@@ -1,70 +1,73 @@
-# Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# translation of gimp.SCRIPT-FU.ru.po to russian
+# Copyright (C) 2000-2002,2003 Free Software Foundation, Inc.
 # Valek Filippov <frob@df.ru>, 2000-2002.
+# Anatoly A. Yakushin <jaa@altlinux.ru>, 2003
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: po-script-fu-1.3\n"
+"Project-Id-Version: gimp.SCRIPT-FU.ru\n"
 "POT-Creation-Date: 2003-06-09 22:54+0200\n"
-"PO-Revision-Date: 2002-03-05 18:27+0300\n"
-"Last-Translator: Valek Filippov <frob@df.ru>\n"
-"Language-Team: Russian <gnome-cyr@gnome.org>\n"
+"PO-Revision-Date: 2003-06-15 23:49+0400\n"
+"Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
+"Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=koi8-r\n"
-"Content-Transfer-Encoding: 8-bit\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.1\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Консольный режим Скрипт-Фу позволяет только интерактивную работу"
+msgstr "п п╬п╫я│п╬п╩я▄п╫я▀п╧ я─п╣п╤п╦п╪ п║п╨я─п╦п©я┌-п╓я┐ п©п╬п╥п╡п╬п╩я▐п╣я┌ я┌п╬п╩я▄п╨п╬ п╦п╫я┌п╣я─п╟п╨я┌п╦п╡п╫я┐я▌ я─п╟п╠п╬я┌я┐"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
-msgstr "Консоль Скрипт-Фу"
+msgstr "п п╬п╫я│п╬п╩я▄ п║п╨я─п╦п©я┌-п╓я┐"
 
 #: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
-msgstr "Вывод SIOD"
+msgstr "п▓я▀п╡п╬п╢ SIOD"
 
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
-msgstr "Текущая команда"
+msgstr "п╒п╣п╨я┐я┴п╟я▐ п╨п╬п╪п╟п╫п╢п╟"
 
 #: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
-msgstr "Просмотр..."
+msgstr "п÷я─п╬я│п╪п╬я┌я─..."
 
 #: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Не удалось открыть поток в канал вывода SIOD"
+msgstr "п²п╣ я┐п╢п╟п╩п╬я│я▄ п╬я┌п╨я─я▀я┌я▄ п©п╬я┌п╬п╨ п╡ п╨п╟п╫п╟п╩ п╡я▀п╡п╬п╢п╟ SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:589
 msgid "Unable to open the SIOD output pipe"
-msgstr "Не удалось открыть канал вывода SIOD"
+msgstr "п²п╣ я┐п╢п╟п╩п╬я│я▄ п╬я┌п╨я─я▀я┌я▄ п╨п╟п╫п╟п╩ п╡я▀п╡п╬п╢п╟ SIOD"
 
 #: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Режим выполнения Скрипт-Фу допускает только неинтерактивную работу"
+msgstr "п═п╣п╤п╦п╪ п╡я▀п©п╬п╩п╫п╣п╫п╦я▐ п║п╨я─п╦п©я┌-п╓я┐ п╢п╬п©я┐я│п╨п╟п╣я┌ я┌п╬п╩я▄п╨п╬ п╫п╣п╦п╫я┌п╣я─п╟п╨я┌п╦п╡п╫я┐я▌ я─п╟п╠п╬я┌я┐"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1164
 #: plug-ins/script-fu/script-fu-scripts.c:1166
 msgid "/Script-Fu/"
-msgstr "/Скрипт-Фу/"
+msgstr "/п║п╨я─п╦п©я┌-п╓я┐/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1174
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "Скрипт-Фу: %s"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: %s"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1208
 msgid "About"
-msgstr "О программе"
+msgstr "п· п©я─п╬пЁя─п╟п╪п╪п╣"
 
 #. the script arguments frame
 #: plug-ins/script-fu/script-fu-scripts.c:1218
 msgid "Script Arguments"
-msgstr "Аргументы скрипта"
+msgstr "п░я─пЁя┐п╪п╣п╫я┌я▀ я│п╨я─п╦п©я┌п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
@@ -73,50 +76,50 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
-msgstr "Скрипт-Фу: Выбор цвета"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ я├п╡п╣я┌п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1369
 msgid "Script-Fu File Selection"
-msgstr "Скрипт-Фу: Выбор файла"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ я└п╟п╧п╩п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1374
 msgid "Script-Fu Folder Selection"
-msgstr "Скрипт-Фу: Выбор каталога"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ п╨п╟я┌п╟п╩п╬пЁп╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu Font Selection"
-msgstr "Скрипт-Фу: Выбор шрифта"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ я┬я─п╦я└я┌п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1399
 msgid "Script-fu Pattern Selection"
-msgstr "Скрипт-Фу: Выбор шаблона"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ я┬п╟п╠п╩п╬п╫п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1406
 msgid "Script-Fu Gradient Selection"
-msgstr "Скрипт-Фу: Выбор градиента"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ пЁя─п╟п╢п╦п╣п╫я┌п╟"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1414
 msgid "Script-Fu Brush Selection"
-msgstr "Скрипт-Фу: Выбор кисти"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п▓я▀п╠п╬я─ п╨п╦я│я┌п╦"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
 #: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
-msgstr "Автор:"
+msgstr "п░п╡я┌п╬я─:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
 #: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
-msgstr "Авторское право:"
+msgstr "п░п╡я┌п╬я─я│п╨п╬п╣ п©я─п╟п╡п╬:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
 #: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
-msgstr "Дата:"
+msgstr "п■п╟я┌п╟:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
-msgstr "Типы изображений:"
+msgstr "п╒п╦п©я▀ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2051
 #, c-format
@@ -125,114 +128,112 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
-"Ошибка Скрипт-Фу во время исполнения\n"
+"п·я┬п╦п╠п╨п╟ п║п╨я─п╦п©я┌-п╓я┐ п╡п╬ п╡я─п╣п╪я▐ п╦я│п©п╬п╩п╫п╣п╫п╦я▐\n"
 " %s\n"
 "%s"
 
 #: plug-ins/script-fu/script-fu-server.c:574
 msgid "Script-Fu Server Options"
-msgstr "Скрипт-Фу: Параметры сервера"
+msgstr "п║п╨я─п╦п©я┌-п╓я┐: п÷п╟я─п╟п╪п╣я┌я─я▀ я│п╣я─п╡п╣я─п╟"
 
 #: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
-msgstr "Порт сервера:"
+msgstr "п÷п╬я─я┌ я│п╣я─п╡п╣я─п╟:"
 
 #: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
-msgstr "Регистрационный файл сервера:"
+msgstr "п═п╣пЁп╦я│я┌я─п╟я├п╦п╬п╫п╫я▀п╧ я└п╟п╧п╩ я│п╣я─п╡п╣я─п╟:"
 
 #: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Консоль..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п п╬п╫я│п╬п╩я▄..."
 
 #: plug-ins/script-fu/script-fu.c:152
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Сервер..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п║п╣я─п╡п╣я─..."
 
 #: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
-msgstr "Перечитать все доступные скрипты"
+msgstr "п÷п╣я─п╣я┤п╦я┌п╟я┌я▄ п╡я│п╣ п╢п╬я│я┌я┐п©п╫я▀п╣ я│п╨я─п╦п©я┌я▀"
 
 #: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Обновить..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п·п╠п╫п╬п╡п╦я┌я▄..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:129
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 msgid "DB Browser"
-msgstr "Просмотр базы данных"
+msgstr "п÷я─п╬я│п╪п╬я┌я─ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:134
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
-#, fuzzy
+
 msgid "Search by _Name"
-msgstr "Поиск по названию"
+msgstr "п÷п╬п╦я│п╨ п©п╬ п╫п╟п╥п╡п╟п╫п╦я▌"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:136
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #, fuzzy
 msgid "Search by _Blurb"
-msgstr "Поиск по обложке"
+msgstr "п÷п╬п╦я│п╨ п©п╬ п╬п╠п╩п╬п╤п╨п╣"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:216
-#, fuzzy
+
 msgid "_Search:"
-msgstr "Поиск:"
+msgstr "п÷п╬п╦я│п╨:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:358
 msgid "Name:"
-msgstr "Название:"
+msgstr "п²п╟п╥п╡п╟п╫п╦п╣:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:367
 msgid "Blurb:"
-msgstr "Обложка:"
+msgstr "п·п╠п╩п╬п╤п╨п╟:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:379
 msgid "In:"
-msgstr "В:"
+msgstr "п▓:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:427
 msgid "Out:"
-msgstr "Из:"
+msgstr "п≤п╥:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Help:"
-msgstr "Справка:"
+msgstr "п║п©я─п╟п╡п╨п╟:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:606
-#, fuzzy
 msgid "Searching by name - please wait"
-msgstr "Просмотр базы данных (по имени -- подождите пожалуйста)"
+msgstr "п÷п╬п╦я│п╨ п©п╬ п╦п╪п╣п╫п╦ -- п©п╬п╢п╬п╤п╢п╦я┌п╣ п©п╬п╤п╟п╩я┐п╧я│я┌п╟"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:629
-#, fuzzy
 msgid "Searching by blurb - please wait"
-msgstr "Просмотр базы данных (по обложке -- подождите пожалуйста)"
+msgstr "п÷п╬п╦я│п╨ п©п╬ п╬п╠п╩п╬п╤п╨п╣ -- п©п╬п╢п╬п╤п╢п╦я┌п╣ п©п╬п╤п╟п╩я┐п╧я│я┌п╟"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:639
 msgid "Searching - please wait"
-msgstr ""
+msgstr "п÷п╬п╦я│п╨ - п©п╬п╢п╬п╤п╢п╦я┌п╣ п©п╬п╤п╟п╩я┐п╧я│я┌п╟"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:675
 msgid "No matches"
-msgstr ""
+msgstr "п²п╣ п╫п╟п╧п╢п╣п╫п╬"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/3D контур..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/3D п╨п╬п╫я┌я┐я─..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Объемный контур..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п·п╠я┼п╣п╪п╫я▀п╧ п╨п╬п╫я┌я┐я─..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr "Радиус размывания рельефа (Альфа-слой)"
+msgstr "п═п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐ я─п╣п╩я▄п╣я└п╟ (п░п╩я▄я└п╟-я│п╩п╬п╧)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default Bumpmap Settings"
-msgstr "Исходная настройка рельефа"
+msgstr "п≤я│я┘п╬п╢п╫п╟я▐ п╫п╟я│я┌я─п╬п╧п╨п╟ я─п╣п╩я▄п╣я└п╟"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
@@ -273,7 +274,7 @@ msgstr "Исходная настройка рельефа"
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
-msgstr "Шрифт"
+msgstr "п╗я─п╦я└я┌"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -314,11 +315,11 @@ msgstr "Шрифт"
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font Size (pixels)"
-msgstr "Размер шрифта (точек)"
+msgstr "п═п╟п╥п╪п╣я─ я┬я─п╦я└я┌п╟ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
-msgstr "Радиус размывания контура"
+msgstr "п═п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐ п╨п╬п╫я┌я┐я─п╟"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -329,23 +330,23 @@ msgstr "Радиус размывания контура"
 #: plug-ins/script-fu/scripts/chip-away.scm.h:12
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
-msgstr "Шаблон"
+msgstr "п╗п╟п╠п╩п╬п╫"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 msgid "Shadow Blur Radius"
-msgstr "Радиус размывания тени"
+msgstr "п═п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X Offset"
-msgstr "Смещение тени по X"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ я┌п╣п╫п╦ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:11
 #: plug-ins/script-fu/scripts/glossy.scm.h:15
 #: plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y Offset"
-msgstr "Смещение тени по Y"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ я┌п╣п╫п╦ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
@@ -385,11 +386,11 @@ msgstr "Смещение тени по Y"
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Text"
-msgstr "Текст"
+msgstr "п╒п╣п╨я│я┌"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/3D Truchet..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/3D Truchet..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -422,51 +423,51 @@ msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/3D Truchet..."
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:2
 msgid "Background Color"
-msgstr "Цвет фона"
+msgstr "п╕п╡п╣я┌ я└п╬п╫п╟"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Block Size"
-msgstr "Размер блока"
+msgstr "п═п╟п╥п╪п╣я─ п╠п╩п╬п╨п╟"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "End Blend"
-msgstr "Конец затемнения"
+msgstr "п п╬п╫п╣я├ п╥п╟я┌п╣п╪п╫п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X Tiles"
-msgstr "Число разрезов по X"
+msgstr "п╖п╦я│п╩п╬ я─п╟п╥я─п╣п╥п╬п╡ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
 #: plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y Tiles"
-msgstr "Число разрезов по Y"
+msgstr "п╖п╦я│п╩п╬ я─п╟п╥я─п╣п╥п╬п╡ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Start Blend"
-msgstr "Начало смешивания"
+msgstr "п²п╟я┤п╟п╩п╬ я│п╪п╣я┬п╦п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
 msgid "Supersample"
-msgstr "Интерполировать"
+msgstr "п≤п╫я┌п╣я─п©п╬п╩п╦я─п╬п╡п╟я┌я▄"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "Thickness"
-msgstr "Толщина"
+msgstr "п╒п╬п╩я┴п╦п╫п╟"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Скрипт-Фу/Декор/Добавить фаску..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п■п╬п╠п╟п╡п╦я┌я▄ я└п╟я│п╨я┐..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep Bump Layer"
-msgstr "Сохранить слой рельефа"
+msgstr "п║п╬я┘я─п╟п╫п╦я┌я▄ я│п╩п╬п╧ я─п╣п╩я▄п╣я└п╟"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -475,36 +476,36 @@ msgstr "Сохранить слой рельефа"
 #: plug-ins/script-fu/scripts/slide.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
-msgstr "Работать с копией"
+msgstr "п═п╟п╠п╬я┌п╟я┌я▄ я│ п╨п╬п©п╦п╣п╧"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr "<Image>/Скрипт-Фу/Декор/Добавить рамку..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п■п╬п╠п╟п╡п╦я┌я▄ я─п╟п╪п╨я┐..."
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Border Color"
-msgstr "Цвет рамки"
+msgstr "п╕п╡п╣я┌ я─п╟п╪п╨п╦"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X Size"
-msgstr "X размер рамки"
+msgstr "X я─п╟п╥п╪п╣я─ я─п╟п╪п╨п╦"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y Size"
-msgstr "Y размер рамки"
+msgstr "Y я─п╟п╥п╪п╣я─ я─п╟п╪п╨п╦"
 
 #: plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Delta Value on Color"
-msgstr "Дельта значения цвета"
+msgstr "п■п╣п╩я▄я┌п╟ п╥п╫п╟я┤п╣п╫п╦я▐ я├п╡п╣я┌п╟"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Стрелка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣/п║я┌я─п╣п╩п╨п╟..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Down"
-msgstr "Вниз"
+msgstr "п▓п╫п╦п╥"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
@@ -513,7 +514,7 @@ msgstr "Вниз"
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten Image"
-msgstr "Свести изображение"
+msgstr "п║п╡п╣я│я┌п╦ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
@@ -525,69 +526,68 @@ msgstr "Свести изображение"
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow Color"
-msgstr "Цвет свечения"
+msgstr "п╕п╡п╣я┌ я│п╡п╣я┤п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
-msgstr "Слева"
+msgstr "п║п╩п╣п╡п╟"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
-msgstr "Ориентация"
+msgstr "п·я─п╦п╣п╫я┌п╟я├п╦я▐"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
-msgstr "Справа"
+msgstr "п║п©я─п╟п╡п╟"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
 #: plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
-msgstr "Размер"
+msgstr "п═п╟п╥п╪п╣я─"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
-msgstr "Верх"
+msgstr "п▓п╣я─я┘"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Гор.линейка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣/п⌠п╬я─.п╩п╦п╫п╣п╧п╨п╟..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
-msgstr "Высота строки"
+msgstr "п▓я▀я│п╬я┌п╟ я│я┌я─п╬п╨п╦"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
 msgid "Bar Length"
-msgstr "Длина строки"
+msgstr "п■п╩п╦п╫п╟ я│я┌я─п╬п╨п╦"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Маркер..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣/п°п╟я─п╨п╣я─..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
 #: plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
-msgstr "Радиус"
+msgstr "п═п╟п╢п╦я┐я│"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Чужое свечение/Кнопка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣/п п╫п╬п©п╨п╟..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
-msgstr "Радиус свечения"
+msgstr "п═п╟п╢п╦я┐я│ я│п╡п╣я┤п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
-msgstr "Заполнение"
+msgstr "п≈п╟п©п╬п╩п╫п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: plug-ins/script-fu/scripts/asc2img.scm.h:9
@@ -603,134 +603,132 @@ msgstr "Заполнение"
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:14
 #: plug-ins/script-fu/scripts/speed-text.scm.h:8
 msgid "Text Color"
-msgstr "Цвет текста"
+msgstr "п╕п╡п╣я┌ я┌п╣п╨я│я┌п╟"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Чужое свечение..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужое свечение..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п╖я┐п╤п╬п╣ я│п╡п╣я┤п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 msgid "Glow Size (pixels * 4)"
-msgstr "Размер свечения (точек * 4)"
+msgstr "п═п╟п╥п╪п╣я─ я│п╡п╣я┤п╣п╫п╦я▐ (я┌п╬я┤п╣п╨ * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Чужой неон..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п╖я┐п╤п╬п╧ п╫п╣п╬п╫..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Чужой Неон..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п╖я┐п╤п╬п╧ п²п╣п╬п╫..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Fade Away"
-msgstr "Затухание"
+msgstr "п≈п╟я┌я┐я┘п╟п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
 msgid "Number of Bands"
-msgstr "Число связей"
+msgstr "п╖п╦я│п╩п╬ я│п╡я▐п╥п╣п╧"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
 msgid "Width of Bands"
-msgstr "Ширина лент"
+msgstr "п╗п╦я─п╦п╫п╟ п╩п╣п╫я┌"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of Gaps"
-msgstr "Ширина зазора"
+msgstr "п╗п╦я─п╦п╫п╟ п╥п╟п╥п╬я─п╟"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Скрипт-Фу/Утилиты/ASCII -> Слой изображения..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/ASCII -> п║п╩п╬п╧ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/ASCII -> Изображение..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/ASCII -> п≤п╥п╬п╠я─п╟п╤п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
 msgid "Buffer Amount (% Height of Text)"
-msgstr "Размер буфера (% высоты текста)"
+msgstr "п═п╟п╥п╪п╣я─ п╠я┐я└п╣я─п╟ (% п╡я▀я│п╬я┌я▀ я┌п╣п╨я│я┌п╟)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Filename"
-msgstr "Имя файла"
+msgstr "п≤п╪я▐ я└п╟п╧п╩п╟"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent Background"
-msgstr "Прозрачный фон"
+msgstr "п÷я─п╬п╥я─п╟я┤п╫я▀п╧ я└п╬п╫"
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Основа I..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п·я│п╫п╬п╡п╟ I..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа I..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п·я│п╫п╬п╡п╟ I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Основа II..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п·я│п╫п╬п╡п╟ II..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Основа II..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п·я│п╫п╬п╡п╟ II..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Простая выпуклая кнопка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п п╫п╬п©п╨п╦/п÷я─п╬я│я┌п╟я▐ п╡я▀п©я┐п╨п╩п╟я▐ п╨п╫п╬п©п╨п╟..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Bevel Width"
-msgstr "Ширина скоса"
+msgstr "п╗п╦я─п╦п╫п╟ я│п╨п╬я│п╟"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-Right color"
-msgstr "Нижний-правый цвет"
+msgstr "п²п╦п╤п╫п╦п╧-п©я─п╟п╡я▀п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
-msgstr "Нажатая"
+msgstr "п²п╟п╤п╟я┌п╟я▐"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:10
 msgid "Upper-Left color"
-msgstr "Верхний-левый цвет"
+msgstr "п▓п╣я─я┘п╫п╦п╧-п╩п╣п╡я▀п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Стрелка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п▓я▀п©я┐п╨п╩я▀п╧ я┬п╟п╠п╩п╬п╫/п║я┌я─п╣п╩п╨п╟..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Маркер..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п▓я▀п©я┐п╨п╩я▀п╧ я┬п╟п╠п╩п╬п╫/п°п╟я─п╨п╣я─..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
-msgstr "Диаметр"
+msgstr "п■п╦п╟п╪п╣я┌я─"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Кнопка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п▓я▀п©я┐п╨п╩я▀п╧ я┬п╟п╠п╩п╬п╫/п п╫п╬п©п╨п╟..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Заголовок..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п▓я▀п©я┐п╨п╩я▀п╧ я┬п╟п╠п╩п╬п╫/п≈п╟пЁп╬п╩п╬п╡п╬п╨..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Выпуклый шаблон/Гор.линейка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/п▓я▀п©я┐п╨п╩я▀п╧ я┬п╟п╠п╩п╬п╫/п⌠п╬я─.п╩п╦п╫п╣п╧п╨п╟..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -738,58 +736,58 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
-msgstr "Высота"
+msgstr "п▓я▀я│п╬я┌п╟"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Width"
-msgstr "Ширина"
+msgstr "п╗п╦я─п╦п╫п╟"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п║п╪п╣я│я▄..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid "Intermediate Frames"
-msgstr "Промежуточные кадры"
+msgstr "п÷я─п╬п╪п╣п╤я┐я┌п╬я┤п╫я▀п╣ п╨п╟п╢я─я▀"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
-msgstr "Циклическое"
+msgstr "п╕п╦п╨п╩п╦я┤п╣я│п╨п╬п╣"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Max. Blur Radius"
-msgstr "Макс. радиус размывания"
+msgstr "п°п╟п╨я│. я─п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Смесь..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п║п╪п╣я│я▄..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Смешанная..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п║п╪п╣я┬п╟п╫п╫п╟я▐..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend Mode"
-msgstr "Режим смешивания"
+msgstr "п═п╣п╤п╦п╪ я│п╪п╣я┬п╦п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Custom Gradient"
-msgstr "Другой градиент"
+msgstr "п■я─я┐пЁп╬п╧ пЁя─п╟п╢п╦п╣п╫я┌"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "FG-BG-HSV"
-msgstr "План-Фон-HSV"
+msgstr "п÷п╩п╟п╫-п╓п╬п╫-HSV"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-RGB"
-msgstr "План-Фон-RGB"
+msgstr "п÷п╩п╟п╫-п╓п╬п╫-RGB"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-Transparent"
-msgstr "План-Прозрачное"
+msgstr "п÷п╩п╟п╫-п÷я─п╬п╥я─п╟я┤п╫п╬п╣"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:12
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:6
@@ -798,35 +796,35 @@ msgstr "План-Прозрачное"
 #: plug-ins/script-fu/scripts/lava.scm.h:2
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
 msgid "Gradient"
-msgstr "Градиент"
+msgstr "п⌠я─п╟п╢п╦п╣п╫я┌"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
 msgid "Offset (pixels)"
-msgstr "Смещение (точек)"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Пятнистая корова..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п÷я▐я┌п╫п╦я│я┌п╟я▐ п╨п╬я─п╬п╡п╟..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Пятнистая корова..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п÷я▐я┌п╫п╦я│я┌п╟я▐ п╨п╬я─п╬п╡п╟..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 msgid "Spots density X"
-msgstr "Плотность пятен по X"
+msgstr "п÷п╩п╬я┌п╫п╬я│я┌я▄ п©я▐я┌п╣п╫ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 msgid "Spots density Y"
-msgstr "Плотность пятен по Y"
+msgstr "п÷п╩п╬я┌п╫п╬я│я┌я▄ п©я▐я┌п╣п╫ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
 msgid "Add Glowing"
-msgstr "Добавить свечение"
+msgstr "п■п╬п╠п╟п╡п╦я┌я▄ я│п╡п╣я┤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "After Glow"
-msgstr "Послесвечение"
+msgstr "п÷п╬я│п╩п╣я│п╡п╣я┤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 #, fuzzy
@@ -835,162 +833,162 @@ msgid ""
 "        A foreground text layer with transparency\n"
 "        and a background layer."
 msgstr ""
-"Выжигание: Необходимо всего два слоя!\n"
-"        Слой текста переднего плана с прозрачностью\n"
-"        и слой фона.\n"
+"п▓я▀п╤п╦пЁп╟п╫п╦п╣: п²п╣п╬п╠я┘п╬п╢п╦п╪п╬ п╡я│п╣пЁп╬ п╢п╡п╟ я│п╩п╬я▐!\n"
+"        п║п╩п╬п╧ я┌п╣п╨я│я┌п╟ п©п╣я─п╣п╢п╫п╣пЁп╬ п©п╩п╟п╫п╟ я│ п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄я▌\n"
+"        п╦ я│п╩п╬п╧ я└п╬п╫п╟.\n"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
-msgstr "Ширина короны"
+msgstr "п╗п╦я─п╦п╫п╟ п╨п╬я─п╬п╫я▀"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
-msgstr "Затухание"
+msgstr "п≈п╟я┌я┐я┘п╟п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout Width"
-msgstr "Ширина затухания"
+msgstr "п╗п╦я─п╦п╫п╟ п╥п╟я┌я┐я┘п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr "Подготовить для GIF"
+msgstr "п÷п╬п╢пЁп╬я┌п╬п╡п╦я┌я▄ п╢п╩я▐ GIF"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
-msgstr "Скорость (точек/кадр)"
+msgstr "п║п╨п╬я─п╬я│я┌я▄ (я┌п╬я┤п╣п╨/п╨п╟п╢я─)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Камуфляж..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/п п╟п╪я┐я└п╩я▐п╤..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
-msgstr "Цвет 1"
+msgstr "п╕п╡п╣я┌ 1"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:3
 msgid "Color 2"
-msgstr "Цвет 2"
+msgstr "п╕п╡п╣я┌ 2"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:4
 msgid "Color 3"
-msgstr "Цвет 3"
+msgstr "п╕п╡п╣я┌ 3"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 msgid "Granularity"
-msgstr "Зернистость"
+msgstr "п≈п╣я─п╫п╦я│я┌п╬я│я┌я▄"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
 #: plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Image Size"
-msgstr "Размер изображения"
+msgstr "п═п╟п╥п╪п╣я─ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
-msgstr "Сгладить"
+msgstr "п║пЁп╩п╟п╢п╦я┌я▄"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:1
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Скрипт-Фу/Парметры трафарета/Вырезать..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п÷п╟я─п╪п╣я┌я─я▀ я┌я─п╟я└п╟я─п╣я┌п╟/п▓я▀я─п╣п╥п╟я┌я▄..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Carve White Areas"
-msgstr "Вырезать белые участки"
+msgstr "п▓я▀я─п╣п╥п╟я┌я▄ п╠п╣п╩я▀п╣ я┐я┤п╟я│я┌п╨п╦"
 
 #: plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to Carve"
-msgstr "Изображение -> гравюра"
+msgstr "п≤п╥п╬п╠я─п╟п╤п╣п╫п╦п╣ -> пЁя─п╟п╡я▌я─п╟"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Вырезанная..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п▓я▀я─п╣п╥п╟п╫п╫п╟я▐..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:2
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 msgid "Background Image"
-msgstr "Фоновое изображение"
+msgstr "п╓п╬п╫п╬п╡п╬п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:3
 msgid "Carve Raised Text"
-msgstr "Вырезать поднятый текст"
+msgstr "п▓я▀я─п╣п╥п╟я┌я▄ п©п╬п╢п╫я▐я┌я▀п╧ я┌п╣п╨я│я┌"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm.h:6
 msgid "Padding Around Text"
-msgstr "Заполнение вокруг текста"
+msgstr "п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╡п╬п╨я─я┐пЁ я┌п╣п╨я│я┌п╟"
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Мел..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п°п╣п╩..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Мел..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п°п╣п╩..."
 
 #: plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Chalk Color"
-msgstr "Цвет мелка"
+msgstr "п╕п╡п╣я┌ п╪п╣п╩п╨п╟"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Chip Away..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/Chip Away..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Осколки..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п·я│п╨п╬п╩п╨п╦..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:3
 msgid "Blur Amount"
-msgstr "Степень размывания"
+msgstr "п║я┌п╣п©п╣п╫я▄ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip Amount"
-msgstr "Количество осколков"
+msgstr "п п╬п╩п╦я┤п╣я│я┌п╡п╬ п╬я│п╨п╬п╩п╨п╬п╡"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
-msgstr "Падающая тень"
+msgstr "п÷п╟п╢п╟я▌я┴п╟я▐ я┌п╣п╫я▄"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Заболнить фон шаблоном"
+msgstr "п≈п╟п╠п╬п╩п╫п╦я┌я▄ я└п╬п╫ я┬п╟п╠п╩п╬п╫п╬п╪"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
-msgstr "Инвертировать"
+msgstr "п≤п╫п╡п╣я─я┌п╦я─п╬п╡п╟я┌я▄"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Keep Background"
-msgstr "Сохранить фон"
+msgstr "п║п╬я┘я─п╟п╫п╦я┌я▄ я└п╬п╫"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:1
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Image>/Скрипт-Фу/Параметры трафарета/Chrome-It..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п÷п╟я─п╟п╪п╣я┌я─я▀ я┌я─п╟я└п╟я─п╣я┌п╟/Chrome-It..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome Balance"
-msgstr "Баланс хрома"
+msgstr "п▒п╟п╩п╟п╫я│ я┘я─п╬п╪п╟"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome Factor"
-msgstr "Фактор хрома"
+msgstr "п╓п╟п╨я┌п╬я─ я┘я─п╬п╪п╟"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome Lightness"
-msgstr "Светлость хрома"
+msgstr "п║п╡п╣я┌п╩п╬я│я┌я▄ я┘я─п╬п╪п╟"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Chrome Saturation"
-msgstr "Насыщенность хрома"
+msgstr "п²п╟я│я▀я┴п╣п╫п╫п╬я│я┌я▄ я┘я─п╬п╪п╟"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome White Areas"
-msgstr "Белые участки хрома"
+msgstr "п▒п╣п╩я▀п╣ я┐я┤п╟я│я┌п╨п╦ я┘я─п╬п╪п╟"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
@@ -1001,163 +999,163 @@ msgstr "Coupled-Map-Lattice"
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:8
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight Balance"
-msgstr "Баланс бликов"
+msgstr "п▒п╟п╩п╟п╫я│ п╠п╩п╦п╨п╬п╡"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Хром..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п╔я─п╬п╪..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Хром..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п╔я─п╬п╪..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 msgid "Offsets (pixels * 2)"
-msgstr "Смещения (точек * 2)"
+msgstr "п║п╪п╣я┴п╣п╫п╦я▐ (я┌п╬я┤п╣п╨ * 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Ток..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐/п╒п╬п╨..."
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Circuit Seed"
-msgstr "Печатная плата"
+msgstr "п÷п╣я┤п╟я┌п╫п╟я▐ п©п╩п╟я┌п╟"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:3
 #: plug-ins/script-fu/scripts/predator.scm.h:3
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep Selection"
-msgstr "Сохранить выделение"
+msgstr "п║п╬я┘я─п╟п╫п╦я┌я▄ п╡я▀п╢п╣п╩п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No Background (only for separate layer)"
-msgstr "Без фона (только для отдельного слоя)"
+msgstr "п▒п╣п╥ я└п╬п╫п╟ (я┌п╬п╩я▄п╨п╬ п╢п╩я▐ п╬я┌п╢п╣п╩я▄п╫п╬пЁп╬ я│п╩п╬я▐)"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify Mask Size"
-msgstr "Размер маски маслянной краски"
+msgstr "п═п╟п╥п╪п╣я─ п╪п╟я│п╨п╦ п╪п╟я│п╩я▐п╫п╫п╬п╧ п╨я─п╟я│п╨п╦"
 
 #: plug-ins/script-fu/scripts/circuit.scm.h:6
 #: plug-ins/script-fu/scripts/lava.scm.h:6
 #: plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate Layer"
-msgstr "Отделить слой"
+msgstr "п·я┌п╢п╣п╩п╦я┌я▄ я│п╩п╬п╧"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Clothify..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я┘п╦п╪п╦я▐/Clothify..."
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
 msgid "Azimuth"
-msgstr "Азимут"
+msgstr "п░п╥п╦п╪я┐я┌"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
-msgstr "Размывание по X"
+msgstr "п═п╟п╥п╪я▀п╡п╟п╫п╦п╣ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
-msgstr "Размывание по Y"
+msgstr "п═п╟п╥п╪я▀п╡п╟п╫п╦п╣ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:5
 #: plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
-msgstr "Глубина"
+msgstr "п⌠п╩я┐п╠п╦п╫п╟"
 
 #: plug-ins/script-fu/scripts/clothify.scm.h:6
 #: plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
-msgstr "Возвышение"
+msgstr "п▓п╬п╥п╡я▀я┬п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Скрипт-Фу/Декор/Кофейное пятно..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п п╬я└п╣п╧п╫п╬п╣ п©я▐я┌п╫п╬..."
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
-"Замена темным\n"
-"(Лучше, но только для изображений с большим количеством белого)"
+"п≈п╟п╪п╣п╫п╟ я┌п╣п╪п╫я▀п╪\n"
+"(п⌡я┐я┤я┬п╣, п╫п╬ я┌п╬п╩я▄п╨п╬ п╢п╩я▐ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ я│ п╠п╬п╩я▄я┬п╦п╪ п╨п╬п╩п╦я┤п╣я│я┌п╡п╬п╪ п╠п╣п╩п╬пЁп╬)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
-msgstr "Пятна"
+msgstr "п÷я▐я┌п╫п╟"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Комикс..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п п╬п╪п╦п╨я│..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Комикс..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п п╬п╪п╦п╨я│..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:7
 msgid "Outline Color"
-msgstr "Цвет контура"
+msgstr "п╕п╡п╣я┌ п╨п╬п╫я┌я┐я─п╟"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:8
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline Size"
-msgstr "Размер контура"
+msgstr "п═п╟п╥п╪п╣я─ п╨п╬п╫я┌я┐я─п╟"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Прохладный метал..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п÷я─п╬я┘п╩п╟п╢п╫я▀п╧ п╪п╣я┌п╟п╩..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Прохладный метал..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п÷я─п╬я┘п╩п╟п╢п╫я▀п╧ п╪п╣я┌п╟п╩..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect Size (pixels)"
-msgstr "Размер эффекта (точек)"
+msgstr "п═п╟п╥п╪п╣я─ я█я└я└п╣п╨я┌п╟ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy Visible"
-msgstr "<Image>/Правка/Скопировать видимые"
+msgstr "<Image>/п÷я─п╟п╡п╨п╟/п║п╨п╬п©п╦я─п╬п╡п╟я┌я▄ п╡п╦п╢п╦п╪я▀п╣"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Кристалл..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п я─п╦я│я┌п╟п╩п╩..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Исказить выделение..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓я▀п╢п╣п╩п╣п╫п╦п╣/п≤я│п╨п╟п╥п╦я┌я▄ п╡я▀п╢п╣п╩п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
-msgstr "Зернистость (1 - низкая)"
+msgstr "п≈п╣я─п╫п╦я│я┌п╬я│я┌я▄ (1 - п╫п╦п╥п╨п╟я▐)"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
-msgstr "Сгладить горизонтально"
+msgstr "п║пЁп╩п╟п╢п╦я┌я▄ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩я▄п╫п╬"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth Vertically"
-msgstr "Сгладить вертикально"
+msgstr "п║пЁп╩п╟п╢п╦я┌я▄ п╡п╣я─я┌п╦п╨п╟п╩я▄п╫п╬"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr "Распространение"
+msgstr "п═п╟я│п©я─п╬я│я┌я─п╟п╫п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "Порог (Больше 1<-->255 Меньше)"
+msgstr "п÷п╬я─п╬пЁ (п▒п╬п╩я▄я┬п╣ 1<-->255 п°п╣п╫я▄я┬п╣)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr "<Image>/Скрипт-Фу/Тень/Падающая тень..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╫я▄/п÷п╟п╢п╟я▌я┴п╟я▐ я┌п╣п╫я▄..."
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow Resizing"
-msgstr "Позволить изменение размере"
+msgstr "п÷п╬п╥п╡п╬п╩п╦я┌я▄ п╦п╥п╪п╣п╫п╣п╫п╦п╣ я─п╟п╥п╪п╣я─п╣"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: plug-ins/script-fu/scripts/news-text.scm.h:3
@@ -1165,674 +1163,667 @@ msgstr "Позволить изменение размере"
 #: plug-ins/script-fu/scripts/round-corners.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Blur Radius"
-msgstr "Радиус размывания"
+msgstr "п═п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
 msgid "Color"
-msgstr "Цвет"
+msgstr "п╕п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
-msgstr "Смещение по X"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
-msgstr "Смещение по Y"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
-msgstr "Непрозрачность"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Очистить каждую иную строку..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я┘п╦п╪п╦я▐/п·я┤п╦я│я┌п╦я┌я▄ п╨п╟п╤п╢я┐я▌ п╦п╫я┐я▌ я│я┌я─п╬п╨я┐..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:2
 msgid "Columns"
-msgstr "Столбцы"
+msgstr "п║я┌п╬п╩п╠я├я▀"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:3
 msgid "Erase"
-msgstr "Очистить"
+msgstr "п·я┤п╦я│я┌п╦я┌я▄"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/Fill"
-msgstr "Очистить/Заполнить"
+msgstr "п·я┤п╦я│я┌п╦я┌я▄/п≈п╟п©п╬п╩п╫п╦я┌я▄"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
-msgstr "Четные"
+msgstr "п╖п╣я┌п╫я▀п╣"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/Odd"
-msgstr "Четные/Нечетные"
+msgstr "п╖п╣я┌п╫я▀п╣/п²п╣я┤п╣я┌п╫я▀п╣"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
-msgstr "Заполнить цветом фона"
+msgstr "п≈п╟п©п╬п╩п╫п╦я┌я▄ я├п╡п╣я┌п╬п╪ я└п╬п╫п╟"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
-msgstr "Нечетные"
+msgstr "п²п╣я┤п╣я┌п╫я▀п╣"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
-msgstr "Строки"
+msgstr "п║я┌я─п╬п╨п╦"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/Cols"
-msgstr "Строки/столбцы"
+msgstr "п║я┌я─п╬п╨п╦/я│я┌п╬п╩п╠я├я▀"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Увести контур..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓я▀п╢п╣п╩п╣п╫п╦п╣/пёп╡п╣я│я┌п╦ п╨п╬п╫я┌я┐я─..."
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:2
 msgid "Apply Generated Layermask"
-msgstr "Применить созданную маску слоя"
+msgstr "п÷я─п╦п╪п╣п╫п╦я┌я▄ я│п╬п╥п╢п╟п╫п╫я┐я▌ п╪п╟я│п╨я┐ я│п╩п╬я▐"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
 #: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
-msgstr "Размер рамки"
+msgstr "п═п╟п╥п╪п╣я─ я─п╟п╪п╨п╦"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:4
 msgid "Clear Unselected Maskarea"
-msgstr "Очистить участки невыделенной маски"
+msgstr "п·я┤п╦я│я┌п╦я┌я▄ я┐я┤п╟я│я┌п╨п╦ п╫п╣п╡я▀п╢п╣п╩п╣п╫п╫п╬п╧ п╪п╟я│п╨п╦"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade From %"
-msgstr "Затухание от %"
+msgstr "п≈п╟я┌я┐я┘п╟п╫п╦п╣ п╬я┌ %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade To   %"
-msgstr "Затухание к %"
+msgstr "п≈п╟я┌я┐я┘п╟п╫п╦п╣ п╨ %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
-msgstr "Использовать растущее выделение"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я─п╟я│я┌я┐я┴п╣п╣ п╡я▀п╢п╣п╩п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Flatland..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/Flatland..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail Level"
-msgstr "Уровень деталей"
+msgstr "пёя─п╬п╡п╣п╫я▄ п╢п╣я┌п╟п╩п╣п╧"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:3
 #: plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image Height"
-msgstr "Высота изображения"
+msgstr "п▓я▀я│п╬я┌п╟ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:4
 #: plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image Width"
-msgstr "Ширина изображения"
+msgstr "п╗п╦я─п╦п╫п╟ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:5
 #: plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random Seed"
-msgstr "Случайное зерно"
+msgstr "п║п╩я┐я┤п╟п╧п╫п╬п╣ п╥п╣я─п╫п╬"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:6
 #: plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
-msgstr "Масштаб X"
+msgstr "п°п╟я│я┬я┌п╟п╠ X"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:7
 #: plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
-msgstr "Масштаб Y"
+msgstr "п°п╟я│я┬я┌п╟п╠ Y"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Карта шрифта..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/п п╟я─я┌п╟ я┬я─п╦я└я┌п╟..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
 msgid "Border"
-msgstr "Рамка"
+msgstr "п═п╟п╪п╨п╟"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Fonts"
-msgstr "Шрифты"
+msgstr "п╗я─п╦я└я┌я▀"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Мороз..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п°п╬я─п╬п╥..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Ледяная..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п⌡п╣п╢я▐п╫п╟я▐..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr "<Image>/Скрипт-Фу/Декор/Нечеткая рамка..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п²п╣я┤п╣я┌п╨п╟я▐ я─п╟п╪п╨п╟..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add Shadow"
-msgstr "Добавить тень"
+msgstr "п■п╬п╠п╟п╡п╦я┌я▄ я┌п╣п╫я▄"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur Border"
-msgstr "Размывать рамку"
+msgstr "п═п╟п╥п╪я▀п╡п╟я┌я▄ я─п╟п╪п╨я┐"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow Weight (%)"
-msgstr "Вес тени (%)"
+msgstr "п▓п╣я│ я┌п╣п╫п╦ (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Большой заголовок..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п▒п╬п╩я▄я┬п╬п╧ п╥п╟пЁп╬п╩п╬п╡п╬п╨..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Маленький заголовок.."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п°п╟п╩п╣п╫я▄п╨п╦п╧ п╥п╟пЁп╬п╩п╬п╡п╬п╨.."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
-msgstr "Автокадр"
+msgstr "п░п╡я┌п╬п╨п╟п╢я─"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark Color"
-msgstr "Темный цвет"
+msgstr "п╒п╣п╪п╫я▀п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight Color"
-msgstr "Цвет бликов"
+msgstr "п╕п╡п╣я┌ п╠п╩п╦п╨п╬п╡"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index Image"
-msgstr "Индекcное изображение"
+msgstr "п≤п╫п╢п╣п╨cп╫п╬п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of Colors"
-msgstr "Число цветов"
+msgstr "п╖п╦я│п╩п╬ я├п╡п╣я┌п╬п╡"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Remove Background"
-msgstr "Удалить фон"
+msgstr "пёп╢п╟п╩п╦я┌я▄ я└п╬п╫"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-By-Color Threshold"
-msgstr "Порог выбора-по-цвету"
+msgstr "п÷п╬я─п╬пЁ п╡я▀п╠п╬я─п╟-п©п╬-я├п╡п╣я┌я┐"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
 msgid "Shadow Color"
-msgstr "Цвет тени"
+msgstr "п╕п╡п╣я┌ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки главной трубы..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п°п╣я┌п╨п╦ пЁп╩п╟п╡п╫п╬п╧ я┌я─я┐п╠я▀..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки кнопок трубы..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п°п╣я┌п╨п╦ п╨п╫п╬п©п╬п╨ я┌я─я┐п╠я▀..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки доп.кнопок трубы..."
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п°п╣я┌п╨п╦ п╢п╬п©.п╨п╫п╬п©п╬п╨ я┌я─я┐п╠я▀..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Дважды вложенные "
-"кнопки..."
+"<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╪я▀ Web-я│я┌я─п╟п╫п╦я├/Gimp.Org/п■п╡п╟п╤п╢я▀ п╡п╩п╬п╤п╣п╫п╫я▀п╣ "
+"п╨п╫п╬п©п╨п╦..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Глянец..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п⌠п╩я▐п╫п╣я├..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Глянцевая..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п⌠п╩я▐п╫я├п╣п╡п╟я▐..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
-msgstr "Градиент (Контур)"
+msgstr "п⌠я─п╟п╢п╦п╣п╫я┌ (п п╬п╫я┌я┐я─)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend Gradient (Text)"
-msgstr "Градиент (Текст)"
+msgstr "п⌠я─п╟п╢п╦п╣п╫я┌ (п╒п╣п╨я│я┌)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Pattern (Outline)"
-msgstr "Шаблон (Контур)"
+msgstr "п╗п╟п╠п╩п╬п╫ (п п╬п╫я┌я┐я─)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Overlay)"
-msgstr "Шаблон (Перекрывание)"
+msgstr "п╗п╟п╠п╩п╬п╫ (п÷п╣я─п╣п╨я─я▀п╡п╟п╫п╦п╣)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Text)"
-msgstr "Шаблон (Текст)"
+msgstr "п╗п╟п╠п╩п╬п╫ (п╒п╣п╨я│я┌)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
-msgstr "Тень"
+msgstr "п╒п╣п╫я▄"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Use Pattern Overlay"
-msgstr "Использовать перекрывание шаблонов"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п©п╣я─п╣п╨я─я▀п╡п╟п╫п╦п╣ я┬п╟п╠п╩п╬п╫п╬п╡"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Использовать для контура шабловн вместо градиента"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╢п╩я▐ п╨п╬п╫я┌я┐я─п╟ я┬п╟п╠п╩п╬п╡п╫ п╡п╪п╣я│я┌п╬ пЁя─п╟п╢п╦п╣п╫я┌п╟"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Использовать для текста шаблон вместо градиента"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╢п╩я▐ я┌п╣п╨я│я┌п╟ я┬п╟п╠п╩п╬п╫ п╡п╪п╣я│я┌п╬ пЁя─п╟п╢п╦п╣п╫я┌п╟"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Горячее свечение..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п⌠п╬я─я▐я┤п╣п╣ я│п╡п╣я┤п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Горячее свечение..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п⌠п╬я─я▐я┤п╣п╣ я│п╡п╣я┤п╣п╫п╦п╣..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect Size (pixels * 3)"
-msgstr "Размер эффекта (точек * 3)"
+msgstr "п═п╟п╥п╪п╣я─ я█я└я└п╣п╨я┌п╟ (я┌п╬я┤п╣п╨ * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Выпуклый градиент..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п▓я▀п©я┐п╨п╩я▀п╧ пЁя─п╟п╢п╦п╣п╫я┌..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Выпуклый градиент..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п▓я▀п©я┐п╨п╩я▀п╧ пЁя─п╟п╢п╦п╣п╫я┌..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "Bevel Height (Sharpness)"
-msgstr "Высота скоса (резкость)"
+msgstr "п▓я▀я│п╬я┌п╟ я│п╨п╬я│п╟ (я─п╣п╥п╨п╬я│я┌я▄)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Border Size (pixels)"
-msgstr "Размер рамки (точек)"
+msgstr "п═п╟п╥п╪п╣я─ я─п╟п╪п╨п╦ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Утилиты/Пользовательский градиент..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/п÷п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╦п╧ пЁя─п╟п╢п╦п╣п╫я┌..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Сделать сетчатую систему..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐/п║п╢п╣п╩п╟я┌я▄ я│п╣я┌я┤п╟я┌я┐я▌ я│п╦я│я┌п╣п╪я┐..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "Grids X"
-msgstr "Сетка X"
+msgstr "п║п╣я┌п╨п╟ X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Grids Y"
-msgstr "Сетка Y"
+msgstr "п║п╣я┌п╨п╟ Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Image>/Скрипт-Фу/Утилиты/Построить HSV-график..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/п÷п╬я│я┌я─п╬п╦я┌я▄ HSV-пЁя─п╟я└п╦п╨..."
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "BG Opacity"
-msgstr "Непрозрачность фона"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ я└п╬п╫п╟"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "End X"
-msgstr "Конец X"
+msgstr "п п╬п╫п╣я├ X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End Y"
-msgstr "Конец Y"
+msgstr "п п╬п╫п╣я├ Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
 msgid "From Top-Left to Bottom-Right"
-msgstr "От верхнего левого к нижнему правому"
+msgstr "п·я┌ п╡п╣я─я┘п╫п╣пЁп╬ п╩п╣п╡п╬пЁп╬ п╨ п╫п╦п╤п╫п╣п╪я┐ п©я─п╟п╡п╬п╪я┐"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "Graph Scale"
-msgstr "Масштаб графика"
+msgstr "п°п╟я│я┬я┌п╟п╠ пЁя─п╟я└п╦п╨п╟"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Start X"
-msgstr "Начало по X"
+msgstr "п²п╟я┤п╟п╩п╬ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
 msgid "Start Y"
-msgstr "Начало по Y"
+msgstr "п²п╟я┤п╟п╩п╬ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Использовать границы выделения вместо нижних"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ пЁя─п╟п╫п╦я├я▀ п╡я▀п╢п╣п╩п╣п╫п╦я▐ п╡п╪п╣я│я┌п╬ п╫п╦п╤п╫п╦я┘"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Imigre-26..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame Color"
-msgstr "Цвет кадра"
+msgstr "п╕п╡п╣я┌ п╨п╟п╢я─п╟"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame Size"
-msgstr "Размер кадра"
+msgstr "п═п╟п╥п╪п╣я─ п╨п╟п╢я─п╟"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr "<Image>/Скрипт-Фу/Утилиты/Показать структуру изображения..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/пёя┌п╦п╩п╦я┌я▀/п÷п╬п╨п╟п╥п╟я┌я▄ я│я┌я─я┐п╨я┌я┐я─я┐ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐..."
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:2
 msgid "Apply Layer Mask (or discard)"
-msgstr "Применить маску слоя (или отказаться)"
+msgstr "п÷я─п╦п╪п╣п╫п╦я┌я▄ п╪п╟я│п╨я┐ я│п╩п╬я▐ (п╦п╩п╦ п╬я┌п╨п╟п╥п╟я┌я▄я│я▐)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:4
 msgid "Create New Image"
-msgstr "Создать новое изображение"
+msgstr "п║п╬п╥п╢п╟я┌я▄ п╫п╬п╡п╬п╣ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:5
 msgid "Insert Layer Names"
-msgstr "Вставить названия слоя"
+msgstr "п▓я│я┌п╟п╡п╦я┌я▄ п╫п╟п╥п╡п╟п╫п╦я▐ я│п╩п╬я▐"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
 msgid "Make New Background"
-msgstr "Создать новый фон"
+msgstr "п║п╬п╥п╢п╟я┌я▄ п╫п╬п╡я▀п╧ я└п╬п╫"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
 msgid "Outer Border"
-msgstr "Внешняя рамка"
+msgstr "п▓п╫п╣я┬п╫я▐я▐ я─п╟п╪п╨п╟"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:8
 msgid "Pad Color"
-msgstr "Цвет заполнения"
+msgstr "п╕п╡п╣я┌ п╥п╟п©п╬п╩п╫п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:9
 msgid "Pad Opacity"
-msgstr "Непрозрачность заполнения"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ п╥п╟п©п╬п╩п╫п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:10
 msgid "Padding for Transparent Regions"
-msgstr "Заполнение для прозрачных участков"
+msgstr "п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ п╢п╩я▐ п©я─п╬п╥я─п╟я┤п╫я▀я┘ я┐я┤п╟я│я┌п╨п╬п╡"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:11
 msgid "Shear Length"
-msgstr "Длина сдвига"
+msgstr "п■п╩п╦п╫п╟ я│п╢п╡п╦пЁп╟"
 
 #: plug-ins/script-fu/scripts/image-structure.scm.h:12
 msgid "Space Between Layers"
-msgstr "Интервал между слоями"
+msgstr "п≤п╫я┌п╣я─п╡п╟п╩ п╪п╣п╤п╢я┐ я│п╩п╬я▐п╪п╦"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Земля..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/п≈п╣п╪п╩я▐..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
-msgstr "Высота земли"
+msgstr "п▓я▀я│п╬я┌п╟ п╥п╣п╪п╩п╦"
 
 #: plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea Depth"
-msgstr "Морская глубина"
+msgstr "п°п╬я─я│п╨п╟я▐ пЁп╩я┐п╠п╦п╫п╟"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Лава..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐/п⌡п╟п╡п╟..."
 
 #: plug-ins/script-fu/scripts/lava.scm.h:4
 #: plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
-msgstr "Шероховатость"
+msgstr "п╗п╣я─п╬я┘п╬п╡п╟я┌п╬я│я┌я▄"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
-msgstr "Зерно"
+msgstr "п≈п╣я─п╫п╬"
 
 #: plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use Current Gradient"
-msgstr "Использовать текущий градиент"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ я┌п╣п╨я┐я┴п╦п╧ пЁя─п╟п╢п╦п╣п╫я┌"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr "<Image>/Скрипт-Фу/Визуализация/Линейная новая..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐/п⌡п╦п╫п╣п╧п╫п╟я▐ п╫п╬п╡п╟я▐..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Number of Lines"
-msgstr "Число линий"
+msgstr "п╖п╦я│п╩п╬ п╩п╦п╫п╦п╧"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Offset Radius"
-msgstr "Радиус смещения"
+msgstr "п═п╟п╢п╦я┐я│ я│п╪п╣я┴п╣п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Randomness"
-msgstr "Случайность"
+msgstr "п║п╩я┐я┤п╟п╧п╫п╬я│я┌я▄"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Sharpness (degrees)"
-msgstr "Резкость (градусы)"
+msgstr "п═п╣п╥п╨п╬я│я┌я▄ (пЁя─п╟п╢я┐я│я▀)"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый эллипс..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п║п╬п╥п╢п╟я┌я▄ п╨п╦я│я┌я▄/п═п╟п╥п╪я▀я┌я▀п╧ я█п╩п╩п╦п©я│..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Эллипс..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п║п╬п╥п╢п╟я┌я▄ п╨п╦я│я┌я▄/п╜п╩п╩п╦п©я│..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Размытый прямоугольник..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п║п╬п╥п╢п╟я┌я▄ п╨п╦я│я┌я▄/п═п╟п╥п╪я▀я┌я▀п╧ п©я─я▐п╪п╬я┐пЁп╬п╩я▄п╫п╦п╨..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Создать кисть/Прямоугольник..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п║п╬п╥п╢п╟я┌я▄ п╨п╦я│я┌я▄/п÷я─я▐п╪п╬я┐пЁп╬п╩я▄п╫п╦п╨..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Description"
-msgstr "Описание"
+msgstr "п·п©п╦я│п╟п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
-msgstr "Размывание"
+msgstr "п═п╟п╥п╪я▀п╡п╟п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
-msgstr "Интервал"
+msgstr "п≤п╫я┌п╣я─п╡п╟п╩"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Неон..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п²п╣п╬п╫..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Неон..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п²п╣п╬п╫..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create Shadow"
-msgstr "Создать тень"
+msgstr "п║п╬п╥п╢п╟я┌я▄ я┌п╣п╫я▄"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect Size (pixels * 5)"
-msgstr "Размер эффекта (точек * 5)"
+msgstr "п═п╟п╥п╪п╣я─ я█я└я└п╣п╨я┌п╟ (я┌п╬я┤п╣п╨ * 5)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Газетный текст..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п⌠п╟п╥п╣я┌п╫я▀п╧ я┌п╣п╨я│я┌..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
-msgstr "Размер ячейки (точек)"
+msgstr "п═п╟п╥п╪п╣я─ я▐я┤п╣п╧п╨п╦ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:6
 #: plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
-msgstr "Плотность (%)"
+msgstr "п÷п╩п╬я┌п╫п╬я│я┌я▄ (%)"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr "<Image>/Скрипт-Фу/Декор/Старое фото..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п║я┌п╟я─п╬п╣ я└п╬я┌п╬..."
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
-msgstr "Расфокусировать"
+msgstr "п═п╟я│я└п╬п╨я┐я│п╦я─п╬п╡п╟я┌я▄"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
-msgstr "Крап"
+msgstr "п я─п╟п©"
 
 #: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
-msgstr "Сепия"
+msgstr "п║п╣п©п╦я▐"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr "<Image>/Скрипт-Фу/Тень/Перспектива..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╫я▄/п÷п╣я─я│п©п╣п╨я┌п╦п╡п╟..."
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
-msgstr "Угол"
+msgstr "пёпЁп╬п╩"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Interpolate"
-msgstr "Интерполировать"
+msgstr "п≤п╫я┌п╣я─п©п╬п╩п╦я─п╬п╡п╟я┌я▄"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative Distance of Horizon"
-msgstr "Относительное расстояние до горизонта"
+msgstr "п·я┌п╫п╬я│п╦я┌п╣п╩я▄п╫п╬п╣ я─п╟я│я│я┌п╬я▐п╫п╦п╣ п╢п╬ пЁп╬я─п╦п╥п╬п╫я┌п╟"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative Length of Shadow"
-msgstr "Относительная длина тени"
+msgstr "п·я┌п╫п╬я│п╦я┌п╣п╩я▄п╫п╟я▐ п╢п╩п╦п╫п╟ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Хищник..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я┘п╦п╪п╦я▐/п╔п╦я┴п╫п╦п╨..."
 
 #: plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge Amount"
-msgstr "Размер края"
+msgstr "п═п╟п╥п╪п╣я─ п╨я─п╟я▐"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel Amount"
-msgstr "Количество точек растра"
+msgstr "п п╬п╩п╦я┤п╣я│я┌п╡п╬ я┌п╬я┤п╣п╨ я─п╟я│я┌я─п╟"
 
 #: plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
-msgstr "Пикселизовать"
+msgstr "п÷п╦п╨я│п╣п╩п╦п╥п╬п╡п╟я┌я▄"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Кнопки/Круглая кнопка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п п╫п╬п©п╨п╦/п я─я┐пЁп╩п╟я▐ п╨п╫п╬п©п╨п╟..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower Color"
-msgstr "Нижний цвет"
+msgstr "п²п╦п╤п╫п╦п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Lower Color (Active)"
-msgstr "Нижний цвет (Активный)"
+msgstr "п²п╦п╤п╫п╦п╧ я├п╡п╣я┌ (п░п╨я┌п╦п╡п╫я▀п╧)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:7
 msgid "Not Pressed"
-msgstr "Не нажатая"
+msgstr "п²п╣ п╫п╟п╤п╟я┌п╟я▐"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Not Pressed (Active)"
-msgstr "Не нажата (Активная)"
+msgstr "п²п╣ п╫п╟п╤п╟я┌п╟ (п░п╨я┌п╦п╡п╫п╟я▐)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding X"
-msgstr "Заполнение X"
+msgstr "п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ X"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Padding Y"
-msgstr "Заполнение Y"
+msgstr "п≈п╟п©п╬п╩п╫п╣п╫п╦п╣ Y"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round Ratio"
-msgstr "Отношение радиусов"
+msgstr "п·я┌п╫п╬я┬п╣п╫п╦п╣ я─п╟п╢п╦я┐я│п╬п╡"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text Color (Active)"
-msgstr "Цвет текста (Активный)"
+msgstr "п╕п╡п╣я┌ я┌п╣п╨я│я┌п╟ (п░п╨я┌п╦п╡п╫я▀п╧)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
 msgid "Upper Color"
-msgstr "Верхний цвет"
+msgstr "п▓п╣я─я┘п╫п╦п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
 msgid "Upper Color (Active)"
-msgstr "Верхний цвет (Активный)"
+msgstr "п▓п╣я─я┘п╫п╦п╧ я├п╡п╣я┌ (п░п╨я┌п╦п╡п╫я▀п╧)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Визуализация карты..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/п▓п╦п╥я┐п╟п╩п╦п╥п╟я├п╦я▐ п╨п╟я─я┌я▀..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
-msgstr "Поведение"
+msgstr "п÷п╬п╡п╣п╢п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
-msgstr "Детали в середине"
+msgstr "п■п╣я┌п╟п╩п╦ п╡ я│п╣я─п╣п╢п╦п╫п╣"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Tile"
-msgstr "Плитка"
+msgstr "п÷п╩п╦я┌п╨п╟"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Рябь..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п═я▐п╠я▄..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Black"
-msgstr ""
+msgstr "п╖п╣я─п╫я▀п╧"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 #, fuzzy
 msgid "Edge Behaviour"
-msgstr "Поведение"
+msgstr "п÷п╬п╡п╣п╢п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
-msgstr "Число кадров"
+msgstr "п╖п╦я│п╩п╬ п╨п╟п╢я─п╬п╡"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
-msgstr "Сила ряби"
+msgstr "п║п╦п╩п╟ я─я▐п╠п╦"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 #, fuzzy
 msgid "Smear"
-msgstr "Поиск:"
+msgstr "п÷п╬п╦я│п╨:"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
@@ -1840,235 +1831,235 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Скрипт-Фу/Декор/Закругленные уголки..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п≈п╟п╨я─я┐пЁп╩п╣п╫п╫я▀п╣ я┐пЁп╬п╩п╨п╦..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:2
 msgid "Add Background"
-msgstr "Добавить фон"
+msgstr "п■п╬п╠п╟п╡п╦я┌я▄ я└п╬п╫"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:3
 msgid "Add Drop-Shadow"
-msgstr "Добавить падающую тень"
+msgstr "п■п╬п╠п╟п╡п╦я┌я▄ п©п╟п╢п╟я▌я┴я┐я▌ я┌п╣п╫я▄"
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Edge Radius"
-msgstr "Радиус края"
+msgstr "п═п╟п╢п╦я┐я│ п╨я─п╟я▐"
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr "<Image>/Скрипт-Фу/Выделение/В кисть..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓я▀п╢п╣п╩п╣п╫п╦п╣/п▓ п╨п╦я│я┌я▄..."
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
-msgstr ""
+msgstr "п²п╟п╥п╡п╟п╫п╦п╣ п╨п╦я│я┌п╦"
 
 #: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "<Image>/Скрипт-Фу/Выделение/В изображение"
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓я▀п╢п╣п╩п╣п╫п╦п╣/п▓ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Image>/Скрипт-Фу/Выделение/Круглое..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п▓я▀п╢п╣п╩п╣п╫п╦п╣/п я─я┐пЁп╩п╬п╣..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:2
 msgid "Relative Radius"
-msgstr "Относительный радиус"
+msgstr "п·я┌п╫п╬я│п╦я┌п╣п╩я▄п╫я▀п╧ я─п╟п╢п╦я┐я│"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Image>/Скрипт-Фу/Декор/Слайд..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п■п╣п╨п╬я─/п║п╩п╟п╧п╢..."
 
 #: plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font Color"
-msgstr "Цвет шрифта"
+msgstr "п╕п╡п╣я┌ я┬я─п╦я└я┌п╟"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
-msgstr "Число"
+msgstr "п╖п╦я│п╩п╬"
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/SOTA Хром..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/SOTA п╔я─п╬п╪..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Скоростной текст..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п║п╨п╬я─п╬я│я┌п╫п╬п╧ я┌п╣п╨я│я┌..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Разное/Сфера..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п═п╟п╥п╫п╬п╣/п║я└п╣я─п╟..."
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
-msgstr "Освещение (градусы)"
+msgstr "п·я│п╡п╣я┴п╣п╫п╦п╣ (пЁя─п╟п╢я┐я│я▀)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
-msgstr "Радиус (точек)"
+msgstr "п═п╟п╢п╦я┐я│ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "Sphere Color"
-msgstr "Цвет сферы"
+msgstr "п╕п╡п╣я┌ я│я└п╣я─я▀"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Вращающийся шар..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п▓я─п╟я┴п╟я▌я┴п╦п╧я│я▐ я┬п╟я─..."
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr "Кадры"
+msgstr "п п╟п╢я─я▀"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "Индекс из n цветов (0 = оставить в RGB)"
+msgstr "п≤п╫п╢п╣п╨я│ п╦п╥ n я├п╡п╣я┌п╬п╡ (0 = п╬я│я┌п╟п╡п╦я┌я▄ п╡ RGB)"
 
 #: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
-msgstr "Повернуть слева на право"
+msgstr "п÷п╬п╡п╣я─п╫я┐я┌я▄ я│п╩п╣п╡п╟ п╫п╟ п©я─п╟п╡п╬"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Взрыв звезды..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п▓п╥я─я▀п╡ п╥п╡п╣п╥п╢я▀..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездная вспышка..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п≈п╡п╣п╥п╢п╫п╟я▐ п╡я│п©я▀я┬п╨п╟..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Burst Color"
-msgstr "Цвет взрыва"
+msgstr "п╕п╡п╣я┌ п╡п╥я─я▀п╡п╟"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Effect Size (pixels * 30)"
-msgstr "Размер эффекта (точек * 30)"
+msgstr "п═п╟п╥п╪п╣я─ я█я└я└п╣п╨я┌п╟ (я┌п╬я┤п╣п╨ * 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/Starscape..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/Starscape..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Звездный фон..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п≈п╡п╣п╥п╢п╫я▀п╧ я└п╬п╫..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid "Effect Size (pixels * 4)"
-msgstr "Размер эффекта (точек * 4)"
+msgstr "п═п╟п╥п╪п╣я─ я█я└я└п╣п╨я┌п╟ (я┌п╬я┤п╣п╨ * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirl-Tile..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/Swirl-Tile..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
-msgstr "Количество вихрей"
+msgstr "п п╬п╩п╦я┤п╣я│я┌п╡п╬ п╡п╦я┘я─п╣п╧"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Swirly (tileable)..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/Swirly (tileable)..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
-msgstr "Число повторов для вихря"
+msgstr "п╖п╦я│п╩п╬ п©п╬п╡я┌п╬я─п╬п╡ п╢п╩я▐ п╡п╦я┘я─я▐"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter Size"
-msgstr "Размер четверти"
+msgstr "п═п╟п╥п╪п╣я─ я┤п╣я┌п╡п╣я─я┌п╦"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl Angle"
-msgstr "Угол вихря"
+msgstr "пёпЁп╬п╩ п╡п╦я┘я─я▐"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Image>/Скрипт-Фу/Альфа->Эмблема/След частицы..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я▄я└п╟->п╜п╪п╠п╩п╣п╪п╟/п║п╩п╣п╢ я┤п╟я│я┌п╦я├я▀..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/След частицы..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п║п╩п╣п╢ я┤п╟я│я┌п╦я├я▀..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 msgid "Base Color"
-msgstr "Основной цвет"
+msgstr "п·я│п╫п╬п╡п╫п╬п╧ я├п╡п╣я┌"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge Only"
-msgstr "Только край"
+msgstr "п╒п╬п╩я▄п╨п╬ п╨я─п╟п╧"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge Width"
-msgstr "Ширина края"
+msgstr "п╗п╦я─п╦п╫п╟ п╨я─п╟я▐"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit Rate"
-msgstr "Скорость попаданий"
+msgstr "п║п╨п╬я─п╬я│я┌я▄ п©п╬п©п╟п╢п╟п╫п╦п╧"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблема/Текст по кругу..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪п╟/п╒п╣п╨я│я┌ п©п╬ п╨я─я┐пЁя┐..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
-msgstr "Сглаживание"
+msgstr "п║пЁп╩п╟п╤п╦п╡п╟п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill Angle"
-msgstr "Заполнить угол"
+msgstr "п≈п╟п©п╬п╩п╫п╦я┌я▄ я┐пЁп╬п╩"
 
 #: plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start Angle"
-msgstr "Начальный угол"
+msgstr "п²п╟я┤п╟п╩я▄п╫я▀п╧ я┐пЁп╬п╩"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Смесь..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п║п╪п╣я│я▄..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Текстура..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п╒п╣п╨я│я┌я┐я─п╟..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending Blend"
-msgstr "Завершение смешивания"
+msgstr "п≈п╟п╡п╣я─я┬п╣п╫п╦п╣ я│п╪п╣я┬п╦п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
-msgstr "Шестиугольники"
+msgstr "п╗п╣я│я┌п╦я┐пЁп╬п╩я▄п╫п╦п╨п╦"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic Tile Type"
-msgstr "Элементы мозаичного типа"
+msgstr "п╜п╩п╣п╪п╣п╫я┌я▀ п╪п╬п╥п╟п╦я┤п╫п╬пЁп╬ я┌п╦п©п╟"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
-msgstr "Восьмиугольники"
+msgstr "п▓п╬я│я▄п╪п╦я┐пЁп╬п╩я▄п╫п╦п╨п╦"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
-msgstr "Квадраты"
+msgstr "п п╡п╟п╢я─п╟я┌я▀"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting Blend"
-msgstr "Начало смешивания"
+msgstr "п²п╟я┤п╟п╩п╬ я│п╪п╣я┬п╦п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text Pattern"
-msgstr "Шаблон текста"
+msgstr "п╗п╟п╠п╩п╬п╫ я┌п╣п╨я│я┌п╟"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Image>/Фильтры/Размывание/Tileable Blur..."
+msgstr "<Image>/п╓п╦п╩я▄я┌я─я▀/п═п╟п╥п╪я▀п╡п╟п╫п╦п╣/Tileable Blur..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur Horizontally"
-msgstr "Размыть горизонтально"
+msgstr "п═п╟п╥п╪я▀я┌я▄ пЁп╬я─п╦п╥п╬п╫я┌п╟п╩я▄п╫п╬"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur Type"
-msgstr "Тип размывания"
+msgstr "п╒п╦п© я─п╟п╥п╪я▀п╡п╟п╫п╦я▐"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur Vertically"
-msgstr "Размыть вертикально"
+msgstr "п═п╟п╥п╪я▀я┌я▄ п╡п╣я─я┌п╦п╨п╟п╩я▄п╫п╬"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
@@ -2080,232 +2071,233 @@ msgstr "RLE"
 
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Эмблемы/Заголовок Web-страницы..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╜п╪п╠п╩п╣п╪я▀/п≈п╟пЁп╬п╩п╬п╡п╬п╨ Web-я│я┌я─п╟п╫п╦я├я▀..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Trochoid..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/Trochoid..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:2
 msgid "Base Radius (pixels)"
-msgstr "Основной радиус (точек)"
+msgstr "п·я│п╫п╬п╡п╫п╬п╧ я─п╟п╢п╦я┐я│ (я┌п╬я┤п╣п╨)"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:3
 msgid "Erase before Draw"
-msgstr "Очистить перед рисованием"
+msgstr "п·я┤п╦я│я┌п╦я┌я▄ п©п╣я─п╣п╢ я─п╦я│п╬п╡п╟п╫п╦п╣п╪"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:4
 msgid "Hue Rate"
-msgstr "Скорость тона"
+msgstr "п║п╨п╬я─п╬я│я┌я▄ я┌п╬п╫п╟"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:5
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Радиус карандаша/радиус колеса [0.0:1.0]"
+msgstr "п═п╟п╢п╦я┐я│ п╨п╟я─п╟п╫п╢п╟я┬п╟/я─п╟п╢п╦я┐я│ п╨п╬п╩п╣я│п╟ [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:6
 msgid "Use Brush"
-msgstr "Использовать кисть"
+msgstr "п≤я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╨п╦я│я┌я▄"
 
 #: plug-ins/script-fu/scripts/trochoid.scm.h:7
 msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Радиус колеса (hypo < 0 < epi)"
+msgstr "п═п╟п╢п╦я┐я│ п╨п╬п╩п╣я│п╟ (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Расш./Скрипт-Фу/Шаблоны/Truchet..."
+msgstr "<Toolbox>/п═п╟я│я┬./п║п╨я─п╦п©я┌-п╓я┐/п╗п╟п╠п╩п╬п╫я▀/Truchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
-msgstr "Цвет переднего плана"
+msgstr "п╕п╡п╣я┌ п©п╣я─п╣п╢п╫п╣пЁп╬ п©п╩п╟п╫п╟"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Нерезкая маска..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я┘п╦п╪п╦я▐/п²п╣я─п╣п╥п╨п╟я▐ п╪п╟я│п╨п╟..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask Opacity"
-msgstr "Непрозрачность маски"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ п╪п╟я│п╨п╦"
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
 msgid "Mask Size"
-msgstr "Размер маски"
+msgstr "п═п╟п╥п╪п╣я─ п╪п╟я│п╨п╦"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Скрипт-Фу/Аниматоры/Волны..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п▓п╬п╩п╫я▀..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:2
 msgid "Amplitude"
-msgstr "Размах"
+msgstr "п═п╟п╥п╪п╟я┘"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
-msgstr "Обратное направление"
+msgstr "п·п╠я─п╟я┌п╫п╬п╣ п╫п╟п©я─п╟п╡п╩п╣п╫п╦п╣"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
-msgstr "Длина волны"
+msgstr "п■п╩п╦п╫п╟ п╡п╬п╩п╫я▀"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:1
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Image>/Скрипт-Фу/Алхимия/Weave..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╩я┘п╦п╪п╦я▐/Weave..."
 
 #: plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon Spacing"
-msgstr "Интервал ленты"
+msgstr "п≤п╫я┌п╣я─п╡п╟п╩ п╩п╣п╫я┌я▀"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon Width"
-msgstr "Ширина ленты"
+msgstr "п╗п╦я─п╦п╫п╟ п╩п╣п╫я┌я▀"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow Darkness"
-msgstr "Темнота тени"
+msgstr "п╒п╣п╪п╫п╬я┌п╟ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow Depth"
-msgstr "Глубина тени"
+msgstr "п⌠п╩я┐п╠п╦п╫п╟ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread Density"
-msgstr "Плотность нити"
+msgstr "п÷п╩п╬я┌п╫п╬я│я┌я▄ п╫п╦я┌п╦"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread Intensity"
-msgstr "Интенсивность нити"
+msgstr "п≤п╫я┌п╣п╫я│п╦п╡п╫п╬я│я┌я▄ п╫п╦я┌п╦"
 
 #: plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread Length"
-msgstr "Длина нити"
+msgstr "п■п╩п╦п╫п╟ п╫п╦я┌п╦"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Image>/Скрипт-Фу/Тень/Xach-эффект..."
+msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п╒п╣п╫я▄/Xach-я█я└я└п╣п╨я┌..."
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop Shadow Blur Radius"
-msgstr "Радиус размывания падающей тени"
+msgstr "п═п╟п╢п╦я┐я│ я─п╟п╥п╪я▀п╡п╟п╫п╦я▐ п©п╟п╢п╟я▌я┴п╣п╧ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop Shadow Color"
-msgstr "Цвет падающей тени"
+msgstr "п╕п╡п╣я┌ п©п╟п╢п╟я▌я┴п╣п╧ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop Shadow Opacity"
-msgstr "Непрозрачность падающей тени"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ п©п╟п╢п╟я▌я┴п╣п╧ я┌п╣п╫п╦"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop Shadow X Offset"
-msgstr "Смещение падающей тени по X"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п©п╟п╢п╟я▌я┴п╣п╧ я┌п╣п╫п╦ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop Shadow Y Offset"
-msgstr "Смещение падающей тени по Y"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п©п╟п╢п╟я▌я┴п╣п╧ я┌п╣п╫п╦ п©п╬ Y"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Opacity"
-msgstr "Непрозрачность бликов"
+msgstr "п²п╣п©я─п╬п╥я─п╟я┤п╫п╬я│я┌я▄ п╠п╩п╦п╨п╬п╡"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight X Offset"
-msgstr "Смещение бликов по X"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п╠п╩п╦п╨п╬п╡ п©п╬ X"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
-msgstr "Смещение бликов по Y"
+msgstr "п║п╪п╣я┴п╣п╫п╦п╣ п╠п╩п╦п╨п╬п╡ п©п╬ Y"
 
 #: plug-ins/webbrowser/web-browser.scm.h:1
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО разработчика"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п╖п░п▓п· я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟"
 
 #: plug-ins/webbrowser/web-browser.scm.h:2
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Расш./Web-браузер/Ошибки GIMP"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п·я┬п╦п╠п╨п╦ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:3
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Расш./Web-браузер/Руководство GIMP"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п═я┐п╨п╬п╡п╬п╢я│я┌п╡п╬ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:4
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Расш./Web-браузер/Новости GIMP"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п²п╬п╡п╬я│я┌п╦ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:5
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Расш./Web-браузер/Учебники GIMP"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/пёя┤п╣п╠п╫п╦п╨п╦ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:6
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Документация"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐"
 
 #: plug-ins/webbrowser/web-browser.scm.h:7
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Скачивание"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п║п╨п╟я┤п╦п╡п╟п╫п╦п╣"
 
 #: plug-ins/webbrowser/web-browser.scm.h:8
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Искусство GIMP"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п≤я│п╨я┐я│я│я┌п╡п╬ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm.h:9
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/GTK"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm.h:10
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Ссылки"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п║я│я▀п╩п╨п╦"
 
 #: plug-ins/webbrowser/web-browser.scm.h:11
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Списки рассылки"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п║п©п╦я│п╨п╦ я─п╟я│я│я▀п╩п╨п╦"
 
 #: plug-ins/webbrowser/web-browser.scm.h:12
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Ресурсы"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/п═п╣я│я┐я─я│я▀"
 
 #: plug-ins/webbrowser/web-browser.scm.h:13
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP.ORG/Gimp"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP.ORG/Gimp"
 
 #: plug-ins/webbrowser/web-browser.scm.h:14
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Расш./Web-браузер/GIMP-Savvy.com"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/GIMP-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm.h:15
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Расш./Web-браузер/Grokking the Gimp"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/Grokking the Gimp"
 
 #: plug-ins/webbrowser/web-browser.scm.h:16
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Расш./Web-браузер/Регистрация дополнений"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п═п╣пЁп╦я│я┌я─п╟я├п╦я▐ п╢п╬п©п╬п╩п╫п╣п╫п╦п╧"
 
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Расш./Web-браузер/ЧАВО"
+msgstr "<Toolbox>/п═п╟я│я┬./Web-п╠я─п╟я┐п╥п╣я─/п╖п░п▓п·"
 
 #~ msgid ""
 #~ "At least one font you've choosen is invalid.\n"
 #~ "Please check your settings.\n"
 #~ msgstr ""
-#~ "По крайней мере один из выбранных вами шрифтов неисправен.\n"
-#~ "Пожалуйста проверьте ваши настройки.\n"
+#~ "п÷п╬ п╨я─п╟п╧п╫п╣п╧ п╪п╣я─п╣ п╬п╢п╦п╫ п╦п╥ п╡я▀п╠я─п╟п╫п╫я▀я┘ п╡п╟п╪п╦ я┬я─п╦я└я┌п╬п╡ п╫п╣п╦я│п©я─п╟п╡п╣п╫.\n"
+#~ "п÷п╬п╤п╟п╩я┐п╧я│я┌п╟ п©я─п╬п╡п╣я─я▄я┌п╣ п╡п╟я┬п╦ п╫п╟я│я┌я─п╬п╧п╨п╦.\n"
 
 #~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Скрипт-Фу/Аниматоры/Выделение в аним.изображение"
+#~ msgstr "<Image>/п║п╨я─п╦п©я┌-п╓я┐/п░п╫п╦п╪п╟я┌п╬я─я▀/п▓я▀п╢п╣п╩п╣п╫п╦п╣ п╡ п╟п╫п╦п╪.п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╣"
 
 #~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Аним-фильтр для всех копий"
+#~ msgstr "п░п╫п╦п╪-я└п╦п╩я▄я┌я─ п╢п╩я▐ п╡я│п╣я┘ п╨п╬п©п╦п╧"
 
 #~ msgid "Fill with BG Color"
-#~ msgstr "Заполнить фон цветом"
+#~ msgstr "п≈п╟п©п╬п╩п╫п╦я┌я▄ я└п╬п╫ я├п╡п╣я┌п╬п╪"
 
 #~ msgid "Number of Copies"
-#~ msgstr "Число копий"
+#~ msgstr "п╖п╦я│п╩п╬ п╨п╬п©п╦п╧"
 
 #~ msgid "DB Browser (init...)"
-#~ msgstr "Просмотр базы данных (инициализация...)"
+#~ msgstr "п÷я─п╬я│п╪п╬я┌я─ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ (п╦п╫п╦я├п╦п╟п╩п╦п╥п╟я├п╦я▐...)"
 
 #~ msgid "DB Browser (please wait)"
-#~ msgstr "Просмотр базы данных (подождите пожалуйста)"
+#~ msgstr "п÷я─п╬я│п╪п╬я┌я─ п╠п╟п╥я▀ п╢п╟п╫п╫я▀я┘ (п©п╬п╢п╬п╤п╢п╦я┌п╣ п©п╬п╤п╟п╩я┐п╧я│я┌п╟)"
 
 #~ msgid "Reset to Defaults"
-#~ msgstr "Сбросить в исходное"
+#~ msgstr "п║п╠я─п╬я│п╦я┌я▄ п╡ п╦я│я┘п╬п╢п╫п╬п╣"
+
