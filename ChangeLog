@@ -1,3 +1,13 @@
+2004-07-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_finalize): remove the image
+	from the image hash table and set its "gimp" pointer to NULL
+	*after* all layers, channels, vectors and the selection are
+	finalized; otherwise these items have no chance of removing
+	themselves from the item hash table (because image->gimp is
+	already NULL). Spotted by pgimeno and nomis.
+	(should be backported after it got some testing)
+
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): string change.

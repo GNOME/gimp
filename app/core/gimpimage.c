@@ -799,13 +799,6 @@ gimp_image_finalize (GObject *object)
 {
   GimpImage *gimage = GIMP_IMAGE (object);
 
-  if (gimage->gimp && gimage->gimp->image_table)
-    {
-      g_hash_table_remove (gimage->gimp->image_table,
-                           GINT_TO_POINTER (gimage->ID));
-      gimage->gimp = NULL;
-    }
-
   if (gimage->projection)
     {
       g_object_unref (gimage->projection);
@@ -882,6 +875,13 @@ gimp_image_finalize (GObject *object)
     {
       g_object_unref (gimage->redo_stack);
       gimage->redo_stack = NULL;
+    }
+
+  if (gimage->gimp && gimage->gimp->image_table)
+    {
+      g_hash_table_remove (gimage->gimp->image_table,
+                           GINT_TO_POINTER (gimage->ID));
+      gimage->gimp = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
