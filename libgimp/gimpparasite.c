@@ -51,7 +51,11 @@ parasite_new (const char *name, guint32 flags,
   if (name)
     p->name = g_strdup(name);
   else
+  {
     p->name = NULL;
+    g_free (p);
+    return NULL;
+  }
   p->flags = flags;
   p->size = size;
   if (size)
@@ -61,11 +65,11 @@ parasite_new (const char *name, guint32 flags,
   return p;
 }
 
-
 void
 parasite_free (Parasite *parasite)
 {
-  g_return_if_fail(parasite != NULL);
+  if (parasite == NULL)
+    return;
   if (parasite->name)
     g_free(parasite->name);
   if (parasite->data)
@@ -88,23 +92,6 @@ parasite_copy (const Parasite *parasite)
     return NULL;
   return parasite_new (parasite->name, parasite->flags,
 		       parasite->size, parasite->data);
-}
-
-Parasite *
-parasite_error()
-{
-  static Parasite *error_p = NULL;
-  if (!error_p)
-    error_p = parasite_new("error", 0, 0, NULL);
-  return error_p;
-}
-
-int
-parasite_is_error(const Parasite *p)
-{
-  if (p == NULL)
-    return TRUE;
-  return parasite_is_type(p, "error");
 }
 
 int

@@ -225,7 +225,7 @@ run (char    *name,
       int image = param[1].data.d_int32;
 
       parasite = gimp_image_find_parasite(image, "gimp-comment");
-      if (!parasite_is_error(parasite))
+      if (parasite)
         image_comment = g_strdup(parasite->data);
       parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
@@ -240,7 +240,7 @@ run (char    *name,
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
-	  if (!parasite_is_error(parasite))
+	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
@@ -280,7 +280,7 @@ run (char    *name,
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
-	  if (!parasite_is_error(parasite))
+	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
@@ -1141,7 +1141,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
       }
   }
-#endif GIMP_HAVE_RESOLUTION_INFO
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   /* do we have a comment?  If so, create a new parasite to hold it,
    * and attach it to the image. The attach function automatically

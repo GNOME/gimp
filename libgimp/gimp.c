@@ -715,11 +715,17 @@ gimp_run_procedure (char *name,
 	{
 	  Parasite *p = va_arg (args, Parasite*);
 	  if (p == NULL)
-	    p = parasite_error();
-	  proc_run.params[i].data.d_parasite.name    = p->name;
-	  proc_run.params[i].data.d_parasite.flags   = p->flags;
-	  proc_run.params[i].data.d_parasite.size    = p->size;
-	  proc_run.params[i].data.d_parasite.data    = p->data;
+	  {
+	    proc_run.params[i].data.d_parasite.name = NULL;
+	    proc_run.params[i].data.d_parasite.data = NULL;
+	  }
+	  else
+	  {
+	    proc_run.params[i].data.d_parasite.name    = p->name;
+	    proc_run.params[i].data.d_parasite.flags   = p->flags;
+	    proc_run.params[i].data.d_parasite.size    = p->size;
+	    proc_run.params[i].data.d_parasite.data    = p->data;
+	  }
 	} break;
         case PARAM_STATUS:
 	  proc_run.params[i].data.d_status = va_arg (args, gint32);

@@ -36,10 +36,6 @@ void      parasite_free     (Parasite *parasite);
 int       parasite_is_type  (const Parasite *parasite, const char *name);
 Parasite *parasite_copy     (const Parasite *parasite);
 
-Parasite *parasite_error    ();
-
-int       parasite_is_error      (const Parasite *p);
-
 int       parasite_is_persistant (const Parasite *p);
 
 #ifdef __cplusplus

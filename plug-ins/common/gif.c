@@ -2142,7 +2142,7 @@ save_dialog ( gint32 image_ID )
     }
 #ifdef FACEHUGGERS
     GIF2_CMNT = gimp_image_find_parasite (image_ID, "gimp-comment");
-    if (!parasite_is_error(GIF2_CMNT))
+    if (GIF2_CMNT)
       {
 	globalcomment = g_malloc(GIF2_CMNT->size);
 	strcpy(globalcomment, GIF2_CMNT->data);

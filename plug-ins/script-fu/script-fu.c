@@ -788,12 +788,12 @@ marshall_proc_db_call (LISP a)
 
 	      /* parasite->size */
 	      intermediate_val = cdr (intermediate_val);
-	      args[i].data.d_parasite.size = (car (intermediate_val))->storage_as.string.dim;
+	      args[i].data.d_parasite.size =
+		(car (intermediate_val))->storage_as.string.dim;
 
 	      /* parasite->data */
-	      args[i].data.d_parasite.data = (void*) (car (intermediate_val))->storage_as.string.data;
-	      printf("e\n");
-
+	      args[i].data.d_parasite.data =
+		(void*) (car (intermediate_val))->storage_as.string.data;
 	    }
 	  break;
 	case PARAM_STATUS:
@@ -950,19 +950,26 @@ marshall_proc_db_call (LISP a)
 	      {
 		LISP name, flags, data;
 
-		string_len = strlen (values[i + 1].data.d_parasite.name);
-		name    = strcons (string_len,
-				   values[i + 1].data.d_parasite.name);
+		if (values[i + 1].data.d_parasite.name == NULL)
+		{
+		  return_val = my_err("Error: null parasite", NIL);
+		}
+		else
+		{
+		  string_len = strlen (values[i + 1].data.d_parasite.name);
+		  name    = strcons (string_len,
+				     values[i + 1].data.d_parasite.name);
 
-		flags   = flocons (values[i + 1].data.d_parasite.flags);
-		data    = arcons (tc_byte_array,
-				  values[i+1].data.d_parasite.size, 0);
-		memcpy(data->storage_as.string.data,
-		       values[i+1].data.d_parasite.data, 
-		       values[i+1].data.d_parasite.size); 
+		  flags   = flocons (values[i + 1].data.d_parasite.flags);
+		  data    = arcons (tc_byte_array,
+				    values[i+1].data.d_parasite.size, 0);
+		  memcpy(data->storage_as.string.data,
+			 values[i+1].data.d_parasite.data, 
+			 values[i+1].data.d_parasite.size); 
 
-		intermediate_val = cons (name, cons(flags, cons(data, NIL)));
-		return_val = cons (intermediate_val, return_val);
+		  intermediate_val = cons (name, cons(flags, cons(data, NIL)));
+		  return_val = cons (intermediate_val, return_val);
+		}
 	      }
 	      break;
 	    case PARAM_STATUS:

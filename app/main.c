@@ -437,18 +437,18 @@ static void test_gserialize()
   g_deserialize(test_struct_descript,  (char *)(void*)to, ser_1);
 
   if (to->test_gint32 != ts->test_gint32)
-    g_message("gint32 test failed: %d\n", to->test_gint32);
+    g_message("gint32 test failed (please email your system configuration to jaycox@earthlink.net): %d\n", to->test_gint32);
   if (to->test_float != ts->test_float)
-    g_message("float test failed: %f\n", to->test_float);
+    g_message("float test failed (please email your system configuration to jaycox@earthlink.net): %f\n", to->test_float);
   if (strcmp(to->test_string, ts->test_string) != 0)
-    g_message("string test failed: %s\n", to->test_string);
+    g_message("string test failed (please email your system configuration to jaycox@earthlink.net): %s\n", to->test_string);
   if (to->test_length != ts->test_length)
-    g_message("array length test failed: %d\n", to->test_length);
+    g_message("array length test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_length);
   if (to->test_array[0] != ts->test_array[0])
-    g_message("int16array value 0 test failed: %d\n", to->test_array[0]);
+    g_message("int16array value 0 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[0]);
   g_return_if_fail (to->test_array[1] == ts->test_array[1]);
   if (to->test_array[1] != ts->test_array[1])
-    g_message("int16array value 1 test failed: %d\n", to->test_array[1]);
+    g_message("int16array value 1 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[1]);
   /*  really should free the memory... */
   g_message("Passed serialization test\n");
 }/* 

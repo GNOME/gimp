@@ -182,9 +182,7 @@ gimp_find_parasite_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = 
-	gimp_find_parasite (name);
-      if (return_args[1].value.pdb_pointer == NULL)
-	return_args[1].value.pdb_pointer = parasite_error();
+	parasite_copy(gimp_find_parasite (name));
     }
 
   return return_args;

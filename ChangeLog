@@ -1,3 +1,13 @@
+1998-11-12  Jay Cox  <jaycox@earthlink.net>
+
+	* app/drawable_cmds.c, app/gimage_cmds.c
+	* app/parasite_cmds.c, libgimp/parasite.[ch],
+	* libgimp/gimp.c, libgimp/gimpprotocol.c
+	* tiff.c, gif.c, script-fu.c: removed all references to
+ 	parasite_error() and parasite_is_error().  Enable the 
+	passing of null parasites in the pdb.  Return a copy of the
+	parasite instead of the orginal in all pdb functions.
+
 Wed Nov 11 04:18:57 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: fix buglet with making GLIB_LIBS (shouldn't have

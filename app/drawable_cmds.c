@@ -1525,9 +1525,7 @@ gimp_drawable_find_parasite_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = 
-	gimp_drawable_find_parasite (gdrawable, name);
-      if (return_args[1].value.pdb_pointer == NULL)
-	return_args[1].value.pdb_pointer = parasite_error();
+	parasite_copy(gimp_drawable_find_parasite (gdrawable, name));
     }
 
   return return_args;

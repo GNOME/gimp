@@ -914,6 +914,11 @@ _gp_params_read (int fd, GPParam **params, guint *nparams)
 	{
 	  if (!wire_read_string (fd, &(*params)[i].data.d_parasite.name, 1))
 	    return;
+	  if ((*params)[i].data.d_parasite.name == NULL)
+	  { /* we have a null parasite */
+	    (*params)[i].data.d_parasite.data = NULL;
+	    break;
+	  }
 	  if (!wire_read_int32 (fd, &((*params)[i].data.d_parasite.flags), 1))
 	    return;
 	  if (!wire_read_int32 (fd, &((*params)[i].data.d_parasite.size), 1))
@@ -1047,6 +1052,11 @@ _gp_params_write (int fd, GPParam *params, int nparams)
         case PARAM_PARASITE:
 	{
 	  Parasite *p = (Parasite *)&params[i].data.d_parasite;
+	  if (p->name == NULL)
+	  { /* write a null string to signifly a null parasite */
+	    wire_write_string (fd,  &p->name, 1);
+	    break;
+	  }
 	  if (!wire_write_string (fd, &p->name, 1))
 	    return;
 	  if (!wire_write_int32 (fd, &p->flags, 1))
@@ -1136,6 +1146,8 @@ _gp_params_destroy (GPParam *params, int nparams)
 	    }
 	  break;
 	case PARAM_PARASITE:
+	  if (params[i].data.d_parasite.name)
+	    g_free(params[i].data.d_parasite.name);
 	  if (params[i].data.d_parasite.data)
 	    g_free(params[i].data.d_parasite.data);
 	  break;
