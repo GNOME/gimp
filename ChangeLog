@@ -1,3 +1,10 @@
+2003-12-11  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c (gimp_display_shell_events):
+	switch off fullscreen mode on Escape key press events only. The shell
+	should not react on the key release event it gets when a dialog is
+	closed using the Escape key.
+
 2003-12-09  DindinX  <david@dindinx.org>
 
 	* libgimp/gimpmiscui.c:
