@@ -322,17 +322,9 @@ init_constants (void)
                 if (*s == '_')
                   *s = '-';
 
-              g_print ("registering %s  \"%s\" = %d\n",
-                       enum_name, scheme_name, value->value);
-
               setvar (rintern (scheme_name), flocons (value->value), NIL);
 
               g_free (scheme_name);
-            }
-          else
-            {
-              g_print ("EEK: enum %s has evil value \"%s\"\n",
-                       enum_name, value->value_name);
             }
         }
 
@@ -349,9 +341,6 @@ init_constants (void)
       tmp = g_ascii_strup (gimp_unit_get_singular (unit), -1);
       scheme_name = g_strconcat ("UNIT-", tmp, NULL);
       g_free (tmp);
-
-      g_print ("registering GimpUnit  \"%s\" = %d\n",
-               scheme_name, unit);
 
       setvar (rintern (scheme_name), flocons (unit), NIL);
 
