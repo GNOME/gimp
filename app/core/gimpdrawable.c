@@ -1243,6 +1243,11 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
       return TRUE;
     }
 
+  *x1 = 0;
+  *y1 = 0;
+  *x2 = gimp_item_width  (item);
+  *y2 = gimp_item_height (item);
+
   return FALSE;
 }
 
@@ -1290,6 +1295,11 @@ gimp_drawable_mask_intersect (GimpDrawable *drawable,
                                        x, y,
                                        width, height);
     }
+
+  *x = 0;
+  *y = 0;
+  *width  = gimp_item_width  (item);
+  *height = gimp_item_height (item);
 
   return TRUE;
 }

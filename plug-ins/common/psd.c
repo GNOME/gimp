@@ -1359,13 +1359,8 @@ do_image_resources(FILE *fd)
       gchar sig[4];
 
       xfread(fd, sig, 4, "imageresources signature");
-
-      if (strncmp(sig, "8BIM", 4) != 0)
-	{
-	  printf("PSD: Error - imageresources block has invalid signature.\n");
-	  gimp_quit();
-	}
       offset += 4;
+
 
       /* generic information about a block ID */
 
@@ -1399,7 +1394,14 @@ do_image_resources(FILE *fd)
       offset += 4;
       IFDBG printf("Size: %d\n", Size);
 
-      dispatch_resID(ID, fd, &offset, Size);
+      if (strncmp(sig, "8BIM", 4) == 0)
+	dispatch_resID(ID, fd, &offset, Size);
+      else
+	{
+	  printf("PSD: Warning, unknown resource signature \"%.4s\" at or before offset %d ::: skipping\n", sig, offset - 8);
+	  throwchunk(Size, fd, "Skipping Unknown Resource");
+	  offset += Size;
+	}
 
       if (Size&1)
 	{

@@ -1,3 +1,16 @@
+2004-11-09  Jay Cox  <jaycox@gimp.org>
+
+	* plug-ins/common/psd.c: Skip resources with unknown signatures
+	instead of quiting.  Fixes bug #142468, and bug #152728
+
+	* app/core/gimpdrawable.c: in functions gimp_drawable_mask_bounds,
+	and gimp_drawable_mask_intersect: reinitialize the return values
+	after calling gimp_channel_bounds because gimp_channel_bounds
+	overwrites the values even when it returns false.  This fixes the
+	bug where the gimp crashes when running color tools on layers
+	smaller than the image, and processes only part of the image when
+	the layer is larger than the image size.
+
 2004-11-10  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: some updates.
