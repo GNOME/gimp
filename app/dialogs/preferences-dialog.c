@@ -2535,17 +2535,19 @@ preferences_dialog_create (Gimp *gimp)
 			   &gimp->config->interpolation_type,
 			   GINT_TO_POINTER (gimp->config->interpolation_type),
 
-			   _("Nearest Neighbor (Fastest)"),
+			   _("None (Fastest)"),
 			   GINT_TO_POINTER (GIMP_INTERPOLATION_NONE), NULL,
+
 			   _("Linear"),
 			   GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR), NULL,
+
 			   _("Cubic (Slowest & Best)"),
 			   GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC), NULL,
 
 			   NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Interpolation Type:"), 1.0, 0.5,
+			     _("Default Interpolation:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   vbox2 = prefs_frame_new (_("File Saving"), GTK_BOX (vbox));

@@ -663,7 +663,7 @@ resize_widget_new (GimpImage    *gimage,
       gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      label = gtk_label_new (_("Interpolation Type:"));
+      label = gtk_label_new (_("Interpolation:"));
       gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
@@ -673,7 +673,7 @@ resize_widget_new (GimpImage    *gimage,
                                &resize->interpolation,
                                GINT_TO_POINTER (resize->interpolation),
 
-                               _("Nearest Neighbor (Fastest)"),
+                               _("None (Fastest)"),
                                GINT_TO_POINTER (GIMP_INTERPOLATION_NONE),
                                NULL,
 
