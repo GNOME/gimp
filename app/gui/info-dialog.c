@@ -365,6 +365,7 @@ info_dialog_popup (InfoDialog *idialog)
 
   if (!GTK_WIDGET_VISIBLE (idialog->shell))
     gtk_widget_show (idialog->shell);
+
 }
 
 void

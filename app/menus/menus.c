@@ -176,7 +176,7 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Tools/Magnify"), "<shift>M", tools_select_cmd_callback, MAGNIFY },
   { N_("/Tools/Crop"), "<shift>C", tools_select_cmd_callback, CROP },
   { N_("/Tools/Transform"), "<shift>T", tools_select_cmd_callback, ROTATE },
-  { N_("/Tools/Flip"), "<shift>F", tools_select_cmd_callback, FLIP_HORZ },
+  { N_("/Tools/Flip"), "<shift>F", tools_select_cmd_callback, FLIP },
   { N_("/Tools/Text"), "T", tools_select_cmd_callback, TEXT },
   { N_("/Tools/Color Picker"), "O", tools_select_cmd_callback, COLOR_PICKER },
   { N_("/Tools/Bucket Fill"), "<shift>B", tools_select_cmd_callback, BUCKET_FILL },

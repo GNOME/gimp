@@ -253,7 +253,7 @@ tools_new_threshold ()
   tool->button_press_func = threshold_button_press;
   tool->button_release_func = threshold_button_release;
   tool->motion_func = threshold_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = threshold_cursor_update;
   tool->control_func = threshold_control;
   tool->preserve = FALSE;

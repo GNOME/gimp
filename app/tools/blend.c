@@ -1738,7 +1738,7 @@ tools_new_blend ()
   tool->button_press_func = blend_button_press;
   tool->button_release_func = blend_button_release;
   tool->motion_func = blend_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = blend_cursor_update;
   tool->control_func = blend_control;
   tool->preserve = TRUE;

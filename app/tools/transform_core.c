@@ -304,9 +304,7 @@ transform_core_button_release (tool, bevent, gdisp_ptr)
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
       /* Shift-clicking is another way to approve the transform  */
-      if ((bevent->state & GDK_SHIFT_MASK) 
-	  || (tool->type == FLIP_HORZ)
-	  || (tool->type == FLIP_VERT))
+      if ((bevent->state & GDK_SHIFT_MASK) || (tool->type == FLIP))
 	{
 	  transform_core_doit (tool, gdisp_ptr);
 	}
@@ -537,8 +535,6 @@ transform_core_cursor_update (tool, mevent, gdisp_ptr)
       case SCALE: ctype = GDK_SIZING; break;
       case SHEAR: ctype = GDK_TCROSS; break;
       case PERSPECTIVE: ctype = GDK_TCROSS; break;
-      case FLIP_HORZ: ctype = GDK_SB_H_DOUBLE_ARROW; break;
-      case FLIP_VERT: ctype = GDK_SB_V_DOUBLE_ARROW; break;
       default: break;
       }
 
@@ -714,7 +710,8 @@ transform_core_new (type, interactive)
   tool->button_press_func = transform_core_button_press;
   tool->button_release_func = transform_core_button_release;
   tool->motion_func = transform_core_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
+  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = transform_core_cursor_update;
   tool->control_func = transform_core_control;
 
@@ -805,7 +802,7 @@ transform_bounding_box (tool)
 }
 
 void
-transform_core_reset(tool, gdisp_ptr)
+transform_core_reset (tool, gdisp_ptr)
      Tool * tool;
      void * gdisp_ptr;
 {

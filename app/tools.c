@@ -281,30 +281,15 @@ ToolInfo tool_info[] =
     10,
     N_("/Tools/Flip"),
     "<shift>F",
-    (char **) horizflip_bits,
+    (char **) flip_bits,
     N_("Flip the layer or selection"),
     "ContextHelp/flip",
-    FLIP_HORZ,
+    FLIP,
     tools_new_flip,
     tools_free_flip_tool,
     NULL
-  }, /* horizontal */
-  
-  {
-    NULL,
-    N_("Flip"),
-    10,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    FLIP_VERT,
-    tools_new_flip, 
-    tools_free_flip_tool,
-    NULL
-  }, /* vertical */
-  
+  },
+    
   {
     NULL,
     N_("Text"),
@@ -891,6 +876,13 @@ active_tool_control (int   action,
 
 void
 standard_arrow_keys_func (Tool        *tool,
+			  GdkEventKey *kevent,
+			  gpointer     gdisp_ptr)
+{
+}
+
+void
+standard_toggle_key_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  gpointer     gdisp_ptr)
 {

@@ -21,6 +21,13 @@
 #include "gimpimageF.h"
 #include "tools.h"
 
+typedef enum
+{
+  CROP_CROP,
+  RESIZE_CROP
+} CropType;
+
+
 /*  select functions  */
 void   crop_draw       (Tool *);
 void   crop_image      (GimpImage *gimage, int, int, int, int, int, int);

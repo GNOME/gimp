@@ -1,3 +1,19 @@
+Tue Apr 27 03:55:44 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* app/tool_options.c
+	* app/tool_options_ui.h
+	* app/tools.[ch]		
+	* app/toolsF.h
+	* app/tools_cmds.c: Enabled toggable tools. Tools can hook to
+	the key-press event of the Shift key.
+
+	* app/bucket_fill.c
+	* app/convolve.c
+	* app/crop.[ch]
+	* app/flip_tool.[ch]: Made these tools toggleable.
+
+	* all other tools: added a standard_toggle_key_func.
+	
 Mon Apr 26 16:05:55 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/MapObject/mapobject_main.c: 

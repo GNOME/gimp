@@ -388,6 +388,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 	case GDK_Shift_L: case GDK_Shift_R:
 	  state |= GDK_SHIFT_MASK;
+	  if (active_tool && !gimage_is_empty (gdisp->gimage))
+	    {
+	      (* active_tool->toggle_key_func) (active_tool, kevent, gdisp);
+	      gdk_input_window_get_pointer (canvas->window, current_device, 
+					    &tx, &ty, NULL, NULL, NULL, NULL);
+	      return_val = TRUE;
+	    }
 	  break;
 	case GDK_Control_L: case GDK_Control_R:
 	  state |= GDK_CONTROL_MASK;
@@ -409,6 +416,13 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  break;
 	case GDK_Shift_L: case GDK_Shift_R:
 	  kevent->state &= ~GDK_SHIFT_MASK;
+	  if (active_tool && !gimage_is_empty (gdisp->gimage))
+	    {
+	      (* active_tool->toggle_key_func) (active_tool, kevent, gdisp);
+	      gdk_input_window_get_pointer (canvas->window, current_device, 
+					    &tx, &ty, NULL, NULL, NULL, NULL);
+	      return_val = TRUE;
+	    }
 	  break;
 	case GDK_Control_L: case GDK_Control_R:
 	  kevent->state &= ~GDK_CONTROL_MASK;

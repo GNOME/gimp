@@ -38,8 +38,7 @@ typedef enum
   SCALE,
   SHEAR,
   PERSPECTIVE,
-  FLIP_HORZ,
-  FLIP_VERT,
+  FLIP,
   TEXT,
   COLOR_PICKER,
   BUCKET_FILL,
@@ -73,6 +72,7 @@ typedef void (* ButtonPressFunc)       (Tool *, GdkEventButton *, gpointer);
 typedef void (* ButtonReleaseFunc)     (Tool *, GdkEventButton *, gpointer);
 typedef void (* MotionFunc)            (Tool *, GdkEventMotion *, gpointer);
 typedef void (* ArrowKeysFunc)         (Tool *, GdkEventKey *, gpointer);
+typedef void (* ToggleKeyFunc)         (Tool *, GdkEventKey *, gpointer);
 typedef void (* CursorUpdateFunc)      (Tool *, GdkEventMotion *, gpointer);
 typedef void (* ToolCtlFunc)           (Tool *, int, gpointer);
 

@@ -374,9 +374,9 @@ static char *gradient_bits [] =
 /*  Image name: horizflip  */
 
 
-#define horizflip_width 22
-#define horizflip_height 22
-static char *horizflip_bits [] =
+#define flip_width 22
+#define flip_height 22
+static char *flip_bits [] =
 {
   "......................",
   "......................",
@@ -847,39 +847,6 @@ static char *text_bits [] =
   "......................",
   "......................"
 };
-/*  GIMP icon image format -- S. Kimball, P. Mattis  */
-/*  Image name: vertflip  */
-
-
-/*
-#define vertflip_width 22
-#define vertflip_height 22
-static char *vertflip_bits [] =
-{
-  "......................",
-  "......................",
-  "......................",
-  "..........a...........",
-  ".........aaa..........",
-  "........aaaaa.........",
-  ".......aaaeaaa........",
-  ".........aeaeee.......",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".........aeae.........",
-  ".......aaaeaaa........",
-  "........aaaaaee.......",
-  ".........aaaee........",
-  "..........aee.........",
-  "...........e..........",
-  "......................",
-  "......................"
-};
-*/
 
 /*  GIMP icon image format -- S. Kimball, P. Mattis  */
 /*  Image name: ink  */

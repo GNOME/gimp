@@ -60,7 +60,7 @@ struct _BucketOptions
 
   BucketFillMode  fill_mode;
   BucketFillMode  fill_mode_d;
-  GtkWidget      *fill_mode_w[3];  /* 3 radio buttons */
+  ToolOptionsRadioButtons type_toggle[4];
 };
 
 
@@ -87,13 +87,6 @@ static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
 /*  functions  */
 
 static void
-bucket_fill_mode_callback (GtkWidget *widget,
-			   gpointer   client_data)
-{
-  bucket_options->fill_mode = (BucketFillMode) client_data;
-}
-
-static void
 bucket_options_reset (void)
 {
   BucketOptions *options = bucket_options;
@@ -104,7 +97,7 @@ bucket_options_reset (void)
 				options->sample_merged_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
 			    options->threshold_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->fill_mode_w[options->fill_mode_d]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->fill_mode_d].widget), TRUE);
 }
 
 static BucketOptions *
@@ -116,18 +109,8 @@ bucket_options_new (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *scale;
-  GSList    *group = NULL;
-  GtkWidget *radio_frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
+  GtkWidget *frame;
 
-  int i;
-  char *button_names[3] =
-  {
-    N_("FG Color Fill"),
-    N_("BG Color Fill"),
-    N_("Pattern Fill")
-  };
 
   /*  the new bucket fill tool options structure  */
   options = (BucketOptions *) g_malloc (sizeof (BucketOptions));
@@ -136,6 +119,13 @@ bucket_options_new (void)
 		      bucket_options_reset);
   options->sample_merged = options->sample_merged_d = FALSE;
   options->threshold     = options->threshold_d     = 15.0;
+  options->type_toggle[0].label = _("FG Color Fill");
+  options->type_toggle[0].value = FG_BUCKET_FILL;
+  options->type_toggle[1].label = _("BG Color Fill");
+  options->type_toggle[1].value = BG_BUCKET_FILL;
+  options->type_toggle[2].label = _("Pattern Fill");
+  options->type_toggle[2].value = PATTERN_BUCKET_FILL;
+  options->type_toggle[3].label = NULL;
   options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
 
   /*  the main vbox  */
@@ -172,30 +162,11 @@ bucket_options_new (void)
   gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
   gtk_widget_show (options->sample_merged_w);
 
-  /*  the radio frame and box  */
-  radio_frame = gtk_frame_new (_("Fill Type"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
-
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
-
-  /*  the radio buttons  */
-  for (i = 0; i < 3; i++)
-    {
-      radio_button =
-	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) bucket_fill_mode_callback,
-			  (gpointer) i);
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_widget_show (radio_button);
-
-      options->fill_mode_w[i] = radio_button;
-    }
-  gtk_widget_show (radio_box);
-  gtk_widget_show (radio_frame);
+  /*  fill type  */
+  frame = tool_options_radio_buttons_new (_("Fill Type"), options->type_toggle, &options->fill_mode);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->fill_mode_d].widget), TRUE); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   return options;
 }
@@ -237,7 +208,6 @@ bucket_fill_button_release (Tool           *tool,
 {
   GDisplay * gdisp;
   BucketTool * bucket_tool;
-  BucketFillMode fill_mode;
   Argument *return_vals;
   int nreturn_vals;
 
@@ -250,19 +220,10 @@ bucket_fill_button_release (Tool           *tool,
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      fill_mode = bucket_options->fill_mode;
-
-      /*  If the mode is color filling, and shift mask is down,
-       *  toggle FG/BG fill mode
-       */
-      if ((bevent->state & GDK_SHIFT_MASK) && (fill_mode != PATTERN_BUCKET_FILL))
-	fill_mode =
-	  (fill_mode == BG_BUCKET_FILL) ? FG_BUCKET_FILL : BG_BUCKET_FILL;
-
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
-					    PDB_INT32, (gint32) fill_mode,
+					    PDB_INT32, (gint32) bucket_options->fill_mode,
 					    PDB_INT32, (gint32) PAINT_OPTIONS_GET_PAINT_MODE (bucket_options),
 					    PDB_FLOAT, (gdouble) PAINT_OPTIONS_GET_OPACITY (bucket_options) * 100,
 					    PDB_FLOAT, (gdouble) bucket_options->threshold,
@@ -324,6 +285,23 @@ bucket_fill_cursor_update (Tool           *tool,
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
+static void
+bucket_fill_toggle_key_func (Tool        *tool,
+			     GdkEventKey *kevent,
+			     gpointer     gdisp_ptr)
+{
+  switch (bucket_options->fill_mode)
+    {
+    case FG_BUCKET_FILL:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->type_toggle[BG_BUCKET_FILL].widget), TRUE);
+      break;
+    case BG_BUCKET_FILL:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (bucket_options->type_toggle[FG_BUCKET_FILL].widget), TRUE);
+      break;
+    default:
+      break;
+    }
+}
 
 static void
 bucket_fill_control (Tool     *tool,
@@ -626,7 +604,8 @@ tools_new_bucket_fill (void)
   tool->button_press_func = bucket_fill_button_press;
   tool->button_release_func = bucket_fill_button_release;
   tool->motion_func = bucket_fill_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  
+  tool->toggle_key_func = bucket_fill_toggle_key_func;
   tool->cursor_update_func = bucket_fill_cursor_update;
   tool->control_func = bucket_fill_control;
   tool->preserve = TRUE;

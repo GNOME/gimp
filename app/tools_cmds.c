@@ -1174,10 +1174,8 @@ flip_invoker (Argument *args)
       switch (flip_type)
 	{
 	case 0: /* horz */
-	  new_tiles = flip_tool_flip_horz (gimage, drawable, float_tiles, -1);
-	  break;
 	case 1: /* vert */
-	  new_tiles = flip_tool_flip_vert (gimage, drawable, float_tiles, -1);
+	  new_tiles = flip_tool_flip (gimage, drawable, float_tiles, -1, flip_type);
 	  break;
 	default:
 	  new_tiles = NULL;

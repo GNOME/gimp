@@ -47,7 +47,7 @@ struct _ConvolveOptions
 
   ConvolveType  type;
   ConvolveType  type_d;
-  GtkWidget    *type_w[2];  /* 2 radio buttons */
+  ToolOptionsRadioButtons type_toggle[3];
 
   double        pressure;
   double        pressure_d;
@@ -102,12 +102,6 @@ static void         convolve_motion      (PaintCore *, GimpDrawable *);
 
 /* functions  */
 
-static void
-convolve_type_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  convolve_options->type = (ConvolveType) data;
-}
 
 static void
 convolve_options_reset (void)
@@ -118,7 +112,7 @@ convolve_options_reset (void)
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
 			    options->pressure_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d]), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE);
 }
 
 static ConvolveOptions *
@@ -130,24 +124,23 @@ convolve_options_new (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *scale;
-  GSList    *group = NULL;
   GtkWidget *frame;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-
-  int i;
-  char *button_names[3] =
-  {
-    N_("Blur"),
-    N_("Sharpen"),
-    N_("Custom")
-  };
 
   /*  the new convolve tool options structure  */
   options = (ConvolveOptions *) g_malloc (sizeof (ConvolveOptions));
   paint_options_init ((PaintOptions *) options,
 		      CONVOLVE,
 		      convolve_options_reset);
+  options->type_toggle[0].label = _("Blur");
+  options->type_toggle[0].value = BLUR_CONVOLVE;
+  options->type_toggle[1].label = _("Sharpen");
+  options->type_toggle[1].value = SHARPEN_CONVOLVE;
+  options->type_toggle[2].label = NULL;
+ /* 
+     options->type_toggle[2].label = N_("Sharpen");
+     options->type_toggle[2].value = CUSTOM_CONVOLVE;
+     options->type_toggle[3].label = NULL;
+  */
   options->type     = options->type_d     = BLUR_CONVOLVE;
   options->pressure = options->pressure_d = 50.0;
 
@@ -175,29 +168,10 @@ convolve_options_new (void)
   gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (_("Convolve Type"));
+  frame = tool_options_radio_buttons_new (_("Convolve Type"), options->type_toggle, &options->type);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_toggle[options->type_d].widget), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
-  radio_box = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
-  gtk_container_add (GTK_CONTAINER (frame), radio_box);
-
-  /*  the radio buttons  */
-  for (i = 0; i < 2; i++)
-    {
-      radio_button =
-	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) convolve_type_callback,
-			  (gpointer) ((long) i));
-      gtk_widget_show (radio_button);
-
-      options->type_w[i] = radio_button;
-    }
-  gtk_widget_show (radio_box);
 
   return options;
 }
@@ -217,6 +191,25 @@ convolve_paint_func (PaintCore    *paint_core,
   return NULL;
 }
 
+static void
+convolve_toggle_key_func (Tool        *tool,
+			  GdkEventKey *kevent,
+			  gpointer     gdisp_ptr)
+{
+  switch (convolve_options->type)
+    {
+    case BLUR_CONVOLVE:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_toggle[SHARPEN_CONVOLVE].widget), TRUE);
+      break;
+    case SHARPEN_CONVOLVE:
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convolve_options->type_toggle[BLUR_CONVOLVE].widget), TRUE);
+      break;
+    default:
+      break;
+    }
+}
+
+
 Tool *
 tools_new_convolve ()
 {
@@ -234,6 +227,7 @@ tools_new_convolve ()
     }
 
   tool = paint_core_new (CONVOLVE);
+  tool->toggle_key_func = convolve_toggle_key_func;
 
   private = (PaintCore *) tool->private;
   private->paint_func = convolve_paint_func;

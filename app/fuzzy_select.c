@@ -573,7 +573,7 @@ tools_new_fuzzy_select (void)
   tool->button_press_func = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func = fuzzy_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = fuzzy_select_control;
 

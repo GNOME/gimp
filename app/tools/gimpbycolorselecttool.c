@@ -481,7 +481,7 @@ tools_new_by_color_select ()
   tool->button_press_func = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->motion_func = by_color_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = by_color_select_cursor_update;
   tool->control_func = by_color_select_control;
   tool->gdisp_ptr = NULL;

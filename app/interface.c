@@ -251,17 +251,15 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
    */
   if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
     type = ROTATE;
-  else if (type == FLIP_VERT)
-    type = FLIP_HORZ;
 
-      if (tool_info[(int) type].icon_data)
-	  return create_pixmap (parent->window, NULL,
-				tool_info[(int) type].icon_data,
-				22, 22);
-      else
-	  return create_pixmap (parent->window, NULL,
-				dialog_bits,
-				22, 22);
+  if (tool_info[(int) type].icon_data)
+    return create_pixmap (parent->window, NULL,
+			  tool_info[(int) type].icon_data,
+			  22, 22);
+  else
+    return create_pixmap (parent->window, NULL,
+			  dialog_bits,
+			  22, 22);
 
   g_return_val_if_fail (FALSE, NULL);
 
@@ -689,7 +687,6 @@ create_display_shell (GDisplay* gdisp,
 		      (GtkSignalFunc) gdisplay_canvas_events,
 		      gdisp);
   gtk_object_set_user_data (GTK_OBJECT (gdisp->canvas), (gpointer) gdisp);
-
 
 
   /*  pack all the widgets  */

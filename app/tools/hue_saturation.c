@@ -314,7 +314,7 @@ tools_new_hue_saturation ()
   tool->button_press_func = hue_saturation_button_press;
   tool->button_release_func = hue_saturation_button_release;
   tool->motion_func = hue_saturation_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;  tool->toggle_key_func = standard_toggle_key_func;
   tool->cursor_update_func = hue_saturation_cursor_update;
   tool->control_func = hue_saturation_control;
   tool->preserve = FALSE;
