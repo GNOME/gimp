@@ -478,7 +478,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
 	}
       else
 	{
-	  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));;
+	  gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));
 	}
     
       if (gradient)

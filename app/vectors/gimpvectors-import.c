@@ -984,7 +984,7 @@ parse_path_data (const gchar *data)
 	break;
       else if ((c == '+' || c == '-') && !exp_wait_sign)
 	{
-	  sign = c == '+' ? 1 : -1;;
+	  sign = c == '+' ? 1 : -1;
 	  val = 0;
 	  in_num = TRUE;
 	  in_frac = FALSE;
