@@ -238,8 +238,8 @@ plug-ins/mosaic/mosaic.c
 plug-ins/pagecurl/pagecurl.c
 plug-ins/print/gimp_color_window.c
 plug-ins/print/gimp_main_window.c
+plug-ins/print/print-image-gimp.c
 plug-ins/print/print.c
-plug-ins/print/print-printers.c
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_callback.c
 plug-ins/rcm/rcm_dialog.c

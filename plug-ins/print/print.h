@@ -36,6 +36,10 @@
  * rlk 20000112
  */
 
+
+#ifndef PRINT_HEADER
+#define PRINT_HEADER
+
 /*
  * Include necessary header files...
  */
@@ -59,15 +63,19 @@
 
 #define OUTPUT_GRAY		0	/* Grayscale output */
 #define OUTPUT_COLOR		1	/* Color output */
+#define OUTPUT_GRAY_COLOR	2 	/* Grayscale output using color */
 
 #define ORIENT_AUTO		-1	/* Best orientation */
 #define ORIENT_PORTRAIT		0	/* Portrait orientation */
 #define ORIENT_LANDSCAPE	1	/* Landscape orientation */
 
-#ifndef MIN
-#  define MIN(a,b)		((a) < (b) ? (a) : (b))
-#  define MAX(a,b)		((a) > (b) ? (a) : (b))
-#endif /* !MIN */
+#define MAX_CARRIAGE_WIDTH	80 /* This really needs to go away */
+				/* For now, this is wide enough for 4B ISO */
+
+#define IMAGE_LINE_ART		0
+#define IMAGE_SOLID_TONE	1
+#define IMAGE_CONTINUOUS	2
+#define IMAGE_MONOCHROME	3
 
 
 /*
@@ -76,23 +84,26 @@
 
 typedef struct
 {
-  unsigned short composite[256];
-  unsigned short red[256];
-  unsigned short green[256];
-  unsigned short blue[256];
+  unsigned steps;
+  unsigned short *composite;
+  unsigned short *red;
+  unsigned short *green;
+  unsigned short *blue;
 } lut_t;
 
 
 typedef struct					/* Plug-in variables */
 {
-  char	output_to[255],		/* Name of file or command to print to */
+  char	output_to[256],		/* Name of file or command to print to */
 	driver[64],		/* Name of printer "driver" */
-	ppd_file[255];		/* PPD file */
+	ppd_file[256];		/* PPD file */
   int	output_type;		/* Color or grayscale output */
   char	resolution[64],		/* Resolution */
 	media_size[64],		/* Media size */
 	media_type[64],		/* Media type */
-	media_source[64];	/* Media source */
+	media_source[64],	/* Media source */
+	ink_type[64],		/* Ink or cartridge */
+	dither_algorithm[64];	/* Dithering algorithm */
   int	brightness;		/* Output brightness */
   float	scaling;		/* Scaling, percent of printable area */
   int	orientation,		/* Orientation - 0 = port., 1 = land.,
@@ -107,6 +118,13 @@ typedef struct					/* Plug-in variables */
   int	linear;			/* Linear density (mostly for testing!) */
   float	saturation;		/* Output saturation */
   float	density;		/* Maximum output density */
+  int	image_type;		/* Image type (line art etc.) */
+  int	unit;			/* Units for preview area 0=Inch 1=Metric */
+  float app_gamma;		/* Application gamma */
+  int	page_width;		/* Width of page in points */
+  int	page_height;		/* Height of page in points */
+  lut_t *lut;			/* Look-up table */
+  unsigned char *cmap;		/* Color map */
 } vars_t;
 
 typedef struct		/**** Printer List ****/
@@ -116,133 +134,270 @@ typedef struct		/**** Printer List ****/
   vars_t v;
 } plist_t;
 
+typedef enum papersize_unit
+{
+  PAPERSIZE_ENGLISH,
+  PAPERSIZE_METRIC
+} papersize_unit_t;
+
+typedef struct
+{
+  char name[32];
+  unsigned width;
+  unsigned length;
+  papersize_unit_t paper_unit;
+} papersize_t;
+
 /*
  * Abstract data type for interfacing with the image creation program
  * (in this case, the Gimp).
  */
 typedef void *Image;
 
+/* For how to create an Image wrapping a Gimp drawable, see print_gimp.h */
+
 extern void Image_init(Image image);
-extern int Image_bpp(Image image);
-extern int Image_width(Image image);
-extern int Image_height(Image image);
-extern const char *Image_get_pluginname(Image image);
-extern void Image_get_col(Image image, unsigned char *data, int column);
+extern void Image_reset(Image image);
+extern void Image_transpose(Image image);
+extern void Image_hflip(Image image);
+extern void Image_vflip(Image image);
+extern void Image_crop(Image image, int left, int top, int right, int bottom);
+extern void Image_rotate_ccw(Image image);
+extern void Image_rotate_cw(Image image);
+extern void Image_rotate_180(Image image);
+extern int  Image_bpp(Image image);
+extern int  Image_width(Image image);
+extern int  Image_height(Image image);
 extern void Image_get_row(Image image, unsigned char *data, int row);
+
+extern const char *Image_get_appname(Image image);
 extern void Image_progress_init(Image image);
 extern void Image_note_progress(Image image, double current, double total);
+extern void Image_progress_conclude(Image image);
 
 
-typedef struct
+typedef struct printer
 {
   char	*long_name,			/* Long name for UI */
 	*driver;			/* Short name for printrc file */
-  int	color,				/* TRUE if supports color */
-	model;				/* Model number */
-  float	gamma,				/* Gamma correction */
-	density;			/* Ink "density" or black level */
-  char	**(*parameters)(int model, char *ppd_file, char *name, int *count);
+  int	model;				/* Model number */
+  char	**(*parameters)(const struct printer *printer, char *ppd_file,
+                        char *name, int *count);
 					/* Parameter names */
-  void	(*media_size)(int model, char *ppd_file, char *media_size,
-                      int *width, int *length);
-  void	(*imageable_area)(int model, char *ppd_file, char *media_size,
+  void	(*media_size)(const struct printer *printer, const vars_t *v,
+		      int *width, int *length);
+  void	(*imageable_area)(const struct printer *printer, const vars_t *v,
                           int *left, int *right, int *bottom, int *top);
+  void	(*limit)(const struct printer *printer, const vars_t *v,
+		 int *width, int *length);
   /* Print function */
-  void	(*print)(int model, int copies, FILE *prn, Image image,
-		 unsigned char *cmap, lut_t *lut, vars_t *v);
+  void	(*print)(const struct printer *printer, int copies, FILE *prn,
+		 Image image, const vars_t *v);
+  const char *(*default_resolution)(const struct printer *printer);
+  vars_t printvars;
 } printer_t;
 
-typedef void 	(*convert_t)(unsigned char *in, unsigned short *out, int width,
-			     int bpp, lut_t *lut, unsigned char *cmap,
-			     vars_t *vars);
+typedef void (*convert_t)(unsigned char *in, unsigned short *out, int width,
+			  int bpp, unsigned char *cmap, const vars_t *vars);
 
+typedef struct
+{
+  double value;
+  unsigned bit_pattern;
+  int is_dark;
+  unsigned dot_size;
+} simple_dither_range_t;
+
+typedef struct
+{
+  double value;
+  double lower;
+  double upper;
+  unsigned bit_pattern;
+  int is_dark;
+  unsigned dot_size;
+} dither_range_t;
+
+typedef struct
+{
+   double value_l;
+   double value_h;
+   unsigned bits_l;
+   unsigned bits_h;
+   int isdark_l;
+   int isdark_h;
+} full_dither_range_t;
 
 /*
  * Prototypes...
  */
 
-extern void	dither_black(unsigned short *, int, int, int, unsigned char *);
+extern void *	init_dither(int in_width, int out_width, int horizontal_aspect,
+			    int vertical_aspect, vars_t *vars);
+extern void	dither_set_transition(void *vd, double);
+extern void	dither_set_density(void *vd, double);
+extern void 	dither_set_black_lower(void *vd, double);
+extern void 	dither_set_black_upper(void *vd, double);
+extern void	dither_set_black_levels(void *vd, double, double, double);
+extern void 	dither_set_randomizers(void *vd, double, double, double, double);
+extern void 	dither_set_ink_darkness(void *vd, double, double, double);
+extern void 	dither_set_light_inks(void *vd, double, double, double, double);
+extern void	dither_set_c_ranges(void *vd, int nlevels,
+				    const simple_dither_range_t *ranges,
+				    double density);
+extern void	dither_set_m_ranges(void *vd, int nlevels,
+				    const simple_dither_range_t *ranges,
+				    double density);
+extern void	dither_set_y_ranges(void *vd, int nlevels,
+				    const simple_dither_range_t *ranges,
+				    double density);
+extern void	dither_set_k_ranges(void *vd, int nlevels,
+				    const simple_dither_range_t *ranges,
+				    double density);
+extern void	dither_set_k_ranges_full(void *vd, int nlevels,
+					 const full_dither_range_t *ranges,
+					 double density);
+extern void	dither_set_c_ranges_full(void *vd, int nlevels,
+					 const full_dither_range_t *ranges,
+					 double density);
+extern void	dither_set_m_ranges_full(void *vd, int nlevels,
+					 const full_dither_range_t *ranges,
+					 double density);
+extern void	dither_set_y_ranges_full(void *vd, int nlevels,
+					 const full_dither_range_t *ranges,
+					 double density);
+extern void	dither_set_c_ranges_simple(void *vd, int nlevels,
+					   const double *levels, double density);
+extern void	dither_set_m_ranges_simple(void *vd, int nlevels,
+					   const double *levels, double density);
+extern void	dither_set_y_ranges_simple(void *vd, int nlevels,
+					   const double *levels, double density);
+extern void	dither_set_k_ranges_simple(void *vd, int nlevels,
+					   const double *levels, double density);
+extern void	dither_set_c_ranges_complete(void *vd, int nlevels,
+					     const dither_range_t *ranges);
+extern void	dither_set_m_ranges_complete(void *vd, int nlevels,
+					     const dither_range_t *ranges);
+extern void	dither_set_y_ranges_complete(void *vd, int nlevels,
+					     const dither_range_t *ranges);
+extern void	dither_set_k_ranges_complete(void *vd, int nlevels,
+					     const dither_range_t *ranges);
+extern void	dither_set_ink_spread(void *vd, int spread);
+extern void	dither_set_max_ink(void *vd, int, double);
+extern void	dither_set_x_oversample(void *vd, int os);
+extern void	dither_set_y_oversample(void *vd, int os);
+extern void	dither_set_adaptive_divisor(void *vd, unsigned divisor);
+extern void	dither_set_error_mix(void *vd, double);
 
-extern void	dither_cmyk(unsigned short *, int, int, int, unsigned char *,
+
+extern void	free_dither(void *);
+
+
+extern void *	initialize_weave_params(int S, int J, int O,
+		                        int firstrow, int lastrow,
+		                        int pagelength);
+extern void	calculate_row_parameters(void *w, int row, int subpass,
+		                         int *pass, int *jet, int *startrow,
+					 int *phantomrows, int *jetsused);
+extern void	destroy_weave_params(void *vw);
+
+
+extern void	dither_fastblack(unsigned short *, int, void *, unsigned char *);
+
+extern void	dither_black(unsigned short *, int, void *, unsigned char *);
+
+extern void	dither_cmyk(unsigned short *, int, void *, unsigned char *,
 			    unsigned char *, unsigned char *,
 			    unsigned char *, unsigned char *,
-			    unsigned char *, unsigned char *, int);
+			    unsigned char *, unsigned char *);
 
-extern void	dither_black4(unsigned short *, int, int, int,
-			      unsigned char *);
-
-extern void	dither_cmyk4(unsigned short *, int, int, int, unsigned char *,
-			     unsigned char *, unsigned char *,
-			     unsigned char *);
-
-extern void	gray_to_gray(unsigned char *, unsigned short *, int, int,
-			     lut_t *, unsigned char *, vars_t *);
-extern void	indexed_to_gray(unsigned char *, unsigned short *, int, int,
-				  lut_t *, unsigned char *, vars_t *);
-extern void	indexed_to_rgb(unsigned char *, unsigned short *, int, int,
-			       lut_t *, unsigned char *, vars_t *);
-extern void	rgb_to_gray(unsigned char *, unsigned short *, int, int,
-			    lut_t *, unsigned char *, vars_t *);
-extern void	rgb_to_rgb(unsigned char *, unsigned short *, int, int,
-			   lut_t *, unsigned char *, vars_t *);
-
-extern void	compute_lut(lut_t *lut, float print_gamma,
-			    float app_gamma, vars_t *v);
+extern void	merge_printvars(vars_t *user, const vars_t *print);
+extern void	free_lut(vars_t *v);
+extern void	compute_lut(size_t steps, vars_t *v);
 
 
-extern void	default_media_size(int model, char *ppd_file, char *media_size,
-		                   int *width, int *length);
+extern void	default_media_size(const printer_t *printer, const vars_t *v,
+				   int *width, int *length);
 
 
-extern char	**escp2_parameters(int model, char *ppd_file, char *name,
-		                   int *count);
-extern void	escp2_imageable_area(int model, char *ppd_file,
-				     char *media_size, int *left, int *right,
+extern char	**escp2_parameters(const printer_t *printer, char *ppd_file,
+				   char *name, int *count);
+extern void	escp2_imageable_area(const printer_t *printer, const vars_t *v,
+				     int *left, int *right,
 				     int *bottom, int *top);
-extern void	escp2_print(int model, int copies, FILE *prn,
-			    Image image, unsigned char *cmap,
-			    lut_t *lut, vars_t *v);
+extern void	escp2_limit(const printer_t *printer, const vars_t *v,
+			    int *width, int *length);
+extern void	escp2_print(const printer_t *printer, int copies, FILE *prn,
+			    Image image, const vars_t *v);
+extern const char *escp2_default_resolution(const printer_t *printer);
 
 
-extern char	**pcl_parameters(int model, char *ppd_file, char *name,
-		                 int *count);
-extern void	pcl_imageable_area(int model, char *ppd_file, char *media_size,
-		                   int *left, int *right, int *bottom,
-				   int *top);
-extern void	pcl_print(int model, int copies, FILE *prn,
-			  Image image, unsigned char *cmap,
-			  lut_t *lut, vars_t *v);
+extern char	**canon_parameters(const printer_t *printer, char *ppd_file,
+		                   char *name, int *count);
+extern void	canon_imageable_area(const printer_t *printer, const vars_t *v,
+				     int *left, int *right,
+				     int *bottom, int *top);
+extern void	canon_limit(const printer_t *printer, const vars_t *v,
+			    int *width, int *length);
+extern void	canon_print(const printer_t *printer, int copies, FILE *prn,
+			    Image image, const vars_t *v);
+extern const char *canon_default_resolution(const printer_t *printer);
 
 
-extern char	**ps_parameters(int model, char *ppd_file, char *name,
-		                int *count);
-extern void	ps_media_size(int model, char *ppd_file, char *media_size,
-		              int *width, int *length);
-extern void	ps_imageable_area(int model, char *ppd_file, char *media_size,
-		                  int *left, int *right, int *bottom,
-				  int *top);
-extern void	ps_print(int model, int copies, FILE *prn,
-			 Image image, unsigned char *cmap,
-			 lut_t *lut, vars_t *v);
+extern char	**pcl_parameters(const printer_t *printer, char *ppd_file,
+		                 char *name, int *count);
+extern void	pcl_imageable_area(const printer_t *printer, const vars_t *v,
+		                   int *left, int *right,
+				   int *bottom, int *top);
+extern void	pcl_limit(const printer_t *printer, const vars_t *v,
+			  int *width, int *length);
+extern void	pcl_print(const printer_t *printer, int copies, FILE *prn,
+			  Image image, const vars_t *v);
+extern const char *pcl_default_resolution(const printer_t *printer);
 
-#ifdef LEFTOVER_8_BIT
-extern void	dither_cmyk4(unsigned char *, int, int, int, unsigned char *,
-		             unsigned char *, unsigned char *,
-			     unsigned char *);
-extern void	dither_black4(unsigned char *, int, int, int, unsigned char *);
-extern void	gray_to_gray(unsigned char *, unsigned char *, int, int,
-			     lut_t *, unsigned char *, float);
-extern void	indexed_to_gray(unsigned char *, unsigned char *, int, int,
-				lut_t *, unsigned char *, float);
-#endif
 
-int                   known_printers(void);
-const printer_t      *get_printers(void);
-const printer_t      *get_printer_by_index(int);
-const printer_t      *get_printer_by_long_name(const char *);
-const printer_t      *get_printer_by_driver(const char *);
-int                   get_printer_index_by_driver(const char *);
+extern char	**ps_parameters(const printer_t *printer, char *ppd_file,
+		                char *name, int *count);
+extern void	ps_media_size(const printer_t *printer, const vars_t *v,
+			      int *width, int *length);
+extern void	ps_imageable_area(const printer_t *printer, const vars_t *v,
+				  int *left, int *right,
+		                  int *bottom, int *top);
+extern void	ps_limit(const printer_t *printer, const vars_t *v,
+			 int *width, int *length);
+extern void	ps_print(const printer_t *printer, int copies, FILE *prn,
+			 Image image, const vars_t *v);
+extern const char *ps_default_resolution(const printer_t *printer);
 
+extern const char *default_dither_algorithm(void);
+
+extern int	      		known_papersizes(void);
+extern const papersize_t	*get_papersizes(void);
+extern const papersize_t	*get_papersize_by_name(const char *);
+extern const papersize_t 	*get_papersize_by_size(int l, int w);
+
+extern int			known_printers(void);
+extern const printer_t		*get_printers(void);
+extern const printer_t		*get_printer_by_index(int);
+extern const printer_t		*get_printer_by_long_name(const char *);
+extern const printer_t		*get_printer_by_driver(const char *);
+extern int			get_printer_index_by_driver(const char *);
+
+extern int			num_dither_algos;
+extern char			*dither_algo_names[];
+extern convert_t choose_colorfunc(int, int, const unsigned char *, int *,
+				  const vars_t *);
+extern void
+compute_page_parameters(int page_right, int page_left, int page_top,
+			int page_bottom, int scaling, int image_width,
+			int image_height, Image image, int *orientation,
+			int *page_width, int *page_height, int *out_width,
+			int *out_height, int *left, int *top);
+
+extern int
+verify_printer_params(const printer_t *, const vars_t *);
+
+#endif /* PRINT_HEADER */
 /*
  * End of "$Id$".
  */

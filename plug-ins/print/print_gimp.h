@@ -26,11 +26,13 @@
  *   See ChangeLog
  */
 
-#ifndef PRINT_GIMP_HEADER
-#define PRINT_GIMP_HEADER
+#ifndef __PRINT_GIMP_H__
+#define __PRINT_GIMP_H__
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "print.h"
 
@@ -38,7 +40,7 @@
  * All Gimp-specific code is in this file.
  */
 
-#define PLUG_IN_VERSION		"3.0.10 - 01 Apr 2000"
+#define PLUG_IN_VERSION		VERSION " - " RELEASE_DATE
 #define PLUG_IN_NAME		"Print"
 
 /*
@@ -46,6 +48,16 @@
  */
 #define PREVIEW_SIZE_VERT  240 /* Assuming max media size of 24" A2 */
 #define PREVIEW_SIZE_HORIZ 240 /* Assuming max media size of 24" A2 */
-#define MAX_PLIST	   100
 
+#if !defined(GIMP_MINOR_VERSION) || (GIMP_MAJOR_VERSION == 1 && GIMP_MINOR_VERSION == 0) || (GIMP_MAJOR_VERSION == 1 && GIMP_MINOR_VERSION == 1 && GIMP_MICRO_VERSION < 21)
+#define GIMP_1_0
 #endif
+
+/*
+ * Function prototypes
+ */
+
+/* How to create an Image wrapping a Gimp drawable */
+extern Image Image_GDrawable_new(GDrawable *drawable);
+
+#endif  /* __PRINT_GIMP_H__ */
