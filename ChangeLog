@@ -1,8 +1,12 @@
+2002-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c: don't allow the splash screen to be closed.
+	Fixes bug #81962.
+
 2002-05-16  Simon Budig  <simon@gimp.org>
 
-        * plug-ins/pagecurl/pagecurl.c: Backported from HEAD:
-	Made the pagecurl plugin automatically add an alpha
-	channel. Fixes #81611.
+	* plug-ins/pagecurl/pagecurl.c: Backported from HEAD: Made the
+	pagecurl plugin automatically add an alpha channel. Fixes #81611.
 
 2002-05-14  Sven Neumann  <sven@gimp.org>
 

@@ -355,11 +355,12 @@ destroy_initialization_status_window (void)
   if (win_initstatus)
     {
       gtk_widget_destroy (win_initstatus);
+
       if (logo_pixmap != NULL)
 	gdk_pixmap_unref (logo_pixmap);
 
-      win_initstatus = label1 = label2 = pbar = logo_area = NULL;
       logo_pixmap = NULL;
+      win_initstatus = label1 = label2 = pbar = logo_area = NULL;
     }
 }
 
@@ -379,6 +380,10 @@ make_initialization_status_window (void)
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
+
+  gtk_signal_connect (GTK_OBJECT (win_initstatus), "delete_event",
+		      GTK_SIGNAL_FUNC (gtk_true),
+		      NULL);
 
   gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
 
