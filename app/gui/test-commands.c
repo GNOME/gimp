@@ -384,7 +384,7 @@ test_image_container_list_view_cmd_callback (GtkWidget *widget,
 {
   container_view_new (TRUE, "Image List",
 		      the_gimp->images,
-		      gimp_context_get_user (),
+		      gimp_get_user_context (the_gimp),
 		      64);
 }
 
@@ -394,7 +394,7 @@ test_image_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   container_view_new (FALSE, "Image Grid",
 		      the_gimp->images,
-		      gimp_context_get_user (),
+		      gimp_get_user_context (the_gimp),
 		      64);
 }
 
@@ -406,7 +406,7 @@ test_brush_container_list_view_cmd_callback (GtkWidget *widget,
 			 "Brush List",
 			 the_gimp->brush_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -418,7 +418,7 @@ test_pattern_container_list_view_cmd_callback (GtkWidget *widget,
 			 "Pattern List",
 			 the_gimp->pattern_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -430,7 +430,7 @@ test_gradient_container_list_view_cmd_callback (GtkWidget *widget,
 			 "Gradient List",
 			 the_gimp->gradient_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -442,7 +442,7 @@ test_palette_container_list_view_cmd_callback (GtkWidget *widget,
 			 "Palette List",
 			 the_gimp->palette_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -454,7 +454,7 @@ test_brush_container_grid_view_cmd_callback (GtkWidget *widget,
 			 "Brush Grid",
 			 the_gimp->brush_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 32);
 }
 
@@ -466,7 +466,7 @@ test_pattern_container_grid_view_cmd_callback (GtkWidget *widget,
 			 "Pattern Grid",
 			 the_gimp->pattern_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -478,7 +478,7 @@ test_gradient_container_grid_view_cmd_callback (GtkWidget *widget,
 			 "Gradient Grid",
 			 the_gimp->gradient_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -490,7 +490,7 @@ test_palette_container_grid_view_cmd_callback (GtkWidget *widget,
 			 "Palette Grid",
 			 the_gimp->palette_factory,
 			 NULL,
-			 gimp_context_get_user (),
+			 gimp_get_user_context (the_gimp),
 			 24);
 }
 
@@ -500,7 +500,7 @@ test_multi_container_list_view_cmd_callback (GtkWidget *widget,
 {
   container_multi_view_new (TRUE, "Multi List",
 			    the_gimp->brush_factory->container,
-			    gimp_context_get_user (),
+			    gimp_get_user_context (the_gimp),
 			    24);
 }
 
@@ -510,7 +510,7 @@ test_multi_container_grid_view_cmd_callback (GtkWidget *widget,
 {
   container_multi_view_new (FALSE, "Multi Grid",
 			    the_gimp->brush_factory->container,
-			    gimp_context_get_user (),
+			    gimp_get_user_context (the_gimp),
 			    32);
 }
 

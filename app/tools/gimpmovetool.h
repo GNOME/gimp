@@ -48,9 +48,9 @@ struct _GimpMoveToolClass
 };
 
 
-GtkType    gimp_move_tool_get_type     (void);
+void       gimp_move_tool_register     (Gimp     *gimp);
 
-void       gimp_move_tool_register     (void);
+GtkType    gimp_move_tool_get_type     (void);
 
 void       gimp_move_tool_start_hguide (GimpTool *tool,
 					GDisplay *gdisp);

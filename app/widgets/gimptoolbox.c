@@ -128,7 +128,7 @@ toolbox_tool_button_toggled (GtkWidget *widget,
   tool_info = GIMP_TOOL_INFO (data);
 
   if ((tool_info) && GTK_TOGGLE_BUTTON (widget)->active)
-    gimp_context_set_tool (gimp_context_get_user (), tool_info);
+    gimp_context_set_tool (gimp_get_user_context (the_gimp), tool_info);
 }
 
 static gint
@@ -410,9 +410,9 @@ toolbox_create (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), wbox, TRUE, TRUE, 0);
   gtk_widget_show (wbox);
 
-  create_tools (wbox, gimp_context_get_user ());
+  create_tools (wbox, gimp_get_user_context (the_gimp));
 
-  gtk_signal_connect_while_alive (GTK_OBJECT (gimp_context_get_user ()),
+  gtk_signal_connect_while_alive (GTK_OBJECT (gimp_get_user_context (the_gimp)),
 				  "tool_changed",
 				  GTK_SIGNAL_FUNC (toolbox_tool_changed),
 				  NULL,
@@ -421,7 +421,7 @@ toolbox_create (void)
   create_color_area (wbox);
 
   if (gimprc.show_indicators)
-    create_indicator_area (wbox, gimp_context_get_user ());
+    create_indicator_area (wbox, gimp_get_user_context (the_gimp));
 
   gtk_drag_dest_set (window,
 		     GTK_DEST_DEFAULT_ALL,
@@ -578,7 +578,8 @@ toolbox_drop_tool (GtkWidget    *widget,
 		   GimpViewable *viewable,
 		   gpointer      data)
 {
-  gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
+  gimp_context_set_tool (gimp_get_user_context (the_gimp),
+			 GIMP_TOOL_INFO (viewable));
 }
 
 static void

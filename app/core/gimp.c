@@ -33,6 +33,8 @@
 #include "gimpbrushgenerated.h"
 #include "gimpbrushpipe.h"
 #include "gimpbuffer.h"
+#include "gimpcontext.h"
+#include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
@@ -46,7 +48,6 @@
 #include "app_procs.h"
 #include "gimage.h"
 #include "gimpparasite.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -100,6 +101,8 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
+  GimpContext *context;
+
   static const GimpDataFactoryLoaderEntry brush_loader_entries[] =
   {
     { gimp_brush_load,           GIMP_BRUSH_FILE_EXTENSION           },
@@ -135,14 +138,12 @@ gimp_init (Gimp *gimp)
 
   gimp->images = gimp_list_new (GIMP_TYPE_IMAGE,
 				GIMP_CONTAINER_POLICY_WEAK);
-
   gtk_object_ref (GTK_OBJECT (gimp->images));
   gtk_object_sink (GTK_OBJECT (gimp->images));
 
   gimp->global_buffer = NULL;
   gimp->named_buffers = gimp_list_new (GIMP_TYPE_BUFFER,
 				       GIMP_CONTAINER_POLICY_STRONG);
-
   gtk_object_ref (GTK_OBJECT (gimp->named_buffers));
   gtk_object_sink (GTK_OBJECT (gimp->named_buffers));
 
@@ -150,45 +151,41 @@ gimp_init (Gimp *gimp)
 
   gimp->brush_factory =
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
-			   (const gchar **) &gimprc.brush_path,
+			   (const gchar **) &core_config->brush_path,
 			   brush_loader_entries,
 			   n_brush_loader_entries,
 			   gimp_brush_new,
 			   gimp_brush_get_standard);
-
   gtk_object_ref (GTK_OBJECT (gimp->brush_factory));
   gtk_object_sink (GTK_OBJECT (gimp->brush_factory));
 
   gimp->pattern_factory =
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
-			   (const gchar **) &gimprc.pattern_path,
+			   (const gchar **) &core_config->pattern_path,
 			   pattern_loader_entries,
 			   n_pattern_loader_entries,
 			   gimp_pattern_new,
 			   gimp_pattern_get_standard);
-
   gtk_object_ref (GTK_OBJECT (gimp->pattern_factory));
   gtk_object_sink (GTK_OBJECT (gimp->pattern_factory));
 
   gimp->gradient_factory =
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
-			   (const gchar **) &gimprc.gradient_path,
+			   (const gchar **) &core_config->gradient_path,
 			   gradient_loader_entries,
 			   n_gradient_loader_entries,
 			   gimp_gradient_new,
 			   gimp_gradient_get_standard);
-
   gtk_object_ref (GTK_OBJECT (gimp->gradient_factory));
   gtk_object_sink (GTK_OBJECT (gimp->gradient_factory));
 
   gimp->palette_factory =
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
-			   (const gchar **) &gimprc.palette_path,
+			   (const gchar **) &core_config->palette_path,
 			   palette_loader_entries,
 			   n_palette_loader_entries,
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
-
   gtk_object_ref (GTK_OBJECT (gimp->palette_factory));
   gtk_object_sink (GTK_OBJECT (gimp->palette_factory));
 
@@ -196,11 +193,23 @@ gimp_init (Gimp *gimp)
 
   gimp->tool_info_list = gimp_list_new (GIMP_TYPE_TOOL_INFO,
 					GIMP_CONTAINER_POLICY_STRONG);
-
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
   gimp_image_new_init (gimp);
+
+  gimp->standard_context = gimp_create_context (gimp, "Standard", NULL);
+  gtk_object_ref (GTK_OBJECT (gimp->standard_context));
+  gtk_object_sink (GTK_OBJECT (gimp->standard_context));
+
+  /*  TODO: load from disk  */
+  context = gimp_create_context (gimp, "Default", NULL);
+  gimp_set_default_context (gimp, context);
+
+  context = gimp_create_context (gimp, "User", context);
+  gimp_set_user_context (gimp, context);
+
+  gimp_set_current_context (gimp, context);
 }
 
 static void
@@ -209,6 +218,17 @@ gimp_destroy (GtkObject *object)
   Gimp *gimp;
 
   gimp = GIMP (object);
+
+  gimp_set_current_context (gimp, NULL);
+
+  gimp_set_user_context (gimp, NULL);
+  gimp_set_default_context (gimp, NULL);
+
+  if (gimp->standard_context)
+    {
+      gtk_object_unref (GTK_OBJECT (gimp->standard_context));
+      gimp->standard_context = NULL;
+    }
 
   gimp_image_new_exit (gimp);
 
@@ -337,14 +357,14 @@ gimp_create_image (Gimp              *gimp,
 
   gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
 
-  if (attach_comment && gimprc.default_comment)
+  if (attach_comment && core_config->default_comment)
     {
       GimpParasite *parasite;
 
       parasite = gimp_parasite_new ("gimp-comment",
 				    GIMP_PARASITE_PERSISTENT,
-				    strlen (gimprc.default_comment) + 1,
-				    gimprc.default_comment);
+				    strlen (core_config->default_comment) + 1,
+				    core_config->default_comment);
       gimp_image_parasite_attach (gimage, parasite);
       gimp_parasite_free (parasite);
     }
@@ -361,4 +381,71 @@ gimp_create_display (Gimp      *gimp,
 
   if (gimp->create_display_func)
     gimp->create_display_func (gimage);
+}
+
+GimpContext *
+gimp_create_context (Gimp        *gimp,
+		     const gchar *name,
+		     GimpContext *template)
+{
+  GimpContext *context;
+
+  g_return_val_if_fail (gimp != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
+
+  /*  FIXME: need unique names here  */
+  if (! name)
+    name = "Unnamed";
+
+  context = gimp_context_new (gimp, name, template);
+
+  gimp->context_list = g_list_prepend (gimp->context_list, context);
+
+  return context;
+}
+
+GimpContext *
+gimp_get_standard_context (Gimp *gimp)
+{
+  return gimp->standard_context;
+}
+
+void
+gimp_set_default_context (Gimp        *gimp,
+			  GimpContext *context)
+{
+  gimp->default_context = context;
+}
+
+GimpContext *
+gimp_get_default_context (Gimp *gimp)
+{
+  return gimp->default_context;
+}
+
+void
+gimp_set_user_context (Gimp        *gimp,
+		       GimpContext *context)
+{
+  gimp->user_context = context;
+}
+
+GimpContext *
+gimp_get_user_context (Gimp *gimp)
+{
+  return gimp->user_context;
+}
+
+void
+gimp_set_current_context (Gimp        *gimp,
+			  GimpContext *context)
+{
+  gimp->current_context = context;
+}
+
+GimpContext *
+gimp_get_current_context (Gimp *gimp)
+{
+  return gimp->current_context;
 }

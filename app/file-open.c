@@ -61,8 +61,6 @@
 
 #include "core/gimpimage.h"
 
-#include "app_procs.h"
-#include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"
 #include "plug_in.h"
@@ -77,7 +75,8 @@ GSList *load_procs = NULL;
 /*  public functions  */
 
 GimpImage *
-file_open_image (const gchar   *filename,
+file_open_image (Gimp          *gimp,
+		 const gchar   *filename,
 		 const gchar   *raw_filename,
 		 const gchar   *open_mode,
 		 PlugInProcDef *file_proc,
@@ -157,7 +156,7 @@ file_open_image (const gchar   *filename,
   args[1].value.pdb_pointer = (gchar *) filename;
   args[2].value.pdb_pointer = (gchar *) raw_filename;
 
-  return_vals = procedural_db_execute (the_gimp, proc->name, args);
+  return_vals = procedural_db_execute (gimp, proc->name, args);
 
   *status   = return_vals[0].value.pdb_int;
   gimage_id = return_vals[1].value.pdb_int;

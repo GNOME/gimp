@@ -28,9 +28,11 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 
 #include "paint-funcs/paint-funcs.h"
 
@@ -168,9 +170,10 @@ static gfloat sharpen_matrix [25] =
 /* global functions  */
 
 void
-gimp_convolve_tool_register (void)
+gimp_convolve_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_CONVOLVE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_CONVOLVE_TOOL,
 			      TRUE,
   			      "gimp:convolve_tool",
   			      _("Convolve"),
@@ -350,6 +353,7 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
   ConvolveClipType  area_vclip = CONVOLVE_NOT_CLIPPED;
   gint              marginx    = 0;
   gint              marginy    = 0;
+  GimpContext      *context;
 
   if (! gimp_drawable_gimage (drawable))
     return;
@@ -545,9 +549,11 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
       g_free(fillcolor);
     }
 
+  context = gimp_get_current_context (gimp_drawable_gimage (drawable)->gimp);
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_tool_replace_canvas (paint_tool, drawable, OPAQUE_OPACITY,
-				  (gint) (gimp_context_get_opacity (NULL) * 255),
+				  (gint) (gimp_context_get_opacity (context) * 255),
 				  pressure_options->pressure ? PRESSURE : SOFT,
 				  scale, INCREMENTAL);
 }

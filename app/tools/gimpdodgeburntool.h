@@ -58,7 +58,7 @@ struct _GimpDodgeBurnToolClass
 };
 
 
-void       gimp_dodgeburn_tool_register        (void);
+void       gimp_dodgeburn_tool_register        (Gimp          *gimp);
 
 GtkType    gimp_dodgeburn_tool_get_type        (void);
 

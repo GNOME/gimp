@@ -35,6 +35,7 @@
 #include "gimpbuffer.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
+#include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
@@ -44,7 +45,6 @@
 #include "gimptoolinfo.h"
 
 #include "gdisplay.h"
-#include "gimprc.h"
 
 
 typedef void (* GimpContextCopyArgFunc) (GimpContext *src,
@@ -58,9 +58,6 @@ typedef void (* GimpContextCopyArgFunc) (GimpContext *src,
 #define context_return_val_if_fail(context,val) \
         g_return_val_if_fail ((context) != NULL, (val)); \
         g_return_val_if_fail (GIMP_IS_CONTEXT (context), (val))
-
-#define context_check_current(context) \
-        ((context) = (context) ? (context) : current_context)
 
 #define context_find_defined(context,arg_mask) \
         while (!(((context)->defined_args) & arg_mask) && (context)->parent) \
@@ -318,21 +315,6 @@ static guint gimp_context_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass * parent_class = NULL;
 
-/*  the currently active context  */
-static GimpContext *current_context  = NULL;
-
-/*  the context user by the interface  */
-static GimpContext *user_context     = NULL;
-
-/*  the default context which is initialized from gimprc  */
-static GimpContext *default_context  = NULL;
-
-/*  the hardcoded standard context  */
-static GimpContext *standard_context = NULL;
-
-/*  the list of all contexts  */
-static GSList      *context_list     = NULL;
-
 
 /*****************************************************************************/
 /*  private functions  *******************************************************/
@@ -566,8 +548,6 @@ gimp_context_init (GimpContext *context)
   context->palette_name  = NULL;
 
   context->buffer        = NULL;
-
-  context_list = g_slist_prepend (context_list, context);
 }
 
 static void
@@ -580,7 +560,8 @@ gimp_context_destroy (GtkObject *object)
   if (context->parent)
     gimp_context_unset_parent (context);
 
-  context_list = g_slist_remove (context_list, context);
+  context->gimp->context_list = g_list_remove (context->gimp->context_list,
+					       context);
 
   context->image   = NULL;
   context->display = NULL;
@@ -797,15 +778,12 @@ gimp_context_new (Gimp        *gimp,
 
   g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
 
   context = gtk_type_new (GIMP_TYPE_CONTEXT);
 
   context->gimp = gimp;
-
-  /*  FIXME: need unique names here  */
-  if (! name)
-    name = "Unnamed";
 
   gimp_object_set_name (GIMP_OBJECT (context), name);
 
@@ -890,68 +868,9 @@ gimp_context_new (Gimp        *gimp,
   return context;
 }
 
-/*****************************************************************************/
-/*  getting/setting the special contexts  ************************************/
-
-GimpContext *
-gimp_context_get_current (void)
-{
-  return current_context;
-}
-
-void
-gimp_context_set_current (GimpContext *context)
-{
-  current_context = context;
-}
-
-GimpContext *
-gimp_context_get_user (void)
-{
-  return user_context;
-}
-
-void
-gimp_context_set_user (GimpContext *context)
-{
-  user_context = context;
-}
-
-GimpContext *
-gimp_context_get_default (void)
-{
-  return default_context;
-}
-
-void
-gimp_context_set_default (GimpContext *context)
-{
-  default_context = context;
-}
-
-GimpContext *
-gimp_context_get_standard (Gimp *gimp)
-{
-  g_return_val_if_fail (gimp != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  if (! standard_context)
-    {
-      standard_context = gimp_context_new (gimp, "Standard", NULL);
-
-      gtk_quit_add_destroy (TRUE, GTK_OBJECT (standard_context));
-    }
-
-  return standard_context;
-}
-
-/*****************************************************************************/
-/*  functions manipulating a single context  *********************************/
-
 const gchar *
 gimp_context_get_name (const GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return gimp_object_get_name (GIMP_OBJECT (context));
@@ -961,7 +880,6 @@ void
 gimp_context_set_name (GimpContext *context,
 		       const gchar *name)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   if (! name)
@@ -973,7 +891,6 @@ gimp_context_set_name (GimpContext *context,
 GimpContext *
 gimp_context_get_parent (const GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->parent;
@@ -985,7 +902,6 @@ gimp_context_set_parent (GimpContext *context,
 {
   GimpContextArgType arg;
 
-  context_check_current (context);
   context_return_if_fail (context);
   g_return_if_fail (!parent || GIMP_IS_CONTEXT (parent));
 
@@ -1008,7 +924,6 @@ gimp_context_set_parent (GimpContext *context,
 void
 gimp_context_unset_parent (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   if (context->parent)
@@ -1029,7 +944,6 @@ gimp_context_define_arg (GimpContext        *context,
 {
   GimpContextArgMask mask;
 
-  context_check_current (context);
   context_return_if_fail (context);
   g_return_if_fail ((arg >= 0) && (arg < GIMP_CONTEXT_NUM_ARGS));
 
@@ -1067,7 +981,6 @@ gboolean
 gimp_context_arg_defined (GimpContext        *context,
 			  GimpContextArgType  arg)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, FALSE);
 
   return (context->defined_args & (1 << arg)) ? TRUE : FALSE;
@@ -1080,7 +993,6 @@ gimp_context_define_args (GimpContext        *context,
 {
   GimpContextArgType arg;
 
-  context_check_current (context);
   context_return_if_fail (context);
 
   for (arg = 0; arg < GIMP_CONTEXT_NUM_ARGS; arg++)
@@ -1095,9 +1007,7 @@ gimp_context_copy_arg (GimpContext        *src,
 		       GimpContext        *dest,
 		       GimpContextArgType  arg)
 {
-  context_check_current (src);
   context_return_if_fail (src);
-  context_check_current (dest);
   context_return_if_fail (dest);
   g_return_if_fail ((arg >= 0) && (arg < GIMP_CONTEXT_NUM_ARGS));
 
@@ -1111,9 +1021,7 @@ gimp_context_copy_args (GimpContext        *src,
 {
   GimpContextArgType arg;
 
-  context_check_current (src);
   context_return_if_fail (src);
-  context_check_current (dest);
   context_return_if_fail (dest);
 
   for (arg = 0; arg < GIMP_CONTEXT_NUM_ARGS; arg++)
@@ -1163,7 +1071,6 @@ gimp_context_get_by_type (GimpContext *context,
   GimpContextArgType  arg;
   GimpObject         *object = NULL;
 
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
   g_return_val_if_fail ((arg = gimp_context_type_to_arg (type)) != -1, NULL);
 
@@ -1181,7 +1088,6 @@ gimp_context_set_by_type (GimpContext *context,
 {
   GimpContextArgType arg;
 
-  context_check_current (context);
   context_return_if_fail (context);
   g_return_if_fail ((arg = gimp_context_type_to_arg (type)) != -1);
 
@@ -1197,7 +1103,6 @@ gimp_context_changed_by_type (GimpContext *context,
   GimpContextArgType  arg;
   GimpObject         *object;
 
-  context_check_current (context);
   context_return_if_fail (context);
   g_return_if_fail ((arg = gimp_context_type_to_arg (type)) != -1);
 
@@ -1214,7 +1119,6 @@ gimp_context_changed_by_type (GimpContext *context,
 GimpImage *
 gimp_context_get_image (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->image;
@@ -1224,7 +1128,6 @@ void
 gimp_context_set_image (GimpContext *context,
 			GimpImage   *image)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_IMAGE_MASK);
 
@@ -1234,7 +1137,6 @@ gimp_context_set_image (GimpContext *context,
 void
 gimp_context_image_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1277,7 +1179,6 @@ gimp_context_copy_image (GimpContext *src,
 GDisplay *
 gimp_context_get_display (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->display;
@@ -1287,7 +1188,6 @@ void
 gimp_context_set_display (GimpContext *context,
 			  GDisplay    *display)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_DISPLAY_MASK);
 
@@ -1297,7 +1197,6 @@ gimp_context_set_display (GimpContext *context,
 void
 gimp_context_display_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1358,7 +1257,6 @@ gimp_context_get_tool (GimpContext *context)
 {
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
 
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->tool_info;
@@ -1371,7 +1269,6 @@ gimp_context_set_tool (GimpContext  *context,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
   g_return_if_fail (! tool_info || GIMP_IS_TOOL_INFO (tool_info));
 
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_TOOL_MASK);
 
@@ -1383,7 +1280,6 @@ gimp_context_tool_changed (GimpContext *context)
 {
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1514,7 +1410,6 @@ void
 gimp_context_get_foreground (GimpContext *context,
 			     GimpRGB     *color)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   g_return_if_fail (color != NULL);
@@ -1526,7 +1421,6 @@ void
 gimp_context_set_foreground (GimpContext   *context,
 			     const GimpRGB *color)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
 
@@ -1538,7 +1432,6 @@ gimp_context_set_foreground (GimpContext   *context,
 void
 gimp_context_foreground_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1572,7 +1465,6 @@ void
 gimp_context_get_background (GimpContext *context,
 			     GimpRGB     *color)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   g_return_if_fail (color != NULL);
@@ -1584,7 +1476,6 @@ void
 gimp_context_set_background (GimpContext   *context,
 			     const GimpRGB *color)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_BACKGROUND_MASK);
 
@@ -1596,7 +1487,6 @@ gimp_context_set_background (GimpContext   *context,
 void
 gimp_context_background_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1635,7 +1525,6 @@ gimp_context_set_default_colors (GimpContext *context)
 
   bg_context = context;
 
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
@@ -1656,7 +1545,6 @@ gimp_context_swap_colors (GimpContext *context)
 
   bg_context = context;
 
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_FOREGROUND_MASK);
   context_find_defined (bg_context, GIMP_CONTEXT_BACKGROUND_MASK);
@@ -1674,7 +1562,6 @@ gimp_context_swap_colors (GimpContext *context)
 gdouble
 gimp_context_get_opacity (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, 1.0);
 
   return context->opacity;
@@ -1684,7 +1571,6 @@ void
 gimp_context_set_opacity (GimpContext *context,
 			  gdouble      opacity)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_OPACITY_MASK);
 
@@ -1694,7 +1580,6 @@ gimp_context_set_opacity (GimpContext *context,
 void
 gimp_context_opacity_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1728,7 +1613,6 @@ gimp_context_get_paint_mode (GimpContext *context)
 {
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NORMAL_MODE);
 
-  context_check_current (context);
   context_return_val_if_fail (context, 0);
 
   return context->paint_mode;
@@ -1740,7 +1624,6 @@ gimp_context_set_paint_mode (GimpContext     *context,
 {
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_PAINT_MODE_MASK);
 
@@ -1752,7 +1635,6 @@ gimp_context_paint_mode_changed (GimpContext *context)
 {
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1788,7 +1670,6 @@ gimp_context_get_brush (GimpContext *context)
 {
   g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
 
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->brush;
@@ -1801,7 +1682,6 @@ gimp_context_set_brush (GimpContext *context,
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
   g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
 
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_BRUSH_MASK);
 
@@ -1813,7 +1693,6 @@ gimp_context_brush_changed (GimpContext *context)
 {
   g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
 
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1840,7 +1719,7 @@ gimp_context_brush_list_thaw (GimpContainer *container,
   GimpBrush *brush;
 
   if (! context->brush_name)
-    context->brush_name = g_strdup (gimprc.default_brush);
+    context->brush_name = g_strdup (core_config->default_brush);
 
   if ((brush = (GimpBrush *)
        gimp_container_get_child_by_name (container,
@@ -1960,7 +1839,6 @@ static GimpPattern *standard_pattern = NULL;
 GimpPattern *
 gimp_context_get_pattern (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->pattern;
@@ -1970,7 +1848,6 @@ void
 gimp_context_set_pattern (GimpContext *context,
 			  GimpPattern *pattern)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_PATTERN_MASK);
 
@@ -1980,7 +1857,6 @@ gimp_context_set_pattern (GimpContext *context,
 void
 gimp_context_pattern_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -2007,7 +1883,7 @@ gimp_context_pattern_list_thaw (GimpContainer *container,
   GimpPattern *pattern;
 
   if (! context->pattern_name)
-    context->pattern_name = g_strdup (gimprc.default_pattern);
+    context->pattern_name = g_strdup (core_config->default_pattern);
 
   if ((pattern = (GimpPattern *)
        gimp_container_get_child_by_name (container,
@@ -2125,7 +2001,6 @@ static GimpGradient *standard_gradient = NULL;
 GimpGradient *
 gimp_context_get_gradient (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->gradient;
@@ -2135,7 +2010,6 @@ void
 gimp_context_set_gradient (GimpContext  *context,
 			   GimpGradient *gradient)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_GRADIENT_MASK);
 
@@ -2145,7 +2019,6 @@ gimp_context_set_gradient (GimpContext  *context,
 void
 gimp_context_gradient_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -2172,7 +2045,7 @@ gimp_context_gradient_list_thaw (GimpContainer *container,
   GimpGradient *gradient;
 
   if (! context->gradient_name)
-    context->gradient_name = g_strdup (gimprc.default_gradient);
+    context->gradient_name = g_strdup (core_config->default_gradient);
 
   if ((gradient = (GimpGradient *)
        gimp_container_get_child_by_name (container,
@@ -2275,7 +2148,6 @@ static GimpPalette *standard_palette = NULL;
 GimpPalette *
 gimp_context_get_palette (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->palette;
@@ -2285,7 +2157,6 @@ void
 gimp_context_set_palette (GimpContext *context,
 			  GimpPalette *palette)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_PALETTE_MASK);
 
@@ -2295,7 +2166,6 @@ gimp_context_set_palette (GimpContext *context,
 void
 gimp_context_palette_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -2322,7 +2192,7 @@ gimp_context_palette_list_thaw (GimpContainer *container,
   GimpPalette *palette;
 
   if (! context->palette_name)
-    context->palette_name = g_strdup (gimprc.default_palette);
+    context->palette_name = g_strdup (core_config->default_palette);
 
   if ((palette = (GimpPalette *)
        gimp_container_get_child_by_name (container,
@@ -2426,7 +2296,6 @@ static GimpBuffer *standard_buffer = NULL;
 GimpBuffer *
 gimp_context_get_buffer (GimpContext *context)
 {
-  context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
   return context->buffer;
@@ -2436,7 +2305,6 @@ void
 gimp_context_set_buffer (GimpContext *context,
 			 GimpBuffer *buffer)
 {
-  context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_BUFFER_MASK);
 
@@ -2446,7 +2314,6 @@ gimp_context_set_buffer (GimpContext *context,
 void
 gimp_context_buffer_changed (GimpContext *context)
 {
-  context_check_current (context);
   context_return_if_fail (context);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -2476,7 +2343,7 @@ gimp_context_buffer_list_thaw (GimpContainer *container,
   GimpBuffer *buffer;
 
   if (! context->buffer_name)
-    context->buffer_name = g_strdup (gimprc.default_buffer);
+    context->buffer_name = g_strdup (core_config->default_buffer);
 
   if ((buffer = (GimpBuffer *)
        gimp_container_get_child_by_name (container,

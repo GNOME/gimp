@@ -104,9 +104,10 @@ static ToolOptions *path_options = NULL;
 
 
 void
-gimp_path_tool_register (void)
+gimp_path_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_PATH_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_PATH_TOOL,
                               FALSE,
 			      "gimp:path_tool",
 			      _("Path Tool"),

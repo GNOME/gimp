@@ -52,7 +52,7 @@ struct _GimpConvolveToolClass
 };
 
 
-void       gimp_convolve_tool_register (void);
+void       gimp_convolve_tool_register (Gimp *gimp);
 
 GtkType    gimp_convolve_tool_get_type (void);
 

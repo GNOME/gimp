@@ -151,9 +151,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_color_picker_tool_register (void)
+gimp_color_picker_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_COLOR_PICKER_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_COLOR_PICKER_TOOL,
                               FALSE,
 			      "gimp:color_picker_tool",
 			      _("Color Picker"),

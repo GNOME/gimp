@@ -49,7 +49,7 @@ struct _GimpMagnifyToolClass
 };
 
 
-void       gimp_magnify_tool_register (void);
+void       gimp_magnify_tool_register (Gimp *gimp);
 
 GtkType    gimp_magnify_tool_get_type (void);
 

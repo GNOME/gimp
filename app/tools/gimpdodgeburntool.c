@@ -32,8 +32,10 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
 #include "gdisplay.h"
 
@@ -134,9 +136,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /* functions  */
 
 void
-gimp_dodgeburn_tool_register (void)
+gimp_dodgeburn_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_DODGEBURN_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_DODGEBURN_TOOL,
                               TRUE,
 			      "gimp:dodgeburn_tool",
 			      _("Dodge/Burn"),
@@ -461,7 +464,9 @@ gimp_dodgeburn_tool_motion (GimpPaintTool        *paint_tool,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity = 255 * gimp_context_get_opacity (NULL);
+  opacity =
+    255 * gimp_context_get_opacity (gimp_get_current_context (gimage->gimp));
+
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_tool->curpressure;
 

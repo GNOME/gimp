@@ -91,12 +91,14 @@ static GimpTransformToolClass *parent_class = NULL;
 
 static TransformOptions *rotate_options = NULL;
 
+
 /*  public functions  */
 
 void 
-gimp_rotate_tool_register (void)
+gimp_rotate_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_ROTATE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_ROTATE_TOOL,
                               FALSE,
 			      "gimp:rotate_tool",
 			      _("Rotate Tool"),

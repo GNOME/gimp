@@ -120,11 +120,11 @@ gradient_select_new (gchar *title,
 
   if (title)
     {
-      gsp->context = gimp_context_new (the_gimp, title, NULL);
+      gsp->context = gimp_create_context (the_gimp, title, NULL);
     }
   else
     {
-      gsp->context = gimp_context_get_user ();
+      gsp->context = gimp_get_user_context (the_gimp);
 
       dialog_register (gsp->shell);
     }
@@ -142,11 +142,11 @@ gradient_select_new (gchar *title,
     }
   else
     {
-      active = gimp_context_get_gradient (gimp_context_get_user ());
+      active = gimp_context_get_gradient (gimp_get_user_context (the_gimp));
     }
 
   if (!active)
-    active = gimp_context_get_gradient (gimp_context_get_standard (the_gimp));
+    active = gimp_context_get_gradient (gimp_get_standard_context (the_gimp));
 
   if (title)
     gimp_context_set_gradient (gsp->context, active);

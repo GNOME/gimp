@@ -273,9 +273,10 @@ static GimpDrawTool *parent_class = NULL;
 
 
 void
-gimp_iscissors_tool_register (void)
+gimp_iscissors_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_ISCISSORS_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_ISCISSORS_TOOL,
                               FALSE,
 			      "gimp:iscissors_tool",
 			      _("Intelligent Scissors"),

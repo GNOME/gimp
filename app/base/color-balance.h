@@ -79,7 +79,7 @@ struct _ColorBalanceDialog
 };
 
 
-void       gimp_color_balance_tool_register (void);
+void       gimp_color_balance_tool_register (Gimp *gimp);
 
 GtkType    gimp_color_balance_tool_get_type (void);
 

@@ -89,9 +89,11 @@ GimpChannel * fuzzy_mask = NULL;
 /*  public functions  */
 
 void
-gimp_fuzzy_select_tool_register (void)
+gimp_fuzzy_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_FUZZY_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_FUZZY_SELECT_TOOL,
+			      FALSE,
                               "gimp:fuzzy_select_tool",
                               _("Fuzzy Select"),
                               _("Select contiguous regions"),

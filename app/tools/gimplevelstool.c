@@ -204,9 +204,10 @@ static GtkWidget *color_option_items[5];
 /*  functions  */
 
 void
-gimp_levels_tool_register (void)
+gimp_levels_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_LEVELS_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_LEVELS_TOOL,
                               FALSE,
 			      "gimp:levels_tool",
 			      _("Levels"),

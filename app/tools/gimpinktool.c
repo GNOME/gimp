@@ -35,6 +35,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -232,9 +233,10 @@ static GimpToolClass *parent_class      = NULL;
 /*  functions  */
 
 void
-gimp_ink_tool_register (void)
+gimp_ink_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_INK_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_INK_TOOL,
 			      TRUE,
 			      "gimp:ink_tool",
 			      _("Ink Tool"),
@@ -1492,12 +1494,15 @@ ink_paste (GimpInkTool  *ink_tool,
 	   Blob         *blob)
 {
   GimpImage   *gimage;
+  GimpContext *context;
   PixelRegion  srcPR;
   gint         offx, offy;
   gchar        col[MAX_CHANNELS];
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   /* Get the the buffer */
   ink_set_paint_area (ink_tool, drawable, blob);
@@ -1537,8 +1542,8 @@ ink_paste (GimpInkTool  *ink_tool,
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
 			  FALSE, 
-			  (int) (gimp_context_get_opacity (NULL) * 255),
-			  gimp_context_get_paint_mode (NULL),
+			  (int) (gimp_context_get_opacity (context) * 255),
+			  gimp_context_get_paint_mode (context),
 			  undo_tiles,  /*  specify an alternative src1  */
 			  canvas_buf->x, canvas_buf->y);
 

@@ -29,13 +29,13 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
+#include "gimpcoreconfig.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
 #include "gimplayer.h"
 
 #include "drawable.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -90,13 +90,13 @@ gimp_image_new_init (Gimp *gimp)
 
   /* Set the last values used to default values. */
 
-  gimp->image_new_last_values.width       = gimprc.default_width;
-  gimp->image_new_last_values.height      = gimprc.default_height;
-  gimp->image_new_last_values.unit        = gimprc.default_units;
-  gimp->image_new_last_values.xresolution = gimprc.default_xresolution;
-  gimp->image_new_last_values.yresolution = gimprc.default_yresolution;
-  gimp->image_new_last_values.res_unit    = gimprc.default_resolution_units;
-  gimp->image_new_last_values.type        = gimprc.default_type;
+  gimp->image_new_last_values.width       = core_config->default_width;
+  gimp->image_new_last_values.height      = core_config->default_height;
+  gimp->image_new_last_values.unit        = core_config->default_units;
+  gimp->image_new_last_values.xresolution = core_config->default_xresolution;
+  gimp->image_new_last_values.yresolution = core_config->default_yresolution;
+  gimp->image_new_last_values.res_unit    = core_config->default_resolution_units;
+  gimp->image_new_last_values.type        = core_config->default_type;
   gimp->image_new_last_values.fill_type   = BACKGROUND_FILL;
 
   gimp->have_current_cut_buffer = FALSE;
@@ -271,7 +271,9 @@ gimp_image_new_create_image (Gimp               *gimp,
       gimp_image_add_layer (gimage, layer, 0);
       gimp_image_undo_enable (gimage);
 
-      drawable_fill (GIMP_DRAWABLE (layer), values->fill_type);
+      drawable_fill (GIMP_DRAWABLE (layer),
+		     gimp_get_current_context (gimp),
+		     values->fill_type);
 
       gimp_image_clean_all (gimage);
 

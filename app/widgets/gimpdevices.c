@@ -301,12 +301,13 @@ devices_init (void)
       device_info->num_axes   = gdk_info->num_axes;
       device_info->axes       = NULL;
 
-      device_info->context    = gimp_context_new (the_gimp,
-						  device_info->name, NULL);
+      device_info->context    = gimp_create_context (the_gimp,
+						     device_info->name, NULL);
       gimp_context_define_args (device_info->context,
 				DEVICE_CONTEXT_MASK,
 				FALSE);
-      gimp_context_copy_args (gimp_context_get_user (), device_info->context,
+      gimp_context_copy_args (gimp_get_user_context (the_gimp),
+			      device_info->context,
 			      DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context, device_info->device);
 
@@ -331,7 +332,7 @@ devices_restore (void)
 
   suppress_update = TRUE;
 
-  context = gimp_context_get_user ();
+  context = gimp_get_user_context (the_gimp);
 
   gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
   gimp_context_set_parent (device_info->context, context);
@@ -389,12 +390,13 @@ devices_rc_update (gchar        *name,
       else
 	device_info->mode = GDK_MODE_DISABLED;
 
-      device_info->context = gimp_context_new (the_gimp,
-					       device_info->name, NULL);
+      device_info->context = gimp_create_context (the_gimp,
+						  device_info->name, NULL);
       gimp_context_define_args (device_info->context,
 				DEVICE_CONTEXT_MASK,
 				FALSE);
-      gimp_context_copy_args (gimp_context_get_user (), device_info->context,
+      gimp_context_copy_args (gimp_get_user_context (the_gimp),
+			      device_info->context,
 			      DEVICE_CONTEXT_MASK);
       device_status_context_connect (device_info->context, device_info->device);
 
@@ -534,7 +536,7 @@ select_device (guint32 new_device)
 
   current_device = new_device;
 
-  context = gimp_context_get_user ();
+  context = gimp_get_user_context (the_gimp);
 
   gimp_context_copy_args (device_info->context, context, DEVICE_CONTEXT_MASK);
   gimp_context_set_parent (device_info->context, context);

@@ -34,14 +34,15 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
-#include "gdisplay.h"
-#include "floating_sel.h"
-
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "app_procs.h"
+#include "gdisplay.h"
+#include "floating_sel.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -92,9 +93,11 @@ static SelectionOptions *rect_options = NULL;
 /*  public functions  */
 
 void
-gimp_rect_select_tool_register (void)
+gimp_rect_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_RECT_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_RECT_SELECT_TOOL,
+			      FALSE,
                               "gimp:rect_select_tool",
                               _("Rect Select"),
                               _("Select rectangular regions"),
@@ -264,7 +267,7 @@ gimp_rect_select_tool_button_press (GimpTool       *tool,
   sel_tool = GIMP_SELECTION_TOOL (tool);
 
   sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (tool)->tool_options;
+    tool_manager_get_info_by_tool (gdisp->gimage->gimp, tool)->tool_options;
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
@@ -623,7 +626,7 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
 
   sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (tool)->tool_options;
+    tool_manager_get_info_by_tool (the_gimp, tool)->tool_options;
 
   rect_select (tool->gdisp->gimage,
                x, y, w, h,

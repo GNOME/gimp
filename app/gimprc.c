@@ -43,6 +43,7 @@
 
 #include "base/base-config.c"
 
+#include "core/gimpcoreconfig.h"
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimptool.h"
@@ -197,24 +198,12 @@ static gchar        * open_backup_file          (gchar        *filename,
 /*  global gimprc variables  */
 GimpRc gimprc =
 {
-  /* plug_in_path              */  NULL,
-  /* brush_path                */  NULL,
-  /* default_brush             */  NULL,
-  /* pattern_path              */  NULL,
-  /* default_pattern           */  NULL,
-  /* palette_path              */  NULL,
-  /* default_palette           */  NULL,
-  /* gradient_path             */  NULL,
-  /* default_gradient          */  NULL,
-  /* pluginrc_path             */  NULL,
-  /* module_path               */  NULL,
   /* marching_speed            */  300,       /* 300 ms */
+  /* last_opened_size          */  4,
   /* gamma_val                 */  1.0,
   /* transparency_type         */  1,     /* Mid-Tone Checks */
   /* perfectmouse              */  FALSE, /* off (fast and sloppy) */
   /* transparency_size         */  1,     /* Medium sized */
-  /* levels_of_undo            */  5,
-  /* last_opened_size          */  4,
   /* min_colors                */  144,   /* 6*6*4 */
   /* install_cmap              */  FALSE,
   /* cycled_marching_ants      */  0,
@@ -225,20 +214,12 @@ GimpRc gimprc =
   /* nav_preview_size          */  112,
   /* show_rulers               */  TRUE,
   /* show_statusbar            */  TRUE,
-  /* default_units             */  GIMP_UNIT_INCH,
   /* auto_save                 */  TRUE,
   /* confirm_on_close          */  TRUE,
+  /* default_dot_for_dot       */  TRUE,
   /* save_session_info         */  TRUE,
   /* save_device_status        */  FALSE,
   /* always_restore_session    */  TRUE,
-  /* default_width             */  256,
-  /* default_height            */  256,
-  /* default_type              */  RGB,
-  /* default_xresolution       */  72.0,
-  /* default_yresolution       */  72.0,
-  /* default_resolution_units  */  GIMP_UNIT_INCH,
-  /* default_comment           */  NULL,
-  /* default_dot_for_dot       */  TRUE,
   /* show_tips                 */  TRUE,
   /* last_tip                  */  -1,
   /* show_tool_tips            */  TRUE,
@@ -247,10 +228,8 @@ GimpRc gimprc =
   /* using_xserver_resolution  */  FALSE,
   /* image_title_format        */  NULL,
   /* global_paint_options      */  FALSE,
-  /* module_db_load_inhibit    */  NULL,
   /* show_indicators           */  TRUE,
   /* max_new_image_size        */  33554432,  /* 32 MB */
-  /* thumbnail_mode            */  1,
   /* trust_dirty_flag          */  FALSE,
   /* use_help                  */  TRUE,
   /* nav_window_per_display    */  FALSE,
@@ -265,36 +244,12 @@ static GHashTable *parse_func_hash = NULL;
 
 static ParseFunc funcs[] =
 {
-  { "brush-path",                TT_PATH,          
-    &(gimprc.brush_path), NULL },
-  { "pattern-path",              TT_PATH,
-    &(gimprc.pattern_path), NULL },
-  { "plug-in-path",              TT_PATH,
-    &(gimprc.plug_in_path), NULL },
-  { "palette-path",              TT_PATH,
-    &(gimprc.palette_path), NULL },
-  { "gradient-path",             TT_PATH,
-    &(gimprc.gradient_path), NULL },
-  { "pluginrc-path",             TT_PATH,
-    &(gimprc.pluginrc_path), NULL },
-  { "module-path",               TT_PATH,
-    &(gimprc.module_path), NULL },
-  { "default-brush",             TT_STRING,
-    &(gimprc.default_brush), NULL },
-  { "default-pattern",           TT_STRING,
-    &(gimprc.default_pattern), NULL },
-  { "default-palette",           TT_STRING,
-    &(gimprc.default_palette), NULL },
-  { "default-gradient",          TT_STRING,
-    &(gimprc.default_gradient), NULL },
   { "gamma-correction",          TT_DOUBLE,
     &(gimprc.gamma_val), NULL },
   { "marching-ants-speed",       TT_INT,
     &(gimprc.marching_speed), NULL },
   { "last-opened-size",          TT_INT,
     &(gimprc.last_opened_size), NULL },
-  { "undo-levels",               TT_INT,
-    &(gimprc.levels_of_undo), NULL },
   { "transparency-type",         TT_INT,
     &(gimprc.transparency_type), NULL },
   { "perfect-mouse",             TT_BOOLEAN,
@@ -327,8 +282,6 @@ static ParseFunc funcs[] =
     &(gimprc.show_statusbar), NULL },
   { "dont-show-statusbar",       TT_BOOLEAN,       NULL,
     &(gimprc.show_statusbar) },
-  { "default-units",             TT_XUNIT,
-    &(gimprc.default_units), NULL },
   { "auto-save",                 TT_BOOLEAN,
     &(gimprc.auto_save), NULL },
   { "dont-auto-save",            TT_BOOLEAN,       NULL,
@@ -357,18 +310,6 @@ static ParseFunc funcs[] =
     &(gimprc.show_tool_tips), NULL },
   { "dont-show-tool-tips",       TT_BOOLEAN,       NULL,
     &(gimprc.show_tool_tips) },
-  { "default-image-size",        TT_POSITION,
-    &(gimprc.default_width), &(gimprc.default_height) },
-  { "default-image-type",        TT_IMAGETYPE,
-    &(gimprc.default_type), NULL },
-  { "default-xresolution",       TT_DOUBLE,
-    &(gimprc.default_xresolution), NULL },
-  { "default-yresolution",       TT_DOUBLE,
-    &(gimprc.default_yresolution), NULL },
-  { "default-resolution-units",  TT_XUNIT,
-    &(gimprc.default_resolution_units), NULL },
-  { "default-comment",           TT_XCOMMENT,
-    &(gimprc.default_comment), NULL },
   { "default-dot-for-dot",       TT_BOOLEAN,
     &(gimprc.default_dot_for_dot), NULL },
   { "plug-in",                   TT_XPLUGIN,       NULL, NULL },
@@ -393,12 +334,8 @@ static ParseFunc funcs[] =
     &(gimprc.show_indicators) },
   { "no-global-paint-options",   TT_BOOLEAN,       NULL,
     &(gimprc.global_paint_options) },
-  { "module-load-inhibit",       TT_PATH,
-    &(gimprc.module_db_load_inhibit), NULL },
   { "max-new-image-size",        TT_MEMSIZE,
     &(gimprc.max_new_image_size), NULL },
-  { "thumbnail-mode",            TT_INT,
-    &(gimprc.thumbnail_mode), NULL },
   { "trust-dirty-flag",		 TT_BOOLEAN,
     &(gimprc.trust_dirty_flag), NULL },
   { "dont-trust-dirty-flag",     TT_BOOLEAN,	   NULL,
@@ -426,12 +363,12 @@ static gint n_funcs = (sizeof (funcs) /
 		       sizeof (funcs[0]));
 
 
-static ParseInfo   parse_info = { NULL };
+static ParseInfo  parse_info = { NULL };
 
-static GList      *unknown_tokens = NULL;
+static GList     *unknown_tokens = NULL;
 
-static gint        cur_token;
-static gint        next_token;
+static gint       cur_token;
+static gint       next_token;
 
 
 /*  extern variables  */
@@ -472,13 +409,63 @@ gimprc_init (void)
       static gint n_base_funcs = (sizeof (base_funcs) /
 				  sizeof (base_funcs[0]));
 
+      static ParseFunc core_funcs[] =
+      {
+	{ "plug-in-path",             TT_PATH,      NULL, NULL },
+	{ "module-path",              TT_PATH,      NULL, NULL },
+	{ "brush-path",               TT_PATH,      NULL, NULL },
+	{ "pattern-path",             TT_PATH,      NULL, NULL },
+	{ "palette-path",             TT_PATH,      NULL, NULL },
+	{ "gradient-path",            TT_PATH,      NULL, NULL },
+	{ "default-brush",            TT_STRING,    NULL, NULL },
+	{ "default-pattern",          TT_STRING,    NULL, NULL },
+	{ "default-palette",          TT_STRING,    NULL, NULL },
+	{ "default-gradient",         TT_STRING,    NULL, NULL },
+	{ "default-comment",          TT_STRING,    NULL, NULL },
+	{ "default-image-type",       TT_IMAGETYPE, NULL, NULL },
+	{ "default-image-size",       TT_POSITION,  NULL, NULL },
+	{ "default-units",            TT_XUNIT,     NULL, NULL },
+	{ "default-xresolution",      TT_DOUBLE,    NULL, NULL },
+	{ "default-yresolution",      TT_DOUBLE,    NULL, NULL },
+	{ "default-resolution-units", TT_XUNIT,     NULL, NULL },
+	{ "undo-levels",              TT_INT,       NULL, NULL },
+	{ "pluginrc-path",            TT_PATH,      NULL, NULL },
+	{ "module-load-inhibit",      TT_PATH,      NULL, NULL },
+	{ "thumbnail-mode",           TT_INT,       NULL, NULL }
+      };
+      static gint n_core_funcs = (sizeof (core_funcs) /
+				  sizeof (core_funcs[0]));
+
       /*  this hurts badly  */
-      base_funcs[0].val1p = &base_config->temp_path;
-      base_funcs[1].val1p = &base_config->swap_path;
-      base_funcs[2].val1p = &base_config->tile_cache_size;
-      base_funcs[3].val1p = &base_config->stingy_memory_use;
-      base_funcs[4].val1p = &base_config->interpolation_type;
-      base_funcs[4].val1p = &base_config->num_processors;
+      base_funcs[0].val1p  = &base_config->temp_path;
+      base_funcs[1].val1p  = &base_config->swap_path;
+      base_funcs[2].val1p  = &base_config->tile_cache_size;
+      base_funcs[3].val1p  = &base_config->stingy_memory_use;
+      base_funcs[4].val1p  = &base_config->interpolation_type;
+      base_funcs[4].val1p  = &base_config->num_processors;
+
+      core_funcs[0].val1p  = &core_config->plug_in_path;
+      core_funcs[1].val1p  = &core_config->module_path;
+      core_funcs[2].val1p  = &core_config->brush_path;
+      core_funcs[3].val1p  = &core_config->pattern_path;
+      core_funcs[4].val1p  = &core_config->palette_path;
+      core_funcs[5].val1p  = &core_config->gradient_path;
+      core_funcs[6].val1p  = &core_config->default_brush;
+      core_funcs[7].val1p  = &core_config->default_pattern;
+      core_funcs[8].val1p  = &core_config->default_palette;
+      core_funcs[9].val1p  = &core_config->default_gradient;
+      core_funcs[10].val1p = &core_config->default_comment;
+      core_funcs[11].val1p = &core_config->default_type;
+      core_funcs[12].val1p = &core_config->default_width;
+      core_funcs[12].val2p = &core_config->default_height;
+      core_funcs[13].val1p = &core_config->default_units;
+      core_funcs[14].val1p = &core_config->default_xresolution;
+      core_funcs[15].val1p = &core_config->default_xresolution;
+      core_funcs[16].val1p = &core_config->default_resolution_units;
+      core_funcs[17].val1p = &core_config->levels_of_undo;
+      core_funcs[18].val1p = &core_config->pluginrc_path;
+      core_funcs[19].val1p = &core_config->module_db_load_inhibit;
+      core_funcs[20].val1p = &core_config->thumbnail_mode;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 
@@ -486,6 +473,11 @@ gimprc_init (void)
 	g_hash_table_insert (parse_func_hash,
 			     base_funcs[i].name,
 			     &base_funcs[i]);
+
+      for (i = 0; i < n_core_funcs; i++)
+	g_hash_table_insert (parse_func_hash,
+			     core_funcs[i].name,
+			     &core_funcs[i]);
 
       for (i = 0; i < n_funcs; i++)
 	g_hash_table_insert (parse_func_hash,
@@ -527,7 +519,7 @@ parse_gimprc (void)
 
   parse_add_directory_tokens ();
 
-  if (alternate_system_gimprc != NULL) 
+  if (alternate_system_gimprc)
     libfilename = g_strdup (alternate_system_gimprc);
   else
     libfilename = g_strdup (gimp_system_rc_file ());
@@ -546,10 +538,10 @@ parse_gimprc (void)
   g_free (filename);
   g_free (libfilename);
  
-  if (!gimprc.image_title_format)
+  if (! gimprc.image_title_format)
     gimprc.image_title_format = g_strdup (DEFAULT_IMAGE_TITLE_FORMAT);
-  if (!gimprc.default_comment)
-    gimprc.default_comment = g_strdup (DEFAULT_COMMENT);
+  if (! core_config->default_comment)
+    core_config->default_comment = g_strdup (DEFAULT_COMMENT);
 }
 
 gboolean
@@ -558,7 +550,7 @@ parse_absolute_gimprc_file (char *filename)
   gint status;
 
   parse_info.fp = fopen (filename, "rt");
-  if (!parse_info.fp)
+  if (! parse_info.fp)
     return FALSE;
 
   if (be_verbose)
@@ -592,10 +584,10 @@ parse_absolute_gimprc_file (char *filename)
 gboolean
 parse_gimprc_file (gchar *filename)
 {
-  gchar *rfilename;
-  gboolean parsed;
+  gchar    *rfilename;
+  gboolean  parsed;
 
-  if (!g_path_is_absolute (filename))
+  if (! g_path_is_absolute (filename))
     {
       gchar *home_dir = g_get_home_dir ();
       gchar *home_dir_sep;
@@ -646,16 +638,17 @@ save_gimprc_strings (gchar *token,
   gboolean  found = FALSE;
   gchar    *personal_gimprc;
   gchar    *str;
-  
+
   UnknownToken *ut;    /* variables to modify unknown_tokens */
   UnknownToken *tmp;
   GList        *list;
-  
+
   g_assert (token != NULL);
   g_assert (value != NULL);
-  
+
   /* get the name of the backup file, and the file pointers.  'name'
-     is reused in another context later, disregard it here */
+   * is reused in another context later, disregard it here
+   */
   personal_gimprc = gimp_personal_rc_file ("gimprc");
   error_msg = open_backup_file (personal_gimprc,
 				gimp_system_rc_file (),
@@ -674,10 +667,11 @@ save_gimprc_strings (gchar *token,
 
   /* copy the old .gimprc into the new one, modifying it as needed */
   prev_line = NULL;
-  cur_line = g_new (char, 1024);
-  while (!feof (fp_old))
+  cur_line  = g_new (char, 1024);
+
+  while (! feof (fp_old))
     {
-      if (!fgets (cur_line, 1024, fp_old))
+      if (! fgets (cur_line, 1024, fp_old))
 	continue;
 
       /* special case: save lines starting with '#-' (added by GIMP) */
@@ -693,11 +687,12 @@ save_gimprc_strings (gchar *token,
 	}
 
       /* see if the line contains something that we can use 
-         and place that into 'name' if its found */
+       * and place that into 'name' if its found
+       */
       if (find_token (cur_line, tokname, 50))
 	{
 	  /* check if that entry should be updated */
-	  if (!g_strcasecmp (token, tokname)) /* if they match */
+	  if (! g_strcasecmp (token, tokname)) /* if they match */
 	    {
 	      if (prev_line == NULL)
 		{
@@ -724,8 +719,8 @@ save_gimprc_strings (gchar *token,
 	      g_free (str);
 	      found = TRUE;
 	      continue;
-	    } /* end if token and name match */
-	} /* end if token is found */
+	    }
+	}
     
       /* all lines that did not match the tests above are simply copied */
       if (prev_line != NULL)
@@ -738,12 +733,13 @@ save_gimprc_strings (gchar *token,
     } /* end of while(!feof) */
 
   g_free (cur_line);
-  if (prev_line != NULL)
+  if (prev_line)
     g_free (prev_line);
+
   fclose (fp_old);
 
   /* append the options that were not in the old .gimprc */
-  if (!found) 
+  if (! found) 
     {
       fprintf (fp_new, "#- Next line added %s\n",
 	       timestamp);
@@ -757,11 +753,9 @@ save_gimprc_strings (gchar *token,
   ut->token = g_strdup (token);
   ut->value = g_strdup (value);
 
-  list = unknown_tokens;
-  while (list)
+  for (list = unknown_tokens; list; list = g_list_next (list))
     {
       tmp = (UnknownToken *) list->data;
-      list = list->next;
 
       if (strcmp (tmp->token, ut->token) == 0)
 	{
@@ -771,6 +765,7 @@ save_gimprc_strings (gchar *token,
 	  g_free (tmp);
 	}
     }
+
   unknown_tokens = g_list_append (unknown_tokens, ut);
 
   fclose (fp_new);

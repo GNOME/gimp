@@ -23,7 +23,8 @@
 extern GSList *load_procs;
 
 
-GimpImage * file_open_image             (const gchar   *filename,
+GimpImage * file_open_image             (Gimp          *gimp,
+					 const gchar   *filename,
 					 const gchar   *raw_filename,
 					 const gchar   *open_mode,
 					 PlugInProcDef *file_proc,

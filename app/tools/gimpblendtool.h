@@ -85,9 +85,9 @@ struct _GimpBlendToolClass
 };
 
 
-GtkType   gimp_blend_tool_get_type (void);
+void      gimp_blend_tool_register (Gimp             *gimp);
 
-void      gimp_blend_tool_register (void);
+GtkType   gimp_blend_tool_get_type (void);
 
 void      blend                    (GimpImage        *gimage,
                                     GimpDrawable     *drawable,

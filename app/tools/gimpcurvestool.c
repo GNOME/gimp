@@ -200,9 +200,10 @@ static CRMatrix CR_basis =
 /*  functions  */
 
 void
-gimp_curves_tool_register (void)
+gimp_curves_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_CURVES_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_CURVES_TOOL,
                               FALSE,
 			      "gimp:curves_tool",
 			      _("Curves"),

@@ -31,9 +31,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
@@ -111,9 +113,10 @@ static gdouble  non_gui_rate;
 /* global functions  */
 
 void
-gimp_smudge_tool_register (void)
+gimp_smudge_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_SMUDGE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_SMUDGE_TOOL,
 			      TRUE,
   			      "gimp:smudge_tool",
   			      _("Smudge"),
@@ -348,6 +351,7 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 			 GimpDrawable         *drawable)
 {
   GimpImage   *gimage;
+  GimpContext *context;
   TempBuf     *area;
   PixelRegion  srcPR, destPR, tempPR;
   gdouble      rate;
@@ -356,6 +360,8 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   /*  If the image type is indexed, don't smudge  */
   if (gimp_drawable_is_indexed (drawable))
@@ -427,7 +433,7 @@ gimp_smudge_tool_motion (GimpPaintTool        *paint_tool,
   else                                                            
     copy_region (&tempPR, &destPR);
 
-  opacity = 255 * gimp_context_get_opacity (NULL);
+  opacity = 255 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_tool->curpressure;
 

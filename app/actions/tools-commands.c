@@ -42,14 +42,14 @@ void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   data)
 {
-  gimp_context_set_default_colors (gimp_context_get_user ());
+  gimp_context_set_default_colors (gimp_get_user_context (the_gimp));
 }
 
 void
 tools_swap_colors_cmd_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  gimp_context_swap_colors (gimp_context_get_user ());
+  gimp_context_swap_colors (gimp_get_user_context (the_gimp));
 }
 
 void
@@ -61,19 +61,19 @@ tools_swap_contexts_cmd_callback (GtkWidget *widget,
 
   if (! swap_context)
     {
-      swap_context = gimp_context_new (the_gimp,
-				       "Swap Context",
-				       gimp_context_get_user ());
-      temp_context = gimp_context_new (the_gimp,
-				       "Temp Context",
-				       NULL);
+      swap_context = gimp_create_context (the_gimp,
+					  "Swap Context",
+					  gimp_get_user_context (the_gimp));
+      temp_context = gimp_create_context (the_gimp,
+					  "Temp Context",
+					  NULL);
     }
 
-  gimp_context_copy_args (gimp_context_get_user (),
+  gimp_context_copy_args (gimp_get_user_context (the_gimp),
 			  temp_context,
 			  GIMP_CONTEXT_ALL_ARGS_MASK);
   gimp_context_copy_args (swap_context,
-			  gimp_context_get_user (),
+			  gimp_get_user_context (the_gimp),
 			  GIMP_CONTEXT_ALL_ARGS_MASK);
   gimp_context_copy_args (temp_context,
 			  swap_context,
@@ -91,10 +91,10 @@ tools_select_cmd_callback (GtkWidget *widget,
 
   tool_type = (GtkType) action;
 
-  tool_info = tool_manager_get_info_by_type (tool_type);
+  tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
   gdisp     = gdisplay_active ();
 
-  gimp_context_set_tool (gimp_context_get_user (), tool_info);
+  gimp_context_set_tool (gimp_get_user_context (the_gimp), tool_info);
 
 #ifdef __GNUC__
 #warning FIXME (let the tool manager to this stuff)

@@ -63,6 +63,21 @@ struct _Gimp
   GList                 *fill_type_names;
   GimpImageNewValues     image_new_last_values;
   gboolean               have_current_cut_buffer;
+
+  /*  the list of all contexts  */
+  GList                 *context_list;
+
+  /*  the hardcoded standard context  */
+  GimpContext           *standard_context;
+
+  /*  the default context which is initialized from gimprc  */
+  GimpContext           *default_context;
+
+  /*  the context used by the interface  */
+  GimpContext           *user_context;
+
+  /*  the currently active context  */
+  GimpContext           *current_context;
 };
 
 struct _GimpClass
@@ -71,19 +86,38 @@ struct _GimpClass
 };
 
 
-GtkType     gimp_get_type       (void);
-Gimp      * gimp_new            (void);
+GtkType       gimp_get_type             (void);
+Gimp        * gimp_new                  (void);
 
-void        gimp_restore        (Gimp              *gimp);
-void        gimp_shutdown       (Gimp              *gimp);
+void          gimp_restore              (Gimp              *gimp);
+void          gimp_shutdown             (Gimp              *gimp);
 
-GimpImage * gimp_create_image   (Gimp              *gimp,
-				 gint               width,
-				 gint               height,
-				 GimpImageBaseType  type,
-				 gboolean           attach_comment);
-void        gimp_create_display (Gimp              *gimp,
-				 GimpImage         *gimage);
+GimpImage   * gimp_create_image         (Gimp              *gimp,
+					 gint               width,
+					 gint               height,
+					 GimpImageBaseType  type,
+					 gboolean           attach_comment);
+
+void          gimp_create_display       (Gimp              *gimp,
+					 GimpImage         *gimage);
+
+GimpContext * gimp_create_context       (Gimp              *gimp,
+					 const gchar       *name,
+					 GimpContext       *template);
+
+GimpContext * gimp_get_standard_context (Gimp              *gimp);
+
+void          gimp_set_default_context  (Gimp              *gimp,
+					 GimpContext       *context);
+GimpContext * gimp_get_default_context  (Gimp              *gimp);
+
+void          gimp_set_user_context     (Gimp              *gimp,
+					 GimpContext       *context);
+GimpContext * gimp_get_user_context     (Gimp              *gimp);
+
+void          gimp_set_current_context  (Gimp              *gimp,
+					 GimpContext       *context);
+GimpContext * gimp_get_current_context  (Gimp              *gimp);
 
 
 #endif  /* __GIMP_H__ */

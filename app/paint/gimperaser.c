@@ -29,6 +29,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -101,9 +102,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_eraser_tool_register (void)
+gimp_eraser_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_ERASER_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_ERASER_TOOL,
 			      TRUE,
   			      "gimp:eraser_tool",
   			      _("Eraser"),
@@ -260,16 +262,19 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
                          gboolean              incremental,
                          gboolean              anti_erase)
 {
-  GimpImage *gimage;
-  gint       opacity;
-  TempBuf   *area;
-  guchar     col[MAX_CHANNELS];
-  gdouble    scale;
+  GimpImage   *gimage;
+  GimpContext *context;
+  gint         opacity;
+  TempBuf     *area;
+  guchar       col[MAX_CHANNELS];
+  gdouble      scale;
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   gimp_image_get_background (gimage, drawable, col);
+
+  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_tool->curpressure;
@@ -287,7 +292,7 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
-  opacity = 255 * gimp_context_get_opacity (NULL);
+  opacity = 255 * gimp_context_get_opacity (context);
 
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_tool->curpressure;
@@ -295,7 +300,7 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_tool_paste_canvas (paint_tool, drawable, 
                                 MIN (opacity, 255),
-                                gimp_context_get_opacity (NULL) * 255,
+                                gimp_context_get_opacity (context) * 255,
                                 anti_erase ? ANTI_ERASE_MODE : ERASE_MODE,
                                 hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
                                 scale,

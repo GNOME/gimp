@@ -567,7 +567,8 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
   gimage = gimp_context_get_image (context);
 
   view = gimp_drawable_list_view_new
-    (gimage,
+    (gimprc.preview_size,
+     gimage,
      GIMP_TYPE_LAYER,
      "active_layer_changed",
      (GimpGetContainerFunc)    gimp_image_get_layers,
@@ -602,7 +603,8 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   gimage = gimp_context_get_image (context);
 
   view = gimp_drawable_list_view_new
-    (gimage,
+    (gimprc.preview_size,
+     gimage,
      GIMP_TYPE_CHANNEL,
      "active_channel_changed",
      (GimpGetContainerFunc)    gimp_image_get_channels,

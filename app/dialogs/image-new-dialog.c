@@ -26,6 +26,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimpcoreconfig.h"
 #include "core/gimpimage-new.h"
 
 #include "file-new-dialog.h"
@@ -120,29 +121,30 @@ file_new_reset_callback (GtkWidget *widget,
 
   gimp_chain_button_set_active
     (GIMP_CHAIN_BUTTON (info->couple_resolutions),
-     ABS (gimprc.default_xresolution - gimprc.default_yresolution) < GIMP_MIN_RESOLUTION);
+     ABS (core_config->default_xresolution -
+	  core_config->default_yresolution) < GIMP_MIN_RESOLUTION);
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      0, gimprc.default_xresolution);
+			      0, core_config->default_xresolution);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se),
-			      1, gimprc.default_yresolution);
+			      1, core_config->default_yresolution);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
-			    gimprc.default_resolution_units);
+			    core_config->default_resolution_units);
 
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (info->resolution_se), info);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se),
-				  0, gimprc.default_xresolution, TRUE);
+				  0, core_config->default_xresolution, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se),
-				  1, gimprc.default_yresolution, TRUE);
+				  1, core_config->default_yresolution, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se),
-			      0, gimprc.default_width);
+			      0, core_config->default_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se),
-			      1, gimprc.default_height);
+			      1, core_config->default_height);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
-			    gimprc.default_units);
+			    core_config->default_units);
 
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[gimprc.default_type]),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (info->type_w[core_config->default_type]),
 				TRUE);
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
@@ -534,7 +536,8 @@ file_new_dialog_create (GimpImage *gimage)
   gtk_widget_set_usize (spinbutton, 75, 0);
 
   info->resolution_se =
-    gimp_size_entry_new (1, gimprc.default_resolution_units, _("pixels/%a"),
+    gimp_size_entry_new (1, core_config->default_resolution_units,
+			 _("pixels/%a"),
 		         FALSE, FALSE, FALSE, 75,
 		         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 1, 2);
@@ -591,8 +594,10 @@ file_new_dialog_create (GimpImage *gimage)
   gtk_widget_show (radio_box);
 
   group = NULL;
-  list = g_list_first (gimp_image_new_get_base_type_names (the_gimp));
-  while (list)
+
+  for (list = gimp_image_new_get_base_type_names (the_gimp);
+       list;
+       list = g_list_next (list))
     {
       GimpImageBaseTypeName *name_info;
 
@@ -613,8 +618,6 @@ file_new_dialog_create (GimpImage *gimage)
       gtk_widget_show (button);
 
       info->type_w[name_info->type] = button;
-
-      list = g_list_next (list);
     }
 
   /* frame for Fill Type */
@@ -628,8 +631,10 @@ file_new_dialog_create (GimpImage *gimage)
   gtk_widget_show (radio_box);
 
   group = NULL;
-  list = g_list_first (gimp_image_new_get_fill_type_names (the_gimp));
-  while (list)
+
+  for (list = gimp_image_new_get_fill_type_names (the_gimp);
+       list;
+       list = g_list_next (list))
     {
       GimpFillTypeName *name_info;
 
@@ -651,8 +656,6 @@ file_new_dialog_create (GimpImage *gimage)
       gtk_widget_show (button);
 
       info->fill_type_w[name_info->type] = button;
-
-      list = g_list_next (list);
     }
 
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (info->size_se));

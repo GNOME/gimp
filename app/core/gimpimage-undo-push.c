@@ -36,6 +36,7 @@
 
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
@@ -54,7 +55,6 @@
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimpparasite.h"
-#include "gimprc.h"
 #include "parasitelist.h"
 #include "path_transform.h"
 #include "undo.h"
@@ -314,13 +314,13 @@ static gboolean
 undo_free_up_space (GimpImage *gimage)
 {
   /* If there are 0 levels of undo return FALSE.  */
-  if (gimprc.levels_of_undo == 0)
+  if (core_config->levels_of_undo == 0)
     return FALSE;
 
   /*  Delete the item on the bottom of the stack if we have the maximum
    *  levels of undo already
    */
-  while (gimage->undo_levels >= gimprc.levels_of_undo)
+  while (gimage->undo_levels >= core_config->levels_of_undo)
     gimage->undo_stack = remove_stack_bottom (gimage);
 
   return TRUE;

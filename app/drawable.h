@@ -21,7 +21,9 @@
 
 
 void drawable_fill        (GimpDrawable *drawable,
+			   GimpContext  *context,
 			   GimpFillType fill_type);
+
 void drawable_update      (GimpDrawable *drawable,
 			   gint          x,
 			   gint          y,

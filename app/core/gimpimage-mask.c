@@ -41,7 +41,6 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimprc.h"
 #include "undo.h"
 
 #include "pdb/procedural_db.h"
@@ -639,7 +638,7 @@ gimage_mask_stroke (GimpImage    *gimage,
       /* Stroke with the correct tool */
       return_vals =
 	procedural_db_run_proc (gimage->gimp,
-				tool_manager_active_get_PDB_string (),
+				tool_manager_active_get_PDB_string (gimage->gimp),
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				GIMP_PDB_INT32, (gint32) cpnt,

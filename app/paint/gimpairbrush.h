@@ -44,9 +44,10 @@ struct _GimpAirbrushToolClass
 };
 
 
-void       gimp_airbrush_tool_register (void);
+void       gimp_airbrush_tool_register (Gimp         *gimp);
 
 GtkType    gimp_airbrush_tool_get_type (void);
+
 
 gboolean   airbrush_non_gui            (GimpDrawable *drawable,
 					gdouble       pressure,

@@ -156,9 +156,10 @@ static GimpToolClass *parent_class      = NULL;
 /*  functions  */
 
 void
-gimp_text_tool_register (void)
+gimp_text_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_TEXT_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_TEXT_TOOL,
 			      FALSE,
 			      "gimp:text_tool",
 			      _("Text Tool"),

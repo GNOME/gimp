@@ -104,9 +104,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_color_balance_tool_register (void)
+gimp_color_balance_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_COLOR_BALANCE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_COLOR_BALANCE_TOOL,
                               FALSE,
 			      "gimp:color_balance_tool",
 			      _("Color Balance"),

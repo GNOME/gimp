@@ -35,6 +35,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -455,7 +456,7 @@ gimp_transform_tool_button_press (GimpTool           *tool,
 	      GtkType tool_type;
 
 	      tool_type =
-		gimp_context_get_tool (gimp_context_get_user ())->tool_type;
+		gimp_context_get_tool (gimp_get_user_context (gdisp->gimage->gimp))->tool_type;
 
 	      gimp_dialog_create_action_area
 		(GTK_DIALOG (transform_info->shell),

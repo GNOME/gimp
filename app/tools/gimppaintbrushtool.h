@@ -44,7 +44,7 @@ struct _GimpPaintbrushToolClass
 };
 
 
-void       gimp_paintbrush_tool_register        (void);
+void       gimp_paintbrush_tool_register        (Gimp         *gimp);
 
 GtkType    gimp_paintbrush_tool_get_type        (void);
 

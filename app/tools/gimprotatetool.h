@@ -44,9 +44,9 @@ struct _GimpRotateToolClass
 };
 
 
-GtkType       gimp_rotate_tool_get_type (void);
+void          gimp_rotate_tool_register (Gimp           *gimp);
 
-void          gimp_rotate_tool_register (void);
+GtkType       gimp_rotate_tool_get_type (void);
 
 
 TileManager * gimp_rotate_tool_rotate   (GimpImage      *gimage,

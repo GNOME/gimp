@@ -66,12 +66,14 @@ static GimpTransformToolClass *parent_class = NULL;
 
 static TransformOptions *perspective_options = NULL;
 
+
 /*  public functions  */
 
 void 
-gimp_perspective_tool_register (void)
+gimp_perspective_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_PERSPECTIVE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_PERSPECTIVE_TOOL,
                               FALSE,
 			      "gimp:perspective_tool",
 			      _("Perspective Tool"),

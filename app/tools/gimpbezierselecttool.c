@@ -30,6 +30,7 @@
 
 #include "base/pixel-region.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpcontext.h"
@@ -270,9 +271,10 @@ static void bezier_start_new_segment (GimpBezierSelectTool *bezier_sel,
 /* Public functions */
 
 void       
-gimp_bezier_select_tool_register (void)
+gimp_bezier_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_BEZIER_SELECT_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_BEZIER_SELECT_TOOL,
 			      FALSE,
                               "gimp:bezier_select_tool",
                               _("Bezier Select"),
@@ -909,18 +911,18 @@ gimp_bezier_select_tool_motion (GimpTool           *tool,
 
 
 gint
-bezier_select_load (GDisplay    *gdisp,
+bezier_select_load (GDisplay              *gdisp,
 		    GimpBezierSelectPoint *pts,
-		    gint         num_pts,
-		    gint         closed)
+		    gint                   num_pts,
+		    gint                   closed)
 {
-  GimpTool         *tool;
+  GimpTool             *tool;
   GimpBezierSelectTool *bezier_sel;
 
   /*  select the bezier tool  */
-  gimp_context_set_tool (gimp_context_get_user (), 
-			 tool_manager_get_info_by_type 
-			   ( GIMP_TYPE_BEZIER_SELECT_TOOL));
+  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp), 
+			 tool_manager_get_info_by_type
+			 (gdisp->gimage->gimp, GIMP_TYPE_BEZIER_SELECT_TOOL));
   tool            = active_tool;
   tool->state     = ACTIVE;
   tool->gdisp     = gdisp;
@@ -3125,7 +3127,7 @@ bezier_tool_selected (void)
 }
 
 void
-bezier_paste_bezierselect_to_current (GDisplay     *gdisp,
+bezier_paste_bezierselect_to_current (GDisplay             *gdisp,
 				      GimpBezierSelectTool *bsel)
 {
   GimpBezierSelectPoint *pts;
@@ -3150,9 +3152,9 @@ bezier_paste_bezierselect_to_current (GDisplay     *gdisp,
 	}
     }
 
-  gimp_context_set_tool (gimp_context_get_user (),
-			 tool_manager_get_info_by_type 
-			   ( GIMP_TYPE_BEZIER_SELECT_TOOL));
+  gimp_context_set_tool (gimp_get_user_context (gdisp->gimage->gimp),
+			 tool_manager_get_info_by_type
+			 (gdisp->gimage->gimp, GIMP_TYPE_BEZIER_SELECT_TOOL));
   active_tool->paused_count = 0;
   active_tool->gdisp        = gdisp;
   active_tool->drawable     = gimp_image_active_drawable (gdisp->gimage);  
@@ -3786,7 +3788,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 	  /* Stroke with the correct tool */
 	  return_vals =
 	    procedural_db_run_proc (gdisp->gimage->gimp,
-				    tool_manager_active_get_PDB_string (),
+				    tool_manager_active_get_PDB_string (gdisp->gimage->gimp),
 				    &nreturn_vals,
 				    GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
 				    GIMP_PDB_INT32, (gint32) rpnts->num_stroke_points * 2,

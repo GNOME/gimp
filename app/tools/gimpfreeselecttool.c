@@ -89,9 +89,11 @@ static SelectionOptions * free_options = NULL;
 /*  public functions  */
 
 void
-gimp_free_select_tool_register (void)
+gimp_free_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_FREE_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_FREE_SELECT_TOOL,
+			      FALSE,
                               "gimp:free_select_tool",
                               _("Free Select"),
                               _("Select hand-drawn regions"),

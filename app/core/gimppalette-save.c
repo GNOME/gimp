@@ -35,8 +35,6 @@
 
 #include "gimppalette.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 

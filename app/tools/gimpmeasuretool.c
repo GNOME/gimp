@@ -119,9 +119,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_measure_tool_register (void)
+gimp_measure_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_MEASURE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_MEASURE_TOOL,
                               FALSE,
 			      "gimp:measure_tool",
 			      _("Measure Tool"),

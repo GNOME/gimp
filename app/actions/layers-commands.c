@@ -30,6 +30,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimplayer.h"
@@ -42,6 +43,7 @@
 #include "menus.h"
 #include "resize-dialog.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "floating_sel.h"
@@ -542,7 +544,9 @@ new_layer_query_ok_callback (GtkWidget *widget,
 			      layer_name, OPAQUE_OPACITY, NORMAL_MODE);
       if (layer) 
 	{
-	  drawable_fill (GIMP_DRAWABLE (layer), fill_type);
+	  drawable_fill (GIMP_DRAWABLE (layer),
+			 gimp_get_user_context (the_gimp),
+			 fill_type);
 	  gimp_image_add_layer (gimage, layer, -1);
 	  
 	  /*  End the group undo  */

@@ -34,6 +34,7 @@
 
 void
 drawable_fill (GimpDrawable *drawable,
+	       GimpContext  *context,
 	       GimpFillType  fill_type)
 {
   GimpRGB color;
@@ -46,11 +47,11 @@ drawable_fill (GimpDrawable *drawable,
   switch (fill_type)
     {
     case FOREGROUND_FILL:
-      gimp_context_get_foreground (NULL, &color);
+      gimp_context_get_foreground (context, &color);
       break;
 
     case BACKGROUND_FILL:
-      gimp_context_get_background (NULL, &color);
+      gimp_context_get_background (context, &color);
       break;
 
     case WHITE_FILL:

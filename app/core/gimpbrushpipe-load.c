@@ -50,7 +50,6 @@
 #include "gimpbrush-header.h"
 #include "gimpbrushpipe.h"
 #include "gimppattern-header.h"
-#include "gimprc.h"
 
 /*  this needs to go away  */
 #include "tools/gimppainttool.h"

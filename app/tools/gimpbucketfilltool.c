@@ -31,6 +31,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -127,9 +128,10 @@ static void   bucket_fill_line_pattern              (guchar         *,
 /*  functions  */
 
 void
-gimp_bucket_fill_tool_register (void)
+gimp_bucket_fill_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_BUCKET_FILL_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_BUCKET_FILL_TOOL,
                               TRUE,
 			      "gimp:bucket_fill_tool",
 			      _("Bucket Fill"),
@@ -354,14 +356,18 @@ gimp_bucket_fill_tool_button_release (GimpTool       *tool,
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
+      GimpContext *context;
+
+      context = gimp_get_current_context (gdisp->gimage->gimp);
+
       return_vals =
 	procedural_db_run_proc (gdisp->gimage->gimp,
 				"gimp_bucket_fill",
 				&nreturn_vals,
 				GIMP_PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
 				GIMP_PDB_INT32, (gint32) bucket_options->fill_mode,
-				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
-				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
+				GIMP_PDB_INT32, (gint32) gimp_context_get_paint_mode (context),
+				GIMP_PDB_FLOAT, (gdouble) gimp_context_get_opacity (context) * 100,
 				GIMP_PDB_FLOAT, (gdouble) bucket_options->threshold,
 				GIMP_PDB_INT32, (gint32) bucket_options->sample_merged,
 				GIMP_PDB_FLOAT, (gdouble) bucket_tool->target_x,
@@ -489,7 +495,7 @@ bucket_fill (GimpImage      *gimage,
     gimp_image_get_background (gimage, drawable, col);
   else if (fill_mode == PATTERN_BUCKET_FILL)
     {
-      pattern = gimp_context_get_pattern (NULL);
+      pattern = gimp_context_get_pattern (gimp_get_current_context (gimage->gimp));
 
       if (!pattern)
 	{

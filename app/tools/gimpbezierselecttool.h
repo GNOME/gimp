@@ -110,7 +110,8 @@ typedef struct
 
 /* Public functions */
 
-void       gimp_bezier_select_tool_register    (void);
+void       gimp_bezier_select_tool_register    (Gimp *gimp);
+
 GtkType    gimp_bezier_select_tool_get_type    (void);
 
 gboolean   bezier_tool_selected      (void);

@@ -102,9 +102,9 @@ gimage_dirty_handler (GimpImage *gimage)
       if (gdisp)
 	{
 	  if (gdisp->gimage == gimage)
-	    tool_manager_initialize_tool (active_tool, gdisp);
+	    tool_manager_initialize_tool (gimage->gimp, active_tool, gdisp);
 	  else
-	    tool_manager_initialize_tool (active_tool, NULL);
+	    tool_manager_initialize_tool (gimage->gimp, active_tool, NULL);
 	}
     }
 }

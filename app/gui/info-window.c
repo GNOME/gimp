@@ -39,11 +39,12 @@
 #include "tools/gimpcolorpickertool.h" /* need icon of color picker tool */
 #include "tools/tool_manager.h"
 
-#include "gdisplay.h"
 #include "info-dialog.h"
 #include "info-window.h"
 
+#include "app_procs.h"
 #include "colormaps.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -182,7 +183,7 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
   
-  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (GIMP_TYPE_MOVE_TOOL)), 22, 0, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_MOVE_TOOL)), 22, 0, FALSE);
   gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);
@@ -242,7 +243,7 @@ info_window_create_extended (InfoDialog *info_win)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (GIMP_TYPE_COLOR_PICKER_TOOL)), 22, 0, FALSE);
+  preview = gimp_preview_new (GIMP_VIEWABLE (tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_COLOR_PICKER_TOOL)), 22, 0, FALSE);
   gtk_table_attach (GTK_TABLE (table), preview, 0, 2, 0, 1,
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 2, 2);
   gtk_widget_show (preview);
@@ -420,7 +421,7 @@ info_window_follow_auto (void)
   GimpContext *context;
   GDisplay    *gdisp;
 
-  context = gimp_context_get_user ();
+  context = gimp_get_user_context (the_gimp);
 
   gdisp = gimp_context_get_display (context);
 

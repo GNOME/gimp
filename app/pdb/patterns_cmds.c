@@ -58,7 +58,7 @@ patterns_get_pattern_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpPattern *pattern;
 
-  success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
+  success = (pattern = gimp_context_get_pattern (gimp_get_current_context (gimp))) != NULL;
 
   return_args = procedural_db_return_args (&patterns_get_pattern_proc, success);
 
@@ -132,7 +132,7 @@ patterns_set_pattern_invoker (Gimp     *gimp,
     
 	  if (! strcmp (GIMP_OBJECT (pattern)->name, name))
 	    {
-	      gimp_context_set_pattern (NULL, pattern);
+	      gimp_context_set_pattern (gimp_get_current_context (gimp), pattern);
 	      success = TRUE;
 	      break;
 	    }
@@ -265,7 +265,7 @@ patterns_get_pattern_data_invoker (Gimp     *gimp,
 	    }
 	}
       else
-	success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
+	success = (pattern = gimp_context_get_pattern (gimp_get_current_context (gimp))) != NULL;
     
       if (success)
 	{

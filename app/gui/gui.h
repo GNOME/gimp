@@ -21,14 +21,14 @@
 
 
 void   gui_init               (Gimp *gimp);
-void   gui_restore            (void);
-void   gui_post_init          (void);
+void   gui_restore            (Gimp *gimp);
+void   gui_post_init          (Gimp *gimp);
 
-void   gui_shutdown           (void);
-void   gui_exit               (void);
+void   gui_shutdown           (Gimp *gimp);
+void   gui_exit               (Gimp *gimp);
 
-void   gui_set_busy           (void);
-void   gui_unset_busy         (void);
+void   gui_set_busy           (Gimp *gimp);
+void   gui_unset_busy         (Gimp *gimp);
 
 void   gui_really_quit_dialog (void);
 

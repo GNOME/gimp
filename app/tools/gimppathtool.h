@@ -68,7 +68,7 @@ struct _GimpPathToolClass
 };
 
 
-void     gimp_path_tool_register        (void);
+void     gimp_path_tool_register        (Gimp *gimp);
 
 GtkType  gimp_path_tool_get_type        (void);
 

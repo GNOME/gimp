@@ -105,9 +105,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_posterize_tool_register (void)
+gimp_posterize_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_POSTERIZE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_POSTERIZE_TOOL,
                               FALSE,
 			      "gimp:posterize_tool",
 			      _("Posterize"),

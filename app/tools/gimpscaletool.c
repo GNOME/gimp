@@ -74,15 +74,17 @@ static gchar      y_ratio_buf[MAX_INFO_BUF];
 
 /*  needed for original size unit update  */
 static GtkWidget *sizeentry = NULL;
+
 static GimpTransformToolClass *parent_class = NULL;
 
 static TransformOptions *scale_options = NULL;
 
 
 void
-gimp_scale_tool_register (void)
+gimp_scale_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_SCALE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_SCALE_TOOL,
                               FALSE,
                               "gimp:scale_tool",
                               _("Scale Tool"),

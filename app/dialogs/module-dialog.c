@@ -38,12 +38,13 @@
 
 #include "core/core-types.h"
 
+#include "core/gimpcoreconfig.h"
 #include "core/gimplist.h"
 
 #include "appenv.h"
 #include "module_db.h"
-#include "gimprc.h"
 #include "datafiles.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpmodule.h"
 
@@ -217,7 +218,7 @@ module_db_init (void)
   modules = gimp_list_new (MODULE_INFO_TYPE, GIMP_CONTAINER_POLICY_WEAK);
 
   if (g_module_supported ())
-    gimp_datafiles_read_directories (gimprc.module_path, 0 /* no flags */,
+    gimp_datafiles_read_directories (core_config->module_path, 0 /* no flags */,
 				     module_initialize, NULL);
 #ifdef DUMP_DB
   gimp_container_foreach (modules, print_module_info, NULL);
@@ -615,7 +616,7 @@ module_initialize (const gchar *filename,
   mod->refs              = 0;
 
   mod->load_inhibit = module_inhibited (mod->fullpath, 
-					gimprc.module_db_load_inhibit);
+					core_config->module_db_load_inhibit);
   if (!mod->load_inhibit)
     {
       if (be_verbose)
@@ -1137,7 +1138,7 @@ browser_refresh_callback (GtkWidget *widget,
   kill_list = NULL;
 
   /* walk filesystem and add new things we find */
-  gimp_datafiles_read_directories (gimprc.module_path, 0 /* no flags */,
+  gimp_datafiles_read_directories (core_config->module_path, 0 /* no flags */,
 				   module_initialize, NULL);
 }
 

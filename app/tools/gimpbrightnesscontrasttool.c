@@ -122,9 +122,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_brightness_contrast_tool_register (void)
+gimp_brightness_contrast_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
                               FALSE,
 			      "gimp:brightness_contrast_tool",
 			      _("Brightness-Contrast"),

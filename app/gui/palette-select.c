@@ -100,11 +100,11 @@ palette_select_new (const gchar *title,
 
   if (title)
     {
-      psp->context = gimp_context_new (the_gimp, title, NULL);
+      psp->context = gimp_create_context (the_gimp, title, NULL);
     }
   else
     {
-      psp->context = gimp_context_get_user ();
+      psp->context = gimp_get_user_context (the_gimp);
 
       /*
       session_set_window_geometry (psp->shell, &palette_select_session_info,
@@ -127,11 +127,11 @@ palette_select_new (const gchar *title,
     }
   else
     {
-      active = gimp_context_get_palette (gimp_context_get_user ());
+      active = gimp_context_get_palette (gimp_get_user_context (the_gimp));
     }
 
   if (!active)
-    active = gimp_context_get_palette (gimp_context_get_standard (the_gimp));
+    active = gimp_context_get_palette (gimp_get_standard_context (the_gimp));
 
   if (title)
     gimp_context_set_palette (psp->context, active);

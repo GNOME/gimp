@@ -320,7 +320,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
 	    success = TRUE;
 	}
       else
-	success = (gradient = gimp_context_get_gradient (NULL)) != NULL;
+	success = (gradient = gimp_context_get_gradient (gimp_get_current_context (gimp))) != NULL;
     
       if (success)
 	{

@@ -44,7 +44,7 @@ struct _GimpEraserToolClass
 };
 
 
-void       gimp_eraser_tool_register (void);
+void       gimp_eraser_tool_register (Gimp         *gimp);
 
 GtkType    gimp_eraser_tool_get_type (void);
 

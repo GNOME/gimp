@@ -129,11 +129,11 @@ pattern_select_new (gchar *title,
 
   if (title)
     {
-      psp->context = gimp_context_new (the_gimp, title, NULL);
+      psp->context = gimp_create_context (the_gimp, title, NULL);
     }
   else
     {
-      psp->context = gimp_context_get_user ();
+      psp->context = gimp_get_user_context (the_gimp);
 
       dialog_register (psp->shell);
     }
@@ -151,11 +151,11 @@ pattern_select_new (gchar *title,
     }
   else
     {
-      active = gimp_context_get_pattern (gimp_context_get_user ());
+      active = gimp_context_get_pattern (gimp_get_user_context (the_gimp));
     }
 
   if (!active)
-    active = gimp_context_get_pattern (gimp_context_get_standard (the_gimp));
+    active = gimp_context_get_pattern (gimp_get_standard_context (the_gimp));
 
   if (title)
     gimp_context_set_pattern (psp->context, active);

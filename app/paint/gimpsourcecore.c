@@ -32,6 +32,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -155,9 +156,10 @@ static CloneType     non_gui_type;
 /* global functions  */
 
 void
-gimp_clone_tool_register (void)
+gimp_clone_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_CLONE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_CLONE_TOOL,
 			      TRUE,
   			      "gimp:clone_tool",
   			      _("Clone"),
@@ -265,18 +267,21 @@ clone_set_src_drawable (GimpDrawable *drawable)
 }
 
 static void
-gimp_clone_tool_paint (GimpPaintTool    *paint_tool,
-		       GimpDrawable *drawable,
-		       PaintState    state)
+gimp_clone_tool_paint (GimpPaintTool *paint_tool,
+		       GimpDrawable  *drawable,
+		       PaintState     state)
 {
-  GDisplay    *gdisp;
-  GDisplay    *src_gdisp;
-  gint         x1, y1, x2, y2;
-  static gint  orig_src_x, orig_src_y;
+  GDisplay     *gdisp;
+  GDisplay     *src_gdisp;
+  gint          x1, y1, x2, y2;
+  static gint   orig_src_x, orig_src_y;
   GimpDrawTool *draw_tool;
+  GimpContext  *context;
 
   gdisp = (GDisplay *) active_tool->gdisp;
-  draw_tool = GIMP_DRAW_TOOL(paint_tool);
+  draw_tool = GIMP_DRAW_TOOL (paint_tool);
+
+  context = gimp_get_current_context (gdisp->gimage->gimp);
 
   switch (state)
     {
@@ -341,7 +346,7 @@ gimp_clone_tool_paint (GimpPaintTool    *paint_tool,
 	  orig_src_y = src_y;
 	}
       if (clone_options->type == PATTERN_CLONE)
-	if (! gimp_context_get_pattern (NULL))
+	if (! gimp_context_get_pattern (context))
 	  g_message (_("No patterns available for this operation."));
       break;
 
@@ -351,7 +356,7 @@ gimp_clone_tool_paint (GimpPaintTool    *paint_tool,
 	{
 	  src_x = orig_src_x;
 	  src_y = orig_src_y;
-	} 
+	}
       return;
       break;
 
@@ -453,6 +458,7 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
 {
   GimpImage   *gimage;
   GimpImage   *src_gimage = NULL;
+  GimpContext *context;
   guchar      *s;
   guchar      *d;
   TempBuf     *orig;
@@ -483,6 +489,8 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
   /*  We always need a destination image */
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_tool->curpressure;
@@ -559,7 +567,7 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
       break;
 
     case PATTERN_CLONE:
-      pattern = gimp_context_get_pattern (NULL);
+      pattern = gimp_context_get_pattern (context);
 
       if (!pattern)
 	return;
@@ -601,15 +609,15 @@ gimp_clone_tool_motion (GimpPaintTool        *paint_tool,
 	}
     }
 
-  opacity = 255.0 * gimp_context_get_opacity (NULL);
+  opacity = 255.0 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_tool->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_tool_paste_canvas (paint_tool, drawable, 
 				MIN (opacity, 255),
-				(gint) (gimp_context_get_opacity (NULL) * 255),
-				gimp_context_get_paint_mode (NULL),
+				(gint) (gimp_context_get_opacity (context) * 255),
+				gimp_context_get_paint_mode (context),
 				pressure_options->pressure ? PRESSURE : SOFT, 
 				scale, CONSTANT);
 }

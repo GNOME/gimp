@@ -100,9 +100,10 @@ static GimpTransformToolClass *parent_class = NULL;
 /*  public functions  */
 
 void 
-gimp_flip_tool_register (void)
+gimp_flip_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_FLIP_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_FLIP_TOOL,
                               FALSE,
 			      "gimp:flip_tool",
 			      _("Flip Tool"),

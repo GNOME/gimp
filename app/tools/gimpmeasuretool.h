@@ -67,7 +67,7 @@ struct _GimpMeasureToolClass
 };
 
 
-void       gimp_measure_tool_register (void);
+void       gimp_measure_tool_register (Gimp *gimp);
 
 GtkType    gimp_measure_tool_get_type (void);
 

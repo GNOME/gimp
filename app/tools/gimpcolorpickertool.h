@@ -50,19 +50,18 @@ struct _GimpColorPickerToolClass
 /* FIXME: Whats this doing here? */
 extern gint col_value[5];
 
+void       gimp_color_picker_tool_register (Gimp         *gimp);
+
 GtkType    gimp_color_picker_tool_get_type (void);
-GimpTool * gimp_color_picker_tool_new      (void);
 
-void       gimp_color_picker_tool_register (void);
-
-gboolean   pick_color                 (GimpImage    *gimage,
-				       GimpDrawable *drawable,
-				       gint          x,
-				       gint          y,
-				       gboolean      sample_merged,
-				       gboolean      sample_average,
-				       double        average_radius,
-				       gint          final);
+gboolean   pick_color                      (GimpImage    *gimage,
+					    GimpDrawable *drawable,
+					    gint          x,
+					    gint          y,
+					    gboolean      sample_merged,
+					    gboolean      sample_average,
+					    double        average_radius,
+					    gint          final);
 
 
 #endif  /*  __GIMP_COLOR_PICKER_TOOL_H__  */

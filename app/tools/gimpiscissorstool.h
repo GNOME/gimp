@@ -93,7 +93,7 @@ struct _GimpIscissorsToolClass
 };
 
 
-void       gimp_iscissors_tool_register (void);
+void       gimp_iscissors_tool_register (Gimp *gimp);
 
 GtkType    gimp_iscissors_tool_get_type (void);
 

@@ -128,9 +128,10 @@ static gint default_colors[6][3] =
 /*  functions  */
 
 void
-gimp_hue_saturation_tool_register (void)
+gimp_hue_saturation_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_HUE_SATURATION_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_HUE_SATURATION_TOOL,
                               FALSE,
 			      "gimp:hue_saturation_tool",
 			      _("Hue-Saturation"),

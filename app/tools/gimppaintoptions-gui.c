@@ -25,13 +25,12 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gtkhwrapbox.h"
-
-#include "gimprc.h"
 
 #include "gimptool.h"
 #include "paint_options.h"
@@ -49,6 +48,9 @@
 #include "gimpsmudgetool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
+
+#include "app_procs.h"
+#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -126,7 +128,7 @@ paint_options_init (PaintOptions         *options,
   GtkWidget    *scale;
   GtkWidget    *separator;
 
-  tool_info = tool_manager_get_info_by_type (tool_type);
+  tool_info = tool_manager_get_info_by_type (the_gimp, tool_type);
 
   if (! tool_info)
     {
@@ -280,7 +282,7 @@ paint_options_reset (ToolOptions *tool_options)
 
   options = (PaintOptions *) tool_options;
 
-  default_context = gimp_context_get_default ();
+  default_context = gimp_get_default_context (the_gimp);
 
   if (options->opacity_w)
     {

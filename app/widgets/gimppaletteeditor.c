@@ -271,9 +271,9 @@ palette_set_active_color (gint r,
     }
 
   if (active_color == FOREGROUND)
-    gimp_context_set_foreground (gimp_context_get_user (), &color);
+    gimp_context_set_foreground (gimp_get_user_context (the_gimp), &color);
   else if (active_color == BACKGROUND)
-    gimp_context_set_background (gimp_context_get_user (), &color);
+    gimp_context_set_background (gimp_get_user_context (the_gimp), &color);
 }
 
 /*  called from palette_select.c  ********************************************/
@@ -327,9 +327,9 @@ palette_dialog_new (gboolean editor)
   palette_dialog = g_new0 (PaletteDialog, 1);
 
   if (! editor)
-    palette_dialog->context = gimp_context_get_user ();
+    palette_dialog->context = gimp_get_user_context (the_gimp);
   else
-    palette_dialog->context = gimp_context_new (the_gimp, NULL, NULL);
+    palette_dialog->context = gimp_create_context (the_gimp, NULL, NULL);
 
   palette_dialog->zoom_factor   = 1.0;
   palette_dialog->columns       = COLUMNS;
@@ -597,9 +597,9 @@ palette_dialog_new_entry_callback (GtkWidget *widget,
     return;
 
   if (active_color == FOREGROUND)
-    gimp_context_get_foreground (gimp_context_get_user (), &color);
+    gimp_context_get_foreground (gimp_get_user_context (the_gimp), &color);
   else if (active_color == BACKGROUND)
-    gimp_context_get_background (gimp_context_get_user (), &color);
+    gimp_context_get_background (gimp_get_user_context (the_gimp), &color);
 
   palette_dialog->color =
     gimp_palette_add_entry (gimp_context_get_palette (palette_dialog->context),
@@ -684,9 +684,11 @@ palette_dialog_color_notebook_callback (ColorNotebook      *color_notebook,
 
 	  /*  Update either foreground or background colors  */
 	  if (active_color == FOREGROUND)
-	    gimp_context_set_foreground (gimp_context_get_user (), color);
+	    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
+					 color);
 	  else if (active_color == BACKGROUND)
-	    gimp_context_set_background (gimp_context_get_user (), color);
+	    gimp_context_set_background (gimp_get_user_context (the_gimp),
+					 color);
 
 	  gimp_data_dirty (GIMP_DATA (palette));
 	}
@@ -779,19 +781,19 @@ palette_dialog_color_area_events (GtkWidget     *widget,
 	      if (active_color == FOREGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_background (gimp_context_get_user (),
+		    gimp_context_set_background (gimp_get_user_context (the_gimp),
 						 &palette_dialog->color->color);
 		  else
-		    gimp_context_set_foreground (gimp_context_get_user (),
+		    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
 						 &palette_dialog->color->color);
 		}
 	      else if (active_color == BACKGROUND)
 		{
 		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_foreground (gimp_context_get_user (),
+		    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
 						 &palette_dialog->color->color);
 		  else
-		    gimp_context_set_background (gimp_context_get_user (),
+		    gimp_context_set_background (gimp_get_user_context (the_gimp),
 						 &palette_dialog->color->color);
 		}
 

@@ -40,7 +40,7 @@
 
 #include "xcf/xcf.h"
 
-#include "tools/tools.h"
+#include "tools/tool_manager.h"
 
 #include "gui/color-notebook.h"
 #include "gui/file-open-dialog.h"
@@ -51,7 +51,6 @@
 #include "app_procs.h"
 #include "batch.h"
 #include "colormaps.h"
-#include "context_manager.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimprc.h"
@@ -143,8 +142,7 @@ app_init (gint    gimp_argc,
   gtk_object_ref (GTK_OBJECT (the_gimp));
   gtk_object_sink (GTK_OBJECT (the_gimp));
 
-  /*  Initialize the context system before loading any data  */
-  context_manager_init ();
+  tool_manager_init (the_gimp);
 
   /*  Initialize the procedural database
    *    We need to do this first because any of the init
@@ -191,7 +189,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-      gui_restore ();
+      gui_restore (the_gimp);
     }
 
   /* Parse the rest of the command line arguments as images to load */
@@ -207,7 +205,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-      gui_post_init ();
+      gui_post_init (the_gimp);
     }
 }
 
@@ -233,20 +231,19 @@ app_exit_finish (void)
 
   if (! no_interface)
     {
-      gui_shutdown ();
+      gui_shutdown (the_gimp);
     }
 
   module_db_free ();
   gdisplays_delete ();
-  context_manager_free ();
   plug_in_kill ();
   save_unitrc ();
 
-  tools_exit ();
+  tool_manager_exit (the_gimp);
 
   if (! no_interface)
     {
-      gui_exit ();
+      gui_exit (the_gimp);
     }
 
   xcf_exit ();
@@ -276,7 +273,7 @@ gimp_set_busy (void)
   /* FIXME: gimp_busy HACK */
   gimp_busy = TRUE;
 
-  gui_set_busy ();
+  gui_set_busy (the_gimp);
 }
 
 static gboolean
@@ -307,7 +304,7 @@ gimp_set_busy_until_idle (void)
 void
 gimp_unset_busy (void)
 {
-  gui_unset_busy ();
+  gui_unset_busy (the_gimp);
 
   /* FIXME: gimp_busy HACK */
   gimp_busy = FALSE;

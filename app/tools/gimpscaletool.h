@@ -43,7 +43,8 @@ struct _GimpScaleToolClass
 };
 
 
-void          gimp_scale_tool_register (void);
+void          gimp_scale_tool_register (Gimp         *gimp);
+
 GtkType       gimp_scale_tool_get_type (void);
 
 TileManager * gimp_scale_tool_scale    (GimpImage    *gimage,

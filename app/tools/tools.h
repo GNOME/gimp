@@ -20,8 +20,8 @@
 #define __TOOLS_H__
 
 
-void   tools_init     (void);
-void   tools_exit     (void);
+void   tools_init (Gimp *gimp);
+void   tools_exit (Gimp *gimp);
 
 
 #endif  /* __TOOLS_H__ */

@@ -33,6 +33,7 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 #include "core/core-types.h"
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable.h"
@@ -161,7 +162,7 @@ drawable_fill_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    drawable_fill (drawable, (GimpFillType) fill_type);
+    drawable_fill (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);
 
   return procedural_db_return_args (&drawable_fill_proc, success);
 }

@@ -58,10 +58,9 @@ struct _GimpSmudgeToolClass
 };
 
 
-void       gimp_smudge_tool_register (void);
+void       gimp_smudge_tool_register (Gimp *gimp);
 
 GtkType    gimp_smudge_tool_get_type (void);
-
 
 
 /* FIXME: this antique code doesn't follow the coding style */

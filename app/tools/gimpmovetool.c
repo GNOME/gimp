@@ -78,9 +78,10 @@ static GimpToolClass *parent_class = NULL;
 
 
 void
-gimp_move_tool_register (void)
+gimp_move_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_MOVE_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_MOVE_TOOL,
                               FALSE,
 			      "gimp:move_tool",
 			      _("Move Tool"),

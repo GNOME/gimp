@@ -2252,7 +2252,7 @@ menus_init (void)
     }
 
   /*  reorder <Image>/Image/Colors  */
-  tool_info = tool_manager_get_info_by_type (GIMP_TYPE_POSTERIZE_TOOL);
+  tool_info = tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_POSTERIZE_TOOL);
 
   menu_item = gtk_item_factory_get_widget (image_factory,
 					   tool_info->menu_path);
@@ -2275,7 +2275,7 @@ menus_init (void)
 
     for (i = 0; i < n_color_tools; i++)
       {
-	tool_info = tool_manager_get_info_by_type (color_tools[i]);
+	tool_info = tool_manager_get_info_by_type (the_gimp, color_tools[i]);
 
 	menu_item = gtk_item_factory_get_widget (image_factory,
 						 tool_info->menu_path);

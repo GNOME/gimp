@@ -24,24 +24,12 @@ typedef struct _GimpRc GimpRc;
 /*  global gimprc variables  - need some comments on this stuff */
 struct _GimpRc 
 {
-  gchar             *plug_in_path;
-  gchar             *brush_path;
-  gchar             *default_brush;
-  gchar             *pattern_path;
-  gchar             *default_pattern;
-  gchar             *palette_path;
-  gchar             *default_palette;
-  gchar             *gradient_path;
-  gchar             *default_gradient;
-  gchar             *pluginrc_path;
-  gchar             *module_path;
   gint               marching_speed;
   gint               last_opened_size;
   gdouble            gamma_val;
   gint               transparency_type;
   gboolean           perfectmouse;
   gint               transparency_size;
-  gint               levels_of_undo;
   gint               min_colors;
   gboolean           install_cmap;
   gboolean           cycled_marching_ants;
@@ -51,16 +39,9 @@ struct _GimpRc
   gint               preview_size;
   gint               nav_preview_size;
   gboolean           show_rulers;
-  GimpUnit           default_units;
   gboolean           show_statusbar;
   gboolean           auto_save;
   gboolean           confirm_on_close;
-  gint               default_width, default_height;
-  gint               default_type;
-  GimpUnit           default_resolution_units;
-  gdouble            default_xresolution;
-  gdouble            default_yresolution;
-  gchar             *default_comment;
   gboolean           default_dot_for_dot;
   gboolean           save_session_info;
   gboolean           save_device_status;
@@ -73,10 +54,8 @@ struct _GimpRc
   gboolean           using_xserver_resolution;
   gchar             *image_title_format;
   gboolean           global_paint_options;
-  gchar             *module_db_load_inhibit;
   gboolean           show_indicators;
   guint              max_new_image_size;
-  gint               thumbnail_mode;
   gboolean           trust_dirty_flag;
   gboolean           use_help;
   gboolean           nav_window_per_display;

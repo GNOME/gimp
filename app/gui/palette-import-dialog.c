@@ -405,7 +405,7 @@ palette_import_grad_callback (GtkWidget *widget,
     {
       GimpGradient *gradient;
 
-      gradient = gimp_context_get_gradient (gimp_context_get_user ());
+      gradient = gimp_context_get_gradient (gimp_get_user_context (the_gimp));
 
       import_dialog->import_type = GRAD_IMPORT;
       if (import_dialog->image_list)
@@ -571,7 +571,7 @@ palette_import_import_callback (GtkWidget *widget,
   else
     palette_name = g_strdup (palette_name);
 
-  gradient  = gimp_context_get_gradient (gimp_context_get_user ());
+  gradient  = gimp_context_get_gradient (gimp_get_user_context (the_gimp));
   n_colors  = (gint) import_dialog->sample->value;
   threshold = (gint) import_dialog->threshold->value;
 
@@ -677,7 +677,7 @@ palette_import_dialog_new (void)
   {
     GimpGradient* gradient;
 
-    gradient = gimp_context_get_gradient (gimp_context_get_current ());
+    gradient = gimp_context_get_gradient (gimp_get_user_context (the_gimp));
     gtk_entry_set_text (GTK_ENTRY (entry),
 			gradient ? GIMP_OBJECT (gradient)->name : _("new_import"));
   }
@@ -783,9 +783,10 @@ palette_import_dialog_new (void)
 
   /*  Fill with the selected gradient  */
   palette_import_fill_grad_preview
-    (image, gimp_context_get_gradient (gimp_context_get_user ()));
+    (image, gimp_context_get_gradient (gimp_get_user_context (the_gimp)));
   import_dialog->import_type = GRAD_IMPORT;
-  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()), "gradient_changed",
+  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
+		      "gradient_changed",
 		      GTK_SIGNAL_FUNC (palette_import_gradient_update),
 		      NULL);
 

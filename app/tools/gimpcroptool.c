@@ -1675,9 +1675,10 @@ gimp_crop_tool_destroy (GtkObject *object)
 }
 
 void
-gimp_crop_tool_register (void)
+gimp_crop_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_CROP_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_CROP_TOOL,
                               FALSE,
                               "gimp:crop_tool",
                               _("Crop Tool"),

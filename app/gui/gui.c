@@ -30,6 +30,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpimage.h"
 
 #include "widgets/gimpdialogfactory.h"
 
@@ -66,13 +67,16 @@
 
 /*  local function prototypes  */
 
-static void   gui_display_new                 (GimpImage *gimage);
-static gint   gui_rotate_the_shield_harmonics (GtkWidget *widget,
-					       GdkEvent  *eevent,
-					       gpointer   data);
-static void   gui_really_quit_callback        (GtkWidget *button,
-					       gboolean   quit,
-					       gpointer   data);
+static void   gui_display_new                 (GimpImage   *gimage);
+static gint   gui_rotate_the_shield_harmonics (GtkWidget   *widget,
+					       GdkEvent    *eevent,
+					       gpointer     data);
+static void   gui_really_quit_callback        (GtkWidget   *button,
+					       gboolean     quit,
+					       gpointer     data);
+static void   gui_display_changed             (GimpContext *context,
+					       GDisplay    *display,
+					       gpointer     data);
 
 
 /*  global variables  */
@@ -85,6 +89,13 @@ extern GSList *display_list;  /*  from gdisplay.c  */
 void
 gui_init (Gimp *gimp)
 {
+  gimp->create_display_func = gui_display_new;
+
+  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (gimp)),
+		      "display_changed",
+		      GTK_SIGNAL_FUNC (gui_display_changed),
+		      NULL);
+
   /* make sure the monitor resolution is valid */
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
       gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
@@ -101,7 +112,7 @@ gui_init (Gimp *gimp)
   gximage_init ();
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
 
-  dialogs_init ();
+  dialogs_init (gimp);
 
   devices_init ();
   session_init ();
@@ -141,12 +152,10 @@ gui_init (Gimp *gimp)
 
     g_free (filenames);
   }
-
-  gimp->create_display_func = gui_display_new;
 }
 
 void
-gui_restore (void)
+gui_restore (Gimp *gimp)
 {
   color_select_init ();
 
@@ -155,7 +164,7 @@ gui_restore (void)
 }
 
 void
-gui_post_init (void)
+gui_post_init (Gimp *gimp)
 {
   if (gimprc.show_tips)
     {
@@ -164,7 +173,7 @@ gui_post_init (void)
 }
 
 void
-gui_shutdown (void)
+gui_shutdown (Gimp *gimp)
 {
   session_save ();
   device_status_free ();
@@ -176,13 +185,13 @@ gui_shutdown (void)
 }
 
 void
-gui_exit (void)
+gui_exit (Gimp *gimp)
 {
   menus_quit ();
   gximage_free ();
   render_free ();
 
-  dialogs_exit ();
+  dialogs_exit (gimp);
 
   /*  handle this in the dialog factory:  */
   document_index_free ();
@@ -194,7 +203,7 @@ gui_exit (void)
 }
 
 void
-gui_set_busy (void)
+gui_set_busy (Gimp *gimp)
 {
   GDisplay *gdisp;
   GSList   *list;
@@ -213,7 +222,7 @@ gui_set_busy (void)
 }
 
 void
-gui_unset_busy (void)
+gui_unset_busy (Gimp *gimp)
 {
   GDisplay *gdisp;
   GSList   *list;
@@ -260,7 +269,7 @@ gui_display_new (GimpImage *gimage)
 
   gdisp = gdisplay_new (gimage, 0x0101);
 
-  gimp_context_set_display (gimp_context_get_user (), gdisp);
+  gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
   if (double_speed)
     gtk_signal_connect_after (GTK_OBJECT (gdisp->canvas), "expose_event",
@@ -330,4 +339,12 @@ gui_really_quit_callback (GtkWidget *button,
       menus_set_sensitive ("<Toolbox>/File/Quit", TRUE);
       menus_set_sensitive ("<Image>/File/Quit", TRUE);
     }
+}
+
+static void
+gui_display_changed (GimpContext *context,
+		     GDisplay    *display,
+		     gpointer     data)
+{
+  gdisplay_set_menu_sensitivity (display);
 }

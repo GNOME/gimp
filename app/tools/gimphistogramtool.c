@@ -90,9 +90,10 @@ static GimpToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_histogram_tool_register (void)
+gimp_histogram_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_HISTOGRAM_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_HISTOGRAM_TOOL,
                               FALSE,
 			      "gimp:histogram_tool",
 			      _("Histogram"),

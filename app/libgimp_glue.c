@@ -24,8 +24,10 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
+#include "app_procs.h"
 #include "libgimp_glue.h"
 
 
@@ -34,7 +36,7 @@ gimp_palette_set_foreground (const GimpRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_set_foreground (NULL, color);
+  gimp_context_set_foreground (gimp_get_user_context (the_gimp), color);
 
   return TRUE;
 }
@@ -44,7 +46,7 @@ gimp_palette_get_foreground (GimpRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_get_foreground (NULL, color);
+  gimp_context_get_foreground (gimp_get_user_context (the_gimp), color);
 
   return TRUE;
 }
@@ -54,7 +56,7 @@ gimp_palette_set_background (const GimpRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_set_background (NULL, color);
+  gimp_context_set_background (gimp_get_user_context (the_gimp), color);
 
   return TRUE;
 }
@@ -64,7 +66,7 @@ gimp_palette_get_background (GimpRGB *color)
 {
   g_return_val_if_fail (color != NULL, FALSE);
 
-  gimp_context_get_background (NULL, color);
+  gimp_context_get_background (gimp_get_user_context (the_gimp), color);
 
   return TRUE;
 }

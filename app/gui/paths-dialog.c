@@ -33,6 +33,7 @@
 #include "core/core-types.h"
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -1347,7 +1348,7 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
   args[2].value.pdb_int = (gint32) gimp_drawable_get_ID (gimp_image_active_drawable (gimage));
 
   /* get the display by asking the current context */
-  gdisp = gimp_context_get_display (gimp_context_get_user ());
+  gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
   plug_in_run (proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gdisp->ID : 0);
 

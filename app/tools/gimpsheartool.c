@@ -92,9 +92,10 @@ static TransformOptions *shear_options = NULL;
 /* Public functions */
 
 void 
-gimp_shear_tool_register (void)
+gimp_shear_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_SHEAR_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_SHEAR_TOOL,
                               FALSE,
 			      "gimp:shear_tool",
 			      _("Shear Tool"),

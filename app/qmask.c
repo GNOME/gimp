@@ -29,6 +29,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -36,6 +37,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -238,7 +240,10 @@ qmask_activate (GtkWidget *widget,
 				    "Qmask",
 				    &color);
 	  gimp_image_add_channel (gimg, gmask, 0);
-	  drawable_fill (GIMP_DRAWABLE (gmask), TRANSPARENT_FILL);
+
+	  drawable_fill (GIMP_DRAWABLE (gmask),
+			 gimp_get_user_context (gimg->gimp),
+			 TRANSPARENT_FILL);
 	}
       else
 	{

@@ -34,6 +34,7 @@
 /* FIXME: remove the Path <-> BezierSelect dependency */
 #include "tools/tools-types.h"
 
+#include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"

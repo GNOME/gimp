@@ -363,7 +363,7 @@ nav_dialog_follow_auto (void)
   GimpContext *context;
   GDisplay    *gdisp;
 
-  context = gimp_context_get_user ();
+  context = gimp_get_user_context (the_gimp);
 
   gdisp = gimp_context_get_display (context);
 

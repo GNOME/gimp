@@ -79,8 +79,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 ##
 ## stuff for core/
 ##
-	context_manager.c	\
-	context_manager.h	\
 	datafiles.c		\
 	datafiles.h		\
 	drawable.c		\

@@ -37,6 +37,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrushpipe.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -44,17 +45,18 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
-#include "devices.h"
-#include "drawable.h"
-#include "gdisplay.h"
-#include "gimprc.h"
-#include "undo.h"
-
 #include "gimpdrawtool.h"
 #include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimpconvolvetool.h"
 #include "gimppainttool.h"
+
+#include "app_procs.h"
+#include "devices.h"
+#include "drawable.h"
+#include "gdisplay.h"
+#include "gimprc.h"
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -837,6 +839,10 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
     {
       if ((col = gimp_drawable_get_color_at (drawable, x, y)))
 	{
+	  Gimp *gimp;
+
+	  gimp = gimp_drawable_gimage (drawable)->gimp;
+
 	  gimp_rgba_set_uchar (&color,
 			       col[RED_PIX],
 			       col[GREEN_PIX],
@@ -844,9 +850,9 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
 			       255);
 
 	  if ((state & GDK_CONTROL_MASK))
-	    gimp_context_set_foreground (gimp_context_get_user (), &color);
+	    gimp_context_set_foreground (gimp_get_user_context (gimp), &color);
 	  else
-	    gimp_context_set_background (gimp_context_get_user (), &color);
+	    gimp_context_set_background (gimp_get_user_context (gimp), &color);
 
 	  g_free (col);
 	}
@@ -870,6 +876,10 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 {
   static GimpBrush *brush = NULL;
 
+  GimpContext *context;
+
+  context = gimp_get_current_context (the_gimp);
+
   paint_tool->curx = x;
   paint_tool->cury = y;
 
@@ -887,14 +897,14 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
 #endif
 
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
-  if (brush && brush != gimp_context_get_brush (NULL))
+  if (brush && brush != gimp_context_get_brush (context))
     {
       gtk_signal_disconnect_by_func (GTK_OBJECT (brush),
 				     GTK_SIGNAL_FUNC (gimp_paint_tool_invalidate_cache),
 				     NULL);
       gtk_object_unref (GTK_OBJECT (brush));
     }
-  if (!(brush = gimp_context_get_brush (NULL)))
+  if (!(brush = gimp_context_get_brush (context)))
     {
       g_message (_("No brushes available for use with this tool."));
       return FALSE;
@@ -1099,8 +1109,11 @@ gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *paint_tool,
 					 GimpRGB           *color,
 					 GradientPaintMode  mode)
 {
-  gdouble y;
-  gdouble distance;  /* distance in current brush stroke */
+  GimpContext *context;
+  gdouble      y;
+  gdouble      distance;  /* distance in current brush stroke */
+
+  context = gimp_get_current_context (the_gimp);
 
   distance = paint_tool->pixel_dist;
   y = ((double) distance / gradient_length);
@@ -1114,7 +1127,7 @@ gimp_paint_tool_get_color_from_gradient (GimpPaintTool     *paint_tool,
   else
     y = y - (int)y;
 
-  gimp_gradient_get_color_at (gimp_context_get_gradient (NULL), y, color);
+  gimp_gradient_get_color_at (gimp_context_get_gradient (context), y, color);
 }
 
 

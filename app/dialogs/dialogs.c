@@ -20,9 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "apptypes.h"
 #include "widgets/widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -88,25 +88,21 @@ static const gint n_dock_entries = (sizeof (dock_entries) /
 /*  public functions  */
 
 void
-dialogs_init (void)
+dialogs_init (Gimp *gimp)
 {
   gint i;
 
-  global_dialog_factory =
-    gimp_dialog_factory_new ("toplevel",
-			     gimp_context_get_user (),
-			     NULL,
-			     NULL);
-
+  global_dialog_factory = gimp_dialog_factory_new ("toplevel",
+						   gimp_get_user_context (gimp),
+						   NULL,
+						   NULL);
   gtk_object_ref (GTK_OBJECT (global_dialog_factory));
   gtk_object_sink (GTK_OBJECT (global_dialog_factory));
 
-  global_dock_factory =
-    gimp_dialog_factory_new ("dock",
-			     gimp_context_get_user (),
-			     menus_get_dialogs_factory (),
-			     dialogs_dock_new);
-
+  global_dock_factory = gimp_dialog_factory_new ("dock",
+						 gimp_get_user_context (gimp),
+						 menus_get_dialogs_factory (),
+						 dialogs_dock_new);
   gtk_object_ref (GTK_OBJECT (global_dock_factory));
   gtk_object_sink (GTK_OBJECT (global_dock_factory));
 
@@ -128,7 +124,7 @@ dialogs_init (void)
 }
 
 void
-dialogs_exit (void)
+dialogs_exit (Gimp *gimp)
 {
   gtk_object_unref (GTK_OBJECT (global_dialog_factory));
   gtk_object_unref (GTK_OBJECT (global_dock_factory));

@@ -44,6 +44,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 
 #include "file-dialog-utils.h"
@@ -54,7 +55,6 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
-#include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"
 #include "plug_in.h"
@@ -245,7 +245,8 @@ file_open_with_proc_and_display (gchar         *filename,
   gchar     *absolute;
   gint       status;
 
-  if ((gimage = file_open_image (filename,
+  if ((gimage = file_open_image (the_gimp,
+				 filename,
 				 raw_filename,
 				 _("Open"),
 				 file_proc,
@@ -605,7 +606,7 @@ set_preview (const gchar *fullfname,
 	}
       else
 	{
-	  switch (gimprc.thumbnail_mode)
+	  switch (core_config->thumbnail_mode)
 	    {
 	    case 0:
 	      gtk_label_set_text (GTK_LABEL(open_options_label),
@@ -717,7 +718,8 @@ file_open_genbutton_callback (GtkWidget *widget,
 	  { /* Is not directory. */
 	    gint dummy;
 
-	    gimage_to_be_thumbed = file_open_image (full_filename,
+	    gimage_to_be_thumbed = file_open_image (the_gimp,
+						    full_filename,
 						    list->data,
 						    NULL,
 						    NULL,
@@ -730,7 +732,7 @@ file_open_genbutton_callback (GtkWidget *widget,
 		RGBbuf  = make_RGBbuf_from_tempbuf (tempbuf,
 						    &RGBbuf_w,
 						    &RGBbuf_h);
-		if (gimprc.thumbnail_mode)
+		if (core_config->thumbnail_mode)
 		  {
 		    file_save_thumbnail (gimage_to_be_thumbed,
 					 full_filename, tempbuf);
@@ -934,7 +936,8 @@ file_revert_confirm_callback (GtkWidget *widget,
 
       filename = gimp_object_get_name (GIMP_OBJECT (old_gimage));
 
-      new_gimage = file_open_image (filename, filename,
+      new_gimage = file_open_image (old_gimage->gimp,
+				    filename, filename,
 				    _("Revert"),
 				    NULL,
 				    RUN_INTERACTIVE,

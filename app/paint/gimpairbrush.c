@@ -29,6 +29,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -124,9 +125,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_airbrush_tool_register (void)
+gimp_airbrush_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_AIRBRUSH_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_AIRBRUSH_TOOL,
                               TRUE,
                               "gimp:airbrush_tool",
                               _("Airbrush"),
@@ -242,7 +244,8 @@ gimp_airbrush_tool_paint (GimpPaintTool *paint_tool,
       incremental      = non_gui_incremental;
     }
 
-  brush = gimp_context_get_brush (NULL);
+  brush =
+    gimp_context_get_brush (gimp_get_current_context (drawable->gimage->gimp));
 
   switch (state)
     {
@@ -352,6 +355,7 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
 			   gboolean              incremental)
 {
   GimpImage            *gimage;
+  GimpContext          *context;
   TempBuf              *area;
   guchar                col[MAX_CHANNELS];
   gdouble               scale;
@@ -362,6 +366,8 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_tool->curpressure;
@@ -374,9 +380,9 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
   /*  color the pixels  */
   if (pressure_options->color)
     {
-      GimpRGB color;
-      
-      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+      GimpRGB  color;
+
+      gimp_gradient_get_color_at (gimp_context_get_gradient (context),
 				  paint_tool->curpressure, &color);
 
       gimp_rgba_get_uchar (&color,
@@ -412,8 +418,8 @@ gimp_airbrush_tool_motion (GimpPaintTool        *paint_tool,
   /*  paste the newly painted area to the image  */
   gimp_paint_tool_paste_canvas (paint_tool, drawable,
 				MIN (pressure, 255),
-				(gint) (gimp_context_get_opacity (NULL) * 255),
-				gimp_context_get_paint_mode (NULL),
+				(gint) (gimp_context_get_opacity (context) * 255),
+				gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
 				SOFT, scale, paint_appl_mode);
 }
 

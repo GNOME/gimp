@@ -153,11 +153,11 @@ brush_select_new (gchar   *title,
 
   if (title)
     {
-      bsp->context = gimp_context_new (the_gimp, title, NULL);
+      bsp->context = gimp_create_context (the_gimp, title, NULL);
     }
   else
     {
-      bsp->context = gimp_context_get_user ();
+      bsp->context = gimp_get_user_context (the_gimp);
 
       dialog_register (bsp->shell);
     }
@@ -175,11 +175,11 @@ brush_select_new (gchar   *title,
     }
   else
     {
-      active = gimp_context_get_brush (gimp_context_get_user ());
+      active = gimp_context_get_brush (gimp_get_user_context (the_gimp));
     }
 
   if (!active)
-    active = gimp_context_get_brush (gimp_context_get_standard (the_gimp));
+    active = gimp_context_get_brush (gimp_get_standard_context (the_gimp));
 
   if (title)
     {

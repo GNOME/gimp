@@ -101,9 +101,10 @@ static GimpDrawToolClass *parent_class = NULL;
 
 
 void
-gimp_magnify_tool_register (void)
+gimp_magnify_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_MAGNIFY_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_MAGNIFY_TOOL,
                               FALSE,
 			      "gimp:magnify_tool",
 			      _("Magnify"),

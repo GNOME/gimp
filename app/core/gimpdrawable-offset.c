@@ -32,11 +32,13 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "drawable.h"
+#include "gimp.h"
 #include "gimpcontext.h"
 #include "gimpdrawable.h"
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
+
+#include "drawable.h"
 
 
 void
@@ -224,9 +226,12 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     {
       if (fill_type == OFFSET_BACKGROUND)
 	{
-	  GimpRGB color;
+	  Gimp    *gimp;
+	  GimpRGB  color;
 
-	  gimp_context_get_background (NULL, &color);
+	  gimp = gimp_drawable_gimage (drawable)->gimp;
+
+	  gimp_context_get_background (gimp_get_current_context (gimp), &color);
 
 	  gimp_rgb_get_uchar (&color, &fill[0], &fill[1], &fill[2]);
 

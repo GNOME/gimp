@@ -24,6 +24,7 @@
 
 #include "tools/tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
@@ -38,6 +39,7 @@
 
 #include "tool-options-dialog.h"
 
+#include "app_procs.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
@@ -84,7 +86,7 @@ tool_options_dialog_create (void)
   if (options_shell)
     return options_shell;
 
-  tool_info = gimp_context_get_tool (gimp_context_get_user ());
+  tool_info = gimp_context_get_tool (gimp_get_user_context (the_gimp));
 
   if (! tool_info)
     {
@@ -173,14 +175,14 @@ tool_options_dialog_create (void)
 				tool_options_dialog_drag_tool, NULL);
 
   gtk_signal_connect_while_alive
-    (GTK_OBJECT (gimp_context_get_user ()), "tool_changed",
+    (GTK_OBJECT (gimp_get_user_context (the_gimp)), "tool_changed",
      GTK_SIGNAL_FUNC (tool_options_dialog_tool_changed),
      NULL,
      GTK_OBJECT (options_shell));
 
-  tool_info = gimp_context_get_tool (gimp_context_get_user ());
+  tool_info = gimp_context_get_tool (gimp_get_user_context (the_gimp));
 
-  tool_options_dialog_tool_changed (gimp_context_get_user (),
+  tool_options_dialog_tool_changed (gimp_get_user_context (the_gimp),
 				    tool_info,
 				    NULL);
 
@@ -254,14 +256,15 @@ tool_options_dialog_drop_tool (GtkWidget    *widget,
 			       GimpViewable *viewable,
 			       gpointer      data)
 {
-  gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
+  gimp_context_set_tool (gimp_get_user_context (the_gimp),
+			 GIMP_TOOL_INFO (viewable));
 }
 
 GimpViewable *
 tool_options_dialog_drag_tool (GtkWidget *widget,
 			       gpointer   data)
 {
-  return (GimpViewable *) gimp_context_get_tool (gimp_context_get_user ());
+  return (GimpViewable *) gimp_context_get_tool (gimp_get_user_context (the_gimp));
 }
 
 static void
@@ -287,7 +290,7 @@ tool_options_dialog_reset_callback (GtkWidget *widget,
   if (! active_tool)
     return;
 
-  tool_info = tool_manager_get_info_by_tool (active_tool);
+  tool_info = tool_manager_get_info_by_tool (the_gimp, active_tool);
 
   if (! tool_info)
     {

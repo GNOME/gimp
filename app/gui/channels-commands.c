@@ -25,6 +25,7 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -37,6 +38,7 @@
 #include "gdisplay.h"
 #include "menus.h"
 
+#include "app_procs.h"
 #include "drawable.h"
 
 #include "libgimp/gimpintl.h"
@@ -314,7 +316,9 @@ new_channel_query_ok_callback (GtkWidget *widget,
 				      channel_name,
 				      &channel_color);
 
-      drawable_fill (GIMP_DRAWABLE (new_channel), TRANSPARENT_FILL);
+      drawable_fill (GIMP_DRAWABLE (new_channel),
+		     gimp_get_user_context (the_gimp),
+		     TRANSPARENT_FILL);
 
       gimp_image_add_channel (gimage, new_channel, -1);
       gdisplays_flush ();

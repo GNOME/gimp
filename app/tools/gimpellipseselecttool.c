@@ -29,12 +29,13 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
-#include "gdisplay.h"
-
 #include "gimpellipseselecttool.h"
 #include "selection_options.h"
 #include "tool_options.h"
 #include "tool_manager.h"
+
+#include "app_procs.h"
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -63,9 +64,11 @@ static SelectionOptions *ellipse_options = NULL;
 /*  public functions  */
 
 void
-gimp_ellipse_select_tool_register (void)
+gimp_ellipse_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_ELLIPSE_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+			      FALSE,
                               "gimp:ellipse_select_tool",
                               _("Ellipse Select"),
                               _("Select elliptical regions"),
@@ -243,7 +246,7 @@ gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
 
   sel_options = (SelectionOptions *)
-    tool_manager_get_info_by_tool (tool)->tool_options;
+    tool_manager_get_info_by_tool (the_gimp, tool)->tool_options;
 
   ellipse_select (tool->gdisp->gimage,
                   x, y, w, h,

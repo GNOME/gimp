@@ -40,6 +40,7 @@
 
 #include "gimp.h"
 #include "gimpcontext.h"
+#include "gimpcoreconfig.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-mask.h"
@@ -55,7 +56,6 @@
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
-#include "gimprc.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "undo.h"
@@ -394,9 +394,9 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->width                 = 0;
   gimage->height                = 0;
-  gimage->xresolution           = gimprc.default_xresolution;
-  gimage->yresolution           = gimprc.default_yresolution;
-  gimage->unit                  = gimprc.default_units;
+  gimage->xresolution           = core_config->default_xresolution;
+  gimage->yresolution           = core_config->default_yresolution;
+  gimage->unit                  = core_config->default_units;
   gimage->base_type             = RGB;
 
   gimage->cmap                  = NULL;
@@ -1294,7 +1294,7 @@ gimp_image_get_foreground (const GimpImage    *gimage,
   GimpRGB  color;
   guchar   pfg[3];
 
-  gimp_context_get_foreground (NULL, &color);
+  gimp_context_get_foreground (gimp_get_current_context (gimage->gimp), &color);
 
   gimp_rgb_get_uchar (&color, &pfg[0], &pfg[1], &pfg[2]);
 
@@ -1310,7 +1310,7 @@ gimp_image_get_background (const GimpImage    *gimage,
   guchar   pbg[3];
 
   /*  Get the palette color  */
-  gimp_context_get_background (NULL, &color);
+  gimp_context_get_background (gimp_get_current_context (gimage->gimp), &color);
 
   gimp_rgb_get_uchar (&color, &pbg[0], &pbg[1], &pbg[2]);
 

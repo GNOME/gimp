@@ -27,8 +27,6 @@
 #include "gimpimage.h"
 #include "gimpundo.h"
 
-#include "gimprc.h"
-
 
 enum
 {
@@ -200,9 +198,11 @@ static void
 gimp_undo_real_push (GimpUndo  *undo,
                      GimpImage *gimage)
 {
+  /* FIXME: need core_config->undo_preview_size */
+
   undo->preview = gimp_viewable_get_preview (GIMP_VIEWABLE (gimage),
-                                             gimprc.preview_size, 
-					     gimprc.preview_size);
+                                             24,
+					     24);
 }
 
 static void

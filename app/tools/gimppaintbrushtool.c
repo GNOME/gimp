@@ -31,6 +31,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -81,9 +82,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_paintbrush_tool_register (void)
+gimp_paintbrush_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_PAINTBRUSH_TOOL,
 			      TRUE,
   			      "gimp:paintbrush_tool",
   			      _("Paintbrush"),
@@ -255,6 +257,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 			     GradientPaintMode     gradient_type)
 {
   GimpImage            *gimage;
+  GimpContext          *context;
   TempBuf              *area;
   gdouble               x, paint_left;
   guchar                local_blend = OPAQUE_OPACITY;
@@ -268,6 +271,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_tool->curpressure;
@@ -299,7 +304,7 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
       if (gradient_length)
 	{
 	  if (pressure_options->color)
-	    gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+	    gimp_gradient_get_color_at (gimp_context_get_gradient (context),
 					paint_tool->curpressure, &color);
 	  else
 	    gimp_paint_tool_get_color_from_gradient (paint_tool, gradient_length,
@@ -344,8 +349,8 @@ gimp_paintbrush_tool_motion (GimpPaintTool        *paint_tool,
 
       gimp_paint_tool_paste_canvas (paint_tool, drawable,
 				    MIN (opacity, 255),
-				    gimp_context_get_opacity (NULL) * 255,
-				    gimp_context_get_paint_mode (NULL),
+				    gimp_context_get_opacity (context) * 255,
+				    gimp_context_get_paint_mode (context),
 				    pressure_options->pressure ? PRESSURE : SOFT,
 				    scale, paint_appl_mode);
     }

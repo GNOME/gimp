@@ -107,7 +107,7 @@ brushes_get_brush_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpBrush *brush;
 
-  success = (brush = gimp_context_get_brush (NULL)) != NULL;
+  success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;
 
   return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
 
@@ -180,7 +180,8 @@ brushes_set_brush_invoker (Gimp     *gimp,
 						 name);
     
       if (object)
-	gimp_context_set_brush (NULL, GIMP_BRUSH (object));
+	gimp_context_set_brush (gimp_get_current_context (gimp),
+				GIMP_BRUSH (object));
       else
 	success = FALSE;
     }
@@ -220,7 +221,7 @@ brushes_get_opacity_invoker (Gimp     *gimp,
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = gimp_context_get_opacity (NULL) * 100.0;
+  return_args[1].value.pdb_float = gimp_context_get_opacity (gimp_get_current_context (gimp)) * 100.0;
 
   return return_args;
 }
@@ -262,7 +263,7 @@ brushes_set_opacity_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_opacity (NULL, opacity / 100.0);
+    gimp_context_set_opacity (gimp_get_current_context (gimp), opacity / 100.0);
 
   return procedural_db_return_args (&brushes_set_opacity_proc, success);
 }
@@ -299,7 +300,7 @@ brushes_get_spacing_invoker (Gimp     *gimp,
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_spacing_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (NULL));
+  return_args[1].value.pdb_int = gimp_brush_get_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)));
 
   return return_args;
 }
@@ -341,7 +342,7 @@ brushes_set_spacing_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_brush_set_spacing (gimp_context_get_brush (NULL), spacing);
+    gimp_brush_set_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)), spacing);
 
   return procedural_db_return_args (&brushes_set_spacing_proc, success);
 }
@@ -378,7 +379,7 @@ brushes_get_paint_mode_invoker (Gimp     *gimp,
   Argument *return_args;
 
   return_args = procedural_db_return_args (&brushes_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_context_get_paint_mode (NULL);
+  return_args[1].value.pdb_int = gimp_context_get_paint_mode (gimp_get_current_context (gimp));
 
   return return_args;
 }
@@ -420,7 +421,7 @@ brushes_set_paint_mode_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_context_set_paint_mode (NULL, paint_mode);
+    gimp_context_set_paint_mode (gimp_get_current_context (gimp), paint_mode);
 
   return procedural_db_return_args (&brushes_set_paint_mode_proc, success);
 }
@@ -548,7 +549,7 @@ brushes_get_brush_data_invoker (Gimp     *gimp,
 	    }
 	}
       else
-	success = (brush = gimp_context_get_brush (NULL)) != NULL;
+	success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;
     
       if (success)
 	{

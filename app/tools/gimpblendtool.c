@@ -35,6 +35,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
@@ -108,14 +109,15 @@ struct _BlendOptions
 
 typedef struct
 {
-  gdouble      offset;
-  gdouble      sx, sy;
-  BlendMode    blend_mode;
-  GradientType gradient_type;
-  GimpRGB      fg, bg;
-  gdouble      dist;
-  gdouble      vec[2];
-  RepeatFunc   repeat_func;
+  GimpGradient *gradient;
+  gdouble       offset;
+  gdouble       sx, sy;
+  BlendMode     blend_mode;
+  GradientType  gradient_type;
+  GimpRGB       fg, bg;
+  gdouble       dist;
+  gdouble       vec[2];
+  RepeatFunc    repeat_func;
 } RenderBlendData;
 
 typedef struct
@@ -272,9 +274,10 @@ static guint blend_n_targets = (sizeof (blend_target_table) /
 
 
 void
-gimp_blend_tool_register (void)
+gimp_blend_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_BLEND_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_BLEND_TOOL,
                               TRUE,
 			      "gimp:blend_tool",
 			      _("Blend"),
@@ -480,9 +483,9 @@ gimp_blend_tool_button_release (GimpTool       *tool,
       blend (gimage,
 	     gimp_image_active_drawable (gimage),
 	     blend_options->blend_mode,
-	     gimp_context_get_paint_mode (NULL),
+	     gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
 	     blend_options->gradient_type,
-	     gimp_context_get_opacity (NULL) * 100,
+	     gimp_context_get_opacity (gimp_get_current_context (gimage->gimp)) * 100,
 	     blend_options->offset,
 	     blend_options->repeat,
 	     blend_options->supersample,
@@ -875,7 +878,8 @@ blend_options_drop_gradient (GtkWidget    *widget,
 
   options = (BlendOptions *) data;
 
-  gimp_context_set_gradient (gimp_context_get_user (), GIMP_GRADIENT (viewable));
+  gimp_context_set_gradient (gimp_get_user_context (the_gimp),
+			     GIMP_GRADIENT (viewable));
 
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w), 
 			       CUSTOM_MODE);
@@ -887,7 +891,8 @@ blend_options_drop_tool (GtkWidget    *widget,
 			 GimpViewable *viewable,
 			 gpointer      data)
 {
-  gimp_context_set_tool (gimp_context_get_user (), GIMP_TOOL_INFO (viewable));
+  gimp_context_set_tool (gimp_get_user_context (the_gimp),
+			 GIMP_TOOL_INFO (viewable));
 }
 
 
@@ -1474,8 +1479,7 @@ gradient_render_pixel (double    x,
 
   if (rbd->blend_mode == CUSTOM_MODE)
     {
-      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
-				  factor, color);
+      gimp_gradient_get_color_at (rbd->gradient, factor, color);
     }
   else
     {
@@ -1554,14 +1558,19 @@ gradient_fill_region (GimpImage        *gimage,
   gpointer        *pr;
   guchar          *data;
   GimpRGB          color;
+  GimpContext     *context;
+
+  context = gimp_get_current_context (gimage->gimp);
+
+  rbd.gradient = gimp_context_get_gradient (context);
 
   /* Get foreground and background colors, normalized */
 
-  gimp_context_get_foreground (NULL, &rbd.fg);
+  gimp_context_get_foreground (context, &rbd.fg);
 
   /* rbd.fg.a = 1.0; */ /* Foreground is always opaque */
 
-  gimp_context_get_background (NULL, &rbd.bg);
+  gimp_context_get_background (context, &rbd.bg);
 
   /* rbd.bg.a = 1.0; */ /* opaque, for now */
 

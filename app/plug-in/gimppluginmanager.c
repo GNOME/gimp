@@ -89,6 +89,7 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -322,18 +323,19 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  gimp_datafiles_read_directories (gimprc.plug_in_path, MODE_EXECUTABLE,
+  gimp_datafiles_read_directories (core_config->plug_in_path, MODE_EXECUTABLE,
 				   plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
   filename = NULL;
-  if (gimprc.pluginrc_path)
+  if (core_config->pluginrc_path)
     {
-      if (g_path_is_absolute (gimprc.pluginrc_path))
-        filename = g_strdup (gimprc.pluginrc_path);
+      if (g_path_is_absolute (core_config->pluginrc_path))
+        filename = g_strdup (core_config->pluginrc_path);
       else
         filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-				    gimp_directory (), gimprc.pluginrc_path);
+				    gimp_directory (),
+				    core_config->pluginrc_path);
     }
   else
     filename = gimp_personal_rc_file ("pluginrc");
@@ -853,7 +855,7 @@ plug_in_new (gchar *name)
 
   if (! g_path_is_absolute (name))
     {
-      path = plug_in_search_in_path (gimprc.plug_in_path, name);
+      path = plug_in_search_in_path (core_config->plug_in_path, name);
 
       if (! path)
 	{

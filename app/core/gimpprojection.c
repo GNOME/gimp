@@ -31,6 +31,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -51,6 +52,7 @@
 #include "gui/menus.h"
 #include "nav_window.h"
 
+#include "app_procs.h"
 #include "appenv.h"
 #include "colormaps.h"
 #include "gimprc.h"
@@ -785,8 +787,12 @@ gdisplay_flush_whenever (GDisplay *gdisp,
   qmask_buttons_update (gdisp);
 
   /*  ensure the consistency of the tear-off menus  */
-  if (!now && gimp_context_get_display (gimp_context_get_user ()) == gdisp)
-    gdisplay_set_menu_sensitivity (gdisp);
+  if (! now &&
+      gimp_context_get_display (gimp_get_user_context
+				(gdisp->gimage->gimp)) == gdisp)
+    {
+      gdisplay_set_menu_sensitivity (gdisp);
+    }
 }
 
 void
@@ -2229,7 +2235,7 @@ gdisplay_active (void)
       gdk_event_free (event);
     }
 
-  return gimp_context_get_display (gimp_context_get_user ());
+  return gimp_context_get_display (gimp_get_user_context (the_gimp));
 }
 
 GDisplay *

@@ -44,10 +44,9 @@ struct _GimpFlipToolClass
 };
 
 
+void          gimp_flip_tool_register (Gimp                    *gimp);
+
 GtkType       gimp_flip_tool_get_type (void);
-
-void          gimp_flip_tool_register (void);
-
 
 TileManager * flip_tool_flip          (GimpImage               *gimage,
 				       GimpDrawable            *drawable,

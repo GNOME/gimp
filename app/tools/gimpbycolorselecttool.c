@@ -49,7 +49,6 @@
 #include "tool_options.h"
 #include "tool_manager.h"
 
-#include "context_manager.h"
 #include "gimprc.h"
 #include "gdisplay.h"
 
@@ -174,9 +173,11 @@ static guint n_by_color_select_targets = (sizeof (by_color_select_targets) /
 /* public functions */
 
 void
-gimp_by_color_select_tool_register (void)
+gimp_by_color_select_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_BY_COLOR_SELECT_TOOL, FALSE,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_BY_COLOR_SELECT_TOOL,
+			      FALSE,
                               "gimp:by_color_select_tool",
                               _("Select By Color"),
                               _("Select regions by color"),

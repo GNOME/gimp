@@ -26,12 +26,6 @@
 #include "gimpobject.h"
 
 
-#define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
-#define GIMP_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
-#define GIMP_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
-#define GIMP_IS_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
-#define GIMP_IS_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
-
 typedef enum
 {
   GIMP_CONTEXT_ARG_IMAGE,
@@ -79,6 +73,14 @@ typedef enum
 				  GIMP_CONTEXT_BUFFER_MASK     |
 				  GIMP_CONTEXT_PAINT_ARGS_MASK)
 } GimpContextArgMask;
+
+
+#define GIMP_TYPE_CONTEXT            (gimp_context_get_type ())
+#define GIMP_CONTEXT(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CONTEXT, GimpContext))
+#define GIMP_CONTEXT_CLASS(klass)    (GTK_CHECK_CLASS_CAST (klass, GIMP_TYPE_CONTEXT, GimpContextClass))
+#define GIMP_IS_CONTEXT(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_CONTEXT))
+#define GIMP_IS_CONTEXT_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTEXT))
+
 
 typedef struct _GimpContextClass GimpContextClass;
 
@@ -151,38 +153,13 @@ struct _GimpContextClass
 			       GimpBuffer       *buffer);
 };
 
+
 GtkType       gimp_context_get_type          (void);
-GimpContext * gimp_context_new               (Gimp        *gimp,
-					      const gchar *name,
-					      GimpContext *template);
 
-/*  TODO: - gimp_context_find ()
- *
- *        probably interacting with the context manager:
- *        - gimp_context_push () which will call gimp_context_set_parent()
- *        - gimp_context_push_new () to do a GL-style push
- *        - gimp_context_pop ()
- *
- *        a proper mechanism to prevent silly operations like pushing
- *        the user context to some client stack etc.
- */
+GimpContext * gimp_context_new               (Gimp              *gimp,
+					      const gchar       *name,
+					      GimpContext       *template);
 
-
-/*  to be used by the context management system only
- */
-void          gimp_context_set_current       (GimpContext *context);
-void          gimp_context_set_user          (GimpContext *context);
-void          gimp_context_set_default       (GimpContext *context);
-
-/*  these are always available
- */
-GimpContext * gimp_context_get_current       (void);
-GimpContext * gimp_context_get_user          (void);
-GimpContext * gimp_context_get_default       (void);
-GimpContext * gimp_context_get_standard      (Gimp        *gimp);
-
-/*  functions for manipulating a single context
- */
 const gchar * gimp_context_get_name          (const GimpContext *context);
 void          gimp_context_set_name          (GimpContext       *context,
 					      const gchar       *name);

@@ -57,9 +57,9 @@ struct _GimpTextToolClass
 };
 
 
-GtkType     gimp_text_tool_get_type (void);
+void        gimp_text_tool_register (Gimp *gimp);
 
-void        gimp_text_tool_register (void);
+GtkType     gimp_text_tool_get_type (void);
 
 
 gboolean    text_get_extents (gchar        *fontname,

@@ -78,7 +78,7 @@ struct _HistogramToolDialog
 };
 
 
-void       gimp_histogram_tool_register (void);
+void       gimp_histogram_tool_register (Gimp *gimp);
 
 GtkType    gimp_histogram_tool_get_type (void);
 

@@ -111,9 +111,10 @@ static GimpImageMapToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_threshold_tool_register (void)
+gimp_threshold_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_THRESHOLD_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_THRESHOLD_TOOL,
                               FALSE,
 			      "gimp:threshold_tool",
 			      _("Threshold"),

@@ -540,7 +540,7 @@ gradient_editor_new (void)
 
   gradient_editor = g_new (GradientEditor, 1);
 
-  gradient_editor->context = gimp_context_new (the_gimp, NULL, NULL);
+  gradient_editor->context = gimp_create_context (the_gimp, NULL, NULL);
 
   gtk_signal_connect (GTK_OBJECT (gradient_editor->context), "gradient_changed",
                       GTK_SIGNAL_FUNC (gradient_editor_gradient_changed),
@@ -1409,7 +1409,7 @@ preview_set_foreground (GradientEditor *gradient_editor,
     (gimp_context_get_gradient (gradient_editor->context),
      xpos, &color);
 
-  gimp_context_set_foreground (gimp_context_get_user (), &color);
+  gimp_context_set_foreground (gimp_get_user_context (gradient_editor->context->gimp), &color);
 
   str = g_strdup_printf (_("Foreground color set to RGB (%d, %d, %d) <-> "
 			   "(%0.3f, %0.3f, %0.3f)"),
@@ -1435,7 +1435,7 @@ preview_set_background (GradientEditor *gradient_editor,
     (gimp_context_get_gradient (gradient_editor->context),
      xpos, &color);
 
-  gimp_context_set_background (gimp_context_get_user (), &color);
+  gimp_context_set_background (gimp_get_user_context (gradient_editor->context->gimp), &color);
 
   str = g_strdup_printf (_("Background color to RGB (%d, %d, %d) <-> "
 			   "(%0.3f, %0.3f, %0.3f)"),
@@ -2836,7 +2836,7 @@ cpopup_adjust_menus (GradientEditor *gradient_editor)
 
   /* Render Foreground color boxes */
 
-  gimp_context_get_foreground (gimp_context_get_user (), &fg);
+  gimp_context_get_foreground (gimp_get_user_context (gradient_editor->context->gimp), &fg);
 
   cpopup_render_color_box (GTK_PREVIEW (gradient_editor->left_load_color_boxes[2]),
 			   &fg);
@@ -3284,7 +3284,7 @@ cpopup_load_left_callback (GtkWidget      *widget,
       break;
 
     case 2: /* Fetch from FG color */
-      gimp_context_get_foreground (gimp_context_get_user (), &fg);
+      gimp_context_get_foreground (gimp_get_user_context (gradient_editor->context->gimp), &fg);
       cpopup_blend_endpoints (gradient_editor,
 			      &fg,
 			      &gradient_editor->control_sel_r->right_color,
@@ -3350,7 +3350,7 @@ cpopup_load_right_callback (GtkWidget      *widget,
       break;
 
     case 2: /* Fetch from FG color */
-      gimp_context_get_foreground (gimp_context_get_user (), &fg);
+      gimp_context_get_foreground (gimp_get_user_context (gradient_editor->context->gimp), &fg);
       cpopup_blend_endpoints (gradient_editor,
 			      &gradient_editor->control_sel_l->left_color,
 			      &fg,

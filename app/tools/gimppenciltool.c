@@ -28,6 +28,7 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -74,9 +75,10 @@ static GimpPaintToolClass *parent_class = NULL;
 /*  functions  */
 
 void
-gimp_pencil_tool_register (void)
+gimp_pencil_tool_register (Gimp *gimp)
 {
-  tool_manager_register_tool (GIMP_TYPE_PENCIL_TOOL,
+  tool_manager_register_tool (gimp,
+			      GIMP_TYPE_PENCIL_TOOL,
                               TRUE,
                               "gimp:pencil_tool",
                               _("Pencil"),
@@ -191,6 +193,7 @@ gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
                          gboolean	       incremental)
 {
   GimpImage            *gimage;
+  GimpContext          *context;
   TempBuf              *area;
   guchar                col[MAX_CHANNELS];
   gint                  opacity;
@@ -199,6 +202,8 @@ gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
+
+  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_tool->curpressure;
@@ -214,7 +219,7 @@ gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
     {
       GimpRGB color;
 
-      gimp_gradient_get_color_at (gimp_context_get_gradient (NULL),
+      gimp_gradient_get_color_at (gimp_context_get_gradient (context),
 				  paint_tool->curpressure, &color);
 
       gimp_rgba_get_uchar (&color,
@@ -242,15 +247,15 @@ gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
 		    area->width * area->height, area->bytes);
     }
 
-  opacity = 255 * gimp_context_get_opacity (NULL);
+  opacity = 255 * gimp_context_get_opacity (context);
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_tool->curpressure;
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_tool_paste_canvas (paint_tool, drawable, 
                                 MIN (opacity, 255),
-                                gimp_context_get_opacity (NULL) * 255,
-                                gimp_context_get_paint_mode (NULL),
+                                gimp_context_get_opacity (context) * 255,
+                                gimp_context_get_paint_mode (context),
                                 HARD, scale, paint_appl_mode);
 }
 

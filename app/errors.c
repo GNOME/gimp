@@ -145,11 +145,34 @@ gimp_terminate (gchar *fmt, ...)
 
   if (use_debug_handler)
     {
-      sigset_t sigset;
+      switch (stack_trace_mode)
+	{
+	case STACK_TRACE_NEVER:
+	  break;
 
-      sigemptyset (&sigset);
-      sigprocmask (SIG_SETMASK, &sigset, NULL);
-      g_on_error_query (prog_name);
+	case STACK_TRACE_QUERY:
+	  {
+	    sigset_t sigset;
+
+	    sigemptyset (&sigset);
+	    sigprocmask (SIG_SETMASK, &sigset, NULL);
+	    g_on_error_query (prog_name);
+	  }
+	  break;
+
+	case STACK_TRACE_ALWAYS:
+	  {
+	    sigset_t sigset;
+
+	    sigemptyset (&sigset);
+	    sigprocmask (SIG_SETMASK, &sigset, NULL);
+	    g_on_error_stack_trace (prog_name);
+	  }
+	  break;
+
+	default:
+	  break;
+	}
     }
 
 #else

@@ -211,6 +211,8 @@ selection_pause (Selection *select)
     {
       g_source_remove (select->timeout_id);
       select->timeout_id = 0;
+
+      select->state = INVISIBLE;
     }
 
   select->paused ++;

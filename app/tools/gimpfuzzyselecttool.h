@@ -49,7 +49,7 @@ struct _GimpFuzzySelectToolClass
 };
 
 
-void          gimp_fuzzy_select_tool_register (void);
+void          gimp_fuzzy_select_tool_register (Gimp         *gimp);
 
 GtkType       gimp_fuzzy_select_tool_get_type (void);
 

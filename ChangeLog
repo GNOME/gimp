@@ -1,3 +1,116 @@
+2001-07-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/context_manager.[ch]: removed.
+
+	* app/app_procs.c: call tool_mananger instead of context_manager
+	functions, pass "the_gimp" to some more functions.
+
+	* app/drawable.[ch]: pass a GimpContext to drawable_fill().
+
+	* app/errors.c: behave according to "stack_trace_mode" when using
+	the debugging signal handler.
+
+	* app/gimprc.[ch]: removed the core/ config variables.
+
+	* app/selection.c: set the selection's state to INVISIBLE in
+	selection_pause().
+
+	* app/core/Makefile.am
+	* app/core/gimpcoreconfig.[ch]: new files (the configuration
+	variables used by core/).
+
+	* app/core/gimpcontext.[ch]: removed the global contexts (user,
+	default, ...) and their functions. It's no longer possible to pass
+	NULL to the context functions to manipulate the current context
+	(gimpcontext.c doesn't know the current context any more).
+
+	* app/core/gimp.[ch]: added them here. The functions are now called
+	gimp_[set|get]_*_context(). Added gimp_create_context() which is
+	the only function to create contexts now.
+
+	* app/gui/dialogs.[ch]
+	* app/gui/gui.[ch]: pass "gimp" to all functions.
+
+	* app/tools/tool_manager.[ch]
+	* app/tools/tools.[ch]: pass "gimp" to lots of functions. Added
+	the "global_tool_context" logic and the global/non-global paint
+	options switching from the context_manager. Pass "gimp" to all
+	tools' "register" functions.
+
+	* app/tools/*: changed accordingly.
+
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/file-open.[ch]
+	* app/file-save.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/libgimp_glue.c
+	* app/module_db.c
+	* app/nav_window.c
+	* app/plug_in.c
+	* app/qmask.c
+	* app/undo.c
+	* app/base/base-config.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-new.c
+	* app/core/gimpimage.c
+	* app/core/gimppalette.c
+	* app/core/gimptoolinfo.[ch]
+	* app/core/gimpundo.c
+	* app/gui/brush-select.c
+	* app/gui/channels-commands.c
+	* app/gui/color-area.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/gradient-editor.c
+	* app/gui/gradient-select.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/menus.c
+	* app/gui/palette-editor.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palette-select.c
+	* app/gui/paths-dialog.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c
+	* app/gui/resize-dialog.c
+	* app/gui/test-commands.c
+	* app/gui/tool-options-dialog.c
+	* app/gui/toolbox.c
+	* app/gui/tools-commands.c
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdrawablelistview.[ch]
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimplayerlistview.c
+	* app/pdb/brushes_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/gradients_cmds.c
+	* app/pdb/palette_cmds.c
+	* app/pdb/patterns_cmds.c
+	* app/pdb/procedural_db.c
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/patterns.pdb: changed accordingly: remove usage
+	of gimp_context_[get|set]_*(NULL), create contexts with
+	gimp_create_context(). Get the user/current context with
+	gimp_get_[user|current]_context(). Added/removed access to the
+	global "the_gimp" variable in some places. Get the core's config
+	variables from "core_config".
+	
 2001-07-06  Dave Neary  <dneary@eircom.net>
 
 	* app/gimprc.c: Removed some C89 & gcc extention stuff which broke

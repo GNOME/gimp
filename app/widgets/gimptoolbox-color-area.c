@@ -30,12 +30,15 @@
 
 #include "core/core-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpdnd.h"
 
 #include "color-area.h"
 #include "color-notebook.h"
+
+#include "app_procs.h"
 #include "gdisplay.h"
 
 #ifdef DISPLAY_FILTERS
@@ -219,7 +222,7 @@ color_area_draw (void)
   gdk_gc_set_foreground (mask_gc, &mask_pattern);
 
   /*  draw the background area  */
-  gimp_context_get_background (gimp_context_get_user (), &color);
+  gimp_context_get_background (gimp_get_user_context (the_gimp), &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			(width - rect_w), (height - rect_h), rect_w, rect_h,
@@ -237,7 +240,7 @@ color_area_draw (void)
 		     (width - rect_w), (height - rect_h), rect_w, rect_h);
 
   /*  draw the foreground area  */
-  gimp_context_get_foreground (gimp_context_get_user (), &color);
+  gimp_context_get_foreground (gimp_get_user_context (the_gimp), &color);
   gimp_rgb_get_uchar (&color, &r, &g, &b);
   color_area_draw_rect (color_area_pixmap, color_area_gc,
 			0, 0, rect_w, rect_h,
@@ -294,15 +297,19 @@ color_area_select_callback (ColorNotebook      *color_notebook,
 	  /* Fallthrough */
 	case COLOR_NOTEBOOK_UPDATE:
 	  if (edit_color == FOREGROUND)
-	    gimp_context_set_foreground (gimp_context_get_user (), color);
+	    gimp_context_set_foreground (gimp_get_user_context (the_gimp),
+					 color);
 	  else
-	    gimp_context_set_background (gimp_context_get_user (), color);
+	    gimp_context_set_background (gimp_get_user_context (the_gimp),
+					 color);
 	  break;
 	case COLOR_NOTEBOOK_CANCEL:
 	  color_notebook_hide (color_notebook);
 	  color_notebook_active = FALSE;
-	  gimp_context_set_foreground (gimp_context_get_user (), &revert_fg);
-	  gimp_context_set_background (gimp_context_get_user (), &revert_bg);
+	  gimp_context_set_foreground (gimp_get_user_context (the_gimp),
+				       &revert_fg);
+	  gimp_context_set_background (gimp_get_user_context (the_gimp),
+				       &revert_bg);
 	}
     }
 }
@@ -313,7 +320,7 @@ color_area_edit (void)
   GimpContext *user_context;
   GimpRGB      color;
 
-  user_context = gimp_context_get_user ();
+  user_context = gimp_get_user_context (the_gimp);
 
   if (! color_notebook_active)
     {
@@ -414,10 +421,10 @@ color_area_events (GtkWidget *widget,
 		}
 	      break;
 	    case SWAP_AREA:
-	      gimp_context_swap_colors (gimp_context_get_user ());
+	      gimp_context_swap_colors (gimp_get_user_context (the_gimp));
 	      break;
 	    case DEF_AREA:
-	      gimp_context_set_default_colors (gimp_context_get_user ());
+	      gimp_context_set_default_colors (gimp_get_user_context (the_gimp));
 	      break;
 	    default:
 	      break;
@@ -512,11 +519,11 @@ color_area_create (gint       width,
 		     GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (color_area, color_area_drop_color, NULL);
 
-  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()),
+  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
 		      "foreground_changed",
 		      GTK_SIGNAL_FUNC (color_area_color_changed),
 		      color_area);
-  gtk_signal_connect (GTK_OBJECT (gimp_context_get_user ()),
+  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (the_gimp)),
 		      "background_changed",
 		      GTK_SIGNAL_FUNC (color_area_color_changed),
 		      color_area);
@@ -539,9 +546,9 @@ color_area_drag_color (GtkWidget *widget,
 		       gpointer   data)
 {
   if (active_color == FOREGROUND)
-    gimp_context_get_foreground (gimp_context_get_user (), color);
+    gimp_context_get_foreground (gimp_get_user_context (the_gimp), color);
   else
-    gimp_context_get_background (gimp_context_get_user (), color);
+    gimp_context_get_background (gimp_get_user_context (the_gimp), color);
 }
 
 static void
@@ -557,9 +564,9 @@ color_area_drop_color (GtkWidget     *widget,
   else
     {
       if (active_color == FOREGROUND)
-	gimp_context_set_foreground (gimp_context_get_user (), color);
+	gimp_context_set_foreground (gimp_get_user_context (the_gimp), color);
       else
-	gimp_context_set_background (gimp_context_get_user (), color);
+	gimp_context_set_background (gimp_get_user_context (the_gimp), color);
     }
 }
 

@@ -24,10 +24,9 @@
 
 #include "base/temp-buf.h"
 
+#include "gimp.h"
 #include "gimpcontext.h"
 #include "gimptoolinfo.h"
-
-#include "context_manager.h"
 
 /* GRMPF */
 #include "tools/tools-types.h"
@@ -201,7 +200,8 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 }
 
 GimpToolInfo *
-gimp_tool_info_new (GtkType       tool_type,
+gimp_tool_info_new (GimpContext  *context,
+		    GtkType       tool_type,
                     gboolean      tool_context,
 		    const gchar  *identifier,
 		    const gchar  *blurb,
@@ -233,9 +233,9 @@ gimp_tool_info_new (GtkType       tool_type,
 
   if (tool_context)
     {
-      tool_info->context = gimp_context_new (global_tool_context->gimp,
-					     identifier,
-                                             global_tool_context);
+      tool_info->context = gimp_create_context (context->gimp,
+						identifier,
+						context);
     }
 
   return tool_info;
@@ -249,7 +249,8 @@ gimp_tool_info_get_standard (void)
   if (! standard_tool_info)
     {
       standard_tool_info =
-	gimp_tool_info_new (GIMP_TYPE_RECT_SELECT_TOOL,
+	gimp_tool_info_new (NULL,
+			    GIMP_TYPE_RECT_SELECT_TOOL,
                             FALSE,
 			    "gimp:standard_tool",
 			    "Standard Tool",
