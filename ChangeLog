@@ -1,3 +1,10 @@
+2004-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/images/stock-gradient-bilinear-16.png
+	* themes/Default/images/stock-gradient-linear-16.png: rotate them
+	by 90 degrees. All our gradient previews and icons go left->right,
+	not top->bottom.
+
 2004-10-14  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/bmpread.c: Make sure we have a bpp value we can
