@@ -189,7 +189,7 @@ dialogs_tool_options_get (GimpDialogFactory *factory,
 
   view = gimp_tool_options_editor_new (context->gimp, factory->menu_factory);
 
-  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer) &view);
 
   return dialogs_dockable_new (view,
                                _("Tool Options"), NULL,
@@ -209,7 +209,7 @@ dialogs_device_status_get (GimpDialogFactory *factory,
 
   view = gimp_device_status_new (context->gimp);
 
-  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer) &view);
 
   return dialogs_dockable_new (view,
                                _("Devices"), _("Device Status"),
@@ -229,7 +229,7 @@ dialogs_error_console_get (GimpDialogFactory *factory,
 
   view = gimp_error_console_new (context->gimp, factory->menu_factory);
 
-  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
+  g_object_add_weak_pointer (G_OBJECT (view), (gpointer) &view);
 
   return dialogs_dockable_new (view,
                                _("Errors"), _("Error Console"),

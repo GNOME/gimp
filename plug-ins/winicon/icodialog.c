@@ -186,25 +186,20 @@ ico_create_icon_hbox (GtkWidget *icon_preview,
   gtk_widget_show (icon_preview);
   gtk_box_pack_start (GTK_BOX (hbox), icon_preview, TRUE, TRUE, 0);
 
-  combo = gtk_combo_box_new ();
-  g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
-  gtk_widget_show (combo);
-
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("1 bpp, 1-bit alpha, 2-slot palette"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("4 bpp, 1-bit alpha, 16-slot palette"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("8 bpp, 1-bit alpha, 256-slot palette"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combo),
-                             _("32 bpp, 8-bit alpha, no palette"));
+  combo = gimp_int_combo_box_new (_("1 bpp, 1-bit alpha, 2-slot palette"),   1,
+                                  _("4 bpp, 1-bit alpha, 16-slot palette"),  4,
+                                  _("8 bpp, 1-bit alpha, 256-slot palette"), 8,
+                                  _("32 bpp, 8-bit alpha, no palette"),      32,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 32);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (combo_bpp_changed),
                     hbox);
 
-  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 3);
+  g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
   return hbox;
 }
@@ -380,15 +375,7 @@ combo_bpp_changed (GtkWidget *combo,
   gint       bpp;
   gint      *icon_depths;
 
-  switch (gtk_combo_box_get_active (GTK_COMBO_BOX (combo)))
-    {
-    case 0: bpp = 1;   break;
-    case 1: bpp = 4;   break;
-    case 2: bpp = 8;   break;
-    case 3: bpp = 32;  break;
-    default:
-      return;
-    }
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &bpp);
 
   icon_depths = g_object_get_data (G_OBJECT (dialog), "icon_depths");
   if (! icon_depths)

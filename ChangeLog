@@ -1,3 +1,11 @@
+2004-04-22  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/preferences-dialog.c: silent the compiler.
+
+	* plug-ins/winicon/icodialog.c: simplified by using a
+	GimpIntComboBox.
+
 2004-04-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpuimanager.[ch]: remember and ref the created

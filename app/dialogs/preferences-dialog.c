@@ -116,7 +116,7 @@ preferences_dialog_create (Gimp *gimp)
   prefs_dialog = prefs_dialog_new (gimp, config_copy);
 
   g_object_add_weak_pointer (G_OBJECT (prefs_dialog),
-                             (gpointer *) &prefs_dialog);
+                             (gpointer) &prefs_dialog);
 
   g_object_set_data (G_OBJECT (prefs_dialog), "gimp", gimp);
 
@@ -420,7 +420,7 @@ prefs_input_devices_dialog (GtkWidget *widget,
   input_dialog = gtk_input_dialog_new ();
 
   g_object_add_weak_pointer (G_OBJECT (input_dialog),
-                             (gpointer *) &input_dialog);
+                             (gpointer) &input_dialog);
 
   gtk_window_set_transient_for (GTK_WINDOW (input_dialog),
                                 GTK_WINDOW (prefs_dialog));
