@@ -33,6 +33,7 @@
 #include "core/gimpcontext.h"
 
 #include "gimpcontainerbox.h"
+#include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimppreview.h"
@@ -40,19 +41,38 @@
 #include "gimppropwidgets.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_CONTAINER,
+  PROP_CONTEXT,
+  PROP_REORDERABLE
+};
+
+
 static void   gimp_container_box_class_init      (GimpContainerBoxClass *klass);
 static void   gimp_container_box_init            (GimpContainerBox      *box);
+static void   gimp_container_box_view_iface_init   (GimpContainerViewInterface *view_iface);
 static void   gimp_container_box_docked_iface_init (GimpDockedInterface *docked_iface);
 
-static GtkWidget * gimp_container_box_get_preview  (GimpDocked         *docked,
-                                                    GimpContext        *context,
-                                                    GtkIconSize         size);
-static void        gimp_container_box_set_context  (GimpDocked         *docked,
-                                                    GimpContext        *context,
-                                                    GimpContext        *prev_context);
+static void   gimp_container_box_set_property      (GObject      *object,
+                                                    guint         property_id,
+                                                    const GValue *value,
+                                                    GParamSpec   *pspec);
+static void   gimp_container_box_get_property      (GObject      *object,
+                                                    guint         property_id,
+                                                    GValue       *value,
+                                                    GParamSpec   *pspec);
+
+static GtkWidget * gimp_container_box_get_preview  (GimpDocked   *docked,
+                                                    GimpContext  *context,
+                                                    GtkIconSize   size);
+static void        gimp_container_box_set_context  (GimpDocked   *docked,
+                                                    GimpContext  *context,
+                                                    GimpContext  *prev_context);
 
 
-static GimpContainerViewClass *parent_class = NULL;
+static GimpEditorClass *parent_class = NULL;
 
 
 GType
@@ -75,6 +95,12 @@ gimp_container_box_get_type (void)
         (GInstanceInitFunc) gimp_container_box_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_container_box_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
       static const GInterfaceInfo docked_iface_info =
       {
         (GInterfaceInitFunc) gimp_container_box_docked_iface_init,
@@ -82,10 +108,12 @@ gimp_container_box_get_type (void)
         NULL            /* iface_data     */
       };
 
-      type = g_type_register_static (GIMP_TYPE_CONTAINER_VIEW,
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
                                      "GimpContainerBox",
                                      &box_info, 0);
 
+      g_type_add_interface_static (type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
       g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
                                    &docked_iface_info);
     }
@@ -96,16 +124,25 @@ gimp_container_box_get_type (void)
 static void
 gimp_container_box_class_init (GimpContainerBoxClass *klass)
 {
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_container_box_set_property;
+  object_class->get_property = gimp_container_box_get_property;
+
+  g_object_class_override_property (object_class, PROP_CONTAINER,
+                                    "container");
+  g_object_class_override_property (object_class, PROP_CONTEXT,
+                                    "context");
+  g_object_class_override_property (object_class, PROP_REORDERABLE,
+                                    "reorderable");
 }
 
 static void
 gimp_container_box_init (GimpContainerBox *box)
 {
-  GimpContainerView        *view = GIMP_CONTAINER_VIEW (box);
-  GimpContainerViewPrivate *private;
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (view);
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (box);
 
   box->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_box_pack_start (GTK_BOX (box), box->scrolled_win, TRUE, TRUE, 0);
@@ -114,7 +151,12 @@ gimp_container_box_init (GimpContainerBox *box)
   GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (box->scrolled_win)->vscrollbar,
                           GTK_CAN_FOCUS);
 
-  private->dnd_widget = box->scrolled_win;
+  gimp_container_view_set_dnd_widget (view, box->scrolled_win);
+}
+
+static void
+gimp_container_box_view_iface_init (GimpContainerViewInterface *view_iface)
+{
 }
 
 static void
@@ -122,6 +164,56 @@ gimp_container_box_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = gimp_container_box_get_preview;
   docked_iface->set_context = gimp_container_box_set_context;
+}
+
+static void
+gimp_container_box_set_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTAINER:
+      gimp_container_view_set_container (view, g_value_get_object (value));
+      break;
+    case PROP_CONTEXT:
+      gimp_container_view_set_context (view, g_value_get_object (value));
+      break;
+    case PROP_REORDERABLE:
+      gimp_container_view_set_reorderable (view, g_value_get_boolean (value));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_container_box_get_property (GObject    *object,
+                                 guint       property_id,
+                                 GValue     *value,
+                                 GParamSpec *pspec)
+{
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (object);
+
+  switch (property_id)
+    {
+    case PROP_CONTAINER:
+      g_value_set_object (value, gimp_container_view_get_container (view));
+      break;
+    case PROP_CONTEXT:
+      g_value_set_object (value, gimp_container_view_get_context (view));
+      break;
+    case PROP_REORDERABLE:
+      g_value_set_boolean (value, gimp_container_view_get_reorderable (view));
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 void

@@ -30,6 +30,7 @@
 
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
+#include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimppreviewrenderer.h"
 
@@ -45,14 +46,11 @@ gimp_container_tree_view_drop_status (GimpContainerTreeView    *tree_view,
                                       GimpViewable            **return_dest,
                                       GtkTreeViewDropPosition  *return_pos)
 {
-  GimpContainerViewPrivate *private;
-  GtkWidget                *src_widget;
-  GimpViewable             *src_viewable;
-  GtkTreePath              *path;
+  GtkWidget    *src_widget;
+  GimpViewable *src_viewable;
+  GtkTreePath  *path;
 
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (tree_view);
-
-  if (! private->reorderable)
+  if (! gimp_container_view_get_reorderable (GIMP_CONTAINER_VIEW (tree_view)))
     return FALSE;
 
   src_widget = gtk_drag_get_source_widget (context);

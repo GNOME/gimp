@@ -37,6 +37,7 @@
 #include "gimpcontainerpopup.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
 #include "gimpdialogfactory.h"
 #include "gimppreviewrenderer.h"
 
@@ -531,12 +532,12 @@ static void
 gimp_container_popup_smaller_clicked (GtkWidget          *button,
                                       GimpContainerPopup *popup)
 {
-  GimpContainerViewPrivate *private;
-  gint                      preview_size;
+  gint preview_size;
 
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (popup->editor->view);
+  preview_size = gimp_container_view_get_preview_size (popup->editor->view,
+                                                       NULL);
 
-  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, private->preview_size * 0.8);
+  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, preview_size * 0.8);
 
   if (preview_size != popup->preview_size)
     {
@@ -552,12 +553,12 @@ static void
 gimp_container_popup_larger_clicked (GtkWidget          *button,
                                      GimpContainerPopup *popup)
 {
-  GimpContainerViewPrivate *private;
-  gint                      preview_size;
+  gint preview_size;
 
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (popup->editor->view);
+  preview_size = gimp_container_view_get_preview_size (popup->editor->view,
+                                                       NULL);
 
-  preview_size = MIN (GIMP_PREVIEW_SIZE_HUGE, private->preview_size * 1.2);
+  preview_size = MAX (GIMP_PREVIEW_SIZE_TINY, preview_size * 1.2);
 
   if (preview_size != popup->preview_size)
     {

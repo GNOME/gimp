@@ -34,6 +34,7 @@
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
+#include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdrawabletreeview.h"
 
@@ -42,6 +43,8 @@
 
 static void   gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass);
 static void   gimp_drawable_tree_view_init       (GimpDrawableTreeView      *view);
+
+static void   gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
 						     GimpViewable      *item,
@@ -64,7 +67,8 @@ static void   gimp_drawable_tree_view_new_color_dropped
                                                   gpointer              data);
 
 
-static GimpItemTreeViewClass *parent_class = NULL;
+static GimpItemTreeViewClass      *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 GType
@@ -87,9 +91,19 @@ gimp_drawable_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_drawable_tree_view_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_drawable_tree_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
                                           "GimpDrawableTreeView",
                                           &view_info, 0);
+
+      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
     }
 
   return view_type;
@@ -98,27 +112,17 @@ gimp_drawable_tree_view_get_type (void)
 static void
 gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 {
-  GimpContainerViewClass *container_view_class;
-  GimpItemTreeViewClass  *item_view_class;
-
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  container_view_class->select_item   = gimp_drawable_tree_view_select_item;
-
-  item_view_class->set_image          = gimp_drawable_tree_view_set_image;
+  item_view_class->set_image = gimp_drawable_tree_view_set_image;
 }
 
 static void
 gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
 {
-  GimpContainerTreeView *tree_view;
-  GimpItemTreeView      *item_view;
-
-  tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
 
   gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
 			      gimp_drawable_tree_view_new_pattern_dropped,
@@ -126,6 +130,14 @@ gimp_drawable_tree_view_init (GimpDrawableTreeView *view)
   gimp_dnd_color_dest_add (item_view->new_button,
                            gimp_drawable_tree_view_new_color_dropped,
                            view);
+}
+
+static void
+gimp_drawable_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->select_item = gimp_drawable_tree_view_select_item;
 }
 
 
@@ -136,10 +148,8 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
                                      GimpViewable      *item,
                                      gpointer           insert_data)
 {
-  GimpItemTreeView *item_view;
-  gboolean          success = TRUE;
-
-  item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
+  gboolean          success   = TRUE;
 
   if (item_view->gimage)
     {
@@ -152,8 +162,7 @@ gimp_drawable_tree_view_select_item (GimpContainerView *view,
     }
 
   if (success)
-    return GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                                  insert_data);
+    return parent_view_iface->select_item (view, item, insert_data);
 
   return success;
 }

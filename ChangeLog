@@ -1,3 +1,31 @@
+2004-05-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontainerview.[ch]: made GimpContainerView an
+	interface. Added accessors for all members in the private struct
+	and made it really private.
+
+	* app/widgets/gimpcontainerbox.[ch]: derive it from GimpEditor and
+	implement GimpContainerViewInterface and its properties.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpcontainertreeview-dnd.c
+	* app/widgets/gimpdrawabletreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: implement
+	GimpContainerViewInterface and use the new accessor functions.
+
+	* app/widgets/gimpcontainerpopup.c
+	* app/widgets/gimpdocumentview.c: changed accordingly.
+
+	* app/widgets/gimptemplateview.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpundoeditor.c
+	* app/actions/palettes-commands.c: #include "gimpcontainerview.h"
+
 2004-05-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.def

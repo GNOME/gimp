@@ -35,6 +35,7 @@
 
 #include "gimpchanneltreeview.h"
 #include "gimpcomponenteditor.h"
+#include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
 #include "gimpwidgets-utils.h"
@@ -44,6 +45,8 @@
 
 static void   gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass);
 static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view);
+
+static void   gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static void   gimp_channel_tree_view_set_image      (GimpItemTreeView     *item_view,
 						     GimpImage            *gimage);
@@ -62,7 +65,8 @@ static void   gimp_channel_tree_view_toselection_extended_clicked
 						     GimpChannelTreeView *view);
 
 
-static GimpDrawableTreeViewClass *parent_class = NULL;
+static GimpDrawableTreeViewClass  *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 GType
@@ -85,9 +89,19 @@ gimp_channel_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_channel_tree_view_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_channel_tree_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       view_type = g_type_register_static (GIMP_TYPE_DRAWABLE_TREE_VIEW,
                                           "GimpChannelTreeView",
                                           &view_info, 0);
+
+      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
     }
 
   return view_type;
@@ -96,16 +110,9 @@ gimp_channel_tree_view_get_type (void)
 static void
 gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 {
-  GimpContainerViewClass *container_view_class;
-  GimpItemTreeViewClass  *item_view_class;
-
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
-
-  container_view_class->select_item      = gimp_channel_tree_view_select_item;
-  container_view_class->set_preview_size = gimp_channel_tree_view_set_preview_size;
 
   item_view_class->set_image       = gimp_channel_tree_view_set_image;
 
@@ -171,6 +178,15 @@ gimp_channel_tree_view_init (GimpChannelTreeView *view)
   gtk_widget_set_sensitive (view->toselection_button, FALSE);
 }
 
+static void
+gimp_channel_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->select_item      = gimp_channel_tree_view_select_item;
+  view_iface->set_preview_size = gimp_channel_tree_view_set_preview_size;
+}
+
 
 /*  GimpItemTreeView methods  */
 
@@ -216,15 +232,11 @@ gimp_channel_tree_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
-  GimpItemTreeView    *item_view;
-  GimpChannelTreeView *tree_view;
+  GimpItemTreeView    *item_view = GIMP_ITEM_TREE_VIEW (view);
+  GimpChannelTreeView *tree_view = GIMP_CHANNEL_TREE_VIEW (view);
   gboolean             success;
 
-  item_view = GIMP_ITEM_TREE_VIEW (view);
-  tree_view = GIMP_CHANNEL_TREE_VIEW (view);
-
-  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                                   insert_data);
+  success = parent_view_iface->select_item (view, item, insert_data);
 
   if (item_view->gimage)
     {
@@ -247,9 +259,9 @@ gimp_channel_tree_view_set_preview_size (GimpContainerView *view)
   GimpChannelTreeView *channel_view = GIMP_CHANNEL_TREE_VIEW (view);
   gint                 preview_size;
 
-  preview_size = gimp_container_view_get_preview_size (view, NULL);
+  parent_view_iface->set_preview_size (view);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_preview_size (view);
+  preview_size = gimp_container_view_get_preview_size (view, NULL);
 
   if (channel_view->component_editor)
     gimp_component_editor_set_preview_size (GIMP_COMPONENT_EDITOR (channel_view->component_editor),

@@ -33,6 +33,7 @@
 #include "core/gimpundostack.h"
 
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
 #include "gimphelp-ids.h"
 #include "gimpundoeditor.h"
 

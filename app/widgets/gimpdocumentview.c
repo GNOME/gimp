@@ -142,10 +142,9 @@ gimp_document_view_new (GimpViewType            view_type,
                         GimpFileOpenDialogFunc  file_open_dialog_func,
                         GimpMenuFactory        *menu_factory)
 {
-  GimpDocumentView         *document_view;
-  GimpContainerEditor      *editor;
-  GimpContainerViewPrivate *private;
-  gchar                    *str;
+  GimpDocumentView    *document_view;
+  GimpContainerEditor *editor;
+  gchar               *str;
 
   g_return_val_if_fail (file_open_dialog_func != NULL, NULL);
 
@@ -166,8 +165,6 @@ gimp_document_view_new (GimpViewType            view_type,
   document_view->file_open_dialog_func = file_open_dialog_func;
 
   editor = GIMP_CONTAINER_EDITOR (document_view);
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (editor->view);
 
   str = g_strdup_printf (_("Open the selected entry\n"
                            "%s  Raise window if already open\n"
@@ -222,9 +219,15 @@ gimp_document_view_new (GimpViewType            view_type,
 				  GIMP_TYPE_IMAGEFILE);
 
   if (view_type == GIMP_VIEW_TYPE_LIST)
-    gimp_dnd_file_source_add (private->dnd_widget,
-                              gimp_document_view_drag_file,
-                              editor);
+    {
+      GtkWidget *dnd_widget;
+
+      dnd_widget = gimp_container_view_get_dnd_widget (editor->view);
+
+      gimp_dnd_file_source_add (dnd_widget,
+                                gimp_document_view_drag_file,
+                                editor);
+    }
 
   return GTK_WIDGET (document_view);
 }

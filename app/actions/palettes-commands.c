@@ -29,6 +29,7 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppreview.h"

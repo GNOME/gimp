@@ -37,6 +37,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "gimpcontainerview.h"
 #include "gimpvectorstreeview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
@@ -47,6 +48,8 @@
 
 static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
 static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
+
+static void   gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static gboolean gimp_vectors_tree_view_select_item  (GimpContainerView   *view,
 						     GimpViewable        *item,
@@ -73,7 +76,8 @@ static void   gimp_vectors_tree_view_stroke_clicked (GtkWidget           *widget
 						     GimpVectorsTreeView *view);
 
 
-static GimpItemTreeViewClass *parent_class = NULL;
+static GimpItemTreeViewClass      *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 GType
@@ -96,9 +100,19 @@ gimp_vectors_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_vectors_tree_view_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_vectors_tree_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
                                           "GimpVectorsTreeView",
                                           &view_info, 0);
+
+      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
     }
 
   return view_type;
@@ -107,24 +121,18 @@ gimp_vectors_tree_view_get_type (void)
 static void
 gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 {
-  GimpContainerViewClass *container_view_class;
-  GimpItemTreeViewClass  *item_view_class;
-
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  item_view_class      = GIMP_ITEM_TREE_VIEW_CLASS (klass);
+  GimpItemTreeViewClass *item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  container_view_class->select_item = gimp_vectors_tree_view_select_item;
+  item_view_class->set_image       = gimp_vectors_tree_view_set_image;
 
-  item_view_class->set_image        = gimp_vectors_tree_view_set_image;
-
-  item_view_class->get_container    = gimp_image_get_vectors;
-  item_view_class->get_active_item  = (GimpGetItemFunc) gimp_image_get_active_vectors;
-  item_view_class->set_active_item  = (GimpSetItemFunc) gimp_image_set_active_vectors;
-  item_view_class->reorder_item     = (GimpReorderItemFunc) gimp_image_position_vectors;
-  item_view_class->add_item         = (GimpAddItemFunc) gimp_image_add_vectors;
-  item_view_class->remove_item      = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+  item_view_class->get_container   = gimp_image_get_vectors;
+  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
+  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
+  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
+  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
+  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
 
   item_view_class->edit_desc               = _("Edit Path Attributes");
   item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
@@ -218,6 +226,14 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
   gtk_widget_set_sensitive (view->stroke_button,      FALSE);
 }
 
+static void
+gimp_vectors_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->select_item = gimp_vectors_tree_view_select_item;
+}
+
 
 /*  GimpContainerView methods  */
 
@@ -226,13 +242,10 @@ gimp_vectors_tree_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
-  GimpVectorsTreeView *tree_view;
+  GimpVectorsTreeView *tree_view = GIMP_VECTORS_TREE_VIEW (view);
   gboolean             success;
 
-  tree_view = GIMP_VECTORS_TREE_VIEW (view);
-
-  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                                   insert_data);
+  success = parent_view_iface->select_item (view, item, insert_data);
 
   gtk_widget_set_sensitive (tree_view->toselection_button, item != NULL);
   gtk_widget_set_sensitive (tree_view->stroke_button,      item != NULL);

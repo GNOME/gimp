@@ -43,6 +43,7 @@
 
 #include "gimpchanneltreeview.h"
 #include "gimpcellrenderertoggle.h"
+#include "gimpcontainerview.h"
 #include "gimpdnd.h"
 #include "gimpdocked.h"
 #include "gimplayertreeview.h"
@@ -73,7 +74,9 @@ static void   gimp_item_tree_view_class_init   (GimpItemTreeViewClass *klass);
 static void   gimp_item_tree_view_init         (GimpItemTreeView      *view,
                                                 GimpItemTreeViewClass *view_class);
 
-static void  gimp_item_tree_view_docked_iface_init  (GimpDockedInterface *docked_iface);
+static void   gimp_item_tree_view_view_iface_init   (GimpContainerViewInterface *view_iface);
+static void   gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface);
+
 static void  gimp_item_tree_view_set_docked_context (GimpDocked        *docked,
                                                      GimpContext       *context,
                                                      GimpContext       *prev_context);
@@ -184,7 +187,8 @@ static void   gimp_item_tree_view_toggle_clicked    (GtkCellRendererToggle *togg
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
 
-static GimpContainerTreeViewClass *parent_class = NULL;
+static GimpContainerTreeViewClass *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 
 GType
@@ -206,6 +210,13 @@ gimp_item_tree_view_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_item_tree_view_init,
       };
+
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_item_tree_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
       static const GInterfaceInfo docked_iface_info =
       {
         (GInterfaceInitFunc) gimp_item_tree_view_docked_iface_init,
@@ -217,6 +228,8 @@ gimp_item_tree_view_get_type (void)
                                      "GimpItemTreeView",
                                      &view_info, 0);
 
+      g_type_add_interface_static (type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
       g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
                                    &docked_iface_info);
     }
@@ -229,12 +242,10 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 {
   GObjectClass               *object_class;
   GtkObjectClass             *gtk_object_class;
-  GimpContainerViewClass     *container_view_class;
   GimpContainerTreeViewClass *tree_view_class;
 
   object_class         = G_OBJECT_CLASS (klass);
   gtk_object_class     = GTK_OBJECT_CLASS (klass);
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
   tree_view_class      = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
@@ -249,46 +260,40 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
 		  G_TYPE_NONE, 1,
 		  GIMP_TYPE_OBJECT);
 
-  object_class->constructor           = gimp_item_tree_view_constructor;
-  object_class->set_property          = gimp_item_tree_view_set_property;
-  object_class->get_property          = gimp_item_tree_view_get_property;
+  object_class->constructor      = gimp_item_tree_view_constructor;
+  object_class->set_property     = gimp_item_tree_view_set_property;
+  object_class->get_property     = gimp_item_tree_view_get_property;
 
-  gtk_object_class->destroy           = gimp_item_tree_view_destroy;
+  gtk_object_class->destroy      = gimp_item_tree_view_destroy;
 
-  container_view_class->set_container = gimp_item_tree_view_set_container;
-  container_view_class->insert_item   = gimp_item_tree_view_insert_item;
-  container_view_class->select_item   = gimp_item_tree_view_select_item;
-  container_view_class->activate_item = gimp_item_tree_view_activate_item;
-  container_view_class->context_item  = gimp_item_tree_view_context_item;
+  tree_view_class->drop_possible = gimp_item_tree_view_drop_possible;
+  tree_view_class->drop          = gimp_item_tree_view_drop;
 
-  tree_view_class->drop_possible      = gimp_item_tree_view_drop_possible;
-  tree_view_class->drop               = gimp_item_tree_view_drop;
+  klass->set_image               = gimp_item_tree_view_real_set_image;
 
-  klass->set_image                    = gimp_item_tree_view_real_set_image;
+  klass->get_container           = NULL;
+  klass->get_active_item         = NULL;
+  klass->set_active_item         = NULL;
+  klass->reorder_item            = NULL;
+  klass->add_item                = NULL;
+  klass->remove_item             = NULL;
 
-  klass->get_container                = NULL;
-  klass->get_active_item              = NULL;
-  klass->set_active_item              = NULL;
-  klass->reorder_item                 = NULL;
-  klass->add_item                     = NULL;
-  klass->remove_item                  = NULL;
-
-  klass->edit_desc                    = NULL;
-  klass->edit_help_id                 = NULL;
-  klass->new_desc                     = NULL;
-  klass->new_help_id                  = NULL;
-  klass->duplicate_desc               = NULL;
-  klass->duplicate_help_id            = NULL;
-  klass->delete_desc                  = NULL;
-  klass->delete_help_id               = NULL;
-  klass->raise_desc                   = NULL;
-  klass->raise_help_id                = NULL;
-  klass->raise_to_top_desc            = NULL;
-  klass->raise_to_top_help_id         = NULL;
-  klass->lower_desc                   = NULL;
-  klass->lower_help_id                = NULL;
-  klass->lower_to_bottom_desc         = NULL;
-  klass->lower_to_bottom_help_id      = NULL;
+  klass->edit_desc               = NULL;
+  klass->edit_help_id            = NULL;
+  klass->new_desc                = NULL;
+  klass->new_help_id             = NULL;
+  klass->duplicate_desc          = NULL;
+  klass->duplicate_help_id       = NULL;
+  klass->delete_desc             = NULL;
+  klass->delete_help_id          = NULL;
+  klass->raise_desc              = NULL;
+  klass->raise_help_id           = NULL;
+  klass->raise_to_top_desc       = NULL;
+  klass->raise_to_top_help_id    = NULL;
+  klass->lower_desc              = NULL;
+  klass->lower_help_id           = NULL;
+  klass->lower_to_bottom_desc    = NULL;
+  klass->lower_to_bottom_help_id = NULL;
 
   g_object_class_install_property (object_class,
 				   PROP_ITEM_TYPE,
@@ -414,6 +419,18 @@ gimp_item_tree_view_init (GimpItemTreeView      *view,
 }
 
 static void
+gimp_item_tree_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->set_container = gimp_item_tree_view_set_container;
+  view_iface->insert_item   = gimp_item_tree_view_insert_item;
+  view_iface->select_item   = gimp_item_tree_view_select_item;
+  view_iface->activate_item = gimp_item_tree_view_activate_item;
+  view_iface->context_item  = gimp_item_tree_view_context_item;
+}
+
+static void
 gimp_item_tree_view_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->get_preview = NULL;
@@ -458,15 +475,13 @@ gimp_item_tree_view_constructor (GType                  type,
                                  guint                  n_params,
                                  GObjectConstructParam *params)
 {
-  GimpContainerViewPrivate *private;
-  GimpContainerTreeView    *tree_view;
-  GimpItemTreeView         *item_view;
-  GObject                  *object;
-  GtkTreeViewColumn        *column;
+  GimpContainerTreeView *tree_view;
+  GimpItemTreeView      *item_view;
+  GObject               *object;
+  GtkTreeViewColumn     *column;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  private   = GIMP_CONTAINER_VIEW_GET_PRIVATE (object);
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   item_view = GIMP_ITEM_TREE_VIEW (object);
 
@@ -515,7 +530,7 @@ gimp_item_tree_view_constructor (GType                  type,
                     item_view);
 
   /*  disable the default GimpContainerView drop handler  */
-  private->dnd_widget = NULL;
+  gimp_container_view_set_dnd_widget (GIMP_CONTAINER_VIEW (item_view), NULL);
 
   gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (tree_view->view),
                                   GTK_DEST_DEFAULT_ALL,
@@ -617,10 +632,8 @@ gimp_item_tree_view_new (gint                  preview_size,
                          const gchar          *menu_identifier,
                          const gchar          *ui_identifier)
 {
-  GimpItemTreeView      *item_view;
-  GimpContainerView     *view;
-  GimpContainerTreeView *tree_view;
-  GType                  view_type;
+  GimpItemTreeView *item_view;
+  GType             view_type;
 
   g_return_val_if_fail (preview_size >  0 &&
 			preview_size <= GIMP_VIEWABLE_MAX_PREVIEW_SIZE, NULL);
@@ -656,16 +669,13 @@ gimp_item_tree_view_new (gint                  preview_size,
     }
 
   item_view = g_object_new (view_type,
+                            "reorderable", TRUE,
                             "item-type",   item_type,
                             "signal-name", signal_name,
                             NULL);
 
-  view      = GIMP_CONTAINER_VIEW (item_view);
-  tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
-
-  gimp_container_view_construct (GIMP_CONTAINER_VIEW (item_view),
-                                 NULL, NULL,
-                                 preview_size, preview_border_width, TRUE);
+  gimp_container_view_set_preview_size (GIMP_CONTAINER_VIEW (item_view),
+                                        preview_size, preview_border_width);
 
   item_view->edit_item_func     = edit_item_func;
   item_view->new_item_func      = new_item_func;
@@ -759,7 +769,7 @@ gimp_item_tree_view_set_container (GimpContainerView *view,
       item_view->linked_changed_handler_id  = 0;
     }
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->set_container (view, container);
+  parent_view_iface->set_container (view, container);
 
   if (container)
     {
@@ -787,8 +797,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   tree_view = GIMP_CONTAINER_TREE_VIEW (view);
   item_view = GIMP_ITEM_TREE_VIEW (view);
 
-  iter = GIMP_CONTAINER_VIEW_CLASS (parent_class)->insert_item (view, viewable,
-                                                                index);
+  iter = parent_view_iface->insert_item (view, viewable, index);
 
   item = GIMP_ITEM (viewable);
 
@@ -807,7 +816,7 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
                                  GimpViewable      *item,
                                  gpointer           insert_data)
 {
-  GimpItemTreeView *tree_view;
+  GimpItemTreeView *tree_view           = GIMP_ITEM_TREE_VIEW (view);
   gboolean          edit_sensitive      = FALSE;
   gboolean          raise_sensitive     = FALSE;
   gboolean          lower_sensitive     = FALSE;
@@ -815,10 +824,7 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
   gboolean          delete_sensitive    = FALSE;
   gboolean          success;
 
-  tree_view = GIMP_ITEM_TREE_VIEW (view);
-
-  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                                   insert_data);
+  success = parent_view_iface->select_item (view, item, insert_data);
 
   if (item)
     {
@@ -871,14 +877,10 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
                                    GimpViewable      *item,
                                    gpointer           insert_data)
 {
-  GimpItemTreeView *item_view;
+  GimpItemTreeView *item_view = GIMP_ITEM_TREE_VIEW (view);
 
-  item_view = GIMP_ITEM_TREE_VIEW (view);
-
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->activate_item)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->activate_item (view,
-							     item,
-							     insert_data);
+  if (parent_view_iface->activate_item)
+    parent_view_iface->activate_item (view, item, insert_data);
 
   item_view->activate_item_func (GIMP_ITEM (item), GTK_WIDGET (view));
 }
@@ -890,10 +892,8 @@ gimp_item_tree_view_context_item (GimpContainerView *view,
 {
   GimpEditor *editor = GIMP_EDITOR (view);
 
-  if (GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item)
-    GIMP_CONTAINER_VIEW_CLASS (parent_class)->context_item (view,
-							    item,
-							    insert_data);
+  if (parent_view_iface->context_item)
+    parent_view_iface->context_item (view, item, insert_data);
 
   if (editor->ui_manager)
     {
@@ -1311,17 +1311,12 @@ static void
 gimp_item_tree_view_visible_changed (GimpItem         *item,
                                      GimpItemTreeView *view)
 {
-  GimpContainerView        *container_view;
-  GimpContainerTreeView    *tree_view;
-  GimpContainerViewPrivate *private;
-  GtkTreeIter              *iter;
+  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (view);
+  GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeIter           *iter;
 
-  container_view = GIMP_CONTAINER_VIEW (view);
-  tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (container_view);
-
-  iter = g_hash_table_lookup (private->hash_table, item);
+  iter = gimp_container_view_lookup (container_view,
+                                     (GimpViewable *) item);
 
   if (iter)
     gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,
@@ -1346,17 +1341,12 @@ static void
 gimp_item_tree_view_linked_changed (GimpItem         *item,
                                     GimpItemTreeView *view)
 {
-  GimpContainerView        *container_view;
-  GimpContainerTreeView    *tree_view;
-  GimpContainerViewPrivate *private;
-  GtkTreeIter              *iter;
+  GimpContainerView     *container_view = GIMP_CONTAINER_VIEW (view);
+  GimpContainerTreeView *tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
+  GtkTreeIter           *iter;
 
-  container_view = GIMP_CONTAINER_VIEW (view);
-  tree_view      = GIMP_CONTAINER_TREE_VIEW (view);
-
-  private = GIMP_CONTAINER_VIEW_GET_PRIVATE (container_view);
-
-  iter = g_hash_table_lookup (private->hash_table, item);
+  iter = gimp_container_view_lookup (container_view,
+                                     (GimpViewable *) item);
 
   if (iter)
     gtk_list_store_set (GTK_LIST_STORE (tree_view->model), iter,

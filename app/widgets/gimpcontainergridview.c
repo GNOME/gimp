@@ -34,6 +34,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainergridview.h"
+#include "gimpcontainerview.h"
 #include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
@@ -52,6 +53,8 @@ enum
 
 static void     gimp_container_grid_view_class_init   (GimpContainerGridViewClass *klass);
 static void     gimp_container_grid_view_init         (GimpContainerGridView      *view);
+
+static void     gimp_container_grid_view_view_iface_init (GimpContainerViewInterface *view_iface);
 
 static gboolean gimp_container_grid_view_move_cursor  (GimpContainerGridView  *view,
                                                        GtkMovementStep         step,
@@ -94,7 +97,8 @@ static void gimp_container_grid_view_viewport_resized (GtkWidget              *w
                                                        GimpContainerGridView  *view);
 
 
-static GimpContainerBoxClass *parent_class = NULL;
+static GimpContainerBoxClass      *parent_class      = NULL;
+static GimpContainerViewInterface *parent_view_iface = NULL;
 
 static guint grid_view_signals[LAST_SIGNAL] = { 0 };
 
@@ -122,9 +126,19 @@ gimp_container_grid_view_get_type (void)
         (GInstanceInitFunc) gimp_container_grid_view_init,
       };
 
+      static const GInterfaceInfo view_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_container_grid_view_view_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       view_type = g_type_register_static (GIMP_TYPE_CONTAINER_BOX,
                                           "GimpContainerGridView",
                                           &view_info, 0);
+
+      g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
+                                   &view_iface_info);
     }
 
   return view_type;
@@ -133,28 +147,16 @@ gimp_container_grid_view_get_type (void)
 static void
 gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 {
-  GimpContainerViewClass *container_view_class;
-  GtkWidgetClass         *widget_class;
-  GtkBindingSet          *binding_set;
-
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  widget_class         = GTK_WIDGET_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GtkBindingSet  *binding_set;
 
   parent_class = g_type_class_peek_parent (klass);
   binding_set  = gtk_binding_set_by_class (klass);
 
-  widget_class->focus                    = gimp_container_grid_view_focus;
-  widget_class->popup_menu               = gimp_container_grid_view_popup_menu;
+  widget_class->focus      = gimp_container_grid_view_focus;
+  widget_class->popup_menu = gimp_container_grid_view_popup_menu;
 
-  container_view_class->insert_item      = gimp_container_grid_view_insert_item;
-  container_view_class->remove_item      = gimp_container_grid_view_remove_item;
-  container_view_class->reorder_item     = gimp_container_grid_view_reorder_item;
-  container_view_class->rename_item      = gimp_container_grid_view_rename_item;
-  container_view_class->select_item      = gimp_container_grid_view_select_item;
-  container_view_class->clear_items      = gimp_container_grid_view_clear_items;
-  container_view_class->set_preview_size = gimp_container_grid_view_set_preview_size;
-
-  klass->move_cursor                     = gimp_container_grid_view_move_cursor;
+  klass->move_cursor       = gimp_container_grid_view_move_cursor;
 
   grid_view_signals[MOVE_CURSOR] =
     g_signal_new ("move_cursor",
@@ -220,6 +222,21 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   GTK_WIDGET_SET_FLAGS (grid_view, GTK_CAN_FOCUS);
 }
 
+static void
+gimp_container_grid_view_view_iface_init (GimpContainerViewInterface *view_iface)
+{
+  parent_view_iface = g_type_interface_peek_parent (view_iface);
+
+  view_iface->insert_item      = gimp_container_grid_view_insert_item;
+  view_iface->remove_item      = gimp_container_grid_view_remove_item;
+  view_iface->reorder_item     = gimp_container_grid_view_reorder_item;
+  view_iface->rename_item      = gimp_container_grid_view_rename_item;
+  view_iface->select_item      = gimp_container_grid_view_select_item;
+  view_iface->clear_items      = gimp_container_grid_view_clear_items;
+  view_iface->set_preview_size = gimp_container_grid_view_set_preview_size;
+
+}
+
 GtkWidget *
 gimp_container_grid_view_new (GimpContainer *container,
 			      GimpContext   *context,
@@ -228,6 +245,7 @@ gimp_container_grid_view_new (GimpContainer *container,
                               gboolean       reorderable)
 {
   GimpContainerGridView *grid_view;
+  GimpContainerView     *view;
 
   g_return_val_if_fail (container == NULL || GIMP_IS_CONTAINER (container),
                         NULL);
@@ -238,12 +256,20 @@ gimp_container_grid_view_new (GimpContainer *container,
                         preview_border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH,
                         NULL);
 
-  grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
+  grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW,
+                            "reorderable", reorderable,
+                            NULL);
 
-  gimp_container_view_construct (GIMP_CONTAINER_VIEW (grid_view),
-                                 container, context,
-                                 preview_size, preview_border_width,
-                                 reorderable);
+  view = GIMP_CONTAINER_VIEW (grid_view);
+
+  gimp_container_view_set_preview_size (view, preview_size,
+                                        preview_border_width);
+
+  if (container)
+    gimp_container_view_set_container (view, container);
+
+  if (context)
+    gimp_container_view_set_context (view, context);
 
   return GTK_WIDGET (grid_view);
 }
@@ -504,7 +530,7 @@ gimp_container_grid_view_clear_items (GimpContainerView *view)
     gtk_container_remove (GTK_CONTAINER (grid_view->wrap_box),
 			  GTK_WRAP_BOX (grid_view->wrap_box)->children->widget);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->clear_items (view);
+  parent_view_iface->clear_items (view);
 }
 
 static void

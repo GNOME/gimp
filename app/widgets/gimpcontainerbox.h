@@ -23,7 +23,7 @@
 #define __GIMP_CONTAINER_BOX_H__
 
 
-#include "gimpcontainerview.h"
+#include "gimpeditor.h"
 
 
 #define GIMP_TYPE_CONTAINER_BOX            (gimp_container_box_get_type ())
@@ -38,14 +38,14 @@ typedef struct _GimpContainerBoxClass  GimpContainerBoxClass;
 
 struct _GimpContainerBox
 {
-  GimpContainerView  parent_instance;
+  GimpEditor  parent_instance;
 
   GtkWidget  *scrolled_win;
 };
 
 struct _GimpContainerBoxClass
 {
-  GimpContainerViewClass  parent_class;
+  GimpEditorClass  parent_class;
 };
 
 

@@ -88,7 +88,7 @@ typedef struct _GimpTemplateEditor      GimpTemplateEditor;
 typedef struct _GimpToolOptionsEditor   GimpToolOptionsEditor;
 typedef struct _GimpUndoEditor          GimpUndoEditor;
 
-typedef struct _GimpContainerView       GimpContainerView;
+typedef struct _GimpContainerView       GimpContainerView; /* dummy typedef */
 typedef struct _GimpContainerBox        GimpContainerBox;
 typedef struct _GimpContainerGridView   GimpContainerGridView;
 typedef struct _GimpContainerTreeView   GimpContainerTreeView;

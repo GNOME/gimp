@@ -26,44 +26,19 @@
 #include "gimpeditor.h"
 
 
-#define GIMP_TYPE_CONTAINER_VIEW            (gimp_container_view_get_type ())
-#define GIMP_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerView))
-#define GIMP_CONTAINER_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewClass))
-#define GIMP_IS_CONTAINER_VIEW(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
-#define GIMP_IS_CONTAINER_VIEW_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CONTAINER_VIEW))
-#define GIMP_CONTAINER_VIEW_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewClass))
+#define GIMP_TYPE_CONTAINER_VIEW               (gimp_container_view_interface_get_type ())
+#define GIMP_CONTAINER_VIEW(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerView))
+#define GIMP_IS_CONTAINER_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CONTAINER_VIEW))
+#define GIMP_CONTAINER_VIEW_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_CONTAINER_VIEW, GimpContainerViewInterface))
 
-#define GIMP_CONTAINER_VIEW_GET_PRIVATE(obj) (gimp_container_view_get_private ((GimpContainerView *) obj));
+#define GIMP_CONTAINER_VIEW_GET_PRIVATE(obj)   (gimp_container_view_get_private ((GimpContainerView *) (obj)))
 
 
-typedef struct _GimpContainerViewClass   GimpContainerViewClass;
-typedef struct _GimpContainerViewPrivate GimpContainerViewPrivate;
+typedef struct _GimpContainerViewInterface GimpContainerViewInterface;
 
-struct _GimpContainerView
+struct _GimpContainerViewInterface
 {
-  GimpEditor     parent_instance;
-};
-
-struct _GimpContainerViewPrivate
-{
-  GimpContainer *container;
-  GimpContext   *context;
-
-  GHashTable    *hash_table;
-
-  gint           preview_size;
-  gint           preview_border_width;
-  gboolean       reorderable;
-
-  /*  initialized by subclass  */
-  GtkWidget     *dnd_widget;
-
-  GQuark         name_changed_handler_id;
-};
-
-struct _GimpContainerViewClass
-{
-  GimpEditorClass  parent_class;
+  GTypeInterface base_iface;
 
   /*  signals  */
   gboolean (* select_item)      (GimpContainerView *view,
@@ -95,57 +70,58 @@ struct _GimpContainerViewClass
   void     (* clear_items)      (GimpContainerView *view);
   void     (* set_preview_size) (GimpContainerView *view);
 
-  /*  the destroy notifier for view->hash_table's values  */
+  /*  the destroy notifier for private->hash_table's values  */
   GDestroyNotify  insert_data_free;
 };
 
 
-GType     gimp_container_view_get_type         (void) G_GNUC_CONST;
-
-GimpContainerViewPrivate *
-          gimp_container_view_get_private      (GimpContainerView   *view);
-
-void      gimp_container_view_construct        (GimpContainerView   *view,
-                                                GimpContainer       *container,
-                                                GimpContext         *context,
-                                                gint                 preview_size,
-                                                gint                 preview_border_width,
-                                                gboolean             reorderable);
+GType     gimp_container_view_interface_get_type  (void) G_GNUC_CONST;
 
 GimpContainer * gimp_container_view_get_container (GimpContainerView *view);
 void            gimp_container_view_set_container (GimpContainerView *view,
                                                    GimpContainer     *container);
 
-GimpContext   * gimp_container_view_get_context  (GimpContainerView  *view);
-void            gimp_container_view_set_context  (GimpContainerView  *view,
-                                                  GimpContext        *context);
+GimpContext   * gimp_container_view_get_context   (GimpContainerView *view);
+void            gimp_container_view_set_context   (GimpContainerView *view,
+                                                   GimpContext       *context);
 
-gint        gimp_container_view_get_preview_size (GimpContainerView  *view,
-                                                  gint               *preview_border_width);
-void        gimp_container_view_set_preview_size (GimpContainerView  *view,
-                                                  gint                preview_size,
-                                                  gint                preview_border_width);
+gint      gimp_container_view_get_preview_size (GimpContainerView *view,
+                                                gint              *preview_border_width);
+void      gimp_container_view_set_preview_size (GimpContainerView *view,
+                                                gint               preview_size,
+                                                gint               preview_border_width);
 
-void      gimp_container_view_enable_dnd       (GimpContainerView   *editor,
-						GtkButton           *button,
-						GType                children_type);
+gboolean  gimp_container_view_get_reorderable  (GimpContainerView *view);
+void      gimp_container_view_set_reorderable  (GimpContainerView *view,
+                                                gboolean           reorderable);
 
-gboolean  gimp_container_view_select_item      (GimpContainerView   *view,
-						GimpViewable        *viewable);
-void      gimp_container_view_activate_item    (GimpContainerView   *view,
-						GimpViewable        *viewable);
-void      gimp_container_view_context_item     (GimpContainerView   *view,
-						GimpViewable        *viewable);
+GtkWidget * gimp_container_view_get_dnd_widget (GimpContainerView *view);
+void        gimp_container_view_set_dnd_widget (GimpContainerView *view,
+                                                GtkWidget         *dnd_widget);
+
+void      gimp_container_view_enable_dnd       (GimpContainerView *editor,
+                                                GtkButton         *button,
+                                                GType              children_type);
+
+gboolean  gimp_container_view_select_item      (GimpContainerView *view,
+                                                GimpViewable      *viewable);
+void      gimp_container_view_activate_item    (GimpContainerView *view,
+                                                GimpViewable      *viewable);
+void      gimp_container_view_context_item     (GimpContainerView *view,
+                                                GimpViewable      *viewable);
 
 
 /*  protected  */
 
-gboolean  gimp_container_view_item_selected    (GimpContainerView   *view,
-						GimpViewable        *item);
-void      gimp_container_view_item_activated   (GimpContainerView   *view,
-						GimpViewable        *item);
-void      gimp_container_view_item_context     (GimpContainerView   *view,
-						GimpViewable        *item);
+gpointer  gimp_container_view_lookup           (GimpContainerView *view,
+                                                GimpViewable      *viewable);
+
+gboolean  gimp_container_view_item_selected    (GimpContainerView *view,
+                                                GimpViewable      *item);
+void      gimp_container_view_item_activated   (GimpContainerView *view,
+                                                GimpViewable      *item);
+void      gimp_container_view_item_context     (GimpContainerView *view,
+                                                GimpViewable      *item);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_H__  */

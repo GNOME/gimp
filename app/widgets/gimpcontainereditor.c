@@ -34,6 +34,7 @@
 #include "gimpcontainereditor.h"
 #include "gimpcontainergridview.h"
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrenderer.h"

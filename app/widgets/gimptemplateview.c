@@ -39,6 +39,7 @@
 #include "core/gimptemplate.h"
 
 #include "gimpcontainertreeview.h"
+#include "gimpcontainerview.h"
 #include "gimptemplateview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
