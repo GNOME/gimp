@@ -1,5 +1,11 @@
 2002-11-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdrawablelistview.c: removed #undef
+	GTK_DISABLE_DEPRECATED and #warning because we don't use
+	deprecated stuff here.
+
+2002-11-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontext.c (gimp_context_set_default_colors,
 	gimp_context_swap_colors): g_return_if_fail() earlier to clarify
 	things (There was a bug in 1.2 which was fixed only accidentially
