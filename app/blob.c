@@ -761,8 +761,8 @@ blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq)
   /* Although it seems that multiplying A-F by a constant would improve
      things, this seems not to be the case in practice. Several test
      cases showed about equal improvement and degradation */
-  blob_conic (r,ROUND(xp+xc),ROUND(yp+yc),ROUND(128*A),ROUND(128*B),ROUND(128*C),
-	      ROUND(128*D),ROUND(128*E),ROUND(128*F));
+  blob_conic (r,ROUND(xp+xc),ROUND(yp+yc),ROUND(1*A),ROUND(1*B),ROUND(1*C),
+	      ROUND(1*D),ROUND(1*E),ROUND(1*F));
 
   /* Add a line through the center to improve things a bit. (Doesn't
    * work perfectly because sometimes we overshoot

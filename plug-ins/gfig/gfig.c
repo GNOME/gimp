@@ -4259,14 +4259,6 @@ gfig_pos_enable(GtkWidget *widget, gpointer data)
 }
 
 void
-my_gtk_label_set2 (GtkLabel *label,
-               const char *str)
-{
-  gtk_label_set(label,str);
-  gtk_container_need_resize (GTK_CONTAINER (gtk_widget_get_toplevel (GTK_WIDGET(label))));
-}
-
-void
 my_gtk_label_set (GtkLabel *label,
                const char *str)
 {

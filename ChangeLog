@@ -1,3 +1,22 @@
+Thu Jun 18 21:20:12 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/interface.c app/tools.c: Removed calls to
+	  gtk_container_[dis/en]able_resize()
+
+Thu Jun 18 21:03:33 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/interface.c (create_display_shell): Set the resize
+	mode on the statusbar to prevent the window from being
+	unnecessarily auto-shrunk.
+
+	* plug-ins/gfig/gfig.c (my_gtk_label_set): Removed unused
+	function using deprecated gtk_container_need_resize()
+	
+Thu Jun 18 16:31:16 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/blob.c: Try to prevent overflows when drawing ellipses)
+	(fixes the ink => line bug for big sizes)
+
 Thu Jun 18 16:11:19 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: fiddled with the spinbuttons

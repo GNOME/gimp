@@ -384,7 +384,7 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
   else if (type == FLIP_VERT)
     type = FLIP_HORZ;
 
-  for (i=0; i<22; i++)
+  for (i = FIRST_TOOLBOX_TOOL; i <= LAST_TOOLBOX_TOOL; i++)
     {
       if ((ToolType)tool_data[i].callback_data == type)
 	  return create_pixmap (parent->window, NULL,
@@ -837,6 +837,8 @@ create_display_shell (int   gdisp_id,
 
   /* statusbar, progressbar  */
   gdisp->statusbar = gtk_statusbar_new();
+  gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
+				 GTK_RESIZE_QUEUE);
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->statusbar, TRUE, TRUE, 0);
   contextid = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar),
 					    "title");
@@ -1138,12 +1140,8 @@ progress_start ()
 			    tool_label_area->allocation.width,
 			    tool_label_area->allocation.height);
 
-      gtk_container_disable_resize (GTK_CONTAINER (progress_area->parent));
-
       gtk_widget_hide (tool_label_area);
       gtk_widget_show (progress_area);
-
-      gtk_container_enable_resize (GTK_CONTAINER (progress_area->parent));
     }
 }
 
@@ -1176,12 +1174,8 @@ progress_end ()
 {
   if (GTK_WIDGET_VISIBLE (progress_area))
     {
-      gtk_container_disable_resize (GTK_CONTAINER (progress_area->parent));
-
       gtk_widget_hide (progress_area);
       gtk_widget_show (tool_label_area);
-
-      gtk_container_enable_resize (GTK_CONTAINER (progress_area->parent));
 
       gdk_flush ();
 
