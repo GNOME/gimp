@@ -618,7 +618,6 @@ blend_button_release (Tool           *tool,
     {
       return_vals = procedural_db_run_proc ("gimp_blend",
 					    &nreturn_vals,
-					    PDB_IMAGE, pdb_image_to_id(gimage),
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
 					    PDB_INT32, (gint32) blend_options->blend_mode,
 					    PDB_INT32, (gint32) blend_options->paint_mode,
@@ -1711,10 +1710,6 @@ tools_free_blend (Tool *tool)
 /*  The blend procedure definition  */
 ProcArg blend_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("The image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("The affected drawable")
@@ -1784,7 +1779,7 @@ ProcRecord blend_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  15,
+  14,
   blend_args,
 
   /*  Output arguments  */
@@ -1826,25 +1821,20 @@ blend_invoker (Argument *args)
   max_depth     = 0;
   threshold     = 0.0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
+      if (drawable == NULL)
 	success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  blend mode  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       switch (int_value)
 	{
 	case 0: blend_mode = FG_BG_RGB_MODE; break;
@@ -1857,7 +1847,7 @@ blend_invoker (Argument *args)
   /*  paint mode  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
 	paint_mode = int_value;
       else
@@ -1866,7 +1856,7 @@ blend_invoker (Argument *args)
   /*  gradient type  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       switch (int_value)
 	{
 	case 0: gradient_type = Linear; break;
@@ -1884,7 +1874,7 @@ blend_invoker (Argument *args)
   /*  opacity  */
   if (success)
     {
-      fp_value = args[5].value.pdb_float;
+      fp_value = args[4].value.pdb_float;
       if (fp_value >= 0.0 && fp_value <= 100.0)
 	opacity = fp_value;
       else
@@ -1893,7 +1883,7 @@ blend_invoker (Argument *args)
   /*  offset  */
   if (success)
     {
-      fp_value = args[6].value.pdb_float;
+      fp_value = args[5].value.pdb_float;
       if (fp_value >= 0.0)
 	offset = fp_value;
       else
@@ -1902,7 +1892,7 @@ blend_invoker (Argument *args)
   /* repeat */
   if (success)
     {
-      int_value = args[7].value.pdb_int;
+      int_value = args[6].value.pdb_int;
       switch (int_value)
 	{
 	case 0: repeat = REPEAT_NONE; break;
@@ -1914,14 +1904,14 @@ blend_invoker (Argument *args)
   /* supersampling */
   if (success)
     {
-      int_value = args[8].value.pdb_int;
+      int_value = args[7].value.pdb_int;
 
       supersample = (int_value ? TRUE : FALSE);
     }
   /* max_depth */
   if (success)
     {
-      int_value = args[9].value.pdb_int;
+      int_value = args[8].value.pdb_int;
 
       if (((int_value >= 1) && (int_value <= 9)) || !supersample)
 	max_depth = int_value;
@@ -1931,7 +1921,7 @@ blend_invoker (Argument *args)
   /* threshold */
   if (success)
     {
-      fp_value = args[10].value.pdb_float;
+      fp_value = args[9].value.pdb_float;
 
       if (((fp_value >= 0.0) && (fp_value <= 4.0)) || !supersample)
 	threshold = fp_value;
@@ -1941,10 +1931,10 @@ blend_invoker (Argument *args)
   /*  x1, y1, x2, y2  */
   if (success)
     {
-      x1 = args[11].value.pdb_float;
-      y1 = args[12].value.pdb_float;
-      x2 = args[13].value.pdb_float;
-      y2 = args[14].value.pdb_float;
+      x1 = args[10].value.pdb_float;
+      y1 = args[11].value.pdb_float;
+      x2 = args[12].value.pdb_float;
+      y2 = args[13].value.pdb_float;
     }
 
   /*  call the blend procedure  */

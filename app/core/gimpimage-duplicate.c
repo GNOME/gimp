@@ -561,10 +561,6 @@ offset_halfheight_update (GtkWidget *widget,
 /*  The offset procedure definition  */
 ProcArg channel_ops_offset_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable to offset"
@@ -598,7 +594,7 @@ ProcRecord channel_ops_offset_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  6,
+  5,
   channel_ops_offset_args,
 
   /*  Output arguments  */
@@ -622,34 +618,29 @@ channel_ops_offset_invoker (Argument *args)
   int offset_x;
   int offset_y;
 
-  /*  the gimage  */
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   if (success)
     {
-      wrap_around = (args[2].value.pdb_int) ? TRUE : FALSE;
+      wrap_around = (args[1].value.pdb_int) ? TRUE : FALSE;
     }
   if (success)
     {
-      fill_type = args[3].value.pdb_int;
+      fill_type = args[2].value.pdb_int;
       if (fill_type < OFFSET_BACKGROUND || fill_type > OFFSET_TRANSPARENT)
 	success = FALSE;
     }
   if (success)
     {
-      offset_x = args[4].value.pdb_int;
-      offset_y = args[5].value.pdb_int;
+      offset_x = args[3].value.pdb_int;
+      offset_y = args[4].value.pdb_int;
     }
 
   if (success)

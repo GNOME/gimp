@@ -579,10 +579,6 @@ tools_free_fuzzy_select (Tool *tool)
 /*  The fuzzy_select procedure definition  */
 ProcArg fuzzy_select_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -632,7 +628,7 @@ ProcRecord fuzzy_select_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  10,
+  9,
   fuzzy_select_args,
 
   /*  Output arguments  */
@@ -663,31 +659,26 @@ fuzzy_select_invoker (Argument *args)
   op          = REPLACE;
   threshold   = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  x, y  */
   if (success)
     {
-      x = args[2].value.pdb_float;
-      y = args[3].value.pdb_float;
+      x = args[1].value.pdb_float;
+      y = args[2].value.pdb_float;
     }
   /*  threshold  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       if (int_value >= 0 && int_value <= 255)
 	threshold = int_value;
       else
@@ -696,7 +687,7 @@ fuzzy_select_invoker (Argument *args)
   /*  operation  */
   if (success)
     {
-      int_value = args[5].value.pdb_int;
+      int_value = args[4].value.pdb_int;
       switch (int_value)
 	{
 	case 0: op = ADD; break;
@@ -709,24 +700,24 @@ fuzzy_select_invoker (Argument *args)
   /*  antialiasing?  */
   if (success)
     {
-      int_value = args[6].value.pdb_int;
+      int_value = args[5].value.pdb_int;
       antialias = (int_value) ? TRUE : FALSE;
     }
   /*  feathering  */
   if (success)
     {
-      int_value = args[7].value.pdb_int;
+      int_value = args[6].value.pdb_int;
       feather = (int_value) ? TRUE : FALSE;
     }
   /*  feather radius  */
   if (success)
     {
-      feather_radius = args[8].value.pdb_float;
+      feather_radius = args[7].value.pdb_float;
     }
   /*  sample merged  */
   if (success)
     {
-      int_value = args[9].value.pdb_int;
+      int_value = args[8].value.pdb_int;
       sample_merged = (int_value) ? TRUE : FALSE;
     }
 

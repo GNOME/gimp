@@ -315,8 +315,6 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
 
       return_vals = procedural_db_run_proc ("gimp_bucket_fill",
 					    &nreturn_vals,
-					    PDB_IMAGE,
-					    pdb_image_to_id(gdisp->gimage),
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gdisp->gimage)),
 					    PDB_INT32, (gint32) fill_mode,
 					    PDB_INT32, (gint32) bucket_options->paint_mode,
@@ -698,10 +696,6 @@ tools_free_bucket_fill (tool)
 /*  The bucket fill procedure definition  */
 ProcArg bucket_fill_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the affected drawable")
@@ -747,7 +741,7 @@ ProcRecord bucket_fill_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  9,
+  8,
   bucket_fill_args,
 
   /*  Output arguments  */
@@ -781,25 +775,20 @@ bucket_fill_invoker (args)
   opacity     = 100.0;
   threshold   = 0.0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
+      if (drawable == NULL)
 	success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  fill mode  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       switch (int_value)
 	{
 	case 0: fill_mode = FgColorFill; break;
@@ -811,7 +800,7 @@ bucket_fill_invoker (args)
   /*  paint mode  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
 	paint_mode = int_value;
       else
@@ -820,7 +809,7 @@ bucket_fill_invoker (args)
   /*  opacity  */
   if (success)
     {
-      fp_value = args[4].value.pdb_float;
+      fp_value = args[3].value.pdb_float;
       if (fp_value >= 0.0 && fp_value <= 100.0)
 	opacity = fp_value;
       else
@@ -829,7 +818,7 @@ bucket_fill_invoker (args)
   /*  threshold  */
   if (success)
     {
-      fp_value = args[5].value.pdb_float;
+      fp_value = args[4].value.pdb_float;
       if (fp_value >= 0.0 && fp_value <= 255.0)
 	threshold = fp_value;
       else
@@ -838,7 +827,7 @@ bucket_fill_invoker (args)
   /*  sample_merged  */
   if (success)
     {
-      int_value = args[6].value.pdb_int;
+      int_value = args[5].value.pdb_int;
       sample_merged = (int_value) ? TRUE : FALSE;
     }
   /*  x, y  */

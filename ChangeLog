@@ -1,3 +1,18 @@
+Fri Nov 13 16:48:10 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* app/airbrush.c, app/blend.c, app/brightness_contrast.c,
+	app/bucket_fill.c by_color_select.c, app/channel_ops.c, app/clone.c,
+	app/color_balance.c color_picker.c, app/convolve.c, app/curves.c,
+	app/desaturate.c, app/edit_cmds.c equalize.c, app/eraser.c,
+	app/flip_tool.c, app/fuzzy_select.c, gimage_mask_cmds.c
+	app/histogram_tool.c, app/hue_saturation.c, app/invert.c, levels.c,
+	app/pencil.c app/paintbrush.c, app/perspective_tool.c,
+	app/posterize.c, rotate_tool.c app/scale_tool.c, app/shear_tool.c,
+	app/text_tool.c, app/threshold.c:
+	
+	API-mega-break-it-all patch part one: removed the unnecessary
+	PDB_IMAGE argument from many functions.
+
 1998-11-12  Jay Cox  <jaycox@earthlink.net>
 
 	* app/drawable_cmds.c, app/gimage_cmds.c
@@ -17,7 +32,7 @@ Wed Nov 11 02:27:46 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* libgimp/gimp.c (gimp_run_procedure2): fixed a memory leak,
 	(gimp_destroy_paramdefs) new function.
-	* libgimp/gimp.h (gimp_destroy_paramdefs): added header. 
+	* libgimp/gimp.h (gimp_destroy_paramdefs): added prototype.
 	* libgimp/gimpfeatures.h.in (GIMP_HAVE_DESTROY_PARAMDEFS): new macro.
 	* plug-ins/script-fu/script-fu.c (init_procedures): fixed a
 	big memory leak (this also applied to perl!)
@@ -64,7 +79,7 @@ Sun Nov  8 17:51:52 PST 1998 Manish Singh <yosh@gimp.org>
 	* libgimp/{gimp.h, gimpchannel.c, gimpdrawable.c, gimplayer.c}:
 	export the tattoo functions to the plug-ins
 	
-	* libimp/gserialize.c, libimp/gserialize.h: new files for 
+	* libgimp/gserialize.c, libgimp/gserialize.h: new files for 
 	serializing structures
 	
 	* main.c: test the gserialize functions

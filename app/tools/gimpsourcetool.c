@@ -547,10 +547,6 @@ clone_non_gui_paint_func (PaintCore *paint_core,
 /*  The clone procedure definition  */
 ProcArg clone_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -593,7 +589,7 @@ ProcRecord clone_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  8,
+  7,
   clone_args,
 
   /*  Output arguments  */
@@ -621,25 +617,20 @@ clone_invoker (Argument *args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  the src drawable  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       src_drawable = drawable_get_ID (int_value);
       if (src_drawable == NULL || gimage != drawable_gimage (src_drawable))
 	success = FALSE;
@@ -649,7 +640,7 @@ clone_invoker (Argument *args)
   /*  the clone type  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       switch (int_value)
 	{
 	case 0: non_gui_type = ImageClone; break;
@@ -660,13 +651,13 @@ clone_invoker (Argument *args)
   /*  x, y offsets  */
   if (success)
     {
-      src_x = args[4].value.pdb_float;
-      src_y = args[5].value.pdb_float;
+      src_x = args[3].value.pdb_float;
+      src_y = args[4].value.pdb_float;
     }
   /*  num strokes  */
   if (success)
     {
-      int_value = args[6].value.pdb_int;
+      int_value = args[5].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -675,7 +666,7 @@ clone_invoker (Argument *args)
 
   /*  point array  */
   if (success)
-    stroke_array = (double *) args[7].value.pdb_pointer;
+    stroke_array = (double *) args[6].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */

@@ -234,10 +234,6 @@ eq_histogram (hist, lut, bytes, count)
 /*  The equalize procedure definition  */
 ProcArg equalize_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -259,7 +255,7 @@ ProcRecord equalize_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   equalize_args,
 
   /*  Output arguments  */
@@ -283,25 +279,20 @@ equalize_invoker (args)
 
   drawable = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  the mask only option  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       mask_only = (int_value) ? TRUE : FALSE;
     }
   /*  make sure the drawable is not indexed color  */

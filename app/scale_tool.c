@@ -438,10 +438,6 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
 /*  The scale procedure definition  */
 ProcArg scale_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the affected drawable")
@@ -487,7 +483,7 @@ ProcRecord scale_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  7,
+  6,
   scale_args,
 
   /*  Output arguments  */
@@ -519,34 +515,29 @@ scale_invoker (args)
   drawable = NULL;
   layer = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  interpolation  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       interpolation = (int_value) ? TRUE : FALSE;
     }
   /*  scale extents  */
   if (success)
     {
-      trans_info[X1] = args[3].value.pdb_float;
-      trans_info[Y1] = args[4].value.pdb_float;
-      trans_info[X2] = args[5].value.pdb_float;
-      trans_info[Y2] = args[6].value.pdb_float;
+      trans_info[X1] = args[2].value.pdb_float;
+      trans_info[Y1] = args[3].value.pdb_float;
+      trans_info[X2] = args[4].value.pdb_float;
+      trans_info[Y2] = args[5].value.pdb_float;
 
       if (trans_info[X1] >= trans_info[X2] ||
 	  trans_info[Y1] >= trans_info[Y2])

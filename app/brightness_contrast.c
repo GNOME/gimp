@@ -643,10 +643,6 @@ brightness_contrast_contrast_text_update (GtkWidget *w,
 /*  The brightness_contrast procedure definition  */
 ProcArg brightness_contrast_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -672,7 +668,7 @@ ProcRecord brightness_contrast_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  4,
+  3,
   brightness_contrast_args,
 
   /*  Output arguments  */
@@ -702,20 +698,15 @@ brightness_contrast_invoker (Argument *args)
   brightness  = 0;
   contrast    = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
+      if (drawable == NULL)
 	success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -724,7 +715,7 @@ brightness_contrast_invoker (Argument *args)
   /*  brightness  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value < -127 || int_value > 127)
 	success = FALSE;
       else
@@ -733,7 +724,7 @@ brightness_contrast_invoker (Argument *args)
   /*  contrast  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value < -127 || int_value > 127)
 	success = FALSE;
       else

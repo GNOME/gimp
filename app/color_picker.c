@@ -475,10 +475,6 @@ tools_free_color_picker (Tool *tool)
 /*  The color_picker procedure definition  */
 ProcArg color_picker_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -520,7 +516,7 @@ ProcRecord color_picker_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  6,
+  5,
   color_picker_args,
 
   /*  Output arguments  */
@@ -551,35 +547,32 @@ color_picker_invoker (Argument *args)
   sample_merged = FALSE;
   save_color    = COLOR_UPDATE;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  x, y  */
   if (success)
     {
-      x = args[2].value.pdb_float;
-      y = args[3].value.pdb_float;
+      x = args[1].value.pdb_float;
+      y = args[2].value.pdb_float;
     }
   /*  sample_merged  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       sample_merged = (int_value) ? TRUE : FALSE;
     }
   /*  save_color  */
   if (success)
     {
-      int_value = args[5].value.pdb_int;
+      int_value = args[4].value.pdb_int;
       save_color = (int_value) ? COLOR_NEW : COLOR_UPDATE;
     }
 

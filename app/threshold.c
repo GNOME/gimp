@@ -611,10 +611,6 @@ threshold_high_threshold_text_update (GtkWidget *w,
 /*  The threshold procedure definition  */
 ProcArg threshold_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -640,7 +636,7 @@ ProcRecord threshold_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  4,
+  3,
   threshold_args,
 
   /*  Output arguments  */
@@ -671,20 +667,15 @@ threshold_invoker (args)
   low_threshold  = 0;
   high_threshold = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -693,7 +684,7 @@ threshold_invoker (args)
   /*  low threhsold  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	low_threshold = int_value;
       else
@@ -702,7 +693,7 @@ threshold_invoker (args)
   /*  high threhsold  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	high_threshold = int_value;
       else

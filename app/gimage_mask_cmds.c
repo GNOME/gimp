@@ -359,18 +359,15 @@ gimage_mask_float_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   if (success)
     {
-      int_value = args[1].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-    }
-  if (success)
-    {
-      offx = args[2].value.pdb_int;
-      offy = args[3].value.pdb_int;
+      offx = args[1].value.pdb_int;
+      offy = args[2].value.pdb_int;
     }
   if (success)
     success = ((layer = gimage_mask_float (gimage, drawable, offx, offy)) != NULL);
@@ -386,10 +383,6 @@ gimage_mask_float_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg gimage_mask_float_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable from which to float selection"
@@ -423,7 +416,7 @@ ProcRecord gimage_mask_float_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  4,
+  3,
   gimage_mask_float_args,
 
   /*  Output arguments  */
@@ -975,14 +968,10 @@ gimage_mask_layer_alpha_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       if ((layer = layer_get_ID (int_value)) == NULL)
-	success = FALSE;
+        success = FALSE;
+      else
+        gimage = drawable_gimage (GIMP_DRAWABLE(layer));
     }
   if (success)
     gimage_mask_layer_alpha (gimage, layer);
@@ -993,10 +982,6 @@ gimage_mask_layer_alpha_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg gimage_mask_layer_alpha_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_LAYER,
     "layer",
     "layer with alpha"
@@ -1014,7 +999,7 @@ ProcRecord gimage_mask_layer_alpha_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   gimage_mask_layer_alpha_args,
 
   /*  Output arguments  */
@@ -1039,17 +1024,14 @@ gimage_mask_load_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       if ((channel = channel_get_ID (int_value)) == NULL)
 	success = FALSE;
       else
-	success = (drawable_width (GIMP_DRAWABLE(channel)) == gimage->width && 
-		   drawable_height (GIMP_DRAWABLE(channel)) == gimage->height);
+        {
+	  success = (drawable_width (GIMP_DRAWABLE(channel)) == gimage->width && 
+		     drawable_height (GIMP_DRAWABLE(channel)) == gimage->height);
+          gimage = drawable_gimage (GIMP_DRAWABLE(channel));
+	}
     }
 
   if (success)
@@ -1061,10 +1043,6 @@ gimage_mask_load_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg gimage_mask_load_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_CHANNEL,
     "channel",
     "the channel"
@@ -1082,7 +1060,7 @@ ProcRecord gimage_mask_load_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   gimage_mask_load_args,
 
   /*  Output arguments  */

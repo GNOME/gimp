@@ -50,15 +50,11 @@ edit_cut_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  create the new image  */
   if (success)
@@ -70,10 +66,6 @@ edit_cut_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_cut_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable to cut from")
@@ -91,7 +83,7 @@ ProcRecord edit_cut_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   edit_cut_args,
 
   /*  Output arguments  */
@@ -119,15 +111,11 @@ edit_copy_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
 
   /*  create the new image  */
@@ -140,10 +128,6 @@ edit_copy_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_copy_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable to copy from")
@@ -161,7 +145,7 @@ ProcRecord edit_copy_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   edit_copy_args,
 
   /*  Output arguments  */
@@ -191,19 +175,15 @@ edit_paste_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
+      drawable = drawable_get_ID (int_value);
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[2].value.pdb_int;
       paste_into = (int_value) ? TRUE : FALSE;
     }
 
@@ -222,10 +202,6 @@ edit_paste_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_paste_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable to paste from")
@@ -255,7 +231,7 @@ ProcRecord edit_paste_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   edit_paste_args,
 
   /*  Output arguments  */
@@ -283,15 +259,11 @@ edit_clear_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
 
   /*  create the new image  */
@@ -304,10 +276,6 @@ edit_clear_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_clear_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("The drawable to clear from")
@@ -325,7 +293,7 @@ ProcRecord edit_clear_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   edit_clear_args,
 
   /*  Output arguments  */
@@ -352,15 +320,11 @@ edit_fill_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
 
   /*  create the new image  */
@@ -373,10 +337,6 @@ edit_fill_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_fill_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable to fill from")
@@ -394,7 +354,7 @@ ProcRecord edit_fill_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   edit_fill_args,
 
   /*  Output arguments  */
@@ -422,15 +382,11 @@ edit_stroke_invoker (Argument *args)
   if (success)
     {
       int_value = args[0].value.pdb_int;
-      if ((gimage = gimage_get_ID (int_value)) == NULL)
-	success = FALSE;
-    }
-  if (success)
-    {
-      int_value = args[1].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
 
   /*  create the new image  */
@@ -443,10 +399,6 @@ edit_stroke_invoker (Argument *args)
 /*  The procedure definition  */
 ProcArg edit_stroke_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable to stroke to")
@@ -464,7 +416,7 @@ ProcRecord edit_stroke_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   edit_stroke_args,
 
   /*  Output arguments  */

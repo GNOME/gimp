@@ -202,10 +202,6 @@ eraser_non_gui_paint_func (PaintCore *paint_core, GimpDrawable *drawable, int st
 /*  The eraser procedure definition  */
 ProcArg eraser_extended_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -230,10 +226,6 @@ ProcArg eraser_extended_args[] =
 
 ProcArg eraser_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -260,7 +252,7 @@ ProcRecord eraser_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  4,
+  3,
   eraser_args,
 
   /*  Output arguments  */
@@ -282,7 +274,7 @@ ProcRecord eraser_extended_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  6,
+  5,
   eraser_extended_args,
 
   /*  Output arguments  */
@@ -308,25 +300,20 @@ eraser_invoker (args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  num strokes  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -335,7 +322,7 @@ eraser_invoker (args)
 
       /*  point array  */
   if (success)
-    stroke_array = (double *) args[3].value.pdb_pointer;
+    stroke_array = (double *) args[2].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */
@@ -390,25 +377,20 @@ eraser_extended_invoker (args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  num strokes  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -417,7 +399,7 @@ eraser_extended_invoker (args)
 
       /*  point array  */
   if (success)
-    stroke_array = (double *) args[3].value.pdb_pointer;
+    stroke_array = (double *) args[2].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */
@@ -426,8 +408,8 @@ eraser_extended_invoker (args)
 
   if (success)
   {
-  	non_gui_hard = args[4].value.pdb_int;
-	non_gui_incremental = args[5].value.pdb_int;
+  	non_gui_hard = args[3].value.pdb_int;
+	non_gui_incremental = args[4].value.pdb_int;
   }
 
   if (success)

@@ -332,10 +332,6 @@ flip_change_type (int new_type)
 /*  The flip procedure definition  */
 ProcArg flip_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the affected drawable")
@@ -365,7 +361,7 @@ ProcRecord flip_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   flip_args,
 
   /*  Output arguments  */
@@ -395,25 +391,20 @@ flip_invoker (Argument *args)
   new_tiles   = NULL;
   layer       = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  flip type */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       switch (int_value)
 	{
 	case 0: flip_type = 0; break;

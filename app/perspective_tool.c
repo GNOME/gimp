@@ -321,10 +321,6 @@ perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matr
 /*  The perspective procedure definition  */
 ProcArg perspective_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the affected drawable"
@@ -386,7 +382,7 @@ ProcRecord perspective_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  11,
+  10,
   perspective_args,
 
   /*  Output arguments  */
@@ -418,38 +414,33 @@ perspective_invoker (args)
   drawable = NULL;
   layer = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  interpolation  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       interpolation = (int_value) ? TRUE : FALSE;
     }
   /*  perspective extents  */
   if (success)
     {
-      trans_info[X0] = args[3].value.pdb_float;
-      trans_info[Y0] = args[4].value.pdb_float;
-      trans_info[X1] = args[5].value.pdb_float;
-      trans_info[Y1] = args[6].value.pdb_float;
-      trans_info[X2] = args[7].value.pdb_float;
-      trans_info[Y2] = args[8].value.pdb_float;
-      trans_info[X3] = args[9].value.pdb_float;
-      trans_info[Y3] = args[10].value.pdb_float;
+      trans_info[X0] = args[2].value.pdb_float;
+      trans_info[Y0] = args[3].value.pdb_float;
+      trans_info[X1] = args[4].value.pdb_float;
+      trans_info[Y1] = args[5].value.pdb_float;
+      trans_info[X2] = args[6].value.pdb_float;
+      trans_info[Y2] = args[7].value.pdb_float;
+      trans_info[X3] = args[8].value.pdb_float;
+      trans_info[Y3] = args[9].value.pdb_float;
     }
 
   /*  call the perspective procedure  */

@@ -877,10 +877,6 @@ color_balance_yb_text_update (GtkWidget *w,
 /*  The color_balance procedure definition  */
 ProcArg color_balance_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -918,7 +914,7 @@ ProcRecord color_balance_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  7,
+  6,
   color_balance_args,
 
   /*  Output arguments  */
@@ -955,20 +951,15 @@ color_balance_invoker (Argument *args)
   magenta_green = 0;
   yellow_blue   = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -977,7 +968,7 @@ color_balance_invoker (Argument *args)
   /*  transfer_mode  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       switch (int_value)
 	{
 	case 0: transfer_mode = SHADOWS; break;
@@ -989,13 +980,13 @@ color_balance_invoker (Argument *args)
   /*  preserve_lum  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       preserve_lum = (int_value) ? TRUE : FALSE;
     }
   /*  cyan_red  */
   if (success)
     {
-      fp_value = args[4].value.pdb_float;
+      fp_value = args[3].value.pdb_float;
       if (fp_value >= -100 && fp_value <= 100)
 	cyan_red = fp_value;
       else
@@ -1004,7 +995,7 @@ color_balance_invoker (Argument *args)
   /*  magenta_green  */
   if (success)
     {
-      fp_value = args[5].value.pdb_float;
+      fp_value = args[4].value.pdb_float;
       if (fp_value >= -100 && fp_value <= 100)
 	magenta_green = fp_value;
       else
@@ -1013,7 +1004,7 @@ color_balance_invoker (Argument *args)
   /*  yellow_blue  */
   if (success)
     {
-      fp_value = args[6].value.pdb_float;
+      fp_value = args[5].value.pdb_float;
       if (fp_value >= -100 && fp_value <= 100)
 	yellow_blue = fp_value;
       else

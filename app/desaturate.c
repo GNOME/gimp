@@ -116,10 +116,6 @@ desaturate (GimpDrawable *drawable)
 /*  The desaturate procedure definition  */
 ProcArg desaturate_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -137,7 +133,7 @@ ProcRecord desaturate_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   desaturate_args,
 
   /*  Output arguments  */
@@ -160,20 +156,15 @@ desaturate_invoker (args)
 
   drawable = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
 
   /*  check to make sure the drawable is color  */

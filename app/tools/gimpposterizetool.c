@@ -452,10 +452,6 @@ posterize_levels_text_update (GtkWidget *w,
 /*  The posterize procedure definition  */
 ProcArg posterize_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -477,7 +473,7 @@ ProcRecord posterize_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   posterize_args,
 
   /*  Output arguments  */
@@ -505,20 +501,15 @@ posterize_invoker (Argument *args)
   drawable = NULL;
   levels = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -527,7 +518,7 @@ posterize_invoker (Argument *args)
   /*  levels  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value >= 2 && int_value < 256)
 	levels = int_value;
       else

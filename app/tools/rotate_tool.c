@@ -376,10 +376,6 @@ rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix)
 /*  The rotate procedure definition  */
 ProcArg rotate_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the affected drawable")
@@ -413,7 +409,7 @@ ProcRecord rotate_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  4,
+  3,
   rotate_args,
 
   /*  Output arguments  */
@@ -445,30 +441,25 @@ rotate_invoker (args)
   drawable = NULL;
   layer = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  interpolation  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       interpolation = (int_value) ? TRUE : FALSE;
     }
   /*  angle of rotation  */
   if (success)
-    angle = args[3].value.pdb_float;
+    angle = args[2].value.pdb_float;
 
   /*  call the rotate procedure  */
   if (success)

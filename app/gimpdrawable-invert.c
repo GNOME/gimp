@@ -48,7 +48,6 @@ image_invert (gimage_ptr)
 
   return_vals = procedural_db_run_proc ("gimp_invert",
 					&nreturn_vals,
-					PDB_IMAGE, pdb_image_to_id(gimage),
 					PDB_DRAWABLE, drawable_ID (drawable),
 					PDB_END);
 
@@ -117,10 +116,6 @@ invert (drawable)
 /*  The invert procedure definition  */
 ProcArg invert_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -138,7 +133,7 @@ ProcRecord invert_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  2,
+  1,
   invert_args,
 
   /*  Output arguments  */
@@ -161,26 +156,15 @@ invert_invoker (args)
 
   drawable = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	{
-	  g_warning ("bleep1\n");
-	  success = FALSE;
-	}
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	{
-	  g_warning ("bleep2\n");
-	  success = FALSE;
-	}
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)

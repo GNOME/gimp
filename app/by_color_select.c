@@ -971,10 +971,6 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 /*  The by_color_select procedure definition  */
 ProcArg by_color_select_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -1020,7 +1016,7 @@ ProcRecord by_color_select_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  9,
+  8,
   by_color_select_args,
 
   /*  Output arguments  */
@@ -1051,20 +1047,15 @@ by_color_select_invoker (Argument *args)
   op          = REPLACE;
   threshold   = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  color  */
   if (success)
@@ -1072,14 +1063,14 @@ by_color_select_invoker (Argument *args)
       int i;
       unsigned char *color_array;
 
-      color_array = (unsigned char *) args[2].value.pdb_pointer;
+      color_array = (unsigned char *) args[1].value.pdb_pointer;
       for (i = 0; i < 3; i++)
 	color[i] = color_array[i];
     }
   /*  threshold  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= 0 && int_value <= 255)
 	threshold = int_value;
       else
@@ -1088,7 +1079,7 @@ by_color_select_invoker (Argument *args)
   /*  operation  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       switch (int_value)
 	{
 	case 0: op = ADD; break;
@@ -1101,24 +1092,24 @@ by_color_select_invoker (Argument *args)
   /*  antialiasing?  */
   if (success)
     {
-      int_value = args[5].value.pdb_int;
+      int_value = args[4].value.pdb_int;
       antialias = (int_value) ? TRUE : FALSE;
     }
   /*  feathering  */
   if (success)
     {
-      int_value = args[6].value.pdb_int;
+      int_value = args[5].value.pdb_int;
       feather = (int_value) ? TRUE : FALSE;
     }
   /*  feather radius  */
   if (success)
     {
-      feather_radius = args[7].value.pdb_float;
+      feather_radius = args[6].value.pdb_float;
     }
   /*  sample merged  */
   if (success)
     {
-      int_value = args[8].value.pdb_int;
+      int_value = args[7].value.pdb_int;
       sample_merged = (int_value) ? TRUE : FALSE;
     }
 

@@ -1298,10 +1298,6 @@ curves_CR_compose (CRMatrix a,
 /*  Procedure for defining the curve with a spline  */
 ProcArg curves_spline_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -1331,7 +1327,7 @@ ProcRecord curves_spline_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   curves_spline_args,
 
   /*  Output arguments  */
@@ -1359,20 +1355,15 @@ curves_spline_invoker (Argument *args)
   void *pr;
   GimpDrawable *drawable;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable =  drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -1382,7 +1373,7 @@ curves_spline_invoker (Argument *args)
   /*  channel  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (success)
 	{
 	  if (drawable_gray (drawable))
@@ -1402,14 +1393,14 @@ curves_spline_invoker (Argument *args)
     }
   if (success)
     {
-      num_cp = args[3].value.pdb_int;
+      num_cp = args[2].value.pdb_int;
       if (num_cp < 4 || num_cp > 32 || (num_cp & 0x1))
 	success = FALSE;
     }
   /*  control points  */
   if (success)
     {
-      control_pts = (unsigned char *) args[4].value.pdb_pointer;
+      control_pts = (unsigned char *) args[3].value.pdb_pointer;
     }
 
   /*  arrange to modify the curves  */
@@ -1456,10 +1447,6 @@ curves_spline_invoker (Argument *args)
 /*  Procedure for explicitly defining the curve  */
 ProcArg curves_explicit_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -1489,7 +1476,7 @@ ProcRecord curves_explicit_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   curves_explicit_args,
 
   /*  Output arguments  */
@@ -1516,20 +1503,15 @@ curves_explicit_invoker (Argument *args)
   void *pr;
   GimpDrawable *drawable;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable =  drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -1538,7 +1520,7 @@ curves_explicit_invoker (Argument *args)
   /*  channel  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (success)
 	{
 	  if (drawable_gray (drawable))
@@ -1559,14 +1541,14 @@ curves_explicit_invoker (Argument *args)
   /*  the number of bytes  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value != 256)
 	success = FALSE;
     }
   /*  the curve  */
   if (success)
     {
-      curve = (unsigned char *) args[4].value.pdb_pointer;
+      curve = (unsigned char *) args[3].value.pdb_pointer;
     }
 
   /*  arrange to modify the curves  */

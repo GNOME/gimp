@@ -244,10 +244,6 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 /*  The paintbrush procedure definition  */
 ProcArg paintbrush_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -268,10 +264,6 @@ ProcArg paintbrush_args[] =
 
 ProcArg paintbrush_extended_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -306,7 +298,7 @@ ProcRecord paintbrush_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   paintbrush_args,
 
   /*  Output arguments  */
@@ -328,7 +320,7 @@ ProcRecord paintbrush_extended_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  6,
+  5,
   paintbrush_extended_args,
 
   /*  Output arguments  */
@@ -354,25 +346,20 @@ paintbrush_invoker (Argument *args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  fade out  */
   if (success)
     {
-      fp_value = args[2].value.pdb_float;
+      fp_value = args[1].value.pdb_float;
       if (fp_value >= 0.0)
 	non_gui_fade_out = fp_value;
       else
@@ -381,7 +368,7 @@ paintbrush_invoker (Argument *args)
   /*  num strokes  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -390,7 +377,7 @@ paintbrush_invoker (Argument *args)
 
   /*  point array  */
   if (success)
-    stroke_array = (double *) args[4].value.pdb_pointer;
+    stroke_array = (double *) args[3].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */
@@ -444,25 +431,20 @@ paintbrush_extended_invoker (Argument *args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  fade out  */
   if (success)
     {
-      fp_value = args[2].value.pdb_float;
+      fp_value = args[1].value.pdb_float;
       if (fp_value >= 0.0)
 	non_gui_fade_out = fp_value;
       else
@@ -471,7 +453,7 @@ paintbrush_extended_invoker (Argument *args)
   /*  num strokes  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -480,7 +462,7 @@ paintbrush_extended_invoker (Argument *args)
 
   /*  point array  */
   if (success)
-    stroke_array = (double *) args[4].value.pdb_pointer;
+    stroke_array = (double *) args[3].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */
@@ -489,7 +471,7 @@ paintbrush_extended_invoker (Argument *args)
 
   if (success)
     {
-      non_gui_incremental = args[5].value.pdb_int;
+      non_gui_incremental = args[4].value.pdb_int;
       /*  set the paint core's paint func  */
       non_gui_paint_core.paint_func = paintbrush_non_gui_paint_func;
 

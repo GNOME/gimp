@@ -1027,10 +1027,6 @@ hue_saturation_hue_partition_events (GtkWidget           *widget,
 /*  The hue_saturation procedure definition  */
 ProcArg hue_saturation_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -1064,7 +1060,7 @@ ProcRecord hue_saturation_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  6,
+  5,
   hue_saturation_args,
 
   /*  Output arguments  */
@@ -1100,20 +1096,15 @@ hue_saturation_invoker (Argument *args)
   lightness   = 0.0;
   saturation  = 0.0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -1122,7 +1113,7 @@ hue_saturation_invoker (Argument *args)
   /*  hue_range  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (int_value < 0 || int_value > 6)
 	success = FALSE;
       else
@@ -1131,7 +1122,7 @@ hue_saturation_invoker (Argument *args)
   /*  hue_offset  */
   if (success)
     {
-      fp_value = args[3].value.pdb_float;
+      fp_value = args[2].value.pdb_float;
       if (fp_value < -180 || fp_value > 180)
 	success = FALSE;
       else
@@ -1140,7 +1131,7 @@ hue_saturation_invoker (Argument *args)
   /*  lightness  */
   if (success)
     {
-      fp_value = args[4].value.pdb_float;
+      fp_value = args[3].value.pdb_float;
       if (fp_value < -100 || fp_value > 100)
 	success = FALSE;
       else
@@ -1149,7 +1140,7 @@ hue_saturation_invoker (Argument *args)
   /*  saturation  */
   if (success)
     {
-      fp_value = args[5].value.pdb_float;
+      fp_value = args[4].value.pdb_float;
       if (fp_value < -100 || fp_value > 100)
 	success = FALSE;
       else

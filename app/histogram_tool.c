@@ -613,10 +613,6 @@ histogram_tool_blue_callback (GtkWidget *w,
 /*  The histogram procedure definition  */
 ProcArg histogram_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -674,7 +670,7 @@ ProcRecord histogram_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   histogram_args,
 
   /*  Output arguments  */
@@ -709,25 +705,20 @@ histogram_invoker (Argument *args)
   low_range   = 0;
   high_range  = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  channel  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (success)
 	{
 	  if (drawable_gray (drawable))
@@ -748,7 +739,7 @@ histogram_invoker (Argument *args)
   /*  low range  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	low_range = int_value;
       else
@@ -757,7 +748,7 @@ histogram_invoker (Argument *args)
   /*  high range  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	high_range = int_value;
       else

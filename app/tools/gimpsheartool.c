@@ -363,10 +363,6 @@ shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix)
 /*  The shear procedure definition  */
 ProcArg shear_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the affected drawable")
@@ -404,7 +400,7 @@ ProcRecord shear_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   shear_args,
 
   /*  Output arguments  */
@@ -438,31 +434,26 @@ shear_invoker (args)
   shear_type  = HORZ;
   layer       = NULL;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  interpolation  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       interpolation = (int_value) ? TRUE : FALSE;
     }
   /*  shear type */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       switch (int_value)
 	{
 	case 0: shear_type = HORZ; break;
@@ -473,7 +464,7 @@ shear_invoker (args)
   /*  shear extents  */
   if (success)
     {
-      shear_magnitude = args[4].value.pdb_float;
+      shear_magnitude = args[3].value.pdb_float;
     }
 
   /*  call the shear procedure  */

@@ -1440,10 +1440,6 @@ levels_output_da_events (GtkWidget    *widget,
 /*  The levels procedure definition  */
 ProcArg levels_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    "the image"
-  },
   { PDB_DRAWABLE,
     "drawable",
     "the drawable"
@@ -1485,7 +1481,7 @@ ProcRecord levels_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  8,
+  7,
   levels_args,
 
   /*  Output arguments  */
@@ -1524,20 +1520,15 @@ levels_invoker (Argument *args)
   low_output  = 0;
   high_output = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
-	success = FALSE;
+      if (drawable == NULL)                                        
+        success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  make sure the drawable is not indexed color  */
   if (success)
@@ -1546,7 +1537,7 @@ levels_invoker (Argument *args)
   /*  channel  */
   if (success)
     {
-      int_value = args[2].value.pdb_int;
+      int_value = args[1].value.pdb_int;
       if (success)
 	{
 	  if (drawable_gray (drawable))
@@ -1567,7 +1558,7 @@ levels_invoker (Argument *args)
   /*  low input  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	low_input = int_value;
       else
@@ -1576,7 +1567,7 @@ levels_invoker (Argument *args)
   /*  high input  */
   if (success)
     {
-      int_value = args[4].value.pdb_int;
+      int_value = args[3].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	high_input = int_value;
       else
@@ -1585,7 +1576,7 @@ levels_invoker (Argument *args)
   /*  gamma  */
   if (success)
     {
-      fp_value = args[5].value.pdb_float;
+      fp_value = args[4].value.pdb_float;
       if (fp_value >= 0.1 && fp_value <= 10.0)
 	gamma = fp_value;
       else
@@ -1594,7 +1585,7 @@ levels_invoker (Argument *args)
   /*  low output  */
   if (success)
     {
-      int_value = args[6].value.pdb_int;
+      int_value = args[5].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	low_output = int_value;
       else
@@ -1603,7 +1594,7 @@ levels_invoker (Argument *args)
   /*  high output  */
   if (success)
     {
-      int_value = args[7].value.pdb_int;
+      int_value = args[6].value.pdb_int;
       if (int_value >= 0 && int_value < 256)
 	high_output = int_value;
       else

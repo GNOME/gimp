@@ -295,10 +295,6 @@ airbrush_non_gui_paint_func (PaintCore *paint_core,
 /*  The airbrush procedure definition  */
 ProcArg airbrush_args[] =
 {
-  { PDB_IMAGE,
-    "image",
-    N_("the image")
-  },
   { PDB_DRAWABLE,
     "drawable",
     N_("the drawable")
@@ -329,7 +325,7 @@ ProcRecord airbrush_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   airbrush_args,
 
   /*  Output arguments  */
@@ -356,25 +352,20 @@ airbrush_invoker (Argument *args)
   drawable = NULL;
   num_strokes = 0;
 
-  /*  the gimage  */
-  if (success)
-    {
-      int_value = args[0].value.pdb_int;
-      if (! (gimage = gimage_get_ID (int_value)))
-	success = FALSE;
-    }
   /*  the drawable  */
   if (success)
     {
-      int_value = args[1].value.pdb_int;
+      int_value = args[0].value.pdb_int;
       drawable = drawable_get_ID (int_value);
-      if (drawable == NULL || gimage != drawable_gimage (drawable))
+      if (drawable == NULL)
 	success = FALSE;
+      else
+        gimage = drawable_gimage (drawable);
     }
   /*  pressure  */
   if (success)
     {
-      fp_value = args[2].value.pdb_float;
+      fp_value = args[1].value.pdb_float;
       if (fp_value >= 0.0 && fp_value <= 100.0)
 	non_gui_pressure = fp_value;
       else
@@ -383,7 +374,7 @@ airbrush_invoker (Argument *args)
   /*  num strokes  */
   if (success)
     {
-      int_value = args[3].value.pdb_int;
+      int_value = args[2].value.pdb_int;
       if (int_value > 0)
 	num_strokes = int_value / 2;
       else
@@ -392,7 +383,7 @@ airbrush_invoker (Argument *args)
 
       /*  point array  */
   if (success)
-    stroke_array = (double *) args[4].value.pdb_pointer;
+    stroke_array = (double *) args[3].value.pdb_pointer;
 
   if (success)
     /*  init the paint core  */
