@@ -1,10 +1,11 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 eval 'exec /usr/bin/perl -w -S $0 ${1+"$@"}'
     if 0; # not running under some shell
 
-# This one's all mine.  Well, its GPL/Artisitic but I"m the author and creator. # I think you need gimp 1.1 or better for this - if  you don't, please let 
-# me know
+# This one's all mine.  Well, its GPL/Artisitic but I"m the author and
+# creator. I think you need gimp 1.1 or better for this - if you don't,
+# please let me know
 
 # I'm hacking this on top of my sethspin script, so this is doing even more
 # stuff it wasn't really designed to do.  Hence if you thought sethspin was

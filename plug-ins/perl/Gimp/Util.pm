@@ -322,8 +322,7 @@ sub gimp_image_add_new_layer {
 
 sub gimp_image_set_visible {
    my $image = shift;
-   my %layers;
-   @layers{map $$_,@_}=(1) x @_;
+   my %layers; @layers{map $$_,@_}=(1) x @_;
    for ($image->get_layers) {
       $_->set_visible ($layers{$$_});
    }
@@ -331,8 +330,7 @@ sub gimp_image_set_visible {
 
 sub gimp_image_set_invisible {
    my $image = shift;
-   my %layers;
-   @layers{map $$_,@_}=(1) x @_;
+   my %layers; @layers{map $$_,@_}=(1) x @_;
    for ($image->get_layers) {
       $_->set_visible (!$layers{$$_});
    }

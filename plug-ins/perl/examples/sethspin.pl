@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 # This one's all mine.  Well, its GPL/Artisitic but I"m the author and creator. # I think you need gimp 1.1 or better for this - if  you don't, please let 
 # me know
@@ -17,7 +17,7 @@
 # Seth Burgess
 # <sjburges@gimp.org>
 
-use Gimp;
+use Gimp qw/:auto/;
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -58,7 +58,7 @@ sub spin_layer { # the function for actually spinning the layer
 	$x[3]-saw($i)*$prp*$framelay->width,$x[2]+$spin->height *sin($i)/2,
 	$x[1]-saw($i)*$prp*$framelay->width,$x[4]-$spin->height *sin($i)/2,  
 	$x[3]+saw($i)*$prp*$framelay->width,$x[4]-$spin->height *sin($i)/2);  
-		$floater->floating_sel_to_layer;
+		#$floater->floating_sel_to_layer;
 		# fill entire layer with background  
 		$framelay->fill(1); # BG-IMAGE-FILL
 	}

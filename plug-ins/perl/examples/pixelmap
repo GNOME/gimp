@@ -16,11 +16,12 @@ sub pixelmap {					# es folgt das eigentliche Skript...
    my $init="";
 
    $_expr =~ /\$p/   and $init.='$p = $src->data;';
+   $_expr =~ /\$P/   and $init.= $drawable->has_alpha ? '$P = $src->data;' : '$P = $src->data->slice("0:-1");';
    $_expr =~ /\$x/   and $init.='$x = sequence(long,$w); $x+=$_dst->x;';
    $_expr =~ /\$y/   and $init.='$y = sequence(long,$h); $y+=$_dst->y;';
    $_expr =~ /\$bpp/ and $init.='$bpp = $_dst->bpp;';
 
-   my($p,$x,$y,$bpp,$w,$h);
+   my($p,$P,$x,$y,$bpp,$w,$h);
 
    $_expr = "sub{$init\n#line 1\n$_expr\n;}";
 
@@ -55,7 +56,7 @@ register "pixelmap",
          "=pod(DESCRIPTION)",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990729",
+         "19991115",
          __"<Image>/Filters/Map/Pixelmap",
          "*",	
          [
@@ -68,7 +69,7 @@ register "pixelgen",
          "=pod(DESCRIPTION)",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "19990730",
+         "19991115",
          __"<Toolbox>/Xtns/Render/Pixelgenerator",
          "*",	
          [
@@ -99,6 +100,34 @@ exit main;
 =head1 DESCRIPTION
 
 Not yet written yet, sorry...
+
+=over 4
+
+=item $p
+
+The source pixels (1..4 bytes per pixel, depending on format). Use like this:
+
+ $p*3.5		# the return value is the result
+
+=item $P
+
+The source pixels without alpha. Use it like this:
+
+ $P *= 0.5; $p	# modify $P inplace, return also modified $p as result
+
+=item $x
+
+A one-dimensional vector of x-coordinates currently being worked on.
+
+=item $y
+
+A one-dimensional vector of y-coordinates currently being worked on.
+
+=item $bpp
+
+The bytes per pixel value of the destination area.
+
+=back
 
 
 
