@@ -502,13 +502,13 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
   /*  ensure the consistency of the menus  */
   if (! now)
     {
-      GimpContext *context;
+      GimpContext *user_context;
 
       gimp_item_factory_update (shell->menubar_factory, shell);
 
-      context = gimp_get_current_context (gdisp->gimage->gimp);
+      user_context = gimp_get_user_context (gdisp->gimage->gimp);
 
-      if (gdisp == gimp_context_get_display (context))
+      if (gdisp == gimp_context_get_display (user_context))
         gimp_item_factory_update (shell->popup_factory, shell);
     }
 }

@@ -24,6 +24,8 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
@@ -347,7 +349,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
   GimpDisplayShell *shell;
   GimpTool         *tool;
 
-  tool  = GIMP_TOOL (image_map_tool);
+  tool = GIMP_TOOL (image_map_tool);
 
   switch (response_id)
     {
@@ -357,7 +359,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      /* Fix for bug #126524 - only set shell in the case 
+      /* Fix for bug #126524 - only set shell in the case
        * where we need it */
       shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
       gtk_widget_hide (image_map_tool->shell);
@@ -378,7 +380,10 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       gimp_tool_control_set_preserve (tool->control, FALSE);
 
       gimp_item_factory_update (shell->menubar_factory, shell);
-      gimp_item_factory_update (shell->popup_factory,   shell);
+
+      if (shell->gdisp == gimp_context_get_display
+          (gimp_get_user_context (shell->gdisp->gimage->gimp)))
+        gimp_item_factory_update (shell->popup_factory, shell);
 
       tool->gdisp    = NULL;
       tool->drawable = NULL;

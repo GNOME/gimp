@@ -1313,8 +1313,6 @@ image_menu_update (GtkItemFactory *item_factory,
   GimpLayer          *layer         = NULL;
   GimpVectors        *vectors       = NULL;
   GimpImageType       drawable_type = -1;
-  GimpRGB             fg;
-  GimpRGB             bg;
   gboolean            is_rgb        = FALSE;
   gboolean            is_gray       = FALSE;
   gboolean            is_indexed    = FALSE;
@@ -1381,9 +1379,6 @@ image_menu_update (GtkItemFactory *item_factory,
       n_screens =
         gdk_display_get_n_screens (gtk_widget_get_display (GTK_WIDGET (shell)));
     }
-
-  gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
-  gimp_context_get_background (gimp_get_user_context (gimp), &bg);
 
 #define SET_ACTIVE(menu,condition) \
         gimp_item_factory_set_active (item_factory, menu, (condition) != 0)

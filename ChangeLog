@@ -1,3 +1,21 @@
+2003-11-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-appearance.c: update
+	shell->popup_factory only if this is the active display or we will
+	change another display's options when creating a new display.
+	Fixes bug #126668.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/view-commands.c
+	* app/tools/gimpimagemaptool.c: do the same here. Can't really
+	happen in these places but it's more correct to have the check
+	for the active display.
+
+	* app/display/gimpdisplay.c (gimp_display_flush_whenever): get the
+	active display from the user_context, not the current_context.
+
+	* app/gui/image-menu.c (image_menu_update): removed unused code.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-selection.[ch]: removed

@@ -55,6 +55,10 @@
   if (! gdisp) \
     return
 
+#define IS_ACTIVE_DISPLAY(gdisp) \
+  ((gdisp) == \
+   gimp_context_get_display (gimp_get_user_context ((gdisp)->gimage->gimp)))
+
 
 void
 view_zoom_out_cmd_callback (GtkWidget *widget,
@@ -145,9 +149,11 @@ view_dot_for_dot_cmd_callback (GtkWidget *widget,
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Dot for Dot",
                                     shell->dot_for_dot);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Dot for Dot",
-                                    shell->dot_for_dot);
+
+      if (IS_ACTIVE_DISPLAY (gdisp))
+        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                      "/View/Dot for Dot",
+                                      shell->dot_for_dot);
     }
 }
 
@@ -319,9 +325,11 @@ view_snap_to_guides_cmd_callback (GtkWidget *widget,
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Snap to Guides",
                                     shell->snap_to_guides);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Snap to Guides",
-                                    shell->snap_to_guides);
+
+      if (IS_ACTIVE_DISPLAY (gdisp))
+        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                      "/View/Snap to Guides",
+                                      shell->snap_to_guides);
     }
 }
 
@@ -358,9 +366,11 @@ view_snap_to_grid_cmd_callback (GtkWidget *widget,
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Snap to Grid",
                                     shell->snap_to_grid);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Snap to Grid",
-                                    shell->snap_to_grid);
+
+      if (IS_ACTIVE_DISPLAY (gdisp))
+        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                      "/View/Snap to Grid",
+                                      shell->snap_to_grid);
     }
 }
 
@@ -406,9 +416,11 @@ view_fullscreen_cmd_callback (GtkWidget *widget,
       gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
                                     "/View/Fullscreen",
                                     fullscreen);
-      gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
-                                    "/View/Fullscreen",
-                                    fullscreen);
+
+      if (IS_ACTIVE_DISPLAY (gdisp))
+        gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
+                                      "/View/Fullscreen",
+                                      fullscreen);
     }
 }
 

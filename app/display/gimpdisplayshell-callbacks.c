@@ -223,6 +223,9 @@ gimp_display_shell_events (GtkWidget        *widget,
 
         gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->menubar_factory),
 				      "/View/Fullscreen", fullscreen);
+
+        if (shell->gdisp ==
+            gimp_context_get_display (gimp_get_user_context (gimp)))
 	gimp_item_factory_set_active (GTK_ITEM_FACTORY (shell->popup_factory),
 				      "/View/Fullscreen", fullscreen);
       }
