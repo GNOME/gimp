@@ -788,18 +788,24 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
   paint_tool = GIMP_PAINT_TOOL (draw_tool);
 
   /*  Draw start target  */
-  gimp_draw_tool_draw_cross (draw_tool,
-                             floor (paint_tool->last_coords.x) + 0.5,
-                             floor (paint_tool->last_coords.y) + 0.5,
-                             TARGET_SIZE,
-                             TRUE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_CROSS,
+                              floor (paint_tool->last_coords.x) + 0.5,
+                              floor (paint_tool->last_coords.y) + 0.5,
+                              TARGET_SIZE,
+                              TARGET_SIZE,
+                              GTK_ANCHOR_CENTER,
+                              TRUE);
 
   /*  Draw end target  */
-  gimp_draw_tool_draw_cross (draw_tool,
-                             floor (paint_tool->cur_coords.x) + 0.5,
-                             floor (paint_tool->cur_coords.y) + 0.5,
-                             TARGET_SIZE,
-                             TRUE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_CROSS,
+                              floor (paint_tool->cur_coords.x) + 0.5,
+                              floor (paint_tool->cur_coords.y) + 0.5,
+                              TARGET_SIZE,
+                              TARGET_SIZE,
+                              GTK_ANCHOR_CENTER,
+                              TRUE);
 
   /*  Draw the line between the start and end coords  */
   gimp_draw_tool_draw_line (draw_tool,

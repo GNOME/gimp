@@ -429,10 +429,13 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 	  gt_tool->function = TRANSFORM_HANDLE_4;
 	}
 
-      if (gimp_draw_tool_in_radius (draw_tool, gdisp,
+      if (gimp_draw_tool_on_handle (draw_tool, gdisp,
                                     coords->x, coords->y,
+                                    GIMP_HANDLE_CIRCLE,
                                     gt_tool->tcx, gt_tool->tcy,
-                                    HANDLE >> 1))
+                                    HANDLE, HANDLE,
+                                    GIMP_HANDLE_CIRCLE,
+                                    FALSE))
 	{
 	  gt_tool->function = TRANSFORM_HANDLE_CENTER;
 	}
@@ -859,29 +862,38 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
     }
 
   /*  draw the tool handles  */
-  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
-                                           tr_tool->tx1, tr_tool->ty1,
-                                           HANDLE, HANDLE,
-                                           FALSE);
-  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
-                                           tr_tool->tx2, tr_tool->ty2,
-                                           HANDLE, HANDLE,
-                                           FALSE);
-  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
-                                           tr_tool->tx3, tr_tool->ty3,
-                                           HANDLE, HANDLE,
-                                           FALSE);
-  gimp_draw_tool_draw_rectangle_by_center (draw_tool, FALSE,
-                                           tr_tool->tx4, tr_tool->ty4,
-                                           HANDLE, HANDLE,
-                                           FALSE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_SQUARE,
+                              tr_tool->tx1, tr_tool->ty1,
+                              HANDLE, HANDLE,
+                              GTK_ANCHOR_CENTER,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_SQUARE,
+                              tr_tool->tx2, tr_tool->ty2,
+                              HANDLE, HANDLE,
+                              GTK_ANCHOR_CENTER,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_SQUARE,
+                              tr_tool->tx3, tr_tool->ty3,
+                              HANDLE, HANDLE,
+                              GTK_ANCHOR_CENTER,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_SQUARE,
+                              tr_tool->tx4, tr_tool->ty4,
+                              HANDLE, HANDLE,
+                              GTK_ANCHOR_CENTER,
+                              FALSE);
 
   /*  draw the center  */
-  gimp_draw_tool_draw_arc_by_center (draw_tool, TRUE,
-                                     tr_tool->tcx, tr_tool->tcy,
-                                     HANDLE >> 1,
-                                     0, 23040,
-                                     FALSE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_FILLED_CIRCLE,
+                              tr_tool->tcx, tr_tool->tcy,
+                              HANDLE, HANDLE,
+                              GTK_ANCHOR_CENTER,
+                              FALSE);
 
   if (gimp_transform_tool_showpath ())
     {

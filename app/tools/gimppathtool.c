@@ -881,11 +881,11 @@ gimp_path_tool_draw_helper (NPath *path,
 {
   GimpPathTool *path_tool;
   GimpDrawTool *draw_tool;
-  gboolean draw = TRUE;
+  gboolean      draw = TRUE;
 
   path_tool = GIMP_PATH_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
-  
+
   if (path_tool->draw & PATH_TOOL_REDRAW_ACTIVE)
     draw = (segment->flags & SEGMENT_ACTIVE ||
 	    (segment->next && segment->next->flags & SEGMENT_ACTIVE));
@@ -894,25 +894,26 @@ gimp_path_tool_draw_helper (NPath *path,
     {
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CIRCLE,
-                                  FALSE,
                                   segment->x, segment->y,
                                   PATH_TOOL_WIDTH,
+                                  PATH_TOOL_WIDTH,
+                                  GTK_ANCHOR_CENTER,
                                   FALSE);
     }
   else
     {
       gimp_draw_tool_draw_handle (draw_tool,
-                                  GIMP_HANDLE_CIRCLE,
-                                  TRUE,
+                                  GIMP_HANDLE_FILLED_CIRCLE,
                                   segment->x, segment->y,
                                   PATH_TOOL_WIDTH,
+                                  PATH_TOOL_WIDTH,
+                                  GTK_ANCHOR_CENTER,
                                   FALSE);
     }
 
   if (segment->next)
     path_curve_draw_segment (draw_tool, segment);
 }
-  
 
 static void
 gimp_path_tool_draw (GimpDrawTool *draw_tool)

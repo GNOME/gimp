@@ -498,18 +498,24 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
   blend_tool = GIMP_BLEND_TOOL (draw_tool);
 
   /*  Draw start target  */
-  gimp_draw_tool_draw_cross (draw_tool,
-                             floor (blend_tool->startx) + 0.5,
-                             floor (blend_tool->starty) + 0.5,
-                             TARGET_SIZE,
-                             TRUE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_CROSS,
+                              floor (blend_tool->startx) + 0.5,
+                              floor (blend_tool->starty) + 0.5,
+                              TARGET_SIZE,
+                              TARGET_SIZE,
+                              GTK_ANCHOR_CENTER,
+                              TRUE);
 
   /*  Draw end target  */
-  gimp_draw_tool_draw_cross (draw_tool,
-                             floor (blend_tool->endx) + 0.5,
-                             floor (blend_tool->endy) + 0.5,
-                             TARGET_SIZE,
-                             TRUE);
+  gimp_draw_tool_draw_handle (draw_tool,
+                              GIMP_HANDLE_CROSS,
+                              floor (blend_tool->endx) + 0.5,
+                              floor (blend_tool->endy) + 0.5,
+                              TARGET_SIZE,
+                              TARGET_SIZE,
+                              GTK_ANCHOR_CENTER,
+                              TRUE);
 
   /*  Draw the line between the start and end coords  */
   gimp_draw_tool_draw_line (draw_tool,

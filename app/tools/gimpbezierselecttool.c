@@ -1869,7 +1869,8 @@ gimp_bezier_select_tool_cursor_update (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (gdisp != tool->gdisp || draw_tool->draw_state == INVISIBLE)
+  if (gdisp != tool->gdisp ||
+      draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_INVISIBLE)
     {
       gimp_display_shell_install_tool_cursor (shell,
                                               GIMP_MOUSE_CURSOR,

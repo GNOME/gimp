@@ -276,12 +276,15 @@ gimp_measure_tool_button_press (GimpTool        *tool,
        */
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (tool), gdisp,
-                                        measure_tool->x[i],
-                                        measure_tool->y[i],
+	  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                         coords->x,
                                         coords->y,
-                                        TARGET))
+                                        GIMP_HANDLE_CIRCLE,
+                                        measure_tool->x[i],
+                                        measure_tool->y[i],
+                                        TARGET, TARGET,
+                                        GTK_ANCHOR_CENTER,
+                                        FALSE))
 	    {
 	      if (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK))
 		{
@@ -692,12 +695,15 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
     {
       for (i = 0; i < measure_tool->num_points; i++)
 	{
-	  if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (tool), gdisp,
-                                        measure_tool->x[i],
-                                        measure_tool->y[i],
+	  if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                         coords->x,
                                         coords->y,
-                                        TARGET))
+                                        GIMP_HANDLE_CIRCLE,
+                                        measure_tool->x[i],
+                                        measure_tool->y[i],
+                                        TARGET, TARGET,
+                                        GTK_ANCHOR_CENTER,
+                                        FALSE))
 	    {
 	      in_handle = TRUE;
 
@@ -754,21 +760,25 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
     {
       if (i == 0 && measure_tool->num_points == 3)
 	{
-          gimp_draw_tool_draw_arc_by_center (draw_tool,
-                                             FALSE,
-                                             measure_tool->x[i],
-                                             measure_tool->y[i],
-                                             TARGET >> 1,
-                                             0, 23040,
-                                             FALSE);
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_CIRCLE,
+                                      measure_tool->x[i],
+                                      measure_tool->y[i],
+                                      TARGET,
+                                      TARGET,
+                                      GTK_ANCHOR_CENTER,
+                                      FALSE);
 	}
       else
 	{
-          gimp_draw_tool_draw_cross (draw_tool,
-                                     measure_tool->x[i],
-                                     measure_tool->y[i],
-                                     TARGET * 2,
-                                     FALSE);
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_CROSS,
+                                      measure_tool->x[i],
+                                      measure_tool->y[i],
+                                      TARGET * 2,
+                                      TARGET * 2,
+                                      GTK_ANCHOR_CENTER,
+                                      FALSE);
 	}
 
       if (i > 0)
@@ -804,12 +814,14 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 
       if (angle2 != 0)
 	{
-          gimp_draw_tool_draw_arc_by_center (draw_tool,
+          gimp_draw_tool_draw_arc_by_anchor (draw_tool,
                                              FALSE,
                                              measure_tool->x[0],
                                              measure_tool->y[0],
                                              ARC_RADIUS,
+                                             ARC_RADIUS,
                                              angle1, angle2,
+                                             GTK_ANCHOR_CENTER,
                                              FALSE);
 
 	  if (measure_tool->num_points == 2)

@@ -36,14 +36,31 @@ enum
   LAST_SIGNAL
 };
 
-static void   gimp_draw_tool_class_init (GimpDrawToolClass *klass);
-static void   gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
+static void          gimp_draw_tool_class_init (GimpDrawToolClass *klass);
+static void          gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
 
-static void   gimp_draw_tool_finalize   (GObject           *object);
+static void          gimp_draw_tool_finalize   (GObject           *object);
 
-static void   gimp_draw_tool_control    (GimpTool          *tool,
-					 ToolAction         action,
-					 GimpDisplay       *gdisp);
+static void          gimp_draw_tool_control    (GimpTool          *tool,
+                                                ToolAction         action,
+                                                GimpDisplay       *gdisp);
+
+static inline void   gimp_draw_tool_shift_to_north_west
+                                               (gdouble            x,
+                                                gdouble            y,
+                                                gint               handle_width,
+                                                gint               handle_height,
+                                                GtkAnchorType      anchor,
+                                                gdouble           *shifted_x,
+                                                gdouble           *shifted_y);
+static inline void   gimp_draw_tool_shift_to_center
+                                               (gdouble            x,
+                                                gdouble            y,
+                                                gint               handle_width,
+                                                gint               handle_height,
+                                                GtkAnchorType      anchor,
+                                                gdouble           *shifted_x,
+                                                gdouble           *shifted_y);
 
 
 static guint gimp_draw_tool_signals[LAST_SIGNAL] = { 0 };
@@ -108,7 +125,7 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 static void
 gimp_draw_tool_init (GimpDrawTool *draw_tool)
 {
-  draw_tool->draw_state   = INVISIBLE;
+  draw_tool->draw_state   = GIMP_DRAW_TOOL_STATE_INVISIBLE;
   draw_tool->win          = NULL;
   draw_tool->gc           = NULL;
   draw_tool->paused_count = 0;
@@ -173,7 +190,7 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
   g_return_if_fail (GDK_IS_WINDOW (win));
 
-  if (draw_tool->draw_state != INVISIBLE)
+  if (draw_tool->draw_state != GIMP_DRAW_TOOL_STATE_INVISIBLE)
     gimp_draw_tool_stop (draw_tool);  /* this seems backwards ;) */
 
   draw_tool->win          = win;
@@ -196,7 +213,7 @@ gimp_draw_tool_start (GimpDrawTool *draw_tool,
 
   g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
 
-  draw_tool->draw_state = VISIBLE;
+  draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
 }
 
 void
@@ -204,12 +221,12 @@ gimp_draw_tool_stop (GimpDrawTool *draw_tool)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
 
-  if (draw_tool->draw_state == INVISIBLE)
+  if (draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_INVISIBLE)
     return;
 
   g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
 
-  draw_tool->draw_state = INVISIBLE;
+  draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
 }
 
 void
@@ -217,7 +234,7 @@ gimp_draw_tool_pause (GimpDrawTool *draw_tool)
 {
   if (draw_tool->paused_count == 0)
     {
-      draw_tool->draw_state = INVISIBLE;
+      draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_INVISIBLE;
 
       g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
     }
@@ -235,7 +252,7 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
 
   if (draw_tool->paused_count == 0)
     {
-      draw_tool->draw_state = VISIBLE;
+      draw_tool->draw_state = GIMP_DRAW_TOOL_STATE_VISIBLE;
 
       g_signal_emit (G_OBJECT (draw_tool), gimp_draw_tool_signals[DRAW], 0);
     }
@@ -249,14 +266,11 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
                               gdouble       x2,
                               gdouble       y2)
 {
-  GimpTool *tool;
-  gdouble   tx1, ty1;
-  gdouble   tx2, ty2;
+  gdouble tx1, ty1;
+  gdouble tx2, ty2;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), 0.0);
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), 0.0);
-
-  tool = GIMP_TOOL (draw_tool);
 
   gdisplay_transform_coords_f (gdisp, x1, y1, &tx1, &ty1, FALSE);
   gdisplay_transform_coords_f (gdisp, x2, y2, &tx2, &ty2, FALSE);
@@ -273,14 +287,11 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
                           gdouble       y2,
                           gint          radius)
 {
-  GimpTool *tool;
-  gdouble   tx1, ty1;
-  gdouble   tx2, ty2;
+  gdouble tx1, ty1;
+  gdouble tx2, ty2;
 
   g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
-
-  tool = GIMP_TOOL (draw_tool);
 
   gdisplay_transform_coords_f (gdisp, x1, y1, &tx1, &ty1, FALSE);
   gdisplay_transform_coords_f (gdisp, x2, y2, &tx2, &ty2, FALSE);
@@ -390,13 +401,14 @@ gimp_draw_tool_draw_arc (GimpDrawTool *draw_tool,
 }
 
 void
-gimp_draw_tool_draw_rectangle_by_center (GimpDrawTool *draw_tool,
-                                         gboolean      filled,
-                                         gdouble       x,
-                                         gdouble       y,
-                                         gint          width,
-                                         gint          height,
-                                         gboolean      use_offsets)
+gimp_draw_tool_draw_rectangle_by_anchor (GimpDrawTool   *draw_tool,
+                                         gboolean        filled,
+                                         gdouble         x,
+                                         gdouble         y,
+                                         gint            width,
+                                         gint            height,
+                                         GtkAnchorType   anchor,
+                                         gboolean        use_offsets)
 {
   GimpTool         *tool;
   GimpDisplayShell *shell;
@@ -409,23 +421,36 @@ gimp_draw_tool_draw_rectangle_by_center (GimpDrawTool *draw_tool,
   shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
+
+  gimp_draw_tool_shift_to_north_west (tx, ty,
+                                      width, height,
+                                      anchor,
+                                      &tx, &ty);
+
+  if (filled)
+    {
+      width++;
+      height++;
+    }
 
   gdk_draw_rectangle (draw_tool->win,
                       draw_tool->gc,
                       filled,
-                      RINT (tx) - (width >> 1), RINT (ty) - (height >> 1),
+                      RINT (tx), RINT (ty),
                       width, height);
 }
 
 void
-gimp_draw_tool_draw_arc_by_center (GimpDrawTool *draw_tool,
-                                   gboolean      filled,
-                                   gdouble       x,
-                                   gdouble       y,
-                                   gint          radius,
-                                   gint          angle1,
-                                   gint          angle2,
-                                   gboolean      use_offsets)
+gimp_draw_tool_draw_arc_by_anchor (GimpDrawTool  *draw_tool,
+                                   gboolean       filled,
+                                   gdouble        x,
+                                   gdouble        y,
+                                   gint           radius_x,
+                                   gint           radius_y,
+                                   gint           angle1,
+                                   gint           angle2,
+                                   GtkAnchorType  anchor,
+                                   gboolean       use_offsets)
 {
   GimpTool         *tool;
   GimpDisplayShell *shell;
@@ -438,21 +463,38 @@ gimp_draw_tool_draw_arc_by_center (GimpDrawTool *draw_tool,
   shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
   gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
+
+  /* well... */
+  radius_x *= 2;
+  radius_y *= 2;
+
+  gimp_draw_tool_shift_to_north_west (tx, ty,
+                                      radius_x, radius_y,
+                                      anchor,
+                                      &tx, &ty);
+
+  if (filled)
+    {
+      radius_x += 1;
+      radius_y += 1;
+    }
 
   gdk_draw_arc (draw_tool->win,
                 draw_tool->gc,
                 filled,
-                RINT (tx) - radius, RINT (ty) - radius,
-                2 * radius, 2 * radius,
+                RINT (tx), RINT (ty),
+                radius_x, radius_y,
                 angle1, angle2);
 }
 
 void
-gimp_draw_tool_draw_cross (GimpDrawTool *draw_tool,
-                           gdouble       x,
-                           gdouble       y,
-                           gint          size,
-                           gboolean      use_offsets)
+gimp_draw_tool_draw_cross_by_anchor (GimpDrawTool  *draw_tool,
+                                     gdouble        x,
+                                     gdouble        y,
+                                     gint           width,
+                                     gint           height,
+                                     GtkAnchorType  anchor,
+                                     gboolean       use_offsets)
 {
   GimpTool         *tool;
   GimpDisplayShell *shell;
@@ -466,23 +508,29 @@ gimp_draw_tool_draw_cross (GimpDrawTool *draw_tool,
 
   gdisplay_transform_coords_f (tool->gdisp, x, y, &tx, &ty, use_offsets);
 
+  gimp_draw_tool_shift_to_center (tx, ty,
+                                  width, height,
+                                  anchor,
+                                  &tx, &ty);
+
   gdk_draw_line (draw_tool->win,
                  draw_tool->gc,
-		 RINT (tx) - (size >> 1), RINT (ty),
-		 RINT (tx) + (size >> 1), RINT (ty));
+		 RINT (tx), RINT (ty) - (height >> 1),
+		 RINT (tx), RINT (ty) + (height >> 1));
   gdk_draw_line (draw_tool->win,
                  draw_tool->gc,
-		 RINT (tx), RINT (ty) - (size >> 1),
-		 RINT (tx), RINT (ty) + (size >> 1));
+		 RINT (tx) - (width >> 1), RINT (ty),
+		 RINT (tx) + (width >> 1), RINT (ty));
 }
 
 void
 gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool, 
                             GimpHandleType  type,
-                            gboolean        filled,
                             gdouble         x,
                             gdouble         y,
-                            gint            size,
+                            gint            width,
+                            gint            height,
+                            GtkAnchorType   anchor,
                             gboolean        use_offsets)
 {
   g_return_if_fail (GIMP_IS_DRAW_TOOL (draw_tool));
@@ -490,29 +538,120 @@ gimp_draw_tool_draw_handle (GimpDrawTool   *draw_tool,
   switch (type)
     {
     case GIMP_HANDLE_SQUARE:
-      gimp_draw_tool_draw_rectangle_by_center (draw_tool,
-                                               filled,
+      gimp_draw_tool_draw_rectangle_by_anchor (draw_tool,
+                                               FALSE,
                                                x, y,
-                                               size,
-                                               size,
+                                               width,
+                                               height,
+                                               anchor,
+                                               use_offsets);
+      break;
+
+    case GIMP_HANDLE_FILLED_SQUARE:
+      gimp_draw_tool_draw_rectangle_by_anchor (draw_tool,
+                                               TRUE,
+                                               x, y,
+                                               width,
+                                               height,
+                                               anchor,
                                                use_offsets);
       break;
 
     case GIMP_HANDLE_CIRCLE:
-      gimp_draw_tool_draw_arc_by_center (draw_tool,
-                                         filled,
+      gimp_draw_tool_draw_arc_by_anchor (draw_tool,
+                                         FALSE,
                                          x, y,
-                                         size >> 1,
+                                         width >> 1,
+                                         height >> 1,
                                          0, 360 * 64,
+                                         anchor,
                                          use_offsets);
       break;
 
+    case GIMP_HANDLE_FILLED_CIRCLE:
+      gimp_draw_tool_draw_arc_by_anchor (draw_tool,
+                                         TRUE,
+                                         x, y,
+                                         width >> 1,
+                                         height >> 1,
+                                         0, 360 * 64,
+                                         anchor,
+                                         use_offsets);
+      break;
+
+    case GIMP_HANDLE_CROSS:
+      gimp_draw_tool_draw_cross_by_anchor (draw_tool,
+                                           x, y,
+                                           width,
+                                           height,
+                                           anchor,
+                                           use_offsets);
+      break;
+
     default:
-      g_warning ("gimp_draw_tool_draw_handle(): invalid handle type");
+      g_warning ("%s: invalid handle type %d", G_GNUC_PRETTY_FUNCTION, type);
       break;
     }
 }
 
+gboolean
+gimp_draw_tool_on_handle (GimpDrawTool   *draw_tool,
+                          GimpDisplay    *gdisp,
+                          gdouble         x,
+                          gdouble         y,
+                          GimpHandleType  type,
+                          gdouble         handle_x,
+                          gdouble         handle_y,
+                          gint            width,
+                          gint            height,
+                          GtkAnchorType   anchor,
+                          gboolean        use_offsets)
+{
+  gdouble tx, ty;
+  gdouble handle_tx, handle_ty;
+
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), 0.0);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), 0.0);
+
+  gdisplay_transform_coords_f (gdisp, x, y, &tx, &ty, use_offsets);
+  gdisplay_transform_coords_f (gdisp,
+                               handle_x, handle_y,
+                               &handle_tx, &handle_ty,
+                               use_offsets);
+
+  switch (type)
+    {
+    case GIMP_HANDLE_SQUARE:
+    case GIMP_HANDLE_FILLED_SQUARE:
+    case GIMP_HANDLE_CROSS:
+      gimp_draw_tool_shift_to_north_west (handle_tx, handle_ty,
+                                          width, height,
+                                          anchor,
+                                          &handle_tx, &handle_ty);
+
+      return (tx == CLAMP (tx, handle_tx, handle_tx + width) &&
+              ty == CLAMP (ty, handle_ty, handle_ty + height));
+
+    case GIMP_HANDLE_CIRCLE:
+    case GIMP_HANDLE_FILLED_CIRCLE:
+      gimp_draw_tool_shift_to_center (handle_tx, handle_ty,
+                                      width, height,
+                                      anchor,
+                                      &handle_tx, &handle_ty);
+
+      /* FIXME */
+      if (width != height)
+        width = (width + height) >> 1;
+
+      return ((SQR (handle_tx - tx) + SQR (handle_ty - ty)) < SQR (width));
+
+    default:
+      g_warning ("%s: invalid handle type %d", G_GNUC_PRETTY_FUNCTION, type);
+      break;
+    }
+
+  return FALSE;
+}
 
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool, 
@@ -554,4 +693,131 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
     }
 
   g_free (coords);
+}
+
+
+/*  private functions  */
+
+static inline void
+gimp_draw_tool_shift_to_north_west (gdouble        x,
+                                    gdouble        y,
+                                    gint           handle_width,
+                                    gint           handle_height,
+                                    GtkAnchorType  anchor,
+                                    gdouble       *shifted_x,
+                                    gdouble       *shifted_y)
+{
+  switch (anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      x -= (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      x -= (handle_width >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      /*  nothing, this is the default  */
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      x -= handle_width;
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      x -= (handle_width >> 1);
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      x -= handle_width;
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_WEST:
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_EAST:
+      x -= handle_width;
+      y -= (handle_height >> 1);
+      break;
+
+    default:
+      break;
+    }
+
+  if (shifted_x)
+    *shifted_x = x;
+
+  if (shifted_y)
+    *shifted_y = y;
+}
+                                    
+static inline void
+gimp_draw_tool_shift_to_center (gdouble        x,
+                                gdouble        y,
+                                gint           handle_width,
+                                gint           handle_height,
+                                GtkAnchorType  anchor,
+                                gdouble       *shifted_x,
+                                gdouble       *shifted_y)
+{
+  switch (anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      /*  nothing, this is the default  */
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      x += (handle_width >> 1);
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      x -= (handle_width >> 1);
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      x += (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      x -= (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_WEST:
+      x += (handle_width >> 1);
+      break;
+
+    case GTK_ANCHOR_EAST:
+      x -= (handle_width >> 1);
+      break;
+
+    default:
+      break;
+    }
+
+  if (shifted_x)
+    *shifted_x = x;
+
+  if (shifted_y)
+    *shifted_y = y;
 }

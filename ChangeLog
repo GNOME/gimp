@@ -1,5 +1,22 @@
 2001-11-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]: restructured the new draw utility
+	functions and added gimp_draw_tool_draw_handle() and
+	gimp_draw_tool_on_handle().
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimptransformtool.c: use the new functions all over
+	the place so handle drawing and mouse_over detection work the same
+	for all tools.
+
+2001-11-15  Michael Natterer  <mitch@gimp.org>
+
 	* Makefile.am: removed antique Makefile targets, including the
 	"files" hack (which was some automatic EXTRA_DIST voodoo), added
 	missing stuff to EXTRA_DIST.

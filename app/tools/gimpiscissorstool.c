@@ -811,11 +811,14 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
   /*  Draw the crosshairs target if we're placing a seed  */
   if (iscissors->draw & DRAW_CURRENT_SEED)
     {
-      gimp_draw_tool_draw_cross (draw_tool,
-                                 iscissors->x,
-                                 iscissors->y,
-                                 TARGET_WIDTH,
-                                 FALSE);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_CROSS,
+                                  iscissors->x,
+                                  iscissors->y,
+                                  TARGET_WIDTH,
+                                  TARGET_WIDTH,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
 
       /* Draw a line boundary */
       if (! iscissors->first_point && ! (iscissors->draw & DRAW_LIVEWIRE))
@@ -870,13 +873,14 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       /*  Draw a point at the init point coordinates  */
       if (! iscissors->connected)
         {
-          gimp_draw_tool_draw_arc_by_center (draw_tool,
-                                             TRUE,
-                                             iscissors->ix,
-                                             iscissors->iy,
-                                             POINT_WIDTH >> 1,
-                                             0, 23040,
-                                             FALSE);
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_FILLED_CIRCLE,
+                                      iscissors->ix,
+                                      iscissors->iy,
+                                      POINT_WIDTH,
+                                      POINT_WIDTH,
+                                      GTK_ANCHOR_CENTER,
+                                      FALSE);
         }
 
       /*  Go through the list of icurves, and render each one...  */
@@ -887,13 +891,14 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 	  /*  plot the curve  */
 	  iscissors_draw_curve (draw_tool, curve);
 
-          gimp_draw_tool_draw_arc_by_center (draw_tool,
-                                             TRUE,
-                                             curve->x1,
-                                             curve->y1,
-                                             POINT_WIDTH >> 1,
-                                             0, 23040,
-                                             FALSE);
+          gimp_draw_tool_draw_handle (draw_tool,
+                                      GIMP_HANDLE_FILLED_CIRCLE,
+                                      curve->x1,
+                                      curve->y1,
+                                      POINT_WIDTH,
+                                      POINT_WIDTH,
+                                      GTK_ANCHOR_CENTER,
+                                      FALSE);
 	}
     }
 
@@ -919,13 +924,14 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
                                     FALSE);
 	}
 
-      gimp_draw_tool_draw_arc_by_center (draw_tool,
-                                         TRUE,
-                                         iscissors->nx,
-                                         iscissors->ny,
-                                         POINT_WIDTH >> 1,
-                                         0, 23040,
-                                         FALSE);
+      gimp_draw_tool_draw_handle (draw_tool,
+                                  GIMP_HANDLE_FILLED_CIRCLE,
+                                  iscissors->nx,
+                                  iscissors->ny,
+                                  POINT_WIDTH,
+                                  POINT_WIDTH,
+                                  GTK_ANCHOR_CENTER,
+                                  FALSE);
     }
 }
 
@@ -1203,22 +1209,28 @@ mouse_over_vertex (GimpIscissorsTool *iscissors,
     {
       curve = (ICurve *) list->data;
 
-      if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
+      if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
                                     GIMP_TOOL (iscissors)->gdisp,
-                                    curve->x1, curve->y1,
                                     x, y,
-                                    POINT_HALFWIDTH))
+                                    GIMP_HANDLE_CIRCLE,
+                                    curve->x1, curve->y1,
+                                    POINT_WIDTH, POINT_WIDTH,
+                                    GTK_ANCHOR_CENTER,
+                                    FALSE))
 	{
 	  iscissors->curve1 = curve;
 
 	  if (curves_found++)
 	    return curves_found;
 	}
-      else if (gimp_draw_tool_in_radius (GIMP_DRAW_TOOL (iscissors),
+      else if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (iscissors),
                                          GIMP_TOOL (iscissors)->gdisp,
-                                         curve->x2, curve->y2,
                                          x, y,
-                                         POINT_HALFWIDTH))
+                                         GIMP_HANDLE_CIRCLE,
+                                         curve->x2, curve->y2,
+                                         POINT_WIDTH, POINT_WIDTH,
+                                         GTK_ANCHOR_CENTER,
+                                         FALSE))
 	{
 	  iscissors->curve2 = curve;
 

@@ -314,9 +314,11 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 			     GimpDisplay     *gdisp)
 {
   GimpCropTool     *crop;
+  GimpDrawTool     *draw_tool;
   GimpDisplayShell *shell;
   
-  crop = GIMP_CROP_TOOL (tool);
+  crop      = GIMP_CROP_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -329,27 +331,43 @@ gimp_crop_tool_button_press (GimpTool        *tool,
       /*  If the cursor is in either the upper left or lower right boxes,
        *  The new function will be to resize the current crop area
        */
-      if (coords->x == CLAMP (coords->x, crop->x1, crop->x1 + crop->cw) &&
-	  coords->y == CLAMP (coords->y, crop->y1, crop->y1 + crop->ch))
+      if (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                    coords->x, coords->y,
+                                    GIMP_HANDLE_SQUARE,
+                                    crop->x1, crop->y1,
+                                    crop->dcw, crop->dch,
+                                    GTK_ANCHOR_NORTH_WEST,
+                                    FALSE))
         {
           crop->function = RESIZING_LEFT;
         }
-      else if (coords->x == CLAMP (coords->x, crop->x2 - crop->cw, crop->x2) &&
-	       coords->y == CLAMP (coords->y, crop->y2 - crop->ch, crop->y2))
+      else if (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         crop->x2, crop->y2,
+                                         crop->dcw, crop->dch,
+                                         GTK_ANCHOR_SOUTH_EAST,
+                                         FALSE))
         {
           crop->function = RESIZING_RIGHT;
         }
       /*  If the cursor is in either the upper right or lower left boxes,
        *  The new function will be to translate the current crop area
        */
-      else if  ((coords->x == CLAMP (coords->x,
-				     crop->x1, crop->x1 + crop->cw) &&
-		 coords->y == CLAMP (coords->y,
-				     crop->y2 - crop->ch, crop->y2)) ||
-		(coords->x == CLAMP (coords->x,
-				     crop->x2 - crop->cw, crop->x2) &&
-		 coords->y == CLAMP (coords->y,
-				     crop->y1, crop->y1 + crop->ch)))
+      else if  (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                          coords->x, coords->y,
+                                          GIMP_HANDLE_SQUARE,
+                                          crop->x2, crop->y1,
+                                          crop->dcw, crop->dch,
+                                          GTK_ANCHOR_NORTH_EAST,
+                                          FALSE) ||
+                gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                          coords->x, coords->y,
+                                          GIMP_HANDLE_SQUARE,
+                                          crop->x1, crop->y2,
+                                          crop->dcw, crop->dch,
+                                          GTK_ANCHOR_SOUTH_WEST,
+                                          FALSE))
         {
           crop->function = MOVING;
         }
@@ -726,11 +744,13 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 			      GimpDisplay     *gdisp)
 {
   GimpCropTool      *crop;
+  GimpDrawTool      *draw_tool;
   GimpDisplayShell  *shell;
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  crop = GIMP_CROP_TOOL (tool);
+  crop      = GIMP_CROP_TOOL (tool);
+  draw_tool = GIMP_DRAW_TOOL (tool);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
@@ -739,23 +759,37 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
     {
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
-  else if (coords->x == CLAMP (coords->x, crop->x1, crop->x1 + crop->cw) &&
-	   coords->y == CLAMP (coords->y, crop->y1, crop->y1 + crop->ch))
+  else if (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coords->x, coords->y,
+                                     GIMP_HANDLE_SQUARE,
+                                     crop->x1, crop->y1,
+                                     crop->dcw, crop->dch,
+                                     GTK_ANCHOR_NORTH_WEST,
+                                     FALSE) ||
+           gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coords->x, coords->y,
+                                     GIMP_HANDLE_SQUARE,
+                                     crop->x2, crop->y2,
+                                     crop->dcw, crop->dch,
+                                     GTK_ANCHOR_SOUTH_EAST,
+                                     FALSE))
     {
       cmodifier = GIMP_CURSOR_MODIFIER_RESIZE;
     }
-  else if (coords->x == CLAMP (coords->x, crop->x2 - crop->cw, crop->x2) &&
-	   coords->y == CLAMP (coords->y, crop->y2 - crop->ch, crop->y2))
-    {
-      cmodifier = GIMP_CURSOR_MODIFIER_RESIZE;
-    }
-  else if  (coords->x == CLAMP (coords->x, crop->x1, crop->x1 + crop->cw) &&
-	    coords->y == CLAMP (coords->y, crop->y2 - crop->ch, crop->y2))
-    {
-      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
-    }
-  else if  (coords->x == CLAMP (coords->x, crop->x2 - crop->cw, crop->x2) &&
-	    coords->y == CLAMP (coords->y, crop->y1, crop->y1 + crop->ch))
+  else if (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coords->x, coords->y,
+                                     GIMP_HANDLE_SQUARE,
+                                     crop->x2, crop->y1,
+                                     crop->dcw, crop->dch,
+                                     GTK_ANCHOR_NORTH_EAST,
+                                     FALSE) ||
+           gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coords->x, coords->y,
+                                     GIMP_HANDLE_SQUARE,
+                                     crop->x1, crop->y2,
+                                     crop->dcw, crop->dch,
+                                     GTK_ANCHOR_SOUTH_WEST,
+                                     FALSE))
     {
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
@@ -798,18 +832,30 @@ gimp_crop_tool_draw (GimpDrawTool *draw)
 		 crop->dx2, crop->dy2,
                  crop->dx2, 0);
 
-  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
-		      crop->dx1, crop->dy1,
-                      crop->dcw, crop->dch);
-  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
-		      crop->dx2 - crop->dcw, crop->dy2-crop->dch,
-                      crop->dcw, crop->dch);
-  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
-		      crop->dx2 - crop->dcw, crop->dy1,
-                      crop->dcw, crop->dch);
-  gdk_draw_rectangle (draw->win, draw->gc, TRUE,
-		      crop->dx1, crop->dy2-crop->dch,
-                      crop->dcw, crop->dch);
+  gimp_draw_tool_draw_handle (draw,
+                              GIMP_HANDLE_FILLED_SQUARE,
+                              crop->x1, crop->y1,
+                              crop->dcw, crop->dch,
+                              GTK_ANCHOR_NORTH_WEST,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw,
+                              GIMP_HANDLE_FILLED_SQUARE,
+                              crop->x2, crop->y1,
+                              crop->dcw, crop->dch,
+                              GTK_ANCHOR_NORTH_EAST,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw,
+                              GIMP_HANDLE_FILLED_SQUARE,
+                              crop->x1, crop->y2,
+                              crop->dcw, crop->dch,
+                              GTK_ANCHOR_SOUTH_WEST,
+                              FALSE);
+  gimp_draw_tool_draw_handle (draw,
+                              GIMP_HANDLE_FILLED_SQUARE,
+                              crop->x2, crop->y2,
+                              crop->dcw, crop->dch,
+                              GTK_ANCHOR_SOUTH_EAST,
+                              FALSE);
 
   crop_info_update (tool);
 }
@@ -850,9 +896,6 @@ crop_recalc (GimpTool     *tool,
 
   crop->dcw = ((crop->dx2 - crop->dx1) < SRW) ? (crop->dx2 - crop->dx1) : SRW;
   crop->dch = ((crop->dy2 - crop->dy1) < SRH) ? (crop->dy2 - crop->dy1) : SRH;
-
-  crop->cw = UNSCALEX (tool->gdisp, crop->dcw);
-  crop->ch = UNSCALEY (tool->gdisp, crop->dch);
 
 #undef SRW
 #undef SRH
