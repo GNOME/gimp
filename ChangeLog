@@ -3,6 +3,9 @@
 	* docs/keybindings.txt: updated list of keybindings provided by
 	Owen <oc@webone.com.au>.
 
+	* docs/Makefile.am
+	* cheat_sheet.txt: removed this hopelessly outdated file.
+
 2003-04-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/mng.c: applied a patch from S. Mukund. that

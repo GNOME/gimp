@@ -15,7 +15,6 @@ EXTRA_DIST = \
 	Wilber.xcf.gz			\
 	Wilber.xcf.gz.README		\
 	Wilber_Construction_Kit.xcf.gz	\
-	cheat_sheet.txt			\
 	gimp.txt			\
 	keybindings.txt 		\
 	quick_reference.ps 		\
