@@ -1,3 +1,7 @@
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/icosave.c: minor cleanup.
+
 2005-02-08  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/Makefile.am: install sphere.py in unstable

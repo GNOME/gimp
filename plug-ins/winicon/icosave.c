@@ -828,12 +828,12 @@ ico_image_get_reduced_buf (guint32   layer,
   gint32          tmp_layer;
   gint            w, h;
   guchar         *buffer;
-  guchar         *cmap;
+  guchar         *cmap = NULL;
   GimpDrawable   *drawable = gimp_drawable_get (layer);
 
   w = gimp_drawable_width (layer);
   h = gimp_drawable_height (layer);
-  *cmap_out = NULL;
+
   *num_colors = 0;
 
   buffer = g_new (guchar, w * h * 4);
@@ -898,11 +898,10 @@ ico_image_get_reduced_buf (guint32   layer,
                                           TRUE,
                                           FALSE,
                                           "dummy");
-
+              g_free (cmap);
               cmap = gimp_image_get_colormap (tmp_image, num_colors);
             }
 
-          *cmap_out = g_memdup (cmap, *num_colors * 3);
           gimp_image_convert_rgb (tmp_image);
         }
 
@@ -923,6 +922,7 @@ ico_image_get_reduced_buf (guint32   layer,
 
   gimp_drawable_detach (drawable);
 
+  *cmap_out = cmap;
   *buf_out = buffer;
 }
 
