@@ -256,7 +256,13 @@ href_tag	: HREF '=' STRING
 		}
 		;
 
-nohref_tag	: NOHREF
+nohref_tag	: NOHREF optional_value
+		{
+		}
+		;
+
+optional_value	: /* Empty */
+		| '=' STRING
 		{
 		}
 		;
