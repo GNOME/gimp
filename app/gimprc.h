@@ -56,7 +56,6 @@ extern int       show_rulers;
 extern GUnit     default_units;
 extern int       show_statusbar;
 extern int       auto_save;
-extern int       cubic_interpolation;
 extern InterpolationType interpolation_type;
 extern int       confirm_on_close;
 extern int       default_width, default_height;

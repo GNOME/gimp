@@ -1,3 +1,9 @@
+Sat Aug 21 01:18:08 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* app/gimprc.[ch]: removed cubic_interpolation variable.
+	* app/transform_core.c: use the interpolation_type variable 
+	instead of the old cubic_interpolation variable.
+
 Sat Aug 21 21:03:00 CST 1999  Seth J. Burgess <sjburges@gimp.org>
 	
 	* plug-ins/common/jpeg.c: committed patch by Steinar Gunderson
@@ -47,7 +53,7 @@ Fri Aug 20 02:17:18 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/paint_funcs.c: rewrote scale_region.  It now behaves
 	correctly on images with alpha, no longer leaves an artifact on the
-	right edge of images when scailing up, and runs signifigantly
+	right edge of images when scaling up, and runs significantly
 	faster.
 
 Fri Aug 20 11:21:57 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)

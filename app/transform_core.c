@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <stdlib.h>
 #include <math.h>
 #include "appenv.h"
@@ -1139,7 +1140,8 @@ transform_core_do (GImage          *gimage,
   alpha = 0;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
-  if (gimp_matrix_is_simple (matrix))
+  if (gimp_matrix_is_simple (matrix)
+      || interpolation_type == NEAREST_NEIGHBOR_INTERPOLATION)
     interpolation = FALSE;
 
   /*  Get the background color  */
@@ -1223,7 +1225,7 @@ transform_core_do (GImage          *gimage,
 
   /* initialise the pixel_surround accessor */
   if (interpolation) {
-    if (cubic_interpolation) {
+    if (interpolation_type == CUBIC_INTERPOLATION) {
       pixel_surround_init(&surround, float_tiles, 4, 4, bg_col);
     } else {
       pixel_surround_init(&surround, float_tiles, 2, 2, bg_col);
@@ -1279,7 +1281,7 @@ transform_core_do (GImage          *gimage,
           if (interpolation)
        	    {
 
-              if (cubic_interpolation)
+              if (interpolation_type == CUBIC_INTERPOLATION)
        	        {
 
                   /*  ttx & tty are the subpixel coordinates of the point in the original

@@ -130,7 +130,6 @@ int       show_rulers = TRUE;
 int       show_statusbar = TRUE;
 GUnit     default_units = UNIT_INCH;
 int       auto_save = TRUE;
-int       cubic_interpolation = FALSE;
 InterpolationType interpolation_type = LINEAR_INTERPOLATION;
 int       confirm_on_close = TRUE;
 int       save_session_info = TRUE;
