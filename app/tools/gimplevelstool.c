@@ -748,7 +748,7 @@ levels_draw_slider (GdkWindow *window,
 		    GdkGC     *fill_gc,
 		    gint       xpos)
 {
-  int y;
+  gint y;
 
   for (y = 0; y < CONTROL_HEIGHT; y++)
     gdk_draw_line (window, fill_gc,
@@ -1120,7 +1120,6 @@ levels_input_area_event (GtkWidget      *widget,
   switch (event->type)
     {
     case GDK_BUTTON_PRESS:
-      gtk_grab_add (widget);
       bevent = (GdkEventButton *) event;
 
       distance = G_MAXINT;
@@ -1136,7 +1135,6 @@ levels_input_area_event (GtkWidget      *widget,
       break;
 
     case GDK_BUTTON_RELEASE:
-      gtk_grab_remove (widget);
       switch (l_tool->active_slider)
 	{
 	case 0:  /*  low input  */

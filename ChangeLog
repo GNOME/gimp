@@ -1,3 +1,10 @@
+2004-01-29  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpinkoptions.c
+	* app/tools/gimplevelstool.c: removed explicit grabs. The pointer
+	is already implicitely grabbed while the button is pressed.
+
 2004-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: reset binary age because of struct changes below.

@@ -955,12 +955,11 @@ curves_graph_events (GtkWidget      *widget,
 	  break;
 	}
 
-      gtk_grab_add (widget);
-
       curves_calculate_curve (c_tool->curves, c_tool->channel);
 
       curves_update (c_tool, XRANGE_TOP);
       gtk_widget_queue_draw (c_tool->graph);
+
       return TRUE;
 
     case GDK_BUTTON_RELEASE:
@@ -969,7 +968,6 @@ curves_graph_events (GtkWidget      *widget,
 
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (c_tool));
 
-      gtk_grab_remove (widget);
       return TRUE;
 
     case GDK_MOTION_NOTIFY:

@@ -100,7 +100,7 @@ gimp_ink_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_ink_options_class_init (GimpInkOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -378,7 +378,7 @@ typedef struct _BrushWidget BrushWidget;
 struct _BrushWidget
 {
   GtkWidget      *widget;
-  gboolean        state;
+  gboolean        active;
 
   /* EEK */
   GimpInkOptions *ink_options;
@@ -415,7 +415,7 @@ brush_widget_new (GimpInkOptions *options)
 
   brush_w = g_new (BrushWidget, 1);
   brush_w->widget      = gtk_drawing_area_new ();
-  brush_w->state       = FALSE;
+  brush_w->active      = FALSE;
   brush_w->ink_options = options;
 
   gtk_widget_set_size_request (brush_w->widget, 60, 60);
@@ -439,7 +439,7 @@ brush_widget_new (GimpInkOptions *options)
 		    G_CALLBACK (brush_widget_motion_notify),
 		    brush_w);
   g_signal_connect (brush_w->widget, "expose_event",
-		    G_CALLBACK (brush_widget_expose), 
+		    G_CALLBACK (brush_widget_expose),
 		    brush_w);
   g_signal_connect (brush_w->widget, "realize",
 		    G_CALLBACK (brush_widget_realize),
@@ -556,7 +556,7 @@ brush_widget_expose (GtkWidget      *widget,
   brush_widget_active_rect (brush_widget, widget, &rect);
   gdk_draw_rectangle (widget->window, widget->style->bg_gc[GTK_STATE_NORMAL],
 		      TRUE,	/* filled */
-		      rect.x, rect.y, 
+		      rect.x, rect.y,
 		      rect.width, rect.height);
   gtk_paint_shadow (widget->style, widget->window, widget->state,
                     GTK_SHADOW_OUT,
@@ -579,9 +579,7 @@ brush_widget_button_press (GtkWidget      *widget,
   if ((event->x >= rect.x) && (event->x-rect.x < rect.width) &&
       (event->y >= rect.y) && (event->y-rect.y < rect.height))
     {
-      brush_widget->state = TRUE;
-
-      gtk_grab_add (brush_widget->widget);
+      brush_widget->active = TRUE;
     }
 
   return TRUE;
@@ -592,9 +590,7 @@ brush_widget_button_release (GtkWidget      *widget,
 			     GdkEventButton *event,
 			     BrushWidget    *brush_widget)
 {
-  brush_widget->state = FALSE;
-
-  gtk_grab_remove (brush_widget->widget);
+  brush_widget->active = FALSE;
 
   return TRUE;
 }
@@ -604,7 +600,7 @@ brush_widget_motion_notify (GtkWidget      *widget,
 			    GdkEventMotion *event,
 			    BrushWidget    *brush_widget)
 {
-  if (brush_widget->state)
+  if (brush_widget->active)
     {
       gint x;
       gint y;
