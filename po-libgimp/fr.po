@@ -140,7 +140,7 @@ msgstr "Sélection du fichier"
 #: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
 #: libgimp/gimpunitmenu.c:495
 msgid "OK"
-msgstr ""
+msgstr "Confirmer"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:47
@@ -209,17 +209,17 @@ msgstr "Facteur"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr ""
+msgstr "Si le bouton « Heure » n'est pas coché, utiliser cette valeur comme graine du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence aléatoire reproductible en fournissant la même graine."
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
-msgstr ""
+msgstr "Heure"
 
 #: libgimp/gimpwidgets.c:718
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
+msgstr "Prend l'heure actuelle comme graine du générateur de nombres aléatoires. Cela garanti un aléa raisonnable."
 
 #~ msgid "Select"
 #~ msgstr "Sélectionner"
