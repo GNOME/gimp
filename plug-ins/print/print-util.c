@@ -1956,5 +1956,66 @@ default_media_size(int  model,		/* I - Printer model */
 }
 
 /*
- * End of "$Id$".
+ * The list of printers has been moved to printers.c
  */
+#include "print-printers.c"
+
+int
+known_printers(void)
+{
+  return printer_count;
+}
+
+const printer_t *
+get_printers(void)
+{
+  return printers;
+}
+
+const printer_t *
+get_printer_by_index(int idx)
+{
+  return &(printers[idx]);
+}
+
+const printer_t *
+get_printer_by_long_name(const char *long_name)
+{
+  const printer_t *val = &(printers[0]);
+  int i;
+  for (i = 0; i < known_printers(); i++)
+    {
+      if (!strcmp(val->long_name, long_name))
+        return val;
+      val++;
+    }
+  return NULL;
+}
+
+const printer_t *
+get_printer_by_driver(const char *driver)
+{
+  const printer_t *val = &(printers[0]);
+  int i;
+  for (i = 0; i < known_printers(); i++)
+    {
+      if (!strcmp(val->driver, driver))
+        return val;
+      val++;
+    }
+  return NULL;
+}
+
+int
+get_printer_index_by_driver(const char *driver)
+{
+  int idx = 0;
+  const printer_t *val = &(printers[0]);
+  for (idx = 0; idx < known_printers(); idx++)
+    {
+      if (!strcmp(val->driver, driver))
+        return idx;
+      val++;
+    }
+  return -1;
+}

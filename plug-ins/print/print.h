@@ -236,6 +236,13 @@ extern void	indexed_to_gray(unsigned char *, unsigned char *, int, int,
 				lut_t *, unsigned char *, float);
 #endif
 
+int                   known_printers(void);
+const printer_t      *get_printers(void);
+const printer_t      *get_printer_by_index(int);
+const printer_t      *get_printer_by_long_name(const char *);
+const printer_t      *get_printer_by_driver(const char *);
+int                   get_printer_index_by_driver(const char *);
+
 /*
  * End of "$Id$".
  */

@@ -5,12 +5,14 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = print
 
 print_SOURCES = \
-	print-escp2.c	\
-	print-pcl.c	\
-	print-ps.c	\
-	print-util.c	\
-	print.c		\
-	print.h   
+	print-escp2.c		\
+	print-pcl.c		\
+	print-ps.c		\
+	print-util.c		\
+	print.c			\
+	print.h			\
+	gimp_color_window.c	\
+	gimp_main_window.c
 
 INCLUDES = \
 	-I$(top_srcdir)			\

@@ -1,5 +1,29 @@
 2000-04-01  Michael Natterer  <mitch@gimp.org>
 
+	Backported the UI changes of the 3.1.x gimp-print plugin to the
+	stable 3.0.x version.
+	Put the printer definitions to a separate file and added the 3.1.x
+	access functions. This way the new dialog files can be used with
+	minimal changes.
+	Bumped version number to 3.0.10.
+
+	* po-plug-ins/POTFILES.in
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print_gimp.h
+	* plug-ins/print/gimp_color_window.c
+	* plug-ins/print/gimp_main_window.c: new files containing the
+	dialog code.
+
+	* plug-ins/print/print-printers.c: new file containing the printer
+	definitions.
+
+	* plug-ins/print/print-util.c: added printer list access functions.
+
+	* plug-ins/print/print.[ch]: removed the dialog stuff and use the
+	list access functions.
+
+2000-04-01  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/flame/Makefile.am
 	* plug-ins/flame/megawidget.[ch]: removed
 
