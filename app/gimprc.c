@@ -153,7 +153,7 @@ static char* gimprc_find_token (char *token);
 static void gimprc_set_token (char *token, char *value);
 static Argument * gimprc_query (Argument *args);
 static void add_gimp_directory_token (char *gimp_dir);
-static int open_backup_file (char *filename, FILE **fp_new, FILE **fp_old);
+static char* open_backup_file (char *filename, FILE **fp_new, FILE **fp_old);
 
 static ParseInfo parse_info;
 
@@ -365,6 +365,7 @@ save_gimprc (GList **updated_options,
   char *cur_line;
   char *prev_line;
   char *str;
+  char *error_msg;
 
   g_assert(updated_options != NULL);
   g_assert(conflicting_options != NULL);
@@ -372,10 +373,11 @@ save_gimprc (GList **updated_options,
   gimp_dir = gimp_directory ();
   sprintf (name, "%s/gimprc", gimp_dir);
 
-  if (! open_backup_file (name, &fp_new, &fp_old))
+  error_msg = open_backup_file (name, &fp_new, &fp_old);
+  if (error_msg != NULL)
     {
       /* FIXME: show the error in a nice dialog box */
-      g_warning ("cannot save .gimprc");
+      g_warning (error_msg);
       return;
     }
 
@@ -1543,14 +1545,18 @@ static char *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  return g_strdup (*((char **)val1p));
+  char *str;
+
+  str = g_malloc (strlen (*((char **)val1p)) + 3);
+  sprintf (str, "%c%s%c", '"', *((char **)val1p), '"');
+  return str;
 }
 
 static char *
 path_to_str (gpointer val1p,
 	     gpointer val2p)
 {
-  return g_strdup (*((char **)val1p));
+  return string_to_str (val1p, val2p);
 }
 
 static char *
@@ -1697,10 +1703,22 @@ add_gimp_directory_token (char *gimp_dir)
   unknown_tokens = g_list_append (unknown_tokens, ut);
 }
 
-static int
+/* Try to:
+
+   1. Open gimprc for reading.
+
+   2. Rename gimprc to gimprc.old.
+
+   3. Open gimprc for writing.
+
+   On success, return NULL. On failure, return a string in English
+   explaining the problem.
+
+   */
+static char *
 open_backup_file (char *filename,
-		  FILE **fp_new,
-		  FILE **fp_old)
+                  FILE **fp_new,
+                  FILE **fp_old)
 {
   char *oldfilename;
 
@@ -1708,25 +1726,37 @@ open_backup_file (char *filename,
     Rename the file to *.old, open it for reading and create the new file.
   */
   if ((*fp_old = fopen (filename, "rt")) == NULL)
-    return FALSE;
+    {
+      if (errno == EACCES)
+        return "Can't open gimprc; permission problems";
+      if (errno == ENOENT)
+        return "Can't open gimprc; file does not exist";
+      return "Can't open gimprc, reason unknown";
+    }
 
   oldfilename = g_malloc (strlen (filename) + 5);
   sprintf (oldfilename, "%s.old", filename);
   if (rename (filename, oldfilename) < 0)
     {
       g_free (oldfilename);
-      return FALSE;
+      if (errno == EACCES)
+        return "Can't rename gimprc to gimprc.old; permission problems";
+      if (errno == EISDIR)
+        return "Can't rename gimprc to gimprc.old; gimprc.old is a directory";
+      return "Can't rename gimprc to gimprc.old, reason unknown";
     }
 
   if ((*fp_new = fopen (filename, "wt")) == NULL)
     {
       (void) rename (oldfilename, filename);
       g_free (oldfilename);
-      return FALSE;
+      if (errno == EACCES)
+        return "Can't write to gimprc; permission problems";
+      return "Can't write to gimprc, reason unknown";
     }
 
   g_free (oldfilename);
-  return TRUE;
+  return NULL;
 }
 
 static char*

@@ -132,6 +132,19 @@ static   char *       old_palette_path;
 static   char *       old_plug_in_path;
 static   char *       old_gradient_path;
 
+static   char *       edit_temp_path = NULL;
+static   char *       edit_swap_path = NULL;
+static   char *       edit_brush_path = NULL;
+static   char *       edit_pattern_path = NULL;
+static   char *       edit_palette_path = NULL;
+static   char *       edit_plug_in_path = NULL;
+static   char *       edit_gradient_path = NULL;
+static   int          edit_stingy_memory_use;
+static   int          edit_tile_cache_size;
+static   int          edit_install_cmap;
+static   int          edit_cycled_marching_ants;
+
+
 /*  local functions  */
 static void   image_resize_callback (GtkWidget *, gpointer);
 static void   image_scale_callback (GtkWidget *, gpointer);
@@ -466,6 +479,80 @@ file_save_as_cmd_callback (GtkWidget *widget,
 }
 
 
+/* Some information regarding preferences, compiled by Raph Levien 11/3/97.
+
+   The following preference items cannot be set on the fly (at least
+   according to the existing pref code - it may be that changing them
+   so they're set on the fly is not hard).
+
+   temp-path
+   swap-path
+   brush-path
+   pattern-path
+   plug-in-path
+   palette-path
+   gradient-path
+   stingy-memory-use
+   tile-cache-size
+   install-cmap
+   cycled-marching-ants
+
+   All of these now have variables of the form edit_temp_path, which
+   are copied from the actual variables (e.g. temp_path) the first time
+   the dialog box is started.
+
+   Variables of the form old_temp_path represent the values at the
+   time the dialog is opened - a cancel copies them back from old to
+   the real variables or the edit variables, depending on whether they
+   can be set on the fly.
+
+   Here are the remaining issues as I see them:
+
+   Still no settings for default-brush, default-gradient,
+   default-palette, default-pattern, gamma-correction, color-cube,
+   marching-ants-speed, show-rulers, ruler-units. No widget for
+   confirm-on-close although a lot of stuff is there.
+
+   No UI feedback for the fact that some settings won't take effect
+   until the next Gimp restart.
+
+   The semantics of "save" are a little funny - it only saves the
+   settings that are different from the way they were when the dialog
+   was opened. So you can set something, close the window, open it
+   up again, click "save" and have nothing happen. To change this
+   to more intuitive semantics, we should have a whole set of init_
+   variables that are set the first time the dialog is opened (along
+   with the edit_ variables that are currently set). Then, the save
+   callback checks against the init_ variable rather than the old_.
+
+   */
+
+/* Copy the string from source to destination, freeing the string stored
+   in the destination if there is one there already. */
+static void
+file_prefs_strset (char **dst, char *src)
+{
+  if (*dst != NULL)
+    g_free (*dst);
+  *dst = g_strdup (src);
+}
+
+
+/* Duplicate the string, but treat NULL as the empty string. */
+static char *
+file_prefs_strdup (char *src)
+{
+  return g_strdup (src == NULL ? "" : src);
+}
+
+/* Compare two strings, but treat NULL as the empty string. */
+static int
+file_prefs_strcmp (char *src1, char *src2)
+{
+  return strcmp (src1 == NULL ? "" : src1,
+		   src2 == NULL ? "" : src2);
+}
+
 static void
 file_prefs_ok_callback (GtkWidget *widget,
 			GtkWidget *dlg)
@@ -548,66 +635,71 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "cubic-interpolation");
   if (confirm_on_close != old_confirm_on_close)
     update = g_list_append (update, "confirm-on-close");
+  if (default_width != old_default_width ||
+      default_height != old_default_height)
+    update = g_list_append (update, "default-image-size");
+  if (default_type != old_default_type)
+    update = g_list_append (update, "default-image-type");
   if (preview_size != old_preview_size)
     update = g_list_append (update, "preview-size");
   if (transparency_type != old_transparency_type)
     update = g_list_append (update, "transparency-type");
   if (transparency_size != old_transparency_size)
     update = g_list_append (update, "transparency-size");
-  if (old_stingy_memory_use != stingy_memory_use)
+  if (edit_stingy_memory_use != stingy_memory_use)
     {
       update = g_list_append (update, "stingy-memory-use");
-      stingy_memory_use = old_stingy_memory_use;
+      stingy_memory_use = edit_stingy_memory_use;
     }
-  if (old_tile_cache_size != tile_cache_size)
+  if (edit_tile_cache_size != tile_cache_size)
     {
       update = g_list_append (update, "tile-cache-size");
-      tile_cache_size = old_tile_cache_size;
+      tile_cache_size = edit_tile_cache_size;
     }
-  if (old_install_cmap != install_cmap)
+  if (edit_install_cmap != install_cmap)
     {
       update = g_list_append (update, "install-colormap");
-      install_cmap = old_install_cmap;
+      install_cmap = edit_install_cmap;
     }
-  if (old_cycled_marching_ants != cycled_marching_ants)
+  if (edit_cycled_marching_ants != cycled_marching_ants)
     {
       update = g_list_append (update, "colormap-cycling");
-      cycled_marching_ants = old_cycled_marching_ants;
+      cycled_marching_ants = edit_cycled_marching_ants;
     }
-  if (strcmp (temp_path, old_temp_path))
+  if (file_prefs_strcmp (temp_path, edit_temp_path))
     {
       update = g_list_append (update, "temp-path");
-      temp_path = old_temp_path;
+      temp_path = edit_temp_path;
     }
-  if (strcmp (swap_path, old_swap_path))
+  if (file_prefs_strcmp (swap_path, edit_swap_path))
     {
       update = g_list_append (update, "swap-path");
-      swap_path = old_swap_path;
+      swap_path = edit_swap_path;
     }
-  if (strcmp (brush_path, old_brush_path))
+  if (file_prefs_strcmp (brush_path, edit_brush_path))
     {
       update = g_list_append (update, "brush-path");
-      brush_path = old_brush_path;
+      brush_path = edit_brush_path;
     }
-  if (strcmp (pattern_path, old_pattern_path))
+  if (file_prefs_strcmp (pattern_path, edit_pattern_path))
     {
       update = g_list_append (update, "pattern-path");
-      pattern_path = old_pattern_path;
+      pattern_path = edit_pattern_path;
     }
-  if (strcmp (palette_path, old_palette_path))
+  if (file_prefs_strcmp (palette_path, edit_palette_path))
     {
       update = g_list_append (update, "palette-path");
-      palette_path = old_palette_path;
+      palette_path = edit_palette_path;
     }
-  if (strcmp (plug_in_path, old_plug_in_path))
+  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
     {
       update = g_list_append (update, "plug-in-path");
-      plug_in_path = old_plug_in_path;
+      plug_in_path = edit_plug_in_path;
     }
-  if (strcmp (gradient_path, old_gradient_path))
+  if (file_prefs_strcmp (gradient_path, edit_gradient_path))
     {
       update = g_list_append (update, "gradient-path");
-      gradient_path = old_gradient_path;
+      gradient_path = edit_gradient_path;
     }
   save_gimprc (&update, &remove);
 
@@ -673,6 +765,18 @@ file_prefs_cancel_callback (GtkWidget *widget,
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
+
+  edit_stingy_memory_use = old_stingy_memory_use;
+  edit_tile_cache_size = old_tile_cache_size;
+  edit_install_cmap = old_install_cmap;
+  edit_cycled_marching_ants = old_cycled_marching_ants;
+  file_prefs_strset (&edit_temp_path, old_temp_path);
+  file_prefs_strset (&edit_swap_path, old_swap_path);
+  file_prefs_strset (&edit_brush_path, old_brush_path);
+  file_prefs_strset (&edit_pattern_path, old_pattern_path);
+  file_prefs_strset (&edit_palette_path, old_palette_path);
+  file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
+  file_prefs_strset (&edit_gradient_path, old_gradient_path);
 }
 
 static void
@@ -733,12 +837,12 @@ file_prefs_text_callback (GtkWidget *widget,
 
 static void
 file_prefs_string_callback (GtkWidget *widget,
-			  gpointer   data)
+			    gpointer   data)
 {
   gchar **val;
 
   val = data;
-  *val = gtk_entry_get_text (GTK_ENTRY (widget));
+  file_prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
 void
@@ -793,17 +897,16 @@ file_pref_cmd_callback (GtkWidget *widget,
   };
   struct {
     char *label;
-    char *path;
     char **mpath;
   } dirs[] =
     {
-      {"Temp dir:", temp_path, &old_temp_path},
-      {"Swap dir:", swap_path, &old_swap_path},
-      {"Brushes dir:", brush_path, &old_brush_path},
-      {"Gradients dir:", gradient_path, &old_gradient_path},
-      {"Patterns dir:", pattern_path, &old_pattern_path},
-      {"Palette dir:", palette_path, &old_palette_path},
-      {"Plug-in dir:", plug_in_path, &old_plug_in_path}
+      {"Temp dir:", &edit_temp_path},
+      {"Swap dir:", &edit_swap_path},
+      {"Brushes dir:", &edit_brush_path},
+      {"Gradients dir:", &edit_gradient_path},
+      {"Patterns dir:", &edit_pattern_path},
+      {"Palette dir:", &edit_palette_path},
+      {"Plug-in dir:", &edit_plug_in_path}
     };
     struct {
       char *label;
@@ -823,6 +926,22 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   if (!prefs_dlg)
     {
+      if (edit_temp_path == NULL)
+	{
+	  /* first time dialog is opened - copy config vals to edit
+             variables. */
+	  edit_temp_path = file_prefs_strdup (temp_path);	
+	  edit_swap_path = file_prefs_strdup (swap_path);
+	  edit_brush_path = file_prefs_strdup (brush_path);
+	  edit_pattern_path = file_prefs_strdup (pattern_path);
+	  edit_palette_path = file_prefs_strdup (palette_path);
+	  edit_plug_in_path = file_prefs_strdup (plug_in_path);
+	  edit_gradient_path = file_prefs_strdup (gradient_path);
+	  edit_stingy_memory_use = stingy_memory_use;
+	  edit_tile_cache_size = tile_cache_size;
+	  edit_install_cmap = install_cmap;
+	  edit_cycled_marching_ants = cycled_marching_ants;
+	}
       old_transparency_type = transparency_type;
       old_transparency_size = transparency_size;
       old_levels_of_undo = levels_of_undo;
@@ -835,17 +954,17 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_default_width = default_width;
       old_default_height = default_height;
       old_default_type = default_type;
-      old_stingy_memory_use = stingy_memory_use;
-      old_tile_cache_size = tile_cache_size;
-      old_install_cmap = install_cmap;
-      old_cycled_marching_ants = cycled_marching_ants;
-      old_temp_path = temp_path;
-      old_swap_path = swap_path;
-      old_brush_path = brush_path;
-      old_pattern_path = pattern_path;
-      old_palette_path = palette_path;
-      old_plug_in_path = plug_in_path;
-      old_gradient_path = gradient_path;
+      old_stingy_memory_use = edit_stingy_memory_use;
+      old_tile_cache_size = edit_tile_cache_size;
+      old_install_cmap = edit_install_cmap;
+      old_cycled_marching_ants = edit_cycled_marching_ants;
+      file_prefs_strset (&old_temp_path, edit_temp_path);
+      file_prefs_strset (&old_swap_path, edit_swap_path);
+      file_prefs_strset (&old_brush_path, edit_brush_path);
+      file_prefs_strset (&old_pattern_path, edit_pattern_path);
+      file_prefs_strset (&old_palette_path, edit_palette_path);
+      file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
+      file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
       prefs_dlg = gtk_dialog_new ();
       gtk_window_set_title (GTK_WINDOW (prefs_dlg), "Preferences");
@@ -1234,7 +1353,7 @@ file_pref_cmd_callback (GtkWidget *widget,
  
           entry = gtk_entry_new ();
           gtk_widget_set_usize (entry, 25, 0);
-          gtk_entry_set_text (GTK_ENTRY (entry), dirs[i].path);
+          gtk_entry_set_text (GTK_ENTRY (entry), *(dirs[i].mpath));
 	  gtk_signal_connect (GTK_OBJECT (entry), "changed",
 			      (GtkSignalFunc) file_prefs_string_callback,
 			      dirs[i].mpath);
