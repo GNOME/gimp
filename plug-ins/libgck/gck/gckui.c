@@ -120,8 +120,6 @@ GckApplicationWindow *gck_application_window_new(char *name)
   appwin->style->bg[GTK_STATE_SELECTED] = *gck_rgb_to_gdkcolor(appwin->visinfo, 0, 0, 156);
   appwin->style->bg[GTK_STATE_INSENSITIVE] = *gck_rgb_to_gdkcolor(appwin->visinfo, 215, 215, 215);
 
-  appwin->style->klass->xthickness = 2;
-  appwin->style->klass->ythickness = 2;
 
   gtk_widget_push_visual(appwin->visinfo->visual);
   gtk_widget_push_colormap(appwin->visinfo->colormap);

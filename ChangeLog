@@ -1,3 +1,9 @@
+Fri Jun  4 22:07:56 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/libgck/gck/gckui.c (gck_application_window_new): 
+	Removed 2 obsolete statements causing OS/2 to crash.
+	The code was trying to update a static const structure!
+	
 Thu Jun  3 20:59:11 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* tips/Makefile.am

@@ -1,7 +1,12 @@
 
+
 GCK changes (post 0.02)
 =======================
 
+	* plug-ins/libgck/gck/gckui.c (gck_application_window_new): 
+	Removed 2 obsolete statements causing OS/2 to crash.
+	The code was trying to update a static const structure!
+	
 -> 1.0.0
 
 * Fixed RINT stuff (Quartic)
