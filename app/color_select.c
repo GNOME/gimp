@@ -152,7 +152,7 @@ static ColorSelectFillUpdateProc update_procs[] =
 static ActionAreaItem action_items[2] =
 {
   { N_("OK"), color_select_ok_callback, NULL, NULL },
-  { N_("Cancel"), color_select_cancel_callback, NULL, NULL },
+  { N_("Cancel"), color_select_cancel_callback, NULL, NULL }
 };
 
 ColorSelectP

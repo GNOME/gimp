@@ -115,7 +115,7 @@ gimp_file_selection_init (GimpFileSelection *gfs)
   gtk_widget_show (gfs->browse_button);
 
   gfs->entry = gtk_entry_new ();
-  gtk_box_pack_end (GTK_BOX (gfs), gfs->entry, TRUE, TRUE, 5);
+  gtk_box_pack_end (GTK_BOX (gfs), gfs->entry, TRUE, TRUE, 2);
   gtk_signal_connect (GTK_OBJECT(gfs->entry), "activate",
 		      (GtkSignalFunc) gimp_file_selection_entry_callback, gfs);
   gtk_signal_connect (GTK_OBJECT(gfs->entry), "focus_out_event",

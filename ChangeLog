@@ -1,3 +1,32 @@
+1999-03-27  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/brush_select.c
+	* app/channels_dialog.c
+	* app/color_select.c
+	* app/devices.c
+	* app/file_new_dialog.c
+	* app/gradient_select.c
+	* app/palette_select.c
+	* app/pattern_select.c: applied a patch from Marco Lamberto
+	<lm@geocities.com> which unifies actionareas ("Cancel" rightmost
+	and default). Did the same in some more dialogs.
+
+	* libgimp/gimpfileselection.c
+	* libgimp/gimppatheditor.c
+	* app/preferences_dialog.[ch]: completely reworked the preferences
+	dialog:
+
+	- select the notebook's pages with a tree.
+	- reordered the categories. Please give me feedback, this really
+	  needs to be intuitive.
+	- removed lots of unused #include's.
+	- turned the prefs. dialog into a test site for new convenience
+	  constructors. These changes are however not visible. Flame me
+	  until they're perfect ;) When finished, this stuff can save
+	  *many* lines of gtk+ code.
+
+	* modules/colorsel_gtk.c: made it circular.
+
 1999-03-25  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* unitrc: corrected a typo

@@ -97,6 +97,8 @@ colorsel_gtk_new (int r, int g, int b,
 		  /* RETURNS: */
 		  void **selector_data)
 {
+  GtkWidget   *hbox;
+  GtkWidget   *vbox;
   ColorselGtk *p;
 
   p = g_malloc (sizeof (ColorselGtk));
@@ -110,8 +112,16 @@ colorsel_gtk_new (int r, int g, int b,
   gtk_signal_connect (GTK_OBJECT (p->selector), "color_changed",
 		      (GtkSignalFunc) colorsel_gtk_update, p);
 
+  vbox = gtk_vbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), p->selector, FALSE, FALSE, 0);
+  gtk_widget_show (p->selector);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+
   (*selector_data) = p;
-  return p->selector;
+  return hbox;
 }
 
 

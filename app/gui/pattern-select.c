@@ -73,8 +73,8 @@ static void pattern_select_scroll_update     (GtkAdjustment *, gpointer);
 /*  the action area structure  */
 static ActionAreaItem action_items[2] =
 {
-  { N_("Close"), pattern_select_close_callback, NULL, NULL },
   { N_("Refresh"), pattern_select_refresh_callback, NULL, NULL },
+  { N_("Close"), pattern_select_close_callback, NULL, NULL }
 };
 
 gint NUM_PATTERN_COLUMNS = 6;
@@ -198,7 +198,7 @@ pattern_select_new (gchar * title,
   /*  The action area  */
   action_items[0].user_data = psp;
   action_items[1].user_data = psp;
-  build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 1);
 
   gtk_widget_show (psp->options_box);
   gtk_widget_show (vbox);

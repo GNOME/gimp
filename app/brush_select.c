@@ -114,8 +114,8 @@ static MenuItem option_items[] =
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { N_("Close"), brush_select_close_callback, NULL, NULL },
-  { N_("Refresh"), brush_select_refresh_callback, NULL, NULL }
+  { N_("Refresh"), brush_select_refresh_callback, NULL, NULL },
+  { N_("Close"), brush_select_close_callback, NULL, NULL }
 };
 
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
@@ -344,7 +344,7 @@ brush_select_new (gchar * title,
   /*  The action area  */
   action_items[0].user_data = bsp;
   action_items[1].user_data = bsp;
-  build_action_area (GTK_DIALOG (bsp->shell), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (bsp->shell), action_items, 2, 1);
 
   gtk_widget_show (bsp->options_box);
   gtk_widget_show (hbox);

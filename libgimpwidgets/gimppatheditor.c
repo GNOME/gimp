@@ -93,7 +93,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gpe->selected_item = NULL;
   gpe->number_of_items = 0;
 
-  gpe->upper_hbox = gtk_hbox_new (FALSE, 5);
+  gpe->upper_hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (gpe), gpe->upper_hbox, FALSE, TRUE, 0);
   gtk_widget_show (gpe->upper_hbox);
 
@@ -129,7 +129,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   scrolled_window =
     gtk_scrolled_window_new (GTK_ADJUSTMENT (hadjustment),
 			     GTK_ADJUSTMENT (vadjustment));
-  gtk_box_pack_start (GTK_BOX (gpe), scrolled_window, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gpe), scrolled_window, TRUE, TRUE, 2);
   gtk_widget_show (scrolled_window);
 
   gpe->dir_list = gtk_list_new ();

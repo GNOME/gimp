@@ -1,75 +1,63 @@
-#include <stdlib.h>
-#include <stdio.h>
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #include <string.h>
 
 #include "appenv.h"
-#include "about_dialog.h"
-#include "actionarea.h"
-#include "app_procs.h"
-#include "brightness_contrast.h"
-#include "by_color_select.h"
-#include "channels_dialog.h"
 #include "colormaps.h"
-#include "color_balance.h"
-#include "commands.h"
-#include "convert.h"
-#include "curves.h"
-#include "desaturate.h"
-#include "devices.h"
-#include "channel_ops.h"
-#include "drawable.h"
-#include "equalize.h"
-#include "fileops.h"
-#include "floating_sel.h"
 #include "gdisplay_ops.h"
-#include "general.h"
-#include "gimage_mask.h"
 #include "gimprc.h"
-#include "global_edit.h"
-#include "gradient.h"
-#include "histogram_tool.h"
-#include "hue_saturation.h"
 #include "image_render.h"
-#include "info_window.h"
 #include "interface.h"
-#include "invert.h"
 #include "layers_dialog.h"
 #include "layer_select.h"
-#include "levels.h"
-#include "palette.h"
-#include "patterns.h"
-#include "plug_in.h"
-#include "posterize.h"
-#include "scale.h"
 #include "session.h"
-#include "threshold.h"
-#include "tips_dialog.h"
-#include "tools.h"
-#include "undo.h"
 
-#include "config.h"
+/*#include "config.h"*/
 #include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpintl.h"
-#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpfileselection.h"
+#include "libgimp/gimpintl.h"
 #include "libgimp/gimppatheditor.h"
-
+#include "libgimp/gimpsizeentry.h"
 
 /*  preferences local functions  */
 static void file_prefs_ok_callback (GtkWidget *, GtkWidget *);
 static void file_prefs_save_callback (GtkWidget *, GtkWidget *);
 static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
-static gint file_prefs_delete_callback (GtkWidget *, GdkEvent *, GtkWidget *);
+
 static void file_prefs_toggle_callback (GtkWidget *, gpointer);
-/* static void file_prefs_text_callback (GtkWidget *, gpointer); */
-static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
+/* static void file_prefs_text_callback (GtkWidget *, gpointer); */
+static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
+/* static void file_prefs_float_spinbutton_callback (GtkWidget *, gpointer); */
+static void file_prefs_string_callback (GtkWidget *, gpointer);
+static void file_prefs_filename_callback (GtkWidget *, gpointer);
+static void file_prefs_path_callback (GtkWidget *, gpointer);
 static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
+static void file_prefs_default_size_callback (GtkWidget *, gpointer);
+static void file_prefs_default_resolution_callback (GtkWidget *, gpointer);
+static void file_prefs_res_source_callback (GtkWidget *, gpointer);
 static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
-static   int          last_type = RGB;
+
+/* static   int          last_type = RGB; ??? */
 
 static   GtkWidget   *prefs_dlg = NULL;
 static   int          old_perfectmouse;
@@ -142,6 +130,7 @@ static   GtkWidget   *monitor_resolution_force_equal = NULL;
 static   GtkWidget   *num_processors_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
+   updated by Michael Natterer 27/3/99
 
    The following preference items cannot be set on the fly (at least
    according to the existing pref code - it may be that changing them
@@ -152,6 +141,7 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
    brush-path
    pattern-path
    plug-in-path
+   module-path
    palette-path
    gradient-path
    stingy-memory-use
@@ -172,12 +162,8 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
    Here are the remaining issues as I see them:
 
    Still no settings for default-brush, default-gradient,
-   default-palette, default-pattern, gamma-correction, color-cube,
-   show-rulers. No widget for confirm-on-close although a lot of
-   stuff is there.
-
-   No UI feedback for the fact that some settings won't take effect
-   until the next Gimp restart.
+   default-palette, default-pattern, gamma-correction, color-cube.
+   No widget for confirm-on-close although a lot of stuff is there.
 
    The semantics of "save" are a little funny - it only saves the
    settings that are different from the way they were when the dialog
@@ -187,19 +173,18 @@ static   GtkWidget   *num_processors_spinbutton = NULL;
    variables that are set the first time the dialog is opened (along
    with the edit_ variables that are currently set). Then, the save
    callback checks against the init_ variable rather than the old_.
-
-   */
+*/
 
 /* Copy the string from source to destination, freeing the string stored
    in the destination if there is one there already. */
 static void
-file_prefs_strset (char **dst, char *src)
+file_prefs_strset (char **dst,
+		   char  *src)
 {
   if (*dst != NULL)
     g_free (*dst);
   *dst = g_strdup (src);
 }
-
 
 /* Duplicate the string, but treat NULL as the empty string. */
 static char *
@@ -210,10 +195,11 @@ file_prefs_strdup (char *src)
 
 /* Compare two strings, but treat NULL as the empty string. */
 static int
-file_prefs_strcmp (char *src1, char *src2)
+file_prefs_strcmp (char *src1,
+		   char *src2)
 {
   return strcmp (src1 == NULL ? "" : src1,
-		   src2 == NULL ? "" : src2);
+		 src2 == NULL ? "" : src2);
 }
 
 static void
@@ -255,7 +241,7 @@ file_prefs_ok_callback (GtkWidget *widget,
   if (default_units < UNIT_INCH ||
       default_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default units must be withing unit range."));
+      g_message (_("Error: Default units must be within unit range."));
       default_units = old_default_units;
       return;
     }
@@ -269,7 +255,7 @@ file_prefs_ok_callback (GtkWidget *widget,
   if (default_resolution_units < UNIT_INCH ||
       default_resolution_units >= gimp_unit_get_number_of_units ())
     {
-      g_message (_("Error: Default units must be withing unit range."));
+      g_message (_("Error: Default units must be within unit range."));
       default_resolution_units = old_default_resolution_units;
       return;
     }
@@ -286,7 +272,7 @@ file_prefs_ok_callback (GtkWidget *widget,
       image_title_format = old_image_title_format;
       return;
     }
-      
+
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
   default_size_sizeentry = NULL;
@@ -302,20 +288,18 @@ file_prefs_ok_callback (GtkWidget *widget,
     gtk_tooltips_disable (tool_tips);
 }
 
-
-
 static void
 file_prefs_save_callback (GtkWidget *widget,
 			  GtkWidget *dlg)
 {
   GList *update = NULL; /* options that should be updated in .gimprc */
   GList *remove = NULL; /* options that should be commented out */
-  int save_stingy_memory_use;
-  int save_tile_cache_size;
-  int save_num_processors;
-  int save_install_cmap;
-  int save_cycled_marching_ants;
-  int save_last_opened_size;
+  int    save_stingy_memory_use;
+  int    save_tile_cache_size;
+  int    save_num_processors;
+  int    save_install_cmap;
+  int    save_cycled_marching_ants;
+  int    save_last_opened_size;
   gchar *save_temp_path;
   gchar *save_swap_path;
   gchar *save_brush_path;
@@ -324,7 +308,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_plug_in_path;
   gchar *save_module_path;
   gchar *save_gradient_path;
-  int restart_notification = FALSE;
+  int    restart_notification = FALSE;
 
   file_prefs_ok_callback (widget, dlg);
 
@@ -519,7 +503,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_gimprc (&update, &remove);
 
   if (using_xserver_resolution)
-      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
 
   /* Restore variables which must not change */
   stingy_memory_use = save_stingy_memory_use;
@@ -537,21 +521,11 @@ file_prefs_save_callback (GtkWidget *widget,
   gradient_path = save_gradient_path;
 
   if (restart_notification)
-    g_message (_("You will need to restart GIMP for these changes to take effect."));
-  
+    g_message (_("You will need to restart GIMP for these changes to take "
+		 "effect."));
+
   g_list_free (update);
   g_list_free (remove);
-}
-
-static int
-file_prefs_delete_callback (GtkWidget *widget,
-			    GdkEvent  *event,
-			    GtkWidget *dlg) 
-{
-  file_prefs_cancel_callback (widget, dlg);
-
-  /* the widget is already destroyed here no need to try again */
-  return TRUE;
 }
 
 static void
@@ -616,6 +590,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   edit_install_cmap = old_install_cmap;
   edit_cycled_marching_ants = old_cycled_marching_ants;
   edit_last_opened_size = old_last_opened_size;
+
   file_prefs_strset (&edit_temp_path, old_temp_path);
   file_prefs_strset (&edit_swap_path, old_swap_path);
   file_prefs_strset (&edit_brush_path, old_brush_path);
@@ -668,7 +643,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
     } 
-  else if (GTK_TOGGLE_BUTTON (widget)->active)
+  else if ((data == &transparency_type) ||
+	   (data == &transparency_size))
     {
       val = data;
       *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -690,7 +666,7 @@ file_prefs_preview_size_callback (GtkWidget *widget,
 
 static void
 file_prefs_mem_size_unit_callback (GtkWidget *widget,
-				    gpointer   data)
+				   gpointer   data)
 {
   int new_unit;
 
@@ -698,10 +674,12 @@ file_prefs_mem_size_unit_callback (GtkWidget *widget,
 
   if (new_unit != mem_size_unit)
     {
-      divided_tile_cache_size = divided_tile_cache_size * mem_size_unit / new_unit;
+      divided_tile_cache_size =
+	divided_tile_cache_size * mem_size_unit / new_unit;
       mem_size_unit = new_unit;
 
-      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton), (float)divided_tile_cache_size);
+      gtk_spin_button_set_value (GTK_SPIN_BUTTON (tile_cache_size_spinbutton),
+				 (float)divided_tile_cache_size);
     }
 }
 
@@ -735,7 +713,7 @@ file_prefs_float_spinbutton_callback (GtkWidget *widget,
   float *val;
 
   val = data;
-  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
+  *val = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (widget));
 }
 */
 
@@ -771,44 +749,10 @@ file_prefs_path_callback (GtkWidget *widget,
 
 static void
 file_prefs_clear_session_info_callback (GtkWidget *widget,
-					gpointer data)
+					gpointer   data)
 {
   g_list_free (session_info_updates);
   session_info_updates = NULL;
-}
-
-static void
-file_prefs_res_source_callback (GtkWidget *widget,
-				gpointer data)
-{
-  if (resolution_xserver_label)
-    gtk_widget_set_sensitive (resolution_xserver_label,
-			      GTK_TOGGLE_BUTTON (widget)->active);
-
-  if (monitor_resolution_sizeentry)
-    gtk_widget_set_sensitive (monitor_resolution_sizeentry,
-			      ! GTK_TOGGLE_BUTTON (widget)->active);
-
-  if (monitor_resolution_force_equal)
-    gtk_widget_set_sensitive (monitor_resolution_force_equal,
-			      ! GTK_TOGGLE_BUTTON (widget)->active);
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-  {
-    gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
-    using_xserver_resolution = TRUE;
-  }
-  else
-  {
-    if (monitor_resolution_sizeentry)
-      {
-	monitor_xres =
-	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
-	monitor_yres =
-	  gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
-      }
-    using_xserver_resolution = FALSE;
-  }
 }
 
 static void
@@ -819,7 +763,6 @@ file_prefs_default_size_callback (GtkWidget *widget,
   default_height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
   default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
-
 
 static void
 file_prefs_default_resolution_callback (GtkWidget *widget,
@@ -860,11 +803,47 @@ file_prefs_default_resolution_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
 				  1, yres, FALSE);
 
-  default_width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0);
-  default_height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1);
+  default_width =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0);
+  default_height =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1);
   default_xresolution = xres;
   default_yresolution = yres;
   default_resolution_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+}
+
+static void
+file_prefs_res_source_callback (GtkWidget *widget,
+				gpointer   data)
+{
+  if (resolution_xserver_label)
+    gtk_widget_set_sensitive (resolution_xserver_label,
+			      GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (monitor_resolution_sizeentry)
+    gtk_widget_set_sensitive (monitor_resolution_sizeentry,
+			      ! GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (monitor_resolution_force_equal)
+    gtk_widget_set_sensitive (monitor_resolution_force_equal,
+			      ! GTK_TOGGLE_BUTTON (widget)->active);
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
+      using_xserver_resolution = TRUE;
+    }
+  else
+    {
+      if (monitor_resolution_sizeentry)
+	{
+	  monitor_xres =
+	    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0);
+	  monitor_yres =
+	    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1);
+	}
+      using_xserver_resolution = FALSE;
+    }
 }
 
 static void
@@ -905,976 +884,1332 @@ file_prefs_monitor_resolution_callback (GtkWidget *widget,
   monitor_yres = yres;
 }
 
+/* ********************************************************************
+ *  convenience constructors test site ;)
+ */
+
+/*  local callback of gimp_dialog_new ()  */
+static int
+gimp_dialog_delete_callback (GtkWidget *widget,
+			     GdkEvent  *event,
+			     gpointer   data) 
+{
+  GtkSignalFunc  cancel_callback;
+  GtkWidget     *cancel_widget;
+
+  cancel_callback =
+    (GtkSignalFunc) gtk_object_get_data (GTK_OBJECT (widget),
+					 "gimp_dialog_cancel_callback");
+  cancel_widget =
+    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (widget),
+				      "gimp_dialog_cancel_widget");
+
+  /* the cancel callback has to destroy the dialog */
+  if (cancel_callback)
+    (* cancel_callback) (cancel_widget, data);
+
+  return TRUE;
+}
+
+/*  this is an experimental one
+ *  I tried to fold the entire dialog creation and the ActionArea stuff
+ *  into one function. Might be not general enough.
+ *  todo:
+ *   - session management?? (probably not)
+ *   - window placement
+ *   - policy setting
+ */
+GtkWidget*
+gimp_dialog_new (const gchar   *title,
+		 const gchar   *wmclass_name,
+
+		 /* this is an action_area button */
+		 gchar         *label1,
+		 GtkSignalFunc  callback1,
+		 gpointer       data1,
+		 gboolean       default_action1,
+		 gboolean       connect_delete1,
+
+		 /* more action_area buttons */
+		 ...)
+{
+  GtkWidget     *dialog;
+  GtkWidget     *hbbox;
+  GtkWidget     *button;
+
+  va_list        args;
+  gchar         *label;
+  GtkSignalFunc  callback;
+  gpointer       data;
+  gboolean       default_action;
+  gboolean       connect_delete;
+
+  gboolean       delete_connected = FALSE;
+
+  g_return_val_if_fail (title != NULL, NULL);
+  g_return_val_if_fail (wmclass_name != NULL, NULL);
+  g_return_val_if_fail (label1 != NULL, NULL);
+
+  dialog = gtk_dialog_new ();
+  gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
+  gtk_window_set_title (GTK_WINDOW (dialog), title);
+
+  /* prepare the action_area */
+  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area),
+			      2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox,
+		    FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+
+  label = label1;
+  callback = callback1;
+  data = data1;
+  default_action = default_action1;
+  connect_delete = connect_delete1;
+  va_start (args, connect_delete1);
+  while (label)
+    {
+      button = gtk_button_new_with_label (label);
+      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+
+      /* pass data as user_data if data != NULL, or the dialog otherwise */
+      if (callback)
+	gtk_signal_connect (GTK_OBJECT (button), "clicked",
+			    GTK_SIGNAL_FUNC (callback),
+			    data ? data : dialog);
+
+      if (connect_delete && callback && !delete_connected)
+	{
+	  gtk_object_set_data (GTK_OBJECT (dialog),
+			       "gimp_dialog_cancel_callback",
+			       callback);
+	  gtk_object_set_data (GTK_OBJECT (dialog),
+			       "gimp_dialog_cancel_widget",
+			       button);
+
+	  /* catch WM delete event */
+	  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+			      (GdkEventFunc) gimp_dialog_delete_callback,
+			      data ? data : dialog);
+
+	  delete_connected = TRUE;
+	}
+
+      if (default_action)
+	gtk_widget_grab_default (button);
+      gtk_widget_show (button);
+
+      label = va_arg (args, gchar*);
+      if (label)
+	{
+	  callback = va_arg (args, GtkSignalFunc);
+	  data = va_arg (args, gpointer);
+	  default_action = va_arg (args, gboolean);
+	  connect_delete = va_arg (args, gboolean);
+	}
+    }
+  va_end (args);
+
+  /* catch WM delete event if not already done*/
+  if (! delete_connected)
+    gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
+			(GdkEventFunc) gimp_dialog_delete_callback,
+			NULL);
+
+  return dialog;
+}
+
+GtkWidget*
+gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
+		      gpointer       initial,
+
+		      /* this is a menu item */
+		      gchar         *label1,
+		      gpointer       data1,
+		      gpointer       set_data1,
+
+		      /* more menu items */
+		      ...)
+{
+  GtkWidget *menu;
+  GtkWidget *menuitem;
+  GtkWidget *optionmenu;
+
+  va_list    args;
+  gchar     *label;
+  gpointer   data;
+  gpointer   set_data;
+  gint       i;
+  gint       initial_index;
+
+  g_return_val_if_fail (label1 != NULL, NULL);
+
+  menu = gtk_menu_new ();
+
+  initial_index = 0;
+  label = label1;
+  data = data1;
+  set_data = set_data1;
+  va_start (args, set_data1);
+  for (i = 0; label; i++)
+    {
+      menuitem = gtk_menu_item_new_with_label (label);
+      gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
+			  menu_item_callback, data);
+      gtk_object_set_user_data (GTK_OBJECT (menuitem), set_data);
+      gtk_widget_show (menuitem);
+
+      /* remember the initial menu item */
+      if (set_data == initial)
+	initial_index = i;
+
+      label = va_arg (args, gchar*);
+      if (label)
+	{
+	  data = va_arg (args, gpointer);
+	  set_data = va_arg (args, gpointer);
+	}
+    }
+  va_end (args);
+
+  optionmenu = gtk_option_menu_new ();
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
+
+  /* select the initial menu item */
+  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
+
+  return optionmenu;
+}
+
+GtkWidget*
+gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
+		      gpointer       initial,
+
+		      /* this is a radio button */
+		      gchar         *label1,
+		      gpointer       data1,
+		      gpointer       set_data1,
+
+		      /* more radio buttons */
+		      ...)
+{
+  GtkWidget *vbox;
+  GtkWidget *button;
+  GSList    *group;
+
+  va_list    args;
+  gchar     *label;
+  gpointer   data;
+  gpointer   set_data;
+
+  g_return_val_if_fail (label1 != NULL, NULL);
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  group = NULL;
+
+  label = label1;
+  data = data1;
+  set_data = set_data1;
+  va_start (args, set_data1);
+  while (label)
+    {
+      button = gtk_radio_button_new_with_label (group, label);
+      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+			  (GtkSignalFunc) radio_button_callback,
+			  data);
+      gtk_object_set_user_data (GTK_OBJECT (button), set_data);
+
+      /* press the initially active radio button */
+      if (set_data == initial)
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+
+      gtk_widget_show (button);
+
+      label = va_arg (args, gchar*);
+      if (label)
+	{
+	  data = va_arg (args, gpointer);
+	  set_data = va_arg (args, gpointer);
+	}
+    }
+  va_end (args);
+
+  return vbox;
+}
+
+/*  this might be the standard gimp spinbutton  */
+GtkWidget*
+gimp_spin_button_new (gfloat   value,
+		      gfloat   lower,
+		      gfloat   upper,
+		      gfloat   step_increment,
+		      gfloat   page_increment,
+		      gfloat   page_size,
+		      gfloat   climb_rate,
+		      guint    digits)
+{
+  GtkWidget *spinbutton;
+
+  spinbutton =
+    gtk_spin_button_new (GTK_ADJUSTMENT (gtk_adjustment_new (value,
+							     lower,
+							     upper,
+							     step_increment,
+							     page_increment,
+							     page_size)),
+			 climb_rate,
+			 digits);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+
+  return spinbutton;
+}
+
+
+/**********************************************************************
+ *  preferences-specific GUI helpers
+ */
+
+/*  create a new notebook page  */
+static GtkWidget*
+file_prefs_notebook_append_page (GtkNotebook   *notebook,
+				 gchar         *notebook_label,
+				 GtkCTree      *ctree,
+				 gchar         *tree_label,
+				 GtkCTreeNode  *parent,
+				 GtkCTreeNode **new_node,
+				 gint           page_index)
+{
+  GtkWidget *out_vbox;
+  GtkWidget *vbox;
+  GtkWidget *button;
+  gchar     *titles[1];
+
+  out_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_widget_show (out_vbox);
+
+  button = gtk_button_new_with_label (notebook_label);
+  gtk_misc_set_alignment (GTK_MISC (GTK_BIN (button)->child), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (out_vbox), button, FALSE, TRUE, 0);
+  gtk_widget_show (button);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (out_vbox), vbox);
+  gtk_widget_show (vbox);
+
+  titles[0] = tree_label;
+  *new_node = gtk_ctree_insert_node (ctree, parent, NULL,
+				     titles, 0,
+				     NULL, NULL, NULL, NULL,
+				     FALSE, TRUE);
+  gtk_ctree_node_set_row_data (ctree,
+			       *new_node, (gpointer) page_index);
+  gtk_notebook_append_page (notebook, out_vbox, NULL);
+
+  return vbox;
+}
+
+/*  select a notebook page  */
+static void
+file_pref_tree_select_callback (GtkWidget    *widget,
+				GtkCTreeNode *node)
+{
+  GtkNotebook *notebook;
+  gint         page;
+
+  if (! GTK_CLIST (widget)->selection)
+    return;
+
+  notebook = (GtkNotebook*) gtk_object_get_user_data (GTK_OBJECT (widget));
+  page = (gint) gtk_ctree_node_get_row_data (GTK_CTREE (widget), node);
+
+  gtk_notebook_set_page (notebook, page);
+}
+
+/*  add correctly aligned label & widget to a prefs table  */
+static void
+file_pref_table_attach (GtkTable   *table,
+			GtkLabel   *label,
+			GtkWidget  *widget,
+			gint        row)
+{
+  GtkWidget *hbox;
+
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_table_attach_defaults (table, GTK_WIDGET (label), 0, 1, row, row + 1);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_table_attach_defaults (table, hbox, 1, 2, row, row + 1);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+}
+
+/************************************************************************
+ *  create the preferences dialog
+ */
 void
 file_pref_cmd_callback (GtkWidget *widget,
 			gpointer   client_data)
 {
-  GtkWidget *button;
-  GtkWidget *frame;
-  GtkWidget *out_frame;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *abox;
-  GtkWidget *label;
-  GtkWidget *radio_box;
-  GtkWidget *fileselection;
-  GtkWidget *patheditor;
-  GtkWidget *spinbutton;
-  GtkWidget *combo;
-  GtkWidget *comboitem;
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GtkWidget *optionmenu;
-  GtkWidget *notebook;
-  GtkWidget *notebook2;
-  GtkWidget *table;
-  GtkAdjustment *adj;
-  GSList *group;
-  static const char *transparencies[] =
-  {
-    N_("Light Checks"),
-    N_("Mid-Tone Checks"),
-    N_("Dark Checks"),
-    N_("White Only"),
-    N_("Gray Only"),
-    N_("Black Only"),
-  };
-  static const char *checks[] =
-  {
-    N_("Small Checks"),
-    N_("Medium Checks"),
-    N_("Large Checks"),
-  };
-  static const int transparency_vals[] =
-  {
-    LIGHT_CHECKS,
-    GRAY_CHECKS,
-    DARK_CHECKS,
-    WHITE_ONLY,
-    GRAY_ONLY,
-    BLACK_ONLY,
-  };
-  static const int check_vals[] =
-  {
-    SMALL_CHECKS,
-    MEDIUM_CHECKS,
-    LARGE_CHECKS,
-  };
-  static const struct {
-    char *label;
-    int unit;
-  } mem_size_units[] =
+  GtkWidget     *ctree;
+  gchar         *titles[1];
+  GtkCTreeNode  *top_insert;
+  GtkCTreeNode  *child_insert;
+  gint           page_index;
+
+  GtkWidget     *frame;
+  GtkWidget     *notebook;
+  GtkWidget     *vbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *hbox;
+  GtkWidget     *abox;
+  GtkWidget     *label;
+  GtkWidget     *button;
+  GtkWidget     *fileselection;
+  GtkWidget     *patheditor;
+  GtkWidget     *spinbutton;
+  GtkWidget     *combo;
+  GtkWidget     *comboitem;
+  GtkWidget     *optionmenu;
+  GtkWidget     *table;
+  GSList        *group;
+
+  int            i;
+
+  if (prefs_dlg)
     {
-      {N_("Bytes"), 1},
-      {N_("KiloBytes"), 1024},
-      {N_("MegaBytes"), (1024*1024)}
-    };
-  static const struct {
-    char  *label;
-    char  *fs_label;
-    char **mdir;
-  } dirs[] =
+      gdk_window_raise (GTK_WIDGET (prefs_dlg)->window);
+      return;
+    }
+
+  if (edit_temp_path == NULL)
     {
-      {N_("Temp dir:"), N_("Select Temp Dir"), &edit_temp_path},
-      {N_("Swap dir:"), N_("Select Swap Dir"), &edit_swap_path},
-    };
-  static const struct {
-    char  *label;
-    char  *fs_label;
-    char **mpath;
-  } paths[] =
-    {
-      {N_("Brushes"),   N_("Select Brushes Dir"),   &edit_brush_path},
-      {N_("Gradients"), N_("Select Gradients Dir"), &edit_gradient_path},
-      {N_("Patterns"),  N_("Select Patterns Dir"),  &edit_pattern_path},
-      {N_("Palettes"),  N_("Select Palettes Dir"),   &edit_palette_path},
-      {N_("Plug-ins"),  N_("Select Plug-ins Dir"),   &edit_plug_in_path},
-      {N_("Modules"),  N_("Select Modules Dir"),   &edit_module_path}
-    };
-  static const struct {
-    char *label;
-    int size;
-  } preview_sizes[] =
-    {
-      {N_("None"),0},
-      {N_("Small"),32},
-      {N_("Medium"),64},
-      {N_("Large"),128}
-    }; 
-  int ntransparencies = sizeof (transparencies) / sizeof (transparencies[0]);
-  int nchecks = sizeof (checks) / sizeof (checks[0]);
-  int ndirs = sizeof(dirs) / sizeof (dirs[0]);
-  int npaths = sizeof(paths) / sizeof (paths[0]);
-  int npreview_sizes = sizeof(preview_sizes) / sizeof (preview_sizes[0]); 
-  int nmem_size_units = sizeof(mem_size_units) / sizeof (mem_size_units[0]);
-  int i;
+      /* first time dialog is opened - copy config vals to edit
+	 variables. */
+      edit_temp_path = file_prefs_strdup (temp_path);	
+      edit_swap_path = file_prefs_strdup (swap_path);
+      edit_brush_path = file_prefs_strdup (brush_path);
+      edit_pattern_path = file_prefs_strdup (pattern_path);
+      edit_palette_path = file_prefs_strdup (palette_path);
+      edit_plug_in_path = file_prefs_strdup (plug_in_path);
+      edit_module_path = file_prefs_strdup (module_path);
+      edit_gradient_path = file_prefs_strdup (gradient_path);
+      edit_stingy_memory_use = stingy_memory_use;
+      edit_tile_cache_size = tile_cache_size;
+      edit_install_cmap = install_cmap;
+      edit_cycled_marching_ants = cycled_marching_ants;
+      edit_last_opened_size = last_opened_size;
+    }
+  old_perfectmouse = perfectmouse;
+  old_transparency_type = transparency_type;
+  old_transparency_size = transparency_size;
+  old_levels_of_undo = levels_of_undo;
+  old_marching_speed = marching_speed;
+  old_allow_resize_windows = allow_resize_windows;
+  old_auto_save = auto_save;
+  old_preview_size = preview_size;
+  old_no_cursor_updating = no_cursor_updating;
+  old_show_tool_tips = show_tool_tips;
+  old_show_rulers = show_rulers;
+  old_show_statusbar = show_statusbar;
+  old_cubic_interpolation = cubic_interpolation;
+  old_confirm_on_close = confirm_on_close;
+  old_save_session_info = save_session_info;
+  old_save_device_status = save_device_status;
+  old_always_restore_session = always_restore_session;
+  old_default_width = default_width;
+  old_default_height = default_height;
+  old_default_units = default_units;
+  old_default_xresolution = default_xresolution;
+  old_default_yresolution = default_yresolution;
+  old_default_resolution_units = default_resolution_units;
+  old_default_type = default_type;
+  old_stingy_memory_use = edit_stingy_memory_use;
+  old_tile_cache_size = edit_tile_cache_size;
+  old_install_cmap = edit_install_cmap;
+  old_cycled_marching_ants = edit_cycled_marching_ants;
+  old_last_opened_size = edit_last_opened_size;
+  old_monitor_xres = monitor_xres;
+  old_monitor_yres = monitor_yres;
+  old_using_xserver_resolution = using_xserver_resolution;
+  old_num_processors = num_processors;
+  old_image_title_format = file_prefs_strdup (image_title_format);	
 
-  if (!prefs_dlg)
-    {
-      if (edit_temp_path == NULL)
-	{
-	  /* first time dialog is opened - copy config vals to edit
-             variables. */
-	  edit_temp_path = file_prefs_strdup (temp_path);	
-	  edit_swap_path = file_prefs_strdup (swap_path);
-	  edit_brush_path = file_prefs_strdup (brush_path);
-	  edit_pattern_path = file_prefs_strdup (pattern_path);
-	  edit_palette_path = file_prefs_strdup (palette_path);
-	  edit_plug_in_path = file_prefs_strdup (plug_in_path);
-	  edit_module_path = file_prefs_strdup (module_path);
-	  edit_gradient_path = file_prefs_strdup (gradient_path);
-	  edit_stingy_memory_use = stingy_memory_use;
-	  edit_tile_cache_size = tile_cache_size;
-	  edit_install_cmap = install_cmap;
-	  edit_cycled_marching_ants = cycled_marching_ants;
-	  edit_last_opened_size = last_opened_size;
-	}
-      old_perfectmouse = perfectmouse;
-      old_transparency_type = transparency_type;
-      old_transparency_size = transparency_size;
-      old_levels_of_undo = levels_of_undo;
-      old_marching_speed = marching_speed;
-      old_allow_resize_windows = allow_resize_windows;
-      old_auto_save = auto_save;
-      old_preview_size = preview_size;
-      old_no_cursor_updating = no_cursor_updating;
-      old_show_tool_tips = show_tool_tips;
-      old_show_rulers = show_rulers;
-      old_show_statusbar = show_statusbar;
-      old_cubic_interpolation = cubic_interpolation;
-      old_confirm_on_close = confirm_on_close;
-      old_save_session_info = save_session_info;
-      old_save_device_status = save_device_status;
-      old_always_restore_session = always_restore_session;
-      old_default_width = default_width;
-      old_default_height = default_height;
-      old_default_units = default_units;
-      old_default_xresolution = default_xresolution;
-      old_default_yresolution = default_yresolution;
-      old_default_resolution_units = default_resolution_units;
-      old_default_type = default_type;
-      old_stingy_memory_use = edit_stingy_memory_use;
-      old_tile_cache_size = edit_tile_cache_size;
-      old_install_cmap = edit_install_cmap;
-      old_cycled_marching_ants = edit_cycled_marching_ants;
-      old_last_opened_size = edit_last_opened_size;
-      old_monitor_xres = monitor_xres;
-      old_monitor_yres = monitor_yres;
-      old_using_xserver_resolution = using_xserver_resolution;
-      old_num_processors = num_processors;
-      old_image_title_format = file_prefs_strdup (image_title_format);	
+  file_prefs_strset (&old_temp_path, edit_temp_path);
+  file_prefs_strset (&old_swap_path, edit_swap_path);
+  file_prefs_strset (&old_brush_path, edit_brush_path);
+  file_prefs_strset (&old_pattern_path, edit_pattern_path);
+  file_prefs_strset (&old_palette_path, edit_palette_path);
+  file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
+  file_prefs_strset (&old_module_path, edit_module_path);
+  file_prefs_strset (&old_gradient_path, edit_gradient_path);
 
-      file_prefs_strset (&old_temp_path, edit_temp_path);
-      file_prefs_strset (&old_swap_path, edit_swap_path);
-      file_prefs_strset (&old_brush_path, edit_brush_path);
-      file_prefs_strset (&old_pattern_path, edit_pattern_path);
-      file_prefs_strset (&old_palette_path, edit_palette_path);
-      file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
-      file_prefs_strset (&old_module_path, edit_module_path);
-      file_prefs_strset (&old_gradient_path, edit_gradient_path);
+  mem_size_unit = 1;
+  for (i = 0; i < 3; i++)
+    { 
+      if (edit_tile_cache_size % (mem_size_unit * 1024) != 0)
+	break;
+      mem_size_unit *= 1024;
+    }
+  divided_tile_cache_size = edit_tile_cache_size / mem_size_unit;
 
-      for (i = 0; i < nmem_size_units; i++)
-	{ 
-	  if (edit_tile_cache_size % mem_size_units[i].unit == 0)
-	    mem_size_unit = mem_size_units[i].unit;
-	}
-      divided_tile_cache_size = edit_tile_cache_size / mem_size_unit;
+  /* Create the dialog */
+  prefs_dlg =
+    gimp_dialog_new (_("Preferences"),
+		     "gimp_preferences",
+		     _("OK"), file_prefs_ok_callback, NULL,
+		     FALSE, FALSE,
+		     _("Save"), file_prefs_save_callback, NULL,
+		     FALSE, FALSE,
+		     _("Cancel"), file_prefs_cancel_callback, NULL,
+		     TRUE, TRUE,
+		     NULL);
 
-      prefs_dlg = gtk_dialog_new ();
-      gtk_window_set_wmclass (GTK_WINDOW (prefs_dlg), "preferences", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (prefs_dlg), _("Preferences"));
+  /* The main hbox */
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->vbox),
+		      hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
 
-      /* handle the wm close signal */
-      gtk_signal_connect (GTK_OBJECT (prefs_dlg), "delete_event",
-			  GTK_SIGNAL_FUNC (file_prefs_delete_callback),
-			  prefs_dlg);
+  /* The categories tree */
+  titles[0] = _("Categories");
+  ctree = gtk_ctree_new_with_titles (1, 0, titles);
+  gtk_ctree_set_indent (GTK_CTREE (ctree), 15);
+  gtk_widget_set_usize (ctree, 140, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), ctree, FALSE, FALSE, 0);
+  gtk_widget_show (ctree);
 
-      gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (prefs_dlg)->action_area), 2);
+  /* The main preferences notebook */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  notebook = gtk_notebook_new ();
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_container_add (GTK_CONTAINER (frame), notebook);
+
+  gtk_object_set_user_data (GTK_OBJECT (ctree), notebook);
+  gtk_signal_connect (GTK_OBJECT (ctree), "tree_select_row",
+		      (GtkSignalFunc) file_pref_tree_select_callback, NULL);
+
+  page_index = 0;
+
+  /* New File page */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("New File Settings"),
+					  GTK_CTREE (ctree),
+					  _("New File"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  /* select this page in the tree */
+  gtk_ctree_select (GTK_CTREE (ctree), top_insert);
+
+  frame = gtk_frame_new (_("Default Image Size and Unit")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  default_size_sizeentry = gimp_size_entry_new (2, default_units, "%p",
+						FALSE, TRUE, 75,
+						GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				  0, default_xresolution, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				  1, default_yresolution, FALSE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 1, 1, 32767);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0,
+			      default_width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1,
+			      default_height);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				_("Width"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				_("Height"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
+				_("Pixels"), 1, 4, 0.0);
+  gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "unit_changed",
+		      (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+  gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "value_changed",
+		      (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+  gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "refval_changed",
+		      (GtkSignalFunc)file_prefs_default_size_callback, NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), default_size_sizeentry, FALSE, FALSE, 0);
+  gtk_widget_show (default_size_sizeentry);
+
+  frame = gtk_frame_new (_("Default Image Resolution and Resolution Unit"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  default_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+
+  default_resolution_sizeentry =
+    gimp_size_entry_new (2, default_resolution_units, "%s", FALSE, TRUE, 75,
+			 GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1, 32767);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+			      0, default_xresolution);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+			      1, default_yresolution);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+				_("Horizontal"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+				_("Vertical"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+				_("dpi"), 1, 3, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry),
+				_("Pixels per "), 2, 3, 0.0);
+  gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+		      "unit_changed",
+		      (GtkSignalFunc)file_prefs_default_resolution_callback,
+		      default_resolution_force_equal);
+  gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+		      "value_changed",
+		      (GtkSignalFunc)file_prefs_default_resolution_callback,
+		      default_resolution_force_equal);
+  gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
+		      "refval_changed",
+		      (GtkSignalFunc)file_prefs_default_resolution_callback,
+		      default_resolution_force_equal);
+  gtk_box_pack_start (GTK_BOX (hbox), default_resolution_sizeentry,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (default_resolution_sizeentry);
+
+  gtk_table_attach_defaults (GTK_TABLE (default_resolution_sizeentry), 
+			     default_resolution_force_equal, 1, 3, 3, 4);
+  if (ABS (default_xresolution - default_yresolution) < 1e-5)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (default_resolution_force_equal), TRUE);
+  gtk_widget_show (default_resolution_force_equal);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
       
-      /* Action area */
-      button = gtk_button_new_with_label (_("OK"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) file_prefs_ok_callback,
-			  prefs_dlg);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->action_area),
-			  button, TRUE, TRUE, 0);
-      gtk_widget_grab_default (button);
-      gtk_widget_show (button);
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-      button = gtk_button_new_with_label (_("Save"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) file_prefs_save_callback,
-			  prefs_dlg);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->action_area),
-			  button, TRUE, TRUE, 0);
-      gtk_widget_grab_default (button);
-      gtk_widget_show (button);
+  label = gtk_label_new (_("Default Image Type:"));
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) default_type,
+			  _("RGB"),       &default_type, (gpointer) RGB,
+			  _("Grayscale"), &default_type, (gpointer) GRAY,
+			  NULL);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
+  gtk_widget_show (label);
+  gtk_widget_show (optionmenu);
 
-      button = gtk_button_new_with_label (_("Cancel"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  (GtkSignalFunc) file_prefs_cancel_callback,
-			  prefs_dlg);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->action_area),
-			  button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
+  /* Display page */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Display Settings"),
+					  GTK_CTREE (ctree),
+					  _("Display"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
 
-      notebook = gtk_notebook_new ();
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->vbox),
-			  notebook, TRUE, TRUE, 0);
+  frame = gtk_frame_new (_("Transparency")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-      /* New File page */
-      out_frame = gtk_frame_new (_("New file settings"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_show (out_frame);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
-
-      frame = gtk_frame_new (_("Default image size and unit")); 
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
-
-      abox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (abox), 1);
-      gtk_container_add (GTK_CONTAINER (frame), abox);
-      gtk_widget_show (abox);
-
-      default_size_sizeentry = gimp_size_entry_new (2, default_units, "%p",
-						    FALSE, TRUE, 75,
-						    GIMP_SIZE_ENTRY_UPDATE_SIZE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
-				      0, default_xresolution, FALSE);
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (default_size_sizeentry),
-				      1, default_yresolution, FALSE);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 0, 1, 32767);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_size_sizeentry), 1, 1, 32767);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 0,
-				  default_width);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_size_sizeentry), 1,
-				  default_height);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
-				    _("Width"), 0, 1, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
-				    _("Height"), 0, 2, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_size_sizeentry),
-				    _("Pixels"), 1, 4, 0.0);
-      /*      gtk_container_set_border_width (GTK_CONTAINER (default_size_sizeentry), 2); */
-      gtk_box_pack_start (GTK_BOX (abox), default_size_sizeentry, TRUE, TRUE, 0);
-      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "unit_changed",
-			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
-      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "value_changed",
-			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
-      gtk_signal_connect (GTK_OBJECT (default_size_sizeentry), "refval_changed",
-			  (GtkSignalFunc)file_prefs_default_size_callback, NULL);
-      gtk_widget_show (default_size_sizeentry);
-
-      frame = gtk_frame_new (_("Default image resolution and resolution unit"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
-
-      abox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (abox), 1);
-      gtk_container_add (GTK_CONTAINER (frame), abox);
-      gtk_widget_show (abox);
-
-      default_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-
-      default_resolution_sizeentry =
-	gimp_size_entry_new (2, default_resolution_units, "%s", FALSE, TRUE, 75,
-			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, 1, 32767);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, 1, 32767);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 0, default_xresolution);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (default_resolution_sizeentry), 1, default_yresolution);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("Horizontal"), 0, 1, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("Vertical"), 0, 2, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("dpi"), 1, 3, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (default_resolution_sizeentry), _("pixels per "), 2, 3, 0.0);
-      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
-			  "unit_changed",
-			  (GtkSignalFunc)file_prefs_default_resolution_callback,
-			  default_resolution_force_equal);
-      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
-			  "value_changed",
-			  (GtkSignalFunc)file_prefs_default_resolution_callback,
-			  default_resolution_force_equal);
-      gtk_signal_connect (GTK_OBJECT (default_resolution_sizeentry),
-			  "refval_changed",
-			  (GtkSignalFunc)file_prefs_default_resolution_callback,
-			  default_resolution_force_equal);
-      gtk_box_pack_start (GTK_BOX (abox), default_resolution_sizeentry,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (default_resolution_sizeentry);
-
-      gtk_table_attach_defaults (GTK_TABLE (default_resolution_sizeentry), 
-				 default_resolution_force_equal, 1, 3, 3, 4);
-      if (ABS (default_xresolution - default_yresolution) < 1e-5)
-	gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (default_resolution_force_equal),
-				      TRUE);
-      gtk_widget_show (default_resolution_force_equal);
-
-      frame = gtk_frame_new (_("Default image type"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
-
-      radio_box = gtk_vbox_new (FALSE, 1);
-      gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
-      gtk_container_add (GTK_CONTAINER (frame), radio_box);
-      gtk_widget_show (radio_box);
-
-      button = gtk_radio_button_new_with_label (NULL, _("RGB"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
-      if (default_type == RGB)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) file_prefs_toggle_callback,
-			  &default_type);
-      gtk_widget_show (button);
-      button = gtk_radio_button_new_with_label (group, _("Grayscale"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
-      gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
-      if (last_type == GRAY) 
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                         (GtkSignalFunc) file_prefs_toggle_callback,
-			  &default_type);
-      gtk_widget_show (button);
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-      gtk_widget_show (hbox);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
       
-      label = gtk_label_new (_("File"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-      /* Display page */
-      out_frame = gtk_frame_new (_("Display settings"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_show (out_frame);
+  label = gtk_label_new (_("Transparency Type:"));
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) transparency_type,
+			  _("Light Checks"),
+			  &transparency_type, (gpointer) LIGHT_CHECKS,
+			  _("Mid-Tone Checks"),
+			  &transparency_type, (gpointer) GRAY_CHECKS,
+			  _("Dark Checks"),
+			  &transparency_type, (gpointer) DARK_CHECKS,
+			  _("White Only"),
+			  &transparency_type, (gpointer) WHITE_ONLY,
+			  _("Gray Only"),
+			  &transparency_type, (gpointer) GRAY_ONLY,
+			  _("Black Only"),
+			  &transparency_type, (gpointer) BLACK_ONLY,
+			  NULL);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
+  gtk_widget_show (label);
+  gtk_widget_show (optionmenu);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
+  label = gtk_label_new (_("Check Size:"));
+  optionmenu =
+    gimp_option_menu_new (file_prefs_toggle_callback,
+			  (gpointer) transparency_size,
+			  _("Small Checks"),
+			  &transparency_size, (gpointer) SMALL_CHECKS,
+			  _("Medium Checks"),
+			  &transparency_size, (gpointer) MEDIUM_CHECKS,
+			  _("Large Checks"), 
+			  &transparency_size, (gpointer) LARGE_CHECKS,
+			  NULL);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 1);
+  gtk_widget_show (label);
+  gtk_widget_show (optionmenu);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+  frame = gtk_frame_new (_("Scaling")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-      label = gtk_label_new (_("Preview size: "));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label(_("Cubic Interpolation"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				cubic_interpolation);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &cubic_interpolation);
+  gtk_widget_show (button);
+
+  /* Interface */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Interface Settings"),
+					  GTK_CTREE (ctree),
+					  _("Interface"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("General")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
       
-      menu = gtk_menu_new ();
-      for (i = 0; i < npreview_sizes; i++)
-        {
-          menuitem = gtk_menu_item_new_with_label (gettext(preview_sizes[i].label));
-	  gtk_menu_append (GTK_MENU (menu), menuitem);
-	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			      (GtkSignalFunc) file_prefs_preview_size_callback,
-			      (gpointer)((long)preview_sizes[i].size));
-	  gtk_widget_show (menuitem);
-	}
-      optionmenu = gtk_option_menu_new ();
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-      gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-      gtk_widget_show (optionmenu);
-      for (i = 0; i < npreview_sizes; i++)
-	if (preview_size==preview_sizes[i].size)
-	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
-	  
-      button = gtk_check_button_new_with_label(_("Cubic interpolation"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    cubic_interpolation);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &cubic_interpolation);
-      gtk_widget_show (button);
+  table = gtk_table_new (3, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+  /* Don't show the Auto-save button until we really 
+     have auto-saving in the gimp.
 
-      frame = gtk_frame_new (_("Transparency Type"));
-      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+     button = gtk_check_button_new_with_label(_("Auto save"));
+     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                   auto_save);
+     gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+     gtk_signal_connect (GTK_OBJECT (button), "toggled",
+	                 (GtkSignalFunc) file_prefs_toggle_callback,
+			 &auto_save);
+     gtk_widget_show (button);
+  */
 
-      radio_box = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
-      gtk_container_add (GTK_CONTAINER (frame), radio_box);
-      gtk_widget_show (radio_box);
+  label = gtk_label_new (_("Preview Size:"));
+  optionmenu =
+    gimp_option_menu_new (file_prefs_preview_size_callback,
+			  (gpointer) preview_size,
+			  _("None"),   (gpointer)   0, (gpointer)   0,
+			  _("Small"),  (gpointer)  32, (gpointer)  32,
+			  _("Medium"), (gpointer)  64, (gpointer)  64,
+			  _("Large"),  (gpointer) 128, (gpointer) 128,
+			  NULL);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), optionmenu, 0);
+  gtk_widget_show (label);
+  gtk_widget_show (optionmenu);
 
-      group = NULL;
-      for (i = 0; i < ntransparencies; i++)
-        {
-	  button = gtk_radio_button_new_with_label (group, gettext(transparencies[i]));
-          group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-          gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
-          gtk_object_set_user_data (GTK_OBJECT (button),
-				    (gpointer) ((long) transparency_vals[i]));
-          if (transparency_vals[i] == transparency_type)
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-          gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                              (GtkSignalFunc) file_prefs_toggle_callback,
-                              &transparency_type);
-          gtk_widget_show (button);
-        }
-      frame = gtk_frame_new (_("Check Size"));
-      gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+  label = gtk_label_new (_("Levels of Undo:"));
+  spinbutton =
+    gimp_spin_button_new (levels_of_undo, 0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+		      &levels_of_undo);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 1);
+  gtk_widget_show (label);
+  gtk_widget_show (spinbutton);
 
-      radio_box = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (radio_box), 2);
-      gtk_container_add (GTK_CONTAINER (frame), radio_box);
-      gtk_widget_show (radio_box);
+  label = gtk_label_new (_("Recent Documents List Size:"));
+  spinbutton =
+    gimp_spin_button_new (last_opened_size, 0.0, 256.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+		      &edit_last_opened_size);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 2);
+  gtk_widget_show (label);
+  gtk_widget_show (spinbutton);
 
-      group = NULL;
-      for (i = 0; i < nchecks; i++)
-        {
-          button = gtk_radio_button_new_with_label (group, gettext(checks[i]));
-          group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-          gtk_box_pack_start (GTK_BOX (radio_box), button, FALSE, FALSE, 0);
-          gtk_object_set_user_data (GTK_OBJECT (button),
-				    (gpointer) ((long) check_vals[i]));
-          if (check_vals[i] == transparency_size)
-            gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-          gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                              (GtkSignalFunc) file_prefs_toggle_callback,
-                              &transparency_size);
-          gtk_widget_show (button);
-        }
+  frame = gtk_frame_new (_("Help System")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label(_("Show Tool Tips"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				show_tool_tips);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &show_tool_tips);
+  gtk_widget_show (button);
+
+  /* Interface / Image Windows */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Image Windows Settings"),
+					  GTK_CTREE (ctree),
+					  _("Image Windows"),
+					  top_insert,
+					  &child_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("Appearance")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label(_("Resize Window on Zoom"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				allow_resize_windows);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &allow_resize_windows);
+  gtk_widget_show (button);
       
-      label = gtk_label_new (_("Display"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+  button = gtk_check_button_new_with_label(_("Show Rulers"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				show_rulers);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &show_rulers);
+  gtk_widget_show (button);
 
-      /* Interface */
-      out_frame = gtk_frame_new (_("Interface settings"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_show (out_frame);
+  button = gtk_check_button_new_with_label(_("Show Statusbar"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				show_statusbar);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &show_statusbar);
+  gtk_widget_show (button);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-      button = gtk_check_button_new_with_label(_("Resize window on zoom"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    allow_resize_windows);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &allow_resize_windows);
-      gtk_widget_show (button);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label = gtk_label_new (_("Marching Ants Speed:"));
+  spinbutton =
+    gimp_spin_button_new (marching_speed, 0.0, 32000.0, 50.0, 100.0, 0.0,
+			  1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+		      &marching_speed);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), spinbutton, 0);
+  gtk_widget_show (label);
+  gtk_widget_show (spinbutton);
+
+  /* The title format string */
+  label = gtk_label_new (_("Image Title Format:"));
+
+  combo = gtk_combo_new ();
+  gtk_combo_set_use_arrows (GTK_COMBO (combo), FALSE);
+  gtk_combo_set_value_in_list (GTK_COMBO (combo), FALSE, FALSE);
+  /* Set the currently used string as "Custom" */
+  comboitem = gtk_list_item_new_with_label (_("Custom"));
+  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+			     image_title_format);
+  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+  gtk_widget_show (comboitem);
+  /* set some commonly used format strings */
+  comboitem = gtk_list_item_new_with_label (_("Standard"));
+  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+			     "%f-%p.%i (%t)");
+  gtk_container_add(GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+  gtk_widget_show (comboitem);
+  comboitem = gtk_list_item_new_with_label (_("Show zoom percentage"));
+  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+			     "%f-%p.%i (%t) %z%%");
+  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+  gtk_widget_show (comboitem);
+  comboitem = gtk_list_item_new_with_label (_("Show zoom ratio"));
+  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+			     "%f-%p.%i (%t) %d:%s");
+  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+  gtk_widget_show (comboitem);
+  comboitem = gtk_list_item_new_with_label (_("Show reversed zoom ratio"));
+  gtk_combo_set_item_string (GTK_COMBO (combo), GTK_ITEM (comboitem),
+			     "%f-%p.%i (%t) %s:%d");
+  gtk_container_add (GTK_CONTAINER (GTK_COMBO (combo)->list), comboitem);
+  gtk_widget_show (comboitem);
+
+  gtk_signal_connect (GTK_OBJECT (GTK_COMBO (combo)->entry), "changed",
+		      GTK_SIGNAL_FUNC (file_prefs_string_callback), 
+		      &image_title_format);
+
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), combo, 1);
+  gtk_widget_show (label);
+  gtk_widget_show (combo);
+  /* End of the title format string */
+
+  frame = gtk_frame_new (_("Pointer Movement Feedback")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label(_("Perfect-but-slow Pointer Tracking"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				perfectmouse);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &perfectmouse);
+  gtk_widget_show (button);
       
-      button = gtk_check_button_new_with_label(_("Perfect-but-slow pointer tracking"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    perfectmouse);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &perfectmouse);
-      gtk_widget_show (button);
-      
-      /* Don't show the Auto-save button until we really 
-	 have auto-saving in the gimp.
-      
-	 button = gtk_check_button_new_with_label(_("Auto save"));
-	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                       auto_save);
-	 gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
-	                           (GtkSignalFunc) file_prefs_toggle_callback,
-                                   &auto_save);
-         gtk_widget_show (button);
-      */
+  button = gtk_check_button_new_with_label(_("Disable Cursor Updating"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				no_cursor_updating);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &no_cursor_updating);
+  gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label(_("Disable cursor updating"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                   no_cursor_updating);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &no_cursor_updating);
-      gtk_widget_show (button);
+  /* Environment */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Environment Settings"),
+					  GTK_CTREE (ctree),
+					  _("Environment"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
 
-      button = gtk_check_button_new_with_label(_("Show tool tips"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    show_tool_tips);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &show_tool_tips);
-      gtk_widget_show (button);
+  frame = gtk_frame_new (_("Resource Consumption")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-      button = gtk_check_button_new_with_label(_("Show rulers"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    show_rulers);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &show_rulers);
-      gtk_widget_show (button);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
-      button = gtk_check_button_new_with_label(_("Show statusbar"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    show_statusbar);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &show_statusbar);
-      gtk_widget_show (button);
+  button = gtk_check_button_new_with_label(_("Conservative Memory Usage"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), stingy_memory_use);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &edit_stingy_memory_use);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-      /* The title format string */
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-      
-      label = gtk_label_new (_("Image title format:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      combo = gtk_combo_new();
-      gtk_combo_set_use_arrows(GTK_COMBO(combo), FALSE);
-      gtk_combo_set_value_in_list(GTK_COMBO(combo), FALSE, FALSE);
-      /* Set the currently used string as "Custom" */
-      comboitem = gtk_list_item_new_with_label(_("Custom"));
-      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
-				image_title_format);
-      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
-      gtk_widget_show(comboitem);      
-      /* set some commonly used format strings */
-      comboitem = gtk_list_item_new_with_label(_("Standard"));
-      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
-				"%f-%p.%i (%t)");
-      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
-      gtk_widget_show(comboitem);
-      comboitem = gtk_list_item_new_with_label(_("Show zoom percentage"));
-      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
-				"%f-%p.%i (%t) %z%%");
-      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
-      gtk_widget_show(comboitem);
-      comboitem = gtk_list_item_new_with_label(_("Show zoom ratio"));
-      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
-				"%f-%p.%i (%t) %d:%s");
-      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
-      gtk_widget_show(comboitem);
-      comboitem = gtk_list_item_new_with_label(_("Show reversed zoom ratio"));
-      gtk_combo_set_item_string(GTK_COMBO(combo), GTK_ITEM(comboitem),
-				"%f-%p.%i (%t) %s:%d");
-      gtk_container_add(GTK_CONTAINER(GTK_COMBO(combo)->list), comboitem);
-      gtk_widget_show(comboitem);
-
-      gtk_box_pack_start(GTK_BOX(hbox), combo, TRUE, TRUE, 0);
-      gtk_widget_show(combo);
-
-      gtk_signal_connect(GTK_OBJECT(GTK_COMBO(combo)->entry), "changed",
-			 GTK_SIGNAL_FUNC(file_prefs_string_callback), 
-			 &image_title_format);
-      /* End of the title format string */
-
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      label = gtk_label_new (_("Levels of undo:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (levels_of_undo, 0.0,
-                                                  255.0, 1.0, 5.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &levels_of_undo);
-      gtk_widget_show (spinbutton);
-      
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      label = gtk_label_new (_("Marching ants speed:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (marching_speed, 0.0,
-                                                  32000.0, 50.0, 100.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &marching_speed);
-      gtk_widget_show (spinbutton);
-
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      label = gtk_label_new (_("Recent Documents list size:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (last_opened_size, 0.0,
-                                                  256.0, 1.0, 5.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &edit_last_opened_size);
-      gtk_widget_show (spinbutton);
-
-      label = gtk_label_new (_("Interface"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
-
-      /* Environment */
-      out_frame = gtk_frame_new (_("Environment settings"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_set_usize (out_frame, 320, 200);
-      gtk_widget_show (out_frame);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
-      
-      button = gtk_check_button_new_with_label(_("Conservative memory usage"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    stingy_memory_use);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) file_prefs_toggle_callback,
-			  &edit_stingy_memory_use);
-      gtk_widget_show (button);
-      
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-
-      label = gtk_label_new (_("Tile cache size:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (divided_tile_cache_size, 0.0,
-                                                  (4069.0 * 1024 * 1024), 1.0,
-                                                  16.0, 0.0);
-      tile_cache_size_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(tile_cache_size_spinbutton), 
-				       GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(tile_cache_size_spinbutton), TRUE);
-      gtk_widget_set_usize (tile_cache_size_spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &divided_tile_cache_size);
-      gtk_widget_show (tile_cache_size_spinbutton);
-      
-      menu = gtk_menu_new ();
-      for (i = 0; i < nmem_size_units; i++)
-        {
-          menuitem = gtk_menu_item_new_with_label (gettext(mem_size_units[i].label));
-	  gtk_menu_append (GTK_MENU (menu), menuitem);
-	  gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			      (GtkSignalFunc) file_prefs_mem_size_unit_callback,
-			      (gpointer) mem_size_units[i].unit);
-	  gtk_widget_show (menuitem);
-	}
-      optionmenu = gtk_option_menu_new ();
-      gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-      gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-      gtk_widget_show (optionmenu);
-      for (i = 0; i < nmem_size_units; i++)
-	if (mem_size_unit == mem_size_units[i].unit)
-	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
-      
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
 #ifdef ENABLE_MP
-      label = gtk_label_new (_("Number of processors to use:"));
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (num_processors, 1,
-                                                  30, 1.0,
-                                                  2.0, 0.0);
-      num_processors_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(num_processors_spinbutton),
-				       GTK_SHADOW_NONE);      
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(num_processors_spinbutton),
-				  TRUE);
-      gtk_widget_set_usize (num_processors_spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), num_processors_spinbutton,
-			  FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (num_processors_spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &num_processors);
-      gtk_widget_show (num_processors_spinbutton);
+  table = gtk_table_new (2, 2, FALSE);
 #else
-      num_processors_spinbutton = NULL;
+  table = gtk_table_new (1, 2, FALSE);
+#endif
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  label = gtk_label_new (_("Tile Cache Size:"));
+  hbox = gtk_hbox_new (FALSE, 2);
+  tile_cache_size_spinbutton =
+    gimp_spin_button_new (divided_tile_cache_size,
+			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
+			  1.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (hbox), tile_cache_size_spinbutton,
+		      FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (tile_cache_size_spinbutton), "changed",
+		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+		      &divided_tile_cache_size);
+  gtk_widget_show (tile_cache_size_spinbutton);
+      
+  optionmenu =
+    gimp_option_menu_new (file_prefs_mem_size_unit_callback,
+			  (gpointer) mem_size_unit,
+			  _("Bytes"),     (gpointer) 1, (gpointer) 1,
+			  _("KiloBytes"), (gpointer) 1024, (gpointer) 1024,
+			  _("MegaBytes"),
+			  (gpointer) (1024*1024), (gpointer) (1024*1024),
+			  NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
+  gtk_widget_show (optionmenu);
+  file_pref_table_attach (GTK_TABLE (table), GTK_LABEL (label), hbox, 0);
+  gtk_widget_show (hbox);
+  gtk_widget_show (label);
+
+#ifdef ENABLE_MP
+  label = gtk_label_new (_("Number of Processors to Use:"));
+  num_processors_spinbutton =
+    gimp_spin_button_new (num_processors, 1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (num_processors_spinbutton), "changed",
+		      (GtkSignalFunc) file_prefs_spinbutton_callback,
+		      &num_processors);
+  file_pref_table_attach (GTK_TABLE (table),
+			  GTK_LABEL (label), num_processors_spinbutton, 1);
+  gtk_widget_show (label);
+  gtk_widget_show (num_processors_spinbutton);
+#else
+  num_processors_spinbutton = NULL;
 #endif /* ENABLE_MP */
 
-      button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    install_cmap);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &edit_install_cmap);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      if (g_visual->depth != 8)
-	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
-      gtk_widget_show (button);
+  frame = gtk_frame_new (_("8-Bit Displays")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  if (g_visual->depth != 8)
+    gtk_widget_set_sensitive (GTK_WIDGET (frame), FALSE);
+  gtk_widget_show (frame);
 
-      button = gtk_check_button_new_with_label(_("Colormap cycling (8-bit only)"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    cycled_marching_ants);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &edit_cycled_marching_ants);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      if (g_visual->depth != 8)
-	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
-      gtk_widget_show (button);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label(_("Install Colormap"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				install_cmap);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &edit_install_cmap);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  button = gtk_check_button_new_with_label(_("Colormap Cycling"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				cycled_marching_ants);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &edit_cycled_marching_ants);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /* Session Management */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Session Management"),
+					  GTK_CTREE (ctree),
+					  _("Session"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("Window Positions")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  button = gtk_check_button_new_with_label (_("Save Window Positions on Exit"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				save_session_info);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &save_session_info);
+  gtk_widget_show (button);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
       
-      label = gtk_label_new (_("Environment"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+  button = gtk_button_new_with_label (_("Clear Saved Window Positions"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) file_prefs_clear_session_info_callback,
+		      NULL);
+  gtk_widget_show (button);
 
-      /* Session Management */
-      out_frame = gtk_frame_new (_("Session managment"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_set_usize (out_frame, 320, 200);
-      gtk_widget_show (out_frame);
+  button = gtk_check_button_new_with_label (_("Always Try to Restore Session"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				always_restore_session);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &always_restore_session);
+  gtk_widget_show (button);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
+  frame = gtk_frame_new (_("Devices")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-      button = gtk_check_button_new_with_label (_("Save window positions on exit"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    save_session_info);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &save_session_info);
-      gtk_widget_show (button);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (hbox), 4);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
-      
-      button = gtk_button_new_with_label (_("Clear saved window positions"));
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                          (GtkSignalFunc) file_prefs_clear_session_info_callback,
-                          NULL);
-      gtk_widget_show (button);
+  button = gtk_check_button_new_with_label (_("Save Device Status on Exit"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				save_device_status);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &save_device_status);
+  gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label (_("Always try to restore session"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    always_restore_session);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &always_restore_session);
-      gtk_widget_show (button);
+  /* Monitor */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Monitor Information"),
+					  GTK_CTREE (ctree),
+					  _("Monitor"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
 
-      button = gtk_check_button_new_with_label (_("Save device status on exit"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				    save_device_status);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &save_device_status);
-      gtk_widget_show (button);
-      
-      label = gtk_label_new (_("Session"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+  frame = gtk_frame_new (_("Get Monitor Resolution")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-      gtk_widget_show (notebook);
+  vbox2 = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
 
-      /* Directories */
-      out_frame = gtk_frame_new (_("Directories settings"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_set_usize (out_frame, 320, 200);
-      gtk_widget_show (out_frame);
+  group = NULL;
+  button = gtk_radio_button_new_with_label (group, _("From X Server"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (file_prefs_res_source_callback),
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-      vbox = gtk_vbox_new (FALSE, 5);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
+  {
+    float xres, yres;
+    char buf[80];
 
-      table = gtk_table_new (ndirs + 1, 2, FALSE);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
-      gtk_widget_show (table);
+    gdisplay_xserver_resolution (&xres, &yres);
 
-      for (i = 0; i < ndirs; i++)
-	{
-	  label = gtk_label_new (gettext(dirs[i].label));
-	  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-	  gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
-                            GTK_FILL, GTK_FILL, 0, 0);
-	  gtk_widget_show (label);
- 
-          fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
-						   *(dirs[i].mdir),
-						   TRUE, TRUE);
-	  gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
-			      (GtkSignalFunc) file_prefs_filename_callback,
-			      dirs[i].mdir);
-          gtk_table_attach (GTK_TABLE (table), fileselection, 1, 2, i, i+1,
-                            GTK_EXPAND | GTK_FILL, 0, 0, 0);
-          gtk_widget_show (fileselection); 
-	}
+    g_snprintf (buf, sizeof (buf), _("(Currently %d x %d dpi)"),
+		(int) (xres + 0.5), (int) (yres + 0.5));
+    resolution_xserver_label = gtk_label_new (buf);
+    gtk_box_pack_start (GTK_BOX (vbox2), resolution_xserver_label,
+			FALSE, FALSE, 0);
+    gtk_widget_show (resolution_xserver_label);
+  }
 
-      notebook2 = gtk_notebook_new ();
-      gtk_box_pack_start (GTK_BOX (vbox), notebook2, TRUE, TRUE, 0);
-      gtk_widget_show (notebook2);
+  button = gtk_radio_button_new_with_label (group, _("Manually:"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+  if (!using_xserver_resolution)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-      for (i = 0; i < npaths; i++)
-	{
-	  vbox = gtk_vbox_new (FALSE, 0);
-	  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-	  gtk_widget_show (vbox);
+  abox = gtk_alignment_new (0.5, 0.5, 0.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
+  gtk_widget_show (abox);
 
-          patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
-					     *(paths[i].mpath));
-	  gtk_signal_connect (GTK_OBJECT (patheditor), "path_changed",
-			      (GtkSignalFunc) file_prefs_path_callback,
-			      paths[i].mpath);
-	  gtk_container_add (GTK_CONTAINER (vbox), patheditor);
-          gtk_widget_show (patheditor);
+  monitor_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
+  monitor_resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
+						      FALSE, TRUE, 75,
+						      GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0, 1, 32767);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1, 1, 32767);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+			      0, monitor_xres);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+			      1, monitor_yres);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+				_("Horizontal"), 0, 1, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+				_("Vertical"), 0, 2, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+				_("dpi"), 1, 3, 0.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
+				_("Pixels per "), 2, 3, 0.0);
+  gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
+		      "value_changed",
+		      (GtkSignalFunc)file_prefs_monitor_resolution_callback,
+		      monitor_resolution_force_equal);
+  gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
+		      "refval_changed",
+		      (GtkSignalFunc)file_prefs_monitor_resolution_callback,
+		      monitor_resolution_force_equal);
+  gtk_container_add (GTK_CONTAINER (abox), monitor_resolution_sizeentry);
+  gtk_widget_show (monitor_resolution_sizeentry);
 
-	  label = gtk_label_new (gettext(paths[i].label));
-	  gtk_notebook_append_page (GTK_NOTEBOOK (notebook2), vbox, label);
-	}
+  if (ABS (monitor_xres - monitor_yres) < 1e-5)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
+				  TRUE);
+  gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
+			     monitor_resolution_force_equal, 1, 3, 3, 4);
+  gtk_widget_show (monitor_resolution_force_equal);
 
-      label = gtk_label_new (_("Directories"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+  gtk_widget_set_sensitive (monitor_resolution_sizeentry,
+			    !using_xserver_resolution);
+  gtk_widget_set_sensitive (monitor_resolution_force_equal,
+			    !using_xserver_resolution);
 
-      /* Monitor */
-      out_frame = gtk_frame_new (_("Monitor information"));
-      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
-      gtk_widget_set_usize (out_frame, 320, 200);
-      gtk_widget_show (out_frame);
+  /* Directories */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Directories Settings"),
+					  GTK_CTREE (ctree),
+					  _("Directories"),
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
-      gtk_widget_show (vbox);
+  {
+    static const struct {
+      char  *label;
+      char  *fs_label;
+      char **mdir;
+    } dirs[] = {
+      { N_("Temp Dir:"), N_("Select Temp Dir"), &edit_temp_path },
+      { N_("Swap Dir:"), N_("Select Swap Dir"), &edit_swap_path },
+    };
+    static int ndirs = sizeof (dirs) / sizeof (dirs[0]);
 
-      label = gtk_label_new (_("Get monitor resolution"));
-      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
+    table = gtk_table_new (ndirs + 1, 2, FALSE);
+    gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+    gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
+    gtk_widget_show (table);
 
-      group = NULL;
-      button = gtk_radio_button_new_with_label (group, _("from X server"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  GTK_SIGNAL_FUNC (file_prefs_res_source_callback),
-			  NULL);
-      gtk_widget_show (button);
-
+    for (i = 0; i < ndirs; i++)
       {
-	  float xres, yres;
-	  char buf[80];
-
-	  gdisplay_xserver_resolution (&xres, &yres);
-
-	  g_snprintf (buf, sizeof(buf), _("(currently %d x %d dpi)"),
-		      (int)(xres + 0.5), (int)(yres + 0.5));
-	  resolution_xserver_label = gtk_label_new (buf);
-	  gtk_box_pack_start (GTK_BOX (vbox), resolution_xserver_label,
-			      FALSE, FALSE, 0);
-	  gtk_widget_show (resolution_xserver_label);
+	label = gtk_label_new (gettext(dirs[i].label));
+	gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+	gtk_table_attach (GTK_TABLE (table), label, 0, 1, i, i+1,
+			  GTK_FILL, GTK_FILL, 0, 0);
+	gtk_widget_show (label);
+	    
+	fileselection = gimp_file_selection_new (gettext(dirs[i].fs_label),
+						 *(dirs[i].mdir),
+						 TRUE, TRUE);
+	gtk_signal_connect (GTK_OBJECT (fileselection), "filename_changed",
+			    (GtkSignalFunc) file_prefs_filename_callback,
+			    dirs[i].mdir);
+	gtk_table_attach (GTK_TABLE (table), fileselection, 1, 2, i, i+1,
+			  GTK_EXPAND | GTK_FILL, 0, 0, 0);
+	gtk_widget_show (fileselection); 
       }
+  }
 
-      button = gtk_radio_button_new_with_label (group, _("manually:"));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-      if (!using_xserver_resolution)
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+  {
+    static const struct {
+      char  *tree_label;
+      char  *label;
+      char  *fs_label;
+      char **mpath;
+    } paths[] = {
+      { N_("Brushes"),   N_("Brushes Directories"),   N_("Select Brushes Dir"),
+	&edit_brush_path },
+      { N_("Gradients"), N_("Gradients Directories"), N_("Select Gradients Dir"),
+	&edit_gradient_path },
+      { N_("Patterns"),  N_("Patterns Directories"),  N_("Select Patterns Dir"),
+	&edit_pattern_path },
+      { N_("Palettes"),  N_("Palettes Directories"),  N_("Select Palettes Dir"),
+	&edit_palette_path },
+      { N_("Plug-Ins"),  N_("Plug-Ins Directories"),  N_("Select Plug-Ins Dir"),
+	&edit_plug_in_path },
+      { N_("Modules"),   N_("Modules Directories"),   N_("Select Modules Dir"),
+	&edit_module_path }
+    };
+    static int npaths = sizeof (paths) / sizeof (paths[0]);
+	
+    for (i = 0; i < npaths; i++)
+      {
+	vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+						gettext (paths[i].label),
+						GTK_CTREE (ctree),
+						gettext (paths[i].tree_label),
+						top_insert,
+						&child_insert,
+						page_index);
+	gtk_widget_show (vbox);
+	page_index++;
 
-      abox = gtk_alignment_new (0.5, 0.5, 0.0, 1.0);
-      gtk_box_pack_start (GTK_BOX (vbox), abox, FALSE, FALSE, 0);
-      gtk_widget_show (abox);
+	patheditor = gimp_path_editor_new (gettext(paths[i].fs_label),
+					   *(paths[i].mpath));
+	gtk_signal_connect (GTK_OBJECT (patheditor), "path_changed",
+			    (GtkSignalFunc) file_prefs_path_callback,
+			    paths[i].mpath);
+	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
+	gtk_widget_show (patheditor);
+      }
+  }
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_add (GTK_CONTAINER (abox), vbox);
-      gtk_widget_show (vbox);
-
-      monitor_resolution_force_equal = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
-      monitor_resolution_sizeentry = gimp_size_entry_new (2, UNIT_INCH, "%s",
-						  FALSE, TRUE, 75,
-						  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-					     0, 1, 32767);
-      gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-					     1, 1, 32767);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 0,
-				  monitor_xres);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry), 1,
-				  monitor_yres);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-				    _("Horizontal"), 0, 1, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-				    _("Vertical"), 0, 2, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-				    _("dpi"), 1, 3, 0.0);
-      gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (monitor_resolution_sizeentry),
-				    _("pixels per "), 2, 3, 0.0);
-      gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
-			  "value_changed",
-			  (GtkSignalFunc)file_prefs_monitor_resolution_callback,
-			  monitor_resolution_force_equal);
-      gtk_signal_connect (GTK_OBJECT (monitor_resolution_sizeentry),
-			  "refval_changed",
-			  (GtkSignalFunc)file_prefs_monitor_resolution_callback,
-			  monitor_resolution_force_equal);
-      gtk_box_pack_start (GTK_BOX (vbox), monitor_resolution_sizeentry,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (monitor_resolution_sizeentry);
-      
-      if (ABS (monitor_xres - monitor_yres) < 1e-5)
-	gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (monitor_resolution_force_equal),
-				      TRUE);
-      gtk_table_attach_defaults (GTK_TABLE (monitor_resolution_sizeentry), 
-				 monitor_resolution_force_equal, 1, 3, 3, 4);
-      gtk_widget_show (monitor_resolution_force_equal);
-
-      gtk_widget_set_sensitive (monitor_resolution_sizeentry,
-				!using_xserver_resolution);
-      gtk_widget_set_sensitive (monitor_resolution_force_equal,
-				!using_xserver_resolution);
-      
-      label = gtk_label_new (_("Monitor"));
-      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
-      
-      gtk_widget_show (notebook);
-      
-      gtk_widget_show (prefs_dlg);
-    }
+  gtk_widget_show (notebook);
+  gtk_widget_show (prefs_dlg);
 }

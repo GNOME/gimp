@@ -1908,7 +1908,7 @@ channels_dialog_new_channel_query (GimpImage* gimage)
 
   action_items[0].user_data = options;
   action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 1);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);

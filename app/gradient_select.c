@@ -90,8 +90,8 @@ extern void import_palette_grad_update(gradient_t *); /* ALT Hmm... */
 
 static ActionAreaItem action_items[2] =
 {
-  { N_("Close"), grad_select_close_callback, NULL, NULL },
   { N_("Edit"), grad_select_edit_callback, NULL, NULL },
+  { N_("Close"), grad_select_close_callback, NULL, NULL }
 };
 
 void
@@ -520,7 +520,7 @@ gsel_new_selection(gchar * title,
 
   action_items[0].user_data = gsp;
   action_items[1].user_data = gsp;
-  build_action_area (GTK_DIALOG (gsp->shell), action_items, 2, 0);
+  build_action_area (GTK_DIALOG (gsp->shell), action_items, 2, 1);
 
   if(!title)
     {

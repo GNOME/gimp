@@ -55,8 +55,8 @@ static void   palette_select_edit_callback (GtkWidget *w,gpointer   client_data)
 
 static ActionAreaItem action_items[2] =
 {
-  { N_("Close"), palette_select_close_callback, NULL, NULL },
   { N_("Edit"), palette_select_edit_callback, NULL, NULL },
+  { N_("Close"), palette_select_close_callback, NULL, NULL }
 };
 
 void

@@ -119,8 +119,8 @@ int current_device = GDK_CORE_POINTER;
 /*  the action area structure  */
 static ActionAreaItem action_items[] =
 {
-  { N_("Close"), devices_close_callback, NULL, NULL },
   { N_("Save"), (ActionCallback)devices_write_rc, NULL, NULL },
+  { N_("Close"), devices_close_callback, NULL, NULL }
 };
 
 void 
@@ -765,8 +765,8 @@ create_device_status (void)
 	  i++;
 	}
 
-      action_items[0].user_data = deviceD->shell;
-      build_action_area (GTK_DIALOG (deviceD->shell), action_items, 2, 0);
+      action_items[1].user_data = deviceD->shell;
+      build_action_area (GTK_DIALOG (deviceD->shell), action_items, 2, 1);
 
       deviceD->current = 0xffffffff; /* random, but doesn't matter */
       device_status_update_current ();

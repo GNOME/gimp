@@ -61,6 +61,13 @@ static   gboolean     last_new_image = TRUE;
 static int new_dialog_run;
 extern TileManager *global_buf;
 
+/*  the action area structure  */
+static ActionAreaItem action_items[] =
+{
+  { N_("OK"), file_new_ok_callback, NULL, NULL },
+  { N_("Cancel"), file_new_cancel_callback, NULL, NULL }
+};
+
 static void
 file_new_ok_callback (GtkWidget *widget,
 		      gpointer   data)
@@ -334,33 +341,17 @@ file_new_cmd_callback (GtkWidget           *widget,
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
   gtk_window_set_title (GTK_WINDOW (vals->dlg), _("New Image"));
   gtk_window_set_position (GTK_WINDOW (vals->dlg), GTK_WIN_POS_MOUSE);
-	gtk_window_set_policy(GTK_WINDOW (vals->dlg), FALSE, FALSE, FALSE);
+  gtk_window_set_policy(GTK_WINDOW (vals->dlg), FALSE, FALSE, FALSE);
 
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (vals->dlg), "delete_event",
 		      GTK_SIGNAL_FUNC (file_new_delete_callback),
 		      vals);
 
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (vals->dlg)->action_area), 2);
-
-  button = gtk_button_new_with_label (_("OK"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) file_new_ok_callback,
-                      vals);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dlg)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) file_new_cancel_callback,
-                      vals);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dlg)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+  /*  The action area  */
+  action_items[0].user_data = vals;
+  action_items[1].user_data = vals;
+  build_action_area (GTK_DIALOG (vals->dlg), action_items, 2, 1);
 
   /* vbox holding the rest of the dialog */
   vbox = gtk_vbox_new (FALSE, 1);
