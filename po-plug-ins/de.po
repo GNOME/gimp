@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2001-11-19 14:01+0100\n"
-"PO-Revision-Date: 2001-11-19 14:02+0100\n"
+"POT-Creation-Date: 2001-11-29 16:44+0100\n"
+"PO-Revision-Date: 2001-11-29 16:45+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -419,7 +419,7 @@ msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:621 plug-ins/common/sinus.c:1859
 #: plug-ins/common/sinus.c:1877 plug-ins/common/sinus.c:1963
-#: plug-ins/imagemap/imap_preferences.c:543
+#: plug-ins/imagemap/imap_preferences.c:545
 msgid "Colors"
 msgstr "Farben"
 
@@ -7754,7 +7754,7 @@ msgstr "Video:"
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
-"and written to seprate diskfiles.\n"
+"and written to seperate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
 "Name einer Videodatei die von xanim GELESEN werden soll.\n"
@@ -11051,7 +11051,7 @@ msgstr "Zeicheneinstellungen für anderes Flare"
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
-#: plug-ins/imagemap/imap_preferences.c:468
+#: plug-ins/imagemap/imap_preferences.c:470
 msgid "General"
 msgstr "Allgemein"
 
@@ -12542,63 +12542,63 @@ msgstr "Ausgabe"
 msgid "Guides..."
 msgstr "Hilfslinien..."
 
-#: plug-ins/imagemap/imap_preferences.c:205
+#: plug-ins/imagemap/imap_preferences.c:207
 msgid "Couldn't save resource file:"
 msgstr "Konnte Einstellungen nicht sichern:"
 
-#: plug-ins/imagemap/imap_preferences.c:357
+#: plug-ins/imagemap/imap_preferences.c:359
 msgid "Select Color"
 msgstr "Farbe auswählen"
 
-#: plug-ins/imagemap/imap_preferences.c:435
+#: plug-ins/imagemap/imap_preferences.c:437
 msgid "Default Map Type"
 msgstr "Standard Map-Typ"
 
-#: plug-ins/imagemap/imap_preferences.c:454
+#: plug-ins/imagemap/imap_preferences.c:456
 msgid "Prompt for area info"
 msgstr "Bereichsinformationen erfragen"
 
-#: plug-ins/imagemap/imap_preferences.c:456
+#: plug-ins/imagemap/imap_preferences.c:458
 msgid "Require default URL"
 msgstr "Standard-URL erforderlich"
 
-#: plug-ins/imagemap/imap_preferences.c:458
+#: plug-ins/imagemap/imap_preferences.c:460
 msgid "Show area handles"
 msgstr "Bereichsanker anzeigen"
 
-#: plug-ins/imagemap/imap_preferences.c:460
+#: plug-ins/imagemap/imap_preferences.c:462
 msgid "Keep NCSA circles true"
 msgstr "NCSA-Kreise beibehalten"
 
-#: plug-ins/imagemap/imap_preferences.c:462
+#: plug-ins/imagemap/imap_preferences.c:464
 msgid "Show area URL tip"
 msgstr "Zeige URL-tooltip über Bereich"
 
-#: plug-ins/imagemap/imap_preferences.c:465
+#: plug-ins/imagemap/imap_preferences.c:467
 msgid "Use double-sized grab handles"
 msgstr "Griffe haben doppelte Grösse"
 
-#: plug-ins/imagemap/imap_preferences.c:489
+#: plug-ins/imagemap/imap_preferences.c:491
 msgid "Number of Undo levels (1 - 99):"
 msgstr "Anzahl der Undo-level (1 - 99):"
 
-#: plug-ins/imagemap/imap_preferences.c:492
+#: plug-ins/imagemap/imap_preferences.c:494
 msgid "Number of MRU entries (1 - 16):"
 msgstr "Anzahl von MRU-Einträgen (1 - 16):"
 
-#: plug-ins/imagemap/imap_preferences.c:495
+#: plug-ins/imagemap/imap_preferences.c:497
 msgid "Menu"
 msgstr "Menü"
 
-#: plug-ins/imagemap/imap_preferences.c:531
+#: plug-ins/imagemap/imap_preferences.c:533
 msgid "Normal:"
 msgstr "Normal:"
 
-#: plug-ins/imagemap/imap_preferences.c:537
+#: plug-ins/imagemap/imap_preferences.c:539
 msgid "Selected:"
 msgstr "Ausgewählt:"
 
-#: plug-ins/imagemap/imap_preferences.c:565
+#: plug-ins/imagemap/imap_preferences.c:567
 msgid "General Preferences"
 msgstr "Generelle Einstellungen"
 
