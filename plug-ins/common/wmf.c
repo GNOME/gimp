@@ -39,7 +39,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define WMF_DEFAULT_RESOLUTION	72.0
+#define WMF_DEFAULT_RESOLUTION	90.0
 #define WMF_DEFAULT_SIZE        500
 #define WMF_PREVIEW_SIZE        128
 
@@ -98,19 +98,29 @@ query (void)
       { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
       { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" },
       { GIMP_PDB_FLOAT,  "resolution",
-      "Resolution to use for rendering the WMF (defaults to 72 dpi"          },
+      "Resolution to use for rendering the WMF (defaults to 72 dpi"     },
       { GIMP_PDB_INT32,  "width",
-      "Width (in pixels) to load the WMF in. "
-      "(0 for original width, a negative width to specify a maximum width)"  },
+      "Width (in pixels) to load the WMF in, 0 for original width"      },
       { GIMP_PDB_INT32,  "height",
-      "Height (in pixels) to load the WMF in. "
-      "(0 for original height, a negative width to specify a maximum height)"}
+      "Height (in pixels) to load the WMF in, 0 for original height"    }
     };
 
   static GimpParamDef load_return_vals[] =
     {
-      { GIMP_PDB_IMAGE,   "image",         "Output image" }
+      { GIMP_PDB_IMAGE,   "image",         "Output image"               }
     };
+
+  static GimpParamDef thumb_args[] =
+  {
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load"   },
+    { GIMP_PDB_INT32,  "thumb_size",   "Preferred thumbnail size"       }
+  };
+  static GimpParamDef thumb_return_vals[] =
+  {
+    { GIMP_PDB_IMAGE,  "image",        "Thumbnail image"                },
+    { GIMP_PDB_INT32,  "image_width",  "Width of full-sized image"      },
+    { GIMP_PDB_INT32,  "image_height", "Height of full-sized image"     }
+  };
 
   gimp_install_procedure ("file_wmf_load",
                           "Loads files in the WMF file format",
@@ -129,6 +139,20 @@ query (void)
   gimp_register_magic_load_handler ("file_wmf_load",
                                     "wmf,apm", "",
                                     "0,string,\\327\\315\\306\\232,0,string,\\1\\0\\11\\0");
+
+  gimp_install_procedure ("file_wmf_load_thumb",
+                          "Loads a small preview from a WMF image",
+                          "",
+                          "Dom Lachowicz <cinamod@hotmail.com>",
+                          "Dom Lachowicz <cinamod@hotmail.com>",
+                          "(c) 2003 - Version 0.3.0",
+			  NULL,
+			  NULL,
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (thumb_args),
+                          G_N_ELEMENTS (thumb_return_vals),
+                          thumb_args, thumb_return_vals);
+  gimp_register_thumbnail_loader ("file_wmf_load", "file_wmf_load_thumb");
 }
 
 /*
@@ -143,8 +167,11 @@ run (const gchar      *name,
 {
   static GimpParam   values[2];
   GimpRunMode        run_mode;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  gint32             image_ID;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
+  const gchar       *filename = NULL;
+  gint32             image_ID = -1;
+  gint               width    = 0;
+  gint               height   = 0;
 
   INIT_I18N ();
 
@@ -158,6 +185,8 @@ run (const gchar      *name,
 
   if (strcmp (name, "file_wmf_load") == 0)
     {
+      filename = param[1].data.d_string;
+
       gimp_get_data ("file_wmf_load", &load_vals);
 
       switch (run_mode)
@@ -176,34 +205,78 @@ run (const gchar      *name,
         case GIMP_RUN_WITH_LAST_VALS:
           break;
         }
+    }
+  else if (strcmp (name, "file_wmf_load_thumb") == 0)
+    {
+      gint size = param[1].data.d_int32;
 
+      filename = param[0].data.d_string;
+
+      if (size > 0                             &&
+          load_wmf_size (filename, &load_vals) &&
+          load_vals.width  > 0                 &&
+          load_vals.height > 0)
+        {
+          width  = load_vals.width;
+          height = load_vals.height;
+
+          if ((gdouble) load_vals.width > (gdouble) load_vals.height)
+            {
+              load_vals.width   = size;
+              load_vals.height *= size / (gdouble) load_vals.width;
+            }
+          else
+            {
+              load_vals.width  *= size / (gdouble) load_vals.height;
+              load_vals.height  = size;
+            }
+        }
+      else
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
+        }
+    }
+  else
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
       if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
           load_vals.resolution > GIMP_MAX_RESOLUTION)
         {
           load_vals.resolution = WMF_DEFAULT_RESOLUTION;
         }
 
-      if (status == GIMP_PDB_SUCCESS)
+      image_ID = load_image (filename);
+
+      if (image_ID != -1)
         {
-          image_ID = load_image (param[1].data.d_string);
-
-          if (image_ID != -1)
-            {
-              *nreturn_vals = 2;
-              values[1].type         = GIMP_PDB_IMAGE;
-              values[1].data.d_image = image_ID;
-            }
-          else
-            {
-              status = GIMP_PDB_EXECUTION_ERROR;
-            }
-
-          gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
+          *nreturn_vals = 2;
+          values[1].type         = GIMP_PDB_IMAGE;
+          values[1].data.d_image = image_ID;
+        }
+      else
+        {
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else
+
+  if (status == GIMP_PDB_SUCCESS)
     {
-      status = GIMP_PDB_CALLING_ERROR;
+      if (strcmp (name, "file_wmf_load_thumb") == 0)
+        {
+          *nreturn_vals = 4;
+          values[2].type         = GIMP_PDB_INT32;
+          values[2].data.d_int32 = width;
+          values[3].type         = GIMP_PDB_INT32;
+          values[3].data.d_int32 = height;
+        }
+      else
+        {
+          gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
+        }
     }
 
   values[0].data.d_status = status;

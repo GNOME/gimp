@@ -1,3 +1,8 @@
+2004-11-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/wmf.c: added a thumbnail load procedure
+	(bug #158193).
+
 2004-11-18  Michael Natterer  <mitch@gimp.org>
 
 	Script-Fu string cleanup/simplification: apply the same fix for
