@@ -50,10 +50,12 @@ typedef GimpImage * GimpXcfLoaderFunc (Gimp    *gimp,
 				       XcfInfo *info);
 
 
-static Argument * xcf_load_invoker (Gimp     *gimp,
-				    Argument *args);
-static Argument * xcf_save_invoker (Gimp     *gimp,
-				    Argument *args);
+static Argument * xcf_load_invoker (Gimp        *gimp,
+                                    GimpContext *context,
+				    Argument    *args);
+static Argument * xcf_save_invoker (Gimp        *gimp,
+                                    GimpContext *context,
+				    Argument    *args);
 
 
 static ProcArg xcf_load_args[] =
@@ -195,8 +197,9 @@ xcf_exit (Gimp *gimp)
 }
 
 static Argument*
-xcf_load_invoker (Gimp     *gimp,
-		  Argument *args)
+xcf_load_invoker (Gimp        *gimp,
+                  GimpContext *context,
+		  Argument    *args)
 {
   XcfInfo    info;
   Argument  *return_args;
@@ -285,8 +288,9 @@ xcf_load_invoker (Gimp     *gimp,
 }
 
 static Argument *
-xcf_save_invoker (Gimp     *gimp,
-		  Argument *args)
+xcf_save_invoker (Gimp        *gimp,
+                  GimpContext *context,
+		  Argument    *args)
 {
   XcfInfo    info;
   Argument  *return_args;

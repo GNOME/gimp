@@ -1,5 +1,11 @@
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/xcf/xcf.c (xcf_save_invoker) (xcf_load_invoker): forgot
+	to add context parameters to this non-generated PDB invokers.
+	Fixes XCF loading/saving.
+
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch]: added "const gchar *stroke_desc" to
 	the GimpItemClass struct and always push an undo group
 	around GimpItem::stroke().
