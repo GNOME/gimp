@@ -101,8 +101,9 @@ static void	run	(gchar   *name,
 			 gint    *nreturn_vals,
 			 GimpParam  **return_vals);
 
-static GtkWidget *preview_widget         (void);
-static gint	plasma_dialog            (GimpDrawable *drawable);
+static GtkWidget *preview_widget         (GimpImageType drawable_type);
+static gint	plasma_dialog            (GimpDrawable *drawable,
+    					  GimpImageType drawable_type);
 static void     plasma_ok_callback       (GtkWidget *widget, 
 					  gpointer   data);
 
@@ -201,6 +202,7 @@ run (gchar   *name,
 {
   static GimpParam values[1];
   GimpDrawable *drawable;
+  GimpImageType drawable_type;
   GimpRunModeType run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
@@ -214,6 +216,7 @@ run (gchar   *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+  drawable_type = gimp_drawable_type (param[2].data.d_drawable);
 
   switch (run_mode)
     {
@@ -223,7 +226,7 @@ run (gchar   *name,
       gimp_get_data ("plug_in_plasma", &pvals);
 
       /*  First acquire information with a dialog  */
-      if (! plasma_dialog (drawable))
+      if (! plasma_dialog (drawable, drawable_type))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -288,7 +291,7 @@ run (gchar   *name,
 }
 
 static gint
-plasma_dialog (GimpDrawable *drawable)
+plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -299,7 +302,7 @@ plasma_dialog (GimpDrawable *drawable)
   GtkObject *adj;
 
   gimp_ui_init ("plasma", TRUE);
-
+  
   dlg = gimp_dialog_new (_("Plasma"), "plasma",
 			 gimp_standard_help_func, "filters/plasma.html",
 			 GTK_WIN_POS_MOUSE,
@@ -336,7 +339,7 @@ plasma_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
-  preview = preview_widget (); /* we are here */
+  preview = preview_widget (drawable_type); /* we are here */
   gtk_container_add (GTK_CONTAINER (frame), preview);
   plasma (drawable, TRUE); /* preview image */
   gtk_widget_show (preview);
@@ -791,20 +794,31 @@ do_plasma (GimpDrawable *drawable,
 
 
 static GtkWidget *
-preview_widget (void)
+preview_widget (GimpImageType drawable_type)
 {
   GtkWidget *preview;
   guchar    *buf;
   gint       y;
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_SIZE, PREVIEW_SIZE);
+  if (drawable_type == GIMP_GRAY_IMAGE || 
+           drawable_type == GIMP_GRAYA_IMAGE)
+  {
+    preview = gtk_preview_new (GTK_PREVIEW_GRAYSCALE);
+    buf = g_malloc0 (PREVIEW_SIZE);
+  }
+  else /* Gray & colour are the only possibilities here */
+  {
+    preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+    buf = g_malloc0 (PREVIEW_SIZE * 3);
+  }
 
-  buf = g_malloc0 (PREVIEW_SIZE * 3);
+  gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_SIZE, PREVIEW_SIZE);
+  
   for (y = 0; y < PREVIEW_SIZE; y++) 
     gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, y, PREVIEW_SIZE);
+  
   g_free (buf);
-
+  
   return preview;
 }
 
