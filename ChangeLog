@@ -1,3 +1,13 @@
+2004-04-10  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): Applied patch from William
+	Skaggs that addresses bug #120490.
+
+	* app/sanity.c (sanity_check): Modified the message that reports
+	an old version of Fontconfig in an attempt to make it more
+	informative.
+
 2004-04-10  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimp-remote.c (start_new_gimp): reverted the last change

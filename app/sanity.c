@@ -80,15 +80,14 @@ sanity_check (gboolean no_interface)
         {
           abort_message =
             g_strdup_printf
-            ("Fontconfig version too old!\n\n"
-             "The GIMP requires fontconfig version %d.%d.%d or later.\n"
-             "Installed fontconfig version is %d.%d.%d.\n\n"
-             "Somehow you or your software packager managed\n"
-             "to install The GIMP with an older fontconfig version.\n\n"
-             "Please upgrade to fontconfig version %d.%d.%d or later.",
+            ("The Fontconfig version being used is too old!\n\n"
+             "The GIMP requires Fontconfig version %d.%d.%d or later.\n"
+             "The Fontconfig version loaded by The GIMP is %d.%d.%d.\n\n"
+             "This may be caused by another instance of libfontconfig.so.1\n"
+             "being installed in the system, probably in /usr/X11R6/lib.\n"
+             "Please correct the situation or report it to someone who can.",
              FC_REQUIRED_MAJOR, FC_REQUIRED_MINOR, FC_REQUIRED_MICRO,
-             fc_major_version, fc_minor_version, fc_micro_version,
-             FC_REQUIRED_MAJOR, FC_REQUIRED_MINOR, FC_REQUIRED_MICRO);
+             fc_major_version, fc_minor_version, fc_micro_version);
         }
 
 #undef FC_REQUIRED_MAJOR
