@@ -184,6 +184,7 @@ extract_from_area  (
                     gint cut
                     );
 
+#if 0
 void
 convolve_area (
 	 	struct _PixelArea   *src_area,
@@ -193,7 +194,16 @@ convolve_area (
 		gint          divisor,
 		gint          mode
 		);
-
+#endif
+void
+convolve_area (
+	 	struct _PixelArea   *src_area,
+		struct _PixelArea   *dest_area,
+		gfloat       *matrix,
+		guint         matrix_size,
+		gfloat        divisor,
+		gint          mode
+		);
 void 
 multiply_alpha_area  (
                       struct _PixelArea * src_area

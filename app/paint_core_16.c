@@ -621,7 +621,7 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_TILED);
+  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), STORAGE_FLAT);
   
   return canvas_buf;
 }
@@ -823,7 +823,7 @@ painthit_init  (
                           ll, tt, ww, hh, FALSE);
           pixelarea_init (&dst, undo_tiles,
                           ll, tt, ww, hh, TRUE);
-          copy_area (&src, &dst);
+         copy_area (&src, &dst);
         }
     }
 }

@@ -20,7 +20,7 @@
 
 /* Function declarations */
 void gimp_init (int, char **);
-typedef int key_t;
+/*typedef int key_t;*/
 gint32  gimp_shmem_init (int p, key_t k, int s, long o, int xs, int ys);
 void app_init (void);
 void app_exit (int);

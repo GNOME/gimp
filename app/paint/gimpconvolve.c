@@ -40,9 +40,8 @@ typedef enum
 
 /*  forward function declarations  */
 static void         calculate_matrix     (ConvolveType, double);
-static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
-static int          sum_matrix           (int *, int);
+static gfloat       sum_matrix           (gfloat *, int);
 static void        *convolve_non_gui_paint_func (PaintCore *, GimpDrawable *, int);
 static void         convolve_motion      (PaintCore *, GimpDrawable *);
 static Argument *   convolve_invoker     (Argument *);
@@ -61,9 +60,9 @@ struct _ConvolveOptions
 };
 
 /*  local variables  */
-static int          matrix [25];
+static gfloat       matrix [25];
 static int          matrix_size;
-static int          matrix_divisor;
+static gfloat       matrix_divisor;
 static ConvolveOptions *convolve_options = NULL;
 
 static float        custom_matrix [25] =
@@ -195,7 +194,6 @@ convolve_paint_func (PaintCore *paint_core,
   switch (state)
     {
     case INIT_PAINT:
-      /*  calculate the matrix  */
       calculate_matrix (convolve_options->type, convolve_options->pressure);
       break;
 
@@ -233,9 +231,6 @@ tools_free_convolve (Tool *tool)
   paint_core_free (tool);
 }
 
-#define FIXME
-  /* something is hosed here, convolve progressively darkens the area
-     it is working on */
   
 static void
 convolve_motion (PaintCore *paint_core,
@@ -265,10 +260,6 @@ convolve_motion (PaintCore *paint_core,
                                 paint_core->w, paint_core->h,
                                 STORAGE_FLAT);
 
-#define FIXME
-      /* this is missing the multiply/separate alpha steps if the
-         source drawable has an alpha channel */
-      
       /* copy data to a flat buffer since convolve_area doesn;t like
          tiled buffers */
       pixelarea_init (&src_area, drawable_data (drawable),
@@ -280,7 +271,7 @@ convolve_motion (PaintCore *paint_core,
                       0, 0,
                       TRUE);
       copy_area (&src_area, &temp_area);
-
+      
 #define FIXME
       /* these refs should really be done inside the area function via
          a pixelarea_process() loop.  the idea with the area funcs is
@@ -289,18 +280,19 @@ convolve_motion (PaintCore *paint_core,
       canvas_portion_refro (temp_canvas, 0, 0);
       canvas_portion_refrw (painthit_canvas, 0, 0);
 
-      /* convolve from temp_area to painthit_area */    
       pixelarea_init (&temp_area, temp_canvas,
                       0, 0,
                       0, 0,
                       FALSE);  
+      
       pixelarea_init (&painthit_area, painthit_canvas,
                       0, 0,
                       0, 0,
                       TRUE);
+      
       convolve_area (&temp_area, &painthit_area,
-                     matrix, matrix_size, matrix_divisor, NORMAL);
-
+                     custom_matrix, matrix_size, matrix_divisor, NORMAL);
+      
       canvas_portion_unref (painthit_canvas, 0, 0);
       canvas_portion_unref (temp_canvas, 0, 0);
     
@@ -357,24 +349,10 @@ calculate_matrix (ConvolveType type,
       break;
     }
 
-  integer_matrix (custom_matrix, matrix, matrix_size);
-  matrix_divisor = sum_matrix (matrix, matrix_size);
+  matrix_divisor = sum_matrix (custom_matrix, matrix_size);
 
   if (!matrix_divisor)
-    matrix_divisor = 1;
-}
-
-static void
-integer_matrix (float *source,
-		int   *dest,
-		int    size)
-{
-  int i;
-
-#define PRECISION  10000
-
-  for (i = 0; i < size*size; i++)
-    *dest++ = (int) (*source ++ * PRECISION);
+    matrix_divisor = 1.0;
 }
 
 static void
@@ -388,11 +366,11 @@ copy_matrix (float *src,
     *dest++ = *src++;
 }
 
-static int
-sum_matrix (int *matrix,
+static gfloat 
+sum_matrix (gfloat *matrix,
 	    int  size)
 {
-  int sum = 0;
+  gfloat sum = 0;
 
   size *= size;
 
@@ -401,7 +379,6 @@ sum_matrix (int *matrix,
 
   return sum;
 }
-
 
 static void *
 convolve_non_gui_paint_func (PaintCore *paint_core,

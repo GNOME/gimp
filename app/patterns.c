@@ -205,15 +205,12 @@ load_pattern (char *filename)
     {
       /* If its version 1 the type field contains just
          the number of bytes and must be converted to a drawable type. */    
-#define PATTERNS_C_1_cw
       if (header.type == 1)    
  	header.type = GRAY_GIMAGE;	   
       else if (header.type == 3)
         header.type = RGB_GIMAGE;	   
-
     }
-  /*  Check for correct version  */
-  if (header.version != FILE_VERSION)
+   else if (header.version != FILE_VERSION)
     {
       g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
 		 filename);

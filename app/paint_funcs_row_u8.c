@@ -776,7 +776,7 @@ replace_row_u8  (
 
   while (width --)
     {
-      mask_val = mask[0] * opacity;
+      mask_val = mask[0] * opacity * (1.0/255.0);
       /* calculate new alpha first. */
       s1_a = src1[alpha];
       s2_a = src2[alpha];
@@ -901,17 +901,17 @@ multiply_alpha_row_u8(
 		      PixelRow * src_row
 		     )
 {
-  int     b;
-  int     alpha_val;
+  int     b, t;
+  guint8  alpha_val;
   guint8 *src          =(guint8*)pixelrow_data (src_row);
   gint    num_channels = tag_num_channels (pixelrow_tag (src_row));
   gint    width        = pixelrow_width (src_row);
 
   while(width --)
     {
-      alpha_val = src[num_channels - 1] * (1.0 / 255.0);
+      alpha_val = src[num_channels - 1];
       for (b = 0; b < num_channels - 1; b++)
-	src[b] = 0.5 + src[b] * alpha_val;
+	src[b] = INT_MULT (src[b], alpha_val, t);
       src += num_channels;
     }
 }

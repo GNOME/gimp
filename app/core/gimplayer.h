@@ -54,6 +54,7 @@ typedef struct _GimpLayerMask      GimpLayerMask;
 typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
 
 typedef GimpLayer Layer;		/* convenience */
+
 typedef GimpLayerMask LayerMask;	/* convenience */
 
 guint gimp_layer_get_type (void);

@@ -44,7 +44,6 @@ enum {
   LAST_SIGNAL
 };
 
-
 static void gimp_layer_class_init    (GimpLayerClass *klass);
 static void gimp_layer_init          (GimpLayer      *layer);
 static void gimp_layer_destroy       (GtkObject      *object);
@@ -317,13 +316,7 @@ layer_copy (layer, add_alpha)
 
 
 Layer *
-layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
-     void *gimage_ptr;
-     GimpDrawable *drawable;
-     Canvas *tiles;
-     char *name;
-     gfloat opacity;
-     int mode;
+layer_from_tiles (void *gimage_ptr, GimpDrawable *drawable, Canvas *tiles, char *name, gfloat opacity,int mode)
 {
   GImage * gimage;
   Layer * new_layer;

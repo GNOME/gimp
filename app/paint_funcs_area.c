@@ -73,11 +73,11 @@ LayerMode layer_modes_16[] =
 
 /* convolve_area */
 
-typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gint*,gint,gint,gint,gint);
+typedef void  (*ConvolveAreaFunc) (PixelArea*,PixelArea*,gfloat*,gint, gfloat, gint, gint);
 static ConvolveAreaFunc convolve_area_funcs (Tag);
-static void convolve_area_u8 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
-static void convolve_area_u16 (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
-static void convolve_area_float (PixelArea*, PixelArea*, gint*, gint, gint, gint, gint);
+static void convolve_area_u8 (PixelArea*, PixelArea*, gfloat*, gint, gfloat, gint, gint);
+static void convolve_area_u16 (PixelArea*, PixelArea*, gfloat*, gint, gfloat, gint, gint);
+static void convolve_area_float (PixelArea*, PixelArea*, gfloat*, gint, gfloat, gint, gint);
 
 /* gaussian_blur_area */
 static void gaussian_blur_area_funcs (Tag);
@@ -934,14 +934,14 @@ convolve_area_funcs (
     return NULL; 
   } 
 }
- 
+
 void 
 convolve_area  (
                 PixelArea * src_area,
                 PixelArea * dest_area,
-                gint * matrix,
+                gfloat * matrix,
                 guint matrix_size,
-                gint divisor,
+                gfloat divisor,
                 gint mode
                 )
 {
@@ -977,17 +977,17 @@ static void
 convolve_area_u8 (
 		  PixelArea   *src_area,
 		  PixelArea   *dest_area,
-		  gint         *matrix,
+		  gfloat         *matrix,
 		  gint          size,
-		  gint          divisor,
+		  gfloat        divisor,
 		  gint          mode,
                   gint          offset
 		  )
 {
   guint8 *src, *s_row, * s;
   guint8 *dest, * d;
-  gint * m;
-  gint total [4];
+  gfloat * m;
+  gfloat total [4];
   gint b, num_channels;
   gint wraparound;
   gint margin;      /*  margin imposed by size of conv. matrix  */
@@ -998,8 +998,8 @@ convolve_area_u8 (
   gint src_height;
   gint src_width;
   gint bytes;
-  
   Tag src_tag = pixelarea_tag (src_area); 
+  
   /*  Initialize some values  */
   src_width = pixelarea_width (src_area);
   src_height = pixelarea_height (src_area);
@@ -1008,14 +1008,11 @@ convolve_area_u8 (
   
   src_rowstride =  pixelarea_rowstride (src_area);
   dest_rowstride = pixelarea_rowstride (dest_area);
-  
+
   margin = size / 2;
   src = (guint8 *) pixelarea_data (src_area);
   dest = (guint8 *) pixelarea_data (dest_area);
-
-  /*  calculate the source wraparound value  */
-  wraparound = src_rowstride  - size * num_channels;
-
+  
   /* copy the first (size / 2) scanlines of the src image... */
   for (i = 0; i < margin; i++)
     {
@@ -1024,24 +1021,20 @@ convolve_area_u8 (
       dest += dest_rowstride;
     }
 
-  src = (guint8 *) pixelarea_data (src_area);
-  
+  /* then do the middle  scanlines*/ 
   for (y = margin; y < src_height - margin; y++)
     {
-      s_row = src;
-      s = s_row + src_rowstride*margin;
-      d = dest;
-
-      /* handle the first margin pixels... */
+      /* first handle the left margin pixels */
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
+	*dest++ = *src++;
+     
       /* now, handle the center pixels */
       x = src_width - margin*2;
       while (x--)
 	{
-	  s = s_row;
+	  /* go to the beginning of the src under the kernal */
+	  s = src - margin * (num_channels + src_rowstride);
 
 	  m = matrix;
 	  total [0] = total [1] = total [2] = total [3] = 0;
@@ -1056,7 +1049,8 @@ convolve_area_u8 (
 		  m ++;
 		}
 
-	      s += wraparound;
+	      /* go to the next line of the src under the kernal */
+	      s += src_rowstride - size * num_channels;
 	    }
 
 	  for (b = 0; b < num_channels; b++)
@@ -1068,27 +1062,18 @@ convolve_area_u8 (
 		total [b] = - total [b];
 
 	      if (total [b] < 0)
-		*d++ = 0;
+		*dest++ = 0;
 	      else
-		*d++ = (total [b] > 255) ? 255 : (unsigned char) total [b];
+		*dest++ = (total [b] > 255) ? 255 : (guint8) total [b];
 	    }
-
-	  s_row += num_channels;
-
+	  src += num_channels;
 	}
-
-      /* handle the last pixel... */
-      s = s_row + (src_rowstride + num_channels) * margin;
+      
+      /* now the right margin pixels*/
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
-      /* set the memory pointers */
-      src += src_rowstride;
-      dest += dest_rowstride;
+	*dest++ = *src++;
     }
-
-  src += src_rowstride*margin;
 
   /* copy the last (margin) scanlines of the src image... */
   for (i = 0; i < margin; i++)
@@ -1103,17 +1088,17 @@ static void
 convolve_area_u16 (
 		   PixelArea   *src_area,
 		   PixelArea   *dest_area,
-		   gint         *matrix,
+		   gfloat       *matrix,
 		   gint          size,
-		   gint          divisor,
+		   gfloat        divisor,
 		   gint          mode,
                    gint          offset
 		   )
 {
-  guint16 *src, *s_row, *s;
-  guint16 *dest, *d;
-  gint * m;
-  gint total [4];
+  guint16 *src, *s_row, * s;
+  guint16 *dest, * d;
+  gfloat * m;
+  gfloat total [4];
   gint b, num_channels;
   gint wraparound;
   gint margin;      /*  margin imposed by size of conv. matrix  */
@@ -1123,25 +1108,22 @@ convolve_area_u16 (
   gint dest_rowstride;
   gint src_height;
   gint src_width;
-  gint bytes; 
+  gint bytes;
   Tag src_tag = pixelarea_tag (src_area); 
+  
   /*  Initialize some values  */
   src_width = pixelarea_width (src_area);
   src_height = pixelarea_height (src_area);
   bytes = tag_bytes (src_tag);  /* per pixel */ 
   num_channels = tag_num_channels (src_tag); /* per pixel */
-  
-  /* divide rowstride by bytes per channel */ 
-  src_rowstride = pixelarea_rowstride (src_area) / sizeof (guint16);
-  dest_rowstride = pixelarea_rowstride (dest_area) / sizeof(guint16);
-  
+ 
+  src_rowstride =  pixelarea_rowstride (src_area) / sizeof (guint16);
+  dest_rowstride = pixelarea_rowstride (dest_area) / sizeof (guint16);
+
   margin = size / 2;
   src = (guint16 *) pixelarea_data (src_area);
   dest = (guint16 *) pixelarea_data (dest_area);
-
-  /*  calculate the source wraparound value  */
-  wraparound = src_rowstride  - size * num_channels;
-
+  
   /* copy the first (size / 2) scanlines of the src image... */
   for (i = 0; i < margin; i++)
     {
@@ -1150,24 +1132,20 @@ convolve_area_u16 (
       dest += dest_rowstride;
     }
 
-  src = (guint16 *) pixelarea_data (src_area);
-  
+  /* then do the middle  scanlines*/ 
   for (y = margin; y < src_height - margin; y++)
     {
-      s_row = src;
-      s = s_row + src_rowstride*margin;
-      d = dest;
-
-      /* handle the first margin pixels... */
+      /* first handle the left margin pixels */
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
+	*dest++ = *src++;
+     
       /* now, handle the center pixels */
       x = src_width - margin*2;
       while (x--)
 	{
-	  s = s_row;
+	  /* go to the beginning of the src under the kernal */
+	  s = src - margin * (num_channels + src_rowstride);
 
 	  m = matrix;
 	  total [0] = total [1] = total [2] = total [3] = 0;
@@ -1182,7 +1160,8 @@ convolve_area_u16 (
 		  m ++;
 		}
 
-	      s += wraparound;
+	      /* go to the next line of the src under the kernal */
+	      s += src_rowstride - size * num_channels;
 	    }
 
 	  for (b = 0; b < num_channels; b++)
@@ -1194,32 +1173,23 @@ convolve_area_u16 (
 		total [b] = - total [b];
 
 	      if (total [b] < 0)
-		*d++ = 0;
+		*dest++ = 0;
 	      else
-		*d++ = (total [b] > 65535) ? 65535 : (guint16) total [b];
+		*dest++ = (total [b] > 65535) ? 65535 : (guint16) total [b];
 	    }
-
-	  s_row += num_channels;
-
+	  src += num_channels;
 	}
-
-      /* handle the last pixel... */
-      s = s_row + (src_rowstride + num_channels) * margin;
+      
+      /* now the right margin pixels*/
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
-      /* set the memory pointers */
-      src += src_rowstride;
-      dest += dest_rowstride;
+	*dest++ = *src++;
     }
-
-  src += src_rowstride*margin;
 
   /* copy the last (margin) scanlines of the src image... */
   for (i = 0; i < margin; i++)
     {
-      memcpy (dest, src, src_width * bytes);
+      memcpy (dest, src, src_width * bytes) ;
       src += src_rowstride;
       dest += dest_rowstride;
     }
@@ -1227,17 +1197,17 @@ convolve_area_u16 (
 
 static void
 convolve_area_float (PixelArea *src_area,
-		 PixelArea *dest_area,
-		 gint         *matrix,
+		 PixelArea    *dest_area,
+		 gfloat        *matrix,
 		 gint          size,
-		 gint          divisor,
+		 gfloat        divisor,
 		 gint          mode,
                  gint          offset)
 {
-  gfloat *src, *s_row, *s;
-  gfloat *dest, *d;
-  gint * m;
-  gdouble total [4];
+  gfloat *src, *s_row, * s;
+  gfloat *dest, * d;
+  gfloat * m;
+  gfloat total [4];
   gint b, num_channels;
   gint wraparound;
   gint margin;      /*  margin imposed by size of conv. matrix  */
@@ -1249,24 +1219,20 @@ convolve_area_float (PixelArea *src_area,
   gint src_width;
   gint bytes;
   Tag src_tag = pixelarea_tag (src_area); 
- 
+  
   /*  Initialize some values  */
   src_width = pixelarea_width (src_area);
   src_height = pixelarea_height (src_area);
   bytes = tag_bytes (src_tag);  /* per pixel */ 
   num_channels = tag_num_channels (src_tag); /* per pixel */
-  
-  /* divide rowstride by bytes per channel */ 
-  src_rowstride = pixelarea_rowstride (src_area) / sizeof (gfloat);
-  dest_rowstride = pixelarea_rowstride (dest_area) / sizeof(gfloat);
-  
+ 
+  src_rowstride =  pixelarea_rowstride (src_area) / sizeof (gfloat);
+  dest_rowstride = pixelarea_rowstride (dest_area) / sizeof (gfloat);
+
   margin = size / 2;
   src = (gfloat *) pixelarea_data (src_area);
   dest = (gfloat *) pixelarea_data (dest_area);
-
-  /*  calculate the source wraparound value  */
-  wraparound = src_rowstride  - size * num_channels;
-
+  
   /* copy the first (size / 2) scanlines of the src image... */
   for (i = 0; i < margin; i++)
     {
@@ -1275,27 +1241,23 @@ convolve_area_float (PixelArea *src_area,
       dest += dest_rowstride;
     }
 
-  src = (gfloat *) pixelarea_data (src_area);
-  
+  /* then do the middle  scanlines*/ 
   for (y = margin; y < src_height - margin; y++)
     {
-      s_row = src;
-      s = s_row + src_rowstride*margin;
-      d = dest;
-
-      /* handle the first margin pixels... */
+      /* first handle the left margin pixels */
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
+	*dest++ = *src++;
+     
       /* now, handle the center pixels */
       x = src_width - margin*2;
       while (x--)
 	{
-	  s = s_row;
+	  /* go to the beginning of the src under the kernal */
+	  s = src - margin * (num_channels + src_rowstride);
 
 	  m = matrix;
-	  total [0] = total [1] = total [2] = total [3] = 0.0;
+	  total [0] = total [1] = total [2] = total [3] = 0;
 	  i = size;
 	  while (i --)
 	    {
@@ -1307,44 +1269,32 @@ convolve_area_float (PixelArea *src_area,
 		  m ++;
 		}
 
-	      s += wraparound;
+	      /* go to the next line of the src under the kernal */
+	      s += src_rowstride - size * num_channels;
 	    }
 
 	  for (b = 0; b < num_channels; b++)
 	    {
-	      total [b] = total [b] /(gdouble)divisor + offset;
-
-	      /*  only if mode was ABSOLUTE will mode by non-zero here  */
+	      total [b] = total [b] / divisor + offset;
+               /*  only if mode was ABSOLUTE will mode by non-zero here  */
 	      if (total [b] < 0 && mode)
 		total [b] = - total [b];
 
-	      if (total [b] < 0)
-		*d++ = 0;
-	      else
-		*d++ = (total [b] > 1.0) ? 1.0 : total [b];
+		*dest++ = total [b];
 	    }
-
-	  s_row += num_channels;
-
+	  src += num_channels;
 	}
-
-      /* handle the last pixel... */
-      s = s_row + (src_rowstride + num_channels) * margin;
+      
+      /* now the right margin pixels*/
       b = num_channels * margin;
       while (b --)
-	*d++ = *s++;
-
-      /* set the memory pointers */
-      src += src_rowstride;
-      dest += dest_rowstride;
+	*dest++ = *src++;
     }
-
-  src += src_rowstride*margin;
 
   /* copy the last (margin) scanlines of the src image... */
   for (i = 0; i < margin; i++)
     {
-      memcpy (dest, src, src_width * bytes);
+      memcpy (dest, src, src_width * bytes) ;
       src += src_rowstride;
       dest += dest_rowstride;
     }
