@@ -1218,7 +1218,31 @@ CODE2
  -- if it was loaded or has since been saved. Otherwise, returns NULL.
 HELP
 
+    $outargs[0]->{alias} =~ s/g_strdup \((.*)\)/$1/;
 CODE
+
+&image_accessors('name', 'string', 'name', 1,
+		 [ <<'CODE1', undef ]);
+    delete @{$outargs[0]}{qw(alias no_declare)};
+
+    %invoke = (
+	vars => [ 'gchar *filename' ],
+	code => <<'CODE2'
+{
+  filename = gimp_image_get_filename (gimage);
+
+  if (filename)
+    {
+      name = g_path_get_basename (filename);
+      g_free (filename);
+    }
+  else
+    name = g_strdup (_("Untitled"));
+}
+CODE2
+    );
+CODE1
+$#procs--;
 
 &image_accessors('resolution', 'float', 'resolution', 0,
 		 [ <<'CODE1', <<'CODE2' ]);

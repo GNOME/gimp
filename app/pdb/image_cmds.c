@@ -106,6 +106,7 @@ static ProcRecord image_get_component_visible_proc;
 static ProcRecord image_set_component_visible_proc;
 static ProcRecord image_get_filename_proc;
 static ProcRecord image_set_filename_proc;
+static ProcRecord image_get_name_proc;
 static ProcRecord image_get_resolution_proc;
 static ProcRecord image_set_resolution_proc;
 static ProcRecord image_get_unit_proc;
@@ -171,6 +172,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_set_component_visible_proc);
   procedural_db_register (gimp, &image_get_filename_proc);
   procedural_db_register (gimp, &image_set_filename_proc);
+  procedural_db_register (gimp, &image_get_name_proc);
   procedural_db_register (gimp, &image_get_resolution_proc);
   procedural_db_register (gimp, &image_set_resolution_proc);
   procedural_db_register (gimp, &image_get_unit_proc);
@@ -3507,7 +3509,7 @@ image_get_filename_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&image_get_filename_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (gimp_image_get_filename (gimage));
+    return_args[1].value.pdb_pointer = gimp_image_get_filename (gimage);
 
   return return_args;
 }
@@ -3596,6 +3598,75 @@ static ProcRecord image_set_filename_proc =
   0,
   NULL,
   { { image_set_filename_invoker } }
+};
+
+static Argument *
+image_get_name_invoker (Gimp     *gimp,
+                        Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *name;
+  gchar *filename;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      filename = gimp_image_get_filename (gimage);
+    
+      if (filename)
+	{
+	  name = g_path_get_basename (filename);
+	  g_free (filename);
+	}
+      else
+	name = g_strdup (_("Untitled"));
+    }
+
+  return_args = procedural_db_return_args (&image_get_name_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = name;
+
+  return return_args;
+}
+
+static ProcArg image_get_name_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  }
+};
+
+static ProcArg image_get_name_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name"
+  }
+};
+
+static ProcRecord image_get_name_proc =
+{
+  "gimp_image_get_name",
+  "Returns the specified image's name.",
+  "This procedure returns the specified image's name.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  1,
+  image_get_name_inargs,
+  1,
+  image_get_name_outargs,
+  { { image_get_name_invoker } }
 };
 
 static Argument *

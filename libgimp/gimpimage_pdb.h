@@ -139,6 +139,7 @@ gboolean          gimp_image_set_component_visible    (gint32              image
 gchar*            gimp_image_get_filename             (gint32              image_ID);
 gboolean          gimp_image_set_filename             (gint32              image_ID,
 						       gchar              *filename);
+gchar*            gimp_image_get_name                 (gint32              image_ID);
 gboolean          gimp_image_get_resolution           (gint32              image_ID,
 						       gdouble            *xresolution,
 						       gdouble            *yresolution);

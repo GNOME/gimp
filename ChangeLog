@@ -1,3 +1,13 @@
+2002-05-07  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: added image_get_name. Also, no longer
+	duplicate the string in image_get_filename, since
+	gimp_image_get_filename() returns a caller freed string now.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpimage_pdb.[ch]: regenerated
+
 2002-05-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

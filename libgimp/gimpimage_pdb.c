@@ -2029,6 +2029,36 @@ gimp_image_set_filename (gint32  image_ID,
 }
 
 /**
+ * gimp_image_get_name:
+ * @image_ID: The image.
+ *
+ * Returns the specified image's name.
+ *
+ * This procedure returns the specified image's name.
+ *
+ * Returns: The name.
+ */
+gchar *
+gimp_image_get_name (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_image_get_name",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return name;
+}
+
+/**
  * gimp_image_get_resolution:
  * @image_ID: The image.
  * @xresolution: The resolutionin the x-axis, in dots per inch.
