@@ -940,8 +940,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
   switch (vector_tool->function)
     {
     case VECTORS_SELECT_VECTOR:
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
-      cmodifier   = GIMP_CURSOR_MODIFIER_HAND;
+      cursor      = GDK_HAND2;
+      tool_cursor = GIMP_HAND_TOOL_CURSOR;
       break;
     case VECTORS_CREATE_VECTOR:
     case VECTORS_CREATE_STROKE:
@@ -957,8 +957,9 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       break;
     case VECTORS_MOVE_HANDLE:
     case VECTORS_CONVERT_EDGE:
-      tool_cursor = GIMP_TOOL_CURSOR_NONE;
-      cmodifier   = GIMP_CURSOR_MODIFIER_HAND;
+      cursor      = GDK_HAND2;
+      tool_cursor = GIMP_HAND_TOOL_CURSOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
     case VECTORS_MOVE_ANCHOR:
     case VECTORS_MOVE_CURVE:

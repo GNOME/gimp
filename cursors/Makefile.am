@@ -34,8 +34,6 @@ EXTRA_DIST = \
 	background_mask.xbm		\
 	pattern.xbm			\
 	pattern_mask.xbm		\
-	hand.xbm			\
-	hand_mask.xbm			\
 	\
 	rect_select_small.xbm		\
 	rect_select_small_mask.xbm	\
@@ -96,4 +94,6 @@ EXTRA_DIST = \
 	smudge_small.xbm		\
 	smudge_small_mask.xbm		\
 	measure_small.xbm		\
-	measure_small_mask.xbm
+	measure_small_mask.xbm		\
+	hand_small.xbm			\
+	hand_small_mask.xbm

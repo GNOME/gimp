@@ -99,6 +99,8 @@
 #include "cursors/smudge_small_mask.xbm"
 #include "cursors/measure_small.xbm"
 #include "cursors/measure_small_mask.xbm"
+#include "cursors/hand_small.xbm"
+#include "cursors/hand_small_mask.xbm"
 
 /*  modifiers  */
 #include "cursors/plus.xbm"
@@ -121,8 +123,6 @@
 #include "cursors/background_mask.xbm"
 #include "cursors/pattern.xbm"
 #include "cursors/pattern_mask.xbm"
-#include "cursors/hand.xbm"
-#include "cursors/hand_mask.xbm"
 
 
 typedef struct _GimpBitmapCursor GimpBitmapCursor;
@@ -333,6 +333,11 @@ static GimpBitmapCursor gimp_stock_tool_cursors[] =
     measure_small_bits, measure_small_mask_bits,
     measure_small_width, measure_small_height,
     0, 0, NULL, NULL
+  },
+  {
+    hand_small_bits, hand_small_mask_bits,
+    hand_small_width, hand_small_height,
+    hand_small_x_hot, hand_small_y_hot, NULL, NULL
   }
 };
 
@@ -394,11 +399,6 @@ static GimpBitmapCursor gimp_modifier_cursors[] =
     pattern_bits, pattern_mask_bits,
     pattern_width, pattern_height,
     pattern_x_hot, pattern_y_hot, NULL, NULL
-  },
-  {
-    hand_bits, hand_mask_bits,
-    hand_width, hand_height,
-    hand_x_hot, hand_y_hot, NULL, NULL
   }
 };
 

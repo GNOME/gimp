@@ -607,9 +607,9 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                          NULL, NULL, NULL, NULL, NULL))
             {
               gimp_tool_set_cursor (tool, gdisp,
-                                    GIMP_MOUSE_CURSOR,
-                                    GIMP_TOOL_CURSOR_NONE,
-                                    GIMP_CURSOR_MODIFIER_HAND);
+                                    GDK_HAND2,
+                                    GIMP_HAND_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
             }
           else
             {
@@ -661,8 +661,8 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	{
 	  gimp_tool_set_cursor (tool, gdisp,
                                 GDK_HAND2,
-                                GIMP_TOOL_CURSOR_NONE,
-                                GIMP_CURSOR_MODIFIER_HAND);
+                                GIMP_HAND_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_MOVE);
 
 	  if (! gimp_tool_control_is_active (tool->control))
 	    {
@@ -714,8 +714,8 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	    {
 	      gimp_tool_set_cursor (tool, gdisp,
                                     GDK_HAND2,
-                                    GIMP_TOOL_CURSOR_NONE,
-                                    GIMP_CURSOR_MODIFIER_HAND);
+                                    GIMP_HAND_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_MOVE);
 	    }
 	}
       else
@@ -809,8 +809,8 @@ gimp_move_tool_start_guide (GimpTool            *tool,
 
   gimp_tool_set_cursor (tool, gdisp,
                         GDK_HAND2,
-                        GIMP_TOOL_CURSOR_NONE,
-                        GIMP_CURSOR_MODIFIER_HAND);
+                        GIMP_HAND_TOOL_CURSOR,
+                        GIMP_CURSOR_MODIFIER_MOVE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 }
