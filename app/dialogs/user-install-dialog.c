@@ -67,7 +67,6 @@ enum
   LOG_PAGE,
   TUNING_PAGE,
   RESOLUTION_PAGE,
-  EEK_PAGE,
   NUM_PAGES
 };
 
@@ -331,17 +330,6 @@ user_install_notebook_set_page (GtkNotebook *notebook,
   gtk_label_set_text (GTK_LABEL (title_label), title);
   gtk_label_set_text (GTK_LABEL (footer_label), footer);
 
-  if (index == EEK_PAGE && title_image)
-    {
-      GtkRequisition req;
-
-      gtk_widget_size_request (title_image, &req);
-      gtk_widget_set_size_request (title_image, req.width, req.height);
-
-      gtk_image_set_from_stock (GTK_IMAGE (title_image),
-                                GIMP_STOCK_WILBER_EEK, GTK_ICON_SIZE_DIALOG);
-    }
-
   gtk_notebook_set_current_page (notebook, index);
 }
 
@@ -354,17 +342,7 @@ user_install_response (GtkWidget *widget,
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      static guint timeout_id = 0;
-
-      if (timeout_id)
-        exit (EXIT_SUCCESS);
-
-      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
-                                         GTK_RESPONSE_OK, FALSE);
-      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-      timeout_id = g_timeout_add (2342, (GSourceFunc) exit, NULL);
-
-      return;
+      exit (EXIT_SUCCESS);
     }
 
   switch (notebook_index)
@@ -966,11 +944,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
   add_label (GTK_BOX (resolution_page),
              _("<b>To display images in their natural size, "
                "GIMP needs to know your monitor resolution.</b>"));
-
-  /*  EEK page  */
-  page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-                                            _("Aborting Installation..."),
-                                            NULL, 0);
 
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
 
