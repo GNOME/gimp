@@ -285,10 +285,15 @@ edit_paste (GImage       *gimage,
   int x1, y1, x2, y2;
   int cx, cy;
 
-  /*  Make a new layer  */
-  layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), paste, 
-				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  /*  Make a new layer: iff drawable == NULL, user is pasting into an empty display. */
 
+  if(drawable != NULL)
+    layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), paste, 
+    			    _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+  else
+    layer = layer_new_from_tiles (gimage, gimp_image_base_type_with_alpha (gimage), paste, 
+    			    _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
+ 
   if (layer)
     {
       /*  Start a group undo  */
@@ -337,6 +342,7 @@ edit_paste (GImage       *gimage,
   else
     return NULL;
 }
+
   
 int
 edit_paste_as_new (GImage       *invoke,

@@ -1,3 +1,11 @@
+2000-01-16 Garry R. Osgood <gosgood@idt.net>
+	* app/global_edit.c
+	global_edit.c  Uncovered buglet spawned by #5045 fix.
+	edit_paste() now properly supplies a GimpImageType
+	parameter in the case where a GimpImage parameter has no 
+	active_drawable: occurs when the user invokes a 
+	paste into an empty image.
+
 Sat Jan 15 22:27:56 CET 2000  Marc Lehmann <pcg@goof.com>
 
         * libgimp/gimpenv.c, libgimp/color_selector.h,
