@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolordisplay.c
@@ -67,7 +67,7 @@ gimp_color_display_get_type (void)
       };
 
       display_type = g_type_register_static (G_TYPE_OBJECT,
-                                             "GimpColorDisplay", 
+                                             "GimpColorDisplay",
                                              &display_info, 0);
     }
 
@@ -88,8 +88,8 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
                   g_cclosure_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
-  klass->name            = "EEK";
-  klass->help_page       = "help_yourself.html";
+  klass->name            = "Unnamed";
+  klass->help_id         = NULL;
 
   klass->clone           = NULL;
   klass->convert         = NULL;

@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorselector.h
@@ -31,8 +31,8 @@ G_BEGIN_DECLS
 /* For information look at the html documentation */
 
 
-#define GIMP_COLOR_SELECTOR_SIZE     150
-#define GIMP_COLOR_SELECTOR_BAR_SIZE 15
+#define GIMP_COLOR_SELECTOR_SIZE      150
+#define GIMP_COLOR_SELECTOR_BAR_SIZE  15
 
 
 #define GIMP_TYPE_COLOR_SELECTOR            (gimp_color_selector_get_type ())
@@ -64,7 +64,7 @@ struct _GimpColorSelectorClass
   GtkVBoxClass  parent_class;
 
   const gchar  *name;
-  const gchar  *help_page;
+  const gchar  *help_id;
   const gchar  *stock_id;
 
   /*  virtual functions  */

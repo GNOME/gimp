@@ -1,5 +1,28 @@
 2003-11-18  Sven Neumann  <sven@gimp.org>
 
+	* libgimpmodule/gimpmodule.c (gimp_module_open): don't do lazy
+	binding on GIMP modules. We can't recover from missing symbols
+	later.
+
+	* libgimpwidgets/gimpquerybox.[ch]: renamed "help_page" parameter
+	to "help_id" and changed the docs accordingly.
+
+	* libgimpwidgets/gimpcolordisplay.[ch]
+	* libgimpwidgets/gimpcolorselector.[ch]: renamed the "help_page"
+	struct members of GimpColorDisplay and GimpColorSelector to
+	"help_id".
+
+	* app/gui/color-notebook.c
+	* app/widgets/gimpcoloreditor.c
+	* libgimpwidgets/gimpcolorbutton.c
+	* libgimpwidgets/gimpcolornotebook.c
+	* libgimpwidgets/gimpcolorscales.c
+	* libgimpwidgets/gimpcolorselect.c
+	* modules/*.c: changed accordingly. Specify a help id instead of
+	a HTML page.
+
+2003-11-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/png.c (load_image): inform the user when a PNG
 	file specifies an offset that causes the layer to be positioned
 	outside the image area. Fixes "bug" #127307.

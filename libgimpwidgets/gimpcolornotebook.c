@@ -127,7 +127,7 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
   widget_class->style_set               = gimp_color_notebook_style_set;
 
   selector_class->name                  = "Notebook";
-  selector_class->help_page             = "notebook.html";
+  selector_class->help_id               = "gimp-colorselector-notebook";
   selector_class->set_toggles_visible   = gimp_color_notebook_togg_visible;
   selector_class->set_toggles_sensitive = gimp_color_notebook_togg_sensitive;
   selector_class->set_show_alpha        = gimp_color_notebook_set_show_alpha;

@@ -177,12 +177,12 @@ colorsel_triangle_class_init (ColorselTriangleClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize      = colorsel_triangle_finalize;
+  object_class->finalize    = colorsel_triangle_finalize;
 
-  selector_class->name        = _("Triangle");
-  selector_class->help_page   = "triangle.html";
-  selector_class->stock_id    = GIMP_STOCK_COLOR_TRIANGLE;
-  selector_class->set_color   = colorsel_triangle_set_color;
+  selector_class->name      = _("Triangle");
+  selector_class->help_id   = "gimp-colorselector-triangle";
+  selector_class->stock_id  = GIMP_STOCK_COLOR_TRIANGLE;
+  selector_class->set_color = colorsel_triangle_set_color;
 }
 
 static void

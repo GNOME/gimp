@@ -154,7 +154,7 @@ cdisplay_gamma_class_init (CdisplayGammaClass *klass)
   object_class->finalize         = cdisplay_gamma_finalize;
 
   display_class->name            = _("Gamma");
-  display_class->help_page       = "modules/gamma.html";
+  display_class->help_id         = "gimp-colordisplay-gamma";
   display_class->clone           = cdisplay_gamma_clone;
   display_class->convert         = cdisplay_gamma_convert;
   display_class->load_state      = cdisplay_gamma_load_state;

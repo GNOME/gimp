@@ -209,8 +209,7 @@ gimp_color_editor_init (GimpColorEditor *editor)
       gtk_widget_show (image);
 
       gimp_help_set_help_data (button,
-			       selector_class->name,
-			       selector_class->help_page);
+			       selector_class->name, selector_class->help_id);
 
       g_object_set_data (G_OBJECT (button),   "selector", selector);
       g_object_set_data (G_OBJECT (selector), "button",   button);

@@ -1,5 +1,5 @@
-/* LIBGIMP - The GIMP Library 
- * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorscales.c
  * Copyright (C) 2002 Michael Natterer <mitch@gimp.org>
@@ -11,10 +11,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -119,7 +119,7 @@ gimp_color_scales_get_type (void)
       };
 
       scales_type = g_type_register_static (GIMP_TYPE_COLOR_SELECTOR,
-                                            "GimpColorScales", 
+                                            "GimpColorScales",
                                             &scales_info, 0);
     }
 
@@ -140,7 +140,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
   object_class->finalize         = gimp_color_scales_finalize;
 
   selector_class->name                  = _("Scales");
-  selector_class->help_page             = "scales.html";
+  selector_class->help_id               = "gimp-colorselector-scales";
   selector_class->stock_id              = GIMP_STOCK_TOOL_OPTIONS;
   selector_class->set_toggles_visible   = gimp_color_scales_togg_visible;
   selector_class->set_toggles_sensitive = gimp_color_scales_togg_sensitive;
@@ -159,8 +159,8 @@ gimp_color_scales_init (GimpColorScales *scales)
   GSList            *group;
   gint               i;
 
-  static const gchar *toggle_titles[] = 
-  { 
+  static const gchar *toggle_titles[] =
+  {
     N_("_H"),
     N_("_S"),
     N_("_V"),
@@ -169,7 +169,7 @@ gimp_color_scales_init (GimpColorScales *scales)
     N_("_B"),
     N_("_A")
   };
-  static const gchar *slider_tips[7] = 
+  static const gchar *slider_tips[7] =
   {
     N_("Hue"),
     N_("Saturation"),
@@ -226,7 +226,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 
       scales->slider_data[i] =
         gimp_color_scale_entry_new (GTK_TABLE (table), 1, i,
-                                    gettext (toggle_titles[i]), 
+                                    gettext (toggle_titles[i]),
                                     80, -1,
                                     slider_initial_vals[i],
                                     0.0, slider_max_vals[i],
@@ -537,7 +537,7 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
           if ((sscanf (hex_color, "%x", &hex_rgb) == 1) &&
               (hex_rgb < (1 << 24)))
 	    {
-	      gimp_rgb_set_uchar (&selector->rgb, 
+	      gimp_rgb_set_uchar (&selector->rgb,
 				  (hex_rgb & 0xff0000) >> 16,
 				  (hex_rgb & 0x00ff00) >> 8,
 				  (hex_rgb & 0x0000ff));

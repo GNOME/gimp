@@ -423,7 +423,7 @@ gimp_module_state_name (GimpModuleState state)
 static gboolean
 gimp_module_open (GimpModule *module)
 {
-  module->module = g_module_open (module->filename, G_MODULE_BIND_LAZY);
+  module->module = g_module_open (module->filename, 0);
 
   if (! module->module)
     {

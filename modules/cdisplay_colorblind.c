@@ -7,8 +7,8 @@
  *                         Robert Dougherty <bob@vischeck.com> and
  *                         Alex Wade <alex@vischeck.com>
  *
- * This code is an implementation of an algorithm described by Hans Brettel, 
- * Francoise Vienot and John Mollon in the Journal of the Optical Society of 
+ * This code is an implementation of an algorithm described by Hans Brettel,
+ * Francoise Vienot and John Mollon in the Journal of the Optical Society of
  * America V14(10), pg 2647. (See http://vischeck.com/ for more info.)
  *
  * This program is free software; you can redistribute it and/or modify
@@ -116,7 +116,7 @@ static void    colorblind_deficiency_callback        (GtkWidget          *widget
                                                       CdisplayColorblind *colorblind);
 
 
-static const GimpModuleInfo cdisplay_colorblind_info = 
+static const GimpModuleInfo cdisplay_colorblind_info =
 {
   GIMP_MODULE_ABI_VERSION,
   N_("Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"),
@@ -186,7 +186,7 @@ cdisplay_colorblind_class_init (CdisplayColorblindClass *klass)
   object_class->finalize         = cdisplay_colorblind_finalize;
 
   display_class->name            = _("Color Deficient Vision");
-  display_class->help_page       = "modules/colorblind.html";
+  display_class->help_id         = "gimp-colordisplay-colorblind";
   display_class->clone           = cdisplay_colorblind_clone;
   display_class->convert         = cdisplay_colorblind_convert;
   display_class->load_state      = cdisplay_colorblind_load_state;
@@ -325,7 +325,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
         if (colorblind->cache[2 * index] == pixel)
           {
             pixel = colorblind->cache[2 * index + 1];
-          
+
             b[2] = pixel & 0xFF; pixel >>= 8;
             b[1] = pixel & 0xFF; pixel >>= 8;
             b[0] = pixel & 0xFF;
@@ -341,18 +341,18 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
         red   = pow (red,   1.0 / colorblind->gammaRGB[0]);
         green = pow (green, 1.0 / colorblind->gammaRGB[1]);
         blue  = pow (blue,  1.0 / colorblind->gammaRGB[2]);
-        
+
         /* Convert to LMS (dot product with transform matrix) */
         redOld   = red;
         greenOld = green;
-        
+
         red   = redOld * rgb2lms[0] + greenOld * rgb2lms[1] + blue * rgb2lms[2];
         green = redOld * rgb2lms[3] + greenOld * rgb2lms[4] + blue * rgb2lms[5];
         blue  = redOld * rgb2lms[6] + greenOld * rgb2lms[7] + blue * rgb2lms[8];
-      
+
         switch (colorblind->deficiency)
           {
-          case COLORBLIND_DEFICIENCY_DEUTERANOPIA:   
+          case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
             tmp = blue / red;
             /* See which side of the inflection line we fall... */
             if (tmp < colorblind->inflection)
@@ -361,7 +361,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
               green = -(a2 * red + c2 * blue) / b2;
             break;
 
-          case COLORBLIND_DEFICIENCY_PROTANOPIA:     
+          case COLORBLIND_DEFICIENCY_PROTANOPIA:
             tmp = blue / green;
             /* See which side of the inflection line we fall... */
             if (tmp < colorblind->inflection)
@@ -369,7 +369,7 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
             else
               red = -(b2 * green + c2 * blue) / a2;
             break;
-            
+
           case COLORBLIND_DEFICIENCY_TRITANOPIA:
             tmp = green / red;
             /* See which side of the inflection line we fall... */
@@ -386,27 +386,27 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
         /* Convert back to RGB (cross product with transform matrix) */
         redOld   = red;
         greenOld = green;
-        
+
         red   = redOld * lms2rgb[0] + greenOld * lms2rgb[1] + blue * lms2rgb[2];
         green = redOld * lms2rgb[3] + greenOld * lms2rgb[4] + blue * lms2rgb[5];
         blue  = redOld * lms2rgb[6] + greenOld * lms2rgb[7] + blue * lms2rgb[8];
-        
+
         /* Apply gamma to go back to non-linear intensities */
         red   = pow (red,   colorblind->gammaRGB[0]);
         green = pow (green, colorblind->gammaRGB[1]);
         blue  = pow (blue,  colorblind->gammaRGB[2]);
-        
+
         /* Ensure that we stay within the RGB gamut */
         /* *** FIX THIS: it would be better to desaturate than blindly clip. */
         red   = CLAMP (red,   0, 255);
         green = CLAMP (green, 0, 255);
         blue  = CLAMP (blue,  0, 255);
-        
+
         /* Stuff result back into buffer */
         b[0] = (guchar) red;
         b[1] = (guchar) green;
         b[2] = (guchar) blue;
-        
+
         /* Put the result into our cache */
         colorblind->cache[2 * index]     = pixel;
         colorblind->cache[2 * index + 1] = b[0] << 16 | b[1] << 8 | b[2];
@@ -504,7 +504,7 @@ static void
 cdisplay_colorblind_configure_reset (GimpColorDisplay *display)
 {
   CdisplayColorblind *colorblind;
- 
+
   colorblind = CDISPLAY_COLORBLIND (display);
 
   if (colorblind->optionmenu)
@@ -530,7 +530,7 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
 
   colorblind = CDISPLAY_COLORBLIND (display);
 
-  /* Performs protan, deutan or tritan color image simulation based on 
+  /* Performs protan, deutan or tritan color image simulation based on
    * Brettel, Vienot and Mollon JOSA 14/10 1997
    *  L,M,S for lambda=475,485,575,660
    *
@@ -541,8 +541,8 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
   anchor[0] = 0.08008;  anchor[1]  = 0.1579;    anchor[2]  = 0.5897;
   anchor[3] = 0.1284;   anchor[4]  = 0.2237;    anchor[5]  = 0.3636;
   anchor[6] = 0.9856;   anchor[7]  = 0.7325;    anchor[8]  = 0.001079;
-  anchor[9] = 0.0914;   anchor[10] = 0.007009;  anchor[11] = 0.0;    
- 
+  anchor[9] = 0.0914;   anchor[10] = 0.007009;  anchor[11] = 0.0;
+
   /* We also need LMS for RGB=(1,1,1)- the equal-energy point (one of
    * our anchors) (we can just peel this out of the rgb2lms transform
    * matrix)

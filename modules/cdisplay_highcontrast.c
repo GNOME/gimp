@@ -84,7 +84,7 @@ static void    contrast_configure_adj_callback     (GtkAdjustment    *adj,
                                                     CdisplayContrast    *contrast);
 
 
-static const GimpModuleInfo cdisplay_contrast_info = 
+static const GimpModuleInfo cdisplay_contrast_info =
 {
   GIMP_MODULE_ABI_VERSION,
   N_("High Contrast color display filter"),
@@ -154,7 +154,7 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   object_class->finalize         = cdisplay_contrast_finalize;
 
   display_class->name            = _("Contrast");
-  display_class->help_page       = "modules/contrast.html";
+  display_class->help_id         = "gimp-colordisplay-contrast";
   display_class->clone           = cdisplay_contrast_clone;
   display_class->convert         = cdisplay_contrast_convert;
   display_class->load_state      = cdisplay_contrast_load_state;
@@ -203,7 +203,7 @@ cdisplay_contrast_clone (GimpColorDisplay *display)
   copy = CDISPLAY_CONTRAST (gimp_color_display_new (G_TYPE_FROM_INSTANCE (contrast)));
 
   copy->contrast = contrast->contrast;
-  
+
   memcpy (copy->lookup, contrast->lookup, sizeof (guchar) * 256);
 
   return GIMP_COLOR_DISPLAY (copy);
@@ -222,7 +222,7 @@ cdisplay_contrast_convert (GimpColorDisplay *display,
 
   contrast = CDISPLAY_CONTRAST (display);
 
-  /* You will not be using the entire buffer most of the time. 
+  /* You will not be using the entire buffer most of the time.
    * Hence, the simplistic code for this is as follows:
    *
    * for (j = 0; j < height; j++)
@@ -337,7 +337,7 @@ static void
 cdisplay_contrast_configure_reset (GimpColorDisplay *display)
 {
   CdisplayContrast *contrast;
- 
+
   contrast = CDISPLAY_CONTRAST (display);
 
   if (contrast->adjustment)

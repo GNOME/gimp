@@ -43,8 +43,8 @@ struct _GimpColorDisplayClass
 {
   GObjectClass  parent_class;
 
-  const gchar *name;
-  const gchar *help_page;
+  const gchar  *name;
+  const gchar  *help_id;
 
   /*  virtual functions  */
   GimpColorDisplay * (* clone)           (GimpColorDisplay *display);

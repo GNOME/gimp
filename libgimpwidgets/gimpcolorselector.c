@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpcolorselector.c
@@ -73,7 +73,7 @@ gimp_color_selector_get_type (void)
       };
 
       selector_type = g_type_register_static (GTK_TYPE_VBOX,
-                                              "GimpColorSelector", 
+                                              "GimpColorSelector",
                                               &selector_info, 0);
     }
 
@@ -106,8 +106,8 @@ gimp_color_selector_class_init (GimpColorSelectorClass *klass)
                   G_TYPE_NONE, 1,
                   G_TYPE_INT);
 
-  klass->name                  = "EEK";
-  klass->help_page             = "help_yourself.html";
+  klass->name                  = "Unnamed";
+  klass->help_id               = NULL;
   klass->stock_id              = GTK_STOCK_SELECT_COLOR;
 
   klass->set_toggles_visible   = NULL;
