@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-22 00:04-0400\n"
+"POT-Creation-Date: 2004-10-22 16:18-0400\n"
 "PO-Revision-Date: 2004-10-22 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -1179,7 +1179,7 @@ msgstr "Bad colourmap"
 #: plug-ins/common/postscript.c:942 plug-ins/common/psd.c:1763
 #: plug-ins/common/raw.c:642 plug-ins/common/sunras.c:439
 #: plug-ins/common/tga.c:422 plug-ins/common/tiff.c:518
-#: plug-ins/common/wmf.c:400 plug-ins/common/xbm.c:728
+#: plug-ins/common/wmf.c:849 plug-ins/common/xbm.c:728
 #: plug-ins/common/xpm.c:346 plug-ins/common/xwd.c:479
 #: plug-ins/faxg3/faxg3.c:204 plug-ins/gfli/gfli.c:468 plug-ins/sgi/sgi.c:327
 #: plug-ins/xjt/xjt.c:3316
@@ -4190,7 +4190,7 @@ msgstr "Intersection"
 
 #. Width and Height
 #: plug-ins/common/grid.c:701 plug-ins/common/svg.c:695
-#: plug-ins/print/gimp_main_window.c:992
+#: plug-ins/common/wmf.c:476 plug-ins/print/gimp_main_window.c:992
 #: plug-ins/print/gimp_main_window.c:1199
 msgid "Width:"
 msgstr "Width:"
@@ -5769,7 +5769,7 @@ msgstr "Rendering"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2840 plug-ins/common/svg.c:816
-#: plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/common/wmf.c:597 plug-ins/print/gimp_main_window.c:1087
 msgid "Resolution:"
 msgstr "Resolution:"
 
@@ -6931,7 +6931,7 @@ msgstr ""
 "SVG file does not\n"
 "specify a size!"
 
-#: plug-ins/common/svg.c:432
+#: plug-ins/common/svg.c:432 plug-ins/common/wmf.c:270
 #, c-format
 msgid "%d x %d"
 msgstr "%d x %d"
@@ -6941,24 +6941,25 @@ msgstr "%d x %d"
 msgid "Render Scalable Vector Graphics"
 msgstr "Render Scalable Vector Graphics"
 
-#: plug-ins/common/svg.c:701 plug-ins/print/gimp_main_window.c:1009
+#: plug-ins/common/svg.c:701 plug-ins/common/wmf.c:482
+#: plug-ins/print/gimp_main_window.c:1009
 #: plug-ins/print/gimp_main_window.c:1212
 msgid "Height:"
 msgstr "Height:"
 
-#: plug-ins/common/svg.c:775
+#: plug-ins/common/svg.c:775 plug-ins/common/wmf.c:556
 msgid "_X ratio:"
 msgstr "_X ratio:"
 
-#: plug-ins/common/svg.c:797
+#: plug-ins/common/svg.c:797 plug-ins/common/wmf.c:578
 msgid "_Y ratio:"
 msgstr "_Y ratio:"
 
-#: plug-ins/common/svg.c:811
+#: plug-ins/common/svg.c:811 plug-ins/common/wmf.c:592
 msgid "Constrain aspect ratio"
 msgstr "Constrain aspect ratio"
 
-#: plug-ins/common/svg.c:822
+#: plug-ins/common/svg.c:822 plug-ins/common/wmf.c:603
 #, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
@@ -7845,30 +7846,28 @@ msgstr "EndPage failed"
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg failed: %d"
 
-#: plug-ins/common/wmf.c:104
+#: plug-ins/common/wmf.c:121
 msgid "Microsoft WMF file"
 msgstr "Microsoft WMF file"
 
-#: plug-ins/common/wmf.c:204
-msgid "Load Windows Metafile"
-msgstr "Load Windows Metafile"
+#: plug-ins/common/wmf.c:264
+msgid ""
+"WMF file does not\n"
+"specify a size!"
+msgstr ""
+"WMF file does not\n"
+"specify a size!"
 
-#. Rendering
-#: plug-ins/common/wmf.c:214
-#, c-format
-msgid "Rendering %s"
-msgstr "Rendering %s"
+#: plug-ins/common/wmf.c:412
+msgid "Render Windows Metafile"
+msgstr "Render Windows Metafile"
 
-#: plug-ins/common/wmf.c:235
-msgid "Scale (log 2):"
-msgstr "Scale (log 2):"
-
-#: plug-ins/common/wmf.c:395 plug-ins/sgi/sgi.c:322
+#: plug-ins/common/wmf.c:844 plug-ins/sgi/sgi.c:322
 #, c-format
 msgid "Could not open '%s' for reading."
 msgstr "Could not open '%s' for reading."
 
-#: plug-ins/common/wmf.c:417
+#: plug-ins/common/wmf.c:860
 msgid "Rendered WMF"
 msgstr "Rendered WMF"
 
