@@ -1,3 +1,8 @@
+2004-03-15  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/splash.c: moved global variables to a struct and
+	optimized the area exposed from splash_update().
+
 2004-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage.[ch]: added "gboolean alpha_changed" to

@@ -31,18 +31,27 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget   *splash   = NULL;
-static PangoLayout *upper    = NULL;
-static PangoLayout *lower    = NULL;
-static GtkWidget   *progress = NULL;
-static gint         width    = 0;
-static gint         height   = 0;
+typedef struct
+{
+  GtkWidget      *window;
+  GtkWidget      *area;
+  gint            width;
+  gint            height;
+  GtkWidget      *progress;
+  GdkPixmap      *pixmap;
+  PangoLayout    *upper;
+  gint            upper_x, upper_y;
+  PangoLayout    *lower;
+  gint            lower_x, lower_y;
+} GimpSplash;
+
+static GimpSplash *splash = NULL;
 
 
 static void      splash_map         (void);
 static gboolean  splash_area_expose (GtkWidget      *widget,
                                      GdkEventExpose *event,
-                                     GdkPixmap      *pixmap);
+                                     GimpSplash     *splash);
 
 
 /*  public functions  */
@@ -50,12 +59,14 @@ static gboolean  splash_area_expose (GtkWidget      *widget,
 void
 splash_create (void)
 {
-  GtkWidget *frame;
-  GtkWidget *vbox;
-  GtkWidget *area;
-  GdkPixbuf *pixbuf;
-  GdkPixmap *pixmap;
-  gchar     *filename;
+  GtkWidget      *frame;
+  GtkWidget      *vbox;
+  GdkPixbuf      *pixbuf;
+  PangoAttrList  *attrs;
+  PangoAttribute *attr;
+  gchar          *filename;
+
+  g_return_if_fail (splash == NULL);
 
   filename = g_build_filename (gimp_data_directory (),
                                "images", "gimp_splash.png", NULL);
@@ -65,83 +76,96 @@ splash_create (void)
   if (! pixbuf)
     return;
 
-  width  = gdk_pixbuf_get_width (pixbuf);
-  height = gdk_pixbuf_get_height (pixbuf);
+  splash = g_new0 (GimpSplash, 1);
 
-  splash = g_object_new (GTK_TYPE_WINDOW,
-                         "type",            GTK_WINDOW_TOPLEVEL,
-                         "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
-                         "title",           _("GIMP Startup"),
-                         "window_position", GTK_WIN_POS_CENTER,
-                         "resizable",       FALSE,
-                         NULL);
+  splash->width  = gdk_pixbuf_get_width (pixbuf);
+  splash->height = gdk_pixbuf_get_height (pixbuf);
 
-  gtk_window_set_role (GTK_WINDOW (splash), "gimp-startup");
+  splash->window = g_object_new (GTK_TYPE_WINDOW,
+                                 "type",            GTK_WINDOW_TOPLEVEL,
+                                 "type_hint",       GDK_WINDOW_TYPE_HINT_SPLASHSCREEN,
+                                 "title",           _("GIMP Startup"),
+                                 "window_position", GTK_WIN_POS_CENTER,
+                                 "resizable",       FALSE,
+                                 NULL);
 
-  g_signal_connect_swapped (splash, "delete_event",
+  gtk_window_set_role (GTK_WINDOW (splash->window), "gimp-startup");
+
+  g_signal_connect_swapped (splash->window, "delete_event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
 
   /* we don't want the splash screen to send the startup notification */
   gtk_window_set_auto_startup_notification (FALSE);
-  g_signal_connect (splash, "map",
+  g_signal_connect (splash->window, "map",
                     G_CALLBACK (splash_map),
                     NULL);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (splash), frame);
+  gtk_container_add (GTK_CONTAINER (splash->window), frame);
   gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  area = gtk_drawing_area_new ();
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), area);
-  gtk_widget_show (area);
+  splash->area = gtk_drawing_area_new ();
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), splash->area);
+  gtk_widget_show (splash->area);
 
-  gtk_widget_set_size_request (area, width, height);
+  gtk_widget_set_size_request (splash->area, splash->width, splash->height);
 
-  gtk_widget_realize (area);
-  pixmap = gdk_pixmap_new (area->window, width, height, -1);
+  gtk_widget_realize (splash->area);
+  splash->pixmap = gdk_pixmap_new (splash->area->window,
+                                   splash->width, splash->height, -1);
 
-  gdk_draw_pixbuf (pixmap, area->style->black_gc,
-                   pixbuf, 0, 0, 0, 0, width, height,
+  gdk_draw_pixbuf (splash->pixmap, splash->area->style->black_gc,
+                   pixbuf, 0, 0, 0, 0, splash->width, splash->height,
                    GDK_RGB_DITHER_NORMAL, 0, 0);
   g_object_unref (pixbuf);
 
-  g_signal_connect (area, "expose_event",
+  g_signal_connect (splash->area, "expose_event",
                     G_CALLBACK (splash_area_expose),
-                    pixmap);
-  g_signal_connect_swapped (area, "destroy",
-                            G_CALLBACK (g_object_unref),
-                            pixmap);
+                    splash);
 
-  upper = gtk_widget_create_pango_layout (splash, "");
-  lower = gtk_widget_create_pango_layout (splash, "");
+  splash->upper = gtk_widget_create_pango_layout (splash->area, "");
+  splash->lower = gtk_widget_create_pango_layout (splash->area, "");
 
-  progress = gtk_progress_bar_new ();
-  gtk_box_pack_end (GTK_BOX (vbox), progress, FALSE, FALSE, 0);
-  gtk_widget_show (progress);
+  attrs = pango_attr_list_new ();
+  attr = pango_attr_weight_new (PANGO_WEIGHT_BOLD);
+  attr->start_index = 0;
+  attr->end_index   = -1;
+  pango_attr_list_insert (attrs, attr);
 
-  gtk_widget_show (splash);
+  pango_layout_set_attributes (splash->upper, attrs);
+
+  pango_attr_list_unref (attrs);
+
+  splash->progress = gtk_progress_bar_new ();
+  gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
+  gtk_widget_show (splash->progress);
+
+  gtk_widget_show (splash->window);
+
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
 }
 
 void
 splash_destroy (void)
 {
-  if (splash)
-    {
-      gtk_widget_destroy (splash);
-      splash = NULL;
+  if (! splash)
+    return;
 
-      g_object_unref (upper);
-      upper = NULL;
+  gtk_widget_destroy (splash->window);
 
-      g_object_unref (lower);
-      lower = NULL;
-    }
+  g_object_unref (splash->pixmap);
+  g_object_unref (splash->upper);
+  g_object_unref (splash->lower);
+
+  g_free (splash);
+  splash = NULL;
 }
 
 void
@@ -149,20 +173,48 @@ splash_update (const gchar *text1,
 	       const gchar *text2,
 	       gdouble      percentage)
 {
+  gint y = 0;
+
   if (! splash)
     return;
 
   if (text1)
-    pango_layout_set_text (upper, text1, -1);
+    {
+      PangoRectangle  rect;
+
+      pango_layout_set_text (splash->upper, text1, -1);
+      pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
+
+      splash->upper_x = (splash->width - rect.width) / 2;
+      splash->upper_y = splash->height - 2 * (rect.height + 8);
+
+      y = splash->upper_y - 2;
+    }
 
   if (text2)
-    pango_layout_set_text (lower, text2, -2);
+    {
+      PangoRectangle  rect;
 
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (progress),
+      pango_layout_set_text (splash->lower, text2, -1);
+      pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
+
+      splash->lower_x = (splash->width - rect.width) / 2;
+      splash->lower_y = splash->height - (rect.height + 8);
+
+      if (!y)
+        y = splash->lower_y - 2;
+    }
+
+  /*  The area that needs exposore could be calculated more precisely,
+   *  but it would probably make this code an unreadable mess. So we
+   *  use a cheap approximation instead.
+   */
+  if (y)
+    gtk_widget_queue_draw_area (splash->area,
+                                0, y, splash->width, splash->height - y);
+
+  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (splash->progress),
                                  CLAMP (percentage, 0.0, 1.0));
-
-  /*  FIXME: It would be more effective to expose the text area only.  */
-  gtk_widget_queue_draw (splash);
 
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -171,40 +223,29 @@ splash_update (const gchar *text1,
 
 /*  private functions  */
 
+
 static gboolean
 splash_area_expose (GtkWidget      *widget,
                     GdkEventExpose *event,
-                    GdkPixmap      *pixmap)
+                    GimpSplash     *splash)
 {
-  GdkRectangle  rect;
-  GdkRectangle  draw;
-  gint          x, y;
+  gint x = (widget->allocation.width  - splash->width)  / 2;
+  gint y = (widget->allocation.height - splash->height) / 2;
 
-  rect.x      = (widget->allocation.width  - width)  / 2;
-  rect.y      = (widget->allocation.height - height) / 2;
-  rect.width  = width;
-  rect.height = height;
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, &event->area);
 
-  if (gdk_rectangle_intersect (&rect, &event->area, &draw))
-    {
-      gdk_draw_drawable (widget->window,
-                         widget->style->black_gc,
-                         pixmap,
-                         draw.x - rect.x, draw.y - rect.y,
-                         draw.x, draw.y, draw.width, draw.height);
-    }
+  gdk_draw_drawable (widget->window,
+                     widget->style->black_gc,
+                     splash->pixmap, 0, 0,
+                     x, y, splash->width, splash->height);
 
-  pango_layout_get_pixel_size (upper, &x, &y);
+  gdk_draw_layout (widget->window, widget->style->black_gc,
+                   x + splash->upper_x, y + splash->upper_y, splash->upper);
 
-  x = (widget->allocation.width - x) / 2;
-  y = widget->allocation.height - 2 * y - 16;
-  gdk_draw_layout (widget->window, widget->style->black_gc, x, y, upper);
+  gdk_draw_layout (widget->window, widget->style->black_gc,
+                   x + splash->lower_x, y + splash->lower_y, splash->lower);
 
-  pango_layout_get_pixel_size (lower, &x, &y);
-
-  x = (widget->allocation.width - x) / 2;
-  y = widget->allocation.height - y - 8;
-  gdk_draw_layout (widget->window, widget->style->black_gc, x, y, lower);
+  gdk_gc_set_clip_rectangle (widget->style->black_gc, NULL);
 
   return FALSE;
 }
