@@ -1557,7 +1557,7 @@ design_area_configure(GtkWidget *widget, GdkEventConfigure *event)
 
   if (ifsDesign->pixmap)
     {
-      gdk_pixmap_destroy(ifsDesign->pixmap);
+      gdk_pixmap_unref(ifsDesign->pixmap);
     }
   ifsDesign->pixmap = gdk_pixmap_new(widget->window,
 				     widget->allocation.width,
