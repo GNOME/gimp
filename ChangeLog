@@ -1,3 +1,20 @@
+2002-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimppreview-utils.[ch]: new file containing
+	gimp_preview_type_from_viewable() so we don't need to include
+	*all* vieable and preview subclasses in gimppreview.c
+
+	* app/widgets/gimppreview.c: gimp_preview_set_viewable: never
+	unset the drag source if the viewable is set to NULL (fixes dock
+	tabs, thanks to sjburges), also check the passed viweable's type.
+
+	* themes/Default/gtkrc: set the paned handle_size to 6 pixels, so
+	it has the same size as the dock_separator.
+
+	* etc/gtkrc_user: set both to 5 here, also fiddle around with
+	the global focus padding and the GtkOptionMenu indicator.
+
 2002-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/plug-in-rc.c

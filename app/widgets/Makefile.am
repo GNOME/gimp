@@ -127,6 +127,8 @@ libappwidgets_a_sources = @STRIP_BEGIN@ \
 	gimppatternpreview.h		\
 	gimppreview.c			\
 	gimppreview.h			\
+	gimppreview-utils.c		\
+	gimppreview-utils.h		\
 	gimptoolbox.c			\
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\

@@ -67,6 +67,7 @@ style "gimp-default-style"
       { "images/gimp-dialog-warning.png", *, *, "gtk-dialog" }
     }
 
+  GtkPaned::handle_size         = 6
   GimpDock::separator_height    = 6
   GimpImageDock::minimal_width  = 250
   GimpToolbox::tool_icon_size   = button

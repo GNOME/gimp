@@ -17,7 +17,12 @@
 
 style "gimp-small-style"
 {
-  GimpDock::separator_height    = 6
+  GtkWidget::focus_padding         = 0
+  GtkOptionMenu::indicator_size    = { 4, 7 }
+  GtkOptionMenu::indicator_spacing = { 4, 3, 1, 1 }
+
+  GtkPaned::handle_size         = 5
+  GimpDock::separator_height    = 5
   GimpImageDock::minimal_width  = 200
   GimpToolbox::tool_icon_size   = menu
   GimpDockbook::tab_border      = 0

@@ -34,30 +34,14 @@
 
 #include "base/temp-buf.h"
 
-#include "core/gimpbrush.h"
-#include "core/gimpbuffer.h"
-#include "core/gimpdrawable.h"
-#include "core/gimpgradient.h"
-#include "core/gimpimage.h"
-#include "core/gimpimagefile.h"
 #include "core/gimpmarshal.h"
-#include "core/gimppalette.h"
-#include "core/gimppattern.h"
-#include "core/gimptoolinfo.h"
+#include "core/gimpviewable.h"
 
 #include "display/gimpdisplayshell-render.h"
 
-#include "gimpbrushpreview.h"
-#include "gimpbufferpreview.h"
 #include "gimpdnd.h"
-#include "gimpdrawablepreview.h"
-#include "gimpgradientpreview.h"
-#include "gimpimagepreview.h"
-#include "gimpimagefilepreview.h"
-#include "gimppalettepreview.h"
-#include "gimppatternpreview.h"
 #include "gimppreview.h"
-#include "gimptoolinfopreview.h"
+#include "gimppreview-utils.h"
 
 
 #define PREVIEW_BYTES       3
@@ -350,7 +334,7 @@ gimp_preview_expose_event (GtkWidget      *widget,
 extern gboolean gimp_debug_memsize;
 #endif
 
-static gint
+static gboolean
 gimp_preview_button_press_event (GtkWidget      *widget,
 				 GdkEventButton *bevent)
 {
@@ -413,7 +397,7 @@ gimp_preview_button_press_event (GtkWidget      *widget,
   return TRUE;
 }
   
-static gint
+static gboolean
 gimp_preview_button_release_event (GtkWidget      *widget,
 				   GdkEventButton *bevent)
 {
@@ -461,7 +445,7 @@ gimp_preview_button_release_event (GtkWidget      *widget,
   return TRUE;
 }
 
-static gint
+static gboolean
 gimp_preview_enter_notify_event (GtkWidget        *widget,
 				 GdkEventCrossing *event)
 {
@@ -480,7 +464,7 @@ gimp_preview_enter_notify_event (GtkWidget        *widget,
   return FALSE;
 }
 
-static gint
+static gboolean
 gimp_preview_leave_notify_event (GtkWidget        *widget,
 				 GdkEventCrossing *event)
 {
@@ -499,51 +483,6 @@ gimp_preview_leave_notify_event (GtkWidget        *widget,
   return FALSE;
 }
 
-static GimpPreview *
-gimp_preview_new_by_type (GimpViewable *viewable)
-{
-  GType type = GIMP_TYPE_PREVIEW;
-
-  if (GIMP_IS_BRUSH (viewable))
-    {
-      type = GIMP_TYPE_BRUSH_PREVIEW;
-    }
-  else if (GIMP_IS_DRAWABLE (viewable))
-    {
-      type = GIMP_TYPE_DRAWABLE_PREVIEW;
-    }
-  else if (GIMP_IS_IMAGE (viewable))
-    {
-      type = GIMP_TYPE_IMAGE_PREVIEW;
-    }
-  else if (GIMP_IS_PATTERN (viewable))
-    {
-      type = GIMP_TYPE_PATTERN_PREVIEW;
-    }
-  else if (GIMP_IS_GRADIENT (viewable))
-    {
-      type = GIMP_TYPE_GRADIENT_PREVIEW;
-    }
-  else if (GIMP_IS_PALETTE (viewable))
-    {
-      type = GIMP_TYPE_PALETTE_PREVIEW;
-    }
-  else if (GIMP_IS_BUFFER (viewable))
-    {
-      type = GIMP_TYPE_BUFFER_PREVIEW;
-    }
-  else if (GIMP_IS_TOOL_INFO (viewable))
-    {
-      type = GIMP_TYPE_TOOL_INFO_PREVIEW;
-    }
-  else if (GIMP_IS_IMAGEFILE (viewable))
-    {
-      type = GIMP_TYPE_IMAGEFILE_PREVIEW;
-    }
-
-  return g_object_new (type, NULL);
-}
-
 
 /*  public functions  */
 
@@ -559,7 +498,7 @@ gimp_preview_new (GimpViewable *viewable,
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
-  preview = gimp_preview_new_by_type (viewable);
+  preview = g_object_new (gimp_preview_type_from_viewable (viewable), NULL);
 
   preview->is_popup = is_popup;
 
@@ -586,7 +525,7 @@ gimp_preview_new_full (GimpViewable *viewable,
   g_return_val_if_fail (height > 0 && height <= 256, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
-  preview = gimp_preview_new_by_type (viewable);
+  preview = g_object_new (gimp_preview_type_from_viewable (viewable), NULL);
 
   preview->is_popup   = is_popup;
   preview->clickable  = clickable;
@@ -605,16 +544,11 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+  g_return_if_fail (! viewable || (gimp_preview_type_from_viewable (viewable) ==
+                                   G_TYPE_FROM_INSTANCE (preview)));
 
   if (preview->viewable)
     {
-      if (! preview->is_popup)
-	{
-	  gtk_drag_source_unset (GTK_WIDGET (preview));
-	  gimp_dnd_viewable_source_unset (GTK_WIDGET (preview),
-					  G_TYPE_FROM_INSTANCE (preview->viewable));
-	}
-
       g_object_remove_weak_pointer (G_OBJECT (preview->viewable),
 				    (gpointer *) &preview->viewable);
 
@@ -627,23 +561,22 @@ gimp_preview_set_viewable (GimpPreview  *preview,
                                             preview);
 
     }
+  else if (viewable && ! preview->is_popup)
+    {
+      gimp_gtk_drag_source_set_by_type (GTK_WIDGET (preview),
+                                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                                        G_TYPE_FROM_INSTANCE (viewable),
+                                        GDK_ACTION_COPY);
+      gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
+                                    G_TYPE_FROM_INSTANCE (viewable),
+                                    gimp_preview_drag_viewable,
+                                    NULL);
+    }
 
   preview->viewable = viewable;
 
   if (preview->viewable)
     {
-      if (! preview->is_popup)
-	{
-	  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (preview),
-					    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-					    G_TYPE_FROM_INSTANCE (preview->viewable),
-					    GDK_ACTION_COPY);
-	  gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
-					G_TYPE_FROM_INSTANCE (preview->viewable),
-					gimp_preview_drag_viewable,
-					NULL);
-	}
-
       g_object_add_weak_pointer (G_OBJECT (preview->viewable),
 				 (gpointer *) &preview->viewable);
 
