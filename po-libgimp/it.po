@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:53+0200\n"
-"PO-Revision-Date: dom feb  6 16:47:39 CET 2003\n"
+"PO-Revision-Date: 2003-09-19 16:33+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -21,23 +21,23 @@ msgid "Brush Selection"
 msgstr "Selezione pennelli"
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "non è possibile agire sui livelli"
+msgstr "%s non è possibile agire sui livelli"
 
 #: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Incolla livelli visibili"
 
 #: libgimp/gimpexport.c:192
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "non è possibile agire sui livelli"
+msgstr "%s non è possibile agire su offset, ampiezza o opacità dei livelli"
 
 #: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "è possibile gestire i livelli come frame dell'animazione"
+msgstr "%s è possibile gestire i livelli solo come frame di animazione"
 
 #: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
@@ -48,61 +48,61 @@ msgid "Flatten Image"
 msgstr "Immagine appiattita"
 
 #: libgimp/gimpexport.c:228
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "non è possibile gestire la trasparenza"
+msgstr "%s non è possibile gestire la trasparenza"
 
 #: libgimp/gimpexport.c:237
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "è possibile gestire solo immagini RGB"
+msgstr "%s è possibile gestire solo immagini RGB"
 
 #: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Conversione a RGB"
 
 #: libgimp/gimpexport.c:246
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "è possibile gestire immagini in scala di grigio"
+msgstr "%s è possibile gestire immagini in scala di grigi"
 
 #: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
-msgstr "Converti a scala di grigio"
+msgstr "Converti in scala di grigi"
 
 #: libgimp/gimpexport.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "è possibile gestire solo immagini in scala di colore"
+msgstr "è possibile gestire solo immagini indicizzate"
 
 #: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Conversione a scala di colore utilizzando\n"
-"le configurazioni base\n"
-"(Fatelo manualmente per controllare il risultato)"
+"Conversione in immagini indicizzate utilizzando \n"
+"le configurazioni base (fatelo manualmente per \n"
+"controllare il risultato)"
 
 #: libgimp/gimpexport.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "è possibile gestire solo Immagini RGB o in scala di grigio"
+msgstr "%s è possibile gestire solo immagini RGB o in scala di grigi"
 
 #: libgimp/gimpexport.c:274
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "è possibile gestire solo immagini RGB o in scala di colore"
+msgstr "%s è possibile gestire solo immagini RGB o indicizzate"
 
 #: libgimp/gimpexport.c:284
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "è possibile gestire solo immagini in scala di colore o scala di grigio"
+msgstr "%s è possibile gestire solo immagini in scala di grigi o indicizzate"
 
 #: libgimp/gimpexport.c:295
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "è necessario un canale alpha"
+msgstr "%s è necessario un canale alpha"
 
 #: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
@@ -157,6 +157,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Si è in procinto di salvare una maschera di livello con nome %s.\n"
+"Non verranno salvati i livelli visibili."
 
 #: libgimp/gimpexport.c:617
 #, c-format
@@ -264,82 +266,80 @@ msgid "Not loaded"
 msgstr ""
 
 #: libgimpwidgets/gimpcolorbutton.c:84
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/Utilizza colore primo piano"
+msgstr "/Colore primo piano"
 
 #: libgimpwidgets/gimpcolorbutton.c:86
-#, fuzzy
 msgid "/Background Color"
-msgstr "/Utilizza colore di sfondo"
+msgstr "/Colore di sfondo"
 
 #: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
-msgstr ""
+msgstr "/Nero"
 
 #: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
-msgstr ""
+msgstr "/Bianco"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
-msgstr ""
+msgstr "Scale"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:170
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Hue"
-msgstr ""
+msgstr "Tonalità"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Saturation"
-msgstr ""
+msgstr "Saturazione"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Value"
-msgstr ""
+msgstr "Valore"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Red"
-msgstr ""
+msgstr "Rosso"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Blue"
-msgstr ""
+msgstr "Blu"
 
 #: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
@@ -350,9 +350,8 @@ msgid "He_x Triplet:"
 msgstr ""
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Seleziona file"
+msgstr "Seleziona cartella"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
@@ -364,12 +363,11 @@ msgstr "KByte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
-msgstr "MByte"
+msgstr "MegaByte"
 
 #: libgimpwidgets/gimpmemsizeentry.c:189
-#, fuzzy
 msgid "GigaBytes"
-msgstr "MByte"
+msgstr "GigaByte"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -378,54 +376,52 @@ msgid ""
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:101
-#, fuzzy
 msgid "Anchor"
-msgstr "pollice"
+msgstr "Ancora"
 
 #: libgimpwidgets/gimpstock.c:102
-#, fuzzy
 msgid "_Duplicate"
-msgstr "pica"
+msgstr "_Duplica"
 
 #: libgimpwidgets/gimpstock.c:103
 msgid "_Edit"
-msgstr ""
+msgstr "_Modifica"
 
 #: libgimpwidgets/gimpstock.c:104
 msgid "Linked"
-msgstr ""
+msgstr "Collegato"
 
 #: libgimpwidgets/gimpstock.c:105
 msgid "Paste as New"
-msgstr ""
+msgstr "Incolla come nuovo"
 
 #: libgimpwidgets/gimpstock.c:106
 msgid "Paste Into"
-msgstr ""
+msgstr "Incolla dentro"
 
 #: libgimpwidgets/gimpstock.c:107
 msgid "_Reset"
-msgstr ""
+msgstr "_Reimposta"
 
 #: libgimpwidgets/gimpstock.c:108
 msgid "Visible"
-msgstr ""
+msgstr "Visibile"
 
 #: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Spaziatura l_ettere"
 
 #: libgimpwidgets/gimpstock.c:157
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Spaziatura r_ighe"
 
 #: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
-msgstr ""
+msgstr "_Ridimensiona"
 
 #: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
 msgid "_Scale"
-msgstr ""
+msgstr "_Scala"
 
 #: libgimpwidgets/gimpstock.c:236
 msgid "Crop"
@@ -433,11 +429,11 @@ msgstr ""
 
 #: libgimpwidgets/gimpstock.c:254
 msgid "_Transform"
-msgstr ""
+msgstr "_Trasforma"
 
 #: libgimpwidgets/gimpstock.c:257
 msgid "_Rotate"
-msgstr ""
+msgstr "_Ruota"
 
 #: libgimpwidgets/gimpstock.c:259
 msgid "_Shear"
@@ -460,118 +456,112 @@ msgid "Factor"
 msgstr "Fattore"
 
 #: libgimpwidgets/gimpwidgets.c:943
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Se non è selezionato il pulsante del \"Tempo\", utilizza questo valoreper la "
-"generazione del seme di casualità - questo vi permette di ripetereuna data "
-"operazione in modalità \"casuale\"."
+"Usa questo valore per la generazione del seme di casualità - questo permette \n"
+"di ripetere una data operazione \"casuale\""
 
 #: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
-msgstr ""
+msgstr "_Casualizza"
 
 #: libgimpwidgets/gimpwidgets.c:958
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
-"casualità ragionevole"
+msgstr "Generatore del seme di casualità con un numero generato casualmente"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Filtro di simulazione deficit colore (algoritmo Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Visione con deficit di colore"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "Tipo di deficit di colore:"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Nessuno (visione normale)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Prostanopia (insensibilità al rosso)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (insensibilità al verde)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopia (insensibilità al blu)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Filtro di visualizzazione gamma dei colori"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:320
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Filtro di visualizzazione colore ad alto contrasto"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Contrasto"
 
 #: modules/cdisplay_highcontrast.c:318
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Ciclo di contrasto:"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Selettore colore CMYK"
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
-msgstr ""
+msgstr "CMYK"
 
 #: modules/colorsel_cmyk.c:149
 msgid "_C"
-msgstr ""
+msgstr "_C"
 
 #: modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr ""
+msgstr "_M"
 
 #: modules/colorsel_cmyk.c:151
 msgid "_Y"
-msgstr ""
+msgstr "_Y"
 
 #: modules/colorsel_cmyk.c:152
 msgid "_K"
-msgstr ""
+msgstr "_K"
 
 #: modules/colorsel_cmyk.c:156
-#, fuzzy
 msgid "Cyan"
-msgstr "Cancella"
+msgstr "Ciano"
 
 #: modules/colorsel_cmyk.c:157
 msgid "Magenta"
-msgstr ""
+msgstr "Magenta"
 
 #: modules/colorsel_cmyk.c:158
 msgid "Yellow"
-msgstr ""
+msgstr "Giallo"
 
 #: modules/colorsel_cmyk.c:159
 msgid "Black"
-msgstr ""
+msgstr "Nero"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
