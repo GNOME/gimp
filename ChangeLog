@@ -1,3 +1,8 @@
+2000-10-03  Simon Budig  <simon@gimp.org>
+
+	* tools/gimppath2svg.py: New file: Script to convert an exported
+	  gimp-path to a simple SVG-File.
+
 2000-10-03  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/align_layers.c: Fixed cut'n'paste bug #26203.
