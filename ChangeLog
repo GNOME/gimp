@@ -1,3 +1,7 @@
+2002-05-27  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/checkerboard.c: fixed typo (bug #82499).
+
 2002-05-16  Sven Neumann  <sven@gimp.org>
 
 	* app/app_procs.c: don't allow the splash screen to be closed.

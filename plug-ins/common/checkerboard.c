@@ -88,7 +88,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "check_mode", "Regular or Physcobilly" },
+    { GIMP_PDB_INT32, "check_mode", "Regular or Psychobilly" },
     { GIMP_PDB_INT32, "check_size", "Size of the checks" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
