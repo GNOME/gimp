@@ -126,6 +126,7 @@ static gint               old_use_help;
 static gint               old_nav_window_per_display;
 static gint               old_info_window_follows_mouse;
 static gint               old_help_browser;
+static gint               old_default_threshold;
 
 /*  variables which can't be changed on the fly  */
 static gint               edit_stingy_memory_use;
@@ -188,7 +189,7 @@ static GtkWidget *        prefs_dlg = NULL;
    Here are the remaining issues as I see them:
 
    Still no settings for default-gradient, default-palette,
-   gamma-correction, color-cube.
+   gamma-correction.
 
    No widget for confirm-on-close although a lot of stuff is there.
 
@@ -666,7 +667,10 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "help-browser");
     }
-
+  if (default_threshold != old_default_threshold)
+    {
+      update = g_list_append (update, "default-threshold");
+    }
 
   /*  values which can't be changed on the fly  */
   if (edit_stingy_memory_use != old_stingy_memory_use)
@@ -836,6 +840,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   trust_dirty_flag         = old_trust_dirty_flag;
   use_help                 = old_use_help;
   help_browser             = old_help_browser;
+  default_threshold        = old_default_threshold;
 
   /*  restore variables which need some magic  */
   if (preview_size != old_preview_size)
@@ -1046,7 +1051,7 @@ static void
 file_prefs_default_size_callback (GtkWidget *widget,
 				  gpointer   data)
 {
-  default_width = 
+  default_width =
     (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
   default_height =
     (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
@@ -1392,6 +1397,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_trust_dirty_flag         = trust_dirty_flag;
   old_use_help                 = use_help;
   old_help_browser             = help_browser;
+  old_default_threshold        = default_threshold;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
   file_prefs_strset (&old_default_comment, default_comment);	
@@ -2041,6 +2047,28 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &global_paint_options);
   gtk_widget_show (button);
+
+  vbox2 = file_prefs_frame_new (_("Finding Contiguous Regions"),
+				GTK_BOX (vbox));
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  /*  Default threshold  */
+  spinbutton =
+    gimp_spin_button_new (&adjustment,
+			  default_threshold, 0.0, 255.0,
+			  1.0, 5.0, 0.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &default_threshold);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Default Threshold:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
 
   /* Expand the "Interface" branch */
   gtk_ctree_expand (GTK_CTREE (ctree), top_insert);

@@ -37,7 +37,6 @@
 #include "config.h"
 #include "libgimp/gimpintl.h"
 
-#define DEFAULT_FUZZINESS    15
 #define PREVIEW_WIDTH       256
 #define PREVIEW_HEIGHT      256
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
@@ -62,6 +61,9 @@ struct _ByColorDialog
 
   GtkWidget *preview;
   GtkWidget *gimage_name;
+
+  GtkWidget *replace_button;
+  GtkObject *threshold_adj;
 
   gint       threshold;  /*  threshold value for color select             */
   gint       operation;  /*  Add, Subtract, Replace                       */
@@ -104,6 +106,9 @@ static void   by_color_select_draw                 (ByColorDialog *, GImage *);
 static gint   by_color_select_preview_events       (GtkWidget *,
 						    GdkEventButton *,
 						    ByColorDialog *);
+static void   by_color_select_invert_callback      (GtkWidget *, gpointer);
+static void   by_color_select_select_all_callback  (GtkWidget *, gpointer);
+static void   by_color_select_select_none_callback (GtkWidget *, gpointer);
 static void   by_color_select_reset_callback       (GtkWidget *, gpointer);
 static void   by_color_select_close_callback       (GtkWidget *, gpointer);
 static void   by_color_select_preview_button_press (ByColorDialog *,
@@ -672,12 +677,13 @@ by_color_select_dialog_new (void)
   GtkWidget *label;
   GtkWidget *util_box;
   GtkWidget *slider;
-  GtkObject *data;
+  GtkWidget *table;
+  GtkWidget *button;
 
   bcd = g_new (ByColorDialog, 1);
   bcd->gimage    = NULL;
   bcd->operation = SELECTION_REPLACE;
-  bcd->threshold = DEFAULT_FUZZINESS;
+  bcd->threshold = default_threshold;
 
   /*  The shell and main vbox  */
   bcd->shell = gimp_dialog_new (_("By Color Selection"), "by_color_selection",
@@ -749,12 +755,13 @@ by_color_select_dialog_new (void)
 			   &bcd->operation,
 			   (gpointer) bcd->operation,
 
-			  _("Replace"),   (gpointer) SELECTION_REPLACE, NULL,
-			  _("Add"),       (gpointer) SELECTION_ADD, NULL,
-			  _("Subtract"),  (gpointer) SELECTION_SUB, NULL,
-			  _("Intersect"), (gpointer) SELECTION_INTERSECT, NULL,
+			   _("Replace"),   (gpointer) SELECTION_REPLACE,
+			   &bcd->replace_button,
+			   _("Add"),       (gpointer) SELECTION_ADD, NULL,
+			   _("Subtract"),  (gpointer) SELECTION_SUB, NULL,
+			   _("Intersect"), (gpointer) SELECTION_INTERSECT, NULL,
 
-			  NULL);
+			   NULL);
 
   gtk_box_pack_start (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -769,17 +776,50 @@ by_color_select_dialog_new (void)
   gtk_widget_show (label);
   gtk_widget_show (util_box);
 
-  data = gtk_adjustment_new (bcd->threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
-  slider = gtk_hscale_new (GTK_ADJUSTMENT (data));
+  bcd->threshold_adj =
+    gtk_adjustment_new (bcd->threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (bcd->threshold_adj));
   gtk_box_pack_start (GTK_BOX (util_box), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
-  gtk_signal_connect (GTK_OBJECT (data), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (bcd->threshold_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &bcd->threshold);
 
   gtk_widget_show (slider);
+
+  frame = gtk_frame_new (_("Selection"));
+  gtk_box_pack_end (GTK_BOX (options_box), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 2, TRUE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
+
+  button = gtk_button_new_with_label (_("Invert"));
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 0, 1);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (by_color_select_invert_callback),
+		      bcd);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("All"));
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 1, 1, 2);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (by_color_select_select_all_callback),
+		      bcd);
+  gtk_widget_show (button);
+
+  button = gtk_button_new_with_label (_("None"));
+  gtk_table_attach_defaults (GTK_TABLE (table), button, 1, 2, 1, 2);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      GTK_SIGNAL_FUNC (by_color_select_select_none_callback),
+		      bcd);
+  gtk_widget_show (button);
 
   gtk_widget_show (options_box);
   gtk_widget_show (hbox);
@@ -939,6 +979,71 @@ by_color_select_preview_events (GtkWidget      *widget,
 static void
 by_color_select_reset_callback (GtkWidget *widget,
 				gpointer   data)
+{
+  ByColorDialog *bcd;
+
+  bcd = (ByColorDialog *) data;
+
+  gtk_widget_activate (bcd->replace_button);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (bcd->threshold_adj),
+			    default_threshold);
+}
+
+static void
+by_color_select_invert_callback (GtkWidget *widget,
+				 gpointer   data)
+{
+  ByColorDialog *bcd;
+
+  bcd = (ByColorDialog *) data;
+
+  if (!bcd->gimage)
+    return;
+
+  /*  check if the image associated to the mask still exists  */
+  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
+    return;
+
+  /*  invert the mask  */
+  gimage_mask_invert (bcd->gimage);
+
+  /*  show selection on all views  */
+  gdisplays_flush ();
+
+  /*  update the preview window  */
+  by_color_select_render (bcd, bcd->gimage);
+  by_color_select_draw (bcd, bcd->gimage);
+}
+
+static void
+by_color_select_select_all_callback (GtkWidget *widget,
+				     gpointer   data)
+{
+  ByColorDialog *bcd;
+
+  bcd = (ByColorDialog *) data;
+
+  if (!bcd->gimage)
+    return;
+
+  /*  check if the image associated to the mask still exists  */
+  if (!drawable_gimage (GIMP_DRAWABLE (gimage_get_mask (bcd->gimage))))
+    return;
+
+  /*  fill the mask  */
+  gimage_mask_all (bcd->gimage);
+
+  /*  show selection on all views  */
+  gdisplays_flush ();
+
+  /*  update the preview window  */
+  by_color_select_render (bcd, bcd->gimage);
+  by_color_select_draw (bcd, bcd->gimage);
+}
+
+static void
+by_color_select_select_none_callback (GtkWidget *widget,
+				      gpointer   data)
 {
   ByColorDialog *bcd;
 

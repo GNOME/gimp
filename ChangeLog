@@ -1,3 +1,32 @@
+2000-04-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/fuzzy_select.c
+	* app/preferences_dialog.c: made the "default_threshold" gimprc
+	variable work as advertized:
+
+	- initialize the thresholds with it.
+	- use it for "Reset".
+	- added a widget to the "Tool Options" preferences page.
+	- noticed that the "Reset" button of "By Color Select" doesn't
+	  behave like all the other "Reset" buttons and changed it to
+	  reset the ui, not the selection.
+	  (There is now a "None" button and because it was so trivial, I
+	  couldn't resist to add "All" and "Invert" buttons, too)
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.c: new file.
+	* libgimp/gimpui.h: new function gimp_ui_init() which will be
+	called by all plugins which have a ui (not only by those with a
+	preview because plugins should always follow gimp's colormap
+	installation policy).
+
+	Could someone please check if the FIXME stuff in the function
+	is the right thing to do (TM). Does GdkRGB allocate the correct
+	colors for the widgets in all cases or do we have to find another
+	way to ensure this across processes (gtk instances)?
+
 2000-04-19  Sven Neumann  <sven@gimp.org>
 	
 	* plug-ins/common/mail.c: Changed "To:" and "From:" strings to 

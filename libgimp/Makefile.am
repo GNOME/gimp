@@ -129,6 +129,7 @@ libgimpui_la_SOURCES = \
 	gimppixmap.c		\
 	gimpquerybox.c		\
 	gimpsizeentry.c		\
+	gimpui.c		\
 	gimpunitmenu.c		\
 	gimpwidgets.c
 

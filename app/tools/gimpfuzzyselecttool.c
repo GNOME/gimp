@@ -63,7 +63,7 @@ struct _FuzzySelectOptions
 {
   SelectionOptions  selection_options;
   gdouble           threshold;
-  gdouble           threshold_d;
+  /* gdouble        threshold_d; (from gimprc) */
   GtkObject        *threshold_w;
 };
   
@@ -631,7 +631,7 @@ fuzzy_select_options_reset (void)
   selection_options_reset ((SelectionOptions *)options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    options->threshold_d);
+			    default_threshold);
 }
 
 static FuzzySelectOptions *
@@ -648,7 +648,7 @@ fuzzy_select_options_new (void)
   selection_options_init ((SelectionOptions *) options,
 			  FUZZY_SELECT, 
 			  fuzzy_select_options_reset);
-  options->threshold = options->threshold_d = default_threshold;
+  options->threshold = default_threshold;
   
   /*  the main vbox  */
   vbox = ((ToolOptions *) options)->main_vbox;
@@ -663,7 +663,7 @@ fuzzy_select_options_new (void)
   gtk_widget_show (label);
 
   options->threshold_w = 
-    gtk_adjustment_new (options->threshold_d, 0.0, 255.0, 1.0, 1.0, 0.0);
+    gtk_adjustment_new (default_threshold, 0.0, 255.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);

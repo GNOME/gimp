@@ -35,4 +35,7 @@
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 
+void gimp_ui_init (gchar    *prog_name,
+		   gboolean  preview);
+
 #endif /* __GIMP_UI_H__ */
