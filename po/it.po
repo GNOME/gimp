@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-09-05 23:46+0200\n"
-"PO-Revision-Date: 2004-09-06 01:01+0200\n"
+"PO-Revision-Date: 2004-09-06 01:08+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -8699,31 +8699,31 @@ msgstr "Auto riduzione della selezione"
 
 #: app/tools/gimpsheartool.c:98
 msgid "Shear"
-msgstr "Cesoie"
+msgstr "Inclina"
 
 #: app/tools/gimpsheartool.c:99
 msgid "Shear the layer or selection"
-msgstr "Ritaglia il livello o la selezione"
+msgstr "Inclina il livello o la selezione"
 
 #: app/tools/gimpsheartool.c:100
 msgid "S_hear"
-msgstr "_Cesoie"
+msgstr "_Inclina"
 
 #: app/tools/gimpsheartool.c:157
 msgid "Shearing Information"
-msgstr "Informazioni sulle cesoie"
+msgstr "Informazioni sull'inclinazione"
 
 #: app/tools/gimpsheartool.c:158
 msgid "Shearing..."
-msgstr "Ritaglio..."
+msgstr "Inclinazione..."
 
 #: app/tools/gimpsheartool.c:167
 msgid "Shear magnitude X:"
-msgstr "Grandezza cesoia X:"
+msgstr "Inclinazione in X:"
 
 #: app/tools/gimpsheartool.c:174
 msgid "Shear magnitude Y:"
-msgstr "Grandezza cesoia Y:"
+msgstr "Inclinazione in Y:"
 
 #: app/tools/gimpsmudgetool.c:55
 msgid "Smudge image"
