@@ -1,3 +1,8 @@
+2005-02-22  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: removed redundant casts,
+	made gimp_display_shell_compress_motion() static.
+
 2005-02-22  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* tools/pdbgen/pdb/channel.pdb: add the 

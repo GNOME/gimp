@@ -81,15 +81,15 @@
 
 /*  local function prototypes  */
 
-static void     gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
-                                                      GimpDisplayShell *shell);
-static void     gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
-                                                      GimpDisplayShell *shell);
+static void       gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
+                                                        GimpDisplayShell *shell);
+static void       gimp_display_shell_hscrollbar_update (GtkAdjustment    *adjustment,
+                                                        GimpDisplayShell *shell);
 
 static GdkModifierType
-                gimp_display_shell_key_to_state      (gint              key);
+                  gimp_display_shell_key_to_state      (gint              key);
 
-GdkEvent *      gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
+static GdkEvent * gimp_display_shell_compress_motion   (GimpDisplayShell *shell);
 
 
 /*  public functions  */
@@ -776,7 +776,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             gdk_display_pointer_ungrab (gdk_display, time);
 
-            gtk_grab_add (GTK_WIDGET (canvas));
+            gtk_grab_add (canvas);
 
             if (active_tool &&
                 (! gimp_image_is_empty (gimage) ||
@@ -801,7 +801,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                              &image_coords, state,
                                              gdisp);
 
-            gtk_grab_remove (GTK_WIDGET (canvas));
+            gtk_grab_remove (canvas);
 
             if (shell->space_release_pending)
               {
@@ -1549,7 +1549,7 @@ gimp_display_shell_key_to_state (gint key)
  * The gimp_display_shell_compress_motion function source may be re-used under
  * the XFree86-style license. <adam@gimp.org>
  */
-GdkEvent *
+static GdkEvent *
 gimp_display_shell_compress_motion (GimpDisplayShell *shell)
 {
   GList    *requeued_events = NULL;
