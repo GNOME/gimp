@@ -10,6 +10,10 @@
 
 2004-12-16  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: updated location of fontconfig sources.
+
+2004-12-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-dump.c
 	* docs/gimp-remote.1.in
 	* docs/gimp.1.in
