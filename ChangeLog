@@ -1,3 +1,7 @@
+2004-11-15  Aman <amanlinux@netscape.net>
+
+   	*configure.in : pa is added to ALL_LINGUS files
+
 2004-11-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/bmpread.c: if the file has space in the colormap for
