@@ -353,7 +353,7 @@ lut_lookup (gfloat        value,
             const gfloat *lut)
 {
   guchar offset = 127;
-  gint   step   = 64;
+  guchar step   = 64;
 
   while (step)
     {
