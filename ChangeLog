@@ -1,3 +1,15 @@
+2001-08-29  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: added comment how to handle version numbers when
+	making releases so I don't get it wrong once again. 
+	Removed leftover GIMP_CONTRIBUTORS.
+
+	* gimptool.1.in: removed this file.
+
+	* docs/Makefile.am
+	* docs/gimp.1.in: fixed stuff that was left after the removal of
+	the GIMP_CONTRIBUTORS hack.
+
 2001-08-29  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: added -DG_DISABLE_DEPRECATED and

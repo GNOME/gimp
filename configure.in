@@ -1,7 +1,15 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(gimprc.in)
 
-dnl Initialize automake stuff
+#
+# Making releases:
+#   GIMP_MICRO_VERSION += 1;
+#   GIMP_INTERFACE_AGE += 1;
+#   GIMP_BINARY_AGE += 1;
+# if any functions have been added, set GIMP_INTERFACE_AGE to 0.
+# if backwards compatibility has been broken,
+# set GIMP_BINARY_AGE _and_ GIMP_INTERFACE_AGE to 0.
+#
 GIMP_MAJOR_VERSION=1
 GIMP_MINOR_VERSION=3
 GIMP_MICRO_VERSION=0
@@ -804,8 +812,6 @@ AC_SUBST(HELPBROWSER)
 AC_SUBST(GTKXMHTML_CFLAGS)
 AC_SUBST(GTKXMHTML_LIBS)
 AC_SUBST(HTML_DIR)
-
-AC_SUBST(GIMP_CONTRIBUTORS)
 
 dnl easy way to skip the plug-in build
 GIMP_PLUGINS=plug-ins
