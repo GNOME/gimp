@@ -131,20 +131,22 @@ lightmenu_callback (GtkWidget *widget,
 
   for (k = 0; k < NUM_LIGHTS; k++)
     {
-      if (mapvals.lightsource[k].type == POINT_LIGHT)
+      switch (mapvals.lightsource[k].type)
         {
+        case POINT_LIGHT:
           gtk_widget_hide (dirlightwid[k]);
           gtk_widget_show (pointlightwid[k]);
-        }
-      else if (mapvals.lightsource[k].type == DIRECTIONAL_LIGHT)
-        {
+          break;
+
+        case DIRECTIONAL_LIGHT:
           gtk_widget_hide (pointlightwid[k]);
           gtk_widget_show (dirlightwid[k]);
-        }
-      else
-        {
+          break;
+
+        default:
           gtk_widget_hide (pointlightwid[k]);
           gtk_widget_hide (dirlightwid[k]);
+          break;
         }
     }
 
@@ -331,11 +333,13 @@ create_light_page (void)
   gtk_widget_show (table);
 
   /* row labels */
-  label = gtk_label_new (_("Type"));
+  label = gtk_label_new (_("Type:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 1, 2);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Color"));
+  label = gtk_label_new (_("Color:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 0, 1, 2, 3);
   gtk_widget_show (label);
 
@@ -350,20 +354,23 @@ create_light_page (void)
                                  label, 2*k + 1, 2*k + 2, 0, 1);
       gtk_widget_show (label);
 
-      light_type_combo[k] = gimp_int_combo_box_new (_("None"),        NO_LIGHT,
-                                                    _("Directional"), DIRECTIONAL_LIGHT,
-                                                    _("Point"),       POINT_LIGHT,
-                                                    /* _("Spot"),     SPOT_LIGHT, */
-                                                    NULL);
+      light_type_combo[k] =
+        gimp_int_combo_box_new (_("None"),        NO_LIGHT,
+                                _("Directional"), DIRECTIONAL_LIGHT,
+                                _("Point"),       POINT_LIGHT,
+                                /* _("Spot"),     SPOT_LIGHT, */
+                                NULL);
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (light_type_combo[k]),
                                      mapvals.lightsource[k].type);
       g_signal_connect (light_type_combo[k], "changed",
                         G_CALLBACK (lightmenu_callback),
                         &mapvals.lightsource[k].type);
+
       ebox = gtk_event_box_new ();
       gtk_container_add (GTK_CONTAINER (ebox), light_type_combo[k]);
       gtk_widget_show (ebox);
-      gtk_table_attach_defaults (GTK_TABLE (table), ebox, 2*k + 1, 2*k + 2, 1, 2);
+      gtk_table_attach_defaults (GTK_TABLE (table),
+                                 ebox, 2*k + 1, 2*k + 2, 1, 2);
       gtk_widget_show (light_type_combo[k]);
       gimp_help_set_help_data (ebox, _("Type of light source to apply"), NULL);
 
@@ -378,7 +385,8 @@ create_light_page (void)
                         G_CALLBACK (interactive_preview_callback),
                         NULL);
       gtk_widget_show (colorbutton[k]);
-      gtk_table_attach_defaults (GTK_TABLE (table), colorbutton[k], 2*k + 1, 2*k + 2, 2, 3);
+      gtk_table_attach_defaults (GTK_TABLE (table),
+                                 colorbutton[k], 2*k + 1, 2*k + 2, 2, 3);
       gimp_help_set_help_data (colorbutton[k],
                                _("Set light source color"), NULL);
 
@@ -386,16 +394,19 @@ create_light_page (void)
       pointlightwid[k] = gtk_vbox_new (FALSE, 0);
       if (mapvals.lightsource[k].type == POINT_LIGHT)
         gtk_widget_show (pointlightwid[k]);
+
       table2 = gtk_table_new (3, 2, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
       gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
       gtk_container_add (GTK_CONTAINER (pointlightwid[k]), table2);
-      gtk_table_attach_defaults (GTK_TABLE (table), pointlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
+      gtk_table_attach_defaults (GTK_TABLE (table),
+                                 pointlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
       gtk_widget_show (table2);
 
-      spin_pos_x[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].position.x,
-                                         -100.0, 100.0,
-                                         0.1, 1.0, 1.0, 0.0, 2);
+      spin_pos_x[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].position.x,
+                                            -100.0, 100.0,
+                                            0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 0,
                                  _("_X:"), 0.0, 0.5,
                                  spin_pos_x[k], 1, TRUE);
@@ -408,7 +419,8 @@ create_light_page (void)
       gimp_help_set_help_data (spin_pos_x[k],
                                _("Light source X position in XYZ space"), NULL);
 
-      spin_pos_y[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].position.y,
+      spin_pos_y[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].position.y,
                                             -100.0, 100.0,
                                             0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 1,
@@ -423,7 +435,8 @@ create_light_page (void)
       gimp_help_set_help_data (spin_pos_y[k],
                            _("Light source Y position in XYZ space"), NULL);
 
-      spin_pos_z[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].position.z,
+      spin_pos_z[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].position.z,
                                             -100.0, 100.0,
                                             0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 2,
@@ -442,14 +455,17 @@ create_light_page (void)
       dirlightwid[k] = gtk_vbox_new (FALSE, 0);
       if (mapvals.lightsource[k].type == DIRECTIONAL_LIGHT)
         gtk_widget_show (dirlightwid[k]);
+
       table2 = gtk_table_new (3, 2, FALSE);
       gtk_widget_show (table2);
       gtk_table_set_col_spacings (GTK_TABLE (table2), 6);
       gtk_table_set_row_spacings (GTK_TABLE (table2), 6);
       gtk_container_add (GTK_CONTAINER (dirlightwid[k]), table2);
-      gtk_table_attach_defaults (GTK_TABLE (table), dirlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
+      gtk_table_attach_defaults (GTK_TABLE (table),
+                                 dirlightwid[k], 2*k + 1, 2*k + 2, 4, 5);
 
-      spin_dir_x[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.x,
+      spin_dir_x[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].direction.x,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 0,
                                  _("X:"), 0.0, 0.5,
@@ -463,7 +479,8 @@ create_light_page (void)
       gimp_help_set_help_data (spin_dir_x[k],
                                _("Light source X direction in XYZ space"), NULL);
 
-      spin_dir_y[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.y,
+      spin_dir_y[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].direction.y,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 1,
                                  _("Y:"), 0.0, 0.5,
@@ -477,7 +494,8 @@ create_light_page (void)
       gimp_help_set_help_data (spin_dir_y[k],
                                _("Light source Y direction in XYZ space"), NULL);
 
-      spin_dir_z[k] = gimp_spin_button_new (&adj, mapvals.lightsource[k].direction.z,
+      spin_dir_z[k] = gimp_spin_button_new (&adj,
+                                            mapvals.lightsource[k].direction.z,
                                             -100.0, 100.0, 0.1, 1.0, 1.0, 0.0, 2);
       gimp_table_attach_aligned (GTK_TABLE (table2), 0, 2,
                                  _("Z:"), 0.0, 0.5,
@@ -489,21 +507,23 @@ create_light_page (void)
                         G_CALLBACK (interactive_preview_callback),
                         NULL);
       gimp_help_set_help_data (spin_dir_z[k],
-                               _("Light source Z direction in XYZ space"), NULL);
+                               _("Light source Z direction in XYZ space"),
+                               NULL);
 
       label = gtk_label_new (_("Lighting preset:"));
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_set_row_spacing (GTK_TABLE (table), 4, 24);
       gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 3, 5, 6);
       gtk_widget_show (label);
 
-      button = gtk_button_new_with_mnemonic (_("_Save"));
+      button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
       gtk_table_attach_defaults (GTK_TABLE (table), button, 3, 4, 5, 6);
       g_signal_connect (button, "clicked",
                         G_CALLBACK (save_lighting_preset),
                         NULL);
       gtk_widget_show (button);
 
-      button = gtk_button_new_with_mnemonic (_("_Load"));
+      button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
       gtk_table_attach_defaults (GTK_TABLE (table), button, 5, 6, 5, 6);
       g_signal_connect (button, "clicked",
                         G_CALLBACK (load_lighting_preset),

@@ -54,7 +54,9 @@ Overview of Changes in GIMP 2.1.2
 
 - Removed HRZ plug-in.
 
-- Improved developer documentation.
+- Improved developers documentation.
+
+- Improved quality of antialiasing in the ellipse select tool.
 
 - Lots of bug fixes and other goodies. Check the ChangeLog for details.
 
