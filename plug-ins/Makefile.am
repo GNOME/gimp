@@ -19,6 +19,7 @@ SUBDIRS = 			\
 	AlienMap		\
 	CEL			\
 	CML_explorer		\
+	FractalExplorer		\
 	Lighting		\
 	MapObject		\
 	align_layers		\

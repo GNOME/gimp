@@ -58,41 +58,45 @@ void         create_display_shell   (GDisplay    *gdisp,
  */
 
 /* some simple query dialogs
- * if object != NULL then the query boxes will connect to the "destroy"
- * signal of this object
+ * if object != NULL then the query boxes will connect their cancel callback
+ * to the provided signal of this object
  */
-GtkWidget *  query_string_box       (char        *title,
-				     char        *message,
-				     char        *initial,
+GtkWidget *  query_string_box       (gchar       *title,
+				     gchar       *message,
+				     gchar       *initial,
 				     GtkObject   *object,
+				     gchar       *signal,
 				     QueryFunc    callback,
 				     gpointer     data);
-GtkWidget *  query_int_box          (char        *title,
+GtkWidget *  query_int_box          (gchar       *title,
 				     char        *message,
-				     int          initial,
-				     int          lower,
-				     int          upper,
+				     gint         initial,
+				     gint         lower,
+				     gint         upper,
 				     GtkObject   *object,
+				     gchar       *signal,
 				     QueryFunc    callback,
 				     gpointer     data);
-GtkWidget *  query_float_box        (char        *title,
-				     char        *message,
-				     float        initial,
-				     float        lower,
-				     float        upper,
-				     int          digits,
+GtkWidget *  query_float_box        (gchar       *title,
+				     gchar       *message,
+				     gfloat       initial,
+				     gfloat       lower,
+				     gfloat       upper,
+				     gint         digits,
 				     GtkObject   *object,
+				     gchar       *signal,
 				     QueryFunc    callback,
 				     gpointer     data);
-GtkWidget *  query_size_box         (char        *title,
-				     char        *message,
-				     float        initial,
-				     float        lower,
-				     float        upper,
-				     int          digits,
+GtkWidget *  query_size_box         (gchar       *title,
+				     gchar       *message,
+				     gfloat       initial,
+				     gfloat       lower,
+				     gfloat       upper,
+				     gint         digits,
 				     GUnit        unit,
-				     float        resolution,
+				     gfloat       resolution,
 				     GtkObject   *object,
+				     gchar       *signal,
 				     QueryFunc    callback,
 				     gpointer     data);
 

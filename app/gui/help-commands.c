@@ -368,13 +368,13 @@ select_border_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (N_("Border Selection"),
-		  N_("Border selection by:"),
+  query_size_box (_("Border Selection"),
+		  _("Border selection by:"),
 		  gimage_mask_border_radius, 1, 32767, 0,
 		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
 		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
-		  GTK_OBJECT (gdisp->gimage), gimage_mask_border_callback,
-		  gdisp->gimage);
+		  GTK_OBJECT (gdisp->gimage), "destroy",
+		  gimage_mask_border_callback, gdisp->gimage);
 }
 
 void
@@ -385,13 +385,13 @@ select_feather_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  query_size_box (N_("Feather Selection"),
-		  N_("Feather selection by:"),
+  query_size_box (_("Feather Selection"),
+		  _("Feather selection by:"),
 		  gimage_mask_feather_radius, 0, 32767, 3,
 		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
 		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
-		  GTK_OBJECT (gdisp->gimage), gimage_mask_feather_callback,
-		  gdisp->gimage);
+		  GTK_OBJECT (gdisp->gimage), "destroy",
+		  gimage_mask_feather_callback, gdisp->gimage);
 }
 
 void
@@ -407,8 +407,8 @@ select_grow_cmd_callback (GtkWidget *widget,
 		  gimage_mask_grow_pixels, 1, 32767, 0,
 		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
 		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
-		  GTK_OBJECT (gdisp->gimage), gimage_mask_grow_callback,
-		  gdisp->gimage);
+		  GTK_OBJECT (gdisp->gimage), "destroy",
+		  gimage_mask_grow_callback, gdisp->gimage);
 }
 
 void
@@ -424,8 +424,8 @@ select_shrink_cmd_callback (GtkWidget *widget,
 		  gimage_mask_shrink_pixels, 1, 32767, 0,
 		  gdisp->dot_for_dot ? UNIT_PIXEL : gdisp->gimage->unit,
 		  MIN(gdisp->gimage->xresolution, gdisp->gimage->yresolution),
-		  GTK_OBJECT (gdisp->gimage), gimage_mask_shrink_callback,
-		  gdisp->gimage);
+		  GTK_OBJECT (gdisp->gimage), "destroy",
+		  gimage_mask_shrink_callback, gdisp->gimage);
 }
 
 void

@@ -1040,8 +1040,6 @@ gimp_image_get_unit (gint32  image_ID)
   int nreturn_vals;
   GUnit unit;
 
-  g_return_if_fail(unit);
-
   return_vals = gimp_run_procedure ("gimp_image_get_unit",
 				    &nreturn_vals,
 				    PARAM_IMAGE, image_ID,

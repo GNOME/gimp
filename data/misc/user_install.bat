@@ -10,8 +10,9 @@ mkdir %2\palettes
 mkdir %2\patterns
 mkdir %2\plug-ins
 mkdir %2\modules
-mkdir %2\gfig
 mkdir %2\scripts
+mkdir %2\gfig
 mkdir %2\gflares
+mkdir %2\fractalexplorer
 
 pause

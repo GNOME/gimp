@@ -106,6 +106,138 @@ install_help (InstallCallback callback)
   GdkFont   *font_strong;
   GdkFont   *font_emphasis;
   GdkFont   *font;
+  static const struct {
+    gint    font;
+    char   *text;
+  } help_lines[] = {
+    { 2, N_("The GIMP - GNU Image Manipulation Program\n\n") },
+    { 1, N_("Copyright (C) 1995 Spencer Kimball and Peter Mattis\n") },
+    { 0, "\n" },
+    
+    { 0, N_("This program is free software; you can redistribute it and/or modify\n") },
+    { 0, N_("it under the terms of the GNU General Public License as published by\n") },
+    { 0, N_("the Free Software Foundation; either version 2 of the License, or\n") },
+    { 0, N_("(at your option) any later version.\n") },
+    { 0, "\n" },
+    { 0, N_("This program is distributed in the hope that it will be useful,\n") },
+    { 0, N_("but WITHOUT ANY WARRANTY; without even the implied warranty of\n") },
+    { 0, N_("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n") },
+    { 0, N_("See the GNU General Public License for more details.\n") },
+    { 0, "\n" },
+    { 0, N_("You should have received a copy of the GNU General Public License\n") },
+    { 0, N_("along with this program; if not, write to the Free Software\n") },
+    { 0, N_("Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n") },
+    { 0, "\n\n" },
+
+    { 2, N_("Personal GIMP Installation\n\n") },
+    { 0, N_("For a proper GIMP installation, a subdirectory called\n") },
+    { 1, NULL }, /* will be replaced with gimp_directory() */
+    { 0, N_(" needs to be created.  This\n") },
+    { 0, N_("subdirectory will contain a number of important files:\n\n") },
+
+    { 1, N_("gimprc\n") },
+    { 0, N_("\t\tThe gimprc is used to store personal preferences\n") },
+    { 0, N_("\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n") },
+    { 0, N_("\t\tPaths to search for brushes, palettes, gradients\n") },
+    { 0, N_("\t\tpatterns, plug-ins and modules are also configured here.\n") },
+
+    { 1, N_("unitrc\n") },
+    { 0, N_("\t\tThe unitrc is used to store your user units database.\n") },
+    { 0, N_("\t\tYou can define additional units and use them just\n") },
+    { 0, N_("\t\tlike you use the built-in units inches, millimeters,\n") },
+    { 0, N_("\t\tpoints and picas. This file is overwritten each time\n") },
+    { 0, N_("\t\tyou quit the GIMP.\n") },
+
+    { 1, N_("pluginrc\n") },
+    { 0, N_("\t\tPlug-ins and extensions are external programs run by\n") },
+    { 0, N_("\t\tthe GIMP which provide additional functionality.\n") },
+    { 0, N_("\t\tThese programs are searched for at run-time and\n") },
+    { 0, N_("\t\tinformation about their functionality and mod-times\n") },
+    { 0, N_("\t\tis cached in this file.  This file is intended to\n") },
+    { 0, N_("\t\tbe GIMP-readable only, and should not be edited.\n") },
+
+    { 1, N_("brushes\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined brushes.  The default gimprc file\n") },
+    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
+    { 0, N_("\t\twide gimp brushes installation when searching for\n") },
+    { 0, N_("\t\tbrushes.\n") },
+
+    { 1, N_("gradients\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined gradients.  The default gimprc file\n") },
+    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
+    { 0, N_("\t\twide gimp gradients installation when searching for\n") },
+    { 0, N_("\t\tgradients.\n") },
+
+    { 1, N_("gfig\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined figures to be used by the gfig plug-in.\n") },
+    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
+    { 0, N_("\t\taddition to the systemwide gimp gfig installation\n") },
+    { 0, N_("\t\twhen searching for gfig figures.\n") },
+
+    { 1, N_("gflares\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined gflares to be used by the gflare plug-in.\n") },
+    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
+    { 0, N_("\t\taddition to the systemwide gimp gflares installation\n") },
+    { 0, N_("\t\twhen searching for gflares.\n") },
+
+    { 1, N_("fractalexplorer\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n") },
+    { 0, N_("\t\tThe default gimprc file checks this subdirectory in\n") },
+    { 0, N_("\t\taddition to the systemwide gimp FractalExplorer installation\n") },
+    { 0, N_("\t\twhen searching for fractals.\n") },
+
+    { 1, N_("palettes\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined palettes.  The default gimprc file\n") },
+    { 0, N_("\t\tchecks only this subdirectory (not the system-wide\n") },
+    { 0, N_("\t\tinstallation) when searching for palettes.  During\n") },
+    { 0, N_("\t\tinstallation, the system palettes will be copied\n") },
+    { 0, N_("\t\there.  This is done to allow modifications made to\n") },
+    { 0, N_("\t\tpalettes during GIMP execution to persist across\n") },
+    { 0, N_("\t\tsessions.\n") },
+
+    { 1, N_("patterns\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser defined patterns.  The default gimprc file\n") },
+    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
+    { 0, N_("\t\twide gimp patterns installation when searching for\n") },
+    { 0, N_("\t\tpatterns.\n") },
+
+    { 1, N_("plug-ins\n") },
+    { 0, N_("\t\tThis is a subdirectory which can be used to store\n") },
+    { 0, N_("\t\tuser created, temporary, or otherwise non-system-\n") },
+    { 0, N_("\t\tsupported plug-ins.  The default gimprc file\n") },
+    { 0, N_("\t\tchecks this subdirectory in addition to the system-\n") },
+    { 0, N_("\t\twide GIMP plug-in directories when searching for\n") },
+    { 0, N_("\t\tplug-ins.\n") },
+
+    { 1, N_("modules\n") },
+    { 0, N_("\t\tThis subdirectory can be used to store user created,\n") },
+    { 0, N_("\t\ttemporary, or otherwise non-system-supported DLL modules.\n") },
+    { 0, N_("\t\tThe default gimprc file checks this subdirectory\n") },
+    { 0, N_("\t\tin addition to the system-wide GIMP module directory\n") },
+    { 0, N_("\t\twhen searching for modules to load when initialising.\n") },
+
+    { 1, N_("scripts\n") },
+    { 0, N_("\t\tThis subdirectory is used by the GIMP to store \n") },
+    { 0, N_("\t\tuser created and installed scripts. The default gimprc\n") },
+    { 0, N_("\t\tfile checks this subdirectory in addition to the system\n") },
+    { 0, N_("\t\t-wide gimp scripts subdirectory when searching for scripts\n") },
+
+    { 1, N_("tmp\n") },
+    { 0, N_("\t\tThis subdirectory is used by the GIMP to temporarily\n") },
+    { 0, N_("\t\tstore undo buffers to reduce memory usage.  If GIMP is\n") },
+    { 0, N_("\t\tunceremoniously killed, files may persist in this directory\n") },
+    { 0, N_("\t\tof the form: gimp<#>.<#>.  These files are useless across\n") },
+    { 0, N_("\t\tGIMP sessions and can be destroyed with impunity.\n") }
+  };
+  gint nhelp_lines = sizeof (help_lines) / sizeof (help_lines[0]);
+  gint i;
 
   help_widget = gtk_dialog_new ();
   gtk_signal_connect (GTK_OBJECT (help_widget), "delete_event",
@@ -147,213 +279,20 @@ install_help (InstallCallback callback)
   /*  Realize the widget before allowing new text to be inserted  */
   gtk_widget_realize (text);
 
-  gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL,
-		   _("The GIMP - GNU Image Manipulation Program\n\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("Copyright (C) 1995 Spencer Kimball and Peter Mattis\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("This program is free software; you can redistribute it and/or modify\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("it under the terms of the GNU General Public License as published by\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("the Free Software Foundation; either version 2 of the License, or\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("(at your option) any later version.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("This program is distributed in the hope that it will be useful,\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("but WITHOUT ANY WARRANTY; without even the implied warranty of\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("See the GNU General Public License for more details.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "\n", -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("You should have received a copy of the GNU General Public License\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("along with this program; if not, write to the Free Software\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   "\n\n", -1);
-
-  gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL,
-		   _("Personal GIMP Installation\n\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("For a proper GIMP installation, a subdirectory called\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   gimp_directory (), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _(" needs to be created.  This\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("subdirectory will contain a number of important files:\n\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("gimprc\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThe gimprc is used to store personal preferences\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tPaths to search for brushes, palettes, gradients\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tpatterns, plug-ins and modules are also configured here.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("unitrc\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThe unitrc is used to store your user units database.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tYou can define additional units and use them just\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tlike you use the built-in units inches, millimeters,\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tpoints and picas. This file is overwritten each time\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tyou quit the GIMP.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("pluginrc\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tPlug-ins and extensions are external programs run by\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tthe GIMP which provide additional functionality.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThese programs are searched for at run-time and\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tinformation about their functionality and mod-times\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tis cached in this file.  This file is intended to\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tbe GIMP-readable only, and should not be edited.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("brushes\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined brushes.  The default gimprc file\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tchecks this subdirectory in addition to the system-\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twide gimp brushes installation when searching for\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tbrushes.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("gradients\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined gradients.  The default gimprc file\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tchecks this subdirectory in addition to the system-\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twide gimp gradients installation when searching for\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tgradients.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("gfig\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined figures to be used by the gfig plug-in.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThe default gimprc file checks this subdirectory in\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\taddition to the systemwide gimp gfig installation\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twhen searching for gfig figures.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("gflares\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined gflares to be used by the gflare plug-in.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThe default gimprc file checks this subdirectory in\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\taddition to the systemwide gimp gflares installation\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twhen searching for gflares.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("palettes\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined palettes.  The default gimprc file\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tchecks only this subdirectory (not the system-wide\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tinstallation) when searching for palettes.  During\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tinstallation, the system palettes will be copied\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\there.  This is done to allow modifications made to\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tpalettes during GIMP execution to persist across\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tsessions.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("patterns\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser defined patterns.  The default gimprc file\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tchecks this subdirectory in addition to the system-\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twide gimp patterns installation when searching for\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tpatterns.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("plug-ins\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis is a subdirectory which can be used to store\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser created, temporary, or otherwise non-system-\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tsupported plug-ins.  The default gimprc file\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tchecks this subdirectory in addition to the system-\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twide GIMP plug-in directories when searching for\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tplug-ins.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("modules\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis subdirectory can be used to store user created,\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\ttemporary, or otherwise non-system-supported DLL modules.  \n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThe default gimprc file checks this subdirectory\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tin addition to the system-wide GIMP module directory\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\twhen searching for modules to load when initialising.\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("scripts\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis subdirectory is used by the GIMP to store \n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tuser created and installed scripts. The default gimprc\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tfile checks this subdirectory in addition to the system\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\t-wide gimp scripts subdirectory when searching for scripts\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font_emphasis, NULL, NULL,
-		   _("tmp\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tThis subdirectory is used by the GIMP to temporarily\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tunceremoniously killed, files may persist in this directory\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tof the form: gimp<#>.<#>.  These files are useless across\n"), -1);
-  gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
-		   _("\t\tGIMP sessions and can be destroyed with impunity.\n"), -1);
+  for (i = 0; i < nhelp_lines; i++)
+    if (help_lines[i].text == NULL)
+      /*  inserting gimp_directory () this way is a little ugly  */
+      gtk_text_insert (GTK_TEXT (text),
+		       (help_lines[i].font == 2) ? font_strong :
+		       (help_lines[i].font == 1) ? font_emphasis : font,
+		       NULL, NULL,
+		       gimp_directory (), -1);
+    else
+      gtk_text_insert (GTK_TEXT (text),
+		       (help_lines[i].font == 2) ? font_strong :
+		       (help_lines[i].font == 1) ? font_emphasis : font,
+		       NULL, NULL,
+		       gettext (help_lines[i].text), -1);
 
   /* scroll back to the top */
   gtk_adjustment_set_value (GTK_ADJUSTMENT (vadj), 0.0);

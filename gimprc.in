@@ -238,9 +238,6 @@
 (transparency-type 1)
 (transparency-size 2)
 
-# gfig pattern directory
-(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
-
 # This string sets how image window titles are formatted.
 # The following percent expansions are performed:
 #   %%  literal percent sign
@@ -253,5 +250,11 @@
 #   %s  source scale factor
 #   %d  destination scale factor
 (image-title-format "%f-%p.%i (%t) %z%%")
+
+# gfig pattern directory
+(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
+
+# fractalexplorer path
+(fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
 # [end of file]

@@ -685,6 +685,8 @@ plug-ins/xpm/Makefile
 plug-ins/AlienMap/Makefile
 plug-ins/CEL/Makefile
 plug-ins/CML_explorer/Makefile
+plug-ins/FractalExplorer/Makefile
+plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
 plug-ins/Lighting/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/align_layers/Makefile

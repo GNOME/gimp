@@ -1,3 +1,30 @@
+1999-03-25  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* unitrc: corrected a typo
+
+	* app/commands.c
+	* app/global_edit.c
+	* app/gradient.c
+	* app/interface.[ch]
+	* app/palette.c
+	* app/paths_dialog.c: the query_[string|..]_boxes connect their
+	close callback to a user provided signal now.
+
+	* libgimp/gimpimage.c: gimp_image_get_unit() doesn't need a
+	g_return_if_fail()
+
+	* libgimp/gimpunitmenu.c: memory leak & compiler warning
+
+	* configure.in
+	* gimprc.in
+	* user_install
+	* user_install.bat
+	* plug-ins/Makefile.am
+	* plug-ins/FractalExplorer/*: added the FractalExplorer plugin.
+
+	* app/install.c: ditto and made the install help text more
+	editable by moving it to an array.
+
 Thu Mar 25 22:44:36 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	Ok. I'll add the file this time..
@@ -212,7 +239,7 @@ Tue Mar 16 19:12:08 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* app/gdisplay.h: double the length of the cursor_format_str as
 	users may define strange units now
-	
+
 	* app/xcf.c: forgot a sanity check when loading/saving the user
 	unit property
 
@@ -220,7 +247,7 @@ Tue Mar 16 19:12:08 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	This implements the rest of the unit system (unitrc loading and
 	saving and full PDB interface)
-	
+
 	* Makefile.am
 	* gimp.1
 	* user_install

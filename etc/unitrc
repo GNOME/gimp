@@ -37,19 +37,18 @@
    (singular "yard")
    (plural "yards"))
 
-(unit-info "typorg. points"
+(unit-info "typogr. points"
    (factor 72.270000)
    (digits 0)
    (symbol "tpt")
    (abbreviation "tpt")
    (singular "typogr. point")
-   (plural "typorg. points"))
+   (plural "typogr. points"))
 
-(unit-info "typorg. picas"
+(unit-info "typogr. picas"
    (factor 6.022500)
    (digits 1)
    (symbol "tpc")
    (abbreviation "tpc")
    (singular "typogr. pica")
-   (plural "typorg. picas"))
-
+   (plural "typogr. picas"))

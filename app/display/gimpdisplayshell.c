@@ -809,8 +809,8 @@ struct _QueryBox
   gpointer   data;
 };
 
-static QueryBox * create_query_box (char *, char *, GtkObject *, QueryFunc,
-				    gpointer);
+static QueryBox * create_query_box (gchar *, gchar *, GtkObject *, gchar *,
+				    QueryFunc, gpointer);
 static gint query_box_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void query_box_cancel_callback (GtkWidget *, gpointer);
 static void string_query_box_ok_callback (GtkWidget *, gpointer);
@@ -822,9 +822,10 @@ static void size_query_box_ok_callback (GtkWidget *, gpointer);
  */
 
 QueryBox *
-create_query_box (char        *title,
-		  char        *message,
+create_query_box (gchar       *title,
+		  gchar       *message,
 		  GtkObject   *object,
+		  gchar       *signal,
 		  QueryFunc    callback,
 		  gpointer     data)
 {
@@ -845,11 +846,10 @@ create_query_box (char        *title,
 		      (GtkSignalFunc) query_box_delete_callback,
 		      query_box);
 
-  /* if we are associated with an object, connect to that object's
-   * "destroy" signal
+  /* if we are associated with an object, connect to the provided signal
    */
-  if (object && GTK_IS_OBJECT (object))
-    gtk_signal_connect (GTK_OBJECT (object), "destroy",
+  if (object && GTK_IS_OBJECT (object) && signal)
+    gtk_signal_connect (GTK_OBJECT (object), signal,
 			(GtkSignalFunc) query_box_cancel_callback,
 			query_box);
   else
@@ -894,17 +894,18 @@ create_query_box (char        *title,
 }
 
 GtkWidget *
-query_string_box (char        *title,
-		  char        *message,
-		  char        *initial,
+query_string_box (gchar       *title,
+		  gchar       *message,
+		  gchar       *initial,
 		  GtkObject   *object,
+		  gchar       *signal,
 		  QueryFunc    callback,
 		  gpointer     data)
 {
   QueryBox  *query_box;
   GtkWidget *entry;
 
-  query_box = create_query_box (title, message, object, callback, data);
+  query_box = create_query_box (title, message, object, signal, callback, data);
 
   gtk_signal_connect (GTK_OBJECT (query_box->ok_button), "clicked",
                       (GtkSignalFunc) string_query_box_ok_callback,
@@ -925,12 +926,13 @@ query_string_box (char        *title,
 }
 
 GtkWidget *
-query_int_box (char        *title,
-	       char        *message,
-	       int          initial,
-	       int          lower,
-	       int          upper,
+query_int_box (gchar       *title,
+	       gchar       *message,
+	       gint         initial,
+	       gint         lower,
+	       gint         upper,
 	       GtkObject   *object,
+	       gchar       *signal,
 	       QueryFunc    callback,
 	       gpointer     data)
 {
@@ -938,7 +940,7 @@ query_int_box (char        *title,
   GtkAdjustment* adjustment;
   GtkWidget *spinbutton;
 
-  query_box = create_query_box (title, message, object, callback, data);
+  query_box = create_query_box (title, message, object, signal, callback, data);
 
   gtk_signal_connect (GTK_OBJECT (query_box->ok_button), "clicked",
                       (GtkSignalFunc) int_query_box_ok_callback,
@@ -959,13 +961,14 @@ query_int_box (char        *title,
 }
 
 GtkWidget *
-query_float_box (char        *title,
-		 char        *message,
-		 float        initial,
-		 float        lower,
-		 float        upper,
-		 int          digits,
+query_float_box (gchar       *title,
+		 gchar       *message,
+		 gfloat       initial,
+		 gfloat       lower,
+		 gfloat       upper,
+		 gint         digits,
 		 GtkObject   *object,
+		 gchar       *signal,
 		 QueryFunc    callback,
 		 gpointer     data)
 {
@@ -973,7 +976,7 @@ query_float_box (char        *title,
   GtkAdjustment* adjustment;
   GtkWidget *spinbutton;
 
-  query_box = create_query_box (title, message, object, callback, data);
+  query_box = create_query_box (title, message, object, signal, callback, data);
 
   gtk_signal_connect (GTK_OBJECT (query_box->ok_button), "clicked",
                       (GtkSignalFunc) float_query_box_ok_callback,
@@ -994,22 +997,23 @@ query_float_box (char        *title,
 }
 
 GtkWidget *
-query_size_box (char        *title,
-		char        *message,
-		float        initial,
-		float        lower,
-		float        upper,
-		int          digits,
+query_size_box (gchar       *title,
+		gchar       *message,
+		gfloat       initial,
+		gfloat       lower,
+		gfloat       upper,
+		gint         digits,
 		GUnit        unit,
-		float        resolution,
+		gfloat       resolution,
 		GtkObject   *object,
+		gchar       *signal,
 		QueryFunc    callback,
 		gpointer     data)
 {
   QueryBox  *query_box;
   GtkWidget *sizeentry;
 
-  query_box = create_query_box (title, message, object, callback, data);
+  query_box = create_query_box (title, message, object, signal, callback, data);
 
   gtk_signal_connect (GTK_OBJECT (query_box->ok_button), "clicked",
                       (GtkSignalFunc) size_query_box_ok_callback,
@@ -1054,7 +1058,7 @@ query_box_cancel_callback (GtkWidget *w,
 
   query_box = (QueryBox *) client_data;
 
-  /*  disconnect, if we are connected to some object's "destroy" signal  */
+  /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
@@ -1069,11 +1073,11 @@ string_query_box_ok_callback (GtkWidget *w,
 			      gpointer   client_data)
 {
   QueryBox *query_box;
-  char     *string;
+  gchar    *string;
 
   query_box = (QueryBox *) client_data;
 
-  /*  disconnect, if we are connected to some object's "destroy" signal  */
+  /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
@@ -1094,18 +1098,18 @@ int_query_box_ok_callback (GtkWidget *w,
 			   gpointer   client_data)
 {
   QueryBox *query_box;
-  int      *integer_value;
+  gint     *integer_value;
 
   query_box = (QueryBox *) client_data;
 
-  /*  disconnect, if we are connected to some object's "destroy" signal  */
+  /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
   /*  Get the spinbutton data  */
-  integer_value = g_malloc(sizeof(int));
+  integer_value = g_malloc (sizeof (gint));
   *integer_value =
-    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(query_box->entry));
+    gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(query_box->entry));
 
   /*  Call the user defined callback  */
   (* query_box->callback) (w, query_box->data, (gpointer) integer_value);
@@ -1121,16 +1125,16 @@ float_query_box_ok_callback (GtkWidget *w,
 			     gpointer   client_data)
 {
   QueryBox *query_box;
-  float    *float_value;
+  gfloat   *float_value;
 
   query_box = (QueryBox *) client_data;
 
-  /*  disconnect, if we are connected to some object's "destroy" signal  */
+  /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
   /*  Get the spinbutton data  */
-  float_value = g_malloc(sizeof(float));
+  float_value = g_malloc (sizeof (gfloat));
   *float_value =
     gtk_spin_button_get_value_as_float(GTK_SPIN_BUTTON(query_box->entry));
 
@@ -1148,16 +1152,16 @@ size_query_box_ok_callback (GtkWidget *w,
 			    gpointer   client_data)
 {
   QueryBox *query_box;
-  float    *float_value;
+  gfloat   *float_value;
 
   query_box = (QueryBox *) client_data;
 
-  /*  disconnect, if we are connected to some object's "destroy" signal  */
+  /*  disconnect, if we are connected to some signal  */
   if (query_box->object)
     gtk_signal_disconnect_by_data (query_box->object, query_box);
 
   /*  Get the sizeentry data  */
-  float_value = g_malloc(sizeof(float));
+  float_value = g_malloc (sizeof (gfloat));
   *float_value =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (query_box->entry), 0);
 

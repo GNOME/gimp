@@ -1348,8 +1348,11 @@ static void
 palette_new_entries_callback (GtkWidget *w,
 				 gpointer   client_data)
 {
-  query_string_box (_("New Palette"), _("Enter a name for new palette"),
-		    NULL, NULL, palette_add_entries_callback, client_data);
+  query_string_box (_("New Palette"),
+		    _("Enter a name for new palette"),
+		    NULL,
+		    NULL, NULL,
+		    palette_add_entries_callback, client_data);
 }
 
 static void
@@ -2709,10 +2712,13 @@ palette_merge_entries_callback (GtkWidget *w,
 
 static void
 palette_merge_dialog_callback (GtkWidget *w,
-				gpointer client_data)
+			       gpointer client_data)
 {
-  query_string_box (_("Merge Palette"), _("Enter a name for merged palette"),
-		    NULL, NULL, palette_merge_entries_callback, client_data);
+  query_string_box (_("Merge Palette"),
+		    _("Enter a name for merged palette"),
+		    NULL,
+		    NULL, NULL,
+		    palette_merge_entries_callback, client_data);
 }
 
 static void
@@ -2731,7 +2737,8 @@ palette_import_dialog_callback (GtkWidget *w,
 }
 
 static void
-palette_import_fill_grad_preview(GtkWidget *preview,gradient_t *gradient)
+palette_import_fill_grad_preview(GtkWidget *preview,
+				 gradient_t *gradient)
 {
   guchar buffer[3*IMPORT_PREVIEW_WIDTH];
   gint loop;

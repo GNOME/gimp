@@ -1256,10 +1256,11 @@ ed_close_callback(GtkWidget *widget, gpointer client_data)
 static void
 ed_new_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
-	query_string_box(N_("New gradient"),
-			 N_("Enter a name for the new gradient"),
-			 N_("untitled"),
-			 NULL, ed_do_new_gradient_callback, NULL);
+	query_string_box(_("New gradient"),
+			 _("Enter a name for the new gradient"),
+			 _("untitled"),
+			 NULL, NULL,
+			 ed_do_new_gradient_callback, NULL);
 } /* ed_new_gradient_callback */
 
 
@@ -1365,10 +1366,11 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 
 	name = g_strdup_printf(_("%s copy"), curr_gradient->name);
 
-	query_string_box(N_("Copy gradient"),
-			 N_("Enter a name for the copied gradient"),
+	query_string_box(_("Copy gradient"),
+			 _("Enter a name for the copied gradient"),
 			 name,
-			 NULL, ed_do_copy_gradient_callback, NULL);
+			 NULL, NULL,
+			 ed_do_copy_gradient_callback, NULL);
 
 	g_free(name);
 } /* ed_copy_gradient_callback */
@@ -1594,10 +1596,11 @@ ed_rename_grads_callback(GtkWidget *widget, gpointer client_data)
         if(curr_gradient == NULL)
 	  return;
 
-	query_string_box(N_("Rename gradient"),
-			 N_("Enter a new name for the gradient"),
+	query_string_box(_("Rename gradient"),
+			 _("Enter a new name for the gradient"),
 			 curr_gradient->name,
-			 NULL, ed_do_rename_gradient_callback, curr_gradient);
+			 NULL, NULL,
+			 ed_do_rename_gradient_callback, curr_gradient);
 }
 
 /*****/
@@ -2246,16 +2249,16 @@ control_do_hint(gint x, gint y)
 			case GRAD_DRAG_LEFT:
 				if (seg != NULL) {
 					if (seg->prev != NULL)
-						ed_set_hint(N_("Drag: move    Shift+drag: move & compress"));
+						ed_set_hint(_("Drag: move    Shift+drag: move & compress"));
 					else
-						ed_set_hint(N_("Click: select    Shift+click: extend selection"));
+						ed_set_hint(_("Click: select    Shift+click: extend selection"));
 				} else
-					ed_set_hint(N_("Click: select    Shift+click: extend selection"));
+					ed_set_hint(_("Click: select    Shift+click: extend selection"));
 
 				break;
 
 			case GRAD_DRAG_MIDDLE:
-				ed_set_hint(N_("Click: select    Shift+click: extend selection    "
+				ed_set_hint(_("Click: select    Shift+click: extend selection    "
 					    "Drag: move"));
 
 				break;
@@ -2266,7 +2269,7 @@ control_do_hint(gint x, gint y)
 				break;
 		} /* switch */
 	} else
-		ed_set_hint(N_("Click: select    Shift+click: extend selection    "
+		ed_set_hint(_("Click: select    Shift+click: extend selection    "
 			    "Drag: move    Shift+drag: move & compress"));
 } /* control_do_hint */
 
