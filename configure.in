@@ -24,13 +24,13 @@ m4_define([gimp_api_version], [2.0])
 
 # Versions used for apps, plugins, tools, pkg-config files, and data,
 # as well as global and user prefs
-m4_define([gimp_app_version], [2.2])
+m4_define([gimp_app_version], [2.3])
 m4_define([gimp_plugin_version], [2.0])
 m4_define([gimp_tool_version], [2.0])
 m4_define([gimp_pkgconfig_version], [2.0])
 m4_define([gimp_data_version], [2.0])
 m4_define([gimp_sysconf_version], [2.0])
-m4_define([gimp_user_version], [2.2])
+m4_define([gimp_user_version], [2.3])
 
 m4_define([gimp_unstable],
           m4_if(m4_eval(gimp_minor_version % 2), [1], [yes], [no]))

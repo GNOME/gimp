@@ -177,6 +177,20 @@ gimp_brush_get_info
 gimp_brush_get_pixels
 gimp_brush_get_spacing
 gimp_brush_set_spacing
+gimp_brush_get_shape
+gimp_brush_set_shape
+gimp_brush_get_spikes
+gimp_brush_set_spikes
+gimp_brush_get_angle
+gimp_brush_set_angle
+gimp_brush_get_radius
+gimp_brush_set_radius
+gimp_brush_get_aspect_ratio
+gimp_brush_set_aspect_ratio
+gimp_brush_get_hardness
+gimp_brush_set_hardness
+gimp_brush_is_generated
+gimp_brush_is_editable
 </SECTION>
 
 <SECTION>
@@ -605,6 +619,7 @@ gimp_palette_set_foreground
 gimp_palette_set_background
 gimp_palette_set_default_colors
 gimp_palette_swap_colors
+gimp_palette_is_editable
 </SECTION>
 
 <SECTION>

@@ -1,3 +1,7 @@
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped gimp_app_version and gimp_user_version to 2.3.
+
 2004-12-30  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* tools/pdbgen/pdb/brush.pdb: added api for changing properties

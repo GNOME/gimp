@@ -101,3 +101,135 @@ Functions operating on a single brush.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_brush_get_shape ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_shape ##### -->
+<para>
+
+</para>
+
+@name: 
+@shape_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_spikes ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_spikes ##### -->
+<para>
+
+</para>
+
+@name: 
+@spikes_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_angle ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_angle ##### -->
+<para>
+
+</para>
+
+@name: 
+@angle_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_radius ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_radius ##### -->
+<para>
+
+</para>
+
+@name: 
+@radius_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_aspect_ratio ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_aspect_ratio ##### -->
+<para>
+
+</para>
+
+@name: 
+@aspect_ratio_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_hardness ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_set_hardness ##### -->
+<para>
+
+</para>
+
+@name: 
+@hardness_in: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_is_generated ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_is_editable ##### -->
+<para>
+
+</para>
+
+@name: 
+@Returns: 
+
+
