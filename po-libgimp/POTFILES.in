@@ -14,6 +14,12 @@ libgimpbase/gimpbaseenums.c
 libgimpbase/gimpmemsize.c
 libgimpbase/gimputils.c
 
+libgimpconfig/gimpconfig-deserialize.c
+libgimpconfig/gimpconfig-iface.c
+libgimpconfig/gimpconfig-path.c
+libgimpconfig/gimpconfigwriter.c
+libgimpconfig/gimpscanner.c
+
 libgimpmodule/gimpmodule.c
 
 libgimpthumb/gimpthumb-utils.c

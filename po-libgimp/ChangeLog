@@ -1,3 +1,7 @@
+2005-02-02  Sven Neumann  <neumann@jpk.com>
+
+	* POTFILES.in: added libgimpconfig.
+
 2005-01-28  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Updated Catalan translation by
