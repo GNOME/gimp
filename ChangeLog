@@ -1,3 +1,14 @@
+1999-03-25  Jay Cox  <jaycox@earthlink.net>
+
+	* app/paint_funcs.[ch]: Added an edge_lock parameter to
+ 	thin_region.  Split the radius parameter into xradius and yradius
+ 	in thin_region and fatten_region.
+
+	* app/channel.c: fixed a bug in channel_bounds that I introduced
+ 	last time I tried to fix a bug in channel_bounds.  Minor
+ 	modifications to work with the improved thin/fatten region
+ 	functions.
+
 Wed Mar 24 11:05:38 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* configure.in: use AC_PATH_PROGS to find perl.

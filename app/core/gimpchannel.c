@@ -641,7 +641,7 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 	          {
 		    if (x < *x1)
 		      *x1 = x;
-		    else if (x > *x2)
+		    if (x > *x2)
 		      *x2 = x;
 		    found = TRUE;
 		  }
@@ -649,15 +649,11 @@ channel_bounds (Channel *mask, int *x1, int *y1, int *x2, int *y2)
 	        {
 		  if (y < *y1)
 		    *y1 = y;
-		  else if (y > *y2)
+		  if (y > *y2)
 		    *y2 = y;
 		}
 	    }
 	}
-      if (*x1 > *x2)
-	*x2 = *x1;
-      if (*y1 > *y2)
-	*y2 = *y1;
     }
 
   *x2 = BOUNDS (*x2 + 1, 0, GIMP_DRAWABLE(mask)->width);
@@ -1317,7 +1313,6 @@ channel_grow (Channel *mask, int radius)
 
   if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
-
   if (channel_is_empty (mask))
     return;
 
@@ -1345,7 +1340,7 @@ channel_grow (Channel *mask, int radius)
   pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1),
 		     (y2 - y1), TRUE);
 
-  fatten_region(&bPR, radius);
+  fatten_region(&bPR, radius, radius);
   mask->bounds_known = FALSE;
 }
 
@@ -1382,7 +1377,7 @@ channel_shrink (Channel *mask, int radius)
   pixel_region_init (&bPR, GIMP_DRAWABLE(mask)->tiles, x1, y1, (x2 - x1),
 		     (y2 - y1), TRUE);
 
-  thin_region (&bPR, radius);
+  thin_region (&bPR, radius, radius, 0);
 
   mask->bounds_known = FALSE;
 }

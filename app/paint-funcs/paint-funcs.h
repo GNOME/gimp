@@ -499,9 +499,11 @@ void  subsample_region                    (PixelRegion *, PixelRegion *,
 
 float shapeburst_region                   (PixelRegion *, PixelRegion *);
 
-void thin_region                           (PixelRegion *, gint16);
+void thin_region                           (PixelRegion *, gint16 xradius,
+					    gint16 yradius, int edge_lock);
 
-void fatten_region                         (PixelRegion *, gint16);
+void fatten_region                         (PixelRegion *, 
+					    gint16 xradius, gint16 yradius);
 
 void  swap_region                         (PixelRegion *, PixelRegion *);
 

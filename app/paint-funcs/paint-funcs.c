@@ -4100,76 +4100,77 @@ rotate_pointers(void **p, guint32 n)
 }
 
 static void
-compute_border(gint16 *circ, guint16 radius)
+compute_border(gint16 *circ, guint16 xradius, guint16 yradius)
 {
   gint32 i;
-  gint32 diameter = radius*2 +1;
+  gint32 diameter = xradius*2 +1;
   gdouble tmp;
   for (i = 0; i < diameter; i++)
   {
-    if (i > radius)
-      tmp = (i - radius) - .5;
-    else if (i < radius)
-      tmp = (radius - i) - .5;
+    if (i > xradius)
+      tmp = (i - xradius) - .5;
+    else if (i < xradius)
+      tmp = (xradius - i) - .5;
     else
       tmp = 0.0;
-    circ[i] = rint(sqrt((radius)*(radius) - (tmp)*(tmp)));
+    circ[i] = rint(yradius/(double)xradius *
+		   sqrt((xradius)*(xradius) - (tmp)*(tmp)));
   }
 }
 
 void
-fatten_region(PixelRegion *src, gint16 radius)
+fatten_region(PixelRegion *src, gint16 xradius, gint16 yradius)
 {
 /*
   Any bugs in this fuction are probably also in thin_region  
   Blame all bugs in this function on jaycox@earthlink.net
 */
   register gint32 i, j, x, y;
-  guchar **buf, *out;
-  guchar **max;
-  gint16 *circ;
+  guchar **buf; /* caches the region's pixel data */
+  guchar *out;  /* holds the new scan line we are computing */
+  guchar **max; /* caches the largest values for each column */
+  gint16 *circ; /* holds the y coords of the filter's mask */
   gint16 last_max, last_index;
 
   guchar *buffer;
-  guint16 diameter = radius*2+1;
 
-  if (radius <= 0)
+  if (xradius <= 0 || yradius <= 0)
     return;
 
-  max = (guchar **)g_malloc ((src->w + 2*radius) * sizeof(void *));
-  buf = (guchar **)g_malloc((radius + 1) * sizeof(void *));
-  for (i = 0; i < radius+1; i++)
+  max = (guchar **)g_malloc ((src->w + 2*xradius) * sizeof(void *));
+  buf = (guchar **)g_malloc((yradius + 1) * sizeof(void *));
+  for (i = 0; i < yradius+1; i++)
   {
     buf[i] = (guchar *)g_malloc(src->w * sizeof(guchar));
   }
-  buffer = g_malloc((src->w + 2*radius)*(radius + 1) * sizeof(guchar));
-  for (i = 0; i < src->w + 2*radius; i++)
+  buffer = g_malloc((src->w + 2*xradius)*(yradius + 1) * sizeof(guchar));
+  for (i = 0; i < src->w + 2*xradius; i++)
   {
-    if (i < radius)
+    if (i < xradius)
       max[i] = buffer;
-    else if (i < src->w + radius)
-      max[i] = &buffer[(radius+1)*(i - radius)];
+    else if (i < src->w + xradius)
+      max[i] = &buffer[(yradius+1)*(i - xradius)];
     else
-      max[i] = &buffer[(radius+1)*(src->w + radius - 1)];
+      max[i] = &buffer[(yradius+1)*(src->w + xradius - 1)];
 
-    for (j = 0 ; j < radius + 1; j++)
+    for (j = 0 ; j < xradius + 1; j++)
       max[i][j] = 0;
   }
-  max += radius;
+  max += xradius;
   out =  (guchar *)g_malloc (src->w * sizeof(guchar));
 
-  circ = (short *)g_malloc (diameter * sizeof(gint16));
-  compute_border (circ, radius);
-  circ += radius;
+  circ = (short *)g_malloc ((2*xradius + 1) * sizeof(gint16));
+  compute_border (circ, xradius, yradius);
+  circ += xradius;
 
   memset (buf[0], 0, src->w);
-  for (i = 0; i < radius && i < src->h; i++) /* load top of image */
+  for (i = 0; i < yradius && i < src->h; i++) /* load top of image */
     pixel_region_get_row (src, src->x, src->y + i, src->w, buf[i+1], 1);
 
   for (x = 0; x < src->w; x++) /* set up max for top of image */
   {
     max[x][0] = buf[0][x];
-    for (j = 1; j < radius+1; j++)
+    for (j = 1; j < yradius+1; j++)
       if (max[x][j] < buf[j][x])
 	max[x][j] = buf[j][x];
       else
@@ -4177,15 +4178,15 @@ fatten_region(PixelRegion *src, gint16 radius)
   }
   for (y = 0; y < src->h; y++)
   {
-    rotate_pointers((void **)buf, radius+1);
-    if (y < src->h - (radius))
-      pixel_region_get_row (src, src->x, src->y + y + radius, src->w,
-			    buf[radius], 1);
+    rotate_pointers((void **)buf, yradius+1);
+    if (y < src->h - (yradius))
+      pixel_region_get_row (src, src->x, src->y + y + yradius, src->w,
+			    buf[yradius], 1);
     else
-      memset (buf[radius], 0, src->w);
+      memset (buf[yradius], 0, src->w);
     for (x = 0 ; x < src->w; x++) /* update max array */
     {
-      for (i = radius; i > 0; i--)
+      for (i = yradius; i > 0; i--)
       {
 	max[x][i] = (MAX (MAX (max[x][i - 1], buf[i-1][x]), buf[i][x]));
       }
@@ -4203,7 +4204,7 @@ fatten_region(PixelRegion *src, gint16 radius)
 	else
 	{
 	  last_max = 0;
-	  for (i = radius; i >= 0; i--)
+	  for (i = xradius; i >= 0; i--)
 	    if (last_max < max[x+i][circ[i]])
 	    {
 	      last_max = max[x+i][circ[i]];
@@ -4214,9 +4215,9 @@ fatten_region(PixelRegion *src, gint16 radius)
       }
       else
       {
-	last_index = radius;
-	last_max = max[x+radius][circ[radius]];
-	for (i = radius-1; i >= -radius; i--)
+	last_index = xradius;
+	last_max = max[x+xradius][circ[xradius]];
+	for (i = xradius-1; i >= -xradius; i--)
 	  if (last_max < max[x+i][circ[i]])
 	  {
 	    last_max = max[x+i][circ[i]];
@@ -4227,68 +4228,84 @@ fatten_region(PixelRegion *src, gint16 radius)
     }
     pixel_region_set_row (src, src->x, src->y + y, src->w, out);
   }
-  circ -= radius;
-  max -= radius;
+  circ -= xradius;
+  max -= xradius;
   g_free (circ);
   g_free (buffer);
   g_free (max);
-  for (i = 0; i < radius; i++)
+  for (i = 0; i < yradius + 1; i++)
     g_free (buf[i]);
   g_free (buf);
   g_free (out);
 }
 
 void
-thin_region(PixelRegion *src, gint16 radius)
+thin_region(PixelRegion *src, gint16 xradius, gint16 yradius, int edge_lock)
 {
 /*
   pretty much the same as fatten_region only different
   blame all bugs in this function on jaycox@earthlink.net
 */
+  /* If edge_lock is true  we assume that pixels outside the region
+     we are passed are identical to the edge pixels.
+     If edge_lock is false, we assume that pixels outside the region are 0
+  */
   register gint32 i, j, x, y;
-  guchar **buf, *out;
-  guchar **max;
-  gint16 *circ;
+  guchar **buf; /* caches the the region's pixels */
+  guchar *out;  /* holds the new scan line we are computing */
+  guchar **max; /* caches the smallest values for each column */
+  gint16 *circ; /* holds the y coords of the filter's mask */
   gint16 last_max, last_index;
 
   guchar *buffer;
-  guint16 diameter = radius*2+1;
 
-  if (radius <= 0)
+  if (xradius <= 0 || yradius <= 0)
     return;
 
-  max = (guchar **)g_malloc ((src->w+2*radius) * sizeof(void *));
-  buf = (guchar **)g_malloc ((radius+1) * sizeof(void *));
-  for (i = 0; i < radius+1; i++)
+  max = (guchar **)g_malloc ((src->w+2*xradius) * sizeof(void *));
+  buf = (guchar **)g_malloc ((yradius+1) * sizeof(void *));
+  for (i = 0; i < yradius+1; i++)
   {
     buf[i] = (guchar *)g_malloc (src->w * sizeof(guchar));
   }
-  buffer = g_malloc ((src->w+2*radius)*(radius+1));
-  for (i = 0; i < src->w+2*radius; i++)
+  buffer = g_malloc ((src->w+2*xradius + 1)*(yradius+1));
+  for (i = 0; i < src->w+2*xradius; i++)
   {
-    if (i < radius)
-      max[i] = buffer;
-    else if (i < src->w + radius)
-      max[i] = &buffer[(radius+1)*(i - radius)];
+    if (i < xradius)
+      if (edge_lock)
+	max[i] = buffer;
+      else
+	max[i] = &buffer[(yradius+1)*(src->w + xradius)];
+    else if (i < src->w + xradius)
+      max[i] = &buffer[(yradius+1)*(i - xradius)];
     else
-      max[i] = &buffer[(radius+1)*(src->w + radius - 1)];
-    for (j = 0 ; j < radius+1; j++)
+      if (edge_lock)
+	max[i] = &buffer[(yradius+1)*(src->w + xradius - 1)];
+      else
+	max[i] = &buffer[(yradius+1)*(src->w + xradius)];
+    for (j = 0 ; j < xradius+1; j++)
       max[i][j] = 255;
   }
-  max += radius;
+  if (!edge_lock)
+    for (j = 0 ; j < xradius+1; j++)
+      max[0][j] = 0;
+  max += xradius;
   out = (guchar *)g_malloc(src->w);
 
-  circ = (short *)g_malloc((diameter)*sizeof(gint16));
-  compute_border(circ, radius);
-  circ += radius;
+  circ = (short *)g_malloc((2*xradius + 1)*sizeof(gint16));
+  compute_border(circ, xradius, yradius);
+  circ += xradius;
 
-  for (i = 0; i < radius && i < src->h; i++) /* load top of image */
+  for (i = 0; i < yradius && i < src->h; i++) /* load top of image */
     pixel_region_get_row (src, src->x, src->y + i, src->w, buf[i+1], 1);
-  memcpy (buf[0], buf[1], src->w);
+  if (edge_lock)
+    memcpy (buf[0], buf[1], src->w);
+  else
+    memset(buf[0], 0, src->w);
   for (x = 0; x < src->w; x++) /* set up max for top of image */
   {
     max[x][0] = buf[0][x];
-    for (j = 1; j < radius+1; j++)
+    for (j = 1; j < yradius+1; j++)
       if (max[x][j] > buf[j][x])
 	max[x][j] = buf[j][x];
       else
@@ -4296,22 +4313,24 @@ thin_region(PixelRegion *src, gint16 radius)
   }
   for (y = 0; y < src->h; y++)
   {
-    rotate_pointers ((void **)buf, radius+1);
-    if (y < src->h - (radius))
-      pixel_region_get_row (src, src->x, src->y + y + radius, src->w,
-			    buf[radius], 1);
+    rotate_pointers ((void **)buf, yradius+1);
+    if (y < src->h - (yradius))
+      pixel_region_get_row (src, src->x, src->y + y + yradius, src->w,
+			    buf[yradius], 1);
+    else if (edge_lock)
+      memcpy (buf[yradius], buf[yradius -1], src->w);
     else
-      memcpy (buf[radius], buf[radius -1], src->w);
+      memset (buf[yradius], 0, src->w);
     for (x = 0 ; x < src->w; x++) /* update max array */
     {
-      for (i = radius; i > 0; i--)
+      for (i = yradius; i > 0; i--)
       {
 	max[x][i] = (MIN (MIN (max[x][i - 1], buf[i-1][x]), buf[i][x]));
       }
       max[x][0] = buf[0][x];
     }
     last_max =  max[0][circ[-1]];
-    last_index = 1;
+    last_index = 0;
     for (x = 0 ; x < src->w; x++) /* render scan line */
     {
       last_index--;
@@ -4322,7 +4341,7 @@ thin_region(PixelRegion *src, gint16 radius)
 	else
 	{
 	  last_max = 255;
-	  for (i = radius; i >= 0; i--)
+	  for (i = xradius; i >= 0; i--)
 	    if (last_max > max[x+i][circ[i]])
 	    {
 	      last_max = max[x+i][circ[i]];
@@ -4333,9 +4352,9 @@ thin_region(PixelRegion *src, gint16 radius)
       }
       else
       {
-	last_index = radius;
-	last_max = max[x+radius][circ[radius]];
-	for (i = radius-1; i >= -radius; i--)
+	last_index = xradius;
+	last_max = max[x+xradius][circ[xradius]];
+	for (i = xradius-1; i >= -xradius; i--)
 	  if (last_max > max[x+i][circ[i]])
 	  {
 	    last_max = max[x+i][circ[i]];
@@ -4346,12 +4365,14 @@ thin_region(PixelRegion *src, gint16 radius)
     }
     pixel_region_set_row (src, src->x, src->y + y, src->w, out);
   }
-  circ -= radius;
-  max -= radius;
+  /* undo the offsets to the pointers so we can free the malloced memmory */
+  circ -= xradius;
+  max -= xradius;
+  /* free the memmory */
   g_free (circ);
   g_free (buffer);
   g_free (max);
-  for (i = 0; i < radius; i++)
+  for (i = 0; i < yradius + 1; i++)
     g_free (buf[i]);
   g_free (buf);
   g_free (out);
