@@ -20,16 +20,30 @@
 #define  __GIMP_IMAGE_PICK_COLOR_H__
 
 
-gboolean   gimp_image_pick_color (GimpImage     *gimage,
-                                  GimpDrawable  *drawable,
-                                  gboolean       sample_merged,
-                                  gint           x,
-                                  gint           y,
-                                  gboolean       sample_average,
-                                  gdouble        average_radius,
-                                  GimpImageType *sample_type,
-                                  GimpRGB       *color,
-                                  gint          *color_index);
+typedef guchar * (* GimpImagePickColorFunc) (GimpObject *object,
+                                             gint        x,
+                                             gint        y);
+
+
+gboolean  gimp_image_pick_color        (GimpImage               *gimage,
+                                        GimpDrawable            *drawable,
+                                        gint                     x,
+                                        gint                     y,
+                                        gboolean                 sample_merged,
+                                        gboolean                 sample_average,
+                                        gdouble                  average_radius,
+                                        GimpImageType           *sample_type,
+                                        GimpRGB                 *color,
+                                        gint                    *color_index);
+
+gboolean  gimp_image_pick_color_by_func (GimpObject             *object,
+                                         gint                    x,
+                                         gint                    y,
+                                         GimpImagePickColorFunc  pick_color_func,
+                                         gboolean                sample_average,
+                                         gdouble                 average_radius,
+                                         GimpRGB                *color,
+                                         gint                   *color_index);
 
 
 #endif  /* __GIMP_IMAGE_PICK_COLOR_H__ */

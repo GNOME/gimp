@@ -259,26 +259,29 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  if (GIMP_COLOR_TOOL (tool)->enabled)
+  GimpColorTool *color_tool = GIMP_COLOR_TOOL (tool);
+
+  if (color_tool->enabled)
     {
+      GdkCursorType cursor = GIMP_BAD_CURSOR;
+
       if (gdisp->gimage &&
+
           coords->x > 0 &&
           coords->x < gdisp->gimage->width &&
           coords->y > 0 &&
-          coords->y < gdisp->gimage->height)
+          coords->y < gdisp->gimage->height &&
+
+          (color_tool->options->sample_merged ||
+           gimp_display_coords_in_active_drawable (gdisp, coords)))
         {
-          gimp_tool_set_cursor (tool, gdisp,
-                                GIMP_COLOR_PICKER_CURSOR,
-                                GIMP_COLOR_PICKER_TOOL_CURSOR,
-                                GIMP_CURSOR_MODIFIER_NONE);
+          cursor = GIMP_COLOR_PICKER_CURSOR;
         }
-      else
-        {
-          gimp_tool_set_cursor (tool, gdisp,
-                                GIMP_BAD_CURSOR,
-                                GIMP_COLOR_PICKER_TOOL_CURSOR,
-                                GIMP_CURSOR_MODIFIER_NONE);
-        }
+
+      gimp_tool_set_cursor (tool, gdisp,
+                            cursor,
+                            GIMP_COLOR_PICKER_TOOL_CURSOR,
+                            GIMP_CURSOR_MODIFIER_NONE);
 
       return;  /*  don't chain up  */
     }
@@ -323,10 +326,8 @@ gimp_color_tool_real_pick (GimpColorTool *color_tool,
   g_return_val_if_fail (tool->gdisp != NULL, FALSE);
   g_return_val_if_fail (tool->drawable != NULL, FALSE);
 
-  return gimp_image_pick_color (tool->gdisp->gimage,
-                                tool->drawable,
+  return gimp_image_pick_color (tool->gdisp->gimage, tool->drawable, x, y,
                                 color_tool->options->sample_merged,
-                                x, y,
                                 color_tool->options->sample_average,
                                 color_tool->options->average_radius,
                                 sample_type,

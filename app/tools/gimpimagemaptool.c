@@ -26,6 +26,7 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-pick-color.h"
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
@@ -36,6 +37,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "gimpcoloroptions.h"
 #include "gimpimagemaptool.h"
 #include "gimptoolcontrol.h"
 
@@ -55,6 +57,12 @@ static void   gimp_image_map_tool_control    (GimpTool              *tool,
 					      GimpToolAction         action,
 					      GimpDisplay           *gdisp);
 
+static gboolean gimp_image_map_tool_pick_color (GimpColorTool       *color_tool,
+                                                gint                 x,
+                                                gint                 y,
+                                                GimpImageType       *sample_type,
+                                                GimpRGB             *color,
+                                                gint                *color_index);
 static void   gimp_image_map_tool_map        (GimpImageMapTool      *image_map_tool);
 static void   gimp_image_map_tool_dialog     (GimpImageMapTool      *image_map_tool);
 static void   gimp_image_map_tool_reset      (GimpImageMapTool      *image_map_tool);
@@ -95,7 +103,7 @@ gimp_image_map_tool_get_type (void)
 	(GInstanceInitFunc) gimp_image_map_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
 					  "GimpImageMapTool", 
                                           &tool_info, 0);
     }
@@ -106,11 +114,13 @@ gimp_image_map_tool_get_type (void)
 static void
 gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 {
-  GObjectClass  *object_class;
-  GimpToolClass *tool_class;
+  GObjectClass       *object_class;
+  GimpToolClass      *tool_class;
+  GimpColorToolClass *color_tool_class;
 
-  object_class = G_OBJECT_CLASS (klass);
-  tool_class   = GIMP_TOOL_CLASS (klass);
+  object_class     = G_OBJECT_CLASS (klass);
+  tool_class       = GIMP_TOOL_CLASS (klass);
+  color_tool_class = GIMP_COLOR_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -118,6 +128,8 @@ gimp_image_map_tool_class_init (GimpImageMapToolClass *klass)
 
   tool_class->initialize = gimp_image_map_tool_initialize;
   tool_class->control    = gimp_image_map_tool_control;
+
+  color_tool_class->pick = gimp_image_map_tool_pick_color;
 
   klass->map    = NULL;
   klass->dialog = NULL;
@@ -288,18 +300,10 @@ gimp_image_map_tool_control (GimpTool       *tool,
 			     GimpToolAction  action,
 			     GimpDisplay    *gdisp)
 {
-  GimpImageMapTool *image_map_tool;
-
-  image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+  GimpImageMapTool *image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
 
   switch (action)
     {
-    case PAUSE:
-      break;
-
-    case RESUME:
-      break;
-
     case HALT:
       if (image_map_tool->shell)
         gimp_image_map_tool_cancel_clicked (NULL, image_map_tool);
@@ -310,6 +314,25 @@ gimp_image_map_tool_control (GimpTool       *tool,
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, gdisp);
+}
+
+static gboolean
+gimp_image_map_tool_pick_color (GimpColorTool *color_tool,
+                                gint           x,
+                                gint           y,
+                                GimpImageType *sample_type,
+                                GimpRGB       *color,
+                                gint          *color_index)
+{
+  GimpImageMapTool *tool = GIMP_IMAGE_MAP_TOOL (color_tool);
+
+  *sample_type = gimp_drawable_type (tool->drawable);
+
+  return gimp_image_pick_color_by_func (GIMP_OBJECT (tool->image_map), x, y,
+                                        (GimpImagePickColorFunc) gimp_image_map_get_color_at,
+                                        color_tool->options->sample_average,
+                                        color_tool->options->average_radius,
+                                        color, color_index);
 }
 
 static void

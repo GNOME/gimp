@@ -163,6 +163,12 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_color_options_gui (tool_options);
 
+  /*  the sample merged toggle button  */
+  button = gimp_prop_check_button_new (config, "sample-merged",
+                                       _("Sample Merged"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
   /*  the update active color toggle button  */
   button = gimp_prop_check_button_new (config, "update-active",
                                        _("Update Active Color"));

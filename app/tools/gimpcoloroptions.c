@@ -184,12 +184,6 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
 
   vbox = gimp_tool_options_gui (tool_options);
 
-  /*  the sample merged toggle button  */
-  button = gimp_prop_check_button_new (config, "sample-merged",
-                                       _("Sample Merged"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /*  the sample average options  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);

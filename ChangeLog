@@ -1,5 +1,28 @@
 2003-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.c (gimp_drawable_get_color_at):
+	* app/core/gimpimage-projection.c (gimp_image_projection_get_color_at):
+	use OPAQUE_OPACITY instead of 255.
+
+	* app/core/gimpimage-pick-color.[ch]: factored out code that
+	averages over colors so it can be used from GimpImageTool.
+
+	* app/tools/gimpimagemaptool.[ch]: derived from GimpColorTool and
+	added a GimpColorTool::pick implementation.
+
+	* app/tools/gimpcoloroptions.c
+	* app/tools/gimpcolorpickeroptions.c: add the toggle for
+	"sample_merged" in gimp_color_picker_options_gui().
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_cursor_update): check
+	if the cursor is over the active drawable or if "sample_merged" is
+	active.
+
+	* app/tools/gimplevelstool.c: simplified since all color-picking is
+	now handled by the parent classes. Fixes bug #112668.
+
+2003-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcoloroptions.c: changed the default radius.
 
 	* app/tools/gimpcolortool.[ch]: pass GimpColorOptions to

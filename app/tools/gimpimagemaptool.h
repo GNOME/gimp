@@ -20,7 +20,7 @@
 #define  __GIMP_IMAGE_MAP_TOOL_H__
 
 
-#include "gimptool.h"
+#include "gimpcolortool.h"
 
 
 #define GIMP_TYPE_IMAGE_MAP_TOOL            (gimp_image_map_tool_get_type ())
@@ -35,24 +35,24 @@ typedef struct _GimpImageMapToolClass GimpImageMapToolClass;
 
 struct _GimpImageMapTool
 {
-  GimpTool      parent_instance;
+  GimpColorTool  parent_instance;
 
-  GimpDrawable *drawable;
-  GimpImageMap *image_map;
+  GimpDrawable  *drawable;
+  GimpImageMap  *image_map;
 
-  gboolean      preview;
+  gboolean       preview;
 
   /* the dialog */
-  const gchar  *shell_identifier;
-  const gchar  *shell_desc;
+  const gchar   *shell_identifier;
+  const gchar   *shell_desc;
 
-  GtkWidget    *shell;
-  GtkWidget    *main_vbox;
+  GtkWidget     *shell;
+  GtkWidget     *main_vbox;
 };
 
 struct _GimpImageMapToolClass
 {
-  GimpToolClass  parent_class;
+  GimpColorToolClass  parent_class;
 
   /* virtual functions */
   void (* map)    (GimpImageMapTool *image_map_tool);
