@@ -8,45 +8,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-13 19:41+0200\n"
-"PO-Revision-Date: 2004-06-16 11:34+0200\n"
+"POT-Creation-Date: 2004-07-16 15:36+0200\n"
+"PO-Revision-Date: 2004-07-17 10:06+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:141
+#: plug-ins/script-fu/script-fu-console.c:135
 #: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "A Script-Fu konzolmódja csak interaktív meghívást tesz lehetővé"
 
-#: plug-ins/script-fu/script-fu-console.c:168
+#: plug-ins/script-fu/script-fu-console.c:161
 msgid "Script-Fu Console"
 msgstr "Script-Fu konzol"
 
-#: plug-ins/script-fu/script-fu-console.c:191
+#: plug-ins/script-fu/script-fu-console.c:184
 msgid "SIOD Output"
 msgstr "SIOD kimenet"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:264
+#: plug-ins/script-fu/script-fu-console.c:243
 msgid "Current Command"
 msgstr "Aktuális parancs"
 
-#: plug-ins/script-fu/script-fu-console.c:283
+#: plug-ins/script-fu/script-fu-console.c:262
 msgid "Browse..."
 msgstr "Tallózás..."
 
-#: plug-ins/script-fu/script-fu-console.c:582
-msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "A folyam megnyitása a SIOD kimeneti csővezetéken sikertelen"
-
-#: plug-ins/script-fu/script-fu-console.c:588
-msgid "Unable to open the SIOD output pipe"
-msgstr "A SIOD kimeneti csővezeték megnyitása sikertelen"
-
-#: plug-ins/script-fu/script-fu-console.c:633
+#: plug-ins/script-fu/script-fu-console.c:545
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
@@ -155,11 +147,11 @@ msgstr "<Toolbox>/Kiterj./Script-Fu/Script-Fu-_konzol"
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr "<Toolbox>/Kiterj./Script-Fu/Kiszolgáló _indítása..."
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:272 plug-ins/script-fu/script-fu.c:273
 msgid "Re-read all available scripts"
 msgstr "Az összes elérhető szkript újraolvasása"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:277
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Kiterj./Script-Fu/Parancsfájlok _frissítése"
 
@@ -780,7 +772,7 @@ msgstr "Ismétlés"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Max. Blur Radius"
-msgstr "Max. elmosás sugara"
+msgstr "Elmosás maximális sugara"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
@@ -2299,7 +2291,7 @@ msgstr "Szöveg mintája"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
-msgstr "<Image>/Szűrők/Elmosás/_Tileable Blur..."
+msgstr "<Image>/Szűrők/Elmosás/_Csempézhető elmosás..."
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur Horizontally"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-15 15:19+0200\n"
-"PO-Revision-Date: 2004-07-15 20:36+0200\n"
+"POT-Creation-Date: 2004-07-16 15:33+0200\n"
+"PO-Revision-Date: 2004-07-17 10:05+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -262,8 +262,7 @@ msgstr "Loglog simítás használata"
 
 #: plug-ins/FractalExplorer/Dialogs.c:934
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
-"Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
+msgstr "Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:938
@@ -407,8 +406,7 @@ msgstr "Aktív színátmenet alkalmazása a végső képre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
-"Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
+msgstr "Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1163
 msgid "FractalExplorer Gradient"
@@ -642,8 +640,7 @@ msgstr "Mélysé_g:"
 
 #: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr ""
-"Élsimítás minősége. Minél magasabb, annál jobb, viszont annál lassabb is"
+msgstr "Élsimítás minősége. Minél magasabb, annál jobb, viszont annál lassabb is"
 
 #: plug-ins/Lighting/lighting_ui.c:444
 msgid "T_hreshold:"
@@ -798,8 +795,7 @@ msgstr "S_zórt:"
 
 #: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr ""
-"Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
+msgstr "Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
 
 #: plug-ins/Lighting/lighting_ui.c:807
 msgid "_Specular:"
@@ -1374,8 +1370,7 @@ msgid "Use cosine-function for green component."
 msgstr "Koszinuszfüggvény használata a zöld komponensnél."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid ""
-"Green channel: use linear mapping instead of any trigonometrical function"
+msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Zöld csatorna: lineáris leképezés használata trigonometrikus függvények "
 "helyett"
@@ -1389,8 +1384,7 @@ msgid "Use cosine-function for blue component."
 msgstr "Koszinuszfüggvény használata a kék komponensnél."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid ""
-"Blue channel: use linear mapping instead of any trigonometrical function"
+msgid "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Kék csatorna: lineáris leképezés használata trigonometrikus függvények "
 "helyett"
@@ -1780,8 +1774,7 @@ msgstr "Kezdőérték eltolása:"
 
 #: plug-ins/common/CML_explorer.c:1374
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr ""
-"Véletlenszám-generálás kiindulóértéke (csak a \"kiindulóértékből\" módokhoz)"
+msgstr "Véletlenszám-generálás kiindulóértéke (csak a \"kiindulóértékből\" módokhoz)"
 
 #: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:292
 msgid "Seed:"
@@ -1957,8 +1950,7 @@ msgstr "Figyelmeztetés: \"%s\" egy régi formátumú fájl"
 #: plug-ins/common/CML_explorer.c:2373
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr ""
-"Figyelmeztetés: a(z) \"%s\" paraméterfájl egy újabb CML-böngészőhöz készült."
+msgstr "Figyelmeztetés: a(z) \"%s\" paraméterfájl egy újabb CML-böngészőhöz készült."
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
@@ -3907,8 +3899,7 @@ msgstr "Nagyítás - korábbi néven \"GIMP E'er Egg\""
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr ""
-"Adam D. Moss (adam@gimp.org / adam@foxbox.org) egyik elavult műve - 1998-2000"
+msgstr "Adam D. Moss (adam@gimp.org / adam@foxbox.org) egyik elavult műve - 1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3931,10 +3922,9 @@ msgstr ""
 "megjegyzés nem lett elmentve."
 
 #: plug-ins/common/gif.c:971
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"RGB-színű képek nem menthetők. Alakítsa a képet indexelt színűre vagy "
+"RGB színű képek nem menthetők. Alakítsa a képet indexelt színűre vagy "
 "szürkeárnyalatosra."
 
 #: plug-ins/common/gif.c:1114
@@ -5603,8 +5593,7 @@ msgstr "Ismeretlen színmodell a(z) \"%s\" PNG-fájlban."
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr ""
-"A PNG-fájl olyan eltolást ad meg, ami miatt a réteg a képen kívülre került."
+msgstr "A PNG-fájl olyan eltolást ad meg, amely miatt a réteg a képen kívülre került."
 
 #: plug-ins/common/png.c:1159
 #, c-format
@@ -6500,8 +6489,7 @@ msgstr "Ágak szö_ge (-1: véletlenszerű):"
 
 #: plug-ins/common/sparkle.c:411
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr ""
-"Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz kiválasztva)"
+msgstr "Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz kiválasztva)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -6881,8 +6869,7 @@ msgid "Import _Paths"
 msgstr "Út_vonalak importálása"
 
 #: plug-ins/common/svg.c:852
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Az SVG-dokumentumban levő útvonalak importálása a GIMP útvonaleszközével "
 "való használat céljából"
@@ -6931,7 +6918,7 @@ msgstr "A réteg megtartja az átlátszóságot."
 #: plug-ins/common/threshold_alpha.c:138
 msgid "RGBA/GRAYA drawable is not selected."
 msgstr ""
-"Nincs kijelölve megfelelő RGB-kódolású (RGBA) vagy szürkeárnyalatos "
+"Nincs kijelölve megfelelő RGB kódolású (RGBA) vagy szürkeárnyalatos "
 "rajzterület."
 
 #: plug-ins/common/threshold_alpha.c:200
@@ -7097,10 +7084,8 @@ msgid "ID"
 msgstr "Azonosító"
 
 #: plug-ins/common/uniteditor.c:85
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
-"Ez a szöveg fogja azonosítani a mértékegységet a GIMP beállítási fájljaiban."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgstr "Ez a szöveg fogja azonosítani a mértékegységet a GIMP beállítási fájljaiban."
 
 #: plug-ins/common/uniteditor.c:87
 msgid "Factor"
@@ -7215,8 +7200,7 @@ msgstr "Teljesen új mértékegység létrehozása."
 
 #: plug-ins/common/uniteditor.c:563
 msgid "Create a new unit with the currently selected unit as template."
-msgstr ""
-"Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
+msgstr "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7681,8 +7665,7 @@ msgstr "M_indkettő"
 
 #: plug-ins/common/wind.c:992
 msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr ""
-"Magasabb érték esetén az effektus a kép kevesebb területén fog megjelenni"
+msgstr "Magasabb érték esetén az effektus a kép kevesebb területén fog megjelenni"
 
 #: plug-ins/common/wind.c:1007 plug-ins/gimpressionist/orientmap.c:600
 msgid "_Strength:"
@@ -7921,7 +7904,7 @@ msgstr "Hiba az indexelt/szürkeárnyalatos kép írása közben"
 
 #: plug-ins/common/xwd.c:2157
 msgid "Error during writing rgb image"
-msgstr "Hiba az RGB-kép írása közben"
+msgstr "Hiba az RGB kép írása közben"
 
 #: plug-ins/common/zealouscrop.c:69
 msgid "<Image>/Layer/Transform/_Zealous Crop"
@@ -9329,10 +9312,8 @@ msgid "Shadow depth:"
 msgstr "Árnyék mélysége:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr ""
-"Az árnyék mélysége, vagyis milyen messze legyen az árnyék az objektumtól"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr "Az árnyék mélysége, vagyis milyen messze legyen az árnyék az objektumtól"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9737,13 +9718,11 @@ msgid "The largest brush to create"
 msgstr "A létrehozandó legnagyobb ecset"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Az ecsetvonás méretét a terület értéke (fényessége) szabja meg"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Az ecsetvonás méretét a kép középpontjától mért távolság szabja meg"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -10824,8 +10803,7 @@ msgstr "Labirintus készítése a Prim-módszerrel..."
 
 #: plug-ins/maze/algorithms.c:463
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
-"Csempézéshez használható labirintus előállítása a Prim-féle módszerrel..."
+msgstr "Csempézéshez használható labirintus előállítása a Prim-féle módszerrel..."
 
 #: plug-ins/maze/maze.c:157
 #, c-format
@@ -11505,8 +11483,7 @@ msgstr "Rajz"
 
 #: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
-msgstr ""
-"A legélénkebb színeket adó és leggyorsabb módszer - szövegekhez és rajzokhoz"
+msgstr "A legélénkebb színeket adó és leggyorsabb módszer - szövegekhez és rajzokhoz"
 
 #: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
@@ -11560,8 +11537,7 @@ msgid "Adjust Output..."
 msgstr "Kimenet beállítása..."
 
 #: plug-ins/print/gimp_main_window.c:1467
-msgid ""
-"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Színegyensúly, fényesség, kontraszt, telítettség és a színszórási módszer "
 "beállítása"

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-13 14:37+0200\n"
-"PO-Revision-Date: 2004-06-16 11:37+0200\n"
+"POT-Creation-Date: 2004-07-16 15:27+0200\n"
+"PO-Revision-Date: 2004-07-17 10:04+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -1651,7 +1651,7 @@ msgstr ""
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Érvénytelen UTF-8 karakterlánc a(z) \"%s\" ecsetfájlban."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -2018,7 +2018,7 @@ msgstr "QuickMask bekapcsolása"
 msgid "Disable QuickMask"
 msgstr "QuickMask kikapcsolása"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s nem visszavonható"
@@ -4905,7 +4905,7 @@ msgstr "%g x %g %s"
 #: app/gui/info-window.c:521 app/gui/preferences-dialog.c:1783
 #: app/gui/user-install-dialog.c:1309
 msgid "dpi"
-msgstr "dpi"
+msgstr "DPI"
 
 #: app/gui/info-window.c:548
 msgid "RGB Color"
@@ -5847,7 +5847,7 @@ msgstr "Monitor felbontása"
 #: app/gui/preferences-dialog.c:1752
 #, c-format
 msgid "(Currently %d x %d dpi)"
-msgstr "(jelenleg %d x %d dpi)"
+msgstr "(jelenleg %d x %d DPI)"
 
 #: app/gui/preferences-dialog.c:1792
 msgid "C_alibrate"
@@ -6110,11 +6110,11 @@ msgstr "Témák mappáinak kiválasztása"
 
 #: app/gui/qmask-commands.c:134
 msgid "Edit Qmask Color"
-msgstr "Qmask szín szerkesztése"
+msgstr "Qmask-szín szerkesztése"
 
 #: app/gui/qmask-commands.c:144
 msgid "Qmask Attributes"
-msgstr "Qmask tulajdonságok"
+msgstr "Qmask-tulajdonságok"
 
 #: app/gui/qmask-commands.c:146
 msgid "Edit QuickMask Attributes"
@@ -6245,7 +6245,7 @@ msgid "_Vertical:"
 msgstr "_Függőleges:"
 
 #: app/gui/select-commands.c:149 app/gui/vectors-commands.c:181
-#: app/pdb/paths_cmds.c:1135 app/tools/gimpvectortool.c:1819
+#: app/pdb/paths_cmds.c:1173 app/tools/gimpvectortool.c:1819
 #: app/widgets/gimpvectorstreeview.c:289
 msgid "Path to Selection"
 msgstr "Útvonal kijelöléssé alakítása"
@@ -6981,7 +6981,7 @@ msgstr ""
 #: app/gui/user-install-dialog.c:1265
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
-msgstr "Vegye a felbontást a grafikus rendszerből (pillanatnyilag %d x %d dpi)"
+msgstr "Vegye a felbontást a grafikus rendszerből (pillanatnyilag %d x %d DPI)"
 
 #: app/gui/user-install-dialog.c:1284
 msgid "Alternatively, you can set the monitor resolution manually."
@@ -7386,7 +7386,7 @@ msgstr "\"%s\" kihagyása: helytelen GIMP protokollverzió."
 
 #: app/plug-in/plug-ins.c:131
 msgid "Resource configuration"
-msgstr "Erőforrás beállítások"
+msgstr "Erőforrás-beállítások"
 
 #. Query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
@@ -7453,7 +7453,7 @@ msgstr ""
 "abcdefghijklmnopqrstuvwxyz\n"
 "áÁéÉíÍóÓöÖőŐúÚüÜűŰ"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:700
 msgid "Add Text Layer"
 msgstr "Szövegréteg hozzáadása"
 
@@ -7946,17 +7946,17 @@ msgstr "Görbe mentése"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Indexelt rétegek esetében nem lehet beállítani görbéket."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Csatorna:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "Csatorna v_isszaállítása"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Minden csatorna"
 
@@ -8224,45 +8224,45 @@ msgstr "Szintek mentése"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Az indexelt rétegeknél nem lehet szinteket állítani."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Fekete pont kijelölése"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Szürke pont kijelölése"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Fehér pont kijelölése"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Bemeneti szintek"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Kimeneti szintek"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Szintbeállítások beolvasása fájlból"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Szintbeállítások mentése fájlba"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "Au_tomatikus"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Szintek automatikus beállítása"
 
@@ -8668,15 +8668,15 @@ msgstr "Szöveg írása a képre"
 msgid "/Tools/Te_xt"
 msgstr "/Eszközök/Szöve_g"
 
-#: app/tools/gimptexttool.c:726
+#: app/tools/gimptexttool.c:731
 msgid "GIMP Text Editor"
 msgstr "GIMP szövegszerkesztő"
 
-#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
+#: app/tools/gimptexttool.c:841 app/tools/gimptexttool.c:844
 msgid "Confirm Text Editing"
 msgstr "Szövegszerkesztés megerősítése"
 
-#: app/tools/gimptexttool.c:860
+#: app/tools/gimptexttool.c:865
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
