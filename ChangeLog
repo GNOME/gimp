@@ -1,7 +1,15 @@
 2004-10-25  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
+	silently accept arrays which are longer than specified. Nothing
+	bad can happen and it's common practice to resize arrays in fixed
+	size chunks so avoid frequent resizing. Fixes bug #155359.
+
+2004-10-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/siod-wrapper.c (init_constants): removed
 	debugging output i forgot.
+	(marshall_proc_db_call): 
 
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
