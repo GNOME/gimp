@@ -33,92 +33,64 @@
 #include "locales.h"
 
 
-static gchar * lookup (const gchar *help_domain,
-                       const gchar *help_locales,
-                       const gchar *help_id);
+static void    show_version (void) G_GNUC_NORETURN;
 
-static void
-usage (const gchar *name)
+static gchar * lookup       (const gchar *help_domain,
+                             const gchar *help_locales,
+                             const gchar *help_id);
+
+
+static const gchar  *help_base    = NULL;
+static const gchar  *help_root    = NULL;
+static const gchar  *help_locales = NULL;
+static const gchar **help_ids     = NULL;
+
+
+static const GOptionEntry entries[] =
 {
-  g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
-  g_print ("Looks up a help-id in the GIMP user manual.\n\n"
-	   "Usage: %s [options] [help-id]\n\n", name);
-  g_print ("Valid options are:\n"
-	   "  -h, --help                  Output this help.\n"
-	   "  -v, --version               Output version info.\n"
-           "  -b, --base <uri>            Speficies base URI.\n"
-           "  -r, --root <directory>      Speficies root directory for index files.\n"
-           "  -l, --lang <language-code>  Specifies help language.\n"
-           "\n");
-}
+  { "version", 'v', 0,
+    G_OPTION_ARG_CALLBACK, (GOptionArgFunc) show_version,
+    "Show version information and exit", NULL
+  },
+  { "base", 'b', 0,
+    G_OPTION_ARG_STRING, &help_base,
+    "Speficies base URI", "URI"
+  },
+  { "root", 'r', 0,
+    G_OPTION_ARG_FILENAME, &help_root,
+    "Speficies root directory for index files", "DIR"
+  },
+  { "lang", 'l', 0,
+    G_OPTION_ARG_STRING, &help_locales,
+    "Specifies help language", "LANG"
+  },
+  {
+    G_OPTION_REMAINING, 0, 0,
+    G_OPTION_ARG_STRING_ARRAY, &help_ids,
+    NULL, NULL
+  },
+  { NULL }
+};
 
 
 gint
 main (gint   argc,
       gchar *argv[])
 {
-  const gchar *help_base    = g_getenv (GIMP_HELP_ENV_URI);
-  const gchar *help_locales = GIMP_HELP_DEFAULT_LOCALE;
-  const gchar *help_id      = GIMP_HELP_DEFAULT_ID;
-  const gchar *help_root    = DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX;
-  gchar       *uri;
-  gint         i;
+  GOptionContext *context;
+  gchar          *uri;
+  GError         *error = NULL;
 
-  for (i = 1; i < argc; i++)
+  help_base = g_getenv (GIMP_HELP_ENV_URI);
+  help_root = DATADIR G_DIR_SEPARATOR_S GIMP_HELP_PREFIX;
+
+  context = g_option_context_new ("HELP-ID");
+  g_option_context_add_main_entries (context, entries, NULL);
+  if (! g_option_context_parse (context, &argc, &argv, &error))
     {
-      if (! strlen (argv[i]))
-        continue;
-
-      if (*argv[i] == '-')
-        {
-          const gchar *opt = argv[i] + 1;
-
-          if (*opt == '-')
-            opt++;
-
-          switch (g_ascii_tolower (*opt))
-            {
-            case 'v':
-              g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
-              exit (EXIT_SUCCESS);
-
-            case 'b':
-              if (i + 1 < argc)
-                {
-                  help_base = argv[++i];
-                  continue;
-                }
-              break;
-
-            case 'r':
-              if (i + 1 < argc)
-                {
-                  help_root = argv[++i];
-                  continue;
-                }
-              break;
-
-            case 'l':
-              if (i + 1 < argc)
-                {
-                  help_locales = argv[++i];
-                  continue;
-                }
-              break;
-
-            case 'h':
-            case '?':
-              usage (argv[0]);
-              exit (EXIT_SUCCESS);
-            }
-
-          g_printerr ("Error parsing the command-line options, try --help\n");
-          exit (EXIT_FAILURE);
-        }
-      else
-        {
-          help_id = argv[i];
-        }
+      g_print ("%s\n", error->message);
+      g_error_free (error);
+      return EXIT_FAILURE;
     }
 
   if (help_base)
@@ -129,13 +101,17 @@ main (gint   argc,
   domain_register (GIMP_HELP_DEFAULT_DOMAIN, uri, help_root);
   g_free (uri);
 
-  uri = lookup (GIMP_HELP_DEFAULT_DOMAIN, help_locales, help_id);
+  uri = lookup (GIMP_HELP_DEFAULT_DOMAIN,
+                help_locales ? help_locales : GIMP_HELP_DEFAULT_LOCALE,
+                help_ids     ? help_ids[0]  : GIMP_HELP_DEFAULT_ID);
 
   if (uri)
     {
       g_print ("%s\n", uri);
       g_free (uri);
     }
+
+  g_option_context_free (context);
 
   return uri ? EXIT_SUCCESS : EXIT_FAILURE;
 }
@@ -165,4 +141,11 @@ lookup (const gchar *help_domain,
     }
 
   return NULL;
+}
+
+static void
+show_version (void)
+{
+  g_print ("gimp-help-lookup version %s\n", GIMP_VERSION);
+  exit (EXIT_SUCCESS);
 }
