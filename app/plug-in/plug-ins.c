@@ -360,7 +360,7 @@ plug_in_init ()
 	  app_init_update_status(NULL, proc_def->db_info.name,
 				 nth/nplugins);
 
-	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE);
+	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE, -1);
 	}
     }
   if ((be_verbose == TRUE) || (no_splash == TRUE))
@@ -987,7 +987,8 @@ Argument*
 plug_in_run (ProcRecord *proc_rec,
 	     Argument   *args,
 	     int         synchronous,   
-	     int         destroy_values)
+	     int         destroy_values,
+	     int         gdisp_ID)
 {
   GPConfig config;
   GPProcRun proc_run;
@@ -1023,6 +1024,7 @@ plug_in_run (ProcRecord *proc_rec,
 	  config.color_cube[1] = color_cube_shades[1];
 	  config.color_cube[2] = color_cube_shades[2];
 	  config.color_cube[3] = color_cube_shades[3];
+	  config.gdisp_ID = gdisp_ID;
 
 	  proc_run.name = proc_rec->name;
 	  proc_run.nparams = proc_rec->num_args;
@@ -1090,7 +1092,7 @@ plug_in_repeat (int with_interface)
       args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
-      plug_in_run (last_plug_in, args, FALSE, TRUE);
+      plug_in_run (last_plug_in, args, FALSE, TRUE, gdisplay->ID);
 
       g_free (args);
     }
@@ -2111,6 +2113,7 @@ plug_in_callback (GtkWidget *widget,
   ProcRecord *proc_rec;
   Argument *args;
   int i;
+  int gdisp_ID = -1;
 
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
@@ -2135,6 +2138,8 @@ plug_in_callback (GtkWidget *widget,
     case PDB_PLUGIN:
       if (gdisplay)
 	{
+	  gdisp_ID = gdisplay->ID;
+
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].value.pdb_int = gdisplay->gimage->ID;
@@ -2156,6 +2161,8 @@ plug_in_callback (GtkWidget *widget,
 	{
 	  if (gdisplay)
 	    {
+	      gdisp_ID = gdisplay->ID;
+
 	      args[1].value.pdb_int = gdisplay->gimage->ID;
 	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 	    }
@@ -2174,7 +2181,7 @@ plug_in_callback (GtkWidget *widget,
     }
 
   /* run the plug-in procedure */
-  plug_in_run (proc_rec, args, FALSE, TRUE);
+  plug_in_run (proc_rec, args, FALSE, TRUE, gdisp_ID);
 
   if (proc_rec->proc_type == PDB_PLUGIN)
     last_plug_in = proc_rec;

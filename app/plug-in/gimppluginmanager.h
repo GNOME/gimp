@@ -147,7 +147,8 @@ void plug_in_close (PlugIn *plug_in,
 Argument* plug_in_run (ProcRecord *proc_rec,
 		       Argument   *args,
 		       int         synchronous,
-		       int         destroy_values);
+		       int         destroy_values,
+		       int         gdisp_ID);
 
 /* Run the last plug-in again with the same arguments. Extensions
  *  are exempt from this "privelege".

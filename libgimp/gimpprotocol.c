@@ -340,6 +340,8 @@ _gp_config_read (int fd, WireMessage *msg)
     return;
   if (!wire_read_int8 (fd, (guint8*) config->color_cube, 3))
     return;
+  if (!wire_read_int32 (fd, (guint32*) &config->gdisp_ID, 1))
+    return;
 
   msg->data = config;
 }
@@ -363,6 +365,8 @@ _gp_config_write (int fd, WireMessage *msg)
   if (!wire_write_int8 (fd, (guint8*) &config->install_cmap, 1))
     return;
   if (!wire_write_int8 (fd, (guint8*) config->color_cube, 3))
+    return;
+  if (!wire_write_int32 (fd, (guint32*) &config->gdisp_ID, 1))
     return;
 }
 

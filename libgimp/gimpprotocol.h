@@ -25,7 +25,7 @@
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x0002
+#define GP_VERSION 0x0003
 
 
 enum {
@@ -66,6 +66,7 @@ struct _GPConfig
   gint8 install_cmap;
   gint8 use_xshm;
   guint8 color_cube[4];
+  gint32 gdisp_ID;
 };
 
 struct _GPTileReq

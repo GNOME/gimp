@@ -37,6 +37,9 @@ gimpinclude_HEADERS =	gimp.h		\
 libgimp_la_LDFLAGS = -version-info 1:0:0
 libgimpui_la_LDFLAGS = -version-info 1:0:0
 
+CPPFLAGS = \
+	-DGIMPDIR=\""$(gimpdir)"\"
+
 INCLUDES = \
 	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\

@@ -64,6 +64,7 @@ static gdouble _gamma_val;
 static gint _install_cmap;
 static gint _use_xshm;
 static guchar _color_cube[4];
+static gint _gdisp_ID = -1;
 
 static char *progname = NULL;
 static guint8 write_buffer[WRITE_BUFFER_SIZE];
@@ -175,11 +176,14 @@ gimp_get_data (gchar *  id,
 }
 
 
+/* Snorfle - check for valid _gdisp_ID (!= -1) here and use it */
 void
 gimp_progress_init (char *message)
 {
   GParam *return_vals;
   int nreturn_vals;
+
+  /* g_print ("%d\n", _gdisp_ID); */
 
   return_vals = gimp_run_procedure ("gimp_progress_init",
 				    &nreturn_vals,
@@ -796,7 +800,7 @@ gimp_gtkrc ()
   if (!home_dir)
     return NULL;
 
-  sprintf (filename, "%s/.gimp/gtkrc", home_dir);
+  sprintf (filename, "%s/%s/gtkrc", home_dir, GIMPDIR);
 
   return filename;
 }
@@ -1029,6 +1033,7 @@ gimp_config (GPConfig *config)
   _color_cube[1] = config->color_cube[1];
   _color_cube[2] = config->color_cube[2];
   _color_cube[3] = config->color_cube[3];
+  _gdisp_ID = config->gdisp_ID;
 
   if (_shm_ID != -1)
     {

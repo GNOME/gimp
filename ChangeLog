@@ -1,3 +1,18 @@
+Sat Jun 13 21:11:17 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: install gimp.m4 too
+
+	* libgimp/gimpprotocol.[ch]
+	* libgimp/gimp.c
+	* app/plug_in.[ch]
+	* app/procedural_db.c: exported the gdisplay ID to the plugins,
+	so they can be smart about hooking on to status bars in the
+	appropriate display shell
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.c: make the plugins aware of $gimpdir for gtkrc
+	parsing
+
 Sat Jun 13 16:52:34 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/file_new_dialog.c: removed unsightly warnings,

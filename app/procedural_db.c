@@ -593,15 +593,15 @@ procedural_db_execute (gchar    *name,
 	  break;
 
 	case PDB_PLUGIN:
-	  return_args = plug_in_run (procedure, args, TRUE, FALSE);
+	  return_args = plug_in_run (procedure, args, TRUE, FALSE, -1);
 	  break;
 
 	case PDB_EXTENSION:
-	  return_args = plug_in_run (procedure, args, TRUE, FALSE);
+	  return_args = plug_in_run (procedure, args, TRUE, FALSE, -1);
 	  break;
 
 	case PDB_TEMPORARY:
-	  return_args = plug_in_run (procedure, args, TRUE, FALSE);
+	  return_args = plug_in_run (procedure, args, TRUE, FALSE, -1);
 	  break;
 
 	default:
