@@ -320,28 +320,124 @@ gimp_dock_add_book (GimpDock     *dock,
   dockbook->dock  = dock;
   dock->dockbooks = g_list_insert (dock->dockbooks, dockbook, index);
 
-  index *= 2;
+  if (length == 0)
+    {
+      g_print ("adding first dockbook\n");
 
-  gtk_box_pack_start (GTK_BOX (dock->vbox), GTK_WIDGET (dockbook),
-		      TRUE, TRUE, 0);
-  gtk_box_reorder_child (GTK_BOX (dock->vbox), GTK_WIDGET (dockbook), index);
+      gtk_box_pack_start (GTK_BOX (dock->vbox), GTK_WIDGET (dockbook),
+                          TRUE, TRUE, 0);
+
+      separator = gimp_dock_separator_new (dock);
+      gtk_box_pack_end (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
+      gtk_widget_show (separator);
+    }
+  else if (length == 1)
+    {
+      GtkWidget *old_book;
+      GtkWidget *parent;
+      GtkWidget *paned;
+
+      g_print ("adding second dockbook\n");
+
+      if (index == 0)
+        old_book = g_list_nth_data (dock->dockbooks, index + 1);
+      else
+        old_book = g_list_nth_data (dock->dockbooks, index - 1);
+
+      parent = old_book->parent;
+
+      g_object_ref (G_OBJECT (old_book));
+
+      gtk_container_remove (GTK_CONTAINER (parent), old_book);
+
+      paned = gtk_vpaned_new ();
+      gtk_container_add (GTK_CONTAINER (parent), paned);
+      gtk_widget_show (paned);
+
+      if (index == 0)
+        {
+          gtk_paned_pack1 (GTK_PANED (paned), GTK_WIDGET (dockbook),
+                           TRUE, FALSE);
+          gtk_paned_pack2 (GTK_PANED (paned), old_book,
+                           TRUE, FALSE);
+        }
+      else
+        {
+          gtk_paned_pack1 (GTK_PANED (paned), old_book,
+                           TRUE, FALSE);
+          gtk_paned_pack2 (GTK_PANED (paned), GTK_WIDGET (dockbook),
+                           TRUE, FALSE);
+        }
+
+      g_object_unref (G_OBJECT (old_book));
+    }
+  else
+    {
+      GtkWidget *old_book;
+      GtkWidget *parent;
+      GtkWidget *paned;
+
+      g_print ("adding another dockbook...");
+
+      if (index == 0)
+        {
+          g_print ("as first one\n");
+
+          old_book = g_list_nth_data (dock->dockbooks, index + 1);
+
+          parent = old_book->parent;
+
+          g_object_ref (G_OBJECT (old_book));
+
+          gtk_container_remove (GTK_CONTAINER (parent), old_book);
+
+          paned = gtk_vpaned_new ();
+          gtk_paned_pack1 (GTK_PANED (parent), paned, TRUE, FALSE);
+          gtk_widget_show (paned);
+
+          gtk_paned_pack1 (GTK_PANED (paned), GTK_WIDGET (dockbook),
+                           TRUE, FALSE);
+          gtk_paned_pack2 (GTK_PANED (paned), old_book, TRUE, FALSE);
+
+          g_object_unref (G_OBJECT (old_book));
+        }
+      else if (index == length)
+        {
+          g_print ("as last one\n");
+
+          old_book = g_list_nth_data (dock->dockbooks, index - 1);
+
+          parent = old_book->parent;
+
+          g_object_ref (G_OBJECT (parent));
+
+          gtk_container_remove (GTK_CONTAINER (dock->vbox), parent);
+
+          paned = gtk_vpaned_new ();
+          gtk_container_add (GTK_CONTAINER (dock->vbox), paned);
+          gtk_widget_show (paned);
+
+          gtk_paned_pack1 (GTK_PANED (paned), parent, TRUE, FALSE);
+          gtk_paned_pack2 (GTK_PANED (paned), GTK_WIDGET (dockbook),
+                           TRUE, FALSE);
+
+          g_object_unref (G_OBJECT (parent));
+        }
+      else
+        {
+          g_print ("EEEEEEEEEEEEEEEEK: with index %d (lost it)\n", index);
+        }
+    }
+
   gtk_widget_show (GTK_WIDGET (dockbook));
-
-  separator = gimp_dock_separator_new (dock);
-  gtk_box_pack_start (GTK_BOX (dock->vbox), separator, FALSE, FALSE, 0);
-  gtk_box_reorder_child (GTK_BOX (dock->vbox), separator, index);
-  gtk_widget_show (separator);
 }
 
 void
 gimp_dock_remove_book (GimpDock     *dock,
 		       GimpDockbook *dockbook)
 {
-  GtkWidget *separator;
-  GList     *children;
-  gint       length;
-  gint       index;
-  gint       book_index;
+  gint length;
+  gint index;
 
   g_return_if_fail (GIMP_IS_DOCK (dock));
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
@@ -354,23 +450,100 @@ gimp_dock_remove_book (GimpDock     *dock,
   dockbook->dock  = NULL;
   dock->dockbooks = g_list_remove (dock->dockbooks, dockbook);
 
-  children   = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
-  book_index = g_list_index (children, dockbook);
-
-  if (index == length -1)
+  if (length == 1)
     {
-      separator = g_list_nth_data (children, book_index - 1);
+      GtkWidget *separator;
+      GList     *children;
+
+      children = gtk_container_get_children (GTK_CONTAINER (dock->vbox));
+
+      separator = g_list_nth_data (children, 2);
+
+      gtk_container_remove (GTK_CONTAINER (dock->vbox), separator);
+      gtk_container_remove (GTK_CONTAINER (dock->vbox), GTK_WIDGET (dockbook));
+
+      g_list_free (children);
+    }
+  else if (length == 2)
+    {
+      GtkWidget *other_book;
+      GtkWidget *parent;
+
+      other_book = g_list_nth_data (dock->dockbooks, 0);
+
+      parent = other_book->parent;
+
+      g_object_ref (G_OBJECT (other_book));
+
+      gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
+      gtk_container_remove (GTK_CONTAINER (parent), other_book);
+
+      gtk_container_remove (GTK_CONTAINER (dock->vbox), parent);
+
+      gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
+
+      g_object_unref (G_OBJECT (other_book));
     }
   else
     {
-      separator = g_list_nth_data (children, book_index + 1);
+      GtkWidget *other_book;
+      GtkWidget *parent;
+      GtkWidget *grandparent;
+
+      if (index == 0)
+        {
+          other_book = g_list_nth_data (dock->dockbooks, 0);
+
+          parent      = other_book->parent;
+          grandparent = parent->parent;
+
+          g_object_ref (G_OBJECT (other_book));
+
+          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
+          gtk_container_remove (GTK_CONTAINER (parent), other_book);
+
+          gtk_container_remove (GTK_CONTAINER (grandparent), parent);
+
+          gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
+
+          g_object_unref (G_OBJECT (other_book));
+        }
+      else if (index == (length - 1))
+        {
+          parent = GTK_WIDGET (dockbook)->parent;
+
+          other_book = GTK_PANED (parent)->child1;
+
+          g_object_ref (G_OBJECT (other_book));
+
+          gtk_container_remove (GTK_CONTAINER (parent), other_book);
+          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
+
+          gtk_container_remove (GTK_CONTAINER (dock->vbox), parent);
+
+          gtk_box_pack_start (GTK_BOX (dock->vbox), other_book, TRUE, TRUE, 0);
+
+          g_object_unref (G_OBJECT (other_book));
+        }
+      else
+        {
+          parent      = GTK_WIDGET (dockbook)->parent;
+          grandparent = parent->parent;
+
+          other_book = GTK_PANED (parent)->child1;
+
+          g_object_ref (G_OBJECT (other_book));
+
+          gtk_container_remove (GTK_CONTAINER (parent), other_book);
+          gtk_container_remove (GTK_CONTAINER (parent), GTK_WIDGET (dockbook));
+
+          gtk_container_remove (GTK_CONTAINER (grandparent), parent);
+
+          gtk_paned_pack1 (GTK_PANED (grandparent), other_book, TRUE, FALSE);
+
+          g_object_unref (G_OBJECT (other_book));
+        }
     }
-
-  gtk_container_remove (GTK_CONTAINER (dock->vbox), separator);
-
-  g_list_free (children);
-
-  gtk_container_remove (GTK_CONTAINER (dock->vbox), GTK_WIDGET (dockbook));
 
   if ((length == 1) && (dock->destroy_if_empty))
     {
@@ -509,16 +682,21 @@ gimp_dock_separator_drag_drop (GtkWidget      *widget,
                              "gimp-dock-drag-widget", NULL);
 
 	  children = gtk_container_get_children (GTK_CONTAINER (widget->parent));
-	  index = g_list_index (children, widget) / 2;
+	  index = g_list_index (children, widget);
           g_list_free (children);
 
-	  dockbook = gimp_dockbook_new ();
-
-	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+          if (index == 0)
+            index = 0;
+          else if (index == 2)
+            index = -1;
 
 	  g_object_ref (G_OBJECT (src_dockable));
 
 	  gimp_dockbook_remove (src_dockable->dockbook, src_dockable);
+
+	  dockbook = gimp_dockbook_new ();
+	  gimp_dock_add_book (dock, GIMP_DOCKBOOK (dockbook), index);
+
 	  gimp_dockbook_add (GIMP_DOCKBOOK (dockbook), src_dockable, -1);
 
 	  g_object_unref (G_OBJECT (src_dockable));
