@@ -1,12 +1,12 @@
 # Norwegian translation of the GIMP (bokmål dialect).
-# Copyright (C) 1999,2000 Free Software Foundation, Inc.
+# Copyright (C) 1999-2001 Free Software Foundation, Inc.
 # Kjartan Maraas <kmaraas@gnome.org>, 1999-2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-01-30 11:09+0100\n"
-"PO-Revision-Date: 2001-01-02 11:57+01:00\n"
+"POT-Creation-Date: 2001-05-22 12:55+0200\n"
+"PO-Revision-Date: 2001-05-22 12:57+0200\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -320,7 +320,7 @@ msgstr "Penseleditor"
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:288 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -353,7 +353,7 @@ msgstr "Valg av pensel"
 #: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
-msgstr "Oppdatér"
+msgstr "Oppdater"
 
 #: app/brush_select.c:413
 msgid "No Brushes available"
@@ -552,17 +552,17 @@ msgid "Empty Channel Copy"
 msgstr "Kopier tom kanal"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:316 app/levels.c:379
 msgid "Red"
 msgstr "Rød"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
 msgid "Green"
 msgstr "Grønn"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
 msgid "Blue"
 msgstr "Blå"
 
@@ -687,7 +687,7 @@ msgstr "Gjennomsnitt"
 
 #: app/color_picker.c:220
 msgid "Update Active Color"
-msgstr "Oppdatér aktiv farge"
+msgstr "Oppdater aktiv farge"
 
 #: app/color_picker.c:261 app/color_picker.c:270
 msgid "Red:"
@@ -718,7 +718,7 @@ msgstr "Indeks:"
 msgid "Hex Triplet"
 msgstr "Hex triplet"
 
-#: app/color_picker.c:278 app/histogram_tool.c:265
+#: app/color_picker.c:278 app/histogram_tool.c:272
 msgid "Intensity:"
 msgstr "Intensitet:"
 
@@ -766,7 +766,7 @@ msgstr "Glød"
 msgid "Saturation"
 msgstr "Metning"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:315
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -837,7 +837,7 @@ msgstr "Generelle alternativer for palett"
 
 #: app/convert.c:541
 msgid "Generate Optimal Palette:"
-msgstr "Generér optimal palett:"
+msgstr "Generer optimal palett:"
 
 #: app/convert.c:574
 msgid "# of Colors:"
@@ -1402,7 +1402,7 @@ msgstr "Filen eksisterer!"
 msgid "Revert"
 msgstr "Forkast"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1970
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1512,26 +1512,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Ingen utvalg til stykning!"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Ukjent penselformat versjon #%d i \"%s\"."
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Feil i GIMP penselfil \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Uten navn"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "GIMP penselfil ser ut til å være avkuttet: \"%s\"."
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "GIMP penselfil ser ut til å være korrupt: \"%s\"."
@@ -1554,7 +1554,7 @@ msgstr ""
 "Advarsel: Klarte ikke å lese penselrør\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1563,7 +1563,7 @@ msgstr ""
 "Rør av pensler må ha minst en pensel:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -2180,7 +2180,7 @@ msgid "Gradient Selection"
 msgstr "Gradientutvalg"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
 msgid "Histogram"
 msgstr "Histogram"
 
@@ -2188,31 +2188,31 @@ msgstr "Histogram"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histogram opererer ikke på indekserte tegnede objekter."
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:268
 msgid "Mean:"
 msgstr "Middelverdi:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:269
 msgid "Std Dev:"
 msgstr "Standardavvik:"
 
-#: app/histogram_tool.c:263
+#: app/histogram_tool.c:270
 msgid "Median:"
 msgstr "Median:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:271
 msgid "Pixels:"
 msgstr "Piksler:"
 
-#: app/histogram_tool.c:266
+#: app/histogram_tool.c:273
 msgid "Count:"
 msgstr "Antall:"
 
-#: app/histogram_tool.c:267
+#: app/histogram_tool.c:274
 msgid "Percentile:"
 msgstr "Prosentil:"
 
-#: app/histogram_tool.c:300
+#: app/histogram_tool.c:307
 msgid "Information on Channel:"
 msgstr "Informasjon om kanal:"
 
@@ -3331,7 +3331,7 @@ msgstr "/Bilde/Transformering/Avstand..."
 
 #: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
-msgstr "/Bilde/Transformeringer/Rotér"
+msgstr "/Bilde/Transformeringer/Roter"
 
 #: app/menus.c:408
 msgid "/Image/Canvas Size..."
@@ -3339,7 +3339,7 @@ msgstr "/Bilde/Størrelse på kanvas..."
 
 #: app/menus.c:410
 msgid "/Image/Scale Image..."
-msgstr "/Bilde/Skalér bilde..."
+msgstr "/Bilde/Skaler bilde..."
 
 #: app/menus.c:412
 msgid "/Image/Duplicate"
@@ -3382,7 +3382,7 @@ msgstr "/Lag/Stabel/Lag til bunn"
 #. <Image>/Layers/Rotate
 #: app/menus.c:446
 msgid "/Layers/Rotate"
-msgstr "/Lag/Rotér"
+msgstr "/Lag/Roter"
 
 #: app/menus.c:451
 msgid "/Layers/Anchor Layer"
@@ -3541,7 +3541,7 @@ msgstr "/Filtre/Animasjon"
 
 #: app/menus.c:571
 msgid "/Filters/Combine"
-msgstr "/Filtre/Kombinér"
+msgstr "/Filtre/Kombiner"
 
 #: app/menus.c:576
 msgid "/Filters/Toys"
@@ -3598,7 +3598,7 @@ msgstr "/Lag/Lag til bildestørrelse"
 
 #: app/menus.c:642
 msgid "/Scale Layer..."
-msgstr "/Skalér lag..."
+msgstr "/Skaler lag..."
 
 #: app/menus.c:647
 msgid "/Merge Visible Layers..."
@@ -4025,7 +4025,7 @@ msgstr "Kilde:"
 
 #: app/palette.c:3185
 msgid "Indexed Palette"
-msgstr "Indeksért palett"
+msgstr "Indeksert palett"
 
 #. The sample size
 #: app/palette.c:3198
@@ -4141,17 +4141,17 @@ msgstr "Mønsterutvalg"
 msgid "No Patterns available"
 msgstr "Ingen mønstre tilgjengelig"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Ukjent versjon av mønsterformat #%d i \"%s\"."
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Feil i GIMP mønsterfil \"%s\"."
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "GIMP mønsterfil ser ut til å være avkuttet: \"%s\"."
@@ -4216,13 +4216,13 @@ msgstr ""
 "Du bør lagre dine bilder og starte GIMP på nytt\n"
 "for å være på den sikre siden."
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "Posterisering"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterisering opererer ikke å indekserte tegnede objekter."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "Posterisering"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
@@ -4414,7 +4414,7 @@ msgstr "Minimum antall farger:"
 
 #: app/preferences_dialog.c:1783
 msgid "Install Colormap"
-msgstr "Installér fargekart"
+msgstr "Installer fargekart"
 
 #: app/preferences_dialog.c:1792
 msgid "Colormap Cycling"
@@ -4872,7 +4872,7 @@ msgstr "Utvalg: "
 
 #: app/resize.c:182
 msgid "Scale Layer"
-msgstr "Skalér lag"
+msgstr "Skaler lag"
 
 #: app/resize.c:184 app/resize.c:209 app/tool_options.c:801
 msgid "Size"
@@ -4880,7 +4880,7 @@ msgstr "Størrelse"
 
 #: app/resize.c:188
 msgid "Scale Image"
-msgstr "Skalér bilde"
+msgstr "Skaler bilde"
 
 #: app/resize.c:190
 msgid "Pixel Dimensions"
@@ -5460,7 +5460,7 @@ msgstr "/Bilde/Farger/Fargebalanse..."
 
 #: app/tools.c:1032
 msgid "Adjust color balance"
-msgstr "Justér fargebalanse"
+msgstr "Juster fargebalanse"
 
 #: app/tools.c:1055
 msgid "/Image/Colors/Brightness-Contrast..."
@@ -5468,7 +5468,7 @@ msgstr "/Bilde/Farger/Lys-Kontrast..."
 
 #: app/tools.c:1060
 msgid "Adjust brightness and contrast"
-msgstr "Justér lysstyrke og kontrast..."
+msgstr "Juster lysstyrke og kontrast..."
 
 #: app/tools.c:1083
 msgid "/Image/Colors/Hue-Saturation..."
@@ -5476,15 +5476,15 @@ msgstr "/Bilde/Farger/Glød-Metning..."
 
 #: app/tools.c:1088
 msgid "Adjust hue and saturation"
-msgstr "Justér Glød og metning"
+msgstr "Juster Glød og metning"
 
 #: app/tools.c:1111
 msgid "/Image/Colors/Posterize..."
-msgstr "/Bilde/Farger/Posterisér..."
+msgstr "/Bilde/Farger/Posteriser..."
 
 #: app/tools.c:1116
 msgid "Reduce image to a fixed numer of colors"
-msgstr "Redusér til et fast antall fargeri bildet"
+msgstr "Reduser til et fast antall fargeri bildet"
 
 #: app/tools.c:1139
 msgid "/Image/Colors/Threshold..."
@@ -5508,7 +5508,7 @@ msgstr "/Bilde/Farger/Nivåer..."
 
 #: app/tools.c:1200
 msgid "Adjust color levels"
-msgstr "Justér fargenivåer"
+msgstr "Juster fargenivåer"
 
 #: app/tools.c:1223
 msgid "/Image/Histogram..."
@@ -5749,7 +5749,7 @@ msgstr "beskjær"
 
 #: app/undo.c:2941
 msgid "layer scale"
-msgstr "skalér lag"
+msgstr "skaler lag"
 
 #: app/undo.c:2942
 msgid "layer resize"
