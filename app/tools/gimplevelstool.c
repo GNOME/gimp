@@ -689,6 +689,16 @@ levels_update (LevelsDialog *ld,
 	       gint          update)
 {
   gint i;
+  gint   sel_channel;
+  
+  if(ld->color) {
+    sel_channel = ld->channel;
+  } else {
+    if(ld->channel == 2)
+      sel_channel = HISTOGRAM_ALPHA;
+    else
+      sel_channel = HISTOGRAM_VALUE;
+  }
 
   /*  Recalculate the transfer arrays  */
   levels_calculate_transfers (ld);
@@ -726,7 +736,7 @@ levels_update (LevelsDialog *ld,
     {
       guchar buf[DA_WIDTH*3];
 
-      switch (ld->channel)
+      switch (sel_channel)
 	{
 	default:
 	  g_warning ("unknown channel type, can't happen\n");
@@ -735,9 +745,9 @@ levels_update (LevelsDialog *ld,
 	case HISTOGRAM_ALPHA:
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
-	      buf[3*i+0] = ld->input[ld->channel][i];
-	      buf[3*i+1] = ld->input[ld->channel][i];
-	      buf[3*i+2] = ld->input[ld->channel][i];
+	      buf[3*i+0] = ld->input[sel_channel][i];
+	      buf[3*i+1] = ld->input[sel_channel][i];
+	      buf[3*i+2] = ld->input[sel_channel][i];
 	    }
 	  break;
 
@@ -778,7 +788,7 @@ levels_update (LevelsDialog *ld,
       guchar r, g, b;
 
       r = g = b = 0;
-      switch (ld->channel)
+      switch (sel_channel)
 	{
 	default:
 	  g_warning ("unknown channel type, can't happen\n");
@@ -878,7 +888,21 @@ levels_channel_callback (GtkWidget *widget,
 
   gimp_menu_item_update (widget, &ld->channel);
 
-  histogram_widget_channel (ld->histogram, ld->channel);
+  if(ld->color)
+    histogram_widget_channel (ld->histogram, ld->channel);
+  else
+    {
+      if(ld->channel > 1) 
+	{
+	  histogram_widget_channel (ld->histogram, 1);
+	  ld->channel = 2;
+	}
+      else
+	{
+	  histogram_widget_channel (ld->histogram, 0);
+	  ld->channel = 1;
+	} 
+    }
   levels_update (ld, ALL);
 }
 

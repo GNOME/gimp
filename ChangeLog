@@ -1,3 +1,11 @@
+2000-11-30  Andy Thomas <alt@gimp.org>
+
+	* app/curves.c
+        * app/levels.c
+	
+	Fix for gimp bug #33403. The curves and levels dialogs should now
+	work in GRAYA images.
+
 2000-11-29  Austin Donnelly  <austin@gimp.org>
 
 	* app/curves.c: Applied patch from David Hodson

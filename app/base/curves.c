@@ -777,12 +777,23 @@ curves_update (CurvesDialog *cd,
   gint i, j;
   gchar buf[32];
   gint offset;
+  gint   sel_channel;
+  
+  if(cd->color) {
+    sel_channel = cd->channel;
+  } else {
+    if(cd->channel == 2)
+      sel_channel = HISTOGRAM_ALPHA;
+    else
+      sel_channel = HISTOGRAM_VALUE;
+  }
+
 
   if (update & XRANGE_TOP)
     {
       guchar buf[XRANGE_WIDTH * 3];
 
-      switch (cd->channel)
+      switch (sel_channel)
 	{
 	case HISTOGRAM_VALUE:
 	case HISTOGRAM_ALPHA:
@@ -790,9 +801,9 @@ curves_update (CurvesDialog *cd,
 	    {
 	      for (j = 0; j < XRANGE_WIDTH ; j++)
 		{
-		  buf[j*3+0] = cd->curve[cd->channel][j];
-		  buf[j*3+1] = cd->curve[cd->channel][j];
-		  buf[j*3+2] = cd->curve[cd->channel][j];
+		  buf[j*3+0] = cd->curve[sel_channel][j];
+		  buf[j*3+1] = cd->curve[sel_channel][j];
+		  buf[j*3+2] = cd->curve[sel_channel][j];
 		}
 	      gtk_preview_draw_row (GTK_PREVIEW (cd->xrange),
 				    buf, 0, i, XRANGE_WIDTH);
@@ -862,7 +873,7 @@ curves_update (CurvesDialog *cd,
 
       for (i = 0; i < YRANGE_HEIGHT; i++)
 	{
-	  switch (cd->channel)
+	  switch (sel_channel)
 	    {
 	    case HISTOGRAM_VALUE:
 	    case HISTOGRAM_ALPHA:
@@ -873,7 +884,7 @@ curves_update (CurvesDialog *cd,
 	    case HISTOGRAM_GREEN:
 	    case HISTOGRAM_BLUE:
 	      pix[0] = pix[1] = pix[2] = 0;
-	      pix[cd->channel - 1] = (255 - i);
+	      pix[sel_channel - 1] = (255 - i);
 	      break;
 
 	    default:
@@ -933,13 +944,13 @@ curves_update (CurvesDialog *cd,
 
       /* draw the colour line */
       gdk_draw_line (cd->pixmap, cd->graph->style->black_gc,
-		     cd->col_value[cd->channel]+RADIUS,RADIUS,
-		     cd->col_value[cd->channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
+		     cd->col_value[sel_channel]+RADIUS,RADIUS,
+		     cd->col_value[sel_channel]+RADIUS,GRAPH_HEIGHT + RADIUS);
 
       /* and xpos indicator */
-      g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[cd->channel]);
+      g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[sel_channel]);
       
-      if ((cd->col_value[cd->channel]+RADIUS) < 127)
+      if ((cd->col_value[sel_channel]+RADIUS) < 127)
 	{
 	  offset = RADIUS + 4;
 	}
@@ -951,7 +962,7 @@ curves_update (CurvesDialog *cd,
       gdk_draw_string (cd->pixmap,
 		       cd->graph->style->font,
 		       cd->graph->style->black_gc,
-		       cd->col_value[cd->channel]+offset,
+		       cd->col_value[sel_channel]+offset,
 		       GRAPH_HEIGHT,
 		       buf);
 
@@ -1122,8 +1133,20 @@ curves_channel_callback (GtkWidget *widget,
 
   gimp_menu_item_update (widget, &cd->channel);
 
+  if(!cd->color) {
+    if(cd->channel > 1)
+      {
+	cd->channel = 2;
+      }
+    else 
+      {
+	cd->channel = 1;
+      }
+  } 
+
   gtk_option_menu_set_history (GTK_OPTION_MENU (cd->curve_type_menu), 
 			       cd->curve_type[cd->channel]);
+
   curves_update (cd, XRANGE_TOP | YRANGE | GRAPH | DRAW);
 }
 
