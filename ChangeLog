@@ -1,3 +1,12 @@
+2004-07-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-utils.[ch] (gimp_parameters_append)
+	(gimp_parameters_append_valist)
+	(gimp_parameters_free): new utility functions which create and
+	destroy GParameter arrays for g_object_newv().
+
+	* app/gui/gui-vtable.c (gui_pdb_dialog_new): use them.
+
 2004-07-10  Michael Natterer  <mitch@gimp.org>
 
 	Removed any remaining GUI dependency from the PDB wrappers:

@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
-#include <gobject/gvaluecollector.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -30,6 +29,7 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpbrush.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -524,105 +524,34 @@ gui_pdb_dialog_new (Gimp          *gimp,
 
       if (object)
         {
-          GObjectClass *object_class;
-          GtkWidget    *dialog;
-          GParameter   *params;
-          gint          n_params;
-          gchar        *param_name;
-          gint          i;
+          GParameter *params   = NULL;
+          gint        n_params = 0;
+          GtkWidget  *dialog;
+
+          params = gimp_parameters_append (dialog_type, params, &n_params,
+                                           "title",          title,
+                                           "role",           dialog_role,
+                                           "help-func",      gimp_standard_help_func,
+                                           "help-id",        help_id,
+                                           "context",        context,
+                                           "select-type",    container->children_type,
+                                           "initial-object", object,
+                                           "callback-name",  callback_name,
+                                           "menu-factory",   global_menu_factory,
+                                           NULL);
 
           if (edit_func)
-            n_params = 10;
-          else
-            n_params = 9;
+            params = gimp_parameters_append (dialog_type, params, &n_params,
+                                             "edit-func", edit_func,
+                                             NULL);
 
-          params = g_new0 (GParameter, n_params);
-
-          params[0].name = "title";
-          g_value_init       (&params[0].value, G_TYPE_STRING);
-          g_value_set_string (&params[0].value, title);
-
-          params[1].name = "role";
-          g_value_init       (&params[1].value, G_TYPE_STRING);
-          g_value_set_string (&params[1].value, dialog_role);
-
-          params[2].name = "help-func";
-          g_value_init        (&params[2].value, G_TYPE_POINTER);
-          g_value_set_pointer (&params[2].value, gimp_standard_help_func);
-
-          params[3].name = "help-id";
-          g_value_init       (&params[3].value, G_TYPE_STRING);
-          g_value_set_string (&params[3].value, help_id);
-
-          params[4].name = "context";
-          g_value_init       (&params[4].value, GIMP_TYPE_CONTEXT);
-          g_value_set_object (&params[4].value, context);
-
-          params[5].name = "select-type";
-          g_value_init        (&params[5].value, G_TYPE_POINTER);
-          g_value_set_pointer (&params[5].value, (gpointer) container->children_type);
-
-          params[6].name = "initial-object";
-          g_value_init       (&params[6].value, GIMP_TYPE_OBJECT);
-          g_value_set_object (&params[6].value, object);
-
-          params[7].name = "callback-name";
-          g_value_init       (&params[7].value, G_TYPE_STRING);
-          g_value_set_string (&params[7].value, callback_name);
-
-          params[8].name = "menu-factory";
-          g_value_init       (&params[8].value, GIMP_TYPE_MENU_FACTORY);
-          g_value_set_object (&params[8].value, global_menu_factory);
-
-          if (edit_func)
-            {
-              params[9].name = "edit-func";
-              g_value_init        (&params[9].value, G_TYPE_POINTER);
-              g_value_set_pointer (&params[9].value, edit_func);
-            }
-
-          object_class = g_type_class_ref (dialog_type);
-
-          param_name = va_arg (args, gchar *);
-          while (param_name)
-            {
-              gchar      *error = NULL;
-              GParamSpec *pspec = g_object_class_find_property (object_class,
-                                                                param_name);
-
-              if (! pspec)
-                {
-                  g_warning ("%s: object class `%s' has no property named `%s'",
-                             G_STRFUNC, g_type_name (dialog_type), param_name);
-                  break;
-                }
-
-              params = g_renew (GParameter, params, n_params + 1);
-              params[n_params].name         = param_name;
-              params[n_params].value.g_type = 0;
-              g_value_init (&params[n_params].value,
-                            G_PARAM_SPEC_VALUE_TYPE (pspec));
-              G_VALUE_COLLECT (&params[n_params].value, args, 0, &error);
-              if (error)
-                {
-                  g_warning ("%s: %s", G_STRFUNC, error);
-                  g_free (error);
-                  g_value_unset (&params[n_params].value);
-                  break;
-                }
-              n_params++;
-
-              param_name = va_arg (args, gchar *);
-            }
-
-          g_type_class_unref (object_class);
+          params = gimp_parameters_append_valist (dialog_type,
+                                                  params, &n_params,
+                                                  args);
 
           dialog = g_object_newv (dialog_type, n_params, params);
 
-          for (i = 0; i < n_params; i++)
-            g_value_unset (&params[i].value);
-
-          g_free (params);
+          gimp_parameters_free (params, n_params);
 
           gtk_widget_show (dialog);
 

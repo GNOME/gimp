@@ -23,6 +23,7 @@
 #include <locale.h>
 
 #include <glib-object.h>
+#include <gobject/gvaluecollector.h>
 
 #include "core-types.h"
 
@@ -169,4 +170,97 @@ gimp_boolean_handled_accum (GSignalInvocationHint *ihint,
   continue_emission = ! signal_handled;
 
   return continue_emission;
+}
+
+GParameter *
+gimp_parameters_append (GType       object_type,
+                        GParameter *params,
+                        gint       *n_params,
+                        ...)
+{
+  va_list args;
+
+  g_return_val_if_fail (g_type_is_a (object_type, G_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (n_params != NULL, NULL);
+  g_return_val_if_fail (params != NULL || *n_params == 0, NULL);
+
+  va_start (args, n_params);
+  params = gimp_parameters_append_valist (object_type, params, n_params, args);
+  va_end (args);
+
+  return params;
+}
+
+GParameter *
+gimp_parameters_append_valist (GType       object_type,
+                               GParameter *params,
+                               gint       *n_params,
+                               va_list     args)
+{
+  GObjectClass *object_class;
+  gchar        *param_name;
+
+  g_return_val_if_fail (g_type_is_a (object_type, G_TYPE_OBJECT), NULL);
+  g_return_val_if_fail (n_params != NULL, NULL);
+  g_return_val_if_fail (params != NULL || *n_params == 0, NULL);
+
+  object_class = g_type_class_ref (object_type);
+
+  param_name = va_arg (args, gchar *);
+
+  while (param_name)
+    {
+      gchar      *error = NULL;
+      GParamSpec *pspec = g_object_class_find_property (object_class,
+                                                        param_name);
+
+      if (! pspec)
+        {
+          g_warning ("%s: object class `%s' has no property named `%s'",
+                     G_STRFUNC, g_type_name (object_type), param_name);
+          break;
+        }
+
+      params = g_renew (GParameter, params, *n_params + 1);
+
+      params[*n_params].name         = param_name;
+      params[*n_params].value.g_type = 0;
+
+      g_value_init (&params[*n_params].value, G_PARAM_SPEC_VALUE_TYPE (pspec));
+
+      G_VALUE_COLLECT (&params[*n_params].value, args, 0, &error);
+
+      if (error)
+        {
+          g_warning ("%s: %s", G_STRFUNC, error);
+          g_free (error);
+          g_value_unset (&params[*n_params].value);
+          break;
+        }
+
+      *n_params = *n_params + 1;
+
+      param_name = va_arg (args, gchar *);
+    }
+
+  g_type_class_unref (object_class);
+
+  return params;
+}
+
+void
+gimp_parameters_free (GParameter *params,
+                      gint        n_params)
+{
+  g_return_if_fail (params != NULL || n_params == 0);
+
+  if (params)
+    {
+      gint i;
+
+      for (i = 0; i < n_params; i++)
+        g_value_unset (&params[i].value);
+
+      g_free (params);
+    }
 }
