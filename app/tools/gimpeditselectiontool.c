@@ -292,6 +292,13 @@ init_edit_selection (GimpTool    *tool,
                             &edit_select->num_segs_in,
                             &edit_select->num_segs_out);
 
+  edit_select->segs_in  = g_memdup (edit_select->segs_in,
+                                    edit_select->num_segs_in *
+                                    sizeof (BoundSeg));
+  edit_select->segs_out = g_memdup (edit_select->segs_out,
+                                    edit_select->num_segs_out *
+                                    sizeof (BoundSeg));
+
   /*  find the bounding box of the selection mask -
    *  this is used for the case of a EDIT_MASK_TO_LAYER_TRANSLATE,
    *  where the translation will result in floating the selection
@@ -394,6 +401,14 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
     }
 
   gimp_image_flush (gdisp->gimage);
+
+  g_free (edit_select->segs_in);
+  g_free (edit_select->segs_out);
+
+  edit_select->segs_in      = NULL;
+  edit_select->segs_out     = NULL;
+  edit_select->num_segs_in  = 0;
+  edit_select->num_segs_out = 0;
 
   g_object_unref (edit_select);
 }

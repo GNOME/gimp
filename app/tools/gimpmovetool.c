@@ -261,6 +261,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 	  gimp_tool_control_activate (tool->control);
 
+          gimp_display_shell_selection_visibility (shell,
+                                                   GIMP_SELECTION_PAUSE);
+
           gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 	}
       else if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,

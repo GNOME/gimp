@@ -1,3 +1,16 @@
+2003-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c (init_edit_selection):
+	g_memdup() the segments returned by gimp_image_mask_boundary().
+	Just caching the pointers leads to bug #22375 because the image's
+	mask boundary changes while we live-move stuff.
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_press): pause
+	the selection when starting to move a guide, since we also resume
+	it when we're finished.
+
+	(both bugs tracked down by Pedro Gimeno).
+
 2003-04-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstock.c (gimp_stock_button_pixbufs): register
