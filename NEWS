@@ -7,6 +7,45 @@ release, GIMP 2.2, will emerge out of this.
 
 
 
+Overview of Changes in GIMP 2.1.3
+=================================
+
+- Cleanups to the MMX code and the composite subsystem in general
+
+- Cleanups and fixes to Gimpressionst plug-in (bug #148088)
+
+- Redone light settings GUI for Lighting plug-in.
+
+- Added keyboard shortcut editor to preferences dialog (bug #142922)
+
+- Implemented the callbacks for the various "Clear saved foobar now"
+  buttons in the preferences dialog.
+
+- Added support for loading gradients from SVG files. This allows to
+  share gradient definitions with Inkscape and Sodipodi (bug #148127)
+
+- Added parsers for the various ways to define a color in SVG to
+  libgimpcolor.
+
+- Added GimpColorHexEntry widget to libgimpwidgets. It displays colors
+  in hexadecimal represention and takes hex and SVG color names as input.
+
+- Added GimpCellRendererColor and GimpCellRendererToggle to libgimpwidgets.
+
+- Renamed GimpColor boxed type to GimpRGB and moved it to libgimpwidgets.
+
+- Fixes to the BMP loader plug-in (bug #143682).
+
+- Fixes to the Decompose plug-in (bug #147603).
+
+
+Contributors:
+
+   Michael Natterer, Sven Neumann, Helvetix Victorinox, Shlomi Fish, 
+   Bill Skaggs, Brion Vibber, Raphael Quinet
+
+
+
 Overview of Changes in GIMP 2.1.2
 =================================
 
@@ -67,6 +106,7 @@ Contributors:
    Geert Jordaens, Simon Budig, Roman Joost, Michael Schumacher,
    Shlomi Fish, Hans Breuer, Brion Vibber, Robert Oegren, Kevin
    Cozens, Helvetix Victorinox
+
 
 
 Overview of Changes in GIMP 2.1.1
