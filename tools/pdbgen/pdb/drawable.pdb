@@ -130,6 +130,7 @@ HELP
 	{ name => 'fill_type', type => 'enum GimpFillType',
 	  desc => 'The type of fill: %%desc%%' }
     );
+    delete $inargs[0]->{no_success};
 
     %invoke = ( code => 'drawable_fill (drawable, (GimpFillType) fill_type);' );
 }
@@ -211,6 +212,8 @@ sub drawable_image {
 
     @outargs = ( &std_image_arg );
     $outargs[0]->{desc} = "The drawable's image";
+
+    delete $inargs[0]->{no_success};
 
     %invoke = (
 	code => 'success = (gimage = drawable_gimage (drawable)) != NULL;'
@@ -309,15 +312,15 @@ HELP
     %invoke = ( code => 'drawable_offsets (drawable, &offset_x, &offset_y);' );
 }
 
-sub drawable_is_layer {
+sub drawable_layer {
     &drawable_is_proc('layer');
 }
 
-sub drawable_is_layer_mask {
+sub drawable_layer_mask {
     &drawable_is_proc('layer mask');
 }
 
-sub drawable_is_channel {
+sub drawable_channel {
     &drawable_is_proc('channel');
 }
 
@@ -509,8 +512,8 @@ CODE
 	    drawable_mask_bounds drawable_image drawable_type
 	    drawable_has_alpha drawable_type_with_alpha drawable_is_rgb
 	    drawable_is_gray drawable_is_indexed drawable_bytes drawable_width
-	    drawable_height drawable_offsets drawable_is_layer
-	    drawable_is_layer_mask drawable_is_channel drawable_get_pixel
+	    drawable_height drawable_offsets drawable_layer
+	    drawable_layer_mask drawable_channel drawable_get_pixel
 	    drawable_set_pixel drawable_set_image drawable_thumbnail);
 %exports = (app => [@procs], lib => [@procs]);
 

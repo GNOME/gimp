@@ -6,10 +6,21 @@ gint p_plug_in_grid_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble 
 {
     typedef struct t_plug_in_grid_Vals 
     {
-      long      width;
-      long      height;
-      long      x_offset;
-      long      y_offset;
+      long      hwidth;
+      long      hspace;
+      long      hoffset;
+      t_color   hcolor;
+      char      hopacity;
+      long      vwidth;
+      long      vspace;
+      long      voffset;
+      t_color   vcolor;
+      char      vopacity;
+      long      iwidth;
+      long      ispace;
+      long      ioffset;
+      t_color   icolor;
+      char      iopacity;
     } t_plug_in_grid_Vals; 
 
     t_plug_in_grid_Vals  buf, *buf_from, *buf_to; 
@@ -28,10 +39,21 @@ gint p_plug_in_grid_iter_ALT(GRunModeType run_mode, gint32 total_steps, gdouble 
     buf_to   = (t_plug_in_grid_Vals *)&g_plugin_data_to[0]; 
     memcpy(&buf, buf_from, sizeof(buf));
 
-    p_delta_long(&buf.width, buf_from->width, buf_to->width, total_steps, current_step);
-    p_delta_long(&buf.height, buf_from->height, buf_to->height, total_steps, current_step);
-    p_delta_long(&buf.x_offset, buf_from->x_offset, buf_to->x_offset, total_steps, current_step);
-    p_delta_long(&buf.y_offset, buf_from->y_offset, buf_to->y_offset, total_steps, current_step);
+    p_delta_long(&buf.hwidth, buf_from->hwidth, buf_to->hwidth, total_steps, current_step);
+    p_delta_long(&buf.hspace, buf_from->hspace, buf_to->hspace, total_steps, current_step);
+    p_delta_long(&buf.hoffset, buf_from->hoffset, buf_to->hoffset, total_steps, current_step);
+    p_delta_color(&buf.hcolor, &buf_from->hcolor, &buf_to->hcolor, total_steps, current_step);
+    p_delta_char(&buf.hopacity, buf_from->hopacity, buf_to->hopacity, total_steps, current_step);
+    p_delta_long(&buf.vwidth, buf_from->vwidth, buf_to->vwidth, total_steps, current_step);
+    p_delta_long(&buf.vspace, buf_from->vspace, buf_to->vspace, total_steps, current_step);
+    p_delta_long(&buf.voffset, buf_from->voffset, buf_to->voffset, total_steps, current_step);
+    p_delta_color(&buf.vcolor, &buf_from->vcolor, &buf_to->vcolor, total_steps, current_step);
+    p_delta_char(&buf.vopacity, buf_from->vopacity, buf_to->vopacity, total_steps, current_step);
+    p_delta_long(&buf.iwidth, buf_from->iwidth, buf_to->iwidth, total_steps, current_step);
+    p_delta_long(&buf.ispace, buf_from->ispace, buf_to->ispace, total_steps, current_step);
+    p_delta_long(&buf.ioffset, buf_from->ioffset, buf_to->ioffset, total_steps, current_step);
+    p_delta_color(&buf.icolor, &buf_from->icolor, &buf_to->icolor, total_steps, current_step);
+    p_delta_char(&buf.iopacity, buf_from->iopacity, buf_to->iopacity, total_steps, current_step);
 
     gimp_set_data("plug_in_grid", &buf, sizeof(buf)); 
 

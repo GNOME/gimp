@@ -181,7 +181,7 @@ static m_info mail_info = {
 			  if you prefer that as the default */
 };
 
-static gchar * mesg_body;
+static gchar * mesg_body = "\0";
 static int run_flag = 0;
 
 MAIN ()

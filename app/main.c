@@ -121,6 +121,7 @@ main (int argc, char **argv)
   /* Initialize i18n support */
 
   INIT_LOCALE("gimp");
+  bindtextdomain("gimp-std-plugins", LOCALEDIR);
 
   gtk_init (&argc, &argv);
 

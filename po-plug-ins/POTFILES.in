@@ -31,7 +31,9 @@ plug-ins/common/depthmerge.c
 plug-ins/common/destripe.c
 plug-ins/common/gif.c
 plug-ins/common/gifload.c
+plug-ins/common/grid.c
 plug-ins/common/film.c
+plug-ins/common/mail.c
 plug-ins/common/normalize.c
 plug-ins/common/oilify.c
 plug-ins/common/png.c

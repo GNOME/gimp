@@ -1,3 +1,24 @@
+Mon Nov  1 13:27:14 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/drawable_cmds.c
+	* tools/pdbgen/pdb/drawable.pdb: applied (a modified version of) a 
+	patch from Garry R. Osgood <gosgood@idt.net> that should fix bug #2202 
+	and problems with the Warp plug-in.
+
+	* app/main.c
+	* po-plug-ins/POTFILES.in
+	* plug-ins/common/mail.c: applied a patch from 
+	SHIRASAKI Yasuhiro <yasuhiro@awa.tohoku.ac.jp> that handles i18n issues 
+	and fixes a problem in the mail plug-in.
+	( Could someone please check if the change to app/main.c is the right 
+	  thing to do ?! )
+
+	* po-plug-ins/POTFILES.in
+	* plug-ins/common/grid.c
+	* plug-ins/gap/iter_ALT/gen/plug_in_grid_iter_ALT.inc: 
+	checked in a new version of the Grid plug_in developed by 
+	Tom Rathborne <tomr@aceldama.com> and me.
+
 Sun Oct 31 21:51:10 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am
