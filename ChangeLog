@@ -1,8 +1,8 @@
 2003-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcellrenderertoggle.c
-	(gimp_cell_renderer_toggle_activate) *
-	app/widgets/gimpcellrendererviewable.c
+	(gimp_cell_renderer_toggle_activate)
+	* app/widgets/gimpcellrendererviewable.c
 	(gimp_cell_renderer_viewable_activate): allow keyboard activation.
 
 	* app/widgets/gimpcellrendererviewable.c
