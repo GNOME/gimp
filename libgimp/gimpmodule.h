@@ -46,7 +46,13 @@ typedef struct {
  * of the following type: */
 typedef GimpModuleStatus (GimpModuleInitFunc) (GimpModuleInfo **);
 
+#ifndef MODULE_COMPILATION	/* On Win32 this declaration clashes with
+				 * the definition (which uses G_MODULE_EXPORT)
+				 * and thus should be bypassed when compiling
+				 * the module itself.
+				 */
 GimpModuleInitFunc module_init;
+#endif
 
 /* This function is called by the GIMP at startup, and should return
  * either GIMP_MODULE_OK if it sucessfully initialised or
@@ -67,7 +73,10 @@ typedef void (GimpModuleUnloadFunc) (void *shutdown_data,
 				      void (*completed_cb)(void *),
 				      void *completed_data);
 
+#ifndef MODULE_COMPILATION	/* The same as for module_init */
+
 GimpModuleUnloadFunc module_unload;
+#endif
 
 /* GIMP calls this unload request function to ask a module to
  * prepare itself to be unloaded.  It is called with the value of

@@ -15,10 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "appenv.h"
 #include "actionarea.h"
@@ -26,8 +31,16 @@
 #include "interface.h"
 #include "gimprc.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
+
+#ifndef NATIVE_WIN32
+#  define USER_INSTALL "user_install"
+#else
+#  define STRICT
+#  include <windows.h>
+#  define USER_INSTALL "user_install.bat"
+#endif
 
 static void install_run (InstallCallback);
 static void install_help (InstallCallback);
@@ -48,11 +61,7 @@ install_verify (InstallCallback install_callback)
   struct stat stat_buf;
 
   filename = gimp_directory ();
-  if ('\000' == filename[0])
-    {
-      g_message (_("No home directory--skipping GIMP user installation."));
-      (* install_callback) ();
-    }
+  /* gimp_directory now always returns something */
 
   if (stat (filename, &stat_buf) != 0)
     properly_installed = FALSE;
@@ -373,6 +382,47 @@ help_quit_callback (GtkWidget *w,
   gtk_exit (0);
 }
 
+#ifdef NATIVE_WIN32
+
+static char *
+quote_spaces (char *string)
+{
+  int nspaces = 0;
+  char *p = string, *q, *new;
+
+  while (*p)
+    {
+      if (*p == ' ')
+	nspaces++;
+      p++;
+    }
+
+  if (nspaces == 0)
+    return g_strdup (string);
+
+  new = g_malloc (strlen (string) + nspaces*2 + 1);
+
+  p = string;
+  q = new;
+  while (*p)
+    {
+      if (*p == ' ')
+	{
+	  *q++ = '"';
+	  *q++ = ' ';
+	  *q++ = '"';
+	}
+      else
+	*q++ = *p;
+      p++;
+    }
+  *q = '\0';
+
+  return new;
+}
+
+#endif
+
 static void
 install_run (InstallCallback callback)
 {
@@ -389,7 +439,6 @@ install_run (InstallCallback callback)
   GdkFont   *font;
   FILE *pfp;
   char buffer[2048];
-  char *gimp_data_dir;
   struct stat stat_buf;
   int err;
   int executable = TRUE;
@@ -430,14 +479,13 @@ install_run (InstallCallback callback)
   /*  Realize the text widget before inserting text strings  */
   gtk_widget_realize (text);
 
+#ifndef NATIVE_WIN32
   gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL, _("User Installation Log\n\n"), -1);
+#endif
 
   /*  Generate output  */
-  if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
-    g_snprintf (buffer, sizeof(buffer), "%s/user_install", gimp_data_dir);
-  else
-    g_snprintf (buffer, sizeof(buffer), "%s/user_install", DATADIR);
-
+  g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
+	      gimp_data_directory ());
   if ((err = stat (buffer, &stat_buf)) != 0)
     {
       gtk_text_insert (GTK_TEXT (text), font, NULL, NULL, buffer, -1);
@@ -445,6 +493,7 @@ install_run (InstallCallback callback)
 		       _(" does not exist.  Cannot install.\n"), -1);
       executable = FALSE;
     }
+#ifdef S_IXUSR
   else if (! (S_IXUSR & stat_buf.st_mode) || ! (S_IRUSR & stat_buf.st_mode))
     {
       gtk_text_insert (GTK_TEXT (text), font, NULL, NULL, buffer, -1);
@@ -452,21 +501,51 @@ install_run (InstallCallback callback)
 		       _(" has invalid permissions.\nCannot install."), -1);
       executable = FALSE;
     }
+#endif
 
   if (executable == TRUE)
     {
-      if (gimp_data_dir)
-	g_snprintf (buffer, sizeof(buffer), "%s/user_install %s %s",
-		    gimp_data_dir, gimp_data_dir, gimp_directory ());
-      else
-	g_snprintf (buffer, sizeof(buffer), "%s/user_install %s %s",
-		    DATADIR, DATADIR, gimp_directory ());
+#ifdef NATIVE_WIN32
+      char *quoted_data_dir, *quoted_user_dir;
+
+      /* On Windows, it is common for the GIMP data directory
+       * to have spaces in it ("c:\Program Files\GIMP"). Put spaces in quotes.
+       */
+      quoted_data_dir = quote_spaces (gimp_data_directory ());
+      quoted_user_dir = quote_spaces (gimp_directory ());
+
+      /* The Microsoft _popen doesn't work in Windows applications, sigh.
+       * Do the installation by calling system(). The user_install.bat
+       * ends with a pause command, so the user has to press enter in
+       * the console window to continue, and thus has a chance to read
+       * at the window contents.
+       */
+
+      AllocConsole ();
+      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
+		  quoted_data_dir, quoted_data_dir,
+		  quoted_user_dir);
+
+      if (system (buffer) == -1)
+	executable = FALSE;
+      g_free (quoted_data_dir);
+      g_free (quoted_user_dir);
+
+      gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL,
+		       "Did you notice any error messages\n"
+		       "in the console window? If not, installation\n"
+		       "was successful! Otherwise, quit and investigate\n"
+		       "the possible reason...\n", -1);
+#else
+      g_snprintf (buffer, sizeof(buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL " %s %s",
+		  gimp_data_directory (), gimp_data_directory(),
+		  gimp_directory ());
 
       /* urk - should really use something better than popen(), since
        * we can't tell if the installation script failed --austin */
       if ((pfp = popen (buffer, "r")) != NULL)
 	{
-	  while (fgets (buffer, 2048, pfp))
+	  while (fgets (buffer, sizeof (buffer), pfp))
 	    gtk_text_insert (GTK_TEXT (text), font, NULL, NULL, buffer, -1);
 	  pclose (pfp);
 
@@ -476,6 +555,8 @@ install_run (InstallCallback callback)
       else
 	executable = FALSE;
     }
+#endif /* !NATIVE_WIN32 */
+
   if (executable == FALSE)
     gtk_text_insert (GTK_TEXT (text), font, NULL, NULL,
 		     _("\nInstallation failed.  Contact system administrator.\n"), -1);
@@ -491,6 +572,10 @@ install_continue_callback (GtkWidget *w,
 			   gpointer   client_data)
 {
   InstallCallback callback;
+
+#ifdef NATIVE_WIN32
+  FreeConsole ();
+#endif
 
   callback = (InstallCallback) client_data;
   gtk_widget_destroy (install_widget);

@@ -77,7 +77,6 @@ extern char *    image_title_format;
 
 
 /*  function prototypes  */
-char *  gimp_directory (void);
 void    parse_gimprc (void);
 void    parse_gimprc_file (char *filename);
 void    save_gimprc (GList **updated_options, GList **conflicting_options);

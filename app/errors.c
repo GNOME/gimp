@@ -71,12 +71,21 @@ fatal_error (char *fmt, ...)
   va_list args;
 
   va_start (args, fmt);
+#ifndef NATIVE_WIN32
   printf ("%s fatal error: ", prog_name);
   vprintf (fmt, args);
   printf ("\n");
+#else
+  g_error ("%s: %s\n", prog_name, g_strdup_vprintf (fmt, args));
+#endif
   va_end (args);
 
+#ifndef NATIVE_WIN32
   g_on_error_query (prog_name);
+#else
+  /* g_on_error_query unreliable on Win32 */
+  abort ();
+#endif
   app_exit (1);
 }
 
@@ -91,7 +100,9 @@ terminate (char *fmt, ...)
   printf ("\n");
   va_end (args);
 
+#ifndef NATIVE_WIN32
   if (use_debug_handler)
     g_on_error_query (prog_name);
+#endif
   gdk_exit (1);
 }

@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "color_notebook.h"

@@ -4,6 +4,7 @@ gimpincludedir = $(includedir)/libgimp
 
 CPPFLAGS = \
 	-DGIMPDIR=\""$(gimpdir)"\"	\
+	-DDATADIR=\""$(gimpdatadir)"\"	\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
@@ -21,6 +22,8 @@ lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
 
 libgimpi_a_SOURCES = \
+	gimpenv.c		\
+	gimpenv.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
 	gimpmatrix.c		\
@@ -52,6 +55,7 @@ libgimp_la_SOURCES = \
 	gimpchannel.c	\
 	gimpdisplay.c	\
 	gimpdrawable.c	\
+	gimpenv.c	\
 	gimpgradient.c	\
 	gimpimage.c	\
 	gimplayer.c	\
@@ -83,6 +87,7 @@ gimpinclude_HEADERS = \
 	gimp.h			\
 	gimpchainbutton.h	\
 	gimpenums.h		\
+	gimpenv.h		\
 	gimpfeatures.h		\
 	gimpmatrix.h		\
 	gimpmenu.h		\

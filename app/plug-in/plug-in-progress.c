@@ -15,22 +15,52 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
+
 #include <errno.h>
 #include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
 #include <sys/stat.h>
 #include <time.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
+#ifdef WIN32
+#define STRICT
+#include <windows.h>
+#include <process.h>
+
+#ifdef _MSC_VER
+#include <fcntl.h>
+#include <io.h>
+#endif
+
+#ifdef __CYGWIN32__
+#define O_TEXT		0x0100	/* text file */
+#define _O_TEXT		0x0100	/* text file */
+#define O_BINARY	0x0200	/* binary file */
+#define _O_BINARY	0x0200	/* binary file */
+#endif
+
+#endif
+
 #include "regex.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
+#include "libgimp/gimpenv.h"
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -75,15 +105,15 @@ struct _PlugInBlocked
 };
 
 
-static int  plug_in_write                 (int                fd,
+static int  plug_in_write                 (GIOChannel	     *channel,
 					   guint8            *buf,
 				           gulong             count);
-static int  plug_in_flush                 (int                fd);
+static int  plug_in_flush                 (GIOChannel        *channel);
 static void plug_in_push                  (PlugIn            *plug_in);
 static void plug_in_pop                   (void);
-static void plug_in_recv_message          (gpointer           data,
-				           gint               id,
-				           GdkInputCondition  cond);
+static gboolean plug_in_recv_message	  (GIOChannel	     *channel,
+					   GIOCondition	      cond,
+					   gpointer	      data);
 static void plug_in_handle_message        (WireMessage       *msg);
 static void plug_in_handle_quit           (void);
 static void plug_in_handle_tile_req       (GPTileReq         *tile_req);
@@ -144,8 +174,8 @@ static GSList *blocked_plug_ins = NULL;
 
 static GSList *plug_in_stack = NULL;
 static PlugIn *current_plug_in = NULL;
-static int current_readfd = 0;
-static int current_writefd = 0;
+static GIOChannel *current_readchannel = NULL;
+static GIOChannel *current_writechannel = NULL;
 static int current_write_buffer_index = 0;
 static char *current_write_buffer = NULL;
 static Argument *current_return_vals = NULL;
@@ -155,6 +185,10 @@ static ProcRecord *last_plug_in = NULL;
 
 static int shm_ID = -1;
 static guchar *shm_addr = NULL;
+
+#ifdef WIN32
+static HANDLE shm_handle;
+#endif
 
 static int write_pluginrc = FALSE;
 
@@ -394,7 +428,7 @@ void
 plug_in_init ()
 {
   extern int use_shm;
-  char filename[MAXPATHLEN];
+  char *filename;
   GSList *tmp, *tmp2;
   PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
@@ -423,22 +457,22 @@ plug_in_init ()
   wire_set_writer (plug_in_write);
   wire_set_flusher (plug_in_flush);
 
-#ifdef HAVE_SHM_H
   /* allocate a piece of shared memory for use in transporting tiles
    *  to plug-ins. if we can't allocate a piece of shared memory then
    *  we'll fall back on sending the data over the pipe.
    */
   if (use_shm)
     {
+#ifdef HAVE_SHM_H
       shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
       if (shm_ID == -1)
-	g_message (_("shmget failed...disabling shared memory tile transport\n"));
+	g_message (_("shmget failed...disabling shared memory tile transport"));
       else
 	{
 	  shm_addr = (guchar*) shmat (shm_ID, 0, 0);
 	  if (shm_addr == (guchar*) -1)
 	    {
-	      g_message (_("shmat failed...disabling shared memory tile transport\n"));
+	      g_message (_("shmat failed...disabling shared memory tile transport"));
 	      shm_ID = -1;
 	    }
 
@@ -447,22 +481,62 @@ plug_in_init ()
 	    shmctl (shm_ID, IPC_RMID, 0);
 #endif
 	}
-    }
-#endif
+#else
+#ifdef WIN32
+      /* Use Win32 shared memory mechanisms for
+       * transfering tile data.
+       */
+      int pid;
+      char fileMapName[MAX_PATH];
+      int tileByteSize = TILE_WIDTH * TILE_HEIGHT * 4;
 
+      /* Our shared memory id will be our process ID */
+      pid = GetCurrentProcessId ();
+
+      /* From the id, derive the file map name */
+      sprintf (fileMapName, "GIMP%d.SHM", pid);
+
+      /* Create the file mapping into paging space */
+      shm_handle = CreateFileMapping ((HANDLE) 0xFFFFFFFF, NULL,
+				      PAGE_READWRITE, 0,
+				      tileByteSize, fileMapName);
+
+      if (shm_handle)
+	{
+	  /* Map the shared memory into our address space for use */
+	  shm_addr = (guchar *) MapViewOfFile(shm_handle,
+					      FILE_MAP_ALL_ACCESS,
+					      0, 0, tileByteSize);
+
+	  /* Verify that we mapped our view */
+	  if (shm_addr)
+	    shm_ID = pid;
+	  else {
+	    g_warning ("MapViewOfFile error: %d... disabling shared memory transport\n", GetLastError());
+	  }
+	}
+      else
+	{
+	  g_warning ("CreateFileMapping error: %d... disabling shared memory transport\n", GetLastError());
+	}
+#endif
+#endif
+    }
   /* search for binaries in the plug-in directory path */
   datafiles_read_directories (plug_in_path, plug_in_init_file, MODE_EXECUTABLE);
 
   /* read the pluginrc file for cached data */
+  filename = NULL;
   if (pluginrc_path)
     {
-      if (*pluginrc_path == '/')
-        strcpy(filename, pluginrc_path);
+      if (g_path_is_absolute (pluginrc_path))
+        filename = g_strdup (pluginrc_path);
       else
-        g_snprintf(filename, MAXPATHLEN, "%s/%s", gimp_directory(), pluginrc_path);
+        filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+				    gimp_directory (), pluginrc_path);
     }
   else
-    g_snprintf (filename, MAXPATHLEN, "%s/pluginrc", gimp_directory ());
+    filename = gimp_personal_rc_file ("pluginrc");
 
   app_init_update_status(_("Resource configuration"), filename, -1);
   parse_gimprc_file (filename);
@@ -525,6 +599,8 @@ plug_in_init ()
       plug_in_write_rc (filename);
     }
 
+  g_free (filename);
+
   /* add the plug-in procs to the procedure database */
   plug_in_add_to_db ();
 
@@ -582,6 +658,9 @@ plug_in_kill ()
   GSList *tmp;
   PlugIn *plug_in;
   
+#ifdef WIN32
+  CloseHandle (shm_handle);
+#else
 #ifdef HAVE_SHM_H
 #ifndef	IPC_RMID_DEFERRED_RELEASE
   if (shm_ID != -1)
@@ -592,6 +671,7 @@ plug_in_kill ()
 #else	/* IPC_RMID_DEFERRED_RELEASE */
   if (shm_ID != -1)
     shmdt ((char*) shm_addr);
+#endif
 #endif
 #endif
  
@@ -787,7 +867,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
   PlugInProcDef *proc_def;
   char *t1, *t2;
 
-  t1 = strrchr (plug_in_def->prog, '/');
+  t1 = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
   if (t1)
     t1 = t1 + 1;
   else
@@ -819,7 +899,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
     {
       tplug_in_def = tmp->data;
 
-      t2 = strrchr (tplug_in_def->prog, '/');
+      t2 = strrchr (tplug_in_def->prog, G_DIR_SEPARATOR);
       if (t2)
 	t2 = t2 + 1;
       else
@@ -827,7 +907,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
 
       if (strcmp (t1, t2) == 0)
 	{
-	  if ((strcmp (plug_in_def->prog, tplug_in_def->prog) == 0) &&
+	  if ((g_strcasecmp (plug_in_def->prog, tplug_in_def->prog) == 0) &&
 	      (plug_in_def->mtime == tplug_in_def->mtime))
 	    {
 	      /* Use cached plug-in entry */
@@ -895,7 +975,7 @@ plug_in_new (char *name)
   PlugIn *plug_in;
   char *path;
 
-  if (name[0] != '/')
+  if (!g_path_is_absolute (name))
     {
       path = search_in_path (plug_in_path, name);
       if (!path)
@@ -920,15 +1000,15 @@ plug_in_new (char *name)
   plug_in->pid = 0;
   plug_in->args[0] = g_strdup (path);
   plug_in->args[1] = g_strdup ("-gimp");
-  plug_in->args[2] = g_new (char, 16);
-  plug_in->args[3] = g_new (char, 16);
+  plug_in->args[2] = g_new (char, 32);
+  plug_in->args[3] = g_new (char, 32);
   plug_in->args[4] = NULL;
   plug_in->args[5] = NULL;
   plug_in->args[6] = NULL;
-  plug_in->my_read = 0;
-  plug_in->my_write = 0;
-  plug_in->his_read = 0;
-  plug_in->his_write = 0;
+  plug_in->my_read = NULL;
+  plug_in->my_write = NULL;
+  plug_in->his_read = NULL;
+  plug_in->his_write = NULL;
   plug_in->input_id = 0;
   plug_in->write_buffer_index = 0;
   plug_in->temp_proc_defs = NULL;
@@ -986,15 +1066,42 @@ plug_in_open (PlugIn *plug_in)
 	  return 0;
 	}
 
-      plug_in->my_read = my_read[0];
-      plug_in->my_write = my_write[1];
-      plug_in->his_read = my_write[0];
-      plug_in->his_write = my_read[1];
+#ifdef __CYGWIN32__
+      /* Set to binary mode */
+      setmode(my_read[0], _O_BINARY);
+      setmode(my_write[0], _O_BINARY);
+      setmode(my_read[1], _O_BINARY);
+      setmode(my_write[1], _O_BINARY);
+#endif
+
+#ifndef NATIVE_WIN32
+      plug_in->my_read = g_io_channel_unix_new (my_read[0]);
+      plug_in->my_write = g_io_channel_unix_new (my_write[1]);
+      plug_in->his_read = g_io_channel_unix_new (my_write[0]);
+      plug_in->his_write = g_io_channel_unix_new (my_read[1]);
+#else
+      plug_in->my_read = g_io_channel_win32_new_pipe (my_read[0]);
+      plug_in->his_read = g_io_channel_win32_new_pipe (my_write[0]);
+      plug_in->his_read_fd = my_write[0];
+      plug_in->my_write = g_io_channel_win32_new_pipe (my_write[1]);
+      plug_in->his_write = g_io_channel_win32_new_pipe (my_read[1]);
+#endif
 
       /* Remember the file descriptors for the pipes.
        */
-      sprintf (plug_in->args[2], "%d", plug_in->his_read);
-      sprintf (plug_in->args[3], "%d", plug_in->his_write);
+#ifndef NATIVE_WIN32
+      sprintf (plug_in->args[2], "%d",
+	       g_io_channel_unix_get_fd (plug_in->his_read));
+      sprintf (plug_in->args[3], "%d",
+	       g_io_channel_unix_get_fd (plug_in->his_write));
+#else
+      sprintf (plug_in->args[2], "%d",
+	       g_io_channel_win32_get_fd (plug_in->his_read));
+      sprintf (plug_in->args[3], "%d:%ud:%d",
+	       g_io_channel_win32_get_fd (plug_in->his_write),
+	       GetCurrentThreadId (),
+	       g_io_channel_win32_get_fd (plug_in->my_read));
+#endif
 
       /* Set the rest of the command line arguments.
        */
@@ -1015,6 +1122,10 @@ plug_in_open (PlugIn *plug_in)
        *  so that we can later use it to kill the filter if
        *  necessary.
        */
+#if defined (__CYGWIN32__) || defined (NATIVE_WIN32)
+      plug_in->pid = spawnv (_P_NOWAIT, plug_in->args[0], plug_in->args);
+      if (plug_in->pid == -1)
+#else
       plug_in->pid = fork ();
 
       if (plug_in->pid == 0)
@@ -1029,19 +1140,37 @@ plug_in_open (PlugIn *plug_in)
           _exit (1);
 	}
       else if (plug_in->pid == -1)
+#endif
 	{
-          g_message (_("unable to run plug-in: %s\n"), plug_in->args[0]);
+          g_message (_("unable to run plug-in: %s"), plug_in->args[0]);
           plug_in_destroy (plug_in);
           return 0;
 	}
 
-      close(plug_in->his_read);  plug_in->his_read  = -1;
-      close(plug_in->his_write); plug_in->his_write = -1;
+      g_io_channel_close (plug_in->his_read);
+      g_io_channel_unref (plug_in->his_read);
+      plug_in->his_read  = NULL;
+      g_io_channel_close (plug_in->his_write);
+      g_io_channel_unref (plug_in->his_write);
+      plug_in->his_write = NULL;
+
+#ifdef NATIVE_WIN32
+      /* The plug-in tells us its thread id */
+      if (!plug_in->query)
+	{
+	  if (!wire_read_int32 (plug_in->my_read, &plug_in->his_thread_id, 1))
+	    {
+	      g_message ("unable to read plug-ins's thread id");
+	      plug_in_destroy (plug_in);
+	      return 0;
+	    }
+	}
+#endif
 
       if (!plug_in->synchronous)
 	{
-	  plug_in->input_id = gdk_input_add (plug_in->my_read,
-					     GDK_INPUT_READ,
+	  plug_in->input_id = g_io_add_watch (plug_in->my_read,
+					      G_IO_IN | G_IO_PRI,
 					     plug_in_recv_message,
 					     plug_in);
 
@@ -1060,7 +1189,9 @@ plug_in_close (PlugIn *plug_in,
 	       int     kill_it)
 {
   int status;
+#ifndef NATIVE_WIN32
   struct timeval tv;
+#endif
 
   if (plug_in && plug_in->open)
     {
@@ -1071,17 +1202,22 @@ plug_in_close (PlugIn *plug_in,
       if (kill_it && plug_in->pid)
 	{
 	  plug_in_push (plug_in);
-	  gp_quit_write (current_writefd);
+	  gp_quit_write (current_writechannel);
 	  plug_in_pop ();
 
 	  /*  give the plug-in some time (10 ms)  */
+#ifndef NATIVE_WIN32
 	  tv.tv_sec = 0;
-	  tv.tv_usec = 100;
+	  tv.tv_usec = 100;	/* But this is 0.1 ms? */
 	  select (0, NULL, NULL, NULL, &tv);
+#else
+	  Sleep (10);
+#endif
 	}
 
       /* If necessary, kill the filter.
        */
+#ifndef NATIVE_WIN32
       if (kill_it && plug_in->pid)
 	status = kill (plug_in->pid, SIGKILL);
 
@@ -1090,6 +1226,10 @@ plug_in_close (PlugIn *plug_in,
        */
       if (plug_in->pid)
         waitpid (plug_in->pid, &status, 0);
+#else
+      if (kill_it && plug_in->pid)
+	TerminateProcess ((HANDLE) plug_in->pid, 0);
+#endif
 
       /* Remove the input handler.
        */
@@ -1098,14 +1238,30 @@ plug_in_close (PlugIn *plug_in,
 
       /* Close the pipes.
        */
-      if (plug_in->my_read)
-        close (plug_in->my_read);
-      if (plug_in->my_write)
-        close (plug_in->my_write);
-      if (plug_in->his_read)
-        close (plug_in->his_read);
-      if (plug_in->his_write)
-        close (plug_in->his_write);
+      if (plug_in->my_read != NULL)
+	{
+	  g_io_channel_close (plug_in->my_read);
+	  g_io_channel_unref (plug_in->my_read);
+	  plug_in->my_read = NULL;
+	}
+      if (plug_in->my_write != NULL)
+	{
+	  g_io_channel_close (plug_in->my_write);
+	  g_io_channel_unref (plug_in->my_write);
+	  plug_in->my_write = NULL;
+	}
+      if (plug_in->his_read != NULL)
+	{
+	  g_io_channel_close (plug_in->his_read);
+	  g_io_channel_unref (plug_in->his_read);
+	  plug_in->his_read = NULL;
+	}
+      if (plug_in->his_write != NULL)
+	{
+	  g_io_channel_close (plug_in->his_write);
+	  g_io_channel_unref (plug_in->his_write);
+	  plug_in->his_write = NULL;
+	}
 
       wire_clear_error();
 
@@ -1119,10 +1275,10 @@ plug_in_close (PlugIn *plug_in,
        */
       plug_in->pid = 0;
       plug_in->input_id = 0;
-      plug_in->my_read = 0;
-      plug_in->my_write = 0;
-      plug_in->his_read = 0;
-      plug_in->his_write = 0;
+      plug_in->my_read = NULL;
+      plug_in->my_write = NULL;
+      plug_in->his_read = NULL;
+      plug_in->his_write = NULL;
 
       if (plug_in->recurse)
 	gtk_main_quit ();
@@ -1243,9 +1399,9 @@ plug_in_run (ProcRecord *proc_rec,
 	  proc_run.nparams = argc;
 	  proc_run.params = plug_in_args_to_params (args, argc, FALSE);
 
-	  if (!gp_config_write (current_writefd, &config) ||
-	      !gp_proc_run_write (current_writefd, &proc_run) ||
-	      !wire_flush (current_writefd))
+	  if (!gp_config_write (current_writechannel, &config) ||
+	      !gp_proc_run_write (current_writechannel, &proc_run) ||
+	      !wire_flush (current_writechannel))
 	    {
 	      return_vals = procedural_db_return_args (proc_rec, FALSE);
 	      goto done;
@@ -1360,17 +1516,19 @@ plug_in_set_menu_sensitivity (int base_type)
     }
 }
 
-static void
-plug_in_recv_message (gpointer          data,
-		      gint              id,
-		      GdkInputCondition cond)
+static gboolean
+plug_in_recv_message (GIOChannel  *channel,
+		      GIOCondition cond,
+		      gpointer	   data)
 {
   WireMessage msg;
 
   plug_in_push ((PlugIn*) data);
+  if (current_readchannel == NULL)
+    return TRUE;
 
   memset (&msg, 0, sizeof (WireMessage));
-  if (!wire_read_msg (current_readfd, &msg))
+  if (!wire_read_msg (current_readchannel, &msg))
     plug_in_close (current_plug_in, TRUE);
   else 
     {
@@ -1382,6 +1540,7 @@ plug_in_recv_message (gpointer          data,
     plug_in_destroy (current_plug_in);
   else
     plug_in_pop ();
+  return TRUE;
 }
 
 static void
@@ -1393,18 +1552,18 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_handle_quit ();
       break;
     case GP_CONFIG:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_REQ:
       plug_in_handle_tile_req (msg->data);
       break;
     case GP_TILE_ACK:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TILE_DATA:
-      g_message (_("plug_in_handle_message(): received a config message (should not happen)\n"));
+      g_message (_("plug_in_handle_message(): received a config message (should not happen)"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_PROC_RUN:
@@ -1415,7 +1574,7 @@ plug_in_handle_message (WireMessage *msg)
       plug_in_close (current_plug_in, FALSE);
       break;
     case GP_TEMP_PROC_RUN:
-      g_message (_("plug_in_handle_message(): received a temp proc run message (should not happen)\n"));
+      g_message (_("plug_in_handle_message(): received a temp proc run message (should not happen)"));
       plug_in_close (current_plug_in, TRUE);
       break;
     case GP_TEMP_PROC_RETURN:
@@ -1430,6 +1589,13 @@ plug_in_handle_message (WireMessage *msg)
       break;
     case GP_EXTENSION_ACK:
       gtk_main_quit ();
+      break;
+    case GP_REQUEST_WAKEUPS:
+#ifdef NATIVE_WIN32
+      g_io_channel_win32_pipe_request_wakeups (current_plug_in->my_write,
+					       current_plug_in->his_thread_id,
+					       current_plug_in->his_read_fd);
+#endif
       break;
     }
 }
@@ -1460,14 +1626,14 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_data.use_shm = (shm_ID == -1) ? FALSE : TRUE;
       tile_data.data = NULL;
 
-      if (!gp_tile_data_write (current_writefd, &tile_data))
+      if (!gp_tile_data_write (current_writechannel, &tile_data))
 	{
 	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
 
-      if (!wire_read_msg (current_readfd, &msg))
+      if (!wire_read_msg (current_readchannel, &msg))
 	{
 	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
@@ -1476,7 +1642,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (msg.type != GP_TILE_DATA)
 	{
-	  g_message (_("expected tile data and received: %d\n"), msg.type);
+	  g_message (_("expected tile data and received: %d"), msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1490,7 +1656,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message (_("plug-in requested invalid drawable (killing)\n"));
+	  g_message (_("plug-in requested invalid drawable (killing)"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1498,7 +1664,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_info->tile_num, TRUE, TRUE);
       if (!tile)
 	{
-	  g_message (_("plug-in requested invalid tile (killing)\n"));
+	  g_message (_("plug-in requested invalid tile (killing)"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1511,7 +1677,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_release (tile, TRUE);
 
       wire_destroy (&msg);
-      if (!gp_tile_ack_write (current_writefd))
+      if (!gp_tile_ack_write (current_writechannel))
 	{
 	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
@@ -1527,7 +1693,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (!tm)
 	{
-	  g_message (_("plug-in requested invalid drawable (killing)\n"));
+	  g_message (_("plug-in requested invalid drawable (killing)"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1535,7 +1701,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile = tile_manager_get (tm, tile_req->tile_num, TRUE, FALSE);
       if (!tile)
 	{
-	  g_message (_("plug-in requested invalid tile (killing)\n"));
+	  g_message (_("plug-in requested invalid tile (killing)"));
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1553,7 +1719,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       else
 	tile_data.data = tile_data_pointer (tile, 0, 0);
 
-      if (!gp_tile_data_write (current_writefd, &tile_data))
+      if (!gp_tile_data_write (current_writechannel, &tile_data))
 	{
 	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
@@ -1562,7 +1728,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       tile_release (tile, FALSE);
 
-      if (!wire_read_msg (current_readfd, &msg))
+      if (!wire_read_msg (current_readchannel, &msg))
 	{
 	  g_message (_("plug_in_handle_tile_req: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
@@ -1571,7 +1737,7 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
 
       if (msg.type != GP_TILE_ACK)
 	{
-	  g_message (_("expected tile ack and received: %d\n"), msg.type);
+	  g_message (_("expected tile ack and received: %d"), msg.type);
 	  plug_in_close (current_plug_in, TRUE);
 	  return;
 	}
@@ -1595,7 +1761,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
   if (!proc_rec)
     {
       /* THIS IS PROBABLY NOT CORRECT -josh */
-      g_message (_("PDB lookup failed on %s\n"), proc_run->name);
+      g_message (_("PDB lookup failed on %s"), proc_run->name);
       plug_in_args_destroy (args, proc_run->nparams, FALSE);
       return;
     }
@@ -1617,7 +1783,7 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
 	  proc_return.params = plug_in_args_to_params (return_vals, 1, FALSE);
 	}
 
-      if (!gp_proc_return_write (current_writefd, &proc_return))
+      if (!gp_proc_return_write (current_writechannel, &proc_return))
 	{
 	  g_message (_("plug_in_handle_proc_run: ERROR"));
 	  plug_in_close (current_plug_in, TRUE);
@@ -1661,7 +1827,7 @@ plug_in_handle_proc_return (GPProcReturn *proc_return)
 	  if (strcmp (blocked->proc_name, proc_return->name) == 0)
 	    {
 	      plug_in_push (blocked->plug_in);
-	      if (!gp_proc_return_write (current_writefd, proc_return))
+	      if (!gp_proc_return_write (current_writechannel, proc_return))
 		{
 		  g_message (_("plug_in_handle_proc_run: ERROR"));
 		  plug_in_close (current_plug_in, TRUE);
@@ -1923,9 +2089,9 @@ plug_in_handle_proc_uninstall (GPProcUninstall *proc_uninstall)
 }
 
 static int
-plug_in_write (int     fd,
-	       guint8 *buf,
-	       gulong  count)
+plug_in_write (GIOChannel *channel,
+	       guint8      *buf,
+	       gulong       count)
 {
   gulong bytes;
 
@@ -1936,7 +2102,7 @@ plug_in_write (int     fd,
 	  bytes = WRITE_BUFFER_SIZE - current_write_buffer_index;
 	  memcpy (&current_write_buffer[current_write_buffer_index], buf, bytes);
 	  current_write_buffer_index += bytes;
-	  if (!wire_flush (fd))
+	  if (!wire_flush (channel))
 	    return FALSE;
 	}
       else
@@ -1954,8 +2120,9 @@ plug_in_write (int     fd,
 }
 
 static int
-plug_in_flush (int fd)
+plug_in_flush (GIOChannel *channel)
 {
+  GIOError error;
   int count;
   int bytes;
 
@@ -1965,11 +2132,13 @@ plug_in_flush (int fd)
       while (count != current_write_buffer_index)
         {
 	  do {
-	    bytes = write (fd, &current_write_buffer[count],
-			   (current_write_buffer_index - count));
-	  } while ((bytes == -1) && (errno == EAGAIN));
+	    bytes = 0;
+	    error = g_io_channel_write (channel, &current_write_buffer[count],
+					(current_write_buffer_index - count),
+					&bytes);
+	  } while (error == G_IO_ERROR_AGAIN);
 
-	  if (bytes == -1)
+	  if (error != G_IO_ERROR_NONE)
 	    return FALSE;
 
           count += bytes;
@@ -1989,15 +2158,15 @@ plug_in_push (PlugIn *plug_in)
       current_plug_in = plug_in;
       plug_in_stack = g_slist_prepend (plug_in_stack, current_plug_in);
 
-      current_readfd = current_plug_in->my_read;
-      current_writefd = current_plug_in->my_write;
+      current_readchannel = current_plug_in->my_read;
+      current_writechannel = current_plug_in->my_write;
       current_write_buffer_index = current_plug_in->write_buffer_index;
       current_write_buffer = current_plug_in->write_buffer;
     }
   else
     {
-      current_readfd = 0;
-      current_writefd = 0;
+      current_readchannel = NULL;
+      current_writechannel = NULL;
       current_write_buffer_index = 0;
       current_write_buffer = NULL;
     }
@@ -2021,16 +2190,16 @@ plug_in_pop ()
   if (plug_in_stack)
     {
       current_plug_in = plug_in_stack->data;
-      current_readfd = current_plug_in->my_read;
-      current_writefd = current_plug_in->my_write;
+      current_readchannel = current_plug_in->my_read;
+      current_writechannel = current_plug_in->my_write;
       current_write_buffer_index = current_plug_in->write_buffer_index;
       current_write_buffer = current_plug_in->write_buffer;
     }
   else
     {
       current_plug_in = NULL;
-      current_readfd = 0;
-      current_writefd = 0;
+      current_readchannel = NULL;
+      current_writechannel = NULL;
       current_write_buffer_index = 0;
       current_write_buffer = NULL;
     }
@@ -2045,9 +2214,27 @@ plug_in_write_rc_string (FILE *fp,
   if (str)
     while (*str)
       {
-	if ((*str == '"') || (*str == '\\'))
-	  fputc ('\\', fp);
-	fputc (*str, fp);
+	if (*str == '\n')
+	  {
+	    fputc ('\\', fp);
+	    fputc ('n', fp);
+	  }
+	else if (*str == '\r')
+	  {
+	    fputc ('\\', fp);
+	    fputc ('r', fp);
+	  }
+	else if (*str == '\032') /* ^Z is problematic on Windows */
+	  {
+	    fputc ('\\', fp);
+	    fputc ('z', fp);
+	  }
+	else
+	  {
+	    if ((*str == '"') || (*str == '\\'))
+	      fputc ('\\', fp);
+	    fputc (*str, fp);
+	  }
 	str += 1;
       }
 
@@ -2063,7 +2250,7 @@ plug_in_write_rc (char *filename)
   GSList *tmp, *tmp2;
   int i;
 
-  fp = fopen (filename, "wb");
+  fp = fopen (filename, "w");
   if (!fp)
     return;
 
@@ -2075,10 +2262,9 @@ plug_in_write_rc (char *filename)
 
       if (plug_in_def->proc_defs)
 	{
-	  fprintf (fp, "(plug-in-def \"%s\" %ld",
-		   plug_in_def->prog,
-		   (long) plug_in_def->mtime);
-
+	  fprintf (fp, "(plug-in-def ");
+	  plug_in_write_rc_string (fp, plug_in_def->prog);
+	  fprintf (fp, " %ld", (long) plug_in_def->mtime);
 	  tmp2 = plug_in_def->proc_defs;
 	  if (tmp2)
 	    fprintf (fp, "\n");
@@ -2161,7 +2347,7 @@ plug_in_init_file (char *filename)
   char *plug_in_name;
   char *name;
 
-  name = strrchr (filename, '/');
+  name = strrchr (filename, G_DIR_SEPARATOR);
   if (name)
     name = name + 1;
   else
@@ -2175,13 +2361,13 @@ plug_in_init_file (char *filename)
       plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      plug_in_name = strrchr (plug_in_def->prog, '/');
+      plug_in_name = strrchr (plug_in_def->prog, G_DIR_SEPARATOR);
       if (plug_in_name)
 	plug_in_name = plug_in_name + 1;
       else
 	plug_in_name = plug_in_def->prog;
 
-      if (strcmp (name, plug_in_name) == 0)
+      if (g_strcasecmp (name, plug_in_name) == 0)
 	{
 	  g_print (_("duplicate plug-in: \"%s\" (skipping)\n"), filename);
 	  return;
@@ -2219,7 +2405,7 @@ plug_in_query (char      *filename,
 
 	  while (plug_in->open)
 	    {
-	      if (!wire_read_msg (current_readfd, &msg))
+	      if (!wire_read_msg (current_readchannel, &msg))
 		plug_in_close (current_plug_in, TRUE);
 	      else 
 		{
@@ -2592,8 +2778,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
       proc_run.nparams = argc;
       proc_run.params = plug_in_args_to_params (args, argc, FALSE);
 
-      if (!gp_temp_proc_run_write (current_writefd, &proc_run) ||
-	  !wire_flush (current_writefd))
+      if (!gp_temp_proc_run_write (current_writechannel, &proc_run) ||
+	  !wire_flush (current_writechannel))
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
 	  goto done;

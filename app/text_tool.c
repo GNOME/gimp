@@ -458,9 +458,13 @@ text_gdk_image_to_region (GdkImage    *image,
   unsigned char * data;
 
   scale2 = scale * scale;
+#ifndef WINDOWS_DISPLAY
   black.red = black.green = black.blue = 0;
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   black_pixel = black.pixel;
+#else
+  black_pixel = 0;
+#endif
   data = textPR->data;
 
   for (y = 0, scaley = 0; y < textPR->h; y++, scaley += scale)
@@ -591,9 +595,14 @@ text_render (GImage *gimage,
 
   /*  get black and white pixels for this gdisplay  */
   black.red = black.green = black.blue = 0;
-  gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   white.red = white.green = white.blue = 65535;
+#ifndef WINDOWS_DISPLAY
+  gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
   gdk_colormap_alloc_color (gdk_colormap_get_system (), &white, FALSE, TRUE);
+#else
+  black.pixel = 0;
+  white.pixel = 1;
+#endif
 
   /* Render the text into the pixmap.
    * Since the pixmap may not fully bound the text (because we limit its size)

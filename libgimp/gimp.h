@@ -23,19 +23,29 @@
 #include <glib.h>
 #include "libgimp/gimpenums.h"
 #include "libgimp/gimpfeatures.h"
+#include "libgimp/gimpenv.h"
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h"
 
+#ifdef NATIVE_WIN32
+#  ifdef LIBGIMP_COMPILATION
+#    define GIMPVAR __declspec(dllexport)
+#  else  /* !LIBGIMP_COMPILATION */
+#    define GIMPVAR extern __declspec(dllimport)
+#  endif /* !LIBGIMP_COMPILATION */
+#else  /* !NATIVE_WIN32 */
+#  define GIMPVAR extern
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
 
-extern const guint gimp_major_version;
-extern const guint gimp_minor_version;
-extern const guint gimp_micro_version;
-
+GIMPVAR guint gimp_major_version;
+GIMPVAR guint gimp_minor_version;
+GIMPVAR guint gimp_micro_version;
+GIMPVAR GIOChannel *_readchannel;
 
 typedef struct _GPlugInInfo  GPlugInInfo;
 typedef struct _GTile        GTile;
@@ -72,6 +82,14 @@ struct _GPlugInInfo
    */
   GRunProc run_proc;
 };
+
+#if defined (NATIVE_WIN32) && !defined (LIBGIMP_COMPILATION)
+/* Define PLUG_IN_INFO as an exported symbol (when compiling a plug-in).
+ * In gimp.c, we don't declare it at all, but fetch the address
+ * of it with GetProcAddress.
+ */
+__declspec(dllexport) GPlugInInfo PLUG_IN_INFO;
+#endif
 
 struct _GTile
 {
@@ -166,7 +184,34 @@ struct _GParam
 };
 
 
-#define MAIN() int main (int argc, char *argv[]) { return gimp_main (argc, argv); }
+#ifdef NATIVE_WIN32
+/* Define WinMain() as plug-ins are built as GUI applications. Also
+ * define a main() in case some plug-in still is built as a console
+ * application.
+ */
+#  define MAIN()			\
+   int _stdcall				\
+   WinMain (int hInstance,		\
+	    int hPrevInstance,		\
+	    char *lpszCmdLine,		\
+	    int nCmdShow)		\
+   {					\
+     return gimp_main (__argc, __argv);	\
+   }					\
+					\
+   int					\
+   main (int argc, char *argv[])	\
+   {					\
+     return gimp_main (argc, argv);	\
+   }
+#else
+#  define MAIN()			\
+   int					\
+   main (int argc, char *argv[])	\
+   {					\
+     return gimp_main (argc, argv);	\
+   }
+#endif
 
 
 /* The main procedure that should be called with the
@@ -348,7 +393,7 @@ gdouble  gimp_gamma        (void);
 gint     gimp_install_cmap (void);
 gint     gimp_use_xshm     (void);
 guchar*  gimp_color_cube   (void);
-gchar*   gimp_gtkrc        (void);
+void     gimp_request_wakeups (void);
 
 
 /****************************************

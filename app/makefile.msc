@@ -1,0 +1,231 @@
+## Makefile for building gimp.exe with Microsoft C
+## Use: nmake -f makefile.msc
+
+# Change this to wherever you want to install gimp.exe.
+BIN = D:\gimp\bin
+
+################################################################
+
+# Nothing much configurable below
+
+# cl -? described the options
+CC = cl -GA -G5 -GF -Ox -W3 -MD -nologo
+
+# Change to /subsystem:console when debugging
+LDFLAGS = /link /subsystem:windows /machine:ix86
+INSTALL = copy
+TOUCH = copy makefile.msc+nul
+
+GIMP_VER = 1.1
+GTK_VER = 1.3
+GLIB_VER = 1.2
+
+GTK = ..\..\gtk-plus
+GLIB = ..\..\glib-$(GLIB_VER)
+GMODULE = $(GLIB)\gmodule
+
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)
+
+GCG = ..\tools\gcg\gcg -I. -I ..\tools\gcg\gh
+
+all : \
+	..\config.h	\
+	gimpim.lib	\
+	colormap_dialog.c \
+	gimp.exe
+	$(TOUCH) all
+
+install : gimp.exe
+	$(INSTALL) gimp.exe $(BIN)
+	$(TOUCH) install
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+gimpim_OBJECTS = \
+	gimpobject.obj	\
+	gimpimage.obj	\
+	gimpset.obj	\
+	gimpsignal.obj	\
+	gimpdrawable.obj
+
+gimpim.lib : $(gimpim_OBJECTS)
+	lib /out:gimpim.lib $(gimpim_OBJECTS)
+	
+gimp_OBJECTS = \
+	about_dialog.obj\
+	actionarea.obj	\
+	airbrush.obj	\
+	app_procs.obj	\
+	asupsample.obj	\
+	batch.obj	\
+	bezier_select.obj\
+	blend.obj	\
+	blob.obj        \
+	boundary.obj	\
+	brightness_contrast.obj\
+	brush_edit.obj	\
+	brush_select.obj\
+	bucket_fill.obj	\
+	buildmenu.obj	\
+	by_color_select.obj\
+	channel.obj	\
+	channel_cmds.obj\
+	channels_dialog.obj\
+	channel_ops.obj	\
+	clone.obj	\
+	color_area.obj	\
+	color_balance.obj\
+	color_notebook.obj\
+	color_panel.obj	\
+	color_picker.obj\
+	color_select.obj\
+	color_transfer.obj\
+	colormaps.obj	\
+	colormap_dialog.obj\
+	commands.obj	\
+	convert.obj	\
+	convolve.obj	\
+	crop.obj	\
+	cursorutil.obj	\
+	curves.obj	\
+	datafiles.obj	\
+	desaturate.obj	\
+	devices.obj	\
+	dialog_handler.obj\
+	disp_callbacks.obj\
+	docindex.obj	\
+	docindexif.obj	\
+	draw_core.obj	\
+	drawable.obj	\
+	drawable_cmds.obj\
+	edit_cmds.obj	\
+	edit_selection.obj\
+	ellipse_select.obj\
+	eraser.obj	\
+	errorconsole.obj\
+	errors.obj	\
+	equalize.obj	\
+	fileops.obj	\
+	flip_tool.obj	\
+	floating_sel.obj\
+	floating_sel_cmds.obj\
+	file_new_dialog.obj\
+	frac.obj	\
+	free_select.obj	\
+	fuzzy_select.obj\
+	gdisplay.obj	\
+	gdisplay_cmds.obj\
+	gdisplay_ops.obj\
+	general.obj	\
+	gimage.obj	\
+	gimage_cmds.obj	\
+	gimage_mask.obj	\
+	gimage_mask_cmds.obj\
+	gimpbrush.obj	\
+	gimpbrushgenerated.obj\
+	gimpbrushlist.obj\
+	gimphistogram.obj\
+	gimplist.obj	\
+	gimplut.obj	\
+	gimpparasite.obj\
+	gimpprogress.obj\
+	gimprc.obj	\
+	global_edit.obj	\
+	gradient.obj	\
+	gradient_select.obj\
+	gximage.obj	\
+	histogramwidget.obj \
+	histogram_tool.obj\
+	hue_saturation.obj\
+	image_map.obj	\
+	image_render.obj\
+	info_dialog.obj	\
+	info_window.obj	\
+	ink.obj         \
+	install.obj	\
+	interface.obj	\
+	internal_procs.obj\
+	invert.obj	\
+	iscissors.obj	\
+	layer.obj	\
+	layer_cmds.obj	\
+	layer_select.obj\
+	layers_dialog.obj\
+	levels.obj	\
+	magnify.obj	\
+	main.obj	\
+	menus.obj	\
+	module_db.obj	\
+	move.obj	\
+	ops_buttons.obj	\
+	palette.obj	\
+	palette_select.obj\
+	paint_core.obj	\
+	paint_funcs.obj	\
+	paintbrush.obj	\
+	parasite_cmds.obj\
+	parasitelist.obj\
+	paths_dialog.obj\
+	pattern_select.obj\
+	patterns.obj	\
+	pencil.obj	\
+	perspective_tool.obj\
+	pixel_region.obj\
+	plug_in.obj	\
+	posterize.obj	\
+	preferences_dialog.obj\
+	procedural_db.obj\
+	rect_select.obj	\
+	regex.obj	\
+	resize.obj	\
+	rotate_tool.obj	\
+	scale.obj	\
+	scale_tool.obj	\
+	scroll.obj	\
+	selection.obj	\
+	session.obj	\
+	shear_tool.obj	\
+	temp_buf.obj	\
+	text_tool.obj	\
+	threshold.obj	\
+	tile.obj	\
+	tile_cache.obj	\
+	tile_manager.obj\
+	tile_swap.obj	\
+	tips_dialog.obj	\
+	tools.obj	\
+	transform_core.obj\
+	transform_tool.obj\
+	undo.obj	\
+	undo_cmds.obj	\
+	vector2d.obj	\
+	xcf.obj
+
+.SUFFIXES: .gc
+
+.gc.c:
+	$(GCG) -o $@ $<
+
+gimp.res : gimp.rc wilber.ico
+	rc -r -fo gimp.res gimp.rc
+
+gimp.exe : ../config.h $(gimp_OBJECTS) gimpim.lib gimp.res
+	$(CC) $(CFLAGS) -Fegimp.exe $(gimp_OBJECTS) gimpim.lib ..\libgimp\gimpi-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(LDFLAGS) gimp.res gdi32.lib user32.lib /def:gimp.def
+
+# General rule for building $(gimp_OBJECTS)
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	del *.exe
+	del *.lib
+	del *.obj
+	del *.exp
+	del *.err
+	del *.map
+	del *.sym
+	del *.lk1
+	del *.mk1
+	del *.pdb
+	del *.ilk

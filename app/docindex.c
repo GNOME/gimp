@@ -214,15 +214,12 @@ load_idea_manager( idea_manager *ideas )
 {
   FILE *fp = NULL;
   gchar *desktopfile;
-  gchar *home_dir;
 
   if ( ! idea_list )
     {
-      home_dir = g_get_home_dir();
-      
       /* open persistant desktop file. */
-      desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-      fp = fopen( desktopfile, "rb" );
+      desktopfile = gimp_personal_rc_file ("ideas");
+      fp = fopen( desktopfile, "r" );
       g_free( desktopfile );
       
       /* Read in persistant desktop information. */
@@ -291,13 +288,10 @@ save_idea_manager( idea_manager *ideas )
 {
   FILE *fp;
   gchar *desktopfile;
-  gchar *home_dir;
     
-  home_dir = g_get_home_dir();
-  
   /* open persistant desktop file. */
-  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-  fp = fopen( desktopfile, "wb" );
+  desktopfile = gimp_personal_rc_file ("ideas");
+  fp = fopen( desktopfile, "w" );
   g_free( desktopfile );
 
   if ( fp )
@@ -435,13 +429,10 @@ static void idea_add_in_position_with_select( gchar *title, gint position, gbool
 	{
 	  FILE *fp = NULL;
 	  gchar *desktopfile;
-	  gchar *home_dir;
-	  
-	  home_dir = g_get_home_dir();
 	  
 	  /* open persistant desktop file. */
-	  desktopfile = append2( home_dir, FALSE, IDEAPATH, FALSE );
-	  fp = fopen( desktopfile, "rb" );
+	  desktopfile = gimp_personal_rc_file ("ideas");
+	  fp = fopen( desktopfile, "r" );
 	  g_free( desktopfile );
 	  
 	  /* Read in persistant desktop information. */

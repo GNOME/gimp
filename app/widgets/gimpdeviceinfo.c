@@ -15,9 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
+
+#include "config.h"
+
 #include <string.h>
 #include <stdio.h>
-#include <sys/param.h>
 
 #include "appenv.h"
 #include "actionarea.h"
@@ -32,6 +34,7 @@
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #define CELL_SIZE 20 /* The size of the preview cells */
 #define PREVIEW_EVENT_MASK  GDK_EXPOSURE_MASK | \
@@ -212,20 +215,14 @@ devices_init (void)
 void
 devices_restore()
 {  
-  char *gimp_dir;
-  char filename[MAXPATHLEN];
+  char *filename;
   GList *tmp_list;
   DeviceInfo *device_info;
 
   /* Augment with information from rc file */
-
-  gimp_dir = gimp_directory ();
-
-  if (gimp_dir)
-    {
-      g_snprintf (filename, MAXPATHLEN, "%s/devicerc", gimp_dir);
-      parse_gimprc_file (filename);
-    }
+  filename = gimp_personal_rc_file ("devicerc");
+  parse_gimprc_file (filename);
+  g_free (filename);
 
   tmp_list = devices_info;
   device_info = NULL;
@@ -625,25 +622,19 @@ devices_write_rc_device (DeviceInfo *device_info, FILE *fp)
 static void
 devices_write_rc (void)
 {
-  char *gimp_dir;
-  char filename[MAXPATHLEN];
+  char *filename;
   FILE *fp;
 
-  devices_save_current_info();
+  filename = gimp_personal_rc_file ("devicerc");
+  fp = fopen (filename, "wb");
+  g_free (filename);
 
-  gimp_dir = gimp_directory ();
-  if ('\000' != gimp_dir[0])
-    {
-      g_snprintf (filename, MAXPATHLEN, "%s/devicerc", gimp_dir);
+  if (!fp)
+    return;
 
-      fp = fopen (filename, "wb");
-      if (!fp)
-	return;
+  g_list_foreach (devices_info, (GFunc)devices_write_rc_device, fp);
 
-      g_list_foreach (devices_info, (GFunc)devices_write_rc_device, fp);
-
-      fclose (fp);
-    }
+  fclose (fp);
 }
 
 void 

@@ -13,6 +13,7 @@
  * GNU General Public License for more details.
  */
 
+#include <string.h>
 
 #include "docindex.h"
 #include "docindexif.h"

@@ -35,6 +35,7 @@
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #define MRU_MENU_ENTRY_SIZE (strlen (_("/File/MRU00 ")) + 1)
 #define MRU_MENU_ACCEL_SIZE sizeof ("<control>0")
@@ -403,7 +404,7 @@ menus_quit ()
 {
   gchar *filename;
 
-  filename = g_strconcat (gimp_directory (), "/menurc", NULL);
+  filename = gimp_personal_rc_file ("menurc");
   gtk_item_factory_dump_rc (filename, NULL, TRUE);
   g_free (filename);
 
@@ -635,7 +636,7 @@ menus_init ()
 	  if (tool_info[i].menu_path)
 	    menus_tools_create (tool_info+i);
 	}
-      filename = g_strconcat (gimp_directory (), "/menurc", NULL);
+      filename = gimp_personal_rc_file ("menurc");
       gtk_item_factory_parse_rc (filename);
       g_free (filename);
     }

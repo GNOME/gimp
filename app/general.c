@@ -198,6 +198,13 @@ get_token (ParseInfo *info)
 	  else if (slashed || (buffer[info->position] != '"'))
 	    {
 	      slashed = FALSE;
+	      if (slashed && buffer[info->position] == 'n')
+		tokenbuf[tokenpos++] = '\n';
+	      else if (slashed && buffer[info->position] == 'r')
+		tokenbuf[tokenpos++] = '\r';
+	      else if (slashed && buffer[info->position] == 'z') /* ^Z */
+		tokenbuf[tokenpos++] = '\032';
+	      else
 	      tokenbuf[tokenpos++] = buffer[info->position];
 	      info->position += 1;
 	    }

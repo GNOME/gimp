@@ -1,0 +1,66 @@
+## Makefile for building gimp modules with Microsoft C
+## Use: nmake -f makefile.msc
+
+# Change this to wherever you install the gimp.
+GIMP = D:\gimp
+BIN = $(GIMP)\modules
+
+################################################################
+
+# Nothing much configurable below
+
+# cl -? described the options
+CC = cl -GA -G5 -GF -Ox -W3 -MD -nologo
+
+LDFLAGS = /link /machine:ix86
+INSTALL = copy
+TOUCH = copy makefile.msc+nul
+
+GIMP_VER = 1.1
+GTK_VER = 1.3
+GLIB_VER = 1.2
+
+GLIB = ..\..\glib-$(GLIB_VER)
+GMODULE = $(GLIB)\gmodule
+GTK = ..\..\gtk-plus
+
+CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)
+
+MODULES = colorsel_gtk.dll	\
+	colorsel_triangle.dll
+
+
+all : \
+	$(MODULES)
+	$(TOUCH) all
+
+install : all
+	$(INSTALL) colorsel_gtk.dll $(BIN)
+	$(INSTALL) colorsel_triangle.dll $(BIN)
+	$(TOUCH) install
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+colorsel_gtk.dll : colorsel_gtk.obj module.def
+	$(CC) $(CFLAGS) -LD -Fecolorsel_gtk.dll colorsel_gtk.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+
+colorsel_triangle.dll : colorsel_triangle.obj module.def
+	$(CC) $(CFLAGS) -LD -Fecolorsel_triangle.dll colorsel_triangle.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+
+# General rule for building 
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+
+clean:
+	del *.exe
+	del *.lib
+	del *.obj
+	del *.exp
+	del *.err
+	del *.map
+	del *.sym
+	del *.lk1
+	del *.mk1
+	del *.pdb
+	del *.ilk

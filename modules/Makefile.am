@@ -2,6 +2,9 @@
 
 moduledir = $(gimpplugindir)/modules
 
+CPPFLAGS = \
+	-DMODULE_COMPILATION
+
 INCLUDES = \
         -I$(top_srcdir)                 \
         -I$(top_srcdir)/intl            \

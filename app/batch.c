@@ -9,6 +9,10 @@
 #include <unistd.h>
 #endif
 
+#ifdef _MSC_VER
+#include <io.h>
+#endif
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
@@ -51,10 +55,10 @@ batch_init ()
 	      g_print (_("reading batch commands from stdin\n"));
 	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
 	      read_from_stdin = TRUE;
-	    }
 #else
 	      g_error ("Batch mode from standard input not implemented on Win32");
 #endif
+	    }
 	}
       else
 	{

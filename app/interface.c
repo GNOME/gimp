@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include "appenv.h"
 #include "actionarea.h"
@@ -24,6 +27,7 @@
 #include "color_area.h"
 #include "commands.h"
 #include "devices.h"
+#include "dialog_handler.h"
 #include "disp_callbacks.h"
 #include "errors.h"
 #include "gdisplay.h"

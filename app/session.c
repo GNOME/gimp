@@ -38,10 +38,13 @@
    Please point me into the right direction to make this work with Gnome-SM.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#include <sys/param.h>
+#endif
 
 #include <gtk/gtk.h>
 
@@ -52,6 +55,7 @@
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 static void sessionrc_write_info (SessionInfo *, FILE *);
 static void session_open_dialog (SessionInfo *);
@@ -107,7 +111,13 @@ session_set_window_geometry (GtkWidget   *window,
   if ( window == NULL || info == NULL)
     return;
   
+#ifdef WINDOWS_DISPLAY
+  /* We should not position windows so that no decoration is visible */
+  if (info->y > 0)
+    gtk_widget_set_uposition (window, info->x, info->y);
+#else
   gtk_widget_set_uposition (window, info->x, info->y);
+#endif
   
   if ( (set_size) && (info->width > 0) && (info->height > 0) )
     gtk_window_set_default_size (GTK_WINDOW(window), info->width, info->height);
@@ -116,51 +126,42 @@ session_set_window_geometry (GtkWidget   *window,
 void
 save_sessionrc (void)
 {
-  char *gimp_dir;
-  char filename[MAXPATHLEN];
+  char *filename;
   FILE *fp;
 
-  gimp_dir = gimp_directory ();
-  if ('\000' != gimp_dir[0])
-    {
-      g_snprintf (filename, MAXPATHLEN, "%s/sessionrc", gimp_dir);
+  filename = gimp_personal_rc_file ("sessionrc");
 
-      fp = fopen (filename, "wb");
-      if (!fp)
-	return;
+  fp = fopen (filename, "w");
+  g_free (filename);
+  if (!fp)
+    return;
 
-      fprintf(fp, _("# GIMP sessionrc\n"));
-      fprintf(fp, _("# This file takes session-specific info (that is info,\n"));
-      fprintf(fp, _("# you want to keep between two gimp-sessions). You are\n"));
-      fprintf(fp, _("# not supposed to edit it manually, but of course you\n"));
-      fprintf(fp, _("# can do. This file will be entirely rewritten every time\n")); 
-      fprintf(fp, _("# you quit the gimp. If this file isn't found, defaults\n"));
-      fprintf(fp, _("# are used.\n\n"));
-
-      /* save window geometries */
-      g_list_foreach (session_info_updates, (GFunc)sessionrc_write_info, fp);
-
-      /* save last tip shown */
-      fprintf(fp, "(last-tip-shown %d)\n\n", last_tip + 1);
-
-      fclose (fp);
-    }
+  fprintf(fp, _("# GIMP sessionrc\n"));
+  fprintf(fp, _("# This file takes session-specific info (that is info,\n"));
+  fprintf(fp, _("# you want to keep between two gimp-sessions). You are\n"));
+  fprintf(fp, _("# not supposed to edit it manually, but of course you\n"));
+  fprintf(fp, _("# can do. This file will be entirely rewritten every time\n")); 
+  fprintf(fp, _("# you quit the gimp. If this file isn't found, defaults\n"));
+  fprintf(fp, _("# are used.\n\n"));
+  
+  /* save window geometries */
+  g_list_foreach (session_info_updates, (GFunc)sessionrc_write_info, fp);
+  
+  /* save last tip shown */
+  fprintf(fp, "(last-tip-shown %d)\n\n", last_tip + 1);
+  
+  fclose (fp);
 }
 
 void
 session_init (void)
 {
-  char *gimp_dir;
-  char filename[MAXPATHLEN];
+  char *filename;
 
-  gimp_dir = gimp_directory ();
-
-  if (gimp_dir)
-    {
-      g_snprintf (filename, MAXPATHLEN, "%s/sessionrc", gimp_dir);
-      app_init_update_status(NULL, filename, -1);
-      parse_gimprc_file (filename);
-    }
+  filename = gimp_personal_rc_file ("sessionrc");
+  app_init_update_status(NULL, filename, -1);
+  parse_gimprc_file (filename);
+  g_free (filename);
 }
 
 void

@@ -58,8 +58,12 @@ struct _PlugIn
   pid_t pid;                             /* Plug-ins process id */
   char *args[7];                         /* Plug-ins command line arguments */
 
-  int my_read, my_write;                 /* Apps read and write file descriptors */
-  int his_read, his_write;               /* Plug-ins read and write file descriptors */
+  GIOChannel *my_read, *my_write;        /* App's read and write channels */
+  GIOChannel *his_read, *his_write;      /* Plug-in's read and write channels */
+#ifdef NATIVE_WIN32
+  guint his_thread_id;			 /* Plug-in's thread ID */
+  int his_read_fd;			 /* Plug-in's read pipe fd */
+#endif
 
   guint32 input_id;                      /* Id of input proc */
 

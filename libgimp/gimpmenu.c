@@ -79,9 +79,9 @@ static void    temp_brush_invoker    (char             *name,
 				      GParam           *param,
 				      int              *nreturn_vals,
 				      GParam          **return_vals);
-static void    input_callback        (gpointer          data,
-				      gint              source,
-				      GdkInputCondition condition);
+static gboolean input_callback	     (GIOChannel       *channel,
+				      GIOCondition      condition,
+				      gpointer		data);
 static void    gimp_setup_callbacks  (void);
 static gchar*  gen_temp_plugin_name  (void);
 
@@ -686,26 +686,30 @@ temp_gradient_invoker(char    *name,
   values[0].data.d_status = status;
 }
 
-static void
-input_callback (gpointer          data,
-                gint              source,
-                GdkInputCondition condition)
+static gboolean
+input_callback (GIOChannel  *channel,
+		GIOCondition condition,
+		gpointer     data)
 {
   /* We have some data in the wire - read it */
   /* The below will only ever run a single proc */
   gimp_run_temp();
+
+  return TRUE;
 }
 
 static void
 gimp_setup_callbacks (void)
 {
   static int first_time = TRUE;
-  extern int _readfd;
+
   if(first_time)
     {
       /* Tie into the gdk input function */
       /* only once */
-      gdk_input_add(_readfd,GDK_INPUT_READ,input_callback,NULL);
+      g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, input_callback, NULL);
+      /* This needed on Win32 */
+      gimp_request_wakeups();
       first_time = FALSE;
     }
 }

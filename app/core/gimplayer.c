@@ -35,6 +35,7 @@
 #include "gimpsignal.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/parasite.h"
 
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"

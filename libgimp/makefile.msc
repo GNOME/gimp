@@ -1,0 +1,159 @@
+## Makefile for building the GIMP DLLs with Microsoft C.
+## Use: nmake -f makefile.msc
+
+# Change this to wherever you want to install the DLLs. This directory
+# should be in your PATH. As these DLLs are for the GIMP and its plug-ins
+# only, it probably is best to keep them in the GIMP's bin directory.
+BIN = D:\gimp\bin
+
+GIMP_VER = 1.1
+
+# The name of the directory in your %HOME% where the GIMP's personal settings
+# and stuff is saved.
+GIMPDIR = _gimp$(GIMP_VER)
+
+################################################################
+
+# Nothing much configurable below
+
+# cl -? described the options
+CC = cl -GD -G5 -GF -Ox -W3 -MD -nologo
+
+LDFLAGS = /link
+INSTALL = copy
+TOUCH = copy makefile.msc+nul
+
+GTK_VER = 1.3
+GLIB_VER = 1.2
+
+GTK = ..\..\gtk-plus
+GLIB = ..\..\glib-$(GLIB_VER)
+
+CFLAGS = -I.. -I$(GLIB) -I$(GTK) -DGIMPDIR=\"$(GIMPDIR)\"
+
+all : \
+	..\config.h	\
+	gimpfeatures.h	\
+	gimpi-$(GIMP_VER).dll	\
+	gimp-$(GIMP_VER).dll	\
+	gimpui-$(GIMP_VER).dll
+	$(TOUCH) all
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+gimpfeatures.h : gimpfeatures.h.win32
+	copy gimpfeatures.h.win32 gimpfeatures.h
+
+install : all
+	$(INSTALL) gimpi-$(GIMP_VER).dll $(BIN)
+	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
+	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
+	$(TOUCH) install
+
+gimpi_OBJECTS = \
+	gimpenv.obj	\
+	gimpchainbutton.obj\
+	gimpmatrix.obj	\
+	gimpprotocol.obj\
+	gimpsizeentry.obj\
+	gimpunit.obj	\
+	gimpunitmenu.obj\
+	gimpwire.obj	\
+	gserialize.obj	\
+	parasite.obj
+
+gimpi-$(GIMP_VER).dll : $(gimpi_OBJECTS) gimpi.def
+	$(CC) $(CFLAGS) -LD -Fegimpi-$(GIMP_VER).dll $(gimpi_OBJECTS) $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimpi.def
+
+gimp_OBJECTS = \
+	gimp.obj	\
+	gimpchannel.obj	\
+	gimpdisplay.obj	\
+	gimpdrawable.obj\
+	gimpenv.obj	\
+	gimpgradient.obj\
+	gimpimage.obj	\
+	gimplayer.obj	\
+	gimpmatrix.obj	\
+	gimppalette.obj	\
+	gimpparasite.obj\
+	gimppixelrgn.obj\
+	gimpprotocol.obj\
+	gimptile.obj	\
+	gimpwire.obj	\
+	gserialize.obj	\
+	parasite.obj
+
+gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
+	$(CC) $(CFLAGS) -LD -Fegimp-$(GIMP_VER).dll $(gimp_OBJECTS) $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) user32.lib /def:gimp.def
+
+gimp.obj : gimp.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimp.c
+gimpchannel.obj : gimpchannel.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpchannel.c
+gimpdisplay.obj : gimpdisplay.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpdisplay.c
+gimpdrawable.obj : gimpdrawable.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpdrawable.c
+gimpenv.obj : gimpenv.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpenv.c
+gimpgradient.obj : gimpgradient.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpgradient.c
+gimpimage.obj : gimpimage.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpimage.c
+gimplayer.obj : gimplayer.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimplayer.c
+gimpmatrix.obj : gimpmatrix.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpmatrix.c
+gimppalette.obj : gimppalette.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimppalette.c
+gimpparasite.obj : gimpparasite.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpparasite.c
+gimppixelrgn.obj : gimppixelrgn.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimppixelrgn.c
+gimpprotocol.obj : gimpprotocol.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpprotocol.c
+gimptile.obj : gimptile.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimptile.c
+gimpwire.obj : gimpwire.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gimpwire.c
+gserialize.obj : gserialize.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP gserialize.c
+parasite.obj : parasite.c
+	$(CC) $(CFLAGS) -c -DCOMPILING_GIMP parasite.c
+
+gimpui_OBJECTS = \
+	gimpmenu.obj	\
+	gimpbrushmenu.obj\
+	gimpgradientmenu.obj\
+	gimppatternmenu.obj
+
+gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
+	$(CC) $(CFLAGS) -LD -Fegimpui-$(GIMP_VER).dll $(gimpui_OBJECTS) gimp-$(GIMP_VER).lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(GLIB)\glib-$(GLIB_VER).lib $(LDFLAGS) /def:gimpui.def
+
+gimpmenu.obj : gimpmenu.c
+	$(CC) $(CFLAGS) -c gimpmenu.c
+
+gimpbrushmenu.obj : gimpbrushmenu.c
+	$(CC) $(CFLAGS) -c gimpbrushmenu.c
+
+gimpgradientmenu.obj : gimpgradientmenu.c
+	$(CC) $(CFLAGS) -c gimpgradientmenu.c
+
+gimppatternmenu.obj : gimppatternmenu.c
+	$(CC) $(CFLAGS) -c gimppatternmenu.c
+
+# General rule for compiling, used by the objects that don't go into
+# gimp-$(GIMP_VER).dll. 
+.c.obj:
+	$(CC) $(CFLAGS) -c $<
+clean:
+	del *.exe
+	del *.obj
+	del *.exp
+	del *.err
+	del *.map
+	del *.sym
+	del *.lk1
+	del *.mk1

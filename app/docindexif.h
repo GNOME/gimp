@@ -37,9 +37,6 @@ int getinteger( FILE *fp );
 gchar *append2( gchar *string1, gboolean del1, gchar *string2, gboolean del2);
 gint reset_usize( gpointer data );
 
-#define IDEAPATH "/" GIMPDIR "/ideas"
-
-
 struct bool_char_pair
 {
   gboolean boole;

@@ -19,6 +19,7 @@
 
 #include "gimpmatrix.h"
 #include <math.h>
+#include <string.h>
 
 void
 gimp_matrix_transform_point (GimpMatrix m, double x, double y,

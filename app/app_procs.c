@@ -38,6 +38,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimp/gimpfeatures.h"
+#include "libgimp/gimpenv.h"
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -179,7 +180,7 @@ splash_logo_load_size (GtkWidget *window)
     return TRUE;
 
   g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
-	      DATADIR);
+	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
   if (!fp)
@@ -215,7 +216,7 @@ splash_logo_load (GtkWidget *window)
     return TRUE;
 
   g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
-	      DATADIR);
+	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
   if (!fp)
@@ -340,7 +341,7 @@ static GtkWidget *pbar = NULL;
 static void
 destroy_initialization_status_window(void)
 {
-  if(win_initstatus)
+  if (win_initstatus)
     {
       gtk_widget_destroy(win_initstatus);
       if (logo_pixmap != NULL)
@@ -473,20 +474,15 @@ app_init_update_status(char *label1val,
 void
 app_init (void)
 {
-  char filename[MAXPATHLEN];
-  char *gimp_dir;
-  char *path;
+  gchar *filename;
+  gchar *path;
 
-  gimp_dir = gimp_directory ();
-  if (gimp_dir[0] != '\000')
-    {
-      g_snprintf (filename, MAXPATHLEN, "%s" G_DIR_SEPARATOR_S "gtkrc", gimp_dir);
+  filename = gimp_gtkrc ();
 
-      if ((be_verbose == TRUE) || (no_splash == TRUE))
-	g_print (_("parsing \"%s\"\n"), filename);
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
+    g_print (_("parsing \"%s\"\n"), filename);
 
-      gtk_rc_parse (filename);
-    }
+  gtk_rc_parse (filename);
 
   if (no_interface == FALSE)
       get_standard_colormaps ();
@@ -555,10 +551,11 @@ app_init (void)
 
   /* Add the swap file  */
   if (swap_path == NULL)
-    swap_path = "/tmp";
+    swap_path = g_get_tmp_dir ();
+
   toast_old_temp_files ();
-  path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%ld",
-			  swap_path, (long)getpid ());
+  path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
+			  swap_path, (unsigned long) getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
 

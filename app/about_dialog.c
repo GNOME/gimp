@@ -17,6 +17,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 #include <gtk/gtk.h>
@@ -25,6 +26,7 @@
 
 #include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #include "about_dialog.h"
 #include "interface.h"
@@ -294,7 +296,8 @@ about_dialog_load_logo (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s/gimp_logo.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp_logo.ppm",
+	      gimp_data_directory ());
 
   fp = fopen (buf, "rb");
   if (!fp)

@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -8,8 +10,8 @@
 #include "interface.h"
 #include "wilber.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
+#include "libgimp/gimpenv.h"
 
 #define TIPS_FILE_NAME "gimp_tips.txt"
 
@@ -39,22 +41,17 @@ tips_dialog_create ()
   GtkWidget *button_prev;
   GtkWidget *vbox_check;
   GtkWidget *button_check;
-  guchar *   temp;
+  gchar  *   temp;
   guchar *   src;
   guchar *   dest;
-  gchar  *   gimp_data_dir;
   int        x;
   int        y;
 
   if (tips_count == 0)
     {
-      if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
-        temp = (char *) g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-					 gimp_data_dir, TIPS_FILE_NAME);
-      else
-        temp = (char *) g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
-					 DATADIR, TIPS_FILE_NAME);
-      read_tips_file ((char *)temp);
+      temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+			      gimp_data_directory (), TIPS_FILE_NAME);
+      read_tips_file (temp);
       g_free (temp);
     }
 
