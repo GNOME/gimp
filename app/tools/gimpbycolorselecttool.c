@@ -746,8 +746,8 @@ by_color_select_dialog_new (void)
   frame = 
     gimp_radio_group_new2 (TRUE, _("Selection Mode"),
 			   gimp_radio_button_update,
-			   &by_color_dialog->operation,
-			   (gpointer) by_color_dialog->operation,
+			   &bcd->operation,
+			   (gpointer) bcd->operation,
 
 			  _("Replace"),   (gpointer) SELECTION_REPLACE, NULL,
 			  _("Add"),       (gpointer) SELECTION_ADD, NULL,

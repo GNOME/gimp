@@ -1,3 +1,8 @@
+Fri Mar 31 04:20:27 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* app/by_color_select.c: use the proper local variable on creation,
+	not the uninitialized one. Fixes bug #8149.
+
 Thu Mar 30 16:48:06 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* configure.in: made glib cflags extraction smarter
