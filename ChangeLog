@@ -1,3 +1,9 @@
+2000-03-18    <tigert@guadec1.enst.fr>
+
+	* pixmaps/eye.xpm: new totally wacked commit from mitch's account
+	from GUADEC.. this will sometimes be used once mitch gets around
+	to actually implement the stuff in layers dialog (ph3ar!) :)
+
 2000-03-18  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.c:  Make sure we don't divide by zero in
