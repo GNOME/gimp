@@ -1102,7 +1102,7 @@ gimp_image_construct_layers (GimpImage *gimage, int x, int y, int w, int h)
 
   if (!list)
     {
-      //      g_warning("g_i_c_l on layerless image.");
+      /*      g_warning("g_i_c_l on layerless image."); */
     }
 
   /* Note added by Raph Levien, 27 Jan 1998
@@ -1228,7 +1228,7 @@ gimp_image_construct_channels (GimpImage *gimage, int x, int y, int w, int h)
 
   if (!list)
     {
-      //      g_warning("g_i_c_c on channelless image.");
+      /*      g_warning("g_i_c_c on channelless image."); */
     }
 
   /*  reverse the channel list  */
