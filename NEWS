@@ -55,6 +55,10 @@ Bugs fixed in GIMP 2.0rc1
 - 137754: added a menu entry and shortcut for "Path to Selection" (Simon)
 - 137170: fixed crash with floating selections on quick-mask (Simon, Sven)
 - 137786: duplicate the text when duplicating a text layer (Sven)
+- 137566: fixed off-by-one errors on the canvas (Pedro)
+
+Other contributions: 
+  Jakub Steiner, Eric Pierce
 
 
 Bugs fixed in GIMP 2.0pre4
@@ -111,7 +115,7 @@ Bugs fixed in GIMP 2.0pre4
 - 133453: Experiments with global shortcuts (Mitch, Simon)
 
 Other contributions: 
-  Manish Singh, Michael Naterrer, Sven Neumann, Henrik Brix Andersen,
+  Manish Singh, Michael Natterer, Sven Neumann, Henrik Brix Andersen,
   Jakub Steiner, Simon Budig
 
 
