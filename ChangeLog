@@ -1,3 +1,28 @@
+2003-07-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintoptions.[ch]: took the fade options out of
+	GimpGradientOptions and added them to the new GimpFadeOptions
+	struct. Added a GObject::finalize() implementation.
+
+	* app/paint/gimppaintbrush.[ch]: changed accordingly. Made
+	gimp_paintbrush_motion() a protected function and renamed it to
+	_gimp_paintbrush_motion() added a "gdouble opacity" parameter so
+	an initial brush opacity can be passed in by subclasses.
+
+	* app/paint/gimpairbrush.[ch]: derive it from GimpPaintbrush so it
+	gets all its rendering features. Removed own rendering code and
+	use _gimp_paintbrush_motion(), passing airbrush_options->pressure
+	as initial opacity. Removed all static variables.
+
+	* app/tools/gimpairbrushtool.[ch]
+	* app/tools/gimppenciltool.[ch]: derive them from GimpPaintbrushTool.
+
+	* app/tools/gimppaintoptions-gui.c: changed accordingly. Added the
+	full paintbrush options overkill to the airbrush GUI. Cleanup.
+
+	* app/tools/gimperasertool.c: forgot to remove the "Hard Edge"
+	toggle here.
+
 2003-07-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd.c: use the new CMYK->RGB conversion routine to

@@ -49,9 +49,6 @@ static void   gimp_paintbrush_paint      (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options,
                                           GimpPaintCoreState   paint_state);
-static void   gimp_paintbrush_motion     (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable,
-                                          GimpPaintOptions    *paint_options);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
@@ -126,7 +123,8 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
   switch (paint_state)
     {
     case MOTION_PAINT:
-      gimp_paintbrush_motion (paint_core, drawable, paint_options);
+      _gimp_paintbrush_motion (paint_core, drawable, paint_options,
+                               GIMP_OPACITY_OPAQUE);
       break;
 
     default:
@@ -134,20 +132,20 @@ gimp_paintbrush_paint (GimpPaintCore      *paint_core,
     }
 }
 
-static void
-gimp_paintbrush_motion (GimpPaintCore    *paint_core,
-                        GimpDrawable     *drawable,
-                        GimpPaintOptions *paint_options)
+void
+_gimp_paintbrush_motion (GimpPaintCore    *paint_core,
+                         GimpDrawable     *drawable,
+                         GimpPaintOptions *paint_options,
+                         gdouble           opacity)
 {
   GimpPressureOptions      *pressure_options;
+  GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
   GimpContext              *context;
   GimpImage                *gimage;
   TempBuf                  *area;
   gdouble                   gradient_length;
-  guchar                    local_blend = OPAQUE_OPACITY;
   guchar                    col[MAX_CHANNELS];
-  gdouble                   opacity;
   gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
@@ -157,42 +155,42 @@ gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
+  fade_options     = paint_options->fade_options;
   gradient_options = paint_options->gradient_options;
 
   paint_appl_mode = paint_options->application_mode;
 
-  if (gradient_options->use_fade)
+  if (fade_options->use_fade)
     {
       gdouble fade_out = 0.0;
       gdouble unit_factor;
 
-      switch (gradient_options->fade_unit)
+      switch (fade_options->fade_unit)
         {
         case GIMP_UNIT_PIXEL:
-          fade_out = gradient_options->fade_length;
+          fade_out = fade_options->fade_length;
           break;
         case GIMP_UNIT_PERCENT:
           fade_out = (MAX (gimage->width, gimage->height) *
-                      gradient_options->fade_length / 100);
+                      fade_options->fade_length / 100);
           break;
         default:
-          unit_factor = gimp_unit_get_factor (gradient_options->fade_unit);
-          fade_out = (gradient_options->fade_length *
-                      MAX (gimage->xresolution,
-                           gimage->yresolution) / unit_factor);
+          unit_factor = gimp_unit_get_factor (fade_options->fade_unit);
+          fade_out    = (fade_options->fade_length *
+                         MAX (gimage->xresolution,
+                              gimage->yresolution) / unit_factor);
           break;
         }
 
       /*  factor in the fade out value  */
       if (fade_out)
         {
-          gdouble x, paint_left;
+          gdouble x;
 
           /*  Model the amount of paint left as a gaussian curve  */
           x = ((gdouble) paint_core->pixel_dist / fade_out);
-          paint_left = exp (- x * x * 5.541);    /*  ln (1/255)  */
 
-          local_blend = (gint) (255 * paint_left);
+          opacity = exp (- x * x * 5.541);    /*  ln (1/255)  */
         }
     }
 
@@ -234,13 +232,8 @@ gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  if (local_blend)
+  if (opacity > 0.0)
     {
-      guchar temp_blend;
-
-      /*  set the alpha channel  */
-      temp_blend = local_blend;
-
       if (gradient_length)
 	{
           GimpGradient *gradient;
@@ -259,7 +252,7 @@ gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 						     &color,
                                                      gradient_options->gradient_type);
 
-	  temp_blend = (gint) ((color.a * local_blend));
+	  opacity *= color.a;
 
 	  gimp_rgb_get_uchar (&color,
 			      &col[RED_PIX],
@@ -268,13 +261,11 @@ gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 	  col[ALPHA_PIX] = OPAQUE_OPACITY;
 
 	  color_pixels (temp_buf_data (area), col,
-			area->width * area->height, area->bytes);
+			area->width * area->height,
+                        area->bytes);
 
 	  paint_appl_mode = GIMP_PAINT_INCREMENTAL;
 	}
-      /* we check to see if this is a pixmap, if so composite the
-       * pixmap image into the area instead of the color
-       */
       else if (paint_core->brush && paint_core->brush->pixmap)
 	{
           /* if it's a pixmap, do pixmap stuff */
@@ -290,13 +281,12 @@ gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 	  gimp_image_get_foreground (gimage, drawable, col);
 	  col[area->bytes - 1] = OPAQUE_OPACITY;
 	  color_pixels (temp_buf_data (area), col,
-			area->width * area->height, area->bytes);
+			area->width * area->height,
+                        area->bytes);
 	}
 
-      opacity = (gdouble) temp_blend / 255.0;
-
       if (pressure_options->opacity)
-	opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
+	opacity *= 2.0 * paint_core->cur_coords.pressure;
 
       gimp_paint_core_paste_canvas (paint_core, drawable,
 				    MIN (opacity, GIMP_OPACITY_OPAQUE),

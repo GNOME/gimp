@@ -19,12 +19,8 @@
 #ifndef __GIMP_PENCIL_TOOL_H__
 #define __GIMP_PENCIL_TOOL_H__
 
-/* FIXME: This whole tool should probably just be a paintbrush tool that
- *        has an option of hard edge.  It'll give the "pencil tool" all the
- *        flashy stuff the paintbrush tool has, and not duplicate code.
- */
 
-#include "gimppainttool.h"
+#include "gimppaintbrushtool.h"
 
 
 #define GIMP_TYPE_PENCIL_TOOL            (gimp_pencil_tool_get_type ())
@@ -40,12 +36,12 @@ typedef struct _GimpPencilToolClass GimpPencilToolClass;
 
 struct _GimpPencilTool
 {
-  GimpPaintTool parent_instance;
+  GimpPaintbrushTool parent_instance;
 };
 
 struct _GimpPencilToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintbrushToolClass parent_class;
 };
 
 

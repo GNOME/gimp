@@ -20,7 +20,7 @@
 #define __GIMP_AIRBRUSH_TOOL_H__
 
 
-#include "gimppainttool.h"
+#include "gimppaintbrushtool.h"
 
 
 #define GIMP_TYPE_AIRBRUSH_TOOL            (gimp_airbrush_tool_get_type ())
@@ -36,12 +36,12 @@ typedef struct _GimpAirbrushToolClass GimpAirbrushToolClass;
 
 struct _GimpAirbrushTool
 {
-  GimpPaintTool parent_instance;
+  GimpPaintbrushTool parent_instance;
 };
 
 struct _GimpAirbrushToolClass
 {
-  GimpPaintToolClass parent_class;
+  GimpPaintbrushToolClass parent_class;
 };
 
 

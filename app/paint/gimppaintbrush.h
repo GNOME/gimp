@@ -51,4 +51,12 @@ void    gimp_paintbrush_register (Gimp                      *gimp,
 GType   gimp_paintbrush_get_type (void) G_GNUC_CONST;
 
 
+/*  protected  */
+
+void    _gimp_paintbrush_motion  (GimpPaintCore             *paint_core,
+                                  GimpDrawable              *drawable,
+                                  GimpPaintOptions          *paint_options,
+                                  gdouble                    opacity);
+
+
 #endif  /*  __GIMP_PAINTBRUSH_H__  */

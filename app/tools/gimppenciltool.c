@@ -38,7 +38,7 @@ static void   gimp_pencil_tool_class_init (GimpPencilToolClass *klass);
 static void   gimp_pencil_tool_init       (GimpPencilTool      *pancil);
 
 
-static GimpPaintToolClass *parent_class = NULL;
+static GimpPaintbrushToolClass *parent_class = NULL;
 
 
 /*  functions  */
@@ -80,7 +80,7 @@ gimp_pencil_tool_get_type (void)
 	(GInstanceInitFunc) gimp_pencil_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_PAINTBRUSH_TOOL,
 					  "GimpPencilTool",
                                           &tool_info, 0);
     }

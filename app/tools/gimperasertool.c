@@ -96,7 +96,7 @@ gimp_eraser_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
-					  "GimpEraserTool", 
+					  "GimpEraserTool",
                                           &tool_info, 0);
     }
 
@@ -146,7 +146,7 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
       ! (state & GDK_SHIFT_MASK)) /* leave stuff untouched in line draw mode */
     {
       GimpEraserOptions *options;
-      
+
       options = GIMP_ERASER_OPTIONS (tool->tool_info->tool_options);
 
       g_object_set (options,
@@ -154,10 +154,9 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
                     NULL);
     }
 
-  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool,
-                                                key, press, state, gdisp);
+  GIMP_TOOL_CLASS (parent_class)->modifier_key (tool, key, press, state, gdisp);
 }
-  
+
 static void
 gimp_eraser_tool_cursor_update (GimpTool        *tool,
                                 GimpCoords      *coords,
@@ -196,11 +195,6 @@ gimp_eraser_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
 
   g_free (str);
-
-  /* the hard toggle */
-  button = gimp_prop_check_button_new (config, "hard", _("Hard Edge"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
 
   return vbox;
 }

@@ -20,7 +20,7 @@
 #define __GIMP_AIRBRUSH_H__
 
 
-#include "gimppaintcore.h"
+#include "gimppaintbrush.h"
 
 
 #define GIMP_TYPE_AIRBRUSH            (gimp_airbrush_get_type ())
@@ -36,12 +36,16 @@ typedef struct _GimpAirbrushClass GimpAirbrushClass;
 
 struct _GimpAirbrush
 {
-  GimpPaintCore parent_instance;
+  GimpPaintbrush    parent_instance;
+
+  guint             timeout_id;
+  GimpDrawable     *drawable;
+  GimpPaintOptions *paint_options;
 };
 
 struct _GimpAirbrushClass
 {
-  GimpPaintCoreClass parent_class;
+  GimpPaintbrushClass parent_class;
 };
 
 

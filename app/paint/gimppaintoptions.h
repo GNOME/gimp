@@ -29,6 +29,7 @@
 
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
+typedef struct _GimpFadeOptions     GimpFadeOptions;
 typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
@@ -40,12 +41,15 @@ struct _GimpPressureOptions
   gboolean   color;
 };
 
-struct _GimpGradientOptions
+struct _GimpFadeOptions
 {
   gboolean   use_fade;
   gdouble    fade_length;
   GimpUnit   fade_unit;
+};
 
+struct _GimpGradientOptions
+{
   gboolean   use_gradient;
   gdouble    gradient_length;
   GimpUnit   gradient_unit;
@@ -73,6 +77,7 @@ struct _GimpPaintOptions
   gboolean                  hard;
 
   GimpPressureOptions      *pressure_options;
+  GimpFadeOptions          *fade_options;
   GimpGradientOptions      *gradient_options;
 };
 

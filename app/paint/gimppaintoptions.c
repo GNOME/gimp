@@ -72,6 +72,7 @@ enum
 static void   gimp_paint_options_init       (GimpPaintOptions      *options);
 static void   gimp_paint_options_class_init (GimpPaintOptionsClass *options_class);
 
+static void   gimp_paint_options_finalize     (GObject         *object);
 static void   gimp_paint_options_set_property (GObject         *object,
                                                guint            property_id,
                                                const GValue    *value,
@@ -124,6 +125,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->finalize     = gimp_paint_options_finalize;
   object_class->set_property = gimp_paint_options_set_property;
   object_class->get_property = gimp_paint_options_get_property;
   object_class->notify       = gimp_paint_options_notify;
@@ -196,7 +198,20 @@ gimp_paint_options_init (GimpPaintOptions *options)
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
   options->pressure_options = g_new0 (GimpPressureOptions, 1);
+  options->fade_options     = g_new0 (GimpFadeOptions,     1);
   options->gradient_options = g_new0 (GimpGradientOptions, 1);
+}
+
+static void
+gimp_paint_options_finalize (GObject *object)
+{
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (object);
+
+  g_free (options->pressure_options);
+  g_free (options->fade_options);
+  g_free (options->gradient_options);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -207,11 +222,13 @@ gimp_paint_options_set_property (GObject      *object,
 {
   GimpPaintOptions    *options;
   GimpPressureOptions *pressure_options;
+  GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
 
   options = GIMP_PAINT_OPTIONS (object);
 
   pressure_options = options->pressure_options;
+  fade_options     = options->fade_options;
   gradient_options = options->gradient_options;
 
   switch (property_id)
@@ -240,13 +257,13 @@ gimp_paint_options_set_property (GObject      *object,
       break;
 
     case PROP_USE_FADE:
-      gradient_options->use_fade = g_value_get_boolean (value);
+      fade_options->use_fade = g_value_get_boolean (value);
       break;
     case PROP_FADE_LENGTH:
-      gradient_options->fade_length = g_value_get_double (value);
+      fade_options->fade_length = g_value_get_double (value);
       break;
     case PROP_FADE_UNIT:
-      gradient_options->fade_unit = g_value_get_int (value);
+      fade_options->fade_unit = g_value_get_int (value);
       break;
 
     case PROP_USE_GRADIENT:
@@ -276,11 +293,13 @@ gimp_paint_options_get_property (GObject    *object,
 {
   GimpPaintOptions    *options;
   GimpPressureOptions *pressure_options;
+  GimpFadeOptions     *fade_options;
   GimpGradientOptions *gradient_options;
 
   options = GIMP_PAINT_OPTIONS (object);
 
   pressure_options = options->pressure_options;
+  fade_options     = options->fade_options;
   gradient_options = options->gradient_options;
 
   switch (property_id)
@@ -309,13 +328,13 @@ gimp_paint_options_get_property (GObject    *object,
       break;
 
     case PROP_USE_FADE:
-      g_value_set_boolean (value, gradient_options->use_fade);
+      g_value_set_boolean (value, fade_options->use_fade);
       break;
     case PROP_FADE_LENGTH:
-      g_value_set_double (value, gradient_options->fade_length);
+      g_value_set_double (value, fade_options->fade_length);
       break;
     case PROP_FADE_UNIT:
-      g_value_set_int (value, gradient_options->fade_unit);
+      g_value_set_int (value, fade_options->fade_unit);
       break;
 
     case PROP_USE_GRADIENT:

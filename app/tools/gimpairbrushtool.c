@@ -44,7 +44,7 @@ static void   gimp_airbrush_tool_init        (GimpAirbrushTool      *airbrush);
 static GtkWidget * gimp_airbrush_options_gui (GimpToolOptions *tool_options);
 
 
-static GimpPaintToolClass *parent_class = NULL;
+static GimpPaintbrushToolClass *parent_class = NULL;
 
 
 /*  functions  */
@@ -86,7 +86,7 @@ gimp_airbrush_tool_get_type (void)
 	(GInstanceInitFunc) gimp_airbrush_tool_init,
       };
 
-      tool_type = g_type_register_static (GIMP_TYPE_PAINT_TOOL,
+      tool_type = g_type_register_static (GIMP_TYPE_PAINTBRUSH_TOOL,
 					  "GimpAirbrushTool",
                                           &tool_info, 0);
     }
@@ -94,7 +94,7 @@ gimp_airbrush_tool_get_type (void)
   return tool_type;
 }
 
-static void 
+static void
 gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass)
 {
   GObjectClass *object_class;

@@ -40,16 +40,6 @@
 #include "gimp-intl.h"
 
 
-typedef struct _AirbrushTimeout AirbrushTimeout;
-
-struct _AirbrushTimeout
-{
-  GimpPaintCore    *paint_core;
-  GimpDrawable     *drawable;
-  GimpPaintOptions *paint_options;
-};
-
-
 static void       gimp_airbrush_class_init (GimpAirbrushClass  *klass);
 static void       gimp_airbrush_init       (GimpAirbrush       *airbrush);
 
@@ -59,17 +49,13 @@ static void       gimp_airbrush_paint      (GimpPaintCore      *paint_core,
                                             GimpDrawable       *drawable,
                                             GimpPaintOptions   *paint_options,
                                             GimpPaintCoreState  paint_state);
-
 static void       gimp_airbrush_motion     (GimpPaintCore      *paint_core,
                                             GimpDrawable       *drawable,
                                             GimpPaintOptions   *paint_options);
 static gboolean   gimp_airbrush_timeout    (gpointer            data);
 
 
-static guint               timeout_id = 0;
-static AirbrushTimeout     airbrush_timeout;
-
-static GimpPaintCoreClass *parent_class = NULL;
+static GimpPaintbrushClass *parent_class = NULL;
 
 
 void
@@ -102,7 +88,7 @@ gimp_airbrush_get_type (void)
 	(GInstanceInitFunc) gimp_airbrush_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
+      type = g_type_register_static (GIMP_TYPE_PAINTBRUSH,
                                      "GimpAirbrush",
                                      &info, 0);
     }
@@ -129,20 +115,18 @@ gimp_airbrush_class_init (GimpAirbrushClass *klass)
 static void
 gimp_airbrush_init (GimpAirbrush *airbrush)
 {
-  GimpPaintCore *paint_core;
-
-  paint_core = GIMP_PAINT_CORE (airbrush);
-
-  paint_core->flags |= CORE_HANDLES_CHANGING_BRUSH;
+  airbrush->timeout_id = 0;
 }
 
 static void
 gimp_airbrush_finalize (GObject *object)
 {
-  if (timeout_id)
+  GimpAirbrush *airbrush = GIMP_AIRBRUSH (object);
+
+  if (airbrush->timeout_id)
     {
-      g_source_remove (timeout_id);
-      timeout_id = 0;
+      g_source_remove (airbrush->timeout_id);
+      airbrush->timeout_id = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -154,25 +138,30 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
                      GimpPaintOptions   *paint_options,
                      GimpPaintCoreState  paint_state)
 {
+  GimpAirbrush        *airbrush;
   GimpAirbrushOptions *options;
 
-  options = (GimpAirbrushOptions *) paint_options;
+  airbrush = GIMP_AIRBRUSH (paint_core);
+  options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
 
   switch (paint_state)
     {
     case INIT_PAINT:
-      if (timeout_id)
+      if (airbrush->timeout_id)
 	{
-	  g_source_remove (timeout_id);
-	  timeout_id = 0;
+	  g_source_remove (airbrush->timeout_id);
+	  airbrush->timeout_id = 0;
 	}
+
+      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
+                                                   paint_options, paint_state);
       break;
 
     case MOTION_PAINT:
-      if (timeout_id)
+      if (airbrush->timeout_id)
 	{
-	  g_source_remove (timeout_id);
-	  timeout_id = 0;
+	  g_source_remove (airbrush->timeout_id);
+	  airbrush->timeout_id = 0;
 	}
 
       gimp_airbrush_motion (paint_core, drawable, paint_options);
@@ -181,29 +170,33 @@ gimp_airbrush_paint (GimpPaintCore      *paint_core,
 	{
 	  gdouble timeout;
 
-	  airbrush_timeout.paint_core    = paint_core;
-	  airbrush_timeout.drawable      = drawable;
-          airbrush_timeout.paint_options = paint_options;
+	  airbrush->drawable      = drawable;
+          airbrush->paint_options = paint_options;
 
 	  timeout = (paint_options->pressure_options->rate ?
 		     (10000 / (options->rate * 2.0 * paint_core->cur_coords.pressure)) :
 		     (10000 / options->rate));
 
-	  timeout_id = g_timeout_add (timeout,
-                                      gimp_airbrush_timeout,
-                                      NULL);
+	  airbrush->timeout_id = g_timeout_add (timeout,
+                                                gimp_airbrush_timeout,
+                                                airbrush);
 	}
       break;
 
     case FINISH_PAINT:
-      if (timeout_id)
+      if (airbrush->timeout_id)
 	{
-	  g_source_remove (timeout_id);
-	  timeout_id = 0;
+	  g_source_remove (airbrush->timeout_id);
+	  airbrush->timeout_id = 0;
 	}
+
+      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
+                                                   paint_options, paint_state);
       break;
 
     default:
+      GIMP_PAINT_CORE_CLASS (parent_class)->paint (paint_core, drawable,
+                                                   paint_options, paint_state);
       break;
     }
 }
@@ -213,111 +206,35 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
                       GimpDrawable     *drawable,
                       GimpPaintOptions *paint_options)
 {
-  GimpImage                *gimage;
-  GimpContext              *context;
-  TempBuf                  *area;
-  guchar                    col[MAX_CHANNELS];
-  gdouble                   scale;
-  gdouble                   pressure;
-  GimpPaintApplicationMode  paint_appl_mode;
+  GimpAirbrushOptions *options;
+  gdouble              opacity;
+  gboolean             saved_pressure;
 
-  if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
-    return;
+  options  = GIMP_AIRBRUSH_OPTIONS (paint_options);
 
-  context = GIMP_CONTEXT (paint_options);
+  opacity = options->pressure / 100.0;
 
-  paint_appl_mode = paint_options->application_mode;
+  saved_pressure = paint_options->pressure_options->pressure;
 
-  pressure = GIMP_AIRBRUSH_OPTIONS (paint_options)->pressure / 100.0;
+  if (saved_pressure)
+    opacity *= 2.0 * paint_core->cur_coords.pressure;
 
-  if (paint_options->pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
-    return;
-
-  /*  color the pixels  */
-  if (paint_options->pressure_options->color)
-    {
-      GimpRGB  color;
-
-      gimp_gradient_get_color_at (gimp_context_get_gradient (context),
-				  paint_core->cur_coords.pressure, &color);
-
-      gimp_rgba_get_uchar (&color,
-			   &col[RED_PIX],
-			   &col[GREEN_PIX],
-			   &col[BLUE_PIX],
-			   &col[ALPHA_PIX]);
-
-      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
-
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height,
-                    area->bytes);
-    }
-  else if (paint_core->brush && paint_core->brush->pixmap)
-    {
-      paint_appl_mode = GIMP_PAINT_INCREMENTAL;
-
-      gimp_paint_core_color_area_with_pixmap (paint_core, gimage,
-					      drawable, area,
-					      scale, GIMP_BRUSH_SOFT);
-    }
-  else
-    {
-      gimp_image_get_foreground (gimage, drawable, col);
-      col[area->bytes - 1] = OPAQUE_OPACITY;
-      color_pixels (temp_buf_data (area), col,
-		    area->width * area->height, area->bytes);
-    }
-
-  if (paint_options->pressure_options->pressure)
-    pressure = pressure * 2.0 * paint_core->cur_coords.pressure;
-
-  /*  paste the newly painted area to the image  */
-  gimp_paint_core_paste_canvas (paint_core, drawable,
-				MIN (pressure, GIMP_OPACITY_OPAQUE),
-				gimp_context_get_opacity (context),
-				gimp_context_get_paint_mode (context),
-				GIMP_BRUSH_SOFT,
-                                scale,
-                                paint_appl_mode);
+  paint_options->pressure_options->pressure = FALSE;
+  _gimp_paintbrush_motion (paint_core, drawable, paint_options, opacity);
+  paint_options->pressure_options->pressure = saved_pressure;
 }
 
 static gboolean
-gimp_airbrush_timeout (gpointer client_data)
+gimp_airbrush_timeout (gpointer data)
 {
-  gdouble rate;
+  GimpAirbrush *airbrush = GIMP_AIRBRUSH (data);
 
-  gimp_airbrush_motion (airbrush_timeout.paint_core,
-                        airbrush_timeout.drawable,
-                        airbrush_timeout.paint_options);
+  gimp_airbrush_paint (GIMP_PAINT_CORE (airbrush),
+                       airbrush->drawable,
+                       airbrush->paint_options,
+                       MOTION_PAINT);
 
-  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush_timeout.drawable)));
-
-  rate = GIMP_AIRBRUSH_OPTIONS (airbrush_timeout.paint_options)->rate;
-
-  /*  restart the timer  */
-  if (rate != 0.0)
-    {
-      if (airbrush_timeout.paint_options->pressure_options->rate)
-	{
-          if (timeout_id)
-            g_source_remove (timeout_id);
-
-	  timeout_id = g_timeout_add ((10000 /
-                                       (rate * 2.0 *
-                                        airbrush_timeout.paint_core->cur_coords.pressure)),
-                                      gimp_airbrush_timeout,
-                                      NULL);
-	  return FALSE;
-	}
-
-      return TRUE;
-    }
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush->drawable)));
 
   return FALSE;
 }
