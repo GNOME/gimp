@@ -1,5 +1,10 @@
 2004-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_interpolate): better
+	fix for bug #123811; patch provided by Philip Lafleur.
+
+2004-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/preferences-dialog.c: added some GtkSizeGroups and
 	changed spacings to improve the dialog layout.
 
