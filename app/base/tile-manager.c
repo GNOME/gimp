@@ -636,3 +636,58 @@ tile_manager_get_tile_num (TileManager *tm,
 
   return tile_num;
 }
+
+void 
+tile_manager_set_user_data (TileManager *tm,
+			    void        *user_data)
+{
+  tm->user_data = user_data;
+}
+
+void *
+tile_manager_get_user_data (TileManager *tm)
+{
+  return tm->user_data;
+}
+
+int 
+tile_manager_level_width  (TileManager *tm, int level) 
+{
+  return tm->levels[level].width;
+}
+
+int 
+tile_manager_level_height (TileManager *tm, int level)
+{
+  return tm->levels[level].height;
+}
+
+int 
+tile_manager_level_bpp    (TileManager *tm, int level)
+{
+  return tm->levels[level].bpp;
+}
+
+void
+tile_manager_get_tile_coordinates (TileManager *tm, Tile *tile, int *x, int *y)
+{
+  TileLink *tl;
+
+  for (tl = tile->tlink; tl; tl = tl->next) 
+    {
+      if (tl->tm == tm) break;
+    }
+
+  if (tl == NULL) 
+    {
+      g_warning ("tile_manager_get_tile_coordinates: tile not attached to manager");
+      return;
+    }
+
+  *x = TILE_WIDTH * (tl->tile_num % tm->levels[0].ntile_cols);
+  *y = TILE_HEIGHT * (tl->tile_num / tm->levels[0].ntile_cols);
+}
+
+  
+
+			    

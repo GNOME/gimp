@@ -138,5 +138,16 @@ void tile_manager_update_tile (TileManager *tm,
 			       Tile        *toplevel_tile,
 			       int          level);
 
+void tile_manager_set_user_data (TileManager *tm,
+				 void        *user_data);
+
+void *tile_manager_get_user_data (TileManager *tm);
+
+int tile_manager_level_width  (TileManager *tm, int level);
+int tile_manager_level_height (TileManager *tm, int level);
+int tile_manager_level_bpp    (TileManager *tm, int level);
+
+void tile_manager_get_tile_coordinates (TileManager *tm, Tile *tile,
+					int *x, int *y);
 
 #endif /* __TILE_MANAGER_H__ */

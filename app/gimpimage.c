@@ -26,7 +26,7 @@
 #include "undo.h"
 #include "gimpsignal.h"
 
-#include "tile_manager_pvt.h"		/* ick. */
+#include "tile_manager.h"		/* ick. */
 #include "tile_pvt.h"
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
@@ -188,7 +188,7 @@ gimp_image_allocate_projection (GimpImage *gimage)
 
   /*  allocate the new projection  */
   gimage->projection = tile_manager_new (gimage->width, gimage->height, gimage->proj_bytes);
-  gimage->projection->user_data = (void *) gimage;
+  tile_manager_set_user_data (gimage->projection, (void *) gimage);
   tile_manager_set_validate_proc (gimage->projection, gimp_image_validate);
 }
 
@@ -411,9 +411,9 @@ TileManager *
 gimp_image_shadow (GimpImage *gimage, int width, int height, int bpp)
 {
   if (gimage->shadow &&
-      ((width != gimage->shadow->levels[0].width) ||
-       (height != gimage->shadow->levels[0].height) ||
-       (bpp != gimage->shadow->levels[0].bpp)))
+      ((width != tile_manager_level_width (gimage->shadow, 0)) ||
+       (height != tile_manager_level_height (gimage->shadow, 0)) ||
+       (bpp != tile_manager_level_bpp (gimage->shadow, 0))))
     gimp_image_free_shadow (gimage);
   else if (gimage->shadow)
     return gimage->shadow;
@@ -1283,11 +1283,10 @@ gimp_image_validate (TileManager *tm, Tile *tile, int level)
   int w, h;
 
   /*  Get the gimage from the tilemanager  */
-  gimage = (GimpImage *) tm->user_data;
+  gimage = (GimpImage *) tile_manager_get_user_data (tm);
 
   /*  Find the coordinates of this tile  */
-  x = TILE_WIDTH * (tile->tlink->tile_num % tm->levels[0].ntile_cols);
-  y = TILE_HEIGHT * (tile->tlink->tile_num / tm->levels[0].ntile_cols);
+  tile_manager_get_tile_coordinates (tm, tile, &x, &y);
   w = tile->ewidth;
   h = tile->eheight;
 
@@ -2576,8 +2575,8 @@ gimp_image_projection (GimpImage *gimage)
     }
   else
     {
-      if ((gimage->projection->levels[0].width != gimage->width) ||
-	  (gimage->projection->levels[0].height != gimage->height))
+      if ((tile_manager_level_width (gimage->projection, 0) != gimage->width) ||
+	  (tile_manager_level_height (gimage->projection, 0) != gimage->height))
 	gimp_image_allocate_projection (gimage);
 
       return gimage->projection;
