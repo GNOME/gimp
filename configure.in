@@ -946,7 +946,7 @@ AC_CHECK_PROG(GTKDOC, gtkdoc-mkdb, true, false)
 if $GTKDOC ; then 
    gtk_doc_version=`gtkdoc-mkdb --version`
    AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
-   IFS="${IFS=         }"; gimp_save_IFS="$IFS"; IFS="."
+   IFS="${IFS= 	}"; gimp_save_IFS="$IFS"; IFS="."
    set $gtk_doc_version
    for min in $gtk_doc_min_version ; do
       cur=$1; shift
