@@ -1,3 +1,13 @@
+2004-12-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/print-size-dialog.c
+	* app/widgets/gimpsizebox.c: set a focus_chain on the size_entries
+	so the focus order is width->height->chain->unitmenu and not
+	width->chain->height->unitmenu.
+
+	* app/widgets/gimptemplateeditor.c: changed focus_chain code to
+	work like above (cosmetics).
+
 2004-12-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c (splash_update): only expose the area of the

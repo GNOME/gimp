@@ -210,6 +210,7 @@ gimp_size_box_constructor (GType                  type,
   GtkWidget          *vbox;
   GtkWidget          *label;
   GtkObject          *adjustment;
+  GList              *focus_chain = NULL;
   GimpSizeBoxPrivate *priv;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -300,6 +301,14 @@ gimp_size_box_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
+  focus_chain = g_list_prepend (focus_chain, GIMP_SIZE_ENTRY (entry)->unitmenu);
+  focus_chain = g_list_prepend (focus_chain, chain);
+  focus_chain = g_list_prepend (focus_chain, height);
+  focus_chain = g_list_prepend (focus_chain, width);
+
+  gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
+  g_list_free (focus_chain);
+
   priv = GIMP_SIZE_BOX_GET_PRIVATE (box);
 
   priv->size_entry  = GIMP_SIZE_ENTRY (entry);
@@ -370,6 +379,16 @@ gimp_size_box_constructor (GType                  type,
       chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
       gtk_table_attach_defaults (GTK_TABLE (entry), chain, 1, 2, 0, 2);
       gtk_widget_show (chain);
+
+      focus_chain = NULL;
+      focus_chain = g_list_prepend (focus_chain,
+                                    GIMP_SIZE_ENTRY (entry)->unitmenu);
+      focus_chain = g_list_prepend (focus_chain, chain);
+      focus_chain = g_list_prepend (focus_chain, yres);
+      focus_chain = g_list_prepend (focus_chain, xres);
+
+      gtk_container_set_focus_chain (GTK_CONTAINER (entry), focus_chain);
+      g_list_free (focus_chain);
 
       gimp_prop_coordinates_connect (G_OBJECT (box),
                                      "xresolution", "yresolution",

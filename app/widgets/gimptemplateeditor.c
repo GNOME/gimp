@@ -420,12 +420,11 @@ gimp_template_editor_constructor (GType                  type,
                                  editor->resolution_se, chainbutton,
                                  1.0, 1.0);
 
-  focus_chain = g_list_append (focus_chain, xres);
-  focus_chain = g_list_append (focus_chain, yres);
-  focus_chain = g_list_append (focus_chain, chainbutton);
-
-  focus_chain = g_list_append (focus_chain,
-                               GIMP_SIZE_ENTRY (editor->resolution_se)->unitmenu);
+  focus_chain = g_list_prepend (focus_chain,
+                                GIMP_SIZE_ENTRY (editor->resolution_se)->unitmenu);
+  focus_chain = g_list_prepend (focus_chain, chainbutton);
+  focus_chain = g_list_prepend (focus_chain, yres);
+  focus_chain = g_list_prepend (focus_chain, xres);
 
   gtk_container_set_focus_chain (GTK_CONTAINER (editor->resolution_se),
                                  focus_chain);
