@@ -1,3 +1,10 @@
+2004-03-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpthumbbox.c: modify the event_box and preview
+	styles in GtkWidget::style_set() instead of in
+	gimp_thumb_box_new() so they follow theme changes correctly and
+	the labels stay visible when switching to an "inverse" theme.
+
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.0rc1 release.

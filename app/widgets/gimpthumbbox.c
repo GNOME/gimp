@@ -48,6 +48,9 @@ static void   gimp_thumb_box_init       (GimpThumbBox      *box);
 
 static void   gimp_thumb_box_finalize   (GObject           *object);
 
+static void   gimp_thumb_box_style_set  (GtkWidget         *widget,
+                                         GtkStyle          *prev_style);
+
 static gboolean  gimp_thumb_box_ebox_button_press (GtkWidget         *widget,
                                                    GdkEventButton    *bevent,
                                                    GimpThumbBox      *box);
@@ -100,11 +103,14 @@ gimp_thumb_box_get_type (void)
 static void
 gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_thumb_box_finalize;
+  object_class->finalize  = gimp_thumb_box_finalize;
+
+  widget_class->style_set = gimp_thumb_box_style_set;
 }
 
 static void
@@ -129,6 +135,28 @@ gimp_thumb_box_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+static void
+gimp_thumb_box_style_set (GtkWidget *widget,
+                          GtkStyle  *prev_style)
+{
+  GimpThumbBox *box = GIMP_THUMB_BOX (widget);
+  GtkWidget    *ebox;
+
+  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
+                        &widget->style->base[GTK_STATE_NORMAL]);
+  gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
+                        &widget->style->base[GTK_STATE_NORMAL]);
+
+  ebox = gtk_bin_get_child (GTK_BIN (widget));
+
+  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
+                        &widget->style->base[GTK_STATE_NORMAL]);
+  gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
+                        &widget->style->base[GTK_STATE_NORMAL]);
+}
+
 
 /*  public functions  */
 
@@ -142,7 +170,6 @@ gimp_thumb_box_new (Gimp *gimp)
   GtkWidget      *hbox;
   GtkWidget      *button;
   GtkWidget      *label;
-  GtkStyle       *style;
   gchar          *str;
   GtkRequisition  info_requisition;
   GtkRequisition  progress_requisition;
@@ -152,14 +179,6 @@ gimp_thumb_box_new (Gimp *gimp)
   box = g_object_new (GIMP_TYPE_THUMB_BOX, NULL);
 
   ebox = gtk_event_box_new ();
-
-  gtk_widget_ensure_style (ebox);
-  style = gtk_widget_get_style (ebox);
-  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
-
   gtk_container_add (GTK_CONTAINER (box), ebox);
   gtk_widget_show (ebox);
 
@@ -219,14 +238,6 @@ gimp_thumb_box_new (Gimp *gimp)
 
   box->preview = gimp_preview_new (GIMP_VIEWABLE (box->imagefile),
                                    gimp->config->thumbnail_size, 0, FALSE);
-
-  gtk_widget_ensure_style (box->preview);
-  style = gtk_widget_get_style (box->preview);
-  gtk_widget_modify_bg (box->preview, GTK_STATE_NORMAL,
-                        &style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (box->preview, GTK_STATE_INSENSITIVE,
-                        &style->base[GTK_STATE_NORMAL]);
-
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
   gtk_widget_show (box->preview);
 
