@@ -1,0 +1,379 @@
+# This is the system-wide gimprc file.  Any change made in this file
+# will affect all users of this system, provided that they are not
+# overriding the default values in their personal gimprc file.
+#
+# Lines that start with a '#' are comments. Blank lines are ignored.
+#
+# By default everything in this file is commented out. The file then
+# documents the default values and shows what changes are possible.
+
+# The variable gimp_dir is set to either the internal value
+# @gimpdir@ or the environment variable GIMP_DIRECTORY.  If
+# the path in GIMP_DIRECTORY is relative, it is considered
+# relative to your home directory.
+
+# Set the temporary storage directory. Files will appear here during the
+# course of running the gimp.  Most files will disappear when the gimp exits,
+# but some files are likely to remain, such as working palette files, so it is
+# best if this directory not be one that is shared by other users or is
+# cleared on machine reboot such as /tmp.  This is a colon-separated list of
+# directories to search.
+#
+# (temp-path "${gimp_dir}/tmp")
+
+# Set the swap file location. The gimp uses a tile based memory allocation
+# scheme. The swap file is used to quickly and easily swap tiles out to disk
+# and back in. Be aware that the swap file can easily get very large if the
+# gimp is used with large images. Also, things can get horribly slow if the
+# swap file is created on a directory that is mounted over NFS.  For these
+# reasons, it may be desirable to put your swap file in "/tmp".  This is a
+# colon-separated list of directories to search.
+#
+# (swap-path "${gimp_dir}")
+
+# There is always a tradeoff between memory usage and speed.  In most cases,
+# the GIMP opts for speed over memory.  However, if memory is a big issue, set
+# stingy-memory-use.  Possible values are yes and no.
+#
+# (stingy-memory-use no)
+
+# On multiprocessor machines, if GIMP has been compiled with --enable-mp this
+# sets how many processors GIMP should use simultaneously.  This is an integer
+# value.
+#
+# (num-processors 1)
+
+# The tile cache is used to make sure the gimp doesn't thrash tiles between
+# memory and disk. Setting this value higher will cause the gimp to use less
+# swap space, but will also cause the gimp to use more memory. Conversely, a
+# smaller cache size causes the gimp to use more swap space and less memory. 
+# The integer size can contain a suffix of 'B', 'K', 'M' or 'G' which makes
+# GIMP interpret the size as being specified in bytes, kilobytes, megabytes or
+# gigabytes. If no suffix is specified the size defaults to being specified in
+# kilobytes.
+#
+# (tile-cache-size 32M)
+
+# Set the level of interpolation used for scaling and other transformations. 
+# Possible values are none, linear and cubic.
+#
+# (interpolation-type linear)
+
+# Set the plug-in search path.  This is a colon-separated list of directories
+# to search.
+#
+# (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
+
+# tool-plug-in-path  This is a colon-separated list of directories to search.
+#
+# (tool-plug-in-path "${gimp_dir}/tool-plug-ins:${gimp_plug_in_dir}/tool-plug-ins")
+
+# Set the module search path.  This is a colon-separated list of directories
+# to search.
+#
+# (module-path "${gimp_dir}/modules:${gimp_plug_in_dir}/modules")
+
+# environ-path  This is a colon-separated list of directories to search.
+#
+# (environ-path "${gimp_dir}/environ:${gimp_plug_in_dir}/environ")
+
+# Set the brush search path.  This is a colon-separated list of directories to
+# search.
+#
+# (brush-path "${gimp_dir}/brushes:${gimp_data_dir}/brushes")
+
+# Set the pattern search path.  This is a colon-separated list of directories
+# to search.
+#
+# (pattern-path "${gimp_dir}/patterns:${gimp_data_dir}/patterns")
+
+# Set the palette search path.  This is a colon-separated list of directories
+# to search.
+#
+# (palette-path "${gimp_dir}/palettes:${gimp_data_dir}/palettes")
+
+# Set the gradient search path.  This is a colon-separated list of directories
+# to search.
+#
+# (gradient-path "${gimp_dir}/gradients:${gimp_data_dir}/gradients")
+
+# default-comment  This is a string value.
+#
+# (default-comment "Created with The GIMP")
+
+# Set the default image type in the File/New dialog.  Possible values are rgb,
+# gray and indexed.
+#
+# (default-image-type rgb)
+
+# Set the default image width in the File/New dialog.  This is an integer
+# value.
+#
+# (default-image-width 256)
+
+# Set the default image height in the File/New dialog.  This is an integer
+# value.
+#
+# (default-image-height 256)
+
+# Set the default unit for new images and for the File/New dialog. This units
+# will be used for coordinate display when not in dot-for-dot mode.  The unit
+# can be one inches, millimeters, points or picas plus those in your user
+# units database.
+#
+# (default-unit inches)
+
+# Set the default horizontal resolution for new images and for the File/New
+# dialog. This value is always in dpi (dots per inch).  This is a float value.
+#
+# (default-xresolution 72.000000)
+
+# Set the default vertical resolution for new images and for the File/New
+# dialog. This value is always in dpi (dots per inch).  This is a float value.
+#
+# (default-yresolution 72.000000)
+
+# Set the units for the display of the default resolution in the File/New
+# dialog.  The unit can be one inches, millimeters, points or picas plus those
+# in your user units database.
+#
+# (default-resolution-unit inches)
+
+# Set the number of operations kept on the undo stack.  This is an integer
+# value.
+#
+# (undo-levels 5)
+
+# pluginrc-path  This is a colon-separated list of directories to search.
+#
+# (pluginrc-path "${gimp_dir}/pluginrc")
+
+# Set the default preview size.  Possible values are none, tiny, extra-small,
+# small, medium, large, extra-large, huge, enormous and gigantic.
+#
+# (preview-size small)
+
+# thumbnail-size  Possible values are none, normal and large.
+#
+# (thumbnail-size normal)
+
+# This setting is ignored.  This is a float value.
+#
+# (gamma-correction 1.000000)
+
+# Install a private colormap; might be useful on pseudocolor visuals. 
+# Possible values are yes and no.
+#
+# (install-colormap no)
+
+# min-colors  This is an integer value.
+#
+# (min-colors 144)
+
+# Speed of marching ants in the selection outline.  This value is in
+# milliseconds (less time indicates faster marching).  This is an integer
+# value.
+#
+# (marching-ants-speed 300)
+
+# Specify that marching ants for selected regions will be drawn with colormap
+# cycling as oposed to redrawing with different stipple masks. This color
+# cycling option works only with 8-bit displays.  Possible values are yes and
+# no.
+#
+# (colormap-cycling no)
+
+# When zooming into and out of images, this option enables the automatic
+# resizing of windows.   Possible values are yes and no.
+#
+# (resize-windows-on-zoom no)
+
+# When the physical image size changes, this option enables the automatic
+# resizing of windows.  Possible values are yes and no.
+#
+# (resize-windows-on-resize no)
+
+# default-dot-for-dot  Possible values are yes and no.
+#
+# (default-dot-for-dot yes)
+
+# If set to true, the X server is queried for the mouse's current position on
+# each motion event, rather than relying on the position hint.  This means
+# painting with large brushes should be more accurate, but it may be slower. 
+# Perversely, on some X servers turning on this option results in faster
+# painting.  Possible values are yes and no.
+#
+# (perfect-mouse no)
+
+# cursor-mode  Possible values are tool-icon, tool-crosshair and crosshair.
+#
+# (cursor-mode tool-icon)
+
+# Context-dependent cursors are cool.  They are enabled by default. However,
+# they require overhead that you may want to do without.  Possible values are
+# yes and no.
+#
+# (cursor-updating yes)
+
+# Set the text to appear in image window titles.  Certain % character
+# sequences are recognised and expanded as follows:
+# 
+# %%  literal percent sign
+# %f  bare filename, or "Untitled"
+# %F  full path to file, or "Untitled"
+# %p  PDB image id
+# %i  view instance number
+# %t  image type (RGB, grayscale, indexed)
+# %z  zoom factor as a percentage
+# %s  source scale factor
+# %d  destination scale factor
+# %Dx expands to x if the image is dirty, the empty string otherwise
+# %Cx expands to x if the image is clean, the empty string otherwise
+# %m  memory used by the image
+# %l  the number of layers
+# %L  the name of the active layer/channel
+# %w  image width in pixels
+# %W  image width in real-world units
+# %h  image height in pixels
+# %H  image height in real-world units
+# %u  unit symbol
+# %U  unit abbreviation
+# 
+#   This is a string value.
+#
+# (image-title-format "%f-%p.%i (%t)")
+
+# Set the text to appear in image window status bars. See image-title-format
+# for the list of possible % sequences.  This is a string value.
+#
+# (image-status-format "%f-%p.%i (%t)")
+
+# Set the menubar visibility. This can also be toggled with the View->Toggle
+# Menubar command.  Possible values are yes and no.
+#
+# (show-menubar no)
+
+# Set the ruler visibility. This can also be toggled with the View->Toggle
+# Rulers command.  Possible values are yes and no.
+#
+# (show-rulers yes)
+
+# Controlling statusbar visibility. This can also be toggled with the
+# View->Toggle Statusbar command.  Possible values are yes and no.
+#
+# (show-statusbar yes)
+
+# Ask for confirmation before closing an image without saving.  Possible
+# values are yes and no.
+#
+# (confirm-on-close yes)
+
+# Set the monitor's horizontal resolution, in dots per inch.  If set to 0,
+# forces the X server to be queried for both horizontal and vertical
+# resolution information.  This is a float value.
+#
+# (monitor-xresolution 72.000000)
+
+# Set the monitor's vertical resolution, in dots per inch.  If set to 0,
+# forces the X server to be queried for both horizontal and vertical
+# resolution information.  This is a float value.
+#
+# (monitor-yresolution 72.000000)
+
+# monitor-resolution-from-windowing-system  Possible values are yes and no.
+#
+# (monitor-resolution-from-windowing-system yes)
+
+# navigation-preview-size  Possible values are none, tiny, extra-small, small,
+# medium, large, extra-large, huge, enormous and gigantic.
+#
+# (navigation-preview-size medium)
+
+# canvas-padding-mode  Possible values are default, light-check, dark-check
+# and custom.
+#
+# (canvas-padding-mode default)
+
+# canvas-padding-color  The color is specified in the form (color-rgba red
+# green blue alpha) with channel values as floats between 0.0 and 1.0.
+#
+# (canvas-padding-color (color-rgba 1.000000 1.000000 1.000000 1.000000))
+
+# Sets the size of the checkerboard used to display transparency.  Possible
+# values are small-checks, medium-checks and large-checks.
+#
+# (transparency-size medium-checks)
+
+# Set the manner in which transparency is displayed in images.  Possible
+# values are light-checks, gray-checks, dark-checks, white-only, gray-only and
+# black-only.
+#
+# (transparency-type gray-checks)
+
+# Tools such as fuzzy-select and bucket fill find regions based on a seed-fill
+# algorithm.  The seed fill starts at the intially selected pixel and
+# progresses in all directions until the difference of pixel intensity from
+# the original is greater than a specified threshold. This value represents
+# the default threshold.  This is an integer value.
+#
+# (default-threshold 15)
+
+# info-window-per-display  Possible values are yes and no.
+#
+# (info-window-per-display no)
+
+# trust-dirty-flag  Possible values are yes and no.
+#
+# (trust-dirty-flag no)
+
+# Remember the current tool, pattern, color, and brush across GIMP sessions. 
+# Possible values are yes and no.
+#
+# (save-device-status no)
+
+# Remember the positions and sizes of the main dialogs and asks your
+# window-manager to place them there again the next time you use the GIMP. 
+# Possible values are yes and no.
+#
+# (save-session-info yes)
+
+# restore-session  Possible values are yes and no.
+#
+# (restore-session yes)
+
+# Set to display a handy GIMP tip on startup.  Possible values are yes and no.
+#
+# (show-tips yes)
+
+# Set to display tooltips.  Possible values are yes and no.
+#
+# (show-tool-tips yes)
+
+# tearoff-menus  Possible values are yes and no.
+#
+# (tearoff-menus yes)
+
+# How many recently opened image filenames to keep on the File menu.  This is
+# an integer value.
+#
+# (last-opened-size 4)
+
+# max-new-image-size  The integer size can contain a suffix of 'B', 'K', 'M'
+# or 'G' which makes GIMP interpret the size as being specified in bytes,
+# kilobytes, megabytes or gigabytes. If no suffix is specified the size
+# defaults to being specified in kilobytes.
+#
+# (max-new-image-size 32M)
+
+# theme-path  This is a colon-separated list of directories to search.
+#
+# (theme-path "${gimp_dir}/themes:${gimp_data_dir}/themes")
+
+# use-help  Possible values are yes and no.
+#
+# (use-help yes)
+
+# help-browser  Possible values are gimp and netscape.
+#
+# (help-browser gimp)
+

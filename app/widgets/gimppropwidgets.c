@@ -32,6 +32,7 @@
 #include "widgets-types.h"
 
 #include "config/gimpconfig-params.h"
+#include "config/gimpconfig-path.h"
 
 #include "gimpcolorpanel.h"
 #include "gimpenummenu.h"
@@ -841,6 +842,7 @@ gimp_prop_file_entry_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *entry;
+  gchar      *filename;
   gchar      *value;
 
   param_spec = check_param_spec (config, property_name,
@@ -852,9 +854,13 @@ gimp_prop_file_entry_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  entry = gimp_file_selection_new (filesel_title, value, dir_only, check_valid);
+  filename = value ? gimp_config_path_expand (value, FALSE, NULL) : NULL;
+
+  entry = gimp_file_selection_new (filesel_title,
+                                   filename, dir_only, check_valid);
 
   g_free (value);
+  g_free (filename);
 
   set_param_spec (G_OBJECT (entry), param_spec);
 
@@ -932,6 +938,7 @@ gimp_prop_path_editor_new (GObject     *config,
   GParamSpec *param_spec;
   GtkWidget  *editor;
   gchar      *value;
+  gchar      *filename;
 
   param_spec = check_param_spec (config, property_name,
                                  GIMP_TYPE_PARAM_PATH, G_STRLOC);
@@ -942,8 +949,11 @@ gimp_prop_path_editor_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  editor = gimp_path_editor_new (filesel_title, value);
+  filename = value ? gimp_config_path_expand (value, FALSE, NULL) : NULL;
 
+  editor = gimp_path_editor_new (filesel_title, filename);
+
+  g_free (filename);
   g_free (value);
 
   set_param_spec (G_OBJECT (editor), param_spec);
