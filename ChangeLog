@@ -1,5 +1,12 @@
 2003-07-08  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/stock-wilber-32.png
+	* themes/Default/images/stock-wilber-48.png
+	* themes/Default/images/stock-wilber-64.png: a nicer Wilber with
+	a brush and drop shadow.
+
+2003-07-08  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptextlayer.c (gimp_text_layer_from_layer): replace
 	the layer in the global item hash table, fixes bug #116936.
 
