@@ -1,8 +1,7 @@
-require 5.004;
+require 5.004_04;
 
 use Config;
 
-$topdir=".";
 $|=1;
 
 @examples =
@@ -199,10 +198,10 @@ install ::
 	      exit ; \
 	   fi \
 	done ; \
-	$(MAKE) UNINST=1 really-install install-plugins
-	cd embed && $(MAKE) install
+	$(MAKE) UNINST=1 really-install install-plugins'."
+	$dont_embed || (cd embed && \$(MAKE) install)
 
-'.$install;
+".$install;
 }
 
 sub MY::postamble {
@@ -218,10 +217,10 @@ check :: test
 MY_FIXIN = \$(PERL) -I\$(PERL_ARCHLIB) -I\$(PERL_LIB) -MExtUtils::MakeMaker -e 'MY->fixin(\@ARGV)'
 
 all ::
-	cd embed && \$(MAKE) all
+	$dont_embed || (cd embed && \$(MAKE) all)
 
 clean ::
-	cd embed && \$(MAKE) clean
+	$dont_embed || (cd embed && \$(MAKE) clean)
 	test -f Makefile || mv -f Makefile.old Makefile
 	\$(RM_RF) inst-temp
 
@@ -270,6 +269,16 @@ close C;
 
 print "ok\n";
 
+$GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
+
+@DIRS= 'Gimp';
+if ($IN_GIMP) {
+   $dont_embed = "false";
+   push(@DIRS,'nolib');
+} else {
+   $dont_embed = "true";
+}
+
 WriteMakefile(
     'dist'	=> {
 	            PREOP	=> 'chmod -R u=rwX,go=rX . ;',
@@ -279,10 +288,10 @@ WriteMakefile(
     'PREREQ_PM'	=> {
     		    Gtk			=> 0.3,
                     PDL			=> 1.99,
-    		    Data::Dumper	=> 2,
+    		    Data::Dumper	=> 2.0,
                     Parse::RecDescent	=> 1.6,
 		   },
-    'DIR'	=> ['Gimp','nolib'],
+    'DIR'	=> [@DIRS],
     'NAME'	=> 'Gimp',
     'VERSION_FROM' => 'Gimp.pm',
     'PM'	=> {
@@ -299,8 +308,8 @@ WriteMakefile(
     		    'Gimp/Config.pm'	=> '$(INST_LIBDIR)/Gimp/Config.pm',
     		   },
     'LIBS'	=> [''],
-    'INC'	=> "$GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
-    'DEFINE'	=> ($IN_GIMP ? " -DIN_GIMP " : "")." $DEFS",
+    'INC'	=> "$INC1 $GIMP_INC_NOUI $CPPFLAGS $CFLAGS",
+    'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> ['scm2perl','scm2scm'],
     'macro'	=> \%cfg,
     'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
