@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-08-23 01:07+0300\n"
+"POT-Creation-Date: 2000-08-29 19:28+0300\n"
 "PO-Revision-Date: 2000-01-11 12:44+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -13,21 +13,21 @@ msgstr ""
 "Content-Type: text/plain; charset=koi8-u\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: app/about_dialog.c:120
+#: app/about_dialog.c:135
 msgid "About the GIMP"
 msgstr "Про GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:179
+#: app/about_dialog.c:197
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal-*-*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:189
+#: app/about_dialog.c:207
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Верс╕ю %s створено для вас"
 
-#: app/about_dialog.c:234
+#: app/about_dialog.c:257
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Для додатково╖ ╕нформац╕╖ в╕дв╕дайте http://www.gimp.org/"
 
@@ -118,13 +118,13 @@ msgstr "Вих╕д"
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
 #: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
-#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
-#: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
-#: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1039
-#: app/layers_dialog.c:3484 app/layers_dialog.c:3666 app/layers_dialog.c:3761
-#: app/layers_dialog.c:4021 app/levels.c:341 app/palette.c:1818
-#: app/posterize.c:202 app/preferences_dialog.c:1465 app/qmask.c:278
-#: app/resize.c:194 app/resize.c:1324 app/threshold.c:275
+#: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimphelp.c:196
+#: app/gimpprogress.c:112 app/global_edit.c:772 app/gradient.c:1768
+#: app/gradient.c:4840 app/gradient.c:5401 app/hue_saturation.c:374
+#: app/interface.c:1039 app/layers_dialog.c:3484 app/layers_dialog.c:3666
+#: app/layers_dialog.c:3761 app/layers_dialog.c:4021 app/levels.c:341
+#: app/palette.c:1818 app/posterize.c:202 app/preferences_dialog.c:1465
+#: app/qmask.c:278 app/resize.c:194 app/resize.c:1324 app/threshold.c:275
 #: app/user_install.c:548 app/user_install.c:1191 modules/cdisplay_gamma.c:332
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
@@ -327,7 +327,7 @@ msgstr "Редактор пензл╕в"
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2051
 #: app/palette.c:2067 app/palette.c:3098 app/palette_select.c:66
 #: app/pattern_select.c:172 app/preferences_dialog.c:367 app/tips_dialog.c:160
-#: app/tools.c:1544 app/undo_history.c:752
+#: app/tools.c:1544 app/undo_history.c:759
 msgid "Close"
 msgstr "Закрити"
 
@@ -1379,20 +1379,20 @@ msgstr ""
 "В╕дкривання не вдалось.\n"
 "%s"
 
-#: app/fileops.c:1800
+#: app/fileops.c:1802
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s ╕сну╓, переписати?"
 
-#: app/fileops.c:1802
+#: app/fileops.c:1804
 msgid "File Exists!"
 msgstr "Файл ╕сну╓!"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "Yes"
 msgstr "Так"
 
-#: app/fileops.c:1807
+#: app/fileops.c:1809
 msgid "No"
 msgstr "Н╕"
 
@@ -1606,49 +1606,49 @@ msgstr "неназвано"
 msgid "Layer type %d not supported."
 msgstr "Шари типу %d не п╕дтримуються."
 
-#: app/gimphelp.c:169
+#: app/gimphelp.c:190
+msgid "Could not find GIMP Help Browser"
+msgstr "Не вдалось знайти програму перегляду дов╕дки GIMP"
+
+#: app/gimphelp.c:192
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
 "you don't have GtkXmHTML installed."
 msgstr ""
-"Не вдалось знайти процедуру дов╕дково╖ системи GIMP.\n"
+"Не вдалось знайти процедуру перегляду дов╕дки GIMP.\n"
 "Можливо ╖╖ не було скомп╕льовано тому що у вас\n"
 "нема╓ GtkXmHTML."
 
-#: app/gimpimage.c:1183
-msgid "attach parasite to image"
-msgstr "причеплення паразита до зображення"
+#: app/gimphelp.c:195
+msgid "Use Netscape instead"
+msgstr "Використати Netscape"
 
-#: app/gimpimage.c:1208
-msgid "detach parasite from image"
-msgstr "в╕дчеплення паризита в╕д зображення"
-
-#: app/gimpimage.c:2312
+#: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
 msgstr "Шар неможливо п╕дняти вище"
 
-#: app/gimpimage.c:2340
+#: app/gimpimage.c:2350
 msgid "Layer cannot be lowered any further"
 msgstr "Шар неможливо опустити нижче"
 
-#: app/gimpimage.c:2366
+#: app/gimpimage.c:2376
 msgid "Layer is already on top"
 msgstr "Шар вже зверху"
 
-#: app/gimpimage.c:2372
+#: app/gimpimage.c:2382
 msgid "Can't raise Layer without alpha"
 msgstr "Неможливо п╕дняти шар, в якого нема╓ альфа-каналу"
 
-#: app/gimpimage.c:2400
+#: app/gimpimage.c:2410
 msgid "Layer is already on bottom"
 msgstr "Шар вже внизу"
 
-#: app/gimpimage.c:2455
+#: app/gimpimage.c:2465
 msgid "BG has no alpha, layer was placed above"
 msgstr "Тло не ма╓ альфа-каналу, шар буде розм╕щено вище"
 
-#: app/gimpimage.c:2526
+#: app/gimpimage.c:2536
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1656,11 +1656,11 @@ msgstr ""
 "Нема╓ видимих шар╕в для об'╓днання.\n"
 "╥х мусить бути хоча б два."
 
-#: app/gimpimage.c:2610
+#: app/gimpimage.c:2620
 msgid "There are not enough visible layers for a merge down."
 msgstr "Нема╓ видимих шар╕в для об'╓днання з попередн╕м."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3037
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1668,7 +1668,7 @@ msgstr ""
 "Не вдалось додати маску шару, так як\n"
 "шар вже ма╓ маску."
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3043
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1676,7 +1676,7 @@ msgstr ""
 "Не вдалось додати маску шару\n"
 "до шару в ╕ндексованому зображен╕."
 
-#: app/gimpimage.c:3039
+#: app/gimpimage.c:3049
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1684,20 +1684,20 @@ msgstr ""
 "Нможливо додати маску шару\n"
 "до шару, що нема╓ альфа-каналу."
 
-#: app/gimpimage.c:3048
+#: app/gimpimage.c:3058
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Неможливо додати маску шару, що в╕др╕зня╓ться розм╕рами в╕д вказаного шару."
 
-#: app/gimpimage.c:3155
+#: app/gimpimage.c:3165
 msgid "Channel cannot be raised any further"
 msgstr "Канал не можна п╕дняти ще вище"
 
-#: app/gimpimage.c:3206
+#: app/gimpimage.c:3216
 msgid "Channel cannot be lowered any further"
 msgstr "Канал не можна опустити ще нижче"
 
-#: app/gimpimage.c:3426 app/palette.c:352 app/palette.c:929 app/palette.c:1065
+#: app/gimpimage.c:3436 app/palette.c:352 app/palette.c:929 app/palette.c:1065
 #: app/palette.c:2007 app/palette.c:2729 app/palette.c:2861
 msgid "Untitled"
 msgstr "Неназвано"
@@ -2603,7 +2603,7 @@ msgstr "Текстов╕ процедури"
 msgid "Tool procedures"
 msgstr "Процедури ╕нструмент╕в"
 
-#: app/internal_procs.c:158 app/undo_history.c:836
+#: app/internal_procs.c:158 app/undo_history.c:847
 msgid "Undo"
 msgstr "В╕дм╕на"
 
@@ -2887,7 +2887,6 @@ msgstr ""
 "\n"
 "Використання: %s [параметр ...] [файл ...]\n"
 "\n"
-
 
 #: app/main.c:306
 msgid "Options:\n"
@@ -4501,7 +4500,7 @@ msgstr "Контексна допомога через \"F1\""
 
 #: app/preferences_dialog.c:1921
 msgid "Help Browser"
-msgstr "Переглядач дов╕дки"
+msgstr "Перегляд дов╕дки"
 
 #: app/preferences_dialog.c:1933
 msgid "Internal"
@@ -4513,7 +4512,7 @@ msgstr "Netscape"
 
 #: app/preferences_dialog.c:1938
 msgid "Help Browser to Use:"
-msgstr "Переглядач дов╕дки:"
+msgstr "Програма перегляду дов╕дки:"
 
 #: app/preferences_dialog.c:1943 app/preferences_dialog.c:1945
 msgid "Image Windows"
@@ -5789,7 +5788,7 @@ msgstr "зм╕на розм╕ру зображення"
 msgid "misc"
 msgstr "╕нше"
 
-#: app/undo_history.c:427 app/undo_history.c:744
+#: app/undo_history.c:427 app/undo_history.c:751
 #, c-format
 msgid "Undo History: %s"
 msgstr "╤стор╕я в╕дм╕н: %s"
@@ -5798,7 +5797,7 @@ msgstr "╤стор╕я в╕дм╕н: %s"
 msgid "[ base image ]"
 msgstr "[ основне зображення ]"
 
-#: app/undo_history.c:843
+#: app/undo_history.c:854
 msgid "Redo"
 msgstr "Повернути"
 
