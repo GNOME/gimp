@@ -45,11 +45,11 @@ static GimpAnchor * gimp_stroke_real_anchor_get_next (const GimpStroke *stroke,
 static void gimp_stroke_real_anchor_move_relative (GimpStroke       *stroke,
                                                    GimpAnchor       *anchor,
                                                    const GimpCoords *deltacoord,
-                                                   const gint        type);
+                                                   const GimpAnchorFeatureType feature);
 static void gimp_stroke_real_anchor_move_absolute (GimpStroke       *stroke,
                                                    GimpAnchor       *anchor,
                                                    const GimpCoords *deltacoord,
-                                                   const gint        type);
+                                                   const GimpAnchorFeatureType feature);
 
 
 /*  private variables  */
@@ -107,6 +107,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->anchor_get_next         = gimp_stroke_real_anchor_get_next;
   klass->anchor_move_relative    = gimp_stroke_real_anchor_move_relative;
   klass->anchor_move_absolute    = gimp_stroke_real_anchor_move_absolute;
+  klass->anchor_convert          = NULL;
   klass->anchor_delete           = NULL;
 
   klass->get_length              = NULL;
@@ -285,7 +286,7 @@ void
 gimp_stroke_anchor_move_relative (GimpStroke        *stroke,
                                   GimpAnchor        *anchor,
 				  const GimpCoords  *deltacoord,
-                                  const gint         type)
+                                  const GimpAnchorFeatureType feature)
 {
   GimpStrokeClass *stroke_class;
 
@@ -293,7 +294,7 @@ gimp_stroke_anchor_move_relative (GimpStroke        *stroke,
 
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
-  stroke_class->anchor_move_relative (stroke, anchor, deltacoord, type);
+  stroke_class->anchor_move_relative (stroke, anchor, deltacoord, feature);
 }
 
 
@@ -301,7 +302,7 @@ static void
 gimp_stroke_real_anchor_move_relative (GimpStroke        *stroke,
                                        GimpAnchor        *anchor,
                                        const GimpCoords  *deltacoord,
-                                       const gint         type)
+                                       const GimpAnchorFeatureType feature)
 {
   /*
    * There should be a test that ensures that the anchor is owned by
@@ -318,7 +319,7 @@ void
 gimp_stroke_anchor_move_absolute (GimpStroke       *stroke,
                                    GimpAnchor        *anchor,
 				   const GimpCoords  *coord,
-                                   const gint         type)
+                                   const GimpAnchorFeatureType feature)
 {
   GimpStrokeClass *stroke_class;
 
@@ -326,7 +327,7 @@ gimp_stroke_anchor_move_absolute (GimpStroke       *stroke,
 
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
-  stroke_class->anchor_move_absolute (stroke, anchor, coord, type);
+  stroke_class->anchor_move_absolute (stroke, anchor, coord, feature);
 }
 
 
@@ -334,7 +335,7 @@ static void
 gimp_stroke_real_anchor_move_absolute (GimpStroke        *stroke,
                                        GimpAnchor        *anchor,
                                        const GimpCoords  *coord,
-                                       const gint         type)
+                                       const GimpAnchorFeatureType feature)
 {
   /*
    * There should be a test that ensures that the anchor is owned by
@@ -344,6 +345,26 @@ gimp_stroke_real_anchor_move_absolute (GimpStroke        *stroke,
     anchor->position.x = coord->x;
     anchor->position.y = coord->y;
   }
+}
+
+
+void
+gimp_stroke_anchor_convert (GimpStroke            *stroke,
+                            GimpAnchor            *anchor,
+                            GimpAnchorFeatureType  feature)
+{
+  GimpStrokeClass *stroke_class;
+
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  stroke_class = GIMP_STROKE_GET_CLASS (stroke);
+
+  if (stroke_class->anchor_convert)
+    stroke_class->anchor_convert (stroke, anchor, feature);
+  else
+    g_printerr ("gimp_stroke_anchor_convert: default implementation\n");
+
+  return;
 }
 
 
@@ -517,7 +538,7 @@ gimp_stroke_get_draw_anchors (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_ANCHOR)
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_ANCHOR_ANCHOR)
             ret_list = g_list_append (ret_list, cur_ptr->data);
           cur_ptr = g_list_next (cur_ptr);
         }
@@ -547,14 +568,14 @@ gimp_stroke_get_draw_controls (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_CONTROL)
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_ANCHOR_CONTROL)
             {
               if (cur_ptr->next &&
-                  ((GimpAnchor *) cur_ptr->next->data)->type == GIMP_HANDLE_ANCHOR &&
+                  ((GimpAnchor *) cur_ptr->next->data)->type == GIMP_ANCHOR_ANCHOR &&
                   ((GimpAnchor *) cur_ptr->next->data)->selected)
                 ret_list = g_list_append (ret_list, cur_ptr->data);
               else if (cur_ptr->prev &&
-                  ((GimpAnchor *) cur_ptr->prev->data)->type == GIMP_HANDLE_ANCHOR &&
+                  ((GimpAnchor *) cur_ptr->prev->data)->type == GIMP_ANCHOR_ANCHOR &&
                   ((GimpAnchor *) cur_ptr->prev->data)->selected)
                 ret_list = g_list_append (ret_list, cur_ptr->data);
             }
@@ -587,7 +608,7 @@ gimp_stroke_get_draw_lines (const GimpStroke  *stroke)
 
       while (cur_ptr)
         {
-          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_HANDLE_ANCHOR &&
+          if (((GimpAnchor *) cur_ptr->data)->type == GIMP_ANCHOR_ANCHOR &&
               ((GimpAnchor *) cur_ptr->data)->selected)
             {
               if (cur_ptr->next)

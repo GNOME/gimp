@@ -1,3 +1,11 @@
+2003-03-29  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/vectors-types.h: More vector tool stuff. Control
+	handles start to behave...
+
 2003-03-28  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.[ch]

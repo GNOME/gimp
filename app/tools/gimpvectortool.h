@@ -50,9 +50,10 @@ struct _GimpVectorTool
 {
   GimpSelectionTool  parent_instance;
 
-  VectorFunction     function;       /*  function we're performing     */
-  gint               last_x;         /*  last x coordinate             */
-  gint               last_y;         /*  last y coordinate             */
+  VectorFunction        function;       /*  function we're performing     */
+  GimpAnchorFeatureType restriction;    /*  movement restriction          */
+  gint                  last_x;         /*  last x coordinate             */
+  gint                  last_y;         /*  last y coordinate             */
                                                                    
   GimpAnchor        *cur_anchor;     /*  The current Anchor            */
   GimpStroke        *cur_stroke;     /*  The current Stroke            */

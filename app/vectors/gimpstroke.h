@@ -69,12 +69,16 @@ struct _GimpStrokeClass
   void          (* anchor_move_relative) (GimpStroke        *stroke,
                                           GimpAnchor        *anchor,
                                           const GimpCoords  *deltacoord,
-                                          const gint         type);
+                                          const GimpAnchorFeatureType feature);
               
   void          (* anchor_move_absolute) (GimpStroke        *stroke,
                                           GimpAnchor        *anchor,
 					  const GimpCoords  *coord,
-                                          const gint         type);
+                                          const GimpAnchorFeatureType feature);
+              
+  void          (* anchor_convert)   (GimpStroke            *stroke,
+                                      GimpAnchor            *anchor,
+				      GimpAnchorFeatureType  feature);
               
   void          (* anchor_delete)        (GimpStroke        *stroke,
                                           GimpAnchor        *anchor);
@@ -134,15 +138,19 @@ void            gimp_stroke_anchor_select      (GimpStroke        *stroke,
 void            gimp_stroke_anchor_move_relative (GimpStroke        *stroke,
                                                   GimpAnchor        *anchor,
                                                   const GimpCoords  *deltacoord,
-                                                  const gint         type);
+                                                  const GimpAnchorFeatureType feature);
 
 void            gimp_stroke_anchor_move_absolute (GimpStroke        *stroke,
                                                   GimpAnchor        *anchor,
                                                   const GimpCoords  *coord,
-                                                  const gint         type);
+                                                  const GimpAnchorFeatureType feature);
 
-void            gimp_stroke_anchor_delete      (GimpStroke          *stroke,
-                                                GimpAnchor          *anchor);
+void            gimp_stroke_anchor_convert    (GimpStroke           *stroke,
+                                               GimpAnchor           *anchor,
+                                               GimpAnchorFeatureType feature);
+
+void            gimp_stroke_anchor_delete        (GimpStroke        *stroke,
+                                                  GimpAnchor        *anchor);
 
 
 /* accessing the shape of the curve */

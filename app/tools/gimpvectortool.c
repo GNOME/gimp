@@ -211,7 +211,7 @@ gimp_vector_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      gimp_tool_pop_status (tool);
+      /* gimp_tool_pop_status (tool); */
       gimp_tool_control_halt (tool->control);
       break;
 
@@ -241,7 +241,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
-      gimp_tool_pop_status (tool);
+      /* gimp_tool_pop_status (tool); */
     }
   
   if (vector_tool->vectors &&
@@ -269,10 +269,24 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                               FALSE))
         {
           gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
+          if (state & GDK_MOD1_MASK)
+            vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+          else
+            vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
 
-          if (anchor->type == GIMP_HANDLE_ANCHOR)
-            gimp_stroke_anchor_select (stroke, anchor, TRUE);
+          if (anchor->type == GIMP_ANCHOR_ANCHOR)
+            {
+              gimp_stroke_anchor_select (stroke, anchor, TRUE);
           
+              /* MOD1 pressed? Convert to Edge */
+              if (state & GDK_MOD1_MASK)
+                {
+                  gimp_stroke_anchor_convert (stroke, anchor,
+                                              GIMP_ANCHOR_FEATURE_EDGE);
+                  vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+                }
+            }
+
           /* doublecheck if there are control handles at this anchor */
           anchor = gimp_vectors_anchor_get (vector_tool->vectors,
                                             coords, &stroke);
@@ -325,8 +339,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       if (gimp_tool_control_is_active (tool->control))
 	{
-	  gimp_tool_pop_status (tool);
-	  gimp_tool_push_status (tool, "");
+	  /* gimp_tool_pop_status (tool); */
+	  /* gimp_tool_push_status (tool, ""); */
         }
 
       /*  start drawing the vector tool  */
@@ -350,8 +364,8 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
       if (gimp_tool_control_is_active (tool->control))
 	{
-	  gimp_tool_pop_status (tool);
-	  gimp_tool_push_status (tool, "");
+	  /* gimp_tool_pop_status (tool); */
+	  /* gimp_tool_push_status (tool, ""); */
         }
 
       /*  start drawing the vector tool  */
@@ -360,6 +374,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   gimp_tool_control_activate (tool->control);
 }
+
 
 static void
 gimp_vector_tool_button_release (GimpTool        *tool,
@@ -403,14 +418,12 @@ gimp_vector_tool_motion (GimpTool        *tool,
   switch (vector_tool->function)
     {
     case VECTORS_MOVING:
-      /* if we are moving the start point and only have two,
-       * make it the end point  */
       anchor = vector_tool->cur_anchor;
 
       if (anchor)
         gimp_stroke_anchor_move_absolute (vector_tool->cur_stroke,
                                           vector_tool->cur_anchor,
-                                          coords, 0);
+                                          coords, vector_tool->restriction);
 
     default:
       break;
@@ -491,7 +504,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
         {
           cur_anchor = (GimpAnchor *) ptr->data;
 
-          if (cur_anchor->type == GIMP_HANDLE_ANCHOR)
+          if (cur_anchor->type == GIMP_ANCHOR_ANCHOR)
             {
               gimp_draw_tool_draw_handle (draw_tool,
                                           cur_anchor->selected ?
