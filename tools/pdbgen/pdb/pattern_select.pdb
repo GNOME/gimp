@@ -41,16 +41,13 @@ sub patterns_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, pattern_callback)))
-    {
-      pattern_select_new (gimp, context, popup_title,
-                          initial_pattern, pattern_callback);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, pattern_callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, gimp->pattern_factory->container,
+                             popup_title, pattern_callback, initial_pattern,
+                             NULL))
     success = FALSE;
 }
 CODE
@@ -70,16 +67,12 @@ sub patterns_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PatternSelect *pattern_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, pattern_callback)) &&
-      (pattern_select = pattern_select_get_by_callback (pattern_callback)))
-    {
-      pattern_select_free (pattern_select);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, pattern_callback) ||
+      ! gimp_pdb_dialog_close (gimp, gimp->pattern_factory->container,
+                               pattern_callback))
     success = FALSE;
 }
 CODE
@@ -101,36 +94,20 @@ sub patterns_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PatternSelect *pattern_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, pattern_callback)) &&
-      (pattern_select = pattern_select_get_by_callback (pattern_callback)))
-    {
-      GimpPattern *active = (GimpPattern *)
-        gimp_container_get_child_by_name (gimp->pattern_factory->container,
-                                          pattern_name);
-
-      if (active)
-        {
-          gimp_context_set_pattern (pattern_select->context, active);
-
-          gtk_window_present (GTK_WINDOW (pattern_select->shell));
-        }
-      else
-        success = FALSE;
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, pattern_callback) ||
+      ! gimp_pdb_dialog_set (gimp, gimp->pattern_factory->container,
+                             pattern_callback, pattern_name,
+                             NULL))
     success = FALSE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
-              "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "gui/gui-types.h" "gui/pattern-select.h");
+@headers = qw("core/gimp.h" "core/gimpdatafactory.h");
 
 @procs = qw(patterns_popup patterns_close_popup patterns_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

@@ -1,3 +1,48 @@
+2004-07-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/Makefile.am
+	* app/gui/brush-select.[ch]
+	* app/gui/font-select.[ch]
+	* app/gui/gradient-select.[ch]
+	* app/gui/palette-select.[ch]
+	* app/gui/pattern-select.[ch]: removed...
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppdbdialog.[ch]
+	* app/widgets/gimpdataselect.[ch]
+	* app/widgets/gimpbrushselect.[ch]
+	* app/widgets/gimpgradientselect.[ch]
+	* app/widgets/gimppaletteselect.[ch]
+	* app/widgets/gimppatternselect.[ch]
+	* app/widgets/gimpfontselect.[ch]: ...and added here as a
+	hierarchy of widgets.
+
+	* app/widgets/gimpdatafactoryview.h: removed typdef
+	GimpDataEditFunc, it's in widgets-types.h now.
+
+	* app/gui/convert-dialog.c: changed accordingly.
+
+	* app/core/gimp.[ch]: added vtable entries for creating, closing
+	and setting PDB dialogs.
+
+	* app/gui/gui-vtable.c: implement the vtable entries using the new
+	widgets.
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb: use the new functions of
+	the Gimp object to create / manage the selection dialogs. The
+	generated files don't depend on GUI stuff any longer.
+	
+	* app/pdb/brush_select_cmds.c
+	* app/pdb/font_select_cmds.c
+	* app/pdb/gradient_select_cmds.c
+	* app/pdb/palette_select_cmds.c
+	* app/pdb/pattern_select_cmds.c: regenerated.
+
 2004-07-09  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/file-save-dialog.c (file_save_overwrite): improved text

@@ -55,12 +55,27 @@ typedef void           (* GimpProgressUpdateFunc)  (Gimp          *gimp,
                                                     gdouble        percentage);
 typedef void           (* GimpProgressEndFunc)     (Gimp          *gimp,
                                                     GimpProgress  *progress);
-typedef void           (* GimpPDBDialogsCheckFunc) (Gimp          *gimp);
 typedef const gchar  * (* GimpGetProgramClassFunc) (Gimp          *gimp);
 typedef gchar        * (* GimpGetDisplayNameFunc)  (Gimp          *gimp,
                                                     gint           gdisp_ID,
                                                     gint          *monitor_number);
-typedef const gchar  * (* GimpGetThemeDirFunc)     (Gimp          *);
+typedef const gchar  * (* GimpGetThemeDirFunc)     (Gimp          *gimp);
+typedef gboolean       (* GimpPDBDialogNewFunc)    (Gimp          *gimp,
+                                                    GimpContext   *context,
+                                                    GimpContainer *container,
+                                                    const gchar   *title,
+                                                    const gchar   *callback_name,
+                                                    const gchar   *object_name,
+                                                    va_list        args);
+typedef gboolean       (* GimpPDBDialogSetFunc)    (Gimp          *gimp,
+                                                    GimpContainer *container,
+                                                    const gchar   *callback_name,
+                                                    const gchar   *object_name,
+                                                    va_list        args);
+typedef gboolean       (* GimpPDBDialogCloseFunc)  (Gimp          *gimp,
+                                                    GimpContainer *container,
+                                                    const gchar   *callback_name);
+typedef void           (* GimpPDBDialogsCheckFunc) (Gimp          *gimp);
 
 
 #define GIMP_TYPE_GIMP            (gimp_get_type ())
@@ -105,10 +120,13 @@ struct _Gimp
   GimpProgressRestartFunc gui_progress_restart_func;
   GimpProgressUpdateFunc  gui_progress_update_func;
   GimpProgressEndFunc     gui_progress_end_func;
-  GimpPDBDialogsCheckFunc gui_pdb_dialogs_check_func;
   GimpGetProgramClassFunc gui_get_program_class_func;
   GimpGetDisplayNameFunc  gui_get_display_name_func;
   GimpGetThemeDirFunc     gui_get_theme_dir_func;
+  GimpPDBDialogNewFunc    gui_pdb_dialog_new_func;
+  GimpPDBDialogSetFunc    gui_pdb_dialog_set_func;
+  GimpPDBDialogCloseFunc  gui_pdb_dialog_close_func;
+  GimpPDBDialogsCheckFunc gui_pdb_dialogs_check_func;
 
   gint                    busy;
   guint                   busy_idle_id;
@@ -262,12 +280,27 @@ void          gimp_update_progress      (Gimp               *gimp,
                                          gdouble             percentage);
 void          gimp_end_progress         (Gimp               *gimp,
                                          GimpProgress       *progress);
-void          gimp_pdb_dialogs_check    (Gimp               *gimp);
 const gchar * gimp_get_program_class    (Gimp               *gimp);
 gchar       * gimp_get_display_name     (Gimp               *gimp,
                                          gint                gdisp_ID,
                                          gint               *monitor_number);
 const gchar * gimp_get_theme_dir        (Gimp               *gimp);
+gboolean      gimp_pdb_dialog_new       (Gimp               *gimp,
+                                         GimpContext        *context,
+                                         GimpContainer      *container,
+                                         const gchar        *title,
+                                         const gchar        *callback_name,
+                                         const gchar        *object_name,
+                                         ...);
+gboolean      gimp_pdb_dialog_set       (Gimp               *gimp,
+                                         GimpContainer      *container,
+                                         const gchar        *callback_name,
+                                         const gchar        *object_name,
+                                         ...);
+gboolean      gimp_pdb_dialog_close     (Gimp               *gimp,
+                                         GimpContainer      *container,
+                                         const gchar        *callback_name);
+void          gimp_pdb_dialogs_check    (Gimp               *gimp);
 
 GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                width,

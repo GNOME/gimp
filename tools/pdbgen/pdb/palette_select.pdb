@@ -42,16 +42,13 @@ sub palettes_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, palette_callback)))
-    {
-      palette_select_new (gimp, context, popup_title,
-                          initial_palette, palette_callback);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, gimp->palette_factory->container,
+                             popup_title, palette_callback, initial_palette,
+                             NULL))
     success = FALSE;
 }
 CODE
@@ -71,16 +68,12 @@ sub palettes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PaletteSelect *palette_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, palette_callback)) &&
-      (palette_select = palette_select_get_by_callback (palette_callback)))
-    {
-      palette_select_free (palette_select);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_dialog_close (gimp, gimp->palette_factory->container,
+                               palette_callback))
     success = FALSE;
 }
 CODE
@@ -102,36 +95,20 @@ sub palettes_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'PaletteSelect *palette_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, palette_callback)) &&
-      (palette_select = palette_select_get_by_callback (palette_callback)))
-    {
-      GimpPalette *active = (GimpPalette *)
-        gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                          palette_name);
-
-      if (active)
-        {
-          gimp_context_set_palette (palette_select->context, active);
-
-          gtk_window_present (GTK_WINDOW (palette_select->shell));
-        }
-      else
-        success = FALSE;
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, palette_callback) ||
+      ! gimp_pdb_dialog_set (gimp, gimp->palette_factory->container,
+                             palette_callback, palette_name,
+                             NULL))
     success = FALSE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
-              "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "gui/gui-types.h" "gui/palette-select.h");
+@headers = qw("core/gimp.h" "core/gimpdatafactory.h");
 
 @procs = qw(palettes_popup palettes_close_popup palettes_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

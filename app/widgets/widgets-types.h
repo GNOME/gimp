@@ -124,6 +124,14 @@ typedef struct _GimpTextEditor          GimpTextEditor;
 typedef struct _GimpViewableDialog      GimpToolDialog;
 typedef struct _GimpViewableDialog      GimpViewableDialog;
 
+typedef struct _GimpPdbDialog           GimpPdbDialog;
+typedef struct _GimpDataSelect          GimpDataSelect;
+typedef struct _GimpBrushSelect         GimpBrushSelect;
+typedef struct _GimpGradientSelect      GimpGradientSelect;
+typedef struct _GimpPaletteSelect       GimpPaletteSelect;
+typedef struct _GimpPatternSelect       GimpPatternSelect;
+typedef struct _GimpFontSelect          GimpFontSelect;
+
 typedef struct _GimpContainerPopup      GimpContainerPopup;
 typedef struct _GimpViewableButton      GimpViewableButton;
 
@@ -157,6 +165,9 @@ typedef struct _GimpSessionInfoAux      GimpSessionInfoAux;
 
 
 /*  function types  */
+
+typedef void (* GimpDataEditFunc)          (GimpData        *data,
+                                            GtkWidget       *parent);
 
 typedef void (* GimpActionGroupSetupFunc)  (GimpActionGroup *group);
 typedef void (* GimpActionGroupUpdateFunc) (GimpActionGroup *group,

@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gobject/gvaluecollector.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -29,15 +30,29 @@
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
+#include "core/gimpgradient.h"
 #include "core/gimpimage.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
+
+#include "text/gimpfont.h"
 
 #include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-proc.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpbrushselect.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
+#include "widgets/gimpfontselect.h"
+#include "widgets/gimpgradientselect.h"
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmenufactory.h"
+#include "widgets/gimppaletteselect.h"
+#include "widgets/gimppatternselect.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -51,12 +66,8 @@
 #include "menus/menus.h"
 #include "menus/plug-in-menus.h"
 
-#include "brush-select.h"
 #include "dialogs.h"
-#include "font-select.h"
-#include "gradient-select.h"
-#include "palette-select.h"
-#include "pattern-select.h"
+#include "dialogs-constructors.h"
 #include "themes.h"
 
 
@@ -94,12 +105,27 @@ static void           gui_update_progress      (Gimp          *gimp,
                                                 gdouble        percentage);
 static void           gui_end_progress         (Gimp          *gimp,
                                                 GimpProgress  *progress);
-static void           gui_pdb_dialogs_check    (Gimp          *gimp);
 static const gchar  * gui_get_program_class    (Gimp          *gimp);
 static gchar        * gui_get_display_name     (Gimp          *gimp,
                                                 gint           gdisp_ID,
                                                 gint          *monitor_number);
 static const gchar  * gui_get_theme_dir        (Gimp          *gimp);
+static gboolean       gui_pdb_dialog_new       (Gimp          *gimp,
+                                                GimpContext   *context,
+                                                GimpContainer *container,
+                                                const gchar   *title,
+                                                const gchar   *callback_name,
+                                                const gchar   *object_name,
+                                                va_list        args);
+static gboolean       gui_pdb_dialog_set       (Gimp          *gimp,
+                                                GimpContainer *container,
+                                                const gchar   *callback_name,
+                                                const gchar   *object_name,
+                                                va_list        args);
+static gboolean       gui_pdb_dialog_close     (Gimp          *gimp,
+                                                GimpContainer *container,
+                                                const gchar   *callback_name);
+static void           gui_pdb_dialogs_check    (Gimp          *gimp);
 
 
 /*  public functions  */
@@ -122,10 +148,13 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui_progress_restart_func  = gui_restart_progress;
   gimp->gui_progress_update_func   = gui_update_progress;
   gimp->gui_progress_end_func      = gui_end_progress;
-  gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
   gimp->gui_get_program_class_func = gui_get_program_class;
   gimp->gui_get_display_name_func  = gui_get_display_name;
   gimp->gui_get_theme_dir_func     = gui_get_theme_dir;
+  gimp->gui_pdb_dialog_new_func    = gui_pdb_dialog_new;
+  gimp->gui_pdb_dialog_set_func    = gui_pdb_dialog_set;
+  gimp->gui_pdb_dialog_close_func  = gui_pdb_dialog_close;
+  gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
 }
 
 
@@ -322,16 +351,6 @@ gui_end_progress (Gimp         *gimp,
   gimp_progress_end (progress);
 }
 
-static void
-gui_pdb_dialogs_check (Gimp *gimp)
-{
-  brush_select_dialogs_check ();
-  font_select_dialogs_check ();
-  gradient_select_dialogs_check ();
-  palette_select_dialogs_check ();
-  pattern_select_dialogs_check ();
-}
-
 static const gchar *
 gui_get_program_class (Gimp *gimp)
 {
@@ -377,4 +396,296 @@ static const gchar *
 gui_get_theme_dir (Gimp *gimp)
 {
   return themes_get_theme_dir (gimp, GIMP_GUI_CONFIG (gimp->config)->theme);
+}
+
+static gboolean
+gui_pdb_dialog_new (Gimp          *gimp,
+                    GimpContext   *context,
+                    GimpContainer *container,
+                    const gchar   *title,
+                    const gchar   *callback_name,
+                    const gchar   *object_name,
+                    va_list        args)
+{
+  GType             dialog_type = G_TYPE_NONE;
+  const gchar      *dialog_role = NULL;
+  const gchar      *help_id     = NULL;
+  GimpDataEditFunc  edit_func   = NULL;
+
+  if (container->children_type == GIMP_TYPE_BRUSH)
+    {
+      dialog_type = GIMP_TYPE_BRUSH_SELECT;
+      dialog_role = "gimp-brush-selection";
+      help_id     = GIMP_HELP_BRUSH_DIALOG;
+      edit_func   = dialogs_edit_brush_func;
+    }
+  else if (container->children_type == GIMP_TYPE_FONT)
+    {
+      dialog_type = GIMP_TYPE_FONT_SELECT;
+      dialog_role = "gimp-font-selection";
+      help_id     = GIMP_HELP_FONT_DIALOG;
+    }
+  else if (container->children_type == GIMP_TYPE_GRADIENT)
+    {
+      dialog_type = GIMP_TYPE_GRADIENT_SELECT;
+      dialog_role = "gimp-gradient-selection";
+      help_id     = GIMP_HELP_GRADIENT_DIALOG;
+      edit_func   = dialogs_edit_gradient_func;
+    }
+  else if (container->children_type == GIMP_TYPE_PALETTE)
+    {
+      dialog_type = GIMP_TYPE_PALETTE_SELECT;
+      dialog_role = "gimp-palette-selection";
+      help_id     = GIMP_HELP_PALETTE_DIALOG;
+      edit_func   = dialogs_edit_palette_func;
+    }
+  else if (container->children_type == GIMP_TYPE_PATTERN)
+    {
+      dialog_type = GIMP_TYPE_PATTERN_SELECT;
+      dialog_role = "gimp-pattern-selection";
+      help_id     = GIMP_HELP_PATTERN_DIALOG;
+    }
+
+  if (dialog_type != G_TYPE_NONE)
+    {
+      GimpObject *object = NULL;
+
+#ifdef __GNUC__
+#warning FIXME: re-enable gimp->no_data case
+#endif
+#if 0
+      if (gimp->no_data)
+        {
+          static gboolean first_call = TRUE;
+
+          if (first_call)
+            gimp_data_factory_data_init (gimp->pattern_factory, FALSE);
+
+          first_call = FALSE;
+        }
+#endif
+
+      if (object_name && strlen (object_name))
+        object = gimp_container_get_child_by_name (container, object_name);
+
+      if (! object)
+        object = gimp_context_get_by_type (context, container->children_type);
+
+      if (object)
+        {
+          GObjectClass *object_class;
+          GtkWidget    *dialog;
+          GParameter   *params;
+          gint          n_params;
+          gchar        *param_name;
+          gint          i;
+
+          if (edit_func)
+            n_params = 10;
+          else
+            n_params = 9;
+
+          params = g_new0 (GParameter, n_params);
+
+          params[0].name = "title";
+          g_value_init       (&params[0].value, G_TYPE_STRING);
+          g_value_set_string (&params[0].value, title);
+
+          params[1].name = "role";
+          g_value_init       (&params[1].value, G_TYPE_STRING);
+          g_value_set_string (&params[1].value, dialog_role);
+
+          params[2].name = "help-func";
+          g_value_init        (&params[2].value, G_TYPE_POINTER);
+          g_value_set_pointer (&params[2].value, gimp_standard_help_func);
+
+          params[3].name = "help-id";
+          g_value_init       (&params[3].value, G_TYPE_STRING);
+          g_value_set_string (&params[3].value, help_id);
+
+          params[4].name = "context";
+          g_value_init       (&params[4].value, GIMP_TYPE_CONTEXT);
+          g_value_set_object (&params[4].value, context);
+
+          params[5].name = "select-type";
+          g_value_init        (&params[5].value, G_TYPE_POINTER);
+          g_value_set_pointer (&params[5].value, (gpointer) container->children_type);
+
+          params[6].name = "initial-object";
+          g_value_init       (&params[6].value, GIMP_TYPE_OBJECT);
+          g_value_set_object (&params[6].value, object);
+
+          params[7].name = "callback-name";
+          g_value_init       (&params[7].value, G_TYPE_STRING);
+          g_value_set_string (&params[7].value, callback_name);
+
+          params[8].name = "menu-factory";
+          g_value_init       (&params[8].value, GIMP_TYPE_MENU_FACTORY);
+          g_value_set_object (&params[8].value, global_menu_factory);
+
+          if (edit_func)
+            {
+              params[9].name = "edit-func";
+              g_value_init        (&params[9].value, G_TYPE_POINTER);
+              g_value_set_pointer (&params[9].value, edit_func);
+            }
+
+          object_class = g_type_class_ref (dialog_type);
+
+          param_name = va_arg (args, gchar *);
+          while (param_name)
+            {
+              gchar      *error = NULL;
+              GParamSpec *pspec = g_object_class_find_property (object_class,
+                                                                param_name);
+
+              if (! pspec)
+                {
+                  g_warning ("%s: object class `%s' has no property named `%s'",
+                             G_STRFUNC, g_type_name (dialog_type), param_name);
+                  break;
+                }
+
+              params = g_renew (GParameter, params, n_params + 1);
+              params[n_params].name         = param_name;
+              params[n_params].value.g_type = 0;
+              g_value_init (&params[n_params].value,
+                            G_PARAM_SPEC_VALUE_TYPE (pspec));
+              G_VALUE_COLLECT (&params[n_params].value, args, 0, &error);
+              if (error)
+                {
+                  g_warning ("%s: %s", G_STRFUNC, error);
+                  g_free (error);
+                  g_value_unset (&params[n_params].value);
+                  break;
+                }
+              n_params++;
+
+              param_name = va_arg (args, gchar *);
+            }
+
+          g_type_class_unref (object_class);
+
+          dialog = g_object_newv (dialog_type, n_params, params);
+
+          for (i = 0; i < n_params; i++)
+            g_value_unset (&params[i].value);
+
+          g_free (params);
+
+          gtk_widget_show (dialog);
+
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gui_pdb_dialog_set (Gimp          *gimp,
+                    GimpContainer *container,
+                    const gchar   *callback_name,
+                    const gchar   *object_name,
+                    va_list        args)
+{
+  GimpPdbDialogClass *klass = NULL;
+
+  if (container->children_type == GIMP_TYPE_BRUSH)
+    klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
+  else if (container->children_type == GIMP_TYPE_FONT)
+    klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
+  else if (container->children_type == GIMP_TYPE_GRADIENT)
+    klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
+  else if (container->children_type == GIMP_TYPE_PALETTE)
+    klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
+  else if (container->children_type == GIMP_TYPE_PATTERN)
+    klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+
+  if (klass)
+    {
+      GimpPdbDialog *dialog;
+
+      dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+
+      if (dialog && dialog->select_type == container->children_type)
+        {
+          GimpObject *object;
+
+          object = gimp_container_get_child_by_name (container, object_name);
+
+          if (object)
+            {
+              const gchar *prop_name;
+
+              gimp_context_set_by_type (dialog->context, dialog->select_type,
+                                        object);
+
+              prop_name = va_arg (args, const gchar *);
+
+              if (prop_name)
+                g_object_set_valist (G_OBJECT (dialog), prop_name, args);
+
+              gtk_window_present (GTK_WINDOW (dialog));
+              return TRUE;
+            }
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
+gui_pdb_dialog_close (Gimp          *gimp,
+                      GimpContainer *container,
+                      const gchar   *callback_name)
+{
+  GimpPdbDialogClass *klass = NULL;
+
+  if (container->children_type == GIMP_TYPE_BRUSH)
+    klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT);
+  else if (container->children_type == GIMP_TYPE_FONT)
+    klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT);
+  else if (container->children_type == GIMP_TYPE_GRADIENT)
+    klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT);
+  else if (container->children_type == GIMP_TYPE_PALETTE)
+    klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT);
+  else if (container->children_type == GIMP_TYPE_PATTERN)
+    klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT);
+
+  if (klass)
+    {
+      GimpPdbDialog *dialog;
+
+      dialog = gimp_pdb_dialog_get_by_callback (klass, callback_name);
+
+      if (dialog && dialog->select_type == container->children_type)
+        {
+          gtk_widget_destroy (GTK_WIDGET (dialog));
+          return TRUE;
+        }
+    }
+
+  return FALSE;
+}
+
+static void
+gui_pdb_dialogs_check (Gimp *gimp)
+{
+  GimpPdbDialogClass *klass;
+
+  if ((klass = g_type_class_peek (GIMP_TYPE_BRUSH_SELECT)))
+    gimp_pdb_dialogs_check_callback (klass);
+
+  if ((klass = g_type_class_peek (GIMP_TYPE_FONT_SELECT)))
+    gimp_pdb_dialogs_check_callback (klass);
+
+  if ((klass = g_type_class_peek (GIMP_TYPE_GRADIENT_SELECT)))
+    gimp_pdb_dialogs_check_callback (klass);
+
+  if ((klass = g_type_class_peek (GIMP_TYPE_PALETTE_SELECT)))
+    gimp_pdb_dialogs_check_callback (klass);
+
+  if ((klass = g_type_class_peek (GIMP_TYPE_PATTERN_SELECT)))
+    gimp_pdb_dialogs_check_callback (klass);
 }

@@ -5,8 +5,6 @@ noinst_LIBRARIES = libappgui.a
 dialogs_sources = \
 	about-dialog.c			\
 	about-dialog.h			\
-	brush-select.c			\
-	brush-select.h			\
 	color-notebook.c		\
 	color-notebook.h		\
 	convert-dialog.c		\
@@ -25,10 +23,6 @@ dialogs_sources = \
 	file-open-location-dialog.h	\
 	file-save-dialog.c		\
 	file-save-dialog.h		\
-	font-select.c			\
-	font-select.h			\
-	gradient-select.c		\
-	gradient-select.h		\
 	grid-dialog.h                   \
 	grid-dialog.c                   \
 	info-dialog.c			\
@@ -41,10 +35,6 @@ dialogs_sources = \
 	offset-dialog.h			\
 	palette-import-dialog.c		\
 	palette-import-dialog.h		\
-	palette-select.c		\
-	palette-select.h		\
-	pattern-select.c		\
-	pattern-select.h		\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
 	resize-dialog.c			\

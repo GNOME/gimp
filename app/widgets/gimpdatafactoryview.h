@@ -26,10 +26,6 @@
 #include "gimpcontainereditor.h"
 
 
-typedef void (* GimpDataEditFunc) (GimpData  *data,
-                                   GtkWidget *parent);
-
-
 #define GIMP_TYPE_DATA_FACTORY_VIEW            (gimp_data_factory_view_get_type ())
 #define GIMP_DATA_FACTORY_VIEW(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryView))
 #define GIMP_DATA_FACTORY_VIEW_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DATA_FACTORY_VIEW, GimpDataFactoryViewClass))

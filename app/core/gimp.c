@@ -223,6 +223,11 @@ gimp_init (Gimp *gimp)
   gimp->gui_progress_restart_func  = NULL;
   gimp->gui_progress_update_func   = NULL;
   gimp->gui_progress_end_func      = NULL;
+  gimp->gui_get_program_class_func = NULL;
+  gimp->gui_get_display_name_func  = NULL;
+  gimp->gui_get_theme_dir_func     = NULL;
+  gimp->gui_pdb_dialog_set_func    = NULL;
+  gimp->gui_pdb_dialog_close_func  = NULL;
   gimp->gui_pdb_dialogs_check_func = NULL;
 
   gimp->busy                = 0;
@@ -1128,15 +1133,6 @@ gimp_end_progress (Gimp         *gimp,
     gimp->gui_progress_end_func (gimp, progress);
 }
 
-void
-gimp_pdb_dialogs_check (Gimp *gimp)
-{
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->gui_pdb_dialogs_check_func)
-    gimp->gui_pdb_dialogs_check_func (gimp);
-}
-
 const gchar *
 gimp_get_program_class (Gimp *gimp)
 {
@@ -1173,6 +1169,92 @@ gimp_get_theme_dir (Gimp *gimp)
     return gimp->gui_get_theme_dir_func (gimp);
 
   return NULL;
+}
+
+gboolean
+gimp_pdb_dialog_new (Gimp          *gimp,
+                     GimpContext   *context,
+                     GimpContainer *container,
+                     const gchar   *title,
+                     const gchar   *callback_name,
+                     const gchar   *object_name,
+                     ...)
+{
+  gboolean retval = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (title != NULL, FALSE);
+  g_return_val_if_fail (callback_name != NULL, FALSE);
+
+  if (gimp->gui_pdb_dialog_new_func)
+    {
+      va_list  args;
+
+      va_start (args, object_name);
+
+      retval = gimp->gui_pdb_dialog_new_func (gimp, context, container, title,
+                                              callback_name, object_name,
+                                              args);
+
+      va_end (args);
+    }
+
+  return retval;
+}
+
+gboolean
+gimp_pdb_dialog_set (Gimp          *gimp,
+                     GimpContainer *container,
+                     const gchar   *callback_name,
+                     const gchar   *object_name,
+                     ...)
+{
+  gboolean retval = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (callback_name != NULL, FALSE);
+  g_return_val_if_fail (object_name != NULL, FALSE);
+
+  if (gimp->gui_pdb_dialog_set_func)
+    {
+      va_list  args;
+
+      va_start (args, object_name);
+
+      retval = gimp->gui_pdb_dialog_set_func (gimp, container, callback_name,
+                                              object_name, args);
+
+      va_end (args);
+    }
+
+  return retval;
+}
+
+gboolean
+gimp_pdb_dialog_close (Gimp          *gimp,
+                       GimpContainer *container,
+                       const gchar   *callback_name)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), FALSE);
+  g_return_val_if_fail (callback_name != NULL, FALSE);
+
+  if (gimp->gui_pdb_dialog_close_func)
+    return gimp->gui_pdb_dialog_close_func (gimp, container, callback_name);
+
+  return FALSE;
+}
+
+void
+gimp_pdb_dialogs_check (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_pdb_dialogs_check_func)
+    gimp->gui_pdb_dialogs_check_func (gimp);
 }
 
 GimpImage *

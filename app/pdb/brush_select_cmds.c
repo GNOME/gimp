@@ -21,20 +21,15 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "gui/gui-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "gui/brush-select.h"
-#include "widgets/gimpbrushfactoryview.h"
 
 static ProcRecord brushes_popup_proc;
 static ProcRecord brushes_close_popup_proc;
@@ -60,7 +55,6 @@ brushes_popup_invoker (Gimp        *gimp,
   gdouble opacity;
   gint32 spacing;
   gint32 paint_mode;
-  ProcRecord *proc;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
@@ -88,16 +82,14 @@ brushes_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, brush_callback)))
-        {
-          brush_select_new (gimp, context, popup_title,
-                            initial_brush, brush_callback,
-                            opacity / 100.0,
-                            paint_mode,
-                            spacing);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, gimp->brush_factory->container,
+                                 popup_title, brush_callback, initial_brush,
+                                 "opacity",    opacity / 100.0,
+                                 "paint-mode", paint_mode,
+                                 "spacing",    spacing,
+                                 NULL))
         success = FALSE;
     }
 
@@ -161,8 +153,6 @@ brushes_close_popup_invoker (Gimp        *gimp,
 {
   gboolean success = TRUE;
   gchar *brush_callback;
-  ProcRecord *proc;
-  BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
@@ -170,13 +160,10 @@ brushes_close_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, brush_callback)) &&
-          (brush_select = brush_select_get_by_callback (brush_callback)))
-        {
-          brush_select_free (brush_select);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_dialog_close (gimp, gimp->brush_factory->container,
+                                   brush_callback))
         success = FALSE;
     }
 
@@ -219,8 +206,6 @@ brushes_set_popup_invoker (Gimp        *gimp,
   gdouble opacity;
   gint32 spacing;
   gint32 paint_mode;
-  ProcRecord *proc;
-  BrushSelect *brush_select;
 
   brush_callback = (gchar *) args[0].value.pdb_pointer;
   if (brush_callback == NULL || !g_utf8_validate (brush_callback, -1, NULL))
@@ -244,33 +229,14 @@ brushes_set_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, brush_callback)) &&
-          (brush_select = brush_select_get_by_callback (brush_callback)))
-        {
-          GimpBrush *active = (GimpBrush *)
-            gimp_container_get_child_by_name (gimp->brush_factory->container,
-                                              brush_name);
-
-          if (active)
-            {
-              GtkAdjustment *spacing_adj;
-
-              spacing_adj = GIMP_BRUSH_FACTORY_VIEW (brush_select->view)->spacing_adjustment;
-
-              gimp_context_set_brush (brush_select->context, active);
-              gimp_context_set_opacity (brush_select->context, opacity / 100.0);
-              gimp_context_set_paint_mode (brush_select->context, paint_mode);
-
-              if (spacing >= 0)
-                gtk_adjustment_set_value (spacing_adj, spacing);
-
-              gtk_window_present (GTK_WINDOW (brush_select->shell));
-            }
-          else
-            success = FALSE;
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, brush_callback) ||
+          ! gimp_pdb_dialog_set (gimp, gimp->brush_factory->container,
+                                 brush_callback, brush_name,
+                                 "opacity",    opacity / 100.0,
+                                 "paint-mode", paint_mode,
+                                 "spacing",    spacing,
+                                 NULL))
         success = FALSE;
     }
 

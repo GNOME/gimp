@@ -33,9 +33,10 @@
 
 #include "widgets/gimpenumwidgets.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimppaletteselect.h"
 #include "widgets/gimpviewabledialog.h"
 
-#include "palette-select.h"
+#include "menus/menus.h"
 
 #include "gimp-intl.h"
 
@@ -45,7 +46,7 @@ typedef struct
   GtkWidget              *shell;
   GtkWidget              *custom_palette_button;
   GimpImage              *gimage;
-  PaletteSelect          *palette_select;
+  GimpPdbDialog          *palette_select;
   GimpConvertDitherType   dither_type;
   gboolean                alpha_dither;
   gboolean                remove_dups;
@@ -55,18 +56,21 @@ typedef struct
 } IndexedDialog;
 
 
-static void indexed_response                        (GtkWidget     *widget,
-                                                     gint           response_id,
-						     IndexedDialog *dialog);
-static void indexed_destroy_callback                (GtkWidget     *widget,
-						     IndexedDialog *dialog);
+static void indexed_response                       (GtkWidget     *widget,
+                                                    gint           response_id,
+                                                    IndexedDialog *dialog);
+static void indexed_destroy                        (GtkWidget     *widget,
+                                                    IndexedDialog *dialog);
 
-static void indexed_custom_palette_button_callback  (GtkWidget     *widget,
-						     IndexedDialog *dialog);
-static void indexed_palette_select_destroy_callback (GtkWidget     *widget,
-						     IndexedDialog *dialog);
+static void indexed_custom_palette_button_callback (GtkWidget     *widget,
+                                                    IndexedDialog *dialog);
+static void indexed_palette_select_destroy         (GtkWidget     *widget,
+                                                    IndexedDialog *dialog);
+static void indexed_palette_select_changed         (GimpContext   *context,
+                                                    GimpPalette   *palette,
+                                                    IndexedDialog *dialog);
 
-static GtkWidget * build_palette_button             (Gimp      *gimp);
+static GtkWidget * build_palette_button            (Gimp          *gimp);
 
 
 static gboolean     UserHasWebPal    = FALSE;
@@ -129,7 +133,7 @@ convert_dialog_new (GimpImage *gimage,
                     dialog);
 
   g_signal_connect (dialog->shell, "destroy",
-                    G_CALLBACK (indexed_destroy_callback),
+                    G_CALLBACK (indexed_destroy),
                     dialog);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
@@ -433,24 +437,53 @@ indexed_response (GtkWidget     *widget,
 }
 
 static void
-indexed_destroy_callback (GtkWidget     *widget,
-                          IndexedDialog *dialog)
+indexed_destroy (GtkWidget     *widget,
+                 IndexedDialog *dialog)
 {
   if (dialog->palette_select)
-    gtk_widget_destroy (dialog->palette_select->shell);
+    gtk_widget_destroy (GTK_WIDGET (dialog->palette_select));
 
   g_free (dialog);
 }
 
 static void
-indexed_palette_select_destroy_callback (GtkWidget     *widget,
-                                         IndexedDialog *dialog)
+indexed_custom_palette_button_callback (GtkWidget     *widget,
+                                        IndexedDialog *dialog)
+{
+  if (! dialog->palette_select)
+    {
+      dialog->palette_select =
+        g_object_new (GIMP_TYPE_PALETTE_SELECT,
+                      "title",          _("Select Custom Palette"),
+                      "role",           "gimp-pelette-selection",
+                      "help-func",      gimp_standard_help_func,
+                      "help_id",        GIMP_HELP_PALETTE_DIALOG,
+                      "context",        gimp_get_user_context (dialog->gimage->gimp),
+                      "select-type",    GIMP_TYPE_PALETTE,
+                      "initial-object", theCustomPalette,
+                      "menu-factory",   global_menu_factory,
+                      NULL);
+
+      g_signal_connect (dialog->palette_select, "destroy",
+			G_CALLBACK (indexed_palette_select_destroy),
+			dialog);
+      g_signal_connect (dialog->palette_select->context, "palette_changed",
+			G_CALLBACK (indexed_palette_select_changed),
+			dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog->palette_select));
+}
+
+static void
+indexed_palette_select_destroy (GtkWidget     *widget,
+                                IndexedDialog *dialog)
 {
   dialog->palette_select = NULL;
 }
 
 static void
-indexed_palette_select_palette (GimpContext   *context,
+indexed_palette_select_changed (GimpContext   *context,
 				GimpPalette   *palette,
                                 IndexedDialog *dialog)
 {
@@ -467,32 +500,5 @@ indexed_palette_select_palette (GimpContext   *context,
 
       gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
                           gimp_object_get_name (GIMP_OBJECT (palette)));
-    }
-}
-
-static void
-indexed_custom_palette_button_callback (GtkWidget     *widget,
-                                        IndexedDialog *dialog)
-{
-  if (dialog->palette_select == NULL)
-    {
-      dialog->palette_select =
-	palette_select_new (dialog->gimage->gimp,
-                            gimp_get_user_context (dialog->gimage->gimp),
-                            _("Select Custom Palette"),
-			    GIMP_OBJECT (theCustomPalette)->name,
-                            NULL);
-
-      g_signal_connect (dialog->palette_select->shell, "destroy",
-			G_CALLBACK (indexed_palette_select_destroy_callback),
-			dialog);
-      g_signal_connect (dialog->palette_select->context,
-			"palette_changed",
-			G_CALLBACK (indexed_palette_select_palette),
-			dialog);
-    }
-  else
-    {
-      gtk_window_present (GTK_WINDOW (dialog->palette_select->shell));
     }
 }

@@ -42,16 +42,13 @@ sub fonts_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, font_callback)))
-    {
-      font_select_new (gimp, context, popup_title,
-                       initial_font, font_callback);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, font_callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
+                             popup_title, font_callback, initial_font,
+                             NULL))
     success = FALSE;
 }
 CODE
@@ -71,16 +68,11 @@ sub fonts_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'FontSelect *font_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, font_callback)) &&
-      (font_select = font_select_get_by_callback (font_callback)))
-    {
-      font_select_free (font_select);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, font_callback) ||
+      ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
     success = FALSE;
 }
 CODE
@@ -102,35 +94,19 @@ sub fonts_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'FontSelect *font_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, font_callback)) &&
-      (font_select = font_select_get_by_callback (font_callback)))
-    {
-      GimpFont *active = (GimpFont *)
-        gimp_container_get_child_by_name (gimp->fonts, font_name);
-
-      if (active)
-	{
-          gimp_context_set_font (font_select->context, active);
-
-          gtk_window_present (GTK_WINDOW (font_select->shell));
-	}
-      else
-        success = FALSE;
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, font_callback) ||
+      ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
+                             NULL))
     success = FALSE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
-	      "core/gimpcontainer.h"
-              "gui/gui-types.h" "gui/font-select.h");
+@headers = qw("core/gimp.h");
 
 @procs = qw(fonts_popup fonts_close_popup fonts_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

@@ -21,19 +21,15 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "gui/gui-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
-#include "gui/palette-select.h"
 
 static ProcRecord palettes_popup_proc;
 static ProcRecord palettes_close_popup_proc;
@@ -56,7 +52,6 @@ palettes_popup_invoker (Gimp        *gimp,
   gchar *palette_callback;
   gchar *popup_title;
   gchar *initial_palette;
-  ProcRecord *proc;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
@@ -72,13 +67,11 @@ palettes_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, palette_callback)))
-        {
-          palette_select_new (gimp, context, popup_title,
-                              initial_palette, palette_callback);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, gimp->palette_factory->container,
+                                 popup_title, palette_callback, initial_palette,
+                                 NULL))
         success = FALSE;
     }
 
@@ -127,8 +120,6 @@ palettes_close_popup_invoker (Gimp        *gimp,
 {
   gboolean success = TRUE;
   gchar *palette_callback;
-  ProcRecord *proc;
-  PaletteSelect *palette_select;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
@@ -136,13 +127,10 @@ palettes_close_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, palette_callback)) &&
-          (palette_select = palette_select_get_by_callback (palette_callback)))
-        {
-          palette_select_free (palette_select);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_dialog_close (gimp, gimp->palette_factory->container,
+                                   palette_callback))
         success = FALSE;
     }
 
@@ -182,8 +170,6 @@ palettes_set_popup_invoker (Gimp        *gimp,
   gboolean success = TRUE;
   gchar *palette_callback;
   gchar *palette_name;
-  ProcRecord *proc;
-  PaletteSelect *palette_select;
 
   palette_callback = (gchar *) args[0].value.pdb_pointer;
   if (palette_callback == NULL || !g_utf8_validate (palette_callback, -1, NULL))
@@ -195,24 +181,11 @@ palettes_set_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, palette_callback)) &&
-          (palette_select = palette_select_get_by_callback (palette_callback)))
-        {
-          GimpPalette *active = (GimpPalette *)
-            gimp_container_get_child_by_name (gimp->palette_factory->container,
-                                              palette_name);
-
-          if (active)
-            {
-              gimp_context_set_palette (palette_select->context, active);
-
-              gtk_window_present (GTK_WINDOW (palette_select->shell));
-            }
-          else
-            success = FALSE;
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, palette_callback) ||
+          ! gimp_pdb_dialog_set (gimp, gimp->palette_factory->container,
+                                 palette_callback, palette_name,
+                                 NULL))
         success = FALSE;
     }
 

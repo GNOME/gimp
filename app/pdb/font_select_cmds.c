@@ -21,18 +21,14 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "gui/gui-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
-#include "gui/font-select.h"
 
 static ProcRecord fonts_popup_proc;
 static ProcRecord fonts_close_popup_proc;
@@ -55,7 +51,6 @@ fonts_popup_invoker (Gimp        *gimp,
   gchar *font_callback;
   gchar *popup_title;
   gchar *initial_font;
-  ProcRecord *proc;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
   if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
@@ -71,13 +66,11 @@ fonts_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, font_callback)))
-        {
-          font_select_new (gimp, context, popup_title,
-                           initial_font, font_callback);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, gimp->fonts,
+                                 popup_title, font_callback, initial_font,
+                                 NULL))
         success = FALSE;
     }
 
@@ -126,8 +119,6 @@ fonts_close_popup_invoker (Gimp        *gimp,
 {
   gboolean success = TRUE;
   gchar *font_callback;
-  ProcRecord *proc;
-  FontSelect *font_select;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
   if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
@@ -135,13 +126,9 @@ fonts_close_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, font_callback)) &&
-          (font_select = font_select_get_by_callback (font_callback)))
-        {
-          font_select_free (font_select);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_dialog_close (gimp, gimp->fonts, font_callback))
         success = FALSE;
     }
 
@@ -181,8 +168,6 @@ fonts_set_popup_invoker (Gimp        *gimp,
   gboolean success = TRUE;
   gchar *font_callback;
   gchar *font_name;
-  ProcRecord *proc;
-  FontSelect *font_select;
 
   font_callback = (gchar *) args[0].value.pdb_pointer;
   if (font_callback == NULL || !g_utf8_validate (font_callback, -1, NULL))
@@ -194,23 +179,10 @@ fonts_set_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, font_callback)) &&
-          (font_select = font_select_get_by_callback (font_callback)))
-        {
-          GimpFont *active = (GimpFont *)
-            gimp_container_get_child_by_name (gimp->fonts, font_name);
-
-          if (active)
-            {
-              gimp_context_set_font (font_select->context, active);
-
-              gtk_window_present (GTK_WINDOW (font_select->shell));
-            }
-          else
-            success = FALSE;
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, font_callback) ||
+          ! gimp_pdb_dialog_set (gimp, gimp->fonts, font_callback, font_name,
+                                 NULL))
         success = FALSE;
     }
 

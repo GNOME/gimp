@@ -29,6 +29,8 @@ libappwidgets_a_sources = \
 	gimpbrusheditor.h		\
 	gimpbrushfactoryview.c		\
 	gimpbrushfactoryview.h		\
+	gimpbrushselect.c		\
+	gimpbrushselect.h		\
 	gimpbufferview.c		\
 	gimpbufferview.h		\
 	gimpcellrenderertoggle.c	\
@@ -89,6 +91,8 @@ libappwidgets_a_sources = \
 	gimpdataeditor.h		\
 	gimpdatafactoryview.c		\
 	gimpdatafactoryview.h		\
+	gimpdataselect.c		\
+	gimpdataselect.h		\
 	gimpdeviceinfo.c		\
 	gimpdeviceinfo.h		\
 	gimpdevices.c			\
@@ -127,10 +131,14 @@ libappwidgets_a_sources = \
 	gimpfgbgeditor.h		\
 	gimpfiledialog.c		\
 	gimpfiledialog.h		\
+	gimpfontselect.c		\
+	gimpfontselect.h		\
 	gimpfontview.c			\
 	gimpfontview.h			\
 	gimpgradienteditor.c		\
 	gimpgradienteditor.h		\
+	gimpgradientselect.c		\
+	gimpgradientselect.h		\
 	gimpgrideditor.c		\
 	gimpgrideditor.h		\
 	gimphelp.c			\
@@ -160,8 +168,14 @@ libappwidgets_a_sources = \
 	gimpnavigationpreview.h		\
 	gimppaletteeditor.c		\
 	gimppaletteeditor.h		\
+	gimppaletteselect.c		\
+	gimppaletteselect.h		\
 	gimppatternfactoryview.c	\
 	gimppatternfactoryview.h	\
+	gimppatternselect.c		\
+	gimppatternselect.h		\
+	gimppdbdialog.c			\
+	gimppdbdialog.h			\
 	gimppluginaction.c		\
 	gimppluginaction.h		\
 	gimppreview.c			\

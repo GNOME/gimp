@@ -54,19 +54,16 @@ sub brushes_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, brush_callback)))
-    {
-      brush_select_new (gimp, context, popup_title,
-                        initial_brush, brush_callback,
-                        opacity / 100.0,
-                        paint_mode,
-                        spacing);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, brush_callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, gimp->brush_factory->container,
+                             popup_title, brush_callback, initial_brush,
+                             "opacity",    opacity / 100.0,
+                             "paint-mode", paint_mode,
+                             "spacing",    spacing,
+                             NULL))
     success = FALSE;
 }
 CODE
@@ -86,16 +83,12 @@ sub brushes_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc', 'BrushSelect *brush_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, brush_callback)) &&
-      (brush_select = brush_select_get_by_callback (brush_callback)))
-    {
-      brush_select_free (brush_select);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, brush_callback) ||
+      ! gimp_pdb_dialog_close (gimp, gimp->brush_factory->container,
+                               brush_callback))
     success = FALSE;
 }
 CODE
@@ -118,46 +111,23 @@ sub brushes_set_popup {
     );
 
     %invoke = (
-	headers => [ qw("widgets/gimpbrushfactoryview.h") ],
-	vars => [ 'ProcRecord *proc', 'BrushSelect *brush_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, brush_callback)) &&
-      (brush_select = brush_select_get_by_callback (brush_callback)))
-    {
-      GimpBrush *active = (GimpBrush *)
-        gimp_container_get_child_by_name (gimp->brush_factory->container,
-					  brush_name);
-
-      if (active)
-	{
-	  GtkAdjustment *spacing_adj;
-
-          spacing_adj = GIMP_BRUSH_FACTORY_VIEW (brush_select->view)->spacing_adjustment;
-
-	  gimp_context_set_brush (brush_select->context, active);
-	  gimp_context_set_opacity (brush_select->context, opacity / 100.0);
-	  gimp_context_set_paint_mode (brush_select->context, paint_mode);
-
-          if (spacing >= 0)
-	    gtk_adjustment_set_value (spacing_adj, spacing);
-
-          gtk_window_present (GTK_WINDOW (brush_select->shell));
-	}
-      else
-        success = FALSE;
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, brush_callback) ||
+      ! gimp_pdb_dialog_set (gimp, gimp->brush_factory->container,
+                             brush_callback, brush_name,
+                             "opacity",    opacity / 100.0,
+                             "paint-mode", paint_mode,
+                             "spacing",    spacing,
+                             NULL))
     success = FALSE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
-	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "gui/gui-types.h" "gui/brush-select.h");
+@headers = qw("core/gimp.h" "core/gimpdatafactory.h");
 
 @procs = qw(brushes_popup brushes_close_popup brushes_set_popup);
 %exports = (app => [@procs], lib => [@procs]);

@@ -21,20 +21,16 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "gui/gui-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
-#include "gui/gradient-select.h"
 
 static ProcRecord gradients_popup_proc;
 static ProcRecord gradients_close_popup_proc;
@@ -58,7 +54,6 @@ gradients_popup_invoker (Gimp        *gimp,
   gchar *popup_title;
   gchar *initial_gradient;
   gint32 sample_size;
-  ProcRecord *proc;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
@@ -78,14 +73,12 @@ gradients_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (proc = procedural_db_lookup (gimp, gradient_callback)))
-        {
-          gradient_select_new (gimp, context, popup_title,
-                               initial_gradient, gradient_callback,
-                               sample_size);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_dialog_new (gimp, context, gimp->gradient_factory->container,
+                                 popup_title, gradient_callback, initial_gradient,
+                                 "sample-size", sample_size,
+                                 NULL))
         success = FALSE;
     }
 
@@ -139,8 +132,6 @@ gradients_close_popup_invoker (Gimp        *gimp,
 {
   gboolean success = TRUE;
   gchar *gradient_callback;
-  ProcRecord *prec;
-  GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
@@ -148,13 +139,10 @@ gradients_close_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-          (gradient_select = gradient_select_get_by_callback (gradient_callback)))
-        {
-          gradient_select_free (gradient_select);
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_dialog_close (gimp, gimp->gradient_factory->container,
+                                   gradient_callback))
         success = FALSE;
     }
 
@@ -194,8 +182,6 @@ gradients_set_popup_invoker (Gimp        *gimp,
   gboolean success = TRUE;
   gchar *gradient_callback;
   gchar *gradient_name;
-  ProcRecord *prec;
-  GradientSelect *gradient_select;
 
   gradient_callback = (gchar *) args[0].value.pdb_pointer;
   if (gradient_callback == NULL || !g_utf8_validate (gradient_callback, -1, NULL))
@@ -207,24 +193,11 @@ gradients_set_popup_invoker (Gimp        *gimp,
 
   if (success)
     {
-      if (! gimp->no_interface &&
-          (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-          (gradient_select = gradient_select_get_by_callback (gradient_callback)))
-        {
-          GimpGradient *active = (GimpGradient *)
-            gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                              gradient_name);
-
-          if (active)
-            {
-              gimp_context_set_gradient (gradient_select->context, active);
-
-              gtk_window_present (GTK_WINDOW (gradient_select->shell));
-            }
-          else
-            success = FALSE;
-        }
-      else
+      if (gimp->no_interface ||
+          ! procedural_db_lookup (gimp, gradient_callback) ||
+          ! gimp_pdb_dialog_set (gimp, gimp->gradient_factory->container,
+                                 gradient_callback, gradient_name,
+                                 NULL))
         success = FALSE;
     }
 

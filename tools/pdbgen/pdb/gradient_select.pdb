@@ -51,17 +51,14 @@ sub gradients_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (proc = procedural_db_lookup (gimp, gradient_callback)))
-    {
-      gradient_select_new (gimp, context, popup_title,
-                           initial_gradient, gradient_callback,
-                           sample_size);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, gradient_callback) ||
+      ! gimp_pdb_dialog_new (gimp, context, gimp->gradient_factory->container,
+                             popup_title, gradient_callback, initial_gradient,
+                             "sample-size", sample_size,
+                             NULL))
     success = FALSE;
 }
 CODE
@@ -81,16 +78,12 @@ sub gradients_close_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradientSelect *gradient_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-      (gradient_select = gradient_select_get_by_callback (gradient_callback)))
-    {
-      gradient_select_free (gradient_select);
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, gradient_callback) ||
+      ! gimp_pdb_dialog_close (gimp, gimp->gradient_factory->container,
+                               gradient_callback))
     success = FALSE;
 }
 CODE
@@ -112,37 +105,20 @@ sub gradients_set_popup {
     );
 
     %invoke = (
-	vars => [ 'ProcRecord *prec', 'GradientSelect *gradient_select' ],
 	code => <<'CODE'
 {
-  if (! gimp->no_interface &&
-      (prec = procedural_db_lookup (gimp, gradient_callback)) &&
-      (gradient_select = gradient_select_get_by_callback (gradient_callback)))
-    {
-      GimpGradient *active = (GimpGradient *)
-        gimp_container_get_child_by_name (gimp->gradient_factory->container,
-                                          gradient_name);
-
-      if (active)
-        {
-          gimp_context_set_gradient (gradient_select->context, active);
-
-          gtk_window_present (GTK_WINDOW (gradient_select->shell));
-        }
-      else
-        success = FALSE;
-    }
-  else
+  if (gimp->no_interface ||
+      ! procedural_db_lookup (gimp, gradient_callback) ||
+      ! gimp_pdb_dialog_set (gimp, gimp->gradient_factory->container,
+                             gradient_callback, gradient_name,
+                             NULL))
     success = FALSE;
 }
 CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontext.h"
-	      "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "core/gimpgradient.h"
-	      "gui/gui-types.h" "gui/gradient-select.h");
+@headers = qw("core/gimp.h" "core/gimpdatafactory.h" "core/gimpgradient.h");
 
 @procs = qw(gradients_popup gradients_close_popup gradients_set_popup);
 %exports = (app => [@procs], lib => [@procs]);
