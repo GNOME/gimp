@@ -2,11 +2,13 @@
 GimpPickButton
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Widget to pick a color from screen.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+#GimpPickButton is a specialized button. When clicked, it changes the
+cursor to a color-picker pipette and allows the user to pick a color
+from any point on the screen.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -34,5 +36,5 @@ GimpPickButton
 </para>
 
 @gimppickbutton: the object which received the signal.
-@arg1: 
+@arg1: pointer to a #GimpRGB structure that holds the picked color
 

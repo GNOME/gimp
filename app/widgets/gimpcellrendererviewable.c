@@ -131,10 +131,10 @@ gimp_cell_renderer_viewable_class_init (GimpCellRendererViewableClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpCellRendererViewableClass, clicked),
 		  NULL, NULL,
-		  gimp_marshal_VOID__STRING_UINT,
+		  gimp_marshal_VOID__STRING_FLAGS,
 		  G_TYPE_NONE, 2,
 		  G_TYPE_STRING,
-                  G_TYPE_UINT);
+                  GDK_TYPE_MODIFIER_TYPE);
 
   object_class->finalize     = gimp_cell_renderer_viewable_finalize;
   object_class->get_property = gimp_cell_renderer_viewable_get_property;

@@ -42,18 +42,18 @@ typedef struct _GimpButtonClass  GimpButtonClass;
 
 struct _GimpButton
 {
-  GtkButton  parent_instance;
+  GtkButton        parent_instance;
 
   /*< private >*/
-  guint      press_state;
+  GdkModifierType  press_state;
 };
 
 struct _GimpButtonClass
 {
   GtkButtonClass  parent_class;
 
-  void (* extended_clicked) (GimpButton *preview,
-			     guint       modifier_state);
+  void (* extended_clicked) (GimpButton      *preview,
+			     GdkModifierType  modifier_state);
 };
 
 
@@ -61,8 +61,8 @@ GType       gimp_button_get_type         (void) G_GNUC_CONST;
 
 GtkWidget * gimp_button_new              (void);
 
-void        gimp_button_extended_clicked (GimpButton *button,
-                                          guint       state);
+void        gimp_button_extended_clicked (GimpButton      *button,
+                                          GdkModifierType  state);
 
 
 G_END_DECLS

@@ -1,3 +1,17 @@
+2003-03-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpbutton.[ch]: pass the modifier mask as
+	GdkModifierType instead of guint.
+	
+	* app/core/gimpmarshal.list
+	* app/widgets/gimpcellrenderertoggle.c
+	* app/widgets/gimpcellrendererviewable.c
+	* app/widgets/gimppreview.c: use proper marshallers for signals
+	that take flags as parameters.
+
+	* app/core/gimpcontext.c: added the G_SIGNAL_TYPE_STATIC_SCOPE flag
+	to the GimpRGB signal parameter.
+
 2003-03-20  Michael Natterer  <mitch@gimp.org>
 
 	Removed deprecated and broken list views

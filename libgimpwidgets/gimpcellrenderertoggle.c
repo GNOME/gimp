@@ -134,10 +134,10 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpCellRendererToggleClass, clicked),
 		  NULL, NULL,
-		  gimp_marshal_VOID__STRING_UINT,
+		  gimp_marshal_VOID__STRING_FLAGS,
 		  G_TYPE_NONE, 2,
 		  G_TYPE_STRING,
-                  G_TYPE_UINT);
+                  GDK_TYPE_MODIFIER_TYPE);
 
   object_class->finalize     = gimp_cell_renderer_toggle_finalize;
   object_class->get_property = gimp_cell_renderer_toggle_get_property;

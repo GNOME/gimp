@@ -4,6 +4,7 @@
 
 #include "devel-docs/libgimpwidgets/libgimpwidgets-include.c"
 
+gimp_button_get_type
 gimp_chain_button_get_type
 gimp_color_button_get_type
 gimp_color_display_get_type

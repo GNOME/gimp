@@ -151,9 +151,9 @@ gimp_preview_class_init (GimpPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpPreviewClass, extended_clicked),
 		  NULL, NULL,
-		  gimp_marshal_VOID__UINT,
+		  gimp_marshal_VOID__FLAGS,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_UINT);
+		  GDK_TYPE_MODIFIER_TYPE);
 
   preview_signals[CONTEXT] = 
     g_signal_new ("context",

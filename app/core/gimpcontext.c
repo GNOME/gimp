@@ -382,7 +382,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__BOXED,
 		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_COLOR);
+		  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[BACKGROUND_CHANGED] =
     g_signal_new ("background_changed",
@@ -392,7 +392,7 @@ gimp_context_class_init (GimpContextClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__BOXED,
 		  G_TYPE_NONE, 1,
-		  GIMP_TYPE_COLOR);
+		  GIMP_TYPE_COLOR | G_SIGNAL_TYPE_STATIC_SCOPE);
 
   gimp_context_signals[OPACITY_CHANGED] =
     g_signal_new ("opacity_changed",
