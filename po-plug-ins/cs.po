@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.19\n"
 "POT-Creation-Date: 2000-04-03 22:04+0200\n"
-"PO-Revision-Date: 2000-04-03 22:18+02:00\n"
+"PO-Revision-Date: 2000-04-04 09:52+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12162,7 +12162,7 @@ msgstr "Rozèeøení stránky..."
 
 #: plug-ins/print/gimp_color_window.c:76
 msgid "Print Color Adjust"
-msgstr "Vytisknout nastavení barev"
+msgstr "Nastavení tiskových barev"
 
 #: plug-ins/print/gimp_color_window.c:184
 msgid "Density:"
@@ -12323,7 +12323,7 @@ msgstr "PPD soubor?"
 
 #: plug-ins/print/print.c:203
 msgid "<Image>/File/Print..."
-msgstr "<Image>/Soubor/Tisk..."
+msgstr "<Image>/Soubor/Tisknout..."
 
 #: plug-ins/print/print-printers.c:6
 msgid "PostScript Level 1"
