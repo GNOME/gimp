@@ -20,7 +20,6 @@
 #include "globals.c"
 #include "../gimprc.c"
 
-
 static void
 parse_show_tokens (GList *list)
 {
@@ -33,7 +32,6 @@ parse_show_tokens (GList *list)
       list = list->next;
     }
 }
-
 
 static void global_parse_init(int showit)
 {
@@ -82,46 +80,28 @@ static void parse_get_alt_personal_gimprc(char *alternate, char *filename)
     parse_get_absolute_gimprc_file(filename);
 }
 
-#if 0
-gboolean
-parse_absolute_gimprc_file (char *filename)
+static gboolean p_asb_show_result(char *filename)
 {
-  int status;
-
-  parse_info.fp = fopen (filename, "rt");
-  if (!parse_info.fp)
-    return FALSE;
-
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
-    g_print (_("parsing \"%s\"\n"), filename);
-
-  cur_token = -1;
-  next_token = -1;
-
-  parse_info.position = -1;
-  parse_info.linenum = 1;
-  parse_info.charnum = 1;
-  parse_info.inc_linenum = FALSE;
-  parse_info.inc_charnum = FALSE;
-
-  done = FALSE;
-  while ((status = parse_statement ()) == OK)
-    ;
-
-  fclose (parse_info.fp);
-
-  if (status == ERROR)
-    {
-      g_print (_("error parsing: \"%s\"\n"), filename);
-      g_print (_("  at line %d column %d\n"), parse_info.linenum, parse_info.charnum);
-      g_print (_("  unexpected token: %s\n"), token_sym);
-
-      return FALSE;
-    }
-
-  return TRUE;
+    gboolean status;
+    
+    status = parse_absolute_gimprc_file (filename);
+    printf("----- Parse Result:%d,filename=%s\n", status,filename);
+    if (status)
+	parse_show_tokens (unknown_tokens);
+    return (status);
 }
-#endif
+
+static void p_show_default_files ()
+{ 
+    char libfilename[MAXPATHLEN];
+    char filename[MAXPATHLEN];
+
+    parse_get_system_file (alternate_system_gimprc, libfilename);
+    parse_get_alt_personal_gimprc (alternate_gimprc, filename);
+    printf("\n----- Parse files: \n");
+    printf("libfilename= %s\n", libfilename);
+    printf("filename= %s\n\n", filename);
+}
 
 int
 main (int argc, char **argv)
@@ -131,30 +111,46 @@ main (int argc, char **argv)
     gboolean status;
     int showit = 1;
     
-    if (argc > 1)
+    if (argc < 2)
+    {
+	printf("%s [option] \n\n",argv[0]);
+	printf("ex: %s -a      # call alternative gimprc parsing\n",argv[0]);
+	printf("ex: %s -p      # call parse_gimprc ()\n",argv[0]);
+	printf("ex: %s -h      # show default files\n",argv[0]);
+	
+	parse_get_system_file (alternate_system_gimprc, libfilename);
+	printf("ex: %s -f%s      # parse a files\n",argv[0], libfilename);
+	
+	exit (1);
+    }
+
+    if (strcmp (argv[1], "-h") == 0)
+    {
+	p_show_default_files ();
+	exit (0);
+    }
+    
+    if (strcmp (argv[1], "-p") == 0)
 	showit = 0;
 
     global_parse_init(showit);
 
-    if (argc == 1)
+    if (strcmp (argv[1], "-a") == 0)
     {
+	p_show_default_files ();
+
 	parse_get_system_file (alternate_system_gimprc, libfilename);
 	parse_get_alt_personal_gimprc(alternate_gimprc, filename);
-	printf("\n----- Parse files: \n");
-	printf("libfilename= %s\n", libfilename);
-	printf("filename= %s\n\n", filename);
-	
-	status = parse_absolute_gimprc_file (libfilename);
-	printf("----- Parse Result:%d,filename=%s\n", status,libfilename);
-	if (status)
-	    parse_show_tokens (unknown_tokens);
-	
-	status = parse_absolute_gimprc_file (filename);
-	printf("----- Parse Result:%d,filename=%s\n", status,filename);
-	if (status)
-	    parse_show_tokens (unknown_tokens);
+
+	status = p_asb_show_result(libfilename);	
+	status = p_asb_show_result(filename);
     }
-    else
+    else if (strncmp (argv[1], "-f",2) == 0)
+    {
+	strcpy (filename, argv[1] + 2);
+	status = p_asb_show_result(filename);
+    }
+    else if (strcmp (argv[1], "-p") == 0)
     {
 	parse_gimprc ();
 	parse_show_tokens (unknown_tokens);
