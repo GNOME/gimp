@@ -1,3 +1,8 @@
+2004-09-11  DindinX  <david@dindinx.org>
+
+	* libgimp/gimppixelrgn.c: added some gtk-doc documentation to pixel
+	region related functions. (work in progress)
+
 2004-09-11  Simon Budig  <simon@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: Added boolean parameter to
