@@ -1,3 +1,7 @@
+2004-03-05  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
+
+	* es.po: Updated Spanish translation.
+
 2004-03-05  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: fixed the newly added dependency.
