@@ -30,7 +30,33 @@ Bugs fixed in GIMP 2.0pre4
 - 133067: Connect the text tool font with the global font selector (Sven)
 - 133958: Made color values in color picker selectable (Mariano Suárez-Alvarez)
 - 125283: Have configure warn when gimp-print is older than 4.2.6 (Sven)
-
+- 112012: Use default preview if none can be generated (Mitch)
+- 124969: Improve text tool logic (Sven)
+- 121033: Ensure that non-indexed images cannot have a colormap (Mitch)
+- 132356: Curves tool trapped the mouse (Mitch)
+- 123321: UTF-8 and zero-size layer bug (Adam Moss, Daniel Rogers, Piotr 
+          Krysiuk)
+- 134274: Behave correctly for edit and delete functions for data files (Mitch)
+- 134285: Improve snap behaviour for grid and guides (Simon)
+- 134274: Fix data file initialisation routine (Mitch)
+- 134423: Fix GIF plug-in when used without display (Sven)
+- 134419: Fix undo button behaviour in GFig plug-in (Sven)
+- 134562: Ensure tile cache cannot write to freed memory (Mitch)
+- 134512: Exclude undo stack from size of memory in an image when scaling 
+          (Sven)
+- 134694: Fix bug in Preferences (Mitch)
+- 134410: Make drawing of straight lines better for fuzzy brushes (Simon)
+- 125303: Remove per-channel gray point picker from levels dialog (Dave 
+          Neary)
+- 134752: Improve clipboard buffer detection between different images in 
+          the same GIMP instance (Mitch)
+- 122049: Validate numerical input in pygimp plug-ins, and fix the Sphere 
+          plug-in (Dave Neary, Florian Traverse)
+- 130568: Mostly fix Van Gogh (LIC) plug-in (Simon)
+ 
+Other contributions: 
+  Manish Singh, Michael Naterrer, Sven Neumann, Henrik Brix Andersen, Pedro 
+  Gimeno, Jakub Steiner, Simon Budig
 
 Bugs fixed in GIMP 2.0pre3
 ==========================
