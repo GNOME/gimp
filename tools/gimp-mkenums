@@ -26,7 +26,7 @@ sub parse_trigraph {
     for $opt (split /\s*,\s*/, $opts) {
 	$opt =~ s/^\s*//;
 	$opt =~ s/\s*$//;
-        my ($key,$val) = $opt =~ /(\w+)(?:=(.+))?/;
+        my ($key,$val) = $opt =~ /([-\w]+)(?:=(.+))?/;
 	defined $val or $val = 1;
 	push @opts, $key, $val;
     }

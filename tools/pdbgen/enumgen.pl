@@ -73,7 +73,6 @@ my $footer = <<'FOOTER';
 FOOTER
 
 my ($enumname, $contig, $symbols, @mapping, $before);
-my ($skip, $pdbskip);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
 sub parse_options {
@@ -81,7 +80,9 @@ sub parse_options {
     my @opts;
 
     for $opt (split /\s*,\s*/, $opts) {
-	my ($key,$val) = $opt =~ /\s*([\w-]+)(?:=(\S+))?/;
+	$opt =~ s/^\s*//;
+	$opt =~ s/\s*$//;
+	my ($key,$val) = $opt =~ /([-\w]+)(?:=(.+))?/;
 	defined $val or $val = 1;
 	push @opts, $key, $val;
     }
@@ -90,17 +91,17 @@ sub parse_options {
 
 sub parse_entries {
     my $file = shift;
+    my $file_name = shift;
+    my $looking_for_name = 0;
 
     while (<$file>) {
 	# Read lines until we have no open comments
-	while (m@/\*
-	       ([^*]|\*(?!/))*$
-	       @x) {
+	while (m@/\*([^*]|\*(?!/))*$@) {
 	    my $new;
-	    defined ($new = <$file>) || die "Unmatched comment";
+	    defined ($new = <$file>) || die "Unmatched comment in $ARGV";
 	    $_ .= $new;
 	}
-	# Now strip comments
+	# strip comments w/o options
 	s@/\*(?!<)
 	    ([^*]+|\*(?!/))*
 	   \*/@@gx;
@@ -109,12 +110,19 @@ sub parse_entries {
         
 	next if m@^\s*$@;
 
+	if ($looking_for_name) {
+	    if (/^\s*(\w+)/) {
+		$enumname = $1;
+		return 1;
+	    }
+	}
+
 	# Handle include files
 	if (/^\#include\s*<([^>]*)>/ ) {
 	    my $file= "../$1";
 	    open NEWFILE, $file or die "Cannot open include file $file: $!\n";
 
-	    if (&parse_entries (\*NEWFILE)) {
+	    if (&parse_entries (\*NEWFILE, $NEWFILE)) {
 		return 1;
 	    } else {
 		next;
@@ -124,6 +132,11 @@ sub parse_entries {
 	if (/^\s*\}\s*(\w+)/) {
 	    $enumname = $1;
 	    return 1;
+	}
+
+	if (/^\s*\}/) {
+	    $looking_for_name = 1;
+	    next;
 	}
 
 	if (m@^\s*
@@ -164,8 +177,10 @@ sub parse_entries {
 	    $contig = 0 if $contig && ($@ || $test - 1 != $before);
 
 	    $before = $test;
+	} elsif (m@^\s*\#@) {
+	    # ignore preprocessor directives
         } else {
-            print STDERR "Can't understand: $_\n";
+            print STDERR "$0: $file_name:$.: Failed to parse `$_'\n";
         }
     }
     return 0;
@@ -177,6 +192,17 @@ while (<>) {
         close (ARGV);           # reset line numbering
     }
 
+    # read lines until we have no open comments
+    while (m@/\*([^*]|\*(?!/))*$@) {
+	my $new;
+	defined ($new = <>) || die "Unmatched comment in $ARGV";
+	$_ .= $new;
+    }
+    # strip comments w/o options
+    s@/\*(?!<)
+       ([^*]+|\*(?!/))*
+       \*/@@gx;
+
     if (m@^\s*typedef\s+enum\s*
 	   ({)?\s*
 	   (?:/\*<
@@ -185,11 +211,7 @@ while (<>) {
          @x) {
         if (defined $2) {
             my %options = parse_options($2);
-	    $skip = $options{"skip"};
-	    $pdbskip = $options{"pdb-skip"};
-	} else {
-	    $skip = undef;
-	    $pdbskip = undef;
+	    next if defined $options{"pdb-skip"};
 	}	    
 	# Didn't have trailing '{' look on next lines
 	if (!defined $1) {
@@ -203,7 +225,7 @@ while (<>) {
 	$symbols = ""; $contig = 1; $before = -1; @mapping = ();
 
 	# Now parse the entries
-	&parse_entries (\*ARGV);
+	&parse_entries (\*ARGV, $ARGV);
 
 	$symbols =~ s/\s*$//s;
 	$symbols = wrap("\t\t\t  ", "\t\t\t  " , $symbols);
@@ -217,7 +239,7 @@ while (<>) {
 
 	$ARGV =~ s@(?:(?:..|app)/)*@@;
 
-	$code .= <<ENTRY if !$pdbskip;
+	$code .= <<ENTRY;
 :    $enumname =>
 :	{ contig => $contig,
 :	  header => '$ARGV',

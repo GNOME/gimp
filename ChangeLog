@@ -1,3 +1,14 @@
+2003-06-29  Manish Singh  <yosh@gimp.org>
+
+	* tools/gimp-mkenums: handle options with -'s in them
+
+	* tools/pdbgen/enumgen.pl: redo a bunch of logic for the below
+
+	* app/core/core-enums.h: use /*< pdb-skip, skip >*/ for skipping
+	in both gimp-mkenums and enumgen.pl
+
+	* app/core/core-enums.c: regenerated
+
 2003-06-29  Michael Natterer  <mitch@gimp.org>
 
 	Getting rid of some legacy filenames:

@@ -25,7 +25,7 @@
    /*< pdb-skip >*/ are exported to libgimp and the PDB. Enums that are
    not marked with /*< skip >*/ are registered with the GType system. 
    If you want the enum to be skipped by both scripts, you have to use 
-   /*< pdb-skip >*/ _before_ /*< skip >*/. 
+   /*< pdb-skip, skip >*/. 
 
    All enum values that are marked with /*< skip >*/ are skipped for
    both targets.
@@ -423,7 +423,7 @@ typedef enum /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
+typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_CONTEXT_FIRST_PROP      =  2,
 
@@ -446,7 +446,7 @@ typedef enum  /*< pdb-skip >*/ /*< skip >*/
   GIMP_CONTEXT_LAST_PROP       = GIMP_CONTEXT_PROP_TEMPLATE
 } GimpContextPropType;
 
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
+typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_CONTEXT_IMAGE_MASK      = 1 <<  2,
   GIMP_CONTEXT_DISPLAY_MASK    = 1 <<  3,
@@ -492,7 +492,7 @@ typedef enum  /*< skip >*/
   GIMP_CUSTOM_PALETTE
 } GimpConvertPaletteType;
 
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
+typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_GRAD_LINEAR = 0,
   GIMP_GRAD_CURVED,
@@ -501,7 +501,7 @@ typedef enum  /*< pdb-skip >*/ /*< skip >*/
   GIMP_GRAD_SPHERE_DECREASING
 } GimpGradientSegmentType;
 
-typedef enum  /*< pdb-skip >*/ /*< skip >*/
+typedef enum  /*< pdb-skip, skip >*/
 {
   GIMP_GRAD_RGB,      /* normal RGB           */
   GIMP_GRAD_HSV_CCW,  /* counterclockwise hue */
