@@ -514,9 +514,9 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     {
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
                   title,
-                  ROUND (x),
+                  (gint) RINT (x),
                   separator,
-                  ROUND (y));
+                  (gint) RINT (y));
     }
   else /* show real world units */
     {
@@ -553,7 +553,7 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
     {
       g_snprintf (buf, sizeof (buf), statusbar->length_format_str,
                   title,
-                  ROUND (value));
+                  (gint) RINT (value));
     }
   else /* show real world units */
     {
@@ -689,7 +689,7 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
     {
       g_snprintf (buffer, sizeof (buffer),
                   statusbar->cursor_format_str,
-                  "", ROUND (x), ", ", ROUND (y));
+                  "", (gint) RINT (x), ", ", (gint) RINT (y));
     }
   else /* show real world units */
     {
