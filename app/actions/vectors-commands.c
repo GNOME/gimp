@@ -39,6 +39,7 @@
 #include "plug-in/plug-in-run.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemtreeview.h"
@@ -224,12 +225,23 @@ void
 vectors_import_cmd_callback (GtkWidget *widget,
                              gpointer   data)
 {
-  GimpImage *gimage;
+  GimpImage   *gimage;
+  GimpVectors *vectors;
+  GError      *error = NULL;
   return_if_no_image (gimage, data);
 
-#ifdef __GNUC__
-#warning FIXME: need vectors import/export
-#endif
+  vectors = gimp_vectors_import (gimage, "path.svg", error);
+
+  if (vectors)
+    {
+      gimp_image_add_vectors (gimage, vectors, -1);
+      gimp_image_flush (gimage);
+    }
+  else
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
 }
 
 void
@@ -411,7 +423,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   /*  the new options structure  */
   options = g_new (NewVectorsOptions, 1);
   options->gimage = gimage;
-  
+
   /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),

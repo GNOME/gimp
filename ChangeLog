@@ -1,3 +1,10 @@
+2003-09-10  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/vectors-commands.c (vectors_import_cmd_callback): call
+	gimp_vectors_import(). Hardcoded filename to path.svg for now.
+
+	* app/vectors/gimpvectors-import.c: more work on the SVG parser.
+	
 2003-09-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf-save.c: changed the various xcf_write_*_error()
