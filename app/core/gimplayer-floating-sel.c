@@ -94,6 +94,9 @@ floating_sel_remove (GimpLayer *layer)
 
   gimage = gimp_item_get_image (GIMP_ITEM (layer->fs.drawable));
 
+  gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_FS_REMOVE,
+                               _("Remove Floating Selection"));
+
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_relax (layer, TRUE);
 
@@ -105,6 +108,8 @@ floating_sel_remove (GimpLayer *layer)
 
   /*  remove the layer from the gimage  */
   gimp_image_remove_layer (gimage, layer);
+
+  gimp_image_undo_group_end (gimage);
 }
 
 void

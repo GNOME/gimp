@@ -1,5 +1,13 @@
 2004-03-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.h (enum GimpUndoType): added new group
+	GIMP_UNDO_GROUP_FS_REMOVE.
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_remove): push an
+	undo group. Fixes undo corruption spotted by Pedro Gimeno.
+
+2004-03-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/guillotine.c (guillotine): Don't just skip
 	guides at the image edges but any guide which is at a position we
 	already remembered. Should catch all instances of bug #138312 this

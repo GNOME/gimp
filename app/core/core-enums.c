@@ -603,6 +603,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_FS_TO_LAYER, N_("Floating Selection to Layer"), "group-fs-to-layer" },
   { GIMP_UNDO_GROUP_FS_FLOAT, N_("Float Selection"), "group-fs-float" },
   { GIMP_UNDO_GROUP_FS_ANCHOR, N_("Anchor Floating Selection"), "group-fs-anchor" },
+  { GIMP_UNDO_GROUP_FS_REMOVE, N_("Remove Floating Selection"), "group-fs-remove" },
   { GIMP_UNDO_GROUP_EDIT_PASTE, N_("Paste"), "group-edit-paste" },
   { GIMP_UNDO_GROUP_EDIT_CUT, N_("Cut"), "group-edit-cut" },
   { GIMP_UNDO_GROUP_TEXT, N_("Text"), "group-text" },

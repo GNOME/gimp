@@ -433,6 +433,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_FS_TO_LAYER,        /*< desc="Floating Selection to Layer" >*/
   GIMP_UNDO_GROUP_FS_FLOAT,           /*< desc="Float Selection"             >*/
   GIMP_UNDO_GROUP_FS_ANCHOR,          /*< desc="Anchor Floating Selection"   >*/
+  GIMP_UNDO_GROUP_FS_REMOVE,          /*< desc="Remove Floating Selection"   >*/
   GIMP_UNDO_GROUP_EDIT_PASTE,         /*< desc="Paste"                       >*/
   GIMP_UNDO_GROUP_EDIT_CUT,           /*< desc="Cut"                         >*/
   GIMP_UNDO_GROUP_TEXT,               /*< desc="Text"                        >*/
