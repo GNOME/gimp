@@ -371,7 +371,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
                                          GimpContext       *context,
                                          const gchar       *identifier,
                                          gint               preview_size,
-                                         gboolean           raise_if_found)
+                                         gboolean           return_existing,
+                                         gboolean           present)
 {
   GimpDialogFactoryEntry *entry;
   GtkWidget              *dialog = NULL;
@@ -395,7 +396,8 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
       return NULL;
     }
 
-  if (raise_if_found || entry->singleton)
+  /*  a singleton dialog is always returned if it already exisits  */
+  if (return_existing || entry->singleton)
     {
       GimpSessionInfo *info;
 
@@ -504,7 +506,7 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         {
           gtk_window_set_screen (GTK_WINDOW (dialog), screen);
 
-          if (raise_if_found)
+          if (present)
             gtk_window_present (GTK_WINDOW (dialog));
         }
       else if (GIMP_IS_DOCKABLE (dialog))
@@ -569,6 +571,7 @@ gimp_dialog_factory_dialog_new (GimpDialogFactory *factory,
                                                   factory->context,
                                                   identifier,
                                                   preview_size,
+                                                  FALSE,
                                                   present);
 }
 
@@ -622,6 +625,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                                         NULL,
                                                         ids[i] ? ids[i] : ids[0],
                                                         preview_size,
+                                                        TRUE,
                                                         TRUE);
       g_strfreev (ids);
     }
@@ -632,6 +636,7 @@ gimp_dialog_factory_dialog_raise (GimpDialogFactory *factory,
                                                         NULL,
                                                         identifiers,
                                                         preview_size,
+                                                        TRUE,
                                                         TRUE);
     }
 
@@ -671,6 +676,7 @@ gimp_dialog_factory_dockable_new (GimpDialogFactory *factory,
                                                   dock->context,
                                                   identifier,
                                                   preview_size,
+                                                  FALSE,
                                                   FALSE);
 }
 
