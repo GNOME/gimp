@@ -198,6 +198,7 @@ init_generated_constants (void)
   setvar (cintern ("INTERNAL"), flocons (0), NIL);
   setvar (cintern ("PLUGIN"), flocons (1), NIL);
   setvar (cintern ("EXTENSION"), flocons (2), NIL);
+  setvar (cintern ("TEMPORARY"), flocons (3), NIL);
 
   setvar (cintern ("PDB-EXECUTION-ERROR"), flocons (0), NIL);
   setvar (cintern ("PDB-CALLING-ERROR"), flocons (1), NIL);

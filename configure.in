@@ -674,7 +674,6 @@ plug-ins/gpc/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
-plug-ins/script-fu/po/Makefile.in
 plug-ins/webbrowser/Makefile
 plug-ins/xjt/Makefile
 plug-ins/AlienMap/Makefile
@@ -735,7 +734,6 @@ tips/Makefile],
    chmod +x gimptool
    sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
    sed -e "/POTFILES =/r po-plug-ins/POTFILES" po-plug-ins/Makefile.in > po-plug-ins/Makefile
-   sed -e "/POTFILES =/r plug-ins/script-fu/po/POTFILES" plug-ins/script-fu/po/Makefile.in > plug-ins/script-fu/po/Makefile
    case "$CONFIG_FILES" in
    *plug-ins/perl*)
       if test -f plug-ins/perl/config.status; then

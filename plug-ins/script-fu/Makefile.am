@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = scripts po
+SUBDIRS = scripts
 
 libexecdir = $(gimpplugindir)/plug-ins
 

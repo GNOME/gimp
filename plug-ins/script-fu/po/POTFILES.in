@@ -1,7 +1,0 @@
-# Files from the Script-Fu distribution (include as standard GIMP Plugin) 
-# which have already been marked to allow runtime translation of messages
-
-script-fu-console.c
-script-fu-scripts.c
-script-fu-server.c
-script-fu.c
