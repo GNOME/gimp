@@ -5,11 +5,11 @@
 # Branko Collin <collin@xs4all.nl>, 2001
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2002-02-03 20:05-0800\n"
-"PO-Revision-Date: 2001-11-30 04:00+0200\n"
+"Project-Id-Version: gimp 1.2.3\n"
+"POT-Creation-Date: 2002-03-04 00:33+0100\n"
+"PO-Revision-Date: 2002-03-03 04:00+0200\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -68,35 +68,35 @@ msgid "parsing \"%s\"\n"
 msgstr "bezig met parsen van \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:569
+#: app/app_procs.c:579
 msgid "Looking for data files"
 msgstr "Bezig met zoeken naar gegevensbestanden"
 
-#: app/app_procs.c:569
+#: app/app_procs.c:579
 msgid "Parasites"
 msgstr "Parasieten"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:581 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Penselen"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:583 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Patronen"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:575 app/preferences_dialog.c:2547
+#: app/app_procs.c:585 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:587 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Verlopen"
 
-#: app/app_procs.c:655
+#: app/app_procs.c:666
 #, c-format
 msgid ""
 "Unable to open a test swap file.  Please check the\n"
@@ -108,11 +108,11 @@ msgstr ""
 "is gedefinieerd (op het moment '%s')."
 
 # Dialog title
-#: app/app_procs.c:775
+#: app/app_procs.c:786
 msgid "Really Quit?"
 msgstr "Werkelijk afsluiten?"
 
-#: app/app_procs.c:779
+#: app/app_procs.c:790
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -122,12 +122,12 @@ msgstr ""
 "\n"
 "Weet u zeker dat u de GIMP wilt afsluiten?"
 
-#: app/app_procs.c:780
+#: app/app_procs.c:791
 msgid "Quit"
 msgstr "Afsluiten"
 
 #. the cancel button
-#: app/app_procs.c:780 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:791 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:573 app/file_new_dialog.c:212 app/file_new_dialog.c:362
@@ -137,7 +137,7 @@ msgstr "Afsluiten"
 #: app/layers_dialog.c:3563 app/layers_dialog.c:3747 app/layers_dialog.c:3842
 #: app/layers_dialog.c:4103 app/levels.c:350 app/palette.c:1825
 #: app/posterize.c:212 app/preferences_dialog.c:1485 app/qmask.c:282
-#: app/resize.c:225 app/resize.c:1398 app/resolution_calibrate.c:116
+#: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:285 app/user_install.c:597
 msgid "Cancel"
 msgstr "Annuleren"
@@ -296,7 +296,7 @@ msgstr "Helderheid-contrast werkt niet op geïndexeerde tekengebieden."
 #: app/layers_dialog.c:3745 app/layers_dialog.c:3840 app/layers_dialog.c:4101
 #: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
-#: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
+#: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
 msgstr "OK"
 
@@ -501,7 +501,7 @@ msgstr "%s kopiëren"
 msgid "Selection Mask"
 msgstr "Selectiemasker"
 
-#: app/channel_ops.c:91 app/resize.c:436
+#: app/channel_ops.c:91 app/resize.c:438
 msgid "Offset"
 msgstr "Verspringing"
 
@@ -511,7 +511,7 @@ msgid "Offset X:"
 msgstr "Verspringing X:"
 
 #: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
-#: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
+#: app/resize.c:374 app/resize.c:468 app/resize.c:606 app/rotate_tool.c:111
 #: app/scale_tool.c:108 app/shear_tool.c:90 app/user_install.c:1443
 msgid "Y:"
 msgstr "Y:"
@@ -931,8 +931,7 @@ msgid ""
 "You should not generate a palette of more than 255 colors if you intend to "
 "create a transparent or animated GIF file from this image."
 msgstr ""
-"U probeert een afbeelding met alpha/lagen van RGB/Grijswaarden naar "
-"geïndexeerd te converteren.\n"
+"U probeert een afbeelding met alpha/lagen van RGB/Grijswaarden naar geïndexeerd te converteren.\n"
 "Genereer niet een palet van meer dan 255 kleuren als u van plan bent om een "
 "transparant of geanimeerd GIF-bestand van deze afbeelding te maken."
 
@@ -1004,7 +1003,7 @@ msgid "Width:"
 msgstr "Breedte:"
 
 #: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:541
+#: app/layers_dialog.c:3605 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Hoogte:"
@@ -1244,11 +1243,11 @@ msgid "Pixels"
 msgstr "pixel"
 
 #. the resolution labels
-#: app/file_new_dialog.c:529 app/resize.c:598
+#: app/file_new_dialog.c:529 app/resize.c:600
 msgid "Resolution X:"
 msgstr "X-resolutie:"
 
-#: app/file_new_dialog.c:550 app/resize.c:619
+#: app/file_new_dialog.c:550 app/resize.c:621
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
@@ -1880,15 +1879,19 @@ msgstr "Plak buffer met naam"
 msgid "Select a buffer to paste:"
 msgstr "Kies een buffer om te plakken: "
 
-#: app/global_edit.c:883
+#: app/global_edit.c:856
+msgid "(Unnamed Buffer)"
+msgstr "(Naamloze buffer)"
+
+#: app/global_edit.c:886
 msgid "Cut Named"
 msgstr "Knip benoemde buffer"
 
-#: app/global_edit.c:886 app/global_edit.c:918
+#: app/global_edit.c:889 app/global_edit.c:921
 msgid "Enter a name for this buffer"
 msgstr "Geef een naam voor deze buffer"
 
-#: app/global_edit.c:915
+#: app/global_edit.c:918
 msgid "Copy Named"
 msgstr "Kopieer benoemde buffer"
 
@@ -2299,7 +2302,7 @@ msgstr "Hue-saturation werkt enkel op RGB-tekengebieden."
 # What is the Dutch translation of this phrase?
 #: app/hue_saturation.c:360
 msgid "Master"
-msgstr "Meester"
+msgstr "Allemaal"
 
 #: app/hue_saturation.c:362
 msgid "Y"
@@ -5021,7 +5024,7 @@ msgid "Original Width:"
 msgstr "Originele breedte:"
 
 #. the new size labels
-#: app/resize.c:303 app/resize.c:535
+#: app/resize.c:303 app/resize.c:537
 msgid "New Width:"
 msgstr "Nieuwe breedte:"
 
@@ -5030,23 +5033,23 @@ msgstr "Nieuwe breedte:"
 msgid "Ratio X:"
 msgstr "X-ratio:"
 
-#: app/resize.c:464
+#: app/resize.c:466
 msgid "X:"
 msgstr "X:"
 
-#: app/resize.c:521
+#: app/resize.c:523
 msgid "Print Size & Display Unit"
 msgstr "Afdrukgrootte & weergave-eenheid"
 
-#: app/resize.c:1310
+#: app/resize.c:1312
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Schaalfout: zowel breedte als hoogte moeten groter zijn dan nul."
 
-#: app/resize.c:1391
+#: app/resize.c:1393
 msgid "Layer Too Small"
 msgstr "Laag te klein"
 
-#: app/resize.c:1395
+#: app/resize.c:1397
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"

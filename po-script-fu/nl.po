@@ -4,8 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
+"Project-Id-Version: GIMP 1.2.3\n"
+"POT-Creation-Date: 2002-03-03 23:55+0000\n"
 "PO-Revision-Date: 2001-09-17 00:00+2\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -192,68 +192,64 @@ msgstr "<Toolbox>/Xtns/Script-Fu/Vernieuwen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
-#, fuzzy
 msgid "DB Browser (init...)"
-msgstr "Bladeren..."
+msgstr "DB-browser (init...)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:153
 #: plug-ins/dbbrowser/dbbrowser_utils.c:172
 msgid "Search by Name"
-msgstr ""
+msgstr "Op naam zoeken"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:155
 #: plug-ins/dbbrowser/dbbrowser_utils.c:174
 msgid "Search by Blurb"
-msgstr ""
+msgstr "Op omschrijving zoeken"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:157
 msgid "Apply"
-msgstr ""
+msgstr "Toepassen"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:226
 msgid "Search:"
-msgstr ""
+msgstr "Zoek:"
 
 #. show the name
 #: plug-ins/dbbrowser/dbbrowser_utils.c:344
-#, fuzzy
 msgid "Name:"
-msgstr "Datum:"
+msgstr "Naam:"
 
 #. show the description
 #: plug-ins/dbbrowser/dbbrowser_utils.c:360
-#, fuzzy
 msgid "Blurb:"
-msgstr "Vervaag Y"
+msgstr "Omschrijving:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:382
 msgid "In:"
-msgstr ""
+msgstr "In:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:429
 msgid "Out:"
-msgstr ""
+msgstr "Uit:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:479
 msgid "Help:"
-msgstr ""
+msgstr "Help:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:643
 msgid "DB Browser (by name - please wait)"
-msgstr ""
+msgstr "DB-browser (op naam - wacht a.u.b.)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:667
 msgid "DB Browser (by blurb - please wait)"
-msgstr ""
+msgstr "DB-browser (op omschrijving - wacht a.u.b.)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:677
 msgid "DB Browser (please wait)"
-msgstr ""
+msgstr "DB-browser (wacht a.u.b.)"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:743
-#, fuzzy
 msgid "DB Browser"
-msgstr "Bladeren..."
+msgstr "DB-browser"
 
 # What does this function do?
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
@@ -923,7 +919,6 @@ msgid "Base Color"
 msgstr "Basiskleur"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
-#, fuzzy
 msgid "Base Radius (pixels)"
 msgstr "Basisradius (pixels)"
 
@@ -2273,6 +2268,3 @@ msgstr "Breedte"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Werk op kopie"
-
-#~ msgid "<Image>/Script-Fu/Alchemy/Warp Sharp..."
-#~ msgstr "<Image>/Script-Fu/Alchemie/Verscherpen door vervorming..."

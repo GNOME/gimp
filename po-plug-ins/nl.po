@@ -3,11 +3,11 @@
 # Branko Collin <collin@xs4all.nl>, 2001.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2002-02-11 13:34-0800\n"
-"PO-Revision-Date: 2002-02-14 15:44+0100\n"
+"Project-Id-Version: gimp 1.2.3\n"
+"POT-Creation-Date: 2002-03-04 00:44+0100\n"
+"PO-Revision-Date: 2002-03-03 04:00+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -401,15 +401,15 @@ msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:569
 msgid "Spider"
-msgstr ""
+msgstr "Spin"
 
 #: plug-ins/FractalExplorer/Dialogs.c:571
 msgid "Man'o'war"
-msgstr ""
+msgstr "Oorlogsschip"
 
 #: plug-ins/FractalExplorer/Dialogs.c:573
 msgid "Lambda"
-msgstr ""
+msgstr "Lambda"
 
 #: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Sierpinski"
@@ -437,11 +437,11 @@ msgstr "Verander het aantal kleuren in de mapping"
 
 #: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "Use loglog Smoothing"
-msgstr ""
+msgstr "Gebruik logloggladmaken"
 
 #: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Gebruik logloggladmaken om strepen in het resultaat te vermijden"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:659
@@ -5788,7 +5788,7 @@ msgstr "Vooruitblik (1:4) - klik RMB om te springen"
 # What does this mean?
 #: plug-ins/common/scatter_hsv.c:441
 msgid "Holdness:"
-msgstr ""
+msgstr "Vasthouden:"
 
 #: plug-ins/common/screenshot.c:137 plug-ins/winsnap/winsnap.c:1074
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
@@ -6329,9 +6329,8 @@ msgstr "RLE-compressie"
 
 #. origin
 #: plug-ins/common/tga.c:1217
-#, fuzzy
 msgid "Origin at bottom left"
-msgstr "links onder"
+msgstr "Begin linksonder"
 
 #: plug-ins/common/threshold_alpha.c:104
 msgid "<Image>/Image/Alpha/Threshold Alpha..."
@@ -7273,6 +7272,10 @@ msgstr "<Image>/Afbeelding/Transformaties/Ijverig snijden"
 msgid "ZealousCropping(tm)..."
 msgstr "Ijverig snijden..."
 
+#: plug-ins/common/zealouscrop.c:219
+msgid "ZealousCrop(tm): Nothing to crop."
+msgstr "Ijverig snijden: niets te snijden."
+
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
 msgstr "<Toolbox>/Xtns/DB-browser..."
@@ -7827,7 +7830,6 @@ msgid "Video:"
 msgstr "Video:"
 
 #: plug-ins/gap/gap_decode_xanim.c:215
-#, fuzzy
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
@@ -7837,7 +7839,7 @@ msgstr ""
 "Naam van een door xanim te lezen videobestand.\n"
 "Frames worden uit het videobestand gehaald\n"
 "en geschreven naar aparte schijfbestanden.\n"
-"xanimuitvoer-uitvoering is nodig."
+"De xanimversie die kan exporteren is nodig."
 
 #: plug-ins/gap/gap_decode_xanim.c:245
 msgid ""
@@ -7850,7 +7852,7 @@ msgstr ""
 # Verb or noun? I cannot check this function
 #: plug-ins/gap/gap_decode_xanim.c:252
 msgid "Format"
-msgstr ""
+msgstr "Formaat"
 
 #: plug-ins/gap/gap_decode_xanim.c:253
 msgid ""
@@ -7902,6 +7904,8 @@ msgid ""
 "Run xanim asynchronously and delete unwanted frames\n"
 "(out of the specified range) while xanim is still running"
 msgstr ""
+"Run xanim asynchroon en wis ongewenste frames (uit het\n"
+"opgegeven bereik) terwijl xanim nog steeds loopt"
 
 #: plug-ins/gap/gap_decode_xanim.c:294
 msgid ""
@@ -7909,10 +7913,13 @@ msgid ""
 "Warning: xanim 2.80 has only limited MPEG support.\n"
 "Most of the frames (type P and B) will be skipped."
 msgstr ""
+"\n"
+"Waarschuwing: xanim 2.80 ondersteunt MPEG slechts in beperkte\n"
+"mate. De meeste frames (type P en B) worden overgeslagen."
 
 #: plug-ins/gap/gap_decode_xanim.c:297
 msgid "Split any Xanim readable Video to Frames"
-msgstr ""
+msgstr "Splits elke voor Xanim leesbare video op in frames"
 
 #: plug-ins/gap/gap_decode_xanim.c:540
 #, c-format
@@ -7921,31 +7928,35 @@ msgid ""
 "%s\n"
 "maybe xanim has failed or was cancelled"
 msgstr ""
+"kan geen opgehaalde frames vinden,\n"
+"%s\n"
+"mischien slaagde xanim niet of werd het gestopt"
 
 #: plug-ins/gap/gap_decode_xanim.c:565
 #, c-format
 msgid "frames are not extracted, because overwrite of %s was cancelled"
 msgstr ""
+"frames worden niet opgehaald, omdat overschrijven van %s was geannuleerd"
 
 #: plug-ins/gap/gap_decode_xanim.c:575
 #, c-format
 msgid "failed to overwrite %s (check permissions ?)"
-msgstr ""
+msgstr "overschrijven %s niet gelukt (controleer permissies?)"
 
 #: plug-ins/gap/gap_decode_xanim.c:597
 #, c-format
 msgid "failed to write %s (check permissions ?)"
-msgstr ""
+msgstr "%s schrijven niet gelukt (controleer permissies?)"
 
 #: plug-ins/gap/gap_decode_xanim.c:723
 #, c-format
 msgid "could not execute %s (check if xanim is installed)"
-msgstr ""
+msgstr "kon %s niet uitvoeren (is xanim geïnstalleerd?)"
 
 #: plug-ins/gap/gap_decode_xanim.c:731
 #, c-format
 msgid "%s does not look like xanim"
-msgstr ""
+msgstr "%s lijkt niet op xanim"
 
 #: plug-ins/gap/gap_decode_xanim.c:755
 #, c-format
@@ -7953,6 +7964,8 @@ msgid ""
 "The xanim program on your system \"%s\"\n"
 "does not support the exporting options Ea, Ee, Eq"
 msgstr ""
+"Het xanim-programma op uw systeem \"%s\"\n"
+"ondersteunt de exportopties Ea, Ee en Eq niet"
 
 #: plug-ins/gap/gap_decode_xanim.c:762
 #, c-format
@@ -7960,11 +7973,13 @@ msgid ""
 "The xanim program on your system \"%s\"\n"
 "does not support exporting of single frames"
 msgstr ""
+"Het xanim-programma op uw systeem \"%s\"\n"
+"ondersteunt niet het exporteren van losse frames"
 
 #: plug-ins/gap/gap_decode_xanim.c:1025
 #, c-format
 msgid "videofile %s not existent or empty\n"
-msgstr ""
+msgstr "videobestand %s bestaat niet of is leeg\n"
 
 #: plug-ins/gap/gap_decode_xanim.c:1078
 #, c-format
@@ -7972,10 +7987,12 @@ msgid ""
 "could not create %s directory\n"
 "(that is required for xanim frame export)"
 msgstr ""
+"kon map %s niet aanmaken\n"
+"(nodig voor exporteren van xanim-frames)"
 
 #: plug-ins/gap/gap_decode_xanim.c:1089
 msgid "extracting frames..."
-msgstr ""
+msgstr "frames ophalen..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1114
 #, c-format
@@ -7983,20 +8000,24 @@ msgid ""
 "could not start xanim process\n"
 "(program=%s)"
 msgstr ""
+"kon xanim-proces niet starten\n"
+"(programma=%s)"
 
 #: plug-ins/gap/gap_decode_xanim.c:1135
 msgid ""
 "can't find any extracted frames,\n"
 "xanim has failed or was cancelled"
 msgstr ""
+"kan geen opgehaalde frames vinden,\n"
+"xanim slaagde niet of was geannuleerd"
 
 #: plug-ins/gap/gap_decode_xanim.c:1154
 msgid "renaming frames..."
-msgstr ""
+msgstr "frames hernoemen..."
 
 #: plug-ins/gap/gap_decode_xanim.c:1159
 msgid "converting frames..."
-msgstr ""
+msgstr "frames converteren..."
 
 #: plug-ins/gap/gap_filter_foreach.c:126
 msgid "backup to file"
@@ -8014,7 +8035,7 @@ msgstr "Doorgaan"
 #: plug-ins/gap/gap_filter_foreach.c:136
 #, c-format
 msgid "Skip %d"
-msgstr ""
+msgstr "Sla %d over"
 
 # Is 'end-settings' a name?
 #: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
@@ -8240,124 +8261,124 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
-msgstr ""
+msgstr "<Image>/Video/Ga naar/Volgend frame"
 
 #: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Goto/Previous Frame"
-msgstr ""
+msgstr "<Image>/Video/Ga naar/Vorig frame"
 
 #: plug-ins/gap/gap_main.c:506
 msgid "<Image>/Video/Goto/First Frame"
-msgstr ""
+msgstr "<Image>/Video/Ga naar/Eerste frame"
 
 #: plug-ins/gap/gap_main.c:518
 msgid "<Image>/Video/Goto/Last Frame"
-msgstr ""
+msgstr "<Image>/Video/Ga naar/Laatste frame"
 
 #: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr ""
+msgstr "<Image>/Video/Ga naar/Willekeurig frame..."
 
 #: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Delete Frames..."
-msgstr ""
+msgstr "<Image>/Video/Verwijder frames..."
 
 #: plug-ins/gap/gap_main.c:554
 msgid "<Image>/Video/Duplicate Frames..."
-msgstr ""
+msgstr "<Image>/Video/Dupliceer frames..."
 
 #: plug-ins/gap/gap_main.c:566
 msgid "<Image>/Video/Exchange Frame..."
-msgstr ""
+msgstr "<Image>Video/Verwissel frame..."
 
 #: plug-ins/gap/gap_main.c:578
 msgid "<Image>/Video/Move Path..."
-msgstr ""
+msgstr "<Image>Video/Bewegingspad..."
 
 #: plug-ins/gap/gap_main.c:649
 msgid "<Image>/Video/Frames to Image..."
-msgstr ""
+msgstr "<Image>Video/Frames naar afbeelding..."
 
 #: plug-ins/gap/gap_main.c:661
 msgid "<Image>/Video/Frames Flatten..."
-msgstr ""
+msgstr "<Image>Video/Frames pletten..."
 
 #: plug-ins/gap/gap_main.c:673
 msgid "<Image>/Video/Frames LayerDel..."
-msgstr ""
+msgstr "<Image>Video/Frames LaagDel..."
 
 #: plug-ins/gap/gap_main.c:697
 msgid "<Image>/Video/Frames Convert..."
-msgstr ""
+msgstr "<Image>Video/Frames converteren..."
 
 #: plug-ins/gap/gap_main.c:709
 msgid "<Image>/Video/Frames Resize..."
-msgstr ""
+msgstr "<Image>Video/Frames herschalen..."
 
 #: plug-ins/gap/gap_main.c:721
 msgid "<Image>/Video/Frames Crop..."
-msgstr ""
+msgstr "<Image>Video/Frames snijden..."
 
 #: plug-ins/gap/gap_main.c:733
 msgid "<Image>/Video/Frames Scale..."
-msgstr ""
+msgstr "<Image>Video/Frames schalen..."
 
 #: plug-ins/gap/gap_main.c:745
 msgid "<Image>/Video/Split Image to Frames..."
-msgstr ""
+msgstr "<Image>Video/Afbeelding opdelen in frames..."
 
 #: plug-ins/gap/gap_main.c:758
 msgid "<Image>/Video/Framesequence Shift..."
-msgstr ""
+msgstr "<Image>Video/Framereeks verschuiven..."
 
 #: plug-ins/gap/gap_main.c:770
 msgid "<Image>/Video/Frames Modify..."
-msgstr ""
+msgstr "<Image>Video/Frames aanpassen..."
 
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is equal to LayerName"
-msgstr ""
+msgstr "Patroon is gelijk aan laagnaam"
 
 #: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is Start of LayerName"
-msgstr ""
+msgstr "Patroon is begin van laagnaam"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is End of Layername"
-msgstr ""
+msgstr "Patroon is eind van laagnaam"
 
 #: plug-ins/gap/gap_mod_layer.c:87 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is a Part of LayerName"
-msgstr ""
+msgstr "Patroon is deel van laagnaam"
 
 #: plug-ins/gap/gap_mod_layer.c:88 plug-ins/gap/gap_range_ops.c:578
 msgid "Pattern is LayerstackNumber List"
-msgstr ""
+msgstr "Patroon is lijst van Laagstapelnummer"
 
 #: plug-ins/gap/gap_mod_layer.c:89 plug-ins/gap/gap_range_ops.c:579
 msgid "Pattern is REVERSE-stack List"
-msgstr ""
+msgstr "Patroon lijst van omgekeerde stapel"
 
 #: plug-ins/gap/gap_mod_layer.c:90 plug-ins/gap/gap_range_ops.c:580
 msgid "All Visible (ignore Pattern)"
-msgstr ""
+msgstr "Allemaal zichtbaar (negeer patroon)"
 
 #: plug-ins/gap/gap_mod_layer.c:92
 msgid "Select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "Selecteer alle lagen waarvan laagnaam gelijk is aan patroon"
 
 #: plug-ins/gap/gap_mod_layer.c:93
 msgid "Select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "Selecteer alle lagen waarvan laagnaam begint met patroon"
 
 #: plug-ins/gap/gap_mod_layer.c:94
 msgid "Select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "Selecteer alle lagen waarvan laagnaam eindigt op laagnaam"
 
 #: plug-ins/gap/gap_mod_layer.c:95
 msgid "Select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "Selecteer alle lagen waarvan laagnaam patroon bevat"
 
 #: plug-ins/gap/gap_mod_layer.c:96
 msgid ""
@@ -8365,6 +8386,9 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
+"Selecteer laagstapelposities.\n"
+"0, 4-5, 8\n"
+"waar 0 gelijk is aan Top-laag"
 
 #: plug-ins/gap/gap_mod_layer.c:97
 msgid ""
@@ -8372,96 +8396,101 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
+"Selecteer laagstapelposities.\n"
+"0, 4-5, 8\n"
+"waar 0 gelijk is aan AG-laag"
 
 #: plug-ins/gap/gap_mod_layer.c:98
 msgid "Select all visible Layers"
-msgstr ""
+msgstr "Selecteer alle zichtbare lagen"
 
 #. action items what to do with the selected layer(s)
 #: plug-ins/gap/gap_mod_layer.c:102
 msgid "Set Layer(s) visible"
-msgstr ""
+msgstr "Stel laag of lagen in op zichtbaar"
 
 #: plug-ins/gap/gap_mod_layer.c:103
 msgid "Set Layer(s) invisible"
-msgstr ""
+msgstr "Stel laag of lagen in op onzichtbaar"
 
 #: plug-ins/gap/gap_mod_layer.c:104
 msgid "Set Layer(s) linked"
-msgstr ""
+msgstr "Stel laag of lagen in op gekoppeld"
 
 #: plug-ins/gap/gap_mod_layer.c:105
 msgid "Set Layer(s) unlinked"
-msgstr ""
+msgstr "Stel laag of lagen in op ongekoppeld"
 
 #: plug-ins/gap/gap_mod_layer.c:106
 msgid "Raise Layer(s)"
-msgstr ""
+msgstr "Laag of lagen omhoog"
 
 #: plug-ins/gap/gap_mod_layer.c:107
 msgid "Lower Layer(s)"
-msgstr ""
+msgstr "Laag of lagen omlaag"
 
 #: plug-ins/gap/gap_mod_layer.c:108
 msgid "Merge Layer(s) expand as necessary"
-msgstr ""
+msgstr "La(a)g(en) samenvoegen waar nodig"
 
 #: plug-ins/gap/gap_mod_layer.c:109
 msgid "Merge Layer(s) clipped to image"
-msgstr ""
+msgstr "La(a)g(en) samenvoegen naar afbeelding gesneden"
 
 #: plug-ins/gap/gap_mod_layer.c:110
 msgid "Merge Layer(s) clipped to bg-layer"
-msgstr ""
+msgstr "La(a)g(en) samenvoegen naar AG-laag gesneden"
 
 #: plug-ins/gap/gap_mod_layer.c:111
 msgid "Apply filter on Layer(s)"
-msgstr ""
+msgstr "Pas filter toe op laag of lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:112
 msgid "Duplicate Layer(s)"
-msgstr ""
+msgstr "Dupliceer laag of lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:113
 msgid "Delete Layer(s)"
-msgstr ""
+msgstr "Verwijder laag of lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:114
 msgid "Rename Layer(s)"
-msgstr ""
+msgstr "Hernoem laag of lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:153
 msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected frame range\n"
 msgstr ""
+"Voer functie uit op een of meer lagen\n"
+"in alle frames of het geselecteerde framebereik\n"
 
 #: plug-ins/gap/gap_mod_layer.c:157 plug-ins/gap/gap_mpege.c:258
 #: plug-ins/gap/gap_range_ops.c:443
 msgid "From Frame:"
-msgstr ""
+msgstr "Van frame:"
 
 #: plug-ins/gap/gap_mod_layer.c:158 plug-ins/gap/gap_mpege.c:259
 #: plug-ins/gap/gap_range_ops.c:444 plug-ins/gap/gap_range_ops.c:603
 msgid "first handled frame"
-msgstr ""
+msgstr "eerste behandelde frame"
 
 #: plug-ins/gap/gap_mod_layer.c:165 plug-ins/gap/gap_range_ops.c:451
 msgid "To Frame:"
-msgstr ""
+msgstr "Naar frame:"
 
 #: plug-ins/gap/gap_mod_layer.c:166 plug-ins/gap/gap_mpege.c:267
 #: plug-ins/gap/gap_range_ops.c:452 plug-ins/gap/gap_range_ops.c:611
 msgid "last handled frame"
-msgstr ""
+msgstr "laatste behandelde frame"
 
 #: plug-ins/gap/gap_mod_layer.c:174 plug-ins/gap/gap_range_ops.c:650
 msgid "Select Layer(s):"
-msgstr ""
+msgstr "Selecteer laag of lagen:"
 
 #: plug-ins/gap/gap_mod_layer.c:184 plug-ins/gap/gap_range_ops.c:659
 msgid "Select Pattern:"
-msgstr ""
+msgstr "Selecteer patroon:"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:186 plug-ins/gap/gap_range_ops.c:661
@@ -8470,35 +8499,38 @@ msgid ""
 "or layerstack position numbers\n"
 "0,3-5"
 msgstr ""
+"String om laagnamen te identificeren\n"
+"of laagstapelpositienummers\n"
+"0,3-5"
 
 #: plug-ins/gap/gap_mod_layer.c:192 plug-ins/gap/gap_range_ops.c:667
 msgid "Case sensitive"
-msgstr ""
+msgstr "Hoofdlettergevoelig"
 
 #: plug-ins/gap/gap_mod_layer.c:193 plug-ins/gap/gap_range_ops.c:668
 msgid "Lowercase and UPPERCASE letters are considered as different"
-msgstr ""
+msgstr "Hoofdletters en kleine letters worden als verschillend beschouwd"
 
 #: plug-ins/gap/gap_mod_layer.c:198 plug-ins/gap/gap_range_ops.c:673
 msgid "Invert Selection"
-msgstr ""
+msgstr "Keer selectie om"
 
 #: plug-ins/gap/gap_mod_layer.c:199
 msgid "Perform actions on all unselected Layers"
-msgstr ""
+msgstr "Voer acties uit op alle ongeselecteerde lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:204
 msgid "Function:"
-msgstr ""
+msgstr "Functie:"
 
 #. argv[7].radio_help_argv = action_help
 #: plug-ins/gap/gap_mod_layer.c:208
 msgid "Function to be performed on all selected layers"
-msgstr ""
+msgstr "Functie om uit te voeren op alle geselecteerde lagen"
 
 #: plug-ins/gap/gap_mod_layer.c:214
 msgid "New Layername:"
-msgstr ""
+msgstr "Nieuwe laagnaam:"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:216
@@ -8507,10 +8539,13 @@ msgid ""
 "[####] is replaced by frame number\n"
 "(is used on function rename only)"
 msgstr ""
+"Nieuwe laagnaam voor alle behandelde lagen\n"
+"[####] wordt vervangen door frame nummer\n"
+"(wordt alleen gebruikt op hernoemen functie)"
 
 #: plug-ins/gap/gap_mod_layer.c:221
 msgid "Frames Modify"
-msgstr ""
+msgstr "Frames aanpassen"
 
 #: plug-ins/gap/gap_mod_layer.c:285
 #, c-format
@@ -8518,24 +8553,26 @@ msgid ""
 "Non-Interactive call of %s\n"
 "(for all selected layers)"
 msgstr ""
+"Niet-interactieve aanroep van %s\n"
+"(voor alle geselecteerde lagen)"
 
 #. GAP-PDB-Browser Dialog
 #. ----------------------
 #: plug-ins/gap/gap_mod_layer.c:663
 msgid "Select Filter for Animated frames-apply"
-msgstr ""
+msgstr "Selecteer filter voor toepassen geannimeerde frames"
 
 #: plug-ins/gap/gap_mod_layer.c:805
 msgid "GAP Modify: No layer selected in last handled frame"
-msgstr ""
+msgstr "GAP-aanpassen: geen laag geselecteerd in laatste behandelde frame"
 
 #: plug-ins/gap/gap_mod_layer.c:891
 msgid "Modifying Frames/Layer(s)..."
-msgstr ""
+msgstr "Aanpassen frames/lagen..."
 
 #: plug-ins/gap/gap_mod_layer.c:972
 msgid "No selected Layer in start frame"
-msgstr ""
+msgstr "Geen geselecteerde laag in startframe"
 
 #: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
@@ -8593,74 +8630,75 @@ msgstr "Rechts onder"
 
 #: plug-ins/gap/gap_mov_dialog.c:294
 msgid "Loop"
-msgstr ""
+msgstr "Herhaal"
 
 #: plug-ins/gap/gap_mov_dialog.c:295
 msgid "Loop Reverse"
-msgstr ""
+msgstr "Omgekeerde lus"
 
 #: plug-ins/gap/gap_mov_dialog.c:296
 msgid "Once"
-msgstr ""
+msgstr "Eenmalig"
 
 #: plug-ins/gap/gap_mov_dialog.c:297
 msgid "OnceReverse"
-msgstr ""
+msgstr "Eenmalig omgekeerd"
 
 #: plug-ins/gap/gap_mov_dialog.c:298
 msgid "PingPong"
-msgstr ""
+msgstr "Heen en weer"
 
 #: plug-ins/gap/gap_mov_dialog.c:300
 msgid "Frame Loop"
-msgstr ""
+msgstr "Framelus"
 
 #: plug-ins/gap/gap_mov_dialog.c:301
 msgid "Frame Loop Reverse"
-msgstr ""
+msgstr "Omgekeerde framelus"
 
 #: plug-ins/gap/gap_mov_dialog.c:302
 msgid "Frame Once"
-msgstr ""
+msgstr "Frame eenmalig"
 
 #: plug-ins/gap/gap_mov_dialog.c:303
 msgid "Frame OnceReverse"
-msgstr ""
+msgstr "Frame eenmalig omgekeerd"
 
 #: plug-ins/gap/gap_mov_dialog.c:304
 msgid "Frame PingPong"
-msgstr ""
+msgstr "Frame heen en weer"
 
 #: plug-ins/gap/gap_mov_dialog.c:305
 msgid "Frame None"
-msgstr ""
+msgstr "Frame geen"
 
 #: plug-ins/gap/gap_mov_dialog.c:480
 msgid "Move Path"
-msgstr ""
+msgstr "Bewegingspad"
 
 #: plug-ins/gap/gap_mov_dialog.c:514
 msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr ""
+"Toon vooruitblikframe met geselecteerde bronlaag op huidig controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:518
 msgid "Anim Preview"
-msgstr ""
+msgstr "Animatievooruitblik"
 
 #: plug-ins/gap/gap_mov_dialog.c:525
 msgid "Generate Animated Preview as multilayer image"
-msgstr ""
+msgstr "Toon animatievooruitblik als een meerlaagse afbeelding"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:538
 msgid "Copy moving source-layer(s) into frames"
-msgstr ""
+msgstr "Kopieer bewegende bronla(a)g(en) naar frames"
 
 #. the start frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:571
 msgid "Start Frame:"
-msgstr ""
+msgstr "Startframe:"
 
 #. label text
 #. scalesize spinsize
@@ -8672,13 +8710,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:579
 msgid "First handled frame"
-msgstr ""
+msgstr "Eerst bewerkte frame"
 
 #. the end frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:586
 msgid "End Frame:"
-msgstr ""
+msgstr "Eindframe:"
 
 #. label text
 #. scalesize spinsize
@@ -8690,13 +8728,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:594
 msgid "Last handled frame"
-msgstr ""
+msgstr "Laatste bewerkte frame"
 
 #. the Preview Frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:601
 msgid "Preview Frame:"
-msgstr ""
+msgstr "Vooruitblikframe:"
 
 #. label text
 #. scalesize spinsize
@@ -8709,12 +8747,13 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:609
 msgid "Frame to show when UpdPreview button is pressed"
 msgstr ""
+"Te tonen frame als de knop voor het verversen van de vooruitblik is ingedrukt"
 
 #. the Layerstack scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:617 plug-ins/gap/gap_range_ops.c:267
 msgid "Layerstack:"
-msgstr ""
+msgstr "Laagstapel:"
 
 #. label text
 #. scalesize spinsize
@@ -8729,151 +8768,159 @@ msgid ""
 "How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
+"Hoe bronlaag in de laagstapel van de doelframe in te voegen\n"
+"0 betekent bovenaan / aan de voorkant"
 
 #. toggle force visibility
 #: plug-ins/gap/gap_mov_dialog.c:637
 msgid "Force visibility"
-msgstr ""
+msgstr "Dwing zichtbaarheid af"
 
 #: plug-ins/gap/gap_mov_dialog.c:644
 msgid "Force visibility for all copied Src-Layers"
-msgstr ""
+msgstr "Dwing zichtbaarheid af voor alle gekopieerde bronlagen"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:650
 msgid "Clip To Frame"
-msgstr ""
+msgstr "Snij naar frame"
 
 #: plug-ins/gap/gap_mov_dialog.c:657
 msgid "Clip all copied Src-Layers at Frame Boundaries"
-msgstr ""
+msgstr "Snij alle gekopieerde bronlagen naar framegrenzen"
 
 #: plug-ins/gap/gap_mov_dialog.c:705
 msgid ""
 "No Source Image was selected\n"
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
+"Geen bronafbeelding was geselecteerd\n"
+"(Open a.u.b. een tweede afbeelding van hetzelfde type voor u het "
+"bewegingspad opent)"
 
 #: plug-ins/gap/gap_mov_dialog.c:801
 msgid "Object on empty frames"
-msgstr ""
+msgstr "Object op lege frames"
 
 #: plug-ins/gap/gap_mov_dialog.c:802
 msgid "Object on one frame"
-msgstr ""
+msgstr "Object op één frame"
 
 #: plug-ins/gap/gap_mov_dialog.c:803
 msgid "Exact Object on frames"
-msgstr ""
+msgstr "Nauwkeurig object op frames"
 
 #: plug-ins/gap/gap_mov_dialog.c:833
 msgid "Anim Preview Mode"
-msgstr ""
+msgstr "Animatievooruitblikstand"
 
 #: plug-ins/gap/gap_mov_dialog.c:841
 msgid "Scale Preview"
-msgstr ""
+msgstr "Schaal vooruitblik"
 
 #: plug-ins/gap/gap_mov_dialog.c:842
 msgid "Scale down size of the generated animated preview (in %)"
-msgstr ""
+msgstr "Verklein de geanimeerde vooruitblik (in %)"
 
 #: plug-ins/gap/gap_mov_dialog.c:850
 msgid "Framerate"
-msgstr ""
+msgstr "Framesnelheid"
 
 #: plug-ins/gap/gap_mov_dialog.c:851
 msgid "Framerate to use in the animated preview in frames/sec"
 msgstr ""
+"Framesnelheid te gebruiken voor de geanimeerde vooruitblik in frames/sec"
 
 #: plug-ins/gap/gap_mov_dialog.c:865
 msgid "Copy to Video Buffer"
-msgstr ""
+msgstr "Kopieer naar videobuffer"
 
 #: plug-ins/gap/gap_mov_dialog.c:866
 msgid ""
 "Save all single frames of animated preview to video buffer\n"
 "(configured in gimprc by video-paste-dir and video-paste-basename)"
 msgstr ""
+"Sla alle losse frames van de geanimeerde vooruitblik op in videobuffer\n"
+"(geconfigureerd in gimprc door video-paste-dir en video-paste-basename)"
 
 #: plug-ins/gap/gap_mov_dialog.c:871
 msgid "Move Path Animated Preview"
-msgstr ""
+msgstr "Bewegingspad geanimeerde vooruitblik"
 
 #: plug-ins/gap/gap_mov_dialog.c:917
 msgid "Generate Animated Preview failed\n"
-msgstr ""
+msgstr "Genereren geanimeerde vooruitblik mislukte\n"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1202
 msgid "Load Path Points from file"
-msgstr ""
+msgstr "Laad padpunten uit bestand"
 
 #. filesel is already open
 #: plug-ins/gap/gap_mov_dialog.c:1238
 msgid "Save Path Points to file"
-msgstr ""
+msgstr "Sla padpunten op in bestand"
 
 #: plug-ins/gap/gap_mov_dialog.c:1567
 #, c-format
 msgid "Current Point: [ %3d ] of [ %3d ]"
-msgstr ""
+msgstr "Huidig punt: [ %3d ] van [ %3d ]"
 
 #: plug-ins/gap/gap_mov_dialog.c:1653
 msgid "Source Select"
-msgstr ""
+msgstr "Bronselectie"
 
 #. Source Layer menu
 #: plug-ins/gap/gap_mov_dialog.c:1669
 msgid "Source Image/Layer:"
-msgstr ""
+msgstr "Bronafbeelding/-laag:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1679
 msgid "Source Object to insert into Frame Range"
-msgstr ""
+msgstr "Bronobject om in framebereik in te voegen"
 
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1694
 msgid "Mode:"
-msgstr ""
+msgstr "Modus:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1703
 msgid "Paintmode"
-msgstr ""
+msgstr "Schildermodus"
 
 #. Loop Stepmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1718
 msgid "Stepmode:"
-msgstr ""
+msgstr "Stapmodus:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1736
 msgid "How to fetch the next SrcLayer at the next handled frame"
-msgstr ""
+msgstr "Hoe de volgende bronlaag bij het volgende bewerkte frame op te halen"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:1742
 msgid "Handle:"
-msgstr ""
+msgstr "Handvat:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1760
 msgid "How to place the SrcLayer at Controlpoint Coordinates"
-msgstr ""
+msgstr "Hoe de bronlaag te plaatsen op de controlepuntcoördinaten"
 
 #. to avoid side effects while initialization
 #. the frame
 #: plug-ins/gap/gap_mov_dialog.c:1814
 msgid "Move Path Preview"
-msgstr ""
+msgstr "Bewegingspad vooruitblik"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1846
 msgid "X Coordinate"
-msgstr ""
+msgstr "X-coördinaat"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1864
 msgid "Y Coordinate"
-msgstr ""
+msgstr "Y-coördinaat"
 
 #. label text
 #. scalesize spinsize
@@ -8885,7 +8932,7 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1881
 msgid "Scale Source Layer's Width in percent"
-msgstr ""
+msgstr "Schaal breedte van bronlaag in procent"
 
 #. label text
 #. scalesize spinsize
@@ -8897,7 +8944,7 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1898
 msgid "Scale SrcLayer's Height in percent"
-msgstr ""
+msgstr "Schaal hoogte van bronlaag in procent"
 
 #. label text
 #. scalesize spinsize
@@ -8909,13 +8956,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1915
 msgid "SrcLayer's Opacity in percent"
-msgstr ""
+msgstr "Ondoorzichtigheid van bronlaag in procent"
 
 #. Rotation
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1924
 msgid "Rotate:"
-msgstr ""
+msgstr "Draai:"
 
 #. label text
 #. scalesize spinsize
@@ -8927,13 +8974,13 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1932
 msgid "Rotate SrcLayer (in degree)"
-msgstr ""
+msgstr "Draai bronlaag (in graden)"
 
 #. Keyframe
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:1942
 msgid "Keyframe:"
-msgstr ""
+msgstr "Sleutelframe:"
 
 #. label text
 #. scalesize spinsize
@@ -8948,27 +8995,33 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
+"Bevestig controlepunt aan sleutelframe nr.\n"
+"(0 == geen sleutelframe)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2025
 msgid "Add Point"
-msgstr ""
+msgstr "Voeg punt toe"
 
 #: plug-ins/gap/gap_mov_dialog.c:2033
 msgid ""
 "Add Controlpoint at end\n"
 "(the last Point is duplicated)"
 msgstr ""
+"Voeg controlepunt aan eind toe\n"
+"(het laatste punt wordt gedupliceerd)"
 
 #. toggle clip_to_image
 #: plug-ins/gap/gap_mov_dialog.c:2038
 msgid "Show Path"
-msgstr ""
+msgstr "Toon pad"
 
 #: plug-ins/gap/gap_mov_dialog.c:2045
 msgid ""
 "Show Path Lines and enable pick/drag with left button or move with right "
 "button"
 msgstr ""
+"Toon padlijnen en schakel kiezen/slepen in met de linkermuisknop of bewegen "
+"met de rechtermuisknop"
 
 #: plug-ins/gap/gap_mov_dialog.c:2055
 #: plug-ins/imagemap/imap_cmd_insert_point.c:60
@@ -8981,6 +9034,8 @@ msgid ""
 "Insert Controlpoint\n"
 "(the current Point is duplicated)"
 msgstr ""
+"Voeg controlepunt in\n"
+"(het huidige punt wordt gedupliceerd)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2067
 #: plug-ins/imagemap/imap_cmd_delete_point.c:60
@@ -8990,123 +9045,131 @@ msgstr "Punt wissen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2075
 msgid "Delete current Controlpoint"
-msgstr ""
+msgstr "Wis huidige controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2081
 msgid "Prev Point"
-msgstr ""
+msgstr "Vorige punt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2089
 msgid "Show Previous Controlpoint"
-msgstr ""
+msgstr "Toon vorige controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2093
 msgid "Next Point"
-msgstr ""
+msgstr "Volgende punt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2101
 msgid "Show Next Controlpoint"
-msgstr ""
+msgstr "Toon volgende controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2107
 msgid "First Point"
-msgstr ""
+msgstr "Eerste punt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2115
 msgid "Show First Controlpoint"
-msgstr ""
+msgstr "Toon eerste controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2119
 msgid "Last Point"
-msgstr ""
+msgstr "Laatste punt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2127
 msgid "Show Last Controlpoint"
-msgstr ""
+msgstr "Toon laatste controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2133
 msgid "Clear Point"
-msgstr ""
+msgstr "Wis punt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2141
 msgid "Reset the current Controlpoint to default Values"
-msgstr ""
+msgstr "Stel het huidige controlepunt in op standaard waarden"
 
 #: plug-ins/gap/gap_mov_dialog.c:2145
 msgid "Clear All Points"
-msgstr ""
+msgstr "Wis alle punten"
 
 #: plug-ins/gap/gap_mov_dialog.c:2153
 msgid ""
 "Reset all Controlpoints to default Values but dont change the path (X/Y "
 "Values)"
 msgstr ""
+"Stel alle controlepunten in op standaard waarden, maar verander niet het pad "
+"(X/Y-waarden)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2160
 msgid "Rotate Follow"
-msgstr ""
+msgstr "Draai volg"
 
 #: plug-ins/gap/gap_mov_dialog.c:2171
 msgid ""
 "Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
+"Stel draaiing voor alle controlepunten in om de vorm van het pad te\n"
+"volgen. (Shift: gebruik draaiing van controlepunt 1 als beginstand)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2178
 msgid "Delete All Points"
-msgstr ""
+msgstr "Wis alle punten"
 
 #: plug-ins/gap/gap_mov_dialog.c:2186
 msgid "Delete all Controlpoints"
-msgstr ""
+msgstr "Wis alle controlepunten"
 
 #: plug-ins/gap/gap_mov_dialog.c:2193
 msgid "Load Points"
-msgstr ""
+msgstr "Laad punten"
 
 #: plug-ins/gap/gap_mov_dialog.c:2201
 msgid "Load Controlpoints from file"
-msgstr ""
+msgstr "Laad controlepunten uit bestand"
 
 #: plug-ins/gap/gap_mov_dialog.c:2205
 msgid "Save Points"
-msgstr ""
+msgstr "Sla punten op"
 
 #: plug-ins/gap/gap_mov_dialog.c:2213
 msgid "Save Controlpoints to file"
-msgstr ""
+msgstr "Sla controlepunten op in bestand"
 
 #: plug-ins/gap/gap_mov_dialog.c:2671
 msgid ""
 "Can't operate with current Controlpoint\n"
 "or Keyframe settings"
 msgstr ""
+"Kan niet werken met huidige controlepunt-\n"
+"of sleutelframe-instellingen"
 
 #: plug-ins/gap/gap_mov_dialog.c:2678
 msgid "Reset Keyframes"
-msgstr ""
+msgstr "Stel sleutelframes opnieuw in"
 
 #: plug-ins/gap/gap_mov_dialog.c:2683
 msgid "Move Path Controlpointcheck"
-msgstr ""
+msgstr "Controle van beweginspad van controlepunt"
 
 #: plug-ins/gap/gap_mov_dialog.c:2684
 msgid "Errors:"
-msgstr ""
+msgstr "Fouten:"
 
 #: plug-ins/gap/gap_mov_exec.c:444
 msgid ""
 "No Source Image was selected.\n"
 "Please open a 2nd Image of the same type before opening Move Path."
 msgstr ""
+"Geen bronafbeelding geselecteerd.\n"
+"Open een tweede afbeelding van hetzelfde type voor u het bewegingspad opent."
 
 #: plug-ins/gap/gap_mov_exec.c:455
 msgid "Copying Layers into Frames..."
-msgstr ""
+msgstr "Lagen naar frames kopiëren"
 
 #: plug-ins/gap/gap_mov_exec.c:459
 msgid "Generating Animated Preview..."
-msgstr ""
+msgstr "Geanimeerde vooruitblik genereren..."
 
 #: plug-ins/gap/gap_mov_exec.c:1376
 #, c-format
@@ -9114,6 +9177,9 @@ msgid ""
 "\n"
 "Error: Keyframe %d at point [%d] higher or equal than last handled frame"
 msgstr ""
+"\n"
+"Fout: sleutelframe %d op punt [%d] groter of gelijk aan laatste bewerkte "
+"frame"
 
 #: plug-ins/gap/gap_mov_exec.c:1384
 #, c-format
@@ -9122,6 +9188,9 @@ msgid ""
 "Error: Keyframe %d at point [%d] leaves not enough space (frames)\n"
 "for the previous controlpoints"
 msgstr ""
+"\n"
+"Fout: sleutelframe %d op punt [%d] laat niet genoeg ruimte\n"
+"over (frames) voor de voorgaande controlepunten."
 
 #: plug-ins/gap/gap_mov_exec.c:1394
 #, c-format
@@ -9129,6 +9198,8 @@ msgid ""
 "\n"
 "Error: Keyframe %d is not in sequence at point [%d]"
 msgstr ""
+"\n"
+"Fout: sleutelframe %d is niet uitgelijnd op punt [%d]"
 
 #: plug-ins/gap/gap_mov_exec.c:1412
 #, c-format
@@ -9136,6 +9207,8 @@ msgid ""
 "\n"
 "Error: controlpoint [%d] is out of handled framerange"
 msgstr ""
+"\n"
+"Fout: controlepunt [%d] ligt buiten het te bewerken framebereik"
 
 #: plug-ins/gap/gap_mov_exec.c:1426
 #, c-format
@@ -9144,136 +9217,141 @@ msgid ""
 "Error: more controlpoints (%d) than handled frames (%d)\n"
 "please reduce controlpoints or select more frames"
 msgstr ""
+"\n"
+"Fout: meer controlepunten (%d) dan bewerkte frames (%d)\n"
+"Verminder het aantal controlepunten of selecteer meer frames."
 
 #: plug-ins/gap/gap_mpege.c:111
 msgid "Conditions to run mpeg_encode 1.5:"
-msgstr ""
+msgstr "Voorwaarden om mpeg_encode 1.5 uit te voeren:"
 
 #: plug-ins/gap/gap_mpege.c:114
 msgid "Conditions to run mpeg2encode 1.2:"
-msgstr ""
+msgstr "Voorwaarden om mpeg2encode 1.2 uit te voeren:"
 
 #: plug-ins/gap/gap_mpege.c:124
 msgid "1.) mpeg_encode 1.5 must be installed"
-msgstr ""
+msgstr "1) mpeg_encode 1.5 moet geïnstalleerd zijn"
 
 #: plug-ins/gap/gap_mpege.c:127
 msgid "1.) mpeg2encode 1.2 must be installed"
-msgstr ""
+msgstr "1) mpeg2encode 1.2 moet geïnstalleerd zijn"
 
 #: plug-ins/gap/gap_mpege.c:132
 msgid "    you can get mpeg_encode at"
-msgstr ""
+msgstr "    u kunt mpeg_encode verkrijgen op"
 
 #: plug-ins/gap/gap_mpege.c:135
 msgid "    you can get mpeg2encode at http://www.mpeg.org/MSSG"
-msgstr ""
+msgstr "    u kunt mpeg2encode verkrijgen op http://www.mpeg.org/MSSG"
 
 #: plug-ins/gap/gap_mpege.c:140
 msgid "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
-msgstr ""
+msgstr "    ftp://mm-ftp.cs.berkeley.edu/pub/multimedia/mpeg/bmt1r1.tar.gz"
 
 #: plug-ins/gap/gap_mpege.c:143
 msgid "   or at ftp://ftp.mpeg.org/pub/mpeg/mssg "
-msgstr ""
+msgstr "   of op  ftp://ftp.mpeg.org/pub/mpeg/mssg "
 
 #: plug-ins/gap/gap_mpege.c:148
 msgid "2.) You need a series of single Images on disk (AnimFrames)"
-msgstr ""
+msgstr "2) U heeft een serie losse afbeeldingen op schijf nodig (AnimFrames)"
 
 #: plug-ins/gap/gap_mpege.c:152
 msgid "    all with fileformat JPEG (or YUV or PNM or PPM)"
-msgstr ""
+msgstr "    alle met bestandsformaat JPEG (of YUV of PNM of PPM)"
 
 #: plug-ins/gap/gap_mpege.c:155
 msgid "   all with fileformat PPM (or YUV)"
-msgstr ""
+msgstr "   alle met bestandsformaat PPM (of YUV)"
 
 #: plug-ins/gap/gap_mpege.c:160
 msgid "    (use 'Frames Convert' from the Video Menu"
-msgstr ""
+msgstr "    (gebruik 'Frames converteren' uit het Video-menu"
 
 #: plug-ins/gap/gap_mpege.c:164
 msgid "    or 'Split Image to Frames' from the Video Menu)"
-msgstr ""
+msgstr "    of 'Afbeelding opdelen in frames' uit het Video-menu)"
 
 #: plug-ins/gap/gap_mpege.c:168
 msgid "3.) All Images must have the same size,"
-msgstr ""
+msgstr "3) Alle afbeeldingen moeten dezelfde grootte zijn,"
 
 #: plug-ins/gap/gap_mpege.c:175
 msgid "    width and height must be a multiple of 16"
-msgstr ""
+msgstr "    breedte en hoogte moeten een meervoud van 16 zijn"
 
 #: plug-ins/gap/gap_mpege.c:179
 msgid "    (use Scale or Crop from the Video Menu)"
-msgstr ""
+msgstr "    (gebruik Schalen of Snijden uit het Video-menu)"
 
 #: plug-ins/gap/gap_mpege.c:194
 msgid "MPEG_ENCODE Information"
-msgstr ""
+msgstr "MPEG_ENCODE-informatie"
 
 #: plug-ins/gap/gap_mpege.c:231
 msgid "generate MPEG1 (ISO/IEC 11172-2) stream"
-msgstr ""
+msgstr "genereer MPEG1-stroom (ISO/IEC 11172-2)"
 
 #: plug-ins/gap/gap_mpege.c:232
 msgid "generate MPEG2 (ISO/IEC DIS 13818-2) stream"
-msgstr ""
+msgstr "genereer MPEG2-stroom (ISO/IEC DIS 13818-2)"
 
 #: plug-ins/gap/gap_mpege.c:242
 msgid "GenParams"
-msgstr ""
+msgstr "GenParams"
 
 #: plug-ins/gap/gap_mpege.c:244
 msgid "Gen + Encode"
-msgstr ""
+msgstr "Gen + Encode"
 
 #: plug-ins/gap/gap_mpege.c:266
 msgid "To   Frame:"
-msgstr ""
+msgstr "Naar frame:"
 
 #: plug-ins/gap/gap_mpege.c:273
 msgid "Framerate :"
-msgstr ""
+msgstr "Framesnelheid:"
 
 #: plug-ins/gap/gap_mpege.c:274
 msgid "framerate in frames/second"
-msgstr ""
+msgstr "framesnelheid in frames/seconde"
 
 #: plug-ins/gap/gap_mpege.c:281
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitratio:"
 
 #: plug-ins/gap/gap_mpege.c:282
 msgid ""
 "used for constant bitrates (bit/sec)                  \n"
 "(low rate gives good compression + bad quality)"
 msgstr ""
+"gebruikt voor constante bitratio's (bit/sec)         \n"
+"(laag zorgt voor goede compressie en slechte kwaliteit)"
 
 #: plug-ins/gap/gap_mpege.c:296
 msgid "Outputfile:"
-msgstr ""
+msgstr "Uitvoerbestand:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:298
 msgid "Name of the resulting MPEG outputfile"
-msgstr ""
+msgstr "Naam van het resulterende MPEG-uitvoerbestand"
 
 #: plug-ins/gap/gap_mpege.c:304
 msgid "Paramfile:"
-msgstr ""
+msgstr "Parambestand:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:306
 msgid ""
 "Name of the Encoder-Parameterfile\n"
 "(is generated)"
-msgstr ""
+msgstr "Naam van het codeerderparameterbestand"
 
 #: plug-ins/gap/gap_mpege.c:312
 msgid "Startscript:"
-msgstr ""
+msgstr "Startscript:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:314
@@ -9281,184 +9359,214 @@ msgid ""
 "Name of the Startscript           \n"
 "(is generated/executed)"
 msgstr ""
+"Naam van het startscript    \n"
+"(wordt gegenereerd/uitgevoerd)"
 
 #: plug-ins/gap/gap_mpege.c:320
 msgid ""
 "Generate parameterfile for mpeg_encode 1.5\n"
 "(the freely distributed Berkeley MPEG-1 Video  Encoder.)\n"
 msgstr ""
+"Genereer parameterbestand voor mpeg_encode 1.5\n"
+"(de vrij verspreide MPEG-1-videocodeerder van Berkeley.)\n"
 
 #: plug-ins/gap/gap_mpege.c:324
 msgid "Constant Bitrate :"
-msgstr ""
+msgstr "Constante bitratio:"
 
 #: plug-ins/gap/gap_mpege.c:325
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr ""
+msgstr "Negeer I/P/QSCALE-waarden en gebruik een constante bitratio"
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
-msgstr ""
+msgstr "Patroon:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:332
 msgid "How to encode MPEG framesequence (I/P/B frames)"
-msgstr ""
+msgstr "How een MPEG-frameserie te coderen (I/P/B-frames)"
 
 #: plug-ins/gap/gap_mpege.c:338
 msgid "IQSCALE:"
-msgstr ""
+msgstr "IQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:339
 msgid ""
 "Quality scale for I-Frames                       \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Kwaliteitsschaal voor I-frames           \n"
+"(1 = beste kwaliteit, 31 = beste compressie)"
 
 #: plug-ins/gap/gap_mpege.c:346
 msgid "PQSCALE:"
-msgstr ""
+msgstr "PQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:347
 msgid ""
 "Quality scale for P-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Kwaliteitsschaal voor P-frames           \n"
+"(1 = beste kwaliteit, 31 = beste compressie)"
 
 #: plug-ins/gap/gap_mpege.c:354
 msgid "BQSCALE:"
-msgstr ""
+msgstr "BQSCALE:"
 
 #: plug-ins/gap/gap_mpege.c:355
 msgid ""
 "Quality scale for B-Frames                  \n"
 "(1 = best quality, 31 = best comression)"
 msgstr ""
+"Kwaliteitsschaal voor B-frames           \n"
+"(1 = beste kwaliteit, 31 = beste compressie)"
 
 #: plug-ins/gap/gap_mpege.c:362
 msgid "P-Search :"
-msgstr ""
+msgstr "P-zoeken:"
 
 #: plug-ins/gap/gap_mpege.c:363
 msgid "Search Algorithmus used for P-frames"
-msgstr ""
+msgstr "Zoekalgoritme van P-frames"
 
 #: plug-ins/gap/gap_mpege.c:369
 msgid "B-Search :"
-msgstr ""
+msgstr "B-zoeken:"
 
 #: plug-ins/gap/gap_mpege.c:370
 msgid "Search Algorithmus used for B-frames"
-msgstr ""
+msgstr "Zoekalgoritme van B-frames"
 
 #: plug-ins/gap/gap_mpege.c:375
 msgid "Gen MPEG_ENCODE Parameters"
-msgstr ""
+msgstr "Gen MPEG_ENCODE-parameters"
 
 #: plug-ins/gap/gap_mpege.c:376 plug-ins/gap/gap_mpege.c:414
 msgid "Encode Values"
-msgstr ""
+msgstr "Waarden coderen"
 
 #: plug-ins/gap/gap_mpege.c:392
 msgid ""
 "Generate parameterfile for mpeg2encode 1.2\n"
 "(MPEG-2 Video  Encoder.)\n"
 msgstr ""
+"Genereer parameterbestand voor mpeg2encode 1.2\n"
+"(MPEG-2-videocodeerder.)\n"
 
 #: plug-ins/gap/gap_mpege.c:395
 msgid "MPEG-type :"
-msgstr ""
+msgstr "MPEG-type:"
 
 #: plug-ins/gap/gap_mpege.c:404
 msgid "Videoformat :"
-msgstr ""
+msgstr "Videoformaat:"
 
 #: plug-ins/gap/gap_mpege.c:405
 msgid "Videoformat"
-msgstr ""
+msgstr "Videoformaat"
 
 #. framerates above 30 ar not allowed in mpeg2encode
 #: plug-ins/gap/gap_mpege.c:413
 msgid "Gen MPEG2ENCODE Parameters"
-msgstr ""
+msgstr "Gen MPEG2ENCODE-parameters"
 
 #: plug-ins/gap/gap_mpege.c:978
 msgid ""
 "\n"
 "WARNING: mpeg_encode does not support Fileformat "
 msgstr ""
+"\n"
+"WAARSCHUWING: mpeg_encode ondersteunt dit bestandsformaat niet"
 
 #: plug-ins/gap/gap_mpege.c:981
 msgid ""
 "\n"
 "ERROR: width not a multiple of 16"
 msgstr ""
+"\n"
+"FOUT: breedte is geen meervoud van 16"
 
 #: plug-ins/gap/gap_mpege.c:982
 msgid ""
 "\n"
 "ERROR: height not a multiple of 16"
 msgstr ""
+"\n"
+"FOUT: hoogte is geen meervoud van 16"
 
 #: plug-ins/gap/gap_mpege.c:988
 msgid ""
 "\n"
 "WARNING: mpeg2encode does not support Fileformat "
 msgstr ""
+"\n"
+"WAARSCHUWING: mpeg2encode ondersteunt dit bestandsformaat niet"
 
 #: plug-ins/gap/gap_mpege.c:993
 msgid ""
 "\n"
 "ERROR: invoked from a single image, animframe required"
 msgstr ""
+"\n"
+"FOUT: aangeroepen vanuit een enkel bestand, animframe benodigd"
 
 #: plug-ins/gap/gap_navigator_dialog.c:368
 msgid ""
 "Playback         \n"
 "<Shift> optimized"
 msgstr ""
+"Afspelen         \n"
+"<Shift> geoptimaliseerd"
 
 #: plug-ins/gap/gap_navigator_dialog.c:373
 msgid ""
 "Smart Update .xvpics\n"
 "<Shift> forced upd"
 msgstr ""
+"Slim vernieuwe .xvpics\n"
+"<Shift> gedwongen vern."
 
 #: plug-ins/gap/gap_navigator_dialog.c:378
 msgid "Duplicate selected Frames"
-msgstr ""
+msgstr "Dupliceer geselecteerde frames"
 
 #: plug-ins/gap/gap_navigator_dialog.c:382
 msgid "Delete selected Frames"
-msgstr ""
+msgstr "Verwijder geselecteerde frames"
 
 #: plug-ins/gap/gap_navigator_dialog.c:391
 msgid "Goto 1st Frame"
-msgstr ""
+msgstr "Ga naar eerste frame"
 
 #: plug-ins/gap/gap_navigator_dialog.c:395
 msgid ""
 "Goto prev Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Naar vorige frame\n"
+"<Shift> gebruik stapgrootte van tijdzoom"
 
 #: plug-ins/gap/gap_navigator_dialog.c:400
 msgid ""
 "Goto next Frame\n"
 "<Shift> use timezoom stepsize"
 msgstr ""
+"Naar volgende frame\n"
+"<Shift> gebruik stapgrootte van tijdzoom"
 
 #: plug-ins/gap/gap_navigator_dialog.c:405
 msgid "Goto last Frame"
-msgstr ""
+msgstr "Naar laatste frame"
 
 #: plug-ins/gap/gap_navigator_dialog.c:463
 msgid "<Image>/Video/VCR Navigator..."
-msgstr ""
+msgstr "<Image>/Video/Videonavigator..."
 
 #: plug-ins/gap/gap_navigator_dialog.c:526
 msgid "Cant open two or more Video Navigator Windows."
-msgstr ""
+msgstr "Kan niet twee of meer videonavigatorvensters openen."
 
 #. menu_item cut
 #: plug-ins/gap/gap_navigator_dialog.c:2932
@@ -9486,165 +9594,177 @@ msgstr "Vervangend plakken"
 #. menu_item copy
 #: plug-ins/gap/gap_navigator_dialog.c:2972
 msgid "Clear Video Buffer"
-msgstr ""
+msgstr "Maak videobuffer leeg"
 
 #: plug-ins/gap/gap_navigator_dialog.c:2997
 msgid "Videoframes:"
-msgstr ""
+msgstr "Videoframes:"
 
 #: plug-ins/gap/gap_navigator_dialog.c:3012
 msgid "Framerate:"
-msgstr ""
+msgstr "Framesnelheid:"
 
 #: plug-ins/gap/gap_navigator_dialog.c:3035
 msgid "Timezoom:"
-msgstr ""
+msgstr "Tijdzoom:"
 
 #. The main shell
 #: plug-ins/gap/gap_navigator_dialog.c:3129
 msgid "Video Navigator"
-msgstr ""
+msgstr "Videonavigator"
 
 #: plug-ins/gap/gap_range_ops.c:120
 msgid "New Width:"
-msgstr ""
+msgstr "Nieuwe breedte:"
 
 #: plug-ins/gap/gap_range_ops.c:129
 msgid "New Height:"
-msgstr ""
+msgstr "Nieuwe hoogte:"
 
 #: plug-ins/gap/gap_range_ops.c:138
 msgid "Offset X:"
-msgstr ""
+msgstr "Verspringing X:"
 
 #: plug-ins/gap/gap_range_ops.c:147
 msgid "Offset Y:"
-msgstr ""
+msgstr "Verspringing Y:"
 
 #: plug-ins/gap/gap_range_ops.c:158
 msgid "Crop AnimFrames (all)"
-msgstr ""
+msgstr "Snij (alle) AnimFrames"
 
 #: plug-ins/gap/gap_range_ops.c:159
 #, c-format
 msgid "Crop (original %dx%d)"
-msgstr ""
+msgstr "Snij (origineel %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:169
 msgid "Resize AnimFrames (all)"
-msgstr ""
+msgstr "Herschaal (alle) AnimFrames"
 
 #: plug-ins/gap/gap_range_ops.c:170
 #, c-format
 msgid "Resize (original %dx%d)"
-msgstr ""
+msgstr "Herschaal (origineel %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:176
 msgid "Scale AnimFrames (all)"
-msgstr ""
+msgstr "Schaal (alle) AnimFrames"
 
 #: plug-ins/gap/gap_range_ops.c:177
 #, c-format
 msgid "Scale (original %dx%d)"
-msgstr ""
+msgstr "Schaal (origineel %dx%d)"
 
 #: plug-ins/gap/gap_range_ops.c:308
 msgid "Generate Optimal Palette"
-msgstr ""
+msgstr "Genereer optimaal palet"
 
 #: plug-ins/gap/gap_range_ops.c:309
 msgid "WEB Palette"
-msgstr ""
+msgstr "WEB-palet"
 
 #: plug-ins/gap/gap_range_ops.c:310
 msgid "Use Custom Palette"
-msgstr ""
+msgstr "Gebruik eigen palet"
 
 #: plug-ins/gap/gap_range_ops.c:311
 msgid "Use Black/White (1-Bit) Palette"
-msgstr ""
+msgstr "Gebruik zwart-witpalet (1-bits)"
 
+# What is the Dutch translation of the term 'dithering'?
 #: plug-ins/gap/gap_range_ops.c:313
 msgid "Floyd-Steinberg Color Dithering (Normal)"
-msgstr ""
+msgstr "Floyd-Steinberg-kleurendithering (normaal)"
 
+# What is the Dutch translation of the term 'dithering'?
 #: plug-ins/gap/gap_range_ops.c:314
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
-msgstr ""
+msgstr "Floyd-Steinberg-kleurendithering (verminderde kleuruitloop)"
 
+# What is the Dutch translation of the term 'dithering'?
 #: plug-ins/gap/gap_range_ops.c:315
 msgid "Positioned Color Dithering"
-msgstr ""
+msgstr "Gepositioneerde kleurendithering"
 
+# What is the Dutch translation of the term 'dithering'?
 #: plug-ins/gap/gap_range_ops.c:316
 msgid "No Color Dithering"
-msgstr ""
+msgstr "Geen kleurendithering"
 
 #: plug-ins/gap/gap_range_ops.c:327
 msgid "Palette Type"
-msgstr ""
+msgstr "Palettype"
 
 #: plug-ins/gap/gap_range_ops.c:334
 msgid "Custom Palette"
-msgstr ""
+msgstr "Aangepast palet"
 
 #: plug-ins/gap/gap_range_ops.c:335
 msgid ""
 "Name of a cutom palette\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Naam van een aangepast palet\n"
+"(wordt genegeerd als palettype niet Aangepast is)"
 
 #: plug-ins/gap/gap_range_ops.c:340
 msgid "Remove Unused"
-msgstr ""
+msgstr "Verwijder ongebruikte"
 
 #: plug-ins/gap/gap_range_ops.c:341
 msgid ""
 "Remove unused or double colors\n"
 "(is ignored if Palette Type is not custom)"
 msgstr ""
+"Verwijder ongebruikte of dubbele kleuren\n"
+"(wordt genegeerd als palettype niet Aangepast is)"
 
 #: plug-ins/gap/gap_range_ops.c:347
 msgid ""
 "Number of resulting Colors\t\t \n"
 "(ignored if Palette Type is not Generate optimal palette)"
 msgstr ""
+"Aantal resulterende kleuren\t\t \n"
+"(genegeerd als palettype niet Genereer Optimaal Palet is)"
 
+# What is the Dutch translation of the term 'Dither'?
 #: plug-ins/gap/gap_range_ops.c:354
 msgid "Dither Options"
-msgstr ""
+msgstr "Dither-opties"
 
 #: plug-ins/gap/gap_range_ops.c:361
 msgid "Enable transparency"
-msgstr ""
+msgstr "Transparantie inschakelen"
 
 #: plug-ins/gap/gap_range_ops.c:362
 msgid "Enable dithering of transparency"
-msgstr ""
+msgstr "Dithering of transparantie inschakelen"
 
 #: plug-ins/gap/gap_range_ops.c:365
 msgid "Convert Frames to Indexed"
-msgstr ""
+msgstr "Frames naar geïndexeerd omzetten"
 
+# What is the Dutch translation of the term 'dithering'?
 #: plug-ins/gap/gap_range_ops.c:366
 msgid "Palette and Dither Settings"
-msgstr ""
+msgstr "Palet- en ditherinstellingen"
 
 #: plug-ins/gap/gap_range_ops.c:431
 msgid "Keep Type"
-msgstr ""
+msgstr "Behoud type"
 
 #: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to RGB"
-msgstr ""
+msgstr "Omzetten naar RGB"
 
 #: plug-ins/gap/gap_range_ops.c:433
 msgid "Convert to Gray"
-msgstr ""
+msgstr "Omzetten naar Grijswaarden"
 
 #: plug-ins/gap/gap_range_ops.c:434
 msgid "Convert to Indexed"
-msgstr ""
+msgstr "Omzetten naar geïndexeerd"
 
 #: plug-ins/gap/gap_range_ops.c:458
 msgid ""
@@ -9652,108 +9772,125 @@ msgid ""
 "Select destination fileformat by extension\n"
 "optionally convert imagetype\n"
 msgstr ""
+"\n"
+"Selecteer doelbestandsformaat op extensie\n"
+"eventueel afbeeldingstype omzetten\n"
 
 #: plug-ins/gap/gap_range_ops.c:461
 msgid "Basename:"
-msgstr ""
+msgstr "Basisnaam:"
 
 #: plug-ins/gap/gap_range_ops.c:462
 msgid ""
 "basename of the resulting frames       \n"
 "(0001.ext is added)"
 msgstr ""
+"basisnaam van de resulterende frames        \n"
+"(0001.ext wordt toegevoegd)"
 
 #: plug-ins/gap/gap_range_ops.c:467 plug-ins/gap/gap_split.c:235
 msgid "Extension:"
-msgstr ""
+msgstr "Extensie:"
 
 #: plug-ins/gap/gap_range_ops.c:468
 msgid ""
 "extension of resulting frames       \n"
 "(is also used to define Fileformat)"
 msgstr ""
+"extensie van de resulterende frames       \n"
+"(wordt ook gebruikt om het bestandsformaat te bepalen)"
 
 #: plug-ins/gap/gap_range_ops.c:474
 msgid "Imagetype:"
-msgstr ""
+msgstr "Afbeeldingstype:"
 
 #: plug-ins/gap/gap_range_ops.c:475
 msgid ""
 "Convert to, or keep imagetype           \n"
 "(most fileformats can't handle all types)"
 msgstr ""
+"Omzetten naar, of behoud afbeeldignstype          \n"
+"(de meeste bestandsformaten kunnen niet alle typen aan)"
 
 #: plug-ins/gap/gap_range_ops.c:481 plug-ins/gap/gap_split.c:246
 msgid "Flatten:"
-msgstr ""
+msgstr "Pletten:"
 
 #: plug-ins/gap/gap_range_ops.c:482
 msgid ""
 "Flatten all resulting frames               \n"
 "(most fileformats need flattened frames)"
 msgstr ""
+"Plet alle resulterende frames               \n"
+"(de meeste bestandsformaten hebben geplette frames nodig)"
 
 #: plug-ins/gap/gap_range_ops.c:487
 msgid "Convert Frames to other Formats"
-msgstr ""
+msgstr "Frames omzetten naar andere formaten"
 
 #: plug-ins/gap/gap_range_ops.c:488
 msgid "Convert Settings"
-msgstr ""
+msgstr "Omzettingsinstellingen"
 
 #: plug-ins/gap/gap_range_ops.c:565
 msgid "Expand as necessary"
-msgstr ""
+msgstr "Uitbreiden waar nodig"
 
 #: plug-ins/gap/gap_range_ops.c:566
 msgid "Clipped to image"
-msgstr ""
+msgstr "Naar afbeelding gesneden"
 
 #: plug-ins/gap/gap_range_ops.c:567
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Naar onderste laag gesneden"
 
 #: plug-ins/gap/gap_range_ops.c:568
 msgid "Flattened image"
-msgstr ""
+msgstr "Geplette afbeelding"
 
 #: plug-ins/gap/gap_range_ops.c:569
 msgid ""
 "Resulting Layer Size is made of the outline-rectangle \n"
 "of all visible layers (may differ from frame to frame)"
 msgstr ""
+"Resulterende laaggroote is gemaakt van de omsluitende rechthoek \n"
+"van alle zichtbare lagen (kan van laag tot laag verschillen)"
 
 #: plug-ins/gap/gap_range_ops.c:570
 msgid "Resulting Layer Size is the frame size"
-msgstr ""
+msgstr "Resulterende laaggrootte is de framegrootte"
 
 #: plug-ins/gap/gap_range_ops.c:571
 msgid ""
 "Resulting Layer Size is the size of the bottom layer\n"
 "(may differ from frame to frame)"
 msgstr ""
+"Resulterende laaggrootte is de grootte van de onderste laag\n"
+"(kan van laag tot laag verschillen)"
 
 #: plug-ins/gap/gap_range_ops.c:572
 msgid ""
 "Resulting Layer Size is the frame size     \n"
 "transparent parts are filled with BG color"
 msgstr ""
+"Resulterende laaggroote is de framegrootte     \n"
+"transparante delen worden met de AG-kleur gevuld"
 
 #: plug-ins/gap/gap_range_ops.c:582
 msgid "select all Layers where Layername is equal to Pattern"
-msgstr ""
+msgstr "selecteer alle lagen waarvan de naam gelijk is aan Patroon"
 
 #: plug-ins/gap/gap_range_ops.c:583
 msgid "select all Layers where Layername starts with Pattern"
-msgstr ""
+msgstr "selecteer alle lagen waarvan de naam begint met Patroon"
 
 #: plug-ins/gap/gap_range_ops.c:584
 msgid "select all Layers where Layername ends up with Pattern"
-msgstr ""
+msgstr "selecteer alle lagen waarvan de naam eindigt op Patroon"
 
 #: plug-ins/gap/gap_range_ops.c:585
 msgid "select all Layers where Layername contains Pattern"
-msgstr ""
+msgstr "selecteer alle lagen waarvan de naam Patroon bevat"
 
 #: plug-ins/gap/gap_range_ops.c:586
 msgid ""
@@ -9761,6 +9898,9 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == Top-layer"
 msgstr ""
+"selecteer laagstapelposities.\n"
+"0, 4-5, 8\n"
+"waar 0 == toplaag"
 
 #: plug-ins/gap/gap_range_ops.c:587
 msgid ""
@@ -9768,28 +9908,33 @@ msgid ""
 "0, 4-5, 8\n"
 "where 0 == BG-layer"
 msgstr ""
+"selecteer laagstapelposities.\n"
+"0, 4-5, 8\n"
+"waar 0 == AG-laag"
 
 #: plug-ins/gap/gap_range_ops.c:588
 msgid "select all visible Layers"
-msgstr ""
+msgstr "selecteer alle zichtbare lagen"
 
 #: plug-ins/gap/gap_range_ops.c:617
 msgid "Layer Basename:"
-msgstr ""
+msgstr "Laagbasisnaam:"
 
 #: plug-ins/gap/gap_range_ops.c:618
 msgid ""
 "Basename for all Layers    \n"
 "[####] is replaced by frame number"
 msgstr ""
+"Basisnaam voor alle lagen     \n"
+"[####] wordt vervangen door laagnummer"
 
 #: plug-ins/gap/gap_range_ops.c:636
 msgid "Layer Mergemode:"
-msgstr ""
+msgstr "Laagsamenvoegmodus:"
 
 #: plug-ins/gap/gap_range_ops.c:643
 msgid "Exclude BG-Layer"
-msgstr ""
+msgstr "Sluit AG-laag uit"
 
 #: plug-ins/gap/gap_range_ops.c:644
 msgid ""
@@ -9797,30 +9942,33 @@ msgid ""
 "in all handled frames\n"
 "regardless to selection"
 msgstr ""
+"Sluit de AG-lagen uit\n"
+"in alle behandelde frames,\n"
+"ongeacht de selectie"
 
 #: plug-ins/gap/gap_range_ops.c:674
 msgid "Use all unselected Layers"
-msgstr ""
+msgstr "Gebruik alle ongeselecteerde lagen"
 
 #: plug-ins/gap/gap_range_ops.c:748
 msgid "Creating Layer-Animated Image..."
-msgstr ""
+msgstr "Laaggeannimeerde afbeelding maken..."
 
 #: plug-ins/gap/gap_range_ops.c:970
 msgid "Frames to Image"
-msgstr ""
+msgstr "Frames naar afbeelding"
 
 #: plug-ins/gap/gap_range_ops.c:971
 msgid "Create Multilayer-Image from Frames"
-msgstr ""
+msgstr "Maak meerlaagse afbeelding uit frames"
 
 #: plug-ins/gap/gap_range_ops.c:1112
 msgid "Flattening Frames..."
-msgstr ""
+msgstr "Frames pletten..."
 
 #: plug-ins/gap/gap_range_ops.c:1113
 msgid "Converting Frames..."
-msgstr ""
+msgstr "Frames converteren..."
 
 #: plug-ins/gap/gap_range_ops.c:1261
 msgid ""
@@ -9828,39 +9976,43 @@ msgid ""
 "Desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"Frames converteren: OPSLAAN mislukte.\n"
+"Gewenste opslagplug-in kan type niet aan\n"
+"of de plug-in is niet beschikbaar."
 
 #: plug-ins/gap/gap_range_ops.c:1369
 msgid "Cropping all Animation Frames..."
-msgstr ""
+msgstr "Alle animatieframes snijden..."
 
 #: plug-ins/gap/gap_range_ops.c:1372
 msgid "Resizing all Animation Frames..."
-msgstr ""
+msgstr "Alle animatieframes herschalen..."
 
 #: plug-ins/gap/gap_range_ops.c:1375
 msgid "Scaling all Animation Frames..."
-msgstr ""
+msgstr "Alle animatieframes schalen..."
 
 #: plug-ins/gap/gap_range_ops.c:1461
 msgid "Flatten Frames"
-msgstr ""
+msgstr "Plet frames"
 
 #: plug-ins/gap/gap_range_ops.c:1517
 #, c-format
 msgid "Removing Layer (pos:%ld) from Frames..."
-msgstr ""
+msgstr "Laag verwijderen (pos:%ld) uit frames..."
 
 #: plug-ins/gap/gap_range_ops.c:1634
 msgid "Delete Layers in Frames"
-msgstr ""
+msgstr "Verwijder laag in frames"
 
+# 'position' of 'frame position'?
 #: plug-ins/gap/gap_range_ops.c:1635
 msgid "Select Frame Range & Position"
-msgstr ""
+msgstr "Selecteer framebereik en postitie"
 
 #: plug-ins/gap/gap_split.c:101
 msgid "Splitting into Frames..."
-msgstr ""
+msgstr "In frames opdelen..."
 
 #: plug-ins/gap/gap_split.c:176
 msgid ""
@@ -9868,6 +10020,9 @@ msgid ""
 "desired save plugin can't handle type\n"
 "or desired save plugin not available."
 msgstr ""
+"Splits frames: OPSLAAN MISLUKTE.\n"
+"gewenste opslagplug-in kan type niet aan\n"
+"of gewenste opslagplug-in niet beschikbaar."
 
 #: plug-ins/gap/gap_split.c:226
 #, c-format
@@ -9876,40 +10031,47 @@ msgid ""
 "%s\n"
 "(%s_0001.%s)\n"
 msgstr ""
+"%s\n"
+"%s\n"
+"(%s_0001.%s)\n"
 
 #: plug-ins/gap/gap_split.c:227
 msgid "Make a frame (diskfile) from each Layer"
-msgstr ""
+msgstr "Maak een frame (schijfbestand) van elke laag"
 
 #: plug-ins/gap/gap_split.c:228
 msgid "frames are named: base_nr.extension"
-msgstr ""
+msgstr "frames krijgen naam: basis_nr.extensie"
 
 #: plug-ins/gap/gap_split.c:236
 msgid "extension of resulting frames (is also used to define Fileformat)"
 msgstr ""
+"extensie van resulterende frames (wordt ook gebruikt om bestandsformaat te "
+"bepalen)"
 
 #: plug-ins/gap/gap_split.c:241
 msgid "Inverse Order:"
-msgstr ""
+msgstr "Omgekeerde volgorde:"
 
 #: plug-ins/gap/gap_split.c:242
 msgid "Start frame 0001 at Top Layer"
-msgstr ""
+msgstr "Begin frame 0001 met bovenste laag"
 
 #: plug-ins/gap/gap_split.c:247
 msgid ""
 "Remove Alpha Channel in resulting Frames. Transparent parts are filled with "
 "BG color."
 msgstr ""
+"Verwijder alphakanaal in resulterende frames. Transparante gedeeltes worden "
+"met AG-kleur gevuld."
 
 #: plug-ins/gap/gap_split.c:250
 msgid "Split Image into Frames"
-msgstr ""
+msgstr "Deel afbeelding op in frames"
 
 #: plug-ins/gap/gap_split.c:251
 msgid "Split Settings"
-msgstr ""
+msgstr "Instellingen van Opdelen"
 
 #: plug-ins/gap/gap_split.c:298
 msgid ""
@@ -9917,30 +10079,33 @@ msgid ""
 "This image is already an AnimFrame.\n"
 "Try again on a Duplicate (Image/Duplicate)."
 msgstr ""
+"BEWERKING GEANNULEERD.\n"
+"Deze afbeelding is al een AnimFrame.\n"
+"Probeer het nog eens op een kopie (Afbeelding/Dupliceren)."
 
 #: plug-ins/gap/resize.c:107
 msgid "Scale"
-msgstr ""
+msgstr "Schalen"
 
 #: plug-ins/gap/resize.c:111
 msgid "Resize"
-msgstr ""
+msgstr "Herschalen"
 
 #: plug-ins/gap/resize.c:127
 msgid "New width:"
-msgstr ""
+msgstr "Nieuwe breedte:"
 
 #: plug-ins/gap/resize.c:144
 msgid "New height:"
-msgstr ""
+msgstr "Nieuwe hoogte:"
 
 #: plug-ins/gap/resize.c:161
 msgid "X ratio:"
-msgstr ""
+msgstr "X-ratio"
 
 #: plug-ins/gap/resize.c:178
 msgid "Y ratio:"
-msgstr ""
+msgstr "Y-ratio:"
 
 #. the constrain toggle button
 #: plug-ins/gap/resize.c:231
@@ -10375,8 +10540,7 @@ msgstr "Meerdere"
 
 #: plug-ins/gfig/gfig.c:2777
 msgid "Draw all objects on one layer (original or new) or one object per layer"
-msgstr ""
-"Teken alle objecten in één laag (originele of nieuwe) of één object per laag"
+msgstr "Teken alle objecten in één laag (originele of nieuwe) of één object per laag"
 
 #: plug-ins/gfig/gfig.c:2782
 msgid "Draw on:"
@@ -10412,9 +10576,7 @@ msgstr "Voorgrond"
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
-msgstr ""
-"Laagachtergrondtype. Kopiëren zorgt ervoor dat de vorige laag wordt "
-"gekopieerd voordat het tekenen wordt uitgevoerd."
+msgstr "Laagachtergrondtype. Kopiëren zorgt ervoor dat de vorige laag wordt gekopieerd voordat het tekenen wordt uitgevoerd."
 
 #: plug-ins/gfig/gfig.c:2844
 msgid "With BG of:"
@@ -10450,7 +10612,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2934
 msgid "Gfig brush selection"
-msgstr ""
+msgstr "Gfig-penseelselectie"
 
 #: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
@@ -10490,10 +10652,11 @@ msgstr "Snijden"
 msgid "Selection Type:"
 msgstr "Selectietype:"
 
+# What does this word mean here?
 #. 3
 #: plug-ins/gfig/gfig.c:3157
 msgid "Feather"
-msgstr ""
+msgstr "Straal"
 
 #: plug-ins/gfig/gfig.c:3189
 msgid "Fill Type:"
@@ -10763,15 +10926,15 @@ msgstr "Hé, waar is het object naar toe?"
 
 #: plug-ins/gflare/gflare.c:826
 msgid "<Image>/Filters/Light Effects/GFlare..."
-msgstr ""
+msgstr "<Image>/Filters/Lichteffecten/Verloopflakkering..."
 
 #: plug-ins/gflare/gflare.c:942
 msgid "Gradient Flare..."
-msgstr ""
+msgstr "Verloopflakkering..."
 
 #: plug-ins/gflare/gflare.c:954
 msgid "GFlare: cannot operate on indexed color images"
-msgstr ""
+msgstr "Verloopflakkering: kan niet met geïndexeerde kleurenafbeeldingen werken"
 
 #: plug-ins/gflare/gflare.c:992
 #, c-format
@@ -10781,20 +10944,25 @@ msgid ""
 "(gflare-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Geen VFlakker-pad in gimprc:\n"
+"U moet een ingang als \n"
+"(gflare-path \"%s\")\n"
+"opnemen in uw %s-bestand."
 
 #: plug-ins/gflare/gflare.c:1010
 msgid "gflare-path misconfigured - the following directories were not found"
 msgstr ""
+"VFlakker-pad fout geconfigureerd - de volgende mappen werden niet gevonden"
 
 #: plug-ins/gflare/gflare.c:1367
 #, c-format
 msgid "not valid GFlare file: %s"
-msgstr ""
+msgstr "geen geldig VFlakker-bestand: %s"
 
 #: plug-ins/gflare/gflare.c:1427
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
-msgstr ""
+msgstr "ongeldig ingedeeld VFlakker-bestand: %s\n"
 
 #: plug-ins/gflare/gflare.c:1541
 #, c-format
@@ -10805,129 +10973,134 @@ msgid ""
 "and make a directory %s,\n"
 "then you can save your own GFlare's into that directory."
 msgstr ""
+"VFlakkering '%s' is niet opgeslagen.\n"
+"Als u een nieuwe ingang in %s opneemt, zoals:\n"
+"(gflare-path \"%s\")\n"
+"en een map %s aanmaakt,\n"
+"dan kunt u uw eigen VFlakkeringen in die map opslaan."
 
 #: plug-ins/gflare/gflare.c:1568
 #, c-format
 msgid "could not open \"%s\""
-msgstr ""
+msgstr "kon niet \"%s\" openen"
 
 #: plug-ins/gflare/gflare.c:1758
 #, c-format
 msgid "error reading GFlare directory \"%s\""
-msgstr ""
+msgstr "fout bij lezen VFlakker-map \"%s\""
 
 #: plug-ins/gflare/gflare.c:2458
 msgid "GFlare"
-msgstr ""
+msgstr "Verloopflakkering"
 
 #: plug-ins/gflare/gflare.c:2573
 msgid "`Default' is created."
-msgstr ""
+msgstr "'Standaard' wordt gemaakt."
 
 #: plug-ins/gflare/gflare.c:2574
 msgid "Default"
-msgstr ""
+msgstr "Standaard"
 
 #: plug-ins/gflare/gflare.c:2924 plug-ins/gflare/gflare.c:3763
 #: plug-ins/gflare/gflare.c:3873 plug-ins/gflare/gflare.c:4015
 msgid "Rotation:"
-msgstr ""
+msgstr "Draaiing:"
 
 #: plug-ins/gflare/gflare.c:2936 plug-ins/gflare/gflare.c:3775
 #: plug-ins/gflare/gflare.c:3886 plug-ins/gflare/gflare.c:4028
 msgid "Hue Rotation:"
-msgstr ""
+msgstr "Hue-draaiing:"
 
 #: plug-ins/gflare/gflare.c:2948
 msgid "Vector Angle:"
-msgstr ""
+msgstr "Vectorhoek:"
 
 #: plug-ins/gflare/gflare.c:2960
 msgid "Vector Length:"
-msgstr ""
+msgstr "Vectorlengte:"
 
 #: plug-ins/gflare/gflare.c:2986
 msgid "Adaptive Supersampling"
-msgstr ""
+msgstr "Aangepaste supermonstering"
 
 #: plug-ins/gflare/gflare.c:3029
 msgid "Auto Update Preview"
-msgstr ""
+msgstr "Automatische vooruitblikvernieuwing"
 
 #: plug-ins/gflare/gflare.c:3153
 msgid "Selector"
-msgstr ""
+msgstr "Selectie"
 
 #: plug-ins/gflare/gflare.c:3242
 msgid "New GFlare"
-msgstr ""
+msgstr "Nieuwe verloopflakkering"
 
 #: plug-ins/gflare/gflare.c:3245
 msgid "Enter a Name for the New GFlare:"
-msgstr ""
+msgstr "Voer een naam in voor de nieuwe verloopflakkering:"
 
 #: plug-ins/gflare/gflare.c:3246
 msgid "untitled"
-msgstr ""
+msgstr "Naamloos"
 
 #: plug-ins/gflare/gflare.c:3264
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr ""
+msgstr "De naam '%s' wordt al gebruikt!"
 
 #: plug-ins/gflare/gflare.c:3313
 msgid "Copy GFlare"
-msgstr ""
+msgstr "Kopieer verloopflakkering"
 
 #: plug-ins/gflare/gflare.c:3316
 msgid "Enter a Name for the Copied GFlare:"
-msgstr ""
+msgstr "Voer een naam in voor de gekopieerde verloopflakkering:"
 
 #: plug-ins/gflare/gflare.c:3337
 #, c-format
 msgid "The name `%s' is used already!"
-msgstr ""
+msgstr "De naam '%s' wordt al gebruikt!"
 
 #: plug-ins/gflare/gflare.c:3363
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
+msgstr "Kan niet wissen! Er moet minstens één verloopflakkering zijn."
 
 #: plug-ins/gflare/gflare.c:3373
 msgid "Delete GFlare"
-msgstr ""
+msgstr "Wis verloopflakkering"
 
 #: plug-ins/gflare/gflare.c:3430
 #, c-format
 msgid "not found %s in gflares_list"
-msgstr ""
+msgstr "niet gevonden %s in gflares_list"
 
 #: plug-ins/gflare/gflare.c:3470
 msgid "GFlare Editor"
-msgstr ""
+msgstr "Verloopflakkeringseditor"
 
 #: plug-ins/gflare/gflare.c:3475
 msgid "Rescan Gradients"
-msgstr ""
+msgstr "Lees verlopen opnieuw in"
 
 #. Glow
 #: plug-ins/gflare/gflare.c:3592
 msgid "Glow Paint Options"
-msgstr ""
+msgstr "Schilderopties voor gloed"
 
 #: plug-ins/gflare/gflare.c:3617 plug-ins/gflare/gflare.c:3647
 #: plug-ins/gflare/gflare.c:3677
 msgid "Paint Mode:"
-msgstr ""
+msgstr "Schildermodus:"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3622
 msgid "Rays Paint Options"
-msgstr ""
+msgstr "Schilderopties voor stralen"
 
 #. Rays
 #: plug-ins/gflare/gflare.c:3652
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "Schilderopties voor tweede flakkeringen"
 
 #: plug-ins/gflare/gflare.c:3684 plug-ins/gimpressionist/general.c:134
 #: plug-ins/gimpressionist/general.c:139
@@ -10941,56 +11114,56 @@ msgstr "Algemeen"
 #: plug-ins/gflare/gflare.c:3710 plug-ins/gflare/gflare.c:3818
 #: plug-ins/gflare/gflare.c:3962
 msgid "Gradients"
-msgstr ""
+msgstr "Verlopen"
 
 #: plug-ins/gflare/gflare.c:3722 plug-ins/gflare/gflare.c:3832
 #: plug-ins/gflare/gflare.c:3974
 msgid "Radial Gradient:"
-msgstr ""
+msgstr "Radiaal verloop:"
 
 #: plug-ins/gflare/gflare.c:3726 plug-ins/gflare/gflare.c:3836
 msgid "Angular Gradient:"
-msgstr ""
+msgstr "Hoekig verloop:"
 
 #: plug-ins/gflare/gflare.c:3730 plug-ins/gflare/gflare.c:3840
 msgid "Angular Size Gradient:"
-msgstr ""
+msgstr "Hoekig grootteverloop:"
 
 #: plug-ins/gflare/gflare.c:3751 plug-ins/gflare/gflare.c:3861
 #: plug-ins/gflare/gflare.c:4003
 msgid "Size (%):"
-msgstr ""
+msgstr "Grootte (%):"
 
 #: plug-ins/gflare/gflare.c:3792
 msgid "Glow"
-msgstr ""
+msgstr "Gloed"
 
 #: plug-ins/gflare/gflare.c:3898
 msgid "# of Spikes:"
-msgstr ""
+msgstr "Aantal pieken:"
 
 #: plug-ins/gflare/gflare.c:3910
 msgid "Spike Thickness:"
-msgstr ""
+msgstr "Dikte van pieken:"
 
 #: plug-ins/gflare/gflare.c:3927
 msgid "Rays"
-msgstr ""
+msgstr "Stralen"
 
 #: plug-ins/gflare/gflare.c:3978
 msgid "Size Factor Gradient:"
-msgstr ""
+msgstr "Groottefactor verloop:"
 
 #: plug-ins/gflare/gflare.c:3982
 msgid "Probability Gradient:"
-msgstr ""
+msgstr "Waarschijnlijkheid verloop:"
 
 #.
 #. *	Shape Radio Button Frame
 #.
 #: plug-ins/gflare/gflare.c:4045
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "Vorm van tweede flakkeringen"
 
 #: plug-ins/gflare/gflare.c:4054 plug-ins/imagemap/imap_circle.c:62
 #: plug-ins/imagemap/imap_menu.c:390 plug-ins/imagemap/imap_popup.c:135
@@ -11006,16 +11179,16 @@ msgstr "Veelhoek"
 
 #: plug-ins/gflare/gflare.c:4129
 msgid "Second Flares"
-msgstr ""
+msgstr "Tweede flakkeringen"
 
 #: plug-ins/gflare/gflare.c:4750
 #, c-format
 msgid "Not found \"%s\": used \"%s\" instead"
-msgstr ""
+msgstr "Niet gevonden \"%s\": heb in plaats daarvan \"%s\" gebruikt"
 
 #: plug-ins/gflare/gflare.c:4821
 msgid "More..."
-msgstr ""
+msgstr "Meer..."
 
 #: plug-ins/gfli/gfli.c:427 plug-ins/gfli/gfli.c:466 plug-ins/gfli/gfli.c:711
 #, c-format
@@ -11029,8 +11202,7 @@ msgstr "Frame (%i)"
 
 #: plug-ins/gfli/gfli.c:675
 msgid "FLI: Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
-"FLI: sorry, ik kan alleen geïndexeerde of grijswaardenafbeeldingen opslaan"
+msgstr "FLI: sorry, ik kan alleen geïndexeerde of grijswaardenafbeeldingen opslaan"
 
 #: plug-ins/gfli/gfli.c:816
 msgid "GFLI 1.3 - Load framestack"
@@ -11084,9 +11256,7 @@ msgstr "Geeft de aspectratio van het penseel aan"
 
 #: plug-ins/gimpressionist/brush.c:490
 msgid "Specifies the amount of embossing to apply to each brush stroke"
-msgstr ""
-"Geeft de hoeveelheid reliëf aan die op elke penseelstreek moet worden "
-"toegepast"
+msgstr "Geeft de hoeveelheid reliëf aan die op elke penseelstreek moet worden toegepast"
 
 #: plug-ins/gimpressionist/color.c:86
 msgid "Average under brush"
@@ -11500,9 +11670,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:197
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
-msgstr ""
-"Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in "
-"procenten)"
+msgstr "Bepaalt de hoeveelheid reliëf die op de afbeelding moet worden toegepast (in procenten)"
 
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
@@ -11731,7 +11899,7 @@ msgstr ""
 "als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
-#, c-format, fuzzy
+#, fuzzy, c-format
 msgid ""
 "<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
 "\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
@@ -11739,7 +11907,12 @@ msgid ""
 "the help for this topic has not been written yet or that something is wrong "
 "with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
-msgstr "<html><head><title>Map niet gevonden</title></head><body><center><p>%s<h3>Kon niet naar map schakelen</h3><tt>%s</tt></center><p><small>Dit betekent dat de hulppagina voor dit onderwerp nog niet is geschreven of dat er iets mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat u dit als een programmeerfout meldt.</small></body></html>"
+msgstr ""
+"<html><head><title>Map niet gevonden</title></head><body><center><p>%"
+"s<h3>Kon niet naar map schakelen</h3><tt>%s</tt></center><p><small>Dit "
+"betekent dat de hulppagina voor dit onderwerp nog niet is geschreven of dat "
+"er iets mis is met uw installatie. Controlleer dit a.u.b. zorgvuldig voordat "
+"u dit als een programmeerfout meldt.</small></body></html>"
 
 #: plug-ins/helpbrowser/helpbrowser.c:137
 msgid "Contents"
@@ -11763,18 +11936,22 @@ msgid ""
 "Couldn't find my root html directory.\n"
 "(%s)"
 msgstr ""
+"GIMP Help Browser-fout.\n"
+"\n"
+"Kon mijn rootmap niet vinden.\n"
+"(%s)"
 
 #: plug-ins/helpbrowser/helpbrowser.c:795
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "GIMP Help Browser"
 
 #: plug-ins/helpbrowser/helpbrowser.c:810
 msgid "Back"
-msgstr ""
+msgstr "Terug"
 
 #: plug-ins/helpbrowser/helpbrowser.c:819
 msgid "Forward"
-msgstr ""
+msgstr "Vooruit"
 
 #: plug-ins/helpbrowser/helpbrowser.c:1199
 #, c-format
@@ -11784,20 +11961,24 @@ msgid ""
 "Couldn't find GIMP_HELP_ROOT html directory.\n"
 "(%s)"
 msgstr ""
+"GIMP Help Browser-fout.\n"
+"\n"
+"Kon GIMP_HELP_ROOT-HTML-map niet vinden.\n"
+"(%s)"
 
 #: plug-ins/ifscompose/ifscompose.c:365
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Natuur/IfsCompositie..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:591
 msgid "Asymmetry:"
-msgstr ""
+msgstr "Asymetrie:"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:605
 msgid "Shear:"
-msgstr ""
+msgstr "Hellen:"
 
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:619
@@ -11807,64 +11988,64 @@ msgstr "Spiegelen"
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:650
 msgid "Simple"
-msgstr ""
+msgstr "Simpel"
 
 #: plug-ins/ifscompose/ifscompose.c:662
 msgid "IfsCompose: Target"
-msgstr ""
+msgstr "IfsCompositie: Doel"
 
 #: plug-ins/ifscompose/ifscompose.c:668
 msgid "Scale Hue by:"
-msgstr ""
+msgstr "Schaal hue met:"
 
 #: plug-ins/ifscompose/ifscompose.c:683
 msgid "Scale Value by:"
-msgstr ""
+msgstr "Schaal waarde met:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:700
 msgid "Full"
-msgstr ""
+msgstr "Vol"
 
 #: plug-ins/ifscompose/ifscompose.c:709
 msgid "IfsCompose: Red"
-msgstr ""
+msgstr "IfsCompositie: Rood"
 
 #: plug-ins/ifscompose/ifscompose.c:718
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsCompositie: Groen"
 
 #: plug-ins/ifscompose/ifscompose.c:727
 msgid "IfsCompose: Blue"
-msgstr ""
+msgstr "IfsCompositie: Blauw"
 
 #: plug-ins/ifscompose/ifscompose.c:736
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsCompositie: Zwart"
 
 #: plug-ins/ifscompose/ifscompose.c:798
 msgid "IfsCompose"
-msgstr ""
+msgstr "IfsCompositie"
 
 #: plug-ins/ifscompose/ifscompose.c:882 plug-ins/ifscompose/ifscompose.c:1152
 msgid "Rotate/Scale"
-msgstr ""
+msgstr "Draaien/Schalen"
 
 #: plug-ins/ifscompose/ifscompose.c:891 plug-ins/ifscompose/ifscompose.c:1164
 msgid "Stretch"
-msgstr ""
+msgstr "Rekken"
 
 #: plug-ins/ifscompose/ifscompose.c:911
 msgid "Render Options"
-msgstr ""
+msgstr "Renderopties"
 
 #: plug-ins/ifscompose/ifscompose.c:925 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
-msgstr ""
+msgstr "Automatisch"
 
 #: plug-ins/ifscompose/ifscompose.c:958
 msgid "Spatial Transformation"
-msgstr ""
+msgstr "Ruimtelijke transformatie"
 
 #: plug-ins/ifscompose/ifscompose.c:964
 msgid "Color Transformation"
@@ -11872,7 +12053,7 @@ msgstr "Kleurtransformatie"
 
 #: plug-ins/ifscompose/ifscompose.c:974
 msgid "Relative Probability:"
-msgstr ""
+msgstr "Relatieve waarschijnlijkheid:"
 
 #: plug-ins/ifscompose/ifscompose.c:1181
 #: plug-ins/imagemap/imap_cmd_select_all.c:53
@@ -11890,30 +12071,30 @@ msgstr "Opnieuw uitvoeren"
 
 #: plug-ins/ifscompose/ifscompose.c:1250
 msgid "IfsCompose Options"
-msgstr ""
+msgstr "IfsCompositie-opties"
 
 #: plug-ins/ifscompose/ifscompose.c:1270
 msgid "Max. Memory:"
-msgstr ""
+msgstr "Max. geheugen:"
 
 #: plug-ins/ifscompose/ifscompose.c:1297
 msgid "Subdivide:"
-msgstr ""
+msgstr "Onderverdeling:"
 
 #: plug-ins/ifscompose/ifscompose.c:1310
 msgid "Spot Radius:"
-msgstr ""
+msgstr "Stipradius:"
 
 #: plug-ins/ifscompose/ifscompose.c:1381
 #, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr ""
+msgstr "IFS renderen (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1400
 #, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr ""
+msgstr "IFS naar afbeelding kopiëren (%d/%d)..."
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid ""
@@ -12550,40 +12731,40 @@ msgstr "Wis geselecteerd gebied"
 
 #: plug-ins/maze/algorithms.c:285
 msgid "Constructing maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Doolhof bouwen met Prims algorithme..."
 
 #: plug-ins/maze/algorithms.c:458
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr ""
+msgstr "Tegelbaar doolhof bouwen met Prims algorithme..."
 
 #: plug-ins/maze/maze.c:161
 msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Patroon/Doolhof..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
-msgstr ""
+msgstr "Doolhof tekenen..."
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:220
 msgid "Width (Pixels):"
-msgstr ""
+msgstr "Breedte (pixels):"
 
 #: plug-ins/maze/maze_face.c:232 plug-ins/maze/maze_face.c:248
 msgid "Pieces:"
-msgstr ""
+msgstr "Stukken:"
 
 #: plug-ins/maze/maze_face.c:237
 msgid "Height (Pixels):"
-msgstr ""
+msgstr "Hoogte (pixels):"
 
 #: plug-ins/maze/maze_face.c:260
 msgid "Multiple (57):"
-msgstr ""
+msgstr "Veelvoud (57):"
 
 #: plug-ins/maze/maze_face.c:273
 msgid "Offset (1):"
-msgstr ""
+msgstr "Verspringing (1):"
 
 # Is there a Dutch phrase for this?
 #: plug-ins/maze/maze_face.c:304
@@ -12592,7 +12773,7 @@ msgstr "Depth-first"
 
 #: plug-ins/maze/maze_face.c:311
 msgid "Prim's Algorithm"
-msgstr ""
+msgstr "Prims algoritme"
 
 #: plug-ins/maze/maze_face.c:330
 #, c-format
@@ -12604,76 +12785,78 @@ msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
 msgstr ""
+"Selectiegrootte is niet even.\n"
+"Doolhof zal niet perfect schaalbaar zijn."
 
 #. open URL for help
 #: plug-ins/maze/maze_face.c:600
 #, c-format
 msgid "Opening %s"
-msgstr ""
+msgstr "Bezig %s te openen"
 
 #: plug-ins/maze/maze_face.c:611
 #, c-format
 msgid "See %s"
-msgstr ""
+msgstr "Zie %s"
 
 #: plug-ins/mosaic/mosaic.c:325
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-msgstr ""
+msgstr "<Image>/Filters/Renderen/Patroon/Mozaiek..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:447
 msgid "Finding Edges..."
-msgstr ""
+msgstr "Randen vinden..."
 
 #. Progress bar for rendering tiles
 #: plug-ins/mosaic/mosaic.c:497
 msgid "Rendering Tiles..."
-msgstr ""
+msgstr "Tegels renderen..."
 
 #: plug-ins/mosaic/mosaic.c:526
 msgid "Mosaic"
-msgstr ""
+msgstr "Mozaiek"
 
 #: plug-ins/mosaic/mosaic.c:593
 msgid "Color Averaging"
-msgstr ""
+msgstr "Kleuren middelen"
 
 #: plug-ins/mosaic/mosaic.c:602
 msgid "Pitted Surfaces"
-msgstr ""
+msgstr "Ruwe oppervlakken"
 
 #: plug-ins/mosaic/mosaic.c:611
 msgid "FG/BG Lighting"
-msgstr ""
+msgstr "VG/AG-verlichting"
 
 #. tiling primitive
 #: plug-ins/mosaic/mosaic.c:625
 msgid "Tiling Primitives"
-msgstr ""
+msgstr "Tegelprimitieven"
 
 #: plug-ins/mosaic/mosaic.c:629
 msgid "Squares"
-msgstr ""
+msgstr "Vierkanten"
 
 #: plug-ins/mosaic/mosaic.c:631
 msgid "Hexagons"
-msgstr ""
+msgstr "Zeshoeken"
 
 #: plug-ins/mosaic/mosaic.c:633
 msgid "Octagons & Squares"
-msgstr ""
+msgstr "Achthoeken en vierkanten"
 
 #: plug-ins/mosaic/mosaic.c:672
 msgid "Tile Spacing:"
-msgstr ""
+msgstr "Tegeltussenruimte:"
 
 #: plug-ins/mosaic/mosaic.c:681
 msgid "Tile Neatness:"
-msgstr ""
+msgstr "Netheid tegelvorm:"
 
 #: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
-msgstr ""
+msgstr "Lichtrichting"
 
 #: plug-ins/mosaic/mosaic.c:700
 msgid "Color Variation:"
@@ -12681,77 +12864,80 @@ msgstr "Kleurvariatie:"
 
 #: plug-ins/mosaic/mosaic.c:2469
 msgid "Unable to add additional point.\n"
-msgstr ""
+msgstr "Kan geen extra punt toevoegen.\n"
 
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr ""
+msgstr "<Image>/Filters/Vervormingen/Ezelsoor..."
 
 #: plug-ins/pagecurl/pagecurl.c:513
 msgid "Pagecurl Effect"
-msgstr ""
+msgstr "Ezelsooreffect"
 
 #: plug-ins/pagecurl/pagecurl.c:534
 msgid "Curl Location"
-msgstr ""
+msgstr "Locatie oor"
 
 #: plug-ins/pagecurl/pagecurl.c:601
 msgid "Upper Left"
-msgstr ""
+msgstr "Linksboven"
 
 #: plug-ins/pagecurl/pagecurl.c:602
 msgid "Upper Right"
-msgstr ""
+msgstr "Rechtsboven"
 
 #: plug-ins/pagecurl/pagecurl.c:603
 msgid "Lower Left"
-msgstr ""
+msgstr "Linksonder"
 
 #: plug-ins/pagecurl/pagecurl.c:604
 msgid "Lower Right"
-msgstr ""
+msgstr "Rechtsonder"
 
 #: plug-ins/pagecurl/pagecurl.c:635
 msgid "Curl Orientation"
-msgstr ""
+msgstr "Oriëntatie oor"
 
 #: plug-ins/pagecurl/pagecurl.c:674
 msgid "Shade under Curl"
-msgstr ""
+msgstr "Schaduw onder oor"
 
 #: plug-ins/pagecurl/pagecurl.c:684
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
 msgstr ""
+"Gebruik huidig verloop\n"
+"in plaats van VG/AG-kleur"
 
 #: plug-ins/pagecurl/pagecurl.c:696
 msgid "Curl Opacity"
-msgstr ""
+msgstr "Ondoorzichtigheid oor"
 
 #: plug-ins/pagecurl/pagecurl.c:823
 msgid "Curl Layer"
-msgstr ""
+msgstr "Ezelsoor"
 
 #: plug-ins/pagecurl/pagecurl.c:1073
 msgid "Page Curl..."
-msgstr ""
+msgstr "Ezelsoor..."
 
 #: plug-ins/print/gimp_color_window.c:135
 msgid "Print Color Adjust"
-msgstr ""
+msgstr "Pas afdrukkleur aan"
 
 #: plug-ins/print/gimp_color_window.c:140
 msgid "Set Defaults"
-msgstr ""
+msgstr "Stel standaardwaarden in"
 
 #: plug-ins/print/gimp_color_window.c:269
 msgid "Density:"
-msgstr ""
+msgstr "Dichtheid:"
 
+# What is the Dutch translation for the word "dither"?
 #: plug-ins/print/gimp_color_window.c:300
 msgid "Dither Algorithm:"
-msgstr ""
+msgstr "Ditheralgoritme:"
 
 #.
 #. * Create the main dialog
@@ -12759,7 +12945,7 @@ msgstr ""
 #: plug-ins/print/gimp_main_window.c:255
 #, c-format
 msgid "%s -- Print v%s"
-msgstr ""
+msgstr "%s -- Druk v%s af"
 
 #: plug-ins/print/gimp_main_window.c:264
 msgid ""
@@ -12783,39 +12969,39 @@ msgstr "Afdrukken"
 
 #: plug-ins/print/gimp_main_window.c:346
 msgid "Center Image"
-msgstr ""
+msgstr "Centreer afbeelding"
 
 #: plug-ins/print/gimp_main_window.c:357
 msgid "Units:"
-msgstr ""
+msgstr "Eenheden:"
 
 #: plug-ins/print/gimp_main_window.c:369
 msgid "cm"
-msgstr ""
+msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
 msgid "Right Border:"
-msgstr ""
+msgstr "Rechterrand:"
 
 #: plug-ins/print/gimp_main_window.c:443
 msgid "Bottom Border:"
-msgstr ""
+msgstr "Onderrand:"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
-msgstr ""
+msgstr "Portret"
 
 #: plug-ins/print/gimp_main_window.c:458
 msgid "Landscape"
-msgstr ""
+msgstr "Landschap"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Ondersteboven"
 
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Seascape"
-msgstr ""
+msgstr "Zeeschap"
 
 #.
 #. *  Printer settings frame...
@@ -12826,42 +13012,42 @@ msgstr "Printerinstellingen"
 
 #: plug-ins/print/gimp_main_window.c:498
 msgid "Media Size:"
-msgstr ""
+msgstr "Mediumgrootte:"
 
 #: plug-ins/print/gimp_main_window.c:507
 msgid "Media Type:"
-msgstr ""
+msgstr "Mediumtype:"
 
 #: plug-ins/print/gimp_main_window.c:516
 msgid "Media Source:"
-msgstr ""
+msgstr "Mediumbron:"
 
 #: plug-ins/print/gimp_main_window.c:525
 msgid "Ink Type:"
-msgstr ""
+msgstr "Inkttype:"
 
 #.
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
 msgid "Scaling"
-msgstr ""
+msgstr "Schalen"
 
 #: plug-ins/print/gimp_main_window.c:580 plug-ins/print/gimp_main_window.c:589
 msgid "Scaling:"
-msgstr ""
+msgstr "Schalen:"
 
 #: plug-ins/print/gimp_main_window.c:604
 msgid "Percent"
-msgstr ""
+msgstr "Procent"
 
 #: plug-ins/print/gimp_main_window.c:614
 msgid "PPI"
-msgstr ""
+msgstr "PPI"
 
 #: plug-ins/print/gimp_main_window.c:623
 msgid "Set Image Scale"
-msgstr ""
+msgstr "Stel afbeeldingsschaal in"
 
 #.
 #. * Image type
@@ -12872,93 +13058,93 @@ msgstr "Afbeeldingsinstellingen"
 
 #: plug-ins/print/gimp_main_window.c:689
 msgid "Line Art"
-msgstr ""
+msgstr "Lijntekening"
 
 #: plug-ins/print/gimp_main_window.c:700
 msgid "Solid Colors"
-msgstr ""
+msgstr "Vaste kleuren"
 
 #: plug-ins/print/gimp_main_window.c:711
 msgid "Photograph"
-msgstr ""
+msgstr "Foto"
 
 #: plug-ins/print/gimp_main_window.c:722
 msgid "Monochrome"
-msgstr ""
+msgstr "Monochroom"
 
 #: plug-ins/print/gimp_main_window.c:737
 msgid "Adjust Color"
-msgstr ""
+msgstr "Pas kleur aan"
 
 #.
 #. * Output type toggles...
 #.
 #: plug-ins/print/gimp_main_window.c:749
 msgid "Output Type:"
-msgstr ""
+msgstr "Uitvoertype:"
 
 #: plug-ins/print/gimp_main_window.c:768
 msgid "B&W"
-msgstr ""
+msgstr "Z/W"
 
 #: plug-ins/print/gimp_main_window.c:802
 msgid "Printer:"
-msgstr ""
+msgstr "Printer:"
 
 #: plug-ins/print/gimp_main_window.c:811 plug-ins/print/gimp_main_window.c:824
 msgid "Setup"
-msgstr ""
+msgstr "Instelling"
 
 #.
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:853
 msgid "Printer Model:"
-msgstr ""
+msgstr "Printertype:"
 
 #.
 #. * PPD file...
 #.
 #: plug-ins/print/gimp_main_window.c:889
 msgid "PPD File:"
-msgstr ""
+msgstr "PPD-bestand:"
 
 #: plug-ins/print/gimp_main_window.c:904
 msgid "Browse"
-msgstr ""
+msgstr "Blader"
 
 #.
 #. * Print command...
 #.
 #: plug-ins/print/gimp_main_window.c:916
 msgid "Command:"
-msgstr ""
+msgstr "Instructie:"
 
 #.
 #. * Output file selection dialog...
 #.
 #: plug-ins/print/gimp_main_window.c:931
 msgid "Print To File?"
-msgstr ""
+msgstr "Naar bestand?"
 
 #.
 #. * PPD file selection dialog...
 #.
 #: plug-ins/print/gimp_main_window.c:945
 msgid "PPD File?"
-msgstr ""
+msgstr "PPD-bestand?"
 
 #: plug-ins/print/print.c:223 plug-ins/print/print.c:232
 msgid "<Image>/File/Print..."
-msgstr ""
+msgstr "<Image>/Bestand/Afdrukken..."
 
 #: plug-ins/print/print.c:241
 msgid "<Image>/File/Print (Gtk)..."
-msgstr ""
+msgstr "<Image>/Bestand/Afdrukken (GTK)..."
 
 #: plug-ins/print/print.c:249
 msgid "<Image>/File/Print (Gimp)..."
-msgstr ""
+msgstr "<Image>/Bestand/Afdrukken (GIMP)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
@@ -13089,25 +13275,27 @@ msgstr "Interne fout. Selectie bpp > 1"
 
 #: plug-ins/sgi/sgi.c:635
 msgid "Save as SGI"
-msgstr ""
+msgstr "Opslaan als SGI"
 
 #: plug-ins/sgi/sgi.c:651
 msgid "Compression Type"
-msgstr ""
+msgstr "Compressietype"
 
 #: plug-ins/sgi/sgi.c:655
 msgid "No Compression"
-msgstr ""
+msgstr "Geen compressie"
 
 #: plug-ins/sgi/sgi.c:657
 msgid "RLE Compression"
-msgstr ""
+msgstr "RLE-compressie"
 
 #: plug-ins/sgi/sgi.c:659
 msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
 msgstr ""
+"Agressieve RLE\n"
+"(Niet ondersteund door SGI)"
 
 #: plug-ins/twain/twain.c:513
 msgid "<Toolbox>/File/Acquire/TWAIN..."
@@ -13231,6 +13419,3 @@ msgstr "Fout: kan XJT-eigenschapsbestand %s niet lezen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fout: XJT-eigenschapsbestand %s is leeg"
-
-#~ msgid "Sinusodial"
-#~ msgstr "Sinusodiaal"
