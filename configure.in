@@ -864,6 +864,7 @@ dnl plug-ins/gap/Makefile
 dnl plug-ins/gdyntext/Makefile
 dnl plug-ins/helpbrowser/Makefile
 dnl plug-ins/perl/po/Makefile.in
+
 AC_OUTPUT([
 build/Makefile
 build/win32/Makefile
