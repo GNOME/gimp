@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
 "POT-Creation-Date: 2001-09-22 11:30+0200\n"
-"PO-Revision-Date: 2001-08-11 20:35+0200\n"
+"PO-Revision-Date: 2001-09-23 16:10+02:00\n"
 "Last-Translator: Andras Timar <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -5602,12 +5602,10 @@ msgstr "Simítás"
 msgid "Show Path"
 msgstr "Útvonal mutatása"
 
-# Eredmény levágása, vagy szélhez igazítása?? Nézd meg a GIMP Help-et
 #. the clip resulting image toggle button
 #: app/transform_tool.c:320
-#, fuzzy
 msgid "Clip Result"
-msgstr "Eredmény ..."
+msgstr "Eredmény levágása"
 
 #: app/undo.c:2875
 #, c-format
