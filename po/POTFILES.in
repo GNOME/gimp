@@ -216,6 +216,7 @@ app/tools/gimpflipoptions.c
 app/tools/gimpfliptool.c
 app/tools/gimpfreeselecttool.c
 app/tools/gimpfuzzyselecttool.c
+app/tools/gimphistogramoptions.c
 app/tools/gimphistogramtool.c
 app/tools/gimphuesaturationtool.c
 app/tools/gimpimagemaptool.c

@@ -1,3 +1,7 @@
+2003-10-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/tools/gimphistogramoptions.c.
+
 2003-10-23  Sven Neumann  <sven@gimp.org>
 
 	* de.po: updated german translation.
