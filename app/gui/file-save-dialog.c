@@ -381,20 +381,29 @@ file_save_dialog_save_image (GtkWidget     *save_dialog,
                              PlugInProcDef *save_proc,
                              gboolean       set_uri_and_proc)
 {
-  GimpPDBStatusType status;
+  GimpPDBStatusType  status;
+  GError            *error = NULL;
 
   status = file_save_as (gimage,
                          uri,
                          raw_filename,
                          save_proc,
                          GIMP_RUN_INTERACTIVE,
-                         set_uri_and_proc);
+                         set_uri_and_proc,
+                         &error);
 
   if (status != GIMP_PDB_SUCCESS &&
       status != GIMP_PDB_CANCEL)
     {
-      /* Another error required. --bex */
-      g_message (_("Saving '%s' failed."), uri);
+      gchar *filename;
+
+      filename = file_utils_uri_to_utf8_filename (uri);
+
+      g_message (_("Saving '%s' failed:\n\n%s"),
+                 filename, error->message);
+      g_clear_error (&error);
+
+      g_free (filename);
     }
   else
     {

@@ -76,6 +76,7 @@ file_open_image (Gimp               *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (status != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   *status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -84,7 +85,8 @@ file_open_image (Gimp               *gimp,
 
   if (! file_proc)
     {
-      g_set_error (error, 0, 0, _("Unknown file type"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unknown file type"));
       return NULL;
     }
 
@@ -98,14 +100,16 @@ file_open_image (Gimp               *gimp,
           if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
               g_free (filename);
-              g_set_error (error, 0, 0, _("Not a regular file"));
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Not a regular file"));
               return NULL;
             }
 
           if (access (filename, R_OK) != 0)
             {
               g_free (filename);
-              g_set_error (error, 0, 0, g_strerror (errno));
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
+                           g_strerror (errno));
               return NULL;
             }
         }
@@ -148,14 +152,16 @@ file_open_image (Gimp               *gimp,
         }
       else
         {
-          g_set_error (error, 0, 0, _("Plug-In returned SUCCESS but did not "
-                                      "return an image"));
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Plug-In returned SUCCESS but did not "
+                         "return an image"));
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else if (*status != GIMP_PDB_CANCEL)
     {
-      g_set_error (error, 0, 0, _("Plug-In could not open image"));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Plug-In could not open image"));
     }
 
   return NULL;
@@ -179,7 +185,6 @@ file_open_with_proc_and_display (Gimp               *gimp,
                                  GError            **error)
 {
   GimpImage *gimage;
-  GError    *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (status != NULL, NULL);
@@ -190,7 +195,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
                             file_proc,
                             GIMP_RUN_INTERACTIVE,
                             status,
-                            &my_error);
+                            error);
 
   if (gimage)
     {
@@ -212,24 +217,6 @@ file_open_with_proc_and_display (Gimp               *gimp,
 
       /* save a thumbnail of every opened image */
       gimp_imagefile_save_thumbnail (imagefile, gimage);
-    }
-  else if (*status != GIMP_PDB_CANCEL)
-    {
-      if (error)
-        {
-          g_propagate_error (error, my_error);
-        }
-      else
-        {
-          gchar *filename;
-
-          filename = file_utils_uri_to_utf8_filename (uri);
-
-          g_message ("Opening '%s' failed:\n%s", filename, my_error->message);
-          g_error_free (my_error);
-
-          g_free (filename);
-        }
     }
 
   return gimage;

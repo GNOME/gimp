@@ -688,15 +688,31 @@ file_open_dialog_open_image (GtkWidget     *open_dialog,
                              const gchar   *entered_filename,
                              PlugInProcDef *load_proc)
 {
-  GimpPDBStatusType status;
+  GimpImage         *gimage;
+  GimpPDBStatusType  status;
+  GError            *error = NULL;
 
-  file_open_with_proc_and_display (gimp,
-                                   uri,
-                                   entered_filename, 
-                                   load_proc,
-                                   &status,
-                                   NULL);
+  gimage = file_open_with_proc_and_display (gimp,
+                                            uri,
+                                            entered_filename, 
+                                            load_proc,
+                                            &status,
+                                            &error);
 
-  if (status == GIMP_PDB_SUCCESS)
-    file_dialog_hide (open_dialog);
+  if (gimage)
+    {
+      file_dialog_hide (open_dialog);
+    }
+  else if (status != GIMP_PDB_CANCEL)
+    {
+      gchar *filename;
+
+      filename = file_utils_uri_to_utf8_filename (uri);
+
+      g_message (_("Opening '%s' failed:\n\n%s"),
+                 filename, error->message);
+      g_clear_error (&error);
+
+      g_free (filename);
+    }
 }

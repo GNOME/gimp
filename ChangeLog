@@ -1,3 +1,24 @@
+2003-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-save.[ch]: added GError reporting, removed
+	g_message() stuff.
+
+	* app/gui/file-commands.c
+	* app/gui/file-save-dialog.c: g_message() here if file_save_*()
+	returns an error.
+
+	* app/file/file-open.c: use the G_FILE_ERROR quark and the
+	GFileError enum for reporting errors. Removed g_message() if the
+	passed in GError** pointer is NULL (passing NULL as error return
+	location should never mean "show the error message yourself").
+
+	* app/app_procs.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdocumentview.c: g_message() here if file_open_*()
+	returns an error.
+
 2003-03-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/compose.c

@@ -48,11 +48,14 @@
 #include "vectors/gimpvectors.h"
 
 #include "file/file-open.h"
+#include "file/file-utils.h"
 
 #include "app_procs.h"
 
 #include "gimpdnd.h"
 #include "gimppreview.h"
+
+#include "libgimp/gimpintl.h"
 
 
 #define DRAG_PREVIEW_SIZE 32
@@ -949,9 +952,25 @@ gimp_dnd_open_files (GtkWidget *widget,
                G_GNUC_FUNCTION, uri);
 
       {
-        GimpPDBStatusType dummy;
+        GimpImage         *gimage;
+        GimpPDBStatusType  status;
+        GError            *error = NULL;
 
-        file_open_with_display (the_gimp, uri, &dummy, NULL);
+        gimage = file_open_with_display (the_gimp, uri,
+                                         &status, &error);
+
+        if (! gimage && status != GIMP_PDB_CANCEL)
+          {
+            gchar *filename;
+
+            filename = file_utils_uri_to_utf8_filename (uri);
+
+            g_message (_("Opening '%s' failed:\n\n%s"),
+                       filename, error->message);
+            g_clear_error (&error);
+
+            g_free (filename);
+          }
       }
 
       g_free (uri);

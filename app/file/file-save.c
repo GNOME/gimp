@@ -62,13 +62,16 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (GimpImage   *gimage,
-           GimpRunMode  run_mode)
+file_save (GimpImage    *gimage,
+           GimpRunMode   run_mode,
+           GError      **error)
 {
   const gchar   *uri;
   PlugInProcDef *file_proc;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (error == NULL || *error == NULL,
+                        GIMP_PDB_CALLING_ERROR);
 
   uri = gimp_object_get_name (GIMP_OBJECT (gimage));
 
@@ -76,7 +79,7 @@ file_save (GimpImage   *gimage,
 
   file_proc = gimp_image_get_save_proc (gimage);
 
-  return file_save_as (gimage, uri, uri, file_proc, run_mode, FALSE);
+  return file_save_as (gimage, uri, uri, file_proc, run_mode, FALSE, error);
 }
 
 GimpPDBStatusType
@@ -85,7 +88,8 @@ file_save_as (GimpImage      *gimage,
               const gchar    *raw_filename,
               PlugInProcDef  *file_proc,
               GimpRunMode     run_mode,
-              gboolean        set_uri_and_proc)
+              gboolean        set_uri_and_proc,
+              GError        **error)
 {
   ProcRecord        *proc;
   Argument          *args;
@@ -97,6 +101,8 @@ file_save_as (GimpImage      *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (uri != NULL, GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (raw_filename != NULL, GIMP_PDB_CALLING_ERROR);
+  g_return_val_if_fail (error == NULL || *error == NULL,
+                        GIMP_PDB_CALLING_ERROR);
 
   if (gimp_image_active_drawable (gimage) == NULL)
     return GIMP_PDB_EXECUTION_ERROR;
@@ -106,11 +112,9 @@ file_save_as (GimpImage      *gimage,
 
   if (! file_proc)
     {
-      g_message (_("Save failed.\n"
-                   "%s: Unknown file type."),
-                 uri);
-
-      return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Unknown file type"));
+      return GIMP_PDB_CALLING_ERROR;
     }
 
   filename = g_filename_from_uri (uri, NULL, NULL);
@@ -122,23 +126,18 @@ file_save_as (GimpImage      *gimage,
         {
           if (! g_file_test (filename, G_FILE_TEST_IS_REGULAR))
             {
-              g_message (_("Save failed.\n"
-                           "%s is not a regular file."),
-                         uri);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Not a regular file"));
               g_free (filename);
-
-              return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+              return GIMP_PDB_EXECUTION_ERROR;
             }
 
           if (access (filename, W_OK) != 0)
             {
-              g_message (_("Save failed.\n"
-                           "%s: %s."),
-                         uri,
-                         g_strerror (errno));
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_ACCES,
+                           g_strerror (errno));
               g_free (filename);
-
-              return GIMP_PDB_CANCEL;  /* inhibits error messages by caller */
+              return GIMP_PDB_EXECUTION_ERROR;
             }
         }
     }
@@ -202,6 +201,11 @@ file_save_as (GimpImage      *gimage,
               GIMP_OBJECT (gimage)->name = saved_uri;
             }
 	}
+    }
+  else if (status != GIMP_PDB_CANCEL)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Plug-In could not save image"));
     }
 
   g_free (return_vals);

@@ -156,10 +156,26 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 
   if (imagefile)
     {
-      GimpPDBStatusType dummy;
+      GimpImage         *gimage;
+      GimpPDBStatusType  status;
+      GError            *error = NULL;
 
-      file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name,
-                              &dummy, NULL);
+      gimage = file_open_with_display (gimp, GIMP_OBJECT (imagefile)->name,
+                                       &status, &error);
+
+      if (! gimage && status != GIMP_PDB_CANCEL)
+        {
+          gchar *filename;
+
+          filename =
+            file_utils_uri_to_utf8_filename (GIMP_OBJECT (imagefile)->name);
+
+          g_message (_("Opening '%s' failed:\n\n%s"),
+                     filename, error->message);
+          g_clear_error (&error);
+
+          g_free (filename);
+        }
     }
 }
 
@@ -204,19 +220,21 @@ file_save_cmd_callback (GtkWidget *widget,
 	}
       else
 	{
-	  GimpPDBStatusType status;
+	  GimpPDBStatusType  status;
+          GError            *error = NULL;
 
-	  status = file_save (gdisp->gimage, GIMP_RUN_WITH_LAST_VALS);
+	  status = file_save (gdisp->gimage, GIMP_RUN_WITH_LAST_VALS, &error);
 
 	  if (status != GIMP_PDB_SUCCESS &&
 	      status != GIMP_PDB_CANCEL)
 	    {
               gchar *filename;
 
-              filename = file_utils_uri_to_utf8_basename (uri);
+              filename = file_utils_uri_to_utf8_filename (uri);
 
-	      /* Error message should be added. --bex */
-	      g_message (_("Saving '%s' failed."), filename);
+	      g_message (_("Saving '%s' failed:\n\n%s"),
+                         filename, error->message);
+              g_clear_error (&error);
 
               g_free (filename);
 	    }
@@ -379,9 +397,9 @@ file_revert_confirm_callback (GtkWidget *widget,
 
           filename = file_utils_uri_to_utf8_filename (uri);
 
-	  g_message (_("Reverting to '%s' failed:\n%s"),
+	  g_message (_("Reverting to '%s' failed:\n\n%s"),
                      filename, error->message);
-          g_error_free (error);
+          g_clear_error (&error);
 
           g_free (filename);
 	}

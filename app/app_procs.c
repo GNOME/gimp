@@ -225,13 +225,28 @@ app_init (gint    gimp_argc,
                 {
                   g_printerr ("conversion filename -> uri failed: %s\n",
                               error->message);
-                  g_error_free (error);
+                  g_clear_error (&error);
                 }
               else
                 {
-                  GimpPDBStatusType dummy;
+                  GimpImage         *gimage;
+                  GimpPDBStatusType  status;
 
-                  file_open_with_display (the_gimp, uri, &dummy, NULL);
+                  gimage = file_open_with_display (the_gimp, uri,
+                                                   &status, &error);
+
+                  if (! gimage && status != GIMP_PDB_CANCEL)
+                    {
+                      gchar *filename;
+
+                      filename = file_utils_uri_to_utf8_filename (uri);
+
+                      g_message (_("Opening '%s' failed:\n\n%s"),
+                                 filename, error->message);
+                      g_clear_error (&error);
+
+                      g_free (filename);
+                   }
 
                   g_free (uri);
                 }

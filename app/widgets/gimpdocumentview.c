@@ -42,6 +42,7 @@
 #include "core/gimpimagefile.h"
 
 #include "file/file-open.h"
+#include "file/file-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -73,6 +74,8 @@ static void   gimp_document_view_select_item     (GimpContainerEditor *editor,
                                                   GimpViewable        *viewable);
 static void   gimp_document_view_activate_item   (GimpContainerEditor *editor,
                                                   GimpViewable        *viewable);
+static void   gimp_document_view_open_image      (GimpDocumentView    *view,
+                                                  GimpImagefile       *imagefile);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -230,11 +233,7 @@ gimp_document_view_open_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      GimpPDBStatusType dummy;
-
-      file_open_with_display (editor->view->context->gimp,
-                              gimp_object_get_name (GIMP_OBJECT (imagefile)),
-                              &dummy, NULL);
+      gimp_document_view_open_image (view, imagefile);
     }
   else
     {
@@ -303,13 +302,7 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
                                   &closure);
 
           if (! closure.found)
-            {
-              GimpPDBStatusType dummy;
-
-              file_open_with_display (editor->view->context->gimp,
-                                      closure.name,
-                                      &dummy, NULL);
-            }
+            gimp_document_view_open_image (view, imagefile);
         }
     }
   else
@@ -436,3 +429,34 @@ gimp_document_view_activate_item (GimpContainerEditor *editor,
       gimp_document_view_open_clicked (NULL, view);
     }
 }
+
+static void
+gimp_document_view_open_image (GimpDocumentView *view,
+                               GimpImagefile    *imagefile)
+{
+  Gimp              *gimp;
+  const gchar       *uri;
+  GimpImage         *gimage;
+  GimpPDBStatusType  status;
+  GError            *error = NULL;
+
+  gimp = GIMP_CONTAINER_EDITOR (view)->view->context->gimp;
+
+  uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+  gimage = file_open_with_display (gimp, uri, &status, &error);
+
+  if (! gimage && status != GIMP_PDB_CANCEL)
+    {
+      gchar *filename;
+
+      filename = file_utils_uri_to_utf8_filename (uri);
+
+      g_message (_("Opening '%s' failed:\n\n%s"),
+                 filename, error->message);
+      g_clear_error (&error);
+
+      g_free (filename);
+    }
+}
+
