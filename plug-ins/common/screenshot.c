@@ -27,6 +27,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -323,18 +325,20 @@ select_window (GdkScreen *screen)
 static gint32
 create_image (const GdkPixbuf *pixbuf)
 {
-  GimpPixelRgn	pr;
+  GimpPixelRgn	rgn;
   GimpDrawable *drawable;
-  GimpParasite *parasite;
   gint32        image;
   gint32        layer;
   gdouble       xres, yres;
   gchar        *comment;
   gint          width, height;
   gint          rowstride;
+  gint          bpp;
   gboolean      status;
-  gchar        *buf;
-  gint          i;
+  gchar        *pixels;
+  gpointer      pr;
+
+  status = gimp_progress_init (_("Loading Screen Shot..."));
 
   width  = gdk_pixbuf_get_width (pixbuf);
   height = gdk_pixbuf_get_height (pixbuf);
@@ -348,39 +352,46 @@ create_image (const GdkPixbuf *pixbuf)
 
   drawable = gimp_drawable_get (layer);
 
-  gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
+  gimp_pixel_rgn_init (&rgn, drawable, 0, 0, width, height, TRUE, FALSE);
 
-  gimp_pixel_rgn_init (&pr, drawable,
-                       0, 0, width, height,
-                       TRUE, FALSE);
-
-  /* copy the contents of the GdkPixbuf to the GimpDrawable */
   rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-  buf       = gdk_pixbuf_get_pixels (pixbuf);
-  status    = gimp_progress_init (_("Loading Screen Shot..."));
+  bpp       = gdk_pixbuf_get_n_channels (pixbuf);
+  pixels    = gdk_pixbuf_get_pixels (pixbuf);
 
-  for (i = 0; i < height; i++)
+  g_assert (bpp == rgn.bpp);
+
+  for (pr = gimp_pixel_rgns_register (1, &rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      gimp_pixel_rgn_set_row (&pr, buf, 0, i, width);
-      buf += rowstride;
-      /* update progress every 10 percent */
-      if (status && ((i + 1) * 100 / height) % 10 == 0)
-        status = gimp_progress_update ((i + 1.0) / height);
+      const guchar *src;
+      guchar       *dest;
+      gint          y;
+
+      src  = pixels + rgn.y * rowstride + rgn.x * bpp;
+      dest = rgn.data;
+
+      for (y = 0; y < rgn.h; y++)
+        {
+          memcpy (dest, src, rgn.w * rgn.bpp);
+
+          src  += rowstride;
+          dest += rgn.rowstride;
+        }
     }
 
   gimp_drawable_detach (drawable);
 
   gimp_progress_update (1.0);
 
-  /*  figure out the monitor resolution and set the image to it  */
   gimp_get_monitor_resolution (&xres, &yres);
   gimp_image_set_resolution (image, xres, yres);
 
-  /* Set the default comment parasite */
   comment = gimp_get_default_comment ();
-
   if (comment)
     {
+      GimpParasite *parasite;
+
       parasite = gimp_parasite_new ("gimp-comment",
                                     GIMP_PARASITE_PERSISTENT,
                                     g_utf8_strlen (comment, -1) + 1,
@@ -471,6 +482,8 @@ shoot (void)
     }
 
   image_ID = create_image (screenshot);
+
+  g_object_unref (screenshot);
 }
 
 /*  ScreenShot dialog  */
