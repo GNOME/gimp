@@ -36,12 +36,12 @@ typedef enum
   GIMP_MODULE_STATE_ERROR,       /* missing gimp_module_register function
                                   * or other error
                                   */
-  GIMP_MODULE_STATE_LOADED_OK,   /* an instance of a type implemented by
+  GIMP_MODULE_STATE_LOADED,      /* an instance of a type implemented by
                                   * this module is allocated
                                   */
   GIMP_MODULE_STATE_LOAD_FAILED, /* gimp_module_register returned FALSE
                                   */
-  GIMP_MODULE_STATE_UNLOADED_OK  /* there are no instances allocated of
+  GIMP_MODULE_STATE_NOT_LOADED   /* there are no instances allocated of
                                   * types implemented by this module
                                   */
 } GimpModuleState;
@@ -75,15 +75,15 @@ struct _GimpModule
 {
   GTypeModule      parent_instance;
 
-  gchar           *filename;     /* path to the module                        */
-  gboolean         verbose;      /* verbose error reporting                   */
-  GimpModuleState  state;        /* what's happened to the module             */
-  gboolean         on_disk;      /* TRUE if file still exists                 */
-  gboolean         load_inhibit; /* user requests not to load at boot time    */
+  gchar           *filename;     /* path to the module                       */
+  gboolean         verbose;      /* verbose error reporting                  */
+  GimpModuleState  state;        /* what's happened to the module            */
+  gboolean         on_disk;      /* TRUE if file still exists                */
+  gboolean         load_inhibit; /* user requests not to load at boot time   */
 
-  /* stuff from now on may be NULL depending on the state the module is in    */
-  GModule         *module;       /* handle on the module                      */
-  GimpModuleInfo  *info;         /* returned values from module_query         */
+  /* stuff from now on may be NULL depending on the state the module is in   */
+  GModule         *module;       /* handle on the module                     */
+  GimpModuleInfo  *info;         /* returned values from module_query        */
   gchar           *last_module_error;
 
   GimpModuleQueryFunc     query_module;

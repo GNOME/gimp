@@ -212,7 +212,7 @@ gimp_module_load (GTypeModule *module)
       return FALSE;
     }
 
-  gimp_module->state = GIMP_MODULE_STATE_LOADED_OK;
+  gimp_module->state = GIMP_MODULE_STATE_LOADED;
   return TRUE;
 }
 
@@ -259,7 +259,7 @@ gimp_module_new (const gchar *filename,
       if (verbose)
 	g_print (_("Skipping module: '%s'\n"), filename);
 
-      module->state = GIMP_MODULE_STATE_UNLOADED_OK;
+      module->state = GIMP_MODULE_STATE_NOT_LOADED;
     }
 
   return module;
@@ -285,7 +285,8 @@ gimp_module_query_module (GimpModule *module)
   /* find the gimp_module_query symbol */
   if (! g_module_symbol (module->module, "gimp_module_query", &symbol))
     {
-      gimp_module_set_last_error (module, "Missing gimp_module_query() symbol");
+      gimp_module_set_last_error (module,
+                                  "Missing gimp_module_query() symbol");
 
       if (module->verbose)
 	g_print (_("Module '%s' load error:\n%s"),
@@ -360,13 +361,13 @@ gimp_module_state_name (GimpModuleState state)
   static const gchar * const statenames[] =
   {
     N_("Module error"),
-    N_("Loaded OK"),
+    N_("Loaded"),
     N_("Load failed"),
-    N_("Unloaded OK")
+    N_("Not loaded")
   };
 
   g_return_val_if_fail (state >= GIMP_MODULE_STATE_ERROR &&
-                        state <= GIMP_MODULE_STATE_UNLOADED_OK, NULL);
+                        state <= GIMP_MODULE_STATE_NOT_LOADED, NULL);
 
   return gettext (statenames[state]);
 }
@@ -398,7 +399,7 @@ gimp_module_close (GimpModule *module)
   module->query_module    = NULL;
   module->register_module = NULL;
 
-  module->state = GIMP_MODULE_STATE_UNLOADED_OK;
+  module->state = GIMP_MODULE_STATE_NOT_LOADED;
 
   return TRUE;
 }

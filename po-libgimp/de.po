@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2002-11-05 19:08+0100\n"
+"POT-Creation-Date: 2002-11-06 14:33+0100\n"
 "PO-Revision-Date: 2002-11-05 19:11+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -168,8 +168,8 @@ msgid "Loading module: '%s'\n"
 msgstr "Lade Modul: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:291 libgimpmodule/gimpmodule.c:315
-#: libgimpmodule/gimpmodule.c:385
+#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
+#: libgimpmodule/gimpmodule.c:386
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -183,21 +183,21 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:362
+#: libgimpmodule/gimpmodule.c:363
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: libgimpmodule/gimpmodule.c:363
-msgid "Loaded OK"
+#: libgimpmodule/gimpmodule.c:364
+msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:365
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmodule.c:365
-msgid "Unloaded OK"
-msgstr "Entladen"
+#: libgimpmodule/gimpmodule.c:366
+msgid "Not loaded"
+msgstr "Nicht geladen"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -291,7 +291,9 @@ msgstr "Datei auswählen"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um dessen Farbe auszuwählen."
+msgstr ""
+"Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
+"dessen Farbe auszuwählen."
 
 #: libgimpwidgets/gimpstock.c:88
 msgid "Anchor"

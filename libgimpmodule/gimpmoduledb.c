@@ -48,7 +48,7 @@ enum
 };
 
 
-#define DUMP_DB 1
+/*  #define DUMP_DB 1  */
 
 
 static void         gimp_module_db_class_init     (GimpModuleDBClass *klass);

@@ -56,7 +56,9 @@ safe_mode_register_tool ()
 void
 tool_safe_mode_init (const gchar *tool_plug_in_path)
 {
+#ifdef VERBOSE
   g_message ("tool-safe-mode init called");
+#endif
 
   if (g_module_supported () && tool_plug_in_path) 
     {
@@ -78,14 +80,17 @@ tool_safe_mode_init (const gchar *tool_plug_in_path)
         }
 #endif
 
+#ifdef VERBOSE
       g_message ("tool_plug_in_path: %s", tool_plug_in_path);
+#endif
 
       path = gimp_path_parse (tool_plug_in_path, 16, TRUE, NULL);
 
       for (list = path; list; list = g_list_next (list))
         {
+#ifdef VERBOSE
           g_message ("reading datafiles directory '%s'", (gchar *) list->data);
-
+#endif
           dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
           if (!dir)
@@ -121,5 +126,7 @@ tool_safe_mode_init (const gchar *tool_plug_in_path)
       gimp_path_free (path);
    }
 
+#ifdef VERBOSE
   g_message ("tool-safe-mode init done");
+#endif
 }

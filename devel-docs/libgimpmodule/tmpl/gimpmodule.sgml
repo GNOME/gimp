@@ -40,9 +40,9 @@ Common definitions for creating a pluggable GIMP module.
 </para>
 
 @GIMP_MODULE_STATE_ERROR: 
-@GIMP_MODULE_STATE_LOADED_OK: 
+@GIMP_MODULE_STATE_LOADED: 
 @GIMP_MODULE_STATE_LOAD_FAILED: 
-@GIMP_MODULE_STATE_UNLOADED_OK: 
+@GIMP_MODULE_STATE_NOT_LOADED: 
 
 <!-- ##### USER_FUNCTION GimpModuleQueryFunc ##### -->
 <para>

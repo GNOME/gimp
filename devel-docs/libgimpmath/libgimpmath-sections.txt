@@ -1,5 +1,6 @@
 <SECTION>
 <FILE>gimpmath</FILE>
+<TITLE>GimpMath</TITLE>
 G_MAXRAND
 RINT
 ROUND
@@ -18,6 +19,7 @@ gimp_md5_get_digest
 
 <SECTION>
 <FILE>gimpmatrix</FILE>
+<TITLE>GimpMatrix</TITLE>
 GimpMatrix3[3][3]
 GimpMatrix4[4][4]
 gimp_matrix3_transform_point
@@ -39,6 +41,7 @@ gimp_matrix4_to_deg
 
 <SECTION>
 <FILE>gimpvector</FILE>
+<TITLE>GimpVector</TITLE>
 GimpVector2
 GimpVector3
 GimpVector4

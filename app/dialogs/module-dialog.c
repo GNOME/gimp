@@ -316,7 +316,7 @@ static void
 browser_load_unload_callback (GtkWidget     *widget, 
 			      ModuleBrowser *browser)
 {
-  if (browser->last_update->state != GIMP_MODULE_STATE_LOADED_OK)
+  if (browser->last_update->state != GIMP_MODULE_STATE_LOADED)
     {
       if (browser->last_update->info)
         {
@@ -471,7 +471,7 @@ browser_info_update (GimpModuleDB  *db,
     {
     case GIMP_MODULE_STATE_ERROR:
     case GIMP_MODULE_STATE_LOAD_FAILED:
-    case GIMP_MODULE_STATE_UNLOADED_OK:
+    case GIMP_MODULE_STATE_NOT_LOADED:
       if (module->info)
         gtk_label_set_text (GTK_LABEL (browser->button_label), _("Load"));
       else
@@ -481,7 +481,7 @@ browser_info_update (GimpModuleDB  *db,
                                 module->on_disk);
       break;
 
-    case GIMP_MODULE_STATE_LOADED_OK:
+    case GIMP_MODULE_STATE_LOADED:
       gtk_label_set_text (GTK_LABEL (browser->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (browser->button), FALSE);
       break;    

@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimpmatrix
+GimpMatrix
 
 <!-- ##### SECTION Short_Description ##### -->
 Utilities to set up and manipulate 3x3 transformation matrices.

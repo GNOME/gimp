@@ -57,10 +57,12 @@ base_init (void)
   gchar *swapfile;
   gchar *path;
 
+#ifdef ENABLE_MMX
 #ifdef HAVE_ASM_MMX
   use_mmx = use_mmx && (intel_cpu_features() & (1 << 23)) ? 1 : 0;
   g_print ("using MMX: %s\n", use_mmx ? "yes" : "no");
-#endif  
+#endif
+#endif
 
   toast_old_temp_files ();
 

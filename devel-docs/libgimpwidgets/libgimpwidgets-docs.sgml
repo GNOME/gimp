@@ -35,6 +35,7 @@
     &GimpColorScale;
     &GimpFileSelection;
     &GimpPathEditor;
+    &GimpPickButton;
     &GimpPixmap;
     &GimpSizeEntry;
     &GimpUnitMenu;
@@ -51,7 +52,6 @@
       &GimpColorNotebook;
       &GimpColorScales;
       &GimpColorSelect;
-      &GimpPickButton;
     </chapter>
   </part>
 

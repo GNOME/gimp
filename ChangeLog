@@ -1,3 +1,15 @@
+2002-11-06  Sven Neumann  <sven@gimp.org>
+
+	* app/base/base.c (base_init): don't say we'd use MMX if it is
+	disabled.
+
+	* libgimpmodule/gimpmodule.[ch]
+	* app/gui/module-browser.c: changed enum values and user-visible
+	strings to saner values.
+
+	* libgimpmodule/gimpmoduledb.c
+	* plug-ins/tools/tool-safe-mode.c: made them less verbose.
+
 2002-11-06  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/png.c: Removed cruft from file,

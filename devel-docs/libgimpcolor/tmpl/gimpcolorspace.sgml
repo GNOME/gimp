@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-gimpcolorspace
+GimpColorSpace
 
 <!-- ##### SECTION Short_Description ##### -->
 Utility functions which convert colors between different color models.

@@ -1,5 +1,6 @@
 <SECTION>
 <FILE>gimpcolorspace</FILE>
+<TITLE>GimpColorSpace</TITLE>
 gimp_rgb_to_hsv
 gimp_rgb_to_hsl
 gimp_hsv_to_rgb
@@ -19,6 +20,7 @@ gimp_hsv_to_rgb4
 
 <SECTION>
 <FILE>gimphsv</FILE>
+<TITLE>GimpHSV</TITLE>
 GimpHSV
 gimp_hsv_set
 gimp_hsv_clamp
@@ -27,6 +29,7 @@ gimp_hsva_set
 
 <SECTION>
 <FILE>gimprgb</FILE>
+<TITLE>GimpRGB</TITLE>
 GimpRGB
 GimpRGBCompositeMode
 gimp_rgb_set
@@ -59,6 +62,7 @@ INTENSITY
 
 <SECTION>
 <FILE>gimpadaptivesupersample</FILE>
+<TITLE>GimpAdaptiveSupersample</TITLE>
 GimpProgressFunc
 GimpPutPixelFunc
 GimpRenderFunc
@@ -67,6 +71,7 @@ gimp_adaptive_supersample_area
 
 <SECTION>
 <FILE>gimpbilinear</FILE>
+<TITLE>GimpBilinear</TITLE>
 gimp_bilinear
 gimp_bilinear_8
 gimp_bilinear_16

@@ -1,3 +1,21 @@
+2002-11-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/tmpl/gimpadaptivesupersample.sgml
+	* libgimpcolor/tmpl/gimpbilinear.sgml
+	* libgimpcolor/tmpl/gimpcolorspace.sgml
+	* libgimpcolor/tmpl/gimphsv.sgml
+	* libgimpcolor/tmpl/gimprgb.sgml
+	* libgimpmath/libgimpmath-sections.txt
+	* libgimpmath/tmpl/gimpmath.sgml
+	* libgimpmath/tmpl/gimpmatrix.sgml
+	* libgimpmath/tmpl/gimpvector.sgml
+	* libgimpmodule/tmpl/gimpmodule.sgml
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/tmpl/gimpcolorscales.sgml
+	* libgimpwidgets/tmpl/gimpcolorselect.sgml: some minor changes to
+	make the docs more pleasant to look at.
+
 2002-11-05  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/tmpl/gimppickbutton.sgml: added GimpPickButton.
