@@ -1,3 +1,9 @@
+2003-11-24  Marco Ciampa  <ciampix@libero.it>
+
+	* it.po: added italian translation.
+	* Makefile.am: added it.po.
+	* gimp_tips.it.txt: removed.
+
 2003-11-21  Stanislav Visnovsky <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny.
