@@ -141,6 +141,7 @@ struct _GimpImageClass
   void (* mask_changed)                 (GimpImage            *gimage);
   void (* resolution_changed)           (GimpImage            *gimage);
   void (* unit_changed)                 (GimpImage            *gimage);
+  void (* qmask_changed)                (GimpImage            *gimage);
   void (* selection_control)            (GimpImage            *gimage,
                                          GimpSelectionControl  control);
 
@@ -185,11 +186,18 @@ void            gimp_image_get_resolution     (const GimpImage      *gimage,
 void            gimp_image_set_unit           (GimpImage            *gimage,
 					       GimpUnit              unit);
 GimpUnit        gimp_image_get_unit           (const GimpImage      *gimage);
+
+void            gimp_image_set_qmask_state    (GimpImage            *gimage,
+					       gboolean              qmask_state);
+gboolean        gimp_image_get_qmask_state    (const GimpImage      *gimage);
+
 void            gimp_image_set_save_proc      (GimpImage            *gimage,
 					       PlugInProcDef        *proc);
 PlugInProcDef * gimp_image_get_save_proc      (const GimpImage      *gimage);
+
 gint		gimp_image_get_width          (const GimpImage      *gimage);
 gint		gimp_image_get_height         (const GimpImage      *gimage);
+
 void            gimp_image_resize             (GimpImage            *gimage,
 					       gint                  new_width,
 					       gint                  new_height,
@@ -201,11 +209,13 @@ void            gimp_image_scale              (GimpImage            *gimage,
 gboolean        gimp_image_check_scaling      (const GimpImage      *gimage,
 					       gint                  new_width,
 					       gint                  new_height);
+
 TileManager   * gimp_image_shadow             (GimpImage            *gimage,
 					       gint                  width,
 					       gint                  height,
 					       gint                  bpp);
 void            gimp_image_free_shadow        (GimpImage            *gimage);
+
 void            gimp_image_apply_image        (GimpImage            *gimage,
 					       GimpDrawable         *drawable,
 					       PixelRegion          *src2PR,
@@ -223,6 +233,7 @@ void            gimp_image_replace_image      (GimpImage            *gimage,
 					       PixelRegion          *maskPR,
 					       gint                  x,
 					       gint                  y);
+
 void            gimp_image_get_foreground     (const GimpImage      *gimage,
 					       const GimpDrawable   *drawable,
 					       guchar               *fg);
@@ -241,6 +252,7 @@ void            gimp_image_transform_color    (const GimpImage      *gimage,
 					       guchar               *src,
 					       guchar               *dest,
 					       GimpImageBaseType     type);
+
 GimpGuide     * gimp_image_add_hguide         (GimpImage            *gimage);
 GimpGuide     * gimp_image_add_vguide         (GimpImage            *gimage);
 void            gimp_image_add_guide          (GimpImage            *gimage,
@@ -298,6 +310,7 @@ void   gimp_image_floating_selection_changed  (GimpImage            *gimage);
 void            gimp_image_mask_changed       (GimpImage            *gimage);
 void            gimp_image_resolution_changed (GimpImage            *gimage);
 void            gimp_image_unit_changed       (GimpImage            *gimage);
+void            gimp_image_qmask_changed      (GimpImage            *gimage);
 void            gimp_image_update             (GimpImage            *gimage,
                                                gint                  x,
                                                gint                  y,

@@ -52,6 +52,8 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-dnd.h"
+#include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-qmask.h"
 #include "gimpdisplayshell-render.h"
 #include "gximage.h"
 
@@ -59,7 +61,6 @@
 #include "gimprc.h"
 #include "nav_window.h"
 #include "plug_in.h"
-#include "qmask.h"
 #include "undo.h"
 
 #ifdef DISPLAY_FILTERS
@@ -243,6 +244,11 @@ gimp_display_shell_destroy (GtkObject *object)
 
   shell = GIMP_DISPLAY_SHELL (object);
 
+  if (shell->gdisp)
+    {
+      gimp_display_shell_disconnect (shell);
+    }
+
   shell->display_areas = gimp_display_area_list_free (shell->display_areas);
 
 #ifdef DISPLAY_FILTERS
@@ -297,6 +303,8 @@ gimp_display_shell_destroy (GtkObject *object)
       nav_dialog_free (shell->gdisp, shell->nav_popup);
       shell->nav_popup = NULL;
     }
+
+  shell->gdisp = NULL;
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -624,18 +632,18 @@ gimp_display_shell_new (GimpDisplay *gdisp)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff), TRUE);
 
   g_signal_connect (G_OBJECT (shell->qmaskoff), "toggled",
-		    G_CALLBACK (qmask_deactivate_callback),
-		    gdisp);
+		    G_CALLBACK (gimp_display_shell_qmask_off_toggled),
+		    shell);
   g_signal_connect (G_OBJECT (shell->qmaskoff), "button_press_event",
-		    G_CALLBACK (qmask_button_press_callback),
-		    gdisp);
+		    G_CALLBACK (gimp_display_shell_qmask_button_press),
+		    shell);
 
   g_signal_connect (G_OBJECT (shell->qmaskon), "toggled",
-		    G_CALLBACK (qmask_activate_callback),
-		    gdisp);
+		    G_CALLBACK (gimp_display_shell_qmask_on_toggled),
+		    shell);
   g_signal_connect (G_OBJECT (shell->qmaskon), "button_press_event",
-		    G_CALLBACK (qmask_button_press_callback),
-		    gdisp);
+		    G_CALLBACK (gimp_display_shell_qmask_button_press),
+		    shell);
 
   gimp_help_set_help_data (shell->qmaskon, NULL, "#qmask_on_button");
 
@@ -743,6 +751,8 @@ gimp_display_shell_new (GimpDisplay *gdisp)
     }
 
   gtk_widget_show (main_vbox);
+
+  gimp_display_shell_connect (shell);
 
   return GTK_WIDGET (shell);
 }

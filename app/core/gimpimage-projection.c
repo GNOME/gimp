@@ -175,6 +175,7 @@ enum
   MASK_CHANGED,
   RESOLUTION_CHANGED,
   UNIT_CHANGED,
+  QMASK_CHANGED,
   SELECTION_CONTROL,
 
   CLEAN,
@@ -320,6 +321,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, unit_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  gimp_image_signals[QMASK_CHANGED] =
+    g_signal_new ("qmask_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, qmask_changed),
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
@@ -837,6 +847,28 @@ gimp_image_get_unit (const GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_UNIT_INCH);
 
   return gimage->unit;
+}
+
+void
+gimp_image_set_qmask_state (GimpImage *gimage,
+                            gboolean   qmask_state)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  if (qmask_state != gimage->qmask_state)
+    {
+      gimage->qmask_state = qmask_state ? TRUE : FALSE;
+
+      gimp_image_qmask_changed (gimage);
+    }
+}
+
+gboolean
+gimp_image_get_qmask_state (const GimpImage *gimage)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  return gimage->qmask_state;
 }
 
 void
@@ -2022,6 +2054,14 @@ gimp_image_unit_changed (GimpImage *gimage)
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UNIT_CHANGED], 0);
+}
+
+void
+gimp_image_qmask_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[QMASK_CHANGED], 0);
 }
 
 void

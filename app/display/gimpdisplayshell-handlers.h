@@ -16,18 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __QMASK_H__
-#define __QMASK_H__
+#ifndef __GIMP_DISPLAY_SHELL_HANDLERS_H__
+#define __GIMP_DISPLAY_SHELL_HANDLERS_H__
 
 
-gboolean   qmask_button_press_callback (GtkWidget      *widget,
-					GdkEventButton *event,
-					gpointer        data);
-void       qmask_activate_callback     (GtkWidget      *widget,
-					GimpDisplay    *gdisp);
-void       qmask_deactivate_callback   (GtkWidget      *widget,
-					GimpDisplay    *gdisp);
-void       qmask_buttons_update        (GimpDisplay    *gdisp);
+void   gimp_display_shell_connect    (GimpDisplayShell *shell);
+void   gimp_display_shell_disconnect (GimpDisplayShell *shell);
 
 
-#endif  /*  __QMASK_H__ */
+#endif /*  __GIMP_DISPLAY_SHELL_HANDLERS_H__  */

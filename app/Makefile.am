@@ -20,8 +20,6 @@ gimp_SOURCES = @STRIP_BEGIN@ \
 	nav_window.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
-	qmask.c			\
-	qmask.h			\
 	undo_history.c		\
 	undo_history.h		\
 ##

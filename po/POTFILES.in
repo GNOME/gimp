@@ -11,7 +11,6 @@ app/gimprc.c
 app/main.c
 app/nav_window.c
 app/plug_in.c
-app/qmask.c
 app/undo.c
 app/undo_history.c
 app/user_install.c
@@ -39,6 +38,7 @@ app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
 app/display/gimpdisplayshell-layer-select.c
+app/display/gimpdisplayshell-qmask.c
 
 app/file/file-open.c
 app/file/file-save.c

@@ -1,5 +1,28 @@
 2001-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/qmask.[ch]: removed.
+
+	* app/core/gimpimage.[ch]: added "qmask_changed" signal and
+	gimp_image_[set|get]_qmask_state().
+
+	* app/display/Makefile.am
+	* app/display/gimpdisplayshell-qmask.[ch]: put the stuff here.
+
+	* app/display/gimpdisplayshell-handlers.[ch]: new files: handlers
+	for GimpImage signals handled by GimpDisplayShell.
+
+	* app/display/gimpdisplay-handlers.c: removed some of them here.
+	Don't include any GimpDisplayShell stuff any more.
+
+	* app/display/gimpdisplay.c: no need to update the qmask buttons
+	in gimp_display_flush_whenever().
+
+	* app/display/gimpdisplayshell.c: call gimp_display_shell_connect()
+	and disconnect().
+
+2001-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/qmask.c: fixed qmask callbacks to check if the toggle is
 	active before performing any action.
 

@@ -1,0 +1,176 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <gtk/gtk.h>
+
+#include "display-types.h"
+
+#include "core/gimpimage.h"
+
+#include "gimpdisplay.h"
+#include "gimpdisplayshell.h"
+#include "gimpdisplayshell-handlers.h"
+#include "gimpdisplayshell-qmask.h"
+#include "gimpdisplayshell-scale.h"
+
+#include "gimprc.h"
+
+
+/*  local function prototypes  */
+
+static void   gimp_display_shell_update_title_handler       (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_size_changed_handler       (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_unit_changed_handler       (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_qmask_changed_handler      (GimpImage        *gimage,
+                                                             GimpDisplayShell *shell);
+
+
+/*  public functions  */
+
+void
+gimp_display_shell_connect (GimpDisplayShell *shell)
+{
+  GimpImage *gimage;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->gimage));
+
+  gimage = shell->gdisp->gimage;
+
+  g_signal_connect (G_OBJECT (gimage), "dirty",
+                    G_CALLBACK (gimp_display_shell_update_title_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "clean",
+                    G_CALLBACK (gimp_display_shell_update_title_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "name_changed",
+                    G_CALLBACK (gimp_display_shell_update_title_handler),
+                    shell);
+
+  g_signal_connect (G_OBJECT (gimage), "size_changed",
+                    G_CALLBACK (gimp_display_shell_size_changed_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "resolution_changed",
+                    G_CALLBACK (gimp_display_shell_resolution_changed_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "unit_changed",
+                    G_CALLBACK (gimp_display_shell_unit_changed_handler),
+                    shell);
+  g_signal_connect (G_OBJECT (gimage), "qmask_changed",
+                    G_CALLBACK (gimp_display_shell_qmask_changed_handler),
+                    shell);
+}
+
+void
+gimp_display_shell_disconnect (GimpDisplayShell *shell)
+{
+  GimpImage *gimage;
+
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY (shell->gdisp));
+  g_return_if_fail (GIMP_IS_IMAGE (shell->gdisp->gimage));
+
+  gimage = shell->gdisp->gimage;
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_qmask_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_unit_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_resolution_changed_handler,
+                                        shell);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_size_changed_handler,
+                                        shell);
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimage),
+                                        gimp_display_shell_update_title,
+                                        shell);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_display_shell_update_title_handler (GimpImage        *gimage,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_update_title (shell);
+}
+
+static void
+gimp_display_shell_size_changed_handler (GimpImage        *gimage,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_resize_cursor_label (shell);
+  gimp_display_shell_scale_resize (shell, gimprc.allow_resize_windows, TRUE);
+}
+
+static void
+gimp_display_shell_resolution_changed_handler (GimpImage        *gimage,
+                                               GimpDisplayShell *shell)
+{
+  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_resize_cursor_label (shell);
+}
+
+static void
+gimp_display_shell_unit_changed_handler (GimpImage        *gimage,
+                                         GimpDisplayShell *shell)
+{
+  gimp_display_shell_scale_setup (shell);
+  gimp_display_shell_resize_cursor_label (shell);
+}
+
+static void
+gimp_display_shell_qmask_changed_handler (GimpImage        *gimage,
+                                          GimpDisplayShell *shell)
+{
+  if (shell->gdisp->gimage->qmask_state !=
+      GTK_TOGGLE_BUTTON (shell->qmaskon)->active)
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskon),
+				       gimp_display_shell_qmask_on_toggled,
+				       shell);
+      g_signal_handlers_block_by_func (G_OBJECT (shell->qmaskoff),
+				       gimp_display_shell_qmask_off_toggled,
+				       shell);
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskon),
+				    shell->gdisp->gimage->qmask_state);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmaskoff),
+				    ! shell->gdisp->gimage->qmask_state);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskon),
+                                         gimp_display_shell_qmask_on_toggled,
+					 shell);
+      g_signal_handlers_unblock_by_func (G_OBJECT (shell->qmaskoff),
+                                         gimp_display_shell_qmask_off_toggled,
+					 shell);
+    }
+}

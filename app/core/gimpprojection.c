@@ -43,7 +43,6 @@
 #include "gimprc.h"
 #include "nav_window.h"
 #include "plug_in.h"
-#include "qmask.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -474,9 +473,6 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
 
   /*  update the gdisplay's info dialog  */
   info_window_update (gdisp);
- 
-  /* update the gdisplay's qmask buttons */
-  qmask_buttons_update (gdisp);
 
   /*  ensure the consistency of the tear-off menus  */
   if (! now && gimp_context_get_display (gimp_get_user_context
