@@ -764,7 +764,11 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
 
   if (target_list)
     {
-      gtk_target_list_add_table (target_list, &dnd_data->target_entry, 1);
+      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
+
+      gtk_target_list_add (target_list, atom,
+                           dnd_data->target_entry.flags,
+                           dnd_data->target_entry.info);
     }
   else
     {
@@ -805,9 +809,7 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
 
   if (target_list)
     {
-      GdkAtom atom;
-
-      atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
+      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
 
       if (atom != GDK_NONE)
         gtk_target_list_remove (target_list, atom);
@@ -856,7 +858,11 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
 
   if (target_list)
     {
-      gtk_target_list_add_table (target_list, &dnd_data->target_entry, 1);
+      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
+
+      gtk_target_list_add (target_list, atom,
+                           dnd_data->target_entry.flags,
+                           dnd_data->target_entry.info);
     }
   else
     {
@@ -883,9 +889,7 @@ gimp_dnd_data_dest_remove (GimpDndType  data_type,
 
   if (target_list)
     {
-      GdkAtom atom;
-
-      atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
+      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
 
       if (atom != GDK_NONE)
         gtk_target_list_remove (target_list, atom);

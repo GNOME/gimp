@@ -1,3 +1,13 @@
+2004-06-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdnd.c: use gtk_target_list_add() instead of
+	gtk_target_list_add_table() because the latter prepends the
+	targets to the internal list which screws the order (== priority)
+	of DND targets.
+
+	* app/widgets/gimpselectiondata.c: added some more checks for
+	failed drops (selection_data->length < 0).
+
 2004-06-29  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/unsharp.c: The preview's row buffer was

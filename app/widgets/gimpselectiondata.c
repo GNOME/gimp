@@ -184,7 +184,7 @@ gimp_selection_data_get_uris (GtkSelectionData *selection)
 
   g_return_val_if_fail (selection != NULL, NULL);
 
-  if (selection->format != 8)
+  if ((selection->format != 8) || (selection->length < 1))
     {
       g_warning ("Received invalid file data!");
       return NULL;
@@ -397,7 +397,7 @@ gimp_selection_data_get_svg (GtkSelectionData *selection,
   g_return_val_if_fail (selection != NULL, NULL);
   g_return_val_if_fail (length != NULL, NULL);
 
-  if (selection->format != 8)
+  if ((selection->format != 8) || (selection->length < 1))
     {
       g_warning ("Received invalid SVG data!");
       return NULL;
