@@ -23,17 +23,19 @@
    to proper places. That is, the handlers should be moved to
    layers_dialog, gdisplay, tools, etc.. */
 
-static void gimage_dirty_handler (GimpImage* gimage);
-static void gimage_destroy_handler (GimpImage* gimage);
-static void gimage_cmap_change_handler (GimpImage* gimage, gint ncol,
-					gpointer user_data);
-static void gimage_rename_handler (GimpImage* gimage);
-static void gimage_resize_handler (GimpImage* gimage);
-static void gimage_restructure_handler (GimpImage* gimage);
-static void gimage_repaint_handler (GimpImage* gimage, gint, gint, gint, gint);
+static void gimage_dirty_handler        (GimpImage* gimage);
+static void gimage_destroy_handler      (GimpImage* gimage);
+static void gimage_cmap_change_handler  (GimpImage* gimage, gint ncol, gpointer user_data);
+static void gimage_rename_handler       (GimpImage* gimage);
+static void gimage_resize_handler       (GimpImage* gimage);
+static void gimage_restructure_handler  (GimpImage* gimage);
+static void gimage_repaint_handler      (GimpImage* gimage, gint, gint, gint, gint);
+
 
 GImage*
-gimage_new(int width, int height, GimpImageBaseType base_type)
+gimage_new(int width, 
+	   int height, 
+	   GimpImageBaseType base_type)
 {
   GimpImage* gimage = gimp_image_new (width, height, base_type);
 
@@ -52,17 +54,16 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
   gtk_signal_connect (GTK_OBJECT (gimage), "colormap_changed",
 		      GTK_SIGNAL_FUNC(gimage_cmap_change_handler), NULL);
 
-  
-  gimp_set_add(image_context, gimage);
+  gimp_set_add (image_context, gimage);
 
-  palette_import_image_new(gimage);
+  palette_import_image_new (gimage);
   return gimage;
 }
 
 GImage*
 gimage_get_ID (gint ID)
 {
-	return pdb_id_to_image(ID);
+  return pdb_id_to_image (ID);
 }
 
 
@@ -74,19 +75,21 @@ void
 gimage_delete (GImage *gimage)
 {
   gimage->ref_count--;
-   if (gimage->ref_count <= 0)
-     gtk_object_unref (GTK_OBJECT(gimage));
+  if (gimage->ref_count <= 0)
+    gtk_object_unref (GTK_OBJECT (gimage));
 }
 
 static void
-invalidate_cb(gpointer image, gpointer user_data){
-	gimp_image_invalidate_preview(GIMP_IMAGE(image));
+invalidate_cb (gpointer image, 
+	       gpointer user_data)
+{
+  gimp_image_invalidate_preview (GIMP_IMAGE(image));
 }
 
 void
 gimage_invalidate_previews (void)
 {
-	gimp_set_foreach(image_context, invalidate_cb, NULL);
+  gimp_set_foreach (image_context, invalidate_cb, NULL);
 }
 
 static void
@@ -107,21 +110,23 @@ gimage_dirty_handler (GimpImage* gimage)
 }
 
 static void
-gimlist_cb(gpointer im, gpointer data){
-	GSList** l=(GSList**)data;
-	*l=g_slist_prepend(*l, im);
+gimlist_cb (gpointer im, 
+	    gpointer data)
+{
+  GSList** l=(GSList**)data;
+  *l=g_slist_prepend(*l, im);
 }
 
 gint
-gimage_image_count()
+gimage_image_count (void)
 {
   GSList *list=NULL;
   gint num_images = 0;
 
-  gimage_foreach(gimlist_cb, &list);
+  gimage_foreach (gimlist_cb, &list);
   num_images = g_slist_length (list);
 
-  g_slist_free(list);
+  g_slist_free (list);
 
   return (num_images);
 }
@@ -129,22 +134,23 @@ gimage_image_count()
 static void
 gimage_destroy_handler (GimpImage* gimage)
 {
-
   /*  free the undo list  */
   undo_free (gimage);
 
-  palette_import_image_destroyed(gimage);
+  palette_import_image_destroyed (gimage);
 
-  if(gimage_image_count() == 1) /* This is the last image */
+  if (gimage_image_count () == 1)  /*  This is the last image  */
     {
-      dialog_show_toolbox();
+      dialog_show_toolbox ();
     }
 }
 
-static void gimage_cmap_change_handler (GimpImage* gimage, gint ncol,
-					gpointer user_data)
+static void 
+gimage_cmap_change_handler (GimpImage *gimage, 
+			    gint       ncol,
+			    gpointer   user_data)
 {
-  gdisplays_update_full(gimage);
+  gdisplays_update_full (gimage);
 }
 
 
@@ -154,7 +160,7 @@ gimage_rename_handler (GimpImage* gimage)
   gdisplays_update_title (gimage);
   lc_dialog_update_image_list ();
 
-  palette_import_image_renamed(gimage);
+  palette_import_image_renamed (gimage);
 }
 
 static void
@@ -178,7 +184,11 @@ gimage_restructure_handler (GimpImage* gimage)
 }
 
 static void
-gimage_repaint_handler (GimpImage* gimage, gint x, gint y, gint w, gint h)
+gimage_repaint_handler (GimpImage* gimage, 
+			gint x, 
+			gint y, 
+			gint w, 
+			gint h)
 {
   gdisplays_update_area (gimage, x, y, w, h);
 }
@@ -188,27 +198,29 @@ gimage_repaint_handler (GimpImage* gimage, gint x, gint y, gint w, gint h)
 /* These really belong in the layer class */
 
 void
-gimage_set_layer_mask_apply (GImage *gimage, GimpLayer* layer)
+gimage_set_layer_mask_apply (GImage    *gimage, 
+			     GimpLayer *layer)
 {
   int off_x, off_y;
 
-  g_return_if_fail(gimage);
-  g_return_if_fail(layer);
+  g_return_if_fail (gimage);
+  g_return_if_fail (layer);
   
   if (! layer->mask)
     return;
 
   layer->apply_mask = ! layer->apply_mask;
-  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
   gdisplays_update_area (gimage, off_x, off_y,
-			 drawable_width (GIMP_DRAWABLE(layer)), 
-			 drawable_height (GIMP_DRAWABLE(layer)));
+			 drawable_width (GIMP_DRAWABLE (layer)), 
+			 drawable_height (GIMP_DRAWABLE (layer)));
 }
 
 
-
 void
-gimage_set_layer_mask_edit (GImage *gimage, Layer * layer, int edit)
+gimage_set_layer_mask_edit (GImage *gimage, 
+			    Layer  *layer, 
+			    int     edit)
 {
   /*  find the layer  */
   if (!layer)
@@ -220,24 +232,32 @@ gimage_set_layer_mask_edit (GImage *gimage, Layer * layer, int edit)
 
 
 void
-gimage_set_layer_mask_show (GImage *gimage, GimpLayer* layer)
+gimage_set_layer_mask_show (GImage    *gimage, 
+			    GimpLayer *layer)
 {
   int off_x, off_y;
 
-  g_return_if_fail(gimage);
-  g_return_if_fail(layer);
+  g_return_if_fail (gimage);
+  g_return_if_fail (layer);
   
   if (! layer->mask)
     return;
 
   layer->show_mask = ! layer->show_mask;
-  drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
   gdisplays_update_area (gimage, off_x, off_y,
-			 drawable_width (GIMP_DRAWABLE(layer)), drawable_height (GIMP_DRAWABLE(layer)));
+			 drawable_width (GIMP_DRAWABLE (layer)), 
+			 drawable_height (GIMP_DRAWABLE (layer)));
 }
 
 void
-gimage_foreach (GFunc func, gpointer user_data){
-	gimp_set_foreach(image_context, func, user_data);
+gimage_foreach (GFunc    func, 
+		gpointer user_data)
+{
+  gimp_set_foreach (image_context, func, user_data);
 }
+
+
+
+
 

@@ -68,12 +68,13 @@ static void    pixel_region_configure  (PixelRegionHolder *, PixelRegionIterator
 /*  Function definitions  */
 
 void
-pixel_region_init (PR, tiles, x, y, w, h, dirty)
-     PixelRegion *PR;
-     TileManager *tiles;
-     int x, y;
-     int w, h;
-     int dirty;
+pixel_region_init (PixelRegion *PR, 
+		   TileManager *tiles, 
+		   int          x, 
+		   int          y, 
+		   int          w, 
+		   int          h, 
+		   int          dirty)
 {
   PR->tiles = tiles;
   PR->curtile = NULL;
@@ -89,10 +90,11 @@ pixel_region_init (PR, tiles, x, y, w, h, dirty)
 
 
 void
-pixel_region_resize (PR, x, y, w, h)
-     PixelRegion *PR;
-     int x, y;
-     int w, h;
+pixel_region_resize (PixelRegion *PR, 
+		     int          x, 
+		     int          y, 
+		     int          w, 
+		     int          h)
 {
   /*  If the data is non-null, data is contiguous--need to advance  */
   if (PR->data != NULL)
@@ -107,15 +109,14 @@ pixel_region_resize (PR, x, y, w, h)
   PR->h = h;
 }
 
-/* request that tiles within a region be fetched asynchronously
- */
+
+/* request that tiles within a region be fetched asynchronously */
 void
-pixel_region_get_async (PR, ulx, uly, lrx, lry)
-    PixelRegion *PR;
-    int ulx;
-    int uly;
-    int lrx;
-    int lry;
+pixel_region_get_async (PixelRegion *PR, 
+			int          ulx, 
+			int          uly, 
+			int          lrx, 
+			int          lry)
 {
   int x, y;
 
@@ -124,13 +125,14 @@ pixel_region_get_async (PR, ulx, uly, lrx, lry)
       tile_manager_get_async (PR->tiles, x, y);
 }
 
+
 void
-pixel_region_get_row (PR, x, y, w, data, subsample)
-     PixelRegion *PR;
-     int x, y;
-     int w;
-     unsigned char *data;
-     int subsample;
+pixel_region_get_row (PixelRegion   *PR, 
+		      int            x, 
+		      int            y, 
+		      int            w, 
+		      unsigned char *data, 
+		      int            subsample)
 {
   Tile *tile;
   unsigned char *tile_data;
@@ -176,11 +178,11 @@ pixel_region_get_row (PR, x, y, w, data, subsample)
 
 
 void
-pixel_region_set_row (PR, x, y, w, data)
-     PixelRegion *PR;
-     int x, y;
-     int w;
-     unsigned char *data;
+pixel_region_set_row (PixelRegion   *PR, 
+		      int            x, 
+		      int            y, 
+		      int            w, 
+		      unsigned char *data)
 {
   Tile *tile;
   unsigned char *tile_data;
@@ -212,12 +214,12 @@ pixel_region_set_row (PR, x, y, w, data)
 
 
 void
-pixel_region_get_col (PR, x, y, h, data, subsample)
-     PixelRegion *PR;
-     int x, y;
-     int h;
-     unsigned char *data;
-     int subsample;
+pixel_region_get_col (PixelRegion   *PR, 
+		      int            x, 
+		      int            y, 
+		      int            h, 
+		      unsigned char *data, 
+		      int            subsample)
 {
   Tile *tile;
   unsigned char *tile_data;
@@ -253,11 +255,11 @@ pixel_region_get_col (PR, x, y, h, data, subsample)
 
 
 void
-pixel_region_set_col (PR, x, y, h, data)
-     PixelRegion *PR;
-     int x, y;
-     int h;
-     unsigned char *data;
+pixel_region_set_col (PixelRegion   *PR, 
+		      int            x, 
+		      int            y, 
+		      int            h, 
+		      unsigned char *data)
 {
   Tile *tile;
   unsigned char *tile_data;
@@ -292,7 +294,8 @@ pixel_region_set_col (PR, x, y, h, data)
 }
 
 void *
-pixel_regions_register (int num_regions, ...)
+pixel_regions_register (int num_regions, 
+			...)
 {
   PixelRegion *PR;
   PixelRegionHolder *PRH;
@@ -345,8 +348,7 @@ pixel_regions_register (int num_regions, ...)
 
 
 void *
-pixel_regions_process (PRI_ptr)
-     void *PRI_ptr;
+pixel_regions_process (void *PRI_ptr)
 {
   GSList *list;
   PixelRegionHolder *PRH;
@@ -392,8 +394,7 @@ pixel_regions_process (PRI_ptr)
 }
 
 void
-pixel_regions_process_stop (PRI_ptr)
-     void *PRI_ptr;
+pixel_regions_process_stop (void *PRI_ptr)
 {
   GSList *list;
   PixelRegionHolder *PRH;
@@ -445,8 +446,7 @@ pixel_regions_process_stop (PRI_ptr)
 /*  Static Function Definitions  */
 
 static int
-get_portion_height (PRI)
-     PixelRegionIterator *PRI;
+get_portion_height (PixelRegionIterator *PRI)
 {
   GSList *list;
   PixelRegionHolder *PRH;
@@ -488,8 +488,7 @@ get_portion_height (PRI)
 
 
 static int
-get_portion_width (PRI)
-     PixelRegionIterator *PRI;
+get_portion_width (PixelRegionIterator *PRI)
 {
   GSList *list;
   PixelRegionHolder *PRH;
@@ -531,8 +530,7 @@ get_portion_width (PRI)
 
 
 static void *
-pixel_regions_configure (PRI)
-     PixelRegionIterator *PRI;
+pixel_regions_configure (PixelRegionIterator *PRI)
 {
   PixelRegionHolder *PRH;
   GSList *list;
@@ -580,9 +578,8 @@ pixel_regions_configure (PRI)
 
 
 static void
-pixel_region_configure (PRH, PRI)
-     PixelRegionHolder *PRH;
-     PixelRegionIterator *PRI;
+pixel_region_configure (PixelRegionHolder   *PRH, 
+			PixelRegionIterator *PRI)
 {
   /*  Configure the rowstride and data pointer for the pixel region
    *  based on the current offsets into the region and whether the
@@ -590,7 +587,8 @@ pixel_region_configure (PRH, PRI)
    */
   if (PRH->PR->tiles)
     {
-      PRH->PR->curtile = tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, TRUE, PRH->PR->dirty);
+      PRH->PR->curtile = 
+	tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, TRUE, PRH->PR->dirty);
 
       PRH->PR->offx = PRH->PR->x % TILE_WIDTH;
       PRH->PR->offy = PRH->PR->y % TILE_HEIGHT;

@@ -1,3 +1,15 @@
+Mon Jul 19 21:40:48 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.c: update the brush title when editing a brush
+
+	* app/gimage.[ch]
+	* app/gimpimage.c
+	* app/ops_buttons.[ch]
+	* app/pixel_regions.c
+	* app/temp_buf.c
+	* app/undo.c: Indentation paranoia! (I was browsing the code a lot
+	this weekend and just couldn't resist...)
+
 1999-07-19  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/gdisplay.c (gdisplay_set_menu_sensitivity): moved the _()

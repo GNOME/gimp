@@ -613,6 +613,7 @@ brush_select_brush_changed (BrushSelectP bsp,
   {
     display_brushes (bsp);
     gtk_widget_draw (bsp->preview, NULL);
+    update_active_brush_field (bsp);
   }
 }
 

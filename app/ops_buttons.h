@@ -40,19 +40,19 @@ typedef enum {
 
 struct _OpsButton 
 {
-  gchar **xpm_data;          /* xpm data for the button */
-  OpsButtonCallback callback;
-  OpsButtonCallback *ext_callbacks;
-  char *tooltip;               
-  GtkWidget *widget;         /* the button widget */
-  gint modifier;
+  gchar             **xpm_data;          /*  xpm data for the button  */
+  OpsButtonCallback   callback;          /*  callback function        */
+  OpsButtonCallback  *ext_callbacks;     /*  callback functions when modifiers are pressed  */
+  char               *tooltip;               
+  GtkWidget          *widget;            /*  the button widget        */
+  gint                modifier;
 };
 
 /* Function declarations */
 
-GtkWidget * ops_button_box_new        (GtkWidget *,      /* parent widget */
+GtkWidget * ops_button_box_new        (GtkWidget   *,      /* parent widget */
 				       GtkTooltips *,    
-				       OpsButton *,
+				       OpsButton   *,
 				       OpsButtonType);
 void ops_button_box_set_insensitive   (OpsButton *);
 

@@ -47,16 +47,15 @@
 
 static unsigned char *   temp_buf_allocate (unsigned int);
 static void              temp_buf_to_color (TempBuf *, TempBuf *);
-static void              temp_buf_to_gray (TempBuf *, TempBuf *);
+static void              temp_buf_to_gray  (TempBuf *, TempBuf *);
 
 
 /*  Memory management  */
 
 static unsigned char *
-temp_buf_allocate (size)
-     unsigned int size;
+temp_buf_allocate (unsigned int size)
 {
-  unsigned char * data;
+  unsigned char *data;
 
   data = (unsigned char *) g_malloc (size);
 
@@ -67,9 +66,8 @@ temp_buf_allocate (size)
 /*  The conversion routines  */
 
 static void
-temp_buf_to_color (src_buf, dest_buf)
-     TempBuf * src_buf;
-     TempBuf * dest_buf;
+temp_buf_to_color (TempBuf *src_buf, 
+		   TempBuf *dest_buf)
 {
   unsigned char *src;
   unsigned char *dest;
@@ -92,13 +90,12 @@ temp_buf_to_color (src_buf, dest_buf)
 
 
 static void
-temp_buf_to_gray (src_buf, dest_buf)
-     TempBuf * src_buf;
-     TempBuf * dest_buf;
+temp_buf_to_gray (TempBuf *src_buf, 
+		  TempBuf *dest_buf)
 {
   unsigned char *src;
   unsigned char *dest;
-  long num_bytes;
+  long  num_bytes;
   float pix;
 
   src = temp_buf_data (src_buf);
@@ -121,15 +118,15 @@ temp_buf_to_gray (src_buf, dest_buf)
 
 
 TempBuf *
-temp_buf_new (width, height, bytes, x, y, col)
-     int width;
-     int height;
-     int bytes;
-     int x, y;
-     unsigned char * col;
+temp_buf_new (int width, 
+	      int height, 
+	      int bytes, 
+	      int x, 
+	      int y, 
+	      unsigned char *col)
 {
   long i;
-  int j;
+  int  j;
   unsigned char * data;
   TempBuf * temp;
 
@@ -190,9 +187,8 @@ temp_buf_new (width, height, bytes, x, y, col)
 
 
 TempBuf *
-temp_buf_copy (src, dest)
-     TempBuf * src;
-     TempBuf * dest;
+temp_buf_copy (TempBuf *src, 
+	       TempBuf *dest)
 {
   TempBuf * new;
   long length;
@@ -233,11 +229,12 @@ temp_buf_copy (src, dest)
 
 
 TempBuf *
-temp_buf_resize (buf, bytes, x, y, w, h)
-     TempBuf * buf;
-     int bytes;
-     int x, y;
-     int w, h;
+temp_buf_resize (TempBuf *buf, 
+		 int      bytes, 
+		 int      x, 
+		 int      y, 
+		 int      w, 
+		 int      h)
 {
   int size;
 
@@ -271,12 +268,13 @@ temp_buf_resize (buf, bytes, x, y, w, h)
 
 
 TempBuf *
-temp_buf_copy_area (src, dest, x, y, w, h, border)
-     TempBuf * src;
-     TempBuf * dest;
-     int x, y;
-     int w, h;
-     int border;
+temp_buf_copy_area (TempBuf *src, 
+		    TempBuf *dest, 
+		    int      x, 
+		    int      y, 
+		    int      w, 
+		    int      h, 
+		    int      border)
 {
   TempBuf * new;
   PixelRegion srcR, destR;
@@ -333,8 +331,7 @@ temp_buf_copy_area (src, dest, x, y, w, h, border)
 
 
 void
-temp_buf_free (temp_buf)
-     TempBuf * temp_buf;
+temp_buf_free (TempBuf *temp_buf)
 {
   if (temp_buf->data)
     g_free (temp_buf->data);
@@ -347,8 +344,7 @@ temp_buf_free (temp_buf)
 
 
 unsigned char *
-temp_buf_data (temp_buf)
-     TempBuf * temp_buf;
+temp_buf_data (TempBuf *temp_buf)
 {
   if (temp_buf->swapped)
     temp_buf_unswap (temp_buf);
@@ -363,9 +359,8 @@ temp_buf_data (temp_buf)
 
 
 MaskBuf *
-mask_buf_new (width, height)
-     int width;
-     int height;
+mask_buf_new (int width, 
+	      int height)
 {
   static unsigned char empty = 0;
 
@@ -374,16 +369,14 @@ mask_buf_new (width, height)
 
 
 void
-mask_buf_free (mask)
-     MaskBuf * mask;
+mask_buf_free (MaskBuf *mask)
 {
   temp_buf_free ((TempBuf *) mask);
 }
 
 
 unsigned char *
-mask_buf_data (mask_buf)
-     MaskBuf * mask_buf;
+mask_buf_data (MaskBuf *mask_buf)
 {
   if (mask_buf->swapped)
     temp_buf_unswap (mask_buf);
@@ -411,12 +404,13 @@ mask_buf_data (mask_buf)
  *    from disk.  In the former case, cached_in_memory is set to NULL;
  *    in the latter case, cached_in_memory is left unchanged.
  *    If temp_buf_swap_free is called, cached_in_memory must be checked
- *    against the temp buf being freed.  If they are the same, then cached_in_memory
- *    must be set to NULL;
+ *    against the temp buf being freed.  If they are the same, then 
+ *    cached_in_memory must be set to NULL;
  *
  *  In the case where memory usage is set to "stingy":
  *    temp bufs are not cached in memory at all, they go right to disk.
  */
+
 
 /*  a static counter for generating unique filenames  */
 static int swap_index = 0;
@@ -436,8 +430,7 @@ generate_unique_filename (void)
 
 
 void
-temp_buf_swap (buf)
-     TempBuf * buf;
+temp_buf_swap (TempBuf *buf)
 {
   TempBuf * swap;
   char * filename;
@@ -511,8 +504,7 @@ temp_buf_swap (buf)
 
 
 void
-temp_buf_unswap (buf)
-     TempBuf * buf;
+temp_buf_unswap (TempBuf *buf)
 {
   struct stat stat_buf;
   FILE * fp;
@@ -563,8 +555,7 @@ temp_buf_unswap (buf)
 
 
 void
-temp_buf_swap_free (buf)
-     TempBuf * buf;
+temp_buf_swap_free (TempBuf *buf)
 {
   struct stat stat_buf;
 

@@ -25,14 +25,15 @@
 
 #include "libgimp/gimpintl.h"
 
-void ops_button_pressed_callback (GtkWidget*, GdkEventButton*, gpointer);
+void ops_button_pressed_callback  (GtkWidget*, GdkEventButton*, gpointer);
 void ops_button_extended_callback (GtkWidget*, gpointer);
 
 
-GtkWidget *ops_button_box_new (GtkWidget   *parent,
-			       GtkTooltips *tool_tips,
-			       OpsButton   *ops_button,
-			       OpsButtonType ops_type)   
+GtkWidget *
+ops_button_box_new (GtkWidget     *parent,
+		    GtkTooltips   *tool_tips,
+		    OpsButton     *ops_button,
+		    OpsButtonType  ops_type)   
 {
   GtkWidget *button;
   GtkWidget *button_box;
@@ -125,9 +126,9 @@ ops_button_box_set_insensitive (OpsButton *ops_button)
 }
 
 void
-ops_button_pressed_callback (GtkWidget *widget, 
+ops_button_pressed_callback (GtkWidget      *widget, 
 			     GdkEventButton *bevent,
-			     gpointer   client_data)
+			     gpointer        client_data)
 {
   OpsButton *ops_button;
 

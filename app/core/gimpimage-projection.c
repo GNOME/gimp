@@ -142,7 +142,8 @@ gimp_image_class_init (GimpImageClass *klass)
 
 /* static functions */
 
-static void gimp_image_init (GimpImage *gimage)
+static void 
+gimp_image_init (GimpImage *gimage)
 {
   gimage->has_filename = 0;
   gimage->num_cols = 0;
@@ -176,15 +177,18 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->paths = NULL;
 }
 
-GtkType gimp_image_get_type(void){
-	static GtkType type;
-	GIMP_TYPE_INIT(type,
-		       GimpImage,
-		       GimpImageClass,
-		       gimp_image_init,
-		       gimp_image_class_init,
-		       GIMP_TYPE_OBJECT);
-	return type;
+GtkType 
+gimp_image_get_type (void) 
+{
+  static GtkType type;
+
+  GIMP_TYPE_INIT(type,
+		 GimpImage,
+		 GimpImageClass,
+		 gimp_image_init,
+		 gimp_image_class_init,
+		 GIMP_TYPE_OBJECT);
+  return type;
 }
 
 
@@ -231,7 +235,10 @@ gimp_image_free_projection (GimpImage *gimage)
 }
 
 static void
-gimp_image_allocate_shadow (GimpImage *gimage, int width, int height, int bpp)
+gimp_image_allocate_shadow (GimpImage *gimage, 
+			    int        width, 
+			    int        height, 
+			    int        bpp)
 {
   /*  allocate the new projection  */
   gimage->shadow = tile_manager_new (width, height, bpp);
@@ -342,7 +349,7 @@ gimp_image_get_resolution (GimpImage *gimage,
 
 void
 gimp_image_set_unit (GimpImage *gimage,
-		     GUnit unit)
+		     GUnit      unit)
 {
   gimage->unit = unit;
 }
@@ -355,7 +362,8 @@ gimp_image_get_unit (GimpImage *gimage)
 
 
 void
-gimp_image_set_save_proc (GimpImage *gimage, PlugInProcDef *proc)
+gimp_image_set_save_proc (GimpImage     *gimage, 
+			  PlugInProcDef *proc)
 {
   gimage->save_proc = proc;
 }
@@ -414,10 +422,9 @@ gimp_image_resize (GimpImage *gimage,
   while (guide_list)
     {
       Guide *guide;
-      GList *next;
 
       guide = (Guide*) guide_list->data;
-      next = g_list_next (guide_list);
+      guide_list = g_list_next (guide_list);
 
       switch (guide->orientation)
 	{
@@ -434,7 +441,6 @@ gimp_image_resize (GimpImage *gimage,
 	default:
 	  g_error("Unknown guide orientation I.\n");
 	}
-      guide_list = next;
     }
 
   /*  Don't forget the selection mask!  */
@@ -469,11 +475,11 @@ gimp_image_scale (GimpImage *gimage,
 		  int        new_height)
 {
   Channel *channel;
-  Layer *layer;
-  Layer *floating_layer;
-  GSList *list;
-  GList *glist;
-  Guide *guide;
+  Layer   *layer;
+  Layer   *floating_layer;
+  GSList  *list;
+  GList   *glist;
+  Guide   *guide;
   int old_width, old_height;
   int layer_width, layer_height;
 
@@ -590,21 +596,22 @@ gimp_image_free_shadow (GimpImage *gimage)
 static void
 gimp_image_destroy (GtkObject *object)
 {
-	GimpImage* gimage=GIMP_IMAGE(object);
-	gimp_image_free_projection (gimage);
-	gimp_image_free_shadow (gimage);
-	
-	if (gimage->cmap)
-		g_free (gimage->cmap);
-	
-	if (gimage->has_filename)
-		g_free (gimage->filename);
+  GimpImage* gimage = GIMP_IMAGE(object);
 
-	gimp_image_free_layers (gimage);
-	gimp_image_free_channels (gimage);
-	channel_delete (gimage->selection_mask);
-	if (gimage->parasites)
-	  gtk_object_unref(GTK_OBJECT(gimage->parasites));
+  gimp_image_free_projection (gimage);
+  gimp_image_free_shadow (gimage);
+  
+  if (gimage->cmap)
+    g_free (gimage->cmap);
+  
+  if (gimage->has_filename)
+    g_free (gimage->filename);
+  
+  gimp_image_free_layers (gimage);
+  gimp_image_free_channels (gimage);
+  channel_delete (gimage->selection_mask);
+  if (gimage->parasites)
+    gtk_object_unref(GTK_OBJECT(gimage->parasites));
 }
 
 void
@@ -619,7 +626,7 @@ gimp_image_apply_image (GimpImage    *gimage,
 			int           x, 
 			int           y)
 {
-  Channel * mask;
+  Channel *mask;
   int x1, y1, x2, y2;
   int offset_x, offset_y;
   PixelRegion src1PR, destPR, maskPR;
@@ -715,7 +722,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  int           x, 
 			  int           y)
 {
-  Channel * mask;
+  Channel *mask;
   int x1, y1, x2, y2;
   int offset_x, offset_y;
   PixelRegion src1PR, destPR;
@@ -971,8 +978,6 @@ gimp_image_transform_color (GimpImage     *gimage,
 
 
 
-
-
 Guide*
 gimp_image_add_hguide (GimpImage *gimage)
 {
@@ -1061,7 +1066,7 @@ gimp_image_attach_parasite (GimpImage *gimage,
 			    Parasite  *parasite)
 {
   /* only set the dirty bit manually if we can be saved and the new
-     parasite differs from the current one and we arn't undoable */
+     parasite differs from the current one and we aren't undoable */
   if (parasite_is_undoable(parasite))
     undo_push_image_parasite (gimage, parasite);
   if (parasite_is_persistent(parasite)
@@ -1081,6 +1086,7 @@ gimp_image_detach_parasite (GimpImage  *gimage,
 			    const char *parasite)
 {
   Parasite *p;
+
   if (!(p = parasite_list_find(gimage->parasites, parasite)))
     return;
   if (parasite_is_undoable(p))
@@ -1223,7 +1229,7 @@ static void
 gimp_image_free_layers (GimpImage *gimage)
 {
   GSList *list = gimage->layers;
-  Layer * layer;
+  Layer  *layer;
 
   while (list)
     {
@@ -1239,8 +1245,8 @@ gimp_image_free_layers (GimpImage *gimage)
 static void
 gimp_image_free_channels (GimpImage *gimage)
 {
-  GSList *list = gimage->channels;
-  Channel * channel;
+  GSList  *list = gimage->channels;
+  Channel *channel;
 
   while (list)
     {
@@ -1602,8 +1608,8 @@ gimp_image_construct (GimpImage *gimage,
 }
 
 void
-gimp_image_invalidate_without_render (GimpImage *gimage, int x, int y,
-				      int w, int h,
+gimp_image_invalidate_without_render (GimpImage *gimage, 
+				      int  x, int  y, int  w, int  h,
 				      int x1, int y1, int x2, int y2)
 {
   Tile *tile;
@@ -1634,14 +1640,8 @@ gimp_image_invalidate_without_render (GimpImage *gimage, int x, int y,
 
 void
 gimp_image_invalidate (GimpImage *gimage, 
-		       int        x, 
-		       int        y, 
-		       int        w, 
-		       int        h,
-		       int        x1, 
-		       int        y1, 
-		       int        x2, 
-		       int        y2)
+		       int  x, int  y, int  w, int  h,
+		       int x1, int y1, int x2, int y2)
 {
   Tile *tile;
   TileManager *tm;
