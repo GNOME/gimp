@@ -21,7 +21,6 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -30,6 +29,7 @@
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
@@ -247,7 +247,7 @@ gimp_brush_generated_save (GimpData  *data,
   gchar               buf[G_ASCII_DTOSTR_BUF_SIZE];
   gboolean            have_shape = FALSE;
 
-  file  = fopen (data->filename, "wb");
+  file = g_fopen (data->filename, "wb");
 
   if (! file)
     {
@@ -593,7 +593,7 @@ gimp_brush_generated_load (const gchar  *filename,
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  file = fopen (filename, "rb");
+  file = g_fopen (filename, "rb");
 
   if (! file)
     {

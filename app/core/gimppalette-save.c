@@ -19,14 +19,15 @@
 #include "config.h"
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -352,7 +353,7 @@ gimp_palette_load (const gchar  *filename,
 
   r = g = b = 0;
 
-  file = fopen (filename, "r");
+  file = g_fopen (filename, "r");
 
   if (! file)
     {
@@ -559,7 +560,7 @@ gimp_palette_save (GimpData  *data,
   GList       *list;
   FILE        *file;
 
-  file = fopen (data->filename, "w");
+  file = g_fopen (data->filename, "w");
 
   if (! file)
     {

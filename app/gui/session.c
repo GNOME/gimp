@@ -22,12 +22,13 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -240,7 +241,7 @@ session_clear (Gimp    *gimp,
 
   filename = session_filename (gimp);
 
-  if (unlink (filename) != 0 && errno != ENOENT)
+  if (g_unlink (filename) != 0 && errno != ENOENT)
     {
       g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));

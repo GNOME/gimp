@@ -21,11 +21,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -229,7 +229,7 @@ gimp_environ_table_get_envp (GimpEnvironTable *environ_table)
 
   /* Hmm.. should we return a copy here in the future? Not thread safe atm,
    * but the rest of it isn't either.
-   */ 
+   */
 
   if (! environ_table->envp)
     gimp_environ_table_populate (environ_table);
@@ -253,7 +253,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
 
   environ_table = GIMP_ENVIRON_TABLE (user_data);
 
-  env = fopen (file_data->filename, "r");
+  env = g_fopen (file_data->filename, "r");
   if (! env)
     return;
 
@@ -377,7 +377,7 @@ gimp_environ_table_populate (GimpEnvironTable *environ_table)
 #ifdef ENVP_DEBUG
   var = environ_table->envp;
 
-  g_print ("GimpEnvironTable:\n"); 
+  g_print ("GimpEnvironTable:\n");
   while (*var)
     {
       g_print ("%s\n", *var);

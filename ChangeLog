@@ -1,5 +1,26 @@
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base.c
+	* app/base/temp-buf.c
+	* app/base/tile-swap.c
+	* app/config/gimpconfig-file.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpdata.c
+	* app/core/gimpenvirontable.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimpgradient-save.c
+	* app/core/gimppalette-import.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c
+	* app/dialogs/user-install-dialog.c
+	* app/gui/session.c
+	* app/menus/menus.c
+	* app/widgets/gimpdevices.c: use gstdio wrappers.
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpdatafiles.c
 	* libgimpbase/gimpenv.c
 	* libgimpconfig/gimpconfigwriter.c

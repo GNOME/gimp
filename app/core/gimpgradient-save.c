@@ -18,11 +18,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <string.h>
 #include <errno.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -43,7 +43,7 @@ gimp_gradient_save (GimpData  *data,
   gint                 num_segments;
   FILE                *file;
 
-  file = fopen (data->filename, "wb");
+  file = g_fopen (data->filename, "wb");
 
   if (! file)
     {
@@ -134,7 +134,7 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  file = fopen (filename, "wb");
+  file = g_fopen (filename, "wb");
 
   if (! file)
     {

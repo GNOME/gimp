@@ -22,12 +22,13 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 #include <sys/types.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
+#include <glib/gstdio.h>
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
@@ -1088,10 +1089,10 @@ user_install_mkdir (GtkTextBuffer  *log_buffer,
   while (gtk_events_pending ())
     gtk_main_iteration ();
 
-  if (mkdir (dirname,
-             S_IRUSR | S_IWUSR | S_IXUSR |
-             S_IRGRP | S_IXGRP |
-             S_IROTH | S_IXOTH) == -1)
+  if (g_mkdir (dirname,
+               S_IRUSR | S_IWUSR | S_IXUSR |
+               S_IRGRP | S_IXGRP |
+               S_IROTH | S_IXOTH) == -1)
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),

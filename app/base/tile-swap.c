@@ -18,19 +18,20 @@
 
 #include "config.h"
 
-#include <stdio.h> /* SEEK_SET */
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #ifdef USE_PTHREADS
 #include <pthread.h>
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -203,7 +204,7 @@ tile_swap_exit1 (gpointer key,
 	  swap_file->fd = -1;
 	}
 #endif
-      unlink (swap_file->filename);
+      g_unlink (swap_file->filename);
     }
 }
 
@@ -344,15 +345,15 @@ tile_swap_test (void)
   g_assert (swap_file->fd == -1);
 
   /* make sure this duplicates the open() call from tile_swap_open() */
-  swap_file->fd = open (swap_file->filename,
-                        O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
-                        S_IREAD | S_IWRITE);
+  swap_file->fd = g_open (swap_file->filename,
+                          O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
+                          S_IREAD | S_IWRITE);
 
   if (swap_file->fd != -1)
     {
       close (swap_file->fd);
       swap_file->fd = -1;
-      unlink (swap_file->filename);
+      g_unlink (swap_file->filename);
       return TRUE;
     }
 
@@ -447,9 +448,9 @@ tile_swap_open (SwapFile *swap_file)
     }
 
   /* duplicate this open() call in tile_swap_test() */
-  swap_file->fd = open (swap_file->filename,
-      			O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
-			S_IRUSR | S_IWUSR);
+  swap_file->fd = g_open (swap_file->filename,
+                          O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
+                          S_IRUSR | S_IWUSR);
 
   if (swap_file->fd == -1)
     {

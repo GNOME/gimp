@@ -22,7 +22,6 @@
 #include "config.h"
 
 #include <errno.h>
-#include <stdio.h>
 #include <string.h>
 
 #ifdef HAVE_UNISTD_H
@@ -30,6 +29,7 @@
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 
@@ -308,7 +308,7 @@ gimp_data_delete_from_disk (GimpData  *data,
   if (data->internal)
     return TRUE;
 
-  if (unlink (data->filename) == -1)
+  if (g_unlink (data->filename) == -1)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_DELETE,
                    _("Could not delete '%s': %s"),

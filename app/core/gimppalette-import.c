@@ -25,11 +25,11 @@
 #include <unistd.h>
 #endif
 
-#include <sys/stat.h>
 #include <sys/types.h>
 #include <fcntl.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -389,7 +389,7 @@ gimp_palette_detect_file_format (const gchar *filename)
   guchar                header[16];
   struct stat           file_stat;
 
-  fd = open (filename, O_RDONLY);
+  fd = g_open (filename, O_RDONLY, 0);
   if (fd)
     {
       if (read (fd, header, sizeof (header)) == sizeof (header))
@@ -433,7 +433,7 @@ gimp_palette_import_from_file (const gchar  *filename,
   g_return_val_if_fail (palette_name != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = open (filename, O_RDONLY);
+  fd = g_open (filename, O_RDONLY, 0);
   if (! fd)
     {
       g_set_error (error,

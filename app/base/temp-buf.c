@@ -20,14 +20,15 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <process.h>		/* For _getpid() */
@@ -689,7 +690,8 @@ temp_buf_swap (TempBuf *buf)
     }
 
   /*  Open file for overwrite  */
-  if ((fp = fopen (filename, "wb")))
+  fp = g_fopen (filename, "wb");
+  if (fp)
     {
       gsize blocks_written;
 
@@ -701,20 +703,18 @@ temp_buf_swap (TempBuf *buf)
          to flush its buffers */
       if ((0 != fclose (fp)) || (1 != blocks_written))
         {
-          unlink (filename);
+          g_unlink (filename);
           perror ("Write error on temp buf");
-          g_message ("Cannot write \"%s\"",
-		     gimp_filename_to_utf8 (filename));
+          g_message ("Cannot write \"%s\"", gimp_filename_to_utf8 (filename));
           g_free (filename);
           return;
         }
     }
   else
     {
-      unlink (filename);
+      g_unlink (filename);
       perror ("Error in temp buf caching");
-      g_message ("Cannot write \"%s\"",
-		 gimp_filename_to_utf8 (filename));
+      g_message ("Cannot write \"%s\"", gimp_filename_to_utf8 (filename));
       g_free (filename);
       return;
     }
@@ -749,7 +749,8 @@ temp_buf_unswap (TempBuf *buf)
 
   if (g_file_test (buf->filename, G_FILE_TEST_IS_REGULAR))
     {
-      if ((fp = fopen (buf->filename, "rb")))
+      fp = g_fopen (buf->filename, "rb");
+      if (fp)
 	{
 	  gsize blocks_read;
 
@@ -764,10 +765,12 @@ temp_buf_unswap (TempBuf *buf)
 	    succ = TRUE;
 	}
       else
-	perror ("Error in temp buf caching");
+        {
+          perror ("Error in temp buf caching");
+        }
 
       /*  Delete the swap file  */
-      unlink (buf->filename);
+      g_unlink (buf->filename);
     }
 
   if (!succ)
@@ -798,15 +801,17 @@ temp_buf_swap_free (TempBuf *buf)
   if (g_file_test (buf->filename, G_FILE_TEST_IS_REGULAR))
     {
       /*  Delete the swap file  */
-      unlink (buf->filename);
+      g_unlink (buf->filename);
     }
   else
     g_message ("Error in temp buf disk swapping: "
                "information swapped to disk was lost!");
 
   if (buf->filename)
-    g_free (buf->filename);   /*  free filename  */
-  buf->filename = NULL;
+    {
+      g_free (buf->filename);
+      buf->filename = NULL;
+    }
 }
 
 void

@@ -21,12 +21,11 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <errno.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -103,7 +102,7 @@ gimp_config_file_copy (const gchar  *source,
       return FALSE;
     }
 
-  if (stat (source, &stat_buf) == 0)
+  if (g_stat (source, &stat_buf) == 0)
     {
       chmod (dest, stat_buf.st_mode);
     }

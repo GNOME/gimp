@@ -21,12 +21,15 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <string.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #include <sys/types.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <process.h>	/*  for _getpid()  */
@@ -170,10 +173,9 @@ base_toast_old_temp_files (GimpBaseConfig *config)
 	if (kill (pid, 0))
 #endif
 	  {
-            gchar *filename;
+            gchar *filename = g_build_filename (dirname, entry, NULL);
 
-	    filename = g_build_filename (dirname, entry, NULL);
-	    unlink (filename);
+	    g_unlink (filename);
             g_free (filename);
 	  }
       }
