@@ -1,13 +1,13 @@
 # gimp-script-fu translation to Catalan.
-# Copyright (C) 2000, 2001, 2004 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000, 2001
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Softcatala <linux@softcatala.org>, 2000-2001
 # Xavier Conde Rueda <xaviconde@eresmas.com>, 2004
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-26 20:33+0100\n"
-"PO-Revision-Date: 2004-02-10 01:08+0100\n"
+"POT-Creation-Date: 2004-02-25 15:18+0100\n"
+"PO-Revision-Date: 2004-02-25 15:18+0100\n"
 "Last-Translator: Xavier Conde Rueda <xaviconde@eresmas.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr "Selecció del patró de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-Fu Gradient Selection"
-msgstr "Selecció del gradient de l'Script-Fu"
+msgstr "Selecció del degradat de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Brush Selection"
@@ -152,7 +152,7 @@ msgstr "<Toolbox>/Extensions/Script-Fu/_Consola de l'Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:147
 msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Inicia el _servidor..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Inicia el ser_vidor..."
 
 #: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
@@ -228,13 +228,13 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/C_ontorn 3D..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
-msgstr ""
+msgstr "Radi de difuminat del Bumpmap (Capa alfa)"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default Bumpmap Settings"
-msgstr ""
+msgstr "Configuració del Bumpmap per defecte"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
@@ -335,7 +335,7 @@ msgstr "Patró"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 msgid "Shadow Blur Radius"
-msgstr "Radi del desenfocat d'ombra"
+msgstr "Radi del difuminat d'ombra"
 
 #
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
@@ -476,7 +476,7 @@ msgstr "<Image>/Script-Fu/Decoració/Af_egeix biselat..."
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:2
 #: plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep Bump Layer"
-msgstr ""
+msgstr "Manté la capa bump"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -576,8 +576,8 @@ msgstr "Amunt"
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Lluentor estranya/"
-"Regle _horitzontal..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Lluentor estranya/Regle "
+"_horitzontal..."
 
 #
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
@@ -602,9 +602,9 @@ msgstr ""
 msgid "Radius"
 msgstr "Radi"
 
+# SF == Script-Fu??
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-# SF == Script-Fu??
 msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
@@ -794,13 +794,15 @@ msgstr ""
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/_Encapçalament..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/"
+"_Encapçalament..."
 
 #
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/Regle _horitzontal..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Patró biselat/Regle "
+"_horitzontal..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -828,7 +830,7 @@ msgstr "Marcs intermitjos"
 #
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Looped"
-msgstr "En cabar torna a començar"
+msgstr "En acabar torna a començar"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Max. Blur Radius"
@@ -850,7 +852,7 @@ msgstr "Mode de barreja"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Custom Gradient"
-msgstr "Gradient personalitzat"
+msgstr "Degradat personalitzat"
 
 #
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -875,7 +877,7 @@ msgstr "Fons transparent"
 #: plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient"
-msgstr "Gradient"
+msgstr "Degradat"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:13
 #: plug-ins/script-fu/scripts/comic-logo.scm.h:7
@@ -884,7 +886,7 @@ msgstr "Gradient"
 #: plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient Reverse"
-msgstr "Gradient invertit"
+msgstr "Degradat invertit"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:14
 msgid "Offset (pixels)"
@@ -921,11 +923,12 @@ msgstr "Després de la brillantor"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid "Burn-In: Need two layers in total!"
-msgstr "Cream: es necessiten dues capes"
+msgstr "Crema: es necessiten dues capes"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
-msgstr "Efecte de cremat en una capa principal (text) i una capa de fons (Versió 2.1)"
+msgstr ""
+"Efecte de cremat en una capa principal (text) i una capa de fons (Versió 2.1)"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -1097,7 +1100,7 @@ msgstr "Saturació del cromat"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome White Areas"
-msgstr "Fes cromat d'àrees blanques"
+msgstr "Àrees blanques del cromat"
 
 #
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:7
@@ -1163,7 +1166,7 @@ msgstr "<Image>/Script-Fu/Alquímia/Afegeix _núvols..."
 #: plug-ins/script-fu/scripts/clothify.scm.h:2
 #: plug-ins/script-fu/scripts/swirltile.scm.h:2
 msgid "Azimuth"
-msgstr ""
+msgstr "Acimut"
 
 #
 #: plug-ins/script-fu/scripts/clothify.scm.h:3
@@ -1248,9 +1251,8 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Cristall..."
 
 #
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Selection/_Distress Selection..."
-msgstr "<Image>/Script-Fu/Selecció/_Distress Selection..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
@@ -1277,7 +1279,6 @@ msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Llindar (Més gran 1<-->255 Més petit)"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "<Image>/Script-Fu/Shadow/_Drop-Shadow..."
 msgstr "<Image>/Script-Fu/Ombra/_Drop-Shadow..."
 
@@ -1335,7 +1336,7 @@ msgstr "Esborra"
 #
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/Fill"
-msgstr "Esborra/Omple"
+msgstr "Buida/Omple"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1463,7 +1464,7 @@ msgstr "Utilitza el _nom del tipus de lletra com a text"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "_Border (pixels)"
-msgstr "Mida del _marge (píxels)"
+msgstr "_Marge (píxels)"
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Color Scheme"
@@ -1573,16 +1574,16 @@ msgstr "Color de l'ombra"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Etiq_ueta "
-"del sub-botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/Etiq_ueta del "
+"sub-botó del conducte..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiqueta "
-"del sub-sub-botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/_Etiqueta del "
+"sub-sub-botó del conducte..."
 
 #
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
@@ -1595,8 +1596,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/E_tiqueta "
-"del botó del conducte..."
+"<Toolbox>/Extensions/Script-Fu/Temes de pàgines web/Gimp.org/E_tiqueta del "
+"botó del conducte..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -1609,16 +1610,16 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Lluminó_s..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend Gradient (Outline)"
-msgstr "Barreja el gradient (contorn)"
+msgstr "Barreja el degradat (contorn)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Blend Gradient (Text)"
-msgstr "Barreja el gradient (text)"
+msgstr "Barreja el degradat (text)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Outline Gradient Reverse"
-msgstr "Inverteix el gradient del contorn"
+msgstr "Inverteix el degradat del contorn"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
@@ -1633,7 +1634,7 @@ msgstr "Patró (sobreposa)"
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
-msgstr "Patró (Text)"
+msgstr "Patró (text)"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
@@ -1643,7 +1644,7 @@ msgstr "Ombra"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Text Gradient Reverse"
-msgstr "Inverteix el gradient del text"
+msgstr "Inverteix el degradat del text"
 
 #
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
@@ -1652,11 +1653,11 @@ msgstr "Utilitza un patró sobreposat"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Utilitza el patró per al contorn en comptes del gradient"
+msgstr "Utilitza el patró per al contorn en comptes del degradat"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Utilitza el patró per al text en comptes del gradient"
+msgstr "Utilitza el patró per al text en comptes del degradat"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
@@ -1673,12 +1674,12 @@ msgstr "Mida de l'efecte (píxels * 3)"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
-msgstr "<Image>/Script-Fu/Alfa a logotipus/Bise_lat del gradient..."
+msgstr "<Image>/Script-Fu/Alfa a logotipus/Bise_lat del deg..."
 
 #
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Bise_lat del gradient..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Bise_lat del degradat..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Bevel Height (Sharpness)"
@@ -1693,7 +1694,7 @@ msgstr "Mida del marge (píxels)"
 #
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Utilitats/_Gradient personalitzat..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Utilitats/De_gradat personalitzat..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:1
 msgid "<Image>/Script-Fu/Render/_Grid..."
@@ -1784,7 +1785,7 @@ msgstr "Insereix els noms de les capes"
 #
 #: plug-ins/script-fu/scripts/image-structure.scm.h:6
 msgid "Make New Background"
-msgstr "Fer un fons nou"
+msgstr "Fes un fons nou"
 
 #
 #: plug-ins/script-fu/scripts/image-structure.scm.h:7
@@ -1848,7 +1849,7 @@ msgstr "Generador"
 #
 #: plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use Current Gradient"
-msgstr "Utilitza el gradient actual"
+msgstr "Utilitza el degradat actual"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
@@ -1910,8 +1911,7 @@ msgstr "<Toolbox>/Extensions/Script-Fu/Fes un pinzell/El·lí_ptic, ploma..."
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:11
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
-msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Fes un pinzell/Re_ctangular, ploma..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Fes un pinzell/Re_ctangular, ploma..."
 
 #
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:12
@@ -1960,8 +1960,7 @@ msgstr "Mida de l'efecte (píxels * 5)"
 #
 #: plug-ins/script-fu/scripts/news-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Logotipus/Text de paper de diari..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Text de paper de diari..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Cell Size (pixels)"
@@ -1990,7 +1989,7 @@ msgstr "Multicolor"
 #
 #: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
-msgstr ""
+msgstr "Sèpia"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Perspective..."
@@ -2298,11 +2297,11 @@ msgstr "Marc"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Sawtooth"
-msgstr "Gradient: repeteix les dents de serra"
+msgstr "Degradat: repeteix les dents de serra"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Gradient: Loop Triangle"
-msgstr "Gradient: repeteix el triangle"
+msgstr "Degradat: repeteix el triangle"
 
 #: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
 msgid "Hexagon"
@@ -2564,8 +2563,7 @@ msgstr "RLE"
 #
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Logotipus/Capçalera de títol de web..."
+msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Capçalera de títol de web..."
 
 #
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
@@ -2647,8 +2645,7 @@ msgstr "Longitud de fil"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
-msgstr ""
-"<Toolbox>/Ajuda/El GIMP al web/_Registre dels connectors"
+msgstr "<Toolbox>/Ajuda/El GIMP al web/_Registre dels connectors"
 
 #: plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
