@@ -23,7 +23,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2001-07-24 01:25+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-22 15:26+02:00\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -2010,8 +2010,8 @@ msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
 msgstr ""
-"Placering: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)   "
-" Ugennemsigtighed: %0.3f"
+"Placering: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
+"0.3f)    Ugennemsigtighed: %0.3f"
 
 #: app/gradient.c:2383
 #, c-format

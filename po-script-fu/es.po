@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-12-27 16:46+01:00\n"
 "Last-Translator: Óscar Cebellán Ramos <cebaman@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -646,8 +646,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor Alienígena/Barra Hor. "
-"..."
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Fulgor Alienígena/Barra "
+"Hor. ..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
@@ -708,8 +708,8 @@ msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Gimp.Org/Etiqueta de "
-"Sub-Sub-Botón del Tubo..."
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Gimp.Org/Etiqueta de Sub-Sub-"
+"Botón del Tubo..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
@@ -1480,6 +1480,10 @@ msgstr "Rejillas Y"
 msgid "Height"
 msgstr "Altura"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1683,6 +1687,10 @@ msgstr "Número de Baldosas en Y"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Número"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1900,6 +1908,11 @@ msgstr "Escala en X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Escala en Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Profundidad de la Sombra"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-02-08 15:45+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -223,14 +223,14 @@ msgstr ""
 "╤н╕ц╕ал╕зувати генератор випадкових чисел поточним часом - це гаранту╓ "
 "над╕йну \"випадков╕сть\""
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "байт╕в"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "к╕лобайт╕в"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "магабайт╕в"

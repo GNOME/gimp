@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2001-07-19 21:37+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-19 21:53+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -2003,8 +2003,8 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Klicka: markera    Skift+klicka: utöka markering    Dra: flytta    "
-"Skift+dra: flytta & komprimera"
+"Klicka: markera    Skift+klicka: utöka markering    Dra: flytta    Skift"
+"+dra: flytta & komprimera"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format

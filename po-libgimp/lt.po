@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) 1.2\n"
-"POT-Creation-Date: 2001-04-08 17:42+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-19 16:13+0000\n"
 "Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -235,4 +235,3 @@ msgstr "KiloBaitø"
 #: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "MegaBaitø"
-

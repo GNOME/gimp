@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.21\n"
-"POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
+"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
 "PO-Revision-Date: 2001-06-26 11:53+0200\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -37,7 +37,7 @@ msgstr ""
 "valores\n"
 "       os parâmetros de script são\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -57,7 +57,7 @@ msgstr ""
 "PORT)\n"
 "                                      (para mais informações, Gimp::Net(3))\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ não é uma tag de importação válida para o pacote $pkg"
 
@@ -71,18 +71,18 @@ msgstr "$_: opção de salvamento de arquivo ilegal/desconhecida"
 
 #: Gimp/Fu.pm:0
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
 msgstr ""
-"$function: o nome do parâmetro '$p->[1]' contém caracteres ilegais, "
-"permite-se apenas 0-9, a-z e _ "
+"$function: o nome do parâmetro '$p->[1]' contém caracteres ilegais, permite-"
+"se apenas 0-9, a-z e _ "
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 "$function: valor de parâmetro/retorno '$p->[1]' tem tipo ilegal '$p->[0]'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -611,7 +611,7 @@ msgstr "Mapa de bump"
 msgid "Cancel"
 msgstr "Cancelar"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Não é possível chamar '$AUTOLOAD' desta vez"
 
@@ -823,7 +823,7 @@ msgstr "Este módulo foi construído sem suporte para PDL."
 msgid "Unable to convert a reference to type '%s'"
 msgstr "não é possível converter uma referência para tipo '%s'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "Não é possível compreender '%s' como especificador de cores"
 
@@ -843,7 +843,7 @@ msgstr "Tipo de parâmetro não suportado $type"
 msgid "Visual Scriptor"
 msgstr "Visual Scriptor"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "WARNING"
 msgstr "AVISO"
 
@@ -971,8 +971,8 @@ msgstr ""
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
-"não foi possível conectar-se ao servidor gimp (certificar-se de que "
-"Perl-Server está em operação)"
+"não foi possível conectar-se ao servidor gimp (certificar-se de que Perl-"
+"Server está em operação)"
 
 #: Gimp/Lib.xs:0
 msgid ""
@@ -1017,7 +1017,7 @@ msgstr "função '$exe' não encontrado neste script (deve ser uma das"
 msgid "function name contains dashes instead of underscores"
 msgstr "o nome da função contém traços em vez de subinhados"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "função/macro \"$name\" não encontrado em $class"
 
@@ -1039,8 +1039,8 @@ msgstr "funções gimp-perl-pixel necessitam do PDL::Core module"
 
 #: Gimp/Lib.xs:0
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
 "gimp_pixel_rgns_register suporta apenas 1, 2 ou 3 parâmetros, atualizar para "
 "gimp-1.1 e reportar esse erro"
@@ -1074,11 +1074,11 @@ msgstr "especificação de informação anexa ilegal, esperava-se referência"
 msgid "illegal type for colour specification"
 msgstr "tipo ilegal para especificação de cores"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr "interface '$interface_type' não suportada."
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr "interface=... tag não é mais suportada\n"
 
@@ -1159,15 +1159,15 @@ msgstr "solicitação de ABANDONAR recebida"
 msgid "register called with too many or wrong arguments\n"
 msgstr "registrador chamado com muitos parâmetros ou parâmetros errôneos\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr "callback necessário 'net' não encontrado\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr "callback 'query' necessário não encontrado\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr "callback 'run' necessário não encontrado\n"
 
@@ -1256,7 +1256,7 @@ msgstr "não é possível bifurcar: $!"
 msgid "unable to grok colour specification"
 msgstr "não é possível compreender especificação de cores"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "não é possível abrir $rgb_db_path"
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-07-19 15:25+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-20 09:48+0300\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -319,8 +319,8 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:497
 msgid ""
-"Change the CX value (changes aspect of fractal, active with every fractal but "
-"Mandelbrot and Sierpinski)"
+"Change the CX value (changes aspect of fractal, active with every fractal "
+"but Mandelbrot and Sierpinski)"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:506
@@ -329,8 +329,8 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:509
 msgid ""
-"Change the CY value (changes aspect of fractal, active with every fractal but "
-"Mandelbrot and Sierpinski)"
+"Change the CY value (changes aspect of fractal, active with every fractal "
+"but Mandelbrot and Sierpinski)"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
@@ -550,8 +550,8 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:790
 #: plug-ins/FractalExplorer/Dialogs.c:831
 msgid ""
-"If you enable this option higher color values will be swapped with lower ones "
-"and vice versa"
+"If you enable this option higher color values will be swapped with lower "
+"ones and vice versa"
 msgstr ""
 
 #. Greenmode radio frame
@@ -579,8 +579,8 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:858
 msgid ""
-"Create a color-map with the options you specified above (color "
-"density/function). The result is visible in the preview image"
+"Create a color-map with the options you specified above (color density/"
+"function). The result is visible in the preview image"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:868
@@ -1453,8 +1453,7 @@ msgid "Use cosine-function for red component."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1481
-msgid ""
-"Red channel: use linear mapping instead of any trigonometrical function"
+msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1500
@@ -1914,8 +1913,8 @@ msgstr ""
 msgid ""
 "\"Fix seed\" button is an alias of me.\n"
 "The same seed produces the same image, if (1) the widths of images are same "
-"(this is the reason why image on drawable is different from preview), and (2) "
-"all mutation rates equal to zero."
+"(this is the reason why image on drawable is different from preview), and "
+"(2) all mutation rates equal to zero."
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1429
@@ -4385,31 +4384,27 @@ msgstr ""
 msgid "Progressive"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1768
-msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr ""
-
-#: plug-ins/common/jpeg.c:1792
+#: plug-ins/common/jpeg.c:1797
 msgid "Subsampling:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1801
+#: plug-ins/common/jpeg.c:1806
 msgid "Fast Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1802
+#: plug-ins/common/jpeg.c:1807
 msgid "Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1803
+#: plug-ins/common/jpeg.c:1808
 msgid "Floating-Point"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1807
+#: plug-ins/common/jpeg.c:1812
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1815
+#: plug-ins/common/jpeg.c:1820
 msgid "Image comments"
 msgstr ""
 
@@ -6725,6 +6720,14 @@ msgstr ""
 msgid "Copying ..."
 msgstr ""
 
+#: plug-ins/common/winclipboard.c:472
+msgid "Unsupported format or Clipboard empty!"
+msgstr ""
+
+#: plug-ins/common/winclipboard.c:483
+msgid "Can't get Clipboard data."
+msgstr ""
+
 #. ??? gimp_convert_rgb (image_ID);
 #.
 #: plug-ins/common/winclipboard.c:565
@@ -6842,8 +6845,8 @@ msgstr ""
 #: plug-ins/common/winprint.c:520
 #, c-format
 msgid ""
-"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, error "
-"= %d, y = %d"
+"StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
+"error = %d, y = %d"
 msgstr ""
 
 #: plug-ins/common/winprint.c:549
@@ -7741,6 +7744,11 @@ msgstr ""
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
 msgid "Continue"
 msgstr "Devam"
+
+#: plug-ins/gap/gap_filter_foreach.c:136
+#, c-format
+msgid "Skip %d"
+msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
 #, c-format
@@ -9685,8 +9693,8 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext.c:231
 msgid ""
-" Current layer isn't a GDynText layer or it has no alpha channel. Forcing new "
-"layer creation."
+" Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
+"new layer creation."
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext.c:313 plug-ins/gdyntext/gdyntext.c:436
@@ -10033,8 +10041,8 @@ msgstr "Desen"
 #: plug-ins/gfig/gfig.c:2364
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-"paints with currently selected brush with a pattern. Only applies to "
-"circles/ellipses if Approx. Circles/Ellipses toggle is set."
+"paints with currently selected brush with a pattern. Only applies to circles/"
+"ellipses if Approx. Circles/Ellipses toggle is set."
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:125
@@ -10052,8 +10060,7 @@ msgid "Multiple"
 msgstr "Çoklu"
 
 #: plug-ins/gfig/gfig.c:2777
-msgid ""
-"Draw all objects on one layer (original or new) or one object per layer"
+msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 
 #: plug-ins/gfig/gfig.c:2782
@@ -10954,8 +10961,7 @@ msgid "Selects a random direction of each stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:167
-msgid ""
-"Let the direction from the center determine the direction of the stroke"
+msgid "Let the direction from the center determine the direction of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:176
@@ -11004,8 +11010,8 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:479
 msgid ""
-"The vector-field. Left-click to move selected vector, Right-click to point it "
-"towards mouse, Middle-click to add a new vector."
+"The vector-field. Left-click to move selected vector, Right-click to point "
+"it towards mouse, Middle-click to add a new vector."
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:500
@@ -11324,22 +11330,21 @@ msgstr ""
 #: plug-ins/helpbrowser/helpbrowser.c:95
 #, c-format
 msgid ""
-"<html><head><title>Document not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't find "
-"document</h3><tt>%s</tt></center><p><small>This either means that the help "
-"for this topic has not been written yet or that something is wrong with your "
-"installation. Please check carefully before you report this as a "
-"bug.</small></body></html>"
+"<html><head><title>Document not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't find document</h3><tt>%s</tt></"
+"center><p><small>This either means that the help for this topic has not been "
+"written yet or that something is wrong with your installation. Please check "
+"carefully before you report this as a bug.</small></body></html>"
 msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:111
 #, c-format
 msgid ""
-"<html><head><title>Directory not found</title></head><body "
-"bgcolor=\"#ffffff\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
-"trying to access</h3><tt>%s</tt></center><p><small>This either means that the "
-"help for this topic has not been written yet or that something is wrong with "
-"your installation. Please check carefully before you report this as a "
+"<html><head><title>Directory not found</title></head><body bgcolor=\"#ffffff"
+"\"><center><p>%s<h3>Couldn't change to directory</h3><tt>%s</tt><h3>while "
+"trying to access</h3><tt>%s</tt></center><p><small>This either means that "
+"the help for this topic has not been written yet or that something is wrong "
+"with your installation. Please check carefully before you report this as a "
 "bug.</small></body></html>"
 msgstr ""
 
@@ -11544,6 +11549,7 @@ msgid "Edit Object"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
+#: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
 msgstr ""
 
@@ -12625,6 +12631,12 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
+#. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
+#: plug-ins/sel2path/pxl-outline.c:83
+#, fuzzy
+msgid "Selection to Path..."
+msgstr "Seçim"
+
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
 msgstr ""
@@ -12797,4 +12809,3 @@ msgstr ""
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr ""
-

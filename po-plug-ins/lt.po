@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2001-07-12 23:14+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4386,31 +4386,27 @@ msgstr ""
 msgid "Progressive"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1768
-msgid "Force baseline JPEG (Readable by all decoders)"
-msgstr ""
-
-#: plug-ins/common/jpeg.c:1792
+#: plug-ins/common/jpeg.c:1797
 msgid "Subsampling:"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1801
+#: plug-ins/common/jpeg.c:1806
 msgid "Fast Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1802
+#: plug-ins/common/jpeg.c:1807
 msgid "Integer"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1803
+#: plug-ins/common/jpeg.c:1808
 msgid "Floating-Point"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1807
+#: plug-ins/common/jpeg.c:1812
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr ""
 
-#: plug-ins/common/jpeg.c:1815
+#: plug-ins/common/jpeg.c:1820
 msgid "Image comments"
 msgstr ""
 
@@ -6726,6 +6722,14 @@ msgstr ""
 msgid "Copying ..."
 msgstr ""
 
+#: plug-ins/common/winclipboard.c:472
+msgid "Unsupported format or Clipboard empty!"
+msgstr ""
+
+#: plug-ins/common/winclipboard.c:483
+msgid "Can't get Clipboard data."
+msgstr ""
+
 #. ??? gimp_convert_rgb (image_ID);
 #.
 #: plug-ins/common/winclipboard.c:565
@@ -7741,6 +7745,11 @@ msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:132 plug-ins/gap/gap_mod_layer.c:262
 msgid "Continue"
+msgstr ""
+
+#: plug-ins/gap/gap_filter_foreach.c:136
+#, c-format
+msgid "Skip %d"
 msgstr ""
 
 #: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
@@ -11542,6 +11551,7 @@ msgid "Edit Object"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:71
+#: plug-ins/imagemap/imap_cmd_guides.c:132
 msgid "Create Guides"
 msgstr ""
 
@@ -12621,6 +12631,11 @@ msgstr ""
 
 #: plug-ins/rcm/rcm_dialog.c:780
 msgid "Misc"
+msgstr ""
+
+#. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
+#: plug-ins/sel2path/pxl-outline.c:83
+msgid "Selection to Path..."
 msgstr ""
 
 #: plug-ins/sel2path/sel2path.c:160

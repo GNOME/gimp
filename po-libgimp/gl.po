@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp cvs\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-07-07 16:33+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -222,14 +222,14 @@ msgstr ""
 "Semente do xerador de números aleatorios da hora actual - esto garante unha "
 "aleatoriedade razonable"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "MegaBytes"

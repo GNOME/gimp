@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-12-22 13:29+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -206,8 +206,8 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Ha az \"Idõ\" gomb nincs lenyomva, ezt a számot használja a "
-"véletlenszám-generálás kiindulópontjaként. Így az adott \"véletlen\" sorozat "
+"Ha az \"Idõ\" gomb nincs lenyomva, ezt a számot használja a véletlenszám-"
+"generálás kiindulópontjaként. Így az adott \"véletlen\" sorozat "
 "megismételhetõ."
 
 #: libgimp/gimpwidgets.c:720
@@ -222,14 +222,14 @@ msgstr ""
 "A véletlenszám-generálás kiindulópontja a pontos idõ, ez garantálja a "
 "megfelelõ véletlenséget."
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "bájt"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "kilobájt"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "megabájt"

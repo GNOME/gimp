@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2001-06-17 17:58+0900\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-04-01 22:09+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -121,7 +121,7 @@ msgstr "終了"
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
-#: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
+#: app/global_edit.c:791 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
 #: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1825
@@ -308,7 +308,7 @@ msgstr "コントラスト:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
-#: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
+#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "プレビュー"
@@ -320,9 +320,9 @@ msgstr "ブラシエディタ"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:288 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -380,7 +380,7 @@ msgstr "新規"
 msgid "Edit"
 msgstr "編集"
 
-#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1884
+#: app/brush_select.c:485 app/global_edit.c:789 app/gradient.c:1884
 #: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "削除"
@@ -496,7 +496,7 @@ msgstr "オフセット"
 msgid "Offset X:"
 msgstr "X オフセット:"
 
-#: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
+#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
 #: app/scale_tool.c:108 app/shear_tool.c:88 app/user_install.c:1211
 msgid "Y:"
@@ -554,17 +554,17 @@ msgid "Empty Channel Copy"
 msgstr "空チャンネルコピー"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:316 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:322 app/levels.c:379
 msgid "Red"
 msgstr "赤"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:317 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:323 app/levels.c:380
 msgid "Green"
 msgstr "緑"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:318 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:324 app/levels.c:381
 msgid "Blue"
 msgstr "青"
 
@@ -720,7 +720,7 @@ msgstr "インデックス:"
 msgid "Hex Triplet"
 msgstr "16進3つ"
 
-#: app/color_picker.c:278 app/histogram_tool.c:272
+#: app/color_picker.c:278 app/histogram_tool.c:278
 msgid "Intensity:"
 msgstr "強度:"
 
@@ -768,7 +768,7 @@ msgstr "色相"
 msgid "Saturation"
 msgstr "彩度"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:315
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:321
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -939,11 +939,11 @@ msgstr "拡大を許可する"
 msgid "Tool Toggle"
 msgstr "機能切替え"
 
-#: app/crop.c:221 app/crop.c:1070
+#: app/crop.c:221 app/crop.c:1069
 msgid "Crop"
 msgstr "切り抜き"
 
-#: app/crop.c:223 app/crop.c:1072
+#: app/crop.c:223 app/crop.c:1071
 msgid "Resize"
 msgstr "サイズ変更"
 
@@ -951,37 +951,37 @@ msgstr "サイズ変更"
 msgid "Crop: "
 msgstr "切り抜き: "
 
-#: app/crop.c:1043
+#: app/crop.c:1042
 msgid "Crop: 0 x 0"
 msgstr "切り抜き: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1064
+#: app/crop.c:1063
 msgid "Crop & Resize Information"
 msgstr "切り抜き & サイズ変更情報"
 
 #. add the information fields
-#: app/crop.c:1080
+#: app/crop.c:1079
 msgid "Origin X:"
 msgstr "開始点 の X:"
 
 #. the pixel size labels
-#: app/crop.c:1096 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
 #: app/tool_options.c:353
 msgid "Width:"
 msgstr "幅:"
 
-#: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
 #: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "高さ:"
 
-#: app/crop.c:1121
+#: app/crop.c:1120
 msgid "From Selection"
 msgstr "選択領域から"
 
-#: app/crop.c:1127
+#: app/crop.c:1126
 msgid "Auto Shrink"
 msgstr "自動縮小"
 
@@ -1050,8 +1050,8 @@ msgstr "脱色操作は RGB 描画対象にのみ有効です."
 msgid "Device Status"
 msgstr "デバイスの状態"
 
-#: app/disp_callbacks.c:845 app/global_edit.c:304 app/global_edit.c:310
-#: app/global_edit.c:382
+#: app/disp_callbacks.c:845 app/global_edit.c:305 app/global_edit.c:311
+#: app/global_edit.c:394
 msgid "Pasted Layer"
 msgstr "ペーストされたレイヤー"
 
@@ -1219,16 +1219,16 @@ msgstr "ピクセル/%a"
 msgid "Image Type"
 msgstr "画像の種類"
 
-#: app/fileops.c:263 app/fileops.c:309
+#: app/fileops.c:268 app/fileops.c:314
 msgid "Load Image"
 msgstr "画像読み込み"
 
 #. format-chooser frame
-#: app/fileops.c:324
+#: app/fileops.c:329
 msgid "Determine File Type"
 msgstr "ファイル形式の決定"
 
-#: app/fileops.c:397
+#: app/fileops.c:402
 msgid ""
 "Generate\n"
 "Preview"
@@ -1236,11 +1236,11 @@ msgstr ""
 "プレビュー\n"
 "作成"
 
-#: app/fileops.c:416
+#: app/fileops.c:421
 msgid "No Selection."
 msgstr "選択なし."
 
-#: app/fileops.c:464 app/fileops.c:1762
+#: app/fileops.c:469 app/fileops.c:1781
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1249,19 +1249,19 @@ msgstr ""
 "保存失敗.\n"
 "%s"
 
-#: app/fileops.c:489 app/fileops.c:521
+#: app/fileops.c:494 app/fileops.c:526
 msgid "Save Image"
 msgstr "画像の保存"
 
-#: app/fileops.c:538
+#: app/fileops.c:543
 msgid "Save Options"
 msgstr "保存オプション"
 
-#: app/fileops.c:547
+#: app/fileops.c:552
 msgid "Determine File Type:"
 msgstr "ファイル形式の決定:"
 
-#: app/fileops.c:610
+#: app/fileops.c:615
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1269,7 +1269,7 @@ msgstr ""
 "復帰できません.\n"
 "この画像に対するファイル名がありません."
 
-#: app/fileops.c:621
+#: app/fileops.c:626
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1285,19 +1285,19 @@ msgstr ""
 "(アンドゥ情報も含めた\n"
 "全ての変更が失われます)"
 
-#: app/fileops.c:628
+#: app/fileops.c:633
 msgid "Revert Image?"
 msgstr "画像の復帰"
 
-#: app/fileops.c:633 app/fileops.c:1902
+#: app/fileops.c:638 app/fileops.c:1921
 msgid "Yes"
 msgstr "はい"
 
-#: app/fileops.c:633 app/fileops.c:1902
+#: app/fileops.c:638 app/fileops.c:1921
 msgid "No"
 msgstr "いいえ"
 
-#: app/fileops.c:738
+#: app/fileops.c:741
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1306,7 +1306,7 @@ msgstr ""
 "%s 失敗.\n"
 "%s: 不明な画像タイプ."
 
-#: app/fileops.c:755
+#: app/fileops.c:758
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1315,7 +1315,7 @@ msgstr ""
 "%s 失敗.\n"
 "%s は通常のファイルではありません."
 
-#: app/fileops.c:776
+#: app/fileops.c:779
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1324,11 +1324,11 @@ msgstr ""
 "%s 失敗.\n"
 "%s: 許可されていません."
 
-#: app/fileops.c:830
+#: app/fileops.c:835 app/fileops.c:1556
 msgid "Open"
 msgstr "開く"
 
-#: app/fileops.c:1141
+#: app/fileops.c:1153
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1337,7 +1337,7 @@ msgstr ""
 "保存失敗.\n"
 "%s: 不明な画像タイプ."
 
-#: app/fileops.c:1156
+#: app/fileops.c:1168
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1346,7 +1346,7 @@ msgstr ""
 "保存失敗.\n"
 "%s は通常のファイルではありません."
 
-#: app/fileops.c:1175
+#: app/fileops.c:1187
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1355,35 +1355,35 @@ msgstr ""
 "保存失敗.\n"
 "%s: 許可されていません."
 
-#: app/fileops.c:1422
+#: app/fileops.c:1434
 msgid "(This thumbnail may be out of date)"
 msgstr "(この簡易表示はもう古い)"
 
-#: app/fileops.c:1423
+#: app/fileops.c:1435
 msgid "(No Information)"
 msgstr "(情報なし)"
 
-#: app/fileops.c:1433
+#: app/fileops.c:1445
 msgid "(Thumbnail saving is disabled)"
 msgstr "(簡易表示保存無効)"
 
-#: app/fileops.c:1437
+#: app/fileops.c:1449
 msgid "(Could not write thumbnail file)"
 msgstr "(簡易表示ファイル書き出し失敗)"
 
-#: app/fileops.c:1441
+#: app/fileops.c:1453
 msgid "(Thumbnail file not written)"
 msgstr "(簡易表示ファイルは書かれていない)"
 
-#: app/fileops.c:1459
+#: app/fileops.c:1471
 msgid "No preview available"
 msgstr "プレビュー無し"
 
-#: app/fileops.c:1568
+#: app/fileops.c:1581
 msgid "(could not make preview)"
 msgstr "(プレビュー作成失敗)"
 
-#: app/fileops.c:1646 app/fileops.c:1688
+#: app/fileops.c:1662 app/fileops.c:1707
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1392,20 +1392,20 @@ msgstr ""
 "読み込み失敗.\n"
 "%s"
 
-#: app/fileops.c:1895
+#: app/fileops.c:1914
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s は存在します、上書きしますか?"
 
-#: app/fileops.c:1897
+#: app/fileops.c:1916
 msgid "File Exists!"
 msgstr "ファイルは存在します!"
 
-#: app/fileops.c:1956
+#: app/fileops.c:1976
 msgid "Revert"
 msgstr "復帰"
 
-#: app/fileops.c:1970
+#: app/fileops.c:1989
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1515,7 +1515,8 @@ msgstr "ストローク描画する領域が選択されていません."
 #: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "不明なブラシファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
+msgstr ""
+"不明なブラシファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
 #: app/gimpbrush.c:318
 #, c-format
@@ -1673,7 +1674,8 @@ msgstr ""
 
 #: app/gimpimage.c:3094
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
+msgstr ""
+"指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
 
 #: app/gimpimage.c:3202
 msgid "Channel cannot be raised any further"
@@ -1805,35 +1807,35 @@ msgstr "パイカ"
 msgid "percent"
 msgstr "パーセント:"
 
-#: app/global_edit.c:755
+#: app/global_edit.c:767
 msgid "Paste"
 msgstr "ペースト"
 
-#: app/global_edit.c:756
+#: app/global_edit.c:768
 msgid "Paste Into"
 msgstr "選択領域内にペースト"
 
-#: app/global_edit.c:757
+#: app/global_edit.c:769
 msgid "Paste as New"
 msgstr "新規にペースト"
 
-#: app/global_edit.c:771
+#: app/global_edit.c:783
 msgid "Paste Named Buffer"
 msgstr "名前を選んでバッファをペースト"
 
-#: app/global_edit.c:789
+#: app/global_edit.c:801
 msgid "Select a buffer to paste:"
 msgstr "ペーストするバッファを選択:"
 
-#: app/global_edit.c:870
+#: app/global_edit.c:882
 msgid "Cut Named"
 msgstr "名前を付けてカット"
 
-#: app/global_edit.c:873 app/global_edit.c:905
+#: app/global_edit.c:885 app/global_edit.c:917
 msgid "Enter a name for this buffer"
 msgstr "このバッファに対する名前を入力して下さい"
 
-#: app/global_edit.c:902
+#: app/global_edit.c:914
 msgid "Copy Named"
 msgstr "名前を付けてコピー"
 
@@ -1965,7 +1967,9 @@ msgstr "拡大倍率: %d:1    表示 [%0.6f, %0.6f]"
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Opacity: %0.3f"
-msgstr "位置: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    不透明度: %0.3f"
+msgstr ""
+"位置: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    不透"
+"明度: %0.3f"
 
 #: app/gradient.c:2383
 #, c-format
@@ -1993,7 +1997,9 @@ msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動"
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
-msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    Shift+ドラッグ: 移動 & 圧縮"
+msgstr ""
+"クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    Shift"
+"+ドラッグ: 移動 & 圧縮"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
@@ -2174,7 +2180,7 @@ msgid "Gradient Selection"
 msgstr "グラデーション選択"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:282 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:288 app/tools.c:1222
 msgid "Histogram"
 msgstr "ヒストグラム"
 
@@ -2182,31 +2188,31 @@ msgstr "ヒストグラム"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "インデックス画像に対してはヒストグラム表示はできません."
 
-#: app/histogram_tool.c:268
+#: app/histogram_tool.c:274
 msgid "Mean:"
 msgstr "平均:"
 
-#: app/histogram_tool.c:269
+#: app/histogram_tool.c:275
 msgid "Std Dev:"
 msgstr "標準偏差:"
 
-#: app/histogram_tool.c:270
+#: app/histogram_tool.c:276
 msgid "Median:"
 msgstr "中心値:"
 
-#: app/histogram_tool.c:271
+#: app/histogram_tool.c:277
 msgid "Pixels:"
 msgstr "ピクセル:"
 
-#: app/histogram_tool.c:273
+#: app/histogram_tool.c:279
 msgid "Count:"
 msgstr "カウント:"
 
-#: app/histogram_tool.c:274
+#: app/histogram_tool.c:280
 msgid "Percentile:"
 msgstr "パーセント:"
 
-#: app/histogram_tool.c:307
+#: app/histogram_tool.c:313
 msgid "Information on Channel:"
 msgstr "チャンネル情報:"
 
@@ -2254,7 +2260,7 @@ msgstr "明度:"
 msgid "Saturation:"
 msgstr "彩度:"
 
-#: app/image_cmds.c:3463
+#: app/image_cmds.c:3459
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -2309,19 +2315,24 @@ msgstr "%.1f MB"
 msgid ""
 "The active brush.\n"
 "Click to open the Brushes Dialog."
-msgstr "アクティブになっているブラシです. クリックするとブラシダイアログを表示します."
+msgstr ""
+"アクティブになっているブラシです. クリックするとブラシダイアログを表示します."
 
 #: app/indicator_area.c:161
 msgid ""
 "The active pattern.\n"
 "Click to open the Patterns Dialog."
-msgstr "アクティブになっているパターンです. クリックするとパターンダイアログを表示します."
+msgstr ""
+"アクティブになっているパターンです. クリックするとパターンダイアログを表示し"
+"ます."
 
 #: app/indicator_area.c:180
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradients Dialog."
-msgstr "アクティブになっているグラデーションです. クリックするとグラデーションダイアログを表示します."
+msgstr ""
+"アクティブになっているグラデーションです. クリックするとグラデーションダイア"
+"ログを表示します."
 
 #: app/info_dialog.c:189 app/preferences_dialog.c:1814
 #: app/preferences_dialog.c:1920
@@ -2453,7 +2464,9 @@ msgstr "形状"
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
-msgstr "前景色と背景色です. 黒と白の四角で色を初期化できます.  矢印は前景色と背景色を交換します. クリックすると色を選択できます."
+msgstr ""
+"前景色と背景色です. 黒と白の四角で色を初期化できます.  矢印は前景色と背景色を"
+"交換します. クリックすると色を選択できます."
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2868,13 +2881,16 @@ msgstr "  -b, --batch <コマンド>   バッチモードで起動。\n"
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
-msgstr "  -c, --console-messages   警告はダイアログでなく、コンソールに出力する。\n"
+msgstr ""
+"  -c, --console-messages   警告はダイアログでなく、コンソールに出力する。\n"
 
 #: app/main.c:313
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data            パターン、グラデーション、パレット、ブラシを読み込まない\n"
+msgstr ""
+"  -d, --no-data            パターン、グラデーション、パレット、ブラシを読み込"
+"まない\n"
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2912,7 +2928,8 @@ msgstr "  --verbose                詳細起動メッセージを表示する。\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr "  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
+msgstr ""
+"  --no-shm                 GIMP とプラグインの間で共有メモリを使用しない。\n"
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -2921,7 +2938,9 @@ msgstr "  --no-xshm                X 共有メモリ拡張機能を使用しない。\n"
 #: app/main.c:324
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
-msgstr "  --debug-handlers         致命的ではないシグナルに対するデバッグ用シグナルハンドラを有効にする。\n"
+msgstr ""
+"  --debug-handlers         致命的ではないシグナルに対するデバッグ用シグナルハ"
+"ンドラを有効にする。\n"
 
 #: app/main.c:325
 msgid "  --display <display>      Use the designated X display.\n"
@@ -4123,7 +4142,8 @@ msgstr "利用可能なパターンがありません"
 #: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "不明なパターンファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
+msgstr ""
+"不明なパターンファイルのフォーマットバージョン #%d が \"%s\" 中にあります."
 
 #: app/patterns.c:229
 #, c-format
@@ -4920,7 +4940,9 @@ msgstr "モニタ解像度測定"
 
 #: app/resolution_calibrate.c:221
 msgid "Measure the rulers and enter their lengths below."
-msgstr "画面に物差しをあててスケールの長さを実際に測り, その結果を下の枠に入力してください."
+msgstr ""
+"画面に物差しをあててスケールの長さを実際に測り, その結果を下の枠に入力してく"
+"ださい."
 
 #: app/resolution_calibrate.c:241
 msgid "Horizontal:"
@@ -5004,7 +5026,8 @@ msgid ""
 "options."
 msgstr ""
 "\n"
-"スケラーブルフォントを持っていない場合には, ツールオプション中のアンチエイリアシングをオフにしてみてください."
+"スケラーブルフォントを持っていない場合には, ツールオプション中のアンチエイリ"
+"アシングをオフにしてみてください."
 
 #: app/text_tool.c:751
 msgid "Text Layer"
@@ -5782,12 +5805,16 @@ msgstr "ユーザに対して GIMP は正常にインストールされていません\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "'--nointerface' フラグ付きで起動されたため、ユーザーインストールは実行されません\n"
+msgstr ""
+"'--nointerface' フラグ付きで起動されたため、ユーザーインストールは実行されま"
+"せん\n"
 
 #: app/user_install.c:106
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr "ユーザーインストールを行うには、'--nointerface' フラグを付けずに GIMP を起動して下さい\n"
+msgstr ""
+"ユーザーインストールを行うには、'--nointerface' フラグを付けずに GIMP を起動"
+"して下さい\n"
 
 #: app/user_install.c:155
 msgid ""
@@ -6186,7 +6213,8 @@ msgstr "上の設定でよければ「次へ」をクリックして下さい."
 
 #: app/user_install.c:859
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
-msgstr "最良の GIMP パフォーマンスを得るために, 幾つかの設定を調整する必要があります."
+msgstr ""
+"最良の GIMP パフォーマンスを得るために, 幾つかの設定を調整する必要があります."
 
 #: app/user_install.c:868
 msgid "Monitor Resolution"
@@ -6249,7 +6277,8 @@ msgid ""
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
-"GIMP は「タイルキャッシュ」という一定量のメモリを使用して画像を取り扱います.\n"
+"GIMP は「タイルキャッシュ」という一定量のメモリを使用して画像を取り扱いま"
+"す.\n"
 "他の実行中のプロセス等のことも考えつつ, 実メモリ量に基づいて適切に設定して\n"
 "やる必要があります."
 

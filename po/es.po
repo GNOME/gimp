@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.29\n"
-"POT-Creation-Date: 2001-01-21 19:10-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-12-27 16:27+01:00\n"
 "Last-Translator: Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
@@ -124,7 +124,7 @@ msgstr "Salir"
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
-#: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
+#: app/global_edit.c:791 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
 #: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1825
@@ -286,7 +286,7 @@ msgstr "Brillo-Contraste no funciona con imágeness de color indexado"
 #: app/curves.c:567 app/file_new_dialog.c:212 app/file_new_dialog.c:358
 #: app/gimpui.c:126 app/hue_saturation.c:379 app/layers_dialog.c:3559
 #: app/layers_dialog.c:3743 app/layers_dialog.c:3838 app/layers_dialog.c:4099
-#: app/levels.c:346 app/module_db.c:319 app/posterize.c:208
+#: app/levels.c:346 app/module_db.c:315 app/posterize.c:208
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1398 app/resolution_calibrate.c:114 app/threshold.c:281
 msgid "OK"
@@ -312,7 +312,7 @@ msgstr "Contraste:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:312 app/color_balance.c:452 app/curves.c:691
-#: app/fileops.c:415 app/hue_saturation.c:571 app/levels.c:579
+#: app/fileops.c:420 app/hue_saturation.c:571 app/levels.c:579
 #: app/palette.c:3229 app/posterize.c:249 app/threshold.c:358
 msgid "Preview"
 msgstr "Vista previa"
@@ -324,9 +324,9 @@ msgstr "Editor de brochas"
 #. The close button
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
-#: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
+#: app/crop.c:1073 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
 #: app/gdisplay_ops.c:310 app/gradient.c:918 app/gradient_select.c:161
-#: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
+#: app/histogram_tool.c:294 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2058
 #: app/palette.c:2074 app/palette.c:3111 app/palette_select.c:70
 #: app/pattern_select.c:178 app/preferences_dialog.c:386 app/tips_dialog.c:163
@@ -356,7 +356,7 @@ msgstr "Ángulo:"
 msgid "Brush Selection"
 msgstr "Selección de brocha"
 
-#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Refrescar"
@@ -384,7 +384,7 @@ msgstr "Nuevo"
 msgid "Edit"
 msgstr "Editar"
 
-#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1884
+#: app/brush_select.c:485 app/global_edit.c:789 app/gradient.c:1884
 #: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "Borrar"
@@ -500,7 +500,7 @@ msgstr "Deslizamiento"
 msgid "Offset X:"
 msgstr "Deslizar X:"
 
-#: app/channel_ops.c:121 app/crop.c:1083 app/file_new_dialog.c:535
+#: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
 #: app/scale_tool.c:108 app/shear_tool.c:88 app/user_install.c:1211
 msgid "Y:"
@@ -558,17 +558,17 @@ msgid "Empty Channel Copy"
 msgstr "Vaciar copia del canal"
 
 #: app/channels_dialog.c:1440 app/color_balance.c:354 app/color_select.c:254
-#: app/curves.c:592 app/histogram_tool.c:309 app/levels.c:379
+#: app/curves.c:592 app/histogram_tool.c:322 app/levels.c:379
 msgid "Red"
 msgstr "Rojo"
 
 #: app/channels_dialog.c:1444 app/color_balance.c:379 app/color_select.c:255
-#: app/curves.c:593 app/histogram_tool.c:310 app/levels.c:380
+#: app/curves.c:593 app/histogram_tool.c:323 app/levels.c:380
 msgid "Green"
 msgstr "Verde"
 
 #: app/channels_dialog.c:1448 app/color_balance.c:404 app/color_select.c:256
-#: app/curves.c:594 app/histogram_tool.c:311 app/levels.c:381
+#: app/curves.c:594 app/histogram_tool.c:324 app/levels.c:381
 msgid "Blue"
 msgstr "Azul"
 
@@ -724,7 +724,7 @@ msgstr "Índice:"
 msgid "Hex Triplet"
 msgstr "Terna hexadecimal"
 
-#: app/color_picker.c:278 app/histogram_tool.c:265
+#: app/color_picker.c:278 app/histogram_tool.c:278
 msgid "Intensity:"
 msgstr "Intensidad:"
 
@@ -772,7 +772,7 @@ msgstr "Tono"
 msgid "Saturation"
 msgstr "Saturación"
 
-#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:308
+#: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:321
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
@@ -944,11 +944,11 @@ msgstr "Permitir agrandar"
 msgid "Tool Toggle"
 msgstr "Conmutar herramienta"
 
-#: app/crop.c:221 app/crop.c:1070
+#: app/crop.c:221 app/crop.c:1069
 msgid "Crop"
 msgstr "Recortar"
 
-#: app/crop.c:223 app/crop.c:1072
+#: app/crop.c:223 app/crop.c:1071
 msgid "Resize"
 msgstr "Cambiar tamaño"
 
@@ -956,37 +956,37 @@ msgstr "Cambiar tamaño"
 msgid "Crop: "
 msgstr "Recortar: "
 
-#: app/crop.c:1043
+#: app/crop.c:1042
 msgid "Crop: 0 x 0"
 msgstr "Recortar: 0 x 0"
 
 #. create the info dialog
-#: app/crop.c:1064
+#: app/crop.c:1063
 msgid "Crop & Resize Information"
 msgstr "Información de recorte y cambio de tamaño"
 
 #. add the information fields
-#: app/crop.c:1080
+#: app/crop.c:1079
 msgid "Origin X:"
 msgstr "Origen X:"
 
 #. the pixel size labels
-#: app/crop.c:1096 app/file_new_dialog.c:394 app/file_new_dialog.c:412
+#: app/crop.c:1095 app/file_new_dialog.c:394 app/file_new_dialog.c:412
 #: app/tool_options.c:353
 msgid "Width:"
 msgstr "Anchura:"
 
-#: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
+#: app/crop.c:1098 app/file_new_dialog.c:400 app/file_new_dialog.c:418
 #: app/layers_dialog.c:3603 app/resize.c:284 app/resize.c:309 app/resize.c:541
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Altura:"
 
-#: app/crop.c:1121
+#: app/crop.c:1120
 msgid "From Selection"
 msgstr "Desde seleccion"
 
-#: app/crop.c:1127
+#: app/crop.c:1126
 msgid "Auto Shrink"
 msgstr "Auto encoger"
 
@@ -1020,7 +1020,7 @@ msgstr "Suave"
 msgid "Free"
 msgstr "Libre"
 
-#: app/curves.c:708 app/levels.c:607 app/module_db.c:878
+#: app/curves.c:708 app/levels.c:607 app/module_db.c:874
 msgid "Load"
 msgstr "Cargar"
 
@@ -1055,8 +1055,8 @@ msgstr "Desaturación sólo funciona en imágenes de color RGB"
 msgid "Device Status"
 msgstr "Estado del dispositivo"
 
-#: app/disp_callbacks.c:845 app/global_edit.c:304 app/global_edit.c:310
-#: app/global_edit.c:382
+#: app/disp_callbacks.c:845 app/global_edit.c:305 app/global_edit.c:311
+#: app/global_edit.c:394
 msgid "Pasted Layer"
 msgstr "Capa pegada"
 
@@ -1225,16 +1225,16 @@ msgstr "píxeles/%a"
 msgid "Image Type"
 msgstr "Tipo de imagen"
 
-#: app/fileops.c:263 app/fileops.c:309
+#: app/fileops.c:268 app/fileops.c:314
 msgid "Load Image"
 msgstr "Cargar imagen"
 
 #. format-chooser frame
-#: app/fileops.c:324
+#: app/fileops.c:329
 msgid "Determine File Type"
 msgstr "Determinar tipo de fichero"
 
-#: app/fileops.c:397
+#: app/fileops.c:402
 msgid ""
 "Generate\n"
 "Preview"
@@ -1242,11 +1242,11 @@ msgstr ""
 "Generar\n"
 "Vista previa"
 
-#: app/fileops.c:416
+#: app/fileops.c:421
 msgid "No Selection."
 msgstr "Sin selección"
 
-#: app/fileops.c:464 app/fileops.c:1762
+#: app/fileops.c:469 app/fileops.c:1781
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1255,19 +1255,19 @@ msgstr ""
 "Fallo al guardar.\n"
 ": %s"
 
-#: app/fileops.c:489 app/fileops.c:521
+#: app/fileops.c:494 app/fileops.c:526
 msgid "Save Image"
 msgstr "Guardar imagen"
 
-#: app/fileops.c:538
+#: app/fileops.c:543
 msgid "Save Options"
 msgstr "Opciones de guardar"
 
-#: app/fileops.c:547
+#: app/fileops.c:552
 msgid "Determine File Type:"
 msgstr "Determinar tipo de fichero:"
 
-#: app/fileops.c:610
+#: app/fileops.c:615
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
@@ -1275,7 +1275,7 @@ msgstr ""
 "Falló al dar marcha atrás.\n"
 "No hay un nombre de fichero asiociado a esta imagen."
 
-#: app/fileops.c:621
+#: app/fileops.c:626
 #, c-format
 msgid ""
 "Reverting %s to\n"
@@ -1291,19 +1291,19 @@ msgstr ""
 "incluyendo información de\n"
 "Deshacer)"
 
-#: app/fileops.c:628
+#: app/fileops.c:633
 msgid "Revert Image?"
 msgstr "¿Revertir imagen?"
 
-#: app/fileops.c:633 app/fileops.c:1902
+#: app/fileops.c:638 app/fileops.c:1921
 msgid "Yes"
 msgstr "Sí"
 
-#: app/fileops.c:633 app/fileops.c:1902
+#: app/fileops.c:638 app/fileops.c:1921
 msgid "No"
 msgstr "No"
 
-#: app/fileops.c:738
+#: app/fileops.c:741
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1312,7 +1312,7 @@ msgstr ""
 "%s falló.\n"
 "%s: Tipo de fichero desconocido."
 
-#: app/fileops.c:755
+#: app/fileops.c:758
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1321,7 +1321,7 @@ msgstr ""
 "%s falló.\n"
 "%s no es un fichero normal."
 
-#: app/fileops.c:776
+#: app/fileops.c:779
 #, c-format
 msgid ""
 "%s failed.\n"
@@ -1330,11 +1330,11 @@ msgstr ""
 "%s falló.\n"
 "%s: Permiso denegado."
 
-#: app/fileops.c:830
+#: app/fileops.c:835 app/fileops.c:1556
 msgid "Open"
 msgstr "Abrir"
 
-#: app/fileops.c:1141
+#: app/fileops.c:1153
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1343,7 +1343,7 @@ msgstr ""
 "Fallo al guardar.\n"
 "%s: Tipo de fichero desconocido."
 
-#: app/fileops.c:1156
+#: app/fileops.c:1168
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1352,7 +1352,7 @@ msgstr ""
 "Fallo al guardar.\n"
 "%s no es un fichero normal."
 
-#: app/fileops.c:1175
+#: app/fileops.c:1187
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1361,35 +1361,35 @@ msgstr ""
 "Fallo al guardar.\n"
 "%s: Permiso denegado."
 
-#: app/fileops.c:1422
+#: app/fileops.c:1434
 msgid "(This thumbnail may be out of date)"
 msgstr "(Esta mini-imagen puede estar desactualizada)"
 
-#: app/fileops.c:1423
+#: app/fileops.c:1435
 msgid "(No Information)"
 msgstr "(No hay información)"
 
-#: app/fileops.c:1433
+#: app/fileops.c:1445
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Guardar miniimágenes está desactivado)"
 
-#: app/fileops.c:1437
+#: app/fileops.c:1449
 msgid "(Could not write thumbnail file)"
 msgstr "(No pude escribir fichero de miniimágenes)"
 
-#: app/fileops.c:1441
+#: app/fileops.c:1453
 msgid "(Thumbnail file not written)"
 msgstr "(Fichero de miniimágenes no escrito)"
 
-#: app/fileops.c:1459
+#: app/fileops.c:1471
 msgid "No preview available"
 msgstr "No hay vista previa disponible"
 
-#: app/fileops.c:1568
+#: app/fileops.c:1581
 msgid "(could not make preview)"
 msgstr "(no pude hacer la Vista previa)"
 
-#: app/fileops.c:1646 app/fileops.c:1688
+#: app/fileops.c:1662 app/fileops.c:1707
 #, c-format
 msgid ""
 "Open failed.\n"
@@ -1398,20 +1398,20 @@ msgstr ""
 "Fallo al abrir.\n"
 "%s"
 
-#: app/fileops.c:1895
+#: app/fileops.c:1914
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existe, ¿sobreescribir?"
 
-#: app/fileops.c:1897
+#: app/fileops.c:1916
 msgid "File Exists!"
 msgstr "¡El fichero existe!"
 
-#: app/fileops.c:1956
+#: app/fileops.c:1976
 msgid "Revert"
 msgstr "Revertir"
 
-#: app/fileops.c:1967
+#: app/fileops.c:1989
 #, c-format
 msgid ""
 "Revert failed.\n"
@@ -1452,27 +1452,27 @@ msgstr ""
 "flotante porque ésta pertenece a una máscara de capa\n"
 "o canal"
 
-#: app/gdisplay.c:237
+#: app/gdisplay.c:239
 msgid "RGB-empty"
 msgstr "RGB-vacío"
 
-#: app/gdisplay.c:237 app/image_new.c:64 app/preferences_dialog.c:1653
+#: app/gdisplay.c:239 app/image_new.c:64 app/preferences_dialog.c:1653
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gdisplay.c:240
+#: app/gdisplay.c:242
 msgid "grayscale-empty"
 msgstr "Tonos de grises-vacío"
 
-#: app/gdisplay.c:240
+#: app/gdisplay.c:242
 msgid "grayscale"
 msgstr "Tonos de grises"
 
-#: app/gdisplay.c:243
+#: app/gdisplay.c:245
 msgid "indexed-empty"
 msgstr "Indexado-vacío"
 
-#: app/gdisplay.c:243
+#: app/gdisplay.c:245
 msgid "indexed"
 msgstr "Indexado"
 
@@ -1521,26 +1521,26 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "¡No hay selección que trazar!"
 
-#: app/gimpbrush.c:294
+#: app/gimpbrush.c:298
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
 msgstr "Formato de brocha versión #%d en \"%s\" es desconocido."
 
-#: app/gimpbrush.c:314
+#: app/gimpbrush.c:318
 #, c-format
 msgid "Error in GIMP brush file \"%s\"."
 msgstr "Error en fichero de brochas GIMP \"%s\"."
 
-#: app/gimpbrush.c:321 app/patterns.c:235
+#: app/gimpbrush.c:325 app/patterns.c:236
 msgid "Unnamed"
 msgstr "Sin nombre"
 
-#: app/gimpbrush.c:334 app/gimpbrush.c:379
+#: app/gimpbrush.c:338 app/gimpbrush.c:383
 #, c-format
 msgid "GIMP brush file appears to be truncated: \"%s\"."
 msgstr "Fichero de brocha de GIMP que parece truncado: \"%s\"."
 
-#: app/gimpbrush.c:359
+#: app/gimpbrush.c:363
 #, c-format
 msgid "GIMP brush file appears to be corrupted: \"%s\"."
 msgstr "\"Fichero de brocha de GIMP que parece defectuoso: \"%s\"."
@@ -1563,7 +1563,7 @@ msgstr ""
 "Aviso: Fallo al cargar tubo de brochas \n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:292
+#: app/gimpbrushpipe.c:296
 #, c-format
 msgid ""
 "Brush pipes should have at least one brush:\n"
@@ -1572,7 +1572,7 @@ msgstr ""
 "Los tubos de brochas deberían tener al menos una brocha:\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:383
+#: app/gimpbrushpipe.c:387
 #, c-format
 msgid ""
 "Failed to load one of the brushes in the brush pipe\n"
@@ -1816,35 +1816,35 @@ msgstr "picas"
 msgid "percent"
 msgstr "por ciento"
 
-#: app/global_edit.c:755
+#: app/global_edit.c:767
 msgid "Paste"
 msgstr "Pegar"
 
-#: app/global_edit.c:756
+#: app/global_edit.c:768
 msgid "Paste Into"
 msgstr "Pegar en"
 
-#: app/global_edit.c:757
+#: app/global_edit.c:769
 msgid "Paste as New"
 msgstr "Pegar como Nueva"
 
-#: app/global_edit.c:771
+#: app/global_edit.c:783
 msgid "Paste Named Buffer"
 msgstr "Pegar búfer con nombre"
 
-#: app/global_edit.c:789
+#: app/global_edit.c:801
 msgid "Select a buffer to paste:"
 msgstr "Selecciona un búfer a pegar:"
 
-#: app/global_edit.c:870
+#: app/global_edit.c:882
 msgid "Cut Named"
 msgstr "Cortar (con nombre)"
 
-#: app/global_edit.c:873 app/global_edit.c:905
+#: app/global_edit.c:885 app/global_edit.c:917
 msgid "Enter a name for this buffer"
 msgstr "Ponga un nombre a este búfer"
 
-#: app/global_edit.c:902
+#: app/global_edit.c:914
 msgid "Copy Named"
 msgstr "Copiar (con nombre)"
 
@@ -2008,8 +2008,8 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Pulsar: seleccionar    Mays+Pulsar: extender selección    Arrastrar: mover   "
-" Mays+Arrastrar: mover y comprimir"
+"Pulsar: seleccionar    Mays+Pulsar: extender selección    Arrastrar: "
+"mover    Mays+Arrastrar: mover y comprimir"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
@@ -2191,7 +2191,7 @@ msgid "Gradient Selection"
 msgstr "Selección de gradientes"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:171 app/histogram_tool.c:275 app/tools.c:1222
+#: app/histogram_tool.c:171 app/histogram_tool.c:288 app/tools.c:1222
 msgid "Histogram"
 msgstr "Histograma"
 
@@ -2199,31 +2199,31 @@ msgstr "Histograma"
 msgid "Histogram does not operate on indexed drawables."
 msgstr "Histograma no funciona en imágenes indexadas."
 
-#: app/histogram_tool.c:261
+#: app/histogram_tool.c:274
 msgid "Mean:"
 msgstr "Media:"
 
-#: app/histogram_tool.c:262
+#: app/histogram_tool.c:275
 msgid "Std Dev:"
 msgstr "Desviac. est.:"
 
-#: app/histogram_tool.c:263
+#: app/histogram_tool.c:276
 msgid "Median:"
 msgstr "Mediana:"
 
-#: app/histogram_tool.c:264
+#: app/histogram_tool.c:277
 msgid "Pixels:"
 msgstr "Píxeles:"
 
-#: app/histogram_tool.c:266
+#: app/histogram_tool.c:279
 msgid "Count:"
 msgstr "Cuenta:"
 
-#: app/histogram_tool.c:267
+#: app/histogram_tool.c:280
 msgid "Percentile:"
 msgstr "Porcentaje: "
 
-#: app/histogram_tool.c:300
+#: app/histogram_tool.c:313
 msgid "Information on Channel:"
 msgstr "Información sobre el canal:"
 
@@ -2271,7 +2271,7 @@ msgstr "Luminosidad:"
 msgid "Saturation:"
 msgstr "Saturación:"
 
-#: app/image_cmds.c:3463
+#: app/image_cmds.c:3459
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."
@@ -3770,74 +3770,74 @@ msgstr "Descarga solicitada"
 msgid "Unloaded OK"
 msgstr "Descarga realizada"
 
-#: app/module_db.c:313
+#: app/module_db.c:309
 msgid "Module DB"
 msgstr "Base de datos de módulos"
 
-#: app/module_db.c:606
+#: app/module_db.c:602
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "cargar módulo: \"%s\"\n"
 
-#: app/module_db.c:613
+#: app/module_db.c:609
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "saltando módulo: \"%s\"\n"
 
-#: app/module_db.c:639
+#: app/module_db.c:635
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "error de carga de módulo: %s: %s"
 
-#: app/module_db.c:826
+#: app/module_db.c:822
 msgid "<No modules>"
 msgstr "<sin módulos>"
 
-#: app/module_db.c:839 app/module_db.c:848
+#: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
 msgstr "en disco"
 
-#: app/module_db.c:839
+#: app/module_db.c:835
 msgid "only in memory"
 msgstr "sólo en memoria"
 
-#: app/module_db.c:848
+#: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
 msgstr "ninguna parte (pulse 'refrescar')"
 
-#: app/module_db.c:887
+#: app/module_db.c:879 app/module_db.c:884
 msgid "Unload"
 msgstr "Descargar"
 
-#: app/module_db.c:903
+#: app/module_db.c:900
 msgid "Purpose:"
 msgstr "Propósito: "
 
-#: app/module_db.c:904
+#: app/module_db.c:901
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/module_db.c:905
+#: app/module_db.c:902
 msgid "Version:"
 msgstr "Versión: "
 
-#: app/module_db.c:906
+#: app/module_db.c:903
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:907
+#: app/module_db.c:904
 msgid "Date:"
 msgstr "Fecha:"
 
-#: app/module_db.c:908
+#: app/module_db.c:905
 msgid "Location:"
 msgstr "Localización: "
 
-#: app/module_db.c:909
+#: app/module_db.c:906
 msgid "State:"
 msgstr "Estado: "
 
-#: app/module_db.c:928
+#: app/module_db.c:925
 msgid "Autoload during startup"
 msgstr "Autocarga durante inicio"
 
@@ -4163,17 +4163,17 @@ msgstr "Selección de patrón"
 msgid "No Patterns available"
 msgstr "No hay patrones disponibles"
 
-#: app/patterns.c:209
+#: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
 msgstr "Formato de brocha versión #%d en \"%s\" es desconocido."
 
-#: app/patterns.c:228
+#: app/patterns.c:229
 #, c-format
 msgid "Error in GIMP pattern file \"%s\"."
 msgstr "Error en fichero de patrones GIMP \"%s\"."
 
-#: app/patterns.c:244
+#: app/patterns.c:245
 #, c-format
 msgid "GIMP pattern file appears to be truncated: \"%s\"."
 msgstr "Fichero de patrones GIMP que parece truncado: \"%s\"."
@@ -4238,13 +4238,13 @@ msgstr ""
 "de GIMP. Sería conveniente que guardase todas sus imágenes y \n"
 "reinicie GIMP, para no arriesgarse. "
 
+#: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
+msgid "Posterize"
+msgstr "Cuantizar"
+
 #: app/posterize.c:158
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Cuantizar no funciona en imágenes indexadas."
-
-#: app/posterize.c:203 app/tools.c:1110
-msgid "Posterize"
-msgstr "Cuantizar"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
@@ -5842,8 +5842,8 @@ msgstr ""
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
-"Para realizar la instalación de usuario, ejecute GIMP sin la bandera "
-"'--nointerface`\n"
+"Para realizar la instalación de usuario, ejecute GIMP sin la bandera '--"
+"nointerface`\n"
 
 #: app/user_install.c:155
 msgid ""

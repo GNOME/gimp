@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: sab giu 10 03:02:00 EDT 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -1432,6 +1432,10 @@ msgstr "Griglia Y"
 msgid "Height"
 msgstr "Altezza"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1634,6 +1638,10 @@ msgstr "Numero di Y Tile"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Numero"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1849,6 +1857,11 @@ msgstr "Scala X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Scala Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Definizione ombra"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
-"POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
+"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
 "PO-Revision-Date: 1999-09-16 21:28-0200\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: http://gimp.linux.it\n"
@@ -37,7 +37,7 @@ msgstr ""
 "interagire\n"
 "       script-argiments sono\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -58,7 +58,7 @@ msgstr ""
 "                                      (per maggiori informazioni, vedere "
 "Gimp::Net(3))\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ non e` un tag valido per importare il pacchetto $pkg"
 
@@ -72,8 +72,8 @@ msgstr "$_: opzione salvataggio-file sconosciuta/illegale"
 
 #: Gimp/Fu.pm:0
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
 msgstr ""
 "$function: nome di argumento '$p->[1]' contiene caratteri illegal, solo 0-9, "
 "a-z and _ allowed"
@@ -84,13 +84,13 @@ msgstr ""
 "$function: valore di argomento o di ritorno '$p->[1]' ha un tipo illegale "
 "'$p->[0]'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: il richiamo a $AUTOLOAD senza specificare il tag di importazione "
-":auto viene deprecato!\n"
+"$function: il richiamo a $AUTOLOAD senza specificare il tag di importazione :"
+"auto viene deprecato!\n"
 
 # msgid "Internal error: Gimp::Net #100, please report!"
 # msgstr ""
@@ -568,7 +568,7 @@ msgstr "Bumpmap"
 msgid "Cancel"
 msgstr "Cancella"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Ora non posso chiamare '$AUTOLOAD'"
 
@@ -786,7 +786,7 @@ msgstr "Questo modulo e` stato costruito senza supporto di PDL."
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Incapace di convertire un riferimento a tipo '%s'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "incapace di accettare specificazione di colore"
 
@@ -806,15 +806,15 @@ msgstr "Tipo di argomento non supportato $type"
 msgid "Visual Scriptor"
 msgstr "Visual Scriptor"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "WARNING"
 msgstr "ATTENZIONE"
 
 #: Gimp/Fu.pm:0
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
 msgstr ""
-"ATTENZIONE: $function ha ritornato qualcosa che non e` una immagine: "
-"\"$img\"\n"
+"ATTENZIONE: $function ha ritornato qualcosa che non e` una immagine: \"$img"
+"\"\n"
 
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
@@ -831,8 +831,7 @@ msgstr "ATTENZIONE: richiesta condivisa di lock, ma non implementata"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
-"Non è possibile eseguire lo script su una immagine in scala di colore!!"
+msgstr "Non è possibile eseguire lo script su una immagine in scala di colore!!"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
@@ -987,7 +986,7 @@ msgstr "funzione '$exe' non trovata in questo script (deve essere una de "
 msgid "function name contains dashes instead of underscores"
 msgstr "nome di funzione contiene cancelletti ('#') anziche` '_'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "funzione/macro \"$name\" non trovata in $class"
 
@@ -1009,11 +1008,11 @@ msgstr "la funzione gimp-perl-pixel richiede il modulo PDL:Core"
 
 #: Gimp/Lib.xs:0
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register supporta solo 1, 2 o 3 argomenti, aggiornare a "
-"gimp-1.1 e riportare questo errore"
+"gimp_pixel_rgns_register supporta solo 1, 2 o 3 argomenti, aggiornare a gimp-"
+"1.1 e riportare questo errore"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
@@ -1046,11 +1045,11 @@ msgstr "colore specificato di tipo illegale"
 # msgid "dunno how to pass arg type %d"
 # msgstr "come passare il tipo di argomenti %d"
 # ?dunno
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr "interfaccia '$interface_type' non supportata.'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr "interface=... non e` piu` supportato\n"
 
@@ -1135,15 +1134,15 @@ msgstr "richiesta di abbandono (QUIT) ricevuta"
 msgid "register called with too many or wrong arguments\n"
 msgstr "registro chiamato con troppy o sbagliati argomenti\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr "callback 'net' richiesto e non trovato\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr "callback 'query' richiesto e non trovato\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr "callback 'run' richiesto e non trovato\n"
 
@@ -1233,7 +1232,7 @@ msgstr "non riesco a compiere operazione fork: $!"
 msgid "unable to grok colour specification"
 msgstr "impossibile accettare specificazione di colore"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "non riesco ad aprire $rgb_db_path"
 
@@ -1341,8 +1340,8 @@ msgstr "xlfd_unpack: carattere XLFD '$fontname' non riscontrato\n"
 #~ msgid ""
 #~ "Internal error: unable to convert reference in sv2net, please report!"
 #~ msgstr ""
-#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
-#~ "cortesia riportare"
+#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, "
+#~ "per cortesia riportare"
 
 #~ msgid "Internal error: stashname too long, please report!"
 #~ msgstr "Errore interno: stashname troppo lungo!"
@@ -1353,15 +1352,15 @@ msgstr "xlfd_unpack: carattere XLFD '$fontname' non riscontrato\n"
 #~ msgid ""
 #~ "Internal error: unable to handle argtype '%c' in net2sv, please report!"
 #~ msgstr ""
-#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
-#~ "cortesia riportare"
+#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, "
+#~ "per cortesia riportare"
 
 #~ msgid ""
 #~ "Internal error: asked to deobjectify an object not in the cache, please "
 #~ "report!"
 #~ msgstr ""
-#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
-#~ "cortesia riportare"
+#~ "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, "
+#~ "per cortesia riportare"
 
 #~ msgid "gimp didn't return an execution status, fatal error"
 #~ msgstr "gimp non riesce a portare a termine l'operazione, errore fatale"

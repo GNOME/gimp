@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-1.1.21\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-04-03 15:38-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -222,14 +222,14 @@ msgstr ""
 "Produz gerador de número aleatório do tempo atual - isso garante uma "
 "eventualidade razoável"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "MegaBytes"

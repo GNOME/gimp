@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.21\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-04-05 00:28+02:00\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -122,8 +122,8 @@ msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr ""
-"Uw afbeelding moet geëxporteerd worden, voordat het bewaard kan worden, "
-"om de volgende redenen :"
+"Uw afbeelding moet geëxporteerd worden, voordat het bewaard kan worden, om "
+"de volgende redenen :"
 
 #. the footline
 #: libgimp/gimpexport.c:420
@@ -208,9 +208,9 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Gebruik deze waarde om de willekeurige nummers te genereren als de "
-"\"Tijd\"-knop niet is ingedrukt. Hiermee kunt u een bepaalde \"random\" "
-"operatie herhalen."
+"Gebruik deze waarde om de willekeurige nummers te genereren als de \"Tijd\"-"
+"knop niet is ingedrukt. Hiermee kunt u een bepaalde \"random\" operatie "
+"herhalen."
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
@@ -224,14 +224,14 @@ msgstr ""
 "Gebruik de tijd om willekeurige waarden te genereren - dit garandeert een "
 "aanvaardbaar resultaat"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Bytes"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "Megabytes"

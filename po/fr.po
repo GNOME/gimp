@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2001-06-26 11:46+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-06-26 11:46+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
@@ -122,7 +122,7 @@ msgstr "Quitter"
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:310 app/gimphelp.c:197 app/gimpprogress.c:120
-#: app/global_edit.c:779 app/gradient.c:1884 app/gradient.c:4944
+#: app/global_edit.c:791 app/gradient.c:1884 app/gradient.c:4944
 #: app/gradient.c:5505 app/hue_saturation.c:383 app/interface.c:1047
 #: app/layers_dialog.c:3561 app/layers_dialog.c:3745 app/layers_dialog.c:3840
 #: app/layers_dialog.c:4101 app/levels.c:350 app/palette.c:1825
@@ -381,7 +381,7 @@ msgstr "Nouveau"
 msgid "Edit"
 msgstr "Édition"
 
-#: app/brush_select.c:485 app/global_edit.c:777 app/gradient.c:1884
+#: app/brush_select.c:485 app/global_edit.c:789 app/gradient.c:1884
 #: app/palette.c:1188 app/palette.c:1825 app/palette.c:2237
 msgid "Delete"
 msgstr "Supprimer"
@@ -1052,8 +1052,8 @@ msgstr "La désaturation n'opère que sur les images RVB."
 msgid "Device Status"
 msgstr "État du périphérique"
 
-#: app/disp_callbacks.c:845 app/global_edit.c:304 app/global_edit.c:310
-#: app/global_edit.c:382
+#: app/disp_callbacks.c:845 app/global_edit.c:305 app/global_edit.c:311
+#: app/global_edit.c:394
 msgid "Pasted Layer"
 msgstr "Calque Copié"
 
@@ -1818,35 +1818,35 @@ msgstr "picas"
 msgid "percent"
 msgstr "pourcent"
 
-#: app/global_edit.c:755
+#: app/global_edit.c:767
 msgid "Paste"
 msgstr "Coller"
 
-#: app/global_edit.c:756
+#: app/global_edit.c:768
 msgid "Paste Into"
 msgstr "Coller dans"
 
-#: app/global_edit.c:757
+#: app/global_edit.c:769
 msgid "Paste as New"
 msgstr "Coller dans un nouveau"
 
-#: app/global_edit.c:771
+#: app/global_edit.c:783
 msgid "Paste Named Buffer"
 msgstr "Coller un tampon nommé"
 
-#: app/global_edit.c:789
+#: app/global_edit.c:801
 msgid "Select a buffer to paste:"
 msgstr "Sélectionnez un tampon à coller :"
 
-#: app/global_edit.c:870
+#: app/global_edit.c:882
 msgid "Cut Named"
 msgstr "Couper (nommé)"
 
-#: app/global_edit.c:873 app/global_edit.c:905
+#: app/global_edit.c:885 app/global_edit.c:917
 msgid "Enter a name for this buffer"
 msgstr "Saisissez un nom pour ce tampon"
 
-#: app/global_edit.c:902
+#: app/global_edit.c:914
 msgid "Copy Named"
 msgstr "Copier (nommé)"
 
@@ -2272,7 +2272,7 @@ msgstr "Luminosité :"
 msgid "Saturation:"
 msgstr "Saturation :"
 
-#: app/image_cmds.c:3463
+#: app/image_cmds.c:3459
 msgid ""
 "Image resolution is out of bounds,\n"
 "using the default resolution instead."

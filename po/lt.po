@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2\n"
-"POT-Creation-Date: 2001-07-02 14:12+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-19 22:38+0200\n"
 "Last-Translator: Mantas Kriauèiûnas <mantelis@centras.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -2814,7 +2814,9 @@ msgstr "Sumaþinti"
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "\nNeteisinga parinktis.\n"
+msgstr ""
+"\n"
+"Neteisinga parinktis.\n"
 
 #: app/main.c:305
 msgid "GIMP version"
@@ -6058,8 +6060,8 @@ msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
 msgstr ""
-"Kad rodyti natûralaus·dydþio paveikslëlius, GIMP turi þinoti jûsø monitoriaus "
-"skiriamà gebà."
+"Kad rodyti natûralaus·dydþio paveikslëlius, GIMP turi þinoti jûsø "
+"monitoriaus skiriamà gebà."
 
 #: app/user_install.c:881
 msgid "Aborting Installation..."
@@ -6136,8 +6138,8 @@ msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP gali gauti ðià informacijà ið grafinës aplinkos (langø "
-"sistemos).\nDeja, daþniausiai tai neduoda naudingø reikðmiø."
+"GIMP gali gauti ðià informacijà ið grafinës aplinkos (langø sistemos).\n"
+"Deja, daþniausiai tai neduoda naudingø reikðmiø."
 
 #: app/user_install.c:1178
 #, c-format
@@ -6196,4 +6198,3 @@ msgstr ""
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Spalvø istorija"
-

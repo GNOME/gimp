@@ -1,5 +1,9 @@
 2001-07-26  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.2.2 release.
+
+2001-07-26  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added zh_TW.Big5 to ALL_LINGUAS (traditional chinese).
 
 2001-07-25  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>

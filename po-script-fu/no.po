@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2001-05-22 13:03+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-05-22 13:12+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -1429,6 +1429,10 @@ msgstr "Rutenett Y"
 msgid "Height"
 msgstr "Høyde"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1631,6 +1635,10 @@ msgstr "Antall Y-fliser"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Antall"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1846,6 +1854,11 @@ msgstr "Skala X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Skala Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Skyggedybde"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

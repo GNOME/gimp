@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.16\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: dom feb  6 16:47:39 CET 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -10,8 +10,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Date: dom feb  6 16:47:39 CET 2000\n"
 "From: Daniele Medri <madrid@linux.it>\n"
-"Xgettext-Options: --default-domain=gimp --directory=.. --add-comments "
-"--keyword=_ --keyword=N_ --files-from=./POTFILES.in\n"
+"Xgettext-Options: --default-domain=gimp --directory=.. --add-comments --"
+"keyword=_ --keyword=N_ --files-from=./POTFILES.in\n"
 "Files: app/about_dialog.c app/main.c app/menus.c app/regex.c\n"
 
 #: libgimp/gimpcolorbutton.c:121
@@ -225,15 +225,15 @@ msgstr ""
 "Generazione del seme di casualità dall'ora corrente - questo garantisceuna "
 "casualità ragionevole"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "KByte"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "MByte"
 

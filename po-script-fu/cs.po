@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.1\n"
-"POT-Creation-Date: 2001-02-17 17:44+0100\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-02-17 19:20+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -1437,6 +1437,10 @@ msgstr "Y møí¾"
 msgid "Height"
 msgstr "Vý¹ka"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1639,6 +1643,10 @@ msgstr "Y poèet dla¾dic"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Poèet"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1854,6 +1862,11 @@ msgstr "Zvìt¹ení X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Zvìt¹ení Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Hloubka stínu"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

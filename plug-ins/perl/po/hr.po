@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.29\n"
-"POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
+"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
 "PO-Revision-Date: 2000-11-04 11:12 +100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -38,7 +38,7 @@ msgstr ""
 "           -i | --interact            daj da prvo korisnik sredi postavke\n"
 "       script-argumenti su\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -55,10 +55,10 @@ msgstr ""
 "           -h | -help | --help | -?   prika¾i pomoæ\n"
 "           -v | --verbose             prika¾i vi¹e o tome ¹to radi¹\n"
 "           --host|--tcp HOST[:PORT]   spoji se na HOST (opcija PORT)\n"
-"                                      (za vi¹e informacija, vidi "
-"Gimp::Net(3))\n"
+"                                      (za vi¹e informacija, vidi Gimp::Net"
+"(3))\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ nije valjan tag za paket $pkg"
 
@@ -72,8 +72,8 @@ msgstr "$_: neispravna/nepoznata opcija spremanja datoteke"
 
 #: Gimp/Fu.pm:0
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
 msgstr ""
 "$function: argument '$p->[1]' sadr¾i krive karaktere, samo 0-9, a-z su "
 "dozvoljeni"
@@ -83,7 +83,7 @@ msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 "$function: argument/povrat. vrijednost '$p->[1]' je neispravan '$p->[0]'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -550,7 +550,7 @@ msgstr "Bumpmap"
 msgid "Cancel"
 msgstr "Odustani"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Trenutno ne mogu pozvati '$AUTOLOAD'"
 
@@ -758,7 +758,7 @@ msgstr "Ovaj modul je napravljen bez podr¹ke za PDL"
 msgid "Unable to convert a reference to type '%s'"
 msgstr "Ne mogu konvertirati referencu u tip '%s'"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "Unable to grok '%s' as colour specifier"
 
@@ -778,7 +778,7 @@ msgstr "Ne podr¾an tip argumenta $type"
 msgid "Visual Scriptor"
 msgstr "Visual Scriptor"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "WARNING"
 msgstr "POZOR"
 
@@ -947,7 +947,7 @@ msgstr "nisam na¹ao funkciju '$exe' u ovoj skripti (mora biti jedna od "
 msgid "function name contains dashes instead of underscores"
 msgstr "ime funkcije sadr¾i dash umjesto underscore"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "nisam na¹ao funkciju/makro u $class"
 
@@ -969,11 +969,11 @@ msgstr "gimp-perl-pixel functions require the PDL::Core module"
 
 #: Gimp/Lib.xs:0
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
@@ -1003,11 +1003,11 @@ msgstr "nepravilna specifikacija parazita, oèekujem referentnu vrijednost"
 msgid "illegal type for colour specification"
 msgstr "nepravilan izbor boje"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
@@ -1081,15 +1081,15 @@ msgstr "primio sam zahtjev za IZLAZ"
 msgid "register called with too many or wrong arguments\n"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr ""
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr ""
 
@@ -1177,7 +1177,7 @@ msgstr "unable to fork: $!"
 msgid "unable to grok colour specification"
 msgstr "unable to grok colour specification"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "ne mogu otvoriti $rgb_db_path"
 

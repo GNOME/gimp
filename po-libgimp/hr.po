@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2000-12-30 14:09-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-11-03:33+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -205,9 +205,8 @@ msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za "
-"sluèajnibroj.Stvoreni generator dozvoljava ponavljanje ove \"sluèajne\" "
-"operacije"
+"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za sluèajnibroj."
+"Stvoreni generator dozvoljava ponavljanje ove \"sluèajne\" operacije"
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
@@ -221,14 +220,14 @@ msgstr ""
 "Napravi generator sluèajnih brojeva iz trenutnog vremena(sat) - ovo jamèi "
 "sigurnu sluèajnost"
 
-#: libgimp/gimpwidgets.c:1041
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
 msgstr "Bajtova"
 
-#: libgimp/gimpwidgets.c:1042
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
 msgstr "Kilobajta"
 
-#: libgimp/gimpwidgets.c:1043
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
 msgstr "Megabajta"

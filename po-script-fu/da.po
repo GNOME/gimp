@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-12-09 23:41+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -1433,6 +1433,10 @@ msgstr "Gitterlinier Y"
 msgid "Height"
 msgstr "Højde"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1635,6 +1639,10 @@ msgstr "Antal Y-kakler"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Nummer"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1850,6 +1858,11 @@ msgstr "Skalering X"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Skalering Y"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Skyggers dybde"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2001-07-19 15:16+0200\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-07-20 09:46+0300\n"
 "Last-Translator: Alper Ersoy <aersoy@tfz.net>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -1996,8 +1996,8 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Týklama: seç    Shift+týklama: seçimi geniþlet    Sürükleme: taþý    "
-"Shift+sürükle: taþý & sýkýþtýr"
+"Týklama: seç    Shift+týklama: seçimi geniþlet    Sürükleme: taþý    Shift"
+"+sürükle: taþý & sýkýþtýr"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
@@ -2946,7 +2946,8 @@ msgstr "  --display <display>      Belirtilen X göstericisini kullan.\n"
 
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Alternatif sistem gimprc dosyasýný kullan.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Alternatif sistem gimprc dosyasýný kullan.\n"
 
 #: app/main.c:328
 msgid ""
@@ -5019,8 +5020,8 @@ msgid ""
 "options."
 msgstr ""
 "\n"
-"Eðer ölçeklenebilir yazýtipleriniz yoksa, alet özelliklerinden "
-"örtüþme-önleyiciyi kapatýn."
+"Eðer ölçeklenebilir yazýtipleriniz yoksa, alet özelliklerinden örtüþme-"
+"önleyiciyi kapatýn."
 
 #: app/text_tool.c:751
 msgid "Text Layer"
@@ -5798,7 +5799,8 @@ msgstr "GIMP bu kullanýcý için düzgün olarak kurulmamýþ\n"
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
-msgstr "Kullanýcý kurulumu geçildi çünkü '--nointerface' argümaný kullanýlmýþ\n"
+msgstr ""
+"Kullanýcý kurulumu geçildi çünkü '--nointerface' argümaný kullanýlmýþ\n"
 
 #: app/user_install.c:106
 msgid ""
@@ -6266,8 +6268,8 @@ msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
 msgstr ""
-"GIMP bu bilgiyi pencereleme sisteminden alabilir. Fakat, bu "
-"genellikle\nkullanýlabilir deðerler vermez."
+"GIMP bu bilgiyi pencereleme sisteminden alabilir. Fakat, bu genellikle\n"
+"kullanýlabilir deðerler vermez."
 
 #: app/user_install.c:1178
 #, c-format
@@ -6328,4 +6330,3 @@ msgstr "Suluboya"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Renk Geçmiþi"
-

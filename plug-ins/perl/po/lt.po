@@ -6,13 +6,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl VERSION\n"
-"POT-Creation-Date: Tue Jun 26 17:51:02 2001\n"
+"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: ENCODING\n"
+
 #: examples/PDB:0
 msgid " (press Tab to complete)"
 msgstr ""
@@ -40,7 +41,8 @@ msgid ""
 "           -gimp <anything>           used internally only\n"
 "           -h | -help | --help | -?   print some help\n"
 "           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
+"PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 
@@ -57,7 +59,9 @@ msgid "$_: unknown/illegal file-save option"
 msgstr ""
 
 #: Gimp/Fu.pm:0
-msgid "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed"
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
 msgstr ""
 
 #: Gimp/Fu.pm:0
@@ -65,11 +69,15 @@ msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 
 #: Gimp.pm:0
-msgid "$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n"
+msgid ""
+"$function: calling $AUTOLOAD without specifying the :auto import tag is "
+"deprecated!\n"
 msgstr ""
 
 #: Gimp/Fu.pm:0
-msgid "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _"
+msgid ""
+"$function: function name contains unusual characters, good style is to use "
+"only 0-9, a-z and _"
 msgstr ""
 
 #: Gimp/Fu.pm:0
@@ -120,17 +128,12 @@ msgstr ""
 msgid "/Xtns/Perl"
 msgstr ""
 
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
-#: examples/povray:0
-#: examples/stamps:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
+#: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
 msgstr ""
 
-#: examples/fire:0
-#: examples/glowing_steel:0
-#: examples/innerbevel:0
+#: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0
 msgid "/Xtns/Render/Logos"
 msgstr ""
@@ -484,7 +487,9 @@ msgid "Accelerator"
 msgstr ""
 
 #: examples/sethspin:0
-msgid "An even number of frames is needed for spin back.\nAdjusted frames up to $frames"
+msgid ""
+"An even number of frames is needed for spin back.\n"
+"Adjusted frames up to $frames"
 msgstr ""
 
 #: examples/PDB:0
@@ -496,7 +501,14 @@ msgid "BG"
 msgstr ""
 
 #: UI/UI.pm:0
-msgid "BLURB:\n\n$blurb\n\nHELP:\n\n$help"
+msgid ""
+"BLURB:\n"
+"\n"
+"$blurb\n"
+"\n"
+"HELP:\n"
+"\n"
+"$help"
 msgstr ""
 
 #: examples/example-fu:0
@@ -516,7 +528,6 @@ msgid "Bumpmap"
 msgstr ""
 
 #: UI/UI.pm:0
-#: UI/UI.pm:0
 msgid "Cancel"
 msgstr ""
 
@@ -524,7 +535,6 @@ msgstr ""
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr ""
 
-#: examples/PDB:0
 #: examples/PDB:0
 msgid "Close"
 msgstr ""
@@ -562,11 +572,15 @@ msgid "Edit"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
+"string"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use strict'"
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
+"'use strict'"
 msgstr ""
 
 #: Gimp/Lib.xs:0
@@ -641,8 +655,6 @@ msgstr ""
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
 
-#: UI/UI.pm:0
-#: UI/UI.pm:0
 #: UI/UI.pm:0
 msgid "OK"
 msgstr ""
@@ -731,8 +743,7 @@ msgstr ""
 msgid "Unable to grok '%s' as colour specifier"
 msgstr ""
 
-#: examples/colorhtml:0
-#: examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr ""
 
@@ -789,7 +800,11 @@ msgid "[unfinished]\n"
 msgstr ""
 
 #: UI/UI.pm:0
-msgid "\n\nEMBEDDED POD DOCUMENTATION:\n\n"
+msgid ""
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
 msgstr ""
 
 #: Gimp/Lib.xs:0
@@ -824,9 +839,6 @@ msgstr ""
 msgid "argument incompatible with type IMAGE"
 msgstr ""
 
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
-#: Gimp/Lib.xs:0
 #: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
 msgstr ""
@@ -872,11 +884,13 @@ msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgid ""
+"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
 #: Gimp/Lib.xs:0
@@ -895,8 +909,7 @@ msgstr ""
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
 
-#: examples/colorhtml:0
-#: examples/dataurl:0
+#: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
 msgstr ""
 
@@ -929,7 +942,9 @@ msgid "gimp-perl-pixel functions require the PDL::Core module"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 and report this error"
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
 
 #: Gimp/Lib.xs:0
@@ -969,7 +984,8 @@ msgid "interface=... tag is no longer supported\n"
 msgstr ""
 
 #: Perl-Server:0
-msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgid ""
+"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
 #: UI/UI.xs:0
@@ -977,19 +993,20 @@ msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
+"PARAM_TYPE"
 msgstr ""
 
 #: Gimp/Fu.pm:0
-#: Gimp/Fu.pm:0
-msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgid ""
+"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
 msgstr ""
 
-#: Gimp/Util.pm:0
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
 msgstr ""
@@ -1019,7 +1036,8 @@ msgid "perl-arrayref required as datatype for a gimp-array"
 msgstr ""
 
 #: Gimp/Lib.xs:0
-msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgid ""
+"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
 #: Gimp/Lib.xs:0
@@ -1063,16 +1081,19 @@ msgid "server version $Gimp::VERSION started"
 msgstr ""
 
 #: Gimp/Util.pm:0
-#: Gimp/Util.pm:0
 msgid "text string is empty"
 msgstr ""
 
 #: Gimp/Fu.pm:0
-msgid "the gtk perl module is required to open a dialog\nwindow, running with default values"
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
 msgstr ""
 
 #: Gimp/Fu.pm:0
-msgid "the gtk perl module is required to run\nthis plug-in in interactive mode\n"
+msgid ""
+"the gtk perl module is required to run\n"
+"this plug-in in interactive mode\n"
 msgstr ""
 
 #: examples/PDB:0
@@ -1104,11 +1125,9 @@ msgid "unable to create '$fn': $!"
 msgstr ""
 
 #: Perl-Server:0
-#: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
 msgstr ""
 
-#: Perl-Server:0
 #: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
 msgstr ""
@@ -1156,4 +1175,3 @@ msgstr ""
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
-

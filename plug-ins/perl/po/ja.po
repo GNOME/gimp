@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
-"POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
+"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
 "PO-Revision-Date: 2000-12-03 22:52+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -38,7 +38,7 @@ msgstr ""
 "           -i | --interact            始めにユーザーに値を編集させる\n"
 "       スクリプト引数は\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
 "       gimp-arguments are\n"
@@ -57,7 +57,7 @@ msgstr ""
 "           --host|--tcp HOST[:PORT]  HOST (PORT) へ接続する\n"
 "                                     (詳しくは Gimp::Net(3) 参照)\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
 msgstr "$_ はパッケージ $pkg のインポートタグとして不正です"
 
@@ -71,23 +71,23 @@ msgstr "$_: 不明/不正なファイル保存オプションです"
 
 #: Gimp/Fu.pm:0
 msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-"
+"z and _ allowed"
 msgstr ""
-"$function: 引数名 '$p->[1]' は不正な文字を含んでいます, 0-9, a-z と _ "
-"だけが認められています"
+"$function: 引数名 '$p->[1]' は不正な文字を含んでいます, 0-9, a-z と _ だけが"
+"認められています"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr "$function: 引数/返り値 '$p->[1]' は不正な型 '$p->[0]' です"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: :auto インポートタグを指定せずに $AUTOLOAD "
-"を呼出すのは古い方法です!\n"
+"$function: :auto インポートタグを指定せずに $AUTOLOAD を呼出すのは古い方法で"
+"す!\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -558,7 +558,7 @@ msgstr "バンプマップ"
 msgid "Cancel"
 msgstr "取消"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "今回は '$AUTOLOAD' を呼び出せませんでした"
 
@@ -770,7 +770,7 @@ msgstr "このモジュールは PDL に対応せずに作られました"
 msgid "Unable to convert a reference to type '%s'"
 msgstr "'%s' の型のリファレンスとして変換できません"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
 msgstr "'%s' を特定の色として解釈できません"
 
@@ -790,7 +790,7 @@ msgstr "未対応の引数型 $type"
 msgid "Visual Scriptor"
 msgstr "ビジュアルスクリプタ"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "WARNING"
 msgstr "警告"
 
@@ -955,14 +955,14 @@ msgstr "エクスポート失敗"
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
-"ファンクション '$exe' がこのスクリプト中に見付かりません "
-"(以下のいずれかでなければなりません "
+"ファンクション '$exe' がこのスクリプト中に見付かりません (以下のいずれかでな"
+"ければなりません "
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
 msgstr "ファンクション名がアンダースコアではなくダッシュを含んでいます"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
 msgstr "ファンクション/マクロ \"$name\" が $class 中に見付かりません"
 
@@ -984,11 +984,11 @@ msgstr "gimp-perl-pixel 機能には PDL:Core モジュールが必要です"
 
 #: Gimp/Lib.xs:0
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-"
+"1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register は 1, 2 または 3 つの引数しか対応していません, "
-"gimp-1.1 にアップグレードしてからこのエラーを報告して下さい"
+"gimp_pixel_rgns_register は 1, 2 または 3 つの引数しか対応していません, gimp-"
+"1.1 にアップグレードしてからこのエラーを報告して下さい"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
@@ -1018,11 +1018,11 @@ msgstr "不正なパラサイト指定です, 参照が期待されます"
 msgid "illegal type for colour specification"
 msgstr "色指定は不正な型です"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
 msgstr "インターフェイス '$interface_type' はサポートされていません"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
 msgstr "interface=... タグはもはやサポートされていません\n"
 
@@ -1047,8 +1047,8 @@ msgstr ""
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"メニューパスは <Image>, <Toolbox>, <Load>, <Save> または <None> "
-"のいずれかで始まらなければなりません."
+"メニューパスは <Image>, <Toolbox>, <Load>, <Save> または <None> のいずれかで"
+"始まらなければなりません."
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
@@ -1087,8 +1087,8 @@ msgstr "perl-arrayref は gimp-array のために datatype として必要です"
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"ピクセルサイズが合いません, pdl は %d チャンネルのピクセルを持っていますが "
-"%d チャンネルが必要です"
+"ピクセルサイズが合いません, pdl は %d チャンネルのピクセルを持っていますが %"
+"d チャンネルが必要です"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
@@ -1102,23 +1102,23 @@ msgstr "QUIT 要求を受け取りました"
 msgid "register called with too many or wrong arguments\n"
 msgstr "register が多すぎるか間違った引数で呼び出されました\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'net' not found\n"
 msgstr "必要なコールバック 'net' が見付かりません\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'query' not found\n"
 msgstr "必要なコールバック 'query' が見付かりません\n"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "required callback 'run' not found\n"
 msgstr "必要なコールバック 'run' が見付かりません\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
-"run_mode は INTERACTIVE, NONINTERACTIVE もしくは RUN_WITH_LAST_VALS "
-"のいずれかでなければなりません\n"
+"run_mode は INTERACTIVE, NONINTERACTIVE もしくは RUN_WITH_LAST_VALS のいずれ"
+"かでなければなりません\n"
 
 #: Perl-Server:0
 msgid "server going down..."
@@ -1200,7 +1200,7 @@ msgstr "fork できません: $!"
 msgid "unable to grok colour specification"
 msgstr "色指定を理解できません"
 
-#: Gimp.pm:0 blib/lib/Gimp.pm:0
+#: Gimp.pm:0
 msgid "unable to open $rgb_db_path"
 msgstr "$rgb_db_path を開けません"
 

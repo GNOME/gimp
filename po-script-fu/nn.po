@@ -2,11 +2,10 @@
 # Copyright (C) 2000 Gaute Hvoslef Kvalnes.
 # Gaute Hvoslef Kvalnes <ai98ghk@stud.hib.no>, 2000.
 # Kjartan Maraas <kmaraas@gnome.org>, 2001.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.1\n"
-"POT-Creation-Date: 2001-01-30 12:44+0100\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian (Nynorsk)\n"
@@ -1532,6 +1531,10 @@ msgstr "Rutenett"
 msgid "Height"
 msgstr "Høgd"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #, fuzzy
@@ -1770,6 +1773,10 @@ msgstr "Tal på røyr"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "Nummer"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 #, fuzzy
@@ -2021,6 +2028,11 @@ msgstr "Skaler"
 #, fuzzy
 msgid "Scale Y"
 msgstr "Skaler"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Skugge"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 #, fuzzy
@@ -2393,4 +2405,3 @@ msgstr "Breidd"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr ""
-

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.23\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-06-20 15:39+0000\n"
 "Last-Translator: Piers Cornwell <piers.cornwell@usa.net>\n"
 "Language-Team: English, British\n"
@@ -1424,6 +1424,10 @@ msgstr ""
 msgid "Height"
 msgstr ""
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1625,6 +1629,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
@@ -1840,6 +1848,10 @@ msgstr ""
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/land.scm:0
+msgid "Sea Depth"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/lava.scm:0

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.21\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2001-05-21 00:00+2\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -184,13 +184,13 @@ msgstr "Alle beschikbare scripts opnieuw inlezen"
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Toolbox>/Xtns/Script-Fu/Vernieuwen"
 
-#: plug-ins/script-fu/scripts/copy-visible.scm:0
 # What does this function do?
+#: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
 msgstr "<Image>/Bewerken/Zichtbare kopiëren"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
 # What is the correct translation of the verb 'tile'?
+#: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "<Image>/Filters/Blur/Tileable Blur..."
 msgstr "<Image>/Filters/Vervagen/Tegelbaar vervagen..."
 
@@ -202,8 +202,8 @@ msgstr "<Image>/Script-Fu/Alchemie/Stoftekstuur..."
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
 msgstr "<Image>/Script-Fu/Alchemie/Wis elke andere rij..."
 
-#: plug-ins/script-fu/scripts/predator.scm:0
 # Named after the movie Predator
+#: plug-ins/script-fu/scripts/predator.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Predator..."
 msgstr "<Image>/Script-Fu/Alchemie/Predator..."
 
@@ -214,10 +214,6 @@ msgstr "<Image>/Script-Fu/Alchemie/Onscherp maskeren"
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
 msgstr "<Image>/Script-Fu/Alchemie/Weven..."
-
-#: plug-ins/script-fu/scripts/warp-sharp.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Warp Sharp..."
-msgstr "<Image>/Script-Fu/Alchemie/Verscherpen door vervorming..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -263,8 +259,8 @@ msgstr "<Image>/Script-Fu/Alpha naar Logo/Chroom..."
 msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
 msgstr "<Image>/Script-Fu/Alpha naar Logo/Stripboek..."
 
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 # What does 'cool' mean here?
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
 msgstr "<Image>/Script-Fu/Alpha naar Logo/Cool metaal..."
 
@@ -288,8 +284,8 @@ msgstr "<Image>/Script-Fu/Alpha naar Logo/Verloop Afschuinen..."
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
 msgstr "<Image>/Script-Fu/Alpha naar Logo/Neon..."
 
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 # What does 'particle trace' refer to?
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
 msgstr "<Image>/Script-Fu/Alpha naar Logo/Deeltjesspoor..."
 
@@ -1437,6 +1433,10 @@ msgstr ""
 msgid "Height"
 msgstr "Hoogte"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1638,6 +1638,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
@@ -1854,6 +1858,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr ""
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "Diepte"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
@@ -2182,3 +2191,6 @@ msgstr "Breedte"
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
 msgstr "Werk op kopie"
+
+#~ msgid "<Image>/Script-Fu/Alchemy/Warp Sharp..."
+#~ msgstr "<Image>/Script-Fu/Alchemie/Verscherpen door vervorming..."

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2001-01-05 17:11-0800\n"
+"POT-Creation-Date: 2001-07-26 14:09+0200\n"
 "PO-Revision-Date: 2000-12-07 00:14+09:00\n"
 "Last-Translator: Çòºê ÂÙ¹° <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -1433,6 +1433,10 @@ msgstr "³Ê»Ò Y"
 msgid "Height"
 msgstr "¹â¤µ"
 
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Hexagons"
+msgstr ""
+
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Highlight Balance"
@@ -1635,6 +1639,10 @@ msgstr "Y ¥¿¥¤¥ë¤Î¿ô"
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Number"
 msgstr "¿ô"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm:0
+msgid "Octagons"
+msgstr ""
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Odd"
@@ -1850,6 +1858,11 @@ msgstr "X ³ÈÂç½Ì¾®"
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Scale Y"
 msgstr "Y ³ÈÂç½Ì¾®"
+
+#: plug-ins/script-fu/scripts/land.scm:0
+#, fuzzy
+msgid "Sea Depth"
+msgstr "±Æ¤Î¿¼¤µ"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
