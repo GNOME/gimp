@@ -59,6 +59,7 @@
 #include "gimpgradient-load.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
+#include "gimpinterpreterdb.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimppalette.h"
@@ -230,6 +231,7 @@ gimp_init (Gimp *gimp)
 
   gimp_modules_init (gimp);
 
+  gimp->interpreter_db      = gimp_interpreter_db_new ();
   gimp->environ_table       = gimp_environ_table_new ();
 
   gimp->plug_in_debug       = NULL;
@@ -430,6 +432,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (gimp->environ_table);
       gimp->environ_table = NULL;
+    }
+
+  if (gimp->interpreter_db)
+    {
+      g_object_unref (gimp->interpreter_db);
+      gimp->interpreter_db = NULL;
     }
 
   if (gimp->module_db)
@@ -634,6 +642,12 @@ gimp_real_initialize (Gimp               *gimp,
   /*  register all internal procedures  */
   (* status_callback) (_("Procedural Database"), NULL, -1);
   procedural_db_init_procs (gimp, status_callback);
+
+  (* status_callback) (_("Plug-In Interpreters"), "", -1);
+
+  path = gimp_config_path_expand (gimp->config->interpreter_path, TRUE, NULL);
+  gimp_interpreter_db_load (gimp->interpreter_db, path);
+  g_free (path);
 
   (* status_callback) (_("Plug-In Environment"), "", -1);
 

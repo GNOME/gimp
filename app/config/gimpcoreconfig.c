@@ -73,6 +73,7 @@ enum
   PROP_INTERPOLATION_TYPE,
   PROP_PLUG_IN_PATH,
   PROP_MODULE_PATH,
+  PROP_INTERPRETER_PATH,
   PROP_ENVIRON_PATH,
   PROP_BRUSH_PATH,
   PROP_BRUSH_PATH_WRITABLE,
@@ -168,6 +169,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  "module-path", MODULE_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_plug_in_path ("modules"),
+                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_INTERPRETER_PATH,
+                                 "interpreter-path", INTERPRETER_PATH_BLURB,
+				 GIMP_CONFIG_PATH_DIR_LIST,
+                                 gimp_config_build_plug_in_path ("interpreters"),
                                  GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
                                  "environ-path", ENVIRON_PATH_BLURB,
@@ -357,6 +363,7 @@ gimp_core_config_finalize (GObject *object)
 
   g_free (core_config->plug_in_path);
   g_free (core_config->module_path);
+  g_free (core_config->interpreter_path);
   g_free (core_config->environ_path);
   g_free (core_config->brush_path);
   g_free (core_config->brush_path_writable);
@@ -407,6 +414,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_MODULE_PATH:
       g_free (core_config->module_path);
       core_config->module_path = g_value_dup_string (value);
+      break;
+    case PROP_INTERPRETER_PATH:
+      g_free (core_config->interpreter_path);
+      core_config->interpreter_path = g_value_dup_string (value);
       break;
     case PROP_ENVIRON_PATH:
       g_free (core_config->environ_path);
@@ -558,6 +569,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_MODULE_PATH:
       g_value_set_string (value, core_config->module_path);
+      break;
+    case PROP_INTERPRETER_PATH:
+      g_value_set_string (value, core_config->interpreter_path);
       break;
     case PROP_ENVIRON_PATH:
       g_value_set_string (value, core_config->environ_path);

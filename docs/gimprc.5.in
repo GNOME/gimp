@@ -61,14 +61,14 @@ GIMP opts for speed over memory.  However, if memory is a big issue, try to
 enable this setting.  Possible values are yes and no.
 
 .TP
-(num-processors 1)
+(num-processors 2)
 
 On multiprocessor machines, if GIMP has been compiled with --enable-mp this
 sets how many processors GIMP should use simultaneously.  This is an integer
 value.
 
 .TP
-(tile-cache-size 128M)
+(tile-cache-size 256M)
 
 The tile cache is used to make sure the GIMP doesn't thrash tiles between
 memory and disk. Setting this value higher will cause the GIMP to use less
@@ -83,7 +83,7 @@ kilobytes.
 (interpolation-type linear)
 
 Sets the level of interpolation used for scaling and other transformations. 
-Possible values are none, linear and cubic.
+Possible values are none, linear, cubic and lanczos.
 
 .TP
 (plug-in-path "${gimp_dir}/plug-ins:${gimp_plug_in_dir}/plug-ins")
@@ -96,6 +96,12 @@ search.
 
 Sets the module search path.  This is a colon-separated list of folders to
 search.
+
+.TP
+(interpreter-path "${gimp_dir}/interpreters:${gimp_plug_in_dir}/interpreters")
+
+Sets the interpreter search path.  This is a colon-separated list of folders
+to search.
 
 .TP
 (environ-path "${gimp_dir}/environ:${gimp_plug_in_dir}/environ")
@@ -219,8 +225,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 420)
-    (height 300)
+    (width 377)
+    (height 233)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
@@ -236,8 +242,8 @@ Sets the default image in the "File/New" dialog.  This is a parameter list.
     (style intersections)
     (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
     (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-    (xspacing 10.000000)
-    (yspacing 10.000000)
+    (xspacing 32.000000)
+    (yspacing 32.000000)
     (spacing-unit inches)
     (xoffset 0.000000)
     (yoffset 0.000000)
@@ -314,6 +320,14 @@ Possible values are yes and no.
 
 Generally only a concern for 8-bit displays, this sets the minimum number of
 system colors allocated for the GIMP.  This is an integer value.
+
+.TP
+(color-management
+    (mode display)
+    (display-rendering-intent perceptual)
+    (simulation-rendering-intent perceptual))
+
+Defines the color management behavior.  This is a parameter list.
 
 .TP
 (transparency-size medium-checks)

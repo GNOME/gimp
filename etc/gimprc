@@ -39,7 +39,7 @@
 # sets how many processors GIMP should use simultaneously.  This is an
 # integer value.
 # 
-# (num-processors 1)
+# (num-processors 2)
 
 # The tile cache is used to make sure the GIMP doesn't thrash tiles between
 # memory and disk. Setting this value higher will cause the GIMP to use less
@@ -50,10 +50,10 @@
 # or gigabytes. If no suffix is specified the size defaults to being
 # specified in kilobytes.
 # 
-# (tile-cache-size 128M)
+# (tile-cache-size 256M)
 
 # Sets the level of interpolation used for scaling and other transformations.
-#  Possible values are none, linear and cubic.
+#  Possible values are none, linear, cubic and lanczos.
 # 
 # (interpolation-type linear)
 
@@ -66,6 +66,11 @@
 # search.
 # 
 # (module-path "${gimp_dir}/modules:${gimp_plug_in_dir}/modules")
+
+# Sets the interpreter search path.  This is a colon-separated list of
+# folders to search.
+# 
+# (interpreter-path "${gimp_dir}/interpreters:${gimp_plug_in_dir}/interpreters")
 
 # Sets the environ search path.  This is a colon-separated list of folders to
 # search.
@@ -170,8 +175,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 420)
-#     (height 300)
+#     (width 377)
+#     (height 233)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -186,8 +191,8 @@
 #     (style intersections)
 #     (fgcolor (color-rgba 0.000000 0.000000 0.000000 1.000000))
 #     (bgcolor (color-rgba 1.000000 1.000000 1.000000 1.000000))
-#     (xspacing 10.000000)
-#     (yspacing 10.000000)
+#     (xspacing 32.000000)
+#     (yspacing 32.000000)
 #     (spacing-unit inches)
 #     (xoffset 0.000000)
 #     (yoffset 0.000000)
@@ -253,6 +258,13 @@
 # of system colors allocated for the GIMP.  This is an integer value.
 # 
 # (min-colors 144)
+
+# Defines the color management behavior.  This is a parameter list.
+# 
+# (color-management
+#     (mode display)
+#     (display-rendering-intent perceptual)
+#     (simulation-rendering-intent perceptual))
 
 # Sets the size of the checkerboard used to display transparency.  Possible
 # values are small-checks, medium-checks and large-checks.

@@ -81,6 +81,7 @@ struct _Gimp
   PlugInProcDef          *last_plug_in;
 
   PlugInShm              *plug_in_shm;
+  GimpInterpreterDB      *interpreter_db;
   GimpEnvironTable       *environ_table;
   GimpPlugInDebug        *plug_in_debug;
 

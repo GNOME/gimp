@@ -399,6 +399,7 @@
 #define GIMP_HELP_PREFS_FOLDERS_PLUG_INS          "gimp-prefs-folders-plug-ins"
 #define GIMP_HELP_PREFS_FOLDERS_SCRIPTS           "gimp-prefs-folders-scripts"
 #define GIMP_HELP_PREFS_FOLDERS_MODULES           "gimp-prefs-folders-modules"
+#define GIMP_HELP_PREFS_FOLDERS_INTERPRETERS      "gimp-prefs-folders-interpreters"
 #define GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT       "gimp-prefs-folders-environment"
 #define GIMP_HELP_PREFS_FOLDERS_THEMES            "gimp-prefs-folders-themes"
 

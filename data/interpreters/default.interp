@@ -1,0 +1,15 @@
+# Example entries in files like these
+
+# This registers an interpreter name with a binary
+# It is matched against #! syntax and the binfmt_misc syntax
+#scm=/path/to/scm
+
+# The following is the same syntax as Linux binfmt_misc
+# See Documentation/binfmt_misc.txt in the Linux kernel sources for
+# detailed information. (Right now, "flags" are noops)
+
+# Register an extension
+#:Scheme-ext:E::scm::/path/to/scm:
+
+# Register a magic
+#:Scheme-magic:M::\x3b\x20GIMP Scheme::scm:

@@ -43,6 +43,7 @@ struct _GimpCoreConfig
   GimpInterpolationType  interpolation_type;
   gchar                 *plug_in_path;
   gchar                 *module_path;
+  gchar                 *interpreter_path;
   gchar                 *environ_path;
   gchar                 *brush_path;
   gchar                 *brush_path_writable;

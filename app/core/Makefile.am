@@ -158,6 +158,8 @@ libappcore_a_sources = \
 	gimpimagefile.h			\
 	gimpimagemap.c			\
 	gimpimagemap.h			\
+	gimpinterpreterdb.c		\
+	gimpinterpreterdb.h		\
 	gimpitem.c			\
 	gimpitem.h			\
 	gimpitem-linked.c		\

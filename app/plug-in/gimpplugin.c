@@ -73,6 +73,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpenvirontable.h"
+#include "core/gimpinterpreterdb.h"
 #include "core/gimpprogress.h"
 
 #include "plug-in.h"
@@ -337,7 +338,9 @@ plug_in_open (PlugIn *plug_in)
   gint       my_read[2];
   gint       my_write[2];
   gchar    **envp;
-  gchar     *args[7], **argv, **debug_argv;
+  gchar     *args[9], **argv, **debug_argv;
+  gint       argc;
+  gchar     *interp, *interp_arg;
   gchar     *read_fd, *write_fd;
   gchar     *mode, *stm;
   GError    *error = NULL;
@@ -417,13 +420,23 @@ plug_in_open (PlugIn *plug_in)
 
   stm = g_strdup_printf ("%d", plug_in->gimp->stack_trace_mode);
 
-  args[0] = plug_in->prog;
-  args[1] = "-gimp";
-  args[2] = read_fd;
-  args[3] = write_fd;
-  args[4] = mode;
-  args[5] = stm;
-  args[6] = NULL;
+  interp = gimp_interpreter_db_resolve (plug_in->gimp->interpreter_db,
+                                        plug_in->prog, &interp_arg);
+
+  argc = 0;
+
+  if (interp)
+    args[argc++] = interp;
+  if (interp_arg)
+    args[argc++] = interp_arg;
+
+  args[argc++] = plug_in->prog;
+  args[argc++] = "-gimp";
+  args[argc++] = read_fd;
+  args[argc++] = write_fd;
+  args[argc++] = mode;
+  args[argc++] = stm;
+  args[argc++] = NULL;
 
   argv = args;
   envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
@@ -496,6 +509,9 @@ cleanup:
   g_free (read_fd);
   g_free (write_fd);
   g_free (stm);
+
+  g_free (interp);
+  g_free (interp_arg);
 
   return plug_in->open;
 }

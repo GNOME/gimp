@@ -1647,6 +1647,7 @@ themes/Default/images/Makefile
 themes/Default/images/preferences/Makefile
 themes/Small/Makefile
 data/Makefile
+data/interpreters/Makefile
 data/environ/Makefile
 data/misc/Makefile
 data/misc/gimp.desktop.in

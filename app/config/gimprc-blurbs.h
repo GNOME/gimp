@@ -173,6 +173,9 @@ N_("Install a private colormap; might be useful on 8-bit (256 colors) displays."
 N_("Sets the level of interpolation used for scaling and other " \
    "transformations.")
 
+#define INTERPRETER_PATH_BLURB \
+"Sets the interpreter search path."
+
 #define LAST_OPENED_SIZE_BLURB \
 N_("How many recently opened image filenames to keep on the File menu.")
 

@@ -1,3 +1,41 @@
+2005-02-20  Manish Singh  <yosh@gimp.org>
+
+	Support for custom plug-in interpreters, independent of OS support.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpinterpreterdb.[ch]: implemented GimpInterpreterDB,
+	which handles registering and resolving custom plug-in interpreters.
+
+	* app/core/gimp.[ch]: keep a GimpInterpreterDB around.
+
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h
+	* app/dialogs/preferences-dialog.c
+	* app/dialogs/user-install-dialog.c
+	* app/widgets/gimphelp-ids.h: interpreter-path config stuff.
+
+	* app/plug-in/plug-in.c: use registered interpreters when running
+	plug-ins.
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folders-interp.png: just copied
+	folders-plug-ins.png here, need a better one.
+
+	* data/interpreters/Makefile.am: creates system interpreter directory.
+
+	* data/interpreters/default.interp: sample interpreter file info.
+
+	* data/Makefile.am
+	* configure.in: add data/interpreters directory.
+
+	* plug-ins/pygimp/Makefile.am: install pygimp.interp, which configures
+	the python interpreter to point to the python we were built with. Also
+	register the .py extension.
+
+	* etc/gimprc
+	* docs/gimprc.5.in: regenerated
+
 2005-02-20  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c: Fix layer mask support.  Addresses bug

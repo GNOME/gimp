@@ -244,6 +244,16 @@ tree_items[] =
     TREE_ITEM_MKDIR
   },
   {
+    TRUE, "interpreters",
+    N_("This folder is used to store configuration for user "
+       "created, temporary, or otherwise non-system-supported "
+       "plug-in interpreters.  The GIMP checks this folder in "
+       "addition to the system-wide GIMP interpreters folder "
+       "when searching for plug-in interpreter configuration "
+       "files."),
+    TREE_ITEM_MKDIR
+  },
+  {
     TRUE, "environ",
     N_("This folder is used to store user created, temporary, "
        "or otherwise non-system-supported additions to the "
