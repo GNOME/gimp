@@ -472,18 +472,18 @@ dump_params (int nparams, GimpParam *args, GimpParamDef *params)
 	  case GIMP_PDB_INT8:		trace_printf ("%d", (guint8) args[i].data.d_int8); break;
 	  case GIMP_PDB_FLOAT:		trace_printf ("%f", args[i].data.d_float); break;
           case GIMP_PDB_STRING:		trace_printf ("\"%s\"", args[i].data.d_string ? args[i].data.d_string : "[null]"); break;
-	  case GIMP_PDB_DISPLAY:		trace_printf ("%d", args[i].data.d_display); break;
+	  case GIMP_PDB_DISPLAY:	trace_printf ("%d", args[i].data.d_display); break;
 	  case GIMP_PDB_IMAGE:		trace_printf ("%d", args[i].data.d_image); break;
 	  case GIMP_PDB_LAYER:		trace_printf ("%d", args[i].data.d_layer); break;
-	  case GIMP_PDB_CHANNEL:		trace_printf ("%d", args[i].data.d_channel); break;
-	  case GIMP_PDB_DRAWABLE:		trace_printf ("%d", args[i].data.d_drawable); break;
-	  case GIMP_PDB_SELECTION:		trace_printf ("%d", args[i].data.d_selection); break;
-	  case GIMP_PDB_BOUNDARY:		trace_printf ("%d", args[i].data.d_boundary); break;
+	  case GIMP_PDB_CHANNEL:	trace_printf ("%d", args[i].data.d_channel); break;
+	  case GIMP_PDB_DRAWABLE:	trace_printf ("%d", args[i].data.d_drawable); break;
+	  case GIMP_PDB_SELECTION:	trace_printf ("%d", args[i].data.d_selection); break;
+	  case GIMP_PDB_BOUNDARY:	trace_printf ("%d", args[i].data.d_boundary); break;
 	  case GIMP_PDB_PATH:		trace_printf ("%d", args[i].data.d_path); break;
 	  case GIMP_PDB_STATUS:		trace_printf ("%d", args[i].data.d_status); break;
 	  case GIMP_PDB_INT32ARRAY:	dump_printarray (args, i, gint32, d_int32array, "%d"); break;
 	  case GIMP_PDB_INT16ARRAY:	dump_printarray (args, i, gint16, d_int16array, "%d"); break;
-	  case GIMP_PDB_INT8ARRAY:		dump_printarray (args, i, guint8, d_int8array , "%d"); break;
+	  case GIMP_PDB_INT8ARRAY:	dump_printarray (args, i, guint8, d_int8array , "%d"); break;
 	  case GIMP_PDB_FLOATARRAY:	dump_printarray (args, i, gfloat, d_floatarray, "%f"); break;
 	  case GIMP_PDB_STRINGARRAY:	dump_printarray (args, i, char* , d_stringarray, "'%s'"); break;
 	  
@@ -930,11 +930,11 @@ convert_sv2gimp (char *croak_str, GimpParam *arg, SV *sv)
   switch (arg->type)
     {
       case GIMP_PDB_INT32:		check_int (croak_str, sv);
-         			arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
+         				arg->data.d_int32	= sv2gimp_extract_noref (SvIV, "INT32");
       case GIMP_PDB_INT16:		arg->data.d_int16	= sv2gimp_extract_noref (SvIV, "INT16");
       case GIMP_PDB_INT8:		arg->data.d_int8	= sv2gimp_extract_noref (SvIV, "INT8");
       case GIMP_PDB_FLOAT:		arg->data.d_float	= sv2gimp_extract_noref (SvNV, "FLOAT");
-      case GIMP_PDB_STRING:	arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");
+      case GIMP_PDB_STRING:		arg->data.d_string	= sv2gimp_extract_noref (SvPv, "STRING");
 
       case GIMP_PDB_DISPLAY:
       case GIMP_PDB_IMAGE:	
@@ -948,14 +948,14 @@ convert_sv2gimp (char *croak_str, GimpParam *arg, SV *sv)
 
         if (SvOK(sv))
           switch (arg->type) {
-            case GIMP_PDB_DISPLAY:		arg->data.d_display	= unbless(sv, PKG_DISPLAY  , croak_str); break;
-            case GIMP_PDB_LAYER:		arg->data.d_layer	= unbless(sv, PKG_ANYABLE  , croak_str); break;
-            case GIMP_PDB_CHANNEL:		arg->data.d_channel	= unbless(sv, PKG_ANYABLE  , croak_str); break;
+            case GIMP_PDB_DISPLAY:	arg->data.d_display	= unbless(sv, PKG_DISPLAY  , croak_str); break;
+            case GIMP_PDB_LAYER:	arg->data.d_layer	= unbless(sv, PKG_ANYABLE  , croak_str); break;
+            case GIMP_PDB_CHANNEL:	arg->data.d_channel	= unbless(sv, PKG_ANYABLE  , croak_str); break;
             case GIMP_PDB_DRAWABLE:	arg->data.d_drawable	= unbless(sv, PKG_ANYABLE  , croak_str); break;
             case GIMP_PDB_SELECTION:	arg->data.d_selection	= unbless(sv, PKG_SELECTION, croak_str); break;
             case GIMP_PDB_BOUNDARY:	arg->data.d_boundary	= sv2gimp_extract_noref (SvIV, "BOUNDARY"); break;
             case GIMP_PDB_PATH:		arg->data.d_path	= sv2gimp_extract_noref (SvIV, "PATH"); break;
-            case GIMP_PDB_STATUS:		arg->data.d_status	= sv2gimp_extract_noref (SvIV, "STATUS"); break;
+            case GIMP_PDB_STATUS:	arg->data.d_status	= sv2gimp_extract_noref (SvIV, "STATUS"); break;
             case GIMP_PDB_IMAGE:
               {
                 if (sv_derived_from (sv, PKG_DRAWABLE))
@@ -979,15 +979,15 @@ convert_sv2gimp (char *croak_str, GimpParam *arg, SV *sv)
           }
         else
           switch (arg->type) {
-            case GIMP_PDB_DISPLAY:		arg->data.d_display	= -1; break;
-            case GIMP_PDB_LAYER:		arg->data.d_layer	= -1; break;
-            case GIMP_PDB_CHANNEL:		arg->data.d_channel	= -1; break;
+            case GIMP_PDB_DISPLAY:	arg->data.d_display	= -1; break;
+            case GIMP_PDB_LAYER:	arg->data.d_layer	= -1; break;
+            case GIMP_PDB_CHANNEL:	arg->data.d_channel	= -1; break;
             case GIMP_PDB_DRAWABLE:	arg->data.d_drawable	= -1; break;
             case GIMP_PDB_SELECTION:	arg->data.d_selection	= -1; break;
             case GIMP_PDB_BOUNDARY:	arg->data.d_boundary	= -1; break;
             case GIMP_PDB_PATH:		arg->data.d_path	= -1; break;
-            case GIMP_PDB_STATUS:		arg->data.d_status	= -1; break;
-            case GIMP_PDB_IMAGE:		arg->data.d_image	= -1; return 0; break;
+            case GIMP_PDB_STATUS:	arg->data.d_status	= -1; break;
+            case GIMP_PDB_IMAGE:	arg->data.d_image	= -1; return 0; break;
             default:			abort ();
           }
       	

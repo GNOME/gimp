@@ -3,7 +3,7 @@ package Gimp::basewidget; # pragma
 use Gtk;
 use Gimp;
 
-$VERSION = 1.21;
+$VERSION = 1.211;
 
 =head1 NAME
 

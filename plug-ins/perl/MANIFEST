@@ -133,13 +133,16 @@ examples/clear_alpha
 examples/warp-sharp
 examples/fade-alpha
 pxgettext
-po/ChangeLog
-po/Makefile.PL
-po/de.po
-po/it.po
-po/cs.po
-po/no.po
-po/fr.po
-po/ru.po
-po/update.sh
+
+	po files are disabled right now
+
+	po/ChangeLog
+	po/Makefile.PL
+	po/de.po
+	po/it.po
+	po/cs.po
+	po/no.po
+	po/fr.po
+	po/ru.po
+	po/update.sh
 

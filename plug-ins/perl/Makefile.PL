@@ -195,7 +195,7 @@ install :: install-po
 	$main::dont_embed || (cd embed && \$(MAKE) install)
 
 install-po:
-	cd po && \$(MAKE) install
+	if test -d po; then cd po && \$(MAKE) install; else true; fi
         
 ".$install;
 }

@@ -1,5 +1,8 @@
 Revision history for Gimp-Perl extension.
 
+1.211 Sat Dec  1 00:35:07 CET 2001
+	- callback return values were still broken. yes, I am an idiot.
+
 1.21  Fri Nov 30 23:54:20 CET 2001
 	- callback return values were broken(!).
         - fixed typo in examples/xachvision

@@ -10,7 +10,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK $AUTOLOAD %EXPORT_TAGS @EXPORT_FAIL
 use subs qw(init end lock unlock canonicalize_color);
 
 BEGIN {
-   $VERSION = 1.21;
+   $VERSION = 1.211;
    eval {
       require XSLoader;
       XSLoader::load Gimp $VERSION;
@@ -407,7 +407,7 @@ sub callback {
       die_msg __"required callback 'run' not found\n" unless @cb;
       my @res;
       for (@cb) { @res = &$_ }
-      return @res;
+      return wantarray ? @res : $res[0];
    } elsif ($type eq "-net") {
       local $in_net = 1;
       _initialized_callback;

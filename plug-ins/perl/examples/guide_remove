@@ -26,7 +26,7 @@ register "guide_remove",
          [],
          ['gimp-1.1'],
          sub {
-    my($img,$layer,$xspace, $yspace, $xoffset, $yoffset) =@_;
+    my ($img, $layer) =@_;
  
     #
     # Remove all existing guides
@@ -43,6 +43,7 @@ register "guide_remove",
     $img->selection_all();
     $img->selection_none();        
  
-    return();
+    ();
 };
+
 exit main;                                        
