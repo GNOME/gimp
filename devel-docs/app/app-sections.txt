@@ -205,6 +205,7 @@ gimp_documents_save
 <TITLE>Gimp-edit</TITLE>
 gimp_edit_cut
 gimp_edit_copy
+gimp_edit_copy_visible
 gimp_edit_paste
 gimp_edit_paste_as_new
 gimp_edit_clear
@@ -7280,6 +7281,7 @@ pattern_region
 blend_region
 shade_region
 copy_region
+copy_region_nocow
 add_alpha_region
 flatten_region
 extract_alpha_region
@@ -8262,6 +8264,7 @@ edit_redo_cmd_callback
 edit_undo_clear_cmd_callback
 edit_cut_cmd_callback
 edit_copy_cmd_callback
+edit_copy_visible_cmd_callback
 edit_paste_cmd_callback
 edit_paste_into_cmd_callback
 edit_paste_as_new_cmd_callback
