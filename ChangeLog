@@ -1,3 +1,8 @@
+2003-11-27  Dave Neary  <bolsh@gimp.org>
+
+	* autogen.sh: Return error code to controlling environment if one of 
+	the commands we run fails. Makes autogen.sh && make work.
+
 2003-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/ps.c (create_new_image): don't add the page

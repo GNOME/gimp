@@ -180,16 +180,16 @@ if test $RC -ne 0; then
    exit 1
 fi
 
-libtoolize --force
+libtoolize --force || exit 1
 
 # optionally feature autoheader
-(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader
+(autoheader --version)  < /dev/null > /dev/null 2>&1 && autoheader || exit 1
 
-$AUTOMAKE --add-missing
-autoconf
+$AUTOMAKE --add-missing || exit 1
+autoconf || exit 1
 
-glib-gettextize --copy --force
-intltoolize --copy --force --automake
+glib-gettextize --copy --force || exit 1
+intltoolize --copy --force --automake || exit 1
 
 cd $ORIGDIR
 
@@ -199,5 +199,6 @@ if $srcdir/configure --enable-maintainer-mode --enable-gtk-doc "$@"; then
 else
   echo
   echo "Configure failed or did not finish!"
+  exit 1
 fi
 
