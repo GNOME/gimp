@@ -301,8 +301,8 @@ gimp_color_frame_update (GimpColorFrame *frame)
         gimp_rgb_to_cmyk (&frame->color, 1.0, &cmyk);
 
         names[0] = _("Cyan:");
-        names[1] = _("Yellow:");
-        names[2] = _("Magenta:");
+        names[1] = _("Magenta:");
+        names[2] = _("Yellow:");
         names[3] = _("Black:");
 
         values[0] = g_strdup_printf ("%d %%", ROUND (cmyk.c * 100.0));
