@@ -5,67 +5,67 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2000-02-19 17:08+0900\n"
-"PO-Revision-Date: 2000-02-19 17:09+09:00\n"
+"POT-Creation-Date: 2000-02-29 15:50+0900\n"
+"PO-Revision-Date: 2000-02-29 15:53+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=EUC-JP\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpcolorbutton.c:115
+#: libgimp/gimpcolorbutton.c:116
 msgid "/Use Foreground Color"
 msgstr "/前景色を使用"
 
-#: libgimp/gimpcolorbutton.c:116
+#: libgimp/gimpcolorbutton.c:117
 msgid "/Use Background Color"
 msgstr "/背景色を使用"
 
-#: libgimp/gimpexport.c:155
+#: libgimp/gimpexport.c:158
 msgid "can't Handle Layers"
 msgstr "レイヤーを取り扱えません"
 
-#: libgimp/gimpexport.c:156 libgimp/gimpexport.c:165
+#: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
 msgstr "可視レイヤーの結合"
 
-#: libgimp/gimpexport.c:164
+#: libgimp/gimpexport.c:167
 msgid "can only Handle Layers as Animation Frames"
 msgstr "アニメーションフレームとしてしかレイヤーを取り扱えません"
 
-#: libgimp/gimpexport.c:165
+#: libgimp/gimpexport.c:168
 msgid "Save as Animation"
 msgstr "アニメーションとして保存"
 
-#: libgimp/gimpexport.c:173
+#: libgimp/gimpexport.c:176
 msgid "can't Handle Transparency"
 msgstr "透明情報を取り扱えません"
 
-#: libgimp/gimpexport.c:174
+#: libgimp/gimpexport.c:177
 msgid "Flatten Image"
 msgstr "画像の統合"
 
-#: libgimp/gimpexport.c:182
+#: libgimp/gimpexport.c:185
 msgid "can only Handle RGB Images"
 msgstr "RGB 画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:211 libgimp/gimpexport.c:220
+#: libgimp/gimpexport.c:186 libgimp/gimpexport.c:214 libgimp/gimpexport.c:223
 msgid "Convert to RGB"
 msgstr "RGB に変換"
 
-#: libgimp/gimpexport.c:191
+#: libgimp/gimpexport.c:194
 msgid "can only Handle Grayscale Images"
 msgstr "グレースケール画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:192 libgimp/gimpexport.c:211 libgimp/gimpexport.c:232
+#: libgimp/gimpexport.c:195 libgimp/gimpexport.c:214 libgimp/gimpexport.c:235
 msgid "Convert to Grayscale"
 msgstr "グレースケールに変換"
 
-#: libgimp/gimpexport.c:200
+#: libgimp/gimpexport.c:203
 msgid "can only Handle Indexed Images"
 msgstr "インデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:220 libgimp/gimpexport.c:230
+#: libgimp/gimpexport.c:204 libgimp/gimpexport.c:223 libgimp/gimpexport.c:233
 msgid ""
 "Convert to indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -73,23 +73,23 @@ msgstr ""
 "インデックス画像にデフォルト設定で自動変換する\n"
 "(良い結果を得たい場合には手動で行って下さい)"
 
-#: libgimp/gimpexport.c:210
+#: libgimp/gimpexport.c:213
 msgid "can only Handle RGB or Grayscale Images"
 msgstr "RGB もしくはグレースケール画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:219
+#: libgimp/gimpexport.c:222
 msgid "can only Handle RGB or Indexed Images"
 msgstr "RGB もしくはインデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:229
+#: libgimp/gimpexport.c:232
 msgid "can only Handle Grayscale or Indexed Images"
 msgstr "グレースケールもしくはインデックス画像しか取り扱えません"
 
-#: libgimp/gimpexport.c:240
+#: libgimp/gimpexport.c:243
 msgid "needs an Alpha Channel"
 msgstr "アルファチャンネルが必要です"
 
-#: libgimp/gimpexport.c:241
+#: libgimp/gimpexport.c:244
 msgid "Add Alpha Channel"
 msgstr "アルファチャンネルを追加"
 
@@ -98,49 +98,42 @@ msgstr "アルファチャンネルを追加"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:310
+#: libgimp/gimpexport.c:313
 msgid "Export File"
 msgstr "エクスポートファイル"
 
-#: libgimp/gimpexport.c:315
+#: libgimp/gimpexport.c:318
 msgid "Export"
 msgstr "エクスポート"
 
-#: libgimp/gimpexport.c:317
+#: libgimp/gimpexport.c:320
 msgid "Ignore"
 msgstr "無視"
 
-#: libgimp/gimpexport.c:319 libgimp/gimpquerybox.c:177
-#: libgimp/gimpquerybox.c:231 libgimp/gimpquerybox.c:287
-#: libgimp/gimpquerybox.c:350
+#: libgimp/gimpexport.c:322 libgimp/gimpquerybox.c:180
+#: libgimp/gimpquerybox.c:234 libgimp/gimpquerybox.c:290
+#: libgimp/gimpquerybox.c:353 libgimp/gimpunitmenu.c:497
 msgid "Cancel"
 msgstr "取消"
 
-#: libgimp/gimpexport.c:334
+#: libgimp/gimpexport.c:337
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "以下の理由のため画像のエクスポートを行う必要があります:"
 
 #. the footline
-#: libgimp/gimpexport.c:397
+#: libgimp/gimpexport.c:400
 msgid "The export conversion won't modify your original image."
 msgstr "エクスポート変換は元画像には影響を与えません."
 
-#: libgimp/gimpfileselection.c:348
+#: libgimp/gimpfileselection.c:350
 msgid "Select File"
 msgstr "ファイル選択"
 
-#: libgimp/gimpfileselection.c:360 libgimp/gimpunitmenu.c:484
-msgid "Select"
-msgstr "選択"
-
-#: libgimp/gimpfileselection.c:361 libgimp/gimpunitmenu.c:486
-msgid "Close"
-msgstr "閉じる"
-
-#: libgimp/gimpquerybox.c:177 libgimp/gimpquerybox.c:231
-#: libgimp/gimpquerybox.c:287 libgimp/gimpquerybox.c:350
+#: libgimp/gimpquerybox.c:180 libgimp/gimpquerybox.c:234
+#: libgimp/gimpquerybox.c:290 libgimp/gimpquerybox.c:353
+#: libgimp/gimpunitmenu.c:495
 msgid "OK"
 msgstr "了解"
 
@@ -195,19 +188,19 @@ msgstr "パーセント"
 msgid "More..."
 msgstr "詳細設定..."
 
-#: libgimp/gimpunitmenu.c:479
+#: libgimp/gimpunitmenu.c:490
 msgid "Unit Selection"
 msgstr "単位選択"
 
-#: libgimp/gimpunitmenu.c:516
+#: libgimp/gimpunitmenu.c:527
 msgid "Unit"
 msgstr "単位"
 
-#: libgimp/gimpunitmenu.c:517
+#: libgimp/gimpunitmenu.c:528
 msgid "Factor"
 msgstr "倍率"
 
-#: libgimp/gimpwidgets.c:695
+#: libgimp/gimpwidgets.c:704
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -215,11 +208,11 @@ msgstr ""
 "\"時間\" ボタンが押されていない場合には, この値を乱数の種として用います - "
 "そうすることで, 特定の \"乱数\" 操作を行うことができます"
 
-#: libgimp/gimpwidgets.c:700
+#: libgimp/gimpwidgets.c:709
 msgid "Time"
 msgstr "時間"
 
-#: libgimp/gimpwidgets.c:712
+#: libgimp/gimpwidgets.c:718
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"

@@ -1,126 +1,123 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# GIMP Script-Fu Japanese message catalog
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Shirasaki Yasuhiro <yasuhiro@gnome.gr.jp>, 2000
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-02-27 20:03+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: gimp 1.1.18\n"
+"POT-Creation-Date: 2000-02-29 15:50+0900\n"
+"PO-Revision-Date: 2000-02-29 16:40+09:00\n"
+"Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
+"Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:157
+#: plug-ins/script-fu/script-fu-console.c:158
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
 
-#: plug-ins/script-fu/script-fu-console.c:193
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "Script-Fu Console"
 msgstr "Script-Fu コンソール"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-console.c:205
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-console.c:206
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Close"
 msgstr "閉じる"
 
 #. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:213
+#: plug-ins/script-fu/script-fu-console.c:214
 msgid "SIOD Output"
 msgstr "SIOD 出力"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:290
+#: plug-ins/script-fu/script-fu-console.c:291
 msgid "Current Command"
 msgstr "現在実行しているコマンド"
 
-#: plug-ins/script-fu/script-fu-console.c:311
+#: plug-ins/script-fu/script-fu-console.c:312
 msgid "Browse..."
 msgstr "場所を指定..."
 
-#: plug-ins/script-fu/script-fu-console.c:574
+#: plug-ins/script-fu/script-fu-console.c:575
 msgid "Unable to open SIOD output pipe"
 msgstr "SIOD 出力パイプが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:578
+#: plug-ins/script-fu/script-fu-console.c:579
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 出力パイプ上のストリームが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:625
+#: plug-ins/script-fu/script-fu-console.c:626
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
-#. strip the first part of the menupath if it says _("Script-Fu")
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1207
 #: plug-ins/script-fu/script-fu-scripts.c:1209
-#, fuzzy
 msgid "/Script-Fu/"
-msgstr "Script-Fu コンソール"
+msgstr "/Script-Fu/"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1209
 #: plug-ins/script-fu/script-fu-scripts.c:1211
-#, fuzzy, c-format
+#, c-format
 msgid "Script-Fu: %s"
-msgstr "Script-Fu コンソール"
+msgstr "Script-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1232
+#: plug-ins/script-fu/script-fu-scripts.c:1236
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1296
+#: plug-ins/script-fu/script-fu-scripts.c:1300
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1302
+#: plug-ins/script-fu/script-fu-scripts.c:1306
 msgid "Script Toggle"
 msgstr "スクリプト切替え"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1364
+#: plug-ins/script-fu/script-fu-scripts.c:1368
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1396
+#: plug-ins/script-fu/script-fu-scripts.c:1400
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1407
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1411
+#: plug-ins/script-fu/script-fu-scripts.c:1415
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
-#, fuzzy
+#: plug-ins/script-fu/script-fu-scripts.c:1440
 msgid "Reset to Defaults"
-msgstr " 初期値に戻す "
+msgstr "初期値に戻す"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1462
+#: plug-ins/script-fu/script-fu-scripts.c:1466
 msgid "About"
 msgstr "このプラグインについて"
 
 #. Action area
-#: plug-ins/script-fu/script-fu-scripts.c:1476
+#: plug-ins/script-fu/script-fu-scripts.c:1480
 #: plug-ins/script-fu/script-fu-server.c:559
 msgid "OK"
 msgstr "了解"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1485
+#: plug-ins/script-fu/script-fu-scripts.c:1489
 #: plug-ins/script-fu/script-fu-server.c:568
 msgid "Cancel"
 msgstr "取消"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1590
+#: plug-ins/script-fu/script-fu-scripts.c:1594
 msgid "NOT SET"
 msgstr "未指定"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1665
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -128,23 +125,23 @@ msgstr ""
 "少なくとも選択したフォント中に一つ以上\n"
 "不正なものがあります.設定を確認して下さい.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1928
+#: plug-ins/script-fu/script-fu-scripts.c:1932
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1934
+#: plug-ins/script-fu/script-fu-scripts.c:1938
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1940
+#: plug-ins/script-fu/script-fu-scripts.c:1944
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1952
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2097
+#: plug-ins/script-fu/script-fu-scripts.c:2101
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
 
