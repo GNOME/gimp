@@ -348,23 +348,25 @@ gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
                                      GSList         *file_procs,
                                      const gchar    *automatic)
 {
-  GtkWidget *scrolled;
+  GtkWidget *scrolled_window;
 
   dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
   gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
                                      dialog->proc_expander);
   gtk_widget_show (dialog->proc_expander);
 
-  scrolled = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled);
-  gtk_widget_show (scrolled);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
+  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
-  gtk_widget_set_size_request (scrolled, -1, 200);
+  gtk_widget_set_size_request (scrolled_window, -1, 200);
 
   dialog->proc_view = gimp_file_proc_view_new (gimp, file_procs, automatic);
-  gtk_container_add (GTK_CONTAINER (scrolled), dialog->proc_view);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), dialog->proc_view);
   gtk_widget_show (dialog->proc_view);
 
   g_signal_connect (dialog->proc_view, "changed",

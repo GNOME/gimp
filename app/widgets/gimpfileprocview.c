@@ -131,29 +131,33 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
   for (list = procedures; list; list = g_slist_next (list))
     {
-      PlugInProcDef *proc     = list->data;
-      const gchar   *domain   = plug_ins_locale_domain (gimp,
-                                                        proc->prog, NULL);
-      gchar         *label    = plug_in_proc_def_get_label (proc, domain);
-      const gchar   *stock_id = plug_in_proc_def_get_stock_id (proc);
-      GdkPixbuf     *pixbuf   = plug_in_proc_def_get_pixbuf (proc);
+      PlugInProcDef *proc = list->data;
 
-      if (label)
+      if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          gtk_list_store_append (store, &iter);
-          gtk_list_store_set (store, &iter,
-                              COLUMN_PROC,       proc,
-                              COLUMN_LABEL,      label,
-                              COLUMN_EXTENSIONS, proc->extensions,
-                              COLUMN_STOCK_ID,   stock_id,
-                              COLUMN_PIXBUF,     pixbuf,
-                              -1);
+          const gchar   *domain   = plug_ins_locale_domain (gimp,
+                                                            proc->prog, NULL);
+          gchar         *label    = plug_in_proc_def_get_label (proc, domain);
+          const gchar   *stock_id = plug_in_proc_def_get_stock_id (proc);
+          GdkPixbuf     *pixbuf   = plug_in_proc_def_get_pixbuf (proc);
 
-          g_free (label);
+          if (label)
+            {
+              gtk_list_store_append (store, &iter);
+              gtk_list_store_set (store, &iter,
+                                  COLUMN_PROC,       proc,
+                                  COLUMN_LABEL,      label,
+                                  COLUMN_EXTENSIONS, proc->extensions,
+                                  COLUMN_STOCK_ID,   stock_id,
+                                  COLUMN_PIXBUF,     pixbuf,
+                                  -1);
+
+              g_free (label);
+            }
+
+          if (pixbuf)
+            g_object_unref (pixbuf);
         }
-
-      if (pixbuf)
-        g_object_unref (pixbuf);
     }
 
   if (automatic)

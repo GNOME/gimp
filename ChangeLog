@@ -1,5 +1,22 @@
 2004-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-actions.c (file_actions): use GIMP_STOCK_WEB
+	for "file-open-location".
+
+	* app/widgets/gimpfiledialog.c: create the scrolled window with
+	shadow_type GTK_SHADOW_IN.
+
+	* app/widgets/gimpfileprocview.c (gimp_file_proc_view_new): skip
+	procedures that register a prefix (the URL loader).
+
+	* app/widgets/gimphelp-ids.h: removed help IDs that used to be
+	used from the file-open and file-save menus.
+
+	* plug-ins/common/xwd.c (query): "X window dump" seems to be more
+	appropriate than "X window image".
+
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/Makefile.am
 	* app/actions/file-dialog-actions.[ch]
 	* app/actions/file-open-actions.[ch]

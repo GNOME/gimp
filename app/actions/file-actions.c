@@ -76,7 +76,7 @@ static GimpActionEntry file_actions[] =
     G_CALLBACK (file_open_from_image_cmd_callback),
     GIMP_HELP_FILE_OPEN },
 
-  { "file-open-location", NULL,
+  { "file-open-location", GIMP_STOCK_WEB,
     N_("_Open Location..."), NULL, NULL,
     G_CALLBACK (file_open_location_cmd_callback),
     GIMP_HELP_FILE_OPEN_LOCATION },
