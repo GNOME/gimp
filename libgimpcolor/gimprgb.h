@@ -31,6 +31,22 @@ G_BEGIN_DECLS
 GType   gimp_rgb_get_type           (void) G_GNUC_CONST;
 
 
+/*
+ * GIMP_TYPE_PARAM_RGB
+ */
+
+#define GIMP_TYPE_PARAM_RGB               (gimp_param_rgb_get_type ())
+#define GIMP_IS_PARAM_SPEC_RGB(pspec)     (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RGB))
+
+GType        gimp_param_rgb_get_type      (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_rgb          (const gchar    *name,
+                                           const gchar    *nick,
+                                           const gchar    *blurb,
+                                           const GimpRGB  *default_value,
+                                           GParamFlags     flags);
+
+
 /*  RGB and RGBA color types and operations taken from LibGCK  */
 
 typedef enum

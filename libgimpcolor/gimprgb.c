@@ -413,3 +413,187 @@ gimp_rgba_distance (const GimpRGB *rgba1,
           fabs (rgba1->b - rgba2->b) +
           fabs (rgba1->a - rgba2->a));
 }
+
+
+/*
+ * GIMP_TYPE_PARAM_RGB
+ */
+
+#define GIMP_PARAM_SPEC_RGB(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RGB, GimpParamSpecRGB))
+
+static void       gimp_param_rgb_class_init  (GParamSpecClass *class);
+static void       gimp_param_rgb_init        (GParamSpec      *pspec);
+static void       gimp_param_rgb_set_default (GParamSpec      *pspec,
+                                              GValue          *value);
+static gboolean   gimp_param_rgb_validate    (GParamSpec      *pspec,
+                                              GValue          *value);
+static gint       gimp_param_rgb_values_cmp  (GParamSpec      *pspec,
+                                              const GValue    *value1,
+                                              const GValue    *value2);
+
+typedef struct _GimpParamSpecRGB GimpParamSpecRGB;
+
+struct _GimpParamSpecRGB
+{
+  GParamSpecBoxed  parent_instance;
+
+  GimpRGB          default_value;
+};
+
+/**
+ * gimp_param_rgb_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a GimpParamRGB object
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_param_rgb_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_rgb_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecRGB),
+        0,
+        (GInstanceInitFunc) gimp_param_rgb_init
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_BOXED,
+                                          "GimpParamRGB",
+                                          &type_info, 0);
+    }
+
+  return spec_type;
+}
+
+static void
+gimp_param_rgb_class_init (GParamSpecClass *class)
+{
+  class->value_type        = GIMP_TYPE_RGB;
+  class->value_set_default = gimp_param_rgb_set_default;
+  class->value_validate    = gimp_param_rgb_validate;
+  class->values_cmp        = gimp_param_rgb_values_cmp;
+}
+
+static void
+gimp_param_rgb_init (GParamSpec *pspec)
+{
+  GimpParamSpecRGB *cspec = GIMP_PARAM_SPEC_RGB (pspec);
+
+  gimp_rgba_set (&cspec->default_value, 0.0, 0.0, 0.0, 0.0);
+}
+
+static void
+gimp_param_rgb_set_default (GParamSpec *pspec,
+                            GValue     *value)
+{
+  GimpParamSpecRGB *cspec = GIMP_PARAM_SPEC_RGB (pspec);
+
+  g_value_set_static_boxed (value, &cspec->default_value);
+}
+
+static gboolean
+gimp_param_rgb_validate (GParamSpec *pspec,
+                         GValue     *value)
+{
+  GimpRGB *rgb;
+
+  rgb = value->data[0].v_pointer;
+
+  if (rgb)
+    {
+      GimpRGB oval;
+
+      oval = *rgb;
+
+      gimp_rgb_clamp (rgb);
+
+      return (oval.r != rgb->r ||
+              oval.g != rgb->g ||
+              oval.b != rgb->b ||
+              oval.a != rgb->a);
+    }
+
+  return FALSE;
+}
+
+static gint
+gimp_param_rgb_values_cmp (GParamSpec   *pspec,
+                           const GValue *value1,
+                           const GValue *value2)
+{
+  GimpRGB *rgb1;
+  GimpRGB *rgb2;
+
+  rgb1 = value1->data[0].v_pointer;
+  rgb2 = value2->data[0].v_pointer;
+
+  /*  try to return at least *something*, it's useless anyway...  */
+
+  if (! rgb1)
+    return rgb2 != NULL ? -1 : 0;
+  else if (! rgb2)
+    return rgb1 != NULL;
+  else
+    {
+      guint32 int1, int2;
+
+      gimp_rgba_get_uchar (rgb1,
+                           ((guchar *) &int1) + 0,
+                           ((guchar *) &int1) + 1,
+                           ((guchar *) &int1) + 2,
+                           ((guchar *) &int1) + 3);
+      gimp_rgba_get_uchar (rgb2,
+                           ((guchar *) &int2) + 0,
+                           ((guchar *) &int2) + 1,
+                           ((guchar *) &int2) + 2,
+                           ((guchar *) &int2) + 3);
+
+      return int1 - int2;
+    }
+}
+
+/**
+ * gimp_param_spec_rgb:
+ * @name:          Canonical name of the param
+ * @nick:          Nickname of the param
+ * @blurb:         Brief desciption of param.
+ * @default_value: Value to use if none is assigned.
+ * @flags:         a combination of #GParamFlags
+ *
+ * Creates a param spec to hold an #GimpRGB value.
+ * See g_param_spec_internal() for more information.
+ *
+ * Returns: a newly allocated #GParamSpec instance
+ *
+ * Since: GIMP 2.4
+ **/
+GParamSpec *
+gimp_param_spec_rgb (const gchar   *name,
+                     const gchar   *nick,
+                     const gchar   *blurb,
+                     const GimpRGB *default_value,
+                     GParamFlags    flags)
+{
+  GimpParamSpecRGB *cspec;
+
+  g_return_val_if_fail (default_value != NULL, NULL);
+
+  cspec = g_param_spec_internal (GIMP_TYPE_PARAM_RGB,
+                                 name, nick, blurb, flags);
+
+  cspec->default_value = *default_value;
+
+  return G_PARAM_SPEC (cspec);
+}
+
+

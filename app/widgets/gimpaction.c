@@ -25,12 +25,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "core/gimpmarshal.h"
 #include "core/gimpimagefile.h"  /* eek */

@@ -27,8 +27,8 @@
 #include "gimpbasetypes.h"
 
 
-static GQuark  gimp_translation_domain_quark (void) G_GNUC_CONST;
-static GQuark  gimp_value_descriptions_quark (void) G_GNUC_CONST;
+static GQuark        gimp_translation_domain_quark (void) G_GNUC_CONST;
+static GQuark        gimp_value_descriptions_quark (void) G_GNUC_CONST;
 
 
 /**
@@ -156,6 +156,31 @@ gimp_flags_get_value_descriptions (GType flags_type)
     g_type_get_qdata (flags_type, gimp_value_descriptions_quark ());
 }
 
+
+/**
+ * gimp_path_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for GimpPath objects
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_path_get_type (void)
+{
+  static GType path_type = 0;
+
+  if (!path_type)
+    {
+      static const GTypeInfo type_info = { 0, };
+
+      path_type = g_type_register_static (G_TYPE_STRING, "GimpPath",
+                                          &type_info, 0);
+    }
+
+  return path_type;
+}
 
 /*  private functions  */
 

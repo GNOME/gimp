@@ -42,6 +42,23 @@ struct _GimpMatrix4
   gdouble coeff[4][4];
 };
 
+#define GIMP_TYPE_MATRIX2               (gimp_matrix2_get_type ())
+#define GIMP_VALUE_HOLDS_MATRIX2(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_MATRIX2))
+
+GType         gimp_matrix2_get_type        (void) G_GNUC_CONST;
+
+
+#define GIMP_TYPE_PARAM_MATRIX2            (gimp_param_matrix2_get_type ())
+#define GIMP_IS_PARAM_SPEC_MATRIX2(pspec)  (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_MATRIX2))
+
+GType         gimp_param_matrix2_get_type  (void) G_GNUC_CONST;
+
+GParamSpec *  gimp_param_spec_matrix2      (const gchar        *name,
+                                            const gchar        *nick,
+                                            const gchar        *blurb,
+                                            const GimpMatrix2  *default_value,
+                                            GParamFlags         flags);
+
 
 void          gimp_matrix2_identity        (GimpMatrix2       *matrix);
 void          gimp_matrix2_mult            (const GimpMatrix2 *matrix1,
