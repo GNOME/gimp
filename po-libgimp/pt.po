@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-11-26 01:02+0000\n"
-"PO-Revision-Date: 2003-11-26 01:10+0000\n"
+"POT-Creation-Date: 2003-12-13 01:40+0000\n"
+"PO-Revision-Date: 2003-12-13 01:45+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -196,11 +196,7 @@ msgstr "Selecção Gradiente"
 msgid "None"
 msgstr "Nenhum"
 
-#: libgimp/gimpmiscui.c:50
-msgid "Preview"
-msgstr "Antever"
-
-#: libgimp/gimpmiscui.c:536
+#: libgimp/gimpmiscui.c:66
 #, c-format
 msgid ""
 "No %s in gimprc:\n"
@@ -212,10 +208,6 @@ msgstr ""
 "Tem de adicionar uma entrada tal como\n"
 "(%s \"%s\")\n"
 "ao seu ficheiro %s."
-
-#: libgimp/gimpmiscui.c:556
-msgid "Parameter Settings"
-msgstr "Definição de Parâmetros"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -311,6 +303,11 @@ msgstr "Falha leitura"
 #: libgimpmodule/gimpmodule.c:412
 msgid "Not loaded"
 msgstr "Não lido"
+
+#: libgimpthumb/gimpthumb-utils.c:143
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Falha ao criar pasta de amostras '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
 msgid "/_Foreground Color"
@@ -677,6 +674,12 @@ msgstr "Aguarela"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pressão"
+
+#~ msgid "Preview"
+#~ msgstr "Antever"
+
+#~ msgid "Parameter Settings"
+#~ msgstr "Definição de Parâmetros"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Nenhuma (visão normal)"
