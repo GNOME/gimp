@@ -1801,8 +1801,8 @@ prefs_dialog_new (Gimp       *gimp,
 
     const gchar *format_names[] =
     {
-      N_("Custom"),
-      N_("Standard"),
+      N_("Default"),
+      N_("Simple"),
       N_("Show zoom percentage"),
       N_("Show zoom ratio"),
       N_("Show image size"),
