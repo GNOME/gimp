@@ -1,3 +1,7 @@
+2000-02-04  Robert Brady  <robert@susu.org.uk>
+
+	* configure.in: Added en_GB to ALL_LINGUAS
+
 2000-02-03  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* app/gtkhwrapbox.c (layout_row, layout_rows): 
