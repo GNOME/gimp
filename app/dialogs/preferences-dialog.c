@@ -48,7 +48,7 @@
 #include "libgimp/gimpintl.h"
 
 
-#define MAX_COMMENT_LENGTH 512 /* arbitrary */
+#define MAX_COMMENT_LENGTH 512  /* arbitrary */
 
 
 /*  preferences local functions  */
@@ -177,15 +177,18 @@ prefs_config_copy_notify (GObject    *config_copy,
     {
       if (param_spec->flags & GIMP_PARAM_CONFIRM)
         {
+#ifdef GIMP_CONFIG_DEBUG
           g_print ("NOT Applying prefs change of '%s' to edit_config "
                    "because it needs confirmation\n",
                    param_spec->name);
+#endif
         }
       else
         {
+#ifdef GIMP_CONFIG_DEBUG
           g_print ("Applying prefs change of '%s' to edit_config\n",
                    param_spec->name);
-
+#endif
           g_signal_handlers_block_by_func (config,
                                            prefs_config_notify,
                                            config_copy);

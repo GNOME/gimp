@@ -1,5 +1,9 @@
 2003-01-27  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/preferences-dialog.c: commented out debugging output.
+
+2003-01-27  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl
