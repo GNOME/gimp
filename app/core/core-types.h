@@ -83,7 +83,7 @@ typedef enum
   UNKNOWN
 } OrientationType;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   ORIENTATION_UNKNOWN,
   ORIENTATION_HORIZONTAL,
@@ -99,7 +99,7 @@ typedef enum /*< chop=CHANNEL_OP_ >*/
   CHANNEL_OP_INTERSECT
 } ChannelOps;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GIMP_SELECTION_OFF,
   GIMP_SELECTION_LAYER_OFF,
@@ -179,7 +179,7 @@ typedef enum
   SPIRAL_ANTICLOCKWISE
 } GradientType;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GRAD_LINEAR = 0,
   GRAD_CURVED,
@@ -188,7 +188,7 @@ typedef enum /*< skip >*/
   GRAD_SPHERE_DECREASING
 } GimpGradientSegmentType;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GRAD_RGB = 0,  /* normal RGB */
   GRAD_HSV_CCW,  /* counterclockwise hue */
@@ -210,7 +210,7 @@ typedef enum
   REPEAT_TRIANGULAR
 } RepeatMode;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GIMP_TRANSFORM_FORWARD,
   GIMP_TRANSFORM_BACKWARD

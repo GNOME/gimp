@@ -59,25 +59,7 @@ typedef enum
   GIMP_GRAY_LUT = 0  /*< skip >*/
 } GimpChannelLutType;
 
-/*  Transparency representation  */
-typedef enum /*< skip >*/
-{
-  GIMP_LIGHT_CHECKS = 0,
-  GIMP_GRAY_CHECKS  = 1,
-  GIMP_DARK_CHECKS  = 2,
-  GIMP_WHITE_ONLY   = 3,
-  GIMP_GRAY_ONLY    = 4,
-  GIMP_BLACK_ONLY   = 5
-} GimpCheckType;
-
-typedef enum /*< skip >*/
-{
-  GIMP_SMALL_CHECKS  = 0,
-  GIMP_MEDIUM_CHECKS = 1,
-  GIMP_LARGE_CHECKS  = 2
-} GimpCheckSize;
-
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GIMP_HISTOGRAM_VALUE = 0,
   GIMP_HISTOGRAM_RED   = 1,

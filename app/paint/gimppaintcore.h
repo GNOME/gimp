@@ -25,7 +25,7 @@
 
 /* the different states that the painting function can be called with  */
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   INIT_PAINT,       /* Setup PaintFunc internals */
   MOTION_PAINT,     /* PaintFunc performs motion-related rendering */
@@ -36,7 +36,7 @@ typedef enum /*< skip >*/
   POSTTRACE_PAINT   /* PaintFunc performs window tracing activity following rendering */
 } PaintState;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   TOOL_CAN_HANDLE_CHANGING_BRUSH = 0x0001, /* Set for tools that don't mind
 					    * if the brush changes while

@@ -66,4 +66,31 @@ typedef enum
 } GimpLayerModeEffects;
 
 
+#define GIMP_TYPE_CHECK_TYPE (gimp_check_type_get_type ())
+
+GType gimp_check_type_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_LIGHT_CHECKS = 0,
+  GIMP_GRAY_CHECKS  = 1,
+  GIMP_DARK_CHECKS  = 2,
+  GIMP_WHITE_ONLY   = 3,
+  GIMP_GRAY_ONLY    = 4,
+  GIMP_BLACK_ONLY   = 5
+} GimpCheckType;
+
+
+#define GIMP_TYPE_CHECK_SIZE (gimp_check_size_get_type ())
+
+GType gimp_check_size_get_type (void) G_GNUC_CONST;
+
+typedef enum /*< pdb-skip >*/
+{
+  GIMP_SMALL_CHECKS  = 0,
+  GIMP_MEDIUM_CHECKS = 1,
+  GIMP_LARGE_CHECKS  = 2
+} GimpCheckSize;
+
+
 #endif /* __BASE_ENUMS_H__ */

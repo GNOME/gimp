@@ -33,7 +33,7 @@
  *  images, floating selections, selective display of intensity
  *  channels, and display of arbitrary mask channels
  */
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   INITIAL_CHANNEL_MASK = 0,
   INITIAL_CHANNEL_SELECTION,
@@ -47,7 +47,7 @@ typedef enum /*< skip >*/
  *  region into a destination region.  This is used for constructing
  *  layer projections, and for applying image patches to an image
  */
-typedef enum /*< skip >*/ 
+typedef enum /*< pdb-skip >*/ 
 {
   NO_COMBINATION = 0,
   COMBINE_INDEXED_INDEXED,

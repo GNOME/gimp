@@ -23,7 +23,7 @@
 #include "widgets/widgets-types.h"
 
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   CURSOR_MODE_TOOL_ICON,
   CURSOR_MODE_TOOL_CROSSHAIR,

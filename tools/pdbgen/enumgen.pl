@@ -74,7 +74,7 @@ my $footer = <<'FOOTER';
 FOOTER
 
 my ($enumname, $contig, $symbols, @nicks, @mapping, $before);
-my ($chop, $skip, $xform);
+my ($chop, $skip, $pdbskip, $xform);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
 sub parse_options {
@@ -82,7 +82,7 @@ sub parse_options {
     my @opts;
 
     for $opt (split /\s*,\s*/, $opts) {
-	my ($key,$val) = $opt =~ /\s*(\w+)(?:=(\S+))?/;
+	my ($key,$val) = $opt =~ /\s*([\w-]+)(?:=(\S+))?/;
 	defined $val or $val = 1;
 	push @opts, $key, $val;
     }
@@ -201,10 +201,12 @@ while (<>) {
             my %options = parse_options($2);
 	    $chop = $options{"chop"};
 	    $skip = $options{"skip"};
+	    $pdbskip = $options{"pdb-skip"};
 	    $xform = $options{"xform"};
 	} else {
 	    $chop = undef;
 	    $skip = undef;
+	    $pdbskip = undef;
 	    $xform = undef;
 	}	    
 	# Didn't have trailing '{' look on next lines
@@ -242,7 +244,7 @@ while (<>) {
 
 	$ARGV =~ s@(?:(?:..|app)/)*@@;
 
-	$code .= <<ENTRY if !$skip;
+	$code .= <<ENTRY if !$pdbskip;
 :    $enumname =>
 :	{ contig => $contig,
 :	  header => '$ARGV',

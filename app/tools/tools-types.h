@@ -90,7 +90,7 @@ typedef enum
   ONCE_END_COLOR   /* paint once, but keep painting with the end color */
 } GradientPaintMode;
 
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   SELECTION_ADD       = CHANNEL_OP_ADD,
   SELECTION_SUB       = CHANNEL_OP_SUB,
@@ -102,7 +102,7 @@ typedef enum /*< skip >*/
 } SelectOps;
 
 /*  The possible states for tools  */
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   INACTIVE,
   ACTIVE,
@@ -110,7 +110,7 @@ typedef enum /*< skip >*/
 } ToolState;
 
 /*  Tool control actions  */
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   PAUSE,
   RESUME,
@@ -118,7 +118,7 @@ typedef enum /*< skip >*/
 } ToolAction;
 
 /* possible transform functions */
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   TRANSFORM_CREATING,
   TRANSFORM_HANDLE_1,
@@ -129,7 +129,7 @@ typedef enum /*< skip >*/
 } TransformAction;
 
 /* the different states that the transformation function can be called with */
-typedef enum /*< skip >*/
+typedef enum /*< pdb-skip >*/
 {
   TRANSFORM_INIT,
   TRANSFORM_MOTION,

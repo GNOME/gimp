@@ -1,5 +1,21 @@
 2001-12-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/enumgen.pl: introduced new trigraph keyword
+	/*< pdb-skip >*/ used to skip enums for inclusion in libgimp when
+	parsing headers. The keyword /*< skip >*/ is still used to skip
+	enum values. This change is necessary since glib-mkenums also uses
+	/*< skip >*/.
+
+	* app/base/base-types.h * app/base/base-enums.h: moved
+	GimpCheckType and GimpCheckSize to base-enums.h so they get
+	registered with the type system, marked them as /*< pdb-skip >*/.
+	
+	* app/core/core-types.h * app/display/display-types.h *
+	app/paint-funcs/paint-funcs-types.h * app/tools/gimppainttool.h *
+	app/tools/tools-types.h: changed /*< skip >*/ to /*< pdb-skip >*/.
+	
+2001-12-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-enums.h: new file that holds enums that are registered
 	with the type system and is used to generate core-enums.c.
