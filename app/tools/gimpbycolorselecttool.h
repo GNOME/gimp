@@ -31,9 +31,7 @@
 #define GIMP_BY_COLOR_SELECT_TOOL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_BY_COLOR_SELECT_TOOL, GimpByColorSelectToolClass))
 
 
-/*  the by color selection structures  */
-
-typedef struct _GimpByColorSelectTool GimpByColorSelectTool;
+typedef struct _GimpByColorSelectTool      GimpByColorSelectTool;
 typedef struct _GimpByColorSelectToolClass GimpByColorSelectToolClass;
 
 struct _GimpByColorSelectTool
@@ -43,10 +41,9 @@ struct _GimpByColorSelectTool
   gint              x, y;  /*  Point from which to execute seed fill  */
 };
 
-
 struct _GimpByColorSelectToolClass
 {
-  GimpSelectionToolClass klass;
+  GimpSelectionToolClass parent_class;
 };
 
 

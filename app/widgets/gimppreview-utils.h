@@ -23,7 +23,7 @@
 #define __GIMP_PREVIEW_UTILS_H__
 
 
-GType   gimp_preview_type_from_viewable (GimpViewable *viewable);
+GType   gimp_preview_type_from_viewable_type (GType viewable_type);
 
 
 #endif /* __GIMP_PREVIEW_UTILS_H__ */

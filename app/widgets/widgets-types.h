@@ -60,6 +60,7 @@ typedef struct _GimpDataEditor          GimpDataEditor;
 typedef struct _GimpBrushEditor         GimpBrushEditor;
 typedef struct _GimpGradientEditor      GimpGradientEditor;
 typedef struct _GimpPaletteEditor       GimpPaletteEditor;
+typedef struct _GimpSelectionEditor     GimpSelectionEditor;
 
 typedef struct _GimpContainerView       GimpContainerView;
 typedef struct _GimpContainerListView   GimpContainerListView;

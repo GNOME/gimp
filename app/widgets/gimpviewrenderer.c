@@ -509,12 +509,16 @@ gimp_preview_new (GimpViewable *viewable,
 		  gboolean      is_popup)
 {
   GimpPreview *preview;
+  GType        viewable_type;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
-  preview = g_object_new (gimp_preview_type_from_viewable (viewable), NULL);
+  viewable_type = G_TYPE_FROM_INSTANCE (viewable);
+
+  preview = g_object_new (gimp_preview_type_from_viewable_type (viewable_type),
+                          NULL);
 
   preview->is_popup = is_popup;
 
@@ -535,13 +539,17 @@ gimp_preview_new_full (GimpViewable *viewable,
 		       gboolean      show_popup)
 {
   GimpPreview *preview;
+  GType        viewable_type;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
 
-  preview = g_object_new (gimp_preview_type_from_viewable (viewable), NULL);
+  viewable_type = G_TYPE_FROM_INSTANCE (viewable);
+
+  preview = g_object_new (gimp_preview_type_from_viewable_type (viewable_type),
+                          NULL);
 
   preview->is_popup   = is_popup;
   preview->clickable  = clickable;
@@ -554,15 +562,44 @@ gimp_preview_new_full (GimpViewable *viewable,
   return GTK_WIDGET (preview);
 }
 
+GtkWidget *
+gimp_preview_new_by_type (GType    viewable_type,
+                          gint     size,
+                          gint     border_width,
+                          gboolean is_popup)
+{
+  GimpPreview *preview;
+
+  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
+  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
+
+  preview = g_object_new (gimp_preview_type_from_viewable_type (viewable_type),
+                          NULL);
+
+  preview->is_popup     = is_popup;
+  preview->size         = size;
+  preview->border_width = border_width;
+
+  return GTK_WIDGET (preview);
+}
+
 void
 gimp_preview_set_viewable (GimpPreview  *preview,
 			   GimpViewable *viewable)
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
-  g_return_if_fail (! viewable ||
-                    g_type_is_a (G_TYPE_FROM_INSTANCE (preview),
-                                 gimp_preview_type_from_viewable (viewable)));
+
+  if (viewable)
+    {
+      GType viewable_type;
+
+      viewable_type = G_TYPE_FROM_INSTANCE (viewable);
+
+      g_return_if_fail (g_type_is_a (G_TYPE_FROM_INSTANCE (preview),
+                                     gimp_preview_type_from_viewable_type (viewable_type)));
+    }
 
   if (viewable == preview->viewable)
     return;

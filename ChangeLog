@@ -1,5 +1,30 @@
 2002-08-22  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: bumped version number to 1.3.9
+
+	* app/tools/gimpbycolorselecttool.[ch]: removed the ByColorDialog
+	and cleaned up the code.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpselectioneditor.[ch]: added new widget
+	GimpSelectionEditor with same same functionality as the old
+	ByColorDialog which can be open all the time (independent of the
+	active tool).
+
+	* app/widgets/gimppreview.[ch]: added gimp_preview_new_by_type()
+	so previews can be created without a viewable.
+
+	* app/widgets/gimppreview-utils.[ch]: changed
+	gimp_preview_type_from_viewable() to
+	gimp_preview_type_from_viewable_type().
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c: register the new dialog type.
+
+2002-08-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/undo.c: compress emissions of "mask_changed" and
 	"qmask_changed" across undo groups.
 

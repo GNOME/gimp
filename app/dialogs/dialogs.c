@@ -74,6 +74,7 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-vectors-list",     dialogs_vectors_list_view_new,  32, FALSE, FALSE, FALSE, TRUE },
   { "gimp-path-list",        dialogs_path_list_view_new,     32, TRUE,  FALSE, FALSE, TRUE },
   { "gimp-indexed-palette",  dialogs_indexed_palette_new,    32, FALSE, FALSE, FALSE, TRUE },
+  { "gimp-selection-editor", dialogs_selection_editor_new,    0, FALSE, FALSE, FALSE, TRUE },
 
   { "gimp-document-history", dialogs_document_history_new,   48, FALSE, FALSE, FALSE, TRUE },
 

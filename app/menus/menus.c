@@ -200,6 +200,11 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   SEPARATOR ("/File/Dialogs/---"),
 
+  { { N_("/File/Dialogs/Selection Editor..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_RECT_SELECT },
+    "gimp-selection-editor",
+    NULL, NULL },
   { { N_("/File/Dialogs/Navigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
@@ -923,6 +928,11 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Dialogs/---"),
 
+  { { N_("/Dialogs/Selection Editor..."), NULL,
+      dialogs_create_dockable_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_TOOL_RECT_SELECT },
+    "gimp-selection-editor",
+    NULL, NULL },
   { { N_("/Dialogs/Navigation..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_NAVIGATION },
@@ -1404,6 +1414,8 @@ static GimpItemFactoryEntry dialogs_entries[] =
 
   SEPARATOR ("/Add Tab/---"),
 
+  ADD_TAB (N_("/Add Tab/Selection Editor..."), "gimp-selection-editor",
+           "<StockItem>",                      GIMP_STOCK_TOOL_RECT_SELECT),
   ADD_TAB (N_("/Add Tab/Navigation..."),       "gimp-navigation-view",
            "<StockItem>",                      GIMP_STOCK_NAVIGATION),
   ADD_TAB (N_("/Add Tab/Images..."),           "gimp-image-list", NULL, NULL),

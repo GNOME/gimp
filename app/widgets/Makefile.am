@@ -131,6 +131,8 @@ libappwidgets_a_sources = \
 	gimppreview.h			\
 	gimppreview-utils.c		\
 	gimppreview-utils.h		\
+	gimpselectioneditor.c		\
+	gimpselectioneditor.h		\
 	gimptoolbox.c			\
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\

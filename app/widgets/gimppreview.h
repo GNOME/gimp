@@ -107,6 +107,11 @@ GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
 					    gboolean       clickable,
 					    gboolean       show_popup);
 
+GtkWidget *  gimp_preview_new_by_type      (GType          viewable_type,
+					    gint           size,
+					    gint           border_width,
+					    gboolean       is_popup);
+
 void         gimp_preview_set_viewable     (GimpPreview   *preview,
 					    GimpViewable  *viewable);
 

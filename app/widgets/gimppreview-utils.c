@@ -47,45 +47,46 @@
 
 
 GType
-gimp_preview_type_from_viewable (GimpViewable *viewable)
+gimp_preview_type_from_viewable_type (GType viewable_type)
 {
   GType type = GIMP_TYPE_PREVIEW;
 
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), G_TYPE_NONE);
+  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE),
+                        G_TYPE_NONE);
 
-  if (GIMP_IS_BRUSH (viewable))
+  if (g_type_is_a (viewable_type, GIMP_TYPE_BRUSH))
     {
       type = GIMP_TYPE_BRUSH_PREVIEW;
     }
-  else if (GIMP_IS_DRAWABLE (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {
       type = GIMP_TYPE_DRAWABLE_PREVIEW;
     }
-  else if (GIMP_IS_IMAGE (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGE))
     {
       type = GIMP_TYPE_IMAGE_PREVIEW;
     }
-  else if (GIMP_IS_PATTERN (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_PATTERN))
     {
       type = GIMP_TYPE_PATTERN_PREVIEW;
     }
-  else if (GIMP_IS_GRADIENT (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_GRADIENT))
     {
       type = GIMP_TYPE_GRADIENT_PREVIEW;
     }
-  else if (GIMP_IS_PALETTE (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_PALETTE))
     {
       type = GIMP_TYPE_PALETTE_PREVIEW;
     }
-  else if (GIMP_IS_BUFFER (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_BUFFER))
     {
       type = GIMP_TYPE_BUFFER_PREVIEW;
     }
-  else if (GIMP_IS_TOOL_INFO (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_TOOL_INFO))
     {
       type = GIMP_TYPE_TOOL_INFO_PREVIEW;
     }
-  else if (GIMP_IS_IMAGEFILE (viewable))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_IMAGEFILE))
     {
       type = GIMP_TYPE_IMAGEFILE_PREVIEW;
     }

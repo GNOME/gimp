@@ -58,6 +58,7 @@
 #include "widgets/gimplistitem.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppreview.h"
+#include "widgets/gimpselectioneditor.h"
 #include "widgets/gimptoolbox.h"
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpvectorslistview.h"
@@ -129,8 +130,10 @@ static void   dialogs_set_image_item_context_func (GimpDockable       *dockable,
                                                    GimpContext        *context);
 static void   dialogs_set_path_context_func       (GimpDockable       *dockable,
                                                    GimpContext        *context);
-static void   dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
-							GimpContext  *context);
+static void   dialogs_set_indexed_palette_context_func (GimpDockable  *dockable,
+							GimpContext   *context);
+static void   dialogs_set_selection_editor_context_func (GimpDockable *dockable,
+                                                         GimpContext  *context);
 static void   dialogs_set_navigation_context_func (GimpDockable       *dockable,
                                                    GimpContext        *context);
 
@@ -141,18 +144,21 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 GimpDockableGetTabFunc      get_tab_func,
 					 GimpDockableSetContextFunc  set_context_func);
 
-static void dialogs_image_item_view_image_changed (GimpContext        *context,
-                                                   GimpImage          *gimage,
-                                                   GimpItemListView   *view);
-static void dialogs_path_view_image_changed       (GimpContext        *context,
-                                                   GimpImage          *gimage,
-                                                   GtkWidget          *view);
-static void dialogs_indexed_palette_image_changed (GimpContext        *context,
-						   GimpImage          *gimage,
-						   GimpColormapEditor *editor);
-static void dialogs_navigation_display_changed    (GimpContext        *context,
-                                                   GimpDisplay        *gdisp,
-                                                   GimpNavigationView *view);
+static void dialogs_image_item_view_image_changed  (GimpContext         *context,
+                                                    GimpImage           *gimage,
+                                                    GimpItemListView    *view);
+static void dialogs_path_view_image_changed        (GimpContext         *context,
+                                                    GimpImage           *gimage,
+                                                    GtkWidget           *view);
+static void dialogs_indexed_palette_image_changed  (GimpContext         *context,
+                                                    GimpImage           *gimage,
+                                                    GimpColormapEditor  *editor);
+static void dialogs_selection_editor_image_changed (GimpContext         *context,
+                                                    GimpImage           *gimage,
+                                                    GimpSelectionEditor *editor);
+static void dialogs_navigation_display_changed     (GimpContext         *context,
+                                                    GimpDisplay         *gdisp,
+                                                    GimpNavigationView  *view);
 
 
 /**********************/
@@ -811,6 +817,29 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
   return dockable;
 }
 
+GtkWidget *
+dialogs_selection_editor_new (GimpDialogFactory *factory,
+                              GimpContext       *context,
+                              gint               preview_size)
+{
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
+
+  gimage = gimp_context_get_image (context);
+
+  view = gimp_selection_editor_new (gimage);
+
+  dockable = dialogs_dockable_new (view,
+				   _("Selection Editor"), _("Selection"), NULL,
+				   NULL,
+				   dialogs_set_selection_editor_context_func);
+
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
 
 /*****  misc dockables  *****/
 
@@ -1338,6 +1367,41 @@ dialogs_set_indexed_palette_context_func (GimpDockable *dockable,
 }
 
 static void
+dialogs_set_selection_editor_context_func (GimpDockable *dockable,
+                                           GimpContext  *context)
+{
+  GimpSelectionEditor *view;
+
+  view = (GimpSelectionEditor *) g_object_get_data (G_OBJECT (dockable),
+                                                    "gimp-dialogs-view");
+
+  if (view)
+    {
+      if (dockable->context)
+	{
+	  g_signal_handlers_disconnect_by_func (G_OBJECT (dockable->context),
+						dialogs_selection_editor_image_changed,
+						view);
+	}
+
+      if (context)
+	{
+	  g_signal_connect (G_OBJECT (context), "image_changed",
+			    G_CALLBACK (dialogs_selection_editor_image_changed),
+			    view);
+
+	  dialogs_selection_editor_image_changed (context,
+                                                  gimp_context_get_image (context),
+                                                  view);
+	}
+      else
+	{
+	  dialogs_selection_editor_image_changed (NULL, NULL, view);
+	}
+    }
+}
+
+static void
 dialogs_set_navigation_context_func (GimpDockable *dockable,
                                      GimpContext  *context)
 {
@@ -1417,6 +1481,14 @@ dialogs_indexed_palette_image_changed (GimpContext        *context,
 				       GimpColormapEditor *editor)
 {
   gimp_colormap_editor_set_image (editor, gimage);
+}
+
+static void
+dialogs_selection_editor_image_changed (GimpContext         *context,
+                                        GimpImage           *gimage,
+                                        GimpSelectionEditor *editor)
+{
+  gimp_selection_editor_set_image (editor, gimage);
 }
 
 static void
