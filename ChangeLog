@@ -1,3 +1,24 @@
+2004-04-05  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	Sanitize rectangle and ellipse selection handling (bug #138237
+	and bug #138103):
+
+	* app/tools/gimprectselecttool.h
+	* app/tools/gimprectselecttool.c (GimpRectSelectTool): new
+	member "moved" indicating whether the cursor was moved after
+	the click.
+	(gimp_rect_select_tool_coords_to_integer): New function for
+	consistent conversion of the rectangle FP coords to pixels.
+	(gimp_rect_select_tool_button_press,
+	gimp_rect_select_tool_button_release,
+	gimp_rect_select_tool_motion, gimp_rect_select_tool_draw): use
+	it instead of fiddling with the FP coordinates. Update "moved"
+	and use it to detect whether the selection needs to be cleared.
+
+	* app/tools/gimpellipseselecttool.c
+	(gimp_ellipse_select_tool_draw): use the new coords_to_integer
+	function.
+
 2004-04-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/Lighting/lighting_ui.c: applied the second patch
