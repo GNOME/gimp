@@ -1,0 +1,49 @@
+
+The GIMP Paintbrush File Format Version 2 (.gbr)
+------------------------------------------------
+
+HEADER
+------
+
+Bytes 0  - 3:  header_size: 
+	Type: 32 bit unsigned int
+	Value: size of brush header (28) + length of brush name
+
+Bytes 4  - 7: version
+	Type: 32 bit unsigned int 
+	Value: The file format version. Currently
+
+Bytes 8  - 11: width
+	Type: 32 bit unsigned int 
+	Value: Brush width
+
+Bytes 12 - 15: height
+	Type: 32 bit unsigned int 
+	Value: Brush height
+
+Bytes 16 - 19: bytes
+	Type: 32 bit unsigned int 
+	Value: Colour depth of brush. 
+	1 = greyscale, 4 = RGBA
+
+Bytes 20 - 23: magic_number
+	Type: 32 bit unsigned int 
+	Value: GIMP brush magic number. 
+	('G' << 24) + ('I' << 16) + ('M' << 8) + 'P'
+
+Bytes 24 - 27: spacing
+	Type: 32 bit unsigned int 
+	Value: Default spacing to be used for brush. Percentage
+	of brush width.
+
+Bytes 28 - (header_size - 28):
+	Type: char *
+	Value: UTF-8 string - name of brush
+
+
+BODY
+----
+	Size: width * height * bytes
+	Type: uchar *
+	Value: Pixel values (row-first) for brush
+

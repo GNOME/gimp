@@ -1,3 +1,8 @@
+2003-07-09  Dave Neary  <bolsh@gimp.org> 
+
+	* devel-docs/gbr.txt: Documented the gbr version 2 file
+	format, after some confusion with Cinepaint's version.
+
 2003-07-09  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/paths.pdb: applied a modified patch from Joao
