@@ -1,34 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY GimpButton SYSTEM "xml/gimpbutton.xml">
-<!ENTITY GimpChainButton SYSTEM "xml/gimpchainbutton.xml">
-<!ENTITY GimpColorArea SYSTEM "xml/gimpcolorarea.xml">
-<!ENTITY GimpColorButton SYSTEM "xml/gimpcolorbutton.xml">
-<!ENTITY GimpColorDisplay SYSTEM "xml/gimpcolordisplay.xml">
-<!ENTITY GimpColorNotebook SYSTEM "xml/gimpcolornotebook.xml">
-<!ENTITY GimpColorScale SYSTEM "xml/gimpcolorscale.xml">
-<!ENTITY GimpColorScales SYSTEM "xml/gimpcolorscales.xml">
-<!ENTITY GimpColorSelect SYSTEM "xml/gimpcolorselect.xml">
-<!ENTITY GimpColorSelector SYSTEM "xml/gimpcolorselector.xml">
-<!ENTITY GimpDialog SYSTEM "xml/gimpdialog.xml">
-<!ENTITY GimpFileSelection SYSTEM "xml/gimpfileselection.xml">
-<!ENTITY GimpHelpUI SYSTEM "xml/gimphelpui.xml">
-<!ENTITY GimpMemsizeEntry SYSTEM "xml/gimpmemsizeentry.xml">
-<!ENTITY GimpOffsetArea SYSTEM "xml/gimpoffsetarea.xml">
-<!ENTITY GimpPathEditor SYSTEM "xml/gimppatheditor.xml">
-<!ENTITY GimpPickButton SYSTEM "xml/gimppickbutton.xml">
-<!ENTITY GimpPixmap SYSTEM "xml/gimppixmap.xml">
-<!ENTITY GimpQueryBox SYSTEM "xml/gimpquerybox.xml">
-<!ENTITY GimpSizeEntry SYSTEM "xml/gimpsizeentry.xml">
-<!ENTITY GimpStock SYSTEM "xml/gimpstock.xml">
-<!ENTITY GimpUnitMenu SYSTEM "xml/gimpunitmenu.xml">
-<!ENTITY GimpWidgets SYSTEM "xml/gimpwidgets.xml">
-<!ENTITY gimpwidgets-objecttree SYSTEM "xml/tree_index.sgml">
-<!ENTITY version SYSTEM "version.xml">
+  <!ENTITY version SYSTEM "version.xml">
 ]>
 
-<book id="index">
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Widgets Library Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>
@@ -39,45 +16,44 @@
 
     <chapter>
       <title>Object Hierarchy</title>
-    &gimpwidgets-objecttree;
+      <xi:include href="xml/tree_index.sgml" />
     </chapter>    
 
-    &GimpButton;
-    &GimpChainButton;
-    &GimpColorArea;
-    &GimpColorButton;
-    &GimpColorScale;
-    &GimpFileSelection;
-    &GimpMemsizeEntry;
-    &GimpOffsetArea;
-    &GimpPathEditor;
-    &GimpPickButton;
-    &GimpPixmap;
-    &GimpSizeEntry;
-    &GimpUnitMenu;
-    &GimpDialog;
-
+    <xi:include href="xml/gimpbutton.xml" />
+    <xi:include href="xml/gimpchainbutton.xml" />
+    <xi:include href="xml/gimpcolorarea.xml" />
+    <xi:include href="xml/gimpcolorbutton.xml" />
+    <xi:include href="xml/gimpcolorscale.xml" />
+    <xi:include href="xml/gimpdialog.xml" />
+    <xi:include href="xml/gimpfileselection.xml" />
+    <xi:include href="xml/gimpmemsizeentry.xml" />
+    <xi:include href="xml/gimpoffsetarea.xml" />
+    <xi:include href="xml/gimppatheditor.xml" />
+    <xi:include href="xml/gimppickbutton.xml" />
+    <xi:include href="xml/gimppixmap.xml" />
+    <xi:include href="xml/gimpunitmenu.xml" />
   </part>
-
   
   <part id="libgimpwidgets-colordisplay">
     <title>GIMP Display Filters</title>
-    &GimpColorDisplay;
+    <xi:include href="xml/gimpcolordisplay.xml" />
   </part>
 
   <part id="libgimpwidgets-colorselector">
     <title>GIMP Color Selectors</title>
-    &GimpColorSelector;
-    &GimpColorNotebook;
-    &GimpColorScales;
-    &GimpColorSelect;
+    <xi:include href="xml/gimpcolorselector.xml" />
+    <xi:include href="xml/gimpcolornotebook.xml" />
+    <xi:include href="xml/gimpcolorscales.xml" />
+    <xi:include href="xml/gimpcolorselect.xml" />
   </part>
 
   <part id="libgimpwidgets-utils">
     <title>GIMP Widgets Utilities</title>
-    &GimpHelpUI;
-    &GimpQueryBox;
-    &GimpWidgets;
-    &GimpStock;
+    <xi:include href="xml/gimphelpui.xml" />
+    <xi:include href="xml/gimpquerybox.xml" />
+    <xi:include href="xml/gimpsizeentry.xml" />
+    <xi:include href="xml/gimpstock.xml" />
+    <xi:include href="xml/gimpwidgets.xml" />
   </part>
+
 </book>

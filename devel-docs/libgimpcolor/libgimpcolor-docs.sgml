@@ -1,16 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY GimpRGB SYSTEM "xml/gimprgb.xml">
-<!ENTITY GimpHSV SYSTEM "xml/gimphsv.xml">
-<!ENTITY GimpCMYK SYSTEM "xml/gimpcmyk.xml">
-<!ENTITY GimpColorSpace SYSTEM "xml/gimpcolorspace.xml">
-<!ENTITY GimpAdaptiveSupersample SYSTEM "xml/gimpadaptivesupersample.xml">
-<!ENTITY GimpBilinear SYSTEM "xml/gimpbilinear.xml">
-<!ENTITY version SYSTEM "version.xml">
+  <!ENTITY version SYSTEM "version.xml">
 ]>
 
-<book id="index">
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Color Library Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>
@@ -18,11 +13,12 @@
 
   <part id="libgimpcolor">
     <title>GIMP Color Library</title>
-    &GimpRGB;
-    &GimpHSV;
-    &GimpCMYK;
-    &GimpColorSpace;
-    &GimpAdaptiveSupersample;
-    &GimpBilinear;
+    <xi:include href="xml/gimprgb.xml" />
+    <xi:include href="xml/gimphsv.xml" />
+    <xi:include href="xml/gimpcmyk.xml" />
+    <xi:include href="xml/gimpcolorspace.xml" />
+    <xi:include href="xml/gimpadaptivesupersample.xml" />
+    <xi:include href="xml/gimpbilinear.xml" />
   </part>
+
 </book>

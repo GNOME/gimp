@@ -1,50 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY Gimp SYSTEM "xml/gimp.xml">
-<!ENTITY GimpBrushes SYSTEM "xml/gimpbrushes.xml">
-<!ENTITY GimpBrushSelect SYSTEM "xml/gimpbrushselect.xml">
-<!ENTITY GimpChannel SYSTEM "xml/gimpchannel.xml">
-<!ENTITY GimpColor SYSTEM "xml/gimpcolor.xml">
-<!ENTITY GimpConvert SYSTEM "xml/gimpconvert.xml">
-<!ENTITY GimpDisplay SYSTEM "xml/gimpdisplay.xml">
-<!ENTITY GimpDrawable SYSTEM "xml/gimpdrawable.xml">
-<!ENTITY GimpEdit SYSTEM "xml/gimpedit.xml">
-<!ENTITY GimpFileops SYSTEM "xml/gimpfileops.xml">
-<!ENTITY GimpFloatingsel SYSTEM "xml/gimpfloatingsel.xml">
-<!ENTITY GimpFonts SYSTEM "xml/gimpfonts.xml">
-<!ENTITY GimpFontSelect SYSTEM "xml/gimpfontselect.xml">
-<!ENTITY GimpGimprc SYSTEM "xml/gimpgimprc.xml">
-<!ENTITY GimpGradients SYSTEM "xml/gimpgradients.xml">
-<!ENTITY GimpGradientSelect SYSTEM "xml/gimpgradientselect.xml">
-<!ENTITY GimpGuides SYSTEM "xml/gimpguides.xml">
-<!ENTITY GimpHelp SYSTEM "xml/gimphelp.xml">
-<!ENTITY GimpImage SYSTEM "xml/gimpimage.xml">
-<!ENTITY GimpLayer SYSTEM "xml/gimplayer.xml">
-<!ENTITY GimpMessage SYSTEM "xml/gimpmessage.xml">
-<!ENTITY GimpPalette SYSTEM "xml/gimppalette.xml">
-<!ENTITY GimpPatterns SYSTEM "xml/gimppatterns.xml">
-<!ENTITY GimpPatternSelect SYSTEM "xml/gimppatternselect.xml">
-<!ENTITY GimpPixelrgn SYSTEM "xml/gimppixelrgn.xml">
-<!ENTITY GimpPlugin SYSTEM "xml/gimpplugin.xml">
-<!ENTITY GimpProceduraldb SYSTEM "xml/gimpproceduraldb.xml">
-<!ENTITY GimpSelection SYSTEM "xml/gimpselection.xml">
-<!ENTITY GimpTexttool SYSTEM "xml/gimptexttool.xml">
-<!ENTITY GimpTile SYSTEM "xml/gimptile.xml">
-<!ENTITY GimpTools SYSTEM "xml/gimptools.xml">
-<!ENTITY GimpUndo SYSTEM "xml/gimpundo.xml">
-<!ENTITY GimpEnums SYSTEM "xml/gimpenums.xml">
-<!ENTITY GimpExport SYSTEM "xml/gimpexport.xml">
-<!ENTITY GimpMenu SYSTEM "xml/gimpmenu.xml">
-<!ENTITY GimpBrushMenu SYSTEM "xml/gimpbrushmenu.xml">
-<!ENTITY GimpFontMenu SYSTEM "xml/gimpfontmenu.xml">
-<!ENTITY GimpGradientMenu SYSTEM "xml/gimpgradientmenu.xml">
-<!ENTITY GimpPatternMenu SYSTEM "xml/gimppatternmenu.xml">
-<!ENTITY GimpUI SYSTEM "xml/gimpui.xml">
 <!ENTITY version SYSTEM "version.xml">
 ]>
 
-<book id="index">
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Library Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>
@@ -52,7 +13,7 @@
 
   <part id="gimpdefinitions">
     <title>GIMP Constants</title>
-    &GimpEnums;
+    <xi:include href="xml/gimpenums.xml" />
   </part>
 
   <part id="libgimp">
@@ -66,49 +27,50 @@
       </para>
     </partintro>
 
-    &Gimp;
-    &GimpBrushes;
-    &GimpChannel;
-    &GimpColor;
-    &GimpConvert;
-    &GimpDisplay;
-    &GimpDrawable;
-    &GimpEdit;
-    &GimpFileops;
-    &GimpFloatingsel;
-    &GimpFonts;
-    &GimpGimprc;
-    &GimpGradients;
-    &GimpGuides;
-    &GimpHelp;
-    &GimpImage;
-    &GimpLayer;
-    &GimpMessage;
-    &GimpPalette;
-    &GimpPatterns;
-    &GimpPixelrgn;
-    &GimpPlugin;
-    &GimpProceduraldb;
-    &GimpSelection;
-    &GimpTexttool;
-    &GimpTile;
-    &GimpTools;
-    &GimpUndo;
+    <xi:include href="xml/gimp.xml" />
+    <xi:include href="xml/gimpbrushes.xml" />
+    <xi:include href="xml/gimpchannel.xml" />
+    <xi:include href="xml/gimpcolor.xml" />
+    <xi:include href="xml/gimpconvert.xml" />
+    <xi:include href="xml/gimpdisplay.xml" />
+    <xi:include href="xml/gimpdrawable.xml" />
+    <xi:include href="xml/gimpedit.xml" />
+    <xi:include href="xml/gimpfileops.xml" />
+    <xi:include href="xml/gimpfloatingsel.xml" />
+    <xi:include href="xml/gimpfonts.xml" />
+    <xi:include href="xml/gimpgimprc.xml" />
+    <xi:include href="xml/gimpgradients.xml" />
+    <xi:include href="xml/gimpguides.xml" />
+    <xi:include href="xml/gimphelp.xml" />
+    <xi:include href="xml/gimpimage.xml" />
+    <xi:include href="xml/gimplayer.xml" />
+    <xi:include href="xml/gimpmessage.xml" />
+    <xi:include href="xml/gimppalette.xml" />
+    <xi:include href="xml/gimppatterns.xml" />
+    <xi:include href="xml/gimppixelrgn.xml" />
+    <xi:include href="xml/gimpplugin.xml" />
+    <xi:include href="xml/gimpproceduraldb.xml" />
+    <xi:include href="xml/gimpselection.xml" />
+    <xi:include href="xml/gimptexttool.xml" />
+    <xi:include href="xml/gimptile.xml" />
+    <xi:include href="xml/gimptools.xml" />
+    <xi:include href="xml/gimpundo.xml" />
 
-    &GimpBrushSelect;
-    &GimpFontSelect;
-    &GimpGradientSelect;
-    &GimpPatternSelect;
+    <xi:include href="xml/gimpbrushselect.xml" />
+    <xi:include href="xml/gimpfontselect.xml" />
+    <xi:include href="xml/gimpgradientselect.xml" />
+    <xi:include href="xml/gimppatternselect.xml" />
   </part>
 
   <part id="libgimpui">
     <title>GIMP User Interface Library</title>
-    &GimpUI;
-    &GimpExport;
-    &GimpMenu;
-    &GimpBrushMenu;
-    &GimpFontMenu;
-    &GimpGradientMenu;
-    &GimpPatternMenu;
+    <xi:include href="xml/gimpui.xml" />
+    <xi:include href="xml/gimpexport.xml" />
+    <xi:include href="xml/gimpmenu.xml" />
+    <xi:include href="xml/gimpbrushmenu.xml" />
+    <xi:include href="xml/gimpfontmenu.xml" />
+    <xi:include href="xml/gimpgradientmenu.xml" />
+    <xi:include href="xml/gimppatternmenu.xml" />
   </part>
+
 </book>

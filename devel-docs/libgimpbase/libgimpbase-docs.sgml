@@ -1,22 +1,11 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
                "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd" [
-<!ENTITY GimpBaseTypes SYSTEM "xml/gimpbasetypes.xml">
-<!ENTITY GimpLimits SYSTEM "xml/gimplimits.xml">
-<!ENTITY GimpDatafiles SYSTEM "xml/gimpdatafiles.xml">
-<!ENTITY GimpEnv SYSTEM "xml/gimpenv.xml">
-<!ENTITY GimpParasite SYSTEM "xml/gimpparasite.xml">
-<!ENTITY GimpParasiteIO SYSTEM "xml/gimpparasiteio.xml">
-<!ENTITY GimpSignal SYSTEM "xml/gimpsignal.xml">
-<!ENTITY GimpUnit SYSTEM "xml/gimpunit.xml">
-<!ENTITY GimpUtils SYSTEM "xml/gimputils.xml">
-<!ENTITY GimpVersion SYSTEM "xml/gimpversion.xml">
-<!ENTITY GimpProtocol SYSTEM "xml/gimpprotocol.xml">
-<!ENTITY GimpWire SYSTEM "xml/gimpwire.xml">
-<!ENTITY version SYSTEM "version.xml">
+  <!ENTITY version SYSTEM "version.xml">
 ]>
 
-<book id="index">
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
   <bookinfo>
     <title>GIMP Base Library Reference Manual</title>
     <releaseinfo>for GIMP &version;</releaseinfo>
@@ -24,17 +13,18 @@
 
   <part id="libgimpbase">
     <title>GIMP Base Library</title>
-    &GimpBaseTypes;
-    &GimpVersion;
-    &GimpLimits;
-    &GimpDatafiles;
-    &GimpEnv;
-    &GimpParasite;
-    &GimpParasiteIO;
-    &GimpSignal;
-    &GimpUnit;
-    &GimpUtils;
-    &GimpProtocol;
-    &GimpWire;
+    <xi:include href="xml/gimpbasetypes.xml" />
+    <xi:include href="xml/gimpversion.xml" />
+    <xi:include href="xml/gimplimits.xml" />
+    <xi:include href="xml/gimpdatafiles.xml" />
+    <xi:include href="xml/gimpenv.xml" />
+    <xi:include href="xml/gimpparasite.xml" />
+    <xi:include href="xml/gimpparasiteio.xml" />
+    <xi:include href="xml/gimpsignal.xml" />
+    <xi:include href="xml/gimpunit.xml" />
+    <xi:include href="xml/gimputils.xml" />
+    <xi:include href="xml/gimpprotocol.xml" />
+    <xi:include href="xml/gimpwire.xml" />
   </part>
+
 </book>

@@ -1,3 +1,12 @@
+2003-09-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-docs.sgml
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpcolor/libgimpcolor-docs.sgml
+	* libgimpmath/libgimpmath-docs.sgml	
+	* libgimpwidgets/libgimpwidgets-docs.sgml: converted to use
+	XInclude instead of entities.
+
 2003-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am: ignore some more headers.
