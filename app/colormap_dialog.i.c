@@ -429,9 +429,11 @@ ipal_clear (GimpColormapDialog* ipal)
 
   palette = GTK_WIDGET(ipal->palette);
 
-  width = palette->allocation.width;
-  height = palette->allocation.height;
-  row = g_new(guchar, width * 3);
+  /* Watch out for negative values (at least on Win32) */
+  width = (int) (gint16) palette->allocation.width;
+  height = (int) (gint16) palette->allocation.height;
+  if (width > 0)
+    row = g_new(guchar, width * 3);
   
   gtk_preview_size(ipal->palette, width, height);
   
@@ -448,7 +450,8 @@ ipal_clear (GimpColormapDialog* ipal)
       for (j = 0; j < 4 && i+j < height; j++)
 	gtk_preview_draw_row (ipal->palette, row, 0, i + j, width);
     }
-  g_free (row);
+  if (width > 0)
+    g_free (row);
   gtk_widget_draw (palette, NULL);
 }
 

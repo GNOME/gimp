@@ -1,11 +1,19 @@
+#include "config.h"
+
 #include <errno.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #ifdef USE_PTHREADS
 #include <pthread.h>
+#endif
+
+#ifdef _MSC_VER
+#include <io.h>
 #endif
 
 #include "libgimp/gimpintl.h"
@@ -352,7 +360,11 @@ tile_swap_open (SwapFile *swap_file)
       nopen_swap_files -= 1;
     }
 
+#ifndef NATIVE_WIN32
   swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
+#else
+  swap_file->fd = open (swap_file->filename, O_CREAT|O_RDWR|_O_BINARY, _S_IREAD|_S_IWRITE);
+#endif
   if (swap_file->fd == -1)
     {
       g_message (_("unable to open swap file...BAD THINGS WILL HAPPEN SOON"));

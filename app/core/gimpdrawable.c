@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include <strings.h>
+#include <string.h>
 #include "gimpdrawableP.h"
 #include "gimpsignal.h"
 #include "gimage.h"

@@ -16,6 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include <string.h>
+
 #include "tile_cache.h"
 #include "tile_manager.h"
 #include "tile_swap.h"

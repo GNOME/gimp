@@ -15,11 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "appenv.h"
@@ -1257,20 +1264,25 @@ palette_create_entries(gpointer   client_data,
 	  home = g_get_home_dir ();
 	  local_path = g_strdup (palette_path);
 	  first_token = local_path;
-	  token = xstrsep(&first_token, ":");
+	  token = xstrsep(&first_token, G_SEARCHPATH_SEPARATOR_S);
 
 	  if (token)
 	    {
 	      if (*token == '~')
 		{
-		  path = g_strdup_printf("%s%s", home, token + 1);
+		  if (home)
+		    path = g_strdup_printf("%s%s", home, token + 1);
+		  else
+		    /* Just ignore the ~ if no HOME ??? */
+		    path = g_strdup(token + 1);
 		}
 	      else
 		{
 		  path = g_strdup(token);
 		}
 
-	      entries->filename = g_strdup_printf ("%s/%s", path, palette_name);
+	      entries->filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+						   path, palette_name);
 
 	      g_free (path);
 	    }

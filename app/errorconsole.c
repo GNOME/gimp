@@ -19,15 +19,32 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/stat.h>
-#include "gtk/gtk.h"
+
+#ifdef _MSC_VER
+#include <io.h>
+#ifndef S_IRUSR
+#define S_IRUSR _S_IREAD
+#endif
+#ifndef S_IWUSR
+#define S_IWUSR _S_IWRITE
+#endif
+#endif
+
+#include <gtk/gtk.h>
 
 #include "commands.h"
 #include "session.h"

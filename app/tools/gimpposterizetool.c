@@ -15,9 +15,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "drawable.h"

@@ -15,12 +15,22 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <errno.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <string.h>
 #include <sys/stat.h>
+
+#ifdef _MSC_VER
+#include <process.h>		/* For _getpid() */
+#endif
+ 
 #include "appenv.h"
 #include "drawable.h"
 #include "errors.h"
@@ -416,7 +426,8 @@ generate_unique_filename (void)
 {
   pid_t pid;
   pid = getpid ();
-  return g_strdup_printf ("%s/gimp%d.%d", temp_path, (int) pid, swap_index++);
+  return g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimp%d.%d",
+			  temp_path, (int) pid, swap_index++);
 }
 
 

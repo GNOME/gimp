@@ -18,10 +18,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#include <time.h>
 
 #include "appenv.h"
 #include "module_db.h"
@@ -335,16 +340,14 @@ module_info_free (module_info *mod)
 /* helper functions */
 
 
-/* name must be of the form lib*.so */
-/* TODO: need support for WIN32-style dll names.  Maybe this function
- * should live in libgmodule? */
+/* name must be of the form lib*.so (Unix) or *.dll (Win32) */
 static gboolean
 valid_module_name (const char *filename)
 {
   const char *basename;
   int len;
 
-  basename = strrchr (filename, '/');
+  basename = strrchr (filename, G_DIR_SEPARATOR);
   if (basename)
     basename++;
   else
@@ -352,6 +355,7 @@ valid_module_name (const char *filename)
 
   len = strlen (basename);
 
+#ifndef WIN32
   if (len < 3 + 1 + 3)
     return FALSE;
 
@@ -360,6 +364,10 @@ valid_module_name (const char *filename)
 
   if (strcmp (basename + len - 3, ".so"))
     return FALSE;
+#else
+  if (g_strcasecmp (basename + len - 4, ".dll"))
+    return FALSE;
+#endif
 
   return TRUE;
 }

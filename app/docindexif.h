@@ -18,7 +18,6 @@
 
 
 #include <ctype.h>
-#include <gdk/gdkprivate.h>
 #include <stdio.h>
  
 #include "libgimp/gimpintl.h"

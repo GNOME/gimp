@@ -22,6 +22,13 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <glib.h>
+
+#ifdef _MSC_VER
+#ifndef S_ISREG
+#define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
+#endif
+#endif
+
 #include "general.h"
 
 char*
@@ -34,14 +41,14 @@ search_in_path (char *search_path,
   int err;
 
   local_path = g_strdup (search_path);
-  token = strtok (local_path, ":");
+  token = strtok (local_path, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
       sprintf (path, "%s", token);
 
-      if (token[strlen (token) - 1] != '/')
-	strcat (path, "/");
+      if (token[strlen (token) - 1] != G_DIR_SEPARATOR)
+	strcat (path, G_DIR_SEPARATOR_S);
       strcat (path, filename);
 
       err = stat (path, &buf);
@@ -51,7 +58,7 @@ search_in_path (char *search_path,
 	  break;
 	}
 
-      token = strtok (NULL, ":");
+      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
     }
 
   g_free (local_path);

@@ -18,15 +18,29 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
+#include "config.h"
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <sys/types.h>
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
+
+#ifdef _MSC_VER
+#ifndef S_ISDIR
+#define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
+#define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
+#endif
+#ifndef S_IXUSR
+#define S_IXUSR _S_IEXEC
+#endif
+#endif
 
 #include <glib.h>
 #include "datafiles.h"
@@ -70,7 +84,7 @@ datafiles_read_directories (char *path_str,
 
   next_token = local_path;
 
-  token = xstrsep(&next_token, ":");
+  token = xstrsep(&next_token, G_SEARCHPATH_SEPARATOR_S);
 
   while (token)
     {
@@ -90,8 +104,8 @@ datafiles_read_directories (char *path_str,
 
       if (!err && S_ISDIR(filestat.st_mode))
 	{
-	  if (path[strlen(path) - 1] != '/')
-	    strcat(path, "/");
+	  if (path[strlen(path) - 1] != G_DIR_SEPARATOR)
+	    strcat(path, G_DIR_SEPARATOR_S);
 
 	  /* Open directory */
 	  dir = opendir(path);
@@ -124,7 +138,7 @@ datafiles_read_directories (char *path_str,
 
       g_free(path);
 
-      token = xstrsep(&next_token, ":");
+      token = xstrsep(&next_token, G_SEARCHPATH_SEPARATOR_S);
     } /* while */
 
   g_free(local_path);

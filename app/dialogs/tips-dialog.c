@@ -45,9 +45,11 @@ tips_dialog_create ()
   if (tips_count == 0)
     {
       if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
-        temp = (char *) g_strdup_printf ("%s/%s", gimp_data_dir, TIPS_FILE_NAME);
+        temp = (char *) g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+					 gimp_data_dir, TIPS_FILE_NAME);
       else
-        temp = (char *) g_strdup_printf ("%s/%s", DATADIR, TIPS_FILE_NAME);
+        temp = (char *) g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s",
+					 DATADIR, TIPS_FILE_NAME);
       read_tips_file ((char *)temp);
       g_free (temp);
     }
@@ -219,7 +221,7 @@ read_tips_file (char *filename)
   char *tip = NULL;
   char *str = NULL;
 
-  fp = fopen (filename, "rb");
+  fp = fopen (filename, "r");
   if (!fp)
     {
       store_tip (_("Your GIMP tips file appears to be missing!\n"

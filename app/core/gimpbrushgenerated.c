@@ -18,12 +18,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <string.h>
+
+#ifndef HAVE_RINT
+#define rint(x) floor (x + 0.5)
+#endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "paint_core.h"
 #include "gimprc.h"
-#include <math.h>
-#include <stdio.h>
 
 #define OVERSAMPLING 5
 
@@ -228,7 +240,7 @@ gimp_brush_generated_generate(GimpBrushGenerated *brush)
   register double exponent;
   register guchar a;
   register int length;
-  register char *lookup;
+  register guchar *lookup;
   double buffer[OVERSAMPLING];
   register double sum, c, s, tx, ty;
   int width, height;

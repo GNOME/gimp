@@ -34,11 +34,15 @@
  * the structures so we can find which one we are taking about.
  */
 
+#include "config.h"
+
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "appenv.h"
 #include "colormaps.h"

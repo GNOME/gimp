@@ -319,7 +319,7 @@ rotate_tool_motion (tool, gdisp_ptr)
 
   /* constrain the angle to 15-degree multiples if ctrl is held down */
   
-  if (transform_core->state & ControlMask)
+  if (transform_core->state & GDK_CONTROL_MASK)
     transform_core->trans_info[ANGLE] = FIFTEEN_DEG * (int) ((transform_core->trans_info[REAL_ANGLE] +
 							      FIFTEEN_DEG / 2.0) /
 							     FIFTEEN_DEG);

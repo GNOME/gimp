@@ -148,12 +148,15 @@
  * - Add a Gradient brush mode (color changes as you move it).
  */
 
+#include "config.h"
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "appenv.h"
 #include "colormaps.h"
@@ -168,7 +171,6 @@
 #include "session.h"
 #include "gradient_header.h"
 
-#include "config.h"
 #include "libgimp/gimpintl.h"
 
 /***** Magic numbers *****/
@@ -5970,17 +5972,20 @@ build_user_filename(char *name, char *path_str)
 	home        = g_get_home_dir ();
 	local_path  = g_strdup(path_str);
 	first_token = local_path;
-	token       = xstrsep(&first_token, ":");
+	token       = xstrsep(&first_token, G_SEARCHPATH_SEPARATOR_S);
 	filename    = NULL;
 
 	if (token) {
 		if (*token == '~') {
+			if (!home)
+				return NULL;
 			path = g_strdup_printf("%s%s", home, token + 1);
 		} else {
 			path = g_strdup(token);
 		} /* else */
 
-		filename = g_strdup_printf("%s/%s", path, name);
+		filename = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s",
+					   path, name);
 
 		g_free(path);
 	} /* if */

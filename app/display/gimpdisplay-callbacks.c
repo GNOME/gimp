@@ -329,7 +329,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	      /*  if the first mouse button is down, check for automatic
 	       *  scrolling...
 	       */
-	      if ((mevent->state & Button1Mask) && !active_tool->scroll_lock)
+	      if ((mevent->state & GDK_BUTTON1_MASK) && !active_tool->scroll_lock)
 		{
 		  if (mevent->x < 0 || mevent->y < 0 ||
 		      mevent->x > gdisp->disp_width ||

@@ -17,6 +17,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "appenv.h"
 #include "buildmenu.h"
 #include "channels_dialog.h"

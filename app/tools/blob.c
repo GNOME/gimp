@@ -31,6 +31,10 @@
 
 #define ROUND(A) floor((A)+0.5)
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 static Blob *
 blob_new (int y, int height)
 {

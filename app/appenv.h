@@ -19,11 +19,23 @@
 #define __APPENV_H__
 
 #include "glib.h"
+
+/* The GIMP shouldn't need to know much about X11 (or Windows), so
+ * I'll remove this inclusion of gdkx.h. This will speed up compilations
+ * a bit, too. If some source file needs gdkx.h, it can include it.
+ */
+#if 0
 #include "gdk/gdkx.h"
+#endif
+
 #include "gtk/gtk.h"
 #include "gimpsetF.h"
 #include "colormap_dialog.t.h"
+
+/* Without gdkx.h no GDK_DISPLAY() */
+#if 0
 #define DISPLAY              ((Display *) GDK_DISPLAY())
+#endif
 
 /*   important macros - we reuse the ones from glib */
 #define BOUNDS(a,x,y)  CLAMP(a,x,y)

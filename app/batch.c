@@ -1,9 +1,13 @@
+#include "config.h"
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "appenv.h"
 #include "app_procs.h"
@@ -43,10 +47,14 @@ batch_init ()
 	{
 	  if (!read_from_stdin)
 	    {
+#ifndef NATIVE_WIN32 /* for now */
 	      g_print (_("reading batch commands from stdin\n"));
 	      gdk_input_add (STDIN_FILENO, GDK_INPUT_READ, batch_read, NULL);
 	      read_from_stdin = TRUE;
 	    }
+#else
+	      g_error ("Batch mode from standard input not implemented on Win32");
+#endif
 	}
       else
 	{

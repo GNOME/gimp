@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
+
 #include "appenv.h"
 #include "about_dialog.h"
 #include "actionarea.h"

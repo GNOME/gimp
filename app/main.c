@@ -22,8 +22,13 @@
 #include <signal.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+
 #include "libgimp/gserialize.h"
 
 #ifndef  WAIT_ANY
@@ -40,7 +45,9 @@
 #include "libgimp/gimpintl.h"
 
 static RETSIGTYPE on_signal (int);
+#ifdef SIGCHLD
 static RETSIGTYPE on_sig_child (int);
+#endif
 static void       init (void);
 static void       test_gserialize();
 static void	  on_error (const gchar* domain,
@@ -137,7 +144,7 @@ main (int argc, char **argv)
   no_data = FALSE;
   no_splash = FALSE;
   no_splash_image = FALSE;
-#ifdef HAVE_SHM_H
+#if defined (HAVE_SHM_H) || defined (NATIVE_WIN32)
   use_shm = TRUE;
 #else
   use_shm = FALSE;
@@ -274,7 +281,7 @@ main (int argc, char **argv)
 
   if (show_help)
     {
-      g_print (_("\007Usage: %s [option ...] [files ...]\n"), argv[0]);
+      g_print (_("Usage: %s [option ...] [files ...]\n"), argv[0]);
       g_print (_("Valid options are:\n"));
       g_print (_("  -h --help                Output this help.\n"));
       g_print (_("  -v --version             Output version info.\n"));
@@ -300,18 +307,38 @@ main (int argc, char **argv)
   g_set_message_handler ((GPrintFunc) message_func);
 
   /* Handle some signals */
+#ifdef SIGHUP
   signal (SIGHUP, on_signal);
+#endif
+#ifdef SIGINT
   signal (SIGINT, on_signal);
+#endif
+#ifdef SIGQUIT
   signal (SIGQUIT, on_signal);
+#endif
+#ifdef SIGABRT
   signal (SIGABRT, on_signal);
+#endif
+#ifdef SIGBUS
   signal (SIGBUS, on_signal);
+#endif
+#ifdef SIGSEGV
   signal (SIGSEGV, on_signal);
+#endif
+#ifdef SIGPIPE
   signal (SIGPIPE, on_signal);
+#endif
+#ifdef SIGTERM
   signal (SIGTERM, on_signal);
+#endif
+#ifdef SIGFPE
   signal (SIGFPE, on_signal);
+#endif
 
+#ifdef SIGCHLD
   /* Handle child exits */
   signal (SIGCHLD, on_sig_child);
+#endif
 
   g_log_set_handler(NULL,
 		    G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
@@ -331,6 +358,18 @@ main (int argc, char **argv)
   
   return 0;
 }
+
+#ifdef NATIVE_WIN32
+
+/* In case we build this as a windowed application */
+
+int _stdcall
+WinMain (int hInstance, int hPrevInstance, char *lpszCmdLine, int nCmdShow)
+{
+  return main (__argc, __argv);
+}
+
+#endif
 
 static void
 init ()
@@ -356,45 +395,67 @@ static RETSIGTYPE
 on_signal (int sig_num)
 {
   if (caught_fatal_sig)
-/*    raise (sig_num);*/
+#ifdef NATIVE_WIN32
+    raise (sig_num);
+#else
     kill (getpid (), sig_num);
+#endif
   caught_fatal_sig = 1;
 
   switch (sig_num)
     {
+#ifdef SIGHUP
     case SIGHUP:
       terminate (_("sighup caught"));
       break;
+#endif
+#ifdef SIGINT
     case SIGINT:
       terminate (_("sigint caught"));
       break;
+#endif
+#ifdef SIGQUIT
     case SIGQUIT:
       terminate (_("sigquit caught"));
       break;
+#endif
+#ifdef SIGABRT
     case SIGABRT:
       terminate (_("sigabrt caught"));
       break;
+#endif
+#ifdef SIGBUS
     case SIGBUS:
       fatal_error (_("sigbus caught"));
       break;
+#endif
+#ifdef SIGSEGV
     case SIGSEGV:
       fatal_error (_("sigsegv caught"));
       break;
+#endif
+#ifdef SIGPIPE
     case SIGPIPE:
       terminate (_("sigpipe caught"));
       break;
+#endif
+#ifdef SIGTERM
     case SIGTERM:
       terminate (_("sigterm caught"));
       break;
+#endif
+#ifdef SIGFPE
     case SIGFPE:
       fatal_error (_("sigfpe caught"));
       break;
+#endif
     default:
       fatal_error (_("unknown signal"));
       break;
     }
 }
 
+#ifdef SIGCHLD
 static RETSIGTYPE
 on_sig_child (int sig_num)
 {
@@ -408,6 +469,7 @@ on_sig_child (int sig_num)
 	break;
     }
 }
+#endif
 
 typedef struct 
 {

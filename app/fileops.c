@@ -16,15 +16,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
+#include "config.h"
+
 #include <ctype.h>
 #include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
 #include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 #include <errno.h>
+
+#ifdef _MSC_VER
+#include <process.h>		/* For _getpid() */
+#include <direct.h>		/* For _mkdir() */
+#define mkdir(path,mode) _mkdir(path)
+#endif
 
 #include "appenv.h"
 #include "actionarea.h"
@@ -534,7 +547,8 @@ file_open_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (fileload))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload), "./");
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(fileload),
+				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (fileload), _("Load Image"));
     }
 
@@ -707,7 +721,8 @@ file_save_as_callback (GtkWidget *w,
       if (GTK_WIDGET_VISIBLE (filesave))
 	return;
 
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave), "./");
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
+				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
     }
 
@@ -1386,9 +1401,9 @@ file_open_ok_callback (GtkWidget *w,
   if (err == 0 && (buf.st_mode & S_IFDIR))
     {
       GString *s = g_string_new (filename);
-      if (s->str[s->len - 1] != '/')
+      if (s->str[s->len - 1] != G_DIR_SEPARATOR)
         {
-          g_string_append_c (s, '/');
+          g_string_append_c (s, G_DIR_SEPARATOR);
         }
       gtk_file_selection_set_filename (fs, s->str);
       g_string_free (s, TRUE);
@@ -1549,7 +1564,7 @@ file_save_ok_callback (GtkWidget *w,
       if (buf.st_mode & S_IFDIR)
 	{
 	  GString *s = g_string_new (filename);
-	  g_string_append_c (s, '/');
+	  g_string_append_c (s, G_DIR_SEPARATOR);
 	  gtk_file_selection_set_filename (fs, s->str);
 	  g_string_free (s, TRUE);
 	  return;
@@ -2106,7 +2121,8 @@ file_temp_name_invoker (Argument *args)
   if (id == 0)
     pid = getpid();
 
-  g_string_sprintf (s, "%s/gimp_temp.%d%d.%s", temp_path, pid, id++, (char*)args[0].value.pdb_pointer);
+  g_string_sprintf (s, "%s" G_DIR_SEPARATOR_S "gimp_temp.%d%d.%s",
+		    temp_path, pid, id++, (char*)args[0].value.pdb_pointer);
 
   return_args = procedural_db_return_args (&file_temp_name_proc, TRUE);
 

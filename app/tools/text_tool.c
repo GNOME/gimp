@@ -447,6 +447,7 @@ text_gdk_image_to_region (GdkImage    *image,
 			  int          scale,
 			  PixelRegion *textPR)
 {
+  GdkColor black;
   int black_pixel;
   int pixel;
   int value;
@@ -457,7 +458,9 @@ text_gdk_image_to_region (GdkImage    *image,
   unsigned char * data;
 
   scale2 = scale * scale;
-  black_pixel = BlackPixel (DISPLAY, DefaultScreen (DISPLAY));
+  black.red = black.green = black.blue = 0;
+  gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
+  black_pixel = black.pixel;
   data = textPR->data;
 
   for (y = 0, scaley = 0; y < textPR->h; y++, scaley += scale)
@@ -587,8 +590,10 @@ text_render (GImage *gimage,
   gdk_gc_set_font (gc, font);
 
   /*  get black and white pixels for this gdisplay  */
-  black.pixel = BlackPixel (DISPLAY, DefaultScreen (DISPLAY));
-  white.pixel = WhitePixel (DISPLAY, DefaultScreen (DISPLAY));
+  black.red = black.green = black.blue = 0;
+  gdk_colormap_alloc_color (gdk_colormap_get_system (), &black, FALSE, TRUE);
+  white.red = white.green = white.blue = 65535;
+  gdk_colormap_alloc_color (gdk_colormap_get_system (), &white, FALSE, TRUE);
 
   /* Render the text into the pixmap.
    * Since the pixmap may not fully bound the text (because we limit its size)

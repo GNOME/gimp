@@ -13,13 +13,14 @@
  * GNU General Public License for more details.
  */
 
-#include "docindexif.h"
-#include "docindex.h"
-
-#include <gtk/gtk.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#include <gtk/gtk.h>
+
+#include "docindexif.h"
+#include "docindex.h"
 
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */

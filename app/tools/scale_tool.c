@@ -310,10 +310,10 @@ scale_tool_motion (tool, gdisp_ptr)
     }
 
   /*  if just the control key is down, affect only the height  */
-  if (transform_core->state & ControlMask && ! (transform_core->state & ShiftMask))
+  if (transform_core->state & GDK_CONTROL_MASK && ! (transform_core->state & GDK_SHIFT_MASK))
     diff_x = 0;
   /*  if just the shift key is down, affect only the width  */
-  else if (transform_core->state & ShiftMask && ! (transform_core->state & ControlMask))
+  else if (transform_core->state & GDK_SHIFT_MASK && ! (transform_core->state & GDK_CONTROL_MASK))
     diff_y = 0;
 
   *x1 += diff_x;

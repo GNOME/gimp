@@ -30,6 +30,7 @@
 
 
 #include <math.h>
+#include <stdlib.h>
 
 #include "appenv.h"
 #include "asupsample.h"

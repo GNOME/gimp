@@ -17,6 +17,7 @@
  */
 
 #include <stdlib.h>
+#include <string.h>
 #include "appenv.h"
 #include "color_area.h"
 #include "color_notebook.h"

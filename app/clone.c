@@ -235,7 +235,7 @@ clone_paint_func (PaintCore *paint_core,
       y2 = paint_core->lasty;
 
       /*  If the control key is down, move the src target and return */
-      if (paint_core->state & ControlMask)
+      if (paint_core->state & GDK_CONTROL_MASK)
 	{
 	  src_x = x1;
 	  src_y = y1;
@@ -269,7 +269,7 @@ clone_paint_func (PaintCore *paint_core,
       break;
 
     case INIT_PAINT :
-      if (paint_core->state & ControlMask)
+      if (paint_core->state & GDK_CONTROL_MASK)
 	{
 	  the_src_gdisp = gdisp;
 	  clone_set_src_drawable(drawable);

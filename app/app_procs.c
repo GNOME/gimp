@@ -15,15 +15,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include "config.h"
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
+#endif
 #include <sys/types.h>
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
+#ifdef _MSC_VER
+#include <process.h>		/* For _getpid() */
+#endif
+ 
 #include <gtk/gtk.h>
 
 #include "libgimp/gimpfeatures.h"
@@ -72,8 +83,6 @@
 
 #include "color_notebook.h"
 #include "color_select.h"
-
-#include "config.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -169,21 +178,22 @@ splash_logo_load_size (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s/gimp1_1_splash.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
+	      DATADIR);
 
   fp = fopen (buf, "rb");
   if (!fp)
     return 0;
 
-  fgets (buf, 1024, fp);
+  fgets (buf, sizeof (buf), fp);
   if (strcmp (buf, "P6\n") != 0)
     {
       fclose (fp);
       return 0;
     }
 
-  fgets (buf, 1024, fp);
-  fgets (buf, 1024, fp);
+  fgets (buf, sizeof (buf), fp);
+  fgets (buf, sizeof (buf), fp);
   sscanf (buf, "%d %d", &logo_width, &logo_height);
 
   fclose (fp);
@@ -204,24 +214,25 @@ splash_logo_load (GtkWidget *window)
   if (logo_pixmap)
     return TRUE;
 
-  g_snprintf (buf, sizeof(buf), "%s/gimp1_1_splash.ppm", DATADIR);
+  g_snprintf (buf, sizeof(buf), "%s" G_DIR_SEPARATOR_S "gimp1_1_splash.ppm",
+	      DATADIR);
 
   fp = fopen (buf, "rb");
   if (!fp)
     return 0;
 
-  fgets (buf, 1024, fp);
+  fgets (buf, sizeof (buf), fp);
   if (strcmp (buf, "P6\n") != 0)
     {
       fclose (fp);
       return 0;
     }
 
-  fgets (buf, 1024, fp);
-  fgets (buf, 1024, fp);
+  fgets (buf, sizeof (buf), fp);
+  fgets (buf, sizeof (buf), fp);
   sscanf (buf, "%d %d", &logo_width, &logo_height);
 
-  fgets (buf, 1024, fp);
+  fgets (buf, sizeof (buf), fp);
   if (strcmp (buf, "255\n") != 0)
     {
       fclose (fp);
@@ -273,6 +284,7 @@ splash_text_draw (GtkWidget *widget)
 		   ((logo_area_width - gdk_string_width (font, NAME)) / 2),
 		   (0.25 * logo_area_height),
 		   NAME);
+  gdk_font_unref (font);
 
   font = gdk_font_load ("-Adobe-Helvetica-Bold-R-Normal--*-120-*-*-*-*-*-*");
   gdk_draw_string (widget->window,
@@ -293,6 +305,7 @@ splash_text_draw (GtkWidget *widget)
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2),
 		   (0.80 * logo_area_height),
 		   AUTHORS);
+  gdk_font_unref (font);
 }
 
 static void
@@ -424,7 +437,7 @@ app_init_update_status(char *label1val,
 	{
 	  while ( strlen (label2val) > max_label_length )
 	    {
-	      temp = strchr (label2val, '/');
+	      temp = strchr (label2val, G_DIR_SEPARATOR);
 	      if (temp == NULL)  /* for sanity */
 		break;
 	      temp++;
@@ -462,7 +475,7 @@ app_init (void)
   gimp_dir = gimp_directory ();
   if (gimp_dir[0] != '\000')
     {
-      g_snprintf (filename, MAXPATHLEN, "%s/gtkrc", gimp_dir);
+      g_snprintf (filename, MAXPATHLEN, "%s" G_DIR_SEPARATOR_S "gtkrc", gimp_dir);
 
       if ((be_verbose == TRUE) || (no_splash == TRUE))
 	g_print (_("parsing \"%s\"\n"), filename);
@@ -539,7 +552,8 @@ app_init (void)
   if (swap_path == NULL)
     swap_path = "/tmp";
   toast_old_temp_files ();
-  path = g_strdup_printf ("%s/gimpswap.%ld", swap_path, (long)getpid ());
+  path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%ld",
+			  swap_path, (long)getpid ());
   tile_swap_add (path, NULL, NULL);
   g_free (path);
 
@@ -759,9 +773,17 @@ toast_old_temp_files (void)
          */
 
 	int pid = atoi (entry->d_name + 9);
+#ifndef NATIVE_WIN32
 	if (kill (pid, 0))
+#else
+	/* On Windows, you can't remove open files anyhow,
+	 * so no harm trying.
+	 */
+#endif
+
 	  {
-	    g_string_sprintf (filename, "%s/%s", swap_path, entry->d_name);
+	    g_string_sprintf (filename, "%s" G_DIR_SEPARATOR_S "%s",
+			      swap_path, entry->d_name);
 	    unlink (filename->str);
 	  }
       }
