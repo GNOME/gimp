@@ -16,16 +16,18 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
-#include "actionarea.h"
 #include "color_select.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "session.h"
 #include "color_area.h" /* for color_area_draw_rect */
 
@@ -110,7 +112,6 @@ static void color_select_update_colors     (ColorSelect *, gint);
 
 static void color_select_ok_callback     (GtkWidget *, gpointer);
 static void color_select_cancel_callback (GtkWidget *, gpointer);
-static gint color_select_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static gint color_select_xy_expose       (GtkWidget *, GdkEventExpose *,
 					  ColorSelect *);
 static gint color_select_xy_events       (GtkWidget *, GdkEvent *,
@@ -190,12 +191,6 @@ color_select_new (gint                 r,
   ColorSelect *csp;
   GtkWidget   *main_vbox;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), color_select_ok_callback, NULL, NULL },
-    { N_("Cancel"), color_select_cancel_callback, NULL, NULL }
-  };
-
   csp = g_new (ColorSelect, 1);
 
   csp->callback      = callback;
@@ -211,36 +206,25 @@ color_select_new (gint                 r,
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
 
-  csp->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (csp->shell), "color_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (csp->shell), _("Color Selection"));
-  gtk_window_set_policy (GTK_WINDOW (csp->shell), FALSE, FALSE, FALSE);
+  csp->shell =
+    gimp_dialog_new (_("Color Selection"), "color_selection",
+		     gimp_standard_help_func,
+		     "dialogs/color_selection_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, FALSE, FALSE,
 
+		     wants_updates ? _("Close") : _("OK"),
+		     color_select_ok_callback,
+		     csp, NULL, TRUE, FALSE,
+		     wants_updates ? _("Revert to Old Color") : _("Cancel"),
+		     color_select_cancel_callback,
+		     csp, NULL, FALSE, TRUE,
 
-  /*  handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (csp->shell), "delete_event",
-		      (GtkSignalFunc) color_select_delete_callback, csp);
+		     NULL);
 
   main_vbox = color_select_widget_new (csp, r, g, b);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (csp->shell)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (csp->shell)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
-
-  /*  The action area  */
-  action_items[0].user_data = csp;
-  action_items[1].user_data = csp;
-  if (csp->wants_updates)
-    {
-      action_items[0].label = _("Close");
-      action_items[1].label = _("Revert to Old Color");
-    }
-  else
-    {
-      action_items[0].label = _("OK");
-      action_items[1].label = _("Cancel");
-    }
-  build_action_area (GTK_DIALOG (csp->shell), action_items, 2, 0);
 
   color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
   color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
@@ -997,16 +981,6 @@ color_select_ok_callback (GtkWidget *widget,
     }
 }
 
-static gint
-color_select_delete_callback (GtkWidget *widget,
-			      GdkEvent  *event,
-			      gpointer   data)
-{
-  color_select_cancel_callback (widget, data);
-
-  return TRUE;
-}
-  
 static void
 color_select_cancel_callback (GtkWidget *widget,
 			      gpointer   data)

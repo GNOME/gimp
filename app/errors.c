@@ -36,9 +36,10 @@
 #include <gtk/gtk.h>
 #include "appenv.h"
 #include "app_procs.h"
-#include "interface.h"
 #include "errorconsole.h"
 #include "errors.h"
+#include "gimpui.h"
+
 #include "libgimp/gimpintl.h"
 
 #ifdef NATIVE_WIN32
@@ -54,7 +55,7 @@ gimp_message_func (gchar *str)
     switch (message_handler)
       {
         case MESSAGE_BOX:
-          message_box (str, NULL, NULL);
+          gimp_message_box (str, NULL, NULL);
           break;
 
         case ERROR_CONSOLE:

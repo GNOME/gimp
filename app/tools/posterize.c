@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -23,13 +22,13 @@
 #include <math.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
 #include "posterize.h"
 #include "gimplut.h"
+#include "gimpui.h"
 #include "lut_funcs.h"
 
 #include "libgimp/gimpintl.h"
@@ -77,7 +76,6 @@ static void   posterize_ok_callback        (GtkWidget *, gpointer);
 static void   posterize_cancel_callback    (GtkWidget *, gpointer);
 static void   posterize_preview_update     (GtkWidget *, gpointer);
 static void   posterize_levels_text_update (GtkWidget *, gpointer);
-static gint   posterize_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 
 
 /*  posterize select action functions  */
@@ -190,29 +188,28 @@ posterize_new_dialog ()
   GtkWidget *label;
   GtkWidget *toggle;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), posterize_ok_callback, NULL, NULL },
-    { N_("Cancel"), posterize_cancel_callback, NULL, NULL }
-  };
-
-  pd = g_malloc (sizeof (PosterizeDialog));
+  pd = g_new (PosterizeDialog, 1);
   pd->preview = TRUE;
-  pd->levels = 3;
-  pd->lut = gimp_lut_new();
+  pd->levels  = 3;
+  pd->lut     = gimp_lut_new ();
 
   /*  The shell and main vbox  */
-  pd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (pd->shell), "posterize", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (pd->shell), _("Posterize"));
+  pd->shell =
+    gimp_dialog_new (_("Posterize"), "posterize",
+		     tools_help_func, NULL,
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (pd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (posterize_delete_callback),
-		      pd);
+		     _("OK"), posterize_ok_callback,
+		     pd, NULL, TRUE, FALSE,
+		     _("Cancel"), posterize_cancel_callback,
+		     pd, NULL, FALSE, TRUE,
+
+		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (pd->shell)->vbox), vbox);
 
   /*  Horizontal box for levels text widget  */
   hbox = gtk_hbox_new (TRUE, 2);
@@ -249,11 +246,6 @@ posterize_new_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
-
-  /*  The action area  */
-  action_items[0].user_data = pd;
-  action_items[1].user_data = pd;
-  build_action_area (GTK_DIALOG (pd->shell), action_items, 2, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (pd->shell);
@@ -302,14 +294,6 @@ posterize_ok_callback (GtkWidget *widget,
 
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
-}
-
-static gint 
-posterize_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
-{
-  posterize_cancel_callback (w, data);
-
-  return TRUE;
 }
 
 static void

@@ -15,15 +15,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <math.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "histogram_tool.h"
 #include "image_map.h"
 #include "interface.h"
@@ -54,7 +53,6 @@ static void   histogram_tool_control (Tool *, ToolAction, gpointer);
 static HistogramToolDialog *  histogram_tool_new_dialog (void);
 
 static void   histogram_tool_close_callback  (GtkWidget *, gpointer);
-static gint   histogram_tool_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void   histogram_tool_value_callback  (GtkWidget *, gpointer);
 static void   histogram_tool_red_callback    (GtkWidget *, gpointer);
 static void   histogram_tool_green_callback  (GtkWidget *, gpointer);
@@ -257,12 +255,7 @@ histogram_tool_new_dialog ()
   gint i;
   gint x, y;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Close"), histogram_tool_close_callback, NULL, NULL }
-  };
-
-  static char * histogram_info_names[] =
+  static gchar * histogram_info_names[] =
   {
     N_("Mean:"),
     N_("Std Dev:"),
@@ -282,23 +275,24 @@ histogram_tool_new_dialog ()
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
 
-  htd = (HistogramToolDialog *) g_malloc (sizeof (HistogramToolDialog));
+  htd = g_new (HistogramToolDialog, 1);
   htd->channel = HISTOGRAM_VALUE;
 
   for (i = 0; i < 4; i++)
     color_option_items [i].user_data = (gpointer) htd;
-  
+
   htd->hist = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
-  htd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (htd->shell), "histogram", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (htd->shell), _("Histogram"));
+  htd->shell = gimp_dialog_new (_("Histogram"), "histogram",
+				tools_help_func, NULL,
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
 
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (htd->shell), "delete_event",
-		      (GtkSignalFunc) histogram_tool_delete_callback,
-		      htd);
+				_("Close"), histogram_tool_close_callback,
+				htd, NULL, TRUE, TRUE,
+
+				NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
@@ -365,10 +359,6 @@ histogram_tool_new_dialog ()
       gtk_widget_show (htd->info_labels[i]);
     }
 
-  /*  The action area  */
-  action_items[0].user_data = htd;
-  build_action_area (GTK_DIALOG (htd->shell), action_items, 1, 0);
-
   gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (htd->shell);
@@ -386,16 +376,6 @@ histogram_tool_close_callback (GtkWidget *widget,
 
   if (GTK_WIDGET_VISIBLE (htd->shell))
     gtk_widget_hide (htd->shell);
-}
-
-static gint
-histogram_tool_delete_callback (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   client_data)
-{
-  histogram_tool_close_callback (widget, client_data);
-
-  return TRUE;
 }
 
 static void

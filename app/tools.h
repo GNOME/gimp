@@ -111,6 +111,8 @@ void   tools_options_dialog_new   (void);
 void   tools_options_dialog_show  (void);
 void   tools_options_dialog_free  (void);
 
+void   tools_help_func            (gpointer);
+
 void   tools_register             (ToolType     tool_type,
 				   ToolOptions *tool_options);
 

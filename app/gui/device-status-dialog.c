@@ -15,19 +15,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 #include "config.h"
 
 #include <string.h>
 #include <stdio.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "devices.h"
 #include "interface.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "palette.h"
 #include "session.h"
 #include "tools.h"
@@ -63,7 +62,7 @@ struct _DeviceInfo {
   GimpBrushP brush;
   GPatternP pattern;
   ToolType tool;
-  unsigned char foreground[3];
+  guchar foreground[3];
 };
 
 typedef struct _DeviceInfoDialog DeviceInfoDialog;
@@ -115,13 +114,6 @@ static void device_status_drop_pattern     (GtkWidget *,
 /* Global data */
 int current_device = GDK_CORE_POINTER;
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Save"), (ActionCallback)devices_write_rc, NULL, NULL },
-  { N_("Close"), devices_close_callback, NULL, NULL }
-};
-
 /*  dnd stuff  */
 static GtkTargetEntry color_area_target_table[] =
 {
@@ -151,17 +143,17 @@ create_input_dialog (void)
 
   if (!inputd)
     {
-      inputd = gtk_input_dialog_new();
+      inputd = gtk_input_dialog_new ();
 
       /* register this one only */
-      dialog_register(inputd);
+      dialog_register (inputd);
 
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG(inputd)->action_area), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (inputd)->action_area), 2);
       gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (inputd)->action_area),
 			       FALSE);
 
-      hbbox = gtk_hbutton_box_new();
-      gtk_button_box_set_spacing(GTK_BUTTON_BOX (hbbox), 4);
+      hbbox = gtk_hbutton_box_new ();
+      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
 
       gtk_widget_reparent (GTK_INPUT_DIALOG (inputd)->save_button, hbbox);
       GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->save_button,
@@ -170,46 +162,52 @@ create_input_dialog (void)
       GTK_WIDGET_SET_FLAGS (GTK_INPUT_DIALOG (inputd)->close_button,
 			    GTK_CAN_DEFAULT);
 
-      gtk_box_pack_end(GTK_BOX (GTK_DIALOG (inputd)->action_area), hbbox,
-		       FALSE, FALSE, 0);
+      gtk_box_pack_end (GTK_BOX (GTK_DIALOG (inputd)->action_area), hbbox,
+			FALSE, FALSE, 0);
       gtk_widget_grab_default (GTK_INPUT_DIALOG (inputd)->close_button);
       gtk_widget_show(hbbox);
 
-      gtk_signal_connect (GTK_OBJECT(GTK_INPUT_DIALOG(inputd)->save_button),
+      gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->save_button),
 			  "clicked",
-			  GTK_SIGNAL_FUNC(devices_write_rc), NULL);
-      gtk_signal_connect (GTK_OBJECT(GTK_INPUT_DIALOG(inputd)->close_button),
+			  GTK_SIGNAL_FUNC (devices_write_rc), NULL);
+      gtk_signal_connect (GTK_OBJECT (GTK_INPUT_DIALOG (inputd)->close_button),
 			  "clicked",
-			  GTK_SIGNAL_FUNC(devices_close_callback), inputd);
+			  GTK_SIGNAL_FUNC (devices_close_callback), inputd);
 
-      gtk_signal_connect (GTK_OBJECT(inputd), "destroy",
-			  (GtkSignalFunc)input_dialog_destroy_callback, 
+      gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
+			  (GtkSignalFunc) input_dialog_destroy_callback, 
 			  &inputd);
-      gtk_signal_connect (GTK_OBJECT(inputd), "enable_device",
-			  GTK_SIGNAL_FUNC(input_dialog_able_callback), NULL);
-      gtk_signal_connect (GTK_OBJECT(inputd), "disable_device",
-			  GTK_SIGNAL_FUNC(input_dialog_able_callback), NULL);
+      gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
+			  GTK_SIGNAL_FUNC (input_dialog_able_callback), NULL);
+      gtk_signal_connect (GTK_OBJECT (inputd), "disable_device",
+			  GTK_SIGNAL_FUNC (input_dialog_able_callback), NULL);
+
+      /*  Connect the "F1" help key  */
+      gimp_help_connect_help_accel (inputd,
+				    gimp_standard_help_func,
+				    "dialogs/input_devices_dialog.html");
+
       gtk_widget_show (inputd);
     }
   else
     {
-      if (!GTK_WIDGET_MAPPED(inputd))
-	gtk_widget_show(inputd);
+      if (!GTK_WIDGET_MAPPED (inputd))
+	gtk_widget_show (inputd);
       else
-	gdk_window_raise(inputd->window);
+	gdk_window_raise (inputd->window);
     }
 }
 
 void
-input_dialog_able_callback (GtkWidget *w, 
-			    guint32    deviceid, 
+input_dialog_able_callback (GtkWidget *widget,
+			    guint32    deviceid,
 			    gpointer   data)
 {
   device_status_update (deviceid);
 }
 
 static void
-input_dialog_destroy_callback (GtkWidget *w, 
+input_dialog_destroy_callback (GtkWidget *widget,
 			       gpointer   call_data)
 {
   *((GtkWidget **)call_data) = NULL;
@@ -223,7 +221,7 @@ devices_init (void)
   /* Create device info structures for present devices */
 
   tmp_list = gdk_input_list_devices ();
-  
+
   while (tmp_list)
     {
       GdkDeviceInfo *gdk_info = (GdkDeviceInfo *)tmp_list->data;
@@ -528,7 +526,7 @@ devices_save_current_info (void)
   device_info->is_init = TRUE;
   device_info->device = current_device;
   device_info->brush = get_active_brush ();
-  device_info->pattern = get_active_pattern();
+  device_info->pattern = get_active_pattern ();
   if (active_tool)
     device_info->tool = active_tool->type;
   else
@@ -539,7 +537,7 @@ devices_save_current_info (void)
 }
 
 static void
-devices_write_rc_device (DeviceInfo *device_info, 
+devices_write_rc_device (DeviceInfo *device_info,
 			 FILE       *fp)
 {
   GdkDeviceInfo *gdk_info;
@@ -552,7 +550,7 @@ devices_write_rc_device (DeviceInfo *device_info,
     {
       /* gdk_input_list_devices returns an internal list, so we shouldn't
 	 free it afterwards */
-      tmp_list = gdk_input_list_devices();
+      tmp_list = gdk_input_list_devices ();
       while (tmp_list)
 	{
 	  GdkDeviceInfo *info = (GdkDeviceInfo *)tmp_list->data;
@@ -566,7 +564,7 @@ devices_write_rc_device (DeviceInfo *device_info,
 	}
     }
   
-  fprintf(fp, "(device \"%s\"",device_info->name);
+  fprintf (fp, "(device \"%s\"",device_info->name);
 
   switch (gdk_info ? gdk_info->mode : device_info->mode)
     {
@@ -581,9 +579,10 @@ devices_write_rc_device (DeviceInfo *device_info,
       break;
     }
   
-  fprintf(fp, "\n        (mode %s)",mode);
+  fprintf (fp, "\n        (mode %s)", mode);
 
-  fprintf(fp, "\n        (axes %d",gdk_info ? gdk_info->num_axes : device_info->num_axes);
+  fprintf (fp, "\n        (axes %d",
+	   gdk_info ? gdk_info->num_axes : device_info->num_axes);
 
   for (i=0; i<(gdk_info ? gdk_info->num_axes : device_info->num_axes); i++)
     {
@@ -615,19 +614,20 @@ devices_write_rc_device (DeviceInfo *device_info,
 	  break;
 #endif /* GTK_HAVE_SIX_VALUATORS */
 	}
-      fprintf(fp, " %s",axis_type);
+      fprintf (fp, " %s",axis_type);
     }
-  fprintf(fp,")");
+  fprintf (fp,")");
 
-  fprintf(fp, "\n        (keys %d", gdk_info ? gdk_info->num_keys : device_info->num_keys);
+  fprintf (fp, "\n        (keys %d",
+	   gdk_info ? gdk_info->num_keys : device_info->num_keys);
 
-  for (i=0; i<(gdk_info ? gdk_info->num_keys : device_info->num_keys); i++)
+  for (i=0; i < (gdk_info ? gdk_info->num_keys : device_info->num_keys); i++)
     {
       GdkModifierType modifiers = gdk_info ? gdk_info->keys[i].modifiers :
 	device_info->keys[i].modifiers;
       guint keyval = gdk_info ? gdk_info->keys[i].keyval :
 	device_info->keys[i].keyval;
-	
+
       if (keyval)
 	{
 	  /* FIXME: integrate this back with menus_install_accelerator */
@@ -650,22 +650,22 @@ devices_write_rc_device (DeviceInfo *device_info,
       else
 	fprintf (fp, " \"\"");
     }
-  fprintf(fp,")");
+  fprintf (fp,")");
 
   if (device_info->is_init)
     {
       if (device_info->brush)
-        fprintf(fp, "\n        (brush \"%s\")",device_info->brush->name);
+        fprintf (fp, "\n        (brush \"%s\")",device_info->brush->name);
       if (device_info->pattern)
-        fprintf(fp, "\n        (pattern \"%s\")",device_info->pattern->name);
+        fprintf (fp, "\n        (pattern \"%s\")",device_info->pattern->name);
       /* Fixme: hard coded last tool....  see gimprc */
       if (device_info->tool && device_info->tool <= LAST_TOOLBOX_TOOL)
-        fprintf(fp, "\n        (tool \"%s\")",
-	      tool_info[device_info->tool].tool_name);
-      fprintf(fp, "\n        (foreground %d %d %d)",
-	      device_info->foreground[0],
-	      device_info->foreground[1],
-	      device_info->foreground[2]);
+        fprintf (fp, "\n        (tool \"%s\")",
+		 tool_info[device_info->tool].tool_name);
+      fprintf (fp, "\n        (foreground %d %d %d)",
+	       device_info->foreground[0],
+	       device_info->foreground[1],
+	       device_info->foreground[2]);
     }
   fprintf(fp,")\n");
   
@@ -702,18 +702,25 @@ create_device_status (void)
   if (deviceD == NULL)
     {
       deviceD = g_new (DeviceInfoDialog, 1);
-      deviceD->shell = gtk_dialog_new ();
+
+      deviceD->shell =
+	gimp_dialog_new (_("Device Status"), "device_status",
+			 gimp_standard_help_func,
+			 "dialogs/device_status_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, FALSE, TRUE,
+
+			 _("Save"), (GtkSignalFunc) devices_write_rc,
+			 NULL, NULL, FALSE, FALSE,
+			 _("Close"), devices_close_callback,
+			 NULL, NULL, TRUE, TRUE,
+
+			 NULL);
 
       /* register this one only */
-      dialog_register(deviceD->shell);
-
-      gtk_window_set_title (GTK_WINDOW(deviceD->shell), _("Device Status"));
-      gtk_window_set_policy (GTK_WINDOW (deviceD->shell), FALSE, FALSE, TRUE);
-      /*  don't set the dialog's size, as the number of devices may have
-       *  changed since the last session
-       */
-      session_set_window_geometry (deviceD->shell,
-				   &device_status_session_info, FALSE);
+      dialog_register (deviceD->shell);
+      session_set_window_geometry (deviceD->shell, &device_status_session_info,
+				   FALSE);
 
       deviceD->num_devices = 0;
       tmp_list = devices_info;
@@ -723,10 +730,10 @@ create_device_status (void)
 	    deviceD->num_devices++;
 	  tmp_list = tmp_list->next;
 	}
-/* devices table */
+      /* devices table */
       deviceD->table = gtk_table_new (deviceD->num_devices, 5, FALSE);
-      gtk_container_set_border_width (GTK_CONTAINER(deviceD->table), 3);
-      gtk_container_add (GTK_CONTAINER(GTK_DIALOG(deviceD->shell)->vbox),
+      gtk_container_set_border_width (GTK_CONTAINER (deviceD->table), 3);
+      gtk_container_add (GTK_CONTAINER (GTK_DIALOG (deviceD->shell)->vbox),
 			 deviceD->table);
       gtk_widget_realize (deviceD->table);
       gtk_widget_show (deviceD->table);
@@ -841,9 +848,6 @@ create_device_status (void)
 	  i++;
 	}
 
-      action_items[1].user_data = deviceD->shell;
-      build_action_area (GTK_DIALOG (deviceD->shell), action_items, 2, 1);
-
       deviceD->current = 0xffffffff; /* random, but doesn't matter */
       device_status_update_current ();
 
@@ -878,7 +882,7 @@ device_status_destroy_callback (void)
 }
 
 static void
-devices_close_callback (GtkWidget *w,
+devices_close_callback (GtkWidget *widget,
 			gpointer   data)
 {
   gtk_widget_hide (GTK_WIDGET(data));

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include <string.h>
 
 #include "gdk/gdkkeysyms.h"
@@ -28,6 +27,7 @@
 #include "floating_sel.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimphelp.h"
 #include "info_dialog.h"
 #include "tool_options_ui.h"
 #include "undo.h"
@@ -1030,7 +1030,8 @@ crop_info_create (Tool *tool)
   gdisp = (GDisplay *) tool->gdisp_ptr;
 
   /*  create the info dialog  */
-  crop_info = info_dialog_new (_("Crop & Resize Information"));
+  crop_info = info_dialog_new (_("Crop & Resize Information"),
+			       tools_help_func, NULL);
 
   /*  add the information fields  */
   spinbutton = info_dialog_add_spinbutton (crop_info, _("Origin X:"), NULL,

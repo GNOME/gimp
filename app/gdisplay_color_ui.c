@@ -15,12 +15,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
-#include "actionarea.h"
 #include "gdisplay.h"
 #include "gdisplay_color.h"
 #include "gdisplay_color_ui.h"
 #include "gimpimageP.h"
+#include "gimpui.h"
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
 #include <gtk/gtk.h>
@@ -48,7 +47,6 @@ struct _ButtonInfo
 
 static void color_display_ok_callback        (GtkWidget *, gpointer);
 static void color_display_cancel_callback    (GtkWidget *, gpointer);
-static gint color_display_delete_callback    (GtkWidget *, gpointer);
 static gint color_display_destroy_callback   (GtkWidget *, gpointer);
 static void color_display_add_callback       (GtkWidget *, gpointer);
 static void color_display_remove_callback    (GtkWidget *, gpointer);
@@ -68,12 +66,6 @@ make_dialog (void)
   char *titles[2];
   int i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), color_display_ok_callback, NULL, NULL },
-    { N_("Cancel"), color_display_cancel_callback, NULL, NULL }
-  };
-
   static ButtonInfo buttons[] = 
   {
     { N_("Add"), color_display_add_callback },
@@ -83,13 +75,18 @@ make_dialog (void)
     { N_("Configure"), color_display_configure_callback }
   };
 
-  cdd.shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (cdd.shell), "display_color", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cdd.shell), _("Color Display Filters"));
+  cdd.shell = gimp_dialog_new (_("Color Display Filters"), "display_color",
+			       gimp_standard_help_func,
+			       "dialogs/color_diaplsy_filters_dialog.html",
+			       GTK_WIN_POS_NONE,
+			       FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (cdd.shell), "delete_event",
-		      GTK_SIGNAL_FUNC (color_display_delete_callback),
-		      NULL);
+			       _("OK"), color_display_ok_callback,
+			       NULL, NULL, TRUE, FALSE,
+			       _("Cancel"), color_display_cancel_callback,
+			       NULL, NULL, FALSE, TRUE,
+
+			       NULL);
 
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cdd.shell)->vbox), hbox,
@@ -139,10 +136,6 @@ make_dialog (void)
     }
 
   gtk_widget_show_all (hbox);
-
-  action_items[0].user_data = cdd.shell;
-  action_items[1].user_data = cdd.shell;
-  build_action_area (GTK_DIALOG (cdd.shell), action_items, 2, 0);
 }
 
 static void
@@ -157,14 +150,6 @@ color_display_cancel_callback (GtkWidget *widget,
 			       gpointer   data)
 {
   gtk_widget_hide (GTK_WIDGET (data));
-}
-
-static gint
-color_display_delete_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  color_display_cancel_callback (widget, data);
-  return TRUE;
 }
 
 static gint

@@ -15,8 +15,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "colormaps.h"
@@ -283,10 +283,12 @@ info_window_create (void *gdisp_ptr)
 
   /*  create the info dialog  */
   title_buf = g_strdup_printf (_("%s: Window Info"), title);
-  info_win = info_dialog_notebook_new (title_buf);
+  info_win = info_dialog_notebook_new (title_buf,
+				       gimp_standard_help_func,
+				       "dialogs/info_window.html");
   g_free (title_buf);
 
-  iwd = (InfoWinData *) g_malloc (sizeof (InfoWinData));
+  iwd = g_new (InfoWinData, 1);
   info_win->user_data = iwd;
   iwd->dimensions_str[0] = '\0';
   iwd->resolution_str[0] = '\0';

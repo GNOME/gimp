@@ -23,22 +23,16 @@
 #include "appenv.h"
 #include "gimpbrushgenerated.h"
 #include "brush_edit.h"
-#include "actionarea.h"
+#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 
-static void brush_edit_close_callback (GtkWidget *w, void *data);
+static void brush_edit_close_callback (GtkWidget *, gpointer);
 static gint brush_edit_preview_resize (GtkWidget *widget, GdkEvent *event, 
 				       BrushEditGeneratedWindow *begw);
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Close"), brush_edit_close_callback, NULL, NULL }
-};
-
 static void
-update_brush_callback (GtkAdjustment *adjustment,
+update_brush_callback (GtkAdjustment            *adjustment,
 		       BrushEditGeneratedWindow *begw)
 {
   if (begw->brush &&
@@ -64,15 +58,6 @@ update_brush_callback (GtkAdjustment *adjustment,
   }
 }
 
-static gint
-brush_edit_delete_callback (GtkWidget *w,
-			    BrushEditGeneratedWindow *begw)
-{
-  if (GTK_WIDGET_VISIBLE (w))
-    gtk_widget_hide (w);
-  return TRUE;
-}
-
 static void
 brush_edit_clear_preview (BrushEditGeneratedWindow *begw)
 {
@@ -93,7 +78,7 @@ brush_edit_clear_preview (BrushEditGeneratedWindow *begw)
 }
 
 static gint 
-brush_edit_brush_dirty_callback(GimpBrush *brush,
+brush_edit_brush_dirty_callback (GimpBrush               *brush,
 				BrushEditGeneratedWindow *begw)
 {
   int x, y, width, yend, ystart, xo;
@@ -138,15 +123,17 @@ brush_edit_brush_dirty_callback(GimpBrush *brush,
   return TRUE;
 }
 
-void brush_renamed_callback(GtkWidget *widget, BrushEditGeneratedWindow *begw)
+void
+brush_renamed_callback (GtkWidget                *widget,
+			BrushEditGeneratedWindow *begw)
 {
   gtk_entry_set_text(GTK_ENTRY(begw->name),
 		     gimp_brush_get_name(GIMP_BRUSH(begw->brush)));
 }
 
 void
-brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
-			       GimpBrush *gbrush)
+brush_edit_generated_set_brush (BrushEditGeneratedWindow *begw,
+				GimpBrush                *gbrush)
 {
   GimpBrushGenerated *brush = 0;
   if (begw->brush == (GimpBrushGenerated*)gbrush)
@@ -189,16 +176,21 @@ brush_edit_generated_set_brush(BrushEditGeneratedWindow *begw,
   }
 }
 
-void name_changed_func(GtkWidget *widget, BrushEditGeneratedWindow *begw)
+void
+name_changed_func (GtkWidget                *widget,
+		   BrushEditGeneratedWindow *begw)
 {
   gchar *entry_text;
   entry_text = gtk_entry_get_text(GTK_ENTRY(widget));
   gimp_brush_set_name(GIMP_BRUSH(begw->brush), entry_text);
 }
 
-void focus_out_func(GtkWidget *wid1, GtkWidget *wid2, BrushEditGeneratedWindow *begw)
+void
+focus_out_func (GtkWidget                *wid1,
+		GtkWidget                *wid2,
+		BrushEditGeneratedWindow *begw)
 {
-  name_changed_func(wid1, begw);
+  name_changed_func (wid1, begw);
 }
 
 BrushEditGeneratedWindow *
@@ -210,34 +202,31 @@ brush_edit_generated_new ()
   GtkWidget *slider;
   GtkWidget *table;
 
-
-
-  begw = g_malloc (sizeof (BrushEditGeneratedWindow));
+  begw = g_new (BrushEditGeneratedWindow, 1);
   begw->brush = NULL;
 
-  begw->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (begw->shell), "generatedbrusheditor",
-			  "Gimp");
-  gtk_window_set_title (GTK_WINDOW (begw->shell), _("Brush Editor"));
-  gtk_window_set_policy(GTK_WINDOW(begw->shell), FALSE, TRUE, FALSE);
+  begw->shell = gimp_dialog_new (_("Brush Editor"), "generated_brush_editor",
+				 gimp_standard_help_func,
+				 "dialogs/generated_brush_editor_dialog.html",
+				 GTK_WIN_POS_NONE,
+				 FALSE, TRUE, FALSE,
+
+				 _("Close"), brush_edit_close_callback,
+				 begw, NULL, TRUE, TRUE,
+
+				 NULL);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (begw->shell)->vbox), vbox,
-		      TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (begw->shell)->vbox), vbox);
 
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (begw->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (brush_edit_delete_callback),
-		      begw);
+  /*  Populate the window with some widgets */
 
-/*  Populate the window with some widgets */
-
- /* table for brush controlls */
+  /* table for brush controlls */
   table = gtk_table_new(5, 4, FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
- /* Brush's name */
+  /* Brush's name */
   begw->name = gtk_entry_new();
   gtk_box_pack_start (GTK_BOX (vbox), begw->name, TRUE, TRUE, 0);
   
@@ -249,7 +238,7 @@ brush_edit_generated_new ()
 		      begw);
   gtk_widget_show(begw->name);
 
- /* brush's preview widget w/frame  */
+  /* brush's preview widget w/frame  */
   begw->frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (begw->frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), begw->frame, TRUE, TRUE, 0);
@@ -276,7 +265,7 @@ brush_edit_generated_new ()
   /* brush radius scale */
   label = gtk_label_new (_("Radius:"));
   gtk_misc_set_alignment (GTK_MISC(label), 1.0, 0.5);
-/*  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 0, 0, 0, 0); */
+  /*  gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 0, 0, 0, 0); */
   gtk_table_attach(GTK_TABLE (table), label, 0, 1, 0, 1, 3, 0, 0, 0);
   begw->radius_data = GTK_ADJUSTMENT (gtk_adjustment_new (10.0, 0.0, 100.0, 0.1, 1.0, 0.0));
   slider = gtk_hscale_new (begw->radius_data);
@@ -341,20 +330,15 @@ brush_edit_generated_new ()
   gtk_table_set_col_spacing(GTK_TABLE (table), 0, 3);
   gtk_widget_show (table);
 
-  /*  The action area  */
-  action_items[0].user_data = begw;
-  build_action_area (GTK_DIALOG (begw->shell), action_items, 1, 0);
-
   gtk_widget_show (vbox);
   gtk_widget_show (begw->shell);
-
 
   return begw;
 }
 
 static gint 
-brush_edit_preview_resize (GtkWidget *widget, 
-			   GdkEvent *event, 
+brush_edit_preview_resize (GtkWidget                *widget,
+			   GdkEvent                 *event,
 			   BrushEditGeneratedWindow *begw)
 {
    gtk_preview_size (GTK_PREVIEW (begw->preview),
@@ -363,14 +347,16 @@ brush_edit_preview_resize (GtkWidget *widget,
    
    /*  update the display  */   
    if (begw->brush)
-     brush_edit_brush_dirty_callback(GIMP_BRUSH(begw->brush), begw);
+     brush_edit_brush_dirty_callback (GIMP_BRUSH (begw->brush), begw);
    return FALSE;
 }
  
 static void
-brush_edit_close_callback (GtkWidget *w, void *data)
+brush_edit_close_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-  BrushEditGeneratedWindow *begw = (BrushEditGeneratedWindow *)data;
+  BrushEditGeneratedWindow *begw = (BrushEditGeneratedWindow *) data;
+
   if (GTK_WIDGET_VISIBLE (begw->shell))
     gtk_widget_hide (begw->shell);
 }

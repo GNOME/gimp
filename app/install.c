@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <glib.h>
@@ -29,9 +28,9 @@
 #endif
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "install.h"
 #include "gimprc.h"
+#include "gimpui.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
@@ -49,13 +48,13 @@
 #  define USER_INSTALL "user_install.bat"
 #endif
 
-static void install_run (InstallCallback);
-static void install_help (InstallCallback);
-static void help_install_callback (GtkWidget *, gpointer);
-static void help_ignore_callback (GtkWidget *, gpointer);
-static void help_quit_callback (GtkWidget *, gpointer);
+static void install_run               (InstallCallback);
+static void install_help              (InstallCallback);
+static void help_install_callback     (GtkWidget *, gpointer);
+static void help_ignore_callback      (GtkWidget *, gpointer);
+static void help_quit_callback        (GtkWidget *, gpointer);
 static void install_continue_callback (GtkWidget *, gpointer);
-static void install_quit_callback (GtkWidget *, gpointer);
+static void install_quit_callback     (GtkWidget *, gpointer);
 
 static GtkWidget *help_widget;
 static GtkWidget *install_widget;
@@ -100,12 +99,6 @@ install_verify (InstallCallback install_callback)
 static void
 install_help (InstallCallback callback)
 {
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Install"), help_install_callback, NULL, NULL },
-    { N_("Ignore"), help_ignore_callback, NULL, NULL },
-    { N_("Quit"), help_quit_callback, NULL, NULL }
-  };
   GtkWidget *text;
   GtkWidget *table;
   GtkWidget *vsb;
@@ -175,7 +168,7 @@ install_help (InstallCallback callback)
     { 1, N_("generated_brushes\n") },
     { 0, N_("\t\tThis is a subdirectory which is used to store brushes\n"
 	    "\t\tthat are created with the brush editor.  The default\n"
-	    "\t\gimprc file checks this subdirectory when searching for\n"
+	    "\t\tgimprc file checks this subdirectory when searching for\n"
 	    "\t\tgenerated brushes.\n") },
 
     { 1, N_("gradients\n") },
@@ -254,13 +247,24 @@ install_help (InstallCallback callback)
   gint nhelp_lines = sizeof (help_lines) / sizeof (help_lines[0]);
   gint i;
 
-  help_widget = gtk_dialog_new ();
-  gtk_signal_connect (GTK_OBJECT (help_widget), "delete_event",
-		      GTK_SIGNAL_FUNC (gtk_true),
-		      NULL);
-  gtk_window_set_wmclass (GTK_WINDOW (help_widget), "gimp_installation", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (help_widget), _("GIMP Installation"));
-  gtk_window_position (GTK_WINDOW (help_widget), GTK_WIN_POS_CENTER);
+  help_widget = gimp_dialog_new (_("GIMP Installation"), "gimp_installation",
+				 NULL, NULL,
+				 GTK_WIN_POS_CENTER,
+				 FALSE, TRUE, FALSE,
+
+				 _("Install"), help_install_callback,
+				 callback, NULL, TRUE, FALSE,
+				 _("Ignore"), help_ignore_callback,
+				 callback, NULL, FALSE, FALSE,
+				 _("Quit"), help_quit_callback,
+				 callback, NULL, FALSE, TRUE,
+
+				 NULL);
+
+  table  = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (help_widget)->vbox), table);
 
   vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
   vsb = gtk_vscrollbar_new (vadj);
@@ -268,24 +272,11 @@ install_help (InstallCallback callback)
   gtk_text_set_editable (GTK_TEXT (text), FALSE);
   gtk_widget_set_usize (text, 450, 475);
 
-  table  = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-
-  action_items[0].user_data = (void *) callback;
-  action_items[1].user_data = (void *) callback;
-  action_items[2].user_data = (void *) callback;
-  build_action_area (GTK_DIALOG (help_widget), action_items, 3, 0);
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (help_widget)->vbox), table,
-		      TRUE, TRUE, 0);
-
   gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
 		    0, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (table), text, 0, 1, 0, 1,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
   font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
   font_emphasis = gdk_font_load ("-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*");
@@ -392,11 +383,6 @@ quote_spaces (char *string)
 static void
 install_run (InstallCallback callback)
 {
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Continue"), install_continue_callback, NULL, NULL },
-    { N_("Quit"), install_quit_callback, NULL, NULL }
-  };
   GtkWidget *text;
   GtkWidget *table;
   GtkWidget *vsb;
@@ -409,26 +395,27 @@ install_run (InstallCallback callback)
   int err;
   int executable = TRUE;
 
-  install_widget = gtk_dialog_new ();
-  gtk_signal_connect (GTK_OBJECT (install_widget), "delete_event",
-		      GTK_SIGNAL_FUNC (gtk_true),
-		      NULL);
-  gtk_window_set_wmclass (GTK_WINDOW (install_widget), "installation_log", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (install_widget), _("Installation Log"));
-  gtk_window_position (GTK_WINDOW (install_widget), GTK_WIN_POS_CENTER);
+  install_widget = gimp_dialog_new (_("Installation Log"), "installation_log",
+				    NULL, NULL,
+				    GTK_WIN_POS_CENTER,
+				    FALSE, TRUE, FALSE,
+
+				    _("Continue"), install_continue_callback,
+				    callback, NULL, TRUE, FALSE,
+				    _("Quit"), install_quit_callback,
+				    callback, NULL, FALSE, TRUE,
+
+				    NULL);
+
+  table  = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (install_widget)->vbox), table);
+
   vadj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
   vsb  = gtk_vscrollbar_new (vadj);
   text = gtk_text_new (NULL, vadj);
   gtk_widget_set_usize (text, 384, 356);
-
-  table  = gtk_table_new (1, 2, FALSE);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-
-  action_items[0].user_data = (void *) callback;
-  action_items[1].user_data = (void *) callback;
-  build_action_area (GTK_DIALOG (install_widget), action_items, 2, 0);
-
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (install_widget)->vbox), table, TRUE, TRUE, 0);
 
   gtk_table_attach (GTK_TABLE (table), vsb, 1, 2, 0, 1,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
@@ -436,8 +423,6 @@ install_run (InstallCallback callback)
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    0, 0);
-
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
   font_strong = gdk_font_load ("-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*");
   font = gdk_font_load ("-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*");

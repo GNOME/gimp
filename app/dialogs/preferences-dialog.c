@@ -23,6 +23,7 @@
 #include "gdisplay_ops.h"
 #include "gdisplay.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "image_render.h"
 #include "interface.h"
 #include "lc_dialog.h"
@@ -107,6 +108,7 @@ static int        old_max_new_image_size;
 static int        old_thumbnail_mode;
 static int 	  old_show_indicators;
 static int	  old_trust_dirty_flag;
+static int        old_use_help;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -531,7 +533,12 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "trust-dirty-flag");
       remove = g_list_append (update, "dont-trust-dirty-flag");
     }
-  
+  if (use_help != old_use_help)
+    {
+      update = g_list_append (update, "use-help");
+      remove = g_list_append (remove, "dont-use-help");
+    }
+
   save_gimprc (&update, &remove);
 
   if (using_xserver_resolution)
@@ -597,6 +604,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   thumbnail_mode = old_thumbnail_mode;
   show_indicators = old_show_indicators;
   trust_dirty_flag = old_trust_dirty_flag;
+  use_help = old_use_help;
 
   if (preview_size != old_preview_size)
     {
@@ -703,6 +711,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
       val = data;
       *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
     }
+  else if (data == &use_help)
+    use_help = GTK_TOGGLE_BUTTON (widget)->active;
   else
     {
       /* Are you a gimp-hacker who is getting this message?  You
@@ -972,360 +982,6 @@ file_prefs_monitor_resolution_callback (GtkWidget *widget,
   monitor_yres = yres;
 }
 
-/* ********************************************************************
- *  convenience constructors test site ;)
- */
-
-/*  local callbacks of gimp_dialog_new ()  */
-static int
-gimp_dialog_delete_callback (GtkWidget *widget,
-			     GdkEvent  *event,
-			     gpointer   data) 
-{
-  GtkSignalFunc  cancel_callback;
-  GtkWidget     *cancel_widget;
-
-  cancel_callback =
-    (GtkSignalFunc) gtk_object_get_data (GTK_OBJECT (widget),
-					 "gimp_dialog_cancel_callback");
-  cancel_widget =
-    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (widget),
-				      "gimp_dialog_cancel_widget");
-
-  /* the cancel callback has to destroy the dialog */
-  if (cancel_callback)
-    (* cancel_callback) (cancel_widget, data);
-
-  return TRUE;
-}
-
-/*
-#include "/home/mitschel/gimpfiles/wilber.xpm"
-
-static void
-gimp_dialog_realize_callback (GtkWidget *widget,
-			      gpointer   data) 
-{
-  static GdkPixmap *wilber_pixmap = NULL;
-  static GdkBitmap *wilber_mask   = NULL;
-  GtkStyle         *style;
-
-  style = gtk_widget_get_style (widget);
-
-  if (wilber_pixmap == NULL)
-    wilber_pixmap =
-      gdk_pixmap_create_from_xpm_d (widget->window,
-				    &wilber_mask,
-				    &style->bg[GTK_STATE_NORMAL],
-				    wilber_xpm);
-
-  gdk_window_set_icon (widget->window, NULL,
-		       wilber_pixmap, wilber_mask);
-}
-*/
-
-/*  this is an experimental one
- *  I tried to fold the entire dialog creation and the ActionArea stuff
- *  into one function. Might be not general enough.
- */
-GtkWidget*
-gimp_dialog_new (const gchar       *title,
-		 const gchar       *wmclass_name,
-		 GtkWindowPosition  position,
-		 gint               allow_shrink,
-		 gint               allow_grow,
-		 gint               auto_shrink,
-
-		 /* specify action area buttons as va_list:
-		  *  gchar         *label,
-		  *  GtkSignalFunc  callback,
-		  *  gpointer       data,
-		  *  gboolean       default_action,
-		  *  gboolean       connect_delete,
-		  */
-
-		 ...)
-{
-  GtkWidget     *dialog;
-  GtkWidget     *hbbox;
-  GtkWidget     *button;
-
-  /*  action area variables  */
-  gchar         *label;
-  GtkSignalFunc  callback;
-  gpointer       data;
-  gboolean       default_action;
-  gboolean       connect_delete;
-
-  va_list        args;
-  gboolean       delete_connected = FALSE;
-
-  g_return_val_if_fail (title != NULL, NULL);
-  g_return_val_if_fail (wmclass_name != NULL, NULL);
-
-  dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog), wmclass_name, "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog), title);
-  gtk_window_set_position (GTK_WINDOW (dialog), position);
-  gtk_window_set_policy (GTK_WINDOW (dialog),
-			 allow_grow, allow_shrink, auto_shrink);
-
-  /*  prepare the action_area  */
-  gtk_container_set_border_width
-    (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
-  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
-
-  hbbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox,
-		    FALSE, FALSE, 0);
-  gtk_widget_show (hbbox);
-
-  /*  the action_area buttons  */
-  va_start (args, auto_shrink);
-  label = va_arg (args, gchar*);
-  while (label)
-    {
-      callback = va_arg (args, GtkSignalFunc);
-      data = va_arg (args, gpointer);
-      default_action = va_arg (args, gboolean);
-      connect_delete = va_arg (args, gboolean);
-
-      button = gtk_button_new_with_label (label);
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-
-      /*  pass data as user_data if data != NULL, or the dialog otherwise  */
-      if (callback)
-	gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			    GTK_SIGNAL_FUNC (callback),
-			    data ? data : dialog);
-
-      if (connect_delete && callback && !delete_connected)
-	{
-	  gtk_object_set_data (GTK_OBJECT (dialog),
-			       "gimp_dialog_cancel_callback",
-			       callback);
-	  gtk_object_set_data (GTK_OBJECT (dialog),
-			       "gimp_dialog_cancel_widget",
-			       button);
-
-	  /*  catch the WM delete event  */
-	  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-			      (GdkEventFunc) gimp_dialog_delete_callback,
-			      data ? data : dialog);
-
-	  delete_connected = TRUE;
-	}
-
-      if (default_action)
-	gtk_widget_grab_default (button);
-      gtk_widget_show (button);
-
-      label = va_arg (args, gchar*);
-    }
-  va_end (args);
-
-  /*  catch the WM delete event if not already done  */
-  if (! delete_connected)
-    gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-			(GdkEventFunc) gimp_dialog_delete_callback,
-			NULL);
-
-  /*  the realize callback sets the WM icon  */
-  /*
-  gtk_signal_connect (GTK_OBJECT (dialog), "realize",
-		      (GtkSignalFunc) gimp_dialog_realize_callback,
-		      NULL);
-  
-  */
-  return dialog;
-}
-
-GtkWidget*
-gimp_option_menu_new (GtkSignalFunc  menu_item_callback,
-		      gpointer       initial,  /* user_data */
-
-		      /* specify menu items as va_list:
-		       *  gchar     *label,
-		       *  gpointer   data,
-		       *  gpointer   user_data,
-		       */
-
-		      ...)
-{
-  GtkWidget *menu;
-  GtkWidget *menuitem;
-  GtkWidget *optionmenu;
-
-  /*  menu item variables  */
-  gchar     *label;
-  gpointer   data;
-  gpointer   user_data;
-
-  va_list    args;
-  gint       i;
-  gint       initial_index;
-
-  menu = gtk_menu_new ();
-
-  /*  create the menu items  */
-  initial_index = 0;
-  va_start (args, initial);
-  label = va_arg (args, gchar*);
-  for (i = 0; label; i++)
-    {
-      data = va_arg (args, gpointer);
-      user_data = va_arg (args, gpointer);
-
-      menuitem = gtk_menu_item_new_with_label (label);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  menu_item_callback, data);
-      gtk_object_set_user_data (GTK_OBJECT (menuitem), user_data);
-      gtk_widget_show (menuitem);
-
-      /*  remember the initial menu item  */
-      if (user_data == initial)
-	initial_index = i;
-
-      label = va_arg (args, gchar*);
-    }
-  va_end (args);
-
-  optionmenu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-
-  /*  select the initial menu item  */
-  gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu), initial_index);
-
-  return optionmenu;
-}
-
-GtkWidget*
-gimp_radio_group_new (GtkSignalFunc  radio_button_callback,
-		      gpointer       initial,  /* user_data */
-
-		      /* specify radio buttons as va_list:
-		       *  gchar     *label,
-		       *  gpointer   data,
-		       *  gpointer   user_data,
-		       */
-
-		      ...)
-{
-  GtkWidget *vbox;
-  GtkWidget *button;
-  GSList    *group;
-
-  /*  radio button variables  */
-  gchar     *label;
-  gpointer   data;
-  gpointer   user_data;
-
-  va_list    args;
-
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  group = NULL;
-
-  /*  create the radio buttons  */
-  va_start (args, initial);
-  label = va_arg (args, gchar*);
-  while (label)
-    {
-      data = va_arg (args, gpointer);
-      user_data = va_arg (args, gpointer);
-
-      button = gtk_radio_button_new_with_label (group, label);
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-			  (GtkSignalFunc) radio_button_callback,
-			  data);
-      gtk_object_set_user_data (GTK_OBJECT (button), user_data);
-
-      /*  press the initially active radio button  */
-      if (user_data == initial)
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-
-      gtk_widget_show (button);
-
-      label = va_arg (args, gchar*);
-    }
-  va_end (args);
-
-  return vbox;
-}
-
-/*  this might be the standard gimp spinbutton  */
-GtkWidget*
-gimp_spin_button_new (GtkObject **adjustment,  /* return value */
-		      gfloat      value,
-		      gfloat      lower,
-		      gfloat      upper,
-		      gfloat      step_increment,
-		      gfloat      page_increment,
-		      gfloat      page_size,
-		      gfloat      climb_rate,
-		      guint       digits)
-{
-  GtkWidget *spinbutton;
-
-  *adjustment = gtk_adjustment_new (value, lower, upper,
-				    step_increment, page_increment, page_size);
-
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (*adjustment),
-				    climb_rate, digits);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
-
-  return spinbutton;
-}
-
-/*  add aligned label & widget to a two-column table  */
-void
-gimp_table_attach_aligned (GtkTable  *table,
-			   gint       row,
-			   gchar     *text,
-			   gfloat     xalign,
-			   gfloat     yalign,
-			   GtkWidget *widget,
-			   gboolean   left_adjust)
-{
-  GtkWidget *label;
-
-  label = gtk_label_new (text);
-  gtk_misc_set_alignment (GTK_MISC (label), xalign, yalign);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
-  gtk_table_attach (table, GTK_WIDGET (label), 0, 1, row, row + 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  if (left_adjust)
-    {
-      GtkWidget *alignment;
-
-      alignment = gtk_alignment_new (0.0, 1.0, 0.0, 0.0);
-      gtk_table_attach_defaults (table, alignment, 1, 2, row, row + 1);
-      gtk_widget_show (alignment);
-      gtk_container_add (GTK_CONTAINER (alignment), widget);
-    }
-  else
-    {
-      gtk_table_attach_defaults (table, widget, 1, 2, row, row + 1);
-    }
-
-  gtk_widget_show (widget);
-}
-
-
-/**********************************************************************
- *  preferences-specific GUI helpers
- */
-
 /*  create a new notebook page  */
 static GtkWidget*
 file_prefs_notebook_append_page (GtkNotebook   *notebook,
@@ -1492,6 +1148,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_thumbnail_mode = thumbnail_mode;
   old_show_indicators = show_indicators;
   old_trust_dirty_flag = trust_dirty_flag;
+  old_use_help = use_help;
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -1506,20 +1163,24 @@ file_pref_cmd_callback (GtkWidget *widget,
   /* Create the dialog */
   prefs_dlg =
     gimp_dialog_new (_("Preferences"), "gimp_preferences",
-		     GTK_WIN_POS_NONE, FALSE, FALSE, FALSE,
-		     _("OK"), file_prefs_ok_callback, NULL,
-		     FALSE, FALSE,
-		     _("Save"), file_prefs_save_callback, NULL,
-		     FALSE, FALSE,
-		     _("Cancel"), file_prefs_cancel_callback, NULL,
-		     TRUE, TRUE,
+		     gimp_standard_help_func,
+		     "dialogs/preferences_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, FALSE, FALSE,
+
+		     _("OK"), file_prefs_ok_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Save"), file_prefs_save_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Cancel"), file_prefs_cancel_callback,
+		     NULL, NULL, TRUE, TRUE,
+
 		     NULL);
 
   /* The main hbox */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (prefs_dlg)->vbox),
-		      hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (prefs_dlg)->vbox), hbox);
   gtk_widget_show (hbox);
 
   /* The categories tree */
@@ -1849,13 +1510,23 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  button = gtk_check_button_new_with_label(_("Show Tool Tips"));
+  button = gtk_check_button_new_with_label (_("Show Tool Tips"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				show_tool_tips);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) file_prefs_toggle_callback,
 		      &show_tool_tips);
+  gtk_widget_show (button);
+
+  button =
+    gtk_check_button_new_with_label (_("Context Sensitive Help with \"F1\""));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				use_help);
+  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      (GtkSignalFunc) file_prefs_toggle_callback,
+		      &use_help);
   gtk_widget_show (button);
 
   /* Interface / Image Windows */

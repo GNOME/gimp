@@ -203,6 +203,8 @@ gimp_SOURCES = \
 	gimpcontextpreview.h	\
 	gimpdnd.c		\
 	gimpdnd.h		\
+	gimphelp.c		\
+	gimphelp.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimphistogramP.h	\
@@ -222,6 +224,8 @@ gimp_SOURCES = \
 	gimprc.c		\
 	gimprc.h		\
 	gimprc_cmds.c		\
+	gimpui.c		\
+	gimpui.h		\
 	gimpunit.c		\
 	global_edit.c		\
 	global_edit.h		\

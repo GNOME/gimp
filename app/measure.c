@@ -18,12 +18,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include "actionarea.h"
 #include "appenv.h"
 #include "draw_core.h"
+#include "gimphelp.h"
 #include "info_dialog.h"
 #include "measure.h"
 #include "tool_options_ui.h"
@@ -266,11 +266,13 @@ measure_tool_button_press (Tool           *tool,
    if (!measure_tool_info &&
        (measure_tool_options->use_info_window || !GTK_WIDGET_VISIBLE (gdisp->statusarea)))
      {
-       measure_tool_info = info_dialog_new (_("Measure Tool"));
+       measure_tool_info = info_dialog_new (_("Measure Tool"),
+					    tools_help_func, NULL);
        info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
        info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
        action_items[0].user_data = measure_tool_info;
-       build_action_area (GTK_DIALOG (measure_tool_info->shell), action_items, 1, 0);
+       build_action_area (GTK_DIALOG (measure_tool_info->shell),
+			  action_items, 1, 0);
       }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,

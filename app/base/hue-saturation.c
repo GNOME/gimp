@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+
 #include "appenv.h"
 #include "actionarea.h"
 #include "colormaps.h"
@@ -25,6 +26,7 @@
 #include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "hue_saturation.h"
 #include "interface.h"
 
@@ -88,8 +90,6 @@ static void   hue_saturation_update                  (HueSaturationDialog *,
 static void   hue_saturation_preview                 (HueSaturationDialog *);
 static void   hue_saturation_ok_callback             (GtkWidget *, gpointer);
 static void   hue_saturation_cancel_callback         (GtkWidget *, gpointer);
-static gint   hue_saturation_delete_callback         (GtkWidget *, GdkEvent *,
-						      gpointer);
 static void   hue_saturation_master_callback         (GtkWidget *, gpointer);
 static void   hue_saturation_R_callback              (GtkWidget *, gpointer);
 static void   hue_saturation_Y_callback              (GtkWidget *, gpointer);
@@ -223,7 +223,7 @@ hue_saturation (PixelRegion *srcPR,
 }
 
 
-/*  by_color select action functions  */
+/*  hue saturation action functions  */
 
 static void
 hue_saturation_control (Tool       *tool,
@@ -281,7 +281,7 @@ tools_free_hue_saturation (Tool *tool)
 
   color_bal = (HueSaturation *) tool->private;
 
-  /*  Close the color select dialog  */
+  /*  Close the hue saturation dialog  */
   if (hue_saturation_dialog)
     hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
 
@@ -299,7 +299,7 @@ hue_saturation_initialize (GDisplay *gdisp)
       return;
     }
 
-  /*  The "hue-saturation color" dialog  */
+  /*  The "hue-saturation" dialog  */
   if (!hue_saturation_dialog)
     hue_saturation_dialog = hue_saturation_new_dialog ();
   else
@@ -354,15 +354,9 @@ hue_saturation_new_dialog ()
   GtkWidget *frame;
   GtkObject *data;
   GSList *group = NULL;
-  int i;
+  gint i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), hue_saturation_ok_callback, NULL, NULL },
-    { N_("Cancel"), hue_saturation_cancel_callback, NULL, NULL }
-  };
-
-  char *hue_partition_names[] =
+  gchar *hue_partition_names[] =
   {
     N_("Master"),
     N_("R"),
@@ -384,23 +378,26 @@ hue_saturation_new_dialog ()
     hue_saturation_M_callback
   };
 
-  hsd = g_malloc (sizeof (HueSaturationDialog));
+  hsd = g_new (HueSaturationDialog, 1);
   hsd->hue_partition = 0;
-  hsd->preview = TRUE;
+  hsd->preview       = TRUE;
 
   /*  The shell and main vbox  */
-  hsd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (hsd->shell), "hue_saturation", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (hsd->shell), _("Hue-Saturation"));
-  
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (hsd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (hue_saturation_delete_callback),
-		      hsd);
+  hsd->shell = gimp_dialog_new (_("Hue-Saturation"), "hue_satiration",
+				tools_help_func, NULL,
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
+
+				_("OK"), hue_saturation_ok_callback,
+				hsd, NULL, TRUE, FALSE,
+				_("Cancel"), hue_saturation_cancel_callback,
+				hsd, NULL, FALSE, TRUE,
+
+				NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (hsd->shell)->vbox), main_vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (hsd->shell)->vbox), main_vbox);
 
   /*  The main hbox containing hue partitions and sliders  */
   main_hbox = gtk_hbox_new (FALSE, 2);
@@ -579,12 +576,6 @@ hue_saturation_new_dialog ()
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-
-  /*  The action area  */
-  action_items[0].user_data = hsd;
-  action_items[1].user_data = hsd;
-  build_action_area (GTK_DIALOG (hsd->shell), action_items, 2, 0);
-
   gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (main_hbox);
@@ -697,16 +688,6 @@ hue_saturation_ok_callback (GtkWidget *widget,
 
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
-}
-
-static gint
-hue_saturation_delete_callback (GtkWidget *w,
-				GdkEvent *e,
-				gpointer client_data)
-{
-  hue_saturation_cancel_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void

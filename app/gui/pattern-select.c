@@ -17,11 +17,11 @@
  */
 #include <string.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "patterns.h"
 #include "pattern_select.h"
 #include "colormaps.h"
 #include "errors.h"
+#include "gimpui.h"
 #include "session.h"
 
 #include "libgimp/gimpintl.h"
@@ -55,7 +55,6 @@ static void preview_calc_scrollbar           (PatternSelectP);
 static void pattern_select_show_selected     (PatternSelectP, int, int);
 static void update_active_pattern_field      (PatternSelectP);
 static void pattern_select_close_callback    (GtkWidget *, gpointer);
-static gint pattern_select_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void pattern_select_refresh_callback  (GtkWidget *, gpointer);
 static gint pattern_select_events            (GtkWidget *, GdkEvent *, PatternSelectP);
 static gint pattern_select_resize            (GtkWidget *, GdkEvent *, PatternSelectP);
@@ -81,12 +80,6 @@ pattern_select_new (gchar *title,
   GtkWidget *sbar;
   GtkWidget *label_box;
 
-  static ActionAreaItem action_items[2] =
-  {
-    { N_("Refresh"), pattern_select_refresh_callback, NULL, NULL },
-    { N_("Close"), pattern_select_close_callback, NULL, NULL }
-  };
-
   psp = g_new (_PatternSelect, 1);
   psp->preview = NULL;
   psp->old_col = psp->old_row = 0;
@@ -97,22 +90,43 @@ pattern_select_new (gchar *title,
   psp->NUM_PATTERN_ROWS    = STD_PATTERN_COLUMNS;
 
   /*  The shell and main vbox  */
-  psp->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
+  if (title)
+    {
+      psp->shell =
+	gimp_dialog_new (title, "pattern_selection",
+			 gimp_standard_help_func,
+			 "dialogs/pattern_selection_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
 
-  if(!title)
-    {
-      gtk_window_set_title (GTK_WINDOW (psp->shell), _("Pattern Selection"));
-      session_set_window_geometry (psp->shell, &pattern_select_session_info,
-				   TRUE);
-    }
-  else
-    {
-      gtk_window_set_title (GTK_WINDOW (psp->shell), title);
+			 _("Close"), pattern_select_close_callback,
+			 psp, NULL, TRUE, TRUE,
+
+			 NULL);
+
       if (initial_pattern && strlen (initial_pattern))
 	{
 	  active = pattern_list_get_pattern (pattern_list, initial_pattern);
 	}
+    }
+  else
+    {
+      psp->shell =
+	gimp_dialog_new (_("Pattern Selection"), "pattern_selection",
+			 gimp_standard_help_func,
+			 "dialogs/pattern_selection_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
+
+			 _("Refresh"), pattern_select_refresh_callback,
+			 psp, NULL, FALSE, FALSE,
+			 _("Close"), pattern_select_close_callback,
+			 psp, NULL, TRUE, TRUE,
+
+			 NULL);
+
+      session_set_window_geometry (psp->shell, &pattern_select_session_info,
+				   TRUE);
     }
 
   /*  update the active selection  */
@@ -120,13 +134,6 @@ pattern_select_new (gchar *title,
     active = get_active_pattern ();
 
   psp->pattern = active;
-
-  gtk_window_set_policy (GTK_WINDOW (psp->shell), FALSE, TRUE, FALSE);
-
-  /* handle the wm close event */
-  gtk_signal_connect (GTK_OBJECT (psp->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (pattern_select_delete_callback),
-		      psp);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -189,14 +196,6 @@ pattern_select_new (gchar *title,
   gtk_widget_show (sbar);
   gtk_widget_show (hbox);
   gtk_widget_show (frame);
-
-  /*  The action area  */
-  action_items[0].user_data = psp;
-  action_items[1].user_data = psp;
-  if (title)
-    build_action_area (GTK_DIALOG (psp->shell), &action_items[1], 1, 0);
-  else
-    build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 1);
 
   gtk_widget_show (psp->options_box);
   gtk_widget_show (vbox);
@@ -799,18 +798,8 @@ pattern_select_events (GtkWidget      *widget,
   return FALSE;
 }
 
-static gint
-pattern_select_delete_callback (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   client_data)
-{
-  pattern_select_close_callback (widget, client_data);
-
-  return TRUE;
-}
-
 static void
-pattern_select_close_callback (GtkWidget *w,
+pattern_select_close_callback (GtkWidget *widget,
 			       gpointer   client_data)
 {
   PatternSelectP psp;
@@ -831,7 +820,7 @@ pattern_select_close_callback (GtkWidget *w,
 }
 
 static void
-pattern_select_refresh_callback (GtkWidget *w,
+pattern_select_refresh_callback (GtkWidget *widget,
 				 gpointer   client_data)
 {
   PatternSelectP psp;
@@ -892,7 +881,7 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
 /* Close active dialogs that no longer have PDB registered for them */
 
 void
-patterns_check_dialogs(void)
+patterns_check_dialogs (void)
 {
   GSList *list;
   PatternSelectP psp;
@@ -908,13 +897,13 @@ patterns_check_dialogs(void)
 
       name = psp->callback_name;
       prec = procedural_db_lookup(name);
-      
-      if(!prec)
+
+      if (!prec)
 	{
-	  pattern_active_dialogs = g_slist_remove(pattern_active_dialogs,psp);
+	  pattern_active_dialogs = g_slist_remove (pattern_active_dialogs,psp);
 
 	  /* Can alter pattern_active_dialogs list*/
-	  pattern_select_close_callback(NULL,psp); 
+	  pattern_select_close_callback (NULL, psp); 
 	}
     }
 }

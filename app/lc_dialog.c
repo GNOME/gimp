@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "dialog_handler.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimprc.h"
 #include "gimpset.h"
-#include "interface.h"
+#include "gimpui.h"
 #include "image_render.h"
 #include "lc_dialog.h"
 #include "lc_dialogP.h"
@@ -100,17 +100,19 @@ lc_dialog_create (GimpImage* gimage)
       return;
     }
 
-  lc_dialog = g_malloc (sizeof (LCDialog));
-  lc_dialog->shell = gtk_dialog_new ();
+  lc_dialog = g_new (LCDialog, 1);
+  lc_dialog->shell =
+    gimp_dialog_new (_("Layers & Channels"), "layers_and_channels",
+		     gimp_standard_help_func,
+		     "dialogs/layers_and_channels_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
+		     NULL);
   lc_dialog->gimage = NULL;
   lc_dialog->auto_follow_active = TRUE;
 
   /*  Register the dialog  */
   dialog_register (lc_dialog->shell);
-
-  gtk_window_set_title (GTK_WINDOW (lc_dialog->shell), _("Layers & Channels"));
-  gtk_window_set_wmclass (GTK_WINDOW (lc_dialog->shell),
-			  "layers_and_channels", "Gimp");
   session_set_window_geometry (lc_dialog->shell, &lc_dialog_session_info, TRUE);
 
   /*  Handle the WM delete event  */
@@ -275,7 +277,7 @@ lc_dialog_flush ()
 }
 
 static gint 
-image_menu_preview_update_do(GimpImage *gimage)
+image_menu_preview_update_do (GimpImage *gimage)
 {
   if(lc_dialog)
     {
@@ -296,7 +298,7 @@ lc_dialog_menu_preview_dirty (GtkObject *obj,
 }
     
 void 
-lc_dialog_preview_update(GimpImage *gimage)
+lc_dialog_preview_update (GimpImage *gimage)
 {
   if(!preview_size)
     return;

@@ -15,11 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "file_new_dialog.h"
-
-#include "actionarea.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpchainbutton.h"
@@ -27,7 +25,8 @@
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
 
-typedef struct {
+typedef struct
+{
   GtkWidget *dlg;
 
   GtkWidget *confirm_dlg;
@@ -50,7 +49,6 @@ static void file_new_confirm_dialog (NewImageInfo *);
 
 static void file_new_ok_callback (GtkWidget *, gpointer);
 static void file_new_reset_callback (GtkWidget *, gpointer);
-static gint file_new_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void file_new_cancel_callback (GtkWidget *, gpointer);
 static void file_new_toggle_callback (GtkWidget *, gpointer);
 static void file_new_resolution_callback (GtkWidget *, gpointer);
@@ -136,15 +134,6 @@ file_new_reset_callback (GtkWidget *widget,
     (GTK_TOGGLE_BUTTON (info->fill_type_w[BACKGROUND_FILL]), TRUE);
 }
 
-static gint
-file_new_delete_callback (GtkWidget *widget,
-			  GdkEvent  *event,
-			  gpointer   data)
-{
-  file_new_cancel_callback (widget, data);
-  return TRUE;
-}
-
 static void
 file_new_cancel_callback (GtkWidget *widget,
 			  gpointer   data)
@@ -185,15 +174,6 @@ file_new_confirm_dialog_cancel_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (info->dlg, TRUE);
 }
 
-static gint
-file_new_confirm_dialog_delete_callback (GtkWidget *widget,
-					 GdkEvent  *event,
-                                         gpointer   data)
-{
-  file_new_confirm_dialog_cancel_callback (widget, data);
-  return TRUE;
-}
-
 static void
 file_new_confirm_dialog (NewImageInfo *info)
 {
@@ -202,32 +182,21 @@ file_new_confirm_dialog (NewImageInfo *info)
   gchar *max_size;
   gchar *text;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"),
-      (ActionCallback) file_new_confirm_dialog_ok_callback, NULL, NULL },
-    { N_("Cancel"),
-      (ActionCallback) file_new_confirm_dialog_cancel_callback, NULL, NULL }
-  };
-
   gtk_widget_set_sensitive (info->dlg, FALSE);
 
-  info->confirm_dlg = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (info->confirm_dlg),
-			  "confirm_size", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (info->confirm_dlg), _("Confirm Image Size"));
-  gtk_window_set_policy (GTK_WINDOW (info->confirm_dlg), FALSE, FALSE, FALSE);
-  gtk_window_position (GTK_WINDOW (info->confirm_dlg), GTK_WIN_POS_MOUSE);
+  info->confirm_dlg =
+    gimp_dialog_new (_("Confirm Image Size"), "confirm_size",
+		     gimp_standard_help_func,
+		     "dialogs/file_new_dialog.html#confirm_size_dialog",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, FALSE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (info->confirm_dlg), "delete_event",
-		      (GtkSignalFunc) file_new_confirm_dialog_delete_callback,
-		      info);
+		     _("OK"), file_new_confirm_dialog_ok_callback,
+		     info, NULL, TRUE, FALSE,
+		     _("Cancel"), file_new_confirm_dialog_cancel_callback,
+		     info, NULL, FALSE, TRUE,
 
-  /*  The action area  */
-  action_items[0].user_data = info;
-  action_items[1].user_data = info;
-  build_action_area (GTK_DIALOG (info->confirm_dlg), action_items, 2, 0);
+		     NULL);
 
   size = image_new_get_size_string (info->size);
   max_size = image_new_get_size_string (max_new_image_size);
@@ -326,15 +295,14 @@ file_new_image_size_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   NewImageInfo *info;
-  gdouble width, height;
   gchar *text;
   gchar *label;
 
   info = (NewImageInfo*) data;
 
-  width = (gdouble) (gint)
+  info->values->width = (gdouble) (gint)
     (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 0) + 0.5);
-  height = (gdouble) (gint)
+  info->values->height = (gdouble) (gint)
     (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (info->size_se), 1) + 0.5);
 
   info->size = image_new_calculate_size (info->values);
@@ -391,35 +359,26 @@ ui_new_image_window_create (const GimpImageNewValues *values_orig)
   GSList *group;
   GList *list;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), file_new_ok_callback, NULL, NULL },
-    { N_("Reset"), file_new_reset_callback, NULL, NULL },
-    { N_("Cancel"), file_new_cancel_callback, NULL, NULL }
-  };
-
   info = g_new (NewImageInfo, 1);
   info->values = values = image_new_values_new (values_orig);
 
   info->confirm_dlg = NULL;
   info->size = 0.0;
 
-  info->dlg = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (info->dlg), "new_image", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (info->dlg), _("New Image"));
-  gtk_window_set_position (GTK_WINDOW (info->dlg), GTK_WIN_POS_MOUSE);
-  gtk_window_set_policy(GTK_WINDOW (info->dlg), FALSE, FALSE, TRUE);
+  info->dlg = gimp_dialog_new (_("New Image"), "new_image",
+			       gimp_standard_help_func,
+			       "dialogs/file_new_dialog.html",
+			       GTK_WIN_POS_MOUSE,
+			       FALSE, FALSE, TRUE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (info->dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (file_new_delete_callback),
-		      info);
+			       _("OK"), file_new_ok_callback,
+			       info, NULL, FALSE, FALSE,
+			       _("Reset"), file_new_reset_callback,
+			       info, NULL, FALSE, FALSE,
+			       _("Cancel"), file_new_cancel_callback,
+			       info, NULL, TRUE, TRUE,
 
-  /*  The action area  */
-  action_items[0].user_data = info;
-  action_items[1].user_data = info;
-  action_items[2].user_data = info;
-  build_action_area (GTK_DIALOG (info->dlg), action_items, 3, 2);
+			       NULL);
 
   /*  vbox holding the rest of the dialog  */
   top_vbox = gtk_vbox_new (FALSE, 2);

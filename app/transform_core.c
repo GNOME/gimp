@@ -101,8 +101,13 @@ typedef struct _PixelSurround {
   int row_stride;
 } PixelSurround;
 
-static void pixel_surround_init(PixelSurround * ps, TileManager* t,
-    int w, int h, unsigned char bg[MAX_CHANNELS]) {
+static void
+pixel_surround_init (PixelSurround *ps,
+		     TileManager   *t,
+		     int            w,
+		     int            h,
+		     guchar         bg[MAX_CHANNELS])
+{
   int i;
   for (i = 0; i < MAX_CHANNELS; ++i) {
     ps->bg[i] = bg[i];
@@ -122,8 +127,11 @@ static void pixel_surround_init(PixelSurround * ps, TileManager* t,
 /* strategy: if we are in the middle of a tile, use the tile storage */
 /* otherwise just copy into out own malloced buffer and return that */
 
-static unsigned char* pixel_surround_lock(PixelSurround* ps, int x, int y) {
-
+static guchar *
+pixel_surround_lock (PixelSurround *ps,
+		     int            x,
+		     int            y)
+{
   int i, j;
   unsigned char* k;
   unsigned char* ptr;
@@ -170,27 +178,33 @@ static unsigned char* pixel_surround_lock(PixelSurround* ps, int x, int y) {
   return ps->buff;
 }
 
-static int pixel_surround_rowstride(PixelSurround* ps) {
+static int
+pixel_surround_rowstride (PixelSurround *ps)
+{
   return ps->row_stride;
 }
 
-static void pixel_surround_release(PixelSurround* ps) {
+static void
+pixel_surround_release (PixelSurround *ps)
+{
   /* always get new tile (for now), so release the old one */
-  if (ps->tile) {
-    tile_release(ps->tile, FALSE);
-    ps->tile = 0;
-  }
+  if (ps->tile)
+    {
+      tile_release(ps->tile, FALSE);
+      ps->tile = 0;
+    }
 }
 
-static void pixel_surround_clear(PixelSurround* ps) {
-  if (ps->buff) {
-    g_free(ps->buff);
-    ps->buff = 0;
-    ps->buff_size = 0;
-  }
+static void
+pixel_surround_clear (PixelSurround *ps)
+{
+  if (ps->buff)
+    {
+      g_free (ps->buff);
+      ps->buff = 0;
+      ps->buff_size = 0;
+    }
 }
-
-
 
 static void
 transform_ok_callback (GtkWidget *w,
@@ -386,6 +400,7 @@ transform_core_button_press (Tool           *tool,
 		action_items[1].user_data = tool;
 		build_action_area (GTK_DIALOG (transform_info->shell),
 				   action_items, n_action_items, 0);
+
 		transform_info_inited = TRUE;
 	      }
 
@@ -1611,5 +1626,3 @@ cubic (double dx,
 
   return result;
 }
-
-

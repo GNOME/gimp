@@ -18,14 +18,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "colormaps.h"
 #include "cursorutil.h"
 #include "fileops.h"
 #include "gdisplay_ops.h"
 #include "gimage.h"
+#include "gimpui.h"
 #include "gximage.h"
-#include "interface.h"
 #include "menus.h"
 #include "scale.h"
 #include "gimprc.h"
@@ -320,16 +319,6 @@ gdisplay_cancel_warning_callback (GtkWidget *widget,
   gtk_widget_destroy (mbox);
 }
 
-static gint
-gdisplay_delete_warning_callback (GtkWidget *widget,
-				  GdkEvent  *event,
-				  gpointer   client_data)
-{
-  gdisplay_cancel_warning_callback (widget, client_data);
-
-  return TRUE;
-}
-
 static void
 gdisplay_destroy_warning_callback (GtkWidget *widget,
 				   gpointer   client_data)
@@ -346,12 +335,6 @@ gdisplay_close_warning_dialog (char     *image_name,
   GtkWidget *label;
   gchar *warning_buf;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Close"), gdisplay_close_warning_callback, NULL, NULL },
-    { N_("Cancel"), gdisplay_cancel_warning_callback, NULL, NULL }
-  };
-
   /* FIXUP this will raise any prexsisting close dialogs, which can be a
      a bit confusing if you tried to close a new window because you had
      forgotten the old dialog was still around */
@@ -364,16 +347,21 @@ gdisplay_close_warning_dialog (char     *image_name,
 
   menus_set_sensitive_glue ("<Image>", N_("/File/Close"), FALSE);
 
-  warning_dialog = mbox = gtk_dialog_new ();
-  /* should this be image_window or the actual image name??? */
-  gtk_window_set_wmclass (GTK_WINDOW (mbox), "really_close", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (mbox), image_name);
-  gtk_window_set_position (GTK_WINDOW (mbox), GTK_WIN_POS_MOUSE);
-  gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);
+  warning_dialog = mbox =
+    gimp_dialog_new (image_name, "really_close",
+		     gimp_standard_help_func,
+		     "dialogs/really_close_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (mbox), "delete_event",
-		      GTK_SIGNAL_FUNC (gdisplay_delete_warning_callback),
-		      mbox);
+		     _("Close"), gdisplay_close_warning_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Cancel"), gdisplay_cancel_warning_callback,
+		     NULL, NULL, TRUE, TRUE,
+
+		     NULL);
+
+  gtk_object_set_user_data (GTK_OBJECT (mbox), gdisp);
 
   gtk_signal_connect (GTK_OBJECT (mbox), "destroy",
 		      GTK_SIGNAL_FUNC (gdisplay_destroy_warning_callback),
@@ -391,10 +379,6 @@ gdisplay_close_warning_dialog (char     *image_name,
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
   g_free (warning_buf);
-
-  action_items[0].user_data = mbox;
-  action_items[1].user_data = mbox;
-  build_action_area (GTK_DIALOG (mbox), action_items, 2, 1);
 
   gtk_widget_show (mbox);
 }

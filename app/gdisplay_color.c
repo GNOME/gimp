@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <string.h>
@@ -23,6 +22,7 @@
 #include "gdisplay_color.h"
 #include "gdisplay.h"
 #include "gimpimageP.h"
+#include "gimpui.h"
 
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
@@ -74,9 +74,6 @@ static Parasite * gamma_save                      (gpointer      cd_ID);
 static void       gamma_configure_ok_callback     (GtkWidget    *widget,
 						   gpointer      data);
 static void       gamma_configure_cancel_callback (GtkWidget    *widget,
-						   gpointer      data);
-static gint       gamma_configure_delete_callback (GtkWidget    *widget,
-						   GdkEvent     *event,
 						   gpointer      data);
 static void       gamma_configure                 (gpointer      cd_ID);
 
@@ -400,15 +397,6 @@ gamma_configure_cancel_callback (GtkWidget *widget,
   gtk_widget_hide (widget);
 }
 
-static gint
-gamma_configure_delete_callback (GtkWidget *widget,
-				 GdkEvent  *event,
-				 gpointer   data)
-{
-  gamma_configure_cancel_callback (widget, data);
-  return TRUE;
-}
-
 static void
 gamma_configure (gpointer cd_ID)
 {
@@ -417,19 +405,23 @@ gamma_configure (gpointer cd_ID)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
-  GtkWidget *hbbox;
-  GtkWidget *button;
   GtkObject *adjustment;
 
   if (!context->shell)
     {
-      context->shell = gtk_dialog_new ();
-      gtk_window_set_wmclass (GTK_WINDOW (context->shell), "gamma", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (context->shell), _("Gamma"));
+      context->shell =
+	gimp_dialog_new (_("Gamma"), "gamma",
+			 gimp_standard_help_func,
+			 "dialogs/gamma_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
 
-      gtk_signal_connect (GTK_OBJECT (context->shell), "delete_event",
-			  GTK_SIGNAL_FUNC (gamma_configure_delete_callback),
-			  NULL);
+			 _("OK"), gamma_configure_ok_callback,
+			 cd_ID, NULL, FALSE, FALSE,
+			 _("Cancel"), gamma_configure_cancel_callback,
+			 cd_ID, NULL, TRUE, TRUE,
+
+			 NULL);
 
       hbox = gtk_hbox_new (TRUE, 2);
       gtk_box_pack_start (GTK_BOX (GTK_DIALOG (context->shell)->vbox),
@@ -446,27 +438,6 @@ gamma_configure (gpointer cd_ID)
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
  
       gtk_widget_show_all (hbox);
-
-      hbbox = gtk_hbutton_box_new ();
-      gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
-      gtk_box_pack_end (GTK_BOX (GTK_DIALOG (context->shell)->action_area),
-			hbbox, FALSE, FALSE, 0);  
-
-      button = gtk_button_new_with_label (_("OK"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (gamma_configure_ok_callback),
-			  cd_ID);
-
-      button = gtk_button_new_with_label (_("Cancel"));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			  GTK_SIGNAL_FUNC (gamma_configure_cancel_callback),
-			  cd_ID);
-
-      gtk_widget_show_all (hbbox);
     }
 
   gtk_widget_show (context->shell);

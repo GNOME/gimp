@@ -157,6 +157,7 @@ int       show_indicators = TRUE;
 int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
 int	  trust_dirty_flag = FALSE;
+int       use_help = FALSE;
 
 extern char * module_db_load_inhibit;
 
@@ -307,7 +308,9 @@ static ParseFunc funcs[] =
   { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL },
   { "thumbnail-mode",            TT_INT,        &thumbnail_mode, NULL },
   { "trust-dirty-flag",		 TT_BOOLEAN,	&trust_dirty_flag, NULL },
-  { "dont-trust-dirty-flag",     TT_BOOLEAN,	NULL, &trust_dirty_flag }
+  { "dont-trust-dirty-flag",     TT_BOOLEAN,	NULL, &trust_dirty_flag },
+  { "use-help",                  TT_BOOLEAN,    &use_help, NULL },
+  { "dont-use-help",             TT_BOOLEAN,    NULL, &use_help }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 

@@ -1,3 +1,55 @@
+1999-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimphelp.[ch]
+	* app/gimpui.[ch]: new files
+
+	* app/interface.[ch]
+	* app/preferences_dialog.[ch]
+
+	The GIMP Help System part 1: Press "F1" in any dialog to pop up
+	the help page for this dialog.
+
+	Moved the widget constructors from preferences_dialog.[ch] and the
+	query boxes from interface.[ch] to gimpui.[ch].
+
+	The dialog constructors take a help_func and a help_data
+	parameter and install the "F1" accelerator which emits the new
+	"help" signal.
+
+	The "help" signal callback calls help_func(help_data) which finally
+	has to call gimp_help() which in turn invokes the help browser.
+
+	Still have to find a proper way to (1) prevent "F1" being assigned
+	to some menu item and (2) to catch "F1" while browsing the menu
+	trees in order to pop up the help for the selected item.
+
+	* app/menus.c: a <Toolbox>/File/Help... menu item.
+	* app/commands.[ch]: a command callback for the "Help..." menu item.
+
+	* app/gimprc.[ch]: new boolean gimprc variable "use_help".
+
+	* app/info_dialog.[ch]: pass a help function and data to the info
+	dialog constructor.
+
+	* app/tools.[ch]: store the tools help page names in the tool info
+	structure. Export a special tools_help_func() which shows the help
+	page for the active tool.
+
+	* app/[all files calling a dialog constructor]: pass the dialog's
+	help page to the constructor.
+
+	Most dialogs are now created by gimp_dialog_new() which also sets
+	up the action_area and the WM delete event callback, so I removed
+	the resp. code from these files.
+
+	Fixed some minor bugs and did some other stuff but didn't change
+	any logic except dialog creation.
+
+	* plug-ins/helpbrowser/helpbrowser.c: don't try to call a running
+	help browser and don't install any menu path (all done in
+	app/gimphelp.[ch] now).
+
 Mon Sep 27 17:13:48 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/unittest/gimpparse.c (global_parse_init): 

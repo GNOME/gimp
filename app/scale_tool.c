@@ -71,7 +71,8 @@ scale_tool_transform (Tool     *tool,
 
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new (_("Scaling Information"));
+	  transform_info = info_dialog_new (_("Scaling Information"),
+					    tools_help_func, NULL);
 
 	  info_dialog_add_label (transform_info, _("Original Width:"),
 				 orig_width_buf);

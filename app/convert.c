@@ -86,17 +86,16 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "convert.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "fsdither.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "undo.h"
 #include "palette.h"
-#include "preferences_dialog.h"	/* ick. */
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -393,7 +392,6 @@ typedef struct
 
 static void indexed_ok_callback        (GtkWidget *, gpointer);
 static void indexed_cancel_callback    (GtkWidget *, gpointer);
-static gint indexed_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void indexed_num_cols_update    (GtkWidget *, gpointer);
 static void indexed_radio_update       (GtkWidget *, gpointer);
 static void frame_sensitivity_update   (GtkWidget *, gpointer);
@@ -457,13 +455,6 @@ convert_to_grayscale (GimpImage* gimage)
   gdisplays_flush ();
 }
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("OK"), indexed_ok_callback, NULL, NULL },
-  { N_("Cancel"), indexed_cancel_callback, NULL, NULL }
-};
-
 void
 convert_to_indexed (GimpImage *gimage)
 {
@@ -478,7 +469,7 @@ convert_to_indexed (GimpImage *gimage)
   GSList *group = NULL;
   gint maxval;
 
-  dialog = g_new(IndexedDialog, 1);
+  dialog = g_new (IndexedDialog, 1);
   dialog->gimage = gimage;
 
   dialog->custom_frame = NULL;
@@ -496,21 +487,31 @@ convert_to_indexed (GimpImage *gimage)
   dialog->monopal_flag = smonopal_flag;
   dialog->reusepal_flag = sreusepal_flag;
 
-  dialog->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog->shell), "indexed_color_conversion", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog->shell), _("Indexed Color Conversion"));
-  gtk_signal_connect (GTK_OBJECT (dialog->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (indexed_delete_callback),
-		      dialog);
+  dialog->shell =
+    gimp_dialog_new (_("Indexed Color Conversion"), "indexed_color_conversion",
+		     gimp_standard_help_func,
+		     "dialogs/indexed_color_conversion_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
+
+		     _("OK"), indexed_ok_callback,
+		     dialog, NULL, TRUE, FALSE,
+		     _("Cancel"), indexed_cancel_callback,
+		     dialog, NULL, FALSE, TRUE,
+
+		     NULL);
 
   frame = gtk_frame_new (_("General Palette Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox), frame,
+		      TRUE, TRUE, 0);
+
   gtk_widget_show(frame);
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_BOX (GTK_DIALOG (dialog->shell)->vbox)), 4);
+
   /* put the vbox in the frame */
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show(vbox);
@@ -823,11 +824,6 @@ convert_to_indexed (GimpImage *gimage)
       gtk_widget_show(frame);
     }
 
-  /*  The action area  */
-  action_items[0].user_data = dialog;
-  action_items[1].user_data = dialog;
-  build_action_area (GTK_DIALOG (dialog->shell), action_items, 2, 0);
-
   gtk_widget_show (vbox);
   gtk_widget_show (dialog->shell);
 }
@@ -955,16 +951,6 @@ indexed_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
   dialog = NULL;
-}
-
-static gint
-indexed_delete_callback (GtkWidget *w,
-			 GdkEvent *e,
-			 gpointer client_data)
-{
-  indexed_cancel_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void

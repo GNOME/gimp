@@ -21,7 +21,6 @@
 #include <errno.h>
 #include <math.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "drawable.h"
@@ -29,6 +28,7 @@
 #include "gdisplay.h"
 #include "histogramwidget.h"
 #include "gimphistogram.h"
+#include "gimpui.h"
 #include "image_map.h"
 #include "interface.h"
 #include "levels.h"
@@ -138,7 +138,6 @@ static void   levels_alpha_callback          (GtkWidget *, gpointer);
 static void   levels_auto_levels_callback    (GtkWidget *, gpointer);
 static void   levels_ok_callback             (GtkWidget *, gpointer);
 static void   levels_cancel_callback         (GtkWidget *, gpointer);
-static gint   levels_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
 static void   levels_load_callback           (GtkWidget *, gpointer);
 static void   levels_save_callback           (GtkWidget *, gpointer);
 static void   levels_preview_update          (GtkWidget *, gpointer);
@@ -342,37 +341,34 @@ levels_new_dialog ()
   GtkWidget *menu;
   GtkWidget *hbbox;
   GtkWidget *button;
-  int i;
+  gint i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Auto Levels"), levels_auto_levels_callback, NULL, NULL },
-    { N_("OK"), levels_ok_callback, NULL, NULL },
-    { N_("Cancel"), levels_cancel_callback, NULL, NULL }
-  };
-
-  ld = g_malloc (sizeof (LevelsDialog));
+  ld = g_new (LevelsDialog, 1);
   ld->preview = TRUE;
-
-  ld->lut  = gimp_lut_new();
-  ld->hist = gimp_histogram_new();
+  ld->lut     = gimp_lut_new();
+  ld->hist    = gimp_histogram_new();
 
   for (i = 0; i < 5; i++)
     color_option_items [i].user_data = (gpointer) ld;
 
   /*  The shell and main vbox  */
-  ld->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (ld->shell), "levels", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (ld->shell), _("Levels"));
+  ld->shell = gimp_dialog_new (_("Levels"), "levels",
+			       tools_help_func, NULL,
+			       GTK_WIN_POS_NONE,
+			       FALSE, TRUE, FALSE,
 
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (ld->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (levels_delete_callback),
-		      ld);
+			       _("Auto Levels"), levels_auto_levels_callback,
+			       ld, NULL, FALSE, FALSE,
+			       _("OK"), levels_ok_callback,
+			       ld, NULL, TRUE, FALSE,
+			       _("Cancel"), levels_cancel_callback,
+			       ld, NULL, FALSE, TRUE,
+
+			       NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (ld->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (ld->shell)->vbox), vbox);
 
   /*  The option menu for selecting channels  */
   channel_hbox = gtk_hbox_new (FALSE, 2);
@@ -570,12 +566,6 @@ levels_new_dialog ()
   gtk_widget_show (button);
 
   gtk_widget_show (hbbox);
-
-  /*  The action area  */
-  action_items[0].user_data = ld;
-  action_items[1].user_data = ld;
-  action_items[2].user_data = ld;
-  build_action_area (GTK_DIALOG (ld->shell), action_items, 3, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (ld->shell);
@@ -1015,16 +1005,6 @@ levels_ok_callback (GtkWidget *widget,
   active_tool->drawable = NULL;
 }
 
-static gint
-levels_delete_callback (GtkWidget *w,
-			GdkEvent *e,
-			gpointer client_data)
-{
-  levels_cancel_callback (w, client_data);
-
-  return TRUE;
-}
-
 static void
 levels_cancel_callback (GtkWidget *widget,
 			gpointer   client_data)
@@ -1409,9 +1389,8 @@ static void
 file_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
-  FILE *f;
-  char *filename;
-  int i;
+  FILE  *f;
+  gchar *filename;
 
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (file_dlg));
 

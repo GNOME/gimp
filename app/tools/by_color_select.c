@@ -28,6 +28,7 @@
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "gimpset.h"
+#include "gimpui.h"
 #include "gdisplay.h"
 #include "selection_options.h"
 
@@ -87,8 +88,6 @@ static gint   by_color_select_preview_events  (GtkWidget *, GdkEventButton *,
 static void   by_color_select_type_callback   (GtkWidget *, gpointer);
 static void   by_color_select_reset_callback  (GtkWidget *, gpointer);
 static void   by_color_select_close_callback  (GtkWidget *, gpointer);
-static gint   by_color_select_delete_callback (GtkWidget *, GdkEvent *,
-					       gpointer);
 static void   by_color_select_fuzzy_update    (GtkAdjustment *, gpointer);
 static void   by_color_select_preview_button_press (ByColorDialog *,
 						    GdkEventButton *);
@@ -529,15 +528,14 @@ by_color_select_new_dialog ()
   GtkWidget *options_box;
   GtkWidget *label;
   GtkWidget *util_box;
-  GtkWidget *push_button;
   GtkWidget *slider;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   GtkObject *data;
   GSList *group = NULL;
-  int i;
+  gint i;
 
-  char *button_names[] =
+  gchar *button_names[] =
   {
     N_("Replace"),
     N_("Add"),
@@ -545,7 +543,7 @@ by_color_select_new_dialog ()
     N_("Intersect")
   };
 
-  int button_values[] =
+  gint button_values[] =
   {
     REPLACE,
     ADD,
@@ -553,28 +551,30 @@ by_color_select_new_dialog ()
     INTERSECT
   };
 
-  bcd = g_malloc (sizeof (ByColorDialog));
-  bcd->gimage = NULL;
+  bcd = g_new (ByColorDialog, 1);
+  bcd->gimage    = NULL;
   bcd->operation = REPLACE;
   bcd->threshold = DEFAULT_FUZZINESS;
 
   /*  The shell and main vbox  */
-  bcd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "by_color_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bcd->shell), _("By Color Selection"));
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->action_area), 2);
+  bcd->shell = gimp_dialog_new (_("By Color Selection"), "by_color_selection",
+				tools_help_func, NULL,
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
 
-  /*  handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
-		      (GtkSignalFunc) by_color_select_delete_callback,
-		      bcd);
+				_("Reset"), by_color_select_reset_callback,
+				bcd, NULL, FALSE, FALSE,
+				_("Close"), by_color_select_close_callback,
+				bcd, NULL, TRUE, TRUE,
 
-  /*  The vbox */
+				NULL);
+
+  /*  The vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->vbox), vbox);
 
-  /*  The horizontal box containing preview  & options box */
+  /*  The horizontal box containing preview & options box  */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
@@ -649,25 +649,6 @@ by_color_select_new_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (slider);
   gtk_widget_show (util_box);
-
-  /*  The reset push button  */
-  push_button = gtk_button_new_with_label (_("Reset"));
-  GTK_WIDGET_SET_FLAGS (push_button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->action_area), push_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (push_button), "clicked",
-		      (GtkSignalFunc) by_color_select_reset_callback,
-		      bcd);
-  gtk_widget_grab_default (push_button);
-  gtk_widget_show (push_button);
-
-  /*  The close push button  */
-  push_button = gtk_button_new_with_label (_("Close"));
-  GTK_WIDGET_SET_FLAGS (push_button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->action_area), push_button, TRUE, TRUE, 0);
-  gtk_signal_connect (GTK_OBJECT (push_button), "clicked",
-		      (GtkSignalFunc) by_color_select_close_callback,
-		      bcd);
-  gtk_widget_show (push_button);
 
   gtk_widget_show (options_box);
   gtk_widget_show (hbox);
@@ -850,16 +831,6 @@ by_color_select_reset_callback (GtkWidget *widget,
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
   by_color_select_draw (bcd, bcd->gimage);
-}
-
-static gint
-by_color_select_delete_callback (GtkWidget *w,
-				 GdkEvent  *e,
-				 gpointer   client_data)
-{
-  by_color_select_close_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void

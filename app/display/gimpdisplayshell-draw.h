@@ -20,85 +20,30 @@
 
 #include "toolsF.h"
 #include "gdisplayF.h"
-#include "libgimp/gimpunit.h"
-
-/*  typedefs  */
-typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 
 /*  externed variables  */
 extern GtkWidget   * tool_widgets[];
 extern GtkTooltips * tool_tips;
 
 /*  function declarations  */
-GtkWidget *  create_pixmap_widget   (GdkWindow   *parent,
-				     gchar      **data,
-				     gint         width,
-				     gint         height);
+GtkWidget *  create_pixmap_widget   (GdkWindow    *parent,
+				     gchar       **data,
+				     gint          width,
+				     gint          height);
 
-GdkPixmap *  create_tool_pixmap     (GtkWidget   *parent,
-				     ToolType     type);
+GdkPixmap *  create_tool_pixmap     (GtkWidget    *parent,
+				     ToolType      type);
 
 void         create_toolbox         (void);
 void	     toolbox_free           (void);
 
-void         toolbox_raise_callback (GtkWidget   *widget,
-				     gpointer     client_data);
+void         toolbox_raise_callback (GtkWidget    *widget,
+				     gpointer      client_data);
 
-void         create_display_shell   (GDisplay    *gdisp,
-				     gint         width,
-				     gint         height,
-				     gchar       *title,
-				     gint         type);
-
-/*  some simple query dialogs
- *  if object != NULL then the query boxes will connect their cancel callback
- *  to the provided signal of this object
- *
- *  it's the caller's job to show the returned widgets
- */
-GtkWidget *  query_string_box       (gchar       *title,
-				     gchar       *message,
-				     gchar       *initial,
-				     GtkObject   *object,
-				     gchar       *signal,
-				     QueryFunc    callback,
-				     gpointer     data);
-GtkWidget *  query_int_box          (gchar       *title,
-				     char        *message,
-				     gint         initial,
-				     gint         lower,
-				     gint         upper,
-				     GtkObject   *object,
-				     gchar       *signal,
-				     QueryFunc    callback,
-				     gpointer     data);
-GtkWidget *  query_double_box       (gchar       *title,
-				     gchar       *message,
-				     gdouble      initial,
-				     gdouble      lower,
-				     gdouble      upper,
-				     gint         digits,
-				     GtkObject   *object,
-				     gchar       *signal,
-				     QueryFunc    callback,
-				     gpointer     data);
-GtkWidget *  query_size_box         (gchar       *title,
-				     gchar       *message,
-				     gdouble      initial,
-				     gdouble      lower,
-				     gdouble      upper,
-				     gint         digits,
-				     GUnit        unit,
-				     gdouble      resolution,
-				     gint         dot_for_dot,
-				     GtkObject   *object,
-				     gchar       *signal,
-				     QueryFunc    callback,
-				     gpointer     data);
-
-/*  a simple message box  */
-GtkWidget *  message_box            (gchar       *message,
-				     GtkCallback  callback,
-				     gpointer     data);
+void         create_display_shell   (GDisplay     *gdisp,
+				     gint          width,
+				     gint          height,
+				     gchar        *title,
+				     gint          type);
 
 #endif /* __INTERFACE_H__ */

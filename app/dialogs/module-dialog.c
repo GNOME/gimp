@@ -36,10 +36,10 @@
 #include "gimpsignal.h"
 #include "gimprc.h"
 #include "datafiles.h"
-#include "actionarea.h"
 #include "gimpset.h"
-#include "libgimp/gimpenv.h"
+#include "gimpui.h"
 
+#include "libgimp/gimpenv.h"
 #include "libgimp/gimpmodule.h"
 #include "libgimp/gimpintl.h"
 
@@ -258,19 +258,21 @@ module_db_browser_new (void)
   GtkWidget *listbox;
   GtkWidget *button;
   browser_st *st;
-  ActionAreaItem action_items[] =
-  {
-    { N_("OK"), browser_popdown_callback, NULL, NULL }
-  };
 
+  shell = gimp_dialog_new (_("Module DB"), "module_db_dialog",
+			   gimp_standard_help_func,
+			   "dialogs/module_db_dialog.html",
+			   GTK_WIN_POS_NONE,
+			   FALSE, TRUE, FALSE,
 
-  shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (shell), "module_db_dialog", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (shell), _("Module DB"));
+			   _("OK"), browser_popdown_callback,
+			   NULL, NULL, TRUE, TRUE,
+
+			   NULL);
 
   vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
   listbox = gtk_scrolled_window_new (NULL, NULL);
@@ -332,12 +334,6 @@ module_db_browser_new (void)
 
   gtk_signal_connect (GTK_OBJECT (shell), "destroy",
 		      browser_destroy_callback, st);
-
-  action_items[0].user_data = shell;
-  build_action_area (GTK_DIALOG (shell), 
-		     action_items,  
-		     sizeof( action_items)/sizeof( ActionAreaItem), 
-		     0);
 
   return shell;
 }

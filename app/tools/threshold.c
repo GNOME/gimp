@@ -19,10 +19,10 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "threshold.h"
 
@@ -56,8 +56,6 @@ static ThresholdDialog * threshold_new_dialog (void);
 static void   threshold_preview                    (ThresholdDialog *);
 static void   threshold_ok_callback                (GtkWidget *, gpointer);
 static void   threshold_cancel_callback            (GtkWidget *, gpointer);
-static gint   threshold_delete_callback            (GtkWidget *, GdkEvent *,
-						    gpointer);
 static void   threshold_preview_update             (GtkWidget *, gpointer);
 static void   threshold_low_threshold_text_update  (GtkWidget *, gpointer);
 static void   threshold_high_threshold_text_update (GtkWidget *, gpointer);
@@ -273,31 +271,29 @@ threshold_new_dialog ()
   GtkWidget *frame;
   GtkWidget *toggle;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), threshold_ok_callback, NULL, NULL },
-    { N_("Cancel"), threshold_cancel_callback, NULL, NULL }
-  };
-
-  td = g_malloc (sizeof (ThresholdDialog));
-  td->preview = TRUE;
-  td->low_threshold = 127;
+  td = g_new (ThresholdDialog, 1);
+  td->preview        = TRUE;
+  td->low_threshold  = 127;
   td->high_threshold = 255;
-  td->hist = gimp_histogram_new();
+  td->hist           = gimp_histogram_new ();
 
   /*  The shell and main vbox  */
-  td->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (td->shell), "threshold", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (td->shell), _("Threshold"));
+  td->shell =
+    gimp_dialog_new (_("Threshold"), "threshold",
+		     tools_help_func, NULL,
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
 
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (td->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (threshold_delete_callback),
-		      td);
+		     _("OK"), threshold_ok_callback,
+		     td, NULL, TRUE, FALSE,
+		     _("Cancel"), threshold_cancel_callback,
+		     td, NULL, FALSE, TRUE,
+
+		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (td->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (td->shell)->vbox), vbox);
 
   /*  Horizontal box for threshold text widget  */
   hbox = gtk_hbox_new (TRUE, 2);
@@ -362,11 +358,6 @@ threshold_new_dialog ()
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-  /*  The action area  */
-  action_items[0].user_data = td;
-  action_items[1].user_data = td;
-  build_action_area (GTK_DIALOG (td->shell), action_items, 2, 0);
-
   gtk_widget_show (vbox);
   gtk_widget_show (td->shell);
 
@@ -409,16 +400,6 @@ threshold_ok_callback (GtkWidget *widget,
 
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
-}
-
-static gint
-threshold_delete_callback (GtkWidget *w,
-			   GdkEvent *e,
-			   gpointer client_data) 
-{
-  threshold_cancel_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void

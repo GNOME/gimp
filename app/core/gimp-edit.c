@@ -24,8 +24,8 @@
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "global_edit.h"
-#include "interface.h"
 #include "layer.h"
 #include "paint_funcs.h"
 #include "tools.h"
@@ -666,27 +666,17 @@ named_buffer_delete_callback (GtkWidget *w,
 }
 
 static void
-named_buffer_cancel_callback (GtkWidget *w,
-			      gpointer   client_data)
+named_buffer_cancel_callback (GtkWidget *widget,
+			      gpointer   data)
 {
   PasteNamedDlg *pn_dlg;
 
-  pn_dlg = (PasteNamedDlg *) client_data;
+  pn_dlg = (PasteNamedDlg *) data;
 
   /*  Destroy the box  */
   gtk_widget_destroy (pn_dlg->shell);
 
   g_free (pn_dlg);
-}
-
-static gint
-named_buffer_dialog_delete_callback (GtkWidget *w,
-				     GdkEvent  *e,
-				     gpointer   client_data)
-{
-  named_buffer_cancel_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void
@@ -706,27 +696,27 @@ paste_named_buffer (GDisplay *gdisp)
     { N_("Paste Into"), named_buffer_paste_into_callback, NULL, NULL },
     { N_("Paste As New"), named_buffer_paste_as_new_callback, NULL, NULL }
   };
-  static ActionAreaItem other_action_items[] =
-  {
-    { N_("Delete"), named_buffer_delete_callback, NULL, NULL },
-    { N_("Cancel"), named_buffer_cancel_callback, NULL, NULL }
-  };
 
-  pn_dlg = (PasteNamedDlg *) g_malloc (sizeof (PasteNamedDlg));
+  pn_dlg = g_new (PasteNamedDlg, 1);
   pn_dlg->gdisp = gdisp;
-  
-  pn_dlg->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (pn_dlg->shell), "paste_named_buffer", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (pn_dlg->shell), _("Paste Named Buffer"));
-  gtk_window_position (GTK_WINDOW (pn_dlg->shell), GTK_WIN_POS_MOUSE);
 
-  gtk_signal_connect (GTK_OBJECT (pn_dlg->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (named_buffer_dialog_delete_callback),
-		      pn_dlg);
+  pn_dlg->shell =
+    gimp_dialog_new (_("Paste Named Buffer"), "paste_named_buffer",
+		     gimp_standard_help_func,
+		     "dialogs/paste_named_buffer_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
+		     _("Delete"), named_buffer_delete_callback,
+		     pn_dlg, NULL, FALSE, FALSE,
+		     _("Cancel"), named_buffer_cancel_callback,
+		     pn_dlg, NULL, TRUE, TRUE,
+
+		     NULL);
+		     
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (pn_dlg->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (pn_dlg->shell)->vbox), vbox);
   gtk_widget_show (vbox);
 
   label = gtk_label_new (_("Select a buffer to paste:"));
@@ -763,10 +753,6 @@ paste_named_buffer (GDisplay *gdisp)
     }
   gtk_widget_show (bbox);
 
-  other_action_items[0].user_data = pn_dlg;
-  other_action_items[1].user_data = pn_dlg;
-  build_action_area (GTK_DIALOG (pn_dlg->shell), other_action_items, 2, 1);
-
   gtk_widget_show (pn_dlg->shell);
 }
 
@@ -791,7 +777,7 @@ new_named_buffer (TileManager *tiles,
 }
 
 static void
-cut_named_buffer_callback (GtkWidget *w,
+cut_named_buffer_callback (GtkWidget *widget,
 			   gpointer   client_data,
 			   gpointer   call_data)
 {
@@ -811,22 +797,27 @@ cut_named_buffer_callback (GtkWidget *w,
 int
 named_edit_cut (void *gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
 
   /*  stop any active tool  */
   gdisp = (GDisplay *) gdisp_ptr;
   active_tool_control (HALT, gdisp_ptr);
 
-  gtk_widget_show (query_string_box (_("Cut Named"),
-				     _("Enter a name for this buffer"),
-				     NULL,
-				     GTK_OBJECT (gdisp->gimage), "destroy",
-				     cut_named_buffer_callback, gdisp));
+  qbox = gimp_query_string_box (_("Cut Named"),
+				gimp_standard_help_func,
+				"dialogs/cut_named_dialog.html",
+				_("Enter a name for this buffer"),
+				NULL,
+				GTK_OBJECT (gdisp->gimage), "destroy",
+				cut_named_buffer_callback, gdisp);
+  gtk_widget_show (qbox);
+
   return TRUE;
 }
 
 static void
-copy_named_buffer_callback (GtkWidget *w,
+copy_named_buffer_callback (GtkWidget *widget,
 			    gpointer   client_data,
 			    gpointer   call_data)
 {
@@ -845,15 +836,20 @@ copy_named_buffer_callback (GtkWidget *w,
 int
 named_edit_copy (void *gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
-  
-  gtk_widget_show (query_string_box (_("Copy Named"),
-				     _("Enter a name for this buffer"),
-				     NULL,
-				     GTK_OBJECT (gdisp->gimage), "destroy",
-				     copy_named_buffer_callback, gdisp));
+
+  qbox = gimp_query_string_box (_("Copy Named"),
+				gimp_standard_help_func,
+				"dialogs/copy_named_dialog.html",
+				_("Enter a name for this buffer"),
+				NULL,
+				GTK_OBJECT (gdisp->gimage), "destroy",
+				copy_named_buffer_callback, gdisp);
+  gtk_widget_show (qbox);
+
   return TRUE;
 }
 

@@ -16,7 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #ifdef HAVE_SYS_PARAM_H
@@ -42,14 +41,13 @@
 #endif
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "cursorutil.h"
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
 #include "gimpcontext.h"
+#include "gimpui.h"
 #include "fileops.h"
-#include "interface.h"
 #include "menus.h"
 #include "layer.h"
 #include "channel.h"
@@ -73,54 +71,42 @@ struct _OverwriteBox
 
 static void file_overwrite              (char *filename,
 					 char* raw_filename);
-static void file_overwrite_yes_callback (GtkWidget *w,
-					 gpointer   client_data);
-static void file_overwrite_no_callback  (GtkWidget *w,
-					 gpointer   client_data);
-
-static gint file_overwrite_delete_callback  (GtkWidget *w,
-					     GdkEvent  *e,
-					     gpointer   client_data);
+static void file_overwrite_yes_callback (GtkWidget *, gpointer);
+static void file_overwrite_no_callback  (GtkWidget *, gpointer);
 
 static GimpImage* file_open_image   (char *filename,
 				     char *raw_filename,
 				     RunModeType runmode);
 
-static void genbutton_callback (GtkWidget *w,
-				gpointer   client_data);
+static void genbutton_callback (GtkWidget *, gpointer);
 
-static void file_open_clistrow_callback (GtkWidget *w,
-				         int        client_data);
-static void file_open_ok_callback   (GtkWidget *w,
-				     gpointer   client_data);
-static void file_save_ok_callback   (GtkWidget *w,
-				     gpointer   client_data);
+static void file_open_clistrow_callback (GtkWidget *, gint);
+static void file_open_ok_callback   (GtkWidget *, gpointer);
+static void file_save_ok_callback   (GtkWidget *, gpointer);
 
 static void file_dialog_show        (GtkWidget *filesel);
 static int  file_dialog_hide        (GtkWidget *filesel);
 static void file_update_name        (PlugInProcDef *proc,
 				     GtkWidget     *filesel);
-static void file_load_type_callback (GtkWidget *w,
-				     gpointer   client_data);
-static void file_save_type_callback (GtkWidget *w,
-				     gpointer   client_data);
+static void file_load_type_callback (GtkWidget *, gpointer);
+static void file_save_type_callback (GtkWidget *, gpointer);
 
 static void file_convert_string (char *instr,
                                  char *outmem,
-                                 int maxmem,
-                                 int *nmem);
+                                 int   maxmem,
+                                 int  *nmem);
 
-static int  file_check_single_magic (char *offset,
-                                     char *type,
-                                     char *value,
-                                     int headsize,
-                                     unsigned char *file_head,
-                                     FILE *ifp);
+static int  file_check_single_magic (char   *offset,
+                                     char   *type,
+                                     char   *value,
+                                     int     headsize,
+                                     guchar *file_head,
+                                     FILE   *ifp);
 
 static int  file_check_magic_list (GSList *magics_list,
-                                   int headsize,
-                                   unsigned char *head,
-                                   FILE *ifp);
+                                   int     headsize,
+                                   guchar *head,
+                                   FILE   *ifp);
 
 static void      file_update_menus      (GSList *procs,
 					 int     image_type);
@@ -149,20 +135,20 @@ static GimpImage *the_gimage = NULL;
 
 extern GSList *display_list; /* from gdisplay.c */
 
-#define FILE_ERR_MESSAGE(str)				G_STMT_START{	\
-  if (message_handler == MESSAGE_BOX)					\
-    message_box ((str), file_message_box_close_callback, (void *) fs);	\
-  else									\
-    g_message (str);							\
+#define FILE_ERR_MESSAGE(str)				G_STMT_START{	    \
+  if (message_handler == MESSAGE_BOX)					    \
+    gimp_message_box ((str), file_message_box_close_callback, (void *) fs); \
+  else									    \
+    g_message (str);							    \
     gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);	}G_STMT_END
 
 static void
-file_message_box_close_callback (GtkWidget *w,
-				 gpointer   client_data)
+file_message_box_close_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   GtkFileSelection *fs;
 
-  fs = (GtkFileSelection *) client_data;
+  fs = (GtkFileSelection *) data;
 
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 }
@@ -212,8 +198,8 @@ file_ops_post_init (void)
 }
 
 void
-file_open_callback (GtkWidget *w,
-		    gpointer   client_data)
+file_open_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   GtkWidget *hbox;
   GtkWidget *vbox;
@@ -244,6 +230,11 @@ file_open_callback (GtkWidget *w,
 
       /* Catch file-clist clicks so we can update the preview thumbnail */
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->file_list), "select_row", (GtkSignalFunc) file_open_clistrow_callback, fileload);
+
+      /*  Connect the "F1" help key  */
+      gimp_help_connect_help_accel (fileload,
+				    gimp_standard_help_func,
+				    "dialogs/file_load_dialog.html");
     }
   else
     {
@@ -408,8 +399,8 @@ file_open_callback (GtkWidget *w,
 }
 
 void
-file_save_callback (GtkWidget *w,
-		    gpointer   client_data)
+file_save_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   GDisplay *gdisplay;
 
@@ -421,7 +412,7 @@ file_save_callback (GtkWidget *w,
     {
       if (gdisplay->gimage->has_filename == FALSE)
 	{
-	  file_save_as_callback (w, client_data);
+	  file_save_as_callback (widget, data);
 	}
       else
 	{
@@ -432,8 +423,8 @@ file_save_callback (GtkWidget *w,
 }
 
 void
-file_save_as_callback (GtkWidget *w,
-		       gpointer   client_data)
+file_save_as_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   GtkWidget *hbox;
   GtkWidget *label;
@@ -466,6 +457,11 @@ file_save_as_callback (GtkWidget *w,
       gtk_file_selection_set_filename (GTK_FILE_SELECTION(filesave),
 				       "." G_DIR_SEPARATOR_S);
       gtk_window_set_title (GTK_WINDOW (filesave), _("Save Image"));
+
+      /*  Connect the "F1" help key  */
+      gimp_help_connect_help_accel (filesave,
+				    gimp_standard_help_func,
+				    "dialogs/file_save_dialog.html");
     }
 
   gdisplay = gdisplay_active ();
@@ -515,12 +511,12 @@ file_save_as_callback (GtkWidget *w,
 }
 
 void
-file_revert_callback (GtkWidget *w,
-		      gpointer   client_data)
+file_revert_callback (GtkWidget *widget,
+		      gpointer   data)
 {
   GDisplay *gdisplay;
   GimpImage *gimage;
-  char *filename, *raw_filename;
+  gchar *filename = NULL, *raw_filename = NULL;
 
   gdisplay = gdisplay_active ();
   if (!gdisplay) return;
@@ -546,21 +542,22 @@ file_revert_callback (GtkWidget *w,
 }
 
 void
-file_load_by_extension_callback (GtkWidget *w,
-				 gpointer   client_data)
+file_load_by_extension_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   load_file_proc = NULL;
 }
 
 void
-file_save_by_extension_callback (GtkWidget *w,
-				 gpointer   client_data)
+file_save_by_extension_callback (GtkWidget *widget,
+				 gpointer   data)
 {
   save_file_proc = NULL;
 }
 
 static void
-file_update_name (PlugInProcDef *proc, GtkWidget *filesel)
+file_update_name (PlugInProcDef *proc,
+		  GtkWidget     *filesel)
 {
   if (proc->extensions_list)
     {
@@ -586,10 +583,10 @@ file_update_name (PlugInProcDef *proc, GtkWidget *filesel)
 }
 
 static void
-file_load_type_callback (GtkWidget *w,
-			 gpointer   client_data)
+file_load_type_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  PlugInProcDef* proc = (PlugInProcDef *) client_data;
+  PlugInProcDef* proc = (PlugInProcDef *) data;
 
   file_update_name (proc, fileload);
 
@@ -597,10 +594,10 @@ file_load_type_callback (GtkWidget *w,
 }
 
 static void
-file_save_type_callback (GtkWidget *w,
-			 gpointer   client_data)
+file_save_type_callback (GtkWidget *widget,
+			 gpointer   data)
 {
-  PlugInProcDef* proc = (PlugInProcDef *) client_data;
+  PlugInProcDef* proc = (PlugInProcDef *) data;
 
   file_update_name (proc, filesave);
 
@@ -608,7 +605,9 @@ file_save_type_callback (GtkWidget *w,
 }
 
 static GimpImage*
-file_open_image (char *filename, char *raw_filename, RunModeType runmode)
+file_open_image (char        *filename,
+		 char        *raw_filename,
+		 RunModeType  runmode)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -658,7 +657,8 @@ file_open_image (char *filename, char *raw_filename, RunModeType runmode)
 }
 
 int
-file_open (char *filename, char *raw_filename)
+file_open (char *filename,
+	   char *raw_filename)
 {
   GimpImage *gimage;
   GDisplay  *gdisplay;
@@ -687,8 +687,7 @@ file_open (char *filename, char *raw_filename)
   return FALSE;
 }
 
-
-static TempBuf*
+static TempBuf *
 make_thumb_tempbuf (GimpImage* gimage)
 {  
   gint w,h;
@@ -722,9 +721,10 @@ make_thumb_tempbuf (GimpImage* gimage)
   return (gimp_image_composite_preview (gimage, GRAY_CHANNEL, w, h));
 }
 
-
-static guchar*
-make_RGBbuf_from_tempbuf (TempBuf* tempbuf, gint* width_rtn, gint* height_rtn)
+static guchar *
+make_RGBbuf_from_tempbuf (TempBuf *tempbuf,
+			  gint    *width_rtn,
+			  gint    *height_rtn)
 {  
   int i,j,w,h;
   guchar* tbd;
@@ -794,9 +794,9 @@ make_RGBbuf_from_tempbuf (TempBuf* tempbuf, gint* width_rtn, gint* height_rtn)
 
 
 static gboolean
-file_save_thumbnail (GimpImage* gimage,
+file_save_thumbnail (GimpImage  * gimage,
 		     const char *full_source_filename,
-		     TempBuf* tempbuf)
+		     TempBuf    *tempbuf)
 {
   gint i,j;
   gint w,h;
@@ -944,12 +944,11 @@ file_save_thumbnail (GimpImage* gimage,
   return (TRUE);
 }
 
-
 int
-file_save (GimpImage* gimage,
-	   char *filename,
-	   char *raw_filename,
-           gint mode)
+file_save (GimpImage *gimage,
+	   char      *filename,
+	   char      *raw_filename,
+           gint       mode)
 {
   PlugInProcDef *file_proc;
   ProcRecord *proc;
@@ -1029,9 +1028,10 @@ file_save (GimpImage* gimage,
 /* The readXVThumb function source may be re-used under
    the XFree86-style license. <adam@gimp.org> */
 static guchar*
-readXVThumb(const gchar *fnam,
-	    gint* w, gint* h,
-	    gchar** imginfo /* caller frees if != NULL */)
+readXVThumb(const gchar  *fnam,
+	    gint         *w,
+	    gint         *h,
+	    gchar       **imginfo /* caller frees if != NULL */)
 {
   FILE *fp;
   const gchar *P7_332 = "P7 332";
@@ -1112,10 +1112,12 @@ readXVThumb(const gchar *fnam,
   return(buf);
 }
 
-
 /* don't call with preview_fullname as parameter!  will be clobbered! */
 static void
-set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
+set_preview (const gchar *fullfname,
+	     guchar      *RGB_source,
+	     gint         RGB_w,
+	     gint         RGB_h)
 {
   guchar *thumb_rgb;
   guchar *raw_thumb;
@@ -1255,23 +1257,21 @@ set_preview (const gchar* fullfname, guchar* RGB_source, gint RGB_w, gint RGB_h)
     }
 }
 
-
 static void
-file_open_clistrow_callback (GtkWidget *w,
-			     int client_data)
+file_open_clistrow_callback (GtkWidget *widget,
+			     int        data)
 {
   gchar  *fullfname = NULL;
 
-  fullfname = gtk_file_selection_get_filename(GTK_FILE_SELECTION(fileload));
+  fullfname = gtk_file_selection_get_filename (GTK_FILE_SELECTION (fileload));
 
-  gtk_widget_set_sensitive (GTK_WIDGET(open_options_frame), TRUE);
+  gtk_widget_set_sensitive (GTK_WIDGET (open_options_frame), TRUE);
   set_preview (fullfname, NULL, 0, 0);
 }
 
-
 static void
-genbutton_callback (GtkWidget *w,
-		    gpointer   client_data)
+genbutton_callback (GtkWidget *widget,
+		    gpointer   data)
 {
   GimpImage* gimage_to_be_thumbed;
   gchar* filename;
@@ -1282,9 +1282,9 @@ genbutton_callback (GtkWidget *w,
       return;
     }
   
-  filename = g_strdup(preview_fullname);
+  filename = g_strdup (preview_fullname);
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), FALSE);
   if ((gimage_to_be_thumbed = file_open_image (filename,
  					       g_basename(filename),
@@ -1322,10 +1322,9 @@ genbutton_callback (GtkWidget *w,
   g_free (filename);
 }
 
-
 static void
-file_open_ok_callback (GtkWidget *w,
-		       gpointer   client_data)
+file_open_ok_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   GtkFileSelection *fs;
   char* filename, *raw_filename, *mfilename;
@@ -1334,7 +1333,7 @@ file_open_ok_callback (GtkWidget *w,
   int err;
   GString *s;
 
-  fs = GTK_FILE_SELECTION (client_data);
+  fs = GTK_FILE_SELECTION (data);
   filename = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
 
@@ -1364,7 +1363,7 @@ file_open_ok_callback (GtkWidget *w,
 
   if (file_open (filename, raw_filename))
     {
-      file_dialog_hide (client_data);
+      file_dialog_hide (data);
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
     }
   else
@@ -1454,7 +1453,7 @@ file_open_ok_callback (GtkWidget *w,
 		    
 		    if (file_open (mfilename, temp))
 		      {
-			file_dialog_hide (client_data);
+			file_dialog_hide (data);
 			gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 		      }
 		    else
@@ -1490,8 +1489,8 @@ file_open_ok_callback (GtkWidget *w,
 }
 
 static void
-file_save_ok_callback (GtkWidget *w,
-		       gpointer   client_data)
+file_save_ok_callback (GtkWidget *widget,
+		       gpointer   data)
 {
   GtkFileSelection *fs;
   char* filename, *raw_filename;
@@ -1499,7 +1498,7 @@ file_save_ok_callback (GtkWidget *w,
   struct stat buf;
   int err;
 
-  fs = GTK_FILE_SELECTION (client_data);
+  fs = GTK_FILE_SELECTION (data);
   filename = gtk_file_selection_get_filename (fs);
   raw_filename = gtk_entry_get_text (GTK_ENTRY(fs->selection_entry));
   err = stat (filename, &buf);
@@ -1533,7 +1532,7 @@ file_save_ok_callback (GtkWidget *w,
       gimage_set_save_proc(the_gimage, save_file_proc);
       if (file_save (the_gimage, filename, raw_filename, 0))
 	{
-	  file_dialog_hide (client_data);
+	  file_dialog_hide (data);
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
 	  return;
 	}
@@ -1577,44 +1576,40 @@ file_dialog_hide (GtkWidget *filesel)
 }
 
 static void
-file_overwrite (char *filename, char* raw_filename)
+file_overwrite (char *filename,
+		char *raw_filename)
 {
-  static ActionAreaItem obox_action_items[2] =
-  {
-    { N_("Yes"), file_overwrite_yes_callback, NULL, NULL },
-    { N_("No"), file_overwrite_no_callback, NULL, NULL }
-  };
-
   OverwriteBox *overwrite_box;
   GtkWidget *vbox;
   GtkWidget *label;
   char *overwrite_text;
 
-  overwrite_box = (OverwriteBox *) g_malloc (sizeof (OverwriteBox));
+  overwrite_box = g_new (OverwriteBox, 1);
   overwrite_text = g_strdup_printf (_("%s exists, overwrite?"), filename);
 
   overwrite_box->full_filename = filename;
   overwrite_box->raw_filename = raw_filename;
-  overwrite_box->obox = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (overwrite_box->obox), "file_exists", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (overwrite_box->obox), _("File Exists!"));
-  gtk_window_set_position (GTK_WINDOW (overwrite_box->obox), GTK_WIN_POS_MOUSE);
+  overwrite_box->obox =
+    gimp_dialog_new (_("File Exists!"), "file_exists",
+		     gimp_standard_help_func,
+		     "dialogs/file_exists_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (overwrite_box->obox),
-		      "delete_event",
-		      (GtkSignalFunc) file_overwrite_delete_callback,
-		      overwrite_box);
+		     _("Yes"), file_overwrite_yes_callback,
+		     overwrite_box, NULL, TRUE, FALSE,
+		     _("No"), file_overwrite_no_callback,
+		     overwrite_box, NULL, FALSE, TRUE,
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (overwrite_box->obox)->vbox), vbox, TRUE, TRUE, 0);
+		     NULL);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (overwrite_box->obox)->vbox),
+		     vbox);
 
   label = gtk_label_new (overwrite_text);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
-
-  obox_action_items[0].user_data = overwrite_box;
-  obox_action_items[1].user_data = overwrite_box;
-  build_action_area (GTK_DIALOG (overwrite_box->obox), obox_action_items, 2, 0);
 
   gtk_widget_show (label);
   gtk_widget_show (vbox);
@@ -1624,13 +1619,13 @@ file_overwrite (char *filename, char* raw_filename)
 }
 
 static void
-file_overwrite_yes_callback (GtkWidget *w,
-			     gpointer   client_data)
+file_overwrite_yes_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   OverwriteBox *overwrite_box;
   GImage *gimage;
 
-  overwrite_box = (OverwriteBox *) client_data;
+  overwrite_box = (OverwriteBox *) data;
 
   gtk_widget_destroy (overwrite_box->obox);
 
@@ -1657,23 +1652,13 @@ file_overwrite_yes_callback (GtkWidget *w,
   g_free (overwrite_box);
 }
 
-static gint
-file_overwrite_delete_callback (GtkWidget *w,
-				GdkEvent  *e,
-				gpointer   client_data)
-{
-  file_overwrite_no_callback (w, client_data);
-
-  return TRUE;
-}
-
 static void
-file_overwrite_no_callback (GtkWidget *w,
-			    gpointer   client_data)
+file_overwrite_no_callback (GtkWidget *widget,
+			    gpointer   data)
 {
   OverwriteBox *overwrite_box;
 
-  overwrite_box = (OverwriteBox *) client_data;
+  overwrite_box = (OverwriteBox *) data;
 
   gtk_widget_destroy (overwrite_box->obox);
   g_free (overwrite_box->full_filename);
@@ -2017,6 +2002,7 @@ file_update_menus (GSList *procs,
       procs = procs->next;
 
       if (file_proc->db_info.proc_type != PDB_EXTENSION)
-	menus_set_sensitive (file_proc->menu_path, (file_proc->image_types_val & image_type));
+	menus_set_sensitive (file_proc->menu_path,
+			     (file_proc->image_types_val & image_type));
     }
 }

@@ -18,7 +18,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <glib.h>
@@ -47,12 +46,11 @@
 #endif
 #endif
 
-#include "actionarea.h"
-
 #include <gtk/gtk.h>
 
 #include "appenv.h"
 #include "commands.h"
+#include "gimpui.h"
 #include "session.h"
 #include "dialog_handler.h"
 
@@ -83,16 +81,6 @@ error_console_clear_callback (GtkWidget	*widget,
     (GTK_EDITABLE (text), 0, gtk_text_get_length (GTK_TEXT (text)));
 }
 
-static gint
-error_console_delete_callback (GtkWidget *widget,
-			       GdkEvent  *event,
-			       gpointer	  data)
-{
-  error_console_close_callback (NULL, NULL);
-
-  return TRUE;
-}
-
 void
 error_console_free (void)
 {                                     
@@ -104,13 +92,13 @@ gint
 error_console_write_file (gchar *path,
 			  gint   textscope)
 {
-  gint	fd;
-  gint	text_length;
-  gint	bytes_written;
+  gint fd;
+  gint text_length;
+  gint bytes_written;
   gchar	*text_contents;
-  GtkText	*gtext;
-  
-  gtext = GTK_TEXT(text);
+  GtkText *gtext;
+
+  gtext = GTK_TEXT (text);
 
   fd = open (path, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
   
@@ -165,9 +153,9 @@ static void
 error_console_file_ok_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  GtkWidget	*filesel;
-  gchar		*filename;
-  gint		textscope;
+  GtkWidget *filesel;
+  gchar	    *filename;
+  gint	     textscope;
 
   filesel = (GtkWidget *) data;
   filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (filesel));
@@ -179,7 +167,8 @@ error_console_file_ok_callback (GtkWidget *widget,
       GString	*string;
 
       string = g_string_new ("");
-      g_string_sprintf (string, _("Error opening file %s: %s"), filename, g_strerror (errno));
+      g_string_sprintf (string, _("Error opening file %s: %s"),
+			filename, g_strerror (errno));
       g_message (string->str);
       g_string_free (string, TRUE);
     }
@@ -190,9 +179,10 @@ error_console_file_ok_callback (GtkWidget *widget,
 static void
 error_console_menu_callback (gint textscope)
 {
-  GtkWidget	*filesel;
+  GtkWidget *filesel;
 
-  if (!(GTK_TEXT (text)->editable.has_selection) && (textscope == ERRORS_SELECTION))
+  if (!(GTK_TEXT (text)->editable.has_selection) &&
+      (textscope == ERRORS_SELECTION))
     {
       g_message (_("Can't save, nothing selected!"));
       return;
@@ -213,16 +203,22 @@ error_console_menu_callback (gint textscope)
   gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (filesel)->cancel_button),
 			     "delete_event", (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (filesel));
+
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (filesel,
+				gimp_standard_help_func,
+				"dialogs/error_console.html");
+
   gtk_widget_show (filesel);
 }
 
 static gint
-text_clicked_callback (GtkWidget        *widget,
-		       GdkEventButton   *event, 
-		       gpointer		 data)
+text_clicked_callback (GtkWidget      *widget,
+		       GdkEventButton *event, 
+		       gpointer	       data)
 {
-  GtkMenu	*menu = (GtkMenu *) data;
-  GtkText	*gtext;
+  GtkMenu *menu = (GtkMenu *) data;
+  GtkText *gtext;
   
   gtext = GTK_TEXT (text);
 
@@ -262,35 +258,40 @@ text_clicked_callback (GtkWidget        *widget,
   return TRUE; 
 }
 
-/*  the action area structure  */
-static ActionAreaItem action_items[] =
-{
-  { N_("Clear"), error_console_clear_callback, NULL, NULL },
-  { N_("Close"), error_console_close_callback, NULL, NULL }
-};
-
 static void
 error_console_create_window (void)
 {
-  GtkWidget	*table;
-  GtkWidget	*vscrollbar;
-  GtkWidget	*menu;
-  GtkWidget	*menuitem;
+  GtkWidget *table;
+  GtkWidget *vscrollbar;
+  GtkWidget *menu;
+  GtkWidget *menuitem;
 
-  error_console = gtk_dialog_new ();
+  error_console = gimp_dialog_new (_("GIMP Error Console"), "error_console",
+				   gimp_standard_help_func,
+				   "dialogs/error_console.html",
+				   GTK_WIN_POS_NONE,
+				   TRUE, TRUE, FALSE,
 
+				   _("Clear"), error_console_clear_callback,
+				   NULL, NULL, FALSE, FALSE,
+				   _("Close"), error_console_close_callback,
+				   text, NULL, TRUE, TRUE,
+
+				   NULL);
   /* register this one only */
   dialog_register (error_console);
+  session_set_window_geometry (error_console, &error_console_session_info,
+			       TRUE); 
 
-  gtk_window_set_wmclass (GTK_WINDOW (error_console), "error_console", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (error_console), _("GIMP Error console"));
-  session_set_window_geometry (error_console, &error_console_session_info, TRUE); 
   /* The next line should disappear when setting the size works in SM */
   gtk_widget_set_usize (error_console, 250, 300);
-  gtk_window_set_policy (GTK_WINDOW(error_console), TRUE, TRUE, FALSE);
-  gtk_signal_connect (GTK_OBJECT (error_console), "delete_event",
-		      (GdkEventFunc) error_console_delete_callback, NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), 2);
+
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (error_console)->vbox), table);
+  gtk_widget_show (table);
 
   menu = gtk_menu_new ();
 
@@ -307,13 +308,6 @@ error_console_create_window (void)
 			     (GtkSignalFunc) error_console_menu_callback,
 			     (gpointer) ERRORS_SELECTION);
   gtk_widget_show (menuitem);
-
-  table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (error_console)->vbox), table, TRUE, TRUE, 0);
-  gtk_widget_show (table);
 
   /*  The output text widget  */
   text = gtk_text_new (NULL, NULL);
@@ -333,11 +327,6 @@ error_console_create_window (void)
   gtk_table_attach (GTK_TABLE (table), vscrollbar, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (vscrollbar);
-
-  /*  Action area  */
-  action_items[0].user_data = error_console;
-  action_items[1].user_data = text;
-  build_action_area (GTK_DIALOG (error_console), action_items, 2, 0);
 
   gtk_widget_show (error_console);
 }

@@ -71,7 +71,8 @@ shear_tool_transform (Tool     *tool,
     case INIT :
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new (_("Shear Information"));
+	  transform_info = info_dialog_new (_("Shear Information"),
+					    tools_help_func, NULL);
 
 	  info_dialog_add_spinbutton (transform_info,
 				      _("Shear Magnitude X:"),

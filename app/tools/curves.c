@@ -21,7 +21,6 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "cursorutil.h"
@@ -29,6 +28,7 @@
 #include "general.h"
 #include "gdisplay.h"
 #include "gimphistogram.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "curves.h"
 #include "gimplut.h"
@@ -114,7 +114,6 @@ static void   curves_free_callback   (GtkWidget *, gpointer);
 static void   curves_reset_callback  (GtkWidget *, gpointer);
 static void   curves_ok_callback     (GtkWidget *, gpointer);
 static void   curves_cancel_callback (GtkWidget *, gpointer);
-static gint   curves_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void   curves_preview_update  (GtkWidget *, gpointer);
 static gint   curves_xrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
 static gint   curves_yrange_events   (GtkWidget *, GdkEvent *, CurvesDialog *);
@@ -519,14 +518,7 @@ curves_new_dialog ()
   GtkWidget *channel_hbox;
   GtkWidget *menu;
   GtkWidget *table;
-  int i, j;
-
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Reset"), curves_reset_callback, NULL, NULL },
-    { N_("OK"), curves_ok_callback, NULL, NULL },
-    { N_("Cancel"), curves_cancel_callback, NULL, NULL }
-  };
+  gint i, j;
 
   static MenuItem curve_type_items[] =
   {
@@ -535,7 +527,7 @@ curves_new_dialog ()
     { NULL, 0, 0, NULL, NULL, NULL, NULL }
   };
 
-  cd = g_malloc (sizeof (CurvesDialog));
+  cd = g_new (CurvesDialog, 1);
   cd->cursor_ind_height = cd->cursor_ind_width = -1;
   cd->preview = TRUE;
   cd->curve_type = SMOOTH;
@@ -556,17 +548,23 @@ curves_new_dialog ()
     curve_type_items [i].user_data = (gpointer) cd;
 
   /*  The shell and main vbox  */
-  cd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (cd->shell), "curves", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cd->shell), _("Curves"));
+  cd->shell = gimp_dialog_new (_("Curves"), "curves",
+			       tools_help_func, NULL,
+			       GTK_WIN_POS_NONE,
+			       FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (cd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (curves_delete_callback),
-		      cd);
-  
+			       _("Reset"), curves_reset_callback,
+			       cd, NULL, FALSE, FALSE,
+			       _("OK"), curves_ok_callback,
+			       cd, NULL, TRUE, FALSE,
+			       _("Cancel"), curves_cancel_callback,
+			       cd, NULL, FALSE, TRUE,
+
+			       NULL);
+
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cd->shell)->vbox), vbox);
 
   /*  The option menu for selecting channels  */
   channel_hbox = gtk_hbox_new (FALSE, 2);
@@ -669,12 +667,6 @@ curves_new_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
-
-  /*  The action area  */
-  action_items[0].user_data = cd;
-  action_items[1].user_data = cd;
-  action_items[2].user_data = cd;
-  build_action_area (GTK_DIALOG (cd->shell), action_items, 3, 0);
 
   gtk_widget_show (vbox);
 
@@ -1278,24 +1270,15 @@ curves_cancel_callback (GtkWidget *widget,
   active_tool->drawable = NULL;
 }
 
-static gint 
-curves_delete_callback (GtkWidget *w,
-			GdkEvent *e,
-			gpointer data) 
-{
-  curves_cancel_callback (w, data);
-
-  return TRUE;
-}
 static void
-curves_preview_update (GtkWidget *w,
+curves_preview_update (GtkWidget *widget,
 		       gpointer   data)
 {
   CurvesDialog *cd;
 
   cd = (CurvesDialog *) data;
   
-  if (GTK_TOGGLE_BUTTON (w)->active)
+  if (GTK_TOGGLE_BUTTON (widget)->active)
     {
       cd->preview = TRUE;
       curves_preview (cd);

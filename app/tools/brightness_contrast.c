@@ -19,10 +19,10 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "brightness_contrast.h"
 #include "drawable.h"
 #include "gimage_mask.h"
+#include "gimpui.h"
 #include "gdisplay.h"
 #include "image_map.h"
 #include "interface.h"
@@ -89,7 +89,6 @@ static void   brightness_contrast_update                  (BrightnessContrastDia
 static void   brightness_contrast_preview                 (BrightnessContrastDialog *);
 static void   brightness_contrast_ok_callback             (GtkWidget *, gpointer);
 static void   brightness_contrast_cancel_callback         (GtkWidget *, gpointer);
-static gint   brightness_contrast_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
 static void   brightness_contrast_preview_update          (GtkWidget *, gpointer);
 static void   brightness_contrast_brightness_scale_update (GtkAdjustment *, gpointer);
 static void   brightness_contrast_contrast_scale_update   (GtkAdjustment *, gpointer);
@@ -208,26 +207,24 @@ brightness_contrast_new_dialog ()
   GtkWidget *toggle;
   GtkObject *data;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), brightness_contrast_ok_callback, NULL, NULL },
-    { N_("Cancel"), brightness_contrast_cancel_callback, NULL, NULL }
-  };
-
   bcd = g_new (BrightnessContrastDialog, 1);
   bcd->preview = TRUE;
 
   bcd->lut = gimp_lut_new ();
 
   /*  The shell and main vbox  */
-  bcd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "brightness_contrast", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (bcd->shell), _("Brightness-Contrast"));
+  bcd->shell =
+    gimp_dialog_new (_("Brightness-Contrast"), "brightness_contrast",
+		     tools_help_func, NULL,
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
 
-  /*  handle wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (brightness_contrast_delete_callback),
-		      bcd);
+		     _("OK"), brightness_contrast_ok_callback,
+		     bcd, NULL, TRUE, FALSE,
+		     _("Cancel"), brightness_contrast_cancel_callback,
+		     bcd, NULL, FALSE, TRUE,
+
+		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
@@ -320,12 +317,6 @@ brightness_contrast_new_dialog ()
   gtk_widget_show (toggle);
   gtk_widget_show (hbox);
 
-
-  /*  The action area  */
-  action_items[0].user_data = bcd;
-  action_items[1].user_data = bcd;
-  build_action_area (GTK_DIALOG (bcd->shell), action_items, 2, 0);
-
   gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (bcd->shell);
@@ -410,16 +401,6 @@ brightness_contrast_ok_callback (GtkWidget *widget,
 
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
-}
-
-static gint
-brightness_contrast_delete_callback (GtkWidget *widget,
-				     GdkEvent  *event,
-				     gpointer   data)
-{
-  brightness_contrast_cancel_callback (widget, data);
-
-  return TRUE;
 }
 
 static void

@@ -150,7 +150,6 @@
 #include <unistd.h>
 #endif
 
-#include "actionarea.h"
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
@@ -158,8 +157,8 @@
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "gradient.h"
-#include "interface.h"
 #include "palette.h"
 #include "session.h"
 #include "gradient_header.h"
@@ -209,8 +208,6 @@ static void  ed_do_copy_gradient_callback   (GtkWidget *, gpointer , gpointer);
 static void  ed_delete_gradient_callback        (GtkWidget *, gpointer);
 static void  ed_do_delete_gradient_callback     (GtkWidget *, gpointer);
 static void  ed_cancel_delete_gradient_callback (GtkWidget *, gpointer);
-static gint  ed_delete_delete_gradient_callback (GtkWidget *, GdkEvent *,
-						 gpointer);
 
 static void  ed_rename_gradient_callback    (GtkWidget *, gpointer);
 static void  ed_do_rename_gradient_callback (GtkWidget *, gpointer, gpointer);
@@ -222,8 +219,6 @@ static gint  ed_delete_save_pov_callback    (GtkWidget *, GdkEvent *, gpointer);
 
 static void  ed_save_grads_callback         (GtkWidget *, gpointer);
 static void  ed_refresh_grads_callback      (GtkWidget *, gpointer);
-
-static gint  ed_delete_callback             (GtkWidget *, GdkEvent *, gpointer);
 static void  ed_close_callback              (GtkWidget *, gpointer);
 
 /* Zoom, scrollbar & instant update callbacks */
@@ -248,27 +243,29 @@ static void prev_fill_image     (int width, int height,
 
 /* Gradient control functions */
 
-static gint   control_events                (GtkWidget *, GdkEvent *, gpointer);
-static void   control_do_hint               (gint x, gint y);
-static void   control_button_press          (gint x, gint y,
-					     guint button, guint state);
-static int    control_point_in_handle       (gint x, gint y, grad_segment_t *seg,
-					     control_drag_mode_t handle);
-static void   control_select_single_segment (grad_segment_t *seg);
-static void   control_extend_selection      (grad_segment_t *seg, double pos);
-static void   control_motion                (gint x);
+static gint     control_events                (GtkWidget *, GdkEvent *,
+					       gpointer);
+static void     control_do_hint               (gint x, gint y);
+static void     control_button_press          (gint x, gint y,
+					       guint button, guint state);
+static gboolean control_point_in_handle       (gint x, gint y,
+					       grad_segment_t *seg,
+					       control_drag_mode_t handle);
+static void     control_select_single_segment (grad_segment_t *seg);
+static void     control_extend_selection      (grad_segment_t *seg, double pos);
+static void     control_motion                (gint x);
 
-static void   control_compress_left         (grad_segment_t *range_l,
-					     grad_segment_t *range_r,
-					     grad_segment_t *drag_seg,
+static void     control_compress_left         (grad_segment_t *range_l,
+					       grad_segment_t *range_r,
+					       grad_segment_t *drag_seg,
 					     double pos);
-static void   control_compress_range        (grad_segment_t *range_l,
-					     grad_segment_t *range_r,
-					     double new_l, double new_r);
+static void     control_compress_range        (grad_segment_t *range_l,
+					       grad_segment_t *range_r,
+					       double new_l, double new_r);
 
-static double control_move                  (grad_segment_t *range_l,
-					     grad_segment_t *range_r,
-					     double delta);
+static double   control_move                  (grad_segment_t *range_l,
+					       grad_segment_t *range_r,
+					       double delta);
 
 /* Control update/redraw functions */
 
@@ -379,8 +376,6 @@ static void  cpopup_split_uniform_callback        (GtkWidget *, gpointer);
 static void  cpopup_split_uniform_scale_update    (GtkAdjustment *, gpointer);
 static void  cpopup_split_uniform_split_callback  (GtkWidget *, gpointer);
 static void  cpopup_split_uniform_cancel_callback (GtkWidget *, gpointer);
-static gint  cpopup_split_uniform_delete_callback (GtkWidget *, GdkEvent *,
-						   gpointer);
 static void  cpopup_split_uniform (grad_segment_t *lseg, int parts,
 				   grad_segment_t **newl, grad_segment_t **newr);
 
@@ -398,8 +393,6 @@ static void  cpopup_replicate_callback        (GtkWidget *, gpointer);
 static void  cpopup_replicate_scale_update    (GtkAdjustment *, gpointer);
 static void  cpopup_do_replicate_callback     (GtkWidget *, gpointer);
 static void  cpopup_replicate_cancel_callback (GtkWidget *, gpointer);
-static gint  cpopup_replicate_delete_callback (GtkWidget *, GdkEvent *,
-					       gpointer);
 
 static void  cpopup_blend_colors              (GtkWidget *, gpointer);
 static void  cpopup_blend_opacity             (GtkWidget *, gpointer);
@@ -668,13 +661,6 @@ grad_create_gradient_editor_init (gint need_show)
   gint i;
   gint select_pos;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Save"), ed_save_grads_callback, NULL, NULL },
-    { N_("Refresh"), ed_refresh_grads_callback, NULL, NULL },
-    { N_("Close"), ed_close_callback, NULL, NULL }
-  };
-
   /* If the editor already exists, just show it */
   if (g_editor)
     {
@@ -698,15 +684,20 @@ grad_create_gradient_editor_init (gint need_show)
   g_editor = g_new (gradient_editor_t, 1);
 
   /* Shell and main vbox */
-  g_editor->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (g_editor->shell),
-			  "gradient_editor", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (g_editor->shell), _("Gradient Editor"));
+  g_editor->shell = gimp_dialog_new (_("Gradient Editor"), "gradient_editor",
+				     gimp_standard_help_func,
+				     "dialogs/gradient_editor_dialog.html",
+				     GTK_WIN_POS_NONE,
+				     FALSE, TRUE, FALSE,
 
-  /* Handle the wm delete event */
-  gtk_signal_connect (GTK_OBJECT (g_editor->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (ed_delete_callback),
-		      NULL);
+				     _("Save"), ed_save_grads_callback,
+				     NULL, NULL, FALSE, FALSE,
+				     _("Refresh"), ed_refresh_grads_callback,
+				     NULL, NULL, FALSE, FALSE,
+				     _("Close"), ed_close_callback,
+				     NULL, NULL, TRUE, TRUE,
+
+				     NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -881,7 +872,6 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_widget_show (gvbox);
 
   /* Gradient preview */
-
   g_editor->preview_rows[0]     = NULL;
   g_editor->preview_rows[1]     = NULL;
   g_editor->preview_last_x      = 0;
@@ -905,7 +895,6 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_widget_show (g_editor->preview);
 
   /* Gradient control */
-
   g_editor->control_pixmap                  = NULL;
   g_editor->control_drag_segment            = NULL;
   g_editor->control_sel_l                   = NULL;
@@ -967,9 +956,6 @@ grad_create_gradient_editor_init (gint need_show)
   gtk_box_pack_start (GTK_BOX (vbox), g_editor->hint_label, FALSE, FALSE, 0);
   gtk_widget_show (g_editor->hint_label);
 
-  /* The action area */
-  build_action_area (GTK_DIALOG (g_editor->shell), action_items, 3, 2);
-
   /* Initialize other data */
   g_editor->left_color_preview            = NULL;
   g_editor->left_saved_segments           = NULL;
@@ -995,10 +981,7 @@ grad_create_gradient_editor_init (gint need_show)
     gtk_clist_moveto (GTK_CLIST (g_editor->clist), select_pos, 0, 0.0, 0.0);
 }
 
-
 /***** Gradient editor functions *****/
-
-/*****/
 
 static void
 ed_fetch_foreground (double *fg_r, double *fg_g, double *fg_b, double *fg_a)
@@ -1319,17 +1302,20 @@ ed_initialize_saved_colors(void)
 
 /***** the "new gradient" dialog functions *****/
 
-/*****/
-
 static void
 ed_new_gradient_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  gtk_widget_show (query_string_box(_("New gradient"),
-				    _("Enter a name for the new gradient"),
-				    _("untitled"),
-				    NULL, NULL,
-				    ed_do_new_gradient_callback, NULL));
+  GtkWidget *qbox;
+
+  qbox = gimp_query_string_box (_("New gradient"),
+				gimp_standard_help_func,
+				"dialogs/gradient_editor_dialog.html",
+				_("Enter a name for the new gradient"),
+				_("untitled"),
+				NULL, NULL,
+				ed_do_new_gradient_callback, NULL);
+  gtk_widget_show (qbox);
 }
 
 static void
@@ -1373,12 +1359,11 @@ ed_do_new_gradient_callback (GtkWidget *widget,
 
 /***** The "copy gradient" dialog functions *****/
 
-/*****/
-
 static void
 ed_copy_gradient_callback (GtkWidget *widget,
 			   gpointer   data)
 {
+  GtkWidget *qbox;
   gchar *name;
 
   if (curr_gradient == NULL) 
@@ -1386,13 +1371,16 @@ ed_copy_gradient_callback (GtkWidget *widget,
 
   name = g_strdup_printf (_("%s copy"), curr_gradient->name);
 
-  gtk_widget_show (query_string_box (_("Copy gradient"),
-				     _("Enter a name for the copied gradient"),
-				     name,
-				     NULL, NULL,
-				     ed_do_copy_gradient_callback, NULL));
+  qbox = gimp_query_string_box (_("Copy gradient"),
+				gimp_standard_help_func,
+				"dialogs/gradient_editor_dialog.html",
+				_("Enter a name for the copied gradient"),
+				name,
+				NULL, NULL,
+				ed_do_copy_gradient_callback, NULL);
+  gtk_widget_show (qbox);
 
-  g_free(name);
+  g_free (name);
 }
 
 static void
@@ -1460,21 +1448,24 @@ ed_do_copy_gradient_callback (GtkWidget *widget,
 
 /***** The "rename gradient" dialog functions *****/
 
-/*****/
-
 static void
 ed_rename_gradient_callback (GtkWidget *widget,
-			  gpointer   data)
+			     gpointer   data)
 {
+  GtkWidget *qbox;
+
   if (curr_gradient == NULL)
     return;
 
-  gtk_widget_show (query_string_box (_("Rename gradient"),
-				     _("Enter a new name for the gradient"),
-				     curr_gradient->name,
-				     NULL, NULL,
-				     ed_do_rename_gradient_callback,
-				     curr_gradient));
+  qbox = gimp_query_string_box (_("Rename gradient"),
+				gimp_standard_help_func,
+				"dialogs/gradient_editor_dialog.html",
+				_("Enter a new name for the gradient"),
+				curr_gradient->name,
+				NULL, NULL,
+				ed_do_rename_gradient_callback,
+				curr_gradient);
+  gtk_widget_show (qbox);
 }
 
 static void
@@ -1536,8 +1527,6 @@ ed_do_rename_gradient_callback (GtkWidget *widget,
 
 /***** The "delete gradient" dialog functions *****/
 
-/*****/
-
 static void
 ed_delete_gradient_callback (GtkWidget *widget,
 			     gpointer   data)
@@ -1547,24 +1536,21 @@ ed_delete_gradient_callback (GtkWidget *widget,
   GtkWidget *label;
   gchar     *str;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Delete"), ed_do_delete_gradient_callback, NULL, NULL },
-    { N_("Cancel"), ed_cancel_delete_gradient_callback, NULL, NULL }
-  };
-
   if (num_gradients <= 1)
     return;
 
-  dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog), "delete_gradient", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Delete gradient"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  dialog = gimp_dialog_new (_("Delete gradient"), "delete_gradient",
+			    gimp_standard_help_func,
+			    "dialogs/gradient_editor_dialog.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  /*  Handle the wm delete event  */
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-                      GTK_SIGNAL_FUNC (ed_delete_delete_gradient_callback),
-                      dialog);
+			    _("Delete"), ed_do_delete_gradient_callback,
+			    NULL, NULL, FALSE, FALSE,
+			    _("Cancel"), ed_cancel_delete_gradient_callback,
+			    NULL, NULL, TRUE, TRUE,
+
+			    NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -1572,20 +1558,15 @@ ed_delete_gradient_callback (GtkWidget *widget,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  str = g_strdup_printf(_("Are you sure you want to delete\n"
-			  "\"%s\" from the list and from disk?"),
-			curr_gradient->name);
+  str = g_strdup_printf (_("Are you sure you want to delete\n"
+			   "\"%s\" from the list and from disk?"),
+			 curr_gradient->name);
 
   label = gtk_label_new (str);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   g_free (str);
-
-  /*  The action area  */
-  action_items[0].user_data = dialog;
-  action_items[1].user_data = dialog;
-  build_action_area (GTK_DIALOG (dialog), action_items, 2, 1);
 
   gtk_widget_show (dialog);
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
@@ -1658,19 +1639,7 @@ ed_cancel_delete_gradient_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
 }
 
-static gint
-ed_delete_delete_gradient_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data)
-{
-  ed_cancel_delete_gradient_callback (widget, data);
-
-  return TRUE;
-}
-
 /***** The "save as pov" dialog functions *****/
-
-/*****/
 
 static void
 ed_save_pov_callback (GtkWidget *widget,
@@ -1682,7 +1651,7 @@ ed_save_pov_callback (GtkWidget *widget,
     return;
 
   window = gtk_file_selection_new (_("Save as POV-Ray"));
-  gtk_window_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (window)->ok_button),
 		      "clicked", (GtkSignalFunc) ed_do_save_pov_callback,
@@ -1695,6 +1664,10 @@ ed_save_pov_callback (GtkWidget *widget,
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      (GdkEventFunc) ed_delete_save_pov_callback,
 		      window);
+
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (window, gimp_standard_help_func,
+				"dialogs/gradient_editor_dialog.html");
 
   gtk_widget_show (window);
   gtk_widget_set_sensitive (g_editor->shell, FALSE);
@@ -1771,8 +1744,6 @@ ed_delete_save_pov_callback (GtkWidget *widget,
 
 /***** The main dialog action area button callbacks *****/
 
-/*****/
-
 static void
 ed_save_grads_callback (GtkWidget *widget,
 			gpointer   data)
@@ -1815,19 +1786,7 @@ ed_close_callback (GtkWidget *widget,
     gtk_widget_hide (g_editor->shell);
 }
 
-static gint
-ed_delete_callback (GtkWidget *widget,
-		    GdkEvent  *event,
-		    gpointer   data)
-{
-  ed_close_callback (widget, data);
-
-  return TRUE;
-}
-
 /***** Zoom, scrollbar & instant update callbacks *****/
-
-/*****/
 
 static void
 ed_scrollbar_update (GtkAdjustment *adjustment,
@@ -1941,8 +1900,6 @@ ed_instant_update_update (GtkWidget *widget,
 }
 
 /***** Gradient preview functions *****/
-
-/*****/
 
 static gint
 prev_events (GtkWidget *widget,
@@ -2103,7 +2060,7 @@ prev_set_foreground (gint x)
 
   palette_set_foreground (r * 255.0, g * 255.0, b * 255.0);
 
-  g_snprintf (str, sizeof(str),
+  g_snprintf (str, sizeof (str),
 	      _("Foreground color set to RGB (%d, %d, %d) <-> "
 		"(%0.3f, %0.3f, %0.3f)"),
 	      (int) (r * 255.0),
@@ -2126,7 +2083,7 @@ prev_set_background (gint x)
 
   palette_set_background (r * 255.0, g * 255.0, b * 255.0);
 
-  g_snprintf (str, sizeof(str),
+  g_snprintf (str, sizeof (str),
 	      _("Background color to RGB (%d, %d, %d) <-> "
 		"(%0.3f, %0.3f, %0.3f)"),
 	      (int) (r * 255.0),
@@ -2229,54 +2186,58 @@ prev_update (gboolean recalculate)
 /*****/
 
 static void
-prev_fill_image(int width, int height, double left, double right)
+prev_fill_image (int    width,
+		 int    height,
+		 double left,
+		 double right)
 {
-	guchar *p0, *p1;
-	int     x, y;
-	double  dx, cur_x;
-	double  r, g, b, a;
-	double  c0, c1;
+  guchar *p0, *p1;
+  int     x, y;
+  double  dx, cur_x;
+  double  r, g, b, a;
+  double  c0, c1;
 
-	dx    = (right - left) / (width - 1);
-	cur_x = left;
-	p0    = g_editor->preview_rows[0];
-	p1    = g_editor->preview_rows[1];
+  dx    = (right - left) / (width - 1);
+  cur_x = left;
+  p0    = g_editor->preview_rows[0];
+  p1    = g_editor->preview_rows[1];
 
-	/* Create lines to fill the image */
+  /* Create lines to fill the image */
+  for (x = 0; x < width; x++)
+    {
+      grad_get_color_at (cur_x, &r, &g, &b, &a);
 
-	for (x = 0; x < width; x++) {
-		grad_get_color_at(cur_x, &r, &g, &b, &a);
+      if ((x / GRAD_CHECK_SIZE) & 1)
+	{
+	  c0 = GRAD_CHECK_LIGHT;
+	  c1 = GRAD_CHECK_DARK;
+	}
+      else
+	{
+	  c0 = GRAD_CHECK_DARK;
+	  c1 = GRAD_CHECK_LIGHT;
+	}
 
-		if ((x / GRAD_CHECK_SIZE) & 1) {
-			c0 = GRAD_CHECK_LIGHT;
-			c1 = GRAD_CHECK_DARK;
-		} else {
-			c0 = GRAD_CHECK_DARK;
-			c1 = GRAD_CHECK_LIGHT;
-		} /* else */
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
 
-		*p0++ = (c0 + (r - c0) * a) * 255.0;
-		*p0++ = (c0 + (g - c0) * a) * 255.0;
-		*p0++ = (c0 + (b - c0) * a) * 255.0;
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
 
-		*p1++ = (c1 + (r - c1) * a) * 255.0;
-		*p1++ = (c1 + (g - c1) * a) * 255.0;
-		*p1++ = (c1 + (b - c1) * a) * 255.0;
+      cur_x += dx;
+    }
 
-		cur_x += dx;
-	} /* for */
-
-	/* Fill image */
-
-	for (y = 0; y < height; y++)
-		if ((y / GRAD_CHECK_SIZE) & 1)
-			gtk_preview_draw_row(GTK_PREVIEW(g_editor->preview),
-					     g_editor->preview_rows[1], 0, y, width);
-		else
-			gtk_preview_draw_row(GTK_PREVIEW(g_editor->preview),
-					     g_editor->preview_rows[0], 0, y, width);
-} /* prev_fill_image */
-
+  /* Fill image */
+  for (y = 0; y < height; y++)
+    if ((y / GRAD_CHECK_SIZE) & 1)
+      gtk_preview_draw_row (GTK_PREVIEW (g_editor->preview),
+			    g_editor->preview_rows[1], 0, y, width);
+    else
+      gtk_preview_draw_row (GTK_PREVIEW (g_editor->preview),
+			    g_editor->preview_rows[0], 0, y, width);
+}
 
 /***** Gradient control functions *****/
 
@@ -2287,8 +2248,6 @@ prev_fill_image(int width, int height, double left, double right)
  * find bugs, mail me unless you are very brave and you want to fix
  * them yourself ;-)
  */
-
-/*****/
 
 static gint
 control_events (GtkWidget *widget,
@@ -2395,51 +2354,56 @@ control_events (GtkWidget *widget,
 /*****/
 
 static void
-control_do_hint(gint x, gint y)
+control_do_hint (gint x,
+		 gint y)
 {
-	grad_segment_t      *seg;
-	control_drag_mode_t  handle;
-	int                  in_handle;
-	double               pos;
+  grad_segment_t      *seg;
+  control_drag_mode_t  handle;
+  gboolean             in_handle;
+  double               pos;
 
-	pos = control_calc_g_pos(x);
+  pos = control_calc_g_pos (x);
 
-	if ((pos < 0.0) || (pos > 1.0))
-		return;
+  if ((pos < 0.0) || (pos > 1.0))
+    return;
 
-	seg_get_closest_handle(curr_gradient, pos, &seg, &handle);
+  seg_get_closest_handle (curr_gradient, pos, &seg, &handle);
 
-	in_handle = control_point_in_handle(x, y, seg, handle);
+  in_handle = control_point_in_handle (x, y, seg, handle);
 
-	if (in_handle) {
-		switch (handle) {
-			case GRAD_DRAG_LEFT:
-				if (seg != NULL) {
-					if (seg->prev != NULL)
-						ed_set_hint(_("Drag: move    Shift+drag: move & compress"));
-					else
-						ed_set_hint(_("Click: select    Shift+click: extend selection"));
-				} else
-					ed_set_hint(_("Click: select    Shift+click: extend selection"));
+  if (in_handle)
+    {
+      switch (handle)
+	{
+	case GRAD_DRAG_LEFT:
+	  if (seg != NULL)
+	    {
+	      if (seg->prev != NULL)
+		ed_set_hint (_("Drag: move    Shift+drag: move & compress"));
+	      else
+		ed_set_hint (_("Click: select    Shift+click: extend selection"));
+	    }
+	  else
+	    ed_set_hint (_("Click: select    Shift+click: extend selection"));
 
-				break;
+	  break;
 
-			case GRAD_DRAG_MIDDLE:
-				ed_set_hint(_("Click: select    Shift+click: extend selection    "
-					    "Drag: move"));
+	case GRAD_DRAG_MIDDLE:
+	  ed_set_hint (_("Click: select    Shift+click: extend selection    "
+			 "Drag: move"));
 
-				break;
+	  break;
 
-			default:
-				g_message ("control_do_hint: oops, in_handle is true "
-					"yet we got handle type %d", (int) handle);
-				break;
-		} /* switch */
-	} else
-		ed_set_hint(_("Click: select    Shift+click: extend selection    "
-			    "Drag: move    Shift+drag: move & compress"));
-} /* control_do_hint */
-
+	default:
+	  g_message ("control_do_hint: oops, in_handle is true "
+		     "yet we got handle type %d", (int) handle);
+	  break;
+	}
+    }
+  else
+    ed_set_hint (_("Click: select    Shift+click: extend selection    "
+		   "Drag: move    Shift+drag: move & compress"));
+}
 
 /*****/
 
@@ -2452,7 +2416,7 @@ control_button_press (gint  x,
   grad_segment_t      *seg;
   control_drag_mode_t  handle;
   double               xpos;
-  gint                 in_handle;
+  gboolean             in_handle;
 
   /* See which button was pressed */
 
@@ -2592,343 +2556,370 @@ control_button_press (gint  x,
 
 /*****/
 
-static int
-control_point_in_handle(gint x, gint y, grad_segment_t *seg, control_drag_mode_t handle)
+static gboolean
+control_point_in_handle (gint                 x,
+			 gint                 y,
+			 grad_segment_t      *seg,
+			 control_drag_mode_t  handle)
 {
-	gint handle_pos;
+  gint handle_pos;
 
-	switch (handle) {
-		case GRAD_DRAG_LEFT:
-			if (seg)
-				handle_pos = control_calc_p_pos(seg->left);
-			else {
-				seg = seg_get_last_segment(curr_gradient->segments);
+  switch (handle)
+    {
+    case GRAD_DRAG_LEFT:
+      if (seg)
+	handle_pos = control_calc_p_pos (seg->left);
+      else
+	{
+	  seg = seg_get_last_segment (curr_gradient->segments);
 
-				handle_pos = control_calc_p_pos(seg->right);
-			} /* else */
+	  handle_pos = control_calc_p_pos (seg->right);
+	}
 
-			break;
+      break;
 
-		case GRAD_DRAG_MIDDLE:
-			handle_pos = control_calc_p_pos(seg->middle);
-			break;
+    case GRAD_DRAG_MIDDLE:
+      handle_pos = control_calc_p_pos (seg->middle);
+      break;
 
-		default:
-			g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
-				(int) handle);
-			return 0;
-	} /* switch */
+    default:
+      g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
+		 (int) handle);
+      return FALSE;
+    }
 
-	y /= 2;
+  y /= 2;
 
-	if ((x >= (handle_pos - y)) && (x <= (handle_pos + y)))
-		return 1;
-	else
-		return 0;
-} /* control_point_in_handle */
-
+  if ((x >= (handle_pos - y)) && (x <= (handle_pos + y)))
+    return TRUE;
+  else
+    return FALSE;
+}
 
 /*****/
 
 static void
-control_select_single_segment(grad_segment_t *seg)
+control_select_single_segment (grad_segment_t *seg)
 {
-	g_editor->control_sel_l = seg;
-	g_editor->control_sel_r = seg;
-} /* control_select_single_segment */
-
+  g_editor->control_sel_l = seg;
+  g_editor->control_sel_r = seg;
+}
 
 /*****/
 
 static void
-control_extend_selection(grad_segment_t *seg, double pos)
+control_extend_selection (grad_segment_t *seg,
+			  double          pos)
 {
-	if (fabs(pos - g_editor->control_sel_l->left) < fabs(pos - g_editor->control_sel_r->right))
-		g_editor->control_sel_l = seg;
-	else
-		g_editor->control_sel_r = seg;
-} /* control_extend_selection */
-
+  if (fabs (pos - g_editor->control_sel_l->left) <
+      fabs(pos - g_editor->control_sel_r->right))
+    g_editor->control_sel_l = seg;
+  else
+    g_editor->control_sel_r = seg;
+}
 
 /*****/
 
 static void
-control_motion(gint x)
+control_motion (gint x)
 {
-	grad_segment_t *seg;
-	double          pos;
-	double          delta;
-	char            str[256];
+  grad_segment_t *seg;
+  double          pos;
+  double          delta;
+  char            str[256];
 
-	seg = g_editor->control_drag_segment;
+  seg = g_editor->control_drag_segment;
 
-	switch (g_editor->control_drag_mode) {
-		case GRAD_DRAG_LEFT:
-			pos = control_calc_g_pos(x);
+  switch (g_editor->control_drag_mode)
+    {
+    case GRAD_DRAG_LEFT:
+      pos = control_calc_g_pos (x);
 
-			if (!g_editor->control_compress)
-				seg->prev->right = seg->left = BOUNDS(pos,
-								      seg->prev->middle + EPSILON,
-								      seg->middle - EPSILON);
-			else
-				control_compress_left(g_editor->control_sel_l,
-						      g_editor->control_sel_r,
-						      seg, pos);
+      if (!g_editor->control_compress)
+	seg->prev->right = seg->left = BOUNDS (pos,
+					       seg->prev->middle + EPSILON,
+					       seg->middle - EPSILON);
+      else
+	control_compress_left (g_editor->control_sel_l,
+			       g_editor->control_sel_r,
+			       seg, pos);
 
-			g_snprintf(str, sizeof(str), _("Handle position: %0.6f"), seg->left);
-			ed_set_hint(str);
+      g_snprintf (str, sizeof (str), _("Handle position: %0.6f"), seg->left);
+      ed_set_hint (str);
 
-			break;
+      break;
 
-		case GRAD_DRAG_MIDDLE:
-			pos = control_calc_g_pos(x);
-			seg->middle = BOUNDS(pos, seg->left + EPSILON, seg->right - EPSILON);
+    case GRAD_DRAG_MIDDLE:
+      pos = control_calc_g_pos (x);
+      seg->middle = BOUNDS (pos, seg->left + EPSILON, seg->right - EPSILON);
 
-			g_snprintf(str, sizeof(str), _("Handle position: %0.6f"), seg->middle);
-			ed_set_hint(str);
+      g_snprintf (str, sizeof (str), _("Handle position: %0.6f"), seg->middle);
+      ed_set_hint (str);
 
-			break;
+      break;
 
-		case GRAD_DRAG_ALL:
-			pos    = control_calc_g_pos(x);
-			delta  = pos - g_editor->control_last_gx;
+    case GRAD_DRAG_ALL:
+      pos    = control_calc_g_pos (x);
+      delta  = pos - g_editor->control_last_gx;
 
-			if ((seg->left >= g_editor->control_sel_l->left) &&
-			    (seg->right <= g_editor->control_sel_r->right))
-				delta = control_move(g_editor->control_sel_l, g_editor->control_sel_r, delta);
-			else
-				delta = control_move(seg, seg, delta);
+      if ((seg->left >= g_editor->control_sel_l->left) &&
+	  (seg->right <= g_editor->control_sel_r->right))
+	delta = control_move (g_editor->control_sel_l,
+			      g_editor->control_sel_r, delta);
+      else
+	delta = control_move (seg, seg, delta);
 
-			g_editor->control_last_gx += delta;
+      g_editor->control_last_gx += delta;
 
-			g_snprintf(str, sizeof(str), _("Distance: %0.6f"),
-				g_editor->control_last_gx - g_editor->control_orig_pos);
-			ed_set_hint(str);
+      g_snprintf (str, sizeof (str), _("Distance: %0.6f"),
+		  g_editor->control_last_gx - g_editor->control_orig_pos);
+      ed_set_hint (str);
 
-			break;
+      break;
 
-		default:
-			gimp_fatal_error(_("control_motion(): Attempt to move bogus handle %d"),
-				    (int) g_editor->control_drag_mode);
-			break;
-	} /* switch */
+    default:
+      gimp_fatal_error (_("control_motion(): Attempt to move bogus handle %d"),
+			(int) g_editor->control_drag_mode);
+      break;
+    }
 
-	curr_gradient->dirty = 1;
+  curr_gradient->dirty = 1;
 
-	if (g_editor->instant_update)
-		ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
-	else
-		ed_update_editor(GRAD_UPDATE_CONTROL);
-} /* control_motion */
-
+  if (g_editor->instant_update)
+    ed_update_editor (GRAD_UPDATE_PREVIEW | GRAD_UPDATE_CONTROL);
+  else
+    ed_update_editor (GRAD_UPDATE_CONTROL);
+}
 
 /*****/
 
 static void
-control_compress_left(grad_segment_t *range_l, grad_segment_t *range_r,
-		      grad_segment_t *drag_seg, double pos)
+control_compress_left (grad_segment_t *range_l,
+		       grad_segment_t *range_r,
+		       grad_segment_t *drag_seg,
+		       double          pos)
 {
-	grad_segment_t *seg;
-	double          lbound, rbound;
-	int             k;
+  grad_segment_t *seg;
+  double          lbound, rbound;
+  int             k;
 
-	/* Check what we have to compress */
+  /* Check what we have to compress */
 
-	if (!((drag_seg->left >= range_l->left) &&
-	      ((drag_seg->right <= range_r->right) || (drag_seg == range_r->next)))) {
-		/* We are compressing a segment outside the selection */
+  if (!((drag_seg->left >= range_l->left) &&
+	((drag_seg->right <= range_r->right) || (drag_seg == range_r->next))))
+    {
+      /* We are compressing a segment outside the selection */
 
-		range_l = range_r = drag_seg;
-	} /* else */
+      range_l = range_r = drag_seg;
+    }
 
-	/* Calculate left bound for dragged hadle */
+  /* Calculate left bound for dragged hadle */
 
-	if (drag_seg == range_l)
-		lbound = range_l->prev->left + 2.0 * EPSILON;
-	else {
-		/* Count number of segments to the left of the dragged handle */
+  if (drag_seg == range_l)
+    lbound = range_l->prev->left + 2.0 * EPSILON;
+  else
+    {
+      /* Count number of segments to the left of the dragged handle */
 
-		seg = drag_seg;
-		k   = 0;
+      seg = drag_seg;
+      k   = 0;
 
-		while (seg != range_l) {
-			k++;
-			seg = seg->prev;
-		} /* while */
+      while (seg != range_l)
+	{
+	  k++;
+	  seg = seg->prev;
+	}
 
-		/* 2*k handles have to fit */
+      /* 2*k handles have to fit */
 
-		lbound = range_l->left + 2.0 * k * EPSILON;
-	} /* else */
+      lbound = range_l->left + 2.0 * k * EPSILON;
+    }
 
-	/* Calculate right bound for dragged handle */
+  /* Calculate right bound for dragged handle */
 
-	if (drag_seg == range_r->next)
-		rbound = range_r->next->right - 2.0 * EPSILON;
-	else {
-		/* Count number of segments to the right of the dragged handle */
+  if (drag_seg == range_r->next)
+    rbound = range_r->next->right - 2.0 * EPSILON;
+  else
+    {
+      /* Count number of segments to the right of the dragged handle */
 
-		seg = drag_seg;
-		k   = 1;
+      seg = drag_seg;
+      k   = 1;
 
-		while (seg != range_r) {
-			k++;
-			seg = seg->next;
-		} /* while */
+      while (seg != range_r)
+	{
+	  k++;
+	  seg = seg->next;
+	}
 
-		/* 2*k handles have to fit */
+      /* 2*k handles have to fit */
 
-		rbound = range_r->right - 2.0 * k * EPSILON;
-	} /* else */
+      rbound = range_r->right - 2.0 * k * EPSILON;
+    }
 
-	/* Calculate position */
+  /* Calculate position */
 
-	pos = BOUNDS(pos, lbound, rbound);
+  pos = BOUNDS (pos, lbound, rbound);
 
-	/* Compress segments to the left of the handle */
+  /* Compress segments to the left of the handle */
 
-	if (drag_seg == range_l)
-		control_compress_range(range_l->prev, range_l->prev, range_l->prev->left, pos);
-	else
-		control_compress_range(range_l, drag_seg->prev, range_l->left, pos);
+  if (drag_seg == range_l)
+    control_compress_range (range_l->prev, range_l->prev,
+			    range_l->prev->left, pos);
+  else
+    control_compress_range (range_l, drag_seg->prev, range_l->left, pos);
 
-	/* Compress segments to the right of the handle */
+  /* Compress segments to the right of the handle */
 
-	if (drag_seg != range_r->next)
-		control_compress_range(drag_seg, range_r, pos, range_r->right);
-	else
-		control_compress_range(drag_seg, drag_seg, pos, drag_seg->right);
-} /* control_compress_left */
-
+  if (drag_seg != range_r->next)
+    control_compress_range (drag_seg, range_r, pos, range_r->right);
+  else
+    control_compress_range (drag_seg, drag_seg, pos, drag_seg->right);
+}
 
 /*****/
 
 static void
-control_compress_range(grad_segment_t *range_l, grad_segment_t *range_r,
-		       double new_l, double new_r)
+control_compress_range (grad_segment_t *range_l,
+			grad_segment_t *range_r,
+			double          new_l,
+			double          new_r)
 {
-	double          orig_l, orig_r;
-	double          scale;
-	grad_segment_t *seg, *aseg;
+  double          orig_l, orig_r;
+  double          scale;
+  grad_segment_t *seg, *aseg;
 
-	orig_l = range_l->left;
-	orig_r = range_r->right;
+  orig_l = range_l->left;
+  orig_r = range_r->right;
 
-	scale = (new_r - new_l) / (orig_r - orig_l);
+  scale = (new_r - new_l) / (orig_r - orig_l);
 
-	seg = range_l;
+  seg = range_l;
 
-	do {
-		seg->left   = new_l + (seg->left - orig_l) * scale;
-		seg->middle = new_l + (seg->middle - orig_l) * scale;
-		seg->right  = new_l + (seg->right - orig_l) * scale;
+  do
+    {
+      seg->left   = new_l + (seg->left - orig_l) * scale;
+      seg->middle = new_l + (seg->middle - orig_l) * scale;
+      seg->right  = new_l + (seg->right - orig_l) * scale;
 
-		/* Next */
+      /* Next */
 
-		aseg = seg;
-		seg  = seg->next;
-	} while (aseg != range_r);
-} /* control_compress_range */
-
+      aseg = seg;
+      seg  = seg->next;
+    } while (aseg != range_r);
+}
 
 /*****/
 
 static double
-control_move(grad_segment_t *range_l, grad_segment_t *range_r, double delta)
+control_move (grad_segment_t *range_l,
+	      grad_segment_t *range_r,
+	      double          delta)
 {
-	double          lbound, rbound;
-	int             is_first, is_last;
-	grad_segment_t *seg, *aseg;
+  double          lbound, rbound;
+  int             is_first, is_last;
+  grad_segment_t *seg, *aseg;
 
-	/* First or last segments in gradient? */
+  /* First or last segments in gradient? */
 
-	is_first = (range_l->prev == NULL);
-	is_last  = (range_r->next == NULL);
+  is_first = (range_l->prev == NULL);
+  is_last  = (range_r->next == NULL);
 
-	/* Calculate drag bounds */
+  /* Calculate drag bounds */
 
-	if (!g_editor->control_compress) {
-		if (!is_first)
-			lbound = range_l->prev->middle + EPSILON;
-		else
-			lbound = range_l->left + EPSILON;
+  if (!g_editor->control_compress)
+    {
+      if (!is_first)
+	lbound = range_l->prev->middle + EPSILON;
+      else
+	lbound = range_l->left + EPSILON;
 
-		if (!is_last)
-			rbound = range_r->next->middle - EPSILON;
-		else
-			rbound = range_r->right - EPSILON;
-	} else {
-		if (!is_first)
-			lbound = range_l->prev->left + 2.0 * EPSILON;
-		else
-			lbound = range_l->left + EPSILON;
+      if (!is_last)
+	rbound = range_r->next->middle - EPSILON;
+      else
+	rbound = range_r->right - EPSILON;
+    }
+  else
+    {
+      if (!is_first)
+	lbound = range_l->prev->left + 2.0 * EPSILON;
+      else
+	lbound = range_l->left + EPSILON;
 
-		if (!is_last)
-			rbound = range_r->next->right - 2.0 * EPSILON;
-		else
-			rbound = range_r->right - EPSILON;
-	} /* if */
+      if (!is_last)
+	rbound = range_r->next->right - 2.0 * EPSILON;
+      else
+	rbound = range_r->right - EPSILON;
+    }
 
-	/* Fix the delta if necessary */
+  /* Fix the delta if necessary */
 
-	if (delta < 0.0) {
-		if (!is_first) {
-			if (range_l->left + delta < lbound)
-				delta = lbound - range_l->left;
-		} else
-			if (range_l->middle + delta < lbound)
-				delta = lbound - range_l->middle;
-	} else {
-		if (!is_last) {
-			if (range_r->right + delta > rbound)
-				delta = rbound - range_r->right;
-		} else
-			if (range_r->middle + delta > rbound)
-				delta = rbound - range_r->middle;
-	} /* else */
+  if (delta < 0.0)
+    {
+      if (!is_first)
+	{
+	  if (range_l->left + delta < lbound)
+	    delta = lbound - range_l->left;
+	}
+      else
+	if (range_l->middle + delta < lbound)
+	  delta = lbound - range_l->middle;
+    }
+  else
+    {
+      if (!is_last)
+	{
+	  if (range_r->right + delta > rbound)
+	    delta = rbound - range_r->right;
+	}
+      else
+	if (range_r->middle + delta > rbound)
+	  delta = rbound - range_r->middle;
+    }
 
-	/* Move all the segments inside the range */
+  /* Move all the segments inside the range */
 
-	seg = range_l;
+  seg = range_l;
 
-	do {
-		if (!((seg == range_l) && is_first))
-			seg->left   += delta;
+  do
+    {
+      if (!((seg == range_l) && is_first))
+	seg->left   += delta;
 
-		seg->middle += delta;
+      seg->middle += delta;
 
-		if (!((seg == range_r) && is_last))
-			seg->right  += delta;
+      if (!((seg == range_r) && is_last))
+	seg->right  += delta;
 
-		/* Next */
+      /* Next */
 
-		aseg = seg;
-		seg  = seg->next;
-	} while (aseg != range_r);
+      aseg = seg;
+      seg  = seg->next;
+    }
+  while (aseg != range_r);
 
-	/* Fix the segments that surround the range */
+  /* Fix the segments that surround the range */
 
-	if (!is_first)
-	  {
-		if (!g_editor->control_compress)
-			range_l->prev->right = range_l->left;
-		else
-			control_compress_range(range_l->prev, range_l->prev,
-					       range_l->prev->left, range_l->left);
-	  }
+  if (!is_first)
+    {
+      if (!g_editor->control_compress)
+	range_l->prev->right = range_l->left;
+      else
+	control_compress_range (range_l->prev, range_l->prev,
+				range_l->prev->left, range_l->left);
+    }
 	
-	if (!is_last)
-	  {
-		if (!g_editor->control_compress)
-			range_r->next->left = range_r->right;
-		else
-			control_compress_range(range_r->next, range_r->next,
-					       range_r->right, range_r->next->right);
-	  }
-	
-	return delta;
-} /* control_move */
+  if (!is_last)
+    {
+      if (!g_editor->control_compress)
+	range_r->next->left = range_r->right;
+      else
+	control_compress_range (range_r->next, range_r->next,
+				range_r->right, range_r->next->right);
+    }
 
+  return delta;
+}
 
 /*****/
 
@@ -2990,157 +2981,161 @@ control_update (gboolean recalculate)
 /*****/
 
 static void
-control_draw(GdkPixmap *pixmap, int width, int height, double left, double right)
+control_draw (GdkPixmap *pixmap,
+	      int        width,
+	      int        height,
+	      double     left,
+	      double     right)
 {
-	int 		     sel_l, sel_r;
-	double               g_pos;
-	grad_segment_t      *seg;
-	control_drag_mode_t  handle;
+  int 		     sel_l, sel_r;
+  double               g_pos;
+  grad_segment_t      *seg;
+  control_drag_mode_t  handle;
 
-	/* Clear the pixmap */
+  /* Clear the pixmap */
 
-	gdk_draw_rectangle(pixmap, g_editor->control->style->bg_gc[GTK_STATE_NORMAL],
-			   TRUE, 0, 0, width, height);
+  gdk_draw_rectangle (pixmap, g_editor->control->style->bg_gc[GTK_STATE_NORMAL],
+		      TRUE, 0, 0, width, height);
 
-	/* Draw selection */
+  /* Draw selection */
 
-	sel_l = control_calc_p_pos(g_editor->control_sel_l->left);
-	sel_r = control_calc_p_pos(g_editor->control_sel_r->right);
+  sel_l = control_calc_p_pos (g_editor->control_sel_l->left);
+  sel_r = control_calc_p_pos (g_editor->control_sel_r->right);
 
-	gdk_draw_rectangle(pixmap, g_editor->control->style->dark_gc[GTK_STATE_NORMAL],
-			   TRUE, sel_l, 0, sel_r - sel_l + 1, height);
+  gdk_draw_rectangle (pixmap,
+		      g_editor->control->style->dark_gc[GTK_STATE_NORMAL],
+		      TRUE, sel_l, 0, sel_r - sel_l + 1, height);
 
-	/* Draw handles */
+  /* Draw handles */
 
-	seg = curr_gradient->segments;
+  seg = curr_gradient->segments;
 
-	while (seg) {
-		control_draw_normal_handle(pixmap, seg->left, height);
-		control_draw_middle_handle(pixmap, seg->middle, height);
+  while (seg)
+    {
+      control_draw_normal_handle (pixmap, seg->left, height);
+      control_draw_middle_handle (pixmap, seg->middle, height);
 
-		/* Draw right handle only if this is the last segment */
+      /* Draw right handle only if this is the last segment */
 
-		if (seg->next == NULL)
-			control_draw_normal_handle(pixmap, seg->right, height);
+      if (seg->next == NULL)
+	control_draw_normal_handle (pixmap, seg->right, height);
 
-		/* Next! */
+      /* Next! */
 
-		seg = seg->next;
-	} /* while */
+      seg = seg->next;
+    }
 
-	/* Draw the handle which is closest to the mouse position */
+  /* Draw the handle which is closest to the mouse position */
 
-	g_pos = control_calc_g_pos(g_editor->control_last_x);
+  g_pos = control_calc_g_pos (g_editor->control_last_x);
 
-	seg_get_closest_handle(curr_gradient, BOUNDS(g_pos, 0.0, 1.0), &seg, &handle);
+  seg_get_closest_handle (curr_gradient, BOUNDS(g_pos, 0.0, 1.0), &seg, &handle);
 
-	switch (handle) {
-		case GRAD_DRAG_LEFT:
-			if (seg)
-				control_draw_normal_handle(pixmap, seg->left, height);
-			else {
-				seg = seg_get_last_segment(curr_gradient->segments);
-				control_draw_normal_handle(pixmap, seg->right, height);
-			} /* else */
+  switch (handle)
+    {
+    case GRAD_DRAG_LEFT:
+      if (seg)
+	control_draw_normal_handle (pixmap, seg->left, height);
+      else
+	{
+	  seg = seg_get_last_segment (curr_gradient->segments);
+	  control_draw_normal_handle (pixmap, seg->right, height);
+	}
 
-			break;
+      break;
 
-		case GRAD_DRAG_MIDDLE:
-			control_draw_middle_handle(pixmap, seg->middle, height);
-			break;
+    case GRAD_DRAG_MIDDLE:
+      control_draw_middle_handle (pixmap, seg->middle, height);
+      break;
 
-		default:
-			break;
-	} /* switch */
-} /* control_draw */
-
+    default:
+      break;
+    }
+}
 
 /*****/
 
 static void
-control_draw_normal_handle(GdkPixmap *pixmap, double pos, int height)
+control_draw_normal_handle (GdkPixmap *pixmap,
+			    double     pos,
+			    int        height)
 {
-	control_draw_handle(pixmap,
-			    g_editor->control->style->black_gc,
-			    g_editor->control->style->black_gc,
-			    control_calc_p_pos(pos), height);
-} /* control_draw_normal_handle */
-
-
-/*****/
+  control_draw_handle (pixmap,
+		       g_editor->control->style->black_gc,
+		       g_editor->control->style->black_gc,
+		       control_calc_p_pos (pos), height);
+}
 
 static void
-control_draw_middle_handle(GdkPixmap *pixmap, double pos, int height)
+control_draw_middle_handle (GdkPixmap *pixmap,
+			    double     pos,
+			    int        height)
 {
-	control_draw_handle(pixmap,
-			    g_editor->control->style->black_gc,
-			    g_editor->control->style->bg_gc[GTK_STATE_PRELIGHT],
-			    control_calc_p_pos(pos), height);
-} /* control_draw_middle_handle */
-
-
-/*****/
+  control_draw_handle (pixmap,
+		       g_editor->control->style->black_gc,
+		       g_editor->control->style->bg_gc[GTK_STATE_PRELIGHT],
+		       control_calc_p_pos(pos), height);
+}
 
 static void
-control_draw_handle(GdkPixmap *pixmap, GdkGC *border_gc, GdkGC *fill_gc, int xpos, int height)
+control_draw_handle (GdkPixmap *pixmap,
+		     GdkGC     *border_gc,
+		     GdkGC     *fill_gc,
+		     int        xpos,
+		     int        height)
 {
-	int y;
-	int left, right, bottom;
+  int y;
+  int left, right, bottom;
 
-	for (y = 0; y < height; y++)
-		gdk_draw_line(pixmap, fill_gc, xpos - y / 2, y, xpos + y / 2, y);
+  for (y = 0; y < height; y++)
+    gdk_draw_line (pixmap, fill_gc, xpos - y / 2, y, xpos + y / 2, y);
 
-	bottom = height - 1;
-	left   = xpos - bottom / 2;
-	right  = xpos + bottom / 2;
+  bottom = height - 1;
+  left   = xpos - bottom / 2;
+  right  = xpos + bottom / 2;
 
-	gdk_draw_line(pixmap, border_gc, xpos, 0, left, bottom);
-	gdk_draw_line(pixmap, border_gc, xpos, 0, right, bottom);
-	gdk_draw_line(pixmap, border_gc, left, bottom, right, bottom);
-} /* control_draw_handle */
-
+  gdk_draw_line (pixmap, border_gc, xpos, 0, left, bottom);
+  gdk_draw_line (pixmap, border_gc, xpos, 0, right, bottom);
+  gdk_draw_line (pixmap, border_gc, left, bottom, right, bottom);
+}
 
 /*****/
 
 static int
-control_calc_p_pos(double pos)
+control_calc_p_pos (double pos)
 {
-	gint           pwidth, pheight;
-	GtkAdjustment *adjustment;
+  gint           pwidth, pheight;
+  GtkAdjustment *adjustment;
 
-	/* Calculate the position (in widget's coordinates) of the
-	 * requested point from the gradient.  Rounding is done to
-	 * minimize mismatches between the rendered gradient preview
-	 * and the gradient control's handles.
-	 */
+  /* Calculate the position (in widget's coordinates) of the
+   * requested point from the gradient.  Rounding is done to
+   * minimize mismatches between the rendered gradient preview
+   * and the gradient control's handles.
+   */
 
-	adjustment = GTK_ADJUSTMENT(g_editor->scroll_data);
-	gdk_window_get_size(g_editor->control_pixmap, &pwidth, &pheight);
+  adjustment = GTK_ADJUSTMENT (g_editor->scroll_data);
+  gdk_window_get_size (g_editor->control_pixmap, &pwidth, &pheight);
 
-	return (int) ((pwidth - 1) * (pos - adjustment->value) / adjustment->page_size + 0.5);
-} /* control_calc_p_pos */
-
+  return (int) ((pwidth - 1) * (pos - adjustment->value) / adjustment->page_size + 0.5);
+}
 
 /*****/
 
 static double
-control_calc_g_pos(int pos)
+control_calc_g_pos (int pos)
 {
-	gint   	       pwidth, pheight;
-	GtkAdjustment *adjustment;
+  gint   	       pwidth, pheight;
+  GtkAdjustment *adjustment;
 
-	/* Calculate the gradient position that corresponds to widget's coordinates */
+  /* Calculate the gradient position that corresponds to widget's coordinates */
 
-	adjustment = GTK_ADJUSTMENT(g_editor->scroll_data);
-	gdk_window_get_size(g_editor->control_pixmap, &pwidth, &pheight);
+  adjustment = GTK_ADJUSTMENT (g_editor->scroll_data);
+  gdk_window_get_size (g_editor->control_pixmap, &pwidth, &pheight);
 
-	return adjustment->page_size * pos / (pwidth - 1) + adjustment->value;
-} /* control_calc_g_pos */
-
+  return adjustment->page_size * pos / (pwidth - 1) + adjustment->value;
+}
 
 /***** Control popup functions *****/
-
-/*****/
 
 static void
 cpopup_create_main_menu (void)
@@ -3350,8 +3345,6 @@ cpopup_do_popup (void)
 
 /***** Create a single menu item *****/
 
-/*****/
-
 static GtkWidget *
 cpopup_create_color_item (GtkWidget **color_box,
 			  GtkWidget **label)
@@ -3415,8 +3408,6 @@ cpopup_create_menu_item_with_label (gchar      *str,
 }
 
 /***** Update all menus *****/
-
-/*****/
 
 static void
 cpopup_adjust_menus (void)
@@ -3677,78 +3668,86 @@ cpopup_check_selection_params (gint *equal_blending,
 /*****/
 
 static void
-cpopup_render_color_box(GtkPreview *preview, double r, double g, double b, double a)
+cpopup_render_color_box (GtkPreview *preview,
+			 double      r,
+			 double      g,
+			 double      b,
+			 double      a)
 {
-	guchar  rows[3][GRAD_COLOR_BOX_WIDTH * 3];
-	int     x, y;
-	int     r0, g0, b0;
-	int     r1, g1, b1;
-	guchar *p0, *p1, *p2;
+  guchar  rows[3][GRAD_COLOR_BOX_WIDTH * 3];
+  int     x, y;
+  int     r0, g0, b0;
+  int     r1, g1, b1;
+  guchar *p0, *p1, *p2;
 
-	/* Fill rows */
+  /* Fill rows */
 
-	r0 = (GRAD_CHECK_DARK + (r - GRAD_CHECK_DARK) * a) * 255.0;
-	r1 = (GRAD_CHECK_LIGHT + (r - GRAD_CHECK_LIGHT) * a) * 255.0;
+  r0 = (GRAD_CHECK_DARK + (r - GRAD_CHECK_DARK) * a) * 255.0;
+  r1 = (GRAD_CHECK_LIGHT + (r - GRAD_CHECK_LIGHT) * a) * 255.0;
 
-	g0 = (GRAD_CHECK_DARK + (g - GRAD_CHECK_DARK) * a) * 255.0;
-	g1 = (GRAD_CHECK_LIGHT + (g - GRAD_CHECK_LIGHT) * a) * 255.0;
+  g0 = (GRAD_CHECK_DARK + (g - GRAD_CHECK_DARK) * a) * 255.0;
+  g1 = (GRAD_CHECK_LIGHT + (g - GRAD_CHECK_LIGHT) * a) * 255.0;
 
-	b0 = (GRAD_CHECK_DARK + (b - GRAD_CHECK_DARK) * a) * 255.0;
-	b1 = (GRAD_CHECK_LIGHT + (b - GRAD_CHECK_LIGHT) * a) * 255.0;
+  b0 = (GRAD_CHECK_DARK + (b - GRAD_CHECK_DARK) * a) * 255.0;
+  b1 = (GRAD_CHECK_LIGHT + (b - GRAD_CHECK_LIGHT) * a) * 255.0;
 
-	p0 = rows[0];
-	p1 = rows[1];
-	p2 = rows[2];
+  p0 = rows[0];
+  p1 = rows[1];
+  p2 = rows[2];
 
-	for (x = 0; x < GRAD_COLOR_BOX_WIDTH; x++) {
-		if ((x == 0) || (x == (GRAD_COLOR_BOX_WIDTH - 1))) {
-			*p0++ = 0;
-			*p0++ = 0;
-			*p0++ = 0;
+  for (x = 0; x < GRAD_COLOR_BOX_WIDTH; x++)
+    {
+      if ((x == 0) || (x == (GRAD_COLOR_BOX_WIDTH - 1)))
+	{
+	  *p0++ = 0;
+	  *p0++ = 0;
+	  *p0++ = 0;
 
-			*p1++ = 0;
-			*p1++ = 0;
-			*p1++ = 0;
-		} else
-			if ((x / GRAD_CHECK_SIZE) & 1) {
-				*p0++ = r1;
-				*p0++ = g1;
-				*p0++ = b1;
+	  *p1++ = 0;
+	  *p1++ = 0;
+	  *p1++ = 0;
+	}
+      else
+	if ((x / GRAD_CHECK_SIZE) & 1)
+	  {
+	    *p0++ = r1;
+	    *p0++ = g1;
+	    *p0++ = b1;
 
-				*p1++ = r0;
-				*p1++ = g0;
-				*p1++ = b0;
-			} else {
-				*p0++ = r0;
-				*p0++ = g0;
-				*p0++ = b0;
+	    *p1++ = r0;
+	    *p1++ = g0;
+	    *p1++ = b0;
+	  }
+	else
+	  {
+	    *p0++ = r0;
+	    *p0++ = g0;
+	    *p0++ = b0;
 
-				*p1++ = r1;
-				*p1++ = g1;
-				*p1++ = b1;
-			} /* else */
+	    *p1++ = r1;
+	    *p1++ = g1;
+	    *p1++ = b1;
+	  }
 
-		*p2++ = 0;
-		*p2++ = 0;
-		*p2++ = 0;
-	} /* for */
+      *p2++ = 0;
+      *p2++ = 0;
+      *p2++ = 0;
+    }
 
-	/* Fill preview */
+  /* Fill preview */
 
-	gtk_preview_draw_row(preview, rows[2], 0, 0, GRAD_COLOR_BOX_WIDTH);
+  gtk_preview_draw_row (preview, rows[2], 0, 0, GRAD_COLOR_BOX_WIDTH);
 
-	for (y = 1; y < (GRAD_COLOR_BOX_HEIGHT - 1); y++)
-		if ((y / GRAD_CHECK_SIZE) & 1)
-			gtk_preview_draw_row(preview, rows[1], 0, y, GRAD_COLOR_BOX_WIDTH);
-		else
-			gtk_preview_draw_row(preview, rows[0], 0, y, GRAD_COLOR_BOX_WIDTH);
+  for (y = 1; y < (GRAD_COLOR_BOX_HEIGHT - 1); y++)
+    if ((y / GRAD_CHECK_SIZE) & 1)
+      gtk_preview_draw_row (preview, rows[1], 0, y, GRAD_COLOR_BOX_WIDTH);
+    else
+      gtk_preview_draw_row (preview, rows[0], 0, y, GRAD_COLOR_BOX_WIDTH);
 
-	gtk_preview_draw_row(preview, rows[2], 0, y, GRAD_COLOR_BOX_WIDTH);
-} /* cpopup_render_color_box */
+  gtk_preview_draw_row (preview, rows[2], 0, y, GRAD_COLOR_BOX_WIDTH);
+}
 
 /***** Creale load & save menus *****/
-
-/*****/
 
 static GtkWidget *
 cpopup_create_load_menu (GtkWidget    **color_boxes,
@@ -3824,8 +3823,8 @@ cpopup_create_load_menu (GtkWidget    **color_boxes,
 }
 
 static GtkWidget *
-cpopup_create_save_menu (GtkWidget    **color_boxes,
-			 GtkWidget    **labels,
+cpopup_create_save_menu (GtkWidget     **color_boxes,
+			 GtkWidget     **labels,
 			 GtkSignalFunc   callback)
 {
   GtkWidget *menu;
@@ -3846,324 +3845,328 @@ cpopup_create_save_menu (GtkWidget    **color_boxes,
   return menu;
 }
 
+/*****/
+
+static void
+cpopup_update_saved_color (int    n,
+			   double r,
+			   double g,
+			   double b,
+			   double a)
+{
+  char str[256];
+
+  cpopup_render_color_box (GTK_PREVIEW (g_editor->left_load_color_boxes[n + 3]),
+			   r, g, b, a);
+  cpopup_render_color_box (GTK_PREVIEW (g_editor->left_save_color_boxes[n]),
+			   r, g, b, a);
+  cpopup_render_color_box (GTK_PREVIEW (g_editor->right_load_color_boxes[n + 3]),
+			   r, g, b, a);
+  cpopup_render_color_box (GTK_PREVIEW (g_editor->right_save_color_boxes[n]),
+			   r, g, b, a);
+
+  g_snprintf (str, sizeof (str),
+	      _("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
+
+  gtk_label_set_text (GTK_LABEL (g_editor->left_load_labels[n + 3]), str);
+  gtk_label_set_text (GTK_LABEL (g_editor->left_save_labels[n]), str);
+  gtk_label_set_text (GTK_LABEL (g_editor->right_load_labels[n + 3]), str);
+  gtk_label_set_text (GTK_LABEL (g_editor->right_save_labels[n]), str);
+
+  g_editor->saved_colors[n].r = r;
+  g_editor->saved_colors[n].g = g;
+  g_editor->saved_colors[n].b = b;
+  g_editor->saved_colors[n].a = a;
+}
 
 /*****/
 
 static void
-cpopup_update_saved_color(int n, double r, double g, double b, double a)
+cpopup_load_left_callback (GtkWidget *widget,
+			   gpointer   data)
 {
-	char str[256];
+  grad_segment_t *seg;
+  double          fg_r, fg_g, fg_b;
+  double          fg_a;
 
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_load_color_boxes[n + 3]),
-				r, g, b, a);
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->left_save_color_boxes[n]),
-				r, g, b, a);
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_load_color_boxes[n + 3]),
-				r, g, b, a);
-	cpopup_render_color_box(GTK_PREVIEW(g_editor->right_save_color_boxes[n]),
-				r, g, b, a);
+  switch ((long) data)
+    {
+    case 0: /* Fetch from left neighbor's right endpoint */
+      if (g_editor->control_sel_l->prev != NULL)
+	seg = g_editor->control_sel_l->prev;
+      else
+	seg = seg_get_last_segment (g_editor->control_sel_l);
 
-	g_snprintf(str, sizeof(str), _("RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"), r, g, b, a);
+      cpopup_blend_endpoints (seg->r1, seg->g1, seg->b1, seg->a1,
+			      g_editor->control_sel_r->r1,
+			      g_editor->control_sel_r->g1,
+			      g_editor->control_sel_r->b1,
+			      g_editor->control_sel_r->a1,
+			      TRUE, TRUE);
+      break;
 
-	gtk_label_set_text (GTK_LABEL (g_editor->left_load_labels[n + 3]), str);
-	gtk_label_set_text (GTK_LABEL (g_editor->left_save_labels[n]), str);
-	gtk_label_set_text (GTK_LABEL (g_editor->right_load_labels[n + 3]), str);
-	gtk_label_set_text (GTK_LABEL (g_editor->right_save_labels[n]), str);
+    case 1: /* Fetch from right endpoint */
+      cpopup_blend_endpoints (g_editor->control_sel_r->r1,
+			      g_editor->control_sel_r->g1,
+			      g_editor->control_sel_r->b1,
+			      g_editor->control_sel_r->a1,
+			      g_editor->control_sel_r->r1,
+			      g_editor->control_sel_r->g1,
+			      g_editor->control_sel_r->b1,
+			      g_editor->control_sel_r->a1,
+			      TRUE, TRUE);
+      break;
 
-	g_editor->saved_colors[n].r = r;
-	g_editor->saved_colors[n].g = g;
-	g_editor->saved_colors[n].b = b;
-	g_editor->saved_colors[n].a = a;
-} /* cpopup_update_saved_color */
+    case 2: /* Fetch from FG color */
+      ed_fetch_foreground (&fg_r, &fg_g, &fg_b, &fg_a);
+      cpopup_blend_endpoints (fg_r,
+			      fg_g,
+			      fg_b,
+			      fg_a,
+			      g_editor->control_sel_r->r1,
+			      g_editor->control_sel_r->g1,
+			      g_editor->control_sel_r->b1,
+			      g_editor->control_sel_r->a1,
+			      TRUE, TRUE);
+      break;
 
+    default: /* Load a color */
+      cpopup_blend_endpoints (g_editor->saved_colors[(long) data - 3].r,
+			      g_editor->saved_colors[(long) data - 3].g,
+			      g_editor->saved_colors[(long) data - 3].b,
+			      g_editor->saved_colors[(long) data - 3].a,
+			      g_editor->control_sel_r->r1,
+			      g_editor->control_sel_r->g1,
+			      g_editor->control_sel_r->b1,
+			      g_editor->control_sel_r->a1,
+			      TRUE, TRUE);
+      break;
+    }
+
+  curr_gradient->dirty = 1;
+  ed_update_editor (GRAD_UPDATE_PREVIEW);
+}
+
+static void
+cpopup_save_left_callback (GtkWidget *widget,
+			   gpointer   data)
+{
+  g_editor->saved_colors[(long) data].r = g_editor->control_sel_l->r0;
+  g_editor->saved_colors[(long) data].g = g_editor->control_sel_l->g0;
+  g_editor->saved_colors[(long) data].b = g_editor->control_sel_l->b0;
+  g_editor->saved_colors[(long) data].a = g_editor->control_sel_l->a0;
+}
+
+static void
+cpopup_load_right_callback (GtkWidget *widget,
+			    gpointer   data)
+{
+  grad_segment_t *seg;
+  double          fg_r, fg_g, fg_b;
+  double          fg_a;
+
+  switch ((long) data)
+    {
+    case 0: /* Fetch from right neighbor's left endpoint */
+      if (g_editor->control_sel_r->next != NULL)
+	seg = g_editor->control_sel_r->next;
+      else
+	seg = curr_gradient->segments;
+
+      cpopup_blend_endpoints (g_editor->control_sel_r->r0,
+			      g_editor->control_sel_r->g0,
+			      g_editor->control_sel_r->b0,
+			      g_editor->control_sel_r->a0,
+			      seg->r0, seg->g0, seg->b0, seg->a0,
+			      TRUE, TRUE);
+      break;
+
+    case 1: /* Fetch from left endpoint */
+      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
+			      g_editor->control_sel_l->g0,
+			      g_editor->control_sel_l->b0,
+			      g_editor->control_sel_l->a0,
+			      g_editor->control_sel_l->r0,
+			      g_editor->control_sel_l->g0,
+			      g_editor->control_sel_l->b0,
+			      g_editor->control_sel_l->a0,
+			      TRUE, TRUE);
+      break;
+
+    case 2: /* Fetch from FG color */
+      ed_fetch_foreground (&fg_r, &fg_g, &fg_b, &fg_a);
+      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
+			      g_editor->control_sel_l->g0,
+			      g_editor->control_sel_l->b0,
+			      g_editor->control_sel_l->a0,
+			      fg_r,
+			      fg_g,
+			      fg_b,
+			      fg_a,
+			      TRUE, TRUE);
+      break;
+
+    default: /* Load a color */
+      cpopup_blend_endpoints (g_editor->control_sel_l->r0,
+			      g_editor->control_sel_l->g0,
+			      g_editor->control_sel_l->b0,
+			      g_editor->control_sel_l->a0,
+			      g_editor->saved_colors[(long) data - 3].r,
+			      g_editor->saved_colors[(long) data - 3].g,
+			      g_editor->saved_colors[(long) data - 3].b,
+			      g_editor->saved_colors[(long) data - 3].a,
+			      TRUE, TRUE);
+      break;
+    }
+
+  curr_gradient->dirty = 1;
+  ed_update_editor (GRAD_UPDATE_PREVIEW);
+}
+
+static void
+cpopup_save_right_callback (GtkWidget *widget,
+			    gpointer   data)
+{
+  g_editor->saved_colors[(long) data].r = g_editor->control_sel_r->r1;
+  g_editor->saved_colors[(long) data].g = g_editor->control_sel_r->g1;
+  g_editor->saved_colors[(long) data].b = g_editor->control_sel_r->b1;
+  g_editor->saved_colors[(long) data].a = g_editor->control_sel_r->a1;
+}
 
 /*****/
 
 static void
-cpopup_load_left_callback(GtkWidget *widget, gpointer data)
+cpopup_set_color_selection_color (GtkColorSelection *cs,
+				  double             r,
+				  double             g,
+				  double             b,
+				  double             a)
 {
-	grad_segment_t *seg;
-	double          fg_r, fg_g, fg_b;
-	double          fg_a;
+  gdouble color[4];
 
-	switch ((long) data) {
-		case 0: /* Fetch from left neighbor's right endpoint */
-			if (g_editor->control_sel_l->prev != NULL)
-				seg = g_editor->control_sel_l->prev;
-			else
-				seg = seg_get_last_segment(g_editor->control_sel_l);
+  color[0] = r;
+  color[1] = g;
+  color[2] = b;
+  color[3] = a;
 
-			cpopup_blend_endpoints(seg->r1, seg->g1, seg->b1, seg->a1,
-					       g_editor->control_sel_r->r1,
-					       g_editor->control_sel_r->g1,
-					       g_editor->control_sel_r->b1,
-					       g_editor->control_sel_r->a1,
-					       TRUE, TRUE);
-			break;
-
-		case 1: /* Fetch from right endpoint */
-			cpopup_blend_endpoints(g_editor->control_sel_r->r1,
-					       g_editor->control_sel_r->g1,
-					       g_editor->control_sel_r->b1,
-					       g_editor->control_sel_r->a1,
-					       g_editor->control_sel_r->r1,
-					       g_editor->control_sel_r->g1,
-					       g_editor->control_sel_r->b1,
-					       g_editor->control_sel_r->a1,
-					       TRUE, TRUE);
-			break;
-
-		case 2: /* Fetch from FG color */
-	                ed_fetch_foreground(&fg_r, &fg_g, &fg_b, &fg_a);
-			cpopup_blend_endpoints(fg_r,
-					       fg_g,
-					       fg_b,
-					       fg_a,
-					       g_editor->control_sel_r->r1,
-					       g_editor->control_sel_r->g1,
-					       g_editor->control_sel_r->b1,
-					       g_editor->control_sel_r->a1,
-					       TRUE, TRUE);
-			break;
-
-		default: /* Load a color */
-			cpopup_blend_endpoints(g_editor->saved_colors[(long) data - 3].r,
-					       g_editor->saved_colors[(long) data - 3].g,
-					       g_editor->saved_colors[(long) data - 3].b,
-					       g_editor->saved_colors[(long) data - 3].a,
-					       g_editor->control_sel_r->r1,
-					       g_editor->control_sel_r->g1,
-					       g_editor->control_sel_r->b1,
-					       g_editor->control_sel_r->a1,
-					       TRUE, TRUE);
-			break;
-	} /* switch */
-
-	curr_gradient->dirty = 1;
-	ed_update_editor(GRAD_UPDATE_PREVIEW);
-} /* cpopup_load_left_callback */
-
+  gtk_color_selection_set_color (cs, color);
+}
 
 /*****/
 
 static void
-cpopup_save_left_callback(GtkWidget *widget, gpointer data)
+cpopup_get_color_selection_color (GtkColorSelection *cs,
+				  double            *r,
+				  double            *g,
+				  double            *b,
+				  double            *a)
 {
-	g_editor->saved_colors[(long) data].r = g_editor->control_sel_l->r0;
-	g_editor->saved_colors[(long) data].g = g_editor->control_sel_l->g0;
-	g_editor->saved_colors[(long) data].b = g_editor->control_sel_l->b0;
-	g_editor->saved_colors[(long) data].a = g_editor->control_sel_l->a0;
-} /* cpopup_save_left_callback */
+  gdouble color[4];
 
+  gtk_color_selection_get_color (cs, color);
 
-/*****/
-
-static void
-cpopup_load_right_callback(GtkWidget *widget, gpointer data)
-{
-	grad_segment_t *seg;
-	double          fg_r, fg_g, fg_b;
-	double          fg_a;
-
-	switch ((long) data) {
-		case 0: /* Fetch from right neighbor's left endpoint */
-			if (g_editor->control_sel_r->next != NULL)
-				seg = g_editor->control_sel_r->next;
-			else
-				seg = curr_gradient->segments;
-
-			cpopup_blend_endpoints(g_editor->control_sel_r->r0,
-					       g_editor->control_sel_r->g0,
-					       g_editor->control_sel_r->b0,
-					       g_editor->control_sel_r->a0,
-					       seg->r0, seg->g0, seg->b0, seg->a0,
-					       TRUE, TRUE);
-			break;
-
-		case 1: /* Fetch from left endpoint */
-			cpopup_blend_endpoints(g_editor->control_sel_l->r0,
-					       g_editor->control_sel_l->g0,
-					       g_editor->control_sel_l->b0,
-					       g_editor->control_sel_l->a0,
-					       g_editor->control_sel_l->r0,
-					       g_editor->control_sel_l->g0,
-					       g_editor->control_sel_l->b0,
-					       g_editor->control_sel_l->a0,
-					       TRUE, TRUE);
-			break;
-
-		case 2: /* Fetch from FG color */
-	                ed_fetch_foreground(&fg_r, &fg_g, &fg_b, &fg_a);
-			cpopup_blend_endpoints(g_editor->control_sel_l->r0,
-					       g_editor->control_sel_l->g0,
-					       g_editor->control_sel_l->b0,
-					       g_editor->control_sel_l->a0,
-					       fg_r,
-					       fg_g,
-					       fg_b,
-					       fg_a,
-					       TRUE, TRUE);
-			break;
-
-		default: /* Load a color */
-			cpopup_blend_endpoints(g_editor->control_sel_l->r0,
-					       g_editor->control_sel_l->g0,
-					       g_editor->control_sel_l->b0,
-					       g_editor->control_sel_l->a0,
-					       g_editor->saved_colors[(long) data - 3].r,
-					       g_editor->saved_colors[(long) data - 3].g,
-					       g_editor->saved_colors[(long) data - 3].b,
-					       g_editor->saved_colors[(long) data - 3].a,
-					       TRUE, TRUE);
-			break;
-	} /* switch */
-
-	curr_gradient->dirty = 1;
-	ed_update_editor(GRAD_UPDATE_PREVIEW);
-} /* cpopup_load_right_callback */
-
-
-/*****/
-
-static void
-cpopup_save_right_callback(GtkWidget *widget, gpointer data)
-{
-	g_editor->saved_colors[(long) data].r = g_editor->control_sel_r->r1;
-	g_editor->saved_colors[(long) data].g = g_editor->control_sel_r->g1;
-	g_editor->saved_colors[(long) data].b = g_editor->control_sel_r->b1;
-	g_editor->saved_colors[(long) data].a = g_editor->control_sel_r->a1;
-} /* cpopup_save_right_callback */
-
-
-/*****/
-
-static void
-cpopup_set_color_selection_color(GtkColorSelection *cs,
-				 double r, double g, double b, double a)
-{
-	gdouble color[4];
-
-	color[0] = r;
-	color[1] = g;
-	color[2] = b;
-	color[3] = a;
-
-	gtk_color_selection_set_color(cs, color);
-} /* cpopup_set_color_selection_color */
-
-
-/*****/
-
-static void
-cpopup_get_color_selection_color(GtkColorSelection *cs,
-				 double *r, double *g, double *b, double *a)
-{
-	gdouble color[4];
-
-	gtk_color_selection_get_color(cs, color);
-
-	*r = color[0];
-	*g = color[1];
-	*b = color[2];
-	*a = color[3];
-} /* cpopup_get_color_selection_color */
-
+  *r = color[0];
+  *g = color[1];
+  *b = color[2];
+  *a = color[3];
+}
 
 /*****/
 
 static grad_segment_t *
-cpopup_save_selection(void)
+cpopup_save_selection (void)
 {
-	grad_segment_t *seg, *prev, *tmp;
-	grad_segment_t *oseg, *oaseg;
+  grad_segment_t *seg, *prev, *tmp;
+  grad_segment_t *oseg, *oaseg;
 
-	prev = NULL;
-	oseg = g_editor->control_sel_l;
-	tmp  = NULL;
+  prev = NULL;
+  oseg = g_editor->control_sel_l;
+  tmp  = NULL;
 
-	do {
-		seg = seg_new_segment();
+  do
+    {
+      seg = seg_new_segment ();
 
-		*seg = *oseg; /* Copy everything */
+      *seg = *oseg; /* Copy everything */
 
-		if (prev == NULL)
-			tmp = seg; /* Remember first segment */
-		else
-			prev->next = seg;
+      if (prev == NULL)
+	tmp = seg; /* Remember first segment */
+      else
+	prev->next = seg;
 
-		seg->prev = prev;
-		seg->next = NULL;
+      seg->prev = prev;
+      seg->next = NULL;
 
-		prev  = seg;
-		oaseg = oseg;
-		oseg  = oseg->next;
-	} while (oaseg != g_editor->control_sel_r);
+      prev  = seg;
+      oaseg = oseg;
+      oseg  = oseg->next;
+    }
+  while (oaseg != g_editor->control_sel_r);
 
-	return tmp;
-} /* cpopup_save_selection */
-
+  return tmp;
+}
 
 /*****/
 
 static void
-cpopup_free_selection(grad_segment_t *seg)
+cpopup_free_selection (grad_segment_t *seg)
 {
-	seg_free_segments(seg);
-} /* cpopup_free_selection */
-
+  seg_free_segments (seg);
+}
 
 /*****/
 
 static void
-cpopup_replace_selection(grad_segment_t *replace_seg)
+cpopup_replace_selection (grad_segment_t *replace_seg)
 {
-	grad_segment_t *lseg, *rseg;
-	grad_segment_t *replace_last;
+  grad_segment_t *lseg, *rseg;
+  grad_segment_t *replace_last;
 
-	/* Remember left and right segments */
+  /* Remember left and right segments */
 
-	lseg = g_editor->control_sel_l->prev;
-	rseg = g_editor->control_sel_r->next;
+  lseg = g_editor->control_sel_l->prev;
+  rseg = g_editor->control_sel_r->next;
 
-	replace_last = seg_get_last_segment(replace_seg);
+  replace_last = seg_get_last_segment (replace_seg);
 
-	/* Free old selection */
+  /* Free old selection */
 
-	g_editor->control_sel_r->next = NULL;
+  g_editor->control_sel_r->next = NULL;
 
-	seg_free_segments(g_editor->control_sel_l);
+  seg_free_segments (g_editor->control_sel_l);
 
-	/* Link in new segments */
+  /* Link in new segments */
 
-	if (lseg)
-		lseg->next = replace_seg;
-	else
-		curr_gradient->segments = replace_seg;
+  if (lseg)
+    lseg->next = replace_seg;
+  else
+    curr_gradient->segments = replace_seg;
 
-	replace_seg->prev = lseg;
+  replace_seg->prev = lseg;
 
-	if (rseg)
-		rseg->prev = replace_last;
+  if (rseg)
+    rseg->prev = replace_last;
 
-	replace_last->next = rseg;
+  replace_last->next = rseg;
 
-	g_editor->control_sel_l = replace_seg;
-	g_editor->control_sel_r = replace_last;
+  g_editor->control_sel_l = replace_seg;
+  g_editor->control_sel_r = replace_last;
 
-	curr_gradient->last_visited = NULL; /* Force re-search */
-} /* cpopup_replace_selection */
+  curr_gradient->last_visited = NULL; /* Force re-search */
+}
 
 /***** Color dialogs for left and right endpoint *****/
 
-/*****/
-
 static void
-cpopup_create_color_dialog (gchar *title,
-			    double r, double g, double b, double a,
-			    GtkSignalFunc color_changed_callback,
-			    GtkSignalFunc ok_callback,
-			    GtkSignalFunc cancel_callback,
-			    GtkSignalFunc delete_callback)
+cpopup_create_color_dialog (gchar         *title,
+			    double         r,
+			    double         g,
+			    double         b,
+			    double         a,
+			    GtkSignalFunc  color_changed_callback,
+			    GtkSignalFunc  ok_callback,
+			    GtkSignalFunc  cancel_callback,
+			    GtkSignalFunc  delete_callback)
 {
   GtkWidget               *window;
   GtkColorSelection       *cs;
@@ -4360,8 +4363,6 @@ cpopup_right_color_dialog_delete (GtkWidget *widget,
 
 /***** Blending menu *****/
 
-/*****/
-
 static GtkWidget *
 cpopup_create_blending_menu (void)
 {
@@ -4431,8 +4432,6 @@ cpopup_blending_callback (GtkWidget *widget,
 }
 
 /***** Coloring menu *****/
-
-/*****/
 
 static GtkWidget *
 cpopup_create_coloring_menu (void)
@@ -4593,26 +4592,23 @@ cpopup_split_uniform_callback (GtkWidget *widget,
   GtkWidget *scale;
   GtkObject *scale_data;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Split"), cpopup_split_uniform_split_callback, NULL, NULL },
-    { N_("Cancel"), cpopup_split_uniform_cancel_callback, NULL, NULL }
-  };
-
   /*  Create dialog window  */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (g_editor->shell),
-			  "gradient_segment_split_uniformly", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog),
-			(g_editor->control_sel_l == g_editor->control_sel_r) ?
-			_("Split segment uniformly") :
-			_("Split segments uniformly"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  dialog =
+    gimp_dialog_new ((g_editor->control_sel_l == g_editor->control_sel_r) ?
+		     _("Split segment uniformly") :
+		     _("Split segments uniformly"),
+		     "gradient_segment_split_uniformly",
+		     gimp_standard_help_func,
+		     "dialogs/gradient_editor_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm delete event  */
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-		      GTK_SIGNAL_FUNC (cpopup_split_uniform_delete_callback),
-		      dialog);
+		     _("Split"), cpopup_split_uniform_split_callback,
+		     NULL, NULL, TRUE, FALSE,
+		     _("Cancel"), cpopup_split_uniform_cancel_callback,
+		     NULL, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -4645,11 +4641,6 @@ cpopup_split_uniform_callback (GtkWidget *widget,
   gtk_signal_connect (scale_data, "value_changed",
 		      (GtkSignalFunc) cpopup_split_uniform_scale_update,
 		      NULL);
-
-  /*  The action area  */
-  action_items[0].user_data = dialog;
-  action_items[1].user_data = dialog;
-  build_action_area (GTK_DIALOG (dialog), action_items, 2, 0);
 
   /*  Show!  */
   gtk_widget_show (dialog);
@@ -4702,16 +4693,6 @@ cpopup_split_uniform_cancel_callback (GtkWidget *widget,
 {
   gtk_widget_destroy (GTK_WIDGET (data));
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
-}
-
-static gint
-cpopup_split_uniform_delete_callback (GtkWidget *widget,
-				      GdkEvent  *event,
-				      gpointer   data)
-{
-  cpopup_split_uniform_cancel_callback (widget, data);
-
-  return TRUE;
 }
 
 static void
@@ -4958,8 +4939,6 @@ cpopup_redistribute_callback (GtkWidget *widget,
 
 /***** Control popup -> selection options functions *****/
 
-/*****/
-
 static GtkWidget *
 cpopup_create_sel_ops_menu (void)
 {
@@ -5172,26 +5151,23 @@ cpopup_replicate_callback (GtkWidget *widget,
   GtkWidget *scale;
   GtkObject *scale_data;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Replicate"), cpopup_do_replicate_callback, NULL, NULL },
-    { N_("Cancel"), cpopup_replicate_cancel_callback, NULL, NULL }
-  };
-
   /*  Create dialog window  */
-  dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog),
-			  "gradient_segment_replicate", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog),
-			(g_editor->control_sel_l == g_editor->control_sel_r) ?
-			_("Replicate segment") :
-			_("Replicate selection"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
+  dialog =
+    gimp_dialog_new ((g_editor->control_sel_l == g_editor->control_sel_r) ?
+		     _("Replicate segment") :
+		     _("Replicate selection"),
+		     "gradient_segment_replicate",
+		     gimp_standard_help_func,
+		     "dialogs/gradient_editor_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm delete event  */
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-		      GTK_SIGNAL_FUNC (cpopup_replicate_delete_callback),
-		      dialog);
+		     _("Replicate"), cpopup_do_replicate_callback,
+		     NULL, NULL, FALSE, FALSE,
+		     _("Cancel"), cpopup_replicate_cancel_callback,
+		     NULL, NULL, TRUE, TRUE,
+
+		     NULL);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -5222,11 +5198,6 @@ cpopup_replicate_callback (GtkWidget *widget,
   gtk_signal_connect (scale_data, "value_changed",
 		      (GtkSignalFunc) cpopup_replicate_scale_update,
 		      NULL);
-
-  /*  The action area  */
-  action_items[0].user_data = dialog;
-  action_items[1].user_data = dialog;
-  build_action_area (GTK_DIALOG (dialog), action_items, 2, 1);
 
   /*  Show!  */
   gtk_widget_show (dialog);
@@ -5370,16 +5341,6 @@ cpopup_replicate_cancel_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (g_editor->shell, TRUE);
 }
 
-static gint
-cpopup_replicate_delete_callback (GtkWidget *widget,
-				  GdkEvent  *event,
-				  gpointer   data)
-{
-  cpopup_replicate_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 /*****/
 
 static void
@@ -5419,8 +5380,6 @@ cpopup_blend_opacity (GtkWidget *widget,
 }
 
 /***** Main blend function *****/
-
-/*****/
 
 static void
 cpopup_blend_endpoints (double r0, double g0, double b0, double a0,
@@ -5469,644 +5428,670 @@ cpopup_blend_endpoints (double r0, double g0, double b0, double a0,
 
 /***** Gradient functions *****/
 
-/*****/
-
 static gradient_t *
-grad_new_gradient(void)
+grad_new_gradient (void)
 {
-	gradient_t *grad;
+  gradient_t *grad;
 
-	grad = g_malloc(sizeof(gradient_t));
+  grad = g_new (gradient_t, 1);
 
-	grad->name     	   = NULL;
-	grad->segments 	   = NULL;
-	grad->last_visited = NULL;
-	grad->dirty        = 0;
-	grad->filename     = NULL;
-	grad->pixmap       = NULL;
+  grad->name   	     = NULL;
+  grad->segments     = NULL;
+  grad->last_visited = NULL;
+  grad->dirty        = 0;
+  grad->filename     = NULL;
+  grad->pixmap       = NULL;
 
-	return grad;
-} /* grad_new_gradient */
-
-
-/*****/
-
-static void
-grad_free_gradient(gradient_t *grad)
-{
-	g_assert(grad != NULL);
-
-	if (grad->name)
-		g_free(grad->name);
-
-	if (grad->segments)
-		seg_free_segments(grad->segments);
-
-	if (grad->filename)
-		g_free(grad->filename);
-
-	g_free(grad);
-} /* grad_free_gradient */
-
-
-/*****/
-
-static void
-grad_save_all(int need_free)
-{
-	GSList     *node;
-	gradient_t *grad;
-
-	node = gradients_list;
-
-	while (node) {
-		grad = node->data;
-
-		/* If gradient has dirty flag set, save it */
-
-		if (grad->dirty)
-			grad_save_gradient(grad, grad->filename);
-
-		if(need_free)
-		        grad_free_gradient(grad);
-
-		node = g_slist_next(node);
-	} /* while */
+  return grad;
 }
 
 /*****/
 
 static void
-grad_free_gradients(void)
+grad_free_gradient (gradient_t *grad)
 {
-        grad_save_all(1);  
+  g_assert (grad != NULL);
+
+  if (grad->name)
+    g_free (grad->name);
+
+  if (grad->segments)
+    seg_free_segments (grad->segments);
+
+  if (grad->filename)
+    g_free (grad->filename);
+
+  g_free (grad);
+}
+
+/*****/
+
+static void
+grad_save_all (int need_free)
+{
+  GSList     *node;
+  gradient_t *grad;
+
+  node = gradients_list;
+
+  while (node)
+    {
+      grad = node->data;
+
+      /* If gradient has dirty flag set, save it */
+      if (grad->dirty)
+	grad_save_gradient (grad, grad->filename);
+
+      if (need_free)
+	grad_free_gradient (grad);
+
+      node = g_slist_next (node);
+    }
+}
+
+/*****/
+
+static void
+grad_free_gradients (void)
+{
+  grad_save_all (1);  
   
-	g_slist_free(gradients_list);
+  g_slist_free (gradients_list);
 
-	num_gradients  = 0;
-	gradients_list = NULL;
-	curr_gradient  = NULL;
-} /* grad_free_gradients */
-
-
-/*****/
-
-static void
-grad_load_gradient(char *filename)
-{
-	FILE           *file;
-	gradient_t     *grad;
-	grad_segment_t *seg, *prev;
-	int             num_segments;
-	int             i;
-	int             type, color;
-	char            line[1024];
-
-	g_assert(filename != NULL);
-
-	file = fopen(filename, "rb");
-	if (!file)
-		return;
-
-	fgets(line, 1024, file);
-	if (strcmp(line, "GIMP Gradient\n") != 0)
-		return;
-
-	grad = grad_new_gradient();
-
-	grad->filename = g_strdup(filename);
-	grad->name     = g_strdup(g_basename(filename));
-
-	fgets(line, 1024, file);
-	num_segments = atoi(line);
-
-	if (num_segments < 1) {
-		g_message (_("grad_load_gradient(): invalid number of segments in \"%s\""), filename);
-		g_free(grad);
-		return;
-	} /* if */
-
-	prev = NULL;
-
-	for (i = 0; i < num_segments; i++) {
-		seg = seg_new_segment();
-		seg->prev = prev;
-
-		if (prev)
-			prev->next = seg;
-		else
-			grad->segments = seg;
-
-		fgets(line, 1024, file);
-
-		if (sscanf(line, "%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%d%d",
-			   &(seg->left), &(seg->middle), &(seg->right),
-			   &(seg->r0), &(seg->g0), &(seg->b0), &(seg->a0),
-			   &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
-			   &type, &color) != 13) {
-			g_message (_("grad_load_gradient(): badly formatted "
-				   "gradient segment %d in \"%s\" --- bad things may "
-				   "happen soon"), i, filename);
-		} else {
-			seg->type  = (grad_type_t) type;
-			seg->color = (grad_color_t) color;
-		} /* else */
-
-		prev = seg;
-	} /* for */
-
-	fclose(file);
-
-	grad_insert_in_gradients_list(grad);
-
-	/* Check if this gradient is the default one */
-
-	if (strcmp(default_gradient, grad->name) == 0)
-		grad_default_gradient = grad;
-} /* grad_load_gradient */
-
+  num_gradients  = 0;
+  gradients_list = NULL;
+  curr_gradient  = NULL;
+}
 
 /*****/
 
 static void
-grad_save_gradient(gradient_t *grad, char *filename)
+grad_load_gradient (char *filename)
 {
-	FILE           *file;
-	int             num_segments;
-	grad_segment_t *seg;
+  FILE           *file;
+  gradient_t     *grad;
+  grad_segment_t *seg, *prev;
+  int             num_segments;
+  int             i;
+  int             type, color;
+  char            line[1024];
 
-	g_assert(grad != NULL);
+  g_assert (filename != NULL);
 
-	if (!filename) {
-		g_message (_("grad_save_gradient(): can not save gradient with NULL filename"));
-		return;
-	} /* if */
+  file = fopen (filename, "rb");
+  if (!file)
+    return;
 
-	file = fopen(filename, "wb");
-	if (!file) {
-		g_message (_("grad_save_gradient(): can't open \"%s\""), filename);
-		return;
-	} /* if */
+  fgets (line, 1024, file);
+  if (strcmp (line, "GIMP Gradient\n") != 0)
+    return;
 
-	/* File format is:
-	 *
-	 *   GIMP Gradient
-	 *   number_of_segments
-	 *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
-	 *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
-	 *   ...
-	 */
+  grad = grad_new_gradient ();
 
-	fprintf(file, "GIMP Gradient\n");
+  grad->filename = g_strdup (filename);
+  grad->name     = g_strdup (g_basename (filename));
 
-	/* Count number of segments */
+  fgets (line, 1024, file);
+  num_segments = atoi (line);
 
-	num_segments = 0;
-	seg          = grad->segments;
+  if (num_segments < 1)
+    {
+      g_message (_("grad_load_gradient(): "
+		   "invalid number of segments in \"%s\""), filename);
+      g_free (grad);
+      return;
+    }
 
-	while (seg) {
-		num_segments++;
-		seg = seg->next;
-	} /* while */
+  prev = NULL;
 
-	/* Write rest of file */
+  for (i = 0; i < num_segments; i++)
+    {
+      seg = seg_new_segment ();
+      seg->prev = prev;
 
-	fprintf(file, "%d\n", num_segments);
+      if (prev)
+	prev->next = seg;
+      else
+	grad->segments = seg;
 
-	for (seg = grad->segments; seg; seg = seg->next)
-		fprintf(file, "%f %f %f %f %f %f %f %f %f %f %f %d %d\n",
-			seg->left, seg->middle, seg->right,
-			seg->r0, seg->g0, seg->b0, seg->a0,
-			seg->r1, seg->g1, seg->b1, seg->a1,
-			(int) seg->type, (int) seg->color);
+      fgets (line, 1024, file);
 
-	fclose(file);
+      if (sscanf (line, "%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%lf%d%d",
+		  &(seg->left), &(seg->middle), &(seg->right),
+		  &(seg->r0), &(seg->g0), &(seg->b0), &(seg->a0),
+		  &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
+		  &type, &color) != 13)
+	{
+	  g_message (_("grad_load_gradient(): badly formatted "
+		       "gradient segment %d in \"%s\" --- bad things may "
+		       "happen soon"), i, filename);
+	}
+      else
+	{
+	  seg->type  = (grad_type_t) type;
+	  seg->color = (grad_color_t) color;
+	}
 
-	grad->dirty = 0;
-} /* grad_save_gradient */
+      prev = seg;
+    }
 
+  fclose (file);
+
+  grad_insert_in_gradients_list (grad);
+
+  /* Check if this gradient is the default one */
+  if (strcmp (default_gradient, grad->name) == 0)
+    grad_default_gradient = grad;
+}
+
+/*****/
+
+static void
+grad_save_gradient (gradient_t *grad,
+		    char       *filename)
+{
+  FILE           *file;
+  int             num_segments;
+  grad_segment_t *seg;
+
+  g_assert (grad != NULL);
+
+  if (!filename)
+    {
+      g_message (_("grad_save_gradient(): "
+		   "can not save gradient with NULL filename"));
+      return;
+    }
+
+  file = fopen (filename, "wb");
+  if (!file)
+    {
+      g_message (_("grad_save_gradient(): can't open \"%s\""), filename);
+      return;
+    }
+
+  /* File format is:
+   *
+   *   GIMP Gradient
+   *   number_of_segments
+   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
+   *   left middle right r0 g0 b0 a0 r1 g1 b1 a1 type coloring
+   *   ...
+   */
+
+  fprintf (file, "GIMP Gradient\n");
+
+  /* Count number of segments */
+  num_segments = 0;
+  seg          = grad->segments;
+
+  while (seg)
+    {
+      num_segments++;
+      seg = seg->next;
+    }
+
+  /* Write rest of file */
+  fprintf (file, "%d\n", num_segments);
+
+  for (seg = grad->segments; seg; seg = seg->next)
+    fprintf (file, "%f %f %f %f %f %f %f %f %f %f %f %d %d\n",
+	     seg->left, seg->middle, seg->right,
+	     seg->r0, seg->g0, seg->b0, seg->a0,
+	     seg->r1, seg->g1, seg->b1, seg->a1,
+	     (int) seg->type, (int) seg->color);
+
+  fclose(file);
+
+  grad->dirty = 0;
+}
 
 /*****/
 
 static gradient_t *
-grad_create_default_gradient(void)
+grad_create_default_gradient (void)
 {
-	gradient_t *grad;
+  gradient_t *grad;
 
-	grad = grad_new_gradient();
-	grad->segments = seg_new_segment();
+  grad = grad_new_gradient();
+  grad->segments = seg_new_segment ();
 
-	return grad;
-} /* grad_create_default_gradient */
-
+  return grad;
+}
 
 /*****/
 
 static int
-grad_insert_in_gradients_list(gradient_t *grad)
+grad_insert_in_gradients_list (gradient_t *grad)
 {
-	GSList     *tmp;
-	gradient_t *g;
-	int         n;
+  GSList     *tmp;
+  gradient_t *g;
+  int         n;
 
-	/* We insert gradients in alphabetical order.  Find the index
-	 * of the gradient after which we will insert the current one.
-	 */
+  /* We insert gradients in alphabetical order.  Find the index
+   * of the gradient after which we will insert the current one.
+   */
 
-	n   = 0;
-	tmp = gradients_list;
+  n   = 0;
+  tmp = gradients_list;
 
-	while (tmp) {
-		g = tmp->data;
+  while (tmp)
+    {
+      g = tmp->data;
 
-		if (strcmp(grad->name, g->name) <= 0)
-			break; /* We found the one we want */
+      if (strcmp (grad->name, g->name) <= 0)
+	break; /* We found the one we want */
 
-		n++;
-		tmp = g_slist_next(tmp);
-	} /* while */
+      n++;
+      tmp = g_slist_next (tmp);
+    }
 
-	num_gradients++;
-	gradients_list = g_slist_insert(gradients_list, grad, n);
+  num_gradients++;
+  gradients_list = g_slist_insert (gradients_list, grad, n);
 
-	return n;
-} /* grad_insert_in_gradients_list */
-
+  return n;
+}
 
 /*****/
 
 static void
-grad_dump_gradient(gradient_t *grad, FILE *file)
+grad_dump_gradient (gradient_t *grad,
+		    FILE       *file)
 {
-	grad_segment_t *seg;
+  grad_segment_t *seg;
 
-	fprintf(file, "Name: \"%s\"\n", grad->name);
-	fprintf(file, "Dirty: %d\n", grad->dirty);
-	fprintf(file, "Filename: \"%s\"\n", grad->filename);
+  fprintf (file, "Name: \"%s\"\n", grad->name);
+  fprintf (file, "Dirty: %d\n", grad->dirty);
+  fprintf (file, "Filename: \"%s\"\n", grad->filename);
 
-	seg = grad->segments;
+  seg = grad->segments;
 
-	while (seg) {
-		fprintf(file, "%c%p | %f %f %f | %f %f %f %f | %f %f %f %f | %d %d | %p %p\n",
-			(seg == grad->last_visited) ? '>' : ' ',
-			seg,
-			seg->left, seg->middle, seg->right,
-			seg->r0, seg->g0, seg->b0, seg->a0,
-			seg->r1, seg->g1, seg->b1, seg->a1,
-			(int) seg->type,
-			(int) seg->color,
-			seg->prev, seg->next);
+  while (seg)
+    {
+      fprintf (file, "%c%p | %f %f %f | %f %f %f %f | %f %f %f %f | %d %d | %p %p\n",
+	       (seg == grad->last_visited) ? '>' : ' ',
+	       seg,
+	       seg->left, seg->middle, seg->right,
+	       seg->r0, seg->g0, seg->b0, seg->a0,
+	       seg->r1, seg->g1, seg->b1, seg->a1,
+	       (int) seg->type,
+	       (int) seg->color,
+	       seg->prev, seg->next);
 
-		seg = seg->next;
-	} /* while */
-} /* grad_dump_gradient */
-
+      seg = seg->next;
+    }
+}
 
 /***** Segment functions *****/
 
-/*****/
-
 static grad_segment_t *
-seg_new_segment(void)
+seg_new_segment (void)
 {
-	grad_segment_t *seg;
+  grad_segment_t *seg;
 
-	seg = g_malloc(sizeof(grad_segment_t));
+  seg = g_new (grad_segment_t, 1);
 
-	seg->left   = 0.0;
-	seg->middle = 0.5;
-	seg->right  = 1.0;
+  seg->left   = 0.0;
+  seg->middle = 0.5;
+  seg->right  = 1.0;
 
-	seg->r0 = seg->g0 = seg->b0 = 0.0;
-	seg->r1 = seg->g1 = seg->b1 = seg->a0 = seg->a1 = 1.0;
+  seg->r0 = seg->g0 = seg->b0 = 0.0;
+  seg->r1 = seg->g1 = seg->b1 = seg->a0 = seg->a1 = 1.0;
 
-	seg->type  = GRAD_LINEAR;
-	seg->color = GRAD_RGB;
+  seg->type  = GRAD_LINEAR;
+  seg->color = GRAD_RGB;
 
-	seg->prev = seg->next = NULL;
+  seg->prev = seg->next = NULL;
 
-	return seg;
-} /* seg_new_segment */
-
+  return seg;
+}
 
 /*****/
 
 static void
-seg_free_segment(grad_segment_t *seg)
+seg_free_segment (grad_segment_t *seg)
 {
-	g_assert(seg != NULL);
+  g_assert (seg != NULL);
 
-	g_free(seg);
-} /* seg_free_segment */
-
+  g_free (seg);
+}
 
 /*****/
 
 static void
-seg_free_segments(grad_segment_t *seg)
+seg_free_segments (grad_segment_t *seg)
 {
-	grad_segment_t *tmp;
+  grad_segment_t *tmp;
 
-	g_assert(seg != NULL);
+  g_assert (seg != NULL);
 
-	while (seg) {
-		tmp = seg->next;
-		seg_free_segment(seg);
-		seg = tmp;
-	} /* while */
-} /* seg_free_segments */
-
+  while (seg)
+    {
+      tmp = seg->next;
+      seg_free_segment(seg);
+      seg = tmp;
+    }
+}
 
 /*****/
 
 static grad_segment_t *
-seg_get_segment_at(gradient_t *grad, double pos)
+seg_get_segment_at (gradient_t *grad,
+		    double      pos)
 {
-	grad_segment_t *seg;
+  grad_segment_t *seg;
 
-	g_assert(grad != NULL);
+  g_assert(grad != NULL);
 
-	pos = BOUNDS(pos, 0.0, 1.0); /* to handle FP imprecision at the edges of the gradient */
+  /* handle FP imprecision at the edges of the gradient */
+  pos = BOUNDS (pos, 0.0, 1.0);
 
-	if (grad->last_visited)
-		seg = grad->last_visited;
-	else
-		seg = grad->segments;
+  if (grad->last_visited)
+    seg = grad->last_visited;
+  else
+    seg = grad->segments;
 
-	while (seg)
-		if (pos >= seg->left) {
-			if (pos <= seg->right) {
-				grad->last_visited = seg; /* for speed */
-				return seg;
-			} else
-				seg = seg->next;
-		} else
-			seg = seg->prev;
+  while (seg)
+    {
+      if (pos >= seg->left)
+	{
+	  if (pos <= seg->right)
+	    {
+	      grad->last_visited = seg; /* for speed */
+	      return seg;
+	    }
+	  else
+	    {
+	      seg = seg->next;
+	    }
+	}
+      else
+	{
+	  seg = seg->prev;
+	}
+    }
 
-	/* Oops: we should have found a segment, but we didn't */
+  /* Oops: we should have found a segment, but we didn't */
+  grad_dump_gradient (curr_gradient, stderr);
+  gimp_fatal_error (_("seg_get_segment_at(): "
+		      "No matching segment for position %0.15f"), pos);
 
-	grad_dump_gradient(curr_gradient, stderr);
-	gimp_fatal_error (_("seg_get_segment_at(): No matching segment for position %0.15f"), pos);
-	return NULL; /* To shut up -Wall */
-} /* seg_get_segment_at */
-
+  return NULL; /* To shut up -Wall */
+}
 
 /*****/
 
 static grad_segment_t *
-seg_get_last_segment(grad_segment_t *seg)
+seg_get_last_segment (grad_segment_t *seg)
 {
-	if (!seg)
-		return NULL;
+  if (!seg)
+    return NULL;
 
-	while (seg->next)
-		seg = seg->next;
+  while (seg->next)
+    seg = seg->next;
 
-	return seg;
-} /* seg_get_last_segment */
-
+  return seg;
+}
 
 /*****/
 
 static void
-seg_get_closest_handle(gradient_t *grad, double pos,
-		       grad_segment_t **seg, control_drag_mode_t *handle)
+seg_get_closest_handle (gradient_t           *grad,
+			double                pos,
+			grad_segment_t      **seg,
+			control_drag_mode_t  *handle)
 {
-	double l_delta, m_delta, r_delta;
+  double l_delta, m_delta, r_delta;
 
-	*seg = seg_get_segment_at(grad, pos);
+  *seg = seg_get_segment_at (grad, pos);
 
-	m_delta = fabs(pos - (*seg)->middle);
+  m_delta = fabs (pos - (*seg)->middle);
 
-	if (pos < (*seg)->middle) {
-		l_delta = fabs(pos - (*seg)->left);
+  if (pos < (*seg)->middle)
+    {
+      l_delta = fabs (pos - (*seg)->left);
 
-		if (l_delta < m_delta)
-			*handle = GRAD_DRAG_LEFT;
-		else
-			*handle = GRAD_DRAG_MIDDLE;
-	} else {
-		r_delta = fabs(pos - (*seg)->right);
+      if (l_delta < m_delta)
+	*handle = GRAD_DRAG_LEFT;
+      else
+	*handle = GRAD_DRAG_MIDDLE;
+    }
+  else
+    {
+      r_delta = fabs (pos - (*seg)->right);
 
-		if (m_delta < r_delta)
-			*handle = GRAD_DRAG_MIDDLE;
-		else {
-			*seg = (*seg)->next;
-			*handle = GRAD_DRAG_LEFT;
-		} /* else */
-	} /* else */
-} /* seg_get_closest_handle */
-
+      if (m_delta < r_delta)
+	{
+	  *handle = GRAD_DRAG_MIDDLE;
+	}
+      else
+	{
+	  *seg = (*seg)->next;
+	  *handle = GRAD_DRAG_LEFT;
+	}
+    }
+}
 
 /***** Calculation functions *****/
 
-/*****/
-
 static double
-calc_linear_factor(double middle, double pos)
+calc_linear_factor (double middle,
+		    double pos)
 {
-	if (pos <= middle) {
-		if (middle < EPSILON)
-			return 0.0;
-		else
-			return 0.5 * pos / middle;
-	} else {
-		pos -= middle;
-		middle = 1.0 - middle;
+  if (pos <= middle)
+    {
+      if (middle < EPSILON)
+	return 0.0;
+      else
+	return 0.5 * pos / middle;
+    }
+  else
+    {
+      pos -= middle;
+      middle = 1.0 - middle;
 
-		if (middle < EPSILON)
-			return 1.0;
-		else
-			return 0.5 + 0.5 * pos / middle;
-	} /* else */
-} /* calc_linear_factor */
-
-
-/*****/
-
-static double
-calc_curved_factor(double middle, double pos)
-{
-	if (middle < EPSILON)
-		middle = EPSILON;
-
-	return pow(pos, log(0.5) / log(middle));
-} /* calc_curved_factor */
-
+      if (middle < EPSILON)
+	return 1.0;
+      else
+	return 0.5 + 0.5 * pos / middle;
+    }
+}
 
 /*****/
 
 static double
-calc_sine_factor(double middle, double pos)
+calc_curved_factor (double middle,
+		    double pos)
 {
-	pos = calc_linear_factor(middle, pos);
+  if (middle < EPSILON)
+    middle = EPSILON;
 
-	return (sin((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
-} /* calc_sine_factor */
-
+  return pow(pos, log (0.5) / log (middle));
+}
 
 /*****/
 
 static double
-calc_sphere_increasing_factor(double middle, double pos)
+calc_sine_factor (double middle,
+		  double pos)
 {
-	pos = calc_linear_factor(middle, pos) - 1.0;
+  pos = calc_linear_factor (middle, pos);
 
-	return sqrt(1.0 - pos * pos); /* Works for convex increasing and concave decreasing */
-} /* calc_sphere_increasing_factor */
-
+  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
+}
 
 /*****/
 
 static double
-calc_sphere_decreasing_factor(double middle, double pos)
+calc_sphere_increasing_factor (double middle,
+			       double pos)
 {
-	pos = calc_linear_factor(middle, pos);
+  pos = calc_linear_factor (middle, pos) - 1.0;
 
-	return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
-} /* calc_sphere_decreasing_factor */
+  return sqrt (1.0 - pos * pos); /* Works for convex increasing and concave decreasing */
+}
 
+/*****/
+
+static double
+calc_sphere_decreasing_factor (double middle,
+			       double pos)
+{
+  pos = calc_linear_factor (middle, pos);
+
+  return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
+}
 
 /*****/
 
 static void
-calc_rgb_to_hsv(double *r, double *g, double *b)
+calc_rgb_to_hsv (double *r,
+		 double *g,
+		 double *b)
 {
-	double red, green, blue;
-	double h, s, v;
-	double min, max;
-	double delta;
+  double red, green, blue;
+  double h, s, v;
+  double min, max;
+  double delta;
 
-	red   = *r;
-	green = *g;
-	blue  = *b;
+  red   = *r;
+  green = *g;
+  blue  = *b;
 
-	h = 0.0; /* Shut up -Wall */
+  h = 0.0; /* Shut up -Wall */
 
-	if (red > green) {
-		if (red > blue)
-			max = red;
-		else
-			max = blue;
+  if (red > green)
+    {
+      if (red > blue)
+	max = red;
+      else
+	max = blue;
 
-		if (green < blue)
-			min = green;
-		else
-			min = blue;
-	} else {
-		if (green > blue)
-			max = green;
-		else
-			max = blue;
+      if (green < blue)
+	min = green;
+      else
+	min = blue;
+    }
+  else
+    {
+      if (green > blue)
+	max = green;
+      else
+	max = blue;
 
-		if (red < blue)
-			min = red;
-		else
-			min = blue;
-	} /* else */
+      if (red < blue)
+	min = red;
+      else
+	min = blue;
+    }
 
-	v = max;
+  v = max;
 
-	if (max != 0.0)
-		s = (max - min) / max;
-	else
-		s = 0.0;
+  if (max != 0.0)
+    s = (max - min) / max;
+  else
+    s = 0.0;
 
-	if (s == 0.0)
-		h = 0.0;
-	else {
-		delta = max - min;
+  if (s == 0.0)
+    {
+      h = 0.0;
+    }
+  else
+    {
+      delta = max - min;
 
-		if (red == max)
-			h = (green - blue) / delta;
-		else if (green == max)
-			h = 2 + (blue - red) / delta;
-		else if (blue == max)
-			h = 4 + (red - green) / delta;
+      if (red == max)
+	h = (green - blue) / delta;
+      else if (green == max)
+	h = 2 + (blue - red) / delta;
+      else if (blue == max)
+	h = 4 + (red - green) / delta;
 
-		h /= 6.0;
+      h /= 6.0;
 
-		if (h < 0.0)
-			h += 1.0;
-		else if (h > 1.0)
-			h -= 1.0;
-	} /* else */
+      if (h < 0.0)
+	h += 1.0;
+      else if (h > 1.0)
+	h -= 1.0;
+    }
 
-	*r = h;
-	*g = s;
-	*b = v;
-} /* calc_rgb_to_hsv */
-
+  *r = h;
+  *g = s;
+  *b = v;
+}
 
 /*****/
 
 static void
-calc_hsv_to_rgb(double *h, double *s, double *v)
+calc_hsv_to_rgb (double *h,
+		 double *s,
+		 double *v)
 {
-	double hue, saturation, value;
-	double f, p, q, t;
+  double hue, saturation, value;
+  double f, p, q, t;
 
-	if (*s == 0.0) {
-		*h = *v;
-		*s = *v;
-		*v = *v; /* heh */
-	} else {
-		hue        = *h * 6.0;
-		saturation = *s;
-		value      = *v;
+  if (*s == 0.0)
+    {
+      *h = *v;
+      *s = *v;
+      *v = *v; /* heh */
+    }
+  else
+    {
+      hue        = *h * 6.0;
+      saturation = *s;
+      value      = *v;
 
-		if (hue == 6.0)
-			hue = 0.0;
+      if (hue == 6.0)
+	hue = 0.0;
 
-		f = hue - (int) hue;
-		p = value * (1.0 - saturation);
-		q = value * (1.0 - saturation * f);
-		t = value * (1.0 - saturation * (1.0 - f));
+      f = hue - (int) hue;
+      p = value * (1.0 - saturation);
+      q = value * (1.0 - saturation * f);
+      t = value * (1.0 - saturation * (1.0 - f));
 
-		switch ((int) hue) {
-			case 0:
-				*h = value;
-				*s = t;
-				*v = p;
-				break;
+      switch ((int) hue)
+	{
+	case 0:
+	  *h = value;
+	  *s = t;
+	  *v = p;
+	  break;
 
-			case 1:
-				*h = q;
-				*s = value;
-				*v = p;
-				break;
+	case 1:
+	  *h = q;
+	  *s = value;
+	  *v = p;
+	  break;
 
-			case 2:
-				*h = p;
-				*s = value;
-				*v = t;
-				break;
+	case 2:
+	  *h = p;
+	  *s = value;
+	  *v = t;
+	  break;
 
-			case 3:
-				*h = p;
-				*s = q;
-				*v = value;
-				break;
+	case 3:
+	  *h = p;
+	  *s = q;
+	  *v = value;
+	  break;
 
-			case 4:
-				*h = t;
-				*s = p;
-				*v = value;
-				break;
+	case 4:
+	  *h = t;
+	  *s = p;
+	  *v = value;
+	  break;
 
-			case 5:
-				*h = value;
-				*s = p;
-				*v = q;
-				break;
-		} /* switch */
-	} /* else */
-} /* calc_hsv_to_rgb */
-
+	case 5:
+	  *h = value;
+	  *s = p;
+	  *v = q;
+	  break;
+	}
+    }
+}
 
 /***** Files and paths functions *****/
-
-/*****/
 
 static gchar *
 build_user_filename (gchar *name,

@@ -19,8 +19,8 @@
 #include "config.h"
 #include "appenv.h"
 #include "resize.h"
-#include "actionarea.h"
 #include "gimprc.h"
+#include "gimpui.h"
 
 #include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimplimits.h"
@@ -91,9 +91,6 @@ resize_widget_new (ResizeType    type,
 		   gboolean      dot_for_dot,
 		   GtkSignalFunc ok_cb,
 		   GtkSignalFunc cancel_cb,
-		   gint        (*delete_cb) (GtkWidget *,
-					     GdkEvent *,
-					     gpointer),
 		   gpointer      user_data)
 {
   Resize *resize;
@@ -109,12 +106,6 @@ resize_widget_new (ResizeType    type,
   GtkWidget *spinbutton;
   GtkWidget *alignment;
   GtkObject *adjustment;
-
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), NULL, NULL, NULL },
-    { N_("Cancel"), NULL, NULL, NULL }
-  };
 
   alignment = NULL;
   frame = NULL;
@@ -149,51 +140,61 @@ resize_widget_new (ResizeType    type,
 
   /*  dialog box  */
   {
-    const char *wmclass = NULL;
-    const char *window_title = NULL;
+    const gchar *wmclass = NULL;
+    const gchar *window_title = NULL;
+    gchar *help_page = NULL;
 
-    switch (type) {
-    case ScaleWidget:
-	switch (target) {
-	case ResizeLayer:
+    switch (type)
+      {
+      case ScaleWidget:
+	switch (target)
+	  {
+	  case ResizeLayer:
 	    wmclass = "scale_layer";
 	    window_title = _("Scale Layer");
+	    help_page = "dialogs/scale_layer_dialog.html";
 	    frame = gtk_frame_new (_("Size"));
 	    break;
-	case ResizeImage:
+	  case ResizeImage:
 	    wmclass = "image_scale";
 	    window_title = _("Image Scale");
+	    help_page = "dialogs/scale_image_dialog.html";
 	    frame = gtk_frame_new (_("Pixel Dimensions"));
 	    break;
-	}
+	  }
 	break;
 
-    case ResizeWidget:
-	switch (target) {
-	case ResizeLayer:
+      case ResizeWidget:
+	switch (target)
+	  {
+	  case ResizeLayer:
 	    wmclass = "resize_layer";
 	    window_title = _("Resize Layer");
+	    help_page = "dialogs/resize_layer_dialog.html";
 	    break;
-	case ResizeImage:
+	  case ResizeImage:
 	    wmclass = "image_resize";
 	    window_title = _("Image Resize");
+	    help_page = "dialogs/resize_image_dialog.html";
 	    break;
-	}
+	  }
 	frame = gtk_frame_new (_("Size"));
 	break;
-    }	
+      }	
 
-    resize->resize_shell = gtk_dialog_new ();
-    gtk_window_set_wmclass (GTK_WINDOW (resize->resize_shell), wmclass,"Gimp");
-    gtk_window_set_title (GTK_WINDOW (resize->resize_shell), window_title);
-    gtk_window_set_policy(GTK_WINDOW (resize->resize_shell), FALSE,FALSE,TRUE);
-    gtk_window_position (GTK_WINDOW (resize->resize_shell), GTK_WIN_POS_MOUSE);
+    resize->resize_shell =
+      gimp_dialog_new (window_title, wmclass,
+		       gimp_standard_help_func, help_page,
+		       GTK_WIN_POS_MOUSE,
+		       FALSE, FALSE, TRUE,
+
+		       _("OK"), ok_cb,
+		       user_data, NULL, TRUE, FALSE,
+		       _("Cancel"), cancel_cb,
+		       user_data, NULL, FALSE, TRUE,
+		       
+		       NULL);
   }
-
-  /*  handle the wm close singal  */
-  if (delete_cb)
-    gtk_signal_connect (GTK_OBJECT (resize->resize_shell), "delete_event",
-			GTK_SIGNAL_FUNC (delete_cb), user_data);
 
   /*  handle the image disappearing under our feet  */
   if (object)
@@ -203,15 +204,8 @@ resize_widget_new (ResizeType    type,
       signame = (target == ResizeLayer) ? "removed" : "destroy";
       private->object = object;
       private->object_destroy_handler =
-	gtk_signal_connect(GTK_OBJECT (object), signame, cancel_cb, user_data);
+	gtk_signal_connect (GTK_OBJECT (object), signame, cancel_cb, user_data);
     }
-
-  /*  the action area  */
-  action_items[0].user_data = user_data;
-  action_items[0].callback  = ok_cb;
-  action_items[1].user_data = user_data;
-  action_items[1].callback  = cancel_cb;
-  build_action_area (GTK_DIALOG (resize->resize_shell), action_items, 2, 0);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 4);

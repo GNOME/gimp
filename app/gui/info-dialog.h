@@ -18,7 +18,9 @@
 #ifndef __INFO_DIALOG_H__
 #define __INFO_DIALOG_H__
 
-#include "gtk/gtk.h"
+#include <gtk/gtk.h>
+
+#include "gimphelp.h"
 
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpunit.h"
@@ -61,8 +63,12 @@ struct _InfoDialog
 
 /*  Info Dialog functions  */
 
-InfoDialog *info_dialog_new            (gchar           *title);
-InfoDialog *info_dialog_notebook_new   (gchar           *title);
+InfoDialog *info_dialog_new            (gchar           *title,
+					GimpHelpFunc     help_func,
+					gpointer         help_data);
+InfoDialog *info_dialog_notebook_new   (gchar           *title,
+					GimpHelpFunc     help_func,
+					gpointer         help_data);
 void        info_dialog_free           (InfoDialog      *idialog);
 
 void        info_dialog_popup          (InfoDialog      *idialog);

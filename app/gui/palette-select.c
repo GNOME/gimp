@@ -16,7 +16,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -27,13 +26,13 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include "actionarea.h"
 #include "colormaps.h"
 #include "color_area.h"
 #include "color_select.h"
 #include "datafiles.h"
 #include "errors.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "palette.h"
 #include "palette_entries.h"
@@ -48,12 +47,6 @@ static GSList *active_dialogs = NULL;
 /*  local function prototypes  */
 static void   palette_select_close_callback (GtkWidget *, gpointer);
 static void   palette_select_edit_callback  (GtkWidget *, gpointer);
-
-static ActionAreaItem action_items[] =
-{
-  { N_("Edit"), palette_select_edit_callback, NULL, NULL },
-  { N_("Close"), palette_select_close_callback, NULL, NULL }
-};
 
 void
 palette_select_set_text_all (PaletteEntriesP entries)
@@ -219,16 +212,6 @@ palette_select_close_callback (GtkWidget *widget,
 /*     } */
 }
 
-static gint
-palette_select_delete_callback (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   client_data)
-{
-  palette_select_close_callback (widget, client_data);
-
-  return TRUE;
-}
-
 PaletteSelectP
 palette_new_selection (gchar *title,
 		       gchar *initial_palette)
@@ -244,29 +227,33 @@ palette_new_selection (gchar *title,
 
   palette_select_palette_init ();
 
-  psp = g_malloc (sizeof (struct _PaletteSelect));
+  psp = g_new (struct _PaletteSelect, 1);
   psp->callback_name = NULL;
   
   /*  The shell and main vbox  */
-  psp->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "paletteselection", "Gimp");
-  
-  gtk_window_set_policy (GTK_WINDOW (psp->shell), FALSE, TRUE, FALSE);
+  psp->shell = gimp_dialog_new (title ? title : _("Palette Selection"),
+				"palette_selection",
+				gimp_standard_help_func,
+				"dialogs/palette_selection_dialog.html",
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
+
+				_("Edit"), palette_select_edit_callback,
+				psp, NULL, TRUE, FALSE,
+				_("Close"), palette_select_close_callback,
+				psp, NULL, FALSE, TRUE,
+
+				NULL);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (psp->shell)->vbox), vbox, TRUE, TRUE, 0);
-
-  /* handle the wm close event */
-  gtk_signal_connect (GTK_OBJECT (psp->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (palette_select_delete_callback),
-		      psp);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), vbox);
 
   /* clist preview of gradients */
   scrolled_win = gtk_scrolled_window_new (NULL, NULL);
 
   psp->clist = gtk_clist_new (3);
-  gtk_clist_set_shadow_type (GTK_CLIST(psp->clist), GTK_SHADOW_IN);
+  gtk_clist_set_shadow_type (GTK_CLIST (psp->clist), GTK_SHADOW_IN);
 
   gtk_clist_set_row_height (GTK_CLIST (psp->clist), SM_PREVIEW_HEIGHT + 2);
 
@@ -275,10 +262,9 @@ palette_new_selection (gchar *title,
   gtk_clist_set_column_title (GTK_CLIST (psp->clist), 1, _("Ncols"));
   gtk_clist_set_column_title (GTK_CLIST (psp->clist), 2, _("Name"));
   gtk_clist_column_titles_show (GTK_CLIST(psp->clist));
-  gtk_clist_set_column_width (GTK_CLIST (psp->clist), 0, SM_PREVIEW_WIDTH+2);
+  gtk_clist_set_column_width (GTK_CLIST (psp->clist), 0, SM_PREVIEW_WIDTH + 2);
 
   hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -294,19 +280,6 @@ palette_new_selection (gchar *title,
 /*   gtk_signal_connect(GTK_OBJECT(gsp->clist), "select_row", */
 /* 		     GTK_SIGNAL_FUNC(sel_list_item_update), */
 /* 		     (gpointer) gsp); */
-
-  action_items[0].user_data = psp;
-  action_items[1].user_data = psp;
-  build_action_area (GTK_DIALOG (psp->shell), action_items, 2, 0);
-
-  if (!title)
-    {
-      gtk_window_set_title (GTK_WINDOW (psp->shell), _("Palette Selection"));
-    }
-  else
-    {
-      gtk_window_set_title (GTK_WINDOW (psp->shell), title);
-    }
 
   select_pos = -1;
   if (initial_palette && strlen (initial_palette))

@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <stdlib.h>
@@ -29,6 +28,7 @@
 #include "info_window.h"
 #include "gdisplay.h"
 #include "gimprc.h"
+#include "gimphelp.h"
 #include "gximage.h"
 #include "interface.h"
 #include "scroll.h"
@@ -1144,19 +1144,21 @@ nav_window_create (void *gdisp_ptr)
 
   /*  create the info dialog  */
   title_buf = g_strdup_printf (_("%s: Window Navigation"), title);
-  info_win = info_dialog_new (title_buf);
-  dialog_register(info_win->shell);
+  info_win = info_dialog_new (title_buf,
+			      gimp_standard_help_func,
+			      "dialogs/navigation_window.html");
+  dialog_register (info_win->shell);
   gtk_signal_connect (GTK_OBJECT (info_win->shell), "destroy",
 		      (GtkSignalFunc) nav_window_destroy_callback,
 		      info_win);
   g_free (title_buf);
-  
-  iwd = create_dummy_iwd(gdisp_ptr,NAV_WINDOW);
+
+  iwd = create_dummy_iwd (gdisp_ptr, NAV_WINDOW);
   info_win->user_data = iwd;
   iwd->info_win = info_win;
 
   /* Add preview */
-  container = info_window_image_preview_new(info_win);
+  container = info_window_image_preview_new (info_win);
   gtk_table_attach_defaults (GTK_TABLE (info_win->info_table), container, 
  			     0, 2, 0, 1); 
   /* Create the action area  */

@@ -23,7 +23,6 @@
 #endif
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "brush_scale.h"
 #include "gimpbrushgenerated.h"
 #include "gimpbrushlist.h"
@@ -32,6 +31,7 @@
 #include "gimpcontext.h"
 #include "gimplist.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "brush_edit.h"
 #include "brush_select.h"
 #include "colormaps.h"
@@ -140,11 +140,9 @@ static void paint_mode_menu_callback      (GtkWidget *, gpointer);
 static gint brush_select_events           (GtkWidget *, GdkEvent *, BrushSelectP);
 static gint brush_select_resize		  (GtkWidget *, GdkEvent *, BrushSelectP);
 
-static gint brush_select_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 static void preview_scroll_update         (GtkAdjustment *, gpointer);
 static void opacity_scale_update          (GtkAdjustment *, gpointer);
 static void spacing_scale_update          (GtkAdjustment *, gpointer);
-
 
 /*  local variables  */
 
@@ -153,7 +151,6 @@ GSList *brush_active_dialogs = NULL;
 
 /*  Brush editor dialog (main brush dialog only)  */
 static BrushEditGeneratedWindow *brush_edit_generated_dialog;
-
 
 /*  If title == NULL then it is the main brush dialog  */
 BrushSelectP
@@ -184,13 +181,7 @@ brush_select_new (gchar   *title,
   GimpBrushP active = NULL;
   gint gotinitbrush = FALSE;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Refresh"), brush_select_refresh_callback, NULL, NULL },
-    { N_("Close"), brush_select_close_callback, NULL, NULL }
-  };
-
-  bsp = g_malloc (sizeof (_BrushSelect));
+  bsp = g_new (_BrushSelect, 1);
   bsp->redraw = TRUE;
   bsp->scroll_offset = 0;
   bsp->callback_name = 0;
@@ -205,35 +196,42 @@ brush_select_new (gchar   *title,
   bsp->freeze = FALSE;
 
   /*  The shell and main vbox  */
-  bsp->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (bsp->shell), "brushselection", "Gimp");
-
-  if (!title)
+  if (title)
     {
-      gtk_window_set_title (GTK_WINDOW (bsp->shell), _("Brush Selection"));
+      bsp->shell = gimp_dialog_new (title, "brush_selection",
+				    gimp_standard_help_func,
+				    "dialogs/brush_selection_dialog.html",
+				    GTK_WIN_POS_NONE,
+				    FALSE, TRUE, FALSE,
 
-      /*  set dialog's size later because weird thing will happen if the
-       *  size was not saved in the current paint options mode
-       */
-      session_set_window_geometry (bsp->shell, &brush_select_session_info,
-				   FALSE);
-    }
-  else
-    {
-      gtk_window_set_title (GTK_WINDOW (bsp->shell), title);
+				    _("Close"), brush_select_close_callback,
+				    bsp, NULL, TRUE, TRUE,
+
+				    NULL);
 
       if (init_name && strlen (init_name))
 	active = gimp_brush_list_get_brush (brush_list, init_name);
       if (active)
 	gotinitbrush = TRUE;
     }
+  else
+    {
+      bsp->shell = gimp_dialog_new (_("Brush Selection"), "brush_selection",
+				    gimp_standard_help_func,
+				    "dialogs/brush_selection_dialog.html",
+				    GTK_WIN_POS_NONE,
+				    FALSE, TRUE, FALSE,
 
-  gtk_window_set_policy (GTK_WINDOW (bsp->shell), FALSE, TRUE, FALSE);
+				    _("Refresh"), brush_select_refresh_callback,
+				    bsp, NULL, FALSE, FALSE,
+				    _("Close"), brush_select_close_callback,
+				    bsp, NULL, TRUE, TRUE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (bsp->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (brush_select_delete_callback),
-		      bsp);
+				    NULL);
+
+      session_set_window_geometry (bsp->shell, &brush_select_session_info,
+				   FALSE);
+    }
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
@@ -425,14 +423,6 @@ brush_select_new (gchar   *title,
 
   gtk_widget_show (table);
 
-  /*  The action area  */
-  action_items[0].user_data = bsp;
-  action_items[1].user_data = bsp;
-  if (title)
-    build_action_area (GTK_DIALOG (bsp->shell), &action_items[1], 1, 0);
-  else
-    build_action_area (GTK_DIALOG (bsp->shell), action_items, 2, 1);
-
   gtk_widget_show (bsp->options_box);
   gtk_widget_show (hbox);
   gtk_widget_show (vbox);
@@ -447,7 +437,7 @@ brush_select_new (gchar   *title,
   display_brushes (bsp);
 
   /*  Only for main dialog  */
-  if(!title)
+  if (!title)
     {
       /*  add callbacks to keep the display area current  */
       gimp_list_foreach (GIMP_LIST (brush_list),
@@ -514,7 +504,6 @@ brush_select_new (gchar   *title,
   return bsp;
 }
 
-
 void
 brush_select_select (BrushSelectP bsp,
 		     GimpBrushP   brush)
@@ -545,7 +534,6 @@ brush_select_select (BrushSelectP bsp,
 
   brush_select_show_selected (bsp, row, col);
 }
-
 
 void
 brush_select_free (BrushSelectP bsp)
@@ -838,7 +826,6 @@ typedef struct {
   GimpBrushP     brush;
 } popup_timeout_args_t;
 
-
 static gint
 brush_popup_anim_timeout (gpointer data)
 {
@@ -1104,7 +1091,6 @@ display_brush (BrushSelectP bsp,
     }
 }
 
-
 static void
 display_setup (BrushSelectP bsp)
 {
@@ -1155,7 +1141,6 @@ display_brushes (BrushSelectP bsp)
   brush_counter = 0;
   gimp_list_foreach (GIMP_LIST (brush_list), (GFunc) do_display_brush, bsp);
 }
-
 
 static void
 brush_select_show_selected (BrushSelectP bsp,
@@ -1245,7 +1230,6 @@ brush_select_show_selected (BrushSelectP bsp,
 
   g_free (buf);
 }
-
 
 static void
 preview_calc_scrollbar (BrushSelectP bsp)
@@ -1342,7 +1326,6 @@ update_active_brush_field (BrushSelectP bsp)
 
   gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
 }
-
 
 static void
 edit_active_brush ()
@@ -1508,56 +1491,47 @@ brush_select_events (GtkWidget    *widget,
 }
 
 static gint
-edit_brush_callback (GtkWidget *w,
-		     GdkEvent  *e,
+edit_brush_callback (GtkWidget *widget,
+		     GdkEvent  *event,
 		     gpointer   data)
 {
-  edit_active_brush();
+  edit_active_brush ();
   return TRUE;
 }
 
 static gint
-delete_brush_callback (GtkWidget *w,
-		       GdkEvent  *e,
+delete_brush_callback (GtkWidget *widget,
+		       GdkEvent  *event,
 		       gpointer   data)
 {
-  delete_active_brush(data);
+  delete_active_brush (data);
   return TRUE;
 }
 
 static gint
-new_brush_callback (GtkWidget *w,
-		    GdkEvent  *e,
+new_brush_callback (GtkWidget *widget,
+		    GdkEvent  *event,
 		    gpointer   data)
 {
   GimpBrushGenerated *brush;
+
   brush = gimp_brush_generated_new (10, .5, 0.0, 1.0);
-  gimp_brush_list_add(brush_list, GIMP_BRUSH (brush));
+  gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
   select_brush (GIMP_BRUSH (brush));
   if (brush_edit_generated_dialog)
     brush_edit_generated_set_brush (brush_edit_generated_dialog,
-				    get_active_brush());
-  edit_brush_callback (w, e, data);
-  return TRUE;
-}
-
-static gint
-brush_select_delete_callback (GtkWidget *w,
-			      GdkEvent  *e,
-			      gpointer   data)
-{
-  brush_select_close_callback (w, data);
-
+				    get_active_brush ());
+  edit_brush_callback (widget, event, data);
   return TRUE;
 }
 
 static void
-brush_select_close_callback (GtkWidget *w, /* Unused so can be NULL */
-			     gpointer   client_data)
+brush_select_close_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   BrushSelectP bsp;
 
-  bsp = (BrushSelectP) client_data;
+  bsp = (BrushSelectP) data;
 
   if (GTK_WIDGET_VISIBLE (bsp->shell))
     gtk_widget_hide (bsp->shell);
@@ -1572,15 +1546,14 @@ brush_select_close_callback (GtkWidget *w, /* Unused so can be NULL */
     }
 }
 
-
 static void
-brush_select_refresh_callback (GtkWidget *w,
-			       gpointer   client_data)
+brush_select_refresh_callback (GtkWidget *widget,
+			       gpointer   data)
 {
   BrushSelectP bsp;
   GimpBrushP active;
 
-  bsp = (BrushSelectP) client_data;
+  bsp = (BrushSelectP) data;
 
   /*  re-init the brush list  */
   bsp->freeze = TRUE;
@@ -1608,7 +1581,6 @@ brush_select_refresh_callback (GtkWidget *w,
     gtk_widget_draw (bsp->preview, NULL);
 }
 
-
 static void
 preview_scroll_update (GtkAdjustment *adjustment,
 		       gpointer       data)
@@ -1617,7 +1589,7 @@ preview_scroll_update (GtkAdjustment *adjustment,
   GimpBrushP active;
   int row, col, index;
 
-  bsp = data;
+  bsp = (BrushSelectP) data;
 
   if (bsp)
     {
@@ -1645,23 +1617,24 @@ preview_scroll_update (GtkAdjustment *adjustment,
 }
 
 static void
-paint_mode_menu_callback (GtkWidget *w,
-			  gpointer   client_data)
+paint_mode_menu_callback (GtkWidget *widget,
+			  gpointer   data)
 {
-  BrushSelectP bsp = (BrushSelectP) gtk_object_get_user_data (GTK_OBJECT (w));
+  BrushSelectP bsp;
   
+  bsp = (BrushSelectP) gtk_object_get_user_data (GTK_OBJECT (widget));
+
   if (bsp == brush_select_dialog)
     {
       gimp_context_set_paint_mode (gimp_context_get_user (),
-				   (int) client_data);
+				   (int) data);
     }
   else
     {
-      bsp->paint_mode = (int) client_data;
+      bsp->paint_mode = (int) data;
       brush_change_callbacks (bsp, 0);
     }
 }
-
 
 static void
 opacity_scale_update (GtkAdjustment *adjustment,

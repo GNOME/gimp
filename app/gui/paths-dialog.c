@@ -27,7 +27,6 @@
 
 #include "appenv.h"
 #include "draw_core.h"
-#include "actionarea.h"
 #include "colormaps.h"
 #include "drawable.h"
 #include "errors.h"
@@ -39,7 +38,7 @@
 #include "gdisplay.h"
 #include "gimprc.h"
 #include "gimpset.h"
-#include "general.h"
+#include "gimpui.h"
 #include "image_render.h"
 #include "interface.h"
 #include "lc_dialogP.h"
@@ -50,7 +49,6 @@
 #include "pathsP.h"
 #include "paths_dialog.h"
 #include "paths_dialogP.h"
-#include "resize.h"
 #include "session.h"
 #include "undo.h"
 
@@ -1216,6 +1214,7 @@ do_rename_paths_callback(GtkWidget *widget, gpointer call_data, gpointer client_
 static void
 paths_dialog_edit_path_query (GtkWidget *widget)
 {
+  GtkWidget *qbox;
   GdkBitmap *mask;
   gchar *text;
   gint   ret;
@@ -1229,11 +1228,14 @@ paths_dialog_edit_path_query (GtkWidget *widget)
 			       NULL,
 			       &mask);
 
-  gtk_widget_show (query_string_box (_("Rename path"),
-				     _("Enter a new name for the path"),
-				     text,
-				     NULL, NULL,
-				     do_rename_paths_callback, widget));
+  qbox = gimp_query_string_box (_("Rename path"),
+				gimp_standard_help_func,
+				"dialogs/paths_dialog.html",
+				_("Enter a new name for the path"),
+				text,
+				NULL, NULL,
+				do_rename_paths_callback, widget);
+  gtk_widget_show (qbox);
 }
 
 static gint
@@ -1275,7 +1277,7 @@ paths_list_events (GtkWidget *widget,
 	{
 	  if(this_colunm == 1)
 	    {
-	      paths_dialog_edit_path_query(widget);
+	      paths_dialog_edit_path_query (widget);
 	      return TRUE;
 	    }
 	  else

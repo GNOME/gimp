@@ -17,7 +17,6 @@
  */
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
-#include "actionarea.h"
 #include "channels_dialog.h"
 #include "colormaps.h"
 #include "color_panel.h"
@@ -28,6 +27,7 @@
 #include "gimage_mask.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "layers_dialogP.h"
 #include "lc_dialogP.h"
@@ -2363,16 +2363,6 @@ new_channel_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-new_channel_query_delete_callback (GtkWidget *widget,
-				   GdkEvent  *event,
-				   gpointer   data)
-{
-  new_channel_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 new_channel_query_scale_update (GtkAdjustment *adjustment,
 				gdouble       *scale_val)
@@ -2391,12 +2381,6 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), new_channel_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), new_channel_query_cancel_callback, NULL, NULL }
-  };
-
   /*  the new options structure  */
   options = g_new (NewChannelOptions, 1);
   options->gimage      = gimage;
@@ -2404,17 +2388,19 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   options->color_panel = color_panel_new (channel_color, 48, 64);
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
-			  "new_channel_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box),
-			_("New Channel Options"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("New Channel Options"), "new_channel_options",
+		     gimp_standard_help_func,
+		     "dialogs/channels_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (new_channel_query_delete_callback),
-		      options);
+		     _("OK"), new_channel_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), new_channel_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -2468,11 +2454,6 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel->color_panel_widget,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel->color_panel_widget);
-
-  /*  The action area  */
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 1);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);
@@ -2558,16 +2539,6 @@ edit_channel_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-edit_channel_query_delete_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data)
-{
-  edit_channel_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
 {
@@ -2580,12 +2551,6 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   GtkObject *opacity_scale_data;
   gint i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), edit_channel_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), edit_channel_query_cancel_callback, NULL, NULL }
-  };
-
   /*  the new options structure  */
   options = g_new (EditChannelOptions, 1);
   options->channel_widget = channel_widget;
@@ -2597,17 +2562,19 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->color_panel = color_panel_new (channel_color, 48, 64);
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
-			  "edit_channel_atributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box),
-			_("Edit Channel Attributes"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Edit Channel Attributes"), "edit_channel_attributes",
+		     gimp_standard_help_func,
+		     "dialogs/channels_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (edit_channel_query_delete_callback),
-		      options);
+		     _("OK"), edit_channel_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), edit_channel_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
@@ -2660,11 +2627,6 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel->color_panel_widget,
 		      TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel->color_panel_widget);
-
-  /*  The action area  */
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
 
   gtk_widget_show (table);
   gtk_widget_show (vbox);

@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gdk/gdkkeysyms.h"
-#include "actionarea.h"
 #include "appenv.h"
 #include "buildmenu.h"
 #include "colormaps.h"
@@ -30,6 +29,7 @@
 #include "gimage_mask.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "image_render.h"
 #include "interface.h"
 #include "layers_dialog.h"
@@ -3256,16 +3256,6 @@ new_layer_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-new_layer_query_delete_callback (GtkWidget *widget,
-				 GdkEvent  *event,
-				 gpointer   data)
-{
-  new_layer_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 new_layer_query_fill_type_callback (GtkWidget *widget,
 				    gpointer   data)
@@ -3293,11 +3283,6 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GSList *group;
   gint    i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), new_layer_query_cancel_callback, NULL, NULL }
-  };
   static gchar *button_names[] =
   {
     N_("Foreground"),
@@ -3313,16 +3298,19 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   options->gimage    = gimage;
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
-			  "new_layer_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Layer Options"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("New Layer Options"), "new_layer_options",
+		     gimp_standard_help_func,
+		     "dialogs/layers_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (new_layer_query_delete_callback),
-		      options);
+		     _("OK"), new_layer_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), new_layer_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -3439,10 +3427,6 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
-
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
@@ -3506,16 +3490,6 @@ edit_layer_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-edit_layer_query_delete_callback (GtkWidget *widget,
-				  GdkEvent  *event,
-				  gpointer   data)
-{
-  edit_layer_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 {
@@ -3524,29 +3498,25 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   GtkWidget *hbox;
   GtkWidget *label;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), edit_layer_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), edit_layer_query_cancel_callback, NULL, NULL }
-  };
-
   /*  The new options structure  */
   options = g_new (EditLayerOptions, 1);
   options->layer  = layer_widget->layer;
   options->gimage = layer_widget->gimage;
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
-			  "edit_layer_attrributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box),
-			_("Edit Layer Attributes"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Edit Layer Attributes"), "edit_layer_attributes",
+		     gimp_standard_help_func,
+		     "dialogs/layers_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (edit_layer_query_delete_callback),
-		      options);
+		     _("OK"), edit_layer_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), edit_layer_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -3571,10 +3541,6 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   gtk_widget_show (options->name_entry);
 
   gtk_widget_show (hbox);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -3626,16 +3592,6 @@ add_mask_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-add_mask_query_delete_callback (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   data)
-{
-  add_mask_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 add_mask_query_fill_type_callback (GtkWidget *widget,
 				   gpointer   data)
@@ -3659,11 +3615,6 @@ layers_dialog_add_mask_query (Layer *layer)
   GSList *group = NULL;
   gint    i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), add_mask_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), add_mask_query_cancel_callback, NULL, NULL }
-  };
   static gchar *button_names[] =
   {
     N_("White (Full Opacity)"),
@@ -3678,15 +3629,19 @@ layers_dialog_add_mask_query (Layer *layer)
   options->add_mask_type = ADD_WHITE_MASK;
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "add_mask_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Add Mask Options"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Add Mask Options"), "add_mask_options",
+		     gimp_standard_help_func,
+		     "dialogs/layers_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (add_mask_query_delete_callback),
-		      options);
+		     _("OK"), add_mask_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), add_mask_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -3718,10 +3673,6 @@ layers_dialog_add_mask_query (Layer *layer)
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -3778,16 +3729,6 @@ apply_mask_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-apply_mask_query_delete_callback (GtkWidget *widget,
-				  GdkEvent  *event,
-				  gpointer   data)
-{
-  apply_mask_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 layers_dialog_apply_mask_query (Layer *layer)
 {
@@ -3795,27 +3736,26 @@ layers_dialog_apply_mask_query (Layer *layer)
   GtkWidget *vbox;
   GtkWidget *label;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Apply"), apply_mask_query_apply_callback, NULL, NULL },
-    { N_("Discard"), apply_mask_query_discard_callback, NULL, NULL },
-    { N_("Cancel"), apply_mask_query_cancel_callback, NULL, NULL }
-  };
-
   /*  The new options structure  */
   options = g_new (ApplyMaskOptions, 1);
   options->layer = layer;
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_mask_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Mask Options"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Layer Mask Options"), "layer_mask_options",
+		     gimp_standard_help_func,
+		     "dialogs/layers_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (apply_mask_query_delete_callback),
-		      options);
+		     _("Apply"), apply_mask_query_apply_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Discard"), apply_mask_query_discard_callback,
+		     options, NULL, FALSE, FALSE,
+		     _("Cancel"), apply_mask_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -3827,11 +3767,6 @@ layers_dialog_apply_mask_query (Layer *layer)
   label = gtk_label_new (_("Apply layer mask?"));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  action_items[2].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 3, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
@@ -3898,16 +3833,6 @@ scale_layer_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-scale_layer_query_delete_callback (GtkWidget *widget,
-				   GdkEvent  *event,
-				   gpointer   data)
-{
-  scale_layer_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 layers_dialog_scale_layer_query (GImage *gimage,
 				 Layer  *layer)
@@ -3928,7 +3853,6 @@ layers_dialog_scale_layer_query (GImage *gimage,
 				       TRUE,
 				       scale_layer_query_ok_callback,
 				       scale_layer_query_cancel_callback,
-				       scale_layer_query_delete_callback,
 				       options);
 
   gtk_widget_show (options->resize->resize_shell);
@@ -3997,16 +3921,6 @@ resize_layer_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-resize_layer_query_delete_callback (GtkWidget *widget,
-				    GdkEvent  *event,
-				    gpointer   data)
-{
-  resize_layer_query_cancel_callback (widget, data);
-
-  return TRUE;
-}
-
 static void
 layers_dialog_resize_layer_query (GImage *gimage,
 				  Layer  *layer)
@@ -4027,7 +3941,6 @@ layers_dialog_resize_layer_query (GImage *gimage,
 				       TRUE,
 				       resize_layer_query_ok_callback,
 				       resize_layer_query_cancel_callback,
-				       resize_layer_query_delete_callback,
 				       options);
 
   gtk_widget_show (options->resize->resize_shell);
@@ -4077,16 +3990,6 @@ layer_merge_query_cancel_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static gint
-layer_merge_query_delete_callback (GtkWidget *widget,
-				   GdkEvent  *event,
-				   gpointer   data)
-{
-  layer_merge_query_cancel_callback (widget, data);
-  
-  return TRUE;
-}
-
 static void
 layer_merge_query_type_callback (GtkWidget *widget,
 				 gpointer   data)
@@ -4112,11 +4015,6 @@ layers_dialog_layer_merge_query (GImage   *gimage,
   GSList *group = NULL;
   gint    i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), layer_merge_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), layer_merge_query_cancel_callback, NULL, NULL }
-  };
   static gchar *button_names[] =
   {
     N_("Expanded as necessary"),
@@ -4132,15 +4030,19 @@ layers_dialog_layer_merge_query (GImage   *gimage,
   options->merge_type    = EXPAND_AS_NECESSARY;
 
   /* The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "layer_merge_options", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box), _("Layer Merge Options"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Layer Merge Options"), "layer_merge_options",
+		     gimp_standard_help_func,
+		     "dialogs/layers_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-		      GTK_SIGNAL_FUNC (layer_merge_query_delete_callback),
-		      options);
+		     _("OK"), layer_merge_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), layer_merge_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -4175,10 +4077,6 @@ layers_dialog_layer_merge_query (GImage   *gimage,
     }
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
-
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
 
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);

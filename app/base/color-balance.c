@@ -28,6 +28,7 @@
 #include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "image_map.h"
 #include "interface.h"
 
@@ -69,8 +70,6 @@ static void   color_balance_update              (ColorBalanceDialog *, int);
 static void   color_balance_preview             (ColorBalanceDialog *);
 static void   color_balance_ok_callback         (GtkWidget *, gpointer);
 static void   color_balance_cancel_callback     (GtkWidget *, gpointer);
-static gint   color_balance_delete_callback     (GtkWidget *, GdkEvent *,
-						 gpointer);
 static void   color_balance_shadows_callback    (GtkWidget *, gpointer);
 static void   color_balance_midtones_callback   (GtkWidget *, gpointer);
 static void   color_balance_highlights_callback (GtkWidget *, gpointer);
@@ -253,7 +252,6 @@ color_balance_initialize (GDisplay *gdisp)
 /*  Color Balance dialog  */
 /**************************/
 
-/*  the action area structure  */
 static ColorBalanceDialog *
 color_balance_new_dialog ()
 {
@@ -269,15 +267,9 @@ color_balance_new_dialog ()
   GtkWidget *radio_button;
   GtkObject *data;
   GSList *group = NULL;
-  int i;
+  gint i;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), color_balance_ok_callback, NULL, NULL },
-    { N_("Cancel"), color_balance_cancel_callback, NULL, NULL }
-  };
-
-  char *appl_mode_names[] =
+  gchar *appl_mode_names[] =
   {
     N_("Shadows"),
     N_("Midtones"),
@@ -297,18 +289,21 @@ color_balance_new_dialog ()
   cbd->application_mode = SHADOWS;
 
   /*  The shell and main vbox  */
-  cbd->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (cbd->shell), "color_balance", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cbd->shell), _("Color Balance"));
-  
-  /* handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (cbd->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (color_balance_delete_callback),
-		      cbd);
+  cbd->shell = gimp_dialog_new (_("Color Balance"), "color_balance",
+				tools_help_func, NULL,
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
+
+				_("OK"), color_balance_ok_callback,
+				cbd, NULL, TRUE, FALSE,
+				_("Cancel"), color_balance_cancel_callback,
+				cbd, NULL, FALSE, TRUE,
+
+				NULL);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (cbd->shell)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cbd->shell)->vbox), vbox);
 
   /*  Horizontal box for application mode  */
   hbox = gtk_hbox_new (TRUE, 2);
@@ -473,11 +468,6 @@ color_balance_new_dialog ()
     }
   gtk_widget_show (hbox);
 
-  /*  The action area  */
-  action_items[0].user_data = cbd;
-  action_items[1].user_data = cbd;
-  build_action_area (GTK_DIALOG (cbd->shell), action_items, 2, 0);
-
   gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (cbd->shell);
@@ -612,16 +602,6 @@ color_balance_ok_callback (GtkWidget *widget,
 
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
-}
-
-static gint
-color_balance_delete_callback (GtkWidget *w,
-			       GdkEvent *e,
-			       gpointer client_data)
-{
-  color_balance_cancel_callback (w, client_data);
-
-  return TRUE;
 }
 
 static void

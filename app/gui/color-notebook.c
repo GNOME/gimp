@@ -17,7 +17,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #define __COLOR_NOTEBOOK_C__ 1
 
 #include "config.h"
@@ -29,27 +28,16 @@
 #include <string.h>
 
 #include "appenv.h"
-#include "actionarea.h"
 #include "color_notebook.h"
+#include "gimpui.h"
 
 #include "libgimp/color_selector.h"
 #include "libgimp/gimpintl.h"
 
-
-
-static void color_notebook_ok_callback (GtkWidget *, gpointer);
+static void color_notebook_ok_callback     (GtkWidget *, gpointer);
 static void color_notebook_cancel_callback (GtkWidget *, gpointer);
-static gint color_notebook_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void color_notebook_update_callback (void *, int, int, int);
 static void color_notebook_page_switch (GtkWidget *, GtkNotebookPage *, guint);
-
-
-static ActionAreaItem action_items[2] =
-{
-  { N_("OK"), color_notebook_ok_callback, NULL, NULL },
-  { N_("Cancel"), color_notebook_cancel_callback, NULL, NULL },
-};
-
 
 /* information we keep on each registered colour selector */
 typedef struct _ColorSelectorInfo {
@@ -98,28 +86,33 @@ color_notebook_new (int                    r,
 
   g_return_val_if_fail (selector_info != NULL, NULL);
 
-  cnp = g_malloc (sizeof (_ColorNotebook));
+  cnp = g_new (_ColorNotebook, 1);
 
-  cnp->callback = callback;
-  cnp->client_data = client_data;
+  cnp->callback      = callback;
+  cnp->client_data   = client_data;
   cnp->wants_updates = wants_updates;
-  cnp->selectors = NULL;
-  cnp->cur_page = NULL;
+  cnp->selectors     = NULL;
+  cnp->cur_page      = NULL;
 
-  cnp->values[RED] = cnp->orig_values[RED] = r & 0xff;
+  cnp->values[RED]   = cnp->orig_values[RED]   = r & 0xff;
   cnp->values[GREEN] = cnp->orig_values[GREEN] = g & 0xff;
-  cnp->values[BLUE] = cnp->orig_values[BLUE] = b & 0xff;
+  cnp->values[BLUE]  = cnp->orig_values[BLUE]  = b & 0xff;
 
-  /* window hints need to stay the same, so people's window manager
-   * setups still work */
-  cnp->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (cnp->shell), "color_selection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (cnp->shell), _("Color Selection"));
-  gtk_window_set_policy (GTK_WINDOW (cnp->shell), FALSE, FALSE, FALSE);
+  cnp->shell =
+    gimp_dialog_new (_("Color Selection"), "color_selection",
+		     gimp_standard_help_func,
+		     "dialogs/color_notebook_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, FALSE, FALSE,
 
-  /*  handle the wm close signal */
-  gtk_signal_connect (GTK_OBJECT (cnp->shell), "delete_event",
-		      (GtkSignalFunc) color_notebook_delete_callback, cnp);
+		     wants_updates ? _("Close") : _("OK"),
+		     color_notebook_ok_callback,
+		     cnp, NULL, TRUE, FALSE,
+		     wants_updates ? _("Revert to Old Color") : _("Cancel"),
+		     color_notebook_cancel_callback,
+		     cnp, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /* do we actually need a notebook? */
   if (selector_info->next)
@@ -179,21 +172,6 @@ color_notebook_new (int                    r,
       info = info->next;
     }
 
-  /*  The action area  */
-  action_items[0].user_data = cnp;
-  action_items[1].user_data = cnp;
-  if (cnp->wants_updates)
-    {
-      action_items[0].label = _("Close");
-      action_items[1].label = _("Revert to Old Color");
-    }
-  else
-    {
-      action_items[0].label = _("OK");
-      action_items[1].label = _("Cancel");
-    }
-  build_action_area (GTK_DIALOG (cnp->shell), action_items, 2, 0);
-
   gtk_widget_show (cnp->shell);
 
   /* this must come after showing the widget, otherwise we get a
@@ -209,14 +187,12 @@ color_notebook_new (int                    r,
   return cnp;
 }
 
-
 void
 color_notebook_show (ColorNotebookP cnp)
 {
   g_return_if_fail (cnp != NULL);
   gtk_widget_show (cnp->shell);
 }
-
 
 void
 color_notebook_hide (ColorNotebookP cnp)
@@ -253,13 +229,12 @@ color_notebook_free (ColorNotebookP cnp)
   g_free (cnp);
 }
 
-
 void
 color_notebook_set_color (ColorNotebookP cnp,
-			  int          r,
-			  int          g,
-			  int          b,
-			  int          set_current)
+			  int            r,
+			  int            g,
+			  int            b,
+			  int            set_current)
 {
   ColorSelectorInstance *csel;
   g_return_if_fail (cnp != NULL);
@@ -279,11 +254,12 @@ color_notebook_set_color (ColorNotebookP cnp,
   csel->info->m.setcolor (csel->selector_data, r, g, b, set_current);
 }
 
-
-
 /* Called by a colour selector on user selection of a colour */
 static void
-color_notebook_update_callback (void *data, int r, int g, int b)
+color_notebook_update_callback (void *data,
+				int   r,
+				int   g,
+				int   b)
 {
   ColorSelectorInstance *csel;
   ColorNotebookP cnp;
@@ -307,16 +283,13 @@ color_notebook_update_callback (void *data, int r, int g, int b)
     }
 }
 
-
-
-
 static void
-color_notebook_ok_callback (GtkWidget *w,
-			    gpointer   client_data)
+color_notebook_ok_callback (GtkWidget *widget,
+			    gpointer   data)
 {
   ColorNotebookP cnp;
 
-  cnp = (ColorNotebookP) client_data;
+  cnp = (ColorNotebookP) data;
 
   if (cnp->callback)
     (* cnp->callback) (cnp->values[RED],
@@ -326,25 +299,13 @@ color_notebook_ok_callback (GtkWidget *w,
 		       cnp->client_data);
 }
 
-
-static gint
-color_notebook_delete_callback (GtkWidget *w,
-				GdkEvent  *e,
-				gpointer   client_data)
-{
-  color_notebook_cancel_callback (w, client_data);
-
-  return TRUE;
-}
-  
-
 static void
-color_notebook_cancel_callback (GtkWidget *w,
-				gpointer   client_data)
+color_notebook_cancel_callback (GtkWidget *widget,
+				gpointer   data)
 {
   ColorNotebookP cnp;
 
-  cnp = (ColorNotebookP) client_data;
+  cnp = (ColorNotebookP) data;
 
   if (cnp->callback)
     (* cnp->callback) (cnp->orig_values[RED],
@@ -355,14 +316,14 @@ color_notebook_cancel_callback (GtkWidget *w,
 }
 
 static void
-color_notebook_page_switch (GtkWidget       *w,
+color_notebook_page_switch (GtkWidget       *widget,
 			    GtkNotebookPage *page,
 			    guint            page_num)
 {
   ColorNotebookP cnp;
   ColorSelectorInstance *csel;
 
-  cnp = gtk_object_get_user_data (GTK_OBJECT (w));
+  cnp = gtk_object_get_user_data (GTK_OBJECT (widget));
   csel = gtk_object_get_data (GTK_OBJECT(page->child), "gimp_color_notebook");
 
   g_return_if_fail (cnp != NULL && csel != NULL);
@@ -465,6 +426,5 @@ selector_death (ColorSelectorInfo *info)
 
   g_warning ("color selector %p not found, can't happen!", info);
 }
-
 
 /* End of color_notebook.c */

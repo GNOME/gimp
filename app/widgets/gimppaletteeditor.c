@@ -31,7 +31,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "color_area.h"
@@ -41,9 +40,9 @@
 #include "errors.h"
 #include "gimpdnd.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "gradient_header.h"
 #include "gradient.h"
-#include "interface.h"
 #include "palette.h"
 #include "palette_entries.h"
 #include "session.h"
@@ -1075,11 +1074,16 @@ static void
 palette_new_entries_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  gtk_widget_show (query_string_box (_("New Palette"),
-				     _("Enter a name for new palette"),
-				     NULL,
-				     NULL, NULL,
-				     palette_add_entries_callback, data));
+  GtkWidget *qbox;
+
+  qbox = gimp_query_string_box (_("New Palette"),
+				gimp_standard_help_func,
+				"dialogs/color_palette_edit_dialog.html",
+				_("Enter a name for new palette"),
+				NULL,
+				NULL, NULL,
+				palette_add_entries_callback, data);
+  gtk_widget_show (qbox);
 }
 
 static void
@@ -1374,17 +1378,6 @@ palette_close_callback (GtkWidget *widget,
 	gtk_widget_hide (palette->shell);
     }
 }
-
-static gint
-palette_dialog_delete_callback (GtkWidget *widget,
-				GdkEvent  *event,
-				gpointer   data) 
-{
-  palette_close_callback (widget, data);
-
-  return TRUE;
-}
-
 
 static void
 color_name_entry_changed (GtkWidget *widget,
@@ -2015,18 +2008,6 @@ create_palette_dialog (gint vert)
   GdkPixmap *pixmap;
   GdkBitmap *mask;
   GtkStyle  *style;
-  
-  static ActionAreaItem vert_action_items[] =
-  {
-    { N_("Edit"), palette_edit_palette_callback, NULL, NULL },
-    { N_("Close"), palette_close_callback, NULL, NULL }
-  };
-  static ActionAreaItem horz_action_items[] =
-  {
-    { N_("Save"), palette_save_palettes_callback, NULL, NULL },
-    { N_("Refresh"), palette_refresh_callback, NULL, NULL },
-    { N_("Close"), palette_close_callback, NULL, NULL }
-  };
 
   palette = g_new (PaletteDialog, 1);
 
@@ -2039,26 +2020,42 @@ create_palette_dialog (gint vert)
   palette->columns_valid = TRUE;
   palette->freeze_update = FALSE;
 
-  palette->shell = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (palette->shell), "color_palette", "Gimp");
-  
   if (!vert)
     {
+      palette->shell =
+	gimp_dialog_new (_("Color Palette Edit"), "color_palette_edit",
+			 gimp_standard_help_func,
+			 "dialogs/color_palette_edit_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
+
+			 _("Save"), palette_save_palettes_callback,
+			 palette, NULL, FALSE, FALSE,
+			 _("Refresh"), palette_refresh_callback,
+			 palette, NULL, FALSE, FALSE,
+			 _("Close"), palette_close_callback,
+			 palette, NULL, TRUE, TRUE,
+
+			 NULL);
       gtk_widget_set_usize (palette->shell, 615, 200);
-      gtk_window_set_title (GTK_WINDOW (palette->shell),
-			    _("Color Palette Edit"));
     }
   else
     {
-      gtk_widget_set_usize (palette->shell, 230, 300);
-      gtk_window_set_title (GTK_WINDOW (palette->shell),
-			    _("Color Palette"));
-    }
+      palette->shell =
+	gimp_dialog_new (_("Color Palette"), "color_palette",
+			 gimp_standard_help_func,
+			 "dialogs/color_palette_dialog.html",
+			 GTK_WIN_POS_NONE,
+			 FALSE, TRUE, FALSE,
 
-  /*  Handle the wm delete event  */
-  gtk_signal_connect (GTK_OBJECT (palette->shell), "delete_event",
-		      GTK_SIGNAL_FUNC (palette_dialog_delete_callback),
-		      palette);
+			 _("Edit"), palette_edit_palette_callback,
+			 palette, NULL, FALSE, FALSE,
+			 _("Close"), palette_close_callback,
+			 palette, NULL, TRUE, TRUE,
+
+			 NULL);
+      gtk_widget_set_usize (palette->shell, 230, 300);
+    }
 
   /*  The main container widget  */
   if (vert)
@@ -2260,20 +2257,6 @@ create_palette_dialog (gint vert)
       gtk_widget_show (button);
     }
 
-  if (!vert)
-    {
-      horz_action_items[0].user_data = palette;
-      horz_action_items[1].user_data = palette;
-      horz_action_items[2].user_data = palette;
-      build_action_area (GTK_DIALOG (palette->shell), horz_action_items, 3, 2);
-    }
-  else
-    {
-      vert_action_items[0].user_data = palette;
-      vert_action_items[1].user_data = palette;
-      build_action_area (GTK_DIALOG (palette->shell), vert_action_items, 2, 1);
-    }
-
   palette->gc = gdk_gc_new (palette->shell->window);
 
   palette_popup_menu (palette);
@@ -2441,17 +2424,6 @@ import_dialog_import_callback (GtkWidget *widget,
     }
 }
 
-static gint
-import_dialog_delete_callback (GtkWidget *widget,
-			       GdkEvent  *event,
-			       gpointer   data) 
-{
-  import_dialog_close_callback (widget, data);
-
-  return TRUE;
-}
-
-
 static void
 palette_merge_entries_callback (GtkWidget *widget,
 				gpointer   data,
@@ -2508,12 +2480,17 @@ static void
 palette_merge_dialog_callback (GtkWidget *widget,
 			       gpointer   data)
 {
-  gtk_widget_show (query_string_box (_("Merge Palette"),
-				     _("Enter a name for merged palette"),
-				     NULL,
-				     NULL, NULL,
-				     palette_merge_entries_callback,
-				     data));
+  GtkWidget *qbox;
+
+  qbox = gimp_query_string_box (_("Merge Palette"),
+				gimp_standard_help_func,
+				"dialogs/color_palette_edit_dialog.html",
+				_("Enter a name for merged palette"),
+				NULL,
+				NULL, NULL,
+				palette_merge_entries_callback,
+				data);
+  gtk_widget_show (qbox);
 }
 
 static void
@@ -2845,24 +2822,23 @@ palette_import_dialog (PaletteDialog *palette)
   GtkWidget *image;
   GtkWidget *hscale;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("Import"), import_dialog_import_callback, NULL, NULL },
-    { N_("Close"), import_dialog_close_callback, NULL, NULL }
-  };
-
   import_dialog = g_new (ImportDialog, 1);
   import_dialog->image_list = NULL;
   import_dialog->gimage = NULL;
 
-  import_dialog->dialog = dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog), "import_palette", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Import Palette"));
+  import_dialog->dialog = dialog =
+    gimp_dialog_new (_("Import Palette"), "import_palette",
+		     gimp_standard_help_func,
+		     "dialogs/import_palette_dialog.html",
+		     GTK_WIN_POS_NONE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm delete event  */
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-		      GTK_SIGNAL_FUNC (import_dialog_delete_callback),
-		      (gpointer)palette);
+		     _("Import"), import_dialog_import_callback,
+		     palette, NULL, FALSE, FALSE,
+		     _("Close"), import_dialog_close_callback,
+		     palette, NULL, TRUE, TRUE,
+
+		     NULL);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -2985,11 +2961,6 @@ palette_import_dialog (PaletteDialog *palette)
 		      (gpointer) image);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  /*  The action area  */
-  action_items[0].user_data = palette;
-  action_items[1].user_data = palette;
-  build_action_area (GTK_DIALOG (dialog), action_items, 2, 1);
 
   /*  Fill with the selected gradient  */
   palette_import_fill_grad_preview (image, curr_gradient);

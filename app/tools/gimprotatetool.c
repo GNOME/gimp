@@ -83,7 +83,8 @@ rotate_tool_transform (Tool     *tool,
 
       if (!transform_info)
 	{
-	  transform_info = info_dialog_new (_("Rotation Information"));
+	  transform_info = info_dialog_new (_("Rotation Information"),
+					    tools_help_func, NULL);
 
 	  widget =
 	    info_dialog_add_spinbutton (transform_info, _("Angle:"),

@@ -49,8 +49,8 @@
 
 
 #include <gtk/gtk.h>
+#include "gimpui.h"
 #include "undo.h"
-#include "actionarea.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -131,25 +131,6 @@ undo_history_close_callback (GtkWidget *w,
     undo_history_st *st = data;
     gtk_widget_hide (GTK_WIDGET (st->shell));
 }
-
-/* WM_DELETE */
-static gint
-undo_history_delete_callback (GtkWidget *w,
-			      GdkEvent *e,
-			      gpointer data)
-{
-    undo_history_close_callback (w, data);
-    return TRUE;
-}
-
-
-static ActionAreaItem action_items[] =
-{
-  { N_("Close"), undo_history_close_callback, NULL, NULL }
-};
-
-
-
 
 /* The gimage and shell destroy callbacks are split so we can:
  *   a) blow the shell when the image dissappears
@@ -441,16 +422,20 @@ undo_history_new (GImage *gimage)
 			undo_history_clean_callback, st);
 
     /*  The shell and main vbox  */
-    st->shell = gtk_dialog_new ();
-
-    gtk_window_set_wmclass (GTK_WINDOW (st->shell), "undohistory", "Gimp");
-    gtk_window_set_policy (GTK_WINDOW (st->shell), FALSE, TRUE, FALSE);
-
     {
-	char *title = g_strdup_printf (_("%s: undo history"),
-				       g_basename (gimage_filename (gimage)));
-	gtk_window_set_title (GTK_WINDOW (st->shell), title);
-	g_free (title);
+      char *title = g_strdup_printf (_("%s: undo history"),
+				     g_basename (gimage_filename (gimage)));
+      st->shell = gimp_dialog_new (title, "undo_history",
+				   gimp_standard_help_func,
+				   "dialogs/undo_histroy_dialog.html",
+				   GTK_WIN_POS_NONE,
+				   FALSE, TRUE, FALSE,
+
+				   _("Close"), undo_history_close_callback,
+				   st, NULL, TRUE, TRUE,
+
+				   NULL);
+      g_free (title);
     }
 
     vbox = gtk_vbox_new (FALSE, 1);
@@ -459,9 +444,6 @@ undo_history_new (GImage *gimage)
 			vbox, TRUE, TRUE, 0);
     gtk_widget_show (vbox);
 
-    /* handle the wm close event */
-    gtk_signal_connect (GTK_OBJECT (st->shell), "delete_event",
-			GTK_SIGNAL_FUNC (undo_history_delete_callback), st);
     gtk_signal_connect (GTK_OBJECT (st->shell), "destroy",
 			GTK_SIGNAL_FUNC (undo_history_shell_destroy_callback),
 			st);
@@ -513,13 +495,9 @@ undo_history_new (GImage *gimage)
 			undo_history_redo_callback, st);
     gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
 
-    action_items[0].user_data = st;
-    build_action_area (GTK_DIALOG (st->shell), action_items, 1, 0);
-
     undo_history_set_sensitive (st, GTK_CLIST (st->clist)->rows);
 
     gtk_widget_show (GTK_WIDGET (st->shell));
 
     return st->shell;
 }
-

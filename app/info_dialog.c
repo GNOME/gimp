@@ -15,7 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #include "config.h"
 
 #include <string.h>
@@ -143,8 +142,10 @@ info_dialog_delete_callback (GtkWidget *widget,
 }
 
 static InfoDialog *
-info_dialog_new_extended (gchar     *title,
-			  gboolean  in_notebook)
+info_dialog_new_extended (gchar        *title,
+			  GimpHelpFunc  help_func,
+			  gpointer      help_data,
+			  gboolean      in_notebook)
 {
   InfoDialog *idialog;
   GtkWidget  *shell;
@@ -171,7 +172,7 @@ info_dialog_new_extended (gchar     *title,
 
   info_table = gtk_table_new (2, 0, FALSE);
 
-  if( in_notebook)
+  if (in_notebook)
     {
       info_notebook = gtk_notebook_new ();
       gtk_notebook_append_page (GTK_NOTEBOOK (info_notebook),
@@ -196,21 +197,28 @@ info_dialog_new_extended (gchar     *title,
   gtk_widget_show (idialog->info_table);
   gtk_widget_show (idialog->vbox);
 
+  /*  Connect the "F1" help key  */
+  gimp_help_connect_help_accel (idialog->shell, help_func, help_data);
+
   return idialog;
 }
 
 /*  public functions  */
 
 InfoDialog *
-info_dialog_notebook_new (gchar *title)
+info_dialog_notebook_new (gchar        *title,
+			  GimpHelpFunc  help_func,
+			  gpointer      help_data)
 {
-  return info_dialog_new_extended (title, TRUE);
+  return info_dialog_new_extended (title, help_func, help_data, TRUE);
 }
 
 InfoDialog *
-info_dialog_new (gchar *title)
+info_dialog_new (gchar        *title,
+		 GimpHelpFunc  help_func,
+		 gpointer      help_data)
 {
-  return info_dialog_new_extended (title, FALSE);
+  return info_dialog_new_extended (title, help_func, help_data, FALSE);
 }
 
 void
@@ -235,7 +243,6 @@ info_dialog_free (InfoDialog *idialog)
   /*  Free the info dialog memory  */
   g_free (idialog);
 }
-
 
 void
 info_dialog_popup (InfoDialog *idialog)

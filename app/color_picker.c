@@ -22,6 +22,7 @@
 #include "draw_core.h"
 #include "drawable.h"
 #include "gdisplay.h"
+#include "gimphelp.h"
 #include "cursorutil.h"
 #include "info_dialog.h"
 #include "palette.h"
@@ -248,7 +249,8 @@ color_picker_button_press (Tool           *tool,
     {
       GtkWidget *hbox;
 
-      color_picker_info = info_dialog_new (_("Color Picker"));
+      color_picker_info = info_dialog_new (_("Color Picker"),
+					   tools_help_func, NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
       switch (drawable_type (tool->drawable))

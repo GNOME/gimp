@@ -18,12 +18,12 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
-#include "actionarea.h"
 #include "channel_ops.h"
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
+#include "gimpui.h"
 #include "interface.h"
 #include "palette.h"
 
@@ -53,7 +53,6 @@ struct _OffsetDialog
 /*  Forward declarations  */
 static void  offset_ok_callback         (GtkWidget *, gpointer);
 static void  offset_cancel_callback     (GtkWidget *, gpointer);
-static gint  offset_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
 
 static void  offset_wraparound_update   (GtkWidget *, gpointer);
 static void  offset_fill_type_update    (GtkWidget *, gpointer);
@@ -77,12 +76,6 @@ channel_ops_offset (GimpImage* gimage)
 
   GimpDrawable *drawable;
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), offset_ok_callback, NULL, NULL },
-    { N_("Cancel"), offset_cancel_callback, NULL, NULL }
-  };
-
   drawable = gimage_active_drawable (gimage);
 
   off_d = g_new (OffsetDialog, 1);
@@ -90,15 +83,19 @@ channel_ops_offset (GimpImage* gimage)
   off_d->fill_type   = drawable_has_alpha (drawable);
   off_d->gimage      = gimage;
 
-  off_d->dlg = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (off_d->dlg), "offset", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (off_d->dlg), _("Offset"));
+  off_d->dlg = gimp_dialog_new (_("Offset"), "offset",
+				gimp_standard_help_func,
+				"dialogs/offset_dialog.html",
+				GTK_WIN_POS_NONE,
+				FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (off_d->dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (offset_delete_callback),
-		      off_d);
+				_("OK"), offset_ok_callback,
+				off_d, NULL, TRUE, FALSE,
+				_("Cancel"), offset_cancel_callback,
+				off_d, NULL, FALSE, TRUE,
 
+				NULL);
+				
   /*  The vbox for first column of options  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -221,14 +218,9 @@ channel_ops_offset (GimpImage* gimage)
 		      (GtkSignalFunc) offset_halfheight_callback,
 		      off_d);
 
-  action_items[0].user_data = off_d;
-  action_items[1].user_data = off_d;
-  build_action_area (GTK_DIALOG (off_d->dlg), action_items, 2, 0);
-
   gtk_widget_show (vbox);
   gtk_widget_show (off_d->dlg);
 }
-
 
 void
 offset (GimpImage    *gimage,
@@ -493,16 +485,6 @@ offset_ok_callback (GtkWidget *widget,
 
   gtk_widget_destroy (off_d->dlg);
   g_free (off_d);
-}
-
-static gint
-offset_delete_callback (GtkWidget *widget,
-			GdkEvent  *event,
-			gpointer   data)
-{
-  offset_cancel_callback (widget, data);
-
-  return TRUE;
 }
 
 static void

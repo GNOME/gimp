@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "config.h"
+
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -57,6 +58,7 @@
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "gimpset.h"
+#include "gimpui.h"
 #include "global_edit.h"
 #include "gradient.h"
 #include "gximage.h"
@@ -325,7 +327,7 @@ static GtkWidget *label2 = NULL;
 static GtkWidget *pbar = NULL;
 
 static void
-destroy_initialization_status_window(void)
+destroy_initialization_status_window (void)
 {
   if (win_initstatus)
     {
@@ -338,7 +340,7 @@ destroy_initialization_status_window(void)
 }
 
 static void
-make_initialization_status_window(void)
+make_initialization_status_window (void)
 {
   if (no_interface == FALSE)
     {
@@ -413,9 +415,9 @@ make_initialization_status_window(void)
 }
 
 void
-app_init_update_status (char *label1val,
-		        char *label2val,
-		        float pct_progress)
+app_init_update_status (char  *label1val,
+		        char  *label2val,
+		        float  pct_progress)
 {
   char *temp;
 
@@ -710,20 +712,10 @@ really_quit_cancel_callback (GtkWidget *widget,
   gtk_widget_destroy (dialog);
 }
 
-static gint
-really_quit_delete_callback (GtkWidget *widget,
-			     GdkEvent  *event,
-			     gpointer client_data)
-{
-  really_quit_cancel_callback (widget, (GtkWidget *) client_data);
-  return TRUE;
-}
-
 static void
 really_quit_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *button;
   GtkWidget *hbox;
   GtkWidget *pixmap_widget;
   GdkPixmap *pixmap;
@@ -734,36 +726,22 @@ really_quit_dialog (void)
   menus_set_sensitive_glue ("<Toolbox>", N_("/File/Quit"), FALSE);
   menus_set_sensitive_glue ("<Image>", N_("/File/Quit"), FALSE);
 
-  dialog = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (dialog), "really_quit", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (dialog), _("Really Quit?"));
-  gtk_window_position (GTK_WINDOW (dialog), GTK_WIN_POS_MOUSE);
-  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  dialog = gimp_dialog_new (_("Really Quit?"), "really_quit",
+			    gimp_standard_help_func,
+			    "dialogs/really_quit_dialog.html",
+			    GTK_WIN_POS_MOUSE,
+			    FALSE, TRUE, FALSE,
 
-  gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
-		      (GtkSignalFunc) really_quit_delete_callback,
-		      dialog);
+			    _("Quit"), really_quit_callback,
+			    NULL, NULL, TRUE, FALSE,
+			    _("Cancel"), really_quit_cancel_callback,
+			    NULL, NULL, FALSE, TRUE,
 
-  button = gtk_button_new_with_label (_("Quit"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) really_quit_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  button = gtk_button_new_with_label (_("Cancel"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      (GtkSignalFunc) really_quit_cancel_callback,
-		      dialog);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
+			    NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   gtk_widget_realize (dialog);

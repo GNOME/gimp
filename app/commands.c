@@ -35,13 +35,14 @@
 #include "gdisplay_ops.h"
 #include "gdisplay_color_ui.h"
 #include "gimage_mask.h"
+#include "gimphelp.h"
 #include "gimprc.h"
+#include "gimpui.h"
 #include "global_edit.h"
 #include "gradient.h"
 #include "image_render.h"
 #include "info_window.h"
 #include "nav_window.h"
-#include "interface.h"
 #include "invert.h"
 #include "lc_dialog.h"
 #include "layer_select.h"
@@ -74,7 +75,6 @@ extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 static void   image_resize_callback        (GtkWidget *, gpointer);
 static void   image_scale_callback         (GtkWidget *, gpointer);
 static void   image_cancel_callback        (GtkWidget *, gpointer);
-static gint   image_delete_callback        (GtkWidget *, GdkEvent *, gpointer);
 static void   gimage_mask_feather_callback (GtkWidget *, gpointer, gpointer);
 static void   gimage_mask_border_callback  (GtkWidget *, gpointer, gpointer);
 static void   gimage_mask_grow_callback    (GtkWidget *, gpointer, gpointer);
@@ -345,54 +345,69 @@ void
 select_border_cmd_callback (GtkWidget *widget,
 			    gpointer   client_data)
 {
-  GDisplay * gdisp;
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
+
   return_if_no_display (gdisp);
 
-  gtk_widget_show (query_size_box (_("Border Selection"),
-				   _("Border selection by:"),
-				   selection_border_radius, 1, 32767, 0,
-				   gdisp->gimage->unit,
-				   MIN (gdisp->gimage->xresolution,
-					gdisp->gimage->yresolution),
-				   gdisp->dot_for_dot,
-				   GTK_OBJECT (gdisp->gimage), "destroy",
-				   gimage_mask_border_callback, gdisp->gimage));
+  qbox = gimp_query_size_box (_("Border Selection"),
+			      gimp_standard_help_func,
+			      "dialogs/border_selection_dialog.html",
+			      _("Border selection by:"),
+			      selection_border_radius, 1, 32767, 0,
+			      gdisp->gimage->unit,
+			      MIN (gdisp->gimage->xresolution,
+				   gdisp->gimage->yresolution),
+			      gdisp->dot_for_dot,
+			      GTK_OBJECT (gdisp->gimage), "destroy",
+			      gimage_mask_border_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
 }
 
 void
 select_feather_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
-  GDisplay * gdisp;
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
+
   return_if_no_display (gdisp);
 
-  gtk_widget_show (query_size_box (_("Feather Selection"),
-				   _("Feather selection by:"),
-				   selection_feather_radius, 0, 32767, 3,
-				   gdisp->gimage->unit,
-				   MIN (gdisp->gimage->xresolution,
-					gdisp->gimage->yresolution),
-				   gdisp->dot_for_dot,
-				   GTK_OBJECT (gdisp->gimage), "destroy",
-				   gimage_mask_feather_callback, gdisp->gimage));
+  qbox = gimp_query_size_box (_("Feather Selection"),
+			      gimp_standard_help_func,
+			      "dialogs/feather_selection_dialog.html",
+			      _("Feather selection by:"),
+			      selection_feather_radius, 0, 32767, 3,
+			      gdisp->gimage->unit,
+			      MIN (gdisp->gimage->xresolution,
+				   gdisp->gimage->yresolution),
+			      gdisp->dot_for_dot,
+			      GTK_OBJECT (gdisp->gimage), "destroy",
+			      gimage_mask_feather_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
 }
 
 void
 select_grow_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
-  GDisplay * gdisp;
+  GtkWidget *qbox;
+  GDisplay  *gdisp;
+
   return_if_no_display (gdisp);
 
-  gtk_widget_show (query_size_box (_("Grow Selection"),
-				   _("Grow selection by:"),
-				   selection_grow_pixels, 1, 32767, 0,
-				   gdisp->gimage->unit,
-				   MIN (gdisp->gimage->xresolution,
-					gdisp->gimage->yresolution),
-				   gdisp->dot_for_dot,
-				   GTK_OBJECT (gdisp->gimage), "destroy",
-				   gimage_mask_grow_callback, gdisp->gimage));
+  qbox = gimp_query_size_box (_("Grow Selection"),
+			      gimp_standard_help_func,
+			      "dialogs/grow_selection_dialog.html",
+			      _("Grow selection by:"),
+			      selection_grow_pixels, 1, 32767, 0,
+			      gdisp->gimage->unit,
+			      MIN (gdisp->gimage->xresolution,
+				   gdisp->gimage->yresolution),
+			      gdisp->dot_for_dot,
+			      GTK_OBJECT (gdisp->gimage), "destroy",
+			      gimage_mask_grow_callback, gdisp->gimage);
+  gtk_widget_show (qbox);
 }
 
 void
@@ -405,15 +420,18 @@ select_shrink_cmd_callback (GtkWidget *widget,
   GDisplay * gdisp;
   return_if_no_display (gdisp);
 
-  shrink_dialog = query_size_box (N_("Shrink Selection"),
-				  N_("Shrink selection by:"),
-				  selection_shrink_pixels, 1, 32767, 0,
-				  gdisp->gimage->unit,
-				  MIN (gdisp->gimage->xresolution,
-				       gdisp->gimage->yresolution),
-				  gdisp->dot_for_dot,
-				  GTK_OBJECT (gdisp->gimage), "destroy",
-				  gimage_mask_shrink_callback, gdisp->gimage);
+  shrink_dialog =
+    gimp_query_size_box (N_("Shrink Selection"),
+			 gimp_standard_help_func,
+			 "dialogs/shrink_selection_dialog.html",
+			 N_("Shrink selection by:"),
+			 selection_shrink_pixels, 1, 32767, 0,
+			 gdisp->gimage->unit,
+			 MIN (gdisp->gimage->xresolution,
+			      gdisp->gimage->yresolution),
+			 gdisp->dot_for_dot,
+			 GTK_OBJECT (gdisp->gimage), "destroy",
+			 gimage_mask_shrink_callback, gdisp->gimage);
 
   edge_lock = gtk_check_button_new_with_label (_("Shrink from image border"));
   /* eeek */
@@ -810,7 +828,6 @@ image_resize_cmd_callback (GtkWidget *widget,
 					    gdisp->dot_for_dot,
 					    image_resize_callback,
 					    image_cancel_callback,
-					    image_delete_callback,
 					    image_resize);
 
   gtk_widget_show (image_resize->resize->resize_shell);
@@ -842,7 +859,6 @@ image_scale_cmd_callback (GtkWidget *widget,
 					   gdisp->dot_for_dot,
 					   image_scale_callback,
 					   image_cancel_callback,
-					   image_delete_callback,
 					   image_scale);
 
   gtk_widget_show (image_scale->resize->resize_shell);
@@ -1176,6 +1192,13 @@ about_dialog_cmd_callback (GtkWidget *widget,
 }
 
 void
+gimp_help_cmd_callback (GtkWidget *widget,
+			gpointer   client_data)
+{
+  gimp_help ("");
+}
+
+void
 tips_dialog_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
@@ -1283,17 +1306,6 @@ image_scale_callback (GtkWidget *widget,
   resize_widget_free (image_scale->resize);
   g_free (image_scale);
 }
-
-static gint
-image_delete_callback (GtkWidget *widget,
-		       GdkEvent  *event,
-		       gpointer   client_data)
-{
-  image_cancel_callback (widget, client_data);
-
-  return TRUE;
-}
-
 
 static void
 image_cancel_callback (GtkWidget *widget,

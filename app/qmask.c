@@ -24,7 +24,6 @@
 #include <string.h>
 
 #include "libgimp/gimpintl.h"
-#include "actionarea.h"
 #include "appenv.h" 
 #include "channel.h"
 #include "color_panel.h"
@@ -33,6 +32,7 @@
 #include "gimpcontext.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
+#include "gimpui.h"
 #include "global_edit.h"
 #include "qmask.h"
 #include "undo.h"
@@ -60,23 +60,8 @@ static void edit_qmask_query_cancel_callback (GtkWidget     *widget,
                                               gpointer       client_data);
 static void qmask_query_scale_update         (GtkAdjustment *adjustment,
                                               gdouble       *scale_val);
-static gint qmask_query_delete_callback      (GtkWidget   *widget,
-                                              GdkEvent      *event,
-                                              gpointer       client_data);
-
 
 /* Actual code */
-static gint 
-qmask_query_delete_callback (GtkWidget   *widget,
-                             GdkEvent    *event,
-                             gpointer     client_data)
-{
-  edit_qmask_query_cancel_callback (widget, client_data);
-
-  return TRUE;
-}
-
-
 static void 
 qmask_query_scale_update (GtkAdjustment *adjustment, gdouble *scale_val)
 {
@@ -86,39 +71,38 @@ qmask_query_scale_update (GtkAdjustment *adjustment, gdouble *scale_val)
 void
 qmask_buttons_update (GDisplay *gdisp)
 {
-g_assert(gdisp);
+  g_assert(gdisp);
 
-g_assert(gdisp->gimage);
+  g_assert(gdisp->gimage);
 
-if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON(gdisp->qmaskon)->active)
-  {
-   /* Disable toggle from doing anything */
-   gtk_signal_handler_block_by_func(GTK_OBJECT(gdisp->qmaskoff), 
-                                   (GtkSignalFunc) qmask_deactivate,
-                                   gdisp);
-   gtk_signal_handler_block_by_func(GTK_OBJECT(gdisp->qmaskon), 
-                                   (GtkSignalFunc) qmask_activate,
-                                   gdisp);
+  if (gdisp->gimage->qmask_state != GTK_TOGGLE_BUTTON(gdisp->qmaskon)->active)
+    {
+      /* Disable toggle from doing anything */
+      gtk_signal_handler_block_by_func(GTK_OBJECT(gdisp->qmaskoff), 
+				       (GtkSignalFunc) qmask_deactivate,
+				       gdisp);
+      gtk_signal_handler_block_by_func(GTK_OBJECT(gdisp->qmaskon), 
+				       (GtkSignalFunc) qmask_activate,
+				       gdisp);
    
-   /* Change the state of the buttons */
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskon), 
-                                gdisp->gimage->qmask_state);
+      /* Change the state of the buttons */
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskon), 
+				   gdisp->gimage->qmask_state);
 
-   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskoff),
-                                !gdisp->gimage->qmask_state);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(gdisp->qmaskoff),
+				   !gdisp->gimage->qmask_state);
    
-   /* Enable toggle again */
-   gtk_signal_handler_unblock_by_func(GTK_OBJECT(gdisp->qmaskoff), 
-                                   (GtkSignalFunc) qmask_deactivate,
-                                   gdisp);
-   gtk_signal_handler_unblock_by_func(GTK_OBJECT(gdisp->qmaskon), 
-                                   (GtkSignalFunc) qmask_activate,
-                                   gdisp);
-/* Flush event queue */
-/*  while (g_main_iteration(FALSE)); */
-  }
+      /* Enable toggle again */
+      gtk_signal_handler_unblock_by_func(GTK_OBJECT(gdisp->qmaskoff), 
+					 (GtkSignalFunc) qmask_deactivate,
+					 gdisp);
+      gtk_signal_handler_unblock_by_func(GTK_OBJECT(gdisp->qmaskon), 
+					 (GtkSignalFunc) qmask_activate,
+					 gdisp);
+      /* Flush event queue */
+      /*  while (g_main_iteration(FALSE)); */
+    }
 }
-
 
 void 
 qmask_click_handler (GtkWidget       *widget,
@@ -135,104 +119,103 @@ qmask_click_handler (GtkWidget       *widget,
   }
 }
 
-
 void
-qmask_deactivate(GtkWidget *w,
-	    GDisplay *gdisp)
+qmask_deactivate (GtkWidget *w,
+		  GDisplay *gdisp)
 {
-GimpImage *gimg;
-GimpChannel *gmask;
+  GimpImage *gimg;
+  GimpChannel *gmask;
 
-if (gdisp)
-  {
-  gimg = gdisp->gimage;
-  if (!gimg) return;
-
-  if (!gdisp->gimage->qmask_state) {
+  if (gdisp)
+    {
+      gimg = gdisp->gimage;
+      if (!gimg) return;
+      
+      if (!gdisp->gimage->qmask_state) {
 	return; /* if already set do nothing */
-	}
+      }
 
-  undo_push_group_start (gimg, QMASK_UNDO);
+      undo_push_group_start (gimg, QMASK_UNDO);
   
-  if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) )
+      if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) )
   	{ 
-	gimage_mask_load (gimg, gmask);
-	gimage_remove_channel(gimg, gmask);
-	undo_push_qmask(gimg,1);
-  	gdisp->gimage->qmask_state = 0;
-        gdisplays_flush (); 
+	  gimage_mask_load (gimg, gmask);
+	  gimage_remove_channel(gimg, gmask);
+	  undo_push_qmask(gimg,1);
+	  gdisp->gimage->qmask_state = 0;
+	  gdisplays_flush (); 
 	}
-  else
+      else
         gdisp->gimage->qmask_state = 0;
  
-  undo_push_group_end (gimg);
-  }
+      undo_push_group_end (gimg);
+    }
 }
 
 void
-qmask_activate(GtkWidget *w,
-           GDisplay *gdisp)
+qmask_activate (GtkWidget *w,
+		GDisplay  *gdisp)
 {
-GimpImage *gimg;
-GimpChannel *gmask;
-GimpLayer *layer;
+  GimpImage *gimg;
+  GimpChannel *gmask;
+  GimpLayer *layer;
 
-double opacity;
-unsigned char *color;
+  double opacity;
+  unsigned char *color;
 
-if (gdisp)
-  {
-  gimg = gdisp->gimage;
-  if (!gimg) return;
+  if (gdisp)
+    {
+      gimg = gdisp->gimage;
+      if (!gimg) return;
 
-  if (gdisp->gimage->qmask_state) {
+      if (gdisp->gimage->qmask_state) {
 	return; /* If already set, do nothing */
-	}
-  
-  /* Set the defaults */
-  opacity = (double) gimg->qmask_opacity;
-  color = gimg->qmask_color;
- 
-  if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) ) {
-    gimg->qmask_state = 1; /* if the user was clever and created his own */
-    return; 
-    }
-
-  undo_push_group_start (gimg, QMASK_UNDO);
-  if (gimage_mask_is_empty(gimg))
-    { 
-    if ((layer = gimage_floating_sel (gimg)))
-      {
-      floating_sel_to_layer (layer);
       }
-   /* if no selection */
-    gmask = channel_new(gimg, 
-                        gimg->width, 
-                        gimg->height,
-                        "Qmask", 
-    	                (int)(255*opacity)/100,
-                        color);
-    gimp_image_add_channel (gimg, gmask, 0);
-    gimp_drawable_fill (GIMP_DRAWABLE(gmask), 0, 0, 0, 0);
-    /* edit_clear(gimg,GIMP_DRAWABLE(gmask));  */
-    undo_push_qmask(gimg,0);
-    gdisp->gimage->qmask_state = 1;
-    gdisplays_flush();  
+  
+      /* Set the defaults */
+      opacity = (double) gimg->qmask_opacity;
+      color = gimg->qmask_color;
+ 
+      if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) ) {
+	gimg->qmask_state = 1; /* if the user was clever and created his own */
+	return; 
+      }
+
+      undo_push_group_start (gimg, QMASK_UNDO);
+      if (gimage_mask_is_empty(gimg))
+	{ 
+	  if ((layer = gimage_floating_sel (gimg)))
+	    {
+	      floating_sel_to_layer (layer);
+	    }
+	  /* if no selection */
+	  gmask = channel_new(gimg, 
+			      gimg->width, 
+			      gimg->height,
+			      "Qmask", 
+			      (int)(255*opacity)/100,
+			      color);
+	  gimp_image_add_channel (gimg, gmask, 0);
+	  gimp_drawable_fill (GIMP_DRAWABLE(gmask), 0, 0, 0, 0);
+	  /* edit_clear(gimg,GIMP_DRAWABLE(gmask));  */
+	  undo_push_qmask(gimg,0);
+	  gdisp->gimage->qmask_state = 1;
+	  gdisplays_flush();  
+	}
+      else 
+	{ /* if selection */
+	  gmask = channel_copy (gimage_get_mask (gimg));
+	  gimp_image_add_channel (gimg, gmask, 0);
+	  channel_set_color(gmask, color);
+	  channel_set_name(gmask, "Qmask");
+	  channel_set_opacity(gmask, opacity);
+	  gimage_mask_none (gimg);           /* Clear the selection */
+	  undo_push_qmask(gimg,0);
+	  gdisp->gimage->qmask_state = 1;
+	  gdisplays_flush();
+	}
+      undo_push_group_end(gimg);
     }
-  else 
-    { /* if selection */
-    gmask = channel_copy (gimage_get_mask (gimg));
-    gimp_image_add_channel (gimg, gmask, 0);
-    channel_set_color(gmask, color);
-    channel_set_name(gmask, "Qmask");
-    channel_set_opacity(gmask, opacity);
-    gimage_mask_none (gimg);           /* Clear the selection */
-    undo_push_qmask(gimg,0);
-    gdisp->gimage->qmask_state = 1;
-    gdisplays_flush();
-    }
-  undo_push_group_end(gimg);
-  }
 }
 
 static void
@@ -249,12 +232,6 @@ edit_qmask_channel_query (GDisplay * gdisp)
   gint i;
   guchar  channel_color[3] = { 0, 0, 0 };
 
-  static ActionAreaItem action_items[] =
-  {
-    { N_("OK"), edit_qmask_query_ok_callback, NULL, NULL },
-    { N_("Cancel"), edit_qmask_query_cancel_callback, NULL, NULL }
-  };
-
   /* channel = gimp_image_get_channel_by_name (gdisp->gimage, "Qmask"); */
   /*  the new options structure  */
   options = g_new (EditQmaskOptions, 1);
@@ -267,24 +244,25 @@ edit_qmask_channel_query (GDisplay * gdisp)
   options->color_panel = color_panel_new (channel_color, 48, 64);
 
   /*  The dialog  */
-  options->query_box = gtk_dialog_new ();
-  gtk_window_set_wmclass (GTK_WINDOW (options->query_box),
-                          "edit_qmask_atributes", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (options->query_box),
-                        _("Edit Qmask Attributes"));
-  gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
+  options->query_box =
+    gimp_dialog_new (_("Edit Qmask Attributes"), "edit_qmask_attributes",
+		     gimp_standard_help_func,
+		     "dialogs/edit_qmask_attributes_dialog.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
 
-  /*  Handle the wm close signal  */
-  gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
-                      GTK_SIGNAL_FUNC (qmask_query_delete_callback),
-                      options);
+		     _("OK"), edit_qmask_query_ok_callback,
+		     options, NULL, TRUE, FALSE,
+		     _("Cancel"), edit_qmask_query_cancel_callback,
+		     options, NULL, FALSE, TRUE,
+
+		     NULL);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
                      hbox);
-
   /*  The vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
@@ -316,10 +294,6 @@ edit_qmask_channel_query (GDisplay * gdisp)
                       TRUE, TRUE, 0);
   gtk_widget_show (options->color_panel->color_panel_widget);
 
-  action_items[0].user_data = options;
-  action_items[1].user_data = options;
-  build_action_area (GTK_DIALOG (options->query_box), action_items, 2, 0);
-
   gtk_widget_show (table);
   gtk_widget_show (vbox);
   gtk_widget_show (hbox);
@@ -327,7 +301,7 @@ edit_qmask_channel_query (GDisplay * gdisp)
 }
 
 static void edit_qmask_query_ok_callback (GtkWidget *widget, 
-                                          gpointer client_data) 
+                                          gpointer   client_data) 
 {
   EditQmaskOptions *options;
   Channel *channel;
@@ -338,8 +312,8 @@ static void edit_qmask_query_ok_callback (GtkWidget *widget,
   gint i;
   
   options = (EditQmaskOptions *) client_data;
-  channel = gimp_image_get_channel_by_name(options->gimage, "Qmask");
-  opacity = (int) (255* options->opacity/100);
+  channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
+  opacity = (int) (255 * options->opacity/100);
 
   if (options->gimage && channel)
     {     /* don't update if opacity hasn't changed */
@@ -377,7 +351,9 @@ static void edit_qmask_query_ok_callback (GtkWidget *widget,
   g_free (options);
 }
 
-static void edit_qmask_query_cancel_callback (GtkWidget *widget, gpointer client_data)
+static void
+edit_qmask_query_cancel_callback (GtkWidget *widget,
+				  gpointer   client_data)
 {
   EditQmaskOptions *options;
 

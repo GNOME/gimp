@@ -855,20 +855,19 @@ idle_load_page (gpointer data)
 }
 
 static void
-run_temp_proc (char    *name,
-	       int      nparams,
+run_temp_proc (gchar   *name,
+	       gint     nparams,
 	       GParam  *param,
-	       int     *nreturn_vals,
+	       gint    *nreturn_vals,
 	       GParam **return_vals)
 {
   static GParam values[1];
   GStatusType status = STATUS_SUCCESS;
   gchar *path;
 
-  g_print ("starting idle page loader (%i)\n", getpid());
-
   /*  Make sure all the arguments are there!  */
-  if (nparams != 1)
+  if ((nparams != 1) ||
+      !strlen (param[0].data.d_string))
     path = "welcome.html";
   else
     path = param[0].data.d_string;
@@ -881,8 +880,6 @@ run_temp_proc (char    *name,
 			path, NULL);
 
   gtk_idle_add (idle_load_page, path);
-
-  g_print ("idle page loader started (%i)\n", getpid());
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -902,11 +899,7 @@ input_callback (GIOChannel   *channel,
 {
   /* We have some data in the wire - read it */
   /* The below will only ever run a single proc */
-  g_print ("before gimp_run_temp (%i)\n", getpid());
-
   gimp_run_temp ();
-
-  g_print ("after gimp_run_temp (%i)\n", getpid());
 
   return TRUE;
 }
@@ -950,32 +943,13 @@ install_temp_proc (void)
 static gboolean
 open_url (gchar *path)
 {
-  GParam* return_params;
-  gint    n_return_params;
+  if (! open_browser_dialog (path))
+    return FALSE;
 
-  g_print ("before run_procedure(%i)\n", getpid());
+  install_temp_proc ();
+  gtk_main ();
 
-  return_params = gimp_run_procedure (GIMP_HELP_TEMP_EXT_NAME,
-				      &n_return_params,
-				      PARAM_STRING, path,
-				      PARAM_END);
-
-  g_print ("after run_procedure(%i)\n", getpid());
-
-  if (return_params[0].data.d_status == STATUS_SUCCESS)
-    {
-      return TRUE;
-    }
-  else
-    {
-      if (! open_browser_dialog (path))
-	return FALSE;
-
-      install_temp_proc ();
-      gtk_main ();
-
-      return TRUE;
-    }
+  return TRUE;
 }
 
 MAIN ()
@@ -1000,7 +974,7 @@ query ()
 			  "Michael Natterer <mitschel@cs.tu-berlin.de>",
 			  "Sven Neumann & Michael Natterer",
                           "1999",
-                          "<Toolbox>/Xtns/Help Browser",
+                          NULL,
                           "",
                           PROC_EXTENSION,
                           nargs, nreturn_vals,
@@ -1035,7 +1009,8 @@ run (char    *name,
         case RUN_NONINTERACTIVE:
 	case RUN_WITH_LAST_VALS:
          /*  Make sure all the arguments are there!  */
-          if (nparams != 2)
+          if ((nparams != 2) ||
+	      !strlen (param[1].data.d_string))
 	    path = g_strdup ("welcome.html");
 	  else
 	    path = g_strdup (param[1].data.d_string);

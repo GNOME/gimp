@@ -73,9 +73,6 @@ Resize * resize_widget_new    (ResizeType    type,
 			       gboolean      dot_for_dot,
 			       GtkSignalFunc ok_cb,
 			       GtkSignalFunc cancel_cb,
-			       gint        (*delete_cb) (GtkWidget *,
-							 GdkEvent *,
-							 gpointer),
 			       gpointer      user_data);
 void     resize_widget_free   (Resize      * resize);
 
