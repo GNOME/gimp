@@ -1082,7 +1082,17 @@ gimp_dialog_factories_toggle (GimpDialogFactory *toolbox_factory,
     return;
 
   if (ensure_visibility && toggle_state != GIMP_DIALOG_HIDE_ALL)
-    return;
+    {
+      GList *list;
+
+      for (list = toolbox_factory->open_dialogs; list; list = list->next)
+        {
+          if (GTK_IS_WIDGET (list->data) && GTK_WIDGET_TOPLEVEL (list->data))
+            gtk_window_present (GTK_WINDOW (list->data));
+        }
+
+      return;
+    }
 
   doing_update = TRUE;
 
