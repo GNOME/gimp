@@ -15,6 +15,7 @@
 
 	* configure.in
 	* plug-ins/Makefile.am
+	* plug-ins/webbrowser/.cvsignore
 	* plug-ins/webbrowser/Makefile.am
 	* plug-ins/webbrowser/README
 	* plug-ins/webbrowser/web-browser.scm
