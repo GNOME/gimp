@@ -1514,12 +1514,12 @@ arcto_ellipsesegment (gdouble radius_x,
                       gdouble phi1,
                       GimpCoords *ellips)
 {
-  gdouble    phi_s, phi_e;
-  GimpCoords template = { 0, 0, 1, 0.5, 0.5, 0.5 };
-  gdouble    circlemagic = 4 * (sqrt(2) - 1) / 3;
-  gdouble    y[4] = { 0.0, circlemagic, 1.0, 1.0 };
-  gdouble    h0, h1;
-  gdouble    t0, t1;
+  gdouble       phi_s, phi_e;
+  GimpCoords    template    = { 0, 0, 1, 0.5, 0.5, 0.5 };
+  const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
+  gdouble       y[4]        = { 0.0, circlemagic, 1.0, 1.0 };
+  gdouble       h0, h1;
+  gdouble       t0, t1;
 
   g_return_if_fail (ellips != NULL);
 

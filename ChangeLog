@@ -1,5 +1,11 @@
 2004-06-19  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpbezierstroke.c (arcto_ellipsesegment): use
+	G_SQRT2 to make circlemagic a constant value so we can initialize
+	the array on declaration. Fixes bug #144632.
+
+2004-06-19  Sven Neumann  <sven@gimp.org>
+
 	* devel-docs/parasites.txt: document "exif-data" parasite.
 
 2004-06-18  Manish Singh  <yosh@gimp.org>
