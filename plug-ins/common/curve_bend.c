@@ -148,7 +148,7 @@ struct _BenderDialog
   GtkWidget *graph;
   GtkAdjustment *rotate_data;
   GdkPixmap *pixmap;
-  GtkWidget *filesel;
+  GtkWidget *filechooser;
 
   GdkCursor *cursor_wait;
   GdkCursor *cursor_acitve;
@@ -1191,7 +1191,6 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkWidget  *button;
   GtkWidget  *spinbutton;
   GtkWidget  *label;
-  GtkWidget  *separator;
   GtkObject  *data;
   GdkDisplay *display;
   gint        i, j;
@@ -1201,7 +1200,7 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->preview = FALSE;
   cd->curve_type = SMOOTH;
   cd->pixmap = NULL;
-  cd->filesel = NULL;
+  cd->filechooser = NULL;
   cd->outline = OUTLINE_UPPER;
   cd->show_progress = FALSE;
   cd->smoothing = TRUE;
@@ -1257,23 +1256,22 @@ bender_new_dialog (GimpDrawable *drawable)
   cd->cursor_acitve = gdk_cursor_new_for_display (display, GDK_TOP_LEFT_ARROW);
 
   /*  The main hbox  */
-  main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cd->shell)->vbox), main_hbox);
   gtk_widget_show (main_hbox);
 
   /* Left side column */
-  vbox =  gtk_vbox_new (FALSE, 4);
+  vbox =  gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (main_hbox), vbox);
   gtk_widget_show (vbox);
 
   /* Preview area, top of column */
-  frame = gtk_frame_new (_("Preview"));
+  frame = gimp_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox2 = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 2);
+  vbox2 = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
@@ -1288,7 +1286,8 @@ bender_new_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   cd->pv_widget = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (cd->pv_widget), PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
+  gtk_preview_size (GTK_PREVIEW (cd->pv_widget),
+                    PREVIEW_SIZE_X, PREVIEW_SIZE_Y);
   gtk_widget_set_events (cd->pv_widget, RANGE_MASK);
   gtk_container_add (GTK_CONTAINER (frame), cd->pv_widget);
   gtk_widget_show (cd->pv_widget);
@@ -1297,7 +1296,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     G_CALLBACK (bender_pv_widget_events),
                     cd);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_end (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1321,17 +1320,16 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /* Options area, bottom of column */
-  frame = gtk_frame_new (_("Options"));
+  frame = gimp_frame_new (_("Options"));
   gtk_box_pack_end (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
   /* Render Options  */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1384,12 +1382,11 @@ bender_new_dialog (GimpDrawable *drawable)
                     cd);
 
   /*  The curves graph  */
-  frame = gtk_frame_new (_("Modify Curves"));
+  frame = gimp_frame_new (_("Modify Curves"));
   gtk_container_add (GTK_CONTAINER (main_hbox), frame);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1409,7 +1406,7 @@ bender_new_dialog (GimpDrawable *drawable)
                     G_CALLBACK (bender_graph_events),
                     cd);
 
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1523,11 +1520,6 @@ bender_new_dialog (GimpDrawable *drawable)
   g_signal_connect (button, "clicked",
                     G_CALLBACK (bender_save_callback),
                     cd);
-
-  /* Separate file ops from pure curve ops */
-  separator = gtk_hseparator_new ();
-  gtk_box_pack_end (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
-  gtk_widget_show (separator);
 
   gtk_widget_show (main_hbox);
 
@@ -2013,90 +2005,99 @@ bender_preview_update_once (GtkWidget *widget,
 }
 
 static void
-p_points_save_to_file_response (GtkFileSelection *fs,
-                                gint              response_id,
-                                BenderDialog     *cd)
+p_points_save_to_file_response (GtkWidget    *dialog,
+                                gint          response_id,
+                                BenderDialog *cd)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
+      gchar *filename;
 
-      filename = gtk_file_selection_get_filename (fs);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
       p_save_pointfile (cd, filename);
+
+      g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (dialog);
 }
 
 static void
-p_points_load_from_file_response (GtkFileSelection *fs,
-                                  gint              response_id,
-                                  BenderDialog     *cd)
+p_points_load_from_file_response (GtkWidget    *dialog,
+                                  gint          response_id,
+                                  BenderDialog *cd)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
+      gchar *filename;
 
-      filename = gtk_file_selection_get_filename (fs);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
       p_load_pointfile (cd, filename);
       bender_update (cd, UP_ALL);
+
+      g_free (filename);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (fs));
+  gtk_widget_destroy (dialog);
 }
 
 static void
 bender_load_callback (GtkWidget    *w,
                       BenderDialog *cd)
 {
-  if (cd->filesel)
+  if (! cd->filechooser)
     {
-      gtk_window_present (GTK_WINDOW (cd->filesel));
-      return;
+      cd->filechooser =
+        gtk_file_chooser_dialog_new (_("Load Curve Points from file"),
+                                     GTK_WINDOW (gtk_widget_get_toplevel (w)),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      g_signal_connect (cd->filechooser, "response",
+                        G_CALLBACK (p_points_load_from_file_response),
+                        cd);
+      g_signal_connect (cd->filechooser, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &cd->filechooser);
     }
 
-  cd->filesel = gtk_file_selection_new (_("Load Curve Points from file"));
-
-  gtk_window_set_transient_for (GTK_WINDOW (cd->filesel),
-                                GTK_WINDOW (gtk_widget_get_toplevel (w)));
-
-  g_signal_connect (cd->filesel, "response",
-                    G_CALLBACK (p_points_load_from_file_response),
-                    cd);
-  g_signal_connect (cd->filesel, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &cd->filesel);
-
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (cd->filesel),
-				   "curve_bend.points");
-  gtk_widget_show (cd->filesel);
+  gtk_window_present (GTK_WINDOW (cd->filechooser));
 }
 
 static void
 bender_save_callback (GtkWidget    *w,
                       BenderDialog *cd)
 {
-  if (cd->filesel)
+  if (! cd->filechooser)
     {
-      gtk_window_present (GTK_WINDOW (cd->filesel));
-      return;
+      cd->filechooser =
+        gtk_file_chooser_dialog_new (_("Save Curve Points to file"),
+                                     GTK_WINDOW (gtk_widget_get_toplevel (w)),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
+
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
+
+                                     NULL);
+
+      g_signal_connect (cd->filechooser, "response",
+                        G_CALLBACK (p_points_save_to_file_response),
+                        cd);
+      g_signal_connect (cd->filechooser, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &cd->filechooser);
+
+      gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (cd->filechooser),
+                                         "curve_bend.points");
     }
 
-  cd->filesel = gtk_file_selection_new (_("Save Curve Points to file"));
-
-  gtk_window_set_transient_for (GTK_WINDOW (cd->filesel),
-                                GTK_WINDOW (gtk_widget_get_toplevel (w)));
-
-  g_signal_connect (cd->filesel, "response",
-                    G_CALLBACK (p_points_save_to_file_response),
-                    cd);
-  g_signal_connect (cd->filesel, "destroy",
-                    G_CALLBACK (gtk_widget_destroyed),
-                    &cd->filesel);
-
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (cd->filesel),
-				   "curve_bend.points");
-  gtk_widget_show (cd->filesel);
+  gtk_window_present (GTK_WINDOW (cd->filechooser));
 }
 
 static void

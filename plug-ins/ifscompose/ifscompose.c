@@ -540,21 +540,21 @@ ifs_compose_trans_page (void)
   GtkWidget *label;
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 6, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
-  gtk_table_set_col_spacing (GTK_TABLE (table), 3, 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 2, 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 4, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   /* X */
 
   label = gtk_label_new (_("X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -568,7 +568,7 @@ ifs_compose_trans_page (void)
   /* Y */
 
   label = gtk_label_new (_("Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -582,7 +582,7 @@ ifs_compose_trans_page (void)
   /* Scale */
 
   label = gtk_label_new (_("Scale:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -610,7 +610,7 @@ ifs_compose_trans_page (void)
   /* Asym */
 
   label = gtk_label_new (_("Asymmetry:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 4, 5, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -624,7 +624,7 @@ ifs_compose_trans_page (void)
   /* Shear */
 
   label = gtk_label_new (_("Shear:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 4, 5, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -658,11 +658,11 @@ ifs_compose_color_page (void)
   GimpRGB    color;
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
 
   table = gtk_table_new (3, 5, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -684,7 +684,7 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->target_cmap->hbox);
 
   label = gtk_label_new (_("Scale Hue by:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -699,7 +699,7 @@ ifs_compose_color_page (void)
   gtk_widget_show (ifsD->hue_scale_pair->spin);
 
   label = gtk_label_new (_("Scale Value by:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
@@ -827,14 +827,14 @@ ifs_compose_dialog (GimpDrawable *drawable)
                     NULL);
 
   /*  The main vbox */
-  main_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
                       TRUE, TRUE, 0);
 
   /*  The design area */
 
-  hbox = gtk_hbox_new (FALSE, 6);
+  hbox = gtk_hbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
 
   aspect_frame = gtk_aspect_frame_new (NULL,
@@ -1002,12 +1002,11 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   /* The current transformation frame */
 
-  ifsD->current_frame = gtk_frame_new (NULL);
+  ifsD->current_frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), ifsD->current_frame,
                       FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (ifsD->current_frame), vbox);
 
   /* The notebook */
@@ -1035,7 +1034,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Relative Probability:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1280,7 +1279,7 @@ ifs_options_dialog (void)
       gtk_widget_show (table);
 
       label = gtk_label_new (_("Max. Memory:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1293,7 +1292,7 @@ ifs_options_dialog (void)
       gtk_widget_show (ifsOptD->memory_pair->spin);
 
       label = gtk_label_new (_("Iterations:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1307,7 +1306,7 @@ ifs_options_dialog (void)
       gtk_widget_show (label);
 
       label = gtk_label_new (_("Subdivide:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -1320,7 +1319,7 @@ ifs_options_dialog (void)
       gtk_widget_show (ifsOptD->subdivide_pair->spin);
 
       label = gtk_label_new (_("Spot Radius:"));
-      gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+      gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
                         GTK_FILL, GTK_FILL, 0, 0);
       gtk_widget_show (label);
@@ -2512,7 +2511,6 @@ ifscompose_message_dialog (GtkMessageType  type,
   GtkWidget *dlg;
 
   dlg = gtk_message_dialog_new (parent, 0, type, GTK_BUTTONS_OK, message);
-  gtk_window_set_transient_for (GTK_WINDOW (dlg), parent);
 
   if (title)
     gtk_window_set_title (GTK_WINDOW (dlg), title);
@@ -2524,17 +2522,17 @@ ifscompose_message_dialog (GtkMessageType  type,
 
 /* save an ifs file */
 static void
-ifsfile_save_response (GtkFileSelection *file_select,
-                       gint              response_id,
-                       gpointer          data)
+ifsfile_save_response (GtkWidget *dialog,
+                       gint       response_id,
+                       gpointer   data)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *filename;
-      gchar       *str;
-      FILE        *fh;
+      gchar *filename;
+      gchar *str;
+      FILE  *fh;
 
-      filename = gtk_file_selection_get_filename (file_select);
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
       str = ifsvals_stringify (&ifsvals, elements);
 
@@ -2545,9 +2543,13 @@ ifsfile_save_response (GtkFileSelection *file_select,
             g_strdup_printf (_("Could not open '%s' for writing: %s"),
                              gimp_filename_to_utf8 (filename),
                              g_strerror (errno));
-          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
-                                     "Save failed", message);
+
+          ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dialog),
+                                     _("Save failed"), message);
+
           g_free (message);
+          g_free (filename);
+
           return;
         }
 
@@ -2555,7 +2557,7 @@ ifsfile_save_response (GtkFileSelection *file_select,
       fclose (fh);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (file_select));
+  gtk_widget_destroy (dialog);
 }
 
 /* replace ifsvals and elements with specified new values
@@ -2635,6 +2637,7 @@ ifsfile_load_response (GtkFileSelection *file_select,
           gchar *message = g_strdup_printf (_("File '%s' doesn't seem to be "
                                               "an IFS Compose file."),
                                             gimp_filename_to_utf8 (filename));
+
           ifscompose_message_dialog (GTK_MESSAGE_ERROR,
                                      GTK_WINDOW (file_select),
                                      _("Open failed"), message);
@@ -2668,51 +2671,61 @@ ifsfile_load_response (GtkFileSelection *file_select,
 static void
 ifs_compose_save (GtkWidget *parent)
 {
-  static GtkWidget *file_select = NULL;
+  static GtkWidget *dialog = NULL;
 
-  if (! file_select)
+  if (! dialog)
     {
-      file_select = gtk_file_selection_new (_("Save as IFS file"));
+      dialog =
+        gtk_file_chooser_dialog_new (_("Save as IFS file"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_SAVE,
 
-      gtk_window_set_transient_for (GTK_WINDOW (file_select),
-                                    GTK_WINDOW (parent));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
 
-      gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
+                                     NULL);
 
-      g_signal_connect (file_select, "destroy",
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
-                        &file_select);
-      g_signal_connect (file_select, "response",
+                        &dialog);
+      g_signal_connect (dialog, "response",
                         G_CALLBACK (ifsfile_save_response),
                         NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (file_select));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
 ifs_compose_load (GtkWidget *parent)
 {
-  static GtkWidget *file_select = NULL;
+  static GtkWidget *dialog = NULL;
 
-  if (! file_select)
+  if (! dialog)
     {
-      file_select = gtk_file_selection_new (_("Open IFS file"));
+      dialog =
+        gtk_file_chooser_dialog_new (_("Open IFS file"),
+                                     GTK_WINDOW (parent),
+                                     GTK_FILE_CHOOSER_ACTION_OPEN,
 
-      gtk_window_set_transient_for (GTK_WINDOW (file_select),
-                                    GTK_WINDOW (parent));
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
 
-      gimp_help_connect (file_select, gimp_standard_help_func, HELP_ID, NULL);
+                                     NULL);
 
-      g_signal_connect (file_select, "destroy",
+      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+
+      g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
-                        &file_select);
-      g_signal_connect (file_select, "response",
+                        &dialog);
+      g_signal_connect (dialog, "response",
                         G_CALLBACK (ifsfile_load_response),
                         NULL);
     }
 
-  gtk_window_present (GTK_WINDOW (file_select));
+  gtk_window_present (GTK_WINDOW (dialog));
 }
 
 static void
