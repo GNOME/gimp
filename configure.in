@@ -654,6 +654,7 @@ plug-ins/script-fu/scripts/Makefile
 plug-ins/webbrowser/Makefile
 plug-ins/xjt/Makefile
 plug-ins/AlienMap/Makefile
+plug-ins/AlienMap2/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/FractalExplorer/fractalexplorer-examples/Makefile
 plug-ins/Lighting/Makefile

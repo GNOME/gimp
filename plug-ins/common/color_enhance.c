@@ -63,7 +63,7 @@ GPlugInInfo PLUG_IN_INFO =
 MAIN ()
 
 static void
-query ()
+query (void)
 {
   static GParamDef args[] =
   {
@@ -76,14 +76,8 @@ query ()
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_Color_Enhance",
-			  "Automatically stretch the saturation of the
-specified drawable to cover all possible ranges.", 	 	   	 
-			  "This simple plug-in does an automatic
-saturation stretch.  For each channel in the image, it finds the
-minimum and maximum values... it uses those values to stretch the individual
-histograms to the full range.  For some images it may do just what
-you want; for others it may be total crap :).  This version differs from
-Contrast Autostretch in that it works in HSV space, and preserves hue.",
+			  "Automatically stretch the saturation of the specified drawable to cover all possible ranges.", 	 	   	 
+			  "This simple plug-in does an automatic saturation stretch.  For each channel in the image, it finds the minimum and maximum values... it uses those values to stretch the individual histograms to the full range.  For some images it may do just what you want; for others it may be total crap :).  This version differs from Contrast Autostretch in that it works in HSV space, and preserves hue.",
 			  "Martin Weber",
 		 	  "Martin Weber", 
 		  	  "1997", 	 	 

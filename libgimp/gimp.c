@@ -18,6 +18,7 @@
  */
 #include "config.h"
 
+#include <locale.h>
 #include <errno.h>
 #include <signal.h>
 #include <stdarg.h>
@@ -140,6 +141,8 @@ gimp_main (int   argc,
   guint32 thread;
   int i, j, k;
 #endif
+
+  setlocale (LC_NUMERIC, "C");
 
 #ifdef NATIVE_WIN32
   /* Check for exe file name with spaces in the path having been split up

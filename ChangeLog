@@ -1,3 +1,17 @@
+Fri Sep  3 17:33:37 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* configure.in: add plug-ins/AlienMap2/Makefile to AC_OUTPUT
+
+	* libgimp/gimp.c: setlocale (LC_NUMERIC, "C") in gimp_main
+	so floats are sane over the wire
+
+	* libgimp/stdplugins-intl.h: same for INIT_I18N_UI()
+
+	* plug-ins/common/color_enhance.c: no literal newlines in string for
+	portability
+
+	* plug-ins/sel2path/sel2path.c: i18n patch from SHIRASAKI Yasuhiro
+
 Sat Sep  4 01:04:00 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/Makefile.am, plug-ins/AlienMap2: new plug-in.

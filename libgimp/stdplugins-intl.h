@@ -15,6 +15,7 @@
   textdomain("gimp-std-plugins")
 #define INIT_I18N_UI() \
   gtk_set_locale(); \
+  setlocale (LC_NUMERIC, "C"); \
   INIT_I18N();
 #else
 #define INIT_I18N() \
@@ -22,5 +23,6 @@
   textdomain("gimp-std-plugins")
 #define INIT_I18N_UI() \
   gtk_set_locale(); \
+  setlocale (LC_NUMERIC, "C"); \
   INIT_I18N();
 #endif

@@ -122,8 +122,8 @@ query_2()
   static int nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_sel2path_advanced",
-			  "Converts a selection to a path (with advanced user menu)",
-			  "Converts a selection to a path (with advanced user menu)",
+			  _("Converts a selection to a path (with advanced user menu)"),
+			  _("Converts a selection to a path (with advanced user menu)"),
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1999",
@@ -147,13 +147,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_sel2path",
-			  "Converts a selection to a path",
-			  "Converts a selection to a path",
+			  _("Converts a selection to a path"),
+			  _("Converts a selection to a path"),
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1999",
-			  "<Image>/Select/To Path",
+			  N_("<Image>/Select/To Path"),
 			  "RGB*, INDEXED*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -179,8 +181,11 @@ run    (gchar    *name,
 
   run_mode = param[0].data.d_int32;
 
-  if(!strcmp(name,"plug_in_sel2path"))
+  if(!strcmp(name,"plug_in_sel2path")) {
     no_dialog = TRUE;
+    INIT_I18N();
+  } else
+    INIT_I18N_UI();
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -195,7 +200,7 @@ run    (gchar    *name,
 
   if(gimp_selection_is_empty(image_ID))
     {
-      g_message("No selection to convert");
+      g_message(_("No selection to convert"));
       gimp_drawable_detach (drawable);
       return;
     }
@@ -342,7 +347,7 @@ sel2path_dialog (SELVALS *sels)
   gtk_container_add (GTK_CONTAINER (vbox), table);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label ( _("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) sel2path_ok_callback,
@@ -351,7 +356,7 @@ sel2path_dialog (SELVALS *sels)
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label ( _("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -359,7 +364,7 @@ sel2path_dialog (SELVALS *sels)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Default Values");
+  button = gtk_button_new_with_label ( ("Default Values"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) sel2path_reset_callback,
@@ -407,7 +412,7 @@ sel_pixel_value(gint row, gint col)
   if(col > sel_width ||
      row > sel_height)
     {
-      g_warning("sel_pixel_value [%d,%d] out of bounds",col,row);
+      g_warning ("sel_pixel_value [%d,%d] out of bounds", col, row);
       return 0;
     }
 
@@ -548,7 +553,7 @@ do_points(spline_list_array_type in_splines,gint32 image_ID)
 	      last_y = END_POINT (s).y;
 	    }
 	  else
-	    g_message ("print_spline: strange degree (%d)", SPLINE_DEGREE (s));
+	    g_message ( _("print_spline: strange degree (%d)"), SPLINE_DEGREE (s));
 	  
 	  point_count++;
 	}
@@ -582,7 +587,7 @@ do_sel2path(gint32 drawable_ID,gint32 image_ID )
 
   if(selection_ID < 0)
     {
-      g_message("gimp_image_get_selection failed");
+      g_message( _("gimp_image_get_selection failed"));
       return FALSE;
     }
 
@@ -590,7 +595,7 @@ do_sel2path(gint32 drawable_ID,gint32 image_ID )
 
   if(gimp_drawable_bpp(selection_ID) != 1)
     {
-      g_message("Internal error. Selection bpp > 1");
+      g_message( _("Internal error. Selection bpp > 1"));
       return FALSE;
     }
 
@@ -735,7 +740,7 @@ safe_free (address *item)
 {
   if (item == NULL || *item == NULL)
     {
-      fprintf (stderr, "safe_free: Attempt to free a null item.\n");
+      g_warning ("safe_free: Attempt to free a null item.");
       abort ();
     }
   
