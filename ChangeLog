@@ -1,5 +1,11 @@
 2003-02-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptransformoptions.c
+	(gimp_transform_options_class_init): the default value of "clip"
+	is FALSE, not TRUE. Fixes bug #106644.
+
+2003-02-21  Michael Natterer  <mitch@gimp.org>
+
 	Refactored the GimpDisplayShell update/draw code:
 
 	* app/display/gimpdisplayshell.[ch]: removed the display_areas

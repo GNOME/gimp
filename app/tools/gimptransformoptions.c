@@ -133,7 +133,7 @@ gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CLIP,
                                     "clip", NULL,
-                                    TRUE,
+                                    FALSE,
                                     0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_GRID_TYPE,
                                  "grid-type", NULL,
