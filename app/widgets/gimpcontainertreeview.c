@@ -254,7 +254,10 @@ gimp_container_tree_view_set (GimpContainerTreeView *tree_view,
   else
     name = g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable)));
 
-  renderer = gimp_preview_renderer_new (viewable, view->preview_size, 1, FALSE);
+  renderer = gimp_preview_renderer_new (G_TYPE_FROM_INSTANCE (viewable),
+                                        view->preview_size, 1, FALSE);
+  gimp_preview_renderer_set_viewable (renderer, viewable);
+  gimp_preview_renderer_remove_idle (renderer);
 
   g_signal_connect (renderer, "update",
                     G_CALLBACK (gimp_container_tree_view_renderer_update),

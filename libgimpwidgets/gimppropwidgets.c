@@ -2127,7 +2127,9 @@ gimp_prop_preview_new (GObject     *config,
       return NULL;
     }
 
-  preview = gimp_preview_new_by_type (param_spec->value_type, size, 0, FALSE);
+  preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
+                                       param_spec->value_type,
+                                       size, 0, FALSE);
 
   if (! preview)
     {

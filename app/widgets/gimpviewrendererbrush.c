@@ -93,9 +93,8 @@ gimp_preview_renderer_brush_class_init (GimpPreviewRendererBrushClass *klass)
 static void
 gimp_preview_renderer_brush_init (GimpPreviewRendererBrush *renderer)
 {
-  renderer->pipe_timeout_id       = 0;
-  renderer->pipe_animation_index  = 0;
-  renderer->pipe_animation_widget = NULL;
+  renderer->pipe_timeout_id      = 0;
+  renderer->pipe_animation_index = 0;
 }
 
 static void
@@ -156,6 +155,7 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 
       if (GIMP_IS_BRUSH_PIPE (brush))
 	{
+#if 0
 	  if (renderer->width  != brush_width ||
               renderer->height != brush_height)
 	    {
@@ -163,10 +163,10 @@ gimp_preview_renderer_brush_render (GimpPreviewRenderer *renderer,
 			 G_GNUC_FUNCTION);
 	      return;
 	    }
+#endif
 
-          renderbrush->pipe_animation_widget = widget;
-	  renderbrush->pipe_animation_index  = 0;
-	  renderbrush->pipe_timeout_id       =
+	  renderbrush->pipe_animation_index = 0;
+	  renderbrush->pipe_timeout_id =
             g_timeout_add (300, gimp_preview_renderer_brush_render_timeout,
                            renderbrush);
 	}
@@ -304,9 +304,8 @@ gimp_preview_renderer_brush_render_timeout (gpointer data)
 
   if (! renderer->viewable)
     {
-      renderbrush->pipe_timeout_id       = 0;
-      renderbrush->pipe_animation_index  = 0;
-      renderbrush->pipe_animation_widget = NULL;
+      renderbrush->pipe_timeout_id      = 0;
+      renderbrush->pipe_animation_index = 0;
 
       return FALSE;
     }
@@ -331,7 +330,7 @@ gimp_preview_renderer_brush_render_timeout (gpointer data)
 
   temp_buf_free (temp_buf);
 
-  gtk_widget_queue_draw (renderbrush->pipe_animation_widget);
+  gimp_preview_renderer_update (renderer);
 
   return TRUE;
 }

@@ -148,10 +148,10 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                     G_CALLBACK (gimp_selection_editor_abox_resized),
                     selection_editor);
 
-  selection_editor->preview = gimp_preview_new_by_type (GIMP_TYPE_DRAWABLE,
-                                                        nav_preview_size,
-                                                        0,
-                                                        FALSE);
+  selection_editor->preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
+                                                         GIMP_TYPE_DRAWABLE,
+                                                         nav_preview_size,
+                                                         0, FALSE);
   gtk_container_add (GTK_CONTAINER (abox), selection_editor->preview);
   gtk_widget_show (selection_editor->preview);
 
@@ -496,5 +496,5 @@ static void
 gimp_selection_editor_mask_changed (GimpImage           *gimage,
                                     GimpSelectionEditor *editor)
 {
-  gimp_preview_update (GIMP_PREVIEW (editor->preview));
+  gimp_preview_renderer_invalidate (GIMP_PREVIEW (editor->preview)->renderer);
 }

@@ -60,7 +60,7 @@ static void     gimp_preview_renderer_init         (GimpPreviewRenderer      *re
 
 static void     gimp_preview_renderer_finalize     (GObject        *object);
 
-static gboolean gimp_preview_renderer_idle_update  (GimpPreviewRenderer *renderer);
+static gboolean gimp_preview_renderer_idle_invalidate (GimpPreviewRenderer *renderer);
 static void     gimp_preview_renderer_real_render  (GimpPreviewRenderer *renderer,
                                                     GtkWidget           *widget);
 
@@ -190,66 +190,10 @@ gimp_preview_renderer_finalize (GObject *object)
 /*  public functions  */
 
 GimpPreviewRenderer *
-gimp_preview_renderer_new (GimpViewable *viewable,
-                           gint          size,
-                           gint          border_width,
-                           gboolean      is_popup)
-{
-  GimpPreviewRenderer *renderer;
-  GType                viewable_type;
-
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (size > 0 && size <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (border_width >= 0 &&
-                        border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
-
-  viewable_type = G_TYPE_FROM_INSTANCE (viewable);
-
-  renderer = g_object_new (gimp_preview_renderer_type_from_viewable_type (viewable_type),
-                           NULL);
-
-  renderer->is_popup = is_popup ? TRUE : FALSE;
-
-  gimp_preview_renderer_set_viewable (renderer, viewable);
-  gimp_preview_renderer_set_size (renderer, size, border_width);
-
-  return renderer;
-}
-
-GimpPreviewRenderer *
-gimp_preview_renderer_new_full (GimpViewable *viewable,
-                                gint          width,
-                                gint          height,
-                                gint          border_width,
-                                gboolean      is_popup)
-{
-  GimpPreviewRenderer *renderer;
-  GType                viewable_type;
-
-  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
-  g_return_val_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE, NULL);
-  g_return_val_if_fail (border_width >= 0 &&
-                        border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
-
-  viewable_type = G_TYPE_FROM_INSTANCE (viewable);
-
-  renderer = g_object_new (gimp_preview_renderer_type_from_viewable_type (viewable_type),
-                           NULL);
-
-  renderer->is_popup = is_popup ? TRUE : FALSE;
-
-  gimp_preview_renderer_set_viewable (renderer, viewable);
-  gimp_preview_renderer_set_size_full (renderer, width, height, border_width);
-
-  return renderer;
-}
-
-GimpPreviewRenderer *
-gimp_preview_renderer_new_by_type (GType    viewable_type,
-                                   gint     size,
-                                   gint     border_width,
-                                   gboolean is_popup)
+gimp_preview_renderer_new (GType    viewable_type,
+                           gint     size,
+                           gint     border_width,
+                           gboolean is_popup)
 {
   GimpPreviewRenderer *renderer;
 
@@ -261,9 +205,36 @@ gimp_preview_renderer_new_by_type (GType    viewable_type,
   renderer = g_object_new (gimp_preview_renderer_type_from_viewable_type (viewable_type),
                            NULL);
 
-  renderer->is_popup     = is_popup ? TRUE : FALSE;
-  renderer->size         = size;
-  renderer->border_width = border_width;
+  renderer->is_popup = is_popup ? TRUE : FALSE;
+
+  gimp_preview_renderer_set_size (renderer, size, border_width);
+  gimp_preview_renderer_remove_idle (renderer);
+
+  return renderer;
+}
+
+GimpPreviewRenderer *
+gimp_preview_renderer_new_full (GType    viewable_type,
+                                gint     width,
+                                gint     height,
+                                gint     border_width,
+                                gboolean is_popup)
+{
+  GimpPreviewRenderer *renderer;
+
+  g_return_val_if_fail (g_type_is_a (viewable_type, GIMP_TYPE_VIEWABLE), NULL);
+  g_return_val_if_fail (width  > 0 && width  <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (height > 0 && height <= GIMP_PREVIEW_MAX_SIZE, NULL);
+  g_return_val_if_fail (border_width >= 0 &&
+                        border_width <= GIMP_PREVIEW_MAX_BORDER_WIDTH, NULL);
+
+  renderer = g_object_new (gimp_preview_renderer_type_from_viewable_type (viewable_type),
+                           NULL);
+
+  renderer->is_popup = is_popup ? TRUE : FALSE;
+
+  gimp_preview_renderer_set_size_full (renderer, width, height, border_width);
+  gimp_preview_renderer_remove_idle (renderer);
 
   return renderer;
 }
@@ -306,7 +277,7 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
 				    (gpointer *) &renderer->viewable);
 
       g_signal_handlers_disconnect_by_func (renderer->viewable,
-                                            G_CALLBACK (gimp_preview_renderer_update),
+                                            G_CALLBACK (gimp_preview_renderer_invalidate),
                                             renderer);
 
       g_signal_handlers_disconnect_by_func (renderer->viewable,
@@ -323,7 +294,7 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
 
       g_signal_connect_swapped (renderer->viewable,
                                 "invalidate_preview",
-                                G_CALLBACK (gimp_preview_renderer_update),
+                                G_CALLBACK (gimp_preview_renderer_invalidate),
                                 renderer);
 
       g_signal_connect_swapped (renderer->viewable,
@@ -334,8 +305,8 @@ gimp_preview_renderer_set_viewable (GimpPreviewRenderer *renderer,
       if (renderer->size != -1)
         gimp_preview_renderer_set_size (renderer, renderer->size,
                                         renderer->border_width);
-
-      gimp_preview_renderer_update (renderer);
+      else
+        gimp_preview_renderer_invalidate (renderer);
     }
 }
 
@@ -398,7 +369,8 @@ gimp_preview_renderer_set_size_full (GimpPreviewRenderer *renderer,
           renderer->buffer = NULL;
         }
 
-      gimp_preview_renderer_update (renderer);
+      if (renderer->viewable)
+        gimp_preview_renderer_invalidate (renderer);
     }
 }
 
@@ -416,7 +388,7 @@ gimp_preview_renderer_set_dot_for_dot (GimpPreviewRenderer *renderer,
         gimp_preview_renderer_set_size (renderer, renderer->size,
                                         renderer->border_width);
 
-      gimp_preview_renderer_update (renderer);
+      gimp_preview_renderer_invalidate (renderer);
     }
 }
 
@@ -445,8 +417,24 @@ gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
           gdk_gc_set_rgb_fg_color (renderer->border_gc, &gdk_color);
         }
 
-      g_signal_emit (renderer, renderer_signals[UPDATE], 0);
+      gimp_preview_renderer_update (renderer);
     }
+}
+
+void
+gimp_preview_renderer_invalidate (GimpPreviewRenderer *renderer)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+
+  if (renderer->idle_id)
+    g_source_remove (renderer->idle_id);
+
+  renderer->needs_render = TRUE;
+
+  renderer->idle_id =
+    g_idle_add_full (G_PRIORITY_LOW,
+                     (GSourceFunc) gimp_preview_renderer_idle_invalidate,
+                     renderer, NULL);
 }
 
 void
@@ -455,12 +443,24 @@ gimp_preview_renderer_update (GimpPreviewRenderer *renderer)
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
 
   if (renderer->idle_id)
-    g_source_remove (renderer->idle_id);
+    {
+      g_source_remove (renderer->idle_id);
+      renderer->idle_id = 0;
+    }
 
-  renderer->idle_id =
-    g_idle_add_full (G_PRIORITY_LOW,
-                     (GSourceFunc) gimp_preview_renderer_idle_update, renderer,
-                     NULL);
+  g_signal_emit (renderer, renderer_signals[UPDATE], 0);
+}
+
+void
+gimp_preview_renderer_remove_idle (GimpPreviewRenderer *renderer)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
+
+  if (renderer->idle_id)
+    {
+      g_source_remove (renderer->idle_id);
+      renderer->idle_id = 0;
+    }
 }
 
 void
@@ -602,16 +602,12 @@ gimp_preview_renderer_draw (GimpPreviewRenderer *renderer,
 /*  private functions  */
 
 static gboolean
-gimp_preview_renderer_idle_update (GimpPreviewRenderer *renderer)
+gimp_preview_renderer_idle_invalidate (GimpPreviewRenderer *renderer)
 {
   renderer->idle_id = 0;
 
   if (renderer->viewable)
-    {
-      renderer->needs_render = TRUE;
-
-      g_signal_emit (renderer, renderer_signals[UPDATE], 0);
-    }
+    gimp_preview_renderer_update (renderer);
 
   return FALSE;
 }
@@ -739,7 +735,7 @@ gimp_preview_renderer_size_changed (GimpPreviewRenderer *renderer,
     gimp_preview_renderer_set_size (renderer, renderer->size,
                                     renderer->border_width);
   else
-    gimp_preview_renderer_update (renderer);
+    gimp_preview_renderer_invalidate (renderer);
 }
 
 

@@ -40,7 +40,6 @@ struct _GimpPreviewRendererBrush
 
   guint               pipe_timeout_id;
   gint                pipe_animation_index;
-  GtkWidget          *pipe_animation_widget;
 };
 
 struct _GimpPreviewRendererBrushClass

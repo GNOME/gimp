@@ -79,19 +79,15 @@ struct _GimpPreviewRendererClass
 
 GType                 gimp_preview_renderer_get_type (void) G_GNUC_CONST;
 
-GimpPreviewRenderer * gimp_preview_renderer_new      (GimpViewable *viewable,
+GimpPreviewRenderer * gimp_preview_renderer_new      (GType         viewable_type,
                                                       gint          size,
                                                       gint          border_width,
                                                       gboolean      is_popup);
-GimpPreviewRenderer * gimp_preview_renderer_new_full (GimpViewable *viewable,
+GimpPreviewRenderer * gimp_preview_renderer_new_full (GType         viewable_type,
                                                       gint          width,
                                                       gint          height,
                                                       gint          border_width,
                                                       gboolean      is_popup);
-GimpPreviewRenderer * gimp_preview_renderer_new_by_type (GType      viewable_type,
-                                                         gint       size,
-                                                         gint       border_width,
-                                                         gboolean   is_popup);
 
 void   gimp_preview_renderer_set_viewable     (GimpPreviewRenderer *renderer,
                                                GimpViewable        *viewable);
@@ -107,31 +103,34 @@ void   gimp_preview_renderer_set_dot_for_dot  (GimpPreviewRenderer *renderer,
 void   gimp_preview_renderer_set_border_color (GimpPreviewRenderer *renderer,
                                                const GimpRGB       *border_color);
 
-void   gimp_preview_renderer_update          (GimpPreviewRenderer *renderer);
+void   gimp_preview_renderer_invalidate       (GimpPreviewRenderer *renderer);
+void   gimp_preview_renderer_update           (GimpPreviewRenderer *renderer);
+void   gimp_preview_renderer_remove_idle      (GimpPreviewRenderer *renderer);
 
-void   gimp_preview_renderer_draw            (GimpPreviewRenderer *renderer,
-                                              GdkWindow           *window,
-                                              GtkWidget           *widget,
-                                              GdkRectangle        *draw_area,
-                                              GdkRectangle        *expose_area);
+void   gimp_preview_renderer_draw             (GimpPreviewRenderer *renderer,
+                                               GdkWindow           *window,
+                                               GtkWidget           *widget,
+                                               GdkRectangle        *draw_area,
+                                               GdkRectangle        *expose_area);
 
 
 /*  protected  */
 
-void   gimp_preview_render_to_buffer         (TempBuf            *temp_buf,
-                                              gint                channel,
-                                              GimpPreviewBG       inside_bg,
-                                              GimpPreviewBG       outside_bg,
-                                              guchar             *dest_buffer,
-                                              gint                dest_width,
-                                              gint                dest_height,
-                                              gint                dest_rowstride,
-                                              gint                dest_bytes);
-void   gimp_preview_renderer_render_preview (GimpPreviewRenderer *renderer,
-                                             TempBuf             *temp_buf,
-                                             gint                 channel,
-                                             GimpPreviewBG        inside_bg,
-                                             GimpPreviewBG        outside_bg);
+void   gimp_preview_render_to_buffer          (TempBuf             *temp_buf,
+                                               gint                 channel,
+                                               GimpPreviewBG        inside_bg,
+                                               GimpPreviewBG        outside_bg,
+                                               guchar              *dest_buffer,
+                                               gint                 dest_width,
+                                               gint                 dest_height,
+                                               gint                 dest_rowstride,
+                                               gint                 dest_bytes);
+
+void   gimp_preview_renderer_render_preview   (GimpPreviewRenderer *renderer,
+                                               TempBuf             *temp_buf,
+                                               gint                 channel,
+                                               GimpPreviewBG        inside_bg,
+                                               GimpPreviewBG        outside_bg);
 
 
 #endif /* __GIMP_PREVIEW_RENDERER_H__ */

@@ -1,5 +1,36 @@
 2003-03-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppreviewrenderer.[ch]: removed the constructors
+	with a GimpViewable parameter and always create renderers from
+	viewable types only. Made gimp_preview_renderer_update() emit only
+	the "update" signal and added the new function
+	gimp_preview_renderer_invalidate() which does what the old
+	_update() did (invalidating and adding an idle function which
+	emits "update"). Added gimp_preview_renderer_remove_idle() so
+	renderer updating can be fully controlled using public functions.
+
+	* app/widgets/gimppreviewrendererbrush.[ch]: no need to remember
+	the widget for the brushpipe animation, simply call
+	gimp_preview_renderer_update() in the animation timeout.
+
+	* app/widgets/gimppreview.[ch]
+	* app/widgets/gimpcontainertreeview.c: changed accordingly. Call
+	gimp_preview_renderer_remove_idle() after setting the initial
+	viewable because we will be updated anyway by the first expose.
+
+	* app/widgets/gimppreview.[ch]: Added a size_request()
+	implementation. Removed gimp_preview_update(). Added new
+	constructor gimp_preview_new_full_by_types() to make the
+	constructor API symmetric. Removed code duplication by calling the
+	_by_types() constructors from the ones taking GimpViewable
+	parameters.
+
+	* app/gui/palette-import-dialog.c
+	* app/widgets/gimppropwidgets.c
+	* app/widgets/gimpselectioneditor.c: changed accordingly.
+
+2003-03-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer.c (gimp_layer_create_mask): don't try to
 	convert a grayscale layer to grayscale. Fixes bug #107422.
 

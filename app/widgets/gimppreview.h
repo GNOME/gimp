@@ -69,57 +69,46 @@ struct _GimpPreviewClass
 };
 
 
-GType        gimp_preview_get_type         (void) G_GNUC_CONST;
+GType       gimp_preview_get_type          (void) G_GNUC_CONST;
 
-GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
+GtkWidget * gimp_preview_new               (GimpViewable  *viewable,
 					    gint           size,
 					    gint           border_width,
 					    gboolean       is_popup);
-GtkWidget *  gimp_preview_new_full         (GimpViewable  *viewable,
+GtkWidget * gimp_preview_new_full          (GimpViewable  *viewable,
 					    gint           width,
 					    gint           height,
 					    gint           border_width,
 					    gboolean       is_popup,
 					    gboolean       clickable,
 					    gboolean       show_popup);
-
-GtkWidget *  gimp_preview_new_by_type      (GType          viewable_type,
-                                            gint           size,
-                                            gint           border_width,
-                                            gboolean       is_popup);
-GtkWidget *  gimp_preview_new_by_types     (GType          preview_type,
+GtkWidget * gimp_preview_new_by_types      (GType          preview_type,
                                             GType          viewable_type,
 					    gint           size,
 					    gint           border_width,
 					    gboolean       is_popup);
+GtkWidget * gimp_preview_new_full_by_types (GType          preview_type,
+                                            GType          viewable_type,
+                                            gint           width,
+                                            gint           height,
+                                            gint           border_width,
+                                            gboolean       is_popup,
+                                            gboolean       clickable,
+                                            gboolean       show_popup);
 
-void         gimp_preview_set_viewable     (GimpPreview   *preview,
+void        gimp_preview_set_viewable      (GimpPreview   *preview,
 					    GimpViewable  *viewable);
-
-void         gimp_preview_set_size         (GimpPreview   *preview,
+void        gimp_preview_set_size          (GimpPreview   *preview,
 					    gint           size,
 					    gint           border_width);
-void         gimp_preview_set_size_full    (GimpPreview   *preview,
+void        gimp_preview_set_size_full     (GimpPreview   *preview,
 					    gint           width,
 					    gint           height,
 					    gint           border_width);
-
-void         gimp_preview_set_dot_for_dot  (GimpPreview   *preview,
+void        gimp_preview_set_dot_for_dot   (GimpPreview   *preview,
 					    gboolean       dot_for_dot);
-
-void         gimp_preview_set_border_color (GimpPreview   *preview,
+void        gimp_preview_set_border_color  (GimpPreview   *preview,
 					    const GimpRGB *border_color);
-
-void         gimp_preview_update           (GimpPreview   *preview);
-
-
-/*  protected  */
-
-void         gimp_preview_render_preview   (GimpPreview   *preview,
-					    TempBuf       *temp_buf,
-					    gint           channel,
-                                            GimpPreviewBG  inside_bg,
-                                            GimpPreviewBG  outside_bg);
 
 
 #endif /* __GIMP_PREVIEW_H__ */

@@ -206,10 +206,10 @@ gimp_cell_renderer_viewable_get_size (GtkCellRenderer *cell,
       preview_height = (cellviewable->renderer->height +
                         2 * cellviewable->renderer->border_width);
     }
-  
+
   calc_width  = (gint) GTK_CELL_RENDERER (cell)->xpad * 2 + preview_width;
   calc_height = (gint) GTK_CELL_RENDERER (cell)->ypad * 2 + preview_height;
-  
+
   if (x_offset) *x_offset = 0;
   if (y_offset) *y_offset = 0;
 
