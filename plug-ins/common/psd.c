@@ -525,21 +525,9 @@ psd_lmode_to_gimp_lmode (gchar modekey[4])
   if (strncmp(modekey, "diss", 4)==0) return(GIMP_DISSOLVE_MODE);
   if (strncmp(modekey, "diff", 4)==0) return(GIMP_DIFFERENCE_MODE);
   if (strncmp(modekey, "lum ", 4)==0) return(GIMP_VALUE_MODE);
-
-#if (GIMP_MAJOR_VERSION > 0) && (GIMP_MINOR_VERSION > 0)
+  if (strncmp(modekey, "hLit", 4)==0) return(GIMP_HARDLIGHT_MODE);
+  if (strncmp(modekey, "sLit", 4)==0) return(GIMP_SOFTLIGHT_MODE);
   if (strncmp(modekey, "over", 4)==0) return(GIMP_OVERLAY_MODE);
-
-  printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
-	 "'overlay' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
-  if (strncmp(modekey, "hLit", 4)==0) return(/**/GIMP_OVERLAY_MODE);
-  if (strncmp(modekey, "sLit", 4)==0) return(/**/GIMP_OVERLAY_MODE);
-#else
-  printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
-	 "'addition' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
-  if (strncmp(modekey, "over", 4)==0) return(GIMP_ADDITION_MODE); /* ? */
-  if (strncmp(modekey, "hLit", 4)==0) return(/**/GIMP_ADDITION_MODE);
-  if (strncmp(modekey, "sLit", 4)==0) return(/**/GIMP_ADDITION_MODE);
-#endif
 
   printf("PSD: Warning - UNKNOWN layer-blend mode, reverting to 'normal'\n");
 

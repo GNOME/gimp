@@ -1,3 +1,8 @@
+2004-09-21  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/psd.c: Correctly set overlay, hard light and 
+	soft light modes from .psd files. Fixes bug #153229.
+
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c (SVG_DEFAULT_RESOLUTION): set to 90dpi as
