@@ -159,6 +159,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   magnify_tool->h = 0;
 
   gimp_tool_control_set_scroll_lock            (tool->control, TRUE);
+  gimp_tool_control_set_handles_empty_image    (tool->control, TRUE);
   gimp_tool_control_set_snap_to                (tool->control, FALSE);
 
   gimp_tool_control_set_cursor                 (tool->control,

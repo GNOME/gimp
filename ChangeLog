@@ -1,3 +1,16 @@
+2005-02-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_init)
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_init)
+	* app/tools/gimpvectortool.c (gimp_vector_tool_init): set
+	handles_empty_image to TRUE because all these tools work fine
+	without active drawable.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): also look at
+	handles_empty_image, not only at gimp_image_is_empty() before
+	setting the BAD cursor.
+
 2005-02-21  Manish Singh  <yosh@gimp.org>
 
 	* app/text/gimpfont-utils.[ch]: be smarter about finding trailing

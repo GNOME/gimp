@@ -634,7 +634,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                        &image_coords, state,
                                                        gdisp);
                   }
-                else if (gimp_image_is_empty (gimage))
+                else if (gimp_image_is_empty (gimage) &&
+                         ! gimp_tool_control_handles_empty_image (active_tool->control))
                   {
                     gimp_display_shell_set_cursor (shell,
                                                    GIMP_CURSOR_BAD,
@@ -1319,7 +1320,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                  &image_coords, state,
                                                  gdisp);
             }
-          else if (gimp_image_is_empty (gimage))
+          else if (gimp_image_is_empty (gimage) &&
+                   ! gimp_tool_control_handles_empty_image (active_tool->control))
             {
               gimp_display_shell_set_cursor (shell,
                                              GIMP_CURSOR_BAD,
