@@ -445,6 +445,15 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @data: 
 
 
+<!-- ##### FUNCTION gimp_uint_adjustment_update ##### -->
+<para>
+
+</para>
+
+@adjustment: 
+@data: 
+
+
 <!-- ##### FUNCTION gimp_float_adjustment_update ##### -->
 <para>
 

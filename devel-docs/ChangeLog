@@ -1,3 +1,8 @@
+2000-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/*: lotsa files removed/added/changed to reflect the
+	recent libgimp changes.
+
 2000-05-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt

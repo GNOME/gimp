@@ -1,0 +1,190 @@
+<!-- ##### SECTION Title ##### -->
+gimpparasite
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpParasite ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO GIMP_PARASITE_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_ATTACH_PARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_PARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_PARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_ATTACH_GRANDPARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_PARASITE_GRANDPARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_parasite_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@flags: 
+@size: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_free ##### -->
+<para>
+
+</para>
+
+@parasite: 
+
+
+<!-- ##### FUNCTION gimp_parasite_copy ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_compare ##### -->
+<para>
+
+</para>
+
+@a: 
+@b: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_is_type ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_is_persistent ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_is_undoable ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_has_flag ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@flag: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_name ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_flags ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_parasite_data ##### -->
+<para>
+
+</para>
+
+@parasite: 
+
+
+<!-- ##### FUNCTION gimp_parasite_data_size ##### -->
+<para>
+
+</para>
+
+@parasite: 
+@Returns: 
+
+

@@ -2,7 +2,7 @@
 gimpcompat
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Compatibility definitions for older plug-ins.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -145,5 +145,235 @@ gimpcompat
 
 </para>
 
+
+
+<!-- ##### MACRO Parasite ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_ATTACH_PARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_PARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_PARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_ATTACH_GRANDPARENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_GRANDPARENT_PERSISTENT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PARASITE_GRANDPARENT_UNDOABLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO parasite_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@name: 
+@flags: 
+@size: 
+@data: 
+
+
+<!-- ##### MACRO parasite_free ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@parasite: 
+
+
+<!-- ##### MACRO parasite_copy ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@parasite: 
+
+
+<!-- ##### MACRO parasite_compare ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@a: 
+@b: 
+
+
+<!-- ##### MACRO parasite_has_flag ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+@flag: 
+
+
+<!-- ##### MACRO parasite_is_type ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@parasite: 
+@name: 
+
+
+<!-- ##### MACRO parasite_is_persistent ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO parasite_is_undoable ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO parasite_name ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO parasite_flags ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO parasite_data ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO parasite_data_size ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@p: 
+
+
+<!-- ##### MACRO PixPipeParams ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO PIXPIPE_MAXDIM ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO pixpipeparams_init ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@params: 
+
+
+<!-- ##### MACRO pixpipeparams_build ##### -->
+<para>
+
+</para>
+
+@Returns: 
+<!-- # Unused Parameters # -->
+@params: 
+
+
+<!-- ##### MACRO pixpipeparams_parse ##### -->
+<para>
+
+</para>
+
+<!-- # Unused Parameters # -->
+@parameters: 
+@params: 
 
 

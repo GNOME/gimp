@@ -1,5 +1,5 @@
 <!-- ##### SECTION Title ##### -->
-parasiteio
+gimpparasiteio
 
 <!-- ##### SECTION Short_Description ##### -->
 
@@ -14,20 +14,14 @@ parasiteio
 
 </para>
 
-<!-- ##### MACRO PIXPIPE_MAXDIM ##### -->
+<!-- ##### MACRO GIMP_PIXPIPE_MAXDIM ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### STRUCT PixPipeParams ##### -->
-<para>
-
-</para>
-
-
-<!-- ##### FUNCTION pixpipeparams_init ##### -->
+<!-- ##### FUNCTION gimp_pixpipe_params_init ##### -->
 <para>
 
 </para>
@@ -35,7 +29,7 @@ parasiteio
 @params: 
 
 
-<!-- ##### FUNCTION pixpipeparams_parse ##### -->
+<!-- ##### FUNCTION gimp_pixpipe_params_parse ##### -->
 <para>
 
 </para>
@@ -44,7 +38,7 @@ parasiteio
 @params: 
 
 
-<!-- ##### FUNCTION pixpipeparams_build ##### -->
+<!-- ##### FUNCTION gimp_pixpipe_params_build ##### -->
 <para>
 
 </para>

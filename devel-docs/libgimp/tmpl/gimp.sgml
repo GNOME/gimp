@@ -376,6 +376,14 @@ gimp
 
 
 
+<!-- ##### FUNCTION gimp_get_progname ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_new ##### -->
 <para>
 
@@ -791,6 +799,8 @@ gimp
 </para>
 
 @image_ID: 
+@parasite: 
+<!-- # Unused Parameters # -->
 @p: 
 
 
@@ -1747,6 +1757,8 @@ gimp
 </para>
 
 @drawable: 
+@parasite: 
+<!-- # Unused Parameters # -->
 @p: 
 
 
@@ -2141,6 +2153,8 @@ gimp
 
 </para>
 
+@parasite: 
+<!-- # Unused Parameters # -->
 @p: 
 
 
@@ -2163,11 +2177,12 @@ gimp
 @name: 
 
 
-<!-- ##### FUNCTION gimp_plugin_help_func ##### -->
+<!-- ##### MACRO gimp_plugin_help_func ##### -->
 <para>
 
 </para>
 
+<!-- # Unused Parameters # -->
 @help_data: 
 
 
@@ -2176,7 +2191,16 @@ gimp
 
 </para>
 
+@prog_name: 
 @help_data: 
+
+
+<!-- ##### FUNCTION gimp_plugin_help_register ##### -->
+<para>
+
+</para>
+
+@help_path: 
 
 
 <!-- ##### FUNCTION gimp_plugin_domain_add_with_path ##### -->

@@ -6,17 +6,15 @@
 <!entity libgimp-gimpenums SYSTEM "sgml/gimpenums.sgml">
 <!entity libgimp-gimpwire SYSTEM "sgml/gimpwire.sgml">
 <!entity libgimp-gimpmatrix SYSTEM "sgml/gimpmatrix.sgml">
-<!entity libgimp-parasite SYSTEM "sgml/parasite.sgml">
-<!entity libgimp-parasiteF SYSTEM "sgml/parasiteF.sgml">
-<!entity libgimp-parasiteP SYSTEM "sgml/parasiteP.sgml">
-<!entity libgimp-color-selector SYSTEM "sgml/color_selector.sgml">
+<!entity libgimp-gimpparasite SYSTEM "sgml/gimpparasite.sgml">
+<!entity libgimp-gimpcolorselector SYSTEM "sgml/gimpcolorselector.sgml">
 <!entity libgimp-gimpmodule SYSTEM "sgml/gimpmodule.sgml">
 <!entity libgimp-gimpmath SYSTEM "sgml/gimpmath.sgml">
-<!entity libgimp-color-display SYSTEM "sgml/color_display.sgml">
+<!entity libgimp-gimpcolordisplay SYSTEM "sgml/gimpcolordisplay.sgml">
 <!entity libgimp-gimpenv SYSTEM "sgml/gimpenv.sgml">
 <!entity libgimp-gimplimits SYSTEM "sgml/gimplimits.sgml">
 <!entity libgimp-gimpexport SYSTEM "sgml/gimpexport.sgml">
-<!entity libgimp-parasiteio SYSTEM "sgml/parasiteio.sgml">
+<!entity libgimp-gimpparasiteio SYSTEM "sgml/gimpparasiteio.sgml">
 <!entity libgimp-gimpcompat SYSTEM "sgml/gimpcompat.sgml">
 <!entity libgimp-gimpfeatures SYSTEM "sgml/gimpfeatures.sgml">
 <!entity GimpChainButton SYSTEM "sgml/gimpchainbutton.sgml">
@@ -56,16 +54,14 @@
     &libgimp-gimpcompat;
     &libgimp-gimpenv;
     &libgimp-gimpmatrix;
+    &libgimp-gimpparasite;
+    &libgimp-gimpparasiteio;
     &libgimp-gimpprotocol;
     &libgimp-gimpsignal;
     &libgimp-gimpunit;
     &libgimp-gimputils;
     &libgimp-gimpvector;
     &libgimp-gimpwire;
-    &libgimp-parasite;
-    &libgimp-parasiteio;
-    &libgimp-parasiteF;
-    &libgimp-parasiteP;
   </chapter>
 
   <chapter id="libgimpui">
@@ -89,7 +85,7 @@
   <chapter id="gimpmodule">
     <title>GIMP Module Header Files</title>
     &libgimp-gimpmodule;
-    &libgimp-color-display;
-    &libgimp-color-selector;
+    &libgimp-gimpcolordisplay;
+    &libgimp-gimpcolorselector;
   </chapter>
 </book>
