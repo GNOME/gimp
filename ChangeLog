@@ -1,5 +1,11 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/unsharp.c: applied a modified patch from Geert
+	Jordaens that adds a preview to the Unsharp Mask plug-in. Fixes
+	bug #140974.
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimppaintcore.c
 	* app/paint-funcs/paint-funcs-generic.h
 	* app/paint-funcs/paint-funcs.[ch]: applied a patch from Philip

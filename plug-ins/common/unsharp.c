@@ -36,11 +36,13 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-
 #define PLUG_IN_VERSION "0.10"
 
-#define SCALE_WIDTH  150
-#define ENTRY_WIDTH    4
+#define PREVIEW_SIZE  128
+#define SCALE_WIDTH   150
+#define ENTRY_WIDTH     4
+
+
 
 /* to show both pretty unoptimized code and ugly optimized code blocks
    There's really no reason to define this, unless you want to see how
@@ -100,6 +102,7 @@ static void      unsharp_mask         (GimpDrawable  *drawable,
                                        gdouble        amount);
 
 static gboolean  unsharp_mask_dialog  (void);
+static void      preview_update       (void);
 
 
 /* create a few globals, set default values */
@@ -118,6 +121,12 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
+
+static  GimpRunMode   run_mode;
+static  GtkWidget    *preview  = NULL;         /* Preview widget */
+static  GimpDrawable *drawable = NULL;         /* Current image  */
+static  gint          delta_x  = 0;            /* preview x offset */
+static  gint          delta_y  = 0;            /* preview y offset */
 
 MAIN ()
 
@@ -163,10 +172,7 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
-  GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-
 #ifdef TIMER
   GTimer *timer = g_timer_new ();
 #endif
@@ -181,11 +187,21 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
+  /*
+   * Get drawable information...
+   */
+  drawable = gimp_drawable_get (param[2].data.d_drawable);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
-      if (! unsharp_mask_dialog ()) return;
+      /* Reset default values show preview unmodified */
+
+      /* initialize pixel regions and buffer */
+      if (! unsharp_mask_dialog ())
+        return;
+
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -253,7 +269,8 @@ unsharp_mask (GimpDrawable *drawable,
 
   /* Get the input */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  gimp_progress_init (_("Blurring..."));
+  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+    gimp_progress_init (_("Blurring..."));
 
   width = drawable->width;
   height = drawable->height;
@@ -359,7 +376,8 @@ unsharp_region (GimpPixelRgn srcPR,
 	gimp_progress_update ((gdouble)col/(3*x) + 0.33);
     }
 
-  gimp_progress_init (_("Merging..."));
+  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+    gimp_progress_init (_("Merging..."));
 
   /* find integer value of threshold */
   threshold = unsharp_params.threshold;
@@ -629,17 +647,89 @@ gen_lookup_table (gdouble *cmatrix,
   return lookup_table;
 }
 
+static GtkWidget *
+unsharp_preview_new (void)
+{
+  GtkWidget *table;
+  GtkWidget *frame;
+  GtkObject *adj;
+  GtkWidget *scrollbar;
+  gint       sel_width;
+  gint       sel_height;
+  gint       x1, y1, x2, y2;
+  gint       preview_width;
+  gint       preview_height;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  sel_width     = x2 - x1;
+  sel_height    = y2 - y1;
+  preview_width  = MIN (sel_width, PREVIEW_SIZE);
+  preview_height = MIN (sel_height, PREVIEW_SIZE);
+
+  table = gtk_table_new (2, 2, FALSE);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
+
+  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  adj = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
+                            MIN (preview_width, sel_width),
+                            MIN (preview_width, sel_width));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_x);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (preview_update),
+                    NULL);
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_DISCONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (scrollbar);
+
+  adj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
+                            MIN (preview_height, sel_height),
+                            MIN (preview_height, sel_height));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_y);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (preview_update),
+                    NULL);
+
+  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_DISCONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
+                    0, GTK_FILL, 0, 0);
+  gtk_widget_show (scrollbar);
+
+  return table;
+}
+
 static gboolean
 unsharp_mask_dialog (void)
 {
-  GtkWidget *window;
+  GtkWidget *dialog;
   GtkWidget *table;
+  GtkWidget *vbox;
+  GtkWidget *hbox;
+  GtkWidget *scrollbar;
   GtkObject *adj;
   gboolean   run;
 
   gimp_ui_init ("unsharp", TRUE);
 
-  window = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
+  dialog = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
                             NULL, 0,
 			    gimp_standard_help_func, "plug-in-unsharp-mask",
 
@@ -648,12 +738,24 @@ unsharp_mask_dialog (void)
 
                             NULL);
 
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  table = unsharp_preview_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   table = gtk_table_new (3, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), table,
-		      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -661,33 +763,147 @@ unsharp_mask_dialog (void)
 			      unsharp_params.radius, 0.1, 120.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.radius);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (preview_update),
+                    NULL);
+
+  scrollbar = GIMP_SCALE_ENTRY_SCALE (adj);
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_DISCONTINUOUS);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("_Amount:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
+  scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
+
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &unsharp_params.amount);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (preview_update),
+                    NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("_Threshold:"), SCALE_WIDTH, ENTRY_WIDTH,
 			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
+  scrollbar = GIMP_SCALE_ENTRY_SCALE(adj);
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_DISCONTINUOUS);
+
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &unsharp_params.threshold);
+  g_signal_connect_after (adj, "value_changed",
+                          G_CALLBACK (preview_update),
+                          NULL);
 
-  gtk_widget_show (window);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (window)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (window);
+  gtk_widget_show (dialog);
+
+  preview_update ();
+
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 
   return run;
 }
+
+/*  preview functions  */
+static void
+preview_update (void)
+{
+  /* drawable */
+  glong width, height;
+  glong bytes;
+  gint  x1, y1, x2, y2;
+
+  /* preview */
+  guchar    *render_buffer=NULL;   /* Buffer to hold rendered image */
+  gint       preview_width;        /* Width of preview widget */
+  gint       preview_height;       /* Height of preview widget */
+  gint       preview_x1;           /* Upper-left X of preview */
+  gint       preview_y1;           /* Upper-left Y of preview */
+  gint       preview_x2;           /* Lower-right X of preview */
+  gint       preview_y2;           /* Lower-right Y of preview */
+  /* preview buffer */
+  gint       preview_buf_width;    /* Width of preview widget */
+  gint       preview_buf_height;   /* Height of preview widget */
+  gint       preview_buf_x1;       /* Upper-left X of preview */
+  gint       preview_buf_y1;       /* Upper-left Y of preview */
+  gint       preview_buf_x2;       /* Lower-right X of preview */
+  gint       preview_buf_y2;       /* Lower-right Y of preview */
+
+  GimpPixelRgn srcPR, destPR;      /* Pixel regions */
+  gint         x,y;                /* Current location in image */
+
+  gint row,buf_y, offset;          /* Preview loop control      */
+
+  /* Get drawable info */
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width = drawable->width;
+  height = drawable->height;
+  bytes = drawable->bpp;
+
+  /*
+   * Setup for filter...
+   */
+  preview_x1 = x1 + delta_x;
+  preview_y1 = y1 + delta_y;
+  preview_x2 = preview_x1 + MIN (PREVIEW_SIZE, x2-x1);
+  preview_y2 = preview_y1 + MIN (PREVIEW_SIZE, y2-y1);
+  preview_width = preview_x2-preview_x1;
+  preview_height = preview_y2-preview_y1;
+
+  /* Make buffer large enough to minimize disturbence */
+  preview_buf_x1 = MAX(0,preview_x1-unsharp_params.radius);
+  preview_buf_y1 = MAX(0,preview_y1-unsharp_params.radius);
+  preview_buf_x2 = MIN(x2,preview_x2+unsharp_params.radius);
+  preview_buf_y2 = MIN(y2,preview_y2+unsharp_params.radius);
+  preview_buf_width =  preview_buf_x2-preview_buf_x1;
+  preview_buf_height = preview_buf_y2-preview_buf_y1;
+
+  /* If radius/amount/treshold changed render*/
+  if ((run_mode != GIMP_RUN_NONINTERACTIVE))
+    gimp_progress_init (_("Blurring..."));
+  /* initialize pixel regions */
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       preview_buf_x1,preview_buf_y1,
+                       preview_buf_width, preview_buf_height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable,
+                       preview_buf_x1,preview_buf_y1,
+                       preview_buf_width, preview_buf_height,  TRUE, TRUE);
+  /* render image */
+  unsharp_region (srcPR, destPR, preview_buf_width, preview_buf_height, bytes,
+                  unsharp_params.radius, unsharp_params.amount,
+           preview_buf_x1, preview_buf_x2, preview_buf_y1, preview_buf_y2);
+  render_buffer = g_new (guchar, preview_buf_width * preview_buf_height * bytes);
+  gimp_pixel_rgn_get_rect(&destPR,render_buffer,
+                          preview_buf_x1, preview_buf_y1,
+                          preview_buf_width,preview_buf_height);
+  /*
+  * Draw the preview image on the screen...
+  */
+  y =  preview_y1-preview_buf_y1;
+  x =  preview_x1-preview_buf_x1;
+  row=0;
+  buf_y = y+preview_height;
+  for ( ; y < buf_y ; y++ )
+    {
+      offset = (x*bytes)+(y*preview_buf_width*bytes);
+      gtk_preview_draw_row(GTK_PREVIEW (preview), render_buffer+offset, 0, row++, preview_width);
+    }
+    gtk_widget_queue_draw (preview);
+    g_free(render_buffer);
+}
+
