@@ -19,6 +19,7 @@
 #define __COLOR_BALANCE_H__
 
 #include <gtk/gtk.h>
+
 #include "gimpdrawableF.h"
 #include "image_map.h"
 #include "tools.h"
@@ -31,39 +32,41 @@ typedef enum
 } TransferMode;
 
 typedef struct _ColorBalanceDialog ColorBalanceDialog;
+
 struct _ColorBalanceDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *cyan_red_text;
-  GtkWidget   *magenta_green_text;
-  GtkWidget   *yellow_blue_text;
-  GtkAdjustment  *cyan_red_data;
-  GtkAdjustment  *magenta_green_data;
-  GtkAdjustment  *yellow_blue_data;
+  GtkWidget     *shell;
 
-  GimpDrawable *drawable;
-  ImageMap     image_map;
+  GtkAdjustment *cyan_red_data;
+  GtkAdjustment *magenta_green_data;
+  GtkAdjustment *yellow_blue_data;
 
-  double       cyan_red[3];
-  double       magenta_green[3];
-  double       yellow_blue[3];
+  GimpDrawable  *drawable;
+  ImageMap       image_map;
 
-  guchar       r_lookup[256];
-  guchar       g_lookup[256];
-  guchar       b_lookup[256];
+  gdouble        cyan_red[3];
+  gdouble        magenta_green[3];
+  gdouble        yellow_blue[3];
 
-  gint         preserve_luminosity;
-  gint         preview;
-  gint         application_mode;
+  guchar         r_lookup[256];
+  guchar         g_lookup[256];
+  guchar         b_lookup[256];
+
+  gboolean       preserve_luminosity;
+  gboolean       preview;
+  TransferMode   application_mode;
 };
 
-/*  by_color select functions  */
-Tool *        tools_new_color_balance  (void);
-void          tools_free_color_balance (Tool *);
+/*  color balance functions  */
 
-void          color_balance_initialize (GDisplay *);
-void          color_balance            (PixelRegion *, PixelRegion *, void *);
+Tool * tools_new_color_balance            (void);
+void   tools_free_color_balance           (Tool              *tool);
 
-void          color_balance_create_lookup_tables (ColorBalanceDialog *);
+void   color_balance_initialize           (GDisplay          *gdisp);
+void   color_balance                      (PixelRegion       *srcPR,
+					   PixelRegion       *destPR,
+					   void              *data);
+
+void   color_balance_create_lookup_tables (ColorBalanceDialog *cbd);
 
 #endif  /*  __COLOR_BALANCE_H__  */

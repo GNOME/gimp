@@ -18,7 +18,6 @@
 #include "config.h"
 
 #include <string.h>
-#include <stdio.h>
 
 #include "appenv.h"
 #include "devices.h"
@@ -1048,10 +1047,10 @@ device_status_update (guint32 deviceid)
       gtk_widget_show (deviceD->colors[i]);
 
       /*  Set the tip to be the RGB value  */
-      sprintf (ttbuf, "[%3d,%3d,%3d]",
-	       buffer[j],
-	       buffer[j+1],
-	       buffer[j+2]);
+      g_snprintf (ttbuf, sizeof (ttbuf), "[%3d,%3d,%3d]",
+		  buffer[j],
+		  buffer[j+1],
+		  buffer[j+2]);
 
       gimp_help_set_help_data (deviceD->colors[i], ttbuf, NULL);
 

@@ -1,5 +1,11 @@
 1999-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/devices.c: s/sprintf/g_snprintf
+
+	* app/color_balance.[ch]: spinbuttons instead of text entries.
+
+1999-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpexport.c: changed the packing spacings to match the
 	core dialogs' standards.
 
