@@ -304,15 +304,6 @@ typedef struct
   /* these values don't belong to drawable, though. */
 } DrawableInfo;
 
-typedef struct
-{
-  GimpTile *tile;
-  gint      col;
-  gint      row;
-  gint      shadow;
-  gint      dirty;
-} TileKeeper;
-
 typedef struct _GradientMenu GradientMenu;
 typedef void (* GradientMenuCallback) (gchar    *gradient_name,
 				       gpointer  data);
@@ -3430,7 +3421,7 @@ ed_make_page_general (GFlareEditor *ed,
 			     option_menu, 1, TRUE);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("_General")));
+			    gtk_label_new_with_mnemonic (_("_General")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GENERAL);
@@ -3535,7 +3526,7 @@ ed_make_page_glow (GFlareEditor *ed,
   gtk_widget_show (table);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("G_low")));
+			    gtk_label_new_with_mnemonic (_("G_low")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_GLOW);
@@ -3667,7 +3658,7 @@ ed_make_page_rays (GFlareEditor *ed,
   gtk_widget_show (table);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("_Rays")));
+			    gtk_label_new_with_mnemonic (_("_Rays")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_RAYS);
@@ -3862,7 +3853,7 @@ ed_make_page_sflare (GFlareEditor *ed,
                     NULL);
 
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
-			    gtk_label_new (_("_Second Flares")));
+			    gtk_label_new_with_mnemonic (_("_Second Flares")));
   g_signal_connect (vbox, "map",
                     G_CALLBACK (ed_page_map_callback),
                     (gpointer) PAGE_SFLARE);

@@ -1533,7 +1533,7 @@ CML_explorer_dialog (void)
 
   CML_initial_value_sensitives_update ();
 
-  /*  Displaying preview might takes a long time. Thus, fisrt, dialog itself
+  /*  Displaying preview might takes a long time. Thus, first, dialog itself
    *  should be shown before making preview in it.
    */
   gtk_widget_show (dlg);
@@ -2080,29 +2080,38 @@ static void
 CML_save_to_file_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  GtkWidget *filesel;
+  static GtkWidget *filesel;
 
-  filesel = gtk_file_selection_new (_("Save Parameters to"));
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+  if (!filesel)
+    {
+      filesel = gtk_file_selection_new (_("Save Parameters to"));
+      gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+      
+      g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
+			"clicked",
+			G_CALLBACK (CML_execute_save_to_file),
+			filesel);
 
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-                    "clicked",
-                    G_CALLBACK (CML_execute_save_to_file),
-                    filesel);
+      g_signal_connect_swapped(G_OBJECT(filesel), "delete_event",
+			       G_CALLBACK (gtk_widget_hide),
+			       filesel);
 
-  g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            filesel);
+      g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
+				"clicked",
+				G_CALLBACK (gtk_widget_hide),
+				filesel);
 
+      gimp_help_connect (filesel, gimp_standard_help_func,
+			 "filters/cml_explorer.html");
+    }
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect (filesel, gimp_standard_help_func,
-		     "filters/cml_explorer.html");
-
-  gtk_widget_show (filesel);
+  if (GTK_WIDGET_VISIBLE (filesel))
+    gdk_window_raise (filesel->window);
+  else
+    gtk_widget_show (filesel);
 }
 
 static void
@@ -2212,7 +2221,7 @@ CML_execute_save_to_file (GtkWidget *widget,
                sizeof (VALS.last_file_name) - 1);
     }
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_widget_hide (GTK_WIDGET (data));
 }
 
 static gint
@@ -2278,32 +2287,45 @@ static void
 CML_load_from_file_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  GtkWidget *filesel;
+  static GtkWidget *filesel;
+
+  if (!filesel)
+    {
+      filesel = gtk_file_selection_new ("");
+
+      gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
+
+      g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
+			"clicked",
+			G_CALLBACK (CML_execute_load_from_file),
+			filesel);
+      
+      g_signal_connect_swapped(G_OBJECT(filesel), "delete_event",
+			       G_CALLBACK (gtk_widget_hide),
+			       filesel);
+      
+      g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
+				"clicked",
+				G_CALLBACK (gtk_widget_hide),
+				filesel);
+
+      gimp_help_connect (filesel, gimp_standard_help_func,
+			 "filters/cml_explorer.html");
+    }
 
   if ((selective_load_source == 0) || (selective_load_destination == 0))
-    filesel = gtk_file_selection_new (_("Load Parameters from"));
+    gtk_window_set_title (GTK_WINDOW (filesel), _("Load Parameters from"));
   else
-    filesel = gtk_file_selection_new (_("Selective Load from"));
-  gtk_window_set_position (GTK_WINDOW (filesel), GTK_WIN_POS_MOUSE);
-
-  g_signal_connect (GTK_FILE_SELECTION (filesel)->ok_button,
-                    "clicked",
-                    G_CALLBACK (CML_execute_load_from_file),
-                    filesel);
-
-  g_signal_connect_swapped (GTK_FILE_SELECTION (filesel)->cancel_button,
-                            "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            filesel);
-
+    gtk_window_set_title (GTK_WINDOW (filesel), _("Selective Load from"));
+  
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect (filesel, gimp_standard_help_func,
-		     "filters/cml_explorer.html");
-
-  gtk_widget_show (filesel);
+  if (GTK_WIDGET_VISIBLE (filesel))
+    gdk_window_raise (filesel->window);
+  else
+    gtk_widget_show (filesel);
 }
 
 static void

@@ -1,3 +1,11 @@
+2003-06-06  Maurits  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/script-fu/scripts/old-photo.scm: fix for #114496 (Script-Fu:
+	Old Photo can't be completely undone)
+
+	* plug-ins/common/CML_explorer.c: fix for #83947 (CML explorer: 
+	multiple instantiations of Load Parameters dialog)
+
 2003-06-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_set_label):
@@ -299,6 +307,11 @@
 	really should be rewritten to use libwmf.)
 
 	* plug-ins/xjt/xjt.c: Use _mkdir() on Win32.
+
+2003-05-30  Maurits Rijk <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/gflare/gflare.c: fixed type in mnemonics for edit dialog 
+	and removed unused typedef.
 
 2003-05-30  Maurits Rijk <lpeek.mrijk@consunet.nl>
 
