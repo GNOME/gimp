@@ -872,7 +872,10 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                 }
               else
                 {
-                  vector_tool->function = VECTORS_DELETE_ANCHOR;
+                  if (state & TOGGLE_MASK)
+                    vector_tool->function = VECTORS_DELETE_ANCHOR;
+                  else
+                    vector_tool->function = VECTORS_MOVE_HANDLE;
                 }
             }
           else

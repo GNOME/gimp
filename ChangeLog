@@ -1,3 +1,10 @@
+2003-09-17  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.c: smallish change to enable
+	dragging out of handles again. It is now dragging handles
+	out of anchors, when click/dragging on them in Insert/Delete
+	mode. Deletion of nodes now requires the SHIFT modifier.
+
 2003-09-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/sparkle.c: some code cleanup.
