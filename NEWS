@@ -8,6 +8,21 @@ development takes place on the road to the next stable release
 dubbed GIMP 1.4.
 
 
+Overview of Changes in GIMP 1.3.15
+==================================
+
+- Load old paths as new vector objects [Mitch]
+- Apply transformations to linked items [Mitch]
+- Generalized item transformations [Mitch]
+- Improved session managment [Mitch]
+- Speed up fonts query [Yosh]
+- Backed out pluggable tools [Sven]
+- Lots of bug fixes
+
+Other contributors:
+  Branko Collin, Pedro Gimeno, Dave Neary
+
+
 Overview of Changes in GIMP 1.3.14
 ==================================
 
@@ -19,12 +34,13 @@ Overview of Changes in GIMP 1.3.14
 - Keyboard navigation for grid views [Sven]
 - List and grid views for fonts [Mitch, Sven]
 - Some text tool improvements [Sven]
+- Moved gimp-gap into it's own CVS module [Yosh, Sven]
 - More icons in even more sizes [Jimmac, Mitch, Sven]
 - I18n header cleanup [Sven]
 - Lots of bug fixes
 
 Other contributors:
-  Manish Singh, Pedro Gimeno, Owen, Raphael Quinet
+  Pedro Gimeno, Owen, Raphael Quinet
 
 
 Overview of Changes in GIMP 1.3.13
