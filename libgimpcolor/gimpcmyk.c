@@ -30,6 +30,18 @@
 
 /*  CMYK functions  */
 
+/**
+ * gimp_cmyk_set:
+ * @cmyk: A GimpCMYK structure which will hold the specified cmyk value.
+ * @c:    The Cyan channel of the CMYK value 
+ * @m:    The Magenta channel
+ * @y:    The Yellow channel
+ * @k:    The blacK channel
+ *
+ * Very basic initialiser for the internal GimpCMYK structure. Channel 
+ * values are doubles in the range 0 to 1.
+ **/
+
 void
 gimp_cmyk_set (GimpCMYK *cmyk,
                gdouble   c,
@@ -45,6 +57,13 @@ gimp_cmyk_set (GimpCMYK *cmyk,
   cmyk->k = k;
 }
 
+/**
+ * gimp_cmyk_set_uchar:
+ *
+ * The same as gimp_cmyk_set, except that channel values are unsigned 
+ * chars in the range 0 to 255.
+ **/
+
 void
 gimp_cmyk_set_uchar (GimpCMYK *cmyk,
                      guchar   c,
@@ -59,6 +78,18 @@ gimp_cmyk_set_uchar (GimpCMYK *cmyk,
   cmyk->y = (gdouble) y / 255.0;
   cmyk->k = (gdouble) k / 255.0;
 }
+
+/**
+ * gimp_cmyk_get_uchar:
+ * @cmyk: A GimpCMYK structure which will hold the specified cmyk value.
+ * @c:    The Cyan channel of the CMYK value 
+ * @m:    The Magenta channel
+ * @y:    The Yellow channel
+ * @k:    The blacK channel
+ *
+ * Retrieve individual channel values from a GimpCMYK structure. Channel 
+ * values are pointers to unsigned chars in the range 0 to 255.
+ **/
 
 void
 gimp_cmyk_get_uchar (const GimpCMYK *cmyk,
@@ -78,6 +109,19 @@ gimp_cmyk_get_uchar (const GimpCMYK *cmyk,
 
 /*  CMYKA functions  */
 
+/**
+ * gimp_cmyka_set:
+ * @cmyka: A GimpCMYK structure which will hold the specified cmyka value.
+ * @c:    The Cyan channel of the CMYK value 
+ * @m:    The Magenta channel
+ * @y:    The Yellow channel
+ * @k:    The blacK channel
+ * @a:    The Alpha channel
+ *
+ * Initialiser for the internal GimpCMYK structure. Channel values are 
+ * doubles in the range 0 to 1.
+ **/
+
 void
 gimp_cmyka_set (GimpCMYK *cmyka,
                 gdouble   c,
@@ -95,6 +139,13 @@ gimp_cmyka_set (GimpCMYK *cmyka,
   cmyka->a = a;
 }
 
+/**
+ * gimp_cmyka_set_uchar:
+ *
+ * The same as gimp_cmyka_set, except that channel values are unsigned chars
+ * in the range 0 to 255.
+ **/
+
 void
 gimp_cmyka_set_uchar (GimpCMYK *cmyka,
                       guchar    c,
@@ -111,6 +162,19 @@ gimp_cmyka_set_uchar (GimpCMYK *cmyka,
   cmyka->k = (gdouble) k / 255.0;
   cmyka->a = (gdouble) a / 255.0;
 }
+
+/**
+ * gimp_cmyka_get_uchar:
+ * @cmyk: A GimpCMYK structure which will hold the specified cmyka value.
+ * @c:    The Cyan channel of the CMYK value 
+ * @m:    The Magenta channel
+ * @y:    The Yellow channel
+ * @k:    The blacK channel
+ * @a:    The Alpha channel
+ *
+ * Retrieve individual channel values from a GimpCMYK structure. Channel 
+ * values are pointers to unsigned chars in the range 0 to 255.
+ **/
 
 void
 gimp_cmyka_get_uchar (const GimpCMYK *cmyka,

@@ -1,5 +1,9 @@
 2003-11-08  Dave Neary  <bolsh@gimp.org>
 
+	* libgimpcolor/gimpcmyk.c: More gtk-docs.
+
+2003-11-08  Dave Neary  <bolsh@gimp.org>
+
 	* libgimpcolor/gimpcolorspace.c: Finished gtk-docs. The docs for
 	these could perhaps include formulae, but for most of the 
 	colorspaces that would be the same thing as copying the code 
