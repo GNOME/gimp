@@ -1044,7 +1044,7 @@ paths_select_row (GtkWidget      *widget,
 				 paths_dialog->gimage);
   if (!gdisp)
     {
-      g_warning("Lost image which bezier curve belonged to");
+      /*g_warning("Lost image which bezier curve belonged to");*/
       return;
     }
   bezier_paste_bezierselect_to_current (gdisp, bsel);
@@ -3008,7 +3008,10 @@ paths_set_path_points (GimpImage *gimage,
 
       /* Mark this path as selected */
       plist->last_selected_row = 0;
-      bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
+
+      /* Only paste if we have an image to paste to! */
+      if(gdisp)
+	bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
     }
 
   beziersel_free(bezier_sel);

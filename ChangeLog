@@ -1,3 +1,17 @@
+Wed Feb  2 22:12:48 GMT 2000 Andy Thomas <alt@gimp.org>
+
+	* app/paths_dialog.c
+
+	Fixed bug number #5727 "PDB-call gimp_path_set_points is buggy"
+
+	* tools/pdbgen/pdb/paths.pdb
+
+	Added missing paths pdb functions 
+
+ 		path_get_locked
+ 		path_set_locked 
+		path_set_tattoo
+	
 Wed Feb  2 11:02:44 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* po/POTFILES.in: accidentally removed the files in the modules dir
