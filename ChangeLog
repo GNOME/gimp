@@ -1,3 +1,11 @@
+Fri Feb 11 15:07:04 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* gimp1_1_splash.ppm: sweet new splash created by Raphael Quinet
+	* gimp_logo.ppm: use "Wilber and Sons" for the About dialog
+
+	* app/interface.c: set a reasonable value for the wrapbox's 
+	aspect_ratio, so Gimp becomes useable again
+
 Fri Feb 11 12:40:18 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: Spit out warnings instead of silently ignoring
