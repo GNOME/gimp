@@ -1,3 +1,8 @@
+2004-02-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimppixelrgn.c: cleaned up a bit: added missing
+	g_return_if_fail()s, iterate lists using for() loops, indentation.
+
 2004-02-16  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimptile.c (gimp_tile_cache_insert): partly rewritten.

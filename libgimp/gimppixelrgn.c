@@ -124,9 +124,9 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
 
 void
 gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
-			  guchar      *buf,
-			  gint         x,
-			  gint         y)
+			  guchar       *buf,
+			  gint          x,
+			  gint          y)
 {
   GimpTile *tile;
   guchar   *tile_data;
@@ -156,11 +156,11 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 {
   GimpTile *tile;
   guchar   *tile_data;
-  gint bpp, inc, min;
-  gint end;
-  gint boundary;
+  gint      bpp, inc, min;
+  gint      end;
+  gint      boundary;
 #ifndef MEMCPY_IS_NICE
-  gint b;
+  gint      b;
 #endif
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
@@ -209,10 +209,10 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
 {
   GimpTile *tile;
   guchar   *tile_data;
-  gint inc;
-  gint end;
-  gint boundary;
-  gint b;
+  gint      inc;
+  gint      end;
+  gint      boundary;
+  gint      b;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -254,14 +254,14 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
   guchar   *src;
   guchar   *dest;
   gulong    bufstride;
-  gint xstart, ystart;
-  gint xend, yend;
-  gint xboundary;
-  gint yboundary;
-  gint xstep, ystep;
-  gint ty, bpp;
+  gint      xstart, ystart;
+  gint      xend, yend;
+  gint      xboundary;
+  gint      yboundary;
+  gint      xstep, ystep;
+  gint      ty, bpp;
 #ifndef MEMCPY_IS_NICE
-  gint b, tx;
+  gint      b, tx;
 #endif
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
@@ -309,7 +309,6 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 		    *dest++ = *src++;
 		}
 #endif /* MEMCPY_IS_NICE */
-
 	    }
 
 	  gimp_tile_unref (tile, FALSE);
@@ -383,7 +382,7 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
       memcpy ((void *)tile_data,
 	      (const void *)buf,
 	      inc = (tile->bpp *
-		     ( (min = MIN(end,boundary)) -x) ) );
+		     ( (min = MIN (end, boundary)) -x) ) );
       x = min;
       buf += inc;
 #else
@@ -527,12 +526,12 @@ gimp_pixel_rgns_register2 (gint           nrgns,
   GimpPixelRgnIterator *pri;
   gboolean              found;
 
+  g_return_val_if_fail (nrgns > 0, NULL);
+  g_return_val_if_fail (prs != NULL, NULL);
+
   pri = g_new (GimpPixelRgnIterator, 1);
   pri->pixel_regions = NULL;
   pri->process_count = 0;
-
-  if (nrgns < 1)
-    return NULL;
 
   found = FALSE;
   while (nrgns --)
@@ -575,6 +574,8 @@ gimp_pixel_rgns_register (gint nrgns,
   gint           n;
   va_list        ap;
 
+  g_return_val_if_fail (nrgns > 0, NULL);
+
   prs = g_new (GimpPixelRgn *, nrgns);
 
   va_start (ap, nrgns);
@@ -594,20 +595,19 @@ gimp_pixel_rgns_register (gint nrgns,
 gpointer
 gimp_pixel_rgns_process (gpointer pri_ptr)
 {
-  GimpPixelRgnHolder   *prh;
   GimpPixelRgnIterator *pri;
   GSList               *list;
+
+  g_return_val_if_fail (pri_ptr != NULL, NULL);
 
   pri = (GimpPixelRgnIterator*) pri_ptr;
   pri->process_count++;
 
   /*  Unref all referenced tiles and increment the offsets  */
 
-  list = pri->pixel_regions;
-  while (list)
+  for (list = pri->pixel_regions; list; list = list->next)
     {
-      prh = (GimpPixelRgnHolder *) list->data;
-      list = list->next;
+      GimpPixelRgnHolder *prh = list->data;
 
       if ((prh->pr != NULL) && (prh->pr->process_count != pri->process_count))
 	{
@@ -645,20 +645,18 @@ gimp_pixel_rgns_process (gpointer pri_ptr)
 static gint
 gimp_get_portion_width (GimpPixelRgnIterator *pri)
 {
-  GimpPixelRgnHolder *prh;
-  GSList             *list;
-  gint                min_width = G_MAXINT;
-  gint                width;
+  GSList *list;
+  gint    min_width = G_MAXINT;
+  gint    width;
 
   /* Find the minimum width to the next vertical tile (in the case of
    * a tile manager) or to the end of the pixel region (in the case of
    * no tile manager)
    */
 
-  list = pri->pixel_regions;
-  while (list)
+  for (list = pri->pixel_regions; list; list = list->next)
     {
-      prh = (GimpPixelRgnHolder *) list->data;
+      GimpPixelRgnHolder *prh = list->data;
 
       if (prh->pr)
         {
@@ -679,30 +677,26 @@ gimp_get_portion_width (GimpPixelRgnIterator *pri)
           if (width < min_width)
             min_width = width;
         }
-
-      list = list->next;
     }
 
   return min_width;
 }
 
-static int
+static gint
 gimp_get_portion_height (GimpPixelRgnIterator *pri)
 {
-  GimpPixelRgnHolder *prh;
-  GSList             *list;
-  gint                min_height = G_MAXINT;
-  gint                height;
+  GSList *list;
+  gint    min_height = G_MAXINT;
+  gint    height;
 
   /* Find the minimum height to the next vertical tile (in the case of
    * a tile manager) or to the end of the pixel region (in the case of
    * no tile manager)
    */
 
-  list = pri->pixel_regions;
-  while (list)
+  for (list = pri->pixel_regions; list; list = list->next)
     {
-      prh = (GimpPixelRgnHolder *) list->data;
+      GimpPixelRgnHolder *prh = list->data;
 
       if (prh->pr)
         {
@@ -723,8 +717,6 @@ gimp_get_portion_height (GimpPixelRgnIterator *pri)
           if (height < min_height)
             min_height = height;
         }
-
-      list = list->next;
     }
 
   return min_height;
@@ -733,8 +725,7 @@ gimp_get_portion_height (GimpPixelRgnIterator *pri)
 static gpointer
 gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri)
 {
-  GimpPixelRgnHolder *prh;
-  GSList             *list;
+  GSList *list;
 
   /*  Determine the portion width and height  */
   pri->portion_width = gimp_get_portion_width (pri);
@@ -744,26 +735,20 @@ gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri)
       (pri->portion_height == 0))
     {
       /*  free the pixel regions list  */
-      if (pri->pixel_regions)
-        {
-          list = pri->pixel_regions;
-          while (list)
-            {
-              g_free (list->data);
-              list = list->next;
-            }
-          g_slist_free (pri->pixel_regions);
-          g_free (pri);
-        }
+      for (list = pri->pixel_regions; list; list = list->next)
+        g_free (list->data);
+
+      g_slist_free (pri->pixel_regions);
+      g_free (pri);
 
       return NULL;
     }
 
   pri->process_count++;
 
-  for (list = pri->pixel_regions; list; list = g_slist_next (list))
+  for (list = pri->pixel_regions; list; list = list->next)
     {
-      prh = (GimpPixelRgnHolder *) list->data;
+      GimpPixelRgnHolder *prh = list->data;
 
       if ((prh->pr != NULL) && (prh->pr->process_count != pri->process_count))
         {
