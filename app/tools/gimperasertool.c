@@ -338,7 +338,6 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
        * colortoalpha plugin by Seth Burgess. Algorithm has been
        * described on IRC by clahey.
        */
-#warning "Simons evil Eraser Hack"
   
       gimp_rgb_set_uchar (&bgcolor, col[0], col[1], col[2]);
       
