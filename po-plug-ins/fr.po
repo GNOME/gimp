@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-16 00:34+0100\n"
-"PO-Revision-Date: 2004-02-16 00:32+0100\n"
+"POT-Creation-Date: 2004-02-28 16:04+0100\n"
+"PO-Revision-Date: 2004-02-28 15:44+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -448,7 +448,7 @@ msgstr "Impossible d'ouvrir le fichier « %s » en écriture : %s"
 #: plug-ins/FractalExplorer/Dialogs.c:1841
 #, c-format
 msgid "Could not write '%s': %s"
-msgstr "Je n'ai pas pu écrire le fichier « %s » : %s"
+msgstr "Impossible d'écrire le fichier « %s » : %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1861
 msgid "Save: No filename given"
@@ -457,7 +457,7 @@ msgstr "Enregistrer : vous n'avez pas donné de nom de fichier."
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1868 plug-ins/gfig/gfig.c:1095
 msgid "Cannot save to a folder."
-msgstr "Ne peut enregistrer dans un répertoire."
+msgstr "Impossible d'enregistrer dans un dossier."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1910
 msgid "Load Fractal Parameters"
@@ -510,7 +510,7 @@ msgstr "<Image>/Filtres/Rendu/Explorateur de _fractales..."
 msgid "Rendering Fractal..."
 msgstr "Calcul de la fractale..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3824
+#: plug-ins/FractalExplorer/FractalExplorer.c:763 plug-ins/gfig/gfig.c:3827
 #: plug-ins/gflare/gflare.c:3110
 #, c-format
 msgid "Are you sure you want to delete \"%s\" from the list and from disk?"
@@ -557,7 +557,7 @@ msgstr "Choisissez la fractale en double-cliquant dessus"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1282
 msgid "Select folder and rescan collection"
-msgstr "Sélectionne un répertoire et rescrute la collection"
+msgstr "Sélectionne un dossier et rescrute la collection"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1294
 msgid "Delete currently selected fractal"
@@ -1259,7 +1259,7 @@ msgstr "Arrière-plan"
 #: plug-ins/bmp/bmpwrite.c:136 plug-ins/common/dicom.c:616
 #: plug-ins/common/hrz.c:445 plug-ins/common/pcx.c:578
 msgid "Cannot save images with alpha channel."
-msgstr "Il est impossible d'enregistrer des images avec des canaux alpha."
+msgstr "Impossible d'enregistrer des images avec un canal alpha."
 
 #: plug-ins/bmp/bmpwrite.c:182 plug-ins/common/dicom.c:631
 #: plug-ins/common/postscript.c:986 plug-ins/common/xwd.c:524
@@ -1513,7 +1513,7 @@ msgstr "Charger une palette KISS"
 
 #: plug-ins/common/CEL.c:349
 msgid "Can't create a new image"
-msgstr "Ne peut créer une nouvelle image"
+msgstr "Impossible de créer une nouvelle image"
 
 #: plug-ins/common/CEL.c:438
 #, c-format
@@ -1750,7 +1750,7 @@ msgstr "Fixer la Graine"
 msgid "New Seed"
 msgstr "Nouvelle Graine"
 
-#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:730
+#: plug-ins/common/CML_explorer.c:1279 plug-ins/common/lic.c:654
 #: plug-ins/fp/fp_gtk.c:290
 msgid "_Hue"
 msgstr "_Teinte"
@@ -1838,7 +1838,7 @@ msgstr "NUL"
 
 #: plug-ins/common/CML_explorer.c:1511
 msgid "Source Channel in File:"
-msgstr "Canal Source dans le Fichier"
+msgstr "Canal Source dans le fichier :"
 
 #: plug-ins/common/CML_explorer.c:1534
 msgid "_Misc Ops."
@@ -2036,7 +2036,7 @@ msgstr "Aligner les calques visibles"
 #: plug-ins/common/gauss_iir.c:353 plug-ins/common/gauss_rle.c:347
 #: plug-ins/common/glasstile.c:251 plug-ins/common/grid.c:682
 #: plug-ins/common/illusion.c:415 plug-ins/common/jpeg.c:1720
-#: plug-ins/common/lic.c:762 plug-ins/common/max_rgb.c:271
+#: plug-ins/common/lic.c:686 plug-ins/common/max_rgb.c:271
 #: plug-ins/common/mosaic.c:603 plug-ins/common/nlfilt.c:361
 #: plug-ins/common/noisify.c:331 plug-ins/common/nova.c:328
 #: plug-ins/common/oilify.c:452 plug-ins/common/pixelize.c:319
@@ -2928,16 +2928,14 @@ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 msgstr "<Image>/Filtres/Distorsions/_Courber..."
 
 #: plug-ins/common/curve_bend.c:709
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
-"« Courber » ne fonctionne que sur les calques, pas sur les canaux et les "
-"masques."
+"Ne peut opérer que sur des calques (mais a été lancé depuis un canal ou un "
+"masque). "
 
 #: plug-ins/common/curve_bend.c:734
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Impossible d'opérer sur des types d'images inconnus."
+msgstr "Impossible d'opérer sur des sélections vides."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -2959,7 +2957,7 @@ msgstr "Aperçu automati_que"
 #. the vertical box and its toggle buttons
 #. Options section
 #: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:528
-#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2989
+#: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Options"
 
@@ -3488,7 +3486,7 @@ msgstr "_Sobel"
 msgid "_Prewitt"
 msgstr "_Prewitt"
 
-#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:744
+#: plug-ins/common/edge.c:652 plug-ins/common/lic.c:668
 msgid "_Gradient"
 msgstr "_Dégradé"
 
@@ -3946,8 +3944,8 @@ msgstr ""
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Désolé, impossible d'enregistrer des images RVB. Convertissez d'abord en "
-"couleurs indexées ou niveaux de gris."
+"Impossible d'enregistrer des images RVB. Convertissez d'abord en couleurs "
+"indexées ou en niveaux de gris."
 
 #: plug-ins/common/gif.c:1114
 msgid ""
@@ -4095,7 +4093,7 @@ msgstr "Le fichier de brosse GIMP semble être corrompu."
 
 #: plug-ins/common/gih.c:685
 msgid "Couldn't load one brush in the pipe, giving up."
-msgstr "Ne peut charger une brosse dans l'animation."
+msgstr "Impossible de charger une brosse dans l'animation."
 
 #: plug-ins/common/gih.c:833
 msgid "Save as Brush Pipe"
@@ -4212,11 +4210,11 @@ msgid "Grid"
 msgstr "Grille"
 
 #. attach labels
-#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:574
+#: plug-ins/common/grid.c:731 plug-ins/pagecurl/pagecurl.c:573
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:575
+#: plug-ins/common/grid.c:733 plug-ins/pagecurl/pagecurl.c:574
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -4247,7 +4245,7 @@ msgstr "Couleur des intersections"
 msgid "GIMP Table Magic"
 msgstr "Table magique de GIMP"
 
-#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3096
+#: plug-ins/common/gtm.c:420 plug-ins/gfig/gfig.c:3099
 msgid "Warning"
 msgstr "Avertissement"
 
@@ -4714,71 +4712,71 @@ msgstr "Laplace..."
 msgid "Cleanup..."
 msgstr "Nettoyer..."
 
-#: plug-ins/common/lic.c:626
+#: plug-ins/common/lic.c:548
 msgid "Van Gogh (LIC)..."
 msgstr "Van Gogh (LIC)..."
 
-#: plug-ins/common/lic.c:705
+#: plug-ins/common/lic.c:631
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: plug-ins/common/lic.c:725
+#: plug-ins/common/lic.c:649
 msgid "Effect Channel"
 msgstr "Canal d'effet"
 
-#: plug-ins/common/lic.c:731 plug-ins/fp/fp_gtk.c:294
+#: plug-ins/common/lic.c:655 plug-ins/fp/fp_gtk.c:294
 msgid "_Saturation"
 msgstr "_Saturation"
 
-#: plug-ins/common/lic.c:732
+#: plug-ins/common/lic.c:656
 msgid "_Brightness"
 msgstr "_Luminosité"
 
-#: plug-ins/common/lic.c:738
+#: plug-ins/common/lic.c:662
 msgid "Effect Operator"
 msgstr "Opérateur d'effet"
 
-#: plug-ins/common/lic.c:743
+#: plug-ins/common/lic.c:667
 msgid "_Derivative"
 msgstr "Dé_rivant"
 
-#: plug-ins/common/lic.c:750
+#: plug-ins/common/lic.c:674
 msgid "Convolve"
 msgstr "Circonvolution"
 
-#: plug-ins/common/lic.c:755
+#: plug-ins/common/lic.c:679
 msgid "_With White Noise"
 msgstr "Avec du _bruit blanc"
 
-#: plug-ins/common/lic.c:756
+#: plug-ins/common/lic.c:680
 msgid "W_ith Source Image"
 msgstr "Avec une ima_ge source"
 
-#: plug-ins/common/lic.c:784
+#: plug-ins/common/lic.c:708
 msgid "_Effect Image:"
 msgstr "_Image d'effet :"
 
-#: plug-ins/common/lic.c:800
+#: plug-ins/common/lic.c:724
 msgid "_Filter Length:"
 msgstr "_Longueur du filtre :"
 
-#: plug-ins/common/lic.c:809
+#: plug-ins/common/lic.c:733
 msgid "_Noise Magnitude:"
 msgstr "I_mportance du bruit :"
 
-#: plug-ins/common/lic.c:818
+#: plug-ins/common/lic.c:742
 msgid "In_tegration Steps:"
 msgstr "_Étapes d'intégration :"
 
-#: plug-ins/common/lic.c:827
+#: plug-ins/common/lic.c:751
 msgid "_Minimum Value:"
 msgstr "Valeur minim_um :"
 
-#: plug-ins/common/lic.c:836
+#: plug-ins/common/lic.c:760
 msgid "M_aximum Value:"
 msgstr "Valeur ma_ximum :"
 
-#: plug-ins/common/lic.c:887
+#: plug-ins/common/lic.c:811
 msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 msgstr "<Image>/Filtres/Carte/_Van Gogh (LIC)..."
 
@@ -5454,7 +5452,7 @@ msgstr "Enregistrer en tant que motif"
 #: plug-ins/common/pcx.c:313
 #, c-format
 msgid "Could not read header from '%s'"
-msgstr "Ne peut lire l'en-tête depuis « %s »"
+msgstr "Impossible de lire l'en-tête depuis « %s »"
 
 #: plug-ins/common/pcx.c:320
 #, c-format
@@ -5624,12 +5622,12 @@ msgstr ""
 #: plug-ins/common/png.c:1153
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
-msgstr "Erreur en écriture de « %s ». Ne peut pas enregistrer l'image."
+msgstr "Erreur en écriture de « %s ». Impossible d'enregistrer l'image."
 
 #: plug-ins/common/png.c:1527
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
-"Ne peut pas enregistrer la transparence à moindre perte,enregistrement de "
+"Impossible d'enregistrer la transparence sans perte, enregistrement de "
 "l'opacité à la place."
 
 #: plug-ins/common/png.c:1553
@@ -5687,7 +5685,7 @@ msgstr "Niveau de _compression :"
 
 #: plug-ins/common/png.c:1786
 msgid "Could not load PNG defaults"
-msgstr "Ne peut charger les valeurs par défaut PNG"
+msgstr "Impossible de charger les valeurs par défaut PNG"
 
 #: plug-ins/common/pnm.c:427 plug-ins/common/pnm.c:448
 #: plug-ins/common/pnm.c:455 plug-ins/common/pnm.c:464
@@ -5793,7 +5791,7 @@ msgstr ""
 #: plug-ins/common/postscript.c:887
 #, c-format
 msgid "Could not interpret '%s'"
-msgstr "Ne peut interpréter« %s »"
+msgstr "Impossible d'interpréter« %s »"
 
 #: plug-ins/common/postscript.c:975
 msgid "PostScript save cannot handle images with alpha channels"
@@ -5804,7 +5802,7 @@ msgstr ""
 #: plug-ins/common/postscript.c:1470 plug-ins/common/postscript.c:1500
 #, c-format
 msgid "Error starting ghostscript (%s)"
-msgstr ""
+msgstr "Erreur au lancement de Ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
@@ -6818,7 +6816,7 @@ msgstr "Le type de ce fichier SUN-Raster n'est pas supporté"
 #: plug-ins/common/sunras.c:422
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr "Je ne peux lire les entrées de couleurs de « %s »"
+msgstr "Impossible de lire les entrées de couleurs de « %s »"
 
 #: plug-ins/common/sunras.c:430
 msgid "Type of colormap not supported"
@@ -6836,7 +6834,7 @@ msgstr ""
 
 #: plug-ins/common/sunras.c:503
 msgid "Can't operate on unknown image types"
-msgstr "Impossible d'opérer sur un type d'image inconnu."
+msgstr "Impossible d'opérer sur des types d'images inconnus."
 
 #: plug-ins/common/sunras.c:1031 plug-ins/common/sunras.c:1122
 #: plug-ins/common/sunras.c:1203 plug-ins/common/sunras.c:1298
@@ -6930,12 +6928,12 @@ msgstr "Fusionner les chemins importés"
 #: plug-ins/common/tga.c:426
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr "Ne peut lire le pied de page depuis « %s »"
+msgstr "Impossible de lire le pied de page depuis « %s »"
 
 #: plug-ins/common/tga.c:442
 #, c-format
 msgid "Cannot read extension from '%s'"
-msgstr "Ne peut lire l'extension depuis « %s »"
+msgstr "Impossible de lire l'extension depuis « %s »"
 
 #: plug-ins/common/tga.c:1193
 msgid "Save as TGA"
@@ -7582,9 +7580,8 @@ msgid ""
 "Web browser not specified.\n"
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
-"Navigateur non spécifié.\n"
-"S'il vous plaît, spécifiez un navigateur web dans le dialogue des "
-"Préférences."
+"Navigateur Web non spécifié.\n"
+"Veuillez spécifier un navigateur Web dans le dialogue des Préférences."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7592,7 +7589,7 @@ msgid ""
 "Could not parse specified web browser command:\n"
 "%s"
 msgstr ""
-"Ne peut pas interpréter la commande spécifiée pour le navigateur web:\n"
+"Impossible d'interpréter la commande spécifiée pour le navigateur Web :\n"
 "%s"
 
 #: plug-ins/common/webbrowser.c:174
@@ -7601,7 +7598,7 @@ msgid ""
 "Could not execute specified web browser:\n"
 "%s"
 msgstr ""
-"Ne peut pas exécuter le navigateur web spécifié:\n"
+"Impossible d'exécuter le navigateur Web spécifié :\n"
 "%s"
 
 #: plug-ins/common/whirlpinch.c:185
@@ -7646,7 +7643,7 @@ msgstr "Format non supporté ou presse-papiers vide !"
 
 #: plug-ins/common/winclipboard.c:482
 msgid "Can't get Clipboard data."
-msgstr "Ne peut obtenir les données du presse-papiers."
+msgstr "Impossible d'obtenir les données du presse-papiers."
 
 #. ??? gimp_image_convert_rgb (image_ID);
 #.
@@ -7816,7 +7813,7 @@ msgid ""
 "Could not read header (ftell == %ld)"
 msgstr ""
 "« %s » :\n"
-"Ne peut lire l'en-tête (ftell == %ld)"
+"Impossible de lire l'en-tête (ftell == %ld)"
 
 #: plug-ins/common/xbm.c:810
 #, c-format
@@ -7925,11 +7922,11 @@ msgstr "Seuil _alpha :"
 #: plug-ins/common/xwd.c:391
 #, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr "Ne peut lire l'en-tête XWD depuis « %s »"
+msgstr "Impossible de lire l'en-tête XWD depuis « %s »"
 
 #: plug-ins/common/xwd.c:427
 msgid "can't read color entries"
-msgstr "Je ne peux lire les entrées de couleurs."
+msgstr "impossible de lire les entrées de couleurs."
 
 #: plug-ins/common/xwd.c:485
 #, c-format
@@ -7944,7 +7941,7 @@ msgstr ""
 
 #: plug-ins/common/xwd.c:513
 msgid "Cannot save images with alpha channels."
-msgstr "Ne peut enregistrer des images avec canaux alpha."
+msgstr "Impossible d'enregistrer des images avec des canaux alpha."
 
 #: plug-ins/common/xwd.c:1237
 msgid "EOF encountered on "
@@ -8448,7 +8445,7 @@ msgid "Delete an object"
 msgstr "Effacer un objet"
 
 #: plug-ins/gfig/gfig.c:1680 plug-ins/gfig/gfig.c:2056
-#: plug-ins/gfig/gfig.c:2975
+#: plug-ins/gfig/gfig.c:2978
 msgid "Brush"
 msgstr "Brosse"
 
@@ -8757,7 +8754,7 @@ msgstr "Effacer la collection d'objets Gfig actuellement sélectionnée"
 
 #: plug-ins/gfig/gfig.c:2833
 msgid "Select folder and rescan Gfig object collections"
-msgstr "Sélectionner un répertoire et actualiser la collection d'objets Gfig"
+msgstr "Sélectionner un dossier et actualiser la collection d'objets Gfig"
 
 #. Position labels
 #: plug-ins/gfig/gfig.c:2860 plug-ins/gimpressionist/size.c:98
@@ -8769,83 +8766,83 @@ msgstr "Taille :"
 msgid "Gfig"
 msgstr "GFig"
 
-#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2970
+#: plug-ins/gfig/gfig.c:2927 plug-ins/gfig/gfig.c:2973
 msgid "Paint"
 msgstr "Dessiner"
 
-#: plug-ins/gfig/gfig.c:2983 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:2986 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Sélectionner"
 
-#: plug-ins/gfig/gfig.c:3093
+#: plug-ins/gfig/gfig.c:3096
 #, c-format
 msgid "%d unsaved Gfig objects. Continue with exiting?"
 msgstr "%d objet Gfig non enregistrés. Voulez-vous vraiment quitter ?"
 
-#: plug-ins/gfig/gfig.c:3262
+#: plug-ins/gfig/gfig.c:3265
 msgid "Enter Gfig Object Name"
 msgstr "Entrer le nom de l'objet Gfig"
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3290
 msgid "Gfig Object Name:"
 msgstr "Nom de l'objet Gfig :"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3345
 msgid "Rescan for Gfig Objects"
 msgstr "Actualiser la liste d'objets Gfig"
 
-#: plug-ins/gfig/gfig.c:3359
+#: plug-ins/gfig/gfig.c:3362
 msgid "Add Gfig Path"
 msgstr "Ajouter un Chemin Gfig"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:3430
+#: plug-ins/gfig/gfig.c:3433
 msgid "Load Gfig object collection"
 msgstr "Charger la collection d'objets Gfig"
 
-#: plug-ins/gfig/gfig.c:3453
+#: plug-ins/gfig/gfig.c:3456
 msgid "Error in copy layer for onlayers"
 msgstr "Erreur en copiant le calque pour onlayers"
 
-#: plug-ins/gfig/gfig.c:3566
+#: plug-ins/gfig/gfig.c:3569
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Calque Gfig n°%d"
 
-#: plug-ins/gfig/gfig.c:3640
+#: plug-ins/gfig/gfig.c:3643
 msgid "About Gfig"
 msgstr "À propos de GFig"
 
-#: plug-ins/gfig/gfig.c:3667
+#: plug-ins/gfig/gfig.c:3670
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - Greffon GIMP"
 
-#: plug-ins/gfig/gfig.c:3672
+#: plug-ins/gfig/gfig.c:3675
 msgid "Release 2.0"
 msgstr "Version 2.0"
 
-#: plug-ins/gfig/gfig.c:3707
+#: plug-ins/gfig/gfig.c:3710
 msgid "New Gfig Object"
 msgstr "Nouvel objet Gfig"
 
-#: plug-ins/gfig/gfig.c:3828
+#: plug-ins/gfig/gfig.c:3831
 msgid "Delete Gfig Drawing"
 msgstr "Effacer le dessin gfig"
 
-#: plug-ins/gfig/gfig.c:3880
+#: plug-ins/gfig/gfig.c:3883
 msgid "Editing read-only object - you will not be able to save it"
 msgstr ""
 "Édition d'un objet en lecture seule - vous ne pourrez pas l'enregistrer"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:3979
+#: plug-ins/gfig/gfig.c:3982
 #, c-format
 msgid "%s copy"
 msgstr "Copie de %s"
 
-#: plug-ins/gfig/gfig.c:4351
+#: plug-ins/gfig/gfig.c:4354
 msgid "Error reading file"
 msgstr "Erreur lors de la lecture du fichier"
 
@@ -8958,8 +8955,8 @@ msgstr ""
 "Éblouissement GIMP « %s » non enregistré. Si vous ajoutez une nouvelle "
 "entrée dans %s, comme :\n"
 "(gflare-path \"%s\")\n"
-"et que vous créez un répertoire %s, vous pourrez enregistrer vos propres "
-"Éblouissements GIMP dans ce répertoire."
+"et que vous créez un dossier %s, vous pourrez enregistrer vos propres "
+"Éblouissements GIMP dans ce dossier."
 
 #: plug-ins/gflare/gflare.c:1490
 #, c-format
@@ -9221,7 +9218,7 @@ msgstr "GFLI 1.3 - Enregistrer la pile de calques"
 
 #: plug-ins/gimpressionist/brush.c:195
 msgid "Can only save drawables!"
-msgstr "Ne peut qu'enregistrer que des tracés !"
+msgstr "Ne peut enregistrer que des tracés !"
 
 #: plug-ins/gimpressionist/brush.c:199
 msgid "Save Brush"
@@ -9729,7 +9726,7 @@ msgstr "Efface le préréglage choisi"
 
 #: plug-ins/gimpressionist/presets.c:684
 msgid "Reread the folder of Presets"
-msgstr "Recharge le répertoire des préréglages"
+msgstr "Recharge le dossier des préréglages"
 
 #  ?
 #: plug-ins/gimpressionist/presets.c:690
@@ -9897,7 +9894,7 @@ msgstr "Document non trouvé"
 
 #: plug-ins/helpbrowser/dialog.c:533
 msgid "Could not locate help document"
-msgstr "Ne peut pas localiser la documentation d'aide"
+msgstr "Impossible de localiser la documentation d'aide"
 
 #: plug-ins/helpbrowser/dialog.c:535
 msgid ""
@@ -10502,7 +10499,7 @@ msgstr "Fichier « %s » enregistré."
 
 #: plug-ins/imagemap/imap_main.c:951
 msgid "Couldn't save file:"
-msgstr "N'a pu enregistrer le fichier :"
+msgstr "Impossible d'enregistrer le fichier :"
 
 #: plug-ins/imagemap/imap_main.c:977
 msgid "Image size has changed."
@@ -10514,7 +10511,7 @@ msgstr "Redimensionner sa surface ?"
 
 #: plug-ins/imagemap/imap_main.c:1006
 msgid "Couldn't read file:"
-msgstr "N'a pu lire le fichier :"
+msgstr "Impossible de lire le fichier :"
 
 #: plug-ins/imagemap/imap_main.c:1053
 #, c-format
@@ -10645,7 +10642,7 @@ msgstr "Guides..."
 
 #: plug-ins/imagemap/imap_preferences.c:212
 msgid "Couldn't save resource file:"
-msgstr "Je n'ai pu enregistrer le fichier de ressources :"
+msgstr "Impossible d'enregistrer le fichier de ressources :"
 
 #: plug-ins/imagemap/imap_preferences.c:357
 msgid "Select Color"
@@ -10927,43 +10924,43 @@ msgstr "Ouverture de %s"
 msgid "See %s"
 msgstr "Voir %s"
 
-#: plug-ins/pagecurl/pagecurl.c:214
+#: plug-ins/pagecurl/pagecurl.c:212
 msgid "<Image>/Filters/Distorts/_Pagecurl..."
 msgstr "<Image>/Filtres/Distorsions/Coin de p_age..."
 
-#: plug-ins/pagecurl/pagecurl.c:491
+#: plug-ins/pagecurl/pagecurl.c:490
 msgid "Pagecurl Effect"
 msgstr "Effet Coin de page"
 
-#: plug-ins/pagecurl/pagecurl.c:505
+#: plug-ins/pagecurl/pagecurl.c:504
 msgid "Curl Location"
 msgstr "Emplacement du coin"
 
-#: plug-ins/pagecurl/pagecurl.c:530
+#: plug-ins/pagecurl/pagecurl.c:529
 msgid "Upper Left"
 msgstr "Supérieure gauche"
 
-#: plug-ins/pagecurl/pagecurl.c:531
+#: plug-ins/pagecurl/pagecurl.c:530
 msgid "Upper Right"
 msgstr "Supérieur droit"
 
-#: plug-ins/pagecurl/pagecurl.c:532
+#: plug-ins/pagecurl/pagecurl.c:531
 msgid "Lower Left"
 msgstr "Inférieur gauche"
 
-#: plug-ins/pagecurl/pagecurl.c:533
+#: plug-ins/pagecurl/pagecurl.c:532
 msgid "Lower Right"
 msgstr "Inférieur droit"
 
-#: plug-ins/pagecurl/pagecurl.c:563
+#: plug-ins/pagecurl/pagecurl.c:562
 msgid "Curl Orientation"
 msgstr "Orientation du coin"
 
-#: plug-ins/pagecurl/pagecurl.c:601
+#: plug-ins/pagecurl/pagecurl.c:600
 msgid "Shade under Curl"
 msgstr "Ombre sous le coin"
 
-#: plug-ins/pagecurl/pagecurl.c:612
+#: plug-ins/pagecurl/pagecurl.c:611
 msgid ""
 "Use Current Gradient\n"
 "instead of FG/BG-Color"
@@ -10971,15 +10968,15 @@ msgstr ""
 "Utiliser le dégradé courant\n"
 "au lieu de la couleur d'Av/Arr Plan"
 
-#: plug-ins/pagecurl/pagecurl.c:625
+#: plug-ins/pagecurl/pagecurl.c:624
 msgid "Curl Opacity"
 msgstr "Opacité du coin"
 
-#: plug-ins/pagecurl/pagecurl.c:756
+#: plug-ins/pagecurl/pagecurl.c:754
 msgid "Curl Layer"
 msgstr "Coin du calque"
 
-#: plug-ins/pagecurl/pagecurl.c:998
+#: plug-ins/pagecurl/pagecurl.c:1000
 msgid "Page Curl..."
 msgstr "Coin de page..."
 
@@ -11724,7 +11721,7 @@ msgstr "Type de compression"
 
 #: plug-ins/sgi/sgi.c:627
 msgid "No Compression"
-msgstr "Pas de Compression"
+msgstr "Aucune compression"
 
 #: plug-ins/sgi/sgi.c:629
 msgid "RLE Compression"
@@ -11735,7 +11732,7 @@ msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
 msgstr ""
-"RLE Aggressif\n"
+"RLE aggressif\n"
 "(non supporté par SGI)"
 
 #: plug-ins/twain/twain.c:532
@@ -11770,38 +11767,38 @@ msgstr "Aucune donnée capturée"
 #: plug-ins/xjt/xjt.c:715
 #, c-format
 msgid "XJT file contains unknown layermode %d"
-msgstr "Le fichier XJT contient le code de calque inconnu %d."
+msgstr "Le fichier XJT contient le code de calque inconnu %d"
 
 #: plug-ins/xjt/xjt.c:752
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr ""
 "Avertissement : mode de calque %d non supporté lors de l'enregistrement au "
-"format XJT."
+"format XJT"
 
 #: plug-ins/xjt/xjt.c:768
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
-msgstr "Le fichier XJT contient le type de chemin inconnu %d."
+msgstr "Le fichier XJT contient le type de chemin inconnu %d"
 
 #: plug-ins/xjt/xjt.c:784
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr ""
 "Avertissement : type de chemin %d non supporté lors de l'enregistrement au "
-"format XJT."
+"format XJT"
 
 #: plug-ins/xjt/xjt.c:803
 #, c-format
 msgid "XJT file contains unknown unittype %d"
-msgstr "Le fichier XJT contient le type d'unité inconnu %d."
+msgstr "Le fichier XJT contient le type d'unité inconnu %d"
 
 #: plug-ins/xjt/xjt.c:824
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
 "Avertissement : type d'unité %d non supporté lors de l'enregistrement au "
-"format XJT."
+"format XJT"
 
 #: plug-ins/xjt/xjt.c:846
 msgid "Save as XJT"
@@ -11815,12 +11812,12 @@ msgstr "Transparence claire"
 #: plug-ins/xjt/xjt.c:1702 plug-ins/xjt/xjt.c:3332
 #, c-format
 msgid "Could not create working folder '%s': %s"
-msgstr "Ne peut créer le répertoire de travail « %s » : %s"
+msgstr "Impossible de créer le dossier de travail « %s » : %s"
 
 #: plug-ins/xjt/xjt.c:3198
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
-msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »"
+msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 
 #: plug-ins/xjt/xjt.c:3204
 #, c-format

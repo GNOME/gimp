@@ -10,10 +10,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp_libgimp 2.0pre4\n"
+"Project-Id-Version: gimp-libgimp 2.0pre4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-16 00:38+0100\n"
-"PO-Revision-Date: 2004-02-16 00:37+0100\n"
+"POT-Creation-Date: 2004-02-28 15:43+0100\n"
+"PO-Revision-Date: 2004-02-28 15:42+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -395,11 +395,11 @@ msgstr "Courant :"
 msgid "Old:"
 msgstr "Ancien :"
 
-#: libgimpwidgets/gimpfileentry.c:361
+#: libgimpwidgets/gimpfileentry.c:350
 msgid "Select Folder"
 msgstr "Sélectionnez un répertoire"
 
-#: libgimpwidgets/gimpfileentry.c:375
+#: libgimpwidgets/gimpfileentry.c:364
 msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
@@ -467,23 +467,23 @@ msgstr "Espacement des l_ignes"
 msgid "_Resize"
 msgstr "_Redimensionner"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
 msgid "_Scale"
 msgstr "_Étirer"
 
-#: libgimpwidgets/gimpstock.c:262
+#: libgimpwidgets/gimpstock.c:263
 msgid "Crop"
 msgstr "Découper"
 
-#: libgimpwidgets/gimpstock.c:279
+#: libgimpwidgets/gimpstock.c:280
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:282
+#: libgimpwidgets/gimpstock.c:283
 msgid "_Rotate"
 msgstr "_Pivoter"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:285
 msgid "_Shear"
 msgstr "_Cisailler"
 
@@ -513,16 +513,15 @@ msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
-msgstr ""
+msgstr "_Nouvelle graine"
 
 #: libgimpwidgets/gimpwidgets.c:1288
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialise le générateur de nombre aléatoire avec un nombre aléatoire"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-#, fuzzy
 msgid "Randomize"
-msgstr "Aléatoi_re"
+msgstr "Aléatoire"
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
