@@ -432,6 +432,17 @@ marshall_proc_db_call (LISP a)
 				      &params, &return_vals))
     return my_err ("Invalid procedure name specified.", NIL);
 
+  /* Free the name and the description which are of no use here.  */
+  for (i = 0; i < nparams; i++)
+    {
+      g_free (params[i].name);
+      g_free (params[i].description);
+    }
+  for (i = 0; i < nreturn_vals; i++)
+    {
+      g_free (return_vals[i].name);
+      g_free (return_vals[i].description);
+    }
 
   /*  Check the supplied number of arguments  */
   if ((nlength (a) - 1) != nparams)
