@@ -92,15 +92,19 @@ typedef struct
  * Function prototypes.
  */
 
-static void      query       (void);
-static void      run         (const gchar      *name,
-                              gint              nparams,
-                              const GimpParam  *param,
-                              gint             *nreturn_vals,
-                              GimpParam       **return_vals);
+static void       query                    (void);
+static void       run                      (const gchar      *name,
+                                            gint              nparams,
+                                            const GimpParam  *param,
+                                            gint             *nreturn_vals,
+                                            GimpParam       **return_vals);
 
-static void      edge        (GimpDrawable     *drawable);
-static gboolean  edge_dialog (GimpDrawable     *drawable);
+static void       edge                     (GimpDrawable     *drawable);
+static gboolean   edge_dialog              (GimpDrawable     *drawable);
+static GtkWidget *edge_preview_new         (GimpDrawable *drawable);
+static void       edge_preview_update      (GimpDrawable *drawable);
+static void       edge_radio_button_update (GtkWidget *widget,
+                                            gpointer   data);
 
 static gint edge_detect  (guchar *data);
 static gint prewitt      (guchar *data);
@@ -122,10 +126,17 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static EdgeVals evals =
 {
-  2.0,         			/* amount */
-  SOBEL,       			/* Edge detection algorithm */
+  2.0,                          /* amount */
+  SOBEL,                        /* Edge detection algorithm */
   GIMP_PIXEL_FETCHER_EDGE_SMEAR /* wrapmode */
 };
+
+/* Preview stuff */
+#define PREVIEW_SIZE 128
+static GimpDrawable *drawable;
+static GtkWidget    *preview;
+static gint          delta_x = 0;
+static gint          delta_y = 0;
 
 /***** Functions *****/
 
@@ -175,7 +186,6 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
@@ -263,21 +273,21 @@ run (const gchar      *name,
 static void
 edge (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  gpointer pr;
+  GimpPixelRgn      src_rgn, dest_rgn;
+  gpointer          pr;
   GimpPixelFetcher *pft;
-  guchar *srcrow, *src;
-  guchar *destrow, *dest;
-  guchar pix00[4], pix01[4], pix02[4];
-  guchar pix10[4], pix11[4], pix12[4];
-  guchar pix20[4], pix21[4], pix22[4];
-  glong width, height;
-  gint alpha, has_alpha, chan;
-  gint x, y;
-  gint x1, y1, x2, y2;
-  gint maxval;
-  gint cur_progress;
-  gint max_progress;
+  guchar           *srcrow, *src;
+  guchar           *destrow, *dest;
+  guchar            pix00[4], pix01[4], pix02[4];
+  guchar            pix10[4], pix11[4], pix12[4];
+  guchar            pix20[4], pix21[4], pix22[4];
+  glong             width, height;
+  gint              alpha, has_alpha, chan;
+  gint              x, y;
+  gint              x1, y1, x2, y2;
+  gint              maxval;
+  gint              cur_progress;
+  gint              max_progress;
 
   if (evals.amount < 1.0)
     evals.amount = 1.0;
@@ -458,7 +468,7 @@ sobel (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
   return sqrt (v_grad * v_grad * evals.amount +
-	       h_grad * h_grad * evals.amount);
+               h_grad * h_grad * evals.amount);
 }
 
 /*
@@ -530,7 +540,7 @@ gradient (guchar *data)
     }
 
   return  sqrt (v_grad * v_grad * evals.amount +
-		h_grad * h_grad * evals.amount);
+                h_grad * h_grad * evals.amount);
 }
 
 /*
@@ -559,7 +569,7 @@ roberts (guchar *data)
     }
 
   return sqrt (v_grad * v_grad * evals.amount +
-	       h_grad * h_grad * evals.amount);
+               h_grad * h_grad * evals.amount);
 }
 
 /*
@@ -589,7 +599,7 @@ differential (guchar *data)
     }
 
   return sqrt (v_grad * v_grad * evals.amount +
-	       h_grad * h_grad * evals.amount);
+               h_grad * h_grad * evals.amount);
 }
 
 /*
@@ -653,9 +663,17 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox);
   gtk_widget_show (vbox);
 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  table = edge_preview_new (drawable);
+  gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
   /*  compression  */
   frame = gimp_int_radio_group_new (TRUE, _("Algorithm"),
-                                    G_CALLBACK (gimp_radio_button_update),
+                                    G_CALLBACK (edge_radio_button_update),
                                     &evals.edgemode, evals.edgemode,
 
                                     _("_Sobel"),        SOBEL,        NULL,
@@ -688,6 +706,9 @@ edge_dialog (GimpDrawable *drawable)
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &evals.amount);
+  g_signal_connect_swapped (scale_data, "value_changed",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
 
   /*  Radio buttons WRAP, SMEAR, BLACK  */
 
@@ -705,6 +726,9 @@ edge_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_wrap);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Smear"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -715,6 +739,9 @@ edge_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_smear);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
 
   toggle = gtk_radio_button_new_with_mnemonic (group, _("_Black"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
@@ -725,8 +752,13 @@ edge_dialog (GimpDrawable *drawable)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &use_black);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
 
   gtk_widget_show (dlg);
+
+  edge_preview_update (drawable);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
@@ -741,3 +773,189 @@ edge_dialog (GimpDrawable *drawable)
 
   return run;
 }
+
+static void
+edge_radio_button_update (GtkWidget *widget,
+                          gpointer   data)
+{
+  gint *toggle_val;
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      toggle_val = (gint *) data;
+
+      *toggle_val = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+							"gimp-item-data"));
+    }
+
+  gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
+  edge_preview_update (drawable);
+}
+
+/* Preview stuff */
+static GtkWidget *
+edge_preview_new (GimpDrawable *drawable)
+{
+  GtkWidget *table;
+  GtkWidget *frame;
+  GtkObject *adj;
+  GtkWidget *scrollbar;
+
+  gint       sel_width;
+  gint       sel_height;
+  gint       x1, y1, x2, y2;
+  gint       preview_width;
+  gint       preview_height;
+
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  sel_width     = x2 - x1;
+  sel_height    = y2 - y1;
+  preview_width  = MIN (sel_width, PREVIEW_SIZE);
+  preview_height = MIN (sel_height, PREVIEW_SIZE);
+
+  table = gtk_table_new (2, 2, FALSE);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1, 0, 0, 0, 0);
+  gtk_widget_show (frame);
+
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  adj = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
+                            MIN (preview_width, sel_width),
+                            MIN (preview_width, sel_width));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_x);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
+  scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 0, 1, 1, 2,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (scrollbar);
+
+  adj = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
+                            MIN (preview_height, sel_height),
+                            MIN (preview_height, sel_height));
+
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &delta_y);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (edge_preview_update),
+                            drawable);
+
+  scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (adj));
+  gtk_range_set_update_policy (GTK_RANGE (scrollbar),
+                               GTK_UPDATE_CONTINUOUS);
+  gtk_table_attach (GTK_TABLE (table), scrollbar, 1, 2, 0, 1,
+                    0, GTK_FILL, 0, 0);
+  gtk_widget_show (scrollbar);
+
+  return table;
+}
+
+static void
+edge_preview_update (GimpDrawable *drawable)
+{
+  /* drawable */
+  glong    width, height;
+  glong    bytes;
+  gint     x1, y1, x2, y2;
+  gint     alpha;
+  gboolean has_alpha;
+
+  /* preview */
+  guchar       *src           = NULL; /* Buffer to hold source image */
+  guchar       *render_buffer = NULL; /* Buffer to hold rendered image */
+  guchar       *dest;
+  gint          preview_width;        /* Width of preview widget */
+  gint          preview_height;       /* Height of preview widget */
+  gint          preview_x1;           /* Upper-left X of preview */
+  gint          preview_y1;           /* Upper-left Y of preview */
+  gint          preview_x2;           /* Lower-right X of preview */
+  gint          preview_y2;           /* Lower-right Y of preview */
+  GimpPixelRgn  srcPR;                /* Pixel regions */
+
+  /* algorithm */
+  gint x, y;
+
+  /* Get drawable info */
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width  = drawable->width;
+  height = drawable->height;
+  bytes  = gimp_drawable_bpp (drawable->drawable_id);
+  alpha  = bytes;
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  if (has_alpha)
+    alpha--;
+
+  /*
+   * Setup for filter...
+   */
+  preview_x1     = x1 + delta_x;
+  preview_y1     = y1 + delta_y;
+  preview_x2     = preview_x1 + MIN (PREVIEW_SIZE, x2 - x1);
+  preview_y2     = preview_y1 + MIN (PREVIEW_SIZE, y2 - y1);
+  preview_width  = preview_x2 - preview_x1;
+  preview_height = preview_y2 - preview_y1;
+
+  /* initialize pixel regions */
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       preview_x1,preview_y1,
+                       preview_width, preview_height, FALSE, FALSE);
+  src = g_new (guchar, preview_width * preview_height * bytes);
+  render_buffer = g_new (guchar, preview_width * preview_height * bytes);
+
+  /* render image */
+  gimp_pixel_rgn_get_rect(&srcPR, src,
+                          preview_x1, preview_y1,
+                          preview_width, preview_height);
+  dest = render_buffer;
+  /* render algorithm */
+  for (y = 0 ; y < preview_height ; y++)
+    for (x = 0 ; x < preview_width ; x++)
+      {
+        gint chan;
+        for (chan = 0; chan < alpha; chan++)
+          {
+            guchar kernel[9];
+
+#define SRC(X,Y) src[bytes * ( CLAMP((X),0,preview_width) + preview_width * CLAMP((Y),0,preview_height) )+chan]
+            kernel[0] = SRC(x-1, y-1);
+            kernel[1] = SRC(x-1, y  );
+            kernel[2] = SRC(x-1, y+1);
+            kernel[3] = SRC(x  , y-1);
+            kernel[4] = SRC(x  , y  );
+            kernel[5] = SRC(x  , y+1);
+            kernel[6] = SRC(x+1, y-1);
+            kernel[7] = SRC(x+1, y  );
+            kernel[8] = SRC(x+1, y+1);
+#undef SRC
+            dest[chan] = edge_detect(kernel);
+          }
+        if (has_alpha)
+          dest[alpha] = src[bytes * (x + preview_width * y) + alpha];
+        dest += bytes;
+      }
+  /*
+   * Draw the preview image on the screen...
+   */
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          gimp_drawable_type (drawable->drawable_id),
+                          render_buffer,
+                          preview_width * bytes);
+
+  g_free (render_buffer);
+  g_free (src);
+}
+
