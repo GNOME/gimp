@@ -1,3 +1,11 @@
+2005-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: check for gnome-vfs-2.0
+
+	* plug-ins/uri/Makefile.am
+	* plug-ins/uri/uri-backend-gnomevfs.c: new file which is built
+	instead of the wget backend if GnomeVFS is available.
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-file.c

@@ -1127,6 +1127,16 @@ AC_SUBST(SVG_CFLAGS)
 AC_SUBST(LIBSVG)
 
 
+#####################
+# Check for gnome-vfs
+#####################
+
+PKG_CHECK_MODULES(GNOMEVFS, gnome-vfs-2.0,
+  have_gnomevfs=yes,
+  AC_MSG_WARN([*** URI plug-in will be built without gnome-vfs support (gnome-vfs-2.0 not found) ***]))
+AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
+
+
 ######################
 # Check for gimp-print
 ######################

@@ -17,14 +17,23 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = uri
 
+if HAVE_GNOMEVFS
+backend_sources = uri-backend-gnomevfs.c
+backend_cflags = $(GNOMEVFS_CFLAGS)
+backend_libs = $(GNOMEVFS_LIBS)
+else
+backend_sources = uri-backend-wget.c
+endif
+
 uri_SOURCES = \
 	uri.c			\
 	uri-backend.h		\
-	uri-backend-wget.c
+	$(backend_sources)
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GTK_CFLAGS)		\
+	$(backend_cflags)	\
 	-I$(includedir)
 
 LDADD = \
@@ -35,5 +44,6 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(backend_libs)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
