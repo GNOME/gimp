@@ -1,3 +1,9 @@
+2005-01-17  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/spheredesigner.c: add basic validity check
+	when attempting to open a preset; let's say this fixes
+	bug #148984.
+
 2005-01-17  Michael Natterer  <mitch@gimp.org>
 
 	Allow to drop stuff onto empty layers, channels and paths dialogs

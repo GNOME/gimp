@@ -1981,16 +1981,27 @@ loadit (const gchar * fn)
   gchar    line[1024];
   gint     i;
   texture *t;
-
-  s.com.numtexture = 0;
+  gint     majtype, type;
 
   f = fopen (fn, "rt");
-  if (!f)
+  if (! f)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (fn), g_strerror (errno));
       return;
     }
+
+  if (2 != fscanf (f, "%d %d", &majtype, &type) || majtype < 0 || majtype > 2)
+    {
+      g_message (_("File '%s' is not a valid save file."),
+                 gimp_filename_to_utf8 (fn));
+      fclose (f);
+      return;
+    }
+
+  rewind (f);
+
+  s.com.numtexture = 0;
 
   while (!feof (f))
     {
