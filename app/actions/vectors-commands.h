@@ -52,6 +52,8 @@ void   vectors_selection_to_vectors_cmd_callback (GtkAction   *action,
                                                   gpointer     data);
 void   vectors_stroke_cmd_callback               (GtkAction   *action,
                                                   gpointer     data);
+void   vectors_stroke_last_vals_cmd_callback     (GtkAction   *action,
+                                                  gpointer     data);
 
 void   vectors_copy_cmd_callback                 (GtkAction   *action,
                                                   gpointer     data);

@@ -114,6 +114,11 @@ static GimpActionEntry vectors_actions[] =
     G_CALLBACK (vectors_stroke_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
+  { "vectors-stroke-last-vals", GIMP_STOCK_PATH_STROKE,
+    "Stroke Path with last Values", NULL, NULL,
+    G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
+    GIMP_HELP_PATH_STROKE },
+
   { "vectors-copy", GTK_STOCK_COPY,
     N_("Co_py Path"), "", NULL,
     G_CALLBACK (vectors_copy_cmd_callback),
@@ -299,6 +304,7 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-to-vectors-short",    gimage && !mask_empty);
   SET_SENSITIVE ("vectors-selection-to-vectors-advanced", gimage && !mask_empty);
   SET_SENSITIVE ("vectors-stroke",                        vectors);
+  SET_SENSITIVE ("vectors-stroke-last-vals",              vectors);
 
   SET_SENSITIVE ("vectors-selection-replace",      vectors);
   SET_SENSITIVE ("vectors-selection-from-vectors", vectors);

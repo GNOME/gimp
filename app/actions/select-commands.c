@@ -289,7 +289,6 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   GimpDrawable *drawable;
   GimpContext  *context;
   GimpObject   *options;
-  GimpItem     *item;
   gboolean      libart_stroking;
   return_if_no_image (image, data);
 
@@ -319,22 +318,22 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
       libart_stroking = TRUE;
     }
 
-  item = GIMP_ITEM (gimp_image_get_mask (image));
-
   if (libart_stroking)
     {
-      gimp_item_stroke (item, drawable, context, options, FALSE);
+      gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                        drawable, context, options, FALSE);
     }
   else
     {
-      gimp_item_stroke (item, drawable, context,
+      gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
+                        drawable, context,
                         g_object_get_data (G_OBJECT (options),
                                            "gimp-paint-info"), FALSE);
     }
 
-  gimp_image_flush (image);
-
   g_object_unref (options);
+
+  gimp_image_flush (image);
 }
 
 

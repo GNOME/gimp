@@ -1,3 +1,16 @@
+2004-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/select-actions.c
+	* app/actions/select-commands.[ch]
+	* app/actions/vectors-actions.c
+	* app/actions/vectors-commands.[ch]: added actions and callbacks
+	to stroke with the last values used without showing the stroke
+	dialog. The actions have no menu entries but can be called via
+	shortcuts. Fixes bug #135746.
+
+	(Disclaimer: the uglyness of the callbacks shows the need for a
+	stroke API overhaul).
+
 2004-10-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-stroke.c

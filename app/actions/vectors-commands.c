@@ -36,6 +36,7 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimpitemundo.h"
 #include "core/gimpprogress.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
 #include "pdb/procedural_db.h"
@@ -364,6 +365,62 @@ vectors_stroke_cmd_callback (GtkAction *action,
                               GIMP_HELP_PATH_STROKE,
                               widget);
   gtk_widget_show (dialog);
+}
+
+void
+vectors_stroke_last_vals_cmd_callback (GtkAction *action,
+                                       gpointer   data)
+{
+  GimpImage    *image;
+  GimpVectors  *vectors;
+  GimpDrawable *drawable;
+  GimpContext  *context;
+  GimpObject   *options;
+  gboolean      libart_stroking;
+  return_if_no_vectors (image, vectors, data);
+
+  drawable = gimp_image_active_drawable (image);
+
+  if (! drawable)
+    {
+      g_message (_("There is no active layer or channel to stroke to."));
+      return;
+    }
+
+  context = gimp_get_user_context (image->gimp);
+
+  options = g_object_get_data (G_OBJECT (context), "saved-stroke-options");
+
+  if (options)
+    {
+      g_object_ref (options);
+      libart_stroking = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (options),
+                                                            "libart-stroking"));
+    }
+  else
+    {
+      options = g_object_new (GIMP_TYPE_STROKE_OPTIONS,
+                              "gimp", image->gimp,
+                              NULL);
+      libart_stroking = TRUE;
+    }
+
+  if (libart_stroking)
+    {
+      gimp_item_stroke (GIMP_ITEM (vectors),
+                        drawable, context, options, FALSE);
+    }
+  else
+    {
+      gimp_item_stroke (GIMP_ITEM (vectors),
+                        drawable, context,
+                        g_object_get_data (G_OBJECT (options),
+                                           "gimp-paint-info"), FALSE);
+    }
+
+  g_object_unref (options);
+
+  gimp_image_flush (image);
 }
 
 void
