@@ -1,16 +1,29 @@
+2003-09-03  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectortool.[ch]: properly keep track of the
+	active anchor and retrieve that information after a _thaw () so
+	that proper editing is possible after an undo. Now the
+	vector_tool->cur_* variables are constantly updated in
+	_oper_update () so that we don't need to determine them in
+	_button_press () again.
+
+	On request by Jimmac and Joao connecting two stroke-ends now
+	works by activating one endpoint and clicking on the other
+	endpoint in Insert/Delete Mode.
+
 2003-09-03  Pedro Gimeno  <pggimeno@wanadoo.es>
 
-	* ccanalyze.c (analyze): use Alpha channel and selection
-	channel info when available to build the histogram and to
-	include/exclude colors in the color count. Fixes bug #121097
-	and handling of INDEXEDA images which was broken.
-	(histogram, insertcolor, fillPreview): updated to use
-	gdoubles where appropriate.
+	* plug-ins/common/ccanalyze.c (analyze): use Alpha channel and
+	selection channel info when available to build the histogram and
+	to include/exclude colors in the color count. Fixes bug #121097
+	and handling of INDEXEDA images which was broken. (histogram,
+	insertcolor, fillPreview): updated to use gdoubles where
+	appropriate.
 
 2003-09-03  Pedro Gimeno  <pggimeno@wanadoo.es>
 
-	* ccanalyze.c: Changed from CR/LF style to LF style in preparation
-	for the next batch of changes.
+	* plug-ins/common/ccanalyze.c: Changed from CR/LF style to LF
+	style in preparation for the next batch of changes.
 
 2003-09-03  Manish Singh  <yosh@gimp.org>
 
