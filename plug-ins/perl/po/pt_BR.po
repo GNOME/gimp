@@ -5,11 +5,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.21\n"
 "POT-Creation-Date: Sat Dec 30 14:09:58 2000\n"
-"PO-Revision-Date: 2000-04-03 15:39-03:00\n"
+"PO-Revision-Date: 2001-06-26 11:53+0200\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; =ISO-8859-1\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bits\n"
 
 #: examples/PDB:0
