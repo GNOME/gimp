@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
@@ -137,8 +136,8 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
 {
   GimpPressureOptions      *pressure_options;
   GimpGradientOptions      *gradient_options;
-  GimpImage                *gimage;
   GimpContext              *context;
+  GimpImage                *gimage;
   TempBuf                  *area;
   gdouble                   gradient_length;
   guchar                    local_blend = OPAQUE_OPACITY;
@@ -150,10 +149,10 @@ gimp_paintbrush_motion (GimpPaintCore         *paint_core,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
+  context = GIMP_CONTEXT (paint_options);
+
   pressure_options = paint_options->pressure_options;
   gradient_options = paint_options->gradient_options;
-
-  context = gimp_get_current_context (gimage->gimp);
 
   paint_appl_mode = (paint_options->incremental ? 
                      GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);

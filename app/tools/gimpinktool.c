@@ -35,7 +35,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -947,7 +946,7 @@ ink_paste (GimpInkTool  *ink_tool,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
-  context = gimp_get_current_context (gimage->gimp);
+  context = GIMP_CONTEXT (GIMP_TOOL (ink_tool)->tool_info->tool_options);
 
   /* Get the the buffer */
   ink_set_paint_area (ink_tool, drawable, blob);

@@ -28,7 +28,6 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpgradient.h"
@@ -220,11 +219,13 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 {
   GimpBlendTool    *blend_tool;
   GimpBlendOptions *options;
+  GimpContext      *context;
   GimpImage        *gimage;
   GimpProgress     *progress;
 
   blend_tool = GIMP_BLEND_TOOL (tool);
   options    = GIMP_BLEND_OPTIONS (tool->tool_info->tool_options);
+  context    = GIMP_CONTEXT (options);
 
   gimage = gdisp->gimage;
 
@@ -244,9 +245,9 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
       gimp_drawable_blend (gimp_image_active_drawable (gimage),
                            GIMP_CUSTOM_MODE,
-                           gimp_context_get_paint_mode (gimp_get_current_context (gimage->gimp)),
+                           gimp_context_get_paint_mode (context),
                            options->gradient_type,
-                           gimp_context_get_opacity (gimp_get_current_context (gimage->gimp)),
+                           gimp_context_get_opacity (context),
                            options->offset,
                            options->repeat,
                            options->supersample,

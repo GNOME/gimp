@@ -30,7 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
@@ -221,7 +220,7 @@ gimp_airbrush_motion (GimpPaintCore    *paint_core,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
-  context = gimp_get_current_context (gimage->gimp);
+  context = GIMP_CONTEXT (paint_options);
 
   paint_appl_mode = (paint_options->incremental ? 
                      GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);
@@ -296,7 +295,7 @@ gimp_airbrush_timeout (gpointer client_data)
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush_timeout.drawable)));
 
-  rate = ((GimpAirbrushOptions *) airbrush_timeout.paint_options)->rate;
+  rate = GIMP_AIRBRUSH_OPTIONS (airbrush_timeout.paint_options)->rate;
 
   /*  restart the timer  */
   if (rate != 0.0)

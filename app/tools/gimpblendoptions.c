@@ -333,8 +333,9 @@ blend_options_drop_tool (GtkWidget    *widget,
   GimpToolOptions *tool_options;
   GimpContext     *context;
 
-  tool_options = (GimpToolOptions *) data;
+  tool_options = GIMP_TOOL_OPTIONS (data);
 
+  /*  use the user context to switch tools  */
   context = gimp_get_user_context (tool_options->tool_info->gimp);
 
   gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));

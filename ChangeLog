@@ -1,5 +1,24 @@
 2003-02-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/tools/gimpblendoptions.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimppainttool.c
+	* app/tools/paint_options.c: use GIMP_CONTEXT(tool_options)
+	instead of gimp_get_current_context(). Cleanup.
+
+2003-02-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.c: should have gone with my
 	previous checkin.
 

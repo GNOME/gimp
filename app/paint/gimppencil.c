@@ -30,7 +30,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
@@ -135,19 +134,19 @@ gimp_pencil_motion (GimpPaintCore    *paint_core,
                     GimpPaintOptions *paint_options)
 {
   GimpPressureOptions      *pressure_options;
-  GimpImage                *gimage;
   GimpContext              *context;
+  GimpImage                *gimage;
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
   gdouble                   opacity;
   gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
+  context = GIMP_CONTEXT (paint_options);
+
   pressure_options = paint_options->pressure_options;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  context = gimp_get_current_context (gimage->gimp);
 
   paint_appl_mode = (paint_options->incremental ?
                      GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);

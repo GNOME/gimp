@@ -29,7 +29,6 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -134,8 +133,8 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 {
   GimpEraserOptions        *options;
   GimpPressureOptions      *pressure_options;
-  GimpImage                *gimage;
   GimpContext              *context;
+  GimpImage                *gimage;
   gdouble                   opacity;
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
@@ -146,13 +145,12 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
 
-  options = (GimpEraserOptions *) paint_options;
+  options = GIMP_ERASER_OPTIONS (paint_options);
+  context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
   gimp_image_get_background (gimage, drawable, col);
-
-  context = gimp_get_current_context (gimage->gimp);
 
   paint_appl_mode = (paint_options->incremental ?
                      GIMP_PAINT_INCREMENTAL : GIMP_PAINT_CONSTANT);

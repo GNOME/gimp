@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
@@ -167,11 +166,9 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
   GimpCloneOptions *options;
   GimpContext      *context;
 
-  clone = GIMP_CLONE (paint_core);
-
-  options = (GimpCloneOptions *) paint_options;
-
-  context = gimp_get_current_context (GIMP_ITEM (drawable)->gimage->gimp);
+  clone   = GIMP_CLONE (paint_core);
+  options = GIMP_CLONE_OPTIONS (paint_options);
+  context = GIMP_CONTEXT (paint_options);
 
   switch (paint_state)
     {
@@ -292,9 +289,9 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   gint                 offset_x;
   gint                 offset_y;
 
-  clone = GIMP_CLONE (paint_core);
-
-  options = (GimpCloneOptions *) paint_options;
+  clone   = GIMP_CLONE (paint_core);
+  options = GIMP_CLONE_OPTIONS (paint_options);
+  context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
@@ -318,8 +315,6 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   /*  We always need a destination image */
   if (! (gimage = gimp_item_get_image (GIMP_ITEM (drawable))))
     return;
-
-  context = gimp_get_current_context (gimage->gimp);
 
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;

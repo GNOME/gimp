@@ -31,7 +31,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -278,23 +277,21 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   GimpSmudge          *smudge;
   GimpSmudgeOptions   *options;
   GimpPressureOptions *pressure_options;
-  GimpImage           *gimage;
   GimpContext         *context;
+  GimpImage           *gimage;
   TempBuf             *area;
   PixelRegion          srcPR, destPR, tempPR;
   gdouble              rate;
   gdouble              opacity;
   gint                 x, y, w, h;
 
-  smudge = GIMP_SMUDGE (paint_core);
-
-  options = (GimpSmudgeOptions *) paint_options;
+  smudge  = GIMP_SMUDGE (paint_core);
+  options = GIMP_SMUDGE_OPTIONS (paint_options);
+  context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
-
-  context = gimp_get_current_context (gimage->gimp);
 
   /*  If the image type is indexed, don't smudge  */
   if (gimp_drawable_is_indexed (drawable))

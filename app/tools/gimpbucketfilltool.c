@@ -190,17 +190,15 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
 {
   GimpBucketFillTool    *bucket_tool;
   GimpBucketFillOptions *options;
+  GimpContext           *context;
 
   bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   options     = GIMP_BUCKET_FILL_OPTIONS (tool->tool_info->tool_options);
+  context     = GIMP_CONTEXT (options);
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK))
     {
-      GimpContext *context;
-
-      context = gimp_get_current_context (gdisp->gimage->gimp);
-
       gimp_drawable_bucket_fill (gimp_image_active_drawable (gdisp->gimage),
                                  options->fill_mode,
                                  gimp_context_get_paint_mode (context),

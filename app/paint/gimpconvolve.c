@@ -29,7 +29,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
-#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -187,6 +186,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 {
   GimpConvolveOptions *options;
   GimpPressureOptions *pressure_options;
+  GimpContext         *context;
   TempBuf             *area;
   guchar              *temp_data;
   PixelRegion          srcPR; 
@@ -196,9 +196,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   ConvolveClipType     area_vclip = CONVOLVE_NOT_CLIPPED;
   gint                 marginx    = 0;
   gint                 marginy    = 0;
-  GimpContext         *context;
 
-  options = (GimpConvolveOptions *) paint_options;
+  options = GIMP_CONVOLVE_OPTIONS (paint_options);
+  context = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
@@ -403,9 +403,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       g_free(ovrsz2_data);
       g_free(fillcolor);
     }
-
-  context =
-    gimp_get_current_context (gimp_item_get_image (GIMP_ITEM (drawable))->gimp);
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_paint_core_replace_canvas (paint_core, drawable,

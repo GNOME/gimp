@@ -26,7 +26,6 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontext.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -87,11 +86,13 @@ void
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
   GimpPaintOptions *options;
+  GimpContext      *context;
   GtkWidget        *vbox;
   GtkWidget        *table;
   GtkWidget        *mode_label;
 
   options = GIMP_PAINT_OPTIONS (tool_options);
+  context = GIMP_CONTEXT (tool_options);
 
   tool_options->reset_func = gimp_paint_options_reset;
 
@@ -108,7 +109,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   options->opacity_w =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Opacity:"), -1, -1,
-			  gimp_context_get_opacity (GIMP_CONTEXT (options)) * 100,
+			  gimp_context_get_opacity (context) * 100,
 			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0.0, 0.0,
 			  NULL, NULL);
@@ -126,7 +127,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     gimp_paint_mode_menu_new (G_CALLBACK (paint_options_paint_mode_update),
                               options,
                               TRUE,
-                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)));
+                              gimp_context_get_paint_mode (context));
   mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                           _("Mode:"), 1.0, 0.5,
                                           options->paint_mode_w, 2, TRUE);
@@ -153,7 +154,7 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       GtkWidget *button;
       GtkWidget *preview;
 
-      brush = gimp_context_get_brush (GIMP_CONTEXT (options));
+      brush = gimp_context_get_brush (context);
 
       button = gtk_button_new ();
       preview = gimp_preview_new_full (GIMP_VIEWABLE (brush),
@@ -239,27 +240,25 @@ void
 gimp_paint_options_reset (GimpToolOptions *tool_options)
 {
   GimpPaintOptions *options;
+  GimpContext      *context;
   GimpContext      *default_context;
 
   options = GIMP_PAINT_OPTIONS (tool_options);
+  context = GIMP_CONTEXT (tool_options);
 
   default_context = gimp_get_default_context (tool_options->tool_info->gimp);
 
   if (options->opacity_w)
-    {
-      gimp_context_set_opacity (GIMP_CONTEXT (options),
-				gimp_context_get_opacity (default_context));
-    }
+    gimp_context_set_opacity (context,
+                              gimp_context_get_opacity (default_context));
+
   if (options->paint_mode_w)
-    {
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
-				   gimp_context_get_paint_mode (default_context));
-    }
+    gimp_context_set_paint_mode (context,
+                                 gimp_context_get_paint_mode (default_context));
+
   if (options->incremental_w)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
-				    options->incremental_d);
-    }
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+                                  options->incremental_d);
 
   pressure_options_reset (options->pressure_options);
   gradient_options_reset (options->gradient_options);

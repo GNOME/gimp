@@ -32,7 +32,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
 #include "gimpdodgeburn.h"
@@ -200,6 +199,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 {
   GimpDodgeBurn        *dodgeburn;
   GimpDodgeBurnOptions *options;
+  GimpContext          *context;
   GimpPressureOptions  *pressure_options;
   GimpImage            *gimage;
   TempBuf              *area;
@@ -211,6 +211,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 
   dodgeburn = GIMP_DODGE_BURN (paint_core);
   options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
+  context   = GIMP_CONTEXT (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
@@ -287,7 +288,7 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   else
     copy_region (&tempPR, &destPR);
 
-  opacity = gimp_context_get_opacity (gimp_get_current_context (gimage->gimp));
+  opacity = gimp_context_get_opacity (context);
 
   if (pressure_options->opacity)
     opacity = opacity * 2.0 * paint_core->cur_coords.pressure;
