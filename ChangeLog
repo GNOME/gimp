@@ -1,5 +1,9 @@
 2001-01-09  Sven Neumann  <sven@gimp.org>
 
+	* TODO.xml: add more stuff
+
+2001-01-09  Sven Neumann  <sven@gimp.org>
+
 	* app/apptypes.h
 	* app/brush_select_cmds.c
 	* app/brushes_cmds.c
