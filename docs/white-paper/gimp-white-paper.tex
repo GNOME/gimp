@@ -86,6 +86,92 @@ arisen.
 
 \part{Core architecture}
 
+\section{Images}
+
+The basic operating element of any digital image editor is the {\it
+image}.  In the \gimp, images are constructed out of {\it layers},
+which are stacked on top of on another through a process called {\it
+composition} to produce a {\it projection}, which is what is displayed
+to the user.  In addition to having any number of layers, a \gimp\
+image may have one or more user-defined {\it channels}, as well as a
+{\it selection mask}.  Channels and selection masks are discussed more
+later.  Together, these three things (layers, channels, and selection
+masks) along with {\it layer masks} (also to be discussed later) are
+known as {\it drawables}, because the drawing tools work on all of
+them.\footnote{There is presently no way to draw directly onto a
+selection mask using the user interface.}
+
+Images in the \gimp\ are typed, and there are presently three types of
+image: RGB, grayscale, and indexed.  The type of image determines the
+representation of the pixels in the image.  In an RGB image, each
+pixel of the composited image is represented by a 24-bit RGB tuple;
+all 16 million possible colors are potentially available in the
+composited image.  Grayscale images are monochromatic, and each pixel
+is a single 8-bit gray value, yielding 256 shades of gray.  Indexed
+images represent each pixel as an index into a color table, each entry
+of which is a 24-bit RGB tuple.  The type of all layers within an
+image must be compatible with the image type.
+
+\section{Drawables}
+
+A {\it drawable} is a planar array of pixel data; however, the
+contents of a drawable need not necessarily be used solely for
+rendering as pixel data.  Each drawable contains from one to four
+data channels (not to be confused with the channels spoken of
+elsewhere in this document), depending on the type of the drawable.
+Each data channel is one byte deep.
+
+There are six types of drawables (see table \ref{tab:drawables}).
+
+\begin{table}
+\centering
+\begin{tabular}{lcl}
+Type & Data channels & Contents of channels \\
+\hline
+RGB & 3 & red, green, blue \\
+RGB w/ alpha & 4 & red, green, blue, alpha \\
+Grayscale & 1 & intensity \\ 
+Grayscale w/ alpha & 2 & intensity, alpha \\
+Indexed & 1 & color index \\
+Indexed w/ alpha & 2 & color index, alpha \\
+\end{tabular}
+\caption{Drawable Types}
+\label{tab:drawables}
+\end{table}
+
+\subsection{Layers}
+
+Each {\it layer} is a drawable.  Layers of any type are possible, but
+the type of a layer must be compatible with the type of the image of
+which it is a part.  A layer type is compatible with an image type if
+the two are the same, or if the layer type is the same as the image
+type with an added alpha channel.  Every layer is part of exactly one
+image.
+
+\subsubsection{Layer masks}
+
+\subsection{Channels}
+
+The term ``channels'' actually refers to three different things in the
+\gimp: layer masks, selection masks, and ``generic'' channels.  In all
+three cases, a channel consists of a rectangular array of byte values;
+the interpretation of these values varies depending on the type of
+channel.
+
+In addition to these channel types, each image also has either
+one or three ``virtual'' channels (three for RGB images, one for
+grayscale and indexed).  This/these are merely the pixel array
+resulting from the layer composition process, and is made available to
+support the ``sample merged'' functionality in some of the tools.
+Also, with RGB images, it is possible to deselect one or more of the
+red, green or blue channels; doing so will cause that portion of the
+colorspace to be excluded from the composition process.
+
+\section{Procedures}
+
+The \gimp\ core consists of 215\footnote{In version 0.99.16.  This
+number tends to go up with time.} procedures which operate on images
+in a great variety of ways.
 \FIXME{General overview}
 
 \section{Tools}
@@ -141,10 +227,11 @@ replicate) that make creation of custom gradients easy and convenient.
 The color segments support full transparency information, making for
 even more flexible gradients.
 
-The gradient rendering engine supports adaptive supersampling with
-customizable threshold and recursion depth parameters.  Using adaptive
-supersampling means that even the most complex custom gradients will
-be rendered without artifacts or ``jaggies.''
+To avoid sampling artifacts (the ``jaggies''), the gradient rendering
+engine supports adaptive supersampling with customizable threshold and
+recursion depth parameters.  With adaptive supersampling even the most
+complex custom gradients will be rendered smoothly without
+artifacting.
 
 \FIXME{drawing or screenshot?}
 
