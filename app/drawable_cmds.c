@@ -42,9 +42,9 @@ static ProcRecord drawable_bytes_proc;
 static ProcRecord drawable_width_proc;
 static ProcRecord drawable_height_proc;
 static ProcRecord drawable_offsets_proc;
-static ProcRecord drawable_layer_proc;
-static ProcRecord drawable_layer_mask_proc;
-static ProcRecord drawable_channel_proc;
+static ProcRecord drawable_is_layer_proc;
+static ProcRecord drawable_is_layer_mask_proc;
+static ProcRecord drawable_is_channel_proc;
 static ProcRecord drawable_get_pixel_proc;
 static ProcRecord drawable_set_pixel_proc;
 static ProcRecord drawable_set_image_proc;
@@ -68,9 +68,9 @@ register_drawable_procs (void)
   procedural_db_register (&drawable_width_proc);
   procedural_db_register (&drawable_height_proc);
   procedural_db_register (&drawable_offsets_proc);
-  procedural_db_register (&drawable_layer_proc);
-  procedural_db_register (&drawable_layer_mask_proc);
-  procedural_db_register (&drawable_channel_proc);
+  procedural_db_register (&drawable_is_layer_proc);
+  procedural_db_register (&drawable_is_layer_mask_proc);
+  procedural_db_register (&drawable_is_channel_proc);
   procedural_db_register (&drawable_get_pixel_proc);
   procedural_db_register (&drawable_set_pixel_proc);
   procedural_db_register (&drawable_set_image_proc);
@@ -880,20 +880,20 @@ static ProcRecord drawable_offsets_proc =
 };
 
 static Argument *
-drawable_layer_invoker (Argument *args)
+drawable_is_layer_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_layer_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_layer_proc, TRUE);
   return_args[1].value.pdb_int = drawable_layer (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
 
-static ProcArg drawable_layer_inargs[] =
+static ProcArg drawable_is_layer_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -902,7 +902,7 @@ static ProcArg drawable_layer_inargs[] =
   }
 };
 
-static ProcArg drawable_layer_outargs[] =
+static ProcArg drawable_is_layer_outargs[] =
 {
   {
     PDB_INT32,
@@ -911,9 +911,9 @@ static ProcArg drawable_layer_outargs[] =
   }
 };
 
-static ProcRecord drawable_layer_proc =
+static ProcRecord drawable_is_layer_proc =
 {
-  "gimp_drawable_layer",
+  "gimp_drawable_is_layer",
   "Returns whether the drawable is a layer.",
   "This procedure returns non-zero if the specified drawable is a layer.",
   "Spencer Kimball & Peter Mattis",
@@ -921,27 +921,27 @@ static ProcRecord drawable_layer_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_layer_inargs,
+  drawable_is_layer_inargs,
   1,
-  drawable_layer_outargs,
-  { { drawable_layer_invoker } }
+  drawable_is_layer_outargs,
+  { { drawable_is_layer_invoker } }
 };
 
 static Argument *
-drawable_layer_mask_invoker (Argument *args)
+drawable_is_layer_mask_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_layer_mask_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, TRUE);
   return_args[1].value.pdb_int = drawable_layer_mask (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
 
-static ProcArg drawable_layer_mask_inargs[] =
+static ProcArg drawable_is_layer_mask_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -950,7 +950,7 @@ static ProcArg drawable_layer_mask_inargs[] =
   }
 };
 
-static ProcArg drawable_layer_mask_outargs[] =
+static ProcArg drawable_is_layer_mask_outargs[] =
 {
   {
     PDB_INT32,
@@ -959,9 +959,9 @@ static ProcArg drawable_layer_mask_outargs[] =
   }
 };
 
-static ProcRecord drawable_layer_mask_proc =
+static ProcRecord drawable_is_layer_mask_proc =
 {
-  "gimp_drawable_layer_mask",
+  "gimp_drawable_is_layer_mask",
   "Returns whether the drawable is a layer mask.",
   "This procedure returns non-zero if the specified drawable is a layer mask.",
   "Spencer Kimball & Peter Mattis",
@@ -969,27 +969,27 @@ static ProcRecord drawable_layer_mask_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_layer_mask_inargs,
+  drawable_is_layer_mask_inargs,
   1,
-  drawable_layer_mask_outargs,
-  { { drawable_layer_mask_invoker } }
+  drawable_is_layer_mask_outargs,
+  { { drawable_is_layer_mask_invoker } }
 };
 
 static Argument *
-drawable_channel_invoker (Argument *args)
+drawable_is_channel_invoker (Argument *args)
 {
   Argument *return_args;
   GimpDrawable *drawable;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
 
-  return_args = procedural_db_return_args (&drawable_channel_proc, TRUE);
+  return_args = procedural_db_return_args (&drawable_is_channel_proc, TRUE);
   return_args[1].value.pdb_int = drawable_channel (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
 
-static ProcArg drawable_channel_inargs[] =
+static ProcArg drawable_is_channel_inargs[] =
 {
   {
     PDB_DRAWABLE,
@@ -998,7 +998,7 @@ static ProcArg drawable_channel_inargs[] =
   }
 };
 
-static ProcArg drawable_channel_outargs[] =
+static ProcArg drawable_is_channel_outargs[] =
 {
   {
     PDB_INT32,
@@ -1007,9 +1007,9 @@ static ProcArg drawable_channel_outargs[] =
   }
 };
 
-static ProcRecord drawable_channel_proc =
+static ProcRecord drawable_is_channel_proc =
 {
-  "gimp_drawable_channel",
+  "gimp_drawable_is_channel",
   "Returns whether the drawable is a channel.",
   "This procedure returns non-zero if the specified drawable is a channel.",
   "Spencer Kimball & Peter Mattis",
@@ -1017,10 +1017,10 @@ static ProcRecord drawable_channel_proc =
   "1995-1996",
   PDB_INTERNAL,
   1,
-  drawable_channel_inargs,
+  drawable_is_channel_inargs,
   1,
-  drawable_channel_outargs,
-  { { drawable_channel_invoker } }
+  drawable_is_channel_outargs,
+  { { drawable_is_channel_invoker } }
 };
 
 static Argument *

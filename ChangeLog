@@ -1,3 +1,14 @@
+Sat Nov  6 14:13:12 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* app/drawable_cmds.c
+	* tools/pdbgen/pdb/drawable.pdb: some PDB names weren't changed here
+	but in all plug-ins and scripts.
+
+	Whoever created the PDB interface for drawable_thumbnail(), could
+	you please change this sentence from the description:
+	   "The alpha channel also returned if the drawable has one."
+	I don't get what it wants me to tell...
+
 Sat Nov  6 03:57:20 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay_color_ui.c: fixed a crash on Cancel that occured 
