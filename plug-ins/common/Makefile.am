@@ -88,7 +88,6 @@ libexec_PROGRAMS = \
 	gz \
 	header \
 	hot \
-	hrz \
 	illusion \
 	iwarp \
 	jigsaw \
@@ -949,19 +948,6 @@ hot_SOURCES = \
 	hot.c
 
 hot_LDADD = \
-	$(libgimpui)							\
-	$(libgimpwidgets)						\
-	$(libgimp)							\
-	$(libgimpcolor)							\
-	$(libgimpbase)							\
-	$(GTK_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)
-
-hrz_SOURCES = \
-	hrz.c
-
-hrz_LDADD = \
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\

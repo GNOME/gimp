@@ -59,7 +59,6 @@
     'gz' => { libdep => 'glib' },
     'header' => { libdep => 'gtk', ui => 1 },
     'hot' => { libdep => 'gtk', ui => 1 },
-    'hrz' => { libdep => 'gtk', ui => 1 },
     'illusion' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
     'iwarp' => { libdep => 'gtk', ui => 1 },
     'jigsaw' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },

@@ -72,7 +72,6 @@ plug-ins/common/guillotine.c
 plug-ins/common/gz.c
 plug-ins/common/header.c
 plug-ins/common/hot.c
-plug-ins/common/hrz.c
 plug-ins/common/illusion.c
 plug-ins/common/iwarp.c
 plug-ins/common/jigsaw.c

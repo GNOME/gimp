@@ -1,5 +1,15 @@
 2004-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf.c (xcf_init): also register the internal XCF
+	handlers according to the new scheme.
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/hrz.c: removed the HRZ file plug-in since it
+	doesn't seem to be very useful.
+
+2004-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-ins.c (plug_ins_temp_proc_def_add)
 	(plug_ins_init_file): use g_slist_prepend() instead of
 	g_slist_append().

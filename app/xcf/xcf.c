@@ -185,25 +185,24 @@ xcf_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  /* So this is sort of a hack, but its better than it was before.  To do this
-   * right there would be a file load-save handler type and the whole interface
-   * would change but there isn't, and currently the plug-in structure contains
-   * all the load-save info, so it makes sense to use that for the XCF load/save
-   * handlers, even though they are internal.  The only thing it requires is
-   * using a PlugInProcDef struct.  -josh
+  /* So this is sort of a hack, but its better than it was before.  To
+   * do this right there would be a file load-save handler type and
+   * the whole interface would change but there isn't, and currently
+   * the plug-in structure contains all the load-save info, so it
+   * makes sense to use that for the XCF load/save handlers, even
+   * though they are internal.  The only thing it requires is using a
+   * PlugInProcDef struct.  -josh
    */
   procedural_db_register (gimp, &xcf_plug_in_save_proc.db_info);
-  procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
-
-  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>/Internal");
-  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>/Internal");
-
+  xcf_plug_in_save_proc.menu_paths = g_list_append (NULL, "<Save>");
   xcf_plug_in_save_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
+  plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
+
+  procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
+  xcf_plug_in_load_proc.menu_paths = g_list_append (NULL, "<Load>");
   xcf_plug_in_load_proc.image_types_val =
     plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
-
-  plug_ins_add_internal (gimp, &xcf_plug_in_save_proc);
   plug_ins_add_internal (gimp, &xcf_plug_in_load_proc);
 }
 
