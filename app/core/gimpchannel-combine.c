@@ -60,7 +60,8 @@ gimp_channel_get_type ()
 	sizeof (GimpChannelClass),
 	(GtkClassInitFunc) gimp_channel_class_init,
 	(GtkObjectInitFunc) gimp_channel_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       channel_type = gtk_type_unique (gimp_drawable_get_type (), &channel_info);

@@ -62,7 +62,8 @@ gimp_drawable_get_type ()
 	sizeof (GimpDrawableClass),
 	(GtkClassInitFunc) gimp_drawable_class_init,
 	(GtkObjectInitFunc) gimp_drawable_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       drawable_type = gtk_type_unique (gtk_data_get_type (), &drawable_info);

@@ -73,7 +73,8 @@ gimp_layer_get_type ()
 	sizeof (GimpLayerClass),
 	(GtkClassInitFunc) gimp_layer_class_init,
 	(GtkObjectInitFunc) gimp_layer_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       layer_type = gtk_type_unique (gimp_drawable_get_type (), &layer_info);
@@ -118,7 +119,8 @@ gimp_layer_mask_get_type ()
 	sizeof (GimpLayerMaskClass),
 	(GtkClassInitFunc) gimp_layer_mask_class_init,
 	(GtkObjectInitFunc) gimp_layer_mask_init,
-	(GtkArgFunc) NULL,
+	(GtkArgSetFunc) NULL,
+	(GtkArgGetFunc) NULL,
       };
 
       layer_mask_type = gtk_type_unique (gimp_channel_get_type (), &layer_mask_info);

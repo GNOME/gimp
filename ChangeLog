@@ -1,3 +1,7 @@
+Wed Jan 21 23:59:02 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* Fixed up the change below to use the SetArg/GetArg stuff
+
 Thu Jan 22 01:54:17 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* Rework of drawables, images, and layers to use GtkObjects.  Lots
