@@ -95,10 +95,10 @@ gchar * const bmode_labels[] =
 
 /* Declare local functions. */
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static gint dialog (void);
@@ -116,17 +116,17 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 gint bytes;
 gint sx1, sy1, sx2, sy2;
-int run_flag = 0;
+gint run_flag = 0;
 
 typedef struct
 {
-  gfloat matrix[5][5];
-  gfloat divisor;
-  gfloat offset;
-  gint alpha_alg;
+  gfloat     matrix[5][5];
+  gfloat     divisor;
+  gfloat     offset;
+  gint       alpha_alg;
   BorderMode bmode;
-  gint channels[5];
-  gint autoset;
+  gint       channels[5];
+  gint       autoset;
 } config;
 
 const config default_config =
@@ -168,8 +168,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
     /*	{ GIMP_PDB_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
 	{ GIMP_PDB_INT32, "alpha_alg", "Enable weighting by alpha channel" },
@@ -196,20 +196,21 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpRunModeType run_mode;
+  static GimpParam  values[1];
+  GimpRunModeType   run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  int x,y;
+  gint              x, y;
 
   INIT_I18N_UI();
 
-  (void)name; /* Shut up warnings about unused parameters. */
+  (void) name; /* Shut up warnings about unused parameters. */
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -217,6 +218,16 @@ run (gchar   *name,
 	
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
+
+  /*  The plug-in is not able to handle images smaller than 3 pixels  */
+  if (drawable->width < 3 || drawable->height < 3)
+    {
+      g_message (_("Convolution Matrix does not work\non layers smaller than 3 pixels."));
+      status = GIMP_PDB_EXECUTION_ERROR;
+      values[0].type = GIMP_PDB_STATUS;
+      values[0].data.d_status = status;
+      return;
+    }
 
   my_config = default_config;
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
@@ -228,12 +239,15 @@ run (gchar   *name,
 	  for (y = 0; y < 5; y++)
 	    for (x = 0; x < 5; x++)
 	      my_config.matrix[x][y]=param[3].data.d_floatarray[y*5+x];
-	  my_config.divisor=param[4].data.d_float;
-	  my_config.offset=param[5].data.d_float;
-	  my_config.alpha_alg=param[6].data.d_int32;
-	  my_config.bmode=param[6].data.d_int32;
+
+	  my_config.divisor   = param[4].data.d_float;
+	  my_config.offset    = param[5].data.d_float;
+	  my_config.alpha_alg = param[6].data.d_int32;
+	  my_config.bmode     = param[6].data.d_int32;
+
 	  for (y = 0; y < 5; y++)
-	    my_config.channels[y]=param[7].data.d_int32array[y];
+	    my_config.channels[y] = param[7].data.d_int32array[y];
+
 	  check_config ();
 	}
     }
@@ -291,16 +305,17 @@ run (gchar   *name,
 
 static void
 my_get_row (GimpPixelRgn *PR,
-	    guchar    *dest,
-	    int        x,
-	    int        y,
-	    int        w)
+	    guchar       *dest,
+	    gint          x,
+	    gint          y,
+	    gint          w)
 {
-  int width, height, bytes;
-  int i;
-  width=PR->drawable->width;
-  height=PR->drawable->height;
-  bytes=PR->drawable->bpp;
+  gint width, height, bytes;
+  gint i;
+
+  width  = PR->drawable->width;
+  height = PR->drawable->height;
+  bytes  = PR->drawable->bpp;
 
   /* Y-wrappings */
 
@@ -313,6 +328,7 @@ my_get_row (GimpPixelRgn *PR,
       while (y >= height)
 	y -= height;
       break;
+
     case CLEAR:
       /* Beyond borders, so set full transparent. */
       if (y < 0 || y >= height)
@@ -331,10 +347,12 @@ my_get_row (GimpPixelRgn *PR,
 	    y = 2 * height - y - 2; /* y=2*height-y-1 */  
 	}
       break;
+
     case EXTEND:
-      y =CLAMP (y , 0 , height - 1);
+      y = CLAMP (y , 0 , height - 1);
       break;
     }
+
   switch (my_config.bmode)
     {
     case CLEAR:
@@ -374,6 +392,7 @@ my_get_row (GimpPixelRgn *PR,
 	  dest += i * bytes;
 	}
       break;
+
     case EXTEND:
       if (x < 0)
 	{
@@ -381,6 +400,7 @@ my_get_row (GimpPixelRgn *PR,
 	  x++;
 	  w--;
 	  dest += bytes;
+
 	  while (x < 0 && w)
 	    {
 	      for (i = 0; i < bytes; i++)
@@ -410,6 +430,7 @@ my_get_row (GimpPixelRgn *PR,
 	  w--;
 	}
       break;
+
     case MIRROR: /* Not yet handled */
       break;
     }
@@ -420,11 +441,13 @@ calcmatrix (guchar **srcrow,
 	    gint     xoff,
 	    gint     i)
 {
-  gfloat sum=0, alphasum=0;
-  static gfloat matrixsum=0;
-  static gint bytes=0;
+  static gfloat matrixsum = 0;
+  static gint bytes       = 0;
+
+  gfloat sum      = 0;
+  gfloat alphasum = 0;
   gfloat temp;
-  gint x, y;
+  gint   x, y;
 
   if (!bytes)
     {
@@ -464,13 +487,16 @@ calcmatrix (guchar **srcrow,
 static void
 doit (void)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height, row, col;
-  int w, h, i;
-  guchar *destrow[3], *srcrow[5], *temprow;
-  gfloat sum;
-  gint xoff;
-  gint chanmask[4];
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height, row, col;
+  gint          w, h, i;
+  guchar       *destrow[3];
+  guchar       *srcrow[5];
+  guchar       *temprow;
+  gfloat        sum;
+  gint          xoff;
+  gint          chanmask[4];
+
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only
    *  operating on the input area is simply an optimization. It doesn't
@@ -493,6 +519,7 @@ doit (void)
       chanmask[i] = my_config.channels[i + 1];
   else /* Grayscale */
     chanmask[0] = my_config.channels[0];
+
   if (gimp_drawable_has_alpha (drawable->id))
     chanmask[bytes - 1] = my_config.channels[4];
 
@@ -508,11 +535,12 @@ doit (void)
 
   /* initialize source arrays */
   for (i = 0; i < 5; i++)
-    my_get_row (&srcPR, srcrow[i], sx1-2, sy1 + i - 2, w + 4);
+    my_get_row (&srcPR, srcrow[i], sx1 - 2, sy1 + i - 2, w + 4);
 
   for (row = sy1; row < sy2; row++)
     {
       xoff = 0;
+
       for (col = sx1; col < sx2; col++)
 	for (i = 0; i < bytes; i++)
 	  {
@@ -520,22 +548,29 @@ doit (void)
 	      sum = srcrow[2][xoff + 2 * bytes];
 	    else
 	      sum = calcmatrix(srcrow, xoff, i);
+
 	    destrow[2][xoff]= (guchar) CLAMP (sum, 0, 255);
 	    xoff++;
 	  }
+
       if (row > sy1 + 1)
 	gimp_pixel_rgn_set_row (&destPR, destrow[0], sx1, row - 2, w);
+
       temprow = destrow[0];
       destrow[0] = destrow[1];
       destrow[1] = destrow[2];
       destrow[2] = temprow;
       temprow = srcrow[0];
+
       for (i = 0; i < 4; i++)
 	srcrow[i] = srcrow[i + 1];
+
       srcrow[4] = temprow;
       my_get_row (&srcPR, srcrow[4], sx1 - 2, row + 3, w + 4);
+
       gimp_progress_update ((double) (row - sy1) / h);
     }
+
   /* put the final rows in the buffer in place */
   if (h < 3)
     gimp_pixel_rgn_set_row (&destPR, destrow[2], sx1, row - 3, w);
@@ -558,24 +593,29 @@ static void
 fprint (gfloat  f,
 	gchar  *buffer)
 {
-  int i, t;
+  gint i, t;
 
   sprintf (buffer, "%.7f", f);
+
   for (t = 0; buffer[t] != '.'; t++);
+
   i = t + 1;
+
   while (buffer[i] != '\0')
     {
       if (buffer[i] != '0')
 	t = i + 1;
+
       i++;
     }
+
   buffer[t] = '\0';
 }
 
 static void
 redraw_matrix (void)
 {
-  int x,y;
+  gint x,y;
   gchar buffer[12];
 
   for (y = 0; y < 5; y++)
@@ -590,7 +630,7 @@ redraw_matrix (void)
 static void
 redraw_channels (void)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 5; i++)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (my_widgets.channels[i]),
@@ -643,16 +683,16 @@ redraw_all (void)
 static void
 check_matrix (void)
 {
-  int x,y;
-  int valid=0;
-  gfloat sum=0.0;
+  gint      x, y;
+  gboolean  valid = FALSE;
+  gfloat    sum   = 0.0;
 
   for (y = 0; y < 5; y++)
     for (x = 0; x < 5; x++)
       {
 	sum += my_config.matrix[x][y];
 	if (my_config.matrix[x][y] != 0.0)
-	  valid = 1;
+	  valid = TRUE;
       }
 
   if (my_config.autoset)
@@ -684,7 +724,7 @@ static void
 ok_callback (GtkWidget *widget,
 	     gpointer   data)
 {
-  run_flag = 1;
+  run_flag = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }
@@ -693,21 +733,23 @@ ok_callback (GtkWidget *widget,
 static void
 check_config (void)
 {
-  int i;
+  gint i;
 
   for (i = 0; i < 5; i++)
     if (my_config.channels[i] < 0)
       my_config.channels[i] = 0;
+
   if (gimp_drawable_is_rgb (drawable->id))
     my_config.channels[0] = -1;
   else if (gimp_drawable_is_gray (drawable->id))
     for (i = 1; i < 4; i++)
       my_config.channels[i] = -1;
+
   if (!gimp_drawable_has_alpha (drawable->id))
     {
       my_config.channels[4] = -1;
-      my_config.alpha_alg = -1;
-      my_config.bmode = EXTEND;
+      my_config.alpha_alg   = -1;
+      my_config.bmode       = EXTEND;
     }
 }
 
@@ -742,12 +784,12 @@ static void
 my_toggle_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  int val = GTK_TOGGLE_BUTTON (widget)->active;
+  gint val = GTK_TOGGLE_BUTTON (widget)->active;
 
   if (val)
-    *(int *) data = TRUE;
+    *(gint *) data = TRUE;
   else
-    *(int *) data = FALSE;
+    *(gint *) data = FALSE;
 
   if (widget == my_widgets.alpha_alg)
     {
@@ -786,9 +828,9 @@ dialog (void)
   GtkWidget *inbox;
   GtkWidget *yetanotherbox;
   GtkWidget *frame;
-  gchar   buffer[32];
-  gint    x, y, i;
-  GSList *group;
+  gchar      buffer[32];
+  gint       x, y, i;
+  GSList    *group;
 
   gimp_ui_init ("convmatrix", FALSE);
 
@@ -976,7 +1018,8 @@ dialog (void)
   gtk_widget_show (dlg);
   redraw_all ();
 
-  gtk_widget_set_sensitive (my_widgets.bmode[CLEAR], (my_config.alpha_alg > 0));
+  gtk_widget_set_sensitive (my_widgets.bmode[CLEAR], 
+			    (my_config.alpha_alg > 0));
 
   gtk_main ();
   gdk_flush ();

@@ -1,5 +1,10 @@
 2000-12-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/convmatrix.c: return with an error message if
+	called with drawables smaller than 3 pixels. Fixes bug #30870.
+
+2000-12-11  Sven Neumann  <sven@gimp.org>
+
 	* app/gradient.c: use the correct pointer when dumping gradients to
 	stderr in case of problems. Sort of fixes bug #31510.
 
