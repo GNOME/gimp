@@ -165,7 +165,7 @@ sub init_gtk {
 # internal utility function for Gimp::Fu and others
 sub wrap_text {
    my $x=$_[0];
-   $x=~s/^(\G.{1,$_[1]})(\s+|$)/$1\n/gm;
+   $x=~s/\G(.{1,$_[1]})(\s+|$)/$1\n/gm;
    $x=~s/[ \t\r\n]+$//g;
    $x;
 }

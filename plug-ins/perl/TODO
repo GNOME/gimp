@@ -10,6 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * Selection => To Brush.
 [DONE]  * --enable-perl=/tmp/leckmich
   * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.

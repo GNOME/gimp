@@ -123,13 +123,13 @@ $parser = new Parse::RecDescent <<'EOA';
 cdr	=> 'sub cdr {
    my(@x)=@{$_[0]};
    shift(@x);
-   @x >1 ? [@x] : $x[1];
+   @x >1 ? [@x] : $x[0];
 }',
 
 cddr	=> 'sub cddr {
    my(@x)=@{$_[0]};
    shift(@x); shift(@x);
-   @x >1 ? [@x] : $x[1];
+   @x >1 ? [@x] : $x[0];
 }',
 
 max	=> 'sub max {

@@ -70,10 +70,10 @@ sub font_table {
     my $fslant = $f[4] eq 'r'? '' : ' italic';
     my $label = "$f[1] $f[2] ($f[3]$fslant $f[7])";
     my($cwidth,$cheight,$ascent,$descent) =
-      gimp_text_get_extents_fontname($label, $size, 1, $labelfont);
+      gimp_text_get_extents_fontname($label, $size, PIXELS, $labelfont);
     my($twidth,$theight,$ascent,$descent) =
-      gimp_text_get_extents($test_text, $f[7], 1, $f[1], $f[2], $f[3],
-			    $f[4], '*', '*');
+      gimp_text_get_extents($test_text, $f[7], PIXELS, $f[1], $f[2], $f[3],
+			    $f[4], '*', '*', '*', '*');
 
     $row_height = $cheight > $theight ? $cheight : $theight;
 
@@ -148,11 +148,11 @@ sub display_fonts {
     my $fslant = $f[4] eq 'r'? '' : ' italic';
     my $label = "$f[1] $f[2] ($f[3]$fslant $f[7])";
 
-    my $l = gimp_text_fontname($draw,$padding, $y, $label, 0, 1, $size, 1,
+    my $l = gimp_text_fontname($draw,$padding, $y, $label, 0, 1, $size, PIXELS,
 		$labelfont);
     gimp_floating_sel_anchor($l);
     $l = gimp_text($draw,$padding*2+$col1_width, $y, $test_text, 0, 1,
-		   $f[7], 1, $f[1], $f[2], $f[3], $f[4], '*', '*');
+		   $f[7], PIXELS, $f[1], $f[2], $f[3], $f[4], '*', '*', '*', '*');
     gimp_floating_sel_anchor($l);
 
     my $row = shift @$rows;
@@ -180,7 +180,7 @@ register
    [PF_STRING, "family", "Family (perl regex or \"*\")", "*"],
    [PF_STRING, "weight", "Weight (perl regex or \"*\")", "*"],
    [PF_STRING, "slant", "Slant (perl regex or \"*\")", "*"],
-   [PF_INT32, "point_size", "Point Size", 18],
+   [PF_INT32, "font_size", "Pixel Size", 18],
    [PF_COLOR, "text_color", "Text Color", 'black'],
    [PF_COLOR, "bg_color", "Background Color", 'white'],
    [PF_FONT, "label_font", "Label Font", '-*-courier-medium-r-normal--18-*-*-*-*-*-*-*'],

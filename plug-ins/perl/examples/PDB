@@ -13,6 +13,7 @@ Gtk->init;
 #Gimp::set_trace(TRACE_ALL);
 
 my $ex;		# average font width for default font
+my $ey;		# average font height for default font
 
 my $window;	# the main window
 my $clist;	# the list of completions
@@ -98,56 +99,34 @@ my %type2str = (
    &PARAM_INT32ARRAY  => 'INT32ARRAY',
 );
 
-sub leftlabel {
-   my $label = shift;
-   $label =~ s/^(.{30,60})[ \t]*([\{[:\(])/$1\n$2/mg;
-   my $label = new Gtk::Label Gimp::wrap_text($label,60);
-   $label->set_alignment (0, 0);
-   $label->set_justify(-left);
-   $label;
-}
-
 sub new_cinfo {
-   my $table = new Gtk::Table 5,$args+$results+3,0;
-   $table->set_col_spacings($ex);
-   $table->set_row_spacings($ex*0.1);
-   $table->attach_defaults(leftlabel("TYPE"),2,3,0,1);
-   $table->attach_defaults(leftlabel("NAME"),3,4,0,1);
-   $table->attach_defaults(leftlabel("DESCRIPTION"),4,5,0,1);
-   my $y=2;
+   $cinfo->freeze;
+   $cinfo->clear;
+
+   my $add_split = sub {
+      my($t,$n,$d)=@_;
+      $d=~s/^(.{40,60})[ \t]*([\{[:\(])/$1\n$2/mg;
+      for(split/\n/,Gimp::wrap_text($d,60)) {
+         $cinfo->append("",$t,$n,$_);
+         $t=$n="";
+      }
+   };
+   
    if($args) {
-      $table->attach_defaults(new Gtk::HSeparator,0,6,$y,$y+1);
-      $y++;
-      my $in = new Gtk::Label("In:");
-      $in->set_alignment (1, 0.5);
-      $table->attach_defaults($in,0,1,$y,$y+$args);
-      undef @argsvalid;
+      $cinfo->append("In:","","","");
       for(@args) {
-         my $valid = new Gtk::Label "-";
-         push(@argsvalid,$valid);
-         $table->attach_defaults($valid,1,2,$y,$y+1);
-         $table->attach_defaults(leftlabel($type2str{$_->[0]}),2,3,$y,$y+1);
-         $table->attach_defaults(leftlabel($_->[1]),3,4,$y,$y+1);
-         $table->attach_defaults(leftlabel($_->[2]),4,5,$y,$y+1);
-         $y++;
+         $add_split->($type2str{$_->[0]},$_->[1],$_->[2]);
       }
    }
    if($results) {
-      $table->attach_defaults(new Gtk::HSeparator,0,6,$y,$y+1);
-      $y++;
-      my $out = new Gtk::Label("Out:");
-      $out->set_alignment (1, 0.5);
-      $table->attach_defaults($out,0,1,$y,$y+$results);
+      $cinfo->append("Out:","","","");
       for(0..$results-1) {
          my($type,$name,$desc)=Gimp->procedural_db_proc_val ($last_func, $_);
-         $table->attach_defaults(leftlabel($type2str{$type}),2,3,$y,$y+1);
-         $table->attach_defaults(leftlabel($name),3,4,$y,$y+1);
-         $table->attach_defaults(leftlabel($desc),4,5,$y,$y+1);
-         $y++;
+         $add_split->($type2str{$type},$name,$desc);
       }
    }
-   $table->show_all;
-   $table;
+
+   $cinfo->thaw;
 }
 
 sub set_current_function {
@@ -163,8 +142,7 @@ sub set_current_function {
       for(0..$args-1) {
          push(@args,[Gimp->procedural_db_proc_arg($fun,$_)]);
       }
-      my $ci = new_cinfo;
-      $cinfo->remove($cinfo->children); $cinfo->add ($ci);
+      new_cinfo;
    };
 }
 
@@ -236,9 +214,7 @@ sub update_completion {
    my($idx,$pos,@words)=get_words;
 
    return unless $idx ne $last_arg;
-   eval { $argsvalid[$last_arg-1]->set('+') };
    $last_arg=$idx;
-   eval { $argsvalid[$last_arg-1]->set('>') };
 
    set_current_function $words[0];
 
@@ -280,7 +256,6 @@ sub do_completion {
       }
       set_words @words;
    }
-   eval { $argsvalid[$last_arg-1]->set('-') };
    undef $last_arg;
 }
 
@@ -313,14 +288,12 @@ sub inputline {
    $e->set_text("");
    $e->signal_connect("changed",sub {
       return if $block_changed;
-      eval { $argsvalid[$last_arg-1]->set('-') };
       undef $last_arg;
       do_idle;
    });
    $e->signal_connect("focus_in_event",\&do_idle);
    $e->signal_connect("button_press_event",\&do_idle);
    $e->signal_connect("key_press_event",sub {
-      eval { $argsvalid[$last_arg-1]->set('-') };
       undef $last_arg;
       do_idle;
       # GDK_Tab = 0xFF09
@@ -370,6 +343,7 @@ sub create_main {
    $window = $w;
    $w->realize;
    $ex = $w->style->font->string_width ('Mn')*0.5;
+   $ey = $w->style->font->string_width ('My');
 
    $w->set_title('PDB Explorer - the alpha version');
    $w->signal_connect("destroy",sub {main_quit Gtk});
@@ -379,7 +353,7 @@ sub create_main {
    $b->signal_connect("clicked",sub {main_quit Gtk});
 
    my $h = new Gtk::HBox (0,5);
-   $w->vbox->add ($h);
+   $w->vbox->pack_start ($h,0,0,0);
 
    inputline;
 
@@ -387,7 +361,7 @@ sub create_main {
    $synopsis->set_justify(-left);
 
    my $table = new Gtk::Table 3,4,0;
-   $w->vbox->add($table);
+   $w->vbox->pack_start($table,0,0,0);
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
@@ -404,8 +378,6 @@ sub create_main {
 
    $statusbar = new Gtk::Label;
 
-   realize $window;
-
    $table->border_width(10);
 
    $table->attach(new Gtk::Label("Synopsis") ,0,1,0,1,{},{},0,0);
@@ -420,14 +392,25 @@ sub create_main {
    $table->attach(new Gtk::Label("Status"),0,1,3,4,{},{},0,0);
       $table->attach($statusbar,1,3,3,4,['expand','fill'],['expand','fill'],0,0);
 
-   $cinfo = new Gtk::Frame "Command Info";
-   $cinfo->border_width(10);
-   $cinfo->add (new_cinfo);
-   $w->vbox->add ($cinfo);
+   my $ci = new Gtk::Frame "Command Info";
+   $ci->border_width(10);
+   my $sw = new Gtk::ScrolledWindow;
+   $sw->set_policy(-automatic, -automatic);
+   $cinfo = new_with_titles Gtk::CList '','TYPE','NAME','DESCRIPTION';
+   $cinfo->set_column_auto_resize (0,1);
+   $cinfo->set_column_auto_resize (1,1);
+   $cinfo->set_column_auto_resize (2,1);
+   $cinfo->set_selection_mode('single');
+   $sw->add ($cinfo);
+   $ci->add ($sw);
+   $w->vbox->pack_start ($ci,1,1,0);
 
    idle;
 
+   $w->realize;
+   $w->window->resize($ex*60,$ey*25);
    show_all $w;
+   $w->window->resize($ex*60,$ey*25);
 }
 
 register "extension_pdb_explorer",
@@ -435,7 +418,7 @@ register "extension_pdb_explorer",
          "This is a more interactive version of the DB Browser",
          "Marc Lehmann",
          "Marc Lehmann",
-         "0.2",
+         "0.3alpha",
          "<Toolbox>/Xtns/PDB Explorer",
          "",
          [],
