@@ -270,9 +270,6 @@ info_window_create (GimpDisplay *gdisp)
   /*  Add extra tabs  */
   info_window_create_extended (info_win, gdisp->gimage->gimp);
 
-  /*  update the fields  */
-  info_window_update (gdisp);
-
   return info_win;
 }
 
@@ -356,12 +353,15 @@ info_window_update_extended (GimpDisplay *gdisp,
 
   iwd = (InfoWinData *) info_win->user_data;
 
+  if (info_window_auto)
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (info_window_auto->shell),
+                                         GIMP_VIEWABLE (gdisp->gimage));
+    }
+
   if (iwd->gdisp != gdisp)
     {
       iwd->gdisp = gdisp;
-
-      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (info_window_auto->shell),
-                                         GIMP_VIEWABLE (gdisp->gimage));
 
       info_window_update (gdisp);
     }

@@ -173,6 +173,11 @@ view_info_window_cmd_callback (GtkWidget *widget,
       if (! shell->info_dialog)
 	shell->info_dialog = info_window_create (gdisp);
 
+      /* To update the fields of the info window for the first time. *
+       * It's no use updating it in info_window_create() because the *
+       * pointer of the info window is not present in the shell yet. */
+      info_window_update (gdisp);
+
       info_dialog_present (shell->info_dialog);
     }
   else
