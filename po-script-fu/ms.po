@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 01:17+0200\n"
+"POT-Creation-Date: 2004-08-06 02:08+0200\n"
 "PO-Revision-Date: 2003-10-30 09:35+0800\n"
 "Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -41,80 +41,85 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Mod penilai Script-Fu membolehkan panggilan bukan interaktif sahaja"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1111
-#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1135
+#: plug-ins/script-fu/script-fu-scripts.c:1137
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1125
+#: plug-ins/script-fu/script-fu-scripts.c:1149
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1188
 msgid "About"
 msgstr "Tentang"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1198
 msgid "Script Arguments"
 msgstr "Argumen Skrip"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1221
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1240
+#: plug-ins/script-fu/script-fu-scripts.c:1264
 msgid "Script-Fu Color Selection"
 msgstr "Pemilihan Warna Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1310
+#: plug-ins/script-fu/script-fu-scripts.c:1334
 msgid "Script-Fu File Selection"
 msgstr "Pemilihan Fail Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1314
+#: plug-ins/script-fu/script-fu-scripts.c:1338
 msgid "Script-Fu Folder Selection"
 msgstr "Pemilihan Folder Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1326
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-Fu Font Selection"
 msgstr "Pemilihan Fon Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1334
+#: plug-ins/script-fu/script-fu-scripts.c:1357
+#, fuzzy
+msgid "Script-Fu Palette Selection"
+msgstr "Pemilihan Corak Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1365
 msgid "Script-fu Pattern Selection"
 msgstr "Pemilihan Corak Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1341
+#: plug-ins/script-fu/script-fu-scripts.c:1372
 msgid "Script-Fu Gradient Selection"
 msgstr "Pemilihan Kecerunan Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1349
+#: plug-ins/script-fu/script-fu-scripts.c:1380
 msgid "Script-Fu Brush Selection"
 msgstr "Pemilihan Berus Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1937
+#: plug-ins/script-fu/script-fu-scripts.c:1998
 #: plug-ins/dbbrowser/dbbrowser_utils.c:488
 msgid "Author:"
 msgstr "Pengarang"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:2004
 #: plug-ins/dbbrowser/dbbrowser_utils.c:504
 msgid "Copyright:"
 msgstr "Hak cipta"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1949
+#: plug-ins/script-fu/script-fu-scripts.c:2010
 #: plug-ins/dbbrowser/dbbrowser_utils.c:496
 msgid "Date:"
 msgstr "Tarikh"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1957
+#: plug-ins/script-fu/script-fu-scripts.c:2018
 msgid "Image Types:"
 msgstr "Jenis Imej"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1982
+#: plug-ins/script-fu/script-fu-scripts.c:2043
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.LIBGIMP.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 01:15+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2004-06-24 00:12+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "Выбор кисти"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "Выбрать..."
 
@@ -197,11 +197,11 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "Выбор шаблона"
 
@@ -209,59 +209,92 @@ msgstr "Выбор шаблона"
 msgid "percent"
 msgstr "процент"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
-msgstr "(неверная строка UTF-8)"
+#: libgimpbase/gimpbaseenums.c:15
+msgid "RGB color"
+msgstr ""
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#, fuzzy
+msgid "Grayscale"
+msgstr "Преобразовать в оттенки серого"
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Indexed color"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "RGB"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "RGB-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "Grayscale-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Indexed"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+msgid "Indexed-alpha"
+msgstr ""
+
+#: libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d байт"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f КБ"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f КБ"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d КБ"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f МБ"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f МБ"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d МБ"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f ГБ"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f ГБ"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d ГБ"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "(неверная строка UTF-8)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
@@ -319,74 +352,75 @@ msgstr "/Чёрный"
 msgid "/_White"
 msgstr "/Белый"
 
-#: libgimpwidgets/gimpcolorscales.c:134
+#: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr "Шкала"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:162
+#: libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "Тон"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Насыщенность"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "Яркость"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "Красный"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "Зелёный"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "Синий"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "Альфа"
 
-#: libgimpwidgets/gimpcolorscales.c:244
-msgid "Hexadecimal color notation as used in HTML"
+#: libgimpwidgets/gimpcolorscales.c:243
+#, fuzzy
+msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Шестнадцатеричная запись цвета используемая в HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:258
-msgid "He_x Triplet:"
-msgstr "Шестнадцатиричный триплет:"
+#: libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr ""
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -475,23 +509,23 @@ msgstr "Расстояние между строками"
 msgid "_Resize"
 msgstr "Изменить размер"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 msgid "_Scale"
 msgstr "Масштабировать"
 
-#: libgimpwidgets/gimpstock.c:264
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "Кадрировать"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Transform"
 msgstr "Преобразовать"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:287
 msgid "_Rotate"
 msgstr "Повернуть"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Shear"
 msgstr "Наклонить"
 
@@ -680,6 +714,9 @@ msgstr "Акварель"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Давление"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "Шестнадцатиричный триплет:"
 
 #~ msgid "None"
 #~ msgstr "Без"

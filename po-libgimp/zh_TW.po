@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 2.0.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 01:15+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2004-03-23 22:13+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "筆刷選擇"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "瀏覽(_B)..."
 
@@ -192,11 +192,11 @@ msgstr "字型選擇"
 msgid "Gradient Selection"
 msgstr "漸層選擇"
 
-#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "圖樣選擇"
 
@@ -204,59 +204,92 @@ msgstr "圖樣選擇"
 msgid "percent"
 msgstr "百分比"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
-msgstr "無效的 UTF-8 文字)"
+#: libgimpbase/gimpbaseenums.c:15
+msgid "RGB color"
+msgstr ""
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#, fuzzy
+msgid "Grayscale"
+msgstr "轉換成灰階"
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Indexed color"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "RGB"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "RGB-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "Grayscale-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Indexed"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+msgid "Indexed-alpha"
+msgstr ""
+
+#: libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d 位元組"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KB"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KB"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d KB"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "無效的 UTF-8 文字)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
@@ -312,74 +345,75 @@ msgstr "/黑(_K)"
 msgid "/_White"
 msgstr "/白(_W)"
 
-#: libgimpwidgets/gimpcolorscales.c:134
+#: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr "色相(_H)"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr "彩度(_S)"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr "明度(_V)"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr "紅(_R)"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr "綠(_G)"
 
-#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr "藍(_B)"
 
-#: libgimpwidgets/gimpcolorscales.c:162
+#: libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "透明(_A)"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "色相"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "彩度"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "明度"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "紅"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "綠"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "藍"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "透明"
 
-#: libgimpwidgets/gimpcolorscales.c:244
-msgid "Hexadecimal color notation as used in HTML"
+#: libgimpwidgets/gimpcolorscales.c:243
+#, fuzzy
+msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "類似 HTML 所用的 16 進位色彩表示方式"
 
-#: libgimpwidgets/gimpcolorscales.c:258
-msgid "He_x Triplet:"
-msgstr "16 進位數字(_X)："
+#: libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr ""
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -467,23 +501,23 @@ msgstr "行距(_I)"
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: libgimpwidgets/gimpstock.c:264
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "裁剪"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:287
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Shear"
 msgstr "推移(_S)"
 
@@ -669,6 +703,9 @@ msgstr "水彩"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "壓力"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "16 進位數字(_X)："
 
 #~ msgid "None"
 #~ msgstr "無"

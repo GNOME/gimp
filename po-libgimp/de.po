@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-29 11:09+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2004-07-29 11:27+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -18,11 +18,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
@@ -193,11 +193,11 @@ msgstr "Schriftenauswahl"
 msgid "Gradient Selection"
 msgstr "Gradientenauswahl"
 
-#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr "(Leer)"
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "Musterauswahl"
 
@@ -502,23 +502,23 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:264
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:287
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Shear"
 msgstr "_Scheren"
 

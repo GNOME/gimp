@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 03:47+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2004-07-20 16:17+0530\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <pa@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "ਬੁਰਸ਼ ਚੋਣ"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "ਝਲਕ਼"
 
@@ -192,11 +192,11 @@ msgstr "ਫੋਟ ਚੋਣ"
 msgid "Gradient Selection"
 msgstr "ਢਾਲਵਾ ਚੋਣ"
 
-#: libgimp/gimpmenu.c:407
-msgid "None"
-msgstr "ਕੋਈ ਨਹੀ"
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+msgid "(Empty)"
+msgstr ""
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "ਤਰਤੀਬ ਚੋਣ"
 
@@ -204,90 +204,123 @@ msgstr "ਤਰਤੀਬ ਚੋਣ"
 msgid "percent"
 msgstr "ਪ੍ਤੀਸ਼ਤ"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
-msgstr "(ਅਯੋਗ UTF-8 ਸਤਰ)"
+#: libgimpbase/gimpbaseenums.c:15
+msgid "RGB color"
+msgstr ""
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#, fuzzy
+msgid "Grayscale"
+msgstr "ਭੂਰੇ-ਪੈਮਾਨੇ ਵਿੱਚ ਬਦਲੋ"
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Indexed color"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "RGB"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "RGB-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "Grayscale-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Indexed"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+msgid "Indexed-alpha"
+msgstr ""
+
+#: libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d ਬਾਈਟ"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f ਕਿਲੋ-ਬਾਈਟ"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f ਕਿਲੋ-ਬਾਈਟ"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d ਕੇਬੀ"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f ਐਮਬੀ"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f ਐਮਬੀ"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d ਐਮਬੀ"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f ਜੀਬੀ"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f ਜੀਬੀ"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d ਜੀਬੀ"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "(ਅਯੋਗ UTF-8 ਸਤਰ)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "ਲੋਡ ਮੈਡਿਊਲ: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
-#: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
-#: libgimpmodule/gimpmodule.c:450
+#: libgimpmodule/gimpmodule.c:193 libgimpmodule/gimpmodule.c:212
+#: libgimpmodule/gimpmodule.c:326 libgimpmodule/gimpmodule.c:354
+#: libgimpmodule/gimpmodule.c:478
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "ਮੈਡਿਊਲ '%s' ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
 
-#: libgimpmodule/gimpmodule.c:283
+#: libgimpmodule/gimpmodule.c:282
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "ਤਿਆਗ ਮੈਡਿਊਲ: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:424
+#: libgimpmodule/gimpmodule.c:422
 msgid "Module error"
 msgstr "ਮੈਡਿਊਲ ਗਲਤੀ"
 
-#: libgimpmodule/gimpmodule.c:425
+#: libgimpmodule/gimpmodule.c:423
 msgid "Loaded"
 msgstr "ਲੋਡ ਕੀਤਾ"
 
-#: libgimpmodule/gimpmodule.c:426
+#: libgimpmodule/gimpmodule.c:424
 msgid "Load failed"
 msgstr "ਲੋਡ ਅਸਫਲ"
 
-#: libgimpmodule/gimpmodule.c:427
+#: libgimpmodule/gimpmodule.c:425
 msgid "Not loaded"
 msgstr "ਲੋਡ ਨਹੀ ਹੋਇਆ"
 
@@ -312,74 +345,75 @@ msgstr "/ਕਾਲਾ"
 msgid "/_White"
 msgstr "/ਸਫੈਦ"
 
-#: libgimpwidgets/gimpcolorscales.c:142
+#: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr "ਪੈਮਾਨਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr "_H"
 
-#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr "_S"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr "_V"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr "_R"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr "_G"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:353
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr "_B"
 
-#: libgimpwidgets/gimpcolorscales.c:170
+#: libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "ਰੰਗਤ"
 
-#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:358
-#: modules/cdisplay_proof.c:323
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
+#: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "ਸੰਤ੍ਰਿਪਤੀ"
 
-#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "ਮੁੱਲ"
 
-#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "ਲਾਲ"
 
-#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:361
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "ਹਰਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:362
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "ਨੀਲਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:363
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "ਐਲਫਾ"
 
-#: libgimpwidgets/gimpcolorscales.c:254
-msgid "Hexadecimal color notation as used in HTML"
+#: libgimpwidgets/gimpcolorscales.c:243
+#, fuzzy
+msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "HTML ਵਿੱਚ ਵਰਤੀ ਜਾਂਦੀ ਹੈਕਸਾਡੈਸੀਮਲ ਰੰਗ "
 
-#: libgimpwidgets/gimpcolorscales.c:268
-msgid "He_x Triplet:"
-msgstr "ਹੈਕਸ ਤਿੱਕਡ਼ੀ:"
+#: libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr ""
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -389,23 +423,23 @@ msgstr "ਮੌਜੂਦਾ:"
 msgid "Old:"
 msgstr "ਪੁਰਾਣਾ:"
 
-#: libgimpwidgets/gimpfileentry.c:350
+#: libgimpwidgets/gimpfileentry.c:351
 msgid "Select Folder"
 msgstr "ਫੋਲਡਰ ਚੁਣੋ"
 
-#: libgimpwidgets/gimpfileentry.c:364
+#: libgimpwidgets/gimpfileentry.c:353
 msgid "Select File"
 msgstr "ਫਾਇਲ ਚੁਣੋ"
 
-#: libgimpwidgets/gimpmemsizeentry.c:234
+#: libgimpwidgets/gimpmemsizeentry.c:232
 msgid "KiloBytes"
 msgstr "ਕਿਲੋ-ਬਾਈਟ"
 
-#: libgimpwidgets/gimpmemsizeentry.c:235
+#: libgimpwidgets/gimpmemsizeentry.c:233
 msgid "MegaBytes"
 msgstr "ਮੈਗਾ ਬਾਈਟ"
 
-#: libgimpwidgets/gimpmemsizeentry.c:236
+#: libgimpwidgets/gimpmemsizeentry.c:234
 msgid "GigaBytes"
 msgstr "ਗੀਗਾ ਬਾਈਟ"
 
@@ -417,7 +451,7 @@ msgstr "ਲਿਖਣਯੋਗ"
 msgid "Folder"
 msgstr "ਫੋਲਡਰ"
 
-#: libgimpwidgets/gimppickbutton.c:141
+#: libgimpwidgets/gimppickbutton.c:138
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -455,55 +489,55 @@ msgstr "ਮੁਡ਼ ਨਿਰਧਾਰਨ"
 msgid "Visible"
 msgstr "ਦਿੱਖ"
 
-#: libgimpwidgets/gimpstock.c:168
+#: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
 msgstr "ਅੱਖਰ ਵਿਸਥਾਪਨ"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_ine Spacing"
 msgstr "ਲਾਈਨ ਵਿਸਥਾਪਨ"
 
-#: libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:185
 msgid "_Resize"
 msgstr "ਮੁਡ਼-ਆਕਾਰ"
 
-#: libgimpwidgets/gimpstock.c:185 libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 msgid "_Scale"
 msgstr "ਪੈਮਾਨਾ"
 
-#: libgimpwidgets/gimpstock.c:263
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "ਫੈਲਾਉ"
 
-#: libgimpwidgets/gimpstock.c:280
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Transform"
 msgstr "ਤਬਦੀਲ"
 
-#: libgimpwidgets/gimpstock.c:283
+#: libgimpwidgets/gimpstock.c:287
 msgid "_Rotate"
 msgstr "ਘੁੰਮਾਓ"
 
-#: libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Shear"
 msgstr "ਧੱਕਾ"
 
-#: libgimpwidgets/gimpunitmenu.c:304
+#: libgimpwidgets/gimpunitmenu.c:302
 msgid "More..."
 msgstr "ਹੋਰ਼"
 
-#: libgimpwidgets/gimpunitmenu.c:614
+#: libgimpwidgets/gimpunitmenu.c:612
 msgid "Unit Selection"
 msgstr "ਇਕਾਈ ਚੋਣ"
 
-#: libgimpwidgets/gimpunitmenu.c:657
+#: libgimpwidgets/gimpunitmenu.c:655
 msgid "Unit"
 msgstr "ਇਕਾਈ"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:659
 msgid "Factor"
 msgstr "ਗੁਣਾਂਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1291
+#: libgimpwidgets/gimpwidgets.c:811
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -511,99 +545,99 @@ msgstr ""
 "ਬੇਤਰਤੀਬੇ ਨੰਬਰ ਉਤਪਾਦਕ ਮੂਲ ਲਈ ਇਹ ਮੁੱਲ ਚੁਣੋ - ਇਸ ਨਾਲ ਤੁਸੀ ਦਰਸਾਏੲ \"ਬੇਤਰਤੀਬ\" ਕਿਰਿਆ ਦੁਹਰਾ "
 "ਸਕਦੇ ਹੋ"
 
-#: libgimpwidgets/gimpwidgets.c:1295
+#: libgimpwidgets/gimpwidgets.c:815
 msgid "_New Seed"
 msgstr "ਨਵਾਂ ਮੂਲ"
 
-#: libgimpwidgets/gimpwidgets.c:1308
+#: libgimpwidgets/gimpwidgets.c:828
 msgid "Seed random number generator with a generated random number"
 msgstr "ਉਪਜੇ ਬੇਤਰਤੀਬ ਨੰਬਰ ਸਮੇਤ ਮੂਲ ਬੇਤਰਤੀਬ ਨੰਬਰ ਉਤਪਾਦਕ"
 
-#: libgimpwidgets/gimpwidgets.c:1312
+#: libgimpwidgets/gimpwidgets.c:832
 msgid "_Randomize"
 msgstr "ਬੇਤਰਤੀਬੀ"
 
-#: modules/cdisplay_colorblind.c:124
-msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "ਰੰਗ ਕਮੀ ਕਪਟ ਫਿਟਰ (Brettel-Vienot-Mollon algorithm)"
-
-#: modules/cdisplay_colorblind.c:190
-msgid "Color Deficient Vision"
-msgstr "ਰੰਗ ਕਮੀ ਵਾਲੀ ਦਿੱਖ"
-
-#: modules/cdisplay_colorblind.c:464
-msgid "Color _Deficiency Type:"
-msgstr "ਰੰਗ ਕਮੀ ਕਿਸਮ:"
-
-#: modules/cdisplay_colorblind.c:473
+#: modules/cdisplay_colorblind.c:57 modules/cdisplay_colorblind.c:545
 msgid "Protanopia (insensitivity to red)"
 msgstr "ਪਰੋਤਾਂਨੋਪੀਆ (ਲਾਲ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
-#: modules/cdisplay_colorblind.c:476
+#: modules/cdisplay_colorblind.c:59 modules/cdisplay_colorblind.c:547
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "ਡਯੂਟਰਾਂਨੋਪੀਆ (ਹਰੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
-#: modules/cdisplay_colorblind.c:479
+#: modules/cdisplay_colorblind.c:61 modules/cdisplay_colorblind.c:549
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "ਟਰੀਟਾਂਨੋਪੀਆ (ਨੀਲੇ ਨੂੰ ਭਾਵੁਕਤਾ)"
 
-#: modules/cdisplay_gamma.c:90
+#: modules/cdisplay_colorblind.c:153
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "ਰੰਗ ਕਮੀ ਕਪਟ ਫਿਟਰ (Brettel-Vienot-Mollon algorithm)"
+
+#: modules/cdisplay_colorblind.c:242
+msgid "Color Deficient Vision"
+msgstr "ਰੰਗ ਕਮੀ ਵਾਲੀ ਦਿੱਖ"
+
+#: modules/cdisplay_colorblind.c:540
+msgid "Color _Deficiency Type:"
+msgstr "ਰੰਗ ਕਮੀ ਕਿਸਮ:"
+
+#: modules/cdisplay_gamma.c:105
 msgid "Gamma color display filter"
 msgstr "ਗਾਮਾ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
-#: modules/cdisplay_gamma.c:156
+#: modules/cdisplay_gamma.c:178
 msgid "Gamma"
 msgstr "ਗਾਮਾ"
 
-#: modules/cdisplay_gamma.c:311
+#: modules/cdisplay_gamma.c:352
 msgid "_Gamma:"
 msgstr "ਗਾਮਾ:"
 
-#: modules/cdisplay_highcontrast.c:90
+#: modules/cdisplay_highcontrast.c:105
 msgid "High Contrast color display filter"
 msgstr "ਵਧੇਰੇ ਵਖਰੇਂਵਾਂ ਰੰਗ ਦਰਿਸ਼ ਫਿਲਟਰ"
 
-#: modules/cdisplay_highcontrast.c:156
+#: modules/cdisplay_highcontrast.c:178
 msgid "Contrast"
 msgstr "ਵਖਰੇਂਵਾਂ"
 
-#: modules/cdisplay_highcontrast.c:308
+#: modules/cdisplay_highcontrast.c:352
 msgid "Contrast C_ycles:"
 msgstr "ਵਖਰੇਂਵਾਂ ਚੱਕਰ:"
 
-#: modules/cdisplay_proof.c:102
-msgid "Color proof filter using ICC color profile"
-msgstr "ICC ਰੰਗ ਰੇਖਾ-ਚਿੱਤਰ ਵਰਤਣ ਵਾਲਾ ਰੰਗ ਸਬੂਤ ਫਿਲਟਰ"
-
-#: modules/cdisplay_proof.c:166
-msgid "Color Proof"
-msgstr "ਰੰਗ ਸਬੂਤ"
-
-#: modules/cdisplay_proof.c:319
+#: modules/cdisplay_proof.c:45 modules/cdisplay_proof.c:440
 msgid "Perceptual"
 msgstr "ਪ੍ਰਤੱਖ ਗਿਆਨਸ਼ੀਲ"
 
-#: modules/cdisplay_proof.c:321
+#: modules/cdisplay_proof.c:47 modules/cdisplay_proof.c:442
 msgid "Relative Colorimetric"
 msgstr "ਸੰਬੰਧਿਤ ਕਲੋਰੀਮੈਟ੍ਰਿਕ"
 
-#: modules/cdisplay_proof.c:325
+#: modules/cdisplay_proof.c:51 modules/cdisplay_proof.c:446
 msgid "Absolute Colorimetric"
 msgstr "ਪੂਰਨ ਕਲੋਰੀਮੈਟ੍ਰਿਕ"
 
-#: modules/cdisplay_proof.c:331
+#: modules/cdisplay_proof.c:138
+msgid "Color proof filter using ICC color profile"
+msgstr "ICC ਰੰਗ ਰੇਖਾ-ਚਿੱਤਰ ਵਰਤਣ ਵਾਲਾ ਰੰਗ ਸਬੂਤ ਫਿਲਟਰ"
+
+#: modules/cdisplay_proof.c:238
+msgid "Color Proof"
+msgstr "ਰੰਗ ਸਬੂਤ"
+
+#: modules/cdisplay_proof.c:457
 msgid "_Intent:"
 msgstr "ਉਦੇਸ਼:"
 
-#: modules/cdisplay_proof.c:334
+#: modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
 msgstr "ICC ਰੰਗ ਰੇਖਾ-ਚਿੱਤਰ ਚੁਣੋ"
 
-#: modules/cdisplay_proof.c:337
+#: modules/cdisplay_proof.c:463
 msgid "_Profile:"
 msgstr "ਰੇਖਾ-ਚਿੱਤਰ:"
 
-#: modules/cdisplay_proof.c:345
+#: modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
 msgstr "ਕਾਲਾ ਬਿੰਦੂ ਪੂਰਤੀ"
 
@@ -671,3 +705,8 @@ msgstr "ਪਾਣੀ ਵਰਗਾ ਰੰਗ"
 msgid "Pressure"
 msgstr "ਦਬਾਅ"
 
+#~ msgid "None"
+#~ msgstr "ਕੋਈ ਨਹੀ"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "ਹੈਕਸ ਤਿੱਕਡ਼ੀ:"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-08-04 11:46+0200\n"
+"POT-Creation-Date: 2004-08-06 02:03+0200\n"
 "PO-Revision-Date: 2004-08-04 11:46+0200\n"
 "Last-Translator: Roman Joost <roman@bromeco.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -197,7 +197,7 @@ msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
 msgstr "  -b, --batch <Befehle>    Befehle im Stapelmodus ausführen.\n"
 
 #. initialize the list of gimp brushes
-#: app/actions/actions.c:91 app/core/gimp.c:846
+#: app/actions/actions.c:91 app/core/gimp.c:856
 #: app/gui/dialogs-constructors.c:277 app/gui/dialogs-constructors.c:479
 #: app/gui/preferences-dialog.c:2379 app/pdb/internal_procs.c:84
 msgid "Brushes"
@@ -255,7 +255,7 @@ msgid "File"
 msgstr "_Datei"
 
 #. initialize the list of gimp fonts
-#: app/actions/actions.c:130 app/core/gimp.c:862
+#: app/actions/actions.c:130 app/core/gimp.c:872
 #: app/gui/dialogs-constructors.c:360 app/gui/dialogs-constructors.c:562
 #: app/gui/preferences-dialog.c:2395 app/pdb/internal_procs.c:114
 msgid "Fonts"
@@ -266,7 +266,7 @@ msgid "Gradient Editor"
 msgstr "Farbverlaufseditor"
 
 #. initialize the list of gimp gradients
-#: app/actions/actions.c:136 app/core/gimp.c:858
+#: app/actions/actions.c:136 app/core/gimp.c:868
 #: app/gui/dialogs-constructors.c:319 app/gui/dialogs-constructors.c:521
 #: app/gui/preferences-dialog.c:2391 app/pdb/internal_procs.c:126
 msgid "Gradients"
@@ -295,14 +295,14 @@ msgid "Palette Editor"
 msgstr "Farbpaletteneditor"
 
 #. initialize the list of gimp palettes
-#: app/actions/actions.c:154 app/core/gimp.c:854
+#: app/actions/actions.c:154 app/core/gimp.c:864
 #: app/gui/dialogs-constructors.c:341 app/gui/dialogs-constructors.c:543
 #: app/gui/preferences-dialog.c:2387 app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp patterns
-#: app/actions/actions.c:157 app/core/gimp.c:850
+#: app/actions/actions.c:157 app/core/gimp.c:860
 #: app/gui/dialogs-constructors.c:297 app/gui/dialogs-constructors.c:499
 #: app/gui/preferences-dialog.c:2383 app/pdb/internal_procs.c:168
 msgid "Patterns"
@@ -321,13 +321,13 @@ msgid "Select"
 msgstr "Auswählen"
 
 #. initialize the template list
-#: app/actions/actions.c:169 app/core/gimp.c:870
+#: app/actions/actions.c:169 app/core/gimp.c:880
 #: app/gui/dialogs-constructors.c:436
 msgid "Templates"
 msgstr "Vorlagen"
 
 #: app/actions/actions.c:172 app/gui/dialogs-constructors.c:194
-#: app/gui/gui.c:376 app/gui/preferences-dialog.c:1542
+#: app/gui/gui.c:389 app/gui/preferences-dialog.c:1542
 #: app/gui/preferences-dialog.c:1545
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
@@ -550,7 +550,7 @@ msgid "_Context"
 msgstr "_Kontext"
 
 #: app/actions/context-actions.c:47 app/actions/layers-actions.c:51
-#: app/actions/plug-in-actions.c:64
+#: app/actions/plug-in-actions.c:68
 msgid "_Colors"
 msgstr "_Farben"
 
@@ -562,7 +562,7 @@ msgstr "_Deckkraft"
 msgid "_Brush"
 msgstr "_Pinsel"
 
-#: app/actions/context-actions.c:50 app/actions/plug-in-actions.c:78
+#: app/actions/context-actions.c:50 app/actions/plug-in-actions.c:82
 #: app/gui/preferences-dialog.c:1587
 msgid "_Pattern"
 msgstr "_Muster"
@@ -580,11 +580,41 @@ msgstr "Far_bverlauf"
 msgid "_Font"
 msgstr "_Schrift:"
 
+#: app/actions/context-actions.c:55
+#, fuzzy
+msgid "_Shape"
+msgstr "Form"
+
 #: app/actions/context-actions.c:56
+#, fuzzy
+msgid "_Radius"
+msgstr "Radius:"
+
+#: app/actions/context-actions.c:57
+#, fuzzy
+msgid "S_pikes"
+msgstr "Spitzen:"
+
+#: app/actions/context-actions.c:58
+#, fuzzy
+msgid "_Hardness"
+msgstr "Härte"
+
+#: app/actions/context-actions.c:59
+#, fuzzy
+msgid "_Aspect"
+msgstr "P_erspektive"
+
+#: app/actions/context-actions.c:60
+#, fuzzy
+msgid "A_ngle"
+msgstr "Winkel:"
+
+#: app/actions/context-actions.c:63
 msgid "_Default Colors"
 msgstr "_Vorgabefarben"
 
-#: app/actions/context-actions.c:61
+#: app/actions/context-actions.c:68
 msgid "S_wap Colors"
 msgstr "Farben _vertauschen"
 
@@ -878,7 +908,7 @@ msgstr "_Hängende Einträge entfernen"
 
 #: app/actions/documents-commands.c:265 app/actions/file-commands.c:144
 #: app/display/gimpdisplayshell-dnd.c:329 app/gui/file-open-dialog.c:184
-#: app/gui/file-open-location-dialog.c:170 app/widgets/gimplayertreeview.c:818
+#: app/gui/file-open-location-dialog.c:170 app/widgets/gimplayertreeview.c:819
 #: app/widgets/gimptoolbox-dnd.c:123
 #, c-format
 msgid ""
@@ -1679,7 +1709,7 @@ msgid "Scale Image"
 msgstr "Bild skalieren"
 
 #: app/actions/image-commands.c:607 app/actions/layers-commands.c:1091
-#: app/tools/gimpscaletool.c:160
+#: app/tools/gimpscaletool.c:161
 msgid "Scaling..."
 msgstr "Skalierung"
 
@@ -1888,13 +1918,13 @@ msgstr "Ebenen_name:"
 
 #. The size labels
 #. the image size labels
-#: app/actions/layers-commands.c:706 app/tools/gimpcroptool.c:1014
+#: app/actions/layers-commands.c:706 app/tools/gimpcroptool.c:1013
 #: app/tools/gimpselectionoptions.c:566 app/widgets/gimptemplateeditor.c:225
 msgid "Width:"
 msgstr "Breite:"
 
-#: app/actions/layers-commands.c:712 app/tools/gimpcroptool.c:1018
-#: app/tools/gimpscaletool.c:172 app/tools/gimpselectionoptions.c:574
+#: app/actions/layers-commands.c:712 app/tools/gimpcroptool.c:1017
+#: app/tools/gimpscaletool.c:173 app/tools/gimpselectionoptions.c:574
 #: app/widgets/gimptemplateeditor.c:231
 msgid "Height:"
 msgstr "Höhe:"
@@ -1907,7 +1937,7 @@ msgstr "Ebenenfüllart"
 msgid "Layer Attributes"
 msgstr "Ebeneneigenschaften"
 
-#: app/actions/layers-commands.c:879 app/widgets/gimplayertreeview.c:232
+#: app/actions/layers-commands.c:879 app/widgets/gimplayertreeview.c:233
 msgid "Edit Layer Attributes"
 msgstr "Ebeneneigenschaften bearbeiten"
 
@@ -2084,109 +2114,109 @@ msgstr "Muster n_eu laden"
 msgid "Refresh patterns"
 msgstr "Muster n_eu laden"
 
-#: app/actions/plug-in-actions.c:62
+#: app/actions/plug-in-actions.c:66
 msgid "Filte_rs"
 msgstr "Filte_r"
 
-#: app/actions/plug-in-actions.c:63
+#: app/actions/plug-in-actions.c:67
 msgid "_Blur"
 msgstr "_Weichzeichnen"
 
-#: app/actions/plug-in-actions.c:65
+#: app/actions/plug-in-actions.c:69
 msgid "Ma_p"
 msgstr "_Abbilden"
 
-#: app/actions/plug-in-actions.c:66
+#: app/actions/plug-in-actions.c:70
 msgid "_Noise"
 msgstr "_Rauschen"
 
-#: app/actions/plug-in-actions.c:67
+#: app/actions/plug-in-actions.c:71
 msgid "Edge-De_tect"
 msgstr "_Kanten finden"
 
-#: app/actions/plug-in-actions.c:68
+#: app/actions/plug-in-actions.c:72
 msgid "En_hance"
 msgstr "_Verbessern"
 
-#: app/actions/plug-in-actions.c:69
+#: app/actions/plug-in-actions.c:73
 msgid "_Generic"
 msgstr "_Generisch"
 
-#: app/actions/plug-in-actions.c:70
+#: app/actions/plug-in-actions.c:74
 msgid "Gla_ss Effects"
 msgstr "_Glas-Effekte"
 
-#: app/actions/plug-in-actions.c:71
+#: app/actions/plug-in-actions.c:75
 msgid "_Light Effects"
 msgstr "_Licht-Effekte"
 
-#: app/actions/plug-in-actions.c:72
+#: app/actions/plug-in-actions.c:76
 msgid "_Distorts"
 msgstr "Ver_zerren"
 
-#: app/actions/plug-in-actions.c:73
+#: app/actions/plug-in-actions.c:77
 msgid "_Artistic"
 msgstr "_Künstlerisch"
 
-#: app/actions/plug-in-actions.c:74
+#: app/actions/plug-in-actions.c:78
 msgid "_Map"
 msgstr "_Abbilden"
 
-#: app/actions/plug-in-actions.c:75
+#: app/actions/plug-in-actions.c:79
 msgid "_Render"
 msgstr "_Render"
 
-#: app/actions/plug-in-actions.c:76
+#: app/actions/plug-in-actions.c:80
 msgid "_Clouds"
 msgstr "_Wolken"
 
-#: app/actions/plug-in-actions.c:77
+#: app/actions/plug-in-actions.c:81
 msgid "_Nature"
 msgstr "_Natur"
 
-#: app/actions/plug-in-actions.c:79
+#: app/actions/plug-in-actions.c:83
 msgid "_Web"
 msgstr "_Web"
 
-#: app/actions/plug-in-actions.c:80
+#: app/actions/plug-in-actions.c:84
 msgid "An_imation"
 msgstr "A_nimation"
 
-#: app/actions/plug-in-actions.c:81
+#: app/actions/plug-in-actions.c:85
 msgid "C_ombine"
 msgstr "K_ombinieren"
 
-#: app/actions/plug-in-actions.c:82
+#: app/actions/plug-in-actions.c:86
 msgid "To_ys"
 msgstr "Viel Spass"
 
-#: app/actions/plug-in-actions.c:85
+#: app/actions/plug-in-actions.c:89
 msgid "Reset all Filters..."
 msgstr "_Alle Filtereinstellungen zurücksetzen..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:235
+#: app/actions/plug-in-actions.c:97 app/actions/plug-in-actions.c:364
 msgid "Repeat Last"
 msgstr "Letzten Vorgang wiederholen"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:237
+#: app/actions/plug-in-actions.c:102 app/actions/plug-in-actions.c:366
 msgid "Re-Show Last"
 msgstr "Letzten Vorgang nochmal anzeigen"
 
-#: app/actions/plug-in-actions.c:211
+#: app/actions/plug-in-actions.c:347
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "»%s« _wiederholen"
 
-#: app/actions/plug-in-actions.c:212
+#: app/actions/plug-in-actions.c:348
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "»%s« _nochmal anzeigen"
 
-#: app/actions/plug-in-commands.c:195
+#: app/actions/plug-in-commands.c:191
 msgid "Reset all Filters"
 msgstr "Alle Filter zurücksetzen"
 
-#: app/actions/plug-in-commands.c:200
+#: app/actions/plug-in-commands.c:196
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
 "Möchten sie alle Filter auf Vorgabeeinstellungen zurücksetzen?Wollen Sie "
@@ -3155,7 +3185,9 @@ msgstr ""
 "angezeigt."
 
 #: app/config/gimprc-blurbs.h:167
-msgid "Install a private colormap; might be useful on pseudocolor visuals."
+#, fuzzy
+msgid ""
+"Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Eine private Farbtabelle installieren; ist möglicherweise auf Pseudocolor-"
 "Anzeigen sinnvoll."
@@ -4102,30 +4134,30 @@ msgid "GIMP"
 msgstr "GIMP"
 
 #. register all internal procedures
-#: app/core/gimp.c:628
+#: app/core/gimp.c:638
 msgid "Procedural Database"
 msgstr "Prozedurdatenbank"
 
-#: app/core/gimp.c:631
+#: app/core/gimp.c:641
 msgid "Plug-In Environment"
 msgstr "Plugin-Umgebung"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:842
+#: app/core/gimp.c:852
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: app/core/gimp.c:842
+#: app/core/gimp.c:852
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the document history
-#: app/core/gimp.c:866
+#: app/core/gimp.c:876
 msgid "Documents"
 msgstr "Dokumente"
 
 #. initialize the module list
-#: app/core/gimp.c:874 app/gui/preferences-dialog.c:2407
+#: app/core/gimp.c:884 app/gui/preferences-dialog.c:2407
 msgid "Modules"
 msgstr "Module"
 
@@ -4613,7 +4645,7 @@ msgstr "Diese Ebene kann nicht weiter angehoben werden."
 msgid "Cannot raise a layer without alpha."
 msgstr "Ebenen ohne Alphakanal können nicht angehoben werden."
 
-#: app/core/gimpimage.c:2821 app/widgets/gimplayertreeview.c:240
+#: app/core/gimpimage.c:2821 app/widgets/gimplayertreeview.c:241
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
@@ -4621,7 +4653,7 @@ msgstr "Ebene anheben"
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2843 app/widgets/gimplayertreeview.c:244
+#: app/core/gimpimage.c:2843 app/widgets/gimplayertreeview.c:245
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
@@ -4629,7 +4661,7 @@ msgstr "Ebene absenken"
 msgid "Layer is already on top."
 msgstr "Diese Ebene befindet sich bereits ganz oben."
 
-#: app/core/gimpimage.c:2871 app/widgets/gimplayertreeview.c:242
+#: app/core/gimpimage.c:2871 app/widgets/gimplayertreeview.c:243
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
@@ -4637,7 +4669,7 @@ msgstr "Ebene nach ganz oben"
 msgid "Layer is already on the bottom."
 msgstr "Diese Ebene befindet sich bereits ganz unten."
 
-#: app/core/gimpimage.c:2896 app/widgets/gimplayertreeview.c:246
+#: app/core/gimpimage.c:2896 app/widgets/gimplayertreeview.c:247
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
@@ -6527,11 +6559,11 @@ msgid "Set Image Canvas Size"
 msgstr "Leinwandgröße festlegen"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:291 app/tools/gimpscaletool.c:176
+#: app/gui/resize-dialog.c:291 app/tools/gimpscaletool.c:177
 msgid "Current width:"
 msgstr "Aktuelle Breite:"
 
-#: app/gui/resize-dialog.c:297 app/tools/gimpscaletool.c:180
+#: app/gui/resize-dialog.c:297 app/tools/gimpscaletool.c:181
 msgid "Current height:"
 msgstr "Aktuelle Höhe:"
 
@@ -7923,27 +7955,27 @@ msgstr "_Zuschneiden / Größe ändern"
 msgid "Crop: "
 msgstr "Zuschneiden: "
 
-#: app/tools/gimpcroptool.c:978
+#: app/tools/gimpcroptool.c:977
 msgid "Crop & Resize Information"
 msgstr "Zuschneideinformationen"
 
-#: app/tools/gimpcroptool.c:997
+#: app/tools/gimpcroptool.c:996
 msgid "Origin X:"
 msgstr "Ursprung X:"
 
-#: app/tools/gimpcroptool.c:1001
+#: app/tools/gimpcroptool.c:1000
 msgid "Origin Y:"
 msgstr "Ursprung X:"
 
-#: app/tools/gimpcroptool.c:1040 app/widgets/gimpbrusheditor.c:190
+#: app/tools/gimpcroptool.c:1038 app/widgets/gimpbrusheditor.c:190
 msgid "Aspect ratio:"
 msgstr "Seitenverhältnis:"
 
-#: app/tools/gimpcroptool.c:1053
+#: app/tools/gimpcroptool.c:1049
 msgid "From selection"
 msgstr "Aus Auswahl"
 
-#: app/tools/gimpcroptool.c:1061
+#: app/tools/gimpcroptool.c:1057
 msgid "Auto shrink"
 msgstr "Automatisch schrumpfen"
 
@@ -8155,38 +8187,38 @@ msgid "_Preview"
 msgstr "_Vorschau"
 
 #. adjust sliders
-#: app/tools/gimpinkoptions-gui.c:60
+#: app/tools/gimpinkoptions-gui.c:58
 msgid "Adjustment"
 msgstr "Justierung"
 
-#: app/tools/gimpinkoptions-gui.c:73 app/tools/gimpinkoptions-gui.c:98
+#: app/tools/gimpinkoptions-gui.c:71 app/tools/gimpinkoptions-gui.c:96
 msgid "Size:"
 msgstr "Größe:"
 
-#: app/tools/gimpinkoptions-gui.c:80 app/tools/gimpmeasuretool.c:865
+#: app/tools/gimpinkoptions-gui.c:78 app/tools/gimpmeasuretool.c:865
 #: app/tools/gimprotatetool.c:173 app/widgets/gimpbrusheditor.c:203
 msgid "Angle:"
 msgstr "Winkel:"
 
 #. sens sliders
-#: app/tools/gimpinkoptions-gui.c:85
+#: app/tools/gimpinkoptions-gui.c:83
 msgid "Sensitivity"
 msgstr "Empfindlichkeit"
 
-#: app/tools/gimpinkoptions-gui.c:105
+#: app/tools/gimpinkoptions-gui.c:103
 msgid "Tilt:"
 msgstr "Neigung:"
 
-#: app/tools/gimpinkoptions-gui.c:112
+#: app/tools/gimpinkoptions-gui.c:110
 msgid "Speed:"
 msgstr "Geschwindigkeit:"
 
-#: app/tools/gimpinkoptions-gui.c:123
+#: app/tools/gimpinkoptions-gui.c:121
 msgid "Type"
 msgstr "Typ"
 
-#. Brush shape widget
-#: app/tools/gimpinkoptions-gui.c:155
+#. Blob shape widget
+#: app/tools/gimpinkoptions-gui.c:151
 msgid "Shape"
 msgstr "Form"
 
@@ -8354,12 +8386,12 @@ msgid "_Paintbrush"
 msgstr "_Pinsel"
 
 #: app/tools/gimppaintoptions-gui.c:117 app/widgets/gimpbrushselect.c:202
-#: app/widgets/gimplayertreeview.c:328
+#: app/widgets/gimplayertreeview.c:329
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
 #: app/tools/gimppaintoptions-gui.c:122 app/tools/gimpselectionoptions.c:395
-#: app/widgets/gimpbrushselect.c:219 app/widgets/gimplayertreeview.c:321
+#: app/widgets/gimpbrushselect.c:219 app/widgets/gimplayertreeview.c:322
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -8520,33 +8552,38 @@ msgstr "Drehinformationen"
 msgid "Center X:"
 msgstr "Zentrum X:"
 
-#: app/tools/gimpscaletool.c:99
+#: app/tools/gimpscaletool.c:100
 msgid "Scale"
 msgstr "Skalieren"
 
-#: app/tools/gimpscaletool.c:100
+#: app/tools/gimpscaletool.c:101
 msgid "Scale the layer or selection"
 msgstr "Ebene oder Auswahl skalieren"
 
-#: app/tools/gimpscaletool.c:101
+#: app/tools/gimpscaletool.c:102
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: app/tools/gimpscaletool.c:159
+#: app/tools/gimpscaletool.c:160
 msgid "Scaling information"
 msgstr "Skalierinformationen"
 
-#: app/tools/gimpscaletool.c:169
+#: app/tools/gimpscaletool.c:170
 msgid "Original Width:"
 msgstr "Ursprüngliche Breite:"
 
-#: app/tools/gimpscaletool.c:195
+#: app/tools/gimpscaletool.c:196
 msgid "Scale ratio X:"
 msgstr "Skalierungsfaktor X:"
 
-#: app/tools/gimpscaletool.c:198
+#: app/tools/gimpscaletool.c:199
 msgid "Scale ratio Y:"
 msgstr "Skalierungsfaktor Y:"
+
+#: app/tools/gimpscaletool.c:203
+#, fuzzy
+msgid "Aspect Ratio:"
+msgstr "Seitenverhältnis:"
 
 #: app/tools/gimpselectionoptions.c:139
 msgid "Smooth edges"
@@ -9851,7 +9888,7 @@ msgstr "Objekt exklusiv sichtbar machen"
 msgid "Set Item Exclusive Linked"
 msgstr "Objekt exklusiv verknüpfen"
 
-#: app/widgets/gimplayertreeview.c:234
+#: app/widgets/gimplayertreeview.c:235
 #, c-format
 msgid ""
 "New Layer\n"
@@ -9860,19 +9897,19 @@ msgstr ""
 "Neue Ebene\n"
 "%s Dialog für neue Ebene"
 
-#: app/widgets/gimplayertreeview.c:236
+#: app/widgets/gimplayertreeview.c:237
 msgid "Duplicate Layer"
 msgstr "Ebene duplizieren"
 
-#: app/widgets/gimplayertreeview.c:238
+#: app/widgets/gimplayertreeview.c:239
 msgid "Delete Layer"
 msgstr "Ebene löschen"
 
-#: app/widgets/gimplayertreeview.c:248
+#: app/widgets/gimplayertreeview.c:249
 msgid "Reorder Layer"
 msgstr "Ebenenreihenfolge ändern"
 
-#: app/widgets/gimplayertreeview.c:309
+#: app/widgets/gimplayertreeview.c:310
 msgid "Keep transparency"
 msgstr "Transparenz erhalten"
 
@@ -9921,7 +9958,7 @@ msgstr ""
 msgid "This text input field is limited to %d characters."
 msgstr "Dieses Eingabefeld ist auf %d Zeichen beschränkt."
 
-#: app/widgets/gimpselectiondata.c:293
+#: app/widgets/gimpselectiondata.c:325
 #, c-format
 msgid ""
 "The filename '%s' couldn't be converted to a valid URI:\n"
@@ -9932,7 +9969,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: app/widgets/gimpselectiondata.c:297
+#: app/widgets/gimpselectiondata.c:329
 msgid "Invalid UTF-8"
 msgstr "Ungültiges UTF-8"
 

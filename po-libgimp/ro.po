@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 01:15+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -14,11 +14,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "Selecţie pensulă"
 
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr ""
 
@@ -193,11 +193,11 @@ msgstr "Din selecţie"
 msgid "Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "Selecţie model"
 
@@ -205,59 +205,96 @@ msgstr "Selecţie model"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
+#: libgimpbase/gimpbaseenums.c:15
+#, fuzzy
+msgid "RGB color"
+msgstr "Culoare RGB"
+
+#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#, fuzzy
+msgid "Grayscale"
+msgstr "nivele de gri"
+
+#: libgimpbase/gimpbaseenums.c:17
+#, fuzzy
+msgid "Indexed color"
+msgstr "Culoare indexată"
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "RGB"
+msgstr "RGB"
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "RGB-alpha"
 msgstr ""
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:40
+#, fuzzy
+msgid "Grayscale-alpha"
+msgstr "nivele de gri"
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Indexed"
+msgstr "Indexat"
+
+#: libgimpbase/gimpbaseenums.c:42
+#, fuzzy
+msgid "Indexed-alpha"
+msgstr "Indexat"
+
+#: libgimpbase/gimpmemsize.c:177
 #, fuzzy, c-format
 msgid "%d Bytes"
 msgstr "%d Octeţi"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f KOcteţi"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f KOcteţi"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d KOcteţi"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MOcteţi"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MOcteţi"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, fuzzy, c-format
 msgid "%d MB"
 msgstr "%d KOcteţi"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, fuzzy, c-format
 msgid "%.2f GB"
 msgstr "%.2f MOcteţi"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, fuzzy, c-format
 msgid "%.1f GB"
 msgstr "%.1f MOcteţi"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, fuzzy, c-format
 msgid "%d GB"
 msgstr "%d KOcteţi"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr ""
 
 #: libgimpmodule/gimpmodule.c:177
 #, fuzzy, c-format
@@ -318,83 +355,83 @@ msgstr "Numai negru"
 msgid "/_White"
 msgstr "Alb"
 
-#: libgimpwidgets/gimpcolorscales.c:134
+#: libgimpwidgets/gimpcolorscales.c:133
 #, fuzzy
 msgid "Scales"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_H"
 msgstr "H"
 
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_S"
 msgstr "S"
 
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_V"
 msgstr "V"
 
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_R"
 msgstr "R"
 
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_G"
 msgstr "G"
 
-#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 #, fuzzy
 msgid "_B"
 msgstr "B"
 
-#: libgimpwidgets/gimpcolorscales.c:162
+#: libgimpwidgets/gimpcolorscales.c:161
 #, fuzzy
 msgid "_A"
 msgstr "A"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "Nuanţă"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Saturare"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "Valoare"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "Roşu"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "Verde"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "Albastru"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "Alfa"
 
-#: libgimpwidgets/gimpcolorscales.c:244
-msgid "Hexadecimal color notation as used in HTML"
+#: libgimpwidgets/gimpcolorscales.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorscales.c:258
+#: libgimpwidgets/gimpcolorscales.c:248
 #, fuzzy
-msgid "He_x Triplet:"
-msgstr "Triplet hexazecimal:"
+msgid "HTML _Notation:"
+msgstr "Amplasare:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 #, fuzzy
@@ -497,26 +534,26 @@ msgstr "Salvare de fişiere"
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:264
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:287
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:289
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -719,6 +756,10 @@ msgstr "Culoarea Apei"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Presiune"
+
+#, fuzzy
+#~ msgid "He_x Triplet:"
+#~ msgstr "Triplet hexazecimal:"
 
 #~ msgid "None"
 #~ msgstr "Nimic"
@@ -924,9 +965,6 @@ msgstr "Presiune"
 
 #~ msgid "Gray"
 #~ msgstr "Gri"
-
-#~ msgid "Indexed"
-#~ msgstr "Indexat"
 
 #~ msgid "New Channel Color"
 #~ msgstr "Culoarea pentru noul canal"
@@ -1351,14 +1389,8 @@ msgstr "Presiune"
 #~ msgid "RGB-empty"
 #~ msgstr "RGB-gol"
 
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
 #~ msgid "grayscale-empty"
 #~ msgstr "nivele de gri-gol"
-
-#~ msgid "grayscale"
-#~ msgstr "nivele de gri"
 
 #~ msgid "indexed-empty"
 #~ msgstr "indexat-gol"
@@ -1868,12 +1900,6 @@ msgstr "Presiune"
 
 #~ msgid "%g x %g dpi"
 #~ msgstr "%g x %g puncte/inch"
-
-#~ msgid "RGB Color"
-#~ msgstr "Culoare RGB"
-
-#~ msgid "Indexed Color"
-#~ msgstr "Culoare indexată"
 
 #~ msgid "colors"
 #~ msgstr "culori"
@@ -2676,9 +2702,6 @@ msgstr "Presiune"
 
 #~ msgid "Date:"
 #~ msgstr "Data:"
-
-#~ msgid "Location:"
-#~ msgstr "Amplasare:"
 
 #~ msgid "State:"
 #~ msgstr "Stare:"

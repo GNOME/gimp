@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-07-20 01:15+0200\n"
+"POT-Creation-Date: 2004-08-06 02:06+0200\n"
 "PO-Revision-Date: 2004-03-21 01:54+0100\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -14,14 +14,14 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpbrushmenu.c:132
+#: libgimp/gimpbrushmenu.c:126
 msgid "Brush Selection"
 msgstr "Penseelselectie"
 
 # Kan ook 'browsen' zijn
 # of misschien 'Overzicht' (een overzicht van alle beschikbare patronen
 # en borstels)
-#: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
+#: libgimp/gimpbrushmenu.c:157 libgimp/gimppatternmenu.c:142
 msgid "_Browse..."
 msgstr "_Bladeren..."
 
@@ -196,11 +196,11 @@ msgstr "Fontselectie"
 msgid "Gradient Selection"
 msgstr "Verloopselectie"
 
-#: libgimp/gimpmenu.c:411 libgimpwidgets/gimpintstore.c:183
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr ""
 
-#: libgimp/gimppatternmenu.c:115
+#: libgimp/gimppatternmenu.c:111
 msgid "Pattern Selection"
 msgstr "Patroonselectie"
 
@@ -208,59 +208,92 @@ msgstr "Patroonselectie"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
-msgid "(invalid UTF-8 string)"
-msgstr "(ongeldige UTF-8 tekenreeks)"
+#: libgimpbase/gimpbaseenums.c:15
+msgid "RGB color"
+msgstr ""
 
-#: libgimpbase/gimputils.c:244
+#: libgimpbase/gimpbaseenums.c:16 libgimpbase/gimpbaseenums.c:39
+#, fuzzy
+msgid "Grayscale"
+msgstr "Converteren naar grijswaarden"
+
+#: libgimpbase/gimpbaseenums.c:17
+msgid "Indexed color"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:37
+msgid "RGB"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:38
+msgid "RGB-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:40
+msgid "Grayscale-alpha"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:41
+msgid "Indexed"
+msgstr ""
+
+#: libgimpbase/gimpbaseenums.c:42
+msgid "Indexed-alpha"
+msgstr ""
+
+#: libgimpbase/gimpmemsize.c:177
 #, c-format
 msgid "%d Bytes"
 msgstr "%d Bytes"
 
-#: libgimpbase/gimputils.c:249
+#: libgimpbase/gimpmemsize.c:182
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f kB"
 
-#: libgimpbase/gimputils.c:253
+#: libgimpbase/gimpmemsize.c:186
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f kB"
 
-#: libgimpbase/gimputils.c:257
+#: libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%d KB"
 msgstr "%d kB"
 
-#: libgimpbase/gimputils.c:264
+#: libgimpbase/gimpmemsize.c:197
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f MB"
 
-#: libgimpbase/gimputils.c:268
+#: libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: libgimpbase/gimputils.c:272
+#: libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%d MB"
 msgstr "%d MB"
 
-#: libgimpbase/gimputils.c:279
+#: libgimpbase/gimpmemsize.c:212
 #, c-format
 msgid "%.2f GB"
 msgstr "%.2f GB"
 
-#: libgimpbase/gimputils.c:283
+#: libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.1f GB"
 msgstr "%.1f GB"
 
-#: libgimpbase/gimputils.c:287
+#: libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%d GB"
 msgstr "%d GB"
+
+#: libgimpbase/gimputils.c:162 libgimpbase/gimputils.c:167
+msgid "(invalid UTF-8 string)"
+msgstr "(ongeldige UTF-8 tekenreeks)"
 
 #: libgimpmodule/gimpmodule.c:177
 #, c-format
@@ -318,82 +351,83 @@ msgstr "/_Wit"
 
 # 'Schaalt'? 'Schubben'? Weegschalen
 # Misschien gaat het over kleurbereik
-#: libgimpwidgets/gimpcolorscales.c:134
+#: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
 msgstr "Schalen"
 
 # Deze letters moeten eigenlijk overeenkomen met de Nederlandse vertaling
 # Hue-kleurtoon
-#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:155 libgimpwidgets/gimpcolorselect.c:350
 msgid "_H"
 msgstr "_K"
 
 # Saturation-verzadiging
-#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:156 libgimpwidgets/gimpcolorselect.c:350
 msgid "_S"
 msgstr "_V"
 
 # Value-waarde
-#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:157 libgimpwidgets/gimpcolorselect.c:350
 msgid "_V"
 msgstr "_W"
 
 # Red-rood
-#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:158 libgimpwidgets/gimpcolorselect.c:350
 msgid "_R"
 msgstr "_R"
 
 # Green-groen
-#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:159 libgimpwidgets/gimpcolorselect.c:350
 msgid "_G"
 msgstr "_G"
 
 # Blue-blauw
-#: libgimpwidgets/gimpcolorscales.c:161 libgimpwidgets/gimpcolorselect.c:350
+#: libgimpwidgets/gimpcolorscales.c:160 libgimpwidgets/gimpcolorselect.c:350
 msgid "_B"
 msgstr "_B"
 
 # Alpha-alfa
-#: libgimpwidgets/gimpcolorscales.c:162
+#: libgimpwidgets/gimpcolorscales.c:161
 msgid "_A"
 msgstr "_A"
 
-#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
 msgid "Hue"
 msgstr "Kleurtoon"
 
-#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:355
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:355
 #: modules/cdisplay_proof.c:49 modules/cdisplay_proof.c:444
 msgid "Saturation"
 msgstr "Verzadiging"
 
-#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:356
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:356
 msgid "Value"
 msgstr "Waarde"
 
-#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:357
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:357
 msgid "Red"
 msgstr "Rood"
 
-#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:358
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:358
 msgid "Green"
 msgstr "Groen"
 
-#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:359
+#: libgimpwidgets/gimpcolorscales.c:170 libgimpwidgets/gimpcolorselect.c:359
 msgid "Blue"
 msgstr "Blauw"
 
-#: libgimpwidgets/gimpcolorscales.c:172 libgimpwidgets/gimpcolorselect.c:360
+#: libgimpwidgets/gimpcolorscales.c:171 libgimpwidgets/gimpcolorselect.c:360
 msgid "Alpha"
 msgstr "Alpha"
 
-#: libgimpwidgets/gimpcolorscales.c:244
-msgid "Hexadecimal color notation as used in HTML"
+#: libgimpwidgets/gimpcolorscales.c:243
+#, fuzzy
+msgid "Hexadecimal color notation as used in HTML and CSS"
 msgstr "Hexadecimale kleurnotatie zoals gebruikt in HTML"
 
-#: libgimpwidgets/gimpcolorscales.c:258
-msgid "He_x Triplet:"
-msgstr "He_xtriple:"
+#: libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr ""
 
 # Huidige kleur
 # (niet huidig kleur)
@@ -486,23 +520,23 @@ msgstr "_Regelhoogte"
 msgid "_Resize"
 msgstr "_Herschalen"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:285
+#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:288
 msgid "_Scale"
 msgstr "_Schalen"
 
-#: libgimpwidgets/gimpstock.c:264
+#: libgimpwidgets/gimpstock.c:267
 msgid "Crop"
 msgstr "Snijden"
 
-#: libgimpwidgets/gimpstock.c:281
+#: libgimpwidgets/gimpstock.c:284
 msgid "_Transform"
 msgstr "_Transformeren"
 
-#: libgimpwidgets/gimpstock.c:284
+#: libgimpwidgets/gimpstock.c:287
 msgid "_Rotate"
 msgstr "_Draaien"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:289
 msgid "_Shear"
 msgstr "_Hellen"
 
@@ -702,6 +736,9 @@ msgstr "Waterverf"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druk"
+
+#~ msgid "He_x Triplet:"
+#~ msgstr "He_xtriple:"
 
 #~ msgid "None"
 #~ msgstr "Geen"

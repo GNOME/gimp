@@ -297,8 +297,8 @@ normal and large.
 .TP
 (install-colormap no)
 
-Install a private colormap; might be useful on pseudocolor visuals.  Possible
-values are yes and no.
+Install a private colormap; might be useful on 8-bit (256 colors) displays. 
+Possible values are yes and no.
 
 .TP
 (min-colors 144)
@@ -652,6 +652,12 @@ and no.
 
 Restore saved keyboard shortcuts on each GIMP startup.  Possible values are
 yes and no.
+
+.TP
+(menu-mnemonics yes)
+
+When enabled, GIMP will show mnemonics in menus.  Possible values are yes and
+no.
 
 .TP
 (last-opened-size 10)

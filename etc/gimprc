@@ -236,8 +236,8 @@
 # 
 # (thumbnail-size normal)
 
-# Install a private colormap; might be useful on pseudocolor visuals. 
-# Possible values are yes and no.
+# Install a private colormap; might be useful on 8-bit (256 colors) displays.
+#  Possible values are yes and no.
 # 
 # (install-colormap no)
 
@@ -505,6 +505,11 @@
 # yes and no.
 # 
 # (restore-accels yes)
+
+# When enabled, GIMP will show mnemonics in menus.  Possible values are yes
+# and no.
+# 
+# (menu-mnemonics yes)
 
 # How many recently opened image filenames to keep on the File menu.  This is
 # an integer value.
