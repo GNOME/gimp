@@ -110,7 +110,8 @@ static void plug_in_proc_def_destroy      (PlugInProcDef     *proc_def,
 					   int                data_only);
 
 static Argument* plug_in_temp_run       (ProcRecord *proc_rec,
-  					 Argument   *args);
+  					 Argument   *args,
+  					 int         argc);
 static Argument* plug_in_params_to_args (GPParam   *params,
   					 int        nparams,
   					 int        full_copy);
@@ -461,7 +462,7 @@ plug_in_init ()
 	  app_init_update_status(NULL, proc_def->db_info.name,
 				 nth/nplugins);
 
-	  plug_in_run (&proc_def->db_info, NULL, FALSE, TRUE, -1);
+	  plug_in_run (&proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
 	}
     }
   if ((be_verbose == TRUE) || (no_splash == TRUE))
@@ -1110,6 +1111,7 @@ plug_in_get_current_return_vals (ProcRecord *proc_rec)
 Argument*
 plug_in_run (ProcRecord *proc_rec,
 	     Argument   *args,
+	     int         argc,
 	     int         synchronous,   
 	     int         destroy_values,
 	     int         gdisp_ID)
@@ -1123,7 +1125,7 @@ plug_in_run (ProcRecord *proc_rec,
 
   if (proc_rec->proc_type == PDB_TEMPORARY)
     {
-      return_vals = plug_in_temp_run (proc_rec, args);
+      return_vals = plug_in_temp_run (proc_rec, args, argc);
       goto done;
     }
 
@@ -1151,8 +1153,8 @@ plug_in_run (ProcRecord *proc_rec,
 	  config.gdisp_ID = gdisp_ID;
 
 	  proc_run.name = proc_rec->name;
-	  proc_run.nparams = proc_rec->num_args;
-	  proc_run.params = plug_in_args_to_params (args, proc_rec->num_args, FALSE);
+	  proc_run.nparams = argc;
+	  proc_run.params = plug_in_args_to_params (args, argc, FALSE);
 
 	  if (!gp_config_write (current_writefd, &config) ||
 	      !gp_proc_run_write (current_writefd, &proc_run) ||
@@ -1203,20 +1205,19 @@ plug_in_repeat (int with_interface)
       gdisplay = gdisplay_active ();
 
       /* construct the procedures arguments */
-      args = g_new (Argument, last_plug_in->num_args);
-      memset (args, 0, (sizeof (Argument) * last_plug_in->num_args));
+      args = g_new (Argument, 3);
 
-      /* initialize the argument types */
-      for (i = 0; i < last_plug_in->num_args; i++)
+      /* initialize the first three argument types */
+      for (i = 0; i < 3; i++)
 	args[i].arg_type = last_plug_in->args[i].arg_type;
 
-      /* initialize the first 3 plug-in arguments  */
+      /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
       args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
-      plug_in_run (last_plug_in, args, FALSE, TRUE, gdisplay->ID);
+      plug_in_run (last_plug_in, args, 3, FALSE, TRUE, gdisplay->ID);
 
       g_free (args);
     }
@@ -2234,6 +2235,7 @@ plug_in_callback (GtkWidget *widget,
   Argument *args;
   int i;
   int gdisp_ID = -1;
+  int argc = 0; /* calm down a gcc warning.  */
 
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
@@ -2253,6 +2255,7 @@ plug_in_callback (GtkWidget *widget,
     case PDB_EXTENSION:
       /* initialize the first argument  */
       args[0].value.pdb_int = RUN_INTERACTIVE;
+      argc = 1;
       break;
 
     case PDB_PLUGIN:
@@ -2264,6 +2267,7 @@ plug_in_callback (GtkWidget *widget,
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
 	  args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
+	  argc = 3;
 	}
       else
 	{
@@ -2285,6 +2289,7 @@ plug_in_callback (GtkWidget *widget,
 
 	      args[1].value.pdb_int = pdb_image_to_id(gdisplay->gimage);
 	      args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gdisplay->gimage));
+	      argc = 3;
 	    }
 	  else
 	    {
@@ -2297,11 +2302,12 @@ plug_in_callback (GtkWidget *widget,
 
     default:
       g_error (_("Unknown procedure type."));
-      break;
+      g_free (args);
+      return;
     }
 
   /* run the plug-in procedure */
-  plug_in_run (proc_rec, args, FALSE, TRUE, gdisp_ID);
+  plug_in_run (proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
   if (proc_rec->proc_type == PDB_PLUGIN)
     last_plug_in = proc_rec;
@@ -2440,7 +2446,8 @@ plug_in_proc_def_destroy (PlugInProcDef *proc_def,
 
 static Argument *
 plug_in_temp_run (ProcRecord *proc_rec,
-		  Argument   *args)
+		  Argument   *args,
+		  int         argc)
 {
   Argument *return_vals;
   PlugIn *plug_in;
@@ -2463,8 +2470,8 @@ plug_in_temp_run (ProcRecord *proc_rec,
       plug_in_push (plug_in);
 
       proc_run.name = proc_rec->name;
-      proc_run.nparams = proc_rec->num_args;
-      proc_run.params = plug_in_args_to_params (args, proc_rec->num_args, FALSE);
+      proc_run.nparams = argc;
+      proc_run.params = plug_in_args_to_params (args, argc, FALSE);
 
       if (!gp_temp_proc_run_write (current_writefd, &proc_run) ||
 	  !wire_flush (current_writefd))

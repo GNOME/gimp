@@ -148,6 +148,7 @@ void plug_in_close (PlugIn *plug_in,
 /* Run a plug-in as if it were a procedure database procedure */
 Argument* plug_in_run (ProcRecord *proc_rec,
 		       Argument   *args,
+		       int         argc,
 		       int         synchronous,
 		       int         destroy_values,
 		       int         gdisp_ID);
