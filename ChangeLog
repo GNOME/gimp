@@ -1,3 +1,8 @@
+Fri Jul  2 18:05:44 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* plug-ins/ifscompose/ifscompose_storage.c (parse_genuine_float):
+	Fix bug with negative values.
+
 Tue Aug  3 18:13:47 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * app/interface.c: Display multi-line messages left-justified

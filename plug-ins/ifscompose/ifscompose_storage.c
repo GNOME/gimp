@@ -134,7 +134,7 @@ parse_genuine_float (GScanner *scanner, gdouble *result)
 
   if (token == G_TOKEN_FLOAT)
     {
-      *result = scanner->value.v_float;
+      *result = negate ? -scanner->value.v_float : scanner->value.v_float;
       return G_TOKEN_NONE;
     }
   else

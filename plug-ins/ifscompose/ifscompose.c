@@ -443,7 +443,7 @@ run (char    *name,
   if ((status == STATUS_SUCCESS) &&
       (gimp_drawable_color (active_drawable->id) || gimp_drawable_gray (active_drawable->id)))
     {
-      /*  set the tile cache size so that the gaussian blur works well  */
+      /*  set the tile cache size so that the operation works well  */
       gimp_tile_cache_ntiles (2 * (MAX (active_drawable->width, active_drawable->height) /
 				   gimp_tile_width () + 1));
 
