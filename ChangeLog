@@ -1,3 +1,9 @@
+Mon Oct  5 00:28:58 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* po/de.po
+	* configure.in: added German translation from Daniel Egger
+	<Daniel.Egger@t-online.de>
+
 Sun Oct  4 22:18:11 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/palette.c: Had a look at making the window resizable,
