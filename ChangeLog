@@ -1,3 +1,8 @@
+2000-04-25  Sven Neumann <sven@gimp.org>
+
+        * app/nav_window.c: (hopefully) fixed a buffer overflow pointed 
+	out by Oleg V. Andrjushenko <oandr@itec.cn.ua>
+
 Tue Apr 25 03:52:43 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/png.c: fix Nick's embarassing bug found by tigert

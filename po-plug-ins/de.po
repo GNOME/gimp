@@ -7,10 +7,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.19\n"
+"Project-Id-Version: GIMP 1.1.20\n"
 "POT-Creation-Date: 2000-04-21 11:39-0700\n"
-"PO-Revision-Date: 2000-04-19 15:01+02:00\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"PO-Revision-Date: 2000-04-25 11:44+02:00\n"
+"Last-Translator: Felix Natter <fnatter@gmx.net>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -5032,6 +5032,8 @@ msgid ""
 "%s\n"
 "PNG unknown color model"
 msgstr ""
+"%s\n"
+"PNG unbekanntes Farbmodell"
 
 #: plug-ins/common/png.c:1029
 msgid "Save as PNG"
@@ -6111,13 +6113,12 @@ msgid "Pack Bits"
 msgstr "Bits packen"
 
 #: plug-ins/common/tiff.c:1493
-#, fuzzy
 msgid "Deflate"
-msgstr "Löschen"
+msgstr "Entpacken"
 
 #: plug-ins/common/tiff.c:1494
 msgid "JPEG"
-msgstr ""
+msgstr "JPEG"
 
 #: plug-ins/common/tile.c:121
 msgid "<Image>/Filters/Map/Tile..."
@@ -7167,13 +7168,15 @@ msgstr "Gamma:"
 msgid "Sample Density:"
 msgstr "Stichprobendichte:"
 
+# TODO !
 #: plug-ins/flame/flame.c:1069
 msgid "Spatial Oversample:"
-msgstr ""
+msgstr "Räumliche Hochrechnung:"
 
+# TODO !
 #: plug-ins/flame/flame.c:1079
 msgid "Spatial Filter Radius:"
-msgstr ""
+msgstr "Räumlicher Filterradius:"
 
 #: plug-ins/flame/flame.c:1105
 msgid "Colormap:"
@@ -10103,19 +10106,21 @@ msgstr "Füllung Typ:"
 
 #: plug-ins/gfig/gfig.c:3212
 msgid "Fill Opacity:"
-msgstr "Füllung Deckkraft:"
+msgstr "Füll-Deckkraft:"
 
+# muss im Kontext zu "Fill after" gesehen werden!
 #: plug-ins/gfig/gfig.c:3220
 msgid "Each Selection"
-msgstr "Jede Auswahl"
+msgstr "Jeder Auswahl"
 
+# muss im Kontext zu "Fill after" gesehen werden!
 #: plug-ins/gfig/gfig.c:3221
 msgid "All Selections"
-msgstr "Alle Selektionen"
+msgstr "Allen Selektionen"
 
 #: plug-ins/gfig/gfig.c:3225
 msgid "Fill after:"
-msgstr ""
+msgstr "Füllen nach:"
 
 #: plug-ins/gfig/gfig.c:3232
 msgid "Segment"
@@ -10127,7 +10132,7 @@ msgstr "Sektor"
 
 #: plug-ins/gfig/gfig.c:3237
 msgid "Arc as:"
-msgstr ""
+msgstr "Bogen als:"
 
 #. Put buttons in
 #: plug-ins/gfig/gfig.c:3291
@@ -10312,7 +10317,7 @@ msgstr "Über GFig"
 
 #: plug-ins/gfig/gfig.c:4898
 msgid "Gfig - GIMP plug-in"
-msgstr "Gfig - GIMP Plugin"
+msgstr "Gfig - GIMP Plug-in"
 
 #: plug-ins/gfig/gfig.c:4903
 msgid "Release 1.3"
@@ -10320,7 +10325,7 @@ msgstr "Version 1.3"
 
 #: plug-ins/gfig/gfig.c:4913
 msgid "Email alt@picnic.demon.co.uk"
-msgstr "Email alt@picnic.demon.co.uk"
+msgstr "E-mail alt@picnic.demon.co.uk"
 
 #: plug-ins/gfig/gfig.c:4923
 msgid "Isometric grid By Rob Saunders"
@@ -10332,11 +10337,12 @@ msgstr "Neues Gfig Objekt"
 
 #: plug-ins/gfig/gfig.c:5082
 msgid "Delete Gfig Drawing"
-msgstr "Gfig Zeichnung löschen"
+msgstr "Gfig-Zeichnung löschen"
 
+# Kontext: "Filename: <NONE>"
 #: plug-ins/gfig/gfig.c:5110 plug-ins/gfig/gfig.c:5150
 msgid "<NONE>"
-msgstr "<KEINE>"
+msgstr "<Unbenannt>"
 
 #: plug-ins/gfig/gfig.c:5188
 msgid "Editing read-only object - you will not be able to save it"
@@ -10593,7 +10599,7 @@ msgstr "Strahlen"
 
 #: plug-ins/gflare/gflare.c:4002
 msgid "Size Factor Gradient:"
-msgstr ""
+msgstr "Grössenfaktor für Gradient:"
 
 #: plug-ins/gflare/gflare.c:4006
 msgid "Probability Gradient:"
@@ -10818,7 +10824,7 @@ msgstr "Abweichungs-Schwellwert:"
 
 #: plug-ins/gimpressionist/general.c:347
 msgid "A bailout-value for adaptive selections"
-msgstr ""
+msgstr "Ausstiegswert für anpassende Selektionen"
 
 #: plug-ins/gimpressionist/gimp.c:105
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
@@ -11165,7 +11171,7 @@ msgstr "Liest das Verzeichnis mit Voreinstellungen neu ein"
 
 #: plug-ins/gimpressionist/presets.c:664
 msgid "(Desc)"
-msgstr ""
+msgstr "(Beschr.)"
 
 #: plug-ins/gimpressionist/presets.c:669
 msgid ""
@@ -13010,6 +13016,3 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error, XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
-
-#~ msgid "Error opening '%.100s' could not save"
-#~ msgstr "Fehler beim öffnen von '%.100s' konnte nicht gespeichert werden"

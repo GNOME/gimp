@@ -408,10 +408,10 @@ nav_window_update_preview (NavWinData *iwd)
   TempBuf * preview_buf_ptr;
   TempBuf * preview_buf_notdot = NULL;
   guchar *src, *buf, *dest;
-  gint x,y,has_alpha;
+  gint x, y;
   gint pwidth, pheight;
   GimpImage *gimage;
-  gdouble r,g,b,a,chk;
+  gdouble r, g, b, a, chk;
   gint xoff = 0;
   gint yoff = 0;
 
@@ -432,7 +432,7 @@ nav_window_update_preview (NavWinData *iwd)
    */
   if (!gdisp->dot_for_dot) /* ALT */ 
     {
-      gint sel_width = gimage->width;
+      gint sel_width  = gimage->width;
       gint sel_height = gimage->height;
       gdouble tratio;
       
@@ -440,13 +440,13 @@ nav_window_update_preview (NavWinData *iwd)
 	pwidth  = iwd->nav_preview_width;
 	tratio = (gdouble)pwidth / ((gdouble)sel_width);
 	pheight = sel_height * tratio + 0.5;
-	tratio = (gdouble)pheight/(gdouble)sel_height;
+	tratio = (gdouble)pheight / (gdouble)sel_height;
 	pwidth  = sel_width * tratio + 0.5;
       } else {
 	pheight = iwd->nav_preview_height;
 	tratio = (gdouble)pheight / ((gdouble)sel_height);
 	pwidth = sel_width * tratio + 0.5;
-	tratio = (gdouble)pwidth/(gdouble)sel_width;
+	tratio = (gdouble)pwidth / (gdouble)sel_width;
 	pheight = sel_height * tratio + 0.5;
       }
     }
@@ -457,7 +457,7 @@ nav_window_update_preview (NavWinData *iwd)
   /* reset & get new preview */
   if (!gdisp->dot_for_dot)
     {
-      int loop1,loop2;
+      gint loop1,loop2;
       gdouble x_ratio,y_ratio;
       guchar *src_data;
       guchar *dest_data;
@@ -466,20 +466,20 @@ nav_window_update_preview (NavWinData *iwd)
 					iwd->pheight,
 					preview_buf->bytes,0,0,NULL);
 
-      x_ratio = (gdouble)pwidth/(gdouble)iwd->pwidth;
-      y_ratio = (gdouble)pheight/(gdouble)iwd->pheight;
-      src_data = temp_buf_data(preview_buf);
-      dest_data = temp_buf_data(preview_buf_notdot);
+      x_ratio   = (gdouble)pwidth  / (gdouble)iwd->pwidth;
+      y_ratio   = (gdouble)pheight / (gdouble)iwd->pheight;
+      src_data  = temp_buf_data (preview_buf);
+      dest_data = temp_buf_data (preview_buf_notdot);
 
-      for(loop1 = 0 ; loop1 < iwd->pheight ; loop1++)
-	for(loop2 = 0 ; loop2 < iwd->pwidth ; loop2++)
+      for (loop1 = 0 ; loop1 < iwd->pheight ; loop1++)
+	for (loop2 = 0 ; loop2 < iwd->pwidth ; loop2++)
 	  {
-	    int i;
+	    gint i;
 	    guchar *src_pixel = src_data +
-	      ((gint)(loop2*x_ratio))*preview_buf->bytes +
-	      ((gint)(loop1*y_ratio))*pwidth*preview_buf->bytes;
+	      ((gint)(loop2 * x_ratio)) * preview_buf->bytes +
+	      ((gint)(loop1 * y_ratio)) * pwidth*preview_buf->bytes;
 	    guchar *dest_pixel = dest_data + 
-	      (loop2+loop1*iwd->pwidth)*preview_buf->bytes;
+	      (loop2 + loop1 * iwd->pwidth) * preview_buf->bytes;
 
 	    for(i = 0 ; i < preview_buf->bytes; i++)
 	      *dest_pixel++ = *src_pixel++;
@@ -496,36 +496,35 @@ nav_window_update_preview (NavWinData *iwd)
       preview_buf_ptr = preview_buf;
     }
   
-  buf = g_new (gchar,  iwd->nav_preview_width * 3);
-  has_alpha = (preview_buf_ptr->bytes == 2 || preview_buf_ptr->bytes == 4);
+  buf = g_new (gchar, preview_buf_ptr->width * 3);
 
-  for (y = 0; y <pheight ; y++)
+  for (y = 0; y < preview_buf_ptr->height ; y++)
     {
       dest = buf;
       switch (preview_buf_ptr->bytes)
 	{
 	case 4:
-	  for (x = 0; x < pwidth; x++)
+	  for (x = 0; x < preview_buf_ptr->width; x++)
 	    {
-	      r = ((gdouble)(*(src++)))/255.0;
-	      g = ((gdouble)(*(src++)))/255.0;
-	      b = ((gdouble)(*(src++)))/255.0;
-	      a = ((gdouble)(*(src++)))/255.0;
-	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
-	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-	      *(dest++) = (guchar)((chk + (g - chk)*a)*255.0);
-	      *(dest++) = (guchar)((chk + (b - chk)*a)*255.0);
+	      r = ((gdouble)(*(src++))) / 255.0;
+	      g = ((gdouble)(*(src++))) / 255.0;
+	      b = ((gdouble)(*(src++))) / 255.0;
+	      a = ((gdouble)(*(src++))) / 255.0;
+	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128)) / 255.0;
+	      *(dest++) = (guchar)((chk + (r - chk) * a) * 255.0);
+	      *(dest++) = (guchar)((chk + (g - chk) * a) * 255.0);
+	      *(dest++) = (guchar)((chk + (b - chk) * a) * 255.0);
 	    }
 	  break;
 	case 2:
-	  for (x = 0; x < pwidth; x++)
+	  for (x = 0; x < preview_buf_ptr->width; x++)
 	    {
-	      r = ((gdouble)(*(src++)))/255.0;
-	      a = ((gdouble)(*(src++)))/255.0;
-	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128))/255.0;
-	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
-	      *(dest++) = (guchar)((chk + (r - chk)*a)*255.0);
+	      r = ((gdouble)(*(src++))) / 255.0;
+	      a = ((gdouble)(*(src++))) / 255.0;
+	      chk = ((gdouble)((( (x^y) & 4 ) << 4) | 128)) / 255.0;
+	      *(dest++) = (guchar)((chk + (r - chk) * a) * 255.0);
+	      *(dest++) = (guchar)((chk + (r - chk) * a) * 255.0);
+	      *(dest++) = (guchar)((chk + (r - chk) * a) * 255.0);
 	    }
 	  break;
 	default:
@@ -533,14 +532,14 @@ nav_window_update_preview (NavWinData *iwd)
 	}
       
       gtk_preview_draw_row (GTK_PREVIEW (iwd->preview),
-			    (guchar *)buf, xoff, yoff+y, preview_buf_ptr->width);
+			    (guchar *)buf, xoff, yoff + y, preview_buf_ptr->width);
     }
 
   g_free (buf);
   temp_buf_free (preview_buf);
 
-  if(preview_buf_notdot)
-    temp_buf_free(preview_buf_notdot);
+  if (preview_buf_notdot)
+    temp_buf_free (preview_buf_notdot);
 
   gimp_remove_busy_cursors (NULL);
 }
