@@ -16,6 +16,8 @@ Mon Aug 16 20:48:33 1999 Adrian Likins <alikins@redhat.com>
 	useful anyway, start using it as a testbed for "image hoses".
 	Right now it doesnt really work correctly. 
 
+	* app/paintbrush.c: force pixmaps to use INCREMENTAL
+
 1999-08-16  Tor Lillqvist  <tml@iki.fi>
 
 	* app/transform_core.c: Use RINT instead of rint.

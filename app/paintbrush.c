@@ -23,6 +23,7 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "gimpbrushhose.h"
 #include "gimpbrushlist.h"
 #include "gradient.h"
 #include "paint_funcs.h"
@@ -403,6 +404,8 @@ paintbrush_motion (PaintCore    *paint_core,
   /* silly hack to be removed later */
   /* paint_core->brush = gimp_brush_list_get_brush_by_index(brush_list,(rand()% gimp_brush_list_length(brush_list))); */
   
+
+
   /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
@@ -448,10 +451,12 @@ paintbrush_motion (PaintCore    *paint_core,
       /*  color the pixels  */
 
 
+      /* we check to see if this is a pixmap, if so composite the
+	 pixmap image into the are instead of the color */
       if(GIMP_IS_BRUSH_PIXMAP(paint_core->brush) && !gradient_length)
 	{
 	  color_area_with_pixmap(gimage, drawable, area, paint_core->brush);
-	  mode = INCREMENTAL;
+	  incremental = INCREMENTAL;
 	}
       else
 	{
@@ -461,10 +466,6 @@ paintbrush_motion (PaintCore    *paint_core,
 	}
 
 
- /*      color_pixels (temp_buf_data (area), col, */
-/* 		    area->width * area->height, area->bytes); */
-
-      /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, temp_blend,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL),

@@ -28,6 +28,7 @@
 #include "gimpbrushgenerated.h"
 #include "paint_core.h"
 #include "gimprc.h"
+#include "gimpbrush.h"
 
 #define OVERSAMPLING 5
 
@@ -66,7 +67,7 @@ gimp_brush_generated_init(GimpBrushGenerated *brush)
 
 guint gimp_brush_generated_get_type(void)
 {
-  static GtkType type;
+  static GtkType type=0;
   if(!type){
     GtkTypeInfo info={
       "GimpBrushGenerated",
@@ -74,8 +75,9 @@ guint gimp_brush_generated_get_type(void)
       sizeof(GimpBrushGeneratedClass),
       (GtkClassInitFunc)gimp_brush_generated_class_init,
       (GtkObjectInitFunc)gimp_brush_generated_init,
-      NULL,
-      NULL };
+      /* reserved_1 */ NULL,
+      /* reserved_2 */ NULL,
+      (GtkClassInitFunc) NULL};
     type=gtk_type_unique(GIMP_TYPE_BRUSH, &info);
   }
   return type;
