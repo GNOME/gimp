@@ -142,8 +142,8 @@ query ()
     { PARAM_DRAWABLE, "drawable", "Drawable to save" },
     { PARAM_STRING, "filename", "The name of the file to save the image in" },
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2)" },
-    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1)" }
+    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2) }" },
+    { PARAM_INT32, "fillorder", "Fill Order: { MSB to LSB (0), LSB to MSB (1) }" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
