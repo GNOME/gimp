@@ -1,3 +1,59 @@
+2003-08-14  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* composite/ modularisation of the automatic compositing function
+	"wiring" to construct the table of compositing functions at
+	run-time instead of compile time.
+
+	The environment variable GIMP_COMPOSITE is a hexadecimal number
+	representing a bit-field used to set/reset options in the
+	gimp-composite code.
+ 
+	* gimp-composite-altivec.[ch]: added
+	* gimp-composite-altivec-installer.[ch]: added
+	* gimp-composite-vis.[ch]: added
+	* gimp-composite-vis-installer.[ch]: added
+	* gimp-composite-mmx-installer.[ch]: added
+	* gimp-composite-sse-installer.[ch]: added
+	* gimp-composite-altivec-test.[ch]: added
+	* gimp-composite-vis-test.[ch]: added
+	* gimp-composite-mmx-test.[ch]: added
+	* gimp-composite-sse-test.[ch]: added
+	* make-installer.py: Added meta programme for generating code to
+	  1) construct a table of compositing functions indexed by
+	  operation, and the pixel formats of the sources and destination,
+	  and 2) generating code for regression testing of these compositing
+	  functions against the same functions in gimp-composite-generic.c
+ 
+	* gimp-composite-mmx.c (xxxgimp_composite_overlay_rgba8_rgba8_rgba8_mmx):
+	  removing from the current set of optimisations because it appears
+	  to be broken.
+ 
+	* Makefile.am: modified regression testing targets to now build
+	  gimp-composite-*-test where * is any of generic, mmx, sse,
+	  altivec, and vis.
+ 
+	* gimp-composite.c: moved in initialisation code
+	  gimp_composite_init() from gimp-composite-dispatch.c
+ 
+	* gimp-composite.c: removed gimp_composite_unsupported().
+ 
+	* gimp-composite.c: use cpu_accel() to determine at run-time which
+	  set of optimisations are to be used.
+ 
+	* gimp-composite.c: conditionally compile code for ARCH_X86.
+
+	* make-gimp-composite-dispatch.c: retired.  See make-installer.py
+ 
+	* gimp-composite-mmx.c (op_overlay): namespace cleanup, op_overlay()
+	  and all of the constant values are now static
+
+	* gimp-composite-mmx.c, gimp-composite-sse.c: fixed bug with the
+	  alpha mask being the address of the alpha mask, not the mask
+	  itself.
+
+	* app/paint-funcs/paint-funcs.c: Check gimp_composite_options.use
+	to see if we should use the new code or the old code.
+
 2003-08-14  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: libgimpbase/gimpversion.h is now only updated if
@@ -4990,7 +5046,7 @@
 
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
-	(Spotted by Ville PÃ€tsi).
+	(Spotted by Ville PÃ$tsi).
 
 2003-05-11  Sven Neumann  <sven@gimp.org>
 
@@ -6523,7 +6579,7 @@
 
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
-	Applied a patch from Ãyvind KolÃ¥s that adds supersampling to the
+	Applied a patch from Ã?yvind KolÃ¥s that adds supersampling to the
 	transform operations (bug #109817):
 
 	* app/base/tile-manager-private.h
@@ -6837,7 +6893,7 @@
 
 	* app/core/gimpdrawable-transform-utils.c
 	(gimp_drawable_transform_matrix_perspective): applied patch from
-	Ãyvind KolÃ¥s that fixes bug #109570.
+	Ã?yvind KolÃ¥s that fixes bug #109570.
 
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
@@ -23234,7 +23290,7 @@
 	* themes/Default/images/stock-button-selection-subtract.png: cropped.
 
 	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
-	a nicer one from Ville PÃ€tsi.
+	a nicer one from Ville PÃ$tsi.
 
 	* app/gui/menus.c
 	* app/widgets/gimpvectorslistview.c: use the new stock items.
@@ -26331,7 +26387,7 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
-	layers by Ville PÃ€tsi (drc).
+	layers by Ville PÃ$tsi (drc).
 
 2001-12-12  Sven Neumann  <sven@gimp.org>
 

@@ -139,14 +139,23 @@ typedef struct
 
 
 struct GimpCompositeOptions {
-		gboolean initialised;
-		gboolean use;
+		unsigned long bits;
 };
+#define GIMP_COMPOSITE_OPTION_USE         0x1
+#define GIMP_COMPOSITE_OPTION_INITIALISED 0x2
+#define GIMP_COMPOSITE_OPTION_VERBOSE     0x4
+
 
 extern struct GimpCompositeOptions gimp_composite_options;
 
 extern void gimp_composite_dispatch(GimpCompositeContext *);
 extern void gimp_composite_init(void);
+
 extern void gimp_composite_context_print(GimpCompositeContext *);
+extern char *gimp_composite_mode_astext(GimpCompositeOperation);
+extern char *gimp_composite_pixelformat_astext(GimpPixelFormat);
+
+extern char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
+extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N])(GimpCompositeContext *);
 
 #endif  /* __GIMP_COMPOSITE_H__  */

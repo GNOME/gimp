@@ -56,7 +56,6 @@ class nmx:
         if sysname == "Linux":
             fp = os.popen("nm -B " + objfile, "r")
             symbols = map(lambda l: string.split(l[8:]), fp.readlines())
-            print symbols
         elif sysname == "SunOS":
             fp = os.popen("nm -p " + objfile, "r")
             symbols = map(lambda l: string.split(l[12:]), fp.readlines())

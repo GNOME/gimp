@@ -5,7 +5,6 @@
 #include "base/base-types.h"
 #include "gimp-composite.h"
 #include "gimp-composite-dispatch.h"
-extern void gimp_composite_unsupported(GimpCompositeContext *);
 
 void gimp_composite_addition_any_any_any_generic(GimpCompositeContext *);
 void gimp_composite_anti_erase_any_any_any_generic(GimpCompositeContext *);
@@ -2574,21 +2573,3 @@ char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PI
   },
  },
 };
-
-extern void gimp_composite_generic_init (void);
-
-void
-gimp_composite_init (void)
-{
-  if (g_getenv ("GIMP_COMPOSITE"))
-    {
-      gimp_composite_options.use = TRUE;
-      g_printerr ("Using new image composite functions\n");
-    }
-
-  if (! gimp_composite_options.initialised)
-    {
-      gimp_composite_generic_init ();
-      gimp_composite_options.initialised = TRUE;
-    }
-}

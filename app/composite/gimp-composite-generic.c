@@ -1143,6 +1143,10 @@ gimp_composite_generic_init(void)
   GRand *gr;
 #define RANDOM_SEED 314159265
 
+		if (gimp_composite_options.bits & GIMP_COMPOSITE_OPTION_VERBOSE) {
+				printf("gimp_composite_generic_init:\n");
+		}
+
   /*  generate a table of random seeds  */
   gr = g_rand_new_with_seed(RANDOM_SEED);
 

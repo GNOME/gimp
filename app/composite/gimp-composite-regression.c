@@ -155,8 +155,7 @@ gimp_composite_regression_comp_rgba8(char *str, gimp_rgba8_t *rgba8A, gimp_rgba8
       if (rgba8B != (gimp_rgba8_t *) 0) {
         printf(" B="); gimp_composite_regression_print_rgba8(&rgba8B[i]);
       }
-      printf("   ");
-      printf("exp=");
+      printf("   exp=");
       gimp_composite_regression_print_rgba8(&expected[i]);
       printf(" got=");
       gimp_composite_regression_print_rgba8(&got[i]);
