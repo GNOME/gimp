@@ -79,7 +79,6 @@ static void     file_open_ok_callback         (GtkWidget        *widget,
                                                gpointer          data);
 static void     file_open_type_callback       (GtkWidget        *widget,
                                                gpointer          data);
-static GSList * tvsel_to_slist                (GtkTreeView      *file_list);
 
 
 
@@ -205,12 +204,8 @@ file_open_dialog_create (Gimp *gimp)
 
   gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
 
+  gtk_file_selection_set_select_multiple (GTK_FILE_SELECTION (fileload), TRUE);
   tree_sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (GTK_FILE_SELECTION (fileload)->file_list));
-
-  /* disabled until fixed in GTK+
-   *
-   *  gtk_tree_selection_set_mode (tree_sel, GTK_SELECTION_MULTIPLE);
-   */
 
   /* Catch file-list clicks so we can update the preview thumbnail */
   g_signal_connect (G_OBJECT (tree_sel), "changed",
@@ -606,12 +601,13 @@ file_open_genbutton_callback (GtkWidget *widget,
   Gimp      *gimp;
 
   /* added for multi-file preview generation... */
-  GtkFileSelection *fs;
-  gchar            *full_filename = NULL;
-  gchar            *dirname       = NULL;
-  struct stat       buf;
-  gint              err;
-  GSList           *list, *toplist;
+  GtkFileSelection  *fs;
+  gchar             *full_filename = NULL;
+  gchar             *raw_filename = NULL;
+  struct stat        buf;
+  gint               err;
+  gchar            **selections;
+  gint               i;
 
   fs = GTK_FILE_SELECTION (data);
 
@@ -628,16 +624,11 @@ file_open_genbutton_callback (GtkWidget *widget,
 
   /* new mult-file preview make: */  
 
-  /* Have to read the list before touching anything else */
-  toplist = tvsel_to_slist (GTK_TREE_VIEW (fs->file_list));
+  selections = gtk_file_selection_get_selections (fs);
 
-  dirname = g_path_get_dirname (gtk_file_selection_get_filename (fs));
-  
-  for (list= toplist; list; list = g_slist_next (list))
+  for (i = 0; selections[i] != NULL; i++)
     {
-      full_filename = g_build_filename (dirname,
-                                        (gchar *) list->data,
-                                        NULL);
+      full_filename = selections[i];
       
       err = stat (full_filename, &buf);
       
@@ -646,13 +637,15 @@ file_open_genbutton_callback (GtkWidget *widget,
           /* Is not directory. */
           GimpPDBStatusType dummy;
           
+	  raw_filename = g_path_get_basename (full_filename);
           gimage_to_be_thumbed = file_open_image (gimp,
                                                   full_filename,
-                                                  list->data,
+                                                  raw_filename,
                                                   NULL,
                                                   NULL,
                                                   GIMP_RUN_NONINTERACTIVE,
                                                   &dummy);
+	  g_free (raw_filename);
           
           if (gimage_to_be_thumbed)
             {			
@@ -682,13 +675,7 @@ file_open_genbutton_callback (GtkWidget *widget,
         }      
      }
 
-  g_free (full_filename);
-
-  for (list = toplist; list; list = g_slist_next (list))
-    g_free (list->data);
-
-  g_slist_free (toplist);
-  g_free (dirname);
+  g_strfreev (selections);
 
   gtk_widget_set_sensitive (GTK_WIDGET (fileload), TRUE);
   gimp_unset_busy (gimp);
@@ -698,27 +685,27 @@ static void
 file_open_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  GtkFileSelection  *fs;
-  Gimp              *gimp;
-  gchar             *full_filename;
-  gchar             *raw_filename;
-  gchar             *dirname;
-  struct stat        buf;
-  gint               err;
-  GimpPDBStatusType  status;
-  GSList            *list;
+  GtkFileSelection   *fs;
+  Gimp               *gimp;
+  gchar              *full_filename;
+  gchar              *raw_filename;
+  struct stat         buf;
+  gint                err;
+  GimpPDBStatusType   status;
+  gchar             **selections;
+  gint                i;
 
   fs = GTK_FILE_SELECTION (data);
 
   gimp = GIMP (g_object_get_data (G_OBJECT (fs), "gimp"));
 
-  full_filename = g_strdup (gtk_file_selection_get_filename (fs));
-  raw_filename  = g_strdup (gtk_entry_get_text (GTK_ENTRY(fs->selection_entry)));
+  selections = gtk_file_selection_get_selections (fs);
 
-  g_assert (full_filename && raw_filename);
-
-  if (strlen (raw_filename) == 0)
+  if (selections == NULL)
     return;
+
+  full_filename = selections[0];
+  raw_filename = g_strdup (gtk_entry_get_text (GTK_ENTRY(fs->selection_entry)));
 
   err = stat (full_filename, &buf);
 
@@ -734,6 +721,9 @@ file_open_ok_callback (GtkWidget *widget,
         {
           gtk_file_selection_set_filename (fs, full_filename);
         }
+
+      g_free (raw_filename);
+      g_strfreev (selections);
 
       return;
     }
@@ -758,84 +748,41 @@ file_open_ok_callback (GtkWidget *widget,
       g_message (_("Opening '%s' failed."), full_filename);
     }
 
-
   /*
    * Now deal with multiple selections from the filesel list
    */
 
-  /* Have to read the list before touching anything else */
-
-  list = tvsel_to_slist (GTK_TREE_VIEW (fs->file_list));
-  
-  raw_filename = g_strdup (raw_filename);
-  dirname = g_path_get_dirname (full_filename);
-  
-  while (list)
+  for (i = 1; selections[i] != NULL; i++)
     {
-      g_free (full_filename);
-      
-      full_filename = g_build_filename (dirname,
-                                        (gchar *) list->data, NULL);
-      
-      if (strcmp (list->data, raw_filename))
-        { /* don't load current selection twice */
-          
-          err = stat (full_filename, &buf);
-          
-          if (! (err == 0 && (buf.st_mode & S_IFDIR)))
-            { /* Is not directory. */
-              
-              status = file_open_with_proc_and_display (gimp,
-                                                        full_filename,
-                                                        (const gchar *) list->data,
-                                                        load_file_proc);
-              
-              if (status == GIMP_PDB_SUCCESS)
-                {
-                  file_dialog_hide (data);
-                }
-              else if (status != GIMP_PDB_CANCEL)
-                {
-		  /* same as previous. --bex */
-                  g_message (_("Opening '%s' failed."), full_filename);
-                }
-            }
-        }
-      
-      g_free (list->data);
-      list = g_slist_next (list);
-    }
-  
-  g_slist_free (list);
+      full_filename = selections[i];
 
-  g_free (dirname);
-  g_free (full_filename);
+      g_free (raw_filename);
+      raw_filename = g_path_get_basename (full_filename);
+      
+      err = stat (full_filename, &buf);
+          
+      if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+	{ /* Is not directory. */
+              
+	  status = file_open_with_proc_and_display (gimp,
+						    full_filename,
+						    raw_filename,
+						    load_file_proc);
+              
+	  if (status == GIMP_PDB_SUCCESS)
+	    {
+	      file_dialog_hide (data);
+	    }
+	  else if (status != GIMP_PDB_CANCEL)
+	    {
+	      /* same as previous. --bex */
+	      g_message (_("Opening '%s' failed."), full_filename);
+	    }
+	}
+    }
+
   g_free (raw_filename);
+  g_strfreev (selections);
     
   gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-}
-
-static void
-tvsel_to_slist_helper (GtkTreeModel *model,
-		       GtkTreePath  *path,
-		       GtkTreeIter  *iter,
-		       gpointer      data)
-{
-  GSList **list = data;
-  gchar   *filename;
-
-  gtk_tree_model_get (model, iter, 0, &filename, -1);
-  *list = g_slist_prepend (*list, filename);
-}
-
-static GSList *
-tvsel_to_slist (GtkTreeView *file_list)
-{
-  GtkTreeSelection *sel;
-  GSList           *list = NULL;
-  
-  sel = gtk_tree_view_get_selection (file_list);
-  gtk_tree_selection_selected_foreach (sel, tvsel_to_slist_helper, &list);
-
-  return list;
 }

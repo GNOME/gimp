@@ -1,3 +1,8 @@
+2002-02-16  Manish Singh  <yosh@gimp.org>
+
+	* app/gui/file-open-dialog.c: use new GtkFileSelection multiselect
+	API.
+
 2002-02-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-handlers.c: added back the handler
