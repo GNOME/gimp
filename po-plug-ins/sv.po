@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-06-17 00:37+0200\n"
-"PO-Revision-Date: 2003-06-17 00:43+0200\n"
+"POT-Creation-Date: 2003-06-18 21:20+0200\n"
+"PO-Revision-Date: 2003-06-18 21:23+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:290
-#: plug-ins/FractalExplorer/Dialogs.c:1396 plug-ins/gfig/gfig.c:3235
+#: plug-ins/FractalExplorer/Dialogs.c:1396 plug-ins/gfig/gfig.c:3238
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
 #: plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
@@ -497,7 +497,7 @@ msgstr "<Image>/Filter/Rendera/Mönster/Fractal Explorer..."
 msgid "Rendering Fractal..."
 msgstr "Renderar fraktal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:4844
+#: plug-ins/FractalExplorer/FractalExplorer.c:731 plug-ins/gfig/gfig.c:4833
 #: plug-ins/gflare/gflare.c:3107
 #, c-format
 msgid ""
@@ -1224,7 +1224,7 @@ msgstr ""
 #: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
 #: plug-ins/common/wmf.c:2141 plug-ins/common/xbm.c:878
 #: plug-ins/faxg3/faxg3.c:454 plug-ins/fits/fits.c:517
-#: plug-ins/gfig/gfig.c:2694 plug-ins/gfig/gfig.c:3051 plug-ins/sgi/sgi.c:367
+#: plug-ins/gfig/gfig.c:2684 plug-ins/gfig/gfig.c:3054 plug-ins/sgi/sgi.c:367
 #: plug-ins/twain/twain.c:742 plug-ins/winsnap/winsnap.c:1233
 msgid "Background"
 msgstr "Bakgrund"
@@ -2019,7 +2019,7 @@ msgid "Fill (right to left)"
 msgstr "Fyll (höger till vänster)"
 
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/gfig/gfig.c:3268
+#: plug-ins/gfig/gfig.c:3271
 msgid "Snap to Grid"
 msgstr "Fäst vid rutnät"
 
@@ -2814,7 +2814,7 @@ msgstr "Automatisk _förhandsgranskning"
 # src/menus.c:311
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1431 plug-ins/common/ripple.c:512
-#: plug-ins/gfig/gfig.c:3864 plug-ins/mosaic/mosaic.c:592
+#: plug-ins/gfig/gfig.c:3852 plug-ins/mosaic/mosaic.c:592
 msgid "Options"
 msgstr "Alternativ"
 
@@ -3738,8 +3738,8 @@ msgstr ""
 msgid ""
 "Sorry, can't save RGB images as GIFs. Convert to Indexed or Grayscale first."
 msgstr ""
-"Tyvärr, kan ej spara RGB-bilder som GIF. Konvertera till INDEXERAD "
-"eller GRÅ först."
+"Tyvärr, kan ej spara RGB-bilder som GIF. Konvertera till INDEXERAD eller GRÅ "
+"först."
 
 #: plug-ins/common/gif.c:1088
 msgid ""
@@ -3976,7 +3976,7 @@ msgstr "<Image>/Filter/Rendera/Mönster/Rutnät..."
 msgid "Drawing Grid..."
 msgstr "Ritar rutnät..."
 
-#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:3257
+#: plug-ins/common/grid.c:644 plug-ins/gfig/gfig.c:3260
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_stock.c:47 plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
@@ -4025,7 +4025,7 @@ msgstr "Skärningspunktsfärg"
 msgid "GIMP Table Magic"
 msgstr "GIMP tabellmagi"
 
-#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3926
+#: plug-ins/common/gtm.c:439 plug-ins/gfig/gfig.c:3912
 msgid "Warning"
 msgstr "Varning"
 
@@ -4587,7 +4587,7 @@ msgstr "Ämne:"
 msgid "Comment:"
 msgstr "Kommentar:"
 
-#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3615
+#: plug-ins/common/mail.c:542 plug-ins/gfig/gfig.c:3612
 #: plug-ins/imagemap/imap_settings.c:92
 msgid "Filename:"
 msgstr "Filnamn:"
@@ -4759,7 +4759,7 @@ msgid "Combine"
 msgstr "Kombinera"
 
 # src/dialogs.c:575 src/menus.c:362
-#: plug-ins/common/mng.c:1233 plug-ins/gfig/gfig.c:3005
+#: plug-ins/common/mng.c:1233 plug-ins/gfig/gfig.c:3008
 msgid "Replace"
 msgstr "Ersätt"
 
@@ -4910,7 +4910,7 @@ msgid "_Factory Defaults"
 msgstr "Ställ in _standardvärden"
 
 #. anti-alias control
-#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:3014
+#: plug-ins/common/newsprint.c:1423 plug-ins/gfig/gfig.c:3017
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
@@ -7047,7 +7047,7 @@ msgid "Smear"
 msgstr "Smeta ut"
 
 #: plug-ins/common/warp.c:521 plug-ins/fits/fits.c:1005
-#: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3191
+#: plug-ins/flame/flame.c:1125 plug-ins/gfig/gfig.c:3194
 msgid "Black"
 msgstr "Svart"
 
@@ -7610,8 +7610,8 @@ msgstr "Läs in FITS-fil"
 msgid "BLANK/NaN Pixel Replacement"
 msgstr "Ersätt BLANK/NaN bildpunkter"
 
-#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2696
-#: plug-ins/gfig/gfig.c:3192
+#: plug-ins/fits/fits.c:1006 plug-ins/gfig/gfig.c:2686
+#: plug-ins/gfig/gfig.c:3195
 msgid "White"
 msgstr "Vitt"
 
@@ -7686,7 +7686,7 @@ msgstr "Virvla"
 msgid "Horseshoe"
 msgstr "Hästsko"
 
-#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3176
+#: plug-ins/flame/flame.c:731 plug-ins/gfig/gfig.c:3179
 msgid "Polar"
 msgstr "Polär"
 
@@ -7902,15 +7902,15 @@ msgstr "Förhandsgranska medan du drar"
 msgid "Preview Size"
 msgstr "Förhandsvisningens storlek"
 
-#: plug-ins/gfig/gfig.c:653
+#: plug-ins/gfig/gfig.c:657
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Filter/Rendera/Gfig..."
 
-#: plug-ins/gfig/gfig.c:957
+#: plug-ins/gfig/gfig.c:960
 msgid "First Gfig"
 msgstr "Första Gfig"
 
-#: plug-ins/gfig/gfig.c:1355
+#: plug-ins/gfig/gfig.c:1358
 #, c-format
 msgid ""
 "Error opening file '%s':\n"
@@ -7919,141 +7919,141 @@ msgstr ""
 "Fel vid öppnande av fil \"%s\":\n"
 "%s"
 
-#: plug-ins/gfig/gfig.c:1451
+#: plug-ins/gfig/gfig.c:1454
 msgid "Save Gfig Drawing"
 msgstr "Spara Gfig-ritning"
 
-#: plug-ins/gfig/gfig.c:1700
+#: plug-ins/gfig/gfig.c:1703
 msgid "Show previous object"
 msgstr "Visa föregående objekt"
 
-#: plug-ins/gfig/gfig.c:1713
+#: plug-ins/gfig/gfig.c:1716
 msgid "Show next object"
 msgstr "Visa nästa objekt"
 
-#: plug-ins/gfig/gfig.c:1725
+#: plug-ins/gfig/gfig.c:1728
 msgid "All"
 msgstr "Alla"
 
-#: plug-ins/gfig/gfig.c:1726
+#: plug-ins/gfig/gfig.c:1729
 msgid "Show all objects"
 msgstr "Visa alla objekt"
 
-#: plug-ins/gfig/gfig.c:1825
+#: plug-ins/gfig/gfig.c:1828
 msgid "Number of Sides/Points/Turns:"
 msgstr "Antal sidor/punkter/vridningar:"
 
-#: plug-ins/gfig/gfig.c:1841
+#: plug-ins/gfig/gfig.c:1844
 msgid "Clockwise"
 msgstr "Medurs"
 
-#: plug-ins/gfig/gfig.c:1842
+#: plug-ins/gfig/gfig.c:1845
 msgid "Anti-Clockwise"
 msgstr "Moturs"
 
-#: plug-ins/gfig/gfig.c:1846 plug-ins/gimpressionist/orientation.c:100
+#: plug-ins/gfig/gfig.c:1849 plug-ins/gimpressionist/orientation.c:100
 #: plug-ins/print/gimp_main_window.c:497
 msgid "Orientation:"
 msgstr "Orientering:"
 
-#: plug-ins/gfig/gfig.c:1866
+#: plug-ins/gfig/gfig.c:1869
 msgid "Bezier Settings"
 msgstr "Bezierinställningar"
 
-#: plug-ins/gfig/gfig.c:1886
+#: plug-ins/gfig/gfig.c:1889
 msgid "Closed"
 msgstr "Sluten"
 
-#: plug-ins/gfig/gfig.c:1891
+#: plug-ins/gfig/gfig.c:1894
 msgid "Close curve on completion"
 msgstr "Slut kurvan när den är färdig"
 
-#: plug-ins/gfig/gfig.c:1896
+#: plug-ins/gfig/gfig.c:1899
 msgid "Show Line Frame"
 msgstr "Visa linjeram"
 
-#: plug-ins/gfig/gfig.c:1901
+#: plug-ins/gfig/gfig.c:1904
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Ritar linjer mellan kontrollpunkterna. Endast när kurvan skapas"
 
-#: plug-ins/gfig/gfig.c:1917
+#: plug-ins/gfig/gfig.c:1920
 msgid "Regular Polygon Number of Sides"
 msgstr "Liksidig polygon antal sidor"
 
-#: plug-ins/gfig/gfig.c:1929
+#: plug-ins/gfig/gfig.c:1932
 msgid "Star Number of Points"
 msgstr "Stjärna antal punkter"
 
-#: plug-ins/gfig/gfig.c:1941
+#: plug-ins/gfig/gfig.c:1944
 msgid "Spiral Number of Points"
 msgstr "Spiral antal punkter"
 
-#: plug-ins/gfig/gfig.c:1971
+#: plug-ins/gfig/gfig.c:1974
 msgid "Create line"
 msgstr "Skapa linje"
 
-#: plug-ins/gfig/gfig.c:1976
+#: plug-ins/gfig/gfig.c:1979
 msgid "Create circle"
 msgstr "Skapa cirkel"
 
-#: plug-ins/gfig/gfig.c:1981
+#: plug-ins/gfig/gfig.c:1984
 msgid "Create ellipse"
 msgstr "Skapa ellips"
 
-#: plug-ins/gfig/gfig.c:1986
+#: plug-ins/gfig/gfig.c:1989
 msgid "Create arch"
 msgstr "Skapa båge"
 
-#: plug-ins/gfig/gfig.c:1995
+#: plug-ins/gfig/gfig.c:1998
 msgid "Create reg polygon"
 msgstr "Skapa liksidig polygon"
 
-#: plug-ins/gfig/gfig.c:2003
+#: plug-ins/gfig/gfig.c:2006
 msgid "Create star"
 msgstr "Skapa stjärna"
 
-#: plug-ins/gfig/gfig.c:2012
+#: plug-ins/gfig/gfig.c:2015
 msgid "Create spiral"
 msgstr "Skapa spiral"
 
-#: plug-ins/gfig/gfig.c:2022
+#: plug-ins/gfig/gfig.c:2025
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Skapa bezierkurva. Shift + musknapp avslutar skapandet."
 
-#: plug-ins/gfig/gfig.c:2028
+#: plug-ins/gfig/gfig.c:2031
 msgid "Move an object"
 msgstr "Flytta ett objekt"
 
-#: plug-ins/gfig/gfig.c:2033
+#: plug-ins/gfig/gfig.c:2036
 msgid "Move a single point"
 msgstr "Flytta en punkt"
 
-#: plug-ins/gfig/gfig.c:2038
+#: plug-ins/gfig/gfig.c:2041
 msgid "Copy an object"
 msgstr "Kopiera ett objekt"
 
-#: plug-ins/gfig/gfig.c:2043
+#: plug-ins/gfig/gfig.c:2046
 msgid "Delete an object"
 msgstr "Ta bort ett objekt"
 
-#: plug-ins/gfig/gfig.c:2204 plug-ins/gfig/gfig.c:2651
-#: plug-ins/gfig/gfig.c:3851
+#: plug-ins/gfig/gfig.c:2203 plug-ins/gfig/gfig.c:2641
+#: plug-ins/gfig/gfig.c:3839
 msgid "Brush"
 msgstr "Pensel"
 
-#: plug-ins/gfig/gfig.c:2205
+#: plug-ins/gfig/gfig.c:2204
 msgid "Airbrush"
 msgstr "Airbrush"
 
-#: plug-ins/gfig/gfig.c:2206
+#: plug-ins/gfig/gfig.c:2205
 msgid "Pencil"
 msgstr "Penna"
 
-#: plug-ins/gfig/gfig.c:2207 plug-ins/gfig/gfig.c:3049
+#: plug-ins/gfig/gfig.c:2206 plug-ins/gfig/gfig.c:3052
 msgid "Pattern"
 msgstr "Mönster"
 
-#: plug-ins/gfig/gfig.c:2214
+#: plug-ins/gfig/gfig.c:2213
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
@@ -8063,39 +8063,39 @@ msgstr ""
 "den valda penseln med ett mönster. Fungerar bara med circlar/ellipser om "
 "Approx. circlar/ellipser är valt."
 
-#: plug-ins/gfig/gfig.c:2632 plug-ins/rcm/rcm_dialog.c:130
+#: plug-ins/gfig/gfig.c:2622 plug-ins/rcm/rcm_dialog.c:130
 msgid "Original"
 msgstr "Original"
 
-#: plug-ins/gfig/gfig.c:2633 plug-ins/webbrowser/webbrowser.c:321
+#: plug-ins/gfig/gfig.c:2623 plug-ins/webbrowser/webbrowser.c:321
 msgid "New"
 msgstr "Ny"
 
-#: plug-ins/gfig/gfig.c:2634
+#: plug-ins/gfig/gfig.c:2624
 msgid "Multiple"
 msgstr "Flera"
 
-#: plug-ins/gfig/gfig.c:2639
+#: plug-ins/gfig/gfig.c:2629
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 "Rita alla objekt på ett lager (nuvarande eller nytt) eller ett objekt per "
 "lager"
 
-#: plug-ins/gfig/gfig.c:2644
+#: plug-ins/gfig/gfig.c:2634
 msgid "Draw on:"
 msgstr "Rita på:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2653 plug-ins/imagemap/imap_selection.c:364
+#: plug-ins/gfig/gfig.c:2643 plug-ins/imagemap/imap_selection.c:364
 #: plug-ins/rcm/rcm_dialog.c:709
 msgid "Selection"
 msgstr "Markering"
 
-#: plug-ins/gfig/gfig.c:2655
+#: plug-ins/gfig/gfig.c:2645
 msgid "Selection+Fill"
 msgstr "Markering+fyll"
 
-#: plug-ins/gfig/gfig.c:2682
+#: plug-ins/gfig/gfig.c:2672
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
@@ -8103,26 +8103,26 @@ msgstr ""
 "Ritningstyp. Antingen pensel eller markering. Se penselsida eller "
 "markeringssida för fler val"
 
-#: plug-ins/gfig/gfig.c:2686
+#: plug-ins/gfig/gfig.c:2676
 msgid "Using:"
 msgstr "Använder:"
 
-#: plug-ins/gfig/gfig.c:2693 plug-ins/gimpressionist/general.c:119
+#: plug-ins/gfig/gfig.c:2683 plug-ins/gimpressionist/general.c:119
 msgid "Transparent"
 msgstr "Genomskinlig"
 
-#: plug-ins/gfig/gfig.c:2695 plug-ins/gfig/gfig.c:3050
+#: plug-ins/gfig/gfig.c:2685 plug-ins/gfig/gfig.c:3053
 msgid "Foreground"
 msgstr "Förgrund"
 
-#: plug-ins/gfig/gfig.c:2697 plug-ins/gfig/gfig.c:5119
+#: plug-ins/gfig/gfig.c:2687 plug-ins/gfig/gfig.c:5108
 #: plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: plug-ins/imagemap/imap_toolbar.c:126
 msgid "Copy"
 msgstr "Kopiera"
 
-#: plug-ins/gfig/gfig.c:2701
+#: plug-ins/gfig/gfig.c:2691
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
@@ -8130,31 +8130,31 @@ msgstr ""
 "Bakgrundstyp för lager. Kopiera medför att förra lagret blir kopierat innan "
 "ritandet utförs"
 
-#: plug-ins/gfig/gfig.c:2706
+#: plug-ins/gfig/gfig.c:2696
 msgid "With BG of:"
 msgstr "Med bakgrund:"
 
-#: plug-ins/gfig/gfig.c:2709
+#: plug-ins/gfig/gfig.c:2699
 msgid "Reverse Line"
 msgstr "Omvänd linje"
 
-#: plug-ins/gfig/gfig.c:2716
+#: plug-ins/gfig/gfig.c:2706
 msgid "Draw lines in reverse order"
 msgstr "Rita linjer i omvänd ordning"
 
-#: plug-ins/gfig/gfig.c:2724
+#: plug-ins/gfig/gfig.c:2714
 msgid "Scale to Image"
 msgstr "Skala till bilden"
 
-#: plug-ins/gfig/gfig.c:2732
+#: plug-ins/gfig/gfig.c:2722
 msgid "Scale drawings to images size"
 msgstr "Skala ritningar till bildstorleken"
 
-#: plug-ins/gfig/gfig.c:2754
+#: plug-ins/gfig/gfig.c:2744
 msgid "Approx. Circles/Ellipses"
 msgstr "Approx. cirklar/ellipser"
 
-#: plug-ins/gfig/gfig.c:2761
+#: plug-ins/gfig/gfig.c:2751
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
@@ -8162,226 +8162,231 @@ msgstr ""
 "Approximera cirklar och ellipser med linjer. Man kan då använda "
 "penselborttoning med dessa objekttyper."
 
-#: plug-ins/gfig/gfig.c:2799
+#: plug-ins/gfig/gfig.c:2803
 msgid "Gfig Brush Selection"
 msgstr "Gfig penselval"
 
-#: plug-ins/gfig/gfig.c:2837
+#: plug-ins/gfig/gfig.c:2841
 msgid "Fade out:"
 msgstr "Tona bort:"
 
-#: plug-ins/gfig/gfig.c:2860
+#: plug-ins/gfig/gfig.c:2864
 msgid "Gradient:"
 msgstr "Färgtoning:"
 
-#: plug-ins/gfig/gfig.c:2880
+#: plug-ins/gfig/gfig.c:2884
 msgid "Pressure:"
 msgstr "Tryck:"
 
-#: plug-ins/gfig/gfig.c:2898
+#: plug-ins/gfig/gfig.c:2902
 msgid "No Options..."
 msgstr "Inga inställningar..."
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:2913
+#: plug-ins/gfig/gfig.c:2917
 msgid "Set Brush..."
 msgstr "Välj pensel..."
 
-#: plug-ins/gfig/gfig.c:3003
+#: plug-ins/gfig/gfig.c:3006
 msgid "Add"
 msgstr "Lägg till"
 
-#: plug-ins/gfig/gfig.c:3004
+#: plug-ins/gfig/gfig.c:3007
 msgid "Subtract"
 msgstr "Subtrahera"
 
-#: plug-ins/gfig/gfig.c:3006
+#: plug-ins/gfig/gfig.c:3009
 msgid "Intersect"
 msgstr "Skär"
 
-#: plug-ins/gfig/gfig.c:3010
+#: plug-ins/gfig/gfig.c:3013
 msgid "Selection Type:"
 msgstr "Markeringstyp:"
 
 #. 3
-#: plug-ins/gfig/gfig.c:3023
+#: plug-ins/gfig/gfig.c:3026
 msgid "Feather"
 msgstr "Fjäder"
 
-#: plug-ins/gfig/gfig.c:3041
+#: plug-ins/gfig/gfig.c:3044
 msgid "Radius:"
 msgstr "Radie:"
 
-#: plug-ins/gfig/gfig.c:3055
+#: plug-ins/gfig/gfig.c:3058
 msgid "Fill Type:"
 msgstr "Fyllningstyp:"
 
-#: plug-ins/gfig/gfig.c:3068
+#: plug-ins/gfig/gfig.c:3071
 msgid "Fill Opacity:"
 msgstr "Fyllnadsopacitet:"
 
-#: plug-ins/gfig/gfig.c:3076
+#: plug-ins/gfig/gfig.c:3079
 msgid "Each Selection"
 msgstr "Varje markering"
 
-#: plug-ins/gfig/gfig.c:3077
+#: plug-ins/gfig/gfig.c:3080
 msgid "All Selections"
 msgstr "Alla markeringar"
 
-#: plug-ins/gfig/gfig.c:3081
+#: plug-ins/gfig/gfig.c:3084
 msgid "Fill after:"
 msgstr "Fyll efter:"
 
-#: plug-ins/gfig/gfig.c:3088
+#: plug-ins/gfig/gfig.c:3091
 msgid "Segment"
 msgstr "Segment"
 
-#: plug-ins/gfig/gfig.c:3089
+#: plug-ins/gfig/gfig.c:3092
 msgid "Sector"
 msgstr "Sektor"
 
-#: plug-ins/gfig/gfig.c:3093
+#: plug-ins/gfig/gfig.c:3096
 msgid "Arc as:"
 msgstr "Cirkelbåge som:"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:3152
+#: plug-ins/gfig/gfig.c:3155
 msgid "Show Image"
 msgstr "Visa bild"
 
-#: plug-ins/gfig/gfig.c:3163
+#: plug-ins/gfig/gfig.c:3166
 msgid "Reload Image"
 msgstr "Läs in bild igen"
 
-#: plug-ins/gfig/gfig.c:3175 plug-ins/imagemap/imap_menu.c:366
+#: plug-ins/gfig/gfig.c:3178 plug-ins/imagemap/imap_menu.c:366
 #: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rektangel"
 
-#: plug-ins/gfig/gfig.c:3177
+#: plug-ins/gfig/gfig.c:3180
 msgid "Isometric"
 msgstr "Isometrisk"
 
-#: plug-ins/gfig/gfig.c:3181
+#: plug-ins/gfig/gfig.c:3184
 msgid "Grid Type:"
 msgstr "Rutnätstyp:"
 
-#: plug-ins/gfig/gfig.c:3190 plug-ins/gflare/gflare.c:575
+#: plug-ins/gfig/gfig.c:3193 plug-ins/gflare/gflare.c:575
 msgid "Normal"
 msgstr "Normalt"
 
-#: plug-ins/gfig/gfig.c:3193
+#: plug-ins/gfig/gfig.c:3196
 msgid "Grey"
 msgstr "Grått"
 
-#: plug-ins/gfig/gfig.c:3194
+#: plug-ins/gfig/gfig.c:3197
 msgid "Darker"
 msgstr "Mörkare"
 
-#: plug-ins/gfig/gfig.c:3195
+#: plug-ins/gfig/gfig.c:3198
 msgid "Lighter"
 msgstr "Ljusare"
 
-#: plug-ins/gfig/gfig.c:3196
+#: plug-ins/gfig/gfig.c:3199
 msgid "Very Dark"
 msgstr "Mycket mörkt"
 
-#: plug-ins/gfig/gfig.c:3200
+#: plug-ins/gfig/gfig.c:3203
 msgid "Grid Color:"
 msgstr "Rutnätsfärg:"
 
-#: plug-ins/gfig/gfig.c:3204
+#: plug-ins/gfig/gfig.c:3207
 msgid "Max Undo:"
 msgstr "Max ångra:"
 
-#: plug-ins/gfig/gfig.c:3212
+#: plug-ins/gfig/gfig.c:3215
 msgid "Show Position"
 msgstr "Visa position"
 
-#: plug-ins/gfig/gfig.c:3223
+#: plug-ins/gfig/gfig.c:3226
 msgid "Hide Control Points"
 msgstr "Göm kontrollpunkter"
 
-#: plug-ins/gfig/gfig.c:3276
+#: plug-ins/gfig/gfig.c:3279
 msgid "Display Grid"
 msgstr "Visa rutnät"
 
-#: plug-ins/gfig/gfig.c:3287
+#: plug-ins/gfig/gfig.c:3290
 msgid "Lock on Grid"
 msgstr "Fäst vid rutnät"
 
-#: plug-ins/gfig/gfig.c:3302
+#: plug-ins/gfig/gfig.c:3305
 msgid "Grid Spacing:"
 msgstr "Rutnätsmellanrum:"
 
-#: plug-ins/gfig/gfig.c:3366
+#: plug-ins/gfig/gfig.c:3369
 msgid "Object"
 msgstr "Objekt"
 
-#: plug-ins/gfig/gfig.c:3403
+#: plug-ins/gfig/gfig.c:3406
 msgid "Create a new Gfig object collection for editing"
 msgstr "Skapa en ny Gfig-objektsamling för redigering"
 
-#: plug-ins/gfig/gfig.c:3413
+#: plug-ins/gfig/gfig.c:3416
 msgid "Load a single Gfig object collection"
 msgstr "Ladda en Gfig-objektsamling"
 
-#: plug-ins/gfig/gfig.c:3421
+#: plug-ins/gfig/gfig.c:3424
 msgid "Edit Gfig object collection"
 msgstr "Redigera Gfig-objektsamling"
 
-#: plug-ins/gfig/gfig.c:3425
-msgid "Merge"
-msgstr "Slå samman"
+#: plug-ins/gfig/gfig.c:3428
+msgid "_Merge"
+msgstr "_Slå samman"
 
-#: plug-ins/gfig/gfig.c:3429
+#: plug-ins/gfig/gfig.c:3432
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr "Lägg in Gfig-objektsamling i den nuvarande redigeringssessionen"
 
-#: plug-ins/gfig/gfig.c:3438
+#: plug-ins/gfig/gfig.c:3441
 msgid "Delete currently selected Gfig Object collection"
 msgstr "Ta bort den valda Gfig-objektsamlingen"
 
-#: plug-ins/gfig/gfig.c:3448
+#: plug-ins/gfig/gfig.c:3451
 msgid "Select folder and rescan Gfig object collections"
 msgstr "Välj katalog och genomsök Gfig-objektsamlingen igen"
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3552
+#: plug-ins/gfig/gfig.c:3522 plug-ins/gimpressionist/size.c:98
+msgid "Size:"
+msgstr "Storlek:"
+
+#. Position labels
+#: plug-ins/gfig/gfig.c:3549
 msgid "XY Position:"
 msgstr "XY-position:"
 
-#: plug-ins/gfig/gfig.c:3573
+#: plug-ins/gfig/gfig.c:3570
 msgid "Object Details"
 msgstr "Objektdetaljer"
 
-#: plug-ins/gfig/gfig.c:3602
+#: plug-ins/gfig/gfig.c:3599
 msgid "Collection Details"
 msgstr "Samlingsdetaljer"
 
-#: plug-ins/gfig/gfig.c:3609
+#: plug-ins/gfig/gfig.c:3606
 msgid "Draw Name:"
 msgstr "Rita namn:"
 
-#: plug-ins/gfig/gfig.c:3621 plug-ins/gfig/gfig.c:3627
+#: plug-ins/gfig/gfig.c:3618 plug-ins/gfig/gfig.c:3624
 msgid "(none)"
 msgstr "(ingen)"
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3785
+#: plug-ins/gfig/gfig.c:3773
 msgid "Gfig"
 msgstr "Gfig"
 
-#: plug-ins/gfig/gfig.c:3805 plug-ins/gfig/gfig.c:3846
+#: plug-ins/gfig/gfig.c:3793 plug-ins/gfig/gfig.c:3834
 msgid "Paint"
 msgstr "Måla"
 
-#: plug-ins/gfig/gfig.c:3859 plug-ins/imagemap/imap_cmd_select.c:53
+#: plug-ins/gfig/gfig.c:3847 plug-ins/imagemap/imap_cmd_select.c:53
 #: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Markera"
 
-#: plug-ins/gfig/gfig.c:3923
+#: plug-ins/gfig/gfig.c:3909
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
@@ -8390,97 +8395,90 @@ msgstr ""
 "%d osparade Gfig-objekt.\n"
 "Sluta ändå?"
 
-#: plug-ins/gfig/gfig.c:4248
+#: plug-ins/gfig/gfig.c:4235
 msgid "Enter Gfig Object Name"
 msgstr "Ange Gfig-objektnamn"
 
-#: plug-ins/gfig/gfig.c:4273
+#: plug-ins/gfig/gfig.c:4260
 msgid "Gfig Object Name:"
 msgstr "Gfig-objektnamn:"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4332
+#: plug-ins/gfig/gfig.c:4319
 msgid "Rescan for Gfig Objects"
 msgstr "Genomsök efter Gfig-objekt igen"
 
-#: plug-ins/gfig/gfig.c:4351
+#: plug-ins/gfig/gfig.c:4338
 msgid "Add Gfig Path"
 msgstr "Lägg till Gfig-sökväg"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4412
 msgid "Load Gfig object collection"
 msgstr "Läs in Gfig-objektsamling"
 
-#: plug-ins/gfig/gfig.c:4450
+#: plug-ins/gfig/gfig.c:4437
 msgid "Error in copy layer for onlayers"
 msgstr "Fel i kopiera lager för onlayers"
 
-#. RGBA or GRAYA type
-#. opacity
-#. mode
-#: plug-ins/gfig/gfig.c:4482
-msgid "Error in creating layer"
-msgstr "Fel vid skapande av lager"
-
-#: plug-ins/gfig/gfig.c:4562
+#: plug-ins/gfig/gfig.c:4551
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "Gfig lager %d"
 
-#: plug-ins/gfig/gfig.c:4636
+#: plug-ins/gfig/gfig.c:4625
 msgid "About Gfig"
 msgstr "Om Gfig"
 
-#: plug-ins/gfig/gfig.c:4661
+#: plug-ins/gfig/gfig.c:4650
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig - GIMP insticksmodul"
 
-#: plug-ins/gfig/gfig.c:4666
+#: plug-ins/gfig/gfig.c:4655
 msgid "Release 1.3"
 msgstr "Utgåva 1.3"
 
-#: plug-ins/gfig/gfig.c:4719
+#: plug-ins/gfig/gfig.c:4708
 msgid "New Gfig Object"
 msgstr "Nytt Gfig-objekt"
 
-#: plug-ins/gfig/gfig.c:4848
+#: plug-ins/gfig/gfig.c:4837
 msgid "Delete Gfig Drawing"
 msgstr "Ta bort Gfig-ritning"
 
-#: plug-ins/gfig/gfig.c:4876 plug-ins/gfig/gfig.c:4915
+#: plug-ins/gfig/gfig.c:4865 plug-ins/gfig/gfig.c:4904
 msgid "<NONE>"
 msgstr "<INGEN>"
 
-#: plug-ins/gfig/gfig.c:4953
+#: plug-ins/gfig/gfig.c:4942
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "Redigerar ej skrivbart objekt - du kommer inte kunna spara det"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5060
+#: plug-ins/gfig/gfig.c:5049
 #, c-format
 msgid "%s copy"
 msgstr "%s-kopia"
 
 # src/menus.c:280
-#: plug-ins/gfig/gfig.c:5092 plug-ins/imagemap/imap_toolbar.c:104
+#: plug-ins/gfig/gfig.c:5081 plug-ins/imagemap/imap_toolbar.c:104
 msgid "Save"
 msgstr "Spara"
 
-#: plug-ins/gfig/gfig.c:5106
+#: plug-ins/gfig/gfig.c:5095
 msgid "Save As..."
 msgstr "Spara som..."
 
-#: plug-ins/gfig/gfig.c:5132 plug-ins/imagemap/imap_selection.c:174
+#: plug-ins/gfig/gfig.c:5121 plug-ins/imagemap/imap_selection.c:174
 #: plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Redigera"
 
-#: plug-ins/gfig/gfig.c:5976
+#: plug-ins/gfig/gfig.c:5969
 msgid "Error reading file"
 msgstr "Fel vid inläsning"
 
-#: plug-ins/gfig/gfig.c:6332
+#: plug-ins/gfig/gfig.c:6325
 msgid "Hey where has the object gone ?"
 msgstr "Hallå, vart har objektet tagit vägen ?"
 
@@ -9340,10 +9338,6 @@ msgstr "Maximumstorlek:"
 #: plug-ins/gimpressionist/size.c:88
 msgid "The largest brush to create"
 msgstr "Största penseln att skapa"
-
-#: plug-ins/gimpressionist/size.c:98
-msgid "Size:"
-msgstr "Storlek:"
 
 #: plug-ins/gimpressionist/size.c:111
 msgid ""
@@ -11473,6 +11467,9 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
+
+#~ msgid "Error in creating layer"
+#~ msgstr "Fel vid skapande av lager"
 
 #~ msgid "Prev"
 #~ msgstr "Föreg"
