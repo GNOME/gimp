@@ -100,6 +100,7 @@ scriptdata_DATA = \
 	unsharp-mask.scm			\
 	waves-anim.scm				\
 	weave.scm				\
+	web-browser.scm				\
 	xach-effect.scm				\
 	\
 	test-sphere.scm

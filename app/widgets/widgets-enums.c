@@ -31,7 +31,7 @@ gimp_aspect_type_get_type (void)
 static const GEnumValue gimp_help_browser_type_enum_values[] =
 {
   { GIMP_HELP_BROWSER_GIMP, N_("Internal"), "gimp" },
-  { GIMP_HELP_BROWSER_NETSCAPE, N_("Netscape"), "netscape" },
+  { GIMP_HELP_BROWSER_WEBBROWSER, N_("Web Browser"), "webbrowser" },
   { 0, NULL, NULL }
 };
 

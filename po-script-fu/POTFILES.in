@@ -99,5 +99,5 @@ plug-ins/script-fu/scripts/truchet.scm
 plug-ins/script-fu/scripts/unsharp-mask.scm
 plug-ins/script-fu/scripts/waves-anim.scm
 plug-ins/script-fu/scripts/weave.scm
+plug-ins/script-fu/scripts/web-browser.scm
 plug-ins/script-fu/scripts/xach-effect.scm
-plug-ins/webbrowser/web-browser.scm

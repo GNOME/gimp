@@ -15,10 +15,6 @@ if BUILD_HELPBROWSER
 helpbrowser = helpbrowser
 endif
 
-if BUILD_WEBBROWSER
-webbrowser = webbrowser
-endif
-
 if BUILD_XJT
 xjt = xjt
 endif
@@ -57,7 +53,6 @@ SUBDIRS = 			\
 	rcm			\
 	sgi			\
 	sel2path		\
-	$(webbrowser)		\
 	$(win32dirs)		\
 	$(xjt)			\
 	common

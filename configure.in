@@ -683,14 +683,14 @@ if test "$gdk_target" = x11; then
           GIMP_REMOTE='gimp-remote-1.3';
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
-	  [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
+	  [AC_MSG_WARN(*** gimp-remote will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
               GIMP_REMOTE='gimp-remote-1.3';
 	      have_libxmu=yes
 	      LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
-	      [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
-	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt)
+	      [AC_MSG_WARN(*** gimp-remote will not be built (XMU header file not found) ***)])],
+	  AC_MSG_WARN(*** gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt)
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
     fi
@@ -702,10 +702,6 @@ fi
 AC_SUBST(LIBXMU)
 AC_SUBST(LIBSCREENSHOT)
 AC_SUBST(GIMP_REMOTE)
-
-## webbrowser has ifdefs for Win32
-AM_CONDITIONAL(BUILD_WEBBROWSER,
-               test x"$have_libxmu" = xyes || test x"$os_win32" = xyes)
 
 
 ###################
@@ -1322,7 +1318,6 @@ plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
-plug-ins/webbrowser/Makefile
 plug-ins/xjt/Makefile
 plug-ins/FractalExplorer/Makefile
 plug-ins/FractalExplorer/fractalexplorer-examples/Makefile

@@ -358,5 +358,12 @@ N_("Sets an upper limit to the memory that is used per image to keep " \
 #define USE_HELP_BLURB  \
 N_("When enabled, pressing F1 will open the help browser.")
 
+#define WEB_BROWSER_BLURB \
+N_("Sets the external web browser to be used.  This can be an absolute " \
+   "path or the name of an executable to search for in the user's PATH. " \
+   "If the command contains '%s' it will be replaced with the URL, else " \
+   "the URL will be appended to the command with a space separating the " \
+   "two.")
+
 
 #endif  /* __GIMP_RC_BLURBS_H__ */

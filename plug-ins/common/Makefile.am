@@ -146,6 +146,7 @@ libexec_PROGRAMS = \
 	vpropagate \
 	warp \
 	waves \
+	webbrowser \
 	whirlpinch \
 	$(WINCLIPBOARD) \
 	wind \
@@ -1658,6 +1659,16 @@ waves_LDADD = \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	@GTK_LIBS@							\
+	@INTLLIBS@
+
+webbrowser_SOURCES = \
+	webbrowser.c
+
+webbrowser_LDADD = \
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	@GLIB_LIBS@							\
 	@INTLLIBS@
 
 whirlpinch_SOURCES = \

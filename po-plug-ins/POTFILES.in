@@ -135,6 +135,7 @@ plug-ins/common/vinvert.c
 plug-ins/common/vpropagate.c
 plug-ins/common/warp.c
 plug-ins/common/waves.c
+plug-ins/common/webbrowser.c
 plug-ins/common/whirlpinch.c
 plug-ins/common/winclipboard.c
 plug-ins/common/wind.c

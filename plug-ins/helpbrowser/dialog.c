@@ -619,12 +619,10 @@ load_remote_page (const gchar *ref)
   GimpParam *return_vals;
   gint       nreturn_vals;
 
-  /*  try to call netscape through the web_browser interface */
+  /*  try to call the user specified web browser */
   return_vals = gimp_run_procedure ("plug_in_web_browser",
                                     &nreturn_vals,
-                                    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
                                     GIMP_PDB_STRING, ref,
-                                    GIMP_PDB_INT32,  FALSE,
                                     GIMP_PDB_END);
   gimp_destroy_params (return_vals, nreturn_vals);
 }

@@ -1854,7 +1854,20 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "thumbnail-size", 0, 0,
                               _("Size of Thumbnail Files:"),
                               GTK_TABLE (table), 1);
-  
+
+  /*  External Browser  */
+  vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  fileselection = gimp_prop_file_entry_new (config, "web-browser",
+                                            _("Select Web Browser"),
+                                            FALSE, FALSE);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Web Browser to Use:"), 1.0, 0.5,
+                             fileselection, 1, TRUE);
+
+  /*  Rescan Font List  */
   vbox2 = prefs_frame_new (_("Fonts"), GTK_CONTAINER (vbox), FALSE);
 
   hbox = gtk_hbox_new (FALSE, 2);

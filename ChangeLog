@@ -1,3 +1,44 @@
+2003-09-22  Henrik Brix Andersen  <brix@gimp.org>
+
+	Replaced the netscape-dependent web browser plug-in with a user
+	configureable plug-in. This fixes bug #119120:
+
+	* app/config/gimpguiconfig.[ch]: added gchar *web_browser member
+
+	* app/config/gimprc-blurbs.h: added web browser blurb
+
+	* etc/gimprc
+	* docs/gimprc-1.3.5.in: regenerated using gimpconfig-dump
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): added UI for
+	specifying external web browser
+
+	* configure.in
+	* plug-ins/Makefile.am
+	* plug-ins/webbrowser/Makefile.am
+	* plug-ins/webbrowser/README
+	* plug-ins/webbrowser/web-browser.scm
+	* plug-ins/webbrowser/webbrowser.c : removed the old netscape-dependent
+	web browser plug-in
+
+	* po-plug-ins/POTFILES.in
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/webbrowser.c: added a new web browser plug-in
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am: regenerated
+
+	* app/widgets/gimphelp.c
+	* app/widgets/widget-enums.[ch]
+	* plug-ins/helpbrowser/dialog.c
+	* plug-ins/maze/maze_face.c: changed accordingly + whitespace
+	clean-up
+
+	* po-script-fu/POTFILES.in
+	* plug-ins/script-fu/scripts/Makefile.am
+	* plug-ins/script-fu/scripts/web-browser.scm: use the new web
+	browser plug-in to add menu entries to <Toolbox>/Help/
+
 2003-09-22  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/menus.c (menus_restore) (menus_save): removed gimprc

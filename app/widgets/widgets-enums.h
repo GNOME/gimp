@@ -20,7 +20,7 @@
 #define __WIDGETS_ENUMS_H__
 
 
-/* 
+/*
  * these enums that are registered with the type system
  */
 
@@ -42,8 +42,8 @@ GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_HELP_BROWSER_GIMP,     /*< desc="Internal" >*/
-  GIMP_HELP_BROWSER_NETSCAPE  /*< desc="Netscape" >*/
+  GIMP_HELP_BROWSER_GIMP,        /*< desc="Internal"    >*/
+  GIMP_HELP_BROWSER_WEBBROWSER   /*< desc="Web Browser" >*/
 } GimpHelpBrowserType;
 
 

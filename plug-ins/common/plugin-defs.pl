@@ -124,6 +124,7 @@
     'vpropagate' => { libdep => 'gtk', ui => 1 },
     'warp' => { libdep => 'gtk', ui => 1 },
     'waves' => { libdep => 'gtk', ui => 1 },
+    'webbrowser' => { libdep => 'glib' },
     'whirlpinch' => { libdep => 'gtk', ui => 1 },
     'winclipboard' => { libdep => 'glib', ui => 1, optional => 1 },
     'wind' => { libdep => 'gtk', ui => 1 },

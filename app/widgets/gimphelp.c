@@ -66,15 +66,15 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help     (gpointer     data);
-static gboolean  gimp_help_internal (Gimp        *gimp,
-                                     const gchar *help_domain,
-				     const gchar *help_locale,
-				     const gchar *help_id);
-static void      gimp_help_netscape (Gimp        *gimp,
-                                     const gchar *help_domain,
-				     const gchar *help_locale,
-				     const gchar *help_id);
+static gint      gimp_idle_help       (gpointer     data);
+static gboolean  gimp_help_internal   (Gimp        *gimp,
+                                       const gchar *help_domain,
+                                       const gchar *help_locale,
+                                       const gchar *help_id);
+static void      gimp_help_webbrowser (Gimp        *gimp,
+                                       const gchar *help_domain,
+                                       const gchar *help_locale,
+                                       const gchar *help_id);
 
 
 /*  public functions  */
@@ -142,11 +142,11 @@ gimp_idle_help (gpointer data)
 			      idle_help->help_id))
 	break;
 
-    case GIMP_HELP_BROWSER_NETSCAPE:
-      gimp_help_netscape (idle_help->gimp,
-                          idle_help->help_domain,
-			  idle_help->help_locale,
-			  idle_help->help_id);
+    case GIMP_HELP_BROWSER_WEBBROWSER:
+      gimp_help_webbrowser (idle_help->gimp,
+                            idle_help->help_domain,
+                            idle_help->help_locale,
+                            idle_help->help_id);
       break;
 
     default:
@@ -163,16 +163,16 @@ gimp_idle_help (gpointer data)
 
 static void
 gimp_help_internal_not_found_callback (GtkWidget *widget,
-				       gboolean   use_netscape,
+				       gboolean   use_webbrowser,
 				       gpointer   data)
 {
   Gimp *gimp = GIMP (data);
 
-  if (use_netscape)
+  if (use_webbrowser)
     g_object_set (gimp->config,
-		  "help-browser", GIMP_HELP_BROWSER_NETSCAPE,
+		  "help-browser", GIMP_HELP_BROWSER_WEBBROWSER,
 		  NULL);
-  
+
   gtk_main_quit ();
 }
 
@@ -211,7 +211,7 @@ gimp_help_internal (Gimp        *gimp,
 				    _("Could not find the GIMP Help Browser procedure.\n"
 				      "It probably was not compiled because\n"
 				      "you don't have GtkXmHTML installed."),
-				    _("Use Netscape instead"),
+				    _("Use web browser instead"),
 				    GTK_STOCK_CANCEL,
 				    NULL, NULL,
 				    gimp_help_internal_not_found_callback,
@@ -222,7 +222,7 @@ gimp_help_internal (Gimp        *gimp,
           busy = FALSE;
 
 	  return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-		  != GIMP_HELP_BROWSER_NETSCAPE);
+		  != GIMP_HELP_BROWSER_WEBBROWSER);
 	}
 
       n_domains = plug_ins_help_domains (gimp, &help_domains, &help_uris);
@@ -253,7 +253,7 @@ gimp_help_internal (Gimp        *gimp,
         gimp_query_boolean_box (_("Could not start GIMP Help Browser"),
                                 NULL, NULL, FALSE,
                                 _("Could not start the GIMP Help Browser."),
-                                _("Use Netscape instead"),
+                                _("Use web browser instead"),
                                 GTK_STOCK_CANCEL,
                                 NULL, NULL,
                                 gimp_help_internal_not_found_callback,
@@ -264,7 +264,7 @@ gimp_help_internal (Gimp        *gimp,
       busy = FALSE;
 
       return (GIMP_GUI_CONFIG (gimp->config)->help_browser
-              != GIMP_HELP_BROWSER_NETSCAPE);
+              != GIMP_HELP_BROWSER_WEBBROWSER);
     }
   else
     {
@@ -289,10 +289,10 @@ gimp_help_internal (Gimp        *gimp,
 }
 
 static void
-gimp_help_netscape (Gimp        *gimp,
-                    const gchar *help_domain,
-		    const gchar *help_locale,
-		    const gchar *help_id)
+gimp_help_webbrowser (Gimp        *gimp,
+                      const gchar *help_domain,
+                      const gchar *help_locale,
+                      const gchar *help_id)
 {
   Argument *return_vals;
   gint      nreturn_vals;
@@ -322,9 +322,7 @@ gimp_help_netscape (Gimp        *gimp,
     procedural_db_run_proc (gimp,
 			    "plug_in_web_browser",
 			    &nreturn_vals,
-			    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
 			    GIMP_PDB_STRING, url,
-			    GIMP_PDB_INT32,  FALSE,
 			    GIMP_PDB_END);
 
   procedural_db_destroy_args (return_vals, nreturn_vals);

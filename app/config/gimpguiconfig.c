@@ -49,7 +49,13 @@ static void  gimp_gui_config_get_property (GObject            *object,
                                            GParamSpec         *pspec);
 
 
-#define DEFAULT_THEME     "Default"
+#define DEFAULT_THEME       "Default"
+
+#ifdef G_OS_WIN32
+#define DEFAULT_WEB_BROWSER "\"C:\Program Files\Internet Explorer\iexplore.exe\" \"%s\""
+#else
+#define DEFAULT_WEB_BROWSER "mozilla \"%s\""
+#endif
 
 enum
 {
@@ -73,13 +79,14 @@ enum
   PROP_THEME_PATH,
   PROP_THEME,
   PROP_USE_HELP,
-  PROP_HELP_BROWSER
+  PROP_HELP_BROWSER,
+  PROP_WEB_BROWSER
 };
 
 static GObjectClass *parent_class = NULL;
 
 
-GType 
+GType
 gimp_gui_config_get_type (void)
 {
   static GType config_type = 0;
@@ -99,8 +106,8 @@ gimp_gui_config_get_type (void)
 	NULL            /* instance_init  */
       };
 
-      config_type = g_type_register_static (GIMP_TYPE_DISPLAY_CONFIG, 
-                                            "GimpGuiConfig", 
+      config_type = g_type_register_static (GIMP_TYPE_DISPLAY_CONFIG,
+                                            "GimpGuiConfig",
                                             &config_info, 0);
     }
 
@@ -207,6 +214,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  GIMP_TYPE_HELP_BROWSER_TYPE,
                                  GIMP_HELP_BROWSER_GIMP,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
+                                 "web-browser", WEB_BROWSER_BLURB,
+                                 GIMP_PARAM_PATH_FILE,
+                                 DEFAULT_WEB_BROWSER,
+                                 0);
 }
 
 static void
@@ -215,9 +227,10 @@ gimp_gui_config_finalize (GObject *object)
   GimpGuiConfig *gui_config;
 
   gui_config = GIMP_GUI_CONFIG (object);
-  
+
   g_free (gui_config->theme_path);
   g_free (gui_config->theme);
+  g_free (gui_config->web_browser);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -245,7 +258,7 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_INFO_WINDOW_PER_DISPLAY:
       gui_config->info_window_per_display = g_value_get_boolean (value);
-      break;      
+      break;
     case PROP_TRUST_DIRTY_FLAG:
       gui_config->trust_dirty_flag = g_value_get_boolean (value);
       break;
@@ -295,6 +308,10 @@ gimp_gui_config_set_property (GObject      *object,
       break;
     case PROP_HELP_BROWSER:
       gui_config->help_browser = g_value_get_enum (value);
+      break;
+    case PROP_WEB_BROWSER:
+      g_free (gui_config->web_browser);
+      gui_config->web_browser = g_value_dup_string (value);
       break;
 
     default:
@@ -374,6 +391,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_HELP_BROWSER:
       g_value_set_enum (value, gui_config->help_browser);
+      break;
+    case PROP_WEB_BROWSER:
+      g_value_set_string (value, gui_config->web_browser);
       break;
 
     default:

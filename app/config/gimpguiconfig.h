@@ -60,6 +60,7 @@ struct _GimpGuiConfig
   gchar               *theme;
   gboolean             use_help;
   GimpHelpBrowserType  help_browser;
+  gchar               *web_browser;
 
   gint                 last_tip;  /* saved in sessionrc */
 };
