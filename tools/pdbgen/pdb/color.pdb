@@ -25,7 +25,7 @@ sub drawable_arg () {{
 
 sub channel_arg () {{
     name => 'channel',
-    type => 'enum GimpChannelLutType',
+    type => 'enum GimpHistogramChannel',
     desc => 'The channel to modify: { %%desc%% }'
 }}
 
@@ -125,9 +125,10 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
-      (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+      (! gimp_drawable_has_alpha (drawable) &&
+       channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
-       channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
+       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
     success = FALSE;
 
   if (success)
@@ -415,9 +416,10 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_points & 1) ||
-      (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+      (! gimp_drawable_has_alpha (drawable) &&
+       channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
-       channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
+       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
     success = FALSE;
 
   if (success)
@@ -495,9 +497,10 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) || (num_bytes != 256) ||
-      (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+      (! gimp_drawable_has_alpha (drawable) &&
+       channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
-       channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
+       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
     success = FALSE;
 
   if (success)
@@ -670,9 +673,10 @@ HELP
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||
-      (! gimp_drawable_has_alpha (drawable) && channel == GIMP_ALPHA_LUT) ||
+      (! gimp_drawable_has_alpha (drawable) &&
+       channel == GIMP_HISTOGRAM_ALPHA) ||
       (gimp_drawable_is_gray (drawable) &&
-       channel != GIMP_GRAY_LUT && channel != GIMP_ALPHA_LUT))
+       channel != GIMP_HISTOGRAM_VALUE && channel != GIMP_HISTOGRAM_ALPHA))
     success = FALSE;
 
   if (success)

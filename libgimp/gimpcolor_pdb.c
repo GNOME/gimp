@@ -90,13 +90,13 @@ gimp_brightness_contrast (gint32 drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_levels (gint32             drawable_ID,
-	     GimpChannelLutType channel,
-	     gint               low_input,
-	     gint               high_input,
-	     gdouble            gamma,
-	     gint               low_output,
-	     gint               high_output)
+gimp_levels (gint32               drawable_ID,
+	     GimpHistogramChannel channel,
+	     gint                 low_input,
+	     gint                 high_input,
+	     gdouble              gamma,
+	     gint                 low_output,
+	     gint                 high_output)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -307,10 +307,10 @@ gimp_invert (gint32 drawable_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_curves_spline (gint32              drawable_ID,
-		    GimpChannelLutType  channel,
-		    gint                num_points,
-		    const guint8       *control_pts)
+gimp_curves_spline (gint32                drawable_ID,
+		    GimpHistogramChannel  channel,
+		    gint                  num_points,
+		    const guint8         *control_pts)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -351,10 +351,10 @@ gimp_curves_spline (gint32              drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_curves_explicit (gint32              drawable_ID,
-		      GimpChannelLutType  channel,
-		      gint                num_bytes,
-		      const guint8       *curve)
+gimp_curves_explicit (gint32                drawable_ID,
+		      GimpHistogramChannel  channel,
+		      gint                  num_bytes,
+		      const guint8         *curve)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -459,16 +459,16 @@ gimp_color_balance (gint32           drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_histogram (gint32              drawable_ID,
-		GimpChannelLutType  channel,
-		gint                start_range,
-		gint                end_range,
-		gdouble            *mean,
-		gdouble            *std_dev,
-		gdouble            *median,
-		gdouble            *pixels,
-		gdouble            *count,
-		gdouble            *percentile)
+gimp_histogram (gint32                drawable_ID,
+		GimpHistogramChannel  channel,
+		gint                  start_range,
+		gint                  end_range,
+		gdouble              *mean,
+		gdouble              *std_dev,
+		gdouble              *median,
+		gdouble              *pixels,
+		gdouble              *count,
+		gdouble              *percentile)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

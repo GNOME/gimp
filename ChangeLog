@@ -1,3 +1,21 @@
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base-enums.h: removed GimpChannelLutType enum and
+	export GimpHistogramChannel to the PDB. The removed enum was just
+	there for libgimp compatibility.
+
+	* tools/pdbgen/pdb/color.pdb: changed accordingly.
+
+	* libgimp/gimpcompat.h
+	* plug-ins/script-fu/siod-wrapper.c: added compat cruft.
+
+	* app/pdb/color_cmds.c
+	* libgimp/gimpcolor_pdb.[ch]
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2004-01-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpcompat.h: fixed definition of gimp_use_xshm().

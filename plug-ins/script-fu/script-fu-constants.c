@@ -42,12 +42,6 @@ init_generated_constants (void)
   setvar (cintern ("BG-BUCKET-FILL"), flocons (1), NIL);
   setvar (cintern ("PATTERN-BUCKET-FILL"), flocons (2), NIL);
 
-  setvar (cintern ("VALUE-LUT"), flocons (0), NIL);
-  setvar (cintern ("RED-LUT"), flocons (1), NIL);
-  setvar (cintern ("GREEN-LUT"), flocons (2), NIL);
-  setvar (cintern ("BLUE-LUT"), flocons (3), NIL);
-  setvar (cintern ("ALPHA-LUT"), flocons (4), NIL);
-
   setvar (cintern ("CHANNEL-OP-ADD"), flocons (0), NIL);
   setvar (cintern ("CHANNEL-OP-SUBTRACT"), flocons (1), NIL);
   setvar (cintern ("CHANNEL-OP-REPLACE"), flocons (2), NIL);
@@ -101,6 +95,12 @@ init_generated_constants (void)
   setvar (cintern ("GRADIENT-SHAPEBURST-DIMPLED"), flocons (8), NIL);
   setvar (cintern ("GRADIENT-SPIRAL-CLOCKWISE"), flocons (9), NIL);
   setvar (cintern ("GRADIENT-SPIRAL-ANTICLOCKWISE"), flocons (10), NIL);
+
+  setvar (cintern ("HISTOGRAM-VALUE"), flocons (0), NIL);
+  setvar (cintern ("HISTOGRAM-RED"), flocons (1), NIL);
+  setvar (cintern ("HISTOGRAM-GREEN"), flocons (2), NIL);
+  setvar (cintern ("HISTOGRAM-BLUE"), flocons (3), NIL);
+  setvar (cintern ("HISTOGRAM-ALPHA"), flocons (4), NIL);
 
   setvar (cintern ("ALL-HUES"), flocons (0), NIL);
   setvar (cintern ("RED-HUES"), flocons (1), NIL);

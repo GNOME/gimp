@@ -57,15 +57,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_VALUE_LUT,
-  GIMP_RED_LUT,
-  GIMP_GREEN_LUT,
-  GIMP_BLUE_LUT,
-  GIMP_ALPHA_LUT
-} GimpChannelLutType;
-
-typedef enum
-{
   GIMP_CHANNEL_OP_ADD,
   GIMP_CHANNEL_OP_SUBTRACT,
   GIMP_CHANNEL_OP_REPLACE,
@@ -147,6 +138,15 @@ typedef enum
   GIMP_GRADIENT_SPIRAL_CLOCKWISE,
   GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE
 } GimpGradientType;
+
+typedef enum
+{
+  GIMP_HISTOGRAM_VALUE,
+  GIMP_HISTOGRAM_RED,
+  GIMP_HISTOGRAM_GREEN,
+  GIMP_HISTOGRAM_BLUE,
+  GIMP_HISTOGRAM_ALPHA
+} GimpHistogramChannel;
 
 typedef enum
 {

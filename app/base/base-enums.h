@@ -77,7 +77,7 @@ typedef enum  /*< pdb-skip >*/
 
 GType gimp_histogram_channel_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< pdb-skip >*/
+typedef enum
 {
   GIMP_HISTOGRAM_VALUE = 0,  /*< desc="Value" >*/
   GIMP_HISTOGRAM_RED   = 1,  /*< desc="Red"   >*/
@@ -156,16 +156,6 @@ typedef enum  /*< skip >*/
   GIMP_ABSOLUTE_CONVOL,    /*  Absolute value              */
   GIMP_NEGATIVE_CONVOL     /*  add 127 to values           */
 } GimpConvolutionType;
-
-typedef enum  /*< skip >*/
-{
-  GIMP_VALUE_LUT,
-  GIMP_RED_LUT,
-  GIMP_GREEN_LUT,
-  GIMP_BLUE_LUT,
-  GIMP_ALPHA_LUT,
-  GIMP_GRAY_LUT = 0  /*< pdb-skip, skip >*/
-} GimpChannelLutType;
 
 typedef enum  /*< skip >*/
 {

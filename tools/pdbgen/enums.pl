@@ -107,6 +107,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_STACK_TRACE_QUERY => '1',
 		       GIMP_STACK_TRACE_ALWAYS => '2' }
 	},
+    GimpHistogramChannel =>
+	{ contig => 1,
+	  header => 'base/base-enums.h',
+	  symbols => [ qw(GIMP_HISTOGRAM_VALUE GIMP_HISTOGRAM_RED
+			  GIMP_HISTOGRAM_GREEN GIMP_HISTOGRAM_BLUE
+			  GIMP_HISTOGRAM_ALPHA) ],
+	  mapping => { GIMP_HISTOGRAM_VALUE => '0',
+		       GIMP_HISTOGRAM_RED => '1',
+		       GIMP_HISTOGRAM_GREEN => '2',
+		       GIMP_HISTOGRAM_BLUE => '3',
+		       GIMP_HISTOGRAM_ALPHA => '4' }
+	},
     GimpLayerModeEffects =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',
@@ -161,17 +173,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_NORMAL_CONVOL => '0',
 		       GIMP_ABSOLUTE_CONVOL => '1',
 		       GIMP_NEGATIVE_CONVOL => '2' }
-	},
-    GimpChannelLutType =>
-	{ contig => 1,
-	  header => 'base/base-enums.h',
-	  symbols => [ qw(GIMP_VALUE_LUT GIMP_RED_LUT GIMP_GREEN_LUT
-			  GIMP_BLUE_LUT GIMP_ALPHA_LUT) ],
-	  mapping => { GIMP_VALUE_LUT => '0',
-		       GIMP_RED_LUT => '1',
-		       GIMP_GREEN_LUT => '2',
-		       GIMP_BLUE_LUT => '3',
-		       GIMP_ALPHA_LUT => '4' }
 	},
     GimpHueRange =>
 	{ contig => 1,

@@ -281,12 +281,12 @@ init_constants (void)
   setvar (cintern ("BLUR"),           flocons (GIMP_BLUR_CONVOLVE),     NIL);
   setvar (cintern ("SHARPEN"),        flocons (GIMP_SHARPEN_CONVOLVE),  NIL);
 
-  setvar (cintern ("RGB_IMAGE"),      flocons (GIMP_RGB_IMAGE),         NIL);
-  setvar (cintern ("RGBA_IMAGE"),     flocons (GIMP_RGBA_IMAGE),        NIL);
-  setvar (cintern ("GRAY_IMAGE"),     flocons (GIMP_GRAY_IMAGE),        NIL);
-  setvar (cintern ("GRAYA_IMAGE"),    flocons (GIMP_GRAYA_IMAGE),       NIL);
-  setvar (cintern ("INDEXED_IMAGE"),  flocons (GIMP_INDEXED_IMAGE),     NIL);
-  setvar (cintern ("INDEXEDA_IMAGE"), flocons (GIMP_INDEXEDA_IMAGE),    NIL);
+  setvar (cintern ("RGB-IMAGE"),      flocons (GIMP_RGB_IMAGE),         NIL);
+  setvar (cintern ("RGBA-IMAGE"),     flocons (GIMP_RGBA_IMAGE),        NIL);
+  setvar (cintern ("GRAY-IMAGE"),     flocons (GIMP_GRAY_IMAGE),        NIL);
+  setvar (cintern ("GRAYA-IMAGE"),    flocons (GIMP_GRAYA_IMAGE),       NIL);
+  setvar (cintern ("INDEXED-IMAGE"),  flocons (GIMP_INDEXED_IMAGE),     NIL);
+  setvar (cintern ("INDEXEDA-IMAGE"), flocons (GIMP_INDEXEDA_IMAGE),    NIL);
 
   setvar (cintern ("WHITE-MASK"),     flocons (GIMP_ADD_WHITE_MASK),    NIL);
   setvar (cintern ("BLACK-MASK"),     flocons (GIMP_ADD_BLACK_MASK),    NIL);
@@ -331,6 +331,12 @@ init_constants (void)
   setvar (cintern ("SHAPEBURST-DIMPLED"),   flocons (GIMP_GRADIENT_SHAPEBURST_DIMPLED),   NIL);
   setvar (cintern ("SPIRAL-CLOCKWISE"),     flocons (GIMP_GRADIENT_SPIRAL_CLOCKWISE),     NIL);
   setvar (cintern ("SPIRAL-ANTICLOCKWISE"), flocons (GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE), NIL);
+
+  setvar (cintern ("VALUE-LUT"), flocons (GIMP_HISTOGRAM_VALUE), NIL);
+  setvar (cintern ("RED-LUT"),   flocons (GIMP_HISTOGRAM_RED),   NIL);
+  setvar (cintern ("GREEN-LUT"), flocons (GIMP_HISTOGRAM_GREEN), NIL);
+  setvar (cintern ("BLUE-LUT"),  flocons (GIMP_HISTOGRAM_BLUE),  NIL);
+  setvar (cintern ("ALPHA-LUT"), flocons (GIMP_HISTOGRAM_ALPHA), NIL);
 
   /* Useful misc stuff */
   setvar (cintern ("TRUE"),           flocons (TRUE),  NIL);
