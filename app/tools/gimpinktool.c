@@ -112,8 +112,10 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 {
   GimpTool *tool = GIMP_TOOL (ink_tool);
 
-  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
+
+  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (ink_tool),
+                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
 }
 
 static void
