@@ -1,5 +1,10 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimageeditor.c (gimp_image_editor_set_context):
+	set the active image. Fixes bug #156942.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/user-install-dialog.c: started to work on migration of
 	user settings (bug #156636). Not at all functional yet.
 

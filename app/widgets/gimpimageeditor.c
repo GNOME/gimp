@@ -114,7 +114,7 @@ gimp_image_editor_set_context (GimpDocked  *docked,
                                GimpContext *context)
 {
   GimpImageEditor *editor = GIMP_IMAGE_EDITOR (docked);
-  GimpImage       *gimage = NULL;
+  GimpImage       *image  = NULL;
 
   if (editor->context)
     g_signal_handlers_disconnect_by_func (editor->context,
@@ -124,11 +124,15 @@ gimp_image_editor_set_context (GimpDocked  *docked,
   editor->context = context;
 
   if (context)
-    g_signal_connect_swapped (context, "image_changed",
-                              G_CALLBACK (gimp_image_editor_set_image),
-                              editor);
+    {
+      g_signal_connect_swapped (context, "image_changed",
+                                G_CALLBACK (gimp_image_editor_set_image),
+                                editor);
 
-  gimp_image_editor_set_image (editor, gimage);
+      image = gimp_context_get_image (context);
+    }
+
+  gimp_image_editor_set_image (editor, image);
 }
 
 static void
