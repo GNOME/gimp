@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
 "POT-Creation-Date: 1999-09-12 17:58+0200\n"
-"PO-Revision-Date: 2000-01-07 13:26+01:00\n"
+"PO-Revision-Date: 2000-01-11 16:45+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -49,7 +49,8 @@ msgid ""
 msgstr ""
 "       argumenty-rozhraní jsou\n"
 "           -o | --output <soubor>     zapí¹e obrázek na disk, nezobrazuje\n"
-"           -i | --interact            nechá u¾ivatele nejdøíve upravit hodnoty\n"
+"           -i | --interact            nechá u¾ivatele nejdøíve upravit "
+"hodnoty\n"
 "       argumenty-skriptu jsou\n"
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
@@ -167,9 +168,8 @@ msgstr ""
 msgid "received QUIT request"
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Web/Webify"
-msgstr "<Image>/Filtry/Mapování/Rozmáznutí..."
+msgstr "<Image>/Filtry/Web/Webifikovat"
 
 msgid "<Toolbox>/Xtns/PDB Explorer"
 msgstr "<Toolbox>/Xtns/PDB badatel"
@@ -202,40 +202,35 @@ msgstr ""
 "PORT)\n"
 "                                      (více informací viz Gimp::Net(3))\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells"
-msgstr "<Image>/Filtry/Animace/Optimalizace animace"
+msgstr "<Image>/Filtry/Animace/Animovat buòky"
 
 msgid "<Image>/Filters/Logulator/Starburst"
 msgstr "<Image>/Filtry/Logulátor/Pronikání hvìzd"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/Filtry/Logulátor/Kolorování..."
+msgstr "<Image>/Filtry/Logulátor/SOTA barvy"
 
-#, fuzzy
 msgid "%s: procedural database execution failed"
-msgstr "Procedurální databáze"
+msgstr "%s: vykonání procedurální databáze selhalo"
 
 msgid "authorization required for tcp connections"
-msgstr ""
+msgstr "pro tcp spojení je vy¾adována autorizece"
 
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Roz¹./Perl/Server"
 
 msgid "function name contains dashes instead of underscores"
-msgstr ""
+msgstr "jméno funkce obsahuje pomlèky místo podtr¾ítek"
 
-#, fuzzy
 msgid "authorization ok, but: $r[1]\n"
-msgstr "©tìtec selhal."
+msgstr "autorizace je v poøádku, ale $r[1]\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Highlight Edges"
-msgstr "<Image>/Filtry/Výpoèty/Sinus..."
+msgstr "<Image>/Filtry/Výpoèty/Zvýraznìní hran"
 
 msgid "a color must have three components (array elements)"
-msgstr ""
+msgstr "barva musí mít tøi komponenty (prvky pole)"
 
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Generátor pixelù"
@@ -249,20 +244,17 @@ msgstr ""
 msgid "TYPE"
 msgstr "TYP"
 
-#, fuzzy
 msgid "Gradient Selection Dialog"
-msgstr "Výbìr barvy"
+msgstr "Dialog výbìru pøechodu"
 
 msgid "Function Info"
 msgstr "Informace o funkci"
 
-#, fuzzy
 msgid "unable to open $rgb_db_path"
-msgstr "nepodaøilo se otevøít rouru"
+msgstr "nepodaøilo se otevøít $rgb_db_path"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/Filtry/Logulátor/Kolorování..."
+msgstr "<Image>/Filtry/Logulátor/Imigre-26"
 
 msgid "<Image>/Select/Round Rectangular Selection"
 msgstr "<Image>/Výbìr/Zaoblený obdélníkový výbìr"
@@ -271,26 +263,25 @@ msgid "<Image>/Filters/Map/Pixelmap"
 msgstr "<Image>/Filtry/Mapování/Pixelová mapa"
 
 msgid "no additional information available, use --help\n"
-msgstr ""
+msgstr "doplòkové informace nejsou k dispozici, pou¾ijte --help\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal"
-msgstr "<Image>/Filtry/Výpoèty/Sinus..."
+msgstr "<Image>/Filtry/Výpoèty/Natøený kov"
 
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr ""
+msgstr "gimp_tile_set_data není dosud implementováno\n"
 
 msgid "Visual Scriptor"
 msgstr "Vizuální skriptor"
 
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr ""
+msgstr "Nebyly nalezeny ¾ádná vodorovná ani svislá vodítka. Zru¹eno."
 
 msgid "<Image>/Filters/Map/Image Tile"
 msgstr "<Image>/Filtry/Mapování/Povrch obrazu"
 
 msgid "Internal error: stashname too long, please report!"
-msgstr ""
+msgstr "Vnitøní chyba: stashname je pøíli¹ dlouhé, podejte prosím zprávu!"
 
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Filtry/Logulátor/Komická kniha"
@@ -299,19 +290,19 @@ msgid "<Image>/Guides/Remove Guides"
 msgstr "<Image>/Vodítka/Smazat vodítka"
 
 msgid "Internal error: Gimp::Net #101, please report!"
-msgstr ""
+msgstr "Vnitøní chyba: Gimp::Net #101, podejte prosím zprávu!"
 
 msgid "get current background colour from the gimp"
 msgstr ""
 
 msgid "WARNING: shared locking requested but not implemented"
-msgstr ""
+msgstr "VAROVÁNÍ: po¾adováno neimplemetované sdílené uzamèení"
 
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr ""
+msgstr "parametr '$entry->[1]' není volitelný\n"
 
 msgid "$s: not an integer\n"
-msgstr ""
+msgstr "$s: není celé èíslo\n"
 
 msgid "unable to read '$fn': $!"
 msgstr "nepodaøilo se èíst '$fn': $!"
@@ -323,34 +314,31 @@ msgid "[undefined]"
 msgstr "[nedefinováno]"
 
 msgid "function/macro \"$name\" not found in $class"
-msgstr ""
+msgstr "funkce/macro \"$name\" nebylo nalezeno v $class"
 
 msgid "accepted tcp connection from "
-msgstr ""
+msgstr "pøijato tcp spojení od "
 
 msgid "<Image>/Layers/Stack/Reorder Layers"
 msgstr "<Image>/Vrstvy/Zásobník/Pøeøazení vrstev"
 
 msgid "illegal parasite specification, expected three array members"
-msgstr ""
+msgstr "neplatná specifikace parazita, oèekáváno tøíèlenné pole"
 
-#, fuzzy
 msgid "unable to read temporary file $tmp: $!"
-msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
+msgstr "nepodaøilo se èíst z pomocného souboru $tmp: $!"
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr ""
+msgstr "PDB badatel - vydání olof (stále je¹tì alfa verze)"
 
 msgid "Illegal default font description for $function: $val\n"
-msgstr ""
+msgstr "Neplatný popis implicitního písma pro $function: $val\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Filtry/Logulátor/"
+msgstr "<Image>/Filtry/Logulátor/Køída"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/Filtry/Výpoèty/Sinus..."
+msgstr "<Image>/Filtry/Výpoèty/Tvorba razítka"
 
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
@@ -402,9 +390,8 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Jin-jang"
 
-#, fuzzy
 msgid "unable to accept unix connection: $!\n"
-msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
+msgstr "nepodaøilo se pøijmout unixové spojení $!\n"
 
 msgid "Save"
 msgstr "Zapsat"
@@ -415,29 +402,33 @@ msgid ""
 "EMBEDDED POD DOCUMENTATION:\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"ZAKOTVENÁ POD DOKUMENTACE:\n"
+"\n"
 
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
+"pro interaktivní spu¹tìní modulu\n"
+"je potøebný modul gtk perl\n"
 
 msgid "<Toolbox>/Xtns/Render/Golden Mean"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Zlatý vzhled"
 
 #, fuzzy
 msgid "<Image>/Filters/Distorts/BlowInOut"
-msgstr "<Image>/Filtry/Rozostøení/Rozostøení..."
+msgstr "<Image>/Filtry/Zkreslení/Rozostøení..."
 
 msgid "interface '$interface_type' unsupported."
-msgstr ""
+msgstr "rozhraní '$interface_type' není podporováno."
 
-#, fuzzy
 msgid "unable to accept tcp connection: $!\n"
-msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
+msgstr "nepodaøilo se pøijmout tcp spojení: $!\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/3D Outline"
-msgstr "<Image>/Filtry/Logulátor/Kolorování..."
+msgstr "<Image>/Filtry/Logulátor/3D obrys"
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
@@ -566,7 +557,7 @@ msgstr "<Image>/Filtry/Výpoèty/Sinus..."
 
 #, fuzzy
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 
 msgid "Synopsis"
 msgstr ""
@@ -575,7 +566,7 @@ msgid "Color"
 msgstr "Barva"
 
 msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Filtry/Barvy/Logulátor/Cizí ¾ár..."
+msgstr "<Image>/Filtry/Barvy/Cizí ¾ár"
 
 msgid "FATAL: canonicalize_colour did not return a value!"
 msgstr ""
@@ -818,28 +809,26 @@ msgid "<Image>/Filters/Logulator/Gradient Bevel"
 msgstr "<Image>/Filtry/Logulátor/"
 
 msgid "gimp didn't return an execution status, fatal error"
-msgstr ""
+msgstr "gimp nevrátil stav vykonání, fatální chyba"
 
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
+"oèekáván protokol verze $Gimp::_PROT_VERSION, ale server pou¾ívá $r[0]\n"
 
-#, fuzzy
 msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-2"
 
 msgid "Restore values to the previous ones"
-msgstr ""
+msgstr "Vrátit na pøedchozí hodnoty"
 
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
 
-#, fuzzy
 msgid ", authorization required"
-msgstr "©tìtec selhal."
+msgstr ", po¾adována autorizace"
 
-#, fuzzy
 msgid "unable to create listening unix socket: $!\n"
-msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
+msgstr "nepodaøilo se vytvoøit naslouchací unixový soket: $!\n"
 
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
@@ -849,7 +838,7 @@ msgid "Last Modified"
 msgstr "Naposled zmìnìno"
 
 msgid "Shortcuts"
-msgstr ""
+msgstr "Klávesové zkratky"
 
 msgid ""
 "the gtk perl module is required to open a dialog\n"
@@ -861,14 +850,15 @@ msgstr ""
 
 #, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit"
-msgstr "<Image>/Filtry/Barvy/Kolorování..."
+msgstr "<Image>/Filtry/Zkreslení/Zrcadlové roz¹tìpení"
 
 msgid "Font Selection Dialog ($desc)"
 msgstr "Dialog výbìtu písma ($desc)"
 
-#, fuzzy
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr "Procedurální databáze"
+msgstr ""
+"%s: vykonání procedurální databáze selhalo na neplatných vstupních "
+"argumentech"
 
 msgid "<Image>/Filters/Colors/Colour To Alpha"
 msgstr "<Image>/Filtry/Barvy/Barva do alfa"
@@ -879,20 +869,17 @@ msgstr ""
 msgid "closing connection %d (%d requests in %g seconds)"
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Filtry/Logulátor/"
+msgstr "<Image>/Filtry/Logulátor/Mrazivo"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/TeX String"
-msgstr "<Image>/Filtry/Výpoèty/Sinus..."
+msgstr "<Image>/Filtry/Výpoèty/Øetìzec TeX"
 
 msgid "<Toolbox>/Xtns/Render/Font Table"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Tabulka písma"
 
-#, fuzzy
 msgid "authorization failed: $r[1]\n"
-msgstr "©tìtec selhal."
+msgstr "autorizace selhala: $r[1]\n"
 
 msgid "FATAL: Gimp::Compat version mismatch\n"
 msgstr ""
@@ -900,9 +887,8 @@ msgstr ""
 msgid "server version $Gimp::VERSION started"
 msgstr ""
 
-#, fuzzy
 msgid "authorization unnecessary"
-msgstr "©tìtec selhal."
+msgstr "autorizace není nutná"
 
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
@@ -910,25 +896,22 @@ msgid ""
 msgstr ""
 
 msgid "Internal error: Gimp::Net #100, please report!"
-msgstr ""
+msgstr "Vnitøní chyba: Gimp::Net #100, podejte prosím zprávu!"
 
 msgid "Close"
 msgstr "Zavøít"
 
-#, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate"
-msgstr "<Image>/Filtry/Opakovat minulý"
+msgstr "<Image>/Úpravy/Opakování a duplikace"
 
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
 
-#, fuzzy
 msgid "unable to fork: $!"
-msgstr "nepodaøilo se otevøít rouru"
+msgstr "nepodaøilo se vìtvit: $!"
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Windify"
-msgstr "<Image>/Filtry/Barvy/Kolorování..."
+msgstr "<Image>/Filtry/Zkreslení/Rozfoukání"
 
 msgid "Unsupported argumenttype $type"
 msgstr ""
@@ -936,74 +919,67 @@ msgstr ""
 msgid "get current foreground colour from the gimp"
 msgstr ""
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "/Roz¹./Výpoèty/Loga"
+msgstr "<Toolbox>/Roz¹./Zkou¹ka perl modulu"
 
 msgid "<Image>/Filters/Logulator/Neon"
 msgstr "<Image>/Filtry/Logulátor/Neón"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Chrome"
-msgstr "<Image>/Filtry/Logulátor/"
+msgstr "<Image>/Filtry/Logulátor/Barvy"
 
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr ""
+msgstr "Nepodaøilo se èíst z pomocné obrázkové dla¾dice $tmp: $!"
 
 msgid "<Image>/Guides/To Selection"
 msgstr "<Image>/Vodítka/Do výbìru"
 
-#, fuzzy
 msgid "export failed"
-msgstr "Exportovat soubor"
+msgstr "exportování selhalo"
 
 msgid "Help for "
 msgstr "Nápovìda pro "
 
 msgid "unsupported status code: %d, fatal error\n"
-msgstr ""
+msgstr "nepodporovaný stavový kód: %d, fatální chyba\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Filtry/Barvy/Kolorování..."
+msgstr "<Image>/Filtry/Barvy/Od¹típnutí"
 
-#, fuzzy
 msgid "dunno how to pass arg type %d"
-msgstr "neznámý typ komprese: %d"
+msgstr "není známo, jak zpracovat argument typu %d"
 
 msgid " (press Tab to complete)"
 msgstr "(k dokonèení stisknìte Tab)"
 
 msgid "This module was built without support for PDL."
-msgstr ""
+msgstr "Tento modul byl sestaven bez podpory PDL."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "/Script-Fu"
+msgstr "<Toolbox>/Roz¹./Logo domovské stránky"
 
 msgid "plug-in returned %d more values than expected"
-msgstr ""
+msgstr "modul vrátil o %d více hodnot, ne¾ bylo oèekáváno"
 
 msgid "FG"
 msgstr "Popøedí"
 
 msgid "url size is too large ($max > 1024)\n"
-msgstr ""
+msgstr "pøíli¹ dlouhé url ($max > 1024)\n"
 
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
+"$function: argument/návratová hodnota '$p->[1]' má neplatný typ '$p->[0]'"
 
-#, fuzzy
 msgid "Edit"
-msgstr "Konec"
+msgstr "Úpravy"
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Filtry/Logulátor/Rozmáznutí..."
 
-#, fuzzy
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtry/Vylep¹ení/Odstranìní pruhù..."
+msgstr "<Image>/Filtry/Vylep¹ení/Vylep¹ení kontrastu 2×2"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
@@ -1014,13 +990,11 @@ msgid "OK"
 msgstr "OK"
 
 msgid "illegal command received, aborting connection"
-msgstr ""
+msgstr "pøijat neplatný pøíkaz, ru¹í se spojení"
 
-#, fuzzy
 msgid "<Image>/Layers/Layer to Image Size"
-msgstr "<Image>/Vrstvy/Rotace/90 stupòù"
+msgstr "<Image>/Vrstvy/Velikost vrstvy dle obrázku"
 
-#, fuzzy
 msgid "(none)"
-msgstr "Není"
+msgstr "(nic)"
 
