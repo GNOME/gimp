@@ -39,7 +39,6 @@
 #include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "file-new-dialog.h"
 
@@ -91,20 +90,17 @@ file_new_dialog_new (Gimp *gimp)
   dialog->gimp     = gimp;
   dialog->template = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
 
-  dialog->dialog =
-    gimp_viewable_dialog_new (NULL,
-                              _("New Image"), "gimp-image-new",
-                              GIMP_STOCK_IMAGE,
-                              _("Create a New Image"),
-                              NULL,
-                              gimp_standard_help_func,
-                              GIMP_HELP_FILE_NEW,
+  dialog->dialog = gimp_dialog_new (_("Create a New Image"),
+                                    "gimp-image-new",
+                                    NULL, 0,
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_FILE_NEW,
 
-                              GIMP_STOCK_RESET, RESPONSE_RESET,
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                    GIMP_STOCK_RESET, RESPONSE_RESET,
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                              NULL);
+                                    NULL);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (file_new_response),
@@ -131,11 +127,13 @@ file_new_dialog_new (Gimp *gimp)
   optionmenu = gtk_option_menu_new ();
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("From _Template:"),  1.0, 0.5,
+                             _("_Template:"),  1.0, 0.5,
                              optionmenu, 1, FALSE);
 
-  dialog->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16, 0);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), dialog->template_menu);
+  dialog->template_menu = gimp_container_menu_new (gimp->templates,
+                                                   NULL, 16, 0);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu),
+                            dialog->template_menu);
   gtk_widget_show (dialog->template_menu);
 
   gimp_container_menu_select_item (GIMP_CONTAINER_MENU (dialog->template_menu),

@@ -1,3 +1,8 @@
+2004-05-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-new-dialog.c: use a normal GimpDialog instead of a
+	GimpViewableDialog that never has a viewable set.
+
 2004-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/brush-select.[ch] (brush_select_new): reordered parameters 
