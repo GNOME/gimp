@@ -15,13 +15,7 @@
 #	ilm. olen korjannut jotain.. -paree katsoa.. -SG(3.6)
 #	2118 "se" sana pois?->turha..? -SG	
 #	2860 ? run in batch mode = aja eräajona*..? siis *. -SG
-#	2880 no-data = no-data -> ei-dataa?
 #	3058 dump-items||vähän aikaisemmin tyhjä myös..
-#	3142 select/all valitse/kokonaan? ->valitse/kaikki.. -SG
-#	3260 shrink wrap = koko kuva? -SG
-#	3354 rotate = kierrätä (ihan vaan kierrä?) -SG
-#	5294 fuzzy = pehmeä? ->epäselvä, epätarkka, sumea tms. -SG
-#	fuzzy = normaalisti sumea, ehkä tuossa tapauksessa pehmeä käy -VH
 #
 msgid ""
 msgstr ""
@@ -41,7 +35,7 @@ msgstr "Tietoja GIMPistä"
 #. this is a font, provide only one single font definition
 #: app/about_dialog.c:243
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/about_dialog.c:253
 #, c-format
@@ -63,7 +57,7 @@ msgstr "Paine:"
 #. this is a font, provide only one single font definition
 #: app/app_procs.c:267
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
 #: app/app_procs.c:278 app/app_procs.c:280 app/interface.c:560
 msgid "The GIMP"
@@ -72,7 +66,7 @@ msgstr "GIMP"
 #. this is a fontset, e.g. multiple comma-separated font definitions
 #: app/app_procs.c:285
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
-msgstr ""
+msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
 #: app/app_procs.c:302 app/app_procs.c:304
 msgid "brought to you by"
@@ -87,7 +81,7 @@ msgstr "GIMP käynnistyy"
 msgid "parsing \"%s\"\n"
 msgstr "luen tiedostoa \"%s\"\n"
 
-#. initialize the xcf file format routines
+#. initialize the xcf fileformat routines
 #: app/app_procs.c:554
 msgid "Looking for data files"
 msgstr "Etsin datatiedostoja"
@@ -307,7 +301,7 @@ msgstr "Kirkkaus- ja kontrastisäätö ei toimi indeksoiduille kuville."
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:329
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: app/brightness_contrast.c:216 app/by_color_select.c:694
 #: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
@@ -1050,20 +1044,25 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Avaa valittu merkintä\n"
+"<Shift> Kohota aukinainen ikkuna päällimmäiseksi\n"
+"<Ctrl> Avaa kuva ikkuna"
 
 #: app/docindex.c:118
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Siirrä valittu ylöspäin"
+msgstr ""
+"Siirrä valittu kohta ylöspäin indeksissä\n"
+"<Shift> Ylimmäiseksi"
 
 #: app/docindex.c:122
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Siirrä valittu alaspäin"
+msgstr ""
+"Siirrä valittu kohta alaspäin indeksissä\n"
+"<Shift> Alimmaiseksi"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1088,7 +1087,7 @@ msgstr ""
 
 #: app/dodgeburn.c:165
 msgid "Burn"
-msgstr ""
+msgstr "Polta"
 
 #: app/dodgeburn.c:175
 msgid "Mode"
@@ -1225,11 +1224,12 @@ msgid "No Selection."
 msgstr "Ei valintaa"
 
 #: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
-#, fuzzy, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Tallennus epäonnistui: %s"
+msgstr ""
+"Tallennus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:475 app/fileops.c:507
 msgid "Save Image"
@@ -1309,26 +1309,28 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"Tallennus epäonnistui.\n"
+"%s: ei tarvittavia käyttöoikeuksia."
 
 #: app/fileops.c:1386
 msgid "(This thumbnail may be out of date)"
-msgstr "(tämä esikatselukuva saattaa olla vanhentunut)"
+msgstr "(Tämä esikatselukuva saattaa olla vanhentunut)"
 
 #: app/fileops.c:1387
 msgid "(No Information)"
-msgstr "(ei tietoa)"
+msgstr "(Ei tietoa)"
 
 #: app/fileops.c:1397
 msgid "(Thumbnail saving is disabled)"
-msgstr "(esikatselukuvien tallennus ei käytössä)"
+msgstr "(Esikatselukuvien tallennus ei käytössä)"
 
 #: app/fileops.c:1401
 msgid "(Could not write thumbnail file)"
-msgstr "(esikatselukuvan tallennus epäonnistui)"
+msgstr "(Esikatselukuvan tallennus epäonnistui)"
 
 #: app/fileops.c:1405
 msgid "(Thumbnail file not written)"
-msgstr "(esikatselukuvaa ei tallennettu)"
+msgstr "(Esikatselukuvaa ei tallennettu)"
 
 #: app/fileops.c:1422
 msgid "No preview available"
@@ -3143,7 +3145,7 @@ msgstr "/Valitse/Invertoi"
 
 #: app/menus.c:263
 msgid "/Select/All"
-msgstr "/Valitse/Kokonaan"
+msgstr "/Valitse/Kaikki"
 
 #: app/menus.c:265
 msgid "/Select/None"
@@ -3353,7 +3355,7 @@ msgstr "/Tasot/Pino/Laske taso pohjimmaiseksi"
 #. <Image>/Layers/Rotate
 #: app/menus.c:430
 msgid "/Layers/Rotate"
-msgstr "/Tasot/Kierrätä"
+msgstr "/Tasot/Kierrä"
 
 #: app/menus.c:435
 msgid "/Layers/Anchor Layer"
@@ -5653,7 +5655,7 @@ msgstr "linkitetty taso"
 
 #: app/undo.c:2894
 msgid "apply layer mask"
-msgstr "tason maskin sovellus"
+msgstr "sovella tason maskia" 
 
 #. ok
 #: app/undo.c:2895
