@@ -48,5 +48,9 @@ gboolean  gimp_config_serialize          (GObject     *object,
 gboolean  gimp_config_deserialize        (GObject     *object,
                                           const gchar *filename);
 
+/* for debugging only */
+void      gimp_config_debug_notify_callback (GObject    *object,
+                                             GParamSpec *pspec);
+
 
 #endif  /* __GIMP_CONFIG_H__ */

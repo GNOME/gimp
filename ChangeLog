@@ -1,5 +1,15 @@
 2001-12-08  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.c: improved code readability by 
+	splitting deserialize_property into smaller functions.
+
+	* app/config/gimpconfig.[ch]: added gimp_config_debug_notify_callback()
+	for debugging purposes.
+
+	* app/main.c: use gimp_config_debug_notify_callback().
+
+2001-12-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am
 	* app/config/gimpconfig-params.[ch]
 	* app/config/gimpconfig-types.[ch]: new files implementing special

@@ -148,3 +148,38 @@ gimp_config_deserialize (GObject     *object,
 
   return success;
 }
+
+
+/* for debugging only */
+
+void
+gimp_config_debug_notify_callback (GObject    *object,
+                                   GParamSpec *pspec)
+{
+  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+
+  if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
+    {
+      GValue  src  = { 0, };
+      GValue  dest = { 0, };
+
+      g_value_init (&src,  pspec->value_type);
+      g_object_get_property (object, pspec->name, &src);
+
+      g_value_init (&dest, G_TYPE_STRING);      
+      g_value_transform (&src, &dest);
+
+      g_print ("%s: %s -> %s\n", 
+               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name, 
+               g_value_get_string (&dest));
+
+      g_value_unset (&src);
+      g_value_unset (&dest);
+    }
+  else
+    {
+      g_print ("%s: %s changed\n", 
+               g_type_name (G_TYPE_FROM_INSTANCE (object)), pspec->name);
+    }
+}

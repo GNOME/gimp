@@ -152,9 +152,9 @@ main (int    argc,
 
     config = g_object_new (GIMP_TYPE_BASE_CONFIG, NULL);
 
-    g_signal_connect_swapped (G_OBJECT (config), "notify",
-                              G_CALLBACK (g_print),
-                              "GimpBaseConfig property changed\n");
+    g_signal_connect (G_OBJECT (config), "notify",
+                      G_CALLBACK (gimp_config_debug_notify_callback),
+                      NULL);
 
     filename = gimp_personal_rc_file ("foorc");
 
