@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimppatternmenu.c
- * Copyright (C) 1998 Andy Thomas 
+ * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -48,7 +48,7 @@ struct _PatternSelect
   GtkWidget              *preview;
   GtkWidget              *button;
 
-  GtkWidget              *popup; 
+  GtkWidget              *popup;
 
   gchar                  *pattern_name;      /* Local copy */
   gint                    width;
@@ -88,7 +88,7 @@ static void     gimp_pattern_select_popup_close     (PatternSelect *pattern_sel)
 /**
  * gimp_pattern_select_widget_new:
  * @title:        Title of the dialog to use or %NULL to use the default title.
- * @pattern_name: Initial pattern name or %NULL to use current selection. 
+ * @pattern_name: Initial pattern name or %NULL to use current selection.
  * @callback:     A function to call when the selected pattern changes.
  * @data:         A pointer to arbitary data to be used in the call to @callback.
  *
@@ -98,9 +98,9 @@ static void     gimp_pattern_select_popup_close     (PatternSelect *pattern_sel)
  *
  * Returns: A #GtkWidget that you can use in your UI.
  */
-GtkWidget * 
+GtkWidget *
 gimp_pattern_select_widget_new (const gchar            *title,
-                                const gchar            *pattern_name, 
+                                const gchar            *pattern_name,
                                 GimpRunPatternCallback  callback,
                                 gpointer                data)
 {
@@ -113,7 +113,7 @@ gimp_pattern_select_widget_new (const gchar            *title,
 
   if (! title)
     title = _("Pattern Selection");
-  
+
   pattern_sel = g_new0 (PatternSelect, 1);
 
   pattern_sel->title    = g_strdup (title);
@@ -133,16 +133,16 @@ gimp_pattern_select_widget_new (const gchar            *title,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
-  gtk_preview_size (GTK_PREVIEW (pattern_sel->preview), CELL_SIZE, CELL_SIZE); 
-  gtk_container_add (GTK_CONTAINER (frame), pattern_sel->preview); 
+  gtk_preview_size (GTK_PREVIEW (pattern_sel->preview), CELL_SIZE, CELL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), pattern_sel->preview);
   gtk_widget_show (pattern_sel->preview);
 
   g_signal_connect (pattern_sel->preview, "event",
                     G_CALLBACK (gimp_pattern_select_preview_events),
                     pattern_sel);
 
-  pattern_sel->button = gtk_button_new_with_label (" ... ");
-  gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, FALSE, FALSE, 0); 
+  pattern_sel->button = gtk_button_new_with_label (_("Browse... "));
+  gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, FALSE, FALSE, 0);
   gtk_widget_show (pattern_sel->button);
 
   g_signal_connect (pattern_sel->button, "clicked",
@@ -158,11 +158,11 @@ gimp_pattern_select_widget_new (const gchar            *title,
                                     &pattern_sel->width,
                                     &pattern_sel->height,
                                     &pattern_sel->bytes,
-                                    &mask_data_size, 
+                                    &mask_data_size,
                                     &pattern_sel->mask_data);
 
   if (pattern_sel->pattern_name)
-    gimp_pattern_select_preview_update (pattern_sel->preview, 
+    gimp_pattern_select_preview_update (pattern_sel->preview,
                                         pattern_sel->width,
                                         pattern_sel->height,
                                         pattern_sel->bytes,
@@ -198,7 +198,7 @@ gimp_pattern_select_widget_close (GtkWidget *widget)
 /**
  * gimp_pattern_select_widget_set:
  * @widget:       A pattern select widget.
- * @pattern_name: Pattern name to set. NULL means no change. 
+ * @pattern_name: Pattern name to set. NULL means no change.
  *
  * Sets the current pattern for the pattern select widget.  Calls the
  * callback function if one was supplied in the call to
@@ -229,9 +229,9 @@ gimp_pattern_select_widget_set (GtkWidget   *widget,
       gchar  *name;
 
       name = gimp_patterns_get_pattern_data (pattern_name,
-                                             &width, 
-                                             &height, 
-                                             &bytes, 
+                                             &width,
+                                             &height,
+                                             &bytes,
                                              &mask_data_size,
                                              &mask_data);
 
@@ -267,9 +267,9 @@ gimp_pattern_select_widget_callback (const gchar  *name,
   pattern_sel->width        = width;
   pattern_sel->height       = height;
   pattern_sel->bytes        = bytes;
-  pattern_sel->mask_data    = g_memdup (mask_data, width * height * bytes); 
+  pattern_sel->mask_data    = g_memdup (mask_data, width * height * bytes);
 
-  gimp_pattern_select_preview_update (pattern_sel->preview, 
+  gimp_pattern_select_preview_update (pattern_sel->preview,
                                       width, height, bytes, mask_data);
 
   if (pattern_sel->callback)
@@ -292,7 +292,7 @@ gimp_pattern_select_widget_clicked (GtkWidget     *widget,
     }
   else
     {
-      pattern_sel->temp_pattern_callback = 
+      pattern_sel->temp_pattern_callback =
 	gimp_pattern_select_new (pattern_sel->title,
                                  pattern_sel->pattern_name,
                                  gimp_pattern_select_widget_callback,
@@ -329,7 +329,7 @@ gimp_pattern_select_preview_events (GtkWidget     *widget,
 	{
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
-	  
+
 	  if (bevent->button == 1)
 	    {
 	      gtk_grab_add (widget);
@@ -337,10 +337,10 @@ gimp_pattern_select_preview_events (GtkWidget     *widget,
                                               bevent->x, bevent->y);
 	    }
 	  break;
-	  
+
 	case GDK_BUTTON_RELEASE:
 	  bevent = (GdkEventButton *) event;
-	  
+
 	  if (bevent->button == 1)
 	    {
 	      gtk_grab_remove (widget);
@@ -436,7 +436,7 @@ gimp_pattern_select_popup_open (PatternSelect *pattern_sel,
   gtk_widget_show (frame);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 
+  gtk_preview_size (GTK_PREVIEW (preview),
 		    pattern_sel->width, pattern_sel->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
@@ -456,7 +456,7 @@ gimp_pattern_select_popup_open (PatternSelect *pattern_sel,
   y = (y + pattern_sel->height > scr_h) ? scr_h - pattern_sel->height : y;
 
   gtk_window_move (GTK_WINDOW (pattern_sel->popup), x, y);
-  
+
   /*  Draw the pattern  */
   buf = g_new (guchar, pattern_sel->width * 3);
   src = pattern_sel->mask_data;

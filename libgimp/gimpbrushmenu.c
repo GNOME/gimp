@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpbrushmenu.c
- * Copyright (C) 1998 Andy Thomas                
+ * Copyright (C) 1998 Andy Thomas
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -50,7 +50,7 @@ struct _BrushSelect
   GtkWidget            *preview;
   GtkWidget            *button;
 
-  GtkWidget            *popup; 
+  GtkWidget            *popup;
 
   gchar                *brush_name;       /* Local copy */
   gdouble               opacity;
@@ -96,7 +96,7 @@ static void     gimp_brush_select_popup_close     (BrushSelect  *brush_sel);
 /**
  * gimp_brush_select_widget_new:
  * @title:      Title of the dialog to use or %NULL to use the default title.
- * @brush_name: Initial brush name or %NULL to use current selection. 
+ * @brush_name: Initial brush name or %NULL to use current selection.
  * @opacity:    Initial opacity. -1 means to use current opacity.
  * @spacing:    Initial spacing. -1 means to use current spacing.
  * @paint_mode: Initial paint mode.  -1 means to use current paint mode.
@@ -109,9 +109,9 @@ static void     gimp_brush_select_popup_close     (BrushSelect  *brush_sel);
  *
  * Returns: A #GtkWidget that you can use in your UI.
  */
-GtkWidget * 
+GtkWidget *
 gimp_brush_select_widget_new (const gchar          *title,
-                              const gchar          *brush_name, 
+                              const gchar          *brush_name,
                               gdouble               opacity,
                               gint                  spacing,
                               GimpLayerModeEffects  paint_mode,
@@ -150,15 +150,15 @@ gimp_brush_select_widget_new (const gchar          *title,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
-  gtk_preview_size (GTK_PREVIEW (brush_sel->preview), CELL_SIZE, CELL_SIZE); 
-  gtk_container_add (GTK_CONTAINER (frame), brush_sel->preview); 
+  gtk_preview_size (GTK_PREVIEW (brush_sel->preview), CELL_SIZE, CELL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), brush_sel->preview);
   gtk_widget_show (brush_sel->preview);
 
   g_signal_connect (brush_sel->preview, "event",
                     G_CALLBACK (gimp_brush_select_preview_events),
                     brush_sel);
 
-  brush_sel->button = gtk_button_new_with_label (" ... ");
+  brush_sel->button = gtk_button_new_with_label (_("Browse..."));
   gtk_box_pack_end (GTK_BOX (hbox), brush_sel->button, FALSE, FALSE, 0);
   gtk_widget_show (brush_sel->button);
 
@@ -221,7 +221,7 @@ gimp_brush_select_widget_close (GtkWidget *widget)
 /**
  * gimp_brush_select_widget_set;
  * @widget:     A brush select widget.
- * @brush_name: Brush name to set; %NULL means no change. 
+ * @brush_name: Brush name to set; %NULL means no change.
  * @opacity:    Opacity to set. -1 means no change.
  * @spacing:    Spacing to set. -1 means no change.
  * @paint_mode: Paint mode to set.  -1 means no change.
@@ -238,14 +238,14 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
                               GimpLayerModeEffects  paint_mode)
 {
   BrushSelect *brush_sel;
-  
+
   brush_sel = g_object_get_data (G_OBJECT (widget), BRUSH_SELECT_DATA_KEY);
 
   g_return_if_fail (brush_sel != NULL);
 
   if (brush_sel->temp_brush_callback)
     {
-      gimp_brushes_set_popup (brush_sel->temp_brush_callback, 
+      gimp_brushes_set_popup (brush_sel->temp_brush_callback,
                               brush_name, opacity, spacing, paint_mode);
     }
   else
@@ -273,7 +273,7 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
           if (opacity    == -1.0) opacity    = init_opacity;
           if (spacing    == -1)   spacing    = init_spacing;
           if (paint_mode == -1)   paint_mode = init_paint_mode;
-  
+
           gimp_brush_select_widget_callback (brush_name, opacity, spacing,
                                              paint_mode, width, height,
                                              mask_data, FALSE, brush_sel);
@@ -329,7 +329,7 @@ gimp_brush_select_widget_clicked (GtkWidget   *widget,
   if (brush_sel->temp_brush_callback)
     {
       /*  calling gimp_brushes_set_popup() raises the dialog  */
-      gimp_brushes_set_popup (brush_sel->temp_brush_callback, 
+      gimp_brushes_set_popup (brush_sel->temp_brush_callback,
 			      brush_sel->brush_name,
 			      brush_sel->opacity,
 			      brush_sel->spacing,
@@ -378,24 +378,24 @@ gimp_brush_select_preview_events (GtkWidget   *widget,
 	{
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
-	  
+
 	  if (bevent->button == 1)
 	    {
 	      gtk_grab_add (widget);
 	      gimp_brush_select_popup_open (brush_sel, bevent->x, bevent->y);
 	    }
 	  break;
-	  
+
 	case GDK_BUTTON_RELEASE:
 	  bevent = (GdkEventButton *) event;
-	  
+
 	  if (bevent->button == 1)
 	    {
 	      gtk_grab_remove (widget);
 	      gimp_brush_select_popup_close (brush_sel);
 	    }
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -420,9 +420,9 @@ gimp_brush_select_preview_update (GtkWidget    *preview,
   gint          width, height;
 
   /*  Draw the brush  */
-  buf = g_new (guchar, CELL_SIZE); 
+  buf = g_new (guchar, CELL_SIZE);
 
-  /* Set buffer to white */  
+  /* Set buffer to white */
   memset (buf, 255, CELL_SIZE);
   for (i = 0; i < CELL_SIZE; i++)
     gtk_preview_draw_row (GTK_PREVIEW (preview),
@@ -510,11 +510,11 @@ gimp_brush_select_popup_open (BrushSelect  *brush_sel,
   y = (y + brush_sel->height > scr_h) ? scr_h - brush_sel->height : y;
 
   gtk_window_move (GTK_WINDOW (brush_sel->popup), x, y);
-  
+
   /*  Draw the brush  */
   buf = g_new (guchar, brush_sel->width);
   memset (buf, 255, brush_sel->width);
-  
+
   src = brush_sel->mask_data;
 
   for (y = 0; y < brush_sel->height; y++)
