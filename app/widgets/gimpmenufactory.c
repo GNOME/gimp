@@ -318,7 +318,7 @@ gimp_menu_factory_manager_new (GimpMenuFactory *factory,
           GimpUIManager *manager;
           GList         *list;
 
-          manager = gimp_ui_manager_new (factory->gimp);
+          manager = gimp_ui_manager_new (factory->gimp, entry->identifier);
           gtk_ui_manager_set_add_tearoffs (GTK_UI_MANAGER (manager),
                                            create_tearoff);
 

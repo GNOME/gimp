@@ -4,15 +4,15 @@
 <ui>
   <menubar action="image-menubar">
 
-    <menu action="file-menu">
+    <menu action="file-menu" name="File">
       <menuitem action="file-new" />
       <menuitem action="file-open" />
-      <menu action="file-open-recent-menu">
+      <menu action="file-open-recent-menu" name="Open Recent">
         <placeholder name="file-open-recent-placeholder" />
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu">
+      <menu action="file-acquire-menu" name="Acquire">
       </menu>
       <separator />
       <menuitem action="file-save" />
@@ -25,7 +25,7 @@
       <menuitem action="file-quit" />
     </menu>
 
-    <menu action="edit-menu">
+    <menu action="edit-menu" name="Edit">
       <menuitem action="edit-undo" />
       <menuitem action="edit-redo" />
       <menuitem action="dialogs-undo-history" />
@@ -35,7 +35,7 @@
       <menuitem action="edit-paste" />
       <menuitem action="edit-paste-into" />
       <menuitem action="edit-paste-as-new" />
-      <menu action="edit-buffer-menu">
+      <menu action="edit-buffer-menu" name="Buffer">
         <menuitem action="edit-named-cut" />
 	<menuitem action="edit-named-copy" />
 	<menuitem action="edit-named-paste" />
@@ -50,7 +50,7 @@
       <separator />
     </menu>
 
-    <menu action="select-menu">
+    <menu action="select-menu" name="Select">
       <menuitem action="select-all" />
       <menuitem action="select-none" />
       <menuitem action="select-invert" />
@@ -69,10 +69,10 @@
       <menuitem action="select-to-vectors" />
     </menu>
 
-    <menu action="view-menu">
+    <menu action="view-menu" name="View">
       <menuitem action="view-new" />
       <menuitem action="view-dot-for-dot" />
-      <menu action="view-zoom-menu">
+      <menu action="view-zoom-menu" name="Zoom">
         <menuitem action="view-zoom-out" />
         <menuitem action="view-zoom-in" />
         <menuitem action="view-zoom-fit" />
@@ -111,13 +111,13 @@
       <menuitem action="view-move-to-screen" />
     </menu>
 
-    <menu action="image-menu">
-      <menu action="image-mode-menu">
+    <menu action="image-menu" name="Image">
+      <menu action="image-mode-menu" name="Mode">
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
       </menu>
-      <menu action="image-transform-menu">
+      <menu action="image-transform-menu" name="Transform">
         <menuitem action="image-flip-horizontal" />
         <menuitem action="image-flip-vertical" />
 	<separator />
@@ -138,7 +138,7 @@
       <menuitem action="image-configure-grid" />
     </menu>
 
-    <menu action="layers-menu">
+    <menu action="layers-menu" name="Layer">
       <menuitem action="layers-new" />
       <menuitem action="layers-duplicate" />
       <menuitem action="layers-anchor" />
@@ -146,7 +146,7 @@
       <menuitem action="layers-delete" />
       <menuitem action="layers-text-discard" />
       <separator />
-      <menu action="layers-stack-menu">
+      <menu action="layers-stack-menu" name="Stack">
         <menuitem action="layers-select-previous" />
         <menuitem action="layers-select-next" />
         <menuitem action="layers-select-top" />
@@ -157,7 +157,7 @@
         <menuitem action="layers-raise-to-top" />
         <menuitem action="layers-lower-to-bottom" />
       </menu>
-      <menu action="layers-colors-menu">
+      <menu action="layers-colors-menu" name="Colors">
         <menuitem action="tools-color-balance" />
         <menuitem action="tools-hue-saturation" />
         <menuitem action="tools-colorize" />
@@ -169,13 +169,13 @@
 	<separator />
         <menuitem action="drawable-desaturate" />
         <menuitem action="drawable-invert" />
-	<menu action="layers-colors-auto-menu">
+	<menu action="layers-colors-auto-menu" name="Auto">
 	  <menuitem action="drawable-equalize" />
 	</menu>
 	<separator />
         <menuitem action="dialogs-histogram" />
       </menu>
-      <menu action="layers-mask-menu">
+      <menu action="layers-mask-menu" name="Mask">
         <menuitem action="layers-mask-add" />
         <menuitem action="layers-mask-apply" />
         <menuitem action="layers-mask-delete" />
@@ -185,7 +185,7 @@
         <menuitem action="layers-mask-selection-subtract" />
         <menuitem action="layers-mask-selection-intersect" />
       </menu>
-      <menu action="layers-transparency-menu">
+      <menu action="layers-transparency-menu" name="Transparency">
         <menuitem action="layers-alpha-add" />
 	<separator />
 	<menuitem action="layers-alpha-selection-replace" />
@@ -194,7 +194,7 @@
 	<menuitem action="layers-alpha-selection-intersect" />
 	<separator />
       </menu>
-      <menu action="layers-transform-menu">
+      <menu action="layers-transform-menu" name="Transform">
         <menuitem action="drawable-flip-horizontal" />
         <menuitem action="drawable-flip-vertical" />
 	<separator />
@@ -212,19 +212,19 @@
       <separator />
     </menu>
 
-    <menu action="tools-menu">
+    <menu action="tools-menu" name="Tools">
       <menuitem action="dialogs-toolbox" />
       <menuitem action="tools-default-colors" />
       <menuitem action="tools-swap-colors" />
       <separator />
-      <menu action="tools-select-menu">
+      <menu action="tools-select-menu" name="Selection Tools">
 	<menuitem action="tools-rect-select" />
 	<menuitem action="tools-ellipse-select" />
 	<menuitem action="tools-free-select" />
 	<menuitem action="tools-by-color-select" />
 	<menuitem action="tools-iscissors" />
       </menu>
-      <menu action="tools-paint-menu">
+      <menu action="tools-paint-menu" name="Paint Tools">
 	<menuitem action="tools-bucket-fill" />
 	<menuitem action="tools-blend" />
 	<menuitem action="tools-pencil" />
@@ -237,7 +237,7 @@
 	<menuitem action="tools-smudge" />
 	<menuitem action="tools-dodge-burn" />
       </menu>
-      <menu action="tools-transform-menu">
+      <menu action="tools-transform-menu" name="Transform Tools">
 	<menuitem action="tools-move" />
 	<menuitem action="tools-crop" />
 	<menuitem action="tools-rotate" />
@@ -245,7 +245,7 @@
 	<menuitem action="tools-perspective" />
 	<menuitem action="tools-flip" />
       </menu>
-      <menu action="tools-color-menu">
+      <menu action="tools-color-menu" name="Color Tools">
 	<menuitem action="tools-color-balance" />
 	<menuitem action="tools-hue-saturation" />
 	<menuitem action="tools-colorize" />
@@ -262,8 +262,8 @@
       <menuitem action="tools-text" />
     </menu>
 
-    <menu action="dialogs-menu">
-      <menu action="dialogs-new-dock-menu">
+    <menu action="dialogs-menu" name="Dialogs">
+      <menu action="dialogs-new-dock-menu" name="Create New Dock">
 	<menuitem action="dialogs-new-dock-lcp" />
 	<menuitem action="dialogs-new-dock-data" />
 	<menuitem action="dialogs-new-dock-stuff" />
@@ -295,52 +295,52 @@
       <menuitem action="dialogs-error-console" />
     </menu>
 
-    <menu action="plug-in-menu">
+    <menu action="plug-in-menu" name="Filters">
       <menuitem action="plug-in-repeat" />
       <menuitem action="plug-in-reshow" />
       <separator />
-      <menu action="plug-in-blur-menu">
+      <menu action="plug-in-blur-menu" name="Blur">
       </menu>
-      <menu action="plug-in-colors-menu">
-	<menu action="plug-in-colors-map-menu">
+      <menu action="plug-in-colors-menu" name="Colors">
+	<menu action="plug-in-colors-map-menu" name="Map">
 	</menu>
       </menu>
-      <menu action="plug-in-noise-menu">
+      <menu action="plug-in-noise-menu" name="Noise">
       </menu>
-      <menu action="plug-in-edge-detect-menu">
+      <menu action="plug-in-edge-detect-menu" name="Edge Detect">
       </menu>
-      <menu action="plug-in-enhance-menu">
+      <menu action="plug-in-enhance-menu" name="Enhance">
       </menu>
-      <menu action="plug-in-generic-menu">
+      <menu action="plug-in-generic-menu" name="Generic">
       </menu>
       <separator />
-      <menu action="plug-in-glass-effects-menu">
+      <menu action="plug-in-glass-effects-menu" name="Glass Effects">
       </menu>
-      <menu action="plug-in-light-effects-menu">
+      <menu action="plug-in-light-effects-menu" name="Light Effects">
       </menu>
-      <menu action="plug-in-distorts-menu">
+      <menu action="plug-in-distorts-menu" name="Distorts">
       </menu>
-      <menu action="plug-in-artistic-menu">
+      <menu action="plug-in-artistic-menu" name="Artistic">
       </menu>
-      <menu action="plug-in-map-menu">
+      <menu action="plug-in-map-menu" name="Map">
       </menu>
-      <menu action="plug-in-render-menu">
-	<menu action="plug-in-render-clouds-menu">
+      <menu action="plug-in-render-menu" name="Render">
+	<menu action="plug-in-render-clouds-menu" name="Clouds">
 	</menu>
-	<menu action="plug-in-render-nature-menu">
+	<menu action="plug-in-render-nature-menu" name="Nature">
 	</menu>
-	<menu action="plug-in-render-pattern-menu">
+	<menu action="plug-in-render-pattern-menu" name="Pattern">
 	</menu>
       </menu>
-      <menu action="plug-in-web-menu">
+      <menu action="plug-in-web-menu" name="Web">
       </menu>
       <separator />
-      <menu action="plug-in-animation-menu">
+      <menu action="plug-in-animation-menu" name="Animation">
       </menu>
-      <menu action="plug-in-combine-menu">
+      <menu action="plug-in-combine-menu" name="Combine">
       </menu>
       <separator />
-      <menu action="plug-in-toys-menu">
+      <menu action="plug-in-toys-menu" name="Toys">
       </menu>
     </menu>
 

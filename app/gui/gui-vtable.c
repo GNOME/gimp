@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -236,6 +238,21 @@ gui_menus_create_entry (Gimp          *gimp,
       plug_in_actions_add_proc (list->data, proc_def);
     }
 
+  for (list = gimp_ui_managers_from_name ("<Image>");
+       list;
+       list = g_list_next (list))
+    {
+      if (! strncmp (proc_def->menu_path, "<Toolbox>", 9))
+        {
+          plug_in_menus_add_proc (list->data, "/toolbox-menubar", proc_def);
+        }
+      else if (! strncmp (proc_def->menu_path, "<Image>", 7))
+        {
+          plug_in_menus_add_proc (list->data, "/image-menubar", proc_def);
+          plug_in_menus_add_proc (list->data, "/image-popup",   proc_def);
+        }
+    }
+
   progname = plug_in_proc_def_get_progname (proc_def);
 
   locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
@@ -251,6 +268,13 @@ gui_menus_delete_entry (Gimp          *gimp,
   GList *list;
 
   plug_in_menus_delete_entry (proc_def);
+
+  for (list = gimp_ui_managers_from_name ("<Image>");
+       list;
+       list = g_list_next (list))
+    {
+      plug_in_menus_remove_proc (list->data, proc_def);
+    }
 
   for (list = gimp_action_groups_from_name ("plug-in");
        list;

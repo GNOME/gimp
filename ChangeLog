@@ -1,5 +1,40 @@
 2004-04-27  Michael Natterer  <mitch@gimp.org>
 
+	Correctly translated & sorted plug-in actions & menu entries:
+
+	* app/widgets/gimpuimanager.[ch]: added a "gchar *name" property
+	and a hash table which keeps all created UI managers (similar to
+	GimpActionGroup's hash table). Added function
+	gimp_ui_managers_from_name() which returns a list of all managers
+	with the given name.
+
+	* app/widgets/gimpmenufactory.c: register a name per UI manager
+	and pass the name to gimp_ui_manager_new().
+
+	* app/actions/plug-in-actions.c: added code which correctly
+	translates the created plug-in actions and also creates translated
+	menu actions for the plug-in's menu_path elements.
+
+	* app/gui/plug-in-menus.[ch]: sort the plug-ins' menu entries
+	using a GTree. For each entry, recursivlely create submenus
+	from the dynamic menu actions created above before creating
+	the plug-in's menu entry itself.
+
+	* app/gui/image-menu.c (image_menu_setup2)
+	* app/gui/toolbox-menu.c (toolbox_menu_setup2): call
+	plug_in_menus_create2().
+
+	* app/gui/gui-vtable.c (gui_menus_create_entry)
+	(gui_menus_delete_entry): added some uglyness which maps old <Prefix>
+	menu identifiers to new-style UI manager plus ui_path tuples and
+	call plug_in_menus_add,remove_proc() accordingly.
+
+	* menus/image-menu.xml
+	* menus/toolbox-menu.xml: added name="Foo" attributes to all menus
+	so plug-in entries find their place.
+
+2004-04-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/gui.c (gui_restore_callback): call actions_init()
 	(gui_exit_after_callback): call actions_exit().
 

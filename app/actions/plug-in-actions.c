@@ -50,6 +50,15 @@
 #include "gimp-intl.h"
 
 
+/*  local function prototypes  */
+
+static void   plug_in_actions_build_path (GimpActionGroup *group,
+                                          const gchar     *path_original,
+                                          const gchar     *path_translated);
+
+
+/*  private variables  */
+
 static GimpActionEntry plug_in_actions[] =
 {
   { "plug-in-menu",                NULL, N_("Filte_rs")       },
@@ -131,7 +140,7 @@ plug_in_actions_update (GimpActionGroup *group,
 {
   GimpImage     *gimage = NULL;
   GimpImageType  type   = -1;
-  GList         *list;
+  GSList        *list;
 
   if (GIMP_IS_ITEM_TREE_VIEW (data))
     gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
@@ -254,12 +263,13 @@ void
 plug_in_actions_add_proc (GimpActionGroup *group,
                           PlugInProcDef   *proc_def)
 {
-  GimpActionEntry  entry;
-  const gchar     *progname;
-  const gchar     *locale_domain;
-  const gchar     *help_domain;
-  gchar           *label;
-  gchar           *help_id;
+  const gchar *progname;
+  const gchar *locale_domain;
+  const gchar *help_domain;
+  gchar       *path_original;
+  gchar       *path_translated;
+  gchar       *help_id;
+  gchar       *p1, *p2;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (proc_def != NULL);
@@ -271,27 +281,44 @@ plug_in_actions_add_proc (GimpActionGroup *group,
 
   help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
 
-  label = g_strdup (strrchr (proc_def->menu_path, '/') + 1);
+  path_original   = g_strdup (proc_def->menu_path);
+  path_translated = g_strdup (dgettext (locale_domain, path_original));
 
-  entry.name        = proc_def->db_info.name;
-  entry.stock_id    = NULL;
-  entry.label       = label;
-  entry.accelerator = proc_def->accelerator;
-  entry.tooltip     = NULL;
-  entry.callback    = G_CALLBACK (plug_in_run_cmd_callback);
-  entry.help_id     = help_id;
+  p1 = strrchr (path_original, '/');
+  p2 = strrchr (path_translated, '/');
 
-  g_print ("adding plug-in action '%s' (%s)\n",
-           entry.name, label);
+  if (p1 && p2)
+    {
+      gchar     *label;
+      GtkAction *action;
 
-  g_object_set (group, "translation-domain", locale_domain, NULL);
+      label = p2 + 1;
 
-  gimp_action_group_add_actions (group, &entry, 1, &proc_def->db_info);
+      g_print ("adding plug-in action '%s' (%s)\n",
+               proc_def->db_info.name, label);
 
-  g_object_set (group, "translation-domain", NULL, NULL);
+      action = gtk_action_new (proc_def->db_info.name, label, NULL, NULL);
 
-  g_free (label);
-  g_free (help_id);
+      g_signal_connect (action, "activate",
+                        G_CALLBACK (plug_in_run_cmd_callback),
+                        &proc_def->db_info);
+
+      gtk_action_group_add_action_with_accel (GTK_ACTION_GROUP (group),
+                                              action,
+                                              proc_def->accelerator);
+
+      g_object_unref (action);
+
+      g_free (help_id);
+
+      *p1 = '\0';
+      *p2 = '\0';
+
+      plug_in_actions_build_path (group, path_original, path_translated);
+
+      g_free (path_original);
+      g_free (path_translated);
+    }
 }
 
 void
@@ -312,5 +339,62 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
                proc_def->db_info.name);
 
       gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+    }
+}
+
+
+/*  private functions  */
+
+static void
+plug_in_actions_build_path (GimpActionGroup *group,
+                            const gchar     *path_original,
+                            const gchar     *path_translated)
+{
+  GHashTable *path_table;
+  gchar      *p1, *p2;
+
+  path_table = g_object_get_data (G_OBJECT (group), "plug-in-path-table");
+
+  if (! path_table)
+    {
+      path_table = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                          g_free, NULL);
+
+      g_object_set_data_full (G_OBJECT (group), "plug-in-path-table",
+                              path_table,
+                              (GDestroyNotify) g_hash_table_destroy);
+    }
+
+  p1 = strrchr (path_original, '/');
+  p2 = strrchr (path_translated, '/');
+
+  if (p1 && p2 && ! g_hash_table_lookup (path_table, path_original))
+    {
+      gchar     *copy_original   = g_strdup (path_original);
+      gchar     *copy_translated = g_strdup (path_translated);
+      gchar     *label;
+      GtkAction *action;
+
+      label = p2 + 1;
+
+      g_print ("adding plug-in submenu '%s' (%s)\n",
+               path_original, label);
+
+      action = gtk_action_new (path_original, label, NULL, NULL);
+      gtk_action_group_add_action (GTK_ACTION_GROUP (group), action);
+      g_object_unref (action);
+
+      g_hash_table_insert (path_table, g_strdup (path_original), action);
+
+      p1 = strrchr (copy_original, '/');
+      p2 = strrchr (copy_translated, '/');
+
+      *p1 = '\0';
+      *p2 = '\0';
+
+      plug_in_actions_build_path (group, copy_original, copy_translated);
+
+      g_free (copy_original);
+      g_free (copy_translated);
     }
 }

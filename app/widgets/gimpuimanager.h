@@ -51,6 +51,7 @@ struct _GimpUIManager
 {
   GtkUIManager  parent_instance;
 
+  gchar        *name;
   Gimp         *gimp;
   GList        *registered_uis;
 };
@@ -58,11 +59,16 @@ struct _GimpUIManager
 struct _GimpUIManagerClass
 {
   GtkUIManagerClass  parent_class;
+
+  GHashTable        *managers;
 };
 
 
 GType           gimp_ui_manager_get_type    (void);
-GimpUIManager * gimp_ui_manager_new         (Gimp *gimp);
+GimpUIManager * gimp_ui_manager_new         (Gimp                   *gimp,
+                                             const gchar            *name);
+
+GList         * gimp_ui_managers_from_name  (const gchar            *name);
 
 void            gimp_ui_manager_update      (GimpUIManager          *manager,
                                              gpointer                update_data);

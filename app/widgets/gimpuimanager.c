@@ -38,22 +38,27 @@
 enum
 {
   PROP_0,
+  PROP_NAME,
   PROP_GIMP
 };
 
 
-static void   gimp_ui_manager_init         (GimpUIManager      *manager);
-static void   gimp_ui_manager_class_init   (GimpUIManagerClass *klass);
+static void   gimp_ui_manager_init           (GimpUIManager         *manager);
+static void   gimp_ui_manager_class_init     (GimpUIManagerClass    *klass);
 
-static void   gimp_ui_manager_finalize     (GObject            *object);
-static void   gimp_ui_manager_set_property (GObject            *object,
-                                            guint               prop_id,
-                                            const GValue       *value,
-                                            GParamSpec         *pspec);
-static void   gimp_ui_manager_get_property (GObject            *object,
-                                            guint               prop_id,
-                                            GValue             *value,
-                                            GParamSpec         *pspec);
+static GObject * gimp_ui_manager_constructor (GType                  type,
+                                              guint                  n_params,
+                                              GObjectConstructParam *params);
+static void   gimp_ui_manager_dispose        (GObject               *object);
+static void   gimp_ui_manager_finalize       (GObject               *object);
+static void   gimp_ui_manager_set_property   (GObject               *object,
+                                              guint                  prop_id,
+                                              const GValue          *value,
+                                              GParamSpec            *pspec);
+static void   gimp_ui_manager_get_property   (GObject               *object,
+                                              guint                  prop_id,
+                                              GValue                *value,
+                                              GParamSpec            *pspec);
 
 
 static GtkUIManagerClass *parent_class = NULL;
@@ -94,9 +99,18 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_ui_manager_constructor;
+  object_class->dispose      = gimp_ui_manager_dispose;
   object_class->finalize     = gimp_ui_manager_finalize;
   object_class->set_property = gimp_ui_manager_set_property;
   object_class->get_property = gimp_ui_manager_get_property;
+
+  g_object_class_install_property (object_class, PROP_NAME,
+                                   g_param_spec_string ("name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -104,12 +118,74 @@ gimp_ui_manager_class_init (GimpUIManagerClass *klass)
                                                         GIMP_TYPE_GIMP,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  klass->managers = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                           g_free, NULL);
 }
 
 static void
 gimp_ui_manager_init (GimpUIManager *manager)
 {
+  manager->name = NULL;
   manager->gimp = NULL;
+}
+
+static GObject *
+gimp_ui_manager_constructor (GType                  type,
+                             guint                  n_params,
+                             GObjectConstructParam *params)
+{
+  GObject       *object;
+  GimpUIManager *manager;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  manager = GIMP_UI_MANAGER (object);
+
+  if (manager->name)
+    {
+      GimpUIManagerClass *manager_class;
+      GList              *list;
+
+      manager_class = GIMP_UI_MANAGER_GET_CLASS (object);
+
+      list = g_hash_table_lookup (manager_class->managers, manager->name);
+
+      list = g_list_append (list, manager);
+
+      g_hash_table_replace (manager_class->managers,
+                            g_strdup (manager->name), list);
+    }
+
+  return object;
+}
+
+static void
+gimp_ui_manager_dispose (GObject *object)
+{
+  GimpUIManager *manager = GIMP_UI_MANAGER (object);
+
+  if (manager->name)
+    {
+      GimpUIManagerClass *manager_class;
+      GList              *list;
+
+      manager_class = GIMP_UI_MANAGER_GET_CLASS (object);
+
+      list = g_hash_table_lookup (manager_class->managers, manager->name);
+
+      if (list)
+        {
+          list = g_list_remove (list, manager);
+
+          if (list)
+            g_hash_table_replace (manager_class->managers,
+                                  g_strdup (manager->name), list);
+          else
+            g_hash_table_remove (manager_class->managers, manager->name);
+        }
+    }
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -134,6 +210,12 @@ gimp_ui_manager_finalize (GObject *object)
   g_list_free (manager->registered_uis);
   manager->registered_uis = NULL;
 
+  if (manager->name)
+    {
+      g_free (manager->name);
+      manager->name = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -147,6 +229,10 @@ gimp_ui_manager_set_property (GObject      *object,
 
   switch (prop_id)
     {
+    case PROP_NAME:
+      g_free (manager->name);
+      manager->name = g_value_dup_string (value);
+      break;
     case PROP_GIMP:
       manager->gimp = g_value_get_object (value);
       break;
@@ -166,6 +252,9 @@ gimp_ui_manager_get_property (GObject    *object,
 
   switch (prop_id)
     {
+    case PROP_NAME:
+      g_value_set_string (value, manager->name);
+      break;
     case PROP_GIMP:
       g_value_set_object (value, manager->gimp);
       break;
@@ -184,17 +273,36 @@ gimp_ui_manager_get_property (GObject    *object,
  * Returns: the new #GimpUIManager
  */
 GimpUIManager *
-gimp_ui_manager_new (Gimp *gimp)
+gimp_ui_manager_new (Gimp        *gimp,
+                     const gchar *name)
 {
   GimpUIManager *manager;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   manager = g_object_new (GIMP_TYPE_UI_MANAGER,
+                          "name", name,
                           "gimp", gimp,
                           NULL);
 
   return manager;
+}
+
+GList *
+gimp_ui_managers_from_name (const gchar *name)
+{
+  GimpUIManagerClass *manager_class;
+  GList              *list;
+
+  g_return_val_if_fail (name != NULL, NULL);
+
+  manager_class = g_type_class_ref (GIMP_TYPE_UI_MANAGER);
+
+  list = g_hash_table_lookup (manager_class->managers, name);
+
+  g_type_class_unref (manager_class);
+
+  return list;
 }
 
 void

@@ -4,20 +4,20 @@
 <ui>
   <menubar action="toolbox-menubar">
 
-    <menu action="file-menu">
+    <menu action="file-menu" name="File">
       <menuitem action="file-new" />
       <menuitem action="file-open" />
-      <menu action="file-open-recent-menu">
+      <menu action="file-open-recent-menu" name="Open Recent">
         <placeholder name="file-open-recent-placeholder" />
         <separator />
         <menuitem action="dialogs-document-history" />
       </menu>
-      <menu action="file-acquire-menu">
+      <menu action="file-acquire-menu" name="Acquire">
       </menu>
       <separator />
       <menuitem action="dialogs-preferences" />
-      <menu action="dialogs-menu">
-        <menu action="dialogs-new-dock-menu">
+      <menu action="dialogs-menu" name="Dialogs">
+        <menu action="dialogs-new-dock-menu" name="Create New Dock">
           <menuitem action="dialogs-new-dock-lcp" />
           <menuitem action="dialogs-new-dock-data" />
           <menuitem action="dialogs-new-dock-stuff" />
@@ -48,7 +48,7 @@
         <menuitem action="dialogs-tools" />
         <menuitem action="dialogs-error-console" />
       </menu>
-      <menu action="debug-menu">
+      <menu action="debug-menu" name="Debug">
         <menuitem action="debug-mem-profile" />
         <menuitem action="debug-dump-items" />
       </menu>
@@ -56,12 +56,12 @@
       <menuitem action="file-quit" />
     </menu>
 
-    <menu action="extensions-menu">
+    <menu action="extensions-menu" name="Xtns">
       <menuitem action="dialogs-module-manager" />
       <separator />
     </menu>
 
-    <menu action="help-menu">
+    <menu action="help-menu" name="Help">
       <menuitem action="help-help" />
       <menuitem action="help-context-help" />
       <separator />

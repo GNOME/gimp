@@ -24,6 +24,14 @@ void   plug_in_menus_init         (Gimp            *gimp,
                                    GSList          *plug_in_defs,
                                    const gchar     *std_plugins_domain);
 
+void   plug_in_menus_create2      (GimpUIManager   *manager,
+                                   const gchar     *ui_path);
+void   plug_in_menus_add_proc     (GimpUIManager   *manager,
+                                   const gchar     *ui_path,
+                                   PlugInProcDef   *proc_def);
+void   plug_in_menus_remove_proc  (GimpUIManager   *manager,
+                                   PlugInProcDef   *proc_def);
+
 void   plug_in_menus_create       (GimpItemFactory *item_factory,
                                    GSList          *proc_defs);
 void   plug_in_menus_create_entry (GimpItemFactory *item_factory,
