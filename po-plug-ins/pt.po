@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-09 17:46+0100\n"
-"PO-Revision-Date: 2003-09-09 18:00+0000\n"
+"POT-Creation-Date: 2003-09-12 15:28+0100\n"
+"PO-Revision-Date: 2003-09-12 15:30+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -244,8 +244,8 @@ msgstr "Densidade Cores"
 #. These values are translated for the GUI but also used internally
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
-#: plug-ins/FractalExplorer/Dialogs.c:697 plug-ins/common/compose.c:138
-#: plug-ins/common/compose.c:148 plug-ins/fp/fp_gtk.c:25
+#: plug-ins/FractalExplorer/Dialogs.c:697 plug-ins/common/compose.c:133
+#: plug-ins/common/compose.c:143 plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Vermelho:"
 
@@ -253,8 +253,8 @@ msgstr "Vermelho:"
 msgid "Change the intensity of the red channel"
 msgstr "Altera intensidade do canal vermelho"
 
-#: plug-ins/FractalExplorer/Dialogs.c:707 plug-ins/common/compose.c:139
-#: plug-ins/common/compose.c:149 plug-ins/fp/fp_gtk.c:26
+#: plug-ins/FractalExplorer/Dialogs.c:707 plug-ins/common/compose.c:134
+#: plug-ins/common/compose.c:144 plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Verde:"
 
@@ -262,8 +262,8 @@ msgstr "Verde:"
 msgid "Change the intensity of the green channel"
 msgstr "Altera intensidade do canal verde"
 
-#: plug-ins/FractalExplorer/Dialogs.c:717 plug-ins/common/compose.c:140
-#: plug-ins/common/compose.c:150 plug-ins/fp/fp_gtk.c:27
+#: plug-ins/FractalExplorer/Dialogs.c:717 plug-ins/common/compose.c:135
+#: plug-ins/common/compose.c:145 plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Azul:"
 
@@ -278,7 +278,7 @@ msgstr "Função Cores"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:737 plug-ins/common/AlienMap.c:1230
-#: plug-ins/common/decompose.c:121
+#: plug-ins/common/decompose.c:128
 msgid "Red"
 msgstr "Vermelho"
 
@@ -344,13 +344,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:778 plug-ins/common/AlienMap.c:1253
-#: plug-ins/common/decompose.c:122
+#: plug-ins/common/decompose.c:129
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/AlienMap.c:1276
-#: plug-ins/common/decompose.c:127
+#: plug-ins/common/decompose.c:134
 msgid "Blue"
 msgstr "Azul"
 
@@ -1207,8 +1207,8 @@ msgstr ""
 #. Create an indexed-alpha layer to hold the image...
 #: plug-ins/bmp/bmpread.c:328 plug-ins/bmp/bmpread.c:336
 #: plug-ins/bmp/bmpread.c:344 plug-ins/common/CEL.c:295
-#: plug-ins/common/blinds.c:321 plug-ins/common/compose.c:617
-#: plug-ins/common/decompose.c:501 plug-ins/common/film.c:979
+#: plug-ins/common/blinds.c:321 plug-ins/common/compose.c:618
+#: plug-ins/common/decompose.c:576 plug-ins/common/film.c:979
 #: plug-ins/common/gifload.c:856 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:930 plug-ins/common/pat.c:338
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
@@ -1680,18 +1680,18 @@ msgstr "Aleatórios a partir da origem"
 msgid "Randoms from seed (shared)"
 msgstr "Aleatórios a partir da origem (partilhados)"
 
-#: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:131
+#: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:138
 #: plug-ins/gimpressionist/orientation.c:167
 #: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
 msgstr "Matiz"
 
-#: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
+#: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:139
 #: plug-ins/fp/fp_gtk.c:497 plug-ins/rcm/rcm_dialog.c:543
 msgid "Saturation"
 msgstr "Saturação"
 
-#: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:133
+#: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:140
 #: plug-ins/gimpressionist/orientation.c:108
 #: plug-ins/gimpressionist/size.c:106
 msgid "Value"
@@ -2528,109 +2528,113 @@ msgstr "Cor para Selector de Cor Alfa"
 msgid "to Alpha"
 msgstr "para Alfa"
 
-#: plug-ins/common/compose.c:137 plug-ins/common/decompose.c:118
+#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: plug-ins/common/compose.c:147 plug-ins/common/decompose.c:123
+#: plug-ins/common/compose.c:142 plug-ins/common/decompose.c:130
 msgid "RGBA"
 msgstr "RGBA"
 
-#: plug-ins/common/compose.c:151
+#: plug-ins/common/compose.c:146
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: plug-ins/common/compose.c:157 plug-ins/common/decompose.c:128
+#: plug-ins/common/compose.c:152 plug-ins/common/decompose.c:135
 msgid "HSV"
 msgstr "HSV"
 
 #. Gray: Circle: Spinbutton 1
-#: plug-ins/common/compose.c:158 plug-ins/rcm/rcm_dialog.c:456
+#: plug-ins/common/compose.c:153 plug-ins/rcm/rcm_dialog.c:456
 msgid "Hue:"
 msgstr "Matiz:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:159 plug-ins/print/gimp_color_window.c:338
+#: plug-ins/common/compose.c:154 plug-ins/print/gimp_color_window.c:338
 #: plug-ins/rcm/rcm_dialog.c:482
 msgid "Saturation:"
 msgstr "Saturação:"
 
-#: plug-ins/common/compose.c:160
+#: plug-ins/common/compose.c:155
 msgid "Value:"
 msgstr "Valor:"
 
-#: plug-ins/common/compose.c:164 plug-ins/common/decompose.c:134
+#: plug-ins/common/compose.c:159 plug-ins/common/decompose.c:141
 msgid "CMY"
 msgstr "CMY"
 
-#: plug-ins/common/compose.c:165 plug-ins/common/compose.c:172
+#: plug-ins/common/compose.c:160 plug-ins/common/compose.c:167
 #: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:281
 msgid "Cyan:"
 msgstr "Ciano:"
 
-#: plug-ins/common/compose.c:166 plug-ins/common/compose.c:173
+#: plug-ins/common/compose.c:161 plug-ins/common/compose.c:168
 #: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:300
 msgid "Magenta:"
 msgstr "Magenta:"
 
-#: plug-ins/common/compose.c:167 plug-ins/common/compose.c:174
+#: plug-ins/common/compose.c:162 plug-ins/common/compose.c:169
 #: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:319
 msgid "Yellow:"
 msgstr "Amarelo:"
 
-#: plug-ins/common/compose.c:171 plug-ins/common/decompose.c:140
+#: plug-ins/common/compose.c:166 plug-ins/common/decompose.c:147
 msgid "CMYK"
 msgstr "CMYK"
 
-#: plug-ins/common/compose.c:175
+#: plug-ins/common/compose.c:170
 msgid "Black:"
 msgstr "Preto:"
 
-#: plug-ins/common/compose.c:179
+#: plug-ins/common/compose.c:173 plug-ins/common/decompose.c:156
+msgid "LAB"
+msgstr "LAB"
+
+#: plug-ins/common/compose.c:181
 msgid "Luma_y470:"
 msgstr "Luma_y470:"
 
-#: plug-ins/common/compose.c:180
+#: plug-ins/common/compose.c:182
 msgid "Blueness_cb470:"
 msgstr "Azulado_cb470:"
 
-#: plug-ins/common/compose.c:181
+#: plug-ins/common/compose.c:183
 msgid "Redness_cr470:"
 msgstr "Avermelhado_cr470:"
 
-#: plug-ins/common/compose.c:186
+#: plug-ins/common/compose.c:188
 msgid "Luma_y709:"
 msgstr "Luma_y709:"
 
-#: plug-ins/common/compose.c:187
+#: plug-ins/common/compose.c:189
 msgid "Blueness_cb709:"
 msgstr "Azulado_cb709:"
 
-#: plug-ins/common/compose.c:188
+#: plug-ins/common/compose.c:190
 msgid "Redness_cr709:"
 msgstr "Avermelhado_cr709:"
 
-#: plug-ins/common/compose.c:193
+#: plug-ins/common/compose.c:195
 msgid "Luma_y470f:"
 msgstr "Luma_y470f:"
 
-#: plug-ins/common/compose.c:194
+#: plug-ins/common/compose.c:196
 msgid "Blueness_cb470f:"
 msgstr "Azulado_cb470f:"
 
-#: plug-ins/common/compose.c:195
+#: plug-ins/common/compose.c:197
 msgid "Redness_cr470f:"
 msgstr "Avermelhado_cd470f:"
 
-#: plug-ins/common/compose.c:200
+#: plug-ins/common/compose.c:202
 msgid "Luma_y709f:"
 msgstr "Luma_y709f:"
 
-#: plug-ins/common/compose.c:201
+#: plug-ins/common/compose.c:203
 msgid "Blueness_cb709f:"
 msgstr "Azulado_cb709f:"
 
-#: plug-ins/common/compose.c:202
+#: plug-ins/common/compose.c:204
 msgid "Redness_cr709f:"
 msgstr "Avermelhado_cr709f:"
 
@@ -2647,29 +2651,29 @@ msgstr "Incapaz de obter camadas para imagem %d"
 msgid "Composing..."
 msgstr "A Compor..."
 
-#: plug-ins/common/compose.c:484
+#: plug-ins/common/compose.c:485
 msgid "Drawables have different size"
 msgstr "Desenhos têm diferentes tamanhos"
 
-#: plug-ins/common/compose.c:501
+#: plug-ins/common/compose.c:502
 msgid "Images have different size"
 msgstr "Imagens têm diferentes tamanhos"
 
-#: plug-ins/common/compose.c:515
+#: plug-ins/common/compose.c:516
 msgid "Error in getting layer IDs"
 msgstr "Erro ao obter IDs camadas"
 
-#: plug-ins/common/compose.c:532
+#: plug-ins/common/compose.c:533
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Imagem não é uma imagem cinza (bpp=%d)"
 
-#: plug-ins/common/compose.c:1018
+#: plug-ins/common/compose.c:1091
 msgid "Compose"
 msgstr "Compor"
 
 #. The left frame keeps the compose type toggles
-#: plug-ins/common/compose.c:1041
+#: plug-ins/common/compose.c:1114
 msgid "Compose Channels"
 msgstr "Compor Canais"
 
@@ -2677,7 +2681,7 @@ msgstr "Compor Canais"
 #. Because the labels within this frame will change when a toggle
 #. in the left frame is changed, fill in the right part first.
 #. Otherwise it can occur, that a non-existing label might be changed.
-#: plug-ins/common/compose.c:1054
+#: plug-ins/common/compose.c:1127
 msgid "Channel Representations"
 msgstr "Representações Canais"
 
@@ -2983,157 +2987,161 @@ msgstr "Gravar Pontos de Curva para ficheiro"
 msgid "Curve Bend..."
 msgstr "Curvar..."
 
-#: plug-ins/common/decompose.c:118 plug-ins/common/decompose.c:121
-#: plug-ins/common/decompose.c:123
+#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
+#: plug-ins/common/decompose.c:130
 msgid "red"
 msgstr "vermelho"
 
-#: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
-#: plug-ins/common/decompose.c:124
+#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
+#: plug-ins/common/decompose.c:131
 msgid "green"
 msgstr "verde"
 
-#: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:125
-#: plug-ins/common/decompose.c:127
+#: plug-ins/common/decompose.c:127 plug-ins/common/decompose.c:132
+#: plug-ins/common/decompose.c:134
 msgid "blue"
 msgstr "azul"
 
-#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:147
+#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:154
 msgid "alpha"
 msgstr "alfa"
 
-#: plug-ins/common/decompose.c:128 plug-ins/common/decompose.c:131
+#: plug-ins/common/decompose.c:135 plug-ins/common/decompose.c:138
 msgid "hue"
 msgstr "matiz"
 
-#: plug-ins/common/decompose.c:129 plug-ins/common/decompose.c:132
+#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:139
 msgid "saturation"
 msgstr "saturação"
 
-#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
+#: plug-ins/common/decompose.c:137 plug-ins/common/decompose.c:140
 msgid "value"
 msgstr "valor"
 
-#: plug-ins/common/decompose.c:134 plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:144
 msgid "cyan"
 msgstr "ciano"
 
-#: plug-ins/common/decompose.c:135 plug-ins/common/decompose.c:138
+#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:145
 msgid "magenta"
 msgstr "magenta"
 
-#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:143 plug-ins/common/decompose.c:146
 msgid "yellow"
 msgstr "amarelo"
 
-#: plug-ins/common/decompose.c:137
+#: plug-ins/common/decompose.c:144
 msgid "Cyan"
 msgstr "Ciano"
 
-#: plug-ins/common/decompose.c:138
+#: plug-ins/common/decompose.c:145
 msgid "Magenta"
 msgstr "Magenta"
 
-#: plug-ins/common/decompose.c:139
+#: plug-ins/common/decompose.c:146
 msgid "Yellow"
 msgstr "Amarelo"
 
-#: plug-ins/common/decompose.c:140 plug-ins/common/decompose.c:144
+#: plug-ins/common/decompose.c:147 plug-ins/common/decompose.c:151
 msgid "cyan_k"
 msgstr "ciano_k"
 
-#: plug-ins/common/decompose.c:141 plug-ins/common/decompose.c:145
+#: plug-ins/common/decompose.c:148 plug-ins/common/decompose.c:152
 msgid "magenta_k"
 msgstr "magenta_k"
 
-#: plug-ins/common/decompose.c:142 plug-ins/common/decompose.c:146
+#: plug-ins/common/decompose.c:149 plug-ins/common/decompose.c:153
 msgid "yellow_k"
 msgstr "amarelo_k"
 
-#: plug-ins/common/decompose.c:143
+#: plug-ins/common/decompose.c:150
 msgid "black"
 msgstr "preto"
 
-#: plug-ins/common/decompose.c:144
+#: plug-ins/common/decompose.c:151
 msgid "Cyan_K"
 msgstr "Ciano_K"
 
-#: plug-ins/common/decompose.c:145
+#: plug-ins/common/decompose.c:152
 msgid "Magenta_K"
 msgstr "Magenta_K"
 
-#: plug-ins/common/decompose.c:146
+#: plug-ins/common/decompose.c:153
 msgid "Yellow_K"
 msgstr "Amarelo_K"
 
-#: plug-ins/common/decompose.c:147
+#: plug-ins/common/decompose.c:154
 msgid "Alpha"
 msgstr "Alfa"
 
-#: plug-ins/common/decompose.c:149
+#: plug-ins/common/decompose.c:161
 msgid "luma_y470"
 msgstr "luma_y470"
 
-#: plug-ins/common/decompose.c:150
+#: plug-ins/common/decompose.c:162
 msgid "blueness_cb470"
 msgstr "azulado_cd470"
 
-#: plug-ins/common/decompose.c:151
+#: plug-ins/common/decompose.c:163
 msgid "redness_cr470"
 msgstr "avermelhado_cr470"
 
-#: plug-ins/common/decompose.c:153
+#: plug-ins/common/decompose.c:165
 msgid "luma_y709"
 msgstr "luma_y709"
 
-#: plug-ins/common/decompose.c:154
+#: plug-ins/common/decompose.c:166
 msgid "blueness_cb709"
 msgstr "azulado_cb709"
 
-#: plug-ins/common/decompose.c:155
+#: plug-ins/common/decompose.c:167
 msgid "redness_cr709"
 msgstr "avermelhado_cr709"
 
-#: plug-ins/common/decompose.c:157
+#: plug-ins/common/decompose.c:169
 msgid "luma_y470f"
 msgstr "luma_y407f"
 
-#: plug-ins/common/decompose.c:158
+#: plug-ins/common/decompose.c:170
 msgid "blueness_cb470f"
 msgstr "azulado_cb407f"
 
-#: plug-ins/common/decompose.c:159
+#: plug-ins/common/decompose.c:171
 msgid "redness_cr470f"
 msgstr "avermelhado_cr470f"
 
-#: plug-ins/common/decompose.c:161
+#: plug-ins/common/decompose.c:173
 msgid "luma_y709f"
 msgstr "luma_y709f"
 
-#: plug-ins/common/decompose.c:162
+#: plug-ins/common/decompose.c:174
 msgid "blueness_cb709f"
 msgstr "azulado_cb709f"
 
-#: plug-ins/common/decompose.c:163
+#: plug-ins/common/decompose.c:175
 msgid "redness_cr709f"
 msgstr "avermelhado_cr709f"
 
-#: plug-ins/common/decompose.c:229
+#: plug-ins/common/decompose.c:242
 msgid "<Image>/Filters/Colors/_Decompose..."
 msgstr "<Image>/Filtros/Cores/_Decompor..."
 
-#: plug-ins/common/decompose.c:310
+#: plug-ins/common/decompose.c:325
 msgid "Decomposing..."
 msgstr "A Decompor..."
 
-#: plug-ins/common/decompose.c:1047
+#: plug-ins/common/decompose.c:1178
 msgid "Decompose"
 msgstr "Decompor"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:1064
+#: plug-ins/common/decompose.c:1195
 msgid "Extract Channels:"
 msgstr "Extrair Canais:"
+
+#: plug-ins/common/decompose.c:1226
+msgid "Decompose to _Layers"
+msgstr "Decompor em _Camadas"
 
 #: plug-ins/common/deinterlace.c:91
 msgid "<Image>/Filters/Enhance/_Deinterlace..."
@@ -5942,49 +5950,49 @@ msgstr "_Saturação:"
 msgid "_Value:"
 msgstr "_Valor:"
 
-#: plug-ins/common/screenshot.c:137
+#: plug-ins/common/screenshot.c:136
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Ficheiro/Capturar/_Captura Ecrã..."
 
-#: plug-ins/common/screenshot.c:268
+#: plug-ins/common/screenshot.c:267
 msgid "Error grabbing the pointer"
 msgstr "Erro ao obter o apontador"
 
 #. main dialog
-#: plug-ins/common/screenshot.c:344 plug-ins/common/screenshot.c:512
+#: plug-ins/common/screenshot.c:343 plug-ins/common/screenshot.c:511
 msgid "Screen Shot"
 msgstr "Captura Ecrã"
 
-#: plug-ins/common/screenshot.c:361
+#: plug-ins/common/screenshot.c:360
 msgid "Loading Screen Shot..."
 msgstr "A Ler Captura Ecrã..."
 
-#: plug-ins/common/screenshot.c:438
+#: plug-ins/common/screenshot.c:437
 msgid "Specified window not found"
 msgstr "Janela especificada não encontrada"
 
-#: plug-ins/common/screenshot.c:470
+#: plug-ins/common/screenshot.c:469
 msgid "Error obtaining Screen Shot"
 msgstr "Erro ao obter Captura Ecrã"
 
 #. single window
-#: plug-ins/common/screenshot.c:536 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:535 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Capturar"
 
-#: plug-ins/common/screenshot.c:545
+#: plug-ins/common/screenshot.c:544
 msgid "a _Single Window"
 msgstr "uma Única _Janela"
 
-#: plug-ins/common/screenshot.c:560
+#: plug-ins/common/screenshot.c:559
 msgid "the _Whole Screen"
 msgstr "o Ecrã _Inteiro"
 
-#: plug-ins/common/screenshot.c:579
+#: plug-ins/common/screenshot.c:578
 msgid "_after"
 msgstr "_após"
 
-#: plug-ins/common/screenshot.c:592 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:591 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "Segundos Atraso"
 
