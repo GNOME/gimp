@@ -1,3 +1,8 @@
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_run): register a log handler for the
+	"Gimp-Actions" domain.
+
 2004-07-14  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* devel-docs/objects.txt: . . . and removed because it is
