@@ -39,6 +39,11 @@
 	- the cursor_update() functions are better than before but still evil.
 	- i probably broke some of them...
 
+	* app/tools/gimptool.c: fixed NULL pointer dereference by using
+	the tools's class name as identifier for gimp_statusbar_foo()
+	instead of accessing tool->tool_info (which may be NULL)
+	(spotted by David Odin).
+
 2002-02-03  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c: ref and sink the adjustment we use
