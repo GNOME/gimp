@@ -1,13 +1,15 @@
 # Dutch translation of The GIMP's plug-in strings.
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Branko Collin <collin@xs4all.nl>, 2001.
+# Branko Collin <collin@xs4all.nl>, 2001-2004.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
-"PO-Revision-Date: 2004-03-14 03:20+0100\n"
-"Last-Translator: Branko Collin <collin@xs4all.nl>\n"
+"POT-Creation-Date: 2004-10-16 18:19+0200\n"
+"PO-Revision-Date: 2004-08-18 01:05+0200\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -717,10 +719,11 @@ msgstr "Z:"
 msgid "Light source Z direction in XYZ space"
 msgstr "Z-richting van lichtbron in XYZ-ruimte"
 
+# What does 'Ins' mean?
 #: plug-ins/Lighting/lighting_ui.c:502
 #, fuzzy
 msgid "I_solate"
-msgstr "Deflate"
+msgstr "Datum"
 
 #: plug-ins/Lighting/lighting_ui.c:512
 #, fuzzy
@@ -890,23 +893,20 @@ msgid "Load Lighting Preset"
 msgstr "Lichteffecten"
 
 #: plug-ins/MapObject/mapobject_apply.c:273
-#, fuzzy
 msgid "Map to Plane..."
-msgstr "Laplace..."
+msgstr "Projecteren op platte vlak..."
 
 #: plug-ins/MapObject/mapobject_apply.c:276
 msgid "Map to Sphere..."
-msgstr ""
+msgstr "Projecteren op bol..."
 
 #: plug-ins/MapObject/mapobject_apply.c:279
-#, fuzzy
 msgid "Map to Box..."
-msgstr "Info projecteren..."
+msgstr "Projecteren op kubus..."
 
 #: plug-ins/MapObject/mapobject_apply.c:282
-#, fuzzy
 msgid "Map to Cylinder..."
-msgstr "Cylinder"
+msgstr "Projecteren op cylinder..."
 
 #: plug-ins/MapObject/mapobject_main.c:199
 #, fuzzy
@@ -931,7 +931,7 @@ msgstr "Algemene opties"
 
 #: plug-ins/MapObject/mapobject_ui.c:508
 msgid "Map to:"
-msgstr "Projecteer op:"
+msgstr "Projecteren op:"
 
 #: plug-ins/MapObject/mapobject_ui.c:512
 msgid "Plane"
@@ -1256,7 +1256,7 @@ msgstr "Fout bij het laden van BMP-bestandsheader van '%s'"
 
 #: plug-ins/bmp/bmpread.c:437 plug-ins/bmp/bmpread.c:472
 msgid "Unrecognized or invalid BMP compression format."
-msgstr ""
+msgstr "Niet herkend of ongeldig BMP compressieformaat."
 
 #.
 #. * Create the "background" layer to hold the image...
@@ -1331,7 +1331,7 @@ msgstr "Verander het _rood/kleurtoon-kanaal"
 #: plug-ins/common/AlienMap2.c:146
 #, fuzzy
 msgid "Mo_dify green channel"
-msgstr "Verander het _groen/verzadiging-kanaal"
+msgstr "Verander het _rood/kleurtoon-kanaal"
 
 #: plug-ins/common/AlienMap2.c:146
 #, fuzzy
@@ -1341,7 +1341,7 @@ msgstr "Verander het _groen/verzadiging-kanaal"
 #: plug-ins/common/AlienMap2.c:147
 #, fuzzy
 msgid "Mod_ify blue channel"
-msgstr "Verander _blauw/helderheid-kanaal"
+msgstr "Verander het _rood/kleurtoon-kanaal"
 
 #: plug-ins/common/AlienMap2.c:147
 #, fuzzy
@@ -1378,11 +1378,10 @@ msgstr "Saturation:"
 msgid "Blue freq_uency:"
 msgstr "B/L-freq_uentie:"
 
-# What does 'B/L' stand for? Blue/Luminance?
 #: plug-ins/common/AlienMap2.c:154
 #, fuzzy
 msgid "Luminosity freq_uency:"
-msgstr "B/L-freq_uentie:"
+msgstr "Helderheidsdrempel:"
 
 # What does 'R/H' stand for? Red/Hue?
 #: plug-ins/common/AlienMap2.c:156
@@ -1402,11 +1401,11 @@ msgstr "R/H-f_aseverschuiving:"
 msgid "Green ph_aseshift:"
 msgstr "G/S-fa_severschuiving:"
 
-# What does 'G/S' stand for? Green/Saturation?
+# What is the Dutch translation of this phrase?
 #: plug-ins/common/AlienMap2.c:157
 #, fuzzy
 msgid "Saturation ph_aseshift:"
-msgstr "G/S-fa_severschuiving:"
+msgstr "Saturation:"
 
 #: plug-ins/common/AlienMap2.c:158
 #, fuzzy
@@ -1721,7 +1720,7 @@ msgstr "Vaste beginwaarde"
 #: plug-ins/common/CML_explorer.c:1245
 #, fuzzy
 msgid "Random seed"
-msgstr "Willekeurige beginwaarde:"
+msgstr "Willekeurige beginwaarde"
 
 # What is the Dutch translation of the term 'Hue'?
 #: plug-ins/common/CML_explorer.c:1287 plug-ins/common/fp.c:663
@@ -1919,7 +1918,7 @@ msgid "Save Parameters to"
 msgstr "Parameters opslaan als"
 
 #: plug-ins/common/CML_explorer.c:2054 plug-ins/common/channel_mixer.c:1052
-#, fuzzy, c-format
+#, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parameters zijn opgeslagen in '%s'"
 
@@ -2300,6 +2299,7 @@ msgstr "_Bumpprojectie"
 msgid "Bump-mapping..."
 msgstr "Bezig met bumpmappen"
 
+# knobbelprojectie?
 #: plug-ins/common/bumpmap.c:834
 msgid "Bump Map"
 msgstr "Bumpprojectie"
@@ -2397,7 +2397,7 @@ msgstr "Tabeltitel"
 #: plug-ins/common/cartoon.c:837 plug-ins/common/photocopy.c:867
 #, fuzzy
 msgid "_Mask radius:"
-msgstr "Vervagingsradius:"
+msgstr "Maskergrootte:"
 
 #: plug-ins/common/cartoon.c:851
 #, fuzzy
@@ -2962,20 +2962,16 @@ msgid "_Curve Bend..."
 msgstr "Bezig met vervormen..."
 
 #: plug-ins/common/curve_bend.c:708
-#, fuzzy
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr ""
-"Naar Kromme werkt alleen op lagen (maar werd op kanaal of masker aangeroepen)"
+msgstr "Werkt alleen op lagen (maar werd op kanaal of masker aangeroepen)."
 
 #: plug-ins/common/curve_bend.c:726
-#, fuzzy
 msgid "Cannot operate on layers with masks."
-msgstr "Kan niet op geïndexeerde kleurenafbeeldingen werken"
+msgstr "Kan niet op lagen met maskers werken."
 
 #: plug-ins/common/curve_bend.c:741
-#, fuzzy
 msgid "Cannot operate on empty selections."
-msgstr "Kan niet werken met onbekende afbeeldingstypen."
+msgstr "Kan niet op lege selecties werken."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -3441,9 +3437,8 @@ msgid "Create _histogram"
 msgstr "Histogram maken"
 
 #: plug-ins/common/dicom.c:134
-#, fuzzy
 msgid "DICOM image"
-msgstr "Afbeelding"
+msgstr ""
 
 #: plug-ins/common/dicom.c:160
 msgid "Digital Imaging and Communications in Medicine image"
@@ -3492,9 +3487,8 @@ msgid "Sc_attering:"
 msgstr "Spreiding:"
 
 #: plug-ins/common/diffraction.c:630
-#, fuzzy
 msgid "Po_larization:"
-msgstr "Polarizatie:"
+msgstr "Po_larisatie:"
 
 #: plug-ins/common/diffraction.c:638
 #, fuzzy
@@ -3554,7 +3548,7 @@ msgstr "Randen vinden"
 #: plug-ins/common/dog.c:293
 #, fuzzy
 msgid "Smoothing parameters"
-msgstr "Parameters kopiëren"
+msgstr "X-verloop gladmaken..."
 
 #: plug-ins/common/dog.c:307
 #, fuzzy
@@ -3825,7 +3819,6 @@ msgid "Image Selection"
 msgstr "Afbeeldingskeuze"
 
 #: plug-ins/common/film.c:1332
-#, fuzzy
 msgid "All Values are Fractions of the Film Height"
 msgstr "Alle waarden zijn breuken van de filmhoogte"
 
@@ -4094,12 +4087,12 @@ msgstr "Y2:"
 #: plug-ins/common/gauss.c:157
 #, fuzzy
 msgid "_Gaussian Blur..."
-msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (IIR)..."
+msgstr "RLE Gaussiaans vervagen"
 
 #: plug-ins/common/gauss.c:407
 #, fuzzy
 msgid "Gaussian Blur..."
-msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (IIR)..."
+msgstr "RLE Gaussiaans vervagen"
 
 #: plug-ins/common/gauss.c:460
 #, fuzzy
@@ -4951,7 +4944,7 @@ msgstr "Exportvooruitblik"
 
 #: plug-ins/common/jpeg.c:758
 msgid "EXIF data will be ignored."
-msgstr ""
+msgstr "EXIF data zal worden genegeerd."
 
 #: plug-ins/common/jpeg.c:972
 msgid "JPEG preview"
@@ -4979,7 +4972,7 @@ msgstr "Kwaliteit:"
 #: plug-ins/common/jpeg.c:1756
 #, fuzzy
 msgid "JPEG quality parameter"
-msgstr "Parameters"
+msgstr "Vul met parameter k"
 
 #: plug-ins/common/jpeg.c:1775
 #, fuzzy
@@ -5526,7 +5519,7 @@ msgstr "Kan geen extra punt toevoegen.\n"
 #: plug-ins/common/neon.c:135
 #, fuzzy
 msgid "_Neon..."
-msgstr "Video/RGB..."
+msgstr "Openen..."
 
 #: plug-ins/common/neon.c:204
 #, fuzzy
@@ -5918,9 +5911,8 @@ msgid "Unusual PCX flavour, giving up"
 msgstr "Ongebruikelijke PCX-soort, ik geef op"
 
 #: plug-ins/common/photocopy.c:158
-#, fuzzy
 msgid "_Photocopy..."
-msgstr "Heet..."
+msgstr ""
 
 #: plug-ins/common/photocopy.c:837
 #, fuzzy
@@ -6233,13 +6225,12 @@ msgstr "Fout bij het starten van ghostscript (%s)"
 #: plug-ins/common/postscript.c:2650 plug-ins/common/postscript.c:2778
 #: plug-ins/common/sunras.c:1457 plug-ins/common/sunras.c:1565
 #: plug-ins/fits/fits.c:830 plug-ins/fits/fits.c:954
-#, fuzzy
 msgid "Write error occurred"
-msgstr "Schrijffout trad op"
+msgstr "Er was een schrijffout"
 
 #: plug-ins/common/postscript.c:2804
 msgid "Load PostScript"
-msgstr "Laad PostScript"
+msgstr "PostScript laden"
 
 #. Rendering
 #: plug-ins/common/postscript.c:2824
@@ -6420,7 +6411,7 @@ msgstr "Broncode..."
 #: plug-ins/common/randomize.c:741 plug-ins/common/snoise.c:614
 #, fuzzy
 msgid "_Random seed:"
-msgstr "Willekeurige beginwaarde:"
+msgstr "_Willekeurige beginwaarde:"
 
 #: plug-ins/common/randomize.c:750
 msgid "R_andomization (%):"
@@ -6666,9 +6657,8 @@ msgid "a _Single Window"
 msgstr "een enkel venster"
 
 #: plug-ins/common/screenshot.c:696
-#, fuzzy
 msgid "S_elect Window After"
-msgstr "Volgend venster selecteren"
+msgstr "Venster selecteren na"
 
 #: plug-ins/common/screenshot.c:709 plug-ins/common/screenshot.c:749
 msgid "Seconds Delay"
@@ -6676,12 +6666,11 @@ msgstr "seconden vertraging"
 
 #: plug-ins/common/screenshot.c:717
 msgid "the _Whole Screen"
-msgstr "heel het scherm"
+msgstr "het hele scherm"
 
 #: plug-ins/common/screenshot.c:736
-#, fuzzy
 msgid "Grab _After"
-msgstr "Volgende grijpen"
+msgstr "Grijpen _na"
 
 #: plug-ins/common/sel_gauss.c:107
 #, fuzzy
@@ -6976,7 +6965,7 @@ msgstr "Sobel-randdetectie..."
 #: plug-ins/common/softglow.c:138
 #, fuzzy
 msgid "_Softglow..."
-msgstr "Sobel"
+msgstr "Verschuiven..."
 
 #: plug-ins/common/softglow.c:629
 msgid "Softglow"
@@ -7041,9 +7030,8 @@ msgid "Spi_ke angle (-1: random):"
 msgstr "Piekhoek (-1: willekeurig):"
 
 #: plug-ins/common/sparkle.c:409
-#, fuzzy
 msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr "Pas de piekhoek aan (-1 betekent dat u een willekeurige hoek kiest)"
+msgstr "De piekhoek aanpassen (-1 betekent dat u een willekeurige hoek kiest)"
 
 #: plug-ins/common/sparkle.c:417
 #, fuzzy
@@ -7445,12 +7433,12 @@ msgstr "Hoogte:"
 #: plug-ins/common/svg.c:775
 #, fuzzy
 msgid "_X ratio:"
-msgstr "Kleurtoondraaiing:"
+msgstr "Variatie:"
 
 #: plug-ins/common/svg.c:797
 #, fuzzy
 msgid "_Y ratio:"
-msgstr "Kleurtoondraaiing:"
+msgstr "Variatie:"
 
 # What is the Dutch phrase for 'aspect ratio'?
 #: plug-ins/common/svg.c:811
@@ -7826,10 +7814,9 @@ msgid "Create a new unit from scratch."
 msgstr "Begin met een nieuwe eenheid."
 
 #: plug-ins/common/uniteditor.c:567
-#, fuzzy
 msgid "Create a new unit with the currently selected unit as template."
 msgstr ""
-"Maak een nieuwe eenheid waarbij de huidige geselecteerde eenheid als "
+"Een nieuwe eenheid aanmaken waarbij de huidige geselecteerde eenheid als "
 "voorbeeld dient."
 
 #: plug-ins/common/unsharp.c:147
@@ -8745,20 +8732,19 @@ msgstr "DB-browser"
 msgid "Name"
 msgstr "Naam"
 
+# What does 'Ins' mean?
 #: plug-ins/dbbrowser/plugin-browser.c:598
 #: plug-ins/dbbrowser/plugin-browser.c:667
 #, fuzzy
 msgid "Insertion Date"
-msgstr "Punt invoegen"
+msgstr "Datum"
 
 #: plug-ins/dbbrowser/plugin-browser.c:606
-#, fuzzy
 msgid "Menu Path"
-msgstr "Menupad:"
+msgstr "Menupad"
 
 #: plug-ins/dbbrowser/plugin-browser.c:614
 #: plug-ins/dbbrowser/plugin-browser.c:676
-#, fuzzy
 msgid "Image Types"
 msgstr "Afbeeldingstypen"
 
@@ -8767,7 +8753,6 @@ msgid "List View"
 msgstr "Lijstweergave"
 
 #: plug-ins/dbbrowser/plugin-browser.c:658
-#, fuzzy
 msgid "Menu Path/Name"
 msgstr "Menupad/naam"
 
@@ -9261,9 +9246,8 @@ msgid "XY position:"
 msgstr "XY-positie:"
 
 #: plug-ins/gfig/gfig-spiral.c:56
-#, fuzzy
 msgid "Spiral Number of Turns"
-msgstr "Spiraal - aantal punten"
+msgstr "Spiraal - aantal draaiingen"
 
 #: plug-ins/gfig/gfig-star.c:55
 msgid "Star Number of Points"
@@ -9732,7 +9716,6 @@ msgid "How much to blur the drop shadow"
 msgstr "Hoeveel moet de dropshadow worden vervaagd"
 
 #: plug-ins/gimpressionist/general.c:257
-#, fuzzy
 msgid "Deviation threshold:"
 msgstr "Afwijkingsdrempel:"
 
@@ -9778,18 +9761,16 @@ msgid "Start angle:"
 msgstr "Beginhoek:"
 
 #: plug-ins/gimpressionist/orientation.c:104
-#, fuzzy
 msgid "The starting angle of the first brush to create"
-msgstr "De hoek van het eerste penseel dat wordt aangemaakt"
+msgstr "De beginhoek van het eerste penseel dat wordt aangemaakt"
 
 #: plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
-msgstr "Reikwijdte:"
+msgstr "Hoekweidte:"
 
 #: plug-ins/gimpressionist/orientation.c:116
-#, fuzzy
 msgid "The angle span of the first brush to create"
-msgstr "De hoek van het eerste penseel dat wordt aangemaakt"
+msgstr "De hoekweidte van het eerste penseel dat wordt aangemaakt"
 
 #: plug-ins/gimpressionist/orientation.c:139
 msgid ""
@@ -10241,7 +10222,7 @@ msgstr "De GIMP-helpbestanden zijn niet geïnstalleerd."
 
 #: plug-ins/help/domain.c:177
 msgid "There is a problem with the GIMP help files."
-msgstr ""
+msgstr "Er is een probleem met de hulpbestanden van the GIMP."
 
 #: plug-ins/help/domain.c:182
 msgid "Please check your installation."
@@ -10253,14 +10234,15 @@ msgid "Help ID '%s' unknown"
 msgstr "Help-ID '%s' onbekend"
 
 #: plug-ins/help/domain.c:445
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Parse error in '%s':\n"
 "%s"
 msgstr ""
-"Fout bij het openen van bestand '%s'\n"
+"Verwerkingsfout in '%s':\n"
 "%s"
 
+# Gimp Hulp browser
 #: plug-ins/helpbrowser/dialog.c:148
 #, fuzzy
 msgid "GIMP Help browser"
@@ -10390,49 +10372,40 @@ msgid "Relative probability:"
 msgstr "Relatieve waarschijnlijkheid:"
 
 #: plug-ins/ifscompose/ifscompose.c:1190
-#, fuzzy
 msgid "/Move"
-msgstr "Verplaatsen"
+msgstr "/Verplaatsen"
 
 #: plug-ins/ifscompose/ifscompose.c:1192
-#, fuzzy
 msgid "/Rotate\\/Scale"
-msgstr "Draaien/Schalen"
+msgstr "/Draaien\\/Schalen"
 
 #: plug-ins/ifscompose/ifscompose.c:1194
-#, fuzzy
 msgid "/Stretch"
-msgstr "Rekken"
+msgstr "/Rekken"
 
 #: plug-ins/ifscompose/ifscompose.c:1197
-#, fuzzy
 msgid "/New"
-msgstr "Nieuw"
+msgstr "/Nieuw"
 
 #: plug-ins/ifscompose/ifscompose.c:1199
-#, fuzzy
 msgid "/Delete"
-msgstr "Wissen"
+msgstr "/Wissen"
 
 #: plug-ins/ifscompose/ifscompose.c:1201
-#, fuzzy
 msgid "/Undo"
-msgstr "Ongedaan maken"
+msgstr "/Ongedaan maken"
 
 #: plug-ins/ifscompose/ifscompose.c:1203
-#, fuzzy
 msgid "/Redo"
-msgstr "Opnieuw uitvoeren"
+msgstr "/Opnieuw uitvoeren"
 
 #: plug-ins/ifscompose/ifscompose.c:1205
-#, fuzzy
 msgid "/Select All"
-msgstr "Alles selecteren"
+msgstr "/Alles selecteren"
 
 #: plug-ins/ifscompose/ifscompose.c:1207
-#, fuzzy
 msgid "/Recompute Center"
-msgstr "Herbereken middelpunt"
+msgstr "/Middelpunt herberekenen"
 
 #: plug-ins/ifscompose/ifscompose.c:1258
 msgid "IfsCompose Options"
@@ -11011,7 +10984,7 @@ msgstr "Hulplijnen maken..."
 
 #: plug-ins/imagemap/imap_menu.c:397
 msgid "_Help"
-msgstr "Help"
+msgstr "_Hulp"
 
 #: plug-ins/imagemap/imap_menu.c:398
 msgid "About ImageMap..."
@@ -11022,9 +10995,8 @@ msgid "Edit Area Info..."
 msgstr "Gebiedsinformatie bewerken..."
 
 #: plug-ins/imagemap/imap_object_popup.c:105
-#, fuzzy
 msgid "Delete Area"
-msgstr "Wis verloopflakkering"
+msgstr "Gebied verwijderen"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -11291,9 +11263,8 @@ msgstr "Doolhof tekenen..."
 
 #. $Id$
 #: plug-ins/maze/maze.h:2
-#, fuzzy
 msgid "Maze"
-msgstr "Marmer"
+msgstr "Doolhof"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:214
@@ -11875,9 +11846,8 @@ msgid "Set the scale (size) of the image"
 msgstr "Schaal (grootte) van de afbeelding instellen"
 
 #: plug-ins/print/gimp_main_window.c:1152
-#, fuzzy
 msgid "Scale by:"
-msgstr "Schalen Z:"
+msgstr "Schalen op:"
 
 # What is a 'scaling'?
 #: plug-ins/print/gimp_main_window.c:1157
@@ -12376,231 +12346,32 @@ msgstr "Fout: kan XJT-eigenschapsbestand '%s' niet lezen."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Render"
-#~ msgstr "<Image>/Filters/Renderen/Gfig..."
+#~ msgid "Zoom Options"
+#~ msgstr "Zoomopties"
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Light Effects"
-#~ msgstr "<Image>/Filters/Lichteffecten/Verloopflakkering..."
+#~ msgid "Save: No filename given"
+#~ msgstr "Opslaan: geen bestandsnaam opgegeven"
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Map"
-#~ msgstr "<Image>/Filters/Projecteren/Scheeftrekken..."
+#  Can't save to directory
+#~ msgid "Cannot save to a folder."
+#~ msgstr "Kan niet in een map opslaan."
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Colors/Map"
-#~ msgstr "<Image>/Filters/Kleuren/Max. RGB..."
+#~ msgid "<Image>/Filters/Render/_Fractal Explorer..."
+#~ msgstr "<Image>/Filters/Renderen/Fractal Explorer..."
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Pattern"
-#~ msgstr "<Image>/Filters/Renderen/Patroon/Doolhof..."
+#~ msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
+#~ msgstr "<Image>/Filters/Lichteffecten/Belichtingseffecten..."
 
-#, fuzzy
-#~ msgid "<Image>/Layer"
-#~ msgstr "<Image>/Bestand/Afdrukken"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Animation"
-#~ msgstr "<Image>/Filters/Animatie/Ontoptimaliseren"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Glass Effects"
-#~ msgstr "<Image>/Filters/Glaseffecten/Glazen tegel..."
-
-# Is there a Dutch translation for 'hot scanning'?
-#, fuzzy
-#~ msgid "<Image>/Image/Crop"
-#~ msgstr "<Image>/Afbeelding/Modus/Samenstellen..."
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Crop"
-#~ msgstr "<Image>/Laag/Transformaties/IJverig snijden"
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Colors/Auto"
-#~ msgstr "<Image>/Laag/Kleuren/Auto/Normalizeren"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Distorts"
-#~ msgstr "<Image>/Filters/Vervormingen/Wind..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Blur"
-#~ msgstr "<Image>/Filters/Vervagen/Vervagen..."
-
-# Is there a Dutch translation for 'hot scanning'?
-#, fuzzy
-#~ msgid "<Image>/Filters/Colors"
-#~ msgstr "<Image>/Filters/Kleuren/Heet..."
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Colors/Info"
-#~ msgstr "<Image>/Laag/Kleuren/Auto/Normalizeren"
-
-#, fuzzy
-#~ msgid "<Image>/Layer/Transparency/Modify"
-#~ msgstr "<Image>/Laag/Transparantie/Drempel Alpha..."
-
-# Is there a Dutch translation for 'hot scanning'?
-#, fuzzy
-#~ msgid "<Image>/Image/Mode"
-#~ msgstr "<Image>/Afbeelding/Modus/Samenstellen..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Generic"
-#~ msgstr "<Image>/Filters/Algemeen/Eroderen"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Artistic"
-#~ msgstr "<Image>/Filters/Artistiek/Kubisme..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Enhance"
-#~ msgstr "<Image>/Filters/Versterken/Verscherpen..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Combine"
-#~ msgstr "<Image>/Filters/Combineren/Film..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Edge-Detect"
-#~ msgstr "<Image>/Filters/Randen/Laplace"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Toys"
-#~ msgstr "<Image>/Filters/Speeltjes/Gee-Zoom"
-
-#, fuzzy
-#~ msgid "<Image>/Image/Transform"
-#~ msgstr "<Image>/Afbeelding/Transformaties/Autosnijden"
-
-#, fuzzy
-#~ msgid "<Image>/File/Send"
-#~ msgstr "<Image>/Bestand/Afdrukken"
-
-#, fuzzy
-#~ msgid "_Do preview"
-#~ msgstr "Vooruitblik uitvoeren"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Noise"
-#~ msgstr "<Image>/Filters/Ruis/Krabbelen..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Clouds"
-#~ msgstr "<Image>/Filters/Renderen/Wolken/Plasma..."
-
-#, fuzzy
-#~ msgid "<Toolbox>/File/Acquire"
-#~ msgstr "<Toolbox>/Bestand/Importeren/TWAIN..."
-
-#~ msgid "Pos X:"
-#~ msgstr "Pos X:"
-
-#~ msgid "Pos Y:"
-#~ msgstr "Pos Y:"
-
-#~ msgid "Pos Z:"
-#~ msgstr "Pos Z:"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Extensions"
-#~ msgstr "<Toolbox>/Xtra/Eenhedeneditor"
-
-#, fuzzy
-#~ msgid "<Image>/Edit"
-#~ msgstr "<Image>/Bestand/Afdrukken"
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Render/Nature"
-#~ msgstr "<Image>/Filters/Renderen/Natuur/Vlam..."
-
-#, fuzzy
-#~ msgid "<Image>/Filters/Web"
-#~ msgstr "<Image>/Filters/Web/ImageMap..."
-
-#, fuzzy
-#~ msgid "Source"
-#~ msgstr "Bron 1:"
-
-#, fuzzy
-#~ msgid "Do pre_view"
-#~ msgstr "Vooruitblik uitvoeren"
-
-#, fuzzy
-#~ msgid "_Plugin Details"
-#~ msgstr "Plug-inbeschrijvingen"
-
-#~ msgid "Details <<"
-#~ msgstr "Details <<"
-
-#~ msgid "Details >>"
-#~ msgstr "Details >>"
-
-#~ msgid "Name:"
-#~ msgstr "Naam:"
-
-#~ msgid "Blurb:"
-#~ msgstr "Omschrijving:"
-
-#~ msgid "Help:"
-#~ msgstr "Help:"
-
-#~ msgid "Plugin Descriptions"
-#~ msgstr "Plug-inbeschrijvingen"
-
-#~ msgid "Search by Name"
-#~ msgstr "Zoeken op naam"
-
-# What does 'Ins' mean?
-#, fuzzy
-#~ msgid "Ins date"
-#~ msgstr "Datum"
-
-#, fuzzy
-#~ msgid "Menu path"
-#~ msgstr "Menupad"
-
-#~ msgid "Search:"
-#~ msgstr "Zoeken:"
-
-#~ msgid "In:"
-#~ msgstr "In:"
-
-#~ msgid "Out:"
-#~ msgstr "Uit:"
-
-#, fuzzy
-#~ msgid "_Spherical"
-#~ msgstr "Bolvormig"
-
-#, fuzzy
-#~ msgid "S_inusoidal"
-#~ msgstr "Sinusoïdaal"
-
-#~ msgid "EOF encountered on "
-#~ msgstr "EOF ontdekt op "
-
-#~ msgid "No memory for mapping colors"
-#~ msgstr "Geen geheugen om kleuren in te delen"
-
-#~ msgid "Selection:"
-#~ msgstr "Selectie:"
-
-#, fuzzy
-#~ msgid "E_nable antialiasing"
+#~ msgid "E_nable Antialiasing"
 #~ msgstr "_Anti-aliasen inschakelen"
 
 #~ msgid "T_hreshold:"
 #~ msgstr "_Drempel:"
 
-#, fuzzy
-#~ msgid "L_ight yype:"
+#~ msgid "L_ight Type:"
 #~ msgstr "_Lichttype:"
 
-#, fuzzy
-#~ msgid "Lig_ht color:"
+#~ msgid "Lig_ht Color:"
 #~ msgstr "_Lichtkleur:"
 
 # What is the correct Dutch translation of this phrase?
@@ -12618,375 +12389,6 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "_Highlight:"
 #~ msgstr "_Hoge lichten:"
-
-#~ msgid "Parameters were Saved to '%s'"
-#~ msgstr "Parameters zijn opgeslagen in '%s'"
-
-# What does HRZ mean?
-#~ msgid "'%s' is not a HRZ file"
-#~ msgstr "'%s' is niet een HRZ-bestand"
-
-#~ msgid "Image must be 256x240"
-#~ msgstr "Afbeelding moet 256x240 zijn"
-
-#~ msgid "Image must be RGB or GRAY"
-#~ msgstr "Afbeelding moet RGB of Grijswaarden zijn"
-
-#~ msgid "Brush"
-#~ msgstr "Penseel"
-
-#~ msgid "Airbrush"
-#~ msgstr "Airbrush"
-
-#~ msgid "Pencil"
-#~ msgstr "Potlood"
-
-#, fuzzy
-#~ msgid ""
-#~ "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
-#~ "paints with currently selected brush with a pattern. Only applies to "
-#~ "circles/ellipses if the \"Approx. Circles/Ellipses\" toggle is set."
-#~ msgstr ""
-#~ "Gebruik het penseel/potlood of de airbrush als u op de afbeelding tekent. "
-#~ "Patroon schildert met het momenteel geselecteerde penseel met een "
-#~ "patroon. Dit is alleen op cirkels/ellipsen van toepassing als \"Benader "
-#~ "cirkels/ellipsen\" is ingeschakeld."
-
-#~ msgid "New"
-#~ msgstr "Nieuw"
-
-#~ msgid "Multiple"
-#~ msgstr "Meerdere"
-
-#, fuzzy
-#~ msgid ""
-#~ "Draw all objects on one layer (original or new) or one object per layer."
-#~ msgstr ""
-#~ "Teken alle objecten in één laag (originele of nieuwe) of één object per "
-#~ "laag"
-
-#~ msgid "Draw on:"
-#~ msgstr "Teken op:"
-
-#~ msgid "Selection+Fill"
-#~ msgstr "Selectie+Vullen"
-
-#, fuzzy
-#~ msgid ""
-#~ "Draw type. Either a brush or a selection. See brush page or selection "
-#~ "page for more options."
-#~ msgstr ""
-#~ "Tekentype. Penseel of selectie. Zie penseeltabblad of selectietabblad "
-#~ "voor meer opties."
-
-#~ msgid "Using:"
-#~ msgstr "Met gebruik van:"
-
-#, fuzzy
-#~ msgid "Reverse line"
-#~ msgstr "Lijn omkeren"
-
-#~ msgid "Draw lines in reverse order"
-#~ msgstr "Tekent lijnen in omgekeerde volgorde"
-
-#, fuzzy
-#~ msgid "Scale to image"
-#~ msgstr "Naar afbeelding schalen"
-
-#~ msgid "Scale drawings to images size"
-#~ msgstr "Schaalt tekeningen naar afbeeldingsgrootte"
-
-#, fuzzy
-#~ msgid "Approx. circles/ellipses"
-#~ msgstr "Benader cirkels/ellipsen"
-
-#~ msgid ""
-#~ "Approx. circles & ellipses using lines. Allows the use of brush fading "
-#~ "with these types of objects."
-#~ msgstr ""
-#~ "Benader cirkels en ellipsen met lijnen. Staat het gebruik van "
-#~ "penseelvervagen met deze typen objecten toe."
-
-#~ msgid "Gfig Brush Selection"
-#~ msgstr "Gfig-penseelselectie"
-
-#~ msgid "Fade out:"
-#~ msgstr "Uitvloeien:"
-
-#~ msgid "Gradient:"
-#~ msgstr "Verloop:"
-
-#~ msgid "Pressure:"
-#~ msgstr "Druk:"
-
-#, fuzzy
-#~ msgid "No options..."
-#~ msgstr "Geen opties..."
-
-#, fuzzy
-#~ msgid "Set brush..."
-#~ msgstr "Penseel instellen..."
-
-#~ msgid "Add"
-#~ msgstr "Toevoegen"
-
-#~ msgid "Subtract"
-#~ msgstr "Aftrekken"
-
-#~ msgid "Intersect"
-#~ msgstr "Snijden"
-
-#, fuzzy
-#~ msgid "Fill type:"
-#~ msgstr "Vultype:"
-
-#~ msgid "Fill Opacity:"
-#~ msgstr "Vulondoorzichtheid:"
-
-#, fuzzy
-#~ msgid "Each selection"
-#~ msgstr "Elke selectie"
-
-#, fuzzy
-#~ msgid "All selections"
-#~ msgstr "Alle selecties"
-
-#~ msgid "Fill after:"
-#~ msgstr "Vullen na:"
-
-#~ msgid "Segment"
-#~ msgstr "Segment"
-
-#~ msgid "Sector"
-#~ msgstr "Sector"
-
-#~ msgid "Arc as:"
-#~ msgstr "Boog als:"
-
-#, fuzzy
-#~ msgid "Reload image"
-#~ msgstr "Afbeelding opnieuw laden"
-
-#, fuzzy
-#~ msgid "Lock on grid"
-#~ msgstr "Magnetisch raster"
-
-#~ msgid "Object"
-#~ msgstr "Object"
-
-#~ msgid "Create a new Gfig object collection for editing"
-#~ msgstr "Nieuwe Gfig-objectenverzameling voor bewerken aanmaken"
-
-#~ msgid "Load a single Gfig object collection"
-#~ msgstr "Objectenverzameling van Gfig laden"
-
-#~ msgid "Edit Gfig object collection"
-#~ msgstr "Gfig-collectie bewerken"
-
-#~ msgid "_Merge"
-#~ msgstr "Samenvoegen"
-
-#, fuzzy
-#~ msgid "Merge Gfig Ooject collection into the current edit session"
-#~ msgstr ""
-#~ "Voeg objectenverzameling van Gfig samen met de huidige bewerkingssessie"
-
-#~ msgid "Delete currently selected Gfig Object collection"
-#~ msgstr "Geselecteerde Gfig-objectenverzameling verwijderen"
-
-# What meaning has 'scan' here?
-#~ msgid "Select folder and rescan Gfig object collections"
-#~ msgstr "Map selecteren en objectenverzamelingen van Gfig opnieuw inlezen"
-
-#~ msgid "%d unsaved Gfig objects. Continue with exiting?"
-#~ msgstr "%d niet opgeslagen Gfig-objecten. Toch verlaten?"
-
-#, fuzzy
-#~ msgid "Enter Gfig object name"
-#~ msgstr "Geef Gfig-objectnaam op"
-
-#, fuzzy
-#~ msgid "Gfig object name:"
-#~ msgstr "Gfig-objectnaam:"
-
-#, fuzzy
-#~ msgid "Rescan for Gfig objects"
-#~ msgstr "Opnieuw zoeken naar Gfig-objecten"
-
-#, fuzzy
-#~ msgid "Add Gfig path"
-#~ msgstr "Gfig-pad toevoegen"
-
-#~ msgid "Error in copy layer for onlayers"
-#~ msgstr "Fout in kopie laag voor onlayers"
-
-#~ msgid "About Gfig"
-#~ msgstr "Over GFig"
-
-#~ msgid "Gfig - GIMP plug-in"
-#~ msgstr "Gfig - GIMP-plug-in"
-
-# What is the Dutch term for 'Release'?
-#~ msgid "Release 2.0"
-#~ msgstr "Release 2.0"
-
-#~ msgid "New Gfig Object"
-#~ msgstr "Nieuw gfig-object"
-
-#, fuzzy
-#~ msgid "Delete Gfig drawing"
-#~ msgstr "Gfig-tekening verwijderen"
-
-#~ msgid "%s copy"
-#~ msgstr "%s kopie"
-
-#~ msgid "Collection Details"
-#~ msgstr "Verzamelingsdetails"
-
-#, fuzzy
-#~ msgid "Draw name:"
-#~ msgstr "Naam tekening:"
-
-#~ msgid "(none)"
-#~ msgstr "(geen)"
-
-#~ msgid "<NONE>"
-#~ msgstr "<GEEN>"
-
-#~ msgid "Curl Opacity"
-#~ msgstr "Ondoorzichtigheid oor"
-
-#, fuzzy
-#~ msgid ""
-#~ "Use current gradient\n"
-#~ "instead of FG/BG-color"
-#~ msgstr ""
-#~ "Gebruik huidig verloop\n"
-#~ "in plaats van VG/AG-kleur"
-
-#~ msgid "Random Seed"
-#~ msgstr "Willekeurige beginwaarde"
-
-#, fuzzy
-#~ msgid "_Blur..."
-#~ msgstr "Vervagen..."
-
-#~ msgid "R_andomization %:"
-#~ msgstr "W_illekeurig maken %:"
-
-#~ msgid "You must specify either horizontal or vertical (or both)"
-#~ msgstr "U moet horizontaal, verticaal of beide aangeven"
-
-#~ msgid "Blur Horizontally"
-#~ msgstr "Horizontaal vervagen"
-
-#~ msgid "Blur Vertically"
-#~ msgstr "Verticaal vervagen"
-
-#~ msgid "Blur Radius:"
-#~ msgstr "Vervagingsradius:"
-
-#, fuzzy
-#~ msgid "Gaussian Blur (_RLE)..."
-#~ msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (RLE)..."
-
-#~ msgid "RLE Gaussian Blur"
-#~ msgstr "RLE Gaussiaans vervagen"
-
-#~ msgid "Image Preview"
-#~ msgstr "Afbeeldingsvooruitblik"
-
-#~ msgid "Force baseline JPEG (Readable by all decoders)"
-#~ msgstr "Dwing baseline JPEG af (door alle decoders leesbaar)"
-
-#~ msgid "DCT method (Speed/quality tradeoff):"
-#~ msgstr "DCT-methode (snelheid versus kwaliteit):"
-
-#~ msgid "Save Background Color"
-#~ msgstr "Achtergrondkleur opslaan"
-
-#~ msgid "Save Gamma"
-#~ msgstr "Gamma opslaan"
-
-#~ msgid "Save Resolution"
-#~ msgstr "Resolutie opslaan"
-
-#~ msgid "Save Creation Time"
-#~ msgstr "Creatiedatum opslaan"
-
-#~ msgid "Tile _Height:"
-#~ msgstr "Tegelhoogte:"
-
-#~ msgid "C_ell Size:"
-#~ msgstr "Celgrootte:"
-
-#, fuzzy
-#~ msgid "_Noisify..."
-#~ msgstr "Verruizen"
-
-#~ msgid "Noisify"
-#~ msgstr "Verruizen"
-
-#~ msgid "Random _Seed:"
-#~ msgstr "Willekeurige beginwaarde:"
-
-#~ msgid "Save _Background Color"
-#~ msgstr "Achtergrondkleur opslaan"
-
-#~ msgid "Save _Gamma"
-#~ msgstr "Gamma opslaan"
-
-#~ msgid "Save _Resolution"
-#~ msgstr "Resolutie opslaan"
-
-#~ msgid "Save Creation _Time"
-#~ msgstr "Creatiedatum opslaan"
-
-#~ msgid "Save Color _Values From Transparent Pixels"
-#~ msgstr "Kleurwaarden van transparante pixels opslaan"
-
-#~ msgid "_X Offset:"
-#~ msgstr "_X-verspringing:"
-
-#~ msgid "_Y Offset:"
-#~ msgstr "_Y-verspringing:"
-
-#~ msgid "_Random Seed:"
-#~ msgstr "_Willekeurige beginwaarde:"
-
-#~ msgid "R_andom Seed:"
-#~ msgstr "Willekeurige beginwaarde:"
-
-#~ msgid "Show Grid"
-#~ msgstr "Raster tonen"
-
-#~ msgid "Snap to Grid"
-#~ msgstr "Kleef aan raster"
-
-#~ msgid "Select _All"
-#~ msgstr "Alles selecteren"
-
-#~ msgid "Select Contiguous Region"
-#~ msgstr "Aaneengesloten gebied selecteren"
-
-#~ msgid "RLE Compression"
-#~ msgstr "RLE-compressie"
-
-#~ msgid "Zoom Options"
-#~ msgstr "Zoomopties"
-
-#~ msgid "Save: No filename given"
-#~ msgstr "Opslaan: geen bestandsnaam opgegeven"
-
-#  Can't save to directory
-#~ msgid "Cannot save to a folder."
-#~ msgstr "Kan niet in een map opslaan."
-
-#~ msgid "<Image>/Filters/Render/_Fractal Explorer..."
-#~ msgstr "<Image>/Filters/Renderen/Fractal Explorer..."
-
-#~ msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-#~ msgstr "<Image>/Filters/Lichteffecten/Belichtingseffecten..."
 
 #~ msgid "Preview Options"
 #~ msgstr "Vooruitblikopties"
@@ -13100,6 +12502,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "The Graph"
 #~ msgstr "De grafiek"
 
+#~ msgid "Parameters were Saved to '%s'"
+#~ msgstr "Parameters zijn opgeslagen in '%s'"
+
 #~ msgid "CML File Operation Warning"
 #~ msgstr "CML bestandbewerkingswaarschuwing"
 
@@ -13109,11 +12514,17 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "Parameter Settings"
 #~ msgstr "Parameterinstellingen"
 
+#~ msgid "Snap to Grid"
+#~ msgstr "Kleef aan raster"
+
 #~ msgid "<Image>/Filters/Animation/_Playback..."
 #~ msgstr "<Image>/Filters/Animatie/Afspelen..."
 
 #~ msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
 #~ msgstr "<Image>/Filters/Animatie/Optimaliseren (voor GIF)"
+
+#~ msgid "<Image>/Filters/Animation/_UnOptimize"
+#~ msgstr "<Image>/Filters/Animatie/Ontoptimaliseren"
 
 #~ msgid "<Image>/Filters/Animation/_Remove Backdrop"
 #~ msgstr "<Image>/Filters/Animatie/Achtergrond verwijderen"
@@ -13124,6 +12535,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
 #~ msgstr "<Image>/Filters/Glaseffecten/Lens toepassen..."
 
+#~ msgid "<Image>/Image/Transform/_Autocrop"
+#~ msgstr "<Image>/Afbeelding/Transformaties/Autosnijden"
+
 # Auto-stretch contrast in HSV space
 # What is the Dutch translation of the term 'HSV'?
 #~ msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
@@ -13131,6 +12545,12 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "<Image>/Filters/Distorts/_Blinds..."
 #~ msgstr "<Image>/Filters/Vervormingen/Rolgordijnen..."
+
+#~ msgid "<Image>/Filters/Blur/_Blur..."
+#~ msgstr "<Image>/Filters/Vervagen/Vervagen..."
+
+#~ msgid "R_andomization %:"
+#~ msgstr "W_illekeurig maken %:"
 
 #~ msgid "<Image>/Filters/Colors/_Border Average..."
 #~ msgstr "<Image>/Filters/Kleuren/Randgemiddelde..."
@@ -13151,7 +12571,7 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "_Spherical Map"
 #~ msgstr "_Bolvormige projectie"
 
-#~ msgid "S_inuosidal Map"
+#~ msgid "S_inusoidal Map"
 #~ msgstr "_Kronkelprojectie"
 
 # Makes the contrast fit the whole color range
@@ -13187,6 +12607,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 # What is the translation of 'convolution'?
 #~ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
 #~ msgstr "<Image>/Filters/Algemeen/Convolutiematrix..."
+
+#~ msgid "<Image>/Filters/Artistic/_Cubism..."
+#~ msgstr "<Image>/Filters/Artistiek/Kubisme..."
 
 #~ msgid "<Image>/Filters/Distorts/_Curve Bend..."
 #~ msgstr "<Image>/Filters/Vervormingen/Naar kromme..."
@@ -13229,6 +12652,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
 #~ msgstr "<Image>/Filters/Kleuren/Projecteren/Kleurverwisseling..."
 
+#~ msgid "<Image>/Filters/Combine/_Film..."
+#~ msgstr "<Image>/Filters/Combineren/Film..."
+
 #~ msgid "_Selection"
 #~ msgstr "Selectie"
 
@@ -13241,8 +12667,29 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Map/_Fractal Trace..."
 #~ msgstr "<Image>/Filters/Projecteren/Fractaltekenen..."
 
+#~ msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
+#~ msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (IIR)..."
+
+#~ msgid "You must specify either horizontal or vertical (or both)"
+#~ msgstr "U moet horizontaal, verticaal of beide aangeven"
+
+#~ msgid "Blur Horizontally"
+#~ msgstr "Horizontaal vervagen"
+
+#~ msgid "Blur Vertically"
+#~ msgstr "Verticaal vervagen"
+
+#~ msgid "Blur Radius:"
+#~ msgstr "Vervagingsradius:"
+
+#~ msgid "<Image>/Filters/Blur/Gaussian Blur (_RLE)..."
+#~ msgstr "<Image>/Filters/Vervagen/Gaussiaans vervagen (RLE)..."
+
 #~ msgid "<Image>/Filters/Toys/Gee-_Slime"
 #~ msgstr "<Image>/Filters/Speeltjes/Gee-Slijm"
+
+#~ msgid "<Image>/Filters/Toys/Gee-_Zoom"
+#~ msgstr "<Image>/Filters/Speeltjes/Gee-Zoom"
 
 #~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 #~ msgstr "GEE-ZOOM: De Plug-In Formerly Known As \"The GIMP E'er Egg\""
@@ -13256,6 +12703,12 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "Milliseconds"
 #~ msgstr "Milliseconden"
 
+#~ msgid "Selection:"
+#~ msgstr "Selectie:"
+
+#~ msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
+#~ msgstr "<Image>/Filters/Glaseffecten/Glazen tegel..."
+
 #~ msgid "<Image>/Filters/Render/Pattern/_Qbist..."
 #~ msgstr "<Image>/Filters/Renderen/Patroon/Qbist..."
 
@@ -13268,6 +12721,20 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Image/Transform/_Guillotine"
 #~ msgstr "<Image>/Afbeelding/Transformaties/Guillotine"
 
+# Is there a Dutch translation for 'hot scanning'?
+#~ msgid "<Image>/Filters/Colors/_Hot..."
+#~ msgstr "<Image>/Filters/Kleuren/Heet..."
+
+# What does HRZ mean?
+#~ msgid "'%s' is not a HRZ file"
+#~ msgstr "'%s' is niet een HRZ-bestand"
+
+#~ msgid "Image must be 256x240"
+#~ msgstr "Afbeelding moet 256x240 zijn"
+
+#~ msgid "Image must be RGB or GRAY"
+#~ msgstr "Afbeelding moet RGB of Grijswaarden zijn"
+
 #~ msgid "<Image>/Filters/Map/_Illusion..."
 #~ msgstr "<Image>/Filters/Projecteren/Illusie..."
 
@@ -13277,13 +12744,20 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
 #~ msgstr "<Image>/Filters/Renderen/Patroon/Legpuzzel..."
 
-#~ msgid "Preview (in image window, will modify image's undo history!)"
-#~ msgstr ""
-#~ "Vooruitblik (in afbeeldingsvenster, zal overzicht 'Ongedaan maken' "
-#~ "beïnvloeden!)"
+#~ msgid "Image Preview"
+#~ msgstr "Afbeeldingsvooruitblik"
+
+#~ msgid "Force baseline JPEG (Readable by all decoders)"
+#~ msgstr "Dwing baseline JPEG af (door alle decoders leesbaar)"
+
+#~ msgid "DCT method (Speed/quality tradeoff):"
+#~ msgstr "DCT-methode (snelheid versus kwaliteit):"
 
 #~ msgid "Image comments"
 #~ msgstr "Afbeeldingscommentaar"
+
+#~ msgid "<Image>/Filters/Edge-Detect/_Laplace"
+#~ msgstr "<Image>/Filters/Randen/Laplace"
 
 #~ msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
 #~ msgstr "<Image>/Filters/Projecteren/Van Gogh (LIC)..."
@@ -13294,8 +12768,23 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
 #~ msgstr "<Image>Filters/Kleuren/Projecteren/Kleurbereik projecteren..."
 
+#~ msgid "<Image>/Filters/Colors/_Max RGB..."
+#~ msgstr "<Image>/Filters/Kleuren/Max. RGB..."
+
 #~ msgid "<Image>/Filters/Blur/_Motion Blur..."
 #~ msgstr "<Image>/Filters/Vervagen/Beweging..."
+
+#~ msgid "Save Background Color"
+#~ msgstr "Achtergrondkleur opslaan"
+
+#~ msgid "Save Gamma"
+#~ msgstr "Gamma opslaan"
+
+#~ msgid "Save Resolution"
+#~ msgstr "Resolutie opslaan"
+
+#~ msgid "Save Creation Time"
+#~ msgstr "Creatiedatum opslaan"
 
 #~ msgid "<Image>/Filters/Distorts/_Mosaic..."
 #~ msgstr "<Image>/Filters/Vervormingen/Mozaiek..."
@@ -13306,8 +12795,17 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Enhance/_NL Filter..."
 #~ msgstr "<Image>/Filters/Versterken/NL-filter..."
 
+#~ msgid "_Do Preview"
+#~ msgstr "Vooruitblik uitvoeren"
+
 #~ msgid "<Image>/Filters/Noise/_Noisify..."
 #~ msgstr "<Image>/Filters/Ruis/Verruizen..."
+
+#~ msgid "Noisify"
+#~ msgstr "Verruizen"
+
+#~ msgid "<Image>/Layer/Colors/Auto/_Normalize"
+#~ msgstr "<Image>/Laag/Kleuren/Auto/Normalizeren"
 
 #  don't translate '<Image>'
 #~ msgid "<Image>/Filters/Light Effects/Su_perNova..."
@@ -13322,14 +12820,56 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Blur/_Pixelize..."
 #~ msgstr "<Image>/Filters/Vervagen/Pixeliseren..."
 
+#~ msgid "<Image>/Filters/Render/Clouds/_Plasma..."
+#~ msgstr "<Image>/Filters/Renderen/Wolken/Plasma..."
+
 #~ msgid "<Toolbox>/Xtns/_Plugin Details"
 #~ msgstr "<Toolbox>/Xtra/Plug-in-details"
 
+#~ msgid "Details <<"
+#~ msgstr "Details <<"
+
+#~ msgid "Details >>"
+#~ msgstr "Details >>"
+
+#~ msgid "Menu Path:"
+#~ msgstr "Menupad:"
+
+#~ msgid "Name:"
+#~ msgstr "Naam:"
+
+#~ msgid "Blurb:"
+#~ msgstr "Omschrijving:"
+
+#~ msgid "Help:"
+#~ msgstr "Help:"
+
+#~ msgid "Plugin Descriptions"
+#~ msgstr "Plug-inbeschrijvingen"
+
+#~ msgid "Search by Name"
+#~ msgstr "Zoeken op naam"
+
+#~ msgid "Search:"
+#~ msgstr "Zoeken:"
+
+#~ msgid "Save _Background Color"
+#~ msgstr "Achtergrondkleur opslaan"
+
+#~ msgid "Save _Gamma"
+#~ msgstr "Gamma opslaan"
+
+#~ msgid "Save _Resolution"
+#~ msgstr "Resolutie opslaan"
+
+#~ msgid "Save Creation _Time"
+#~ msgstr "Creatiedatum opslaan"
+
+#~ msgid "Save Color _Values From Transparent Pixels"
+#~ msgstr "Kleurwaarden van transparante pixels opslaan"
+
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
 #~ msgstr "<Image>/Filters/Vervormingen/Polaire coördinaten..."
-
-#~ msgid "write error occured"
-#~ msgstr "schrijffout vond plaats"
 
 #~ msgid "_X-Offset:"
 #~ msgstr "X-verspringing:"
@@ -13342,6 +12882,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "<Image>/Filters/Noise/_Pick..."
 #~ msgstr "<Image>/Filters/Ruis/Kiezen..."
+
+#~ msgid "<Image>/Filters/Noise/_Slur..."
+#~ msgstr "<Image>/Filters/Ruis/Krabbelen..."
 
 #~ msgid "<Image>/Filters/Distorts/_Ripple..."
 #~ msgstr "<Image>/Filters/Vervormingen/Rimpelen..."
@@ -13365,6 +12908,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Colors/_Semi-Flatten"
 #~ msgstr "<Image>/Filters/Kleuren/Semi-pletten"
 
+#~ msgid "<Image>/Filters/Enhance/_Sharpen..."
+#~ msgstr "<Image>/Filters/Versterken/Verscherpen..."
+
 #~ msgid "<Image>/Filters/Distorts/_Shift..."
 #~ msgstr "<Image>/Filters/Vervormingen/Verschuiven..."
 
@@ -13386,6 +12932,15 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Light Effects/_Sparkle..."
 #~ msgstr "<Image>/Filters/Lichteffecten/Fonkelen..."
 
+#~ msgid "Pos X:"
+#~ msgstr "Pos X:"
+
+#~ msgid "Pos Y:"
+#~ msgstr "Pos Y:"
+
+#~ msgid "Pos Z:"
+#~ msgstr "Pos Z:"
+
 #~ msgid "<Image>/Filters/Render/Sphere _Designer..."
 #~ msgstr "<Image>/Filters/Renderen/Bolontwerper..."
 
@@ -13403,6 +12958,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "Targa Options"
 #~ msgstr "Targa-opties"
+
+#~ msgid "<Image>/Layer/Transparency/_Threshold Alpha..."
+#~ msgstr "<Image>/Laag/Transparantie/Drempel Alpha..."
 
 #~ msgid "<Image>/Filters/Map/_Tile..."
 #~ msgstr "<Image>/Filters/Projecteren/Tegel..."
@@ -13422,6 +12980,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Map/_Make Seamless"
 #~ msgstr "<Image>/Filters/Projecteren/Maak tegelbaar"
 
+#~ msgid "<Toolbox>/Xtns/_Unit Editor"
+#~ msgstr "<Toolbox>/Xtra/Eenhedeneditor"
+
 #~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
 #~ msgstr "<Image>/Filters/Versterken/Onscherp masker..."
 
@@ -13437,8 +12998,14 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Distorts/_Value Propagate..."
 #~ msgstr "<Image>/Filters/Vervormingen/Waarde doorgeven..."
 
+#~ msgid "<Image>/Filters/Generic/E_rode"
+#~ msgstr "<Image>/Filters/Algemeen/Eroderen"
+
 #~ msgid "<Image>/Filters/Generic/_Dilate"
 #~ msgstr "<Image>/Filters/Algemeen/Verwijden"
+
+#~ msgid "<Image>/Filters/Map/_Warp..."
+#~ msgstr "<Image>/Filters/Projecteren/Scheeftrekken..."
 
 #~ msgid "Secondary Options"
 #~ msgstr "Subopties"
@@ -13458,11 +13025,35 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Toolbox>/File/Acquire/From Clipboard"
 #~ msgstr "<Toolbox>/Bestand/Importeren/Uit klembord"
 
+#~ msgid "<Image>/Filters/Distorts/Wi_nd..."
+#~ msgstr "<Image>/Filters/Vervormingen/Wind..."
+
+#~ msgid "<Image>/File/_Print"
+#~ msgstr "<Image>/Bestand/Afdrukken"
+
 #~ msgid "<Image>/File/Page Setup"
 #~ msgstr "<Image>/Bestand/Pagina-instelling"
 
+#~ msgid "EOF encountered on "
+#~ msgstr "EOF ontdekt op "
+
+#~ msgid "No memory for mapping colors"
+#~ msgstr "Geen geheugen om kleuren in te delen"
+
+#~ msgid "<Image>/Layer/Transform/_Zealous Crop"
+#~ msgstr "<Image>/Laag/Transformaties/IJverig snijden"
+
 #~ msgid "<Toolbox>/Xtns/_DB Browser"
 #~ msgstr "<Toolbox>/Xtra/DB-browser"
+
+#~ msgid "In:"
+#~ msgstr "In:"
+
+#~ msgid "Out:"
+#~ msgstr "Uit:"
+
+#~ msgid "<Image>/Filters/Render/Nature/_Flame..."
+#~ msgstr "<Image>/Filters/Renderen/Natuur/Vlam..."
 
 #~ msgid "<Image>/Filters/Colors/_Filter Pack..."
 #~ msgstr "<Image>/Filters/Kleuren/Filterpak..."
@@ -13479,11 +13070,215 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "Miscellaneous Options"
 #~ msgstr "Overige opties"
 
+#~ msgid "<Image>/Filters/Render/_Gfig..."
+#~ msgstr "<Image>/Filters/Renderen/Gfig..."
+
+#~ msgid "Brush"
+#~ msgstr "Penseel"
+
+#~ msgid "Airbrush"
+#~ msgstr "Airbrush"
+
+#~ msgid "Pencil"
+#~ msgstr "Potlood"
+
+#~ msgid ""
+#~ "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
+#~ "paints with currently selected brush with a pattern. Only applies to "
+#~ "circles/ellipses if Approx. Circles/Ellipses toggle is set."
+#~ msgstr ""
+#~ "Gebruik het penseel/potlood of de airbrush als u op de afbeelding tekent. "
+#~ "Patroon schildert met het momenteel geselecteerde penseel met een "
+#~ "patroon. Dit is alleen op cirkels/ellipsen van toepassing als \"Benader "
+#~ "cirkels/ellipsen\" is ingeschakeld."
+
+#~ msgid "New"
+#~ msgstr "Nieuw"
+
+#~ msgid "Multiple"
+#~ msgstr "Meerdere"
+
+#~ msgid ""
+#~ "Draw all objects on one layer (original or new) or one object per layer"
+#~ msgstr ""
+#~ "Teken alle objecten in één laag (originele of nieuwe) of één object per "
+#~ "laag"
+
+#~ msgid "Draw on:"
+#~ msgstr "Teken op:"
+
+#~ msgid "Selection+Fill"
+#~ msgstr "Selectie+Vullen"
+
+#~ msgid ""
+#~ "Draw type. Either a brush or a selection. See brush page or selection "
+#~ "page for more options"
+#~ msgstr ""
+#~ "Tekentype. Penseel of selectie. Zie penseeltabblad of selectietabblad "
+#~ "voor meer opties."
+
+#~ msgid "Using:"
+#~ msgstr "Met gebruik van:"
+
 #~ msgid "With BG of:"
 #~ msgstr "Met AG van:"
 
+#~ msgid "Reverse Line"
+#~ msgstr "Lijn omkeren"
+
+#~ msgid "Draw lines in reverse order"
+#~ msgstr "Tekent lijnen in omgekeerde volgorde"
+
+#~ msgid "Scale drawings to images size"
+#~ msgstr "Schaalt tekeningen naar afbeeldingsgrootte"
+
+#~ msgid "Approx. Circles/Ellipses"
+#~ msgstr "Benader cirkels/ellipsen"
+
+#~ msgid ""
+#~ "Approx. circles & ellipses using lines. Allows the use of brush fading "
+#~ "with these types of objects."
+#~ msgstr ""
+#~ "Benader cirkels en ellipsen met lijnen. Staat het gebruik van "
+#~ "penseelvervagen met deze typen objecten toe."
+
+#~ msgid "Gfig Brush Selection"
+#~ msgstr "Gfig-penseelselectie"
+
+#~ msgid "Fade out:"
+#~ msgstr "Uitvloeien:"
+
+#~ msgid "Gradient:"
+#~ msgstr "Verloop:"
+
+#~ msgid "Pressure:"
+#~ msgstr "Druk:"
+
+#~ msgid "No Options..."
+#~ msgstr "Geen opties..."
+
+#~ msgid "Set Brush..."
+#~ msgstr "Penseel instellen..."
+
+#~ msgid "Add"
+#~ msgstr "Toevoegen"
+
+#~ msgid "Subtract"
+#~ msgstr "Aftrekken"
+
+#~ msgid "Intersect"
+#~ msgstr "Snijden"
+
 #~ msgid "Selection Type:"
 #~ msgstr "Selectietype:"
+
+#~ msgid "Fill Type:"
+#~ msgstr "Vultype:"
+
+#~ msgid "Fill Opacity:"
+#~ msgstr "Vulondoorzichtheid:"
+
+#~ msgid "Each Selection"
+#~ msgstr "Elke selectie"
+
+#~ msgid "All Selections"
+#~ msgstr "Alle selecties"
+
+#~ msgid "Fill after:"
+#~ msgstr "Vullen na:"
+
+#~ msgid "Segment"
+#~ msgstr "Segment"
+
+#~ msgid "Sector"
+#~ msgstr "Sector"
+
+#~ msgid "Arc as:"
+#~ msgstr "Boog als:"
+
+#~ msgid "Reload Image"
+#~ msgstr "Afbeelding opnieuw laden"
+
+#~ msgid "Show Grid"
+#~ msgstr "Raster tonen"
+
+#~ msgid "Lock on Grid"
+#~ msgstr "Magnetisch raster"
+
+#~ msgid "Object"
+#~ msgstr "Object"
+
+#~ msgid "Create a new Gfig object collection for editing"
+#~ msgstr "Nieuwe Gfig-objectenverzameling voor bewerken aanmaken"
+
+#~ msgid "Load a single Gfig object collection"
+#~ msgstr "Objectenverzameling van Gfig laden"
+
+#~ msgid "Edit Gfig object collection"
+#~ msgstr "Gfig-collectie bewerken"
+
+#~ msgid "_Merge"
+#~ msgstr "Samenvoegen"
+
+#~ msgid "Merge Gfig Object collection into the current edit session"
+#~ msgstr ""
+#~ "Voeg objectenverzameling van Gfig samen met de huidige bewerkingssessie"
+
+#~ msgid "Delete currently selected Gfig Object collection"
+#~ msgstr "Geselecteerde Gfig-objectenverzameling verwijderen"
+
+# What meaning has 'scan' here?
+#~ msgid "Select folder and rescan Gfig object collections"
+#~ msgstr "Map selecteren en objectenverzamelingen van Gfig opnieuw inlezen"
+
+#~ msgid "%d unsaved Gfig objects. Continue with exiting?"
+#~ msgstr "%d niet opgeslagen Gfig-objecten. Toch verlaten?"
+
+#~ msgid "Enter Gfig Object Name"
+#~ msgstr "Geef Gfig-objectnaam op"
+
+#~ msgid "Gfig Object Name:"
+#~ msgstr "Gfig-objectnaam:"
+
+#~ msgid "Rescan for Gfig Objects"
+#~ msgstr "Opnieuw zoeken naar Gfig-objecten"
+
+#~ msgid "Add Gfig Path"
+#~ msgstr "Gfig-pad toevoegen"
+
+#~ msgid "Error in copy layer for onlayers"
+#~ msgstr "Fout in kopie laag voor onlayers"
+
+#~ msgid "About Gfig"
+#~ msgstr "Over GFig"
+
+#~ msgid "Gfig - GIMP plug-in"
+#~ msgstr "Gfig - GIMP-plug-in"
+
+# What is the Dutch term for 'Release'?
+#~ msgid "Release 2.0"
+#~ msgstr "Release 2.0"
+
+#~ msgid "New Gfig Object"
+#~ msgstr "Nieuw gfig-object"
+
+#~ msgid "Delete Gfig Drawing"
+#~ msgstr "Gfig-tekening verwijderen"
+
+#~ msgid "%s copy"
+#~ msgstr "%s kopie"
+
+#~ msgid "Draw Name:"
+#~ msgstr "Naam tekening:"
+
+#~ msgid "(none)"
+#~ msgstr "(geen)"
+
+#~ msgid "<NONE>"
+#~ msgstr "<GEEN>"
+
+#~ msgid "<Image>/Filters/Light Effects/_GFlare..."
+#~ msgstr "<Image>/Filters/Lichteffecten/Verloopflakkering..."
 
 #~ msgid "none"
 #~ msgstr "geen"
@@ -13519,8 +13314,17 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
 #~ msgstr "<Image>/Filters/Renderen/Natuur/IfsCompositie..."
 
+#~ msgid "Select _All"
+#~ msgstr "Alles selecteren"
+
 #~ msgid "lpeek.mrijk@consunet.nl"
 #~ msgstr "lpeek.mrijk@consunet.nl"
+
+#~ msgid "<Image>/Filters/Web/_ImageMap..."
+#~ msgstr "<Image>/Filters/Web/ImageMap..."
+
+#~ msgid "Select Contiguous Region"
+#~ msgstr "Aaneengesloten gebied selecteren"
 
 #~ msgid ""
 #~ "Generates a maze using either the depth-first search method or Prim's "
@@ -13532,11 +13336,24 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgid "Draws a maze."
 #~ msgstr "Tekent een doolhof."
 
+#~ msgid "<Image>/Filters/Render/Pattern/_Maze..."
+#~ msgstr "<Image>/Filters/Renderen/Patroon/Doolhof..."
+
 #~ msgid "Selection is %dx%d"
 #~ msgstr "Selectie is %dx%d"
 
 #~ msgid "<Image>/Filters/Distorts/_Pagecurl..."
 #~ msgstr "<Image>/Filters/Vervormingen/Ezelsoor..."
+
+#~ msgid ""
+#~ "Use Current Gradient\n"
+#~ "instead of FG/BG-Color"
+#~ msgstr ""
+#~ "Gebruik huidig verloop\n"
+#~ "in plaats van VG/AG-kleur"
+
+#~ msgid "Curl Opacity"
+#~ msgstr "Ondoorzichtigheid oor"
 
 #~ msgid "<Image>/File/_Print..."
 #~ msgstr "<Image>/Bestand/Afdrukken..."
@@ -13552,6 +13369,20 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "Misc"
 #~ msgstr "Overige"
+
+#~ msgid "RLE Compression"
+#~ msgstr "RLE-compressie"
+
+#~ msgid "<Toolbox>/File/Acquire/_TWAIN..."
+#~ msgstr "<Toolbox>/Bestand/Importeren/TWAIN..."
+
+#~ msgid "Preview (in image window, will modify image's undo history!)"
+#~ msgstr ""
+#~ "Vooruitblik (in afbeeldingsvenster, zal overzicht 'Ongedaan maken' "
+#~ "beïnvloeden!)"
+
+#~ msgid "write error occured"
+#~ msgstr "schrijffout vond plaats"
 
 #~ msgid "M_inimum Height:"
 #~ msgstr "M_inimumhoogte:"
@@ -13914,6 +13745,10 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 #~ msgstr "<Image>/Afbeelding/Transformaties/270 graden draaien"
 
 # Is there a Dutch translation for 'hot scanning'?
+#~ msgid "<Image>/Image/Mode/Compose..."
+#~ msgstr "<Image>/Afbeelding/Modus/Samenstellen..."
+
+# Is there a Dutch translation for 'hot scanning'?
 #~ msgid "<Image>/Image/Mode/Decompose..."
 #~ msgstr "<Image>/Afbeelding/Modus/Ontleden..."
 
@@ -14206,6 +14041,9 @@ msgstr "Fout: XJT-eigenschapsbestand '%s' is leeg."
 
 #~ msgid "Vertical:"
 #~ msgstr "Verticaal:"
+
+#~ msgid "Do Preview"
+#~ msgstr "Vooruitblik uitvoeren"
 
 #~ msgid "Wind Strength must be greater than 0."
 #~ msgstr "Windsterkte moet meer dan 0 zijn."

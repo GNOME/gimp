@@ -1,15 +1,16 @@
 # Dutch translation of the GIMP's script-fu strings.
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Branko Collin <collin@xs4all.nl>, 2001.
+# Branko Collin <collin@xs4all.nl>, 2001-2004.
+# Tino Meinen <a.t.meinen@chello.nl>, 2004.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
-"PO-Revision-Date: 2004-03-13 03:27+0100\n"
-"Last-Translator: Branko Collin <collin@xs4all.nl>\n"
-"Language-Team: Dutch <nl@li.org>\n"
+"POT-Creation-Date: 2004-10-16 18:19+0200\n"
+"PO-Revision-Date: 2004-07-10 16:53+0200\n"
+"Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
+"Language-Team: Dutch <vertaling@nl.linux.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1511,16 +1512,14 @@ msgid "Shadow weight (%)"
 msgstr "Schaduwgewicht (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Grote kop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Grote kop..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Kleine kop..."
+msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Kleine kop..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 #, fuzzy
@@ -1569,34 +1568,34 @@ msgid "Shadow color"
 msgstr "Schaduwkleur"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subknoplabel van buis..."
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Subknoplabel van "
+"buis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
 "Button Label..."
 msgstr ""
-"<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Subsubknoplabel van buis..."
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Subsubknoplabel van "
+"buis..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
 "Labels..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Algemene buislabels"
+msgstr ""
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Algemene buislabels"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#, fuzzy
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
 "Label..."
-msgstr "<Toolbox>/Xtra/Script-Fu/Websitethema's/Gimp.Org/Buisknoplabel..."
+msgstr ""
+"<Toolbox>/Xtra/Script-Fu/Websitethema's/Classic.Gimp.Org/Buisknoplabel..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
@@ -2703,27 +2702,14 @@ msgstr "Y-verspringing hoge lichten"
 msgid "Highlight opacity"
 msgstr "Ondoorzichtheid hoge lichten"
 
-#~ msgid ""
-#~ "\n"
-#~ "\t\t    SF-ADJUSTMENT _"
-#~ msgstr ""
-#~ "\n"
-#~ "\t\t    SF-ADJUSTMENT _"
-
-#~ msgid ""
-#~ "\n"
-#~ "\t\t    SF-COLOR      _"
-#~ msgstr ""
-#~ "\n"
-#~ "\t\t    SF-COLOR      _"
-
-#, fuzzy
-#~ msgid "Relative radius"
-#~ msgstr "Relatieve radius"
-
-#, fuzzy
-#~ msgid "_About"
+#~ msgid "About"
 #~ msgstr "Info"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#~ msgstr "<Toolbox>/Xtra/Script-Fu/Console..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Toolbox>/Xtra/Script-Fu/Server starten..."
 
 #~ msgid "DB Browser"
 #~ msgstr "DB-browser"
@@ -2740,14 +2726,19 @@ msgstr "Ondoorzichtheid hoge lichten"
 #~ msgid "Help:"
 #~ msgstr "Help:"
 
-#~ msgid "Font Size (pixels)"
-#~ msgstr "Fontgrootte (pixel)"
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-ADJUSTMENT _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t    SF-ADJUSTMENT _"
 
-#~ msgid "Text Color"
-#~ msgstr "Tekstkleur"
-
-#~ msgid "Transparent Background"
-#~ msgstr "Transparante achtergrond"
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-COLOR      _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t    SF-COLOR      _"
 
 #~ msgid ""
 #~ ")))\n"
@@ -2793,22 +2784,15 @@ msgstr "Ondoorzichtheid hoge lichten"
 #~ ")))\n"
 #~ "  (set! filename2 (string-append data-dir\n"
 #~ "\t\t\t\t "
+
+#~ msgid "Relative Radius"
+#~ msgstr "Relatieve radius"
 
 #~ msgid "Unable to open a stream on the SIOD output pipe"
 #~ msgstr "Niet in staat een stream op de SIOD-uitvoerpipe te openen"
 
 #~ msgid "Unable to open the SIOD output pipe"
 #~ msgstr "Niet in staat SIOD-uitvoerpipe te openen"
-
-#, fuzzy
-#~ msgid "Blend gradient (sext)"
-#~ msgstr "Verloop (tekst)"
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-#~ msgstr "<Toolbox>/Xtra/Script-Fu/Console..."
-
-#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-#~ msgstr "<Toolbox>/Xtra/Script-Fu/Server starten..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
 #~ msgstr "<Toolbox>/Xtra/Script-Fu/Patronen/Kronkel (naadloos)..."
