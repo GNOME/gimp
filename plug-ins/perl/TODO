@@ -5,7 +5,7 @@ shortcuts (don't ask)
 
 gimp -b "(extension-perl-server 0 0 0)"
 gimp ~/pix/ka001.jpg -b "(extension-perl-server 0 0 0)"
-file:///usr/app/lib/perl5/site_perl/i686-linux/PDL/HtmlDocs/PDL/
+file:///usr/app/lib/perl5/PDL/HtmlDocs/PDL/
 make test TEST_VERBOSE=1
 
 put under LGPL:

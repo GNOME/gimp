@@ -49,8 +49,8 @@ if ($ARGV[0] ne "--writemakefile") {
    qw(
       border gouge pixelmap view3d clear_alpha
 
-      fire
-   ); # fire should use nmormal gradient map!
+      fire map_to_gradient
+   ); # fire should use normal gradient map!
 
 eval "use Gtk;"; $GTK = $@ eq "";
 eval "use Parse::RecDescent;"; $PRD = $@ eq "";
