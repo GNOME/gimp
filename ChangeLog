@@ -1,3 +1,29 @@
+2001-12-02  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/plug-in.c: use g_tree_foreach() instead of deprecated
+	g_tree_traverse().
+
+	* app/undo_history.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/about-dialog.c
+	* app/gui/color-area.c
+	* app/gui/color-select.c
+	* app/gui/gradient-editor.c
+	* app/gui/gui.c
+	* app/gui/paths-dialog.c
+	* app/gui/user-install-dialog.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpinktool.c
+	* app/widgets/gimpcursor.c
+	* app/widgets/gimpnavigationpreview.c
+	* libgimpwidgets/gimpchainbutton.c
+	* libgimpwidgets/gimppixmap.c
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/ifscompose/ifscompose.c: s/gdk_gc_unref/g_object_unref/, 
+	s/gdk_drawable_unref/g_object_unref/
+
 2001-12-02  Daniel Egger  <degger@fhm.edu>
 
 	* app/gimprc.c: Convert ugly comments into named structure fields.

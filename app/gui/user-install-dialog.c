@@ -818,10 +818,10 @@ user_install_dialog_create (Gimp *gimp)
 
     gtk_widget_set_usize (ctree, -1, ctree->requisition.height);
 
-    gdk_drawable_unref (file_pixmap);
-    gdk_drawable_unref (file_mask);
-    gdk_drawable_unref (folder_pixmap);
-    gdk_drawable_unref (folder_mask);
+    g_object_unref (file_pixmap);
+    g_object_unref (file_mask);
+    g_object_unref (folder_pixmap);
+    g_object_unref (folder_mask);
   }
   
   /*  Page 3  */

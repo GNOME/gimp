@@ -474,8 +474,8 @@ color_area_events (GtkWidget *widget,
     case GDK_CONFIGURE:
       if (color_area_pixmap)
 	{
-	  gdk_drawable_unref (color_area_pixmap);
-	  gdk_drawable_unref (color_area_mask);
+	  g_object_unref (color_area_pixmap);
+	  g_object_unref (color_area_mask);
 	}
 
       color_area_pixmap = gdk_pixmap_new (widget->window,

@@ -2781,9 +2781,10 @@ plug_in_make_menu (void)
 	  proc_def = procs->data;
 	  procs = procs->next;
 
-	  if (proc_def->prog && proc_def->menu_path && (!proc_def->extensions &&
-							!proc_def->prefixes &&
-							!proc_def->magics))
+	  if (proc_def->prog &&
+              proc_def->menu_path && ( !proc_def->extensions &&
+                                       !proc_def->prefixes   &&
+                                       !proc_def->magics) )
 	    {
 	      menu_entry = g_new (PlugInMenuEntry, 1);
 	      menu_entry->proc_def = proc_def;
@@ -2792,14 +2793,16 @@ plug_in_make_menu (void)
 	      menu_entry->help_path = plug_in_def->help_path;
 
 	      g_tree_insert (menu_entries, 
-			     dgettext (menu_entry->domain, proc_def->menu_path),
+			     dgettext (menu_entry->domain, 
+                                       proc_def->menu_path),
 			     menu_entry);
 	    }
 	}
     }
 
-  g_tree_traverse (menu_entries, 
-		   (GTraverseFunc) plug_in_make_menu_entry, G_IN_ORDER, NULL);
+  g_tree_foreach (menu_entries, 
+                  (GTraverseFunc) plug_in_make_menu_entry, 
+                  NULL);
   g_tree_destroy (menu_entries);
 
   g_slist_free (domains);

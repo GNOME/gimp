@@ -411,7 +411,7 @@ clear_pathwidget (gpointer data)
   if (pwidget)
     {
       if (pwidget->paths_pixmap)
-	gdk_drawable_unref (pwidget->paths_pixmap);
+	g_object_unref (pwidget->paths_pixmap);
 
       g_free (pwidget);
     }

@@ -1839,7 +1839,7 @@ control_update (GradientEditor *editor,
       (cheight != pheight))
     {
       if (editor->control_pixmap)
-	gdk_drawable_unref (editor->control_pixmap);
+	g_object_unref (editor->control_pixmap);
 
       editor->control_pixmap =
 	gdk_pixmap_new (editor->control->window, cwidth, cheight, -1);

@@ -404,7 +404,7 @@ undo_history_set_pixmap_idle (gpointer data)
 
   gtk_clist_set_row_data (idle->clist, idle->row, (gpointer)2);
   gtk_clist_set_pixmap (idle->clist, idle->row, 0, pixmap, NULL);
-  gdk_drawable_unref (pixmap);
+  g_object_unref (pixmap);
   
   return (FALSE);
 }

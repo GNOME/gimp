@@ -368,7 +368,7 @@ about_dialog_load_logo (GtkWidget *window)
   gtk_preview_put (GTK_PREVIEW (preview),
 		   logo_pixmap, gc,
 		   0, 0, 0, 0, logo_width, logo_height);
-  gdk_gc_unref (gc);
+  g_object_unref (gc);
 
   gtk_object_sink (GTK_OBJECT (preview));
   g_free (pixelrow);
@@ -587,8 +587,8 @@ about_dialog_tool_drop (GtkWidget    *widget,
       gdk_gc_set_clip_origin (logo_area->style->black_gc, 0, 0);
     }
 
-  gdk_drawable_unref (pixmap);
-  gdk_drawable_unref (mask);
+  g_object_unref (pixmap);
+  g_object_unref (mask);
 
   scroll_text = drop_text;
   nscroll_texts = G_N_ELEMENTS (drop_text);

@@ -518,8 +518,8 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
       gdk_gc_set_clip_origin (widget->style->black_gc, 0, 0);
     }
 
-  gdk_drawable_unref (pixmap);
-  gdk_drawable_unref (mask);
+  g_object_unref (pixmap);
+  g_object_unref (mask);
 
   return FALSE;
 }

@@ -609,8 +609,8 @@ gimp_cursor_new (GimpCursorType      cursor_type,
 				       bmcursor->x_hot,
 				       bmcursor->y_hot);
 
-  gdk_drawable_unref (bitmap);
-  gdk_drawable_unref (mask);
+  g_object_unref (bitmap);
+  g_object_unref (mask);
 
   return cursor;
 }

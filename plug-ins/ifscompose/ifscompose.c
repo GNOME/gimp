@@ -1061,7 +1061,7 @@ ifs_compose_dialog (GimpDrawable *drawable)
 
   gdk_flush ();
 
-  gdk_gc_unref (ifsDesign->selected_gc);
+  g_object_unref (ifsDesign->selected_gc);
 
   g_free(ifsD);
 
@@ -1600,7 +1600,7 @@ design_area_configure (GtkWidget         *widget,
 
   if (ifsDesign->pixmap)
     {
-      gdk_drawable_unref(ifsDesign->pixmap);
+      g_object_unref(ifsDesign->pixmap);
     }
   ifsDesign->pixmap = gdk_pixmap_new(widget->window,
 				     widget->allocation.width,

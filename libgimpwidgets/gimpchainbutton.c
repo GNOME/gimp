@@ -173,25 +173,25 @@ gimp_chain_button_destroy (GtkObject *object)
 
   if (gcb->broken)
     {
-      gdk_drawable_unref (gcb->broken);
+      g_object_unref (gcb->broken);
       gcb->broken = NULL;
     }
 
   if (gcb->broken_mask)
     {
-      gdk_drawable_unref (gcb->broken_mask);
+      g_object_unref (gcb->broken_mask);
       gcb->broken_mask = NULL;
     }
 
   if (gcb->chain)
     {
-      gdk_drawable_unref (gcb->chain);
+      g_object_unref (gcb->chain);
       gcb->chain = NULL;
     }
 
   if (gcb->chain_mask)
     {
-      gdk_drawable_unref (gcb->chain_mask);
+      g_object_unref (gcb->chain_mask);
       gcb->chain_mask = NULL;
     }
 

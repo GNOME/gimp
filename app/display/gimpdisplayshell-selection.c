@@ -218,15 +218,15 @@ gimp_display_shell_selection_free (Selection *select)
     g_source_remove (select->timeout_id);
 
   if (select->gc_in)
-    gdk_gc_unref (select->gc_in);
+    g_object_unref (select->gc_in);
   if (select->gc_out)
-    gdk_gc_unref (select->gc_out);
+    g_object_unref (select->gc_out);
   if (select->gc_layer)
-    gdk_gc_unref (select->gc_layer);
+    g_object_unref (select->gc_layer);
   if (select->gc_white)
-    gdk_gc_unref (select->gc_white);
+    g_object_unref (select->gc_white);
   if (select->gc_black)
-    gdk_gc_unref (select->gc_black);
+    g_object_unref (select->gc_black);
 
   selection_free_segs (select);
 
@@ -409,7 +409,7 @@ create_cycled_ants_pixmap (GdkWindow *window,
 	gdk_draw_line (pixmap, gc, i, j, i, j);
       }
 
-  gdk_gc_unref (gc);
+  g_object_unref (gc);
 
   return pixmap;
 }

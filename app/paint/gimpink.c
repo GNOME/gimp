@@ -768,8 +768,8 @@ blob_pixmap (GdkColormap *colormap,
   paint_blob (pixmap, black_gc, blob);
   g_free (blob);
 
-  gdk_gc_unref (white_gc);
-  gdk_gc_unref (black_gc);
+  g_object_unref (white_gc);
+  g_object_unref (black_gc);
 
   return pixmap;
 }
@@ -1578,7 +1578,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			blob_ellipse);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
+  g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button = gtk_radio_button_new (NULL);
@@ -1597,7 +1597,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			blob_square);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
+  g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button =
@@ -1617,7 +1617,7 @@ ink_options_new (GimpToolInfo *tool_info)
 			blob_diamond);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
-  gdk_drawable_unref (pixmap);
+  g_object_unref (pixmap);
   gtk_misc_set_padding (GTK_MISC (pixmap_widget), 6, 0);
 
   radio_button =

@@ -276,7 +276,7 @@ gimp_display_shell_destroy (GtkObject *object)
 
   if (shell->render_gc)
     {
-      gdk_gc_unref (shell->render_gc);
+      g_object_unref (shell->render_gc);
       shell->render_gc = NULL;
     }
 

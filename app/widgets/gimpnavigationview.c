@@ -191,7 +191,7 @@ gimp_navigation_preview_destroy (GtkObject *object)
 
   if (nav_preview->gc)
     {
-      gdk_gc_unref (nav_preview->gc);
+      g_object_unref (nav_preview->gc);
       nav_preview->gc = NULL;
     }
 
