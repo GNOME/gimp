@@ -407,12 +407,13 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
                                    "gimp-text-tool-dialog",
                                    text_tool->editor);
 
-  if (! text_tool->text)
-    {
-      g_signal_connect_object (text_tool->editor, "text_changed",
-                               G_CALLBACK (gimp_text_tool_text_changed),
-                               text_tool, 0);
-    }
+  if (text_tool->text)
+    gimp_text_editor_set_text (GIMP_TEXT_EDITOR (text_tool->editor),
+                               text_tool->text->text, -1);
+
+  g_signal_connect_object (text_tool->editor, "text_changed",
+                           G_CALLBACK (gimp_text_tool_text_changed),
+                           text_tool, 0);
 
   gtk_widget_show (text_tool->editor);
 }

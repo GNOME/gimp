@@ -1,5 +1,10 @@
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptexttool.c (gimp_text_tool_editor): always connect
+	the "text_changed" signal so text layers can be edited again.
+
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/tool-options-menu.c (tool_options_menu_entries): added
 	explicit menu branches to allow them to be translated (bug #136937).
 
