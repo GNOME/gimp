@@ -64,12 +64,7 @@ static void  gimp_display_config_fullscreen_notify (GObject    *object,
 
 #define DEFAULT_IMAGE_TITLE_FORMAT  "%f-%p.%i (%t, %L) %z%%"
 #define DEFAULT_IMAGE_STATUS_FORMAT "%n (%m)"
-
-#ifdef OS_WIN32
-#  define DEFAULT_ACTIVATE_ON_FOCUS  TRUE
-#else
-#  define DEFAULT_ACTIVATE_ON_FOCUS  FALSE
-#endif
+#define DEFAULT_ACTIVATE_ON_FOCUS   TRUE
 
 
 enum

@@ -1,5 +1,12 @@
 2003-12-26  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpdisplayconfig.c: set the default value for
+	"activate-on-focus" to TRUE. The discussion on this has been
+	controversial and I am doing this change now in order to get more
+	feedback.
+
+2003-12-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpmisc.[ch]: applied a modified version of a patch
 	from Maurits Rijk that cleans up the remaining API (bug #125141).
 
