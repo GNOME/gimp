@@ -1,3 +1,80 @@
+2000-12-18  Sven Neumann  <sven@gimp.org>
+	    Jens Lautenbacher <jtl@gimp.org>
+
+	* app/Makefile.am
+	
+	* app/gimpbrushlistP.h
+	* app/gimpbrushpipeP.h
+	* app/gimpobjectP.h: removed these three files
+
+	* app/parasitelistP.h
+	* app/channels_dialog.c
+	* app/docindex.c
+	* app/gimpdrawable.c
+	* app/gimpdrawableP.h
+	* app/gimpimage.c
+	* app/gimpimageP.h
+	* app/gimplist.[ch]
+	* app/gimpobject.c
+	* app/gimpobject.h
+	* app/gimpsetP.h: changed according to header removal
+
+	* app/airbrush.c
+	* app/brush_select.[ch]
+	* app/brushes_cmds.c
+	* app/gimpbrush.[ch]
+	* app/gimpbrushgenerated.[ch]
+	* app/gimpbrushlist.[ch]
+	* app/gimpbrushpipe.[ch]
+	* app/gimpcontextpreview.c
+	* app/paint_core.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* tools/pdbgen/pdb/brushes.pdb: Big Brushes Cleanup.
+
+	The GimpBrush* object hierarchy and the file formats were broken by
+	"design". This made it overly difficult to read and write pixmap
+	brushes and brush pipes, leading to the situation that The GIMP was
+	not able to read it's very own file formats. Since the GimpBrush
+	format did support arbitrary color depths, the introduction of a 
+	file format for pixmap brushes was unnecessary.
+	
+	The GimpBrushPixmap object is dead. GimpBrush has an additional
+	pixmap temp_buf and handles pixmap brushes transparently. The file
+	format of pixmap brushes is not any longer a grayscale brush plus
+	a pattern, but a simple brush with RGBA data. The old brushes can
+	still be loaded, but the .gpb format is deprecated.
+
+	GimpBrushPipe derives from GimpBrush. The fileformat is still a text
+	header, followed by a number of brushes, but those brushes are stored
+	in the new GimpBrush format (no pattern anymore). The pipe does not
+	care about the depth of the contained GimpBrushes, so we get 
+	grayscale BrushPipes for free. Since the brush loader still loads the
+	old format, old .gih files can also still be loaded.
+
+	Since the brushes in the GimpBrushPipe do not any longer contain a
+	pointer to the pipe object, we do only temporarily switch brushes
+	in the paint_core routines. This is not very elegant, but the best
+	we can do without a major redesign.
+	
+	* app/patterns.[ch]: changed the loader to work with a filedescriptor
+	instead of a filehandle to make it work with the new brush loading
+	code.
+
+	* plug-ins/common/.cvsignore
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/gih.c: new plug-in that saves GIH files in the 
+	new format (loader will follow soon)
+	
+	* plug-ins/common/gpb.c: removed since Pixmap Brushes are no longer
+	supported as a special file format.
+
+	* plug-ins/common/gbr.c: load and save brushes in the new brush format
+	which allows RGBA brushes too.
+	
+	* plug-ins/common/pat.c: load and save grayscale patterns too
+
 2000-12-18  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/gee.c: Using "env" instead of "environ" caused

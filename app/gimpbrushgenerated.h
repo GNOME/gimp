@@ -51,13 +51,13 @@ struct _GimpBrushGeneratedClass
 };
 
 
-GtkType              gimp_brush_generated_get_type (void);
+GtkType     gimp_brush_generated_get_type (void);
 
-GimpBrushGenerated * gimp_brush_generated_new      (gfloat       radius,
-						    gfloat       hardness,
-						    gfloat       angle,
-						    gfloat       aspect_ratio);
-GimpBrushGenerated * gimp_brush_generated_load     (const gchar *file_name);
+GimpBrush * gimp_brush_generated_new      (gfloat       radius,
+					   gfloat       hardness,
+					   gfloat       angle,
+					   gfloat       aspect_ratio);
+GimpBrush * gimp_brush_generated_load     (const gchar *file_name);
 
 void    gimp_brush_generated_save             (GimpBrushGenerated *brush,
 					       const gchar        *file_name);

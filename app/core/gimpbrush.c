@@ -22,15 +22,41 @@
 #include <stdio.h>
 #include <string.h>
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#include <fcntl.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include <gtk/gtk.h>
 
+
+#include <stdio.h>
+
+#include "apptypes.h"
+
+#include "libgimp/gimpvector.h"
+
+#include "brush_header.h"
+#include "pattern_header.h"
 #include "gimpbrush.h"
 #include "gimpbrushlist.h"
+
 #include "gimpsignal.h"
 #include "gimprc.h"
-#include "brush_header.h"
 
-#include "config.h"
+#include "paint_core.h"
+#include "temp_buf.h"
+
 #include "libgimp/gimpintl.h"
 
 enum
@@ -66,7 +92,7 @@ static void
 gimp_brush_class_init (GimpBrushClass *klass)
 {
   GtkObjectClass *object_class;
-  GtkType type;
+  GtkType         type;
   
   object_class = GTK_OBJECT_CLASS (klass);
 
@@ -93,12 +119,15 @@ gimp_brush_init (GimpBrush *brush)
 {
   brush->filename  = NULL;
   brush->name      = NULL;
+
   brush->spacing   = 20;
-  brush->mask      = NULL;
   brush->x_axis.x  = 15.0;
   brush->x_axis.y  =  0.0;
   brush->y_axis.x  =  0.0;
   brush->y_axis.y  = 15.0;
+
+  brush->mask      = NULL;
+  brush->pixmap    = NULL;
 }
 
 
@@ -127,14 +156,32 @@ gimp_brush_get_type (void)
 }
 
 GimpBrush *
-gimp_brush_new (gchar *filename)
+gimp_brush_load (gchar *filename)
 {
-  GimpBrush *brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+  GimpBrush *brush;
+  gint       fd;
 
-  if (gimp_brush_load (brush, filename))
-    return brush;
+  g_return_val_if_fail (filename != NULL, NULL);
 
-  return NULL;
+  fd = open (filename, O_RDONLY | _O_BINARY);
+  if (fd == -1) 
+    return NULL;
+
+  brush = gimp_brush_load_brush (fd, filename);
+
+  close (fd);
+
+  brush->filename = g_strdup (filename);
+
+  /*  Swap the brush to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    {
+      temp_buf_swap (brush->mask);
+      if (brush->pixmap)
+	temp_buf_swap (brush->pixmap);
+    }
+
+  return brush;
 }
 
 static GimpBrush *
@@ -156,6 +203,15 @@ gimp_brush_get_mask (GimpBrush *brush)
   g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
 
   return brush->mask;
+}
+
+TempBuf *
+gimp_brush_get_pixmap (GimpBrush *brush)
+{
+  g_return_val_if_fail (brush != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH (brush), NULL);
+
+  return brush->pixmap;
 }
 
 gchar *
@@ -203,125 +259,145 @@ gimp_brush_set_spacing (GimpBrush *brush,
   brush->spacing = spacing;
 }
 
-gboolean
-gimp_brush_load (GimpBrush *brush, 
-		 gchar     *filename)
+GimpBrush *
+gimp_brush_load_brush (gint   fd,
+		       gchar *filename)
 {
-  FILE *fp;
+  GimpBrush   *brush;
+  GPattern    *pattern;
+  gint         bn_size;
+  BrushHeader  header;
+  gchar       *name;
+  gint         i;
 
-  brush->filename = g_strdup (filename);
-
-  /*  Open the requested file  */
-  if (! (fp = fopen (filename, "rb")))
-    {
-      gtk_object_sink (GTK_OBJECT (brush));
-      return FALSE;
-    }
-
-  if (! gimp_brush_load_brush (brush, fp, filename))
-    {
-      return FALSE;
-    }
-
-  /*  Clean up  */
-  fclose (fp);
-
-  /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (brush->mask);
- 
-  return TRUE;
-}
-
-gboolean
-gimp_brush_load_brush (GimpBrush *brush, 
-		       FILE      *fp, 
-		       gchar     *filename)
-{
-  gint   bn_size;
-  guchar buf [sizeof (BrushHeader)];
-  BrushHeader header;
-  guint *hp;
-  gint   i;
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (fd != -1, NULL);
 
   /*  Read in the header size  */
-  if ((fread (buf, 1, sizeof (BrushHeader), fp)) < sizeof (BrushHeader))
-    {
-      fclose (fp);
-      gtk_object_sink (GTK_OBJECT (brush));
-      return FALSE;
-    }
+  if (read (fd, &header, sizeof (header)) != sizeof (header)) 
+    return NULL;
 
   /*  rearrange the bytes in each unsigned int  */
-  hp = (guint *) &header;
-  for (i = 0; i < (sizeof (BrushHeader) / 4); i++)
-    hp [i] = ((buf [i * 4] << 24) + (buf [i * 4 + 1] << 16) +
-	      (buf [i * 4 + 2] << 8) + (buf [i * 4 + 3]));
+  header.header_size  = g_ntohl (header.header_size);
+  header.version      = g_ntohl (header.version);
+  header.width        = g_ntohl (header.width);
+  header.height       = g_ntohl (header.height);
+  header.bytes        = g_ntohl (header.bytes);
+  header.magic_number = g_ntohl (header.magic_number);
+  header.spacing      = g_ntohl (header.spacing);
 
   /*  Check for correct file format */
-  if (header.magic_number != GBRUSH_MAGIC)
+  /*  It looks as if version 1 did not have the same magic number.  (neo)  */
+  if (header.version != 1 &&
+      (header.magic_number != GBRUSH_MAGIC || header.version != 2))
     {
-      if (header.version != 1)
-	{
-	  fclose (fp);
-	  gtk_object_sink (GTK_OBJECT (brush));
-	  return FALSE;
-	}
+      g_message (_("Unknown brush format version #%d in \"%s\"."),
+		 header.version, filename);
+      return NULL;
     }
 
   if (header.version == 1)
     {
       /*  If this is a version 1 brush, set the fp back 8 bytes  */
-      fseek (fp, -8, SEEK_CUR);
+      lseek (fd, -8, SEEK_CUR);
       header.header_size += 8;
       /*  spacing is not defined in version 1  */
       header.spacing = 25;
     }
   
    /*  Read in the brush name  */
-  if ((bn_size = (header.header_size - sizeof (BrushHeader))))
+  if ((bn_size = (header.header_size - sizeof (header))))
     {
-      brush->name = g_new (gchar, bn_size);
-      if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
+      name = g_new (gchar, bn_size);
+      if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP brush file...aborting."));
-	  fclose (fp);
-	  gtk_object_sink (GTK_OBJECT (brush));
-	  return FALSE;
+	  g_message (_("Error in GIMP brush file \"%s\"."), filename);
+	  g_free (name);
+	  return NULL;
 	}
     }
   else
     {
-      brush->name = g_strdup (_("Unnamed"));
+      name = g_strdup (_("Unnamed"));
     }
 
-  switch (header.version)
+  switch (header.bytes)
     {
     case 1:
-    case 2:
-      /*  Get a new brush mask  */
-      brush->mask = temp_buf_new (header.width, header.height, header.bytes,
+      brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+      brush->mask = temp_buf_new (header.width, header.height, 1,
 				  0, 0, NULL);
-      brush->spacing = header.spacing;
-      /* set up spacing axis */
-      brush->x_axis.x = header.width  / 2.0;
-      brush->x_axis.y = 0.0;
-      brush->y_axis.x = 0.0;
-      brush->y_axis.y = header.height / 2.0;
-      /*  Read the brush mask data  */
-      if ((fread (temp_buf_data (brush->mask),
-		  1, header.width * header.height, fp)) <
+      if (read (fd, 
+		temp_buf_data (brush->mask), header.width * header.height) <
 	  header.width * header.height)
-	g_message (_("GIMP brush file appears to be truncated."));
+	{
+	  g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
+		     filename);
+	  g_free (name);
+	  gtk_object_unref (GTK_OBJECT (brush));
+	  return NULL;
+	}
+      
+      /*  For backwards-compatibility, check if a pattern follows.
+	  The obsolete .gpb format did it this way.  */
+      pattern = pattern_load (fd, filename);
+      
+      if (pattern)
+	{
+	  if (pattern->mask && pattern->mask->bytes == 3)
+	    {
+	      brush->pixmap = pattern->mask;
+	      pattern->mask = NULL;
+	    }
+	  pattern_free (pattern);
+	}
+      else
+	{
+	  /*  rewind to make brush pipe loader happy  */
+	  if (lseek (fd, - sizeof (PatternHeader), SEEK_CUR) < 0)
+	    {
+	      g_message (_("GIMP brush file appears to be corrupted: \"%s\"."),
+			 filename);
+	      g_free (name);
+	      gtk_object_unref (GTK_OBJECT (brush));
+	      return NULL;
+	    }
+	}
       break;
 
+    case 4:
+      brush = GIMP_BRUSH (gtk_type_new (gimp_brush_get_type ()));
+      brush->mask =   temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
+      brush->pixmap = temp_buf_new (header.width, header.height, 3, 0, 0, NULL);
+
+      for (i = 0; i < header.width * header.height; i++)
+	{
+	  if (read (fd, temp_buf_data (brush->pixmap) 
+		    + i * 3, 3) != 3 ||
+	      read (fd, temp_buf_data (brush->mask) + i, 1) != 1)
+	    {
+	      g_message (_("GIMP brush file appears to be truncated: \"%s\"."),
+			 filename);
+	      g_free (name);
+	      gtk_object_unref (GTK_OBJECT (brush));
+	      return NULL;
+	    }
+	}
+      break;
+      
     default:
-      g_message (_("Unknown brush format version #%d in \"%s\"\n"),
-		 header.version, filename);
-      fclose (fp);
-      gtk_object_sink (GTK_OBJECT (brush));
-      return FALSE;
+      g_message ("Unsupported brush depth: %d\n in file \"%s\"\nGIMP Brushes must be GRAY or RGBA\n",
+		 header.bytes, filename);
+      g_free (name);
+      return NULL;
     }
 
-  return TRUE;
+  brush->name     = name;
+  brush->spacing  = header.spacing;
+  brush->x_axis.x = header.width  / 2.0;
+  brush->x_axis.y = 0.0;
+  brush->y_axis.x = 0.0;
+  brush->y_axis.y = header.height / 2.0;
+
+  return brush;
 }

@@ -18,7 +18,6 @@
 #ifndef __GIMP_SET_P_H__
 #define __GIMP_SET_P_H__
 
-#include "gimpobjectP.h"
 #include "gimpset.h"
 
 #define GIMP_SET_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_set_get_type(), GimpSetClass)

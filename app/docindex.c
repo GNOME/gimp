@@ -24,6 +24,8 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "fileops.h"
+#include "gdisplay.h"
+#include "gimpimageP.h"
 #include "gimpui.h"
 #include "gimpdnd.h"
 #include "ops_buttons.h"

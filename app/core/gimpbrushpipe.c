@@ -19,10 +19,24 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+#include <fcntl.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
 
 #include <gtk/gtk.h>
 
@@ -33,7 +47,6 @@
 #include "patterns.h"
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
-#include "gimpbrushpipeP.h"
 #include "paint_core.h"
 #include "gimprc.h"
 
@@ -43,87 +56,25 @@
 #include "libgimp/gimpintl.h"
 
 
-static GimpBrushClass       *gimp_brush_class;
-static GimpBrushPixmapClass *gimp_brush_pixmap_class;
+static GimpBrushClass  *parent_class;
 
-static GimpBrush *gimp_brush_pixmap_select_brush     (PaintCore *paint_core);
-static gboolean   gimp_brush_pixmap_want_null_motion (PaintCore *paint_core);
 
-static void
-gimp_brush_pixmap_destroy (GtkObject *object)
-{
-  GimpBrushPixmap *pixmap;
+static GimpBrush * gimp_brush_pipe_select_brush     (PaintCore *paint_core);
+static gboolean    gimp_brush_pipe_want_null_motion (PaintCore *paint_core);
+static void        gimp_brush_pipe_destroy          (GtkObject *object);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (object));
-
-  pixmap = GIMP_BRUSH_PIXMAP (object);
-
-  if (pixmap->pixmap_mask)
-    temp_buf_free (pixmap->pixmap_mask);
-
-  if (GTK_OBJECT_CLASS (gimp_brush_class)->destroy)
-    GTK_OBJECT_CLASS (gimp_brush_class)->destroy (object);
-}
-
-static void
-gimp_brush_pixmap_class_init (GimpBrushPixmapClass *klass)
-{
-  GtkObjectClass *object_class;
-  GimpBrushClass *brush_class;
-  
-  object_class = GTK_OBJECT_CLASS (klass);
-  brush_class = GIMP_BRUSH_CLASS (klass);
-
-  gimp_brush_class = gtk_type_class (gimp_brush_get_type ());
-
-  object_class->destroy         = gimp_brush_pixmap_destroy;
-  brush_class->select_brush     = gimp_brush_pixmap_select_brush;
-  brush_class->want_null_motion = gimp_brush_pixmap_want_null_motion;
-}
-
-void
-gimp_brush_pixmap_init (GimpBrushPixmap *brush)
-{
-  brush->pixmap_mask = NULL;
-  brush->pipe        = NULL;
-}
-
-GtkType
-gimp_brush_pixmap_get_type (void)
-{
-  static GtkType type = 0;
-
-  if (!type)
-    {
-      GtkTypeInfo info =
-      {
-	"GimpBrushPixmap",
-	sizeof (GimpBrushPixmap),
-	sizeof (GimpBrushPixmapClass),
-	(GtkClassInitFunc) gimp_brush_pixmap_class_init,
-	(GtkObjectInitFunc) gimp_brush_pixmap_init,
-	/* reserved_1 */ NULL,
-	/* reserved_2 */ NULL,
-	(GtkClassInitFunc) NULL
-      };
-
-      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
-    }
-
-  return type;
-}
 
 static GimpBrush *
-gimp_brush_pixmap_select_brush (PaintCore *paint_core)
+gimp_brush_pipe_select_brush (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
-  int i, brushix, ix;
-  double angle;
+  gint i, brushix, ix;
+  gdouble angle;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), NULL);
+  g_return_val_if_fail (paint_core != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), NULL);
 
-  pipe = GIMP_BRUSH_PIXMAP (paint_core->brush)->pipe;
+  pipe = GIMP_BRUSH_PIPE (paint_core->brush);
 
   if (pipe->nbrushes == 1)
     return GIMP_BRUSH (pipe->current);
@@ -168,7 +119,6 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 	}
       pipe->index[i] = CLAMP (ix, 0, pipe->rank[i]-1);
       brushix += pipe->stride[i] * pipe->index[i];
-      /* g_print ("ix at %d: %d, brushix: %d\n", i, ix, brushix); */
     }
 
   /* Make sure is inside bounds */
@@ -180,14 +130,15 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
 }
 
 static gboolean
-gimp_brush_pixmap_want_null_motion (PaintCore *paint_core)
+gimp_brush_pipe_want_null_motion (PaintCore *paint_core)
 {
   GimpBrushPipe *pipe;
   gint i;
 
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), TRUE);
+  g_return_val_if_fail (paint_core != NULL, TRUE);
+  g_return_val_if_fail (GIMP_IS_BRUSH_PIPE (paint_core->brush), TRUE);
 
-  pipe = GIMP_BRUSH_PIXMAP (paint_core->brush)->pipe;
+  pipe = GIMP_BRUSH_PIPE (paint_core->brush);
 
   if (pipe->nbrushes == 1)
     return TRUE;
@@ -221,18 +172,24 @@ gimp_brush_pipe_destroy (GtkObject *object)
   g_free (pipe->select);
   g_free (pipe->index);
 
-  if (GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy)
-    GTK_OBJECT_CLASS (gimp_brush_pixmap_class)->destroy (object);
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
 gimp_brush_pipe_class_init (GimpBrushPipeClass *klass)
 {
   GtkObjectClass *object_class;
+  GimpBrushClass *brush_class;
 
   object_class = GTK_OBJECT_CLASS (klass);
+  brush_class = GIMP_BRUSH_CLASS (klass);
 
-  gimp_brush_pixmap_class = gtk_type_class (GIMP_TYPE_BRUSH_PIXMAP);
+  parent_class = gtk_type_class (GIMP_TYPE_BRUSH);
+
+  brush_class->select_brush     = gimp_brush_pipe_select_brush;
+  brush_class->want_null_motion = gimp_brush_pipe_want_null_motion;
+
   object_class->destroy = gimp_brush_pipe_destroy;
 }
 
@@ -268,55 +225,75 @@ gimp_brush_pipe_get_type (void)
 	(GtkClassInitFunc) NULL
       };
 
-      type = gtk_type_unique (GIMP_TYPE_BRUSH_PIXMAP, &info);
+      type = gtk_type_unique (GIMP_TYPE_BRUSH, &info);
     }
 
   return type;
 }
 
-GimpBrushPipe *
+#include <errno.h>
+
+GimpBrush *
 gimp_brush_pipe_load (gchar *filename)
 {
-  GimpBrushPipe     *pipe;
-  GPattern          *pattern;
+  GimpBrushPipe     *pipe = NULL;
   GimpPixPipeParams  params;
-  FILE  *fp;
-  gchar  buf[1024];
-  gchar *name;
-  gint   i;
-  gint   num_of_brushes;
-  gint   totalcells;
-  gchar *paramstring;
+  gint     i;
+  gint     num_of_brushes = 0;
+  gint     totalcells;
+  gchar   *paramstring;
+  GString *buffer;
+  gchar    c;
+  gint     fd;
 
-  if ((fp = fopen (filename, "rb")) == NULL)
-    return NULL;
+  g_return_val_if_fail (filename != NULL, NULL);
 
-  /* The file format starts with a painfully simple text header
-   * and we use a painfully simple way to read it
-   */
-  if (fgets (buf, 1024, fp) == NULL)
+  fd = open (filename, O_RDONLY | _O_BINARY);
+  if (fd == -1)
     {
-      fclose (fp);
+      g_message ("Couldn't open file '%s'", filename);
       return NULL;
     }
-  buf[strlen (buf) - 1] = 0;
 
-  pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));
-  name = g_strdup (buf);
+  /* The file format starts with a painfully simple text header */
 
-  /* get the number of brushes */
-  if (fgets (buf, 1024, fp) == NULL)
+  /*  get the name  */
+  buffer = g_string_new (NULL);
+  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
+    g_string_append_c (buffer, c);
+    
+  if (buffer->len > 0 && buffer->len < 1024)
     {
-      fclose (fp);
-      gtk_object_sink (GTK_OBJECT (pipe));
+      pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));      
+      GIMP_BRUSH (pipe)->name = buffer->str;
+    }
+  g_string_free (buffer, FALSE);
+
+  if (!pipe)
+    {
+      g_message ("Couldn't read name for brush pipe from file '%s'\n", 
+		 filename);
+      close (fd);
       return NULL;
     }
-  num_of_brushes = strtol (buf, &paramstring, 10);
+
+  /*  get the number of brushes  */
+  buffer = g_string_new (NULL);
+  while (read (fd, &c, 1) == 1 && c != '\n' && buffer->len < 1024)
+    g_string_append_c (buffer, c);
+
+  if (buffer->len > 0 && buffer->len < 1024)
+    {
+      num_of_brushes = strtol (buffer->str, &paramstring, 10);
+    }
+
   if (num_of_brushes < 1)
     {
-      g_message (_("Brush pipes should have at least one brush."));
-      fclose (fp);
+      g_message (_("Brush pipes should have at least one brush:\n\"%s\""), 
+		 filename);
+      close (fd);
       gtk_object_sink (GTK_OBJECT (pipe));
+      g_string_free (buffer, TRUE);
       return NULL;
     }
 
@@ -372,6 +349,8 @@ gimp_brush_pipe_load (gchar *filename)
       pipe->index[0]  = 0;
     }
 
+  g_string_free (buffer, TRUE);
+
   totalcells = 1;		/* Not all necessarily present, maybe */
   for (i = 0; i < pipe->dimension; i++)
     totalcells *= pipe->rank[i];
@@ -385,136 +364,41 @@ gimp_brush_pipe_load (gchar *filename)
     }
   g_assert (pipe->stride[pipe->dimension-1] == 1);
 
-  pattern = g_new0 (GPattern, 1);
-
-  pipe->brushes = g_new0 (GimpBrushPixmap *, num_of_brushes);
-
-  /* First pixmap brush in the list is the pipe itself */
-  pipe->brushes[0] = GIMP_BRUSH_PIXMAP (pipe);
-
-  /* Current pixmap brush is the first one. */
-  pipe->current = pipe->brushes[0];
+  pipe->brushes = g_new0 (GimpBrush *, num_of_brushes);
 
   while (pipe->nbrushes < num_of_brushes)
     {
-      if (pipe->nbrushes > 0)
-	{
-	  pipe->brushes[pipe->nbrushes] =
-	    GIMP_BRUSH_PIXMAP (gtk_type_new (GIMP_TYPE_BRUSH_PIXMAP));
+      pipe->brushes[pipe->nbrushes] = gimp_brush_load_brush (fd, filename);
 
+      if (pipe->brushes[pipe->nbrushes])
+	{
 	  gtk_object_ref (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
 	  gtk_object_sink (GTK_OBJECT (pipe->brushes[pipe->nbrushes]));
-
+	  
 	  g_free (GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name);
 	  GIMP_BRUSH (pipe->brushes[pipe->nbrushes])->name = NULL;
 	}
-
-      pipe->brushes[pipe->nbrushes]->pipe = pipe;
-
-      /* load the brush */
-      if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[pipe->nbrushes]),
-				  fp, filename))
+      else
 	{
-	  g_message (_("Failed to load one of the brushes in the brush pipe."));
-	  pattern_free (pattern);
+	  g_message (_("Failed to load one of the brushes in the brush pipe\n\"%s\""), 
+		       filename);
+	  close (fd);
 	  gtk_object_sink (GTK_OBJECT (pipe));
 	  return NULL;
 	}
-
-      if (!pattern_load (pattern, fp, filename))
-	{
-	  g_message (_("Failed to load one of the brushes in the brush pipe."));
-	  gtk_object_sink (GTK_OBJECT (pipe));
-	  return NULL;
-	}
-
-      if (pipe->nbrushes == 0)
-	{
-	  /* Replace name with the whole pipe's name */
-	  g_free (GIMP_BRUSH (pipe)->name);
-	  GIMP_BRUSH (pipe)->name = name;
-	}
-
-      pipe->brushes[pipe->nbrushes]->pixmap_mask = pattern->mask;
-      pattern->mask = NULL;   /* #8150: mask now belongs to pixmap */
-      g_free (pattern->name);
-      pattern->name = NULL;   /* #8150: name no longer exists      */
-                              
+  
       pipe->nbrushes++;
     }
 
-  /*  Clean up  */
-  fclose (fp);
+  /* Current brush is the first one. */
+  pipe->current = pipe->brushes[0];
 
-  g_free (pattern);
+  /*  just to satisfy the code that relies on this crap  */
 
-  return pipe;
-}
+  GIMP_BRUSH (pipe)->mask   = pipe->brushes[0]->mask;
+  GIMP_BRUSH (pipe)->pixmap = pipe->brushes[0]->pixmap;
 
-GimpBrushPipe *
-gimp_brush_pixmap_load (gchar *filename)
-{
-  GimpBrushPipe *pipe;
-  GPattern      *pattern;
-  FILE          *fp;
+  close (fd);
 
-  if ((fp = fopen (filename, "rb")) == NULL)
-    return NULL;
-
-  pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));
-
-  /* A (single) pixmap brush is a pixmap pipe brush with just one pixmap */
-  pipe->dimension = 1;
-  pipe->rank      = g_new (gint, 1);
-  pipe->rank[0]   = 1;
-  pipe->select    = g_new (PipeSelectModes, 1);
-  pipe->select[0] = PIPE_SELECT_INCREMENTAL;
-  pipe->index     = g_new (gint, 1);
-  pipe->index[0]  = 0;
-
-  pattern = g_new0 (GPattern, 1);
-
-  pipe->brushes = g_new (GimpBrushPixmap *, 1);
-
-  pipe->brushes[0] = GIMP_BRUSH_PIXMAP (pipe);
-  pipe->current    = pipe->brushes[0];
-
-  pipe->brushes[0]->pipe = pipe;
-
-  /* load the brush */
-  if (!gimp_brush_load_brush (GIMP_BRUSH (pipe->brushes[0]),
-			      fp, filename))
-    {
-      g_message (_("Failed to load pixmap brush."));
-      pattern_free (pattern);
-      gtk_object_sink (GTK_OBJECT (pipe));
-      return NULL;
-    }
-
-  if (!pattern_load (pattern, fp, filename))
-    {
-      g_message (_("Failed to load pixmap brush."));
-      gtk_object_sink (GTK_OBJECT (pipe));
-      return NULL;
-    }
-
-  pipe->brushes[0]->pixmap_mask = pattern->mask;
-
-  pipe->nbrushes = 1;
-  /*  Clean up  */
-  fclose (fp);
-
-  g_free (pattern->name);
-  g_free (pattern);
-
-  return pipe;
-}
-
-TempBuf *
-gimp_brush_pixmap_pixmap (GimpBrushPixmap *brush)
-{
-  g_return_val_if_fail (brush != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (brush), NULL);
-
-  return brush->pixmap_mask;
+  return GIMP_BRUSH (pipe);
 }

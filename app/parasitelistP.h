@@ -17,7 +17,7 @@
 #ifndef __PARASITE_LIST_P_H__
 #define __PARASITE_LIST_P_H__
 
-#include "gimpobjectP.h"
+#include "gimpobject.h"
 #include "parasitelist.h"
 
 struct _ParasiteList

@@ -353,7 +353,7 @@ CODE
     );
 }
 
-@headers = qw("gimplist.h" "gimpbrush.h" "gimpbrushlistP.h" "gimpcontext.h");
+@headers = qw("gimplist.h" "gimpbrush.h" "gimpbrushlist.h" "gimpcontext.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing

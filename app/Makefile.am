@@ -14,7 +14,6 @@ libgimpim_a_SOURCES = \
 	gimpimageP.h		\
 	gimpobject.c		\
 	gimpobject.h		\
-	gimpobjectP.h		\
 	gimppreviewcache.h	\
 	gimppreviewcache.c	\
 	gimpset.c		\
@@ -180,10 +179,8 @@ gimp_SOURCES = \
 	gimpbrushgenerated.h	\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
-	gimpbrushlistP.h	\
 	gimpbrushpipe.c		\
 	gimpbrushpipe.h		\
-	gimpbrushpipeP.h	\
 	gimpcontext.c		\
 	gimpcontext.h		\
 	gimpcontextpreview.c	\

@@ -102,7 +102,7 @@ gimp_brush_generated_get_type (void)
   return type;
 }
 
-GimpBrushGenerated *
+GimpBrush *
 gimp_brush_generated_new (gfloat radius,
 			  gfloat hardness,
 			  gfloat angle,
@@ -126,10 +126,10 @@ gimp_brush_generated_new (gfloat radius,
   /* render brush mask */
   gimp_brush_generated_generate (brush);
 
-  return brush;
+  return GIMP_BRUSH (brush);
 }
 
-GimpBrushGenerated *
+GimpBrush *
 gimp_brush_generated_load (const gchar *file_name)
 {
   GimpBrushGenerated *brush;
@@ -193,7 +193,7 @@ gimp_brush_generated_load (const gchar *file_name)
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
 
-  return brush;
+  return GIMP_BRUSH (brush);
 }
 
 void

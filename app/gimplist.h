@@ -20,6 +20,8 @@
 #define __GIMP_LIST_H__
 
 
+#include "gimpobject.h"
+
 /* GimpList - a typed list of objects with signals for adding and
  * removing of stuff. If it is weak, destroyed objects get removed
  * automatically. If it is not, it refs them so they won't be freed
@@ -27,9 +29,28 @@
  */
 
 
-#define GIMP_TYPE_LIST    gimp_list_get_type ()
-#define GIMP_LIST(obj)    GTK_CHECK_CAST (obj, GIMP_TYPE_LIST, GimpList)
-#define GIMP_IS_LIST(obj) GTK_CHECK_TYPE (obj, gimp_list_get_type())
+#define GIMP_TYPE_LIST         gimp_list_get_type ()
+#define GIMP_LIST(obj)         GTK_CHECK_CAST (obj, GIMP_TYPE_LIST, GimpList)
+#define GIMP_IS_LIST(obj)      GTK_CHECK_TYPE (obj, gimp_list_get_type())
+#define GIMP_LIST_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_list_get_type(), GimpListClass)
+
+struct _GimpList
+{
+  GimpObject gobject;
+  GtkType type;
+  GSList* list;
+  gboolean weak;
+};
+
+struct _GimpListClass
+{
+  GimpObjectClass parent_class;
+  void (* add)    (GimpList *list, void *data);
+  void (* remove) (GimpList *list, void *data);
+};
+
+typedef struct _GimpListClass GimpListClass;
+
 
      
 /* Signals:

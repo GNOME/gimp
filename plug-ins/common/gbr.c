@@ -7,6 +7,10 @@
  * tool to read them.  
  * July 6, 1998 by Seth Burgess <sjburges@gimp.org>
  *
+ * Dec 17, 2000
+ * Load and save GIMP brushes in GRAY or RGBA.  jtl + neo
+ * 
+ *
  * TODO: Give some better error reporting on not opening files/bad headers
  *       etc. 
  */
@@ -14,7 +18,7 @@
 #include "config.h"
 
 #include <glib.h>		/* Include early for G_OS_WIN32 */
-#include <setjmp.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -41,6 +45,7 @@
 #include <libgimp/gimpui.h>
 
 #include "app/brush_header.h"
+#include "app/pattern_header.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -60,27 +65,29 @@ t_info info =
   10
 };
 
-gint run_flag = FALSE;
+gboolean run_flag = FALSE;
+
 
 /* Declare some local functions.
  */
 static void   query          (void);
-static void   run            (gchar   *name,
-			      gint     nparams,
+static void   run            (gchar      *name,
+			      gint        nparams,
 			      GimpParam  *param,
-			      gint    *nreturn_vals,
+			      gint       *nreturn_vals,
 			      GimpParam **return_vals);
 
-static gint32 load_image     (gchar  *filename);
-static gint   save_image     (gchar  *filename,
-			      gint32  image_ID,
-			      gint32  drawable_ID);
+static gint32 load_image     (gchar      *filename);
+static gint   save_image     (gchar      *filename,
+			      gint32      image_ID,
+			      gint32      drawable_ID);
 
 static gint   save_dialog    (void);
-static void   ok_callback    (GtkWidget *widget, 
-			      gpointer   data);
-static void   entry_callback (GtkWidget *widget, 
-			      gpointer   data);
+static void   ok_callback    (GtkWidget  *widget, 
+			      gpointer    data);
+static void   entry_callback (GtkWidget  *widget, 
+			      gpointer    data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -123,11 +130,11 @@ query (void)
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_gbr_load",
-                          "loads files of the .gbr file format",
+                          "Loads GIMP brushes (1 or 4 bpp)",
                           "FIXME: write help",
-                          "Tim Newsome",
-                          "Tim Newsome",
-                          "1997",
+                          "Tim Newsome, Jens Lautenbacher, Sven Neumann",
+                          "Tim Newsome, Jens Lautenbacher, Sven Neumann",
+                          "1997-2000",
                           "<Load>/GBR",
                           NULL,
                           GIMP_PLUGIN,
@@ -137,11 +144,11 @@ query (void)
   gimp_install_procedure ("file_gbr_save",
                           "saves files in the .gbr file format",
                           "Yeah!",
-                          "Tim Newsome",
-                          "Tim Newsome",
-                          "1997",
+                          "Tim Newsome, Jens Lautenbacher, Sven Neumann",
+                          "Tim Newsome, Jens Lautenbacher, Sven Neumann",
+                          "1997-2000",
                           "<Save>/GBR",
-                          "GRAY",
+                          "RGBA, GRAY",
                           GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -149,24 +156,24 @@ query (void)
   gimp_register_magic_load_handler ("file_gbr_load",
 				    "gbr",
 				    "",
-				    "20,string,GIMP");
+				    "20, string, GIMP");
   gimp_register_save_handler       ("file_gbr_save",
 				    "gbr",
 				    "");
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunModeType  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
-  gint32        drawable_ID;
+  static GimpParam     values[2];
+  GimpRunModeType      run_mode;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  gint32               image_ID;
+  gint32               drawable_ID;
   GimpExportReturnType export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -204,7 +211,9 @@ run (gchar   *name,
 	  INIT_I18N_UI();
 	  gimp_ui_init ("gbr", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GBR", 
-				      GIMP_EXPORT_CAN_HANDLE_GRAY);
+				      GIMP_EXPORT_CAN_HANDLE_GRAY  |
+				      GIMP_EXPORT_CAN_HANDLE_RGB   |
+				      GIMP_EXPORT_CAN_HANDLE_ALPHA);
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -225,7 +234,8 @@ run (gchar   *name,
 	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case GIMP_RUN_NONINTERACTIVE:  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
+	case GIMP_RUN_NONINTERACTIVE:  
+	  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
 	  if (nparams != 7)
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
@@ -268,131 +278,162 @@ run (gchar   *name,
 static gint32 
 load_image (gchar *filename) 
 {
-  char *temp;
-  int fd;
-  BrushHeader ph;
-  gchar *buffer;
-  gint32 image_ID, layer_ID;
-  GimpDrawable *drawable;
-  gint line;
-  GimpPixelRgn pixel_rgn;
-  int version_extra;
+  gchar         *temp;
+  gint           fd;
+  BrushHeader    bh;
+  guchar        *brush_buf   = NULL;
+  gint32         image_ID;
+  gint32         layer_ID;
+  GimpDrawable  *drawable;
+  GimpPixelRgn   pixel_rgn;
+  gint           version_extra;
+  GimpImageBaseType  base_type;
+  GimpImageType      image_type;
   
   temp = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
   
-  fd = open(filename, O_RDONLY | _O_BINARY);
+  fd = open (filename, O_RDONLY | _O_BINARY);
   
   if (fd == -1) 
     {
       return -1;
     }
   
-  if (read(fd, &ph, sizeof(ph)) != sizeof(ph)) 
+  if (read (fd, &bh, sizeof (bh)) != sizeof (bh)) 
     {
-      close(fd);
+      close (fd);
       return -1;
     }
 
   /*  rearrange the bytes in each unsigned int  */
-  ph.header_size = g_ntohl(ph.header_size);
-  ph.version = g_ntohl(ph.version);
-  ph.width = g_ntohl(ph.width);
-  ph.height = g_ntohl(ph.height);
-  ph.bytes = g_ntohl(ph.bytes);
-  ph.magic_number = g_ntohl(ph.magic_number);
-  ph.spacing = g_ntohl(ph.spacing);
+  bh.header_size  = g_ntohl (bh.header_size);
+  bh.version      = g_ntohl (bh.version);
+  bh.width        = g_ntohl (bh.width);
+  bh.height       = g_ntohl (bh.height);
+  bh.bytes        = g_ntohl (bh.bytes);
+  bh.magic_number = g_ntohl (bh.magic_number);
+  bh.spacing      = g_ntohl (bh.spacing);
   
-  /* How much extra to add ot the header seek - 1 needs a bit more */
+  /* How much extra to add to the header seek - 1 needs a bit more */
   version_extra = 0;
   
-  if (ph.version == 1) 
+  if (bh.version == 1) 
     {
       /* Version 1 didn't know about spacing */	
-      ph.spacing=25;
+      bh.spacing = 25;
       /* And we need to rewind the handle a bit too */
       lseek (fd, -8, SEEK_CUR);
-      version_extra=8;
+      version_extra = 8;
     }
   /* Version 1 didn't know about magic either */
-  if ((ph.version != 1 && 
-       (ph.magic_number != GBRUSH_MAGIC || ph.version != 2)) ||
-      ph.header_size <= sizeof(ph)) {
-    close(fd);
-    return -1;
-  }
-  
-  if (lseek(fd, ph.header_size - sizeof(ph) + version_extra, SEEK_CUR) 
-      != ph.header_size) 
+  if ((bh.version != 1 && 
+       (bh.magic_number != GBRUSH_MAGIC || bh.version != 2)) ||
+      bh.header_size <= sizeof (bh)) 
     {
-      close(fd);
+      close (fd);
+      return -1;
+    }
+  
+  if (lseek (fd, bh.header_size - sizeof (bh) + version_extra, SEEK_CUR) 
+      != bh.header_size) 
+    {
+      close (fd);
       return -1; 
     }
  
   /* Now there's just raw data left. */
   
+  brush_buf = g_malloc (bh.width * bh.height * bh.bytes);
+
+  if (read (fd, brush_buf, 
+	    bh.width * bh.height * bh.bytes) != bh.width * bh.height * bh.bytes) 
+    {
+      close (fd);
+      g_free (brush_buf);
+      return -1;
+    }
+
   /*
    * Create a new image of the proper size and 
    * associate the filename with it.
    */
   
-  image_ID = gimp_image_new (ph.width, ph.height, (ph.bytes >= 3) ? GIMP_RGB : GIMP_GRAY);
+  switch (bh.bytes)
+    {
+    case 1:
+      base_type = GIMP_GRAY;
+      image_type = GIMP_GRAY_IMAGE;
+      break;
+    case 4:
+      base_type = GIMP_RGB;
+      image_type = GIMP_RGBA_IMAGE;
+      break;
+    default:
+      g_message ("Unsupported brush depth: %d\nGIMP Brushes must be GRAY or RGBA\n",
+		 bh.bytes);
+      return -1;
+    }
+
+  image_ID = gimp_image_new (bh.width, bh.height, base_type);
   gimp_image_set_filename (image_ID, filename);
   
-  layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
-			     (ph.bytes >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE, 100,
-			     GIMP_NORMAL_MODE);
+  layer_ID = gimp_layer_new (image_ID, _("Background"), 
+			     bh.width, bh.height, 
+			     image_type, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
-		       drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 
+		       0, 0, drawable->width, drawable->height, 
+		       TRUE, FALSE);
 
-  buffer = g_malloc (ph.width * ph.bytes);
+  gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar *) brush_buf, 
+			   0, 0, bh.width, bh.height);
 
-  for (line = 0; line < ph.height; line++) 
-    {
-      if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) 
-	{
-	  close(fd);
-	  g_free(buffer);
-	  return -1;
-	}
-      gimp_pixel_rgn_set_row (&pixel_rgn, (guchar *)buffer, 0, line, ph.width);
-      gimp_progress_update ((double) line / (double) ph.height);
-    }
-  
+  if (image_type == GIMP_GRAY_IMAGE)
+    gimp_invert (layer_ID);
+
+  close (fd);
+  g_free (brush_buf);
+
   gimp_drawable_flush (drawable);
   
   return image_ID;
 }
 
 static gint 
-save_image (char   *filename, 
+save_image (gchar  *filename, 
 	    gint32  image_ID, 
 	    gint32  drawable_ID) 
 {
-  int fd;
-  BrushHeader ph;
-  unsigned char *buffer;
+  gint          fd;
+  BrushHeader   bh;
+  guchar       *buffer;
   GimpDrawable *drawable;
-  gint line;
-  GimpPixelRgn pixel_rgn;
-  char *temp;
+  gint          line;
+  gint          x;
+  GimpPixelRgn  pixel_rgn;
+  gchar        *temp;
   
-  if (gimp_drawable_type(drawable_ID) != GIMP_GRAY_IMAGE)
-    return FALSE;
-  
+  if (gimp_drawable_type (drawable_ID) != GIMP_GRAY_IMAGE &&
+      gimp_drawable_type (drawable_ID) != GIMP_RGBA_IMAGE)
+    {
+      g_message (_("GIMP brushes are either GRAYSCALE or RGBA\n"));
+      return FALSE;
+    }
+
   temp = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (temp);
   g_free (temp);
   
-  drawable = gimp_drawable_get(drawable_ID);
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-		      drawable->height, FALSE, FALSE);
+  drawable = gimp_drawable_get (drawable_ID);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 
+		       0, 0, drawable->width, drawable->height, 
+		       FALSE, FALSE);
   
-  fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  fd = open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
   
   if (fd == -1) 
     {
@@ -400,41 +441,50 @@ save_image (char   *filename,
       return FALSE;
     }
 
-  ph.header_size = g_htonl(sizeof(ph) + strlen(info.description) + 1);
-  ph.version = g_htonl(2);
-  ph.width = g_htonl(drawable->width);
-  ph.height = g_htonl(drawable->height);
-  ph.bytes = g_htonl(drawable->bpp);
-  ph.magic_number = g_htonl(GBRUSH_MAGIC);
-  ph.spacing = g_htonl(info.spacing);
+  bh.header_size  = g_htonl (sizeof (bh) + strlen (info.description) + 1);
+  bh.version      = g_htonl (2);
+  bh.width        = g_htonl (drawable->width);
+  bh.height       = g_htonl (drawable->height);
+  bh.bytes        = g_htonl (drawable->bpp);
+  bh.magic_number = g_htonl (GBRUSH_MAGIC);
+  bh.spacing      = g_htonl (info.spacing);
   
-  if (write(fd, &ph, sizeof(ph)) != sizeof(ph)) 
+  if (write (fd, &bh, sizeof (bh)) != sizeof (bh)) 
+    {
+      close (fd);
+      return FALSE;
+    }
+  
+  if (write (fd, info.description, strlen(info.description) + 1) !=
+      strlen (info.description) + 1) 
     {
       close(fd);
       return FALSE;
     }
   
-  if (write(fd, info.description, strlen(info.description) + 1) !=
-      strlen(info.description) + 1) 
-    {
-      close(fd);
-      return FALSE;
-    }
-  
-  buffer = g_malloc(drawable->width * drawable->bpp);
+  buffer = g_malloc (drawable->width * drawable->bpp);
   for (line = 0; line < drawable->height; line++) 
     {
-      gimp_pixel_rgn_get_row(&pixel_rgn, buffer, 0, line, drawable->width);
-      if (write(fd, buffer, drawable->width * drawable->bpp) !=
-	  drawable->width * drawable->bpp) {
-	close(fd);
-	return FALSE;
-      }
-      gimp_progress_update((double) line / (double) drawable->height);
+      gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
+
+      if (drawable->bpp == 1)
+	{
+	  for (x = 0; x < drawable->width; x++)
+	    buffer[x] = 255 - buffer[x];
+	}
+
+      if (write (fd, buffer, 
+		 drawable->width * drawable->bpp) != drawable->width * drawable->bpp) 
+	{
+	  g_free (buffer);
+	  close (fd);
+	  return FALSE;
+	}
+      gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
     }
-  g_free(buffer);
-  
-  close(fd);
+
+  g_free (buffer);  
+  close (fd);
   
   return TRUE;
 }
@@ -503,7 +553,7 @@ static void
 ok_callback (GtkWidget *widget, 
 	     gpointer   data)
 {
-  run_flag = 1;
+  run_flag = TRUE;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 

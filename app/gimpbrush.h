@@ -20,14 +20,11 @@
 #define __GIMP_BRUSH_H__
 
 
-#include <stdio.h>
-
-#include "apptypes.h"
-#include "gimpobjectP.h"
-#include "paint_core.h"
+#include "gimpobject.h"
 #include "temp_buf.h"
 
 #include "libgimp/gimpvector.h"
+
 
 typedef struct _GimpBrushClass	   GimpBrushClass;
 
@@ -40,7 +37,8 @@ struct _GimpBrush
   gint         spacing;    /*  brush's spacing                            */
   GimpVector2  x_axis;     /*  for calculating brush spacing              */
   GimpVector2  y_axis;     /*  for calculating brush spacing              */
-  TempBuf     *mask;       /*  the actual mask...                         */
+  TempBuf     *mask;       /*  the actual mask                            */
+  TempBuf     *pixmap;     /*  optional pixmap data                       */
 };
 
 struct _GimpBrushClass
@@ -57,15 +55,13 @@ struct _GimpBrushClass
 #define GIMP_IS_BRUSH(obj)      (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH))
 
 GtkType     gimp_brush_get_type    (void);
-GimpBrush * gimp_brush_new         (gchar     *filename);
+GimpBrush * gimp_brush_load        (gchar     *filename);
 
-gboolean    gimp_brush_load        (GimpBrush *brush,
-				    gchar     *filename);
-gboolean    gimp_brush_load_brush  (GimpBrush *brush,
-				    FILE      *fp,
+GimpBrush * gimp_brush_load_brush  (gint       fd,
 				    gchar     *filename);
 
 TempBuf   * gimp_brush_get_mask    (GimpBrush *brush);
+TempBuf *   gimp_brush_get_pixmap  (GimpBrush *brush);
 
 gchar     * gimp_brush_get_name    (GimpBrush *brush);
 void        gimp_brush_set_name    (GimpBrush *brush,

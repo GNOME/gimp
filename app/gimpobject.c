@@ -23,7 +23,6 @@
 #include "apptypes.h"
 
 #include "gimpobject.h"
-#include "gimpobjectP.h"
 
 
 static void

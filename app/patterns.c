@@ -21,11 +21,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+#include <fcntl.h>
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #ifdef HAVE_DIRENT_H
 #include <dirent.h>
 #endif
@@ -40,6 +51,7 @@
 
 #include "libgimp/gimpintl.h"
 
+
 /*  global variables  */
 GPattern *active_pattern = NULL;
 GSList   *pattern_list   = NULL;
@@ -48,11 +60,16 @@ gint      num_patterns   = 0;
 /*  static variables  */
 static GPattern *standard_pattern = NULL;
 
+
 /*  local function prototypes  */
-static void     load_pattern           (gchar *);
-static void     pattern_free_func      (gpointer, gpointer);
-static gint     pattern_compare_func   (gconstpointer, 
-					gconstpointer);
+static GPattern *  pattern_load_real      (gint           fd,
+					   gchar         *filename,
+					   gboolean       quiet);
+static void        load_pattern           (gchar         *filename);
+static void        pattern_free_func      (gpointer       data, 
+					   gpointer       dummy);
+static gint        pattern_compare_func   (gconstpointer  second, 
+					   gconstpointer  first);
 
 /*  public functions  */
 
@@ -148,83 +165,87 @@ pattern_list_get_pattern (GSList *list,
   return NULL;
 }
 
-gboolean
-pattern_load (GPattern *pattern,
-	      FILE     *fp,
+GPattern *
+pattern_load (gint      fd,
 	      gchar    *filename)
 {
-  PatternHeader header;
-  gint   bn_size;
-  guchar buf [sizeof (PatternHeader)];
-  guint *hp;
-  gint   i;
+  return pattern_load_real (fd, filename, TRUE);
+}
+
+static GPattern *
+pattern_load_real (gint      fd,
+	           gchar    *filename,
+	           gboolean  quiet)
+{
+  GPattern      *pattern;
+  PatternHeader  header;
+  gint    bn_size;
+  gchar  *name;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (fd != -1, NULL);
 
   /*  Read in the header size  */
-  if ((fread (buf, 1, sizeof (PatternHeader), fp)) < sizeof (PatternHeader))
-    {
-      fclose (fp);
-      pattern_free (pattern);
-      return FALSE;
-    }
+  if (read (fd, &header, sizeof (header)) != sizeof (header)) 
+    return NULL;
 
   /*  rearrange the bytes in each unsigned int  */
-  hp = (guint *) &header;
-  for (i = 0; i < (sizeof (PatternHeader) / 4); i++)
-    hp [i] = (buf [i * 4] << 24) + (buf [i * 4 + 1] << 16) +
-             (buf [i * 4 + 2] << 8) + (buf [i * 4 + 3]);
+  header.header_size  = g_ntohl (header.header_size);
+  header.version      = g_ntohl (header.version);
+  header.width        = g_ntohl (header.width);
+  header.height       = g_ntohl (header.height);
+  header.bytes        = g_ntohl (header.bytes);
+  header.magic_number = g_ntohl (header.magic_number);
 
-  /*  Check for correct file format */
-  if (header.magic_number != GPATTERN_MAGIC)
+ /*  Check for correct file format */
+  if (header.magic_number != GPATTERN_MAGIC || header.version != 1 || 
+      header.header_size <= sizeof (header)) 
     {
-      /*  One thing that can save this error is if the pattern is version 1  */
-      if (header.version != 1)
-	{
-	  fclose (fp);
-	  pattern_free (pattern);
-	  return FALSE;
-	}
+      if (!quiet)
+	g_message (_("Unknown pattern format version #%d in \"%s\"."),
+		   header.version, filename);
+      return NULL;
     }
-  /*  Check for correct version  */
-  if (header.version != GPATTERN_FILE_VERSION)
+  
+  /*  Check for supported bit depths  */
+  if (header.bytes != 1 && header.bytes != 3)
     {
-      g_message (_("Unknown GIMP pattern version #%d in \"%s\"\n"),
-		 header.version, filename);
-      fclose (fp);
-      pattern_free (pattern);
-      return FALSE;
+      g_message ("Unsupported pattern depth: %d\n in file \"%s\"\nGIMP Patterns must be GRAY or RGB\n",
+		 header.bytes, filename);
+      return NULL;
     }
 
-  /*  Get a new pattern mask  */
-  pattern->mask =
-    temp_buf_new (header.width, header.height, header.bytes, 0, 0, NULL);
-
-  /*  Read in the pattern name  */
-  if ((bn_size = (header.header_size - sizeof (PatternHeader))))
+   /*  Read in the brush name  */
+  if ((bn_size = (header.header_size - sizeof (header))))
     {
-      pattern->name = g_new (gchar, bn_size);
-      if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
+      name = g_new (gchar, bn_size);
+      if ((read (fd, name, bn_size)) < bn_size)
 	{
-	  g_message (_("Error in GIMP pattern file \"%s\""), filename);
-	  fclose (fp);
-	  pattern_free (pattern);
-	  return FALSE;
+	  g_message (_("Error in GIMP pattern file \"%s\"."), filename);
+	  g_free (name);
+	  return NULL;
 	}
     }
   else
-    pattern->name = g_strdup (_("Unnamed"));
-
-  /*  Read the pattern mask data  */
-  /*  Read the image data  */
-  if ((fread (temp_buf_data (pattern->mask), 1,
-	      header.width * header.height * header.bytes, fp)) <
-      header.width * header.height * header.bytes)
     {
-      g_message (_("GIMP pattern file \"%s\" appears to be truncated."),
-		 filename);
+      name = g_strdup (_("Unnamed"));
     }
 
-  /*  success  */
-  return TRUE;
+  pattern = g_new0 (GPattern, 1);
+  pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
+				0, 0, NULL);
+  if (read (fd, temp_buf_data (pattern->mask), 
+	    header.width * header.height * header.bytes) < header.width * header.height * header.bytes)
+      {
+	g_message (_("GIMP pattern file appears to be truncated: \"%s\"."),
+		   filename);
+	pattern_free (pattern);
+	return NULL;
+      }
+
+  pattern->name = name;
+
+  return pattern;
 }
 
 void
@@ -261,31 +282,24 @@ static void
 load_pattern (gchar *filename)
 {
   GPattern *pattern;
-  FILE *fp;
+  gint      fd;
 
-  pattern = g_new0 (GPattern, 1);
+  g_return_if_fail (filename != NULL);
+
+  fd = open (filename, O_RDONLY | _O_BINARY);
+  if (fd == -1) 
+    return;
+
+  pattern = pattern_load_real (fd, filename, FALSE);
+
+  if (!pattern)
+    return;
 
   pattern->filename = g_strdup (filename);
-  pattern->name     = NULL;
-  pattern->mask     = NULL;
 
-  /*  Open the requested file  */
-  if (! (fp = fopen (filename, "rb")))
-    {
-      pattern_free (pattern);
-      return;
-    }
-
-  if (! pattern_load (pattern, fp, filename))
-    {
-      g_message (_("Error loading pattern \"%s\""), filename);
-      return;
-    }
-
-  /*  Clean up  */
-  fclose (fp);
-
-  /*temp_buf_swap (pattern->mask);*/
+  /*  Swap the pattern to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    temp_buf_swap (pattern->mask);
 
   pattern_list = g_slist_insert_sorted (pattern_list, pattern,
 					pattern_compare_func);

@@ -21,6 +21,7 @@
 
 
 #include "gimpbrush.h"
+#include "gimpcontext.h"
 
 
 typedef struct _BrushSelect BrushSelect;

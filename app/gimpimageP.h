@@ -22,7 +22,7 @@
 
 #include <gtk/gtk.h>  /*  eeeek  */
 
-#include "gimpobjectP.h"
+#include "gimpobject.h"
 #include "gimpimage.h"
 
 #include "tile_manager.h"

@@ -183,7 +183,8 @@ run (gchar   *name,
 	  INIT_I18N_UI();
 	  gimp_ui_init ("pat", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
-				      (GIMP_EXPORT_CAN_HANDLE_RGB | GIMP_EXPORT_CAN_HANDLE_GRAY));
+				      (GIMP_EXPORT_CAN_HANDLE_GRAY |
+				       GIMP_EXPORT_CAN_HANDLE_RGB));
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -254,6 +255,8 @@ load_image (gchar *filename)
   GimpDrawable *drawable;
   gint line;
   GimpPixelRgn pixel_rgn;
+  GimpImageBaseType base_type;
+  GimpImageType     image_type;
 
   temp = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (temp);
@@ -295,18 +298,35 @@ load_image (gchar *filename)
   /*
    * Create a new image of the proper size and associate the filename with it.
    */
-  image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? GIMP_RGB : GIMP_GRAY);
+
+  switch (ph.bytes)
+    {
+    case 1:
+      base_type = GIMP_GRAY;
+      image_type = GIMP_GRAY_IMAGE;
+      break;
+    case 3:
+      base_type = GIMP_RGB;
+      image_type = GIMP_RGB_IMAGE;
+      break;
+   default:
+      g_message ("Unsupported pattern depth: %d\nGIMP Patterns must be GRAY or RGB\n", ph.bytes);
+      return -1;
+    }
+
+  image_ID = gimp_image_new (ph.width, ph.height, base_type);
   gimp_image_set_filename(image_ID, filename);
   
-  layer_ID = gimp_layer_new(image_ID, _("Background"), ph.width, ph.height,
-			    (ph.bytes >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE, 100, GIMP_NORMAL_MODE);
-  gimp_image_add_layer(image_ID, layer_ID, 0);
+  layer_ID = gimp_layer_new (image_ID, _("Background"), ph.width, ph.height,
+			    image_type, 100, GIMP_NORMAL_MODE);
+  gimp_image_add_layer (image_ID, layer_ID, 0);
   
   drawable = gimp_drawable_get(layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, 
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, 
+		       drawable->width, drawable->height, 
 		       TRUE, FALSE);
   
-  buffer = g_malloc(ph.width * ph.bytes);
+  buffer = g_malloc (ph.width * ph.bytes);
   
   for (line = 0; line < ph.height; line++) 
     {

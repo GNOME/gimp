@@ -26,7 +26,7 @@
 
 #include "gimpobject.h"
 #include "gimpsignal.h"
-#include "gimplistP.h"
+#include "gimplist.h"
 
 
 /*  code mostly ripped from nether's gimpset class  */

@@ -26,7 +26,6 @@
 #include "airbrush.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimpbrushpipe.h"
 #include "gradient.h"
 #include "gimage.h"
 #include "gimpui.h"
@@ -330,7 +329,7 @@ airbrush_motion (PaintCore	      *paint_core,
       color_pixels (temp_buf_data (area), col,
 		    area->width * area->height, area->bytes);
     }
-  else if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
+  else if (paint_core->brush && paint_core->brush->pixmap)
     {
       mode = INCREMENTAL;
       paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 

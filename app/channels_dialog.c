@@ -31,6 +31,7 @@
 #include "gimage.h"
 #include "gimage_mask.h"
 #include "gimpdnd.h"
+#include "gimppreviewcache.h"
 #include "gimprc.h"
 #include "gimpui.h"
 #include "layers_dialogP.h"

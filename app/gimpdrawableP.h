@@ -19,9 +19,8 @@
 #ifndef __GIMPDRAWABLEP_H__
 #define __GIMPDRAWABLEP_H__
 
-#include "gimpobjectP.h"
+#include "gimpobject.h"
 #include "gimpdrawable.h"
-#include "gimppreviewcache.h"
 
 
 struct _GimpDrawable
@@ -65,3 +64,4 @@ void gimp_drawable_configure (GimpDrawable *, GimpImage *,
 			      gint, gint, GimpImageType, gchar *);
 
 #endif /* __GIMPDRAWABLEP_H__ */
+

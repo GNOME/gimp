@@ -26,7 +26,6 @@
 #include "drawable.h"
 #include "gdisplay.h"
 #include "gimpbrushlist.h"
-#include "gimpbrushpipe.h"
 #include "gimpui.h"
 #include "gradient.h"
 #include "paint_funcs.h"
@@ -547,9 +546,10 @@ paintbrush_motion (PaintCore            *paint_core,
 	}
       /* we check to see if this is a pixmap, if so composite the
 	 pixmap image into the are instead of the color */
-      else if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
+      else if (paint_core->brush && paint_core->brush->pixmap)
 	{
-	  paint_core_color_area_with_pixmap (paint_core, gimage, drawable, area, 
+	  paint_core_color_area_with_pixmap (paint_core, gimage, drawable, 
+					     area, 
 					     scale, SOFT);
 	  paint_appl_mode = INCREMENTAL;
 	}

@@ -31,7 +31,6 @@
 #include "brush_scale.h"
 #include "gimpbrush.h"
 #include "gimpbrushpipe.h"
-#include "gimpbrushpipeP.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
 #include "gradient_header.h"
@@ -474,7 +473,7 @@ gimp_context_preview_popup_timeout (gpointer data)
 	gcp->popup_width  = brush->mask->width;
 	gcp->popup_height = brush->mask->height;
 
-	if (GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
+	if (GIMP_IS_BRUSH_PIPE (brush))
 	  {
 	    GimpBrushPipe *pipe = GIMP_BRUSH_PIPE (brush);
 	    gint i;
@@ -482,7 +481,7 @@ gimp_context_preview_popup_timeout (gpointer data)
 	    for (i = 1; i < pipe->nbrushes; i++)
 	      {
 		brush = GIMP_BRUSH (pipe->brushes[i]);
-		gcp->popup_width = MAX (gcp->popup_width, brush->mask->width);
+		gcp->popup_width  = MAX (gcp->popup_width, brush->mask->width);
 		gcp->popup_height = MAX (gcp->popup_height, brush->mask->height);
 	      }
 	  }
@@ -550,18 +549,24 @@ gimp_context_preview_popup_timeout (gpointer data)
     {
     case GCP_BRUSH:      
       gimp_context_preview_draw_brush_popup (gcp);
-      if (GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data) && gcp_pipe_timer == 0)
+      if (GIMP_IS_BRUSH_PIPE (gcp->data) && gcp_pipe_timer == 0)
 	{
 	  gcp_pipe_index = 0;
-	  gcp_pipe_timer = gtk_timeout_add (300, (GtkFunction)gimp_context_preview_animate_pipe, gcp);
+	  gcp_pipe_timer = 
+	    gtk_timeout_add (300, 
+			     (GtkFunction) gimp_context_preview_animate_pipe, 
+			     gcp);
 	}
       break;
+
     case GCP_PATTERN:
       gimp_context_preview_draw_pattern_popup (gcp);
       break;
+
     case GCP_GRADIENT:
       gimp_context_preview_draw_gradient_popup (gcp);
       break;
+
     default:
       break;
     }  
@@ -645,10 +650,9 @@ draw_brush (GtkPreview *preview,
   guchar bg;
   gint x, y;
 
-  mask_buf = brush->mask;
-  if (GIMP_IS_BRUSH_PIXMAP (brush))
-    pixmap_buf = GIMP_BRUSH_PIXMAP (brush)->pixmap_mask;
-  brush_width = mask_buf->width;
+  mask_buf     = gimp_brush_get_mask (brush);
+  pixmap_buf   = gimp_brush_get_pixmap (brush);
+  brush_width  = mask_buf->width;
   brush_height = mask_buf->height;
 
   if (brush_width > width || brush_height > height)
@@ -660,7 +664,7 @@ draw_brush (GtkPreview *preview,
       brush_height = (gdouble)brush_height / MAX (ratio_x, ratio_y) + 0.5;
       
       mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
-      if (GIMP_IS_BRUSH_PIXMAP (brush))
+      if (pixmap_buf)
 	{
 	  /*  TODO: the scale function should scale the pixmap 
 	      and the mask in one run                            */
@@ -676,7 +680,7 @@ draw_brush (GtkPreview *preview,
   buf = g_new (guchar, 3 * width);
   memset (buf, 255, 3 * width);
 
-  if (GIMP_IS_BRUSH_PIXMAP (brush)) 
+  if (pixmap_buf) 
     {
       guchar *pixmap = temp_buf_data (pixmap_buf);
 
@@ -724,16 +728,16 @@ draw_brush (GtkPreview *preview,
       offset_x = width - indicator_width;
       offset_y = height - indicator_height;
       for (y = 0; y < indicator_height; y++)
-	(GIMP_IS_REALLY_A_BRUSH_PIPE (brush)) ?
+	(GIMP_IS_BRUSH_PIPE (brush)) ?
 	  gtk_preview_draw_row (preview, scale_pipe_indicator_bits[y][0],
 				offset_x, offset_y + y, indicator_width) :
 	  gtk_preview_draw_row (preview, scale_indicator_bits[y][0],
 				offset_x, offset_y + y, indicator_width);
       temp_buf_free (mask_buf);
-      if (GIMP_IS_BRUSH_PIXMAP (brush))
+      if (pixmap_buf)
 	temp_buf_free (pixmap_buf);
     }
-  else if (!is_popup && GIMP_IS_REALLY_A_BRUSH_PIPE (brush))
+  else if (!is_popup && GIMP_IS_BRUSH_PIPE (brush))
     {
       offset_x = width - indicator_width;
       offset_y = height - indicator_height;
@@ -775,7 +779,8 @@ gimp_context_preview_animate_pipe (GimpContextPreview *gcp)
   GimpBrushPipe *pipe;
   GimpBrush *brush;
 
-  g_return_val_if_fail (gcp != NULL && GIMP_IS_REALLY_A_BRUSH_PIPE (gcp->data), FALSE);
+  g_return_val_if_fail (gcp != NULL && 
+			GIMP_IS_BRUSH_PIPE (gcp->data), FALSE);
   if (gcp_popup != NULL && !GTK_WIDGET_VISIBLE (gcp_popup))
     {
       gcp_pipe_timer = 0;

@@ -24,9 +24,6 @@
 
 #include "apptypes.h"
 
-#include "gimpobjectP.h"
-#include "gimpimageP.h"
-
 #include "cursorutil.h"
 #include "drawable.h"
 #include "floating_sel.h"

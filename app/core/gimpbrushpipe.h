@@ -27,33 +27,59 @@
 #include "temp_buf.h"
 
 
-typedef struct _GimpBrushPixmap GimpBrushPixmap;
 typedef struct _GimpBrushPipe GimpBrushPipe;
 
-
-#define GIMP_TYPE_BRUSH_PIXMAP    (gimp_brush_pixmap_get_type ())
-#define GIMP_BRUSH_PIXMAP(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIXMAP, GimpBrushPixmap))
-#define GIMP_IS_BRUSH_PIXMAP(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIXMAP))
 
 #define GIMP_TYPE_BRUSH_PIPE    (gimp_brush_pipe_get_type ())
 #define GIMP_BRUSH_PIPE(obj)    (GTK_CHECK_CAST ((obj), GIMP_TYPE_BRUSH_PIPE, GimpBrushPipe))
 #define GIMP_IS_BRUSH_PIPE(obj) (GTK_CHECK_TYPE ((obj), GIMP_TYPE_BRUSH_PIPE))
 
 
-GtkType         gimp_brush_pixmap_get_type (void);
-GtkType         gimp_brush_pipe_get_type   (void);
+typedef enum
+{
+  PIPE_SELECT_CONSTANT,
+  PIPE_SELECT_INCREMENTAL,
+  PIPE_SELECT_ANGULAR,
+  PIPE_SELECT_VELOCITY,
+  PIPE_SELECT_RANDOM,
+  PIPE_SELECT_PRESSURE,
+  PIPE_SELECT_TILT_X,
+  PIPE_SELECT_TILT_Y
+} PipeSelectModes;
 
-GimpBrushPipe * gimp_brush_pipe_load       (gchar *filename);
-GimpBrushPipe * gimp_brush_pixmap_load     (gchar *filename);
 
-TempBuf       * gimp_brush_pixmap_pixmap   (GimpBrushPixmap *brush);
+struct _GimpBrushPipe
+{
+  GimpBrush         gbrush;     /* Also itself a brush */
+
+  gint              dimension;
+  gint             *rank;	/* Size in each dimension */
+  gint             *stride;	/* Aux for indexing */
+  PipeSelectModes  *select;	/* One mode per dimension */
+
+  gint             *index;	/* Current index for incremental dimensions */
+
+  gint              nbrushes;	/* Might be less than the product of the
+				 * ranks in some odd special case */
+  GimpBrush       **brushes;
+  GimpBrush        *current;    /* Currently selected brush */
+};
+
+typedef struct _GimpBrushPipeClass GimpBrushPipeClass;
+
+struct _GimpBrushPipeClass
+{
+  GimpBrushClass  parent_class;
+};
 
 
-/* appearantly GIMP_IS_BRUSH_PIPE () returning TRUE is no indication
- * that you really have a brush_pipe in front of you, so here we introduce
- * a macro that works:
- */
-#define GIMP_IS_REALLY_A_BRUSH_PIPE(obj) (GIMP_IS_BRUSH_PIPE (obj) && GIMP_BRUSH_PIPE (obj)->nbrushes > 1)
+GtkType     gimp_brush_pixmap_get_type (void);
+GtkType     gimp_brush_pipe_get_type   (void);
+
+GimpBrush * gimp_brush_pipe_load       (gchar *filename);
 
 
 #endif  /* __GIMP_BRUSH_PIPE_H__ */
+
+
+

@@ -24,7 +24,7 @@
 
 #include "apptypes.h"
 #include "gimpbrush.h"
-#include "gimpbrushlistP.h"
+#include "gimpbrushlist.h"
 #include "gimpcontext.h"
 #include "gimplist.h"
 

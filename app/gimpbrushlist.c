@@ -46,8 +46,7 @@
 #include "gimpsignal.h"
 #include "gimplist.h"
 #include "gimpbrush.h"
-#include "gimplistP.h"
-#include "gimpbrushlistP.h"
+#include "gimpbrushlist.h"
 
 #include "libgimp/gimpenv.h"
 
@@ -188,11 +187,12 @@ brushes_get_standard_brush (void)
 static void
 brushes_brush_load (gchar *filename)
 {
-  if (strcmp (&filename[strlen (filename) - 4], ".gbr") == 0)
-    {
-      GimpBrush *brush;
+  GimpBrush *brush;
 
-      brush = gimp_brush_new (filename);
+  if (strcmp (&filename[strlen (filename) - 4], ".gbr") == 0 ||
+      strcmp (&filename[strlen (filename) - 4], ".gpb") == 0)
+    {
+      brush = gimp_brush_load (filename);
 
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, brush);
@@ -201,8 +201,6 @@ brushes_brush_load (gchar *filename)
     }
   else if (strcmp (&filename[strlen(filename) - 4], ".vbr") == 0)
     {
-      GimpBrushGenerated *brush;
-
       brush = gimp_brush_generated_load (filename);
 
       if (brush != NULL)
@@ -210,27 +208,14 @@ brushes_brush_load (gchar *filename)
       else
 	g_message (_("Warning: Failed to load brush\n\"%s\""), filename);
     }
-  else if (strcmp (&filename[strlen (filename) - 4], ".gpb") == 0)
-    {
-      GimpBrushPipe *brush;
-
-      brush = gimp_brush_pixmap_load (filename);
-
-      if (brush != NULL)
-	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
-      else
-	g_message (_("Warning: Failed to load pixmap brush\n\"%s\""), filename);
-    }
   else if (strcmp (&filename[strlen (filename) - 4], ".gih") == 0)
     {
-      GimpBrushPipe *brush;
-
       brush = gimp_brush_pipe_load (filename);
 
       if (brush != NULL)
 	gimp_brush_list_add (brush_list, GIMP_BRUSH (brush));
       else
-	g_message (_("Warning: Failed to load pixmap pipe\n\"%s\""), filename);
+	g_message (_("Warning: Failed to load brush pipe\n\"%s\""), filename);
     }
 }
 

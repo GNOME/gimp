@@ -196,12 +196,16 @@ paint_core_button_press (Tool           *tool,
 {
   PaintCore    *paint_core;
   GDisplay     *gdisp;
+  GimpBrush    *current_brush;
   gboolean      draw_line;
   gdouble       x, y;
   GimpDrawable *drawable;
 
   gdisp = (GDisplay *) gdisp_ptr;
   paint_core = (PaintCore *) tool->private;
+
+  g_return_if_fail (gdisp != NULL);
+  g_return_if_fail (paint_core != NULL);
 
   gdisplay_untransform_coords_f (gdisp, (double) bevent->x, (double) bevent->y,
 				 &x, &y, TRUE);
@@ -318,6 +322,9 @@ paint_core_button_press (Tool           *tool,
   else
     paint_core->pick_state = FALSE;
 
+  /*  store the current brush pointer  */
+  current_brush = paint_core->brush;
+
   /*  Paint to the image  */
   if (draw_line)
     {
@@ -361,6 +368,9 @@ paint_core_button_press (Tool           *tool,
 
   if (paint_core->flags & TOOL_TRACES_ON_WINDOW)
     (* paint_core->paint_func) (paint_core, drawable, POSTTRACE_PAINT);
+
+  /*  restore the current brush pointer  */
+  paint_core->brush = current_brush;
 }
 
 void
@@ -833,6 +843,7 @@ void
 paint_core_interpolate (PaintCore    *paint_core, 
 			GimpDrawable *drawable)
 {
+  GimpBrush *current_brush;
   GimpVector2 delta;
 #ifdef GTK_HAVE_SIX_VALUATORS
   gdouble dpressure, dxtilt, dytilt, dwheel;
@@ -910,11 +921,18 @@ paint_core_interpolate (PaintCore    *paint_core,
 #ifdef GTK_HAVE_SIX_VALUATORS
           paint_core->curwheel    = paint_core->lastwheel + dwheel * t;
 #endif /* GTK_HAVE_SIX_VALUATORS */
+
+	  /*  save the current brush  */
+	  current_brush = paint_core->brush;
+
 	  if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
 	    paint_core->brush     =
 	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
 				   ->klass)->select_brush) (paint_core);
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+
+	  /*  restore the current brush pointer  */
+	  paint_core->brush = current_brush;
 	}
     }
   paint_core->distance    = total;
@@ -2013,11 +2031,11 @@ paint_core_color_area_with_pixmap (PaintCore            *paint_core,
   TempBuf *pixmap_mask;
   TempBuf *brush_mask;
 
-  g_return_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush));
-
+  g_return_if_fail (GIMP_IS_BRUSH (paint_core->brush));
+  g_return_if_fail (paint_core->brush->pixmap != NULL);
+  
   /*  scale the brushes  */
-  pixmap_mask = 
-    paint_core_scale_pixmap (gimp_brush_pixmap_pixmap (GIMP_BRUSH_PIXMAP (paint_core->brush)), scale);
+  pixmap_mask = paint_core_scale_pixmap (paint_core->brush->pixmap, scale);
 
   if (mode == SOFT)
     brush_mask = paint_core_scale_mask (paint_core->brush->mask, scale);

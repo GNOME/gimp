@@ -25,6 +25,7 @@
 #include <gtk/gtk.h>
 
 #include "gimpdrawableP.h"
+#include "gimppreviewcache.h"
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"

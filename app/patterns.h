@@ -46,9 +46,9 @@ GPattern * pattern_list_get_pattern          (GSList    *list,
 					      gchar     *name);
 
 /*  this is useful for pixmap brushes etc.  */
-gboolean   pattern_load                      (GPattern  *pattern,
-					      FILE      *fp,
+GPattern * pattern_load                      (gint       fd,
 					      gchar     *filename);
 void       pattern_free                      (GPattern  *pattern);
+
 
 #endif  /*  __PATTERNS_H__  */
