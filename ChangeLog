@@ -1,3 +1,7 @@
+2001-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/palette.c: plugged memory leaks.
+
 2001-01-17  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: updated and changed .gimp to .gimp-1.2

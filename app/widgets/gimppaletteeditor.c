@@ -2552,6 +2552,8 @@ palette_import_image_menu_activate (gint        redo,
 
            gtk_option_menu_set_history (GTK_OPTION_MENU (optionmenu1), act_num);
            gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+
+	   g_free (lab);
 	}
     }
   g_slist_free (list);
@@ -2561,6 +2563,8 @@ palette_import_image_menu_activate (gint        redo,
 			 pdb_image_to_id (import_dialog->gimage));
 
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry), lab);
+
+  g_free (lab);
 }
 
 /*  the import source menu item callbacks  ***********************************/
@@ -2873,6 +2877,8 @@ palette_import_create_image_palette (gpointer data,
      (gint) color_tab->r + (color_tab->r_adj / color_tab->count), 
      (gint) color_tab->g + (color_tab->g_adj / color_tab->count), 
      (gint) color_tab->b + (color_tab->b_adj / color_tab->count));
+
+  g_free (lab);
 }
 
 static gboolean
