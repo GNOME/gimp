@@ -7,9 +7,10 @@ GIMP 1.3 is the development branch of The GIMP. Here's where the
 development takes place on the road to the next stable release
 GIMP version 2.0.
 
+
 Overview of Changes in GIMP 1.3.18
 ==================================
-- Made a bunch of improvements to the path tool [Nomis]
+- Made a bunch of improvements to the path tool [Simon]
 - Added lots of mnemonnics for plug-ins [Brix]
 - Build fixes for Win32 [Hans, Tor]
 - Improvements to the grid [Brix]
@@ -18,17 +19,18 @@ Overview of Changes in GIMP 1.3.18
 - Add several edge detection algorithms to the edge tool [Bolsh]
 - Fixed handle leak in plug-ins on Win32 [Tor]
 - Changed default quality for jpegs [Raphael]
-- Add changing opacity via cursor keys [Nomis]
+- Add changing opacity via cursor keys [Simon]
 - Fix text tool outlines [Mitch]
 - Serialize/deserialize documentation [Sven]
-- Colourcibe analysis plug-in added [Yosh]
+- Colourcube analysis plug-in added [Yosh]
 - Lots of code clean-up in displayshell [Mitch]
 - Camp organisation [Sven, Mitch]
-- Added a working gimp.spec for building RPMs [Drh]
+- Added a working gimp.spec for building RPMs [drc]
 - Lots of bug fixes
 
 Other contributors:
   Maurits Rijk, Raphael Quinet, Adam Moss
+
 
 Overview of Changes in GIMP 1.3.17
 ==================================
