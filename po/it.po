@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-04-04 01:05+0200\n"
-"PO-Revision-Date: 2005-04-04 01:13+0200\n"
+"PO-Revision-Date: 2005-04-04 01:48+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -8925,7 +8925,7 @@ msgstr "Forbici"
 
 #: ../app/tools/gimpiscissorstool.c:278
 msgid "Select shapes from image"
-msgstr "Seleziona aree dall'immagine"
+msgstr "Seleziona forme dall'immagine"
 
 #: ../app/tools/gimpiscissorstool.c:279
 msgid "Intelligent _Scissors"

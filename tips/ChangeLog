@@ -1,3 +1,7 @@
+2005-04-04  Marco Ciampa <ciampix@libero.it>
+
+	* it.po: very small fix.
+
 2005-04-03  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added rw.po.
