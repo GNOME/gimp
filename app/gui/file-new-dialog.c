@@ -188,8 +188,8 @@ file_new_dialog_set (GtkWidget    *widget,
     {
       template = gimp_image_new_get_last_template (dialog->gimp, gimage);
 
-      gimp_config_sync (GIMP_CONFIG (dialog->template),
-                        GIMP_CONFIG (template), 0);
+      gimp_config_sync (GIMP_CONFIG (template),
+                        GIMP_CONFIG (dialog->template), 0);
 
       g_object_unref (template);
     }

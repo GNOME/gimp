@@ -498,7 +498,6 @@ gimp_template_editor_constructor (GType                  type,
   g_signal_connect (editor->template, "notify",
                     G_CALLBACK (gimp_template_editor_template_notify),
                     editor);
-  gimp_template_editor_template_notify (editor->template, NULL, editor);
 
   return object;
 }

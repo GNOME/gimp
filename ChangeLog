@@ -1,3 +1,11 @@
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-new-dialog.c (file_new_dialog_set): sync from the
+	given template to the dialog template, not the other way around.
+
+	* app/widgets/gimptemplateeditor.c (gimp_template_editor_constructor):
+	shouldn't have to call the notify callback from here.
+
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcolorframe.[ch] (gimp_color_frame_set_color):
