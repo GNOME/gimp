@@ -86,7 +86,7 @@
 
 (script-fu-register "script-fu-test-sphere"
 		    "<Toolbox>/Xtns/Script-Fu/Test/Sphere"
-		    "Simple script to test and show the usage of the new Script-Fu API extensions"
+		    "Simple script to test and show the usage of the new Script-Fu API extensions. \n\nNote the use of spinbuttons, sliders, the font selector and do not forget the about dialog..."
 		    "Spencer Kimball, Sven Neumann"
 		    "Spencer Kimball"
 		    "1996, 1998"

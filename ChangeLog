@@ -1,3 +1,8 @@
+Tue Aug 11 21:14:40 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c: Added an about-dialog that
+	gives access to the short help hidden in the scripts.
+
 Tue Aug 11 12:24:14 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* tile.c tile.h: exported some accessor functions, made Tile
