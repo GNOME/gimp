@@ -153,8 +153,9 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "core/gimpcontainer.h"
-	      "core/gimpimage.h" "core/gimpdatafactory.h" "core/gimppalette.h");
+@headers = qw("core/gimp.h" "core/gimpcontainer.h" "core/gimpimage.h"
+	      "core/gimpimage-convert.h" "core/gimpdatafactory.h"
+	      "core/gimppalette.h");
 
 @procs = qw(convert_rgb convert_grayscale convert_indexed);
 %exports = (app => [@procs], lib => [@procs]);

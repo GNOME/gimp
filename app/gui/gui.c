@@ -68,40 +68,43 @@
 
 /*  local function prototypes  */
 
-static void   gui_set_busy                        (Gimp        *gimp);
-static void   gui_unset_busy                      (Gimp        *gimp);
-static void   gui_display_new                     (GimpImage   *gimage);
+static void   gui_set_busy                    (Gimp                 *gimp);
+static void   gui_unset_busy                  (Gimp                 *gimp);
+static void   gui_display_new                 (GimpImage            *gimage);
 
-static gint   gui_rotate_the_shield_harmonics     (GtkWidget   *widget,
-						   GdkEvent    *eevent,
-						   gpointer     data);
-static void   gui_really_quit_callback            (GtkWidget   *button,
-						   gboolean     quit,
-						   gpointer     data);
+static gint   gui_rotate_the_shield_harmonics (GtkWidget            *widget,
+                                               GdkEvent             *eevent,
+                                               gpointer              data);
+static void   gui_really_quit_callback        (GtkWidget            *button,
+                                               gboolean              quit,
+                                               gpointer              data);
 
-static void   gui_display_changed                 (GimpContext *context,
-						   GDisplay    *display,
-						   gpointer     data);
+static void   gui_display_changed             (GimpContext          *context,
+                                               GDisplay             *display,
+                                               gpointer              data);
 
-static void   gui_image_disconnect                (GimpImage   *gimage,
-						   gpointer     data);
-static void   gui_image_mode_changed              (GimpImage   *gimage,
-						   gpointer     data);
-static void   gui_image_colormap_changed          (GimpImage   *gimage,
-						   gint         ncol,
-						   gpointer     data);
-static void   gui_image_name_changed              (GimpImage   *gimage,
-						   gpointer     data);
-static void   gui_image_size_changed              (GimpImage   *gimage,
-						   gpointer     data);
-static void   gui_image_alpha_changed             (GimpImage   *gimage,
-						   gpointer     data);
-static void   gui_image_update                    (GimpImage   *gimage,
-						   gint         x,
-						   gint         y,
-						   gint         w,
-						   gint         h,
-						   gpointer     data);
+static void   gui_image_disconnect            (GimpImage            *gimage,
+                                               gpointer              data);
+static void   gui_image_mode_changed          (GimpImage            *gimage,
+                                               gpointer              data);
+static void   gui_image_colormap_changed      (GimpImage            *gimage,
+                                               gint                  ncol,
+                                               gpointer              data);
+static void   gui_image_name_changed          (GimpImage            *gimage,
+                                               gpointer              data);
+static void   gui_image_size_changed          (GimpImage            *gimage,
+                                               gpointer              data);
+static void   gui_image_alpha_changed         (GimpImage            *gimage,
+                                               gpointer              data);
+static void   gui_image_update                (GimpImage            *gimage,
+                                               gint                  x,
+                                               gint                  y,
+                                               gint                  w,
+                                               gint                  h,
+                                               gpointer              data);
+static void   gui_image_selection_control     (GimpImage            *gimage,
+                                               GimpSelectionControl  control,
+                                               gpointer              data);
 
 
 /*  global variables  */
@@ -111,13 +114,14 @@ extern GSList *display_list;  /*  from gdisplay.c  */
 
 /*  private variables  */
 
-static GQuark image_disconnect_handler_id       = 0;
-static GQuark image_mode_changed_handler_id     = 0;
-static GQuark image_colormap_changed_handler_id = 0;
-static GQuark image_name_changed_handler_id     = 0;
-static GQuark image_size_changed_handler_id     = 0;
-static GQuark image_alpha_changed_handler_id    = 0;
-static GQuark image_update_handler_id           = 0;
+static GQuark image_disconnect_handler_id        = 0;
+static GQuark image_mode_changed_handler_id      = 0;
+static GQuark image_colormap_changed_handler_id  = 0;
+static GQuark image_name_changed_handler_id      = 0;
+static GQuark image_size_changed_handler_id      = 0;
+static GQuark image_alpha_changed_handler_id     = 0;
+static GQuark image_update_handler_id            = 0;
+static GQuark image_selection_control_handler_id = 0;
 
 static GHashTable *themes_hash = NULL;
 
@@ -248,6 +252,11 @@ gui_init (Gimp *gimp)
 				G_CALLBACK (gui_image_update),
 				gimp);
 
+  image_selection_control_handler_id =
+    gimp_container_add_handler (gimp->images, "selection_control",
+				G_CALLBACK (gui_image_selection_control),
+				gimp);
+
   g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)), "display_changed",
 		    G_CALLBACK (gui_display_changed),
 		    gimp);
@@ -365,14 +374,16 @@ gui_exit (Gimp *gimp)
   gimp_container_remove_handler (gimp->images, image_size_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_alpha_changed_handler_id);
   gimp_container_remove_handler (gimp->images, image_update_handler_id);
+  gimp_container_remove_handler (gimp->images, image_selection_control_handler_id);
 
-  image_disconnect_handler_id       = 0;
-  image_mode_changed_handler_id     = 0;
-  image_colormap_changed_handler_id = 0;
-  image_name_changed_handler_id     = 0;
-  image_size_changed_handler_id     = 0;
-  image_alpha_changed_handler_id    = 0;
-  image_update_handler_id           = 0;
+  image_disconnect_handler_id        = 0;
+  image_mode_changed_handler_id      = 0;
+  image_colormap_changed_handler_id  = 0;
+  image_name_changed_handler_id      = 0;
+  image_size_changed_handler_id      = 0;
+  image_alpha_changed_handler_id     = 0;
+  image_update_handler_id            = 0;
+  image_selection_control_handler_id = 0;
 
   if (themes_hash)
     {
@@ -628,4 +639,16 @@ gui_image_update (GimpImage *gimage,
   gimp = (Gimp *) data;
 
   gdisplays_update_area (gimage, x, y, w, h);
+}
+
+static void
+gui_image_selection_control (GimpImage            *gimage,
+                             GimpSelectionControl  control,
+                             gpointer              data)
+{
+  Gimp *gimp;
+
+  gimp = (Gimp *) data;
+
+  gdisplays_selection_visibility (gimage, control);
 }

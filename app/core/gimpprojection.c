@@ -95,135 +95,165 @@ struct _GimpArea
 };
 
 
-/* variable declarations */
-GSList               * display_list            = NULL;
-static gint            display_num             = 1;
-static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
-
-
 /*  Local functions  */
-static void     gdisplay_format_title       (GDisplay  *gdisp,
-					     gchar     *title,
-					     gint       title_len);
-static void     gdisplay_delete             (GDisplay  *gdisp);
-static GSList * gdisplay_free_area_list     (GSList    *list);
-static GSList * gdisplay_process_area_list  (GSList    *list,
-					     GimpArea  *ga1);
-static void     gdisplay_add_update_area    (GDisplay  *gdisp,
-					     gint       x,
-					     gint       y,
-					     gint       w,
-					     gint       h);
-static void     gdisplay_add_display_area   (GDisplay  *gdisp,
-					     gint       x,
-					     gint       y,
-					     gint       w,
-					     gint       h);
-static void     gdisplay_paint_area         (GDisplay  *gdisp,
-					     gint       x,
-					     gint       y,
-					     gint       w,
-					     gint       h);
-static void	gdisplay_draw_cursor	    (GDisplay  *gdisp);
-static void     gdisplay_display_area       (GDisplay  *gdisp,
-					     gint       x,
-					     gint       y,
-					     gint       w,
-					     gint       h);
-static guint    gdisplay_hash               (GDisplay  *gdisp);
-static void     gdisplay_cleandirty_handler (GimpImage *gdisp,
-					     gpointer   data);
+static void     gimp_display_class_init     (GimpDisplayClass *klass);
+static void     gimp_display_init           (GimpDisplay      *gdisp);
+
+static void     gimp_display_finalize       (GObject          *object);
+
+static void     gdisplay_format_title       (GimpDisplay  *gdisp,
+					     gchar        *title,
+					     gint          title_len);
+static void     gdisplay_delete             (GimpDisplay  *gdisp);
+static GSList * gdisplay_free_area_list     (GSList       *list);
+static GSList * gdisplay_process_area_list  (GSList       *list,
+					     GimpArea     *ga1);
+static void     gdisplay_add_update_area    (GimpDisplay  *gdisp,
+					     gint          x,
+					     gint          y,
+					     gint          w,
+					     gint          h);
+static void     gdisplay_add_display_area   (GimpDisplay  *gdisp,
+					     gint          x,
+					     gint          y,
+					     gint          w,
+					     gint          h);
+static void     gdisplay_paint_area         (GimpDisplay  *gdisp,
+					     gint          x,
+					     gint          y,
+					     gint          w,
+					     gint          h);
+static void	gdisplay_draw_cursor	    (GimpDisplay  *gdisp);
+static void     gdisplay_display_area       (GimpDisplay  *gdisp,
+					     gint          x,
+					     gint          y,
+					     gint          w,
+					     gint          h);
+static guint    gdisplay_hash               (GimpDisplay  *gdisp);
+static void     gdisplay_cleandirty_handler (GimpImage    *gdisp,
+					     gpointer      data);
 
 
-static GHashTable *display_ht = NULL;
+static GimpObjectClass *parent_class = NULL;
 
-/* FIXME: GDisplays really need to be GtkObjects */
+GSList               *display_list            = NULL;
+static gint           display_num             = 1;
+static GdkCursorType  default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
+static GHashTable    *display_ht              = NULL;
 
-GDisplay *
-gdisplay_new (GimpImage *gimage,
-	      guint      scale)
+
+GType
+gimp_display_get_type (void)
 {
-  GDisplay *gdisp;
-  gchar     title [MAX_TITLE_BUF];
+  static GType display_type = 0;
 
-  /*  If there isn't an interface, never create a gdisplay  */
-  if (no_interface)
-    return NULL;
+  if (! display_type)
+    {
+      static const GTypeInfo display_info =
+      {
+        sizeof (GimpDisplayClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_display_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpDisplay),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_display_init,
+      };
 
-  /*
-   *  Set all GDisplay parameters...
-   */
-  gdisp = g_new0 (GDisplay, 1);
+      display_type = g_type_register_static (GIMP_TYPE_OBJECT,
+                                             "GimpDisplay",
+                                             &display_info, 0);
+    }
 
-  gdisp->ID                    = display_num++;
+  return display_type;
+}
 
-  gdisp->ifactory              = NULL;
+static void
+gimp_display_class_init (GimpDisplayClass *klass)
+{
+  GObjectClass *object_class;
 
-  gdisp->shell                 = NULL;
-  gdisp->canvas                = NULL;
-  gdisp->hsb                   = NULL;
-  gdisp->vsb                   = NULL;
-  gdisp->qmaskoff              = NULL;
-  gdisp->qmaskon               = NULL;
-  gdisp->hrule                 = NULL;
-  gdisp->vrule                 = NULL;
-  gdisp->origin                = NULL;
-  gdisp->statusarea            = NULL;
-  gdisp->progressbar           = NULL;
-  gdisp->cursor_label          = NULL;
-  gdisp->cursor_format_str[0]  = '\0';
-  gdisp->cancelbutton          = NULL;
-  gdisp->progressid = FALSE;
+  object_class = G_OBJECT_CLASS (klass);
 
-  gdisp->window_info_dialog    = NULL;
-  gdisp->window_nav_dialog     = NULL;
-  gdisp->nav_popup             = NULL;
-  gdisp->warning_dialog        = NULL;
+  parent_class = g_type_class_peek_parent (klass);
 
-  gdisp->hsbdata               = NULL;
-  gdisp->vsbdata               = NULL;
+  object_class->finalize = gimp_display_finalize;
+}
 
-  gdisp->icon                  = NULL;
-  gdisp->iconmask              = NULL;
-  gdisp->iconsize              = 0;
-  gdisp->icon_needs_update     = FALSE;
-  gdisp->icon_timeout_id       = 0;
-  gdisp->icon_idle_id          = 0;
+static void
+gimp_display_init (GimpDisplay *gdisp)
+{
+  gdisp->ID                       = display_num++;
 
-  gdisp->gimage                = gimage;
-  gdisp->instance              = gimage->instance_count;
+  gdisp->ifactory                 = NULL;
 
-  gdisp->disp_width            = 0;
-  gdisp->disp_height           = 0;
-  gdisp->disp_xoffset          = 0;
-  gdisp->disp_yoffset          = 0;
+  gdisp->shell                    = NULL;
+  gdisp->canvas                   = NULL;
+  gdisp->hsb                      = NULL;
+  gdisp->vsb                      = NULL;
+  gdisp->qmaskoff                 = NULL;
+  gdisp->qmaskon                  = NULL;
+  gdisp->hrule                    = NULL;
+  gdisp->vrule                    = NULL;
+  gdisp->origin                   = NULL;
+  gdisp->statusarea               = NULL;
+  gdisp->progressbar              = NULL;
+  gdisp->cursor_label             = NULL;
+  gdisp->cursor_format_str[0]     = '\0';
+  gdisp->cancelbutton             = NULL;
+  gdisp->progressid               = FALSE;
 
-  gdisp->offset_x              = 0;
-  gdisp->offset_y              = 0;
-  gdisp->scale                 = scale;
-  gdisp->dot_for_dot           = gimprc.default_dot_for_dot;
-  gdisp->draw_guides           = TRUE;
-  gdisp->snap_to_guides        = TRUE;
+  gdisp->window_info_dialog       = NULL;
+  gdisp->window_nav_dialog        = NULL;
+  gdisp->nav_popup                = NULL;
+  gdisp->warning_dialog           = NULL;
 
-  gdisp->select                = NULL;
+  gdisp->hsbdata                  = NULL;
+  gdisp->vsbdata                  = NULL;
 
-  gdisp->scroll_gc             = NULL;
+  gdisp->icon                     = NULL;
+  gdisp->iconmask                 = NULL;
+  gdisp->iconsize                 = 0;
+  gdisp->icon_needs_update        = FALSE;
+  gdisp->icon_timeout_id          = 0;
+  gdisp->icon_idle_id             = 0;
 
-  gdisp->update_areas          = NULL;
-  gdisp->display_areas         = NULL;
+  gdisp->gimage                   = NULL;
+  gdisp->instance                 = 0;
 
-  gdisp->current_cursor        = (GdkCursorType) -1;
-  gdisp->tool_cursor           = GIMP_TOOL_CURSOR_NONE;
-  gdisp->cursor_modifier       = GIMP_CURSOR_MODIFIER_NONE;
+  gdisp->disp_width               = 0;
+  gdisp->disp_height              = 0;
+  gdisp->disp_xoffset             = 0;
+  gdisp->disp_yoffset             = 0;
 
-  gdisp->override_cursor       = (GdkCursorType) -1;
-  gdisp->using_override_cursor = FALSE;
+  gdisp->offset_x                 = 0;
+  gdisp->offset_y                 = 0;
+  gdisp->scale                    = 0;
+  gdisp->dot_for_dot              = gimprc.default_dot_for_dot;
+  gdisp->draw_guides              = TRUE;
+  gdisp->snap_to_guides           = TRUE;
 
-  gdisp->draw_cursor           = FALSE;
-  gdisp->cursor_x              = 0;
-  gdisp->cursor_y              = 0;
-  gdisp->proximity             = FALSE;
-  gdisp->have_cursor           = FALSE;
+  gdisp->select                   = NULL;
+
+  gdisp->scroll_gc                = NULL;
+
+  gdisp->update_areas             = NULL;
+  gdisp->display_areas            = NULL;
+
+  gdisp->current_cursor           = (GdkCursorType) -1;
+  gdisp->tool_cursor              = GIMP_TOOL_CURSOR_NONE;
+  gdisp->cursor_modifier          = GIMP_CURSOR_MODIFIER_NONE;
+
+  gdisp->override_cursor          = (GdkCursorType) -1;
+  gdisp->using_override_cursor    = FALSE;
+
+  gdisp->draw_cursor              = FALSE;
+  gdisp->cursor_x                 = 0;
+  gdisp->cursor_y                 = 0;
+  gdisp->proximity                = FALSE;
+  gdisp->have_cursor              = FALSE;
 
   gdisp->idle_render.idleid       = -1;
   gdisp->idle_render.update_areas = NULL;
@@ -233,6 +263,52 @@ gdisplay_new (GimpImage *gimage,
   gdisp->cd_list = NULL;
   gdisp->cd_ui   = NULL;
 #endif /* DISPLAY_FILTERS */
+}
+
+static void
+gimp_display_finalize (GObject *object)
+{
+  GimpDisplay *gdisp;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (object));
+
+  gdisp = GIMP_DISPLAY (object);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+GimpDisplay *
+gdisplay_new (GimpImage *gimage,
+	      guint      scale)
+{
+  GimpDisplay *gdisp;
+  gchar        title [MAX_TITLE_BUF];
+
+  /*  If there isn't an interface, never create a gdisplay  */
+  if (no_interface)
+    return NULL;
+
+  /*
+   *  Set all GimpDisplay parameters...
+   */
+  gdisp = g_object_new (GIMP_TYPE_DISPLAY, NULL);
+
+  gdisp->gimage   = gimage;
+  gdisp->instance = gimage->instance_count;
+  gdisp->scale    = scale;
+
+  gimage->instance_count++;   /* this is obsolete */
+  gimage->disp_count++;
+
+  g_object_ref (G_OBJECT (gimage));
+
+  /* We're interested in clean and dirty signals so we can update the
+   * title if need be.
+   */
+  g_signal_connect (G_OBJECT (gimage), "dirty",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
+  g_signal_connect (G_OBJECT (gimage), "clean",
+                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
 
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
@@ -263,19 +339,6 @@ gdisplay_new (GimpImage *gimage,
 				GIMP_TOOL_CURSOR_NONE,
 				GIMP_CURSOR_MODIFIER_NONE);
 
-  gimage->instance_count++;   /* this is obsolete */
-  gimage->disp_count++;
-
-  g_object_ref (G_OBJECT (gimage));
-
-  /* We're interested in clean and dirty signals so we can update the
-   * title if need be.
-   */
-  g_signal_connect (G_OBJECT (gimage), "dirty",
-                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
-  g_signal_connect (G_OBJECT (gimage), "clean",
-                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
-
   return gdisp;
 }
 
@@ -299,15 +362,17 @@ print (char *buf, int len, int start, const char *fmt, ...)
 }
 
 static void
-gdisplay_format_title (GDisplay *gdisp,
-		       gchar    *title,
-		       gint      title_len)
+gdisplay_format_title (GimpDisplay *gdisp,
+		       gchar       *title,
+		       gint         title_len)
 {
   GimpImage *gimage;
   gchar     *image_type_str;
   gint       empty;
   gint       i;
   gchar     *format;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   gimage = gdisp->gimage;
 
@@ -423,9 +488,11 @@ gdisplay_format_title (GDisplay *gdisp,
 }
 
 static void
-gdisplay_delete (GDisplay *gdisp)
+gdisplay_delete (GimpDisplay *gdisp)
 {
   GimpTool *active_tool;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   g_hash_table_remove (display_ht, gdisp->shell);
   g_hash_table_remove (display_ht, gdisp->canvas);
@@ -442,14 +509,17 @@ gdisplay_delete (GDisplay *gdisp)
       active_tool->gdisp    = NULL;
     }
 
-  /*  free the selection structure  */
-  selection_free (gdisp->select);
+  if (gdisp->select)
+    {
+      selection_free (gdisp->select);
+      gdisp->select = NULL;
+    }
 
   /* If this gdisplay was idlerendering at the time when it was deleted,
      deactivate the idlerendering thread before deletion! */
   if (gdisp->idle_render.active)
     {
-      gtk_idle_remove (gdisp->idle_render.idleid);
+      g_source_remove (gdisp->idle_render.idleid);
       gdisp->idle_render.active = FALSE;
     }
 
@@ -462,7 +532,10 @@ gdisplay_delete (GDisplay *gdisp)
   g_signal_handlers_disconnect_by_data (G_OBJECT (gdisp->gimage), gdisp);
 
   if (gdisp->scroll_gc)
-    gdk_gc_unref (gdisp->scroll_gc);
+    {
+      gdk_gc_unref (gdisp->scroll_gc);
+      gdisp->scroll_gc = NULL;
+    }
 
   /*  free the area lists  */
   gdisplay_free_area_list (gdisp->update_areas);
@@ -473,49 +546,68 @@ gdisplay_delete (GDisplay *gdisp)
   /*  remove dialogs before removing the image because they may want to
    *  disconnect from image signals
    */
+  if (gdisp->window_info_dialog)
+    {
+      info_window_free (gdisp->window_info_dialog);
+      gdisp->window_info_dialog = NULL;
+    }
 
-  /*  insure that if a window information dialog exists, it is removed  */
-  info_window_free (gdisp->window_info_dialog);
-
-  /* Remove navigation dialog */
-  nav_dialog_free (gdisp, gdisp->window_nav_dialog);
+  if (gdisp->window_nav_dialog)
+    {
+      nav_dialog_free (gdisp, gdisp->window_nav_dialog);
+      gdisp->window_nav_dialog = NULL;
+    }
 
   /*  free the gimage  */
   gdisp->gimage->disp_count--;
   g_object_unref (G_OBJECT (gdisp->gimage));
 
   if (gdisp->nav_popup)
-    nav_dialog_free (gdisp, gdisp->nav_popup);
+    {
+      nav_dialog_free (gdisp, gdisp->nav_popup);
+      gdisp->nav_popup = NULL;
+    }
 
   if (gdisp->icon_timeout_id)
-    g_source_remove (gdisp->icon_timeout_id);
+    {
+      g_source_remove (gdisp->icon_timeout_id);
+      gdisp->icon_timeout_id = 0;
+    }
 
   if (gdisp->icon_idle_id)
-    g_source_remove (gdisp->icon_idle_id);
+    {
+      g_source_remove (gdisp->icon_idle_id);
+      gdisp->icon_idle_id = 0;
+    }
 
-  gdk_drawable_unref (gdisp->icon);
-  gdk_drawable_unref (gdisp->iconmask);
+  if (gdisp->icon)
+    {
+      gdk_drawable_unref (gdisp->icon);
+      gdisp->icon = NULL;
+    }
+  if (gdisp->iconmask)
+    {
+      gdk_drawable_unref (gdisp->iconmask);
+      gdisp->iconmask = NULL;
+    }
 
-  gtk_widget_destroy (gdisp->shell);
+  if (gdisp->shell)
+    {
+      gtk_widget_destroy (gdisp->shell);
+      gdisp->shell = NULL;
+    }
 
-  g_free (gdisp);
+  g_object_unref (G_OBJECT (gdisp));
 }
 
 static GSList *
 gdisplay_free_area_list (GSList *list)
 {
-  GSList   *l;
-  GimpArea *ga;
-
-  for (l = list; l; l = g_slist_next (l))
-    {
-      ga = (GimpArea *) l->data;
-
-      g_free (ga);
-    }
-
   if (list)
-    g_slist_free (list);
+    {
+      g_slist_foreach (list, (GFunc) g_free, NULL);
+      g_slist_free (list);
+    }
 
   return NULL;
 }
@@ -528,24 +620,27 @@ static GSList *
 gdisplay_process_area_list (GSList   *list,
 			    GimpArea *ga1)
 {
-  GSList *new_list;
-  GSList *l = list;
-  gint area1, area2, area3;
+  GSList   *new_list;
+  GSList   *l;
+  gint      area1, area2, area3;
   GimpArea *ga2;
 
   /*  start new list off  */
   new_list = g_slist_prepend (NULL, ga1);
-  while (l)
+
+  for (l = list; l; l = g_slist_next (l))
     {
-      /*  process the data  */
       ga2 = (GimpArea *) l->data;
+
       area1 = (ga1->x2 - ga1->x1) * (ga1->y2 - ga1->y1) + OVERHEAD;
       area2 = (ga2->x2 - ga2->x1) * (ga2->y2 - ga2->y1) + OVERHEAD;
       area3 = (MAX (ga2->x2, ga1->x2) - MIN (ga2->x1, ga1->x1)) *
 	(MAX (ga2->y2, ga1->y2) - MIN (ga2->y1, ga1->y1)) + OVERHEAD;
 
       if ((area1 + area2) < area3)
-	new_list = g_slist_prepend (new_list, ga2);
+        {
+          new_list = g_slist_prepend (new_list, ga2);
+        }
       else
 	{
 	  ga1->x1 = MIN (ga1->x1, ga2->x1);
@@ -555,8 +650,6 @@ gdisplay_process_area_list (GSList   *list,
 
 	  g_free (ga2);
 	}
-
-      l = g_slist_next (l);
     }
 
   if (list)
@@ -566,20 +659,20 @@ gdisplay_process_area_list (GSList   *list,
 }
 
 
-static int
-idle_render_next_area (GDisplay *gdisp)
+static gint
+idle_render_next_area (GimpDisplay *gdisp)
 {
-  GimpArea  *ga;
-  GSList *list;
+  GimpArea *ga;
+  GSList   *list;
   
   list = gdisp->idle_render.update_areas;
 
   if (list == NULL)
     {
-      return (-1);
+      return -1;
     }
 
-  ga = (GimpArea*) list->data;
+  ga = (GimpArea *) list->data;
 
   gdisp->idle_render.update_areas =
     g_slist_remove (gdisp->idle_render.update_areas, ga);
@@ -591,44 +684,45 @@ idle_render_next_area (GDisplay *gdisp)
 
   g_free (ga);
 
-  return (0);
+  return 0;
 }
 
 
-/* Unless specified otherwise, display re-rendering is organised
- by IdleRender, which amalgamates areas to be re-rendered and
- breaks them into bite-sized chunks which are chewed on in a low-
- priority idle thread.  This greatly improves responsiveness for
- many GIMP operations.  -- Adam */
-static int
+/* Unless specified otherwise, display re-rendering is organised by
+ * IdleRender, which amalgamates areas to be re-rendered and breaks
+ * them into bite-sized chunks which are chewed on in a low- priority
+ * idle thread.  This greatly improves responsiveness for many GIMP
+ * operations.  -- Adam
+ */
+static gint
 idlerender_callback (gpointer data)
 {
-  const gint CHUNK_WIDTH = 256;
-  const gint CHUNK_HEIGHT = 128;
-  gint workx, worky, workw, workh;
-  GDisplay* gdisp = data;
+  const gint   CHUNK_WIDTH  = 256;
+  const gint   CHUNK_HEIGHT = 128;
+  gint         workx, worky, workw, workh;
+  GimpDisplay *gdisp = data;
 
   workw = CHUNK_WIDTH;
   workh = CHUNK_HEIGHT;
   workx = gdisp->idle_render.x;
   worky = gdisp->idle_render.y;
 
-  if (workx+workw > gdisp->idle_render.basex+gdisp->idle_render.width)
+  if (workx + workw > gdisp->idle_render.basex + gdisp->idle_render.width)
     {
-      workw = gdisp->idle_render.basex+gdisp->idle_render.width-workx;
+      workw = gdisp->idle_render.basex + gdisp->idle_render.width - workx;
     }
 
   if (worky+workh > gdisp->idle_render.basey+gdisp->idle_render.height)
     {
-      workh = gdisp->idle_render.basey+gdisp->idle_render.height-worky;
+      workh = gdisp->idle_render.basey + gdisp->idle_render.height - worky;
     }  
 
-  gdisplay_paint_area (gdisp, workx, worky,
-		       workw, workh);
+  gdisplay_paint_area (gdisp, workx, worky, workw, workh);
   gdisplay_flush_displays_only (gdisp);
 
   gdisp->idle_render.x += CHUNK_WIDTH;
-  if (gdisp->idle_render.x >= gdisp->idle_render.basex+gdisp->idle_render.width)
+  if (gdisp->idle_render.x >=
+      gdisp->idle_render.basex + gdisp->idle_render.width)
     {
       gdisp->idle_render.x = gdisp->idle_render.basex;
       gdisp->idle_render.y += CHUNK_HEIGHT;
@@ -651,14 +745,14 @@ idlerender_callback (gpointer data)
 
 
 static void
-gdisplay_idlerender_init (GDisplay *gdisp)
+gdisplay_idlerender_init (GimpDisplay *gdisp)
 {
-  GSList *list;
+  GSList    *list;
   GimpArea  *ga, *new_ga;
 
 /*  gdisplay_install_override_cursor(gdisp, GDK_CIRCLE); */
 
-  /* We need to merge the IdleRender's and the GDisplay's update_areas list
+  /* We need to merge the IdleRender's and the GimpDisplay's update_areas list
      to keep track of which of the updates have been flushed and hence need
      to be drawn.   */
   list = gdisp->update_areas;
@@ -715,10 +809,12 @@ gdisplay_idlerender_init (GDisplay *gdisp)
 
 
 void
-gdisplay_flush_displays_only (GDisplay *gdisp)
+gdisplay_flush_displays_only (GimpDisplay *gdisp)
 {
-  GSList *list;
-  GimpArea  *ga;
+  GSList   *list;
+  GimpArea *ga;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   list = gdisp->display_areas;
 
@@ -756,8 +852,8 @@ gdisplay_flush_displays_only (GDisplay *gdisp)
 
 
 static void
-gdisplay_flush_whenever (GDisplay *gdisp, 
-			 gboolean  now)
+gdisplay_flush_whenever (GimpDisplay *gdisp, 
+			 gboolean     now)
 {
   GSList *list;
   GimpArea  *ga;
@@ -813,15 +909,19 @@ gdisplay_flush_whenever (GDisplay *gdisp,
 }
 
 void
-gdisplay_flush (GDisplay *gdisp)
+gdisplay_flush (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   /* Redraw on idle time */
   gdisplay_flush_whenever (gdisp, FALSE);
 }
 
 void
-gdisplay_flush_now (GDisplay *gdisp)
+gdisplay_flush_now (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   /* Redraw NOW */
   gdisplay_flush_whenever (gdisp, TRUE);
 }
@@ -830,12 +930,12 @@ gdisplay_flush_now (GDisplay *gdisp)
 void 
 gdisplays_finish_draw (void)
 {
-  GSList *list = display_list;
-  GDisplay* gdisp;
+  GSList      *list = display_list;
+  GimpDisplay *gdisp;
 
   while (list)
     {
-      gdisp = (GDisplay*) list->data;
+      gdisp = (GimpDisplay *) list->data;
       
       if (gdisp->idle_render.active)
 	{
@@ -847,7 +947,7 @@ gdisplays_finish_draw (void)
 }
 
 void
-gdisplay_update_icon (GDisplay *gdisp)
+gdisplay_update_icon (GimpDisplay *gdisp)
 {
 
   /* Warning: Lots of obscure Gdk-Stuff ahead. */
@@ -864,6 +964,8 @@ gdisplay_update_icon (GDisplay *gdisp)
   guchar  *data;
   gint width, height;
   gdouble factor;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   if (!gdisp->icon)
     {
@@ -1006,9 +1108,9 @@ void
 gdisplay_update_icon_scheduler (GimpImage *gimage,
 				gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp == gdisplays_check_valid (gdisp, gimage))
     {
@@ -1035,10 +1137,10 @@ gdisplay_update_icon_scheduler (GimpImage *gimage,
 gboolean
 gdisplay_update_icon_timer (gpointer data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   /* we should check this for validity... */
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp->icon_needs_update == 1 && !gdisp->icon_idle_id)
     gdisp->icon_idle_id = g_idle_add (gdisplay_update_icon_invoker, gdisp);
@@ -1050,10 +1152,10 @@ gdisplay_update_icon_timer (gpointer data)
 gboolean
 gdisplay_update_icon_invoker (gpointer data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
   /* we should check this for validity... */
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   gdisplay_update_icon (gdisp);
 
@@ -1063,10 +1165,12 @@ gdisplay_update_icon_invoker (gpointer data)
 
 
 void
-gdisplay_draw_guides (GDisplay *gdisp)
+gdisplay_draw_guides (GimpDisplay *gdisp)
 {
   GList     *list;
   GimpGuide *guide;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   if (gdisp->draw_guides)
     {
@@ -1080,9 +1184,9 @@ gdisplay_draw_guides (GDisplay *gdisp)
 }
 
 void
-gdisplay_draw_guide (GDisplay  *gdisp,
-		     GimpGuide *guide,
-		     gboolean   active)
+gdisplay_draw_guide (GimpDisplay *gdisp,
+		     GimpGuide   *guide,
+		     gboolean     active)
 {
   static GdkGC    *normal_hgc = NULL;
   static GdkGC    *active_hgc = NULL;
@@ -1093,6 +1197,8 @@ gdisplay_draw_guide (GDisplay  *gdisp,
   gint y1, y2;
   gint w, h;
   gint x, y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   if (guide->position < 0)
     return;
@@ -1183,15 +1289,17 @@ gdisplay_draw_guide (GDisplay  *gdisp,
 }
 
 GimpGuide *
-gdisplay_find_guide (GDisplay *gdisp,
-		     gdouble   x,
-		     gdouble   y)
+gdisplay_find_guide (GimpDisplay *gdisp,
+		     gdouble      x,
+		     gdouble      y)
 {
   GList     *list;
   GimpGuide *guide;
   gint       offset_x, offset_y;
   gdouble    scalex, scaley;
   gdouble    pos;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
   if (gdisp->draw_guides)
     {
@@ -1232,11 +1340,11 @@ gdisplay_find_guide (GDisplay *gdisp,
 }
 
 gboolean
-gdisplay_snap_point (GDisplay *gdisp,
-		     gdouble   x,
-		     gdouble   y,
-		     gdouble  *tx,
-		     gdouble  *ty)
+gdisplay_snap_point (GimpDisplay *gdisp,
+		     gdouble      x,
+		     gdouble      y,
+		     gdouble     *tx,
+		     gdouble     *ty)
 {
   GList     *list;
   GimpGuide *guide;
@@ -1246,6 +1354,8 @@ gdisplay_snap_point (GDisplay *gdisp,
   gint       minhdist, minvdist;
   gint       dist;
   gboolean   snapped = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
 
   *tx = x;
   *ty = y;
@@ -1313,17 +1423,19 @@ gdisplay_snap_point (GDisplay *gdisp,
 }
 
 void
-gdisplay_snap_rectangle (GDisplay *gdisp,
-			 gdouble   x1,
-			 gdouble   y1,
-			 gdouble   x2,
-			 gdouble   y2,
-			 gdouble  *tx1,
-			 gdouble  *ty1)
+gdisplay_snap_rectangle (GimpDisplay *gdisp,
+			 gdouble      x1,
+			 gdouble      y1,
+			 gdouble      x2,
+			 gdouble      y2,
+			 gdouble     *tx1,
+			 gdouble     *ty1)
 {
-  gdouble nx1, ny1;
-  gdouble nx2, ny2;
+  gdouble  nx1, ny1;
+  gdouble  nx2, ny2;
   gboolean snap1, snap2;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   *tx1 = x1;
   *ty1 = y1;
@@ -1346,11 +1458,13 @@ gdisplay_snap_rectangle (GDisplay *gdisp,
 }
 
 void
-gdisplay_draw_cursor (GDisplay *gdisp)
+gdisplay_draw_cursor (GimpDisplay *gdisp)
 {
   gint x = gdisp->cursor_x;
   gint y = gdisp->cursor_y;
   
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   gdk_draw_line (gdisp->canvas->window,
 		 gdisp->canvas->style->white_gc,
 		 x - 7, y-1, x + 7, y-1);
@@ -1372,14 +1486,16 @@ gdisplay_draw_cursor (GDisplay *gdisp)
 }
 
 void
-gdisplay_update_cursor (GDisplay *gdisp, 
-			gint      x, 
-			gint      y)
+gdisplay_update_cursor (GimpDisplay *gdisp, 
+			gint         x, 
+			gint         y)
 {
   gint  new_cursor;
   gchar buffer[CURSOR_STR_LENGTH];
   gint  t_x;
   gint  t_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   new_cursor = gdisp->draw_cursor && gdisp->proximity;
   
@@ -1440,9 +1556,11 @@ gdisplay_update_cursor (GDisplay *gdisp,
 
 
 void
-gdisplay_set_dot_for_dot (GDisplay *gdisp, 
-			  gboolean  dot_for_dot)
+gdisplay_set_dot_for_dot (GimpDisplay *gdisp, 
+			  gboolean     dot_for_dot)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (dot_for_dot != gdisp->dot_for_dot)
     {
       gdisp->dot_for_dot = dot_for_dot;
@@ -1455,12 +1573,14 @@ gdisplay_set_dot_for_dot (GDisplay *gdisp,
 
 /* Set a proper size for the coordinates display in the statusbar. */
 void
-gdisplay_resize_cursor_label (GDisplay *gdisp)
+gdisplay_resize_cursor_label (GimpDisplay *gdisp)
 {
   static PangoLayout *layout = NULL;
   gchar buffer[CURSOR_STR_LENGTH];
   gint  cursor_label_width;
   gint  label_frame_size_difference;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   if (gdisp->dot_for_dot)
     {
@@ -1514,8 +1634,10 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 }
 
 void
-gdisplay_remove_and_delete (GDisplay *gdisp)
+gdisplay_remove_and_delete (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   /* remove the display from the list */
   display_list = g_slist_remove (display_list, (void *) gdisp);
   gdisplay_delete (gdisp);
@@ -1523,15 +1645,18 @@ gdisplay_remove_and_delete (GDisplay *gdisp)
 
 
 static void
-gdisplay_add_update_area (GDisplay *gdisp,
-			  gint      x,
-			  gint      y,
-			  gint      w,
-			  gint      h)
+gdisplay_add_update_area (GimpDisplay *gdisp,
+			  gint         x,
+			  gint         y,
+			  gint         w,
+			  gint         h)
 {
   GimpArea * ga;
 
-  ga = (GimpArea *) g_malloc (sizeof (GimpArea));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  ga = g_new (GimpArea, 1);
+
   ga->x1 = CLAMP (x, 0, gdisp->gimage->width);
   ga->y1 = CLAMP (y, 0, gdisp->gimage->height);
   ga->x2 = CLAMP (x + w, 0, gdisp->gimage->width);
@@ -1542,13 +1667,15 @@ gdisplay_add_update_area (GDisplay *gdisp,
 
 
 static void
-gdisplay_add_display_area (GDisplay *gdisp,
-			   gint      x,
-			   gint      y,
-			   gint      w,
-			   gint      h)
+gdisplay_add_display_area (GimpDisplay *gdisp,
+			   gint         x,
+			   gint         y,
+			   gint         w,
+			   gint         h)
 {
   GimpArea * ga;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   ga = g_new (GimpArea, 1);
 
@@ -1562,11 +1689,11 @@ gdisplay_add_display_area (GDisplay *gdisp,
 
 
 static void
-gdisplay_paint_area (GDisplay *gdisp,
-		     gint      x,
-		     gint      y,
-		     gint      w,
-		     gint      h)
+gdisplay_paint_area (GimpDisplay *gdisp,
+		     gint         x,
+		     gint         y,
+		     gint         w,
+		     gint         h)
 {
   gint x1, y1, x2, y2;
 
@@ -1596,11 +1723,11 @@ gdisplay_paint_area (GDisplay *gdisp,
 
 
 static void
-gdisplay_display_area (GDisplay *gdisp,
-		       gint      x,
-		       gint      y,
-		       gint      w,
-		       gint      h)
+gdisplay_display_area (GimpDisplay *gdisp,
+		       gint         x,
+		       gint         y,
+		       gint         w,
+		       gint         h)
 {
   gint    sx, sy;
   gint    x1, y1;
@@ -1712,31 +1839,35 @@ gdisplay_display_area (GDisplay *gdisp,
 }
 
 gint
-gdisplay_mask_value (GDisplay *gdisp,
-		     gint      x,
-		     gint      y)
+gdisplay_mask_value (GimpDisplay *gdisp,
+		     gint         x,
+		     gint         y)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), 0);
+
   /*  move the coordinates from screen space to image space  */
   gdisplay_untransform_coords (gdisp, x, y, &x, &y, FALSE, 0);
 
   return gimage_mask_value (gdisp->gimage, x, y);
 }
 
-gint
-gdisplay_mask_bounds (GDisplay *gdisp,
-		      gint     *x1,
-		      gint     *y1,
-		      gint     *x2,
-		      gint     *y2)
+gboolean
+gdisplay_mask_bounds (GimpDisplay *gdisp,
+		      gint        *x1,
+		      gint        *y1,
+		      gint        *x2,
+		      gint        *y2)
 {
   GimpLayer *layer;
   gint       off_x;
   gint       off_y;
 
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
+
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_floating_sel (gdisp->gimage)))
     {
-      gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
 				 x1, y1, x2, y2))
@@ -1771,17 +1902,19 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 }
 
 void
-gdisplay_transform_coords (GDisplay *gdisp,
-			   gint      x,
-			   gint      y,
-			   gint     *nx,
-			   gint     *ny,
-			   gboolean  use_offsets)
+gdisplay_transform_coords (GimpDisplay *gdisp,
+			   gint         x,
+			   gint         y,
+			   gint        *nx,
+			   gint        *ny,
+			   gboolean     use_offsets)
 {
   gdouble scalex;
   gdouble scaley;
   gint    offset_x;
   gint    offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   /*  transform from image coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1803,18 +1936,20 @@ gdisplay_transform_coords (GDisplay *gdisp,
 }
 
 void
-gdisplay_untransform_coords (GDisplay *gdisp,
-			     gint       x,
-			     gint       y,
-			     gint      *nx,
-			     gint      *ny,
-			     gboolean   round,
-			     gboolean   use_offsets)
+gdisplay_untransform_coords (GimpDisplay *gdisp,
+			     gint         x,
+			     gint         y,
+			     gint        *nx,
+			     gint        *ny,
+			     gboolean     round,
+			     gboolean     use_offsets)
 {
   gdouble scalex;
   gdouble scaley;
   gint    offset_x;
   gint    offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1844,17 +1979,19 @@ gdisplay_untransform_coords (GDisplay *gdisp,
 }
 
 void
-gdisplay_transform_coords_f (GDisplay *gdisp,
-			     gdouble   x,
-			     gdouble   y,
-			     gdouble  *nx,
-			     gdouble  *ny,
-			     gboolean  use_offsets)
+gdisplay_transform_coords_f (GimpDisplay *gdisp,
+			     gdouble      x,
+			     gdouble      y,
+			     gdouble     *nx,
+			     gdouble     *ny,
+			     gboolean     use_offsets)
 {
   gdouble scalex;
   gdouble scaley;
   gint    offset_x;
   gint    offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   /*  transform from gimp coordinates to screen coordinates  */
   scalex = SCALEFACTOR_X (gdisp);
@@ -1876,17 +2013,19 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
 }
 
 void
-gdisplay_untransform_coords_f (GDisplay *gdisp,
-			       gdouble    x,
-			       gdouble    y,
-			       gdouble   *nx,
-			       gdouble   *ny,
-			       gboolean   use_offsets)
+gdisplay_untransform_coords_f (GimpDisplay *gdisp,
+			       gdouble      x,
+			       gdouble      y,
+			       gdouble     *nx,
+			       gdouble     *ny,
+			       gboolean     use_offsets)
 {
   gdouble scalex;
   gdouble scaley;
   gint    offset_x;
   gint    offset_y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   x -= gdisp->disp_xoffset;
   y -= gdisp->disp_yoffset;
@@ -1909,12 +2048,14 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 
 /*  install and remove tool cursor from gdisplay...  */
 void
-gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
+gdisplay_real_install_tool_cursor (GimpDisplay        *gdisp,
 				   GdkCursorType       cursor_type,
 				   GimpToolCursorType  tool_cursor,
 				   GimpCursorModifier  modifier,
 				   gboolean            always_install)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (cursor_type != GIMP_BAD_CURSOR)
     {
       switch (gimprc.cursor_mode)
@@ -1954,11 +2095,13 @@ gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
 }
 
 void
-gdisplay_install_tool_cursor (GDisplay           *gdisp,
+gdisplay_install_tool_cursor (GimpDisplay        *gdisp,
 			      GdkCursorType       cursor_type,
 			      GimpToolCursorType  tool_cursor,
 			      GimpCursorModifier  modifier)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (!gdisp->using_override_cursor)
     gdisplay_real_install_tool_cursor (gdisp,
 				       cursor_type,
@@ -1968,9 +2111,11 @@ gdisplay_install_tool_cursor (GDisplay           *gdisp,
 }
 
 void
-gdisplay_install_override_cursor (GDisplay      *gdisp,
+gdisplay_install_override_cursor (GimpDisplay   *gdisp,
 				  GdkCursorType  cursor_type)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (!gdisp->using_override_cursor ||
       (gdisp->using_override_cursor &&
        (gdisp->override_cursor != cursor_type)))
@@ -1989,8 +2134,10 @@ gdisplay_install_override_cursor (GDisplay      *gdisp,
 }
 
 void
-gdisplay_remove_override_cursor (GDisplay *gdisp)
+gdisplay_remove_override_cursor (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (gdisp->using_override_cursor)
     {
       gdisp->using_override_cursor = FALSE;
@@ -2003,13 +2150,15 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
 }
 
 void
-gdisplay_remove_tool_cursor (GDisplay *gdisp)
+gdisplay_remove_tool_cursor (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   gdk_window_set_cursor (gdisp->canvas->window, NULL);
 }
 
 void
-gdisplay_set_menu_sensitivity (GDisplay *gdisp)
+gdisplay_set_menu_sensitivity (GimpDisplay *gdisp)
 {
   GimpImageBaseType  base_type = 0;
   GimpImageType      type      = -1;
@@ -2022,6 +2171,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gboolean           alpha     = FALSE;
   gint               lind      = -1;
   gint               lnum      = -1;
+
+  g_return_if_fail (! gdisp || GIMP_IS_DISPLAY (gdisp));
 
   if (gdisp)
     {
@@ -2178,21 +2329,25 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 }
 
 void
-gdisplay_expose_area (GDisplay *gdisp,
-		      gint      x,
-		      gint      y,
-		      gint      w,
-		      gint      h)
+gdisplay_expose_area (GimpDisplay *gdisp,
+		      gint         x,
+		      gint         y,
+		      gint         w,
+		      gint         h)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   gdisplay_add_display_area (gdisp, x, y, w, h);
 }
 
 void
-gdisplay_expose_guide (GDisplay  *gdisp,
-		       GimpGuide *guide)
+gdisplay_expose_guide (GimpDisplay *gdisp,
+		       GimpGuide   *guide)
 {
   gint x;
   gint y;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   if (guide->position < 0)
     return;
@@ -2216,34 +2371,38 @@ gdisplay_expose_guide (GDisplay  *gdisp,
 }
 
 void
-gdisplay_expose_full (GDisplay *gdisp)
+gdisplay_expose_full (GimpDisplay *gdisp)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   gdisplay_add_display_area (gdisp, 0, 0,
 			     gdisp->disp_width,
 			     gdisp->disp_height);
 }
 
 void
-gdisplay_selection_visibility (GDisplay         *gdisp,
-			       SelectionControl  function)
+gdisplay_selection_visibility (GimpDisplay          *gdisp,
+			       GimpSelectionControl  control)
 {
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
   if (gdisp->select)
     {
-      switch (function)
+      switch (control)
 	{
-	case SELECTION_OFF:
+	case GIMP_SELECTION_OFF:
 	  selection_invis (gdisp->select);
 	  break;
-	case SELECTION_LAYER_OFF:
+	case GIMP_SELECTION_LAYER_OFF:
 	  selection_layer_invis (gdisp->select);
 	  break;
-	case SELECTION_ON:
+	case GIMP_SELECTION_ON:
 	  selection_start (gdisp->select, TRUE);
 	  break;
-	case SELECTION_PAUSE:
+	case GIMP_SELECTION_PAUSE:
 	  selection_pause (gdisp->select);
 	  break;
-	case SELECTION_RESUME:
+	case GIMP_SELECTION_RESUME:
 	  selection_resume (gdisp->select);
 	  break;
 	}
@@ -2254,7 +2413,7 @@ gdisplay_selection_visibility (GDisplay         *gdisp,
 /*  Functions independent of a specific gdisplay  */
 /**************************************************/
 
-GDisplay *
+GimpDisplay *
 gdisplay_active (void)
 {
   GdkEvent *event;
@@ -2271,19 +2430,19 @@ gdisplay_active (void)
   return gimp_context_get_display (gimp_get_user_context (the_gimp));
 }
 
-GDisplay *
+GimpDisplay *
 gdisplay_get_by_ID (Gimp *gimp,
 		    gint  ID)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  Traverse the list of displays, returning the one that matches the ID
    *  If no display in the list is a match, return NULL.
    */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->ID == ID)
 	return gdisp;
@@ -2293,10 +2452,12 @@ gdisplay_get_by_ID (Gimp *gimp,
 }
 
 void
-gdisplay_update_title (GDisplay *gdisp)
+gdisplay_update_title (GimpDisplay *gdisp)
 {
   gchar title [MAX_TITLE_BUF];
   guint context_id;
+
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   /* format the title */
   gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
@@ -2312,13 +2473,13 @@ gdisplay_update_title (GDisplay *gdisp)
 void
 gdisplays_update_title (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	gdisplay_update_title (gdisp);
@@ -2328,13 +2489,13 @@ gdisplays_update_title (GimpImage *gimage)
 void
 gdisplays_resize_cursor_label (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	gdisplay_resize_cursor_label (gdisp);
@@ -2344,13 +2505,13 @@ gdisplays_resize_cursor_label (GimpImage *gimage)
 void
 gdisplays_setup_scale (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	setup_scale (gdisp);
@@ -2364,13 +2525,13 @@ gdisplays_update_area (GimpImage *gimage,
 		       gint       w,
 		       gint       h)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	gdisplay_add_update_area (gdisp, x, y, w, h);
@@ -2380,14 +2541,14 @@ gdisplays_update_area (GimpImage *gimage,
 void
 gdisplays_expose_guides (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
-  GList    *guide_list;
+  GimpDisplay *gdisp;
+  GSList      *list;
+  GList       *guide_list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	{
@@ -2405,13 +2566,13 @@ void
 gdisplays_expose_guide (GimpImage *gimage,
 			GimpGuide *guide)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	gdisplay_expose_guide (gdisp, guide);
@@ -2421,13 +2582,13 @@ gdisplays_expose_guide (GimpImage *gimage,
 void
 gdisplays_update_full (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	gdisplay_add_update_area (gdisp, 0, 0,
@@ -2439,13 +2600,13 @@ gdisplays_update_full (GimpImage *gimage)
 void
 gdisplays_shrink_wrap (GimpImage *gimage)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
 	shrink_wrap_display (gdisp);
@@ -2455,13 +2616,13 @@ gdisplays_shrink_wrap (GimpImage *gimage)
 void
 gdisplays_expose_full (void)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       gdisplay_expose_full (gdisp);
     }
@@ -2470,13 +2631,13 @@ gdisplays_expose_full (void)
 void
 gdisplays_nav_preview_resized (void)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->window_nav_dialog)
 	nav_dialog_preview_resized (gdisp->window_nav_dialog);
@@ -2490,19 +2651,19 @@ gdisplays_nav_preview_resized (void)
 }
 
 void
-gdisplays_selection_visibility (GimpImage        *gimage,
-				SelectionControl  function)
+gdisplays_selection_visibility (GimpImage            *gimage,
+				GimpSelectionControl  control)
 {
-  GDisplay *gdisp;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GSList      *list;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
-	gdisplay_selection_visibility (gdisp, function);
+	gdisplay_selection_visibility (gdisp, control);
     }
 }
 
@@ -2515,7 +2676,7 @@ gdisplays_dirty (void)
   /*  traverse the linked list of displays  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      if (((GDisplay *) list->data)->gimage->dirty != 0)
+      if (((GimpDisplay *) list->data)->gimage->dirty != 0)
 	dirty = TRUE;
     }
 
@@ -2525,36 +2686,36 @@ gdisplays_dirty (void)
 void
 gdisplays_delete (void)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  /*  destroying the shell removes the GDisplay from the list, so
+  /*  destroying the shell removes the GimpDisplay from the list, so
    *  do a while loop "around" the first element to get them all
    */
   while (display_list)
     {
-      gdisp = (GDisplay *) display_list->data;
+      gdisp = (GimpDisplay *) display_list->data;
 
       gtk_widget_destroy (gdisp->shell);
     }
 }
 
-GDisplay *
-gdisplays_check_valid (GDisplay  *gtest, 
-		       GimpImage *gimage)
+GimpDisplay *
+gdisplays_check_valid (GimpDisplay *gtest, 
+		       GimpImage   *gimage)
 {
   /* Give a gdisp check that it is still valid and points to the required
    * GimpImage. If not return the first gDisplay that does point to the 
    * gimage. If none found return NULL;
    */
 
-  GDisplay *gdisp;
-  GDisplay *gdisp_found = NULL;
-  GSList   *list;
+  GimpDisplay *gdisp;
+  GimpDisplay *gdisp_found = NULL;
+  GSList      *list;
 
   /*  traverse the linked list of displays  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisp = (GDisplay *) list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       if (gdisp == gtest)
 	return gtest;
@@ -2589,7 +2750,7 @@ gdisplays_flush_whenever (gboolean now)
   /*  traverse the linked list of displays  */
   for (list = display_list; list; list = g_slist_next (list))
     {
-      gdisplay_flush_whenever ((GDisplay *) list->data, now);
+      gdisplay_flush_whenever ((GimpDisplay *) list->data, now);
     }
 
   flushing = FALSE;
@@ -2608,18 +2769,19 @@ gdisplays_flush_now (void)
 }
 
 static guint
-gdisplay_hash (GDisplay *display)
+gdisplay_hash (GimpDisplay *display)
 {
   return (gulong) display;
 }
 
 void
-gdisplay_reconnect (GDisplay  *gdisp, 
-		    GimpImage *gimage)
+gdisplay_reconnect (GimpDisplay *gdisp, 
+		    GimpImage   *gimage)
 {
   gint instance;
 
-  g_return_if_fail (gdisp != NULL && gimage != NULL);
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   if (gdisp->idle_render.active)
     {
@@ -2635,17 +2797,17 @@ gdisplay_reconnect (GDisplay  *gdisp,
   gimage->instance_count++;
   gimage->disp_count++;
 
-  gdisp->gimage = gimage;
+  gdisp->gimage   = gimage;
   gdisp->instance = instance;
-
-  gtk_object_ref (GTK_OBJECT (gimage));
-  gtk_object_sink (GTK_OBJECT (gimage));
+  g_object_ref (G_OBJECT (gimage));
 
   /*  reconnect our clean / dirty signal_handlers  */
   g_signal_connect (G_OBJECT (gimage), "dirty",
-                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
+                    G_CALLBACK (gdisplay_cleandirty_handler),
+                    gdisp);
   g_signal_connect (G_OBJECT (gimage), "clean",
-                    G_CALLBACK (gdisplay_cleandirty_handler), gdisp);
+                    G_CALLBACK (gdisplay_cleandirty_handler),
+                    gdisp);
 
   gdisplays_update_title (gimage);
 
@@ -2657,8 +2819,8 @@ void
 gdisplays_reconnect (GimpImage *old,
 		     GimpImage *new)
 {
-  GSList   *list;
-  GDisplay *gdisp;
+  GSList      *list;
+  GimpDisplay *gdisp;
 
   g_return_if_fail (old != NULL && new != NULL);
   
@@ -2676,7 +2838,7 @@ static void
 gdisplay_cleandirty_handler (GimpImage *gimage, 
 			     void      *data)
 {
-  GDisplay *gdisp = data;
+  GimpDisplay *gdisp = data;
 
   gdisplay_update_title (gdisp);
 }

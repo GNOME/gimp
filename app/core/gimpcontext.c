@@ -1249,8 +1249,9 @@ gimp_context_real_set_display (GimpContext *context,
 {
   typedef struct
   {
-    GObject   *shell;
-    GimpImage *gimage;
+    GimpObject  foobar;
+    GObject    *shell;
+    GimpImage  *gimage;
   } EEKWrapper;
 
   EEKWrapper *eek_wrapper;

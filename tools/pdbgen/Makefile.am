@@ -53,9 +53,6 @@ enum_headers = \
 	../../app/paint-funcs/paint-funcs.h	\
 	../../app/base/base-types.h		\
 	../../app/core/core-types.h		\
-	../../app/core/gimpdrawable-offset.h	\
-	../../app/core/gimpimage.h		\
-	../../app/core/gimpimage-convert.h	\
 	../../app/plug-in/plug-in-types.h	\
 	../../app/tools/tools-types.h		\
 	../../app/tools/gimpblendtool.h		\
@@ -64,7 +61,6 @@ enum_headers = \
 	../../app/tools/gimpconvolvetool.h	\
 	../../app/tools/gimpdodgeburntool.h	\
 	../../app/tools/gimphuesaturationtool.h	\
-	../../app/tools/gimppainttool.h		\
 	../../app/tools/gimptexttool.h
 
 pdb_scripts = \

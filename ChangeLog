@@ -1,3 +1,44 @@
+2001-09-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.[ch]: renamed it to GimpDisplay and made it a
+	GimpObject subclass.
+
+	* app/disp_callbacks.[ch]
+	* app/gdisplay_ops.[ch]
+	* app/scale.[ch]
+	* app/scroll.[ch]
+	* app/display/display-types.h: changed accordingly.
+
+	* app/core/gimpimage.[ch]: new signal "selection_control".
+
+	* app/core/core-types.h: moved the SelectionControl enum and all
+	other core enums here.
+
+	* app/gui/gui.c: connect to the images' "selection_control" signal
+	and call gdisplays_selection_visibility().
+
+	* app/core/gimpcontext.c
+	* app/core/gimpdrawable-offset.h
+	* app/core/gimpimage-convert.h
+	* app/core/gimpimage-mask.c
+	* app/core/gimplayer.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
+	* app/gui/colormap-dialog.[ch]: GObject porting.
+
+	* tools/pdbgen/Makefile.am: removed headers which no longer
+	contain enums.
+
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/drawable.pdb: include files which are no longer
+	included automatically by the enum voodoo.
+
+	* app/pdb/convert_cmds.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2001-09-24 Nathan Summers <rock@gimp.org>
         
         * plug-ins/Lighting/lighting_image.c

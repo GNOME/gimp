@@ -20,27 +20,6 @@
 #define __GIMP_IMAGE_CONVERT_H__
 
 
-/* adam's extra palette stuff */
-typedef enum
-{
-  MAKE_PALETTE   = 0,
-  REUSE_PALETTE  = 1,
-  WEB_PALETTE    = 2,
-  MONO_PALETTE   = 3,
-  CUSTOM_PALETTE = 4
-} ConvertPaletteType;
-
-/* adam's extra dither stuff */
-typedef enum
-{
-  NO_DITHER         = 0,
-  FS_DITHER         = 1,
-  FSLOWBLEED_DITHER = 2,
-  FIXED_DITHER      = 3,
-
-  NODESTRUCT_DITHER = 4 /* NEVER USE NODESTRUCT_DITHER EXPLICITLY */
-} ConvertDitherType;
-
 #define MAXNUMCOLORS 256
 
 

@@ -946,7 +946,7 @@ ink_button_press (GimpTool       *tool,
   tool->paused_count = 0;
 
   /*  pause the current selection and grab the pointer  */
-  gdisplays_selection_visibility (gdisp->gimage, SELECTION_PAUSE);
+  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   /* add motion memory if you press mod1 first ^ perfectmouse */
   if (((bevent->state & GDK_MOD1_MASK) != 0) != (gimprc.perfectmouse != 0))
@@ -995,7 +995,7 @@ ink_button_release (GimpTool       *tool,
   gimage = gdisp->gimage;
 
   /*  resume the current selection and ungrab the pointer  */
-  gdisplays_selection_visibility (gdisp->gimage, SELECTION_RESUME);
+  gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();

@@ -35,14 +35,14 @@
 
 gboolean   gdisplay_shell_events        (GtkWidget      *widget,
 					 GdkEvent       *event,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 gboolean   gdisplay_canvas_events       (GtkWidget      *widget,
 					 GdkEvent       *event,
-					 GDisplay       *gdisp);
+					 GimpDisplay    *gdisp);
 
 gboolean   gdisplay_hruler_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,
-					 gpointer        dtata);
+					 gpointer        data);
 gboolean   gdisplay_vruler_button_press (GtkWidget      *widget,
 					 GdkEventButton *bevent,
 					 gpointer        data);

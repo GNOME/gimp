@@ -20,19 +20,12 @@
 #define __GDISPLAY_H__
 
 
+#include "core/gimpobject.h"
+
+
 /* FIXME: move the display stuff to display/ */
 
 #include "display/display-types.h"
-
-
-typedef enum
-{
-  SELECTION_OFF,
-  SELECTION_LAYER_OFF,
-  SELECTION_ON,
-  SELECTION_PAUSE,
-  SELECTION_RESUME
-} SelectionControl;
 
 
 /*  some useful macros  */
@@ -93,8 +86,20 @@ struct _IdleRenderStruct
 };
 
 
-struct _GDisplay
+#define GIMP_TYPE_DISPLAY            (gimp_display_get_type ())
+#define GIMP_DISPLAY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DISPLAY, GimpDisplay))
+#define GIMP_DISPLAY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DISPLAY, GimpDisplayClass))
+#define GIMP_IS_DISPLAY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DISPLAY))
+#define GIMP_IS_DISPLAY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY))
+#define GIMP_DISPLAY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DISPLAY, GimpDisplayClass))
+
+
+typedef struct _GimpDisplayClass GimpDisplayClass;
+
+struct _GimpDisplay
 {
+  GimpObject  parent_instance;
+
   GtkWidget  *shell;              /*  shell widget for this gdisplay          */
   GimpImage  *gimage;	          /*  pointer to the associated gimage struct */
 				  /*
@@ -185,144 +190,150 @@ struct _GDisplay
 #endif /* DISPLAY_FILTERS */
 };
 
+struct _GimpDisplayClass
+{
+  GimpObjectClass  parent_class;
+};
 
 
 /* member function declarations */
 
-GDisplay * gdisplay_new                      (GimpImage          *gimage,
-					      guint               scale);
-void       gdisplay_reconnect                (GDisplay           *gdisp,
-					      GimpImage          *gimage);
-void       gdisplay_remove_and_delete        (GDisplay           *gdisp);
-gint       gdisplay_mask_value               (GDisplay           *gdisp,
-					      gint                x,
-					      gint                y);
-gint       gdisplay_mask_bounds              (GDisplay           *gdisp,
-					      gint               *x1,
-					      gint               *y1,
-					      gint               *x2,
-					      gint               *y2);
-void       gdisplay_transform_coords         (GDisplay           *gdisp,
-					      gint                x,
-					      gint                y,
-					      gint               *nx,
-					      gint               *ny,
-					      gboolean            use_offsets);
-void       gdisplay_untransform_coords       (GDisplay           *gdisp,
-					      gint                x,
-					      gint                y,
-					      gint               *nx,
-					      gint               *ny,
-					      gboolean            round,
-					      gboolean            use_offsets);
-void       gdisplay_transform_coords_f       (GDisplay           *gdisp,
-					      gdouble             x,
-					      gdouble             y,
-					      gdouble            *nx,
-					      gdouble            *ny,
-					      gboolean            use_offsets);
-void       gdisplay_untransform_coords_f     (GDisplay           *gdisp,
-					      gdouble             x,
-					      gdouble             y,
-					      gdouble            *nx,
-					      gdouble            *ny,
-					      gboolean            use_offsets);
+GType         gimp_display_get_type             (void);
 
-void       gdisplay_real_install_tool_cursor (GDisplay           *gdisp,
-					      GdkCursorType       cursor_type,
-					      GimpToolCursorType  tool_cursor,
-					      GimpCursorModifier  modifier,
-					      gboolean            always_install);
-void       gdisplay_install_tool_cursor      (GDisplay           *gdisp,
-					      GdkCursorType       cursor_type,
-					      GimpToolCursorType  tool_cursor,
-					      GimpCursorModifier  modifier);
-void       gdisplay_remove_tool_cursor       (GDisplay           *gdisp);
-void       gdisplay_install_override_cursor  (GDisplay           *gdisp,
-					      GdkCursorType       cursor_type);
-void       gdisplay_remove_override_cursor   (GDisplay           *gdisp);
+GimpDisplay * gdisplay_new                      (GimpImage            *gimage,
+                                                 guint                 scale);
+void          gdisplay_reconnect                (GimpDisplay          *gdisp,
+                                                 GimpImage            *gimage);
+void          gdisplay_remove_and_delete        (GimpDisplay          *gdisp);
+gint          gdisplay_mask_value               (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y);
+gint          gdisplay_mask_bounds              (GimpDisplay          *gdisp,
+                                                 gint                 *x1,
+                                                 gint                 *y1,
+                                                 gint                 *x2,
+                                                 gint                 *y2);
+void          gdisplay_transform_coords         (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y,
+                                                 gint                 *nx,
+                                                 gint                 *ny,
+                                                 gboolean              use_offsets);
+void          gdisplay_untransform_coords       (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y,
+                                                 gint                 *nx,
+                                                 gint                 *ny,
+                                                 gboolean              round,
+                                                 gboolean              use_offsets);
+void          gdisplay_transform_coords_f       (GimpDisplay          *gdisp,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble              *nx,
+                                                 gdouble              *ny,
+                                                 gboolean              use_offsets);
+void          gdisplay_untransform_coords_f     (GimpDisplay          *gdisp,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble              *nx,
+                                                 gdouble              *ny,
+                                                 gboolean              use_offsets);
 
-void       gdisplay_set_menu_sensitivity     (GDisplay           *gdisp);
-void       gdisplay_expose_area              (GDisplay           *gdisp,
-					      gint                x,
-					      gint                y,
-					      gint                w,
-					      gint                h);
-void       gdisplay_expose_guide             (GDisplay           *gdisp,
-					      GimpGuide          *guide);
-void       gdisplay_expose_full              (GDisplay           *gdisp);
-void       gdisplay_selection_visibility     (GDisplay           *gdisp,
-					      SelectionControl    function);
-void       gdisplay_flush                    (GDisplay           *gdisp);
-void       gdisplay_flush_now                (GDisplay           *gdisp);
-void       gdisplay_update_icon              (GDisplay           *gdisp);
-gboolean   gdisplay_update_icon_timer        (gpointer            data);
-gboolean   gdisplay_update_icon_invoker      (gpointer            data);
-void       gdisplay_update_icon_scheduler    (GimpImage          *gimage,
-					      gpointer            data);
-void       gdisplay_draw_guides              (GDisplay           *gdisp);
-void       gdisplay_draw_guide               (GDisplay           *gdisp,
-					      GimpGuide          *guide,
-					      gboolean            active);
-GimpGuide *gdisplay_find_guide               (GDisplay           *gdisp,
-					      gdouble             x,
-					      double              y);
-gboolean   gdisplay_snap_point               (GDisplay           *gdisp,
-					      gdouble             x,
-					      gdouble             y,
-					      gdouble            *tx,
-					      gdouble            *ty);
-void       gdisplay_snap_rectangle           (GDisplay           *gdisp,
-					      gdouble             x1,
-					      gdouble             y1,
-					      gdouble             x2,
-					      gdouble             y2,
-					      gdouble            *tx1,
-					      gdouble            *ty1);
-void	   gdisplay_update_cursor	     (GDisplay           *gdisp,
-					      gint                x,
-					      gint                y);
-void	   gdisplay_set_dot_for_dot	     (GDisplay           *gdisp,
-					      gboolean            dot_for_dot);
-void       gdisplay_resize_cursor_label      (GDisplay           *gdisp);
-void       gdisplay_update_title             (GDisplay           *gdisp);
-void       gdisplay_flush_displays_only      (GDisplay           *gdisp); /* no rerender! */
+void          gdisplay_real_install_tool_cursor (GimpDisplay          *gdisp,
+                                                 GdkCursorType         cursor_type,
+                                                 GimpToolCursorType    tool_cursor,
+                                                 GimpCursorModifier    modifier,
+                                                 gboolean              always_install);
+void          gdisplay_install_tool_cursor      (GimpDisplay          *gdisp,
+                                                 GdkCursorType         cursor_type,
+                                                 GimpToolCursorType    tool_cursor,
+                                                 GimpCursorModifier    modifier);
+void          gdisplay_remove_tool_cursor       (GimpDisplay          *gdisp);
+void          gdisplay_install_override_cursor  (GimpDisplay          *gdisp,
+                                                 GdkCursorType         cursor_type);
+void          gdisplay_remove_override_cursor   (GimpDisplay          *gdisp);
 
-GDisplay * gdisplay_active                   (void);
-GDisplay * gdisplay_get_by_ID                (Gimp               *gimp,
-					      gint                ID);
+void          gdisplay_set_menu_sensitivity     (GimpDisplay          *gdisp);
+void          gdisplay_expose_area              (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y,
+                                                 gint                  w,
+                                                 gint                  h);
+void          gdisplay_expose_guide             (GimpDisplay          *gdisp,
+                                                 GimpGuide            *guide);
+void          gdisplay_expose_full              (GimpDisplay          *gdisp);
+void          gdisplay_selection_visibility     (GimpDisplay          *gdisp,
+                                                 GimpSelectionControl  control);
+void          gdisplay_flush                    (GimpDisplay          *gdisp);
+void          gdisplay_flush_now                (GimpDisplay          *gdisp);
+void          gdisplay_update_icon              (GimpDisplay          *gdisp);
+gboolean      gdisplay_update_icon_timer        (gpointer              data);
+gboolean      gdisplay_update_icon_invoker      (gpointer              data);
+void          gdisplay_update_icon_scheduler    (GimpImage            *gimage,
+                                                 gpointer              data);
+void          gdisplay_draw_guides              (GimpDisplay          *gdisp);
+void          gdisplay_draw_guide               (GimpDisplay          *gdisp,
+                                                 GimpGuide            *guide,
+                                                 gboolean              active);
+GimpGuide   * gdisplay_find_guide               (GimpDisplay          *gdisp,
+                                                 gdouble               x,
+                                                 double                y);
+gboolean      gdisplay_snap_point               (GimpDisplay          *gdisp,
+                                                 gdouble               x,
+                                                 gdouble               y,
+                                                 gdouble              *tx,
+                                                 gdouble              *ty);
+void          gdisplay_snap_rectangle           (GimpDisplay          *gdisp,
+                                                 gdouble               x1,
+                                                 gdouble               y1,
+                                                 gdouble               x2,
+                                                 gdouble               y2,
+                                                 gdouble              *tx1,
+                                                 gdouble              *ty1);
+void	      gdisplay_update_cursor	        (GimpDisplay          *gdisp,
+                                                 gint                  x,
+                                                 gint                  y);
+void	      gdisplay_set_dot_for_dot	        (GimpDisplay          *gdisp,
+                                                 gboolean              dot_for_dot);
+void          gdisplay_resize_cursor_label      (GimpDisplay          *gdisp);
+void          gdisplay_update_title             (GimpDisplay          *gdisp);
+void          gdisplay_flush_displays_only      (GimpDisplay          *gdisp); /* no rerender! */
+
+GimpDisplay * gdisplay_active                   (void);
+GimpDisplay * gdisplay_get_by_ID                (Gimp                 *gimp,
+                                                 gint                  ID);
 
 
 /*  function declarations  */
 
-GDisplay * gdisplays_check_valid             (GDisplay           *gdisp,
-					      GimpImage          *gimage);
-void       gdisplays_reconnect               (GimpImage          *old,
-					      GimpImage          *new);
-void       gdisplays_update_title            (GimpImage          *gimage);
-void       gdisplays_resize_cursor_label     (GimpImage          *gimage);
-void       gdisplays_setup_scale             (GimpImage          *gimage);
-void       gdisplays_update_area             (GimpImage          *gimage,
-					      gint                x,
-					      gint                y,
-					      gint                w,
-					      gint                h);
-void       gdisplays_expose_guides           (GimpImage          *gimage);
-void       gdisplays_expose_guide            (GimpImage          *gimage,
-					      GimpGuide          *guide);
-void       gdisplays_update_full             (GimpImage          *gimage);
-void       gdisplays_shrink_wrap             (GimpImage          *gimage);
-void       gdisplays_expose_full             (void);
-void       gdisplays_selection_visibility    (GimpImage          *gimage,
-					      SelectionControl    function);
-gboolean   gdisplays_dirty                   (void);
-void       gdisplays_delete                  (void);
-void       gdisplays_flush                   (void);
-void       gdisplays_flush_now               (void);
-void       gdisplays_finish_draw             (void);
-void       gdisplays_nav_preview_resized     (void);
-void       gdisplays_foreach                 (GFunc               func,
-					      gpointer            user_data);
+GimpDisplay * gdisplays_check_valid             (GimpDisplay          *gdisp,
+                                                 GimpImage            *gimage);
+void          gdisplays_reconnect               (GimpImage            *old,
+                                                 GimpImage            *new);
+void          gdisplays_update_title            (GimpImage            *gimage);
+void          gdisplays_resize_cursor_label     (GimpImage            *gimage);
+void          gdisplays_setup_scale             (GimpImage            *gimage);
+void          gdisplays_update_area             (GimpImage            *gimage,
+                                                 gint                  x,
+                                                 gint                  y,
+                                                 gint                  w,
+                                                 gint                  h);
+void          gdisplays_expose_guides           (GimpImage            *gimage);
+void          gdisplays_expose_guide            (GimpImage            *gimage,
+                                                 GimpGuide            *guide);
+void          gdisplays_update_full             (GimpImage            *gimage);
+void          gdisplays_shrink_wrap             (GimpImage            *gimage);
+void          gdisplays_expose_full             (void);
+void          gdisplays_selection_visibility    (GimpImage            *gimage,
+                                                 GimpSelectionControl  control);
+gboolean      gdisplays_dirty                   (void);
+void          gdisplays_delete                  (void);
+void          gdisplays_flush                   (void);
+void          gdisplays_flush_now               (void);
+void          gdisplays_finish_draw             (void);
+void          gdisplays_nav_preview_resized     (void);
+void          gdisplays_foreach                 (GFunc                 func,
+                                                 gpointer              user_data);
 
 
 #endif /*  __GDISPLAY_H__  */

@@ -68,11 +68,11 @@
 
 
 static void
-gdisplay_redraw (GDisplay *gdisp,
-		 gint      x,
-		 gint      y,
-		 gint      w,
-		 gint      h)
+gdisplay_redraw (GimpDisplay *gdisp,
+		 gint         x,
+		 gint         y,
+		 gint         w,
+		 gint         h)
 {
   glong x1, y1, x2, y2;    /*  coordinate of rectangle corners  */
 
@@ -96,7 +96,7 @@ gdisplay_redraw (GDisplay *gdisp,
 }
 
 static void
-gdisplay_check_device_cursor (GDisplay *gdisp)
+gdisplay_check_device_cursor (GimpDisplay *gdisp)
 {
   GList *list;
 
@@ -136,22 +136,22 @@ key_to_state (gint key)
 
 static void
 gdisplay_vscrollbar_update (GtkAdjustment *adjustment,
-			    GDisplay      *gdisp)
+			    GimpDisplay   *gdisp)
 {
   scroll_display (gdisp, 0, (adjustment->value - gdisp->offset_y));
 }
 
 static void
 gdisplay_hscrollbar_update (GtkAdjustment *adjustment,
-			    GDisplay      *gdisp)
+			    GimpDisplay   *gdisp)
 {
   scroll_display (gdisp, (adjustment->value - gdisp->offset_x), 0);
 }
 
 gboolean
-gdisplay_shell_events (GtkWidget *widget,
-		       GdkEvent  *event,
-		       GDisplay  *gdisp)
+gdisplay_shell_events (GtkWidget   *widget,
+		       GdkEvent    *event,
+		       GimpDisplay *gdisp)
 {
   switch (event->type)
     {
@@ -170,9 +170,9 @@ gdisplay_shell_events (GtkWidget *widget,
 }
 
 gboolean
-gdisplay_canvas_events (GtkWidget *canvas,
-			GdkEvent  *event,
-			GDisplay  *gdisp)
+gdisplay_canvas_events (GtkWidget   *canvas,
+			GdkEvent    *event,
+			GimpDisplay *gdisp)
 {
   GimpTool        *active_tool;
   GdkEventExpose  *eevent;
@@ -664,9 +664,9 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp->gimage->gimp->busy)
     return TRUE;
@@ -702,9 +702,9 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp->gimage->gimp->busy)
     return TRUE;
@@ -764,9 +764,9 @@ gdisplay_origin_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
 			      gpointer        data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (! gdisp->gimage->gimp->busy && event->button == 1)
     {
@@ -793,7 +793,7 @@ gdisplay_drop_drawable (GtkWidget    *widget,
 			gpointer      data)
 {
   GimpDrawable     *drawable;
-  GDisplay         *gdisp;
+  GimpDisplay      *gdisp;
   GimpImage        *src_gimage;
   GimpLayer        *new_layer;
   GimpImage        *dest_gimage;
@@ -806,7 +806,7 @@ gdisplay_drop_drawable (GtkWidget    *widget,
   gint              bytes; 
   GimpImageBaseType type;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp->gimage->gimp->busy)
     return;
@@ -896,7 +896,7 @@ gdisplay_drop_drawable (GtkWidget    *widget,
 }
 
 static void
-gdisplay_bucket_fill (GDisplay       *gdisp,
+gdisplay_bucket_fill (GimpDisplay    *gdisp,
 		      BucketFillMode  fill_mode,
 		      guchar          orig_color[],
 		      TempBuf        *orig_pat_buf)
@@ -1015,9 +1015,9 @@ gdisplay_drop_pattern (GtkWidget    *widget,
 		       GimpViewable *viewable,
 		       gpointer      data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (GIMP_IS_PATTERN (viewable))
     {
@@ -1033,10 +1033,10 @@ gdisplay_drop_color (GtkWidget     *widget,
 		     const GimpRGB *drop_color,
 		     gpointer       data)
 {
-  GDisplay *gdisp;
-  guchar    color[4];
+  GimpDisplay *gdisp;
+  guchar       color[4];
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   gimp_rgba_get_uchar (drop_color,
 		       &color[0],
@@ -1055,10 +1055,10 @@ gdisplay_drop_buffer (GtkWidget    *widget,
 		      GimpViewable *viewable,
 		      gpointer      data)
 {
-  GimpBuffer *buffer;
-  GDisplay   *gdisp;
+  GimpBuffer  *buffer;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   if (gdisp->gimage->gimp->busy)
     return;

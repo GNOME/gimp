@@ -40,7 +40,7 @@
 
 
 void
-bounds_checking (GDisplay *gdisp)
+bounds_checking (GimpDisplay *gdisp)
 {
   gint sx, sy;
 
@@ -56,9 +56,9 @@ bounds_checking (GDisplay *gdisp)
 
 
 void
-resize_display (GDisplay *gdisp,
-		gboolean  resize_window,
-		gboolean  redisplay)
+resize_display (GimpDisplay *gdisp,
+		gboolean     resize_window,
+		gboolean     redisplay)
 {
   /* freeze the active tool */
   tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
@@ -83,7 +83,7 @@ resize_display (GDisplay *gdisp,
 
 
 void
-shrink_wrap_display (GDisplay *gdisp)
+shrink_wrap_display (GimpDisplay *gdisp)
 {
   /* freeze the active tool */
   tool_manager_control_active (gdisp->gimage->gimp, PAUSE, gdisp);
@@ -102,7 +102,7 @@ shrink_wrap_display (GDisplay *gdisp)
 
 
 void
-change_scale (GDisplay     *gdisp,
+change_scale (GimpDisplay  *gdisp,
 	      GimpZoomType  zoom_type)
 {
   guchar  scalesrc, scaledest;
@@ -181,9 +181,9 @@ change_scale (GDisplay     *gdisp,
 /* 27/Feb/1999 I tried inlining this, but the result was slightly
  * slower (poorer cache locality, probably) -- austin */
 static gdouble
-img2real (GDisplay *gdisp,
-	  gboolean  xdir,
-	  gdouble   a)
+img2real (GimpDisplay *gdisp,
+	  gboolean     xdir,
+	  gdouble      a)
 {
   gdouble res;
 
@@ -200,12 +200,12 @@ img2real (GDisplay *gdisp,
 
 
 void
-setup_scale (GDisplay *gdisp)
+setup_scale (GimpDisplay *gdisp)
 {
   GtkRuler *hruler;
   GtkRuler *vruler;
-  gfloat sx, sy;
-  gfloat stepx, stepy;
+  gfloat    sx, sy;
+  gfloat    stepx, stepy;
 
   sx = SCALEX (gdisp, gdisp->gimage->width);
   sy = SCALEY (gdisp, gdisp->gimage->height);
@@ -224,8 +224,8 @@ setup_scale (GDisplay *gdisp)
   gdisp->vsbdata->page_increment = (gdisp->disp_height / 2);
   gdisp->vsbdata->step_increment = stepy;
 
-  g_signal_emit_by_name (G_OBJECT (gdisp->hsbdata), "changed", 0);
-  g_signal_emit_by_name (G_OBJECT (gdisp->vsbdata), "changed", 0);
+  gtk_adjustment_changed (gdisp->hsbdata);
+  gtk_adjustment_changed (gdisp->vsbdata);
 
   hruler = GTK_RULER (gdisp->hrule);
   vruler = GTK_RULER (gdisp->vrule);

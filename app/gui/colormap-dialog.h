@@ -20,14 +20,15 @@
 #define __COLORMAP_DIALOG_H__
 
 
-#include <gtk/gtkdialog.h>
+#include <gtk/gtkvbox.h>
 
 
 #define GIMP_TYPE_COLORMAP_DIALOG            (gimp_colormap_dialog_get_type ())
-#define GIMP_COLORMAP_DIALOG(obj)            (GTK_CHECK_CAST((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialog))
-#define GIMP_COLORMAP_DIALOG_CLASS(klass)    (GTK_CHECK_CLASS_CAST((klass), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
-#define GIMP_IS_COLORMAP_DIALOG(obj)         (GTK_CHECK_TYPE((obj), GIMP_TYPE_COLORMAP_DIALOG))
-#define GIMP_IS_COLORMAP_DIALOG_CLASS(klass) (GTK_CHECK_CLASS_TYPE((klass), GIMP_TYPE_COLORMAP_DIALOG))
+#define GIMP_COLORMAP_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialog))
+#define GIMP_COLORMAP_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
+#define GIMP_IS_COLORMAP_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLORMAP_DIALOG))
+#define GIMP_IS_COLORMAP_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_COLORMAP_DIALOG))
+#define GIMP_COLORMAP_DIALOG_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_COLORMAP_DIALOG, GimpColormapDialogClass))
 
 
 typedef struct _GimpColormapDialog      GimpColormapDialog;
@@ -35,7 +36,7 @@ typedef struct _GimpColormapDialogClass GimpColormapDialogClass;
 
 struct _GimpColormapDialog
 {
-  GtkVBox        parent;
+  GtkVBox        parent_instance;
 
   GimpImage     *image;
   gint           col_index;
@@ -62,7 +63,7 @@ struct _GimpColormapDialogClass
 };
 
 
-GtkType     gimp_colormap_dialog_get_type  (void);
+GType       gimp_colormap_dialog_get_type  (void);
 
 GtkWidget * gimp_colormap_dialog_new       (GimpImage          *gimage);
 

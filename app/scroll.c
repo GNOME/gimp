@@ -47,7 +47,7 @@
 static gint startx, starty;
 
 void
-start_grab_and_scroll (GDisplay       *gdisp,
+start_grab_and_scroll (GimpDisplay    *gdisp,
 		       GdkEventButton *bevent)
 {
   GdkCursor *cursor;
@@ -64,7 +64,7 @@ start_grab_and_scroll (GDisplay       *gdisp,
 
 
 void
-end_grab_and_scroll (GDisplay       *gdisp,
+end_grab_and_scroll (GimpDisplay    *gdisp,
 		     GdkEventButton *bevent)
 {
   gdisplay_real_install_tool_cursor (gdisp,
@@ -76,7 +76,7 @@ end_grab_and_scroll (GDisplay       *gdisp,
 
 
 void
-grab_and_scroll (GDisplay       *gdisp,
+grab_and_scroll (GimpDisplay    *gdisp,
 		 GdkEventMotion *mevent)
 {
   if (mevent && mevent->window != gdisp->canvas->window)
@@ -89,7 +89,7 @@ grab_and_scroll (GDisplay       *gdisp,
 
 
 void
-scroll_to_pointer_position (GDisplay       *gdisp,
+scroll_to_pointer_position (GimpDisplay    *gdisp,
 			    GdkEventMotion *mevent)
 {
   gdouble child_x, child_y;
@@ -126,7 +126,7 @@ scroll_to_pointer_position (GDisplay       *gdisp,
 }
 
 gboolean
-scroll_display (GDisplay *gdisp,
+scroll_display (GimpDisplay *gdisp,
 		gint      x_offset,
 		gint      y_offset)
 {

@@ -31,8 +31,13 @@ typedef enum /*< skip >*/
 } CursorMode;
 
 
-typedef struct _GDisplay  GDisplay;
-typedef struct _Selection Selection;
+#define GDisplay GimpDisplay
+
+
+typedef struct _GimpDisplay       GimpDisplay;
+typedef struct _GimpDisplayShell  GimpDisplayShell;
+
+typedef struct _Selection         Selection;
 
 
 #endif /* __DISPLAY_TYPES_H__ */

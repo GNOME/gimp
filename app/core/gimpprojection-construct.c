@@ -171,6 +171,7 @@ enum
   COMPONENT_VISIBILITY_CHANGED,
   COMPONENT_ACTIVE_CHANGED,
   MASK_CHANGED,
+  SELECTION_CONTROL,
 
   CLEAN,
   DIRTY,
@@ -300,6 +301,16 @@ gimp_image_class_init (GimpImageClass *klass)
 		  NULL, NULL,
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
+
+  gimp_image_signals[SELECTION_CONTROL] =
+    g_signal_new ("selection_control",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, selection_control),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__INT,
+		  G_TYPE_NONE, 1,
+                  G_TYPE_INT);
 
   gimp_image_signals[CLEAN] =
     g_signal_new ("clean",
@@ -1852,6 +1863,16 @@ gimp_image_update (GimpImage *gimage,
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[UPDATE], 0,
 		 x, y, width, height);
+}
+
+void
+gimp_image_selection_control (GimpImage            *gimage,
+                              GimpSelectionControl  control)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[SELECTION_CONTROL], 0,
+                 control);
 }
 
 

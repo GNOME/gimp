@@ -38,32 +38,32 @@ static void gdisplay_close_warning_callback  (GtkWidget   *widget,
 					      gboolean     close,
 					      gpointer     data);
 static void gdisplay_close_warning_dialog    (const gchar *image_name,
-					      GDisplay    *gdisp);
+					      GimpDisplay *gdisp);
 
 /*
  *  This file is for operations on the gdisplay object
  */
 
 gulong
-gdisplay_white_pixel (GDisplay *gdisp)
+gdisplay_white_pixel (GimpDisplay *gdisp)
 {
   return g_white_pixel;
 }
 
 gulong
-gdisplay_gray_pixel (GDisplay *gdisp)
+gdisplay_gray_pixel (GimpDisplay *gdisp)
 {
   return g_gray_pixel;
 }
 
 gulong
-gdisplay_black_pixel (GDisplay *gdisp)
+gdisplay_black_pixel (GimpDisplay *gdisp)
 {
   return g_black_pixel;
 }
 
 gulong
-gdisplay_color_pixel (GDisplay *gdisp)
+gdisplay_color_pixel (GimpDisplay *gdisp)
 {
   return g_color_pixel;
 }
@@ -98,9 +98,9 @@ gdisplay_xserver_resolution (gdouble *xres,
 
 
 void
-gdisplay_new_view (GDisplay *gdisp)
+gdisplay_new_view (GimpDisplay *gdisp)
 {
-  GDisplay *new_gdisp;
+  GimpDisplay *new_gdisp;
 
   /* make sure the image has been fully loaded... */
   if (gdisp->gimage)
@@ -111,8 +111,8 @@ gdisplay_new_view (GDisplay *gdisp)
 
 
 void
-gdisplay_close_window (GDisplay *gdisp,
-		       gboolean  kill_it)
+gdisplay_close_window (GimpDisplay *gdisp,
+		       gboolean     kill_it)
 {
   /*  FIXME: gimp_busy HACK not really appropriate here because we only
    *  want to prevent the busy image and display to be closed.  --Mitch
@@ -145,7 +145,7 @@ gdisplay_close_window (GDisplay *gdisp,
 
 
 void
-gdisplay_shrink_wrap (GDisplay *gdisp)
+gdisplay_shrink_wrap (GimpDisplay *gdisp)
 {
   /* 
    * I'm pretty sure this assumes that the current size is < display size
@@ -278,9 +278,9 @@ gdisplay_close_warning_callback (GtkWidget *widget,
 				 gboolean   close,
 				 gpointer   data)
 {
-  GDisplay *gdisp;
+  GimpDisplay *gdisp;
 
-  gdisp = (GDisplay *) data;
+  gdisp = (GimpDisplay *) data;
 
   gdisp->warning_dialog = NULL;
 
@@ -290,7 +290,7 @@ gdisplay_close_warning_callback (GtkWidget *widget,
 
 static void
 gdisplay_close_warning_dialog (const gchar *image_name,
-			       GDisplay    *gdisp)
+			       GimpDisplay *gdisp)
 {
   GtkWidget *mbox;
   gchar     *warning_buf;

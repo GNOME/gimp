@@ -313,14 +313,14 @@ package Gimp::CodeGen::enums;
 	},
     GimpOffsetType =>
 	{ contig => 1,
-	  header => 'core/gimpdrawable-offset.h',
+	  header => 'core/core-types.h',
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
 	},
     MergeType =>
 	{ contig => 1,
-	  header => 'core/gimpimage.h',
+	  header => 'core/core-types.h',
 	  symbols => [ qw(EXPAND_AS_NECESSARY CLIP_TO_IMAGE
 			  CLIP_TO_BOTTOM_LAYER FLATTEN_IMAGE) ],
 	  mapping => { EXPAND_AS_NECESSARY => '0',
@@ -330,7 +330,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvertPaletteType =>
 	{ contig => 1,
-	  header => 'core/gimpimage-convert.h',
+	  header => 'core/core-types.h',
 	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
 			  MONO_PALETTE CUSTOM_PALETTE) ],
 	  mapping => { MAKE_PALETTE => '0',
@@ -341,7 +341,7 @@ package Gimp::CodeGen::enums;
 	},
     ConvertDitherType =>
 	{ contig => 1,
-	  header => 'core/gimpimage-convert.h',
+	  header => 'core/core-types.h',
 	  symbols => [ qw(NO_DITHER FS_DITHER FSLOWBLEED_DITHER FIXED_DITHER
 			  NODESTRUCT_DITHER) ],
 	  mapping => { NO_DITHER => '0',

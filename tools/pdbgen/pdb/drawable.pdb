@@ -537,7 +537,7 @@ CODE
 }
 
 @headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
-              "core/gimpdrawable.h"
+              "core/gimpdrawable.h" "core/gimpdrawable-offset.h"
 	      "pdb_glue.h" "base/tile.h" "base/tile-manager.h"
               "base/temp-buf.h");
 

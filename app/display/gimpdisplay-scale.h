@@ -20,14 +20,14 @@
 #define __SCALE_H__
 
 
-void   change_scale        (GDisplay     *gdisp,
+void   change_scale        (GimpDisplay  *gdisp,
 			    GimpZoomType  zoom_type);
-void   resize_display      (GDisplay     *gdisp,
+void   resize_display      (GimpDisplay  *gdisp,
 			    gboolean      resize_window,
 			    gboolean      redisplay);
-void   shrink_wrap_display (GDisplay     *gdisp);
-void   setup_scale         (GDisplay     *gdisp);
-void   bounds_checking     (GDisplay     *gdisp);
+void   shrink_wrap_display (GimpDisplay  *gdisp);
+void   setup_scale         (GimpDisplay  *gdisp);
+void   bounds_checking     (GimpDisplay  *gdisp);
 
 
 #endif  /*  __SCALE_H__  */

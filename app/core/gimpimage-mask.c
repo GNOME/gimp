@@ -46,7 +46,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "display/display-funcs.h"
 
 /*  local variables  */
 static gboolean   gimage_mask_stroking = FALSE;
@@ -143,7 +142,7 @@ gimage_mask_invalidate (GimpImage *gimage)
   GimpChannel *mask;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, 0 /* SELECTION_OFF */);
+  gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
 
   mask = gimp_image_get_mask (gimage);
   mask->boundary_known = FALSE;

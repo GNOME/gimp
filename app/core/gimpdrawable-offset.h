@@ -20,13 +20,6 @@
 #define __GIMP_DRAWABLE_OFFSET_H__
 
 
-typedef enum
-{
-  OFFSET_BACKGROUND,
-  OFFSET_TRANSPARENT
-} GimpOffsetType;
-
-
 void   gimp_drawable_offset (GimpDrawable   *drawable,
 			     gboolean        wrap_around,
 			     GimpOffsetType  fill_type,

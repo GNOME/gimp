@@ -126,42 +126,39 @@ static GtkTargetEntry color_palette_target_table[] =
 {
   GIMP_TARGET_COLOR
 };
-static guint n_color_palette_targets = (sizeof (color_palette_target_table) /
-					sizeof (color_palette_target_table[0]));
 
 
-GtkType
+GType
 gimp_colormap_dialog_get_type (void)
 {
-  static GtkType gimp_colormap_dialog_type = 0;
+  static GType gcd_type = 0;
 
-  if (! gimp_colormap_dialog_type)
+  if (! gcd_type)
     {
-      static GtkTypeInfo info =
+      static const GTypeInfo gcd_info =
       {
-	"GimpColormapDialog",
+        sizeof (GimpColormapDialogClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_colormap_dialog_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
 	sizeof (GimpColormapDialog),
-	sizeof (GimpColormapDialogClass),
-	(GtkClassInitFunc) gimp_colormap_dialog_class_init,
-	(GtkObjectInitFunc) gimp_colormap_dialog_init,
-	NULL,
-	NULL,
-	NULL,
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_colormap_dialog_init,
       };
 
-      gimp_colormap_dialog_type = gtk_type_unique (GTK_TYPE_VBOX, &info);
+      gcd_type = g_type_register_static (GTK_TYPE_VBOX,
+                                         "GimpColormapDialog",
+                                         &gcd_info, 0);
     }
 
-  return gimp_colormap_dialog_type;
+  return gcd_type;
 }
 
 static void
 gimp_colormap_dialog_class_init (GimpColormapDialogClass* klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass*) klass;
-
   parent_class = g_type_class_peek_parent (klass);
 
   gimp_colormap_dialog_signals[SELECTED] =
@@ -235,7 +232,8 @@ gimp_colormap_dialog_new (GimpImage *gimage)
   /*  dnd stuff  */
   gtk_drag_source_set (ipal->palette,
                        GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_palette_target_table, n_color_palette_targets,
+                       color_palette_target_table,
+                       G_N_ELEMENTS (color_palette_target_table),
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (ipal->palette, ipal_drag_color, ipal);
 
@@ -243,7 +241,8 @@ gimp_colormap_dialog_new (GimpImage *gimage)
                      GTK_DEST_DEFAULT_HIGHLIGHT |
                      GTK_DEST_DEFAULT_MOTION |
                      GTK_DEST_DEFAULT_DROP,
-                     color_palette_target_table, n_color_palette_targets,
+                     color_palette_target_table,
+                     G_N_ELEMENTS (color_palette_target_table),
                      GDK_ACTION_COPY);
   gimp_dnd_color_dest_set (ipal->palette, ipal_drop_color, ipal);
 
@@ -334,8 +333,6 @@ gimp_colormap_dialog_set_image (GimpColormapDialog *ipal,
       if (gimp_image_base_type (gimage) == INDEXED)
 	{
 	  ipal_draw (ipal);
-
-	  gtk_container_queue_resize (GTK_CONTAINER (ipal));
 
 	  ipal->index_adjustment->upper = ipal->image->num_cols - 1;
 	  gtk_adjustment_changed (ipal->index_adjustment);
@@ -775,7 +772,6 @@ image_colormap_changed_cb (GimpImage          *gimage,
       if (ncol < 0)
 	{
 	  ipal_draw (ipal);
-	  gtk_container_queue_resize (GTK_CONTAINER (ipal));
 	}
       else
 	{

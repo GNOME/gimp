@@ -21,17 +21,17 @@
 
 
 /*  routines for grabbing the image and scrolling via the pointer  */
-void      start_grab_and_scroll      (GDisplay       *gdisp,
+void      start_grab_and_scroll      (GimpDisplay    *gdisp,
 				      GdkEventButton *bevent);
-void      end_grab_and_scroll        (GDisplay       *gdisp,
+void      end_grab_and_scroll        (GimpDisplay    *gdisp,
 				      GdkEventButton *bevent);
-void      grab_and_scroll            (GDisplay       *gdisp,
+void      grab_and_scroll            (GimpDisplay    *gdisp,
 				      GdkEventMotion *mevent);
-void      scroll_to_pointer_position (GDisplay       *gdisp,
+void      scroll_to_pointer_position (GimpDisplay    *gdisp,
 				      GdkEventMotion *mevent);
 
 /* generic scroll-by-offset function */
-gboolean  scroll_display             (GDisplay       *gdisp,
+gboolean  scroll_display             (GimpDisplay    *gdisp,
 				      gint            x_offset,
 				      gint            y_offset);
 

@@ -47,7 +47,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "display/display-funcs.h"
 
 enum
 {
@@ -1290,10 +1289,10 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
     return;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage, 0 /* SELECTION_OFF */);
+  gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
 
   /*  clear the affected region surrounding the layer  */
-  gdisplays_selection_visibility (gimage, 1 /* SELECTION_LAYER_OFF */);
+  gimp_image_selection_control (gimage, GIMP_SELECTION_LAYER_OFF);
 
   /*  get the selection mask channel  */
   mask = gimp_image_get_mask (gimage);

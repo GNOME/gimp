@@ -30,15 +30,6 @@
 				      (t) == INDEXEDA_GIMAGE)
 
 
-typedef enum
-{
-  EXPAND_AS_NECESSARY,
-  CLIP_TO_IMAGE,
-  CLIP_TO_BOTTOM_LAYER,
-  FLATTEN_IMAGE
-} MergeType;
-
-
 struct _GimpGuide
 {
   gint                     ref_count;
@@ -136,31 +127,33 @@ struct _GimpImageClass
 {
   GimpViewableClass  parent_class;
 
-  void (* mode_changed)                 (GimpImage   *gimage);
-  void (* alpha_changed)                (GimpImage   *gimage);
-  void (* floating_selection_changed)   (GimpImage   *gimage);
-  void (* active_layer_changed)         (GimpImage   *gimage);
-  void (* active_channel_changed)       (GimpImage   *gimage);
-  void (* component_visibility_changed) (GimpImage   *gimage,
-					 ChannelType  channel);
-  void (* component_active_changed)     (GimpImage   *gimage,
-					 ChannelType  channel);
-  void (* mask_changed)                 (GimpImage   *gimage);
+  void (* mode_changed)                 (GimpImage            *gimage);
+  void (* alpha_changed)                (GimpImage            *gimage);
+  void (* floating_selection_changed)   (GimpImage            *gimage);
+  void (* active_layer_changed)         (GimpImage            *gimage);
+  void (* active_channel_changed)       (GimpImage            *gimage);
+  void (* component_visibility_changed) (GimpImage            *gimage,
+					 ChannelType           channel);
+  void (* component_active_changed)     (GimpImage            *gimage,
+					 ChannelType           channel);
+  void (* mask_changed)                 (GimpImage            *gimage);
+  void (* selection_control)            (GimpImage            *gimage,
+                                         GimpSelectionControl  control);
 
-  void (* clean)                        (GimpImage   *gimage);
-  void (* dirty)                        (GimpImage   *gimage);
-  void (* update)                       (GimpImage   *gimage,
-					 gint         x,
-					 gint         y,
-					 gint         width,
-					 gint         height);
-  void (* colormap_changed)             (GimpImage   *gimage,
-					 gint         color_index);
-  void (* undo_event)                   (GimpImage   *gimage,
-					 gint         event);
+  void (* clean)                        (GimpImage            *gimage);
+  void (* dirty)                        (GimpImage            *gimage);
+  void (* update)                       (GimpImage            *gimage,
+					 gint                  x,
+					 gint                  y,
+					 gint                  width,
+					 gint                  height);
+  void (* colormap_changed)             (GimpImage            *gimage,
+					 gint                  color_index);
+  void (* undo_event)                   (GimpImage            *gimage,
+					 gint                  event);
 
-  void (* undo)                         (GimpImage   *gimage);
-  void (* redo)                         (GimpImage   *gimage);
+  void (* undo)                         (GimpImage            *gimage);
+  void (* redo)                         (GimpImage            *gimage);
 };
 
 
@@ -168,108 +161,108 @@ struct _GimpImageClass
 
 GType           gimp_image_get_type          (void);
 
-GimpImage     * gimp_image_new               (Gimp               *gimp,
-					      gint                width,
-					      gint                height,
-					      GimpImageBaseType   base_type);
+GimpImage     * gimp_image_new               (Gimp                 *gimp,
+					      gint                  width,
+					      gint                  height,
+					      GimpImageBaseType     base_type);
 
-gint            gimp_image_get_ID            (GimpImage          *gimage);
-GimpImage     * gimp_image_get_by_ID         (Gimp               *gimp,
-					      gint                id);
+gint            gimp_image_get_ID            (GimpImage            *gimage);
+GimpImage     * gimp_image_get_by_ID         (Gimp                 *gimp,
+					      gint                  id);
 
-void            gimp_image_set_filename      (GimpImage          *gimage,
-					      const gchar        *filename);
-void            gimp_image_set_resolution    (GimpImage          *gimage,
-					      gdouble             xres,
-					      gdouble             yres);
-void            gimp_image_get_resolution    (const GimpImage    *gimage,
-					      gdouble            *xresolution,
-					      gdouble            *yresolution);
-void            gimp_image_set_unit          (GimpImage          *gimage,
-					      GimpUnit            unit);
-GimpUnit        gimp_image_get_unit          (const GimpImage    *gimage);
-void            gimp_image_set_save_proc     (GimpImage          *gimage,
-					      PlugInProcDef      *proc);
-PlugInProcDef * gimp_image_get_save_proc     (const GimpImage    *gimage);
-gint		gimp_image_get_width         (const GimpImage    *gimage);
-gint		gimp_image_get_height        (const GimpImage    *gimage);
-void            gimp_image_resize            (GimpImage          *gimage,
-					      gint                new_width,
-					      gint                new_height,
-					      gint                offset_x,
-					      gint                offset_y);
-void            gimp_image_scale             (GimpImage          *gimage,
-					      gint                new_width,
-					      gint                new_height);
-gboolean        gimp_image_check_scaling     (const GimpImage    *gimage,
-					      gint                new_width,
-					      gint                new_height);
-TileManager   * gimp_image_shadow            (GimpImage          *gimage,
-					      gint                width,
-					      gint                height,
-					      gint                bpp);
-void            gimp_image_free_shadow       (GimpImage          *gimage);
-void            gimp_image_apply_image       (GimpImage          *gimage,
-					      GimpDrawable       *drawable,
-					      PixelRegion        *src2PR,
-					      gboolean            undo,
-					      gint                opacity,
-					      LayerModeEffects    mode,
-					      TileManager        *src1_tiles,
-					      gint                x,
-					      gint                y);
-void            gimp_image_replace_image     (GimpImage          *gimage,
-					      GimpDrawable       *drawable,
-					      PixelRegion        *src2PR,
-					      gboolean            undo,
-					      gint                opacity,
-					      PixelRegion        *maskPR,
-					      gint                x,
-					      gint                y);
-void            gimp_image_get_foreground    (const GimpImage    *gimage,
-					      const GimpDrawable *drawable,
-					      guchar             *fg);
-void            gimp_image_get_background    (const GimpImage    *gimage,
-					      const GimpDrawable *drawable,
-					      guchar             *bg);
-guchar        * gimp_image_get_color_at      (GimpImage          *gimage,
-					      gint                x,
-					      gint                y);
-void            gimp_image_get_color         (const GimpImage    *gimage,
-					      GimpImageType       d_type,
-					      guchar             *rgb,
-					      guchar             *src);
-void            gimp_image_transform_color   (const GimpImage    *gimage,
-					      const GimpDrawable *drawable,
-					      guchar             *src,
-					      guchar             *dest,
-					      GimpImageBaseType   type);
-GimpGuide     * gimp_image_add_hguide        (GimpImage          *gimage);
-GimpGuide     * gimp_image_add_vguide        (GimpImage          *gimage);
-void            gimp_image_add_guide         (GimpImage          *gimage,
-					      GimpGuide          *guide);
-void            gimp_image_remove_guide      (GimpImage          *gimage,
-					      GimpGuide          *guide);
-void            gimp_image_delete_guide      (GimpImage          *gimage,
-					      GimpGuide          *guide);
+void            gimp_image_set_filename      (GimpImage            *gimage,
+					      const gchar          *filename);
+void            gimp_image_set_resolution    (GimpImage            *gimage,
+					      gdouble               xres,
+					      gdouble               yres);
+void            gimp_image_get_resolution    (const GimpImage      *gimage,
+					      gdouble              *xresolution,
+					      gdouble              *yresolution);
+void            gimp_image_set_unit          (GimpImage            *gimage,
+					      GimpUnit              unit);
+GimpUnit        gimp_image_get_unit          (const GimpImage      *gimage);
+void            gimp_image_set_save_proc     (GimpImage            *gimage,
+					      PlugInProcDef        *proc);
+PlugInProcDef * gimp_image_get_save_proc     (const GimpImage      *gimage);
+gint		gimp_image_get_width         (const GimpImage      *gimage);
+gint		gimp_image_get_height        (const GimpImage      *gimage);
+void            gimp_image_resize            (GimpImage            *gimage,
+					      gint                  new_width,
+					      gint                  new_height,
+					      gint                  offset_x,
+					      gint                  offset_y);
+void            gimp_image_scale             (GimpImage            *gimage,
+					      gint                  new_width,
+					      gint                  new_height);
+gboolean        gimp_image_check_scaling     (const GimpImage      *gimage,
+					      gint                  new_width,
+					      gint                  new_height);
+TileManager   * gimp_image_shadow            (GimpImage            *gimage,
+					      gint                  width,
+					      gint                  height,
+					      gint                  bpp);
+void            gimp_image_free_shadow       (GimpImage            *gimage);
+void            gimp_image_apply_image       (GimpImage            *gimage,
+					      GimpDrawable         *drawable,
+					      PixelRegion          *src2PR,
+					      gboolean              undo,
+					      gint                  opacity,
+					      LayerModeEffects      mode,
+					      TileManager          *src1_tiles,
+					      gint                  x,
+					      gint                  y);
+void            gimp_image_replace_image     (GimpImage            *gimage,
+					      GimpDrawable         *drawable,
+					      PixelRegion          *src2PR,
+					      gboolean              undo,
+					      gint                  opacity,
+					      PixelRegion          *maskPR,
+					      gint                  x,
+					      gint                  y);
+void            gimp_image_get_foreground    (const GimpImage      *gimage,
+					      const GimpDrawable   *drawable,
+					      guchar               *fg);
+void            gimp_image_get_background    (const GimpImage      *gimage,
+					      const GimpDrawable   *drawable,
+					      guchar               *bg);
+guchar        * gimp_image_get_color_at      (GimpImage            *gimage,
+					      gint                  x,
+					      gint                  y);
+void            gimp_image_get_color         (const GimpImage      *gimage,
+					      GimpImageType         d_type,
+					      guchar               *rgb,
+					      guchar               *src);
+void            gimp_image_transform_color   (const GimpImage      *gimage,
+					      const GimpDrawable   *drawable,
+					      guchar               *src,
+					      guchar               *dest,
+					      GimpImageBaseType     type);
+GimpGuide     * gimp_image_add_hguide        (GimpImage            *gimage);
+GimpGuide     * gimp_image_add_vguide        (GimpImage            *gimage);
+void            gimp_image_add_guide         (GimpImage            *gimage,
+					      GimpGuide            *guide);
+void            gimp_image_remove_guide      (GimpImage            *gimage,
+					      GimpGuide            *guide);
+void            gimp_image_delete_guide      (GimpImage            *gimage,
+					      GimpGuide            *guide);
 
-GimpParasite  * gimp_image_parasite_find     (const GimpImage    *gimage,
-					      const gchar        *name);
-gchar        ** gimp_image_parasite_list     (const GimpImage    *gimage,
-					      gint               *count);
-void            gimp_image_parasite_attach   (GimpImage          *gimage,
-					      GimpParasite       *parasite);
-void            gimp_image_parasite_detach   (GimpImage          *gimage,
-					      const gchar        *parasite);
+GimpParasite  * gimp_image_parasite_find     (const GimpImage      *gimage,
+					      const gchar          *name);
+gchar        ** gimp_image_parasite_list     (const GimpImage      *gimage,
+					      gint                 *count);
+void            gimp_image_parasite_attach   (GimpImage            *gimage,
+					      GimpParasite         *parasite);
+void            gimp_image_parasite_detach   (GimpImage            *gimage,
+					      const gchar          *parasite);
 
-GimpTattoo      gimp_image_get_new_tattoo    (GimpImage          *gimage);
-gboolean        gimp_image_set_tattoo_state  (GimpImage          *gimage,
-					      GimpTattoo          val);
-GimpTattoo      gimp_image_get_tattoo_state  (GimpImage          *gimage);
+GimpTattoo      gimp_image_get_new_tattoo    (GimpImage            *gimage);
+gboolean        gimp_image_set_tattoo_state  (GimpImage            *gimage,
+					      GimpTattoo            val);
+GimpTattoo      gimp_image_get_tattoo_state  (GimpImage            *gimage);
 
-void            gimp_image_set_paths         (GimpImage          *gimage,
-					      PathList           *paths);
-PathList      * gimp_image_get_paths         (const GimpImage    *gimage);
+void            gimp_image_set_paths         (GimpImage            *gimage,
+					      PathList             *paths);
+PathList      * gimp_image_get_paths         (const GimpImage      *gimage);
 
 /* Temporary hack till colormap manipulation is encapsulated in functions.
  * Call this whenever you modify an image's colormap. The col argument
@@ -277,18 +270,20 @@ PathList      * gimp_image_get_paths         (const GimpImage    *gimage);
  * Currently, use this also when the image's base type is changed to/from
  * indexed.
  */
-void		gimp_image_colormap_changed  (GimpImage          *gimage,
-					      gint                col);
+void		gimp_image_colormap_changed  (GimpImage            *gimage,
+					      gint                  col);
 
-void            gimp_image_mode_changed      (GimpImage          *gimage);
-void            gimp_image_alpha_changed     (GimpImage          *gimage);
-void   gimp_image_floating_selection_changed (GimpImage          *gimage);
-void            gimp_image_mask_changed      (GimpImage          *gimage);
-void            gimp_image_update            (GimpImage          *gimage,
-					      gint                x,
-					      gint                y,
-					      gint                width,
-					      gint                height);
+void            gimp_image_mode_changed      (GimpImage            *gimage);
+void            gimp_image_alpha_changed     (GimpImage            *gimage);
+void   gimp_image_floating_selection_changed (GimpImage            *gimage);
+void            gimp_image_mask_changed      (GimpImage            *gimage);
+void            gimp_image_update            (GimpImage            *gimage,
+					      gint                  x,
+					      gint                  y,
+					      gint                  width,
+					      gint                  height);
+void            gimp_image_selection_control (GimpImage            *gimage,
+                                              GimpSelectionControl  control);
 
 
 /*  layer/channel functions  */

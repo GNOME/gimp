@@ -289,7 +289,7 @@ init_edit_selection (GimpTool       *tool,
 			  GIMP_TOOL (edit_select));
 
   /*  pause the current selection  */
-  gdisplay_selection_visibility (gdisp, SELECTION_PAUSE);
+  gdisplay_selection_visibility (gdisp, GIMP_SELECTION_PAUSE);
 
   /* initialize the statusbar display */
   edit_select->context_id 
@@ -317,7 +317,7 @@ gimp_edit_selection_tool_button_release (GimpTool       *tool,
   edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
 
   /*  resume the current selection and ungrab the pointer  */
-  gdisplay_selection_visibility (gdisp, SELECTION_RESUME);
+  gdisplay_selection_visibility (gdisp, GIMP_SELECTION_RESUME);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
