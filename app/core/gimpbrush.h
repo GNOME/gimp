@@ -19,6 +19,7 @@
 #ifndef __GIMPBRUSH_H__
 #define __GIMPBRUSH_H__
 
+#include <stdio.h>
 #include "gimpobjectP.h"
 #include "temp_buf.h"
 #include "vector2d.h"
@@ -51,6 +52,7 @@ typedef struct _GimpBrushClass GimpBrushClass;
 
 GimpBrush * gimp_brush_new         (char *filename);
 void        gimp_brush_load        (GimpBrush *brush, char *filename);
+int         gimp_brush_load_brush  (GimpBrush *brush, FILE* fp, char* filename);
 GtkType     gimp_brush_get_type    (void);
 TempBuf   * gimp_brush_get_mask    (GimpBrush *brush);
 char      * gimp_brush_get_name    (GimpBrush *brush);

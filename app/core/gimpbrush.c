@@ -165,11 +165,6 @@ void
 gimp_brush_load(GimpBrush *brush, char *filename)
 {
   FILE * fp;
-  int bn_size;
-  unsigned char buf [sz_BrushHeader];
-  BrushHeader header;
-  unsigned int * hp;
-  int i;
 
   brush->filename = g_strdup (filename);
 
@@ -180,12 +175,32 @@ gimp_brush_load(GimpBrush *brush, char *filename)
       return;
     }
 
+  gimp_brush_load_brush(brush,fp,filename);
+
+  /*  Clean up  */
+  fclose (fp);
+
+  /*  Swap the brush to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    temp_buf_swap (brush->mask);
+}
+
+
+int
+gimp_brush_load_brush(GimpBrush *brush, FILE* fp, char* filename)
+{
+  int bn_size;
+  unsigned char buf [sz_BrushHeader];
+  BrushHeader header;
+  unsigned int * hp;
+  int i;
+
   /*  Read in the header size  */
   if ((fread (buf, 1, sz_BrushHeader, fp)) < sz_BrushHeader)
     {
       fclose (fp);
       gimp_object_destroy (brush);
-      return;
+      return 0;
     }
 
   /*  rearrange the bytes in each unsigned int  */
@@ -197,25 +212,26 @@ gimp_brush_load(GimpBrush *brush, char *filename)
   /*  Check for correct file format */
   if (header.magic_number != GBRUSH_MAGIC)
     {
-      /*  One thing that can save this error is if the brush is version 1  */
       if (header.version != 1)
 	{
 	  fclose (fp);
 	  gimp_object_destroy (brush);
-	  return;
+	  return 0;
 	}
     }
+ 
 
   if (header.version == 1)
-  {
-     /*  If this is a version 1 brush, set the fp back 8 bytes  */
-     fseek (fp, -8, SEEK_CUR);
-     header.header_size += 8;
-     /*  spacing is not defined in version 1  */
-     header.spacing = 25;
-  }
+    {
+      /*  If this is a version 1 brush, set the fp back 8 bytes  */
+      fseek (fp, -8, SEEK_CUR);
+      header.header_size += 8;
+      /*  spacing is not defined in version 1  */
+      header.spacing = 25;
+    }
 
-  /*  Read in the brush name  */
+  
+   /*  Read in the brush name  */
   if ((bn_size = (header.header_size - sz_BrushHeader)))
   {
     brush->name = (char *) g_malloc (sizeof (char) * bn_size);
@@ -224,7 +240,7 @@ gimp_brush_load(GimpBrush *brush, char *filename)
       g_message (_("Error in GIMP brush file...aborting."));
       fclose (fp);
       gimp_object_destroy (brush);
-      return;
+      return 0;
     }
   }
   else
@@ -253,20 +269,8 @@ gimp_brush_load(GimpBrush *brush, char *filename)
 		header.version, filename);
      fclose (fp);
      gimp_object_destroy (brush);
-     return;
+     return 0;
   }
-
-  /*  Clean up  */
-  fclose (fp);
-
-  /*  Swap the brush to disk (if we're being stingy with memory) */
-  if (stingy_memory_use)
-    temp_buf_swap (brush->mask);
-
-  /* Check if the current brush is the default one */
-/* lets see if it works with out this for now */
-/*  if (strcmp(default_brush, g_basename(filename)) == 0) {
-	  active_brush = brush;
-	  have_default_brush = 1;
-  }*/ /* if */
+  return 1;
 }
+

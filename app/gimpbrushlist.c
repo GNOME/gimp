@@ -34,7 +34,7 @@
 #include "appenv.h"
 #include "gimpbrushpixmap.h"
 #include "gimpbrushgenerated.h"
-#include "gimpbrushhose.h"
+#include "gimpbrushpipe.h"
 #include "brush_header.h"
 #include "brush_select.h"
 #include "colormaps.h"
@@ -182,12 +182,12 @@ brush_load(char *filename)
     }
   else if (strcmp(&filename[strlen(filename) - 4], ".gih") == 0)
     {
-      GimpBrushHose *brush;
-      brush = gimp_brush_hose_load(filename);
+      GimpBrushPipe *brush;
+      brush = gimp_brush_pipe_load(filename);
       if (brush != NULL)
 	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
       else
-	g_message("Warning: failed to load brush \"%s\"", filename);
+	g_message("Warning: failed to load pipe \"%s\"", filename);
     }
 }
 

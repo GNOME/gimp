@@ -22,7 +22,7 @@
 #include "appenv.h"
 #include "gimpbrushpixmap.h"
 #include "gimpbrushlist.h"
-#include "gimpbrushhose.h"
+#include "gimpbrushpipe.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -44,7 +44,7 @@ static void         pixmapbrush_motion      (PaintCore *, GimpDrawable *);
 /* static Argument *   pixmapbrush_extended_invoker     (Argument *); */
 /* static Argument *   pixmapbrush_extended_gradient_invoker     (Argument *); */
 
-
+#if 0
 static void paint_line_pixmap_mask (GImage        *dest,
 				    GimpDrawable  *drawable,
 				    GimpBrushPixmap  *brush,
@@ -56,7 +56,8 @@ static void paint_line_pixmap_mask (GImage        *dest,
 				    int            bytes,
 				    int            width);
 					 
-					 
+#endif	
+				 
 /*  defines  */
 #define  PAINT_LEFT_THRESHOLD  0.05
 
@@ -214,12 +215,13 @@ pixmapbrush_motion (PaintCore *paint_core,
   TempBuf * area;
   int opacity;
   static int index = 0;
+  gboolean RANDOM=1;
 
   /* We always need a destination image */ 
   if (! (gimage = drawable_gimage (drawable))) 
     return; 
 
-  if(!( GIMP_IS_BRUSH_HOSE(paint_core->brush)))
+  if(!( GIMP_IS_BRUSH_PIPE(paint_core->brush)))
     {
       return;
     }
@@ -229,8 +231,17 @@ pixmapbrush_motion (PaintCore *paint_core,
       /* Set paint_core->brush, restore below before returning.
        * I wonder if this is wise?
        */
-      paint_core->brush = gimp_brush_list_get_brush_by_index(GIMP_BRUSH_HOSE(paint_core->brush)->brush_list, index++);
-      if (index == gimp_brush_list_length (GIMP_BRUSH_HOSE(saved_brush)->brush_list))
+      if(RANDOM)
+	{
+	  /* eeek, what a ugly line */
+	  paint_core->brush = 
+	    gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list,
+					       (rand()%gimp_brush_list_length
+						(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list)));
+      }
+      else
+	paint_core->brush = gimp_brush_list_get_brush_by_index(GIMP_BRUSH_PIPE(paint_core->brush)->brush_list, index++);
+      if (index == gimp_brush_list_length (GIMP_BRUSH_PIPE(saved_brush)->brush_list))
 	index = 0;
     }
   
@@ -306,25 +317,26 @@ color_area_with_pixmap (GImage *dest,
 /* register this pixel region */
   pr = pixel_regions_register (1, &destPR);
 
-
-  /* to handle the case of the left side of the image */
-  if(area->x == 0)
-    offset_x = destPR.w;
-  else
-    offset_x = 0;
- 
+  /* maybe its not so bizare. area is always 2 wider and
+     2 taller than the brush image. No idea why */
   if (area->y == 0)
-    offset_y = pixmapbrush->pixmap_mask->height - destPR.h;
+    offset_y = pixmapbrush->pixmap_mask->height - destPR.h + 1;
   else
-    offset_y = 0;
-  
+    offset_y = -1;
+
+  if(area->x == 0)
+    {
+      offset_x = destPR.w -1;
+      offset_y++;  /* uh, i havent a clue. but it works */
+    }
+  else
+    offset_x = 1;
+
   for (; pr != NULL; pr = pixel_regions_process (pr))
     {
       d = destPR.data;
-      for(y = 0; y < destPR.h; y++)
+      for(y = 0; y < destPR.h  ; y++)
 	{
-/* 	  printf(" brush->width: %i offset_x: %i", brush->pixmap_mask->width, offset_x); */
-/* 	  printf(" area->y: %i destPR.h: %i area->x: %i destPR.w: %i ",area->y, destPR.h, area->x, destPR.w);  */
 	  paint_line_pixmap_mask(dest, drawable, pixmapbrush,
 				 d, area->x,offset_x, y, offset_y,
 				 destPR.bytes, destPR.w);
@@ -335,7 +347,7 @@ color_area_with_pixmap (GImage *dest,
 
 }
 
-static void
+void
 paint_line_pixmap_mask (GImage        *dest,
 			GimpDrawable  *drawable,
 			GimpBrushPixmap  *brush,
@@ -350,26 +362,24 @@ paint_line_pixmap_mask (GImage        *dest,
   unsigned char *pat, *p;
   int color, alpha;
   int i;
-
+  int temp;
   /* point to the approriate scanline */
   /* use "pat" here because i'm c&p from pattern clone */
   pat = temp_buf_data (brush->pixmap_mask) +
     (( y + offset_y ) * brush->pixmap_mask->width * brush->pixmap_mask->bytes);
     
-  /*   dest = d +  (y * brush->pixmap_mask->width * brush->pixmap_mask->bytes); */
   color = RGB;
-
   alpha = bytes -1;
 
   /*  printf("x: %i y: %i y2: %i   \n",x,y,y2); */
   for (i = 0; i < width; i++)
     {
-      p = pat + ((i-offset_x) % brush->pixmap_mask->width) * brush->pixmap_mask->bytes;
-     
-      /* printf("d->r: %i d->g: %i d->b: %i d->a: %i\n",(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
-      gimage_transform_color (dest, drawable, p, d, color);
-
+      p = pat + (i-offset_x) * brush->pixmap_mask->bytes;
+      /* pretty sure this is wrong. I think we get artifacts because of it */
       d[alpha] = 255;
+
+      /* printf("i: %i d->r: %i d->g: %i d->b: %i d->a: %i\n",i,(int)d[0], (int)d[1], (int)d[2], (int)d[3]); */
+      gimage_transform_color (dest, drawable, p, d, color);
       d += bytes;
       
     }

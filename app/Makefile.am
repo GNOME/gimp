@@ -185,8 +185,8 @@ gimp_SOURCES = \
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\
 	gimpbrushgenerated.h	\
-	gimpbrushhose.c		\
-	gimpbrushhose.h		\
+	gimpbrushpipe.c		\
+	gimpbrushpipe.h		\
 	gimpbrushpixmap.c	\
 	gimpbrushpixmap.h	\
 	gimpbrushlist.c		\

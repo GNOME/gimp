@@ -8,6 +8,20 @@ Add Unsharp Mask to the distribution.  The filter is just way too basic
 to leave out.
 
 
+For the pixmap/hose stuff:
+
+	a loader/saver plugin for the hose types
+	(tml has a gpb saver, and a .tub loader...getting close)
+
+	add a "pipe edit" option to the brush dialog so we can
+	call up a hose editor (to reorder images, scale them, etc)
+
+	"selection to brush" and as part of that, some general
+	TileManager->TempBuf functions. 
+
+	Load pipes as xcf maybe? would need above functiosn first
+	
+
 A few GUI things suggestions...
 
    1) Crop tool could have an optional shader for the outside area
@@ -181,6 +195,8 @@ drag & drop for layers:
 	raise by one, and lower by one. It would be much nicer to be
 	able to click & drag a layer to its new spot in the stack.
 
+	Done, by Michael Natterer 8/22/99
+
 Handle Out of Space Better!
 
 	Also should handle out-of-space on swap device better.
@@ -242,7 +258,7 @@ active brushes:
 	Maybe really want to define new tool types, rather than new brush
 	types.
 
-pixmap brushes:
+*pixmap brushes:
 
 	Should be simple. maybe need a new format that would include
 	data/mask (probabaly just use a xcf). Once its loaded in as a
@@ -250,11 +266,15 @@ pixmap brushes:
 	it. Should it be a new tool?  jsut a new brush type for old
 	paint to ls?
 
-Quickmask/paintable selections:
+	Just about done: Adrian Likins 8/23/99
+
+*Quickmask/paintable selections:
 
 	Any ideas on the best way to do the ui? The fundamentals of
 	beng able to do this are already there. Just need a good way to
 	present it.
+
+	Done: Seth Burgess	
 
 let pdb stuff register under the layers_dialog menu:
 
@@ -404,4 +424,12 @@ Grid
         to draw at a grid intersection and then end drawing at another 
         intersection.
 				(this was suggested to me by email -- Sven)
+
+"font" brush?
+
+	a brush that could use chars rendered from fonts as the brush
+	bitmap. limited utility for char's, but a couple of nice sets
+	of winding fonts could make it interestings. And you could
+	use words or strings.
+
 

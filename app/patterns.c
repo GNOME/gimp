@@ -164,11 +164,6 @@ load_pattern (gchar *filename)
 {
   GPatternP pattern;
   FILE * fp;
-  gint bn_size;
-  guchar buf [sz_PatternHeader];
-  PatternHeader header;
-  guint * hp;
-  gint i;
 
   pattern = (GPatternP) g_malloc (sizeof (GPattern));
 
@@ -183,12 +178,45 @@ load_pattern (gchar *filename)
       return;
     }
 
+  if(!load_pattern_pattern(pattern, fp, filename))
+    {
+      g_message (_("Pattern load failed"));
+      return;
+    }
+
+  /*  Clean up  */
+  fclose (fp);
+
+  /*temp_buf_swap (pattern->mask);*/
+
+  pattern_list = insert_pattern_in_list (pattern_list, pattern);
+
+  /* Check if the current pattern is the default one */
+
+  if (strcmp (default_pattern, g_basename (filename)) == 0)
+    {
+      active_pattern = pattern;
+      have_default_pattern = 1;
+    }
+}
+
+int
+load_pattern_pattern(GPatternP pattern, FILE* fp, gchar* filename)
+{
+
+ gint bn_size;
+ guchar buf [sz_PatternHeader];
+ PatternHeader header;
+ guint * hp;
+ gint i;
+
+
   /*  Read in the header size  */
   if ((fread (buf, 1, sz_PatternHeader, fp)) < sz_PatternHeader)
     {
       fclose (fp);
       free_pattern (pattern);
-      return;
+      return 0;
     }
 
   /*  rearrange the bytes in each unsigned int  */
@@ -205,7 +233,7 @@ load_pattern (gchar *filename)
 	{
 	  fclose (fp);
 	  free_pattern (pattern);
-	  return;
+	  return 0;
 	}
     }
   /*  Check for correct version  */
@@ -215,7 +243,7 @@ load_pattern (gchar *filename)
 		 filename);
       fclose (fp);
       free_pattern (pattern);
-      return;
+      return 0;
     }
 
   /*  Get a new pattern mask  */
@@ -231,7 +259,7 @@ load_pattern (gchar *filename)
 	  g_message (_("Error in GIMP pattern file...aborting."));
 	  fclose (fp);
 	  free_pattern (pattern);
-	  return;
+	  return 0;
 	}
     }
   else
@@ -244,20 +272,9 @@ load_pattern (gchar *filename)
       header.width * header.height * header.bytes)
     g_message (_("GIMP pattern file appears to be truncated."));
 
-  /*  Clean up  */
-  fclose (fp);
+  /* success */
+  return 1;
 
-  /*temp_buf_swap (pattern->mask);*/
-
-  pattern_list = insert_pattern_in_list (pattern_list, pattern);
-
-  /* Check if the current pattern is the default one */
-
-  if (strcmp (default_pattern, g_basename (filename)) == 0)
-    {
-      active_pattern = pattern;
-      have_default_pattern = 1;
-    }
 }
 
 GPatternP           

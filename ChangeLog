@@ -1,3 +1,36 @@
+Mon Aug 23 00:56:59 EDT 1999 Adrian Likins <alikins@redhat.com>
+	
+	* app/gimpbrushhose.c
+	* app/gimpbrushhose.h:
+		removed.
+	* app/gimpbrushpipe.c
+	* app/gimpbrushpipe.h:
+		New files to replace the above
+	* app/gimpbrushlist.c
+	* app/paintbrush.c
+	* app/pixmapbrush.c
+	* app/Makefile.am:
+		s/hose/pipe. Seems someone else uses that name,
+	so change it to pipe. 
+
+	* app/gimpbrush.c
+	* app/gimpbrush.h
+	* app/gimpbrushpixmap.c
+	* app/patterns.c
+	* app/patterns.h
+	* app/pixmapbrush.c:
+		Added functions to do the actual loading of 
+	brush/pattern dialog. Use them where approriate instead
+	of c&p the same code all over the place. 
+	
+	* app/pixmapbrush.c: Fix the bug where masks and brush
+	data werent aligned. I didnt quite notice that 
+	paint_core_get_paint_area returns an area with a 1 pixel
+	border larger than the brush. Ooops.
+
+	* TODO: just update a few things while I'm at it
+	(pixmap/pipe stuff in particular)
+
 Sun Aug 22 15:49:10 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: add check for zlib for building psp plugin

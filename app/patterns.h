@@ -19,6 +19,7 @@
 #define __PATTERNS_H__
 
 #include <glib.h>
+#include <stdio.h>
 #include "temp_buf.h"
 
 typedef struct _GPattern  GPattern, * GPatternP;
@@ -43,6 +44,10 @@ GPatternP  pattern_list_get_pattern   (GSList    *list,
 
 void       create_pattern_dialog      (void);
 void       pattern_select_dialog_free (void);
+/* this is useful for pixmap brushes etc */
+int        load_pattern_pattern       (GPatternP pattern,
+				       FILE* fp,
+				       gchar* filename);
 
 /*  global variables  */
 extern GSList * pattern_list;

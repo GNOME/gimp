@@ -23,7 +23,7 @@
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
-#include "gimpbrushhose.h"
+#include "gimpbrushpipe.h"
 #include "gimpbrushlist.h"
 #include "gradient.h"
 #include "paint_funcs.h"
@@ -450,8 +450,7 @@ paintbrush_motion (PaintCore            *paint_core,
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);
 	}
-
-
+      
       paint_core_paste_canvas (paint_core, drawable, temp_blend,
 			       (int) (gimp_context_get_opacity (NULL) * 255),
 			       gimp_context_get_paint_mode (NULL),
