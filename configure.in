@@ -41,9 +41,9 @@ m4_define([gimp_full_name], [The GIMP])
 
 # required versions of other packages
 m4_define([glib_required_version], [2.6.0])
-m4_define([gtk_required_version], [2.4.4])
+m4_define([gtk_required_version], [2.6.0])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
-m4_define([pangoft2_required_version], [1.4.0])
+m4_define([pangoft2_required_version], [1.8.0])
 m4_define([fontconfig_required_version], [2.2.0])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([gtkhtml2_required_version], [2.0.0])
