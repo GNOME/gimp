@@ -90,7 +90,8 @@ gimp_edit_paste (GimpImage    *gimage,
   gint           cx, cy;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
+  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
 
   /*  Make a new layer: if drawable == NULL,
    *  user is pasting into an empty image.
@@ -158,6 +159,10 @@ gimp_edit_paste_as_new (Gimp       *gimp,
   GimpImage    *gimage;
   GimpLayer    *layer;
 
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (invoke == NULL || GIMP_IS_IMAGE (invoke), NULL);
+  g_return_val_if_fail (GIMP_IS_BUFFER (paste), NULL);
+
   /*  create a new image  (always of type GIMP_RGB)  */
   gimage = gimp_create_image (gimp,
 			      gimp_buffer_get_width (paste),
@@ -179,19 +184,20 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 				     _("Pasted Layer"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 
-  if (layer)
+  if (! layer)
     {
-      gimp_image_add_layer (gimage, layer, 0);
-
-      gimp_image_undo_enable (gimage);
-
-      gimp_create_display (gimp, gimage, 0x0101);
       g_object_unref (gimage);
-
-      return gimage;
+      return NULL;
     }
 
-  return NULL;
+  gimp_image_add_layer (gimage, layer, 0);
+
+  gimp_image_undo_enable (gimage);
+
+  gimp_create_display (gimp, gimage, 0x0101);
+  g_object_unref (gimage);
+
+  return gimage;
 }
 
 gboolean

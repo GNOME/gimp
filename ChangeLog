@@ -1,5 +1,10 @@
 2003-12-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-edit.c: added more precondition checks, minor
+	cleanup.
+
+2003-12-16  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/image.pdb (image_add_layer_mask)
 	* tools/pdbgen/pdb/layer.pdb (layer_add_mask): don't unref the
 	mask after adding it because the layer now takes ownership using
