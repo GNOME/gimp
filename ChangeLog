@@ -1,3 +1,7 @@
+Tue Jun  9 11:22:32 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* updated pagecurl plug-in
+
 Mon Jun  8 21:55:55 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: use @gimpdir@ instead of hardcoding .gimp

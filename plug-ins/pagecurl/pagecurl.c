@@ -1,4 +1,4 @@
-/* Page Curl 0.8 --- image filter plug-in for The Gimp
+/* Page Curl 0.9 --- image filter plug-in for The Gimp
  * Copyright (C) 1996 Federico Mena Quintero
  * Ported to Gimp 1.0 1998 by Simon Budig <Simon.Budig@unix-ag.org>
  *
@@ -21,7 +21,7 @@
  *
  */
 
-/* TODO for v0.5 - in 0.8 still to do...
+/* TODO for v0.5 - in 0.9 still to do...
  * As of version 0.5 alpha, the only thing that is not yet implemented
  * is the "Warp curl" option.  Everything else seems to be working
  * just fine.  Please email me if you find any bugs.  I know that the
@@ -33,6 +33,20 @@
  *  *** Why does gimp_drawable_add_alpha cause the plugin to produce an
  *      ** WARNING **: received tile info did not match computed tile info
  *      ** WARNING **: expected tile ack and received: 0
+ */
+
+/*
+ * Version History
+ * 0.5: (1996) Version for Gimp 0.54 by Federico Mena Quintero
+ * 0.6: (Feb '98) First Version for Gimp 0.99.x, very buggy.
+ * 0.8: (Mar '98) First "stable" version
+ * 0.9: (May '98)
+ *      - Added support for Gradients. It is now possible to map
+ *        a gradient to the back of the curl.
+ *      - This implies a changed PDB-Interface: New "mode" parameter.
+ *      - Pagecurl now returns the ID of the new layer.
+ *      - Exchanged the meaning of FG/BG Color, because mostly the FG
+ *        color is darker.
  */
 
 #include <stdio.h>
@@ -56,7 +70,8 @@
 #endif /* M_PI */
 
 #define PLUG_IN_NAME    "plug_in_pagecurl"
-#define PLUG_IN_VERSION "Mar 1998, 0.8"
+#define PLUG_IN_VERSION "May 1998, 0.9"
+#define NGRADSAMPLES 256
 
 /***** Macros *****/
 
@@ -72,6 +87,7 @@ typedef struct {
 
 typedef struct {
    gint do_curl_shade;
+   gint do_curl_gradient;
    gint do_curl_warp;  /* Not yet supported... */
 
    double do_curl_opacity;
@@ -122,6 +138,7 @@ static int inside_circle (double x, double y);
 static void do_curl_effect (void);
 static void clear_curled_region (void);
 static void page_curl (void);
+static guchar *get_samples (GDrawable *drawable);
 
 /***** Variables *****/
 
@@ -154,6 +171,7 @@ gint true_sel_width, true_sel_height;
 gint sel_width, sel_height;
 gint drawable_position;
 static gint curl_run = FALSE;
+gint32 curl_layer_ID;
 
 /* Center and radius of circle */
 
@@ -261,17 +279,20 @@ static int inside_circle (double x, double y) {
 
 static void query (void) {
    static GParamDef args[] = {
-      {PARAM_INT32, "run_mode", "Interactive (0) , non-interactive (1)"},
+      {PARAM_INT32, "run_mode", "Interactive (0), non-interactive (1)"},
       {PARAM_IMAGE, "image", "Input image"},
       {PARAM_DRAWABLE, "drawable", "Input drawable"},
+      {PARAM_INT32, "mode", "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)"},
       {PARAM_INT32, "edge", "Edge to curl (1-4, clockwise, starting in the lower right edge)"},
       {PARAM_INT32, "type", "vertical (0), horizontal (1)"},
       {PARAM_INT32, "shade", "Shade the region under the curl (1) or not (0)"},
    };				/* args */
 
-   static GParamDef *return_vals = NULL;
+   static GParamDef return_vals[] = {
+      {PARAM_LAYER, "Curl layer", "The new layer with the curl." }
+   }; 
    static int nargs = sizeof (args) / sizeof (args[0]);
-   static int nreturn_vals = 0;
+   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
    gimp_install_procedure (PLUG_IN_NAME,
 			   "Pagecurl effect",
@@ -293,7 +314,7 @@ static void run (gchar * name,
 		 GParam * param,
 		 gint * nreturn_vals,
 		 GParam ** return_vals) {
-   static GParam values[1];
+   static GParam values[2];
    GRunModeType run_mode;
    GStatusType status = STATUS_SUCCESS;
 
@@ -304,11 +325,13 @@ static void run (gchar * name,
    /*  Possibly retrieve data  */
    gimp_get_data (PLUG_IN_NAME, &curl);
 
-   *nreturn_vals = 1;
+   *nreturn_vals = 2;
    *return_vals = values;
 
    values[0].type = PARAM_STATUS;
    values[0].data.d_status = status;
+   values[1].type = PARAM_LAYER;
+   values[1].data.d_layer = -1;
 
    /*  Get the specified drawable  */
    drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -327,10 +350,12 @@ static void run (gchar * name,
 
       case RUN_NONINTERACTIVE:
 	 /*  Make sure all the arguments are there!  */
-	 if (nparams != 6)
+	 if (nparams != 7)
 	    status = STATUS_CALLING_ERROR;
 	 if (status == STATUS_SUCCESS) {
-	    switch (param[3].data.d_int32) {
+	    curl.do_curl_shade = (param[3].data.d_int32 == 0) ? 1 : 0;
+	    curl.do_curl_gradient = 1 - curl.do_curl_shade;
+	    switch (param[4].data.d_int32) {
 	    case 1:
 	       curl.do_upper_left = 0;
 	       curl.do_upper_right = 0;
@@ -358,9 +383,9 @@ static void run (gchar * name,
 	    default:
 	       break;
 	    }
-	    curl.do_vertical = (param[4].data.d_int32) ? 0 : 1;
+	    curl.do_vertical = (param[5].data.d_int32) ? 0 : 1;
 	    curl.do_horizontal = 1 - curl.do_vertical;
-	    curl.do_shade_under = (param[5].data.d_int32) ? 1 : 0;
+	    curl.do_shade_under = (param[6].data.d_int32) ? 1 : 0;
 	 }
 	 break;
 
@@ -373,6 +398,7 @@ static void run (gchar * name,
 
       if (status == STATUS_SUCCESS) {
          page_curl ();
+         values[1].data.d_layer = curl_layer_ID;
          if (run_mode != RUN_NONINTERACTIVE)
             gimp_displays_flush ();
          if (run_mode == RUN_INTERACTIVE)
@@ -390,6 +416,7 @@ static void run (gchar * name,
 
 static void set_default_params (void) {
    curl.do_curl_shade = 1;
+   curl.do_curl_gradient = 0;
    curl.do_curl_warp = 0;  /* Not yet supported... */
 
    curl.do_curl_opacity = 1.0;
@@ -453,6 +480,11 @@ static void dialog_toggle_update (GtkWidget * widget, gint32 value) {
       curl.do_shade_under = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
       return;
       break;
+   case 9:
+      curl.do_curl_gradient = (GTK_TOGGLE_BUTTON (widget)->active) ? 1 : 0;
+      curl.do_curl_shade = (GTK_TOGGLE_BUTTON (widget)->active) ? 0 : 1;
+      return;
+      break;
    default:
       break;
    }
@@ -478,7 +510,7 @@ static int do_dialog (void) {
 
    GtkWidget *dialog;
    GtkWidget *orhbox1, *orhbox2, *vbox, *ivbox, *corner_frame, *orient_frame;
-   GtkWidget *shade_button, *button, *label, *scale;
+   GtkWidget *shade_button, *gradient_button, *button, *label, *scale;
    GtkStyle *style;
    GtkObject *adjustment;
    gint pixmapindex;
@@ -630,13 +662,21 @@ static int do_dialog (void) {
    gtk_widget_show (orhbox2);
    gtk_widget_show (orient_frame);
 
-   shade_button = gtk_toggle_button_new_with_label ("Shade under curl");
+   shade_button = gtk_check_button_new_with_label ("Shade under curl");
    gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (shade_button),
 				curl.do_shade_under ? TRUE : FALSE);
    gtk_signal_connect (GTK_OBJECT (shade_button), "toggled",
 		       (GtkSignalFunc) dialog_toggle_update, (gpointer) 8);
    gtk_box_pack_start (GTK_BOX (vbox), shade_button, TRUE, FALSE, 0);
    gtk_widget_show (shade_button);
+
+   gradient_button = gtk_check_button_new_with_label ("Use current Gradient\n instead of FG/BG-Color");
+   gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (gradient_button),
+				curl.do_curl_gradient ? TRUE : FALSE);
+   gtk_signal_connect (GTK_OBJECT (gradient_button), "toggled",
+		       (GtkSignalFunc) dialog_toggle_update, (gpointer) 9);
+   gtk_box_pack_start (GTK_BOX (vbox), gradient_button, TRUE, FALSE, 0);
+   gtk_widget_show (gradient_button);
 
 
    label = gtk_label_new ("Curl opacity");
@@ -743,6 +783,8 @@ static void init_calculation () {
 
    gimp_palette_get_foreground (&fore_color[0], &fore_color[1], &fore_color[2]);
    gimp_palette_get_background (&back_color[0], &back_color[1], &back_color[2]);
+
+   
 }				/* init_calculation */
 
 /*****/
@@ -750,13 +792,15 @@ static void init_calculation () {
 static void do_curl_effect (void) {
    gint x, y, color_image;
    gint x1, y1, k;
-   guint alpha_pos, progress, max_progress;
-   gdouble intensity, alpha;
+   guint alpha_pos, progress, max_progress, nreturn_vals;
+   gdouble intensity, alpha, beta;
    vector_t v, dl, dr;
    gdouble dl_mag, dr_mag, angle, factor;
    guchar *pp, *dest, fore_grayval, back_grayval;
+   guchar *gradsamp;
    GPixelRgn dest_rgn;
    gpointer pr;
+   guchar *grad_samples = NULL;
 
    color_image = gimp_drawable_color (drawable->id);
    curl_layer =
@@ -767,6 +811,7 @@ static void do_curl_effect (void) {
 				         color_image ? RGBA_IMAGE : GRAYA_IMAGE,
 					 100, NORMAL_MODE));
    gimp_image_add_layer (image_id, curl_layer->id, drawable_position);
+   curl_layer_ID = curl_layer->id;
 
    gimp_drawable_offsets (drawable->id, &x1, &y1);
    gimp_layer_set_offsets (curl_layer->id, sel_x1 + x1, sel_y1 + y1);
@@ -786,6 +831,7 @@ static void do_curl_effect (void) {
 	 dest += dest_rgn.rowstride;
       }
    }
+
    gimp_drawable_flush (curl_layer);
    gimp_drawable_update (curl_layer->id, 0, 0, curl_layer->width, curl_layer->height);
 
@@ -797,11 +843,16 @@ static void do_curl_effect (void) {
    v_set (&dr, -(sel_width - right_tangent.x), -(sel_height - right_tangent.y));
    dr_mag = v_mag (dr);
    alpha = acos (v_dot (dl, dr) / (dl_mag * dr_mag));
+   beta=alpha/2;
 
    /* Init shade_curl */
 
    fore_grayval = INTENSITY (fore_color[0], fore_color[1], fore_color[2]);
    back_grayval = INTENSITY (back_color[0], back_color[1], back_color[2]);
+
+   /* Gradient Samples */
+   if (curl.do_curl_gradient)
+      grad_samples = get_samples (curl_layer);
 
    max_progress = 2 * sel_width * sel_height;
    progress = 0;
@@ -846,14 +897,29 @@ static void do_curl_effect (void) {
 
 	       } else {
 		  /* On the curl */
-		  intensity = pow (sin (M_PI * angle / alpha), 1.5);
-		  if (color_image) {
-		     pp[0] = (intensity * fore_color[0] + (1 - intensity) * back_color[0]);
-		     pp[1] = (intensity * fore_color[1] + (1 - intensity) * back_color[1]);
-		     pp[2] = (intensity * fore_color[2] + (1 - intensity) * back_color[2]);
-		  } else
-		     pp[0] = (intensity * fore_grayval + (1 - intensity) * back_grayval);
-		  pp[alpha_pos] = (guchar) ((double) 255 * (1 - intensity*(1-curl.do_curl_opacity)));
+		  if (curl.do_curl_gradient) {
+		     /* Calculate position in Gradient (0 <= intensity <= 1) */
+		     intensity = (angle/alpha) + sin(M_PI*2 * angle/alpha)*0.075;
+		     /* Check boundaries */
+		     intensity = (intensity < 0 ? 0 : (intensity > 1 ? 1 : intensity ));
+		     gradsamp = &grad_samples[((guint) (intensity * NGRADSAMPLES)) * dest_rgn.bpp];
+		     if (color_image) {
+		        pp[0] = gradsamp[0];
+		        pp[1] = gradsamp[1];
+		        pp[2] = gradsamp[2];
+		     } else 
+		        pp[0] = gradsamp[0];
+		     pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1 - intensity*(1-curl.do_curl_opacity)));
+		  } else {
+		     intensity = pow (sin (M_PI * angle / alpha), 1.5);
+		     if (color_image) {
+		        pp[0] = (intensity * back_color[0] + (1 - intensity) * fore_color[0]);
+		        pp[1] = (intensity * back_color[1] + (1 - intensity) * fore_color[1]);
+		        pp[2] = (intensity * back_color[2] + (1 - intensity) * fore_color[2]);
+		     } else
+		        pp[0] = (intensity * back_grayval + (1 - intensity) * fore_grayval);
+		     pp[alpha_pos] = (guchar) ((double) 255 * (1 - intensity*(1-curl.do_curl_opacity)));
+		  }
 	       }
 	    }
 	    pp += dest_rgn.bpp;
@@ -868,6 +934,8 @@ static void do_curl_effect (void) {
    gimp_drawable_merge_shadow (curl_layer->id, FALSE);
    gimp_drawable_update (curl_layer->id, 0, 0, curl_layer->width, curl_layer->height);
    gimp_drawable_detach (curl_layer);
+
+   if (grad_samples != NULL) g_free (grad_samples);
 }
 
 /************************************************/
@@ -943,4 +1011,43 @@ static void page_curl () {
 		       PARAM_IMAGE, image_id,
 		       PARAM_END);
 }				/* page_curl */
+
+
+/*
+  Returns NGRADSAMPLES samples of active gradient.
+  Each sample has (gimp_drawable_bpp (drawable->id)) bytes.
+  "ripped" from gradmap.c.
+ */
+static guchar *get_samples (GDrawable *drawable) {
+  gdouble       *f_samples, *f_samp;    /* float samples */
+  guchar        *b_samples, *b_samp;    /* byte samples */
+  gint          bpp, color, has_alpha, alpha;
+  gint          i, j;
+
+  f_samples = gimp_gradients_sample_uniform (NGRADSAMPLES);
+
+  bpp       = gimp_drawable_bpp (drawable->id);
+  color     = gimp_drawable_color (drawable->id);
+  has_alpha = gimp_drawable_has_alpha (drawable->id);
+  alpha     = (has_alpha ? bpp - 1 : bpp);
+
+  b_samples = g_new (guchar, NGRADSAMPLES * bpp);
+
+  for (i = 0; i < NGRADSAMPLES; i++)
+    {
+      b_samp = &b_samples[i * bpp];
+      f_samp = &f_samples[i * 4];
+      if (color)
+        for (j = 0; j < 3; j++)
+          b_samp[j] = f_samp[j] * 255;
+      else
+        b_samp[0] = INTENSITY (f_samp[0], f_samp[1], f_samp[2]) * 255;
+
+      if (has_alpha)
+        b_samp[alpha] = f_samp[3] * 255;
+    }
+
+  g_free (f_samples);
+  return b_samples;
+}
 
