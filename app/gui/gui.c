@@ -148,11 +148,14 @@ gui_themes_dir_foreach_func (const gchar *filename,
 }
 
 void
-gui_libs_init (gint    *argc,
+gui_libs_init (Gimp    *gimp,
+               gint    *argc,
 	       gchar ***argv)
 {
   gchar *theme_dir;
   gchar *gtkrc;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_stock_init ();
 
@@ -210,6 +213,8 @@ gui_libs_init (gint    *argc,
 void
 gui_init (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   gimp->create_display_func = gui_display_new;
   gimp->gui_set_busy_func   = gui_set_busy;
   gimp->gui_unset_busy_func = gui_unset_busy;
@@ -269,10 +274,13 @@ gui_init (Gimp *gimp)
       gimprc.using_xserver_resolution = TRUE;
     }
 
-  file_open_dialog_menu_init ();
-  file_save_dialog_menu_init ();
+  /*  tooltips  */
+  gimp_help_init ();
 
-  menus_reorder_plugins ();
+  if (! gimprc.show_tool_tips)
+    gimp_help_disable_tooltips ();
+
+  menus_init (gimp);
 
   gximage_init ();
   render_setup (gimprc.transparency_type, gimprc.transparency_size);
@@ -280,50 +288,34 @@ gui_init (Gimp *gimp)
   dialogs_init (gimp);
 
   devices_init ();
-  session_init ();
-
-  /*  tooltips  */
-  gimp_help_init ();
-
-  if (! gimprc.show_tool_tips)
-    gimp_help_disable_tooltips ();
-
-  gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
-
-  /*  Fill the "last opened" menu items with the first last_opened_size
-   *  elements of gimp->documents
-   */
-  {
-    GimpImagefile *imagefile;
-    gint           i;
-
-    for (i = gimprc.last_opened_size - 1; i >= 0; i--)
-      {
-        imagefile = (GimpImagefile *)
-          gimp_container_get_child_by_index (gimp->documents, i);
-
-        if (! imagefile)
-          continue;
-
-        menus_last_opened_add (gimp_object_get_name (GIMP_OBJECT (imagefile)));
-      }
-  }
+  session_init (gimp);
 }
 
 void
 gui_restore (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  file_open_dialog_menu_init ();
+  file_save_dialog_menu_init ();
+
+  menus_restore (gimp);
+
+  gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:toolbox");
+
   color_select_init ();
 
   devices_restore ();
 
   if (restore_session)
-    session_restore ();
+    session_restore (gimp);
 }
 
 void
 gui_post_init (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   if (gimprc.show_tips)
     {
       gimp_dialog_factory_dialog_new (global_dialog_factory, "gimp:tips-dialog");
@@ -333,7 +325,9 @@ gui_post_init (Gimp *gimp)
 void
 gui_shutdown (Gimp *gimp)
 {
-  session_save ();
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  session_save (gimp);
   device_status_free ();
 
   brush_dialog_free ();
@@ -347,7 +341,9 @@ gui_shutdown (Gimp *gimp)
 void
 gui_exit (Gimp *gimp)
 {
-  menus_quit ();
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  menus_exit (gimp);
   gximage_free ();
   render_free ();
 

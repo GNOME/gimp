@@ -47,6 +47,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimp.h"
+
 #include "widgets/gimpdialogfactory.h"
 
 #include "color-notebook.h"
@@ -59,9 +61,11 @@
 /*  public functions  */
 
 void
-session_init (void)
+session_init (Gimp *gimp)
 {
   gchar *filename;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("sessionrc");
 
@@ -76,16 +80,20 @@ session_init (void)
 }
 
 void
-session_restore (void)
+session_restore (Gimp *gimp)
 {
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
   gimp_dialog_factories_session_restore ();
 }
 
 void
-session_save (void)
+session_save (Gimp *gimp)
 {
   gchar *filename;
   FILE  *fp;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("sessionrc");
 

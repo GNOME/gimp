@@ -1,3 +1,25 @@
+2001-10-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c: pass a "Gimp" to gui_libs_init(), initialize
+	the GUI before initializing the plug-ins.
+
+	* app/gui/menus.[ch]: removed menus_last_opened_add() and connect
+	to gimp->documents' "add", "remove" and "reorder" signals to
+	auto-update the "last opened" menu entries. Moved all public
+	functions to the top of the file. Removed global variable
+	"last_opened_raw_filenames".
+
+	* app/gui/gui.[ch]: removed "last opened" fiddling here, moved
+	menu init functions which need to be called after plug-in query
+	to gui_restore().
+
+	* app/gui/session.[ch]: added "Gimp" parameters to all public
+	functions.
+
+	* app/file-save.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c: changed accordingly.
+
 2001-10-23  Sven Neumann  <sven@gimp.org>
 
 	* TODO.xml: added an entry for handling layers with masks with the 

@@ -62,7 +62,6 @@
 #include "tools-commands.h"
 #include "view-commands.h"
 
-#include "app_procs.h"
 #include "gimphelp.h"
 #include "gimprc.h"
 
@@ -71,30 +70,33 @@
 
 /*  local function prototypes  */
 
-static void    menus_create_item          (GtkItemFactory       *item_factory,
-					   GimpItemFactoryEntry *entry,
-					   gpointer              callback_data,
-					   guint                 callback_type,
-					   gboolean              create_tearoff,
-					   gboolean              static_entry);
-static void    menus_create_items         (GtkItemFactory       *item_factory,
-					   guint                 n_entries,
-					   GimpItemFactoryEntry *entries,
-					   gpointer              callback_data,
-					   guint                 callback_type,
-					   gboolean              create_tearoff,
-					   gboolean              static_entries);
-static GtkItemFactory * menus_item_factory_new
-                                          (GtkType               container_type,
-					   const gchar          *path,
-					   const gchar          *factory_path,
-					   guint                 n_entries,
-					   GimpItemFactoryEntry *entries,
-					   gpointer              callback_data,
-					   gboolean              create_tearoff);
-static void    menus_create_branches      (GtkItemFactory       *item_factory,
-					   GimpItemFactoryEntry *entry);
-static void    menus_init                 (void);
+static void    menus_create_item               (GtkItemFactory       *item_factory,
+                                                GimpItemFactoryEntry *entry,
+                                                gpointer              callback_data,
+                                                guint                 callback_type,
+                                                gboolean              create_tearoff,
+                                                gboolean              static_entry);
+static void    menus_create_items              (GtkItemFactory       *item_factory,
+                                                guint                 n_entries,
+                                                GimpItemFactoryEntry *entries,
+                                                gpointer              callback_data,
+                                                guint                 callback_type,
+                                                gboolean              create_tearoff,
+                                                gboolean              static_entries);
+static GtkItemFactory * menus_item_factory_new (GtkType               container_type,
+                                                const gchar          *path,
+                                                const gchar          *factory_path,
+                                                guint                 n_entries,
+                                                GimpItemFactoryEntry *entries,
+                                                gpointer              callback_data,
+                                                gboolean              create_tearoff);
+static void    menus_create_branches           (GtkItemFactory       *item_factory,
+                                                GimpItemFactoryEntry *entry);
+static void    menus_filters_subdirs_to_top    (GtkMenu              *menu);
+static void    menus_tools_create              (GimpToolInfo         *tool_info);
+static void    menus_last_opened_update_labels (GimpContainer        *container,
+                                                GimpImagefile        *unused,
+                                                Gimp                 *gimp);
 
 #ifdef ENABLE_NLS
 static gchar * menus_menu_translate_func  (const gchar          *path,
@@ -115,9 +117,6 @@ static void    menus_debug_cmd_callback   (GtkWidget            *widget,
 					   gpointer              data,
 					   guint                 action);
 #endif  /*  ENABLE_DEBUG_ENTRY  */
-
-
-GSList *last_opened_raw_filenames = NULL;
 
 
 #define SEPARATOR(path) \
@@ -1520,13 +1519,386 @@ static GtkItemFactory *gradients_factory = NULL;
 static GtkItemFactory *palettes_factory  = NULL;
 
 
+/*  public functions  */
+
+void
+menus_init (Gimp *gimp)
+{
+  GtkWidget    *menu_item;
+  gchar        *filename;
+  GList        *list;
+  GimpToolInfo *tool_info;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (menus_initialized == FALSE);
+
+  menus_initialized = TRUE;
+
+  toolbox_factory   = menus_get_toolbox_factory ();
+  image_factory     = menus_get_image_factory ();
+  load_factory      = menus_get_load_factory ();
+  save_factory      = menus_get_save_factory ();
+  layers_factory    = menus_get_layers_factory ();
+  channels_factory  = menus_get_channels_factory ();
+  paths_factory     = menus_get_paths_factory ();
+  dialogs_factory   = menus_get_dialogs_factory ();
+  brushes_factory   = menus_get_brushes_factory ();
+  patterns_factory  = menus_get_patterns_factory ();
+  gradients_factory = menus_get_gradients_factory ();
+  palettes_factory  = menus_get_palettes_factory ();
+
+  for (list = GIMP_LIST (gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      menus_tools_create (GIMP_TOOL_INFO (list->data));
+    }
+
+  /*  reorder <Image>/Image/Colors  */
+  tool_info = tool_manager_get_info_by_type (gimp, GIMP_TYPE_POSTERIZE_TOOL);
+
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   tool_info->menu_path);
+  if (menu_item && menu_item->parent)
+    gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
+
+  {
+    GtkType color_tools[] = { GIMP_TYPE_COLOR_BALANCE_TOOL,
+			      GIMP_TYPE_HUE_SATURATION_TOOL,
+			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
+			      GIMP_TYPE_THRESHOLD_TOOL,
+			      GIMP_TYPE_LEVELS_TOOL,
+			      GIMP_TYPE_CURVES_TOOL };
+    static gint n_color_tools = (sizeof (color_tools) /
+				 sizeof (color_tools[0]));
+    GtkWidget *separator;
+    gint       i, pos;
+
+    pos = 1;
+
+    for (i = 0; i < n_color_tools; i++)
+      {
+	tool_info = tool_manager_get_info_by_type (gimp, color_tools[i]);
+
+	menu_item = gtk_item_factory_get_widget (image_factory,
+						 tool_info->menu_path);
+	if (menu_item && menu_item->parent)
+	  {
+	    gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+				    menu_item, pos);
+	    pos++;
+	  }
+      }
+
+    if (menu_item && menu_item->parent)
+      {
+	separator = gtk_menu_item_new ();
+	gtk_menu_shell_insert (GTK_MENU_SHELL (menu_item->parent), separator, pos);
+	gtk_widget_show (separator);
+      }
+  }
+
+  filename = gimp_personal_rc_file ("menurc");
+  gtk_item_factory_parse_rc (filename);
+  g_free (filename);
+
+  g_signal_connect (G_OBJECT (gimp->documents), "add",
+                    G_CALLBACK (menus_last_opened_update_labels),
+                    gimp);
+  g_signal_connect (G_OBJECT (gimp->documents), "remove",
+                    G_CALLBACK (menus_last_opened_update_labels),
+                    gimp);
+  g_signal_connect (G_OBJECT (gimp->documents), "reorder",
+                    G_CALLBACK (menus_last_opened_update_labels),
+                    gimp);
+
+  menus_last_opened_update_labels (gimp->documents, NULL, gimp);
+}
+
+void
+menus_exit (Gimp *gimp)
+{
+  gchar *filename;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gimp->documents),
+                                        menus_last_opened_update_labels,
+                                        gimp);
+
+  filename = gimp_personal_rc_file ("menurc");
+  gtk_item_factory_dump_rc (filename, NULL, TRUE);
+  g_free (filename);
+
+  if (toolbox_factory)
+    {
+      g_object_unref (G_OBJECT (toolbox_factory));
+      toolbox_factory = NULL;
+    }
+
+  if (image_factory)
+    {
+      g_object_unref (G_OBJECT (image_factory));
+      image_factory = NULL;
+    }
+
+  if (load_factory)
+    {
+      g_object_unref (G_OBJECT (load_factory));
+      load_factory = NULL;
+    }
+
+  if (save_factory)
+    {
+      g_object_unref (G_OBJECT (save_factory));
+      save_factory = NULL;
+    }
+
+  if (layers_factory)
+    {
+      g_object_unref (G_OBJECT (layers_factory));
+      layers_factory = NULL;
+    }
+
+  if (channels_factory)
+    {
+      g_object_unref (G_OBJECT (channels_factory));
+      channels_factory = NULL;
+    }
+
+  if (paths_factory)
+    {
+      g_object_unref (G_OBJECT (paths_factory));
+      paths_factory = NULL;
+    }
+
+  if (dialogs_factory)
+    {
+      g_object_unref (G_OBJECT (dialogs_factory));
+      dialogs_factory = NULL;
+    }
+
+  if (brushes_factory)
+    {
+      g_object_unref (G_OBJECT (brushes_factory));
+      brushes_factory = NULL;
+    }
+
+  if (patterns_factory)
+    {
+      g_object_unref (G_OBJECT (patterns_factory));
+      patterns_factory = NULL;
+    }
+
+  if (gradients_factory)
+    {
+      g_object_unref (G_OBJECT (gradients_factory));
+      gradients_factory = NULL;
+    }
+
+  if (palettes_factory)
+    {
+      g_object_unref (G_OBJECT (palettes_factory));
+      palettes_factory = NULL;
+    }
+}
+
+void
+menus_restore (Gimp *gimp)
+{
+  static gchar *rotate_plugins[]      = { "90 degrees",
+                                          "180 degrees",
+                                          "270 degrees" };
+  static gchar *image_file_entries[]  = { "---moved",
+                                          "Close",
+                                          "Quit" };
+  static gchar *reorder_submenus[]    = { "<Image>/Video",
+                                          "<Image>/Script-Fu" };
+  static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
+					  "<Toolbox>/Xtns" };
+
+  GtkItemFactory *item_factory;
+  GtkWidget *menu_item;
+  GtkWidget *menu;
+  GList     *list;
+  gchar     *path;
+  gint      i, pos;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
+   *  separators to the top of the menu
+   */
+  pos = 1;
+  menu_item = gtk_item_factory_get_widget (toolbox_factory,
+					   "/Xtns/Module Browser...");
+  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+    {
+      menu = menu_item->parent;
+
+      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
+	   list = g_list_next (list))
+	{
+	  menu_item = GTK_WIDGET (list->data);
+
+	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
+	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+				      menu_item, pos);
+	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
+	      pos++;
+	    }
+	}
+    }
+
+  /*  Move all menu items under "<Image>/Filters" which are not submenus or
+   *  separators to the top of the menu
+   */
+  pos = 3;
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   "/Filters/Filter all Layers...");
+  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+    {
+      menu = menu_item->parent;
+
+      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
+	   list = g_list_next (list))
+	{
+	  menu_item = GTK_WIDGET (list->data);
+
+	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
+	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
+				      menu_item, pos);
+	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
+	      pos++;
+	    }
+	}
+    }
+
+  /*  Reorder Rotate plugin menu entries */
+  pos = 2;
+  for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
+    {
+      path = g_strconcat ("/Image/Transforms/Rotate/", rotate_plugins[i], NULL);
+      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      g_free (path);
+
+      if (menu_item && menu_item->parent)
+        {
+          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
+          pos++;
+        }
+    }
+
+  pos = 2;
+  for (i = 0; i < G_N_ELEMENTS (rotate_plugins); i++)
+    {
+      path = g_strconcat ("/Layers/Rotate/", rotate_plugins[i], NULL);
+      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      g_free (path);
+
+      if (menu_item && menu_item->parent)
+        {
+          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
+          pos++;
+        }
+    }
+
+  /*  Reorder "<Image>/File"  */
+  for (i = 0; i < G_N_ELEMENTS (image_file_entries); i++)
+    {
+      path = g_strconcat ("/File/", image_file_entries[i], NULL);
+      menu_item = gtk_item_factory_get_widget (image_factory, path);
+      g_free (path);
+
+      if (menu_item && menu_item->parent)
+	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
+    }
+
+  /*  Reorder menus where plugins registered submenus  */
+  for (i = 0; i < G_N_ELEMENTS (reorder_submenus); i++)
+    {
+      item_factory = gtk_item_factory_from_path (reorder_submenus[i]);
+      menu = gtk_item_factory_get_widget (item_factory,
+					  reorder_submenus[i]);
+
+      if (menu && GTK_IS_MENU (menu))
+	{
+	  menus_filters_subdirs_to_top (GTK_MENU (menu));
+	}
+    }
+
+  for (i = 0; i < G_N_ELEMENTS (reorder_subsubmenus); i++)
+    {
+      item_factory = gtk_item_factory_from_path (reorder_subsubmenus[i]);
+      menu = gtk_item_factory_get_widget (item_factory,
+					  reorder_subsubmenus[i]);
+
+      if (menu && GTK_IS_MENU (menu))
+	{
+	  for (list = GTK_MENU_SHELL (menu)->children; list;
+	       list = g_list_next (list))
+	    {
+	      GtkMenuItem *menu_item;
+
+	      menu_item = GTK_MENU_ITEM (list->data);
+
+	      if (menu_item->submenu)
+		menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
+	    }
+	}
+    }
+
+  /*  Move all submenus which registered after "<Image>/Filters/Toys"
+   *  before the separator after "<Image>/Filters/Web"
+   */
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   "/Filters/---INSERT");
+
+  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
+    {
+      menu = menu_item->parent;
+      pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
+
+      menu_item = gtk_item_factory_get_widget (image_factory,
+					       "/Filters/Toys");
+
+      if (menu_item && GTK_IS_MENU (menu_item))
+	{
+	  GList *list;
+	  gint index = 1;
+
+	  for (list = GTK_MENU_SHELL (menu)->children; list;
+	       list = g_list_next (list))
+	    {
+	      if (GTK_MENU_ITEM (list->data)->submenu == menu_item)
+		break;
+
+	      index++;
+	    }
+
+	  while ((menu_item = g_list_nth_data (GTK_MENU_SHELL (menu)->children,
+					       index)))
+	    {
+	      gtk_menu_reorder_child (GTK_MENU (menu), menu_item, pos);
+
+	      pos++;
+	      index++;
+	    }
+	}
+    }
+}
+
 GtkItemFactory *
 menus_get_toolbox_factory (void)
 {
   if (! toolbox_factory)
     {
       GimpItemFactoryEntry *last_opened_entries;
-      GtkWidget	       *menu_item;
+      GtkWidget            *menu_item;
       gint                  i;
 
       toolbox_factory = menus_item_factory_new (GTK_TYPE_MENU_BAR,
@@ -1776,9 +2148,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
   gchar          *path;
 
   g_return_if_fail (entry != NULL);
-
-  if (!menus_initialized)
-    menus_init ();
+  g_return_if_fail (menus_initialized);
 
   path = entry->entry.path;
 
@@ -1803,6 +2173,70 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
 
   menus_create_item (item_factory, entry, callback_data, 2, TRUE, FALSE);
 }
+
+void
+menus_set_sensitive (gchar    *path,
+		     gboolean  sensitive)
+{
+  GtkItemFactory *ifactory;
+  GtkWidget      *widget = NULL;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (menus_initialized);
+
+  ifactory = gtk_item_factory_from_path (path);
+
+  if (ifactory)
+    {
+      widget = gtk_item_factory_get_widget (ifactory, path);
+
+      if (widget)
+	gtk_widget_set_sensitive (widget, sensitive);
+    }
+
+  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
+    g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s",
+	       path);
+}
+
+void
+menus_set_state (gchar    *path,
+		 gboolean  state)
+{
+  GtkItemFactory *ifactory;
+  GtkWidget      *widget = NULL;
+
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (menus_initialized);
+
+  ifactory = gtk_item_factory_from_path (path);
+
+  if (ifactory)
+    {
+      widget = gtk_item_factory_get_widget (ifactory, path);
+
+      if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
+	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), state);
+      else
+	widget = NULL;
+    }
+
+  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
+    g_warning ("Unable to set state for menu which doesn't exist:\n%s",
+	       path);
+}
+
+void
+menus_destroy (gchar *path)
+{
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (menus_initialized);
+
+  gtk_item_factories_path_delete (NULL, path);
+}
+
+
+/*  private functions  */
 
 static void
 menus_create_branches (GtkItemFactory       *item_factory,
@@ -1909,204 +2343,6 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
     }
 }
 
-void
-menus_reorder_plugins (void)
-{
-  static gchar *rotate_plugins[] = { "90 degrees",
-				     "180 degrees",
-                                     "270 degrees" };
-  static gint n_rotate_plugins = (sizeof (rotate_plugins) /
-				  sizeof (rotate_plugins[0]));
-
-  static gchar *image_file_entries[] = { "---moved",
-					 "Close",
-					 "Quit" };
-  static gint n_image_file_entries = (sizeof (image_file_entries) /
-				      sizeof (image_file_entries[0]));
-
-  static gchar *reorder_submenus[] = { "<Image>/Video",
-				       "<Image>/Script-Fu" };
-  static gint n_reorder_submenus = (sizeof (reorder_submenus) /
-				    sizeof (reorder_submenus[0]));
-
-  static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
-					  "<Toolbox>/Xtns" };
-  static gint n_reorder_subsubmenus = (sizeof (reorder_subsubmenus) /
-				       sizeof (reorder_subsubmenus[0]));
-
-  GtkItemFactory *item_factory;
-  GtkWidget *menu_item;
-  GtkWidget *menu;
-  GList     *list;
-  gchar     *path;
-  gint      i, pos;
-
-  /*  Move all menu items under "<Toolbox>/Xtns" which are not submenus or
-   *  separators to the top of the menu
-   */
-  pos = 1;
-  menu_item = gtk_item_factory_get_widget (toolbox_factory,
-					   "/Xtns/Module Browser...");
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
-    {
-      menu = menu_item->parent;
-
-      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
-	   list = g_list_next (list))
-	{
-	  menu_item = GTK_WIDGET (list->data);
-
-	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
-	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
-	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				      menu_item, pos);
-	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
-	      pos++;
-	    }
-	}
-    }
-
-  /*  Move all menu items under "<Image>/Filters" which are not submenus or
-   *  separators to the top of the menu
-   */
-  pos = 3;
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   "/Filters/Filter all Layers...");
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
-    {
-      menu = menu_item->parent;
-
-      for (list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos); list;
-	   list = g_list_next (list))
-	{
-	  menu_item = GTK_WIDGET (list->data);
-
-	  if (! GTK_MENU_ITEM (menu_item)->submenu &&
-	      GTK_IS_LABEL (GTK_BIN (menu_item)->child))
-	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				      menu_item, pos);
-	      list = g_list_nth (GTK_MENU_SHELL (menu)->children, pos);
-	      pos++;
-	    }
-	}
-    }
-
-  /*  Reorder Rotate plugin menu entries */
-  pos = 2;
-  for (i = 0; i < n_rotate_plugins; i++)
-    {
-      path = g_strconcat ("/Image/Transforms/Rotate/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
-
-      if (menu_item && menu_item->parent)
-        {
-          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
-          pos++;
-        }
-    }
-
-  pos = 2;
-  for (i = 0; i < n_rotate_plugins; i++)
-    {
-      path = g_strconcat ("/Layers/Rotate/", rotate_plugins[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
-
-      if (menu_item && menu_item->parent)
-        {
-          gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, pos);
-          pos++;
-        }
-    }
-
-  /*  Reorder "<Image>/File"  */
-  for (i = 0; i < n_image_file_entries; i++)
-    {
-      path = g_strconcat ("/File/", image_file_entries[i], NULL);
-      menu_item = gtk_item_factory_get_widget (image_factory, path);
-      g_free (path);
-
-      if (menu_item && menu_item->parent)
-	gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, -1);
-    }
-
-  /*  Reorder menus where plugins registered submenus  */
-  for (i = 0; i < n_reorder_submenus; i++)
-    {
-      item_factory = gtk_item_factory_from_path (reorder_submenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
-					  reorder_submenus[i]);
-
-      if (menu && GTK_IS_MENU (menu))
-	{
-	  menus_filters_subdirs_to_top (GTK_MENU (menu));
-	}
-    }
-
-  for (i = 0; i < n_reorder_subsubmenus; i++)
-    {
-      item_factory = gtk_item_factory_from_path (reorder_subsubmenus[i]);
-      menu = gtk_item_factory_get_widget (item_factory,
-					  reorder_subsubmenus[i]);
-
-      if (menu && GTK_IS_MENU (menu))
-	{
-	  for (list = GTK_MENU_SHELL (menu)->children; list;
-	       list = g_list_next (list))
-	    {
-	      GtkMenuItem *menu_item;
-
-	      menu_item = GTK_MENU_ITEM (list->data);
-
-	      if (menu_item->submenu)
-		menus_filters_subdirs_to_top (GTK_MENU (menu_item->submenu));
-	    }
-	}
-    }
-
-  /*  Move all submenus which registered after "<Image>/Filters/Toys"
-   *  before the separator after "<Image>/Filters/Web"
-   */
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   "/Filters/---INSERT");
-
-  if (menu_item && menu_item->parent && GTK_IS_MENU (menu_item->parent))
-    {
-      menu = menu_item->parent;
-      pos = g_list_index (GTK_MENU_SHELL (menu)->children, menu_item);
-
-      menu_item = gtk_item_factory_get_widget (image_factory,
-					       "/Filters/Toys");
-
-      if (menu_item && GTK_IS_MENU (menu_item))
-	{
-	  GList *list;
-	  gint index = 1;
-
-	  for (list = GTK_MENU_SHELL (menu)->children; list;
-	       list = g_list_next (list))
-	    {
-	      if (GTK_MENU_ITEM (list->data)->submenu == menu_item)
-		break;
-
-	      index++;
-	    }
-
-	  while ((menu_item = g_list_nth_data (GTK_MENU_SHELL (menu)->children,
-					       index)))
-	    {
-	      gtk_menu_reorder_child (GTK_MENU (menu), menu_item, pos);
-
-	      pos++;
-	      index++;
-	    }
-	}
-    }
-}
-
 static void
 menus_tools_create (GimpToolInfo *tool_info)
 {
@@ -2131,177 +2367,67 @@ menus_tools_create (GimpToolInfo *tool_info)
 		     TRUE, FALSE);
 }
 
-void
-menus_set_sensitive (gchar    *path,
-		     gboolean  sensitive)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
-
-  if (! path)
-    return;
-
-  if (!menus_initialized)
-    menus_init ();
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget)
-	gtk_widget_set_sensitive (widget, sensitive);
-    }
-
-  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s",
-	       path);
-}
-
-void
-menus_set_state (gchar    *path,
-		 gboolean  state)
-{
-  GtkItemFactory *ifactory;
-  GtkWidget      *widget = NULL;
-
-  if (!menus_initialized)
-    menus_init ();
-
-  ifactory = gtk_item_factory_from_path (path);
-
-  if (ifactory)
-    {
-      widget = gtk_item_factory_get_widget (ifactory, path);
-
-      if (widget && GTK_IS_CHECK_MENU_ITEM (widget))
-	gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (widget), state);
-      else
-	widget = NULL;
-    }
-
-  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
-    g_warning ("Unable to set state for menu which doesn't exist:\n%s",
-	       path);
-}
-
-void
-menus_destroy (gchar *path)
-{
-  if (!menus_initialized)
-    menus_init ();
-
-  gtk_item_factories_path_delete (NULL, path);
-}
-
 static void
-menus_last_opened_update_labels (void)
+menus_last_opened_update_labels (GimpContainer *container,
+                                 GimpImagefile *unused,
+                                 Gimp          *gimp)
 {
-  GSList    *filename_slist;
-  GString   *entry_filename;
-  GString   *path;
   GtkWidget *widget;
-  gint	     i;
-  guint      num_entries;
+  gint       num_documents;
+  gint       i;
 
-  entry_filename = g_string_new ("");
-  path = g_string_new ("");
+  num_documents = gimp_container_num_children (container);
 
-  filename_slist = last_opened_raw_filenames;
-  num_entries = g_slist_length (last_opened_raw_filenames);
+  widget = gtk_item_factory_get_widget (toolbox_factory, "/File/---MRU");
 
-  for (i = 1; i <= num_entries; i++)
+  if (num_documents > 0)
+    gtk_widget_show (widget);
+  else
+    gtk_widget_hide (widget);
+
+  for (i = 0; i < gimprc.last_opened_size; i++)
     {
-      gchar *basename;
+      gchar *path_str;
 
-      basename = g_path_get_basename (((GString *) filename_slist->data)->str);
+      path_str = g_strdup_printf ("/File/MRU%02d", i + 1);
 
-      g_string_printf (entry_filename, "%d. %s", i, basename);
+      widget = gtk_item_factory_get_widget (toolbox_factory, path_str);
 
-      g_free (basename);
+      g_free (path_str);
 
-      g_string_printf (path, "/File/MRU%02d", i);
+      if (i < num_documents - 1)
+        {
+          GimpImagefile *imagefile;
 
-      widget = gtk_item_factory_get_widget (toolbox_factory, path->str);
-      if (widget)
-	{
-	  gtk_widget_show (widget);
+          imagefile = (GimpImagefile *)
+            gimp_container_get_child_by_index (container, i);
 
-	  gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
-			      entry_filename->str);
-	  gimp_help_set_help_data (widget,
-				   ((GString *) filename_slist->data)->str,
-				   NULL);
-	}
+          if (g_object_get_data (G_OBJECT (widget), "gimp-imagefile") !=
+              (gpointer) imagefile)
+            {
+              gchar *basename;
 
-      filename_slist = filename_slist->next;
+              basename = g_path_get_basename (GIMP_OBJECT (imagefile)->name);
+
+              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
+                                  basename);
+
+              g_free (basename);
+
+              gimp_help_set_help_data (widget,
+                                       GIMP_OBJECT (imagefile)->name,
+                                       NULL);
+
+              g_object_set_data (G_OBJECT (widget), "gimp-imagefile", imagefile);
+              gtk_widget_show (widget);
+            }
+        }
+      else
+        {
+          g_object_set_data (G_OBJECT (widget), "gimp-imagefile", NULL);
+          gtk_widget_hide (widget);
+        }
     }
-
-  g_string_free (entry_filename, TRUE);
-  g_string_free (path, TRUE);
-}
-
-void
-menus_last_opened_add (const gchar *filename)
-{
-  GString   *raw_filename;
-  GSList    *list;
-  GtkWidget *menu_item;
-  guint      num_entries;
-
-  g_return_if_fail (filename != NULL);
-
-  /*  see if we've already got the filename on the list  */
-  for (list = last_opened_raw_filenames; list; list = g_slist_next (list))
-    {
-      raw_filename = (GString *) list->data;
-
-      if (strcmp (raw_filename->str, filename) == 0)
-	{
-	  /*  move the entry to the top  */
-
-	  last_opened_raw_filenames =
-	    g_slist_remove_link (last_opened_raw_filenames, list);
-
-	  last_opened_raw_filenames =
-	    g_slist_concat (list, last_opened_raw_filenames);
-
-	  menus_last_opened_update_labels ();
-
-	  return;
-	}
-    }
-
-  num_entries = g_slist_length (last_opened_raw_filenames);
-
-  if (num_entries == gimprc.last_opened_size)
-    {
-      GSList *oldest;
-
-      oldest = g_slist_last (last_opened_raw_filenames);
-
-      if (oldest)
-	{
-	  g_string_free ((GString *) oldest->data, TRUE);
-
-	  last_opened_raw_filenames = g_slist_remove (last_opened_raw_filenames,
-						      oldest);
-	}
-    }
-
-  raw_filename = g_string_new (filename);
-  last_opened_raw_filenames = g_slist_prepend (last_opened_raw_filenames,
-					       raw_filename);
-
-  if (num_entries == 0)
-    {
-      menu_item = gtk_item_factory_get_widget (toolbox_factory, 
-					       "/File/---MRU");
-      gtk_widget_show (menu_item);
-    }
-
-  menus_last_opened_update_labels ();
 }
 
 /*  This function gets called while browsing a menu created
@@ -2517,170 +2643,6 @@ menus_item_factory_new (GtkType               container_type,
 		      TRUE);
 
   return item_factory;
-}
-
-static void
-menus_init (void)
-{
-  GtkWidget    *menu_item;
-  gchar        *filename;
-  GList        *list;
-  GimpToolInfo *tool_info;
-
-  if (menus_initialized)
-    return;
-
-  menus_initialized = TRUE;
-
-  toolbox_factory   = menus_get_toolbox_factory ();
-  image_factory     = menus_get_image_factory ();
-  load_factory      = menus_get_load_factory ();
-  save_factory      = menus_get_save_factory ();
-  layers_factory    = menus_get_layers_factory ();
-  channels_factory  = menus_get_channels_factory ();
-  paths_factory     = menus_get_paths_factory ();
-  dialogs_factory   = menus_get_dialogs_factory ();
-  brushes_factory   = menus_get_brushes_factory ();
-  patterns_factory  = menus_get_patterns_factory ();
-  gradients_factory = menus_get_gradients_factory ();
-  palettes_factory  = menus_get_palettes_factory ();
-
-  for (list = GIMP_LIST (the_gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      menus_tools_create (GIMP_TOOL_INFO (list->data));
-    }
-
-  /*  reorder <Image>/Image/Colors  */
-  tool_info = tool_manager_get_info_by_type (the_gimp, GIMP_TYPE_POSTERIZE_TOOL);
-
-  menu_item = gtk_item_factory_get_widget (image_factory,
-					   tool_info->menu_path);
-  if (menu_item && menu_item->parent)
-    gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
-
-  {
-    GtkType color_tools[] = { GIMP_TYPE_COLOR_BALANCE_TOOL,
-			      GIMP_TYPE_HUE_SATURATION_TOOL,
-			      GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-			      GIMP_TYPE_THRESHOLD_TOOL,
-			      GIMP_TYPE_LEVELS_TOOL,
-			      GIMP_TYPE_CURVES_TOOL };
-    static gint n_color_tools = (sizeof (color_tools) /
-				 sizeof (color_tools[0]));
-    GtkWidget *separator;
-    gint       i, pos;
-
-    pos = 1;
-
-    for (i = 0; i < n_color_tools; i++)
-      {
-	tool_info = tool_manager_get_info_by_type (the_gimp, color_tools[i]);
-
-	menu_item = gtk_item_factory_get_widget (image_factory,
-						 tool_info->menu_path);
-	if (menu_item && menu_item->parent)
-	  {
-	    gtk_menu_reorder_child (GTK_MENU (menu_item->parent),
-				    menu_item, pos);
-	    pos++;
-	  }
-      }
-
-    if (menu_item && menu_item->parent)
-      {
-	separator = gtk_menu_item_new ();
-	gtk_menu_shell_insert (GTK_MENU_SHELL (menu_item->parent), separator, pos);
-	gtk_widget_show (separator);
-      }
-  }
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_item_factory_parse_rc (filename);
-  g_free (filename);
-}
-
-void
-menus_quit (void)
-{
-  gchar *filename;
-
-  filename = gimp_personal_rc_file ("menurc");
-  gtk_item_factory_dump_rc (filename, NULL, TRUE);
-  g_free (filename);
-
-  if (toolbox_factory)
-    {
-      g_object_unref (G_OBJECT (toolbox_factory));
-      toolbox_factory = NULL;
-    }
-
-  if (image_factory)
-    {
-      g_object_unref (G_OBJECT (image_factory));
-      image_factory = NULL;
-    }
-
-  if (load_factory)
-    {
-      g_object_unref (G_OBJECT (load_factory));
-      load_factory = NULL;
-    }
-
-  if (save_factory)
-    {
-      g_object_unref (G_OBJECT (save_factory));
-      save_factory = NULL;
-    }
-
-  if (layers_factory)
-    {
-      g_object_unref (G_OBJECT (layers_factory));
-      layers_factory = NULL;
-    }
-
-  if (channels_factory)
-    {
-      g_object_unref (G_OBJECT (channels_factory));
-      channels_factory = NULL;
-    }
-
-  if (paths_factory)
-    {
-      g_object_unref (G_OBJECT (paths_factory));
-      paths_factory = NULL;
-    }
-
-  if (dialogs_factory)
-    {
-      g_object_unref (G_OBJECT (dialogs_factory));
-      dialogs_factory = NULL;
-    }
-
-  if (brushes_factory)
-    {
-      g_object_unref (G_OBJECT (brushes_factory));
-      brushes_factory = NULL;
-    }
-
-  if (patterns_factory)
-    {
-      g_object_unref (G_OBJECT (patterns_factory));
-      patterns_factory = NULL;
-    }
-
-  if (gradients_factory)
-    {
-      g_object_unref (G_OBJECT (gradients_factory));
-      gradients_factory = NULL;
-    }
-
-  if (palettes_factory)
-    {
-      g_object_unref (G_OBJECT (palettes_factory));
-      palettes_factory = NULL;
-    }
 }
 
 #ifdef ENABLE_NLS

@@ -69,8 +69,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
-#include "gui/menus.h"
-
 #include "file-save.h"
 #include "file-utils.h"
 #include "plug_in.h"
@@ -177,7 +175,6 @@ file_save (GimpImage   *gimage,
       gimp_image_clean_all (gimage);
 
       gimp_documents_add (gimage->gimp, filename);
-      menus_last_opened_add (filename);
 
       /*  use the same plug-in for this image next time  */
       /* DISABLED - gets stuck on first saved format... needs

@@ -20,9 +20,9 @@
 #define __SESSION_H__
 
 
-void   session_init    (void);
-void   session_restore (void);
-void   session_save    (void);
+void   session_init    (Gimp *gimp);
+void   session_restore (Gimp *gimp);
+void   session_save    (Gimp *gimp);
 
 
 #endif  /*  __SESSION_H__  */

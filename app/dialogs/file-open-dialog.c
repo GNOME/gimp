@@ -202,7 +202,6 @@ file_open_with_proc_and_display (const gchar   *filename,
       absolute = file_open_absolute_filename (filename);
 
       gimp_documents_add (the_gimp, filename);
-      menus_last_opened_add (absolute);
 
       g_free (absolute);
     }
@@ -215,7 +214,7 @@ file_open_dialog_create (void)
 {
   GtkFileSelection *file_sel;
 
-  fileload = gtk_file_selection_new (_("Load Image"));
+  fileload = gtk_file_selection_new (_("Open Image"));
   gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
   gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
 

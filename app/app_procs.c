@@ -131,7 +131,7 @@ app_init (gint    gimp_argc,
 
   if (! no_interface)
     {
-      gui_libs_init (&gimp_argc, &gimp_argv);
+      gui_libs_init (the_gimp, &gimp_argc, &gimp_argv);
 
       get_standard_colormaps ();
 
@@ -161,6 +161,15 @@ app_init (gint    gimp_argc,
    */
   gimp_restore (the_gimp, app_init_update_status, no_data);
 
+  if (! no_interface)
+    {
+#ifdef DISPLAY_FILTERS
+      color_display_init ();
+#endif /* DISPLAY_FILTERS */
+
+      gui_init (the_gimp);
+    }
+
   /*  Initialize the plug-in structures
    */
   plug_in_init (the_gimp, app_init_update_status);
@@ -169,12 +178,6 @@ app_init (gint    gimp_argc,
     {
       if (! no_splash)
 	splash_destroy ();
-
-#ifdef DISPLAY_FILTERS
-      color_display_init ();
-#endif /* DISPLAY_FILTERS */
-
-      gui_init (the_gimp);
 
       /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;

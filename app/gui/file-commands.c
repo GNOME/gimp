@@ -25,6 +25,7 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpobject.h"
@@ -37,7 +38,6 @@
 #include "file-new-dialog.h"
 #include "file-open-dialog.h"
 #include "file-save-dialog.h"
-#include "menus.h"
 
 #include "app_procs.h"
 #include "file-open.h"
@@ -105,24 +105,28 @@ file_last_opened_cmd_callback (GtkWidget *widget,
 			       gpointer   data,
 			       guint      action)
 {
-  gchar *filename;
-  guint  num_entries;
-  gint   status;
+  GimpImagefile *imagefile;
+  guint          num_entries;
+  gint           status;
 
-  num_entries = g_slist_length (last_opened_raw_filenames); 
+  num_entries = gimp_container_num_children (the_gimp->documents);
 
   if (action >= num_entries)
     return;
 
-  filename =
-    ((GString *) g_slist_nth_data (last_opened_raw_filenames, action))->str;
+  imagefile = (GimpImagefile *)
+    gimp_container_get_child_by_index (the_gimp->documents, action);
 
-  status = file_open_with_display (filename);
-
-  if (status != GIMP_PDB_SUCCESS &&
-      status != GIMP_PDB_CANCEL)
+  if (imagefile)
     {
-      g_message (_("Error opening file: %s\n"), filename);
+      status = file_open_with_display (GIMP_OBJECT (imagefile)->name);
+
+      if (status != GIMP_PDB_SUCCESS &&
+          status != GIMP_PDB_CANCEL)
+        {
+          g_message (_("Error opening file: %s\n"),
+                     GIMP_OBJECT (imagefile)->name);
+        }
     }
 }
 

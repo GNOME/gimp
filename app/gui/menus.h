@@ -33,8 +33,9 @@ struct _GimpItemFactoryEntry
 };
 
 
-extern GSList *last_opened_raw_filenames;
-
+void             menus_init                  (Gimp *gimp);
+void             menus_exit                  (Gimp *gimp);
+void             menus_restore               (Gimp *gimp);
 
 GtkItemFactory * menus_get_toolbox_factory   (void);
 GtkItemFactory * menus_get_image_factory     (void);
@@ -54,17 +55,11 @@ void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
 					 gchar                 *domain_name,
 					 gpointer               callback_data);
 
-void   menus_reorder_plugins            (void);
-
-void   menus_quit                       (void);
-
 void   menus_set_sensitive              (gchar                 *path,
 					 gboolean               sensitive);
 void   menus_set_state                  (gchar                 *path,
 					 gboolean               state);
 void   menus_destroy                    (gchar                 *path);
-
-void   menus_last_opened_add            (const gchar           *filename);
 
 
 #endif /* __MENUS_H__ */
