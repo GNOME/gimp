@@ -1,3 +1,8 @@
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c (toolbox_area_notify): removed
+	unused variable.
+
 2004-06-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/autocrop.c (query): register as "Autocrop Image"

@@ -901,8 +901,7 @@ toolbox_area_notify (GimpGuiConfig *config,
                      GParamSpec    *pspec,
                      GtkWidget     *area)
 {
-  GtkRequisition foo;
-  gboolean       visible;
+  gboolean visible;
 
   if (config->toolbox_color_area ||
       config->toolbox_foo_area   ||
