@@ -1,7 +1,9 @@
 /* threshold_alpha.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
  * Time-stamp: <1997/06/08 22:34:26 narazaki@InetQ.or.jp>
- * Version: 0.13
+ * Version: 0.13A (the 'A' is for Adam who hacked in greyscale
+ *                 support - don't know if there's a more recent official
+ *                 version)
  *
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
  *
@@ -227,9 +229,10 @@ run (char	*name,
 	  ERROR_DIALOG (1, "The layer preserves transparency.");
 	  return;
 	}
-      if (!gimp_drawable_color (drawable_id))
+      if (!gimp_drawable_color (drawable_id) &&
+	  !gimp_drawable_gray (drawable_id))
 	{
-	  ERROR_DIALOG (1, "RGB drawable is not selected.");
+	  ERROR_DIALOG (1, "RGBA/GRAYA drawable is not selected.");
 	  return;
 	}
       gimp_get_data (PLUG_IN_NAME, &VALS);
@@ -273,7 +276,12 @@ MAIN_FUNCTION (gint32 drawable_id)
   
   drawable = gimp_drawable_get (drawable_id);
   if (! gimp_drawable_has_alpha (drawable_id)) return STATUS_EXECUTION_ERROR;
-  gap = 3;
+
+  if (gimp_drawable_color(drawable_id))
+    gap = 3;
+  else
+    gap = 1;
+
   gimp_drawable_mask_bounds (drawable_id, &x1, &y1, &x2, &y2);
   total = (x2 - x1) * (y2 - y1);
 

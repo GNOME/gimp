@@ -1,3 +1,8 @@
+Sun May 23 14:13:03 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/threshold_alpha/threshold_alpha.c: Added
+	support for greyscale drawables (why not?)
+
 Sun May 23 13:37:53 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/paint_funcs.c: Removed bogosity of previous fix and
