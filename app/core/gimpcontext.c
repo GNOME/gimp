@@ -50,6 +50,7 @@
 #include "config/gimpconfig.h"
 #include "config/gimpconfig-types.h"
 #include "config/gimpconfig-params.h"
+#include "config/gimpscanner.h"
 
 #include "libgimp/gimpintl.h" 
 
@@ -65,8 +66,9 @@ typedef void (* GimpContextCopyPropFunc) (GimpContext *src,
 
 /*  local function prototypes  */
 
-static void    gimp_context_class_init       (GimpContextClass *klass);
-static void    gimp_context_init             (GimpContext      *context);
+static void    gimp_context_class_init        (GimpContextClass    *klass);
+static void    gimp_context_init              (GimpContext         *context);
+static void    gimp_context_config_iface_init (GimpConfigInterface *config_iface);
 
 static void    gimp_context_dispose          (GObject          *object);
 static void    gimp_context_finalize         (GObject          *object);
@@ -80,6 +82,18 @@ static void    gimp_context_get_property     (GObject          *object,
 					      GParamSpec       *pspec);
 
 static gsize   gimp_context_get_memsize      (GimpObject       *object);
+
+static gboolean   gimp_context_serialize_property   (GObject      *object,
+                                                     guint         property_id,
+                                                     const GValue *value,
+                                                     GParamSpec   *pspec,
+                                                     GString      *string);
+static gboolean   gimp_context_deserialize_property (GObject      *object,
+                                                     guint         property_id,
+                                                     GValue       *value,
+                                                     GParamSpec   *pspec,
+                                                     GScanner     *scanner,
+                                                     GTokenType   *expected);
 
 /*  image  */
 static void gimp_context_image_removed       (GimpContainer    *container,
@@ -367,7 +381,7 @@ gimp_context_get_type (void)
       };
       static const GInterfaceInfo config_iface_info = 
       {
-        NULL,           /* iface_init     */
+        (GInterfaceInitFunc) gimp_context_config_iface_init,
         NULL,           /* iface_finalize */
         NULL            /* iface_data     */
       };
@@ -582,12 +596,9 @@ gimp_context_class_init (GimpContextClass *klass)
                                                         GIMP_TYPE_OBJECT,
                                                         G_PARAM_READWRITE));
 
-  g_object_class_install_property (object_class,
-				   PROP_TOOL,
-				   g_param_spec_object (gimp_context_prop_names[TOOL_CHANGED],
-							NULL, NULL,
-							GIMP_TYPE_TOOL_INFO,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_TOOL,
+                                   gimp_context_prop_names[TOOL_CHANGED],
+                                   GIMP_TYPE_TOOL_INFO);
 
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FOREGROUND,
                                   gimp_context_prop_names[FOREGROUND_CHANGED],
@@ -608,33 +619,21 @@ gimp_context_class_init (GimpContextClass *klass)
                                  GIMP_TYPE_LAYER_MODE_EFFECTS,
                                  GIMP_NORMAL_MODE);
 
-  g_object_class_install_property (object_class,
-				   PROP_BRUSH,
-				   g_param_spec_object (gimp_context_prop_names[BRUSH_CHANGED],
-							NULL, NULL,
-							GIMP_TYPE_BRUSH,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_BRUSH,
+                                   gimp_context_prop_names[BRUSH_CHANGED],
+                                   GIMP_TYPE_BRUSH);
 
-  g_object_class_install_property (object_class,
-				   PROP_PATTERN,
-				   g_param_spec_object (gimp_context_prop_names[PATTERN_CHANGED],
-							NULL, NULL,
-							GIMP_TYPE_PATTERN,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PATTERN,
+                                   gimp_context_prop_names[PATTERN_CHANGED],
+                                   GIMP_TYPE_PATTERN);
 
-  g_object_class_install_property (object_class,
-				   PROP_GRADIENT,
-				   g_param_spec_object (gimp_context_prop_names[GRADIENT_CHANGED],
-							NULL, NULL,
-							GIMP_TYPE_GRADIENT,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_GRADIENT,
+                                   gimp_context_prop_names[GRADIENT_CHANGED],
+                                   GIMP_TYPE_GRADIENT);
 
-  g_object_class_install_property (object_class,
-				   PROP_PALETTE,
-				   g_param_spec_object (gimp_context_prop_names[PALETTE_CHANGED],
-							NULL, NULL,
-							GIMP_TYPE_PALETTE,
-							G_PARAM_READWRITE));
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PALETTE,
+                                   gimp_context_prop_names[PALETTE_CHANGED],
+                                   GIMP_TYPE_PALETTE);
 
   g_object_class_install_property (object_class,
 				   PROP_BUFFER,
@@ -680,6 +679,13 @@ gimp_context_init (GimpContext *context)
 
   context->buffer        = NULL;
   context->imagefile     = NULL;
+}
+
+static void
+gimp_context_config_iface_init (GimpConfigInterface *config_iface)
+{
+  config_iface->serialize_property   = gimp_context_serialize_property;
+  config_iface->deserialize_property = gimp_context_deserialize_property;
 }
 
 static void
@@ -935,6 +941,117 @@ gimp_context_get_memsize (GimpObject *object)
     memsize += strlen (context->palette_name) + 1;
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object);
+}
+
+static gboolean
+gimp_context_serialize_property (GObject      *object,
+                                 guint         property_id,
+                                 const GValue *value,
+                                 GParamSpec   *pspec,
+                                 GString      *string)
+{
+  GimpContext *context;
+  GimpObject  *serialize_obj;
+  gchar       *escaped;
+
+  context = GIMP_CONTEXT (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL:
+    case PROP_BRUSH:
+    case PROP_PATTERN:
+    case PROP_GRADIENT:
+    case PROP_PALETTE:
+      serialize_obj =  g_value_get_object (value);
+      break;
+
+    default:
+      return FALSE;
+    }
+
+  escaped = g_strescape (gimp_object_get_name (serialize_obj), NULL);
+
+  g_string_append_printf (string, "\"%s\"", escaped);
+
+  g_free (escaped);
+
+  return TRUE;
+}
+
+static gboolean
+gimp_context_deserialize_property (GObject    *object,
+                                   guint       property_id,
+                                   GValue     *value,
+                                   GParamSpec *pspec,
+                                   GScanner   *scanner,
+                                   GTokenType *expected)
+{
+  GimpContext   *context;
+  GimpContainer *container;
+  GimpObject    *standard;
+  gchar         *object_name;
+
+  context = GIMP_CONTEXT (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL:
+      container = context->gimp->tool_info_list;
+      standard  = GIMP_OBJECT (gimp_tool_info_get_standard (context->gimp));
+      break;
+
+    case PROP_BRUSH:
+      container = context->gimp->brush_factory->container;
+      standard  = GIMP_OBJECT (gimp_brush_get_standard ());
+      break;
+
+    case PROP_PATTERN:
+      container = context->gimp->pattern_factory->container;
+      standard  = GIMP_OBJECT (gimp_pattern_get_standard ());
+      break;
+
+    case PROP_GRADIENT:
+      container = context->gimp->gradient_factory->container;
+      standard  = GIMP_OBJECT (gimp_gradient_get_standard ());
+      break;
+
+    case PROP_PALETTE:
+      container = context->gimp->palette_factory->container;
+      standard  = GIMP_OBJECT (gimp_palette_get_standard ());
+      break;
+
+    default:
+      return FALSE;
+    }
+
+  if (gimp_scanner_parse_string (scanner, &object_name))
+    {
+      GimpObject *deserialize_obj;
+
+      deserialize_obj = gimp_container_get_child_by_name (container,
+                                                          object_name);
+
+      if (! deserialize_obj)
+        {
+          if (gimp_container_num_children (container) > 0)
+            {
+              deserialize_obj = gimp_container_get_child_by_index (container, 0);
+            }
+          else
+            {
+              deserialize_obj = standard;
+            }
+        }
+
+      g_value_set_object (value, deserialize_obj);
+    }
+  else
+    {
+      *expected = G_TOKEN_STRING;
+    }
+
+  return TRUE;
 }
 
 
@@ -1499,7 +1616,8 @@ gimp_context_tool_list_thaw (GimpContainer *container,
       (context,
        GIMP_TOOL_INFO (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_tool (context, gimp_tool_info_get_standard (context->gimp));
+    gimp_context_real_set_tool (context,
+                                gimp_tool_info_get_standard (context->gimp));
 }
 
 /*  the active tool disappeared  */

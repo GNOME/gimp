@@ -43,9 +43,13 @@
 #include "gimpconfig-utils.h"
 
 
-static void  serialize_unknown_token (const gchar  *key,
-                                      const gchar  *value,
-                                      gpointer      data);
+static gboolean   gimp_config_serialize_property (GObject      *object,
+                                                  GParamSpec   *param_spec,
+                                                  GString      *str,
+                                                  gboolean      escaped);
+static void       serialize_unknown_token        (const gchar  *key,
+                                                  const gchar  *value,
+                                                  gpointer      data);
 
 
 /**
@@ -78,20 +82,16 @@ gimp_config_serialize_properties (GObject *object,
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec  *prop_spec;
-      GValue       value = { 0, };
+      GParamSpec *prop_spec;
 
       prop_spec = property_specs[i];
 
       if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
         continue;
 
-      g_value_init (&value, prop_spec->value_type);
-      g_object_get_property (object, prop_spec->name, &value);
-
       g_string_printf (str, "(%s ", prop_spec->name);
       
-      if (gimp_config_serialize_value (&value, str, TRUE))
+      if (gimp_config_serialize_property (object, prop_spec, str, TRUE))
         {
           g_string_append (str, ")\n");
 
@@ -105,8 +105,6 @@ gimp_config_serialize_properties (GObject *object,
                      prop_spec->name, 
                      g_type_name (prop_spec->value_type));
         }
-
-      g_value_unset (&value);
     }
 
   g_free (property_specs);
@@ -329,6 +327,43 @@ gimp_config_serialize_unknown_tokens (GObject *object,
   gimp_config_foreach_unknown_token (object, serialize_unknown_token, str);
 
   return (write (fd, str->str, str->len) != -1);
+}
+
+static gboolean
+gimp_config_serialize_property (GObject      *object,
+                                GParamSpec   *param_spec,
+                                GString      *str,
+                                gboolean      escaped)
+{
+  GimpConfigInterface *gimp_config_iface;
+  GValue               value = { 0, };
+  gboolean             retval;
+
+  g_value_init (&value, param_spec->value_type);
+  g_object_get_property (object, param_spec->name, &value);
+
+  gimp_config_iface =
+    g_type_interface_peek (g_type_class_peek (param_spec->owner_type),
+                           GIMP_TYPE_CONFIG_INTERFACE);
+
+  if (gimp_config_iface                     &&
+      gimp_config_iface->serialize_property &&
+      gimp_config_iface->serialize_property (object,
+                                             param_spec->param_id,
+                                             (const GValue *) &value,
+                                             param_spec,
+                                             str))
+    {
+      retval = TRUE;
+    }
+  else
+    {
+      retval = gimp_config_serialize_value (&value, str, escaped);
+    }
+
+  g_value_unset (&value);
+
+  return retval;
 }
 
 static void

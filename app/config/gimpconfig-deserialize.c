@@ -211,15 +211,31 @@ static GTokenType
 gimp_config_deserialize_property (GObject    *object,
                                   GScanner   *scanner)
 {
-  GParamSpec *prop_spec;
-  GTokenType  token;
-  GValue      value = { 0, };
+  GimpConfigInterface *gimp_config_iface;
+  GParamSpec          *prop_spec;
+  GTokenType           token = G_TOKEN_RIGHT_PAREN;
+  GValue               value = { 0, };
 
-  prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);  
+  prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);
 
   g_value_init (&value, prop_spec->value_type);
 
-  if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
+  gimp_config_iface =
+    g_type_interface_peek (g_type_class_peek (prop_spec->owner_type),
+                           GIMP_TYPE_CONFIG_INTERFACE);
+
+  if (gimp_config_iface &&
+      gimp_config_iface->deserialize_property &&
+      gimp_config_iface->deserialize_property (object,
+                                               prop_spec->param_id,
+                                               &value,
+                                               prop_spec,
+                                               scanner,
+                                               &token))
+    {
+      /* nop */
+    }
+  else if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
     {
       token = gimp_config_deserialize_enum (&value, prop_spec, scanner);
     }
@@ -240,8 +256,10 @@ gimp_config_deserialize_property (GObject    *object,
     {
       token = gimp_config_deserialize_color (&value, prop_spec, scanner);
     }
-  else  /*  This fallback will only work for value_types that  */
-    {   /*  can be transformed from a string value.            */
+  else
+    {
+      /*  This fallback will only work for value_types that  */
+      /*  can be transformed from a string value.            */
       token = gimp_config_deserialize_any (&value, prop_spec, scanner);
     }
 

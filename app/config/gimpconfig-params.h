@@ -112,6 +112,11 @@ GParamSpec * gimp_param_spec_unit         (const gchar    *name,
                                    gimp_param_spec_memsize (name, NULL, NULL,\
                                    min, max, default,\
                                    GIMP_CONFIG_PARAM_FLAGS))
+#define GIMP_CONFIG_INSTALL_PROP_OBJECT(class, id, name, object_type)\
+  g_object_class_install_property (class, id,\
+                                   g_param_spec_object (name, NULL, NULL,\
+                                   object_type,\
+                                   GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_PATH(class, id, name, default)\
   g_object_class_install_property (class, id,\
                                    gimp_param_spec_path (name, NULL, NULL,\

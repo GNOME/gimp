@@ -1,3 +1,22 @@
+2002-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig.[ch]: added virtual interface methods
+	serialize_property() and deserialize_property() which can be used
+	to implement (de)serialization of special properties or to
+	override the default implementation.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-serialize.c: for each property, check if
+	the class which added it implements the virtual functions and call
+	them before trying the default implementations.
+
+	* app/config/gimpconfig-params.h: added new macro
+	GIMP_CONFIG_INSTALL_PROP_OBJECT().
+
+	* app/core/gimpcontext.c: declare the "tool", "brush", "pattern",
+	"gradient" and "palette" properties as serializable and added
+	implementations of (de)serialize_property().
+
 2002-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am: need to link test-config against

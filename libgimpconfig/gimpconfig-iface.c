@@ -90,10 +90,12 @@ gimp_config_interface_get_type (void)
 static void
 gimp_config_iface_init (GimpConfigInterface *gimp_config_iface)
 {
-  gimp_config_iface->serialize   = gimp_config_iface_serialize;
-  gimp_config_iface->deserialize = gimp_config_iface_deserialize;
-  gimp_config_iface->duplicate   = gimp_config_iface_duplicate;
-  gimp_config_iface->equal       = gimp_config_iface_equal;
+  gimp_config_iface->serialize            = gimp_config_iface_serialize;
+  gimp_config_iface->deserialize          = gimp_config_iface_deserialize;
+  gimp_config_iface->serialize_property   = NULL;
+  gimp_config_iface->deserialize_property = NULL;
+  gimp_config_iface->duplicate            = gimp_config_iface_duplicate;
+  gimp_config_iface->equal                = gimp_config_iface_equal;
 }
 
 static gboolean
@@ -314,6 +316,9 @@ gimp_config_deserialize (GObject      *object,
 
   g_scanner_destroy (scanner);
   close (fd);
+
+  if (! success)
+    g_assert (error == NULL || *error != NULL);
 
   return success;
 }

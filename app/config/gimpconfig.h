@@ -40,15 +40,26 @@ struct _GimpConfigInterface
 {
   GTypeInterface base_iface;
 
-  gboolean   (* serialize)    (GObject  *object,
-                               gint      fd,
-                               gpointer  data);
-  gboolean   (* deserialize)  (GObject  *object,
-                               GScanner *scanner,
-                               gpointer  data);
-  GObject  * (* duplicate)    (GObject  *object);
-  gboolean   (* equal)        (GObject  *a,
-                               GObject  *b);
+  gboolean   (* serialize)            (GObject      *object,
+                                       gint          fd,
+                                       gpointer      data);
+  gboolean   (* deserialize)          (GObject      *object,
+                                       GScanner     *scanner,
+                                       gpointer      data);
+  gboolean   (* serialize_property)   (GObject      *object,
+                                       guint         property_id,
+                                       const GValue *value,
+                                       GParamSpec   *pspec,
+                                       GString      *string);
+  gboolean   (* deserialize_property) (GObject      *object,
+                                       guint         property_id,
+                                       GValue       *value,
+                                       GParamSpec   *pspec,
+                                       GScanner     *scanner,
+                                       GTokenType   *expected);
+  GObject  * (* duplicate)            (GObject      *object);
+  gboolean   (* equal)                (GObject      *a,
+                                       GObject      *b);
 };
 
 typedef void  (* GimpConfigForeachFunc) (const gchar *key,
