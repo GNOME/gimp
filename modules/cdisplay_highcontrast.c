@@ -17,7 +17,6 @@
  */
 #include "config.h"
 
-#include <math.h>
 #include <string.h>
 
 #include <libgimp/color_display.h>
@@ -25,6 +24,7 @@
 #include <libgimp/gimpmodule.h>
 #include <libgimp/parasite.h>
 #include <libgimp/gimpui.h>
+#include <libgimp/gimpmath.h>
 
 #include <gtk/gtk.h>
 #include "modregister.h"
@@ -163,7 +163,7 @@ contrast_create_lookup_table (ContrastContext *context)
   for (i = 0; i < 256; i++)
     {
       context->lookup[i] 
-	= (guchar) (int)(255 * .5 * (1 + sin(context->contrast*2*M_PI*i/255.0)));
+	= (guchar) (int)(255 * .5 * (1 + sin(context->contrast*2*G_PI*i/255.0)));
     }
 }
 

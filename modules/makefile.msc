@@ -1,9 +1,10 @@
 ## Makefile for building gimp modules with Microsoft C
 ## Use: nmake -f makefile.msc
 
-# Change this to wherever you install the gimp.
-GIMP = C:\gimp
-BIN = $(GIMP)\modules
+# Change this to wherever you install gimp.
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+GIMP = \install\gimp
 
 ################################################################
 
@@ -36,10 +37,14 @@ INTL = ..\..\intl
 
 CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
+BIN = $(GIMP)\modules
+
 MODULES = \
 	colorsel_gtk-$(GIMP_VER).dll \
 	colorsel_triangle-$(GIMP_VER).dll \
-	colorsel_water-$(GIMP_VER).dll
+	colorsel_water-$(GIMP_VER).dll \
+	cdisplay_gamma-$(GIMP_VER).dll \
+	cdisplay_highcontrast-$(GIMP_VER).dll
 
 
 all : \
@@ -59,6 +64,12 @@ colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.obj module.def
 
 colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ colorsel_water.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+
+cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
+
+cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj module.def
+	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) ..\app\gimp.lib $(GTK)\gtk\gtk-$(GTK_VER).lib $(GTK)\gdk\gdk-$(GTK_VER).lib $(INTL)\gnu-intl.lib $(GLIB)\gmodule-$(GLIB_VER).lib $(GLIB)\glib-$(GLIB_VER).lib /def:module.def
 
 # General rule for building 
 .c.obj:

@@ -109,7 +109,7 @@
 #  colors remaining after the allocation of the colorcube
 #  will be left to the system palette in an effort to reduce
 #  colormap "flashing".
-(color-cube 6 6 4 24)
+(min-colors 144)
 
 # Install a GIMP colormap by default -- only for 8-bit displays
 # (install-colormap)

@@ -4,7 +4,7 @@
 # Change this to wherever you want to install the DLLs. This directory
 # should be in your PATH. As these DLLs are for the GIMP and its plug-ins
 # only, it probably is best to keep them in the GIMP's bin directory.
-BIN = C:\gimp\bin
+BIN = C:\install\gimp\bin
 
 GIMP_VER = 1.1
 

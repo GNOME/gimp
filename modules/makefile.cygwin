@@ -1,9 +1,10 @@
-## Makefile for building gimp modules with gcc -mno-cygwin
+## Makefile for building gimp modules with gcc
 ## Use: make -f makefile.cygwin
 
-# Change this to wherever you install the gimp.
-GIMP = /gimp
-BIN = $(GIMP)/modules
+# Change this to wherever you install gimp.
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+GIMP = /install/gimp
 
 OPTIMIZE = -O
 
@@ -27,10 +28,14 @@ INTL = ../../intl
 CFLAGS = $(OPTIMIZE) -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk -I$(GTK) -I$(INTL)
 LDFLAGS = -s
 
+BIN = $(GIMP)/modules
+
 MODULES = \
 	colorsel_gtk-$(GIMP_VER).dll \
 	colorsel_triangle-$(GIMP_VER).dll \
-	colorsel_water-$(GIMP_VER).dll
+	colorsel_water-$(GIMP_VER).dll \
+	cdisplay_gamma-$(GIMP_VER).dll \
+	cdisplay_highcontrast-$(GIMP_VER).dll
 
 all : \
 	$(MODULES)
@@ -49,6 +54,12 @@ colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.o module.def
 
 colorsel_water-$(GIMP_VER).dll : colorsel_water.o module.def
 	$(GLIB)/build-dll colorsel_water $(GIMP_VER) module.def colorsel_water.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+
+cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.o module.def
+	$(GLIB)/build-dll cdisplay_gamma $(GIMP_VER) module.def cdisplay_gamma.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
+
+cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.o module.def
+	$(GLIB)/build-dll cdisplay_highcontrast $(GIMP_VER) module.def cdisplay_highcontrast.o $(LDFLAGS) -L ../app -lgimp -L ../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk -lgdk-$(GTK_VER) -L $(INTL) -lgnu-intl -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
 
 clean:
 	-rm *.dll *.a *.o *.exp *.base

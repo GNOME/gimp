@@ -196,6 +196,7 @@ EXPORTS
 	gimp_matrix4_to_deg
 	gimp_message
 	gimp_micro_version
+	gimp_min_colors
 	gimp_minor_version
 	gimp_palette_get_background
 	gimp_palette_get_foreground

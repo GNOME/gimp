@@ -1,3 +1,14 @@
+2000-05-04  Tor Lillqvist  <tml@iki.fi>
+
+	* gimprc.win32: Replace "color-cube" by "min-colors".
+
+	* */makefile.{cygwin,msc}: Updates. Install to /install/gimp.
+
+	* libgimp/gimp.def: Add gimp_min_colors.
+
+	* modules/cdisplay_highcontrast.c: Include gimpmath.h instead of
+	math.h. Use G_PI instead of M_PI.
+
 2000-05-04  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_gamma.c: 

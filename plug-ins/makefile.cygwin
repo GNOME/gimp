@@ -25,14 +25,14 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # the one used with Microsoft's nmake, which has silly limits.
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
+COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
 COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler unsharp video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain webbrowser winsnap
+SEPARATE = AlienMap AlienMap2 FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gdyntext gfig gflare gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain webbrowser winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -454,8 +454,9 @@ EXTRALIBS = -L $(TIFF) -ltiff -L $(JPEG) -ljpeg -L $(ZLIB) -lz -luser32
 endif
 
 ifdef EXTRA_gimp_ace
-EXTRACFLAGS = -DGLACE_GIMP
+EXTRACFLAGS = -DGLACE_GIMP -DVERSION=\"0.5.1\"
 OBJECTS = \
+	dialog.o \
 	gimp_ace.o \
 	glace.o \
 	glaceG.o
@@ -490,6 +491,41 @@ ifdef EXTRA_magiceye
 OBJECTS = \
 	dialog.o \
 	magiceye.o
+endif
+
+ifdef EXTRA_mathmap
+OBJECTS = \
+	builtins.o \
+	builtins_compiler.o \
+	cgen.o \
+	colorwell.o \
+	exprtree.o \
+	internals.o \
+	jump.o \
+	lispreader.o \
+	macros.o \
+	mathmap.o \
+	noise.o \
+	overload.o \
+	parser.o \
+	postfix.o \
+	scanner.o \
+	tags.o \
+	tuples.o \
+	userval.o \
+	vars.o
+
+EXTRACFLAGS = -Drandom=g_random_int
+
+parser.c parser.h : parser.y
+	bison -p mm -d parser.y
+	mv parser.tab.c parser.c
+	mv parser.tab.h parser.h
+
+scanner.c : scanner.fl parser.h
+	flex -Pmm scanner.fl
+	mv lex.mm.c scanner.c
+
 endif
 
 ifdef EXTRA_user_filter
