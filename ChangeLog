@@ -1,3 +1,11 @@
+2005-02-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-utils.[ch] (gimp_check_glib_version): removed this
+	function.
+
+	* app/sanity.c (sanity_check_glib): use glib_check_version()
+	instead and set required version to 2.6.0.
+
 2005-02-02  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: depend on glib >= 2.6.0.

@@ -59,9 +59,5 @@ GParameter  * gimp_parameters_append_valist (GType         object_type,
 void          gimp_parameters_free          (GParameter   *params,
                                              gint          n_params);
 
-const gchar * gimp_check_glib_version       (guint         required_major,
-                                             guint         required_minor,
-                                             guint         required_micro);
-
 
 #endif /* __APP_GIMP_UTILS_H__ */

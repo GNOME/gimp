@@ -303,26 +303,3 @@ gimp_parameters_free (GParameter *params,
       g_free (params);
     }
 }
-
-const gchar *
-gimp_check_glib_version (guint required_major,
-                         guint required_minor,
-                         guint required_micro)
-{
-#ifdef __GNUC__
-#warning FIXME: remove this function as soon as we depend on GLib 2.6.0
-#endif
-
-  gint glib_effective_micro = 100 * glib_minor_version + glib_micro_version;
-  gint required_effective_micro = 100 * required_minor + required_micro;
-
-  if (required_major > glib_major_version)
-    return "GLib version too old (major mismatch)";
-  if (required_major < glib_major_version)
-    return "GLib version too new (major mismatch)";
-  if (required_effective_micro < glib_effective_micro - glib_binary_age)
-    return "GLib version too new (micro mismatch)";
-  if (required_effective_micro > glib_effective_micro)
-    return "GLib version too old (micro mismatch)";
-  return NULL;
-}

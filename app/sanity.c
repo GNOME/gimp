@@ -24,8 +24,6 @@
 
 #include "libgimpbase/gimpenv.h"
 
-#include "core/gimp-utils.h"
-
 #include "sanity.h"
 
 #include "gimp-intl.h"
@@ -65,12 +63,12 @@ sanity_check_glib (void)
   const gchar *mismatch;
 
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 4
-#define GLIB_REQUIRED_MICRO 5
+#define GLIB_REQUIRED_MINOR 6
+#define GLIB_REQUIRED_MICRO 0
 
-  mismatch = gimp_check_glib_version (GLIB_REQUIRED_MAJOR,
-                                      GLIB_REQUIRED_MINOR,
-                                      GLIB_REQUIRED_MICRO);
+  mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
+                                 GLIB_REQUIRED_MINOR,
+                                 GLIB_REQUIRED_MICRO);
 
   if (mismatch)
     {
