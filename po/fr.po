@@ -2353,7 +2353,7 @@ msgstr "%d × %d pixels"
 #: app/info_window.c:520
 #, c-format
 msgid "%g x %g dpi"
-msgstr "%d × %d pts par pouce"
+msgstr "%g × %g pts par pouce"
 
 #: app/info_window.c:532
 msgid "RGB Color"

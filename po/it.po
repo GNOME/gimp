@@ -2332,7 +2332,7 @@ msgstr "Info: %s-%d.%d"
 #: app/info_window.c:508
 #, c-format
 msgid "%d x %d pixels"
-msgstr "%d x &d pixel"
+msgstr "%d x %d pixel"
 
 #. image resolution
 #: app/info_window.c:520

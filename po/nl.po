@@ -1833,7 +1833,7 @@ msgstr ""
 #: app/gradient.c:2003
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
-msgstr "Zoomfactor: %d:1    Weergave [%0, 6f, %0, 6f]"
+msgstr "Zoomfactor: %d:1    Weergave [%0.6f, %0.6f]"
 
 #: app/gradient.c:2254
 #, c-format

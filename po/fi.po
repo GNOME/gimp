@@ -1438,7 +1438,7 @@ msgstr "Sivellintiedosto on liian lyhyt."
 #: app/gimpbrush.c:300
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
-msgstr "Tuntematon formaatin versio #%s sivellintiedostossa \"%s\"\n"
+msgstr "Tuntematon formaatin versio #%d sivellintiedostossa \"%s\"\n"
 
 #: app/gimpbrushlist.c:188 app/gimpbrushlist.c:197
 #, c-format
@@ -2328,7 +2328,7 @@ msgstr ""
 #: app/info_window.c:508
 #, c-format
 msgid "%d x %d pixels"
-msgstr "%s x %d pikseliä"
+msgstr "%d x %d pikseliä"
 
 #. image resolution
 #: app/info_window.c:520
@@ -4600,7 +4600,7 @@ msgstr "Lisäykset"
 #: app/plug_in.c:775
 #, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "Liitännäistä %s ei lötynyt: \"%s\""
+msgstr "Liitännäistä ei lötynyt: \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -5343,7 +5343,7 @@ msgstr "Kirjasinleikkausta '%s' ei löytynyt."
 #: app/text_tool.c:620
 #, c-format
 msgid "Font '%s' not found.%s"
-msgstr "Kirjasinleikkausta '%s' ei löytynyt."
+msgstr "Kirjasinleikkausta '%s' ei löytynyt.%s"
 
 #: app/text_tool.c:623
 msgid ""
