@@ -33,7 +33,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
-#include "ppport.h"
+#include "gppport.h"
 
 /* dirty is used in gimp.h AND in perl < 5.005 or with PERL_POLLUTE.  */
 #ifdef dirty
@@ -184,7 +184,7 @@ static int gdrawable_free (SV *obj, MAGIC *mg)
   return 0;
 }
 
-MGVTBL vtbl_gdrawable = {0, 0, 0, 0, gdrawable_free};
+static MGVTBL vtbl_gdrawable = {0, 0, 0, 0, gdrawable_free};
 
 static SV *new_gdrawable (gint32 id)
 {
@@ -265,7 +265,7 @@ static int gpixelrgn_free (SV *obj, MAGIC *mg)
   return 0;
 }
 
-MGVTBL vtbl_gpixelrgn = {0, 0, 0, 0, gpixelrgn_free};
+static MGVTBL vtbl_gpixelrgn = {0, 0, 0, 0, gpixelrgn_free};
 
 static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, int dirty, int shadow)
 {

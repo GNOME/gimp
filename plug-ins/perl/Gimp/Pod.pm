@@ -40,6 +40,7 @@ sub new {
 sub _cache {
    my $self = shift;
    my $fmt = shift;
+   local $^W = 0;
    if (!$self->{doc}{$fmt} && $converter{$fmt}) {
       my $doc = $converter{$fmt}->($self->{path});
       undef $doc if $?>>8;

@@ -1,0 +1,80 @@
+#!/usr/bin/perl
+
+use Gimp 1.095;
+use Gimp::Fu;
+
+register	"layer_reorder",
+		"Reshuffle the order of layers in an image according to a function",
+		"=pod",
+		"Marc Lehmann <pcg\@goof.com>",
+		"Marc Lehmann <pcg\@goof.com>",
+		"19990707",
+		"<Image>/Layers/Stack/Reorder Layers",
+		"*",
+		[
+                 [PF_RADIO,	"function",	"which remapping function to use: CUSTOM (0), REVERSE (1), SHIFT (2)", 1,
+                  [Custom => 0, Reverse => 1, Shift => 2] ],
+                 [PF_STRING,	"custom",	"the (optional) custom function to use, e.g. 'n-i' reverses the order"],
+		],
+                [],
+                ['gimp-1.1'],
+	sub {
+		my($img,$drawable,$function,$custom) = @_;
+
+                $custom = "-i"            if $function == 1;
+                $custom = "(i+$custom)%n" if $function == 2;
+
+                my @layers = $img->get_layers;
+
+                $layers[-1]->add_alpha;
+
+                # replace vars
+                $custom =~ s/\bn\b/scalar@layers/ge;
+                $custom =~ s/\bi\b/\$i/g;
+
+                $function = eval "sub { my \$i = shift;\n#line 0\n$custom\n}";
+                die "syntax error in expression '$custom': $@\n" if $@;
+
+                # calculcate new order
+                my $index = 0;
+                @layers = map $_->[0],
+                             sort { $b->[1] <=> $a->[1] }
+                                map [$_, $function->($index++)],
+                                   @layers;
+
+                # now re-order the layers
+		$img->undo_push_group_start;
+                for(@layers) {
+                   $img->raise_layer_to_top($_) unless $$_ == ${($img->get_layers)[0]};
+                }
+                Gimp->displays_flush;
+		$img->undo_push_group_end;
+	};
+
+exit main;
+
+=head1 DESCRIPTION
+
+This function re-orders the layer stack using either a builtin function
+(only reversal is available at the moment, contact me if you find another
+useful function) or a custom one.
+
+REVERSE (1) will reverse the order of layers (it is equivalent to the custom
+function C<-i>).
+
+SHIFT (2) will shift the sequence by the amount (positive or negative)
+indicated in the custom field. It is equivalent to the custom function
+C<( i + custom ) % n>.
+
+If you specify CUSTOM (0) as function than you can use the "custom"
+argument to specify any function you like. Any C<i> is replaced by the
+index of the layer (C<0>..C<n-1>), any C<n> is replaced by the total
+number of layers. The function returns the new position of the layer,
+which is measured relative to all other positions, i.e. your function can
+return values 0.1, 0.7 and 0.3 for layers 0, 1 and 2 respectively, and the
+new order will be 0, 2 and 1.
+
+Examples:
+
+ -i        # reverse the order of layers
+ (i+5)%n   # shift the order of frames by 5

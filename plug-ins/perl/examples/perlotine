@@ -14,7 +14,7 @@ sub get_vguides {  # get back an ordered set of vertical guides
     my ($img)=@_;
     $i=0;
     my @vguides;
-    while ($i=$img->findnext_guide($i)) {
+    while ($i=$img->find_next_guide($i)) {
         if (!$img->get_guide_orientation($i)){
 			$keyval = sprintf("%4d", $img->get_guide_position($i));
             $vkeys{$keyval} = $i;
@@ -31,7 +31,7 @@ sub get_hguides { # get back an ordered set of horizontal guides
     my ($img)=@_;
     $i=0;
     my @hguides;
-    while ($i=$img->findnext_guide($i)) {
+    while ($i=$img->find_next_guide($i)) {
         if ($img->get_guide_orientation($i)){
 			$keyval = sprintf("%4d", $img->get_guide_position($i));
             $hkeys{$keyval} = $i;

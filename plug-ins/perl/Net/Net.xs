@@ -7,7 +7,7 @@
 #include "perl.h"
 #include "XSUB.h"
 #define NEED_newCONSTSUB
-#include "ppport.h"
+#include "gppport.h"
 
 #if !defined(PERLIO_IS_STDIO) && defined(HASATTRIBUTE)
 # undef printf

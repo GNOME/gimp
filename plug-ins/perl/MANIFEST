@@ -19,7 +19,7 @@ t/load.t
 t/loadlib.t
 t/run.t
 extradefs.h
-ppport.h
+gppport.h
 Perl-Server
 etc/configure
 etc/configure.in
@@ -102,3 +102,5 @@ examples/colourtoalpha
 examples/pixelmap
 embedxpm
 logo.xpm
+examples/frame_reshuffle
+

@@ -14,7 +14,7 @@
 #include "perl.h"
 #include "XSUB.h"
 #define NEED_newCONSTSUB
-#include "ppport.h"
+#include "gppport.h"
 
 /* FIXME */
 /* dirty is used in gimp.h.  */
