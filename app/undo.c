@@ -1689,10 +1689,8 @@ undo_pop_layer (GimpImage *gimage,
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (gimage, lu->layer);
 
-      /*  if exists, set the previous layer                                           */
-      /* (counterexample: result layer added after a merge op has no previous layer.) */
-
-      if(GIMP_IS_LAYER (lu->prev_layer))
+      /*  if exists, set the previous layer  */
+      if (lu->prev_layer)
 	gimp_image_set_active_layer (gimage, lu->prev_layer);
 
       /*  remove the layer  */
@@ -1868,7 +1866,7 @@ undo_pop_layer_mod (GimpImage *gimage,
   GIMP_DRAWABLE (layer)->offset_x  = offset_x;
   GIMP_DRAWABLE (layer)->offset_y  = offset_y;
 
-  if (layer->mask) 
+  if (layer->mask)
     {
       GIMP_DRAWABLE (layer->mask)->offset_x = offset_x;
       GIMP_DRAWABLE (layer->mask)->offset_y = offset_y;
@@ -2309,11 +2307,9 @@ undo_pop_channel (GimpImage *gimage,
       /*  remove the channel  */
       gimp_container_remove (gimage->channels, GIMP_OBJECT (cu->channel));
 
+      /*  if exists, set the previous channel  */
       if (cu->prev_channel)
-        {
-          /*  set the previous channel  */
-          gimp_image_set_active_channel (gimage, cu->prev_channel);
-        }
+        gimp_image_set_active_channel (gimage, cu->prev_channel);
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (cu->channel),
@@ -2637,11 +2633,9 @@ undo_pop_vectors (GimpImage *gimage,
       /*  remove the vectors  */
       gimp_container_remove (gimage->vectors, GIMP_OBJECT (vu->vectors));
 
+      /*  if exists, set the previous vectors  */
       if (vu->prev_vectors)
-        {
-          /*  set the previous vectors  */
-          gimp_image_set_active_vectors (gimage, vu->prev_vectors);
-        }
+        gimp_image_set_active_vectors (gimage, vu->prev_vectors);
     }
   else
     {
@@ -2982,8 +2976,8 @@ undo_push_fs_rigor (GimpImage *gimage,
 
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }
 
 static gboolean
@@ -3065,8 +3059,8 @@ undo_push_fs_relax (GimpImage *gimage,
 
       return TRUE;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }
 
 static gboolean
@@ -3224,7 +3218,7 @@ undo_pop_transform (GimpImage *gimage,
           /*  If we're re-implementing the first transform, reactivate tool  */
           if (state == REDO && tt->original)
             {
-              gimp_tool_control_activate(active_tool->control);
+              gimp_tool_control_activate (active_tool->control);
 
               gimp_draw_tool_resume (GIMP_DRAW_TOOL (tt));
             }
@@ -3516,7 +3510,7 @@ undo_pop_parasite (GimpImage *gimage,
       else
 	gimp_parasite_detach (gimage->gimp, data->name);
     }
-    
+
   if (tmp)
     gimp_parasite_free (tmp);
 

@@ -179,7 +179,7 @@ procedural_db_execute (Gimp        *gimp,
   if (list == NULL)
     {
       g_message (_("PDB calling error %s not found"), name);
-      
+
       return_args = g_new (Argument, 1);
       return_args->arg_type      = GIMP_PDB_STATUS;
       return_args->value.pdb_int = GIMP_PDB_CALLING_ERROR;
@@ -187,7 +187,7 @@ procedural_db_execute (Gimp        *gimp,
       return return_args;
     }
   
-  while (list)
+  for (; list; list = g_list_next (list))
     {
       if ((procedure = (ProcRecord *) list->data) == NULL)
 	{
@@ -199,7 +199,6 @@ procedural_db_execute (Gimp        *gimp,
 
 	  return return_args;
 	}
-      list = list->next;
 
       /*  check the arguments  */
       for (i = 0; i < procedure->num_args; i++)
@@ -244,14 +243,22 @@ procedural_db_execute (Gimp        *gimp,
 	  (procedure->num_values > 0))
 	memset (&return_args[1], 0, sizeof (Argument) * procedure->num_values);
 
-      /*  Check if the return value is a PDB_PASS_THROUGH, 
-          in which case run the next procedure in the list  */
-
-      if (return_args[0].value.pdb_int != GIMP_PDB_PASS_THROUGH)
-	break;
-      else if (list)  /*  Pass through, 
-                          destroy return values and run another procedure  */
-	procedural_db_destroy_args (return_args, procedure->num_values);
+      if (return_args[0].value.pdb_int == GIMP_PDB_PASS_THROUGH)
+        {
+          /*  If the return value is GIMP_PDB_PASS_THROUGH and there is
+           *  a next procedure in the list, destroy the return values
+           *  and run the next procedure.
+           */
+          if (g_list_next (list))
+            procedural_db_destroy_args (return_args, procedure->num_values);
+        }
+      else
+        {
+          /*  No GIMP_PDB_PASS_THROUGH, break out of the list of
+           *  procedures and return the current return values.
+           */
+          break;
+        }
     }
 
   return return_args;
@@ -466,7 +473,7 @@ procedural_db_destroy_args (Argument *args,
 }
 
 void
-procedural_db_set_data (Gimp        *gimp,
+procedural_db_set_data (Gimp         *gimp,
                         const gchar  *identifier,
                         gint32        bytes,
                         const guint8 *data)
