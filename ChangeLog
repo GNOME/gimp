@@ -1,5 +1,11 @@
 2004-11-16  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/gimpfu.py
+	* plug-ins/common/gimpui.py: Add a palette selector (bug #155325).
+	Patch by Joao S. O. Bueno.
+
+2004-11-16  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/gimpfu.py: Fix -fu slider behavior (bug #155103).
 	Patch by Joao S. O. Bueno.
 	

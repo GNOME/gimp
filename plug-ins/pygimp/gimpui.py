@@ -279,6 +279,18 @@ class GradientSelector(_Selector):
         num, gradients = gimp.pdb.gimp_gradients_get_list(None)
         return gradients
 
+class PaletteSelector(_Selector):
+    def __init__(self, default=""):
+        self.default = default
+        _Selector.__init__(self)
+    def get_default(self):
+        return self.default
+    def get_title(self):
+        return "Palettes"
+    def get_list(self):
+        num, palettes = gimp.pdb.gimp_palettes_get_list("")
+        return palettes    
+    
 class FontSelector(gtk.HBox):
     def __init__(self, default="Sans"):
         gtk.HBox.__init__(self, gtk.FALSE, 5)

@@ -91,6 +91,7 @@ PF_PATTERN     = 1006
 PF_GRADIENT    = 1007
 PF_RADIO       = 1008
 PF_TEXT        = 1009
+PF_PALETTE     = 1010
 
 _type_mapping = {
     PF_INT8        : PDB_INT8,
@@ -121,6 +122,7 @@ _type_mapping = {
     PF_GRADIENT    : PDB_STRING,
     PF_RADIO       : PDB_STRING,
     PF_TEXT        : PDB_STRING,
+    PF_PALETTE     : PDB_STRING,
 }
 
 _registered_plugins_ = {}
@@ -391,6 +393,7 @@ def _interact(func_name, start_params):
             PF_BRUSH       : gimpui.BrushSelector,
             PF_PATTERN     : gimpui.PatternSelector,
             PF_GRADIENT    : gimpui.GradientSelector,
+            PF_PALETTE     : gimpui.PaletteSelector,
             PF_TEXT        : TextEntry
     }
 
