@@ -4,6 +4,7 @@
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04.
+# Martin Willemoes Hansen <mwh@sysrq.dk>, 2005.
 #
 # Hvis der er problemer, så start med at kigge i de.po - den er oversat
 # af Sven Neumann som er en af udviklerne bag programmet.
@@ -79,11 +80,11 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP /gnome-cvs\n"
+"Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:32+0100\n"
-"PO-Revision-Date: 2004-12-12 17:07+0100\n"
-"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
+"POT-Creation-Date: 2005-02-04 10:05+0100\n"
+"PO-Revision-Date: 2005-02-04 10:07+0100\n"
+"Last-Translator: Martin Willemoes Hansen <mwh@sysrq.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1877,7 +1878,7 @@ msgstr "_Hjælpelinjer"
 
 #: app/actions/image-actions.c:65 app/actions/image-actions.c:70
 msgid "_New..."
-msgstr "_Ny bane..."
+msgstr "_Ny..."
 
 #: app/actions/image-actions.c:75
 msgid "Can_vas Size..."
@@ -5035,23 +5036,23 @@ msgstr "Skift farveafbildningselement"
 msgid "Add Color to Colormap"
 msgstr "Tilføj farve til farveafbildning"
 
-#: app/core/gimpimage-convert.c:788
+#: app/core/gimpimage-convert.c:789
 msgid "Convert Image to RGB"
 msgstr "Konvertér billede til RGB"
 
-#: app/core/gimpimage-convert.c:792
+#: app/core/gimpimage-convert.c:793
 msgid "Convert Image to Grayscale"
 msgstr "Konvertér billede til gråtone"
 
-#: app/core/gimpimage-convert.c:796
+#: app/core/gimpimage-convert.c:797
 msgid "Convert Image to Indexed"
 msgstr "Konvertér billede til indekseret"
 
-#: app/core/gimpimage-convert.c:875
+#: app/core/gimpimage-convert.c:879
 msgid "Converting to indexed (stage 2)..."
 msgstr "Konvertér billede til indekseret (skridt 2)..."
 
-#: app/core/gimpimage-convert.c:919
+#: app/core/gimpimage-convert.c:923
 msgid "Converting to indexed (stage 3)..."
 msgstr "Konvertér billede til indekseret (skridt 3)..."
 
@@ -5658,7 +5659,15 @@ msgstr "Oversættelse af"
 #. we'd prefer just the names, please no email addresses.
 #: app/dialogs/about-dialog.c:54
 msgid "translator-credits"
-msgstr "Ole Laursen <olau@hardworking.dk>"
+msgstr ""
+"Birger Langkjer\n"
+"Keld Simonsen\n"
+"Kenneth Christiansen\n"
+"Martin Willemoes Hansen\n"
+"Ole Laursen\n"
+"\n"
+"Dansk-gruppen <dansk@klid.dk>\n"
+"Mere info: http://www.klid.dk/dansk/"
 
 #: app/dialogs/about-dialog.c:59
 msgid "Contributions by"
