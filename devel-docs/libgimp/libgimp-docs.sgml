@@ -8,7 +8,6 @@
 <!entity libgimp-parasite SYSTEM "sgml/parasite.sgml">
 <!entity libgimp-parasiteF SYSTEM "sgml/parasiteF.sgml">
 <!entity libgimp-parasiteP SYSTEM "sgml/parasiteP.sgml">
-<!entity libgimp-gserialize SYSTEM "sgml/gserialize.sgml">
 <!entity libgimp-color-selector SYSTEM "sgml/color_selector.sgml">
 <!entity libgimp-gimpmodule SYSTEM "sgml/gimpmodule.sgml">
 <!entity libgimp-gimpmath SYSTEM "sgml/gimpmath.sgml">
@@ -38,7 +37,7 @@
   </bookinfo>
 
   <chapter id="gimpdefinitions">
-    <title>GIMP Constants and Limits</title>
+    <title>GIMP Constants, Limits and Macros</title>
     &libgimp-gimpenums;
     &libgimp-gimpfeatures;
     &libgimp-gimplimits;
@@ -48,17 +47,16 @@
   <chapter id="libgimp">
     <title>GIMP Library</title>
     &libgimp-gimp;
-    &libgimp-gimpprotocol;
     &libgimp-gimpcolorspace;
-    &libgimp-gimpwire;
+    &libgimp-gimpcompat;
+    &libgimp-gimpenv;
     &libgimp-gimpmatrix;
+    &libgimp-gimpprotocol;
+    &libgimp-gimpwire;
     &libgimp-parasite;
+    &libgimp-parasiteio;
     &libgimp-parasiteF;
     &libgimp-parasiteP;
-    &libgimp-gserialize;
-    &libgimp-gimpenv;
-    &libgimp-parasiteio;
-    &libgimp-gimpcompat;
   </chapter>
 
   <chapter id="libgimpui">

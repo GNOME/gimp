@@ -485,21 +485,6 @@ Parasite
 </SECTION>
 
 <SECTION>
-<FILE>gserialize</FILE>
-GSerialType
-GSerialItem
-GSerialDescription
-g_new_serial_item
-g_serial_item
-g_serial_array
-g_serial_vlen_array
-g_new_serial_description
-g_free_serial_description
-g_serialize
-g_deserialize
-</SECTION>
-
-<SECTION>
 <FILE>color_selector</FILE>
 GimpColorSelector_Callback
 GimpColorSelector_NewFunc
@@ -828,6 +813,7 @@ gimp_unit_get_plural
 <FILE>gimpwidgets</FILE>
 gimp_option_menu_new
 gimp_option_menu_new2
+gimp_option_menu_set_history
 gimp_radio_group_new
 gimp_radio_group_new2
 gimp_spin_button_new
@@ -843,3 +829,4 @@ gimp_double_adjustment_update
 gimp_unit_menu_update
 gimp_table_attach_aligned
 </SECTION>
+

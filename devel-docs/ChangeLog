@@ -1,3 +1,15 @@
+Mon Feb 14 16:41:31 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am: there was a slash missing in EXTRA_DIST
+	
+	* libgimp/tmpl/gserialize.sgml: removed gserialize documentation
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpwidgets.sgml
+	* libgimp/tmpl/libgimp-unused.sgml: updates
+
 2000-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/Makefile.am

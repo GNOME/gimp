@@ -37,6 +37,15 @@ gimpwidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_option_menu_set_history ##### -->
+<para>
+
+</para>
+
+@option_menu: 
+@user_data: 
+
+
 <!-- ##### FUNCTION gimp_radio_group_new ##### -->
 <para>
 

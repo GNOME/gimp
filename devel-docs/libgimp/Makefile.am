@@ -43,7 +43,6 @@ tmpl_sources = 				\
 	tmpl/gimpunitmenu.sgml		\
 	tmpl/gimpwidgets.sgml		\
 	tmpl/gimpwire.sgml		\
-	tmpl/gserialize.sgml		\
 	tmpl/libgimp-unused.sgml	\
 	tmpl/parasite.sgml		\
 	tmpl/parasiteF.sgml		\
@@ -54,7 +53,7 @@ libgimp_docdir = $(HTML_DIR)
 
 libgimp_doc_DATA = libgimp.html
 
-EXTRA_DIST =
+EXTRA_DIST =				\
 	$(libgimp_doc_DATA)		\
 	libgimp.hierarchy		\
 	libgimp.signals			\
@@ -83,7 +82,7 @@ scan:
 		LDFLAGS="$(LDFLAGS)" \
 		gtkdoc-scanobj --module=$(DOC_MODULE) \
 	&& gtkdoc-scan --module=$(DOC_MODULE) --source-dir=$(DOC_SOURCE_DIR) \
-		--ignore-headers="gimpintl.h libgimp-intl.h stdplugins-intl.h" )
+		--ignore-headers="gimpintl.h libgimp-intl.h stdplugins-intl.h gserialize.h")
 
 templates: scan
 	cd $(srcdir) && gtkdoc-mktmpl --module=$(DOC_MODULE)
