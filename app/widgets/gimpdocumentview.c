@@ -330,21 +330,20 @@ gimp_document_view_refresh_clicked (GtkWidget        *widget,
   if (imagefile && gimp_container_have (editor->view->container,
                                         GIMP_OBJECT (imagefile)))
     {
-      /* FIXME: hardcoded thumbnail size */
-      gimp_imagefile_create_thumbnail (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
+      gimp_imagefile_create_thumbnail (imagefile, editor->view->preview_size);
     }
 }
 
 static void
-gimp_document_view_delete_dangling_foreach (GimpImagefile *imagefile,
-                                            GimpContainer *container)
+gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
+                                            GimpContainerView *container_view)
 {
-  /* FIXME: hardcoded thumbnail size */
-  gimp_imagefile_update (imagefile, GIMP_THUMBNAIL_SIZE_NORMAL);
+  gimp_imagefile_update (imagefile, container_view->preview_size);
 
   if (imagefile->state == GIMP_IMAGEFILE_STATE_NOT_FOUND)
     {
-      gimp_container_remove (container, GIMP_OBJECT (imagefile));
+      gimp_container_remove (container_view->container, 
+                             GIMP_OBJECT (imagefile));
     }
 }
 
@@ -367,7 +366,7 @@ gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
     {
       gimp_container_foreach (editor->view->container,
                               (GFunc) gimp_imagefile_update,
-                              NULL);
+                              (gpointer) editor->view->preview_size);
     }
 }
 

@@ -102,7 +102,7 @@ static TempBuf     * gimp_imagefile_get_new_preview (GimpViewable   *viewable,
                                                      gint            height);
 
 static TempBuf     * gimp_imagefile_read_png_thumb  (GimpImagefile  *imagefile,
-                                                     gint            size);
+                                                     gint            thumb_size);
 static gboolean      gimp_imagefile_save_png_thumb  (GimpImagefile  *imagefile,
                                                      GimpImage      *gimage,
                                                      const gchar    *thumb_name,
@@ -114,9 +114,8 @@ static void          gimp_imagefile_save_fail_thumb (GimpImagefile  *imagefile,
                                                      off_t          image_size);
 static const gchar * gimp_imagefile_png_thumb_name  (const gchar    *uri);
 static gchar       * gimp_imagefile_png_thumb_path  (const gchar    *uri,
-                                                     gint            size);
+                                                     gint           *thumb_size);
 static gchar       * gimp_imagefile_find_png_thumb  (const gchar    *uri,
-                                                     gint            size,
                                                      gint           *thumb_size);
 
 static TempBuf     * gimp_imagefile_read_xv_thumb   (GimpImagefile  *imagefile);
@@ -261,13 +260,14 @@ gimp_imagefile_new (const gchar *uri)
 
 void
 gimp_imagefile_update (GimpImagefile *imagefile,
-                       gint           size)
+                       gint           thumb_size)
 {
   const gchar *uri;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (thumb_size <= 256);
 
-  if (size < 1)
+  if (thumb_size < 1)
     return;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
@@ -276,7 +276,6 @@ gimp_imagefile_update (GimpImagefile *imagefile,
     {
       gchar  *filename   = NULL;
       gchar  *thumbname  = NULL;
-      gint    thumb_size = THUMB_SIZE_FAIL;
       off_t   image_size;
 
       filename = g_filename_from_uri (uri, NULL, NULL);
@@ -304,7 +303,7 @@ gimp_imagefile_update (GimpImagefile *imagefile,
       imagefile->image_size = image_size;
       imagefile->state      = GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND;
 
-      thumbname = gimp_imagefile_find_png_thumb (uri, size, &thumb_size);
+      thumbname = gimp_imagefile_find_png_thumb (uri, &thumb_size);
 
       if (thumbname)
         imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_EXISTS;
@@ -328,7 +327,8 @@ gimp_imagefile_update (GimpImagefile *imagefile,
       if (GIMP_IS_IMAGEFILE (documents_imagefile) &&
           (documents_imagefile != imagefile))
         {
-          gimp_imagefile_update (GIMP_IMAGEFILE (documents_imagefile), size);
+          gimp_imagefile_update (GIMP_IMAGEFILE (documents_imagefile),
+                                 thumb_size);
         }
     }
 }
@@ -340,11 +340,15 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   const gchar *uri;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
+  g_return_if_fail (thumb_size <= 256);
 
   if (thumb_size < 1)
     return;
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
+
+  if (strstr (uri, "/.thumbnails/"))
+    return;
 
   if (uri)
     {
@@ -380,8 +384,7 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
           gchar *thumb_name;
 
           thumb_size = MIN (thumb_size, MAX (gimage->width, gimage->height));
-
-          thumb_name = gimp_imagefile_png_thumb_path (uri, thumb_size);
+          thumb_name = gimp_imagefile_png_thumb_path (uri, &thumb_size);
 
           if (thumb_name)
             {
@@ -414,6 +417,7 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
 {
   GdkPixbuf   *pixbuf;
   const gchar *uri;
+  gint         thumb_size = THUMB_SIZE_FAIL;
   gchar       *thumb_name;
   gchar       *desc;
   gchar       *t_str;
@@ -422,7 +426,7 @@ gimp_imagefile_save_fail_thumb (GimpImagefile *imagefile,
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  thumb_name = gimp_imagefile_png_thumb_path (uri, THUMB_SIZE_FAIL);
+  thumb_name = gimp_imagefile_png_thumb_path (uri, &thumb_size);
 
   if (!thumb_name)
     return;
@@ -479,6 +483,8 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   thumb_size = gimage->gimp->config->thumbnail_size;
 
+  g_return_val_if_fail (thumb_size <= 256, FALSE);
+
   if (thumb_size < 1)
     return TRUE;
 
@@ -487,6 +493,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   g_return_val_if_fail (uri && image_uri && ! strcmp (uri, image_uri), FALSE);
 
+  if (strstr (uri, "/.thumbnails/"))
+    return FALSE;
+
   filename = g_filename_from_uri (uri, NULL, NULL);
 
   /*  no thumbnails of remote images :-(  */
@@ -494,7 +503,7 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
     return FALSE;
 
   thumb_size = MIN (thumb_size, MAX (gimage->width, gimage->height));
-  thumb_name = gimp_imagefile_png_thumb_path (uri, thumb_size);
+  thumb_name = gimp_imagefile_png_thumb_path (uri, &thumb_size);
 
   /*  the thumbnail directory doesn't exist and couldn't be created */
   if (! thumb_name)
@@ -758,13 +767,12 @@ gimp_imagefile_test (const gchar *filename,
 
 static TempBuf *
 gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
-                               gint           size)
+                               gint           thumb_size)
 {
   GimpImagefileState  old_state;
   TempBuf            *temp_buf   = NULL;
   GdkPixbuf          *pixbuf     = NULL;
   gchar              *thumbname  = NULL;
-  gint                thumb_size = THUMB_SIZE_FAIL;
   const gchar        *option;
   gint                width;
   gint                height;
@@ -785,7 +793,7 @@ gimp_imagefile_read_png_thumb (GimpImagefile *imagefile,
   imagefile->state = GIMP_IMAGEFILE_STATE_THUMBNAIL_NOT_FOUND;
 
   thumbname = gimp_imagefile_find_png_thumb (GIMP_OBJECT (imagefile)->name,
-                                             size, &thumb_size);
+                                             &thumb_size);
 
   if (!thumbname)
     goto cleanup;
@@ -1002,34 +1010,33 @@ gimp_imagefile_png_thumb_name (const gchar *uri)
 
 static gchar *
 gimp_imagefile_png_thumb_path (const gchar *uri,
-                               gint         size)
+                               gint        *thumb_size)
 {
   const gchar *name;
   gchar       *thumb_name = NULL;
   gint         i;
 
   if (strstr (uri, "/.thumbnails/"))
-    {
-      g_message (_("Cannot create thumbnail of thumbnail\n%s"), uri);
-      return NULL;
-    }
+    return NULL;
 
   name = gimp_imagefile_png_thumb_name (uri);
 
-  if (size == THUMB_SIZE_FAIL)
+  if (*thumb_size == THUMB_SIZE_FAIL)
     {
       i = 0;
     }
   else
     {
       for (i = 1; 
-           i < G_N_ELEMENTS (thumb_sizes) && thumb_sizes[i].size < size; 
+           i < G_N_ELEMENTS (thumb_sizes) && thumb_sizes[i].size < *thumb_size; 
            i++)
         /* nothing */;
       
       if (i == G_N_ELEMENTS (thumb_sizes))
         i--;
     }
+
+  *thumb_size = thumb_sizes[i].size;
 
   if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
     {
@@ -1057,7 +1064,6 @@ gimp_imagefile_png_thumb_path (const gchar *uri,
 
 static gchar *
 gimp_imagefile_find_png_thumb (const gchar *uri,
-                               gint         size,
                                gint        *thumb_size)
 {
   const gchar *name;
@@ -1067,7 +1073,7 @@ gimp_imagefile_find_png_thumb (const gchar *uri,
   name = gimp_imagefile_png_thumb_name (uri);
 
   n = G_N_ELEMENTS (thumb_sizes);
-  for (i = 1; i < n && thumb_sizes[i].size < size; i++)
+  for (i = 1; i < n && thumb_sizes[i].size < *thumb_size; i++)
     /* nothing */;
 
   n = i;

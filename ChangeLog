@@ -1,5 +1,13 @@
 2002-04-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimagefile.[ch]: added some assertions, cleaned up
+	internals.
+
+	* app/widgets/gimpdocumentview.c: use the preview size instead of a
+	hardcoded thumbnail size. Should we use the prefs value instead?
+
+2002-04-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimagefile.c: adapt the thumbnail size to the image size
 	so that thumbs of small images don't end up in the "large" directory.
 
