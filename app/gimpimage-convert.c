@@ -271,7 +271,8 @@ realize_text (GtkWidget *text, gpointer data)
   gtk_text_set_word_wrap   (GTK_TEXT (text), TRUE);
   gtk_text_freeze (GTK_TEXT (text));
   gtk_text_insert (GTK_TEXT (text), NULL, &text->style->black, NULL,
-		   "You are attempting to convert an image with alpha/layers from RGB to INDEXED.  You should not quantize to more than 255 colors if you intend to make a transparent or animated GIF file from this image.", -1);
+		   "You are attempting to convert an image with alpha/layers from RGB to INDEXED.  You should not generate a palette of more than 255 colors if you intend to create a transparent or animated GIF file from this image.",
+		   -1);
   
   gtk_text_thaw (GTK_TEXT (text));
 }

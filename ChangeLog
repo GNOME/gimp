@@ -1,3 +1,12 @@
+Sat Jul 18 16:08:23 BST 1998 Adam D. Moss <adam@gimp.org>
+
+	* app/fileops.c: Added the ability to make multiple
+	selections from GIMP's load-file-selector.  It's
+	adequate but not perfect without the ability to get
+	the filesel's idea of its cwd via clean GTK coding.
+
+	* app/convert.c: Minor textual changes.
+
 Fri Jul 17 01:28:30 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: Made usage printout more verbose, added

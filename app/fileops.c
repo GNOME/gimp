@@ -492,6 +492,10 @@ file_open_callback (GtkWidget *w,
 			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
       gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
+
+      gtk_clist_set_selection_mode (GTK_CLIST
+				    (GTK_FILE_SELECTION (fileload)->file_list),
+				    GTK_SELECTION_EXTENDED);
     }
   else
     {
@@ -822,7 +826,8 @@ file_open_ok_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
   GtkFileSelection *fs;
-  char* filename, *raw_filename;
+  char* filename, *raw_filename, *mfilename;
+  gchar* filedirname;
   struct stat buf;
   int err;
   GString *s;
@@ -859,16 +864,125 @@ file_open_ok_callback (GtkWidget *w,
     {
       file_dialog_hide (client_data);
       gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
-      return;
+    }
+  else
+    {
+      s = g_string_new ("Open failed: ");
+      g_string_append (s, raw_filename);
+      message_box (s->str, file_message_box_close_callback, (void *) fs);
+      g_string_free (s, TRUE);
     }
 
-  s = g_string_new ("Open failed: ");
 
-  g_string_append (s, raw_filename);
+  /*
+   * Now deal with multiple selections from the filesel clist
+   */
 
-  message_box (s->str, file_message_box_close_callback, (void *) fs);
+  /*
+   * FIXME: cope with cwd != fileselcwd != dirname(filename)
+   *
 
-  g_string_free (s, TRUE);
+  /*
+  {
+    HistoryCallbackArg *callback_arg;
+    GList *row = fs->history_list;
+
+    while (row)
+      {
+	callback_arg = row->data;
+
+	printf ("(%s)\n", callback_arg->directory );
+
+	row = g_list_next (row);
+      }
+      }*/
+
+  /*  filedirname = fs->history_list->data;*/
+  
+  filedirname = g_dirname (filename);
+
+  {
+    GList *row = GTK_CLIST(fs->file_list)->row_list;
+    gint rownum = 0;
+    gchar* temp;
+
+    /*printf("%d\n", GTK_CLIST(fs->file_list)->rows);*/
+
+    while (row)
+      {
+	if (GTK_CLIST_ROW(row)->state == GTK_STATE_SELECTED)
+	  {
+	    if (gtk_clist_get_cell_type(GTK_CLIST(fs->file_list),
+					rownum, 0) == GTK_CELL_TEXT)
+	      {
+		gtk_clist_get_text (GTK_CLIST(fs->file_list),
+				    rownum, 0, &temp);
+		
+		/*printf("%s\n", temp);*/
+
+		/* When doing multiple selections, the name
+		 * of the first item touched with the cursor will
+		 * become the text-field default - and we don't
+		 * want to load that twice.
+		 */
+		/*printf("[%s]{%s}\n", temp, raw_filename);*/
+		/*		fflush(stdout);*/
+		if (strcmp(temp, raw_filename)==0)
+		  {
+		    goto next_iter;
+		  }
+
+		mfilename = g_strdup (temp);
+		
+		err = stat (mfilename, &buf);
+		
+		if (! (err == 0 && (buf.st_mode & S_IFDIR)))
+		  { /* Is not directory. */
+		    
+		    if (err)
+		      {
+			g_free (mfilename);
+			mfilename = g_strconcat (filedirname, "/", temp, NULL);
+
+			/*printf(">>> %s\n", mfilename);/*
+			/*fflush (stdout);*/
+		      }
+		    
+		    if (file_open (mfilename, temp))
+		      {
+			file_dialog_hide (client_data);
+			gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
+		      }
+		    else
+		      {
+			s = g_string_new ("Open failed: ");
+			g_string_append (s, temp);
+			message_box (s->str, file_message_box_close_callback, (void *) fs);
+			g_string_free (s, TRUE);
+		      }
+		  }
+
+		if (mfilename)
+		  {
+		    g_free (mfilename);
+		    mfilename = NULL;
+		  }
+	      }
+	  }
+
+      next_iter:
+	rownum++;
+	row = g_list_next (row);
+      }
+
+    /*fflush(stdout);*/
+  }
+
+  if (filedirname)
+    {
+      g_free (filedirname);
+      filedirname = NULL;
+    }
 }
 
 static void
