@@ -72,6 +72,7 @@ static void       gimp_data_editor_save_clicked      (GtkWidget      *widget,
                                                       GimpDataEditor *editor);
 static void       gimp_data_editor_revert_clicked    (GtkWidget      *widget,
                                                       GimpDataEditor *editor);
+static void       gimp_data_editor_save_dirty        (GimpDataEditor *editor);
 
 
 static GimpEditorClass *parent_class = NULL;
@@ -226,7 +227,11 @@ gimp_data_editor_dispose (GObject *object)
   editor = GIMP_DATA_EDITOR (object);
 
   if (editor->data)
-    gimp_data_editor_set_data (editor, NULL);
+    {
+      /* Save dirty data before we clear out */
+      gimp_data_editor_save_dirty (editor);
+      gimp_data_editor_set_data (editor, NULL);
+    }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -360,9 +365,22 @@ static void
 gimp_data_editor_save_clicked (GtkWidget      *widget,
                                GimpDataEditor *editor)
 {
+  gimp_data_editor_save_dirty (editor);
+}
+
+static void
+gimp_data_editor_revert_clicked (GtkWidget      *widget,
+                                 GimpDataEditor *editor)
+{
+  g_print ("TODO: implement revert\n");
+}
+
+static void
+gimp_data_editor_save_dirty (GimpDataEditor *editor)
+{
   gchar *path = NULL;
   GimpData *data;
-
+  
   g_object_get (editor->data_factory->gimp->config,
                 editor->data_factory->path_property_name, &path,
                 NULL);
@@ -401,9 +419,3 @@ gimp_data_editor_save_clicked (GtkWidget      *widget,
   g_free (path);
 }
 
-static void
-gimp_data_editor_revert_clicked (GtkWidget      *widget,
-                                 GimpDataEditor *editor)
-{
-  g_print ("TODO: implement revert\n");
-}

@@ -1,3 +1,8 @@
+2003-11-11  Dave Neary  <bolsh@gimp.org>
+
+	* app/widgets/gimpdataeditor.c: Save data before disposing of 
+	it when closing the dialog. Closes bug #116606.
+
 2003-11-11  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.[ch] (gimp_dialog_run): new function
