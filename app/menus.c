@@ -203,7 +203,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   /*  <Toolbox>/Help  */
 
-  { { N_("/Help"), NULL, NULL, 0, "<LastBranch>" },
+  { { N_("/Help"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/Help/Help..."), "F1", help_help_cmd_callback, 0 },
     "help/dialogs/help.html", NULL },
