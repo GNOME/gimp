@@ -1057,10 +1057,12 @@ GIMP_MODULES=modules
 AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
+dnl These are not built nor included in the tarball for the time being.
 dnl plug-ins/perl/config.pl
 dnl plug-ins/gap/Makefile
 dnl plug-ins/gdyntext/Makefile
 dnl plug-ins/perl/po/Makefile.in
+dnl plug-ins/tools/common/Makefile
 
 AC_OUTPUT([
 build/Makefile
@@ -1139,7 +1141,6 @@ plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/plugin-helper/Makefile
 plug-ins/tools/Makefile
-plug-ins/tools/common/Makefile
 modules/Makefile
 modules/makefile.mingw
 devel-docs/Makefile
