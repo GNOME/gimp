@@ -443,6 +443,12 @@ gimp_config_build_data_path (const gchar *name)
 }
 
 gchar *
+gimp_config_build_writable_path (const gchar *name)
+{
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
+}
+
+gchar *
 gimp_config_build_plug_in_path (const gchar *name)
 {
   return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name,

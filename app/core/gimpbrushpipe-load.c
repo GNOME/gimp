@@ -503,10 +503,10 @@ gimp_brush_pipe_load (const gchar  *filename,
       pipe->nbrushes++;
     }
 
+  close (fd);
+
   /* Current brush is the first one. */
   pipe->current = pipe->brushes[0];
-
-  gimp_data_set_filename (GIMP_DATA (pipe), filename);
 
   /*  just to satisfy the code that relies on this crap  */
   GIMP_BRUSH (pipe)->spacing  = pipe->current->spacing;
@@ -514,10 +514,6 @@ gimp_brush_pipe_load (const gchar  *filename,
   GIMP_BRUSH (pipe)->y_axis   = pipe->current->y_axis;
   GIMP_BRUSH (pipe)->mask     = pipe->current->mask;
   GIMP_BRUSH (pipe)->pixmap   = pipe->current->pixmap;
-
-  close (fd);
-
-  GIMP_DATA (pipe)->dirty = FALSE;
 
   return GIMP_DATA (pipe);
 }

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimppatheditor.h
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -40,44 +40,62 @@ typedef struct _GimpPathEditorClass  GimpPathEditorClass;
 
 struct _GimpPathEditor
 {
-  GtkVBox           parent_instance;
+  GtkVBox            parent_instance;
 
-  GtkWidget        *upper_hbox;
+  GtkWidget         *upper_hbox;
 
-  GtkWidget        *new_button;
-  GtkWidget        *up_button;
-  GtkWidget        *down_button;
-  GtkWidget        *delete_button;
+  GtkWidget         *new_button;
+  GtkWidget         *up_button;
+  GtkWidget         *down_button;
+  GtkWidget         *delete_button;
 
-  GtkWidget        *file_entry;
+  GtkWidget         *file_entry;
 
-  GtkListStore     *dir_list;
+  GtkListStore      *dir_list;
 
-  GtkTreeSelection *sel;
-  GtkTreePath      *sel_path;
+  GtkTreeSelection  *sel;
+  GtkTreePath       *sel_path;
 
-  gint              num_items;
+  GtkTreeViewColumn *writable_column;
+
+  gint               num_items;
 };
 
 struct _GimpPathEditorClass
 {
   GtkVBoxClass  parent_class;
 
-  void (* path_changed) (GimpPathEditor *editor);
+  void (* path_changed)     (GimpPathEditor *editor);
+  void (* writable_changed) (GimpPathEditor *editor);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
 };
 
 
 /* For information look into the C source or the html documentation */
 
-GType       gimp_path_editor_get_type (void) G_GNUC_CONST;
+GType       gimp_path_editor_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_path_editor_new      (const gchar    *filesel_title,
-				       const gchar    *path);
+GtkWidget * gimp_path_editor_new               (const gchar    *filesel_title,
+                                                const gchar    *path);
 
-gchar     * gimp_path_editor_get_path (GimpPathEditor *editor);
-void        gimp_path_editor_set_path (GimpPathEditor *editor,
-                                       const gchar    *path);
+gchar     * gimp_path_editor_get_path          (GimpPathEditor *editor);
+void        gimp_path_editor_set_path          (GimpPathEditor *editor,
+                                                const gchar    *path);
 
+gchar     * gimp_path_editor_get_writable_path (GimpPathEditor *editor);
+void        gimp_path_editor_set_writable_path (GimpPathEditor *editor,
+                                                const gchar    *path);
+
+gboolean    gimp_path_editor_get_dir_writable  (GimpPathEditor *editor,
+                                                const gchar    *directory);
+void        gimp_path_editor_set_dir_writable  (GimpPathEditor *editor,
+                                                const gchar    *directory,
+                                                gboolean        writable);
 
 G_END_DECLS
 

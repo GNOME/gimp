@@ -17,6 +17,8 @@ N_("When enabled, an image will become the active image when its image " \
 #define BRUSH_PATH_BLURB \
 "Sets the brush search path."
 
+#define BRUSH_PATH_WRITABLE_BLURB ""
+
 #define CANVAS_PADDING_MODE_BLURB \
 N_("Specifies how the area around the image should be drawn.")
 
@@ -111,8 +113,12 @@ N_("The window type hint that is set on dock windows. This may affect " \
 #define GRADIENT_PATH_BLURB \
 "Sets the gradient search path."
 
+#define GRADIENT_PATH_WRITABLE_BLURB ""
+
 #define FONT_PATH_BLURB \
 "Where to look for fonts."
+
+#define FONT_PATH_WRITABLE_BLURB ""
 
 #define HELP_BROWSER_BLURB \
 N_("Sets the browser used by the help system.")
@@ -180,8 +186,12 @@ N_("On multiprocessor machines, if GIMP has been compiled with --enable-mp " \
 #define PALETTE_PATH_BLURB \
 "Sets the palette search path."
 
+#define PALETTE_PATH_WRITABLE_BLURB ""
+
 #define PATTERN_PATH_BLURB \
 "Sets the pattern search path."
+
+#define PATTERN_PATH_WRITABLE_BLURB ""
 
 #define PERFECT_MOUSE_BLURB \
 N_("When enabled, the X server is queried for the mouse's current position " \

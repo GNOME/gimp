@@ -122,7 +122,8 @@ GtkWidget     * gimp_prop_file_entry_new          (GObject     *config,
                                                    gboolean     dir_only,
                                                    gboolean     check_valid);
 GtkWidget     * gimp_prop_path_editor_new         (GObject     *config,
-                                                   const gchar *property_name,
+                                                   const gchar *path_property_name,
+                                                   const gchar *writable_property_name,
                                                    const gchar *filesel_title);
 
 

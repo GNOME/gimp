@@ -407,8 +407,6 @@ gimp_brush_generated_load (const gchar  *filename,
   /* create new brush */
   brush = g_object_new (GIMP_TYPE_BRUSH_GENERATED, NULL);
 
-  gimp_data_set_filename (GIMP_DATA (brush), filename);
-
   gimp_brush_generated_freeze (brush);
 
   /* read name */
@@ -443,8 +441,6 @@ gimp_brush_generated_load (const gchar  *filename,
 
   if (stingy_memory_use)
     temp_buf_swap (GIMP_BRUSH (brush)->mask);
-
-  GIMP_DATA (brush)->dirty = FALSE;
 
   return GIMP_DATA (brush);
 }

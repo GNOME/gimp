@@ -83,10 +83,11 @@ gboolean      gimp_data_delete_from_disk (GimpData     *data,
 const gchar * gimp_data_get_extension    (GimpData     *data);
 
 void          gimp_data_set_filename     (GimpData     *data,
-					  const gchar  *filename);
+                                          const gchar  *filename,
+                                          gboolean      writable);
 void          gimp_data_create_filename  (GimpData     *data,
 					  const gchar  *basename,
-					  const gchar  *data_path);
+					  const gchar  *dest_dir);
 
 GimpData    * gimp_data_duplicate        (GimpData     *data,
                                           gboolean      stingy_memory_use);

@@ -144,6 +144,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 	      err = stat (filename, &filestat);
 
               file_data.filename = filename;
+              file_data.dirname  = (gchar *) list->data;
               file_data.basename = dir_ent;
               file_data.atime    = filestat.st_atime;
               file_data.mtime    = filestat.st_mtime;

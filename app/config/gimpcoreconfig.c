@@ -76,10 +76,15 @@ enum
   PROP_MODULE_PATH,
   PROP_ENVIRON_PATH,
   PROP_BRUSH_PATH,
+  PROP_BRUSH_PATH_WRITABLE,
   PROP_PATTERN_PATH,
+  PROP_PATTERN_PATH_WRITABLE,
   PROP_PALETTE_PATH,
+  PROP_PALETTE_PATH_WRITABLE,
   PROP_GRADIENT_PATH,
+  PROP_GRADIENT_PATH_WRITABLE,
   PROP_FONT_PATH,
+  PROP_FONT_PATH_WRITABLE,
   PROP_DEFAULT_BRUSH,
   PROP_DEFAULT_PATTERN,
   PROP_DEFAULT_PALETTE,
@@ -167,26 +172,56 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("brushes"),
                                  GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH_WRITABLE,
+                                 "brush-path-writable",
+                                 BRUSH_PATH_WRITABLE_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_writable_path ("brushes"),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH,
                                  "pattern-path", PATTERN_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("patterns"),
+                                 GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PATTERN_PATH_WRITABLE,
+                                 "pattern-path-writable",
+                                 PATTERN_PATH_WRITABLE_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_writable_path ("patterns"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH,
                                  "palette-path", PALETTE_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("palettes"),
                                  GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_PALETTE_PATH_WRITABLE,
+                                 "palette-path-writable",
+                                 PALETTE_PATH_WRITABLE_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_writable_path ("palettes"),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH,
                                  "gradient-path", GRADIENT_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gradients"),
+                                 GIMP_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_GRADIENT_PATH_WRITABLE,
+                                 "gradient-path-writable",
+                                 GRADIENT_PATH_WRITABLE_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_writable_path ("gradients"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH,
                                  "font-path", FONT_PATH_BLURB,
 				 GIMP_PARAM_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("fonts"),
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_FONT_PATH_WRITABLE,
+                                 "font-path-writable",
+                                 FONT_PATH_WRITABLE_BLURB,
+				 GIMP_PARAM_PATH_DIR_LIST,
+                                 gimp_config_build_writable_path ("fonts"),
+                                 GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_BRUSH,
                                    "default-brush", DEFAULT_BRUSH_BLURB,
                                    DEFAULT_BRUSH,
@@ -278,10 +313,15 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->module_path);
   g_free (core_config->environ_path);
   g_free (core_config->brush_path);
+  g_free (core_config->brush_path_writable);
   g_free (core_config->pattern_path);
+  g_free (core_config->pattern_path_writable);
   g_free (core_config->palette_path);
+  g_free (core_config->palette_path_writable);
   g_free (core_config->gradient_path);
+  g_free (core_config->gradient_path_writable);
   g_free (core_config->font_path);
+  g_free (core_config->font_path_writable);
   g_free (core_config->default_brush);
   g_free (core_config->default_pattern);
   g_free (core_config->default_palette);
@@ -327,21 +367,41 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->brush_path);
       core_config->brush_path = g_value_dup_string (value);
       break;
+    case PROP_BRUSH_PATH_WRITABLE:
+      g_free (core_config->brush_path_writable);
+      core_config->brush_path_writable = g_value_dup_string (value);
+      break;
     case PROP_PATTERN_PATH:
       g_free (core_config->pattern_path);
       core_config->pattern_path = g_value_dup_string (value);
+      break;
+    case PROP_PATTERN_PATH_WRITABLE:
+      g_free (core_config->pattern_path_writable);
+      core_config->pattern_path_writable = g_value_dup_string (value);
       break;
     case PROP_PALETTE_PATH:
       g_free (core_config->palette_path);
       core_config->palette_path = g_value_dup_string (value);
       break;
+    case PROP_PALETTE_PATH_WRITABLE:
+      g_free (core_config->palette_path_writable);
+      core_config->palette_path_writable = g_value_dup_string (value);
+      break;
     case PROP_GRADIENT_PATH:
       g_free (core_config->gradient_path);
       core_config->gradient_path = g_value_dup_string (value);
       break;
+    case PROP_GRADIENT_PATH_WRITABLE:
+      g_free (core_config->gradient_path_writable);
+      core_config->gradient_path_writable = g_value_dup_string (value);
+      break;
     case PROP_FONT_PATH:
       g_free (core_config->font_path);
       core_config->font_path = g_value_dup_string (value);
+      break;
+    case PROP_FONT_PATH_WRITABLE:
+      g_free (core_config->font_path_writable);
+      core_config->font_path_writable = g_value_dup_string (value);
       break;
     case PROP_DEFAULT_BRUSH:
       g_free (core_config->default_brush);
@@ -430,17 +490,32 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_BRUSH_PATH:
       g_value_set_string (value, core_config->brush_path);
       break;
+    case PROP_BRUSH_PATH_WRITABLE:
+      g_value_set_string (value, core_config->brush_path_writable);
+      break;
     case PROP_PATTERN_PATH:
       g_value_set_string (value, core_config->pattern_path);
+      break;
+    case PROP_PATTERN_PATH_WRITABLE:
+      g_value_set_string (value, core_config->pattern_path_writable);
       break;
     case PROP_PALETTE_PATH:
       g_value_set_string (value, core_config->palette_path);
       break;
+    case PROP_PALETTE_PATH_WRITABLE:
+      g_value_set_string (value, core_config->palette_path_writable);
+      break;
     case PROP_GRADIENT_PATH:
       g_value_set_string (value, core_config->gradient_path);
       break;
+    case PROP_GRADIENT_PATH_WRITABLE:
+      g_value_set_string (value, core_config->gradient_path_writable);
+      break;
     case PROP_FONT_PATH:
       g_value_set_string (value, core_config->font_path);
+      break;
+    case PROP_FONT_PATH_WRITABLE:
+      g_value_set_string (value, core_config->font_path_writable);
       break;
     case PROP_DEFAULT_BRUSH:
       g_value_set_string (value, core_config->default_brush);

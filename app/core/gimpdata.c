@@ -145,9 +145,7 @@ gimp_data_init (GimpData *data)
 static void
 gimp_data_finalize (GObject *object)
 {
-  GimpData *data;
-
-  data = GIMP_DATA (object);
+  GimpData *data = GIMP_DATA (object);
 
   if (data->filename)
     {
@@ -171,10 +169,8 @@ static gint64
 gimp_data_get_memsize (GimpObject *object,
                        gint64     *gui_size)
 {
-  GimpData *data;
+  GimpData *data    = GIMP_DATA (object);
   gint64    memsize = 0;
-
-  data = GIMP_DATA (object);
 
   if (data->filename)
     memsize += strlen (data->filename) + 1;
@@ -260,42 +256,47 @@ gimp_data_get_extension (GimpData *data)
 
 void
 gimp_data_set_filename (GimpData    *data,
-			const gchar *filename)
+			const gchar *filename,
+                        gboolean     writable)
 {
   g_return_if_fail (GIMP_IS_DATA (data));
+  g_return_if_fail (filename != NULL);
+  g_return_if_fail (g_path_is_absolute (filename));
 
   if (data->internal)
     return;
 
-  g_free (data->filename);
-
-  data->filename  = NULL;
-  data->writeable = TRUE;
-
-  if (filename)
+  if (data->filename)
     {
-      data->filename  = g_strdup (filename);
+      g_free (data->filename);
+      data->filename  = NULL;
+    }
 
-      if (access (filename, W_OK) &&     /* check if the file is writeable  */
-          access (filename, F_OK) == 0)  /* or doesn't exist                */
+  data->filename  = g_strdup (filename);
+  data->writeable = FALSE;
+
+  /*  if the data is supposed to be writable, still check if it really is  */
+  if (writable)
+    {
+      gchar *dirname = g_path_get_dirname (filename);
+
+      if ((access (filename, F_OK) == 0 &&  /* check if the file exists    */
+           access (filename, W_OK) == 0) || /* and is writeable            */
+          (access (filename, F_OK) != 0 &&  /* OR doesn't exist            */
+           access (dirname,  W_OK) == 0))   /* and we can write to its dir */
         {
-          gchar *dirname = g_path_get_dirname (filename);
-
-          if (access (dirname, W_OK | X_OK)) /* check if we can write to the dir */
-            data->writeable = FALSE;
-
-          g_free (dirname);
+          data->writeable = TRUE;
         }
+
+      g_free (dirname);
     }
 }
 
 void
 gimp_data_create_filename (GimpData    *data,
 			   const gchar *basename,
-			   const gchar *data_path)
+			   const gchar *dest_dir)
 {
-  GList *path;
-  gchar *dir;
   gchar *filename;
   gchar *fullpath;
   gchar *safe_name;
@@ -304,27 +305,18 @@ gimp_data_create_filename (GimpData    *data,
 
   g_return_if_fail (GIMP_IS_DATA (data));
   g_return_if_fail (basename != NULL);
-  g_return_if_fail (data_path != NULL);
-
-  path = gimp_path_parse (data_path, 16, TRUE, NULL);
-  dir  = gimp_path_get_user_writable_dir (path);
-  gimp_path_free (path);
-
-  if (! dir)
-    return;
+  g_return_if_fail (dest_dir != NULL);
 
   safe_name = g_strdup (basename);
   if (safe_name[0] == '.')
-    safe_name[0] = '_';
+    safe_name[0] = '-';
   for (i = 0; safe_name[i]; i++)
     if (safe_name[i] == G_DIR_SEPARATOR || g_ascii_isspace (safe_name[i]))
-      safe_name[i] = '_';
+      safe_name[i] = '-';
 
-  filename = g_strdup_printf ("%s%s",
-			      safe_name,
-			      gimp_data_get_extension (data));
+  filename = g_strconcat (safe_name, gimp_data_get_extension (data), NULL);
 
-  fullpath = g_build_filename (dir, filename, NULL);
+  fullpath = g_build_filename (dest_dir, filename, NULL);
 
   g_free (filename);
 
@@ -337,15 +329,14 @@ gimp_data_create_filename (GimpData    *data,
                                   unum++,
 				  gimp_data_get_extension (data));
 
-      fullpath = g_build_filename (dir, filename, NULL);
+      fullpath = g_build_filename (dest_dir, filename, NULL);
 
       g_free (filename);
     }
 
-  g_free (dir);
   g_free (safe_name);
 
-  gimp_data_set_filename (data, fullpath);
+  gimp_data_set_filename (data, fullpath, TRUE);
 
   g_free (fullpath);
 }
@@ -354,12 +345,19 @@ GimpData *
 gimp_data_duplicate (GimpData *data,
                      gboolean  stingy_memory_use)
 {
+  GimpData *new = NULL;
+
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
   if (GIMP_DATA_GET_CLASS (data)->duplicate)
-    return GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
+    {
+      new = GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
 
-  return NULL;
+      if (new)
+        new->dirty = TRUE;
+    }
+
+  return new;
 }
 
 GQuark

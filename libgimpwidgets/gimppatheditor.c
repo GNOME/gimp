@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimppatheditor.c
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -26,16 +26,29 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "gimpwidgetstypes.h"
 
 #include "gimppatheditor.h"
 #include "gimpfileentry.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 enum
 {
   PATH_CHANGED,
+  WRITABLE_CHANGED,
   LAST_SIGNAL
+};
+
+enum
+{
+  COLUMN_UTF8,
+  COLUMN_DIRECTORY,
+  COLUMN_WRITABLE,
+  NUM_COLUMNS
 };
 
 
@@ -52,11 +65,9 @@ static void     gimp_path_editor_file_entry_changed (GtkWidget           *widget
                                                      GimpPathEditor      *editor);
 static void     gimp_path_editor_selection_changed  (GtkTreeSelection    *sel,
                                                      GimpPathEditor      *editor);
-
-static gboolean build_path                          (GtkTreeModel        *model,
-                                                     GtkTreePath         *tpath,
-                                                     GtkTreeIter         *iter,
-                                                     gpointer             data);
+static void     gimp_path_editor_writable_toggled   (GtkCellRendererToggle *toggle,
+                                                     gchar               *path_str,
+                                                     GimpPathEditor      *editor);
 
 
 static guint gimp_path_editor_signals[LAST_SIGNAL] = { 0 };
@@ -112,17 +123,36 @@ gimp_path_editor_class_init (GimpPathEditorClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  klass->path_changed = NULL;
+  /**
+   * GimpPathEditor::writable-changed:
+   *
+   * This signal is emitted whenever the "writable" column of a directory
+   * is changed, either by the user clicking on it or by calling
+   * gimp_path_editor_set_dir_writable().
+   **/
+  gimp_path_editor_signals[WRITABLE_CHANGED] =
+    g_signal_new ("writable_changed",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpPathEditorClass, writable_changed),
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  klass->path_changed     = NULL;
+  klass->writable_changed = NULL;
 }
 
 static void
 gimp_path_editor_init (GimpPathEditor *editor)
 {
-  GtkWidget *button_box;
-  GtkWidget *button;
-  GtkWidget *image;
-  GtkWidget *scrolled_window;
-  GtkWidget *tv;
+  GtkWidget         *button_box;
+  GtkWidget         *button;
+  GtkWidget         *image;
+  GtkWidget         *scrolled_window;
+  GtkWidget         *tv;
+  GtkTreeViewColumn *col;
+  GtkCellRenderer   *renderer;
 
   editor->file_entry = NULL;
   editor->sel_path   = NULL;
@@ -196,17 +226,35 @@ gimp_path_editor_init (GimpPathEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), scrolled_window, TRUE, TRUE, 2);
   gtk_widget_show (scrolled_window);
 
-  editor->dir_list = gtk_list_store_new (1, G_TYPE_STRING);
+  editor->dir_list = gtk_list_store_new (NUM_COLUMNS,
+                                         G_TYPE_STRING,
+                                         G_TYPE_STRING,
+                                         G_TYPE_BOOLEAN);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->dir_list));
   g_object_unref (editor->dir_list);
 
+  renderer = gtk_cell_renderer_toggle_new ();
+
+  g_signal_connect (renderer, "toggled",
+                    G_CALLBACK (gimp_path_editor_writable_toggled),
+                    editor);
+
+  editor->writable_column = col = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (col, _("Writable"));
+  gtk_tree_view_column_pack_start (col, renderer, FALSE);
+  gtk_tree_view_column_add_attribute (col, renderer, "active", COLUMN_WRITABLE);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
+
+  gtk_tree_view_column_set_visible (col, FALSE);
+
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-					       -1, NULL,
+					       -1, _("Folder"),
 					       gtk_cell_renderer_text_new (),
-					       "text", 0,
+					       "text", COLUMN_UTF8,
 					       NULL);
 
-  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), FALSE);
+  gtk_tree_view_set_headers_visible (GTK_TREE_VIEW (tv), TRUE);
 
   gtk_container_add (GTK_CONTAINER (scrolled_window), tv);
   gtk_widget_show (tv);
@@ -270,13 +318,34 @@ gimp_path_editor_new (const gchar *filesel_title,
 gchar *
 gimp_path_editor_get_path (GimpPathEditor *editor)
 {
-  GString *path;
+  GtkTreeModel *model;
+  GString      *path;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
 
   g_return_val_if_fail (GIMP_IS_PATH_EDITOR (editor), g_strdup (""));
 
+  model = GTK_TREE_MODEL (editor->dir_list);
+
   path = g_string_new ("");
 
-  gtk_tree_model_foreach (GTK_TREE_MODEL (editor->dir_list), build_path, path);
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar *dir;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DIRECTORY, &dir,
+                          -1);
+
+      if (path->len > 0)
+        g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
+
+      g_string_append (path, dir);
+
+      g_free (dir);
+    }
 
   return g_string_free (path, FALSE);
 }
@@ -293,39 +362,217 @@ void
 gimp_path_editor_set_path (GimpPathEditor *editor,
                            const gchar    *path)
 {
-  gchar       *directory;
-  gchar       *mypath;
-  GtkTreeIter  iter;
+  gchar *old_path;
+  GList *path_list;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_PATH_EDITOR (editor));
 
-  directory = mypath = g_strdup (path);
+  old_path = gimp_path_editor_get_path (editor);
+
+  if (old_path == path || (old_path && path && ! strcmp (old_path, path)))
+    {
+      g_free (old_path);
+      return;
+    }
+
+  path_list = gimp_path_parse (path, 16, TRUE, NULL);
 
   gtk_list_store_clear (editor->dir_list);
 
-  /*  split up the path  */
-  while (strlen (directory))
+  for (list = path_list; list; list = g_list_next (list))
     {
-      gchar *next_separator;
+      gchar       *directory = list->data;
+      gchar       *utf8;
+      GtkTreeIter  iter;
 
-      next_separator = strchr (directory, G_SEARCHPATH_SEPARATOR);
-      if (next_separator != NULL)
-	*next_separator = '\0';
+      utf8 = g_filename_to_utf8 (directory, -1, NULL, NULL, NULL);
 
       gtk_list_store_append (editor->dir_list, &iter);
-      gtk_list_store_set (editor->dir_list, &iter, 0, directory, -1);
+      gtk_list_store_set (editor->dir_list, &iter,
+                          COLUMN_UTF8,      utf8,
+                          COLUMN_DIRECTORY, directory,
+                          COLUMN_WRITABLE,  FALSE,
+                          -1);
 
       editor->num_items++;
-
-      if (next_separator != NULL)
-	directory = next_separator + 1;
-      else
-	break;
     }
 
-  g_free (mypath);
+  gimp_path_free (path_list);
 
   g_signal_emit (editor, gimp_path_editor_signals[PATH_CHANGED], 0);
+}
+
+gchar *
+gimp_path_editor_get_writable_path (GimpPathEditor *editor)
+{
+  GtkTreeModel *model;
+  GString      *path;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  g_return_val_if_fail (GIMP_IS_PATH_EDITOR (editor), g_strdup (""));
+
+  model = GTK_TREE_MODEL (editor->dir_list);
+
+  path = g_string_new ("");
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar    *dir;
+      gboolean  dir_writable;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DIRECTORY, &dir,
+                          COLUMN_WRITABLE,  &dir_writable,
+                          -1);
+
+      if (dir_writable)
+        {
+          if (path->len > 0)
+            g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
+
+          g_string_append (path, dir);
+        }
+
+      g_free (dir);
+    }
+
+  return g_string_free (path, FALSE);
+}
+
+void
+gimp_path_editor_set_writable_path (GimpPathEditor *editor,
+                                    const gchar    *path)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+  GList        *path_list;
+  gboolean      writable_changed = FALSE;
+
+  g_return_if_fail (GIMP_IS_PATH_EDITOR (editor));
+
+  gtk_tree_view_column_set_visible (editor->writable_column, TRUE);
+
+  path_list = gimp_path_parse (path, 16, TRUE, NULL);
+
+  model = GTK_TREE_MODEL (editor->dir_list);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar    *dir;
+      gboolean  dir_writable;
+      gboolean  new_writable = FALSE;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DIRECTORY, &dir,
+                          COLUMN_WRITABLE,  &dir_writable,
+                          -1);
+
+      if (g_list_find_custom (path_list, dir, (GCompareFunc) strcmp))
+        new_writable = TRUE;
+
+      g_free (dir);
+
+      if (dir_writable != new_writable)
+        {
+          gtk_list_store_set (editor->dir_list, &iter,
+                              COLUMN_WRITABLE, new_writable,
+                              -1);
+
+          writable_changed = TRUE;
+        }
+    }
+
+  gimp_path_free (path_list);
+
+  if (writable_changed)
+    g_signal_emit (editor, gimp_path_editor_signals[WRITABLE_CHANGED], 0);
+}
+
+gboolean
+gimp_path_editor_get_dir_writable (GimpPathEditor *editor,
+                                   const gchar    *directory)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  g_return_val_if_fail (GIMP_IS_PATH_EDITOR (editor), FALSE);
+  g_return_val_if_fail (directory != NULL, FALSE);
+
+  model = GTK_TREE_MODEL (editor->dir_list);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar    *dir;
+      gboolean  dir_writable;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DIRECTORY, &dir,
+                          COLUMN_WRITABLE,  &dir_writable,
+                          -1);
+
+      if (! strcmp (dir, directory))
+        {
+          g_free (dir);
+
+          return dir_writable;
+        }
+
+      g_free (dir);
+    }
+
+  return FALSE;
+}
+
+void
+gimp_path_editor_set_dir_writable (GimpPathEditor *editor,
+                                   const gchar    *directory,
+                                   gboolean        writable)
+{
+  GtkTreeModel *model;
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  g_return_if_fail (GIMP_IS_PATH_EDITOR (editor));
+  g_return_if_fail (directory != NULL);
+
+  model = GTK_TREE_MODEL (editor->dir_list);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gchar    *dir;
+      gboolean  dir_writable;
+
+      gtk_tree_model_get (model, &iter,
+                          COLUMN_DIRECTORY, &dir,
+                          COLUMN_WRITABLE,  &dir_writable,
+                          -1);
+
+      if (! strcmp (dir, directory) && dir_writable != writable)
+        {
+          gtk_list_store_set (editor->dir_list, &iter,
+                              COLUMN_WRITABLE, writable ? TRUE : FALSE,
+                              -1);
+
+          g_signal_emit (editor, gimp_path_editor_signals[WRITABLE_CHANGED], 0);
+
+          g_free (dir);
+          break;
+        }
+
+      g_free (dir);
+    }
 }
 
 
@@ -369,7 +616,9 @@ gimp_path_editor_move_clicked (GtkWidget      *widget,
   GtkTreePath  *path;
   GtkTreeModel *model;
   GtkTreeIter   iter1, iter2;
+  gchar        *utf81, *utf82;
   gchar        *dir1, *dir2;
+  gboolean      writable1, writable2;
 
   if (editor->sel_path == NULL)
     return;
@@ -386,11 +635,30 @@ gimp_path_editor_move_clicked (GtkWidget      *widget,
   gtk_tree_model_get_iter (model, &iter1, editor->sel_path);
   gtk_tree_model_get_iter (model, &iter2, path);
 
-  gtk_tree_model_get (model, &iter1, 0, &dir1, -1);
-  gtk_tree_model_get (model, &iter2, 0, &dir2, -1);
+  gtk_tree_model_get (model, &iter1,
+                      COLUMN_UTF8,      &utf81,
+                      COLUMN_DIRECTORY, &dir1,
+                      COLUMN_WRITABLE,  &writable1,
+                      -1);
+  gtk_tree_model_get (model, &iter2,
+                      COLUMN_UTF8,      &utf82,
+                      COLUMN_DIRECTORY, &dir2,
+                      COLUMN_WRITABLE,  &writable2,
+                      -1);
 
-  gtk_list_store_set (editor->dir_list, &iter1, 0, dir2, -1);
-  gtk_list_store_set (editor->dir_list, &iter2, 0, dir1, -1);
+  gtk_list_store_set (editor->dir_list, &iter1,
+                      COLUMN_UTF8,      utf82,
+                      COLUMN_DIRECTORY, dir2,
+                      COLUMN_WRITABLE,  writable2,
+                      -1);
+  gtk_list_store_set (editor->dir_list, &iter2,
+                      COLUMN_UTF8,      utf81,
+                      COLUMN_DIRECTORY, dir1,
+                      COLUMN_WRITABLE,  writable1,
+                      -1);
+
+  g_free (utf81);
+  g_free (utf82);
 
   g_free (dir2);
   g_free (dir1);
@@ -404,14 +672,19 @@ static void
 gimp_path_editor_delete_clicked (GtkWidget      *widget,
                                  GimpPathEditor *editor)
 {
-  GtkTreeIter  iter;
-  gint        *indices;
+  GtkTreeIter iter;
+  gboolean    dir_writable;
 
   if (editor->sel_path == NULL)
     return;
 
   gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dir_list), &iter,
 			   editor->sel_path);
+
+  gtk_tree_model_get (GTK_TREE_MODEL (editor->dir_list), &iter,
+                      COLUMN_WRITABLE, &dir_writable,
+                      -1);
+
   gtk_list_store_remove (editor->dir_list, &iter);
 
   editor->num_items--;
@@ -435,37 +708,49 @@ gimp_path_editor_delete_clicked (GtkWidget      *widget,
       gtk_widget_set_sensitive (editor->up_button,     FALSE);
       gtk_widget_set_sensitive (editor->down_button,   FALSE);
       gtk_widget_set_sensitive (editor->file_entry,    FALSE);
+    }
+  else
+    {
+      gint *indices;
 
-      return;
+      indices = gtk_tree_path_get_indices (editor->sel_path);
+      if ((indices[0] == editor->num_items) && (indices[0] > 0))
+        gtk_tree_path_prev (editor->sel_path);
+
+      gtk_tree_selection_select_path (editor->sel, editor->sel_path);
     }
 
-  indices = gtk_tree_path_get_indices (editor->sel_path);
-  if ((indices[0] == editor->num_items) && (indices[0] > 0))
-    gtk_tree_path_prev (editor->sel_path);
-
-  gtk_tree_selection_select_path (editor->sel, editor->sel_path);
-
   g_signal_emit (editor, gimp_path_editor_signals[PATH_CHANGED], 0);
+
+  if (dir_writable)
+    g_signal_emit (editor, gimp_path_editor_signals[WRITABLE_CHANGED], 0);
 }
 
 static void
 gimp_path_editor_file_entry_changed (GtkWidget      *widget,
                                      GimpPathEditor *editor)
 {
-  gchar       *directory;
+  gchar       *dir;
+  gchar       *utf8;
   GtkTreeIter  iter;
 
-  directory = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (widget));
-  if (strcmp (directory, "") == 0)
+  dir = gimp_file_entry_get_filename (GIMP_FILE_ENTRY (widget));
+  if (strcmp (dir, "") == 0)
     {
-      g_free (directory);
+      g_free (dir);
       return;
     }
+
+  utf8 = g_filename_to_utf8 (dir, -1, NULL, NULL, NULL);
 
   if (editor->sel_path == NULL)
     {
       gtk_list_store_append (editor->dir_list, &iter);
-      gtk_list_store_set (editor->dir_list, &iter, 0, directory, -1);
+      gtk_list_store_set (editor->dir_list, &iter,
+                          COLUMN_UTF8,      utf8,
+                          COLUMN_DIRECTORY, dir,
+                          COLUMN_WRITABLE,  FALSE,
+                          -1);
       editor->num_items++;
 
       gtk_tree_selection_select_iter (editor->sel, &iter);
@@ -474,10 +759,14 @@ gimp_path_editor_file_entry_changed (GtkWidget      *widget,
     {
       gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dir_list), &iter,
 			       editor->sel_path);
-      gtk_list_store_set (editor->dir_list, &iter, 0, directory, -1);
+      gtk_list_store_set (editor->dir_list, &iter,
+                          COLUMN_UTF8,      utf8,
+                          COLUMN_DIRECTORY, dir,
+                          -1);
     }
 
-  g_free (directory);
+  g_free (dir);
+  g_free (utf8);
 
   g_signal_emit (editor, gimp_path_editor_signals[PATH_CHANGED], 0);
 }
@@ -493,19 +782,19 @@ gimp_path_editor_selection_changed (GtkTreeSelection *sel,
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
       gtk_tree_model_get (GTK_TREE_MODEL (editor->dir_list), &iter,
-			  0, &directory,
-			  -1);
+                          0, &directory,
+                          -1);
 
       g_signal_handlers_block_by_func (editor->file_entry,
-				       gimp_path_editor_file_entry_changed,
-				       editor);
+                                       gimp_path_editor_file_entry_changed,
+                                       editor);
 
       gimp_file_entry_set_filename (GIMP_FILE_ENTRY (editor->file_entry),
                                     directory);
 
       g_signal_handlers_unblock_by_func (editor->file_entry,
-					 gimp_path_editor_file_entry_changed,
-					 editor);
+                                         gimp_path_editor_file_entry_changed,
+                                         editor);
 
       g_free (directory);
 
@@ -520,40 +809,47 @@ gimp_path_editor_selection_changed (GtkTreeSelection *sel,
       gtk_widget_set_sensitive (editor->delete_button, TRUE);
       gtk_widget_set_sensitive (editor->up_button, (indices[0] > 0));
       gtk_widget_set_sensitive (editor->down_button,
-				(indices[0] < (editor->num_items - 1)));
+                                (indices[0] < (editor->num_items - 1)));
       gtk_widget_set_sensitive (editor->file_entry, TRUE);
     }
   else
     {
       g_signal_handlers_block_by_func (sel,
-				       gimp_path_editor_selection_changed,
-				       editor);
+                                       gimp_path_editor_selection_changed,
+                                       editor);
 
       gtk_tree_selection_select_path (editor->sel, editor->sel_path);
 
       g_signal_handlers_unblock_by_func (sel,
-					 gimp_path_editor_selection_changed,
-					 editor);
+                                         gimp_path_editor_selection_changed,
+                                         editor);
     }
 }
 
-static gboolean
-build_path (GtkTreeModel *model,
-	    GtkTreePath  *tpath,
-	    GtkTreeIter  *iter,
-	    gpointer      data)
+static void
+gimp_path_editor_writable_toggled (GtkCellRendererToggle *toggle,
+                                   gchar                 *path_str,
+                                   GimpPathEditor        *editor)
 {
-  gchar   *buf;
-  GString *path = data;
+  GtkTreePath *path;
+  GtkTreeIter  iter;
 
-  gtk_tree_model_get (model, iter, 0, &buf, -1);
+  path = gtk_tree_path_new_from_string (path_str);
 
-  if (path->len > 0)
-    g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
+  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dir_list), &iter, path))
+    {
+      gboolean dir_writable;
 
-  g_string_append (path, buf);
+      gtk_tree_model_get (GTK_TREE_MODEL (editor->dir_list), &iter,
+                          COLUMN_WRITABLE,  &dir_writable,
+                          -1);
 
-  g_free (buf);
+      gtk_list_store_set (editor->dir_list, &iter,
+                          COLUMN_WRITABLE, ! dir_writable,
+                          -1);
 
-  return FALSE;
+      g_signal_emit (editor, gimp_path_editor_signals[WRITABLE_CHANGED], 0);
+    }
+
+  gtk_tree_path_free (path);
 }

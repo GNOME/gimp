@@ -1,3 +1,78 @@
+2004-01-28  Michael Natterer  <mitch@gimp.org>
+
+	Added infrastructure to make sure we don't write to the global
+	brush, pattern etc. directories. Needed to make this configurable
+	because we can't rely on the global directories being read-only,
+	having certain names or being otherwise detectable at runtime in a
+	sane way. Fixes bug #132214.
+
+	* libgimpbase/gimpdatafiles.[ch]: added "const gchar *dirname" to
+	the GimpDataFileData struct so callbacks don't need to call
+	g_path_get_dirname() for each file.
+
+	* libgimpwidgets/gimpfileentry.c: made it work with non UTF-8
+	encoded filenames.
+
+	* libgimpwidgets/gimppatheditor.[ch]: ditto. Added GUI and API for
+	setting/getting a second "writable_path". The widget makes sure
+	that the writable_path is always a subset of the path.
+
+	* app/config/gimpconfig-utils.[ch]: added new function
+	gimp_config_build_writable_path().
+
+	* app/config/gimpcoreconfig.[ch]: added separate properties for
+	the writable brush, pattern, gradient, palette and font paths.
+
+	* app/config/gimprc-blurbs.h: added (still empty) blurbs for the
+	new properties.
+
+	* app/core/gimpdata.[ch] (gimp_data_set_filename): added parameter
+	"gboolean writable". Set data->writable to FALSE by default. If
+	"writable" is passed as TRUE, still check if we can write to the
+	file before setting data->writable to TRUE.
+
+	(gimp_data_create_filename): changed "data_path" parameter to
+	"dest_dir" and assume dest_dir is writable.
+
+	(gimp_data_duplicate): set data->dirty to TRUE to make sure
+	duplicated things will be saved.
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpgradient.c
+	* app/core/gimppalette.c
+	* app/core/gimppattern.c: don't set the data's filename and don't
+	touch data->dirty in the _load() functions because that's done by
+	the data factory now. Don't touch data->dirty in the _duplicate()
+	functions because that's done by gimp_data_duplicate() itself now.
+
+	* app/core/gimpdatafactory.[ch] (gimp_data_factory_new): added
+	"writable_property_name" and remember it.
+	Added utility function gimp_data_factory_get_save_dir() which
+	determines the directory to save new datas to.
+	Added public function gimp_data_factory_data_save_single() which
+	saves a single data object.
+	Make sure new things get saved to the first writable directory
+	as specified in preferences.
+
+	* app/core/gimp.c (gimp_real_initialize): pass the writable_paths'
+	property names to gimp_data_factory_new().
+
+	* app/widgets/gimpdataeditor.c (gimp_data_editor_save_dirty): use
+	gimp_data_factory_data_save_single() instead of implementing
+	saving here.
+
+	* app/widgets/gimppropwidgets.[ch] (gimp_prop_path_editor_new):
+	added "const gchar *writable_property_name" parameter (can be
+	NULL).
+
+	Added the needed callbacks to handle the writable_path and made
+	the path_editor and file_entry code aware of non UTF-8 filename
+	encodings. Some general cleanup.
+
+	* app/gui/preferences-dialog.c: changed accordingly.
+
 2004-01-28  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: according to the automake docs, we need to add

@@ -408,8 +408,6 @@ gimp_palette_load (const gchar  *filename,
 
   palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
-  gimp_data_set_filename (GIMP_DATA (palette), filename);
-
   if (! fgets (str, 1024, fp))
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
@@ -560,8 +558,6 @@ gimp_palette_load (const gchar  *filename,
 
   fclose (fp);
 
-  GIMP_DATA (palette)->dirty = FALSE;
-
   return GIMP_DATA (palette);
 }
 
@@ -630,8 +626,6 @@ gimp_palette_duplicate (GimpData *data,
   palette = GIMP_PALETTE (data);
 
   new = g_object_new (GIMP_TYPE_PALETTE, NULL);
-
-  gimp_data_dirty (GIMP_DATA (new));
 
   new->n_columns = palette->n_columns;
 

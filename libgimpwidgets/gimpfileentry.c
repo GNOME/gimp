@@ -225,9 +225,18 @@ gimp_file_entry_new (const gchar *title,
 gchar *
 gimp_file_entry_get_filename (GimpFileEntry *entry)
 {
+  gchar *utf8;
+  gchar *filename;
+
   g_return_val_if_fail (GIMP_IS_FILE_ENTRY (entry), NULL);
 
-  return gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+
+  filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+
+  g_free (utf8);
+
+  return filename;
 }
 
 /**
@@ -243,9 +252,17 @@ void
 gimp_file_entry_set_filename (GimpFileEntry *entry,
                               const gchar   *filename)
 {
+  gchar *utf8;
+
   g_return_if_fail (GIMP_IS_FILE_ENTRY (entry));
 
-  gtk_entry_set_text (GTK_ENTRY (entry->entry), filename ? filename : "");
+  if (filename)
+    utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+  else
+    utf8 = g_strdup ("");
+
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), utf8);
+  g_free (utf8);
 
   /*  update everything
    */
@@ -256,23 +273,26 @@ static void
 gimp_file_entry_entry_activate (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
+  gchar *utf8;
   gchar *filename;
   gint   len;
 
   /*  filenames still need more sanity checking
    *  (erase double G_DIR_SEPARATORS, ...)
    */
-  filename = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
-  filename = g_strstrip (filename);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
+  utf8 = g_strstrip (utf8);
 
-  while (((len = strlen (filename)) > 1) &&
-	 (filename[len - 1] == G_DIR_SEPARATOR))
-    filename[len - 1] = '\0';
+  while (((len = strlen (utf8)) > 1) &&
+	 (utf8[len - 1] == G_DIR_SEPARATOR))
+    utf8[len - 1] = '\0';
+
+  filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
 
   g_signal_handlers_block_by_func (entry->entry,
                                    gimp_file_entry_entry_activate,
                                    entry);
-  gtk_entry_set_text (GTK_ENTRY (entry->entry), filename);
+  gtk_entry_set_text (GTK_ENTRY (entry->entry), utf8);
   g_signal_handlers_unblock_by_func (entry->entry,
                                      gimp_file_entry_entry_activate,
                                      entry);
@@ -280,7 +300,9 @@ gimp_file_entry_entry_activate (GtkWidget     *widget,
   if (entry->file_selection)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (entry->file_selection),
 				     filename);
+
   g_free (filename);
+  g_free (utf8);
 
   gimp_file_entry_check_filename (entry);
 
@@ -321,9 +343,12 @@ static void
 gimp_file_entry_browse_clicked (GtkWidget     *widget,
                                 GimpFileEntry *entry)
 {
+  gchar *utf8;
   gchar *filename;
 
-  filename = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+  g_free (utf8);
 
   if (! entry->file_selection)
     {
@@ -384,13 +409,16 @@ gimp_file_entry_browse_clicked (GtkWidget     *widget,
 static void
 gimp_file_entry_check_filename (GimpFileEntry *entry)
 {
+  gchar    *utf8;
   gchar    *filename;
   gboolean  exists;
 
   if (! entry->check_valid || ! entry->file_exists)
     return;
 
-  filename = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  utf8 = gtk_editable_get_chars (GTK_EDITABLE (entry->entry), 0, -1);
+  filename = g_filename_from_utf8 (utf8, -1, NULL, NULL, NULL);
+  g_free (utf8);
 
   if (entry->dir_only)
     exists = g_file_test (filename, G_FILE_TEST_IS_DIR);

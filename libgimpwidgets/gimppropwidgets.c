@@ -1323,11 +1323,10 @@ gimp_prop_file_entry_new (GObject     *config,
                 property_name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, FALSE, NULL) : NULL;
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  g_free (value);
 
   entry = gimp_file_entry_new (filesel_title, filename, dir_only, check_valid);
-
-  g_free (value);
   g_free (filename);
 
   set_param_spec (G_OBJECT (entry),
@@ -1351,18 +1350,29 @@ gimp_prop_file_entry_callback (GimpFileEntry *entry,
 {
   GParamSpec *param_spec;
   gchar      *value;
+  gchar      *utf8;
 
   param_spec = get_param_spec (G_OBJECT (entry));
   if (! param_spec)
     return;
 
   value = gimp_file_entry_get_filename (entry);
+  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  g_free (value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_file_entry_notify,
+                                   entry);
 
   g_object_set (config,
-                param_spec->name, value,
+                param_spec->name, utf8,
                 NULL);
 
-  g_free (value);
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_file_entry_notify,
+                                   entry);
+
+  g_free (utf8);
 }
 
 static void
@@ -1371,22 +1381,26 @@ gimp_prop_file_entry_notify (GObject       *config,
                              GimpFileEntry *entry)
 {
   gchar *value;
+  gchar *filename;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  g_free (value);
+
   g_signal_handlers_block_by_func (entry,
                                    gimp_prop_file_entry_callback,
                                    config);
 
-  gimp_file_entry_set_filename (entry, value);
+  gimp_file_entry_set_filename (entry, filename);
 
   g_signal_handlers_unblock_by_func (entry,
                                      gimp_prop_file_entry_callback,
                                      config);
 
-  g_free (value);
+  g_free (filename);
 }
 
 
@@ -1394,93 +1408,235 @@ gimp_prop_file_entry_notify (GObject       *config,
 /*  path editor  */
 /*****************/
 
-static void   gimp_prop_path_editor_callback (GimpPathEditor *editor,
-                                              GObject        *config);
-static void   gimp_prop_path_editor_notify   (GObject        *config,
-                                              GParamSpec     *param_spec,
-                                              GimpPathEditor *editor);
+static void   gimp_prop_path_editor_path_callback     (GimpPathEditor *editor,
+                                                       GObject        *config);
+static void   gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
+                                                       GObject        *config);
+static void   gimp_prop_path_editor_path_notify       (GObject        *config,
+                                                       GParamSpec     *param_spec,
+                                                       GimpPathEditor *editor);
+static void   gimp_prop_path_editor_writable_notify   (GObject        *config,
+                                                       GParamSpec     *param_spec,
+                                                       GimpPathEditor *editor);
 
 GtkWidget *
 gimp_prop_path_editor_new (GObject     *config,
-                           const gchar *property_name,
+                           const gchar *path_property_name,
+                           const gchar *writable_property_name,
                            const gchar *filesel_title)
 {
-  GParamSpec *param_spec;
+  GParamSpec *path_param_spec;
+  GParamSpec *writable_param_spec = NULL;
   GtkWidget  *editor;
   gchar      *value;
   gchar      *filename;
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_PATH, G_STRLOC);
-  if (! param_spec)
+  path_param_spec = check_param_spec (config, path_property_name,
+                                      GIMP_TYPE_PARAM_PATH, G_STRLOC);
+  if (! path_param_spec)
     return NULL;
 
+  if (writable_property_name)
+    {
+      writable_param_spec = check_param_spec (config, writable_property_name,
+                                              GIMP_TYPE_PARAM_PATH, G_STRLOC);
+      if (! writable_param_spec)
+        return NULL;
+    }
+
   g_object_get (config,
-                property_name, &value,
+                path_property_name, &value,
                 NULL);
 
-  filename = value ? gimp_config_path_expand (value, FALSE, NULL) : NULL;
-
-  editor = gimp_path_editor_new (filesel_title, filename);
-
-  g_free (filename);
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
 
-  set_param_spec (G_OBJECT (editor), NULL, param_spec);
+  editor = gimp_path_editor_new (filesel_title, filename);
+  g_free (filename);
+
+  if (writable_property_name)
+    {
+      g_object_get (config,
+                    writable_property_name, &value,
+                    NULL);
+
+      filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+      g_free (value);
+
+      gimp_path_editor_set_writable_path (GIMP_PATH_EDITOR (editor), filename);
+      g_free (filename);
+    }
+
+  g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-path",
+                     path_param_spec);
 
   g_signal_connect (editor, "path_changed",
-		    G_CALLBACK (gimp_prop_path_editor_callback),
+		    G_CALLBACK (gimp_prop_path_editor_path_callback),
 		    config);
 
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_path_editor_notify),
+  connect_notify (config, path_property_name,
+                  G_CALLBACK (gimp_prop_path_editor_path_notify),
                   editor);
+
+  if (writable_property_name)
+    {
+      g_object_set_data (G_OBJECT (editor), "gimp-config-param-spec-writable",
+                         writable_param_spec);
+
+      g_signal_connect (editor, "writable_changed",
+                        G_CALLBACK (gimp_prop_path_editor_writable_callback),
+                        config);
+
+      connect_notify (config, writable_property_name,
+                      G_CALLBACK (gimp_prop_path_editor_writable_notify),
+                      editor);
+    }
 
   return editor;
 }
 
 static void
-gimp_prop_path_editor_callback (GimpPathEditor *editor,
-                                GObject        *config)
+gimp_prop_path_editor_path_callback (GimpPathEditor *editor,
+                                     GObject        *config)
 {
-  GParamSpec *param_spec;
+  GParamSpec *path_param_spec;
+  GParamSpec *writable_param_spec;
   gchar      *value;
+  gchar      *utf8;
 
-  param_spec = get_param_spec (G_OBJECT (editor));
-  if (! param_spec)
+  path_param_spec     = g_object_get_data (G_OBJECT (editor),
+                                           "gimp-config-param-spec-path");
+  writable_param_spec = g_object_get_data (G_OBJECT (editor),
+                                           "gimp-config-param-spec-writable");
+  if (! path_param_spec)
     return;
 
   value = gimp_path_editor_get_path (editor);
+  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  g_free (value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_path_editor_path_notify,
+                                   editor);
 
   g_object_set (config,
-                param_spec->name, value,
+                path_param_spec->name, utf8,
                 NULL);
 
-  g_free (value);
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_path_editor_path_notify,
+                                     editor);
+
+  g_free (utf8);
+
+  if (writable_param_spec)
+    {
+      value = gimp_path_editor_get_writable_path (editor);
+      utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+      g_free (value);
+
+      g_signal_handlers_block_by_func (config,
+                                       gimp_prop_path_editor_writable_notify,
+                                       editor);
+
+      g_object_set (config,
+                    writable_param_spec->name, utf8,
+                    NULL);
+
+      g_signal_handlers_unblock_by_func (config,
+                                         gimp_prop_path_editor_writable_notify,
+                                         editor);
+
+      g_free (utf8);
+    }
 }
 
 static void
-gimp_prop_path_editor_notify (GObject        *config,
-                              GParamSpec     *param_spec,
-                              GimpPathEditor *editor)
+gimp_prop_path_editor_writable_callback (GimpPathEditor *editor,
+                                         GObject        *config)
+{
+  GParamSpec *param_spec;
+  gchar      *value;
+  gchar      *utf8;
+
+  param_spec = g_object_get_data (G_OBJECT (editor),
+                                  "gimp-config-param-spec-writable");
+  if (! param_spec)
+    return;
+
+  value = gimp_path_editor_get_writable_path (editor);
+  utf8 = g_filename_to_utf8 (value, -1, NULL, NULL, NULL);
+  g_free (value);
+
+  g_signal_handlers_block_by_func (config,
+                                   gimp_prop_path_editor_writable_notify,
+                                   editor);
+
+  g_object_set (config,
+                param_spec->name, utf8,
+                NULL);
+
+  g_signal_handlers_unblock_by_func (config,
+                                     gimp_prop_path_editor_writable_notify,
+                                     editor);
+
+  g_free (utf8);
+}
+
+static void
+gimp_prop_path_editor_path_notify (GObject        *config,
+                                   GParamSpec     *param_spec,
+                                   GimpPathEditor *editor)
 {
   gchar *value;
+  gchar *filename;
 
   g_object_get (config,
                 param_spec->name, &value,
                 NULL);
 
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
+  g_free (value);
+
   g_signal_handlers_block_by_func (editor,
-                                   gimp_prop_path_editor_callback,
+                                   gimp_prop_path_editor_path_callback,
                                    config);
 
-  gimp_path_editor_set_path (editor, value);
+  gimp_path_editor_set_path (editor, filename);
 
   g_signal_handlers_unblock_by_func (editor,
-                                     gimp_prop_path_editor_callback,
+                                     gimp_prop_path_editor_path_callback,
                                      config);
 
+  g_free (filename);
+}
+
+static void
+gimp_prop_path_editor_writable_notify (GObject        *config,
+                                       GParamSpec     *param_spec,
+                                       GimpPathEditor *editor)
+{
+  gchar *value;
+  gchar *filename;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  filename = value ? gimp_config_path_expand (value, TRUE, NULL) : NULL;
   g_free (value);
+
+  g_signal_handlers_block_by_func (editor,
+                                   gimp_prop_path_editor_writable_callback,
+                                   config);
+
+  gimp_path_editor_set_writable_path (editor, filename);
+
+  g_signal_handlers_unblock_by_func (editor,
+                                     gimp_prop_path_editor_writable_callback,
+                                     config);
+
+  g_free (filename);
 }
 
 
@@ -1576,19 +1732,10 @@ gimp_prop_size_entry_new (GObject                   *config,
 
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
                      param_spec);
-  g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
-                     unit_param_spec);
 
   g_signal_connect (sizeentry, "value_changed",
 		    G_CALLBACK (gimp_prop_size_entry_callback),
 		    config);
-
-  if (unit_property_name)
-    {
-      g_signal_connect (sizeentry, "unit_changed",
-                        G_CALLBACK (gimp_prop_size_entry_callback),
-                        config);
-    }
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_size_entry_notify),
@@ -1596,6 +1743,13 @@ gimp_prop_size_entry_new (GObject                   *config,
 
   if (unit_property_name)
     {
+      g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
+                         unit_param_spec);
+
+      g_signal_connect (sizeentry, "unit_changed",
+                        G_CALLBACK (gimp_prop_size_entry_callback),
+                        config);
+
       connect_notify (config, unit_property_name,
                       G_CALLBACK (gimp_prop_size_entry_notify_unit),
                       sizeentry);
@@ -1873,8 +2027,6 @@ gimp_prop_coordinates_connect (GObject     *config,
                      x_param_spec);
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-y",
                      y_param_spec);
-  g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
-                     unit_param_spec);
 
   old_x_value  = g_new0 (gdouble, 1);
   *old_x_value = x_value;
@@ -1887,15 +2039,6 @@ gimp_prop_coordinates_connect (GObject     *config,
   g_object_set_data_full (G_OBJECT (sizeentry), "old-y-value",
                           old_y_value,
                           (GDestroyNotify) g_free);
-
-  if (unit_property_name)
-    {
-      old_unit_value  = g_new0 (GimpUnit, 1);
-      *old_unit_value = unit_value;
-      g_object_set_data_full (G_OBJECT (sizeentry), "old-unit-value",
-                              old_unit_value,
-                              (GDestroyNotify) g_free);
-    }
 
   if (chainbutton)
     {
@@ -1912,13 +2055,6 @@ gimp_prop_coordinates_connect (GObject     *config,
 		    G_CALLBACK (gimp_prop_coordinates_callback),
 		    config);
 
-  if (unit_property_name)
-    {
-      g_signal_connect (sizeentry, "unit_changed",
-                        G_CALLBACK (gimp_prop_coordinates_callback),
-                        config);
-    }
-
   connect_notify (config, x_property_name,
                   G_CALLBACK (gimp_prop_coordinates_notify_x),
                   sizeentry);
@@ -1928,6 +2064,19 @@ gimp_prop_coordinates_connect (GObject     *config,
 
   if (unit_property_name)
     {
+      g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec-unit",
+                         unit_param_spec);
+
+      old_unit_value  = g_new0 (GimpUnit, 1);
+      *old_unit_value = unit_value;
+      g_object_set_data_full (G_OBJECT (sizeentry), "old-unit-value",
+                              old_unit_value,
+                              (GDestroyNotify) g_free);
+
+      g_signal_connect (sizeentry, "unit_changed",
+                        G_CALLBACK (gimp_prop_coordinates_callback),
+                        config);
+
       connect_notify (config, unit_property_name,
                       G_CALLBACK (gimp_prop_coordinates_notify_unit),
                       sizeentry);

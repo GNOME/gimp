@@ -423,8 +423,6 @@ gimp_brush_load (const gchar  *filename,
   if (! brush)
     return NULL;
 
-  gimp_data_set_filename (GIMP_DATA (brush), filename);
-
   /*  Swap the brush to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     {
@@ -433,8 +431,6 @@ gimp_brush_load (const gchar  *filename,
       if (brush->pixmap)
 	temp_buf_swap (brush->pixmap);
     }
-
-  GIMP_DATA (brush)->dirty = FALSE;
 
   return GIMP_DATA (brush);
 }

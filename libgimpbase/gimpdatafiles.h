@@ -29,6 +29,7 @@
 struct _GimpDatafileData
 {
   const gchar *filename;
+  const gchar *dirname;
   const gchar *basename;
 
   time_t       atime;

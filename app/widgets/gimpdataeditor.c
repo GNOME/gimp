@@ -35,8 +35,6 @@
 #include "core/gimpdata.h"
 #include "core/gimpdatafactory.h"
 
-#include "config/gimpconfig-path.h"
-
 #include "gimpdataeditor.h"
 #include "gimpdocked.h"
 #include "gimpitemfactory.h"
@@ -222,9 +220,7 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
 static void
 gimp_data_editor_dispose (GObject *object)
 {
-  GimpDataEditor *editor;
-
-  editor = GIMP_DATA_EDITOR (object);
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
 
   if (editor->data)
     {
@@ -378,44 +374,9 @@ gimp_data_editor_revert_clicked (GtkWidget      *widget,
 static void
 gimp_data_editor_save_dirty (GimpDataEditor *editor)
 {
-  GimpData *data;
-  gchar    *path = NULL;
+  GimpData *data = editor->data;
 
-  data = editor->data;
-
-  if (! data || ! data->dirty)
-    return;
-
-  g_object_get (editor->data_factory->gimp->config,
-                editor->data_factory->path_property_name, &path,
-                NULL);
-
-  if (path && strlen (path))
-    {
-      gchar  *tmp;
-      GError *error = NULL;
-
-      tmp = gimp_config_path_expand (path, TRUE, NULL);
-      g_free (path);
-      path = tmp;
-
-      if (! data->filename)
-        gimp_data_create_filename (data, GIMP_OBJECT (data)->name, path);
-
-      if (! gimp_data_save (data, &error))
-        {
-          /*  check if there actually was an error (no error
-           *  means the data class does not implement save)
-           */
-          if (error)
-            {
-              g_message (_("Warning: Failed to save data:\n%s"),
-                         error->message);
-              g_clear_error (&error);
-            }
-        }
-    }
-
-  g_free (path);
+  if (data && data->dirty)
+    gimp_data_factory_data_save_single (editor->data_factory, data);
 }
 

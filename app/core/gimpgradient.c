@@ -155,9 +155,7 @@ gimp_gradient_init (GimpGradient *gradient)
 static void
 gimp_gradient_finalize (GObject *object)
 {
-  GimpGradient *gradient;
-
-  gradient = GIMP_GRADIENT (object);
+  GimpGradient *gradient = GIMP_GRADIENT (object);
 
   if (gradient->segments)
     {
@@ -172,11 +170,9 @@ static gint64
 gimp_gradient_get_memsize (GimpObject *object,
                            gint64     *gui_size)
 {
-  GimpGradient        *gradient;
+  GimpGradient        *gradient = GIMP_GRADIENT (object);
   GimpGradientSegment *segment;
-  gint64               memsize = 0;
-
-  gradient = GIMP_GRADIENT (object);
+  gint64               memsize  = 0;
 
   for (segment = gradient->segments; segment; segment = segment->next)
     memsize += sizeof (GimpGradientSegment);
@@ -221,7 +217,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 			       gint          width,
 			       gint          height)
 {
-  GimpGradient *gradient;
+  GimpGradient *gradient = GIMP_GRADIENT (viewable);
   TempBuf      *temp_buf;
   guchar       *buf;
   guchar       *p;
@@ -229,8 +225,6 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   gint          x, y;
   gdouble       dx, cur_x;
   GimpRGB       color;
-
-  gradient = GIMP_GRADIENT (viewable);
 
   dx    = 1.0 / (width - 1);
   cur_x = 0.0;
@@ -271,8 +265,6 @@ gimp_gradient_duplicate (GimpData *data,
 
   gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
 
-  gimp_data_dirty (GIMP_DATA (gradient));
-
   prev = NULL;
   orig = GIMP_GRADIENT (data)->segments;
   head = NULL;
@@ -308,9 +300,9 @@ gimp_gradient_new (const gchar *name,
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
-
-  gimp_object_set_name (GIMP_OBJECT (gradient), name);
+  gradient = g_object_new (GIMP_TYPE_GRADIENT,
+                           "name", name,
+                           NULL);
 
   gradient->segments = gimp_gradient_segment_new ();
 
@@ -370,8 +362,6 @@ gimp_gradient_load (const gchar  *filename,
     }
 
   gradient = g_object_new (GIMP_TYPE_GRADIENT, NULL);
-
-  gimp_data_set_filename (GIMP_DATA (gradient), filename);
 
   fgets (line, 1024, file);
   if (! strncmp (line, "Name: ", strlen ("Name: ")))
@@ -472,8 +462,6 @@ gimp_gradient_load (const gchar  *filename,
     }
 
   fclose (file);
-
-  GIMP_DATA (gradient)->dirty = FALSE;
 
   return GIMP_DATA (gradient);
 }

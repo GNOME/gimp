@@ -42,6 +42,7 @@ void       gimp_config_string_append_escaped (GString      *string,
                                               const gchar  *val);
 
 gchar    * gimp_config_build_data_path       (const gchar  *name);
+gchar    * gimp_config_build_writable_path   (const gchar *name);
 gchar    * gimp_config_build_plug_in_path    (const gchar  *name);
 
 gboolean   gimp_config_file_copy             (const gchar  *source,

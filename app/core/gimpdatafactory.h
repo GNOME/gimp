@@ -61,6 +61,7 @@ struct _GimpDataFactory
   GimpContainer                    *container;
 
   gchar                            *path_property_name;
+  gchar                            *writable_property_name;
 
   const GimpDataFactoryLoaderEntry *loader_entries;
   gint                              n_loader_entries;
@@ -80,6 +81,7 @@ GType             gimp_data_factory_get_type (void) G_GNUC_CONST;
 GimpDataFactory * gimp_data_factory_new      (Gimp                             *gimp,
                                               GType                             data_type,
 					      const gchar                      *path_property_name,
+                                              const gchar                      *writable_property_name,
 					      const GimpDataFactoryLoaderEntry *loader_entries,
 					      gint                              n_loader_entries,
 					      GimpDataNewFunc                   new_func,
@@ -95,6 +97,8 @@ GimpData * gimp_data_factory_data_new          (GimpDataFactory *factory,
 GimpData * gimp_data_factory_data_duplicate    (GimpDataFactory *factory,
 						GimpData        *data);
 GimpData * gimp_data_factory_data_get_standard (GimpDataFactory *factory);
+gboolean   gimp_data_factory_data_save_single  (GimpDataFactory *factory,
+                                                GimpData        *data);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */

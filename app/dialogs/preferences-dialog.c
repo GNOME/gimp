@@ -2040,50 +2040,51 @@ prefs_dialog_new (Gimp       *gimp,
       const gchar *icon;
       const gchar *help_data;
       const gchar *fs_label;
-      const gchar *property_name;
+      const gchar *path_property_name;
+      const gchar *writable_property_name;
     }
     paths[] =
     {
       { N_("Brushes"), N_("Brush Folders"), "folders-brushes.png",
 	GIMP_HELP_PREFS_FOLDERS_BRUSHES,
 	N_("Select Brush Folders"),
-	"brush-path" },
+	"brush-path", "brush-path-writable" },
       { N_("Patterns"), N_("Pattern Folders"), "folders-patterns.png",
 	GIMP_HELP_PREFS_FOLDERS_PATTERNS,
 	N_("Select Pattern Folders"),
-	"pattern-path" },
+	"pattern-path", "pattern-path-writable" },
       { N_("Palettes"), N_("Palette Folders"), "folders-palettes.png",
 	GIMP_HELP_PREFS_FOLDERS_PALETTES,
 	N_("Select Palette Folders"),
-        "palette-path" },
+        "palette-path", "palette-path-writable" },
       { N_("Gradients"), N_("Gradient Folders"), "folders-gradients.png",
 	GIMP_HELP_PREFS_FOLDERS_GRADIENTS,
 	N_("Select Gradient Folders"),
-        "gradient-path" },
+        "gradient-path", "gradient-path-writable" },
       { N_("Fonts"), N_("Font Folders"), "folders-fonts.png",
 	GIMP_HELP_PREFS_FOLDERS_FONTS,
 	N_("Select Font Folders"),
-        "font-path" },
+        "font-path", "font-path-writable" },
       { N_("Plug-Ins"), N_("Plug-In Folders"), "folders-plug-ins.png",
 	GIMP_HELP_PREFS_FOLDERS_PLUG_INS,
 	N_("Select Plug-In Folders"),
-        "plug-in-path" },
+        "plug-in-path", NULL },
       { N_("Scripts"), N_("Script-Fu Folders"), "folders-scripts.png",
 	GIMP_HELP_PREFS_FOLDERS_SCRIPTS,
 	N_("Select Script-Fu Folders"),
-        "script-fu-path" },
+        "script-fu-path", NULL },
       { N_("Modules"), N_("Module Folders"), "folders-modules.png",
 	GIMP_HELP_PREFS_FOLDERS_MODULES,
 	N_("Select Module Folders"),
-        "module-path" },
+        "module-path", NULL },
       { N_("Environment"), N_("Environment Folders"), "folders-environ.png",
 	GIMP_HELP_PREFS_FOLDERS_ENVIRONMENT,
 	N_("Select Environment Folders"),
-        "environ-path" },
+        "environ-path", NULL },
       { N_("Themes"), N_("Theme Folders"), "folders-themes.png",
 	GIMP_HELP_PREFS_FOLDERS_THEMES,
 	N_("Select Theme Folders"),
-        "theme-path" }
+        "theme-path", NULL }
     };
 
     for (i = 0; i < G_N_ELEMENTS (paths); i++)
@@ -2099,7 +2100,9 @@ prefs_dialog_new (Gimp       *gimp,
 					   &child_iter,
 					   page_index++);
 
-	patheditor = gimp_prop_path_editor_new (object, paths[i].property_name,
+	patheditor = gimp_prop_path_editor_new (object,
+                                                paths[i].path_property_name,
+                                                paths[i].writable_property_name,
                                                 gettext (paths[i].fs_label));
 	gtk_container_add (GTK_CONTAINER (vbox), patheditor);
 	gtk_widget_show (patheditor);

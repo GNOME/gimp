@@ -436,13 +436,9 @@ gimp_pattern_load (const gchar  *filename,
   gimp_object_set_name (GIMP_OBJECT (pattern), name);
   g_free (name);
 
-  gimp_data_set_filename (GIMP_DATA (pattern), filename);
-
   /*  Swap the pattern to disk (if we're being stingy with memory) */
   if (stingy_memory_use)
     temp_buf_swap (pattern->mask);
-
-  GIMP_DATA (pattern)->dirty = FALSE;
 
   return GIMP_DATA (pattern);
 
