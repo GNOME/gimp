@@ -353,7 +353,7 @@ gimp_brush_load_brush (gint   fd,
       else
 	{
 	  /*  rewind to make brush pipe loader happy  */
-	  if (lseek (fd, - sizeof (PatternHeader), SEEK_CUR) < 0)
+	  if (lseek (fd, - ((off_t) sizeof (PatternHeader)), SEEK_CUR) < 0)
 	    {
 	      g_message (_("GIMP brush file appears to be corrupted: \"%s\"."),
 			 filename);

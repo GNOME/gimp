@@ -1,3 +1,11 @@
+2000-12-31  Sven Neumann  <sven@gimp.org>
+            Simon Budig <simon@gimp.org>
+	
+	* app/gimpbrush.c
+	* plug-ins/common/gih.c: explicitely cast offset to (off_t) when 
+	seeking back. Should fix the problems reading grayscale BrushPipes 
+	on IRIX.
+
 2000-12-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/apptypes.h: cleaned up a bit.
