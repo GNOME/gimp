@@ -1,3 +1,7 @@
+Tue May  4 15:16:47 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/text_tool.c: s@gdkprivate@gdk/gdkprivate@
+
 1999-05-04  Tor Lillqvist  <tml@iki.fi>
 
 	Win32 portability changes:
