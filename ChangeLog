@@ -1,5 +1,11 @@
 2004-03-12  Sven Neumann  <sven@gimp.org>
 
+	* data/misc/gimp.keys.in: removed category entry. This would have
+	to be translated and it's not our job to define where image/jpeg
+	belongs to.
+
+2004-03-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c
 	* app/tools/gimpinktool.c
 	* app/tools/gimptool.c: print debug output to stderr.
