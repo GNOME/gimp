@@ -143,33 +143,34 @@ gimp_template_class_init (GimpTemplateClass *klass)
   viewable_class->default_stock_id = "gimp-template";
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_WIDTH, "width",
-                                NULL,
+                                "The image width in pixels.",
                                 1, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_HEIGHT, "height",
-                                NULL,
+                                "The image height in pixels.",
                                 1, GIMP_MAX_IMAGE_SIZE, 256,
                                 0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
-                                 NULL,
+                                 "The unit used for coordinate display "
+                                 "when not in dot-for-dot mode.",
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_XRESOLUTION,
                                    "xresolution",
-                                   NULL,
+                                   "The horizonal resolution in dpi.",
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_YRESOLUTION,
                                    "yresolution",
-                                   NULL,
+                                   "The vertical resolution in dpi.",
                                    GIMP_MIN_RESOLUTION, GIMP_MAX_RESOLUTION,
                                    72.0,
                                    0);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",
-                                 NULL,
+                                 "The unit used to display resolutions.",
                                  FALSE, FALSE, GIMP_UNIT_INCH,
                                  0);
 

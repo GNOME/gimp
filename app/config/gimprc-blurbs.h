@@ -82,11 +82,6 @@ N_("Tools such as fuzzy-select and bucket fill find regions based on a " \
    "intensity from the original is greater than a specified threshold. " \
    "This value represents the default threshold.")
 
-#define DEFAULT_UNIT_BLURB \
-"Sets the default unit for new images and for the \"File/New\" dialog. " \
-"This units will be used for coordinate display when not in dot-for-dot " \
-"mode."
-
 #define ENVIRON_PATH_BLURB \
 "Sets the environ search path."
 

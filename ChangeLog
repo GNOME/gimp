@@ -1,5 +1,12 @@
 2003-10-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptemplate.c (gimp_template_class_init): added blurbs
+	for most properties.
+
+	* app/config/gimprc-blurbs.h: removed an unused blurb.
+
+2003-10-14  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpdisplayconfig.c: made "perfect-mouse" the default
 	and changed defaults for image title and image statusbar.
 
