@@ -1,5 +1,10 @@
 2003-08-29  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimpvectortool.[ch]: further modifier changes.
+	Mail to gimp-devel will follow.
+
+2003-08-29  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpbezierstroke.c: Do not modify the selection
 	state of the anchors. When extending EXTEND_EDITABLE return
 	the anchor created (not the handle at the end of the list)

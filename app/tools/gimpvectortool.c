@@ -55,6 +55,10 @@
 
 #define TARGET 9
 
+#define TOGGLE_MASK GDK_SHIFT_MASK
+#define MOVE_MASK   GDK_MOD1_MASK
+#define INSDEL_MASK GDK_CONTROL_MASK
+
 
 /*  local function prototypes  */
 
@@ -77,6 +81,11 @@ static void   gimp_vector_tool_button_release  (GimpTool        *tool,
 static void   gimp_vector_tool_motion          (GimpTool        *tool,
                                                 GimpCoords      *coords,
                                                 guint32          time,
+                                                GdkModifierType  state,
+                                                GimpDisplay     *gdisp);
+static void   gimp_vector_tool_modifier_key    (GimpTool        *tool,
+                                                GdkModifierType  key,
+                                                gboolean         press,
                                                 GdkModifierType  state,
                                                 GimpDisplay     *gdisp);
 static void   gimp_vector_tool_oper_update     (GimpTool        *tool,
@@ -177,6 +186,7 @@ gimp_vector_tool_class_init (GimpVectorToolClass *klass)
   tool_class->button_press   = gimp_vector_tool_button_press;
   tool_class->button_release = gimp_vector_tool_button_release;
   tool_class->motion         = gimp_vector_tool_motion;
+  tool_class->modifier_key   = gimp_vector_tool_modifier_key;
   tool_class->oper_update    = gimp_vector_tool_oper_update;
   tool_class->cursor_update  = gimp_vector_tool_cursor_update;
 
@@ -193,6 +203,8 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
   vector_tool->function       = VECTORS_CREATE_VECTOR;
+  vector_tool->restriction    = GIMP_ANCHOR_FEATURE_NONE;
+  vector_tool->modifier_lock  = 0;
   vector_tool->last_x         = 0;
   vector_tool->last_y         = 0;
 
@@ -253,27 +265,15 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
-  /* when pressing mouse down
-   *
-   * Anchor: (NONE) -> Regular Movement
-   *         (SHFT) -> multiple selection
-   *         (CTRL) -> Drag out control point
-   *         (CTRL+SHFT) -> Convert to corner
-   *         (ALT)  -> close this stroke  (really should be able to connect
-   *                                       two strokes)
-   *
-   * Handle: (NONE) -> Regular Movement
-   *         (SHFT) -> (Handle) Move opposite handle symmetrically
-   *         (CTRL+SHFT) -> move handle to its anchor
-   */
+  /* Save the current modifier state */
+
+  vector_tool->saved_state = state;
 
   /*  if we are changing displays, pop the statusbar of the old one  */
   if (gdisp != tool->gdisp)
     {
       /* gimp_tool_pop_status (tool); */
     }
-
-  vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
 
   gimp_draw_tool_pause (draw_tool);
 
@@ -576,10 +576,6 @@ gimp_vector_tool_motion (GimpTool        *tool,
   GimpVectorOptions *options;
   GimpAnchor        *anchor;
 
-  /* While moving:
-   *         (SHFT) -> restrict movement
-   */
-
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
@@ -588,13 +584,19 @@ gimp_vector_tool_motion (GimpTool        *tool,
 
   gimp_vectors_freeze (vector_tool->vectors);
 
-  if (state & GDK_SHIFT_MASK)
+  if ((vector_tool->saved_state & TOGGLE_MASK) != (state & TOGGLE_MASK))
+    vector_tool->modifier_lock = FALSE;
+
+  if (!vector_tool->modifier_lock)
     {
-      vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
-    }
-  else
-    {
-      vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
+      if (state & TOGGLE_MASK)
+        {
+          vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+        }
+      else
+        {
+          vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
+        }
     }
 
   switch (vector_tool->function)
@@ -645,6 +647,43 @@ gimp_vector_tool_motion (GimpTool        *tool,
     }
 
   gimp_vectors_thaw (vector_tool->vectors);
+}
+
+static void
+gimp_vector_tool_modifier_key (GimpTool        *tool,
+                               GdkModifierType  key,
+                               gboolean         press,
+                               GdkModifierType  state,
+                               GimpDisplay     *gdisp)
+{
+  GimpVectorOptions *options;
+
+  options = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+
+  if (key == TOGGLE_MASK)
+    return;
+
+  if (state & MOVE_MASK)
+    {
+      g_object_set (options,
+                    "vectors-edit-mode", GIMP_VECTOR_MODE_MOVE,
+                    NULL);
+    }
+  else if (state & INSDEL_MASK)
+    {
+      g_object_set (options,
+                    "vectors-edit-mode", GIMP_VECTOR_MODE_ADJUST,
+                    NULL);
+    }
+  else
+    {
+      g_object_set (options,
+                    "vectors-edit-mode", GIMP_VECTOR_MODE_CREATE,
+                    NULL);
+    }
+
+
+
 }
 
 static gboolean
@@ -862,10 +901,11 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
   GimpVectorTool    *vector_tool;
   GimpVectorOptions *options;
   GimpAnchor        *anchor = NULL;
-  GdkModifierType    modifier_mask = GDK_CONTROL_MASK;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
   options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
+
+  vector_tool->modifier_lock = FALSE;
 
   switch (options->edit_mode)
     {
@@ -873,26 +913,33 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
         {
           vector_tool->function = VECTORS_CREATE_VECTOR;
+          vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+          vector_tool->modifier_lock = TRUE;
         }
       else if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
                                            gdisp, &anchor, NULL))
         {
-          if (state & modifier_mask)
+          if (anchor->type == GIMP_ANCHOR_ANCHOR)
             {
               vector_tool->function = VECTORS_MOVE_ANCHOR;
             }
           else
             {
-              if (anchor->type == GIMP_ANCHOR_ANCHOR)
-                vector_tool->function = VECTORS_MOVE_ANCHOR;
+              vector_tool->function = VECTORS_MOVE_HANDLE;
+              if (state & TOGGLE_MASK)
+                vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
               else
-                vector_tool->function = VECTORS_MOVE_HANDLE;
+                vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
             }
         }
       else if (gimp_vector_tool_on_curve (tool, coords, gdisp,
                                          NULL, NULL, NULL, NULL))
         {
           vector_tool->function = VECTORS_MOVE_CURVE;
+          if (state & TOGGLE_MASK)
+            vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+          else
+            vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
         }
       else
         {
@@ -902,6 +949,9 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
             vector_tool->function = VECTORS_ADD_ANCHOR;
           else
             vector_tool->function = VECTORS_CREATE_STROKE;
+          
+          vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+          vector_tool->modifier_lock = TRUE;
         }
 
       break;
@@ -914,20 +964,31 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       else if (gimp_vector_tool_on_handle (tool, coords, GIMP_ANCHOR_ANCHOR,
                                            gdisp, &anchor, NULL))
         {
-          if (state & modifier_mask)
+          if (anchor->type == GIMP_ANCHOR_ANCHOR)
             {
-              vector_tool->function = VECTORS_DELETE_ANCHOR;
+              if (state & TOGGLE_MASK)
+                {
+                  vector_tool->function = VECTORS_DELETE_ANCHOR;
+                }
+              else
+                {
+                  vector_tool->function = VECTORS_CONNECT_STROKES;
+                  vector_tool->cur_anchor = NULL;  /* slightly misplaced here */
+                }
             }
           else
             {
-              vector_tool->function = VECTORS_CONNECT_STROKES;
-              vector_tool->cur_anchor = NULL;  /* slightly misplaced here */
+              vector_tool->function = VECTORS_CONVERT_EDGE;
+              if (state & TOGGLE_MASK)
+                vector_tool->restriction = GIMP_ANCHOR_FEATURE_SYMMETRIC;
+              else
+                vector_tool->restriction = GIMP_ANCHOR_FEATURE_NONE;
             }
         }
       else if (gimp_vector_tool_on_curve (tool, coords, gdisp,
                                          NULL, NULL, NULL, NULL))
         {
-          if (state & modifier_mask)
+          if (state & TOGGLE_MASK)
             {
               vector_tool->function = VECTORS_DELETE_SEGMENT;
             }
@@ -944,10 +1005,18 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
       break;
 
     case GIMP_VECTOR_MODE_MOVE:
-      if (state & modifier_mask)
-        vector_tool->function = VECTORS_MOVE_VECTORS;
+      if (! vector_tool->vectors || GIMP_DRAW_TOOL (tool)->gdisp != gdisp)
+        {
+          vector_tool->function = VECTORS_FINISHED;
+        }
+      else if (state & TOGGLE_MASK)
+        {
+          vector_tool->function = VECTORS_MOVE_VECTORS;
+        }
       else
-        vector_tool->function = VECTORS_MOVE_STROKE;
+        {
+          vector_tool->function = VECTORS_MOVE_STROKE;
+        }
 
       break;
     }
