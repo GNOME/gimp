@@ -1,5 +1,10 @@
 2004-09-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/aa.c (aa_dialog): use a combo box for format
+	selection.
+
+2004-09-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimppixelrgn.c: fixed gtk-doc comments, removed trailing
 	whitespace.
 

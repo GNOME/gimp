@@ -41,21 +41,20 @@
 /*
  * Declare some local functions.
  */
-static void     query      (void);
-static void     run        (const gchar      *name,
-                            gint              nparams,
-                            const GimpParam  *param,
-                            gint             *nreturn_vals,
-                            GimpParam       **return_vals);
-static gboolean save_aa    (gint32            drawable_ID,
-                            gchar            *filename,
-                            gint              output_type);
-static void     gimp2aa    (gint32            drawable_ID,
-                            aa_context       *context);
+static void     query       (void);
+static void     run         (const gchar      *name,
+                             gint              nparams,
+                             const GimpParam  *param,
+                             gint             *nreturn_vals,
+                             GimpParam       **return_vals);
+static gboolean save_aa     (gint32            drawable_ID,
+                             gchar            *filename,
+                             gint              output_type);
+static void     gimp2aa     (gint32            drawable_ID,
+                             aa_context       *context);
 
-static gint     type_dialog                 (gint       selected);
-static void     type_dialog_toggle_update   (GtkWidget *widget,
-                                             gpointer   data);
+static gint     aa_dialog   (gint              selected);
+
 
 /*
  * Some global variables.
@@ -68,11 +67,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-/**
- * Type the user selected. (Global for easier UI coding.)
- */
-static gint selected_type = 0;
 
 
 MAIN ()
@@ -191,7 +185,7 @@ run (const gchar      *name,
         {
         case GIMP_RUN_INTERACTIVE:
           gimp_get_data ("file_aa_save", &output_type);
-          output_type = type_dialog (output_type);
+          output_type = aa_dialog (output_type);
           if (output_type < 0)
             status = GIMP_PDB_CANCEL;
           break;
@@ -342,16 +336,16 @@ gimp2aa (gint32      drawable_ID,
 }
 
 static gint
-type_dialog (gint selected)
+aa_dialog (gint selected)
 {
-  GtkWidget *dlg;
-  GtkWidget *toggle;
-  GtkWidget *frame;
-  GtkWidget *toggle_vbox;
-  GSList    *group;
+  GtkWidget *dialog;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *combo;
+  gint       i;
 
   /* Create the actual window. */
-  dlg = gimp_dialog_new (_("Save as Text"), "aa",
+  dialog = gimp_dialog_new (_("Save as Text"), "aa",
                          NULL, 0,
                          gimp_standard_help_func, "file-aa-save",
 
@@ -360,54 +354,38 @@ type_dialog (gint selected)
 
                          NULL);
 
-  /*  file save type  */
-  frame = gimp_frame_new (_("Data Formatting"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+                      hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  toggle_vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
+  label = gtk_label_new_with_mnemonic (_("_Format:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
-  group = NULL;
-  {
-    aa_format **p = (aa_format **) aa_formats;
-    gint current = 0;
+  combo = gimp_int_combo_box_new (NULL, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
-    while (*p != NULL)
-      {
-        toggle = gtk_radio_button_new_with_label (group, (*p)->formatname);
-        group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
-        gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
-        gtk_widget_show (toggle);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-        g_signal_connect (toggle, "toggled",
-                          G_CALLBACK (type_dialog_toggle_update),
-                          (gpointer) (*p)->formatname);
+  for (i = 0; aa_formats[i]; i++)
+    gimp_int_combo_box_append (GIMP_INT_COMBO_BOX (combo),
+                               GIMP_INT_STORE_VALUE, i,
+                               GIMP_INT_STORE_LABEL, aa_formats[i]->formatname,
+                               -1);
 
-        if (current == selected)
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), TRUE);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo), selected,
+                              G_CALLBACK (gimp_int_combo_box_get_active),
+                              &selected);
 
-        p++;
-        current++;
-      }
-  }
+  gtk_widget_show (dialog);
 
-  gtk_widget_show (toggle_vbox);
-  gtk_widget_show (frame);
+  if (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK)
+    selected = -1;
 
-  gtk_widget_show (dlg);
+  gtk_widget_destroy (dialog);
 
-  if (gimp_dialog_run (GIMP_DIALOG (dlg)) != GTK_RESPONSE_OK)
-    selected_type = -1;
-
-  gtk_widget_destroy (dlg);
-
-  return selected_type;
-}
-
-static void
-type_dialog_toggle_update (GtkWidget *widget,
-                           gpointer   data)
-{
-  selected_type = get_type_from_string ((const gchar *) data);
+  return selected;
 }
