@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "POT-Creation-Date: 2003-06-26 22:13+0200\n"
-"PO-Revision-Date: 2003-06-15 23:52+0400\n"
+"PO-Revision-Date: 2003-06-30 01:47+0400\n"
 "Last-Translator: Anatoly A. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,12 +30,12 @@ msgstr ""
 "Для пользовательской установки запустите  GIMP  без опции '--no-interface' ."
 
 #: app/app_procs.c:317
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "%s"
 msgstr ""
-"Не удалось открыть \"%s\":\n"
+"Ошибка '%s' открытия:\n"
 "%s"
 
 #: app/main.c:174
@@ -94,7 +94,7 @@ msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  -d, --no-data                Не загружать шаблоны, градиенты, палитры и "
+"  -d, --no-data                Не загружать образцы, градиенты, палитры и "
 "кисти.\n"
 
 #: app/main.c:412
@@ -111,8 +111,7 @@ msgstr "  -h, --help                Вывести эту подсказку.\n"
 
 #: app/main.c:415
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr ""
-"  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
+msgstr "  -r, --restore-session     Попытаться восстановить сохраненный сеанс.\n"
 
 #: app/main.c:416
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -120,8 +119,7 @@ msgstr "  -s, --no-splash              Не показывать окно зап
 
 #: app/main.c:417
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr ""
-"  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
+msgstr "  -S, --no-splash-image        Не добавлять изображение к окну запуска.\n"
 
 #: app/main.c:418
 msgid "  -v, --version            Output version information.\n"
@@ -144,8 +142,7 @@ msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                Без  MMX расширения.\n"
 
 #: app/main.c:422
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Разрешить отладку обработчиков сигналов для "
 "нефатальных сигналов.\n"
@@ -168,6 +165,7 @@ msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
 msgstr ""
+"  --enable-stack-trace <никогда | запрос | всегда>\n"
 "                          Режим отладки для фатальных сигналов.\n"
 "\n"
 
@@ -278,29 +276,27 @@ msgstr "неисправимая ошибка лекс.анализа"
 #: app/config/gimpconfig-deserialize.c:434
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "для двоичного токена %s ожидалось \"да\" или \"нет\", получено \"%s\""
+msgstr "для двоичного знака ожидалось \"да\" или \"нет\" %s, получено'%s' "
 
 #: app/config/gimpconfig-deserialize.c:493
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "недопустимое значение \"%s\" для токена %s"
+msgstr "недопустимое значение \"%s\" для знака%s"
 
 #: app/config/gimpconfig-deserialize.c:507
 #, c-format
 msgid "invalid value '%ld' for token %s"
-msgstr "invalid value '%ld' for token %s"
+msgstr "недопустимое значение '%ld' для знака %s"
 
 #: app/config/gimpconfig-deserialize.c:573
 #, c-format
 msgid "while parsing token %s: %s"
-msgstr ""
-"Ошибка при открытии файла \"%s\"\n"
-"%s"
+msgstr "сейчас происходит синтаксический анализ %s: %s"
 
 #: app/config/gimpconfig-deserialize.c:710
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "значение для токена %s не является допустимой строкой UTF-8"
+msgstr "значение для знака %s не является допустимой строкой UTF-8"
 
 #: app/config/gimpconfig-path.c:126
 #, c-format
@@ -398,13 +394,14 @@ msgid ""
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:78
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the intially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
-msgstr ""
+msgstr "Инструменты точка растра точка растра."
 
 #: app/config/gimprc-blurbs.h:128
 msgid "Sets the browser used by the help system."
@@ -433,8 +430,7 @@ msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:147
-msgid ""
-"Sets the level of interpolation used for scaling and other transformations."
+msgid "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:151
@@ -454,10 +450,11 @@ msgid ""
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:162
+#, fuzzy
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
-msgstr ""
+msgstr "цвета."
 
 #: app/config/gimprc-blurbs.h:186
 msgid ""
@@ -481,15 +478,16 @@ msgid ""
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:213
+#, fuzzy
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
 "down when working with large images."
-msgstr ""
+msgstr "Просмотр."
 
 #: app/config/gimprc-blurbs.h:218
 msgid "Sets the default preview size for layers and channels."
-msgstr ""
+msgstr "Установить размер просмотра для слоев и каналов по умолчанию."
 
 #: app/config/gimprc-blurbs.h:221
 msgid ""
@@ -508,13 +506,12 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:232
-msgid ""
-"Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr ""
+msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgstr "Запомнить текущие инструменты, образцы, цвета и кисти."
 
 #: app/config/gimprc-blurbs.h:236
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
-msgstr ""
+msgstr "Сохранить положение и размеры окон при закрытии GIMP."
 
 #: app/config/gimprc-blurbs.h:242
 msgid ""
@@ -570,17 +567,16 @@ msgid "When enabled, menus can be torn off."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:281
-msgid ""
-"When enabled, you can change keyboard shortcuts for menu items on the fly."
+msgid "When enabled, you can change keyboard shortcuts for menu items on the fly."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:284
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr ""
+msgstr "Сохранить измененные \"быстрые клавиши\" при выходе из GIMP."
 
 #: app/config/gimprc-blurbs.h:287
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
+msgstr "Восстановить сохраненные быстрые клавиши при запуске GIMP."
 
 #: app/config/gimprc-blurbs.h:290
 msgid ""
@@ -699,7 +695,7 @@ msgstr "Заливка цветом фона"
 
 #: app/core/core-enums.c:58
 msgid "Pattern Fill"
-msgstr "Заливка шаблоном"
+msgstr "Заливка образцом"
 
 #: app/core/core-enums.c:76
 msgid "Add to the current selection"
@@ -792,7 +788,7 @@ msgstr "По форме (сферический)"
 
 #: app/core/core-enums.c:198
 msgid "Shapeburst (dimpled)"
-msgstr "По форме (ямочкой :-)"
+msgstr "По форме (ямочкой)"
 
 #: app/core/core-enums.c:199
 msgid "Spiral (clockwise)"
@@ -803,9 +799,8 @@ msgid "Spiral (anticlockwise)"
 msgstr "Спиральный (против часовой)"
 
 #: app/core/core-enums.c:218
-#, fuzzy
 msgid "Intersections Only"
-msgstr "Обратить выделение"
+msgstr "Только пересечение"
 
 #: app/core/core-enums.c:219
 msgid "Dashed"
@@ -816,9 +811,8 @@ msgid "Double Dashed"
 msgstr ""
 
 #: app/core/core-enums.c:221
-#, fuzzy
 msgid "Solid"
-msgstr "Разделить"
+msgstr "Однотонный"
 
 #: app/core/core-enums.c:239 app/core/core-enums.c:259
 #: app/display/gimpdisplayshell-title.c:163
@@ -836,7 +830,7 @@ msgstr "Альфа-канал"
 
 #: app/core/core-enums.c:262
 msgid "Grayscale-Alpha"
-msgstr "Градации серого"
+msgstr "Альфа-серый"
 
 #: app/core/core-enums.c:264
 msgid "Indexed-Alpha"
@@ -858,7 +852,7 @@ msgstr "Неизвестный "
 
 #: app/core/core-enums.c:322
 msgid "Tiny"
-msgstr "Тонкий"
+msgstr "Крошечный"
 
 #: app/core/core-enums.c:323
 msgid "Very Small"
@@ -948,9 +942,8 @@ msgstr "Быстрая маска"
 
 #: app/core/core-enums.c:480 app/core/core-enums.c:508
 #: app/core/gimpimage.c:3277
-#, fuzzy
 msgid "Grid"
-msgstr "Направляющая"
+msgstr "Сетка"
 
 #: app/core/core-enums.c:481 app/core/core-enums.c:509
 msgid "Guide"
@@ -963,16 +956,15 @@ msgstr "Выбранная маска"
 
 #: app/core/core-enums.c:483
 msgid "Item Properties"
-msgstr "Свойства слоя"
+msgstr "Свойства элемента"
 
 #: app/core/core-enums.c:484 app/core/core-enums.c:513
 msgid "Move Item"
-msgstr "Перемещение: "
+msgstr "Перемещение 'элемента "
 
 #: app/core/core-enums.c:485
-#, fuzzy
 msgid "Linked Item"
-msgstr "Cвязанный слой"
+msgstr "Cвязанный элемент"
 
 #: app/core/core-enums.c:486 app/core/core-enums.c:515
 msgid "Drawable Visibility"
@@ -1068,26 +1060,25 @@ msgstr "Изменение разрешения"
 
 #: app/core/core-enums.c:510
 msgid "Change Indexed Palette"
-msgstr "Сменить ндексированную палитру"
+msgstr "Сменить индексированную палитру"
 
 #: app/core/core-enums.c:512
 msgid "Rename Item"
 msgstr "Переименование элемента"
 
 #: app/core/core-enums.c:514
-#, fuzzy
 msgid "Set Item Linked"
-msgstr "Установить связь со слоем"
+msgstr "Установить связь с элементом"
 
 #: app/core/core-enums.c:516 app/gui/layers-commands.c:587
 #: app/gui/layers-commands.c:619 app/gui/layers-commands.c:651
 #: app/widgets/gimpdrawabletreeview.c:333 app/widgets/gimplayertreeview.c:197
 msgid "New Layer"
-msgstr "Создание слоя"
+msgstr "Новый слой"
 
 #: app/core/core-enums.c:517 app/widgets/gimplayertreeview.c:200
 msgid "Delete Layer"
-msgstr "Удаление слоя"
+msgstr "Удалить слой"
 
 #: app/core/core-enums.c:518
 msgid "Layer Mod"
@@ -1096,11 +1087,11 @@ msgstr "Режим слоя"
 #: app/core/core-enums.c:519 app/core/gimplayer.c:873
 #: app/gui/layers-commands.c:901
 msgid "Add Layer Mask"
-msgstr "Добавление маски слоя"
+msgstr "Добавить маску слоя"
 
 #: app/core/core-enums.c:520
 msgid "Delete Layer Mask"
-msgstr "Удаление маски слоя"
+msgstr "Удалить маску слоя"
 
 #: app/core/core-enums.c:521
 msgid "Reposition Layer"
@@ -1108,7 +1099,7 @@ msgstr "Изменить размер слоя"
 
 #: app/core/core-enums.c:522
 msgid "Set Layer Mode"
-msgstr "Режим слоя"
+msgstr "Установить режим слоя"
 
 #: app/core/core-enums.c:523
 msgid "Set Layer Opacity"
@@ -1126,7 +1117,7 @@ msgstr "Создать канал"
 
 #: app/core/core-enums.c:526 app/widgets/gimpchanneltreeview.c:121
 msgid "Delete Channel"
-msgstr "Удаление канала"
+msgstr "Удалить канал"
 
 #: app/core/core-enums.c:527
 msgid "Channel Mod"
@@ -1158,7 +1149,7 @@ msgstr "Перемещение векторов"
 
 #: app/core/core-enums.c:534
 msgid "FS to Layer"
-msgstr "FS -> слой"
+msgstr "FS в слой"
 
 #: app/core/core-enums.c:535
 msgid "FS Rigor"
@@ -1170,17 +1161,15 @@ msgstr "FS мягко"
 
 #: app/core/core-enums.c:541
 msgid "EEK: can't undo"
-msgstr "Ой! Невозможно отменить"
+msgstr "Невозможно отменить"
 
 #: app/core/gimp-gradients.c:75
-#, fuzzy
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "/тип окрашивания/HSV (Тон от центра [FixMe])"
+msgstr "Передний план в фон  (HSV против часовой )"
 
 #: app/core/gimp-gradients.c:80
-#, fuzzy
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Основной в фоновой (HSV)"
+msgstr "Основной в фоновой (HSV по часовой )"
 
 #. register all internal procedures
 #: app/core/gimp.c:738
@@ -1198,7 +1187,7 @@ msgstr "Поиск файлов данных"
 
 #: app/core/gimp.c:757
 msgid "Parasites"
-msgstr "Паразиты"
+msgstr "Шумы"
 
 #. initialize the list of gimp brushes
 #: app/core/gimp.c:761 app/gui/dialogs-constructors.c:336
@@ -1212,7 +1201,7 @@ msgstr "Кисти"
 #: app/gui/dialogs-constructors.c:521 app/gui/preferences-dialog.c:1874
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
-msgstr "Шаблоны"
+msgstr "Образцы"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:769 app/gui/dialogs-constructors.c:399
@@ -1242,7 +1231,7 @@ msgstr "Документы"
 #. initialize the template list
 #: app/core/gimp.c:787 app/gui/dialogs-constructors.c:899
 msgid "Templates"
-msgstr "Темы"
+msgstr "Шаблоны"
 
 #: app/core/gimpbrush.c:408 app/core/gimpbrushgenerated.c:377
 #: app/core/gimpbrushpipe.c:350 app/core/gimpgradient.c:354
@@ -1254,7 +1243,7 @@ msgstr "Нельзя открыть '%s' на чтение: %s"
 #: app/core/gimpbrush.c:547 app/core/gimppattern.c:353
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
-msgstr "Невозможно записать %d в '%s': %s"
+msgstr "Нельзя прочести %d ни байта из '%s': %s"
 
 #: app/core/gimpbrush.c:567
 #, c-format
@@ -1302,7 +1291,7 @@ msgstr ""
 #: app/core/gimpgradient.c:588 app/core/gimppalette.c:581
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Невозможно  '%s' прочесть: %s"
+msgstr "Невозможно открыть '%s' для записи: %s"
 
 #: app/core/gimpbrushgenerated.c:388
 #, c-format
@@ -1334,7 +1323,7 @@ msgstr "Канал"
 
 #: app/core/gimpchannel.c:160
 msgid "Rename Channel"
-msgstr "Переименование канала"
+msgstr "Переименовать канала"
 
 #: app/core/gimpchannel.c:285
 msgid "Move Channel"
@@ -1358,7 +1347,7 @@ msgstr "Вращать канал"
 
 #: app/core/gimpchannel.c:485 app/core/gimpdrawable-transform.c:1107
 msgid "Transform Channel"
-msgstr "Преобразование канала"
+msgstr "Преобразовать канал"
 
 #: app/core/gimpchannel.c:615
 msgid "Set Channel Color"
@@ -1366,12 +1355,11 @@ msgstr "Установить цвет канала"
 
 #: app/core/gimpchannel.c:664
 msgid "Set Channel Opacity"
-msgstr "Установить непрозрачность слоя"
+msgstr "Установить непрозрачность канала"
 
 #: app/core/gimpchannel.c:1488
-#, fuzzy
 msgid "Feather Channel"
-msgstr "Удаление канала"
+msgstr "Удалить канал"
 
 #: app/core/gimpchannel.c:1510
 msgid "Sharpen Channel"
@@ -1407,11 +1395,11 @@ msgstr "Загрузить канал"
 
 #: app/core/gimpchannel.c:1823
 msgid "Channel from Alpha"
-msgstr "Канал для Альфа"
+msgstr "Канал из Альфа"
 
 #: app/core/gimpchannel.c:1860
 msgid "Channel from Mask"
-msgstr "Канал для Маски"
+msgstr "Канал из Маски"
 
 #: app/core/gimpdata.c:239
 #, c-format
@@ -1463,7 +1451,7 @@ msgstr "Бленда"
 
 #: app/core/gimpdrawable-bucket-fill.c:113 app/paint/gimpclone.c:211
 msgid "No patterns available for this operation."
-msgstr "Нет шаблонов доступных для этой операции."
+msgstr "Нет образцов, доступных для этой операции."
 
 #: app/core/gimpdrawable-bucket-fill.c:320 app/tools/gimpbucketfilltool.c:86
 msgid "Bucket Fill"
@@ -1479,11 +1467,10 @@ msgstr "Выравнивание"
 
 #: app/core/gimpdrawable-invert.c:56
 msgid "Invert"
-msgstr "Инвертировать"
+msgstr "Инвертирование"
 
 #. push an undo
 #: app/core/gimpdrawable-offset.c:317
-#, fuzzy
 msgid "Offset Drawable"
 msgstr "Смещение слоя"
 
@@ -1572,9 +1559,8 @@ msgid "Set Indexed Palette"
 msgstr "Установитьиндексированную палитра"
 
 #: app/core/gimpimage-colormap.c:107
-#, fuzzy
 msgid "Change Indexed Palette Entry"
-msgstr "Индексированная палитра"
+msgstr "Сменить индексированную палитру"
 
 #: app/core/gimpimage-colormap.c:127
 msgid "Add Color to Indexed Palette"
@@ -1624,7 +1610,7 @@ msgstr "Нечёткое выделение"
 
 #: app/core/gimpimage-mask-select.c:388
 msgid "Select by Color"
-msgstr "Вделение по цвету"
+msgstr "Выделение по цвету"
 
 #: app/core/gimpimage-mask.c:226
 msgid ""
@@ -1680,7 +1666,7 @@ msgstr "Сокращение выделения"
 
 #: app/core/gimpimage-mask.c:568
 msgid "Selection from Channel"
-msgstr "Выделение в канал"
+msgstr "Выделение из канала"
 
 #: app/core/gimpimage-mask.c:585 app/tools/gimpeditselectiontool.c:242
 #: app/tools/gimpeditselectiontool.c:1084
@@ -1701,7 +1687,7 @@ msgstr ""
 
 #: app/core/gimpimage-mask.c:629
 msgid "Selection from Mask"
-msgstr "Выбрать маску"
+msgstr "Выделить из маски"
 
 #: app/core/gimpimage-mask.c:638
 msgid ""
@@ -1716,7 +1702,6 @@ msgid "No selection to stroke."
 msgstr "Нет выделения для обводки."
 
 #: app/core/gimpimage-mask.c:709 app/widgets/gimpselectioneditor.c:215
-#, fuzzy
 msgid "Stroke Selection"
 msgstr "Сокращение выделения"
 
@@ -1838,7 +1823,7 @@ msgstr ""
 
 #: app/core/gimpimage.c:2827
 msgid "Add Channel"
-msgstr "Добавить альфа-канал"
+msgstr "Добавить канал"
 
 #: app/core/gimpimage.c:2879
 msgid "Remove Channel"
@@ -1898,7 +1883,6 @@ msgid "Failed to set permissions of thumbnail '%s': %s"
 msgstr "Не удалось открыть файл миниатюр '%s': %s"
 
 #: app/core/gimpimagefile.c:748
-#, fuzzy
 msgid "Remote image"
 msgstr "Размывание изображения"
 
@@ -1915,8 +1899,9 @@ msgid "Loading preview ..."
 msgstr "Загрузить просмотр"
 
 #: app/core/gimpimagefile.c:786
+#, fuzzy
 msgid "Preview is out of date"
-msgstr ""
+msgstr "Просмотр"
 
 #: app/core/gimpimagefile.c:790
 msgid "Cannot create preview"
@@ -1947,14 +1932,12 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Не удалось создать каталог миниатюр '%s'"
 
 #: app/core/gimpitem.c:796
-#, fuzzy
 msgid "Attach Parasite to Item"
-msgstr "Прицепление паразита"
+msgstr "Добавить шум в элемент"
 
 #: app/core/gimpitem.c:835 app/core/gimpitem.c:842
-#, fuzzy
 msgid "Remove Parasite from Item"
-msgstr "Удаление паразита"
+msgstr "Удалить шум из элемента"
 
 #: app/core/gimplayer-floating-sel.c:124
 msgid ""
@@ -1998,8 +1981,7 @@ msgstr "Вращать слой"
 
 #: app/core/gimplayer.c:833
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr ""
-"Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
+msgstr "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
 #: app/core/gimplayer.c:840
 msgid "Unable to add a layer mask since the layer already has one."
@@ -2116,7 +2098,7 @@ msgstr "Чёрное"
 #: app/core/gimppattern.c:371
 #, c-format
 msgid "Unknown pattern format version %d in '%s'."
-msgstr "Неизвестная версия формата шаблона #%d в \"%s\"."
+msgstr "Неизвестная версия формата образца %d в \"%s\"."
 
 #: app/core/gimppattern.c:380
 #, c-format
@@ -2125,25 +2107,24 @@ msgid ""
 "in file '%s'.\n"
 "GIMP Patterns must be GRAY or RGB.\n"
 msgstr ""
-"Неподдерживаемая глубина шаблона %d\n"
+"Неподдерживаемая глубина образца %d\n"
 "в файле \"%s\".\n"
 "Палитры GIMP должны быть в оттенках серого или RGB.\n"
 
 #: app/core/gimppattern.c:395
 #, c-format
 msgid "Error in GIMP pattern file '%s'."
-msgstr "Ошибка в файле шаблона GIMP \"%s\"."
+msgstr "Ошибка в файле образца GIMP \"%s\"."
 
 #: app/core/gimppattern.c:402
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Недопустимая строка UTF-8 файле шаблона \"%s\""
+msgstr "Недопустимая строка UTF-8 файле образца \"%s\""
 
 #: app/core/gimppattern.c:421
 #, c-format
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
-msgstr ""
-"Неисправимая ошибка разбора файла: Файл шаблона \"%s\" вероятно оборван."
+msgstr "Фатальная ошибка разбора файла: Файл образца \"%s\" вероятно поврежден."
 
 #. pseudo unit
 #: app/core/gimpunit.c:55
@@ -2514,7 +2495,7 @@ msgstr "Непрозрачность заливки:"
 
 #: app/gui/channels-commands.c:487 app/gui/channels-commands.c:531
 msgid "Channel Attributes"
-msgstr "Редактирование атрибутов канала"
+msgstr "Атрибуты канала"
 
 #: app/gui/channels-commands.c:521
 msgid "Edit Channel Color"
@@ -2578,7 +2559,7 @@ msgstr "Вернуть бывший цвет"
 
 #: app/gui/color-notebook.c:488
 msgid "Add the current color to the color history"
-msgstr "Добавить текущий цвет к цветовой истории"
+msgstr "Добавить текущий цвет к  истории цвета"
 
 #: app/gui/colormap-editor-commands.c:101
 msgid "Edit Indexed Color"
@@ -2586,7 +2567,9 @@ msgstr "Правка индексированного цвета"
 
 #: app/gui/colormap-editor-commands.c:103
 msgid "Edit Indexed Image Palette Color"
-msgstr "Правка цвета палитры"
+msgstr ""
+"Правка цвета палитры\n"
+"индексированного изображения"
 
 #: app/gui/colormap-editor-menu.c:40
 msgid "/Add Color"
@@ -2702,7 +2685,7 @@ msgstr "Список кистей"
 
 #: app/gui/dialogs-constructors.c:357
 msgid "Pattern List"
-msgstr "Список шаблонов"
+msgstr "Список образцов"
 
 #: app/gui/dialogs-constructors.c:378
 msgid "Gradient List"
@@ -2742,7 +2725,7 @@ msgstr "Сетка кисти"
 
 #: app/gui/dialogs-constructors.c:521
 msgid "Pattern Grid"
-msgstr "Сетка шаблога"
+msgstr "Сетка образца"
 
 #: app/gui/dialogs-constructors.c:542
 msgid "Gradient Grid"
@@ -2754,11 +2737,11 @@ msgstr "Сетка палитры"
 
 #: app/gui/dialogs-constructors.c:582
 msgid "Font Grid"
-msgstr "Сетка фонта"
+msgstr "Сетка шрифта"
 
 #: app/gui/dialogs-constructors.c:601
 msgid "Tool Grid"
-msgstr "Показать сетку"
+msgstr "Сетка инструмента"
 
 #: app/gui/dialogs-constructors.c:620
 msgid "Buffer Grid"
@@ -2825,7 +2808,7 @@ msgstr "Цвет"
 
 #: app/gui/dialogs-constructors.c:851
 msgid "Document History List"
-msgstr "История документов"
+msgstr "Недавние изображения"
 
 #: app/gui/dialogs-constructors.c:851 app/gui/dialogs-constructors.c:872
 msgid "History"
@@ -2833,7 +2816,7 @@ msgstr "История"
 
 #: app/gui/dialogs-constructors.c:872
 msgid "Document History Grid"
-msgstr "История документов"
+msgstr "Недавние изображения"
 
 #: app/gui/dialogs-constructors.c:899
 msgid "List of Templates"
@@ -2852,8 +2835,9 @@ msgid "Palette Editor"
 msgstr "Редактор палитры"
 
 #: app/gui/dialogs-constructors.c:1014
+#, fuzzy
 msgid "Display Navigation"
-msgstr ""
+msgstr "Дисплей"
 
 #: app/gui/dialogs-constructors.c:1014
 msgid "Navigation"
@@ -2885,16 +2869,15 @@ msgstr "/Добавить закладку/Индексированная пал
 
 #: app/gui/dialogs-menu.c:69
 msgid "/Add Tab/Selection Editor..."
-msgstr "/Добавить закладку/Выбрать редактор.."
+msgstr "/Добавить закладку/Редактировать выделение"
 
 #: app/gui/dialogs-menu.c:71
 msgid "/Add Tab/Navigation..."
 msgstr "/Добавить закладку/Навигация..."
 
 #: app/gui/dialogs-menu.c:73
-#, fuzzy
 msgid "/Add Tab/Undo History..."
-msgstr "/Добавить закладку/История документов..."
+msgstr "/Добавить закладку/История ..."
 
 #: app/gui/dialogs-menu.c:78
 msgid "/Add Tab/Colors..."
@@ -2906,7 +2889,7 @@ msgstr "/Добавить закладку/Кисти..."
 
 #: app/gui/dialogs-menu.c:82
 msgid "/Add Tab/Patterns..."
-msgstr "/Добавить закладку/Шаблоны..."
+msgstr "/Добавить закладку/Образцы..."
 
 #: app/gui/dialogs-menu.c:84
 msgid "/Add Tab/Gradients..."
@@ -2930,7 +2913,7 @@ msgstr "/Добавить закладку/Изображения..."
 
 #: app/gui/dialogs-menu.c:97
 msgid "/Add Tab/Document History..."
-msgstr "/Добавить закладку/История документов..."
+msgstr "/Добавить закладку/Недавние изображения..."
 
 #: app/gui/dialogs-menu.c:99
 msgid "/Add Tab/Templates..."
@@ -2950,7 +2933,7 @@ msgstr "/Удалить закладку"
 
 #: app/gui/dialogs-menu.c:117
 msgid "/Preview Size/Tiny"
-msgstr "/Размер пред.просмотра/Маленький"
+msgstr "/Размер пред.просмотра/Крошечный"
 
 #: app/gui/dialogs-menu.c:122
 msgid "/Preview Size/Extra Small"
@@ -3017,11 +3000,8 @@ msgid "/Remove Entry"
 msgstr "/Удалить запись"
 
 #: app/gui/documents-menu.c:61
-#, fuzzy
 msgid "/Recreate Preview"
-msgstr ""
-"Создать\n"
-"просмотр"
+msgstr "/Создать просмотр"
 
 #: app/gui/documents-menu.c:65
 msgid "/Reload all Previews"
@@ -3061,19 +3041,16 @@ msgid "(Unnamed Buffer)"
 msgstr "(Безымянный буфер)"
 
 #: app/gui/error-console-menu.c:38
-#, fuzzy
 msgid "/Clear Errors"
-msgstr "Ошибки"
+msgstr "/Очистить"
 
 #: app/gui/error-console-menu.c:45
-#, fuzzy
 msgid "/Save all Errors to File..."
-msgstr "Записать все ошибки в файл..."
+msgstr "/Сохранить Ошибки."
 
 #: app/gui/error-console-menu.c:49
-#, fuzzy
 msgid "/Save Selection to File..."
-msgstr "Записать выделение в файл..."
+msgstr "/Сохранить Выделение."
 
 #: app/gui/file-commands.c:187 app/gui/file-open-dialog.c:703
 #: app/widgets/gimpdnd.c:1005 app/widgets/gimpdocumentview.c:451
@@ -3099,7 +3076,7 @@ msgstr ""
 
 #: app/gui/file-commands.c:290
 msgid "Create New Template"
-msgstr "Создать Новый Шаблон"
+msgstr "Создать Новый шаблон"
 
 #: app/gui/file-commands.c:293
 msgid "Enter a name for this template"
@@ -3161,7 +3138,7 @@ msgstr "Создать новое изображение"
 
 #: app/gui/file-new-dialog.c:134
 msgid "From _Template:"
-msgstr "Для_Шаблона"
+msgstr "Из шаблона"
 
 #: app/gui/file-new-dialog.c:276
 #, c-format
@@ -3277,7 +3254,6 @@ msgid "Replicate Segment"
 msgstr "Сделать копию сегмента"
 
 #: app/gui/gradient-editor-commands.c:515
-#, fuzzy
 msgid "Replicate Gradient Segment"
 msgstr "Сделать копию сегмента"
 
@@ -3331,18 +3307,20 @@ msgid "Split"
 msgstr "Разделить"
 
 #: app/gui/gradient-editor-commands.c:655
-#, fuzzy
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
-msgstr "на которое надо разделить сегмент"
+msgstr ""
+"Выберите число равных частей  \n"
+"на которое надо разделить сегмент"
 
 #: app/gui/gradient-editor-commands.c:658
-#, fuzzy
 msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
-msgstr "на которое надо разделить сегменты в выделении"
+msgstr ""
+"Выберите число равных частей  \n"
+"на которое надо разделить сегменты в выделении"
 
 #: app/gui/gradient-editor-menu.c:58
 msgid "/Left Endpoint's Color..."
@@ -3374,8 +3352,7 @@ msgstr "/Цвет крайней правой точки..."
 
 #: app/gui/gradient-editor-menu.c:113
 msgid "/Load Right Color From/Right Neighbor's Left Endpoint"
-msgstr ""
-"/Загрузить цвет крайней правой из/Соседних справа к крайней левой точке"
+msgstr "/Загрузить цвет крайней правой из/Соседних справа к крайней левой точке"
 
 #: app/gui/gradient-editor-menu.c:117
 msgid "/Load Right Color From/Left Endpoint"
@@ -3423,7 +3400,7 @@ msgstr "/тип окрашивания/RGB"
 
 #: app/gui/gradient-editor-menu.c:193
 msgid "/coloringtype/HSV (counter-clockwise hue)"
-msgstr "/тип окрашивания/HSV (Тон от центра [FixMe])"
+msgstr "/тип окрашивания/HSV (Тон против часовой)"
 
 #: app/gui/gradient-editor-menu.c:198
 msgid "/coloringtype/HSV (clockwise hue)"
@@ -3462,7 +3439,6 @@ msgid "Split Segment at Midpoint"
 msgstr "Разделить сегмент по центру"
 
 #: app/gui/gradient-editor-menu.c:396
-#, fuzzy
 msgid "Split Segment Uniformly..."
 msgstr "Равномерно разделить сегмент"
 
@@ -3495,11 +3471,11 @@ msgid "Replicate Selection..."
 msgstr "Сделать копию выделения "
 
 #: app/gui/gradient-editor-menu.c:408
+#, fuzzy
 msgid "Split Segments at Midpoints"
 msgstr "Разделить сегменты по центрам"
 
 #: app/gui/gradient-editor-menu.c:409
-#, fuzzy
 msgid "Split Segments Uniformly..."
 msgstr "Равномерно разделить сегменты"
 
@@ -3551,61 +3527,52 @@ msgid "/Save as POV-Ray..."
 msgstr "/Сохранить как POV-Ray файл..."
 
 #: app/gui/grid-dialog.c:102
-#, fuzzy
 msgid "Configure Grid"
-msgstr "Настроить"
+msgstr "Настроить сетку"
 
 #: app/gui/grid-dialog.c:103
-#, fuzzy
 msgid "Configure Image Grid"
-msgstr "Подтвердить размер изображения"
+msgstr "Настроить сетку изображения"
 
 #: app/gui/grid-dialog.c:132
-#, fuzzy
 msgid "S_how Grid"
-msgstr "Не показывать сетку"
+msgstr "Показать сетку"
 
 #: app/gui/grid-dialog.c:140
-#, fuzzy
 msgid "S_nap to Grid"
-msgstr "/Просмотр/Выравнивание по направляющим"
+msgstr ""
 
 #. the appearence frame
 #: app/gui/grid-dialog.c:151
-#, fuzzy
 msgid "Appearence"
-msgstr "Внешний вид"
+msgstr ""
 
 #: app/gui/grid-dialog.c:165
-#, fuzzy
 msgid "Line _Style:"
-msgstr "Стиль:"
+msgstr "Стиль линии:"
 
 #: app/gui/grid-dialog.c:169
 #, fuzzy
 msgid "Grid Foreground Color"
-msgstr "Редактировать цвет переднего плана"
+msgstr "Переднего плана"
 
 #: app/gui/grid-dialog.c:173
-#, fuzzy
 msgid "_Foreground Color:"
-msgstr "Редактировать цвет переднего плана"
+msgstr "Цвет переднего плана:"
 
 #: app/gui/grid-dialog.c:177
 #, fuzzy
 msgid "Grid Background Color"
-msgstr "Редактировать цвет фона"
+msgstr "Фон"
 
 #: app/gui/grid-dialog.c:181
-#, fuzzy
 msgid "_Background Color:"
-msgstr "Редактировать цвет фона"
+msgstr "Цвет фона:"
 
 #. the spacing frame
 #: app/gui/grid-dialog.c:187
-#, fuzzy
 msgid "Spacing"
-msgstr "Интервал:"
+msgstr ""
 
 #: app/gui/grid-dialog.c:214 app/gui/grid-dialog.c:255
 #: app/gui/preferences-dialog.c:1047
@@ -3839,7 +3806,7 @@ msgstr "/Правка/Обводка"
 #. <Image>/Select
 #: app/gui/image-menu.c:242
 msgid "/_Select"
-msgstr "/_Выделить"
+msgstr "/Выделить"
 
 #: app/gui/image-menu.c:244
 msgid "/Select/All"
@@ -3858,9 +3825,8 @@ msgid "/Select/Float"
 msgstr "/Выделение/Плавающее"
 
 #: app/gui/image-menu.c:263
-#, fuzzy
 msgid "/Select/By Color"
-msgstr "Выбор по цвету"
+msgstr "/Выделение/По цвету"
 
 #: app/gui/image-menu.c:271
 msgid "/Select/Feather..."
@@ -3985,19 +3951,16 @@ msgid "/View/Snap to Guides"
 msgstr "/Просмотр/Выравнивание по направляющим"
 
 #: app/gui/image-menu.c:425
-#, fuzzy
 msgid "/View/Configure Grid..."
-msgstr "/Просмотр/Информация об окне..."
+msgstr "/Просмотр/Настроить сетку"
 
 #: app/gui/image-menu.c:429
-#, fuzzy
 msgid "/View/Show Grid"
-msgstr "/Просмотр/Выравнивание по линейкам"
+msgstr "/Просмотр/Показать сетку"
 
 #: app/gui/image-menu.c:433
-#, fuzzy
 msgid "/View/Snap to Grid"
-msgstr "/Просмотр/Выравнивание по направляющим"
+msgstr ""
 
 #: app/gui/image-menu.c:440
 msgid "/View/Show Menubar"
@@ -4172,7 +4135,6 @@ msgid "/Layer/Colors/Hue-Saturation..."
 msgstr "/Слои/Цвета/Тон-насыщенность..."
 
 #: app/gui/image-menu.c:653
-#, fuzzy
 msgid "/Layer/Colors/Colorize..."
 msgstr "/Слои/Цвета/Постеризовать..."
 
@@ -4265,23 +4227,20 @@ msgid "/Layer/Transform/Flip Vertically"
 msgstr "/Слои/Преобразования/Отражение по вертикали"
 
 #: app/gui/image-menu.c:770
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees CW"
-msgstr "/Изображение/Преобразование"
+msgstr "/Изображение/Преобразование/Повернуть на 90 по часовой"
 
 #: app/gui/image-menu.c:775
-#, fuzzy
 msgid "/Layer/Transform/Rotate 90 degrees CCW"
-msgstr "/Изображение/Преобразование"
+msgstr "/Изображение/Преобразование/Повернуть на 90 против часовой"
 
 #: app/gui/image-menu.c:780
 msgid "/Layer/Transform/Rotate 180 degrees"
-msgstr ""
+msgstr "/Слой/Преобразование/Повернуть на 180"
 
 #: app/gui/image-menu.c:785
-#, fuzzy
 msgid "/Layer/Transform/Arbitrary Rotation..."
-msgstr "/Слои/Преобразования/Смещение..."
+msgstr "/Слой/Преобразование/Произвольное вращение"
 
 #: app/gui/image-menu.c:793
 msgid "/Layer/Transform/Offset..."
@@ -4321,24 +4280,20 @@ msgid "/Tools/Swap Colors"
 msgstr "/Инструменты/Поменять цвета"
 
 #: app/gui/image-menu.c:844
-#, fuzzy
 msgid "/Tools/_Selection Tools"
 msgstr "/Инструменты/Выделение"
 
 #: app/gui/image-menu.c:845
-#, fuzzy
 msgid "/Tools/_Paint Tools"
 msgstr "/Инструменты/Рисование"
 
 #: app/gui/image-menu.c:846
-#, fuzzy
 msgid "/Tools/_Transform Tools"
 msgstr "/Инструменты/Преобразование"
 
 #: app/gui/image-menu.c:847
-#, fuzzy
 msgid "/Tools/_Color Tools"
-msgstr "/Инструменты/Преобразование"
+msgstr "/Инструменты/Цвет"
 
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:851
@@ -4347,22 +4302,19 @@ msgstr "/Диалоги..."
 
 #: app/gui/image-menu.c:853
 msgid "/Dialogs/_Create New Dock"
-msgstr ""
+msgstr "/Диалоги/Создать новый диалог"
 
 #: app/gui/image-menu.c:855
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Layers, Channels & Paths..."
-msgstr "/Диалоги/Слои, каналы и контуры..."
+msgstr "/Диалоги/Создать новый диалог/Слои, каналы и контуры..."
 
 #: app/gui/image-menu.c:859
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
-msgstr "/Диалоги/Кисти, Шаблоны и прочее..."
+msgstr "/Диалоги/Создать новый диалог/Кисти, образцы и прочее..."
 
 #: app/gui/image-menu.c:863
-#, fuzzy
 msgid "/Dialogs/Create New Dock/Misc. Stuff..."
-msgstr "/Диалоги/Кисти, Шаблоны и прочее..."
+msgstr "/Диалоги/Создать новый диалог/Буферы, Изображения, История..."
 
 #: app/gui/image-menu.c:868
 msgid "/Dialogs/Tool Options..."
@@ -4382,7 +4334,7 @@ msgstr "/Диалоги/Каналы..."
 
 #: app/gui/image-menu.c:891
 msgid "/Dialogs/Paths..."
-msgstr "/Диалоги/Пути..."
+msgstr "/Диалоги/Контуры..."
 
 #: app/gui/image-menu.c:896
 msgid "/Dialogs/Indexed Palette..."
@@ -4390,7 +4342,7 @@ msgstr "/Диалоги/Индексированная палитра..."
 
 #: app/gui/image-menu.c:901
 msgid "/Dialogs/Selection Editor..."
-msgstr "/Диалоги/Выбрать редактор..."
+msgstr "/Диалоги/Редактировать выделение..."
 
 #: app/gui/image-menu.c:906
 msgid "/Dialogs/Navigation..."
@@ -4410,7 +4362,7 @@ msgstr "/Диалоги/Кисти..."
 
 #: app/gui/image-menu.c:929
 msgid "/Dialogs/Patterns..."
-msgstr "/Диалоги/Шаблоны..."
+msgstr "/Диалоги/Образцы..."
 
 #: app/gui/image-menu.c:934
 msgid "/Dialogs/Gradients..."
@@ -4434,7 +4386,7 @@ msgstr "/Диалоги/Изображения..."
 
 #: app/gui/image-menu.c:962
 msgid "/Dialogs/Document History..."
-msgstr "/Диалоги/История документов..."
+msgstr "/Диалоги/Недавние..."
 
 #: app/gui/image-menu.c:967
 msgid "/Dialogs/Templates..."
@@ -4457,82 +4409,66 @@ msgid "/Filters/Re-Show Last"
 msgstr "/Фильтры/Показать последний"
 
 #: app/gui/image-menu.c:997
-#, fuzzy
 msgid "/Filters/_Blur"
 msgstr "/Фильтры/Размывание"
 
 #: app/gui/image-menu.c:998
-#, fuzzy
 msgid "/Filters/_Colors"
 msgstr "/Фильтры/Цвета"
 
 #: app/gui/image-menu.c:999
-#, fuzzy
 msgid "/Filters/_Noise"
 msgstr "/Фильтры/Шум"
 
 #: app/gui/image-menu.c:1000
-#, fuzzy
 msgid "/Filters/_Edge-Detect"
 msgstr "/Фильтры/Выделение края"
 
 #: app/gui/image-menu.c:1001
-#, fuzzy
 msgid "/Filters/En_hance"
-msgstr "/Фильтры/Enhance"
+msgstr "/Фильтры/Расширение"
 
 #: app/gui/image-menu.c:1002
-#, fuzzy
 msgid "/Filters/_Generic"
 msgstr "/Фильтры/Общие"
 
 #: app/gui/image-menu.c:1006
-#, fuzzy
 msgid "/Filters/Gla_ss Effects"
 msgstr "/Фильтры/Эффекты стекол"
 
 #: app/gui/image-menu.c:1007
-#, fuzzy
 msgid "/Filters/_Light Effects"
 msgstr "/Фильтры/Световый эффекты"
 
 #: app/gui/image-menu.c:1008
-#, fuzzy
 msgid "/Filters/_Distorts"
 msgstr "/Фильтры/Искажения"
 
 #: app/gui/image-menu.c:1009
-#, fuzzy
 msgid "/Filters/_Artistic"
 msgstr "/Фильтры/Имитация"
 
 #: app/gui/image-menu.c:1010
-#, fuzzy
 msgid "/Filters/_Map"
 msgstr "/Фильтры/Карта"
 
 #: app/gui/image-menu.c:1011
-#, fuzzy
 msgid "/Filters/_Render"
 msgstr "/Фильтры/Визуализация"
 
 #: app/gui/image-menu.c:1012
-#, fuzzy
 msgid "/Filters/_Web"
 msgstr "/Фильтры/Веб"
 
 #: app/gui/image-menu.c:1016
-#, fuzzy
 msgid "/Filters/An_imation"
 msgstr "/Фильтры/Анимация"
 
 #: app/gui/image-menu.c:1017
-#, fuzzy
 msgid "/Filters/C_ombine"
 msgstr "/Фильтры/Объединение"
 
 #: app/gui/image-menu.c:1021
-#, fuzzy
 msgid "/Filters/_Toys"
 msgstr "/Фильтры/Развлечения"
 
@@ -4556,7 +4492,7 @@ msgid "Other (%d:%d) ..."
 msgstr "Другой (%d:%d) ..."
 
 #: app/gui/image-menu.c:1604
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%d:%d)"
 msgstr "Масштаб (%d:%d)"
 
@@ -4566,6 +4502,7 @@ msgid "/Raise Displays"
 msgstr "8-Bit дисплей"
 
 #: app/gui/images-menu.c:46
+#, fuzzy
 msgid "/New Display"
 msgstr "/Новый дисплей"
 
@@ -4636,19 +4573,16 @@ msgstr "B:"
 
 #. Hue
 #: app/gui/info-window.c:260
-#, fuzzy
 msgid "H:"
 msgstr "Тон:"
 
 #. Saturation
 #: app/gui/info-window.c:267
-#, fuzzy
 msgid "S:"
 msgstr "S"
 
 #. Value
 #: app/gui/info-window.c:274
-#, fuzzy
 msgid "V:"
 msgstr "V"
 
@@ -4682,6 +4616,7 @@ msgid "Scale Ratio:"
 msgstr "Отношение сторон:"
 
 #: app/gui/info-window.c:355
+#, fuzzy
 msgid "Display Type:"
 msgstr "Тип дисплея:"
 
@@ -4813,6 +4748,7 @@ msgid "/Delete Layer"
 msgstr "/Удалить слой"
 
 #: app/gui/layers-menu.c:93
+#, fuzzy
 msgid "/Layer Boundary Size..."
 msgstr "/Слой Boundary Size..."
 
@@ -4866,7 +4802,6 @@ msgid "Autoload"
 msgstr "Автозагрузка"
 
 #: app/gui/module-browser.c:172
-#, fuzzy
 msgid "Module Path"
 msgstr "Загрузить контур"
 
@@ -4947,7 +4882,6 @@ msgid "Offset Channel"
 msgstr "Смещение канала"
 
 #: app/gui/offset-dialog.c:147
-#, fuzzy
 msgid "Offset _X:"
 msgstr "Смещение по X:"
 
@@ -4962,7 +4896,6 @@ msgstr "Сместить на (x/2),(y/2)"
 
 #. The wrap around option
 #: app/gui/offset-dialog.c:187
-#, fuzzy
 msgid "_Wrap"
 msgstr "Перенести"
 
@@ -4987,19 +4920,16 @@ msgid "/Delete Color"
 msgstr "/Удалить цвет"
 
 #: app/gui/palette-editor-menu.c:53
-#, fuzzy
 msgid "/Zoom Out"
-msgstr "Уменьшение масштаба"
+msgstr "/Уменьшение масштаба"
 
 #: app/gui/palette-editor-menu.c:57
-#, fuzzy
 msgid "/Zoom In"
-msgstr "Увеличение масштаба"
+msgstr "/Увеличение масштаба"
 
 #: app/gui/palette-editor-menu.c:61
-#, fuzzy
 msgid "/Zoom All"
-msgstr "Масштабировать все"
+msgstr "/Масштабировать все"
 
 #: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
@@ -5007,7 +4937,7 @@ msgstr "Импортировать палитру"
 
 #: app/gui/palette-import-dialog.c:168
 msgid "Import a New Palette"
-msgstr "Импортировать палитру"
+msgstr "Импортировать в новуюпалитру"
 
 #: app/gui/palette-import-dialog.c:175
 msgid "_Import"
@@ -5028,9 +4958,8 @@ msgstr "Изображение"
 
 #. The "Import" frame
 #: app/gui/palette-import-dialog.c:283
-#, fuzzy
 msgid "Import Options"
-msgstr "Параметры инструментов"
+msgstr "Параметры импорта"
 
 #: app/gui/palette-import-dialog.c:297
 msgid "New Import"
@@ -5038,7 +4967,7 @@ msgstr "Импорт"
 
 #: app/gui/palette-import-dialog.c:299
 msgid "Palette _Name:"
-msgstr "Палитра Имя:"
+msgstr "Имя палитры:"
 
 #: app/gui/palette-import-dialog.c:305
 msgid "N_umber of Colors:"
@@ -5086,7 +5015,7 @@ msgstr "/Правка палитры..."
 
 #: app/gui/palettes-menu.c:60
 msgid "/Delete Palette..."
-msgstr "/Удалить палитры..."
+msgstr "/Удалить палитру..."
 
 #: app/gui/palettes-menu.c:68
 msgid "/Refresh Palettes"
@@ -5108,23 +5037,23 @@ msgstr ""
 
 #: app/gui/patterns-menu.c:44
 msgid "/New Pattern"
-msgstr "/Новый шаблон"
+msgstr "/Новый образец"
 
 #: app/gui/patterns-menu.c:49
 msgid "/Duplicate Pattern"
-msgstr "/Создать копию шаблона"
+msgstr "/Создать копию образца"
 
 #: app/gui/patterns-menu.c:54
 msgid "/Edit Pattern..."
-msgstr "/Правка шаблона..."
+msgstr "/Правка образца..."
 
 #: app/gui/patterns-menu.c:59
 msgid "/Delete Pattern..."
-msgstr "/Удалить шаблон..."
+msgstr "/Удалить образец..."
 
 #: app/gui/patterns-menu.c:67
 msgid "/Refresh Patterns"
-msgstr "/Обновить шаблоны"
+msgstr "/Обновить образцы"
 
 #: app/gui/plug-in-menus.c:356
 #, c-format
@@ -5199,15 +5128,13 @@ msgstr "Просмотр"
 
 #: app/gui/preferences-dialog.c:1161
 msgid "_Enable Layer & Channel Previews"
-msgstr ""
+msgstr "Просмотр видимых слоев и каналов"
 
 #: app/gui/preferences-dialog.c:1167
-#, fuzzy
 msgid "_Layer & Channel Preview Size:"
-msgstr "Размер просмотра навигации"
+msgstr "Размер просмотра слоя и канала"
 
 #: app/gui/preferences-dialog.c:1170
-#, fuzzy
 msgid "_Navigation Preview Size:"
 msgstr "Размер просмотра навигации"
 
@@ -5217,7 +5144,6 @@ msgid "Dialog Behavior"
 msgstr "Поведение диалога"
 
 #: app/gui/preferences-dialog.c:1177
-#, fuzzy
 msgid "_Info Window Per Display"
 msgstr "Навигационных окон на экране"
 
@@ -5227,41 +5153,37 @@ msgid "Menus"
 msgstr "Меню"
 
 #: app/gui/preferences-dialog.c:1184
-#, fuzzy
 msgid "Enable _Tearoff Menus"
 msgstr "Отключить отцепляемые меню"
 
 #: app/gui/preferences-dialog.c:1190
-#, fuzzy
 msgid "Open _Recent Menu Size:"
 msgstr "Размер списка открывавшихся документов:"
 
 #. Keyboard Shortcuts
 #: app/gui/preferences-dialog.c:1194
 msgid "Keyboard Shortcuts"
-msgstr ""
+msgstr "Быстрые клавиши"
 
 #: app/gui/preferences-dialog.c:1197
 msgid "Dynamic _Keyboard Shortcuts"
-msgstr ""
+msgstr "Динамические быстрые клавиши"
 
 #: app/gui/preferences-dialog.c:1200
 msgid "Save Keyboard Shortcuts on Exit"
-msgstr ""
+msgstr "Сохранить быстрые клавиши и выйти"
 
 #: app/gui/preferences-dialog.c:1203
-#, fuzzy
 msgid "Restore Saved Keyboard Shortcuts on Start-up"
-msgstr "Восстанавливать сохранённую позицию окна при запуске"
+msgstr "Восстанавливать сохранённые быстрые клавиши при запуске"
 
 #: app/gui/preferences-dialog.c:1211
 msgid "Save Keyboard Shortcuts Now"
-msgstr ""
+msgstr "Сохранить быстрые клавиши"
 
 #: app/gui/preferences-dialog.c:1220
-#, fuzzy
 msgid "Clear Saved Keyboard Shortcuts Now"
-msgstr "Очистить сохраненную позицию окна"
+msgstr "Очистить сохраненные быстрые клавиши"
 
 #. Window Positions
 #: app/gui/preferences-dialog.c:1230
@@ -5277,7 +5199,6 @@ msgid "R_estore Saved Window Positions on Start-up"
 msgstr "Восстанавливать сохранённую позицию окна при запуске"
 
 #: app/gui/preferences-dialog.c:1244
-#, fuzzy
 msgid "Save Window Positions Now"
 msgstr "Очистить сохраненную позицию окна"
 
@@ -5334,7 +5255,7 @@ msgstr "Устройства ввода"
 
 #: app/gui/preferences-dialog.c:1351
 msgid "Configure Input Devices"
-msgstr "Устройства ввода"
+msgstr "Конфигурироватьустройства ввода"
 
 #: app/gui/preferences-dialog.c:1361
 msgid "Save Input Device Settings on Exit"
@@ -5374,12 +5295,10 @@ msgid "Show S_tatusbar"
 msgstr "Показывать строку состояния"
 
 #: app/gui/preferences-dialog.c:1415
-#, fuzzy
 msgid "Fit to Window"
-msgstr "Использовать информационное окно"
+msgstr "К размеру окна"
 
 #: app/gui/preferences-dialog.c:1417
-#, fuzzy
 msgid "Inital Zoom Ratio:"
 msgstr "Отношение сторон:"
 
@@ -5390,36 +5309,31 @@ msgstr "Скорость муравьиной дорожки:"
 
 #. Canvas Padding Color
 #: app/gui/preferences-dialog.c:1424
-#, fuzzy
 msgid "Canvas Padding Color"
 msgstr "Установить цвет заливки холста"
 
 #: app/gui/preferences-dialog.c:1429
 msgid "Padding Mode:"
-msgstr ""
+msgstr "Режим заполнения:"
 
 #: app/gui/preferences-dialog.c:1432
-#, fuzzy
 msgid "Custom Color:"
-msgstr "Псевдо-цветное"
+msgstr "Выбрнные цвета"
 
 #: app/gui/preferences-dialog.c:1433
-#, fuzzy
 msgid "Select Custom Canvas Padding Color"
 msgstr "Установить цвет заливки холста"
 
 #. Zoom & Resize Behavior
 #: app/gui/preferences-dialog.c:1439
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "Правила масштабирования"
 
 #: app/gui/preferences-dialog.c:1443
-#, fuzzy
 msgid "Resize Window on _Zoom"
 msgstr "Изменять размер окна при масштабировании"
 
 #: app/gui/preferences-dialog.c:1446
-#, fuzzy
 msgid "Resize Window on Image _Size Change"
 msgstr "Изменять размер окна при изменении размера изображения"
 
@@ -5429,21 +5343,18 @@ msgid "Pointer Movement Feedback"
 msgstr "Обратная связь движения указателя"
 
 #: app/gui/preferences-dialog.c:1454
-#, fuzzy
 msgid "Perfect-but-Slow _Pointer Tracking"
-msgstr "Совершенное-но-медленное движение указателя"
+msgstr "Медленное, но точное движение указателя"
 
 #: app/gui/preferences-dialog.c:1457
-#, fuzzy
 msgid "Enable Cursor _Updating"
-msgstr "Отключить обновление курсора"
+msgstr "Включить обновление курсора"
 
 #: app/gui/preferences-dialog.c:1463
 msgid "Cursor M_ode:"
 msgstr "Режим курсора:"
 
 #: app/gui/preferences-dialog.c:1472
-#, fuzzy
 msgid "Image Title & Statusbar Format"
 msgstr "Формат состояния изображения:"
 
@@ -5481,11 +5392,11 @@ msgid "Image Title Format"
 msgstr "Формат заголовка изображения:"
 
 #: app/gui/preferences-dialog.c:1517
-#, fuzzy
 msgid "Image Statusbar Format"
 msgstr "Формат состояния изображения:"
 
 #: app/gui/preferences-dialog.c:1602 app/gui/preferences-dialog.c:1605
+#, fuzzy
 msgid "Display"
 msgstr "Дисплей"
 
@@ -5499,14 +5410,13 @@ msgid "Transparency _Type:"
 msgstr "Тип прозрачности:"
 
 #: app/gui/preferences-dialog.c:1619
-#, fuzzy
 msgid "Check _Size:"
-msgstr "Размер графы:"
+msgstr "Проверить размер:"
 
 #. 8-Bit Displays
 #: app/gui/preferences-dialog.c:1623
 msgid "8-Bit Displays"
-msgstr "8-Bit дисплей"
+msgstr "8-Bit экран"
 
 #: app/gui/preferences-dialog.c:1631
 msgid "Minimum Number of Colors:"
@@ -5531,14 +5441,13 @@ msgstr "Установить разрешение монитора"
 #: app/gui/preferences-dialog.c:1664
 #, c-format
 msgid "(Currently %d x %d dpi)"
-msgstr "(сейчас %d x %d dpi)"
+msgstr "(сейчас %d x %d точек на дюйм)"
 
 #: app/gui/preferences-dialog.c:1701
 msgid "C_alibrate"
 msgstr "Откалибровать"
 
 #: app/gui/preferences-dialog.c:1715
-#, fuzzy
 msgid "From _Windowing System"
 msgstr "От оконной системы"
 
@@ -5566,11 +5475,11 @@ msgstr "Минимальное число уровней отката"
 
 #: app/gui/preferences-dialog.c:1787
 msgid "Maximum Undo Memory:"
-msgstr ""
+msgstr "Мксимально памяти для отката"
 
 #: app/gui/preferences-dialog.c:1790 app/gui/user-install-dialog.c:1173
 msgid "Tile Cache Size:"
-msgstr "Размер кэша для орнаментов"
+msgstr "Размер кэша"
 
 #: app/gui/preferences-dialog.c:1795
 msgid "Number of Processors to Use:"
@@ -5627,11 +5536,11 @@ msgstr "Выбрать каталоги кистей"
 
 #: app/gui/preferences-dialog.c:1874
 msgid "Pattern Folders"
-msgstr "Каталоги шаблонов"
+msgstr "Каталоги образцов"
 
 #: app/gui/preferences-dialog.c:1876
 msgid "Select Pattern Folders"
-msgstr "Выбрать каталоги шаблонов"
+msgstr "Выбрать каталоги образцов"
 
 #: app/gui/preferences-dialog.c:1878
 msgid "Palette Folders"
@@ -5674,14 +5583,12 @@ msgid "Select Module Folders"
 msgstr "Выбрать каталоги модулей"
 
 #: app/gui/preferences-dialog.c:1894
-#, fuzzy
 msgid "Environment Folders"
-msgstr "Окружение"
+msgstr "Каталоги окружения"
 
 #: app/gui/preferences-dialog.c:1896
-#, fuzzy
 msgid "Select Environment Folders"
-msgstr "Выбрать каталоги градиентов"
+msgstr "Выбрать каталоги окружения"
 
 #: app/gui/preferences-dialog.c:1898
 msgid "Themes"
@@ -5700,9 +5607,8 @@ msgid "Edit Qmask Color"
 msgstr "Правка цвета быстрой маски"
 
 #: app/gui/qmask-commands.c:147
-#, fuzzy
 msgid "Qmask Attributes"
-msgstr "Правка атрибутов быстрой маски"
+msgstr "Атрибуты быстрой маски"
 
 #: app/gui/qmask-commands.c:149
 msgid "Edit QuickMask Attributes"
@@ -5729,7 +5635,6 @@ msgid "/Configure Color and Opacity..."
 msgstr "/Настроить цвет и непрозрачность..."
 
 #: app/gui/resize-dialog.c:194
-#, fuzzy
 msgid "Scale Layer Options"
 msgstr "Параметры нового слоя"
 
@@ -5739,7 +5644,6 @@ msgid "Size"
 msgstr "Размер"
 
 #: app/gui/resize-dialog.c:202
-#, fuzzy
 msgid "Scale Image Options"
 msgstr "Масштабировать изображение"
 
@@ -5748,9 +5652,8 @@ msgid "Pixel Dimensions"
 msgstr "Размеры пиксела"
 
 #: app/gui/resize-dialog.c:216
-#, fuzzy
 msgid "Layer Boundary Size"
-msgstr "/Слой Boundary Size..."
+msgstr "Размер рамки слоя..."
 
 #: app/gui/resize-dialog.c:217
 msgid "Set Layer Boundary Size"
@@ -5758,10 +5661,9 @@ msgstr "Установить размеры границ слоя"
 
 #: app/gui/resize-dialog.c:223
 msgid "Canvas Size"
-msgstr "Установить размер холста"
+msgstr "Размер холста"
 
 #: app/gui/resize-dialog.c:224
-#, fuzzy
 msgid "Set Image Canvas Size"
 msgstr "Установить размер холста"
 
@@ -5929,13 +5831,11 @@ msgid "Restore saved default values"
 msgstr "Восстановить значение по умолчанию."
 
 #: app/gui/tool-options-dialog.c:118
-#, fuzzy
 msgid "Reset to factory defaults"
 msgstr "Использовать \"Точка за точкой\" по умолчанию"
 
 #. <Toolbox>/File/Acquire
 #: app/gui/toolbox-menu.c:78
-#, fuzzy
 msgid "/File/_Acquire"
 msgstr "/Файл/Захватить"
 
@@ -5949,24 +5849,20 @@ msgid "/File/_Dialogs"
 msgstr "/Файл/Диалоги"
 
 #: app/gui/toolbox-menu.c:92
-#, fuzzy
 msgid "/File/Dialogs/_Create New Dock"
-msgstr "/Файл/Диалоги/Шаблоны..."
+msgstr "/Файл/Диалоги/Создать новый диалог"
 
 #: app/gui/toolbox-menu.c:94
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Layers, Channels & Paths..."
-msgstr "/Файл/Диалоги/Слои, каналы и контуры..."
+msgstr "/Файл/Диалоги/Создать новый диалог/Слои, каналы и контуры..."
 
 #: app/gui/toolbox-menu.c:98
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Brushes, Patterns & Gradients..."
-msgstr "/Файл/Диалоги/Кисти, Шаблоны и прочее..."
+msgstr "/Файл/Диалоги/Создать новый диалог/Кисти, образцы и градиенты..."
 
 #: app/gui/toolbox-menu.c:102
-#, fuzzy
 msgid "/File/Dialogs/Create New Dock/Misc. Stuff..."
-msgstr "/Файл/Диалоги/Кисти, Шаблоны и прочее..."
+msgstr "/Файл/Диалоги/Создать новый диалог/Другие..."
 
 #: app/gui/toolbox-menu.c:107
 msgid "/File/Dialogs/Tool Options..."
@@ -5994,7 +5890,7 @@ msgstr "/Файл/Диалоги/Индексированная палитра..
 
 #: app/gui/toolbox-menu.c:140
 msgid "/File/Dialogs/Selection Editor..."
-msgstr "/Файл/Диалоги/Выбранный редактор..."
+msgstr "/Файл/Диалоги/Редактировать выделение..."
 
 #: app/gui/toolbox-menu.c:145
 msgid "/File/Dialogs/Navigation..."
@@ -6002,7 +5898,7 @@ msgstr "/Файл/Диалоги/Навигация..."
 
 #: app/gui/toolbox-menu.c:150
 msgid "/File/Dialogs/Undo History..."
-msgstr "/Файл/Диалоги/История документов..."
+msgstr "/Файл/Диалоги/Откат..."
 
 #: app/gui/toolbox-menu.c:158
 msgid "/File/Dialogs/Colors..."
@@ -6014,7 +5910,7 @@ msgstr "/Файл/Диалоги/Кисти..."
 
 #: app/gui/toolbox-menu.c:168
 msgid "/File/Dialogs/Patterns..."
-msgstr "/Файл/Диалоги/Шаблоны..."
+msgstr "/Файл/Диалоги/Образцы..."
 
 #: app/gui/toolbox-menu.c:173
 msgid "/File/Dialogs/Gradients..."
@@ -6026,7 +5922,7 @@ msgstr "/Файл/Диалоги/Палитры..."
 
 #: app/gui/toolbox-menu.c:183
 msgid "/File/Dialogs/Fonts..."
-msgstr "/Файл/Диалоги/Фонты..."
+msgstr "/Файл/Диалоги/Шрифты..."
 
 #: app/gui/toolbox-menu.c:188
 msgid "/File/Dialogs/Buffers..."
@@ -6038,7 +5934,7 @@ msgstr "/Файл/Диалоги/Изображения..."
 
 #: app/gui/toolbox-menu.c:201
 msgid "/File/Dialogs/Document History..."
-msgstr "/Файл/Диалоги/История документов..."
+msgstr "/Файл/Диалоги/Недавние изображения..."
 
 #: app/gui/toolbox-menu.c:206
 msgid "/File/Dialogs/Templates..."
@@ -6088,7 +5984,7 @@ msgid ""
 msgstr ""
 "gimprc используется для хранения персональных\n"
 "настроек таких как поведение GIMP по умолчанию.\n"
-"Пути поиска кистей, палитр, градиентов, шаблонов,\n"
+"Пути поиска кистей, палитр, градиентов, образцов,\n"
 "дополнений и модулей также указываются здесь."
 
 #: app/gui/user-install-dialog.c:147
@@ -6204,10 +6100,10 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
-"Этот каталог используется для хранения созданных пользователем шаблонов.\n"
+"Этот каталог используется для хранения созданных пользователем образцов.\n"
 "По умолчанию в файле gimprc указана проверка этого подкаталога,\n"
 "в дополнение к системному при поиске\n"
-"шаблонов."
+"образцов."
 
 #: app/gui/user-install-dialog.c:227
 msgid ""
@@ -6236,7 +6132,6 @@ msgstr ""
 "загружаемых при инициализации."
 
 #: app/gui/user-install-dialog.c:244
-#, fuzzy
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported additions to the\n"
@@ -6263,15 +6158,14 @@ msgstr ""
 "в дополнение к системному при поиске скриптов."
 
 #: app/gui/user-install-dialog.c:262
-#, fuzzy
 msgid "This folder is searched for image templates."
-msgstr ""
-"Этот каталог используется для сохранения файла\n"
-"параметров инструмента \"Уровни\"."
+msgstr "Этот каталог используется для сохранения шаблонов."
 
 #: app/gui/user-install-dialog.c:267
 msgid "This folder is searched for user-installed themes."
 msgstr ""
+"Этот каталог используется для сохранения тем, \n"
+"установленных пользователем."
 
 #: app/gui/user-install-dialog.c:272
 msgid ""
@@ -6311,7 +6205,7 @@ msgstr ""
 msgid ""
 "Installation successful.\n"
 "Click \"Continue\" to proceed."
-msgstr ""
+msgstr "Продолжить."
 
 #: app/gui/user-install-dialog.c:386
 msgid ""
@@ -6342,15 +6236,14 @@ msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Нажмите \"Продолжить\", чтобы перейти к пользовательской установке."
 
 #: app/gui/user-install-dialog.c:742
-#, fuzzy
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2003\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2002\n"
-"Spencer Kimball, Peter Mattis и команда разработчиков GIMP."
+"The GIMP - GNU Image Manipulation Program\n"
+"Copyright (C) 1995-2003\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team."
 
 #: app/gui/user-install-dialog.c:752
 msgid ""
@@ -6361,7 +6254,7 @@ msgid ""
 msgstr ""
 "Эта программа - свободная программа; вы можете распространять ее и/или "
 "изменять\n"
-"в соответствии с терминами GNU General Public License опубликованной\n"
+"в соответствии с условиями GNU General Public License опубликованной\n"
 "Free Software Foundation; в Лицензии версии 2, или (по вашему усмотрению)\n"
 "любой более поздней версии."
 
@@ -6465,12 +6358,12 @@ msgstr "Прерывание установки..."
 #: app/gui/user-install-dialog.c:967
 #, c-format
 msgid "Cannot open '%s' for reading: %s"
-msgstr "Невозможно открыть '%s'   %s"
+msgstr "Невозможно открыть '%s' для чтения%s"
 
 #: app/gui/user-install-dialog.c:976
 #, c-format
 msgid "Cannot open '%s' for writing: %s"
-msgstr "Невозможно открыть %s; %s"
+msgstr "Невозможно открыть %s на запись %s"
 
 #: app/gui/user-install-dialog.c:987 app/gui/user-install-dialog.c:1010
 #, c-format
@@ -6498,7 +6391,7 @@ msgstr "Не удается создать папку '%s': %s"
 
 #: app/gui/user-install-dialog.c:1066 app/gui/user-install-dialog.c:1134
 msgid "  Success\n"
-msgstr ""
+msgstr "   Успешно \n"
 
 #: app/gui/user-install-dialog.c:1096
 #, c-format
@@ -6508,12 +6401,12 @@ msgstr "Не удается создать папку : %s"
 #: app/gui/user-install-dialog.c:1117
 #, c-format
 msgid "Copying file '%s' from '%s'\n"
-msgstr "ошибка при открытии на %s: %s\n"
+msgstr "Копировать файл '%s' из'%s'\n"
 
 #: app/gui/user-install-dialog.c:1141
 #, c-format
 msgid "  Failure: %s\n"
-msgstr ""
+msgstr "Ошибка: %s\n"
 
 #: app/gui/user-install-dialog.c:1161
 msgid ""
@@ -6580,9 +6473,8 @@ msgid "There is no active Layer or Channel to stroke to"
 msgstr "Нет активного слоя или канала для обводки"
 
 #: app/gui/vectors-commands.c:467
-#, fuzzy
 msgid "Empty Vectors Copy"
-msgstr "Копия пустого слоя"
+msgstr "Копия пустого вектора"
 
 #: app/gui/vectors-commands.c:481 app/gui/vectors-commands.c:527
 #: app/widgets/gimpvectorstreeview.c:123
@@ -6591,7 +6483,7 @@ msgstr "Новый контур"
 
 #: app/gui/vectors-commands.c:483
 msgid "New Path Options"
-msgstr "Параметры нового слоя"
+msgstr "Параметры нового контура"
 
 #. The name entry hbox, label and entry
 #: app/gui/vectors-commands.c:516 app/gui/vectors-commands.c:631
@@ -6668,7 +6560,7 @@ msgstr "Аэрограф"
 
 #: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:97
 msgid "Clone"
-msgstr "Закрыть"
+msgstr "Клонировать"
 
 #: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:90
 msgid "Convolve"
@@ -6704,7 +6596,7 @@ msgstr "Источник изображения"
 
 #: app/paint/paint-enums.c:14
 msgid "Pattern Source"
-msgstr "Источник шаблона"
+msgstr "Источник образца"
 
 #: app/paint/paint-enums.c:32
 msgid "Non Aligned"
@@ -6832,7 +6724,7 @@ msgstr "Плавающее выделение"
 
 #: app/pdb/internal_procs.c:110
 msgid "Font UI"
-msgstr "Шрифт:"
+msgstr "Шрифт UI:"
 
 #: app/pdb/internal_procs.c:113
 msgid "Gimprc procedures"
@@ -6851,9 +6743,8 @@ msgid "Help procedures"
 msgstr "Справочные процедуры"
 
 #: app/pdb/internal_procs.c:134
-#, fuzzy
 msgid "Message procedures"
-msgstr "Справочные процедуры"
+msgstr "Процедуры сообщений"
 
 #: app/pdb/internal_procs.c:137
 msgid "Miscellaneous"
@@ -6873,15 +6764,15 @@ msgstr "Палитра"
 
 #: app/pdb/internal_procs.c:149
 msgid "Palette UI"
-msgstr "Палитра"
+msgstr "Палитра UI"
 
 #: app/pdb/internal_procs.c:155
 msgid "Parasite procedures"
-msgstr "Процедуры Parasite"
+msgstr "Процедуры шума"
 
 #: app/pdb/internal_procs.c:161
 msgid "Pattern UI"
-msgstr "UI шаблона"
+msgstr "UI образца"
 
 #: app/pdb/internal_procs.c:167
 msgid "Plug-in"
@@ -6904,7 +6795,6 @@ msgid "Text procedures"
 msgstr "Текстовые процедуры"
 
 #: app/pdb/internal_procs.c:182
-#, fuzzy
 msgid "Transform Tool procedures"
 msgstr "Процедуры инструментов рисования"
 
@@ -6913,11 +6803,11 @@ msgid "Units"
 msgstr "Единицы"
 
 #: app/pdb/procedural_db.c:177
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
-msgstr "Ошибка вызова PDB %s не найдена"
+msgstr ""
 
 #: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
 #, c-format
@@ -6973,7 +6863,7 @@ msgstr "Конфигурирование ресурсов"
 #.
 #: app/plug-in/plug-ins.c:144
 msgid "Querying new Plug-ins"
-msgstr "Запрос к новым Plug-ins"
+msgstr "Запрос к новым дополнениям"
 
 #: app/plug-in/plug-ins.c:162
 #, c-format
@@ -7006,19 +6896,19 @@ msgstr "Запуск расширения: \"%s\"\n"
 
 #: app/text/text-enums.c:32
 msgid "From Left to Right"
-msgstr ""
+msgstr "Слева направо"
 
 #: app/text/text-enums.c:33
 msgid "From Right to Left"
-msgstr ""
+msgstr "Справа налево"
 
 #: app/text/text-enums.c:51
 msgid "Left Justified"
-msgstr ""
+msgstr "Выровнять влево"
 
 #: app/text/text-enums.c:52
 msgid "Right Justified"
-msgstr ""
+msgstr "Выровнять вправо"
 
 #: app/text/text-enums.c:53
 msgid "Centered"
@@ -7046,8 +6936,7 @@ msgid "(invalid UTF-8 string)"
 msgstr "(недопустимая строка UTF-8)"
 
 #: app/text/gimptext.c:159
-msgid ""
-"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 
 #: app/text/gimptext.c:166
@@ -7057,12 +6946,14 @@ msgid ""
 msgstr ""
 
 #: app/text/gimptext.c:197
+#, fuzzy
 msgid "How many pixels the first line should be shorter"
-msgstr ""
+msgstr "точек растра"
 
 #: app/text/gimptext.c:203
+#, fuzzy
 msgid "Additional line spacing (in pixels)"
-msgstr ""
+msgstr "точек растра"
 
 #: app/text/gimptextlayer.c:124
 msgid "Text Layer"
@@ -7110,7 +7001,7 @@ msgstr "Число линий сетки"
 
 #: app/tools/tools-enums.c:140
 msgid "Grid Line Spacing"
-msgstr ""
+msgstr "Расстояние между линиями сетки"
 
 #: app/tools/gimpairbrushtool.c:62
 msgid "Airbrush with variable pressure"
@@ -7184,9 +7075,8 @@ msgid "Adjust brightness and contrast"
 msgstr "Подстройка яркости-контрастности"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
-#, fuzzy
 msgid "/Tools/Color Tools/Brightness-Contrast..."
-msgstr "/Слои/Цвета/Яркость-Контрастность..."
+msgstr "/Инструменты/Цвет/Яркость - Контрастность."
 
 #: app/tools/gimpbrightnesscontrasttool.c:148
 msgid "Adjust Brightness and Contrast"
@@ -7198,7 +7088,7 @@ msgstr "Яркость-Контрастность не действует на �
 
 #: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
-msgstr "_Яркость:"
+msgstr "Яркость:"
 
 #: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
@@ -7234,11 +7124,11 @@ msgstr "Заполнить прозрачные области"
 #: app/tools/gimpcolorpickeroptions.c:168 app/tools/gimpselectionoptions.c:493
 #: app/tools/gimpselectionoptions.c:539
 msgid "Sample Merged"
-msgstr "Объединенные образцы"
+msgstr "Пробное объединение"
 
 #: app/tools/gimpbucketfilltool.c:87
 msgid "Fill with a color or pattern"
-msgstr "Заливка цветом или шаблоном"
+msgstr "Заливка цветом или образцом"
 
 #: app/tools/gimpbucketfilltool.c:88
 msgid "/Tools/Paint Tools/Bucket Fill"
@@ -7258,7 +7148,7 @@ msgstr "/Инструменты/Выделение/Выделение по цв�
 
 #: app/tools/gimpclonetool.c:98
 msgid "Paint using Patterns or Image Regions"
-msgstr "Рисование с использованием шаблона или участка изображения"
+msgstr "Рисование с использованием образца или участка изображения"
 
 #: app/tools/gimpclonetool.c:99
 msgid "/Tools/Paint Tools/Clone"
@@ -7277,9 +7167,8 @@ msgid "Adjust color balance"
 msgstr "Подстройка цветового баланса"
 
 #: app/tools/gimpcolorbalancetool.c:96
-#, fuzzy
 msgid "/Tools/Color Tools/Color Balance..."
-msgstr "/Слои/Цвета/Цветовой баланс..."
+msgstr "/Инструменты/Цвет/Цветовой баланс."
 
 #: app/tools/gimpcolorbalancetool.c:160
 msgid "Adjust Color Balance"
@@ -7294,8 +7183,9 @@ msgid "Select Range to Modify"
 msgstr "Выбрать область для изменения"
 
 #: app/tools/gimpcolorbalancetool.c:288
+#, fuzzy
 msgid "Modify Selected Range's Color Levels"
-msgstr ""
+msgstr "Цвет"
 
 #: app/tools/gimpcolorbalancetool.c:306
 msgid "Cyan"
@@ -7310,12 +7200,10 @@ msgid "Yellow"
 msgstr "Желтый"
 
 #: app/tools/gimpcolorbalancetool.c:330
-#, fuzzy
 msgid "R_eset Range"
-msgstr "Восстановить изображение"
+msgstr "Восстановить значение"
 
 #: app/tools/gimpcolorbalancetool.c:339
-#, fuzzy
 msgid "Preserve _Luminosity"
 msgstr "Сохранить яркость"
 
@@ -7330,19 +7218,16 @@ msgid "Colorize the image"
 msgstr "Отсекать по изображению"
 
 #: app/tools/gimpcolorizetool.c:95
-#, fuzzy
 msgid "/Tools/Color Tools/Colorize..."
-msgstr "/Слои/Цвета/Постеризовать..."
+msgstr "/Инструменты/Цвет/Колоризация ."
 
 #: app/tools/gimpcolorizetool.c:162
-#, fuzzy
 msgid "Colorize the Image"
-msgstr "Отсекать по изображению"
+msgstr "Колоризация изображения"
 
 #: app/tools/gimpcolorizetool.c:195
-#, fuzzy
 msgid "Colorize operates only on RGB color drawables."
-msgstr "Цветовой баланс действует только на цветные изображения в формате RGB"
+msgstr "Колоризация действует только на цветные изображения в формате RGB"
 
 #: app/tools/gimpcolorizetool.c:237
 msgid "Select Color"
@@ -7386,9 +7271,8 @@ msgid "/Tools/Color Picker"
 msgstr "/Инструменты/Пипетка"
 
 #: app/tools/gimpcolorpickertool.c:263
-#, fuzzy
 msgid "Color Picker Information"
-msgstr "Информация о кадрировании и изменении размера"
+msgstr "Информация о пипетке"
 
 #: app/tools/gimpcolorpickertool.c:279 app/tools/gimpcolorpickertool.c:294
 msgid "Red:"
@@ -7434,7 +7318,7 @@ msgstr "/Инструменты/Рисование/Размывание"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Convolve Type  %s"
 msgstr "Тип размывания  %s"
 
@@ -7465,7 +7349,7 @@ msgstr "Кадрировать или изменить размер изобра
 
 #: app/tools/gimpcroptool.c:161
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Инструменты/Преобразование/Резак"
+msgstr "/Инструменты/Преобразование/Кадрировать и изменить размер"
 
 #: app/tools/gimpcroptool.c:594
 msgid "Crop: "
@@ -7504,9 +7388,8 @@ msgid "Adjust color curves"
 msgstr "Подстройка цветовых кривых"
 
 #: app/tools/gimpcurvestool.c:161
-#, fuzzy
 msgid "/Tools/Color Tools/Curves..."
-msgstr "/Слои/Цвета/Кривые..."
+msgstr "/Инструменты/Цвет/Кривые."
 
 #: app/tools/gimpcurvestool.c:234
 msgid "Adjust Color Curves"
@@ -7595,9 +7478,8 @@ msgid "/Tools/Selection Tools/Ellipse Select"
 msgstr "/Инструменты/Выделение/Выделение кривой эллипса"
 
 #: app/tools/gimperasertool.c:71
-#, fuzzy
 msgid "Erase to background or transparency"
-msgstr "Включить прозрачное размывание"
+msgstr "Стирание до фона или прозрачности"
 
 #: app/tools/gimperasertool.c:72
 msgid "/Tools/Paint Tools/Eraser"
@@ -7615,7 +7497,6 @@ msgid "Hard Edge"
 msgstr "Жесткие края"
 
 #: app/tools/gimpflipoptions.c:174 app/tools/gimptransformoptions.c:293
-#, fuzzy
 msgid "Affect:"
 msgstr "Смещение:"
 
@@ -7635,7 +7516,7 @@ msgstr "/Инструменты/Преобразование/Зеркало"
 
 #: app/tools/gimpfreeselecttool.c:97
 msgid "Select hand-drawn regions"
-msgstr "Выделить произвольные области"
+msgstr "Выделение произвольных областей"
 
 #: app/tools/gimpfreeselecttool.c:98
 msgid "/Tools/Selection Tools/Free Select"
@@ -7658,9 +7539,8 @@ msgid "View image histogram"
 msgstr "Просмотр гистограммы изображения"
 
 #: app/tools/gimphistogramtool.c:123
-#, fuzzy
 msgid "/Tools/Color Tools/Histogram..."
-msgstr "/Слои/Цвета/Гистограмма..."
+msgstr "/Инструменты/Цвет/Гистограмма."
 
 #: app/tools/gimphistogramtool.c:184
 msgid "Histogram does not operate on indexed drawables."
@@ -7704,16 +7584,15 @@ msgstr "Информация о канале:"
 
 #: app/tools/gimphistogramtool.c:398
 msgid "Histogram Scale:"
-msgstr "Гистограмма"
+msgstr "Масштабирование гистограммы:"
 
 #: app/tools/gimphuesaturationtool.c:108
 msgid "Adjust hue and saturation"
 msgstr "Подстройка тона и насыщенности"
 
 #: app/tools/gimphuesaturationtool.c:109
-#, fuzzy
 msgid "/Tools/Color Tools/Hue-Saturation..."
-msgstr "/Слои/Цвета/Тон-насыщенность..."
+msgstr "/Инструменты/Цвет/Тон - Насыщенность."
 
 #: app/tools/gimphuesaturationtool.c:176
 msgid "Adjust Hue / Lightness / Saturation"
@@ -7721,8 +7600,7 @@ msgstr "Подгонка  Тона / Осветления / Насыщеннос
 
 #: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color drawables."
-msgstr ""
-"Тон-Насыщенность действует только на цветные изображения в формате RGB."
+msgstr "Тон-Насыщенность действует только на цветные изображения в формате RGB."
 
 #: app/tools/gimphuesaturationtool.c:265
 msgid "_Master"
@@ -7766,7 +7644,7 @@ msgstr "Изменять выделенные цвета"
 
 #: app/tools/gimphuesaturationtool.c:411
 msgid "R_eset Color"
-msgstr "Удалить цвет"
+msgstr "Восстановить цвет"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:259
@@ -7818,7 +7696,7 @@ msgstr "/Инструменты/Рисование/Чернила"
 
 #: app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
-msgstr ""
+msgstr "Ножницы"
 
 #: app/tools/gimpiscissorstool.c:278
 msgid "Select shapes from image"
@@ -7833,9 +7711,8 @@ msgid "Adjust color levels"
 msgstr "Подбор цветовых уровней"
 
 #: app/tools/gimplevelstool.c:164
-#, fuzzy
 msgid "/Tools/Color Tools/Levels..."
-msgstr "/Слои/Цвета/Уровни..."
+msgstr "/Инструменты/Цвет/Уровни."
 
 #: app/tools/gimplevelstool.c:235
 msgid "Adjust Color Levels"
@@ -7846,12 +7723,14 @@ msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "Уровни для индексированных изображений не могут быть выровнены."
 
 #: app/tools/gimplevelstool.c:357
+#, fuzzy
 msgid "Pick Black Point"
-msgstr ""
+msgstr "Чёрное"
 
 #: app/tools/gimplevelstool.c:361
+#, fuzzy
 msgid "Pick Gray Point"
-msgstr ""
+msgstr "Серый"
 
 #: app/tools/gimplevelstool.c:365
 #, fuzzy
@@ -8028,14 +7907,12 @@ msgid "Reduce image to a fixed number of colors"
 msgstr "Уменьшить число цветов в изображении до указанного"
 
 #: app/tools/gimpposterizetool.c:77
-#, fuzzy
 msgid "/Tools/Color Tools/Posterize..."
-msgstr "/Слои/Цвета/Постеризовать..."
+msgstr "/Инструменты/Цвет/Постеризовать."
 
 #: app/tools/gimpposterizetool.c:141
-#, fuzzy
 msgid "Posterize (Reduce Number of Colors)"
-msgstr "Минимальное число цветов:"
+msgstr "Постеризовать (Уменьшить количество цветов)"
 
 #: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed drawables."
@@ -8047,7 +7924,7 @@ msgstr "Уровни постеризации:"
 
 #: app/tools/gimprectselecttool.c:96
 msgid "Select rectangular regions"
-msgstr "Выделить прямоугольные области"
+msgstr "Выделение прямоугольных областей"
 
 #: app/tools/gimprectselecttool.c:97
 msgid "/Tools/Selection Tools/Rect Select"
@@ -8079,7 +7956,7 @@ msgstr "Поворот слоев или выделений"
 
 #: app/tools/gimprotatetool.c:106
 msgid "/Tools/Transform Tools/Rotate"
-msgstr "/Инструменты/Преобразование/Поворот"
+msgstr "/Инструменты/Преобразование/Вращение"
 
 #: app/tools/gimprotatetool.c:170
 msgid "Rotation Information"
@@ -8131,7 +8008,7 @@ msgstr "Использовать все видимые слои при сокр�
 
 #: app/tools/gimpselectionoptions.c:405 app/tools/gimptextoptions.c:305
 msgid "Antialiasing"
-msgstr "Выравнивание"
+msgstr "Антиалиасинг"
 
 #: app/tools/gimpselectionoptions.c:428
 msgid "Feather Edges"
@@ -8151,7 +8028,7 @@ msgstr "Автосокращение выделения"
 
 #: app/tools/gimpsheartool.c:99
 msgid "Shear"
-msgstr "Ножницы"
+msgstr "Искривление"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear the layer or selection"
@@ -8163,7 +8040,7 @@ msgstr "/Инструменты/Преобразование/Искривлен�
 
 #: app/tools/gimpsheartool.c:163
 msgid "Shearing Information"
-msgstr "Информация о вырезанном"
+msgstr "Информация об искривлении"
 
 #: app/tools/gimpsheartool.c:164
 msgid "Shearing..."
@@ -8202,8 +8079,9 @@ msgid "_Hinting"
 msgstr ""
 
 #: app/tools/gimptextoptions.c:297
+#, fuzzy
 msgid "Force Auto-Hinter"
-msgstr ""
+msgstr "Авто"
 
 #: app/tools/gimptextoptions.c:311
 msgid "Text Color"
@@ -8247,14 +8125,12 @@ msgid "Reduce image to two colors using a threshold"
 msgstr "Превратить изображение в двухцветное используя порог"
 
 #: app/tools/gimpthresholdtool.c:90
-#, fuzzy
 msgid "/Tools/Color Tools/Threshold..."
-msgstr "/Слои/Цвета/Порог..."
+msgstr "/Инструменты/Цвет/Порог."
 
 #: app/tools/gimpthresholdtool.c:157
-#, fuzzy
 msgid "Apply Threshold"
-msgstr "Порог"
+msgstr "Применить порог"
 
 #: app/tools/gimpthresholdtool.c:201
 msgid "Threshold does not operate on indexed drawables."
@@ -8325,7 +8201,7 @@ msgstr "Векторы"
 
 #: app/tools/gimpvectortool.c:115
 msgid "the most promising path tool prototype... :-)"
-msgstr ""
+msgstr "Рисование контурных изображений"
 
 #: app/tools/gimpvectortool.c:116
 msgid "/Tools/Vectors"
@@ -8341,11 +8217,11 @@ msgstr "Кисти"
 
 #: app/tools/paint_options.c:152
 msgid "Open the pattern selection dialog"
-msgstr "Открыть диалог выбора палитры"
+msgstr "Открыть диалог выбора образца"
 
 #: app/tools/paint_options.c:155
 msgid "Pattern:"
-msgstr "Шаблоны"
+msgstr "Образец:"
 
 #: app/tools/paint_options.c:168
 msgid "Open the gradient selection dialog"
@@ -8393,7 +8269,7 @@ msgstr "У этого инструмента нет параметров."
 
 #: app/vectors/gimpvectors.c:198
 msgid "Path"
-msgstr "Контуры"
+msgstr "Контур"
 
 #: app/vectors/gimpvectors.c:199
 msgid "Rename Path"
@@ -8425,7 +8301,7 @@ msgstr "Преобразовать контур"
 
 #: app/widgets/widgets-enums.c:14
 msgid "Portrait"
-msgstr "Портрет"
+msgstr "Портретный"
 
 #: app/widgets/widgets-enums.c:15
 msgid "Landscape"
@@ -8445,11 +8321,11 @@ msgstr "Логарифмический"
 
 #: app/widgets/widgets-enums.c:71
 msgid "View as List"
-msgstr "/Просмотр в виде списка"
+msgstr "Просмотр в виде списка"
 
 #: app/widgets/widgets-enums.c:72
 msgid "View as Grid"
-msgstr "Просмотр в виде cетки"
+msgstr "Просмотр в виде таблицы"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -8481,16 +8357,15 @@ msgstr "Создать копию канала"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Raise Channel to Top"
-msgstr "Поднять канал"
+msgstr "Поднять канал доверху"
 
 #: app/widgets/gimpchanneltreeview.c:125
 msgid "Lower Channel to Bottom"
-msgstr "Опустить слой на дно"
+msgstr "Опустить канал на дно"
 
 #: app/widgets/gimpchanneltreeview.c:126
-#, fuzzy
 msgid "Reorder Channel"
-msgstr "/Опустить канал"
+msgstr "Преобразовать канал"
 
 #: app/widgets/gimpchanneltreeview.c:134
 #, c-format
@@ -8609,9 +8484,8 @@ msgid "Set Drawable Exclusive Visible"
 msgstr ""
 
 #: app/widgets/gimperrorconsole.c:173
-#, fuzzy
 msgid "Clear Errors"
-msgstr "Ошибки"
+msgstr "Очистить"
 
 #: app/widgets/gimperrorconsole.c:178
 #, c-format
@@ -8619,33 +8493,33 @@ msgid ""
 "Save all Errors\n"
 "%s  Save Selection"
 msgstr ""
+"Сохранить все ошибки\n"
+"%s  Сохранить выделение"
 
 #: app/widgets/gimperrorconsole.c:254 app/widgets/gimpwidgets-utils.c:89
-#, fuzzy
 msgid "GIMP"
 msgstr "GIMP"
 
 #: app/widgets/gimperrorconsole.c:265 app/widgets/gimpwidgets-utils.c:190
-#, fuzzy, c-format
+#, c-format
 msgid "%s Message"
-msgstr "Сообщение GIMP"
+msgstr "%s Сообщение"
 
 #: app/widgets/gimperrorconsole.c:331
 msgid "Cannot save. Nothing is selected."
 msgstr "Невозможно сохранить. Ничего не выделено."
 
 #: app/widgets/gimperrorconsole.c:341
-#, fuzzy
 msgid "Save Error Log to File"
-msgstr "Сохранить журнал ошибок в файл..."
+msgstr "Сохранить сообщения об ошибках в файл"
 
 #: app/widgets/gimperrorconsole.c:390
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
-"Ошибка при открытии файла \"%s\"\n"
+"Ошибка сохранения файла '%s':\n"
 "%s"
 
 #: app/widgets/gimpfontselection.c:171
@@ -8702,9 +8576,9 @@ msgid "Position: %0.6f"
 msgstr "Позиция: %0.6f"
 
 #: app/widgets/gimpgradienteditor.c:791
-#, fuzzy, c-format
+#, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
 
 #: app/widgets/gimpgradienteditor.c:794
 #, c-format
@@ -8718,7 +8592,7 @@ msgstr "RGB (%d, %d, %d)"
 
 #: app/widgets/gimpgradienteditor.c:832
 msgid "Foreground color set to:"
-msgstr ""
+msgstr "Установить цвет переднего плана в:"
 
 #: app/widgets/gimpgradienteditor.c:864
 #, c-format
@@ -8727,7 +8601,7 @@ msgstr "(%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:867
 msgid "Background color set to:"
-msgstr ""
+msgstr "Установить цвет фона в:"
 
 #: app/widgets/gimpgradienteditor.c:1054 app/widgets/gimpgradienteditor.c:1116
 #, c-format
@@ -8735,6 +8609,7 @@ msgid "%s%sDrag: move & compress"
 msgstr "%s%sПеремещение и сжатие"
 
 #: app/widgets/gimpgradienteditor.c:1060
+#, fuzzy
 msgid "Drag: move"
 msgstr "Drag: перемещение"
 
@@ -8749,6 +8624,7 @@ msgid "Click: select"
 msgstr "Щелчок: выделение"
 
 #: app/widgets/gimpgradienteditor.c:1098 app/widgets/gimpgradienteditor.c:1121
+#, fuzzy
 msgid "Click: select    Drag: move"
 msgstr "Щелчок: выделение   Drag: перемещение"
 
@@ -8824,9 +8700,8 @@ msgid "Duplicate Layer"
 msgstr "/Создать копию слоя"
 
 #: app/widgets/gimplayertreeview.c:205
-#, fuzzy
 msgid "Reorder Layer"
-msgstr "/Опустить слой"
+msgstr "Опустить слой"
 
 #: app/widgets/gimplayertreeview.c:258
 msgid "Keep Trans."
@@ -8872,11 +8747,11 @@ msgstr "Правка цвета палитры"
 #: app/widgets/gimppropwidgets.c:1273
 #, c-format
 msgid "This text input field is limited to %d characters."
-msgstr "Комментарий по умолчанию ограничен %d символами."
+msgstr "Это текствое поле ограничено %d символами."
 
 #: app/widgets/gimpselectioneditor.c:193
 msgid "Save Selection to Channel"
-msgstr "Выделение Сохранить в канале"
+msgstr "Сохранить выделение в канале"
 
 #: app/widgets/gimpselectioneditor.c:198 app/widgets/gimpvectorstreeview.c:161
 #, c-format
@@ -8896,9 +8771,8 @@ msgid "_Icon:"
 msgstr "Пиктограмма:"
 
 #: app/widgets/gimptemplateeditor.c:593
-#, fuzzy
 msgid "Too large!"
-msgstr "Процедуры инструментов"
+msgstr "Очень большое!"
 
 #: app/widgets/gimptemplateview.c:172
 msgid "Create a new template"
@@ -8978,8 +8852,8 @@ msgid ""
 "The active pattern.\n"
 "Click to open the Pattern Dialog."
 msgstr ""
-"Действующий шаблон.\n"
-"Щелкните, чтобы открыть диалог \"Шаблоны\"."
+"Действующий образец.\n"
+"Щелкните, чтобы открыть диалог \"Образцы\"."
 
 #: app/widgets/gimptoolbox-indicator-area.c:200
 msgid ""
@@ -9011,16 +8885,15 @@ msgstr "Удалить контур"
 
 #: app/widgets/gimpvectorstreeview.c:128
 msgid "Raise Path to Top"
-msgstr "Поднять слой в верх"
+msgstr "Поднять контур вверх"
 
 #: app/widgets/gimpvectorstreeview.c:130
 msgid "Lower Path to Bottom"
-msgstr "Опустить слой на дно"
+msgstr "Опустить контур на дно"
 
 #: app/widgets/gimpvectorstreeview.c:131
-#, fuzzy
 msgid "Reorder Path"
-msgstr "/Опустить контур"
+msgstr "Опустить контур"
 
 #: app/widgets/gimpvectorstreeview.c:142
 #, c-format
@@ -9089,7 +8962,6 @@ msgstr "Мягкий свет"
 
 #: app/widgets/gimpwidgets-constructors.c:59
 #: app/widgets/gimpwidgets-constructors.c:92
-#, fuzzy
 msgid "Grain Extract"
 msgstr "Редактор градиентов"
 
@@ -9186,9 +9058,9 @@ msgid "Error writing XCF: %s"
 msgstr "Ошибка записи XCF: %s"
 
 #: app/xcf/xcf-seek.c:44 app/xcf/xcf-seek.c:61 app/xcf/xcf-seek.c:72
-#, fuzzy, c-format
+#, c-format
 msgid "Could not seek in XCF file: %s"
-msgstr "Не удалось открыть файл \"%s\""
+msgstr "Не удалось открыть XCF файл \"%s\""
 
 #: app/xcf/xcf.c:261
 #, c-format
@@ -9208,844 +9080,3 @@ msgstr "Создание и редактирование изображений 
 msgid "The GIMP (unstable)"
 msgstr "GIMP (нестабильный)"
 
-#~ msgid "Clear Console"
-#~ msgstr "Очистить консоль"
-
-#~ msgid "Tool Plug-Ins"
-#~ msgstr "Дополнения инструментов"
-
-#~ msgid "Tool Plug-In Folders"
-#~ msgstr "Каталоги дополнений инструментов"
-
-#~ msgid "Select Tool Plug-In Folders"
-#~ msgstr "Выбрать каталоги дополнений инструментов"
-
-#~ msgid "PDB calling error %s"
-#~ msgstr "PDB ошибка вызова %s"
-
-#~ msgid ""
-#~ "Incorrect arguments passed to procedural_db_run_proc:\n"
-#~ "Argument %d to '%s' should be a %s, but got passed a %s"
-#~ msgstr ""
-#~ "procedural_db_run_proc переданы некорректные аргументы:\n"
-#~ "Аргумент %d -- '%s' должен быть %s, а передано %s"
-
-#~ msgid "/Add Tab/Old Paths..."
-#~ msgstr "/Добавить закладку/Старые контуры..."
-
-#, fuzzy
-#~ msgid "/Image/Transform/Rotate Right"
-#~ msgstr "/Изображение/Преобразование"
-
-#, fuzzy
-#~ msgid "/Layer/Transform/Rotate Left"
-#~ msgstr "/Слои/Преобразования/Смещение..."
-
-#~ msgid "/New Path"
-#~ msgstr "/Новый контур"
-
-#~ msgid "Path to Selection"
-#~ msgstr "Контур -> Выделенная область"
-
-#~ msgid "Selection to Path"
-#~ msgstr "Выделенная область -> Контур"
-
-#~ msgid "New Point"
-#~ msgstr "Новая точка"
-
-#~ msgid "Add Point"
-#~ msgstr "Добавить точку"
-
-#~ msgid "Delete Point"
-#~ msgstr "Удалить точку"
-
-#~ msgid "Edit Point"
-#~ msgstr "Правка точки"
-
-#~ msgid "Path %d"
-#~ msgstr "Контур %d"
-
-#~ msgid "Enter a new name for the path"
-#~ msgstr "Введите новое название для контура"
-
-#~ msgid "Failed to read from '%s'."
-#~ msgstr "Не удалось прочитать из \"%s\""
-
-#~ msgid "Failed to read path from '%s'."
-#~ msgstr "Не удалось считать контур из \"%s\""
-
-#~ msgid "No points specified in path file '%s'."
-#~ msgstr "Не указаны точки в файле контура \"%s\""
-
-#~ msgid "Failed to read path points from '%s'."
-#~ msgstr "Не удалось считать точки контура из %s"
-
-#~ msgid "Load and Save Bezier Curves"
-#~ msgstr "Загрузка и сохранение кривых Безье"
-
-#~ msgid "Load Path"
-#~ msgstr "Загрузить контур"
-
-#~ msgid "Save Path"
-#~ msgstr "Сохранить контур"
-
-#, fuzzy
-#~ msgid "Selection to path procedure lookup failed."
-#~ msgstr "Процедуры инструментов выделения"
-
-#~ msgid "Bezier Select"
-#~ msgstr "Выделение кривой Безье"
-
-#~ msgid "Select regions using Bezier curves"
-#~ msgstr "Выделение области с использованием кривых Безье"
-
-#~ msgid "/Tools/Selection Tools/Bezier Select"
-#~ msgstr "/Инструменты/Выделение/Выделение кривой Безье"
-
-#~ msgid "Bezier path already closed."
-#~ msgstr "Кривая Безье уже закрыта."
-
-#~ msgid "Corrupt curve"
-#~ msgstr "Кривая испорчена"
-
-#~ msgid "Curve not closed!"
-#~ msgstr "Кривая не закрыта!"
-
-#~ msgid "Paintbrush operation failed."
-#~ msgstr "Действие кисти не удалось."
-
-#~ msgid "Show Path"
-#~ msgstr "Показать контур"
-
-#~ msgid "Translate Channel"
-#~ msgstr "Транслировать канала"
-
-#, fuzzy
-#~ msgid "Selection from Path"
-#~ msgstr "Выделенная область -> Контур"
-
-#, fuzzy
-#~ msgid "Translate Selection"
-#~ msgstr "Выбор палитры"
-
-#~ msgid "Gimp Dock #%d"
-#~ msgstr "Док GIMP #%d"
-
-#~ msgid "Input Device Settings"
-#~ msgstr "Настройки устройств ввода"
-
-#~ msgid "%d Bytes"
-#~ msgstr "%d байт"
-
-#~ msgid "%.2f KB"
-#~ msgstr "%.2f KБ"
-
-#~ msgid "%.1f KB"
-#~ msgstr "%.1f KБ"
-
-#~ msgid "%d KB"
-#~ msgstr "%d KБ"
-
-#~ msgid "%.2f MB"
-#~ msgstr "%.2f MБ"
-
-#~ msgid "%.1f MB"
-#~ msgstr "%.1f MБ"
-
-#~ msgid ""
-#~ "Unable to add a layer mask to a\n"
-#~ "layer in an indexed image."
-#~ msgstr ""
-#~ "Не удалось добавить маску слоя\n"
-#~ "к слою в индексированном изображении."
-
-#, fuzzy
-#~ msgid "Other"
-#~ msgstr "Инструмент \"Искривление\""
-
-#, fuzzy
-#~ msgid "Move Selection Mask"
-#~ msgstr "Быстрая маска"
-
-#, fuzzy
-#~ msgid "Add Guide"
-#~ msgstr "Направляющая"
-
-#~ msgid "Layer Reposition"
-#~ msgstr "Изменение положения слоя"
-
-#~ msgid "Layer Move"
-#~ msgstr "Перемещение слоя"
-
-#~ msgid "Channel Reposition"
-#~ msgstr "Изменение положения канала"
-
-#~ msgid "Vectors Reposition"
-#~ msgstr "Изменение положения векторов"
-
-#, fuzzy
-#~ msgid "Add Layer to Image"
-#~ msgstr "/Изм. размер по изображению"
-
-#, fuzzy
-#~ msgid "Remove Layer from Image"
-#~ msgstr "Выделить формы в изображении"
-
-#, fuzzy
-#~ msgid "Add Channel to Image"
-#~ msgstr "Добавить текст к изображению"
-
-#, fuzzy
-#~ msgid "Add Path to Image"
-#~ msgstr "Добавить текст к изображению"
-
-#, fuzzy
-#~ msgid "Remove Path from Image"
-#~ msgstr "Удаление паразита"
-
-#, fuzzy
-#~ msgid "Image Tree"
-#~ msgstr "Тип изображения"
-
-#, fuzzy
-#~ msgid "Brush Tree"
-#~ msgstr "Кисти"
-
-#, fuzzy
-#~ msgid "Pattern Tree"
-#~ msgstr "Источник шаблона"
-
-#, fuzzy
-#~ msgid "Gradient Tree"
-#~ msgstr "Градиент"
-
-#, fuzzy
-#~ msgid "Palette Tree"
-#~ msgstr "Палитра"
-
-#, fuzzy
-#~ msgid "Buffer Tree"
-#~ msgstr "Буферы"
-
-#, fuzzy
-#~ msgid "Document History Tree"
-#~ msgstr "История документов"
-
-#, fuzzy
-#~ msgid "/View as Tree"
-#~ msgstr "/Просмотр в виде cетки"
-
-#~ msgid "Undo History: %s"
-#~ msgstr "%s: история отката"
-
-#, fuzzy
-#~ msgid "Image Undo History"
-#~ msgstr "/Изображение/История отмен..."
-
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s: Unknown file type."
-#~ msgstr ""
-#~ "Сохранение не удалось.\n"
-#~ "%s: Неизвестный тип файла."
-
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s is not a regular file."
-#~ msgstr ""
-#~ "Сохранение не удалось.\n"
-#~ "%s - не обычный файл."
-
-#~ msgid ""
-#~ "Save failed.\n"
-#~ "%s: %s."
-#~ msgstr ""
-#~ "Не удалось сохранить.\n"
-#~ "%s: %s."
-
-#~ msgid "/Tools/Swap Contexts"
-#~ msgstr "/Инструменты/Поменять контексты"
-
-#~ msgid "Inverse Grayscale Copy of Layer"
-#~ msgstr "Копия слоя в инвертированных оттенках серого"
-
-#, fuzzy
-#~ msgid "_Preview Size:"
-#~ msgstr "Размер пред.просмотра:"
-
-#~ msgid "Levels of Undo:"
-#~ msgstr "Уровней отката:"
-
-#~ msgid ""
-#~ "This is folder used to store user defined fractals to\n"
-#~ "be used by the FractalExplorer plug-in.  The GIMP\n"
-#~ "checks this folder in addition to the systemwide\n"
-#~ "FractalExplorer installation when searching for fractals."
-#~ msgstr ""
-#~ "Этот каталог используется для хранения созданных пользователем\n"
-#~ "фракталов для дополнения FractalExplorer. По умолчанию в файле\n"
-#~ "gimprc указана проверка этого подкаталога, в дополнение к системному\n"
-#~ "при поиске фракталов."
-
-#~ msgid ""
-#~ "This folder is used to store user defined figures to\n"
-#~ "be used by the GFig plug-in.  The GIMP checks this\n"
-#~ "folder in addition to the systemwide GFig installation\n"
-#~ "when searching for gfig figures."
-#~ msgstr ""
-#~ "Этот каталог используется для хранения созданных пользователем фигур\n"
-#~ "для дополнения gfig. По умолчанию в файле gimprc указана\n"
-#~ "проверка этого подкаталога, в дополнение к системному\n"
-#~ "при поиске фигур для gfig."
-
-#~ msgid ""
-#~ "This folder is used to store user defined gflares to\n"
-#~ "be used by the GFlare plug-in.  The GIMP checks this\n"
-#~ "folder in addition to the systemwide GFlares\n"
-#~ "installation when searching for gflares."
-#~ msgstr ""
-#~ "Этот каталог используется для хранения созданных пользователем\n"
-#~ "gflares для дополнением gflare. По умолчанию в файле gimprc указана\n"
-#~ "проверка этого подкаталога, в дополнение к системному\n"
-#~ "при поиске gflares."
-
-#~ msgid ""
-#~ "This folder is used to store user defined data to be\n"
-#~ "used by the Gimpressionist plug-in.  The GIMP checks\n"
-#~ "this folder in addition to the systemwide Gimpressionist\n"
-#~ "installation when searching for data."
-#~ msgstr ""
-#~ "Этот каталог используется для хранения данных  определенных\n"
-#~ "пользователем для дополнения Gимпрессионист. По умолчанию\n"
-#~ "в файле gimprc указана проверка этого подкаталога, в дополнение\n"
-#~ "к системному при поиске данных для Gимпрессионист."
-
-#~ msgid "Unit:"
-#~ msgstr "Единица:"
-
-#~ msgid "The GIMP is not properly installed for the current user\n"
-#~ msgstr "GIMP не был полностью установлен для текущего пользователя\n"
-
-#~ msgid ""
-#~ "User installation was skipped because the '--nointerface' flag was "
-#~ "encountered\n"
-#~ msgstr ""
-#~ "Пользовательская установка была пропущена, так как был указан флаг '--"
-#~ "nointerface'\n"
-
-#~ msgid ""
-#~ "To perform user installation, run the GIMP without the '--nointerface' "
-#~ "flag\n"
-#~ msgstr ""
-#~ "Для выполнения пользовательской установки, запустите GIMP без флага '--"
-#~ "nointerface'\n"
-
-#~ msgid "parasite attached to item"
-#~ msgstr "паразит прицеплен к элементу"
-
-#~ msgid "parasite detached from item"
-#~ msgstr "паразит отцеплен от элемента"
-
-#~ msgid "Please select the number of uniform parts"
-#~ msgstr "Выберите число частей,"
-
-#~ msgid "/View/Toggle Guides"
-#~ msgstr "/Просмотр/Переключить направляющие"
-
-#, fuzzy
-#~ msgid "/View/Toggle Menubar"
-#~ msgstr "/Просмотр/Переключить строка состояния"
-
-#~ msgid "/Filters/Text"
-#~ msgstr "/Фильтры/Текст"
-
-#, fuzzy
-#~ msgid "Reset"
-#~ msgstr "Восстановить"
-
-#~ msgid "Unable to locate Plug-In: \"%s\""
-#~ msgstr "Не удалось обнаружить дополнение: \"%s\""
-
-#~ msgid "Path tool prototype"
-#~ msgstr "Прототип инструмента \"Контур\""
-
-#~ msgid "/Tools/Path"
-#~ msgstr "/Инструменты/Контур"
-
-#, fuzzy
-#~ msgid "No font chosen or font invalid."
-#~ msgstr "Шрифт не выбран или неправильный."
-
-#, fuzzy
-#~ msgid "_Border:"
-#~ msgstr "Рамка:"
-
-#~ msgid "Path Tool"
-#~ msgstr "Инструмент \"Контур\""
-
-#~ msgid "Anchor"
-#~ msgstr "Прицепить"
-
-#~ msgid ""
-#~ "This folder is used to store brushes that are created\n"
-#~ "with the brush editor."
-#~ msgstr ""
-#~ "Этот каталог используется для хранения кистей, созданных\n"
-#~ "с помощью редактора кистей."
-
-#, fuzzy
-#~ msgid "Error reading from '%s': %s"
-#~ msgstr ""
-#~ "Ошибка при открытии файла \"%s\"\n"
-#~ "%s"
-
-#~ msgid "does not exist.  Cannot install."
-#~ msgstr "не существует. Установка невозможна."
-
-#~ msgid "has invalid permissions.  Cannot install."
-#~ msgstr "имеет неправильные права доступа. Установка невозможна."
-
-#~ msgid ""
-#~ "Did you notice any error messages in the lines above?\n"
-#~ "If not, installation was successful!\n"
-#~ "Otherwise, quit and investigate the possible reason..."
-#~ msgstr ""
-#~ "Вы получали какие-либо сообщения об ошибках в строках выше?\n"
-#~ "Если нет, установка была успешной! В противном случае,\n"
-#~ "выйдите и исследуйте возможные причины..."
-
-#~ msgid "Click \"Continue\" to complete GIMP installation."
-#~ msgstr "\"Нажмите \\\"Продолжить\\\", чтобы завершить установку GIMP."
-
-#, fuzzy
-#~ msgid "Installation failed.  Contact your system administrator."
-#~ msgstr "Установка не удалась. Обратитесь к системному администратору."
-
-#~ msgid "Vector angles and lengths"
-#~ msgstr "Углы и длины векторов"
-
-#~ msgid "parsing \"%s\"\n"
-#~ msgstr "синтаксический анализ \"%s\"\n"
-
-#~ msgid "  at line %d column %d\n"
-#~ msgstr "  в строке %d столбце %d\n"
-
-#~ msgid "  unexpected token: %s\n"
-#~ msgstr " неожиданный символ: %s\n"
-
-#~ msgid "Can't rename %s to %s.old; %s"
-#~ msgstr "Невозможно переименовать %s в %s.old; %s"
-
-#~ msgid "Couldn't reopen %s\n"
-#~ msgstr "Невозможно переоткрыть %s\n"
-
-#~ msgid "Can't write to %s; %s"
-#~ msgstr "Невозможно записать в %s; %s"
-
-#~ msgid ""
-#~ "Unable to save '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Не удалось сохранить \"%s\":\n"
-#~ "%s"
-
-#~ msgid "Failed to open palette file '%s': %s"
-#~ msgstr "Не удалось открыть файл палитры \"%s\": %s"
-
-#~ msgid ""
-#~ "Cannot save palette '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Не удалось сохранить палитру \"%s\":\n"
-#~ "%s"
-
-#~ msgid "/Default Color"
-#~ msgstr "/Цвет по умолчанию"
-
-#~ msgid "Gradient Selection"
-#~ msgstr "Выбор градиента"
-
-#~ msgid ""
-#~ "At least one of the changes you made will only\n"
-#~ "take effect after you restart the GIMP.\n"
-#~ "\n"
-#~ "You may choose 'Save' now to make your changes\n"
-#~ "permanent, so you can restart GIMP or hit 'Close'\n"
-#~ "and the critical parts of your changes will not\n"
-#~ "be applied."
-#~ msgstr ""
-#~ "По крайней мере одно сделанное вами изменение будет\n"
-#~ "действовать только после перезапуска Gimp.\n"
-#~ "\\n\n"
-#~ "Вы можете выбрать \\\"Сохранить\\\" чтобы сделать ваши изменения\n"
-#~ "постоянными, так чтобы вы могли перезапустить Gimp, или\n"
-#~ "нажать \\\"Закрыть\\\" и критичные части ваших изменений\n"
-#~ "не будут применены."
-
-#~ msgid "Info Window Follows Mouse"
-#~ msgstr "Информационное окно следует за мышью"
-
-#~ msgid "Auto Save"
-#~ msgstr "Автосохранение"
-
-#~ msgid ""
-#~ "Did you notice any error messages in the console window?\n"
-#~ "If not, installation was successful!\n"
-#~ "Otherwise, quit and investigate the possible reason..."
-#~ msgstr ""
-#~ "Вы получали какие-либо сообщения об ошибках в консольном\n"
-#~ "окне? Если нет, установка была успешной!\n"
-#~ "В противном случае, выйдите и исследуйте возможные причины..."
-
-#~ msgid "Monitor Resolution X:"
-#~ msgstr "Разрешение монитора по X:"
-
-#~ msgid "Fill Type (<Ctrl>)"
-#~ msgstr "Тип заливки (<Ctrl>)"
-
-#~ msgid "Type (<Ctrl>)"
-#~ msgstr "Тип (<Ctrl>)"
-
-#~ msgid "Cannot float selection: No selection made."
-#~ msgstr "Не удалось переместить выделение: нет выделения."
-
-#~ msgid ""
-#~ "Module '%s' load error:\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Ошибка загрузки модуля \"%s\"\n"
-#~ "%s"
-
-#~ msgid "loading module: '%s'\n"
-#~ msgstr "загрузка модуля: \"%s\"\n"
-
-#~ msgid "skipping module: '%s'\n"
-#~ msgstr "пропуск модуля: \"%s\"\n"
-
-#~ msgid "H"
-#~ msgstr "H"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "V"
-#~ msgstr "V"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "A"
-#~ msgstr "A"
-
-#, fuzzy
-#~ msgid "He_x Triplet:"
-#~ msgstr "Шестн. триплет:"
-
-#~ msgid "%s Options"
-#~ msgstr "Параметры %s"
-
-#~ msgid "Module DB"
-#~ msgstr "База данных модулей"
-
-#~ msgid "Loaded OK"
-#~ msgstr "Загрузка успешна"
-
-#~ msgid "Unload requested"
-#~ msgstr "Запрос выгрузки"
-
-#~ msgid "Unloaded OK"
-#~ msgstr "Выгрузка успешна"
-
-#~ msgid "Autoload during start-up"
-#~ msgstr "Автозагрузка при запуске"
-
-#~ msgid "Ink Tool"
-#~ msgstr "Чернила"
-
-#~ msgid "Intelligent Scissors"
-#~ msgstr "Умные ножницы"
-
-#~ msgid "Move Tool"
-#~ msgstr "Перемещение"
-
-#~ msgid "Perspective Tool"
-#~ msgstr "Инструмент \"Перспектива\""
-
-#~ msgid "Scale Tool"
-#~ msgstr "Масштаб"
-
-#~ msgid "Shear Tool"
-#~ msgstr "Инструмент \"Искривление\""
-
-#~ msgid "Text Tool"
-#~ msgstr "Инструмент \"Текст\""
-
-#~ msgid "Vector Tool"
-#~ msgstr "Инструмент \"Вектор\""
-
-#, fuzzy
-#~ msgid "Gamma color display filter"
-#~ msgstr "Цветные экранные фильтры"
-
-#, fuzzy
-#~ msgid "High Contrast"
-#~ msgstr "Контрастность:"
-
-#, fuzzy
-#~ msgid "High Contrast color display filter"
-#~ msgstr "Цветные экранные фильтры"
-
-#, fuzzy
-#~ msgid "Contrast Cycles:"
-#~ msgstr "Контрастность:"
-
-#~ msgid "Painter-style color selector as a pluggable color selector"
-#~ msgstr "Выбор цвета в стиле художника как подключаемый модуль"
-
-#~ msgid "Triangle"
-#~ msgstr "Треугольный цикл"
-
-#~ msgid "Watercolor style color selector as a pluggable module"
-#~ msgstr "Выбор цвета в стиле акварели как подключаемый модуль"
-
-#~ msgid "Watercolor"
-#~ msgstr "Акварель"
-
-#~ msgid "Pressure"
-#~ msgstr "Нажим"
-
-#~ msgid "Replicate segment"
-#~ msgstr "Создать копию сегмента"
-
-#~ msgid "Replicate selection"
-#~ msgstr "Создать копию выделения"
-
-#~ msgid "Info: %s-%d.%d"
-#~ msgstr "Инфо: %s-%d.%d"
-
-#~ msgid "Layer name:"
-#~ msgstr "Название слоя:"
-
-#~ msgid "Add Mask Options"
-#~ msgstr "Добавить параметры маски"
-
-#, fuzzy
-#~ msgid "Select a Gradient to Create a Palette from"
-#~ msgstr "Выбрать каталоги градиентов"
-
-#~ msgid "new_import"
-#~ msgstr "импорт_новой"
-
-#~ msgid "Source:"
-#~ msgstr "Источник:"
-
-#~ msgid "Sample Size:"
-#~ msgstr "Размер образца:"
-
-#~ msgid "New Plug-ins"
-#~ msgstr "Новые дополнения"
-
-#~ msgid "Plug-ins"
-#~ msgstr "Дополнения"
-
-#~ msgid "Extensions"
-#~ msgstr "Расширения"
-
-#~ msgid "By Color Selection"
-#~ msgstr "Выбор по цвету"
-
-#~ msgid "Inactive"
-#~ msgstr "Недействующий"
-
-#~ msgid "All"
-#~ msgstr "Все"
-
-#, fuzzy
-#~ msgid "Color Levels"
-#~ msgstr "Цветовые уровни:"
-
-#~ msgid "Crop Tool"
-#~ msgstr "Резак"
-
-#~ msgid "Load/Save Curves"
-#~ msgstr "Загрузка/Сохранение кривых"
-
-#~ msgid "Load/Save Levels"
-#~ msgstr "Загрузка/Сохранение уровней"
-
-#~ msgid "Rotate Tool"
-#~ msgstr "Инструмент \"Поворот\""
-
-#~ msgid "Color Selection"
-#~ msgstr "Выбор цвета"
-
-#~ msgid "Could not open image"
-#~ msgstr "Не удалось открыть изображение"
-
-#~ msgid ""
-#~ "Could not open thumbnail\n"
-#~ "file '%s':\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Не удалось открыть файл миниатюр\n"
-#~ "\"%s\"\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Unable to open file '%s'\n"
-#~ "Error: %s."
-#~ msgstr ""
-#~ "Не удалось открыть файл \"%s\"\n"
-#~ "Ошибка: %s."
-
-#~ msgid "Blend:"
-#~ msgstr "Бленда:"
-
-#~ msgid "Unable to open file %s"
-#~ msgstr "Не удалось открыть файл %s"
-
-#~ msgid "EEEEK"
-#~ msgstr "Ооой!"
-
-#~ msgid "Navigation: No Image"
-#~ msgstr "Навигация: Нет изображения"
-
-#~ msgid "Open"
-#~ msgstr "Открыть"
-
-#~ msgid ""
-#~ "%s failed.\n"
-#~ "%s: %s."
-#~ msgstr ""
-#~ "%s не удалось.\n"
-#~ "%s: %s."
-
-#~ msgid "Determine File Type"
-#~ msgstr "Определить тип файла"
-
-#~ msgid "This thumbnail may be out of date"
-#~ msgstr "Эта миниатюра может быть устаревшей"
-
-#~ msgid "No Information"
-#~ msgstr "Нет информации"
-
-#~ msgid "Thumbnail saving is disabled."
-#~ msgstr "Сохранение миниатюр отключено."
-
-#~ msgid "Opening '%s' failed."
-#~ msgstr "Не удалось открыть \"%s\"."
-
-#~ msgid "Save Options"
-#~ msgstr "Параметры сохранения"
-
-#~ msgid "Saving %s failed."
-#~ msgstr "Не удалось сохранить \"%s\"."
-
-#~ msgid "/Refresh History"
-#~ msgstr "/Обновить историю"
-
-#~ msgid "Never"
-#~ msgstr "Никогда"
-
-#~ msgid "Refresh (check files for existence)"
-#~ msgstr "Обновить (проверить наличие файлов)"
-
-#~ msgid "Add"
-#~ msgstr "Добавить"
-
-#~ msgid "Up"
-#~ msgstr "Вверх"
-
-#~ msgid "Down"
-#~ msgstr "Вниз"
-
-#~ msgid "Brush Selection"
-#~ msgstr "Выбор кисти"
-
-#~ msgid "Custom Palette Options"
-#~ msgstr "Параметры собственной палитры"
-
-#~ msgid "/File/Dialogs/Display Filters..."
-#~ msgstr "/Файл/Диалоги/Дисплейные фильтры..."
-
-#~ msgid "Pattern Selection"
-#~ msgstr "Выбор шаблона"
-
-#~ msgid "Error: Levels of undo must be zero or greater."
-#~ msgstr "Ошибка: уровней отмены должно быть 0 или больше."
-
-#~ msgid "Error: Marching speed must be 50 or greater."
-#~ msgstr "Ошибка: скорость муравьев должна быть 50 или больше."
-
-#~ msgid "Error: Default width must be one or greater."
-#~ msgstr "Ошибка: Ширина по умолчанию должна быть 1 или больше."
-
-#~ msgid "Error: Default height must be one or greater."
-#~ msgstr "Ошибка: Высота по умолчанию должна быть 1 или больше."
-
-#~ msgid "Error: Default unit must be within unit range."
-#~ msgstr ""
-#~ "Ошибка: Единица измерения по умолчанию должна быть в своем диапазоне."
-
-#~ msgid "Error: Default resolution must not be zero."
-#~ msgstr "Ошибка: разрешение по умолчанию не должно быть 0."
-
-#~ msgid "Error: Default resolution unit must be within unit range."
-#~ msgstr ""
-#~ "Ошибка: Единица измерения разрешения по умолчанию должна быть в своем "
-#~ "диапазоне."
-
-#~ msgid "Error: Monitor resolution must not be zero."
-#~ msgstr "Ошибка: разрешение монитора не должно быть 0."
-
-#~ msgid "Error: Image title format must not be NULL."
-#~ msgstr "Ошибка: Формат заголовка изображения не должен быть NULL."
-
-#~ msgid "Error: Image status format must not be NULL."
-#~ msgstr "Ошибка: Формат состояния изображения не должен быть NULL."
-
-#~ msgid "Error: Number of processors must be between 1 and 30."
-#~ msgstr "Ошибка: число процессоров должно быть между 1 и 30."
-
-#~ msgid "Extra Small"
-#~ msgstr "Очень маленький"
-
-#~ msgid "Paint Options"
-#~ msgstr "Параметры кисти"
-
-#~ msgid "Use Global Paint Options"
-#~ msgstr "Использовать глобальные параметры кисти"
-
-#~ msgid "Gradient Options"
-#~ msgstr "Параметры градиента"
-
-#~ msgid "This brush cannot be edited."
-#~ msgstr "Эта кисть не может быть изменена."
-
-#~ msgid "Default"
-#~ msgstr "По умолчанию"
-
-#~ msgid ""
-#~ "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
-#~ "0.3f)    Opacity: %0.3f"
-#~ msgstr ""
-#~ "Позиция: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
-#~ "0.3f)    Непрозрачность: %0.3f"
-
-#~ msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-#~ msgstr ""
-#~ "Цвет переднего плана установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %"
-#~ "0.3f)"
-
-#~ msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-#~ msgstr "Цвет фона установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-
-#~ msgid ""
-#~ "Click: select    <Shift>+Click: extend selection    Drag: move    <Shift>"
-#~ "+Drag: move & compress"
-#~ msgstr ""
-#~ "Щелчок: выделение    Shift+щелчок: расширение выделения    Drag: "
-#~ "перемещение    Shift+drag: перемещение и сжатие"
-
-#~ msgid "Invalid UTF-8 string in GIMP brush file '%s'."
-#~ msgstr "Недопустимая строка UTF-8 в файле кисти GIMP \"%s\"."
