@@ -487,13 +487,15 @@ gdisplay_find_guide (GDisplay *gdisp,
 	    {
 	    case HORIZONTAL_GUIDE:
 	      pos = (int) (scale * guide->position - offset_y);
-	      if ((pos > (y - EPSILON)) &&
+	      if ((guide->position != -1) &&
+		  (pos > (y - EPSILON)) &&
 		  (pos < (y + EPSILON)))
 		return guide;
 	      break;
 	    case VERTICAL_GUIDE:
 	      pos = (int) (scale * guide->position - offset_x);
-	      if ((pos > (x - EPSILON)) &&
+	      if ((guide->position != -1) &&
+		  (pos > (x - EPSILON)) &&
 		  (pos < (x + EPSILON)))
 		return guide;
 	      break;
@@ -1056,31 +1058,21 @@ void
 gdisplay_expose_guide (GDisplay *gdisp,
 		       Guide    *guide)
 {
-  int x1, y1;
-  int x2, y2;
   int x, y;
-  int w, h;
 
   if (guide->position < 0)
     return;
 
-  gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, FALSE);
-  gdisplay_transform_coords (gdisp, gdisp->disp_width, gdisp->disp_height, &x2, &y2, FALSE);
-  gdisplay_transform_coords (gdisp, guide->position, guide->position, &x, &y, FALSE);
-  gdk_window_get_size (gdisp->canvas->window, &w, &h);
-
-  if (x1 < 0) x1 = 0;
-  if (y1 < 0) y1 = 0;
-  if (x2 > w) x2 = w;
-  if (y2 > h) y2 = h;
+  gdisplay_transform_coords (gdisp, guide->position,
+			     guide->position, &x, &y, FALSE);
 
   switch (guide->orientation)
     {
     case HORIZONTAL_GUIDE:
-      gdisplay_expose_area (gdisp, x1, y, x2 - x1, 1);
+      gdisplay_expose_area (gdisp, 0, y, gdisp->disp_width, 1);
       break;
     case VERTICAL_GUIDE:
-      gdisplay_expose_area (gdisp, x, y1, 1, y2 - y1);
+      gdisplay_expose_area (gdisp, x, 0, 1, gdisp->disp_height);
       break;
     }
 }

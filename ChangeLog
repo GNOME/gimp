@@ -1,3 +1,10 @@
+Mon Mar 16 05:12:00 CST 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/move.c: 
+	* app/gdisplay.c:
+	* app/gimage.c: Reworked the guide drawing and picking code to
+	remove all known guide artifacts.
+
 Mon Mar 16 12:20:12 EET 1998 Lauri Alanko <la@iki.fi>
 
 	* app/menus.c: Fixed the tool options disappearing at undo.
