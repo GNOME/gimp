@@ -514,7 +514,7 @@ offset_ok_callback (GtkWidget *widget,
 		    gpointer   data)
 {
   OffsetDialog *off_d;
-  GImage       *gimage;
+  GimpImage    *gimage;
   GimpDrawable *drawable;
   gint          offset_x;
   gint          offset_y;
@@ -555,7 +555,7 @@ offset_halfheight_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   OffsetDialog *off_d;
-  GImage       *gimage;
+  GimpImage    *gimage;
 
   off_d = (OffsetDialog *) data;
   gimage = off_d->gimage;
@@ -853,8 +853,8 @@ duplicate_projection (GimpImage *oldgimage,
 void
 channel_ops_duplicate (GimpImage *gimage)
 {
-  GDisplay *new_gdisp;
-  GImage   *new_gimage;
+  GDisplay  *new_gdisp;
+  GimpImage *new_gimage;
 
   new_gimage = duplicate (gimage);
 

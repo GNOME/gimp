@@ -71,7 +71,7 @@
 
 typedef struct
 {
-  GImage    *gimage;	      /* image we're tracking undo info for */
+  GimpImage *gimage;	      /* image we're tracking undo info for */
   GtkWidget *shell;	      /* dialog window */
   GtkWidget *clist;	      /* list of undo actions */
   GtkWidget *undo_button;     /* button to undo an operation */
@@ -82,10 +82,10 @@ typedef struct
 
 typedef struct 
 {
-  GtkCList *clist;
-  gint      row;
-  gint      size;
-  GImage   *gimage;
+  GtkCList  *clist;
+  gint       row;
+  gint       size;
+  GimpImage *gimage;
 } idle_preview_args;
 
 /*
@@ -152,9 +152,9 @@ static GdkBitmap *clear_mask   = NULL;
 
 
 static MaskBuf *
-mask_render_preview (GImage        *gimage,
-		     gint          *pwidth,
-		     gint          *pheight)
+mask_render_preview (GimpImage *gimage,
+		     gint      *pwidth,
+		     gint      *pheight)
 {
   GimpChannel *mask;
   MaskBuf     *scaled_buf = NULL;
@@ -396,10 +396,10 @@ undo_history_set_pixmap_idle (gpointer data)
 
 /* check if a preview is already made, otherwise gtk_idle_add the pixmap func */ 
 static void
-undo_history_set_pixmap (GtkCList *clist,
-			 gint      row,
-			 gint      size,
-			 GImage   *gimage)
+undo_history_set_pixmap (GtkCList  *clist,
+			 gint       row,
+			 gint       size,
+			 GimpImage *gimage)
 {
   static idle_preview_args idle;
   
@@ -735,7 +735,7 @@ undo_history_init_redo (const char *undoitemname,
 /* Publicly exported function */
 
 GtkWidget *
-undo_history_new (GImage *gimage)
+undo_history_new (GimpImage *gimage)
 {
   undo_history_st *st;
   GtkWidget *vbox;

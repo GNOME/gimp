@@ -28,7 +28,7 @@ void   render_preview                    (TempBuf   *preview_buf,
 					  gint       height,
 					  gint       channel);
 void   layers_dialog_invalidate_previews (GimpImage *gimage);
-void   layers_dialog_layer_merge_query   (GImage    *gimage,
+void   layers_dialog_layer_merge_query   (GimpImage *gimage,
 					  gboolean   merge_visible);
 
 

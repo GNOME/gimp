@@ -1820,35 +1820,35 @@ clist_to_slist (GtkCList *file_list)
  * error happened and leave the dialog up.  Make sure it's sensitive.
  */
 static void
-file_save_with_proc (GImage        *gimage,
+file_save_with_proc (GimpImage     *gimage,
 		     gchar         *full_filename,
 		     gchar         *raw_filename,
 		     PlugInProcDef *save_proc,
 		     gboolean       set_filename)
 {
-    gint status = PDB_EXECUTION_ERROR;
+  gint status = PDB_EXECUTION_ERROR;
 
-    if (gimage != NULL)
-      {
-	gimp_image_set_save_proc (gimage, save_proc);
-	status = file_save (gimage,
-			    full_filename,
-			    raw_filename,
-			    RUN_INTERACTIVE,
-			    set_filename);
+  if (gimage != NULL)
+    {
+      gimp_image_set_save_proc (gimage, save_proc);
+      status = file_save (gimage,
+                          full_filename,
+                          raw_filename,
+                          RUN_INTERACTIVE,
+                          set_filename);
 
-	/* hide the file save dialog on success */
-	if (status == PDB_SUCCESS)
-	  file_dialog_hide (filesave);
-      }
+      /* hide the file save dialog on success */
+      if (status == PDB_SUCCESS)
+        file_dialog_hide (filesave);
+    }
 
-    /* If there was an error but file_save() didn't print an error
-     * message, then we'd better. */
-    if (status != PDB_SUCCESS && status != PDB_CANCEL)
-      g_message (_("Save failed.\n%s"), full_filename);
-     
-    /* always make file save dialog sensitive */
-    gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
+  /* If there was an error but file_save() didn't print an error
+   * message, then we'd better. */
+  if (status != PDB_SUCCESS && status != PDB_CANCEL)
+    g_message (_("Save failed.\n%s"), full_filename);
+
+  /* always make file save dialog sensitive */
+  gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
 }
 
 

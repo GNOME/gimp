@@ -1171,7 +1171,7 @@ gimp_channel_push_undo (GimpChannel *mask)
   MaskUndo    *mask_undo;
   TileManager *undo_tiles;
   PixelRegion  srcPR, destPR;
-  GImage      *gimage;
+  GimpImage   *gimage;
 
   mask_undo = g_new (MaskUndo, 1);
   if (gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))

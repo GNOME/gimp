@@ -1,5 +1,32 @@
 2001-03-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/apptypes.h
+	* app/channel_ops.c
+	* app/commands.c
+	* app/convert.[ch]
+	* app/fileops.c
+	* app/floating_sel.c
+	* app/gimage.h
+	* app/gimage_mask.[ch]
+	* app/gimpchannel.c
+	* app/global_edit.h
+	* app/image_map.c
+	* app/layer_select.[ch]
+	* app/layers_dialogP.h
+	* app/lc_dialog.c
+	* app/resize.c
+	* app/toolbox.c
+	* app/undo.h
+	* app/undo_history.c
+	* app/xcf.c
+	* app/tools/gimpbycolorselecttool.h
+	* app/tools/gimpcroptool.[ch]
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimppainttool.c
+	* app/tools/transform_core.h: removed the GImage typedef, cleanup.
+
+2001-03-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/[almost *]: lots of files renamed to gimp*tool.[ch]
 

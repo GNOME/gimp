@@ -45,7 +45,7 @@ void
 floating_sel_attach (GimpLayer    *layer,
 		     GimpDrawable *drawable)
 {
-  GImage    *gimage;
+  GimpImage *gimage;
   GimpLayer *floating_sel;
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
@@ -86,7 +86,7 @@ floating_sel_attach (GimpLayer    *layer,
 void
 floating_sel_remove (GimpLayer *layer)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (! (gimage = gimp_drawable_gimage (layer->fs.drawable)))
     return;
@@ -107,7 +107,7 @@ floating_sel_remove (GimpLayer *layer)
 void
 floating_sel_anchor (GimpLayer *layer)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
@@ -148,7 +148,7 @@ floating_sel_anchor (GimpLayer *layer)
 void
 floating_sel_reset (GimpLayer *layer)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
@@ -176,7 +176,7 @@ floating_sel_to_layer (GimpLayer *layer)
   gint           off_x, off_y;
   gint           width, height;
 
-  GImage *gimage;
+  GimpImage *gimage;
 
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
@@ -346,7 +346,7 @@ void
 floating_sel_rigor (GimpLayer *layer,
 		    gboolean   undo)
 {
-  GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
+  GimpImage *gimage = GIMP_DRAWABLE (layer)->gimage;
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_store (layer,
@@ -364,7 +364,7 @@ void
 floating_sel_relax (GimpLayer *layer,
 		    gboolean   undo)
 {
-  GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
+  GimpImage *gimage = GIMP_DRAWABLE (layer)->gimage;
 
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
@@ -388,7 +388,7 @@ floating_sel_composite (GimpLayer *layer,
 			gboolean   undo)
 {
   PixelRegion  fsPR;
-  GImage      *gimage;
+  GimpImage   *gimage;
   GimpLayer   *d_layer;
   gint         preserve_trans;
   gint         active[MAX_CHANNELS];

@@ -302,7 +302,7 @@ find_contiguous_region_helper (PixelRegion *mask,
 }
 
 GimpChannel *
-find_contiguous_region (GImage       *gimage, 
+find_contiguous_region (GimpImage    *gimage, 
 			GimpDrawable *drawable, 
 			gboolean      antialias,
 			gint          threshold, 

@@ -103,31 +103,31 @@ typedef enum
   COMPRESS_FRACTAL = 3  /* Unused. */
 } CompressionType;
 
-typedef GImage* XcfLoader(XcfInfo *info);
+typedef GimpImage* XcfLoader(XcfInfo *info);
 
 static Argument* xcf_load_invoker (Argument  *args);
 static Argument* xcf_save_invoker (Argument  *args);
 
 static gint xcf_save_image         (XcfInfo     *info,
-				    GImage      *gimage);
+				    GimpImage   *gimage);
 static void xcf_save_choose_format (XcfInfo     *info,
-				    GImage      *gimage);
+				    GimpImage   *gimage);
 static void xcf_save_image_props   (XcfInfo     *info,
-				    GImage      *gimage);
+				    GimpImage   *gimage);
 static void xcf_save_layer_props   (XcfInfo     *info,
-				    GImage      *gimage,
+				    GimpImage   *gimage,
 				    GimpLayer   *layer);
 static void xcf_save_channel_props (XcfInfo     *info,
-				    GImage      *gimage,
+				    GimpImage   *gimage,
 				    GimpChannel *channel);
 static void xcf_save_prop          (XcfInfo     *info,
 				    PropType     prop_type,
 				    ...);
 static void xcf_save_layer         (XcfInfo     *info,
-				    GImage      *gimage,
+				    GimpImage   *gimage,
 				    GimpLayer   *layer);
 static void xcf_save_channel       (XcfInfo     *info,
-				    GImage      *gimage,
+				    GimpImage   *gimage,
 				    GimpChannel *channel);
 static void xcf_save_hierarchy     (XcfInfo     *info,
 				    TileManager *tiles);
@@ -141,25 +141,25 @@ static void xcf_save_tile_rle      (XcfInfo     *info,
 
 static GimpImage    *  xcf_load_image         (XcfInfo     *info);
 static gboolean        xcf_load_image_props   (XcfInfo     *info,
-					       GImage      *gimage);
+					       GimpImage   *gimage);
 static gboolean        xcf_load_layer_props   (XcfInfo     *info,
-					       GImage      *gimage,
+					       GimpImage   *gimage,
 					       GimpLayer   *layer,
                                                gboolean    *apply_mask,
                                                gboolean    *edit_mask,
                                                gboolean    *show_mask);
 static gboolean        xcf_load_channel_props (XcfInfo     *info,
-					       GImage      *gimage,
+					       GimpImage   *gimage,
 					       GimpChannel *channel);
 static gboolean        xcf_load_prop          (XcfInfo     *info,
 					       PropType    *prop_type,
 					       guint32     *prop_size);
 static GimpLayer     * xcf_load_layer         (XcfInfo     *info,
-					       GImage      *gimage);
+					       GimpImage   *gimage);
 static GimpChannel   * xcf_load_channel       (XcfInfo     *info,
-					       GImage      *gimage);
+					       GimpImage   *gimage);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo     *info,
-					       GImage      *gimage);
+					       GimpImage   *gimage);
 static gboolean        xcf_load_hierarchy     (XcfInfo     *info,
 					       TileManager *tiles);
 static gboolean        xcf_load_level         (XcfInfo     *info,
@@ -332,14 +332,14 @@ xcf_init (void)
 static Argument*
 xcf_load_invoker (Argument *args)
 {
-  XcfInfo info;
-  Argument *return_args;
-  GImage *gimage;
-  gchar *filename;
-  gboolean success;
-  gchar id[14];
+  XcfInfo    info;
+  Argument  *return_args;
+  GimpImage *gimage;
+  gchar     *filename;
+  gboolean   success;
+  gchar      id[14];
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
 
   gimage = NULL;
 
@@ -403,16 +403,16 @@ xcf_load_invoker (Argument *args)
   return return_args;
 }
 
-static Argument*
+static Argument *
 xcf_save_invoker (Argument *args)
 {
-  XcfInfo info;
-  Argument *return_args;
-  GImage *gimage;
-  gchar *filename;
-  gboolean success;
+  XcfInfo    info;
+  Argument  *return_args;
+  GimpImage *gimage;
+  gchar     *filename;
+  gboolean   success;
 
-  gimp_add_busy_cursors();
+  gimp_add_busy_cursors ();
 
   success = FALSE;
 
@@ -451,8 +451,8 @@ xcf_save_invoker (Argument *args)
 }
 
 static void
-xcf_save_choose_format (XcfInfo *info,
-			GImage  *gimage)
+xcf_save_choose_format (XcfInfo   *info,
+			GimpImage *gimage)
 {
   gint save_version = 0;                /* default to oldest */
 
@@ -463,8 +463,8 @@ xcf_save_choose_format (XcfInfo *info,
 }
 
 static gint
-xcf_save_image (XcfInfo *info,
-		GImage  *gimage)
+xcf_save_image (XcfInfo   *info,
+		GimpImage *gimage)
 {
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
@@ -615,8 +615,8 @@ xcf_save_image (XcfInfo *info,
 }
 
 static void
-xcf_save_image_props (XcfInfo *info,
-		      GImage  *gimage)
+xcf_save_image_props (XcfInfo   *info,
+		      GimpImage *gimage)
 {
   /* check and see if we should save the colormap property */
   if (gimage->cmap)
@@ -649,7 +649,7 @@ xcf_save_image_props (XcfInfo *info,
 
 static void
 xcf_save_layer_props (XcfInfo   *info,
-		      GImage    *gimage,
+		      GimpImage *gimage,
 		      GimpLayer *layer)
 {
   if (layer == gimp_image_get_active_layer (gimage))
@@ -694,7 +694,7 @@ xcf_save_layer_props (XcfInfo   *info,
 
 static void
 xcf_save_channel_props (XcfInfo     *info,
-			GImage      *gimage,
+			GimpImage   *gimage,
 			GimpChannel *channel)
 {
   guchar col[3];
@@ -839,20 +839,20 @@ write_one_path (gpointer pptr,
   g_slist_foreach (bzp->path_details, write_bz_point, info);
 }
 
-static Path*
-read_one_path (GImage  *gimage,
-	       XcfInfo *info)
+static Path *
+read_one_path (GimpImage *gimage,
+	       XcfInfo   *info)
 {
-  Path *bzp;
-  gchar *name;
-  guint32 locked;
-  guint8  state;
-  guint32 closed;
-  guint32 num_points;
-  guint32 version; /* changed from num_paths */
-  Tattoo  tattoo = 0;
-  GSList *pts_list = NULL;
-  PathType ptype;
+  Path     *bzp;
+  gchar    *name;
+  guint32   locked;
+  guint8    state;
+  guint32   closed;
+  guint32   num_points;
+  guint32   version; /* changed from num_paths */
+  Tattoo    tattoo = 0;
+  GSList   *pts_list = NULL;
+  PathType  ptype;
 
   info->cp += xcf_read_string (info->fp, &name, 1);
   info->cp += xcf_read_int32 (info->fp, &locked, 1);
@@ -926,14 +926,14 @@ write_bzpaths (PathList *paths,
   g_slist_foreach( paths->bz_paths, write_one_path, info);  
 }
 
-static PathList* 
-read_bzpaths (GImage  *gimage, 
-	      XcfInfo *info)
+static PathList *
+read_bzpaths (GimpImage *gimage, 
+	      XcfInfo   *info)
 {
-  guint32 num_paths;
-  guint32 last_selected_row;
+  guint32   num_paths;
+  guint32   last_selected_row;
   PathList *paths;
-  GSList *bzp_list = NULL;
+  GSList   *bzp_list = NULL;
 
   info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
   info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
@@ -1311,7 +1311,7 @@ xcf_save_prop (XcfInfo  *info,
 
 static void
 xcf_save_layer (XcfInfo   *info,
-		GImage    *gimage,
+		GimpImage *gimage,
 		GimpLayer *layer)
 {
   guint32 saved_pos;
@@ -1371,7 +1371,7 @@ xcf_save_layer (XcfInfo   *info,
 
 static void
 xcf_save_channel (XcfInfo     *info,
-		  GImage      *gimage,
+		  GimpImage   *gimage,
 		  GimpChannel *channel)
 {
   guint32 saved_pos;
@@ -1710,7 +1710,7 @@ xcf_save_tile_rle (XcfInfo *info,
 static GimpImage *
 xcf_load_image (XcfInfo *info)
 {
-  GImage      *gimage;
+  GimpImage   *gimage;
   GimpLayer   *layer;
   GimpChannel *channel;
   guint32      saved_pos;
@@ -1836,8 +1836,8 @@ xcf_load_image (XcfInfo *info)
 }
 
 static gboolean
-xcf_load_image_props (XcfInfo *info,
-		      GImage  *gimage)
+xcf_load_image_props (XcfInfo   *info,
+		      GimpImage *gimage)
 {
   PropType prop_type;
   guint32 prop_size;
@@ -2059,7 +2059,7 @@ xcf_load_image_props (XcfInfo *info,
 
 static gboolean
 xcf_load_layer_props (XcfInfo   *info,
-		      GImage    *gimage,
+		      GimpImage *gimage,
 		      GimpLayer *layer,
                       gboolean  *apply_mask,
                       gboolean  *edit_mask,
@@ -2160,11 +2160,11 @@ xcf_load_layer_props (XcfInfo   *info,
 
 static gboolean
 xcf_load_channel_props (XcfInfo     *info,
-			GImage      *gimage,
+			GimpImage   *gimage,
 			GimpChannel *channel)
 {
   PropType prop_type;
-  guint32 prop_size;
+  guint32  prop_size;
 
   while (TRUE)
     {
@@ -2264,8 +2264,8 @@ xcf_load_prop (XcfInfo  *info,
 }
 
 static GimpLayer *
-xcf_load_layer (XcfInfo *info,
-		GImage  *gimage)
+xcf_load_layer (XcfInfo   *info,
+		GimpImage *gimage)
 {
   GimpLayer     *layer;
   GimpLayerMask *layer_mask;
@@ -2349,8 +2349,8 @@ xcf_load_layer (XcfInfo *info,
 }
 
 static GimpChannel *
-xcf_load_channel (XcfInfo *info,
-		  GImage  *gimage)
+xcf_load_channel (XcfInfo   *info,
+		  GimpImage *gimage)
 {
   GimpChannel *channel;
   guint32      hierarchy_offset;
@@ -2406,8 +2406,8 @@ error:
 }
 
 static GimpLayerMask *
-xcf_load_layer_mask (XcfInfo *info,
-		     GImage  *gimage)
+xcf_load_layer_mask (XcfInfo   *info,
+		     GimpImage *gimage)
 {
   GimpLayerMask *layer_mask;
   guint32        hierarchy_offset;

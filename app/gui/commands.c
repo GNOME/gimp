@@ -1346,8 +1346,8 @@ void
 dialogs_undo_history_cmd_callback (GtkWidget *widget,
 				   gpointer   client_data)
 {
-  GDisplay *gdisp;
-  GImage   *gimage;
+  GDisplay  *gdisp;
+  GimpImage *gimage;
   return_if_no_display (gdisp);
 
   gimage = gdisp->gimage;
@@ -1412,7 +1412,7 @@ image_resize_callback (GtkWidget *widget,
 		       gpointer   client_data)
 {
   ImageResize *image_resize;
-  GImage      *gimage;
+  GimpImage   *gimage;
 
   image_resize = (ImageResize *) client_data;
 
@@ -1466,9 +1466,9 @@ gimage_mask_feather_callback (GtkWidget *widget,
 			      GimpUnit   unit,
 			      gpointer   data)
 {
-  GImage  *gimage;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GimpImage *gimage;
+  gdouble    radius_x;
+  gdouble    radius_y;
 
   gimage = GIMP_IMAGE (data);
 
@@ -1499,9 +1499,9 @@ gimage_mask_border_callback (GtkWidget *widget,
 			     GimpUnit   unit,
 			     gpointer   data)
 {
-  GImage  *gimage;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GimpImage *gimage;
+  gdouble    radius_x;
+  gdouble    radius_y;
 
   gimage = GIMP_IMAGE (data);
 
@@ -1532,9 +1532,9 @@ gimage_mask_grow_callback (GtkWidget *widget,
 			   GimpUnit   unit,
 			   gpointer   data)
 {
-  GImage  *gimage;
-  gdouble  radius_x;
-  gdouble  radius_y;
+  GimpImage *gimage;
+  gdouble    radius_x;
+  gdouble    radius_y;
 
   gimage = GIMP_IMAGE (data);
 
@@ -1565,9 +1565,9 @@ gimage_mask_shrink_callback (GtkWidget *widget,
 			     GimpUnit   unit,
 			     gpointer   data)
 {
-  GImage *gimage;
-  gint    radius_x;
-  gint    radius_y;
+  GimpImage *gimage;
+  gint       radius_x;
+  gint       radius_y;
 
   gimage = GIMP_IMAGE (data);
 

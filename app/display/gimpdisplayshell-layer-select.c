@@ -48,7 +48,7 @@ struct _LayerSelect
   GdkPixmap *layer_pixmap;
   GtkWidget *preview;
 
-  GImage    *gimage;
+  GimpImage *gimage;
   GimpLayer *current_layer;
   gboolean   dirty;
   gint       image_width;
@@ -65,7 +65,7 @@ static void   layer_select_backward   (LayerSelect *layer_select);
 static void   layer_select_end        (LayerSelect *layer_select, 
 				       guint32      time);
 static void   layer_select_set_gimage (LayerSelect *layer_select, 
-				       GImage      *gimage);
+				       GimpImage   *gimage);
 static void   layer_select_set_layer  (LayerSelect *layer_select);
 static gint   layer_select_events     (GtkWidget   *widget, 
 				       GdkEvent    *event);
@@ -86,9 +86,9 @@ LayerSelect *layer_select = NULL;
 
 
 void
-layer_select_init (GImage  *gimage,
-		   gint     move,
-		   guint32  time)
+layer_select_init (GimpImage *gimage,
+		   gint       move,
+		   guint32    time)
 {
   GtkWidget *frame1;
   GtkWidget *frame2;
@@ -277,7 +277,7 @@ layer_select_end (LayerSelect *layer_select,
 
 static void
 layer_select_set_gimage (LayerSelect *layer_select,
-			 GImage      *gimage)
+			 GimpImage   *gimage)
 {
   gint image_width;
   gint image_height;

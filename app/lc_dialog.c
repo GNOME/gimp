@@ -420,12 +420,12 @@ lc_dialog_update (GimpImage *gimage)
 
 typedef struct
 {
-  GImage        **def;
+  GimpImage     **def;
   gint           *default_index;
   GtkSignalFunc   callback;
   GtkWidget      *menu;
   gint            num_items;
-  GImage         *id;
+  GimpImage      *id;
 } IMCBData;
 
 static void

@@ -1334,7 +1334,7 @@ resize_scale_warn_callback (GtkWidget *widget,
 			    gpointer   data)
 {
   ImageResize *image_scale = NULL;
-  GImage      *gimage      = NULL;
+  GimpImage   *gimage      = NULL;
 
   g_assert (data != NULL);
   image_scale = (ImageResize *) data;
@@ -1364,7 +1364,7 @@ resize_check_layer_scaling (ImageResize *image_scale)
    */
 
   gboolean   success = FALSE;
-  GImage    *gimage  = NULL;
+  GimpImage *gimage  = NULL;
   GList     *list    = NULL;
   GimpLayer *layer   = NULL;
   GtkWidget *dialog  = NULL;

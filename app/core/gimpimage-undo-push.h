@@ -20,16 +20,16 @@
 #define __UNDO_H__
 
 
-gboolean      undo_push_group_start       (GImage       *gimage, 
+gboolean      undo_push_group_start       (GimpImage    *gimage, 
 					   UndoType      type);
-gboolean      undo_push_group_end         (GImage       *gimage);
-gboolean      undo_push_image             (GImage       *gimage, 
+gboolean      undo_push_group_end         (GimpImage    *gimage);
+gboolean      undo_push_image             (GimpImage    *gimage, 
 					   GimpDrawable *drawable, 
 					   gint          x1, 
 					   gint          y1, 
 					   gint          x2, 
 					   gint          y2);
-gboolean      undo_push_image_mod         (GImage       *gimage, 
+gboolean      undo_push_image_mod         (GimpImage    *gimage, 
 					   GimpDrawable *drawable, 
 					   gint          x1, 
 					   gint          y1, 
@@ -37,78 +37,78 @@ gboolean      undo_push_image_mod         (GImage       *gimage,
 					   gint          y2, 
 					   gpointer      tiles_ptr, 
 					   gboolean      sparse);
-gboolean      undo_push_mask              (GImage       *gimage, 
+gboolean      undo_push_mask              (GimpImage    *gimage, 
 					   gpointer      mask_ptr);
-gboolean      undo_push_layer_displace    (GImage       *gimage,
+gboolean      undo_push_layer_displace    (GimpImage    *gimage,
 					   GimpLayer    *layer);
-gboolean      undo_push_transform         (GImage       *gimage, 
+gboolean      undo_push_transform         (GimpImage    *gimage, 
 					   gpointer      tu_ptr);
-gboolean      undo_push_paint             (GImage       *gimage, 
+gboolean      undo_push_paint             (GimpImage    *gimage, 
 					   gpointer      pu_ptr);
-gboolean      undo_push_layer             (GImage       *gimage, 
+gboolean      undo_push_layer             (GimpImage    *gimage, 
 					   UndoType      type, 
 					   gpointer      lu_ptr);
-gboolean      undo_push_layer_mod         (GImage       *gimage, 
+gboolean      undo_push_layer_mod         (GimpImage    *gimage, 
 					   gpointer      layer_ptr);
-gboolean      undo_push_layer_mask        (GImage       *gimage, 
+gboolean      undo_push_layer_mask        (GimpImage    *gimage, 
 					   UndoType      type, 
 					   gpointer      lmu_prt);
-gboolean      undo_push_layer_change      (GImage       *gimage, 
+gboolean      undo_push_layer_change      (GimpImage    *gimage, 
 					   GimpLayer    *layer);
-gboolean      undo_push_layer_reposition  (GImage       *gimage, 
+gboolean      undo_push_layer_reposition  (GimpImage    *gimage, 
 					   GimpLayer    *layer);
-gboolean      undo_push_channel           (GImage       *gimage, 
+gboolean      undo_push_channel           (GimpImage    *gimage, 
 					   UndoType      type, 
 					   gpointer      cu_ptr);
-gboolean      undo_push_channel_mod       (GImage       *gimage, 
+gboolean      undo_push_channel_mod       (GimpImage    *gimage, 
 					   gpointer      cmu_ptr);
-gboolean      undo_push_fs_to_layer       (GImage       *gimage,
+gboolean      undo_push_fs_to_layer       (GimpImage    *gimage,
 					   gpointer      fsu_ptr);
-gboolean      undo_push_fs_rigor          (GImage       *gimage, 
+gboolean      undo_push_fs_rigor          (GimpImage    *gimage, 
 					   gint32        layer_ID);
-gboolean      undo_push_fs_relax          (GImage       *gimage, 
+gboolean      undo_push_fs_relax          (GimpImage    *gimage, 
 					   gint32        layer_ID);
-gboolean      undo_push_gimage_mod        (GImage       *gimage);
-gboolean      undo_push_guide             (GImage       *gimage, 
+gboolean      undo_push_gimage_mod        (GimpImage    *gimage);
+gboolean      undo_push_guide             (GimpImage    *gimage, 
 					   gpointer      guide);
-gboolean      undo_push_image_parasite    (GImage       *gimage,
+gboolean      undo_push_image_parasite    (GimpImage    *gimage,
 					   gpointer      parasite);
-gboolean      undo_push_drawable_parasite (GImage       *gimage, 
+gboolean      undo_push_drawable_parasite (GimpImage    *gimage, 
 					   GimpDrawable *drawable, 
 					   gpointer      parasite);
 gboolean      undo_push_image_parasite_remove    
-                                          (GImage       *gimage, 
+                                          (GimpImage    *gimage, 
 					   const gchar  *name);
 gboolean      undo_push_drawable_parasite_remove    
-                                          (GImage       *gimage, 
+                                          (GimpImage    *gimage, 
 					   GimpDrawable *drabable,
 					   const gchar  *name);
-gboolean      undo_push_qmask             (GImage       *gimage);
-gboolean      undo_push_resolution        (GImage       *gimage);
-gboolean      undo_push_layer_rename      (GImage       *gimage, 
+gboolean      undo_push_qmask             (GimpImage    *gimage);
+gboolean      undo_push_resolution        (GimpImage    *gimage);
+gboolean      undo_push_layer_rename      (GimpImage    *gimage, 
 					   GimpLayer    *layer);
-gboolean      undo_push_cantundo          (GImage       *gimage, 
+gboolean      undo_push_cantundo          (GimpImage    *gimage, 
 					   const gchar  *action);
 
-gboolean      undo_pop                    (GImage       *gimage);
-gboolean      undo_redo                   (GImage       *gimage);
-void          undo_free                   (GImage       *gimage);
+gboolean      undo_pop                    (GimpImage    *gimage);
+gboolean      undo_redo                   (GimpImage    *gimage);
+void          undo_free                   (GimpImage    *gimage);
 
-const gchar  *undo_get_undo_name          (GImage       *gimage);
-const gchar  *undo_get_redo_name          (GImage       *gimage);
+const gchar  *undo_get_undo_name          (GimpImage    *gimage);
+const gchar  *undo_get_redo_name          (GimpImage    *gimage);
 
 
 /* Stack peeking functions */
 typedef gint (*undo_map_fn)     (const gchar *undoitemname, 
 				 gpointer     data);
 
-void undo_map_over_undo_stack   (GImage      *gimage, 
+void undo_map_over_undo_stack   (GimpImage   *gimage, 
 				 undo_map_fn  fn, 
 				 gpointer     data);
-void undo_map_over_redo_stack   (GImage      *gimage, 
+void undo_map_over_redo_stack   (GimpImage   *gimage, 
 				 undo_map_fn  fn, 
 				 gpointer     data);
-UndoType undo_get_undo_top_type (GImage      *gimage);
+UndoType undo_get_undo_top_type (GimpImage   *gimage);
 
 
 /* Argument to undo_event signal emitted by gimages: */

@@ -52,11 +52,11 @@ static int gimage_mask_stroking = FALSE;
 
 /*  functions  */
 gboolean
-gimage_mask_boundary (GImage    *gimage,
-		      BoundSeg **segs_in,
-		      BoundSeg **segs_out,
-		      gint      *num_segs_in,
-		      gint      *num_segs_out)
+gimage_mask_boundary (GimpImage  *gimage,
+		      BoundSeg  **segs_in,
+		      BoundSeg  **segs_out,
+		      gint       *num_segs_in,
+		      gint       *num_segs_out)
 {
   GimpDrawable *d;
   GimpLayer    *layer;
@@ -124,18 +124,18 @@ gimage_mask_boundary (GImage    *gimage,
 
 
 gboolean
-gimage_mask_bounds (GImage *gimage,
-		    gint   *x1,
-		    gint   *y1,
-		    gint   *x2,
-		    gint   *y2)
+gimage_mask_bounds (GimpImage *gimage,
+		    gint      *x1,
+		    gint      *y1,
+		    gint      *x2,
+		    gint      *y2)
 {
   return gimp_channel_bounds (gimp_image_get_mask (gimage), x1, y1, x2, y2);
 }
 
 
 void
-gimage_mask_invalidate (GImage *gimage)
+gimage_mask_invalidate (GimpImage *gimage)
 {
   GimpLayer   *layer;
   GimpChannel *mask;
@@ -161,16 +161,16 @@ gimage_mask_invalidate (GImage *gimage)
 
 
 gint
-gimage_mask_value (GImage *gimage,
-		   gint    x,
-		   gint    y)
+gimage_mask_value (GimpImage *gimage,
+		   gint       x,
+		   gint       y)
 {
   return gimp_channel_value (gimp_image_get_mask (gimage), x, y);
 }
 
 
 gboolean
-gimage_mask_is_empty (GImage *gimage)
+gimage_mask_is_empty (GimpImage *gimage)
 {
   /*  in order to allow stroking of selections, we need to pretend here
    *  that the selection mask is empty so that it doesn't mask the paint
@@ -184,16 +184,16 @@ gimage_mask_is_empty (GImage *gimage)
 
 
 void
-gimage_mask_translate (GImage *gimage,
-		       gint    off_x,
-		       gint    off_y)
+gimage_mask_translate (GimpImage *gimage,
+		       gint       off_x,
+		       gint       off_y)
 {
   gimp_channel_translate (gimp_image_get_mask (gimage), off_x, off_y);
 }
 
 
 TileManager *
-gimage_mask_extract (GImage       *gimage,
+gimage_mask_extract (GimpImage    *gimage,
 		     GimpDrawable *drawable,
 		     gboolean      cut_gimage,
 		     gboolean      keep_indexed,
@@ -345,7 +345,7 @@ gimage_mask_extract (GImage       *gimage,
 }
 
 GimpLayer *
-gimage_mask_float (GImage       *gimage,
+gimage_mask_float (GimpImage    *gimage,
 		   GimpDrawable *drawable,
 		   gint          off_x,    /* optional offset */
 		   gint          off_y)
@@ -400,28 +400,28 @@ gimage_mask_float (GImage       *gimage,
 
 
 void
-gimage_mask_clear (GImage *gimage)
+gimage_mask_clear (GimpImage *gimage)
 {
   gimp_channel_clear (gimp_image_get_mask (gimage));
 }
 
 
 void
-gimage_mask_undo (GImage *gimage)
+gimage_mask_undo (GimpImage *gimage)
 {
   gimp_channel_push_undo (gimp_image_get_mask (gimage));
 }
 
 
 void
-gimage_mask_invert (GImage *gimage)
+gimage_mask_invert (GimpImage *gimage)
 {
   gimp_channel_invert (gimp_image_get_mask (gimage));
 }
 
 
 void
-gimage_mask_sharpen (GImage *gimage)
+gimage_mask_sharpen (GimpImage *gimage)
 {
   /*  No need to play with the selection visibility
    *  because sharpen will not change the outline
@@ -431,23 +431,23 @@ gimage_mask_sharpen (GImage *gimage)
 
 
 void
-gimage_mask_all (GImage *gimage)
+gimage_mask_all (GimpImage *gimage)
 {
   gimp_channel_all (gimp_image_get_mask (gimage));
 }
 
 
 void
-gimage_mask_none (GImage *gimage)
+gimage_mask_none (GimpImage *gimage)
 {
   gimp_channel_clear (gimp_image_get_mask (gimage));
 }
 
 
 void
-gimage_mask_feather (GImage  *gimage,
-		     gdouble  feather_radius_x,
-		     gdouble  feather_radius_y)
+gimage_mask_feather (GimpImage *gimage,
+		     gdouble    feather_radius_x,
+		     gdouble    feather_radius_y)
 {
   /*  push the current mask onto the undo stack--need to do this here because
    *  gimp_channel_feather doesn't do it
@@ -464,9 +464,9 @@ gimage_mask_feather (GImage  *gimage,
 
 
 void
-gimage_mask_border (GImage *gimage,
-		    gint    border_radius_x,
-		    gint    border_radius_y)
+gimage_mask_border (GimpImage *gimage,
+		    gint       border_radius_x,
+		    gint       border_radius_y)
 {
   /*  feather the region  */
   gimp_channel_border (gimp_image_get_mask (gimage),
@@ -476,9 +476,9 @@ gimage_mask_border (GImage *gimage,
 
 
 void
-gimage_mask_grow (GImage *gimage,
-		  int     grow_pixels_x,
-		  int     grow_pixels_y)
+gimage_mask_grow (GimpImage *gimage,
+		  int        grow_pixels_x,
+		  int        grow_pixels_y)
 {
   /*  feather the region  */
   gimp_channel_grow (gimp_image_get_mask (gimage),
@@ -488,10 +488,10 @@ gimage_mask_grow (GImage *gimage,
 
 
 void
-gimage_mask_shrink (GImage   *gimage,
-		    gint      shrink_pixels_x,
-		    gint      shrink_pixels_y,
-		    gboolean  edge_lock)
+gimage_mask_shrink (GimpImage *gimage,
+		    gint       shrink_pixels_x,
+		    gint       shrink_pixels_y,
+		    gboolean   edge_lock)
 {
   /*  feather the region  */
   gimp_channel_shrink (gimp_image_get_mask (gimage),
@@ -540,7 +540,7 @@ gimage_mask_layer_mask (GimpImage *gimage,
 
 
 void
-gimage_mask_load (GImage      *gimage,
+gimage_mask_load (GimpImage   *gimage,
 		  GimpChannel *channel)
 {
   /*  Load the specified channel to the gimage mask  */
@@ -549,7 +549,7 @@ gimage_mask_load (GImage      *gimage,
 
 
 GimpChannel *
-gimage_mask_save (GImage *gimage)
+gimage_mask_save (GimpImage *gimage)
 {
   GimpChannel *new_channel;
 
@@ -565,7 +565,7 @@ gimage_mask_save (GImage *gimage)
 
 
 gboolean
-gimage_mask_stroke (GImage       *gimage,
+gimage_mask_stroke (GimpImage    *gimage,
 		    GimpDrawable *drawable)
 {
   BoundSeg  *bs_in;

@@ -55,7 +55,6 @@ typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;
 
 typedef struct _GimpImage           GimpImage;
-typedef         GimpImage           GImage;
 
 
 /*  data objects  */

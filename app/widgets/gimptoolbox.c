@@ -511,8 +511,8 @@ toolbox_drag_drop (GtkWidget      *widget,
 						     "gimp_channel");
       layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
 							  "gimp_layer_mask");
-      component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						  "gimp_component");
+      component = (GimpImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						     "gimp_component");
 
       if (layer)
 	{

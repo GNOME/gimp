@@ -49,13 +49,16 @@ void   convert_to_rgb        (GimpImage          *gimage);
 void   convert_to_grayscale  (GimpImage          *gimage);
 void   convert_to_indexed    (GimpImage          *gimage);
 
-void   convert_image         (GimpImage          *gimage,
-			      GimpImageBaseType   ,
-			      gint                num_cols,
-			      ConvertDitherType   ,
-			      gint                alpha_dither,
-			      gint                remdups,
-			      ConvertPaletteType  );
+void   convert_image         (GimpImage         *gimage,
+                              GimpImageBaseType  new_type,
+                              /* The following three params used only for
+                               * new_type == INDEXED
+                               */
+                              gint               num_cols,
+                              ConvertDitherType  dither,
+                              gint               alpha_dither,
+                              gint               remdups,
+                              ConvertPaletteType palette_type);
 
 
 extern GimpPalette *theCustomPalette;

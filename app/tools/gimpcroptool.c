@@ -127,7 +127,7 @@ static void   crop_recalc              (GimpTool       *tool,
 					GimpCropTool   *crop);
 static void   crop_start               (GimpTool       *tool,
 					GimpCropTool   *crop);
-static void   crop_adjust_guides       (GImage         *gimage,
+static void   crop_adjust_guides       (GimpImage      *gimage,
 					gint            x1,
 					gint            y1,
 					gint            x2,
@@ -272,14 +272,14 @@ crop_options_new (void)
 
 static void
 crop_tool_button_press (GimpTool       *tool,
-		   GdkEventButton *bevent,
-		   GDisplay       *gdisp)
+                        GdkEventButton *bevent,
+                        GDisplay       *gdisp)
 {
   GimpCropTool *crop;
   GimpDrawTool *draw;
   
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
   
   if (tool->state == INACTIVE ||
       gdisp != tool->gdisp)
@@ -349,12 +349,12 @@ crop_tool_button_press (GimpTool       *tool,
 
 static void
 crop_tool_button_release (GimpTool       *tool,
-		     GdkEventButton *bevent,
-		     GDisplay       *gdisp)
+                          GdkEventButton *bevent,
+                          GDisplay       *gdisp)
 {
   GimpCropTool *crop;
 
-  crop = GIMP_CROP_TOOL(tool);
+  crop = GIMP_CROP_TOOL (tool);
   
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -383,11 +383,11 @@ crop_tool_button_release (GimpTool       *tool,
 }
 
 static void
-crop_adjust_guides (GImage *gimage,
-                    gint    x1,
-		    gint    y1,
-                    gint    x2,
-		    gint    y2)
+crop_adjust_guides (GimpImage *gimage,
+                    gint       x1,
+		    gint       y1,
+                    gint       x2,
+		    gint       y2)
 
 {
   GList    *glist;
@@ -440,10 +440,10 @@ crop_adjust_guides (GImage *gimage,
 
 static void
 crop_tool_motion (GimpTool       *tool,
-	     GdkEventMotion *mevent,
-	     GDisplay       *gdisp)
+                  GdkEventMotion *mevent,
+                  GDisplay       *gdisp)
 {
-  GimpCropTool  *crop;
+  GimpCropTool *crop;
   GimpDrawTool *draw;
   
   GimpLayer     *layer;
@@ -453,8 +453,8 @@ crop_tool_motion (GimpTool       *tool,
   gchar         size[STATUSBAR_SIZE];
   gint          min_x, min_y, max_x, max_y; 
 
-  crop = GIMP_CROP_TOOL(tool);
-  draw = GIMP_DRAW_TOOL(tool);
+  crop = GIMP_CROP_TOOL (tool);
+  draw = GIMP_DRAW_TOOL (tool);
   
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
@@ -587,15 +587,15 @@ crop_tool_motion (GimpTool       *tool,
 
 static void
 crop_tool_cursor_update (GimpTool       *tool,
-		    GdkEventMotion *mevent,
-		    GDisplay       *gdisp)
+                         GdkEventMotion *mevent,
+                         GDisplay       *gdisp)
 {
   GimpCropTool *crop;
 
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
-  crop = GIMP_CROP_TOOL(tool);
+  crop = GIMP_CROP_TOOL (tool);
 
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp != gdisp))
@@ -816,13 +816,13 @@ crop_tool_draw (GimpDrawTool *draw)
 }
 
 void
-crop_image (GImage   *gimage,
-	    gint      x1,
-	    gint      y1,
-	    gint      x2,
-	    gint      y2,
-	    gboolean  layer_only,
-	    gboolean  crop_layers)
+crop_image (GimpImage *gimage,
+	    gint       x1,
+	    gint       y1,
+	    gint       x2,
+	    gint       y2,
+	    gboolean   layer_only,
+	    gboolean   crop_layers)
 {
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
@@ -834,7 +834,7 @@ crop_image (GImage   *gimage,
   gint         off_x, off_y;
   gint         doff_x, doff_y;
 
-  width = x2 - x1;
+  width  = x2 - x1;
   height = y2 - y1;
 
   /*  Make sure new width and height are non-zero  */
@@ -965,8 +965,8 @@ crop_image (GImage   *gimage,
 }
 
 static void
-crop_recalc (GimpTool      *tool,
-	     GimpCropTool  *crop)
+crop_recalc (GimpTool     *tool,
+	     GimpCropTool *crop)
 {
   gdisplay_transform_coords (tool->gdisp, crop->tx1, crop->ty1,
 			     &crop->x1, &crop->y1, FALSE);
@@ -981,7 +981,7 @@ crop_start (GimpTool     *tool,
   static GDisplay *old_gdisp = NULL;
   GimpDrawTool *draw;
 
-  draw = GIMP_DRAW_TOOL(tool);
+  draw = GIMP_DRAW_TOOL (tool);
   crop_recalc (tool, crop);
 
   if (! crop_info)

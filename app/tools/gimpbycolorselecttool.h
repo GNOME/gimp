@@ -24,7 +24,7 @@ Tool * tools_new_by_color_select           (void);
 void   tools_free_by_color_select          (Tool         *tool);
 
 void   by_color_select_initialize          (GDisplay     *gdisp);
-void   by_color_select_initialize_by_image (GImage       *gimage);
+void   by_color_select_initialize_by_image (GimpImage    *gimage);
 
 void   by_color_select                     (GimpImage    *gimage,
 					    GimpDrawable *drawable,

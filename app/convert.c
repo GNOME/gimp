@@ -1169,26 +1169,26 @@ remap_indexed_layer (GimpLayer     *layer,
 }
 
 void
-convert_image (GImage		 *gimage,
+convert_image (GimpImage         *gimage,
 	       GimpImageBaseType  new_type,
 	       /* The following three params used only for
 		* new_type == INDEXED
 		*/
-	       int		  num_cols,
+	       gint               num_cols,
 	       ConvertDitherType  dither,
-	       int                alpha_dither,
-	       int                remdups,
+	       gint               alpha_dither,
+	       gint               remdups,
 	       ConvertPaletteType palette_type)
 {
-  QuantizeObj *quantobj;
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  GimpImageBaseType old_type;
-  GList     *list;
-  GimpImageType new_layer_type;
-  gint       new_layer_bytes;
-  gboolean   has_alpha;
-  TileManager *new_tiles;
+  QuantizeObj       *quantobj;
+  GimpLayer         *layer;
+  GimpLayer         *floating_layer;
+  GimpImageBaseType  old_type;
+  GList             *list;
+  GimpImageType      new_layer_type;
+  gint               new_layer_bytes;
+  gboolean           has_alpha;
+  TileManager       *new_tiles;
 
   quantobj        = NULL;
   new_layer_type  = RGBA_GIMAGE;

@@ -20,9 +20,9 @@
 #define  __LAYER_SELECT_H__
 
 
-void   layer_select_init                (GImage  *gimage, 
-					 gint     move, 
-					 guint32  time);
+void   layer_select_init                (GimpImage *gimage, 
+					 gint       move, 
+					 guint32    time);
 void   layer_select_update_preview_size (void);
 
 

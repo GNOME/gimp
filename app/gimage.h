@@ -23,9 +23,9 @@
 #include "gimpimage.h"
 
 
-GImage * gimage_new                  (gint               width,
-				      gint               height,
-				      GimpImageBaseType  base_type);
+GimpImage * gimage_new (gint               width,
+                        gint               height,
+                        GimpImageBaseType  base_type);
 
 
 extern guint32 next_guide_id;

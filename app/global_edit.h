@@ -23,19 +23,19 @@
 TileManager * crop_buffer              (TileManager  *tiles,
 					gint          border);
 
-TileManager * edit_cut                 (GImage       *gimage,
+TileManager * edit_cut                 (GimpImage    *gimage,
 					GimpDrawable *drawable);
-TileManager * edit_copy                (GImage       *gimage,
+TileManager * edit_copy                (GimpImage    *gimage,
 					GimpDrawable *drawable);
-GimpLayer   * edit_paste               (GImage       *gimage,
+GimpLayer   * edit_paste               (GimpImage    *gimage,
 					GimpDrawable *drawable,
 					TileManager  *paste,
 					gboolean      paste_into);
-gboolean      edit_paste_as_new        (GImage       *gimage,
+gboolean      edit_paste_as_new        (GimpImage    *gimage,
 					TileManager  *tiles);
-gboolean      edit_clear               (GImage       *gimage,
+gboolean      edit_clear               (GimpImage    *gimage,
 					GimpDrawable *drawable);
-gboolean      edit_fill                (GImage       *gimage,
+gboolean      edit_fill                (GimpImage    *gimage,
 					GimpDrawable *drawable,
 					GimpFillType  fill_type);
 

@@ -140,17 +140,17 @@ void	      transform_core_grid_density_changed   (void);
 void	      transform_core_showpath_changed       (gint            type);
 
 /*  transform functions  */
-TileManager * transform_core_do    (GImage           *gimage,
+TileManager * transform_core_do    (GimpImage        *gimage,
 				    GimpDrawable     *drawable,
 				    TileManager      *float_tiles,
 				    gboolean          interpolation,
 				    GimpMatrix3       matrix,
 				    GimpProgressFunc  progress_callback,
 				    gpointer          progress_data);
-TileManager * transform_core_cut   (GImage           *gimage,
+TileManager * transform_core_cut   (GimpImage        *gimage,
 				    GimpDrawable     *drawable,
 				    gboolean         *new_layer);
-gboolean      transform_core_paste (GImage           *gimage,
+gboolean      transform_core_paste (GimpImage        *gimage,
 				    GimpDrawable     *drawable,
 				    TileManager      *tiles,
 				    gboolean          new_layer);

@@ -1056,7 +1056,7 @@ void
 gimp_paint_tool_finish (GimpPaintTool *paint_tool,
 			GimpDrawable  *drawable)
 {
-  GImage    *gimage;
+  GimpImage *gimage;
   PaintUndo *pu;
 
   if (! (gimage = gimp_drawable_gimage (drawable)))

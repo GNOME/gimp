@@ -16,10 +16,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef  __CROP_H__
-#define  __CROP_H__
+#ifndef  __GIMP_CROP_TOOL_H__
+#define  __GIMP_CROP_TOOL_H__
+
 
 #include "gimpdrawtool.h"
+
+
+/* XXX Used? */
+typedef enum
+{
+  CROP_CROP,
+  RESIZE_CROP
+} CropType;
+
 
 #define GIMP_TYPE_CROP_TOOL            (gimp_crop_tool_get_type ())
 #define GIMP_CROP_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_CROP_TOOL, GimpCropTool))
@@ -30,35 +40,26 @@
 typedef struct _GimpCropTool      GimpCropTool;
 typedef struct _GimpCropToolClass GimpCropToolClass;
 
-/* XXX Used? */
-typedef enum
-{
-  CROP_CROP,
-  RESIZE_CROP
-} CropType;
-
 struct _GimpCropTool
 {
   GimpDrawTool  parent_instance;
 
-  /*  DrawCore *core; */
+  gint          startx;     /*  starting x coord            */
+  gint          starty;     /*  starting y coord            */
 
-  gint      startx;     /*  starting x coord            */
-  gint      starty;     /*  starting y coord            */
+  gint          lastx;      /*  previous x coord            */
+  gint          lasty;      /*  previous y coord            */
 
-  gint      lastx;      /*  previous x coord            */
-  gint      lasty;      /*  previous y coord            */
+  gint          x1, y1;     /*  upper left hand coordinate  */
+  gint          x2, y2;     /*  lower right hand coords     */
 
-  gint      x1, y1;     /*  upper left hand coordinate  */
-  gint      x2, y2;     /*  lower right hand coords     */
+  gint          srw, srh;   /*  width and height of corners */
 
-  gint      srw, srh;   /*  width and height of corners */
+  gint          tx1, ty1;   /*  transformed coords          */
+  gint          tx2, ty2;   /*                              */
 
-  gint      tx1, ty1;   /*  transformed coords          */
-  gint      tx2, ty2;   /*                              */
-
-  guint     function;   /*  moving or resizing          */
-  guint     context_id; /*  for the statusbar           */
+  guint         function;   /*  moving or resizing          */
+  guint         context_id; /*  for the statusbar           */
 };
 
 struct _GimpCropToolClass
@@ -69,7 +70,7 @@ struct _GimpCropToolClass
 
 void      gimp_crop_tool_register (void);
 
-GtkType   gimp_crop_tool_get_type   (void);
+GtkType   gimp_crop_tool_get_type (void);
 
 
 /* Keep around for the PDB, temporarily */
@@ -81,4 +82,5 @@ void   crop_image      (GimpImage *gimage,
 			gboolean   layer_only,
 			gboolean   crop_layers);
 
-#endif  /*  __CROP_H__  */
+
+#endif  /*  __GIMP_CROP_TOOL_H__  */
