@@ -1,3 +1,7 @@
+Thu Oct 26 10:58:23 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* INSTALL: clear up use of --prefix
+
 2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Fix #27994 (corruption of tiled tiffs)
