@@ -1,3 +1,8 @@
+2003-11-09  Sven Neumann  <sven@gimp.org>
+
+	* README.gtkdoc: added some information on how to write proper
+	gtk-doc comments.
+
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
 	* */version.xml.in: renamed to version.in.
