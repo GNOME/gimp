@@ -1,3 +1,8 @@
+Mon Oct  4 09:00:51 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/common/gz.c (load_image): BUG loading gz files
+	for the OS/2 version fixed.
+
 Sun Oct  3 23:47:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am: add scan_convert.[ch]

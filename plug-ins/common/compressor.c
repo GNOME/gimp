@@ -491,7 +491,7 @@ load_image (char *filename, gint32 run_mode)
     }
   else  /* parent process */
 #else /* __EMX__ */
-   if (spawn_gzip(filename, tmpname, "-cfd", &pid) == -1)  
+   if (spawn_gzip(tmpname, filename, "-cfd", &pid) == -1)  
       return -1;  
 #endif
     {
