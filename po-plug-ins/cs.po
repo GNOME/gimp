@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:58+0200\n"
-"PO-Revision-Date: 2004-06-07 11:04+0200\n"
+"POT-Creation-Date: 2004-07-05 04:25+0200\n"
+"PO-Revision-Date: 2004-07-05 12:07+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,7 +62,7 @@ msgstr "O aplikaci"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
+#: plug-ins/common/channel_mixer.c:548 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
@@ -307,7 +307,7 @@ msgstr "Barevná funkce"
 #. Redmode radio frame
 #. Redmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:990 plug-ins/common/AlienMap.c:1218
-#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:130
+#: plug-ins/common/channel_mixer.c:597 plug-ins/common/decompose.c:130
 msgid "Red"
 msgstr "Červená"
 
@@ -373,14 +373,14 @@ msgstr ""
 #. Greenmode radio frame
 #. Greenmode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1031 plug-ins/common/AlienMap.c:1241
-#: plug-ins/common/channel_mixer.c:600 plug-ins/common/decompose.c:131
+#: plug-ins/common/channel_mixer.c:598 plug-ins/common/decompose.c:131
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
 #. Bluemode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:1072 plug-ins/common/AlienMap.c:1264
-#: plug-ins/common/channel_mixer.c:601 plug-ins/common/decompose.c:136
+#: plug-ins/common/channel_mixer.c:599 plug-ins/common/decompose.c:136
 msgid "Blue"
 msgstr "Modrá"
 
@@ -420,7 +420,7 @@ msgstr "_Fraktály"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
+#: plug-ins/common/channel_mixer.c:1216 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
@@ -466,7 +466,7 @@ msgstr "Zapsat parametry fraktálu"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
+#: plug-ins/common/channel_mixer.c:1131 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
@@ -1299,7 +1299,7 @@ msgstr "Mimozemské mapování: Transformuji..."
 msgid "AlienMap"
 msgstr "Mimozemské mapování"
 
-#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:624
+#: plug-ins/common/AlienMap.c:1190 plug-ins/common/channel_mixer.c:622
 #: plug-ins/common/diffraction.c:505 plug-ins/common/diffraction.c:543
 #: plug-ins/common/diffraction.c:581 plug-ins/common/exchange.c:409
 #: plug-ins/common/noisify.c:366 plug-ins/common/noisify.c:373
@@ -1310,7 +1310,7 @@ msgstr "Če_rvená:"
 msgid "Change intensity of the red channel"
 msgstr "Změna intenzity červeného kanálu"
 
-#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:636
+#: plug-ins/common/AlienMap.c:1200 plug-ins/common/channel_mixer.c:634
 #: plug-ins/common/diffraction.c:514 plug-ins/common/diffraction.c:552
 #: plug-ins/common/diffraction.c:590 plug-ins/common/exchange.c:453
 #: plug-ins/common/noisify.c:367 plug-ins/common/noisify.c:374
@@ -1321,7 +1321,7 @@ msgstr "_Zelená:"
 msgid "Change intensity of the green channel"
 msgstr "Změna intenzity zeleného kanálu"
 
-#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:649
+#: plug-ins/common/AlienMap.c:1209 plug-ins/common/channel_mixer.c:647
 #: plug-ins/common/diffraction.c:523 plug-ins/common/diffraction.c:561
 #: plug-ins/common/diffraction.c:599 plug-ins/common/exchange.c:497
 #: plug-ins/common/noisify.c:368 plug-ins/common/noisify.c:375
@@ -1911,7 +1911,7 @@ msgstr "Varování: zdroj i cíl je tentýž kanál."
 msgid "Save Parameters to"
 msgstr "Zapsat parametry do"
 
-#: plug-ins/common/CML_explorer.c:2191 plug-ins/common/channel_mixer.c:1245
+#: plug-ins/common/CML_explorer.c:2191
 #, c-format
 msgid "Parameters were Saved to '%s'"
 msgstr "Parametry byly uloženy do '%s'"
@@ -1920,7 +1920,7 @@ msgstr "Parametry byly uloženy do '%s'"
 msgid "CML File Operation Warning"
 msgstr "CML varování práce se souborem"
 
-#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1278
+#: plug-ins/common/CML_explorer.c:2223 plug-ins/common/channel_mixer.c:1256
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2482,41 +2482,46 @@ msgstr "Komprimovaná velikost: %s"
 msgid "Compression ratio (approx.): %d to 1"
 msgstr "Poměr komprese (přibližně): %d k 1"
 
-#: plug-ins/common/channel_mixer.c:226
+#: plug-ins/common/channel_mixer.c:224
 msgid "<Image>/Filters/Colors/Channel Mi_xer.."
 msgstr "<Image>/Filtry/Barvy/Mi_xér kanálů..."
 
-#: plug-ins/common/channel_mixer.c:530
+#: plug-ins/common/channel_mixer.c:528
 msgid "Channel Mixer"
 msgstr "Mixér kanálů"
 
 #. The preview toggle
-#: plug-ins/common/channel_mixer.c:566 plug-ins/imagemap/imap_grid.c:295
+#: plug-ins/common/channel_mixer.c:564 plug-ins/imagemap/imap_grid.c:295
 msgid "_Preview"
 msgstr "_Náhled"
 
-#: plug-ins/common/channel_mixer.c:591
+#: plug-ins/common/channel_mixer.c:589
 msgid "O_utput Channel:"
 msgstr "_Výstupní kanál:"
 
 #. The monochrome toggle
-#: plug-ins/common/channel_mixer.c:660
+#: plug-ins/common/channel_mixer.c:658
 msgid "_Monochrome"
 msgstr "_Monochromatické"
 
-#: plug-ins/common/channel_mixer.c:672
+#: plug-ins/common/channel_mixer.c:670
 msgid "Preserve _Luminosity"
 msgstr "Zachovat _jas"
 
-#: plug-ins/common/channel_mixer.c:1035
+#: plug-ins/common/channel_mixer.c:1014
 msgid "Load Channel Mixer Settings"
 msgstr "Načíst nastavení mixéru kanálů"
 
-#: plug-ins/common/channel_mixer.c:1171
+#: plug-ins/common/channel_mixer.c:1152
 msgid "Save Channel Mixer Settings"
 msgstr "Uložit nastavení mixéru kanálů"
 
-#: plug-ins/common/channel_mixer.c:1264
+#: plug-ins/common/channel_mixer.c:1223
+#, c-format
+msgid "Parameters were saved to '%s'"
+msgstr "Parametry byly uloženy do '%s'"
+
+#: plug-ins/common/channel_mixer.c:1242
 msgid "Channel Mixer File Operation Warning"
 msgstr "Varování operace souboru mixéru kanálů"
 
