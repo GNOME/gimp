@@ -1,3 +1,8 @@
+Tue Nov  9 11:33:03 PST 1999 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/drawable.pdb: fix {get,set}_pixel typo reported
+	by Tamito KAJIYAMA <kajiyama@grad.sccs.chukyo-u.ac.jp>
+
 Tue Nov  9 15:08:13 MET 1999  Sven Neumann <sven@gimp.org>
 	
 	* app/fileops.c:

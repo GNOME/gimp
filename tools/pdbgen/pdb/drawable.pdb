@@ -212,6 +212,7 @@ sub drawable_image {
 
     @outargs = ( &std_image_arg );
     $outargs[0]->{desc} = "The drawable's image";
+    $outargs[0]->{init} = 1;
 
     delete $inargs[0]->{no_success};
 
@@ -356,7 +357,7 @@ HELP
       x %= TILE_WIDTH;
       y %= TILE_WIDTH;
 
-      p = tile_data_pointer (tile, y, x);
+      p = tile_data_pointer (tile, x, y);
       for (b = 0; b < num_channels; b++)
 	pixel[b] = p[b];
 
@@ -397,7 +398,7 @@ HELP
       x %= TILE_WIDTH;
       y %= TILE_WIDTH;
 
-      p = tile_data_pointer (tile, y, x);
+      p = tile_data_pointer (tile, x, y);
       for (b = 0; b < num_channels; b++)
 	*p++ = *pixel++;
 

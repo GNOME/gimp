@@ -332,7 +332,7 @@ drawable_image_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  GimpImage *gimage;
+  GimpImage *gimage = NULL;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -1062,7 +1062,7 @@ drawable_get_pixel_invoker (Argument *args)
 	  x %= TILE_WIDTH;
 	  y %= TILE_WIDTH;
     
-	  p = tile_data_pointer (tile, y, x);
+	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
 	    pixel[b] = p[b];
     
@@ -1172,7 +1172,7 @@ drawable_set_pixel_invoker (Argument *args)
 	  x %= TILE_WIDTH;
 	  y %= TILE_WIDTH;
     
-	  p = tile_data_pointer (tile, y, x);
+	  p = tile_data_pointer (tile, x, y);
 	  for (b = 0; b < num_channels; b++)
 	    *p++ = *pixel++;
     
