@@ -1,3 +1,22 @@
+2001-12-11  Tor Lillqvist  <tml@iki.fi>
+
+	* gimptool-win32.c.in: Also look at the CC env var, and the @CC@
+	configuration variable.
+
+	Set the msvc_syntax flag if the compiler appears to be MSVC
+	(cl). Also accept the command line flag --msvc-syntax. If
+	msvc_syntax, pass --msvc-syntax to pkg-config, and change
+	generated command line appropriately (turn -o, -L and -l flags
+	into their MSVC equivalents).
+
+	Accept also C++ source files. 
+
+	Insert a space in the generated COPY command.
+
+	Parse command line in two passes: first scan for flags that affect
+	behaviour of others, like --msvc-syntax or --prefix=, then to
+	actually do stuff. Thus the order of flags doesn't matter.
+
 2001-12-07  Tor Lillqvist  <tml@iki.fi>
 
 	* app/general.c (iso_8601_date_format): Can't use g_snprintf here,

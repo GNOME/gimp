@@ -42,6 +42,8 @@ static gboolean dry_run = FALSE;
 static gchar *prefix;
 static gchar *exec_prefix;
 
+static gchar *env_cc;
+static gboolean msvc_syntax = FALSE;
 static gchar *env_cflags;
 static gchar *env_ldflags;
 static gchar *env_libs;
@@ -206,6 +208,14 @@ find_out_env_flags (void)
 {
   gchar *p;
 
+  if ((p = getenv ("CC")) != NULL && *p != '\0')
+    env_cc = p;
+  else
+    env_cc = "@CC@";
+
+  if (g_strncasecmp (env_cc, "cl", 2) == 0)
+    msvc_syntax = TRUE;
+
   if ((p = getenv ("CFLAGS")) != NULL && *p != '\0')
     env_cflags = p;
   else
@@ -214,7 +224,17 @@ find_out_env_flags (void)
   if ((p = getenv ("LDFLAGS")) != NULL && *p != '\0')
     env_ldflags = p;
   else
-    env_ldflags = "@LDFLAGS@";
+    {
+      env_ldflags = "@LDFLAGS@";
+      if (msvc_syntax)
+	{
+	  /* If we want an MSVC command line, just ignore any
+	   * Unix-style LDFLAGS configure variable.
+	   */
+	  if (strncmp (env_ldflags, "-L", 2) == 0)
+	    env_ldflags = "";
+	}
+    }
 
   if ((p = getenv ("LIBS")) != NULL && *p != '\0')
     env_libs = p;
@@ -245,6 +265,7 @@ Developer options:\n\
   --exec-prefix=PREFIX    use PREFIX instead of the installation exec prefix\n\
                           that GIMP was built when computing the output for\n\
                           --cflags and --libs\n\
+  --msvc-syntax           print flags in MSVC syntax\n\
 \n\
 Installation directory options:\n\
   --prefix --exec-prefix --bindir --sbindir --libexecdir --datadir --sysconfdir\n\
@@ -304,7 +325,10 @@ one_line_output (gchar *program,
 static gchar *
 pkg_config (gchar *args)
 {
-  return one_line_output ("pkg-config", args);
+  if (msvc_syntax)
+    return one_line_output ("pkg-config --msvc-syntax", args);
+  else
+    return one_line_output ("pkg-config", args);
 }
 
 #endif
@@ -342,7 +366,7 @@ get_cflags (void)
    * accept it, and it means less quoting trouble when using backquoted
    * invokations of gimptool in Makefiles.
    */
-  return g_strdup_printf ("%s -I %s/include", gtk_cflags, get_prefix ('/'));
+  return g_strdup_printf ("%s -I%s/include", gtk_cflags, get_prefix ('/'));
 }
 
 static void
@@ -356,7 +380,7 @@ get_cflags_noui (void)
 {
   gchar *glib_cflags = glib_config ("--cflags");
 
-  return g_strdup_printf ("%s -I %s/include", glib_cflags, get_prefix ('/'));
+  return g_strdup_printf ("%s -I%s/include", glib_cflags, get_prefix ('/'));
 }
 
 static void
@@ -370,7 +394,10 @@ get_libs (void)
 {
   gchar *gtk_libs = gtk_config ("--libs");
 
-  return g_strdup_printf ("-L%s/lib -lgimpui -lgimp %s", get_prefix ('/'), gtk_libs);
+  if (msvc_syntax)
+    return g_strdup_printf ("/libpath:%s/lib gimpui.lib gimp.lib %s", get_prefix ('/'), gtk_libs);
+  else
+    return g_strdup_printf ("-L%s/lib -lgimpui -lgimp %s", get_prefix ('/'), gtk_libs);
 }
 
 static void
@@ -384,7 +411,10 @@ get_libs_noui (void)
 {
   gchar *glib_libs = glib_config ("--libs");
 
-  return g_strdup_printf ("-L%s/lib -lgimp %s", get_prefix ('/'), glib_libs);
+  if (msvc_syntax)
+    return g_strdup_printf ("/libpath:%s/lib gimp.lib %s", get_prefix ('/'), glib_libs);
+  else
+    return g_strdup_printf ("-L%s/lib -lgimp %s", get_prefix ('/'), glib_libs);
 }
 
 static void
@@ -411,10 +441,10 @@ do_build_2 (gchar *cflags,
 {
   gchar *cmd;
   gchar *dest_dir;
+  gchar *output_flag;
   gchar *dest_exe;
+  gchar *here_comes_linker_flags;
   gchar *p, *q, *r;
-
-  find_out_env_flags ();
 
   if (install_dir != NULL)
     dest_dir = g_strconcat (install_dir, "/", NULL);
@@ -424,9 +454,9 @@ do_build_2 (gchar *cflags,
   dest_exe = g_strdup (what);
 
   p = strrchr (dest_exe, '.');
-  if (p == NULL || strcmp (p, ".c") != 0)
+  if (p == NULL || !(strcmp (p, ".c") == 0 || strcmp (p, ".cc") == 0 || strcmp (p, ".cpp") == 0))
     {
-      fprintf (stderr, "plug-in source %s is not a C file?\n", what);
+      fprintf (stderr, "plug-in source %s is not a C or C++ file?\n", what);
       exit (1);
     }
 
@@ -444,12 +474,26 @@ do_build_2 (gchar *cflags,
   
   dest_exe = g_strconcat (q, EXEEXT, NULL);
 
-  cmd = g_strdup_printf ("gcc %s %s -o %s%s %s %s %s %s",
+  if (msvc_syntax)
+    {
+      output_flag = "-Fe";
+      here_comes_linker_flags = "-link";
+    }
+  else
+    {
+      output_flag = "-o ";
+      here_comes_linker_flags = "";
+    }
+
+  cmd = g_strdup_printf ("%s %s %s %s%s%s %s %s %s %s %s",
+			 env_cc,
 			 env_cflags,
 			 cflags,
+			 output_flag,
 			 dest_dir,
 			 dest_exe,
 			 what,
+			 here_comes_linker_flags,
 			 env_ldflags,
 			 libs,
 			 env_libs);
@@ -548,7 +592,7 @@ static void
 do_install_bin_2 (gchar *dir,
 		  gchar *what)
 {
-  maybe_run (g_strconcat (COPY, " ", what, dir, NULL));
+  maybe_run (g_strconcat (COPY, " ", what, " ", dir, NULL));
 }
 
 static void
@@ -652,12 +696,35 @@ int
 main (int    argc,
       char **argv)
 {
-  gint argi = 0;
+  gint argi;
   gint i;
 
   if (argc == 1)
     usage (0);
 
+  /* First scan for flags that affect our behaviour globally, but
+   * are still allowed late on the command line.
+   */
+  argi = 0;
+  while (++argi < argc)
+    {
+      if (strcmp (argv[argi], "-n") == 0 ||
+	  strcmp (argv[argi], "--just-print") == 0 ||
+	  strcmp (argv[argi], "--dry-run") == 0 ||
+	  strcmp (argv[argi], "--recon") == 0)
+	dry_run = TRUE;
+      else if (starts_with (argv[argi], "--prefix="))
+	prefix = argv[argi] + strlen ("--prefix=");
+      else if (starts_with (argv[argi], "--exec-prefix="))
+	exec_prefix = argv[argi] + strlen ("--exec_prefix=");
+      else if (strcmp (argv[argi], "--msvc-syntax") == 0)
+	msvc_syntax = TRUE;
+    }
+
+  find_out_env_flags ();
+
+  /* Second pass, actually do something. */
+  argi = 0;
   while (++argi < argc)
     {
       for (i = 0; i < G_N_ELEMENTS (dirs); i++)
@@ -679,7 +746,7 @@ main (int    argc,
 	       strcmp (argv[argi], "--just-print") == 0 ||
 	       strcmp (argv[argi], "--dry-run") == 0 ||
 	       strcmp (argv[argi], "--recon") == 0)
-	dry_run = TRUE;
+	;			/* Already handled */
       else if (strcmp (argv[argi], "--cflags") == 0)
 	do_cflags ();
       else if (strcmp (argv[argi], "--cflags-noui") == 0)
@@ -691,9 +758,11 @@ main (int    argc,
       else if (strcmp (argv[argi], "--libs-noui") == 0)
 	do_libs_noui ();
       else if (starts_with (argv[argi], "--prefix="))
-	prefix = argv[argi] + strlen ("--prefix=");
+	;
       else if (starts_with (argv[argi], "--exec-prefix="))
-	exec_prefix = argv[argi] + strlen ("--exec_prefix=");
+	;
+      else if (strcmp (argv[argi], "--msvc-syntax") == 0)
+	;
       else if (strcmp (argv[argi], "--build") == 0)
 	do_build (argv[++argi]);
       else if (strcmp (argv[argi], "--build-noui") == 0)
