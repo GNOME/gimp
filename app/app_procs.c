@@ -219,7 +219,7 @@ void
 app_exit (gboolean kill_it)
 {
   /*  If it's the user's perogative, and there are dirty images  */
-  if (! kill_it && gdisplays_dirty () && ! no_interface)
+  if (! kill_it && gimp_displays_dirty (the_gimp) && ! no_interface)
     gui_really_quit_dialog (G_CALLBACK (app_exit_finish));
   else
     app_exit_finish ();

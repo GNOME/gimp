@@ -66,8 +66,6 @@
 
 #include "file/file-utils.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "gimprc.h"
 #include "undo.h"
 #include "undo_types.h"
@@ -523,9 +521,7 @@ undo_history_undo_callback (GtkWidget *widget,
   undo_history_st *st = data;
 
   if (undo_pop (st->gimage))
-    {
-      gdisplays_flush ();
-    }
+    gimp_image_flush (st->gimage);
 }
 
 /* redo button clicked */
@@ -536,9 +532,7 @@ undo_history_redo_callback (GtkWidget *widget,
   undo_history_st *st = data;
 
   if (undo_redo (st->gimage))
-    {
-      gdisplays_flush ();
-    }
+    gimp_image_flush (st->gimage);
 }
 
 
@@ -705,13 +699,15 @@ undo_history_select_row_callback (GtkWidget *widget,
       st->old_selection++;
     }
 
-  gdisplays_flush ();
+  gimp_image_flush (st->gimage);
 
-  undo_history_set_pixmap (GTK_CLIST (widget), cur_selection, st->preview_size, st->gimage);
+  undo_history_set_pixmap (GTK_CLIST (widget),
+                           cur_selection, st->preview_size, st->gimage);
 
   /*  if the image is clean, set the clean pixmap  */ 
   if (st->gimage->dirty == 0)
-    gtk_clist_set_pixmap (GTK_CLIST (widget), cur_selection, 1, clean_pixmap, clean_mask);
+    gtk_clist_set_pixmap (GTK_CLIST (widget),
+                          cur_selection, 1, clean_pixmap, clean_mask);
 
   g_signal_handlers_unblock_by_func (G_OBJECT (st->gimage),
                                      undo_history_undo_event, st);    

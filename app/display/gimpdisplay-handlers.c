@@ -43,6 +43,8 @@ static void   gimp_display_colormap_changed_handler (GimpImage   *gimage,
                                                      GimpDisplay *gdisp);
 static void   gimp_display_size_changed_handler     (GimpImage   *gimage,
                                                      GimpDisplay *gdisp);
+static void   gimp_display_flush_handler            (GimpImage   *gimage,
+                                                     GimpDisplay *gdisp);
 
 
 /*  public functions  */
@@ -78,6 +80,9 @@ gimp_display_connect (GimpDisplay *gdisp,
   g_signal_connect (G_OBJECT (gimage), "size_changed",
                     G_CALLBACK (gimp_display_size_changed_handler),
                     gdisp);
+  g_signal_connect (G_OBJECT (gimage), "flush",
+                    G_CALLBACK (gimp_display_flush_handler),
+                    gdisp);
 }
 
 void
@@ -86,6 +91,9 @@ gimp_display_disconnect (GimpDisplay *gdisp)
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gdisp->gimage));
 
+  g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
+                                        gimp_display_flush_handler,
+                                        gdisp);
   g_signal_handlers_disconnect_by_func (G_OBJECT (gdisp->gimage),
                                         gimp_display_size_changed_handler,
                                         gdisp);
@@ -154,4 +162,11 @@ gimp_display_size_changed_handler (GimpImage   *gimage,
                                 0, 0,
                                 gdisp->gimage->width,
                                 gdisp->gimage->height);
+}
+
+static void
+gimp_display_flush_handler (GimpImage   *gimage,
+                            GimpDisplay *gdisp)
+{
+  gimp_display_flush (gdisp);
 }

@@ -40,7 +40,6 @@
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-selection.h"
 
@@ -391,7 +390,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
       undo_pop (gdisp->gimage);
     }
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 
   g_object_unref (G_OBJECT (edit_select));
 }
@@ -942,5 +941,5 @@ gimp_edit_selection_tool_arrow_key (GimpTool    *tool,
     }
 
   undo_push_group_end (gdisp->gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }

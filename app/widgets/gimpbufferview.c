@@ -27,16 +27,11 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpedit.h"
 #include "core/gimpimage.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcontainerview.h"
 #include "gimpbufferview.h"
@@ -224,7 +219,7 @@ gimp_buffer_view_paste_clicked (GtkWidget      *widget,
 			   buffer,
 			   FALSE);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (gimage);
 	}
     }
 }
@@ -254,7 +249,7 @@ gimp_buffer_view_paste_into_clicked (GtkWidget      *widget,
 			   buffer,
 			   TRUE);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (gimage);
 	}
     }
 }

@@ -45,7 +45,6 @@
 #include "paint/gimppaintoptions.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
@@ -443,7 +442,7 @@ gimp_ink_tool_button_release (GimpTool        *tool,
   ink_tool->last_blob = NULL;
 
   ink_finish (ink_tool, gimp_image_active_drawable (gdisp->gimage));
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }
 
 static void

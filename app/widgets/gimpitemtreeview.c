@@ -33,9 +33,6 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
@@ -43,8 +40,6 @@
 #include "core/gimpmarshal.h"
 
 #include "vectors/gimpvectors.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpchannellistview.h"
 #include "gimpdnd.h"
@@ -468,7 +463,7 @@ gimp_item_list_view_select_item (GimpContainerView *view,
 	{
 	  list_view->set_item_func (list_view->gimage, item);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (list_view->gimage);
 	}
 
       index = gimp_container_get_child_index (view->container,
@@ -584,7 +579,7 @@ gimp_item_list_view_duplicate_clicked (GtkWidget        *widget,
     {
       view->add_item_func (view->gimage, new_viewable, -1);
 
-      gdisplays_flush ();
+      gimp_image_flush (view->gimage);
     }
 }
 
@@ -608,7 +603,7 @@ gimp_item_list_view_raise_clicked (GtkWidget        *widget,
     {
       view->reorder_item_func (view->gimage, viewable, index - 1, TRUE);
 
-      gdisplays_flush ();
+      gimp_image_flush (view->gimage);
     }
 }
 
@@ -630,7 +625,7 @@ gimp_item_list_view_raise_extended_clicked (GtkWidget        *widget,
     {
       view->reorder_item_func (view->gimage, viewable, 0, TRUE);
 
-      gdisplays_flush ();
+      gimp_image_flush (view->gimage);
     }
 }
 
@@ -651,7 +646,7 @@ gimp_item_list_view_lower_clicked (GtkWidget        *widget,
     {
       view->reorder_item_func (view->gimage, viewable, index + 1, TRUE);
 
-      gdisplays_flush ();
+      gimp_image_flush (view->gimage);
     }
 }
 
@@ -674,7 +669,7 @@ gimp_item_list_view_lower_extended_clicked (GtkWidget        *widget,
       view->reorder_item_func (view->gimage, viewable,
                                container->num_children - 1, TRUE);
 
-      gdisplays_flush ();
+      gimp_image_flush (view->gimage);
     }
 }
 
@@ -705,7 +700,7 @@ gimp_item_list_view_delete_clicked (GtkWidget        *widget,
 
   view->remove_item_func (view->gimage, viewable);
 
-  gdisplays_flush ();
+  gimp_image_flush (view->gimage);
 }
 
 

@@ -31,7 +31,6 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpposterizetool.h"
 #include "tool_manager.h"
@@ -396,7 +395,7 @@ posterize_cancel_callback (GtkWidget *widget,
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
       pd->image_map = NULL;
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
     }
 
   active_tool->gdisp    = NULL;
@@ -427,7 +426,8 @@ posterize_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (pd->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+	  gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 }

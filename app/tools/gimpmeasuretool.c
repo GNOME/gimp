@@ -39,7 +39,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
 #include "gui/info-dialog.h"
@@ -317,7 +316,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		    undo_push_group_end (gdisp->gimage);
 
 		  if (create_hguide || create_vguide)
-                    gdisplays_flush ();
+                    gimp_image_flush (gdisp->gimage);
 
 		  measure_tool->function = GUIDING;
 		  break;

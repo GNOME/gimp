@@ -36,7 +36,6 @@
 #include "paint/gimppaintoptions.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpenummenu.h"
 
@@ -243,7 +242,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
                                  bucket_tool->target_x,
                                  bucket_tool->target_y);
 
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
     }
 
   gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */

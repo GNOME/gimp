@@ -30,8 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -171,7 +169,7 @@ colormap_editor_color_notebook_callback (ColorNotebook      *color_notebook,
 			  &gimage->cmap[editor->col_index * 3 + 2]);
 
       gimp_image_colormap_changed (gimage, editor->col_index);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
       /* Fall through */
     case COLOR_NOTEBOOK_CANCEL:
       color_notebook_hide (editor->color_notebook);

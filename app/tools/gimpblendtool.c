@@ -38,7 +38,6 @@
 #include "paint/gimppaintoptions.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpprogress.h"
 
 #include "widgets/gimpdnd.h"
@@ -314,7 +313,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
       if (progress)
 	gimp_progress_end (progress);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 

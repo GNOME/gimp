@@ -37,7 +37,6 @@
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-dnd.h"
-#include "gimpdisplay-foreach.h"
 
 #include "undo.h"
 
@@ -74,7 +73,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
   undo_push_group_end (gdisp->gimage);
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 
   gimp_context_set_display (gimp_get_user_context (gdisp->gimage->gimp), gdisp);
 }
@@ -119,7 +118,7 @@ gimp_display_shell_bucket_fill (GimpImage          *gimage,
                                   FALSE /* no seed fill */,
                                   FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */);
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -177,5 +176,5 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 		   buffer,
 		   FALSE);
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }

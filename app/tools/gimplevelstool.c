@@ -48,7 +48,6 @@
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimplevelstool.h"
 #include "tool_manager.h"
@@ -1134,7 +1133,7 @@ levels_cancel_callback (GtkWidget *widget,
       image_map_abort (ld->image_map);
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
       ld->image_map = NULL;
     }
 
@@ -1225,7 +1224,8 @@ levels_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (ld->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+	  gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 

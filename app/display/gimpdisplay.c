@@ -25,10 +25,12 @@
 #include "tools/tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-projection.h"
+#include "core/gimplist.h"
 
 #include "libgimptool/gimptool.h"
 
@@ -65,9 +67,6 @@ static void       gimp_display_paint_area            (GimpDisplay      *gdisp,
 
 
 static GimpObjectClass *parent_class = NULL;
-
-GSList      *display_list = NULL;
-static gint  display_num  = 1;
 
 
 GType
@@ -113,7 +112,7 @@ gimp_display_class_init (GimpDisplayClass *klass)
 static void
 gimp_display_init (GimpDisplay *gdisp)
 {
-  gdisp->ID                       = display_num++;
+  gdisp->ID                       = 0;
 
   gdisp->gimage                   = NULL;
   gdisp->instance                 = 0;
@@ -157,8 +156,7 @@ gimp_display_new (GimpImage *gimage,
 
   gdisp = g_object_new (GIMP_TYPE_DISPLAY, NULL);
 
-  /*  add the new display to the list so that it isn't lost  */
-  display_list = g_slist_append (display_list, gdisp);
+  gdisp->ID = gimage->gimp->next_display_ID;
 
   /*  refs the image  */
   gimp_display_connect (gdisp, gimage);
@@ -182,7 +180,8 @@ gimp_display_delete (GimpDisplay *gdisp)
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
 
   /* remove the display from the list */
-  display_list = g_slist_remove (display_list, gdisp);
+  gimp_container_remove (gdisp->gimage->gimp->displays,
+                         GIMP_OBJECT (gdisp));
 
   /*  stop any active tool  */
   tool_manager_control_active (gdisp->gimage->gimp, HALT, gdisp);
@@ -234,14 +233,13 @@ gimp_display_get_by_ID (Gimp *gimp,
                         gint  ID)
 {
   GimpDisplay *gdisp;
-  GSList      *list;
+  GList       *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  /*  Traverse the list of displays, returning the one that matches the ID
-   *  If no display in the list is a match, return NULL.
-   */
-  for (list = display_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
 

@@ -283,7 +283,7 @@ gui_shutdown (Gimp *gimp)
   if (gimprc.save_device_status)
     gimp_devices_save (gimp);
 
-  gdisplays_delete ();
+  gimp_displays_delete (gimp);
 }
 
 void
@@ -384,7 +384,7 @@ gui_main_quit (Gimp *gimp)
 static void
 gui_set_busy (Gimp *gimp)
 {
-  gdisplays_set_busy ();
+  gimp_displays_set_busy (gimp);
   gimp_dialog_factories_idle ();
 
   gdk_flush ();
@@ -393,7 +393,7 @@ gui_set_busy (Gimp *gimp)
 static void
 gui_unset_busy (Gimp *gimp)
 {
-  gdisplays_unset_busy ();
+  gimp_displays_unset_busy (gimp);
   gimp_dialog_factories_unidle ();
 
   gdk_flush ();

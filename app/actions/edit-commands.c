@@ -36,7 +36,6 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "tools/tool_manager.h"
 
@@ -81,9 +80,7 @@ edit_undo_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   if (undo_pop (gimage))
-    {
-      gdisplays_flush ();
-    }
+    gimp_image_flush (gimage);
 }
 
 void
@@ -94,9 +91,7 @@ edit_redo_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   if (undo_redo (gimage))
-    {
-      gdisplays_flush ();
-    }
+    gimp_image_flush (gimage);
 }
 
 void
@@ -112,7 +107,7 @@ edit_cut_cmd_callback (GtkWidget *widget,
   if (gimp_edit_cut (gdisp->gimage,
 		     gimp_image_active_drawable (gdisp->gimage)))
     {
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
     }
 }
 
@@ -125,7 +120,7 @@ edit_copy_cmd_callback (GtkWidget *widget,
 
   if (gimp_edit_copy (gimage, gimp_image_active_drawable (gimage)))
     {
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
@@ -146,7 +141,7 @@ edit_paste_cmd_callback (GtkWidget *widget,
 			   gdisp->gimage->gimp->global_buffer,
 			   FALSE))
 	{
-	  gdisplays_flush ();
+          gimp_image_flush (gdisp->gimage);
 	}
     }
 }
@@ -168,7 +163,7 @@ edit_paste_into_cmd_callback (GtkWidget *widget,
 			   gdisp->gimage->gimp->global_buffer,
 			   TRUE))
 	{
-	  gdisplays_flush ();
+          gimp_image_flush (gdisp->gimage);
 	}
     }
 }
@@ -245,7 +240,7 @@ edit_clear_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_edit_clear (gimage, gimp_image_active_drawable (gimage));
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -262,8 +257,7 @@ edit_fill_cmd_callback (GtkWidget *widget,
   gimp_edit_fill (gimage,
 		  gimp_image_active_drawable (gimage),
 		  fill_type);
-
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -276,8 +270,7 @@ edit_stroke_cmd_callback (GtkWidget *widget,
   gimp_image_mask_stroke (gimage,
                           gimp_image_active_drawable (gimage),
                           gimp_get_current_context (gimage->gimp));
-
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 
@@ -309,7 +302,7 @@ cut_named_buffer_callback (GtkWidget *widget,
                           GIMP_OBJECT (new_buffer));
     }
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void

@@ -27,13 +27,8 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpviewable.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcomponentlistitem.h"
 #include "gimpdnd.h"
@@ -273,7 +268,7 @@ gimp_component_list_item_eye_toggled (GtkWidget *widget,
 					 gimp_component_list_item_visibility_changed,
 					 list_item);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 

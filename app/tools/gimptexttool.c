@@ -44,7 +44,6 @@
 #include "widgets/gimpfontselection.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimptexttool.h"
@@ -364,7 +363,7 @@ text_tool_render (GimpTextTool *text_tool)
 
   g_free (fontname);
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }
 
 GimpLayer *

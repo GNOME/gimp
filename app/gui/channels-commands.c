@@ -35,8 +35,6 @@
 #include "core/gimpimage-mask-select.h"
 #include "core/gimplist.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -91,7 +89,7 @@ channels_raise_channel_cmd_callback (GtkWidget *widget,
   return_if_no_channel (gimage, active_channel);
 
   gimp_image_raise_channel (gimage, active_channel);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -103,7 +101,7 @@ channels_lower_channel_cmd_callback (GtkWidget *widget,
   return_if_no_channel (gimage, active_channel);
 
   gimp_image_lower_channel (gimage, active_channel);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -119,7 +117,7 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
                                    G_TYPE_FROM_INSTANCE (active_channel),
                                    TRUE);
   gimp_image_add_channel (gimage, new_channel, -1);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -131,7 +129,7 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
   return_if_no_channel (gimage, active_channel);
 
   gimp_image_remove_channel (gimage, active_channel);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void
@@ -148,7 +146,7 @@ channels_channel_to_sel (GtkWidget      *widget,
                                   0, 0,
                                   op,
                                   FALSE, 0, 0);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -237,7 +235,7 @@ new_channel_query_ok_callback (GtkWidget *widget,
 				  GIMP_TRANSPARENT_FILL);
 
       gimp_image_add_channel (gimage, new_channel, -1);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 
   gtk_widget_destroy (options->query_box);
@@ -281,7 +279,7 @@ channels_new_channel_query (GimpImage   *gimage,
 
       undo_push_group_end (gimage);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
       return;
     }
 
@@ -413,7 +411,7 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 	{
 	  gimp_channel_set_color (channel, &color);
 
-	  gdisplays_flush ();
+          gimp_image_flush (options->gimage);
 	}
     }
 

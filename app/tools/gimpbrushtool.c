@@ -40,7 +40,6 @@
 #include "widgets/gimpdevices.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpstatusbar.h"
 
@@ -420,7 +419,7 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   gimp_paint_core_finish (core, drawable);
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }
 
 static void

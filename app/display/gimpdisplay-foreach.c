@@ -22,27 +22,26 @@
 
 #include "display-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 
+#include "app_procs.h"
 
-void
-gdisplays_foreach (GFunc    func, 
-		   gpointer user_data)
-{
-  g_slist_foreach (display_list, func, user_data);
-}
 
 void
 gdisplays_expose_full (void)
 {
   GimpDisplay *gdisp;
-  GSList      *list;
+  GList       *list;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (the_gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
 
@@ -51,31 +50,36 @@ gdisplays_expose_full (void)
 }
 
 gboolean
-gdisplays_dirty (void)
+gimp_displays_dirty (Gimp *gimp)
 {
-  gboolean  dirty = FALSE;
-  GSList   *list;
+  GList *list;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  for (list = GIMP_LIST (the_gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       if (((GimpDisplay *) list->data)->gimage->dirty != 0)
-	dirty = TRUE;
+	return TRUE;
     }
 
-  return dirty;
+  return FALSE;
 }
 
 void
-gdisplays_delete (void)
+gimp_displays_delete (Gimp *gimp)
 {
   GimpDisplay *gdisp;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /*  this removes the GimpDisplay from the list, so do a while loop
    *  "around" the first element to get them all
    */
-  while (display_list)
+  while (GIMP_LIST (gimp->displays)->list)
     {
-      gdisp = (GimpDisplay *) display_list->data;
+      gdisp = (GimpDisplay *) GIMP_LIST (gimp->displays)->list->data;
 
       gimp_display_delete (gdisp);
     }
@@ -92,9 +96,11 @@ gdisplays_check_valid (GimpDisplay *gtest,
 
   GimpDisplay *gdisp;
   GimpDisplay *gdisp_found = NULL;
-  GSList      *list;
+  GList       *list;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (the_gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
 
@@ -109,12 +115,14 @@ gdisplays_check_valid (GimpDisplay *gtest,
 }
 
 void
-gdisplays_flush (void)
+gimp_displays_flush (Gimp *gimp)
 {
   static gboolean flushing = FALSE;
 
-  GSList      *list;
+  GList       *list;
   GimpDisplay *gdisp;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   /*  this prevents multiple recursive calls to this procedure  */
   if (flushing == TRUE)
@@ -125,9 +133,11 @@ gdisplays_flush (void)
 
   flushing = TRUE;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
-      gdisp = list->data;
+      gdisp = (GimpDisplay *) list->data;
 
       gimp_display_flush (gdisp);
     }
@@ -137,12 +147,16 @@ gdisplays_flush (void)
 
 /* Force all gdisplays to finish their idlerender projection */
 void
-gdisplays_finish_draw (void)
+gimp_displays_finish_draw (Gimp *gimp)
 {
-  GSList      *list;
+  GList       *list;
   GimpDisplay *gdisp;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       gdisp = (GimpDisplay *) list->data;
       
@@ -154,13 +168,15 @@ void
 gdisplays_reconnect (GimpImage *old,
 		     GimpImage *new)
 {
-  GSList      *list;
+  GList       *list;
   GimpDisplay *gdisp;
 
   g_return_if_fail (old != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (new));
   
-  for (list = display_list; list; list = g_slist_next (list))
+  for (list = GIMP_LIST (new->gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       gdisp = list->data;
       
@@ -170,12 +186,16 @@ gdisplays_reconnect (GimpImage *old,
 }
 
 void
-gdisplays_set_busy (void)
+gimp_displays_set_busy (Gimp *gimp)
 {
-  GSList           *list;
+  GList            *list;
   GimpDisplayShell *shell;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
 
@@ -184,12 +204,16 @@ gdisplays_set_busy (void)
 }
 
 void
-gdisplays_unset_busy (void)
+gimp_displays_unset_busy (Gimp *gimp)
 {
-  GSList           *list;
+  GList            *list;
   GimpDisplayShell *shell;
 
-  for (list = display_list; list; list = g_slist_next (list))
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  for (list = GIMP_LIST (gimp->displays)->list;
+       list;
+       list = g_list_next (list))
     {
       shell = GIMP_DISPLAY_SHELL (GIMP_DISPLAY (list->data)->shell);
       

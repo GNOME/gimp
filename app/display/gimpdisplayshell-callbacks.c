@@ -50,7 +50,6 @@
 #include "gui/dialogs.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-layer-select.h"
@@ -1231,7 +1230,7 @@ gimp_display_shell_qmask_toggled (GtkWidget        *widget,
   gimp_image_set_qmask_state (shell->gdisp->gimage,
                               GTK_TOGGLE_BUTTON (widget)->active);
 
-  gdisplays_flush ();
+  gimp_image_flush (shell->gdisp->gimage);
 }
 
 gboolean

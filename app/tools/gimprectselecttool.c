@@ -38,7 +38,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
@@ -292,7 +291,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
           else
             gimp_image_mask_clear (gdisp->gimage);
 
-          gdisplays_flush ();
+          gimp_image_flush (gdisp->gimage);
           return;
         }
 
@@ -305,7 +304,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
                                          x1, y1, (x2 - x1), (y2 - y1));
 
       /*  show selection on all views  */
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
     }
 }
 

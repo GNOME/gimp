@@ -32,12 +32,8 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
+#include "core/gimpimage.h"
 #include "core/gimpitem.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpdnd.h"
 #include "gimpitemlistitem.h"
@@ -160,8 +156,8 @@ gimp_item_list_item_drag_drop (GtkWidget      *widget,
                                         new_viewable,
                                         dest_index);
             }
-
-          gdisplays_flush ();
+          
+          gimp_image_flush (item_view->gimage);
         }
       else
         {

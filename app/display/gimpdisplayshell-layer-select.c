@@ -29,7 +29,6 @@
 
 #include "widgets/gimppreview.h"
 
-#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell-layer-select.h"
 
 #include "gimprc.h"
@@ -211,7 +210,7 @@ layer_select_end (LayerSelect *layer_select,
     {
       gimp_image_set_active_layer (layer_select->gimage, 
 				   layer_select->current_layer);
-      gdisplays_flush ();
+      gimp_image_flush (layer_select->gimage);
     }
 }
 

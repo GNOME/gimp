@@ -31,7 +31,6 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -84,7 +83,7 @@ select_invert_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_invert (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -95,7 +94,7 @@ select_all_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_all (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -106,7 +105,7 @@ select_none_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_none (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -117,7 +116,7 @@ select_float_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_float (gimage, gimp_image_active_drawable (gimage), 0, 0);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -150,7 +149,7 @@ select_sharpen_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_sharpen (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -240,7 +239,7 @@ select_save_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_mask_save (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 
@@ -276,7 +275,7 @@ gimp_image_mask_feather_callback (GtkWidget *widget,
     }
 
   gimp_image_mask_feather (gimage, radius_x, radius_y);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void
@@ -309,7 +308,7 @@ gimp_image_mask_border_callback (GtkWidget *widget,
     }
 
   gimp_image_mask_border (gimage, radius_x, radius_y);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void
@@ -342,7 +341,7 @@ gimp_image_mask_grow_callback (GtkWidget *widget,
     }
 
   gimp_image_mask_grow (gimage, radius_x, radius_y);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void
@@ -380,5 +379,5 @@ gimp_image_mask_shrink_callback (GtkWidget *widget,
 
   gimp_image_mask_shrink (gimage, radius_x, radius_y,
                           selection_shrink_edge_lock);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }

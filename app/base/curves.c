@@ -45,7 +45,6 @@
 #include "widgets/gimpenummenu.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcurvestool.h"
 #include "tool_manager.h"
@@ -1414,7 +1413,7 @@ curves_cancel_callback (GtkWidget *widget,
       image_map_abort (cd->image_map);
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
       cd->image_map = NULL;
     }
 
@@ -1476,7 +1475,8 @@ curves_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (cd->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+	  gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 }

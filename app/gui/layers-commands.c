@@ -40,8 +40,6 @@
 
 #include "pdb/procedural_db.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -98,7 +96,7 @@ layers_previous_cmd_callback (GtkWidget *widget,
       if (new_layer)
 	{
 	  gimp_image_set_active_layer (gimage, new_layer);
-	  gdisplays_flush ();
+	  gimp_image_flush (gimage);
 	}
     }
 }
@@ -122,7 +120,7 @@ layers_next_cmd_callback (GtkWidget *widget,
   if (new_layer)
     {
       gimp_image_set_active_layer (gimage, new_layer);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
@@ -135,7 +133,7 @@ layers_raise_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage,active_layer);
 
   gimp_image_raise_layer (gimage, active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -147,7 +145,7 @@ layers_lower_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage,active_layer);
 
   gimp_image_lower_layer (gimage, active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -159,7 +157,7 @@ layers_raise_to_top_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage,active_layer);
 
   gimp_image_raise_layer_to_top (gimage, active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -171,7 +169,7 @@ layers_lower_to_bottom_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
 
   gimp_image_lower_layer_to_bottom (gimage, active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -198,7 +196,7 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
                                TRUE);
   gimp_image_add_layer (gimage, new_layer, -1);
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -221,7 +219,7 @@ layers_merge_down_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
 
   gimp_image_merge_down (gimage, active_layer, GIMP_EXPAND_AS_NECESSARY);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -237,7 +235,7 @@ layers_delete_cmd_callback (GtkWidget *widget,
   else
     gimp_image_remove_layer (gimage, active_layer);
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -260,7 +258,7 @@ layers_resize_to_image_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
   
   gimp_layer_resize_to_image (active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -307,7 +305,7 @@ layers_crop_cmd_callback (GtkWidget *widget,
 
   undo_push_group_end (gimage);
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -338,7 +336,7 @@ layers_apply_layer_mask_cmd_callback (GtkWidget *widget,
       gimp_layer_apply_mask (active_layer, GIMP_MASK_APPLY, TRUE);
 
       if (flush)
-	gdisplays_flush ();
+        gimp_image_flush (gimage);
     }
 }
 
@@ -359,7 +357,7 @@ layers_delete_layer_mask_cmd_callback (GtkWidget *widget,
       gimp_layer_apply_mask (active_layer, GIMP_MASK_DISCARD, TRUE);
 
       if (flush)
-	gdisplays_flush ();
+        gimp_image_flush (gimage);
     }
 }
 
@@ -374,7 +372,7 @@ layers_mask_select_cmd_callback (GtkWidget *widget,
   if (gimp_layer_get_mask (active_layer))
     {
       gimp_image_mask_layer_mask (gimage, active_layer);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
@@ -387,7 +385,7 @@ layers_alpha_select_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer);
 
   gimp_image_mask_layer_alpha (gimage, active_layer);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -401,7 +399,7 @@ layers_add_alpha_channel_cmd_callback (GtkWidget *widget,
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (active_layer)))
     {
       gimp_layer_add_alpha (active_layer);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
@@ -437,7 +435,7 @@ layers_anchor_layer (GimpLayer *layer)
   if (gimp_layer_is_floating_sel (layer))
     {
       floating_sel_anchor (layer);
-      gdisplays_flush ();
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
     }
 }
 
@@ -500,7 +498,7 @@ new_layer_query_ok_callback (GtkWidget *widget,
 				      fill_type);
 	  gimp_image_add_layer (gimage, layer, -1);
 	  
-	  gdisplays_flush ();
+          gimp_image_flush (gimage);
 	} 
       else 
 	{
@@ -534,8 +532,7 @@ layers_new_layer_query (GimpImage *gimage,
   if ((floating_sel = gimp_image_floating_sel (gimage)))
     {
       floating_sel_to_layer (floating_sel);
-
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
       return;
     }
 
@@ -567,7 +564,7 @@ layers_new_layer_query (GimpImage *gimage,
 
       undo_push_group_end (gimage);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
       return;
     }
 
@@ -749,7 +746,7 @@ edit_layer_query_ok_callback (GtkWidget *widget,
         }
     }
 
-  gdisplays_flush ();
+  gimp_image_flush (options->gimage);
 
   gtk_widget_destroy (options->query_box); 
 }
@@ -852,7 +849,7 @@ add_mask_query_ok_callback (GtkWidget *widget,
     {
       mask = gimp_layer_create_mask (layer, options->add_mask_type);
       gimp_layer_add_mask (layer, mask, TRUE);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 
   gtk_widget_destroy (options->query_box);
@@ -1007,7 +1004,7 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 
 	  undo_push_group_end (gimage);
 
-	  gdisplays_flush ();
+          gimp_image_flush (gimage);
 	}
 
       gtk_widget_destroy (options->resize->resize_shell);
@@ -1099,7 +1096,7 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 
 	  undo_push_group_end (gimage);
 
-	  gdisplays_flush ();
+          gimp_image_flush (gimage);
 	}
 
       gtk_widget_destroy (options->resize->resize_shell);

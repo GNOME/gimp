@@ -1,3 +1,92 @@
+2002-05-08  Michael Natterer  <mitch@gimp.org>
+
+	Started to get rid of the gdisplays_foo() functions in
+	app/display/gimpdisplay-foreach.[ch]. Work in progress...
+
+	* app/core/gimp.[ch]: added the display list to the Gimp object
+	(as a GimpList of GimpObjects). This way we get more independent
+	from whether there is GUI or not, as gimp->displays will simply
+	be an empty list for the --no-interface case.
+
+	* app/display/gimpdisplay.[ch]: Removed the global "display_list"
+	and "display_num" variables. Use gimp->displays instead.
+
+	* app/display/gimpdisplay-foreach.[ch]: renamed most functions
+	from gdisplays_foo() to gimp_displays_foo() and pass them a Gimp
+	pointer. 
+
+	* app/core/gimpimage.[ch]: added a "flush" signal.
+
+	* app/display/gimpdisplay-handlers.c: connect to "flush" and call
+	gimp_display_flush() in the callback.
+
+	* tools/pdbgen/pdb/display.pdb: use gimp_displays_flush(gimp)
+	here and only here.
+
+	* app/pdb/display_cmds.c: regenerated.
+
+	* app/app_procs.c
+	* app/gui/gui.c
+	* app/gui/preferences-dialog.c:
+	s/gdislays_foo()/gimp_displays_foo(gimp)/
+
+	* app/image_map.c
+	* app/undo_history.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/gui/channels-commands.c
+	* app/gui/colormap-editor-commands.c
+	* app/gui/convert-dialog.c
+	* app/gui/drawable-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/offset-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/select-commands.c
+	* app/gui/vectors-commands.c
+	* app/paint/gimpairbrush.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpposterizetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c
+	* app/widgets/gimpbufferview.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.c
+	* app/widgets/gimpdocumentview.c
+	* app/widgets/gimpdrawablelistitem.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimpitemlistitem.c
+	* app/widgets/gimpitemlistview.c
+	* app/widgets/gimplayerlistitem.c
+	* app/widgets/gimplayerlistview.c
+	* app/widgets/gimpvectorslistview.c: replaced gdisplays_flush()
+	with calls to gimp_image_flush(gimage). Removed inclusion of
+	"display/gimpdisplay-foreach.h" from most files.
+
 2002-05-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/gimp_color_window.c

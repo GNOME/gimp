@@ -34,7 +34,6 @@
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
 #include "qmask-commands.h"
@@ -84,7 +83,7 @@ qmask_toggle_cmd_callback (GtkWidget *widget,
   gimp_image_set_qmask_state (shell->gdisp->gimage,
                               GTK_CHECK_MENU_ITEM (widget)->active);
 
-  gdisplays_flush ();
+  gimp_image_flush (shell->gdisp->gimage);
 }
 
 void
@@ -104,7 +103,7 @@ qmask_invert_cmd_callback (GtkWidget *widget,
       gimp_image_qmask_invert (shell->gdisp->gimage);
 
       if (shell->gdisp->gimage->qmask_state)
-        gdisplays_flush ();
+        gimp_image_flush (shell->gdisp->gimage);
     }
 }
 
@@ -255,7 +254,7 @@ qmask_query_ok_callback (GtkWidget *widget,
 	{
 	  gimp_channel_set_color (channel, &color);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (options->gimage);
 	}
     }
 

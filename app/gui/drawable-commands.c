@@ -34,8 +34,6 @@
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -76,7 +74,7 @@ drawable_desaturate_cmd_callback (GtkWidget *widget,
     }
 
   gimp_drawable_desaturate (active_drawable);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -94,7 +92,7 @@ drawable_invert_cmd_callback (GtkWidget *widget,
     }
 
   gimp_drawable_invert (active_drawable);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -112,7 +110,7 @@ drawable_equalize_cmd_callback (GtkWidget *widget,
     }
 
   gimp_drawable_equalize (active_drawable, TRUE);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void

@@ -41,8 +41,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -92,7 +90,7 @@ vectors_raise_vectors_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors);
 
   gimp_image_raise_vectors (gimage, active_vectors);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -104,7 +102,7 @@ vectors_lower_vectors_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors);
 
   gimp_image_lower_vectors (gimage, active_vectors);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -122,7 +120,7 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
                                    G_TYPE_FROM_INSTANCE (active_vectors),
                                    TRUE);
   gimp_image_add_vectors (gimage, new_vectors, -1);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 #endif
 }
 
@@ -135,7 +133,7 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
   return_if_no_vectors (gimage, active_vectors);
 
   gimp_image_remove_vectors (gimage, active_vectors);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 static void
@@ -152,7 +150,7 @@ vectors_vectors_to_sel (GtkWidget      *widget,
                                   op,
                                   TRUE,
                                   FALSE, 0, 0);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -324,7 +322,7 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
       g_object_unref (G_OBJECT (core));
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
@@ -396,7 +394,7 @@ new_vectors_query_ok_callback (GtkWidget *widget,
 
       gimp_object_set_name (GIMP_OBJECT (new_vectors), vectors_name);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 
   gtk_widget_destroy (options->query_box);
@@ -427,13 +425,13 @@ vectors_new_vectors_query (GimpImage   *gimage,
 
       /* undo_push_group_end (gimage); */
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
       return;
     }
 
   /*  the new options structure  */
   options = g_new (NewVectorsOptions, 1);
-  options->gimage      = gimage;
+  options->gimage = gimage;
   
   /*  The dialog  */
   options->query_box =

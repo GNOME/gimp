@@ -205,6 +205,8 @@ struct _GimpImageClass
 
   void (* undo)                         (GimpImage            *gimage);
   void (* redo)                         (GimpImage            *gimage);
+
+  void (* flush)                        (GimpImage            *gimage);
 };
 
 
@@ -306,6 +308,11 @@ void		gimp_image_undo_event            (GimpImage          *gimage,
 gint            gimp_image_dirty                 (GimpImage          *gimage);
 gint            gimp_image_clean                 (GimpImage          *gimage);
 void            gimp_image_clean_all             (GimpImage          *gimage);
+
+
+/*  flush this image's displays  */
+
+void            gimp_image_flush                 (GimpImage          *gimage);
 
 
 /*  color transforms / utilities  */

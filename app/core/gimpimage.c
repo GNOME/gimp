@@ -90,6 +90,7 @@ enum
   UPDATE_GUIDE,
   COLORMAP_CHANGED,
   UNDO_EVENT,
+  FLUSH,
   LAST_SIGNAL
 };
 
@@ -363,6 +364,15 @@ gimp_image_class_init (GimpImageClass *klass)
 		  gimp_marshal_VOID__INT,
 		  G_TYPE_NONE, 1,
 		  G_TYPE_INT);
+
+  gimp_image_signals[FLUSH] =
+    g_signal_new ("flush",
+		  G_TYPE_FROM_CLASS (klass),
+		  G_SIGNAL_RUN_FIRST,
+		  G_STRUCT_OFFSET (GimpImageClass, flush),
+		  NULL, NULL,
+		  gimp_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
 
   object_class->dispose               = gimp_image_dispose;
   object_class->finalize              = gimp_image_finalize;
@@ -1611,6 +1621,17 @@ gimp_image_clean_all (GimpImage *gimage)
   gimage->dirty = 0;
 
   g_signal_emit (G_OBJECT (gimage), gimp_image_signals[CLEAN], 0);
+}
+
+
+/*  flush this image's displays  */
+
+void
+gimp_image_flush (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (G_OBJECT (gimage), gimp_image_signals[FLUSH], 0);
 }
 
 

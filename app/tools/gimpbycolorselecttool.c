@@ -53,7 +53,6 @@
 #include "widgets/gimpdnd.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpbycolorselecttool.h"
 #include "selection_options.h"
@@ -415,7 +414,7 @@ by_color_select_button_release (GimpTool        *tool,
                                            sel_options->feather_radius);
 
 	  /*  show selection on all views  */
-	  gdisplays_flush ();
+	  gimp_image_flush (gdisp->gimage);
 
 	  /*  update the preview window  */
 	  by_color_select_render (by_color_dialog, gdisp->gimage);
@@ -767,7 +766,7 @@ by_color_select_invert_callback (GtkWidget *widget,
   gimp_image_mask_invert (bcd->gimage);
 
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (bcd->gimage);
 
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
@@ -793,7 +792,7 @@ by_color_select_select_all_callback (GtkWidget *widget,
   gimp_image_mask_all (bcd->gimage);
 
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (bcd->gimage);
 
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
@@ -819,7 +818,7 @@ by_color_select_select_none_callback (GtkWidget *widget,
   gimp_image_mask_clear (bcd->gimage);
 
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (bcd->gimage);
 
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
@@ -937,7 +936,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
                                    sel_options->feather_radius);
 
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (bcd->gimage);
 
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);
@@ -976,7 +975,7 @@ by_color_select_color_drop (GtkWidget     *widget,
                                    sel_options->feather_radius);
 
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (bcd->gimage);
 
   /*  update the preview window  */
   by_color_select_render (bcd, bcd->gimage);

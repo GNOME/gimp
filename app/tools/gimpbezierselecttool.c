@@ -43,7 +43,6 @@
 #include "pdb/procedural_db.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gui/paths-dialog.h"
 
@@ -2914,7 +2913,7 @@ bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
                                   sel_options->feather_radius);
   
   /*  show selection on all views  */
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }
 
 static gboolean
@@ -3475,7 +3474,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
 
   /*  End an undo group  */
   undo_push_group_end (gdisp->gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 }
 
 static void

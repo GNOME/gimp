@@ -37,7 +37,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpfreeselecttool.h"
@@ -247,7 +246,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
 	  else
 	    gimp_image_mask_clear (gdisp->gimage);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (gdisp->gimage);
 	  return;
 	}
 
@@ -260,7 +259,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       sel_options->feather_radius,
                                       sel_options->feather_radius);
 
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
     }
 }
 

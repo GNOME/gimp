@@ -79,7 +79,7 @@ HELP
 
     &std_pdb_misc;
 
-    %invoke = ( code => 'gdisplays_flush ();' );
+    %invoke = ( code => 'gimp_displays_flush (gimp);' );
 }
 
 @headers = qw("core/gimp.h" "display/display-types.h" "display/gimpdisplay.h"

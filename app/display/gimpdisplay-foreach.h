@@ -20,19 +20,19 @@
 #define __GIMP_DISPLAY_FOREACH_H__
 
 
-void          gdisplays_foreach                 (GFunc        func,
-                                                 gpointer     user_data);
 GimpDisplay * gdisplays_check_valid             (GimpDisplay *gdisp,
                                                  GimpImage   *gimage);
 void          gdisplays_reconnect               (GimpImage   *old,
                                                  GimpImage   *new);
 void          gdisplays_expose_full             (void);
-gboolean      gdisplays_dirty                   (void);
-void          gdisplays_delete                  (void);
-void          gdisplays_flush                   (void);
-void          gdisplays_finish_draw             (void);
-void          gdisplays_set_busy                (void);
-void          gdisplays_unset_busy              (void);
+
+gboolean      gimp_displays_dirty               (Gimp        *gimp);
+void          gimp_displays_delete              (Gimp        *gimp);
+void          gimp_displays_flush               (Gimp        *gimp);
+void          gimp_displays_finish_draw         (Gimp        *gimp);
+
+void          gimp_displays_set_busy            (Gimp        *gimp);
+void          gimp_displays_unset_busy          (Gimp        *gimp);
 
 
 #endif /*  __GIMP_DISPLAY_FOREACH_H__  */

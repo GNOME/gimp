@@ -38,7 +38,6 @@
 #include "core/gimpimage-mask.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimphuesaturationtool.h"
 #include "tool_manager.h"
@@ -789,7 +788,7 @@ hue_saturation_cancel_callback (GtkWidget *widget,
       image_map_abort (hsd->image_map);
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
       hsd->image_map = NULL;
     }
 
@@ -837,7 +836,8 @@ hue_saturation_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (hsd->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+	  gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 }

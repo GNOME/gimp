@@ -957,7 +957,7 @@ prefs_cancel_callback (GtkWidget *widget,
 			      NULL);
 
       gdisplays_expose_full ();
-      gdisplays_flush ();
+      gimp_displays_flush (gimp);
     }
 
   prefs_strset (&gimprc.image_title_format,     old_image_title_format);
@@ -1060,7 +1060,7 @@ prefs_toggle_callback (GtkWidget *widget,
 			      (GFunc) gimp_image_invalidate_layer_previews,
 			      NULL);
       gdisplays_expose_full ();
-      gdisplays_flush ();
+      gimp_displays_flush (gimp);
     }
   /*  no matching varible found  */
   else

@@ -32,7 +32,6 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpbrightnesscontrasttool.h"
 #include "tool_manager.h"
@@ -481,7 +480,7 @@ brightness_contrast_cancel_callback (GtkWidget *widget,
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
       bcd->image_map = NULL;
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
     }
 
   active_tool->gdisp    = NULL;
@@ -512,7 +511,8 @@ brightness_contrast_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (bcd->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+          gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 }

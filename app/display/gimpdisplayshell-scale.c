@@ -33,7 +33,6 @@
 #include "tools/tool_manager.h"
 
 #include "gimpdisplay.h"
-#include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -423,7 +422,7 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
       /* title may have changed if it includes the zoom ratio */
       shell->title_dirty = TRUE;
 
-      gdisplays_flush ();
+      gimp_display_shell_flush (shell);
     }
 
   /* re-enable the active tool */

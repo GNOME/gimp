@@ -32,8 +32,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "offset-dialog.h"
 
 #include "libgimp/gimpintl.h"
@@ -251,7 +249,7 @@ offset_ok_callback (GtkWidget *widget,
       gimp_drawable_offset (drawable,
 			    off_d->wrap_around, off_d->fill_type,
 			    offset_x, offset_y);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 
   gtk_widget_destroy (off_d->dlg);

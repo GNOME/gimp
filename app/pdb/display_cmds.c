@@ -154,7 +154,7 @@ static Argument *
 displays_flush_invoker (Gimp     *gimp,
                         Argument *args)
 {
-  gdisplays_flush ();
+  gimp_displays_flush (gimp);
   return procedural_db_return_args (&displays_flush_proc, TRUE);
 }
 

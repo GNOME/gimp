@@ -72,7 +72,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
@@ -501,7 +500,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
 	  gimp_iscissors_tool_reset (iscissors);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (gdisp->gimage);
 	}
       else if (! iscissors->connected)
 	{

@@ -32,7 +32,6 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "widgets/gimpenummenu.h"
 
@@ -617,7 +616,7 @@ color_balance_cancel_callback (GtkWidget *widget,
       image_map_abort (cbd->image_map);
       gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
-      gdisplays_flush ();
+      gimp_image_flush (active_tool->gdisp->gimage);
       cbd->image_map = NULL;
     }
 
@@ -677,7 +676,8 @@ color_balance_preview_update (GtkWidget *widget,
 	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (cbd->image_map);
 	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
-	  gdisplays_flush ();
+
+	  gimp_image_flush (active_tool->gdisp->gimage);
 	}
     }
 }

@@ -41,7 +41,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
@@ -270,7 +269,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 	  else
 	    gimp_image_mask_clear (gdisp->gimage);
 
-	  gdisplays_flush ();
+	  gimp_image_flush (gdisp->gimage);
 	  return;
 	}
 
@@ -300,7 +299,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
       g_object_unref (G_OBJECT (fuzzy_sel->fuzzy_mask));
       fuzzy_sel->fuzzy_mask = NULL;
 
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
     }
 
   /*  If the segment array is allocated, free it  */

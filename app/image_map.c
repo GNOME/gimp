@@ -32,7 +32,6 @@
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 
 #include "image_map.h"
@@ -434,7 +433,7 @@ image_map_do (gpointer data)
   if (image_map->PRI == NULL)
     {
       image_map->state = IMAGE_MAP_WAITING;
-      gdisplays_flush ();
+      gimp_image_flush (image_map->gdisp->gimage);
 
       return FALSE;
     }

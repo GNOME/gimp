@@ -35,7 +35,6 @@
 #include "core/gimpimage-scale.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 #include "display/gimpprogress.h"
 
 #include "convert-dialog.h"
@@ -234,7 +233,7 @@ image_flatten_image_cmd_callback (GtkWidget *widget,
   return_if_no_image (gimage, data);
 
   gimp_image_flatten (gimage);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 /****************************/
 /*  The layer merge dialog  */
@@ -264,7 +263,7 @@ image_layers_merge_query_ok_callback (GtkWidget *widget,
   if (options->merge_visible)
     gimp_image_merge_visible_layers (gimage, options->merge_type);
 
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 
   gtk_widget_destroy (options->query_box);
 }
@@ -358,7 +357,7 @@ image_resize_callback (GtkWidget *widget,
 			 image_resize->resize->height,
 			 image_resize->resize->offset_x,
 			 image_resize->resize->offset_y);
-      gdisplays_flush ();
+      gimp_image_flush (image_resize->gimage);
     }
   else 
     {
@@ -506,6 +505,6 @@ image_scale_implement (ImageResize *image_scale)
   if (display_flush)
     {
       undo_push_group_end (gimage);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }

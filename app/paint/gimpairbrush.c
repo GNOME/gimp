@@ -219,10 +219,7 @@ gimp_airbrush_timeout (gpointer client_data)
                         airbrush_timeout.drawable,
                         airbrush_timeout.paint_options);
 
-#ifdef __GNUC__
-#warning: FIXME: gdisplays_flush()
-#endif
-  gdisplays_flush ();
+  gimp_image_flush (gimp_item_get_image (GIMP_ITEM (airbrush_timeout.drawable)));
 
   rate = ((GimpAirbrushOptions *) airbrush_timeout.paint_options)->rate;
 

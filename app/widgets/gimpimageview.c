@@ -27,16 +27,10 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-
-#include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpcontainerview.h"
 #include "gimpimageview.h"

@@ -156,6 +156,12 @@ gimp_init (Gimp *gimp)
   gimp->next_item_ID        = 1;
   gimp->item_table          = g_hash_table_new (g_direct_hash, NULL);
 
+  gimp->displays            = gimp_list_new (GIMP_TYPE_OBJECT,
+                                             GIMP_CONTAINER_POLICY_WEAK);
+  gimp_object_set_name (GIMP_OBJECT (gimp->displays), "displays");
+
+  gimp->next_display_ID     = 1;
+
   gimp->global_buffer       = NULL;
   gimp->named_buffers       = gimp_list_new (GIMP_TYPE_BUFFER,
 					     GIMP_CONTAINER_POLICY_STRONG);
@@ -302,6 +308,12 @@ gimp_finalize (GObject *object)
       gimp->global_buffer = NULL;
     }
 
+  if (gimp->displays)
+    {
+      g_object_unref (gimp->displays);
+      gimp->displays = NULL;
+    }
+
   if (gimp->item_table)
     {
       g_hash_table_destroy (gimp->item_table);
@@ -351,6 +363,8 @@ gimp_get_memsize (GimpObject *object)
               3 * sizeof (gpointer)); /* FIXME */
   memsize += (g_hash_table_size (gimp->item_table) *
               3 * sizeof (gpointer)); /* FIXME */
+
+  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->displays));
 
   if (gimp->global_buffer)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimp->global_buffer));
@@ -711,15 +725,19 @@ gimp_create_display (Gimp      *gimp,
 		     GimpImage *gimage,
                      guint      scale)
 {
+  GimpObject *display = NULL;
+
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if (gimp->gui_create_display_func)
     {
-      return gimp->gui_create_display_func (gimage, scale);
+      display = gimp->gui_create_display_func (gimage, scale);
+
+      gimp_container_add (gimp->displays, display);
     }
 
-  return NULL;
+  return display;
 }
 
 GimpContext *

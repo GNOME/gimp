@@ -31,8 +31,6 @@
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
 
-#include "display/gimpdisplay-foreach.h"
-
 #include "libgimptool/gimptool.h"
 #include "tools/tool_manager.h"
 
@@ -86,14 +84,14 @@ void
 convert_to_rgb (GimpImage *gimage)
 {
   gimp_image_convert (gimage, GIMP_RGB, 0, 0, 0, 0, 0, NULL);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
 convert_to_grayscale (GimpImage* gimage)
 {
   gimp_image_convert (gimage, GIMP_GRAY, 0, 0, 0, 0, 0, NULL);
-  gdisplays_flush ();
+  gimp_image_flush (gimage);
 }
 
 void
@@ -451,7 +449,7 @@ indexed_ok_callback (GtkWidget *widget,
 		      dialog->remove_dups, 
                       dialog->palette_type, 
                       theCustomPalette);
-  gdisplays_flush ();
+  gimp_image_flush (dialog->gimage);
 
   /* Save defaults for next time */
   sdither_type  = dialog->dither_type;

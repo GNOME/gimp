@@ -84,6 +84,9 @@ struct _Gimp
   gint                   next_item_ID;
   GHashTable            *item_table;
 
+  GimpContainer         *displays;
+  gint                   next_display_ID;
+
   GimpBuffer            *global_buffer;
   GimpContainer         *named_buffers;
 

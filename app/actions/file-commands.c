@@ -310,7 +310,7 @@ file_revert_confirm_callback (GtkWidget *widget,
 
 	  gimp_image_clean_all (new_gimage);
 
-          gdisplays_flush ();
+          gimp_image_flush (new_gimage);
 	}
       else if (status != GIMP_PDB_CANCEL)
 	{

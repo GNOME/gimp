@@ -32,6 +32,7 @@
 #warning FIXME #include "display/display-types.h"
 #include "display/display-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpedit.h"
@@ -41,7 +42,6 @@
 #include "file/file-open.h"
 
 #include "display/gimpdisplay.h"
-#include "display/gimpdisplay-foreach.h"
 
 #include "gui/file-open-dialog.h"
 
@@ -282,7 +282,9 @@ gimp_document_view_open_extended_clicked (GtkWidget        *widget,
           closure.name  = gimp_object_get_name (GIMP_OBJECT (imagefile));
           closure.found = FALSE;
 
-          gdisplays_foreach (gimp_document_view_raise_display, &closure);
+          gimp_container_foreach (editor->view->context->gimp->displays,
+                                  gimp_document_view_raise_display,
+                                  &closure);
 
           if (! closure.found)
             {

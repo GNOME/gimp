@@ -34,6 +34,7 @@
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "vectors/gimpanchor.h"
@@ -517,11 +518,13 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
       if (gdisp->gimage != item->gimage)
         {
-          GSList *list;
+          GList *list;
 
           gdisp = NULL;
 
-          for (list = display_list; list; list = g_slist_next (list))
+          for (list = GIMP_LIST (item->gimage->gimp->displays)->list;
+               list;
+               list = g_list_next (list))
             {
               if (((GimpDisplay *) list->data)->gimage == item->gimage)
                 {

@@ -33,15 +33,10 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask-select.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpchannellistview.h"
 #include "gimpcomponentlistitem.h"
@@ -308,7 +303,8 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 
   if (viewable)
     {
-      GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
+      GimpChannelOps  operation = GIMP_CHANNEL_OP_REPLACE;
+      GimpImage      *gimage;
 
       if (state & GDK_SHIFT_MASK)
 	{
@@ -322,12 +318,14 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimp_image_mask_select_channel (gimp_item_get_image (GIMP_ITEM (viewable)),
+      gimage = gimp_item_get_image (GIMP_ITEM (viewable));
+
+      gimp_image_mask_select_channel (gimage,
                                       GIMP_CHANNEL (viewable),
                                       0, 0,
                                       operation,
                                       FALSE, 0.0, 0.0);
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 

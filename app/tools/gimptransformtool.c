@@ -785,7 +785,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
   gimp_unset_busy (gdisp->gimage->gimp);
 
-  gdisplays_flush ();
+  gimp_image_flush (gdisp->gimage);
 
   gimp_transform_tool_reset (tr_tool, gdisp);
 }

@@ -367,7 +367,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 	}
 
       gimp_display_shell_selection_visibility (shell, GIMP_SELECTION_RESUME);
-      gdisplays_flush ();
+      gimp_image_flush (gdisp->gimage);
 
       if (move->guide)
 	gimp_display_shell_draw_guide (shell, move->guide, TRUE);
@@ -380,7 +380,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 	  if (move->layer)
 	    {
 	      floating_sel_anchor (move->layer);
-	      gdisplays_flush ();
+	      gimp_image_flush (gdisp->gimage);
 	    }
 	}
     }

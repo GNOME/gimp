@@ -28,14 +28,9 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
 #include "core/gimplayer.h"
-
-#include "display/gimpdisplay-foreach.h"
+#include "core/gimpimage.h"
 
 #include "gimpdnd.h"
 #include "gimplayerlistview.h"
@@ -386,7 +381,7 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 	  gimp_layer_set_mode (layer, mode);
 	  UNBLOCK();
 
-	  gdisplays_flush ();
+	  gimp_image_flush (item_view->gimage);
 	}
     }
 }
@@ -440,7 +435,7 @@ gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 	  gimp_layer_set_opacity (layer, opacity);
 	  UNBLOCK();
 
-	  gdisplays_flush ();
+	  gimp_image_flush (item_view->gimage);
 	}
     }
 }

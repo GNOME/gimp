@@ -32,12 +32,8 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpdrawable.h"
-
-#include "display/gimpdisplay-foreach.h"
+#include "core/gimpimage.h"
 
 #include "gimpdnd.h"
 #include "gimpdrawablelistitem.h"
@@ -210,7 +206,7 @@ gimp_drawable_list_item_eye_toggled (GtkWidget *widget,
 					 gimp_drawable_list_item_visibility_changed,
 					 list_item);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (drawable)));
     }
 }
 

@@ -33,17 +33,12 @@
 
 #include "widgets-types.h"
 
-#warning FIXME #include "display/display-types.h"
-#include "display/display-types.h"
-
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask-select.h"
 
 #include "vectors/gimpvectors.h"
-
-#include "display/gimpdisplay-foreach.h"
 
 #include "gimpvectorslistview.h"
 #include "gimpcomponentlistitem.h"
@@ -195,13 +190,17 @@ gimp_vectors_list_view_to_selection (GimpVectorsListView *view,
 {
   if (vectors)
     {
-      gimp_image_mask_select_vectors (GIMP_ITEM (vectors)->gimage,
+      GimpImage *gimage;
+
+      gimage = gimp_item_get_image (GIMP_ITEM (vectors));
+
+      gimp_image_mask_select_vectors (gimage,
                                       vectors,
                                       operation,
                                       TRUE,
                                       FALSE, 0, 0);
 
-      gdisplays_flush ();
+      gimp_image_flush (gimage);
     }
 }
 
