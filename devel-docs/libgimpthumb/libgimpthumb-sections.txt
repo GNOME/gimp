@@ -27,7 +27,8 @@ gimp_thumb_init
 gimp_thumb_name_from_uri
 gimp_thumb_find_thumb
 gimp_thumb_file_test
-gimp_thumb_ensure_thumb_dirs
+gimp_thumb_ensure_thumb_dir
+gimp_thumb_get_thumb_dir
 </SECTION>
 
 <SECTION>

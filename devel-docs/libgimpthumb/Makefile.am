@@ -19,7 +19,7 @@ SCAN_OPTIONS =
 MKDB_OPTIONS = --sgml-mode --output-format=xml
 
 # Extra options to supply to gtkdoc-fixref
-FIXXREF_OPTIONS = --extra-dir=../libgimpbase/html --extra-dir=../libgimpcolor/html --extra-dir=../libgimpmath/html --extra-dir=../libgimp/html
+FIXXREF_OPTIONS = --extra-dir=../libgimpmath/html
 
 # Used for dependencies
 HFILE_GLOB = $(DOC_SOURCE_DIR)/*.h
@@ -46,7 +46,6 @@ GTKDOC_CFLAGS = \
 	@GDK_PIXBUF_CFLAGS@
 
 GTKDOC_LIBS = \
-        $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
         $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
         $(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
 	@GDK_PIXBUF_LIBS@

@@ -55,12 +55,3 @@ gimpthumb-utils
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_thumb_ensure_thumb_dirs ##### -->
-<para>
-
-</para>
-
-@error: 
-@Returns: 
-
-

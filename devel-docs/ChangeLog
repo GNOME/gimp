@@ -1,5 +1,12 @@
 2003-12-08  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am: removed unnecessary stuff.
+
+	* libgimpthumb/libgimpthumb-sections.txt
+	* libgimpthumb/tmpl/gimpthumb-utils.sgml: updated.
+
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am
 	* libgimpthumb/Makefile.am
 	* libgimpthumb/libgimpthumb-docs.sgml

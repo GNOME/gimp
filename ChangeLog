@@ -1,3 +1,11 @@
+2003-12-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumb-utils.[ch]: renamed a function, added
+	another one.
+
+	* libgimpthumb/gimpthumb.def
+	* libgimpthumb/gimpthumbnail.c: changed accordingly.
+
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/channel.pdb

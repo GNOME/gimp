@@ -47,8 +47,9 @@
 #include "libgimp/libgimp-intl.h"
 
 
-static const gchar * gimp_thumb_png_name (const gchar *uri);
-static void          gimp_thumb_exit     (void);
+static gint           gimp_thumb_size     (GimpThumbSize  size);
+static const gchar  * gimp_thumb_png_name (const gchar   *uri);
+static void           gimp_thumb_exit     (void);
 
 
 
@@ -101,40 +102,47 @@ gimp_thumb_init (const gchar *creator,
   return gimp_thumb_initialized;
 }
 
+gchar *
+gimp_thumb_get_thumb_dir (GimpThumbSize  size)
+{
+  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+
+  size = gimp_thumb_size (size);
+
+  return thumb_subdirs[size];
+}
 
 gboolean
-gimp_thumb_ensure_thumb_dirs (GError **error)
+gimp_thumb_ensure_thumb_dir (GimpThumbSize   size,
+                             GError        **error)
 {
   gint i;
 
   g_return_val_if_fail (gimp_thumb_initialized, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  for (i = 0; i < thumb_num_sizes; i++)
+  i = gimp_thumb_size (size);
+
+  if (g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
+    return TRUE;
+
+  if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
+      (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
     {
-      if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
-        {
-          if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
-              (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
-            {
-              if (i == 0)
-                mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
+      if (i == 0)
+        mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
 
-              mkdir (thumb_subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR);
-            }
-
-          if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
-            {
-              g_set_error (error,
-                           GIMP_THUMB_ERROR, GIMP_THUMB_ERROR_MKDIR,
-                           _("Failed to create thumbnail folder '%s'."),
-                           thumb_subdirs[i]);
-              return FALSE;
-            }
-        }
+      mkdir (thumb_subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR);
     }
 
-  return TRUE;
+  if (g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
+    return TRUE;
+
+  g_set_error (error,
+               GIMP_THUMB_ERROR, GIMP_THUMB_ERROR_MKDIR,
+               _("Failed to create thumbnail folder '%s'."),
+               thumb_subdirs[i]);
+  return FALSE;
 }
 
 gchar *
@@ -142,25 +150,17 @@ gimp_thumb_name_from_uri (const gchar    *uri,
                           GimpThumbSize  *size)
 {
   const gchar  *name;
-  gint          i = 0;
+  gint          i;
 
   g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (size != NULL, NULL);
 
   if (strstr (uri, thumb_dir))
     return NULL;
 
   name = gimp_thumb_png_name (uri);
 
-  if (*size != GIMP_THUMB_SIZE_FAIL)
-    {
-      for (i = 1;
-           i < thumb_num_sizes && thumb_sizes[i] < *size;
-           i++)
-        /* nothing */;
-
-      if (i == thumb_num_sizes)
-        i--;
-    }
+  i = gimp_thumb_size (*size);
 
   *size = thumb_sizes[i];
 
@@ -176,13 +176,11 @@ gimp_thumb_find_thumb (const gchar   *uri,
   gint         i, n;
 
   g_return_val_if_fail (gimp_thumb_initialized, NULL);
+  g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, NULL);
 
   name = gimp_thumb_png_name (uri);
 
-  for (i = 1; i < thumb_num_sizes && thumb_sizes[i] < *size; i++)
-    /* do nothing */;
-
-  n = i;
+  i = n = gimp_thumb_size (*size);
 
   for (; i < thumb_num_sizes; i++)
     {
@@ -251,6 +249,25 @@ gimp_thumb_exit (void)
   thumb_subdirs          = NULL;
   thumb_fail_subdir      = NULL;
   gimp_thumb_initialized = FALSE;
+}
+
+static gint
+gimp_thumb_size (GimpThumbSize size)
+{
+  gint i = 0;
+
+  if (size > GIMP_THUMB_SIZE_FAIL)
+    {
+      for (i = 1;
+           i < thumb_num_sizes && thumb_sizes[i] < size;
+           i++)
+        /* nothing */;
+
+      if (i == thumb_num_sizes)
+        i--;
+    }
+
+  return i;
 }
 
 static const gchar *

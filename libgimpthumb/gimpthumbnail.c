@@ -647,9 +647,6 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
   g_return_val_if_fail (software != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  if (! gimp_thumb_ensure_thumb_dirs (error))
-    return FALSE;
-
   size = MAX (gdk_pixbuf_get_width (pixbuf), gdk_pixbuf_get_height (pixbuf));
   if (size < 1)
     return TRUE;
@@ -657,6 +654,12 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
   name = gimp_thumb_name_from_uri (thumbnail->image_uri, &size);
   if (! name)
     return TRUE;
+
+  if (! gimp_thumb_ensure_thumb_dir (size, error))
+    {
+      g_free (name);
+      return FALSE;
+    }
 
   desc     = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
   time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
@@ -687,7 +690,7 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
 
   if (success)
     {
-      success = chmod (name, 0600);
+      success = (chmod (name, 0600) == 0);
 
       if (! success)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
@@ -723,12 +726,15 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
   g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
   g_return_val_if_fail (software != NULL, FALSE);
 
-  if (! gimp_thumb_ensure_thumb_dirs (error))
-    return FALSE;
-
   name = gimp_thumb_name_from_uri (thumbnail->image_uri, &size);
   if (! name)
     return TRUE;
+
+  if (! gimp_thumb_ensure_thumb_dir (size, error))
+    {
+      g_free (name);
+      return FALSE;
+    }
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 1, 1);
 
@@ -745,7 +751,7 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
                              NULL);
   if (success)
     {
-      success = chmod (name, 0600);
+      success = (chmod (name, 0600) == 0);
 
       if (! success)
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
