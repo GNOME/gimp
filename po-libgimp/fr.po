@@ -1,17 +1,19 @@
 # French translation of gimp-libgimp.
-# Copyright (C) 1998-2003 Free Software Foundation, Inc.
+# Copyright (C) 1998-2004 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
 # maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2003.
-# Raymond Ostertag <r.ostertag@caramail.com>, 2003.
+# Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.3.18\n"
+"Project-Id-Version: gimp_libgimp 2.0pre3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2003-07-31 22:12+0200\n"
+"POT-Creation-Date: 2004-01-20 00:21+0100\n"
+"PO-Revision-Date: 2004-01-20 00:18+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +26,7 @@ msgstr "Sélection des brosses"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Naviguer..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
@@ -59,14 +61,13 @@ msgid "%s can't handle transparency"
 msgstr "%s ne peut gérer la transparence"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s ne peut gérer les calques"
+msgstr "%s ne peut manipuler les masques de calque"
 
 #: libgimp/gimpexport.c:270
-#, fuzzy
 msgid "Apply Layer Masks"
-msgstr "un masque de calque"
+msgstr "Aplliquer les masques de calque"
 
 #: libgimp/gimpexport.c:278
 #, c-format
@@ -101,19 +102,17 @@ msgstr ""
 "pour régler le résultat)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s ne gérer que les images RVB ou indexées"
+msgstr "%s ne peut manipuler que les images bitmap (2 couleurs) ou indexées"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Convertir en couleurs indexées en utilisant\n"
-"les réglages par défaut (faites-le à la main\n"
-"pour régler le résultat)"
+"Convertir en couleurs indexées en utilisant les réglages par défaut\n"
+"(faites-le à la main pour régler le résultat)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
@@ -152,24 +151,21 @@ msgid "Export File"
 msgstr "Exporter fichier"
 
 #: libgimp/gimpexport.c:460
-#, fuzzy
 msgid "_Ignore"
-msgstr "Ignorer"
+msgstr "_Ignorer"
 
 #: libgimp/gimpexport.c:462
-#, fuzzy
 msgid "_Export"
-msgstr "Exporter"
+msgstr "_Exporter"
 
-#. the headline
 #: libgimp/gimpexport.c:484
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
 msgstr ""
-"Votre image devrait être exportée avant d'être enregistrée pour les raison "
-"suivantes :"
+"Votre image devrait être exportée avant d'être enregistrée en %s pour les "
+"raison suivantes :"
 
 #: libgimp/gimpexport.c:562
 msgid "The export conversion won't modify your original image."
@@ -216,7 +212,7 @@ msgstr "pourcent"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(chaîne de caractères UTF-8 non valide)"
 
 #: libgimpbase/gimputils.c:244
 #, c-format
@@ -249,24 +245,24 @@ msgid "%.1f MB"
 msgstr "%.1f Mo"
 
 #: libgimpbase/gimputils.c:272
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "%d ko"
+msgstr "%d Mo"
 
 #: libgimpbase/gimputils.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f GB"
-msgstr "%.2f Mo"
+msgstr "%.2f Go"
 
 #: libgimpbase/gimputils.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB"
-msgstr "%.1f Mo"
+msgstr "%.1f Go"
 
 #: libgimpbase/gimputils.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "%d ko"
+msgstr "%d Go"
 
 #: libgimpmodule/gimpmodule.c:178
 #, c-format
@@ -276,11 +272,9 @@ msgstr "Chargement du module : « %s »\n"
 #: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
 #: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
 #: libgimpmodule/gimpmodule.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
-"Erreur de chargement du module « %s » :\n"
-"%s"
+msgstr "Erreur de chargement du module « %s » : %s"
 
 #: libgimpmodule/gimpmodule.c:293
 #, c-format
@@ -306,27 +300,23 @@ msgstr "Non chargé"
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Échec lors de la création du dossier de vignettes « %s »."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/Couleur de premier plan"
+msgstr "/Couleur de _premier plan"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/Couleur d'arrière-plan"
+msgstr "/Couleur d'_arrière-plan"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
-msgstr "/Noir"
+msgstr "/_Noir"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-#, fuzzy
 msgid "/_White"
-msgstr "/Blanc"
+msgstr "/_Blanc"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -395,15 +385,15 @@ msgstr "Notation hexadécimal de la couleur tel qu'utilisé en HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
-msgstr "Triplet hexa :"
+msgstr "Triplet he_xa :"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Courant :"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Ancien :"
 
 #: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
@@ -539,9 +529,8 @@ msgid "Color Deficient Vision"
 msgstr "Vision des couleurs déficiente"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "Type de déficience de couleur :"
+msgstr "Type de _déficience de couleur :"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
@@ -564,9 +553,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Gamma :"
+msgstr "_Gamma :"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -577,45 +565,44 @@ msgid "Contrast"
 msgstr "Contraste"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Cycles de contraste :"
+msgstr "C_ycles de contraste :"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Filtre d'épreuve des couleurs utilisant le profil colorimétrique ICC"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Épreuve des couleurs"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Perceptual"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Relative Colorimetric"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Absolute Colorimetric"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Intent :"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Choisir un profil colorimétrique ICC"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profil :"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "_Point de compensation du noir"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -659,7 +646,7 @@ msgstr "Noir"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Supplément de noir (%) :"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
@@ -690,7 +677,7 @@ msgstr "Pression"
 #~ "(%s \"%s\")\n"
 #~ "to your %s file."
 #~ msgstr ""
-#~ "Pas de %s dans gimprc :\n"
+#~ "Pas de %s dans gimprc :\n"
 #~ "Vous devez ajouter une entrée telle\n"
 #~ "(%s \"%s\")\n"
 #~ "à votre fichier %s."
