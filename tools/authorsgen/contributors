@@ -5,10 +5,7 @@
 #
 # The format is one name per line in alphabetical order. 
 # Names are 7bit ASCII. To include special characters, append
-# an ISO-8859-1 encoded string in brackets on the same line. 
-# We might want to change to UTF-8 as soon as all ports use 
-# GTK+-2.0. Right now the authorsgen script takes care of 
-# converting to UTF-8. 
+# an UTF-8 encoded string in brackets on the same line. 
 #
 # Spencer Kimball and Peter Mattis are always listed separatly.
 #
@@ -65,7 +62,7 @@ Marcelo de Gomensoro Malheiros
 Pavel Grinfeld
 Michael Hammel
 Henrik Hansen
-Ville Hautamaki [Ville Hautam‰ki]
+Ville Hautamaki [Ville Hautam√§ki]
 James Henstridge
 Eric Hernes
 David Hodson
@@ -126,7 +123,7 @@ Sven Neumann
 Stephen Robert Norris
 Tim Newsome
 Erik Nygren
-Tomas Ogren [Tomas ÷gren]
+Tomas Ogren [Tomas √ñgren]
 Miles O'Neal
 Thom van Os
 Garry R. Osgood

@@ -59,11 +59,7 @@ static gchar *authors[] =
   "Pavel Grinfeld",
   "Michael Hammel",
   "Henrik Hansen",
-#ifndef GDK_USE_UTF8_MBS
-  "Ville Hautam‰ki",
-#else
   "Ville Hautam√§ki",
-#endif
   "James Henstridge",
   "Eric Hernes",
   "David Hodson",
@@ -124,11 +120,7 @@ static gchar *authors[] =
   "Stephen Robert Norris",
   "Tim Newsome",
   "Erik Nygren",
-#ifndef GDK_USE_UTF8_MBS
-  "Tomas ÷gren",
-#else
   "Tomas √ñgren",
-#endif
   "Miles O'Neal",
   "Thom van Os",
   "Garry R. Osgood",

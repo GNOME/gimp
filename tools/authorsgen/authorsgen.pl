@@ -21,7 +21,7 @@ while (<INPUT>)
     {
 	if (/(.{1,})\[(.{1,})\]/)
 	{
-	    $iso{$1} = $2;
+	    $utf{$1} = $2;
 	    push (@contributors, $1);
 	}
 	else 
@@ -31,20 +31,6 @@ while (<INPUT>)
     }
 }
 close (INPUT);
-
-
-open (ICONV, "iconv -f iso-8859-1 -t utf-8 contributors |")
-   or die ("Call to iconv failed."); 
-while (<ICONV>)
-{
-    chomp;
-    if (length ($_) and not (/^\#/) and (/(.{1,})\[(.{1,})\]/))
-    {
-	$utf{$1} = $2;
-    }
-}
-close (ICONV);
-
 
 
 open (AUTHORS, ">../../AUTHORS")
@@ -89,13 +75,9 @@ static gchar *authors[] =
 EOT
 foreach $author (@contributors)
 {   
-    if ($iso{$author} and $utf{$author})
+    if ($utf{$author})
     {
-	print AUTHORS "#ifndef GDK_USE_UTF8_MBS\n";
-	print AUTHORS "  \"$iso{$author}\",\n";
-	print AUTHORS "#else\n";
 	print AUTHORS "  \"$utf{$author}\",\n";
-	print AUTHORS "#endif\n";
     }
     else
     {
@@ -104,6 +86,5 @@ foreach $author (@contributors)
 }
 print AUTHORS "};\n";
 close (AUTHORS);
-
 
 exit;

@@ -23,12 +23,6 @@
 #include <string.h>
 #include <time.h>
 
-#ifdef __GNUC__
-#warning FIXME: GDK_DISABLE_DEPRECATED
-#endif
-
-#undef GDK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -76,29 +70,30 @@ static void      about_dialog_tool_drop   (GtkWidget      *widget,
 static gint      about_dialog_timer       (gpointer        data);
 
 
-static GtkWidget *about_dialog     = NULL;
-static GtkWidget *logo_area        = NULL;
-static GtkWidget *scroll_area      = NULL;
-static GdkPixmap *logo_pixmap      = NULL;
-static GdkPixmap *scroll_pixmap    = NULL;
-static guchar    *dissolve_map     = NULL;
-static gint       dissolve_width;
-static gint       dissolve_height;
-static gint       logo_width       = 0;
-static gint       logo_height      = 0;
-static gboolean   do_animation     = FALSE;
-static gboolean   do_scrolling     = FALSE;
-static gint       scroll_state     = 0;
-static gint       frame            = 0;
-static gint       offset           = 0;
-static gint       timer            = 0;
-static gint       hadja_state      = 0;
-static gchar    **scroll_text      = authors;
-static gint       nscroll_texts    = sizeof (authors) / sizeof (authors[0]);
-static gint       scroll_text_widths[sizeof (authors) / sizeof (authors[0])];
-static gint       cur_scroll_text  = 0;
-static gint       cur_scroll_index = 0;
-static gint       shuffle_array[sizeof (authors) / sizeof (authors[0])];
+static GtkWidget   *about_dialog     = NULL;
+static GtkWidget   *logo_area        = NULL;
+static GtkWidget   *scroll_area      = NULL;
+static GdkPixmap   *logo_pixmap      = NULL;
+static GdkPixmap   *scroll_pixmap    = NULL;
+static PangoLayout *scroll_layout    = NULL;
+static guchar      *dissolve_map     = NULL;
+static gint         dissolve_width;
+static gint         dissolve_height;
+static gint         logo_width       = 0;
+static gint         logo_height      = 0;
+static gboolean     do_animation     = FALSE;
+static gboolean     do_scrolling     = FALSE;
+static gint         scroll_state     = 0;
+static gint         frame            = 0;
+static gint         offset           = 0;
+static gint         timer            = 0;
+static gint         hadja_state      = 0;
+static gchar      **scroll_text      = authors;
+static gint         nscroll_texts    = G_N_ELEMENTS (authors);
+static gint         scroll_text_widths[G_N_ELEMENTS (authors)];
+static gint         cur_scroll_text  = 0;
+static gint         cur_scroll_index = 0;
+static gint         shuffle_array[G_N_ELEMENTS (authors)];
 
 
 static gchar *drop_text[] = 
@@ -112,11 +107,7 @@ static gchar *hadja_text[] =
 {
   "Hadjaha!",
   "Nej!",
-#ifndef GDK_USE_UTF8_MBS
-  "Tvärtom!"
-#else
   "TvÃ¤rtom!"
-#endif
 };
 
 GtkWidget *
@@ -126,11 +117,9 @@ about_dialog_create (void)
   GtkWidget *aboutframe;
   GtkWidget *label;
   GtkWidget *alignment;
-#if 0
-  GtkStyle  *style;
-  GdkFont   *font;
-#endif
   gint       max_width;
+  gint       width;
+  gint       height;
   gint       i;
   gchar     *label_text;
 
@@ -204,22 +193,6 @@ about_dialog_create (void)
       gtk_widget_realize (logo_area);
       gdk_window_set_background (logo_area->window, &logo_area->style->black);
 
-      /* this is a font, provide only one single font definition */
-#ifdef __GNUC__
-#warning FIXME: font description
-#endif
-#if 0
-      font = gdk_font_load (_("-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"));
-      if (font)
-	{
-	  style = gtk_style_new ();
-	  gdk_font_unref (style->font);
-	  style->font = font;
-	  gdk_font_ref (style->font);
-	  gtk_widget_push_style (style);
-	  gtk_style_unref (style);
-	}
-#endif
       label_text = g_strdup_printf (_("Version %s brought to you by"),
 				    GIMP_VERSION);
       label = gtk_label_new (label_text);
@@ -232,10 +205,6 @@ about_dialog_create (void)
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, TRUE, 0);
       gtk_widget_show (label);
 
-#if 0
-      gtk_widget_pop_style ();
-#endif
-
       alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, TRUE, 0);
       gtk_widget_show (alignment);
@@ -246,28 +215,33 @@ about_dialog_create (void)
       gtk_container_add (GTK_CONTAINER (alignment), aboutframe);
       gtk_widget_show (aboutframe);
 
+      scroll_layout = gtk_widget_create_pango_layout (aboutframe, NULL);
+      g_object_weak_ref (G_OBJECT (aboutframe), 
+                         (GWeakNotify) g_object_unref, scroll_layout);
+
       max_width = 0;
       for (i = 0; i < nscroll_texts; i++)
 	{
-	  scroll_text_widths[i] = gdk_string_width (aboutframe->style->font,
-						    scroll_text[i]);
+          pango_layout_set_text (scroll_layout, scroll_text[i], -1);
+	  pango_layout_get_pixel_size (scroll_layout,
+                                       &scroll_text_widths[i], &height);
 	  max_width = MAX (max_width, scroll_text_widths[i]);
 	}
       for (i = 0; i < (sizeof (drop_text) / sizeof (drop_text[0])); i++)
 	{
-	  max_width = MAX (max_width, 
-			   gdk_string_width (aboutframe->style->font, drop_text[i]));
+          pango_layout_set_text (scroll_layout, drop_text[i], -1);
+          pango_layout_get_pixel_size (scroll_layout, &width, NULL);
+	  max_width = MAX (max_width, width);
 	}
       for (i = 0; i < (sizeof (hadja_text) / sizeof (hadja_text[0])); i++)
 	{
-	  max_width = MAX (max_width,
-			   gdk_string_width (aboutframe->style->font, hadja_text[i]));
-	}
+          pango_layout_set_text (scroll_layout, hadja_text[i], -1);
+          pango_layout_get_pixel_size (scroll_layout, &width, NULL);
+	  max_width = MAX (max_width, width);
+        }
       scroll_area = gtk_drawing_area_new ();
       gtk_drawing_area_size (GTK_DRAWING_AREA (scroll_area),
-			     max_width + 10,
-			     aboutframe->style->font->ascent +
-			     aboutframe->style->font->descent);
+			     max_width + 6, height + 1);
       gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
       gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
@@ -313,7 +287,10 @@ about_dialog_create (void)
 		  shuffle_array[i] = t;
 		}
 	    }
-	  cur_scroll_text = rand() % nscroll_texts;
+	  cur_scroll_text = rand() % nscroll_texts;          
+          pango_layout_set_text (scroll_layout, 
+                                 scroll_text[cur_scroll_text], -1);
+
 	}
     }
   else 
@@ -531,19 +508,21 @@ about_dialog_key (GtkWidget      *widget,
   if (hadja_state == 7)
     {
       scroll_text = hadja_text;
-      nscroll_texts = sizeof (hadja_text) / sizeof (hadja_text[0]);
+      nscroll_texts = G_N_ELEMENTS (hadja_text);
       
       for (i = 0; i < nscroll_texts; i++)
 	{
 	  shuffle_array[i] = i;
-	  scroll_text_widths[i] = gdk_string_width (scroll_area->style->font,
-						    scroll_text[i]);
+          pango_layout_set_text (scroll_layout, scroll_text[i], -1);
+          pango_layout_get_pixel_size (scroll_layout, 
+                                       &scroll_text_widths[i], NULL);
 	}
       
       scroll_state     = 0;
       cur_scroll_index = 0;
       cur_scroll_text  = 0;
       offset           = 0;
+      pango_layout_set_text (scroll_layout, scroll_text[cur_scroll_text], -1);
     }
   
   return FALSE;
@@ -611,19 +590,21 @@ about_dialog_tool_drop (GtkWidget    *widget,
   gdk_drawable_unref (mask);
 
   scroll_text = drop_text;
-  nscroll_texts = sizeof (drop_text) / sizeof (drop_text[0]);
+  nscroll_texts = G_N_ELEMENTS (drop_text);
 
   for (i = 0; i < nscroll_texts; i++)
     {
       shuffle_array[i] = i;
-      scroll_text_widths[i] = gdk_string_width (scroll_area->style->font,
-						scroll_text[i]);
+      pango_layout_set_text (scroll_layout, scroll_text[i], -1);
+      pango_layout_get_pixel_size (scroll_layout, 
+                                   &scroll_text_widths[i], NULL);
     }
 
   scroll_state     = 0;
   cur_scroll_index = 0;
   cur_scroll_text  = 0;
   offset           = 0;
+  pango_layout_set_text (scroll_layout, scroll_text[cur_scroll_text], -1);
 
   double_speed = TRUE;
 }
@@ -698,7 +679,8 @@ about_dialog_timer (gpointer data)
 	    cur_scroll_index = 0;
 
 	  cur_scroll_text = shuffle_array[cur_scroll_index];
-
+          pango_layout_set_text (scroll_layout, 
+                                 scroll_text[cur_scroll_text], -1);
 	  offset = 0;
 	}
 
@@ -707,12 +689,10 @@ about_dialog_timer (gpointer data)
 			  TRUE, 0, 0,
 			  scroll_area->allocation.width,
 			  scroll_area->allocation.height);
-      gdk_draw_string (scroll_pixmap,
-		       scroll_area->style->font,
-		       scroll_area->style->black_gc,
-		       scroll_area->allocation.width - offset,
-		       scroll_area->style->font->ascent,
-		       scroll_text[cur_scroll_text]);
+      gdk_draw_layout (scroll_pixmap,
+                       scroll_area->style->black_gc,
+                       scroll_area->allocation.width - offset, 0,
+                       scroll_layout);
       gdk_draw_drawable (scroll_area->window,
 		 	 scroll_area->style->black_gc,
 			 scroll_pixmap, 0, 0, 0, 0,

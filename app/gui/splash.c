@@ -21,12 +21,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning FIXME: GDK_DISABLE_DEPRECATED
-#endif
-
-#undef GDK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
  
 #include "libgimpbase/gimpbase.h"
@@ -51,7 +45,6 @@ enum
 
 #define LOGO_WIDTH_MIN  300
 #define LOGO_HEIGHT_MIN 110
-#define AUTHORS "Spencer Kimball & Peter Mattis"
 
 
 static gboolean  splash_logo_load_size (GtkWidget *window);
@@ -60,20 +53,22 @@ static void      splash_text_draw      (GtkWidget *widget);
 static void      splash_logo_expose    (GtkWidget *widget);
 
 
-static gint       splash_show_logo  = SPLASH_SHOW_LOGO_NEVER;
+static gint         splash_show_logo  = SPLASH_SHOW_LOGO_NEVER;
 
-static GtkWidget *logo_area         = NULL;
-static GdkPixmap *logo_pixmap       = NULL;
-static gint       logo_width        = 0;
-static gint       logo_height       = 0;
-static gint       logo_area_width   = 0;
-static gint       logo_area_height  = 0;
-static gint       max_label_length  = 1024;
+static GtkWidget   *logo_area         = NULL;
+static GdkPixmap   *logo_pixmap       = NULL;
+static gint         logo_width        = 0;
+static gint         logo_height       = 0;
+static gint         logo_area_width   = 0;
+static gint         logo_area_height  = 0;
+static PangoLayout *logo_layout       = NULL;
 
-static GtkWidget *win_initstatus = NULL;
-static GtkWidget *label1 = NULL;
-static GtkWidget *label2 = NULL;
-static GtkWidget *pbar   = NULL;
+static gint         max_label_length  = 1024;
+
+static GtkWidget   *win_initstatus    = NULL;
+static GtkWidget   *label1            = NULL;
+static GtkWidget   *label2            = NULL;
+static GtkWidget   *progress          = NULL;
 
 
 /*  public functions  */
@@ -81,9 +76,10 @@ static GtkWidget *pbar   = NULL;
 void
 splash_create (void)
 {
-  GtkWidget *vbox;
-  GtkWidget *logo_hbox;
-  GtkStyle  *style;
+  GtkWidget        *vbox;
+  GtkWidget        *logo_hbox;
+  PangoFontMetrics  metrics;
+  PangoContext     *context;
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
@@ -126,28 +122,33 @@ splash_create (void)
   label2 = gtk_label_new ("");
   gtk_box_pack_start_defaults (GTK_BOX (vbox), label2);
 
-  pbar = gtk_progress_bar_new ();
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), pbar);
+  progress = gtk_progress_bar_new ();
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), progress);
 
   gtk_widget_show (vbox);
   gtk_widget_show (logo_hbox);
   gtk_widget_show (logo_area);
   gtk_widget_show (label1);
   gtk_widget_show (label2);
-  gtk_widget_show (pbar);
-
-  gtk_widget_show (win_initstatus);
+  gtk_widget_show (progress);
 
   /*  This is a hack: we try to compute a good guess for the maximum 
    *  number of charcters that will fit into the splash-screen using 
    *  the default_font
    */
-  style = gtk_widget_get_style (win_initstatus);
-  max_label_length = (0.8 * (gfloat) strlen (AUTHORS) *
-		      ((gfloat) logo_area_width /
-		       (gfloat) gdk_string_width (style->font, AUTHORS)));
+  context = gtk_widget_get_pango_context (label2);
+  pango_context_get_metrics (context,
+                             label2->style->font_desc,
+                             pango_context_get_language (context),
+                             &metrics);
+  max_label_length = (0.9 * (gdouble) logo_area_width /
+                      (gdouble) PANGO_PIXELS (metrics.approximate_char_width));
 
-  splash_text_draw (logo_area);
+  logo_layout = gtk_widget_create_pango_layout (logo_area, NULL);
+  g_object_weak_ref (G_OBJECT (win_initstatus), 
+                     (GWeakNotify) g_object_unref, logo_layout);
+
+  gtk_widget_show (win_initstatus);
 }
 
 void
@@ -159,7 +160,7 @@ splash_destroy (void)
       if (logo_pixmap != NULL)
 	gdk_drawable_unref (logo_pixmap);
 
-      win_initstatus = label1 = label2 = pbar = logo_area = NULL;
+      win_initstatus = label1 = label2 = progress = logo_area = NULL;
       logo_pixmap = NULL;
     }
 }
@@ -192,7 +193,7 @@ splash_update (const gchar *text1,
 
       percentage = CLAMP (percentage, 0.0, 1.0);
 
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (pbar), percentage);
+      gtk_progress_bar_update (GTK_PROGRESS_BAR (progress), percentage);
 
       while (gtk_events_pending ())
 	gtk_main_iteration ();
@@ -296,7 +297,8 @@ splash_logo_load (void)
     }
 
   gtk_widget_realize (win_initstatus);
-  logo_pixmap = gdk_pixmap_new (win_initstatus->window, logo_width, logo_height,
+  logo_pixmap = gdk_pixmap_new (win_initstatus->window, 
+                                logo_width, logo_height,
 				gtk_preview_get_visual ()->depth);
   gc = gdk_gc_new (logo_pixmap);
   gtk_preview_put (GTK_PREVIEW (preview),
@@ -317,55 +319,25 @@ splash_logo_load (void)
 static void
 splash_text_draw (GtkWidget *widget)
 {
-  GdkFont *font;
+  gint width;
 
-  /* this is a font, provide only one single font definition */
-  font = gdk_font_load (_("-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"));
-  if (!font)
-    {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      font = style->font;
-      gdk_font_ref (font);
-    }
+  pango_layout_set_text (logo_layout, _("The GIMP"), -1);
+  pango_layout_get_pixel_size (logo_layout, &width, NULL);
 
-  gdk_draw_string (widget->window,
-		   font,
+  gdk_draw_layout (widget->window,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font,  _("The GIMP"))) / 2),
-		   (0.25 * logo_area_height),
-		   _("The GIMP"));
+		   (logo_area_width - width) / 2,
+		   0.25 * logo_area_height,
+                   logo_layout);
 
-  gdk_font_unref (font);
+  pango_layout_set_text (logo_layout, GIMP_VERSION, -1);
+  pango_layout_get_pixel_size (logo_layout, &width, NULL);
 
-  /* this is a fontset, e.g. multiple comma-separated font definitions */
-  font = gdk_fontset_load (_("-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"));
-  if (!font)
-    {
-      GtkStyle *style = gtk_widget_get_style (widget);
-      font = style->font;
-      gdk_font_ref (font);
-    }
-
-  gdk_draw_string (widget->window,
-		   font,
+  gdk_draw_layout (widget->window,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2),
-		   (0.45 * logo_area_height),
-		   GIMP_VERSION);
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, _("brought to you by"))) / 2),
-		   (0.65 * logo_area_height),
-		   _("brought to you by"));
-  gdk_draw_string (widget->window,
-		   font,
-		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2),
-		   (0.80 * logo_area_height),
-		   AUTHORS);
-
-  gdk_font_unref (font);
+		   (logo_area_width - width) / 2,
+		   0.45 * logo_area_height,
+		   logo_layout);
 }
 
 static void

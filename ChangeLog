@@ -1,4 +1,14 @@
-2001-09-02  Michael Natterer  <mitch@gimp.org>
+2001-09-03  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/about-dialog.c
+	* app/gui/splash.c: draw text using PangoLayouts, now compiles with
+	GDK_DISABLE_DEPRECATED being defined.
+
+	* app/gui/authors.h
+	* tools/authorsgen/authorsgen.pl
+	* tools/authorsgen/contributors: converted to use UTF-8 strings.
+
+2001-09-03  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: added -DGDK_DISABLE_DEPRECATED.
 
