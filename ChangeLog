@@ -1,3 +1,9 @@
+Fri May 26 22:33:05 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/common/wind.c
+
+	Code tidy only.	
+
 Fri May 26 22:21:57 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/common/noisify.c

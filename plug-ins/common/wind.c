@@ -172,7 +172,6 @@ config_t config =
   LEADING      /* abs(derivative); */
 };
 
-static guchar    *preview_bits;
 static guchar    *preview_cache;
 static GtkWidget *preview;
 static gint       preview_cache_rowstride;
@@ -259,7 +258,6 @@ run (gchar   *name,
 	  status = STATUS_CALLING_ERROR;
 	  break;
 	}
-      g_free(preview_bits);
       g_free(preview_cache);
       gimp_set_data("plug_in_wind", &config, sizeof(config_t));
       gimp_displays_flush();
@@ -1175,13 +1173,10 @@ static GtkWidget *
 preview_widget (GDrawable *drawable)
 {
   gint       size;
-  GtkWidget *preview;
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview (preview, drawable);
   size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
   return preview;
 }
@@ -1195,11 +1190,8 @@ fill_preview (GtkWidget *widget,
   gint       height;
   gint       x1, x2, y1, y2;
   gint       bpp;
-  gint       x, y;
+  gint       y;
   guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1;
   guchar    *even, *odd;
   
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -1232,61 +1224,13 @@ fill_preview (GtkWidget *widget,
     {
       gimp_pixel_rgn_get_row (&srcPR, src, x1, y + y1, width);
       memcpy(preview_cache + (y*width*bpp),src,width*bpp);
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble)src[x*4+0]) / 255.0;
-	      g = ((gdouble)src[x*4+1]) / 255.0;
-	      b = ((gdouble)src[x*4+2]) / 255.0;
-	      a = ((gdouble)src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble)src[x*3+0]) / 255.0;
-	      g = ((gdouble)src[x*3+1]) / 255.0;
-	      b = ((gdouble)src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0]) / 255.0;
-	      g = b = r;
-	      if (bpp == 2)
-		a = ((gdouble)src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-	
-	if ((x / GIMP_CHECK_SIZE) & 1) 
-	  {
-	    c0 = GIMP_CHECK_LIGHT;
-	    c1 = GIMP_CHECK_DARK;
-	  } 
-	else 
-	  {
-	    c0 = GIMP_CHECK_DARK;
-	    c1 = GIMP_CHECK_LIGHT;
-	  }
-	
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
     }
+  
+  for (y = 0; y < height; y++)
+    {
+      preview_do_row(y,width,even,odd,preview_cache + (y*width*bpp));
+    }
+
 
   g_free (even);
   g_free (odd);
