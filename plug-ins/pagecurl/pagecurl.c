@@ -21,13 +21,6 @@
  *
  */
 
-/* TODO for v0.5 - in 0.9 still to do...
- * As of version 0.5 alpha, the only thing that is not yet implemented
- * is the "Warp curl" option.  Everything else seems to be working
- * just fine.  Please email me if you find any bugs.  I know that the
- * calculation code is horrible, but you don't want to tweak it anyway ;)
- */
-
 /*
  * Ported to the 0.99.x architecture by Simon Budig, Simon.Budig@unix-ag.org
  */
@@ -44,6 +37,8 @@
  *      - Pagecurl now returns the ID of the new layer.
  *      - Exchanged the meaning of FG/BG Color, because mostly the FG
  *        color is darker.
+ * 1.0: (July '04)
+ *      - Code cleanup, added reverse gradient option.
  */
 
 #include "config.h"
@@ -71,7 +66,7 @@
 #include "curl7.xpm"
 
 #define PLUG_IN_NAME    "plug_in_pagecurl"
-#define PLUG_IN_VERSION "May 1998, 0.9"
+#define PLUG_IN_VERSION "July 2004, 1.0"
 #define HELP_ID         "plug-in-pagecurl"
 #define NGRADSAMPLES    256
 
@@ -108,7 +103,7 @@ typedef enum
                             (e) == CURL_EDGE_UPPER_RIGHT)
 #define CURL_EDGE_LOWER(e) ((e) == CURL_EDGE_LOWER_RIGHT || \
                             (e) == CURL_EDGE_LOWER_LEFT)
-#define CURL_EDGE_UPPER(e) ((e) == CURL_EDGE_UPPER_LEFT || \
+#define CURL_EDGE_UPPER(e) ((e) == CURL_EDGE_UPPER_LEFT  || \
                             (e) == CURL_EDGE_UPPER_RIGHT)
 
 
@@ -140,9 +135,9 @@ static void       dialog_scale_update  (GtkAdjustment    *adjustment,
 static gboolean   dialog               (void);
 
 static void       init_calculation     (gint32            drawable_id);
-static void       do_curl_effect       (gint32            drawable_id);
+static gint32     do_curl_effect       (gint32            drawable_id);
 static void       clear_curled_region  (gint32            drawable_id);
-static void       page_curl            (gint32            drawable_id);
+static gint32     page_curl            (gint32            drawable_id);
 static guchar   * get_gradient_samples (gint32            drawable_id,
                                         gboolean          reverse);
 
@@ -176,13 +171,12 @@ static gchar **curl_pixmaps[] =
   curl7_xpm
 };
 
-static GtkWidget *curl_pixmap_widget;
+static GtkWidget *curl_pixmap_widget = NULL;
 
 static gint   sel_x1, sel_y1, sel_x2, sel_y2;
 static gint   true_sel_width, true_sel_height;
 static gint   sel_width, sel_height;
 static gint   drawable_position;
-static gint32 curl_layer_ID;
 
 /* Center and radius of circle */
 
@@ -320,10 +314,11 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  page_curl (drawable_id);
-	  values[1].data.d_layer = curl_layer_ID;
+	  values[1].data.d_layer = page_curl (drawable_id);
+
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
+
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data (PLUG_IN_NAME, &curl, sizeof (CurlParams));
 	}
@@ -470,16 +465,16 @@ dialog (void)
    gtk_widget_show (vbox);
 
    frame = gimp_frame_new (_("Curl Location"));
-   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
-   table = gtk_table_new (3, 3, FALSE);
+   table = gtk_table_new (3, 2, TRUE);
    gtk_table_set_col_spacings (GTK_TABLE (table), 6);
    gtk_table_set_row_spacings (GTK_TABLE (table), 6);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
    curl_pixmap_widget = gimp_pixmap_new (curl_pixmaps[0]);
 
-   gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 1, 2, 1, 2,
+   gtk_table_attach (GTK_TABLE (table), curl_pixmap_widget, 0, 2, 1, 2,
 		     GTK_SHRINK, GTK_SHRINK, 0, 0);
    gtk_widget_show (curl_pixmap_widget);
 
@@ -502,7 +497,7 @@ dialog (void)
            gtk_radio_button_new_with_label (button == NULL ?
                                             NULL :
                                             gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-                                            gettext (name[i-CURL_EDGE_FIRST]));
+                                            gettext (name[i - CURL_EDGE_FIRST]));
 
 	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                        curl.edge == i);
@@ -511,8 +506,8 @@ dialog (void)
                             "gimp-item-data", GINT_TO_POINTER (i));
 
 	 gtk_table_attach (GTK_TABLE (table), button,
-			   CURL_EDGE_LEFT  (i) ? 0 : 2,
-                           CURL_EDGE_LEFT  (i) ? 1 : 3,
+			   CURL_EDGE_LEFT  (i) ? 0 : 1,
+                           CURL_EDGE_LEFT  (i) ? 1 : 2,
                            CURL_EDGE_UPPER (i) ? 0 : 2,
                            CURL_EDGE_UPPER (i) ? 1 : 3,
 			   GTK_SHRINK, GTK_SHRINK, 0, 0);
@@ -541,17 +536,17 @@ dialog (void)
      gint   i;
      gchar *name[] =
      {
-       N_("Vertical"),
-       N_("Horizontal")
+       N_("_Vertical"),
+       N_("_Horizontal")
      };
 
      button = NULL;
      for (i = 0; i <= CURL_ORIENTATION_LAST; i++)
        {
-	 button = gtk_radio_button_new_with_label
-	   ((button == NULL) ?
-	    NULL : gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
-	    gettext (name[i]));
+	 button = gtk_radio_button_new_with_mnemonic (button == NULL ?
+                                                      NULL :
+                                                      gtk_radio_button_get_group (GTK_RADIO_BUTTON (button)),
+                                                      gettext (name[i]));
 
 	 gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                        curl.orientation == i);
@@ -574,21 +569,6 @@ dialog (void)
 
    gtk_widget_show (hbox);
    gtk_widget_show (frame);
-
-   table = gtk_table_new (1, 3, FALSE);
-   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-   gtk_widget_show (table);
-
-   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                                      _("_Opacity:"), 100, 0,
-                                      curl.opacity * 100.0, 0.0, 100.0,
-                                      1.0, 1.0, 0.0,
-                                      TRUE, 0, 0,
-                                      NULL, NULL);
-   g_signal_connect (adjustment, "value_changed",
-                     G_CALLBACK (dialog_scale_update),
-                     &curl.opacity);
 
    button = gtk_check_button_new_with_mnemonic (_("_Shade under curl"));
    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), curl.shade);
@@ -615,6 +595,21 @@ dialog (void)
                                &curl.colors);
 
    gtk_widget_show (dialog);
+
+   table = gtk_table_new (1, 3, FALSE);
+   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+   gtk_widget_show (table);
+
+   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                                      _("_Opacity:"), 100, 0,
+                                      curl.opacity * 100.0, 0.0, 100.0,
+                                      1.0, 1.0, 0.0,
+                                      TRUE, 0, 0,
+                                      NULL, NULL);
+   g_signal_connect (adjustment, "value_changed",
+                     G_CALLBACK (dialog_scale_update),
+                     &curl.opacity);
 
    run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
@@ -708,7 +703,7 @@ init_calculation (gint32 drawable_id)
   gimp_rgb_get_uchar (&color, &back_color[0], &back_color[1], &back_color[2]);
 }
 
-static void
+static gint32
 do_curl_effect (gint32 drawable_id)
 {
   gint          x = 0;
@@ -723,9 +718,11 @@ do_curl_effect (gint32 drawable_id)
   guchar       *gradsamp;
   GimpPixelRgn  dest_rgn;
   gpointer      pr;
-  guchar       *grad_samples = NULL;
+  gint32        curl_layer_id;
+  guchar       *grad_samples  = NULL;
 
   color_image = gimp_drawable_is_rgb (drawable_id);
+
   curl_layer =
     gimp_drawable_get (gimp_layer_new (image_id,
 				       _("Curl Layer"),
@@ -734,9 +731,11 @@ do_curl_effect (gint32 drawable_id)
 				       color_image ?
                                        GIMP_RGBA_IMAGE : GIMP_GRAYA_IMAGE,
 				       100, GIMP_NORMAL_MODE));
+
+  curl_layer_id = curl_layer->drawable_id;
+
   gimp_image_add_layer (image_id, curl_layer->drawable_id, drawable_position);
   gimp_drawable_fill (curl_layer->drawable_id, GIMP_TRANSPARENT_FILL);
-  curl_layer_ID = curl_layer->drawable_id;
 
   gimp_drawable_offsets (drawable_id, &x1, &y1);
   gimp_layer_set_offsets (curl_layer->drawable_id, sel_x1 + x1, sel_y1 + y1);
@@ -835,6 +834,7 @@ do_curl_effect (gint32 drawable_id)
 		      factor = angle / alpha;
 		      for (k = 0; k < alpha_pos; k++)
 			pp[k] = 0;
+
 		      pp[alpha_pos] = (curl.shade ?
                                        (guchar) ((float) 255 * (float) factor) :
                                        0);
@@ -907,6 +907,8 @@ do_curl_effect (gint32 drawable_id)
   gimp_drawable_detach (curl_layer);
 
   g_free (grad_samples);
+
+  return curl_layer_id;
 }
 
 /************************************************/
@@ -1004,19 +1006,24 @@ clear_curled_region (gint32 drawable_id)
   gimp_drawable_detach (drawable);
 }
 
-static void
+static gint32
 page_curl (gint32 drawable_id)
 {
+  gint curl_layer_id;
+
   gimp_image_undo_group_start (image_id);
 
   gimp_progress_init (_("Page Curl..."));
 
   init_calculation (drawable_id);
 
-  do_curl_effect (drawable_id);
+  curl_layer_id = do_curl_effect (drawable_id);
+
   clear_curled_region (drawable_id);
 
   gimp_image_undo_group_end (image_id);
+
+  return curl_layer_id;
 }
 
 /*
