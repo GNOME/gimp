@@ -1,3 +1,30 @@
+2003-06-26  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpui.py: Missing self. reference. Fixes #115714.
+
+	* plug-ins/pygimp/gimpui.py: Move item.show() in Selector so that all
+	items are shown. Fixes bug #115715. Thanks to Dave Corrie for catching
+	both these.
+
+	* plug-ins/pygimp/gimpfu.py: Always register as type PLUGIN, to
+	reflect the recent changes in semantics.
+
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py: s/extension/plug_in/ to 
+	reflect above, for consistency.
+
+	* plug-ins/pygimp/gimpfu.py: Add a fail method which uses
+	gimp.message and then raises an error.
+
+	* plug-ins/pygimp/gimpmodule.c: remove declarations for
+	gimp_extension_ack and gimp_extension_process, they are in gimp.h.
+
+	* plug-ins/pygimp/gimpfu.py
+	* plug-ins/pygimp/gimpui.py
+	* plug-ins/pygimp/plug-ins/gimpcons.py
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py: Added pygtk.require('2.0').
+	Fixes bug #115545.
+
 2003-06-28  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/gui/grid-dialog.c (cancel_callback): removed unneeded

@@ -30,6 +30,9 @@ for i in pars:
 del pars, i
 
 def define_browse_win():
+    import pygtk
+    pygtk.require('2.0')
+
     import gtk
 
     global BrowseWin
@@ -288,14 +291,22 @@ def define_browse_win():
 		map(lambda x: x[1], params), ', ') + ")"
 
 if __name__ == '__main__':
-    def extension_pdb_browse():
+    def plug_in_pdb_browse():
+        import pygtk
+        pygtk.require('2.0')
+
         import gtk
+
 	gtk.rc_parse(gimp.gtkrc())
+
         define_browse_win()
+
 	win = BrowseWin()
 	win.connect("destroy", gtk.mainquit)
 	win.show()
+
 	gtk.mainloop()
+
     register(
 	"python_fu_pdb_browse",
 	"Browse the Procedural Database",
@@ -307,7 +318,9 @@ if __name__ == '__main__':
 	"*",
 	[],
 	[],
-	extension_pdb_browse)
+	plug_in_pdb_browse)
+
     main()
+
 else:
     define_browse_win()

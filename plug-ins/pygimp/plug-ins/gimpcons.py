@@ -19,13 +19,19 @@
 
 from gimpfu import *
 
-def extension_python_fu_console():
+def plug_in_python_fu_console():
+    import pygtk
+    pygtk.require('2.0')
+
     import gtk, gimpenums, gimpshelf
+
     gtk.rc_parse(gimp.gtkrc())
+
     namespace = {'__builtins__': __builtins__,
 		 '__name__': '__main__', '__doc__': None,
 		 'gimp': gimp, 'pdb': gimp.pdb,
 		 'shelf': gimpshelf.shelf}
+
     for s in gimpenums.__dict__.keys():
         if s[0] != '_':
             namespace[s] = getattr(gimpenums, s)
@@ -38,15 +44,21 @@ def extension_python_fu_console():
     cons = gtkcons.Console(namespace=namespace, quit_cb=gtk.mainquit)
 
     def browse(button, cons):
+        import pygtk
+        pygtk.require('2.0')
+
         import gtk, pdbbrowse
+
         def ok_clicked(button, browse, cons=cons):
             cons.line.set_text(browse.cmd)
             browse.destroy()
+
         win = pdbbrowse.BrowseWin(ok_button=ok_clicked)
         win.connect("destroy", gtk.mainquit)
         win.set_modal(TRUE)
         win.show()
         gtk.mainloop()
+
     button = gtk.Button("Browse")
     button.connect("clicked", browse, cons)
     cons.inputbox.pack_end(button, expand=FALSE)
@@ -56,10 +68,12 @@ def extension_python_fu_console():
     win.set_default_size(475, 300)
     win.show()
     cons.init()
+
     # flush the displays every half second
     def timeout():
         gimp.displays_flush()
         return TRUE
+
     gtk.timeout_add(500, timeout)
     gtk.mainloop()
 
@@ -74,6 +88,6 @@ register(
     "*",
     [],
     [],
-    extension_python_fu_console)
+    plug_in_python_fu_console)
 
 main()

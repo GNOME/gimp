@@ -135,7 +135,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 	else:
 	    return 1
     if not letterCheck(func_name):
-	raise error, "function name contains ileagal characters"
+	raise error, "function name contains illegal characters"
     for ent in params:
 	if len(ent) < 4:
 	    raise error, "sequence not long enough for "+ent[0]
@@ -152,12 +152,11 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 	    raise error,"result name contains ilegal characters"
     if menupath[:8] == '<Image>/' or \
        menupath[:7] == '<Load>/' or \
-       menupath[:7] == '<Save>/':
+       menupath[:7] == '<Save>/' or \
+       menupath[:10] == '<Toolbox>/':
 	plugin_type = PLUGIN
-    elif menupath[:10] == '<Toolbox>/':
-	plugin_type = EXTENSION
     else:
-	raise error, "menu path must start with <Image> or <Toolbox>"
+	raise error, "Invalid menu path"
 
     if not func_name[:7] == 'python_' and \
        not func_name[:10] == 'extension_' and \
@@ -188,7 +187,7 @@ def _query():
 	if plugin_type == PLUGIN:
 	    if menupath[:7] == '<Load>/':
 		params[1:1] = file_params
-	    else:
+	    elif menupath[:10] != '<Toolbox>/':
 		params.insert(1, (PDB_IMAGE, "image",
 				  "The image to work on"))
 		params.insert(2, (PDB_DRAWABLE, "drawable",
@@ -233,6 +232,9 @@ def _interact(func_name):
     # short circuit for no parameters ...
     if len(params) == 0: return []
 
+    import pygtk
+    pygtk.require('2.0')
+
     import gtk
     import gimpui
 
@@ -242,6 +244,9 @@ def _interact(func_name):
     # define a mapping of param types to edit objects ...
     class StringEntry(gtk.Entry):
 	def __init__(self, default=''):
+	    import pygtk
+	    pygtk.require('2.0')
+
 	    import gtk
 	    gtk.Entry.__init__(self)
 	    self.set_text(str(default))
@@ -261,6 +266,8 @@ def _interact(func_name):
     class SliderEntry(gtk.HScale):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
+	    import pygtk
+	    pygtk.require('2.0')
 	    import gtk
 	    self.adj = gtk.Adjustment(default, bounds[0],
 				      bounds[1], bounds[2],
@@ -271,6 +278,8 @@ def _interact(func_name):
     class SpinnerEntry(gtk.SpinButton):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
+	    import pygtk
+	    pygtk.require('2.0')
 	    import gtk
 	    self.adj = gtk.Adjustment(default, bounds[0],
 				      bounds[1], bounds[2],
@@ -280,6 +289,8 @@ def _interact(func_name):
 	    return int(self.adj.value)
     class ToggleEntry(gtk.ToggleButton):
 	def __init__(self, default=0):
+	    import pygtk
+	    pygtk.require('2.0')
 	    import gtk
 	    gtk.ToggleButton.__init__(self)
 	    self.label = gtk.Label("No")
@@ -296,6 +307,8 @@ def _interact(func_name):
 	    return self.get_active()
     class RadioEntry(gtk.Frame):
         def __init__(self, default=0, items=(("Yes", 1), ("No", 0))):
+	    import pygtk
+	    pygtk.require('2.0')
             import gtk
             gtk.Frame.__init__(self)
             box = gtk.HBox(gtk.FALSE, 5)
@@ -441,6 +454,11 @@ def main():
     '''This should be called after registering the plugin.'''
     gimp.main(None, None, _query, _run)
 
+def fail(msg):
+    '''Display and error message and quit'''
+    gimp.message(msg)
+    raise error, msg
+
 _python_image = [
 "64 64 7 1",
 "  c #000000",
@@ -517,6 +535,8 @@ _python_image = [
 ]
 
 def _get_logo(colormap):
+    import pygtk
+    pygtk.require('2.0')
     import gtk
     pix, mask = gtk.gdk.pixmap_colormap_create_from_xpm_d(None, colormap,
 							  None, _python_image)

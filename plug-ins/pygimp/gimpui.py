@@ -11,6 +11,9 @@ various gimp data types.  Each of these selectors takes default as an argument
 to the constructor, and has a get_value() method for retrieving the result.
 '''
 
+import pygtk
+pygtk.require('2.0')
+
 import gtk, gimp
 
 def _callbackWrapper(menu_item, callback, data):
@@ -188,7 +191,7 @@ class _Selector(gtk.HBox):
 
 	swin = gtk.ScrolledWindow()
 	swin.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-	dialog.vbox.pack_start(swin)
+	self.dialog.vbox.pack_start(swin)
 	swin.show()
 		
 	items = map(None, self.get_list())
@@ -202,7 +205,7 @@ class _Selector(gtk.HBox):
 	    list.add(item)
 	    if s == self.selected:
 		list.select_child(item)
-		item.show()
+	    item.show()
 	swin.add_with_viewport(list)
 	list.show()
 

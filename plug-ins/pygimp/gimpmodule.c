@@ -669,9 +669,6 @@ pygimp_tile_height(PyObject *self)
     return PyInt_FromLong(gimp_tile_height());
 }
 
-void gimp_extension_ack     (void);
-void gimp_extension_process (guint timeout);
-
 static PyObject *
 pygimp_extension_ack(PyObject *self)
 {
