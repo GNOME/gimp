@@ -31,7 +31,7 @@ Fri Jul  9 16:47:04 MEST 1999  Sven Neumann <sven@gimp.org>
 	* app/crop.c: mysteriously, using the new tool constructor fixed
 	the crop tool redraw problem.
 
-	* app/gdisplay.c: clode cleanup
+	* app/gdisplay.c: code cleanup.
 
 	* app/info_dialog.c: never emit signals when updating the info
 	fields. Fixes some more transform tool grid redraw bugs.
