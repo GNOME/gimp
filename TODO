@@ -1,43 +1,173 @@
-Please add things to this file when the need to do them is
-discovered. Explanations of why or how this would be useful are
-even better. Insight into possible ways to implement are even better
-than that.
+This is really intended to be a list of ideas that came up so they don't
+get lost. We are working towards making a real TODO with scheduling for
+the 1.4 and 2.0 release out of this.
 
-This is really intended to be a list of stuff thats potentially bolted
-onto the current codebase (i.e. gimp 1.3), rather than in gimp 2.0.
+Please add things to this file when the need to do them is discovered. 
+Explanations of why or how this would be useful are even better. Insight 
+into possible ways to implement are even better than that.
 
 ===================================================================
 
-For the pixmap/hose stuff:
+GUI / Functionality Separation
 
-	add a "pipe edit" option to the brush dialog so we can
-	call up a hose editor (to reorder images, scale them, etc)
+	Both file scope wise and in use, particulary so that the GUI 
+	version of the tool uses the pdb whenever possible
+	(for finding bugs, and for macro recording)
+
+	The core and the GUI have to reside in separate subdirectories.
+
+Macro recording and better scripting support:
+
+	This pretty much is going to require the aforementioned
+	gui/func seperation. More stuff needs to be triggered via pdb
+	to make this a possibilty.
+
+Named undo
+
+	Each pushing of an undo operation should include a textual
+	string for human consumption.  That way, the "undo" menu
+	option can list exactly what will be undone.  Its sorta there,
+	but could be more specific. 
+
+	NOTE: With eyerything going thru the PDB, we'll get a much better
+	undo system and macro recording more or less for free. This is
+	schedulded for 2.0.
+
+Fix stuff so that the tile size could actually be changed eventually
+
+	Currently gimp core is mostly setup to use a potentially
+	variable tilesize, but lots of plugins and some internal stuff
+	are hardcoded to expect 64x64 tiles. This is good for 8-bit
+	images on x86, but with potential of deep images and other
+	platforms, having this variable could be a real gain in
+	performance tweaking.  
+
+	This will be hard because the XCF file format assumes 64x64
+	tiles.  XCF load/save will have to be written to retile
+	images, or the XCF file format redesigned.  --sg
+
+Automagically guess whats a good tile_cache size:
+
+	Not sure how to do this. Suggestions are offered in the
+	install.
+
+Optimize transform_core (special cases, fft stuff?, optimizations only
+        raph understands, etc...)
+
+Some sort of image/drawable locking:
+
+	so we don't munge images by doing >1 ops on them at once.
+	For plugins in particular, may also simplifie some of the tool
+	redesign.
+	
+Integrate gimp-16 stuff?
+
+	Probably won't happen for 1.4 but will definitely be in 2.0 as GEGL.
+
+	see http://film.gimp.org/
+
+Action/active/Procedural Layers
+
+	People seem to want them. Planned for 2.0.
+
+Previews in file save (for jpeg compression, etc):
+
+	Currently there is no easy way to see the effects of
+	compression or other image saving effects before actually
+	saving and reloading an image. 
+
+	NOTE: The JPEG plug-in uses an awful hack to acomplish this
+	      goal. There needs to be an API for save plug-ins that 
+	      provides this functionality. We should not allow 
+	      another plug-in to follow the bad example of the JPEG
+	      plug-in.
+
+Generic preview code in libgimp for use by plugins
+
+	All plugins should have a preview. it would be nice if there
+	were code in libgimp to make this easier. Possibly just
+	generalize a good exmaple of preview code (quartics?) and
+	slap it in libgimp. Maybe throw some of the gck stuff in there
+	too. Or possibly make a new plugin helper lib combining
+	gck, megawidget, preview code, etc.
+
+	"All" plugins might be too extreme.  Some plugins (autostretch 
+	contrast) have little need for an interface, and exist IMHO 
+	better w/o one.  Also, there are different needs for previews
+	depending on the plug-in type, so a set of preview widgets
+	would be a better solution.
+
+	Should be done in 1.4.
+
+Indexed/color reducing to arbitrary number of colors:
+
+	Current convert.c is limited to indexing to 8-bit palettes or
+	less.  Dont know what would be involved in making it work for
+	larger palettes. convert.c has some deep magic involved in it,
+	so who knows.
+
+	(Related: indexed images with more than 8 bits depth.  --sg)
+
+Active brushes:
+
+	Use module system to dynamically load new brush types, eg
+	Raph's(?) watercolour brushes, pixmap brushes, or image hose
+	style brushes.  Need to define a proper API for hooking.
+	Maybe really want to define new tool types, rather than new brush
+	types.
+
+
+
+Various Tool Ideas:
+
+	Make tools listen for gimage dirty signals to fix munging.
+	When a tool caches image data privately, you need to reset
+	when the image gets dirty.
+
+
+    Some degree of drawing tools, straight line, etc:
+
+	Perhaps large parts of gfig could be salvaged for this. Its
+	not something "paint" programs traditionaly do, but there
+	usefulnes is obvious. square/circle/ellipse are already there
+	basically (just make a wrapper to select and stroke). need a
+	better straigh line drawing ui though.
+
+    More Xinput stuff ( gradient brushes, pen "strokes" ?):
+
+	This is very important for "artist" types. The more
+	value-added utility we can make for Xinput stuff the better.
+
+    BETTER FONT SUPPORT! 
+
+	Text should be redone entirely, with a native T1/TTF
+	interpreter.  Using X to render text is cheap but nasty.
+
+	NOTE: Actually we should use FreeType (and probably Pango) for 
+              this. The gimp-freetype plug-in should be used as a 
+	      test-bed to develop the next-generation text-tool..
+
+	(There's a good argument for making all text operations run
+	thru an extension. --sg)
+
+	See gimp-freetype for exciting work on going around X!
+
+    "Font brush"
+
+	a brush that could use chars rendered from fonts as the brush
+	bitmap. limited utility for char's, but a couple of nice sets
+	of winding fonts could make it interestings. And you could
+	use words or strings.
+
+	Very nice idea, indeed. Freetype would even allow to resize and
+	transform the font based on pressure, speed, tilt, ...
+
+    A clone tool that lets you rotate before writing to destination.
+
 
 A few GUI things suggestions...
 
-   1) Crop tool could have an optional shader for the outside area
-      so when you crop, the area outside would show in a darker color /
-      user definable color / black / white etc.. (maybe a selector for
-      the outside area:                  ____________ 
-                         Outside fill: [|_none_______| = ]
-                                        |.black......|
-                                        |.white......|
-                                        |.user def...|
-                                        |.shade 50%..|
-                                        `------------'
-      That would be very handy for cropping scanned photos etc - 
-      one would see the result much easier apart from the rest.
-
-gui/functionality separation
-
-	both file scope wise and in use, particulary so that
-	the gui version of the tool uses the pdb whenever possible
-	(for finding bugs, and for macro recording)
-
-	May be a good idea to actually put the core and the gui in
-	separate subdirectories.  --sg
-
-more configurabilty (eek)
+    More configurabilty:
 
 	I would like to be able to let the user stick arbitrary
 	buttons into the toolbox and attach arbitrary functions to
@@ -64,33 +194,78 @@ more configurabilty (eek)
 	make sense to implement something like this?
 								--tigert 
 
-fix stuff so that the tile size could actually be changed eventually
+    Brush-shaped cursors:
 
-	Currently gimp core is mostly setup to use a potentially
-	variable tilesize, but lots of plugins and some internal stuff
-	are hardcoded to expect 64x64 tiles. This is good for 8-bit
-	images on x86, but with potential of deep images and other
-	platforms, having this variable could be a real gain in
-	performance tweaking.  
+	Possible solutions, generate cursors on the fly, use shaped
+	pixmaps, possibly just draw directly on the preview, any other
+	ideas?  Raphs canvas might offer the oppurtunity to do this
+	in color and anti-aliased.
 
-	This will be hard because the XCF file format assumes 64x64
-	tiles.  XCF load/save will have to be written to retile
-	images, or the XCF file format redesigned.  --sg
+    Crop tool could have an optional shader for the outside area
+	so when you crop, the area outside would show in a darker color /
+	user definable color / black / white etc.. (maybe a selector for
+	the outside area:                  ____________ 
+                         Outside fill: [|_none_______| = ]
+                                        |.black......|
+                                        |.white......|
+                                        |.user def...|
+                                        |.shade 50%..|
+                                        `------------'
+	That would be very handy for cropping scanned photos etc - 
+	one would see the result much easier apart from the rest.
 
-previews in file save (for jpeg compression, etc):
+    Suggestion from Ville Hautamaki (CW): 
 
-	Currently there is no easy way to see the effects of
-	compression or other image saving effects before actually
-	saving and reloading an image.
+	Pattern groups
+	Especially once patterns are demand-loaded. It would be
+	very conveint to say "load all the wood patterns",
+	or even just "set 1" etc.
 
-keybindings for simple "binary" tools:
+	Same for brushes, gradients, fonts, ...
 
-	(for ex, flip should flip horiz normal, and shift+click to
-	shift vertically). The more that can be done by power-users
-	without having to delve through dialogs the better.  This is
-	mostly implemented already.
+    For the pixmap/hose stuff:
 
-curve deal in the gradient editor?:
+	add a "pipe edit" option to the brush dialog so we can
+	call up a hose editor (to reorder images, scale them, etc)
+
+	NOTE: Probably overkill and difficult to implement in the 
+	      current brush model. Users can use the brush and pipe 
+	      load/save plug-ins if they really want to edit brushes.
+
+    Grid:
+
+	A gridding, and a snap to gridding. Basically a way of turning on 
+        and off a grid, and setting the grid size. Then also a way of 
+	starting to draw at a grid intersection and then end drawing at 
+	another. 
+
+    Have a "Preview" button too that performs the transformation 
+        without interpolation:
+
+	As it stands, transforms can be very slow and feedback to the
+	user is small. A preiview would save much time and make the action
+	more accururate.
+
+    Selections should be transformable:
+
+	(e.g. rotate an elliptical selection; the selection, not it's
+	content!!).
+	This shouldnt be too hard. Perhaps just need to add the hooks
+	for the selection info (usually in TileManager structs) to
+	be passed to the existent image ops. 
+
+    Have a possibility to add a text as selection:
+
+	If selections would be editable as described above, we'd 
+	then have editable vector-text. 
+
+	See the bezier option in gimp-freetype!
+
+    Option to create New Indexed image (with the choice of palette foo).
+
+    Big cad style cross-hairs cursor.
+
+    Curve deal in the gradient editor?:
 
 	It could be useful to have a curve widget for each of the
 	color channels or hsv. For example, you have a custom palette
@@ -100,226 +275,37 @@ curve deal in the gradient editor?:
 	(Note: this would require a complete rewrite of the gradient
 	_engine_, not just the editor. --sg)
 
-some degree of drawing tools, straight line, etc:
+    Redesign of the Blend Tool dialog? (it's rather large...)
 
-	Perhaps large parts of gfig could be salvaged for this. Its
-	not something "paint" programs traditionaly do, but there
-	usefulnes is obvious. square/circle/ellipse are already there
-	basically (just make a wrapper to select and stroke). need a
-	better straigh line drawing ui though.
+    Let PDB stuff register under the layers_dialog menu:
 
-Macro recording and better scripting support:
+	Lots of potential in scripts to do layer/channel manip.  Might
+	as well let them register on those menus.
 
-	This pretty much is going to require the aforementioned
-	gui/func seperation. More stuff needs to be triggered via pdb
-	to make thsi a possibilty.
+    Some sort of mdi for dialogs so you could tab them together or
+    pull them apart:
 
-More Xinput stuff ( gradient brushes, pen "strokes" ?):
+	Would be nice to be able to pile all the dialogs into one big
+	notebook.  
+  
+    Make color picker able to choose from any color on the screen. 
 
-	This is very important for "artist" types. The more
-	value-added utility we can make for Xinput stuff the better.
+	This sounds really simple. GTK-2.0 will does this for us.
 
-Redesign of the Blend Tool dialog? (it's rather large...)
+    Code to set built in icons or icon path?
 
-"Fit text to selection": 
+	Is this the wm's job or soemthing internal?  Could be nice for
+	plug-ins to register an icon for internal use.
 
-	make selection, scale text to fit it... A suggestion from
-	Xach, Perhaps instead of rendering the text and font size
-	exactly, make a bounding box of it, then scale the bounding
-	box as approriate. When the box size is chosen, figure out the
-	best-fit font size and render it.
-
-	instead of rendering into a preview, render preview directly
-	onto the image. 
-
-	(Text should be redone entirely, with a native T1/TTF
-	interpreter.  Using X to render text is cheap but nasty. --sg)
-
-	Done via a perl script hack, but would be nicer in core/extension 
-	-sjb
-
-progress bars on long proccesses:
+    Progress bars on long proccesses:
 
 	Currently, long-term ops like blend run from a recursive event
 	loop, not the idle loop like they should.  This should be cleaned up a
 	little. -- Austin.
 
-"open into layer" and new image from cut buffer stuff should perhaps
-be in core?:
+    "Open into Layer" might be a good idea.
 
-	This would be "Paste into New" and/or "Copy to New". Should be
-	simple. Theres a script to do this, but the functionailty is
-	so simple it perhaps would be best to do in core.
+    Ability to get an exact count of the total number of colors in the image:
 
-Automagically guess whats a good tilecache size:
-
-	Not sure how to do this. Suggestions are offered in the
-	install.
-
-BETTER FONT SUPPORT! 
-
-	even if we have to go around X. and a better font selector
-	too. Perhaps the new gtk font selector could be used. It seems
-	handy. The actual support may require integration of type1lib
-	or freetype or similar. Probabaly be an extension, gimp could
-	fall back to X font rendering if need be.
-
-	Refresh font list while running.
-
-	(There's a good argument for making all text operations run
-	thru an extension. --sg)
-
-	See gimp-freetype for exciting work on going around X!
-
-ability to get an exact count of the total number of colors in the
-image:
-
-	Xpm plugin has an algo to do this. Perhaps it should be in the
-	core.
-
-indexed/color reducing to arbitrary number of colors:
-
-	Current convert.c is limited to indexing to 8-bit palettes or
-	less.  Dont know what would be involved in making it work for
-	larger palettes. convert.c has some deep magic involved in it,
-	so who knows.
-
-	(Related: indexed images with more than 8 bits depth.  --sg)
-
-Folding box for the toolbar:
-
-	Done, but a bit buggy on some boxes still?
-	
-optimize transform_core (special cases, fft stuff?, optimizations only
-raph understands, etc...)
-
-brush-shaped cursors:
-
-	Possible solutions, generate cursors on the fly, use shaped
-	pixmaps, possibly just draw directly on the preview, any other
-	ideas?  Raphs caanvas might offer the oppurtunity to do this
-	in color and anti-aliased.
-
-active brushes:
-	Use module system to dynamically load new brush types, eg
-	Raph's(?) watercolour brushes, pixmap brushes, or image hose
-	style brushes.  Need to define a proper API for hooking.
-	Maybe really want to define new tool types, rather than new brush
-	types.
-
-let pdb stuff register under the layers_dialog menu:
-
-	Lots of potential in scripts to do layer/channel manip.  Might
-	as well let them register on those menus.
-
-some sort of mdi for dialogs so you could tab them together or
-pull them apart:
-
-	Would be nice to be able to pile all the dialogs into one big
-	notebook.  
-
-make color picker able to choose from any color on the screen. 
-
-	This sounds really simple. Any idea how to actually do it?
-
-big cad style cross-hairs cursor:
-	guides come close, but we probabaly dont wont somethign like
-	that again.
-
-some sort of image/drawable locking:
-	so we don't munge images by doing >1 ops on them at once.
-	For plugins in particular, may also simplifie some of the tool
-	redesign.
-
-Suggestion from Ville Hautamaki (CW): 
-	Pattern groups
-	Especially once patterns are demand-loaded. It would be
-	very conveint to say "load all the wood patterns",
-	or even just "set 1" etc.
-
-Have a "Preview" button too that performs the transformation 
-without interpolation:
-	As it stands, transforms can be very slow and feedback to the
-	user is small. A preiview would save much time and make the action
-	more accururate.
-
-Selections should be transformable:
-	(e.g. rotate an elliptical selection; the selection, not it's
-	content!!).
-	This shouldnt be too hard. Perhaps just need to add the hooks
-	for the selection info (usually in TileManager structs) to
-	be passed to the existent image ops. 
-	
-Have a possibility to add a text as selection:
-	If selections would be editable as described above, we'd 
-	then have editable vector-text. 
-
-	See the bezier option in gimp-freetype!
-
-Option to create New Indexed image (with the choice of pattern foo) ?
-
-Integrate gimp-16 stuff?
-	Probably won't happen, though some good ideas we could steal 
-	have come out of that - in particular, a clone tool that lets
-	you rotate before writing to destination is a nifty idea.
-	
-	see http://film.gimp.org/
-
-Make file load/save errors not worthy of existence.
-
-	Right now the errors from the file plugins pop
-	up in weird places, at weird times, and are often
-	basically useless. This is bad.
-
-Code to set built in icons or icon path?
-
-	Is this the wm's job or soemthing internal?  Could be nice for
-	plug-ins to register an icon for internal use.
-
-Action/active/Procedural Layers
-
-	People seem to want them. For some ops it would be painfully
-	easy. For alot of stuff i havent a clue. Anyone have a good plan
-	on how to potentialy implement this?
-
-generic preview code in libgimp for use by plugins
-
-	All plugins should have a preview. it would be nice if there
-	were code in libgimp to make this easier. Possibly just
-	generalize a good exmaple of preview code (quartics?) and
-	slap it in libgimp. Maybe throw some of the gck stuff in there
-	too. Or possibly make a new plugin helper lib combining
-	gck, megawidget, preview code, etc.
-
-	"All" plugins might be too extreme.  Some plugins (autostretch 
-	contrast) have little need for an interface, and exist IMHO 
-	better w/o one.  Also, there are different needs for previews
-	depending on the plug-in type, so a set of preview widgets
-	would be a better solution.
-
-named undo
-	Each pushing of an undo operation should include a textual
-	string for human consumption.  That way, the "undo" menu
-	option can list exactly what will be undone.  Its sorta there,
-	but could be more specific.
-
-tools
-
-	Make tools listen for gimage dirty signals to fix munging.
-	When a tool caches image data privately, you need to reset
-	when the image gets dirty.
-
-Grid
-
-	A gridding, and a snap to gridding. Basically a way of turning on 
-        and off a grid, and setting the grid size. Then also a way of starting  
-        to draw at a grid intersection and then end drawing at another 
-        intersection.
-				(this was suggested to me by email -- Sven)
-
-"font" brush?
-
-	a brush that could use chars rendered from fonts as the brush
-	bitmap. limited utility for char's, but a couple of nice sets
-	of winding fonts could make it interestings. And you could
-	use words or strings.
+	Xpm plugin has an algo to do this. Should be trivial to add this to
+	the core.
