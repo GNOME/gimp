@@ -1,3 +1,8 @@
+2002-03-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.c: gimp_dock_add_book() optimized to about
+	two cases :) as gimp_dock_remove_book(), just a bit more ugly.
+
 2002-03-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdock.c: reduced the gimp_dock_remove_book()
