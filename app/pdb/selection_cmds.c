@@ -481,7 +481,7 @@ selection_invert_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_invert (gimage);
+    gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
 
   return procedural_db_return_args (&selection_invert_proc, success);
 }
@@ -523,7 +523,7 @@ selection_sharpen_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_sharpen (gimage);
+    gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
 
   return procedural_db_return_args (&selection_sharpen_proc, success);
 }
@@ -565,7 +565,7 @@ selection_all_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_all (gimage);
+    gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
 
   return procedural_db_return_args (&selection_all_proc, success);
 }
@@ -654,7 +654,7 @@ selection_feather_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_feather (gimage, radius, radius);
+    gimp_channel_feather (gimp_image_get_mask (gimage), radius, radius, TRUE);
 
   return procedural_db_return_args (&selection_feather_proc, success);
 }
@@ -706,7 +706,7 @@ selection_border_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_border (gimage, radius, radius);
+    gimp_channel_border (gimp_image_get_mask (gimage), radius, radius, TRUE);
 
   return procedural_db_return_args (&selection_border_proc, success);
 }
@@ -758,7 +758,7 @@ selection_grow_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_grow (gimage, steps, steps);
+    gimp_channel_grow (gimp_image_get_mask (gimage), steps, steps, TRUE);
 
   return procedural_db_return_args (&selection_grow_proc, success);
 }
@@ -810,7 +810,7 @@ selection_shrink_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_image_mask_shrink (gimage, radius, radius, FALSE);
+    gimp_channel_shrink (gimp_image_get_mask (gimage), radius, radius, FALSE, TRUE);
 
   return procedural_db_return_args (&selection_shrink_proc, success);
 }

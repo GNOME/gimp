@@ -92,27 +92,6 @@ gimp_image_mask_is_empty (GimpImage *gimage)
 }
 
 void
-gimp_image_mask_feather (GimpImage *gimage,
-                         gdouble    feather_radius_x,
-                         gdouble    feather_radius_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_feather (gimp_image_get_mask (gimage),
-			feather_radius_x,
-			feather_radius_y,
-                        TRUE);
-}
-
-void
-gimp_image_mask_sharpen (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
-}
-
-void
 gimp_image_mask_clear (GimpImage   *gimage,
                        const gchar *undo_desc)
 {
@@ -122,69 +101,12 @@ gimp_image_mask_clear (GimpImage   *gimage,
 }
 
 void
-gimp_image_mask_all (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
-}
-
-void
-gimp_image_mask_invert (GimpImage *gimage)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
-}
-
-void
-gimp_image_mask_border (GimpImage *gimage,
-                        gint       border_radius_x,
-                        gint       border_radius_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_border (gimp_image_get_mask (gimage),
-		       border_radius_x,
-		       border_radius_y,
-                       TRUE);
-}
-
-void
-gimp_image_mask_grow (GimpImage *gimage,
-                      gint       grow_pixels_x,
-                      gint       grow_pixels_y)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_grow (gimp_image_get_mask (gimage),
-		     grow_pixels_x,
-		     grow_pixels_y,
-                     TRUE);
-}
-
-void
-gimp_image_mask_shrink (GimpImage *gimage,
-                        gint       shrink_pixels_x,
-                        gint       shrink_pixels_y,
-                        gboolean   edge_lock)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimp_channel_shrink (gimp_image_get_mask (gimage),
-		       shrink_pixels_x,
-		       shrink_pixels_y,
-		       edge_lock,
-                       TRUE);
-}
-
-void
 gimp_image_mask_push_undo (GimpImage   *gimage,
                            const gchar *undo_desc)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_selection_push_undo (GIMP_SELECTION (gimp_image_get_mask (gimage)),
+  gimp_selection_push_undo (gimp_image_get_mask (gimage),
                             undo_desc);
 }
 
@@ -193,7 +115,7 @@ gimp_image_mask_invalidate (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_selection_invalidate (GIMP_SELECTION (gimp_image_get_mask (gimage)));
+  gimp_selection_invalidate (gimp_image_get_mask (gimage));
 }
 
 

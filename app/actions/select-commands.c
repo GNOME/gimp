@@ -26,6 +26,7 @@
 #include "gui-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -100,7 +101,7 @@ select_invert_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_invert (gimage);
+  gimp_channel_invert (gimp_image_get_mask (gimage), TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -111,7 +112,7 @@ select_all_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_all (gimage);
+  gimp_channel_all (gimp_image_get_mask (gimage), TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -122,7 +123,7 @@ select_none_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_clear (gimage, NULL);
+  gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -167,7 +168,7 @@ select_sharpen_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_sharpen (gimage);
+  gimp_channel_sharpen (gimp_image_get_mask (gimage), TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -307,7 +308,7 @@ gimp_image_mask_feather_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimp_image_mask_feather (gimage, radius_x, radius_y);
+  gimp_channel_feather (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -340,7 +341,7 @@ gimp_image_mask_border_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimp_image_mask_border (gimage, radius_x, radius_y);
+  gimp_channel_border (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -373,7 +374,7 @@ gimp_image_mask_grow_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimp_image_mask_grow (gimage, radius_x, radius_y);
+  gimp_channel_grow (gimp_image_get_mask (gimage), radius_x, radius_y, TRUE);
   gimp_image_flush (gimage);
 }
 
@@ -410,7 +411,7 @@ gimp_image_mask_shrink_callback (GtkWidget *widget,
 	radius_x *= factor;
     }
 
-  gimp_image_mask_shrink (gimage, radius_x, radius_y,
-                          selection_shrink_edge_lock);
+  gimp_channel_shrink (gimp_image_get_mask (gimage), radius_x, radius_y,
+                       selection_shrink_edge_lock, TRUE);
   gimp_image_flush (gimage);
 }

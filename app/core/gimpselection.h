@@ -48,12 +48,12 @@ struct _GimpSelectionClass
 
 GType         gimp_selection_get_type   (void) G_GNUC_CONST;
 
-GimpChannel * gimp_selection_new        (GimpImage     *gimage,
-                                         gint           width,
-                                         gint           height);
-void          gimp_selection_push_undo  (GimpSelection *selection,
-                                         const gchar   *undo_desc);
-void          gimp_selection_invalidate (GimpSelection *selection);
+GimpChannel * gimp_selection_new        (GimpImage   *gimage,
+                                         gint         width,
+                                         gint         height);
+void          gimp_selection_push_undo  (GimpChannel *selection,
+                                         const gchar *undo_desc);
+void          gimp_selection_invalidate (GimpChannel *selection);
 
 
 #endif /* __GIMP_SELECTION_H__ */

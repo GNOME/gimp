@@ -113,7 +113,7 @@ static void       gimp_selection_shrink        (GimpChannel     *channel,
                                                 gboolean         edge_lock,
                                                 gboolean         push_undo);
 
-static void       gimp_selection_changed       (GimpSelection   *selection);
+static void       gimp_selection_changed       (GimpChannel     *selection);
 static void       gimp_selection_validate      (TileManager     *tm,
                                                 Tile            *tile);
 
@@ -193,7 +193,7 @@ gimp_selection_translate (GimpItem *item,
                           gint      offset_y,
                           gboolean  push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (item);
+  GimpChannel *selection = GIMP_CHANNEL (item);
 
   if (push_undo)
     gimp_selection_push_undo (selection, _("Move Selection"));
@@ -213,7 +213,7 @@ gimp_selection_scale (GimpItem              *item,
                       gint                   new_offset_y,
                       GimpInterpolationType  interp_type)
 {
-  GimpSelection *selection = GIMP_SELECTION (item);
+  GimpChannel *selection = GIMP_CHANNEL (item);
 
   gimp_selection_invalidate (selection);
 
@@ -234,7 +234,7 @@ gimp_selection_resize (GimpItem *item,
                        gint      off_x,
                        gint      off_y)
 {
-  GimpSelection *selection = GIMP_SELECTION (item);
+  GimpChannel *selection = GIMP_CHANNEL (item);
 
   gimp_selection_invalidate (selection);
 
@@ -253,7 +253,7 @@ gimp_selection_flip (GimpItem            *item,
                      gdouble              axis,
                      gboolean             clip_result)
 {
-  GimpSelection *selection = GIMP_SELECTION (item);
+  GimpChannel *selection = GIMP_CHANNEL (item);
 
   gimp_selection_invalidate (selection);
 
@@ -269,7 +269,7 @@ gimp_selection_rotate (GimpItem        *item,
                        gdouble          center_y,
                        gboolean         clip_result)
 {
-  GimpSelection *selection = GIMP_SELECTION (item);
+  GimpChannel *selection = GIMP_CHANNEL (item);
 
   gimp_selection_invalidate (selection);
 
@@ -445,33 +445,29 @@ gimp_selection_feather (GimpChannel *channel,
                         gdouble      radius_y,
                         gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Feather Selection"));
+    gimp_selection_push_undo (channel, _("Feather Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->feather (channel, radius_x, radius_y,
                                               FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
 gimp_selection_sharpen (GimpChannel *channel,
                         gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Sharpen Selection"));
+    gimp_selection_push_undo (channel, _("Sharpen Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->sharpen (channel, FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
@@ -479,53 +475,47 @@ gimp_selection_clear (GimpChannel *channel,
                       const gchar *undo_desc,
                       gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
     {
       if (! undo_desc)
         undo_desc = _("Select None");
 
-      gimp_selection_push_undo (selection, undo_desc);
+      gimp_selection_push_undo (channel, undo_desc);
     }
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->clear (channel, NULL, FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
 gimp_selection_all (GimpChannel *channel,
                     gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Select All"));
+    gimp_selection_push_undo (channel, _("Select All"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->all (channel, FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
 gimp_selection_invert (GimpChannel *channel,
                        gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Invert Selection"));
+    gimp_selection_push_undo (channel, _("Invert Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->invert (channel, FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
@@ -534,17 +524,15 @@ gimp_selection_border (GimpChannel *channel,
                        gint         radius_y,
                        gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Border Selection"));
+    gimp_selection_push_undo (channel, _("Border Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->border (channel, radius_x, radius_y,
                                              FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
@@ -553,17 +541,15 @@ gimp_selection_grow (GimpChannel *channel,
                      gint         radius_y,
                      gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Grow Selection"));
+    gimp_selection_push_undo (channel, _("Grow Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->grow (channel, radius_x, radius_y,
                                            FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
@@ -573,21 +559,19 @@ gimp_selection_shrink (GimpChannel *channel,
                        gboolean     edge_lock,
                        gboolean     push_undo)
 {
-  GimpSelection *selection = GIMP_SELECTION (channel);
-
   if (push_undo)
-    gimp_selection_push_undo (selection, _("Shrink Selection"));
+    gimp_selection_push_undo (channel, _("Shrink Selection"));
   else
-    gimp_selection_invalidate (selection);
+    gimp_selection_invalidate (channel);
 
   GIMP_CHANNEL_CLASS (parent_class)->shrink (channel, radius_x, radius_y,
                                              edge_lock, FALSE);
 
-  gimp_selection_changed (selection);
+  gimp_selection_changed (channel);
 }
 
 static void
-gimp_selection_changed (GimpSelection *selection)
+gimp_selection_changed (GimpChannel *selection)
 {
   gimp_image_mask_changed (gimp_item_get_image (GIMP_ITEM (selection)));
 }
@@ -635,8 +619,8 @@ gimp_selection_new (GimpImage *gimage,
 }
 
 void
-gimp_selection_push_undo (GimpSelection *selection,
-                          const gchar   *undo_desc)
+gimp_selection_push_undo (GimpChannel *selection,
+                          const gchar *undo_desc)
 {
   GimpImage *gimage;
 
@@ -646,13 +630,13 @@ gimp_selection_push_undo (GimpSelection *selection,
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_undo_push_mask (gimage, undo_desc, GIMP_CHANNEL (selection));
+  gimp_image_undo_push_mask (gimage, undo_desc, selection);
 
   gimp_selection_invalidate (selection);
 }
 
 void
-gimp_selection_invalidate (GimpSelection *selection)
+gimp_selection_invalidate (GimpChannel *selection)
 {
   GimpLayer *layer;
   GimpImage *gimage;
@@ -666,7 +650,7 @@ gimp_selection_invalidate (GimpSelection *selection)
   /*  Turn the current selection off  */
   gimp_image_selection_control (gimage, GIMP_SELECTION_OFF);
 
-  GIMP_CHANNEL (selection)->boundary_known = FALSE;
+  selection->boundary_known = FALSE;
 
   /*  If there is a floating selection, update it's area...
    *  we need to do this since this selection mask can act as an additional

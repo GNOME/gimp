@@ -37,8 +37,8 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-mask-select.h"
@@ -286,7 +286,7 @@ gimp_selection_editor_invert_clicked (GtkWidget       *widget,
 {
   if (editor->gimage)
     {
-      gimp_image_mask_invert (editor->gimage);
+      gimp_channel_invert (gimp_image_get_mask (editor->gimage), TRUE);
       gimp_image_flush (editor->gimage);
     }
 }
@@ -297,7 +297,7 @@ gimp_selection_editor_all_clicked (GtkWidget       *widget,
 {
   if (editor->gimage)
     {
-      gimp_image_mask_all (editor->gimage);
+      gimp_channel_all (gimp_image_get_mask (editor->gimage), TRUE);
       gimp_image_flush (editor->gimage);
     }
 }
@@ -308,7 +308,7 @@ gimp_selection_editor_none_clicked (GtkWidget       *widget,
 {
   if (editor->gimage)
     {
-      gimp_image_mask_clear (editor->gimage, NULL);
+      gimp_channel_clear (gimp_image_get_mask (editor->gimage), NULL, TRUE);
       gimp_image_flush (editor->gimage);
     }
 }
@@ -353,9 +353,8 @@ gimp_selection_editor_stroke_clicked (GtkWidget       *widget,
 
   if (gimage)
     {
-      GimpToolInfo *tool_info;
-
-      tool_info = gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
+      GimpToolInfo *tool_info =
+        gimp_context_get_tool (gimp_get_current_context (gimage->gimp));
 
       gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (gimage)),
                         gimp_image_active_drawable (gimage),
@@ -462,7 +461,6 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                    options->feather,
                                    options->feather_radius,
                                    options->feather_radius);
-
   gimp_image_flush (image_editor->gimage);
 
   return TRUE;
@@ -507,7 +505,6 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                    options->feather,
                                    options->feather_radius,
                                    options->feather_radius);
-
   gimp_image_flush (editor->gimage);
 }
 

@@ -37,24 +37,8 @@ gint          gimp_image_mask_value       (GimpImage       *gimage,
                                            gint             y);
 gboolean      gimp_image_mask_is_empty    (GimpImage       *gimage);
 
-void          gimp_image_mask_feather     (GimpImage       *gimage,
-                                           gdouble          feather_radius_x,
-                                           gdouble          feather_radius_y);
-void          gimp_image_mask_sharpen     (GimpImage       *gimage);
 void          gimp_image_mask_clear       (GimpImage       *gimage,
                                            const gchar     *undo_name);
-void          gimp_image_mask_all         (GimpImage       *gimage);
-void          gimp_image_mask_invert      (GimpImage       *gimage);
-void          gimp_image_mask_border      (GimpImage       *gimage,
-                                           gint             border_radius_x,
-                                           gint             border_radius_y);
-void          gimp_image_mask_grow        (GimpImage       *gimage,
-                                           gint             grow_pixels_x,
-                                           gint             grow_pixels_y);
-void          gimp_image_mask_shrink      (GimpImage       *gimage,
-                                           gint             shrink_pixels_x,
-                                           gint             shrink_pixels_y,
-                                           gboolean         edge_lock);
 
 
 /*  pure wrappers around the resp. GimpSelection functions:  */
