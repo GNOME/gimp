@@ -56,13 +56,12 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "gimpoldpreview.h"
-
 /* --- Defines --- */
 #define ENTRY_WIDTH  75
 #define PREVIEW_MASK (GDK_EXPOSURE_MASK | \
                       GDK_BUTTON_PRESS_MASK | \
                       GDK_BUTTON1_MOTION_MASK)
+#define PREVIEW_SIZE (128)
 
 #define PREVIEW   0x1
 #define CURSOR    0x2
@@ -156,14 +155,16 @@ static FlareValues fvals =
   128, 128              /* posx, posy */
 };
 
-static gfloat          scolor, sglow, sinner, souter; /* size     */
-static gfloat          shalo;
-static gint            xs, ys;
-static gint            numref;
-static RGBfloat        color, glow, inner, outer, halo;
-static Reflect         ref1[19];
-static GimpOldPreview *preview;
-static gboolean        show_cursor = TRUE;
+static gfloat     scolor, sglow, sinner, souter; /* size     */
+static gfloat     shalo;
+static gint       xs, ys;
+static gint       numref;
+static RGBfloat   color, glow, inner, outer, halo;
+static Reflect    ref1[19];
+static GtkWidget *preview;
+static guchar    *preview_cache;
+static gint       preview_width, preview_height, preview_bpp;
+static gboolean   show_cursor = TRUE;
 
 /* --- Functions --- */
 MAIN ()
@@ -266,7 +267,7 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
-          FlareFX (drawable, 0);
+          FlareFX (drawable, FALSE);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
@@ -315,6 +316,8 @@ flare_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
+  FlareFX (drawable, TRUE);
+
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
   gtk_widget_destroy (dlg);
@@ -327,24 +330,23 @@ static void
 FlareFX (GimpDrawable *drawable,
          gboolean   preview_mode)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *dest, *d;
-  guchar *cur_row, *s;
-  gint row, col, i;
-  gint x1, y1, x2, y2;
-  gint matt;
-  gfloat hyp;
+  GimpPixelRgn  srcPR, destPR;
+  gint          width, height;
+  gint          bytes;
+  guchar       *cur_row, *s, *buffer = NULL;
+  gint          row, col, i;
+  gint          x1, y1, x2, y2;
+  gint          matt;
+  gfloat        hyp;
 
+  bytes  = drawable->bpp;
   if (preview_mode)
     {
-      width  = preview->width;
-      height = preview->height;
-      bytes  = preview->bpp;
+      width  = preview_width;
+      height = preview_height;
 
-      xs = (gdouble)fvals.posx * preview->scale_x;
-      ys = (gdouble)fvals.posy * preview->scale_y;
+      xs = (gdouble)fvals.posx * width  / drawable->width;
+      ys = (gdouble)fvals.posy * height / drawable->height;
 
       x1 = y1 = 0;
       x2 = width;
@@ -355,7 +357,6 @@ FlareFX (GimpDrawable *drawable,
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       width  = drawable->width;
       height = drawable->height;
-      bytes  = drawable->bpp;
 
       xs = fvals.posx; /* set x,y of flare center */
       ys = fvals.posy;
@@ -365,8 +366,7 @@ FlareFX (GimpDrawable *drawable,
 
   if (preview_mode)
     {
-      cur_row = g_new (guchar, preview->rowstride);
-      dest    = g_new (guchar, preview->rowstride);
+      buffer = g_new (guchar, bytes * width * height);
     }
   else
     {
@@ -374,9 +374,8 @@ FlareFX (GimpDrawable *drawable,
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-      cur_row = g_new (guchar, (x2 - x1) * bytes);
-      dest    = g_new (guchar, (x2 - x1) * bytes);
     }
+  cur_row = g_new (guchar, (x2 - x1) * bytes);
 
   scolor = (gfloat)matt * 0.0375;
   sglow  = (gfloat)matt * 0.078125;
@@ -396,13 +395,10 @@ FlareFX (GimpDrawable *drawable,
   for (row = y1; row < y2; row++) /* y-coord */
     {
       if (preview_mode)
-        memcpy (cur_row,
-                preview->cache + preview->rowstride * row,
-                preview->rowstride);
+        memcpy (cur_row, preview_cache + row * width * bytes, width * bytes);
       else
         gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, x2-x1);
 
-      d = dest;
       s = cur_row;
       for (col = x1; col < x2; col++) /* x-coord */
         {
@@ -436,7 +432,7 @@ FlareFX (GimpDrawable *drawable,
         }
       if (preview_mode)
         {
-          gimp_old_preview_do_row (preview, row, preview->width, cur_row);
+          memcpy (buffer + row * width * bytes, cur_row, width * bytes);
         }
       else
         {
@@ -450,7 +446,12 @@ FlareFX (GimpDrawable *drawable,
 
   if (preview_mode)
     {
-      gtk_widget_queue_draw (preview->widget);
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                              0, 0, width, height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buffer,
+                              width * bytes);
+      g_free (buffer);
     }
   else
     {
@@ -460,7 +461,6 @@ FlareFX (GimpDrawable *drawable,
       gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));    }
 
   g_free (cur_row);
-  g_free (dest);
 }
 
 static void
@@ -771,17 +771,23 @@ flare_center_create (GimpDrawable *drawable)
                     &fvals.posy);
 
   /* PREVIEW */
-  preview = gimp_old_preview_new (drawable);
-  gtk_widget_add_events (GTK_WIDGET (preview->widget), PREVIEW_MASK);
-  gtk_table_attach (GTK_TABLE (table), preview->frame, 0, 4, 1, 2, 0, 0, 0, 0);
-  gtk_widget_show (preview->frame);
+  preview = gimp_preview_area_new ();
+  preview_width = preview_height = PREVIEW_SIZE;
+  preview_cache = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+                                                    &preview_width,
+                                                    &preview_height,
+                                                    &preview_bpp);
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
+  gtk_widget_add_events (GTK_WIDGET (preview), PREVIEW_MASK);
+  gtk_table_attach (GTK_TABLE (table), preview, 0, 4, 1, 2, 0, 0, 0, 0);
+  gtk_widget_show (preview);
 
-  g_object_set_data (G_OBJECT (preview->widget), "center", center);
+  g_object_set_data (G_OBJECT (preview), "center", center);
 
-  g_signal_connect_after (preview->widget, "expose_event",
+  g_signal_connect_after (preview, "expose_event",
                           G_CALLBACK (flare_center_preview_expose),
                           center);
-  g_signal_connect (preview->widget, "event",
+  g_signal_connect (preview, "event",
                     G_CALLBACK (flare_center_preview_events),
                     center);
 
@@ -808,8 +814,6 @@ flare_center_create (GimpDrawable *drawable)
   center->cursor = FALSE;    /* Make sure that the cursor has not been drawn */
   center->in_call = FALSE;   /* End of initialization */
 
-  FlareFX (drawable, TRUE);
-
   return frame;
 }
 
@@ -831,7 +835,7 @@ static void
 flare_center_draw (FlareCenter *center,
                    gint         update)
 {
-  GtkWidget *prvw = preview->widget;
+  GtkWidget *prvw = preview;
 
   if (update & PREVIEW)
     {
@@ -850,11 +854,11 @@ flare_center_draw (FlareCenter *center,
                              prvw->style->black_gc,
                              center->oldx, 1,
                              center->oldx,
-                             preview->height - 1);
+                             preview_height - 1);
               gdk_draw_line (prvw->window,
                              prvw->style->black_gc,
                              1, center->oldy,
-                             preview->width - 1,
+                             preview_width - 1,
                              center->oldy);
             }
 
@@ -862,11 +866,11 @@ flare_center_draw (FlareCenter *center,
                          prvw->style->black_gc,
                          center->curx, 1,
                          center->curx,
-                         preview->height - 1);
+                         preview_height - 1);
           gdk_draw_line (prvw->window,
                          prvw->style->black_gc,
                          1, center->cury,
-                         preview->width - 1,
+                         preview_width - 1,
                          center->cury);
         }
 
@@ -898,7 +902,7 @@ flare_center_adjustment_update (GtkAdjustment *adjustment,
     {
       flare_center_cursor_update (center);
       flare_center_draw (center, CURSOR);
-      FlareFX(center->drawable, 1);
+      FlareFX(center->drawable, TRUE);
     }
 }
 
@@ -910,11 +914,11 @@ flare_center_adjustment_update (GtkAdjustment *adjustment,
 static void
 flare_center_cursor_update (FlareCenter *center)
 {
-  center->curx = fvals.posx * preview->width / center->dwidth;
-  center->cury = fvals.posy * preview->height / center->dheight;
+  center->curx = fvals.posx * preview_width  / center->dwidth;
+  center->cury = fvals.posy * preview_height / center->dheight;
 
-  center->curx = CLAMP (center->curx, 0, preview->width - 1);
-  center->cury = CLAMP (center->cury, 0, preview->height - 1);
+  center->curx = CLAMP (center->curx, 0, preview_width - 1);
+  center->cury = CLAMP (center->cury, 0, preview_height - 1);
 }
 
 /*
@@ -967,12 +971,12 @@ flare_center_preview_events (GtkWidget *widget,
       center->in_call = TRUE;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (center->xadj),
                                 center->curx * center->dwidth /
-                                preview->width);
+                                preview_width);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (center->yadj),
                                 center->cury * center->dheight /
-                                preview->height);
+                                preview_height);
       center->in_call = FALSE;
-      FlareFX(center->drawable, 1);
+      FlareFX(center->drawable, TRUE);
       break;
 
     default:
