@@ -1,3 +1,9 @@
+2000-02-03  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* app/gtkhwrapbox.c (layout_row, layout_rows): 
+	* app/gtkvwrapbox.c (layout_col, layout_cols):
+	Partial fix for the toolbox problem... it's still not perfect.
+
 Fri Feb  4 01:29:08 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpcolorbutton.c: documented GimpColorButton
