@@ -1,3 +1,14 @@
+2000-11-04 Garry R. Osgood <gosgood@idt.net>
+	* app/convolve.c
+	* app/convolve.h
+	When the  convolution tool finds itself
+	within a brush-mask width of the image
+	edge it internally allocates pseudo pixels
+	beyond the image edge. This allows the center
+	of the convolution matrix to operate right
+	at the image edge. closes #19285. See gorey details
+	at http://idt.net/~gosgood/gimp-patch/patch08.html.
+
 2000-11-04  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in

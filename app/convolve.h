@@ -28,6 +28,16 @@ typedef enum
   CUSTOM_CONVOLVE
 } ConvolveType;
 
+
+/* Different clip relationships between a blur-blob and edges: see convolve_motion */
+
+typedef enum
+{
+  CONVOLVE_NCLIP,       /* Left or top edge     */
+  CONVOLVE_NOT_CLIPPED, /* No edges             */
+  CONVOLVE_PCLIP        /* Right or bottom edge */
+} ConvolveClipType;
+
 void *        convolve_paint_func  (PaintCore *, GimpDrawable *, int);
 gboolean      convolve_non_gui     (GimpDrawable *, double, ConvolveType, int, double *);
 gboolean      convolve_non_gui_default (GimpDrawable *, int, double *);

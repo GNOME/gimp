@@ -308,13 +308,17 @@ convolve_motion (PaintCore            *paint_core,
 		 ConvolveType          type,
 		 double                rate)
 {
-  GImage  *gimage;
-  TempBuf *area;
-  guchar  *temp_data;
-  PixelRegion srcPR, destPR, tempPR;
-  gdouble scale;
+  TempBuf         *area;
+  guchar          *temp_data;
+  PixelRegion      srcPR; 
+  PixelRegion      destPR;
+  gdouble          scale;
+  ConvolveClipType area_hclip = CONVOLVE_NOT_CLIPPED;
+  ConvolveClipType area_vclip = CONVOLVE_NOT_CLIPPED;
+  gint             marginx = 0;
+  gint             marginy = 0;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (!drawable_gimage (drawable))
     return;
 
   /*  If the image type is indexed, don't convolve  */
@@ -322,94 +326,183 @@ convolve_motion (PaintCore            *paint_core,
       (drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
+  /* If the brush is smaller than the convolution matrix, don't convolve */
+
+  if((paint_core->brush->mask->width < matrix_size) || (paint_core->brush->mask->height < matrix_size))
+    return;
+
   if (pressure_options->size)
     scale = paint_core->curpressure;
   else
     scale = 1.0;
 
-  /*  Get a region which can be used to paint to  */
+  /*  Get image region around current brush (mask bbox + 1 pixel)  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  /*  configure the pixel regions correctly  */
+  /*  configure the source pixel region  */
   pixel_region_init (&srcPR, drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
-  destPR.bytes = area->bytes;
-  destPR.x = 0; destPR.y = 0;
-  destPR.w = area->width;
-  destPR.h = area->height;
+  /* Configure the destination pixel region - a paint_core TempBuf */
+
+  destPR.bytes     = area->bytes;
+  destPR.tiles     = NULL;
+  destPR.x         = 0; 
+  destPR.y         = 0;
+  destPR.w         = area->width;
+  destPR.h         = area->height;
   destPR.rowstride = area->width * destPR.bytes;
-  destPR.data = temp_buf_data (area);
+  destPR.data      = temp_buf_data (area);
 
   if (pressure_options->rate)
     rate = rate * 2.0 * paint_core->curpressure;
 
   calculate_matrix (type, rate); 
+    
+  /*  Image region near edges? If so, paint area will be clipped   */
+  /*  with respect to brush mask + 1 pixel border (# 19285)        */
+ 
+  if((marginx = (gint)paint_core->curx - paint_core->brush->mask->width/2 - 1)  != area->x)
+    area_hclip = CONVOLVE_NCLIP;
+  else
+    if((marginx = area->width - paint_core->brush->mask->width - 2) != 0)
+      area_hclip = CONVOLVE_PCLIP;
 
-  /*  convolve the source image with the convolve mask  */
-  if (srcPR.w >= matrix_size && srcPR.h >= matrix_size)
+  if((marginy = (gint)paint_core->cury - paint_core->brush->mask->height/2 - 1) != area->y)
+    area_vclip = CONVOLVE_NCLIP;
+  else 
+    if((marginy = area->height - paint_core->brush->mask->height - 2) != 0)
+      area_vclip = CONVOLVE_PCLIP;
+
+  /* Has the TempBuf been clipped by a canvas edge or two ?        */
+  if((area_hclip == CONVOLVE_NOT_CLIPPED)  && (area_vclip == CONVOLVE_NOT_CLIPPED))
     {
-      /*  if the source has no alpha, then add alpha pixels  */
+      /* No clipping...                                              */
+      /* Standard case: copy src to temp. convolve temp to dest.     */
+      /* Brush defines pipe size and no edge adjustments are needed. */
+
+      /*  If the source has no alpha, then add alpha pixels          */
+      /*  Because paint_core.c is alpha-only code. See below.        */
+
+      PixelRegion  tempPR;
+
+      tempPR.x     = 0; 
+      tempPR.y     = 0;
+      tempPR.w     = area->width;
+      tempPR.h     = area->height;
+      tempPR.tiles = NULL;
+
       if (!drawable_has_alpha (drawable))
 	{
-	  /* note: this architecture needlessly convolves the totally-
+	  /* note: this particular approach needlessly convolves the totally-
 	     opaque alpha channel. A faster approach would be to keep
 	     tempPR the same number of bytes as srcPR, and extend the
 	     paint_core_replace_canvas API to handle non-alpha images. */
 
-	  tempPR.bytes = srcPR.bytes + 1;
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
+	  tempPR.bytes     = srcPR.bytes + 1;
 	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data = temp_data;
-
+	  temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
+	  tempPR.data      = temp_data;
 	  add_alpha_region (&srcPR, &tempPR);
 	}
       else
 	{
-	  tempPR.bytes = srcPR.bytes;
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
+	  tempPR.bytes     = srcPR.bytes;
 	  tempPR.rowstride = tempPR.bytes * tempPR.w;
-	  temp_data = g_malloc (tempPR.h * tempPR.rowstride);
-	  tempPR.data = temp_data;
-
+	  temp_data        = g_malloc (tempPR.h * tempPR.rowstride);
+	  tempPR.data      = temp_data;
 	  copy_region (&srcPR, &tempPR);
-
-	  tempPR.x = 0; tempPR.y = 0;
-	  tempPR.w = area->width;
-	  tempPR.h = area->height;
-	  tempPR.data = temp_data;
-
-	  multiply_alpha_region (&tempPR);
 	}
 
-      tempPR.x = 0; tempPR.y = 0;
-      tempPR.w = area->width;
-      tempPR.h = area->height;
-      tempPR.data = temp_data;
-
       /*  Convolve the region  */
+
+      tempPR.x    = 0;
+      tempPR.y    = 0;
+      tempPR.w    = area->width;
+      tempPR.h    = area->height;
+      tempPR.data = temp_data;
       convolve_region (&tempPR, &destPR, matrix, matrix_size,
 		       matrix_divisor, NORMAL_CONVOL);
-
-      if (drawable_has_alpha (drawable))
-	  separate_alpha_region (&destPR);
 
       /*  Free the allocated temp space  */
       g_free (temp_data);
     }
   else
     {
-      /*  if the source has no alpha, then add alpha pixels, otherwise copy  */
-      if (!drawable_has_alpha (drawable))
-	add_alpha_region (&srcPR, &destPR);
+      /* TempBuf clipping has occured on at least one edge...                   */
+      /* Edge case: expand area under brush margin px on near edge(s), convolve */
+      /* expanded buffers. copy src -> ovrsz1 convolve ovrsz1 -> ovrsz2         */
+      /* copy-with-crop ovrsz2 -> dest                                          */
+
+      PixelRegion   ovrsz1PR;
+      PixelRegion   ovrsz2PR;
+      guchar        *ovrsz1_data = NULL;
+      guchar        *ovrsz2_data = NULL;
+      guchar        *fillcolor   = gimp_drawable_get_color_at (drawable,
+				     CLAMP ((gint) paint_core->curx, 0, gimp_drawable_width (drawable) - 1),
+				     CLAMP ((gint) paint_core->cury, 0, gimp_drawable_height (drawable) - 1));
+
+      marginx *= (marginx < 0) ? -1 : 0;
+      marginy *= (marginy < 0) ? -1 : 0;
+
+      ovrsz2PR.x         = 0;
+      ovrsz2PR.y         = 0;
+      ovrsz2PR.w         = area->width  + marginx;
+      ovrsz2PR.h         = area->height + marginy;
+      ovrsz2PR.bytes     = (drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
+      ovrsz2PR.offx      = 0;
+      ovrsz2PR.offy      = 0;
+      ovrsz2PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
+      ovrsz2PR.tiles     = NULL;
+      ovrsz2_data        = g_malloc (ovrsz2PR.h * ovrsz2PR.rowstride);
+      ovrsz2PR.data      = ovrsz2_data;
+
+      ovrsz1PR.x         = 0;
+      ovrsz1PR.y         = 0;
+      ovrsz1PR.w         = area->width  + marginx;
+      ovrsz1PR.h         = area->height + marginy;
+      ovrsz1PR.bytes     = (drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
+      ovrsz1PR.offx      = 0;
+      ovrsz1PR.offy      = 0;
+      ovrsz1PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
+      ovrsz1PR.tiles     = NULL;
+      ovrsz1_data        = g_malloc (ovrsz1PR.h * ovrsz1PR.rowstride);
+      ovrsz1PR.data      = ovrsz1_data;
+      color_region (&ovrsz1PR, (const guchar *)fillcolor); 
+
+      ovrsz1PR.x         = (area_hclip == CONVOLVE_NCLIP)? marginx : 0; 
+      ovrsz1PR.y         = (area_vclip == CONVOLVE_NCLIP)? marginy : 0;
+      ovrsz1PR.w         = area->width;
+      ovrsz1PR.h         = area->height;
+      ovrsz1PR.data      = ovrsz1_data + (ovrsz1PR.rowstride * ovrsz1PR.y) + (ovrsz1PR.bytes * ovrsz1PR.x);
+
+      if (!(drawable_has_alpha (drawable)))
+	add_alpha_region (&srcPR, &ovrsz1PR);
       else
-	copy_region (&srcPR, &destPR);
+	copy_region (&srcPR, &ovrsz1PR);
+
+      /*  Convolve the region  */
+
+      ovrsz1PR.x    = 0;
+      ovrsz1PR.y    = 0;
+      ovrsz1PR.w    = area->width  + marginx;
+      ovrsz1PR.h    = area->height + marginy;
+      ovrsz1PR.data = ovrsz1_data;
+      convolve_region (&ovrsz1PR, &ovrsz2PR, matrix, matrix_size,
+		       matrix_divisor, NORMAL_CONVOL);
+
+      /* Crop and copy to destination */
+
+      ovrsz2PR.x    = (area_hclip == CONVOLVE_NCLIP)? marginx : 0; 
+      ovrsz2PR.y    = (area_vclip == CONVOLVE_NCLIP)? marginy : 0; 
+      ovrsz2PR.w    = area->width;
+      ovrsz2PR.h    = area->height;
+      ovrsz2PR.data = ovrsz2_data + (ovrsz2PR.rowstride * ovrsz2PR.y) + (ovrsz2PR.bytes * ovrsz2PR.x);
+      copy_region (&ovrsz2PR, &destPR);
+      g_free(ovrsz1_data);
+      g_free(ovrsz2_data);
+      g_free(fillcolor);
     }
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
