@@ -45,10 +45,10 @@
 
 /* Declare local functions. */
 static void query  (void);
-static void run    (char    *name,
-		    int      nparams,
+static void run    (gchar   *name,
+		    gint     nparams,
 		    GParam  *param,
-		    int     *nreturn_vals,
+		    gint    *nreturn_vals,
 		    GParam **return_vals);
 
 static gint dialog (gint32 image_ID, GDrawable *drawable);
@@ -123,8 +123,8 @@ void query (void)
     {PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)"},
   };
   static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
+  static gint nreturn_vals = 0;
 
   INIT_I18N();
 
@@ -142,10 +142,10 @@ void query (void)
 }
 
 static void
-run (char    *name, 
-     int      n_params, 
+run (gchar   *name, 
+     gint     n_params, 
      GParam  *param, 
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -246,10 +246,10 @@ run (char    *name,
 G_INLINE_FUNC void
 pix_composite (guchar *p1, 
 	       guchar  p2[4], 
-	       int     bytes, 
-	       int     alpha)
+	       gint    bytes, 
+	       gint    alpha)
 {
- int b;
+ gint b;
 
  if (alpha)
    {
@@ -275,21 +275,15 @@ doit (GDrawable * drawable)
   GPixelRgn srcPR, destPR;
   gint width, height, bytes;
   guchar *dest;
-  int x, y, alpha;
+  gint x, y, alpha;
   
   /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
+   *  the image (or the entire image if there is no selection). 
    */
   gimp_drawable_mask_bounds (drawable->id, &sx1, &sy1, &sx2, &sy2);
 
-  /* Get the size of the input image. 
-   *  (This will/must be the same as the size of the output image.)
-   */
-  width  = drawable->width;
-  height = drawable->height;
+  width  = gimp_drawable_width (drawable->id);
+  height = gimp_drawable_height (drawable->id);
   bytes  = drawable->bpp;
   alpha  = gimp_drawable_has_alpha (drawable->id);
 
@@ -297,12 +291,12 @@ doit (GDrawable * drawable)
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
 
-  dest = malloc (width * bytes);
+  dest = g_malloc (width * bytes);
   for (y = sy1; y < sy2; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2-sx1));
 
-      if (((y - grid_cfg.voffset + height) % grid_cfg.vspace) < grid_cfg.vwidth )
+      if ( abs ((y - grid_cfg.voffset) % grid_cfg.vspace) < grid_cfg.vwidth )
 	{ /* Draw row */
 	  for (x = sx1; x < sx2; x++)
 	    {
@@ -310,14 +304,15 @@ doit (GDrawable * drawable)
 	    }
 	}
 
-      if (((y - grid_cfg.voffset + height + ((grid_cfg.iwidth - grid_cfg.vwidth) / 2)) % grid_cfg.vspace) < grid_cfg.iwidth )
+      if ( abs ((y - grid_cfg.voffset + ((grid_cfg.iwidth - grid_cfg.vwidth) / 2)) % grid_cfg.vspace) 
+	   < grid_cfg.iwidth )
         { /* Draw irow */
 	  for (x = sx1; x < sx2; x++)
 	    {
-              if ((((x - grid_cfg.hoffset + width - (grid_cfg.hwidth /2)) % grid_cfg.hspace) >= grid_cfg.ispace
-                && ((x - grid_cfg.hoffset + width - (grid_cfg.hwidth /2)) % grid_cfg.hspace) < grid_cfg.ioffset)
-                || (abs(((x - grid_cfg.hoffset + width - (grid_cfg.hwidth /2)) % grid_cfg.hspace) - grid_cfg.hspace) >= grid_cfg.ispace
-                && (abs(((x - grid_cfg.hoffset + width - (grid_cfg.hwidth /2)) % grid_cfg.hspace) - grid_cfg.hspace) < grid_cfg.ioffset))) {
+              if (( abs ((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) >= grid_cfg.ispace
+                && ( abs (x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) < grid_cfg.ioffset)
+                || (abs (((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) - grid_cfg.hspace) >= grid_cfg.ispace
+                && (abs (((x - grid_cfg.hoffset - (grid_cfg.hwidth / 2)) % grid_cfg.hspace) - grid_cfg.hspace) < grid_cfg.ioffset))) {
 	          pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.icolor, bytes, alpha);
                 }
 	    }
@@ -325,16 +320,16 @@ doit (GDrawable * drawable)
 
       for (x = sx1; x < sx2; x++)
         {
-          if (((x - grid_cfg.hoffset + width) % grid_cfg.hspace) < grid_cfg.hwidth )
+          if (abs ((x - grid_cfg.hoffset) % grid_cfg.hspace) < grid_cfg.hwidth)
             {
 	      pix_composite ( &dest[(x-sx1) * bytes], grid_cfg.vcolor, bytes, alpha);
             }
 
-          if ((((x - grid_cfg.hoffset + width + ((grid_cfg.iwidth - grid_cfg.hwidth)/ 2)) % grid_cfg.hspace) < grid_cfg.iwidth)
-            && (( (((y - grid_cfg.voffset + height - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) >= grid_cfg.ispace)
-               && (((y - grid_cfg.voffset + height - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) < grid_cfg.ioffset))
-            || (( (abs(((y - grid_cfg.voffset + height - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) >= grid_cfg.ispace)
-               && (abs(((y - grid_cfg.voffset + height - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) < grid_cfg.ioffset))
+          if (abs (((x - grid_cfg.hoffset + ((grid_cfg.iwidth - grid_cfg.hwidth) / 2)) % grid_cfg.hspace) < grid_cfg.iwidth)
+            && (( (abs ((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) >= grid_cfg.ispace)
+               && (abs ((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) < grid_cfg.ioffset))
+            || (( (abs (((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) >= grid_cfg.ispace)
+               && (abs (((y - grid_cfg.voffset - (grid_cfg.vwidth / 2)) % grid_cfg.vspace) - grid_cfg.vspace) < grid_cfg.ioffset))
             ))
           )
             {
@@ -345,7 +340,8 @@ doit (GDrawable * drawable)
       gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2-sx1) );
       gimp_progress_update ((double) y / (double) (sy2 - sy1));
     }
-  free (dest);
+ 
+  g_free (dest);
 
   /*  update the timred region  */
   gimp_drawable_flush (drawable);
