@@ -99,11 +99,6 @@ main (int argc, char **argv)
   gtk_set_locale ();
   setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
   gtk_init (&argc, &argv);
-#if 0
-  gtk_accelerator_set_default_mod_mask (GDK_SHIFT_MASK |
-					GDK_CONTROL_MASK |
-					GDK_MOD1_MASK);
-#endif
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();

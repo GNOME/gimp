@@ -1340,7 +1340,7 @@ parse_menu_path (gpointer val1p,
     goto error;
   token = get_next_token ();
 
-  menus_add_path (menu_path, accelerator);
+  /* Sort of silly, we do nothing here - same as 1.1 */
 
   return OK;
 

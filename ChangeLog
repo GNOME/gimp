@@ -1,3 +1,13 @@
+Mon Mar 15 12:07:59 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/menus.[ch] app/gimprc.c app/gradient.c (menus_quit): 
+	Merge in menufactory => itemfactory changes from head
+
+Mon Mar 15 11:44:13 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/gradient.c (cpopup_create_color_item): Use an
+	accel label when creating a menuitem by hand.
+
 Mon Mar 15 11:30:04 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* app/layers_dialog.c (lc_dialog_create): Show dialog

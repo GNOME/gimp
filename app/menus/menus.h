@@ -36,8 +36,6 @@ void menus_set_sensitive       (char                 *path,
 				int                   sensitive);
 void menus_set_state           (char                 *path,
 				int                   state);
-void menus_add_path            (char                 *path,
-				char                 *accelerator);
 void menus_destroy             (char                 *path);
 void menus_quit                (void);
 
