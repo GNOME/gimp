@@ -3483,6 +3483,10 @@ msgstr "/Fichier/Acquisition"
 msgid "/File/Preferences..."
 msgstr "/Fichier/Préférences..."
 
+#: app/menus.c:105
+msgid "/File/Dialogs"
+msgstr "/Fichier/Dialogues"
+
 #: app/menus.c:108
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Fichier/Dialogues/Calques, canaux & chemins...."
@@ -4671,7 +4675,7 @@ msgstr "Extensions"
 #: app/plug_in.c:775
 #, c-format
 msgid "Unable to locate plug-in: \"%s\""
-msgstr "Impossible de trouver l'appendice : \"%s\""
+msgstr "Impossible de trouver le module chargeable : \"%s\""
 
 #: app/posterize.c:147
 msgid "Posterize does not operate on indexed drawables."
@@ -5039,6 +5043,10 @@ msgstr "Utilisation parcimonieuse de la mémoire"
 #: app/preferences_dialog.c:2091
 msgid "Levels of Undo:"
 msgstr "Niveaux d'annulation :"
+
+#: app/preferences_dialog.c:2174
+msgid "Tile Cache Size:"
+msgstr "Taille du cache de carreaux:"
 
 #: app/preferences_dialog.c:2113
 msgid "Number of Processors to Use:"

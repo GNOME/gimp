@@ -4925,7 +4925,7 @@ msgstr "Détails >>"
 #: plug-ins/common/plugindetails.c:312
 #, c-format
 msgid " Number of Plugin Interfaces: %d"
-msgstr " Nombre d'interfaces d'appendice : %d"
+msgstr " Nombre d'interfaces de modules chargeables : %d"
 
 #. menu path
 #: plug-ins/common/plugindetails.c:330
@@ -4957,7 +4957,7 @@ msgstr "Type :"
 
 #: plug-ins/common/plugindetails.c:995
 msgid "Plugin Descriptions"
-msgstr "Description de l'appendice"
+msgstr "Description des modules chargeables"
 
 #: plug-ins/common/plugindetails.c:1000
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
@@ -11325,7 +11325,7 @@ msgstr "Suivant"
 
 #: plug-ins/ifscompose/ifscompose.c:359
 msgid "<Image>/Filters/Render/Nature/IfsCompose..."
-msgstr "<Image>/Filtres/Synthèse/Nature/Fractales IFS..."
+msgstr "<Image>/Filtres/Synthèse/Nature/Composition IFS..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:568
@@ -14968,7 +14968,7 @@ msgstr "Erreur, le fichier de propriétés XJT %s est vide."
 #~ "l'application du filtre animé s'est arrêtée.\n"
 
 #~ msgid "ERROR: Plugin not available or wrong type %s\n"
-#~ msgstr "ERREUR: Appendice non disponible ou d'un mauvais type %s\n"
+#~ msgstr "ERREUR: Module chargeable non disponible ou d'un mauvais type %s\n"
 
 #~ msgid "ERROR: need at 1 Layers to apply plugin !\n"
 #~ msgstr "ERREUR: il faut au moins 1 calque pour appliquer l'extension !\n"
