@@ -496,7 +496,7 @@ compute_difference (GimpDrawable *drawable,
     return;
 
   bpp = drawable->bpp;
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   gimp_pixel_rgn_init (&src1_rgn,
                        drawable1, 0, 0, drawable1->width, drawable1->height,
@@ -925,7 +925,7 @@ preview_update_preview (GimpPreview  *preview,
   guchar       *buffer;
   GimpPixelRgn  src_rgn;
   GimpPixelRgn  preview_rgn;
-  gint32        image_id;
+  gint32        image_id, src_image_id;
   gint32        preview_id;
   GimpDrawable *preview_drawable;
 
@@ -942,7 +942,9 @@ preview_update_preview (GimpPreview  *preview,
                            x1, y1, width, height);
 
   /* set up gimp drawable for rendering preview into */
-  image_id = gimp_image_new (width, height, GIMP_RGB);
+  src_image_id = gimp_drawable_get_image (drawable->drawable_id);
+  image_id = gimp_image_new (width, height,
+                             gimp_image_base_type (src_image_id));
   preview_id = gimp_layer_new (image_id, "preview", width, height,
                                gimp_drawable_type (drawable->drawable_id),
                                100,
