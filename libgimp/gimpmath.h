@@ -82,6 +82,8 @@ extern "C" {
 
 #ifdef G_OS_WIN32
 #define FINITE(x) _finite(x)
+#elsifdef __EMX__
+#define FINITE(x) isfinite(x)
 #else
 #define FINITE(x) finite(x) 
 #endif

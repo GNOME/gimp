@@ -1,3 +1,10 @@
+2000-04-30  Sven Neumann  <sven@gimp.org>
+
+	* app/gimage_cmds.c: reverted Asbjorns change (changing this file
+	has no effect anyway, change tools/pdbgen/pdb/gimage.pdb instead).
+	
+	* libgimp/gimpmath.h (FINITE): #define FINITE(x) isfinite(x) for OS/2
+
 2000-04-29  Jay Cox  <jaycox@earthlink.net>
 
 	* app/gimage_mask.c: Fix the end of group check in 
@@ -8,7 +15,7 @@
 	* app/gimage_cmds.c (finite): #define finite(d) isfinite(d) for OS/2
 
 	* libgimp/gimpsignal.h: #define SA_RESTART SA_SYSV
-	SA_RESTART isnt's defined for OS/2!
+	SA_RESTART isnt't defined for OS/2!
 
 2000-04-29  Jay Cox  <jaycox@earthlink.net>
 
