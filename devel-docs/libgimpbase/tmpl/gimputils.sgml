@@ -63,16 +63,6 @@ Utilities of general interest
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_enum_value_get_name ##### -->
-<para>
-
-</para>
-
-@enum_class: 
-@enum_value: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_enum_get_value ##### -->
 <para>
 
@@ -80,8 +70,10 @@ Utilities of general interest
 
 @enum_type: 
 @value: 
-@value_nick: 
 @value_name: 
+@value_nick: 
+@value_desc: 
+@value_help: 
 @Returns: 
 
 
