@@ -66,10 +66,11 @@
  * V 1.15  PK, 04-Oct-2002: Be more accurate with using BoundingBox
  * V 1.16  PK, 22-Jan-2004: Don't use popen(), use g_spawn_async_with_pipes()
  *                          or g_spawn_sync().
+ * V 1.17  PK, 19-Sep-2004: Fix problem with interpretation of bounding box
  */
-#define VERSIO 1.16
-static char dversio[] = "v1.16  22-Jan-2004";
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.16  22-Jan-2004";
+#define VERSIO 1.17
+static char dversio[] = "v1.17  19-Sep-2004";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.17  19-Sep-2004";
 
 #include "config.h"
 
@@ -1416,10 +1417,14 @@ ps_open (const gchar      *filename,
             {
                *llx = (int)((x0/72.0) * resolution + 0.0001);
                *lly = (int)((y0/72.0) * resolution + 0.0001);
-               *urx = (int)((x1/72.0) * resolution + 0.5);
-               *ury = (int)((y1/72.0) * resolution + 0.5);
-               width = *urx;
-               height = *ury;
+               /* Use upper bbox values as image size */
+               width = (int)((x1/72.0) * resolution + 0.5);
+               height = (int)((y1/72.0) * resolution + 0.5);
+               /* Pixel coordinates must be one less */
+               *urx = width - 1;
+               *ury = height - 1;
+               if (*urx < *llx) *urx = *llx;
+               if (*ury < *lly) *ury = *lly;
             }
         }
     }

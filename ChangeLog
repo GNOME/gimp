@@ -1,5 +1,11 @@
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/postscript.c (ps_open): applied a patch by Peter
+	Kirchgessner that solves a problem with the recognition of the
+	bounding box. Fixes bug #152829.
+
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb-parse.c (gimp_rgb_parse_hex): fixed gtk-doc
 	comment.
 
