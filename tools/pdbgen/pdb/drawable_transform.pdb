@@ -49,7 +49,7 @@ sub transform_options_args () {
 }
 
 sub transform_options_defaults_args () {
-    { name => 'interpolation', type => 'boolean',
+    { name => 'interpolate', type => 'boolean',
       desc => 'Whether to use interpolation and supersampling' },
     { name => 'clip_result', type => 'boolean',
       desc => 'Whether to clip results' }
@@ -199,7 +199,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_flip() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -237,7 +237,7 @@ HELP
                                        x0, y0, x1, y1,
                                        &matrix);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -247,7 +247,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
       if (progress)
         gimp_progress_end (progress);
@@ -352,7 +352,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_perspective() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -400,7 +400,7 @@ HELP
                                          trans_info[X3], trans_info[Y3],
                                          &matrix);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -410,7 +410,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)
@@ -554,7 +554,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_rotate() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -595,7 +595,7 @@ HELP
         gimp_transform_matrix_rotate_center (center_x, center_y, angle,
                                              &matrix);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -605,7 +605,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)
@@ -702,7 +702,7 @@ sub drawable_transform_scale_defaults {
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_scale() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -753,7 +753,7 @@ HELP
                                    trans_info[Y1] - trans_info[Y0],
                                    &matrix);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -763,7 +763,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)
@@ -850,7 +850,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_shear() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -884,7 +884,7 @@ HELP
                                    shear_type, magnitude,
                                    &matrix);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -894,7 +894,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)
@@ -994,7 +994,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_2d() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -1040,7 +1040,7 @@ HELP
       gimp_matrix3_rotate    (&matrix, angle);
       gimp_matrix3_translate (&matrix, dest_x, dest_y);
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -1050,7 +1050,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)
@@ -1155,7 +1155,7 @@ BLURB
     $help = <<'HELP';
 This procedure is a variant of gimp_drawable_transform_matrix() which
 uses no interpolation/supersampling at all, or default values
-(depending on the 'interpolation' parameter).
+(depending on the 'interpolate' parameter).
 HELP
 
     &pdb_misc;
@@ -1209,7 +1209,7 @@ HELP
       matrix.coeff[2][1] = coeff_2_1;
       matrix.coeff[2][2] = coeff_2_2;
 
-      if (interpolation)
+      if (interpolate)
         interpolation_type = gimp->config->interpolation_type;
 
       if (progress)
@@ -1219,7 +1219,7 @@ HELP
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
                                                 interpolation_type,
-                                                interpolation, 3,
+                                                interpolate, 3,
                                                 clip_result, progress);
 
       if (progress)

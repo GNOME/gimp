@@ -1,5 +1,14 @@
 2004-11-02  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/drawable_transform.pdb (drawable_*_defaults):
+	renamed parameter "interpolation" to "interpolate" as suggested by
+	pippin.
+
+	* app/pdb/drawable_transform_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.[ch]: regenerated.
+
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/user-install-dialog.c (user_install_migrate_files):
 	don't copy pluginrc* and themerc*.
 

@@ -49,7 +49,7 @@ gint32 gimp_drawable_transform_flip_defaults        (gint32                 draw
 						     gdouble                y0,
 						     gdouble                x1,
 						     gdouble                y1,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_perspective          (gint32                 drawable_ID,
 						     gdouble                x0,
@@ -74,7 +74,7 @@ gint32 gimp_drawable_transform_perspective_defaults (gint32                 draw
 						     gdouble                y2,
 						     gdouble                x3,
 						     gdouble                y3,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_rotate_simple        (gint32                 drawable_ID,
 						     GimpRotationType       rotate_type,
@@ -97,7 +97,7 @@ gint32 gimp_drawable_transform_rotate_defaults      (gint32                 draw
 						     gboolean               auto_center,
 						     gint                   center_x,
 						     gint                   center_y,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_scale                (gint32                 drawable_ID,
 						     gdouble                x0,
@@ -114,7 +114,7 @@ gint32 gimp_drawable_transform_scale_defaults       (gint32                 draw
 						     gdouble                y0,
 						     gdouble                x1,
 						     gdouble                y1,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_shear                (gint32                 drawable_ID,
 						     GimpOrientationType    shear_type,
@@ -127,7 +127,7 @@ gint32 gimp_drawable_transform_shear                (gint32                 draw
 gint32 gimp_drawable_transform_shear_defaults       (gint32                 drawable_ID,
 						     GimpOrientationType    shear_type,
 						     gdouble                magnitude,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_2d                   (gint32                 drawable_ID,
 						     gdouble                source_x,
@@ -150,7 +150,7 @@ gint32 gimp_drawable_transform_2d_defaults          (gint32                 draw
 						     gdouble                angle,
 						     gdouble                dest_x,
 						     gdouble                dest_y,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 gint32 gimp_drawable_transform_matrix               (gint32                 drawable_ID,
 						     gdouble                coeff_0_0,
@@ -177,7 +177,7 @@ gint32 gimp_drawable_transform_matrix_defaults      (gint32                 draw
 						     gdouble                coeff_2_0,
 						     gdouble                coeff_2_1,
 						     gdouble                coeff_2_2,
-						     gboolean               interpolation,
+						     gboolean               interpolate,
 						     gboolean               clip_result);
 
 

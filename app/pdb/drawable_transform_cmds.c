@@ -360,7 +360,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
   gdouble y0;
   gdouble x1;
   gdouble y1;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -375,7 +375,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
 
   y1 = args[4].value.pdb_float;
 
-  interpolation = args[5].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[5].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[6].value.pdb_int ? TRUE : FALSE;
 
@@ -396,7 +396,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
                                            x0, y0, x1, y1,
                                            &matrix);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -406,7 +406,7 @@ drawable_transform_flip_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
           if (progress)
             gimp_progress_end (progress);
@@ -450,7 +450,7 @@ static ProcArg drawable_transform_flip_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -473,7 +473,7 @@ static ProcRecord drawable_transform_flip_defaults_proc =
 {
   "gimp_drawable_transform_flip_defaults",
   "Flip the specified drawable around a given line.",
-  "This procedure is a variant of gimp_drawable_transform_flip() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_flip() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -689,7 +689,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
   gdouble trans_info[8];
 
@@ -713,7 +713,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
 
   trans_info[Y3] = args[8].value.pdb_float;
 
-  interpolation = args[9].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[9].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[10].value.pdb_int ? TRUE : FALSE;
 
@@ -737,7 +737,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
                                              trans_info[X3], trans_info[Y3],
                                              &matrix);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -747,7 +747,7 @@ drawable_transform_perspective_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -812,7 +812,7 @@ static ProcArg drawable_transform_perspective_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -835,7 +835,7 @@ static ProcRecord drawable_transform_perspective_defaults_proc =
 {
   "gimp_drawable_transform_perspective_defaults",
   "Perform a possibly non-affine transformation on the specified drawable, with extra parameters.",
-  "This procedure is a variant of gimp_drawable_transform_perspective() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_perspective() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -1145,7 +1145,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
   gboolean auto_center;
   gint32 center_x;
   gint32 center_y;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1160,7 +1160,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
 
   center_y = args[4].value.pdb_int;
 
-  interpolation = args[5].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[5].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[6].value.pdb_int ? TRUE : FALSE;
 
@@ -1184,7 +1184,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
             gimp_transform_matrix_rotate_center (center_x, center_y, angle,
                                                  &matrix);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -1194,7 +1194,7 @@ drawable_transform_rotate_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -1239,7 +1239,7 @@ static ProcArg drawable_transform_rotate_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -1262,7 +1262,7 @@ static ProcRecord drawable_transform_rotate_defaults_proc =
 {
   "gimp_drawable_transform_rotate_defaults",
   "Rotate the specified drawable about given coordinates through the specified angle.",
-  "This procedure is a variant of gimp_drawable_transform_rotate() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_rotate() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -1452,7 +1452,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpDrawable *drawable;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
   gdouble trans_info[4];
 
@@ -1468,7 +1468,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
 
   trans_info[Y1] = args[4].value.pdb_float;
 
-  interpolation = args[5].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[5].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[6].value.pdb_int ? TRUE : FALSE;
 
@@ -1494,7 +1494,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
                                        trans_info[Y1] - trans_info[Y0],
                                        &matrix);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -1504,7 +1504,7 @@ drawable_transform_scale_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -1549,7 +1549,7 @@ static ProcArg drawable_transform_scale_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -1572,7 +1572,7 @@ static ProcRecord drawable_transform_scale_defaults_proc =
 {
   "gimp_drawable_transform_scale_defaults",
   "Scale the specified drawable with extra parameters",
-  "This procedure is a variant of gimp_drawable_transform_scale() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_scale() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -1748,7 +1748,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
   GimpDrawable *drawable;
   gint32 shear_type;
   gdouble magnitude;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -1761,7 +1761,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
 
   magnitude = args[2].value.pdb_float;
 
-  interpolation = args[3].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[3].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[4].value.pdb_int ? TRUE : FALSE;
 
@@ -1782,7 +1782,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
                                        shear_type, magnitude,
                                        &matrix);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -1792,7 +1792,7 @@ drawable_transform_shear_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -1827,7 +1827,7 @@ static ProcArg drawable_transform_shear_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -1850,7 +1850,7 @@ static ProcRecord drawable_transform_shear_defaults_proc =
 {
   "gimp_drawable_transform_shear_defaults",
   "Shear the specified drawable about its center by the specified magnitude, with extra parameters.",
-  "This procedure is a variant of gimp_drawable_transform_shear() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_shear() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -2071,7 +2071,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
   gdouble angle;
   gdouble dest_x;
   gdouble dest_y;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -2092,7 +2092,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
 
   dest_y = args[7].value.pdb_float;
 
-  interpolation = args[8].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[8].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[9].value.pdb_int ? TRUE : FALSE;
 
@@ -2115,7 +2115,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
           gimp_matrix3_rotate    (&matrix, angle);
           gimp_matrix3_translate (&matrix, dest_x, dest_y);
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -2125,7 +2125,7 @@ drawable_transform_2d_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -2185,7 +2185,7 @@ static ProcArg drawable_transform_2d_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -2208,7 +2208,7 @@ static ProcRecord drawable_transform_2d_defaults_proc =
 {
   "gimp_drawable_transform_2d_defaults",
   "Transform the specified drawable in 2d, with extra parameters.",
-  "This procedure is a variant of gimp_drawable_transform_2d() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_2d() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
@@ -2451,7 +2451,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
   gdouble coeff_2_0;
   gdouble coeff_2_1;
   gdouble coeff_2_2;
-  gboolean interpolation;
+  gboolean interpolate;
   gboolean clip_result;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
@@ -2476,7 +2476,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
 
   coeff_2_2 = args[9].value.pdb_float;
 
-  interpolation = args[10].value.pdb_int ? TRUE : FALSE;
+  interpolate = args[10].value.pdb_int ? TRUE : FALSE;
 
   clip_result = args[11].value.pdb_int ? TRUE : FALSE;
 
@@ -2503,7 +2503,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
           matrix.coeff[2][1] = coeff_2_1;
           matrix.coeff[2][2] = coeff_2_2;
 
-          if (interpolation)
+          if (interpolate)
             interpolation_type = gimp->config->interpolation_type;
 
           if (progress)
@@ -2513,7 +2513,7 @@ drawable_transform_matrix_defaults_invoker (Gimp         *gimp,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
                                                     interpolation_type,
-                                                    interpolation, 3,
+                                                    interpolate, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -2583,7 +2583,7 @@ static ProcArg drawable_transform_matrix_defaults_inargs[] =
   },
   {
     GIMP_PDB_INT32,
-    "interpolation",
+    "interpolate",
     "Whether to use interpolation and supersampling"
   },
   {
@@ -2606,7 +2606,7 @@ static ProcRecord drawable_transform_matrix_defaults_proc =
 {
   "gimp_drawable_transform_matrix_defaults",
   "Transform the specified drawable in 2d, with extra parameters.",
-  "This procedure is a variant of gimp_drawable_transform_matrix() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolation' parameter).",
+  "This procedure is a variant of gimp_drawable_transform_matrix() which uses no interpolation/supersampling at all, or default values (depending on the 'interpolate' parameter).",
   "João S. O. Bueno Calligaris",
   "João S. O. Bueno Calligaris",
   "2004",
