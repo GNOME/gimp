@@ -1,3 +1,10 @@
+2004-12-06  Sven Neumann  <sven@gimp.org>
+
+	* tools/authorsgen/contributors: removed duplicate entry for Roman.
+
+	* AUTHORS
+	* app/dialogs/authors.h: regenerated.
+
 2004-12-06  Roman Joost	<romanofski@gimp.org>
 
 	* tools/authorsgen/contributors: added Róman Joost to

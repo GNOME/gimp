@@ -84,7 +84,7 @@ static gchar *authors[] =
   "Simon Janes",
   "Tim Janik",
   "Fellmann Joaquim",
-  "Roman Joost",
+  "Róman Joost",
   "Geert Jordaens",
   "Andrew Kieschnick",
   "Peter Kirchgessner",
