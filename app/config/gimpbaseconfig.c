@@ -28,6 +28,8 @@
 
 #include "config-types.h"
 
+#include "base/pixel-processor.h"
+
 #include "gimprc-blurbs.h"
 #include "gimpbaseconfig.h"
 
@@ -117,7 +119,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                     GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_UINT (object_class, PROP_NUM_PROCESSORS,
                                  "num-processors", NUM_PROCESSORS_BLURB,
-                                 1, 16, 2,
+                                 1, GIMP_MAX_NUM_THREADS, 2,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size", TILE_CACHE_SIZE_BLURB,

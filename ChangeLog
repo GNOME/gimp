@@ -1,5 +1,12 @@
 2005-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-processor.[ch]: define the maximum number of
+	threads in the header file.
+
+	* app/config/gimpbaseconfig.c: use the #define.
+
+2005-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/gimphistogram.c
 	* app/base/pixel-processor.c: use static mutexes.
 

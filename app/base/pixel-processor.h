@@ -22,6 +22,9 @@
 #define __PIXEL_PROCESSOR_H__
 
 
+#define GIMP_MAX_NUM_THREADS  16
+
+
 typedef void (* PixelProcessorFunc) (void);
 
 

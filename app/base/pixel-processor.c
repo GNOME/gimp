@@ -213,7 +213,7 @@ do_parallel_regions_single (PixelProcessor *processor)
   return NULL;
 }
 
-#define MAX_THREADS      16
+
 #define TILES_PER_THREAD  8
 
 static void
@@ -225,7 +225,7 @@ pixel_regions_do_parallel (PixelProcessor *processor)
 
   if (max_threads > 1 && tiles > TILES_PER_THREAD)
     {
-      GThread *threads[MAX_THREADS];
+      GThread *threads[GIMP_MAX_NUM_THREADS];
       gint     nthreads = MIN (max_threads, tiles / TILES_PER_THREAD);
       gint     i;
 
@@ -331,7 +331,7 @@ pixel_processor_set_num_threads (gint num_threads)
 {
   g_return_if_fail (num_threads > 0);
 
-  max_threads = CLAMP (num_threads, 1, MAX_THREADS);
+  max_threads = CLAMP (num_threads, 1, GIMP_MAX_NUM_THREADS);
 }
 
 void
