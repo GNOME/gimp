@@ -1,6 +1,8 @@
 Revision history for Gimp-Perl extension.
 
-1.092
+	- scm2perl had broken cdr and cddr stubs...
+
+1.092 Wed Jun  2 14:52:29 CEST 1999
 	- testsuite failed when !HAVE_PDL (and the whole package broke on
           systems with underpowered dynamic linkers).
         - gtk-1.0.x and gimp < 1.0.4 are no longer "officially" supported.
@@ -10,7 +12,9 @@ Revision history for Gimp-Perl extension.
         - fixed pager bug in gimpdoc.
         - cleaned filehandle handling in Gimp/Net.pm.
         - streamlined config code again.
-        - updated examples/parasite-editor and examples/mirrorsplit.
+        - updated examples/parasite-editor, examples/mirrorsplit,
+          examples/PDB.
+        - Gimp::Net was broken (it used GIMP_PATH instead of just GIMP).
 
 1.091 Sun May 23 13:21:34 CEST 1999
 	- include a fake typemap.pdl.

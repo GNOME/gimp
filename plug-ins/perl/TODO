@@ -10,7 +10,7 @@ make test TEST_VERBOSE=1
 
 bugs
 
-  * --enable-perl=/tmp/leckmich
+[DONE]  * --enable-perl=/tmp/leckmich
   * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.
   * KILL :auto from default(!)
@@ -19,7 +19,7 @@ bugs
   * possibly rename "Brush Selection" to "Paint Settings"
   * gimp-tile set dirty automatically(!)
   * fatal errors in config.pl (!)
-  * disable module build (EMBEDMYALLOC)
+[DONE]  * disable module build (EMBEDMYALLOC)
 [DONE]  * turn -1 into undef and vice versa.
   * perl module install dependency
   * not calling unload -> coredump
@@ -29,7 +29,6 @@ bugs
   * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
   * create gimpstyle.pod
-  * get rid of ':auto'
   
 important issues
 
