@@ -915,6 +915,8 @@
       <xi:include href="xml/dockable-commands.xml" />
       <xi:include href="xml/error-console-actions.xml" />
       <xi:include href="xml/error-console-commands.xml" />
+      <xi:include href="xml/text-editor-actions.xml" />
+      <xi:include href="xml/text-editor-commands.xml" />
       <xi:include href="xml/tool-options-actions.xml" />
       <xi:include href="xml/tool-options-commands.xml" />
     </chapter>
@@ -968,6 +970,7 @@
       <xi:include href="xml/offset-dialog.xml" />
       <xi:include href="xml/palette-import-dialog.xml" />
       <xi:include href="xml/preferences-dialog.xml" />
+      <xi:include href="xml/print-size-dialog" />
       <xi:include href="xml/quit-dialog.xml" />
       <xi:include href="xml/resize-dialog.xml" />
       <xi:include href="xml/resolution-calibrate-dialog.xml" />

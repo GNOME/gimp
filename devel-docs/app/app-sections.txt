@@ -244,6 +244,7 @@ gimp_parasiterc_save
 <TITLE>Gimp-templates</TITLE>
 gimp_templates_load
 gimp_templates_save
+gimp_templates_migrate
 </SECTION>
 
 <SECTION>
@@ -1680,9 +1681,8 @@ gimp_display_shell_get_padding
 GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK
 gimp_display_shell_events
 gimp_display_shell_canvas_realize
-gimp_display_shell_canvas_configure
+gimp_display_shell_canvas_size_allocate
 gimp_display_shell_canvas_expose
-gimp_display_shell_popup_menu
 gimp_display_shell_canvas_tool_events
 gimp_display_shell_hruler_button_press
 gimp_display_shell_vruler_button_press
@@ -1862,6 +1862,7 @@ GimpStatusbar
 gimp_statusbar_new
 gimp_statusbar_push
 gimp_statusbar_push_coords
+gimp_statusbar_push_length
 gimp_statusbar_replace
 gimp_statusbar_pop
 gimp_statusbar_set_cursor
@@ -3316,6 +3317,7 @@ gimp_tool_oper_update
 gimp_tool_cursor_update
 gimp_tool_push_status
 gimp_tool_push_status_coords
+gimp_tool_push_status_length
 gimp_tool_pop_status
 gimp_tool_set_cursor
 gimp_tool_control_dirty_mask
@@ -6833,6 +6835,7 @@ file_open_image
 file_open_with_display
 file_open_with_proc_and_display
 file_open_layer
+file_open_thumbnail
 </SECTION>
 
 <SECTION>
@@ -7081,6 +7084,12 @@ palette_import_dialog_destroy
 <SECTION>
 <FILE>preferences-dialog</FILE>
 preferences_dialog_create
+</SECTION>
+
+<SECTION>
+<FILE>print-size-dialog</FILE>
+GimpResolutionCallback
+print_size_dialog_new
 </SECTION>
 
 <SECTION>
@@ -7480,6 +7489,7 @@ plug_ins_exit
 plug_ins_add_internal
 plug_ins_file_register_magic
 plug_ins_file_register_mime
+plug_ins_file_register_thumb_loader
 plug_ins_def_add_from_rc
 plug_ins_temp_proc_def_add
 plug_ins_temp_proc_def_remove
@@ -7790,7 +7800,9 @@ gimp_rgb_get_gdk_color
 gimp_rgb_set_gdk_color
 gimp_window_set_hint
 gimp_dialog_set_sensitive
+gimp_text_buffer_load
 gimp_text_buffer_save
+gimp_toggle_button_set_visible
 </SECTION>
 
 <SECTION>
@@ -8064,6 +8076,7 @@ plug_in_actions_setup
 plug_in_actions_update
 plug_in_actions_add_proc
 plug_in_actions_remove_proc
+plug_in_actions_add_path
 </SECTION>
 
 <SECTION>
@@ -8082,6 +8095,12 @@ select_actions_update
 <FILE>templates-actions</FILE>
 templates_actions_setup
 templates_actions_update
+</SECTION>
+
+<SECTION>
+<FILE>text-editor-actions</FILE>
+text_editor_actions_update
+text_editor_actions_setup
 </SECTION>
 
 <SECTION>
@@ -8314,6 +8333,7 @@ help_context_help_cmd_callback
 image_new_cmd_callback
 image_new_from_image_cmd_callback
 image_convert_cmd_callback
+image_print_size_cmd_callback
 image_resize_cmd_callback
 image_resize_to_layers_cmd_callback
 image_scale_cmd_callback
@@ -8417,6 +8437,13 @@ templates_new_template_cmd_callback
 templates_duplicate_template_cmd_callback
 templates_edit_template_cmd_callback
 templates_delete_template_cmd_callback
+</SECTION>
+
+<SECTION>
+<FILE>text-editor-commands</FILE>
+text_editor_clear_cmd_callback
+text_editor_load_cmd_callback
+text_editor_direction_cmd_callback
 </SECTION>
 
 <SECTION>
