@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.8\n"
-"POT-Creation-Date: 1999-09-02 23:16+0200\n"
-"PO-Revision-Date: 1999-09-03 01:16+0200\n"
+"POT-Creation-Date: 1999-09-06 02:07+0200\n"
+"PO-Revision-Date: 1999-09-06 02:07+0200\n"
 "Last-Translator: Tomas Ögren <stric@ing.umu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -54,7 +54,7 @@ msgstr "dödade vilse timer, var god rapportera till lewing@gimp.org"
 msgid "GIMP Startup"
 msgstr "GIMP Uppstart"
 
-#: app/app_procs.c:472 app/gimprc.c:403
+#: app/app_procs.c:472 app/gimprc.c:408
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "tolkar \"%s\"\n"
@@ -69,23 +69,23 @@ msgid "Parasites"
 msgstr "Parasiter"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2413
+#: app/app_procs.c:531 app/internal_procs.c:70 app/preferences_dialog.c:2443
 msgid "Brushes"
 msgstr "Penslar"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2417
+#: app/app_procs.c:533 app/internal_procs.c:139 app/preferences_dialog.c:2447
 msgid "Patterns"
 msgstr "Mönster"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:535 app/preferences_dialog.c:2419
+#: app/app_procs.c:535 app/preferences_dialog.c:2449
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp palettes
 #: app/app_procs.c:537 app/gradient_select.c:560 app/internal_procs.c:109
-#: app/preferences_dialog.c:2421
+#: app/preferences_dialog.c:2451
 msgid "Gradients"
 msgstr "Färgskalor"
 
@@ -106,13 +106,14 @@ msgstr "Avsluta"
 #: app/channels_dialog.c:2397 app/channels_dialog.c:2586
 #: app/color_balance.c:277 app/color_notebook.c:50 app/color_notebook.c:193
 #: app/color_select.c:196 app/color_select.c:241 app/convert.c:464
-#: app/curves.c:519 app/file_new_dialog.c:209 app/file_new_dialog.c:398
-#: app/gdisplay_ops.c:352 app/gimpprogress.c:135 app/global_edit.c:712
-#: app/gradient.c:1553 app/gradient.c:4599 app/gradient.c:5178
-#: app/hue_saturation.c:362 app/interface.c:935 app/interface.c:1032
-#: app/layers_dialog.c:3297 app/layers_dialog.c:3528 app/layers_dialog.c:3663
-#: app/layers_dialog.c:3800 app/layers_dialog.c:4116 app/levels.c:351
-#: app/posterize.c:196 app/preferences_dialog.c:1485 app/resize.c:116
+#: app/curves.c:528 app/file_new_dialog.c:209 app/file_new_dialog.c:398
+#: app/gdisplay_color.c:462 app/gdisplay_color_ui.c:74 app/gdisplay_ops.c:352
+#: app/gimpprogress.c:135 app/global_edit.c:712 app/gradient.c:1553
+#: app/gradient.c:4599 app/gradient.c:5178 app/hue_saturation.c:362
+#: app/interface.c:938 app/interface.c:1035 app/layers_dialog.c:3297
+#: app/layers_dialog.c:3528 app/layers_dialog.c:3663 app/layers_dialog.c:3800
+#: app/layers_dialog.c:4116 app/levels.c:351 app/posterize.c:196
+#: app/preferences_dialog.c:1505 app/qmask.c:255 app/resize.c:116
 #: app/threshold.c:279
 msgid "Cancel"
 msgstr "Avbryt"
@@ -225,7 +226,7 @@ msgstr "FG till Transparent"
 msgid "Custom from editor"
 msgstr "Egen från editor"
 
-#: app/blend.c:270 app/gradient.c:468 app/preferences_dialog.c:1725
+#: app/blend.c:270 app/gradient.c:468 app/preferences_dialog.c:1745
 msgid "Linear"
 msgstr "Linjär"
 
@@ -269,7 +270,7 @@ msgstr "Spiral (medurs)"
 msgid "Spiral (anticlockwise)"
 msgstr "Spiral (moturs)"
 
-#: app/blend.c:296 app/preferences_dialog.c:1777
+#: app/blend.c:296 app/preferences_dialog.c:1797
 msgid "None"
 msgstr "Ingen"
 
@@ -379,12 +380,13 @@ msgstr "Ljusstyrka-Kontrast går ej att använda på indexerade bilder."
 #: app/channels_dialog.c:2396 app/channels_dialog.c:2585
 #: app/color_balance.c:276 app/color_notebook.c:49 app/color_notebook.c:192
 #: app/color_select.c:195 app/color_select.c:240 app/convert.c:463
-#: app/curves.c:518 app/file_new_dialog.c:207 app/file_new_dialog.c:396
-#: app/hue_saturation.c:361 app/interface.c:1031 app/interface.c:1409
+#: app/curves.c:527 app/file_new_dialog.c:207 app/file_new_dialog.c:396
+#: app/gdisplay_color.c:455 app/gdisplay_color_ui.c:73
+#: app/hue_saturation.c:361 app/interface.c:1034 app/interface.c:1412
 #: app/layers_dialog.c:3296 app/layers_dialog.c:3527 app/layers_dialog.c:3662
 #: app/layers_dialog.c:4115 app/levels.c:350 app/module_db.c:263
-#: app/posterize.c:195 app/preferences_dialog.c:1481 app/resize.c:115
-#: app/threshold.c:278
+#: app/posterize.c:195 app/preferences_dialog.c:1501 app/qmask.c:254
+#: app/resize.c:115 app/threshold.c:278
 msgid "OK"
 msgstr "OK"
 
@@ -403,7 +405,7 @@ msgid "Contrast"
 msgstr "Kontrast"
 
 #. The preview toggle
-#: app/brightness_contrast.c:312 app/color_balance.c:441 app/curves.c:652
+#: app/brightness_contrast.c:312 app/color_balance.c:441 app/curves.c:662
 #: app/fileops.c:396 app/hue_saturation.c:572 app/levels.c:548
 #: app/palette.c:2946 app/posterize.c:242 app/threshold.c:354
 msgid "Preview"
@@ -413,12 +415,13 @@ msgstr "Förhandsvisning"
 #: app/brush_edit.c:37 app/brush_select.c:163 app/by_color_select.c:664
 #: app/color_notebook.c:187 app/color_picker.c:235 app/color_select.c:235
 #: app/colormap_dialog.i.c:94 app/colormap_dialog.i.c:103 app/crop.c:1027
-#: app/devices.c:111 app/docindexif.c:103 app/errorconsole.c:269
+#: app/devices.c:122 app/docindexif.c:103 app/errorconsole.c:269
 #: app/gdisplay_ops.c:351 app/gradient.c:675 app/gradient_select.c:77
 #: app/histogram_tool.c:262 app/info_window.c:267 app/lc_dialog.c:196
-#: app/measure.c:179 app/palette.c:2006 app/palette.c:2012 app/palette.c:2833
-#: app/palette_select.c:55 app/pattern_select.c:87 app/tips_dialog.c:146
-#: app/tools.c:890 libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
+#: app/measure.c:179 app/nav_window.c:1092 app/palette.c:2006
+#: app/palette.c:2012 app/palette.c:2833 app/palette_select.c:55
+#: app/pattern_select.c:87 app/tips_dialog.c:146 app/tools.c:890
+#: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
 msgid "Close"
 msgstr "Stäng"
 
@@ -534,6 +537,7 @@ msgid "Replace"
 msgstr "Byt ut"
 
 #: app/by_color_select.c:543 app/colormap_dialog.i.c:99
+#: app/gdisplay_color_ui.c:79
 msgid "Add"
 msgstr "Addera"
 
@@ -563,7 +567,7 @@ msgid "Fuzziness Threshold"
 msgstr "Luddighetströskel"
 
 #. The reset push button
-#: app/by_color_select.c:654 app/curves.c:517 app/file_new_dialog.c:397
+#: app/by_color_select.c:654 app/curves.c:526 app/file_new_dialog.c:397
 #: app/tools.c:889 app/transform_core.c:233
 msgid "Reset"
 msgstr "Återställ"
@@ -607,11 +611,12 @@ msgstr "Slå-runt"
 msgid "Fill Options"
 msgstr "Fyllnad - inställningar"
 
-#: app/channel_ops.c:180 app/layers_dialog.c:3302
+#: app/channel_ops.c:180 app/image_new.c:70 app/image_new.c:224
+#: app/layers_dialog.c:3302
 msgid "Background"
 msgstr "Bakgrund"
 
-#: app/channel_ops.c:192 app/layers_dialog.c:3304
+#: app/channel_ops.c:192 app/image_new.c:80 app/layers_dialog.c:3304
 msgid "Transparent"
 msgstr "Transparent"
 
@@ -701,17 +706,17 @@ msgstr ""
 "channels_dialog_drop_new_channel_callback():\n"
 "kunde ej allokera nytt lager"
 
-#: app/channels_dialog.c:1356 app/color_balance.c:373 app/curves.c:406
+#: app/channels_dialog.c:1356 app/color_balance.c:373 app/curves.c:415
 #: app/histogram_tool.c:279 app/levels.c:244
 msgid "Red"
 msgstr "Röd"
 
-#: app/channels_dialog.c:1360 app/color_balance.c:400 app/curves.c:407
+#: app/channels_dialog.c:1360 app/color_balance.c:400 app/curves.c:416
 #: app/histogram_tool.c:280 app/levels.c:245
 msgid "Green"
 msgstr "Grön"
 
-#: app/channels_dialog.c:1364 app/color_balance.c:427 app/curves.c:408
+#: app/channels_dialog.c:1364 app/color_balance.c:427 app/curves.c:417
 #: app/histogram_tool.c:281 app/levels.c:246
 msgid "Blue"
 msgstr "Blå"
@@ -1102,41 +1107,41 @@ msgstr "Från markering"
 msgid "Auto Shrink"
 msgstr "Auto-krymp"
 
-#: app/curves.c:369
+#: app/curves.c:378
 msgid "Curves Options"
 msgstr "Kurvor - inställningar"
 
-#: app/curves.c:405 app/histogram_tool.c:278 app/layers_dialog.c:255
+#: app/curves.c:414 app/histogram_tool.c:278 app/layers_dialog.c:255
 #: app/levels.c:243 app/paint_funcs.c:96 app/tool_options.c:843
 msgid "Value"
 msgstr "Värde"
 
-#: app/curves.c:409 app/levels.c:247
+#: app/curves.c:418 app/levels.c:247
 msgid "Alpha"
 msgstr "Alfa"
 
-#: app/curves.c:420
+#: app/curves.c:429
 msgid "Curves for indexed drawables cannot be adjusted."
 msgstr "Kurvor för indexerade bilder kan inte justeras."
 
-#: app/curves.c:524
+#: app/curves.c:533
 msgid "Smooth"
 msgstr "Mjuk"
 
-#: app/curves.c:525
+#: app/curves.c:534
 msgid "Free"
 msgstr "Frihand"
 
-#: app/curves.c:551 app/tools.c:593
+#: app/curves.c:561 app/tools.c:593
 msgid "Curves"
 msgstr "Kurvor"
 
-#: app/curves.c:565
+#: app/curves.c:575
 msgid "Modify Curves for Channel: "
 msgstr "Modifiera kurvor för kanal: "
 
 #. The option menu for selecting the drawing method
-#: app/curves.c:639
+#: app/curves.c:649
 msgid "Curve Type: "
 msgstr "Kurvtyp: "
 
@@ -1144,16 +1149,16 @@ msgstr "Kurvtyp: "
 msgid "Desaturate operates only on RGB color drawables."
 msgstr "Avfärga fungerar endast på RGB bilder."
 
-#: app/devices.c:110 app/gradient.c:673 app/levels.c:564 app/palette.c:2010
-#: app/preferences_dialog.c:1483
+#: app/devices.c:121 app/gradient.c:673 app/levels.c:564 app/palette.c:2010
+#: app/preferences_dialog.c:1503
 msgid "Save"
 msgstr "Spara"
 
-#: app/devices.c:373
+#: app/devices.c:405
 msgid "devices_rc_update called multiple times for not present device\n"
 msgstr "devices_rc_update anropades flera ggr för icke närvarande enhet\n"
 
-#: app/devices.c:673
+#: app/devices.c:710
 msgid "Device Status"
 msgstr "Enhetsstatus"
 
@@ -1185,7 +1190,7 @@ msgstr "Öppna"
 msgid "Open a file"
 msgstr "Öppna en fil"
 
-#: app/docindexif.c:88
+#: app/docindexif.c:88 app/gdisplay_color_ui.c:81
 msgid "Up"
 msgstr "Upp"
 
@@ -1193,7 +1198,7 @@ msgstr "Upp"
 msgid "Move the selected entry up in the index"
 msgstr "Flytta den valda posten uppåt i listan"
 
-#: app/docindexif.c:93
+#: app/docindexif.c:93 app/gdisplay_color_ui.c:82
 msgid "Down"
 msgstr "Ner"
 
@@ -1201,7 +1206,7 @@ msgstr "Ner"
 msgid "Move the selected entry down in the index"
 msgstr "Flytta den valda posten nedåt i listan"
 
-#: app/docindexif.c:98
+#: app/docindexif.c:98 app/gdisplay_color_ui.c:80
 msgid "Remove"
 msgstr "Avlägsna"
 
@@ -1343,7 +1348,7 @@ msgstr "Bildstorlek: %s"
 msgid "New Image"
 msgstr "Ny bild"
 
-#: app/file_new_dialog.c:515 app/preferences_dialog.c:1554
+#: app/file_new_dialog.c:515 app/preferences_dialog.c:1574
 msgid "Pixels"
 msgstr "Pixlar"
 
@@ -1434,13 +1439,13 @@ msgstr "%s existerar, skriv över?"
 msgid "File Exists!"
 msgstr "Filen existerar!"
 
-#: app/flip_tool.c:74 app/preferences_dialog.c:1600
-#: app/preferences_dialog.c:2308
+#: app/flip_tool.c:74 app/preferences_dialog.c:1620
+#: app/preferences_dialog.c:2338
 msgid "Horizontal"
 msgstr "Horisontell"
 
-#: app/flip_tool.c:74 app/preferences_dialog.c:1602
-#: app/preferences_dialog.c:2310
+#: app/flip_tool.c:74 app/preferences_dialog.c:1622
+#: app/preferences_dialog.c:2340
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -1478,7 +1483,7 @@ msgstr "Kan ej korrekt scanline-konvertera polygon!\n"
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/gdisplay.c:215 app/preferences_dialog.c:1645
+#: app/gdisplay.c:215 app/image_new.c:54 app/preferences_dialog.c:1665
 msgid "RGB"
 msgstr "RGB"
 
@@ -1731,9 +1736,33 @@ msgstr "/Filter"
 msgid "/Script-Fu"
 msgstr "/Script-Fu"
 
-#: app/gdisplay.c:2146
+#: app/gdisplay.c:2166
 msgid "gdisplays_flush() called recursively."
 msgstr "gdisplays_flush() anropad rekursivt."
+
+#: app/gdisplay_color.c:428
+msgid "Gamma"
+msgstr "Gamma"
+
+#: app/gdisplay_color.c:438
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: app/gdisplay_color_ui.c:83
+msgid "Configure"
+msgstr "Inställningar"
+
+#: app/gdisplay_color_ui.c:88
+msgid "Color Display Filters"
+msgstr "Färgvisnings-filter"
+
+#: app/gdisplay_color_ui.c:105
+msgid "Available Filters"
+msgstr "Tillgängliga filter"
+
+#: app/gdisplay_color_ui.c:123
+msgid "Active Filters"
+msgstr "Aktiva filter"
 
 #: app/gdisplay_ops.c:388
 #, c-format
@@ -1981,50 +2010,50 @@ msgstr ""
 msgid "Progress"
 msgstr "Framsteg"
 
-#: app/gimprc.c:363 app/plug_in.c:305
+#: app/gimprc.c:368 app/plug_in.c:305
 msgid "Resource configuration"
 msgstr "Resurs-konfiguration"
 
-#: app/gimprc.c:422
+#: app/gimprc.c:427
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "kunde inte tolka: \"%s\"\n"
 
-#: app/gimprc.c:423
+#: app/gimprc.c:428
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  på rad %d kolumn %d\n"
 
-#: app/gimprc.c:424
+#: app/gimprc.c:429
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  oväntad token: %s\n"
 
-#: app/gimprc.c:1348
+#: app/gimprc.c:1391
 msgid "error parsing pluginrc"
 msgstr "fel vid tolkning av pluginrc"
 
-#: app/gimprc.c:1683
+#: app/gimprc.c:1726
 #, c-format
 msgid "transform_path(): gimprc token referenced but not defined: %s"
 msgstr "transform_path(): gimprc token refererad men ej definerad: %s"
 
-#: app/gimprc.c:2591
+#: app/gimprc.c:2655
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kan ej öppna %s: %s"
 
-#: app/gimprc.c:2610
+#: app/gimprc.c:2674
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kan ej döpa om %s till %s.old: %s"
 
-#: app/gimprc.c:2616
+#: app/gimprc.c:2680
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Kan ej öppna %s igen\n"
 
-#: app/gimprc.c:2628
+#: app/gimprc.c:2692
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kan ej skriva till %s: %s"
@@ -2034,7 +2063,7 @@ msgstr "Kan ej skriva till %s: %s"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:440
+#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:458
 #: libgimp/gimpunit.c:44
 msgid "pixels"
 msgstr "pixlar"
@@ -2649,13 +2678,84 @@ msgstr "Mättnad"
 msgid "image depth change, unable to restore original image"
 msgstr "bilddjup förändrat, kunde ej återskapa originalbilden"
 
+#: app/image_new.c:59 app/info_window.c:60 app/info_window.c:447
+#: app/preferences_dialog.c:1666
+msgid "Grayscale"
+msgstr "Gråskala"
+
+#: app/image_new.c:65 app/layers_dialog.c:3301
+msgid "Foreground"
+msgstr "Förgrund"
+
+#: app/image_new.c:75 app/layers_dialog.c:3303
+msgid "White"
+msgstr "Vit"
+
+#: app/image_new.c:263
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Bytes"
+
+#: app/image_new.c:265
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KB"
+
+#: app/image_new.c:267
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KB"
+
+#: app/image_new.c:269
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: app/image_new.c:271
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: app/image_new.c:273
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: app/indicator_area.c:170
+msgid ""
+"The active brush.\n"
+"Click to open the Brushes Dialog."
+msgstr ""
+"Den aktiva penseln.\n"
+"Klicka för att öppna pensel-fönstret."
+
+#: app/indicator_area.c:190
+msgid ""
+"The active pattern.\n"
+"Click to open the Patterns Dialog."
+msgstr ""
+"Det aktiva mönstret.\n"
+"Klicka för att öppna mönster-fönstret."
+
+#: app/indicator_area.c:210
+msgid ""
+"The active gradient.\n"
+"Click to open the Gradients Dialog."
+msgstr ""
+"Den aktiva färgskalan.\n"
+"Klicka för att öppna färgskale-fönstret."
+
+#: app/info_dialog.c:126
+msgid "Unknown info_dialog field type."
+msgstr "Okänd info_dialog fält-typ."
+
+#: app/info_dialog.c:179 app/preferences_dialog.c:1766
+msgid "General"
+msgstr "Generellt"
+
 #: app/info_window.c:59
 msgid "Static Gray"
 msgstr "Statisk Grå"
-
-#: app/info_window.c:60 app/info_window.c:447 app/preferences_dialog.c:1646
-msgid "Grayscale"
-msgstr "Gråskala"
 
 #: app/info_window.c:61
 msgid "Static Color"
@@ -3162,7 +3262,7 @@ msgstr ""
 "\n"
 "Installationen misslyckades, kontakta din systemadministratör.\n"
 
-#: app/interface.c:307
+#: app/interface.c:308
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
@@ -3171,11 +3271,11 @@ msgstr ""
 "färgerna. Pilarna byter plats på färgerna. Dubbelklicka för att få upp en "
 "färgväljare."
 
-#: app/interface.c:528
+#: app/interface.c:530
 msgid "The GIMP"
 msgstr "GIMP"
 
-#: app/interface.c:1401
+#: app/interface.c:1404
 msgid "GIMP Message"
 msgstr "GIMP meddelande"
 
@@ -3244,7 +3344,7 @@ msgstr "Färgskale UI"
 msgid "Guide procedures"
 msgstr "Hjälplinje-procedurer"
 
-#: app/internal_procs.c:118 app/preferences_dialog.c:1739
+#: app/internal_procs.c:118 app/preferences_dialog.c:1759
 msgid "Interface"
 msgstr "Gränssnitt"
 
@@ -3529,14 +3629,6 @@ msgstr ""
 "new_layer_query_ok_callback():\n"
 "kunde ej allokera nytt lager"
 
-#: app/layers_dialog.c:3301
-msgid "Foreground"
-msgstr "Förgrund"
-
-#: app/layers_dialog.c:3303
-msgid "White"
-msgstr "Vit"
-
 #: app/layers_dialog.c:3317
 msgid "New Layer Options"
 msgstr "Nytt lager - inställningar"
@@ -3708,44 +3800,44 @@ msgstr "Förstora - inställningar"
 msgid "Allow Window Resizing"
 msgstr "Tillåt storleksförändring av fönster"
 
-#: app/main.c:290
+#: app/main.c:292
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:294
+#: app/main.c:296
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Användning: %s [flagga ...] [fil ...]\n"
 
-#: app/main.c:295
+#: app/main.c:297
 msgid "Valid options are:\n"
 msgstr "Giltiga flaggor är:\n"
 
-#: app/main.c:296
+#: app/main.c:298
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Skriv ut denna hjälptext.\n"
 
-#: app/main.c:297
+#: app/main.c:299
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Skriv ut versionsinformation.\n"
 
-#: app/main.c:298
+#: app/main.c:300
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <kommandon>   Kör i fler-jobbs-läge.\n"
 
-#: app/main.c:299
+#: app/main.c:301
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Använd en alternativ gimprc fil.\n"
 
-#: app/main.c:300
+#: app/main.c:302
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Kör utan användargränssnitt.\n"
 
-#: app/main.c:301
+#: app/main.c:303
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Försök återställ sparad session.\n"
 
-#: app/main.c:302
+#: app/main.c:304
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -3753,19 +3845,19 @@ msgstr ""
 "  --no-data                Ladda inte in mönster, färgskalor, färgpaletter, "
 "penslar.\n"
 
-#: app/main.c:303
+#: app/main.c:305
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Visa startmeddelanden.\n"
 
-#: app/main.c:304
+#: app/main.c:306
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Visa inte start-fönstret.\n"
 
-#: app/main.c:305
+#: app/main.c:307
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Visa ingen bild i start-fönstret.\n"
 
-#: app/main.c:306
+#: app/main.c:308
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -3773,11 +3865,11 @@ msgstr ""
 "  --no-shm                 Använd inte delat minne mellan GIMP och dess "
 "tillägg.\n"
 
-#: app/main.c:307
+#: app/main.c:309
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr "  --no-xshm                Använd inte 'X Shared Memory' tillägget.\n"
 
-#: app/main.c:308
+#: app/main.c:310
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -3785,11 +3877,11 @@ msgstr ""
 "  --console-messages       Visa varningsmeddelanden till konsollen, inte ett "
 "separat dialogfönster.\n"
 
-#: app/main.c:309
+#: app/main.c:311
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Aktivera signalhanterare för felsökning.\n"
 
-#: app/main.c:310
+#: app/main.c:312
 msgid ""
 "  --display <display>      Use the designated X display.\n"
 "\n"
@@ -3797,47 +3889,47 @@ msgstr ""
 "  --display <display>      Använd en speciell X 'display'.\n"
 "\n"
 
-#: app/main.c:311
+#: app/main.c:313
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Använd en alternativ system gimprc fil.\n"
 
-#: app/main.c:432
+#: app/main.c:434
 msgid "sighup caught"
 msgstr "fick signal 'sighup'"
 
-#: app/main.c:437
+#: app/main.c:439
 msgid "sigint caught"
 msgstr "fick signal 'sigint'"
 
-#: app/main.c:442
+#: app/main.c:444
 msgid "sigquit caught"
 msgstr "fick signal 'sigquit'"
 
-#: app/main.c:447
+#: app/main.c:449
 msgid "sigabrt caught"
 msgstr "fick signal 'sigabrt'"
 
-#: app/main.c:452
+#: app/main.c:454
 msgid "sigbus caught"
 msgstr "fick signal 'sigbus'"
 
-#: app/main.c:457
+#: app/main.c:459
 msgid "sigsegv caught"
 msgstr "fick signal 'sigsegv'"
 
-#: app/main.c:462
+#: app/main.c:464
 msgid "sigpipe caught"
 msgstr "fick signal 'sigpipe'"
 
-#: app/main.c:467
+#: app/main.c:469
 msgid "sigterm caught"
 msgstr "fick signal 'sigterm'"
 
-#: app/main.c:472
+#: app/main.c:474
 msgid "sigfpe caught"
 msgstr "fick signal 'sigfpe'"
 
-#: app/main.c:476
+#: app/main.c:478
 msgid "unknown signal"
 msgstr "fick okänd signal"
 
@@ -4392,11 +4484,17 @@ msgstr "Ladda automatiskt vid start"
 msgid "Move Tool Options"
 msgstr "Flyttaverktyget - inställningar"
 
-#: app/paint_core.c:650
+#. create the info dialog
+#: app/nav_window.c:1143
+#, c-format
+msgid "%s: Window Navigation"
+msgstr "%s: Fönsternavigation"
+
+#: app/paint_core.c:671
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
-#: app/paint_core.c:1641
+#: app/paint_core.c:1682
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles är null"
 
@@ -4878,488 +4976,491 @@ msgstr "Posterisering"
 msgid "Posterize Levels: "
 msgstr "Posterisering nivåer: "
 
-#: app/preferences_dialog.c:207
+#: app/preferences_dialog.c:210
 msgid "Error: Levels of undo must be zero or greater."
 msgstr "Fel: Antalet ångrasteg måste vara 0 eller högre."
 
-#: app/preferences_dialog.c:213
+#: app/preferences_dialog.c:216
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Fel: Antalet processorer måste vara mellan 1 och 30."
 
-#: app/preferences_dialog.c:219
+#: app/preferences_dialog.c:222
 msgid "Error: Marching speed must be 50 or greater."
 msgstr "Fel: Vandrande myrornas hastighet måste vara 50 eller högre."
 
-#: app/preferences_dialog.c:225
+#: app/preferences_dialog.c:228
 msgid "Error: Default width must be one or greater."
 msgstr "Fel: Standardbredden måste vara 1 eller högre."
 
-#: app/preferences_dialog.c:231
+#: app/preferences_dialog.c:234
 msgid "Error: Default height must be one or greater."
 msgstr "Fel: Standardhöjden måste vara 1 eller högre."
 
-#: app/preferences_dialog.c:238
+#: app/preferences_dialog.c:241
 msgid "Error: Default unit must be within unit range."
 msgstr "Fel: Standardmåttet måste vara inom måttområdet."
 
-#: app/preferences_dialog.c:245
+#: app/preferences_dialog.c:248
 msgid "Error: default resolution must not be zero."
 msgstr "Fel: standard bildskärmsupplösningen får ej vara 0."
 
-#: app/preferences_dialog.c:253
+#: app/preferences_dialog.c:256
 msgid "Error: Default resolution unit must be within unit range."
 msgstr "Fel: Standardmåttenheten måste vara inom måttområdet."
 
-#: app/preferences_dialog.c:260
+#: app/preferences_dialog.c:263
 msgid "Error: Monitor resolution must not be zero."
 msgstr "Fel: Bildskärmsupplösningen får ej vara 0."
 
-#: app/preferences_dialog.c:267
+#: app/preferences_dialog.c:270
 msgid "Error: Image title format must not be NULL."
 msgstr "Fel: Bildtitelformatet får ej vara NULL."
 
-#: app/preferences_dialog.c:547
+#: app/preferences_dialog.c:552
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Du måste starta om GIMP för att förändringarna ska ta effekt."
 
-#: app/preferences_dialog.c:1479
+#: app/preferences_dialog.c:1499
 msgid "Preferences"
 msgstr "Inställningar"
 
 #. The categories tree
-#: app/preferences_dialog.c:1497
+#: app/preferences_dialog.c:1517
 msgid "Categories"
 msgstr "Kategorier"
 
-#: app/preferences_dialog.c:1524
+#: app/preferences_dialog.c:1544
 msgid "New File Settings"
 msgstr "Ny fil - inställningar"
 
-#: app/preferences_dialog.c:1526
+#: app/preferences_dialog.c:1546
 msgid "New File"
 msgstr "Ny fil"
 
-#: app/preferences_dialog.c:1536
+#: app/preferences_dialog.c:1556
 msgid "Default Image Size and Unit"
 msgstr "Standard bildstorlek och mått"
 
-#: app/preferences_dialog.c:1550
+#: app/preferences_dialog.c:1570
 msgid "Width"
 msgstr "Bredd"
 
-#: app/preferences_dialog.c:1552
+#: app/preferences_dialog.c:1572
 msgid "Height"
 msgstr "Höjd"
 
-#: app/preferences_dialog.c:1579
+#: app/preferences_dialog.c:1599
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standard bildstorlek och måttenhet"
 
-#: app/preferences_dialog.c:1604 app/preferences_dialog.c:2312
+#: app/preferences_dialog.c:1624 app/preferences_dialog.c:2342
 msgid "dpi"
 msgstr "dpi"
 
-#: app/preferences_dialog.c:1649
+#: app/preferences_dialog.c:1669
 msgid "Default Image Type:"
 msgstr "Standard bildtyp:"
 
-#: app/preferences_dialog.c:1654
+#: app/preferences_dialog.c:1674
 msgid "Display Settings"
 msgstr "Visuella inställningar"
 
-#: app/preferences_dialog.c:1656
+#: app/preferences_dialog.c:1676
 msgid "Display"
 msgstr "Visuellt"
 
-#: app/preferences_dialog.c:1663
+#: app/preferences_dialog.c:1683
 msgid "Transparency"
 msgstr "Transparent"
 
-#: app/preferences_dialog.c:1681
+#: app/preferences_dialog.c:1701
 msgid "Light Checks"
 msgstr "Ljusa kontroller"
 
-#: app/preferences_dialog.c:1683
+#: app/preferences_dialog.c:1703
 msgid "Mid-Tone Checks"
 msgstr "Mid-ton kontroller"
 
-#: app/preferences_dialog.c:1685
+#: app/preferences_dialog.c:1705
 msgid "Dark Checks"
 msgstr "Mörka kontroller"
 
-#: app/preferences_dialog.c:1687
+#: app/preferences_dialog.c:1707
 msgid "White Only"
 msgstr "Endast vit"
 
-#: app/preferences_dialog.c:1689
+#: app/preferences_dialog.c:1709
 msgid "Gray Only"
 msgstr "Endast grå"
 
-#: app/preferences_dialog.c:1691
+#: app/preferences_dialog.c:1711
 msgid "Black Only"
 msgstr "Endast svart"
 
-#: app/preferences_dialog.c:1695
+#: app/preferences_dialog.c:1715
 msgid "Transparency Type:"
 msgstr "Transparenthets-typ:"
 
-#: app/preferences_dialog.c:1701 app/preferences_dialog.c:1778
+#: app/preferences_dialog.c:1721 app/preferences_dialog.c:1798
+#: app/preferences_dialog.c:1808
 msgid "Small"
 msgstr "Liten"
 
-#: app/preferences_dialog.c:1703 app/preferences_dialog.c:1779
+#: app/preferences_dialog.c:1723 app/preferences_dialog.c:1799
+#: app/preferences_dialog.c:1809
 msgid "Medium"
 msgstr "Medium"
 
-#: app/preferences_dialog.c:1705 app/preferences_dialog.c:1780
+#: app/preferences_dialog.c:1725 app/preferences_dialog.c:1800
+#: app/preferences_dialog.c:1810
 msgid "Large"
 msgstr "Stor"
 
-#: app/preferences_dialog.c:1709
+#: app/preferences_dialog.c:1729
 msgid "Check Size:"
 msgstr "Kontrollstorlek:"
 
-#: app/preferences_dialog.c:1711 app/transform_tool.c:190
+#: app/preferences_dialog.c:1731 app/transform_tool.c:190
 msgid "Scaling"
 msgstr "Skalning"
 
-#: app/preferences_dialog.c:1723
+#: app/preferences_dialog.c:1743
 msgid "Nearest Neighbor"
 msgstr "Närmaste granne"
 
-#: app/preferences_dialog.c:1727
+#: app/preferences_dialog.c:1747
 msgid "Cubic"
 msgstr "Kubisk"
 
-#: app/preferences_dialog.c:1737
+#: app/preferences_dialog.c:1757
 msgid "Interface Settings"
 msgstr "Gränssnitt inställningar"
 
-#: app/preferences_dialog.c:1746
-msgid "General"
-msgstr "Generellt"
-
-#: app/preferences_dialog.c:1783
+#: app/preferences_dialog.c:1803
 msgid "Preview Size:"
 msgstr "Förvisningsstorlek:"
 
-#: app/preferences_dialog.c:1792
+#: app/preferences_dialog.c:1813
+msgid "Nav Preview Size:"
+msgstr "Förvisningsstorlek navigering:"
+
+#: app/preferences_dialog.c:1822
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/preferences_dialog.c:1801
+#: app/preferences_dialog.c:1831
 msgid "Recent Documents List Size:"
 msgstr "Antal senast-använda dokument:"
 
-#: app/preferences_dialog.c:1804
+#: app/preferences_dialog.c:1834
 msgid "Help System"
 msgstr "Hjälpsystem"
 
-#: app/preferences_dialog.c:1813
+#: app/preferences_dialog.c:1843
 msgid "Show Tool Tips"
 msgstr "Visa hjälpbubblor"
 
-#: app/preferences_dialog.c:1824
+#: app/preferences_dialog.c:1854
 msgid "Image Windows Settings"
 msgstr "Bildfönster - inställningar"
 
-#: app/preferences_dialog.c:1826
+#: app/preferences_dialog.c:1856
 msgid "Image Windows"
 msgstr "Bildfönster"
 
-#: app/preferences_dialog.c:1833
+#: app/preferences_dialog.c:1863
 msgid "Appearance"
 msgstr "Utseende"
 
-#: app/preferences_dialog.c:1842
+#: app/preferences_dialog.c:1872
 msgid "Resize Window on Zoom"
 msgstr "Ändra storlek på fönstret vid zoom"
 
-#: app/preferences_dialog.c:1851
+#: app/preferences_dialog.c:1881
 msgid "Show Rulers"
 msgstr "Visa linjaler"
 
-#: app/preferences_dialog.c:1860
+#: app/preferences_dialog.c:1890
 msgid "Show Statusbar"
 msgstr "Visa statusrad"
 
-#: app/preferences_dialog.c:1884
+#: app/preferences_dialog.c:1914
 msgid "Marching Ants Speed:"
 msgstr "Vandrande myrors hastighet:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:1892
+#: app/preferences_dialog.c:1922
 msgid "Custom"
 msgstr "Egen"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:1898
+#: app/preferences_dialog.c:1928
 msgid "Standard"
 msgstr "Standard"
 
-#: app/preferences_dialog.c:1903
+#: app/preferences_dialog.c:1933
 msgid "Show zoom percentage"
 msgstr "Visa zoom-procent"
 
-#: app/preferences_dialog.c:1908
+#: app/preferences_dialog.c:1938
 msgid "Show zoom ratio"
 msgstr "Visa zoom-ratio"
 
-#: app/preferences_dialog.c:1913
+#: app/preferences_dialog.c:1943
 msgid "Show reversed zoom ratio"
 msgstr "Visa omvänd zoom-ratio"
 
-#: app/preferences_dialog.c:1924
+#: app/preferences_dialog.c:1954
 msgid "Image Title Format:"
 msgstr "Bildtitelformat:"
 
 #. End of the title format string
-#: app/preferences_dialog.c:1927
+#: app/preferences_dialog.c:1957
 msgid "Pointer Movement Feedback"
 msgstr "Markörförflyttning"
 
-#: app/preferences_dialog.c:1937
+#: app/preferences_dialog.c:1967
 msgid "Perfect-but-slow Pointer Tracking"
 msgstr "Följ pekaren perfekt men långsammare"
 
-#: app/preferences_dialog.c:1946
+#: app/preferences_dialog.c:1976
 msgid "Disable Cursor Updating"
 msgstr "Slå av marköruppdatering"
 
-#: app/preferences_dialog.c:1957
+#: app/preferences_dialog.c:1987
 msgid "Tool Options Settings"
 msgstr "Verktygsinställningar"
 
-#: app/preferences_dialog.c:1959 app/tools.c:900
+#: app/preferences_dialog.c:1989 app/tools.c:900
 msgid "Tool Options"
 msgstr "Verktygsinställningar"
 
-#: app/preferences_dialog.c:1966
+#: app/preferences_dialog.c:1996
 msgid "Paint Options"
 msgstr "Pensel - inställningar"
 
-#: app/preferences_dialog.c:1976
+#: app/preferences_dialog.c:2006
 msgid "Use Global Paint Options"
 msgstr "Använd globala målarinställningar"
 
-#: app/preferences_dialog.c:1992
+#: app/preferences_dialog.c:2022
 msgid "Display brush and pattern indicators on Toolbar"
 msgstr "Visa pensel- och mönster-indikatorer på verktygsfältet"
 
-#: app/preferences_dialog.c:2006
+#: app/preferences_dialog.c:2036
 msgid "Environment Settings"
 msgstr "Miljöinställningar"
 
-#: app/preferences_dialog.c:2008
+#: app/preferences_dialog.c:2038
 msgid "Environment"
 msgstr "Miljö"
 
-#: app/preferences_dialog.c:2015
+#: app/preferences_dialog.c:2045
 msgid "Resource Consumption"
 msgstr "Resursanvändning"
 
-#: app/preferences_dialog.c:2024
+#: app/preferences_dialog.c:2054
 msgid "Conservative Memory Usage"
 msgstr "Konservativ minnesanvändning"
 
-#: app/preferences_dialog.c:2075 app/preferences_dialog.c:2116
+#: app/preferences_dialog.c:2105 app/preferences_dialog.c:2146
 msgid "Bytes"
 msgstr "Bytes"
 
-#: app/preferences_dialog.c:2076 app/preferences_dialog.c:2117
+#: app/preferences_dialog.c:2106 app/preferences_dialog.c:2147
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: app/preferences_dialog.c:2077 app/preferences_dialog.c:2118
+#: app/preferences_dialog.c:2107 app/preferences_dialog.c:2148
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: app/preferences_dialog.c:2082
+#: app/preferences_dialog.c:2112
 msgid "Tile Cache Size:"
 msgstr "Bildblock-cachestorlek:"
 
-#: app/preferences_dialog.c:2123
+#: app/preferences_dialog.c:2153
 msgid "Maximum Image Size:"
 msgstr "Max bildstorlek:"
 
-#: app/preferences_dialog.c:2133
+#: app/preferences_dialog.c:2163
 msgid "Number of Processors to Use:"
 msgstr "Antalet processorer att använda:"
 
-#: app/preferences_dialog.c:2137
+#: app/preferences_dialog.c:2167
 msgid "8-Bit Displays"
 msgstr "8-bitars skärmar"
 
-#: app/preferences_dialog.c:2148
+#: app/preferences_dialog.c:2178
 msgid "Install Colormap"
 msgstr "Använd egen färgkarta"
 
-#: app/preferences_dialog.c:2157
+#: app/preferences_dialog.c:2187
 msgid "Colormap Cycling"
 msgstr "Rotera färgkarta"
 
-#: app/preferences_dialog.c:2166
+#: app/preferences_dialog.c:2196
 msgid "File Previews / Thumbnails"
 msgstr "Fil förhandsvisning / Tumnagel"
 
-#: app/preferences_dialog.c:2189
+#: app/preferences_dialog.c:2219
 msgid "Always"
 msgstr "Alltid"
 
-#: app/preferences_dialog.c:2190
+#: app/preferences_dialog.c:2220
 msgid "Never"
 msgstr "Aldrig"
 
-#: app/preferences_dialog.c:2193
+#: app/preferences_dialog.c:2223
 msgid "Try to Write a Thumbnail File:"
 msgstr "Försök skriva tumnagelsfil:"
 
-#: app/preferences_dialog.c:2198
+#: app/preferences_dialog.c:2228
 msgid "Session Management"
 msgstr "Sessionshantering"
 
-#: app/preferences_dialog.c:2200
+#: app/preferences_dialog.c:2230
 msgid "Session"
 msgstr "Session"
 
-#: app/preferences_dialog.c:2207
+#: app/preferences_dialog.c:2237
 msgid "Window Positions"
 msgstr "Fönsterpositioner"
 
-#: app/preferences_dialog.c:2216
+#: app/preferences_dialog.c:2246
 msgid "Save Window Positions on Exit"
 msgstr "Spara fönsterpositioner vid avslutning"
 
-#: app/preferences_dialog.c:2230
+#: app/preferences_dialog.c:2260
 msgid "Clear Saved Window Positions"
 msgstr "Rensa sparade fönsterpositioner"
 
-#: app/preferences_dialog.c:2237
+#: app/preferences_dialog.c:2267
 msgid "Always Try to Restore Session"
 msgstr "Försök alltid återställa sessionen"
 
-#: app/preferences_dialog.c:2246
+#: app/preferences_dialog.c:2276
 msgid "Devices"
 msgstr "Enheter"
 
-#: app/preferences_dialog.c:2255
+#: app/preferences_dialog.c:2285
 msgid "Save Device Status on Exit"
 msgstr "Spara enhets-status vid avslutning"
 
-#: app/preferences_dialog.c:2266
+#: app/preferences_dialog.c:2296
 msgid "Monitor Information"
 msgstr "Bildskärmsinformation"
 
-#: app/preferences_dialog.c:2268
+#: app/preferences_dialog.c:2298
 msgid "Monitor"
 msgstr "Bildskärm"
 
-#: app/preferences_dialog.c:2275
+#: app/preferences_dialog.c:2305
 msgid "Get Monitor Resolution"
 msgstr "Hämta bildskärmsupplösning"
 
-#: app/preferences_dialog.c:2290
+#: app/preferences_dialog.c:2320
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Nuvarande %d x %d dpi)"
 
-#: app/preferences_dialog.c:2337
+#: app/preferences_dialog.c:2367
 msgid "From X Server"
 msgstr "från X-servern"
 
-#: app/preferences_dialog.c:2352
+#: app/preferences_dialog.c:2382
 msgid "Manually:"
 msgstr "Manuellt:"
 
-#: app/preferences_dialog.c:2365
+#: app/preferences_dialog.c:2395
 msgid "Directories Settings"
 msgstr "Biblioteksinställningar"
 
-#: app/preferences_dialog.c:2367
+#: app/preferences_dialog.c:2397
 msgid "Directories"
 msgstr "Bibliotek"
 
-#: app/preferences_dialog.c:2380
+#: app/preferences_dialog.c:2410
 msgid "Temp Dir:"
 msgstr "Temporärt:"
 
-#: app/preferences_dialog.c:2380
+#: app/preferences_dialog.c:2410
 msgid "Select Temp Dir"
 msgstr "Välj temp-bibliotek"
 
-#: app/preferences_dialog.c:2381
+#: app/preferences_dialog.c:2411
 msgid "Swap Dir:"
 msgstr "Swap:"
 
-#: app/preferences_dialog.c:2381
+#: app/preferences_dialog.c:2411
 msgid "Select Swap Dir"
 msgstr "Välj swap-bibliotek"
 
-#: app/preferences_dialog.c:2413
+#: app/preferences_dialog.c:2443
 msgid "Brushes Directories"
 msgstr "Penselbibliotek"
 
-#: app/preferences_dialog.c:2413
+#: app/preferences_dialog.c:2443
 msgid "Select Brushes Dir"
 msgstr "Välj pensel-bibliotek"
 
-#: app/preferences_dialog.c:2415
+#: app/preferences_dialog.c:2445
 msgid "Generated Brushes"
 msgstr "Genererade penslar"
 
-#: app/preferences_dialog.c:2415
+#: app/preferences_dialog.c:2445
 msgid "Generated Brushes Directories"
 msgstr "Genererade penslar - bibliotek"
 
-#: app/preferences_dialog.c:2415
+#: app/preferences_dialog.c:2445
 msgid "Select Generated Brushes Dir"
 msgstr "Välj bibliotek för genererade penslar"
 
-#: app/preferences_dialog.c:2417
+#: app/preferences_dialog.c:2447
 msgid "Patterns Directories"
 msgstr "Mönsterbibliotek"
 
-#: app/preferences_dialog.c:2417
+#: app/preferences_dialog.c:2447
 msgid "Select Patterns Dir"
 msgstr "Välj mönster-bibliotek"
 
-#: app/preferences_dialog.c:2419
+#: app/preferences_dialog.c:2449
 msgid "Palettes Directories"
 msgstr "Palettbibliotek"
 
-#: app/preferences_dialog.c:2419
+#: app/preferences_dialog.c:2449
 msgid "Select Palettes Dir"
 msgstr "Välj palett-bibliotek"
 
-#: app/preferences_dialog.c:2421
+#: app/preferences_dialog.c:2451
 msgid "Gradients Directories"
 msgstr "Färgskalebibliotek"
 
-#: app/preferences_dialog.c:2421
+#: app/preferences_dialog.c:2451
 msgid "Select Gradients Dir"
 msgstr "Välj färgskale-bibliotek"
 
-#: app/preferences_dialog.c:2423
+#: app/preferences_dialog.c:2453
 msgid "Plug-Ins"
 msgstr "Insticksprogram"
 
-#: app/preferences_dialog.c:2423
+#: app/preferences_dialog.c:2453
 msgid "Plug-Ins Directories"
 msgstr "Insticksprogram-bibliotek"
 
-#: app/preferences_dialog.c:2423
+#: app/preferences_dialog.c:2453
 msgid "Select Plug-Ins Dir"
 msgstr "Välj insticksprograms-bibliotek"
 
-#: app/preferences_dialog.c:2425
+#: app/preferences_dialog.c:2455
 msgid "Modules"
 msgstr "Moduler"
 
-#: app/preferences_dialog.c:2425
+#: app/preferences_dialog.c:2455
 msgid "Modules Directories"
 msgstr "Modulbibliotek"
 
-#: app/preferences_dialog.c:2425
+#: app/preferences_dialog.c:2455
 msgid "Select Modules Dir"
 msgstr "Välj modul-bibliotek"
 
@@ -5396,6 +5497,15 @@ msgstr "GIMP tillägg"
 #: app/procedural_db_cmds.c:67
 msgid "Temporary Procedure"
 msgstr "Temporär procedur"
+
+#: app/qmask.c:274
+msgid "Edit Qmask Attributes"
+msgstr "Ändra Snabbmask-attribut"
+
+#. The opacity scale
+#: app/qmask.c:298
+msgid "Mask Opacity:"
+msgstr "Mask opacitet:"
 
 #: app/rect_select.c:180
 msgid "Selection: ADD"
@@ -5523,6 +5633,26 @@ msgstr "Luta-magnitud X:"
 #: app/shear_tool.c:356
 msgid "Shearing..."
 msgstr "Lutar..."
+
+#: app/temp_buf.c:218
+msgid "Cannot convert from indexed color."
+msgstr "Kan ej konvertera från indexerad färg."
+
+#: app/temp_buf.c:468
+#, c-format
+msgid "Error in temp buf caching: \"%s\" is a directory (cannot overwrite)"
+msgstr "Fel i temporär buffert: \"%s\" är en katalog (kan ej skriva över)"
+
+#: app/temp_buf.c:485 app/temp_buf.c:494
+#, c-format
+msgid "Cannot write \"%s\""
+msgstr "Kan ej skriva \"%s\""
+
+#: app/temp_buf.c:550
+msgid "Error in temp buf caching: information swapped to disk was lost!"
+msgstr ""
+"Fel i temporär buffert: information som mellanlagrades på disk har gått "
+"förlorad!"
 
 #: app/text_tool.c:157
 msgid "Text Tool Options"
