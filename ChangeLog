@@ -1,3 +1,9 @@
+Fri Feb 11 01:40:22 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: This should guard us against unintentionally wrong
+	translations for menupaths until gtk+-1.2.7 is released and used by
+	everyone. (This is a quick fix which will not work in all cases.)
+
 Thu Feb 10 22:05:42 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/grid.c: use upper left corner as origin when

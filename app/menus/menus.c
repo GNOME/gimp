@@ -1764,7 +1764,12 @@ menu_translate (const gchar *path,
       (strstr (path, "/MRU") != NULL))
     return menupath;
 
-  retval = gettext (menupath);
+  /* 
+   * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
+   */
+  translation = gettext (menupath);
+  if (*translation == '/')
+    retval = translation;
 
   i = 0;
   while (i < n_plugin_domains && !strcmp (path, retval) && factory)
@@ -1776,7 +1781,8 @@ menu_translate (const gchar *path,
       /* 
        * We compare the start of the translated string with the original menu 
        * entry. This is not really necessary, but it helps to suppress badly
-       * translated menu_entries which tend to crash the app 
+       * translated menu_entries which tend to crash the app due to bug in 
+       * GTK+. 
        */
       translation = dgettext (plugin_domains[i++], menupath);
 
