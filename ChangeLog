@@ -1,3 +1,8 @@
+2000-04-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug_in.c: if attaching to the newly created shared memory
+	segment fails, destroy it before forgetting it's ID. Closes #6299.
+
 2000-04-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmath.h: defined FINITE() macro that defaults to

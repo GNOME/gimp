@@ -206,16 +206,17 @@ plug_in_init_shm (void)
     g_message ("shmget failed...disabling shared memory tile transport");
   else
     {
-      shm_addr = (guchar*) shmat (shm_ID, 0, 0);
-      if (shm_addr == (guchar*) -1)
+      shm_addr = (guchar *) shmat (shm_ID, NULL, 0);
+      if (shm_addr == (guchar *) -1)
 	{
 	  g_message ("shmat failed...disabling shared memory tile transport");
+	  shmctl (shm_ID, IPC_RMID, NULL);
 	  shm_ID = -1;
 	}
       
 #ifdef	IPC_RMID_DEFERRED_RELEASE
-      if (shm_addr != (guchar*) -1)
-	shmctl (shm_ID, IPC_RMID, 0);
+      if (shm_addr != (guchar *) -1)
+	shmctl (shm_ID, IPC_RMID, NULL);
 #endif
     }
 #else
@@ -242,15 +243,16 @@ plug_in_init_shm (void)
     {
       /* Map the shared memory into our address space for use */
       shm_addr = (guchar *) MapViewOfFile(shm_handle,
-					      FILE_MAP_ALL_ACCESS,
+					  FILE_MAP_ALL_ACCESS,
 					  0, 0, tileByteSize);
       
       /* Verify that we mapped our view */
       if (shm_addr)
 	shm_ID = pid;
-      else {
-	g_warning ("MapViewOfFile error: %d... disabling shared memory transport\n", GetLastError());
-      }
+      else
+	{
+	  g_warning ("MapViewOfFile error: %d... disabling shared memory transport\n", GetLastError());
+	}
     }
   else
     {
@@ -423,12 +425,12 @@ plug_in_kill (void)
 #ifndef	IPC_RMID_DEFERRED_RELEASE
   if (shm_ID != -1)
     {
-      shmdt ((char*) shm_addr);
-      shmctl (shm_ID, IPC_RMID, 0);
+      shmdt ((gchar *) shm_addr);
+      shmctl (shm_ID, IPC_RMID, NULL);
     }
 #else	/* IPC_RMID_DEFERRED_RELEASE */
   if (shm_ID != -1)
-    shmdt ((char*) shm_addr);
+    shmdt ((gchar *) shm_addr);
 #endif
 #endif
 #endif
