@@ -2729,11 +2729,21 @@ gimp_image_remove_layer (GimpImage *gimage,
   GimpLayer *active_layer;
   gint       index;
   gboolean   old_has_alpha;
+  gboolean   undo_group = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_LAYER (layer));
   g_return_if_fail (gimp_container_have (gimage->layers,
                                          GIMP_OBJECT (layer)));
+
+  if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (layer)))
+    {
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                   _("Remove Layer"));
+      undo_group = TRUE;
+
+      floating_sel_remove (gimp_image_floating_sel (gimage));
+    }
 
   active_layer = gimp_image_get_active_layer (gimage);
 
@@ -2797,6 +2807,9 @@ gimp_image_remove_layer (GimpImage *gimage,
 
   if (old_has_alpha != gimp_image_has_alpha (gimage))
     gimp_image_alpha_changed (gimage);
+
+  if (undo_group)
+    gimp_image_undo_group_end (gimage);
 }
 
 gboolean
@@ -3024,11 +3037,21 @@ gimp_image_remove_channel (GimpImage   *gimage,
 {
   GimpChannel *active_channel;
   gint         index;
+  gboolean     undo_group = FALSE;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_container_have (gimage->channels,
                                          GIMP_OBJECT (channel)));
+
+  if (gimp_drawable_has_floating_sel (GIMP_DRAWABLE (channel)))
+    {
+      gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,
+                                   _("Remove Channel"));
+      undo_group = TRUE;
+
+      floating_sel_remove (gimp_image_floating_sel (gimage));
+    }
 
   active_channel = gimp_image_get_active_channel (gimage);
 
@@ -3063,6 +3086,9 @@ gimp_image_remove_channel (GimpImage   *gimage,
     }
 
   g_object_unref (channel);
+
+  if (undo_group)
+    gimp_image_undo_group_end (gimage);
 }
 
 gboolean

@@ -439,6 +439,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_ROTATE,       /*< desc="Rotate image"                >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert image"               >*/
+  GIMP_UNDO_GROUP_IMAGE_ITEM_REMOVE,  /*< desc="Remove item"                 >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge layers"                >*/
   GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,/*< desc="Merge vectors"               >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="Quick Mask"                  >*/

@@ -2,6 +2,16 @@
 
 	Merged from HEAD branch:
 
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage.c
+	(gimp_image_remove_layer, gimp_image_remove_channel): handle a
+	floating selection attached to the layer or channel that is being
+	removed.  Fixes bug #168582.
+
+2005-04-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
 	* configure.in: select localedir according to the format of the
 	gettext message catalogs. Closes bug #169274 again.
 
