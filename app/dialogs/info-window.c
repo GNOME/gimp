@@ -241,23 +241,23 @@ info_window_create (GimpDisplay *gdisp)
   info_win->user_data = iwd;
 
   /*  add the information fields  */
-  info_dialog_add_label (info_win, _("Pixel Dimensions:"),
+  info_dialog_add_label (info_win, _("Pixel dimensions:"),
 			 iwd->dimensions_str);
-  info_dialog_add_label (info_win, _("Print Size:"),
+  info_dialog_add_label (info_win, _("Print size:"),
 			 iwd->real_dimensions_str);
   info_dialog_add_label (info_win, _("Resolution:"),
 			iwd->resolution_str);
-  info_dialog_add_label (info_win, _("Scale Ratio:"),
+  info_dialog_add_label (info_win, _("Scale ratio:"),
 			 iwd->scale_str);
-  info_dialog_add_label (info_win, _("Number of Layers:"),
+  info_dialog_add_label (info_win, _("Number of layers:"),
 			 iwd->num_layers_str);
-  info_dialog_add_label (info_win, _("Size in Memory:"),
+  info_dialog_add_label (info_win, _("Size in memory:"),
 			 iwd->memsize_str);
-  info_dialog_add_label (info_win, _("Display Type:"),
+  info_dialog_add_label (info_win, _("Display type:"),
 			 iwd->color_type_str);
-  info_dialog_add_label (info_win, _("Visual Class:"),
+  info_dialog_add_label (info_win, _("Visual class:"),
 			 iwd->visual_class_str);
-  info_dialog_add_label (info_win, _("Visual Depth:"),
+  info_dialog_add_label (info_win, _("Visual depth:"),
 			 iwd->visual_depth_str);
 
   /*  Add extra tabs  */

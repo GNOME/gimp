@@ -99,23 +99,23 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
   item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
 
-  item_view_class->edit_desc               = _("Edit Path Attributes");
+  item_view_class->edit_desc               = _("Edit path attributes");
   item_view_class->edit_help_id            = GIMP_HELP_PATH_EDIT;
-  item_view_class->new_desc                = _("New Path\n%s New Path Dialog");
+  item_view_class->new_desc                = _("New path\n%s new path dialog");
   item_view_class->new_help_id             = GIMP_HELP_PATH_NEW;
-  item_view_class->duplicate_desc          = _("Duplicate Path");
+  item_view_class->duplicate_desc          = _("Duplicate path");
   item_view_class->duplicate_help_id       = GIMP_HELP_PATH_DUPLICATE;
-  item_view_class->delete_desc             = _("Delete Path");
+  item_view_class->delete_desc             = _("Delete path");
   item_view_class->delete_help_id          = GIMP_HELP_PATH_DELETE;
-  item_view_class->raise_desc              = _("Raise Path");
+  item_view_class->raise_desc              = _("Raise path");
   item_view_class->raise_help_id           = GIMP_HELP_PATH_RAISE;
-  item_view_class->raise_to_top_desc       = _("Raise Path to Top");
+  item_view_class->raise_to_top_desc       = _("Raise path to top");
   item_view_class->raise_to_top_help_id    = GIMP_HELP_PATH_RAISE_TO_TOP;
-  item_view_class->lower_desc              = _("Lower Path");
+  item_view_class->lower_desc              = _("Lower path");
   item_view_class->lower_help_id           = GIMP_HELP_PATH_LOWER;
-  item_view_class->lower_to_bottom_desc    = _("Lower Path to Bottom");
+  item_view_class->lower_to_bottom_desc    = _("Lower path to bottom");
   item_view_class->lower_to_bottom_help_id = GIMP_HELP_PATH_LOWER_TO_BOTTOM;
-  item_view_class->reorder_desc            = _("Reorder Path");
+  item_view_class->reorder_desc            = _("Reorder path");
 }
 
 static void

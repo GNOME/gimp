@@ -214,7 +214,7 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_mnemonic (_("_Previous Tip"));
+  button = gtk_button_new_with_mnemonic (_("_Previous tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
@@ -224,7 +224,7 @@ tips_dialog_create (Gimp *gimp)
 		    G_CALLBACK (tips_show_previous),
 		    NULL);
 
-  button = gtk_button_new_with_mnemonic (_("_Next Tip"));
+  button = gtk_button_new_with_mnemonic (_("_Next tip"));
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);

@@ -232,13 +232,13 @@ gimp_colormap_editor_constructor (GType                  type,
 
   editor->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
-                            GIMP_STOCK_EDIT, _("Edit Color"),
+                            GIMP_STOCK_EDIT, _("Edit color"),
                             GIMP_HELP_INDEXED_PALETTE_EDIT,
                             G_CALLBACK (gimp_colormap_edit_clicked),
                             NULL,
                             editor);
 
-  str = g_strdup_printf (_("Add Color from FG\n%s  from BG"),
+  str = g_strdup_printf (_("Add color from FG\n%s  from BG"),
                          gimp_get_mod_name_control ());
   editor->add_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor), "colormap-editor",
@@ -392,7 +392,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
     gimp_spin_button_new ((GtkObject **) &editor->index_adjustment,
 			  0, 0, 0, 1, 10, 10, 1.0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Color Index:"), 0.0, 0.5,
+			     _("Color index:"), 0.0, 0.5,
 			     editor->index_spinbutton, 1, TRUE);
 
   g_signal_connect (editor->index_adjustment, "value_changed",
@@ -403,7 +403,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
   gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("He_x Triplet:"), 0.0, 0.5,
+			     _("He_x triplet:"), 0.0, 0.5,
 			     editor->color_entry, 1, TRUE);
 
   g_signal_connect (editor->color_entry, "activate",
@@ -915,7 +915,7 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
             color_notebook_new (GIMP_VIEWABLE (gimage),
                                 _("Edit Indexed Color"),
                                 GIMP_STOCK_CONVERT_INDEXED,
-                                _("Edit Indexed Image Palette Color"),
+                                _("Edit indexed image palette color"),
                                 GTK_WIDGET (editor),
                                 toplevel_factory,
                                 "gimp-colormap-editor-color-dialog",

@@ -220,16 +220,16 @@ gimp_grid_editor_constructor (GType                  type,
                              style, 1, FALSE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "fgcolor",
-                                             _("Change Grid Foreground Color"),
+                                             _("Change grid foreground color"),
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Foreground Color:"), 0.0, 0.5,
+                             _("_Foreground color:"), 0.0, 0.5,
                              color_button, 1, TRUE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "bgcolor",
-                                             _("Change Grid Background Color"),
+                                             _("Change grid background color"),
                                              GRID_EDITOR_COLOR_BUTTON_WIDTH,
                                              GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);

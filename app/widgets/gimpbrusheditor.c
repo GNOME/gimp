@@ -153,7 +153,7 @@ gimp_brush_editor_init (GimpBrushEditor *editor)
   editor->aspect_ratio_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (editor->options_table),
                                           0, 2,
-                                          _("Aspect Ratio:"), -1, 5,
+                                          _("Aspect ratio:"), -1, 5,
                                           0.0, 1.0, 20.0, 0.1, 1.0, 1,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));

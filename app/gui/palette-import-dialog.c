@@ -243,7 +243,7 @@ palette_import_dialog_new (Gimp *gimp)
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (import_dialog->image_radio));
 
   import_dialog->palettefile_radio =
-    gtk_radio_button_new_with_mnemonic (group, _("Palette _File"));
+    gtk_radio_button_new_with_mnemonic (group, _("Palette _file"));
   gtk_table_attach_defaults (GTK_TABLE (table),
                              import_dialog->palettefile_radio,
                              0, 1, 2, 3);
@@ -314,7 +314,7 @@ palette_import_dialog_new (Gimp *gimp)
   /*  The source's name  */
   import_dialog->entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (import_dialog->entry),
-                      gradient ? GIMP_OBJECT (gradient)->name : _("New Import"));
+                      gradient ? GIMP_OBJECT (gradient)->name : _("New import"));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Palette _Name:"), 0.0, 0.5,
                              import_dialog->entry, 2, FALSE);
@@ -322,7 +322,7 @@ palette_import_dialog_new (Gimp *gimp)
   /*  The # of colors  */
   import_dialog->num_colors =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                                          _("N_umber of Colors:"), -1, 5,
+                                          _("N_umber of colors:"), -1, 5,
                                           256, 2, 10000, 1, 10, 0,
                                           TRUE, 0.0, 0.0,
                                           NULL, NULL));

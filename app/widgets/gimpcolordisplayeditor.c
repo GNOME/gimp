@@ -542,18 +542,18 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
 
       editor->config_widget = gimp_color_display_configure (display);
 
-      str = g_strdup_printf (_("Configure Selected Filter: %s"),
+      str = g_strdup_printf (_("Configure selected filter: %s"),
                              GIMP_COLOR_DISPLAY_GET_CLASS (display)->name);
       gtk_frame_set_label (GTK_FRAME (editor->config_frame), str);
       g_free (str);
     }
   else
     {
-      editor->config_widget = gtk_label_new (_("No Filter Selected"));
+      editor->config_widget = gtk_label_new (_("No filter selected"));
       gtk_widget_set_sensitive (editor->config_widget, FALSE);
 
       gtk_frame_set_label (GTK_FRAME (editor->config_frame),
-                           _("Configure Selected Filter"));
+                           _("Configure selected filter"));
     }
 
   if (editor->config_widget)

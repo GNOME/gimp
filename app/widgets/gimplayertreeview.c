@@ -284,7 +284,7 @@ gimp_layer_tree_view_init (GimpLayerTreeView *view)
 		    G_CALLBACK (gimp_layer_tree_view_preserve_button_toggled),
 		    view);
 
-  gimp_help_set_help_data (toggle, _("Keep Transparency"),
+  gimp_help_set_help_data (toggle, _("Keep transparency"),
                            GIMP_HELP_LAYER_DIALOG_KEEP_TRANS_BUTTON);
 
   gtk_widget_style_get (GTK_WIDGET (view),

@@ -181,11 +181,11 @@ gimp_text_editor_new (const gchar *title)
   gtk_widget_show (GTK_WIDGET (toolbar));
 
   gtk_toolbar_insert_stock (toolbar, GTK_STOCK_OPEN,
-                            _("Load Text from File"), NULL,
+                            _("Load text from file"), NULL,
                             G_CALLBACK (gimp_text_editor_load), editor,
                             0);
   gtk_toolbar_insert_stock (toolbar, GTK_STOCK_CLEAR,
-                            _("Clear all Text"), NULL,
+                            _("Clear all text"), NULL,
                             G_CALLBACK (gimp_text_editor_clear), editor,
                             1);
 

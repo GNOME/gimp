@@ -1,3 +1,10 @@
+2004-06-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/gui/*.c:
+	* app/widgets/*.c:
+	* etc/templaterc: HIGify capitalization.  Should finish bug #123699
+	except for everything I missed or got wrong.
+	
 2004-06-24  Sven Neumann  <sven@gimp.org>
 
 	* etc/controllerrc: commented out the linux_input controller

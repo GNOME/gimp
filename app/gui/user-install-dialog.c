@@ -1124,7 +1124,7 @@ user_install_tuning (GimpRc *gimprc)
   gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  label = gtk_label_new (_("Tile Cache Size:"));
+  label = gtk_label_new (_("Tile cache size:"));
   PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
@@ -1147,12 +1147,12 @@ user_install_tuning (GimpRc *gimprc)
   gtk_widget_show (hbox);
 
   entry = gimp_prop_file_entry_new (G_OBJECT (gimprc), "swap-path",
-                                    _("Select Swap Dir"),
+                                    _("Select swap dir"),
                                     TRUE, TRUE);
   gtk_box_pack_end (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
   gtk_widget_show (entry);
 
-  label = gtk_label_new (_("Swap Folder:"));
+  label = gtk_label_new (_("Swap folder:"));
   PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

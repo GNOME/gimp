@@ -204,13 +204,13 @@ offset_dialog_new (GimpDrawable *drawable,
                                     G_CALLBACK (gimp_radio_button_update),
                                     &off_d->fill_type, off_d->fill_type,
 
-                                    _("_Wrap Around"),
+                                    _("_Wrap around"),
                                     WRAP_AROUND, NULL,
 
-                                    _("Fill with _Background Color"),
+                                    _("Fill with _background color"),
                                     GIMP_OFFSET_BACKGROUND, NULL,
 
-                                    _("Make _Transparent"),
+                                    _("Make _transparent"),
                                     GIMP_OFFSET_TRANSPARENT, &radio_button,
                                     NULL);
 

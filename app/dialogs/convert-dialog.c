@@ -151,7 +151,7 @@ convert_dialog_new (GimpImage *gimage,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   toggle = gtk_radio_button_new_with_label (NULL,
-                                            _("Generate Optimum Palette:"));
+                                            _("Generate optimum palette:"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -176,7 +176,7 @@ convert_dialog_new (GimpImage *gimage,
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &dialog->num_colors);
 
-  label = gtk_label_new (_("Max. Number of Colors:"));
+  label = gtk_label_new (_("Max. number of colors:"));
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -209,7 +209,7 @@ convert_dialog_new (GimpImage *gimage,
 
   /*  'mono palette'  */
   toggle = gtk_radio_button_new_with_label (group,
-                                            _("Use Black and White (1-Bit) Palette"));
+                                            _("Use black and white (1-bit) palette"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -225,7 +225,7 @@ convert_dialog_new (GimpImage *gimage,
     {
       GtkWidget *remove_toggle;
 
-      remove_toggle = gtk_check_button_new_with_label (_("Remove Unused Colors from Final Palette"));
+      remove_toggle = gtk_check_button_new_with_label (_("Remove unused colors from final palette"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (remove_toggle),
                                     dialog->remove_dups);
       g_signal_connect (remove_toggle, "toggled",
@@ -238,7 +238,7 @@ convert_dialog_new (GimpImage *gimage,
       gtk_widget_show (hbox);
 
       toggle = gtk_radio_button_new_with_label (group,
-                                                _("Use Custom Palette:"));
+                                                _("Use custom palette:"));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
@@ -294,7 +294,7 @@ convert_dialog_new (GimpImage *gimage,
 
   /*  the alpha-dither toggle  */
   toggle =
-    gtk_check_button_new_with_label (_("Enable Dithering of Transparency"));
+    gtk_check_button_new_with_label (_("Enable dithering of transparency"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				dialog->alpha_dither);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

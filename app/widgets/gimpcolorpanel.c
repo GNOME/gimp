@@ -155,10 +155,10 @@ gimp_color_panel_button_press (GtkWidget      *widget,
       item_factory = GTK_ITEM_FACTORY (color_button->popup_menu);
 
       gimp_item_factory_set_visible (item_factory,
-                                     "/Foreground Color",
+                                     "/Foreground color",
                                      color_panel->context != NULL);
       gimp_item_factory_set_visible (item_factory,
-                                     "/Background Color",
+                                     "/Background color",
                                      color_panel->context != NULL);
       gimp_item_factory_set_visible (item_factory,
                                      "/fg-bg-separator",
@@ -172,9 +172,9 @@ gimp_color_panel_button_press (GtkWidget      *widget,
           gimp_context_get_background (color_panel->context, &bg);
 
           gimp_item_factory_set_color (item_factory,
-                                       "/Foreground Color", &fg, FALSE);
+                                       "/Foreground color", &fg, FALSE);
           gimp_item_factory_set_color (item_factory,
-                                       "/Background Color", &bg, FALSE);
+                                       "/Background color", &bg, FALSE);
         }
 
       gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);

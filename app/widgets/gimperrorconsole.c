@@ -172,14 +172,14 @@ gimp_error_console_init (GimpErrorConsole *console)
 
   console->clear_button =
     gimp_editor_add_button (GIMP_EDITOR (console),
-                            GTK_STOCK_CLEAR, _("Clear Errors"),
+                            GTK_STOCK_CLEAR, _("Clear errors"),
                             GIMP_HELP_ERRORS_CLEAR,
                             G_CALLBACK (gimp_error_console_clear_clicked),
                             NULL,
                             console);
 
-  str = g_strdup_printf (_("Save all Errors\n"
-                           "%s  Save Selection"),
+  str = g_strdup_printf (_("Save all errors\n"
+                           "%s  Save selection"),
                          gimp_get_mod_name_shift ());
 
   console->save_button =

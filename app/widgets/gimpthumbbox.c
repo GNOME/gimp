@@ -247,7 +247,7 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gimp_thumb_box_thumbnail_clicked),
                     box);
 
-  box->filename = gtk_label_new (_("No Selection"));
+  box->filename = gtk_label_new (_("No selection"));
   gtk_label_set_line_wrap (GTK_LABEL (box->filename), TRUE);
   gtk_label_set_justify (GTK_LABEL (box->filename), GTK_JUSTIFY_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
@@ -296,7 +296,7 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (box->filename), _("No Selection"));
+      gtk_label_set_text (GTK_LABEL (box->filename), _("No selection"));
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (box), uri != NULL);

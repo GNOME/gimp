@@ -163,7 +163,7 @@ gimp_channel_tree_view_constructor (GType                  type,
   editor = GIMP_EDITOR (object);
   view   = GIMP_CHANNEL_TREE_VIEW (object);
 
-  str = g_strdup_printf (_("Channel to Selection\n"
+  str = g_strdup_printf (_("Channel to selection\n"
                            "%s  Add\n"
                            "%s  Subtract\n"
                            "%s%s%s  Intersect"),

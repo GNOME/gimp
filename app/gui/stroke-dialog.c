@@ -159,7 +159,7 @@ stroke_dialog_new (GimpItem    *item,
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_radio_button_new_with_label (NULL, _("Stroke Line"));
+  button = gtk_radio_button_new_with_label (NULL, _("Stroke line"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);
@@ -189,7 +189,7 @@ stroke_dialog_new (GimpItem    *item,
   gtk_widget_show (frame);
 
   button = gtk_radio_button_new_with_label (group,
-                                            _("Stroke With a Paint Tool"));
+                                            _("Stroke with a paint tool"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_frame_set_label_widget (GTK_FRAME (frame), button);
   gtk_widget_show (button);

@@ -119,7 +119,7 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
-(GimpTemplate "Toilet Paper (US, 300dpi)"
+(GimpTemplate "Toilet paper (US, 300dpi)"
     (stock-id "gimp-toilet-paper")
     (width 1350)
     (height 1350)
@@ -129,7 +129,7 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
-(GimpTemplate "CD Cover (300dpi)"
+(GimpTemplate "CD cover (300dpi)"
     (stock-id "gtk-cdrom")
     (width 1429)
     (height 1417)
@@ -139,7 +139,7 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
-(GimpTemplate "Floppy Label (300dpi)"
+(GimpTemplate "Floppy label (300dpi)"
     (stock-id "gtk-floppy")
     (width 825)
     (height 825)
@@ -149,7 +149,7 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
-(GimpTemplate "Web Banner Common 468x60"
+(GimpTemplate "Web banner common 468x60"
     (stock-id "gimp-web")
     (width 468)
     (height 60)
@@ -159,7 +159,7 @@
     (resolution-unit inches)
     (image-type rgb)
     (fill-type background-fill))
-(GimpTemplate "Web Banner Huge 728x90"
+(GimpTemplate "Web banner huge 728x90"
     (stock-id "gimp-web")
     (width 728)
     (height 90)

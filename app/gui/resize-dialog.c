@@ -288,13 +288,13 @@ resize_dialog_new (GimpViewable *viewable,
   gtk_widget_show (table);
 
   /*  the original width & height labels  */
-  label = gtk_label_new (_("Current Width:"));
+  label = gtk_label_new (_("Current width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Current Height:"));
+  label = gtk_label_new (_("Current height:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -313,13 +313,13 @@ resize_dialog_new (GimpViewable *viewable,
   gtk_widget_show (private->orig_height_label);
 
   /*  the new size labels  */
-  label = gtk_label_new (_("New Width:"));
+  label = gtk_label_new (_("New width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("New Height:"));
+  label = gtk_label_new (_("New height:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -376,13 +376,13 @@ resize_dialog_new (GimpViewable *viewable,
   orig_labels_update (private->size_se, dialog);
 
   /*  the scale ratio labels  */
-  label = gtk_label_new (_("X Ratio:"));
+  label = gtk_label_new (_("X ratio:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Y Ratio:"));
+  label = gtk_label_new (_("Y ratio:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -560,13 +560,13 @@ resize_dialog_new (GimpViewable *viewable,
       gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
       /*  the print size labels  */
-      label = gtk_label_new (_("New Width:"));
+      label = gtk_label_new (_("New width:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("New Height:"));
+      label = gtk_label_new (_("New height:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
@@ -627,13 +627,13 @@ resize_dialog_new (GimpViewable *viewable,
 			dialog);
 
       /*  the resolution labels  */
-      label = gtk_label_new (_("X Resolution:"));
+      label = gtk_label_new (_("X resolution:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
 
-      label = gtk_label_new (_("Y Resolution:"));
+      label = gtk_label_new (_("Y resolution:"));
       gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);

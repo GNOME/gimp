@@ -240,7 +240,7 @@ file_save_overwrite (GtkWidget   *save_dialog,
                                "Overwrite it?"), filename);
   g_free (filename);
 
-  query_box = gimp_query_boolean_box (_("File Exists!"),
+  query_box = gimp_query_boolean_box (_("File exists!"),
                                       save_dialog,
                                       gimp_standard_help_func,
                                       GIMP_HELP_FILE_SAVE_OVERWRITE,
