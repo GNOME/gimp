@@ -298,8 +298,16 @@ static void          iscissors_draw_curve      (GDisplay    *gdisp,
 						ICurve      *curve);
 static void          iscissors_free_icurves    (GSList      *list);
 static void          iscissors_free_buffers    (Iscissors   *iscissors);
-static gint          clicked_on_vertex         (Tool        *tool);
-static gint          clicked_on_curve          (Tool        *tool);
+
+static gint          mouse_over_vertex         (Iscissors   *iscissors,
+						gint         x,
+						gint         y);
+static gboolean      clicked_on_vertex         (Tool        *tool);
+static GSList      * mouse_over_curve          (Iscissors   *iscissors,
+						gint         x,
+						gint         y);
+static gboolean      clicked_on_curve          (Tool        *tool);
+
 static void          precalculate_arrays       (void);
 static GPtrArray   * plot_pixels               (Iscissors   *iscissors,
 						TempBuf     *dp_buf,
@@ -899,8 +907,13 @@ iscissors_oper_update (Tool           *tool,
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
 			       &x, &y, FALSE, FALSE);
 
-  if (iscissors->connected && iscissors->mask &&
-      channel_value (iscissors->mask, x, y))
+  if (mouse_over_vertex (iscissors, x, y) ||
+      mouse_over_curve (iscissors, x, y))
+    {
+      iscissors->op = SELECTION_MOVE_MASK; /* abused */
+    }
+  else if (iscissors->connected && iscissors->mask &&
+	   channel_value (iscissors->mask, x, y))
     {
       if (mevent->state & GDK_SHIFT_MASK &&
 	  mevent->state & GDK_CONTROL_MASK)
@@ -919,6 +932,10 @@ iscissors_oper_update (Tool           *tool,
 	{
 	  iscissors->op = SELECTION_REPLACE;
 	}
+    }
+  else if (iscissors->connected && iscissors->mask)
+    {
+      iscissors->op = SELECTION_MOVE; /* abused */
     }
   else
     {
@@ -992,6 +1009,12 @@ iscissors_cursor_update (Tool           *tool,
 	  break;
 	case SELECTION_INTERSECT:
 	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_INTERSECT_CURSOR);
+	  break;
+	case SELECTION_MOVE_MASK: /* abused */
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_POINT_CURSOR);
+	  break;
+	case SELECTION_MOVE: /* abused */
+	  gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
 	  break;
 	default:
 	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_CURSOR);
@@ -1150,15 +1173,14 @@ iscissors_free_buffers (Iscissors *iscissors)
 
 /* XXX need some scan-conversion routines from somewhere.  maybe. ? */
 
-static gboolean
-clicked_on_vertex (Tool *tool)
+static gint
+mouse_over_vertex (Iscissors *iscissors,
+		   gint       x,
+		   gint       y)
 {
-  Iscissors * iscissors;
   GSList *list;
-  ICurve * curve;
-  int curves_found = 0;
-
-  iscissors = (Iscissors *) tool->private;
+  ICurve *curve;
+  gint curves_found = 0;
 
   /*  traverse through the list, returning non-zero if the current cursor
    *  position is on an existing curve vertex.  Set the curve1 and curve2
@@ -1173,33 +1195,47 @@ clicked_on_vertex (Tool *tool)
     {
       curve = (ICurve *) list->data;
 
-      if (abs (curve->x1 - iscissors->x) < POINT_HALFWIDTH &&
-	  abs (curve->y1 - iscissors->y) < POINT_HALFWIDTH)
+      if (abs (curve->x1 - x) < POINT_HALFWIDTH &&
+	  abs (curve->y1 - y) < POINT_HALFWIDTH)
 	{
 	  iscissors->curve1 = curve;
 	  if (curves_found++)
-	    return TRUE;
+	    return curves_found;
 	}
-      else if (abs (curve->x2 - iscissors->x) < POINT_HALFWIDTH &&
-	       abs (curve->y2 - iscissors->y) < POINT_HALFWIDTH)
+      else if (abs (curve->x2 - x) < POINT_HALFWIDTH &&
+	       abs (curve->y2 - y) < POINT_HALFWIDTH)
 	{
 	  iscissors->curve2 = curve;
 	  if (curves_found++)
-	    return TRUE;
+	    return curves_found;
 	}
 
       list = g_slist_next (list);
     }
-  
+
+  return curves_found;
+}
+
+static gboolean
+clicked_on_vertex (Tool *tool)
+{
+  Iscissors *iscissors;
+  gint curves_found = 0;
+
+  iscissors = (Iscissors *) tool->private;
+
+  curves_found = mouse_over_vertex (iscissors, iscissors->x, iscissors->y);
+
+  if (curves_found > 1)
+    return TRUE;
+
   /*  if only one curve was found, the curves are unconnected, and
    *  the user only wants to move either the first or last point
    *  disallow this for now.
    */
   if (curves_found == 1)
-    {
-      return FALSE;
-    }
-    
+    return FALSE;
+
   /*  no vertices were found at the cursor click point.  Now check whether
    *  the click occured on a curve.  If so, create a new vertex there and
    *  two curve segments to replace what used to be just one...
@@ -1208,26 +1244,23 @@ clicked_on_vertex (Tool *tool)
 }
 
 
-static gboolean
-clicked_on_curve (Tool *tool)
+static GSList *
+mouse_over_curve (Iscissors *iscissors,
+		  gint       x,
+		  gint       y)
 {
-  Iscissors *iscissors;
-  GSList    *list, *new_link;
-  gpointer  *pt;
-  gint       len;
-  ICurve    *curve, *new_curve;
-  guint32    coords;
-  gint       tx, ty;
+  GSList   *list;
+  gpointer *pt;
+  gint      len;
+  ICurve   *curve;
+  guint32   coords;
+  gint      tx, ty;
 
-  iscissors = (Iscissors *) tool->private;
-
-  /*  traverse through the list, returning non-zero if the current cursor
-   *  position is on a curve...  If this occurs, replace the curve with two
-   *  new curves, separated by the new vertex.
+  /*  traverse through the list, returning the curve segment's list element
+   *  if the current cursor position is on a curve... 
    */
 
-  list = iscissors->curves;
-  while (list)
+  for (list = iscissors->curves; list; list = g_slist_next (list))
     {
       curve = (ICurve *) list->data;
 
@@ -1241,41 +1274,65 @@ clicked_on_curve (Tool *tool)
 	  ty = coords >> 16;
 
 	  /*  Is the specified point close enough to the curve?  */
-	  if (abs (tx - iscissors->x) < POINT_HALFWIDTH &&
-	      abs (ty - iscissors->y) < POINT_HALFWIDTH)
+	  if (abs (tx - x) < POINT_HALFWIDTH &&
+	      abs (ty - y) < POINT_HALFWIDTH)
 	    {
-	      /*  Since we're modifying the curve, undraw the existing one  */
-	      iscissors->draw = DRAW_CURVE;
-	      draw_core_pause (iscissors->core, tool);
-
-	      /*  Create the new curve  */
-	      new_curve = g_malloc (sizeof (ICurve));
-
-	      new_curve->x2 = curve->x2;
-	      new_curve->y2 = curve->y2;
-	      new_curve->x1 = curve->x2 = iscissors->x;
-	      new_curve->y1 = curve->y2 = iscissors->y;
-	      new_curve->points = NULL;
-
-	      /*  Create the new link and supply the new curve as data  */
-	      new_link = g_slist_alloc ();
-	      new_link->data = (void *) new_curve;
-	      
-	      /*  Insert the new link in the list  */
-	      new_link->next = list->next;
-	      list->next = new_link;
-
-	      iscissors->curve1 = new_curve;
-	      iscissors->curve2 = curve;
-
-	      /*  Redraw the curve  */
-	      draw_core_resume (iscissors->core, tool);
-	      
-	      return TRUE;
+	      return list;
 	    }
 	}
+    }
 
-      list = g_slist_next (list);
+  return NULL;
+}
+
+static gboolean
+clicked_on_curve (Tool *tool)
+{
+  Iscissors *iscissors;
+  GSList    *list, *new_link;
+  ICurve    *curve, *new_curve;
+
+  iscissors = (Iscissors *) tool->private;
+
+  /*  traverse through the list, getting back the curve segment's list
+   *  element if the current cursor position is on a curve...
+   *  If this occurs, replace the curve with two new curves,
+   *  separated by a new vertex.
+   */
+  list = mouse_over_curve (iscissors, iscissors->x, iscissors->y);
+
+  if (list)
+    {
+      curve = (ICurve *) list->data;
+
+      /*  Since we're modifying the curve, undraw the existing one  */
+      iscissors->draw = DRAW_CURVE;
+      draw_core_pause (iscissors->core, tool);
+
+      /*  Create the new curve  */
+      new_curve = g_new (ICurve, 1);
+
+      new_curve->x2 = curve->x2;
+      new_curve->y2 = curve->y2;
+      new_curve->x1 = curve->x2 = iscissors->x;
+      new_curve->y1 = curve->y2 = iscissors->y;
+      new_curve->points = NULL;
+
+      /*  Create the new link and supply the new curve as data  */
+      new_link = g_slist_alloc ();
+      new_link->data = (void *) new_curve;
+
+      /*  Insert the new link in the list  */
+      new_link->next = list->next;
+      list->next = new_link;
+
+      iscissors->curve1 = new_curve;
+      iscissors->curve2 = curve;
+
+      /*  Redraw the curve  */
+      draw_core_resume (iscissors->core, tool);
+
+      return TRUE;
     }
 
   return FALSE;

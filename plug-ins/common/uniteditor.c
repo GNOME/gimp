@@ -589,7 +589,7 @@ unit_editor_dialog (void)
   gimp_help_set_help_data (button, _("Create a new unit with the currently "
 				     "seleted unit as template."), NULL);
 
-  button = gimp_pixmap_button_new (no_xpm, _("Delete Unit"));
+  button = gimp_pixmap_button_new (no_xpm, _("Don't Save Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (delete_callback),
@@ -601,7 +601,7 @@ unit_editor_dialog (void)
 
   delete_button = button;
 
-  button = gimp_pixmap_button_new (yes_xpm, _("Undelete Unit"));
+  button = gimp_pixmap_button_new (yes_xpm, _("Save Unit"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (undelete_callback),

@@ -1,3 +1,14 @@
+2000-03-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/iscissors.c: this time cursor_update feedback is _really_
+	correct: for closed curves, show the "point" cursor if a mouse
+	click will modify the curve and the "bad" cursor if a mouse click
+	will do nothing. Seems it was not too hard to understand how it
+	works...
+
+	* plug-ins/common/uniteditor.c: for consistency, did a
+	s/"Delete","Undelete"/"Don't Save","Save"/.
+
 Thu Mar  2 23:27:59 CET 2000  Marc Lehmann <pcg@goof.com>
 
 	* configure.in: Fix $dirprefix to $topdir in perl part.
