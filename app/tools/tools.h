@@ -23,6 +23,7 @@
 #include "gimpcontext.h"
 #include "tool_options.h"
 #include "channel.h"
+#include "cursorutil.h"
 
 #include "toolsF.h"
 
@@ -109,6 +110,9 @@ struct _ToolInfo
   GtkWidget *tool_widget;
 
   GimpContext *tool_context;
+
+  BitmapCursor tool_cursor;
+  BitmapCursor toggle_cursor;
 };
 
 /*  Global Data Structures  */
@@ -142,7 +146,3 @@ GdkPixmap * tool_get_pixmap        (ToolType     tool_type);
 GdkBitmap * tool_get_mask          (ToolType     tool_type);
 
 #endif  /*  __TOOLS_H__  */
-
-
-
-

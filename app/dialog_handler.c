@@ -150,18 +150,21 @@ dialog_idle_all (void)
   
       if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  change_win_cursor (dstate->dialog->window, GDK_WATCH);
+	  change_win_cursor (dstate->dialog->window, GDK_WATCH,
+			     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
 	}
     }
 
   if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      change_win_cursor (toolbox_shell->dialog->window, GDK_WATCH);
+      change_win_cursor (toolbox_shell->dialog->window, GDK_WATCH,
+			 TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
     }
 
   if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      change_win_cursor (fileload_shell->dialog->window, GDK_WATCH);
+      change_win_cursor (fileload_shell->dialog->window, GDK_WATCH,
+			 TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
     }
 }
 

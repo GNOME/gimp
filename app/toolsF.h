@@ -36,8 +36,9 @@ typedef enum
 /*  Tool types  */
 typedef enum
 {
-  FIRST_TOOLBOX_TOOL,
-  RECT_SELECT = FIRST_TOOLBOX_TOOL,
+  TOOL_TYPE_NONE     = -1,
+  FIRST_TOOLBOX_TOOL = 0,
+  RECT_SELECT        = FIRST_TOOLBOX_TOOL,
   ELLIPSE_SELECT,
   FREE_SELECT,
   FUZZY_SELECT,

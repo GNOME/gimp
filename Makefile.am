@@ -26,6 +26,41 @@ EXTRA_DIST = \
 	cursors/mouse_mask.xbm			\
 	cursors/crosshair.xbm			\
 	cursors/crosshair_mask.xbm		\
+	cursors/crosshair_small.xbm		\
+	cursors/crosshair_small_mask.xbm	\
+	cursors/intersect.xbm			\
+	cursors/intersect_mask.xbm		\
+	cursors/minus.xbm			\
+	cursors/minus_mask.xbm			\
+	cursors/move.xbm			\
+	cursors/move_mask.xbm			\
+	cursors/plus.xbm			\
+	cursors/plus_mask.xbm			\
+	rect_select_small.xbm			\
+	rect_select_small_mask.xbm		\
+	ellipse_select_small.xbm		\
+	ellipse_select_small_mask.xbm		\
+	free_select_small.xbm			\
+	free_select_small_mask.xbm		\
+	fuzzy_select_small.xbm			\
+	fuzzy_select_small_mask.xbm		\
+	bucket_fill_small.xbm			\
+	bucket_fill_small_mask.xbm		\
+	crop_small.xbm				\
+	crop_small_mask.xbm			\
+	resize_small.xbm			\
+	resize_small_mask.xbm			\
+	pencil_small.xbm			\
+	pencil_small_mask.xbm			\
+	paintbrush_small.xbm			\
+	paintbrush_small_mask.xbm		\
+	eraser_small.xbm			\
+	eraser_small_mask.xbm			\
+	cursors/zoom.xbm			\
+	cursors/zoom_mask.xbm			\
+	cursors/zoom_small.xbm			\
+	cursors/zoom_small_mask.xbm		\
+	\
 	cursors/mouse_add.xbm			\
         cursors/mouse_add_mask.xbm		\
 	cursors/mouse_subtract.xbm		\

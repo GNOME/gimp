@@ -67,7 +67,8 @@ start_grab_and_scroll (GDisplay       *gdisp,
   startx = bevent->x + gdisp->offset_x;
   starty = bevent->y + gdisp->offset_y;
 
-  change_win_cursor(gdisp->canvas->window, GDK_FLEUR);
+  change_win_cursor (gdisp->canvas->window, GDK_FLEUR,
+		     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
 }
 
 
@@ -75,7 +76,12 @@ void
 end_grab_and_scroll (GDisplay       *gdisp,
 		     GdkEventButton *bevent)
 {
-  change_win_cursor(gdisp->canvas->window, gdisp->current_cursor);
+  gdisplay_real_install_tool_cursor (gdisp,
+				     gdisp->current_cursor,
+				     active_tool->type,
+				     CURSOR_MODIFIER_NONE,
+				     FALSE,
+				     TRUE);
 }
 
 
@@ -83,13 +89,14 @@ void
 grab_and_scroll (GDisplay       *gdisp,
 		 GdkEventMotion *mevent)
 {
-  if(mevent && mevent->window != gdisp->canvas->window)
+  if (mevent && mevent->window != gdisp->canvas->window)
     {
       return;
     }
 
-  scroll_display (gdisp, (startx - mevent->x - gdisp->offset_x),
-		  (starty - mevent->y - gdisp->offset_y));
+  scroll_display (gdisp,
+		  startx - mevent->x - gdisp->offset_x,
+		  starty - mevent->y - gdisp->offset_y);
 }
 
 

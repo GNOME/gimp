@@ -1239,7 +1239,8 @@ gimp_dnd_file_open_files (gchar *buffer)
       if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
         name += sig_len;
 
-      file_open (name, name);
+      if (name && strlen (name) > 2)
+	file_open (name, name);
 
       if (*buffer)
         buffer++;
@@ -1275,6 +1276,6 @@ gimp_dnd_file_dest_set (GtkWidget *widget)
 {
   gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
                       GTK_SIGNAL_FUNC (gimp_dnd_file_drag_data_received),
-                      NULL);
+                      widget);
 }
 

@@ -1497,10 +1497,11 @@ curves_graph_events (GtkWidget    *widget,
       if (new_type != cursor_type)
 	{
 	  cursor_type = new_type;
-	  change_win_cursor (cd->graph->window, cursor_type);
+	  change_win_cursor (cd->graph->window, cursor_type,
+			     TOOL_TYPE_NONE, CURSOR_MODIFIER_NONE, FALSE);
 	}
 
-      curve_print_loc(cd,x,255-y);
+      curve_print_loc (cd, x, 255 - y);
 
       break;
 

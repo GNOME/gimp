@@ -99,36 +99,40 @@ gdisplay_new (GimpImage *gimage,
    */
   gdisp = g_new (GDisplay, 1);
 
-  gdisp->offset_x = gdisp->offset_y = 0;
-  gdisp->scale = scale;
-  gdisp->dot_for_dot = default_dot_for_dot;
-  gdisp->gimage = gimage;
+  gdisp->offset_x           = 0;
+  gdisp->offset_y           = 0;
+  gdisp->scale              = scale;
+  gdisp->dot_for_dot        = default_dot_for_dot;
+  gdisp->gimage             = gimage;
   gdisp->window_info_dialog = NULL;
-  gdisp->window_nav_dialog = NULL;
-  gdisp->nav_popup = NULL;
-  gdisp->depth = g_visual->depth;
-  gdisp->select = NULL;
-  gdisp->ID = display_num++;
-  gdisp->instance = gimage->instance_count;
-  gdisp->update_areas = NULL;
-  gdisp->display_areas = NULL;
-  gdisp->disp_xoffset = 0;
-  gdisp->disp_yoffset = 0;
-  gdisp->current_cursor = -1;
-  gdisp->draw_guides = TRUE;
-  gdisp->snap_to_guides = TRUE;
+  gdisp->window_nav_dialog  = NULL;
+  gdisp->nav_popup          = NULL;
+  gdisp->depth              = g_visual->depth;
+  gdisp->select             = NULL;
+  gdisp->ID                 = display_num++;
+  gdisp->instance           = gimage->instance_count;
+  gdisp->update_areas       = NULL;
+  gdisp->display_areas      = NULL;
+  gdisp->disp_xoffset       = 0;
+  gdisp->disp_yoffset       = 0;
+  gdisp->current_cursor     = (GdkCursorType) -1;
+  gdisp->cursor_tool        = TOOL_TYPE_NONE;
+  gdisp->cursor_modifier    = CURSOR_MODIFIER_NONE;
+  gdisp->toggle_cursor      = FALSE;
+  gdisp->draw_guides        = TRUE;
+  gdisp->snap_to_guides     = TRUE;
 
-  gdisp->draw_cursor = FALSE;
-  gdisp->proximity = FALSE;
-  gdisp->have_cursor = FALSE;
+  gdisp->draw_cursor           = FALSE;
+  gdisp->proximity             = FALSE;
+  gdisp->have_cursor           = FALSE;
   gdisp->using_override_cursor = FALSE;
 
   gdisp->progressid = FALSE;
 
-  gdisp->idle_render.idleid = -1;
+  gdisp->idle_render.idleid       = -1;
   /*gdisp->idle_render.handlerid = -1;*/
   gdisp->idle_render.update_areas = NULL;
-  gdisp->idle_render.active = FALSE;
+  gdisp->idle_render.active       = FALSE;
 
   gdisp->cd_list = NULL;
   gdisp->cd_ui   = NULL;
@@ -1556,27 +1560,61 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
 
 /*  install and remove tool cursor from gdisplay...  */
 void
-gdisplay_install_tool_cursor (GDisplay      *gdisp,
-			      GdkCursorType  cursor_type)
+gdisplay_real_install_tool_cursor (GDisplay      *gdisp,
+				   GdkCursorType  cursor_type,
+				   ToolType       tool_type,
+				   CursorModifier modifier,
+				   gboolean       toggle_cursor,
+				   gboolean       always_install)
 {
   switch (cursor_mode)
     {
     case CURSOR_MODE_TOOL_ICON:
+      break;
+
     case CURSOR_MODE_TOOL_CROSSHAIR:
+      cursor_type = GIMP_CROSSHAIR_SMALL_CURSOR;
+      tool_type   = RECT_SELECT;
+      modifier    = CURSOR_MODIFIER_PLUS;
       break;
 
     case CURSOR_MODE_CROSSHAIR:
       cursor_type = GIMP_CROSSHAIR_CURSOR;
+      tool_type   = TOOL_TYPE_NONE;
+      modifier    = CURSOR_MODIFIER_NONE;
       break;
     }
 
-  if (gdisp->current_cursor != (gint)cursor_type)
+  if (gdisp->current_cursor  != cursor_type   ||
+      gdisp->cursor_tool     != tool_type     ||
+      gdisp->cursor_modifier != modifier      ||
+      gdisp->toggle_cursor   != toggle_cursor ||
+      always_install)
     {
-      gdisp->current_cursor = (gint)cursor_type;
+      gdisp->current_cursor  = cursor_type;
+      gdisp->cursor_tool     = tool_type;
+      gdisp->cursor_modifier = modifier;
+      gdisp->toggle_cursor   = toggle_cursor;
 
-      if (!gdisp->using_override_cursor)
-	change_win_cursor (gdisp->canvas->window, cursor_type);
+      change_win_cursor (gdisp->canvas->window,
+			 cursor_type,
+			 tool_type,
+			 modifier,
+			 toggle_cursor);
     }
+}
+
+void
+gdisplay_install_tool_cursor (GDisplay      *gdisp,
+			      GdkCursorType  cursor_type)
+{
+  if (!gdisp->using_override_cursor)
+    gdisplay_real_install_tool_cursor (gdisp,
+				       cursor_type,
+				       TOOL_TYPE_NONE,
+				       CURSOR_MODIFIER_NONE,
+				       FALSE,
+				       FALSE);
 }
 
 
@@ -1585,16 +1623,17 @@ void
 gdisplay_install_override_cursor (GDisplay      *gdisp,
 				  GdkCursorType  cursor_type)
 {
-  if ((!gdisp->using_override_cursor) ||
-      (
-       (gdisp->using_override_cursor) &&
-       (gdisp->override_cursor != cursor_type)
-       )
-      )
+  if (!gdisp->using_override_cursor ||
+      (gdisp->using_override_cursor &&
+       (gdisp->override_cursor != cursor_type)))
     {
-      gdisp->override_cursor = cursor_type;
+      gdisp->override_cursor       = cursor_type;
       gdisp->using_override_cursor = TRUE;
-      change_win_cursor (gdisp->canvas->window, cursor_type);
+      change_win_cursor (gdisp->canvas->window,
+			 cursor_type,
+			 TOOL_TYPE_NONE,
+			 CURSOR_MODIFIER_NONE,
+			 FALSE);
     }
 }
 
@@ -1606,11 +1645,12 @@ gdisplay_remove_override_cursor (GDisplay *gdisp)
   if (gdisp->using_override_cursor)
     {
       gdisp->using_override_cursor = FALSE;
-      change_win_cursor (gdisp->canvas->window, gdisp->current_cursor);
-    }
-  else
-    {
-      /* g_warning ("Tried to remove override-cursor from un-overridden gdisp."); */
+      gdisplay_real_install_tool_cursor (gdisp,
+					 gdisp->current_cursor,
+					 active_tool->type,
+					 CURSOR_MODIFIER_NONE,
+					 FALSE,
+					 TRUE);
     }
 }
 

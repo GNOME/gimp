@@ -1,3 +1,72 @@
+2000-06-09  Michael Natterer  <mitch@gimp.org>
+
+	Cursor patch II:
+	This is only the logic inside the cursor system and not yet used.
+
+	* app/cursorutil.[ch]: [gimp]_change_win_cursor() take lots of
+	parameters now and compose cursors from up to three cursor
+	bitmaps/masks.
+
+	* app/gdisplay.[ch]: As a test, create a hardcoded example cursor
+	if "Cursor Mode" is set to "Tool Icon with Crosshair" in prefs.
+
+	* app/curves.c
+	* app/dialog_handler.c
+	* app/scroll.c: changed the calls to the win_cursor function.
+
+	* app/tools.[ch]: added a cursor and a toggle cursor to the ToolInfo
+	structure of all tools.
+
+	* app/toolsF.h: new ToolType TOOL_TYPE_NONE.
+
+	* app/gimpdnd.c
+	* app/interface.c: check for silly filenames in the file dnd
+	callback. Closes #13733.
+
+	* Makefile.am
+	* cursors/bucket_fill_small.xbm
+	* cursors/bucket_fill_small_mask.xbm
+	* cursors/crop_small.xbm
+	* cursors/crop_small_mask.xbm
+	* cursors/crosshair_small.xbm
+	* cursors/crosshair_small_mask.xbm
+	* cursors/ellipse_select_small.xbm
+	* cursors/ellipse_select_small_mask.xbm
+	* cursors/eraser_small.xbm
+	* cursors/eraser_small_mask.xbm
+	* cursors/free_select_small.xbm
+	* cursors/free_select_small_mask.xbm
+	* cursors/fuzzy_select_small.xbm
+	* cursors/fuzzy_select_small_mask.xbm
+	* cursors/intersect.xbm
+	* cursors/intersect_mask.xbm
+	* cursors/minus.xbm
+	* cursors/minus_mask.xbm
+	* cursors/move.xbm
+	* cursors/move_mask.xbm
+	* cursors/paintbrush_small.xbm
+	* cursors/paintbrush_small_mask.xbm
+	* cursors/pencil_small.xbm
+	* cursors/pencil_small_mask.xbm
+	* cursors/plus.xbm
+	* cursors/plus_mask.xbm
+	* cursors/rect_select_small.xbm
+	* cursors/rect_select_small_mask.xbm
+	* cursors/resize_small.xbm
+	* cursors/resize_small_mask.xbm
+	* cursors/zoom.xbm
+	* cursors/zoom_mask.xbm
+	* cursors/zoom_small.xbm
+	* cursors/zoom_small_mask.xbm: new files extracted from Tigert's
+	gimp-tool-cursors.xcf created at GimpCon.
+
+	Tigert, I'll commit the xcf as soon as I've added empty layers
+	with the names of the cursors that are missing.
+
+	* cursors/mouse.xbm
+	* cursors/mouse_mask.xbm: made it 32x32 to allow for cursor
+	composition.
+
 2000-06-09  Sven Neumann  <sven@gimp.org>
 
 	* gimp.h

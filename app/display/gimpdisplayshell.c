@@ -1118,11 +1118,12 @@ toolbox_set_drag_dest (GtkWidget *object)
 		     toolbox_target_table, toolbox_n_targets,
 		     GDK_ACTION_COPY);
 
+  gimp_dnd_file_dest_set (object);
+
   gtk_signal_connect (GTK_OBJECT (object), "drag_drop",
 		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
 		      NULL);
 
-  gimp_dnd_file_dest_set (object);
   gimp_dnd_tool_dest_set (object, toolbox_drop_tool, NULL);
 }
 

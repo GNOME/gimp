@@ -28,12 +28,35 @@
 
 #include <gtk/gtk.h>
 
-enum
+#include "toolsF.h"
+
+
+typedef struct
+{
+  guchar    *bits;
+  guchar    *mask_bits;
+  gint       width, height;
+  gint       x_hot, y_hot;
+  GdkBitmap *bitmap;
+  GdkBitmap *mask;
+  GdkCursor *cursor;
+} BitmapCursor;
+
+typedef enum
 {
   CURSOR_MODE_TOOL_ICON,
   CURSOR_MODE_TOOL_CROSSHAIR,
   CURSOR_MODE_CROSSHAIR
-};
+} CursorMode;
+
+typedef enum
+{
+  CURSOR_MODIFIER_NONE,
+  CURSOR_MODIFIER_PLUS,
+  CURSOR_MODIFIER_MINUS,
+  CURSOR_MODIFIER_INTERSECT,
+  CURSOR_MODIFIER_MOVE
+} CursorModifier;
 
 /* FIXME: gimp_busy HACK */
 extern gboolean gimp_busy;
@@ -42,6 +65,12 @@ typedef enum
 {
   GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
   GIMP_CROSSHAIR_CURSOR,
+  GIMP_CROSSHAIR_SMALL_CURSOR,
+
+  /* to be reordered */
+  GIMP_ZOOM_CURSOR,
+
+  /* to be reordered / removed: */
   GIMP_MOUSE_ADD_CURSOR,
   GIMP_MOUSE_SUBTRACT_CURSOR,
   GIMP_MOUSE_INTERSECT_CURSOR,
@@ -60,16 +89,19 @@ typedef enum
   GIMP_LAST_CURSOR_ENTRY
 } GimpCursorType;
 
-void       change_win_cursor                (GdkWindow     *win,
-					     GdkCursorType  curtype);
-void       unset_win_cursor                 (GdkWindow     *win);
+void       change_win_cursor                (GdkWindow      *win,
+					     GdkCursorType   curtype,
+					     ToolType        tool_type,
+					     CursorModifier  modifier,
+					     gboolean        toggle_cursor);
+void       unset_win_cursor                 (GdkWindow      *win);
 
 void       gimp_add_busy_cursors_until_idle (void);
 void       gimp_add_busy_cursors            (void);
-gint       gimp_remove_busy_cursors         (gpointer       data);
+gint       gimp_remove_busy_cursors         (gpointer        data);
 
-gboolean   gtkutil_compress_motion          (GtkWidget     *widget,
-					     gdouble       *lastmotion_x,
-					     gdouble       *lastmotion_y);
+gboolean   gtkutil_compress_motion          (GtkWidget      *widget,
+					     gdouble        *lastmotion_x,
+					     gdouble        *lastmotion_y);
 
 #endif /*  __CURSORUTIL_H__  */

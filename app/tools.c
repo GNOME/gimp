@@ -66,6 +66,29 @@
 
 #include "pixmaps2.h"
 
+#include "cursors/rect_select_small.xbm"
+#include "cursors/rect_select_small_mask.xbm"
+#include "cursors/ellipse_select_small.xbm"
+#include "cursors/ellipse_select_small_mask.xbm"
+#include "cursors/free_select_small.xbm"
+#include "cursors/free_select_small_mask.xbm"
+#include "cursors/fuzzy_select_small.xbm"
+#include "cursors/fuzzy_select_small_mask.xbm"
+#include "cursors/zoom_small.xbm"
+#include "cursors/zoom_small_mask.xbm"
+#include "cursors/crop_small.xbm"
+#include "cursors/crop_small_mask.xbm"
+#include "cursors/resize_small.xbm"
+#include "cursors/resize_small_mask.xbm"
+#include "cursors/bucket_fill_small.xbm"
+#include "cursors/bucket_fill_small_mask.xbm"
+#include "cursors/pencil_small.xbm"
+#include "cursors/pencil_small_mask.xbm"
+#include "cursors/paintbrush_small.xbm"
+#include "cursors/paintbrush_small_mask.xbm"
+#include "cursors/eraser_small.xbm"
+#include "cursors/eraser_small_mask.xbm"
+
 
 /*  Global Data  */
 Tool * active_tool = NULL;
@@ -97,7 +120,17 @@ ToolInfo tool_info[] =
     tools_free_rect_select, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      rect_select_small_bits, rect_select_small_mask_bits,
+      rect_select_small_width, rect_select_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -115,7 +148,17 @@ ToolInfo tool_info[] =
     tools_free_ellipse_select,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      ellipse_select_small_bits, ellipse_select_small_mask_bits,
+      ellipse_select_small_width, ellipse_select_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -133,7 +176,17 @@ ToolInfo tool_info[] =
     tools_free_free_select, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      free_select_small_bits, free_select_small_mask_bits,
+      free_select_small_width, free_select_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -151,7 +204,17 @@ ToolInfo tool_info[] =
     tools_free_fuzzy_select, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      fuzzy_select_small_bits, fuzzy_select_small_mask_bits,
+      fuzzy_select_small_width, fuzzy_select_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -169,7 +232,17 @@ ToolInfo tool_info[] =
     tools_free_bezier_select,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -187,7 +260,17 @@ ToolInfo tool_info[] =
     tools_free_iscissors, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -205,7 +288,17 @@ ToolInfo tool_info[] =
     tools_free_move_tool, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -223,7 +316,17 @@ ToolInfo tool_info[] =
     tools_free_magnify, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      zoom_small_bits, zoom_small_mask_bits,
+      zoom_small_width, zoom_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -241,7 +344,17 @@ ToolInfo tool_info[] =
     tools_free_crop,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      crop_small_bits, crop_small_mask_bits,
+      crop_small_width, crop_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      resize_small_bits, resize_small_mask_bits,
+      resize_small_width, resize_small_height,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -259,7 +372,17 @@ ToolInfo tool_info[] =
     tools_free_transform_tool,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   }, /* rotate */
   
   {
@@ -277,7 +400,17 @@ ToolInfo tool_info[] =
     tools_free_transform_tool, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   }, /* scale */
   
   {
@@ -295,7 +428,17 @@ ToolInfo tool_info[] =
     tools_free_transform_tool,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   }, /* shear */
   
   {
@@ -313,7 +456,17 @@ ToolInfo tool_info[] =
     tools_free_transform_tool,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   }, /* perspective */
   
   {
@@ -331,7 +484,17 @@ ToolInfo tool_info[] =
     tools_free_flip_tool,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
     
   {
@@ -350,6 +513,16 @@ ToolInfo tool_info[] =
     NULL,
     NULL,
     NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -367,7 +540,17 @@ ToolInfo tool_info[] =
     tools_free_color_picker,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -385,7 +568,17 @@ ToolInfo tool_info[] =
     tools_free_bucket_fill,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      bucket_fill_small_bits, bucket_fill_small_mask_bits,
+      bucket_fill_small_width, bucket_fill_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   { 
@@ -403,7 +596,17 @@ ToolInfo tool_info[] =
     tools_free_blend,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -421,7 +624,17 @@ ToolInfo tool_info[] =
     tools_free_pencil,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      pencil_small_bits, pencil_small_mask_bits,
+      pencil_small_width, pencil_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   {
@@ -439,7 +652,17 @@ ToolInfo tool_info[] =
     tools_free_paintbrush, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      paintbrush_small_bits, paintbrush_small_mask_bits,
+      paintbrush_small_width, paintbrush_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -457,7 +680,17 @@ ToolInfo tool_info[] =
     tools_free_eraser,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      eraser_small_bits, eraser_small_mask_bits,
+      eraser_small_width, eraser_small_height,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -475,7 +708,17 @@ ToolInfo tool_info[] =
     tools_free_airbrush,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -493,7 +736,17 @@ ToolInfo tool_info[] =
     tools_free_clone,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -511,7 +764,17 @@ ToolInfo tool_info[] =
     tools_free_convolve,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -529,7 +792,17 @@ ToolInfo tool_info[] =
     tools_free_ink,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -547,7 +820,17 @@ ToolInfo tool_info[] =
     tools_free_dodgeburn,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   {
@@ -565,7 +848,17 @@ ToolInfo tool_info[] =
     tools_free_smudge,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
 /*
@@ -584,7 +877,17 @@ ToolInfo tool_info[] =
     tools_free_xinput_airbrush,
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },          
 */
 
@@ -603,7 +906,17 @@ ToolInfo tool_info[] =
     tools_free_measure_tool, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
 /*
@@ -622,7 +935,17 @@ ToolInfo tool_info[] =
     tools_free_path_tool, 
     NULL,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 */
 
@@ -642,7 +965,17 @@ ToolInfo tool_info[] =
     tools_free_by_color_select,
     by_color_select_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -660,7 +993,17 @@ ToolInfo tool_info[] =
     tools_free_color_balance,
     color_balance_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -678,7 +1021,17 @@ ToolInfo tool_info[] =
     tools_free_brightness_contrast,
     brightness_contrast_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -696,7 +1049,17 @@ ToolInfo tool_info[] =
     tools_free_hue_saturation, 
     hue_saturation_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
 
   { 
@@ -714,7 +1077,17 @@ ToolInfo tool_info[] =
     tools_free_posterize,
     posterize_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -732,7 +1105,17 @@ ToolInfo tool_info[] =
     tools_free_threshold,
     threshold_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -750,7 +1133,17 @@ ToolInfo tool_info[] =
     tools_free_curves,
     curves_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -768,7 +1161,17 @@ ToolInfo tool_info[] =
     tools_free_levels,
     levels_initialize,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   },
   
   { 
@@ -786,7 +1189,17 @@ ToolInfo tool_info[] =
     tools_free_histogram_tool,
     histogram_tool_initialize ,
     NULL,
-    NULL
+    NULL,
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    },
+    {
+      NULL, NULL,
+      0, 0,
+      0, 0, NULL, NULL, NULL
+    }
   }
 };
 
