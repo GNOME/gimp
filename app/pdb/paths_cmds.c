@@ -165,7 +165,7 @@ path_get_current_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *pname;
+  gchar *pname = NULL;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -353,8 +353,8 @@ path_get_points_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gchar *pname;
-  gint32 path_type;
-  gint32 path_closed;
+  gint32 path_type = 0;
+  gint32 path_closed = 0;
   gint32 num_points = 0;
   gdouble *points = NULL;
   GimpVectors *vectors;
@@ -396,6 +396,8 @@ path_get_points_invoker (Gimp     *gimp,
     
 	  points = g_new0 (gdouble, num_points * 3);
     
+	  curr_point = points;
+    
 	  for (list = vectors->strokes; list; list = g_list_next (list))
 	    {
 	      GList *anchors;
@@ -406,13 +408,13 @@ path_get_points_invoker (Gimp     *gimp,
 		   anchors;
 		   anchors = g_list_next (anchors))
 		{
-		  GimpAnchor *anchor = anchors->data;
-		  gdouble     anchor_type;
+		  GimpAnchor *anchor      = anchors->data;
+		  gdouble     anchor_type = 1.0;
     
 		  switch (anchor->type)
 		    {
 		    case GIMP_ANCHOR_ANCHOR:
-		      if (list->prev)
+		      if (list->prev && ! anchors->prev)
 			anchor_type = 3.0; /* new stroke start */
 		      else
 			anchor_type = 1.0; /* ordinary anchor */
@@ -584,8 +586,9 @@ path_set_points_invoker (Gimp     *gimp,
 		  next_stroke->x        = curr_point_pair[0];
 		  next_stroke->y        = curr_point_pair[1];
 		  next_stroke->pressure = 1.0;
-		  next_stroke->xtilt    = 1.0;
-		  next_stroke->ytilt    = 1.0;
+		  next_stroke->xtilt    = 0.5;
+		  next_stroke->ytilt    = 0.5;
+		  next_stroke->wheel    = 0.5;
     
 		  if (next_stroke != curr_coord && curr_point_pair[2] == 3.0)
 		    break;
@@ -979,7 +982,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
   Argument *return_args;
   GimpImage *gimage;
   gint32 tattoo;
-  gchar *path_name;
+  gchar *path_name = NULL;
   GimpVectors *vectors;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);

@@ -86,10 +86,10 @@ HELP
     $inargs[0]->{desc} = 'The ID of the image to list the paths from';
 
     @outargs = (
-	{ name => 'path_type', type => 'int32',
+	{ name => 'path_type', type => 'int32', init => 1,
 	  desc => 'The type of the path. Currently only one type (1 = Bezier)
 		   is supported' },
-	{ name => 'path_closed', type => 'int32',
+	{ name => 'path_closed', type => 'int32', init => 1,
 	  desc => 'Return if the path is closed. (0 = path open, 1 = path
 		   closed)' },
 	{ name => 'points_pairs', type => 'floatarray',
@@ -137,6 +137,8 @@ HELP
 
       points = g_new0 (gdouble, num_points * 3);
 
+      curr_point = points;
+
       for (list = vectors->strokes; list; list = g_list_next (list))
         {
           GList *anchors;
@@ -147,13 +149,13 @@ HELP
                anchors;
                anchors = g_list_next (anchors))
             {
-              GimpAnchor *anchor = anchors->data;
-              gdouble     anchor_type;
+              GimpAnchor *anchor      = anchors->data;
+              gdouble     anchor_type = 1.0;
 
               switch (anchor->type)
                 {
                 case GIMP_ANCHOR_ANCHOR:
-	          if (list->prev)
+	          if (list->prev && ! anchors->prev)
                     anchor_type = 3.0; /* new stroke start */
                   else
                     anchor_type = 1.0; /* ordinary anchor */
@@ -208,7 +210,7 @@ HELP
     @outargs = (
 	{ name => 'current_path_name', type => 'string',
 	  desc => 'The name of the current path',
-	  alias => 'pname' }
+	  alias => 'pname', init => 1 }
     );
 
     %invoke = (
@@ -345,8 +347,9 @@ HELP
               next_stroke->x        = curr_point_pair[0];
               next_stroke->y        = curr_point_pair[1];
               next_stroke->pressure = 1.0;
-              next_stroke->xtilt    = 1.0;
-              next_stroke->ytilt    = 1.0;
+              next_stroke->xtilt    = 0.5;
+              next_stroke->ytilt    = 0.5;
+              next_stroke->wheel    = 0.5;
 
               if (next_stroke != curr_coord && curr_point_pair[2] == 3.0)
                 break;
@@ -560,7 +563,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'path_name', type => 'string',
+	{ name => 'path_name', type => 'string', init => 1,
 	  desc => 'The name of the path with the specified tattoo' }
     );
 
