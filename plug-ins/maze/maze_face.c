@@ -179,7 +179,6 @@ maze_dialog (void)
 
   gint      trow = 0;
   gchar    *message;
-  gboolean  randomize = FALSE;
 
   gimp_ui_init ("maze", FALSE);
 

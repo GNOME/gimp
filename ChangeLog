@@ -1,5 +1,10 @@
 2004-02-03  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/maze/maze_face.c (maze_dialog): remove unused variable
+	randomize.
+
+2004-02-03  Manish Singh  <yosh@gimp.org>
+
 	* gimptool-2.0.in: use GIMP_API_VERSION.
 
 2004-02-03  Sven Neumann  <sven@gimp.org>
