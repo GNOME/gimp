@@ -192,7 +192,7 @@ splash_update (const gchar *text1,
       pango_layout_get_pixel_extents (splash->upper, NULL, &rect);
 
       splash->upper_x = (splash->width - rect.width) / 2;
-      splash->upper_y = splash->height - 2 * (rect.height + 8);
+      splash->upper_y = splash->height - 2 * (rect.height + 6);
 
       y = splash->upper_y - 2;
     }
@@ -205,7 +205,7 @@ splash_update (const gchar *text1,
       pango_layout_get_pixel_extents (splash->lower, NULL, &rect);
 
       splash->lower_x = (splash->width - rect.width) / 2;
-      splash->lower_y = splash->height - (rect.height + 8);
+      splash->lower_y = splash->height - (rect.height + 6);
 
       if (!y)
         y = splash->lower_y - 2;
