@@ -82,6 +82,15 @@ GtkObject     * gimp_prop_scale_entry_new         (GObject     *config,
                                                    gdouble      restricted_lower,
                                                    gdouble      restricted_upper);
 
+/*  special form of gimp_prop_scale_entry_new() for GParamDouble  */
+
+GtkObject     * gimp_prop_opacity_entry_new       (GObject     *config,
+                                                   const gchar *property_name,
+                                                   GtkTable    *table,
+                                                   gint         column,
+                                                   gint         row,
+                                                   const gchar *label);
+
 
 /*  GimpParamMemsize  */
 

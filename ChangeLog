@@ -1,5 +1,14 @@
 2003-02-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.[ch]: added a new widget constructor
+	gimp_prop_opacity_entry_new() which is a scale entry with a display
+	factor of 100.0.
+
+	* app/tools/paint_options.c: use the new opacity scale for opacity
+	controls.
+
+2003-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/uniteditor.c: fixed typo.
 
 	* plug-ins/helpbrowser/helpbrowser.c: generate HTML with proper

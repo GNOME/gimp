@@ -96,11 +96,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /*  the opacity scale  */
-  gimp_prop_scale_entry_new (config, "opacity",
-                             GTK_TABLE (table), 0, 0,
-                             _("Opacity:"),
-                             1.0, 10.0, 1,
-                             FALSE, 0.0, 0.0);
+  gimp_prop_opacity_entry_new (config, "opacity",
+                               GTK_TABLE (table), 0, 0,
+                               _("Opacity:"));
 
   /*  the paint mode menu  */
   optionmenu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
