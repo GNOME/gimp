@@ -1,3 +1,9 @@
+2004-01-15  Manish Singh  <yosh@gimp.org>
+
+	* app/text/gimpfontlist.c: Minor cleanup, add note about using
+	pango_fc_font_description_from_pattern from pango 1.4 when we
+	can.
+
 2004-01-15  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/nova.c: Do not display the color button or the

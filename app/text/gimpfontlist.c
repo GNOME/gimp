@@ -215,7 +215,9 @@ gimp_font_list_load_aliases (GimpFontList *list,
 }
 
 /* This is copied straight from _pango_fc_font_desc_from_pattern, minus
- * the size bits. */
+ * the size bits.
+ * FIXME: Use pango_fc_font_description_from_pattern from 1.4 when we can.
+ */
 static PangoFontDescription *
 gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
 {
@@ -223,27 +225,30 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
   PangoStyle            style;
   PangoWeight           weight;
   PangoStretch          stretch;
-  gchar                *s;
+  FcChar8              *s;
   gint                  i;
+  FcResult              res;
 
   desc = pango_font_description_new ();
 
-  g_assert (FcPatternGetString (pattern,
-                                FC_FAMILY, 0, (FcChar8 **) &s) == FcResultMatch);
+  res = FcPatternGetString (pattern, FC_FAMILY, 0, (FcChar8 **) &s);
+  g_assert (res == FcResultMatch);
 
-  pango_font_description_set_family (desc, s);
+  pango_font_description_set_family (desc, (gchar *)s);
 
   if (FcPatternGetInteger (pattern, FC_SLANT, 0, &i) == FcResultMatch)
     {
       switch (i)
         {
+        case FC_SLANT_ROMAN:
+          style = PANGO_STYLE_NORMAL;
+          break;
         case FC_SLANT_ITALIC:
           style = PANGO_STYLE_ITALIC;
           break;
         case FC_SLANT_OBLIQUE:
           style = PANGO_STYLE_OBLIQUE;
           break;
-        case FC_SLANT_ROMAN:
         default:
           style = PANGO_STYLE_NORMAL;
           break;
@@ -278,6 +283,9 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
     {
       switch (i)
         {
+        case FC_WIDTH_NORMAL:
+          stretch = PANGO_STRETCH_NORMAL;
+          break;
         case FC_WIDTH_ULTRACONDENSED:
           stretch = PANGO_STRETCH_ULTRA_CONDENSED;
           break;
@@ -302,7 +310,6 @@ gimp_font_list_font_desc_from_pattern (FcPattern *pattern)
         case FC_WIDTH_ULTRAEXPANDED:
           stretch = PANGO_STRETCH_ULTRA_EXPANDED;
           break;
-        case FC_WIDTH_NORMAL:
         default:
           stretch = PANGO_STRETCH_NORMAL;
           break;
