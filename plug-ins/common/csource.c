@@ -49,16 +49,16 @@ typedef struct
 
 /* --- prototypes --- */
 static void	query		(void);
-static void	run		(gchar      *name,
-				 gint        nparams,
-				 GimpParam  *param,
-				 gint       *nreturn_vals,
-				 GimpParam **return_vals);
+static void	run		(const gchar      *name,
+				 gint              nparams,
+				 const GimpParam  *param,
+				 gint             *nreturn_vals,
+				 GimpParam       **return_vals);
 
-static gint	save_image	(Config     *config,
-				 gint32      image_ID,
-				 gint32      drawable_ID);
-static gboolean	run_save_dialog	(Config     *config);
+static gint	save_image	(Config           *config,
+				 gint32            image_ID,
+				 gint32            drawable_ID);
+static gboolean	run_save_dialog	(Config           *config);
 
 
 /* --- variables --- */
@@ -117,11 +117,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;

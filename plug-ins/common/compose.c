@@ -76,24 +76,24 @@ static gint32    create_new_image (const gchar    *filename,
 				   GimpDrawable  **drawable,
 				   GimpPixelRgn   *pixel_rgn);
 
-static void  compose_rgb       (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_rgba      (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_hsv       (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_cmy       (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_cmyk      (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr470  (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr709  (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr470f (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
-static void  compose_ycbcr709f (const guchar **src,
-				const gint    *incr, gint numpix, guchar *dst);
+static void  compose_rgb       (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_rgba      (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_hsv       (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_cmy       (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_cmyk      (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470  (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709  (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr470f (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
+static void  compose_ycbcr709f (guchar **src,
+				gint    *incr, gint numpix, guchar *dst);
 
 static gboolean  compose_dialog (const gchar *compose_type,
                                  gint32       drawable_ID);
@@ -124,10 +124,10 @@ typedef struct
   const gchar  *channel_icon[MAX_COMPOSE_IMAGES];
   const gchar  *filename;      /*  Name of new image                        */
                                /*  Compose functon                          */
-  void  (* compose_fun) (const guchar **src,
-			 const gint    *incr_src,
-			 gint           numpix,
-			 guchar        *dst);
+  void  (* compose_fun) (guchar **src,
+			 gint    *incr_src,
+			 gint     numpix,
+			 guchar  *dst);
 } COMPOSE_DSC;
 
 /* Array of available compositions. */
@@ -626,17 +626,19 @@ create_new_image (const gchar    *filename,
 }
 
 static void
-compose_rgb (const guchar **src,
-             const gint    *incr_src,
-             gint           numpix,
-             guchar        *dst)
+compose_rgb (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
 {
   register const guchar *red_src   = src[0];
   register const guchar *green_src = src[1];
   register const guchar *blue_src  = src[2];
   register       guchar *rgb_dst   = dst;
   register       gint    count     = numpix;
-  gint red_incr = incr_src[0], green_incr = incr_src[1], blue_incr = incr_src[2];
+  gint red_incr   = incr_src[0];
+  gint green_incr = incr_src[1];
+  gint blue_incr  = incr_src[2];
   
   if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1))
     {
@@ -660,10 +662,10 @@ compose_rgb (const guchar **src,
 
 
 static void
-compose_rgba (const guchar **src,
-              const gint    *incr_src,
-              gint           numpix,
-              guchar        *dst)
+compose_rgba (guchar **src,
+              gint    *incr_src,
+              gint     numpix,
+              guchar  *dst)
 {
   register const guchar *red_src   = src[0];
   register const guchar *green_src = src[1];
@@ -671,8 +673,10 @@ compose_rgba (const guchar **src,
   register const guchar *alpha_src = src[3];
   register       guchar *rgb_dst   = dst;
   register       gint    count     = numpix;
-  gint red_incr = incr_src[0], green_incr = incr_src[1],
-    blue_incr = incr_src[2], alpha_incr = incr_src[3];
+  gint red_incr   = incr_src[0];
+  gint green_incr = incr_src[1];
+  gint blue_incr  = incr_src[2];
+  gint alpha_incr = incr_src[3];
   
   if ((red_incr == 1) && (green_incr == 1) && (blue_incr == 1) &&
       (alpha_incr == 1))
@@ -699,17 +703,19 @@ compose_rgba (const guchar **src,
 
 
 static void
-compose_hsv (const guchar **src,
-             const gint    *incr_src,
-             gint           numpix,
-             guchar        *dst)
+compose_hsv (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
 {
   register const guchar *hue_src = src[0];
   register const guchar *sat_src = src[1];
   register const guchar *val_src = src[2];
   register       guchar *rgb_dst = dst;
   register       gint    count   = numpix;
-  gint hue_incr = incr_src[0], sat_incr = incr_src[1], val_incr = incr_src[2];
+  gint hue_incr = incr_src[0];
+  gint sat_incr = incr_src[1];
+  gint val_incr = incr_src[2];
 
   while (count-- > 0)
     {
@@ -725,19 +731,19 @@ compose_hsv (const guchar **src,
 
 
 static void
-compose_cmy (const guchar **src,
-             const gint    *incr_src,
-             gint           numpix,
-             guchar        *dst)
+compose_cmy (guchar **src,
+             gint    *incr_src,
+             gint     numpix,
+             guchar  *dst)
 {
   register const guchar *cyan_src    = src[0];
   register const guchar *magenta_src = src[1];
   register const guchar *yellow_src  = src[2];
   register       guchar *rgb_dst     = dst;
   register       gint    count       = numpix;
-  gint cyan_incr = incr_src[0];
+  gint cyan_incr    = incr_src[0];
   gint magenta_incr = incr_src[1];
-  gint yellow_incr = incr_src[2];
+  gint yellow_incr  = incr_src[2];
 
   if ((cyan_incr == 1) && (magenta_incr == 1) && (yellow_incr == 1))
     {
@@ -764,10 +770,10 @@ compose_cmy (const guchar **src,
 
 
 static void
-compose_cmyk (const guchar **src,
-              const gint    *incr_src,
-              gint           numpix,
-              guchar        *dst)
+compose_cmyk (guchar **src,
+              gint    *incr_src,
+              gint     numpix,
+              guchar  *dst)
 {
   register const guchar *cyan_src    = src[0];
   register const guchar *magenta_src = src[1];
@@ -776,10 +782,10 @@ compose_cmyk (const guchar **src,
   register       guchar *rgb_dst     = dst;
   register       gint    count       = numpix;
   gint cyan, magenta, yellow, black;
-  gint cyan_incr = incr_src[0];
+  gint cyan_incr    = incr_src[0];
   gint magenta_incr = incr_src[1];
-  gint yellow_incr = incr_src[2];
-  gint black_incr = incr_src[3];
+  gint yellow_incr  = incr_src[2];
+  gint black_incr   = incr_src[3];
 
   while (count-- > 0)
     {
@@ -819,18 +825,20 @@ compose_cmyk (const guchar **src,
 
 
 static void
-compose_ycbcr470 (const guchar **src,
-                  const gint    *incr_src,
-                  gint           numpix,
-                  guchar        *dst)
+compose_ycbcr470 (guchar **src,
+                  gint    *incr_src,
+                  gint     numpix,
+                  guchar  *dst)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
   register const guchar *cr_src  = src[2];
   register       guchar *rgb_dst = dst;
   register       gint    count   = numpix;
-  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
-  
+  gint y_incr  = incr_src[0];
+  gint cb_incr = incr_src[1];
+  gint cr_incr = incr_src[2];
+
   while (count-- > 0)
     {
       int r,g,b,y,cb,cr;
@@ -857,17 +865,19 @@ compose_ycbcr470 (const guchar **src,
 
 
 static void
-compose_ycbcr709 (const guchar **src,
-                  const gint    *incr_src,
-                  gint           numpix,
-                  guchar        *dst)
+compose_ycbcr709 (guchar **src,
+                  gint    *incr_src,
+                  gint     numpix,
+                  guchar  *dst)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
   register const guchar *cr_src  = src[2];
   register       guchar *rgb_dst = dst;
   register       gint    count   = numpix;
-  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  gint y_incr  = incr_src[0];
+  gint cb_incr = incr_src[1];
+  gint cr_incr = incr_src[2];
   
   while (count-- > 0)
     {
@@ -895,17 +905,19 @@ compose_ycbcr709 (const guchar **src,
 
 
 static void
-compose_ycbcr470f (const guchar **src,
-                   const gint    *incr_src,
-                   gint           numpix,
-                   guchar        *dst)
+compose_ycbcr470f (guchar **src,
+                   gint    *incr_src,
+                   gint     numpix,
+                   guchar  *dst)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
   register const guchar *cr_src  = src[2];
   register       guchar *rgb_dst = dst;
   register       gint    count   = numpix;
-  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  gint y_incr  = incr_src[0];
+  gint cb_incr = incr_src[1];
+  gint cr_incr = incr_src[2];
   
   while (count-- > 0)
     {
@@ -933,17 +945,19 @@ compose_ycbcr470f (const guchar **src,
 
 
 static void
-compose_ycbcr709f (const guchar **src,
-                   const gint    *incr_src,
-                   gint           numpix,
-                   guchar        *dst)
+compose_ycbcr709f (guchar **src,
+                   gint    *incr_src,
+                   gint     numpix,
+                   guchar  *dst)
 {
   register const guchar *y_src   = src[0];
   register const guchar *cb_src  = src[1];
   register const guchar *cr_src  = src[2];
   register       guchar *rgb_dst = dst;
   register       gint    count   = numpix;
-  gint y_incr = incr_src[0], cb_incr = incr_src[1], cr_incr = incr_src[2];
+  gint y_incr  = incr_src[0];
+  gint cb_incr = incr_src[1];
+  gint cr_incr = incr_src[2];
   
   while (count-- > 0)
     {

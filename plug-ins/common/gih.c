@@ -124,13 +124,13 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query    (void);
-static void   run      (gchar      *name,
-			gint        nparams,
-			GimpParam  *param,
-			gint       *nreturn_vals,
-			GimpParam **return_vals);
+static void   run      (const gchar      *name,
+			gint              nparams,
+			const GimpParam  *param,
+			gint             *nreturn_vals,
+			GimpParam       **return_vals);
 
-static gint32    gih_load_image      (gchar        *filename); 
+static gint32    gih_load_image      (const gchar  *filename); 
 static gboolean  gih_load_one_brush  (gint          fd,
 				      gint32        image_ID); 
 
@@ -138,7 +138,7 @@ static gint      gih_save_dialog     (gint32        image_ID);
 static gboolean  gih_save_one_brush  (gint          fd,
 				      GimpPixelRgn *pixel_rgn,
 				      gchar        *name);
-static gboolean  gih_save_image      (gchar        *filename,
+static gboolean  gih_save_image      (const gchar  *filename,
 				      gint32        image_ID,
 				      gint32        orig_image_ID,
 				      gint32        drawable_ID);
@@ -223,11 +223,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[1];
   GimpRunMode           run_mode;
@@ -608,7 +608,7 @@ gih_load_one_brush (gint   fd,
 }
 
 static gint32 
-gih_load_image (gchar *filename) 
+gih_load_image (const gchar *filename) 
 {
   gchar   *temp;
   gint     fd;
@@ -1198,10 +1198,10 @@ gih_save_one_brush (gint          fd,
 }
 
 static gboolean
-gih_save_image (gchar  *filename,
-		gint32  image_ID,
-		gint32  orig_image_ID,
-		gint32  drawable_ID)
+gih_save_image (const gchar *filename,
+		gint32       image_ID,
+		gint32       orig_image_ID,
+		gint32       drawable_ID)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;

@@ -53,15 +53,20 @@
  */
 
 static void   query      (void);
-static void   run        (gchar   *name,
-			  gint     nparams,
-			  GimpParam  *param,
-			  gint    *nreturn_vals,
-			  GimpParam **return_vals);
+static void   run        (const gchar      *name,
+			  gint              nparams,
+			  const GimpParam  *param,
+			  gint             *nreturn_vals,
+			  GimpParam       **return_vals);
 
-static gint32 load_image (gchar *);
+static gint32 load_image (const gchar      *filename);
 
-gint32        emitgimp   (gint, gint, gchar *, gint, gchar *);
+static gint32 emitgimp   (gint              hcol,
+                          gint              row,
+                          const gchar      *bitmap,
+                          gint              bperrow,
+                          const gchar      *filename);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -106,15 +111,15 @@ void query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[2];
-  GimpRunMode run_mode;
-  gint32 image_ID;
+  GimpRunMode      run_mode;
+  gint32           image_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -174,7 +179,7 @@ static	int  rs;		/* read buffer size */
 #define MAX_COLS 1728		/* !! FIXME - command line parameter */
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   int data;
   int hibit;
@@ -185,13 +190,14 @@ load_image (gchar *filename)
   int i, rr, rsize;
   int cons_eol;
 
-  int	bperrow = MAX_COLS/8;	/* bytes per bit row */
-  char *bitmap;			/* MAX_ROWS by (bperrow) bytes */
-  char *bp;			/* bitmap pointer */
-  char *name;
-  int	row;
-  int	max_rows;		/* max. rows allocated */
-  int	col, hcol;		/* column, highest column ever used */
+  gint32 image_id;
+  gint   bperrow = MAX_COLS/8;	/* bytes per bit row */
+  gchar *bitmap;		/* MAX_ROWS by (bperrow) bytes */
+  gchar *bp;			/* bitmap pointer */
+  gchar *name;
+  gint	 row;
+  gint	 max_rows;		/* max. rows allocated */
+  gint 	 col, hcol;		/* column, highest column ever used */
 
   name = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (name);
@@ -235,15 +241,9 @@ load_image (gchar *filename)
   /* initialize bitmap */
 
   row = col = hcol = 0;
-  bitmap = (char *) malloc( ( max_rows = MAX_ROWS ) * MAX_COLS / 8 );
-  if ( bitmap == NULL )
-  {
-    fprintf( stderr, "cannot allocate %d bytes for bitmap",
-             max_rows * MAX_COLS/8 );
-    close( fd );
-    exit(9);
-  }
-  memset( bitmap, 0, max_rows * MAX_COLS/8 );
+
+  bitmap = g_new0 (gchar, ( max_rows = MAX_ROWS ) * MAX_COLS / 8 );
+
   bp = &bitmap[ row * MAX_COLS/8 ]; 
 
   while ( rs > 0 && cons_eol < 4 )	/* i.e., while (!EOF) */
@@ -420,8 +420,11 @@ do_write:      	/* write pbm (or whatever) file */
     fprintf( stderr, "consecutive EOLs: %d, max columns: %d\n", cons_eol, hcol );
 #endif
 
-    return emitgimp(hcol, row, bitmap, bperrow, filename );
+    image_id = emitgimp (hcol, row, bitmap, bperrow, filename);
 
+    g_free (bitmap);
+
+    return image_id;
 }
 
 /* hcol is the number of columns, row the number of rows
@@ -430,15 +433,20 @@ do_write:      	/* write pbm (or whatever) file */
  * than 1728 pixels wide]
  */
 
-gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
+static gint32
+emitgimp (gint         hcol,
+          gint         row,
+          const gchar *bitmap,
+          gint         bperrow,
+          const gchar *filename)
 {
-  GimpPixelRgn pixel_rgn;
+  GimpPixelRgn  pixel_rgn;
   GimpDrawable *drawable;
-  gint32 image_ID;
-  gint32 layer_ID;
-  guchar *buf;
-  guchar tmp;
-  int x,y,xx,yy,tile_height;
+  gint32        image_ID;
+  gint32        layer_ID;
+  guchar       *buf;
+  guchar        tmp;
+  gint          x,y,xx,yy,tile_height;
 
   /* initialize */
 
@@ -458,13 +466,14 @@ gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
-  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, TRUE, FALSE);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable,
+                       0, 0, drawable->width, drawable->height, TRUE, FALSE);
   tile_height = gimp_tile_height ();
 #ifdef DEBUG
   fprintf( stderr, "tile height: %d\n", tile_height);
 #endif
 
-  buf = g_new(guchar, hcol*tile_height);
+  buf = g_new (guchar, hcol*tile_height);
   xx=0;
   yy=0;
   for (y=0; y<row; y++) {
@@ -495,5 +504,4 @@ gint32 emitgimp ( int hcol, int row, char *bitmap, int bperrow, char *filename )
   gimp_drawable_flush (drawable);
 
   return image_ID;
-
 }

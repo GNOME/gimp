@@ -92,19 +92,19 @@
 /* Declare some local functions.
  */
 static void   query      (void);
-static void   run        (gchar   *name,
-                          gint     nparams,
-                          GimpParam  *param,
-                          gint    *nreturn_vals,
-                          GimpParam **return_vals);
-static gint32 load_image (gchar   *filename);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
+static gint32 load_image (const gchar      *filename);
 
 
-static guchar   used_cmap[3][256];
+static guchar      used_cmap[3][256];
 static GimpRunMode run_mode;
-static guchar   highest_used_index;
-static gboolean promote_to_rgb   = FALSE;
-static guchar   gimp_cmap[768];
+static guchar      highest_used_index;
+static gboolean    promote_to_rgb   = FALSE;
+static guchar      gimp_cmap[768];
 #ifdef FACEHUGGERS
 GimpParasite*      comment_parasite = NULL;
 #endif
@@ -156,15 +156,15 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[2];
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  gint32        image_ID;
+  static GimpParam   values[2];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
 
   run_mode = param[0].data.d_int32;
 
@@ -266,16 +266,17 @@ char *globalcomment = NULL;
 gint globalusecomment = TRUE;
 
 static int ReadColorMap (FILE *, int, CMap, int *);
-static int DoExtension (FILE *, int);
+static int DoExtension  (FILE *, int);
 static int GetDataBlock (FILE *, unsigned char *);
-static int GetCode (FILE *, int, int);
-static int LZWReadByte (FILE *, int, int);
-static gint32 ReadImage (FILE *, char *, int, int, CMap, int, int, int, int,
+static int GetCode      (FILE *, int, int);
+static int LZWReadByte  (FILE *, int, int);
+static gint32 ReadImage (FILE *, const gchar *,
+                         int, int, CMap, int, int, int, int,
 			 guint, guint, guint, guint);
 
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   FILE *fd;
   char * name_buf;
@@ -789,19 +790,19 @@ LZWReadByte (FILE *fd,
 }
 
 static gint32
-ReadImage (FILE *fd,
-	   char *filename,
-	   int   len,
-	   int   height,
-	   CMap  cmap,
-	   int   ncols,
-	   int   format,
-	   int   interlace,
-	   int   number,
-	   guint   leftpos,
-	   guint   toppos,
-	   guint screenwidth,
-	   guint screenheight)
+ReadImage (FILE        *fd,
+	   const gchar *filename,
+	   gint         len,
+	   gint         height,
+	   CMap         cmap,
+	   gint         ncols,
+	   gint         format,
+	   gint         interlace,
+	   gint         number,
+	   guint        leftpos,
+	   guint        toppos,
+	   guint        screenwidth,
+	   guint        screenheight)
 {
   static gint32 image_ID;
   static gint frame_number = 1;

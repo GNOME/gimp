@@ -59,28 +59,29 @@ static gchar rcsid[] = "$Id$";
 
 typedef struct
 {
-  gdouble amount;
-  gint    wrapmode;
+  gdouble   amount;
+  gint      wrapmode;
 } EdgeVals;
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } EdgeInterface;
 
 /*
  * Function prototypes.
  */
 
-static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void      query       (void);
+static void      run         (const gchar      *name,
+                              gint              nparams,
+                              const GimpParam  *param,
+                              gint             *nreturn_vals,
+                              GimpParam       **return_vals);
 
-static void      edge        (GimpDrawable *drawable);
-static gint      edge_dialog (GimpDrawable *drawable);
+static void      edge        (GimpDrawable     *drawable);
+static gint      edge_dialog (GimpDrawable     *drawable);
+
 
 /***** Local vars *****/
 
@@ -138,11 +139,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;

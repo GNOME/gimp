@@ -38,13 +38,13 @@
 /* Declare local functions.
  */
 static void   query      (void);
-static void   run        (gchar      *name,
-			  gint        nparams,
-			  GimpParam  *param,
-			  gint       *nreturn_vals,
-			  GimpParam **return_vals);
+static void   run        (const gchar      *name,
+			  gint              nparams,
+			  const GimpParam  *param,
+			  gint             *nreturn_vals,
+			  GimpParam       **return_vals);
 
-static void   guillotine (gint32      image_ID);
+static void   guillotine (gint32            image_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -84,11 +84,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
   gint32            image_ID;

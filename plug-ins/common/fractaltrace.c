@@ -46,11 +46,11 @@
 /******************************************************************************/
 
 static void query  (void);
-static void run    (gchar      *name,
-		    gint        nparams,
-		    GimpParam  *param,
-		    gint       *nreturn_vals,
-		    GimpParam **return_vals);
+static void run    (const gchar      *name,
+		    gint              nparams,
+		    const GimpParam  *param,
+		    gint             *nreturn_vals,
+		    GimpParam       **return_vals);
 
 static void filter      (GimpDrawable *drawable);
 
@@ -162,11 +162,11 @@ static image_t     image;
 /******************************************************************************/
 
 static void
-run (gchar      *name,
-     gint        argc,
-     GimpParam  *args,
-     gint       *retc,
-     GimpParam **rets)
+run (const gchar      *name,
+     gint              argc,
+     const GimpParam  *args,
+     gint             *retc,
+     GimpParam       **rets)
 {
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;

@@ -26,11 +26,11 @@
 
 /* Declare local functions. */
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static void       do_fun                 (void);
 
@@ -108,14 +108,14 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        n_params,
-     GimpParam  *param, 
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              n_params,
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;

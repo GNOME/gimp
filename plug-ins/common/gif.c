@@ -308,7 +308,7 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean run;
 } GIFSaveInterface;
 
 
@@ -316,27 +316,27 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query                    (void);
-static void   run                      (gchar          *name,
-					gint            nparams,
-					GimpParam      *param,
-					gint           *nreturn_vals,
-					GimpParam     **return_vals);
-static gint   save_image               (gchar          *filename,
-					gint32          image_ID,
-					gint32          drawable_ID,
-					gint32          orig_image_ID);
+static void   run                      (const gchar      *name,
+					gint              nparams,
+					const GimpParam  *param,
+					gint             *nreturn_vals,
+					GimpParam       **return_vals);
+static gint   save_image               (const gchar      *filename,
+					gint32            image_ID,
+					gint32            drawable_ID,
+					gint32            orig_image_ID);
 
-static gboolean boundscheck            (gint32          image_ID);
+static gboolean boundscheck            (gint32            image_ID);
 static gboolean badbounds_dialog       (void);
 
-static void   cropok_callback          (GtkWidget      *widget,
-					gpointer        data);
+static void   cropok_callback          (GtkWidget        *widget,
+					gpointer          data);
 
-static gint   save_dialog              (gint32          image_ID);
+static gint   save_dialog              (gint32            image_ID);
 
-static void   save_ok_callback         (GtkWidget      *widget,
-					gpointer        data);
-static void   comment_entry_callback   (GtkTextBuffer  *buffer);
+static void   save_ok_callback         (GtkWidget        *widget,
+					gpointer          data);
+static void   comment_entry_callback   (GtkTextBuffer    *buffer);
 
 
 static gboolean comment_was_edited = FALSE;
@@ -416,11 +416,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
@@ -545,8 +545,7 @@ run (gchar      *name,
 typedef guchar CMap[3][MAXCOLORMAPSIZE];
 
 
-gint   verbose = FALSE;
-gchar *globalcomment = NULL;
+static gchar * globalcomment = NULL;
 
 
 
@@ -842,10 +841,10 @@ boundscheck (gint32 image_ID)
 
 
 static gint
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint32  orig_image_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID,
+	    gint32       orig_image_ID)
 {
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;

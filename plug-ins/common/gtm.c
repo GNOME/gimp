@@ -110,13 +110,13 @@ static GTMValues gtmvals =
 /* Declare some local functions */
 
 static void   query      (void);
-static void   run        (gchar      *name,
-                          gint        nparams,
-                          GimpParam  *param,
-                          gint       *nreturn_vals,
-                          GimpParam **return_vals);
+static void   run        (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
-static gboolean save_image          (gchar        *filename,
+static gboolean save_image          (const gchar  *filename,
                                      GimpDrawable *drawable);
 static gboolean save_dialog         (gint32        image_ID);
 
@@ -175,11 +175,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[2];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
@@ -217,7 +217,7 @@ run (gchar      *name,
 }
 
 static gboolean
-save_image (gchar        *filename,
+save_image (const gchar  *filename,
 	    GimpDrawable *drawable)
 {
   gint          row,col, cols, rows, x, y;

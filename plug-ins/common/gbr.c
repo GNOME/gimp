@@ -72,16 +72,16 @@ gboolean run_flag = FALSE;
 /* Declare some local functions.
  */
 static void   query          (void);
-static void   run            (gchar      *name,
-			      gint        nparams,
-			      GimpParam  *param,
-			      gint       *nreturn_vals,
-			      GimpParam **return_vals);
+static void   run            (const gchar      *name,
+			      gint              nparams,
+			      const GimpParam  *param,
+			      gint             *nreturn_vals,
+			      GimpParam       **return_vals);
 
-static gint32 load_image     (gchar      *filename);
-static gint   save_image     (gchar      *filename,
-			      gint32      image_ID,
-			      gint32      drawable_ID);
+static gint32 load_image     (const gchar      *filename);
+static gint   save_image     (const gchar      *filename,
+			      gint32            image_ID,
+			      gint32            drawable_ID);
 
 static gint   save_dialog    (void);
 static void   ok_callback    (GtkWidget  *widget, 
@@ -161,11 +161,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam     values[2];
   GimpRunMode          run_mode;
@@ -276,13 +276,13 @@ run (gchar      *name,
 }
 
 static gint32 
-load_image (gchar *filename) 
+load_image (const gchar *filename) 
 {
   gchar             *temp;
   gchar             *name = NULL;
   gint               fd;
   BrushHeader        bh;
-  guchar            *brush_buf   = NULL;
+  guchar            *brush_buf = NULL;
   gint32             image_ID;
   gint32             layer_ID;
   GimpDrawable      *drawable;
@@ -451,7 +451,7 @@ load_image (gchar *filename)
 		       0, 0, drawable->width, drawable->height, 
 		       TRUE, FALSE);
 
-  gimp_pixel_rgn_set_rect (&pixel_rgn, (guchar *) brush_buf, 
+  gimp_pixel_rgn_set_rect (&pixel_rgn, brush_buf, 
 			   0, 0, bh.width, bh.height);
   g_free (brush_buf);
 
@@ -467,9 +467,9 @@ load_image (gchar *filename)
 }
 
 static gint 
-save_image (gchar  *filename, 
-	    gint32  image_ID, 
-	    gint32  drawable_ID) 
+save_image (const gchar *filename, 
+	    gint32       image_ID, 
+	    gint32       drawable_ID) 
 {
   gint          fd;
   BrushHeader   bh;

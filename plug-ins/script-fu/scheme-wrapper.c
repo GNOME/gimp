@@ -1,29 +1,51 @@
+/* The GIMP -- an image manipulation program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #include "config.h"
 
 #include <string.h> /* memcpy, strcpy, strlen */
 
-#include "siod.h"
-#include "siod-wrapper.h"
 #include <glib.h>
+
 #include "libgimp/gimp.h"
+
 #include "script-fu-constants.h"
 #include "script-fu-enums.h"
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
+#include "siod.h"
+#include "siod-wrapper.h"
+
+
 /* global variables declared by the scheme interpreter */
-extern FILE* siod_output;
-extern int siod_verbose_level;
-extern char siod_err_msg[];
-extern LISP repl_return_val;
+extern FILE * siod_output;
+extern int    siod_verbose_level;
+extern gchar  siod_err_msg[];
+extern LISP   repl_return_val;
 
 
 /* defined in regex.c. not exported by regex.h */
 extern void  init_regex   (void);
 
 /* defined in siodp.h but this file cannot be imported... */
-extern long nlength (LISP obj);
-extern LISP leval_define (LISP args, LISP env);
+extern long  nlength (LISP obj);
+extern LISP  leval_define (LISP args, LISP env);
 
 
 /* wrapper functions */
@@ -47,11 +69,10 @@ siod_get_verbose_level (void)
 
 
 void 
-siod_set_verbose_level (int verbose_level)
+siod_set_verbose_level (gint verbose_level)
 {
   siod_verbose_level = verbose_level;
 }
-
 
 void
 siod_print_welcome (void)
@@ -59,13 +80,11 @@ siod_print_welcome (void)
   print_welcome ();
 }
 
-
-int
-siod_interpret_string (const char *expr)
+gint
+siod_interpret_string (const gchar *expr)
 {
   return repl_c_string ((char *)expr, 0, 0, 1);
 }
-
 
 const char *
 siod_get_error_msg (void)
@@ -73,22 +92,18 @@ siod_get_error_msg (void)
   return siod_err_msg;
 }
 
-const char *
+const gchar *
 siod_get_success_msg (void)
 {
-  char *response;
-
   if (TYPEP (repl_return_val, tc_string))
-    response = get_c_string (repl_return_val);
+    return get_c_string (repl_return_val);
   else
-    response = "Success";
-
-  return (const char *) response;
+    return "Success";
 }
 
 
-static void  init_constants           (void);
-static void  init_procedures          (void);
+static void  init_constants   (void);
+static void  init_procedures  (void);
 
 static gboolean register_scripts = FALSE;
 
@@ -121,14 +136,14 @@ siod_init (gboolean local_register_scripts)
 
 }
 
-static void  convert_string           (char *str);
-static gint  sputs_fcn                (char *st,
-				       void  *dest);
-static LISP  lprin1s                  (LISP   exp,
-				       char *dest);
-static LISP  marshall_proc_db_call    (LISP a);
-static LISP  script_fu_register_call  (LISP a);
-static LISP  script_fu_quit_call      (LISP a);
+static void  convert_string           (gchar    *str);
+static gint  sputs_fcn                (gchar    *st,
+				       gpointer  dest);
+static LISP  lprin1s                  (LISP      exp,
+				       gchar    *dest);
+static LISP  marshall_proc_db_call    (LISP      a);
+static LISP  script_fu_register_call  (LISP      a);
+static LISP  script_fu_quit_call      (LISP      a);
 
 
 /*********

@@ -102,22 +102,22 @@
 
 
 static void          query       (void);
-static void          run         (gchar       *name,
-				  gint         nparams,
-				  GimpParam      *param,
-				  gint        *nreturn_vals,
-				  GimpParam     **return_vals);
+static void          run         (const gchar       *name,
+				  gint               nparams,
+				  const GimpParam   *param,
+				  gint              *nreturn_vals,
+				  GimpParam        **return_vals);
 
-static gint32        load_image  (gchar       *filename,
-				  gint32       run_mode,
+static gint32        load_image  (const gchar       *filename,
+				  gint32             run_mode,
 				  GimpPDBStatusType *status /* return value */);
-static GimpPDBStatusType   save_image  (gchar       *filename,
-				  gint32       image_ID,
-				  gint32       drawable_ID,
-				  gint32       run_mode);
+static GimpPDBStatusType   save_image  (const gchar *filename,
+                                        gint32       image_ID,
+                                        gint32       drawable_ID,
+                                        gint32       run_mode);
 
-static gboolean   valid_file     (gchar       *filename);
-static gchar    * find_extension (gchar       *filename);
+static gboolean   valid_file     (const gchar       *filename);
+static gchar    * find_extension (const gchar       *filename);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -187,11 +187,11 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[2];
   GimpRunMode  run_mode;
@@ -296,10 +296,10 @@ spawn_gzip (gchar *filename,
 #endif
 
 static GimpPDBStatusType
-save_image (gchar  *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID,
-	    gint32  run_mode)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID,
+	    gint32       run_mode)
 {
   gchar *ext;
   gchar *tmpname;
@@ -421,7 +421,7 @@ save_image (gchar  *filename,
 }
 
 static gint32
-load_image (gchar             *filename,
+load_image (const gchar       *filename,
 	    gint32             run_mode,
 	    GimpPDBStatusType *status /* return value */)
 {
@@ -552,7 +552,7 @@ load_image (gchar             *filename,
 }
 
 static gboolean
-valid_file (gchar *filename)
+valid_file (const gchar *filename)
 {
   gint stat_res;
   struct stat buf;
@@ -566,7 +566,7 @@ valid_file (gchar *filename)
 }
 
 static gchar *
-find_extension (gchar *filename)
+find_extension (const gchar *filename)
 {
   gchar *filename_copy;
   gchar *ext;

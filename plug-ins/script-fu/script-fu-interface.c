@@ -154,11 +154,11 @@ static void       script_fu_script_proc      (const gchar       *name,
 					      gint              *nreturn_vals,
 					      GimpParam        **return_vals);
 
-static SFScript * script_fu_find_script      (gchar      *script_name);
-static void       script_fu_free_script      (SFScript   *script);
-static void       script_fu_interface        (SFScript   *script);
-static void       script_fu_interface_quit   (SFScript   *script);
-static void       script_fu_error_msg        (gchar      *command);
+static SFScript * script_fu_find_script      (const gchar       *script_name);
+static void       script_fu_free_script      (SFScript          *script);
+static void       script_fu_interface        (SFScript          *script);
+static void       script_fu_interface_quit   (SFScript          *script);
+static void       script_fu_error_msg        (const gchar       *command);
 
 static void       script_fu_ok_callback             (GtkWidget *widget,
 						     gpointer   data);
@@ -953,14 +953,14 @@ script_fu_script_proc (const gchar      *name,
 
 /* this is a GTraverseFunction */
 static gboolean
-script_fu_lookup_script (gpointer  *foo,
-			 SFScript  *script,
-			 gchar    **name)
+script_fu_lookup_script (gpointer      *foo,
+			 SFScript      *script,
+			 gconstpointer *name)
 {
   if (strcmp (script->pdb_name, *name) == 0)
     {  
       /* store the script in the name pointer and stop the traversal */
-      *name = (gchar *)script;
+      *name = script;
       return TRUE;
     }
   else
@@ -968,11 +968,10 @@ script_fu_lookup_script (gpointer  *foo,
 }
 
 static SFScript *
-script_fu_find_script (gchar *pdb_name)
+script_fu_find_script (const gchar *pdb_name)
 {
-  gchar *script;
-  
-  script = pdb_name;
+  gconstpointer script = pdb_name;
+
   g_tree_foreach (script_list, 
                   (GTraverseFunc) script_fu_lookup_script, 
                   &script);
@@ -980,7 +979,7 @@ script_fu_find_script (gchar *pdb_name)
   if (script == pdb_name)
     return NULL;
   else
-    return (SFScript *)script;
+    return (SFScript *) script;
 }
 
 static void
@@ -1995,7 +1994,7 @@ script_fu_file_selection_callback (GtkWidget *widget,
 }
 
 static void
-script_fu_error_msg (gchar *command)
+script_fu_error_msg (const gchar *command)
 {
   g_message (_("Script-Fu Error while executing\n %s\n%s"), 
 	     command, siod_err_msg);

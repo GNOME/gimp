@@ -57,20 +57,20 @@
 
 /* Declare local functions. */
 static void   query  (void);
-static void   run    (gchar      *name,
-		      gint        nparams,
-		      GimpParam  *param,
-		      gint       *nreturn_vals,
-		      GimpParam **return_vals);
+static void   run    (const gchar      *name,
+		      gint              nparams,
+		      const GimpParam  *param,
+		      gint             *nreturn_vals,
+		      GimpParam       **return_vals);
 
-static guchar      best_cmap_match (guchar       *cmap, 
-				    gint          ncolors,
-				    GimpRGB      *color);
-static void        doit            (gint32        image_ID, 
-				    GimpDrawable *drawable, 
-				    gboolean      preview_mode);
-static gint        dialog          (gint32        image_ID, 
-				    GimpDrawable *drawable);
+static guchar      best_cmap_match (const guchar  *cmap, 
+				    gint           ncolors,
+				    const GimpRGB *color);
+static void        doit            (gint32         image_ID, 
+				    GimpDrawable  *drawable, 
+				    gboolean       preview_mode);
+static gint        dialog          (gint32         image_ID, 
+				    GimpDrawable  *drawable);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -157,11 +157,11 @@ void query (void)
 }
 
 static void
-run (gchar      *name, 
-     gint        n_params, 
-     GimpParam  *param, 
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name, 
+     gint              n_params, 
+     const GimpParam  *param, 
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
@@ -258,9 +258,9 @@ run (gchar      *name,
 #define MAXDIFF 195076
 
 static guchar
-best_cmap_match (guchar  *cmap,
-		 gint     ncolors,
-		 GimpRGB *color)
+best_cmap_match (const guchar  *cmap,
+		 gint           ncolors,
+		 const GimpRGB *color)
 {
   guchar cmap_index = 0;
   gint   max = MAXDIFF;

@@ -88,14 +88,14 @@ typedef struct
 /* Declare local functions
  */
 static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
-			 GimpParam  *param,
-			 gint       *nreturn_vals,
-			 GimpParam **return_vals);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
 
 
-static gint32    create_new_image   (gchar          *filename,
+static gint32    create_new_image   (const gchar    *filename,
 				     guint           width,
 				     guint           height,
 				     GimpImageType   gdtype,
@@ -258,11 +258,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam  values[2];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
@@ -955,7 +955,7 @@ draw_number (gint32 layer_ID,
 
 /* Create an image. Sets layer_ID, drawable and rgn. Returns image_ID */
 static gint32
-create_new_image (gchar          *filename,
+create_new_image (const gchar    *filename,
                   guint           width,
                   guint           height,
                   GimpImageType   gdtype,

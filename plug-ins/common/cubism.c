@@ -56,18 +56,18 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  gboolean  run;
 } CubismInterface;
 
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar         *name,
-			 gint           nparams,
-			 GimpParam     *param,
-			 gint          *nreturn_vals,
-			 GimpParam    **return_vals);
-static void      cubism (GimpDrawable  *drawable);
+static void      run    (const gchar      *name,
+			 gint              nparams,
+			 const GimpParam  *param,
+			 gint             *nreturn_vals,
+			 GimpParam       **return_vals);
+static void      cubism (GimpDrawable     *drawable);
 
 static void      fill_poly_color      (Polygon      *poly,
 				       GimpDrawable *drawable,
@@ -162,16 +162,16 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *active_drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *active_drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
 

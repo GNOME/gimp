@@ -68,11 +68,11 @@ typedef struct
 
 /* lets prototype */
 static void	query (void);
-static void	run   (gchar      *name,
-		       gint        nparams,
-		       GimpParam  *param,
-		       gint       *nreturn_vals,
-		       GimpParam **return_vals);
+static void	run   (const gchar      *name,
+		       gint              nparams,
+		       const GimpParam  *param,
+		       gint             *nreturn_vals,
+		       GimpParam       **return_vals);
 
 static void	exchange              (void);
 static void	real_exchange         (gint, gint, gint, gint, gboolean);
@@ -146,15 +146,15 @@ query (void)
 
 /* main function */
 static void
-run (gchar   *name,
-     gint     nparams,
-     GimpParam  *param,
-     gint    *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
-  static GimpParam	values[1];
-  GimpRunMode	runmode;
-  GimpPDBStatusType 	status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpRunMode	     runmode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;

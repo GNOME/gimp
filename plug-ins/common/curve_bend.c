@@ -181,7 +181,7 @@ struct _BenderDialog
   BenderValues  *bval_to;
   BenderValues  *bval_curr;
 
-  gint           run;
+  gboolean   run;
 };
 
 /* points Coords:
@@ -264,11 +264,11 @@ typedef struct
 
 /*  curves action functions  */
 static void  query (void);
-static void  run   (gchar   *name,
-		    gint     nparams,
-		    GimpParam  *param,
-		    gint    *nreturn_vals,
-		    GimpParam **return_vals);
+static void  run   (const gchar      *name,
+		    gint              nparams,
+		    const GimpParam  *param,
+		    gint             *nreturn_vals,
+		    GimpParam       **return_vals);
 
 static BenderDialog *  bender_new_dialog              (GimpDrawable *);
 static void            bender_update                  (BenderDialog *, int);
@@ -379,8 +379,8 @@ int gb_debug = FALSE;
  * ============================================================================
  */
 
-gint 
-p_pdb_procedure_available (char *proc_name)
+static gint 
+p_pdb_procedure_available (const gchar *proc_name)
 {    
   gint             l_nparams;
   gint             l_nreturn_vals;
@@ -521,9 +521,9 @@ p_gimp_edit_copy (gint32 image_id,
    if (p_pdb_procedure_available(l_procname) >= 0)
    {
       return_vals = gimp_run_procedure (l_procname,
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE,  drawable_id,
-                                    GIMP_PDB_END);
+                                        &nreturn_vals,
+                                        GIMP_PDB_DRAWABLE,  drawable_id,
+                                        GIMP_PDB_END);
                                     
       if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
       {
@@ -555,10 +555,10 @@ p_gimp_edit_paste (gint32 image_id,
    if (p_pdb_procedure_available(l_procname) >= 0)
    {
       return_vals = gimp_run_procedure (l_procname,
-                                    &nreturn_vals,
-                                    GIMP_PDB_DRAWABLE,  drawable_id,
-                                    GIMP_PDB_INT32,     paste_into,
-                                    GIMP_PDB_END);
+                                        &nreturn_vals,
+                                        GIMP_PDB_DRAWABLE,  drawable_id,
+                                        GIMP_PDB_INT32,     paste_into,
+                                        GIMP_PDB_END);
                                     
       if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
       {
@@ -702,11 +702,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,           /* name of plugin */
-     gint        nparams,        /* number of in-paramters */
-     GimpParam  *param,          /* in-parameters */
-     gint       *nreturn_vals,   /* number of out-parameters */
-     GimpParam **return_vals)    /* out-parameters */
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   const gchar  *l_env;
   BenderDialog *cd;

@@ -122,11 +122,11 @@ QbistInfo;
 /** prototypes **************************************************************/
 
 static void query (void);
-static void run   (gchar      *name,
-		   gint        nparams,
-		   GimpParam  *param,
-		   gint       *nreturn_vals,
-		   GimpParam **return_vals);
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
+		   gint             *nreturn_vals,
+		   GimpParam       **return_vals);
 
 static gint dialog_create          (void);
 static void dialog_new_variations  (GtkWidget *widget,
@@ -443,18 +443,18 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam values[1];
   gint sel_x1, sel_y1, sel_x2, sel_y2;
   gint img_height, img_width, img_bpp, img_has_alpha;
 
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
 
   *nreturn_vals = 1;

@@ -49,21 +49,21 @@ typedef struct
 
 typedef struct
 {
-  gint  run;
+  gboolean  run;
 } GIconSaveInterface;
 
 /* Declare some local functions.
  */
 static void   query          (void);
-static void   run            (gchar      *name,
-                              gint        nparams,
-                              GimpParam  *param,
-                              gint       *nreturn_vals,
-                              GimpParam **return_vals);
-static gint32 load_image     (gchar      *filename);
-static gint   save_image     (gchar      *filename,
-                              gint32      image_ID,
-                              gint32      drawable_ID);
+static void   run            (const gchar      *name,
+                              gint              nparams,
+                              const GimpParam  *param,
+                              gint             *nreturn_vals,
+                              GimpParam       **return_vals);
+static gint32 load_image     (const gchar      *filename);
+static gint   save_image     (const gchar      *filename,
+                              gint32            image_ID,
+                              gint32            drawable_ID);
 
 static gint   save_dialog    (void);
 
@@ -152,11 +152,11 @@ query (void)
 }
 
 static void
-run (gchar      *name,
-     gint        nparams,
-     GimpParam  *param,
-     gint       *nreturn_vals,
-     GimpParam **return_vals)
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
+     gint             *nreturn_vals,
+     GimpParam       **return_vals)
 {
   static GimpParam      values[2];
   GimpRunMode           run_mode;
@@ -271,7 +271,7 @@ run (gchar      *name,
 }
 
 static gint32
-load_image (gchar *filename)
+load_image (const gchar *filename)
 {
   GimpDrawable *drawable;
   GimpPixelRgn pixel_rgn;
@@ -293,7 +293,8 @@ load_image (gchar *filename)
     }
 
   /*  Check the identifier string  */
-  fscanf (fp, "/*  %s icon image format -- S. Kimball, P. Mattis  */\n", name_buf);
+  fscanf (fp, "/*  %s icon image format -- S. Kimball, P. Mattis  */\n",
+          name_buf);
   if (strcmp ("GIMP", name_buf))
     {
       fprintf (stderr, "Not a GIcon file: %s!\n", filename);
@@ -356,9 +357,9 @@ load_image (gchar *filename)
 }
 
 static gint
-save_image (char   *filename,
-	    gint32  image_ID,
-	    gint32  drawable_ID)
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
