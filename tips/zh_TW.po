@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
-"POT-Creation-Date: 2002-11-09 19:45+0100\n"
+"POT-Creation-Date: 2003-06-27 03:00+0200\n"
 "PO-Revision-Date: 2003-02-10 01:31+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -59,17 +59,29 @@ msgstr ""
 "顏色而非前景顏色。"
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
 "A Floating Selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the New Layer or "
-"Anchor Layer buttons in the \"Layers, Channels and Paths\" dialog, or use "
-"the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
+"same."
 msgstr ""
 "對圖像進行任何操作前，浮動選擇區域必須先固定在新的圖層或是最後使用的圖層上。"
 "要進行以上的程序，可以在「圖層、色版及路徑」對話窗中選取「新增圖層」或「固定"
 "圖層」按鈕。另外在選單中也可以使用同樣的方法。"
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
+msgid ""
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. This is saved when you "
+"exit GIMP."
+msgstr ""
+"閣下可以重新安排選單上的捷徑鍵組合，方法是先用滑鼠選取選單某個項目，並同時按"
+"下新的捷徑鍵組合。這是動態的設定，會在離開 GIMP 時被儲存下來。"
+
+#: tips/gimp-tips.xml.in.h:9
 msgid ""
 "Click and drag on a ruler to place a Guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -79,18 +91,19 @@ msgstr ""
 "會自動吸引至參考線上。如果要去除參考線，可利用「移動」工具將參考線拖曳到圖像"
 "範圍以外。"
 
-#: tips/gimp-tips.xml.in.h:9
+#: tips/gimp-tips.xml.in.h:10
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the \"Auto\" button in the Levels tool (Image-"
+"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
 "&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Image-&gt;Colors-&gt;Curves)."
+"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "如果掃描出來的相片色彩不太鮮豔，可以使用「色階」工具（圖像→色彩→色階）中的"
 "「自動」按鈕來輕鬆地改善圖像的色彩範圍。如果色彩有任何走樣，可以利用「曲線」"
 "工具（圖像→色彩→曲線）來修正。"
 
-#: tips/gimp-tips.xml.in.h:10
+#: tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
 "settings are used. You can use the Paintbrush in gradient mode, the Clone "
@@ -98,17 +111,6 @@ msgid ""
 msgstr ""
 "描畫路徑時（編輯→描邊）會使用目前的繪畫工具及設定。閣下可以使用漸層模式的「畫"
 "筆」、「模仿」工具加上圖樣，甚至「橡皮擦」或「塗污」工具也可以。"
-
-#: tips/gimp-tips.xml.in.h:11
-msgid ""
-"If your fonts turn out blocky, that's because they're not scalable fonts. "
-"Most X servers support scalable Type 1 Postscript fonts. Download and "
-"install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
-"fonts, which are also scalable."
-msgstr ""
-"如果字型看起來很不平滑，那是因為它們不是可縮放的字型。大部分的 X 伺服器都支"
-"援 Type 1 Postscript 字型。閣下可以下載並安裝這類字型。某些字型伺服程式允許使"
-"用 TrueType (<tt>.ttf</tt>) 字型，它們也是可以縮放的。"
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -175,20 +177,22 @@ msgstr ""
 "整合後的內容。"
 
 #: tips/gimp-tips.xml.in.h:19
+#, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila! "
-"It's completed."
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voilá, "
+"it's completed."
 msgstr ""
 "在檔案選擇對話窗內有類似命令殼的指令自動補齊功能。只要鍵入部份的檔案名稱，按"
 "下 <tt>Tab</tt>，就完成了！"
 
 #: tips/gimp-tips.xml.in.h:20
+#, fuzzy
 msgid ""
 "The layer named \"Background\" it special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
-"stack. You may add transparency to it by right-clicking in the \"Layers, "
-"Channels and Paths\" dialog and selecting \"Add Alpha Channel\"."
+"stack. You may add transparency to it by right-clicking in the Layers dialog "
+"and selecting \"Add Alpha Channel\"."
 msgstr ""
 "圖層中稱為「背景」的一個是比較特殊的，因為它沒有透明度。這樣會妨礙閣下加上圖"
 "層遮罩或將圖層移至較面層的位置。在「圖層、色版及路徑」對話窗中按右邊滑鼠按鈕"
@@ -248,18 +252,20 @@ msgid ""
 msgstr "閣下可以調整模糊選擇區域的範圍，方法是按下滑鼠按鈕後向左或右拖曳。"
 
 #: tips/gimp-tips.xml.in.h:27
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The \"Paths"
-"\" tab in the \"Layers, Channels and Paths\" dialog allows you to work on "
-"multiple paths and to convert them to selections."
+"You can create and edit complex selections using the Bezier tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
 msgstr ""
 "閣下可以使用貝茲曲線工具來製作及修改複雜的選擇區域。在「圖層、色版及路徑」對"
 "話窗的「路徑」部份，可讓閣下同時處理多個路徑並將它們轉換為選擇區域。"
 
 #: tips/gimp-tips.xml.in.h:28
+#, fuzzy
 msgid ""
-"You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
-"it onto the toolbox. This will create a new image containing only that layer."
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
 msgstr ""
 "閣下可以在「圖層、色版及路徑」對話窗中拖曳一個圖層並將之放進工具箱內。這樣會"
 "產生一幅只含有該圖層的圖像。"
@@ -281,9 +287,10 @@ msgstr ""
 "閣下可以在任何時候按下 F1 來瀏覽相關功能的說明文件，即使在選單中也同樣適用。"
 
 #: tips/gimp-tips.xml.in.h:31
+#, fuzzy
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
-"a layer in the \"Layers, Channels and Paths\" dialog."
+"a layer in the Layers dialog."
 msgstr ""
 "在「圖層、色版及路徑」對話窗中，在圖層名稱上按下右邊滑鼠按鈕，可以執行很多不"
 "同的圖層功能。"
@@ -298,26 +305,18 @@ msgstr ""
 "區域為正方形或正圓形，或是將滑鼠開始拖曳的位置定為選擇區域的中心點。"
 
 #: tips/gimp-tips.xml.in.h:33
-msgid ""
-"You can reassign shortcut keys on any menu by bringing up the menu, "
-"selecting a menu item, and pressing the new shortcut key combination. This "
-"is dynamic and is saved when you exit GIMP."
-msgstr ""
-"閣下可以重新安排選單上的捷徑鍵組合，方法是先用滑鼠選取選單某個項目，並同時按"
-"下新的捷徑鍵組合。這是動態的設定，會在離開 GIMP 時被儲存下來。"
-
-#: tips/gimp-tips.xml.in.h:34
+#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
-"modify this channel with any paint tools. Using the buttons in the \"Channels"
-"\" tab of the \"Layers, Channels and Paths\" dialog, you can toggle the "
-"visibility of this new channel or convert it to a selection."
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
 msgstr ""
 "閣下可以將選擇區域儲存為色版 (選擇→儲存為色版) 然後使用任何繪畫工具修改該色"
 "版。利用「圖層、色版及路徑」對話窗中「色版」部份的按鈕，閣下可以切換是否顯示"
 "這個新的色版並將之轉換為選擇區域。"
 
-#: tips/gimp-tips.xml.in.h:35
+#: tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -325,19 +324,30 @@ msgstr ""
 "閣下可以用 <tt>Alt</tt>-<tt>Tab</tt> 來逐層顯示圖像中的所有圖層。(但必須注意"
 "視窗管理程式會否攔截這個按鍵組合...)"
 
-#: tips/gimp-tips.xml.in.h:36
+#: tips/gimp-tips.xml.in.h:35
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr "當圖像大於顯示圖像的視窗時，可以用中央滑鼠按鈕抓住圖像在視窗內移動。"
 
-#: tips/gimp-tips.xml.in.h:37
+#: tips/gimp-tips.xml.in.h:36
+#, fuzzy
 msgid ""
-"You can use the paint tools to change the selection. Click on the Quick Mask "
-"button at the bottom left of an image window. Change your selection by "
-"painting in the image and click on the button again to convert it back to a "
-"normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
 "閣下可以使用繪畫工具來更改選擇區域。按下圖像視窗左下角的「快速遮罩」按鈕。透"
 "過在圖像上繪圖可以更改選擇區域，然後再按一次按鈕可以將之轉換為普通的選擇區"
 "域。"
+
+#~ msgid ""
+#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
+#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
+#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+#~ "fonts, which are also scalable."
+#~ msgstr ""
+#~ "如果字型看起來很不平滑，那是因為它們不是可縮放的字型。大部分的 X 伺服器都"
+#~ "支援 Type 1 Postscript 字型。閣下可以下載並安裝這類字型。某些字型伺服程式"
+#~ "允許使用 TrueType (<tt>.ttf</tt>) 字型，它們也是可以縮放的。"

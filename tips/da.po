@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP tips\n"
-"POT-Creation-Date: 2002-11-09 19:45+0100\n"
+"POT-Creation-Date: 2003-06-27 03:00+0200\n"
 "PO-Revision-Date: 2003-03-18 22:58+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -60,18 +60,32 @@ msgstr ""
 "til at bruge baggrundsfarven i stedet for forgrundsfarven."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
 "A Floating Selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the New Layer or "
-"Anchor Layer buttons in the \"Layers, Channels and Paths\" dialog, or use "
-"the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
+"same."
 msgstr ""
 "En flydende markering skal forankres til et nyt lag eller det sidste aktive "
 "lag før der kan foretages andre operationer på billedet. Klik på Nyt lag- "
 "eller Forankr lag-knapperne i \"Lag, kanaler og baner\"-vinduet eller brug "
 "menuerne til at gøre det samme."
 
+# mon ikke 'dynamic' dækker over noget i retning af det skrevne
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
+msgid ""
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. This is saved when you "
+"exit GIMP."
+msgstr ""
+"Du kan omdefinere genvejstaster i menuerne ved at bringe en menu frem, pege "
+"på et menupunkt og trykke den nye tastekombination. Genvejen virker med "
+"samme og bliver gemt når du afslutter Gimp'en."
+
+#: tips/gimp-tips.xml.in.h:9
 msgid ""
 "Click and drag on a ruler to place a Guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -81,19 +95,20 @@ msgstr ""
 "markeringer der bliver flyttet, vil så følge hjælpelinjerne. Du kan fjerne "
 "linjerne igen ved at trække dem af billedet med flytteværktøjet."
 
-#: tips/gimp-tips.xml.in.h:9
+#: tips/gimp-tips.xml.in.h:10
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the \"Auto\" button in the Levels tool (Image-"
+"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
 "&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Image-&gt;Colors-&gt;Curves)."
+"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Hvis nogle af din indskannede foto ikke ser farverige nok ud, kan du let "
 "forbedre deres farvetoneinterval med \"Auto\"-knappen i niveauværktøjet "
 "(Billede-&gt;Farver-&gt;Niveauer). Hvis der er farveudblødninger, kan du "
 "rette dem med kurveværktøjet (Billede-&gt;Farver-&gt;Kurver)."
 
-#: tips/gimp-tips.xml.in.h:10
+#: tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
 "settings are used. You can use the Paintbrush in gradient mode, the Clone "
@@ -103,18 +118,6 @@ msgstr ""
 "tegneværktøj og dets indstillinger brugt. Du kan bruge malerpenslen i "
 "farveovergangstilstand, kloningsværktøjet med et mønster eller endda "
 "viskelæderet eller udtværingsværktøjet."
-
-#: tips/gimp-tips.xml.in.h:11
-msgid ""
-"If your fonts turn out blocky, that's because they're not scalable fonts. "
-"Most X servers support scalable Type 1 Postscript fonts. Download and "
-"install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
-"fonts, which are also scalable."
-msgstr ""
-"Hvis dine skrifttyper ser kornede ud skyldes det at de ikke er skalérbare. "
-"De fleste X-servere understøtter skalérbare Type 1 Postscript-skrifttyper. "
-"Hent og installér dem. Nogle skrifttypeservere lader dig bruge TrueType-"
-"skrifttyper (.ttf) som også er skalérbare."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -187,21 +190,23 @@ msgstr ""
 "du en bestemt sammensætning af deres indhold."
 
 #: tips/gimp-tips.xml.in.h:19
+#, fuzzy
 msgid ""
 "The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila! "
-"It's completed."
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voilá, "
+"it's completed."
 msgstr ""
 "Filvælgervinduet har kommandolinjefuldførelse med tabulatortasten, ligesom "
 "en kommandoskal. Indtast en del af et filnavn, tryk på tabulator og vupti! "
 "Navnet bliver fuldført."
 
 #: tips/gimp-tips.xml.in.h:20
+#, fuzzy
 msgid ""
 "The layer named \"Background\" it special because it lacks transparency. "
 "This prevents you from adding a layer mask or moving the layer up in the "
-"stack. You may add transparency to it by right-clicking in the \"Layers, "
-"Channels and Paths\" dialog and selecting \"Add Alpha Channel\"."
+"stack. You may add transparency to it by right-clicking in the Layers dialog "
+"and selecting \"Add Alpha Channel\"."
 msgstr ""
 "Laget ved navn \"Baggrund\" er specielt fordi det mangler gennemsigtighed. "
 "Dette forhindrer dig i at tilføje en lagmaske eller hæve laget. Du kan "
@@ -270,19 +275,21 @@ msgstr ""
 "og trække til højre eller venstre."
 
 #: tips/gimp-tips.xml.in.h:27
+#, fuzzy
 msgid ""
-"You can create and edit complex selections using the Bezier tool. The \"Paths"
-"\" tab in the \"Layers, Channels and Paths\" dialog allows you to work on "
-"multiple paths and to convert them to selections."
+"You can create and edit complex selections using the Bezier tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
 msgstr ""
 "Du kan oprette og redigere komplekse markeringer med Bezier-værktøjet. "
 "\"Baner\"-fanebladet i \"Lag, kanaler og baner\"-vinduet lader dig arbejde "
 "på flere baner og så konvertere dem til markeringer."
 
 #: tips/gimp-tips.xml.in.h:28
+#, fuzzy
 msgid ""
-"You can drag a layer from the \"Layers, Channels and Paths\" dialog and drop "
-"it onto the toolbox. This will create a new image containing only that layer."
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
 msgstr ""
 "Du kan trække et lag fra \"Lag, kanaler og baner\"-vinduet og slippe det i "
 "værktøjskassen. Dette opretter et nyt billede som kun indeholder det lag."
@@ -307,9 +314,10 @@ msgstr ""
 "i menuer."
 
 #: tips/gimp-tips.xml.in.h:31
+#, fuzzy
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
-"a layer in the \"Layers, Channels and Paths\" dialog."
+"a layer in the Layers dialog."
 msgstr ""
 "Du kan udføre mange lagoperationer ved at højreklikke på tekstetiketten til "
 "et lag i \"Lag, kanaler og baner\"-vinduet."
@@ -324,30 +332,20 @@ msgstr ""
 "markering før at begrænse den til en perfekt cirkel eller et kvadrat, eller "
 "til at få den centreret ved startpunktet."
 
-# mon ikke 'dynamic' dækker over noget i retning af det skrevne
 #: tips/gimp-tips.xml.in.h:33
-msgid ""
-"You can reassign shortcut keys on any menu by bringing up the menu, "
-"selecting a menu item, and pressing the new shortcut key combination. This "
-"is dynamic and is saved when you exit GIMP."
-msgstr ""
-"Du kan omdefinere genvejstaster i menuerne ved at bringe en menu frem, pege "
-"på et menupunkt og trykke den nye tastekombination. Genvejen virker med "
-"samme og bliver gemt når du afslutter Gimp'en."
-
-#: tips/gimp-tips.xml.in.h:34
+#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
-"modify this channel with any paint tools. Using the buttons in the \"Channels"
-"\" tab of the \"Layers, Channels and Paths\" dialog, you can toggle the "
-"visibility of this new channel or convert it to a selection."
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
 msgstr ""
 "Du kan gemme en markering som en kanel (Markering-&gt;Gem som kanal) og så "
 "ændre denne kanal med maleværktøjerne. Ved hjælp af knapperne i \"Kanaler\"-"
 "fanebladet i \"Lag, kanaler og baner\"-vinduet kan du slå synligheden af "
 "denne nye kanal til eller fra eller konvertere den til en markering."
 
-#: tips/gimp-tips.xml.in.h:35
+#: tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -355,7 +353,7 @@ msgstr ""
 "Du kan bruge <tt>Alt</tt> + tabulator til at gå gennem alle lagene i et "
 "billede (hvis din vindueshåndtering ikke bruger den kombination...)."
 
-#: tips/gimp-tips.xml.in.h:36
+#: tips/gimp-tips.xml.in.h:35
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -363,14 +361,26 @@ msgstr ""
 "Du kan bruge den midterste museknap til at flytte rundt i billedet hvis det "
 "er større end dets fremvisningsvindue."
 
-#: tips/gimp-tips.xml.in.h:37
+#: tips/gimp-tips.xml.in.h:36
+#, fuzzy
 msgid ""
-"You can use the paint tools to change the selection. Click on the Quick Mask "
-"button at the bottom left of an image window. Change your selection by "
-"painting in the image and click on the button again to convert it back to a "
-"normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
 "Du kan bruge tegneværktøjerne til at ændre det markerede. Klik på "
 "hurtigmaskeknappen for neden til venstre i et billedvindue. Ændr det "
 "markerede ved at tegne i billedet og klikke på knappen igen for at "
 "konvertere det tilbage til en normal markering."
+
+#~ msgid ""
+#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
+#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
+#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+#~ "fonts, which are also scalable."
+#~ msgstr ""
+#~ "Hvis dine skrifttyper ser kornede ud skyldes det at de ikke er "
+#~ "skalérbare. De fleste X-servere understøtter skalérbare Type 1 Postscript-"
+#~ "skrifttyper. Hent og installér dem. Nogle skrifttypeservere lader dig "
+#~ "bruge TrueType-skrifttyper (.ttf) som også er skalérbare."
