@@ -8,11 +8,16 @@ libexec_PROGRAMS = FractalExplorer
 
 FractalExplorer_SOURCES = \
 	Callbacks.h		\
+	Callbacks.c		\
 	Dialogs.h		\
+	Dialogs.c		\
 	Events.h		\
+	Events.c		\
 	FractalExplorer.c	\
 	FractalExplorer.h	\
+	Globals.c		\
 	Languages.h		\
+	Languages.c		\
 	logo.h			\
 	pix_data.h
 

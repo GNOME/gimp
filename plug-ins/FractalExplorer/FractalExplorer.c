@@ -77,7 +77,6 @@
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
-#include "logo.h"
 #include "pix_data.h"
 
 #include "Languages.h"
@@ -96,7 +95,7 @@ MAIN()
  FUNCTION: query  
  *********************************************************************/
 
-static void
+void
 query()
 {
     static GParamDef    args[] =
@@ -144,7 +143,7 @@ query()
  FUNCTION: run
  *********************************************************************/
 
-static void
+void
 run(char *name,
     int nparams,
     GParam * param,
@@ -551,7 +550,7 @@ explorer_render_row(const guchar * src_row,
 
 /*
 
-static gint
+gint
 rename_button_press(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer data)
@@ -569,7 +568,7 @@ rename_button_press(GtkWidget *widget,
 }
 */
 
-static gint
+gint
 delete_button_press_cancel(GtkWidget *widget,
 		  gpointer   data)
 {
@@ -580,7 +579,7 @@ delete_button_press_cancel(GtkWidget *widget,
   return(FALSE);
 }
 
-static gint
+gint
 fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer   data)
@@ -670,7 +669,7 @@ fractalexplorer_save(void)
 }
 
 
-static gint
+gint
 gradient_list_button_press(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer   data)
@@ -712,7 +711,7 @@ gradient_list_button_press(GtkWidget *widget,
           get_line(load_buf,MAX_LOAD_LINE,fp,1);
           if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
           {
-             gchar err[256];
+             gchar err[MAXSTRLEN];
              sprintf(err,msg[lng][MSG_WRONGFILETYPE],sel_obj->filename);
              create_warn_dialog(err);
              return(0);
@@ -720,7 +719,7 @@ gradient_list_button_press(GtkWidget *widget,
 
           if(gradient_load_options(sel_obj,fp))
             {
-               gchar err[256];
+               gchar err[MAXSTRLEN];
                sprintf(err,msg[lng][MSG_CORRUPTFILE],
 	      filename,
 	      line_no);
@@ -745,7 +744,7 @@ gradient_list_button_press(GtkWidget *widget,
 }
 
 
-static void
+void
 fractalexplorer_list_ok_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
@@ -781,7 +780,7 @@ fractalexplorer_list_ok_callback (GtkWidget *w,
 
 }
 
-static void
+void
 fractalexplorer_list_cancel_callback (GtkWidget *w,
 				  gpointer   client_data)
 {
@@ -799,7 +798,7 @@ fractalexplorer_list_cancel_callback (GtkWidget *w,
 }
 
 
-static void
+void
 fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gint created)
 {
   fractalexplorerListOptions *options;
@@ -859,7 +858,7 @@ fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gin
 }
 
 
-static GtkWidget *
+GtkWidget *
 new_fractalexplorer_obj(gchar * name)
 {
   fractalexplorerOBJ * fractalexplorer;
@@ -887,7 +886,7 @@ new_fractalexplorer_obj(gchar * name)
 }
 
 
-static gint
+gint
 new_button_press(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer   data)
@@ -900,7 +899,7 @@ new_button_press(GtkWidget *widget,
   return(FALSE);
 }
 
-static void
+void
 fractalexplorer_rescan_cancel_callback (GtkWidget *w,
 				  gpointer   client_data)
 {
@@ -1085,7 +1084,7 @@ fractalexplorer_new_pixmap(GtkWidget *list, char **pixdata)
 }
 
 
-static GtkWidget *
+GtkWidget *
 fractalexplorer_list_add(fractalexplorerOBJ *obj)
 {
   GList *list;
@@ -1208,7 +1207,7 @@ gradient_build_list_items(GtkWidget *list)
 
 /*
 
-static void
+void
 fractalexplorer_save_menu_callback(GtkWidget *widget, gpointer data)
 {
   fractalexplorerOBJ * real_current = current_obj;
@@ -1220,7 +1219,7 @@ fractalexplorer_save_menu_callback(GtkWidget *widget, gpointer data)
   current_obj = real_current;
 }
 
-static void
+void
 fractalexplorer_load_menu_callback(GtkWidget *widget, gpointer data)
 {
       dialog_change_scale();
@@ -1228,13 +1227,13 @@ fractalexplorer_load_menu_callback(GtkWidget *widget, gpointer data)
       dialog_update_preview();
 }
 
-static void
+void
 fractalexplorer_rename_menu_callback(GtkWidget *widget, gpointer data)
 {
   create_file_selection(fractalexplorer_obj_for_menu,fractalexplorer_obj_for_menu->filename);
 }
 
-static void
+void
 fractalexplorer_copy_menu_callback(GtkWidget *widget, gpointer data)
 {
   gchar *new_name = g_strup_printf(msg[lng][MSG_COPYNAME],fractalexplorer_obj_for_menu->draw_name);
@@ -1252,7 +1251,7 @@ fractalexplorer_copy_menu_callback(GtkWidget *widget, gpointer data)
 
 /*
 
-static void
+void
 fractalexplorer_op_menu_create(GtkWidget *window)
 {
   GtkWidget *menu_item;
@@ -1310,7 +1309,7 @@ fractalexplorer_op_menu_create(GtkWidget *window)
 }
 
 
-static void
+void
 fractalexplorer_op_menu_popup(gint button, guint32 activate_time,fractalexplorerOBJ *obj)
 {
   fractalexplorer_obj_for_menu = obj; 
@@ -1329,7 +1328,7 @@ fractalexplorer_op_menu_popup(gint button, guint32 activate_time,fractalexplorer
 
 */
 
-static gint
+gint
 list_button_press(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer   data)
@@ -1391,7 +1390,7 @@ plug_in_parse_fractalexplorer_path()
   gchar *token;
   struct stat filestat;
   gint	err;
-  gchar buf[256];
+  gchar buf[MAXSTRLEN];
   
   if(fractalexplorer_path_list)
     g_list_free(fractalexplorer_path_list);
@@ -1584,7 +1583,7 @@ fractalexplorer_load (gchar *filename, gchar *name)
 
   if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
     {
-      gchar err[256];
+      gchar err[MAXSTRLEN];
       sprintf(err,msg[lng][MSG_WRONGFILETYPE],fractalexplorer->filename);
       create_warn_dialog(err);
       fclose(fp);
@@ -1594,7 +1593,7 @@ fractalexplorer_load (gchar *filename, gchar *name)
   if(load_options(fractalexplorer,fp))
     {
       /* waste some mem */
-      gchar err[256];
+      gchar err[MAXSTRLEN];
       sprintf(err,
 	      msg[lng][MSG_CORRUPTFILE],
 	      filename,
@@ -1648,7 +1647,7 @@ gradient_load (gchar *filename, gchar *name)
 
   if(strncmp(fractalexplorer_HEADER,load_buf,strlen(load_buf)))
     {
-      gchar err[256];
+      gchar err[MAXSTRLEN];
       sprintf(err,msg[lng][MSG_WRONGFILETYPE],gradi->filename);
       create_warn_dialog(err);
       return(NULL);
@@ -1657,7 +1656,7 @@ gradient_load (gchar *filename, gchar *name)
 /*      
   if(gradient_load_options(gradient,fp))
     {
-      gchar err[256];
+      gchar err[MAXSTRLEN];
       sprintf(err,
 	      msg[lng][MSG_CORRUPTFILE],
 	      filename,
@@ -1676,7 +1675,7 @@ gradient_load (gchar *filename, gchar *name)
   return(gradi);
 }
 
-static void
+void
 fractalexplorer_rescan_file_selection_ok(GtkWidget *w,
 		   GtkFileSelection *fs,
 		   gpointer data)
@@ -1850,7 +1849,7 @@ gradient_list_load_all(GList *plist)
 }
 
 
-static GtkWidget *
+GtkWidget *
 add_objects_list ()
 {
   GtkWidget *table;
@@ -1942,7 +1941,7 @@ add_objects_list ()
 
 
 
-static GtkWidget *
+GtkWidget *
 add_gradients_list ()
 {
   GtkWidget *table;
@@ -2009,7 +2008,7 @@ add_gradients_list ()
 
 
 
-static void
+void
 fractalexplorer_rescan_ok_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
@@ -2034,7 +2033,7 @@ fractalexplorer_rescan_ok_callback (GtkWidget *w,
 }
 
 
-static void
+void
 fractalexplorer_rescan_add_entry_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
@@ -2061,7 +2060,7 @@ fractalexplorer_rescan_add_entry_callback (GtkWidget *w,
 }
 
 
-static void
+void
 fractalexplorer_rescan_list (void)
 {
   GtkWidget *vbox;
@@ -2157,7 +2156,7 @@ fractalexplorer_rescan_list (void)
 }
 
 
-static gint
+gint
 rescan_button_press(GtkWidget *widget,
 		  GdkEventButton *event,
 		  gpointer   data)
@@ -2167,7 +2166,7 @@ rescan_button_press(GtkWidget *widget,
 }
 
 
-static gint
+gint
 delete_button_press_ok(GtkWidget *widget,
 		  gpointer   data)
 {

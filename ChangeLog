@@ -1,3 +1,16 @@
+1999-09-08  Kelly Lynn Martin  <kelly@gimp.org>
+
+	* plug-ins/FractalExplorer/FractalExplorer.[ch]
+	  plug-ins/FractalExplorer/Globals.c
+	  plug-ins/FractalExplorer/Languages.[ch]
+	  plug-ins/FractalExplorer/Events.[ch]
+	  plug-ins/FractalExplorer/Callbacks.[ch]
+	  plug-ins/FractalExplorer/Dialogs.[ch]
+	  plug-ins/FractalExplorer/Makefile.am: fixed so that the code
+	wasn't one giant .c file with several included .h files
+	containing function definitions (eek!).  Done in preparation for 
+	modifying to allow a colormap larger than 256 colors.
+
 Thu Sep  9 03:45:39 MEST 1999  Sven Neumann <sven@gimp.org>
 
  	* app/airbrush.c

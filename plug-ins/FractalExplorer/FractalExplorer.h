@@ -1,3 +1,11 @@
+#ifndef __FRACTALEXPLORER_H__
+#define __FRACTALEXPLORER_H__
+
+#include "config.h"
+#include <glib.h>
+#include "gtk/gtk.h"
+#include "libgimp/gimp.h"
+
 /**********************************************************************
  Magic numbers  
  *********************************************************************/
@@ -7,6 +15,9 @@
 #define ENTRY_WIDTH  60
 #define MAX_LOAD_LINE 256
 #define GR_WIDTH 325
+
+#define NCOLORS 256
+#define MAXSTRLEN 256
 
 #define SINUS 0
 #define COSINUS 1
@@ -49,7 +60,9 @@ typedef struct {
     gint                run;
 } explorer_interface_t;
 
-typedef int         clrmap[256][3];
+typedef int         colorvalue[3];
+
+typedef colorvalue  clrmap[NCOLORS];
 
 typedef struct {
     GtkWidget          *text;
@@ -134,19 +147,17 @@ typedef struct _fractalexplorerListOptions {
 
 #define gradient_GRADIENTEDITOR 0x2
 
-static fractalexplorerOBJ *current_obj;
-static fractalexplorerOBJ *pic_obj;
-static GtkWidget *delete_dialog = NULL;
-
-
+extern fractalexplorerOBJ *current_obj;
+extern fractalexplorerOBJ *pic_obj;
+extern GtkWidget *delete_dialog;
 
 /**********************************************************************
  Declare local functions
  *********************************************************************/
 
 /* Gimp interface functions */
-static void         query(void);
-static void         run(char *name, int nparams, GParam * param, int *nreturn_vals,
+void         query(void);
+void         run(char *name, int nparams, GParam * param, int *nreturn_vals,
 			GParam ** return_vals);
 
 /* Dialog and fractal functions */
@@ -154,204 +165,148 @@ void                explorer(GDrawable * drawable);
 void                explorer_render_row(const guchar * src_row, guchar * dest_row, gint row,
 					gint row_width, gint bytes);
 void                transform(short int *, short int *, short int *, double, double, double);
-gint                explorer_dialog(void);
-void                dialog_update_preview(void);
 
 /* Functions for dialog widgets */
-void                dialog_create_value(char *title, GtkTable * table, int row, gdouble * value,
-	      int left, int right, const char *desc, scaledata * scalevalues);
-void                dialog_scale_update(GtkAdjustment * adjustment, gdouble * value);
-void                dialog_create_int_value(char *title, GtkTable * table, int row, gdouble * value,
-	      int left, int right, const char *desc, scaledata * scalevalues);
-void                dialog_scale_int_update(GtkAdjustment * adjustment, gdouble * value);
-void                dialog_entry_update(GtkWidget * widget, gdouble * value);
-void                dialog_close_callback(GtkWidget * widget, gpointer data);
-void                dialog_ok_callback(GtkWidget * widget, gpointer data);
-void                dialog_cancel_callback(GtkWidget * widget, gpointer data);
-void                dialog_step_out_callback(GtkWidget * widget, gpointer data);
-void                dialog_step_in_callback(GtkWidget * widget, gpointer data);
-void                dialog_undo_zoom_callback(GtkWidget * widget, gpointer data);
-void                dialog_redo_zoom_callback(GtkWidget * widget, gpointer data);
-void                dialog_redraw_callback(GtkWidget * widget, gpointer data);
-void                dialog_reset_callback(GtkWidget * widget, gpointer data);
-GtkWidget          *explorer_logo_dialog();
-GtkWidget          *explorer_load_dialog();
-void                explorer_toggle_update(GtkWidget * widget, gpointer data);
-void                set_tooltip(GtkTooltips * tooltips, GtkWidget * widget, const char *desc);
-void         dialog_change_scale(void);
-void         set_cmap_preview(void);
-void         make_color_map(void);
-void                create_file_selection();
-void                create_load_file_selection();
-void                explorer_load();
-void                load_button_press(GtkWidget * widget, gpointer data);
 
-/* Preview events */
-gint                preview_button_press_event(GtkWidget * widget, GdkEventButton * event);
-gint                preview_button_release_event(GtkWidget * widget, GdkEventButton * event);
-gint                preview_motion_notify_event(GtkWidget * widget, GdkEventButton * event);
-gint                preview_leave_notify_event(GtkWidget * widget, GdkEventButton * event);
-gint                preview_enter_notify_event(GtkWidget * widget, GdkEventButton * event);
-
-
-
-static gint      list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
-static gint      new_button_press(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
-static gint      fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
-static gint      delete_button_press_ok(GtkWidget *widget,gpointer   data);
-static gint      rescan_button_press(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
-static void      fractalexplorer_list_ok_callback (GtkWidget *w,  gpointer   client_data);
-static void      fractalexplorer_list_cancel_callback (GtkWidget *w, gpointer   client_data);
-static void      fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gint created);
-static GtkWidget *new_fractalexplorer_obj(gchar * name);
-static void      fractalexplorer_rescan_cancel_callback (GtkWidget *w, gpointer   client_data);
+gint      list_button_press(GtkWidget *widget,GdkEventButton *event,gpointer   data);
+gint      new_button_press(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
+gint      fractalexplorer_delete_fractalexplorer_callback(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
+gint      delete_button_press_ok(GtkWidget *widget,gpointer   data);
+gint      rescan_button_press(GtkWidget *widget,GdkEventButton *bevent,gpointer   data);
+void      fractalexplorer_list_ok_callback (GtkWidget *w,  gpointer   client_data);
+void      fractalexplorer_list_cancel_callback (GtkWidget *w, gpointer   client_data);
+void      fractalexplorer_dialog_edit_list (GtkWidget *lwidget,fractalexplorerOBJ *obj,gint created);
+GtkWidget *new_fractalexplorer_obj(gchar * name);
+void      fractalexplorer_rescan_cancel_callback (GtkWidget *w, gpointer   client_data);
 void             clear_list_items(GtkList *list);
 gint             fractalexplorer_list_pos(fractalexplorerOBJ *fractalexplorer);
 gint             fractalexplorer_list_insert (fractalexplorerOBJ *fractalexplorer);
 GtkWidget*       fractalexplorer_list_item_new_with_label_and_pixmap (fractalexplorerOBJ *obj, gchar *label, GtkWidget *pix_widget);
 GtkWidget*       fractalexplorer_new_pixmap(GtkWidget *list, char **pixdata);
-static GtkWidget *fractalexplorer_list_add(fractalexplorerOBJ *obj);
+GtkWidget *fractalexplorer_list_add(fractalexplorerOBJ *obj);
 void             list_button_update(fractalexplorerOBJ *obj);
 fractalexplorerOBJ *fractalexplorer_new(void);
 void             build_list_items(GtkWidget *list);
-/*
-static void      fractalexplorer_op_menu_popup(gint button, guint32 activate_time,fractalexplorerOBJ *obj);
-*/
+
 void             plug_in_parse_fractalexplorer_path();
 void             fractalexplorer_free(fractalexplorerOBJ * fractalexplorer);
 void             fractalexplorer_free_everything(fractalexplorerOBJ * fractalexplorer);
 void             fractalexplorer_list_free_all ();
 fractalexplorerOBJ *fractalexplorer_load (gchar *filename, gchar *name);
-static void      fractalexplorer_rescan_file_selection_ok(GtkWidget *w, GtkFileSelection *fs, gpointer data);
+void      fractalexplorer_rescan_file_selection_ok(GtkWidget *w, GtkFileSelection *fs, gpointer data);
 void             fractalexplorer_list_load_all(GList *plist);
-static GtkWidget *add_objects_list ();
-static GtkWidget *add_gradients_list ();
-static void      fractalexplorer_rescan_ok_callback (GtkWidget *w, gpointer   client_data);
-static void      fractalexplorer_rescan_add_entry_callback (GtkWidget *w, gpointer   client_data);
-static void      fractalexplorer_rescan_list (void);
-/*
-static void      fractalexplorer_op_menu_create(GtkWidget *window);
-*/
+GtkWidget *add_objects_list ();
+GtkWidget *add_gradients_list ();
+void      fractalexplorer_rescan_ok_callback (GtkWidget *w, gpointer   client_data);
+void      fractalexplorer_rescan_add_entry_callback (GtkWidget *w, gpointer   client_data);
+void      fractalexplorer_rescan_list (void);
 
 
 /**********************************************************************
   Global variables  
  *********************************************************************/
 
-double              xmin = -2,
-                    xmax = 1,
-                    ymin = -1.5,
-                    ymax = 1.5;
-double              xbild,
+extern double       xmin,
+                    xmax,
+                    ymin,
+                    ymax;
+extern double       xbild,
                     ybild,
                     xdiff,
                     ydiff;
-double              x_press = -1.0,
-                    y_press = -1.0;
-double              x_release = -1.0,
-                    y_release = -1.0;
-float               cx = -0.75;
-float               cy = -0.2;
-GDrawable          *drawable;
-gint                tile_width,
+extern double       x_press,
+                    y_press;
+extern double       x_release,
+                    y_release;
+extern float        cx;
+extern float        cy;
+extern GDrawable   *drawable;
+extern gint         tile_width,
                     tile_height;
-gint                img_width,
+extern gint         img_width,
                     img_height,
                     img_bpp;
-gint                sel_x1,
+extern gint         sel_x1,
                     sel_y1,
                     sel_x2,
                     sel_y2;
-gint                sel_width,
+extern gint         sel_width,
                     sel_height;
-gint                preview_width,
+extern gint         preview_width,
                     preview_height;
-GTile              *the_tile = NULL;
-double              cen_x,
+extern GTile       *the_tile;
+extern double       cen_x,
                     cen_y;
-double              xpos,
+extern double       xpos,
                     ypos,
-                    oldxpos = -1,
-                    oldypos = -1;
-gint                do_redsinus,
+                    oldxpos,
+                    oldypos;
+extern gint         do_redsinus,
                     do_redcosinus,
                     do_rednone;
-gint                do_greensinus,
+extern gint         do_greensinus,
                     do_greencosinus,
                     do_greennone;
-gint                do_bluesinus,
+extern gint         do_bluesinus,
                     do_bluecosinus,
                     do_bluenone;
-gint                do_redinvert,
+extern gint         do_redinvert,
                     do_greeninvert,
 		    do_blueinvert;
-gint                do_colormode1 = FALSE,
-                    do_colormode2 = FALSE;
-gint                do_type0 = FALSE,
-                    do_type1 = FALSE,
-		    do_type2 = FALSE,
-                    do_type3 = FALSE,
-                    do_type4 = FALSE,
-                    do_type5 = FALSE,
-                    do_type6 = FALSE,
-                    do_type7 = FALSE,
-                    do_type8 = FALSE,
-                    do_english = TRUE,
-                    do_french = FALSE,
-                    do_german = FALSE;
-GtkWidget          *maindlg;
-GtkWidget          *logodlg;
-GtkWidget          *loaddlg;
-GtkWidget          *cmap_preview;
-GtkWidget          *cmap_preview_long;
-GtkWidget          *cmap_preview_long2;
-GtkWidget          *delete_frame_to_freeze;
-GtkWidget          *fractalexplorer_gtk_list;
-GtkWidget          *save_menu_item;
-GtkWidget          *fractalexplorer_op_menu;
-GtkTooltips        *tips;
-GdkColor            tips_fg,
+extern gint         do_colormode1,
+                    do_colormode2;
+extern gint         do_type0,
+                    do_type1,
+		    do_type2,
+                    do_type3,
+                    do_type4,
+                    do_type5,
+                    do_type6,
+                    do_type7,
+                    do_type8,
+                    do_english,
+                    do_french,
+                    do_german;
+extern GtkWidget   *maindlg;
+extern GtkWidget   *logodlg;
+extern GtkWidget   *loaddlg;
+extern GtkWidget   *cmap_preview;
+extern GtkWidget   *cmap_preview_long;
+extern GtkWidget   *cmap_preview_long2;
+extern GtkWidget   *delete_frame_to_freeze;
+extern GtkWidget   *fractalexplorer_gtk_list;
+extern GtkWidget   *save_menu_item;
+extern GtkWidget   *fractalexplorer_op_menu;
+extern GtkTooltips *tips;
+extern GdkColor     tips_fg,
                     tips_bg;
-GdkCursor          *MyCursor;
-int                 ready_now = FALSE;
-explorer_vals_t     zooms[100];
-DialogElements     *elements = NULL;
-int                 zoomindex = 1;
-int                 zoommax = 1;
-gdouble            *gg;
-int                 line_no;
-gchar              *filename;
-clrmap              colormap;
-GList		   *fractalexplorer_path_list = NULL;
-GList		   *fractalexplorer_list = NULL;
-GList		   *gradient_list = NULL;
-gchar 		   *tpath = NULL;
-fractalexplorerOBJ *fractalexplorer_obj_for_menu;
-static GList *rescan_list = NULL;
-int 		 lng=LNG_GERMAN;
+extern GdkCursor   *MyCursor;
+extern int          ready_now;
+extern explorer_vals_t     
+                    zooms[100];
+extern DialogElements
+                    *elements;
+extern int          zoomindex;
+extern int          zoommax;
+extern gdouble     *gg;
+extern int          line_no;
+extern gchar       *filename;
+extern clrmap       colormap;
+extern GList	   *fractalexplorer_path_list;
+extern GList	   *fractalexplorer_list;
+extern GList	   *gradient_list;
+extern gchar 	   *tpath;
+extern fractalexplorerOBJ 
+                   *fractalexplorer_obj_for_menu;
+extern GList       *rescan_list;
+extern int 	    lng;
 
+extern GPlugInInfo  PLUG_IN_INFO;
 
-GPlugInInfo         PLUG_IN_INFO =
-{
-    NULL,			/* init_proc */
-    NULL,			/* quit_proc */
-    query,			/* query_proc */
-    run,			/* run_proc */
-};
+extern explorer_interface_t wint;
 
-explorer_interface_t wint =
-{
-    NULL,			/* preview */
-    NULL,			/* wimage */
-    FALSE			/* run */
-};				/* wint */
+extern explorer_vals_t wvals;
 
-static explorer_vals_t wvals =
-{
-    0, -2.0, 2.0, -1.5, 1.5, 50.0, -0.75, -0.2, 0, 128.0, 128.0, 128.0, 1, 1, 0, 0, 0, 0, 1, 0,
-};				/* wvals */
+extern explorer_vals_t standardvals;
 
-static explorer_vals_t standardvals =
-{
-    0, -2.0, 2.0, -1.5, 1.5, 50.0, -0.75, -0.2, 0, 128.0, 128.0, 128.0, 1, 1, 0, 0, 0, 0, 1, 0,
-};				/* standardvals */
+#endif
