@@ -75,8 +75,10 @@ system.
 </para>
 
 @widget: 
-@tool_tip: 
+@tooltip: 
 @help_data: 
+<!-- # Unused Parameters # -->
+@tool_tip: 
 
 
 <!-- ##### FUNCTION gimp_context_help ##### -->

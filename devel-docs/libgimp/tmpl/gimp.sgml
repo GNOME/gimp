@@ -2215,3 +2215,20 @@ gimp
 @help_data: 
 
 
+<!-- ##### FUNCTION gimp_plugin_domain_add_with_path ##### -->
+<para>
+
+</para>
+
+@domain_name: 
+@domain_path: 
+
+
+<!-- ##### FUNCTION gimp_plugin_domain_add ##### -->
+<para>
+
+</para>
+
+@domain_name: 
+
+

@@ -1438,6 +1438,16 @@ gchar *help_data
 <RETURNS>void  </RETURNS>
 gchar *help_data
 </FUNCTION>
+<FUNCTION>
+<NAME>gimp_plugin_domain_add</NAME>
+<RETURNS>void  </RETURNS>
+gchar *domain_name
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_plugin_domain_add_with_path</NAME>
+<RETURNS>void  </RETURNS>
+gchar *domain_name,gchar *domain_path
+</FUNCTION>
 <MACRO>
 <NAME>GIMP_MAJOR_VERSION</NAME>
 #define GIMP_MAJOR_VERSION				(1)
@@ -1538,7 +1548,7 @@ typedef enum
 <NAME>GimpChainButton</NAME>
 struct GimpChainButton
 {
-  GtkTable table;
+  GtkTable           table;
 
   GimpChainPosition  position;
   GtkWidget         *button;
@@ -3878,7 +3888,7 @@ GtkWidget    *widget,GimpHelpFunc  help_func,gchar        *help_data
 <FUNCTION>
 <NAME>gimp_help_set_help_data</NAME>
 <RETURNS>void  </RETURNS>
-GtkWidget    *widget,const gchar  *tool_tip,gchar        *help_data
+GtkWidget    *widget,const gchar  *tooltip,gchar        *help_data
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_context_help</NAME>

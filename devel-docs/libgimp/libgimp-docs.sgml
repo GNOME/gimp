@@ -54,6 +54,7 @@
     &libgimp-gimpenv;
     &libgimp-gimpmatrix;
     &libgimp-gimpprotocol;
+    &libgimp-gimpunit;
     &libgimp-gimpvector;
     &libgimp-gimpwire;
     &libgimp-parasite;
@@ -76,7 +77,6 @@
     &libgimp-gimphelpui;
     &libgimp-gimpmenu;
     &libgimp-gimpquerybox;
-    &libgimp-gimpunit;
     &libgimp-gimpwidgets;
   </chapter>
 

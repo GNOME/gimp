@@ -69,6 +69,61 @@ dialog-related stuff.
 <!-- ##### FUNCTION gimp_dialog_create_action_areav ##### -->
 <para>
 
+The @va_list describing the action_area #GtkButton's has the following format:
+
+<informaltable pgwide=1 frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>#gchar *label,</entry>
+<entry>The button's label.</entry>
+</row>
+
+<row>
+<entry>#GtkSignalFunc callback,</entry>
+<entry>The callback which will be connected to the button's
+"clicked" signal</entry>
+</row>
+
+<row>
+<entry>#gpointer data,</entry>
+<entry>The callback data which will be used in
+gtk_signal_connect(). If you pass #NULL, then the dialog itself will
+by passed as @data.</entry>
+</row>
+
+<row>
+<entry>#GtkObject *slot_object,</entry>
+<entry>If you pass a pointer other than #NULL, then the button's "clicked"
+signal will be connected with gtk_signal_connect_object() instead of
+gtk_signal_connect(). If you want the dialog itself to be the
+@slot_object, pass "1".</entry>
+</row>
+
+<row>
+<entry>#GtkWidget **widget_ptr,</entry>
+<entry>A pointer to store the created button in.</entry>
+</row>
+
+<row>
+<entry>#gboolean default_action,</entry>
+<entry>#TRUE if this button should grab the default dialog action with
+gtk_widget_grab_default().</entry>
+</row>
+
+<row>
+<entry>#gboolean connect_delete,</entry>
+<entry>#TRUE if the dialog's "delete_event" should be connected to
+this button's callback. Usually you will connect to the dialog's
+"Cancel" callback. Note that the callback will be called indirectly,
+so you don't habe to worry about the #GdkEvent pointer which comes
+with the "delete_event", as it will be stripped away before your
+"Cancel" callback is called.</entry>
+</row>
+
+</tbody></tgroup></informaltable>
+
 </para>
 
 @dialog: 

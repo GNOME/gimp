@@ -1,3 +1,8 @@
+2000-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimphelpui.[ch]
+	* libgimp/gimpdialog.c: added some not-yet-complete documentation.
+
 Sat Feb 26 14:56:15 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/exchange.c: implemented locking of threshold

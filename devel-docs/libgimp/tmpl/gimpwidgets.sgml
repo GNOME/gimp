@@ -25,7 +25,7 @@ The @va_list describing the #GtkMenuItem's has the following format:
 <tbody>
 
 <row>
-<entry>#gchar label,</entry>
+<entry>#gchar *label,</entry>
 <entry>The menu item's label.</entry>
 </row>
 
@@ -75,7 +75,7 @@ The @va_list describing the #GtkMenuItem's has the following format:
 <tbody>
 
 <row>
-<entry>#gchar label,</entry>
+<entry>#gchar *label,</entry>
 <entry>The menu item's label.</entry>
 </row>
 
@@ -121,7 +121,7 @@ The @va_list describing the #GtkRadioButton's has the following format:
 <tbody>
 
 <row>
-<entry>#gchar label,</entry>
+<entry>#gchar *label,</entry>
 <entry>The radio button's label.</entry>
 </row>
 
@@ -172,7 +172,7 @@ The @va_list describing the #GtkRadioButton's has the following format:
 <tbody>
 
 <row>
-<entry>#gchar label,</entry>
+<entry>#gchar *label,</entry>
 <entry>The radio button's label.</entry>
 </row>
 

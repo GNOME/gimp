@@ -46,7 +46,7 @@ void  gimp_help_connect_help_accel (GtkWidget    *widget,
 
 /*  set help data for non-window widgets  */
 void  gimp_help_set_help_data      (GtkWidget    *widget,
-				    const gchar  *tool_tip,
+				    const gchar  *tooltip,
 				    gchar        *help_data);
 
 /*  activate the context help inspector  */

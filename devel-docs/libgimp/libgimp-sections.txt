@@ -227,6 +227,8 @@ gimp_attach_new_parasite
 gimp_parasite_detach
 gimp_plugin_help_func
 gimp_help
+gimp_plugin_domain_add_with_path
+gimp_plugin_domain_add
 </SECTION>
 
 

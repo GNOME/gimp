@@ -50,12 +50,28 @@ static GtkWidget   * tips_query = NULL;
 /*  public functions  */
 /**********************/
 
+/**
+ * gimp_help_init:
+ *
+ * This function initializes GIMP's help system.
+ *
+ * Currently it only creates a #GtkTooltips object with gtk_tooltips_new()
+ * which will be used by gimp_help_set_help_data().
+ *
+ */
 void
 gimp_help_init (void)
 {
   tool_tips = gtk_tooltips_new ();
 }
 
+/**
+ * gimp_help_free:
+ *
+ * This function frees the menory used by the #GtkTooltips created by
+ * gimp_help_init().
+ *
+ */
 void
 gimp_help_free (void)
 {
@@ -63,18 +79,38 @@ gimp_help_free (void)
   gtk_object_unref   (GTK_OBJECT (tool_tips));
 }
 
+/**
+ * gimp_help_enable_tooltips:
+ *
+ * This function calls gtk_tooltips_enable().
+ *
+ */
 void
 gimp_help_enable_tooltips (void)
 {
   gtk_tooltips_enable (tool_tips);
 }
 
+/**
+ * gimp_help_disable_tooltips:
+ *
+ * This function calls gtk_tooltips_disable().
+ *
+ */
 void
 gimp_help_disable_tooltips (void)
 {
   gtk_tooltips_disable (tool_tips);
 }
 
+/**
+ * gimp_help_connect_help_accel:
+ * @widget: The widget you want to connect the help accelerator for. Will
+ *          be a #GtkWindow in most cases.
+ * @help_func: The function which will be called if the user presses "F1".
+ * @help_data: The data pointer which will be passed to @help_func.
+ *
+ */
 void
 gimp_help_connect_help_accel (GtkWidget    *widget,
 			      GimpHelpFunc  help_func,
@@ -162,6 +198,13 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
   gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
 }
 
+/**
+ * gimp_help_set_help_data:
+ * @widget: The #GtkWidget you want to set a @tooltip and/or @help_data for.
+ * @tooltip: The text for this widget's tooltip.
+ * @help_data: The @help_data for the #GtkTipsQuery tooltips inspector.
+ *
+ */
 void
 gimp_help_set_help_data (GtkWidget   *widget,
 			 const gchar *tooltip,
@@ -176,6 +219,12 @@ gimp_help_set_help_data (GtkWidget   *widget,
     gtk_object_set_data (GTK_OBJECT (widget), "gimp_help_data", help_data);
 }
 
+/**
+ * gimp_context_help:
+ *
+ * This function invokes the #GtkTipsQuery tooltips inspector.
+ * 
+ */
 void
 gimp_context_help (void)
 {
