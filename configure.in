@@ -120,7 +120,7 @@ AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
 
 ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
 
-AC_PROG_INTLTOOL
+AC_PROG_INTLTOOL(0.17)
 AM_GLIB_GNU_GETTEXT
 
 
@@ -865,11 +865,6 @@ dnl plug-ins/gdyntext/Makefile
 dnl plug-ins/helpbrowser/Makefile
 dnl plug-ins/perl/po/Makefile.in
 AC_OUTPUT([
-gimptool-1.3
-gimp-1.3.pc
-gimpui-1.3.pc
-gimp.spec
-Makefile
 build/Makefile
 build/win32/Makefile
 build/win32/dirent/Makefile
@@ -982,6 +977,11 @@ po/Makefile.in
 po-libgimp/Makefile.in
 po-plug-ins/Makefile.in
 po-script-fu/Makefile.in
+gimptool-1.3
+gimp-1.3.pc
+gimpui-1.3.pc
+gimp.spec
+Makefile
 ],[
    chmod +x gimptool-1.3
 

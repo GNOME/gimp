@@ -26,6 +26,10 @@
 
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: reorder AC_OUTPUT to make intltool happy.
+	
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
 	Handle gtk-doc just like GTK+ does it now:
 	
 	* configure.in: check for gtk-doc version 0.9. Do not build the API

@@ -6,12 +6,33 @@ tips_in_files = gimp-tips.xml.in
 
 tipsdata_DATA = $(tips_in_files:.xml.in=.xml)
 
-%.xml: %.xml.in $(GETTEXT_PACKAGE)-tips.pot $(wildcard $(srcdir)/*.po)
+%.xml: %.xml.in $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot  $(wildcard $(srcdir)/*.po)
 	$(INTLTOOL_MERGE) $(srcdir) $< $(@) -x -u -c .intltool-merge-cache
 
-$(GETTEXT_PACKAGE)-tips.pot: $(srcdir)/gimp-tips.xml.in
-	$(INTLTOOL_EXTRACT) --type=gettext/xml $<
-	$(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --pot
+GENPOT = INTLTOOL_EXTRACT=$(INTLTOOL_EXTRACT) $(INTLTOOL_UPDATE) --gettext-package $(GETTEXT_PACKAGE)-tips --pot
+
+# POTFILES is created from POTFILES.in by stripping comments, empty lines
+# and Intltool tags (enclosed in square brackets), and appending a full
+# relative path to them
+POTFILES: POTFILES.in
+	( if test 'x$(srcdir)' != 'x.'; then \
+	    posrcprefix='$(top_srcdir)/'; \
+	  else \
+	    posrcprefix="../"; \
+	  fi; \
+	  rm -f $@-t $@ \
+	    && (sed -e '/^#/d' 						\
+		    -e "s/^\[.*\] +//" 					\
+		    -e '/^[ 	]*$$/d' 				\
+		    -e "s@.*@	$$posrcprefix& \\\\@" < $(srcdir)/$@.in	\
+		| sed -e '$$s/\\$$//') > $@-t \
+	    && chmod a-w $@-t \
+	    && mv $@-t $@ )
+
+$(srcdir)/$(GETTEXT_PACKAGE)-tips.pot: $(POTFILES)
+	$(GENPOT)
+
+CLEANFILES = $(GETTEXT_PACKAGE)-tips.po
 
 oldtips = \
 	gimp_tips.cs.txt	\

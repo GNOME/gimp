@@ -1,3 +1,7 @@
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am: more voodoo.
+
 2002-03-08  Wang Jian  <lark@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation by
