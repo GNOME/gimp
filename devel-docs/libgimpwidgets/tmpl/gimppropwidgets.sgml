@@ -224,6 +224,18 @@ GimpPropWidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_prop_file_chooser_button_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@title: 
+@action: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_prop_file_entry_new ##### -->
 <para>
 

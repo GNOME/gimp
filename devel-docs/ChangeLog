@@ -1,3 +1,9 @@
+2005-03-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml
+	* libgimpwidgets/tmpl/gimpsizeentry.sgml: updated.
+
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

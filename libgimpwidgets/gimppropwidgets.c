@@ -1927,10 +1927,13 @@ static void  gimp_prop_file_chooser_button_notify   (GObject        *config,
  * @title:         the title of the browse dialog.
  * @action:        the open mode for the widget.
  *
- * Creates a #GtkFileChooserButton to set and display the specified
- * Path property.
+ * Creates a #GtkFileChooserButton to edit the specified path
+ * property.
  *
- * Return value:  A new #GimpFileButton widget.
+ * Note that #GtkFileChooserButton implements the #GtkFileChooser
+ * interface; you can use the #GtkFileChooser API with it.
+ *
+ * Return value:  A new #GtkFileChooserButton.
  *
  * Since GIMP 2.4
  */

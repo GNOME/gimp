@@ -364,6 +364,7 @@ gimp_size_entry_set_refval
 gimp_size_entry_get_unit
 gimp_size_entry_set_unit
 gimp_size_entry_set_pixel_digits
+gimp_size_entry_show_unit_menu
 gimp_size_entry_grab_focus
 gimp_size_entry_set_activates_default
 gimp_size_entry_get_help_widget
@@ -723,6 +724,7 @@ gimp_prop_memsize_entry_new
 gimp_prop_label_new
 gimp_prop_entry_new
 gimp_prop_text_buffer_new
+gimp_prop_file_chooser_button_new
 gimp_prop_file_entry_new
 gimp_prop_path_editor_new
 gimp_prop_size_entry_new

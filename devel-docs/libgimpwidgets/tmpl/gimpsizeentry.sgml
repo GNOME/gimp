@@ -244,6 +244,15 @@ gimp_coordinates_new()
 @digits: 
 
 
+<!-- ##### FUNCTION gimp_size_entry_show_unit_menu ##### -->
+<para>
+
+</para>
+
+@gse: 
+@show: 
+
+
 <!-- ##### FUNCTION gimp_size_entry_grab_focus ##### -->
 <para>
 
