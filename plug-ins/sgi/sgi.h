@@ -64,7 +64,8 @@ typedef struct
   FILE			*file;		/* Image file */
   int			mode,		/* File open mode */
 			bpp,		/* Bytes per pixel/channel */
-			comp;		/* Compression */
+			comp,		/* Compression */
+			swapBytes;	/* SwapBytes flag */
   unsigned short	xsize,		/* Width in pixels */
 			ysize,		/* Height in pixels */
 			zsize;		/* Number of channels */

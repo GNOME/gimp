@@ -38,6 +38,14 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.8  2003/04/07 11:59:33  neo
+ *   2003-04-07  Sven Neumann  <sven@gimp.org>
+ *
+ *   	* plug-ins/sgi/sgi.h
+ *   	* plug-ins/sgi/sgilib.c: applied a patch from marek@aki.cz that
+ *   	adds support for reading SGI files in little-endian format. Fixes
+ *   	bug #106610.
+ *
  *   Revision 1.7  1998/06/06 23:22:21  yosh
  *   * adding Lighting plugin
  *
@@ -72,14 +80,14 @@
  * Local functions...
  */
 
-static int	getlong(FILE *);
-static int	getshort(FILE *);
-static int	putlong(long, FILE *);
-static int	putshort(unsigned short, FILE *);
-static int	read_rle8(FILE *, unsigned short *, int);
-static int	read_rle16(FILE *, unsigned short *, int);
-static int	write_rle8(FILE *, unsigned short *, int);
-static int	write_rle16(FILE *, unsigned short *, int);
+static int	getlong(sgi_t*);
+static int	getshort(sgi_t*);
+static int	putlong(long, sgi_t*);
+static int	putshort(unsigned short, sgi_t*);
+static int	read_rle8(sgi_t*, unsigned short *, int);
+static int	read_rle16(sgi_t*, unsigned short *, int);
+static int	write_rle8(sgi_t*, unsigned short *, int);
+static int	write_rle16(sgi_t*, unsigned short *, int);
 
 
 /*
@@ -107,13 +115,13 @@ sgiClose(sgi_t *sgip)	/* I - SGI image */
     for (i = sgip->ysize * sgip->zsize, offset = sgip->table[0];
          i > 0;
          i --, offset ++)
-      if (putlong(offset[0], sgip->file) < 0)
+      if (putlong(offset[0], sgip) < 0)
         return (-1);
 
     for (i = sgip->ysize * sgip->zsize, offset = sgip->length[0];
          i > 0;
          i --, offset ++)
-      if (putlong(offset[0], sgip->file) < 0)
+      if (putlong(offset[0], sgip) < 0)
         return (-1);
   };
 
@@ -179,7 +187,7 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
         else
         {
           for (x = sgip->xsize; x > 0; x --, row ++)
-            *row = getshort(sgip->file);
+            *row = getshort(sgip);
         };
         break;
 
@@ -189,9 +197,9 @@ sgiGetRow(sgi_t          *sgip,	/* I - SGI image */
           fseek(sgip->file, offset, SEEK_SET);
 
         if (sgip->bpp == 1)
-          return (read_rle8(sgip->file, row, sgip->xsize));
+          return (read_rle8(sgip, row, sgip->xsize));
         else
-          return (read_rle16(sgip->file, row, sgip->xsize));
+          return (read_rle16(sgip, row, sgip->xsize));
         break;
   };
 
@@ -254,27 +262,34 @@ sgiOpenFile(FILE *file,	/* I - File to open */
     return (NULL);
 
   sgip->file = file;
+  sgip->swapBytes = 0;
 
   switch (mode)
   {
     case SGI_READ :
         sgip->mode = SGI_READ;
 
-        magic = getshort(sgip->file);
+        magic = getshort(sgip);
         if (magic != SGI_MAGIC)
         {
-          free(sgip);
-          return (NULL);
-        };
+	  /* try little endian format */
+	  magic = ((magic >> 8) & 0x00ff) | ((magic << 8) & 0xff00);
+	  if(magic != SGI_MAGIC) {
+            free(sgip);
+            return (NULL);
+          } else {
+	    sgip->swapBytes = 1;
+	  }
+	}
 
         sgip->comp  = getc(sgip->file);
         sgip->bpp   = getc(sgip->file);
-        getshort(sgip->file);		/* Dimensions */
-        sgip->xsize = getshort(sgip->file);
-        sgip->ysize = getshort(sgip->file);
-        sgip->zsize = getshort(sgip->file);
-        getlong(sgip->file);		/* Minimum pixel */
-        getlong(sgip->file);		/* Maximum pixel */
+        getshort(sgip);		/* Dimensions */
+        sgip->xsize = getshort(sgip);
+        sgip->ysize = getshort(sgip);
+        sgip->zsize = getshort(sgip);
+        getlong(sgip);		/* Minimum pixel */
+        getlong(sgip);		/* Maximum pixel */
 
         if (sgip->comp)
         {
@@ -291,7 +306,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
 
           for (i = 0; i < sgip->zsize; i ++)
             for (j = 0; j < sgip->ysize; j ++)
-              sgip->table[i][j] = getlong(sgip->file);
+              sgip->table[i][j] = getlong(sgip);
         };
         break;
 
@@ -308,30 +323,30 @@ sgiOpenFile(FILE *file,	/* I - File to open */
 
         sgip->mode = SGI_WRITE;
 
-        putshort(SGI_MAGIC, sgip->file);
+        putshort(SGI_MAGIC, sgip);
         putc((sgip->comp = comp) != 0, sgip->file);
         putc(sgip->bpp = bpp, sgip->file);
-        putshort(3, sgip->file);		/* Dimensions */
-        putshort(sgip->xsize = xsize, sgip->file);
-        putshort(sgip->ysize = ysize, sgip->file);
-        putshort(sgip->zsize = zsize, sgip->file);
+        putshort(3, sgip);		/* Dimensions */
+        putshort(sgip->xsize = xsize, sgip);
+        putshort(sgip->ysize = ysize, sgip);
+        putshort(sgip->zsize = zsize, sgip);
         if (bpp == 1)
         {
-          putlong(0, sgip->file);	/* Minimum pixel */
-          putlong(255, sgip->file);	/* Maximum pixel */
+          putlong(0, sgip);	/* Minimum pixel */
+          putlong(255, sgip);	/* Maximum pixel */
         }
         else
         {
-          putlong(-32768, sgip->file);	/* Minimum pixel */
-          putlong(32767, sgip->file);	/* Maximum pixel */
+          putlong(-32768, sgip);	/* Minimum pixel */
+          putlong(32767, sgip);	/* Maximum pixel */
         };
-        putlong(0, sgip->file);		/* Reserved */
+        putlong(0, sgip);		/* Reserved */
 
         memset(name, 0, sizeof(name));
         fwrite(name, sizeof(name), 1, sgip->file);
 
         for (i = 0; i < 102; i ++)
-          putlong(0, sgip->file);
+          putlong(0, sgip);
 
         switch (comp)
         {
@@ -349,7 +364,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
               else
               {
         	for (i = xsize * ysize * zsize; i > 0; i --)
-        	  putshort(0, sgip->file);
+        	  putshort(0, sgip);
               };
               break;
 
@@ -363,7 +378,7 @@ sgiOpenFile(FILE *file,	/* I - File to open */
               */
 
               for (i = 2 * ysize * zsize; i > 0; i --)
-        	putlong(0, sgip->file);
+        	putlong(0, sgip);
 
               sgip->firstrow = ftell(sgip->file);
               sgip->nextrow  = ftell(sgip->file);
@@ -428,7 +443,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
         else
         {
           for (x = sgip->xsize; x > 0; x --, row ++)
-            putshort(*row, sgip->file);
+            putshort(*row, sgip);
         };
         break;
 
@@ -465,7 +480,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
           do
           {
             sgip->arle_offset = ftell(sgip->file);
-            if ((sgip->arle_length = read_rle8(sgip->file, sgip->arle_row, sgip->xsize)) < 0)
+            if ((sgip->arle_length = read_rle8(sgip, sgip->arle_row, sgip->xsize)) < 0)
             {
               x = 0;
               break;
@@ -482,7 +497,7 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
           do
           {
             sgip->arle_offset = ftell(sgip->file);
-            if ((sgip->arle_length = read_rle16(sgip->file, sgip->arle_row, sgip->xsize)) < 0)
+            if ((sgip->arle_length = read_rle16(sgip, sgip->arle_row, sgip->xsize)) < 0)
             {
               x = 0;
               break;
@@ -514,9 +529,9 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
           fseek(sgip->file, offset, SEEK_SET);
 
         if (sgip->bpp == 1)
-          x = write_rle8(sgip->file, row, sgip->xsize);
+          x = write_rle8(sgip, row, sgip->xsize);
         else
-          x = write_rle16(sgip->file, row, sgip->xsize);
+          x = write_rle16(sgip, row, sgip->xsize);
 
         if (sgip->comp == SGI_COMP_ARLE)
         {
@@ -540,13 +555,16 @@ sgiPutRow(sgi_t          *sgip,	/* I - SGI image */
  */
 
 static int
-getlong(FILE *fp)	/* I - File to read from */
+getlong(sgi_t *sgip)	/* I - SGI image to read from */
 {
   unsigned char	b[4];
 
 
-  fread(b, 4, 1, fp);
-  return ((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]);
+  fread(b, 4, 1, sgip->file);
+  if(sgip->swapBytes)
+    return ((b[3] << 24) | (b[2] << 16) | (b[1] << 8) | b[0]);
+  else
+    return ((b[0] << 24) | (b[1] << 16) | (b[2] << 8) | b[3]);
 }
 
 
@@ -555,13 +573,16 @@ getlong(FILE *fp)	/* I - File to read from */
  */
 
 static int
-getshort(FILE *fp)	/* I - File to read from */
+getshort(sgi_t *sgip)	/* I - SGI image to read from */
 {
   unsigned char	b[2];
 
 
-  fread(b, 2, 1, fp);
-  return ((b[0] << 8) | b[1]);
+  fread(b, 2, 1, sgip->file);
+  if(sgip->swapBytes)
+    return ((b[1] << 8) | b[0]);
+  else
+    return ((b[0] << 8) | b[1]);
 }
 
 
@@ -571,15 +592,15 @@ getshort(FILE *fp)	/* I - File to read from */
 
 static int
 putlong(long n,		/* I - Long to write */
-        FILE *fp)	/* I - File to write to */
+        sgi_t *sgip)	/* I - File to write to */
 {
-  if (putc(n >> 24, fp) == EOF)
+  if (putc(n >> 24, sgip->file) == EOF)
     return (EOF);
-  if (putc(n >> 16, fp) == EOF)
+  if (putc(n >> 16, sgip->file) == EOF)
     return (EOF);
-  if (putc(n >> 8, fp) == EOF)
+  if (putc(n >> 8, sgip->file) == EOF)
     return (EOF);
-  if (putc(n, fp) == EOF)
+  if (putc(n, sgip->file) == EOF)
     return (EOF);
   else
     return (0);
@@ -592,11 +613,11 @@ putlong(long n,		/* I - Long to write */
 
 static int
 putshort(unsigned short n,	/* I - Short to write */
-         FILE           *fp)	/* I - File to write to */
+         sgi_t *sgip)		/* I - File to write to */
 {
-  if (putc(n >> 8, fp) == EOF)
+  if (putc(n >> 8, sgip->file) == EOF)
     return (EOF);
-  if (putc(n, fp) == EOF)
+  if (putc(n, sgip->file) == EOF)
     return (EOF);
   else
     return (0);
@@ -608,7 +629,7 @@ putshort(unsigned short n,	/* I - Short to write */
  */
 
 static int
-read_rle8(FILE           *fp,	/* I - File to read from */
+read_rle8(sgi_t *sgip,		/* I - SGI image to read from */
           unsigned short *row,	/* O - Data */
           int            xsize)	/* I - Width of data in pixels */
 {
@@ -622,7 +643,7 @@ read_rle8(FILE           *fp,	/* I - File to read from */
 
   while (xsize > 0)
   {
-    if ((ch = getc(fp)) == EOF)
+    if ((ch = getc(sgip->file)) == EOF)
       return (-1);
     length ++;
 
@@ -633,11 +654,11 @@ read_rle8(FILE           *fp,	/* I - File to read from */
     if (ch & 128)
     {
       for (i = 0; i < count; i ++, row ++, xsize --, length ++)
-        *row = getc(fp);
+        *row = getc(sgip->file);
     }
     else
     {
-      ch = getc(fp);
+      ch = getc(sgip->file);
       length ++;
       for (i = 0; i < count; i ++, row ++, xsize --)
         *row = ch;
@@ -653,7 +674,7 @@ read_rle8(FILE           *fp,	/* I - File to read from */
  */
 
 static int
-read_rle16(FILE           *fp,	/* I - File to read from */
+read_rle16(sgi_t *sgip,		/* I - SGI image to read from */
            unsigned short *row,	/* O - Data */
            int            xsize)/* I - Width of data in pixels */
 {
@@ -667,7 +688,7 @@ read_rle16(FILE           *fp,	/* I - File to read from */
 
   while (xsize > 0)
   {
-    if ((ch = getshort(fp)) == EOF)
+    if ((ch = getshort(sgip)) == EOF)
       return (-1);
     length ++;
 
@@ -678,11 +699,11 @@ read_rle16(FILE           *fp,	/* I - File to read from */
     if (ch & 128)
     {
       for (i = 0; i < count; i ++, row ++, xsize --, length ++)
-        *row = getshort(fp);
+        *row = getshort(sgip);
     }
     else
     {
-      ch = getshort(fp);
+      ch = getshort(sgip);
       length ++;
       for (i = 0; i < count; i ++, row ++, xsize --)
         *row = ch;
@@ -698,7 +719,7 @@ read_rle16(FILE           *fp,	/* I - File to read from */
  */
 
 static int
-write_rle8(FILE           *fp,	/* I - File to write to */
+write_rle8(sgi_t *sgip,		/* I - SGI image to write to */
            unsigned short *row,	/* I - Data */
            int            xsize)/* I - Width of data in pixels */
 {
@@ -731,13 +752,13 @@ write_rle8(FILE           *fp,	/* I - File to write to */
       i     = count > 126 ? 126 : count;
       count -= i;
 
-      if (putc(128 | i, fp) == EOF)
+      if (putc(128 | i, sgip->file) == EOF)
         return (-1);
       length ++;
 
       while (i > 0)
       {
-	if (putc(*start, fp) == EOF)
+	if (putc(*start, sgip->file) == EOF)
           return (-1);
         start ++;
         i --;
@@ -766,11 +787,11 @@ write_rle8(FILE           *fp,	/* I - File to write to */
       i     = count > 126 ? 126 : count;
       count -= i;
 
-      if (putc(i, fp) == EOF)
+      if (putc(i, sgip->file) == EOF)
         return (-1);
       length ++;
 
-      if (putc(repeat, fp) == EOF)
+      if (putc(repeat, sgip->file) == EOF)
         return (-1);
       length ++;
     };
@@ -778,7 +799,7 @@ write_rle8(FILE           *fp,	/* I - File to write to */
 
   length ++;
 
-  if (putc(0, fp) == EOF)
+  if (putc(0, sgip->file) == EOF)
     return (-1);
   else
     return (length);
@@ -790,7 +811,7 @@ write_rle8(FILE           *fp,	/* I - File to write to */
  */
 
 static int
-write_rle16(FILE           *fp,	/* I - File to write to */
+write_rle16(sgi_t *sgip,	/* I - SGI image to write to */
             unsigned short *row,/* I - Data */
             int            xsize)/* I - Width of data in pixels */
 {
@@ -823,13 +844,13 @@ write_rle16(FILE           *fp,	/* I - File to write to */
       i     = count > 126 ? 126 : count;
       count -= i;
 
-      if (putshort(128 | i, fp) == EOF)
+      if (putshort(128 | i, sgip) == EOF)
         return (-1);
       length ++;
 
       while (i > 0)
       {
-	if (putshort(*start, fp) == EOF)
+	if (putshort(*start, sgip) == EOF)
           return (-1);
         start ++;
         i --;
@@ -858,11 +879,11 @@ write_rle16(FILE           *fp,	/* I - File to write to */
       i     = count > 126 ? 126 : count;
       count -= i;
 
-      if (putshort(i, fp) == EOF)
+      if (putshort(i, sgip) == EOF)
         return (-1);
       length ++;
 
-      if (putshort(repeat, fp) == EOF)
+      if (putshort(repeat, sgip) == EOF)
         return (-1);
       length ++;
     };
@@ -870,7 +891,7 @@ write_rle16(FILE           *fp,	/* I - File to write to */
 
   length ++;
 
-  if (putshort(0, fp) == EOF)
+  if (putshort(0, sgip) == EOF)
     return (-1);
   else
     return (2 * length);
