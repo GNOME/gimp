@@ -786,6 +786,28 @@ xcf_load_layer (XcfInfo   *info,
             info->active_layer = layer;
         }
     }
+  else
+    {
+      /* check for a GDynText parasite */
+      parasite = gimp_item_parasite_find (GIMP_ITEM (layer),
+                                          gimp_text_gdyntext_parasite_name ());
+
+      if (parasite)
+        {
+          GimpText *text = gimp_text_from_gdyntext_parasite (parasite);
+
+          if (text)
+            {
+              gboolean active = (info->active_layer == layer);
+              
+              /* convert the layer to a text layer */
+              layer = gimp_text_layer_from_layer (layer, text);
+              
+              if (active)
+                info->active_layer = layer;
+            }
+        }
+    }
 
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);

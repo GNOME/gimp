@@ -1,3 +1,18 @@
+2003-06-24  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig.[ch]: added new function
+	gimp_config_serialize_to_fd() for the sake of completeness and
+	since it's a nice way to generate debugging output.
+
+	* app/text/Makefile.am
+	* app/text/gimptext-xlfd.[ch]: new files with routines to handle X
+	Logical Font Descriptions in an attempt to improve backwards
+	compatibility.
+
+	* app/text/gimptext-parasite.[ch]
+	* app/xcf/xcf-load.c: promote layers with GDynText parasite to
+	GimpTextLayer. Work in progress, we need to improve font matching.
+
 2003-06-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c

@@ -22,10 +22,12 @@
 #include "config.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 
 #include "text/text-types.h"
 
@@ -33,7 +35,20 @@
 
 #include "gimptext.h"
 #include "gimptext-parasite.h"
+#include "gimptext-xlfd.h"
 
+#include "gimp-intl.h"
+
+
+/****************************************/
+/*  The native GimpTextLayer parasite.  */
+/****************************************/
+
+const gchar *
+gimp_text_parasite_name (void)
+{
+  return "gimp-text-layer";
+}
 
 GimpParasite *
 gimp_text_to_parasite (const GimpText *text)
@@ -83,8 +98,113 @@ gimp_text_from_parasite (const GimpParasite *parasite)
   return text;
 }
 
+
+/****************************************************************/
+/*  Compatibility to plug-in GDynText 1.4.4 and later versions  */
+/*  GDynText was written by Marco Lamberto <lm@geocities.com>   */
+/****************************************************************/
+
 const gchar *
-gimp_text_parasite_name (void)
+gimp_text_gdyntext_parasite_name (void)
 {
-  return "gimp-text-layer";
+  return "plug_in_gdyntext/data";
+}
+
+enum
+{
+  TEXT	          = 0,
+  ANTIALIAS       = 1,
+  ALIGNMENT	  = 2,
+  ROTATION	  = 3,
+  LINE_SPACING	  = 4,
+  COLOR		  = 5,
+  LAYER_ALIGNMENT = 6,
+  XLFD		  = 7,
+  NUM_PARAMS 
+};
+
+GimpText *
+gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
+{
+  GimpText               *retval = NULL;
+  GimpTextJustification   justify;
+  const gchar            *str;
+  gchar                  *text = NULL;
+  gchar                  *font = NULL;
+  gchar                 **params;
+  gboolean                antialias;
+  gdouble                 spacing;
+  gdouble                 size;
+  GimpUnit                unit;
+  GimpRGB                 rgb;
+  glong                   color;
+  gint                    i;
+
+  g_return_val_if_fail (parasite != NULL, NULL);
+  g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
+                                gimp_text_gdyntext_parasite_name ()) == 0,
+                        NULL);
+
+  str = gimp_parasite_data (parasite);
+  g_return_val_if_fail (str != NULL, NULL);
+
+  if (strncmp (str, "GDT10{", 6) != 0)  /*  magic value  */
+    return NULL;
+
+  params = g_strsplit (str + 6, "}{", -1);
+
+  /*  first check that we have the required number of parameters  */
+  for (i = 0; i < NUM_PARAMS; i++)
+    if (!params[i])
+      goto cleanup;
+
+  text = g_strcompress (params[TEXT]);
+
+  if (! g_utf8_validate (text, -1, NULL))
+    {
+      g_message (_("Can not convert GDynText layer because it "
+                   "contains text that is not UTF-8 encoded."));
+      goto cleanup;
+    }
+
+  antialias = atoi (params[ANTIALIAS]) ? TRUE : FALSE;
+
+  switch (atoi (params[ALIGNMENT]))
+    {
+    default:
+    case 0:  justify = GIMP_TEXT_JUSTIFY_LEFT;   break;
+    case 1:  justify = GIMP_TEXT_JUSTIFY_CENTER; break;
+    case 2:  justify = GIMP_TEXT_JUSTIFY_RIGHT;  break;
+    }
+
+  spacing = atof (params[LINE_SPACING]);
+
+  color	= strtol (params[COLOR], NULL, 16);
+  gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
+
+  font = gimp_text_font_name_from_xlfd (params[XLFD]);
+
+  retval = g_object_new (GIMP_TYPE_TEXT,
+                         "text",         text,
+                         "antialias",    antialias,
+                         "justify",      justify,
+                         "line-spacing", spacing,
+                         "color",        &rgb,
+                         "font",         font,
+                         NULL);
+
+  if (gimp_text_font_size_from_xlfd (params[XLFD], &size, &unit))
+    {
+      g_object_set (retval,
+                    "font-size",      size,
+                    "font-size-unit", unit,
+                    NULL);
+    }
+
+ cleanup:
+  g_free (font);
+  g_free (text);
+  g_strfreev (params);
+
+  return retval;
 }

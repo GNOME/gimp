@@ -77,6 +77,9 @@ gboolean      gimp_config_serialize_to_file     (GObject      *object,
                                                  const gchar  *footer,
                                                  gpointer      data,
                                                  GError      **error);
+gboolean      gimp_config_serialize_to_fd       (GObject      *object,
+                                                 gint          fd,
+                                                 gpointer      data);
 gchar       * gimp_config_serialize_to_string   (GObject      *object,
 						 gpointer      data);
 gboolean      gimp_config_deserialize_file      (GObject      *object,

@@ -27,6 +27,8 @@ libapptext_a_sources = \
 	gimptext-compat.h	\
 	gimptext-parasite.c	\
 	gimptext-parasite.h	\
+	gimptext-xlfd.c		\
+	gimptext-xlfd.h		\
 	gimptextlayer.c		\
 	gimptextlayer.h		\
 	gimptextlayout.c	\

@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * GimpText
- * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2002-2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,16 +19,17 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_TEXT_PARASITE_H__
-#define __GIMP_TEXT_PARASITE_H__
+#ifndef __GIMP_TEXT_XLFD_H__
+#define __GIMP_TEXT_XLFD_H__
 
 
-const gchar  * gimp_text_parasite_name          (void) G_GNUC_CONST;
-GimpParasite * gimp_text_to_parasite            (const GimpText     *text);
-GimpText     * gimp_text_from_parasite          (const GimpParasite *parasite);
+/*  handle X Logical Font Descriptions for compat  */
 
-const gchar  * gimp_text_gdyntext_parasite_name (void) G_GNUC_CONST;
-GimpText     * gimp_text_from_gdyntext_parasite (const GimpParasite *parasite);
+gchar    * gimp_text_font_name_from_xlfd (const gchar *xlfd);
+gboolean   gimp_text_font_size_from_xlfd (const gchar *xlfd,
+                                          gdouble     *size,
+                                          GimpUnit    *size_unit);
 
 
-#endif /* __GIMP_TEXT_PARASITE_H__ */
+
+#endif /* __GIMP_TEXT_COMPAT_H__ */

@@ -213,6 +213,29 @@ gimp_config_serialize_to_file (GObject      *object,
   return gimp_config_writer_finish (writer, footer, error);
 }
 
+gboolean
+gimp_config_serialize_to_fd (GObject   *object,
+                             gint       fd,
+                             gpointer   data)
+{
+  GimpConfigInterface *gimp_config_iface;
+  GimpConfigWriter    *writer;
+
+  g_return_val_if_fail (G_IS_OBJECT (object), FALSE);
+  g_return_val_if_fail (fd > 0, FALSE);
+
+  gimp_config_iface = GIMP_GET_CONFIG_INTERFACE (object);
+  g_return_val_if_fail (gimp_config_iface != NULL, FALSE);
+
+  writer = gimp_config_writer_new_fd (fd);
+  if (!writer)
+    return FALSE;
+
+  gimp_config_iface->serialize (object, writer, data);
+
+  return gimp_config_writer_finish (writer, NULL, NULL);
+}
+
 /**
  * gimp_config_serialize_to_string:
  * @object: a #GObject that implements the #GimpConfigInterface.
