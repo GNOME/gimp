@@ -6,7 +6,7 @@ import g;
 
 class Ostream {
 	public virtual void putchar (char c);
-	public virtual void putstring (char* str);
-	public virtual void flush ();
-	public virtual void close ();
+	public pre-emit void putstring (char* str);
+	public pre-emit void flush ();
+	public pre-emit void close ();
 }

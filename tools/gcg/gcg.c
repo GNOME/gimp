@@ -5,6 +5,7 @@
 #include "parse.h"
 #include <unistd.h>
 #include "output.h"
+#include "marshall.h"
 
 #ifndef CPP
 #define CPP "cpp"
@@ -123,11 +124,13 @@ int main(int argc, char* argv[]){
 	if(!f)
 		g_error("Unable to open file %s: %s",
 			source_name, strerror(errno));
-	p_write(p_fmt("~~~"
+	p_write(p_fmt("~~~~~"
 		      "#include \"~\"\n",
 		      p_col("source_prot_depends", p_prot_include),
 		      p_col("source_head", NULL),
+		      p_col("source_sigtypes", p_sigdemarsh_decl),
 		      p_col("source", NULL),
+		      p_col("source_sigtypes", p_demarshaller),
 		      p_str(impl_name)),
 		f, out);
 	fclose(f);
@@ -147,7 +150,8 @@ int main(int argc, char* argv[]){
 		   out);
 	
 	open_out(p_prot_header, "prot",
-		 p_fmt("~~~",
+		 p_fmt("~~~~",
+		       p_func_include(current_module),
 		       p_col("prot_parent_depends", p_prot_include),
 		       p_col("prot_depends", p_type_include),
 		       p_col("protected", NULL)),

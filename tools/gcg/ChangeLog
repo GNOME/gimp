@@ -1,5 +1,9 @@
 1998-11-21  Lauri Alanko  <la@iki.fi>
 
+	* Added signal demarshallers. Currently they are generated for
+	each module (= compilation unit) separately, which is bound to
+	cause some code duplication..
+
 	* Added import headers and some more example stuff.
 
 	* It actually runs now, with a zillion caveats, but anyway..

@@ -128,7 +128,7 @@ void output_connector(PRoot* out, Method* m){
 			  m->ret_type.prim?p_str("return "):p_nil,
 			  p_self_name(MEMBER(m)),
 			  p_str(MEMBER(m)->name)));
-	output_var_import(out, m->ret_type.prim,
+	output_var_import(out, DEF(MEMBER(m)->my_class)->type,
 			  p_fmt("connect_~",
 				p_c_ident(MEMBER(m)->name)));
 }
@@ -168,10 +168,7 @@ void output_method(PRoot* out, Method* m){
 			   p_signal_id(m));
 		o.names=FALSE;
 		o.types=TRUE;
-		pr_put(out, "class_init_head",
-		       p_fmt("\textern void ~ (GtkObject*, GtkSignalFunc, "
-			     "gpointer, GtkArg*);\n",
-			     p_signal_demarshaller_name(sig)));
+		pr_put(out, "source_sigtypes", sig);
 		pr_put(out, "member_class_init",
 		       p_fmt("\t~ =\n"
 			     "\tgtk_signal_new(\"~\",\n"
@@ -184,8 +181,7 @@ void output_method(PRoot* out, Method* m){
 			     "~);\n"
 			     "\tgtk_object_class_add_signals(obklass,\n"
 			     "\t\t&~,\n"
-			     "\t\t1);\n"
-			     "\t}\n",
+			     "\t\t1);\n",
 			     p_signal_id(m),
 			     p_str(MEMBER(m)->name),
 			     p_str(m->kind==METH_EMIT_PRE
@@ -415,7 +411,7 @@ void output_object_init(PRoot* out, ObjectDef* o){
 
 void output_class_init(PRoot* out, ObjectDef* o){
 	pr_put(out, "source_head",
-	       p_fmt("static inline void ~ (~* klass);\n",
+	       p_fmt("static void ~ (~* klass);\n",
 		     p_varname(DEF(o)->type, p_str("class_init_real")),
 		     p_class_name(DEF(o)->type)));
 	output_func(out, NULL,
@@ -426,8 +422,8 @@ void output_class_init(PRoot* out, ObjectDef* o){
 		    NULL,
 		    p_fmt("\tGtkObjectClass* obklass = "
 			  "(GtkObjectClass*) klass;\n"
-			  "\t(void) obklass;\n"
 			  "~"
+			  "\t(void) obklass;\n"
 			  "~"
 			  "\t~ (klass);\n",
 			  p_col("class_init_head", NULL),
@@ -439,7 +435,6 @@ void output_object(PRoot* out, Def* d){
 	ObjectDef* o = (ObjectDef*)d;
 	pr_put(out, "func_depends", d->type->module);
 	pr_put(out, "func_parent_depends", o->parent->module);
-	pr_put(out, "prot_depends", d->type->module);
 	pr_put(out, "prot_parent_depends", o->parent->module);
 	pr_put(out, "source_prot_depends", d->type->module);
 	pr_put(out, "import_depends", o->parent->module);

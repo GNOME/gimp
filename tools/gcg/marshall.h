@@ -14,6 +14,10 @@ PNode* p_arg_marsh(gpointer p, gpointer d);
 PNode* p_gtktype(Type* t);
 PNode* p_signal_id(Method* s);
 PNode* p_sig_marshalling(Method* m);
+PNode* p_sigdemarsh_decl(SignalType* t);
+PNode* p_demarshaller(SignalType* t);
+
+
 
 
 #endif

@@ -114,23 +114,6 @@ void p_unref(PNode* node){
 	g_mem_chunk_free(p_node_chunk, node);
 }
 
-typedef struct{
-	FILE* f;
-	PRoot* p;
-	PNode* n;
-} PCollect;
-
-void cb_pwrite(gpointer key, gpointer value, gpointer data){
-	PCollect* c = data;
-	PNodeCreateFunc func = c->n->u.c.func;
-	(void)key;
-	if(func)
-		p_write(func(value), c->f, c->p);
-	else
-		p_write(value, c->f, c->p);
-}
-	
-
 void p_write(PNode* node, FILE* f, PRoot* r){
 	g_assert(f);
 	BE_NODE(node);
@@ -150,14 +133,17 @@ void p_write(PNode* node, FILE* f, PRoot* r){
 		break;
 	case NODE_COLLECT:
 		if(r){
-			GHashTable* h = g_datalist_id_get_data(&r->data,
-							       node->u.c.tag);
-			PCollect c;
-			c.f = f;
-			c.p = r;
-			c.n = node;
-			if(h)
-				g_hash_table_foreach(h, cb_pwrite, &c);
+			GList* l = g_datalist_id_get_data(&r->data,
+							  node->u.c.tag);
+			l = g_list_last(l);
+			
+			if(node->u.c.func)
+				for(; l; l = l->prev)
+					p_write(node->u.c.func(l->data),
+						f, r);
+			else
+				for(; l; l = l->prev)
+					p_write(l->data, f, r);
 		}
 		break;
 	}
@@ -297,13 +283,11 @@ PRoot* pr_new(void){
 }
 */
 void pr_put(PRoot* pr, const gchar* tag, gpointer datum){
-	GHashTable* h = g_datalist_get_data(&pr->data, tag);
-	if(!h){
-		h = g_hash_table_new(NULL, NULL);
-		g_datalist_set_data(&pr->data, tag, h);
-	}
+	GList* l = g_datalist_get_data(&pr->data, tag);
 
-	g_hash_table_insert(h, datum, datum);
+	if(!g_list_find(l, datum))
+		g_datalist_set_data(&pr->data, tag,
+				    g_list_prepend(l, datum));
 }
 
 	
