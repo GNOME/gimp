@@ -375,7 +375,15 @@ gimp_text_get_pango_context (GimpText *text,
     pango_context_set_language (context,
                                 pango_language_from_string (text->language));
 
-  pango_context_set_base_dir (context, text->base_dir);
+  switch (text->base_dir)
+    {
+    case GIMP_TEXT_DIRECTION_LTR:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_LTR);
+      break;
+    case GIMP_TEXT_DIRECTION_RTL:
+      pango_context_set_base_dir (context, PANGO_DIRECTION_RTL);
+      break;
+    }
 
   return context;
 }

@@ -316,6 +316,54 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   return vbox;
 }
 
+                          
+static void
+gimp_text_options_dir_changed (GimpTextEditor *editor,
+                               GimpText       *text)
+{
+  g_object_set (text,
+                "base-direction", editor->base_dir,
+                NULL);
+}
+
+static void
+gimp_text_options_notify_dir (GimpText       *text,
+                              GParamSpec     *pspec,
+                              GimpTextEditor *editor)
+{
+  GimpTextDirection  dir;
+
+  g_object_get (text,
+                "base-direction", &dir,
+                NULL);
+
+  gimp_text_editor_set_direction (editor, dir);
+}
+
+GtkWidget *
+gimp_text_options_editor_new (GimpTextOptions *options,
+                              const gchar     *title)
+{
+  GtkWidget *editor;
+
+  g_return_val_if_fail (GIMP_IS_TEXT_OPTIONS (options), NULL);
+
+  editor = gimp_text_editor_new (title, options->buffer);
+
+  gimp_text_editor_set_direction (GIMP_TEXT_EDITOR (editor),
+                                  options->text->base_dir);
+
+  g_signal_connect_object (editor, "dir_changed",
+                           G_CALLBACK (gimp_text_options_dir_changed),
+                           options->text, 0);
+  g_signal_connect_object (options->text, "notify::base-direction",
+                           G_CALLBACK (gimp_text_options_notify_dir),
+                           editor, 0);
+
+  return editor;
+}                          
+
+
 static void
 gimp_text_options_font_clicked (GtkWidget   *widget, 
                                 GimpContext *context)

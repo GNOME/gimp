@@ -52,6 +52,9 @@ style "gimp-default-style"
   GimpEditor::content_spacing      = 2
   GimpEditor::button_spacing       = 2
   GimpEditor::button_icon_size     = menu
+  GtkDialog::content_area_border   = 0
+  GtkDialog::button_spacing        = 4
+  GtkDialog::action_area_border    = 4
 }
 
 class "GtkWidget" style "gimp-default-style"
@@ -63,16 +66,6 @@ style "gimp-tiny-font-style"
 }
 
 class "*Ruler*" style "gimp-tiny-font-style"
-
-
-style "gimp-dialog-style"
-{
-  GtkDialog::content_area_border = 0
-  GtkDialog::button_spacing      = 4
-  GtkDialog::action_area_border  = 4
-}
-
-widget "*Gimp*Dialog*" style "gimp-dialog-style"
 
 
 style "gimp-hscale-style"

@@ -43,9 +43,12 @@ struct _GimpTextOptions
 };
 
 
-GType       gimp_text_options_get_type (void) G_GNUC_CONST;
+GType       gimp_text_options_get_type   (void) G_GNUC_CONST;
 
-GtkWidget * gimp_text_options_gui      (GimpToolOptions *tool_options);
+GtkWidget * gimp_text_options_gui        (GimpToolOptions *tool_options);
+
+GtkWidget * gimp_text_options_editor_new (GimpTextOptions *options,
+                                          const gchar     *title);
 
 
 #endif /* __GIMP_TEXT_OPTIONS_H__ */

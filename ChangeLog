@@ -1,3 +1,27 @@
+2003-03-31  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-text-dir-ltr-24.png
+	* themes/Default/images/stock-text-dir-rtl-24.png: placeholders
+	for new icons.
+
+	* libgimpwidgets/gimpstock.[ch]: register the new icons.
+
+	* themes/Default/gtkrc: tweak GtkDialog in "gimp-default-style".
+
+	* app/text/text-enums.[ch]
+	* app/text/gimptext.[ch]
+	* app/text/gimptextlayout.c: added new enum GimpTextDirection and
+	use it instead of PangoDirection.
+
+	* app/widgets/widgets-types.h
+	* app/widgets/gimptexteditor.[ch]: made GimpTextEditor a real widget
+	and added buttons to switch the text direction.
+
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimptexttool.c: moved creation of the text editor to the
+	text tool options, take care of GimpText::base-direction here.
+
 2003-03-31  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-list-16.png:

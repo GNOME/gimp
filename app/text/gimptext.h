@@ -44,7 +44,7 @@ struct _GimpText
   gboolean               autohint;
   gboolean               antialias;
   gchar                 *language;
-  gint                   base_dir;  /* actually a PangoDirection */
+  GimpTextDirection      base_dir;
   GimpRGB                color;
   GimpTextJustification  justify;
   gdouble                indent;

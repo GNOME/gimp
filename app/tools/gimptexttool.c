@@ -44,7 +44,6 @@
 
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimptexteditor.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -366,8 +365,8 @@ gimp_text_tool_editor (GimpTextTool *text_tool)
 
   options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
-  text_tool->editor = gimp_text_editor_new (_("GIMP Text Editor"),
-                                            options->buffer);
+  text_tool->editor = gimp_text_options_editor_new (options,
+                                                    _("GIMP Text Editor"));
 
   g_object_add_weak_pointer (G_OBJECT (text_tool->editor),
 			     (gpointer *) &text_tool->editor);

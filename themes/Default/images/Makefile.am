@@ -117,6 +117,8 @@ STOCK_BUTTON_IMAGES = \
 	stock-selection-subtract-16.png		\
 	stock-selection-to-channel-16.png	\
 	stock-selection-to-path-16.png		\
+	stock-text-dir-ltr-24.png		\
+	stock-text-dir-rtl-24.png		\
 	stock-text-layer-24.png			\
 	stock-vchain-24.png			\
 	stock-vchain-broken-24.png		\

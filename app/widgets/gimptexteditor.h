@@ -23,8 +23,39 @@
 #define __GIMP_TEXT_EDITOR_H__
 
 
-GtkWidget * gimp_text_editor_new (const gchar   *title,
-                                  GtkTextBuffer *buffer);
+#define GIMP_TYPE_TEXT_EDITOR    (gimp_text_editor_get_type ())
+#define GIMP_TEXT_EDITOR(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TEXT_EDITOR, GimpTextEditor))
+#define GIMP_IS_TEXT_EDITOR(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TEXT_EDITOR))
+
+
+typedef struct _GimpTextEditorClass  GimpTextEditorClass;
+
+struct _GimpTextEditor
+{
+  GimpDialog         parent_instance;
+
+  GimpTextDirection  base_dir;
+
+  /*<  private  >*/
+  GtkTextBuffer     *buffer;
+  GtkWidget         *group;
+  GtkWidget         *view;
+  GtkWidget         *filesel;
+};
+
+struct _GimpTextEditorClass
+{
+  GimpDialogClass   parent_class;
+
+  void (* dir_changed) (GimpTextEditor *editor);
+};
+
+
+GType        gimp_text_editor_get_type      (void) G_GNUC_CONST;
+GtkWidget  * gimp_text_editor_new           (const gchar       *title,
+                                             GtkTextBuffer     *buffer);
+void         gimp_text_editor_set_direction (GimpTextEditor    *editor,
+                                             GimpTextDirection  base_dir);
 
 
 #endif  /* __GIMP_TEXT_EDITOR_H__ */

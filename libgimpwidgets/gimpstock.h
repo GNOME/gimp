@@ -75,6 +75,9 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_LETTER_SPACING       "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING         "gimp-line-spacing"
 
+#define GIMP_STOCK_TEXT_DIR_LTR         "gimp-text-dir-ltr"
+#define GIMP_STOCK_TEXT_DIR_RTL         "gimp-text-dir-rtl"
+
 #define GIMP_STOCK_TOOL_AIRBRUSH            "gimp-tool-airbrush"
 #define GIMP_STOCK_TOOL_BEZIER_SELECT       "gimp-tool-bezier-select"
 #define GIMP_STOCK_TOOL_BLEND               "gimp-tool-blend"

@@ -141,6 +141,8 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_CHAR_PICKER,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LETTER_SPACING, N_("L_etter Spacing"), 0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEXT_DIR_LTR,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEXT_DIR_RTL,             NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -280,6 +282,8 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_CHAR_PICKER,              stock_char_picker_22              },
   { GIMP_STOCK_LETTER_SPACING,           stock_letter_spacing_22           },
   { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
+  { GIMP_STOCK_TEXT_DIR_LTR,             stock_text_dir_ltr_24             },
+  { GIMP_STOCK_TEXT_DIR_RTL,             stock_text_dir_rtl_24             },
 
   { GIMP_STOCK_IMAGES,                   stock_images_24                   },
   { GIMP_STOCK_LAYERS,                   stock_layers_24                   },

@@ -173,8 +173,8 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BASE_DIR,
                                 "base-direction",
                                  NULL,
-                                 PANGO_TYPE_DIRECTION,
-                                 PANGO_DIRECTION_LTR,
+                                 GIMP_TYPE_TEXT_DIRECTION,
+                                 GIMP_TEXT_DIRECTION_LTR,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_COLOR,
 				  "color", NULL,

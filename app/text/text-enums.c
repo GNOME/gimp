@@ -8,6 +8,25 @@
 
 /* enumerations from "./text-enums.h" */
 
+static const GEnumValue gimp_text_direction_enum_values[] =
+{
+  { GIMP_TEXT_DIRECTION_LTR, N_("From Left to Right"), "ltr" },
+  { GIMP_TEXT_DIRECTION_RTL, N_("From Right to Left"), "rtl" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_text_direction_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTextDirection", gimp_text_direction_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_text_justification_enum_values[] =
 {
   { GIMP_TEXT_JUSTIFY_LEFT, N_("Left Justified"), "left" },

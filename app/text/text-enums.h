@@ -20,6 +20,17 @@
 #define __TEXT_ENUMS_H__
 
 
+#define GIMP_TYPE_TEXT_DIRECTION (gimp_text_direction_get_type ())
+
+GType gimp_text_direction_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TEXT_DIRECTION_LTR,   /*< desc="From Left to Right"  >*/
+  GIMP_TEXT_DIRECTION_RTL    /*< desc="From Right to Left"  >*/
+} GimpTextDirection;
+
+
 #define GIMP_TYPE_TEXT_JUSTIFICATION (gimp_text_justification_get_type ())
 
 GType gimp_text_justification_get_type (void) G_GNUC_CONST;
