@@ -248,7 +248,7 @@ file_open_dialog_create (Gimp *gimp)
                               GTK_ITEM_FACTORY (item_factory)->widget);
 
     /* Preview frame */
-    open_options_frame = frame = gtk_frame_new (_("Preview"));
+    open_options_frame = frame = gtk_frame_new (_("No Selection"));
     gtk_box_pack_end (GTK_BOX (open_options), frame, TRUE, TRUE, 0);
     gtk_widget_show (frame);
 
@@ -283,7 +283,7 @@ file_open_dialog_create (Gimp *gimp)
                       G_CALLBACK (file_open_imagefile_info_changed),
                       NULL);
 
-    open_options_label = gtk_label_new (_("No Selection"));
+    open_options_label = gtk_label_new (NULL);
     gtk_box_pack_start (GTK_BOX (vbox), open_options_label, FALSE, FALSE, 0);
     gtk_widget_show (open_options_label); 
 
@@ -318,75 +318,18 @@ file_open_imagefile_info_changed (GimpImagefile *imagefile,
 
   if (! uri)
     {
-      gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection"));
-      gtk_frame_set_label (GTK_FRAME (open_options_frame), _("Preview"));
+      gtk_frame_set_label (GTK_FRAME (open_options_frame), _("No Selection"));
+      gtk_label_set_text (GTK_LABEL (open_options_label), NULL);
     }
   else
     {
-      gchar *basename;
-
-      basename = file_utils_uri_to_utf8_basename (uri);
+      gchar *basename = file_utils_uri_to_utf8_basename (uri);
 
       gtk_frame_set_label (GTK_FRAME (open_options_frame), basename);
-
       g_free (basename);
-    }
 
-  switch (imagefile->thumb_state)
-    {
-    case GIMP_IMAGEFILE_STATE_UNKNOWN:
-    case GIMP_IMAGEFILE_STATE_REMOTE:
-    case GIMP_IMAGEFILE_STATE_NOT_FOUND:
       gtk_label_set_text (GTK_LABEL (open_options_label),
-                          _("No preview available"));
-      break;
-
-    case GIMP_IMAGEFILE_STATE_EXISTS:
-      if (imagefile->image_mtime > imagefile->thumb_mtime)
-        {
-          gtk_label_set_text (GTK_LABEL (open_options_label),
-                              _("Thumbnail is out of date"));
-        }
-      else
-        {
-          GEnumClass *enum_class;
-          GEnumValue *enum_value;
-          gchar      *str;
-          gchar      *size_str;
-          gchar      *type_str;
-
-          size_str = gimp_image_new_get_memsize_string (imagefile->size);
-
-          enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
-          enum_value = g_enum_get_value (enum_class, imagefile->type);
-
-          if (enum_value)
-            {
-              type_str = gettext (enum_value->value_name);
-
-              str = g_strdup_printf ("%d x %d (%s, %s)",
-                                     imagefile->width,
-                                     imagefile->height,
-                                     size_str,
-                                     type_str);
-            }
-          else
-            {
-              str = g_strdup_printf ("%d x %d (%s)",
-                                     imagefile->width,
-                                     imagefile->height,
-                                     size_str);
-            }
-
-          g_free (size_str);
-
-          gtk_label_set_text (GTK_LABEL (open_options_label), str);
-          g_free (str);
-        }
-      break;
-
-    default:
-      break;
+                          gimp_imagefile_get_description (imagefile));
     }
 }
 

@@ -60,6 +60,9 @@ struct _GimpImagefile
 
   GimpImagefileState  thumb_state;
   time_t              thumb_mtime;
+
+  gchar              *description;
+  gboolean            static_desc;
 };
 
 struct _GimpImagefileClass
@@ -75,6 +78,7 @@ GType           gimp_imagefile_get_type         (void) G_GNUC_CONST;
 GimpImagefile * gimp_imagefile_new              (const gchar   *uri);
 void            gimp_imagefile_update           (GimpImagefile *imagefile);
 void            gimp_imagefile_create_thumbnail (GimpImagefile *imagefile);
+const gchar   * gimp_imagefile_get_description  (GimpImagefile *imagefile);
 
 
 #endif /* __GIMP_IMAGEFILE_H__ */

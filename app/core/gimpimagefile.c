@@ -86,6 +86,7 @@ static const ThumbnailSize thumb_sizes[] =
 
 static void          gimp_imagefile_class_init (GimpImagefileClass  *klass);
 static void          gimp_imagefile_init            (GimpImagefile  *imagefile);
+static void          gimp_imagefile_finalize        (GObject        *object);
 static void          gimp_imagefile_name_changed    (GimpObject     *object);
 static void          gimp_imagefile_set_info        (GimpImagefile  *imagefile,
                                                      gint            width,
@@ -153,13 +154,15 @@ gimp_imagefile_get_type (void)
 static void
 gimp_imagefile_class_init (GimpImagefileClass *klass)
 {
-  GimpObjectClass   *object_class;
+  GObjectClass      *object_class;
+  GimpObjectClass   *gimp_object_class;
   GimpViewableClass *viewable_class;
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class   = GIMP_OBJECT_CLASS (klass);
-  viewable_class = GIMP_VIEWABLE_CLASS (klass);
+  object_class      = G_OBJECT_CLASS (klass);
+  gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  viewable_class    = GIMP_VIEWABLE_CLASS (klass);
 
   gimp_imagefile_signals[INFO_CHANGED] =
     g_signal_new ("info_changed",
@@ -170,7 +173,8 @@ gimp_imagefile_class_init (GimpImagefileClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->name_changed      = gimp_imagefile_name_changed;
+  object_class->finalize          = gimp_imagefile_finalize;
+  gimp_object_class->name_changed = gimp_imagefile_name_changed;
   viewable_class->get_new_preview = gimp_imagefile_get_new_preview;
 
   g_type_class_ref (GIMP_TYPE_IMAGE_TYPE);
@@ -183,10 +187,22 @@ gimp_imagefile_init (GimpImagefile *imagefile)
   imagefile->height      = -1;
   imagefile->size        = -1;
   imagefile->type        = -1;
+  imagefile->description = NULL;
   imagefile->image_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->image_mtime = 0;
   imagefile->thumb_state = GIMP_IMAGEFILE_STATE_UNKNOWN;
   imagefile->thumb_mtime = 0;
+}
+
+static void
+gimp_imagefile_finalize (GObject *object)
+{
+  GimpImagefile *imagefile = (GimpImagefile *) object;
+
+  if (imagefile->description && ! imagefile->static_desc)
+    g_free (imagefile->description);
+  
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 GimpImagefile *
@@ -256,6 +272,13 @@ gimp_imagefile_update (GimpImagefile *imagefile)
     cleanup:
       g_free (filename);
       g_free (thumbname);
+    }
+
+  if (imagefile->description)
+    {
+      if (!imagefile->static_desc)
+        g_free (imagefile->description);
+      imagefile->description = NULL;
     }
 
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (imagefile));
@@ -510,6 +533,101 @@ gimp_imagefile_get_new_preview (GimpViewable *viewable,
     temp_buf = gimp_imagefile_read_xv_thumb (imagefile);
 
   return temp_buf;
+}
+
+const gchar *
+gimp_imagefile_get_description (GimpImagefile *imagefile)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), NULL);
+
+  if (imagefile->description)
+    return (const gchar *) imagefile->description;
+
+  switch (imagefile->thumb_state)
+    {
+    case GIMP_IMAGEFILE_STATE_UNKNOWN:
+    case GIMP_IMAGEFILE_STATE_REMOTE:
+    case GIMP_IMAGEFILE_STATE_NOT_FOUND:
+      imagefile->description = _("No preview available");
+      imagefile->static_desc = TRUE;
+      break;
+
+    case GIMP_IMAGEFILE_STATE_EXISTS:
+      if (imagefile->image_mtime > imagefile->thumb_mtime)
+        {
+          imagefile->description = _("Thumbnail is out of date");
+          imagefile->static_desc = TRUE;
+        }
+      else
+        {
+          GString    *str;
+          GEnumClass *enum_class;
+          GEnumValue *enum_value;
+
+          str = g_string_new (NULL);
+
+          if (imagefile->width > -1 && imagefile->height > -1)
+            {
+              /* image size */
+              g_string_append_printf (str, _("%d x %d"), 
+                                      imagefile->width, imagefile->height);
+            }
+
+          if (imagefile->size > -1)
+            {
+              gchar *size;
+
+              size = gimp_image_new_get_memsize_string (imagefile->size);
+
+              if (str->len)
+                g_string_append_len (str, ", ", 2);
+
+              g_string_append (str, size);
+              g_free (size);
+            }
+
+          enum_class = g_type_class_peek (GIMP_TYPE_IMAGE_TYPE);
+          enum_value = g_enum_get_value (enum_class, imagefile->type);
+
+          if (enum_value)
+            {
+              if (str->len)
+                g_string_append_len (str, ", ", 2);
+
+              g_string_append (str, gettext (enum_value->value_name));
+            }
+
+          imagefile->static_desc = FALSE;
+          imagefile->description = g_string_free (str, FALSE);
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  return (const gchar *) imagefile->description;
+}
+
+static gboolean
+gimp_imagefile_test (const gchar *filename,
+                     time_t      *mtime,
+                     off_t       *size)
+{
+  struct stat s;
+
+  if (stat (filename, &s) == 0 && (S_ISREG (s.st_mode)))
+    {
+      if (mtime)
+        *mtime = s.st_mtime;
+
+      if (size)
+        *size = s.st_size;
+
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 
@@ -895,28 +1013,3 @@ readXVThumb (const gchar  *fnam,
   return buf;
 }
 
-
-static gboolean
-gimp_imagefile_test (const gchar *filename,
-                     time_t      *mtime,
-                     off_t       *size)
-{
-  struct stat s;
-
-#if 0      
-  g_print ("gimp_image_file_test (%s)\n", filename);
-#endif 
-
-  if (stat (filename, &s) == 0 && (S_ISREG (s.st_mode)))
-    {
-      if (mtime)
-        *mtime = s.st_mtime;
-
-      if (size)
-        *size = s.st_size;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
