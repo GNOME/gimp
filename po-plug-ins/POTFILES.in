@@ -114,7 +114,6 @@ plug-ins/common/smooth_palette.c
 plug-ins/common/snoise.c
 plug-ins/common/sobel.c
 plug-ins/common/sparkle.c
-plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
 plug-ins/common/struc.c
 plug-ins/common/sunras.c
