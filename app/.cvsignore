@@ -5,4 +5,3 @@ makefile.mingw
 .libs
 gimp-2.1
 gimp-console-2.1
-app_procs_console.c

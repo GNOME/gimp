@@ -1,3 +1,8 @@
+2004-07-13  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: removed hack for gimp-console compilation.
+	automake seems to handle it correctly all by itself.
+
 2004-07-12  Michael Schumacher <schumaml@cvs.gnome.org>
 
 	* app/app_procs.c: added
