@@ -214,7 +214,7 @@ gimp_controller_wheel_get_event_name (GimpController *controller,
   if (event_id < 0 || event_id >= G_N_ELEMENTS (wheel_events))
     return NULL;
 
-  return gettext (wheel_events[event_id].name);
+  return wheel_events[event_id].name;
 }
 
 static const gchar *

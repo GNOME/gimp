@@ -1,5 +1,13 @@
 2004-06-16  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollerwheel.c
+	(gimp_controller_wheel_get_event_name): don't use gettext() here.
+
+	* modules/controller_linux_input.c: added more button events, set
+	the device name, some cleanup.
+
+2004-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plugin-defs.pl: changed dependencies for blur.
 
 	* plug-ins/common/Makefile.am: regenerated.

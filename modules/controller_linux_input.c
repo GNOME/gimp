@@ -23,6 +23,7 @@
 #include "config.h"
 
 #include <errno.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -37,6 +38,48 @@
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "libgimp/libgimp-intl.h"
+
+
+typedef struct
+{
+  __u16         code;
+  const gchar  *name;
+  const gchar  *blurb;
+} LinuxInputEvent;
+
+static const LinuxInputEvent key_events[] =
+{
+  { BTN_MISC,      "button-misc",      N_("Button Misc")      },
+  { BTN_0,         "button-0",         N_("Button 0")         },
+  { BTN_1,         "button-1",         N_("Button 1")         },
+  { BTN_2,         "button-2",         N_("Button 2")         },
+  { BTN_3,         "button-3",         N_("Button 3")         },
+  { BTN_4,         "button-4",         N_("Button 4")         },
+  { BTN_5,         "button-5",         N_("Button 5")         },
+  { BTN_6,         "button-6",         N_("Button 6")         },
+  { BTN_7,         "button-7",         N_("Button 7")         },
+  { BTN_8,         "button-8",         N_("Button 8")         },
+  { BTN_9,         "button-9",         N_("Button 9")         },
+  { BTN_MOUSE,     "button-mouse",     N_("Button Mouse")     },
+  { BTN_LEFT,      "button-left",      N_("Button Left")      },
+  { BTN_RIGHT,     "button-right",     N_("Button Right")     },
+  { BTN_MIDDLE,    "button-middle",    N_("Button Middle")    },
+  { BTN_SIDE,      "button-side",      N_("Button Side")      },
+  { BTN_EXTRA,     "button-extra",     N_("Button Extra")     },
+  { BTN_FORWARD,   "button-forward",   N_("Button Forward")   },
+  { BTN_BACK,      "button-back",      N_("Button Forward")   },
+  { BTN_WHEEL,     "button-wheel",     N_("Button Wheel")     },
+  { BTN_GEAR_DOWN, "button-gear-down", N_("Button Gear Down") },
+  { BTN_GEAR_UP,   "button-gear-up",   N_("Button Gear Up")   }
+};
+
+static const LinuxInputEvent rel_events[] =
+{
+  { REL_WHEEL,     "wheel-turn-left",  N_("Wheel Turn Left")  },
+  { REL_WHEEL,     "wheel-turn-right", N_("Wheel Turn Right") },
+  { REL_DIAL,      "dial-turn-left",   N_("Dial Turn Left")   },
+  { REL_DIAL,      "dial-turn-right",  N_("Dial Turn Right")  },
+};
 
 
 enum
@@ -70,17 +113,6 @@ struct _ControllerLinuxInputClass
 };
 
 
-typedef struct _LinuxInputEvent LinuxInputEvent;
-
-struct _LinuxInputEvent
-{
-  __u16         type;
-  __u16         code;
-  const gchar  *name;
-  const gchar  *blurb;
-};
-
-
 GType         linux_input_get_type     (GTypeModule    *module);
 static void   linux_input_class_init   (ControllerLinuxInputClass *klass);
 static void   linux_input_finalize     (GObject        *object);
@@ -93,17 +125,17 @@ static void   linux_input_get_property (GObject        *object,
                                         GValue         *value,
                                         GParamSpec     *pspec);
 
-static gint          linux_input_get_n_events    (GimpController *controller);
-static const gchar * linux_input_get_event_name  (GimpController *controller,
-                                                  gint            event_id);
-static const gchar * linux_input_get_event_blurb (GimpController *controller,
-                                                  gint            event_id);
+static gint          linux_input_get_n_events     (GimpController *controller);
+static const gchar * linux_input_get_event_name   (GimpController *controller,
+                                                   gint            event_id);
+static const gchar * linux_input_get_event_blurb  (GimpController *controller,
+                                                   gint            event_id);
 
 static gboolean      linux_input_set_device (ControllerLinuxInput *controller,
                                              const gchar          *device);
 static gboolean      linux_input_read_event (GIOChannel           *io,
                                              GIOCondition          cond,
-                                             gpointer              user_data);
+                                             gpointer              data);
 
 
 static const GimpModuleInfo linux_input_info =
@@ -116,27 +148,6 @@ static const GimpModuleInfo linux_input_info =
   "June 2004"
 };
 
-
-static const LinuxInputEvent input_events[] =
-{
-  { EV_KEY, BTN_0,      "button-0",         N_("Button 0")         },
-  { EV_KEY, BTN_1,      "button-1",         N_("Button 1")         },
-  { EV_KEY, BTN_2,      "button-2",         N_("Button 2")         },
-  { EV_KEY, BTN_3,      "button-3",         N_("Button 3")         },
-  { EV_KEY, BTN_4,      "button-4",         N_("Button 4")         },
-  { EV_KEY, BTN_5,      "button-5",         N_("Button 5")         },
-  { EV_KEY, BTN_6,      "button-6",         N_("Button 6")         },
-  { EV_KEY, BTN_7,      "button-7",         N_("Button 7")         },
-  { EV_KEY, BTN_8,      "button-8",         N_("Button 8")         },
-  { EV_KEY, BTN_9,      "button-9",         N_("Button 9")         },
-  { EV_KEY, BTN_LEFT,   "button-left",      N_("Button Left")      },
-  { EV_KEY, BTN_RIGHT,  "button-right",     N_("Button Right")     },
-  { EV_KEY, BTN_MIDDLE, "button-middle",    N_("Button Middle")    },
-  { EV_REL, REL_WHEEL,  "wheel-turn-left",  N_("Wheel Turn Left")  },
-  { EV_REL, REL_WHEEL,  "wheel-turn-right", N_("Wheel Turn Right") },
-  { EV_REL, REL_DIAL,   "dial-turn-left",   N_("Dial Turn Left")   },
-  { EV_REL, REL_DIAL,   "dial-turn-right",  N_("Dial Turn Right")  },
-};
 
 static GType                controller_type = 0;
 static GimpControllerClass *parent_class    = NULL;
@@ -260,27 +271,51 @@ linux_input_get_property (GObject    *object,
 static gint
 linux_input_get_n_events (GimpController *controller)
 {
-  return G_N_ELEMENTS (input_events);
+  return G_N_ELEMENTS (key_events) + G_N_ELEMENTS (rel_events);
 }
 
 static const gchar *
 linux_input_get_event_name (GimpController *controller,
                                       gint            event_id)
 {
-  if (event_id < 0 || event_id >= G_N_ELEMENTS (input_events))
-    return NULL;
-
-  return gettext (input_events[event_id].name);
+  if (event_id < 0)
+    {
+      return NULL;
+    }
+  else if (event_id < G_N_ELEMENTS (key_events))
+    {
+      return key_events[event_id].name;
+    }
+  else if (event_id < linux_input_get_n_events (controller))
+    {
+      return rel_events[event_id - G_N_ELEMENTS (key_events)].name;
+    }
+  else
+    {
+      return NULL;
+    }
 }
 
 static const gchar *
 linux_input_get_event_blurb (GimpController *controller,
                              gint            event_id)
 {
-  if (event_id < 0 || event_id >= G_N_ELEMENTS (input_events))
-    return NULL;
-
-  return gettext (input_events[event_id].blurb);
+  if (event_id < 0)
+    {
+      return NULL;
+    }
+  else if (event_id < G_N_ELEMENTS (key_events))
+    {
+      return gettext (key_events[event_id].blurb);
+    }
+  else if (event_id < linux_input_get_n_events (controller))
+    {
+      return gettext (rel_events[event_id - G_N_ELEMENTS (key_events)].blurb);
+    }
+  else
+    {
+      return NULL;
+    }
 }
 
 static gboolean
@@ -305,6 +340,18 @@ linux_input_set_device (ControllerLinuxInput *controller,
       fd = open (controller->device, O_RDONLY);
       if (fd >= 0)
         {
+          gchar  name[256];
+
+          name[0] = '\0';
+          if (ioctl (fd, EVIOCGNAME (sizeof (name)), name) == 0 &&
+              strlen (name) > 0                                 &&
+              g_utf8_validate (name, -1, NULL))
+            {
+              g_object_set (controller,
+                            "name", name,
+                            NULL);
+            }
+
           controller->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (controller->io, TRUE);
           g_io_channel_set_encoding (controller->io, NULL, NULL);
@@ -317,7 +364,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
         }
       else
         {
-          g_printerr ("Cannot open device '%s': %s\n",
+          g_printerr ("controller_linux_input: Cannot open device '%s': %s\n",
                       device, g_strerror (errno));
         }
     }
@@ -328,7 +375,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
 gboolean
 linux_input_read_event (GIOChannel   *io,
                         GIOCondition  cond,
-                        gpointer      user_data)
+                        gpointer      data)
 {
   struct input_event  ev;
   gint                n_bytes;
@@ -340,38 +387,44 @@ linux_input_read_event (GIOChannel   *io,
                                NULL) == G_IO_STATUS_NORMAL &&
       n_bytes == sizeof (struct input_event))
     {
-      for (i = 0; i < G_N_ELEMENTS (input_events); i++)
+      switch (ev.type)
         {
-          if (ev.type == input_events[i].type &&
-              ev.code == input_events[i].code)
-            {
-              GimpController      *controller = GIMP_CONTROLLER (user_data);
-              GimpControllerEvent  cevent;
+        case EV_KEY:
+          for (i = 0; i < G_N_ELEMENTS (key_events); i++)
+            if (ev.code == key_events[i].code)
+              {
+                GimpControllerEvent  cevent;
 
-              cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-              cevent.any.source   = controller;
-              cevent.any.event_id = i;
+                cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
+                cevent.any.source   = GIMP_CONTROLLER (data);
+                cevent.any.event_id = i;
+              }
+          break;
 
-              /* EEEEEEK */
-              if (ev.code == REL_WHEEL || ev.code == REL_DIAL)
-                {
-                  gint count;
+        case EV_REL:
+          for (i = 0; i < G_N_ELEMENTS (rel_events); i++)
+            if (ev.code == rel_events[i].code)
+              {
+                GimpController      *controller = GIMP_CONTROLLER (data);
+                GimpControllerEvent  cevent;
+                gint                 count;
 
-                  for (count = ev.value; count < 0; count++)
-                    gimp_controller_event (controller, &cevent);
+                cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
+                cevent.any.source   = controller;
+                cevent.any.event_id = G_N_ELEMENTS (key_events) + i;
 
-                  cevent.any.event_id++;
-
-                  for (count = ev.value; count > 0; count--)
-                    gimp_controller_event (controller, &cevent);
-                }
-              else
-                {
+                for (count = ev.value; count < 0; count++)
                   gimp_controller_event (controller, &cevent);
-                }
 
-              break;
-            }
+                cevent.any.event_id++;
+
+                for (count = ev.value; count > 0; count--)
+                  gimp_controller_event (controller, &cevent);
+              }
+          break;
+
+        default:
+          break;
         }
     }
 
