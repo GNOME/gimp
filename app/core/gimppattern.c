@@ -307,9 +307,9 @@ gimp_pattern_get_standard (void)
 }
 
 GimpData *
-gimp_pattern_load (const gchar  *filename,
-                   gboolean      stingy_memory_use,
-                   GError      **error)
+gimp_pattern_native_load (const gchar  *filename,
+                          gboolean      stingy_memory_use,
+                          GError      **error)
 {
   GimpPattern   *pattern = NULL;
   gint           fd;
@@ -435,6 +435,103 @@ gimp_pattern_load (const gchar  *filename,
   close (fd);
 
   return NULL;
+}
+
+GimpData *
+gimp_pattern_load (const gchar  *filename,
+                   gboolean      stingy_memory_use,
+                   GError      **error)
+{
+  GimpPattern   *pattern = NULL;
+  GdkPixbuf     *pat_buf = NULL;
+  guchar        *pat_data, *buf_data;
+  gchar         *name    = NULL;
+  gint           width, 
+                 height, 
+                 bytes, 
+                 rowstride, 
+                 i;
+  gchar         *utf8_filename;
+  gsize          filename_length;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  pat_buf = gdk_pixbuf_new_from_file (filename, error);
+
+  if (*error)
+    {
+      if ((*error)->domain == G_FILE_ERROR)
+	g_message (_("Could not open file %s: %s"), 
+                   gimp_filename_to_utf8 (filename),
+                   (*error)->message);
+      else if ((*error)->domain == GDK_PIXBUF_ERROR)
+	g_message (_("Filename %s is not a valid GdkPixbuf: %s"), 
+                   gimp_filename_to_utf8 (filename),
+                   (*error)->message);
+      
+      return NULL;
+    }
+
+
+  /*  Read in the pattern name -
+      First try to get a "comment" option, this could be set for pnm, 
+      jpeg and gif (it isn't yet)
+      Then try the tEXt option, which is set for pngs, 
+      Then fall back to filename 
+  */
+
+  utf8_filename = g_filename_to_utf8 (filename, -1, NULL, &filename_length, 
+				      error);
+  if (*error)
+    {
+      g_message (_("Problem converting filename to UTF8: %s"), 
+		 (*error)->message);
+      utf8_filename = "Unnamed";
+      g_clear_error (error);
+    }
+
+  name = g_strdup (gdk_pixbuf_get_option (pat_buf, "comment"));
+
+  if (name == NULL)
+    name = g_strdup (gdk_pixbuf_get_option (pat_buf, "tEXt"));
+
+  if (name == NULL)
+    name = g_strdup (utf8_filename);
+
+  pattern = g_object_new (GIMP_TYPE_PATTERN,
+                          "name", name,
+                          NULL);
+
+  g_free (name);
+  g_free (utf8_filename);
+
+  width     = gdk_pixbuf_get_width (pat_buf);
+  height    = gdk_pixbuf_get_height (pat_buf);
+  bytes     = gdk_pixbuf_get_n_channels (pat_buf);
+  rowstride = gdk_pixbuf_get_rowstride (pat_buf);
+
+  pattern->mask = temp_buf_new (width, height, bytes,
+				0, 0, NULL);
+  
+  pat_data = gdk_pixbuf_get_pixels (pat_buf);
+  buf_data = temp_buf_data (pattern->mask);
+
+  for (i = 0; i < height; i++)
+    {
+      memcpy(buf_data + i * width * bytes, pat_data, width * bytes);
+      pat_data += rowstride;
+    }
+
+  /* Free up loaded Pixbuf */
+  g_object_unref (pat_buf);
+  
+  /*  Swap the pattern to disk (if we're being stingy with memory) */
+  if (stingy_memory_use)
+    temp_buf_swap (pattern->mask);
+
+  return GIMP_DATA (pattern);
 }
 
 TempBuf *

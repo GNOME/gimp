@@ -1,3 +1,11 @@
+2004-06-03  Dave Neary  <bolsh@gimp.org>
+
+	* app/core/gimp.c:
+	* app/core/gimpdatafactory.c:
+	* app/core/gimppattern.[ch]: Add support for GdkPixbuf patterns, 
+	so now all of png, jpex, pnm, xbm, bmp, gif, ico, pcx, ras, tga, 
+	xpm and tiff can be used for patterns.
+
 2004-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/vectors-actions.c: added alternative actions
