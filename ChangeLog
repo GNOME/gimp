@@ -1,3 +1,12 @@
+2003-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimptoolbox-dnd.[ch]: new files containing the
+	toolbox' drop callbacks. Exports gimp_toolbox_dnd_init().
+
+	* app/widgets/gimptoolbox.c: removed the callbacks and all the
+	"core/" includes they needed and call gimp_toolbox_dnd_init().
+
 2003-06-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimptoolinfo.[ch]: added "in_toolbox"; defaults to TRUE.

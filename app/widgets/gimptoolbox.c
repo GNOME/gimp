@@ -27,22 +27,16 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpedit.h"
-#include "core/gimpimage.h"
-#include "core/gimpimage-colormap.h"
-#include "core/gimplayer.h"
-#include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
-#include "gimpdnd.h"
 #include "gimpitemfactory.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
+#include "gimptoolbox-dnd.h"
 #include "gimptoolbox-indicator-area.h"
 #include "gtkhwrapbox.h"
 
@@ -90,16 +84,6 @@ static gboolean   toolbox_tool_button_press     (GtkWidget      *widget,
 static gboolean   toolbox_check_device          (GtkWidget      *widget,
                                                  GdkEvent       *event,
                                                  Gimp           *gimp);
-
-static void       toolbox_drop_drawable         (GtkWidget      *widget,
-                                                 GimpViewable   *viewable,
-                                                 gpointer        data);
-static void       toolbox_drop_tool             (GtkWidget      *widget,
-                                                 GimpViewable   *viewable,
-                                                 gpointer        data);
-static void       toolbox_drop_buffer           (GtkWidget      *widget,
-                                                 GimpViewable   *viewable,
-                                                 gpointer        data);
 
 
 /*  local variables  */
@@ -489,25 +473,7 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 			   toolbox->wbox,
 			   0);
 
-  gimp_dnd_file_dest_add (GTK_WIDGET (toolbox), gimp_dnd_open_files, NULL);
-
-  gimp_dnd_file_dest_add (toolbox->wbox, gimp_dnd_open_files, NULL);
-
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER,
-			      toolbox_drop_drawable,
-			      context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER_MASK,
-			      toolbox_drop_drawable,
-			      context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_CHANNEL,
-			      toolbox_drop_drawable,
-			      context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_TOOL_INFO,
-			      toolbox_drop_tool,
-			      context);
-  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_BUFFER,
-			      toolbox_drop_buffer,
-			      context);
+  gimp_toolbox_dnd_init (GIMP_TOOLBOX (toolbox));
 
   gimp_toolbox_style_set (GTK_WIDGET (toolbox), GTK_WIDGET (toolbox)->style);
 
@@ -846,102 +812,4 @@ toolbox_check_device (GtkWidget *widget,
   gimp_devices_check_change (gimp, event);
 
   return FALSE;
-}
-
-static void
-toolbox_drop_drawable (GtkWidget    *widget,
-		       GimpViewable *viewable,
-		       gpointer      data)
-{
-  GimpDrawable      *drawable;
-  GimpItem          *item;
-  GimpImage         *gimage;
-  GimpImage         *new_gimage;
-  GimpLayer         *new_layer;
-  gint               width, height;
-  gint               off_x, off_y;
-  gint               bytes;
-  GimpImageBaseType  type;
-
-  drawable = GIMP_DRAWABLE (viewable);
-  item     = GIMP_ITEM (viewable);
-  gimage   = gimp_item_get_image (item);
-
-  width  = gimp_item_width  (item);
-  height = gimp_item_height (item);
-  bytes  = gimp_drawable_bytes (drawable);
-
-  type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
-
-  new_gimage = gimp_create_image (gimage->gimp,
-				  width, height,
-				  type,
-				  FALSE);
-  gimp_image_undo_disable (new_gimage);
-
-  if (type == GIMP_INDEXED) /* copy the colormap */
-    gimp_image_set_colormap (new_gimage,
-                             gimp_image_get_colormap (gimage),
-                             gimp_image_get_colormap_size (gimage),
-                             FALSE);
-
-  gimp_image_set_resolution (new_gimage,
-			     gimage->xresolution, gimage->yresolution);
-  gimp_image_set_unit (new_gimage, gimage->unit);
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
-                                                   G_TYPE_FROM_INSTANCE (drawable),
-                                                   FALSE));
-    }
-  else
-    {
-      new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (drawable),
-                                                   GIMP_TYPE_LAYER,
-                                                   TRUE));
-    }
-
-  gimp_item_set_image (GIMP_ITEM (new_layer), new_gimage);
-
-  gimp_object_set_name (GIMP_OBJECT (new_layer),
-			gimp_object_get_name (GIMP_OBJECT (drawable)));
-
-  gimp_item_offsets (GIMP_ITEM (new_layer), &off_x, &off_y);
-  gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
-
-  gimp_image_add_layer (new_gimage, new_layer, 0);
-
-  gimp_image_undo_enable (new_gimage);
-
-  gimp_create_display (gimage->gimp, new_gimage, 0x0101);
-
-  g_object_unref (new_gimage);
-}
-
-static void
-toolbox_drop_tool (GtkWidget    *widget,
-		   GimpViewable *viewable,
-		   gpointer      data)
-{
-  GimpContext *context;
-
-  context = (GimpContext *) data;
-
-  gimp_context_set_tool (context, GIMP_TOOL_INFO (viewable));
-}
-
-static void
-toolbox_drop_buffer (GtkWidget    *widget,
-		     GimpViewable *viewable,
-		     gpointer      data)
-{
-  GimpContext *context;
-
-  context = (GimpContext *) data;
-
-  if (context->gimp->busy)
-    return;
-
-  gimp_edit_paste_as_new (context->gimp, NULL, GIMP_BUFFER (viewable));
 }

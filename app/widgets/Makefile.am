@@ -149,6 +149,8 @@ libappwidgets_a_sources = \
 	gimptoolbox.h			\
 	gimptoolbox-color-area.c	\
 	gimptoolbox-color-area.h	\
+	gimptoolbox-dnd.c		\
+	gimptoolbox-dnd.h		\
 	gimptoolbox-indicator-area.c	\
 	gimptoolbox-indicator-area.h	\
 	gimpundoeditor.c		\
