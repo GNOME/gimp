@@ -18,6 +18,7 @@ SUBDIRS = \
 #	libgimptool \
 	libgimpmodule \
 	regexrepl \
+	cursors \
 	app \
 #	plug-ins \
 	modules

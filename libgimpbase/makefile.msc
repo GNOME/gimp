@@ -38,23 +38,11 @@ OBJECTS = \
 	gimputils.obj \
 	gimpwire.obj \
 
-lib_LTLIBRARIES = \
-	libgimpbase-2.0.la
-
-libgimpbase_2_0_la_LIBADD = \
-	$(GLIB_LIBS)
-
-libgimpbaseincludedir = \
-	$(includedir)/gimp-$(LT_RELEASE)/libgimpbase
-
 EXTRA_DIST = \
 	makefile.mingw \
 	makefile.mingw.in \
 	makefile.msc \
 	gimpbase.def
-
-libgimpbase_2_0_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
 
 libgimpbaseinclude_HEADERS = \
 	gimpbase.h \
@@ -82,7 +70,7 @@ $(PACKAGE).lib : $(OBJECTS)
 	lib /out:$(PACKAGE).lib $(OBJECTS)
 
 $(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
-	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
+	$(CC) $(CFLAGS) -LD -Felib$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
 $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
 	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \

@@ -102,6 +102,7 @@ gimp_OBJECTS = \
 	gimppatternselect.obj \
 	gimppixelfetcher.obj \
 	gimppixelrgn.obj \
+	gimpplugin.obj \
 	gimpproceduraldb.obj \
 	gimpregioniterator.obj \
 	gimpselection.obj \
@@ -124,11 +125,14 @@ gimp.obj : gimp.c
 gimpui_OBJECTS = \
 	gimpui.obj \
 	gimpbrushmenu.obj \
+	gimpdrawablecombobox.obj \
 	gimpfontmenu.obj \
 	gimpfontselect_pdb.obj \
 	gimpgradientmenu.obj \
 	gimpmenu.obj \
+	gimpimagecombobox.obj \
 	gimppatternmenu.obj \
+	gimppixbuf.obj \
 	gimpexport.obj \
 #	gimppatheditor.obj \
 

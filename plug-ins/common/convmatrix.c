@@ -630,7 +630,7 @@ fprint (gfloat  f,
 {
   gint i, t;
 
-  snprintf (buffer, len, "%.7f", f);
+  g_snprintf (buffer, len, "%.7f", f);
   buffer[len - 1] = '\0';
 
   for (t = 0; t < len - 1 && buffer[t] != '.'; t++);

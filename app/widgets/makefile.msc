@@ -26,12 +26,17 @@ PKG_LINK = \
 #	..\gui\appgui-$(PKG_VER).lib
 
 OBJECTS = \
+	gimpaction.obj \
+	gimpactionfactory.obj \
+	gimpactiongroup.obj \
 	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
+	gimpbrushselect.obj \
 	gimpbufferview.obj \
 	gimpcellrenderertoggle.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
+	gimpclipboard.obj \
 	gimpcolorbar.obj \
 	gimpcolordisplayeditor.obj \
 	gimpcoloreditor.obj \
@@ -39,18 +44,24 @@ OBJECTS = \
 	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
 	gimpcomponenteditor.obj \
+	gimpcontainerbox.obj \
+	gimpcontainercombobox.obj \
 	gimpcontainereditor.obj \
+	gimpcontainerentry.obj \
 	gimpcontainergridview.obj \
-	gimpcontainermenu.obj \
-	gimpcontainermenuimpl.obj \
 	gimpcontainerpopup.obj \
 	gimpcontainertreeview.obj \
 	gimpcontainertreeview-dnd.obj \
 	gimpcontainerview.obj \
 	gimpcontainerview-utils.obj \
+	gimpcontrollerinfo.obj \
+	gimpcontrollerkeyboard.obj \
+	gimpcontrollerwheel.obj \
+	gimpcontrollers.obj \
 	gimpcursor.obj \
 	gimpdasheditor.obj \
 	gimpdataeditor.obj \
+	gimpdataselect.obj \
 	gimpdatafactoryview.obj \
 	gimpdeviceinfo.obj \
 	gimpdevices.obj \
@@ -64,11 +75,17 @@ OBJECTS = \
 	gimpdocumentview.obj \
 	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
-	gimpenummenu.obj \
+	gimpenumaction.obj \
+	gimpenumcombobox.obj \
+	gimpenumstore.obj \
+	gimpenumwidgets.obj \
 	gimperrorconsole.obj \
+	gimpfgbgeditor.obj \
 	gimpfiledialog.obj \
 	gimpfontview.obj \
+	gimpfontselect.obj \
 	gimpgradienteditor.obj \
+	gimpgradientselect.obj \
 	gimpgrideditor.obj \
 	gimphelp.obj \
 	gimphistogrambox.obj \
@@ -81,10 +98,13 @@ OBJECTS = \
 	gimpitemtreeview.obj \
 	gimplayertreeview.obj \
 	gimpmenufactory.obj \
-	gimpmenuitem.obj \
 	gimpnavigationpreview.obj \
 	gimppaletteeditor.obj \
+	gimppaletteselect.obj \
 	gimppatternfactoryview.obj \
+	gimppatternselect.obj \
+	gimppdbdialog.obj \
+	gimppluginaction.obj \
 	gimppreview.obj \
 	gimppreview-popup.obj \
 	gimppreviewrenderer.obj \
@@ -97,8 +117,10 @@ OBJECTS = \
 	gimppreviewrenderervectors.obj \
 	gimppreviewrenderer-utils.obj \
 	gimppropwidgets.obj \
+	gimpselectiondata.obj \
 	gimpselectioneditor.obj \
 	gimpsessioninfo.obj \
+	gimpstringaction.obj \
 	gimpstrokeeditor.obj \
 	gimptemplateeditor.obj \
 	gimptemplateview.obj \
@@ -107,10 +129,15 @@ OBJECTS = \
 	gimptoolbox.obj \
 	gimptoolbox-dnd.obj \
 	gimptoolbox-color-area.obj \
+	gimptoolbox-image-area.obj \
 	gimptoolbox-indicator-area.obj \
 	gimptooldialog.obj \
 	gimptooloptionseditor.obj \
+	gimptoolview.obj \
+	gimpuimanager.obj \
+	gimpunitcombobox.obj \
 	gimpundoeditor.obj \
+	gimpunitstore.obj \
 	gimpvectorstreeview.obj \
 	gimpviewablebutton.obj \
 	gimpviewabledialog.obj \

@@ -29,91 +29,35 @@ PKG_LINK = \
 
 OBJECTS = \
 	about-dialog.obj \
-	brushes-menu.obj \
-	brush-select.obj \
-	buffers-commands.obj \
-	buffers-menu.obj \
-	channels-commands.obj \
-	channels-menu.obj \
-	colormap-editor-commands.obj \
-	colormap-editor-menu.obj \
 	color-history.obj \
 	color-notebook.obj \
 	convert-dialog.obj \
-	data-commands.obj \
-	debug-commands.obj \
 	dialogs.obj \
-	dialogs-commands.obj \
-	dialogs-menu.obj \
 	dialogs-constructors.obj \
-	documents-commands.obj \
-	documents-menu.obj \
-	drawable-commands.obj \
-	edit-commands.obj \
-	error-console-commands.obj \
-	error-console-menu.obj \
-	file-commands.obj \
 	file-dialog-utils.obj \
 	file-new-dialog.obj \
 	file-open-dialog.obj \
-	file-open-menu.obj \
+	file-open-location-dialog.obj \
 	file-save-dialog.obj \
-	file-save-menu.obj \
-	font-select.obj \
-	fonts-commands.obj \
-	fonts-menu.obj \
-	gradient-editor-commands.obj \
-	gradient-editor-menu.obj \
-	gradients-commands.obj \
-	gradients-menu.obj \
-	gradient-select.obj \
 	grid-dialog.obj \
 	gui.obj \
 	gui-vtable.obj \
-	help-commands.obj \
-	image-commands.obj \
-	image-menu.obj \
-	images-commands.obj \
-	images-menu.obj \
 	info-dialog.obj \
 	info-window.obj \
-	layers-commands.obj \
-	layers-menu.obj \
-	menus.obj \
 	module-browser.obj \
 	offset-dialog.obj \
-	palette-editor-commands.obj \
-	palette-editor-menu.obj \
 	palette-import-dialog.obj \
-	palettes-commands.obj \
-	palettes-menu.obj \
-	palette-select.obj \
-	patterns-menu.obj \
-	pattern-select.obj \
-	plug-in-commands.obj \
-	plug-in-menus.obj \
 	preferences-dialog.obj \
-	qmask-commands.obj \
-	qmask-menu.obj \
+	quit-dialog.obj \
 	resize-dialog.obj \
 	resolution-calibrate-dialog.obj \
-	select-commands.obj \
 	session.obj \
 	splash.obj \
 	stroke-dialog.obj \
-	templates-commands.obj \
-	templates-menu.obj \
 	themes.obj \
 	tips-dialog.obj \
 	tips-parser.obj \
-	tool-options-commands.obj \
-	tool-options-menu.obj \
-	toolbox-menu.obj \
-	tools-commands.obj \
 	user-install-dialog.obj \
-	vectors-commands.obj \
-	vectors-menu.obj \
-	view-commands.obj \
 
 
 INCLUDES = \

@@ -29,6 +29,7 @@ OBJECTS = \
 	gimp-paint.obj \
 	gimpairbrush.obj \
 	gimpairbrushoptions.obj \
+	gimpbrushcore.obj \
 	gimpclone.obj \
 	gimpcloneoptions.obj \
 	gimpconvolve.obj \
@@ -37,6 +38,9 @@ OBJECTS = \
 	gimpdodgeburnoptions.obj \
 	gimperaser.obj \
 	gimperaseroptions.obj \
+	gimpink.obj \
+	gimpink-blob.obj \
+	gimpinkoptions.obj \
 	gimppaintbrush.obj \
 	gimppaintcore.obj \
 	gimppaintcore-stroke.obj \

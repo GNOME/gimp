@@ -43,11 +43,16 @@ OBJECTS = \
 	gimpcolorselection.obj \
 	gimpcolordisplaystack.obj \
 	gimpcolorselector.obj \
+	gimpcontroller.obj \
 	gimpdialog.obj \
 	gimpfileentry.obj \
+	gimpframe.obj \
 	gimphelpui.obj \
+	gimpintcombobox.obj \
+	gimpintstore.obj \
 	gimpmemsizeentry.obj \
 	gimpoffsetarea.obj \
+	gimpoldwidgets.obj \
 	gimppatheditor.obj \
 	gimppickbutton.obj \
 	gimppixmap.obj \

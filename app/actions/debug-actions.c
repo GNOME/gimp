@@ -29,6 +29,7 @@
 #include "debug-actions.h"
 #include "debug-commands.h"
 
+#ifdef ENABLE_DEBUG_MENU
 
 static GimpActionEntry debug_actions[] =
 {
@@ -50,13 +51,16 @@ static GimpActionEntry debug_actions[] =
     NULL }
 };
 
+#endif
 
 void
 debug_actions_setup (GimpActionGroup *group)
 {
+#ifdef ENABLE_DEBUG_MENU
   gimp_action_group_add_actions (group,
                                  debug_actions,
                                  G_N_ELEMENTS (debug_actions));
+#endif
 }
 
 void

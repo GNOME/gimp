@@ -55,13 +55,11 @@ OBJECTS = \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
 	gimphistogramoptions.obj \
-#	gimphistogramtool.obj \
 	gimphuesaturationtool.obj \
 	gimpimagemapoptions.obj \
 	gimpimagemaptool.obj \
-	gimpinkoptions.obj \
+	gimpinkoptions-gui.obj \
 	gimpinktool.obj \
-	gimpinktool-blob.obj \
 	gimpiscissorstool.obj \
 	gimplevelstool.obj \
 	gimpmagnifyoptions.obj \

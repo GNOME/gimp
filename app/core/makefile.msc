@@ -44,12 +44,12 @@ OBJECTS = \
 	gimpchannel.obj \
 	gimpchannel-combine.obj \
 	gimpchannel-select.obj \
+	gimpcoords.obj \
 	gimpcontainer.obj \
 	gimpcontainer-filter.obj \
 	gimpcontext.obj \
 	gimpdata.obj \
 	gimpdatafactory.obj \
-	gimpdatalist.obj \
 	gimp-documents.obj \
 	gimpdocumentlist.obj \
 	gimpdrawable.obj \
@@ -64,7 +64,6 @@ OBJECTS = \
 	gimpdrawable-preview.obj \
 	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
-#	gimpdrawable-transform-utils.obj \
 	gimpenvirontable.obj \
 	gimpgradient.obj \
 	gimpgrid.obj \
@@ -80,8 +79,6 @@ OBJECTS = \
 	gimpimage-flip.obj \
 	gimpimage-grid.obj \
 	gimpimage-guides.obj \
-#	gimpimage-mask.obj \
-#	gimpimage-mask-select.obj \
 	gimpimage-merge.obj \
 	gimpimage-new.obj \
 	gimpimage-pick-color.obj \
@@ -94,7 +91,6 @@ OBJECTS = \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimage-undo-push.obj \
-	gimpimage-unit.obj \
 	gimpimagefile.obj \
 	gimpitem.obj \
 	gimpitem-linked.obj \

@@ -15,7 +15,8 @@ includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
 
 SUBDIRS = composite paint-funcs base config xcf core file text \
-	display paint vectors pdb plug-in tools widgets gui
+	display paint vectors pdb plug-in tools widgets gui \
+	actions menus
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -28,8 +29,10 @@ sub-one:
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
 PKG_LINK = \
+	actions/appactions.lib \
 	config/appconfig.lib \
 	composite/appcomposite.lib \
+	menus/appmenus.lib \
 	paint/apppaint.lib \
 	paint-funcs/apppaint-funcs.lib \
 	plug-in/appplug-in.lib \
@@ -75,6 +78,10 @@ INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/intl \
 	$(GTK2_CFLAGS) \
+!IFNDEF PANGO_WIN32_EXTENDED
+	$(FONTCONFIG_CFLAGS) \
+	$(FREETYPE2_CFLAGS) \
+!ENDIF
 	-I$(includedir)
 
 regex_sources = \

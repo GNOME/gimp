@@ -1,3 +1,23 @@
+2004-07-11  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc : updated
+	  app/actions/makefile.msc app/menus/makefile.msc : (new files)
+	  app/actions/Makefile.msc app/menus/Makefile.am : added to EXTRA_DIST
+
+	* libgimpbase/gimputils.c libgimpwidgets/gimpmemsizeentry.c
+	  app/widgets/gimppropwidgets.c : bumped compiler version check, 
+	msvc6 still can't cast from unsigned __int64 to double
+
+	* app/actions/debug-actions.c : only use debug_*_callback
+	and thus debug_action if ENABLE_DEBUG_MENU
+
+	* app/core/gimpalette-import.c : added gimpwin32-io.h
+
+	* plug-ins/common/convmatrix.c : s/snprintf/g_snprintf/
+
+	* plug-ins/common/screenshot.c : make it compile with msvc, 
+	but still no win32 specific implementation ...
+
 2004-07-11  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/gfig/gfig-dobject.h: fix commit error that

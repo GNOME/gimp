@@ -148,7 +148,7 @@ gimp_memsize_entry_unit_callback (GtkWidget        *widget,
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) &shift);
 
-#if _MSC_VER < 1200
+#if _MSC_VER < 1300
 #  define CAST (gint64)
 #else
 #  define CAST
@@ -188,7 +188,7 @@ gimp_memsize_entry_new (guint64  value,
   GimpMemsizeEntry *entry;
   guint             shift;
 
-#if _MSC_VER < 1200
+#if _MSC_VER < 1300
 #  define CAST (gint64)
 #else
 #  define CAST
@@ -278,7 +278,7 @@ gimp_memsize_entry_set_value (GimpMemsizeEntry *entry,
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (entry->menu), shift);
     }
 
-#if _MSC_VER < 1200
+#if _MSC_VER < 1300
 #  define CAST (gint64)
 #else
 #  define CAST

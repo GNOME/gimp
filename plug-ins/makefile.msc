@@ -32,17 +32,17 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 # List plug-ins. We must use several lists to work around nmake's limits
 
 # The COMMON* ones are in the common subdirectory
-COMMON1 = AlienMap AlienMap2 ccanalyze CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
-COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
-COMMON3 = gauss_iir gauss_rle gbr gee gee_zoom gicon gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar postscript psd psd_save psp randomize ripple rotate
-COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
-COMMON6 = warp waves whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
+COMMON1 = AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch checkerboard color_enhance colorify colortoalpha compose convmatrix csource cubism curve_bend
+COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace edge emboss engrave exchange film flarefx fractaltrace
+COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
+COMMON4 = mapcolor max_rgb mblur mosaic newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar postscript psd psd_save psp randomize ripple rotate
+COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff tile tileit tiler uniteditor unsharp video vinvert vpropagate 
+COMMON6 = warp waves webbrowser whirlpinch winclipboard wind winprint wiredebug xbm xwd zealouscrop
 
 NOTNOW = wmf 
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain webbrowser winsnap xjt
+SEPARATE = FractalExplorer Lighting MapObject bmp dbbrowser faxg3 fits flame fp gfig gflare gfli gimpressionist helpbrowser ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi twain winicon winsnap xjt
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -227,14 +227,6 @@ OBJECTS = \
 	rect.obj
 !ENDIF
 
-!IFDEF EXTRA_fp
-OBJECTS = \
-	fp.obj \
-	fp_gdk.obj \
-	fp_gtk.obj \
-	fp_misc.obj
-!ENDIF
-
 !IFDEF EXTRA_gfli
 OBJECTS = \
 	fli.obj \
@@ -282,6 +274,7 @@ OBJECTS = \
 	gfig-arc.obj \
 	gfig-bezier.obj \
 	gfig-circle.obj \
+	gfig-dialog.obj \
 	gfig-dobject.obj \
 	gfig-ellipse.obj \
 	gfig-grid.obj \
@@ -290,6 +283,7 @@ OBJECTS = \
 	gfig-preview.obj \
 	gfig-spiral.obj \
 	gfig-star.obj \
+	gfig-style.obj \
 	gfig-stock.obj
 !ENDIF
 
@@ -478,7 +472,7 @@ OBJECTS = \
 gimpressionist.c: logo-pixbuf.h
 
 logo-pixbuf.h: logo.png
-	gdk-pixbuf-csource --raw --name=logo_data logo.png > $(@F)
+	gdk-pixbuf-csource --rle --name=logo_data logo.png > $(@F)
 
 OBJECTS = \
 	brush.obj \
@@ -503,10 +497,10 @@ OBJECTS = \
 !IFDEF EXTRA_helpbrowser
 OBJECTS = \
 	helpbrowser.obj	\
-	domain.obj	\
-	dialog.obj	\
+	browser-win32.obj	\
 	queue.obj		\
 	uri.obj
+EXTRALIBS = user32.lib shell32.lib
 !ENDIF
 
 !IFDEF EXTRA_guash
@@ -565,6 +559,14 @@ EXTRALIBS = user32.lib gdi32.lib comdlg32.lib
 
 !IFDEF EXTRA_winclipboard
 EXTRALIBS = user32.lib
+!ENDIF
+
+!IFDEF EXTRA_winicon
+OBJECTS = \
+	icodialog.obj \
+	icoload.obj \
+	icosave.obj \
+	main.obj
 !ENDIF
 
 !IFDEF EXTRA_winsnap

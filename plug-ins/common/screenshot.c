@@ -438,7 +438,11 @@ select_window (GdkScreen *screen)
   /* note to self: take a look at the winsnap plug-in for example
      code */
 
+#ifdef __GNUC__
 #warning Win32 screenshot window chooser not implemented yet
+#else
+#pragma message "Win32 screenshot window chooser not implemented yet"
+#endif
   return 0;
 #else /* GDK_WINDOWING_WIN32 */
 #warning screenshot window chooser not implemented yet for this GDK backend

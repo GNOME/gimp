@@ -49,6 +49,7 @@ OBJECTS = \
 	fonts_cmds.obj \
 	font_select_cmds.obj \
 	gimprc_cmds.obj \
+	gradient_edit_cmds.obj \
 	gradients_cmds.obj \
 	guides_cmds.obj \
 	help_cmds.obj \
@@ -75,7 +76,7 @@ INCLUDES = \
 	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK2_CFLAGS) \
+	$(GLIB_CFLAGS) $(GDK_PIXBUF_CFLAGS) \
 	-I$(includedir)
 
 all : \

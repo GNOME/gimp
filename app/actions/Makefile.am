@@ -141,7 +141,8 @@ libappactions_a_SOURCES = \
 	view-commands.h
 
 
-EXTRA_DIST =
+EXTRA_DIST = \
+	makefile.msc
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Actions\"	\
