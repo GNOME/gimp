@@ -144,6 +144,7 @@ app/dialogs/resize-dialog.c
 app/dialogs/resolution-calibrate-dialog.c
 app/dialogs/scale-dialog.c
 app/dialogs/stroke-dialog.c
+app/dialogs/template-options-dialog.c
 app/dialogs/tips-dialog.c
 app/dialogs/tips-parser.c
 app/dialogs/user-install-dialog.c
