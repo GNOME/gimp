@@ -22,18 +22,16 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
-#include <glib.h>
-
 #include <ctype.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/stat.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <glib.h>
+#include <glib/gstdio.h>
 
 #include "gimpenv.h"
 #include "gimpversion.h"

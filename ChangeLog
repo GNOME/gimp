@@ -5,6 +5,15 @@
 	* libgimpconfig/gimpconfigwriter.c
 	* libgimpconfig/gimpscanner.c
 	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumbnail.c: include gstdio.h.
+
+2005-02-07  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpdatafiles.c
+	* libgimpbase/gimpenv.c
+	* libgimpconfig/gimpconfigwriter.c
+	* libgimpconfig/gimpscanner.c
+	* libgimpthumb/gimpthumb-utils.c
 	* libgimpthumb/gimpthumbnail.c: use gstdio wrappers.
 	Unfortunately this causes compiler warnings, see bug #166512.
 

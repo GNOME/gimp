@@ -26,13 +26,15 @@
 #include <string.h>
 #include <errno.h>
 #include <fcntl.h>
-#include <stdio.h>
+
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
 #include <sys/types.h>
 
 #include <glib-object.h>
+#include <glib/gstdio.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
