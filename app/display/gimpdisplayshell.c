@@ -79,6 +79,19 @@ gdisplay_delete (GtkWidget *widget,
   return TRUE;
 }
 
+static gboolean
+gdisplay_get_accel_context (gpointer data)
+{
+  GDisplay *gdisp;
+
+  gdisp = (GDisplay *) data;
+
+  if (gdisp)
+    return gdisp->gimage;
+
+  return NULL;
+}
+
 void
 create_display_shell (GDisplay *gdisp,
 		      gint      width,
@@ -185,8 +198,10 @@ create_display_shell (GDisplay *gdisp,
   gdisp->ifactory = menus_get_image_factory ();
 
   /*  The accelerator table for images  */
-  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell),
-			      gdisp->ifactory->accel_group);
+  gimp_window_add_accel_group (GTK_WINDOW (gdisp->shell),
+			       gdisp->ifactory,
+			       gdisplay_get_accel_context,
+			       gdisp);
 
   /*  connect the "F1" help key  */
   gimp_help_connect_help_accel (gdisp->shell,

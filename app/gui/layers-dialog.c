@@ -1501,16 +1501,17 @@ layer_list_events (GtkWidget *widget,
 /*  layers dialog callbacks  */
 /*****************************/
 
-static gboolean
-layers_dialog_button_press (GtkWidget    *widget,
-			    GdkEvent     *event,
-			    LayersDialog *layers_dialog)
+static gpointer
+layers_dialog_get_accel_context (gpointer data)
 {
-  gtk_object_set_data (GTK_OBJECT (layers_dialog->ifactory),
-		       "gimp-accel-context",
-		       layers_dialog->gimage);
+  LayersDialog *layers_dialog;
 
-  return FALSE;
+  layers_dialog = (LayersDialog *) data;
+
+  if (layers_dialog)
+    return layers_dialog->gimage;
+
+  return NULL;
 }
 
 static void
@@ -1520,12 +1521,10 @@ layers_dialog_map_callback (GtkWidget *widget,
   if (! layersD)
     return;
 
-  gtk_signal_connect (GTK_OBJECT (lc_dialog->shell), "key_press_event",
-		      GTK_SIGNAL_FUNC (layers_dialog_button_press),
-		      layersD);
-
-  gtk_window_add_accel_group (GTK_WINDOW (lc_dialog->shell),
-			      layersD->ifactory->accel_group);
+  gimp_window_add_accel_group (GTK_WINDOW (lc_dialog->shell),
+			       layersD->ifactory,
+			       layers_dialog_get_accel_context,
+			       layersD);
 }
 
 static void
@@ -1535,12 +1534,8 @@ layers_dialog_unmap_callback (GtkWidget *widget,
   if (! layersD)
     return;
 
-  gtk_signal_disconnect_by_func (GTK_OBJECT (lc_dialog->shell),
-				 GTK_SIGNAL_FUNC (layers_dialog_button_press),
-				 layersD);
-
-  gtk_window_remove_accel_group (GTK_WINDOW (lc_dialog->shell),
-				 layersD->ifactory->accel_group);
+  gimp_window_remove_accel_group (GTK_WINDOW (lc_dialog->shell),
+				  layersD->ifactory);
 }
 
 /***************************/

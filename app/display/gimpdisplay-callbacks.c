@@ -151,10 +151,6 @@ gdisplay_shell_events (GtkWidget *widget,
   switch (event->type)
     {
     case GDK_KEY_PRESS:
-      gtk_object_set_data (GTK_OBJECT (gdisp->ifactory), "gimp-accel-context",
-			   gdisp->gimage);
-      /* fallthrough */
-
     case GDK_BUTTON_PRESS:
       /*  Setting the context's display automatically sets the image, too  */
       gimp_context_set_display (gimp_context_get_user (), gdisp);

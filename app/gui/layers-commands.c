@@ -64,13 +64,8 @@ layers_get_callback_context (GtkWidget *widget)
   popup_gimage = (GimpImage *) gtk_item_factory_popup_data_from_widget (widget);
 
   if (ifactory)
-    {
-      accel_gimage = (GimpImage *) gtk_object_get_data (GTK_OBJECT (ifactory),
-							"gimp-accel-context");
-
-      if (accel_gimage)
-	gtk_object_set_data (GTK_OBJECT (ifactory), "gimp-accel-context", NULL);
-    }
+    accel_gimage = (GimpImage *) gtk_object_get_data (GTK_OBJECT (ifactory),
+						      "gimp-accel-context");
 
   if (popup_gimage)
     return popup_gimage;

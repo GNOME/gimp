@@ -23,17 +23,25 @@
 #define __GIMP_UI_H__
 
 
-/*  a simple message box  */
+void  gimp_message_box   (gchar        *message,
+			  GtkCallback   callback,
+			  gpointer      data);
 
-void gimp_message_box   (gchar        *message,
-			 GtkCallback   callback,
-			 gpointer      data);
+void  gimp_dialog_hide   (GtkWidget    *dialog);
 
-void gimp_dialog_hide   (GtkWidget    *dialog);
+void  gimp_menu_position (GtkMenu      *menu,
+			  gint         *x,
+			  gint         *y);
 
-void gimp_menu_position (GtkMenu      *menu,
-			 gint         *x,
-			 gint         *y);
+
+typedef gpointer (* GimpGetAccelContextFunc) (gpointer data);
+
+void  gimp_window_add_accel_group    (GtkWindow               *window,
+				      GtkItemFactory          *item_factory,
+				      GimpGetAccelContextFunc  get_context_func,
+				      gpointer                 get_context_data);
+void  gimp_window_remove_accel_group (GtkWindow               *window,
+				      GtkItemFactory          *item_factory);
 
 
 #endif /* __GIMP_UI_H__ */

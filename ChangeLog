@@ -1,5 +1,18 @@
 2001-04-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpui.[ch]: new functions gimp_window_add_accel_group() and
+	gimp_window_remove_accel_group() which do the ugly accel context
+	hack described below.
+
+	* app/interface.c
+	* app/gui/layers-dialog.c: use the new functions.
+
+	* app/disp_callbacks.c
+	* app/gui/layers-commands.c: removed stuff which is now done
+	automatically.
+
+2001-04-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/layers_dialogP.h: removed.
 
