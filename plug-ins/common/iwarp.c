@@ -638,10 +638,13 @@ iwarp_supersample (gint    sxl,
 	  iwarp_getsample (srow_old[row-sxl], srow_old[row-sxl+1],
 			   srow[row-sxl], srow[row-sxl+1],
 			   row, col, color, &cc, 0, 1.0);
+	  dest = dest_data + (col - syl) * stride + (row - sxl) * image_bpp;
+#if 0
 	  if (layer_alpha)
-	    dest = dest_data + (col-syl) * (stride) + (row-sxl) * image_bpp;
+	    dest = dest_data + (col - syl) * stride + (row - sxl) * image_bpp;
 	  else 
-	    dest = dest_data + (col-syl) * stride + (row-sxl) * image_bpp;
+	    dest = dest_data + (col - syl) * stride + (row - sxl) * image_bpp;
+#endif
 	  for (i = 0; i < image_bpp; i++)
 	    *dest++ = color[i] / cc;
 	  (*progress)++;
@@ -703,12 +706,19 @@ iwarp_frame (void)
 				       color);
 		      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
+
+		      if( !layer_alpha )
+		       *dest++ = 255;
+		      
 		    }
 		  else
 		    {
 		      iwarp_get_pixel (col, row, color);
 		      for (i = 0; i < image_bpp; i++)
 			*dest++ = color[i];
+
+		      if( !layer_alpha )
+		        *dest++ = 255;
 		    }
 		}
 	      dest_row += dest_rgn.rowstride;

@@ -1,3 +1,9 @@
+2003-08-09  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/iwarp.c: Fixed bug #119440 with Raphael Quinet. 
+	The bug was caused by missing a channel in the dest drawable when 
+	the original drawable didn't have an alpha channel.
+
 2003-08-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/blinds.c: fix for #83970 (blinds filter: strange 
