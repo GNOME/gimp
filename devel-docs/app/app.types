@@ -146,6 +146,7 @@ gimp_palette_editor_get_type
 gimp_palette_get_type
 gimp_parasite_list_get_type
 gimp_pattern_get_type
+gimp_pattern_factory_view_get_type
 gimp_pencil_get_type
 gimp_pencil_options_get_type
 gimp_pencil_tool_get_type
@@ -186,6 +187,7 @@ gimp_text_layer_get_type
 gimp_text_layout_get_type
 gimp_text_options_get_type
 gimp_text_tool_get_type
+gimp_text_undo_get_type
 gimp_threshold_tool_get_type
 gimp_thumb_box_get_type
 gimp_tool_control_get_type

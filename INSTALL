@@ -22,7 +22,7 @@ need to uninstall the 1.2 version.
 
   3. We require PangoFT2, a Pango backend that uses FreeType2. Make sure 
      you have FreeType2 and fontconfig installed before you compile Pango.
-     FreetType2 can be downloaded from http://www.freetype.org/.
+     FreeType2 can be downloaded from http://www.freetype.org/.
      Fontconfig from http://x2.freedesktop.org/software/fontconfig.
 
   4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or

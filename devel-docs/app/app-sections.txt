@@ -262,6 +262,11 @@ gimp_unitrc_save
 <SECTION>
 <FILE>gimp-utils</FILE>
 gimp_rectangle_intersect
+gimp_g_list_get_memsize
+gimp_g_slist_get_memsize
+gimp_g_hash_table_get_memsize
+gimp_g_object_get_memsize
+gimp_get_default_language
 </SECTION>
 
 <SECTION>
@@ -1101,10 +1106,6 @@ gimp_object_name_changed
 gimp_object_name_free
 gimp_object_name_collate
 gimp_object_get_memsize
-gimp_g_list_get_memsize
-gimp_g_slist_get_memsize
-gimp_g_hash_table_get_memsize
-gimp_g_object_get_memsize
 <SUBSECTION Standard>
 GimpObjectClass
 GIMP_OBJECT
@@ -1307,6 +1308,8 @@ gimp_undo_new
 gimp_undo_pop
 gimp_undo_free
 gimp_undo_create_preview
+gimp_undo_refresh_preview
+gimp_undo_type_to_name
 <SUBSECTION Standard>
 GimpUndoClass
 GIMP_UNDO
@@ -1475,6 +1478,7 @@ GIMP_DISPLAY_OPTIONS_GET_CLASS
 
 <SECTION>
 <FILE>gimpdisplayshell</FILE>
+PROJ_ROUND
 SCREEN_XRES
 SCREEN_YRES
 SCALEFACTOR_X
@@ -2137,6 +2141,7 @@ gimp_text_layer_new
 gimp_text_layer_set_text
 gimp_text_layer_get_text
 gimp_text_layer_discard
+gimp_text_layer_set
 <SUBSECTION Standard>
 GimpTextLayerClass
 GIMP_TEXT_LAYER
@@ -2162,6 +2167,8 @@ gimp_text_layer_transform
 <TITLE>GimpTextLayer-xcf</TITLE>
 gimp_text_layer_xcf_load_hack
 gimp_text_layer_xcf_save_prepare
+gimp_text_layer_get_xcf_flags
+gimp_text_layer_set_xcf_flags
 </SECTION>
 
 <SECTION>
@@ -2184,6 +2191,22 @@ gimp_text_layout_get_type
 <TITLE>GimpTextLayout-render</TITLE>
 GimpTextRenderFunc
 gimp_text_layout_render
+</SECTION>
+
+<SECTION>
+<FILE>gimptextundo</FILE>
+<TITLE>GimpTextUndo</TITLE>
+GimpTextUndo
+gimp_text_undo_new
+<SUBSECTION Standard>
+GimpTextUndoClass
+GIMP_TEXT_UNDO
+GIMP_IS_TEXT_UNDO
+GIMP_TYPE_TEXT_UNDO
+gimp_text_undo_get_type
+GIMP_TEXT_UNDO_CLASS
+GIMP_IS_TEXT_UNDO_CLASS
+GIMP_TEXT_UNDO_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -4376,6 +4399,22 @@ GIMP_PALETTE_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimppatternfactoryview</FILE>
+<TITLE>GimpPatternFactoryView</TITLE>
+GimpPatternFactoryView
+gimp_pattern_factory_view_new
+<SUBSECTION Standard>
+GimpPatternFactoryViewClass
+GIMP_PATTERN_FACTORY_VIEW
+GIMP_IS_PATTERN_FACTORY_VIEW
+GIMP_TYPE_PATTERN_FACTORY_VIEW
+gimp_pattern_factory_view_get_type
+GIMP_PATTERN_FACTORY_VIEW_CLASS
+GIMP_IS_PATTERN_FACTORY_VIEW_CLASS
+GIMP_PATTERN_FACTORY_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimppreview</FILE>
 <TITLE>GimpPreview</TITLE>
 GimpPreview
@@ -5835,6 +5874,7 @@ gimp_image_undo_group_start
 gimp_image_undo_group_end
 gimp_image_undo_push
 gimp_image_undo_push_item
+gimp_image_undo_push_undo
 </SECTION>
 
 <SECTION>
@@ -6631,6 +6671,7 @@ select_border_cmd_callback
 select_grow_cmd_callback
 select_save_cmd_callback
 select_toggle_quickmask_cmd_callback
+select_from_vectors_cmd_callback
 </SECTION>
 
 <SECTION>

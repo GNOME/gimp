@@ -384,6 +384,7 @@
       <xi:include href="xml/gimptext-parasite.xml" />
       <xi:include href="xml/gimptext-vectors.xml" />
       <xi:include href="xml/gimptext-xlfd.xml" />
+      <xi:include href="xml/gimptextundo.xml" />
     </chapter>
 
     <chapter id="app-text-layout">
