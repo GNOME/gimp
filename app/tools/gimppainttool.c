@@ -48,6 +48,7 @@
 #include "undo.h"
 
 #include "gimpdrawtool.h"
+#include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimppainttool.h"
 

@@ -6,6 +6,7 @@
 	still.
 
 	* app/tools/gimptool.[ch]
+	* app/tools/gimppainttool.c
 	* app/tools/paint_options.c
 	* app/tools/tools.c: changed accordingly.
  
