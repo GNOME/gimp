@@ -399,7 +399,7 @@ export_dialog (GSList *actions,
  * user chooses Cancel, EXPORT_CANCEL is returned and the 
  * save_plugin should quit itself with status #STATUS_CANCEL.
  *
- * Returns: An enum of #GimpExportType describing the user_action.
+ * Returns: An enum of #GimpExportReturnType describing the user_action.
  */
 GimpExportReturnType
 gimp_export_image (gint32 *image_ID,
