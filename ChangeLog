@@ -1,3 +1,21 @@
+2003-02-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimageeditor.[ch]: new GimpEditor subclass adding
+	a GimpImage pointer and a virtual set_image() function.
+
+	* app/widgets/gimpcolormapeditor.[ch]
+	* app/widgets/gimpselectioneditor.[ch]
+	* app/widgets/gimpundoeditor.[ch]: derive them from GimpImageEditor.
+	Removed the public set_image() functions.
+
+	* app/gui/colormap-editor-commands.c
+	* app/gui/colormap-editor-menu.c: changed accordingly.
+
+	* app/gui/dialogs-constructors.c: removed lots of code duplication
+	and use the uniform GimpImageEditor API. Misc cleanups.
+
 2003-02-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpmarshal.list: reduced to the set of marshallers we

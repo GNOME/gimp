@@ -20,7 +20,7 @@
 #define __GIMP_SELECTION_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "gimpimageeditor.h"
 
 
 #define GIMP_TYPE_SELECTION_EDITOR            (gimp_selection_editor_get_type ())
@@ -35,29 +35,25 @@ typedef struct _GimpSelectionEditorClass GimpSelectionEditorClass;
 
 struct _GimpSelectionEditor
 {
-  GimpEditor  parent_instance;
+  GimpImageEditor  parent_instance;
 
-  GimpImage  *gimage;
+  GtkWidget       *preview;
 
-  GtkWidget  *preview;
-
-  GtkWidget  *invert_button;
-  GtkWidget  *all_button;
-  GtkWidget  *none_button;
-  GtkWidget  *save_button;
+  GtkWidget       *invert_button;
+  GtkWidget       *all_button;
+  GtkWidget       *none_button;
+  GtkWidget       *save_button;
 };
 
 struct _GimpSelectionEditorClass
 {
-  GimpEditorClass  parent_class;
+  GimpImageEditorClass  parent_class;
 };
 
 
 GType       gimp_selection_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_selection_editor_new       (GimpImage           *gimage);
-void        gimp_selection_editor_set_image (GimpSelectionEditor *editor,
-                                             GimpImage           *gimage);
+GtkWidget * gimp_selection_editor_new       (GimpImage *gimage);
 
 
 #endif /* __GIMP_SELECTION_EDITOR_H__ */

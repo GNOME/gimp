@@ -20,7 +20,7 @@
 #define __GIMP_COLORMAP_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "gimpimageeditor.h"
 
 #include "gui/gui-types.h" /* temp hack */
 
@@ -37,11 +37,9 @@ typedef struct _GimpColormapEditorClass GimpColormapEditorClass;
 
 struct _GimpColormapEditor
 {
-  GimpEditor       parent_instance;
+  GimpImageEditor  parent_instance;
 
   GimpItemFactory *item_factory;
-
-  GimpImage       *gimage;
 
   gint             col_index;
   gint             dnd_col_index;
@@ -57,7 +55,7 @@ struct _GimpColormapEditor
 
 struct _GimpColormapEditorClass
 {
-  GimpEditorClass  parent_class;
+  GimpImageEditorClass  parent_class;
 
   void (* selected) (GimpColormapEditor *gcd);
 };
@@ -69,10 +67,6 @@ GtkWidget * gimp_colormap_editor_new       (GimpImage          *gimage,
                                             GimpMenuFactory    *menu_factory);
 
 void        gimp_colormap_editor_selected  (GimpColormapEditor *editor);
-
-void        gimp_colormap_editor_set_image (GimpColormapEditor *editor,
-					    GimpImage          *gimage);
-GimpImage * gimp_colormap_editor_get_image (GimpColormapEditor *editor);
 gint        gimp_colormap_editor_col_index (GimpColormapEditor *editor);
 
 

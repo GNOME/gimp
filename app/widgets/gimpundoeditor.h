@@ -20,7 +20,7 @@
 #define __GIMP_UNDO_EDITOR_H__
 
 
-#include "gimpeditor.h"
+#include "gimpimageeditor.h"
 
 
 #define GIMP_TYPE_UNDO_EDITOR            (gimp_undo_editor_get_type ())
@@ -35,30 +35,26 @@ typedef struct _GimpUndoEditorClass GimpUndoEditorClass;
 
 struct _GimpUndoEditor
 {
-  GimpEditor     parent_instance;
+  GimpImageEditor  parent_instance;
 
-  GimpImage     *gimage;
+  GimpContainer   *container;
+  GtkWidget       *view;
 
-  GimpContainer *container;
-  GtkWidget     *view;
+  GimpUndo        *base_item;
 
-  GimpUndo      *base_item;
-
-  GtkWidget     *undo_button;
-  GtkWidget     *redo_button;
+  GtkWidget       *undo_button;
+  GtkWidget       *redo_button;
 };
 
 struct _GimpUndoEditorClass
 {
-  GimpEditorClass  parent_class;
+  GimpImageEditorClass  parent_class;
 };
 
 
 GType       gimp_undo_editor_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_undo_editor_new       (GimpImage      *gimage);
-void        gimp_undo_editor_set_image (GimpUndoEditor *editor,
-                                        GimpImage      *gimage);
+GtkWidget * gimp_undo_editor_new       (GimpImage *gimage);
 
 
 #endif /* __GIMP_UNDO_EDITOR_H__ */

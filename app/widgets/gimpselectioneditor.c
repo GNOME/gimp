@@ -55,19 +55,20 @@
 static void   gimp_selection_editor_class_init (GimpSelectionEditorClass *klass);
 static void   gimp_selection_editor_init       (GimpSelectionEditor      *selection_editor);
 
-static void   gimp_selection_editor_destroy        (GtkObject           *object);
+static void   gimp_selection_editor_set_image      (GimpImageEditor     *editor,
+                                                    GimpImage           *gimage);
 
 static void   gimp_selection_editor_abox_resized   (GtkWidget           *widget,
                                                     GtkAllocation       *allocation,
                                                     GimpSelectionEditor *editor);
 static void   gimp_selection_editor_invert_clicked (GtkWidget           *widget,
-                                                    GimpSelectionEditor *editor);
+                                                    GimpImageEditor     *editor);
 static void   gimp_selection_editor_all_clicked    (GtkWidget           *widget,
-                                                    GimpSelectionEditor *editor);
+                                                    GimpImageEditor     *editor);
 static void   gimp_selection_editor_none_clicked   (GtkWidget           *widget,
-                                                    GimpSelectionEditor *editor);
+                                                    GimpImageEditor     *editor);
 static void   gimp_selection_editor_save_clicked   (GtkWidget           *widget,
-                                                    GimpSelectionEditor *editor);
+                                                    GimpImageEditor     *editor);
 
 static gboolean gimp_selection_preview_button_press(GtkWidget           *widget,
                                                     GdkEventButton      *bevent,
@@ -80,7 +81,7 @@ static void   gimp_selection_editor_mask_changed   (GimpImage           *gimage,
                                                     GimpSelectionEditor *editor);
 
 
-static GimpEditorClass *parent_class = NULL;
+static GimpImageEditorClass *parent_class = NULL;
 
 
 GType
@@ -103,7 +104,7 @@ gimp_selection_editor_get_type (void)
 	(GInstanceInitFunc) gimp_selection_editor_init,
       };
 
-      editor_type = g_type_register_static (GIMP_TYPE_EDITOR,
+      editor_type = g_type_register_static (GIMP_TYPE_IMAGE_EDITOR,
                                             "GimpSelectionEditor",
                                             &editor_info, 0);
     }
@@ -114,13 +115,13 @@ gimp_selection_editor_get_type (void)
 static void
 gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
 {
-  GtkObjectClass *object_class;
+  GimpImageEditorClass *image_editor_class;
 
-  object_class = GTK_OBJECT_CLASS (klass);
+  image_editor_class = GIMP_IMAGE_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->destroy = gimp_selection_editor_destroy;
+  image_editor_class->set_image = gimp_selection_editor_set_image;
 }
 
 static void
@@ -130,8 +131,6 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   GtkWidget       *abox;
   /* FIXME: take value from GimpGuiConfig */ 
   GimpPreviewSize  nav_preview_size = GIMP_PREVIEW_SIZE_HUGE;
-
-  selection_editor->gimage = NULL;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -199,16 +198,35 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 }
 
 static void
-gimp_selection_editor_destroy (GtkObject *object)
+gimp_selection_editor_set_image (GimpImageEditor *image_editor,
+                                 GimpImage       *gimage)
 {
   GimpSelectionEditor *editor;
 
-  editor = GIMP_SELECTION_EDITOR (object);
+  editor = GIMP_SELECTION_EDITOR (image_editor);
 
-  if (editor->gimage)
-    gimp_selection_editor_set_image (editor, NULL);
+  if (image_editor->gimage)
+    {
+      g_signal_handlers_disconnect_by_func (image_editor->gimage,
+					    gimp_selection_editor_mask_changed,
+					    editor);
+    }
 
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GIMP_IMAGE_EDITOR_CLASS (parent_class)->set_image (image_editor, gimage);
+
+  if (gimage)
+    {
+      g_signal_connect (gimage, "mask_changed",
+			G_CALLBACK (gimp_selection_editor_mask_changed),
+			editor);
+
+      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview),
+                                 GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
+    }
+  else
+    {
+      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview), NULL);
+    }
 }
 
 
@@ -226,48 +244,10 @@ gimp_selection_editor_new (GimpImage *gimage)
 
   editor = g_object_new (GIMP_TYPE_SELECTION_EDITOR, NULL);
 
-  gimp_selection_editor_set_image (editor, gimage);
+  if (gimage)
+    gimp_image_editor_set_image (GIMP_IMAGE_EDITOR (editor), gimage);
 
   return GTK_WIDGET (editor);
-}
-
-void
-gimp_selection_editor_set_image (GimpSelectionEditor *editor,
-                                 GimpImage           *gimage)
-{
-  g_return_if_fail (GIMP_IS_SELECTION_EDITOR (editor));
-  g_return_if_fail (! gimage || GIMP_IS_IMAGE (gimage));
-
-  if (gimage == editor->gimage)
-    return;
-
-  if (editor->gimage)
-    {
-      g_signal_handlers_disconnect_by_func (editor->gimage,
-					    gimp_selection_editor_mask_changed,
-					    editor);
-    }
-  else if (gimage)
-    {
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-    }
-
-  editor->gimage = gimage;
-
-  if (gimage)
-    {
-      g_signal_connect (gimage, "mask_changed",
-			G_CALLBACK (gimp_selection_editor_mask_changed),
-			editor);
-
-      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview),
-                                 GIMP_VIEWABLE (gimp_image_get_mask (gimage)));
-    }
-  else
-    {
-      gimp_preview_set_viewable (GIMP_PREVIEW (editor->preview), NULL);
-      gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
-    }
 }
 
 static void
@@ -275,9 +255,11 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
                                     GtkAllocation       *allocation,
                                     GimpSelectionEditor *editor)
 {
-  GimpPreview *preview;
+  GimpImageEditor *image_editor;
+  GimpPreview     *preview;
 
-  preview = GIMP_PREVIEW (editor->preview);
+  image_editor = GIMP_IMAGE_EDITOR (editor);
+  preview      = GIMP_PREVIEW (editor->preview);
 
   if (! preview->viewable)
     return;
@@ -292,12 +274,12 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
       gboolean dummy;
 
       gimp_preview_calc_size (preview,
-                              editor->gimage->width,
-                              editor->gimage->height,
+                              image_editor->gimage->width,
+                              image_editor->gimage->height,
                               MIN (allocation->width,  GIMP_PREVIEW_MAX_SIZE),
                               MIN (allocation->height, GIMP_PREVIEW_MAX_SIZE),
-                              editor->gimage->xresolution,
-                              editor->gimage->yresolution,
+                              image_editor->gimage->xresolution,
+                              image_editor->gimage->yresolution,
                               &width,
                               &height,
                               &dummy);
@@ -318,8 +300,8 @@ gimp_selection_editor_abox_resized (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_invert_clicked (GtkWidget           *widget,
-                                      GimpSelectionEditor *editor)
+gimp_selection_editor_invert_clicked (GtkWidget       *widget,
+                                      GimpImageEditor *editor)
 {
   if (editor->gimage)
     {
@@ -329,8 +311,8 @@ gimp_selection_editor_invert_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_all_clicked (GtkWidget           *widget,
-                                   GimpSelectionEditor *editor)
+gimp_selection_editor_all_clicked (GtkWidget       *widget,
+                                   GimpImageEditor *editor)
 {
   if (editor->gimage)
     {
@@ -340,8 +322,8 @@ gimp_selection_editor_all_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_none_clicked (GtkWidget           *widget,
-                                    GimpSelectionEditor *editor)
+gimp_selection_editor_none_clicked (GtkWidget       *widget,
+                                    GimpImageEditor *editor)
 {
   if (editor->gimage)
     {
@@ -351,8 +333,8 @@ gimp_selection_editor_none_clicked (GtkWidget           *widget,
 }
 
 static void
-gimp_selection_editor_save_clicked (GtkWidget           *widget,
-                                    GimpSelectionEditor *editor)
+gimp_selection_editor_save_clicked (GtkWidget       *widget,
+                                    GimpImageEditor *editor)
 {
   if (editor->gimage)
     {
@@ -365,6 +347,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                      GdkEventButton      *bevent,
                                      GimpSelectionEditor *editor)
 {
+  GimpImageEditor      *image_editor;
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
@@ -373,11 +356,13 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   guchar               *col;
   GimpRGB               color;
 
-  if (! editor->gimage)
+  image_editor = GIMP_IMAGE_EDITOR (editor);
+
+  if (! image_editor->gimage)
     return TRUE;
 
   tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (editor->gimage->gimp->tool_info_list,
+    gimp_container_get_child_by_name (image_editor->gimage->gimp->tool_info_list,
                                       "gimp-by-color-select-tool");
 
   if (! tool_info)
@@ -385,7 +370,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (editor->gimage);
+  drawable = gimp_image_active_drawable (image_editor->gimage);
 
   if (! drawable)
     return TRUE;
@@ -408,15 +393,17 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
   if (options->sample_merged)
     {
-      x = editor->gimage->width  * bevent->x / editor->preview->allocation.width;
-      y = editor->gimage->height * bevent->y / editor->preview->allocation.height;
+      x = (image_editor->gimage->width  * bevent->x /
+           editor->preview->allocation.width);
+      y = (image_editor->gimage->height * bevent->y /
+           editor->preview->allocation.height);
 
       if (x < 0 || y < 0 ||
-          x >= editor->gimage->width ||
-          y >= editor->gimage->height)
+          x >= image_editor->gimage->width ||
+          y >= image_editor->gimage->height)
 	return TRUE;
 
-      col = gimp_image_projection_get_color_at (editor->gimage, x, y);
+      col = gimp_image_projection_get_color_at (image_editor->gimage, x, y);
     }
   else
     {
@@ -441,7 +428,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
 
   g_free (col);
 
-  gimp_image_mask_select_by_color (editor->gimage, drawable,
+  gimp_image_mask_select_by_color (image_editor->gimage, drawable,
                                    options->sample_merged,
                                    &color,
                                    options->threshold,
@@ -452,7 +439,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                    options->feather_radius,
                                    options->feather_radius);
 
-  gimp_image_flush (editor->gimage);
+  gimp_image_flush (image_editor->gimage);
 
   return TRUE;
 }
@@ -465,9 +452,9 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   GimpToolInfo         *tool_info;
   GimpSelectionOptions *options;
   GimpDrawable         *drawable;
-  GimpSelectionEditor  *editor;
+  GimpImageEditor      *editor;
 
-  editor = GIMP_SELECTION_EDITOR (data);
+  editor = GIMP_IMAGE_EDITOR (data);
 
   if (! editor->gimage)
     return;

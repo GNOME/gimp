@@ -61,8 +61,7 @@ colormap_editor_menu_update (GtkItemFactory *factory,
   gint                num_colors = 0;
 
   editor = GIMP_COLORMAP_EDITOR (data);
-
-  gimage = editor->gimage;
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (gimage)
     {

@@ -56,8 +56,7 @@ colormap_editor_add_color_cmd_callback (GtkWidget *widget,
   GimpImage          *gimage;
 
   editor = GIMP_COLORMAP_EDITOR (data);
-
-  gimage = editor->gimage;
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (! gimage)
     return;
@@ -80,8 +79,7 @@ colormap_editor_edit_color_cmd_callback (GtkWidget *widget,
   GimpRGB             color;
 
   editor = GIMP_COLORMAP_EDITOR (data);
-
-  gimage = editor->gimage;
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   if (! gimage)
     return;
@@ -126,8 +124,7 @@ colormap_editor_color_notebook_callback (ColorNotebook      *color_notebook,
   GimpImage          *gimage;
 
   editor = GIMP_COLORMAP_EDITOR (data);
-
-  gimage = editor->gimage;
+  gimage = GIMP_IMAGE_EDITOR (editor)->gimage;
 
   switch (state)
     {
