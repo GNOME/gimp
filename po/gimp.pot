@@ -1,0 +1,673 @@
+# Messages file for Gimp's main ditribution
+# Micha³ Gomuliñski <M.Gomulinski@writeme.com>, 1998.
+#
+# DO NOT TRANSLATE YET! * NOT ALL MESSAGES INCLUDED! *  NOT TESTED! 
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP 1.1.0\n"
+"POT-Creation-Date: 1998-07-25 17:25+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: main.c:242
+#, c-format
+msgid "Usage: %s [option ...] [files ...]\n"
+msgstr ""
+
+#: main.c:256
+msgid ""
+"  --console-messages       Display warnings to console instead of a dialog "
+"box.\n"
+msgstr ""
+
+#: main.c:257
+msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+msgstr ""
+
+#: main.c:258
+msgid ""
+"  --display <display>      Use the designated X display.\n"
+"\n"
+msgstr ""
+
+#: main.c:250
+msgid ""
+"  --no-data                Do not load patterns, gradients, palettes, "
+"brushes.\n"
+msgstr ""
+
+#: main.c:254
+msgid ""
+"  --no-shm                 Do not use shared memory between GIMP and its "
+"plugins.\n"
+msgstr ""
+
+#: main.c:252
+msgid "  --no-splash              Do not show the startup window.\n"
+msgstr ""
+
+#: main.c:253
+msgid "  --no-splash-image        Do not add an image to the startup window.\n"
+msgstr ""
+
+#: main.c:255
+msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
+msgstr ""
+
+#: main.c:259
+msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
+msgstr ""
+
+#: main.c:251
+msgid "  --verbose                Show startup messages.\n"
+msgstr ""
+
+#: main.c:246
+msgid "  -b --batch <commands>    Run in batch mode.\n"
+msgstr ""
+
+#: main.c:247
+msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+msgstr ""
+
+#: main.c:244
+msgid "  -h --help                Output this help.\n"
+msgstr ""
+
+#: main.c:248
+msgid "  -n --no-interface        Run without a user interface.\n"
+msgstr ""
+
+#: main.c:249
+msgid "  -r --restore-session     Try to restore saved session.\n"
+msgstr ""
+
+#: main.c:245
+msgid "  -v --version             Output version info.\n"
+msgstr ""
+
+#: about_dialog.c:197 about_dialog.c:198
+msgid " brought to you by"
+msgstr ""
+
+#: about_dialog.c:193
+msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr ""
+
+#: menus.c:221
+msgid "/Automatic"
+msgstr ""
+
+#: menus.c:229
+msgid "/By extension"
+msgstr ""
+
+#: menus.c:206
+msgid "/Dialogs/Brushes..."
+msgstr ""
+
+#: menus.c:214
+msgid "/Dialogs/Device Status..."
+msgstr ""
+
+#: menus.c:209
+msgid "/Dialogs/Gradient Editor..."
+msgstr ""
+
+#: menus.c:211
+msgid "/Dialogs/Indexed Palette..."
+msgstr ""
+
+#: menus.c:213
+msgid "/Dialogs/Input Devices..."
+msgstr ""
+
+#: menus.c:210
+msgid "/Dialogs/Layers & Channels..."
+msgstr ""
+
+#: menus.c:208
+msgid "/Dialogs/Palette..."
+msgstr ""
+
+#: menus.c:207
+msgid "/Dialogs/Patterns..."
+msgstr ""
+
+#: menus.c:212
+msgid "/Dialogs/Tool Options..."
+msgstr ""
+
+#: menus.c:93 menus.c:97
+msgid "/Edit/---"
+msgstr ""
+
+#: menus.c:88
+msgid "/Edit/Clear"
+msgstr ""
+
+#: menus.c:85
+msgid "/Edit/Copy"
+msgstr ""
+
+#: menus.c:95
+msgid "/Edit/Copy Named"
+msgstr ""
+
+#: menus.c:84
+msgid "/Edit/Cut"
+msgstr ""
+
+#: menus.c:94
+msgid "/Edit/Cut Named"
+msgstr ""
+
+#: menus.c:89
+msgid "/Edit/Fill"
+msgstr ""
+
+#: menus.c:86
+msgid "/Edit/Paste"
+msgstr ""
+
+#: menus.c:87
+msgid "/Edit/Paste Into"
+msgstr ""
+
+#: menus.c:96
+msgid "/Edit/Paste Named"
+msgstr ""
+
+#: menus.c:92
+msgid "/Edit/Redo"
+msgstr ""
+
+#: menus.c:90
+msgid "/Edit/Stroke"
+msgstr ""
+
+#: menus.c:91
+msgid "/Edit/Undo"
+msgstr ""
+
+#: menus.c:52 menus.c:62 menus.c:67 menus.c:77 menus.c:82
+msgid "/File/---"
+msgstr ""
+
+#: menus.c:49
+msgid "/File/About..."
+msgstr ""
+
+#: menus.c:80
+msgid "/File/Close"
+msgstr ""
+
+#: menus.c:53
+msgid "/File/Dialogs/Brushes..."
+msgstr ""
+
+#: menus.c:60
+msgid "/File/Dialogs/Device Status..."
+msgstr ""
+
+#: menus.c:61
+msgid "/File/Dialogs/Document Index..."
+msgstr ""
+
+#: menus.c:newthing
+msgid "/File/Dialogs/Error Console..."
+msgstr ""
+
+#: menus.c:56
+msgid "/File/Dialogs/Gradient Editor..."
+msgstr ""
+
+#: menus.c:59
+msgid "/File/Dialogs/Input Devices..."
+msgstr ""
+
+#: menus.c:57
+msgid "/File/Dialogs/Layers & Channels..."
+msgstr ""
+
+#: menus.c:55
+msgid "/File/Dialogs/Palette..."
+msgstr ""
+
+#: menus.c:54
+msgid "/File/Dialogs/Patterns..."
+msgstr ""
+
+#: menus.c:58
+msgid "/File/Dialogs/Tool Options..."
+msgstr ""
+
+#: menus.c:431 menus.c:501
+#, c-format
+msgid "/File/MRU%02d"
+msgstr ""
+
+#: menus.c:47 menus.c:72
+msgid "/File/New"
+msgstr ""
+
+#: menus.c:48 menus.c:73
+msgid "/File/Open"
+msgstr ""
+
+#: menus.c:50 menus.c:76
+msgid "/File/Preferences..."
+msgstr ""
+
+#: menus.c:68 menus.c:81
+msgid "/File/Quit"
+msgstr ""
+
+#: menus.c:74
+msgid "/File/Save"
+msgstr ""
+
+#: menus.c:75
+msgid "/File/Save as"
+msgstr ""
+
+#: menus.c:51
+msgid "/File/Tip of the day"
+msgstr ""
+
+#: menus.c:199
+msgid "/Filters/"
+msgstr ""
+
+#: menus.c:202
+msgid "/Filters/---"
+msgstr ""
+
+#: menus.c:201
+msgid "/Filters/Re-show last"
+msgstr ""
+
+#: menus.c:200
+msgid "/Filters/Repeat last"
+msgstr ""
+
+#: menus.c:150 menus.c:154 menus.c:157 menus.c:159
+msgid "/Image/---"
+msgstr ""
+
+#: menus.c:148
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr ""
+
+#: menus.c:146
+msgid "/Image/Channel Ops/Duplicate"
+msgstr ""
+
+#: menus.c:147
+msgid "/Image/Channel Ops/Offset"
+msgstr ""
+
+#: menus.c:144
+msgid "/Image/Colors/---"
+msgstr ""
+
+#: menus.c:145
+msgid "/Image/Colors/Desaturate"
+msgstr ""
+
+#: menus.c:132
+msgid "/Image/Colors/Equalize"
+msgstr ""
+
+#: menus.c:152
+msgid "/Image/Grayscale"
+msgstr ""
+
+#: menus.c:153
+msgid "/Image/Indexed"
+msgstr ""
+
+#: menus.c:151
+msgid "/Image/RGB"
+msgstr ""
+
+#: menus.c:155
+msgid "/Image/Resize"
+msgstr ""
+
+#: menus.c:156
+msgid "/Image/Scale"
+msgstr ""
+
+#: menus.c:169
+msgid "/Layers/Add Alpha Channel"
+msgstr ""
+
+#: menus.c:167
+msgid "/Layers/Alpha To Selection"
+msgstr ""
+
+#: menus.c:164
+msgid "/Layers/Anchor Layer"
+msgstr ""
+
+#: menus.c:166
+msgid "/Layers/Flatten Image"
+msgstr ""
+
+#: menus.c:161
+msgid "/Layers/Layers & Channels..."
+msgstr ""
+
+#: menus.c:163
+msgid "/Layers/Lower Layer"
+msgstr ""
+
+#: menus.c:168
+msgid "/Layers/Mask To Selection"
+msgstr ""
+
+#: menus.c:165
+msgid "/Layers/Merge Visible Layers"
+msgstr ""
+
+#: menus.c:162
+msgid "/Layers/Raise Layer"
+msgstr ""
+
+#: menus.c:204
+msgid "/Script-Fu/"
+msgstr ""
+
+#: menus.c:101
+msgid "/Select/All"
+msgstr ""
+
+#: menus.c:105
+msgid "/Select/Border"
+msgstr ""
+
+#: menus.c:106
+msgid "/Select/Feather"
+msgstr ""
+
+#: menus.c:103
+msgid "/Select/Float"
+msgstr ""
+
+#: menus.c:107
+msgid "/Select/Grow"
+msgstr ""
+
+#: menus.c:100
+msgid "/Select/Invert"
+msgstr ""
+
+#: menus.c:102
+msgid "/Select/None"
+msgstr ""
+
+#: menus.c:109
+msgid "/Select/Save To Channel"
+msgstr ""
+
+#: menus.c:104
+msgid "/Select/Sharpen"
+msgstr ""
+
+#: menus.c:108
+msgid "/Select/Shrink"
+msgstr ""
+
+#: menus.c:99
+msgid "/Select/Toggle"
+msgstr ""
+
+#: menus.c:196
+msgid "/Tools/---"
+msgstr ""
+
+#: menus.c:197
+msgid "/Tools/Default Colors"
+msgstr ""
+
+#: menus.c:198
+msgid "/Tools/Swap Colors"
+msgstr ""
+
+#: menus.c:195
+msgid "/Tools/Toolbox"
+msgstr ""
+
+#: menus.c:128
+msgid "/View/---"
+msgstr ""
+
+#: menus.c:129
+msgid "/View/New View"
+msgstr ""
+
+#: menus.c:130
+msgid "/View/Shrink Wrap"
+msgstr ""
+
+#: menus.c:127
+msgid "/View/Snap To Guides"
+msgstr ""
+
+#: menus.c:126
+msgid "/View/Toggle Guides"
+msgstr ""
+
+#: menus.c:125
+msgid "/View/Toggle Rulers"
+msgstr ""
+
+#: menus.c:124
+msgid "/View/Window Info..."
+msgstr ""
+
+#: menus.c:113
+msgid "/View/Zoom In"
+msgstr ""
+
+#: menus.c:114
+msgid "/View/Zoom Out"
+msgstr ""
+
+#: menus.c:115
+msgid "/View/Zoom/16:1"
+msgstr ""
+
+#: menus.c:119
+msgid "/View/Zoom/1:1"
+msgstr ""
+
+#: menus.c:123
+msgid "/View/Zoom/1:16"
+msgstr ""
+
+#: menus.c:120
+msgid "/View/Zoom/1:2"
+msgstr ""
+
+#: menus.c:121
+msgid "/View/Zoom/1:4"
+msgstr ""
+
+#: menus.c:122
+msgid "/View/Zoom/1:8"
+msgstr ""
+
+#: menus.c:118
+msgid "/View/Zoom/2:1"
+msgstr ""
+
+#: menus.c:117
+msgid "/View/Zoom/4:1"
+msgstr ""
+
+#: menus.c:116
+msgid "/View/Zoom/8:1"
+msgstr ""
+
+#: about_dialog.c:150
+msgid "About the GIMP"
+msgstr ""
+
+#: menus.c:409
+#, c-format
+msgid "Error opening file: %s\n"
+msgstr ""
+
+#: main.c:238
+msgid "GIMP version"
+msgstr ""
+
+#: regex.c:982
+msgid "Invalid back reference"
+msgstr ""
+
+#: regex.c:980
+msgid "Invalid character class name"
+msgstr ""
+
+#: regex.c:979
+msgid "Invalid collation character"
+msgstr ""
+
+#: regex.c:986
+msgid "Invalid content of \\{\\}"
+msgstr ""
+
+#: regex.c:989
+msgid "Invalid preceding regular expression"
+msgstr ""
+
+#: regex.c:987
+msgid "Invalid range end"
+msgstr ""
+
+#: regex.c:978
+msgid "Invalid regular expression"
+msgstr ""
+
+#: regex.c:988
+msgid "Memory exhausted"
+msgstr ""
+
+#: regex.c:977
+msgid "No match"
+msgstr ""
+
+#: regex.c:5442
+msgid "No previous regular expression"
+msgstr ""
+
+#: about_dialog.c:237
+msgid "Please visit http://www.gimp.org/ for more info"
+msgstr ""
+
+#: regex.c:990
+msgid "Premature end of regular expression"
+msgstr ""
+
+#: regex.c:991
+msgid "Regular expression too big"
+msgstr ""
+
+#: about_dialog.c:204
+msgid "Spencer Kimball and Peter Mattis"
+msgstr ""
+
+#: regex.c:976
+msgid "Success"
+msgstr ""
+
+#: regex.c:981
+msgid "Trailing backslash"
+msgstr ""
+
+#: menus.c:342
+#, c-format
+msgid ""
+"Unable to set sensitivity for menu which doesn't exist:\n"
+"%s"
+msgstr ""
+
+#: menus.c:367
+#, c-format
+msgid ""
+"Unable to set state for menu which doesn't exist:\n"
+"%s"
+msgstr ""
+
+#: regex.c:984
+msgid "Unmatched ( or \\("
+msgstr ""
+
+#: regex.c:992
+msgid "Unmatched ) or \\)"
+msgstr ""
+
+#: regex.c:983
+msgid "Unmatched [ or [^"
+msgstr ""
+
+#: regex.c:985
+msgid "Unmatched \\{"
+msgstr ""
+
+#: main.c:243
+msgid "Valid options are:\n"
+msgstr ""
+
+#: about_dialog.c:196 about_dialog.c:198
+msgid "Version "
+msgstr ""
+
+#: main.c:324
+msgid "sigabrt caught"
+msgstr ""
+
+#: main.c:327
+msgid "sigbus caught"
+msgstr ""
+
+#: main.c:339
+msgid "sigfpe caught"
+msgstr ""
+
+#: main.c:315
+msgid "sighup caught"
+msgstr ""
+
+#: main.c:318
+msgid "sigint caught"
+msgstr ""
+
+#: main.c:333
+msgid "sigpipe caught"
+msgstr ""
+
+#: main.c:321
+msgid "sigquit caught"
+msgstr ""
+
+#: main.c:330
+msgid "sigsegv caught"
+msgstr ""
+
+#: main.c:336
+msgid "sigterm caught"
+msgstr ""
+
+#: main.c:342
+msgid "unknown signal"
+msgstr ""

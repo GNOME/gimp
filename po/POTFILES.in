@@ -1,0 +1,11 @@
+# Files from the Gimp ditribution which have already been
+# marked to allow runtime translation of messages
+
+
+app/about_dialog.c
+app/main.c
+app/menus.c
+
+# Originally marked by the authors (GNU people)
+app/regex.c
+
