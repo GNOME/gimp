@@ -73,7 +73,7 @@
 
 	* app/widgets/gimpdialogfactory.h
 	* app/widgets/gimpsessioninfo.h: removed inclusion of
-	"libgimpbase/gimpbasetypes.h".
+	"libgimpconfig/gimpconfig.h".
 
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
