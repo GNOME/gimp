@@ -201,7 +201,7 @@ gimp_progress_set_text (const gchar *format,
   gboolean  retval;
   va_list   args;
 
-  g_return_if_fail (format != NULL);
+  g_return_val_if_fail (format != NULL, FALSE);
 
   va_start (args, format);
   text = g_strdup_vprintf (format, args);
