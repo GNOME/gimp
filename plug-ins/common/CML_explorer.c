@@ -2170,6 +2170,8 @@ CML_execute_save_to_file (GtkWidget *widget,
       fprintf (file, ";\n");
       for (channel_id = 0; channel_id < 3; channel_id++)
 	{
+          gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
+
 	  CML_PARAM param = *(CML_PARAM *)(channel_params[channel_id]);
 
 	  fprintf (file, "\t%s\n", channel_names[channel_id]);
@@ -2181,17 +2183,26 @@ CML_execute_save_to_file (GtkWidget *widget,
 		   param.arrange, arrange_names[param.arrange]);
 	  fprintf (file, "Cyclic_range     : %d (%s)\n",
 		   param.cyclic_range, (param.cyclic_range ? "TRUE" : "FALSE"));
-	  fprintf (file, "Mod. rate        : %f\n", param.mod_rate);
-	  fprintf (file, "Env_sensitivtiy  : %f\n", param.env_sensitivity);
+	  fprintf (file, "Mod. rate        : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.mod_rate));
+	  fprintf (file, "Env_sensitivtiy  : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.env_sensitivity));
 	  fprintf (file, "Diffusion dist.  : %d\n", param.diffusion_dist);
-	  fprintf (file, "Ch. sensitivity  : %f\n", param.ch_sensitivity);
+	  fprintf (file, "Ch. sensitivity  : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.ch_sensitivity));
 	  fprintf (file, "Num. of Subranges: %d\n", param.range_num);
-	  fprintf (file, "Power_factor     : %f\n", param.power);
-	  fprintf (file, "Parameter_k      : %f\n", param.parameter_k);
-	  fprintf (file, "Range_low        : %f\n", param.range_l);
-	  fprintf (file, "Range_high       : %f\n", param.range_h);
-	  fprintf (file, "Mutation_rate    : %f\n", param.mutation_rate);
-	  fprintf (file, "Mutation_distance: %f\n", param.mutation_dist);
+	  fprintf (file, "Power_factor     : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.power));
+	  fprintf (file, "Parameter_k      : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.parameter_k));
+	  fprintf (file, "Range_low        : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.range_l));
+	  fprintf (file, "Range_high       : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.range_h));
+	  fprintf (file, "Mutation_rate    : %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.mutation_rate));
+	  fprintf (file, "Mutation_distance: %s\n",
+                   g_ascii_dtostr (buf, sizeof (buf), param.mutation_dist));
 	}
       fprintf (file, "\n");
       fprintf (file, "Initial value  : %d (%s)\n",

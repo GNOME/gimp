@@ -1778,24 +1778,45 @@ void loadpreset_ok(GtkWidget *w, GtkFileSelection *fs)
 
 void saveit(char *fn)
 {
-  int i;
+  gint  i;
   FILE *f;
+  gchar buf[G_ASCII_DTOSTR_BUF_SIZE];
 
-  f = fopen(fn, "wt");
-  for(i = 0; i < s.com.numtexture; i++) {
-    texture *t = &s.com.texture[i];
-    if(t->majtype < 0) continue;
-    fprintf(f, "%d %d %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
-	    t->majtype, t->type,
-	    t->color1.x,t->color1.y,t->color1.z,t->color1.w,
-	    t->color2.x,t->color2.y,t->color2.z,t->color2.w,
-	    t->oscale, t->turbulence.x, t->amount, t->exp,
-	    t->scale.x,t->scale.y,t->scale.z,
-	    t->rotate.x,t->rotate.y,t->rotate.z,
-	    t->translate.x,t->translate.y,t->translate.z);
-  }
-  fclose(f);
+  f = fopen (fn, "wt");
 
+  for (i = 0; i < s.com.numtexture; i++)
+    {
+      texture *t = &s.com.texture[i];
+
+      if (t->majtype < 0)
+        continue;
+
+      fprintf (f, "%d %d", t->majtype, t->type);
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color1.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color1.y));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color1.z));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color1.w));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color2.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color2.y));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color2.z));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->color2.w));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->oscale));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->turbulence.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->amount));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->exp));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->scale.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->scale.y));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->scale.z));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->rotate.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->rotate.y));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->rotate.z));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->translate.x));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->translate.y));
+      fprintf (f, " %s", g_ascii_dtostr (buf, sizeof (buf), t->translate.z));
+      fprintf (f, "\n");
+    }
+
+  fclose (f);
 }
 
 void savepreset_ok(GtkWidget *w, GtkFileSelection *fs)

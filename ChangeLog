@@ -1,5 +1,11 @@
 2002-12-16  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/spheredesigner.c: use g_ascii_dtostr() to
+	serialize floats.
+
+2002-12-16  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/ps.c (save_ps_setup): applied a patch from
 	Henrik Brix Andersen <brix@gimp.org> which fixes bug #101263.
 
