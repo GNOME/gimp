@@ -1361,6 +1361,7 @@ device_status_update (guint32 deviceid)
 	}
     }
   brush_area_update();
+  pattern_area_update();
 }
 
 

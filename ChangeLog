@@ -1,6 +1,13 @@
+Thur Jun 3 1:43:00 CST 1999 Seth Burgess <sjburges@gimp.org>
+
+	* app/indicator_area.[ch]
+	* app/devices.c: Added a pattern preview and its popup.  This
+	needs some GUI work still, as they are just way too big in a 
+	general case.
+
 Wed Jun  2 23:13:30 CST 1999 Seth Burgess <sjburges@gimp.org>
 
-	* indicator_area.c : Added popup previews if the brush is bigger
+	* app/indicator_area.c : Added popup previews if the brush is bigger
 	than the indicator area.
 
 Wed Jun  2 19:43:30 CST 1999 Seth Burgess <sjburges@gimp.org>

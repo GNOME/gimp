@@ -15,14 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include "gimpbrushlist.h"
 #ifndef __INDICATOR_AREA_H__
 #define __INDICATOR_AREA_H__
-
+#include "patterns.h"
+#include "gimpbrushlist.h"
 GtkWidget *
 indicator_area_create (int width, int height);
 
 void brush_area_update(void);
+void pattern_area_update(void);
 
 #endif  /*  __INDICATOR_AREA_H__  */
 
