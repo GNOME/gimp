@@ -78,6 +78,9 @@ static GdkPixmap *create_pixmap    (GdkWindow      *parent,
 				    gint            width,
 				    gint            height);
 
+static void     toolbox_style_set_callback (GtkWidget        *window,
+					    GtkStyle         *previous_style,
+					    gpointer          data);
 static void     toolbox_set_drag_dest      (GtkWidget        *widget);
 static gboolean toolbox_drag_drop          (GtkWidget        *widget,
 					    GdkDragContext   *context,
@@ -502,7 +505,6 @@ create_pixmap (GdkWindow  *parent,
   return pixmap;
 }
 
-
 void
 create_toolbox (void)
 {
@@ -512,10 +514,6 @@ create_toolbox (void)
   GtkWidget *menubar;
   GList     *list;
   GtkAccelGroup *table;
-  GdkGeometry    geometry;
-  GtkStyle      *style;
-  gint           xthickness;
-  gint           ythickness;
 
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -560,20 +558,9 @@ create_toolbox (void)
   gtk_window_set_title (GTK_WINDOW (window), _("The GIMP"));
   gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
 
-  gtk_widget_realize (window);
-  style = gtk_widget_get_style (window);
-  xthickness = ((GtkStyleClass *) style->klass)->xthickness;
-  ythickness = ((GtkStyleClass *) style->klass)->ythickness;
-  
-  geometry.min_width  =   2 + 24 + 2 * xthickness;
-  geometry.min_height = 100 + 24 + 2 * ythickness;
-  geometry.width_inc  =       24 + 2 * xthickness;
-  geometry.height_inc =       24 + 2 * ythickness;
-
-  gtk_window_set_geometry_hints (GTK_WINDOW (window), 
-				 NULL,
-				 &geometry, 
-				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
+  gtk_signal_connect (GTK_OBJECT (window), "style_set",
+		      GTK_SIGNAL_FUNC (toolbox_style_set_callback),
+		      NULL);
 
   session_set_window_geometry (window, &toolbox_session_info, TRUE);
 
@@ -648,6 +635,31 @@ toolbox_raise_callback (GtkWidget *widget,
 			gpointer   data)
 {
   gdk_window_raise (toolbox_shell->window);
+}
+
+static void
+toolbox_style_set_callback (GtkWidget *window,
+			    GtkStyle  *previous_style,
+			    gpointer   data)
+{
+  GdkGeometry  geometry;
+  GtkStyle    *style;
+  gint         xthickness;
+  gint         ythickness;
+
+  style = gtk_widget_get_style (window);
+  xthickness = ((GtkStyleClass *) style->klass)->xthickness;
+  ythickness = ((GtkStyleClass *) style->klass)->ythickness;
+  
+  geometry.min_width  =  2 + 24 + 2 * xthickness;
+  geometry.min_height = 80 + 24 + 2 * ythickness;
+  geometry.width_inc  =      24 + 2 * xthickness;
+  geometry.height_inc =      24 + 2 * ythickness;
+
+  gtk_window_set_geometry_hints (GTK_WINDOW (window), 
+				 NULL,
+				 &geometry, 
+				 GDK_HINT_MIN_SIZE | GDK_HINT_RESIZE_INC);
 }
 
 void
