@@ -86,12 +86,12 @@ static GimpEnumActionEntry drawable_flip_actions[] =
 {
   { "drawable-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
     N_("Flip _Horizontally"), NULL, NULL,
-    GIMP_ORIENTATION_HORIZONTAL,
+    GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_LAYER_FLIP_HORIZONTAL },
 
   { "drawable-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
     N_("Flip _Vertically"), NULL, NULL,
-    GIMP_ORIENTATION_VERTICAL,
+    GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_LAYER_FLIP_VERTICAL }
 };
 
@@ -99,17 +99,17 @@ static GimpEnumActionEntry drawable_rotate_actions[] =
 {
   { "drawable-rotate-90", GIMP_STOCK_ROTATE_90,
     N_("Rotate 90 degrees _CW"), NULL, NULL,
-    GIMP_ROTATE_90,
+    GIMP_ROTATE_90, FALSE,
     GIMP_HELP_LAYER_ROTATE_90 },
 
   { "drawable-rotate-180", GIMP_STOCK_ROTATE_180,
     N_("Rotate _180 degrees"), NULL, NULL,
-    GIMP_ROTATE_180,
+    GIMP_ROTATE_180, FALSE,
     GIMP_HELP_LAYER_ROTATE_180 },
 
   { "drawable-rotate-270", GIMP_STOCK_ROTATE_270,
     N_("Rotate 90 degrees CC_W"), NULL, NULL,
-    GIMP_ROTATE_270,
+    GIMP_ROTATE_270, FALSE,
     GIMP_HELP_LAYER_ROTATE_270 }
 };
 

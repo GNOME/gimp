@@ -41,6 +41,7 @@ struct _GimpEnumAction
   GimpAction parent_instance;
 
   gint       value;
+  gboolean   value_variable;
 };
 
 struct _GimpEnumActionClass
@@ -57,7 +58,8 @@ GimpEnumAction * gimp_enum_action_new      (const gchar    *name,
                                             const gchar    *label,
                                             const gchar    *tooltip,
                                             const gchar    *stock_id,
-                                            gint            value);
+                                            gint            value,
+                                            gboolean        value_variable);
 void             gimp_enum_action_selected (GimpEnumAction *action,
                                             gint            value);
 

@@ -121,17 +121,17 @@ static GimpEnumActionEntry image_convert_actions[] =
 {
   { "image-convert-rgb", GIMP_STOCK_CONVERT_RGB,
     N_("_RGB"), NULL, NULL,
-    GIMP_RGB,
+    GIMP_RGB, FALSE,
     GIMP_HELP_IMAGE_CONVERT_RGB },
 
   { "image-convert-grayscale", GIMP_STOCK_CONVERT_GRAYSCALE,
     N_("_Grayscale"), NULL, NULL,
-    GIMP_GRAY,
+    GIMP_GRAY, FALSE,
     GIMP_HELP_IMAGE_CONVERT_GRAYSCALE },
 
   { "image-convert-indexed", GIMP_STOCK_CONVERT_INDEXED,
     N_("_Indexed..."), NULL, NULL,
-    GIMP_INDEXED,
+    GIMP_INDEXED, FALSE,
     GIMP_HELP_IMAGE_CONVERT_INDEXED }
 };
 
@@ -139,12 +139,12 @@ static GimpEnumActionEntry image_flip_actions[] =
 {
   { "image-flip-horizontal", GIMP_STOCK_FLIP_HORIZONTAL,
     N_("Flip _Horizontally"), NULL, NULL,
-    GIMP_ORIENTATION_HORIZONTAL,
+    GIMP_ORIENTATION_HORIZONTAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_HORIZONTAL },
 
   { "image-flip-vertical", GIMP_STOCK_FLIP_VERTICAL,
     N_("Flip _Vertically"), NULL, NULL,
-    GIMP_ORIENTATION_VERTICAL,
+    GIMP_ORIENTATION_VERTICAL, FALSE,
     GIMP_HELP_IMAGE_FLIP_VERTICAL }
 };
 
@@ -153,17 +153,17 @@ static GimpEnumActionEntry image_rotate_actions[] =
   { "image-rotate-90", GIMP_STOCK_ROTATE_90,
     /*  please use the degree symbol in the translation  */
     N_("Rotate 90 degrees _CW"), NULL, NULL,
-    GIMP_ROTATE_90,
+    GIMP_ROTATE_90, FALSE,
     GIMP_HELP_IMAGE_ROTATE_90 },
 
   { "image-rotate-180", GIMP_STOCK_ROTATE_180,
     N_("Rotate _180 degrees"), NULL, NULL,
-    GIMP_ROTATE_180,
+    GIMP_ROTATE_180, FALSE,
     GIMP_HELP_IMAGE_ROTATE_180 },
 
   { "image-rotate-270", GIMP_STOCK_ROTATE_270,
     N_("Rotate 90 degrees CC_W"), NULL, NULL,
-    GIMP_ROTATE_270,
+    GIMP_ROTATE_270, FALSE,
     GIMP_HELP_IMAGE_ROTATE_270 }
 };
 

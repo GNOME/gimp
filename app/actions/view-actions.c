@@ -192,39 +192,39 @@ static GimpEnumActionEntry view_zoom_actions[] =
 {
   { "view-zoom", NULL,
     "Set zoom factor", NULL, NULL,
-    GIMP_ACTION_SELECT_SET,
+    GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-zoom-minimum", GTK_STOCK_ZOOM_OUT,
     "Zoom out as far as possible", NULL, NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-maximum", GTK_STOCK_ZOOM_IN,
     "Zoom in as far as possible", NULL, NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out", GTK_STOCK_ZOOM_OUT,
     N_("Zoom _Out"), "minus",
     N_("Zoom out"),
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom _In"), "plus",
     N_("Zoom in"),
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN },
 
   { "view-zoom-out-skip", GTK_STOCK_ZOOM_OUT,
     "Zoom out a lot", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_VIEW_ZOOM_OUT },
 
   { "view-zoom-in-skip", GTK_STOCK_ZOOM_IN,
     "Zoom in a lot", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_NEXT,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_VIEW_ZOOM_IN }
 };
 
@@ -286,27 +286,27 @@ static GimpEnumActionEntry view_padding_color_actions[] =
 {
   { "view-padding-color-theme", NULL,
     N_("From _Theme"), NULL, NULL,
-    GIMP_CANVAS_PADDING_MODE_DEFAULT,
+    GIMP_CANVAS_PADDING_MODE_DEFAULT, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
   { "view-padding-color-light-check", NULL,
     N_("_Light Check Color"), NULL, NULL,
-    GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK,
+    GIMP_CANVAS_PADDING_MODE_LIGHT_CHECK, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
   { "view-padding-color-dark-check", NULL,
     N_("_Dark Check Color"), NULL, NULL,
-    GIMP_CANVAS_PADDING_MODE_DARK_CHECK,
+    GIMP_CANVAS_PADDING_MODE_DARK_CHECK, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
   { "view-padding-color-custom", GTK_STOCK_SELECT_COLOR,
     N_("Select _Custom Color..."), NULL, NULL,
-    GIMP_CANVAS_PADDING_MODE_CUSTOM,
+    GIMP_CANVAS_PADDING_MODE_CUSTOM, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR },
 
   { "view-padding-color-prefs", GIMP_STOCK_RESET,
     N_("As in _Preferences"), NULL, NULL,
-    GIMP_CANVAS_PADDING_MODE_RESET,
+    GIMP_CANVAS_PADDING_MODE_RESET, FALSE,
     GIMP_HELP_VIEW_PADDING_COLOR }
 };
 
@@ -314,37 +314,37 @@ static GimpEnumActionEntry view_scroll_horizontal_actions[] =
 {
   { "view-scroll-horizontal", NULL,
     "Set horizontal scroll offset", NULL, NULL,
-    GIMP_ACTION_SELECT_SET,
+    GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-scroll-left-border", NULL,
     "Scroll to left border", NULL, NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
 
   { "view-scroll-right-border", NULL,
     "Scroll to right border", NULL, NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
 
   { "view-scroll-left", NULL,
     "Scroll left", NULL, NULL,
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-right", NULL,
     "Scroll right", NULL, NULL,
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
 
   { "view-scroll-page-left", NULL,
     "Scroll page left", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-page-right", NULL,
     "Scroll page right", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_NEXT,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
 
@@ -352,37 +352,37 @@ static GimpEnumActionEntry view_scroll_vertical_actions[] =
 {
   { "view-scroll-vertical", NULL,
     "Set vertical scroll offset", NULL, NULL,
-    GIMP_ACTION_SELECT_SET,
+    GIMP_ACTION_SELECT_SET, TRUE,
     NULL },
 
   { "view-scroll-top-border", NULL,
     "Scroll to top border", NULL, NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     NULL },
 
   { "view-scroll-bottom-border", NULL,
     "Scroll to bottom border", NULL, NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     NULL },
 
   { "view-scroll-up", NULL,
     "Scroll up", NULL, NULL,
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-down", NULL,
     "Scroll down", NULL, NULL,
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     NULL },
 
   { "view-scroll-page-up", NULL,
     "Scroll page up", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     NULL },
 
   { "view-scroll-page-down", NULL,
     "Scroll page down", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_NEXT,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     NULL }
 };
 

@@ -346,7 +346,8 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
             {
             case GIMP_CONTROLLER_EVENT_VALUE:
               if (G_VALUE_HOLDS_DOUBLE (&event->value.value) &&
-                  GIMP_IS_ENUM_ACTION (action))
+                  GIMP_IS_ENUM_ACTION (action)               &&
+                  GIMP_ENUM_ACTION (action)->value_variable)
                 {
                   gdouble value = g_value_get_double (&event->value.value);
 

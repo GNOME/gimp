@@ -538,7 +538,8 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
 
       action = gimp_enum_action_new (entries[i].name, label, tooltip,
 				     entries[i].stock_id,
-				     entries[i].value);
+				     entries[i].value,
+                                     entries[i].value_variable);
 
       if (! group->mnemonics)
         g_free (label);

@@ -206,12 +206,12 @@ static GimpEnumActionEntry layers_mask_apply_actions[] =
 {
   { "layers-mask-apply", NULL,
     N_("Apply Layer _Mask"), NULL, NULL,
-    GIMP_MASK_APPLY,
+    GIMP_MASK_APPLY, FALSE,
     GIMP_HELP_LAYER_MASK_APPLY },
 
   { "layers-mask-delete", GTK_STOCK_DELETE,
     N_("Delete Layer Mas_k"), "", NULL,
-    GIMP_MASK_DISCARD,
+    GIMP_MASK_DISCARD, FALSE,
     GIMP_HELP_LAYER_MASK_DELETE }
 };
 
@@ -219,22 +219,22 @@ static GimpEnumActionEntry layers_mask_to_selection_actions[] =
 {
   { "layers-mask-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("_Mask to Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_REPLACE,
+    GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_REPLACE },
 
   { "layers-mask-selection-add", GIMP_STOCK_SELECTION_ADD,
     N_("_Add to Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_ADD,
+    GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_ADD },
 
   { "layers-mask-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
     N_("_Subtract from Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_SUBTRACT,
+    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_SUBTRACT },
 
   { "layers-mask-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
     N_("_Intersect with Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_INTERSECT,
+    GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_MASK_SELECTION_INTERSECT }
 };
 
@@ -242,22 +242,22 @@ static GimpEnumActionEntry layers_alpha_to_selection_actions[] =
 {
   { "layers-alpha-selection-replace", GIMP_STOCK_SELECTION_REPLACE,
     N_("Al_pha to Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_REPLACE,
+    GIMP_CHANNEL_OP_REPLACE, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_REPLACE },
 
   { "layers-alpha-selection-add", GIMP_STOCK_SELECTION_ADD,
     N_("A_dd to Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_ADD,
+    GIMP_CHANNEL_OP_ADD, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_ADD },
 
   { "layers-alpha-selection-subtract", GIMP_STOCK_SELECTION_SUBTRACT,
     N_("_Subtract from Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_SUBTRACT,
+    GIMP_CHANNEL_OP_SUBTRACT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_SUBTRACT },
 
   { "layers-alpha-selection-intersect", GIMP_STOCK_SELECTION_INTERSECT,
     N_("_Intersect with Selection"), NULL, NULL,
-    GIMP_CHANNEL_OP_INTERSECT,
+    GIMP_CHANNEL_OP_INTERSECT, FALSE,
     GIMP_HELP_LAYER_ALPHA_SELECTION_INTERSECT }
 };
 
@@ -265,22 +265,22 @@ static GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
     N_("Select _Top Layer"), "Home", NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_TOP },
 
   { "layers-select-bottom", NULL,
     N_("Select _Bottom Layer"), "End", NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_BOTTOM },
 
   { "layers-select-previous", NULL,
     N_("Select _Previous Layer"), "Prior", NULL,
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
     N_("Select _Next Layer"), "Next", NULL,
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
 };
 
@@ -288,31 +288,31 @@ static GimpEnumActionEntry layers_opacity_actions[] =
 {
   { "layers-opacity-set", GIMP_STOCK_TRANSPARENCY,
     N_("Set Opacity"), NULL, NULL,
-    GIMP_ACTION_SELECT_SET,
+    GIMP_ACTION_SELECT_SET, TRUE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-transparent", GIMP_STOCK_TRANSPARENCY,
     "Completely Transparent", NULL, NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-opaque", GIMP_STOCK_TRANSPARENCY,
     "Completely Opaque", NULL, NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-decrease", GIMP_STOCK_TRANSPARENCY,
     "More Transparent", NULL, NULL,
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-increase", GIMP_STOCK_TRANSPARENCY,
     "More Opaque", NULL, NULL,
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-decrease-skip", GIMP_STOCK_TRANSPARENCY,
     "10% More Transparent", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_PREVIOUS,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_OPACITY },
   { "layers-opacity-increase-skip", GIMP_STOCK_TRANSPARENCY,
     "10% More Opaque", NULL, NULL,
-    GIMP_ACTION_SELECT_SKIP_NEXT,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
     GIMP_HELP_LAYER_OPACITY }
 };
 
@@ -320,19 +320,19 @@ static GimpEnumActionEntry layers_mode_actions[] =
 {
   { "layers-mode-first", GIMP_STOCK_TOOL_PENCIL,
     "First Layer Mode", NULL, NULL,
-    GIMP_ACTION_SELECT_FIRST,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-last", GIMP_STOCK_TOOL_PENCIL,
     "Last Layer Mode", NULL, NULL,
-    GIMP_ACTION_SELECT_LAST,
+    GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-previous", GIMP_STOCK_TOOL_PENCIL,
     "Previous Layer Mode", NULL, NULL,
-    GIMP_ACTION_SELECT_PREVIOUS,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_MODE },
   { "layers-mode-next", GIMP_STOCK_TOOL_PENCIL,
     "Next Layer Mode", NULL, NULL,
-    GIMP_ACTION_SELECT_NEXT,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_MODE }
 };
 

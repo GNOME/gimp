@@ -61,13 +61,13 @@ static GimpEnumActionEntry palette_editor_new_actions[] =
   { "palette-editor-new-color-fg", GTK_STOCK_NEW,
     N_("New Color from _FG"), "",
     N_("New color from FG"),
-    FALSE,
+    FALSE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW },
 
   { "palette-editor-new-color-bg", GTK_STOCK_NEW,
     N_("New Color from _BG"), "",
     N_("New color from BG"),
-    TRUE,
+    TRUE, FALSE,
     GIMP_HELP_PALETTE_EDITOR_NEW }
 };
 
@@ -76,19 +76,19 @@ static GimpEnumActionEntry palette_editor_zoom_actions[] =
   { "palette-editor-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom _In"), "",
     N_("Zoom in"),
-    GIMP_ZOOM_IN,
+    GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_IN },
 
   { "palette-editor-zoom-out", GTK_STOCK_ZOOM_OUT,
     N_("Zoom _Out"), "",
     N_("Zoom out"),
-    GIMP_ZOOM_OUT,
+    GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_OUT },
 
   { "palette-editor-zoom-all", GTK_STOCK_ZOOM_FIT,
     N_("Zoom _All"), "",
     N_("Zoom all"),
-    GIMP_ZOOM_TO, /* abused */
+    GIMP_ZOOM_TO /* abused */, FALSE,
     GIMP_HELP_PALETTE_EDITOR_ZOOM_ALL }
 };
 

@@ -129,17 +129,17 @@ static GimpEnumActionEntry edit_fill_actions[] =
 {
   { "edit-fill-fg", GIMP_STOCK_TOOL_BUCKET_FILL,
     N_("Fill with _FG Color"), "<control>comma", NULL,
-    GIMP_FOREGROUND_FILL,
+    GIMP_FOREGROUND_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_FG },
 
   { "edit-fill-bg", GIMP_STOCK_TOOL_BUCKET_FILL,
     N_("Fill with B_G Color"), "<control>period", NULL,
-    GIMP_BACKGROUND_FILL,
+    GIMP_BACKGROUND_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_BG },
 
   { "edit-fill-pattern", GIMP_STOCK_TOOL_BUCKET_FILL,
     N_("Fill with P_attern"), "<control>semicolon", NULL,
-    GIMP_PATTERN_FILL,
+    GIMP_PATTERN_FILL, FALSE,
     GIMP_HELP_EDIT_FILL_PATTERN }
 };
 

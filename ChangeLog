@@ -1,5 +1,38 @@
 2004-11-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpenumaction.[ch]: added boolean property
+	"value-variable" which specifies if the GimpEnumAction::selected()
+	signal may be emitted with arbirtary values (value-variable = TRUE)
+	or *only* with enum_action->value (value-variable = FALSE).
+
+	* app/widgets/gimpactiongroup.[ch]: added "gboolean
+	value_variable" to GimpEnumActionEntry and set it in
+	gimp_action_group_add_enum_actions().
+
+	* app/actions/channels-actions.c
+	* app/actions/colormap-editor-actions.c
+	* app/actions/context-actions.c
+	* app/actions/drawable-actions.c
+	* app/actions/edit-actions.c
+	* app/actions/error-console-actions.c
+	* app/actions/gradient-editor-actions.c
+	* app/actions/image-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/palette-editor-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/vectors-actions.c
+	* app/actions/view-actions.c: set "variable" to FALSE for all enum
+	actions except those which are used with the GIMP_ACTION_SELECT_SET
+	voodoo.
+
+	* app/widgets/gimpcontrollers.c (gimp_controllers_event_mapped):
+	fall back to gtk_action_activate() if the action specified in a
+	GIMP_CONTROLLER_EVENT_VALUE mapping is not variable. Enables
+	triggering of enum actions from GIMP_CONTROLLER_EVENT_VALUE events
+	(like midi note-on and note-off).
+
+2004-11-18  Michael Natterer  <mitch@gimp.org>
+
 	* acinclude.m4: pasted the complete alsa.m4 so compiling from
 	CVS doesn't require alsa.m4 to be installed.
 

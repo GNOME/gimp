@@ -101,6 +101,7 @@ struct _GimpEnumActionEntry
   const gchar *accelerator;
   const gchar *tooltip;
   gint         value;
+  gboolean     value_variable;
 
   const gchar *help_id;
 };

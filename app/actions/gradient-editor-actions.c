@@ -119,44 +119,44 @@ static GimpActionEntry gradient_editor_actions[] =
 #define LOAD_LEFT_FROM(num,magic) \
   { "gradient-editor-load-left-" num, NULL, \
     num, NULL, NULL, \
-    (magic), \
+    (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD }
 #define SAVE_LEFT_TO(num,magic) \
   { "gradient-editor-save-left-" num, NULL, \
     num, NULL, NULL, \
-    (magic), \
+    (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_LEFT_SAVE }
 #define LOAD_RIGHT_FROM(num,magic) \
   { "gradient-editor-load-right-" num, NULL, \
     num, NULL, NULL, \
-    (magic), \
+    (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD }
 #define SAVE_RIGHT_TO(num,magic) \
   { "gradient-editor-save-right-" num, NULL, \
     num, NULL, NULL, \
-    (magic), \
+    (magic), FALSE, \
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_SAVE }
 
 static GimpEnumActionEntry gradient_editor_load_left_actions[] =
 {
   { "gradient-editor-load-left-left-neighbor", NULL,
     N_("_Left Neighbor's Right Endpoint"), NULL, NULL,
-    0,
+    0, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-right-endpoint", NULL,
     N_("_Right Endpoint"), NULL, NULL,
-    1,
+    1, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-fg", NULL,
     N_("_FG Color"), NULL, NULL,
-    2,
+    2, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   { "gradient-editor-load-left-bg", NULL,
     N_("_BG Color"), NULL, NULL,
-    3,
+    3, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_LEFT_LOAD },
 
   LOAD_LEFT_FROM ("01", 4),
@@ -189,22 +189,22 @@ static GimpEnumActionEntry gradient_editor_load_right_actions[] =
 {
   { "gradient-editor-load-right-right-neighbor", NULL,
     N_("_Right Neighbor's Left Endpoint"), NULL, NULL,
-    0,
+    0, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-left-endpoint", NULL,
     N_("_Left Endpoint"), NULL, NULL,
-    1,
+    1, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-fg", NULL,
     N_("_FG Color"), NULL, NULL,
-    2,
+    2, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   { "gradient-editor-load-right-bg", NULL,
     N_("_BG Color"), NULL, NULL,
-    3,
+    3, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_RIGHT_LOAD },
 
   LOAD_RIGHT_FROM ("01", 4),
@@ -300,19 +300,19 @@ static GimpEnumActionEntry gradient_editor_zoom_actions[] =
   { "gradient-editor-zoom-in", GTK_STOCK_ZOOM_IN,
     N_("Zoom In"), NULL,
     N_("Zoom in"),
-    GIMP_ZOOM_IN,
+    GIMP_ZOOM_IN, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
 
   { "gradient-editor-zoom-out", GTK_STOCK_ZOOM_OUT,
     N_("Zoom Out"), NULL,
     N_("Zoom out"),
-    GIMP_ZOOM_OUT,
+    GIMP_ZOOM_OUT, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
 
   { "gradient-editor-zoom-all", GTK_STOCK_ZOOM_FIT,
     N_("Zoom All"), NULL,
     N_("Zoom all"),
-    GIMP_ZOOM_TO, /* abused */
+    GIMP_ZOOM_TO /* abused */, FALSE,
     GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL }
 };
 

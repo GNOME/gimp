@@ -39,7 +39,8 @@ enum
 enum
 {
   PROP_0,
-  PROP_VALUE
+  PROP_VALUE,
+  PROP_VALUE_VARIABLE
 };
 
 
@@ -109,6 +110,12 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
                                                      G_MININT, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_VALUE_VARIABLE,
+                                   g_param_spec_boolean ("value-variable",
+                                                         NULL, NULL,
+                                                         FALSE,
+                                                         G_PARAM_READWRITE));
+
   action_signals[SELECTED] =
     g_signal_new ("selected",
                   G_TYPE_FROM_CLASS (klass),
@@ -123,7 +130,8 @@ gimp_enum_action_class_init (GimpEnumActionClass *klass)
 static void
 gimp_enum_action_init (GimpEnumAction *action)
 {
-  action->value = 0;
+  action->value          = 0;
+  action->value_variable = FALSE;
 }
 
 static void
@@ -138,6 +146,9 @@ gimp_enum_action_get_property (GObject    *object,
     {
     case PROP_VALUE:
       g_value_set_int (value, action->value);
+      break;
+    case PROP_VALUE_VARIABLE:
+      g_value_set_boolean (value, action->value_variable);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
@@ -158,6 +169,9 @@ gimp_enum_action_set_property (GObject      *object,
     case PROP_VALUE:
       action->value = g_value_get_int (value);
       break;
+    case PROP_VALUE_VARIABLE:
+      action->value_variable = g_value_get_boolean (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
       break;
@@ -169,14 +183,16 @@ gimp_enum_action_new (const gchar *name,
                       const gchar *label,
                       const gchar *tooltip,
                       const gchar *stock_id,
-                      gint         value)
+                      gint         value,
+                      gboolean     value_variable)
 {
   return g_object_new (GIMP_TYPE_ENUM_ACTION,
-                       "name",     name,
-                       "label",    label,
-                       "tooltip",  tooltip,
-                       "stock_id", stock_id,
-                       "value",    value,
+                       "name",           name,
+                       "label",          label,
+                       "tooltip",        tooltip,
+                       "stock_id",       stock_id,
+                       "value",          value,
+                       "value-variable", value_variable,
                        NULL);
 }
 

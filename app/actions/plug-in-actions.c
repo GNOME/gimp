@@ -91,12 +91,12 @@ static GimpEnumActionEntry plug_in_repeat_actions[] =
 {
   { "plug-in-repeat", GTK_STOCK_EXECUTE,
     N_("Repeat Last"), "<control>F", NULL,
-    FALSE,
+    FALSE, FALSE,
     GIMP_HELP_FILTER_REPEAT },
 
   { "plug-in-reshow", GIMP_STOCK_RESHOW_FILTER,
     N_("Re-Show Last"), "<control><shift>F", NULL,
-    TRUE,
+    TRUE, FALSE,
     GIMP_HELP_FILTER_RESHOW }
 };
 

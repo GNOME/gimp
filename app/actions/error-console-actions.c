@@ -52,13 +52,13 @@ static GimpEnumActionEntry error_console_save_actions[] =
   { "error-console-save-all", GTK_STOCK_SAVE_AS,
     N_("Save _All Errors to File..."), "",
     N_("Save all errors"),
-    FALSE,
+    FALSE, FALSE,
     GIMP_HELP_ERRORS_SAVE },
 
   { "error-console-save-selection", GTK_STOCK_SAVE_AS,
     N_("Save _Selection to File..."), "",
     N_("Save selection"),
-    TRUE,
+    TRUE, FALSE,
     GIMP_HELP_ERRORS_SAVE }
 };
 
