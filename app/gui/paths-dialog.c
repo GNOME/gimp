@@ -212,9 +212,10 @@ static OpsButton point_ops_buttons[] =
 static void
 paths_dialog_set_menu_sensitivity (void)
 {
-  gboolean gimage = FALSE;  /*  is there a gimage  */
-  gboolean pp     = FALSE;  /*  paths present  */
-  gboolean cpp    = FALSE;  /*  is there a path in the pate buffer  */
+  GtkItemFactory *item_factory;
+  gboolean        gimage = FALSE;  /*  is there a gimage  */
+  gboolean        pp     = FALSE;  /*  paths present  */
+  gboolean        cpp    = FALSE;  /*  is there a path in the pate buffer  */
 
   if (! paths_dialog)
     return;
@@ -228,8 +229,10 @@ paths_dialog_set_menu_sensitivity (void)
   if (copy_pp)
     cpp = TRUE;
 
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Paths>"));
+
 #define SET_SENSITIVE(menu,condition) \
-        gimp_menu_item_set_sensitive ("<Paths>/" menu, (condition) != 0)
+        gimp_item_factory_set_sensitive (item_factory, menu, (condition) != 0)
 #define SET_OPS_SENSITIVE(button,condition) \
         gtk_widget_set_sensitive (paths_ops_buttons[(button)].widget, \
                                  (condition) != 0)
@@ -237,31 +240,31 @@ paths_dialog_set_menu_sensitivity (void)
         gtk_widget_set_sensitive (point_ops_buttons[(button)].widget, \
                                  (condition) != 0)
 
-  SET_SENSITIVE ("New Path", gimage);
+  SET_SENSITIVE ("/New Path", gimage);
   SET_OPS_SENSITIVE (0, gimage);
 
-  SET_SENSITIVE ("Duplicate Path", pp);
+  SET_SENSITIVE ("/Duplicate Path", pp);
   SET_OPS_SENSITIVE (1, pp);
 
-  SET_SENSITIVE ("Path to Selection", pp);
+  SET_SENSITIVE ("/Path to Selection", pp);
   SET_OPS_SENSITIVE (2, pp);
 
-  SET_SENSITIVE ("Selection to Path", gimage);
+  SET_SENSITIVE ("/Selection to Path", gimage);
   SET_OPS_SENSITIVE (3, gimage);
 
-  SET_SENSITIVE ("Stroke Path", pp);
+  SET_SENSITIVE ("/Stroke Path", pp);
   SET_OPS_SENSITIVE (4, pp);
 
-  SET_SENSITIVE ("Delete Path", pp);
+  SET_SENSITIVE ("/Delete Path", pp);
   SET_OPS_SENSITIVE (5, pp);
 
-  SET_SENSITIVE ("Copy Path", pp);
-  SET_SENSITIVE ("Paste Path", pp && cpp);
+  SET_SENSITIVE ("/Copy Path", pp);
+  SET_SENSITIVE ("/Paste Path", pp && cpp);
 
-  SET_SENSITIVE ("Import Path...", gimage);
-  SET_SENSITIVE ("Export Path...", pp);
+  SET_SENSITIVE ("/Import Path...", gimage);
+  SET_SENSITIVE ("/Export Path...", pp);
 
-  SET_SENSITIVE ("Edit Path Attributes...", pp);
+  SET_SENSITIVE ("/Edit Path Attributes...", pp);
 
   /*  new point  */
   SET_POINT_SENSITIVE (0, pp);
@@ -1329,7 +1332,8 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
   args[2].arg_type      = GIMP_PDB_DRAWABLE;
   args[2].value.pdb_int = (gint32) gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage)));
 
-  plug_in_run (proc_rec, args, 3, FALSE, TRUE,
+  plug_in_run (gimage->gimp,
+               proc_rec, args, 3, FALSE, TRUE,
 	       gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gimage))));
 
   g_free (args);
@@ -1368,7 +1372,8 @@ paths_dialog_sel_to_path_callback (GtkWidget *widget,
 
   /* get the display by asking the current context */
   gdisp = gimp_context_get_display (gimp_get_user_context (gimage->gimp));
-  plug_in_run (proc_rec, args, 3, FALSE, TRUE,
+  plug_in_run (gimage->gimp,
+               proc_rec, args, 3, FALSE, TRUE,
 	       gdisp ? gdisp->ID : 0);
 
   g_free (args);

@@ -20,10 +20,11 @@
 #define __FILE_OPEN_DIALOG_H__
 
 
-void   file_open_dialog_menu_init  (Gimp *gimp);
+void   file_open_dialog_menu_init  (Gimp            *gimp,
+                                    GimpItemFactory *item_factory);
 void   file_open_dialog_menu_reset (void);
 
-void   file_open_dialog_show       (Gimp *gimp);
+void   file_open_dialog_show       (Gimp            *gimp);
 
 
 #endif /* __FILE_OPEN_DIALOG_H__ */

@@ -244,8 +244,8 @@ gui_restore (Gimp     *gimp,
 
   gimp->message_handler = GIMP_MESSAGE_BOX;
 
-  file_open_dialog_menu_init (gimp);
-  file_save_dialog_menu_init (gimp);
+  file_open_dialog_menu_init (gimp, gimp_item_factory_from_path ("<Load>"));
+  file_save_dialog_menu_init (gimp, gimp_item_factory_from_path ("<Save>"));
 
   menus_restore (gimp);
 

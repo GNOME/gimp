@@ -30,7 +30,7 @@
 #include "procedural_db.h"
 
 #include "gimphelp.h"
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
 
 static ProcRecord help_proc;
 
@@ -57,7 +57,7 @@ help_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    gimp_help (plug_in_help_path (prog_name), help_page);
+    gimp_help (plug_ins_help_path (prog_name), help_page);
 
   return procedural_db_return_args (&help_proc, success);
 }

@@ -46,11 +46,11 @@ HELP
 
     %invoke = (
         success => 'TRUE',
-	code => 'gimp_help (plug_in_help_path (prog_name), help_page);'
+	code => 'gimp_help (plug_ins_help_path (prog_name), help_page);'
     );
 }
 
-@headers = qw(<sys/types.h> "plug-in/plug-in.h" "gimphelp.h");
+@headers = qw(<sys/types.h> "plug-in/plug-ins.h" "gimphelp.h");
 
 @procs = qw(help);
 %exports = (app => [@procs], lib => [@procs]);

@@ -100,13 +100,15 @@ static PlugInProcDef *load_file_proc = NULL;
 /*  public functions  */
 
 void
-file_open_dialog_menu_init (Gimp *gimp)
+file_open_dialog_menu_init (Gimp            *gimp,
+                            GimpItemFactory *item_factory)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
   GSList               *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
   gimp->load_procs = g_slist_reverse (gimp->load_procs);
 
@@ -131,7 +133,7 @@ file_open_dialog_menu_init (Gimp *gimp)
 
       g_free (lowercase_basename);
 
-      entry.entry.path            = file_proc->menu_path;
+      entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
       entry.entry.callback        = file_open_type_callback;
       entry.entry.callback_action = 0;
@@ -140,7 +142,10 @@ file_open_dialog_menu_init (Gimp *gimp)
       entry.help_page             = help_page;
       entry.description           = NULL;
 
-      gimp_menu_item_create (&entry, NULL, file_proc);
+      gimp_item_factory_create_item (item_factory,
+                                     &entry,
+                                     file_proc, 2,
+                                     TRUE, FALSE);
     }
 }
 

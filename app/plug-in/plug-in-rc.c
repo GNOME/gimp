@@ -38,6 +38,8 @@
 #include "plug-in-types.h"
 
 #include "plug-in.h"
+#include "plug-ins.h"
+#include "plug-in-def.h"
 #include "plug-in-proc.h"
 #include "plug-in-rc.h"
 
@@ -244,7 +246,7 @@ plug_in_def_deserialize (GScanner *scanner)
 
       if (parse_token (scanner, token))
         {
-          plug_in_def_add (plug_in_def);
+          plug_ins_def_add (plug_in_def);
           return G_TOKEN_LEFT_PAREN;
         }
     }
@@ -287,7 +289,7 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
     return G_TOKEN_STRING;
 
   proc_def->image_types_val = 
-    plug_in_image_types_parse (proc_def->image_types);
+    plug_ins_image_types_parse (proc_def->image_types);
 
   if (!parse_int (scanner, (gint *) &proc_def->db_info.num_args)) 
     return G_TOKEN_INT;

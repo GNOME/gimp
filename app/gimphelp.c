@@ -34,6 +34,9 @@
 
 #include "core/core-types.h"
 
+#include "pdb/procedural_db.h"
+
+#include "plug-in/plug-ins.h"
 #include "plug-in/plug-in.h"
 
 #include "app_procs.h"
@@ -218,7 +221,7 @@ gimp_help_internal (const gchar *help_path,
       args[3].arg_type          = GIMP_PDB_STRING;
       args[3].value.pdb_pointer = (gpointer) help_data;
 
-      plug_in_run (proc_rec, args, 4, FALSE, TRUE, 0);
+      plug_in_run (the_gimp, proc_rec, args, 4, FALSE, TRUE, 0);
 
       g_free (args);
     }

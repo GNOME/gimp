@@ -333,8 +333,10 @@ match_strings (regex_t *preg,
 }
 CODE
 
-@headers = qw(<string.h> <stdlib.h> "regexrepl/regex.h"
-              "core/gimp.h" "plug-in/plug-in.h");
+@headers = qw(<string.h> <stdlib.h> "regexrepl/regex.h" "core/gimp.h"
+              "plug-in/plug-in.h" "plug-in/plug-ins.h"
+              "plug-in/plug-in-def.h" "plug-in/plug-in-proc.h"
+              "plug-in/plug-in-progress.h");
 
 @procs = qw(progress_init progress_update temp_PDB_name plugins_query
 	    plugin_domain_register plugin_help_register);

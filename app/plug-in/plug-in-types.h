@@ -19,6 +19,7 @@
 #ifndef __PLUG_IN_TYPES_H__
 #define __PLUG_IN_TYPES_H__
 
+
 #include "core/core-types.h"
 
 
@@ -40,9 +41,10 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 } PlugInImageType;
 
 
-typedef struct _PlugIn        PlugIn;
-typedef struct _PlugInDef     PlugInDef;
-typedef struct _PlugInProcDef PlugInProcDef;
+typedef struct _PlugIn          PlugIn;
+typedef struct _PlugInDef       PlugInDef;
+typedef struct _PlugInProcDef   PlugInProcDef;
+typedef struct _PlugInMenuEntry PlugInMenuEntry;
 
 
 #endif /* __PLUG_IN_TYPES_H__ */

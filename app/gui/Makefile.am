@@ -89,6 +89,10 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	pattern-select.h		\
 	patterns-commands.c		\
 	patterns-commands.h		\
+	plug-in-commands.c		\
+	plug-in-commands.h		\
+	plug-in-menus.c			\
+	plug-in-menus.h			\
 	preferences-dialog.c		\
 	preferences-dialog.h		\
 	qmask-commands.c		\

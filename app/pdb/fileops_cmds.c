@@ -45,7 +45,9 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "file/file-utils.h"
+#include "plug-in/plug-in-proc.h"
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
 
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;
@@ -489,7 +491,7 @@ register_magic_load_handler_invoker (Gimp     *gimp,
 	  goto done;
 	}
     
-      file_proc = plug_in_file_handler (name, extensions, prefixes, magics);
+      file_proc = plug_ins_file_handler (name, extensions, prefixes, magics);
     
       if (! file_proc)
 	{
@@ -637,7 +639,7 @@ register_save_handler_invoker (Gimp     *gimp,
 	  goto done;
 	}
     
-      file_proc = plug_in_file_handler (name, extensions, prefixes, NULL);
+      file_proc = plug_ins_file_handler (name, extensions, prefixes, NULL);
     
       if (! file_proc)
 	{

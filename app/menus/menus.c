@@ -56,6 +56,7 @@
 #include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "patterns-commands.h"
+#include "plug-in-commands.h"
 #include "qmask-commands.h"
 #include "select-commands.h"
 #include "test-commands.h"
@@ -85,7 +86,7 @@ static void    menus_last_opened_reorder    (GimpContainer   *container,
                                              GimpItemFactory *item_factory);
 static void    menus_color_changed          (GimpContext     *context,
                                              const GimpRGB   *unused,
-                                             Gimp            *gimp);
+                                             GimpItemFactory *item_factory);
 static void    menus_filters_subdirs_to_top (GtkMenu         *menu);
 #ifdef ENABLE_DEBUG_ENTRIES
 static void    menus_debug_recurse_menu     (GtkWidget       *menu,
@@ -900,12 +901,12 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/Filters  */
 
   { { N_("/Filters/Repeat Last"), "<alt>F",
-      filters_repeat_cmd_callback, (guint) FALSE,
+      plug_in_repeat_cmd_callback, (guint) FALSE,
       "<StockItem>", GTK_STOCK_EXECUTE },
     NULL,
     "filters/repeat_last.html", NULL },
   { { N_("/Filters/Re-Show Last"), "<alt><shift>F",
-      filters_repeat_cmd_callback, (guint) TRUE,
+      plug_in_repeat_cmd_callback, (guint) TRUE,
       "<StockItem>", GIMP_STOCK_RESHOW_FILTER },
     NULL,
     "filters/reshow_last.html", NULL },
@@ -2151,12 +2152,12 @@ menus_init (Gimp *gimp)
 
     g_signal_connect (G_OBJECT (user_context), "foreground_changed",
                       G_CALLBACK (menus_color_changed),
-                      gimp);
+                      image_factory);
     g_signal_connect (G_OBJECT (user_context), "background_changed",
                       G_CALLBACK (menus_color_changed),
-                      gimp);
+                      image_factory);
 
-    menus_color_changed (user_context, NULL, gimp);
+    menus_color_changed (user_context, NULL, image_factory);
   }
 }
 
@@ -2530,9 +2531,9 @@ menus_last_opened_reorder (GimpContainer   *container,
 }
 
 static void
-menus_color_changed (GimpContext   *context,
-                     const GimpRGB *unused,
-                     Gimp          *gimp)
+menus_color_changed (GimpContext     *context,
+                     const GimpRGB   *unused,
+                     GimpItemFactory *item_factory)
 {
   GimpRGB fg;
   GimpRGB bg;
@@ -2540,8 +2541,10 @@ menus_color_changed (GimpContext   *context,
   gimp_context_get_foreground (context, &fg);
   gimp_context_get_background (context, &bg);
 
-  gimp_menu_item_set_color ("<Image>/Edit/Fill with FG Color", &fg, FALSE);
-  gimp_menu_item_set_color ("<Image>/Edit/Fill with BG Color", &bg, FALSE);
+  gimp_item_factory_set_color (GTK_ITEM_FACTORY (item_factory),
+                               "/Edit/Fill with FG Color", &fg, FALSE);
+  gimp_item_factory_set_color (GTK_ITEM_FACTORY (item_factory),
+                               "/Edit/Fill with BG Color", &bg, FALSE);
 }
 
 static void

@@ -113,29 +113,9 @@ void   gimp_item_factory_set_visible          (GtkItemFactory        *factory,
                                                gchar                 *path,
                                                gboolean               visible);
 
-
 void   gimp_item_factory_tearoff_callback     (GtkWidget             *widget,
                                                gpointer               data,
                                                guint                  action);
-
-
-void   gimp_menu_item_create                  (GimpItemFactoryEntry  *entry,
-                                               gchar                 *domain_name,
-                                               gpointer               callback_data);
-void   gimp_menu_item_destroy                 (gchar                 *path);
-
-void   gimp_menu_item_set_active              (gchar                 *path,
-                                               gboolean               state);
-void   gimp_menu_item_set_color               (gchar                 *path,
-                                               const GimpRGB         *color,
-                                               gboolean               set_label);
-void   gimp_menu_item_set_label               (gchar                 *path,
-                                               const gchar           *label);
-void   gimp_menu_item_set_sensitive           (gchar                 *path,
-                                               gboolean               sensitive);
-void   gimp_menu_item_set_visible             (gchar                 *path,
-                                               gboolean               visible);
-
 
 G_END_DECLS
 

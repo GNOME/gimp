@@ -42,7 +42,7 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimpunit.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
 
 #include "file/file-open.h"
 
@@ -160,7 +160,7 @@ app_init (gint    gimp_argc,
 
   /*  Initialize the plug-in structures
    */
-  plug_in_init (the_gimp, app_init_update_status);
+  plug_ins_init (the_gimp, app_init_update_status);
 
   if (! no_interface)
     {
@@ -271,7 +271,7 @@ app_exit_finish (void)
       gui_shutdown (the_gimp);
     }
 
-  plug_in_kill ();
+  plug_ins_exit (the_gimp);
 
   if (! no_interface)
     {

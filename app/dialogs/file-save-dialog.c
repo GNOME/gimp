@@ -39,6 +39,7 @@
 #include "core/gimpimage.h"
 
 #include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "file/file-save.h"
 #include "file/file-utils.h"
@@ -90,13 +91,15 @@ static gboolean   set_filename = TRUE;
 /*  public functions  */
 
 void
-file_save_dialog_menu_init (Gimp *gimp)
+file_save_dialog_menu_init (Gimp            *gimp,
+                            GimpItemFactory *item_factory)
 {
   GimpItemFactoryEntry  entry;
   PlugInProcDef        *file_proc;
   GSList               *list;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
 
   gimp->save_procs = g_slist_reverse (gimp->save_procs);
 
@@ -123,7 +126,7 @@ file_save_dialog_menu_init (Gimp *gimp)
 
       g_free (page);
 
-      entry.entry.path            = file_proc->menu_path;
+      entry.entry.path            = strstr (file_proc->menu_path, "/");
       entry.entry.accelerator     = NULL;
       entry.entry.callback        = file_save_type_callback;
       entry.entry.callback_action = 0;
@@ -132,7 +135,10 @@ file_save_dialog_menu_init (Gimp *gimp)
       entry.help_page             = lowercase_page;
       entry.description           = NULL;
 
-      gimp_menu_item_create (&entry, NULL, file_proc);
+      gimp_item_factory_create_item (item_factory,
+                                     &entry,
+                                     file_proc, 2,
+                                     TRUE, FALSE);
     }
 }
 
@@ -348,7 +354,7 @@ file_save_ok_callback (GtkWidget *widget,
 	  args[2].arg_type      = GIMP_PDB_DRAWABLE;
 	  args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (the_drawable));
 
-	  plug_in_run (proc_rec, args, 3, FALSE, TRUE, 0);
+	  plug_in_run (the_gimage->gimp, proc_rec, args, 3, FALSE, TRUE, 0);
 
 	  g_free (args);
 	  

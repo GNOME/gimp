@@ -25,7 +25,7 @@
 
 #include "gui-types.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-in-proc.h"
 
 #include "widgets/gimpitemfactory.h"
 
@@ -35,11 +35,16 @@
 void
 file_dialog_show (GtkWidget *filesel)
 {
-  gimp_menu_item_set_sensitive ("<Toolbox>/File/Open...", FALSE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Open...", FALSE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save", FALSE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save as...", FALSE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save a Copy as...", FALSE);
+  GtkItemFactory *item_factory;
+
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", FALSE);
+
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", FALSE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save", FALSE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", FALSE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy as...", FALSE);
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
   gtk_widget_show (filesel);
@@ -48,13 +53,18 @@ file_dialog_show (GtkWidget *filesel)
 gboolean
 file_dialog_hide (GtkWidget *filesel)
 {
+  GtkItemFactory *item_factory;
+
   gtk_widget_hide (filesel);
   
-  gimp_menu_item_set_sensitive ("<Toolbox>/File/Open...", TRUE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Open...", TRUE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save", TRUE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save as...", TRUE);
-  gimp_menu_item_set_sensitive ("<Image>/File/Save a Copy as...", TRUE);
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", TRUE);
+
+  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
+  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", TRUE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save", TRUE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", TRUE);
+  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy as...", TRUE);
 
   /*  return TRUE because we are used as "delete_event" handler  */
   return TRUE;
@@ -128,8 +138,14 @@ file_dialog_update_menus (GSList        *procs,
 
       if (file_proc->db_info.proc_type != GIMP_EXTENSION)
         {
-          gimp_menu_item_set_sensitive (file_proc->menu_path,
-                                        (file_proc->image_types_val & plug_in_image_type));
+          GtkItemFactory *item_factory;
+
+          item_factory =
+            GTK_ITEM_FACTORY (gimp_item_factory_from_path (file_proc->menu_path));
+
+          gimp_item_factory_set_sensitive (item_factory,
+                                           file_proc->menu_path,
+                                           (file_proc->image_types_val & plug_in_image_type));
         }
     }
 }

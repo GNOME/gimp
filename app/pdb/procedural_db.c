@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 
 #include "core/gimp.h"
@@ -181,7 +183,8 @@ procedural_db_execute (Gimp        *gimp,
 	case GIMP_PLUGIN:
 	case GIMP_EXTENSION:
 	case GIMP_TEMPORARY:
-	  return_args = plug_in_run (procedure, 
+	  return_args = plug_in_run (gimp,
+                                     procedure, 
                                      args, procedure->num_args, 
                                      TRUE, FALSE, -1);
 	  break;
@@ -342,13 +345,11 @@ procedural_db_return_args (ProcRecord *procedure,
 
 void
 procedural_db_destroy_args (Argument *args,
-			    int       nargs)
+			    gint      nargs)
 {
-  gint    i, j;
-  gint    prev_val = 0;
-  gchar **strs;
+  gint i;
 
-  if (!args)
+  if (! args)
     return;
 
   for (i = 0; i < nargs; i++)
@@ -356,10 +357,6 @@ procedural_db_destroy_args (Argument *args,
       switch (args[i].arg_type)
 	{
 	case GIMP_PDB_INT32:
-	  /*  Keep this around in case we need to free an array of strings  */
-	  prev_val = args[i].value.pdb_int;
-	  break;
-
 	case GIMP_PDB_INT16:
 	case GIMP_PDB_INT8:
 	case GIMP_PDB_FLOAT:
@@ -374,16 +371,22 @@ procedural_db_destroy_args (Argument *args,
 	  break;
 
 	case GIMP_PDB_STRINGARRAY:
-	  strs = (gchar **) args[i].value.pdb_pointer;
-	  for (j = 0; j < prev_val; j++)
-	    g_free (strs[j]);
-	  g_free (strs);
+          {
+            gchar **stringarray;
+            gint    count;
+            gint    j;
+
+            count       = args[i - 1].value.pdb_int;
+            stringarray = args[i].value.pdb_pointer;
+
+            for (j = 0; j < count; j++)
+              g_free (stringarray[j]);
+
+            g_free (args[i].value.pdb_pointer);
+          }
 	  break;
 
 	case GIMP_PDB_COLOR:
-	  g_free (args[i].value.pdb_pointer);
-	  break;
-
 	case GIMP_PDB_REGION:
 	case GIMP_PDB_DISPLAY:
 	case GIMP_PDB_IMAGE:
@@ -393,7 +396,12 @@ procedural_db_destroy_args (Argument *args,
 	case GIMP_PDB_SELECTION:
 	case GIMP_PDB_BOUNDARY:
 	case GIMP_PDB_PATH:
+          break;
+
 	case GIMP_PDB_PARASITE:
+          gimp_parasite_free ((GimpParasite *) (args[i].value.pdb_pointer));
+          break;
+
 	case GIMP_PDB_STATUS:
 	case GIMP_PDB_END:
 	  break;

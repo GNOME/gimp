@@ -324,7 +324,7 @@ HELP
       goto done;
     }
 
-  file_proc = plug_in_file_handler (name, extensions, prefixes, magics);
+  file_proc = plug_ins_file_handler (name, extensions, prefixes, magics);
 
   if (! file_proc)
     {
@@ -395,7 +395,7 @@ HELP
       goto done;
     }
 
-  file_proc = plug_in_file_handler (name, extensions, prefixes, NULL);
+  file_proc = plug_ins_file_handler (name, extensions, prefixes, NULL);
 
   if (! file_proc)
     {
@@ -416,7 +416,8 @@ CODE
 }
 
 @headers = qw(<sys/types.h> <unistd.h> "core/gimp.h"
-              "plug-in/plug-in.h" "file/file-utils.h");
+              "plug-in/plug-in.h" "plug-in/plug-ins.h" "plug-in/plug-in-proc.h"
+              "file/file-utils.h");
 
 @procs = qw(file_load file_save file_load_thumbnail file_save_thumbnail
 	    temp_name register_magic_load_handler register_load_handler

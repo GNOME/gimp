@@ -38,8 +38,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimppattern.h"
 
-#include "plug-in/plug-in.h"
-
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdnd.h"
@@ -49,6 +47,7 @@
 #include "gui/gui-types.h" /* FIXME */
 
 #include "gui/info-window.h"
+#include "gui/plug-in-menus.h"
 
 #include "tools/tools-types.h"
 

@@ -61,6 +61,9 @@ libappdisplay_a_SOURCES = \
 	$(libappdisplay_a_built_sources)	\
 	$(libappdisplay_a_sources)
 
+## This is a truly ugly hack
+libappdisplay_a_LIBADD = ../gui/plug-in-menus.o
+
 #
 # rules to generate built sources
 #

@@ -16,23 +16,16 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_PARAMS_H__
-#define __PLUG_IN_PARAMS_H__
+#ifndef __PLUG_IN_COMMANDS_H__
+#define __PLUG_IN_COMMANDS_H__
 
 
-Argument * plug_in_params_to_args (GPParam  *params,
-                                   gint      nparams,
-                                   gboolean  full_copy);
-GPParam  * plug_in_args_to_params (Argument *args,
-                                   gint      nargs,
-                                   gboolean  full_copy);
-
-void       plug_in_params_destroy (GPParam  *params,
-                                   gint      nparams,
-                                   gboolean  full_destroy);
-void       plug_in_args_destroy   (Argument *args,
-                                   gint      nargs,
-                                   gboolean  full_destroy);
+void   plug_in_run_cmd_callback       (GtkWidget *widget,
+                                       gpointer   data,
+                                       guint      action);
+void   plug_in_repeat_cmd_callback    (GtkWidget *widget,
+				       gpointer   data,
+				       guint      action);
 
 
-#endif /* __PLUG_IN_PARAMS_H__ */
+#endif /* __PLUG_IN_COMMANDS_H__ */

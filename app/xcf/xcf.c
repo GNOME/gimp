@@ -32,7 +32,7 @@
 
 #include "pdb/procedural_db.h"
 
-#include "plug-in/plug-in.h"
+#include "plug-in/plug-ins.h"
 #include "plug-in/plug-in-proc.h"
 
 #include "xcf.h"
@@ -178,12 +178,12 @@ xcf_init (Gimp *gimp)
   procedural_db_register (gimp, &xcf_plug_in_load_proc.db_info);
 
   xcf_plug_in_save_proc.image_types_val =
-    plug_in_image_types_parse (xcf_plug_in_save_proc.image_types);
+    plug_ins_image_types_parse (xcf_plug_in_save_proc.image_types);
   xcf_plug_in_load_proc.image_types_val =
-    plug_in_image_types_parse (xcf_plug_in_load_proc.image_types);
+    plug_ins_image_types_parse (xcf_plug_in_load_proc.image_types);
 
-  plug_in_add_internal (&xcf_plug_in_save_proc);
-  plug_in_add_internal (&xcf_plug_in_load_proc);
+  plug_ins_add_internal (&xcf_plug_in_save_proc);
+  plug_ins_add_internal (&xcf_plug_in_load_proc);
 }
 
 void

@@ -31,16 +31,6 @@
 #include "commands.h"
 
 
-/*****  Filters  *****/
-
-void
-filters_repeat_cmd_callback (GtkWidget *widget,
-			     gpointer   data,
-			     guint      action)
-{
-  plug_in_repeat ((gboolean) action);
-}
-
 /*****  Help  *****/
 
 void

@@ -20,10 +20,6 @@
 #define __COMMANDS_H__
 
 
-void   filters_repeat_cmd_callback    (GtkWidget *widget,
-				       gpointer   data,
-				       guint      action);
-
 void   help_help_cmd_callback         (GtkWidget *widget,
 				       gpointer   data);
 void   help_context_help_cmd_callback (GtkWidget *widget,

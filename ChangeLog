@@ -1,5 +1,60 @@
 2002-03-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/plug-in.[ch]: badly chopped into the new files below.
+	Pass around much more "PlugIn" and "Gimp" pointers instead of
+	using "current_plug_in" and "the_gimp". Needs much more hacking
+	though... :(
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-def.[ch]
+	* app/plug-in/plug-in-params.[ch]
+	* app/plug-in/plug-in-progress.[ch]
+	* app/plug-in/plug-ins.[ch]: new files.
+
+	* app/gui/Makefile.am
+	* app/gui/plug-in-commands.[ch]
+	* app/gui/plug-in-menus.[ch]: ditto.
+
+	* app/plug-in/plug-in-rc.c
+	* app/plug-in/plug-in-types.h: changed accordingly.
+
+	* app/pdb/procedural_db.c: changed procedural_db_destroy_args()
+	so it can be used from plug_in_args_destroy(). Fixed a parasite
+	memory leak (or introduced a new SEGV, we'll see...).
+
+	* app/display/Makefile.am: another "truly ugly hack" until the
+	plug-in menu stuff is chopped even more...
+
+	* app/gui/commands.[ch]: removed filters_repeat_cmd_callback() here,
+	it is now in plug-in-commands.[ch].
+
+	* app/widgets/gimpitemfactory.[ch]: removed all gimp_menu_item_*()
+	hacks. We have a GimpItemFactory available in most cases we used
+	to call this functions, and can use gimp_item_factors_from_path()
+	in all other cases. The item factory stuff needs more work
+	anyway...
+
+	* app/app_procs.c
+	* app/gimphelp.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/file-dialog-utils.c
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/paths-dialog.c
+	* app/xcf/xcf.c
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/help.pdb
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly (includes,
+	renamed functions and gimp_menu_item_*() removal).
+
+	* app/pdb/fileops_cmds.c
+	* app/pdb/help_cmds.c
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2002-03-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: pass an additional "Gimp"
 	pointer to gimp_display_shell_set_menu_sensitivity() so we can
 	correctly set the state of some items even without a display.
@@ -12,7 +67,7 @@
 	* app/gui/gui.c: changed accordingly.
 
 	* app/gui/view-commands.[ch]: added a callback for the display
-	filters dialog because display releted dialogs are going to
+	filters dialog because display related dialogs are going to
 	be handled different soon.
 
 	* app/gui/menus.c: use the new callback.
