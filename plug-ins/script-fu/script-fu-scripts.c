@@ -1019,7 +1019,6 @@ script_fu_free_script (SFScript *script)
       g_free (script->copyright);
       g_free (script->date);
       g_free (script->img_types);
-      g_free (script->arg_types);
 
       for (i = 0; i < script->num_args; i++)
 	{
@@ -1087,6 +1086,7 @@ script_fu_free_script (SFScript *script)
 
       g_free (script->arg_labels);
       g_free (script->arg_defaults);
+      g_free (script->arg_types);
       g_free (script->arg_values);
 
       g_free (script);
