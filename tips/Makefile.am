@@ -16,7 +16,6 @@ $(GETTEXT_PACKAGE)-tips.pot: gimp-tips.xml.in
 oldtips = \
 	gimp_tips.txt		\
 	gimp_tips.cs.txt	\
-	gimp_tips.de.txt	\
 	gimp_tips.es.txt 	\
 	gimp_tips.fr.txt	\
 	gimp_tips.hu.txt	\

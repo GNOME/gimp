@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.4\n"
 "POT-Creation-Date: 2002-02-27 16:55+0100\n"
-"PO-Revision-Date: 2002-02-27 18:00+0100\n"
+"PO-Revision-Date: 2002-03-02 14:44+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,13 @@ msgstr "Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei gedrückter <tt
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
-msgstr "Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei gedrückter <tt>Ctrl</tt>-Taste wird die Wirkung der Maske an- und ausgeschaltet."
+msgstr "Durch Mausklick auf die Ebenenmaske im Ebenen-Dialog bei gedrückter <tt>Strg</tt>-Taste wird die Wirkung der Maske an- und ausgeschaltet."
 
 #: tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
-msgstr "Wird mit dem Transformationswerkzeug im Rotationsmodus die <tt>Ctrl</tt>-Taste gedrückt, so können für den Winkel nur Vielfache von 15 Grad eingestellt werden."
+msgstr "Wird mit dem Transformationswerkzeug im Rotationsmodus die <tt>Strg</tt>-Taste gedrückt, so können für den Winkel nur Vielfache von 15 Grad eingestellt werden."
 
 #: tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -120,7 +120,7 @@ msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
-msgstr "Wird beim Erstellen einer Selektion während des Mausklicks die <tt>Shift</tt>-Taste gedrückt, so wird die neue Selektion einer bestehenden hinzugefügt. Wird die <tt>Ctrl</tt>-Taste gedrückt, so wird die neue Selektion von der bestehenden subtrahiert."
+msgstr "Wird beim Erstellen einer Selektion während des Mausklicks die <tt>Shift</tt>-Taste gedrückt, so wird die neue Selektion einer bestehenden hinzugefügt. Wird die <tt>Strg</tt>-Taste gedrückt, so wird die neue Selektion von der bestehenden subtrahiert."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -180,7 +180,7 @@ msgid ""
 "click will draw a straight line from your last drawing point to your current "
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
-msgstr "Mit den Malwerkzeugen (Pinsel, Sprühpistole und Bleistift) kann eine gerade Linie zum letzten gezeichneten Punkt gezogen werden, indem beim Klicken die <tt>Shift</tt>-Taste gedrückt wird."
+msgstr "Mit den Malwerkzeugen (Pinsel, Sprühpistole und Bleistift) kann eine gerade Linie zum letzten gezeichneten Punkt gezogen werden, indem beim Klicken die <tt>Shift</tt>-Taste gedrückt wird. Wird ausserdem <tt>Strg</tt> gedrückt, so wird der Winkel auf Vielfache von 15 Grad beschränkt."
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -238,7 +238,7 @@ msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a perfect square or "
 "circle, or to have it centered on its starting point."
-msgstr "Durch Drücken der <tt>Shift</tt>- bzw. der <tt>Ctrl</tt>-Taste während des Erstellens einer Selektion kann ein Quadrat oder ein Kreis erzeugt werden, beziehungsweise die Selektion auf den Startpunkt zentriert werden."
+msgstr "Durch Drücken der <tt>Shift</tt>- bzw. der <tt>Strg</tt>-Taste während des Erstellens einer Selektion kann ein Quadrat oder ein Kreis erzeugt werden, beziehungsweise die Selektion auf den Startpunkt zentriert werden."
 
 #: tips/gimp-tips.xml.in.h:33
 msgid ""
