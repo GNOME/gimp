@@ -1,5 +1,13 @@
 2004-06-05  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintcore.c
+	* app/paint-funcs/paint-funcs-generic.h
+	* app/paint-funcs/paint-funcs.[ch]: applied a patch from Philip
+	Lafleur that changes the way that paint is applied during a paint
+	stroke. Fixes bug #124225.
+
+2004-06-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/glob.c: added a simple glob plug-in based on

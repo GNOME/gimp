@@ -401,7 +401,8 @@ void  apply_mask_to_region                (PixelRegion *src,
 /*  Combine a mask with an image's alpha channel  */
 void  combine_mask_and_region             (PixelRegion *src,
                                            PixelRegion *mask,
-                                           guint        opacity);
+                                           guint        opacity,
+                                           gboolean     stipple);
 
 /*  Copy a gray image to an intensity-alpha region  */
 void  copy_gray_to_region                 (PixelRegion *src,

@@ -4313,9 +4313,9 @@ apply_mask_to_region (PixelRegion *src,
 
 
 static void
-combine_mask_and_sub_region (gint        *opacityp,
-                             PixelRegion *src,
-                             PixelRegion *mask)
+combine_mask_and_sub_region_stipple (gint        *opacityp,
+                                     PixelRegion *src,
+                                     PixelRegion *mask)
 {
   gint    h;
   guchar *s;
@@ -4328,20 +4328,48 @@ combine_mask_and_sub_region (gint        *opacityp,
 
   while (h --)
     {
-      combine_mask_and_alpha_channel (s, m, opacity, src->w, src->bytes);
+      combine_mask_and_alpha_channel_stipple (s, m, opacity, src->w, src->bytes);
       s += src->rowstride;
       m += mask->rowstride;
     }
 }
 
+
+static void
+combine_mask_and_sub_region_stroke (gint        *opacityp,
+                                    PixelRegion *src,
+                                    PixelRegion *mask)
+{
+  gint    h;
+  guchar *s;
+  guchar *m;
+  guint   opacity = *opacityp;
+
+  s = src->data;
+  m = mask->data;
+  h = src->h;
+
+  while (h --)
+    {
+      combine_mask_and_alpha_channel_stroke (s, m, opacity, src->w, src->bytes);
+      s += src->rowstride;
+      m += mask->rowstride;
+    }
+}
+
+
 void
 combine_mask_and_region (PixelRegion *src,
                          PixelRegion *mask,
-                         guint        opacity)
+                         guint        opacity,
+                         gboolean     stipple)
 {
-
-  pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region,
-                                  &opacity, 2, src, mask);
+  if (stipple)
+    pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region_stipple,
+                                    &opacity, 2, src, mask);
+  else
+    pixel_regions_process_parallel ((p_func)combine_mask_and_sub_region_stroke,
+                                    &opacity, 2, src, mask);
 }
 
 

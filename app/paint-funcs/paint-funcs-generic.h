@@ -1379,34 +1379,71 @@ apply_mask_to_alpha_channel (guchar       *src,
 
 
 inline void
-combine_mask_and_alpha_channel (guchar       *src,
-                                const guchar *mask,
-                                guint         opacity,
-                                guint         length,
-                                guint         bytes)
+combine_mask_and_alpha_channel_stipple (guchar       *src,
+                                        const guchar *mask,
+                                        guint         opacity,
+                                        guint         length,
+                                        guint         bytes)
 {
   gint mask_val;
-  gint alpha;
   gint tmp;
 
-  alpha = bytes - 1;
-  src += alpha;
+  /* align with alpha channel */
+  src += bytes - 1;
 
   if (opacity != 255)
     while (length --)
-    {
-      mask_val = INT_MULT(*mask, opacity, tmp);
-      mask++;
-      *src = *src + INT_MULT((255 - *src) , mask_val, tmp);
-      src += bytes;
-    }
+      {
+        mask_val = INT_MULT(*mask, opacity, tmp);
+        *src = *src + INT_MULT((255 - *src) , mask_val, tmp);
+
+        src += bytes;
+        mask++;
+      }
   else
     while (length --)
-    {
-      *src = *src + INT_MULT((255 - *src) , *mask, tmp);
-      src += bytes;
-      mask++;
-    }
+      {
+        *src = *src + INT_MULT((255 - *src) , *mask, tmp);
+
+        src += bytes;
+        mask++;
+      }
+}
+
+
+inline void
+combine_mask_and_alpha_channel_stroke (guchar       *src,
+                                       const guchar *mask,
+                                       guint         opacity,
+                                       guint         length,
+                                       guint         bytes)
+{
+  gint mask_val;
+  gint tmp;
+
+  /* align with alpha channel */
+  src += bytes - 1;
+
+  if (opacity != 255)
+    while (length --)
+      {
+        if (opacity > *src)
+          {
+            mask_val = INT_MULT(*mask, opacity, tmp);
+            *src = *src + INT_MULT((opacity - *src) , mask_val, tmp);
+          }
+
+        src += bytes;
+        mask++;
+      }
+  else
+    while (length --)
+      {
+        *src = *src + INT_MULT((255 - *src) , *mask, tmp);
+
+        src += bytes;
+        mask++;
+      }
 }
 
 

@@ -42,8 +42,9 @@
 #include "gimppaintcore-undo.h"
 #include "gimppaintoptions.h"
 
-#include "gimp-intl.h"
+#include "gimpairbrush.h"
 
+#include "gimp-intl.h"
 
 /*  local function prototypes  */
 
@@ -851,7 +852,8 @@ paint_mask_to_canvas_tiles (GimpPaintCore *core,
                      TRUE);
 
   /*  combine the mask to the canvas tiles  */
-  combine_mask_and_region (&srcPR, paint_maskPR, paint_opacity * 255.999);
+  combine_mask_and_region (&srcPR, paint_maskPR,
+                           paint_opacity * 255.999, GIMP_IS_AIRBRUSH (core));
 }
 
 static void
