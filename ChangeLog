@@ -1,5 +1,10 @@
 2004-09-13  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimpcroptool.c: Fix trailing whitespace introduced by me.
+	/me hides embarrassed in a corner...   :)
+
+2004-09-13  Simon Budig  <simon@gimp.org>
+
 	* app/tools/gimpcroptool.c: Fix warnings and coding style.
 
 2004-09-12  Nathan Summers  <rock@gimp.org>

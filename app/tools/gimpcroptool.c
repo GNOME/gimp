@@ -936,11 +936,11 @@ crop_start (GimpCropTool *crop)
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, _("Crop: "), 0, " x ", 0);
-  
+
   /* restore sensitivity of buttons */
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell), 
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
                                      GIMP_CROP_MODE_CROP,   TRUE);
-  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell), 
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
                                      GIMP_CROP_MODE_RESIZE, TRUE);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->gdisp);
@@ -1109,9 +1109,9 @@ crop_response (GtkWidget    *widget,
           /* set these buttons to be insensitive so that you cannot
            * accidentially trigger a crop while one is ongoing */
 
-          gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell), 
+          gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
                                              GIMP_CROP_MODE_CROP,   FALSE);
-          gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell), 
+          gtk_dialog_set_response_sensitive (GTK_DIALOG (crop->crop_info->shell),
                                              GIMP_CROP_MODE_RESIZE, FALSE);
         }
 
