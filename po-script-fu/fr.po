@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.11\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2002-12-19 20:42+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Le mode console pour Script-Fu n'autorise que des appels interactifs"
 
@@ -28,23 +29,23 @@ msgid "SIOD Output"
 msgstr "Sortie SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:265
+#: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
 msgstr "Commande courante"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
 msgstr "Parcourir..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Impossible d'ouvrir un flot sur le tampon de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:589
 msgid "Unable to open the SIOD output pipe"
 msgstr "Incapable d'ouvrir le tube de sortie SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "Le mode d'évaluation du Script-Fu autorise uniquement un appel noninteractif"
@@ -69,12 +70,12 @@ msgstr "À propos"
 msgid "Script Arguments"
 msgstr "Paramètres du script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la Couleur pour le Script-Fu"
 
@@ -103,25 +104,25 @@ msgid "Script-Fu Brush Selection"
 msgstr "Sélection des brosses pour le Script-Fu"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
 msgstr "Auteur :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
 msgstr "Copyright :"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
 msgstr "Date :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
 msgstr "Types d'images :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1236,6 +1237,7 @@ msgstr "Appliquer le calque de masque généré"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "Taille de bordure"
 
@@ -1296,7 +1298,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Carte de police..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Bordure"
 

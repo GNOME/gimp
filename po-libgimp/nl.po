@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
+"POT-Creation-Date: 2003-06-09 16:03+0200\n"
 "PO-Revision-Date: 2001-11-30 04:00+01:00\n"
 "Last-Translator: Branko Collin <collin@xs4all.nl>\n"
 "Language-Team: Dutch <vertaling@nl.linux.org>\n"
@@ -14,62 +14,62 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
 msgstr "ondersteunt geen lagen"
 
-#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Zichtbare lagen samenvoegen"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "ondersteunt geen laagverspringen, -grootte of -ondoorzichtigheid"
 
-#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "ondersteunt enkel lagen als animatieframes"
 
-#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "Opslaan als animatie"
 
-#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "Afbeelding pletten"
 
-#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
 msgstr "ondersteunt geen transparantie"
 
-#: libgimp/gimpexport.c:224
+#: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
 msgstr "ondersteunt enkel RGB-afbeeldingen"
 
-#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Converteren naar RGB"
 
-#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
 msgstr "ondersteunt enkel grijswaardenafbeeldingen"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Converteren naar grijswaarden"
 
-#: libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
 msgstr "ondersteunt enkel geïndexeerde afbeeldingen"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -77,27 +77,27 @@ msgstr ""
 "Converteer naar Geïndexeerd met standaard instellingen\n"
 "(Doe het met de hand om het resultaat fijn te regelen)"
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "ondersteunt enkel RGB en Grijswaarden"
 
-#: libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "ondersteunt enkel RGB en Geïndexeerd"
 
-#: libgimp/gimpexport.c:271
+#: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "ondersteunt enkel Grijswaarden en Geïndexeerd"
 
-#: libgimp/gimpexport.c:282
+#: libgimp/gimpexport.c:295
 #, fuzzy, c-format
 msgid "%s needs an alpha channel"
 msgstr "heeft een Alpha-kanaal nodig"
 
-#: libgimp/gimpexport.c:283
+#: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
 msgstr "Alpha-kanaal toevoegen"
 
@@ -106,36 +106,32 @@ msgstr "Alpha-kanaal toevoegen"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:357
+#: libgimp/gimpexport.c:370
 msgid "Confirm Save"
 msgstr "Bevestig opslaan"
 
-#: libgimp/gimpexport.c:361
+#: libgimp/gimpexport.c:378
 msgid "Confirm"
 msgstr "Bevestig"
-
-#: libgimp/gimpexport.c:363
-msgid "Cancel"
-msgstr "Annuleren"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:416
+#: libgimp/gimpexport.c:431
 msgid "Export File"
 msgstr "Bestand exporteren"
 
-#: libgimp/gimpexport.c:421
+#: libgimp/gimpexport.c:436
 msgid "Ignore"
 msgstr "Negeren"
 
-#: libgimp/gimpexport.c:427
+#: libgimp/gimpexport.c:442
 msgid "Export"
 msgstr "Exporteren"
 
-#: libgimp/gimpexport.c:453
+#: libgimp/gimpexport.c:468
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -144,11 +140,11 @@ msgstr ""
 "de volgende redenen:"
 
 #. the footline
-#: libgimp/gimpexport.c:526
+#: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
 msgstr "De exportconversie zal uw orginele afbeelding niet wijzigen."
 
-#: libgimp/gimpexport.c:595
+#: libgimp/gimpexport.c:610
 #, fuzzy, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -157,7 +153,7 @@ msgstr ""
 "U staat op het punt %s op te slaan als %s.\n"
 "Hiermee slaat u niet de zichtbare lagen op."
 
-#: libgimp/gimpexport.c:600
+#: libgimp/gimpexport.c:615
 #, fuzzy, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -169,6 +165,19 @@ msgstr ""
 #: libgimp/gimpmenu.c:181 libgimp/gimpmenu.c:301 libgimp/gimpmenu.c:416
 #: libgimp/gimpmenu.c:598
 msgid "None"
+msgstr ""
+
+#: libgimp/gimpmiscui.c:50
+msgid "Preview"
+msgstr ""
+
+#: libgimp/gimpmiscui.c:529
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
 msgstr ""
 
 #: libgimp/gimpunit.c:56
@@ -240,21 +249,21 @@ msgstr ""
 msgid "Not loaded"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:85
+#: libgimpwidgets/gimpcolorbutton.c:84
 #, fuzzy
 msgid "/Foreground Color"
 msgstr "/Voorgrondkleur gebruiken"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 #, fuzzy
 msgid "/Background Color"
 msgstr "/Achtergrondkleur gebruiken"
 
-#: libgimpwidgets/gimpcolorbutton.c:90
+#: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:92
+#: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
 msgstr ""
 
@@ -335,15 +344,15 @@ msgstr "Selecteer bestand"
 msgid "Select File"
 msgstr "Selecteer bestand"
 
-#: libgimpwidgets/gimpmemsizeentry.c:185
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
 msgstr "Kilobytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
 msgstr "Megabytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:189
 #, fuzzy
 msgid "GigaBytes"
 msgstr "Megabytes"
@@ -388,55 +397,55 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:157
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:229
+#: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:247
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:250
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:266
+#: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Meer..."
 
-#: libgimpwidgets/gimpunitmenu.c:526
+#: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
 msgstr "Selectie van de eenheden"
 
-#: libgimpwidgets/gimpunitmenu.c:571
+#: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
 msgstr "Eenheid"
 
-#: libgimpwidgets/gimpunitmenu.c:575
+#: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
 msgstr "Factor"
 
-#: libgimpwidgets/gimpwidgets.c:977
+#: libgimpwidgets/gimpwidgets.c:943
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -446,11 +455,11 @@ msgstr ""
 "knop niet is ingedrukt. Hiermee kunt u een bepaalde \"random\" operatie "
 "herhalen."
 
-#: libgimpwidgets/gimpwidgets.c:981
+#: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:992
+#: libgimpwidgets/gimpwidgets.c:958
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
@@ -528,6 +537,9 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
+
+#~ msgid "Cancel"
+#~ msgstr "Annuleren"
 
 #~ msgid "a layer mask"
 #~ msgstr "een laagmasker"

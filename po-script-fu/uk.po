@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -13,6 +13,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Консольний режим Скрипт-Фу дозволя╓ лише ╕нтерактивну роботу"
 
@@ -25,24 +26,24 @@ msgid "SIOD Output"
 msgstr "Вив╕д SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:265
+#: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
 msgstr "Поточна команда"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
 msgstr "Переглянути..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Неможливо в╕дкрити пот╕к на канал╕ виводу SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:589
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Неможливо в╕дкрити канал виводу SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Режим виконання Скрипт-Фу дозволя╓ лише не╕нтерактивну роботу"
 
@@ -66,12 +67,12 @@ msgstr "Про"
 msgid "Script Arguments"
 msgstr "Аргументи скрипту"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
 msgstr "Виб╕р кольору Скрипт-Фу"
 
@@ -101,25 +102,25 @@ msgid "Script-Fu Brush Selection"
 msgstr "Виб╕р пензля Скрипт-Фу"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
 msgstr "Автор:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
 msgstr "Авторське право:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
 msgstr "Дата:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
 msgstr "Типи зображень:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1234,6 +1235,7 @@ msgstr "Застосувати створену маску шару"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "Розм╕р облям╕вки"
 
@@ -1294,7 +1296,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Розш./Скрипт-Фу/Утил╕ти/Мапа шрифту..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Рамка"
 

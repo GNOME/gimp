@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
+"POT-Creation-Date: 2003-06-09 16:03+0200\n"
 "PO-Revision-Date: 2003-03-01 09:52--500\n"
 "Last-Translator: Yuriy Syrota <yuri@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -13,62 +13,62 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, fuzzy, c-format
 msgid "%s can't handle layers"
 msgstr "неможливо обробити шари"
 
-#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Об'єднати видимі шари"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:192
 #, fuzzy, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "неможливо обробити шари"
 
-#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, fuzzy, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "можна обробити шари лише як анімовані кадри"
 
-#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "Зберегти як анімацію"
 
-#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "Звести зображення"
 
-#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:228
 #, fuzzy, c-format
 msgid "%s can't handle transparency"
 msgstr "неможливо обробити прозорість"
 
-#: libgimp/gimpexport.c:224
+#: libgimp/gimpexport.c:237
 #, fuzzy, c-format
 msgid "%s can only handle RGB images"
 msgstr "можна обробити лише RGB-зображення"
 
-#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Перетворити у RGB"
 
-#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:246
 #, fuzzy, c-format
 msgid "%s can only handle grayscale images"
 msgstr "можни обробити лише зображення у градація сірого"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Перетворити у градації сірого"
 
-#: libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:255
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
 msgstr "можна обробити лише індексовані зображення"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -76,27 +76,27 @@ msgstr ""
 "Перетворити в індексоване використовуючи типові налаштування\n"
 "(Результат можна налагодити вручну)"
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:265
 #, fuzzy, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "можна обробити лише зображення у градація сірого або RGB"
 
-#: libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:274
 #, fuzzy, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "можна обробити лише RGB або індексовані зображення"
 
-#: libgimp/gimpexport.c:271
+#: libgimp/gimpexport.c:284
 #, fuzzy, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "можна обробити лише зображення у градація сірого або індексовані"
 
-#: libgimp/gimpexport.c:282
+#: libgimp/gimpexport.c:295
 #, fuzzy, c-format
 msgid "%s needs an alpha channel"
 msgstr "необхідно альфа-канал"
 
-#: libgimp/gimpexport.c:283
+#: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
 msgstr "Додати альфа-канал"
 
@@ -105,36 +105,32 @@ msgstr "Додати альфа-канал"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:357
+#: libgimp/gimpexport.c:370
 msgid "Confirm Save"
 msgstr ""
 
-#: libgimp/gimpexport.c:361
+#: libgimp/gimpexport.c:378
 msgid "Confirm"
 msgstr ""
-
-#: libgimp/gimpexport.c:363
-msgid "Cancel"
-msgstr "Скасувати"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:416
+#: libgimp/gimpexport.c:431
 msgid "Export File"
 msgstr "Експортувати файл"
 
-#: libgimp/gimpexport.c:421
+#: libgimp/gimpexport.c:436
 msgid "Ignore"
 msgstr "Ігнорувати"
 
-#: libgimp/gimpexport.c:427
+#: libgimp/gimpexport.c:442
 msgid "Export"
 msgstr "Експорт"
 
-#: libgimp/gimpexport.c:453
+#: libgimp/gimpexport.c:468
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -143,18 +139,18 @@ msgstr ""
 "таких причин:"
 
 #. the footline
-#: libgimp/gimpexport.c:526
+#: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
 msgstr "Експортне перетворення не змінить ваше початкове зображення."
 
-#: libgimp/gimpexport.c:595
+#: libgimp/gimpexport.c:610
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:600
+#: libgimp/gimpexport.c:615
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -165,6 +161,19 @@ msgstr ""
 #: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "Немає"
+
+#: libgimp/gimpmiscui.c:50
+msgid "Preview"
+msgstr ""
+
+#: libgimp/gimpmiscui.c:529
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -237,19 +246,19 @@ msgstr "Не вдалося завантажити"
 msgid "Not loaded"
 msgstr "Не завантажено"
 
-#: libgimpwidgets/gimpcolorbutton.c:85
+#: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
 msgstr "/Колір переднього плану"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Background Color"
 msgstr "/Колір тла"
 
-#: libgimpwidgets/gimpcolorbutton.c:90
+#: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
 msgstr "/Чорний"
 
-#: libgimpwidgets/gimpcolorbutton.c:92
+#: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
 msgstr "/Білий"
 
@@ -329,15 +338,15 @@ msgstr "Вибір теки"
 msgid "Select File"
 msgstr "Вибір файлу"
 
-#: libgimpwidgets/gimpmemsizeentry.c:185
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
 msgstr "Кілобайти"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
 msgstr "Мегабайти"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:189
 msgid "GigaBytes"
 msgstr "Гігабайти"
 
@@ -381,55 +390,55 @@ msgstr ""
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:157
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:229
+#: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:247
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:250
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:266
+#: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "Ще..."
 
-#: libgimpwidgets/gimpunitmenu.c:526
+#: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
 msgstr "Вибір одиниць"
 
-#: libgimpwidgets/gimpunitmenu.c:571
+#: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
 msgstr "Одиниці"
 
-#: libgimpwidgets/gimpunitmenu.c:575
+#: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
 msgstr "Множник"
 
-#: libgimpwidgets/gimpwidgets.c:977
+#: libgimpwidgets/gimpwidgets.c:943
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -439,11 +448,11 @@ msgstr ""
 "ініціалізації генератора випадкових чисел, то це дозволяє вам повторити дану "
 "\"випадкову\" операцію"
 
-#: libgimpwidgets/gimpwidgets.c:981
+#: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:992
+#: libgimpwidgets/gimpwidgets.c:958
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
@@ -521,3 +530,6 @@ msgstr ""
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
+
+#~ msgid "Cancel"
+#~ msgstr "Скасувати"

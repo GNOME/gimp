@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2003-06-05 07:53+0800\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2003-06-05 07:54+0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu 콘솔 모드는 오직 상호작용적 작용에서만 허용됩니다."
 
@@ -68,12 +69,12 @@ msgstr "대하여"
 msgid "Script Arguments"
 msgstr "스크립트 인수"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 파일 셀렉션"
@@ -103,30 +104,30 @@ msgstr "Script-Fu 색감변화도 셀렉션"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 브러쉬 셀렉션"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1910
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1916
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1922
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 #, fuzzy
 msgid "Date:"
 msgstr "날짜 :"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 #, fuzzy
 msgid "Image Types:"
 msgstr "이미지 유형: "
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -242,12 +243,12 @@ msgid "Default Bumpmap Settings"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:5
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 #: plug-ins/script-fu/scripts/asc2img.scm.h:7
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
@@ -265,7 +266,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: plug-ins/script-fu/scripts/glossy.scm.h:7
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:6
 #: plug-ins/script-fu/scripts/news-text.scm.h:7
@@ -283,11 +284,12 @@ msgid "Font"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:6
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
 #: plug-ins/script-fu/scripts/asc2img.scm.h:8
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
@@ -306,7 +308,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: plug-ins/script-fu/scripts/glossy.scm.h:8
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:7
 #: plug-ins/script-fu/scripts/news-text.scm.h:8
@@ -356,11 +358,11 @@ msgid "Shadow Y Offset"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:12
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
@@ -378,7 +380,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 #: plug-ins/script-fu/scripts/glossy.scm.h:16
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 #: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:9
 #: plug-ins/script-fu/scripts/news-text.scm.h:9
@@ -404,11 +406,11 @@ msgstr "Script-Fu 콘솔"
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 #: plug-ins/script-fu/scripts/asc2img.scm.h:3
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:3
 #: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: plug-ins/script-fu/scripts/chalk.scm.h:3
@@ -419,7 +421,7 @@ msgstr "Script-Fu 콘솔"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 #: plug-ins/script-fu/scripts/glossy.scm.h:3
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 #: plug-ins/script-fu/scripts/image-structure.scm.h:3
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:3
 #: plug-ins/script-fu/scripts/news-text.scm.h:2
@@ -526,7 +528,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #: plug-ins/script-fu/scripts/camo.scm.h:5
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
 msgid "Flatten Image"
@@ -535,8 +537,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
@@ -600,30 +602,23 @@ msgid "Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
-msgid ""
-"\n"
-"\t\t    SF-ADJUSTMENT _"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow Radius"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
 #: plug-ins/script-fu/scripts/asc2img.scm.h:9
 #: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:9
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
 #: plug-ins/script-fu/scripts/blended-logo.scm.h:16
@@ -638,23 +633,16 @@ msgid "Text Color"
 msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
-msgid ""
-"\n"
-"\t\t    SF-COLOR      _"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 msgid "Glow Size (pixels * 4)"
 msgstr ""
 
@@ -700,7 +688,7 @@ msgid "Buffer Amount (% Height of Text)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:6
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Filename"
 msgstr ""
 
@@ -721,12 +709,12 @@ msgstr "Script-Fu 콘솔"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
 msgstr "Script-Fu 콘솔"
@@ -737,7 +725,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
 msgstr "Script-Fu 콘솔"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:2
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:2
 #, fuzzy
 msgid "Bevel Width"
@@ -792,7 +780,7 @@ msgstr "Script-Fu 콘솔"
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:16
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: plug-ins/script-fu/scripts/swirltile.scm.h:7
 #, fuzzy
 msgid "Height"
@@ -800,7 +788,7 @@ msgstr "이미지 유형: "
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
 #: plug-ins/script-fu/scripts/gradient-example.scm.h:3
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:18
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
 #: plug-ins/script-fu/scripts/swirltile.scm.h:10
 #, fuzzy
 msgid "Width"
@@ -858,7 +846,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: plug-ins/script-fu/scripts/land.scm.h:3
 #: plug-ins/script-fu/scripts/lava.scm.h:2
-#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
 msgid "Gradient"
 msgstr ""
 
@@ -943,12 +931,12 @@ msgid "Color 3"
 msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:6
-#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
 msgid "Granularity"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/camo.scm.h:7
-#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
 #, fuzzy
 msgid "Image Size"
 msgstr "이미지 유형: "
@@ -1577,21 +1565,21 @@ msgstr "Script-Fu 콘솔"
 msgid "Effect Size (pixels * 3)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 msgid "Bevel Height (Sharpness)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:4
 #, fuzzy
@@ -1768,56 +1756,35 @@ msgid "Sharpness (degrees)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:1
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"\t\t\t      "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid ""
-")))\n"
-"     (filename (string-append data-dir\n"
-"               "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid ""
-")))\n"
-"    (filename (string-append data-dir\n"
-"               "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:12
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:13
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:14
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Description"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:15
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/mkbrush.scm.h:17
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:7
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr ""
 
@@ -1961,21 +1928,19 @@ msgid "Upper Color (Active)"
 msgstr "닫기"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
-msgid ""
-"\n"
-" SF-OPTION     _"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/rendermap.scm.h:3
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
 msgstr "Script-Fu 콘솔"
 
-#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/rendermap.scm.h:8
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
 msgid "Tile"
 msgstr ""
 
@@ -2029,18 +1994,11 @@ msgid "Edge Radius"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
-msgid ""
-")))\n"
-"    (set! filename2 (string-append data-dir\n"
-"\t\t\t\t\t "
-msgstr ""
-
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Brush Name"
 msgstr ""
 

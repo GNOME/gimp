@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.15\n"
-"POT-Creation-Date: 2003-04-24 21:32+0800\n"
+"POT-Creation-Date: 2003-06-09 16:03+0200\n"
 "PO-Revision-Date: 2003-04-24 21:38+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Chinese (traditional) <zh-l10n@linux.org.tw>\n"
@@ -15,62 +15,62 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
 msgid "%s can't handle layers"
 msgstr "%s 無法處理圖層"
 
-#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "合併可見圖層"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:192
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
 msgstr "%s 無法處理圖層的偏移、尺寸或透明度"
 
-#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 #, c-format
 msgid "%s can only handle layers as animation frames"
 msgstr "%s 只能以動畫影格的方式處理圖層"
 
-#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "儲存為動畫"
 
-#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "圖像平面化"
 
-#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:228
 #, c-format
 msgid "%s can't handle transparency"
 msgstr "%s 無法處理透明度"
 
-#: libgimp/gimpexport.c:224
+#: libgimp/gimpexport.c:237
 #, c-format
 msgid "%s can only handle RGB images"
 msgstr "%s 只能處理 RGB 圖像"
 
-#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "轉換成 RGB"
 
-#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:246
 #, c-format
 msgid "%s can only handle grayscale images"
 msgstr "%s 只能處理灰階圖像"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "轉換成灰階"
 
-#: libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:255
 #, c-format
 msgid "%s can only handle indexed images"
 msgstr "%s 只能處理索引色圖像"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -78,27 +78,27 @@ msgstr ""
 "根據預設設定轉換成索引色圖像\n"
 "(請自行調整結果)"
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:265
 #, c-format
 msgid "%s can only handle RGB or grayscale images"
 msgstr "%s 只能處理 RGB 或灰階圖像"
 
-#: libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:274
 #, c-format
 msgid "%s can only handle RGB or indexed images"
 msgstr "%s 只能處理 RGB 或索引色圖像"
 
-#: libgimp/gimpexport.c:271
+#: libgimp/gimpexport.c:284
 #, c-format
 msgid "%s can only handle grayscale or indexed images"
 msgstr "%s 只能處理灰階或索引色圖像"
 
-#: libgimp/gimpexport.c:282
+#: libgimp/gimpexport.c:295
 #, c-format
 msgid "%s needs an alpha channel"
 msgstr "%s 需要透明色版"
 
-#: libgimp/gimpexport.c:283
+#: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
 msgstr "新增透明色版"
 
@@ -107,47 +107,43 @@ msgstr "新增透明色版"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:357
+#: libgimp/gimpexport.c:370
 msgid "Confirm Save"
 msgstr "確認儲存"
 
-#: libgimp/gimpexport.c:361
+#: libgimp/gimpexport.c:378
 msgid "Confirm"
 msgstr "確認"
-
-#: libgimp/gimpexport.c:363
-msgid "Cancel"
-msgstr "取消"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:416
+#: libgimp/gimpexport.c:431
 msgid "Export File"
 msgstr "匯出檔案"
 
-#: libgimp/gimpexport.c:421
+#: libgimp/gimpexport.c:436
 msgid "Ignore"
 msgstr "忽略"
 
-#: libgimp/gimpexport.c:427
+#: libgimp/gimpexport.c:442
 msgid "Export"
 msgstr "匯出"
 
-#: libgimp/gimpexport.c:453
+#: libgimp/gimpexport.c:468
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
 msgstr "圖像在儲存前必須匯出，原因如下："
 
 #. the footline
-#: libgimp/gimpexport.c:526
+#: libgimp/gimpexport.c:541
 msgid "The export conversion won't modify your original image."
 msgstr "匯出時的圖像轉換程序不會更改原有的圖像。"
 
-#: libgimp/gimpexport.c:595
+#: libgimp/gimpexport.c:610
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -156,7 +152,7 @@ msgstr ""
 "準備將圖層遮罩儲存為 %s。\n"
 "本程序不會儲存可見的圖層。"
 
-#: libgimp/gimpexport.c:600
+#: libgimp/gimpexport.c:615
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -169,6 +165,19 @@ msgstr ""
 #: libgimp/gimpmenu.c:598
 msgid "None"
 msgstr "無"
+
+#: libgimp/gimpmiscui.c:50
+msgid "Preview"
+msgstr ""
+
+#: libgimp/gimpmiscui.c:529
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
@@ -241,19 +250,19 @@ msgstr "載入失敗"
 msgid "Not loaded"
 msgstr "未載入"
 
-#: libgimpwidgets/gimpcolorbutton.c:85
+#: libgimpwidgets/gimpcolorbutton.c:84
 msgid "/Foreground Color"
 msgstr "/前景顏色"
 
-#: libgimpwidgets/gimpcolorbutton.c:87
+#: libgimpwidgets/gimpcolorbutton.c:86
 msgid "/Background Color"
 msgstr "/背景顏色"
 
-#: libgimpwidgets/gimpcolorbutton.c:90
+#: libgimpwidgets/gimpcolorbutton.c:89
 msgid "/Black"
 msgstr "/黑"
 
-#: libgimpwidgets/gimpcolorbutton.c:92
+#: libgimpwidgets/gimpcolorbutton.c:91
 msgid "/White"
 msgstr "/白"
 
@@ -333,15 +342,15 @@ msgstr "選取資料夾"
 msgid "Select File"
 msgstr "選取檔案"
 
-#: libgimpwidgets/gimpmemsizeentry.c:185
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "KiloBytes"
 msgstr "KB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:188
 msgid "MegaBytes"
 msgstr "MB"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:189
 msgid "GigaBytes"
 msgstr "GB"
 
@@ -383,66 +392,66 @@ msgstr "重設(_R)"
 msgid "Visible"
 msgstr "可見"
 
-#: libgimpwidgets/gimpstock.c:155
+#: libgimpwidgets/gimpstock.c:156
 msgid "L_etter Spacing"
 msgstr "字距(_E)"
 
-#: libgimpwidgets/gimpstock.c:156
+#: libgimpwidgets/gimpstock.c:157
 msgid "L_ine Spacing"
 msgstr "行距(_I)"
 
-#: libgimpwidgets/gimpstock.c:171
+#: libgimpwidgets/gimpstock.c:172
 msgid "_Resize"
 msgstr "調整尺寸(_R)"
 
-#: libgimpwidgets/gimpstock.c:172 libgimpwidgets/gimpstock.c:251
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:256
 msgid "_Scale"
 msgstr "縮放(_S)"
 
-#: libgimpwidgets/gimpstock.c:229
+#: libgimpwidgets/gimpstock.c:234
 msgid "Crop"
 msgstr "裁剪"
 
-#: libgimpwidgets/gimpstock.c:247
+#: libgimpwidgets/gimpstock.c:252
 msgid "_Transform"
 msgstr "變換(_T)"
 
-#: libgimpwidgets/gimpstock.c:250
+#: libgimpwidgets/gimpstock.c:255
 msgid "_Rotate"
 msgstr "旋轉(_R)"
 
-#: libgimpwidgets/gimpstock.c:252
+#: libgimpwidgets/gimpstock.c:257
 msgid "_Shear"
 msgstr "推移(_S)"
 
-#: libgimpwidgets/gimpunitmenu.c:266
+#: libgimpwidgets/gimpunitmenu.c:267
 msgid "More..."
 msgstr "其它..."
 
-#: libgimpwidgets/gimpunitmenu.c:526
+#: libgimpwidgets/gimpunitmenu.c:527
 msgid "Unit Selection"
 msgstr "選擇單位"
 
-#: libgimpwidgets/gimpunitmenu.c:571
+#: libgimpwidgets/gimpunitmenu.c:573
 msgid "Unit"
 msgstr "單位"
 
-#: libgimpwidgets/gimpunitmenu.c:575
+#: libgimpwidgets/gimpunitmenu.c:577
 msgid "Factor"
 msgstr "比例"
 
-#: libgimpwidgets/gimpwidgets.c:977
+#: libgimpwidgets/gimpwidgets.c:943
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 "使用本數值作為隨機數產生程序的來源數字 ─ 這樣可重複地產生同一系列的「隨機」數"
 
-#: libgimpwidgets/gimpwidgets.c:981
+#: libgimpwidgets/gimpwidgets.c:947
 msgid "_Randomize"
 msgstr "隨機化(_R)"
 
-#: libgimpwidgets/gimpwidgets.c:992
+#: libgimpwidgets/gimpwidgets.c:958
 msgid "Seed random number generator with a generated random number"
 msgstr "使用產生出來的隨機數作為隨機數產生程序的來源數字"
 
@@ -517,6 +526,9 @@ msgstr "水彩(_W)"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "壓力"
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
 
 #~ msgid "pixel"
 #~ msgstr "像素"

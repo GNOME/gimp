@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2000-11-04 18:50+0100\n"
 "Last-Translator: ®eljan Rikalo <zeljko@linuxfreak.com>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -14,6 +14,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu konzola dozvoljava samo interaktivno kori¹tenje"
 
@@ -26,24 +27,24 @@ msgid "SIOD Output"
 msgstr "SIOD Izlaz"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:265
+#: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
 msgstr "Trenutna Naredba"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
 msgstr "Tra¾i..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Ne mogu otvoriti stream na cjevovodu SIOD izlaza"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:589
 #, fuzzy
 msgid "Unable to open the SIOD output pipe"
 msgstr "Ne mogu otvoriti cjevovod SIOD izlaza"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu provjera je dozvoljena samo kao ne-interaktivni poziv"
 
@@ -69,12 +70,12 @@ msgid "Script Arguments"
 msgstr "Argumenti Skripte"
 
 #
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu odabir boje"
 
@@ -104,25 +105,25 @@ msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu Odabir Kista"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
 msgstr "Autorska prava:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
 msgstr "Vrste Slika:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, fuzzy, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1234,6 +1235,7 @@ msgstr "Prihvati generiranu masku sloja"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "Velièina Ruba"
 
@@ -1294,7 +1296,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Uslu¾ni/Mapa Fontova..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Rub"
 

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
-"POT-Creation-Date: 2003-04-12 14:48+0200\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2003-04-12 14:49+0200\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -15,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Der Skript-Fu Konsole-Modus kann nur interaktiv gestartet werden"
 
@@ -27,23 +28,23 @@ msgid "SIOD Output"
 msgstr "SIOD Ausgabe"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:265
+#: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
 msgstr "Aktueller Befehl"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
 msgstr "Auswählen..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "Mit dem SIOD-Ausgabe-Weiterleitung konnte kein Stream erstellt werden"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:589
 msgid "Unable to open the SIOD output pipe"
 msgstr "SIOD konnte Ausgabe-Weiterleitung nicht geöffnet werden"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
@@ -67,12 +68,12 @@ msgstr "Info"
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
@@ -101,25 +102,25 @@ msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
-#: plug-ins/script-fu/script-fu-scripts.c:1910
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
 msgstr "Autor:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
-#: plug-ins/script-fu/script-fu-scripts.c:1916
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
 msgstr "Copyright:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
-#: plug-ins/script-fu/script-fu-scripts.c:1922
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -1233,6 +1234,7 @@ msgstr "Erstellte Ebenenmaske anwenden"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:3
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border Size"
 msgstr "Randgröße (Pixel)"
 
@@ -1293,7 +1295,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Hilfsmittel/Schriften-Liste..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Rand"
 

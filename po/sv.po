@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-06-07 11:44+0200\n"
+"POT-Creation-Date: 2003-06-09 22:52+0200\n"
 "PO-Revision-Date: 2003-06-07 11:45+0200\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -28,8 +28,8 @@ msgstr ""
 "Kör GIMP med flaggan \"--no-interface\" för att utföra användarinstallation."
 
 #: app/app_procs.c:306 app/gui/file-commands.c:187
-#: app/gui/file-open-dialog.c:704 app/widgets/gimpdocumentview.c:451
-#: app/widgets/gimpdnd.c:1005
+#: app/gui/file-open-dialog.c:704 app/widgets/gimpdnd.c:1005
+#: app/widgets/gimpdocumentview.c:451
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -5640,7 +5640,6 @@ msgid "Resolution X:"
 msgstr "Upplösning X:"
 
 #: app/gui/resize-dialog.c:639 app/widgets/gimptemplateeditor.c:317
-#, c-format
 msgid "pixels/%a"
 msgstr "bildpunkter/%a"
 
@@ -6516,7 +6515,7 @@ msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 msgid "Pencil"
 msgstr "Penna"
 
-#: app/paint/gimpsmudge.c:80 app/tools/gimpsmudgetool.c:61
+#: app/paint/gimpsmudge.c:75 app/tools/gimpsmudgetool.c:61
 msgid "Smudge"
 msgstr "Smeta"
 
@@ -6766,8 +6765,8 @@ msgstr "GIMP-tillägg"
 msgid "Temporary Procedure"
 msgstr "Temporär procedur"
 
-#: app/pdb/selection_tools_cmds.c:326 app/tools/tools-enums.c:98
-#: app/tools/gimpfreeselecttool.c:96
+#: app/pdb/selection_tools_cmds.c:326 app/tools/gimpfreeselecttool.c:96
+#: app/tools/tools-enums.c:98
 msgid "Free Select"
 msgstr "Fri markering"
 

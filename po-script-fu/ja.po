@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
-"POT-Creation-Date: 2003-04-26 02:20+0900\n"
+"POT-Creation-Date: 2003-06-09 22:54+0200\n"
 "PO-Revision-Date: 2003-04-08 13:11+0900\n"
 "Last-Translator: KAMAGASAKO Masatoshi <emerald@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
+#: plug-ins/script-fu/script-fu-text-console.c:66
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "Script-Fu コンソールモードはインタラクティブ動作しかしません"
 
@@ -28,23 +29,23 @@ msgid "SIOD Output"
 msgstr "SIOD 出力"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:265
+#: plug-ins/script-fu/script-fu-console.c:267
 msgid "Current Command"
 msgstr "現在実行しているコマンド"
 
-#: plug-ins/script-fu/script-fu-console.c:285
+#: plug-ins/script-fu/script-fu-console.c:287
 msgid "Browse..."
 msgstr "場所を指定..."
 
-#: plug-ins/script-fu/script-fu-console.c:581
+#: plug-ins/script-fu/script-fu-console.c:583
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "SIOD 出力パイプ上のストリームが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:587
+#: plug-ins/script-fu/script-fu-console.c:589
 msgid "Unable to open the SIOD output pipe"
 msgstr "SIOD 出力パイプが開けません"
 
-#: plug-ins/script-fu/script-fu-console.c:632
+#: plug-ins/script-fu/script-fu-console.c:634
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Script-Fu 評価モードは非インタラクティブ動作しかできません"
 
@@ -68,12 +69,12 @@ msgstr "このプラグインについて"
 msgid "Script Arguments"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1241
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1288
+#: plug-ins/script-fu/script-fu-scripts.c:1289
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
@@ -101,26 +102,26 @@ msgstr "Script-Fu グラデーション選択"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1910
 #: plug-ins/dbbrowser/dbbrowser_utils.c:499
+#: plug-ins/script-fu/script-fu-scripts.c:1908
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1916
 #: plug-ins/dbbrowser/dbbrowser_utils.c:515
+#: plug-ins/script-fu/script-fu-scripts.c:1914
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1922
 #: plug-ins/dbbrowser/dbbrowser_utils.c:507
+#: plug-ins/script-fu/script-fu-scripts.c:1920
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1930
+#: plug-ins/script-fu/script-fu-scripts.c:1928
 msgid "Image Types:"
 msgstr "画像種:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2053
+#: plug-ins/script-fu/script-fu-scripts.c:2051
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
