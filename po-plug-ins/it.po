@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 02:40+0200\n"
-"PO-Revision-Date: 2004-08-02 00:32+0200\n"
+"POT-Creation-Date: 2004-09-06 01:25+0200\n"
+"PO-Revision-Date: 2004-09-06 01:27+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1238,7 +1238,7 @@ msgstr "Formato di compressione BMP non riconosciuto o non valido."
 #: plug-ins/common/pcx.c:338 plug-ins/common/pcx.c:344
 #: plug-ins/common/pix.c:378 plug-ins/common/png.c:810
 #: plug-ins/common/pnm.c:484 plug-ins/common/psd.c:2184
-#: plug-ins/common/smooth_palette.c:256 plug-ins/common/sunras.c:928
+#: plug-ins/common/smooth_palette.c:257 plug-ins/common/sunras.c:928
 #: plug-ins/common/tga.c:931 plug-ins/common/tiff.c:836
 #: plug-ins/common/tile.c:267 plug-ins/common/winclipboard.c:579
 #: plug-ins/common/xbm.c:871 plug-ins/faxg3/faxg3.c:466
@@ -2314,28 +2314,25 @@ msgstr "Aggiustamento contrasto..."
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch: cmap era NULL!  Uscita...\n"
 
-#: plug-ins/common/cartoon.c:225 plug-ins/common/dog.c:275
+#: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:275
 #: plug-ins/common/gauss.c:431 plug-ins/common/neon.c:222
-#: plug-ins/common/photocopy.c:238 plug-ins/common/sel_gauss.c:203
+#: plug-ins/common/photocopy.c:241 plug-ins/common/sel_gauss.c:203
 #: plug-ins/common/softglow.c:220 plug-ins/gflare/gflare.c:979
 #: plug-ins/sgi/sgi.c:532 plug-ins/xjt/xjt.c:1677
 msgid "Cannot operate on indexed color images."
 msgstr "Impossibile operare su immagini a colori indicizzati."
 
-#: plug-ins/common/cartoon.c:754
-#, fuzzy
+#: plug-ins/common/cartoon.c:808
 msgid "Cartoon"
-msgstr "Intest_azione"
+msgstr "Cartone"
 
-#: plug-ins/common/cartoon.c:773 plug-ins/common/photocopy.c:811
-#, fuzzy
+#: plug-ins/common/cartoon.c:840 plug-ins/common/photocopy.c:882
 msgid "_Mask radius:"
-msgstr "Raggio di s_focatura:"
+msgstr "Raggio di _mascheratura:"
 
-#: plug-ins/common/cartoon.c:784
-#, fuzzy
+#: plug-ins/common/cartoon.c:853
 msgid "_Percent black:"
-msgstr "Percentuale"
+msgstr "_Percentuale del nero:"
 
 #: plug-ins/common/ccanalyze.c:110
 msgid "Colorcube A_nalysis..."
@@ -2747,35 +2744,35 @@ msgstr ""
 msgid "Applying convolution"
 msgstr "Convoluzione in corso"
 
-#: plug-ins/common/convmatrix.c:877
+#: plug-ins/common/convmatrix.c:878
 msgid "Convolution Matrix"
 msgstr "Matrice di convoluzione"
 
-#: plug-ins/common/convmatrix.c:902
+#: plug-ins/common/convmatrix.c:903
 msgid "Matrix"
 msgstr "Matrice"
 
-#: plug-ins/common/convmatrix.c:936
+#: plug-ins/common/convmatrix.c:937
 msgid "D_ivisor:"
 msgstr "D_ivisore:"
 
-#: plug-ins/common/convmatrix.c:957 plug-ins/common/depthmerge.c:749
+#: plug-ins/common/convmatrix.c:958 plug-ins/common/depthmerge.c:749
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
-#: plug-ins/common/convmatrix.c:983
+#: plug-ins/common/convmatrix.c:984
 msgid "A_utomatic"
 msgstr "A_utomatico"
 
-#: plug-ins/common/convmatrix.c:992
+#: plug-ins/common/convmatrix.c:993
 msgid "A_lpha-weighting"
 msgstr "Ponderazione-alfa"
 
-#: plug-ins/common/convmatrix.c:1008
+#: plug-ins/common/convmatrix.c:1009
 msgid "Border"
 msgstr "Bordo"
 
-#: plug-ins/common/convmatrix.c:1032
+#: plug-ins/common/convmatrix.c:1033
 msgid "Channels"
 msgstr "Canali"
 
@@ -2855,9 +2852,8 @@ msgid "_Use background color"
 msgstr "_Usa colore di sfondo"
 
 #: plug-ins/common/cubism.c:358
-#, fuzzy
 msgid "Cubistic Transformation..."
-msgstr "Trasformazione cubistica"
+msgstr "Trasformazione cubistica..."
 
 #: plug-ins/common/curve_bend.c:569
 msgid "_Curve Bend..."
@@ -3314,7 +3310,7 @@ msgstr "Destriscia"
 
 #: plug-ins/common/destripe.c:585 plug-ins/common/gtm.c:581
 #: plug-ins/common/postscript.c:2844 plug-ins/common/postscript.c:3003
-#: plug-ins/common/smooth_palette.c:428 plug-ins/common/tile.c:418
+#: plug-ins/common/smooth_palette.c:429 plug-ins/common/tile.c:418
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3466,43 +3462,36 @@ msgid "Edge Detection"
 msgstr "Rilevamento spigoli"
 
 #: plug-ins/common/edge.c:678
-#, fuzzy
 msgid "Sobel"
-msgstr "_Sobel"
+msgstr "Sobel"
 
 #: plug-ins/common/edge.c:679
-#, fuzzy
 msgid "Prewitt"
-msgstr "_Prewitt"
+msgstr "Prewitt"
 
 #: plug-ins/common/edge.c:680 plug-ins/common/sinus.c:898
 msgid "Gradient"
 msgstr "Gradiente"
 
 #: plug-ins/common/edge.c:681
-#, fuzzy
 msgid "Roberts"
-msgstr "_Roberts"
+msgstr "Roberts"
 
 #: plug-ins/common/edge.c:682
-#, fuzzy
 msgid "Differential"
-msgstr "_Differenziale"
+msgstr "Differenziale"
 
 #: plug-ins/common/edge.c:683
-#, fuzzy
 msgid "Laplace"
-msgstr "_Laplace..."
+msgstr "Laplace"
 
 #: plug-ins/common/edge.c:692
-#, fuzzy
 msgid "_Algorithm:"
-msgstr "Algoritmo"
+msgstr "_Algoritmo:"
 
 #: plug-ins/common/edge.c:700
-#, fuzzy
 msgid "A_mount:"
-msgstr "Ammontare:"
+msgstr "_Quantità:"
 
 #: plug-ins/common/emboss.c:149
 msgid "_Emboss..."
@@ -3546,7 +3535,7 @@ msgstr "Incisione"
 
 #: plug-ins/common/engrave.c:221 plug-ins/common/film.c:1207
 #: plug-ins/common/gtm.c:597 plug-ins/common/postscript.c:2853
-#: plug-ins/common/postscript.c:3012 plug-ins/common/smooth_palette.c:433
+#: plug-ins/common/postscript.c:3012 plug-ins/common/smooth_palette.c:434
 #: plug-ins/common/tile.c:422 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
@@ -3792,9 +3781,8 @@ msgid "_Gaussian Blur..."
 msgstr "Sfocatura _gaussiana..."
 
 #: plug-ins/common/gauss.c:408
-#, fuzzy
 msgid "Gaussian Blur..."
-msgstr "Sfocatura _gaussiana..."
+msgstr "Sfocatura gaussiana..."
 
 #: plug-ins/common/gauss.c:461
 msgid "Gaussian Blur"
@@ -5123,19 +5111,16 @@ msgid "Unable to add additional point.\n"
 msgstr "Impossibile aggiungere altri punti.\n"
 
 #: plug-ins/common/neon.c:135
-#, fuzzy
 msgid "_Neon..."
-msgstr "Vi_deo..."
+msgstr "_Neon..."
 
 #: plug-ins/common/neon.c:204
-#, fuzzy
 msgid "Neon..."
-msgstr "Effetto giornale..."
+msgstr "Neon..."
 
 #: plug-ins/common/neon.c:688
-#, fuzzy
 msgid "Neon Detection"
-msgstr "Rilevamento spigoli"
+msgstr "Rilevamento neon"
 
 #: plug-ins/common/neon.c:737 plug-ins/common/unsharp.c:708
 msgid "_Amount:"
@@ -5499,30 +5484,26 @@ msgstr "'%s' non è un file PCX"
 msgid "Unusual PCX flavour, giving up"
 msgstr "Tipo PCX strano, abbandono"
 
-#: plug-ins/common/photocopy.c:155
-#, fuzzy
+#: plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
-msgstr "_Bollente..."
+msgstr "_Fotocopia..."
 
-#: plug-ins/common/photocopy.c:793
-#, fuzzy
+#: plug-ins/common/photocopy.c:850
 msgid "Photocopy"
-msgstr "Fotografie"
+msgstr "Fotocopia"
 
-#: plug-ins/common/photocopy.c:822 plug-ins/common/sharpen.c:518
+#: plug-ins/common/photocopy.c:895 plug-ins/common/sharpen.c:518
 #: plug-ins/common/softglow.c:722
 msgid "_Sharpness:"
 msgstr "_Filo:"
 
-#: plug-ins/common/photocopy.c:833
-#, fuzzy
+#: plug-ins/common/photocopy.c:908
 msgid "Percent _black:"
-msgstr "Percentuale"
+msgstr "Percentuale del _nero:"
 
-#: plug-ins/common/photocopy.c:844
-#, fuzzy
+#: plug-ins/common/photocopy.c:921
 msgid "Percent _white:"
-msgstr "Percentuale"
+msgstr "Percentuale del _bianco:"
 
 #: plug-ins/common/pix.c:141 plug-ins/common/pix.c:159
 msgid "Alias|Wavefront PIX image"
@@ -6512,11 +6493,11 @@ msgstr "Sfuma _tavolozza..."
 msgid "Deriving Smooth Palette..."
 msgstr "Calcolo sfumatura tavolozza..."
 
-#: plug-ins/common/smooth_palette.c:411
+#: plug-ins/common/smooth_palette.c:412
 msgid "Smooth Palette"
 msgstr "Sfuma tavolozza"
 
-#: plug-ins/common/smooth_palette.c:444
+#: plug-ins/common/smooth_palette.c:445
 msgid "_Search depth:"
 msgstr "_Profondità di ricerca:"
 
@@ -6580,18 +6561,16 @@ msgid "Sobel Edge Detecting..."
 msgstr "Rilevamento bordi sobel in corso..."
 
 #: plug-ins/common/softglow.c:138
-#, fuzzy
 msgid "_Softglow..."
-msgstr "_Sobel..."
+msgstr "_Incandescenza leggera..."
 
 #: plug-ins/common/softglow.c:660
 msgid "Softglow"
-msgstr ""
+msgstr "Incandescenza leggera"
 
 #: plug-ins/common/softglow.c:694
-#, fuzzy
 msgid "_Glow radius:"
-msgstr "Raggio di s_focatura:"
+msgstr "Raggio di incandescen_za:"
 
 #: plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
@@ -9805,7 +9784,7 @@ msgstr "Asimmetria:"
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:623
 msgid "Shear:"
-msgstr "Cesoie:"
+msgstr "Inclina:"
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:668
@@ -11788,6 +11767,3 @@ msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
-
-#~ msgid "Selection:"
-#~ msgstr "Selezione:"
