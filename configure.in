@@ -145,7 +145,7 @@ dnl Large file support for the swap file
 AC_SYS_LARGEFILE
 
 AC_ARG_ENABLE(debug,
-              [  --enable-debug          turn on debugging [default=no]],
+              [  --enable-debug          turn on debugging (default=no)],
               if eval "test x$enable_debug = xyes"; then
                 DEBUGFLAG="-g"
               fi)
@@ -155,7 +155,7 @@ if test -n "$DEBUGFLAG"; then
 fi
 
 AC_ARG_ENABLE(ansi,
-              [  --enable-ansi           turn on strict ansi [default=no]],,
+              [  --enable-ansi           turn on strict ansi (default=no)],,
               enable_ansi=no)
 
 if eval "test x$GCC = xyes"; then
@@ -239,7 +239,7 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
 
-ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi yi zh_CN zh_TW"
+ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt pt_BR ro ru sk sv tr uk vi yi zh_CN zh_TW"
 
 AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT
@@ -430,7 +430,7 @@ case "$host_os" in
 esac
 
 shmtype=auto
-AC_ARG_WITH(shm, [  --with-shm=none/sysv/auto     shared memory transport type [default=auto]], shmtype=$with_shm)
+AC_ARG_WITH(shm, [  --with-shm=none/sysv/auto     shared memory transport type (default=auto)], shmtype=$with_shm)
 
 case $shmtype in
   none|sysv) ;;
@@ -533,7 +533,7 @@ fi
 # Threads and multi processor 
 #############################
 
-dnl AC_ARG_ENABLE(threads, [  --enable-threads    support POSIX threading [default=no]])
+dnl AC_ARG_ENABLE(threads, [  --enable-threads    support POSIX threading (default=no)])
 dnl if test "x$enable_threads" = "xyes"; then
 dnl   AC_CHECK_LIB(pthread, pthread_attr_init, 
 dnl     [AC_DEFINE(USE_PTHREADS)
@@ -550,7 +550,7 @@ AC_SUBST(GIMP_THREAD_FLAGS)
 AC_SUBST(GIMP_THREAD_LIBS)
 
 
-AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors [default=no]])
+AC_ARG_ENABLE(mp, [  --enable-mp             support multiple processors (default=no)])
 if test "x$enable_mp" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init, 
     [AC_DEFINE(ENABLE_MP, 1,
@@ -763,6 +763,22 @@ AC_SUBST(MNG)
 AC_SUBST(LIBMNG)
 
 
+############################################################
+# libexif: Library to allow exif tags to be read from, and
+# saved to, jpeg files. Currently, this permits exif data to
+# avoid destruction, but no data modification is performed.
+############################################################
+
+AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
+if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
+  PKG_CHECK_MODULES(EXIF, libexif, 
+    AC_DEFINE(HAVE_EXIF, 1, "Define to 1 if libexif is available"),
+    AC_MSG_WARN([libexif not found!
+EXIF support will not be built into the JPEG plug-in. 
+libexif is available from http://www.sourceforge.net/projects/libexif]))
+fi
+
+
 #################
 # Check for libaa
 #################
@@ -894,7 +910,7 @@ AM_CONDITIONAL(WITH_AUTHORSGEN, test x$enable_maintainer_mode = xyes)
 dnl Pygimp configure stuff ...
 AC_ARG_ENABLE(python,
   AC_HELP_STRING([--enable-python],
-                 [build python extension [by default disabled]]),,
+                 [build python extension (by default disabled)]),,
   [enable_python=no])
 
 
@@ -908,21 +924,6 @@ if test "x$enable_python" != xno; then
   AC_SUBST(PYGTK_CFLAGS)
 fi
 AM_CONDITIONAL(BUILD_PYTHON, test "x$enable_python" != xno)
-
-############################################################
-# libexif: Library to allow exif tags to be read from, and
-# saved to, jpeg files. Currently, this permits exif data to
-# avoid destruction, but no data modification is performed.
-############################################################
-
-AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
-if test x$with_libexif != xno && test -z "$LIBEXIF"; then
-  PKG_CHECK_MODULES(EXIF, libexif, 
-    AC_DEFINE(HAVE_EXIF, 1, "Define to 1 if libexif is available"),
-    AC_MSG_WARN([libexif not found!
-EXIF support will not be built into the JPEG plug-in. 
-libexif is available from http://www.sourceforge.net/projects/libexif]))
-fi
 
 
 ###########################################################
@@ -947,20 +948,20 @@ AC_SUBST(WINCLIPBOARD)
 AC_SUBST(WINPRINT)
 
 
-#################################################################
-# Determine where to install the GNOME2 desktop & mime info files
-#################################################################
+##########################################################
+# Determine where to install the desktop & mime info files
+##########################################################
 
-AC_ARG_WITH(gnome-datadir, [  --with-gnome-datadir=PATH     where to install GNOME2 files [default=auto]])
+AC_ARG_WITH(desktop-dir, [  --with-desktop-dir=PATH where to install desktop files (default=PREFIX/share)])
 
-if test "x$with_gnome_datadir" != x; then
-  GNOME_DATADIR=$with_gnome_datadir
+if test "x$with_desktop_dir" != x; then
+  DESKTOP_DATADIR=$with_desktop_dir
 else
-  GNOME_DATADIR="$datadir"
+  DESKTOP_DATADIR="$datadir"
 fi
 
-AM_CONDITIONAL(GNOME_DATADIR, test "x$with_gnome_datadir" != xno)
-AC_SUBST(GNOME_DATADIR)
+AM_CONDITIONAL(DESKTOP_DATADIR, test "x$with_desktop_dir" != xno)
+AC_SUBST(DESKTOP_DATADIR)
 
 
 ######################################
@@ -1002,7 +1003,7 @@ if $GTKDOC ; then
 fi
 
 dnl Make people enable the gtk-doc stuff explicitely.
-AC_ARG_ENABLE(gtk-doc, [  --enable-gtk-doc        use gtk-doc to build documentation [default=no]], enable_gtk_doc="$enableval", enable_gtk_doc=auto)
+AC_ARG_ENABLE(gtk-doc, [  --enable-gtk-doc        use gtk-doc to build documentation (default=no)], enable_gtk_doc="$enableval", enable_gtk_doc=auto)
 
 if test x$enable_gtk_doc = xyes ; then
   if test x$GTKDOC != xtrue ; then
@@ -1019,7 +1020,7 @@ AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
 # Allow to configure the gimp environment
 #########################################
 
-AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp binary [default=no]], , enable_default_binary=no)
+AC_ARG_ENABLE(debug, [  --enable-default-binary install this as the default gimp binary (default=no)], , enable_default_binary=no)
 
 AM_CONDITIONAL(DEFAULT_BINARY, test x$enable_default_binary = xyes)
 

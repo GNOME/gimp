@@ -1,3 +1,12 @@
+2003-06-23  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* configure.in: renamed --with-gnome-datadir configure option to
+	--with-desktop-dir because it is not GNOME specific.
+
+	Removed "sr" and "sr@Latn" from ALL_LINGUAS until all required po
+	files have been added.
+
 2003-06-23  Danilo Šegan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.

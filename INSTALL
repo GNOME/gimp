@@ -114,11 +114,13 @@ recognizes. These are:
      the sendmail command. Normally this options don't have to be used
      because configure tries to find it in the usual places.
 
-  --with-gnome-desktop=[PATH]. This option specifies where to install
-     a link to the gimp.desktop file for GNOME-2.0. The default value 
-     ${prefix}/share/applications should be fine if GNOME-2.0 is installed
-     in the same prefix. No link is created if the specified directory
-     doesn't exist or you use --without-gnome-desktop.
+  --with-desktop-dir=[PATH]. This option specifies where to install
+     links to the gimp desktop files. These files are used by desktop
+     environments that comply to the specs published at freedesktop.org.
+     The default value ${prefix}/share should be fine if your desktop
+     environment is installed in the same prefix as gimp. No links are
+     created if the desktop directories don't exist or you used
+     --without-desktop-dir.
 
   --enable-default-binary. Use this option if you want to make gimp-1.3
      the default gimp installation. A link called gimp pointing to the

@@ -27,36 +27,36 @@ gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
 	&& rm -r desktop-foo
 
 install-data-local:
-if GNOME_DATADIR
-	if test -d $(DESTDIR)@GNOME_DATADIR@/applications; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/applications \
+if DESKTOP_DATADIR
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
 		&& rm -f gimp-$(LT_RELEASE).desktop \
 		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-$(LT_RELEASE).desktop \
 	; fi
-	if test -d $(DESTDIR)@GNOME_DATADIR@/application-registry; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/application-registry \
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
 		&& rm -f gimp-$(LT_RELEASE).applications \
 		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-$(LT_RELEASE).applications \
 	; fi
-	if test -d $(DESTDIR)@GNOME_DATADIR@/mime-info; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/mime-info \
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
 		&& rm -f gimp-$(LT_RELEASE).keys \
 		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-$(LT_RELEASE).keys \
 	; fi
 endif
 
 uninstall-local:
-if GNOME_DATADIR
-	if test -d $(DESTDIR)@GNOME_DATADIR@/applications; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/applications \
+if DESKTOP_DATADIR
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
 		&& rm -f gimp-$(LT_RELEASE).desktop \
 	; fi
-	if test -d $(DESTDIR)@GNOME_DATADIR@/application-registry; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/application-registry \
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
 		&& rm -f gimp-$(LT_RELEASE).applications \
 	; fi
-	if test -d $(DESTDIR)@GNOME_DATADIR@/mime-info; then \
-		cd $(DESTDIR)@GNOME_DATADIR@/mime-info \
+	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
+		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
 		&& rm -f gimp-$(LT_RELEASE).keys \
 	; fi
 endif
