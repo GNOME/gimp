@@ -84,7 +84,6 @@ static GimpActionEntry layers_actions[] =
 
   { "layers-duplicate", GIMP_STOCK_DUPLICATE,
     N_("D_uplicate Layer"), "<control><shift>D",
-    NULL,
     N_("Duplicate layer"),
     G_CALLBACK (layers_duplicate_cmd_callback),
     GIMP_HELP_LAYER_DUPLICATE },
