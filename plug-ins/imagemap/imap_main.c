@@ -583,7 +583,7 @@ main_set_title(const char *filename)
 
    g_strreplace(&_filename, filename);
    p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
-   title = g_strdup_printf("%s - ImageMap 2.0", p);
+   title = g_strdup_printf("%s - ImageMap", p);
    if (filename)
      g_free (p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);

@@ -612,13 +612,10 @@ despeckle_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
-  gchar *plugin_name;
 
   gimp_ui_init ("despeckle", TRUE);
 
-  plugin_name = g_strdup_printf ("%s %s", _("Despeckle"), PLUG_IN_VERSION);
-
-  dialog = gimp_dialog_new (plugin_name, "despeckle",
+  dialog = gimp_dialog_new (_("Despeckle"), "despeckle",
 			    gimp_standard_help_func, "filters/despeckle.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
@@ -629,8 +626,6 @@ despeckle_dialog (void)
 			    NULL, NULL, NULL, TRUE, FALSE,
 
 			    NULL);
-
-  g_free (plugin_name);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),

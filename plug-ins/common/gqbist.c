@@ -808,7 +808,7 @@ dialog_create (void)
 
   gimp_ui_init ("gqbist", TRUE);
 
-  dialog = gimp_dialog_new (_("G-Qbist 1.12"), "gqbist",
+  dialog = gimp_dialog_new (_("G-Qbist"), "gqbist",
 			    gimp_standard_help_func, "filters/gqbist.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,

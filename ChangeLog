@@ -1,3 +1,17 @@
+2003-10-18  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/maze/maze.c
+	* plug-ins/maze/maze.h
+	* plug-ins/maze/maze_face.c
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/spyrogimp.scm: Made several strings
+	translateable, and removed version numbers from window titles and
+	plug-in names, following suggestions from Raymond Ostertag. 
+	This closes bug #124600.
+
 2003-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimperasertool.c (gimp_eraser_options_gui): changed
