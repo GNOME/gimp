@@ -930,21 +930,48 @@ gimp_coordinates_new (GimpUnit         unit,
 /**
  * gimp_pixmap_button_new:
  * @xpm_data:
+ * @text:
  *
  * Returns:
  *
  */
 GtkWidget *
-gimp_pixmap_button_new (gchar **xpm_data)
+gimp_pixmap_button_new (gchar **xpm_data,
+			gchar  *text)
 {
   GtkWidget *button;
   GtkWidget *pixmap;
 
   button = gtk_button_new ();
-
   pixmap = gimp_pixmap_new (xpm_data);
-  gtk_container_add (GTK_CONTAINER (button), pixmap);
-  gtk_widget_show (pixmap);
+
+  if (text)
+    {
+      GtkWidget *abox;
+      GtkWidget *hbox;
+      GtkWidget *label;
+
+      abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
+      gtk_container_add (GTK_CONTAINER (button), abox);
+      gtk_widget_show (abox);
+
+      hbox = gtk_hbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (abox), hbox);
+      gtk_widget_show (hbox);
+
+      gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 4);
+      gtk_widget_show (pixmap);
+
+      label = gtk_label_new (text);
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 4);
+      gtk_widget_show (label);
+    }
+  else
+    {
+      gtk_container_add (GTK_CONTAINER (button), pixmap);
+      gtk_widget_show (pixmap);
+    }
+
 
   return button;
 }

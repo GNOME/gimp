@@ -36,8 +36,8 @@
 #include "queue.h"
 
 /*  pixmaps  */
-#include "back.xpm"
 #include "forward.xpm"
+#include "back.xpm"
 
 /*  defines  */
 
@@ -527,45 +527,6 @@ xmhtml_activate (GtkWidget *html,
     }
 }
 
-static GtkWidget *
-pixmap_button_new (gchar     **xpm,
-		   gchar      *text,
-		   GtkWidget  *parent)
-{
-  GtkWidget *box;
-  GtkWidget *label;
-  GtkWidget *button;
-  GtkWidget *pixmapwid;
-  GdkPixmap *pixmap;
-  GdkBitmap *mask;
-  GtkStyle *style;
-
-  gtk_widget_realize (parent);
-  style = gtk_widget_get_style (parent);
-  pixmap = gdk_pixmap_create_from_xpm_d (parent->window,
-					 &mask,
-					 &style->bg[GTK_STATE_NORMAL],
-					 xpm);
-  pixmapwid = gtk_pixmap_new (pixmap, mask);
-
-  box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (box), pixmapwid, FALSE, FALSE, 0);
-  gtk_widget_show (pixmapwid);
-
-  label = gtk_label_new (text);
-  gtk_box_pack_start (GTK_BOX (box), label, TRUE, TRUE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (box);
-
-  button = gtk_button_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (button), 0);
-  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
-  gtk_container_add (GTK_CONTAINER (button), box);
-
-  return (button);
-}
-
 static void 
 notebook_switch_callback (GtkNotebook     *notebook,
 			  GtkNotebookPage *page,
@@ -803,7 +764,8 @@ open_browser_dialog (gchar *locale,
   gtk_button_box_set_spacing (GTK_BUTTON_BOX (bbox), 0);
   gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
-  back_button = pixmap_button_new (back_xpm, _("Back"), window);
+  back_button = gimp_pixmap_button_new (back_xpm, _("Back"));
+  gtk_button_set_relief (GTK_BUTTON (back_button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), back_button);
   gtk_widget_set_sensitive (GTK_WIDGET (back_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (back_button), "clicked",
@@ -811,7 +773,8 @@ open_browser_dialog (gchar *locale,
 		      NULL);
   gtk_widget_show (back_button);
 
-  forward_button = pixmap_button_new (forward_xpm, _("Forward"), window);
+  forward_button = gimp_pixmap_button_new (forward_xpm, _("Forward"));
+  gtk_button_set_relief (GTK_BUTTON (forward_button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), forward_button);
   gtk_widget_set_sensitive (GTK_WIDGET (forward_button), FALSE);
   gtk_signal_connect (GTK_OBJECT (forward_button), "clicked",

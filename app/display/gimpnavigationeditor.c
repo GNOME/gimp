@@ -1080,7 +1080,7 @@ nav_create_button_area (InfoDialog *info_win)
   hbox1 = gtk_hbox_new (FALSE, 0);
   gtk_widget_show (hbox1);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm);
+  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 		      GTK_SIGNAL_FUNC (navwindow_zoomout),
@@ -1115,7 +1115,7 @@ nav_create_button_area (InfoDialog *info_win)
   gtk_box_pack_start (GTK_BOX (vbox1), hscale1, TRUE, TRUE, 0);
   gtk_scale_set_draw_value (GTK_SCALE (hscale1), FALSE);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm);
+  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked", 
 		      GTK_SIGNAL_FUNC (navwindow_zoomin),

@@ -931,7 +931,7 @@ gradient_editor_create (void)
   /*  + and - buttons  */
   gtk_widget_realize (g_editor->shell);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm);
+  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_in_callback),
@@ -939,7 +939,7 @@ gradient_editor_create (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm);
+  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (ed_zoom_out_callback),

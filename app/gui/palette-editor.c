@@ -2186,14 +2186,14 @@ palette_dialog_new (gint vert)
 			palette);
 
   /*  + and - buttons  */
-  button = gimp_pixmap_button_new (zoom_in_xpm);
+  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_dialog_zoomin_callback),
 		      (gpointer) palette);
   gtk_widget_show (button);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm);
+  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (hbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (palette_dialog_zoomout_callback),

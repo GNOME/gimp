@@ -78,11 +78,6 @@
 
 typedef struct
 {
-  gdouble x, y;
-} vector_t;
-
-typedef struct
-{
   gint    do_curl_shade;
   gint    do_curl_gradient;
   gint    do_curl_warp;  /* Not yet supported... */
@@ -110,30 +105,27 @@ static void run   (gchar   *name,
 
 static void set_default_params (void);
 
-static void dialog_ok_callback   (GtkWidget *, gpointer);
-static void dialog_toggle_update (GtkWidget *, gint);
-static void dialog_scale_update  (GtkAdjustment *, double *);
+static void dialog_ok_callback   (GtkWidget     *widget,
+				  gpointer       data);
+static void dialog_toggle_update (GtkWidget     *widget,
+				  gint32         value);
+static void dialog_scale_update  (GtkAdjustment *adjustment,
+				  gdouble       *value);
 
-static int do_dialog (void);
+static gint do_dialog (void);
 
-static void   v_set (vector_t * v, double x, double y);
-static void   v_add (vector_t * v, vector_t a, vector_t b);
-static void   v_sub (vector_t * v, vector_t a, vector_t b);
-static double v_mag (vector_t v);
-static double v_dot (vector_t a, vector_t b);
+static void init_calculation (void);
 
-static void   init_calculation (void);
+static gint left_of_diagl  (gdouble x, gdouble y);
+static gint right_of_diagr (gdouble x, gdouble y);
+static gint below_diagb    (gdouble x, gdouble y);
+static gint right_of_diagm (gdouble x, gdouble y);
+static gint inside_circle  (gdouble x, gdouble y);
 
-static int left_of_diagl  (double x, double y);
-static int right_of_diagr (double x, double y);
-static int below_diagb    (double x, double y);
-static int right_of_diagm (double x, double y);
-static int inside_circle  (double x, double y);
-
-static void do_curl_effect      (void);
-static void clear_curled_region (void);
-static void page_curl           (void);
-static guchar *get_samples      (GDrawable *drawable);
+static void    do_curl_effect      (void);
+static void    clear_curled_region (void);
+static void    page_curl           (void);
+static guchar *get_samples         (GDrawable *drawable);
 
 /***** Variables *****/
 
@@ -149,47 +141,43 @@ static CurlParams curl;
 
 /* Image parameters */
 
-gint32     image_id;
-GDrawable *curl_layer;
-GDrawable *drawable;
-GDrawable *layer_mask;
+static gint32     image_id;
+static GDrawable *curl_layer;
+static GDrawable *drawable;
 
-typedef GdkPixmap *GdkPmP;
-GdkPmP  gdk_curl_pixmaps[8];
+static GdkPixmap *gdk_curl_pixmaps[8];
+static GdkBitmap *gdk_curl_masks[8];
 
-typedef GdkBitmap *GdkBmP;
-GdkBmP  gdk_curl_masks[8];
+static GtkWidget *curl_pixmap_widget;
 
-GtkWidget *curl_pixmap_widget;
-
-gint        sel_x1, sel_y1, sel_x2, sel_y2;
-gint        true_sel_width, true_sel_height;
-gint        sel_width, sel_height;
-gint        drawable_position;
-static gint curl_run = FALSE;
-gint32      curl_layer_ID;
+static gint   sel_x1, sel_y1, sel_x2, sel_y2;
+static gint   true_sel_width, true_sel_height;
+static gint   sel_width, sel_height;
+static gint   drawable_position;
+static gint   curl_run = FALSE;
+static gint32 curl_layer_ID;
 
 /* Center and radius of circle */
 
-vector_t center;
-double   radius;
+static GimpVector2 center;
+static double      radius;
 
 /* Useful points to keep around */
 
-vector_t left_tangent;
-vector_t right_tangent;
+static GimpVector2 left_tangent;
+static GimpVector2 right_tangent;
 
 /* Slopes --- these are *not* in the usual geometric sense! */
 
-double diagl_slope;
-double diagr_slope;
-double diagb_slope;
-double diagm_slope;
+static gdouble diagl_slope;
+static gdouble diagr_slope;
+static gdouble diagb_slope;
+static gdouble diagm_slope;
 
 /* User-configured parameters */
 
-guchar fore_color[3];
-guchar back_color[3];
+static guchar fore_color[3];
+static guchar back_color[3];
 
 
 /***** Functions *****/
@@ -208,14 +196,14 @@ query (void)
     { PARAM_INT32, "edge", "Edge to curl (1-4, clockwise, starting in the lower right edge)" },
     { PARAM_INT32, "type", "vertical (0), horizontal (1)" },
     { PARAM_INT32, "shade", "Shade the region under the curl (1) or not (0)" },
-   };				/* args */
+  };
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GParamDef return_vals[] =
   {
     { PARAM_LAYER, "Curl layer", "The new layer with the curl." }
   }; 
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
+  static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
   INIT_I18N();
 
@@ -346,49 +334,6 @@ run (gchar   *name,
   values[0].data.d_status = status;
 }
 
-/*************************/
-/* Some Vector-functions */
-
-static void
-v_set (vector_t *v,
-       double    x,
-       double    y)
-{
-  v->x = x;
-  v->y = y;
-}
-
-static void
-v_add (vector_t *v,
-       vector_t  a,
-       vector_t  b)
-{
-  v->x = a.x + b.x;
-  v->y = a.y + b.y;
-}
-
-static void
-v_sub (vector_t *v,
-       vector_t  a,
-       vector_t  b)
-{
-  v->x = a.x - b.x;
-  v->y = a.y - b.y;
-}
-
-static double
-v_mag (vector_t v)
-{
-  return sqrt (v.x * v.x + v.y * v.y);
-}
-
-static double
-v_dot (vector_t a,
-       vector_t b)
-{
-  return a.x * b.x + a.y * b.y;
-}
-
 /*****************************************************
  * Functions to locate the current point in the curl.
  *  The following functions assume an curl in the
@@ -411,38 +356,39 @@ v_dot (vector_t a,
  *   +-------------------------+----------------------+
  */
 
-static int
-left_of_diagl (double x,
-	       double y)
+static gint
+left_of_diagl (gdouble x,
+	       gdouble y)
 {
   return (x < (sel_width + (y - sel_height) * diagl_slope));
 }
 
-static int
-right_of_diagr (double x,
-		double y)
+static gint
+right_of_diagr (gdouble x,
+		gdouble y)
 {
   return (x > (sel_width + (y - sel_height) * diagr_slope));
 }
 
-static int
-below_diagb (double x,
-	     double y)
+static gint
+below_diagb (gdouble x,
+	     gdouble y)
 {
   return (y < (right_tangent.y + (x - right_tangent.x) * diagb_slope));
 }
 
-static int
-right_of_diagm (double x,
-		double y)
+static gint
+right_of_diagm (gdouble x,
+		gdouble y)
 {
   return (x > (sel_width + (y - sel_height) * diagm_slope));
 }
 
-static int
-inside_circle (double x, double y)
+static gint
+inside_circle (gdouble x,
+	       gdouble y)
 {
-  double dx, dy;
+  gdouble dx, dy;
 
   dx = x - center.x;
   dy = y - center.y;
@@ -589,8 +535,6 @@ do_dialog (void)
 		       GTK_SIGNAL_FUNC (gtk_main_quit),
 		       NULL);
 
-   gtk_widget_realize (dialog);
-
    vbox = gtk_vbox_new (FALSE, 4);
    gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), vbox, TRUE, TRUE, 0);
@@ -605,7 +549,9 @@ do_dialog (void)
    gtk_container_set_border_width (GTK_CONTAINER (table), 2);
    gtk_container_add (GTK_CONTAINER (frame), table);
 
+   gtk_widget_realize (dialog);
    style = gtk_widget_get_style (dialog);
+
    gdk_curl_pixmaps[0] =
      gdk_pixmap_create_from_xpm_d (dialog->window,
 				   &(gdk_curl_masks[0]),
@@ -695,7 +641,7 @@ do_dialog (void)
    gtk_widget_show (table);
    gtk_widget_show (frame);
 
-   frame = gtk_frame_new ( _("Curl Orientation"));
+   frame = gtk_frame_new (_("Curl Orientation"));
    gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
    gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
@@ -790,11 +736,11 @@ do_dialog (void)
 static void
 init_calculation (void)
 {
-  double k;
-  double alpha, beta;
-  double angle;
-  vector_t v1, v2;
-  gint32 *image_layers, nlayers;
+  gdouble      k;
+  gdouble      alpha, beta;
+  gdouble      angle;
+  GimpVector2  v1, v2;
+  gint32      *image_layers, nlayers;
 
   gimp_layer_add_alpha (drawable->id);
 
@@ -833,23 +779,24 @@ init_calculation (void)
   alpha = atan ((double) sel_height / sel_width);
   beta = alpha / 2.0;
   k = sel_width / ((G_PI + alpha) * sin (beta) + cos (beta));
-  v_set (&center, k * cos (beta), k * sin (beta));
+  gimp_vector2_set (&center, k * cos (beta), k * sin (beta));
   radius = center.y;
 
   /* left_tangent  */
 
-  v_set (&left_tangent, radius * -sin (alpha), radius * cos (alpha));
-  v_add (&left_tangent, left_tangent, center);
+  gimp_vector2_set (&left_tangent, radius * -sin (alpha), radius * cos (alpha));
+  gimp_vector2_add (&left_tangent, &left_tangent, &center);
 
   /* right_tangent */
 
-  v_sub (&v1, left_tangent, center);
-  v_set (&v2, sel_width - center.x, sel_height - center.y);
-  angle = -2.0 * acos (v_dot (v1, v2) / (v_mag (v1) * v_mag (v2)));
-  v_set (&right_tangent,
-	 v1.x * cos (angle) + v1.y * -sin (angle),
-	 v1.x * sin (angle) + v1.y * cos (angle));
-  v_add (&right_tangent, right_tangent, center);
+  gimp_vector2_sub (&v1, &left_tangent, &center);
+  gimp_vector2_set (&v2, sel_width - center.x, sel_height - center.y);
+  angle = -2.0 * acos (gimp_vector2_inner_product (&v1, &v2) /
+		       (gimp_vector2_length (&v1) * gimp_vector2_length (&v2)));
+  gimp_vector2_set (&right_tangent,
+		    v1.x * cos (angle) + v1.y * -sin (angle),
+		    v1.x * sin (angle) + v1.y * cos (angle));
+  gimp_vector2_add (&right_tangent, &right_tangent, &center);
 
   /* Slopes */
 
@@ -867,17 +814,17 @@ init_calculation (void)
 static void
 do_curl_effect (void)
 {
-  gint x, y, color_image;
-  gint x1, y1, k;
-  guint alpha_pos, progress, max_progress;
-  gdouble intensity, alpha, beta;
-  vector_t v, dl, dr;
-  gdouble dl_mag, dr_mag, angle, factor;
-  guchar *pp, *dest, fore_grayval, back_grayval;
-  guchar *gradsamp;
-  GPixelRgn dest_rgn;
-  gpointer pr;
-  guchar *grad_samples = NULL;
+  gint         x, y, color_image;
+  gint         x1, y1, k;
+  guint        alpha_pos, progress, max_progress;
+  gdouble      intensity, alpha, beta;
+  GimpVector2  v, dl, dr;
+  gdouble      dl_mag, dr_mag, angle, factor;
+  guchar      *pp, *dest, fore_grayval, back_grayval;
+  guchar      *gradsamp;
+  GPixelRgn    dest_rgn;
+  gpointer     pr;
+  guchar      *grad_samples = NULL;
 
   color_image = gimp_drawable_is_rgb (drawable->id);
   curl_layer =
@@ -923,12 +870,14 @@ do_curl_effect (void)
 		       0, 0, true_sel_width, true_sel_height, TRUE, TRUE);
 
   /* Init shade_under */
-  v_set (&dl, -sel_width, -sel_height);
-  dl_mag = v_mag (dl);
-  v_set (&dr, -(sel_width - right_tangent.x), -(sel_height - right_tangent.y));
-  dr_mag = v_mag (dr);
-  alpha = acos (v_dot (dl, dr) / (dl_mag * dr_mag));
-  beta=alpha/2;
+  gimp_vector2_set (&dl, -sel_width, -sel_height);
+  dl_mag = gimp_vector2_length (&dl);
+  gimp_vector2_set (&dr,
+		    -(sel_width - right_tangent.x),
+		    -(sel_height - right_tangent.y));
+  dr_mag = gimp_vector2_length (&dr);
+  alpha = acos (gimp_vector2_inner_product (&dl, &dr) / (dl_mag * dr_mag));
+  beta=alpha / 2;
 
   /* Init shade_curl */
 
@@ -985,7 +934,8 @@ do_curl_effect (void)
 		{
 		  v.x = -(sel_width - x);
 		  v.y = -(sel_height - y);
-		  angle = acos (v_dot (v, dl) / (v_mag (v) * dl_mag));
+		  angle = acos (gimp_vector2_inner_product (&v, &dl) /
+				(gimp_vector2_length (&v) * dl_mag));
 
 		  if (inside_circle (x, y) || below_diagb (x, y))
 		    {

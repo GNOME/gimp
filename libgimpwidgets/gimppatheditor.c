@@ -97,14 +97,14 @@ gimp_path_editor_init (GimpPathEditor *gpe)
   gtk_box_pack_start (GTK_BOX (gpe->upper_hbox), button_box, FALSE, TRUE, 0);
   gtk_widget_show (button_box);
 
-  gpe->new_button = button = gimp_pixmap_button_new (new_xpm);
+  gpe->new_button = button = gimp_pixmap_button_new (new_xpm, NULL);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_path_editor_new_callback),
 		      gpe);
   gtk_widget_show (button);
 
-  gpe->up_button = button = gimp_pixmap_button_new (raise_xpm);
+  gpe->up_button = button = gimp_pixmap_button_new (raise_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -112,7 +112,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 		      gpe);
   gtk_widget_show (button);
 
-  gpe->down_button = button = gimp_pixmap_button_new (lower_xpm);
+  gpe->down_button = button = gimp_pixmap_button_new (lower_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -120,7 +120,7 @@ gimp_path_editor_init (GimpPathEditor *gpe)
 		      gpe);
   gtk_widget_show (button);
 
-  gpe->delete_button = button = gimp_pixmap_button_new (delete_xpm);
+  gpe->delete_button = button = gimp_pixmap_button_new (delete_xpm, NULL);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_box_pack_start (GTK_BOX (button_box), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",

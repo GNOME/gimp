@@ -20,6 +20,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
+#include <stdio.h>
+
 #include "gimppixmap.h"
 
 struct _GimpPixmap
@@ -67,9 +69,6 @@ gimp_pixmap_init (GimpPixmap *pixmap)
   GtkPixmap *gtk_pixmap;
 
   gtk_pixmap = GTK_PIXMAP (pixmap);
-
-  gtk_pixmap->pixmap_insensitive = NULL;
-  gtk_pixmap->build_insensitive  = TRUE;
 }
 
 GtkType
@@ -110,6 +109,7 @@ GtkWidget *
 gimp_pixmap_new (gchar **xpm_data)
 {
   GimpPixmap *pixmap;
+  gint width, height;
 
   g_return_val_if_fail (xpm_data != NULL, NULL);
 
@@ -119,6 +119,18 @@ gimp_pixmap_new (gchar **xpm_data)
   pixmap = gtk_type_new (gimp_pixmap_get_type ());
 
   pixmap->xpm_data = xpm_data;
+
+  if (sscanf (xpm_data[0], "%d %d", &width, &height) != 2)
+    {
+      g_warning ("passed pointer is no XPM data");
+    }
+  else
+    {
+      GTK_WIDGET (pixmap)->requisition.width =
+	width + GTK_MISC (pixmap)->xpad * 2;
+      GTK_WIDGET (pixmap)->requisition.height =
+	height + GTK_MISC (pixmap)->ypad * 2;
+    }
 
   return GTK_WIDGET (pixmap);
 }
@@ -143,6 +155,7 @@ gimp_pixmap_realize (GtkWidget *widget)
 					     &style->bg[GTK_STATE_NORMAL],
 					     pixmap->xpm_data);
 
+  GTK_PIXMAP (pixmap)->build_insensitive = TRUE;
   gtk_pixmap_set (GTK_PIXMAP (pixmap), gdk_pixmap, mask);
 
   gdk_pixmap_unref (gdk_pixmap);

@@ -194,6 +194,8 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_map_object",
 			  "Maps a picture to a object (plane, sphere, box or cylinder)",
 			  "No help yet",

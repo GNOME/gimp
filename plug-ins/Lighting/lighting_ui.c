@@ -1136,7 +1136,7 @@ main_dialog (GDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Recompute preview image"), NULL);
 
-  button = gimp_pixmap_button_new (zoom_out_xpm);
+  button = gimp_pixmap_button_new (zoom_out_xpm, NULL);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (zoomout_callback),
@@ -1145,7 +1145,7 @@ main_dialog (GDrawable *drawable)
 
   gimp_help_set_help_data (button, _("Zoom out (make image smaller)"), NULL);
 
-  button = gimp_pixmap_button_new (zoom_in_xpm);
+  button = gimp_pixmap_button_new (zoom_in_xpm, NULL);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (zoomin_callback),

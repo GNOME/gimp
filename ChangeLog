@@ -1,3 +1,32 @@
+2000-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimppixmap.c: gimp_pixmap_new(): set the widget's
+	requisition so it can be properly packed before it's realized.
+
+	* libgimp/gimpwidgets.[ch]: added a "text" parameter to
+	gimp_pixmap_button_new().
+
+	* app/undo_history.c: use gimp_pixmap_buttons.
+	
+	* app/gradient.c
+	* app/nav_window.c
+	* app/palette.c
+	* libgimp/gimppatheditor.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c: changed calls to
+	gimp_pixmap_button_new().
+
+	* plug-ins/MapObject/mapobject_main.c: INIT_I18N() was missing in
+	query().
+
+	* plug-ins/pagecurl/pagecurl.c: use GimpVector2 functions instead
+	of reinventing the wheel.
+
+	* plug-ins/helpbrowser/helpbrowser.c: use gimp_pixmap_buttons.
+
+	* plug-ins/helpbrowser/back.xpm
+	* plug-ins/helpbrowser/forward.xpm: cropped.
+
 Sat Feb 19 13:53:34 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/fuzzy_select.c: ignore motion_events in a time-window of

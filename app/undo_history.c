@@ -130,12 +130,6 @@ typedef struct
 /**************************************************************/
 /* Static Data */
 
-static GdkPixmap *undo_pixmap = NULL;
-static GdkBitmap *undo_mask   = NULL;
-
-static GdkPixmap *redo_pixmap = NULL;
-static GdkBitmap *redo_mask   = NULL;
-
 static GdkPixmap *clean_pixmap = NULL;
 static GdkBitmap *clean_mask   = NULL;
 
@@ -725,10 +719,6 @@ undo_history_new (GImage *gimage)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *button;
-  GtkWidget *abox;
-  GtkWidget *hbox2;
-  GtkWidget *pixmapwid;
-  GtkWidget *label;
   GtkWidget *scrolled_win;
 
   st = g_new0 (undo_history_st, 1);
@@ -799,16 +789,6 @@ undo_history_new (GImage *gimage)
       gtk_widget_realize (st->shell);
       style = gtk_widget_get_style (st->shell);
 
-      undo_pixmap =
-	gdk_pixmap_create_from_xpm_d (st->shell->window,
-				      &undo_mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      raise_xpm);
-      redo_pixmap =
-	gdk_pixmap_create_from_xpm_d (st->shell->window,
-				      &redo_mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      lower_xpm);
       clean_pixmap =
 	gdk_pixmap_create_from_xpm_d (st->shell->window,
 				      &clean_mask,
@@ -853,56 +833,18 @@ undo_history_new (GImage *gimage)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  button = gtk_button_new ();
-  st->undo_button = button;
+  st->undo_button = button = gimp_pixmap_button_new (raise_xpm, _("Undo"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (undo_history_undo_callback),
 		      st);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (button), abox);
-
-  hbox2 = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (abox), hbox2);
-
-  pixmapwid = gtk_pixmap_new (undo_pixmap, undo_mask);
-
-  gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
-  gtk_widget_show (pixmapwid);
-  
-  label = gtk_label_new (_("Undo"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (GTK_WIDGET (hbox2));
-  gtk_widget_show (GTK_WIDGET (abox));
   gtk_widget_show (GTK_WIDGET (button));
 
-  button = gtk_button_new ();
-  st->redo_button = button;
+  st->redo_button = button = gimp_pixmap_button_new (lower_xpm, _("Redo"));
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (undo_history_redo_callback),
 		      st);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-
-  abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (button), abox);
-
-  hbox2 = gtk_hbox_new (FALSE, 4);
-  gtk_container_add (GTK_CONTAINER (abox), hbox2);
-
-  pixmapwid = gtk_pixmap_new (redo_pixmap, redo_mask);
-
-  gtk_box_pack_start (GTK_BOX (hbox2), pixmapwid, FALSE, FALSE, 0);
-  gtk_widget_show (pixmapwid);
-
-  label = gtk_label_new (_("Redo"));
-  gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (GTK_WIDGET (hbox2));
-  gtk_widget_show (GTK_WIDGET (abox));
   gtk_widget_show (GTK_WIDGET (button));
 
   undo_history_set_sensitive (st, GTK_CLIST (st->clist)->rows);
