@@ -30,9 +30,10 @@
 #include "gimppreviewarea.h"
 
 
-#define CHECK_COLOR(row,col) \
-  ((((row) & GIMP_CHECK_SIZE) ^ ((col) & GIMP_CHECK_SIZE)) ? \
-   (GIMP_CHECK_LIGHT * 255) :                                \
+#define CHECK_COLOR(area, row, col)                     \
+  (((((area)->offset_x + (row)) & GIMP_CHECK_SIZE) ^    \
+    (((area)->offset_y + (col)) & GIMP_CHECK_SIZE)) ?   \
+   (GIMP_CHECK_LIGHT * 255) :                           \
    (GIMP_CHECK_DARK  * 255))
 
 
@@ -97,8 +98,8 @@ gimp_preview_area_init (GimpPreviewArea *area)
 {
   area->buf       = NULL;
   area->cmap      = NULL;
-  area->dither_x  = 0;
-  area->dither_y  = 0;
+  area->offset_x  = 0;
+  area->offset_y  = 0;
   area->width     = 0;
   area->height    = 0;
   area->rowstride = 0;
@@ -173,8 +174,8 @@ gimp_preview_area_expose (GtkWidget      *widget,
                                 GDK_RGB_DITHER_MAX,
                                 buf,
                                 area->rowstride,
-                                area->dither_x - event->area.x,
-                                area->dither_y - event->area.y);
+                                area->offset_x - event->area.x,
+                                area->offset_y - event->area.y);
 
   return FALSE;
 }
@@ -310,7 +311,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
               switch (s[3])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
                   break;
 
                 case 255:
@@ -322,7 +323,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[3] + 1;
-                    register guint check = CHECK_COLOR (row, col);
+                    register guint check = CHECK_COLOR (area, row, col);
 
                     d[0] = ((check << 8) + (s[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (s[1] - check) * alpha) >> 8;
@@ -364,7 +365,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
               switch (s[1])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
                   break;
 
                 case 255:
@@ -374,7 +375,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[1] + 1;
-                    register guint check = CHECK_COLOR (row, col);
+                    register guint check = CHECK_COLOR (area, row, col);
 
                     d[0] = d[1] = d[2] =
                       ((check << 8) + (s[0] - check) * alpha) >> 8;
@@ -423,7 +424,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
               switch (s[1])
                 {
                 case 0:
-                  d[0] = d[1] = d[2] = CHECK_COLOR (row, col);
+                  d[0] = d[1] = d[2] = CHECK_COLOR (area, row, col);
                   break;
 
                 case 255:
@@ -435,7 +436,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
                 default:
                   {
                     register guint alpha = s[3] + 1;
-                    register guint check = CHECK_COLOR (row, col);
+                    register guint check = CHECK_COLOR (area, row, col);
 
                     d[0] = ((check << 8) + (cmap[0] - check) * alpha) >> 8;
                     d[1] = ((check << 8) + (cmap[1] - check) * alpha) >> 8;
@@ -535,6 +536,27 @@ gimp_preview_area_fill (GimpPreviewArea *area,
   gtk_widget_queue_draw_area (GTK_WIDGET (area), x, y, width, height);
 }
 
+/**
+ * gimp_preview_area_set_offsets:
+ * @area: a #GimpPreviewArea
+ * @x:    horizontal offset
+ * @y:    vertical offset
+ *
+ * Sets the offsets of the previewed area. This information is used
+ * when drawing the checkerboard and to determine the dither offsets.
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_preview_area_set_offsets (GimpPreviewArea *area,
+                               gint             x,
+                               gint             y)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
+
+  area->offset_x = x;
+  area->offset_y = y;
+}
 
 /**
  * gimp_preview_area_set_cmap:

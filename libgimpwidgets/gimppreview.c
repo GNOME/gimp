@@ -371,6 +371,9 @@ gimp_preview_h_scroll (GtkAdjustment *hadj,
 {
   preview->xoff = hadj->value;
 
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
+                                 preview->xoff, preview->yoff);
+
   if (! preview->in_drag)
     gimp_preview_draw (preview);
 
@@ -382,6 +385,9 @@ gimp_preview_v_scroll (GtkAdjustment *vadj,
                        GimpPreview   *preview)
 {
   preview->yoff = vadj->value;
+
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
+                                 preview->xoff, preview->yoff);
 
   if (! preview->in_drag)
     gimp_preview_draw (preview);
@@ -434,11 +440,13 @@ gimp_preview_area_event (GtkWidget   *area,
           yoff = CLAMP (preview->drag_yoff - dy,
                         0, preview->ymax - preview->ymin - preview->height);
 
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadj), xoff);
-          gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
+          if (preview->xoff != xoff || preview->yoff != yoff)
+            {
+              gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->hadj), xoff);
+              gtk_adjustment_set_value (GTK_ADJUSTMENT (preview->vadj), yoff);
 
-          gimp_preview_draw (preview);
-          gimp_preview_invalidate (preview);
+              gimp_preview_draw (preview);
+            }
         }
       break;
 

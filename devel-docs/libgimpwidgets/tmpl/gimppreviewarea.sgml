@@ -60,6 +60,16 @@ GimpPreviewArea
 @blue: 
 
 
+<!-- ##### FUNCTION gimp_preview_area_set_offsets ##### -->
+<para>
+
+</para>
+
+@area: 
+@x: 
+@y: 
+
+
 <!-- ##### FUNCTION gimp_preview_area_set_cmap ##### -->
 <para>
 

@@ -40,8 +40,8 @@ struct _GimpPreviewArea
   gint             width;
   gint             height;
   gint             rowstride;
-  gint             dither_x;
-  gint             dither_y;
+  gint             offset_x;
+  gint             offset_y;
   guchar          *buf;
   guchar          *cmap;
 };
@@ -52,31 +52,32 @@ struct _GimpPreviewAreaClass
 };
 
 
-GType       gimp_preview_area_get_type (void) G_GNUC_CONST;
+GType       gimp_preview_area_get_type    (void) G_GNUC_CONST;
 
-GtkWidget * gimp_preview_area_new      (void);
+GtkWidget * gimp_preview_area_new         (void);
 
-void        gimp_preview_area_draw     (GimpPreviewArea *area,
-                                        gint             x,
-                                        gint             y,
-                                        gint             width,
-                                        gint             height,
-                                        GimpImageType    type,
-                                        const guchar    *buf,
-                                        gint             rowstride);
-
-void        gimp_preview_area_fill     (GimpPreviewArea *area,
-                                        gint             x,
-                                        gint             y,
-                                        gint             width,
-                                        gint             height,
-                                        guchar           red,
-                                        guchar           green,
-                                        guchar           blue);
-
-void        gimp_preview_area_set_cmap (GimpPreviewArea *area,
-                                        const guchar    *cmap,
-                                        gint             num_colors);
+void        gimp_preview_area_draw        (GimpPreviewArea *area,
+                                           gint             x,
+                                           gint             y,
+                                           gint             width,
+                                           gint             height,
+                                           GimpImageType    type,
+                                           const guchar    *buf,
+                                           gint             rowstride);
+void        gimp_preview_area_fill        (GimpPreviewArea *area,
+                                           gint             x,
+                                           gint             y,
+                                           gint             width,
+                                           gint             height,
+                                           guchar           red,
+                                           guchar           green,
+                                           guchar           blue);
+void        gimp_preview_area_set_offsets (GimpPreviewArea *area,
+                                           gint             x,
+                                           gint             y);
+void        gimp_preview_area_set_cmap    (GimpPreviewArea *area,
+                                           const guchar    *cmap,
+                                           gint             num_colors);
 
 
 #endif /* __GIMP_PREVIEW_AREA_H__ */

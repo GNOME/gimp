@@ -1,5 +1,13 @@
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.[ch]: added new function
+	gimp_preview_area_set_offsets().
+
+	* libgimpwidgets/gimppreview.c: use the new function to let the
+	checkerboard scroll with the preview.
+
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.[ch]: delay the emission of the
 	"invalidated" signal using a timeout. Removed hack that used to
 	invalidate the preview on button-release.
