@@ -104,6 +104,7 @@ enum
   PROP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
+  PROP_THUMBNAIL_FILESIZE_LIMIT,
   PROP_INSTALL_COLORMAP,
   PROP_MIN_COLORS
 };
@@ -309,6 +310,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_TYPE_THUMBNAIL_SIZE,
                                  GIMP_THUMBNAIL_SIZE_NORMAL,
                                  0);
+  GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_THUMBNAIL_FILESIZE_LIMIT,
+                                    "thumbnail-filesize-limit",
+                                    THUMBNAIL_FILESIZE_LIMIT_BLURB,
+                                    1, GIMP_MAX_MEMSIZE, 1 << 22,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                                     "install-colormap", INSTALL_COLORMAP_BLURB,
                                     FALSE,
@@ -501,6 +507,9 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_THUMBNAIL_SIZE:
       core_config->thumbnail_size = g_value_get_enum (value);
       break;
+    case PROP_THUMBNAIL_FILESIZE_LIMIT:
+      core_config->thumbnail_filesize_limit = g_value_get_uint64 (value);
+      break;
     case PROP_INSTALL_COLORMAP:
       core_config->install_cmap = g_value_get_boolean (value);
       break;
@@ -622,6 +631,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_THUMBNAIL_SIZE:
       g_value_set_enum (value, core_config->thumbnail_size);
+      break;
+    case PROP_THUMBNAIL_FILESIZE_LIMIT:
+      g_value_set_uint64 (value, core_config->thumbnail_filesize_limit);
       break;
     case PROP_INSTALL_COLORMAP:
       g_value_set_boolean (value, core_config->install_cmap);

@@ -44,6 +44,8 @@ struct _GimpThumbBox
 
   gboolean       progress_active;
   GtkWidget     *progress;
+
+  guint          idle_id;
 };
 
 struct _GimpThumbBoxClass

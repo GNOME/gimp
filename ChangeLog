@@ -1,5 +1,27 @@
 2004-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: added new gimprc option
+	"thumbnail-filesize-limit" that allows to control the maximum
+	filesize for automatic thumbnail creation.
+
+	* app/dialogs/preferences-dialog.c: added a GUI for it, needs
+	review.
+
+	* app/core/gimpimagefile.[ch]: minor cleanups. Moved call to
+	gimp_thumbnail_peek_image() from gimp_imagefile_save_thumb() to
+	 gimp_imagefile_save_thumbnail() to avoid it being called twice.
+
+	* app/file/file-utils.[ch]: export utility function
+	file_utils_find_proc_by_extension() that allows to check for a
+	file plug-in by looking at the filename extension only.
+
+	* app/widgets/gimpthumbbox.[ch]: automatically create or update
+	thumbnails for image files with a known extension that are smaller
+	than "thumbnail-filesize-limit".  Fixes bug #137176.
+
+2004-10-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/ripple.c: handle the tile parameter identically
 	for preview and final result. Set Edges options insensitive when
 	"Retain tileability" is checked. Reported by Olivier.

@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfileimage.c
+ * gimpimagefile.c
  *
  * Copyright (C) 2001-2004  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
@@ -302,6 +302,9 @@ gimp_imagefile_save_thumbnail (GimpImagefile *imagefile,
 
   g_return_val_if_fail (GIMP_IS_IMAGEFILE (imagefile), FALSE);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  /*  peek the thumbnail to make sure that mtime and filesize are set  */
+  gimp_thumbnail_peek_image (imagefile->thumbnail);
 
   success = gimp_imagefile_save_thumb (imagefile,
                                        gimage,
@@ -663,15 +666,11 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
         }
     }
 
-  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (gimage),
-                                         width, height);
+  pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (gimage), width, height);
 
   /*  when layer previews are disabled, we won't get a pixbuf  */
   if (! pixbuf)
     return TRUE;
-
-  /*  peek the thumbnail to make sure that mtime and filesize are set  */
-  gimp_thumbnail_peek_image (thumbnail);
 
   type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
 

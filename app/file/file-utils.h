@@ -22,13 +22,17 @@
 #define __FILE_UTILS_H__
 
 
-gchar         * file_utils_filename_to_uri      (GSList        *procs,
-                                                 const gchar   *filename,
-                                                 GError       **error);
-PlugInProcDef * file_utils_find_proc            (GSList        *procs,
-                                                 const gchar   *filename);
-gchar         * file_utils_uri_to_utf8_basename (const gchar   *uri);
-gchar         * file_utils_uri_to_utf8_filename (const gchar   *uri);
+gchar         * file_utils_filename_to_uri        (GSList        *procs,
+                                                   const gchar   *filename,
+                                                   GError       **error);
+
+gchar         * file_utils_uri_to_utf8_basename   (const gchar   *uri);
+gchar         * file_utils_uri_to_utf8_filename   (const gchar   *uri);
+
+PlugInProcDef * file_utils_find_proc              (GSList        *procs,
+                                                   const gchar   *filename);
+PlugInProcDef * file_utils_find_proc_by_extension (GSList        *procs,
+                                                   const gchar   *uri);
 
 
 #endif /* __FILE_UTILS_H__ */

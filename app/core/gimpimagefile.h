@@ -1,7 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpfileimage.h
+ * gimpimagefile.h
+ *
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * http://triq.net/~pearl/thumbnail-spec/
  *

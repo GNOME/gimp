@@ -203,8 +203,18 @@ file_utils_find_proc (GSList       *procs,
         return size_matched_proc;
     }
 
-  /* As a last ditch, try matching by name */
+  /* As a last resort, try matching by name */
   return file_proc_find_by_name (all_procs, uri, FALSE);
+}
+
+PlugInProcDef *
+file_utils_find_proc_by_extension (GSList      *procs,
+                                   const gchar *uri)
+{
+  g_return_val_if_fail (procs != NULL, NULL);
+  g_return_val_if_fail (uri != NULL, NULL);
+
+  return file_proc_find_by_extension (procs, uri, FALSE);
 }
 
 gchar *
@@ -212,8 +222,6 @@ file_utils_uri_to_utf8_basename (const gchar *uri)
 {
   gchar *filename;
   gchar *basename;
-
-  g_assert (uri != NULL);
 
   g_return_val_if_fail (uri != NULL, NULL);
 

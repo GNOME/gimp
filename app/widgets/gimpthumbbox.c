@@ -50,6 +50,7 @@ static void     gimp_thumb_box_class_init (GimpThumbBoxClass *klass);
 static void     gimp_thumb_box_init       (GimpThumbBox      *box);
 static void     gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface);
 
+static void     gimp_thumb_box_dispose    (GObject           *object);
 static void     gimp_thumb_box_finalize   (GObject           *object);
 
 static void     gimp_thumb_box_style_set  (GtkWidget         *widget,
@@ -73,12 +74,16 @@ static void gimp_thumb_box_thumbnail_clicked      (GtkWidget         *widget,
                                                    GimpThumbBox      *box);
 static void gimp_thumb_box_imagefile_info_changed (GimpImagefile     *imagefile,
                                                    GimpThumbBox      *box);
+static void gimp_thumb_box_thumb_state_notify     (GimpThumbnail     *thumb,
+                                                   GParamSpec        *pspec,
+                                                   GimpThumbBox      *box);
 static void gimp_thumb_box_create_thumbnails      (GimpThumbBox      *box,
-                                                   gboolean           always_create);
+                                                   gboolean           force);
 static void gimp_thumb_box_create_thumbnail       (GimpThumbBox      *box,
                                                    const gchar       *uri,
                                                    GimpThumbnailSize  size,
-                                                   gboolean           always_create);
+                                                   gboolean           force);
+static gboolean gimp_thumb_box_auto_thumbnail     (GimpThumbBox      *box);
 
 
 /*  private variables  */
@@ -132,6 +137,7 @@ gimp_thumb_box_class_init (GimpThumbBoxClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->dispose   = gimp_thumb_box_dispose;
   object_class->finalize  = gimp_thumb_box_finalize;
 
   widget_class->style_set = gimp_thumb_box_style_set;
@@ -141,6 +147,8 @@ static void
 gimp_thumb_box_init (GimpThumbBox *box)
 {
   gtk_frame_set_shadow_type (GTK_FRAME (box), GTK_SHADOW_IN);
+
+  box->idle_id = 0;
 }
 
 static void
@@ -151,6 +159,20 @@ gimp_thumb_box_progress_iface_init (GimpProgressInterface *progress_iface)
   progress_iface->is_active = gimp_thumb_box_progress_is_active;
   progress_iface->set_value = gimp_thumb_box_progress_set_value;
   progress_iface->get_value = gimp_thumb_box_progress_get_value;
+}
+
+static void
+gimp_thumb_box_dispose (GObject *object)
+{
+  GimpThumbBox *box = GIMP_THUMB_BOX (object);
+
+  if (box->idle_id)
+    {
+      g_source_remove (box->idle_id);
+      box->idle_id = 0;
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -196,15 +218,15 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
                                const gchar  *message,
                                gboolean      cancelable)
 {
-  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  if (! thumb_box->progress_active)
+  if (! box->progress_active)
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (thumb_box->progress);
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, 0.0);
 
-      thumb_box->progress_active = TRUE;
+      box->progress_active = TRUE;
 
       return progress;
     }
@@ -215,48 +237,58 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
 static void
 gimp_thumb_box_progress_end (GimpProgress *progress)
 {
-  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  if (thumb_box->progress_active)
+  if (box->progress_active)
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (thumb_box->progress);
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, 0.0);
 
-      thumb_box->progress_active = FALSE;
+      box->progress_active = FALSE;
     }
 }
 
 static gboolean
 gimp_thumb_box_progress_is_active (GimpProgress *progress)
 {
-  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  return thumb_box->progress_active;
+  return box->progress_active;
 }
 
 static void
 gimp_thumb_box_progress_set_value (GimpProgress *progress,
                                    gdouble       percentage)
 {
-  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  if (thumb_box->progress_active)
+  if (box->progress_active)
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (thumb_box->progress);
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, percentage);
+
+      if (box->idle_id)
+        {
+          const gchar *desc = gimp_imagefile_get_desc_string (box->imagefile);
+          gchar       *text;
+
+          text = g_strdup_printf ("%s\n\n%s", desc, _("Creating Preview ..."));
+          gtk_label_set_text (GTK_LABEL (box->info), text);
+          g_free (text);
+        }
     }
 }
 
 static gdouble
 gimp_thumb_box_progress_get_value (GimpProgress *progress)
 {
-  GimpThumbBox *thumb_box = GIMP_THUMB_BOX (progress);
+  GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  if (thumb_box->progress_active)
+  if (box->progress_active)
     {
-      GtkProgressBar *bar = GTK_PROGRESS_BAR (thumb_box->progress);
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       return gtk_progress_bar_get_fraction (bar);
     }
@@ -345,12 +377,17 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
                     box);
 
+  g_signal_connect (box->imagefile->thumbnail, "notify::thumb-state",
+                    G_CALLBACK (gimp_thumb_box_thumb_state_notify),
+                    box);
+
   gimp_view_renderer_get_frame_size (&h, &v);
 
   box->preview = gimp_view_new (GIMP_VIEWABLE (box->imagefile),
                                 /* add padding for the shadow frame */
                                 gimp->config->thumbnail_size + MAX (h, v),
                                 0, FALSE);
+
   gtk_box_pack_start (GTK_BOX (hbox), box->preview, TRUE, FALSE, 10);
   gtk_widget_show (box->preview);
 
@@ -411,6 +448,12 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
                         const gchar  *uri)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
+
+  if (box->idle_id)
+    {
+      g_source_remove (box->idle_id);
+      box->idle_id = 0;
+    }
 
   gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
 
@@ -478,12 +521,35 @@ gimp_thumb_box_imagefile_info_changed (GimpImagefile *imagefile,
 }
 
 static void
+gimp_thumb_box_thumb_state_notify (GimpThumbnail *thumb,
+                                   GParamSpec    *pspec,
+                                   GimpThumbBox  *box)
+{
+  if (box->idle_id)
+    return;
+
+  switch (thumb->thumb_state)
+    {
+    case GIMP_THUMB_STATE_NOT_FOUND:
+    case GIMP_THUMB_STATE_OLD:
+      box->idle_id =
+        g_idle_add_full (G_PRIORITY_LOW,
+                         (GSourceFunc) gimp_thumb_box_auto_thumbnail,
+                         box, NULL);
+      break;
+
+    default:
+      break;
+    }
+}
+
+static void
 gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
-                                  gboolean      always_create)
+                                  gboolean      force)
 {
   Gimp           *gimp   = box->imagefile->gimp;
-  GtkWidget      *toplevel;
   GimpFileDialog *dialog = NULL;
+  GtkWidget      *toplevel;
   GSList         *list;
   gint            n_uris;
   gint            i;
@@ -537,7 +603,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
           gimp_thumb_box_create_thumbnail (box,
                                            list->data,
                                            gimp->config->thumbnail_size,
-                                           always_create);
+                                           force);
 
           if (dialog && dialog->canceled)
             goto canceled;
@@ -563,7 +629,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
       gimp_thumb_box_create_thumbnail (box,
                                        box->uris->data,
                                        gimp->config->thumbnail_size,
-                                       always_create);
+                                       force);
 
       if (n_uris > 1)
         {
@@ -598,7 +664,7 @@ static void
 gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
                                  const gchar       *uri,
                                  GimpThumbnailSize  size,
-                                 gboolean           always_create)
+                                 gboolean           force)
 {
   gchar *filename = g_filename_from_uri (uri, NULL, NULL);
 
@@ -611,7 +677,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 
       gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
 
-      if (always_create ||
+      if (force ||
           gimp_thumbnail_peek_thumb (box->imagefile->thumbnail, size)
           < GIMP_THUMB_STATE_FAILED)
         {
@@ -623,4 +689,60 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
     }
 
   g_free (filename);
+}
+
+static gboolean
+gimp_thumb_box_auto_thumbnail (GimpThumbBox  *box)
+{
+  Gimp          *gimp  = box->imagefile->gimp;
+  GimpThumbnail *thumb = box->imagefile->thumbnail;
+  const gchar   *uri   = gimp_object_get_name (GIMP_OBJECT (box->imagefile));
+
+  g_object_add_weak_pointer (G_OBJECT (box), (gpointer *) &box);
+
+  switch (thumb->thumb_state)
+    {
+    case GIMP_THUMB_STATE_NOT_FOUND:
+    case GIMP_THUMB_STATE_OLD:
+      if (thumb->image_filesize < gimp->config->thumbnail_filesize_limit &&
+          file_utils_find_proc_by_extension (gimp->load_procs, uri))
+        {
+          /*  This is tricky because gimp_imagefile_create_thumbnail()
+           *  may call a plug-in and the progress callback runs the
+           *  mainloop. Thus the dialog may change below our feet. For
+           *  that reason we use a seperate GimpImagefile to create the
+           *  thumbnail.
+           */
+          GimpImagefile *local = gimp_imagefile_new (gimp, uri);
+
+          gimp_imagefile_create_thumbnail (local,
+                                           gimp_get_user_context (gimp),
+                                           GIMP_PROGRESS (box),
+                                           gimp->config->thumbnail_size);
+
+          if (box)
+            {
+              if (strcmp (gimp_object_get_name (GIMP_OBJECT (box->imagefile)),
+                          gimp_object_get_name (GIMP_OBJECT (local))) == 0)
+                {
+                  gimp_imagefile_update (box->imagefile);
+                }
+            }
+
+          g_object_unref (local);
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  if (box)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (box), (gpointer *) &box);
+
+      box->idle_id = 0;
+    }
+
+  return FALSE;
 }

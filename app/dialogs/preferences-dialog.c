@@ -2300,8 +2300,17 @@ prefs_dialog_new (Gimp       *gimp,
                          GTK_TABLE (table), 4, size_group);
 #endif /* ENABLE_MP */
 
+  /*  File Opening  */
+  vbox2 = prefs_frame_new (_("Opening Images"), GTK_CONTAINER (vbox), FALSE);
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
+
+  prefs_memsize_entry_add (object, "thumbnail-filesize-limit",
+                           _("Filesize limit for thumbnailing:"),
+                           GTK_TABLE (table), 0, size_group);
+
   /*  File Saving  */
-  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox), FALSE);
+  vbox2 = prefs_frame_new (_("Saving Images"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (object, "confirm-on-close",
                           _("Confirm closing of unsaved images"),
@@ -2310,12 +2319,11 @@ prefs_dialog_new (Gimp       *gimp,
   table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
-                            _("Size of thumbnail files:"),
+                            _("Create thumbnails:"),
                             GTK_TABLE (table), 0, size_group);
 
   g_object_unref (size_group);
   size_group = NULL;
-
 
   /*************/
   /*  Folders  */
