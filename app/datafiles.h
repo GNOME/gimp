@@ -19,11 +19,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
-#ifndef _DATAFILES_H_
-#define _DATAFILES_H_
+#ifndef __DATAFILES_H__
+#define __DATAFILES_H__
 
 #include <time.h>
+#include <glib.h>
 
 #define INCLUDE_TEMP_DIR 0x1
 #define MODE_EXECUTABLE  0x2
@@ -31,23 +31,22 @@
 
 /***** Types *****/
 
-typedef void (*datafile_loader_t) (char *filename);
+typedef void (* GimpDataFileLoaderFunc) (gchar *filename);
 
 
 /***** Functions *****/
 
-void datafiles_read_directories(char *path_str,
-				datafile_loader_t loader_func,
-				int flags);
+void datafiles_read_directories (gchar                  *path_str,
+				 GimpDataFileLoaderFunc  loader_func,
+				 gint                    flags);
 
 /* Return the current datafiles access, modification
  *  or change time. The current datafile is the one for
- *  which the "datafile_loader_t" function has been called
+ *  which the "DataFileLoaderFunc" function has been called
  *  on.
  */
 time_t datafile_atime (void);
 time_t datafile_mtime (void);
 time_t datafile_ctime (void);
 
-
-#endif
+#endif  /*  __DATAFILES_H__ */

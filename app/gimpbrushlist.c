@@ -53,10 +53,10 @@ GimpBrushList    *brush_list     = NULL;
 static GimpBrush *standard_brush = NULL;
 
 /*  local function prototypes  */
-static void   brushes_brush_load           (gchar         *filename);
+static void   brushes_brush_load (gchar         *filename);
 
-static gint   brush_compare_func           (gconstpointer  first,
-					    gconstpointer  second);
+static gint   brush_compare_func (gconstpointer  first,
+				  gconstpointer  second);
 
 /*  class functions  */
 static GimpObjectClass* parent_class;
@@ -134,7 +134,7 @@ gimp_brush_list_new (void)
 
 /*  function declarations  */
 void
-brushes_init (int no_data)
+brushes_init (gint no_data)
 {
   if (brush_list)
     brushes_free ();
@@ -146,9 +146,11 @@ brushes_init (int no_data)
       brush_select_freeze_all ();
 
       datafiles_read_directories (brush_path,
-				  (datafile_loader_t) brushes_brush_load, 0);
+				  (GimpDataFileLoaderFunc) brushes_brush_load,
+				  0);
       datafiles_read_directories (brush_vbr_path,
-				  (datafile_loader_t) brushes_brush_load, 0);
+				  (GimpDataFileLoaderFunc) brushes_brush_load,
+				  0);
 
       brush_select_thaw_all ();
     }

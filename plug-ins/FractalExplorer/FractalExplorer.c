@@ -1135,17 +1135,11 @@ plug_in_parse_fractalexplorer_path (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gchar *path_string;
-  gchar *home;
-  gchar *path;
-  gchar *token;
-  gchar *next_token;
-  struct stat filestat;
-  gint	err;
-  
-  if(fractalexplorer_path_list)
-    g_list_free(fractalexplorer_path_list);
-  
+
+  GList *fail_list = NULL;
+  GList *list;
+
+  gimp_path_free (fractalexplorer_path_list);
   fractalexplorer_path_list = NULL;
   
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
@@ -1164,52 +1158,28 @@ plug_in_parse_fractalexplorer_path (void)
       return;
     }
 
-  path_string = g_strdup (return_vals[1].data.d_string);
+  fractalexplorer_path_list = gimp_path_parse (return_vals[1].data.d_string,
+					       16, TRUE, &fail_list);
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = g_get_home_dir ();
-
-  /* Search through all directories in the  path */
-
-  next_token = path_string;
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
+  if (fail_list)
     {
-      if (*token == '\0')
-	{
-	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-	  continue;
-	}
+      GString *err =
+        g_string_new (_("fractalexplorer-path misconfigured - "
+                        "the following directories were not found"));
 
-      if (*token == '~')
-	{
-	  path = g_strdup_printf ("%s%s", home, token + 1);
-	}
-      else
-	{
-	  path = g_strdup (token);
-	} /* else */
+      for (list = fail_list; list; list = g_list_next (list))
+        {
+          g_string_append_c (err, '\n');
+          g_string_append (err, (gchar *) list->data);
+        }
 
-      /* Check if directory exists */
-      err = stat (path, &filestat);
+      g_message (err->str);
 
-      if (!err && S_ISDIR (filestat.st_mode))
-	{
-	  fractalexplorer_path_list = g_list_append (fractalexplorer_path_list, path);
-	}
-      else
-	{
-	  g_message (_("fractalexplorer-path misconfigured\nPath "
-		       "\"%s\" not found."), path);
-	  g_free (path);
-	}
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
+      g_string_free (err, TRUE);
+      gimp_path_free (fail_list);
     }
-  g_free (path_string);
 }
 
 static void
@@ -1448,17 +1418,11 @@ fractalexplorer_rescan_ok_callback (GtkWidget *widget,
 				    gpointer   data)
 {
   GtkWidget *patheditor;
-  GList     *list;
   gchar     *raw_path;
-  gchar    **path;
-  gint       i;
 
   gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
 
-  for (list = fractalexplorer_path_list; list; list = g_list_next (list))
-    g_free (list->data);
-
-  g_list_free (fractalexplorer_path_list);
+  gimp_path_free (fractalexplorer_path_list);
   fractalexplorer_path_list = NULL;
 
   patheditor = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (data),
@@ -1466,18 +1430,9 @@ fractalexplorer_rescan_ok_callback (GtkWidget *widget,
 
   raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
-  path = g_strsplit (raw_path, ":", 16);
+  fractalexplorer_path_list = gimp_path_parse (raw_path, 16, FALSE, NULL);
 
-  for (i = 0; i < 16; i++)
-    {
-      if (!path[i])
-        break;
-
-      fractalexplorer_path_list = g_list_append (fractalexplorer_path_list,
-						 g_strdup (path[i]));
-    }
-
-  g_strfreev (path);
+  g_free (raw_path);
 
   if (fractalexplorer_path_list)
     {
@@ -1496,8 +1451,7 @@ fractalexplorer_rescan_list (void)
   static GtkWidget *dlg = NULL;
 
   GtkWidget *patheditor;
-  GString   *path = NULL;
-  GList     *list;
+  gchar     *path;
 
   if (dlg)
     {
@@ -1522,26 +1476,15 @@ fractalexplorer_rescan_list (void)
                       GTK_SIGNAL_FUNC (gtk_widget_destroyed),
                       &dlg);
 
-  for (list = fractalexplorer_path_list; list; list = g_list_next (list))
-    {
-      if (path == NULL)
-        {
-          path = g_string_new (list->data);
-        }
-      else
-        {
-          g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
-          g_string_append (path, list->data);
-        }
-    }
+  path = gimp_path_to_str (fractalexplorer_path_list);
 
-  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"), path->str);
+  patheditor = gimp_path_editor_new (_("Add FractalExplorer Path"), path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
                       TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
 
-  g_string_free (path, TRUE);
+  g_free (path);
 
   gtk_object_set_data (GTK_OBJECT (dlg), "patheditor", patheditor);
 

@@ -1718,24 +1718,30 @@ create_file_selection (void)
 			  "clicked",
 			  GTK_SIGNAL_FUNC (file_selection_ok),
 			  (gpointer) window);
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button, _("Click here to save your file"), NULL);
+      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->ok_button,
+			       _("Click here to save your file"), NULL);
 
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION(window)->cancel_button),
 				 "clicked",
 				 GTK_SIGNAL_FUNC (gtk_widget_destroy),
 				 GTK_OBJECT (window));
-      gimp_help_set_help_data (GTK_FILE_SELECTION(window)->cancel_button, _("Click here to cancel save procedure"), NULL);
+      gimp_help_set_help_data (GTK_FILE_SELECTION (window)->cancel_button,
+			       _("Click here to cancel save procedure"), NULL);
     }
   if (tpath)
     {
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
     }
-  else if(fractalexplorer_path_list)
+  else if (fractalexplorer_path_list)
     {
-      /* Last path is where usually saved to */
-      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window),
-				       g_list_nth (fractalexplorer_path_list,
-						   g_list_length (fractalexplorer_path_list)-1)->data);
+      gchar *dir;
+
+      dir = gimp_path_get_user_writable_dir (fractalexplorer_path_list);
+
+      if (!dir)
+	dir = gimp_directory ();
+
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
     }
   else
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (window),"/tmp");

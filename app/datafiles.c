@@ -45,16 +45,13 @@
 #endif /* G_OS_WIN32 */
 
 #include "datafiles.h"
-#include "errors.h"
-#include "general.h"
 #include "gimprc.h"
 
+#include "libgimp/gimpenv.h"
 
 /***** Functions *****/
 
-/*****/
-
-static int filestat_valid = 0;
+static gint        filestat_valid = 0;
 static struct stat filestat;
 
 #ifdef G_OS_WIN32
@@ -66,7 +63,7 @@ static struct stat filestat;
  * variable, which is also used by cmd.exe.
  */
 gboolean
-is_script (const gchar* filename)
+is_script (const gchar *filename)
 {
   const gchar *ext = strrchr (filename, '.');
   gchar *pathext;
@@ -103,105 +100,78 @@ is_script (const gchar* filename)
 #endif
 
 void
-datafiles_read_directories (char *path_str,
-			    datafile_loader_t loader_func,
-			    int flags)
+datafiles_read_directories (gchar                  *path_str,
+			    GimpDataFileLoaderFunc  loader_func,
+			    gint                    flags)
 {
-  char          *home;
-  char 	        *local_path;
-  char          *path;
-  char 	        *filename;
-  char 	        *token;
-  char          *next_token;
-  int            err;
-  DIR           *dir;
+  gchar *local_path;
+  GList *path;
+  GList *list;
+  gchar *filename;
+  gint   err;
+  DIR   *dir;
   struct dirent *dir_ent;
 
   if (path_str == NULL)
     return;
 
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = g_get_home_dir ();
   local_path = g_strdup (path_str);
+
 #ifdef __EMX__
   /*
    *  Change drive so opendir works.
    */
   if (local_path[1] == ':')
-  {
-      _chdrive(local_path[0]);
-  }
-#endif  
-  /* Search through all directories in the local path */
-
-  next_token = local_path;
-
-  token = xstrsep(&next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
     {
-      if (*token == '~')
+      _chdrive (local_path[0]);
+    }
+#endif  
+
+  path = gimp_path_parse (local_path, 16, TRUE, NULL);
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      /* Open directory */
+      dir = opendir ((gchar *) list->data);
+
+      if (!dir)
 	{
-	  path = g_malloc(strlen(home) + strlen(token) + 1);
-	  sprintf(path, "%s%s", home, token + 1);
+	  g_message ("error reading datafiles directory \"%s\"",
+		     (gchar *) list->data);
 	}
       else
 	{
-	  path = g_malloc(strlen(token) + 2);
-	  strcpy(path, token);
-	} /* else */
-
-      /* Check if directory exists and if it has any items in it */
-      err = stat(path, &filestat);
-
-      if (!err && S_ISDIR(filestat.st_mode))
-	{
-	  if (path[strlen(path) - 1] != G_DIR_SEPARATOR)
-	    strcat(path, G_DIR_SEPARATOR_S);
-
-	  /* Open directory */
-	  dir = opendir(path);
-
-	  if (!dir)
-	    g_message ("error reading datafiles directory \"%s\"", path);
-	  else
+	  while ((dir_ent = readdir(dir)))
 	    {
-	      while ((dir_ent = readdir(dir)))
+	      filename = g_strdup_printf ("%s%s",
+					  (gchar *) list->data,
+					  dir_ent->d_name);
+
+	      /* Check the file and see that it is not a sub-directory */
+	      err = stat (filename, &filestat);
+
+	      if (!err && S_ISREG (filestat.st_mode) &&
+		  (!(flags & MODE_EXECUTABLE) ||
+		   (filestat.st_mode & S_IXUSR) ||
+		   is_script (filename)))
 		{
-		  filename = g_strdup_printf("%s%s", path, dir_ent->d_name);
+		  filestat_valid = 1;
+		  (*loader_func) (filename);
+		  filestat_valid = 0;
+		}
 
-		  /* Check the file and see that it is not a sub-directory */
-		  err = stat(filename, &filestat);
+	      g_free (filename);
+	    }
 
-		  if (!err && S_ISREG(filestat.st_mode) &&
-		      (!(flags & MODE_EXECUTABLE) ||
-		       (filestat.st_mode & S_IXUSR) ||
-		       is_script (filename)))
-		    {
-		      filestat_valid = 1;
-		      (*loader_func) (filename);
-		      filestat_valid = 0;
-		    }
+	  closedir (dir);
+	}
+    }
 
-		  g_free(filename);
-		} /* while */
-
-	      closedir(dir);
-	    } /* else */
-	} /* if */
-
-      g_free(path);
-
-      token = xstrsep(&next_token, G_SEARCHPATH_SEPARATOR_S);
-    } /* while */
-
-  g_free(local_path);
-} /* datafiles_read_directories */
+  gimp_path_free (path);
+}
 
 time_t
-datafile_atime ()
+datafile_atime (void)
 {
   if (filestat_valid)
     return filestat.st_atime;
@@ -209,7 +179,7 @@ datafile_atime ()
 }
 
 time_t
-datafile_mtime ()
+datafile_mtime (void)
 {
   if (filestat_valid)
     return filestat.st_mtime;
@@ -217,7 +187,7 @@ datafile_mtime ()
 }
 
 time_t
-datafile_ctime ()
+datafile_ctime (void)
 {
   if (filestat_valid)
     return filestat.st_ctime;

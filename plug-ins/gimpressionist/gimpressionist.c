@@ -21,7 +21,6 @@
 #include "ppmtool.h"
 #include <libgimp/gimp.h>
 #include <libgimp/stdplugins-intl.h>
-/* #include <libgimp/gimpenv.h> */
 
 #ifndef GIMP_CHECK_VERSION
 #define GIMP_CHECK_VERSION(a,b,c) 0
@@ -40,15 +39,16 @@ GtkTooltips *tooltips = NULL;
 struct ppm infile = {0,0,NULL};
 struct ppm inalpha = {0,0,NULL};
 
-GList *parsepath(void)
+GList * parsepath (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
   static GList *lastpath = NULL;
-  char *gimpdatasubdir, *defaultpath, *tmps, *lastchr;
+  gchar *gimpdatasubdir, *defaultpath, *tmps;
   struct stat st;
 
-  if(lastpath) return lastpath;
+  if (lastpath)
+    return lastpath;
 
 #if GIMP_CHECK_VERSION(1, 1, 0)
   gimpdatasubdir = g_strconcat (gimp_data_directory (),
@@ -68,54 +68,46 @@ GList *parsepath(void)
   gimpdatasubdir = strchr (defaultpath, ':') + 1;
 #endif
 
-  if(standalone)
-    tmps = g_strdup(defaultpath);
-  else {
-    return_vals = gimp_run_procedure ("gimp_gimprc_query", &nreturn_vals,
-				    PARAM_STRING, "gimpressionist-path",
-                                    PARAM_END);
-    if(return_vals[0].data.d_status != STATUS_SUCCESS ||
-       return_vals[1].data.d_string == NULL) {
-      if (stat (gimpdatasubdir, &st) != 0
-	  || !S_ISDIR(st.st_mode)) {
-	/* No gimpressionist-path parameter, and the default doesn't exist */
-#if GIMP_CHECK_VERSION(1, 1, 0)
-        g_message( "*** Warning ***\n"
-                   "It is highly recommended to add\n"
-		  " (gimpressionist-path \"${gimp_dir}" G_DIR_SEPARATOR_S "gimpressionist"
-		    G_SEARCHPATH_SEPARATOR_S
-		    "${gimp_data_dir}" G_DIR_SEPARATOR_S "gimpressionist\")\n"
-		  "(or similar) to your gimprc file.\n");
-#else
-	g_message( _("*** Warning ***\nIt is highly recommended to add\n  (gimpressionist-path \"%s\")\n(or similar) to your gimprc file.\n"), defaultpath);
-#endif
-      }
-      tmps = g_strdup(defaultpath);
-    } else {
-      tmps = g_strdup(return_vals[1].data.d_string);
-    }
-    gimp_destroy_params (return_vals, nreturn_vals);
-  }
+  if (standalone)
+    tmps = g_strdup (defaultpath);
+  else
+    {
+      return_vals = gimp_run_procedure ("gimp_gimprc_query", &nreturn_vals,
+					PARAM_STRING, "gimpressionist-path",
+					PARAM_END);
 
-  for(;;) {
-    lastchr = strchr(tmps, G_SEARCHPATH_SEPARATOR);
-    if(lastchr) *lastchr = '\0';
-    if(*tmps == '~') {
-      char *tmps2, *home;
-      home = g_get_home_dir ();
-      if(!home) {
-	g_message( _("*** Warning ***\nNo home directory!\n"));
-	home = "";
-      }
-      tmps2 = g_strconcat(home, tmps + 1, NULL);
-      tmps = tmps2;
+      if (return_vals[0].data.d_status != STATUS_SUCCESS ||
+	  return_vals[1].data.d_string == NULL)
+	{
+	  if (stat (gimpdatasubdir, &st) != 0
+	      || !S_ISDIR(st.st_mode))
+	    {
+	      /* No gimpressionist-path parameter,
+	       * and the default doesn't exist */
+#if GIMP_CHECK_VERSION(1, 1, 0)
+	      g_message( "*** Warning ***\n"
+			 "It is highly recommended to add\n"
+			 " (gimpressionist-path \"${gimp_dir}" G_DIR_SEPARATOR_S "gimpressionist"
+			 G_SEARCHPATH_SEPARATOR_S
+			 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gimpressionist\")\n"
+			 "(or similar) to your gimprc file.\n");
+#else
+	      g_message( _("*** Warning ***\nIt is highly recommended to add\n  (gimpressionist-path \"%s\")\n(or similar) to your gimprc file.\n"), defaultpath);
+#endif
+	    }
+	  tmps = g_strdup (defaultpath);
+	}
+      else
+	{
+	  tmps = g_strdup (return_vals[1].data.d_string);
+	}
+      gimp_destroy_params (return_vals, nreturn_vals);
     }
-    lastpath = g_list_append(lastpath, tmps);
-    if(lastchr) 
-      tmps = lastchr + 1;
-    else
-      break;
-  }
+
+  lastpath = gimp_path_parse (tmps, 16, FALSE, NULL);
+
+  g_free (tmps);
+
   return lastpath;
 }
 

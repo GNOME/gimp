@@ -599,7 +599,7 @@ static GFlareDialog       *dlg = NULL;
 static GFlareEditor       *ed = NULL;
 static GList              *gflares_list = NULL;
 static gint                num_gflares = 0;
-GList              *gflare_path_list;
+static GList              *gflare_path_list = NULL;
 static CalcParams          calc;
 static GList              *gradient_menus;
 static gchar             **gradient_names = NULL;
@@ -967,14 +967,11 @@ plug_in_parse_gflare_path (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gchar *path_string;
-  gchar *home;
-  gchar *path;
-  gchar *token;
-  gchar *next_token;
-  struct stat filestat;
-  gint	err;
 
+  GList *fail_list = NULL;
+  GList *list;
+
+  gimp_path_free (gflare_path_list);
   gflare_path_list = NULL;
 
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
@@ -982,62 +979,40 @@ plug_in_parse_gflare_path (void)
 				    PARAM_STRING, "gflare-path",
 				    PARAM_END);
 
-  if (return_vals[0].data.d_status != STATUS_SUCCESS || return_vals[1].data.d_string == NULL)
+  if (return_vals[0].data.d_status != STATUS_SUCCESS ||
+      return_vals[1].data.d_string == NULL)
     {
-      DEBUG_PRINT ("No gflare-path in gimprc: gflare_path_list is NULL\n");
+      g_message ("No gflare-path in gimprc:\n\n"
+		 "You need to add an entry like\n"
+		 "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
+		 "to your ~/.gimp/gimprc file\n");
       gimp_destroy_params (return_vals, nreturn_vals);
       return;
     }
 
-  path_string = g_strdup (return_vals[1].data.d_string);
+
+  gflare_path_list = gimp_path_parse (return_vals[1].data.d_string,
+				      16, TRUE, &fail_list);
+
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  home = g_get_home_dir ();
-
-  /* Search through all directories in the  path */
-
-  next_token = path_string;
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
+  if (fail_list)
     {
-      if (*token == '\0')
-	{
-	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-	  continue;
-	}
+      GString *err =
+        g_string_new (_("gflare-path misconfigured - "
+                        "the following directories were not found"));
 
-      if (*token == '~')
-	{
-	  path = g_malloc (strlen (home) + strlen (token) + 2);
-	  sprintf (path, "%s%s", home, token + 1);
-	}
-      else
-	{
-	  path = g_malloc (strlen (token) + 2);
-	  strcpy (path, token);
-	} /* else */
+      for (list = fail_list; list; list = g_list_next (list))
+        {
+          g_string_append_c (err, '\n');
+          g_string_append (err, (gchar *) list->data);
+        }
 
-      /* Check if directory exists */
-      err = stat (path, &filestat);
+      g_message (err->str);
 
-      if (!err && S_ISDIR (filestat.st_mode))
-	{
-	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    strcat (path, G_DIR_SEPARATOR_S);
-
-	  DEBUG_PRINT(("Added `%s' to gflare_path_list\n", path));
-	  gflare_path_list = g_list_append (gflare_path_list, path);
-	}
-      else
-	{
-	  DEBUG_PRINT(("Not found `%s'\n", path));
-	  g_free (path);
-	}
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
+      g_string_free (err, TRUE);
+      gimp_path_free (fail_list);
     }
-  g_free (path_string);
-
 }
 
 
@@ -1548,14 +1523,12 @@ gflare_save (GFlare *gflare)
       if (gflare_path_list == NULL)
 	{
 	  if (!message_ok)
-	    g_message (message,
-		       gflare->name);
+	    g_message (message, gflare->name);
 	  message_ok = TRUE;
 	  return;
 	}
 
-      /* get first entry of path */
-      path = gflare_path_list->data;
+      path = gimp_path_get_user_writable_dir (gflare_path_list);
 
       gflare->filename = g_strdup_printf ("%s%s", path, gflare->name);
     }

@@ -1,3 +1,30 @@
+2000-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimppixmap.c: fixed a gtk-doc comment.
+
+	* libgimp/gimpenv.[ch]: new functions:
+
+	- gimp_path_parse(): Creates a GList of strings from a searchpath
+	  string and performs sanity checks.
+	- gimp_path_to_str(): Creates a searchpath string from the list
+	  returned by gimp_path_parse().
+	- gimp_path_free(): Frees the list returned by gimp_path_parse().
+	- gimp_path_get_user_writable_dir(): Returns the first dir in a
+	  path where the user has write access. With this function the
+	  "Save" dialogs of some plugins always show the plugin's
+	  subdirectory of the user's gimp_dir instead of the read-only
+	  global one.
+
+	* app/datafiles.[ch]
+	* app/gimpbrushlist.c: use the new functions and
+	s/datafile_loader_t/GimpDataFileLoaderFunc/.
+
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.c: use the new functions.
+
 Mon Feb 21 14:05:56 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpbrushlist.c

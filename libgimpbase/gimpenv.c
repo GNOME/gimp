@@ -22,6 +22,12 @@
 
 #include <glib.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include "gimpenv.h"
 
 #ifdef G_OS_WIN32
@@ -240,6 +246,196 @@ gimp_gtkrc (void)
   return gimp_gtkrc_filename;
 }
 
+/**
+ * gimp_path_parse:
+ * @path: A list of directories separated by #G_SEARCHPATH_SEPARATOR.
+ * @max_path: The maximum number of directories to return.
+ * @check: #TRUE if you want the directories to be checked.
+ * @not_found: #
+ *
+ * Return: A list of all directories in @path.
+ *
+ */
+GList *
+gimp_path_parse (gchar     *path,
+		 gint       max_paths,
+		 gboolean   check,
+		 GList    **check_failed)
+{
+  gchar  *home;
+  gchar **patharray;
+  GList  *list = NULL;
+  GList  *fail_list = NULL;
+  gint    i;
 
+  struct stat filestat;
+  gint        err = FALSE;
 
+  if (!path || !*path || max_paths < 1 || max_paths > 256)
+    return NULL;
 
+  home = g_get_home_dir ();
+
+  patharray = g_strsplit (path, G_SEARCHPATH_SEPARATOR_S, max_paths);
+
+  for (i = 0; i < max_paths; i++)
+    {
+      GString *dir;
+
+      if (!patharray[i])
+	break;
+
+      if (*patharray[i] == '~')
+	{
+	  dir = g_string_new (home);
+	  g_string_append (dir, patharray[i] + 1);
+	}
+      else
+	{
+	  dir = g_string_new (patharray[i]);
+	}
+
+#ifdef __EMX__
+      _fnslashify (dir);
+#endif
+
+      if (check)
+	{
+	  /*  check if directory exists  */
+	  err = stat (dir->str, &filestat);
+
+	  if (!err && S_ISDIR (filestat.st_mode))
+	    {
+	      if (dir->str[dir->len - 1] != G_DIR_SEPARATOR)
+		g_string_append_c (dir, G_DIR_SEPARATOR);
+	    }
+	}
+
+      if (!err)
+	list = g_list_prepend (list, dir->str);
+      else if (check_failed)
+	fail_list = g_list_prepend (fail_list, dir->str);
+
+      g_string_free (dir, FALSE);
+    }
+
+  g_strfreev (patharray);
+
+  list = g_list_reverse (list);
+
+  if (check && check_failed)
+    {
+      fail_list = g_list_reverse (fail_list);
+      *check_failed = fail_list;
+    }
+
+  return list;
+}
+
+/**
+ * gimp_path_to_str:
+ * @path: A list of directories as returned by gimp_path_parse().
+ *
+ * Returns: A searchpath string separated by #G_SEARCHPATH_SEPARATOR.
+ *
+ */
+gchar *
+gimp_path_to_str (GList *path)
+{
+  GString *str = NULL;
+  GList   *list;
+  gchar   *retval = NULL;
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      if (str)
+	{
+	  g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
+	  g_string_append (str, (gchar *) list->data);
+	}
+      else
+	{
+	  str = g_string_new ((gchar *) list->data);
+	}
+    }
+
+  if (str)
+    {
+      retval = str->str;
+      g_string_free (str, FALSE);
+    }
+
+  return retval;
+}
+
+/**
+ * gimp_path_free:
+ * @path: A list of directories as returned by gimp_path_parse().
+ *
+ * This function frees the memory allocated for the list and it's strings.
+ *
+ */
+void
+gimp_path_free (GList *path)
+{
+  GList *list;
+
+  if (path)
+    {
+      for (list = path; list; list = g_list_next (list))
+	{
+	  g_free (list->data);
+	}
+
+      g_list_free (path);
+    }
+}
+
+/**
+ * gimp_path_get_user_writable_dir:
+ * @path: A list of directories as returned by gimp_path_parse().
+ *
+ * Returns: The first directory in @path where the user has write permission.
+ *
+ */
+gchar *
+gimp_path_get_user_writable_dir (GList *path)
+{
+  GList *list;
+
+  uid_t euid;
+  gid_t egid;
+
+  struct stat filestat;
+  gint        err;
+
+  euid = geteuid ();
+  egid = getegid ();
+
+  for (list = path; list; list = g_list_next (list))
+    {
+      /*  check if directory exists  */
+      err = stat ((gchar *) list->data, &filestat);
+
+      /*  this is tricky:
+       *  if a file is e.g. owned by the current user but not user-writable,
+       *  the user has no permission to write to the file regardless
+       *  of his group's or other's write permissions
+       */
+      if (!err && S_ISDIR (filestat.st_mode) &&
+
+	  ((filestat.st_mode & S_IWUSR) ||
+
+	   ((filestat.st_mode & S_IWGRP) &&
+	    (euid != filestat.st_uid)) ||
+
+	   ((filestat.st_mode & S_IWOTH) &&
+	    (euid != filestat.st_uid) &&
+	    (egid != filestat.st_gid))))
+	{
+	  return (gchar *) list->data;
+	}
+    }
+
+  return NULL;
+}

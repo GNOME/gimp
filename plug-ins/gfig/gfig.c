@@ -134,7 +134,6 @@ static GtkWidget *gfig_preview;
 static GtkWidget *pic_preview;
 static GtkWidget *gfig_gtk_list;
 static gint       gfig_preview_exp_id;
-static GdkPixmap *gfig_pixmap;
 static gint32     gfig_image;
 static gint32     gfig_drawable;
 static GtkWidget *brush_page_pw;
@@ -818,9 +817,7 @@ gfig_clear_selection (gint32 image_ID)
 }
 
 /*
- *	Query gimprc for gfig-path, and parse it.
- *	This code is based on script_fu_find_scripts ()
- *      and the Gflare plugin.
+ *  Query gimprc for gfig-path, and parse it.
  */
 
 static void
@@ -828,16 +825,12 @@ plug_in_parse_gfig_path (void)
 {
   GParam *return_vals;
   gint nreturn_vals;
-  gchar *path_string;
-  gchar *home;
-  gchar *path;
-  gchar *token;
-  gchar *next_token;
-  struct stat filestat;
-  gint	err;
+
+  GList *fail_list = NULL;
+  GList *list;
 
   if (gfig_path_list)
-    g_list_free (gfig_path_list);
+    gimp_path_free (gfig_path_list);
   
   gfig_path_list = NULL;
   
@@ -849,7 +842,7 @@ plug_in_parse_gfig_path (void)
   if (return_vals[0].data.d_status != STATUS_SUCCESS ||
       return_vals[1].data.d_string == NULL)
     {
-      g_message ("No gfig-path in gimprc: gfig_path_list is NULL\n\n"
+      g_message ("No gfig-path in gimprc:\n\n"
 		 "You need to add an entry like\n"
 		 "(gfig-path \"${gimp_dir}/gfig:${gimp_data_dir}/gfig\n"
 		 "to your ~/.gimp/gimprc file\n");
@@ -857,63 +850,28 @@ plug_in_parse_gfig_path (void)
       return;
     }
   
-  path_string = g_strdup (return_vals[1].data.d_string);
+  gfig_path_list = gimp_path_parse (return_vals[1].data.d_string,
+				    16, TRUE, &fail_list);
+
   gimp_destroy_params (return_vals, nreturn_vals);
-  
-  /* Set local path to contain temp_path, where (supposedly)
-   * there may be working files.
-   */
-  home = g_get_home_dir ();
 
-  /* Search through all directories in the  path */
-
-  next_token = path_string;
-  token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
-
-  while (token)
+  if (fail_list)
     {
-      if (*token == '\0')
+      GString *err =
+	g_string_new (_("gfig-path misconfigured - "
+			"the following directories were not found"));
+
+      for (list = fail_list; list; list = g_list_next (list))
 	{
-	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
-	  continue;
+	  g_string_append_c (err, '\n');
+	  g_string_append (err, (gchar *) list->data);
 	}
 
-      if (*token == '~')
-	{
-	  path = g_malloc (strlen (home) + strlen (token) + 2);
-	  sprintf (path, "%s%s", home, token + 1);
-	}
-      else
-	{
-	  path = g_malloc (strlen (token) + 2);
-	  strcpy (path, token);
-	} /* else */
-#ifdef __EMX__
-      _fnslashify (path);
-#endif
+      g_message (err->str);
 
-      /* Check if directory exists */
-      err = stat (path, &filestat);
-
-      if (!err && S_ISDIR (filestat.st_mode))
-	{
-	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    strcat (path, G_DIR_SEPARATOR_S);
-
-#ifdef DEBUG
-	  printf ("Added `%s' to gfig_path_list\n", path);
-#endif /* DEBUG */
-	  gfig_path_list = g_list_append (gfig_path_list, path);
-	}
-      else
-	{
-	  g_message ("gfig-path misconfigured - \nPath `%.100s' not found\n",
-		     path);
-	}
-      token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
+      g_string_free (err, TRUE);
+      gimp_path_free (fail_list);
     }
-
-  g_free (path_string);
 }
 
 
@@ -1640,15 +1598,17 @@ create_file_selection (GFigObj *obj,
     {
       gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), tpath);
     }
-  else
-  /* Last path is where usually saved to */
-    if (gfig_path_list)
-      {
-	gtk_file_selection_set_filename
-	  (GTK_FILE_SELECTION (window),
-	   g_list_nth (gfig_path_list,
-		       g_list_length (gfig_path_list) - 1)->data);
-      }
+  else if (gfig_path_list)
+    {
+      gchar *dir;
+
+      dir = gimp_path_get_user_writable_dir (gfig_path_list);
+
+      if (!dir)
+	dir = gimp_directory ();
+
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), dir);
+    }
   else
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (window), "/tmp");
 
@@ -4523,17 +4483,11 @@ gfig_rescan_ok_callback (GtkWidget *widget,
 			 gpointer   data)
 {
   GtkWidget *patheditor;
-  GList     *list;
   gchar     *raw_path;
-  gchar    **path;
-  gint       i;
 
   gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
 
-  for (list = gfig_path_list; list; list = g_list_next (list))
-    g_free (list->data);
-
-  g_list_free (gfig_path_list);
+  gimp_path_free (gfig_path_list);
   gfig_path_list = NULL;
 
   patheditor = GTK_WIDGET (gtk_object_get_data (GTK_OBJECT (data),
@@ -4541,17 +4495,9 @@ gfig_rescan_ok_callback (GtkWidget *widget,
 
   raw_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
-  path = g_strsplit (raw_path, ":", 16);
+  gfig_path_list = gimp_path_parse (raw_path, 16, FALSE, NULL);
 
-  for (i = 0; i < 16; i++)
-    {
-      if (!path[i])
-	break;
-
-      gfig_path_list = g_list_append (gfig_path_list, g_strdup (path[i]));
-    }
-
-  g_strfreev (path);
+  g_free (raw_path);
 
   if (gfig_path_list)
     {
@@ -4570,8 +4516,7 @@ gfig_rescan_list (void)
   static GtkWidget *dlg = NULL;
 
   GtkWidget *patheditor;
-  GString   *path = NULL;
-  GList     *list;
+  gchar     *path;
 
   if (dlg)
     {
@@ -4596,26 +4541,15 @@ gfig_rescan_list (void)
 		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 		      &dlg);
 
-  for (list = gfig_path_list; list; list = g_list_next (list))
-    {
-      if (path == NULL)
-	{
-	  path = g_string_new (list->data);
-	}
-      else
-	{
-	  g_string_append_c (path, G_SEARCHPATH_SEPARATOR);
-	  g_string_append (path, list->data);
-	}
-    }
+  path = gimp_path_to_str (gfig_path_list);
 
-  patheditor = gimp_path_editor_new (_("Add Gfig Path"), path->str);
+  patheditor = gimp_path_editor_new (_("Add Gfig Path"), path);
   gtk_container_set_border_width (GTK_CONTAINER (patheditor), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), patheditor,
 		      TRUE, TRUE, 0);
   gtk_widget_show (patheditor);
 
-  g_string_free (path, TRUE);
+  g_free (path);
 
   gtk_object_set_data (GTK_OBJECT (dlg), "patheditor", patheditor);
 

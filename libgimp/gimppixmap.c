@@ -118,7 +118,7 @@ gimp_pixmap_new (gchar **xpm_data)
 }
 
 /**
- * gimp_pixmap_new:
+ * gimp_pixmap_set:
  * @pixmap: The pixmap widget you want to set the new xpm_data for.
  * @xpm_data: A pointer to a XPM data structure as found in XPM files.
  *
