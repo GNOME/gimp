@@ -356,17 +356,22 @@ view_configure_grid_cmd_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpDisplay      *gdisp;
-  GtkWidget        *grid_dialog;
+  GimpDisplayShell *shell;
   return_if_no_display (gdisp, data);
 
-  grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  g_signal_connect_object (gdisp, "disconnect",
-                           G_CALLBACK (gtk_widget_destroy),
-                           grid_dialog,
-                           G_CONNECT_SWAPPED);
+  if (! shell->grid_dialog)
+    {
+      shell->grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
+      
+      g_signal_connect_object (gdisp, "disconnect",
+                               G_CALLBACK (gtk_widget_destroy),
+                               shell->grid_dialog,
+                               G_CONNECT_SWAPPED);
+    }
 
-  gtk_widget_show (grid_dialog);
+  gtk_window_present (GTK_WINDOW (shell->grid_dialog));
 }
 
 

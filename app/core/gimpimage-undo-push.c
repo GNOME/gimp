@@ -692,8 +692,6 @@ undo_pop_image_grid (GimpUndo            *undo,
   gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
   gu->grid = tmp;
 
-  gimp_image_grid_changed (undo->gimage);
-
   return TRUE;
 }
 

@@ -129,7 +129,7 @@ grid_dialog_new (GimpDisplay *gdisp)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
 
-  show_button = gtk_check_button_new_with_label (_("Show Grid"));
+  show_button = gtk_check_button_new_with_mnemonic (_("S_how Grid"));
   gtk_box_pack_start (GTK_BOX (vbox), show_button, FALSE, FALSE, 0);
 
   show_grid = gimp_display_shell_get_show_grid (GIMP_DISPLAY_SHELL (shell));
@@ -137,7 +137,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                 show_grid);
   gtk_widget_show (show_button);
  
-  snap_button = gtk_check_button_new_with_label (_("Snap to Grid"));
+  snap_button = gtk_check_button_new_with_mnemonic (_("S_nap to Grid"));
   gtk_box_pack_start (GTK_BOX (vbox), snap_button, FALSE, FALSE, 0);
 
   snap_to_grid = gimp_display_shell_get_snap_to_grid (GIMP_DISPLAY_SHELL (shell));
@@ -162,7 +162,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                          GIMP_GRID_TYPE_INTERSECTION,
                                          GIMP_GRID_TYPE_SOLID);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Line Style:"), 1.0, 0.5,
+                             _("Line _Style:"), 1.0, 0.5,
                              type, 1, TRUE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (grid), "fgcolor",
@@ -170,7 +170,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Foreground Color:"), 1.0, 0.5,
+                             _("_Foreground Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (grid), "bgcolor",
@@ -178,7 +178,7 @@ grid_dialog_new (GimpDisplay *gdisp)
                                              GRID_COLOR_SIZE, GRID_COLOR_SIZE,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Background Color:"), 1.0, 0.5,
+                             _("_Background Color:"), 1.0, 0.5,
                              color_button, 1, TRUE);
 
   gtk_widget_show (table);
@@ -351,15 +351,18 @@ static void
 remove_callback (GtkWidget  *widget,
                  GtkWidget  *dialog)
 {
-  GimpImage *gimage;
-  GimpGrid  *grid;
+  GimpImage        *gimage;
+  GimpDisplayShell *shell;
+  GimpGrid         *grid;
   
   gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
-  grid = g_object_get_data (G_OBJECT (dialog), "grid");
+  shell  = g_object_get_data (G_OBJECT (dialog), "shell");
+  grid   = g_object_get_data (G_OBJECT (dialog), "grid");
 
   gimp_image_set_grid (gimage, NULL, TRUE);
   g_object_unref (G_OBJECT (grid));
   gtk_widget_destroy (dialog);
+  shell->grid_dialog = NULL;
 }
 
 
@@ -367,12 +370,15 @@ static void
 cancel_callback (GtkWidget  *widget,
                  GtkWidget  *dialog)
 {
-  GimpGrid *grid;
+  GimpDisplayShell *shell;
+  GimpGrid         *grid;
 
-  grid = g_object_get_data (G_OBJECT (dialog), "grid");
+  shell = g_object_get_data (G_OBJECT (dialog), "shell");
+  grid  = g_object_get_data (G_OBJECT (dialog), "grid");
 
   g_object_unref (G_OBJECT (grid));
   gtk_widget_destroy (dialog);
+  shell->grid_dialog = NULL;
 }
 
 static void
@@ -408,4 +414,5 @@ ok_callback (GtkWidget  *widget,
   gimp_display_shell_set_snap_to_grid (GIMP_DISPLAY_SHELL (shell), snap_to_grid);
 
   gtk_widget_destroy (dialog);
+  shell->grid_dialog = NULL;
 }

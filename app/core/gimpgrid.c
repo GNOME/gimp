@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -59,7 +62,7 @@ static void gimp_grid_set_property (GObject       *object,
                                     GParamSpec    *pspec);
 
 
-static GObjectClass *parent_class = NULL;
+static GimpObjectClass *parent_class = NULL;
 
 
 GType
@@ -88,7 +91,7 @@ gimp_grid_get_type (void)
         NULL            /* iface_data     */
       };
 
-      grid_type = g_type_register_static (G_TYPE_OBJECT,
+      grid_type = g_type_register_static (GIMP_TYPE_OBJECT,
                                           "GimpGrid", &grid_info, 0);
 
       g_type_add_interface_static (grid_type,

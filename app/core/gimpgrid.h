@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpGrid
+ * Copyright (C) 2003  Henrik Brix Andersen <brix@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,6 +23,9 @@
 #define __GIMP_GRID_H__
 
 
+#include "gimpobject.h"
+
+
 #define GIMP_TYPE_GRID            (gimp_grid_get_type ())
 #define GIMP_GRID(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_GRID, GimpGrid))
 #define GIMP_GRID_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_GRID, GimpGridClass))
@@ -32,7 +38,7 @@ typedef struct _GimpGridClass  GimpGridClass;
 
 struct _GimpGrid
 {
-  GObject       parent_instance;
+  GimpObject    parent_instance;
 
   gdouble       xspacing;
   gdouble       yspacing;
@@ -48,7 +54,7 @@ struct _GimpGrid
 
 struct _GimpGridClass
 {
-  GObjectClass  parent_class;
+  GimpObjectClass  parent_class;
 };
 
 

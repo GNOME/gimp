@@ -646,7 +646,8 @@ gimp_image_get_memsize (GimpObject *object)
   memsize += (g_list_length (gimage->guides) * (sizeof (GList) +
                                                 sizeof (GimpGuide)));
 
-  memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid));
+  if (gimage->grid)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->grid));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->layers));
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->channels));

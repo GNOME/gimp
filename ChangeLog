@@ -1,3 +1,18 @@
+2003-06-24  Henrik Brix Andersen  <brix@gimp.org>
+
+	* app/core/gimpgrid.[ch]: derive GimpGrid from GimpObject (not
+	GObject) allowing us to use gimp_object_get_memsize(). Added
+	missing copyright notice.
+
+	* app/core/gimpimage.c: only call gimp_object_get_memsize() if
+	gimage->grid != NULL.
+
+	* app/gui/grid-dialog.c: added mnemonics, set shell->grid_dialog
+	to NULL when destroyed.
+
+	* app/gui/view-commands.c (view_configure_grid_cmd_callback):
+	added call to gtk_window_present()
+
 2003-06-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.[ch]
