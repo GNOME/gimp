@@ -408,7 +408,7 @@ static gint save_image(char *file, char *brief, gint32 image, gint32 layer) {
   gimp_progress_init(progress);
 
  /* Headers */
-  bzero(header, 32);
+  memset(header, 0, 32);
   strcpy(header, "KiSS");
   header[4]= 0x20;
 

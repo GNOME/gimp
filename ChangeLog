@@ -1,3 +1,11 @@
+Tue Jun  2 16:15:51 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* Makefile.am: install gtkrc.forest2 in $prefix/share/gimp
+
+	* plug-ins/CEL/CEL.c: change bzero to memset for portability
+
+	* plug-ins/gfli/fli.c: #include <glib.h> to get inline defintion
+
 Mon Jun  1 01:05:52 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* plug-ins/grid.c: fix a comment. :)
