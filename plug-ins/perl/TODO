@@ -21,10 +21,15 @@ API generalization
 firetext! AND _grayscale_ for map_gradient(!)
 
 bugs
-  * make test should not be run without DISPLAY
+  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
+    gimp (pid:27638): [E]xit, [H]alt, show [S]tack trace or [P]roceed:
+    this should not crash the gimp itself, but rather gimp-perl (or libc).
+[KILL]  * ftp://metalab.unc.edu/pub/Linux/X11/gtkbuffet/libs/gtkxmhtml/ into INSTALL
+  * gtview_log (perlcc & helpfenster) erste zeile anzeigen + scrollbar
+[DONE]  * make test should not be run without DISPLAY
   * document on_xxx functions and register_callback
   * fix Gimp::Feature::missing => on_query-dir!
-  * update logulator
+[DONE]  * update logulator
   * on-query => remove gimp::fu parasite(?)
   * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
@@ -33,20 +38,14 @@ bugs
   * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
   * Kommandozeilenmodus(!). (???)
-[DONE]  * KILL :auto from default(!)
-  * auto-flush of gdrawable when merge_shadow(?)
+[KILL]  * auto-flush of gdrawable when merge_shadow(?)
   * gimp-piddle must be written back automatically on destroy, if changed
   * gimp-tile set dirty automatically(!)
-[KILL]  * perl module install dependency
-[KILL]  * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
-[KILL]  * wait for working gimp_file_load (or do it myself?)
-  * get rid of xs_exit. please please fuck me plenty.
+[KILL]  * get rid of xs_exit. please please fuck me plenty.
   * create gimpstyle.pod
   
 important issues
 
-[DONE]  * improve PDB explorer
-[DONE]  * input image arguments
   * find_next_guide is a lousy interface. => just do num_guides
   * constant names (RADIO) automatically into help strings!
   * migrate BOOT: into INIT() (forgot why but important for B)
@@ -66,11 +65,9 @@ important issues
   * Gimp::ping
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button
-[KILL]  * implement Perl-Server RSET and shared lock(!)
   * weighted movement in drawing tools
   * --function localfunc to select one of the registered scripts
   * create working progress when Net and $verbose
-[KILL]  * Gimp::Fu::command(?)
   * default parameters at end(!)
   * try to deduce default parameters
 

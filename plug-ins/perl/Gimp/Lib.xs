@@ -460,7 +460,7 @@ dump_params (int nparams, GParam *args, GParamDef *params)
 	  case PARAM_INT16:		trace_printf ("%d", args[i].data.d_int16); break;
 	  case PARAM_INT8:		trace_printf ("%d", (guint8) args[i].data.d_int8); break;
 	  case PARAM_FLOAT:		trace_printf ("%f", args[i].data.d_float); break;
-	  case PARAM_STRING:		trace_printf ("\"%s\"", args[i].data.d_string); break;
+          case PARAM_STRING:		trace_printf ("\"%s\"", args[i].data.d_string ? args[i].data.d_string : "[null]"); break;
 	  case PARAM_DISPLAY:		trace_printf ("%d", args[i].data.d_display); break;
 	  case PARAM_IMAGE:		trace_printf ("%d", args[i].data.d_image); break;
 	  case PARAM_LAYER:		trace_printf ("%d", args[i].data.d_layer); break;

@@ -78,7 +78,7 @@ sub gtkview_log {
       $w->vbox->add($b);
       $b->realize; # for gtk-1.0
       $b->insert($font,$b->style->fg(-normal),undef,$log);
-      $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+1));
+      $b->set_usize($font->string_width('M')*80,($font->ascent+$font->descent)*($lines+2));
 
       $b = new Gtk::Button "OK";
       $b->can_default(1);

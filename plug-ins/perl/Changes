@@ -34,6 +34,10 @@ Revision history for Gimp-Perl extension.
         - use XSLoader instead of DynaLoader where available.
         - use perl_require_pv instead of perl_eval_pv.
         - updated COPYING.GNU to version 2.
+        - removed .pl suffix from all examples.
+        - deprecate use of included scripts with gimp-1.0 in configure.in.
+        - fix the ColorSelectButton ro work with newer versions of Gtk.
+        - updated logulator from scheme sources. oh yeah :(
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

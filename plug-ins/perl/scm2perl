@@ -98,10 +98,8 @@ $parser = new Parse::RecDescent <<'EOA';
       
       RGB		RGB_IMAGE
       RGBA		RGBA_IMAGE
-      
-      ADD		SELECTION_ADD
-      SUB		SELECTION_SUB
-      REPLACE		SELECTION_REPLACE
+
+      LINEAR		LINEAR_INTERPOLATION
       
       NORMAL		NORMAL_MODE
       ADDITION		ADDITION_MODE

@@ -322,6 +322,7 @@ sub GTK_CLASS_INIT {
 sub GTK_OBJECT_INIT {
     my (@color) = @class_def_color;
     
+    shift unless ref $_[0];
     my($color_button) = @_;
     
     $color_button->{_color} ||= [@color];
@@ -410,8 +411,6 @@ sub cb_color_button {
 					      sub { $cs_window->destroy; delete $color_button->{_cs_window} });
     $color_button->{_cs_window} = $cs_window;
 }
-
-1;
 
 package Gimp::UI;
 

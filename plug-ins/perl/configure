@@ -858,13 +858,28 @@ rm -f conftest*
      GIMP_LIBS=""
      GIMP_CFLAGS_NOUI=""
      GIMP_LIBS_NOUI=""
-     { echo "configure: error: ** unable to find gimp" 1>&2; exit 1; }
+     echo "configure: warning: ** unable to find gimp" 1>&2
   fi
   
   
   
   
   rm -f conf.gimptest
+
+
+gimptool_major_version=`$GIMPTOOL $gimptool_args --version | \
+   sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\1/'`
+gimptool_minor_version=`$GIMPTOOL $gimptool_args --version | \
+   sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\2/'`
+
+if test $gimptool_major_version -lt 2 && test $gimptool_minor_version -lt 1 ; then
+   echo
+   echo '** you are using a too old version of gimp (this includes all _stable_'
+   echo '** 1.0.x versions!). While this plug-in should still compile with the'
+   echo '** released 1.0.x versions of the gimp, many scripts will not, since they'
+   echo '** already use the new API.'
+   echo
+fi
 
 
 # Check whether --with-glib-prefix or --without-glib-prefix was given.
@@ -920,7 +935,7 @@ fi
   # Extract the first word of "glib-config", so it can be a program name with args.
 set dummy glib-config; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:924: checking for $ac_word" >&5
+echo "configure:939: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_GLIB_CONFIG'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -955,7 +970,7 @@ fi
 
   min_glib_version=1.2.0
   echo $ac_n "checking for GLIB - version >= $min_glib_version""... $ac_c" 1>&6
-echo "configure:959: checking for GLIB - version >= $min_glib_version" >&5
+echo "configure:974: checking for GLIB - version >= $min_glib_version" >&5
   no_glib=""
   if test "$GLIB_CONFIG" = "no" ; then
     no_glib=yes
@@ -978,7 +993,7 @@ echo "configure:959: checking for GLIB - version >= $min_glib_version" >&5
   echo $ac_n "cross compiling; assumed OK... $ac_c"
 else
   cat > conftest.$ac_ext <<EOF
-#line 982 "configure"
+#line 997 "configure"
 #include "confdefs.h"
 
 #include <glib.h>
@@ -1054,7 +1069,7 @@ main ()
 }
 
 EOF
-if { (eval echo configure:1058: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+if { (eval echo configure:1073: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
 then
   :
 else
@@ -1088,7 +1103,7 @@ fi
           CFLAGS="$CFLAGS $GLIB_CFLAGS"
           LIBS="$LIBS $GLIB_LIBS"
           cat > conftest.$ac_ext <<EOF
-#line 1092 "configure"
+#line 1107 "configure"
 #include "confdefs.h"
 
 #include <glib.h>
@@ -1098,7 +1113,7 @@ int main() {
  return ((glib_major_version) || (glib_minor_version) || (glib_micro_version)); 
 ; return 0; }
 EOF
-if { (eval echo configure:1102: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1117: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
    echo "*** The test program compiled, but did not run. This usually means"
           echo "*** that the run-time linker is not finding GLIB or finding the wrong"
@@ -1140,7 +1155,7 @@ rm -f conftest*
 ac_gimp_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GIMP_CFLAGS"
 echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
-echo "configure:1144: checking how to run the C preprocessor" >&5
+echo "configure:1159: checking how to run the C preprocessor" >&5
 # On Suns, sometimes $CPP names a directory.
 if test -n "$CPP" && test -d "$CPP"; then
   CPP=
@@ -1155,13 +1170,13 @@ else
   # On the NeXT, cc -E runs the code through the compiler's parser,
   # not just through cpp.
   cat > conftest.$ac_ext <<EOF
-#line 1159 "configure"
+#line 1174 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1165: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1180: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1172,13 +1187,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -E -traditional-cpp"
   cat > conftest.$ac_ext <<EOF
-#line 1176 "configure"
+#line 1191 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1182: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1197: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1189,13 +1204,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -nologo -E"
   cat > conftest.$ac_ext <<EOF
-#line 1193 "configure"
+#line 1208 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1199: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1214: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -1220,7 +1235,7 @@ fi
 echo "$ac_t""$CPP" 1>&6
 
 cat > conftest.$ac_ext <<EOF
-#line 1224 "configure"
+#line 1239 "configure"
 #include "confdefs.h"
 #include <libgimp/gimp.h>
 EOF
@@ -1238,17 +1253,17 @@ for ac_hdr in libgimp/gimpmodule.h libintl.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:1242: checking for $ac_hdr" >&5
+echo "configure:1257: checking for $ac_hdr" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1247 "configure"
+#line 1262 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1252: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1267: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1280,17 +1295,17 @@ for ac_hdr in unistd.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:1284: checking for $ac_hdr" >&5
+echo "configure:1299: checking for $ac_hdr" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1289 "configure"
+#line 1304 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1294: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1309: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1322,12 +1337,12 @@ CONFIG_H="config.h"
 for ac_func in vsnprintf
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:1326: checking for $ac_func" >&5
+echo "configure:1341: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1331 "configure"
+#line 1346 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -1350,7 +1365,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:1354: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1369: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -1406,12 +1421,12 @@ fi
 for ac_func in _exit
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:1410: checking for $ac_func" >&5
+echo "configure:1425: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1415 "configure"
+#line 1430 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -1434,7 +1449,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:1438: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1453: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
