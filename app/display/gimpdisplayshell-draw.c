@@ -636,8 +636,8 @@ create_toolbox ()
   create_tools (vbox);
   /*create_tool_label (vbox);*/
   /*create_progress_area (vbox);*/
-  gtk_widget_show (window);
   create_color_area (vbox);
+  gtk_widget_show (window);
 
 
   toolbox_shell = window;
