@@ -1,3 +1,9 @@
+2004-12-29  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/file-save-dialog.c (file_save_dialog_response):
+	handle a NULL return value from gtk_file_chooser_get_uri(). Fixes
+	bug #162443.
+
 2004-12-29  Maurits Rijk  <m.rijk@chello.nl>
 
 	* plug-ins/imagemap/imap_preferences.[ch]: replace home-brewn color
