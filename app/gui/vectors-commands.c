@@ -39,6 +39,7 @@
 #include "plug-in/plug-in-run.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectors-export.h"
 #include "vectors/gimpvectors-import.h"
 
 #include "widgets/gimphelp-ids.h"
@@ -244,11 +245,14 @@ vectors_export_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
+  GError      *error = NULL;
   return_if_no_vectors (gimage, active_vectors, data);
 
-#ifdef __GNUC__
-#warning FIXME: need vectors import/export
-#endif
+  if (! gimp_vectors_export (active_vectors, "path-export.svg", &error))
+    {
+      g_message (error->message);
+      g_error_free (error);
+    }
 }
 
 void
