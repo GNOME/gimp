@@ -1,5 +1,17 @@
 2003-05-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimplayer.[ch]: removed the remaining layer scale API.
+
+	* app/core/gimpitem.[ch]: added the same functions here.
+
+	* app/core/gimpimage-scale.c
+	* app/gui/layers-commands.c
+	* tools/pdbgen/pdb/layer.pdb: changed accordingly.
+
+	* app/pdb/layer_cmds.c: regenerated.
+
+2003-05-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.[ch] (gimp_item_configure): added width,
 	height, offset_x and offset_y parameters.
 

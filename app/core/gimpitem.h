@@ -80,63 +80,75 @@ struct _GimpItemClass
 };
 
 
-GType           gimp_item_get_type        (void) G_GNUC_CONST;
+GType           gimp_item_get_type         (void) G_GNUC_CONST;
 
-void            gimp_item_removed         (GimpItem       *item);
+void            gimp_item_removed          (GimpItem       *item);
 
-void            gimp_item_configure       (GimpItem       *item,
-                                           GimpImage      *gimage,
-                                           gint            offset_x,
-                                           gint            offset_y,
-                                           gint            width,
-                                           gint            height,
-                                           const gchar    *name);
-GimpItem      * gimp_item_duplicate       (GimpItem       *item,
-                                           GType           new_type,
-                                           gboolean        add_alpha);
+void            gimp_item_configure        (GimpItem       *item,
+                                            GimpImage      *gimage,
+                                            gint            offset_x,
+                                            gint            offset_y,
+                                            gint            width,
+                                            gint            height,
+                                            const gchar    *name);
+GimpItem      * gimp_item_duplicate        (GimpItem       *item,
+                                            GType           new_type,
+                                            gboolean        add_alpha);
 
-void            gimp_item_rename          (GimpItem       *item,
-                                           const gchar    *new_name);
+void            gimp_item_rename           (GimpItem       *item,
+                                            const gchar    *new_name);
 
-gint            gimp_item_width           (const GimpItem *item);
-gint            gimp_item_height          (const GimpItem *item);
-void            gimp_item_offsets         (const GimpItem *item,
-                                           gint           *offset_x,
-                                           gint           *offset_y);
+gint            gimp_item_width            (const GimpItem *item);
+gint            gimp_item_height           (const GimpItem *item);
+void            gimp_item_offsets          (const GimpItem *item,
+                                            gint           *offset_x,
+                                            gint           *offset_y);
 
-void            gimp_item_scale           (GimpItem       *item,
-                                           gint            new_width,
-                                           gint            new_height,
-                                           gint            new_offset_x,
-                                           gint            new_offset_y,
-                                           GimpInterpolationType  interp_type);
-void            gimp_item_resize          (GimpItem       *item,
-                                           gint            new_width,
-                                           gint            new_height,
-                                           gint            offset_x,
-                                           gint            offset_y);
-void            gimp_item_resize_to_image (GimpItem       *item);
+gboolean        gimp_item_check_scaling    (const GimpItem *layer,
+                                            gint            new_width,
+                                            gint            new_height);
+void            gimp_item_scale            (GimpItem       *item,
+                                            gint            new_width,
+                                            gint            new_height,
+                                            gint            new_offset_x,
+                                            gint            new_offset_y,
+                                            GimpInterpolationType  interp_type);
+gboolean        gimp_item_scale_by_factors (GimpItem       *item,
+                                            gdouble         w_factor, 
+                                            gdouble         h_factor,
+                                            GimpInterpolationType interp_type);
+void            gimp_item_scale_by_origin  (GimpItem       *item,
+                                            gint            new_width,
+                                            gint            new_height,
+                                            GimpInterpolationType interp_type,
+                                            gboolean        local_origin);
+void            gimp_item_resize           (GimpItem       *item,
+                                            gint            new_width,
+                                            gint            new_height,
+                                            gint            offset_x,
+                                            gint            offset_y);
+void            gimp_item_resize_to_image  (GimpItem       *item);
 
-gint            gimp_item_get_ID          (GimpItem       *item);
-GimpItem      * gimp_item_get_by_ID       (Gimp           *gimp,
-                                           gint            id);
+gint            gimp_item_get_ID           (GimpItem       *item);
+GimpItem      * gimp_item_get_by_ID        (Gimp           *gimp,
+                                            gint            id);
 
-GimpTattoo      gimp_item_get_tattoo      (const GimpItem *item);
-void            gimp_item_set_tattoo      (GimpItem       *item,
-                                           GimpTattoo      tattoo);
+GimpTattoo      gimp_item_get_tattoo       (const GimpItem *item);
+void            gimp_item_set_tattoo       (GimpItem       *item,
+                                            GimpTattoo      tattoo);
 
-GimpImage     * gimp_item_get_image       (const GimpItem *item);
-void            gimp_item_set_image       (GimpItem       *item,
-                                           GimpImage      *gimage);
+GimpImage     * gimp_item_get_image        (const GimpItem *item);
+void            gimp_item_set_image        (GimpItem       *item,
+                                            GimpImage      *gimage);
 
-void            gimp_item_parasite_attach (GimpItem       *item,
-                                           GimpParasite   *parasite);
-void            gimp_item_parasite_detach (GimpItem       *item,
-                                           const gchar    *name);
-GimpParasite  * gimp_item_parasite_find   (const GimpItem *item,
-                                           const gchar    *name);
-gchar        ** gimp_item_parasite_list   (const GimpItem *item,
-                                           gint           *count);
+void            gimp_item_parasite_attach  (GimpItem       *item,
+                                            GimpParasite   *parasite);
+void            gimp_item_parasite_detach  (GimpItem       *item,
+                                            const gchar    *name);
+GimpParasite  * gimp_item_parasite_find    (const GimpItem *item,
+                                            const gchar    *name);
+gchar        ** gimp_item_parasite_list    (const GimpItem *item,
+                                            gint           *count);
 
 
 #endif /* __GIMP_ITEM_H__ */

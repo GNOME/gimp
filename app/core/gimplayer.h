@@ -91,9 +91,6 @@ GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
 GimpLayer     * gimp_layer_new_from_drawable   (GimpDrawable         *drawable,
                                                 GimpImage            *dest_image);
 
-gboolean        gimp_layer_check_scaling       (const GimpLayer      *layer,
-                                                gint                  new_width,
-                                                gint                  new_height);
 GimpLayerMask * gimp_layer_create_mask         (const GimpLayer      *layer,
                                                 GimpAddMaskType        mask_type);
 GimpLayerMask * gimp_layer_add_mask            (GimpLayer            *layer,
@@ -107,15 +104,6 @@ void            gimp_layer_translate           (GimpLayer            *layer,
                                                 gint                  off_y,
                                                 gboolean              push_undo);
 void            gimp_layer_add_alpha           (GimpLayer            *layer);
-gboolean        gimp_layer_scale_by_factors    (GimpLayer            *layer, 
-                                                gdouble               w_factor, 
-                                                gdouble               h_factor,
-                                                GimpInterpolationType interpolation_type);
-void            gimp_layer_scale_by_origin     (GimpLayer            *layer, 
-                                                gint                  new_width,
-                                                gint                  new_height,
-                                                GimpInterpolationType interpolation_type,
-                                                gboolean              local_origin);
 
 void            gimp_layer_resize_to_image     (GimpLayer            *layer);
 BoundSeg      * gimp_layer_boundary            (GimpLayer            *layer, 

@@ -943,11 +943,11 @@ scale_layer_query_ok_callback (GtkWidget *widget,
               floating_sel_relax (layer, TRUE);
             }
 
-	  gimp_layer_scale_by_origin (layer, 
-                                      options->resize->width,
-                                      options->resize->height,
-                                      options->resize->interpolation,
-                                      TRUE);
+	  gimp_item_scale_by_origin (GIMP_ITEM (layer),
+                                     options->resize->width,
+                                     options->resize->height,
+                                     options->resize->interpolation,
+                                     TRUE);
 
 	  if (gimp_layer_is_floating_sel (layer))
             {

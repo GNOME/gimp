@@ -368,6 +368,40 @@ gimp_item_offsets (const GimpItem *item,
   if (off_y) *off_y = item->offset_y;
 }
 
+/**
+ * gimp_item_check_scaling:
+ * @item:       Item to check
+ * @new_width:  proposed width of item, in pixels
+ * @new_height: proposed height of item, in pixels
+ *
+ * Scales item dimensions, then snaps them to pixel centers
+ *
+ * Returns: #FALSE if any dimension reduces to zero as a result 
+ *          of this; otherwise, returns #TRUE.
+ **/
+gboolean
+gimp_item_check_scaling (const GimpItem *item,
+                         gint            new_width,
+                         gint            new_height)
+{
+  GimpImage *gimage;
+  gdouble    img_scale_w;
+  gdouble    img_scale_h;
+  gint       new_item_width;
+  gint       new_item_height;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  gimage = gimp_item_get_image (item);
+
+  img_scale_w     = (gdouble) new_width  / (gdouble) gimage->width;
+  img_scale_h     = (gdouble) new_height / (gdouble) gimage->height;
+  new_item_width  = ROUND (img_scale_w * (gdouble) item->width);
+  new_item_height = ROUND (img_scale_h * (gdouble) item->height);
+
+  return (new_item_width > 0 && new_item_height > 0);  
+}
+
 void
 gimp_item_scale (GimpItem              *item,
                  gint                   new_width,
@@ -387,6 +421,133 @@ gimp_item_scale (GimpItem              *item,
 
   item_class->scale (item, new_width, new_height, new_offset_x, new_offset_y,
                      interpolation_type);
+}
+
+/**
+ * gimp_item_scale_by_factors:
+ * @item:     Item to be transformed by explicit width and height factors.
+ * @w_factor: scale factor to apply to width and horizontal offset
+ * @h_factor: scale factor to apply to height and vertical offset
+ * 
+ * Scales item dimensions and offsets by uniform width and
+ * height factors.
+ *
+ * Use gimp_item_scale_by_factors() in circumstances when the
+ * same width and height scaling factors are to be uniformly
+ * applied to a set of items. In this context, the item's
+ * dimensions and offsets from the sides of the containing
+ * image all change by these predetermined factors. By fiat,
+ * the fixed point of the transform is the upper left hand
+ * corner of the image. Returns gboolean FALSE if a requested
+ * scale factor is zero or if a scaling zero's out a item
+ * dimension; returns #TRUE otherwise.
+ *
+ * Use gimp_item_scale() in circumstances where new item width
+ * and height dimensions are predetermined instead.
+ *
+ * Side effects: Undo set created for item. Old item imagery 
+ *               scaled & painted to new item tiles. 
+ *
+ * Returns: #TRUE, if the scaled item has positive dimensions
+ *          #FALSE if the scaled item has at least one zero dimension
+ **/
+gboolean
+gimp_item_scale_by_factors (GimpItem              *item,
+                            gdouble                w_factor,
+                            gdouble                h_factor,
+                            GimpInterpolationType  interpolation_type)
+{
+  gint new_width, new_height;
+  gint new_offset_x, new_offset_y;
+
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  if (w_factor == 0.0 || h_factor == 0.0)
+    {
+      g_message ("gimp_item_scale_by_factors: Error. Requested width or height scale equals zero.");
+      return FALSE;
+    }
+
+  new_offset_x = ROUND (w_factor * (gdouble) item->offset_x);
+  new_offset_y = ROUND (h_factor * (gdouble) item->offset_y);
+  new_width    = ROUND (w_factor * (gdouble) item->width);
+  new_height   = ROUND (h_factor * (gdouble) item->height);
+
+  if (new_width != 0 && new_height != 0)
+    {
+      gimp_item_scale (item,
+                       new_width, new_height,
+                       new_offset_x, new_offset_y,
+                       interpolation_type);
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
+/**
+ * gimp_item_scale_by_origin:
+ * @item:         The item to be transformed by width & height scale factors
+ * @new_width:    The width that item will acquire
+ * @new_height:   The height that the item will acquire
+ * @local_origin: sets fixed point of the scaling transform. See below.
+ *
+ * Sets item dimensions to new_width and
+ * new_height. Derives vertical and horizontal scaling
+ * transforms from new width and height. If local_origin is
+ * TRUE, the fixed point of the scaling transform coincides
+ * with the item's center point.  Otherwise, the fixed
+ * point is taken to be [-item->offset_x, -item->offset_y].
+ *
+ * Since this function derives scale factors from new and
+ * current item dimensions, these factors will vary from
+ * item to item because of aliasing artifacts; factor
+ * variations among items can be quite large where item
+ * dimensions approach pixel dimensions. Use 
+ * gimp_item_scale_by_factors() where constant scales are to
+ * be uniformly applied to a number of items.
+ *
+ * Side effects: undo set created for item.
+ *               Old item imagery scaled 
+ *               & painted to new item tiles 
+ **/
+void
+gimp_item_scale_by_origin (GimpItem              *item,
+                           gint                   new_width,
+                           gint                   new_height,
+                           GimpInterpolationType  interpolation_type,
+                           gboolean               local_origin)
+{
+  gint new_offset_x, new_offset_y;
+
+  g_return_if_fail (GIMP_IS_ITEM (item));
+
+  if (new_width == 0 || new_height == 0)
+    {
+      g_message ("gimp_layer_scale: Error. Requested width or height equals zero.");
+      return;
+    }
+
+  if (local_origin)
+    {
+      new_offset_x = item->offset_x + ((item->width  - new_width)  / 2.0);
+      new_offset_y = item->offset_y + ((item->height - new_height) / 2.0);
+    }
+  else
+    {
+      new_offset_x = (gint) (((gdouble) new_width * 
+                              (gdouble) item->offset_x / 
+                              (gdouble) item->width));
+
+      new_offset_y = (gint) (((gdouble) new_height * 
+                              (gdouble) item->offset_y / 
+                              (gdouble) item->height));
+    }
+
+  gimp_item_scale (item,
+                   new_width, new_height,
+                   new_offset_x, new_offset_y,
+                   interpolation_type);
 }
 
 void

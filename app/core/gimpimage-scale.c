@@ -122,17 +122,17 @@ gimp_image_scale (GimpImage             *gimage,
        list; 
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      item = (GimpItem *) list->data;
 
-      if (! gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h,
-                                         interpolation_type))
+      if (! gimp_item_scale_by_factors (item, img_scale_w, img_scale_h,
+                                        interpolation_type))
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented
 	   * here. Upstream warning implemented in resize_check_layer_scaling()
 	   * [resize.c line 1295], which offers the user the chance to bail out.
 	   */
-          remove = g_slist_append (remove, layer);
+          remove = g_slist_append (remove, item);
         }
 
       if (progress_func)
@@ -216,11 +216,11 @@ gimp_image_check_scaling (const GimpImage *gimage,
        list;
        list = g_list_next (list))
     {
-      GimpLayer *layer;
+      GimpItem *item;
 
-      layer = (GimpLayer *) list->data;
+      item = (GimpItem *) list->data;
 
-      if (! gimp_layer_check_scaling (layer, new_width, new_height))
+      if (! gimp_item_check_scaling (item, new_width, new_height))
 	return FALSE;
     }
 
