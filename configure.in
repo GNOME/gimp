@@ -110,9 +110,9 @@ fi
 
 dnl Choose a desktop icon
 if test "x$GIMP_UNSTABLE" = "xyes"; then
-  GIMP_DESKTOP_ICON="gimp-devel-icon.png"
+  GIMP_DESKTOP_ICON="wilber-devel-icon.png"
 else
-  GIMP_DESKTOP_ICON="gimp-icon.png"
+  GIMP_DESKTOP_ICON="wilber-icon.png"
 fi
 
 AC_SUBST(GIMP_DESKTOP_ICON)

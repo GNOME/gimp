@@ -1,5 +1,9 @@
 2004-02-11  Sven Neumann  <sven@gimp.org>
 
+	* configure.in (GIMP_DESKTOP_ICON): fixed icon names.
+
+2004-02-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptexttool.c: repaired broken text tool logic
 	(bug #124969).
 
