@@ -26,22 +26,24 @@
 #[terral] input levels of 0, .24, 113                                    [22:11]
 #[terral] --end of script                                                [22:12]
 
-use Gimp;
+use Gimp 1.06;
 use Gimp::Fu;
+use Gimp::Util;
 
 # Gimp::set_trace(TRACE_ALL);
 
 register 
 	"terraltext",
 	"Make a cool text bumpmap thingy",
-	"Creates a bumpmap text thingy.  Can work using the current layer as a bumpmap or make a solid noise layer for it.",
+	"Does a neat text render effect.  If you uncheck the box, it uses the current layer.  ".
+        "Otherwise, it overwrites the current layer and uses a solid noise",
 	"Seth Burgess",
 	"Seth Burgess <sjburges\@gimp.org>",
-	"1999-02-24",
+	"1999-02-26",
 	"<Image>/Filters/Render/Terral Text",
-	"RGB*",
+	"RGB*,GRAY*",
 	[ 
-	  [ PF_TOGGLE, "Solid Noise?", "Say yes here", "Either use solid noise or the current background", 0 ],
+	  [ PF_RADIO, "solid_noise", "The Texture Type", 0, [["solid noise",1],["current picture",0]]],
 	  [ PF_FONT, "helvetica", "Font Name", "-*-helvetica-medium-r-normal-*-*-240-*-*-p-*-iso8859-1" ],
 	  [ PF_STRING, "Text", "Enter your Text to be Terral-ified", "TerralText"],
 	  [ PF_SLIDER, "Blur Amount", "Blur Amount", 10, [0,26,1]],
@@ -60,8 +62,10 @@ sub {
       # FIXME: I should endeavour to find out what kind of image I'm talking
       # about before blindly apply a type of layer.  Oh well. Call it RGBA
       # for now.
+
+      # Hello, Seth.. look at this:
 	
-	$textlayer = $img->layer_new($img->width, $img->height,RGBA_IMAGE,
+	$textlayer = $img->layer_new($img->width, $img->height, $img->layertype(1),
 		"TextLayer", 100, 0);
 	$img->add_layer($textlayer,1);
 	palette_set_background([255,255,255]);

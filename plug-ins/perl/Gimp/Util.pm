@@ -244,8 +244,8 @@ is with alpha or not. Example: imagetype: RGB -> RGB_IMAGE (or RGBA_IMAGE).
 =cut
 sub gimp_image_layertype {
    my $type = $_[0]->base_type;
-   $type == RGB     ? $alpha ? RGBA_IMAGE     : RGB_IMAGE :
-   $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE :
+   $type == RGB     ? $alpha ? RGBA_IMAGE     : RGB_IMAGE     :
+   $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE    :
    $type == INDEXED ? $alpha ? INDEXEDA_IMAGE : INDEXED_IMAGE :
    die;
 }
