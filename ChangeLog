@@ -1,3 +1,9 @@
+2004-07-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c: applied a patch done by Brion Vibber
+	and Philip Lafleur that fixes loading of CMYK TIFF images on
+	big-endian hardware (bug #147328).
+
 2004-07-14  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* plug-ins/common/mng.c (respin_cmap): Properly check the return

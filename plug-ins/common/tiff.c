@@ -981,6 +981,15 @@ load_rgba (TIFF         *tif,
 
   for (row = 0; row < imageLength; ++row)
     {
+#if G_BYTE_ORDER != G_LITTLE_ENDIAN
+      /* Make sure our channels are in the right order */
+      uint32 i;
+      uint32 rowStart = row * imageWidth;
+      uint32 rowEnd   = rowStart + imageWidth;
+
+      for (i = rowStart; i < rowEnd; i++)
+        buffer[i] = GUINT32_TO_LE (buffer[i]);
+#endif
       gimp_pixel_rgn_set_rect (&(channel[0].pixel_rgn),
                                channel[0].pixels + row * imageWidth * 4,
                                0, imageLength -row -1, imageWidth, 1);
