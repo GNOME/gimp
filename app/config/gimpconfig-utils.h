@@ -29,17 +29,4 @@ void       gimp_config_connect               (GObject      *a,
 void       gimp_config_disconnect            (GObject      *a,
                                               GObject      *b);
 
-GList    * gimp_config_diff                  (GimpConfig   *a,
-                                              GimpConfig   *b,
-                                              GParamFlags   flags);
-gboolean   gimp_config_sync                  (GimpConfig   *src,
-                                              GimpConfig   *dest,
-                                              GParamFlags   flags);
-
-void       gimp_config_reset_properties      (GimpConfig   *config);
-
-void       gimp_config_string_append_escaped (GString      *string,
-                                              const gchar  *val);
-
-
 #endif  /* __GIMP_CONFIG_UTILS_H__ */

@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -31,10 +32,7 @@
 #include "gimp-units.h"
 #include "gimpunit.h"
 
-#include "config/gimpconfig-error.h"
 #include "config/gimpconfig-file.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 #include "gimp-intl.h"
 

@@ -22,12 +22,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"

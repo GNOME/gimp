@@ -28,10 +28,9 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "text-types.h"
-
-#include "config/gimpconfig.h"
 
 #include "gimptext.h"
 #include "gimptext-parasite.h"

@@ -21,11 +21,11 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpconfig-params.h"
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"

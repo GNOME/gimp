@@ -20,10 +20,9 @@
 
 #include <glib-object.h>
 
-#include "text-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
+#include "text-types.h"
 
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"

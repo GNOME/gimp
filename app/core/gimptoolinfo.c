@@ -22,11 +22,11 @@
 
 #include <glib-object.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"

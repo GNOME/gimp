@@ -35,11 +35,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
-#include "config/gimpconfig-path.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"

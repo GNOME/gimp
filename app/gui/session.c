@@ -31,6 +31,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -38,11 +39,8 @@
 
 #include "gui-types.h"
 
-#include "config/gimpconfig-error.h"
 #include "config/gimpconfig-file.h"
-#include "config/gimpconfigwriter.h"
 #include "config/gimpguiconfig.h"
-#include "config/gimpscanner.h"
 
 #include "core/gimp.h"
 

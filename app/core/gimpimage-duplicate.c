@@ -24,8 +24,6 @@
 
 #include "base/pixel-region.h"
 
-#include "config/gimpconfig.h"
-
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"

@@ -8,26 +8,12 @@ noinst_LIBRARIES = libappconfig.a
 
 libappconfig_a_SOURCES = \
 	config-types.h			\
-	gimpconfig.c			\
-	gimpconfig.h			\
-	gimpconfig-deserialize.c	\
-	gimpconfig-deserialize.h	\
 	gimpconfig-dump.c		\
 	gimpconfig-dump.h		\
-	gimpconfig-error.c		\
-	gimpconfig-error.h		\
 	gimpconfig-file.c		\
 	gimpconfig-file.h		\
-	gimpconfig-params.h		\
-	gimpconfig-path.c		\
-	gimpconfig-path.h		\
-	gimpconfig-serialize.c		\
-	gimpconfig-serialize.h		\
-	gimpconfig-serialize.h		\
 	gimpconfig-utils.c		\
 	gimpconfig-utils.h		\
-	gimpconfigwriter.c		\
-	gimpconfigwriter.h		\
 	gimpbaseconfig.c		\
 	gimpbaseconfig.h		\
 	gimpcoreconfig.c		\
@@ -49,8 +35,6 @@ libappconfig_a_SOURCES = \
 	gimprc-unknown.h		\
 	gimprc-utils.c			\
 	gimprc-utils.h			\
-	gimpscanner.c			\
-	gimpscanner.h			\
 	gimpxmlparser.c			\
 	gimpxmlparser.h
 
@@ -86,6 +70,7 @@ test_config_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
+	$(libgimpconfig)	\
 	$(GLIB_LIBS)
 
 

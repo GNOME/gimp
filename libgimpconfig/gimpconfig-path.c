@@ -30,7 +30,7 @@
 
 #include "gimpconfig-path.h"
 
-#include "gimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 static gchar        * gimp_config_path_expand_only (const gchar  *path,

@@ -25,12 +25,9 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "plug-in-types.h"
-
-#include "config/gimpconfig-error.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 #include "core/gimp.h"
 

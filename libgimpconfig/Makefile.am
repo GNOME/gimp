@@ -66,8 +66,26 @@ lib_LTLIBRARIES = libgimpconfig-2.0.la
 	@:
 
 
-libgimpconfig_sources = \
-	gimpconfig.h
+libgimpconfig_sources = 		\
+	gimpconfig.h			\
+	gimpconfig-iface.c		\
+	gimpconfig-iface.h		\
+	gimpconfig-deserialize.c	\
+	gimpconfig-deserialize.h	\
+	gimpconfig-error.c		\
+	gimpconfig-error.h		\
+	gimpconfig-params.h		\
+	gimpconfig-path.c		\
+	gimpconfig-path.h		\
+	gimpconfig-serialize.c		\
+	gimpconfig-serialize.h		\
+	gimpconfigwriter.c		\
+	gimpconfigwriter.h		\
+	gimpscanner.c			\
+	gimpscanner.h			\
+	gimpconfig-utils.c		\
+	gimpconfig-utils.h
+
 
 libgimpconfig_built_sources =
 
@@ -75,7 +93,16 @@ libgimpconfig_2_0_la_SOURCES = $(libgimpconfig_sources) $(libgimpconfig_built_so
 
 
 libgimpconfiginclude_HEADERS = \
-	gimpconfig.h
+	gimpconfig.h			\
+	gimpconfig-iface.h		\
+	gimpconfig-deserialize.h	\
+	gimpconfig-error.h		\
+	gimpconfig-params.h		\
+	gimpconfig-path.h		\
+	gimpconfig-serialize.h		\
+	gimpconfigwriter.h		\
+	gimpscanner.h			\
+	gimpconfig-utils.h
 
 
 libgimpconfig_2_0_la_LDFLAGS = \

@@ -20,11 +20,9 @@
 
 #include <glib-object.h>
 
-#include "core-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
+#include "core-types.h"
 
 #include "gimp.h"
 #include "gimpdocumentlist.h"

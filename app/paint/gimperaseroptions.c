@@ -20,9 +20,9 @@
 
 #include <glib-object.h>
 
-#include "paint-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig-params.h"
+#include "paint-types.h"
 
 #include "gimperaseroptions.h"
 

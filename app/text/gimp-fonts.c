@@ -28,10 +28,10 @@
 #include <fontconfig/fontconfig.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "text-types.h"
 
-#include "config/gimpconfig-path.h"
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"

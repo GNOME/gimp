@@ -24,10 +24,9 @@
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "core/gimpstrokeoptions.h"
 

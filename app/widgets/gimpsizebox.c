@@ -24,11 +24,10 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "gimppropwidgets.h"
 #include "gimpsizebox.h"

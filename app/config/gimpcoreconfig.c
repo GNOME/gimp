@@ -24,16 +24,13 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
 
 #include "core/core-types.h"
 #include "core/gimpgrid.h"
 #include "core/gimptemplate.h"
-
-#include "gimpconfig.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-utils.h"
 
 #include "gimprc-blurbs.h"
 #include "gimprc-utils.h"

@@ -22,11 +22,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "gimpcolorbar.h"
 

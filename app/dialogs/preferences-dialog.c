@@ -24,13 +24,11 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "dialogs-types.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfig-utils.h"
 #include "config/gimprc.h"
 
 #include "core/gimp.h"

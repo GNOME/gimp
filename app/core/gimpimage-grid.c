@@ -23,10 +23,9 @@
 
 #include <glib-object.h>
 
-#include "core-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
+#include "core-types.h"
 
 #include "gimpgrid.h"
 #include "gimpimage.h"

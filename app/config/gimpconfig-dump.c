@@ -31,6 +31,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
@@ -38,11 +39,7 @@
 
 #include "config-types.h"
 
-#include "gimpconfig.h"
 #include "gimpconfig-dump.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-serialize.h"
-#include "gimpconfigwriter.h"
 #include "gimprc.h"
 
 

@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
@@ -114,6 +115,7 @@ gimp_2_3_LDADD = \
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
 	$(libgimpbase)			\
+	$(libgimpconfig)		\
 	$(REGEXREPL)			\
 	$(GTK_LIBS)			\
 	$(LIBART_LIBS)			\
@@ -158,6 +160,7 @@ gimp_console_2_3_LDADD = \
 	$(libgimpthumb)			\
 	$(libgimpmath)			\
 	$(libgimpbase)			\
+	$(libgimpconfig)		\
 	$(REGEXREPL)			\
 	$(GDK_PIXBUF_LIBS)		\
 	$(LIBART_LIBS)			\

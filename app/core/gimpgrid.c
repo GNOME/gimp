@@ -27,13 +27,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimplimits.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
 
 #include "gimpgrid.h"
 

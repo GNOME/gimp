@@ -20,10 +20,9 @@
 
 #include <gtk/gtk.h>
 
-#include "tools-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfig-utils.h"
+#include "tools-types.h"
 
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"

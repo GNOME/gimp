@@ -25,13 +25,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmodule/gimpmodule.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
-#include "config/gimpconfig-path.h"
-#include "config/gimpconfigwriter.h"
 #include "config/gimpcoreconfig.h"
-#include "config/gimpscanner.h"
 
 #include "gimp.h"
 #include "gimp-modules.h"

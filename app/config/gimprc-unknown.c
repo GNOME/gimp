@@ -25,9 +25,11 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
+
 #include "config-types.h"
 
-#include "gimpconfig.h"
 #include "gimprc-unknown.h"
 
 

@@ -23,14 +23,12 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
 #include "tools/tools-types.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfig-utils.h"
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimp.h"

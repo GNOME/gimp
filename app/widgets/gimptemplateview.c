@@ -25,11 +25,10 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"

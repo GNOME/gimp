@@ -27,13 +27,11 @@
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
-#include "config-types.h"
-
-#include "gimpconfig.h"
+#include "gimpconfigwriter.h"
+#include "gimpconfig-iface.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-serialize.h"
 #include "gimpconfig-utils.h"
-#include "gimpconfigwriter.h"
 
 
 /**

@@ -22,6 +22,7 @@
 #ifndef __GIMP_SESSION_INFO_H__
 #define __GIMP_SESSION_INFO_H__
 
+#include "libgimpconfig/gimpconfig.h"
 
 struct _GimpSessionInfo
 {

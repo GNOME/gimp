@@ -29,14 +29,13 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
 #include "libgimpbase/gimpwin32-io.h"
 #endif
 
 #include "config-types.h"
-
-#include "gimpconfig-file.h"
 
 #include "gimp-intl.h"
 

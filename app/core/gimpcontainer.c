@@ -25,16 +25,13 @@
 
 #include <glib-object.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "core-types.h"
 
 #include "gimp.h"
 #include "gimpcontainer.h"
 #include "gimpmarshal.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-deserialize.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 
 /* #define DEBUG_CONTAINER */

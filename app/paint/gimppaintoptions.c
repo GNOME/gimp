@@ -21,11 +21,9 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "paint-types.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"

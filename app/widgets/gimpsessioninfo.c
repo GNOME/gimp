@@ -25,11 +25,9 @@
 
 #include <gtk/gtk.h>
 
-#include "widgets-types.h"
+#include "libgimpconfig/gimpconfig.h"
 
-#include "config/gimpconfig-serialize.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
+#include "widgets-types.h"
 
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"

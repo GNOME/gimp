@@ -20,12 +20,11 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"

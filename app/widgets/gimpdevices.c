@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpbase/gimpbase.h"
 
 #ifdef G_OS_WIN32
@@ -40,9 +41,6 @@
 #include "core/gimplist.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-error.h"
 
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"

@@ -27,13 +27,11 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 #include "core/gimpgrid.h"
 
-#include "gimpconfig.h"
-#include "gimpconfig-serialize.h"
-#include "gimpconfig-utils.h"
 #include "gimprc-unknown.h"
 
 

@@ -25,13 +25,11 @@
 
 #include <glib-object.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfigwriter.h"
 
 #include "gimp-utils.h"
 #include "gimpmarshal.h"

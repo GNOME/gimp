@@ -27,15 +27,14 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "config-types.h"
-
-#include "gimpconfig.h"
+#include "gimpconfigwriter.h"
+#include "gimpconfig-iface.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-path.h"
 #include "gimpscanner.h"
 
-#include "gimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 /*

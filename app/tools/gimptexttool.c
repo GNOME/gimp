@@ -29,6 +29,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -42,9 +43,6 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpundo.h"
 #include "core/gimpundostack.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
 
 #include "text/gimptext.h"
 #include "text/gimptext-vectors.h"

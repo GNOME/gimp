@@ -25,15 +25,12 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
 
-#include "gimpconfig.h"
-#include "gimpconfig-deserialize.h"
-#include "gimpconfig-params.h"
 #include "gimprc-deserialize.h"
 #include "gimprc-unknown.h"
-#include "gimpscanner.h"
 
 #include "gimp-intl.h"
 

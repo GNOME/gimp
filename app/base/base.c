@@ -33,10 +33,11 @@
 #include <io.h>         /*  for _unlink()  */
 #endif
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
-#include "config/gimpconfig-path.h"
 
 #include "paint-funcs/paint-funcs.h"
 #include "composite/gimp-composite.h"

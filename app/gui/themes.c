@@ -25,10 +25,10 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "gui-types.h"
 
-#include "config/gimpconfig-path.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"

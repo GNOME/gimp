@@ -27,12 +27,11 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 #include "libgimpbase/gimpwire.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "plug-in-types.h"
 
 #include "config/gimpcoreconfig.h"
-#include "config/gimpconfig-error.h"
-#include "config/gimpconfig-path.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"

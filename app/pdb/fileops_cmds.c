@@ -39,13 +39,13 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "config/gimpbaseconfig.h"
-#include "config/gimpconfig-path.h"
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"

@@ -21,19 +21,13 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
 #include "widgets-types.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-error.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfig-utils.h"
-#include "config/gimpconfigwriter.h"
-#include "config/gimpscanner.h"
 
 #include "core/gimp.h"
 #include "core/gimplist.h"

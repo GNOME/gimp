@@ -26,16 +26,14 @@
 #include <glib-object.h>
 #include <pango/pangoft2.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "text-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
-
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
-#include "config/gimpconfig-utils.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"

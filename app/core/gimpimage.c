@@ -26,14 +26,13 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-utils.h"
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"

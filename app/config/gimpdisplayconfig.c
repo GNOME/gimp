@@ -25,15 +25,12 @@
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
 
 #include "display/display-enums.h"
 #include "display/gimpdisplayoptions.h"
-
-#include "gimpconfig.h"
-#include "gimpconfig-params.h"
-#include "gimpconfig-utils.h"
 
 #include "gimprc-blurbs.h"
 #include "gimpdisplayconfig.h"

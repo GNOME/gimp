@@ -24,12 +24,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "config/gimpconfig.h"
 #include "config/gimpcoreconfig.h"
 #include "config/gimpdisplayconfig.h"
 #include "config/gimprc.h"

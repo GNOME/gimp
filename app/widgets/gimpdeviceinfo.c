@@ -22,14 +22,14 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpmarshal.h"
-
-#include "config/gimpconfig-params.h"
 
 #include "gimpdeviceinfo.h"
 

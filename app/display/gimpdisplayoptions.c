@@ -26,13 +26,11 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core/core-types.h"
 #include "display-enums.h"
 
-#include "config/gimpconfig.h"
-#include "config/gimpconfig.h"
-#include "config/gimpconfig-params.h"
 #include "config/gimprc-blurbs.h"
 
 #include "gimpdisplayoptions.h"
