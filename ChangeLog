@@ -1,5 +1,10 @@
 2003-05-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-crop.c (gimp_image_crop): resize all vectors
+	here, too.
+
+2003-05-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpitem.c: added default implementations for scale()
 	and resize() which just set the resulting width/height and offset
 	values.

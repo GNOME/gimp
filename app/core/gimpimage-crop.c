@@ -95,13 +95,13 @@ gimp_image_crop (GimpImage *gimage,
 		 gboolean   active_layer_only,
 		 gboolean   crop_layers)
 {
-  GimpLayer   *layer;
-  GimpLayer   *floating_layer;
-  GimpChannel *channel;
-  GList       *list;
-  gint         width, height;
-  gint         lx1, ly1, lx2, ly2;
-  gint         off_x, off_y;
+  GimpLayer *layer;
+  GimpLayer *floating_layer;
+  GimpItem  *item;
+  GList     *list;
+  gint       width, height;
+  gint       lx1, ly1, lx2, ly2;
+  gint       off_x, off_y;
 
   g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -161,9 +161,19 @@ gimp_image_crop (GimpImage *gimage,
 	       list;
 	       list = g_list_next (list))
 	    {
-	      channel = (GimpChannel *) list->data;
+	      item = (GimpItem *) list->data;
 
-	      gimp_item_resize (GIMP_ITEM (channel), width, height, -x1, -y1);
+	      gimp_item_resize (item, width, height, -x1, -y1);
+	    }
+
+	  /*  Resize all vectors  */
+	  for (list = GIMP_LIST (gimage->vectors)->list;
+	       list;
+	       list = g_list_next (list))
+	    {
+	      item = (GimpItem *) list->data;
+
+	      gimp_item_resize (item, width, height, -x1, -y1);
 	    }
 
 	  /*  Don't forget the selection mask!  */
