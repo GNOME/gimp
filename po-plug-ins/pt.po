@@ -11,9 +11,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-08 00:27+0200\n"
-"PO-Revision-Date: 2003-08-06 02:20+0000\n"
+"Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
+"POT-Creation-Date: 2003-09-09 17:46+0100\n"
+"PO-Revision-Date: 2003-09-09 18:00+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -843,7 +843,7 @@ msgstr "Altura máxima para saliências"
 
 #: plug-ins/Lighting/lighting_ui.c:966
 msgid "M_inimum Height:"
-msgstr "Altura Mínima:"
+msgstr "Altura Mín_ima:"
 
 #: plug-ins/Lighting/lighting_ui.c:973
 msgid "Minimum height for bumps"
@@ -1214,14 +1214,13 @@ msgstr ""
 #: plug-ins/common/pcx.c:329 plug-ins/common/pcx.c:335
 #: plug-ins/common/pix.c:373 plug-ins/common/png.c:617
 #: plug-ins/common/pnm.c:490 plug-ins/common/psd.c:2101
-#: plug-ins/common/screenshot.c:344 plug-ins/common/smooth_palette.c:253
-#: plug-ins/common/sunras.c:931 plug-ins/common/tga.c:925
-#: plug-ins/common/tiff.c:675 plug-ins/common/tile.c:278
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2141
-#: plug-ins/common/xbm.c:873 plug-ins/faxg3/faxg3.c:462
-#: plug-ins/fits/fits.c:517 plug-ins/gfig/gfig.c:2670
-#: plug-ins/gfig/gfig.c:3038 plug-ins/sgi/sgi.c:367 plug-ins/twain/twain.c:744
-#: plug-ins/winsnap/winsnap.c:1238
+#: plug-ins/common/smooth_palette.c:253 plug-ins/common/sunras.c:931
+#: plug-ins/common/tga.c:925 plug-ins/common/tiff.c:675
+#: plug-ins/common/tile.c:278 plug-ins/common/winclipboard.c:556
+#: plug-ins/common/wmf.c:2140 plug-ins/common/xbm.c:873
+#: plug-ins/faxg3/faxg3.c:462 plug-ins/fits/fits.c:517
+#: plug-ins/gfig/gfig.c:2670 plug-ins/gfig/gfig.c:3038 plug-ins/sgi/sgi.c:367
+#: plug-ins/twain/twain.c:744 plug-ins/winsnap/winsnap.c:1238
 msgid "Background"
 msgstr "Fundo"
 
@@ -2082,9 +2081,8 @@ msgid "_Grid Size:"
 msgstr "Tamanho de _Grade:"
 
 #: plug-ins/common/animationplay.c:241
-#, fuzzy
 msgid "<Image>/Filters/Animation/_Playback..."
-msgstr "<Image>/Filtros/Animação/Re_produzir Animação..."
+msgstr "<Image>/Filtros/Animação/Re_produzir..."
 
 #: plug-ins/common/animationplay.c:544
 msgid "Animation Playback: "
@@ -2112,43 +2110,39 @@ msgstr "Etapa"
 msgid "Frame %d of %d"
 msgstr "Quadro %d de %d"
 
-#: plug-ins/common/animoptimize.c:176
-#, fuzzy
+#: plug-ins/common/animoptimize.c:185
 msgid "<Image>/Filters/Animation/_Optimize"
-msgstr "<Image>/Filtros/Animação/_Optimizar Animação"
+msgstr "<Image>/Filtros/Animação/_Optimizar"
 
-#: plug-ins/common/animoptimize.c:193
-#, fuzzy
+#: plug-ins/common/animoptimize.c:202
 msgid "<Image>/Filters/Animation/_UnOptimize"
-msgstr "<Image>/Filtros/Animação/_Não Optimizar Animação"
+msgstr "<Image>/Filtros/Animação/_Não Optimizar"
 
-#: plug-ins/common/animoptimize.c:208
-#, fuzzy
+#: plug-ins/common/animoptimize.c:218
 msgid "<Image>/Filters/Animation/_Remove Backdrop"
-msgstr "<Image>/Filtros/Animação/Animação: _Remover Fundo"
+msgstr "<Image>/Filtros/Animação/_Remover Fundo"
 
-#: plug-ins/common/animoptimize.c:224
-#, fuzzy
+#: plug-ins/common/animoptimize.c:234
 msgid "<Image>/Filters/Animation/_Find Backdrop"
-msgstr "<Image>/Filtros/Animação/Animação: _Encontrar Fundo"
+msgstr "<Image>/Filtros/Animação/_Encontrar Fundo"
 
-#: plug-ins/common/animoptimize.c:423
+#: plug-ins/common/animoptimize.c:434
 msgid "UnOptimizing Animation..."
 msgstr "A Desfazer Optimização Animação..."
 
-#: plug-ins/common/animoptimize.c:426
+#: plug-ins/common/animoptimize.c:437
 msgid "Removing Animation Background..."
 msgstr "A Remover Fundo Animação..."
 
-#: plug-ins/common/animoptimize.c:429
+#: plug-ins/common/animoptimize.c:440
 msgid "Finding Animation Background..."
 msgstr "A Procurar Fundo Animação..."
 
-#: plug-ins/common/animoptimize.c:433
+#: plug-ins/common/animoptimize.c:444
 msgid "Optimizing Animation..."
 msgstr "A Optimizar Animação..."
 
-#: plug-ins/common/animoptimize.c:470
+#: plug-ins/common/animoptimize.c:481
 msgid "Not enough memory to allocate buffers for optimization.\n"
 msgstr "Memória insuficiente para alocar buffers para optimização.\n"
 
@@ -2253,9 +2247,8 @@ msgid "Blurring..."
 msgstr "A Desfocar..."
 
 #: plug-ins/common/blur.c:590
-#, fuzzy
 msgid "Blur"
-msgstr "Descrição:"
+msgstr "Desfocar"
 
 #: plug-ins/common/blur.c:627 plug-ins/common/randomize.c:737
 #: plug-ins/common/snoise.c:539
@@ -2382,14 +2375,12 @@ msgid "A_mbient:"
 msgstr "A_mbiente:"
 
 #: plug-ins/common/bz2.c:265 plug-ins/common/gz.c:321
-#, fuzzy
 msgid "No sensible extension, saving as compressed XCF."
-msgstr "Sem extensão sensível, a gravar como xcf gzip'd"
+msgstr "Sem extensão sensível, a gravar como XCF comprimido."
 
 #: plug-ins/common/bz2.c:351 plug-ins/common/gz.c:446
-#, fuzzy
 msgid "No sensible extension, attempting to load with file magic."
-msgstr "Sem extensão sensível, a tentar ler baseado na magia de ficheiro"
+msgstr "Sem extensão sensível, a tentar ler baseado na magia de ficheiro."
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -2400,62 +2391,61 @@ msgid "Auto-Stretching Contrast..."
 msgstr "Contraste de Ampliação Automático..."
 
 #: plug-ins/common/ccanalyze.c:191
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-msgstr "<Image>/Filtros/Cores/Co_lorir..."
+msgstr "<Image>/Filtros/Cores/A_nálise Cubo Colorido..."
 
 #: plug-ins/common/ccanalyze.c:277
 msgid "Colorcube Analysis..."
-msgstr ""
+msgstr "Análise Cubo Colorido..."
 
 #. set up the dialog
 #: plug-ins/common/ccanalyze.c:554
 msgid "Colorcube Analysis"
-msgstr ""
+msgstr "Análise Cubo Colorido"
 
 #. set up frame
 #: plug-ins/common/ccanalyze.c:569
 msgid "Results"
-msgstr ""
+msgstr "Resultados"
 
 #. output results
 #: plug-ins/common/ccanalyze.c:593
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions: %dx%d"
-msgstr "Dimensões de imagem: %d x %d"
+msgstr "Dimensões de imagem: %dx%d"
 
 #: plug-ins/common/ccanalyze.c:594
 #, c-format
 msgid "Uncompressed size in bytes: %d"
-msgstr ""
+msgstr "Tamanho descomprimido em bytes: %d"
 
 #: plug-ins/common/ccanalyze.c:597
 msgid "No colors (?)"
-msgstr ""
+msgstr "Sem cores (?)"
 
 #: plug-ins/common/ccanalyze.c:599
 msgid "Only one unique color"
-msgstr ""
+msgstr "Apenas uma cor única"
 
 #: plug-ins/common/ccanalyze.c:601
-#, fuzzy, c-format
+#, c-format
 msgid "Number of unique colors: %d"
-msgstr "Número de Cores:"
+msgstr "Número de cores únicas: %d"
 
 #: plug-ins/common/ccanalyze.c:605
-#, fuzzy, c-format
+#, c-format
 msgid "Filename: %s"
-msgstr "Nome Ficheiro:"
+msgstr "Nome Ficheiro: %s"
 
 #: plug-ins/common/ccanalyze.c:609
 #, c-format
 msgid "Compressed size in bytes: %u"
-msgstr ""
+msgstr "Tamanho comprimido em bytes: %u"
 
 #: plug-ins/common/ccanalyze.c:610
 #, c-format
 msgid "Compression ratio (approx.): %d to 1"
-msgstr ""
+msgstr "Rácio de compressão (aprox.): %d para 1"
 
 #: plug-ins/common/checkerboard.c:104
 msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
@@ -2800,7 +2790,7 @@ msgstr "_Utilizar Tipos GLib (guint8*)"
 #.
 #: plug-ins/common/csource.c:720
 msgid "Us_e Macros instead of Struct"
-msgstr "Utilizar Macros em vez de Struct"
+msgstr "Utilizar Macros _em vez de Struct"
 
 #. Use RLE
 #.
@@ -2843,29 +2833,30 @@ msgid "Cubistic Transformation"
 msgstr "Transformação Cubística"
 
 #: plug-ins/common/curve_bend.c:562
-#, fuzzy
 msgid "<Image>/Filters/Distorts/_Curve Bend..."
-msgstr "<Image>/Filtros/Distorção/_CurveBend..."
+msgstr "<Image>/Filtros/Distorção/_Curve Bend..."
 
 #: plug-ins/common/curve_bend.c:688
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr "Curva funciona apenas em camadas (mas foi chamado no canal ou máscara)"
 
 #: plug-ins/common/curve_bend.c:812
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to write file '%s':\n"
 "%s"
 msgstr ""
-"Falha ao escrever '%s':\n"
+"Falha ao escrever ficheiro '%s':\n"
 "%s"
 
 #: plug-ins/common/curve_bend.c:864
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to open file '%s':\n"
 "%s"
-msgstr "Falha ao abrir ficheiro GFlare '%s': %s"
+msgstr ""
+"Falha ao abrir ficheiro '%s':\n"
+"%s"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
@@ -2891,15 +2882,13 @@ msgstr "Opções"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1287
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "Girar:"
+msgstr "_Girar:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1305
-#, fuzzy
 msgid "Smoo_thing"
-msgstr "A Unif_ormizar"
+msgstr "Unif_ormizar"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1315 plug-ins/common/gqbist.c:860
@@ -2918,34 +2907,28 @@ msgid "Modify Curves"
 msgstr "Modificar Curvas"
 
 #: plug-ins/common/curve_bend.c:1364
-#, fuzzy
 msgid "Curve for Border"
-msgstr "Curva para _Margem:"
+msgstr "Curva para Margem"
 
 #: plug-ins/common/curve_bend.c:1369
-#, fuzzy
 msgid "_Upper"
-msgstr "Acima"
+msgstr "_Acima"
 
 #: plug-ins/common/curve_bend.c:1372
-#, fuzzy
 msgid "_Lower"
-msgstr "Abaixo"
+msgstr "A_baixo"
 
 #: plug-ins/common/curve_bend.c:1383
-#, fuzzy
 msgid "Curve Type"
-msgstr "_Tipo Curva:"
+msgstr "Tipo Curva"
 
 #: plug-ins/common/curve_bend.c:1388
-#, fuzzy
 msgid "Smoot_h"
-msgstr "Uniforme"
+msgstr "Uni_forme"
 
 #: plug-ins/common/curve_bend.c:1391
-#, fuzzy
 msgid "_Free"
-msgstr "Livre"
+msgstr "_Livre"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1407
@@ -3519,24 +3502,20 @@ msgid "Color Exchange: From Color"
 msgstr "Troca Cores: Da Cor"
 
 #: plug-ins/common/exchange.c:441
-#, fuzzy
 msgid "R_ed Threshold:"
-msgstr "Limite Vermelho:"
+msgstr "Limite V_ermelho:"
 
 #: plug-ins/common/exchange.c:485
-#, fuzzy
 msgid "G_reen Threshold:"
-msgstr "Limite Verde:"
+msgstr "Limite Ve_rde:"
 
 #: plug-ins/common/exchange.c:529
-#, fuzzy
 msgid "B_lue Threshold:"
-msgstr "Limite Azul:"
+msgstr "Limite Azu_l:"
 
 #: plug-ins/common/exchange.c:553
-#, fuzzy
 msgid "Lock _Thresholds"
-msgstr "Bloquear Limites"
+msgstr "Bloquear Limi_tes"
 
 #: plug-ins/common/film.c:252
 msgid "<Image>/Filters/Combine/_Film..."
@@ -4202,7 +4181,7 @@ msgstr "Opções Criação Tabelas"
 
 #: plug-ins/common/gtm.c:499
 msgid "_Use Cellspan"
-msgstr "Utilizar Cellspan"
+msgstr "_Utilizar Cellspan"
 
 #: plug-ins/common/gtm.c:505
 msgid ""
@@ -4240,7 +4219,7 @@ msgstr "O texto para a legenda da tabela."
 
 #: plug-ins/common/gtm.c:564
 msgid "C_ell Content:"
-msgstr "Conteúdo Célula:"
+msgstr "Cont_eúdo Célula:"
 
 #: plug-ins/common/gtm.c:568
 msgid "The text to go into each cell."
@@ -4445,7 +4424,7 @@ msgstr "S_uper-amostragem Adaptativa"
 
 #: plug-ins/common/iwarp.c:1164
 msgid "Ma_x Depth:"
-msgstr "Profundidade Máx:"
+msgstr "Profundidade Má_x:"
 
 #: plug-ins/common/iwarp.c:1174
 msgid "Thresho_ld:"
@@ -5968,48 +5947,44 @@ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Ficheiro/Capturar/_Captura Ecrã..."
 
 #: plug-ins/common/screenshot.c:268
-#, fuzzy
 msgid "Error grabbing the pointer"
-msgstr "Erro ao ler ficheiro"
-
-#: plug-ins/common/screenshot.c:361
-#, fuzzy
-msgid "Loading Screen Shot..."
-msgstr "Captura Ecrã"
-
-#: plug-ins/common/screenshot.c:436
-msgid "Specified window not found"
-msgstr ""
-
-#: plug-ins/common/screenshot.c:468
-msgid "Error obtaining screenshot"
-msgstr ""
+msgstr "Erro ao obter o apontador"
 
 #. main dialog
-#: plug-ins/common/screenshot.c:510
+#: plug-ins/common/screenshot.c:344 plug-ins/common/screenshot.c:512
 msgid "Screen Shot"
 msgstr "Captura Ecrã"
 
+#: plug-ins/common/screenshot.c:361
+msgid "Loading Screen Shot..."
+msgstr "A Ler Captura Ecrã..."
+
+#: plug-ins/common/screenshot.c:438
+msgid "Specified window not found"
+msgstr "Janela especificada não encontrada"
+
+#: plug-ins/common/screenshot.c:470
+msgid "Error obtaining Screen Shot"
+msgstr "Erro ao obter Captura Ecrã"
+
 #. single window
-#: plug-ins/common/screenshot.c:534 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:536 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Capturar"
 
-#: plug-ins/common/screenshot.c:543
-#, fuzzy
+#: plug-ins/common/screenshot.c:545
 msgid "a _Single Window"
-msgstr "Janela _Simples"
+msgstr "uma Única _Janela"
 
-#: plug-ins/common/screenshot.c:558
-#, fuzzy
+#: plug-ins/common/screenshot.c:560
 msgid "the _Whole Screen"
-msgstr "Ecrã _Inteiro"
+msgstr "o Ecrã _Inteiro"
 
-#: plug-ins/common/screenshot.c:577
+#: plug-ins/common/screenshot.c:579
 msgid "_after"
 msgstr "_após"
 
-#: plug-ins/common/screenshot.c:590 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:592 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "Segundos Atraso"
 
@@ -6057,9 +6032,8 @@ msgid "Sharpening..."
 msgstr "A Enfatizar..."
 
 #: plug-ins/common/sharpen.c:501
-#, fuzzy
 msgid "Sharpen"
-msgstr "Enfatiza - %s"
+msgstr "Enfatizar"
 
 #: plug-ins/common/sharpen.c:602
 msgid "_Sharpness:"
@@ -6125,7 +6099,7 @@ msgstr "Configurações Cálculo"
 
 #: plug-ins/common/sinus.c:1739
 msgid "R_andom Seed:"
-msgstr "Origem Aleatória:"
+msgstr "Origem _Aleatória:"
 
 #: plug-ins/common/sinus.c:1748
 msgid "_Force Tiling?"
@@ -7086,7 +7060,7 @@ msgstr "Pri_meiro Plano para Picos"
 
 #: plug-ins/common/vpropagate.c:204
 msgid "O_nly Foreground"
-msgstr "Apenas Primeiro Plano"
+msgstr "Ape_nas Primeiro Plano"
 
 #: plug-ins/common/vpropagate.c:207
 msgid "Only B_ackground"
@@ -7498,12 +7472,12 @@ msgstr "A Renderizar %s"
 msgid "Scale (log 2):"
 msgstr "Escala (registro 2):"
 
-#: plug-ins/common/wmf.c:1124
+#: plug-ins/common/wmf.c:1125
 #, c-format
 msgid "Interpreting %s:"
 msgstr "A Interpretar %s:"
 
-#: plug-ins/common/wmf.c:2137
+#: plug-ins/common/wmf.c:2136
 msgid "Transferring image"
 msgstr "A Transferir imagem"
 
@@ -7951,28 +7925,24 @@ msgid "Affected Range"
 msgstr "Faixa Afectada"
 
 #: plug-ins/fp/fp_gtk.c:262
-#, fuzzy
 msgid "Sha_dows"
-msgstr "Sombras"
+msgstr "Som_bras"
 
 #: plug-ins/fp/fp_gtk.c:266
-#, fuzzy
 msgid "_Midtones"
-msgstr "Tons Médios"
+msgstr "Tons _Médios"
 
 #: plug-ins/fp/fp_gtk.c:270
-#, fuzzy
 msgid "H_ighlights"
-msgstr "Destaques"
+msgstr "_Realçes"
 
 #: plug-ins/fp/fp_gtk.c:283
 msgid "Windows"
 msgstr "Janelas"
 
 #: plug-ins/fp/fp_gtk.c:305
-#, fuzzy
 msgid "A_dvanced"
-msgstr "Avançado"
+msgstr "A_vançado"
 
 #: plug-ins/fp/fp_gtk.c:354
 msgid "Value Variations"
@@ -7987,38 +7957,32 @@ msgid "Select Pixels by"
 msgstr "Seleccionar Pixeis por"
 
 #: plug-ins/fp/fp_gtk.c:429
-#, fuzzy
 msgid "H_ue"
-msgstr "Mati_z:"
+msgstr "Mati_z"
 
 #: plug-ins/fp/fp_gtk.c:433
-#, fuzzy
 msgid "Satu_ration"
-msgstr "Saturação"
+msgstr "Satu_ração"
 
 #: plug-ins/fp/fp_gtk.c:437
-#, fuzzy
 msgid "V_alue"
-msgstr "Valor"
+msgstr "V_alor"
 
 #: plug-ins/fp/fp_gtk.c:450
 msgid "Show"
 msgstr "Mostrar"
 
 #: plug-ins/fp/fp_gtk.c:458
-#, fuzzy
 msgid "_Entire Image"
-msgstr "Imagem Inteira"
+msgstr "Imagem Int_eira"
 
 #: plug-ins/fp/fp_gtk.c:463
-#, fuzzy
 msgid "Se_lection Only"
-msgstr "Somente Selecção"
+msgstr "Apenas Se_lecção"
 
 #: plug-ins/fp/fp_gtk.c:468
-#, fuzzy
 msgid "Selec_tion In Context"
-msgstr "Selecção No Contexto"
+msgstr "Selecção No Con_texto"
 
 #: plug-ins/fp/fp_gtk.c:482
 msgid "Display"
@@ -9593,7 +9557,7 @@ msgstr "Alterar a resistência do vector pequeno seleccionado"
 
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "St_rength exp.:"
-msgstr "Expoente resistência:"
+msgstr "Expoente _resistência:"
 
 #: plug-ins/gimpressionist/sizemap.c:528
 msgid ""
@@ -11610,7 +11574,6 @@ msgstr "Erro: o ficheiro de propriedade %s XJT está vazio"
 #~ msgid "Document Not Found"
 #~ msgstr "Documento Não Encontrado"
 
-#, fuzzy
 #~ msgid "Could not locate help document"
 #~ msgstr "Incapaz de localizar documentação de ajuda"
 
