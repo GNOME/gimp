@@ -19,12 +19,11 @@
 #ifndef  __PATHS_DIALOG_P_H__
 #define  __PATHS_DIALOG_P_H__
 
-
-void        paths_newpoint_current       (BezierSelect *, GDisplay *);
-void        paths_first_button_press     (BezierSelect *, GDisplay *);
+void        paths_newpoint_current       (GimpBezierSelectTool *, GDisplay *);
+void        paths_first_button_press     (GimpBezierSelectTool *, GDisplay *);
 void        paths_new_bezier_select_tool (void);
 Path *      paths_get_bzpaths            (void); 
-void        paths_set_bzpaths            (GImage *, Path *);
+void        paths_set_bzpaths            (GimpImage *, Path *);
 void        paths_dialog_set_default_op  (void);
 
 

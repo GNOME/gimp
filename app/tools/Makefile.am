@@ -5,6 +5,8 @@ noinst_LTLIBRARIES = libapptools.la
 libapptools_la_SOURCES = \
 ##	gimpairbrushtool.c	\
 ##	gimpairbrushtool.h	\
+	gimpbezierselecttool.c  \
+	gimpbezierselecttool.h  \
 	gimpblendtool.c		\
 	gimpblendtool.h		\
 	gimpbucketfilltool.c	\
@@ -90,9 +92,6 @@ libapptools_la_SOURCES = \
 	tool_manager.h		\
 	tools.c
 
-##	bezier_select.c		\
-##	bezier_select.h		\
-##	bezier_selectP.h	\
 ##	brightness_contrast.c	\
 ##	brightness_contrast.h	\
 ##	color_balance.c		\

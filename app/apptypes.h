@@ -81,6 +81,8 @@ typedef struct _GimpPaintTool       GimpPaintTool;
 typedef struct _GimpDrawTool        GimpDrawTool;
 typedef struct _GimpTransformTool   GimpTransformTool;
 
+typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;
+typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 /*  undo objects  */
 
@@ -116,9 +118,6 @@ typedef struct _HistogramWidget       HistogramWidget;
 /*  other stuff  */
 
 typedef struct _Argument            Argument;
-
-typedef struct _BezierPoint         BezierPoint;
-typedef struct _BezierSelect        BezierSelect;
 
 typedef struct _GimpBitmapCursor    GimpBitmapCursor;
 

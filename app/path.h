@@ -67,17 +67,17 @@ gint          path_distance             (Path      *bzp,
 					 gint      *y, 
 					 gdouble   *grad);
 
-PathPoint*    path_point_new            (guint      type, 
-					 gdouble    x, 
-					 gdouble    y);
-void          path_point_free           (PathPoint *pathpoint);
+PathPoint*            path_point_new            (guint      type, 
+						 gdouble    x, 
+						 gdouble    y);
+void                  path_point_free           (PathPoint *pathpoint);
 
-PathList*     path_list_new             (GimpImage *gimage, 
-					 gint       last_selected_row, 
-					 GSList    *bz_paths);
-void          path_list_free            (PathList  *plist);
+PathList*             path_list_new             (GimpImage *gimage, 
+						 gint       last_selected_row, 
+						 GSList    *bz_paths);
+void                  path_list_free            (PathList  *plist);
 
-BezierSelect* path_to_beziersel         (Path      *path);
+GimpBezierSelectTool* path_to_beziersel         (Path      *path);
 
 #endif  /*  __PATH_H__  */
 

@@ -1,6 +1,22 @@
 2001-03-25 Seth Burgess <sjburges@gimp.org>
+
+        * app/tools/gimpbezierselecttool.[ch]: added new files from
+	Dave Neary <dneary@eircom.net> to give back bezier curves.  This
+	might be entirely replaced at some future point.
 	
-	* app/tools/paint_options.c : applied 1-line patch by Dave Peary
+	* app/Makefile.am
+	* app/apptypes.h
+	* app/path.[ch]
+	* app/path_bezier.[ch]
+	* app/paths_dialog.c
+	* app/paths_dialogP.h
+	* app/tools/Makefile.am
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimptool.c: applied patches to let bezier work again.
+
+2001-03-25 Seth Burgess <sjburges@gimp.org>
+	
+	* app/tools/paint_options.c : applied 1-line patch by Dave Neary
 	<dneary@eircom.net> that takes away the warning on startup of 
 	dodgeburn.
 

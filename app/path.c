@@ -34,7 +34,7 @@
 #include "pathP.h"
 #include "paths_dialog.h"
 
-#include "tools/bezier_selectP.h"
+#include "tools/gimpbezierselecttool.h"
 
 
 static gchar * unique_name (GimpImage *gimage,
@@ -137,7 +137,7 @@ path_stroke (GimpImage *gimage,
 	     PathList  *pl,
 	     Path      *bzp)
 {
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
   GDisplay     *gdisp;
 
   gdisp = gdisplays_check_valid (pl->gdisp, gimage);
@@ -154,7 +154,7 @@ path_distance (Path    *bzp,
 	       gdouble *grad)
 {
   gint          ret;
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
 
   bezier_sel = path_to_beziersel (bzp);
   ret = bezier_distance_along (bezier_sel, !bzp->closed, dist, x, y, grad);
@@ -239,22 +239,21 @@ path_list_free (PathList* iml)
   g_free (iml);
 }
 
-BezierSelect *
+GimpBezierSelectTool *
 path_to_beziersel (Path *bzp)
 {
-  BezierSelect *bezier_sel;
-  BezierPoint  *bpnt = NULL;
+  GimpBezierSelectTool *bezier_sel;
+  GimpBezierSelectPoint  *bpnt = NULL;
   GSList       *list;
 
   if (!bzp)
     g_warning ("path_to_beziersel: NULL bzp");
 
   list = bzp->path_details;
-  bezier_sel = g_new0 (BezierSelect, 1);
+  bezier_sel = g_new0 (GimpBezierSelectTool, 1);
 
   bezier_sel->num_points = 0;
   bezier_sel->mask       = NULL;
-  bezier_sel->core       = NULL; /* not required will be reset in bezier code */
   bezier_select_reset (bezier_sel);
   bezier_sel->closed = bzp->closed;
 /*   bezier_sel->state = BEZIER_ADD; */

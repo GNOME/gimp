@@ -231,7 +231,7 @@ gimp_SOURCES = \
 	path.h			\
 	pathP.h			\
 	path_transform.h	\
-##	paths_dialog.c		\
+	paths_dialog.c		\
 	paths_dialog.h		\
 	paths_dialogP.h		\
 	pattern_header.h	\

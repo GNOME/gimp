@@ -32,7 +32,6 @@
 
 #include "apptypes.h"
 
-#include "draw_core.h"
 #include "floating_sel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
@@ -52,8 +51,7 @@
 #include "plug_in.h"
 #include "undo.h"
 
-#include "tools/bezier_select.h"
-#include "tools/bezier_selectP.h"
+#include "tools/gimpbezierselecttool.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -140,7 +138,7 @@ static void     paths_dialog_unmap_callback  (GtkWidget      *widget,
 					      gpointer        data);
 static void     paths_update_paths           (gpointer        data,
 					      gint            row);
-static void     paths_update_preview         (BezierSelect   *bezier_sel);
+static void     paths_update_preview         (GimpBezierSelectTool   *bezier_sel);
 static void     paths_dialog_preview_extents           (void);
 static void     paths_dialog_new_point_callback        (GtkWidget *, gpointer);
 static void     paths_dialog_add_point_callback        (GtkWidget *, gpointer);
@@ -706,7 +704,7 @@ paths_select_row (GtkWidget      *widget,
 {
   PathWidget *pwidget;
   Path* bzp;
-  BezierSelect * bsel;
+  GimpBezierSelectTool * bsel;
   GDisplay *gdisp;
   gint last_row;
 
@@ -911,7 +909,7 @@ paths_update_paths (gpointer data,
 		    gint     row)
 {
   Path* bzp;
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
 
   paths_add_path ((bzp = (Path*) data), -1);
   /* Now fudge the drawing....*/
@@ -1089,7 +1087,7 @@ void
 paths_dialog_new_path_callback (GtkWidget *widget, 
 				gpointer   data)
 {
-  BezierSelect * bsel;
+  GimpBezierSelectTool * bsel;
   GDisplay *gdisp;
   Path* bzp;
 
@@ -1120,7 +1118,7 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
   PathList* plp;
   gboolean new_sz;
   gint row = paths_dialog->selected_row_num;
-  BezierSelect *bsel  = NULL;
+  GimpBezierSelectTool *bsel  = NULL;
   GDisplay     *gdisp = NULL;
 
   g_return_if_fail (paths_dialog->current_path_list != NULL);
@@ -1156,7 +1154,7 @@ paths_dialog_delete_path_callback (GtkWidget *widget,
 
       /* Paste an empty BezierSelect to the current display to emulate an empty path list */
 
-      bsel = g_new0 (BezierSelect, 1);
+      bsel = g_new0 (GimpBezierSelectTool, 1);
       bezier_select_reset (bsel);
       gdisp = gdisplays_check_valid (paths_dialog->current_path_list->gdisp,
 				     paths_dialog->gimage);
@@ -1180,7 +1178,7 @@ paths_dialog_paste_path_callback (GtkWidget *widget,
   Path* bzp;
   PathList* plp;
   PathPoint* pp;
-  BezierSelect * bezier_sel;
+  GimpBezierSelectTool * bezier_sel;
   gint tmprow;
   GDisplay *gdisp;
 
@@ -1272,7 +1270,7 @@ paths_dialog_dup_path_callback (GtkWidget *widget,
 {
   Path* bzp;
   PathList* plp;
-  BezierSelect * bezier_sel;
+  GimpBezierSelectTool * bezier_sel;
   gint row;
   gint tmprow;
 
@@ -1383,7 +1381,7 @@ paths_dialog_path_to_sel_callback (GtkWidget *widget,
 {
   Path* bzp;
   PathList* plp;
-  BezierSelect * bezier_sel;
+  GimpBezierSelectTool * bezier_sel;
   GDisplay  * gdisp;
   gint row = paths_dialog->selected_row_num;
 
@@ -1519,13 +1517,13 @@ paths_dialog_destroy_cb (GtkObject *object,
 
 /* Functions used from the bezier code .. tie in with this code */
 static GSList *
-pathpoints_create (BezierSelect *sel)
+pathpoints_create (GimpBezierSelectTool *sel)
 {
   gint i;
   GSList *list = NULL;
   PathPoint *pathpoint;
-  BezierPoint *pts = (BezierPoint *) sel->points;
-  BezierPoint *start_pnt = pts;
+  GimpBezierSelectPoint *pts = (GimpBezierSelectPoint *) sel->points;
+  GimpBezierSelectPoint *start_pnt = pts;
   gint need_move = 0;
 
   for (i=0; i< sel->num_points; i++)
@@ -1583,7 +1581,7 @@ pathpoints_free (GSList *list)
 
 static void
 paths_update_bzpath (PathList     *plp,
-		     BezierSelect *bezier_sel)
+		     GimpBezierSelectTool *bezier_sel)
 {
   Path* p;
 
@@ -1599,7 +1597,7 @@ paths_update_bzpath (PathList     *plp,
 
 static gboolean
 paths_replaced_current (PathList     *plp,
-			BezierSelect *bezier_sel)
+			GimpBezierSelectTool *bezier_sel)
 {
   /* Is there a currently selected path in this image? */
   /* ALT if(paths_dialog && plp &&  */
@@ -1629,7 +1627,7 @@ number_curves_in_path (GSList *plist)
 }
 
 static void 
-paths_draw_segment_points (BezierSelect *bezier_sel, 
+paths_draw_segment_points (GimpBezierSelectTool *bezier_sel, 
 			   GdkPoint     *pnt, 
 			   int           npoints,
 			   gpointer      udata)
@@ -1693,7 +1691,7 @@ paths_draw_segment_points (BezierSelect *bezier_sel,
 }
 
 static void
-paths_update_preview (BezierSelect *bezier_sel)
+paths_update_preview (GimpBezierSelectTool *bezier_sel)
 {
   gint row;
   PathCounts curve_count;
@@ -1784,7 +1782,7 @@ paths_dialog_flush (void)
 }
 
 void 
-paths_first_button_press (BezierSelect *bezier_sel,
+paths_first_button_press (GimpBezierSelectTool *bezier_sel,
 			  GDisplay     *gdisp)
 {
   /* First time a button is pressed in this display */
@@ -1832,7 +1830,7 @@ paths_first_button_press (BezierSelect *bezier_sel,
 }
 
 void
-paths_newpoint_current (BezierSelect *bezier_sel,
+paths_newpoint_current (GimpBezierSelectTool *bezier_sel,
 			GDisplay     *gdisp)
 {
   /*  Check if currently showing the paths we are updating  */
@@ -2191,7 +2189,7 @@ path_transform_do_undo (GimpImage *gimage,
   /* Restore the paths as they were before this transform took place. */
   Path *p_undo;
   Path *p;
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
   gint tmprow;
   gint loop;
   gboolean preview_update = FALSE;
@@ -2259,7 +2257,7 @@ transform_func (GimpImage  *gimage,
   Path          *p;
   Path          *p_copy;
   GSList        *points_list;
-  BezierSelect  *bezier_sel;
+  GimpBezierSelectTool  *bezier_sel;
   GSList        *plist;
   gint           loop;
   gint           tmprow;
@@ -2355,7 +2353,7 @@ path_transform_current_path (GimpImage   *gimage,
   Path          *p;
   Path          *p_copy;
   GSList        *points_list;
-  BezierSelect  *bezier_sel;
+  GimpBezierSelectTool  *bezier_sel;
   GSList        *plist;
   gint           loop;
   gint           tmprow;
@@ -2426,12 +2424,12 @@ path_transform_current_path (GimpImage   *gimage,
 
 void
 path_transform_draw_current (GDisplay    *gdisp, 
-			     DrawCore    *core,
+			     GimpDrawTool    *draw_tool,
 			     GimpMatrix3  transform)
 {
   PathList     *plp;
   Path         *bzp;
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
   Path         *p_copy;
   GSList       *points_list;
   GSList       *plist;
@@ -2470,7 +2468,7 @@ path_transform_draw_current (GDisplay    *gdisp,
 	    }
 
 	  bezier_sel = path_to_beziersel (p_copy);
-	  bezier_sel->core = core; /* A bit hacky */
+	  bezier_sel = GIMP_BEZIER_SELECT_TOOL (draw_tool);
 	  bezier_draw (gdisp, bezier_sel);
 	  bezier_select_free (bezier_sel);
 	  path_free (p_copy);
@@ -2543,7 +2541,7 @@ path_set_path_points (GimpImage *gimage,
   PathList     *plist    = gimp_image_get_paths(gimage);
   GSList       *pts_list = NULL;
   Path         *bzpath;
-  BezierSelect *bezier_sel;
+  GimpBezierSelectTool *bezier_sel;
   gint          pcount   = 0;
   gint          this_path_count = 0;
 

@@ -57,16 +57,16 @@ path_bezier_get_point (PathTool *path_tool,
 		       gdouble *y);
 
 void
-path_bezier_draw_handles (Tool *tool,
+path_bezier_draw_handles (GimpTool *tool,
 			  PathSegment *segment);
 			  
 void
-path_bezier_draw_segment (Tool *tool,
+path_bezier_draw_segment (GimpTool *tool,
 			  PathSegment *segment);
 			  
 
 gdouble
-path_bezier_on_segment (Tool *tool,
+path_bezier_on_segment (GimpTool *tool,
 			PathSegment *segment,
 			gint x,
 			gint y,

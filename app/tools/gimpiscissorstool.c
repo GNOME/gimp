@@ -58,7 +58,7 @@
 #include "tile.h"
 #include "tile_manager.h"
 
-#include "bezier_selectP.h"
+#include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpeditselectiontool.h"
 #include "selection_options.h"
