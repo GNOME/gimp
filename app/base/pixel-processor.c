@@ -269,7 +269,7 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
     {
       GError *error = NULL;
       gint    tasks = MIN (tiles / TILES_PER_THREAD,
-                        g_thread_pool_get_max_threads (pool));
+                           g_thread_pool_get_max_threads (pool));
 
       /*
        * g_printerr ("pushing %d tasks into the thread pool (for %lu tiles)\n",
@@ -296,11 +296,10 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
 
       if (progress_func)
         {
-
           while (processor->threads != 0)
             {
-              gulong  progress;
 	      GTimeVal timeout;
+              gulong   progress;
 
 	      g_get_current_time (&timeout);
 	      g_time_val_add (&timeout, PROGRESS_TIMEOUT * 1024);
@@ -313,16 +312,12 @@ pixel_regions_do_parallel (PixelProcessor             *processor,
 
               progress_func (progress_data,
                              (gdouble) progress / (gdouble) pixels);
-
             }
-
         }
       else
         {
           while (processor->threads != 0)
-	  {
-	    g_cond_wait (pool_cond, pool_mutex);
-	  }
+            g_cond_wait (pool_cond, pool_mutex);
         }
 
       g_mutex_unlock (pool_mutex);

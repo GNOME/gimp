@@ -1,6 +1,10 @@
+2005-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-processor.c: fixed indentation.
+
 2005-02-24  Jay Cox  <jaycox@gimp.org>
- 
-        * app/base/pixel-processor.c: fixed potential race condition on
+
+	* app/base/pixel-processor.c: fixed potential race condition on
         processor->threads.  Changed mutex to a GMutex from a GStaticMutex
         because it needs to be initialized anyway.  Placed g_cond_wait
         calls inside while loops to handle g_cond_wait returning prematurely.
