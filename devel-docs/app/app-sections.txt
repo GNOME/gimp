@@ -412,6 +412,7 @@ GIMP_CHANNEL_GET_CLASS
 <TITLE>GimpChannel-select</TITLE>
 gimp_channel_select_rectangle
 gimp_channel_select_ellipse
+gimp_channel_select_scan_convert
 gimp_channel_select_polygon
 gimp_channel_select_vectors
 gimp_channel_select_channel
@@ -1054,6 +1055,7 @@ GimpList
 gimp_list_new
 gimp_list_reverse
 gimp_list_sort
+gimp_list_sort_by_name
 gimp_list_uniquefy_name
 <SUBSECTION Standard>
 GimpListClass
@@ -1074,6 +1076,7 @@ gimp_object_set_name
 gimp_object_get_name
 gimp_object_set_name_safe
 gimp_object_name_changed
+gimp_object_name_collate
 gimp_object_get_memsize
 gimp_g_object_get_memsize
 <SUBSECTION Standard>
@@ -1312,6 +1315,8 @@ GIMP_UNDO_STACK_GET_CLASS
 
 <SECTION>
 <FILE>gimpviewable</FILE>
+GIMP_VIEWABLE_MAX_BUTTON_SIZE
+GIMP_VIEWABLE_MAX_MENU_SIZE
 GIMP_VIEWABLE_MAX_PREVIEW_SIZE
 GIMP_VIEWABLE_MAX_POPUP_SIZE
 <TITLE>GimpViewable</TITLE>
@@ -1380,7 +1385,6 @@ gimp_display_area_list_free
 gdisplays_check_valid
 gimp_displays_dirty
 gimp_displays_delete
-gimp_displays_flush
 gimp_displays_finish_draw
 gimp_displays_reconnect
 gimp_displays_set_busy
@@ -3683,6 +3687,7 @@ GIMP_DIALOG_FACTORY_GET_CLASS
 <TITLE>GimpDock</TITLE>
 GimpDock
 gimp_dock_construct
+gimp_dock_setup
 gimp_dock_add
 gimp_dock_remove
 gimp_dock_add_book
@@ -3709,6 +3714,7 @@ gimp_dockable_new
 gimp_dockable_get_menu
 gimp_dockable_get_tab_widget
 gimp_dockable_set_context
+gimp_dockable_detach
 <SUBSECTION Standard>
 GimpDockableClass
 GIMP_DOCKABLE
