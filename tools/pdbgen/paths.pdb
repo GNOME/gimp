@@ -1,0 +1,378 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Andy Thomas <alt@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Andy Thomas';
+    $date = '1999';
+}
+
+# The defs
+
+sub  path_list {
+    $blurb = 'List the paths associated with the passed image';
+
+    $help = <<'HELP';
+List the paths associated with the passed image
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    $inargs[0]->{desc} = 'The ID of the image to list the paths from';
+
+    @outargs = (
+	{ name => 'num_paths',
+	  type => 'stringarray',
+	  desc => 'list of the paths belonging to this image',
+	  array => {
+		     name => 'num_gradients',
+		     desc => 'list of the paths belonging to this image',
+	  	     alias => 'paths_list'
+		   }  
+	}
+    );
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+      PathsList *plist = gimage->paths;
+
+      if(plist && plist->bz_paths)
+	{
+	  gint    count = 0;
+	  GSList *pl    = plist->bz_paths;
+
+	  num_paths = g_slist_length(plist->bz_paths);
+
+	  paths_list = g_malloc(sizeof(gchar *) * num_paths);
+	  while(pl)
+	    {
+	      PATHP pptr = pl->data;
+	      paths_list[count++] = g_strdup(pptr->name->str);
+	      pl = g_slist_next(pl);
+	    }
+	}
+}
+CODE
+    );
+}
+
+sub  path_get_points {
+    $blurb = 'List the points associated with the named path';
+
+    $help = <<'HELP';
+List the points associated with the named path
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg,
+	{
+	  name => 'pathname',
+	  type => 'string',
+	  desc => 'the name of the path whose points should be listed',
+	  alias => 'pname'
+	}
+	);
+    $inargs[0]->{desc} = 'The ID of the image to list the paths from';
+
+    @outargs = (
+	{
+	  name => 'paths_type',
+	  type => 'int32',
+	  desc => 'The type of the path. Currently only one type (1 = Bezier) is supported',
+	  alias => 'pathtype'
+	},
+	{
+	  name => 'pathclosed',
+	  type => 'int32',
+	  alias => 'closed',
+	  desc => 'Return if the path is closed. {0=path open, 1= path closed}'
+	},
+	{ name => 'num_path_point_details',
+	  type => 'floatarray',
+	  alias => 'pnts',
+	  desc => 'The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution',
+	  array => {
+		     name => 'points_pairs',
+		     desc => 'The number of point returned. Each point is made up of (x,y,pnt_type) of floats',
+	  	     alias => 'points_pairs'
+		   }  
+	}
+    );
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+      /* Get the path with the given name */
+      PathsList *plist = gimage->paths;
+      
+      if(pname && plist && plist->bz_paths)
+	{
+	  GSList *pl = plist->bz_paths;
+	  PATHP   pptr;
+
+	  while(pl)
+	    {
+	      pptr = pl->data;
+	      if(strcmp(pname,pptr->name->str) == 0)
+		{
+		  /* Found the path */
+		  break;
+		}
+	      pl = g_slist_next(pl);
+	      pptr = NULL;
+	    }
+
+	  if(pl && pptr)
+	    {
+	      gint     num_pdetails;
+	      GSList  *points_list;
+	      gint     pcount = 0;
+
+	      /* Get the details for this path */
+	      pathtype = pptr->pathtype;
+	      closed = pptr->closed;
+
+	      points_list = pptr->path_details;
+	      if(points_list)
+		{
+		  num_pdetails = g_slist_length(points_list);
+		  points_pairs = num_pdetails*3; /* 3 floats for each point */
+
+		  pnts = g_malloc(sizeof(gdouble)*3*num_pdetails);
+
+		  /* fill points and types in */
+		  while(points_list)
+		    {
+		      PATHPOINTP ppoint = points_list->data;
+		      pnts[pcount] = ppoint->x;
+		      pnts[pcount+1] = ppoint->y;
+		      pnts[pcount+2] = (gfloat)ppoint->type; /* Bit of fiddle but should be understandable why it was done */
+		      pcount += 3;
+		      points_list = g_slist_next(points_list);
+		    }
+		}
+            }	
+	  else
+	    {
+	      success = FALSE;
+	    }
+	}
+      else
+	{
+	  success = FALSE;
+	}
+    }
+}
+CODE
+    );
+}
+
+sub  path_get_current {
+    $blurb = 'The name of the current path. Error if no paths';
+
+    $help = <<'HELP';
+The name of the current path. Error if no paths.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    $inargs[0]->{desc} = 'The ID of the image to get the current paths from';
+
+    @outargs = (
+	{ name => 'current_path_name',
+	  type => 'string',
+	  desc => 'The name of the current path',
+	  alias => 'pname'
+	}
+    );
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+      /* Get the path with the given name */
+      PathsList *plist = gimage->paths;
+
+      if(plist && plist->bz_paths)
+	{
+	  PATHP          pptr    = NULL;
+
+	  if(plist->last_selected_row >= 0)
+	    {
+	      pptr = (PATHP)g_slist_nth_data(plist->bz_paths,plist->last_selected_row);
+	      pname = g_strdup(pptr->name->str);
+	    }
+	  else
+	    {
+	      success = FALSE;
+	    }
+	}
+      else
+	{
+	  success = FALSE;
+	}
+    }
+}
+CODE
+    );
+}
+
+sub  path_set_current {
+    $blurb = 'List the paths associated with the passed image';
+
+    $help = <<'HELP';
+List the paths associated with the passed image
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg,
+	{
+	  name => 'set_current_path_name',
+	  type => 'string',
+	  desc => 'The name of the path to set the current path to',
+	  alias => 'pname'
+	},	
+	 );
+    $inargs[0]->{desc} = 'The ID of the image to list set the paths in';
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+      if(pname && paths_set_path(gimage,pname))
+	{
+	  success = TRUE;
+	}
+      else
+	{
+	  success = FALSE;
+	}
+    }
+}
+CODE
+    );
+}
+
+sub  path_set_points {
+    $blurb = 'Set the points associated with the named path';
+
+    $help = <<'HELP';
+Set the points associated with the named path
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg,
+	{ name => 'pathname',
+	  type => 'string',
+	  alias => 'pname',
+	  desc => 'the name of the path to create (if it exists then all current points are removed). This will not be set as the current path.You will have to do a gimp_set_current_path after creating the path to make it current.'
+	},
+	{ name => 'ptype',
+	  type => 'int32',
+	  desc => 'The type of the path. Currently only one type (1 = Bezier) is supported'
+	},
+	{ name => 'points_pairs',
+	  type => 'floatarray',
+	  alias => 'pnts',
+	  desc => 'The points in the path represented as 3 floats. The first is the x pos, next is the y pos, last is the type of the pnt. The type field is dependant on the path type. For beziers (type 1 paths) the type can either be {1.0= BEZIER_ANCHOR, 2.0= BEZIER_CONTROL}. Note all points are returned in pixel resolution',
+	  array => {
+		     name => 'num_path_points',
+		     desc => 'The number of points in the path. Each point is made up of (x,y) of floats. Currently only the creation of bezier curves is allowed. The type parameter must be set to (1) to indicate a BEZIER type curve.\n For BEZIERS.\n Note the that points must be given in the following order... ACCACCAC ... If the path is not closed the last control point is missed off. Points consist of three control points (control/anchor/control) so for a curve that is not closed there must be at least two points passed (2 x,y pairs). If num_path_pnts%3 = 0 then the path is assumed to be closed and the points are ACCACCACCACC.',
+	  	     alias => 'numpoints'
+		   }  
+	} 
+    );
+    $inargs[0]->{desc} = 'The ID of the image to set the paths in';
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+  gint      pclosed = FALSE;
+
+  if((numpoints/2)%3 == 0)
+     pclosed = TRUE;
+  else if ((numpoints/2)%3 != 2)
+     success = FALSE;
+
+  if(success && !paths_set_path_points(gimage,pname,ptype,pclosed,numpoints,pnts))
+     success = FALSE;
+}
+CODE
+    );
+}
+
+sub  path_stroke_current {
+    $blurb = 'Stroke the current path in the passed image';
+
+    $help = <<'HELP';
+Stroke the current path in the passed image
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg );
+    $inargs[0]->{desc} = 'The ID of the image which contains the path to stroke';
+
+    %invoke = (
+	headers => [ qw("paths_cmds.h") ],
+	code  => <<CODE
+{
+      /* Get the path with the given name */
+      PathsList *plist = gimage->paths;
+
+      if(plist && plist->bz_paths)
+	{
+	  GSList *pl    = plist->bz_paths;
+	  PATHP   pptr  = NULL;
+
+	  if(plist->last_selected_row >= 0 &&
+	     (pptr = (PATHP)g_slist_nth_data(plist->bz_paths,plist->last_selected_row)))
+	    {
+	      /* Found the path to stroke.. */
+	      paths_stroke(gimage,plist,pptr);
+	    }
+	  else
+	    {
+	      success = FALSE;
+	    }
+	}
+      else
+	{
+	  success = FALSE;
+	}
+    }
+}
+CODE
+    );
+}
+
+@procs = qw(path_list path_get_points path_get_current path_set_current path_set_points path_stroke_current);
+%exports = (app => [@procs]);
+
+$desc = 'Gradient UI';
+
+1;
