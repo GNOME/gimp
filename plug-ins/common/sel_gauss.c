@@ -19,12 +19,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
- *
- * Changelog:
- *
- * v0.1 	990202, TVO
- * 	First release
- *
  * To do:
  *	- support for horizontal or vertical only blur
  *	- use memory more efficiently, smaller regions at a time
@@ -35,9 +29,6 @@
  *
  */
 #include "config.h"
-
-#include <stdio.h>
-#include <stdlib.h>
 
 #include <gtk/gtk.h>
 
@@ -221,7 +212,6 @@ static gint
 sel_gauss_dialog (void)
 {
   GtkWidget *dlg;
-  GtkWidget *frame;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -238,17 +228,12 @@ sel_gauss_dialog (void)
 
                          NULL);
 
-  /* parameter settings */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame,
-                     TRUE, TRUE, 0);
-
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), table,
+                     TRUE, TRUE, 0);
 
   spinbutton = gimp_spin_button_new (&adj,
 				     bvals.radius, 0.0, G_MAXINT, 1.0, 5.0,
@@ -270,7 +255,6 @@ sel_gauss_dialog (void)
                     &bvals.maxdelta);
 
   gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
@@ -290,14 +274,14 @@ init_matrix (gdouble   radius,
 
   /* This formula isn't really correct, but it'll do */
   sd = radius / 3.329042969;
-  c1 = 1.0 / sqrt(2.0 * G_PI * sd);
+  c1 = 1.0 / sqrt (2.0 * G_PI * sd);
   c2 = -2.0 * (sd * sd);
 
-  for (dy=0; dy<num; dy++)
+  for (dy = 0; dy < num; dy++)
     {
-      for (dx=dy; dx<num; dx++)
+      for (dx = dy; dx < num; dx++)
 	{
-	  mat[dx][dy] = c1 * exp(((dx*dx)+ (dy*dy))/ c2);
+	  mat[dx][dy] = c1 * exp ((dx * dx + dy * dy)/ c2);
 	  mat[dy][dx] = mat[dx][dy];
 	}
     }
@@ -316,53 +300,70 @@ matrixmult (guchar   *src,
 {
   gint    i, j, b, nb, x, y;
   gint    six, dix, tmp;
-  gdouble sum, fact, d, alpha=1.0;
+  gint    rowstride;
+  gdouble sum, fact, d, alpha = 1.0;
+  guchar *src_b, *src_db;
+  gdouble *m;
+  gint    offset;
 
-  nb = bytes - (has_alpha?1:0);
+  nb = bytes - (has_alpha ? 1 : 0);
+  rowstride = width * bytes;
 
-  for (y = 0; y< height; y++)
+  for (y = 0; y < height; y++)
     {
-      for (x = 0; x< width; x++)
+      for (x = 0; x < width; x++)
 	{
-	  dix = (bytes*((width*y)+x));
+	  dix = bytes * (width * y + x);
 	  if (has_alpha)
-	    dest[dix+nb] = src[dix+nb];
-	  for (b=0; b<nb; b++)
+	    dest[dix + nb] = src[dix + nb];
+
+	  for (b = 0; b < nb; b++)
 	    {
 	      sum = 0.0;
 	      fact = 0.0;
-	      for (i= 1-numrad; i<numrad; i++)
+	      src_db = src + dix + b;
+
+	      offset = rowstride * (y - numrad) + bytes * (x - numrad);
+
+	      for (i = 1 - numrad; i < numrad; i++)
 		{
-		  if (((x+i)< 0) || ((x+i)>= width))
+		  offset += bytes;
+		  if (x + i < 0 || x + i >= width)
 		    continue;
-		  for (j= 1-numrad; j<numrad; j++)
+
+		  six = offset;
+		  m = mat[ABS(i)];
+
+		  src_b = src + six + b;
+
+		  for (j = 1 - numrad; j < numrad; j++)
 		    {
-		      if (((y+j)<0)||((y+j)>=height))
+		      src_b += rowstride;
+		      six += rowstride;
+
+		      if (y + j < 0 || y + j >= height)
 			continue;
-		      six = (bytes*((width*(y+j))+x+i));
+
+		      tmp = *src_db - *src_b;
+		      if (tmp > maxdelta || tmp < -maxdelta)
+			continue;
+
+		      d = m[ABS(j)];
 		      if (has_alpha)
 			{
-			  if (!src[six+nb])
+			  if (!src[six + nb])
 			    continue;
-			  alpha = (double)src[six+nb] / 255.0;
-			}
-		      tmp = src[dix+b] - src[six+b];
-		      if ((tmp>maxdelta)||
-			  (tmp<-maxdelta))
-			continue;
-		      d = mat[ABS(i)][ABS(j)];
-		      if (has_alpha)
-			{
+			  alpha = (double) src[six + nb] / 255.0;
 			  d *= alpha;
 			}
-		      sum += d * src[six+b];
+		      sum += d * *src_b;
 		      fact += d;
 		    }
 		}
 	      if (fact == 0.0)
-		dest[dix+b] = src[dix+b];
+		dest[dix + b] = *src_db;
 	      else
-		dest[dix+b] = sum/fact;
+		dest[dix + b] = sum / fact;
 	    }
 	}
 

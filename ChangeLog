@@ -1,3 +1,8 @@
+2004-05-18  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/sel_gauss.c: HIGified, fixed indendation, speed
+	improvement (around 70 %).
+
 2004-05-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/blur.c
