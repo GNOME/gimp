@@ -136,6 +136,9 @@ static void   gimp_vector_tool_undo_push       (GimpVectorTool  *vector_tool,
                                                 const gchar     *desc);
 
 static void   gimp_vector_tool_to_selection    (GimpVectorTool  *vector_tool);
+static void   gimp_vector_tool_to_selection_extended
+                                               (GimpVectorTool  *vector_tool,
+                                                gint             state);
 static void   gimp_vector_tool_stroke_vectors  (GimpVectorTool  *vector_tool,
                                                 GtkWidget       *button);
 
@@ -1503,6 +1506,9 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
           g_signal_handlers_disconnect_by_func (sel_button,
                                                 gimp_vector_tool_to_selection,
                                                 tool);
+          g_signal_handlers_disconnect_by_func (sel_button,
+                                                gimp_vector_tool_to_selection_extended,
+                                                tool);
         }
 
       if (stroke_button)
@@ -1552,6 +1558,9 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
     {
       g_signal_connect_swapped (sel_button, "clicked",
                                 G_CALLBACK (gimp_vector_tool_to_selection),
+                                tool);
+      g_signal_connect_swapped (sel_button, "extended_clicked",
+                                G_CALLBACK (gimp_vector_tool_to_selection_extended),
                                 tool);
       gtk_widget_set_sensitive (sel_button, TRUE);
     }
@@ -1741,18 +1750,40 @@ gimp_vector_tool_undo_push (GimpVectorTool *vector_tool, const gchar *desc)
 static void
 gimp_vector_tool_to_selection (GimpVectorTool *vector_tool)
 {
+  gimp_vector_tool_to_selection_extended (vector_tool, 0);
+}
+
+
+static void
+gimp_vector_tool_to_selection_extended (GimpVectorTool *vector_tool,
+                                        gint            state)
+{
   GimpImage    *gimage;
+  GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
 
   if (! vector_tool->vectors)
     return;
 
   gimage = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
 
+  if (state & GDK_SHIFT_MASK)
+    {
+      if (state & GDK_CONTROL_MASK)
+        operation = GIMP_CHANNEL_OP_INTERSECT;
+      else
+        operation = GIMP_CHANNEL_OP_ADD;
+    }
+  else if (state & GDK_CONTROL_MASK)
+    {
+      operation = GIMP_CHANNEL_OP_SUBTRACT;
+    }
+
   gimp_channel_select_vectors (gimp_image_get_mask (gimage),
                                _("Path to Selection"),
                                vector_tool->vectors,
-                               GIMP_CHANNEL_OP_REPLACE,
+                               operation,
                                TRUE, FALSE, 0, 0);
+  gimp_image_flush (gimage);
 }
 
 

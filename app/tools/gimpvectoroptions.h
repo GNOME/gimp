@@ -20,7 +20,7 @@
 #define __GIMP_VECTOR_OPTIONS_H__
 
 
-#include "gimpselectionoptions.h"
+#include "core/gimptooloptions.h"
 
 
 #define GIMP_TYPE_VECTOR_OPTIONS            (gimp_vector_options_get_type ())
@@ -36,10 +36,10 @@ typedef struct _GimpToolOptionsClass GimpVectorOptionsClass;
 
 struct _GimpVectorOptions
 {
-  GimpSelectionOptions  parent_instance;
+  GimpToolOptions  parent_instance;
 
-  GimpVectorMode        edit_mode;
-  gboolean              polygonal;
+  GimpVectorMode   edit_mode;
+  gboolean         polygonal;
 };
 
 

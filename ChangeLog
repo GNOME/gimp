@@ -1,3 +1,14 @@
+2003-11-15  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpvectoroptions.[ch]: Since GimpVectorTool is no
+	GimpSelectionTool, it does not make sense to have
+	GimpSelectionOptions for it.
+
+	* app/tools/gimpvectoroptions.c
+	* app/tools/gimpvectortool.c: Connect the Buttons to the
+	Help system and make the to-selection Button modifier
+	aware.
+
 2003-11-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.[ch]: guard old functions using
@@ -239,7 +250,7 @@
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_deserialize):
 	replaced a misleading comment.
 
-2003-11-14 Simon Budig  <simon@gimp.org>
+2003-11-14  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectoroptions.c: Add two buttons to the
 	Tool Options
@@ -360,7 +371,7 @@
 	Changed "drawable" to "layer" in all user visible warnings about
 	indexed or non-RGB drawables. Cleanup.
 
-2003-11-13 Simon Budig  <simon@gimp.org>
+2003-11-13  Simon Budig  <simon@gimp.org>
 
 	* app/core/gimpdrawable-stroke.c: removed erraneous offset by
 	0.5 pixels.
@@ -664,7 +675,7 @@
 	* app/widgets/gimpdialogfactory.c
 	* app/widgets/gimptooldialog.c: updated gtk-doc comments.
 
-2003-11-11 Simon Budig  <simon@gimp.org>
+2003-11-11  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.c: New vectors now are invisible by
 	default. A quick poll on #gimp revealed that this is more
@@ -1137,7 +1148,7 @@
 
 	* libgimpwidgets/gimpquerybox.c: cleanups and fixes.
 
-2003-11-07 Simon Budig  <simon@gimp.org>
+2003-11-07  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpvectors.[ch]: New function that appends a
 	duplicate of the source vectors strokes to the list of strokes
@@ -1821,7 +1832,7 @@
 	* app/tools/gimptextoptions.c: made all length properties in
 	GimpText depend on a single unit.
 
-2003-10-26 Simon Budig  <simon@gimp.org>
+2003-10-26  Simon Budig  <simon@gimp.org>
 
 	* tools/authorsgen/contributors: Fixed/Added some UTF-8 encoded
 	names. Please speak up if I did mess up your name.
@@ -2099,7 +2110,7 @@
 	* app/widgets/gimptooldialog.c (gimp_tool_dialog_new): fixed
 	inline documentation.
 
-2003-10-22 Simon Budig  <simon@gimp.org>
+2003-10-22  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Changed the priority
 	of ALT vs. CTRL. Resolves an small issue with (broken)
@@ -3473,7 +3484,7 @@
 	* app/gui/dialogs-commands.c (dialogs_detach_tab_cmd_callback):
 	implement it using gimp_dockable_detach().
 
-2003-10-07 Simon Budig  <simon@gimp.org>
+2003-10-07  Simon Budig  <simon@gimp.org>
 
 	* docs/Wilber.svg: Debugged winding rule issue,
 	removed redundant paths, added IDs. Indentation madness.

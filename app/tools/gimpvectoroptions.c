@@ -31,6 +31,7 @@
 
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -81,7 +82,7 @@ gimp_vector_options_get_type (void)
 	(GInstanceInitFunc) gimp_vector_options_init,
       };
 
-      type = g_type_register_static (GIMP_TYPE_SELECTION_OPTIONS,
+      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
                                      "GimpVectorOptions",
                                      &info, 0);
     }
@@ -176,6 +177,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *button;
+  gchar     *str;
 
   config = G_OBJECT (tool_options);
 
@@ -192,10 +194,24 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Create Selection from Path"));
+  str = g_strdup_printf (_("Path to Selection\n"
+                           "%s  Add\n"
+                           "%s  Subtract\n"
+                           "%s%s%s  Intersect"),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_name_control (),
+                         gimp_get_mod_name_shift (),
+                         gimp_get_mod_separator (),
+                         gimp_get_mod_name_control ());
+
+  button = gimp_button_new ();
+  gtk_button_set_label (GTK_BUTTON (button), _("Create Selection from Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
+  gimp_help_set_help_data (button, str, GIMP_HELP_PATH_SELECTION_REPLACE);
   gtk_widget_show (button);
+
+  g_free (str);
 
   g_object_set_data (G_OBJECT (tool_options),
                      "gimp-vectors-to-selection", button);
@@ -203,6 +219,7 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
   button = gtk_button_new_with_label (_("Stroke Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
+  gimp_help_set_help_data (button, NULL, GIMP_HELP_PATH_STROKE);
   gtk_widget_show (button);
 
   g_object_set_data (G_OBJECT (tool_options),
