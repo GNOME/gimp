@@ -25,6 +25,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "vectors-types.h"
 
 #include "gimpanchor.h"
@@ -1436,6 +1438,304 @@ gimp_bezier_stroke_cubicto (GimpStroke       *stroke,
   stroke->anchors = g_list_prepend (stroke->anchors,
                                     gimp_anchor_new (GIMP_ANCHOR_CONTROL,
                                                      end));
+}
+
+static gdouble
+arcto_circleparam (gdouble h, gdouble *y)
+{
+  gdouble t0 = 0.5;
+  gdouble dt = 0.25;
+  gdouble pt0;
+  gdouble y01, y12, y23, y012, y123, y0123;   /* subdividing y[] */
+
+  while (dt >= 0.00001)
+    {
+      pt0 = (  y[0]*(1-t0)*(1-t0)*(1-t0) +
+             3*y[1]*(1-t0)*(1-t0)*t0 +
+             3*y[2]*(1-t0)*t0*t0 +
+               y[3]*t0*t0*t0 );
+
+      if (pt0 > h)
+        t0 = t0 - dt;
+      else if (pt0 < h)
+        t0 = t0 + dt;
+      else
+        break;
+      dt = dt/2;
+    }
+
+  y01   = y[0] * (1-t0) + y[1] * t0;
+  y12   = y[1] * (1-t0) + y[2] * t0;
+  y23   = y[2] * (1-t0) + y[3] * t0;
+  y012  = y01  * (1-t0) + y12  * t0;
+  y123  = y12  * (1-t0) + y23  * t0;
+  y0123 = y012 * (1-t0) + y123 * t0;
+
+  y[0] = y0123; y[1] = y123; y[2] = y23; /* y[3] unchanged */
+
+  return t0;
+}
+
+static void
+arcto_subdivide (gdouble t, gint part, GimpCoords *p)
+{
+  GimpCoords p01, p12, p23, p012, p123, p0123;
+
+  gimp_bezier_coords_mix (1-t, &(p[0]), t, &(p[1]), &p01  );
+  gimp_bezier_coords_mix (1-t, &(p[1]), t, &(p[2]), &p12  );
+  gimp_bezier_coords_mix (1-t, &(p[2]), t, &(p[3]), &p23  );
+  gimp_bezier_coords_mix (1-t,  &p01  , t,  &p12  , &p012 );
+  gimp_bezier_coords_mix (1-t,  &p12  , t,  &p23  , &p123 );
+  gimp_bezier_coords_mix (1-t,  &p012 , t,  &p123 , &p0123);
+
+  if (part == 0)
+    {
+      /* p[0] unchanged */
+      p[1] = p01;
+      p[2] = p012;
+      p[3] = p0123;
+    }
+  else
+    {
+      p[0] = p0123;
+      p[1] = p123;
+      p[2] = p23;
+      /* p[3] unchanged */
+    }
+}
+
+static void
+arcto_ellipsesegment (gdouble radius_x,
+                      gdouble radius_y,
+                      gdouble phi0,
+                      gdouble phi1,
+                      GimpCoords *ellips)
+{
+  gdouble    phi_s, phi_e;
+  GimpCoords template = { 0, 0, 1, 0.5, 0.5, 0.5 };
+  gdouble    circlemagic = 4 * (sqrt(2) - 1) / 3;
+  gdouble    y[4] = { 0.0, circlemagic, 1.0, 1.0 };
+  gdouble    h0, h1;
+  gdouble    t0, t1;
+
+  g_return_if_fail (ellips != NULL);
+
+  ellips[0] = template;
+  ellips[1] = template;
+  ellips[2] = template;
+  ellips[3] = template;
+
+  if (phi0 < phi1)
+    {
+      phi_s = floor (phi0 / G_PI_2) * G_PI_2;
+      while (phi_s < 0) phi_s += 2 * G_PI;
+      phi_e = phi_s + G_PI_2;
+    }
+  else
+    {
+      phi_e = floor (phi1 / G_PI_2) * G_PI_2;
+      while (phi_e < 0) phi_e += 2 * G_PI;
+      phi_s = phi_e + G_PI_2;
+    }
+
+  h0 = sin (fabs (phi0-phi_s));
+  h1 = sin (fabs (phi1-phi_s));
+
+  ellips[0].x = cos (phi_s); ellips[0].y = sin (phi_s);
+  ellips[3].x = cos (phi_e); ellips[3].y = sin (phi_e);
+  gimp_bezier_coords_mix (1, &(ellips[0]), circlemagic, &(ellips[3]),
+                          &(ellips[1]));
+  gimp_bezier_coords_mix (circlemagic, &(ellips[0]), 1, &(ellips[3]),
+                          &(ellips[2]));
+
+  if (h0 > y[0])
+    {
+      t0 = arcto_circleparam (h0, y); /* also subdivides y[] at t0 */
+      arcto_subdivide (t0, 1, ellips);
+    }
+
+  if (h1 < y[3])
+    {
+      t1 = arcto_circleparam (h1, y);
+      arcto_subdivide (t1, 0, ellips);
+    }
+
+  ellips[0].x *= radius_x ; ellips[0].y *= radius_y;
+  ellips[1].x *= radius_x ; ellips[1].y *= radius_y;
+  ellips[2].x *= radius_x ; ellips[2].y *= radius_y;
+  ellips[3].x *= radius_x ; ellips[3].y *= radius_y;
+}
+
+void
+gimp_bezier_stroke_arcto (GimpStroke       *bez_stroke,
+                          gdouble           radius_x,
+                          gdouble           radius_y,
+                          gdouble           angle_rad,
+                          gboolean          large_arc,
+                          gboolean          sweep,
+                          const GimpCoords *end)
+{
+  GimpCoords start;
+  GimpCoords middle;   /* between start and end */
+  GimpCoords trans_delta;
+  GimpCoords trans_center;
+  GimpCoords tmp_center;
+  GimpCoords center;
+  GimpCoords ellips[4]; /* control points of untransformed ellipse segment */
+  GimpCoords ctrl[4]; /* control points of next bezier segment */
+
+  GimpMatrix3 anglerot;
+
+  gdouble lambda;
+  gdouble phi0, phi1, phi2;
+  gdouble tmpx, tmpy;
+
+  g_return_if_fail (GIMP_IS_BEZIER_STROKE (bez_stroke));
+  g_return_if_fail (bez_stroke->closed == FALSE);
+  g_return_if_fail (bez_stroke->anchors != NULL);
+  g_return_if_fail (bez_stroke->anchors->next != NULL);
+
+  if (radius_x == 0 || radius_y == 0)
+    {
+      gimp_bezier_stroke_lineto (bez_stroke, end);
+      return;
+    }
+
+  start = GIMP_ANCHOR (bez_stroke->anchors->next->data)->position;
+
+  gimp_matrix3_identity (&anglerot);
+  gimp_matrix3_rotate (&anglerot, -angle_rad);
+
+  gimp_bezier_coords_mix (0.5, &start, -0.5, end, &trans_delta);
+  gimp_matrix3_transform_point (&anglerot, trans_delta.x, trans_delta.y,
+                                &tmpx, &tmpy);
+  trans_delta.x = tmpx;
+  trans_delta.y = tmpy;
+
+  lambda = (trans_delta.x*trans_delta.x / radius_x / radius_x +
+            trans_delta.y*trans_delta.y / radius_y / radius_y);
+
+  if (lambda < 0.00001)
+    {
+      /* dont bother with it - endpoint is too close to startpoint */
+      return;
+    }
+
+  trans_center = trans_delta;
+
+  if (lambda > 1.0)
+    { 
+      /* The radii are too small for a matching ellipse. We expand them
+       * so that they fit exacty (center of the ellipse between the
+       * start- and endpoint
+       */
+      radius_x *= sqrt (lambda);
+      radius_y *= sqrt (lambda);
+      trans_center.x = 0.0;
+      trans_center.y = 0.0;
+    } 
+  else
+    {
+      gdouble factor = sqrt ((1.0 - lambda) / lambda);
+      trans_center.x =   trans_delta.y * radius_x / radius_y * factor;
+      trans_center.y = - trans_delta.x * radius_y / radius_x * factor;
+    }
+  
+  if (large_arc == sweep)
+    {
+      trans_center.x *= -1;
+      trans_center.y *= -1;
+    }
+  
+  gimp_matrix3_identity (&anglerot);
+  gimp_matrix3_rotate (&anglerot, angle_rad);
+
+  tmp_center = trans_center;
+  gimp_matrix3_transform_point (&anglerot, tmp_center.x, tmp_center.y,
+                                &tmpx, &tmpy);
+  tmp_center.x = tmpx;
+  tmp_center.y = tmpy;
+
+  gimp_bezier_coords_mix (0.5, &start, 0.5, end, &middle);
+  gimp_bezier_coords_add (&tmp_center, &middle, &center);
+
+  phi1 = atan2 ((trans_delta.y - trans_center.y) / radius_y,
+                (trans_delta.x - trans_center.x) / radius_x);
+
+  phi2 = atan2 ((- trans_delta.y - trans_center.y) / radius_y,
+                (- trans_delta.x - trans_center.x) / radius_x);
+
+  if (phi1 < 0) phi1 += 2 * G_PI;
+  if (phi2 < 0) phi2 += 2 * G_PI;
+
+  if (sweep)
+    {
+      while (phi2 < phi1) phi2 += 2 * G_PI;
+
+      phi0 = floor (phi1 / G_PI_2) * G_PI_2;
+
+      while (phi0 < phi2)
+        {
+          arcto_ellipsesegment (radius_x, radius_y,
+                                MAX (phi0, phi1), MIN (phi0 + G_PI_2, phi2),
+                                ellips);
+
+          gimp_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
+                                        &tmpx, &tmpy);
+          ellips[0].x = tmpx; ellips[0].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
+                                        &tmpx, &tmpy);
+          ellips[1].x = tmpx; ellips[1].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
+                                        &tmpx, &tmpy);
+          ellips[2].x = tmpx; ellips[2].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
+                                        &tmpx, &tmpy);
+          ellips[3].x = tmpx; ellips[3].y = tmpy;
+
+          gimp_bezier_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          gimp_bezier_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          gimp_bezier_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+
+          gimp_bezier_stroke_cubicto (bez_stroke,
+                                      &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
+          phi0 += G_PI_2;
+        }
+    }
+  else
+    {
+      while (phi1 < phi2) phi1 += 2 * G_PI;
+
+      phi0 = ceil (phi1 / G_PI_2) * G_PI_2;
+
+      while (phi0 > phi2)
+        {
+          arcto_ellipsesegment (radius_x, radius_y,
+                                MIN (phi0, phi1), MAX (phi0 - G_PI_2, phi2),
+                                ellips);
+
+          gimp_matrix3_transform_point (&anglerot, ellips[0].x, ellips[0].y,
+                                        &tmpx, &tmpy);
+          ellips[0].x = tmpx; ellips[0].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[1].x, ellips[1].y,
+                                        &tmpx, &tmpy);
+          ellips[1].x = tmpx; ellips[1].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[2].x, ellips[2].y,
+                                        &tmpx, &tmpy);
+          ellips[2].x = tmpx; ellips[2].y = tmpy;
+          gimp_matrix3_transform_point (&anglerot, ellips[3].x, ellips[3].y,
+                                        &tmpx, &tmpy);
+          ellips[3].x = tmpx; ellips[3].y = tmpy;
+
+          gimp_bezier_coords_add (&center, &(ellips[1]), &(ctrl[1]));
+          gimp_bezier_coords_add (&center, &(ellips[2]), &(ctrl[2]));
+          gimp_bezier_coords_add (&center, &(ellips[3]), &(ctrl[3]));
+
+          gimp_bezier_stroke_cubicto (bez_stroke,
+                                      &(ctrl[1]), &(ctrl[2]), &(ctrl[3]));
+          phi0 -= G_PI_2;
+        }
+    }
 }
 
 
