@@ -428,7 +428,7 @@ user_install_cancel_callback (GtkWidget *widget,
   static guint timeout_id = 0;
 
   if (timeout_id)
-    exit (0);
+    exit (EXIT_SUCCESS);
 
   gtk_widget_destroy (continue_button);
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);

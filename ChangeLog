@@ -1,3 +1,10 @@
+2003-10-10  Sven Neumann  <sven@gimp.org>
+
+	* app/errors.c (gimp_eek)	
+	* app/main.c (main) (gimp_text_console_exit)
+	* app/gui/user-install-dialog.c (user_install_cancel_callback):
+	call exit() with EXIT_SUCCESS or EXIT_FAILURE instead of 0 and 1.
+
 2003-10-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview-dnd.c: added auto-scrolling

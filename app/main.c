@@ -400,7 +400,7 @@ main (int    argc,
             stack_trace_mode,
             restore_session);
 
-  return 0;
+  return EXIT_SUCCESS;
 }
 
 
@@ -456,7 +456,8 @@ gimp_text_console_exit (gboolean fail)
       Sleep(10000);
     }
 #endif
-  exit (fail ? 1 : 0);
+
+  exit (fail ? EXIT_FAILURE : EXIT_SUCCESS);
 }
 
 
