@@ -41,7 +41,7 @@ long g_serial_copy_to_n(char *dest, char *source, long data_size, long n_items)
 {
   int i;
   int length = n_items*data_size;
-#ifdef WORDS_BIGENDIAN
+#if G_BYTE_ORDER == G_BIG_ENDIAN
   memcpy(dest, source, length);
 #else
   switch (data_size)
@@ -77,7 +77,7 @@ long g_serial_copy_to_n(char *dest, char *source, long data_size, long n_items)
    default:
      g_assert_not_reached();
   }
-#endif /* !WORDS_BIGENDIAN */
+#endif /* G_BYTE_ORDER != G_BIG_ENDIAN */
   return length;
 }
 

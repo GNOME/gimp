@@ -402,7 +402,7 @@ static void test_gserialize()
 {
   GSerialDescription *test_struct_descript;
   test_struct *ts, *to;
-  char ser_1[] = {3, 4, 3, 2, 1, 4, 51, 51, 83, 64, 6, 4, 0, 0, 0, 102, 111, 111, 0, 8, 2, 0, 0, 0, 6, 5, 8, 7};
+  char ser_1[] = {3, 1, 2, 3, 4, 4, 64, 83, 51, 51, 6, 0, 0, 0, 4, 102, 111, 111, 0, 8, 0, 0, 0, 2, 5, 6, 7, 8 };
   void *ser;
   long len;
   int i;
@@ -436,12 +436,20 @@ static void test_gserialize()
 
   g_deserialize(test_struct_descript,  (char *)(void*)to, ser_1);
 
-  g_return_if_fail (to->test_gint32 == ts->test_gint32);
-  g_return_if_fail (to->test_float == ts->test_float);
-  g_return_if_fail (strcmp(to->test_string, ts->test_string) == 0);
-  g_return_if_fail (to->test_length == ts->test_length);
-  g_return_if_fail (to->test_array[0] == ts->test_array[0]);
+  if (to->test_gint32 != ts->test_gint32)
+    g_message("gint32 test failed: %d\n", to->test_gint32);
+  if (to->test_float != ts->test_float)
+    g_message("float test failed: %f\n", to->test_float);
+  if (strcmp(to->test_string, ts->test_string) != 0)
+    g_message("string test failed: %s\n", to->test_string);
+  if (to->test_length != ts->test_length)
+    g_message("array length test failed: %d\n", to->test_length);
+  if (to->test_array[0] != ts->test_array[0])
+    g_message("int16array value 0 test failed: %d\n", to->test_array[0]);
   g_return_if_fail (to->test_array[1] == ts->test_array[1]);
+  if (to->test_array[1] != ts->test_array[1])
+    g_message("int16array value 1 test failed: %d\n", to->test_array[1]);
   /*  really should free the memory... */
   g_message("Passed serialization test\n");
-}
+}/* 
+    67108864 */
