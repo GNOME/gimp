@@ -305,7 +305,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   vector_tool->undo_motion = FALSE;
 
-  /* Save the current modifier state */
+  /* save the current modifier state */
 
   vector_tool->saved_state = state;
 
@@ -397,7 +397,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
     }
 
 
-  /* Insertion of an anchor in a curve segment */
+  /* insertion of an anchor in a curve segment */
 
   if (vector_tool->function == VECTORS_INSERT_ANCHOR)
     {
@@ -1214,8 +1214,11 @@ gimp_vector_tool_status_update (GimpTool    *tool,
           new_status = _("Click-Drag to move the handle around. (try SHIFT)");
           break;
         case VECTORS_MOVE_CURVE:
-          new_status = _("Click-Drag to change the shape of the curve. "
-                         "(SHIFT: symmetrical)");
+          if (GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options)->polygonal)
+            new_status = _("Click-Drag to move the anchors around.");
+          else
+            new_status = _("Click-Drag to change the shape of the curve. "
+                           "(SHIFT: symmetrical)");
           break;
         case VECTORS_MOVE_STROKE:
           new_status = _("Click-Drag to move the component around. "
@@ -1296,24 +1299,29 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
       cursor      = GDK_HAND2;
       tool_cursor = GIMP_TOOL_CURSOR_HAND;
       break;
+
     case VECTORS_CREATE_VECTOR:
     case VECTORS_CREATE_STROKE:
       cmodifier = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
+
     case VECTORS_ADD_ANCHOR:
     case VECTORS_INSERT_ANCHOR:
       cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
+
     case VECTORS_DELETE_ANCHOR:
     case VECTORS_DELETE_SEGMENT:
       cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
       break;
+
     case VECTORS_MOVE_HANDLE:
     case VECTORS_CONVERT_EDGE:
       cursor      = GDK_HAND2;
       tool_cursor = GIMP_TOOL_CURSOR_HAND;
       cmodifier   = GIMP_CURSOR_MODIFIER_CONTROL;
       break;
+
     case VECTORS_MOVE_ANCHOR:
     case VECTORS_MOVE_CURVE:
     case VECTORS_MOVE_STROKE:
@@ -1321,9 +1329,11 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
     case VECTORS_MOVE_ANCHORSET:
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
+
     case VECTORS_CONNECT_STROKES:
       cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
       break;
+
     default:
       cursor = GIMP_CURSOR_BAD;
       break;
