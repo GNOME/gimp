@@ -36,8 +36,7 @@
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the 'gimp-edit-paste' command. If there is no selection, then the
  * specified drawable will be removed and its contents stored in the
- * internal GIMP edit buffer. The drawable MUST belong to the specified
- * image, or an error is returned.
+ * internal GIMP edit buffer.
  *
  * Returns: TRUE on success.
  */
@@ -71,8 +70,7 @@ gimp_edit_cut (gint32 drawable_ID)
  * internal GIMP edit buffer. It can subsequently be retrieved using
  * the 'gimp-edit-paste' command. If there is no selection, then the
  * specified drawable's contents will be stored in the internal GIMP
- * edit buffer. The drawable MUST belong to the specified image, or an
- * error is returned.
+ * edit buffer.
  *
  * Returns: TRUE on success.
  */
