@@ -210,18 +210,10 @@ about your glib, pango and gtk+ installation.
 .BR pkg-config (1)
 
 .SH AUTHORS
-gimptool was written by Manish Singh (yosh@gimp.org) and based on
+gimptool was written by Manish Singh (yosh@gimp.org) and is based on
 gtk-config by Owen Taylor (owen@gtk.org).
 
 This man page was written by Ben Gertzfield (che@debian.org), and tweaked
 by Manish Singh (yosh@gimp.org), Adrian Likins (adrian@gimp.org) and Marc
 Lehmann (pcg@goof.com>).
 
-.SH COPYRIGHT
-Copyright \(co  1998 Owen Taylor and Manish Singh
-
-Permission to use, copy, modify, and distribute this software and its
-documentation for any purpose and without fee is hereby granted,
-provided that the above copyright notice appear in all copies and that
-both that copyright notice and this permission notice appear in
-supporting documentation.

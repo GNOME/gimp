@@ -222,36 +222,16 @@ Gimp about dialog.
 in the "Tip of the Day" dialog box. At the same place you will find files 
 with tips in other languages.
 
-.SH COPYRIGHT
-Copyright \(co  1995 Spencer Kimball and Peter Mattis
-
-Permission to use, copy, modify, and distribute this software and its
-documentation for any purpose and without fee is hereby granted,
-provided that the above copyright notice appear in all copies and that
-both that copyright notice and this permission notice appear in
-supporting documentation. 
-
 .SH SUGGESTIONS AND BUG REPORTS
-Any bugs found should be reported to the Gimp Developer mailing list
-at gimp-developer@xcf.berkeley.edu or you may want to make use
-of the online bug-tracking system available on the web at
-http://bugs.gnome.org/db/pa/lgimp.html or submit a bug report
-to the system via http://www.xach.com/gimp/news/bugreport.html
+Any bugs found should be reported to the online bug-tracking system
+available on the web at http://bugzilla.gnome.org/. Before reporting
+bugs, please check to see if the bug has already been reported.
 
-Before reporting bugs, please check to see if the bug is mentioned 
-in the FAQ's or the mailing list archive. See the section on Other 
-Info for locations of these.
-
-When reporting Gimp bugs, it is important to include a
-reliable way to reproduce the bug, version number of Gimp (and
-probably GTK), OS name and version, and any relevant hardware
-specs. It is also very important to include as much info as possible 
-about the Xserver the problem was found on including at least server 
-name, the visual, and the bit depth.
-
-If a bug is causing a crash, it is very useful if a stack trace 
-can be provided. And of course, patches to rectify the bug are even
-better.
+When reporting Gimp bugs, it is important to include a reliable way to
+reproduce the bug, version number of Gimp (and probably GTK), OS name
+and version, and any relevant hardware specs. If a bug is causing a
+crash, it is very useful if a stack trace can be provided. And of
+course, patches to rectify the bug are even better.
 
 .SH OTHER INFO
 
@@ -259,11 +239,11 @@ The canonical place to find GIMP info is at http://www.gimp.org/.
 Here you can find links to just about every other gimp site, tutorials, data 
 sets, mailing list archives, and more.
 
-There is also a Gimp User Manual available at 
+There is also a GIMP User Manual available at 
 http://manual.gimp.org/ that goes into much more detail 
 about the interactive use of Gimp.
 
-The latest version of Gimp and the gtk libs is always available at 
+The latest version of GIMP and the GTK+ libs is always available at 
 ftp://ftp.gimp.org/.
 
 .SH AUTHORS
