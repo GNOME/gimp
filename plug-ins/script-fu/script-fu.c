@@ -155,7 +155,6 @@ query (void)
 			  PROC_EXTENSION,
 			  0, 0, NULL, NULL);
 
-#ifndef G_OS_WIN32
   gimp_install_procedure ("extension_script_fu_console",
 			  "Provides a console mode for script-fu development",
 			  "Provides an interface which allows interactive scheme development.",
@@ -168,6 +167,7 @@ query (void)
 			  nconsole_args, 0,
 			  console_args, NULL);
 
+#ifndef G_OS_WIN32
   gimp_install_procedure ("extension_script_fu_server",
 			  "Provides a server for remote script-fu operation",
 			  "Provides a server for remote script-fu operation",
@@ -243,7 +243,6 @@ run (gchar   *name,
       values[0].type = PARAM_STATUS;
       values[0].data.d_status = status;
     }
-#ifndef G_OS_WIN32
   /*
    *  The script-fu console for interactive SIOD development
    */
@@ -251,6 +250,7 @@ run (gchar   *name,
     {
       script_fu_console_run (name, nparams, param, nreturn_vals, return_vals);
     }
+#ifndef G_OS_WIN32
   /*
    *  The script-fu server for remote operation
    */

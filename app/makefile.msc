@@ -35,7 +35,7 @@ GLIB = ..\..\glib
 GMODULE = $(GLIB)\gmodule
 INTL = ..\..\intl
 
-CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
+CFLAGS = -DREGEX_MALLOC -DHAVE_CONFIG_H -DG_LOG_DOMAIN=\"Gimp\" -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)\gdk -I$(GTK)\gdk -I$(GTK) -I$(INTL)
 
 all : \
 	..\config.h	\

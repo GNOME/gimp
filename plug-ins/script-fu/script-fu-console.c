@@ -48,8 +48,6 @@
 #include <io.h>
 #endif
 
-#ifndef G_OS_WIN32
-
 #define TEXT_WIDTH  400
 #define TEXT_HEIGHT 400
 #define ENTRY_WIDTH 400
@@ -79,9 +77,9 @@ static void  script_fu_close_callback    (GtkWidget        *widget,
 					  gpointer          data);
 static void  script_fu_browse_callback    (GtkWidget        *widget,
 					  gpointer          data);
-static void  script_fu_siod_read         (gpointer          data,
-					  gint              id,
-					  GdkInputCondition cond);
+static gboolean script_fu_siod_read      (GIOChannel  *channel,
+					  GIOCondition cond,
+					  gpointer     data);
 static gint  script_fu_cc_is_empty       (void);
 static gint  script_fu_cc_key_function   (GtkWidget         *widget,
 					  GdkEventKey       *event,
@@ -178,6 +176,7 @@ script_fu_console_interface (void)
   GtkWidget *vsb;
   GtkWidget *table;
   GtkWidget *hbox;
+  GIOChannel *input_channel;
 
   INIT_I18N_UI();
 
@@ -315,10 +314,11 @@ script_fu_console_interface (void)
   gtk_widget_show (button);
   gtk_widget_show (cint.cc);
 
-  cint.input_id = gdk_input_add (siod_output_pipe[0],
-				 GDK_INPUT_READ,
-				 script_fu_siod_read,
-				 NULL);
+  input_channel = g_io_channel_unix_new (siod_output_pipe[0]);
+  cint.input_id = g_io_add_watch (input_channel,
+				  G_IO_IN,
+				  script_fu_siod_read,
+				  NULL);
 
   /*  Initialize the history  */
   history = g_list_append (history, NULL);
@@ -328,7 +328,7 @@ script_fu_console_interface (void)
 
   gtk_main ();
 
-  gdk_input_remove (cint.input_id);
+  g_source_remove (cint.input_id);
   if (dlg)
     gtk_widget_destroy (dlg);
   gdk_flush ();
@@ -399,16 +399,22 @@ script_fu_console_scroll_end (gpointer data)
   return FALSE;
 }
 
-static void
-script_fu_siod_read (gpointer          data,
-		     gint              id,
-		     GdkInputCondition cond)
+static gboolean
+script_fu_siod_read (GIOChannel  *channel,
+		     GIOCondition cond,
+		     gpointer     data)
 {
   int count;
   static int hack = 0;
+  GIOError error;
 
-  if ((count = read (id, read_buffer, BUFSIZE - 1)) != 0)
+  count = 0;
+  error = g_io_channel_read (channel, read_buffer, BUFSIZE - 1, &count);
+
+  if (error == G_IO_ERROR_NONE)
     {
+#ifndef G_OS_WIN32
+      /* Is this needed any longer on Unix? */
       if (!hack) /* this is a stupid hack, but as of 10/27/98
 		 * the script-fu-console will hang on my system without it.
 		 * the real cause of this needs to be tracked down.
@@ -419,8 +425,9 @@ script_fu_siod_read (gpointer          data,
 		 */
       {
 	hack = 1;
-	return;
+	return TRUE;
       }
+#endif
       read_buffer[count] = '\0';
       gtk_text_freeze (GTK_TEXT (cint.console));
       gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL,
@@ -429,6 +436,7 @@ script_fu_siod_read (gpointer          data,
 
       script_fu_console_scroll_end (NULL);
     }
+  return TRUE;
 }
 
 static gint
@@ -593,8 +601,6 @@ script_fu_close_siod_console (void)
   close (siod_output_pipe[0]);
   close (siod_output_pipe[1]);
 }
-
-#endif /* !G_OS_WIN32 */
 
 void
 script_fu_eval_run (char     *name,

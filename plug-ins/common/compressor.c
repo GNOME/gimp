@@ -314,11 +314,9 @@ save_image (gchar  *filename,
   gint pid;
   gint status;
 #else
-  SECURITY_ATTRIBUTES secattr;
-  HANDLE f;
+  FILE *in, *out;
   STARTUPINFO startupinfo;
   PROCESS_INFORMATION processinfo;
-  gchar *cmdline;
 #endif
 
   if (NULL == (ext = find_extension (filename)))
@@ -408,18 +406,8 @@ save_image (gchar  *filename,
 	}
     }
 #else  /* G_OS_WIN32 */
-  secattr.nLength = sizeof (SECURITY_ATTRIBUTES);
-  secattr.lpSecurityDescriptor = NULL;
-  secattr.bInheritHandle = TRUE;
-
-  if ((f = CreateFile (filename, GENERIC_WRITE, FILE_SHARE_READ,
-		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
-      == INVALID_HANDLE_VALUE)
-    {
-      g_message ("gz: CreateFile failed\n");
-      g_free (tmpname);
-      _exit (127);
-    }
+  in = fopen (tmpname, "rb");
+  out = fopen (filename, "wb");
 
   startupinfo.cb = sizeof (STARTUPINFO);
   startupinfo.lpReserved = NULL;
@@ -430,21 +418,18 @@ save_image (gchar  *filename,
   startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
   startupinfo.cbReserved2 = 0;
   startupinfo.lpReserved2 = NULL;
-  startupinfo.hStdInput = GetStdHandle (STD_INPUT_HANDLE);
-  startupinfo.hStdOutput = f;
+  startupinfo.hStdInput = (HANDLE) _get_osfhandle (fileno (in));
+  startupinfo.hStdOutput = (HANDLE)  _get_osfhandle (fileno (out));
   startupinfo.hStdError = GetStdHandle (STD_ERROR_HANDLE);
 
-  cmdline = g_strdup_printf ("gzip -cf %s", tmpname);
-
-  if (!CreateProcess (NULL, cmdline, NULL, NULL,
+  if (!CreateProcess (NULL, "minigzip", NULL, NULL,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
-      g_message ("gz: CreateProcess failed. Do you have gzip.exe in your PATH?\n");
+      g_message ("gz: CreateProcess failed. Minigzip.exe not in the ?\n");
       g_free (tmpname);
       _exit (127);
     }
-  CloseHandle (f);
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);
 #endif /* G_OS_WIN32 */
@@ -468,11 +453,10 @@ load_image (gchar       *filename,
   gint pid;
   gint process_status;
 #else
+  FILE *in, *out;
   SECURITY_ATTRIBUTES secattr;
-  HANDLE f;
   STARTUPINFO startupinfo;
   PROCESS_INFORMATION processinfo;
-  gchar *cmdline;
 #endif
 
   if (NULL == (ext = find_extension (filename)))
@@ -544,18 +528,8 @@ load_image (gchar       *filename,
 	}
     }
 #else
-  secattr.nLength = sizeof (SECURITY_ATTRIBUTES);
-  secattr.lpSecurityDescriptor = NULL;
-  secattr.bInheritHandle = TRUE;
-
-  if ((f = CreateFile (tmpname, GENERIC_WRITE, FILE_SHARE_READ,
-		       &secattr, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL))
-      == INVALID_HANDLE_VALUE)
-    {
-      g_message ("gz: CreateFile failed\n");
-      g_free (tmpname);
-      _exit (127);
-    }
+  in = fopen (filename, "rb");
+  out = fopen (tmpname, "wb");
 
   startupinfo.cb = sizeof (STARTUPINFO);
   startupinfo.lpReserved = NULL;
@@ -566,13 +540,11 @@ load_image (gchar       *filename,
   startupinfo.wShowWindow = SW_SHOWMINNOACTIVE;
   startupinfo.cbReserved2 = 0;
   startupinfo.lpReserved2 = NULL;
-  startupinfo.hStdInput = GetStdHandle (STD_INPUT_HANDLE);
-  startupinfo.hStdOutput = f;
+  startupinfo.hStdInput = (HANDLE) _get_osfhandle (fileno (in));
+  startupinfo.hStdOutput = (HANDLE) _get_osfhandle (fileno (out));
   startupinfo.hStdError = GetStdHandle (STD_ERROR_HANDLE);
 
-  cmdline = g_strdup_printf ("gzip -cfd %s", filename);
-
-  if (!CreateProcess (NULL, cmdline, NULL, NULL,
+  if (!CreateProcess (NULL, "minigzip -d", NULL, NULL,
 		      TRUE, NORMAL_PRIORITY_CLASS, NULL, NULL,
 		      &startupinfo, &processinfo))
     {
@@ -580,9 +552,10 @@ load_image (gchar       *filename,
       g_free (tmpname);
       _exit (127);
     }
-  CloseHandle (f);
   CloseHandle (processinfo.hThread);
   WaitForSingleObject (processinfo.hProcess, INFINITE);
+  fclose (in);
+  fclose (out);
 #endif /* G_OS_WIN32 */
 
   /* now that we un-gziped it, load the temp file */

@@ -1,3 +1,28 @@
+2000-07-31  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/common/gz.c (load_image,save_image): Change Win32
+	implementation to be a bit simpler. Use minigzip (from zlib)
+	instead of the full gzip. Intend to include minigzip with the
+	(binary) distribution.
+
+	* libgimp/makefile.{cygwin,msc}
+	* app/makefile.{cygwin,msc}: Add G_LOG_DOMAIN.
+
+	* app/gimpbrushhose.{c,h}: Really remove these files, as
+	Adrian tried on August 23.
+
+	* plug-ins/script-fu/script-fu.c: Enable the script-fu console on
+	Win32, too.
+
+	* plug-ins/script-fu/script-fu-console.c: Now with new GLib
+	GIOChannel implementaion, compile for Win32, too. Use
+	g_io_add_watch instead of gdk_input_add (on Unix, too). The
+	callback for g_io_add_watch is passed a GIOChannel, while the
+	callback for gdk_input_add is passed a file descriptor. On Win32
+	(and possibly other non-Unices) we want GIOChannels, as we must
+	use g_io_channel_read to read from file descriptors being
+	watched. Works as previously on Unix this way, too.
+
 2000-07-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/ps.c: added a tooltip describing the "Keep
