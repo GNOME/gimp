@@ -29,7 +29,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <gtk/gtk.h>
 
@@ -51,8 +50,8 @@ static void	run	(gchar      *name,
 			 gint       *nreturn_vals,
 			 GimpParam **return_vals);
 
-static GimpPDBStatusType main_function     (GimpDrawable *drawable, 
-					    gboolean      preview_mode);
+static void main_function (GimpDrawable *drawable, 
+			   gboolean      preview_mode);
 
 static gint	   dialog         (GimpDrawable *drawable);
 static void        ok_callback    (GtkWidget    *widget,
@@ -95,6 +94,7 @@ static Interface interface =
   FALSE
 };
 
+static GimpRunMode       run_mode;
 static GimpFixMePreview *preview;
 
 MAIN ()
@@ -136,7 +136,6 @@ run (gchar      *name,
   GimpDrawable      *drawable;
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  GimpRunMode        run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -171,7 +170,7 @@ run (gchar      *name,
       break;
     }
   
-  status = main_function (drawable, FALSE);
+  main_function (drawable, FALSE);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
@@ -181,137 +180,81 @@ run (gchar      *name,
   values[0].data.d_status = status;
 }
 
-static GimpPDBStatusType
+typedef struct {
+  gint init_value;
+  gint flag;
+  gboolean has_alpha;
+} MaxRgbParam_t;
+
+static void
+max_rgb_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  MaxRgbParam_t *param = (MaxRgbParam_t*) data;
+  gint   ch, max_ch = 0;
+  guchar max, tmp_value;
+  
+  max = param->init_value;
+  for (ch = 0; ch < 3; ch++)
+    if (param->flag * max <= param->flag * (tmp_value = (*src++)))
+      {
+	if (max == tmp_value)
+	  {
+	    max_ch += 1 << ch;
+	  }
+	else
+	  {
+	    max_ch = 1 << ch; /* clear memories of old channels */
+	    max = tmp_value;
+	  }
+      }
+
+  dest[0] = (max_ch & (1 << 0)) ? max : 0;
+  dest[1] = (max_ch & (1 << 1)) ? max : 0;
+  dest[2] = (max_ch & (1 << 2)) ? max : 0;
+  if (param->has_alpha)
+    dest[3] = src[3];
+}
+
+static void
 main_function (GimpDrawable *drawable, 
 	       gboolean      preview_mode)
 {
-  GimpPixelRgn  src_rgn, dest_rgn;
-  guchar    *src, *dest, *save_dest, *src_data, *dest_data;
-  gpointer   pr = NULL;
-  gint       x, y, x1, x2, y1, y2;
-  gint       gap, total, processed = 0;
-  gint       init_value, flag;
-  gint       bpp = 3;
-
-  init_value = (pvals.max_p > 0) ? 0 : 255;
-  flag = (0 < pvals.max_p) ? 1 : -1;
-
-  if (preview_mode) 
-    {
-      x1 = y1 = 0;
-      x2 = preview->width;
-      y2 = preview->height;
-      gap = 0; /* no alpha on preview */
-      bpp = preview->bpp;
-    } 
-  else 
-    {
-      gap = (gimp_drawable_has_alpha (drawable->drawable_id)) ? 1 : 0;
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
-      gimp_pixel_rgn_init (&src_rgn, drawable,
-			   x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-      gimp_pixel_rgn_init (&dest_rgn, drawable,
-			   x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-      pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-      gimp_progress_init ( _("Max RGB: Scanning..."));
-    }
+  MaxRgbParam_t param;
   
-  total = (x2 - x1) * (y2 - y1);
-  if (total < 1)
-    return GIMP_PDB_EXECUTION_ERROR;
+  param.init_value = (pvals.max_p > 0) ? 0 : 255;
+  param.flag = (0 < pvals.max_p) ? 1 : -1;
 
   if (preview_mode) 
     {
-      src_data = g_malloc (preview->rowstride * y2);
-      memcpy (src_data, preview->cache, preview->rowstride * y2);
-      dest_data = g_malloc (preview->rowstride * y2);
-      save_dest = dest_data;
-      
-      for (y = 0; y < y2; y++)
+      gint x, y;
+      gint bpp = preview->bpp;
+
+      param.has_alpha = FALSE; /* no alpha on preview */
+
+      for (y = 0; y < preview->height; y++)
 	{
-	  src  = src_data  + y * preview->rowstride;
-	  dest = dest_data + y * preview->rowstride;
-	  
-	  for (x = 0; x < x2; x++)
+	  guchar *src = preview->cache + y * preview->rowstride;
+	  guchar *dest = preview->buffer + y * preview->rowstride;
+
+	  for (x = 0; x < preview->width; x++)
 	    {
-	      gint   ch, max_ch = 0;
-	      guchar max, tmp_value;
-	      
-	      max = init_value;
-	      for (ch = 0; ch < 3; ch++)
-		if (flag * max <= flag * (tmp_value = (*src++)))
-		  {
-		    if (max == tmp_value)
-		      {
-			max_ch += 1 << ch;
-		      }
-		    else
-		      {
-			max_ch = 1 << ch; /* clear memories of old channels */
-			max = tmp_value;
-		      }
-		  }
-	      
-	      for ( ch = 0; ch < 3; ch++)
-		*dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
-	      
-	      if (gap) 
-		*dest++ = *src++;
+	      max_rgb_func (src, dest, bpp, &param);
+	      dest += bpp;
+	      src += bpp;
 	    }
 	}
-      
-      memcpy (preview->buffer, save_dest, preview->rowstride * y2);
       gtk_widget_queue_draw (preview->widget);
     } 
   else 
     { /* normal mode */
-      for (; pr != NULL; pr = gimp_pixel_rgns_process (pr))
-	{
-	  for (y = 0; y < src_rgn.h; y++)
-	    {
-	      src = src_rgn.data + y * src_rgn.rowstride;
-	      dest = dest_rgn.data + y * dest_rgn.rowstride;
-	      
-	      for (x = 0; x < src_rgn.w; x++)
-		{
-		  gint   ch, max_ch = 0;
-		  guchar max, tmp_value;
-		  
-		  max = init_value;
-		  for (ch = 0; ch < 3; ch++)
-		    if (flag * max <= flag * (tmp_value = (*src++)))
-		      {
-			if (max == tmp_value)
-			  {
-			    max_ch += 1 << ch;
-			  }
-			else
-			  {
-			    max_ch = 1 << ch; /* clear memories of old channels */
-			    max = tmp_value;
-			  }
-			
-		      }
-		  for ( ch = 0; ch < 3; ch++)
-		    *dest++ = (guchar)(((max_ch & (1 << ch)) > 0) ? max : 0);
-		  
-		  if (gap) 
-		    *dest++=*src++;
-		  
-		  if ((++processed % (total / PROGRESS_UPDATE_NUM + 1)) == 0)
-		    gimp_progress_update ((gdouble) processed / (gdouble) total); 
-		}
-	    }
-	}
-      gimp_progress_update (1.0);
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+
+      gimp_progress_init ( _("Max RGB: Scanning..."));
+
+      gimp_rgn_iterate2 (drawable, run_mode, max_rgb_func, &param);
+
       gimp_drawable_detach (drawable);
-    }
-  
-  return GIMP_PDB_SUCCESS;
+    }  
 }
  
 

@@ -44,6 +44,7 @@
 
 #include "config.h"
 
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -87,8 +88,6 @@ static void      run    (gchar      *name,
 
 static void      edge        (GimpDrawable *drawable);
 static gint      edge_dialog (GimpDrawable *drawable);
-
-static long      long_sqrt   (long n);
 
 /***** Local vars *****/
 
@@ -232,94 +231,6 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-/**********************************************************************
-   TileBuf Util Routines End
- **********************************************************************/
-
-static long
-long_sqrt (long n)
-{
-#define lsqrt_max4pow (1UL << 30)
-  /* lsqrt_max4pow is the (machine-specific) largest power of 4 that can
-   * be represented in an unsigned long.
-   *
-   * Compute the integer square root of the integer argument n
-   * Method is to divide n by x computing the quotient x and remainder r
-   * Notice that the divisor x is changing as the quotient x changes
-   * 
-   * Instead of shifting the dividend/remainder left, we shift the
-   * quotient/divisor right. The binary point starts at the extreme
-   * left, and shifts two bits at a time to the extreme right.
-   * 
-   * The residue contains n-x^2. (Within these comments, the ^ operator
-   * signifies exponentiation rather than exclusive or. Also, the /
-   * operator returns fractions, rather than truncating, so 1/4 means
-   * one fourth, not zero.)
-   * 
-   * Since (x + 1/2)^2 == x^2 + x + 1/4,
-   * n - (x + 1/2)^2 == (n - x^2) - (x + 1/4)
-   * Thus, we can increase x by 1/2 if we decrease (n-x^2) by (x+1/4)
-   */
-
-  gulong residue;        /* n - x^2  */
-  gulong root;           /* x + 1/4  */
-  gulong half;           /* 1/2      */
-
-  residue = n;           /* n - (x = 0)^2, with suitable alignment */
-
-  /*
-   * if the correct answer fits in two bits, pull it out of a magic hat
-   */
-  if (residue <= 12)
-    return (0x03FFEA94 >> (residue *= 2)) & 3;
-
-  root = lsqrt_max4pow;         /* x + 1/4, shifted all the way left */
-  /* half = root + root; 1/2, shifted likewise */
-
-  /* 
-   * Unwind iterations corresponding to leading zero bits 
-   */
-  while (root > residue)
-    root >>= 2;
-
-  /*
-   * Unwind the iteration corresponding to the first one bit
-   * Operations have been rearranged and combined for efficiency
-   * Initialization of half is folded into this iteration
-   */
-  residue -= root;              /* Decrease (n-x^2) by (0+1/4)             */
-  half = root >> 2;             /* 1/4, with binary point shifted right 2  */
-  root += half;                 /* x=1. (root is now (x=1)+1/4.)           */
-  half += half;                 /* 1/2, properly aligned                   */
-
-  /*
-   * Normal loop (there is at least one iteration remaining)
-   */
-  do
-    {
-      if (root <= residue)      /* Whenever we can,                          */
-        {
-          residue -= root;      /* decrease (n-x^2) by (x+1/4)               */
-          root += half;         /* increase x by 1/2                         */
-        }
-      half >>= 2;               /* Shift binary point 2 places right          */
-      root -= half;             /* x{ +1/2 } +1/4 - 1/8 == x { +1/2 } 1/8     */
-      root >>= 1;               /* 2x{ +1 } +1/4, shifted right 2 places      */
-    }
-  while (half);                 /* When 1/2 == 0, bin. point is at far right  */
-
-  /* 
-   * round up if (x+1/2)^2 < n
-   */
-  if (root < residue)
-    ++root;
-
-  /* 
-   * Guaranteed to be correctly rounded (or truncated)
-   */
-  return root;
-}
-
 /********************************************************/
 /*              Edge Detection main                     */
 /********************************************************/
@@ -421,7 +332,8 @@ edge (GimpDrawable *drawable)
 			     (PIX(2,2) - PIX(2,0));
 #undef  PIX
 		      /* common job ... */
-		      sum = long_sqrt ((long) sum1 * sum1 + (long) sum2 * sum2);
+		      sum = (glong) (sqrt((long) sum1 * sum1 + 
+					  (long) sum2 * sum2) + 0.5);
 		      sum = (sum * scale) >> 16;    /* arbitrary scaling factor */
 		      if (sum > maxval)
 			sum = maxval;
@@ -458,7 +370,8 @@ edge (GimpDrawable *drawable)
 			 2 * (pix12[chan] - pix10[chan]) +
 			     (pix22[chan] - pix20[chan]);
 		      /* common job ... */
-		      sum = long_sqrt ((long) sum1 * sum1 + (long) sum2 * sum2);
+		      sum = (glong) (sqrt ((long) sum1 * sum1 + 
+					   (long) sum2 * sum2) + 0.5);
 		      sum = (sum * scale) >> 16;  /* arbitrary scaling factor */
 		      if (sum > maxval) sum = maxval;
 		      dest[chan] = sum;

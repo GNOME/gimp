@@ -58,6 +58,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+static GimpRunMode run_mode;
 
 MAIN ()
 
@@ -100,7 +101,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
@@ -146,9 +146,8 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-
 static void
-indexed_c_astretch (gint32 image_ID)  /* a.d.m. */
+indexed_c_astretch (gint32 image_ID)
 {
   guchar *cmap;
   gint ncols,i;
@@ -185,127 +184,73 @@ indexed_c_astretch (gint32 image_ID)  /* a.d.m. */
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
+typedef struct {
+  gint		alpha;
+  guchar  	lut[256][3];
+  guchar  	min[3];
+  guchar	max[3];
+  gboolean 	has_alpha;
+} AutoStretchParam_t;
+
+static void 
+find_min_max (guchar *src, gint bpp, gpointer data)
+{
+  AutoStretchParam_t *param = (AutoStretchParam_t*) data;
+  gint b;
+
+  for (b = 0; b < param->alpha; b++)
+    {
+      if (!param->has_alpha || src[param->alpha])
+	{
+	  if (src[b] < param->min[b])
+	    param->min[b] = src[b];
+	  if (src[b] > param->max[b])
+	    param->max[b] = src[b];
+	}
+    }
+}
+
+static void
+c_astretch_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  AutoStretchParam_t *param = (AutoStretchParam_t*) data;
+  gint b;
+
+  for (b = 0; b < param->alpha; b++)
+    dest[b] = param->lut[src[b]][b];
+  
+  if (param->has_alpha)
+    dest[param->alpha] = src[param->alpha];
+}
 
 static void
 c_astretch (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src, *s;
-  guchar *dest, *d;
-  guchar  min[3], max[3];
-  guchar  range;
-  guchar  lut[256][3];
-  gint    progress, max_progress;
-  gint    has_alpha, alpha;
-  gint    x1, y1, x2, y2;
-  gint    x, y, b;
-  gpointer pr;
+  AutoStretchParam_t param;
+  gint b;
 
-  /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
-
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1) * 2;
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.alpha = (param.has_alpha) ? drawable->bpp - 1 : drawable->bpp;
 
   /* Get minimum and maximum values for each channel */
-  min[0] = min[1] = min[2] = 255;
-  max[0] = max[1] = max[2] = 0;
+  param.min[0] = param.min[1] = param.min[2] = 255;
+  param.max[0] = param.max[1] = param.max[2] = 0;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		{
-		  if (!has_alpha || (has_alpha && s[alpha]))
-		    {
-		      if (s[b] < min[b])
-			min[b] = s[b];
-		      if (s[b] > max[b])
-			max[b] = s[b];
-		    }
-		}
-
-	      s += src_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
+  gimp_rgn_iterate1 (drawable, run_mode, find_min_max, &param);
 
   /* Calculate LUTs with stretched contrast */
-  for (b = 0; b < alpha; b++)
+  for (b = 0; b < param.alpha; b++)
     {
-      range = max[b] - min[b];
+      gint range = param.max[b] - param.min[b];
+      gint x;
 
       if (range != 0)
-	for (x = min[b]; x <= max[b]; x++)
-	  lut[x][b] = 255 * (x - min[b]) / range;
+	for (x = param.min[b]; x <= param.max[b]; x++)
+	  param.lut[x][b] = 255 * (x - param.min[b]) / range;
       else
-	lut[min[b]][b] = min[b];
+	param.lut[param.min[b]][b] = param.min[b];
     }
 
-  /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-      dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		d[b] = lut[s[b]][b];
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      s += src_rgn.bpp;
-	      d += dest_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	  dest += dest_rgn.rowstride;
-
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate2 (drawable, run_mode, c_astretch_func, &param);
 }
+

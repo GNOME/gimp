@@ -53,9 +53,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include <libgimp/gimp.h>
 
 #include "libgimp/stdplugins-intl.h"
@@ -70,6 +67,8 @@ static char rcsid[] = "$Id$";
 #define NSAMPLES	256
 #define TILE_CACHE_SIZE 32
 #define LUMINOSITY(X)	(INTENSITY (X[0], X[1], X[2]))
+
+static GimpRunMode run_mode;
 
 /* Declare a local function.
  */
@@ -135,7 +134,6 @@ run (gchar   *name,
 {
   static GimpParam values[1];
   GimpDrawable *drawable;
-  GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
@@ -174,86 +172,46 @@ run (gchar   *name,
   gimp_drawable_detach (drawable);
 }
 
+typedef struct {
+  guchar *samples;
+  gboolean is_rgb;
+  gboolean has_alpha;
+} GradMapParam_t;
+
+static void 
+gradmap_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  GradMapParam_t *param = (GradMapParam_t*) data;
+  gint lum;
+  gint b;
+  guchar *samp;
+
+  lum = (param->is_rgb) ? LUMINOSITY (src) : src[0];
+  samp = &param->samples[lum * bpp];
+
+  if (param->has_alpha)
+    {
+      for (b = 0; b < bpp - 1; b++)
+	dest[b] = samp[b];
+      dest[b] = ((guint)samp[b] * (guint)src[b]) / 255;
+    }
+  else
+    {
+      for (b = 0; b < bpp; b++)
+	dest[b] = samp[b];
+    }
+}
+
 static void
 gradmap (GimpDrawable *drawable)
 {
-  GimpPixelRgn	src_rgn, dest_rgn;
-  gpointer	pr;
-  guchar	*src_row, *dest_row;
-  guchar	*src, *dest;
-  gint		progress, max_progress;
-  gint		x1, y1, x2, y2;
-  gint		row, col;
-  gint		bpp, color, has_alpha;
-  guchar	*samples, *samp;
-  gint		lum;				/* luminosity */
-  gint		b;
+  GradMapParam_t param;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  param.is_rgb = gimp_drawable_is_rgb (drawable->drawable_id);
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.samples = get_samples (drawable);
 
-  bpp = gimp_drawable_bpp (drawable->drawable_id);
-  color = gimp_drawable_is_rgb (drawable->drawable_id);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-
-  samples = get_samples (drawable);
-
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, x2-x1, y2-y1, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, x2-x1, y2-y1, TRUE, TRUE);
-
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL; pr = gimp_pixel_rgns_process (pr))
-    {
-      src_row = src_rgn.data;
-      dest_row = dest_rgn.data;
-
-      for (row = 0; row < src_rgn.h; row++)
-	{
-	  src = src_row;
-	  dest = dest_row;
-
-	  for (col = 0; col < src_rgn.w; col++)
-	    {
-	      if (color)
-		{
-		  lum = LUMINOSITY (src);
-		  lum = CLAMP (lum, 0, 255);	/* to make sure */
-		}
-	      else
-		lum = src[0];
-
-	      samp = &samples[lum * bpp];
-	      if (has_alpha)
-		{
-		  for (b = 0; b < bpp - 1; b++)
-		    dest[b] = samp[b];
-		  dest[b] = ((guint)(samp[b]) * (guint)(src[b])) / 255;
-		}
-	      else
-		{
-		  for (b = 0; b < bpp; b++)
-		    dest[b] = samp[b];
-		}
-
-	      src += src_rgn.bpp;
-	      dest += dest_rgn.bpp;
-	    }
-	  src_row += src_rgn.rowstride;
-	  dest_row += dest_rgn.rowstride;
-	}
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  g_free (samples);
-
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate2 (drawable, run_mode, gradmap_func, &param);
 }
 
 /*

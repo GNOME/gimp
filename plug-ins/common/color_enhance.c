@@ -39,6 +39,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+static GimpRunMode    run_mode;
 
 /* Declare local functions.
  */
@@ -104,7 +105,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
@@ -149,222 +149,146 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
+static gdouble
+get_v (const guchar *src)
+{
+  gdouble h, z, v;
+  gint c, m, y;
+  gint k;
+  guchar map[3];
+  
+  c = 255 - src[0];
+  m = 255 - src[1];
+  y = 255 - src[2];
+      
+  k = c;
+  if (m < k) k = m;
+  if (y < k) k = y;
+  
+  map[0] = c - k;
+  map[1] = m - k;
+  map[2] = y - k;
+
+  gimp_rgb_to_hsv4(map, &h, &z, &v);
+
+  return v;
+}
 
 static void
-indexed_Color_Enhance (gint32 image_ID)  /* a.d.m. */
+enhance_it (const guchar *src, guchar *dest, gdouble vlo, gdouble vhi)
+{
+  gdouble h, z, v;
+  gint c, m, y;
+  gint k;
+  guchar map[3];
+  
+  c = 255 - src[0];
+  m = 255 - src[1];
+  y = 255 - src[2];
+      
+  k = c;
+  if (m < k) k = m;
+  if (y < k) k = y;
+  
+  map[0] = c - k;
+  map[1] = m - k;
+  map[2] = y - k;
+
+  gimp_rgb_to_hsv4(map, &h, &z, &v);
+
+  if (vhi != vlo)
+    v = (v - vlo) / (vhi - vlo);
+
+  gimp_hsv_to_rgb4(map, h, z, v);
+  
+  c = map[0];
+  m = map[1];
+  y = map[2];
+
+  c += k;
+  if (c > 255) c = 255;
+  m += k;
+  if (m > 255) m = 255;
+  y += k;
+  if (y > 255) y = 255;
+
+  dest[0] = 255 - c;
+  dest[1] = 255 - m;
+  dest[2] = 255 - y;
+}
+
+static void
+indexed_Color_Enhance (gint32 image_ID)
 {
   guchar *cmap;
   gint ncols,i;
-
   gdouble vhi = 0.0, vlo = 1.0;
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
-  if (cmap==NULL)
+  if (!cmap)
     {
       printf("Color_Enhance: cmap was NULL!  Quitting...\n");
       gimp_quit();
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      gdouble h, s, v;
-      gint c, m, y;
-      gint k;
-      guchar map[3];
-      
-      c = 255 - cmap[i*3+0];
-      m = 255 - cmap[i*3+1];
-      y = 255 - cmap[i*3+2];
-      k = c;
-      if (m < k) k = m;
-      if (y < k) k = y;
-      map[0] = c - k;
-      map[1] = m - k;
-      map[2] = y - k;
-      gimp_rgb_to_hsv4(map, &h, &s, &v);
+      gdouble v = get_v (&cmap[3 * i]);
+
       if (v > vhi) vhi = v;
       if (v < vlo) vlo = v;
     }
 
-  for (i=0;i<ncols;i++)
+  for (i = 0; i < ncols; i++)
     {
-      gdouble h, s, v;
-      gint c, m, y;
-      gint k;
-      guchar map[3];
-      
-      c = 255 - cmap[i*3+0];
-      m = 255 - cmap[i*3+1];
-      y = 255 - cmap[i*3+2];
-      k = c;
-      if (m < k) k = m;
-      if (y < k) k = y;
-      map[0] = c - k;
-      map[1] = m - k;
-      map[2] = y - k;
-      gimp_rgb_to_hsv4(map, &h, &s, &v);
-      if (vhi!=vlo)
-	v = (v-vlo) / (vhi-vlo);
-      gimp_hsv_to_rgb4(map, h, s, v);
-      c = map[0];
-      m = map[1];
-      y = map[2];
-      c += k;
-      if (c > 255) c = 255;
-      m += k;
-      if (m > 255) m = 255;
-      y += k;
-      if (y > 255) y = 255;
-      cmap[i*3+0] = 255 - c;
-      cmap[i*3+1] = 255 - m;
-      cmap[i*3+2] = 255 - y;
+      enhance_it (&cmap[3 * i], &cmap[3 * i], vlo, vhi);
     }
 
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
+typedef struct {
+  gdouble vhi;
+  gdouble vlo;
+  gboolean has_alpha;
+} ColorEnhanceParam_t;
+
+static void 
+find_vhi_vlo (guchar *src, gint bpp, gpointer data)
+{
+  ColorEnhanceParam_t *param = (ColorEnhanceParam_t*) data;
+
+  if (!param->has_alpha || src[3])
+    {
+      gdouble v = get_v (src);
+
+      if (v > param->vhi) param->vhi = v;
+      if (v < param->vlo) param->vlo = v;
+    }
+}
+
+static void 
+color_enhance_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  ColorEnhanceParam_t *param = (ColorEnhanceParam_t*) data;
+
+  enhance_it (src, dest, param->vlo, param->vhi);
+
+  if (param->has_alpha)
+    dest[3] = src[3];
+}
 
 static void
 Color_Enhance (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src, *s;
-  guchar *dest, *d;
-  gdouble  vhi = 0.0, vlo = 1.0;
-  gint    progress, max_progress;
-  gint    has_alpha, alpha;
-  gint    x1, y1, x2, y2;
-  gint    x, y;
-  gpointer pr;
+  ColorEnhanceParam_t param;
 
-  /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.vhi = 0.0;
+  param.vlo = 1.0;
 
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1) * 2;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      if (!has_alpha || (has_alpha && s[alpha])) 
-		{
-		  gdouble h, z, v;
-		  gint c, m, y;
-		  gint k;
-		  guchar map[3];
-		  
-		  c = 255 - s[0];
-		  m = 255 - s[1];
-		  y = 255 - s[2];
-		  k = c;
-		  if (m < k) k = m;
-		  if (y < k) k = y;
-		  map[0] = c - k;
-		  map[1] = m - k;
-		  map[2] = y - k;
-		  gimp_rgb_to_hsv4(map, &h, &z, &v);
-		  if (v > vhi) vhi = v;
-		  if (v < vlo) vlo = v;
-		}
-
-	      s += src_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
-    }
-
-  /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-      dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      gdouble h, z, v;
-	      gint c, m, y;
-	      gint k;
-	      guchar map[3];
-	      
-	      c = 255 - s[0];
-	      m = 255 - s[1];
-	      y = 255 - s[2];
-	      k = c;
-	      if (m < k) k = m;
-	      if (y < k) k = y;
-	      map[0] = c - k;
-	      map[1] = m - k;
-	      map[2] = y - k;
-	      gimp_rgb_to_hsv4(map, &h, &z, &v);
-	      if (vhi!=vlo)
-		v = (v-vlo) / (vhi-vlo);
-	      gimp_hsv_to_rgb4(map, h, z, v);
-	      c = map[0];
-	      m = map[1];
-	      y = map[2];
-	      c += k;
-	      if (c > 255) c = 255;
-	      m += k;
-	      if (m > 255) m = 255;
-	      y += k;
-	      if (y > 255) y = 255;
-	      d[0] = 255 - c;
-	      d[1] = 255 - m;
-	      d[2] = 255 - y;
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      s += src_rgn.bpp;
-	      d += dest_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	  dest += dest_rgn.rowstride;
-
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
-    }
-
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate1 (drawable, run_mode, find_vhi_vlo, &param);
+  gimp_rgn_iterate2 (drawable, run_mode, color_enhance_func, &param);
 }
+

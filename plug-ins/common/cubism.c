@@ -69,7 +69,6 @@ static void      run    (gchar         *name,
 			 GimpParam    **return_vals);
 static void      cubism (GimpDrawable  *drawable);
 
-static void      render_cubism        (GimpDrawable *drawable);
 static void      fill_poly_color      (Polygon      *poly,
 				       GimpDrawable *drawable,
 				       guchar       *col);
@@ -108,8 +107,6 @@ static void      cubism_ok_callback   (GtkWidget *widget,
 /*
  *  Local variables
  */
-
-static guchar bg_col[4];
 
 static CubismVals cvals =
 {
@@ -253,52 +250,6 @@ run (gchar      *name,
   gimp_drawable_detach (active_drawable);
 }
 
-static void
-cubism (GimpDrawable *drawable)
-{
-  GimpRGB background;
-  gint    x1, y1, x2, y2;
-
-  /*  find the drawable mask bounds  */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-
-  /*  determine the background color  */
-  if (cvals.bg_color == BLACK)
-    {
-      bg_col[0] = bg_col[1] = bg_col[2] = bg_col[3] = 0;
-    }
-  else
-    {
-      gimp_palette_get_background (&background);
-      switch (gimp_drawable_type (drawable->drawable_id))
-	{
-	case GIMP_RGBA_IMAGE:
-	  bg_col[3] = 0;
-	case GIMP_RGB_IMAGE:
-	  gimp_rgb_get_uchar (&background, 
-			      &bg_col[0], &bg_col[1], &bg_col[2]);
-	  break;
-	case GIMP_GRAYA_IMAGE:
-	  bg_col[1] = 0;
-	case GIMP_GRAY_IMAGE:
-	  bg_col[0] = gimp_rgb_intensity_uchar (&background);
-
-	default:
-	  break;
-	}
-    }
-
-  gimp_progress_init (_("Cubistic Transformation"));
-
-  /*  render the cubism  */
-  render_cubism (drawable);
-
-  /*  merge the shadow, update the drawable  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
-}
-
 static gint
 cubism_dialog (void)
 {
@@ -391,10 +342,10 @@ cubism_ok_callback (GtkWidget *widget,
 }
 
 static void
-render_cubism (GimpDrawable *drawable)
+cubism (GimpDrawable *drawable)
 {
   GimpPixelRgn src_rgn;
-  gdouble img_area, tile_area;
+  guchar bg_col[4];
   gdouble x, y;
   gdouble width, height;
   gdouble theta;
@@ -416,8 +367,18 @@ render_cubism (GimpDrawable *drawable)
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
   bytes = drawable->bpp;
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  img_area = (x2 - x1) * (y2 - y1);
-  tile_area = SQR (cvals.tile_size);
+
+  /*  determine the background color  */
+  if (cvals.bg_color == BLACK)
+    {
+      bg_col[0] = bg_col[1] = bg_col[2] = bg_col[3] = 0;
+    }
+  else
+    {
+      gimp_get_bg_guchar (drawable, TRUE, bg_col);
+    }
+
+  gimp_progress_init (_("Cubistic Transformation"));
 
   cols = ((x2 - x1) + cvals.tile_size - 1) / cvals.tile_size;
   rows = ((y2 - y1) + cvals.tile_size - 1) / cvals.tile_size;
@@ -446,7 +407,7 @@ render_cubism (GimpDrawable *drawable)
 
   count = 0;
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+		       x1, y1, x2 - x1, y2 - y1, FALSE, FALSE);
 
   while (count < num_tiles)
     {
@@ -456,10 +417,12 @@ render_cubism (GimpDrawable *drawable)
 	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + x1;
       y = i * cvals.tile_size + (cvals.tile_size / 4.0) 
 	- g_rand_double_range (gr, 0, cvals.tile_size/2.0) + y1;
-      width = (cvals.tile_size + g_rand_double_range (gr, 0, cvals.tile_size / 4.0) 
-	       - cvals.tile_size / 8.0) * cvals.tile_saturation;
-      height = (cvals.tile_size + g_rand_double_range (gr, 0, cvals.tile_size / 4.0) 
-		- cvals.tile_size / 8.0) * cvals.tile_saturation;
+      width = (cvals.tile_size + 
+	       g_rand_double_range (gr, 0, cvals.tile_size / 4.0) -
+	       cvals.tile_size / 8.0) * cvals.tile_saturation;
+      height = (cvals.tile_size + 
+		g_rand_double_range (gr, 0, cvals.tile_size / 4.0) - 
+		cvals.tile_size / 8.0) * cvals.tile_saturation;
       theta = g_rand_double_range (gr, 0, 2 * G_PI);
       polygon_reset (&poly);
       polygon_add_point (&poly, -width / 2.0, -height / 2.0);
@@ -470,20 +433,12 @@ render_cubism (GimpDrawable *drawable)
       polygon_translate (&poly, x, y);
 
       /*  bounds check on x, y  */
-      ix = (int) x;
-      iy = (int) y;
-      if (ix < x1)
-	ix = x1;
-      if (ix >= x2)
-	ix = x2 - 1;
-      if (iy < y1)
-	iy = y1;
-      if (iy >= y2)
-	iy = y2 - 1;
+      ix = CLAMP (x, x1, x2 - 1);
+      iy = CLAMP (y, y1, y2 - 1);
 
       gimp_pixel_rgn_get_pixel (&src_rgn, col, ix, iy);
 
-      if (! has_alpha || (has_alpha && col[bytes - 1] != 0))
+      if (!has_alpha || col[bytes - 1])
 	fill_poly_color (&poly, drawable, col);
 
       count++;
@@ -494,6 +449,11 @@ render_cubism (GimpDrawable *drawable)
   gimp_progress_update (1.0);
   g_free (random_indices);
   g_rand_free (gr);
+
+  /*  merge the shadow, update the drawable  */
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_drawable_update (drawable->drawable_id, x1, y1, x2 - x1, y2 - y1);
 }
 
 static inline gdouble
@@ -659,7 +619,6 @@ fill_poly_color (Polygon   *poly,
 			{
 			  xx = (gdouble) j / (gdouble) SUPERSAMPLE + min_x;
 			  alpha = (gint) (val * calc_alpha_blend (vec, one_over_dist, xx - sx, yy - sy));
-
 			  gimp_pixel_rgn_get_pixel (&src_rgn, buf, x, y);
 
 #ifndef USE_READABLE_BUT_SLOW_CODE

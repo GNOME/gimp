@@ -58,6 +58,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
+static GimpRunMode run_mode;
+
 
 MAIN ()
 
@@ -101,7 +103,6 @@ run (gchar      *name,
 {
   static GimpParam   values[1];
   GimpDrawable      *drawable;
-  GimpRunMode    run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   gint32 image_ID;
@@ -182,126 +183,69 @@ indexed_normalize (gint32 image_ID)  /* a.d.m. */
   gimp_image_set_cmap (image_ID, cmap, ncols);
 }
 
+typedef struct {
+  guchar  lut[256];
+  gdouble min;
+  gdouble max;
+  gint alpha;
+  gboolean has_alpha;
+} NormalizeParam_t;
+
+static void 
+find_min_max (guchar *src, gint bpp, gpointer data)
+{
+  NormalizeParam_t *param = (NormalizeParam_t*) data;
+  gint b;
+
+  for (b = 0; b < param->alpha; b++)
+    {
+      if (!param->has_alpha || src[param->alpha])
+	{
+	  if (src[b] < param->min)
+	    param->min = src[b];
+	  if (src[b] > param->max)
+	    param->max = src[b];
+	}
+    }
+}
+
+static void 
+normalize_func (guchar *src, guchar *dest, gint bpp, gpointer data)
+{
+  NormalizeParam_t *param = (NormalizeParam_t*) data;
+  gint b;
+
+  for (b = 0; b < param->alpha; b++)
+    dest[b] = param->lut[src[b]];
+  
+  if (param->has_alpha)
+    dest[param->alpha] = src[param->alpha];
+}
 
 static void
 normalize (GimpDrawable *drawable)
 {
-  GimpPixelRgn src_rgn, dest_rgn;
-  guchar *src, *s;
-  guchar *dest, *d;
-  guchar  min, max;
+  NormalizeParam_t param;
+  gint x;
   guchar  range;
-  guchar  lut[256];
-  gint    progress, max_progress;
-  gint    has_alpha, alpha;
-  gint    x1, y1, x2, y2;
-  gint    x, y, b;
-  gpointer pr;
 
-  /* Get selection area */
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  alpha = (has_alpha) ? drawable->bpp - 1 : drawable->bpp;
+  param.min = 255;
+  param.max = 0;
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.alpha = (param.has_alpha) ? drawable->bpp - 1 : drawable->bpp;
 
-  /* Initialize progress */
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1) * 2;
-
-  /* Get minimum and maximum values for each channel */
-  min = 255;
-  max = 0;
-
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		{
-		  if (!has_alpha || (has_alpha && s[alpha]))
-		    {
-		      if (s[b] < min)
-			min = s[b];
-		      if (s[b] > max)
-			max = s[b];
-		    }
-		}
-
-	      s += src_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
+  gimp_rgn_iterate1 (drawable, run_mode, find_min_max, &param);
 
   /* Calculate LUT */
 
-  range = max - min;
+  range = param.max - param.min;
 
   if (range != 0)
-    for (x = min; x <= max; x++)
-      lut[x] = 255 * (x - min) / range;
+    for (x = param.min; x <= param.max; x++)
+      param.lut[x] = 255 * (x - param.min) / range;
   else
-    lut[min] = min;
+    param.lut[(gint)param.min] = param.min;
 
-
-  /* Now substitute pixel vales */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable,
-		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
-    {
-      src = src_rgn.data;
-      dest = dest_rgn.data;
-
-      for (y = 0; y < src_rgn.h; y++)
-	{
-	  s = src;
-	  d = dest;
-
-	  for (x = 0; x < src_rgn.w; x++)
-	    {
-	      for (b = 0; b < alpha; b++)
-		d[b] = lut[s[b]];
-
-	      if (has_alpha)
-		d[alpha] = s[alpha];
-
-	      s += src_rgn.bpp;
-	      d += dest_rgn.bpp;
-	    }
-
-	  src += src_rgn.rowstride;
-	  dest += dest_rgn.rowstride;
-
-	}
-
-      /* Update progress */
-      progress += src_rgn.w * src_rgn.h;
-
-      gimp_progress_update ((double) progress / (double) max_progress);
-    }
-
-  /*  update the region  */
-  gimp_drawable_flush (drawable);
-  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_rgn_iterate2 (drawable, run_mode, normalize_func, &param);
 }
+
