@@ -251,34 +251,34 @@ histogram_tool_dialog_update (HistogramToolDialog *htd,
 
   /*  mean  */
   sprintf (text, "%3.1f", htd->mean);
-  gtk_label_set (GTK_LABEL (htd->info_labels[0]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[0]), text);
 
   /*  std dev  */
   sprintf (text, "%3.1f", htd->std_dev);
-  gtk_label_set (GTK_LABEL (htd->info_labels[1]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[1]), text);
 
   /*  median  */
   sprintf (text, "%3.1f", htd->median);
-  gtk_label_set (GTK_LABEL (htd->info_labels[2]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[2]), text);
 
   /*  pixels  */
   sprintf (text, "%8.1f", htd->pixels);
-  gtk_label_set (GTK_LABEL (htd->info_labels[3]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[3]), text);
 
   /*  intensity  */
   if (start == end)
     sprintf (text, "%d", start);
   else
     sprintf (text, "%d..%d", start, end);
-  gtk_label_set (GTK_LABEL (htd->info_labels[4]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[4]), text);
 
   /*  count  */
   sprintf (text, "%8.1f", htd->count);
-  gtk_label_set (GTK_LABEL (htd->info_labels[5]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[5]), text);
 
   /*  percentile  */
   sprintf (text, "%2.2f", htd->percentile * 100);
-  gtk_label_set (GTK_LABEL (htd->info_labels[6]), text);
+  gtk_label_set_text (GTK_LABEL (htd->info_labels[6]), text);
 }
 
 /*  histogram_tool action functions  */

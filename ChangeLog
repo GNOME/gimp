@@ -1,3 +1,16 @@
+Sun Jan 10 21:42:11 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
+
+	* app/brush_select.c
+	* app/channels_dialog.c
+	* app/disp_callbacks.c
+	* app/histogram_tool.c
+	* app/info_dialog.c
+	* app/layer_select.c
+	* app/pattern_select.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/newsprint/newsprint.c: More changes of the form
+ 	       s/gtk_label_set/gtk_label_set_text/
+
 Sun Jan 10 20:44:07 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/paint_funcs.c: Disabled debug output of [.!..!!] for COW

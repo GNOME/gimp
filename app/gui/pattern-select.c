@@ -620,11 +620,11 @@ update_active_pattern_field (PatternSelectP psp)
     return;
 
   /*  Set pattern name  */
-  gtk_label_set (GTK_LABEL (psp->pattern_name), pattern->name);
+  gtk_label_set_text (GTK_LABEL (psp->pattern_name), pattern->name);
 
   /*  Set pattern size  */
   sprintf (buf, "(%d X %d)", pattern->mask->width, pattern->mask->height);
-  gtk_label_set (GTK_LABEL (psp->pattern_size), buf);
+  gtk_label_set_text (GTK_LABEL (psp->pattern_size), buf);
 }
 
 static gint

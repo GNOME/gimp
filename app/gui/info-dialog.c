@@ -93,7 +93,7 @@ update_field (InfoField *field)
     {
       /* set the new value and update somehow */
         if (field->callback == NULL)
-	  gtk_label_set (GTK_LABEL (field->w), field->text_ptr);
+	  gtk_label_set_text (GTK_LABEL (field->w), field->text_ptr);
 	else
 	  gtk_entry_set_text (GTK_ENTRY (field->w), field->text_ptr);
     }

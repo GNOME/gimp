@@ -23,7 +23,7 @@
  */
 
 /*
- * version 0.51
+ * version 0.52
  * This version requires gtk-1.0.4 or above.
  *
  * This plug-in puts an image through a screen at a particular angle
@@ -38,6 +38,9 @@
  * Tim Harris <tim.harris@acm.org> provided valuable feedback on
  * pre-press issues.
  *
+ *
+ * 0.52: 10 Jan 1999  <austin@greenend.org.uk>
+ *    gtk_label_set() -> gtk_label_set_text()
  */
 
 
@@ -52,7 +55,7 @@
 static char rcsid[] = "$Id$";
 #endif
 
-#define VERSION "v0.51"
+#define VERSION "v0.52"
 
 /* Some useful macros */
 #ifdef DEBUG
@@ -808,7 +811,7 @@ preview_update(channel_st *st)
 	gtk_widget_draw(prev->widget, NULL);
 
 	sprintf(pct, "%2d%%", (int)rint(spotfn_list[sfn].prev_lvl[i] * 100));
-	gtk_label_set(GTK_LABEL(prev->label), pct);
+	gtk_label_set_text (GTK_LABEL(prev->label), pct);
     }
 
     gdk_flush ();

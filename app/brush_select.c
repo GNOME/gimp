@@ -886,11 +886,11 @@ update_active_brush_field (BrushSelectP bsp)
     return;
 
   /*  Set brush name  */
-  gtk_label_set (GTK_LABEL (bsp->brush_name), brush->name);
+  gtk_label_set_text (GTK_LABEL (bsp->brush_name), brush->name);
 
   /*  Set brush size  */
   sprintf (buf, "(%d X %d)", brush->mask->width, brush->mask->height);
-  gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
+  gtk_label_set_text (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
   if(bsp == brush_select_dialog)

@@ -1876,8 +1876,8 @@ edit_channel_query_ok_callback (GtkWidget *w,
     /*  Set the new channel name  */
     channel_set_name(channel,
 		     gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-    gtk_label_set (GTK_LABEL (options->channel_widget->label),
-		   channel_get_name(channel));
+    gtk_label_set_text (GTK_LABEL (options->channel_widget->label),
+			channel_get_name(channel));
 
     if (channel->opacity != opacity)
       {

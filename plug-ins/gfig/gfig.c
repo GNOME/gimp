@@ -4429,14 +4429,14 @@ gfig_pos_update_labels(gpointer data)
   else
     sprintf(buf," X:  %.3d ",x_pos_val);
 
-  gtk_label_set(GTK_LABEL(x_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(x_pos_label),buf);
 
   if(y_pos_val < 0)
     sprintf(buf," Y:%.3d ",y_pos_val);
   else
     sprintf(buf," Y:  %.3d ",y_pos_val);
 
-  gtk_label_set(GTK_LABEL(y_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(y_pos_label),buf);
 }
 
 static void
@@ -4466,7 +4466,7 @@ gfig_obj_size_update(gint sz)
   static gchar buf[256];
   
   sprintf(buf,"%6d",sz);
-  gtk_label_set(GTK_LABEL(obj_size_label),buf);
+  gtk_label_set_text(GTK_LABEL(obj_size_label),buf);
 }  
 
 static GtkWidget *
@@ -4491,7 +4491,7 @@ gfig_obj_size_label(void)
   gtk_widget_show(hbox);
 
   sprintf(buf,"%6d",0);
-  gtk_label_set(GTK_LABEL(obj_size_label),buf);
+  gtk_label_set_text(GTK_LABEL(obj_size_label),buf);
 
   return(hbox);
 }
@@ -4529,9 +4529,9 @@ gfig_pos_labels(void)
   gtk_widget_show(vbox);
 
   sprintf(buf," X:  %.3d ",0);
-  gtk_label_set(GTK_LABEL(x_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(x_pos_label),buf);
   sprintf(buf," Y:  %.3d ",0);
-  gtk_label_set(GTK_LABEL(y_pos_label),buf);
+  gtk_label_set_text(GTK_LABEL(y_pos_label),buf);
 
   return(hbox);
 }
@@ -5314,7 +5314,7 @@ gfig_list_ok_callback (GtkWidget *w,
 #endif /* DEBUG */
 
   /* Need to reorder the list */
-  /* gtk_label_set (GTK_LABEL (options->layer_widget->label), layer->name);*/
+  /* gtk_label_set_text (GTK_LABEL (options->layer_widget->label), layer->name);*/
 
   pos = gtk_list_child_position(GTK_LIST(gfig_gtk_list),list);
 #ifdef DEBUG
@@ -6224,7 +6224,7 @@ gfig_update_stat_labels()
   else
     sprintf(str,"<NONE>");
 
-  gtk_label_set(GTK_LABEL(status_label_dname),str);
+  gtk_label_set_text(GTK_LABEL(status_label_dname),str);
 
   if(current_obj->filename)
     {
@@ -6252,7 +6252,7 @@ gfig_update_stat_labels()
   else
     sprintf(str,"<NONE>");
 
-  gtk_label_set(GTK_LABEL(status_label_fname),str);
+  gtk_label_set_text(GTK_LABEL(status_label_fname),str);
 
 }
 
