@@ -308,6 +308,9 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (l_tool->channel_menu),
                                  l_tool->channel);
 
+  if (! l_tool->color && l_tool->alpha)
+    l_tool->channel = 1;
+
   levels_update (l_tool, ALL);
 
   gimp_drawable_calculate_histogram (drawable, l_tool->hist);
@@ -906,6 +909,10 @@ levels_channel_callback (GtkWidget      *widget,
 
   gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
                                    tool->channel);
+
+  /* FIXME: hack */
+  if (! tool->color && tool->alpha)
+    tool->channel = (tool->channel > 1) ? 2 : 1;
 
   levels_update (tool, ALL);
 }

@@ -1,5 +1,11 @@
 2004-06-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimplevelstool.c: reverted fix for bug #141930. These
+	hacks are there because the enum used in levels doesn't match
+	the enum used by the combo box and the histogram widget.
+
+2004-06-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpclonetool.c (gimp_clone_tool_button_release):
 	removed again (tools must not draw outside GimpDrawTool::draw()).
 
