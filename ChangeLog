@@ -1,8 +1,3 @@
-2003-03-24  gettextize  <bug-gnu-gettext@gnu.org>
-
-	* Makefile.am (SUBDIRS): Remove intl.
-	(ACLOCAL_AMFLAGS): New variable.
-
 2003-03-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf.c (xcf_save_layer): changed if(fail) (which is
