@@ -93,7 +93,7 @@ static void   color_balance_yb_adjustment_update (GtkAdjustment      *adj,
 
 
 /*  the color balance tool options  */
-static ToolOptions *color_balance_options = NULL;
+static GimpToolOptions *color_balance_options = NULL;
 
 /*  the color balance dialog  */
 static ColorBalanceDialog *color_balance_dialog = NULL;
@@ -173,7 +173,7 @@ gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
       color_balance_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_COLOR_BALANCE_TOOL,
-					  (ToolOptions *) color_balance_options);
+					  (GimpToolOptions *) color_balance_options);
     }
 }
 

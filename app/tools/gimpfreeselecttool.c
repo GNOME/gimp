@@ -203,7 +203,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
                                             selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_FREE_SELECT_TOOL,
-                                          (ToolOptions *) free_options);
+                                          (GimpToolOptions *) free_options);
     }
 
   tool->tool_cursor = GIMP_FREE_SELECT_TOOL_CURSOR;

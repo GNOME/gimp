@@ -28,21 +28,20 @@
 
 
 void
-tool_options_init (ToolOptions          *options,
+tool_options_init (GimpToolOptions      *options,
 		   ToolOptionsResetFunc  reset_func)
 {
   options->main_vbox  = gtk_vbox_new (FALSE, 2);
   options->reset_func = reset_func;
 }
 
-ToolOptions *
+GimpToolOptions *
 tool_options_new (void)
 {
-  ToolOptions *options;
+  GimpToolOptions *options;
+  GtkWidget       *label;
 
-  GtkWidget *label;
-
-  options = g_new0 (ToolOptions, 1);
+  options = g_new0 (GimpToolOptions, 1);
   tool_options_init (options, NULL);
 
   label = gtk_label_new (_("This tool has no options."));

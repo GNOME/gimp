@@ -104,7 +104,7 @@ static void   gimp_airbrush_tool_motion     (GimpPaintTool         *paint_tool,
 static gint   airbrush_time_out             (gpointer               data);
 
 static AirbrushOptions * airbrush_options_new   (void);
-static void              airbrush_options_reset (ToolOptions *tool_options);
+static void              airbrush_options_reset (GimpToolOptions *tool_options);
 
 
 /*  local variables  */
@@ -192,7 +192,7 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
       airbrush_options = airbrush_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_AIRBRUSH_TOOL,
-                                          (ToolOptions *) airbrush_options);
+                                          (GimpToolOptions *) airbrush_options);
      }
 
    tool->tool_cursor = GIMP_AIRBRUSH_TOOL_CURSOR;
@@ -504,7 +504,7 @@ airbrush_options_new (void)
   options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the rate scale  */
   table = gtk_table_new (2, 2, FALSE);
@@ -543,7 +543,7 @@ airbrush_options_new (void)
 }
 
 static void
-airbrush_options_reset (ToolOptions *tool_options)
+airbrush_options_reset (GimpToolOptions *tool_options)
 {
   AirbrushOptions *options;
 

@@ -137,7 +137,7 @@ paint_options_init (PaintOptions         *options,
     }
 
   /*  initialize the tool options structure  */
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     reset_func);
 
   /*  initialize the paint options structure  */
@@ -275,7 +275,7 @@ paint_options_new (GtkType               tool_type,
 }
 
 void
-paint_options_reset (ToolOptions *tool_options)
+paint_options_reset (GimpToolOptions *tool_options)
 {
   PaintOptions *options;
   GimpContext  *default_context;

@@ -214,7 +214,7 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
                                             transform_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_PERSPECTIVE_TOOL,
-                                          (ToolOptions *) perspective_options);
+                                          (GimpToolOptions *) perspective_options);
     }
 
   tool->tool_cursor   = GIMP_PERSPECTIVE_TOOL_CURSOR;

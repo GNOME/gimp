@@ -62,7 +62,7 @@ typedef struct _FlipOptions FlipOptions;
 
 struct _FlipOptions
 {
-  ToolOptions              tool_options;
+  GimpToolOptions          tool_options;
 
   InternalOrientationType  type;
   InternalOrientationType  type_d;
@@ -89,7 +89,7 @@ static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
 						   TransformState     state);
 
 static FlipOptions * flip_options_new             (void);
-static void          flip_options_reset           (ToolOptions       *tool_options);
+static void          flip_options_reset           (GimpToolOptions   *tool_options);
 
 
 static FlipOptions *flip_options = NULL;
@@ -250,7 +250,7 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
       flip_options = flip_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_FLIP_TOOL,
-					  (ToolOptions *) flip_options);
+					  (GimpToolOptions *) flip_options);
     }
 
   tool->tool_cursor   = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
@@ -387,7 +387,7 @@ flip_options_new (void)
   GtkWidget   *frame;
  
   options = g_new0 (FlipOptions, 1);
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     flip_options_reset);
 
   options->type = options->type_d = ORIENTATION_HORIZONTAL;
@@ -415,7 +415,7 @@ flip_options_new (void)
 }
 
 static void
-flip_options_reset (ToolOptions *tool_options)
+flip_options_reset (GimpToolOptions *tool_options)
 {
   FlipOptions *options;
 

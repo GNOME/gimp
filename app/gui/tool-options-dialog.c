@@ -70,7 +70,7 @@ static GtkWidget   *options_preview      = NULL;
 static GtkWidget   *options_eventbox     = NULL;
 static GtkWidget   *options_reset_button = NULL;
 
-static ToolOptions *visible_tool_options = NULL;
+static GimpToolOptions *visible_tool_options = NULL;
 
 
 /*  public functions  */

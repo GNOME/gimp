@@ -31,9 +31,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-/* FIXME: remove the Path <-> BezierSelect dependency */
-#include "tools/tools-types.h"
-
 #include "gimp.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
@@ -45,7 +42,6 @@
 #include "gimpparasitelist.h"
 
 #include "floating_sel.h"
-#include "gdisplay.h"
 #include "path.h"
 
 #include "libgimp/gimpintl.h"

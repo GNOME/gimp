@@ -149,7 +149,7 @@ gimp_scale_tool_init (GimpScaleTool *sc_tool)
                                             transform_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_SCALE_TOOL,
-                                          (ToolOptions *) scale_options);
+                                          (GimpToolOptions *) scale_options);
     }
 
   tool->tool_cursor = GIMP_RESIZE_TOOL_CURSOR;

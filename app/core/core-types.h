@@ -137,6 +137,11 @@ typedef struct _GimpGuide           GimpGuide;
 typedef struct _GimpImageNewValues  GimpImageNewValues;
 
 
+/*  stuff which is forward declared here so we don't need to cross-include it  */
+
+typedef struct _GimpToolOptions     GimpToolOptions;
+
+
 /*  functions  */
 
 typedef void       (* GimpDataFileLoaderFunc)   (const gchar *filename,

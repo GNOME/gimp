@@ -123,73 +123,73 @@ static void        gimp_ink_tool_init            (GimpInkTool      *tool);
 static void        gimp_ink_tool_destroy         (GtkObject        *object);
 
 static InkOptions * ink_options_new     (void);
-static void         ink_options_reset   (ToolOptions    *tool_options);
+static void         ink_options_reset   (GimpToolOptions *tool_options);
 
-static void        ink_button_press     (GimpTool       *tool,
-					 GdkEventButton *mevent,
-					 GDisplay       *gdisp);
-static void        ink_button_release   (GimpTool       *tool,
-					 GdkEventButton *bevent,
-					 GDisplay       *gdisp);
-static void        ink_motion           (GimpTool       *tool,
-					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
-static void        ink_cursor_update    (GimpTool       *tool,
-					 GdkEventMotion *mevent,
-					 GDisplay       *gdisp);
-static void        ink_control          (GimpTool       *tool,
-					 ToolAction      tool_action,
-					 GDisplay       *gdisp);
+static void        ink_button_press     (GimpTool        *tool,
+					 GdkEventButton  *mevent,
+					 GDisplay        *gdisp);
+static void        ink_button_release   (GimpTool        *tool,
+					 GdkEventButton  *bevent,
+					 GDisplay        *gdisp);
+static void        ink_motion           (GimpTool        *tool,
+					 GdkEventMotion  *mevent,
+					 GDisplay        *gdisp);
+static void        ink_cursor_update    (GimpTool        *tool,
+					 GdkEventMotion  *mevent,
+					 GDisplay        *gdisp);
+static void        ink_control          (GimpTool        *tool,
+					 ToolAction       tool_action,
+					 GDisplay        *gdisp);
 
-static void        time_smoother_add    (GimpInkTool    *ink_tool,
-					 guint32         value);
-static gdouble     time_smoother_result (GimpInkTool    *ink_tool);
-static void        time_smoother_init   (GimpInkTool    *ink_tool,
-					 guint32         initval);
-static void        dist_smoother_add    (GimpInkTool    *ink_tool,
-					 gdouble         value);
-static gdouble     dist_smoother_result (GimpInkTool    *ink_tool);
-static void        dist_smoother_init   (GimpInkTool    *ink_tool,
-					 gdouble         initval);
+static void        time_smoother_add    (GimpInkTool     *ink_tool,
+					 guint32          value);
+static gdouble     time_smoother_result (GimpInkTool     *ink_tool);
+static void        time_smoother_init   (GimpInkTool     *ink_tool,
+					 guint32          initval);
+static void        dist_smoother_add    (GimpInkTool     *ink_tool,
+					 gdouble          value);
+static gdouble     dist_smoother_result (GimpInkTool     *ink_tool);
+static void        dist_smoother_init   (GimpInkTool     *ink_tool,
+					 gdouble          initval);
 
-static void        ink_init             (GimpInkTool    *ink_tool, 
-					 GimpDrawable   *drawable, 
-					 gdouble         x, 
-					 gdouble         y);
-static void        ink_finish           (GimpInkTool    *ink_tool, 
-					 GimpDrawable   *drawable);
+static void        ink_init             (GimpInkTool     *ink_tool, 
+					 GimpDrawable    *drawable, 
+					 gdouble          x, 
+					 gdouble          y);
+static void        ink_finish           (GimpInkTool     *ink_tool, 
+					 GimpDrawable    *drawable);
 static void        ink_cleanup          (void);
 
-static void        ink_type_update      (GtkWidget      *radio_button,
-					 BlobFunc        function);
-static GdkPixmap * blob_pixmap          (GdkColormap    *colormap,
-					 GdkVisual      *visual,
-					 BlobFunc        function);
-static void        paint_blob           (GdkDrawable    *drawable, 
-					 GdkGC          *gc,
-					 Blob           *blob);
+static void        ink_type_update      (GtkWidget       *radio_button,
+					 BlobFunc         function);
+static GdkPixmap * blob_pixmap          (GdkColormap     *colormap,
+					 GdkVisual       *visual,
+					 BlobFunc         function);
+static void        paint_blob           (GdkDrawable     *drawable, 
+					 GdkGC           *gc,
+					 Blob            *blob);
 
 /*  Rendering functions  */
-static void        ink_set_paint_area   (GimpInkTool    *ink_tool, 
-					 GimpDrawable   *drawable, 
-					 Blob           *blob);
-static void        ink_paste            (GimpInkTool    *ink_tool, 
-					 GimpDrawable   *drawable,
-					 Blob           *blob);
+static void        ink_set_paint_area   (GimpInkTool     *ink_tool, 
+					 GimpDrawable    *drawable, 
+					 Blob            *blob);
+static void        ink_paste            (GimpInkTool     *ink_tool, 
+					 GimpDrawable    *drawable,
+					 Blob            *blob);
 
-static void        ink_to_canvas_tiles  (GimpInkTool    *ink_tool,
-					 Blob           *blob,
-					 guchar         *color);
+static void        ink_to_canvas_tiles  (GimpInkTool     *ink_tool,
+					 Blob            *blob,
+					 guchar          *color);
 
-static void        ink_set_undo_tiles   (GimpDrawable   *drawable,
-					 gint            x, 
-					 gint            y,
-					 gint            w, 
-					 gint            h);
-static void        ink_set_canvas_tiles (gint            x, 
-					 gint            y,
-					 gint            w, 
-					 gint            h);
+static void        ink_set_undo_tiles   (GimpDrawable    *drawable,
+					 gint             x, 
+					 gint             y,
+					 gint             w, 
+					 gint             h);
+static void        ink_set_canvas_tiles (gint             x, 
+					 gint             y,
+					 gint             w, 
+					 gint             h);
 
 /*  Brush pseudo-widget callbacks  */
 static void   brush_widget_active_rect    (BrushWidget    *brush_widget,
@@ -303,9 +303,9 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
       ink_options = ink_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_INK_TOOL,
-					  (ToolOptions *) ink_options);
+					  (GimpToolOptions *) ink_options);
 
-      ink_options_reset ((ToolOptions *) ink_options);
+      ink_options_reset ((GimpToolOptions *) ink_options);
     }
 }
 
@@ -338,7 +338,7 @@ ink_type_update (GtkWidget      *radio_button,
 }
 
 static void
-ink_options_reset (ToolOptions *tool_options)
+ink_options_reset (GimpToolOptions *tool_options)
 {
   InkOptions *options;
 
@@ -398,7 +398,7 @@ ink_options_new (void)
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (((ToolOptions *) options)->main_vbox), vbox,
+  gtk_box_pack_start (GTK_BOX (((GimpToolOptions *) options)->main_vbox), vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 

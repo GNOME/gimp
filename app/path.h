@@ -77,7 +77,6 @@ PathList*             path_list_new             (GimpImage *gimage,
 						 GSList    *bz_paths);
 void                  path_list_free            (PathList  *plist);
 
-GimpBezierSelectTool* path_to_beziersel         (Path      *path);
 
 #endif  /*  __PATH_H__  */
 

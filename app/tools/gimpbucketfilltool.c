@@ -91,35 +91,35 @@ static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_
 static void   gimp_bucket_fill_tool_destroy    (GtkObject      *object);
 
 static BucketOptions * bucket_options_new           (void);
-static void            bucket_options_reset         (ToolOptions    *tool_options);
+static void            bucket_options_reset         (GimpToolOptions *tool_options);
 
-static void   gimp_bucket_fill_tool_button_press    (GimpTool       *tool,
-						     GdkEventButton *bevent,
-						     GDisplay       *gdisp);
-static void   gimp_bucket_fill_tool_button_release  (GimpTool       *tool,
-						     GdkEventButton *bevent,
-						     GDisplay       *gdisp);
-static void   gimp_bucket_fill_tool_cursor_update   (GimpTool       *tool,
-						     GdkEventMotion *mevent,
-						     GDisplay       *gdisp);
-static void   gimp_bucket_fill_tool_modifier_key    (GimpTool       *tool,
-						     GdkEventKey    *kevent,
-						     GDisplay       *gdisp);
+static void   gimp_bucket_fill_tool_button_press    (GimpTool        *tool,
+						     GdkEventButton  *bevent,
+						     GDisplay        *gdisp);
+static void   gimp_bucket_fill_tool_button_release  (GimpTool        *tool,
+						     GdkEventButton  *bevent,
+						     GDisplay        *gdisp);
+static void   gimp_bucket_fill_tool_cursor_update   (GimpTool        *tool,
+						     GdkEventMotion  *mevent,
+						     GDisplay        *gdisp);
+static void   gimp_bucket_fill_tool_modifier_key    (GimpTool        *tool,
+						     GdkEventKey     *kevent,
+						     GDisplay        *gdisp);
 
-static void   bucket_fill_line_color                (guchar         *,
-						     guchar         *,
-						     guchar         *,
-						     gboolean        ,
-						     gint            ,
-						     gint            );
-static void   bucket_fill_line_pattern              (guchar         *,
-						     guchar         *,
-						     TempBuf        *,
-						     gboolean        ,
-						     gint            ,
-						     gint            ,
-						     gint            ,
-						     gint            );
+static void   bucket_fill_line_color                (guchar          *,
+						     guchar          *,
+						     guchar          *,
+						     gboolean         ,
+						     gint             ,
+						     gint             );
+static void   bucket_fill_line_pattern              (guchar          *,
+						     guchar          *,
+						     TempBuf         *,
+						     gboolean         ,
+						     gint             ,
+						     gint             ,
+						     gint             ,
+						     gint             );
 
 
 /*  functions  */
@@ -194,9 +194,9 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
       bucket_options = bucket_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_BUCKET_FILL_TOOL,
-					  (ToolOptions *) bucket_options);
+					  (GimpToolOptions *) bucket_options);
 
-      bucket_options_reset ((ToolOptions *) bucket_options);
+      bucket_options_reset ((GimpToolOptions *) bucket_options);
     }
 
   tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
@@ -212,7 +212,7 @@ gimp_bucket_fill_tool_destroy (GtkObject *object)
 }
 
 static void
-bucket_options_reset (ToolOptions *tool_options)
+bucket_options_reset (GimpToolOptions *tool_options)
 {
   BucketOptions *options;
 
@@ -249,7 +249,7 @@ bucket_options_new (void)
   options->fill_mode     = options->fill_mode_d     = FG_BUCKET_FILL;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the sample merged toggle  */
   options->sample_merged_w =

@@ -54,7 +54,7 @@ selection_options_init (SelectionOptions     *options,
   GtkWidget *separator;
 
   /*  initialize the tool options structure  */
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     reset_func);
 
   /*  the main vbox  */
@@ -305,7 +305,7 @@ selection_options_new (GtkType               tool_type,
 }
 
 void
-selection_options_reset (ToolOptions *tool_options)
+selection_options_reset (GimpToolOptions *tool_options)
 {
   SelectionOptions *options;
 

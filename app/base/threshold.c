@@ -100,7 +100,7 @@ static void   threshold_histogram_range       (HistogramWidget *,
 
 
 /*  the threshold tool options  */
-static ToolOptions *threshold_options = NULL;
+static GimpToolOptions *threshold_options = NULL;
 
 /*  the threshold tool dialog  */
 static ThresholdDialog *threshold_dialog = NULL;
@@ -178,7 +178,7 @@ gimp_threshold_tool_init (GimpThresholdTool *bc_tool)
       threshold_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_THRESHOLD_TOOL,
-					  (ToolOptions *) threshold_options);
+					  (GimpToolOptions *) threshold_options);
     }
 }
 

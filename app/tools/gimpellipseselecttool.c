@@ -191,7 +191,7 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 					       selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-                                          (ToolOptions *) ellipse_options);
+                                          (GimpToolOptions *) ellipse_options);
     }
 
   tool->tool_cursor = GIMP_ELLIPSE_SELECT_TOOL_CURSOR;

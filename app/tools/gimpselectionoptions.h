@@ -27,7 +27,7 @@
 
 struct _SelectionOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   /*  options used by all selection tools  */
   gboolean     feather;
@@ -81,7 +81,7 @@ struct _SelectionOptions
 SelectionOptions * selection_options_new   (GtkType               tool_type,
 					    ToolOptionsResetFunc  reset_func);
 
-void               selection_options_reset (ToolOptions          *tool_options);
+void               selection_options_reset (GimpToolOptions      *tool_options);
 
 
 /*  to be used by "derived" selection options only

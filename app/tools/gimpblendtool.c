@@ -132,73 +132,73 @@ typedef struct
 static void    gimp_blend_tool_class_init        (GimpBlendToolClass *klass);
 static void    gimp_blend_tool_init              (GimpBlendTool      *blend_tool);
 
-static void    gimp_blend_tool_destroy           (GtkObject      *object);
+static void    gimp_blend_tool_destroy           (GtkObject       *object);
 
-static void    gradient_type_callback            (GtkWidget      *widget,
-						  gpointer        data);
+static void    gradient_type_callback            (GtkWidget       *widget,
+						  gpointer         data);
 
-static void    gimp_blend_tool_button_press      (GimpTool       *tool,
-						  GdkEventButton *bevent,
-						  GDisplay       *gdisp);
-static void    gimp_blend_tool_button_release    (GimpTool       *tool,
-						  GdkEventButton *bevent,
-						  GDisplay       *gdisp);
-static void    gimp_blend_tool_motion            (GimpTool       *tool,
-						  GdkEventMotion *mevent,
-						  GDisplay       *gdisp);
-static void    gimp_blend_tool_cursor_update     (GimpTool       *tool,
-						  GdkEventMotion *mevent,
-						  GDisplay       *gdisp);
+static void    gimp_blend_tool_button_press      (GimpTool        *tool,
+						  GdkEventButton  *bevent,
+						  GDisplay        *gdisp);
+static void    gimp_blend_tool_button_release    (GimpTool        *tool,
+						  GdkEventButton  *bevent,
+						  GDisplay        *gdisp);
+static void    gimp_blend_tool_motion            (GimpTool        *tool,
+						  GdkEventMotion  *mevent,
+						  GDisplay        *gdisp);
+static void    gimp_blend_tool_cursor_update     (GimpTool        *tool,
+						  GdkEventMotion  *mevent,
+						  GDisplay        *gdisp);
 
-static void    gimp_blend_tool_draw              (GimpDrawTool   *draw_tool);
+static void    gimp_blend_tool_draw              (GimpDrawTool    *draw_tool);
 
 static BlendOptions * blend_options_new          (void);
 
-static void    blend_options_reset               (ToolOptions    *tool_options);
+static void    blend_options_reset               (GimpToolOptions *tool_options);
 
-static void    gradient_type_callback            (GtkWidget      *widget,
-                                                  gpointer        data);
-static void    blend_options_drop_gradient       (GtkWidget      *widget,
-						  GimpViewable   *viewable,
-						  gpointer        data);
-static void    blend_options_drop_tool           (GtkWidget      *widget,
-						  GimpViewable   *viewable,
-						  gpointer        data);
+static void    gradient_type_callback            (GtkWidget       *widget,
+                                                  gpointer         data);
+static void    blend_options_drop_gradient       (GtkWidget       *widget,
+						  GimpViewable    *viewable,
+						  gpointer         data);
+static void    blend_options_drop_tool           (GtkWidget       *widget,
+						  GimpViewable    *viewable,
+						  gpointer         data);
 
-static gdouble gradient_calc_conical_sym_factor  (gdouble         dist,
-						  gdouble        *axis,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_conical_asym_factor (gdouble         dist,
-						  gdouble        *axis,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_square_factor       (gdouble         dist,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_radial_factor   	 (gdouble         dist,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_linear_factor   	 (gdouble         dist,
-						  gdouble        *vec,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_bilinear_factor 	 (gdouble         dist,
-						  gdouble        *vec,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y);
-static gdouble gradient_calc_spiral_factor       (gdouble         dist,
-						  gdouble        *axis,
-						  gdouble         offset,
-						  gdouble         x,
-						  gdouble         y,
-						  gint            cwise);
+static gdouble gradient_calc_conical_sym_factor  (gdouble          dist,
+						  gdouble         *axis,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_conical_asym_factor (gdouble          dist,
+						  gdouble         *axis,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_square_factor       (gdouble          dist,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_radial_factor   	 (gdouble          dist,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_linear_factor   	 (gdouble          dist,
+						  gdouble         *vec,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_bilinear_factor 	 (gdouble          dist,
+						  gdouble         *vec,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y);
+static gdouble gradient_calc_spiral_factor       (gdouble          dist,
+						  gdouble         *axis,
+						  gdouble          offset,
+						  gdouble          x,
+						  gdouble          y,
+						  gint             cwise);
 
 static gdouble gradient_calc_shapeburst_angular_factor   (gdouble x,
 							  gdouble y);
@@ -345,7 +345,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
       blend_options = blend_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_BLEND_TOOL,
-					  (ToolOptions *) blend_options);
+					  (GimpToolOptions *) blend_options);
     }
 
   tool->tool_cursor = GIMP_BLEND_TOOL_CURSOR;
@@ -670,7 +670,7 @@ blend_options_new (void)
   options->threshold     = options->threshold_d     = 0.2;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  dnd stuff  */
   gtk_drag_dest_set (vbox,
@@ -828,7 +828,7 @@ blend_options_new (void)
 }
 
 static void
-blend_options_reset (ToolOptions *tool_options)
+blend_options_reset (GimpToolOptions *tool_options)
 {
   BlendOptions *options;
 

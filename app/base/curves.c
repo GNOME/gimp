@@ -175,7 +175,7 @@ static void      curves_write_to_file     (FILE           *f);
 
 
 /*  the curves tool options  */
-static ToolOptions  * curves_options = NULL;
+static GimpToolOptions  * curves_options = NULL;
 
 /*  the curves dialog  */
 static CurvesDialog * curves_dialog = NULL;
@@ -270,7 +270,7 @@ gimp_curves_tool_init (GimpCurvesTool *bc_tool)
       curves_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_CURVES_TOOL,
-					  (ToolOptions *) curves_options);
+					  (GimpToolOptions *) curves_options);
     }
 }
 

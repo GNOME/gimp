@@ -192,7 +192,7 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
                                             transform_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_ROTATE_TOOL,
-                                          (ToolOptions *) rotate_options);
+                                          (GimpToolOptions *) rotate_options);
     }
 
   tool->tool_cursor   = GIMP_ROTATE_TOOL_CURSOR;
@@ -204,7 +204,6 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   /*  assemble the transformation matrix  */
   gimp_matrix3_identity (tr_tool->transform);
-
 }
 
 static void

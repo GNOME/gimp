@@ -55,7 +55,7 @@ typedef struct _GimpColorPickerToolOptions GimpColorPickerToolOptions;
 
 struct _GimpColorPickerToolOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   gboolean     sample_merged;
   gboolean     sample_merged_d;
@@ -108,7 +108,7 @@ static void       gimp_color_picker_tool_draw           (GimpDrawTool   *draw_to
 
 static GimpColorPickerToolOptions * gimp_color_picker_tool_options_new  (void);
 
-static void       gimp_color_picker_tool_options_reset   	(ToolOptions *tool_options);
+static void       gimp_color_picker_tool_options_reset   	(GimpToolOptions *tool_options);
 static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
                                                                  gpointer   data);
 static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
@@ -224,7 +224,7 @@ gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
       gimp_color_picker_tool_options = gimp_color_picker_tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_COLOR_PICKER_TOOL,
-					  (ToolOptions *) gimp_color_picker_tool_options);
+					  (GimpToolOptions *) gimp_color_picker_tool_options);
     }
 
   tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
@@ -256,7 +256,7 @@ gimp_color_picker_tool_destroy (GtkObject *object)
 }
 
 static void
-gimp_color_picker_tool_options_reset (ToolOptions *tool_options)
+gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options)
 {
   GimpColorPickerToolOptions *options;
 
@@ -284,7 +284,7 @@ gimp_color_picker_tool_options_new (void)
   GtkWidget *scale;
 
   options = g_new0 (GimpColorPickerToolOptions, 1);
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     gimp_color_picker_tool_options_reset);
 
   options->sample_merged  = options->sample_merged_d  = FALSE;

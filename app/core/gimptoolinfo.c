@@ -210,6 +210,7 @@ gimp_tool_info_new (GimpContext  *context,
 		    const gchar  *menu_accel,
 		    const gchar  *help_domain,
 		    const gchar  *help_data,
+		    const gchar  *pdb_string,
 		    const gchar **icon_data)
 {
   GimpToolInfo *tool_info;
@@ -228,6 +229,9 @@ gimp_tool_info_new (GimpContext  *context,
 
   tool_info->help_domain   = g_strdup (help_domain);
   tool_info->help_data     = g_strdup (help_data);
+
+  tool_info->pdb_string    = (pdb_string ?
+			      g_strdup (pdb_string) : "gimp_paintbrush_default");
 
   tool_info->icon_data     = icon_data;
 
@@ -257,6 +261,7 @@ gimp_tool_info_get_standard (void)
 			    "Well something must be broken",
 			    NULL, NULL,
 			    NULL, NULL,
+			    NULL,
 			    NULL);
     }
 

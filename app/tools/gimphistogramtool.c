@@ -79,7 +79,7 @@ static void   histogram_tool_dialog_update    (HistogramToolDialog *htd,
 
 
 /*  the histogram tool options  */
-static ToolOptions * histogram_options = NULL;
+static GimpToolOptions * histogram_options = NULL;
 
 /*  the histogram tool dialog  */
 static HistogramToolDialog * histogram_dialog = NULL;
@@ -157,7 +157,7 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
       histogram_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_HISTOGRAM_TOOL,
-					  (ToolOptions *) histogram_options);
+					  (GimpToolOptions *) histogram_options);
     }
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */

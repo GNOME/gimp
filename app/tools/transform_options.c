@@ -161,7 +161,7 @@ gimp_transform_tool_show_grid (void)
  */
 
 void
-transform_options_reset (ToolOptions *tool_options)
+transform_options_reset (GimpToolOptions *tool_options)
 {
   TransformOptions *options;
 
@@ -197,7 +197,7 @@ transform_options_init (TransformOptions     *options,
   GtkWidget *fbox;
   GtkWidget *grid_density;
 
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     reset_func);
 
   options->smoothing = options->smoothing_d = TRUE;
@@ -311,7 +311,7 @@ transform_options_init (TransformOptions     *options,
   gtk_widget_show (options->clip_w);
 
   /* Set options to default values */
-  transform_options_reset((ToolOptions *) options);
+  transform_options_reset ((GimpToolOptions *) options);
 }
 
 TransformOptions *

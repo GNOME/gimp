@@ -1,3 +1,33 @@
+2001-07-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/path.[ch]: removed path_to_beziersel() so this file can be
+	safely included from core/.
+
+	* app/tools/gimpbezierselecttool.[ch]: added it here.
+
+	* app/core/core-types.h: added a GimpToolOptions typedef. Removes
+	deps into tools/ and will later be a core object anyway.
+
+	* app/tools/tools-types.h: removed the ToolOptions typedef here.
+
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage.c
+	* app/core/gimptoolinfo.[ch]: removed deps into tools/, misc stuff.
+
+	* app/tools/tool_manager.[ch]: some ugly temp hacks. Please ignore.
+
+	* app/widgets/gimpdialogfactory.[ch]: added a "remember_if_open" field
+	to the GimpDialogFactoryEntry so we can manage dialogs which should
+	not be re-opened on startup.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs.c: register & create all editor dialog with the
+	"global_dialog_factory".
+
+	* app/gui/tool-options-dialog.c
+	* app/tools/*: s/ToolOptions/GimpToolOptions/
+
 2001-07-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpwire.c: remove the usage of printf()/scanf()

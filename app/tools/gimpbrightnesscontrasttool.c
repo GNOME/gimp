@@ -111,7 +111,7 @@ static void   brightness_contrast_contrast_adjustment_update   (GtkAdjustment *a
 
 
 /*  the brightness-contrast tool options  */
-static ToolOptions *brightness_contrast_options = NULL;
+static GimpToolOptions *brightness_contrast_options = NULL;
 
 /*  the brightness-contrast dialog  */
 static BrightnessContrastDialog *brightness_contrast_dialog = NULL;
@@ -189,7 +189,7 @@ gimp_brightness_contrast_tool_init (GimpBrightnessContrastTool *bc_tool)
       brightness_contrast_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-					  (ToolOptions *) brightness_contrast_options);
+					  (GimpToolOptions *) brightness_contrast_options);
     }
 }
 

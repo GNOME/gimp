@@ -188,7 +188,7 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
                                             transform_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_SHEAR_TOOL,
-                                          (ToolOptions *) shear_options);
+                                          (GimpToolOptions *) shear_options);
     }
 
   tool->tool_cursor   = GIMP_SHEAR_TOOL_CURSOR;

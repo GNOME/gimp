@@ -187,7 +187,7 @@ static void      levels_write_to_file              (FILE          *f);
 
 
 /*  the levels tool options  */
-static ToolOptions *levels_options = NULL;
+static GimpToolOptions *levels_options = NULL;
 
 /*  the levels tool dialog  */
 static LevelsDialog *levels_dialog = NULL;
@@ -271,7 +271,7 @@ gimp_levels_tool_init (GimpLevelsTool *bc_tool)
       levels_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_LEVELS_TOOL,
-					  (ToolOptions *) levels_options);
+					  (GimpToolOptions *) levels_options);
     }
 }
 

@@ -39,18 +39,12 @@ typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 /*  stuff  */
 
-typedef struct _ToolOptions         ToolOptions;
 typedef struct _SelectionOptions    SelectionOptions;
 
 
 /*  functions  */
 
-typedef void   (* ToolOptionsResetFunc) (ToolOptions *tool_options);
-
-
-/*  EEK  */
-
-typedef struct _Tool Tool;
+typedef void   (* ToolOptionsResetFunc) (GimpToolOptions *tool_options);
 
 
 /*  enums  */

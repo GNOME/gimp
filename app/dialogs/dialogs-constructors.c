@@ -56,6 +56,7 @@
 #include "channels-commands.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
+#include "dialogs.h"
 #include "devices.h"
 #include "dialogs-constructors.h"
 #include "docindex.h"
@@ -89,6 +90,17 @@
 
 #include "libgimp/gimpintl.h"
 
+
+/* FIXME: do something about this uglyness:
+ */
+
+typedef struct
+{
+  GtkWidget *shell;
+} EEKWrapper;
+
+
+/*  local function prototypes  */
 
 static void dialogs_indexed_palette_selected     (GimpColormapDialog *dialog,
 						  GimpDockable       *dockable);
@@ -135,6 +147,13 @@ static void dialogs_path_view_image_changed     (GimpContext          *context,
 static void dialogs_indexed_palette_image_changed (GimpContext        *context,
 						   GimpImage          *gimage,
 						   GimpColormapDialog *ipal);
+
+
+/*  private variables  */
+
+static BrushEditor    *brush_editor_dialog    = NULL;
+static GradientEditor *gradient_editor_dialog = NULL;
+static PaletteEditor  *palette_editor_dialog  = NULL;
 
 
 /*  public functions  */
@@ -282,21 +301,36 @@ GtkWidget *
 dialogs_brush_editor_get (GimpDialogFactory *factory,
 			  GimpContext       *context)
 {
-  return NULL;
+  if (! brush_editor_dialog)
+    {
+      brush_editor_dialog = brush_editor_new (context->gimp);
+    }
+
+  return ((EEKWrapper *) brush_editor_dialog)->shell;
 }
 
 GtkWidget *
 dialogs_gradient_editor_get (GimpDialogFactory *factory,
 			     GimpContext       *context)
 {
-  return NULL;
+  if (! gradient_editor_dialog)
+    {
+      gradient_editor_dialog = gradient_editor_new (context->gimp);
+    }
+
+  return ((EEKWrapper *) gradient_editor_dialog)->shell;
 }
 
 GtkWidget *
 dialogs_palette_editor_get (GimpDialogFactory *factory,
 			    GimpContext       *context)
 {
-  return NULL;
+  if (! palette_editor_dialog)
+    {
+      palette_editor_dialog = palette_editor_new (context->gimp);
+    }
+
+  return ((EEKWrapper *) palette_editor_dialog)->shell;
 }
 
 
@@ -717,8 +751,6 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 void
 dialogs_edit_brush_func (GimpData *data)
 {
-  static BrushEditor *brush_editor_dialog = NULL;
-
   GimpBrush *brush;
 
   brush = GIMP_BRUSH (data);
@@ -727,7 +759,8 @@ dialogs_edit_brush_func (GimpData *data)
     {
       if (! brush_editor_dialog)
 	{
-	  brush_editor_dialog = brush_editor_new (the_gimp);
+	  gimp_dialog_factory_dialog_raise (global_dialog_factory,
+					    "gimp:brush-editor");
 	}
 
       brush_editor_set_brush (brush_editor_dialog, brush);
@@ -741,15 +774,14 @@ dialogs_edit_brush_func (GimpData *data)
 void
 dialogs_edit_gradient_func (GimpData *data)
 {
-  static GradientEditor *gradient_editor_dialog = NULL;
-
   GimpGradient *gradient;
 
   gradient = GIMP_GRADIENT (data);
 
   if (! gradient_editor_dialog)
     {
-      gradient_editor_dialog = gradient_editor_new (the_gimp);
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+					"gimp:gradient-editor");
     }
 
   gradient_editor_set_gradient (gradient_editor_dialog, gradient);
@@ -758,15 +790,14 @@ dialogs_edit_gradient_func (GimpData *data)
 void
 dialogs_edit_palette_func (GimpData *data)
 {
-  static PaletteEditor *palette_editor_dialog = NULL;
-
   GimpPalette *palette;
 
   palette = GIMP_PALETTE (data);
 
   if (! palette_editor_dialog)
     {
-      palette_editor_dialog = palette_editor_new (the_gimp);
+      gimp_dialog_factory_dialog_raise (global_dialog_factory,
+					"gimp:palette-editor");
     }
 
   palette_editor_set_palette (palette_editor_dialog, palette);

@@ -86,7 +86,7 @@ static void   gimp_eraser_tool_motion       (GimpPaintTool        *paint_tool,
                                              gboolean              anti_erase);
 
 static EraserOptions * gimp_eraser_tool_options_new   (void);
-static void            gimp_eraser_tool_options_reset (ToolOptions *tool_options);
+static void            gimp_eraser_tool_options_reset (GimpToolOptions *tool_options);
 
 
 /*  local variables  */
@@ -170,7 +170,7 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
       eraser_options = gimp_eraser_tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_ERASER_TOOL,
-                                          (ToolOptions *) eraser_options);
+                                          (GimpToolOptions *) eraser_options);
     }
 
   tool->tool_cursor = GIMP_ERASER_TOOL_CURSOR;
@@ -402,7 +402,7 @@ gimp_eraser_tool_options_new (void)
   options->anti_erase  = options->anti_erase_d  = ERASER_DEFAULT_ANTI_ERASE;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /* the hard toggle */
   options->hard_w = gtk_check_button_new_with_label (_("Hard Edge"));
@@ -428,7 +428,7 @@ gimp_eraser_tool_options_new (void)
 }
 
 static void
-gimp_eraser_tool_options_reset (ToolOptions *tool_options)
+gimp_eraser_tool_options_reset (GimpToolOptions *tool_options)
 {
   EraserOptions *options;
 

@@ -94,7 +94,7 @@ static void   posterize_levels_adjustment_update (GtkAdjustment   *adjustment,
 
 
 /*  the posterize tool options  */
-static ToolOptions *posterize_options = NULL;
+static GimpToolOptions *posterize_options = NULL;
 
 /* the posterize tool dialog  */
 static PosterizeDialog *posterize_dialog = NULL;
@@ -172,7 +172,7 @@ gimp_posterize_tool_init (GimpPosterizeTool *bc_tool)
       posterize_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_POSTERIZE_TOOL,
-					  (ToolOptions *) posterize_options);
+					  (GimpToolOptions *) posterize_options);
     }
 }
 

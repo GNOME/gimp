@@ -20,56 +20,56 @@
 #define __TOOL_MANAGER_H__
 
 
-void           tool_manager_init                  (Gimp           *gimp);
-void           tool_manager_exit                  (Gimp           *gimp);
+void           tool_manager_init                  (Gimp             *gimp);
+void           tool_manager_exit                  (Gimp             *gimp);
 
-void        tool_manager_set_global_paint_options (Gimp           *gimp,
-						   gboolean        global);
+void        tool_manager_set_global_paint_options (Gimp             *gimp,
+						   gboolean          global);
 
-GimpTool     * tool_manager_get_active            (Gimp           *gimp); 
+GimpTool     * tool_manager_get_active            (Gimp             *gimp); 
 
-void           tool_manager_select_tool           (Gimp           *gimp,
-						   GimpTool       *tool);
+void           tool_manager_select_tool           (Gimp             *gimp,
+						   GimpTool         *tool);
 
-void           tool_manager_push_tool             (Gimp           *gimp,
-						   GimpTool       *tool);
-void           tool_manager_pop_tool              (Gimp           *gimp);
-
-
-void           tool_manager_initialize_tool       (Gimp           *gimp,
-						   GimpTool       *tool,
-						   GDisplay       *gdisp);
-
-void           tool_manager_control_active        (Gimp           *gimp,
-						   ToolAction      action,
-						   GDisplay       *gdisp);
-
-const gchar  * tool_manager_active_get_PDB_string (Gimp           *gimp);
-const gchar  * tool_manager_active_get_help_data  (Gimp           *gimp);
+void           tool_manager_push_tool             (Gimp             *gimp,
+						   GimpTool         *tool);
+void           tool_manager_pop_tool              (Gimp             *gimp);
 
 
-void           tool_manager_register_tool         (Gimp           *gimp,
-						   GtkType         tool_type,
-						   gboolean        tool_context,
-						   const gchar    *identifier,
-						   const gchar    *blurb,
-						   const gchar    *help,
-						   const gchar    *menu_path,
-						   const gchar    *menu_accel,
-						   const gchar    *help_domain,
-						   const gchar    *help_data,
-						   const gchar   **icon_data);
+void           tool_manager_initialize_tool       (Gimp             *gimp,
+						   GimpTool         *tool,
+						   GDisplay         *gdisp);
 
-void           tool_manager_register_tool_options (GtkType         tool_type,
-						   ToolOptions    *tool_options);
+void           tool_manager_control_active        (Gimp             *gimp,
+						   ToolAction        action,
+						   GDisplay         *gdisp);
 
-GimpToolInfo * tool_manager_get_info_by_type      (Gimp           *gimp,
-						   GtkType         tool_type);
-GimpToolInfo * tool_manager_get_info_by_tool      (Gimp           *gimp,
-						   GimpTool       *tool);
+const gchar  * tool_manager_active_get_PDB_string (Gimp             *gimp);
+const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
 
-void	       tool_manager_help_func             (const gchar   *help_data);
+void           tool_manager_register_tool         (Gimp             *gimp,
+						   GtkType           tool_type,
+						   gboolean          tool_context,
+						   const gchar      *identifier,
+						   const gchar      *blurb,
+						   const gchar      *help,
+						   const gchar      *menu_path,
+						   const gchar      *menu_accel,
+						   const gchar      *help_domain,
+						   const gchar      *help_data,
+						   const gchar     **icon_data);
+
+void           tool_manager_register_tool_options (GtkType           tool_type,
+						   GimpToolOptions  *tool_options);
+
+GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
+						   GtkType           tool_type);
+GimpToolInfo * tool_manager_get_info_by_tool      (Gimp             *gimp,
+						   GimpTool         *tool);
+
+
+void	       tool_manager_help_func             (const gchar      *help_data);
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

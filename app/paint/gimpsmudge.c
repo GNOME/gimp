@@ -95,7 +95,7 @@ static void       gimp_smudge_tool_allocate_accum_buffer (gint       w,
 							  guchar    *do_fill);
 
 static SmudgeOptions * smudge_options_new   (void);
-static void            smudge_options_reset (ToolOptions *tool_options);
+static void            smudge_options_reset (GimpToolOptions *tool_options);
 
 
 /*  local variables */
@@ -177,7 +177,7 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
       smudge_options = smudge_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_SMUDGE_TOOL,
-                                          (ToolOptions *) smudge_options);
+                                          (GimpToolOptions *) smudge_options);
     }
 
   tool->tool_cursor = GIMP_SMUDGE_TOOL_CURSOR;
@@ -533,7 +533,7 @@ smudge_options_new (void)
   options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the rate scale  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -560,7 +560,7 @@ smudge_options_new (void)
 }
 
 static void
-smudge_options_reset (ToolOptions *tool_options)
+smudge_options_reset (GimpToolOptions *tool_options)
 {
   SmudgeOptions *options;
 

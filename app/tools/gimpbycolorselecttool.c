@@ -314,7 +314,7 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
 						selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-                                          (ToolOptions *) by_color_options);
+                                          (GimpToolOptions *) by_color_options);
     }
   /* Temporary until we find out how to make a new one */
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;

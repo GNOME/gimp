@@ -89,7 +89,7 @@ typedef struct _TextOptions TextOptions;
 
 struct _TextOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   gboolean     antialias;
   gboolean     antialias_d;
@@ -108,42 +108,42 @@ struct _TextOptions
 static void   gimp_text_tool_class_init      (GimpTextToolClass *klass);
 static void   gimp_text_tool_init            (GimpTextTool      *tool);
 
-static void   gimp_text_tool_destroy         (GtkObject      *object);
+static void   gimp_text_tool_destroy         (GtkObject       *object);
 
-static void   text_tool_control              (GimpTool       *tool,
-					      ToolAction      tool_action,
-					      GDisplay       *gdisp);
-static void   text_tool_button_press         (GimpTool       *tool,
-					      GdkEventButton *bevent,
-					      GDisplay       *gdisp);
-static void   text_tool_button_release       (GimpTool       *tool,
-					      GdkEventButton *bevent,
-					      GDisplay       *gdisp);
-static void   text_tool_cursor_update        (GimpTool       *tool,
-					      GdkEventMotion *mevent,
-					      GDisplay       *gdisp);
+static void   text_tool_control              (GimpTool        *tool,
+					      ToolAction       tool_action,
+					      GDisplay        *gdisp);
+static void   text_tool_button_press         (GimpTool        *tool,
+					      GdkEventButton  *bevent,
+					      GDisplay        *gdisp);
+static void   text_tool_button_release       (GimpTool        *tool,
+					      GdkEventButton  *bevent,
+					      GDisplay        *gdisp);
+static void   text_tool_cursor_update        (GimpTool        *tool,
+					      GdkEventMotion  *mevent,
+					      GDisplay        *gdisp);
 
 static TextOptions * text_tool_options_new   (void);
-static void          text_tool_options_reset (ToolOptions    *tool_options);
+static void          text_tool_options_reset (GimpToolOptions *tool_options);
 
 static void   text_dialog_create             (void);
-static void   text_dialog_ok_callback        (GtkWidget      *widget,
-					      gpointer        data);
-static void   text_dialog_cancel_callback    (GtkWidget      *widget,
-					      gpointer        data);
-static gint   text_dialog_delete_callback    (GtkWidget      *widget,
-					      GdkEvent       *event,
-					      gpointer        data);
+static void   text_dialog_ok_callback        (GtkWidget       *widget,
+					      gpointer         data);
+static void   text_dialog_cancel_callback    (GtkWidget       *widget,
+					      gpointer         data);
+static gint   text_dialog_delete_callback    (GtkWidget       *widget,
+					      GdkEvent        *event,
+					      gpointer         data);
 
-static void   text_init_render               (GimpTextTool  *text_tool);
-static void   text_gdk_image_to_region       (GdkImage      *image,
-					      gint           ,
-					      PixelRegion   *);
-static void   text_size_multiply             (gchar        **fontname,
-					      gint           size);
-static void   text_set_resolution            (gchar        **fontname,
-					      gdouble        xres,
-					      gdouble        yres);
+static void   text_init_render               (GimpTextTool    *text_tool);
+static void   text_gdk_image_to_region       (GdkImage        *image,
+					      gint             ,
+					      PixelRegion     *);
+static void   text_size_multiply             (gchar          **fontname,
+					      gint             size);
+static void   text_set_resolution            (gchar          **fontname,
+					      gdouble          xres,
+					      gdouble          yres);
 
 
 /*  local variables  */
@@ -227,7 +227,7 @@ gimp_text_tool_init (GimpTextTool *text_tool)
       text_tool_options = text_tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_TEXT_TOOL,
-					  (ToolOptions *) text_tool_options);
+					  (GimpToolOptions *) text_tool_options);
     }
 
   tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
@@ -246,7 +246,7 @@ gimp_text_tool_destroy (GtkObject *object)
 }
 
 static void
-text_tool_options_reset (ToolOptions *tool_options)
+text_tool_options_reset (GimpToolOptions *tool_options)
 {
   TextOptions *options;
 
@@ -271,7 +271,7 @@ text_tool_options_new (void)
   GtkWidget   *sep;
 
   options = g_new0 (TextOptions, 1);
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     text_tool_options_reset);
 
   options->antialias   = options->antialias_d   = TRUE;

@@ -406,6 +406,40 @@ tool_manager_register_tool (Gimp         *gimp,
 {
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
+  const gchar     *pdb_string = "gimp_paintbrush_default";
+
+  if (tool_type == GIMP_TYPE_PENCIL_TOOL)
+    {
+      pdb_string = "gimp_pencil";
+    }
+  else if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
+    {
+      pdb_string = "gimp_paintbrush_default";
+    }
+  else if (tool_type == GIMP_TYPE_ERASER_TOOL)
+    {
+      pdb_string = "gimp_eraser_default";
+    }
+  else if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
+    {
+      pdb_string = "gimp_airbrush_default";
+    }
+  else if (tool_type == GIMP_TYPE_CLONE_TOOL)
+    {
+      pdb_string = "gimp_clone_default";
+    }
+  else if (tool_type == GIMP_TYPE_CONVOLVE_TOOL)
+    {
+      pdb_string = "gimp_convolve_default";
+    }
+  else if (tool_type == GIMP_TYPE_SMUDGE_TOOL)
+    {
+      pdb_string = "gimp_smudge_default";
+    }
+  else if (tool_type == GIMP_TYPE_DODGEBURN_TOOL)
+    {
+      pdb_string = "gimp_dodgeburn_default";
+    }
 
   tool_manager = tool_manager_get (gimp);
 
@@ -419,14 +453,15 @@ tool_manager_register_tool (Gimp         *gimp,
 				  menu_accel,
 				  help_domain,
 				  help_data,
+				  pdb_string,
 				  icon_data);
 
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
 }
 
 void
-tool_manager_register_tool_options (GtkType      tool_type,
-				    ToolOptions *tool_options)
+tool_manager_register_tool_options (GtkType          tool_type,
+				    GimpToolOptions *tool_options)
 {
   GimpToolInfo *tool_info;
 

@@ -140,7 +140,7 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
 					  paint_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_PENCIL_TOOL,
-                                          (ToolOptions *) pencil_options);
+                                          (GimpToolOptions *) pencil_options);
      }
 
    tool->tool_cursor = GIMP_PENCIL_TOOL_CURSOR;

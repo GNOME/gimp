@@ -67,7 +67,7 @@ typedef struct _CropOptions CropOptions;
 
 struct _CropOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   gboolean     layer_only;
   gboolean     layer_only_d;
@@ -99,68 +99,68 @@ static GtkWidget   *size_sizeentry;
 static void   gimp_crop_tool_class_init     (GimpCropToolClass *klass);
 static void   gimp_crop_tool_init           (GimpCropTool      *crop_tool);
 
-static void   gimp_crop_tool_destroy        (GtkObject      *object);
+static void   gimp_crop_tool_destroy        (GtkObject       *object);
 
-static void   gimp_crop_tool_button_press   (GimpTool       *tool,
-					     GdkEventButton *bevent,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_button_release (GimpTool       *tool,
-					     GdkEventButton *bevent,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_motion         (GimpTool       *tool,
-					     GdkEventMotion *mevent,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_cursor_update  (GimpTool       *tool,
-					     GdkEventMotion *mevent,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_control        (GimpTool       *tool,
-					     ToolAction      action,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_arrow_key      (GimpTool       *tool,
-					     GdkEventKey    *kevent,
-					     GDisplay       *gdisp);
-static void   gimp_crop_tool_modifier_key   (GimpTool       *tool,
-					     GdkEventKey    *kevent,
-					     GDisplay       *gdisp);
+static void   gimp_crop_tool_button_press   (GimpTool        *tool,
+					     GdkEventButton  *bevent,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_button_release (GimpTool        *tool,
+					     GdkEventButton  *bevent,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_motion         (GimpTool        *tool,
+					     GdkEventMotion  *mevent,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_cursor_update  (GimpTool        *tool,
+					     GdkEventMotion  *mevent,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_control        (GimpTool        *tool,
+					     ToolAction       action,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_arrow_key      (GimpTool        *tool,
+					     GdkEventKey     *kevent,
+					     GDisplay        *gdisp);
+static void   gimp_crop_tool_modifier_key   (GimpTool        *tool,
+					     GdkEventKey     *kevent,
+					     GDisplay        *gdisp);
 
-static void   gimp_crop_tool_draw           (GimpDrawTool   *draw_tool);
+static void   gimp_crop_tool_draw           (GimpDrawTool    *draw_tool);
 
 /*  Crop helper functions  */
-static void   crop_tool_crop_image          (GimpImage      *gimage,
-					     gint            x1,
-					     gint            y1,
-					     gint            x2,
-					     gint            y2,
-					     gboolean        layer_only,
-					     gboolean        crop_layers);
+static void   crop_tool_crop_image          (GimpImage       *gimage,
+					     gint             x1,
+					     gint             y1,
+					     gint             x2,
+					     gint             y2,
+					     gboolean         layer_only,
+					     gboolean         crop_layers);
 
-static void   crop_recalc                   (GimpTool       *tool,
-					     GimpCropTool   *crop);
-static void   crop_start                    (GimpTool       *tool,
-					     GimpCropTool   *crop);
+static void   crop_recalc                   (GimpTool        *tool,
+					     GimpCropTool    *crop);
+static void   crop_start                    (GimpTool        *tool,
+					     GimpCropTool    *crop);
 
 /*  Crop dialog functions  */
-static void   crop_info_update              (GimpTool       *tool);
-static void   crop_info_create              (GimpTool       *tool);
-static void   crop_crop_callback            (GtkWidget      *widget,
-					     gpointer        data);
-static void   crop_resize_callback          (GtkWidget      *widget,
-					     gpointer        data);
-static void   crop_close_callback           (GtkWidget      *widget,
-					     gpointer        data);
+static void   crop_info_update              (GimpTool        *tool);
+static void   crop_info_create              (GimpTool        *tool);
+static void   crop_crop_callback            (GtkWidget       *widget,
+					     gpointer         data);
+static void   crop_resize_callback          (GtkWidget       *widget,
+					     gpointer         data);
+static void   crop_close_callback           (GtkWidget       *widget,
+					     gpointer         data);
 
-static void   crop_selection_callback       (GtkWidget      *widget,
-					     gpointer        data);
-static void   crop_automatic_callback       (GtkWidget      *widget,
-					     gpointer        data);
+static void   crop_selection_callback       (GtkWidget       *widget,
+					     gpointer         data);
+static void   crop_automatic_callback       (GtkWidget       *widget,
+					     gpointer         data);
 
-static void   crop_orig_changed             (GtkWidget      *widget,
-					     gpointer        data);
-static void   crop_size_changed             (GtkWidget      *widget,
-					     gpointer        data);
+static void   crop_orig_changed             (GtkWidget       *widget,
+					     gpointer         data);
+static void   crop_size_changed             (GtkWidget       *widget,
+					     gpointer         data);
 
 static CropOptions * crop_options_new       (void);
-static void          crop_options_reset     (ToolOptions    *tool_options);
+static void          crop_options_reset     (GimpToolOptions *tool_options);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -244,7 +244,7 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
       crop_options = crop_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_CROP_TOOL,
-                                         (ToolOptions *) crop_options);
+                                         (GimpToolOptions *) crop_options);
     }
 
   tool->preserve = FALSE;  /*  Don't preserve on drawable change  */
@@ -1227,7 +1227,7 @@ crop_options_new (void)
   GtkWidget   *frame;
 
   options = g_new0 (CropOptions, 1);
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     crop_options_reset);
 
   options->layer_only    = options->layer_only_d    = FALSE;
@@ -1279,7 +1279,7 @@ crop_options_new (void)
 }
 
 static void
-crop_options_reset (ToolOptions *tool_options)
+crop_options_reset (GimpToolOptions *tool_options)
 {
   CropOptions *options;
 

@@ -100,7 +100,7 @@ static void   gimp_path_tool_draw            (GimpDrawTool   *draw_tool);
 static GimpDrawToolClass *parent_class = NULL;
 
 /*  the move tool options  */
-static ToolOptions *path_options = NULL;
+static GimpToolOptions *path_options = NULL;
 
 
 void
@@ -179,7 +179,7 @@ gimp_path_tool_init (GimpPathTool *path_tool)
       path_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_PATH_TOOL,
-                                          (ToolOptions *) path_options);
+                                          (GimpToolOptions *) path_options);
     }
 
 

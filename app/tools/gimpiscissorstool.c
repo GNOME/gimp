@@ -349,7 +349,7 @@ gimp_iscissors_tool_init (GimpIscissorsTool *iscissors)
       iscissors_options = iscissors_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_ISCISSORS_TOOL,
-                                          (ToolOptions *) iscissors_options);
+                                          (GimpToolOptions *) iscissors_options);
     }
 
   tool->auto_snap_to = FALSE;   /*  Don't snap to guides   */

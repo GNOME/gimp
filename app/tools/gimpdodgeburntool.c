@@ -122,7 +122,7 @@ static gfloat   gimp_dodgeburn_tool_shadows_lut_func    (gpointer       user_dat
 					                 gfloat         value);
 
 static DodgeBurnOptions * gimp_dodgeburn_tool_options_new   (void);
-static void               gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options);
+static void               gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options);
 
 
 static gdouble  non_gui_exposure;
@@ -205,7 +205,7 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
       dodgeburn_options = gimp_dodgeburn_tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_DODGEBURN_TOOL, 
-	                                  (ToolOptions *) dodgeburn_options);
+	                                  (GimpToolOptions *) dodgeburn_options);
     }
 
   tool->tool_cursor   = GIMP_DODGE_TOOL_CURSOR;
@@ -659,7 +659,7 @@ gimp_dodgeburn_tool_options_new (void)
   options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the exposure scale  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -721,7 +721,7 @@ gimp_dodgeburn_tool_options_new (void)
 }
 
 static void
-gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options)
+gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
 {
   DodgeBurnOptions *options;
 

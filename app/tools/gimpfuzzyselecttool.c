@@ -460,7 +460,7 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 					     selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_FUZZY_SELECT_TOOL,
-                                          (ToolOptions *) fuzzy_options);
+                                          (GimpToolOptions *) fuzzy_options);
     }
 
   tool->tool_cursor = GIMP_FUZZY_SELECT_TOOL_CURSOR;

@@ -140,8 +140,11 @@ void  bezier_draw_curve                    (GimpBezierSelectTool     *bezier_sel
 					    GimpBezierSelectPointsFunc  func,
 					    gint              coord,
 					    gpointer          data);
+
 void  bezier_select_reset                  (GimpBezierSelectTool     *bezier_sel);
 void  bezier_select_free                   (GimpBezierSelectTool     *bezier_sel);
+GimpBezierSelectTool* path_to_beziersel    (Path                     *path);
+
 void  bezier_add_point                     (GimpBezierSelectTool     *bezier_sel,
 					    gint              type,
 					    gdouble           x,

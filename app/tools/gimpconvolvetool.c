@@ -121,7 +121,7 @@ static void   gimp_convolve_tool_motion        (GimpPaintTool        *paint_tool
 						gdouble               rate);
 
 static ConvolveOptions * convolve_options_new   (void);
-static void              convolve_options_reset (ToolOptions *options);
+static void              convolve_options_reset (GimpToolOptions     *options);
 
 
 /* The parent class */
@@ -242,7 +242,7 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
       convolve_options = convolve_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_CONVOLVE_TOOL,
-                                          (ToolOptions *) convolve_options);
+                                          (GimpToolOptions *) convolve_options);
     }
 
   tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
@@ -724,7 +724,7 @@ convolve_options_new (void)
   options->rate = options->rate_d = DEFAULT_CONVOLVE_RATE;
 
   /*  the main vbox  */
-  vbox = ((ToolOptions *) options)->main_vbox;
+  vbox = ((GimpToolOptions *) options)->main_vbox;
 
   /*  the rate scale  */
   hbox = gtk_hbox_new (FALSE, 4);
@@ -765,7 +765,7 @@ convolve_options_new (void)
 }
 
 static void
-convolve_options_reset (ToolOptions *tool_options)
+convolve_options_reset (GimpToolOptions *tool_options)
 {
   ConvolveOptions *options;
 

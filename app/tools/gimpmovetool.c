@@ -69,7 +69,7 @@ static void   move_create_gc            (GDisplay          *gdisp);
 
 
 /*  the move tool options  */
-static ToolOptions *move_options = NULL;
+static GimpToolOptions *move_options = NULL;
 
 /*  local variables  */
 static GdkGC *move_gc = NULL;
@@ -150,7 +150,7 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
       move_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_MOVE_TOOL,
-					  (ToolOptions *) move_options);
+					  (GimpToolOptions *) move_options);
     }
 
   move_tool->layer = NULL;

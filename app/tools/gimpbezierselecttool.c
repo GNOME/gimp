@@ -50,6 +50,8 @@
 #include "app_procs.h"
 #include "errors.h"
 #include "gdisplay.h"
+#include "path.h"
+#include "pathP.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -370,7 +372,7 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
 					      selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_BEZIER_SELECT_TOOL,
-                                          (ToolOptions *) bezier_options);
+                                          (GimpToolOptions *) bezier_options);
     }
 
   bezier_select->num_points = 0;
@@ -1097,6 +1099,63 @@ bezier_select_free  (GimpBezierSelectTool *bezier_sel)
 {
   bezier_select_reset (bezier_sel);
   g_free (bezier_sel);
+}
+
+GimpBezierSelectTool *
+path_to_beziersel (Path *bzp)
+{
+  GimpBezierSelectTool *bezier_sel;
+  GimpBezierSelectPoint  *bpnt = NULL;
+  GSList       *list;
+
+  if (!bzp)
+    g_warning ("path_to_beziersel: NULL bzp");
+
+  list = bzp->path_details;
+  bezier_sel = g_new0 (GimpBezierSelectTool, 1);
+
+  bezier_sel->num_points = 0;
+  bezier_sel->mask       = NULL;
+  bezier_select_reset (bezier_sel);
+  bezier_sel->closed = bzp->closed;
+/*   bezier_sel->state = BEZIER_ADD; */
+  bezier_sel->state  = bzp->state;
+
+  while (list)
+    {
+      PathPoint *pdata;
+
+      pdata = (PathPoint *) list->data;
+
+      if (pdata->type == BEZIER_MOVE)
+	{
+	  bezier_sel->last_point->next = bpnt;
+	  bpnt->prev = bezier_sel->last_point;
+	  bezier_sel->cur_anchor  = NULL;
+	  bezier_sel->cur_control = NULL;
+	  bpnt = NULL;
+	}
+
+      bezier_add_point (bezier_sel,
+			(gint) pdata->type,
+			RINT (pdata->x),
+			RINT (pdata->y));
+
+      if (bpnt == NULL)
+	bpnt = bezier_sel->last_point;
+
+      list = g_slist_next (list);
+    }
+  
+  if ( bezier_sel->closed )
+    {
+      bezier_sel->last_point->next = bpnt;
+      bpnt->prev = bezier_sel->last_point;
+      bezier_sel->cur_anchor = bezier_sel->points;
+      bezier_sel->cur_control = bezier_sel-> points->next;
+    }
+
+  return bezier_sel;
 }
 
 /* Find the curve that points to this curve. This makes to_check point

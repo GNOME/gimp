@@ -91,7 +91,7 @@ typedef struct _PaintOptions PaintOptions;
 
 struct _PaintOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   /*  vbox for the common paint options  */
   GtkWidget   *paint_vbox;
@@ -133,7 +133,7 @@ extern PaintGradientOptions non_gui_gradient_options;
 PaintOptions * paint_options_new    (GtkType               tool_type,
 				     ToolOptionsResetFunc  reset_func);
 
-void           paint_options_reset  (ToolOptions          *tool_options);
+void           paint_options_reset  (GimpToolOptions      *tool_options);
 
 
 /*  to be used by "derived" paint options only  */

@@ -63,7 +63,7 @@ typedef struct _MeasureOptions MeasureOptions;
 
 struct _MeasureOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   gboolean     use_info_window;
   gboolean     use_info_window_d;
@@ -102,7 +102,7 @@ static gdouble measure_get_angle                      (gint         dx,
                                                        gdouble      xres,
                                                        gdouble      yres);
 static MeasureOptions * measure_tool_options_new      (void);
-static void   measure_tool_options_reset              (ToolOptions *tool_options);
+static void   measure_tool_options_reset              (GimpToolOptions *tool_options);
 static void   measure_tool_info_window_close_callback (GtkWidget   *widget,
 						       gpointer     data);
 static void   measure_tool_info_update                (void);
@@ -194,7 +194,7 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
       measure_tool_options = measure_tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_MEASURE_TOOL,
-					  (ToolOptions *) measure_tool_options);
+					  (GimpToolOptions *) measure_tool_options);
     }
 
   tool->preserve = TRUE;  /*  Preserve on drawable change  */
@@ -782,7 +782,7 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-measure_tool_options_reset (ToolOptions *tool_options)
+measure_tool_options_reset (GimpToolOptions *tool_options)
 {
   MeasureOptions *options;
 
@@ -799,7 +799,7 @@ measure_tool_options_new (void)
   GtkWidget      *vbox;
 
   options = g_new0 (MeasureOptions, 1);
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     measure_tool_options_reset);
 
   options->use_info_window = options->use_info_window_d  = FALSE;

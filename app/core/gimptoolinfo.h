@@ -23,10 +23,6 @@
 #include "gimpdata.h"
 
 
-/* FIXME: the ToolOptions need to be an object living in core/ */
-#include "tools/tools-types.h"
-
-
 #define GIMP_TYPE_TOOL_INFO            (gimp_tool_info_get_type ())
 #define GIMP_TOOL_INFO(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_TOOL_INFO, GimpToolInfo))
 #define GIMP_IS_TOOL_INFO(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_TOOL_INFO))
@@ -39,24 +35,26 @@ typedef struct _GimpToolInfoClass GimpToolInfoClass;
 
 struct _GimpToolInfo
 {
-  GimpData      parent_instance;
+  GimpData          parent_instance;
 
-  GtkType       tool_type;
+  GtkType           tool_type;
 
-  gchar        *blurb;
-  gchar        *help;
+  gchar            *blurb;
+  gchar            *help;
 
-  gchar        *menu_path;  
-  gchar        *menu_accel; 
+  gchar            *menu_path;  
+  gchar            *menu_accel; 
 
-  gchar        *help_domain;
-  gchar        *help_data;
+  gchar            *help_domain;
+  gchar            *help_data;
 
-  const gchar **icon_data;
+  gchar            *pdb_string;
 
-  GimpContext  *context;
+  const gchar     **icon_data;
 
-  ToolOptions  *tool_options;
+  GimpContext      *context;
+
+  GimpToolOptions  *tool_options;
 };
 
 struct _GimpToolInfoClass
@@ -77,6 +75,7 @@ GimpToolInfo * gimp_tool_info_new          (GimpContext  *context,
 					    const gchar  *menu_accel,
 					    const gchar  *help_domain,
 					    const gchar  *help_data,
+					    const gchar  *pdb_string,
 					    const gchar **icon_data);
 
 GimpToolInfo * gimp_tool_info_get_standard (void);

@@ -193,7 +193,8 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
 				    GimpDialogNewFunc  new_func,
 				    gboolean           singleton,
 				    gboolean           session_managed,
-				    gboolean           remember_size)
+				    gboolean           remember_size,
+				    gboolean           remember_if_open)
 {
   GimpDialogFactoryEntry *entry;
 
@@ -203,11 +204,12 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
 
   entry = g_new0 (GimpDialogFactoryEntry, 1);
 
-  entry->identifier      = g_strdup (identifier);
-  entry->new_func        = new_func;
-  entry->singleton       = singleton ? TRUE : FALSE;
-  entry->session_managed = session_managed ? TRUE : FALSE;
-  entry->remember_size   = remember_size ? TRUE : FALSE;
+  entry->identifier       = g_strdup (identifier);
+  entry->new_func         = new_func;
+  entry->singleton        = singleton ? TRUE : FALSE;
+  entry->session_managed  = session_managed ? TRUE : FALSE;
+  entry->remember_size    = remember_size ? TRUE : FALSE;
+  entry->remember_if_open = remember_if_open ? TRUE : FALSE;
 
   factory->registered_dialogs = g_list_prepend (factory->registered_dialogs,
 						entry);
@@ -1003,7 +1005,10 @@ gimp_dialog_factory_get_window_info (GtkWidget       *window,
 	}
     }
 
-  info->open = GTK_WIDGET_VISIBLE (window);
+  if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
+    info->open = GTK_WIDGET_VISIBLE (window);
+  else
+    info->open = FALSE;
 }
 
 static void

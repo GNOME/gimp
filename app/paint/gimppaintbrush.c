@@ -147,7 +147,7 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 					      paint_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
-                                          (ToolOptions *) paintbrush_options);
+                                          (GimpToolOptions *) paintbrush_options);
     }
 
   tool->tool_cursor = GIMP_PAINTBRUSH_TOOL_CURSOR;

@@ -102,7 +102,7 @@ static gint   hue_saturation_hue_partition_events    (GtkWidget *,
 
 
 /*  the hue-saturation tool options  */
-static ToolOptions *hue_saturation_options = NULL;
+static GimpToolOptions *hue_saturation_options = NULL;
 
 /*  the hue-saturation tool dialog  */
 static HueSaturationDialog *hue_saturation_dialog = NULL;
@@ -195,7 +195,7 @@ gimp_hue_saturation_tool_init (GimpHueSaturationTool *bc_tool)
       hue_saturation_options = tool_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_HUE_SATURATION_TOOL,
-					  (ToolOptions *) hue_saturation_options);
+					  (GimpToolOptions *) hue_saturation_options);
     }
 }
 

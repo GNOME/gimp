@@ -164,7 +164,7 @@ void path_tool_motion_curve        (Tool *, GdkEventMotion *, GDisplay *);
 #endif
 
 /*  the path tool options  */
-static ToolOptions *path_options = NULL;
+static GimpToolOptions *path_options = NULL;
 
 
 /* 
@@ -1410,7 +1410,7 @@ tools_new_path_tool (void)
    if (! path_options)
       {
          path_options = tool_options_new (_("Path Tool"));
-         tools_register (PATH_TOOL, (ToolOptions *) path_options);
+         tools_register (PATH_TOOL, (GimpToolOptions *) path_options);
       }
 
    tool = tools_new_tool (PATH_TOOL);
@@ -1887,10 +1887,10 @@ path_tool_draw_helper (NPath *path,
 #endif
 }
 
+#if 0
 void
 path_tool_draw (Tool *tool)
 {
-#if 0
    GDisplay * gdisp;
    NPath * cur_path;
    PathTool * path_tool;
@@ -1909,8 +1909,8 @@ path_tool_draw (Tool *tool)
    /* fprintf (stderr, "path_tool_draw end.\n");
     */
 #endif PATH_TOOL_DEBUG
-#endif
    
 }
+#endif
 
 

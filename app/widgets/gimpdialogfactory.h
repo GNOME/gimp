@@ -42,6 +42,7 @@ struct _GimpDialogFactoryEntry
   gboolean           singleton;
   gboolean           session_managed;
   gboolean           remember_size;
+  gboolean           remember_if_open;
 };
 
 struct _GimpSessionInfo
@@ -113,7 +114,8 @@ void        gimp_dialog_factory_register_entry    (GimpDialogFactory *factory,
 						   GimpDialogNewFunc  new_func,
 						   gboolean           singleton,
 						   gboolean           session_managed,
-						   gboolean           remember_size);
+						   gboolean           remember_size,
+						   gboolean           remember_if_open);
 GimpDialogFactoryEntry * gimp_dialog_factory_find_entry
                                                   (GimpDialogFactory *factory,
 						   const gchar       *identifier);
@@ -136,8 +138,8 @@ void        gimp_dialog_factory_add_dialog        (GimpDialogFactory *factory,
 void        gimp_dialog_factory_remove_dialog     (GimpDialogFactory *factory,
 						   GtkWidget         *dialog);
 
-void        gimp_dialog_factories_session_save     (FILE             *file);
-void        gimp_dialog_factories_session_restore  (void);
+void        gimp_dialog_factories_session_save    (FILE              *file);
+void        gimp_dialog_factories_session_restore (void);
 
 
 #endif  /*  __GIMP_DIALOG_FACTORY_H__  */

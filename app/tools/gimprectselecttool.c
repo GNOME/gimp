@@ -233,7 +233,7 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
                                             selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_RECT_SELECT_TOOL,
-                                          (ToolOptions *) rect_options);
+                                          (GimpToolOptions *) rect_options);
     }
 
   tool->tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;

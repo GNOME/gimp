@@ -25,7 +25,7 @@ typedef struct _TransformOptions TransformOptions;
 
 struct _TransformOptions
 {
-  ToolOptions  tool_options;
+  GimpToolOptions  tool_options;
 
   gboolean     smoothing;
   gboolean     smoothing_d;
@@ -59,7 +59,7 @@ TransformOptions * transform_options_new   (GtkType               tool_type,
 void               transform_options_init  (TransformOptions     *options,
 					    GtkType               tool_type,
 					    ToolOptionsResetFunc  reset_func);
-void               transform_options_reset (ToolOptions          *tool_options);
+void               transform_options_reset (GimpToolOptions      *tool_options);
 
 gboolean           gimp_transform_tool_smoothing (void);
 gboolean           gimp_transform_tool_showpath  (void);

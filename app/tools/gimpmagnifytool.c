@@ -47,7 +47,7 @@ typedef struct _MagnifyOptions MagnifyOptions;
 
 struct _MagnifyOptions
 {
-  ToolOptions   tool_options;
+  GimpToolOptions   tool_options;
 
   /* gint       allow_resize_windows; (from gimprc) */
   gint          allow_resize_d;
@@ -92,7 +92,7 @@ static void   zoom_out                  (gint           *src,
 					 gint            scale);
 
 static MagnifyOptions * magnify_options_new   (void);
-static void             magnify_options_reset (ToolOptions *tool_options);
+static void             magnify_options_reset (GimpToolOptions *tool_options);
 
 
 static MagnifyOptions *magnify_options = NULL;
@@ -175,7 +175,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
       magnify_options = magnify_options_new ();
 
       tool_manager_register_tool_options (GIMP_TYPE_MAGNIFY_TOOL,
-					  (ToolOptions *) magnify_options);
+					  (GimpToolOptions *) magnify_options);
     }
 
   tool->scroll_lock  = TRUE;   /*  Disallow scrolling    */
@@ -198,7 +198,7 @@ gimp_magnify_tool_destroy (GtkObject *object)
 /*  magnify tool options functions  */
 
 static void
-magnify_options_reset (ToolOptions *tool_options)
+magnify_options_reset (GimpToolOptions *tool_options)
 {
   MagnifyOptions *options;
 
@@ -222,7 +222,7 @@ magnify_options_new (void)
   /*  the new magnify tool options structure  */
   options = g_new0 (MagnifyOptions, 1);
 
-  tool_options_init ((ToolOptions *) options,
+  tool_options_init ((GimpToolOptions *) options,
 		     magnify_options_reset);
 
   options->allow_resize_d = gimprc.allow_resize_windows;
