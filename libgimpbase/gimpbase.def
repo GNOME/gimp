@@ -9,10 +9,20 @@ EXPORTS
 	gimp_datafiles_check_extension
 	gimp_datafiles_read_directories
 	gimp_directory
+	gimp_enum_get_desc
 	gimp_enum_get_value
-	gimp_enum_value_get_name
+	gimp_enum_get_value_descriptions
+	gimp_enum_set_value_descriptions
+	gimp_enum_value_get_desc
+	gimp_enum_value_get_help
 	gimp_escape_uline
 	gimp_filename_to_utf8
+	gimp_flags_get_first_desc
+	gimp_flags_get_value
+	gimp_flags_get_value_descriptions
+	gimp_flags_set_value_descriptions
+	gimp_flags_value_get_desc
+	gimp_flags_value_get_help
 	gimp_gtkrc
 	gimp_image_base_type_get_type
 	gimp_image_type_get_type
@@ -21,6 +31,7 @@ EXPORTS
 	gimp_memsize_get_type
 	gimp_memsize_serialize
 	gimp_memsize_to_string
+	gimp_message_handler_type_get_type
 	gimp_parasite_compare
 	gimp_parasite_copy
 	gimp_parasite_data
@@ -37,12 +48,17 @@ EXPORTS
 	gimp_path_get_user_writable_dir
 	gimp_path_parse
 	gimp_path_to_str
+	gimp_pdb_arg_type_get_type
+	gimp_pdb_proc_type_get_type
+	gimp_pdb_status_type_get_type
 	gimp_personal_rc_file
 	gimp_pixpipe_params_build
 	gimp_pixpipe_params_init
 	gimp_pixpipe_params_parse
 	gimp_plug_in_directory
+	gimp_progress_command_get_type
 	gimp_signal_private
+	gimp_stack_trace_mode_get_type
 	gimp_strip_uline
 	gimp_sysconf_directory
 	gimp_type_get_translation_domain

@@ -1,3 +1,7 @@
+2004-10-26  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpbase.def: updated.
+
 2004-10-25  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/retinex.c: added this new plug-in.
