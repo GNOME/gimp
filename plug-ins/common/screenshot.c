@@ -519,13 +519,13 @@ shoot_dialog (void)
 			    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   /*  single window  */
-  frame = gtk_frame_new (_("Grab"));
+  frame = gimp_frame_new (_("Grab"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   vbox = gtk_vbox_new (FALSE, 2);
