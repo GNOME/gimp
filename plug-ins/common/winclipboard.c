@@ -578,7 +578,10 @@ CB_PasteImage (gboolean interactive,
       
       /* adjust pointer */
       pPal  = pInfo->bmiColors;
-      pData = (guchar*)pPal + sizeof(RGBQUAD) * nColors;
+      if (pInfo->bmiHeader.biCompression == BI_BITFIELDS)
+        pData = (guchar*)pPal + sizeof(DWORD) * 3;
+      else
+        pData = (guchar*)pPal + sizeof(RGBQUAD) * nColors;
 	  
       /* create palette */
       if (0 != nColors)
