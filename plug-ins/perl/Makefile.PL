@@ -4,13 +4,13 @@ use ExtUtils::MakeMaker;
 use Config;
 
 $topdir=".";
+$|=1;
 
 if ($ARGV[0] ne "--writemakefile") {
    for(@ARGV) {
       s/^prefix=/--prefix=/i;
    }
    
-   $|=1;
    do './config.pl';
    if(defined $EXTENSIVE_TESTS) {
       print "\nFetched some defaults from an earlier Makefile.PL run.\n";
@@ -53,28 +53,30 @@ $] >= 5.005 or print <<EOF;
 WARNING: you are using a version of perl older than 5.005. While this
          extension should run on older versions (and I try to keep source
          compatibility), some people get spurious errors that go away
-         after upgrading to 5.005. Since 5.005 is much better and has many
-         many bugs fixed, an upgrade wpuld come in handy...
+         after upgrading to 5.005 (or to gimp-1.1). Therefore, some
+         features of Gimp DO NOT WORK WITH 5.004 or gimp-1.0. Since 5.005
+         is much better and has many many bugs fixed, an upgrade would
+         come in handy...
 
 EOF
 
 $GTK or print <<EOF;
 
-WARNING: unable to use the Perl-Gtk interface.  Some features (like
-         Gimp::Fu) rely on this extension.  You can try to build without
-         it, but it's better to install it (version 0.3 or higher is
-         required, you can get it from ftp://ftp.gimp.org/pub/gtk/perl/ or
-         any CPAN mirror.
+WARNING: unable to use the Perl-Gtk interface. Most features (like
+         Gimp::Fu) rely on this extension. You can try to build without
+         it (and many scripts won't work), but it's better to install
+         it (version 0.3 or higher is required, you can get it from
+         ftp://ftp.gimp.org/pub/gtk/perl/ or any CPAN mirror.
 
 EOF
 
 $PDL or print <<EOF;
 
-WARNING: unable to use PDL (the perl data language).  This means that
-         Gimp::PDL is non-functional.  Unless you plan to use Tile/PixelRgn
-         functions together with PDL, this is harmless.  Gimp::PDL will be
-         installed, just in case you later install PDL.  The plug-ins using
-         PDL, however, will NOT BE INSTALLED.  You can get PDL from any CPAN
+WARNING: unable to use PDL (the perl data language). This means that
+         Gimp::PDL is non-functional. Unless you plan to use Tile/PixelRgn
+         functions together with PDL, this is harmless. Gimp::PDL will
+         be installed, just in case you later install PDL. The plug-ins
+         using PDL, however, will NOT WORK. You can get PDL from any CPAN
          mirror.
 
 EOF
@@ -112,6 +114,17 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 EOF
 }
 
+@examples =
+   qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
+      border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl);
+@shebang = (map("examples/$_",@examples),
+   qw(Perl-Server scm2perl scm2scm examples/example-net.pl));
+
+for(@shebang) {
+   print "updating bangpath in $_\n";
+   system ($PERL,"-pi","-e","\$. == 1 and \$_ = '#!$PERL\n'",$_);
+}
+
 sub MY::postamble {
    (my $GIMPTOOL2 = $GIMPTOOL) =~ s/^\.\./..\/../;
    my $postamble=<<"EOF";
@@ -130,9 +143,7 @@ install :: install-plugins
 install-plugins:
 EOF
 
-   $postamble.join("",map "	-cd examples && $GIMPTOOL2 --install-admin-bin $_\n",
-      qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
-         border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl));
+   $postamble.join("",map "	-cd examples && $GIMPTOOL2 --install-admin-bin $_\n", @examples);
 }
 
 WriteMakefile(

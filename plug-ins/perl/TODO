@@ -10,14 +10,15 @@ make test TEST_VERBOSE=1
 
 bugs
 
-  * auto-edit shebang
-  * only install plug-ins that really work
+[DONE]  * auto-edit shebang
+[XXXX]  * only install plug-ins that really work
   * perl_fu_webify in homepage-logo.pl
   * wait for working gimp_file_load (or do it myself?)
-  * Gimp::import should croak on importing "garbage".
+[DONE]  * Gimp::import should croak on importing "garbage".
   
 important issues
 
+  * register dummy function to calm gimp down
   * gimp->object_id, drawable_object_id remove!
   * PF_CUSTOM
   * gimp_display_image

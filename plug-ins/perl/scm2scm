@@ -1,0 +1,280 @@
+#!/usr/app/bin/perl
+
+#require 5.005;
+
+# Copyright Marc Lehmann <pcg@goof.com>
+#
+# This is distributed under the GPL.
+
+=cut
+
+=head1 NAME
+
+scm2scm - convert script-fu to script-fu
+
+=head1 SYNOPSIS
+
+ scm2scm [-d] [-t translation]... filename.scm...
+
+=head1 DESCRIPTION
+
+This perl-script can be used to upgrade existing script-fu-scripts to
+newer gimp API's.
+
+=head1 EXAMPLES
+
+Convert all script-fu scripts in the current directory from the
+1.0 to the current API:
+
+ scm2scm *.scm
+
+Convert C<weird.scm> from the 1.0 api to the 1.2 api:
+
+ scm2scm -t 1.2 weird.scm
+
+Generate a diff containing the required changes from the 1.0
+to the 1.1-API:
+
+ scm2scm -d -t 1.1 test.scm
+
+=head1 SWITCHES
+
+=over 4
+
+=item -d
+
+generate a unified diff on stdout
+
+=item -t translation id
+
+specify a translation id, can be one of (run scm2scm without arguments
+to see the full list)
+
+I<api1>	api-mega-break-patch #1
+
+I<1.1>	1.0 -> 1.1 (not fully implemented)
+
+I<1.2>	1.0 -> 1.2 (not fully implemented)
+
+=back
+
+=head1 AUTHOR
+
+Marc Lehmann <pcg@goof.com>
+
+=head1 SEE ALSO
+
+gimp(1), L<Gimp>.
+
+=cut
+
+# drop the first argument, while preserving correct whitespace(!)
+sub drop_1st {
+  my($a,$f,$t1,$t2,@t)=@_;
+  ($a,$f,new token($t1->[0],$t2->[1],$t2->[2]),@t);
+}
+
+# every hash value consists of an array of specifications, each
+# one has the form ["regexp", codref_to_call], or a string (another translation
+# name)
+%translation = (
+   'api1' =>
+      [[
+        "^(gimp-airbrush|gimp-blend|gimp-brightness-contrast|gimp-bucket-fill|".
+        "gimp-by-color-select|gimp-channel-ops-offset|gimp-clone|gimp-color-balance|".
+        "gimp-color-picker|gimp-convolve|gimp-curves-explicit|gimp-curves-spline|".
+        "gimp-desaturate|gimp-edit-clear|gimp-edit-copy|gimp-edit-cut|gimp-edit-fill|".
+        "gimp-edit-paste|gimp-edit-stroke|gimp-equalize|gimp-eraser|".
+        "gimp-eraser-extended|gimp-flip|gimp-fuzzy-select|gimp-histogram|".
+        "gimp-hue-saturation|gimp-invert|gimp-levels|gimp-paintbrush|".
+        "gimp-paintbrush-extended|gimp-pencil|gimp-perspective|gimp-posterize|".
+        "gimp-rotate|gimp-scale|gimp-selection-float|gimp-selection-layer-alpha|".
+        "gimp-selection-load|gimp-shear|gimp-threshold)\$",
+        \&drop_1st
+      ]],
+   '1.1' => ['api1'],
+   '1.2' => ['api1'],
+);
+
+$gen_diff=0;
+@trans = ();
+
+package token;
+
+sub new {
+   my $type = shift;
+   bless [@_],$type;
+}
+
+package main;
+
+my $stream;	# the stream to tokenize from
+my $word;	# the current token-word
+my $tok;	# current token
+
+# parses a new token [ws, tok, ws]
+sub get() {
+   my $ws1,$ws1,$ctok;
+   # could be wrapped into one regex
+   $ws1 = $stream=~s/^((?:\s*(?:(;[^\n]*\n))?)*)// ? $1 : die;
+   $ctk = $stream=~s/^(\(
+                      |\)
+                      |"(?:[^"]+|\\")*"
+                      |'(?:[^()]+)
+                      |[^ \t\r\n()]+
+                      )
+                      (?:[ \t]*(?=\n))?//x ? $1 : undef;
+   $ws2 = $stream=~s/^([ \t]*;[^\n]*\n)// ? $1 : "";
+   $word=$ctk;
+   
+#   print "TOKEN:$ws1:$ctk:$ws2\n";
+   $tok=new token($ws1,$ctk,$ws2);
+}
+
+# returns a parse tree, which is an array
+# of [token, token...] refs.
+sub parse() {
+   my @toks;
+   $depth++;
+   for(;;) {
+#      print "$depth: $word\n";
+      if ($word eq "(") {
+         my $t = $tok; get;
+         my @t = &parse;
+         $word eq ")" or die "missing right paranthese (got $word)\n";
+         push(@toks,[$t,@t,$tok]); get;
+      } elsif ($word eq ")") {
+         $depth--;
+         return @toks;
+      } elsif (!defined $word) {
+         $depth--;
+         return @toks;
+      } else {
+         push(@toks,$tok);
+         get;
+      }
+   }
+}
+
+sub parse_scheme {
+   get;
+   my @t = parse;
+   (@t,$tok);
+}
+
+# dumb dump of the tree structure
+sub dump_tree {
+   my $d=shift;
+   print "$d",scalar@_;
+   for(@_) {
+      if (isa($_,token)) {
+         print " [$_->[1]]";
+      } else {
+         print " *";
+      }
+   }
+   print "\n";
+   for(@_) {
+      if(!isa($_,token)) {
+         dump_tree ("$d   ",@$_);
+      }
+   }
+}
+
+sub toks2scheme {
+   my $func = shift;
+   if ($func->[1] eq "(") {
+      my $close = shift;
+#      func2scheme @_;
+   } else {
+   }
+   while(@_) {
+      my @toks = shift;
+      my ($ws1,$t,$ws1)=$toks[0]
+   }
+   
+}
+
+sub tree2scheme {
+   join ("",map isa($_,token) ? @$_ : tree2scheme(@$_),@_);
+}
+
+# translate functions, sorry folks, this function is write-only!
+sub translate {
+   my $v=shift;
+   my @t=@_;
+   if (isa($t[0],token)) {
+      for(@$v) {
+         if ($t[1][1] =~ $_->[0]) {
+            @t=$_->[1]->(@t);
+         }
+      }
+   }
+   for(@t) {
+      $_=[translate($v,@$_)] unless isa($_,token);
+   }
+   @t;
+}
+
+sub dofile {
+   my($in,$out)=@_;
+   
+   open IN,"$in"   or die "unable to open '$in' for reading: $!";
+   { local $/; $stream = <IN> }
+   close IN;
+   
+   my @prog = parse_scheme;
+   
+   if (@trans) {
+      my $changed;
+      do {
+         $changed=0;
+         @trans = map {
+            if (!ref $_) {
+               $changed=1;
+               @{$translation{$_}};
+            } else {
+               $_;
+            }
+         } @trans;
+      } while($changed);
+      @prog = translate ([@trans],@prog);
+   }
+   
+   open OUT,"$out" or die "unable to open '$out' for writing: $!";
+   print OUT tree2scheme(@prog);
+   close OUT;
+}
+
+*isa = \&UNIVERSAL::isa;
+
+sub usage {
+   print STDERR "Script-Fu to Script-Fu Translater 1.1\n";
+   print STDERR "Usage: $0 [-d] [-t translation] file.scm ...\n";
+   print STDERR "available translations are: @{[keys %translation]}\n";
+   exit(1);
+}
+
+while($ARGV[0]=~/^-(.)$/) {
+   shift;
+   if ($1 eq "d") {
+      $gen_diff=1;
+   } elsif ($1 eq "t") {
+      push(@trans,shift);
+   } else {
+     print STDERR "unknown switch '$1'\n";
+   }
+}
+@ARGV or usage;
+
+for $x (@ARGV) {
+   my $y;
+   if ($gen_diff) {
+      $y="| echo Index: '$x' && diff -u '$x' -";
+   } else {
+      ($y=$x)=~s/\.scm/.sc2/i or die "source file '$x' has no .scm extension";
+      $y=">$y\0";
+   }
+   dofile("<$x\0",$y);
+}
+

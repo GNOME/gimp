@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl
+#!/usr/app/bin/perl
 ######################################################################
 #  A Perl::Fu plugin for converting TeX strings to floating layers.
 #

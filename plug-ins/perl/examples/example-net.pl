@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/app/bin/perl
 
 # example for the gimp-perl-server (also called Net-Server)
 

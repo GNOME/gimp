@@ -174,7 +174,7 @@ sub import($;@) {
       } elsif ($_ ne "") {
          push(@export,$_);
       } elsif ($_ eq "") {
-         #nop #d#FIXME
+         #nop #d#FIXME, Perl-Server requires this!
       } else {
          croak "$_ is not a valid import tag for package $pkg";
       }
@@ -797,6 +797,8 @@ invocation.
 =item set_trace(*FILEHANDLE)
 
 write trace to FILEHANDLE instead of STDERR.
+
+=back
 
 =head1 SUPPORTED GIMP DATA TYPES
 

@@ -116,8 +116,9 @@ Some exmaples:
 
  $region = $drawable->pixel_rgn (0,0, 100,100, 1,0);
  $pixel = $region->get_pixel (5,7);	# fetches the pixel from (5|7)
- print $pixel;
- -> [255, 127, 0]			# RGB format ;)
+ print $pixel;				# outputs something like
+ 					# [255, 127, 0], i.e. in
+ 					# RGB format ;)
  $region->set_pixel ($pixel * 0.5, 5, 7);# darken the pixel
  $rect = $region->get_rect (3,3,70,20);	# get a horizontal stripe
  $rect = $rect->hclip(255/5)*5;		# clip and multiply by 5

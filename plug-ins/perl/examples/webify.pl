@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/app/bin/perl
 
 use Gimp;
 use Gimp::Fu;

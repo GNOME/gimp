@@ -1,4 +1,3 @@
-scm2perl
 README
 NEWS
 Changes
@@ -12,6 +11,8 @@ Makefile.PL
 typemap
 Gimp.pm
 Gimp.xs
+scm2perl
+scm2scm
 t/load.t
 t/loadlib.t
 t/run.t

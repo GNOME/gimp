@@ -1,6 +1,6 @@
 =head1 NAME
 
- Gimp::Util - some handy routines for Gimp.Perl users
+ Gimp::Util - some handy routines for Gimp-Perl users
 
 =head1 SYNOPSIS
 
@@ -23,7 +23,7 @@ you end up with them and the user cannot see them or delete them. So we
 always attach our created layers to an image here, too avoid memory leaks
 and debugging times.
 
-These functions preserve the current settings like colors.
+These functions try to preserve the current settings like colors.
 
 Also: these functions are handled in exactly the same way as
 PDB-Functions, i.e. the (hypothetical) function C<gimp_image_xyzzy> can be
@@ -235,6 +235,8 @@ sub gimp_text_wh {
 }
 
 =pod
+
+=back
 
 =head1 AUTHOR
 
