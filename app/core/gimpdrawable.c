@@ -53,15 +53,21 @@ enum
   LAST_SIGNAL
 };
 
+
 static void gimp_drawable_class_init   (GimpDrawableClass *klass);
 static void gimp_drawable_init	       (GimpDrawable      *drawable);
 static void gimp_drawable_destroy      (GtkObject         *object);
 static void gimp_drawable_name_changed (GimpObject        *drawable);
 
 
+/*  private variables  */
+
 static guint gimp_drawable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
+
+static gint        global_drawable_ID  = 1;
+static GHashTable *gimp_drawable_table = NULL;
 
 
 GtkType
@@ -126,6 +132,59 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   gimp_object_class->name_changed = gimp_drawable_name_changed;
 
   klass->invalidate_preview = NULL;
+}
+
+static void
+gimp_drawable_init (GimpDrawable *drawable)
+{
+  drawable->tiles         = NULL;
+  drawable->visible       = FALSE;
+  drawable->width         = 0;
+  drawable->height        = 0;
+  drawable->offset_x      = 0;
+  drawable->offset_y      = 0;
+  drawable->bytes         = 0;
+  drawable->ID            = global_drawable_ID++;
+  drawable->tattoo        = 0;
+  drawable->gimage        = NULL;
+  drawable->type          = -1;
+  drawable->has_alpha     = FALSE;
+  drawable->preview_cache = NULL;
+  drawable->preview_valid = FALSE;
+  drawable->parasites     = parasite_list_new ();
+  drawable->preview_cache = NULL;
+  drawable->preview_valid = FALSE;
+
+  if (gimp_drawable_table == NULL)
+    gimp_drawable_table = g_hash_table_new (g_direct_hash, NULL);
+
+  g_hash_table_insert (gimp_drawable_table,
+		       GINT_TO_POINTER (drawable->ID),
+		       (gpointer) drawable);
+}
+
+static void
+gimp_drawable_destroy (GtkObject *object)
+{
+  GimpDrawable *drawable;
+
+  g_return_if_fail (GIMP_IS_DRAWABLE (object));
+
+  drawable = GIMP_DRAWABLE (object);
+
+  g_hash_table_remove (gimp_drawable_table, (gpointer) drawable->ID);
+
+  if (drawable->tiles)
+    tile_manager_destroy (drawable->tiles);
+
+  if (drawable->preview_cache)
+    gimp_preview_cache_invalidate (&drawable->preview_cache);
+
+  if (drawable->parasites)
+    gtk_object_unref (GTK_OBJECT (drawable->parasites));
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -222,15 +281,64 @@ gimp_drawable_name_changed (GimpObject *object)
     }
 }
 
+void
+gimp_drawable_configure (GimpDrawable  *drawable,
+			 GimpImage     *gimage,
+			 gint           width,
+			 gint           height, 
+			 GimpImageType  type,
+			 const gchar   *name)
+{
+  gint     bpp;
+  gboolean alpha;
 
-/*
- *  Static variables
- */
-static gint        global_drawable_ID  = 1;
-static GHashTable *gimp_drawable_table = NULL;
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-/**************************/
-/*  Function definitions  */
+  if (!name)
+    name = _("unnamed");
+
+  switch (type)
+    {
+    case RGB_GIMAGE:
+      bpp = 3; alpha = FALSE; break;
+    case GRAY_GIMAGE:
+      bpp = 1; alpha = FALSE; break;
+    case RGBA_GIMAGE:
+      bpp = 4; alpha = TRUE; break;
+    case GRAYA_GIMAGE:
+      bpp = 2; alpha = TRUE; break;
+    case INDEXED_GIMAGE:
+      bpp = 1; alpha = FALSE; break;
+    case INDEXEDA_GIMAGE:
+      bpp = 2; alpha = TRUE; break;
+    default:
+      g_message (_("Layer type %d not supported."), type);
+      return;
+    }
+
+  drawable->width     = width;
+  drawable->height    = height;
+  drawable->bytes     = bpp;
+  drawable->type      = type;
+  drawable->has_alpha = alpha;
+  drawable->offset_x  = 0;
+  drawable->offset_y  = 0;
+
+  if (drawable->tiles)
+    tile_manager_destroy (drawable->tiles);
+
+  drawable->tiles   = tile_manager_new (width, height, bpp);
+  drawable->visible = TRUE;
+
+  if (gimage)
+    gimp_drawable_set_gimage (drawable, gimage);
+
+  gimp_object_set_name (GIMP_OBJECT (drawable), name);
+
+  /*  preview variables  */
+  drawable->preview_cache = NULL;
+  drawable->preview_valid = FALSE;
+}
 
 gint
 gimp_drawable_get_ID (GimpDrawable *drawable)
@@ -251,11 +359,33 @@ gimp_drawable_get_by_ID (gint drawable_id)
 					       (gpointer) drawable_id);
 }
 
+GimpImage *
+gimp_drawable_gimage (const GimpDrawable *drawable)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
+  return drawable->gimage;
+}
+
+void
+gimp_drawable_set_gimage (GimpDrawable *drawable,
+			  GimpImage    *gimage)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  if (gimage == NULL)
+    drawable->tattoo = 0;
+  else if (drawable->tattoo == 0 || drawable->gimage != gimage )
+    drawable->tattoo = gimp_image_get_new_tattoo (gimage);
+
+  drawable->gimage = gimage;
+}
+
 void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
 			    gint          undo)
 {
-  GImage      *gimage;
+  GimpImage   *gimage;
   PixelRegion  shadowPR;
   gint         x1, y1, x2, y2;
 
@@ -279,13 +409,10 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_fill (GimpDrawable *drawable,
-		    guchar        r,
-		    guchar        g,
-		    guchar        b,
-		    guchar        a)
+gimp_drawable_fill (GimpDrawable  *drawable,
+		    const GimpRGB *color)
 {
-  GImage      *gimage;
+  GimpImage   *gimage;
   PixelRegion  destPR;
   guchar       c[MAX_CHANNELS];
   guchar       i;
@@ -300,27 +427,38 @@ gimp_drawable_fill (GimpDrawable *drawable,
   switch (gimp_drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
-      c[RED_PIX]   = r;
-      c[GREEN_PIX] = g;
-      c[BLUE_PIX]  = b;
-      if (gimp_drawable_type (drawable) == RGBA_GIMAGE)
-	c[ALPHA_PIX] = a;
+      gimp_rgba_get_uchar (color,
+			   &c[RED_PIX],
+			   &c[GREEN_PIX],
+			   &c[BLUE_PIX],
+			   &c[ALPHA_PIX]);
+      if (gimp_drawable_type (drawable) != RGBA_GIMAGE)
+	c[ALPHA_PIX] = 255;
       break;
 
     case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      c[GRAY_PIX] = r;
-      if (gimp_drawable_type (drawable) == GRAYA_GIMAGE)
-	c[ALPHA_G_PIX] = a;
+      gimp_rgba_get_uchar (color,
+			   &c[GRAY_PIX],
+			   NULL,
+			   NULL,
+			   &c[ALPHA_G_PIX]);
+      if (gimp_drawable_type (drawable) != GRAYA_GIMAGE)
+	c[ALPHA_G_PIX] = 255;
       break;
 
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      c[RED_PIX]   = r;
-      c[GREEN_PIX] = g;
-      c[BLUE_PIX]  = b;
+      gimp_rgb_get_uchar (color,
+			  &c[RED_PIX],
+			  &c[GREEN_PIX],
+			  &c[BLUE_PIX]);
       gimp_image_transform_color (gimage, drawable, c, &i, RGB);
       c[INDEXED_PIX] = i;
       if (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE)
-	  c[ALPHA_I_PIX] = a;
+	gimp_rgba_get_uchar (color,
+			     NULL,
+			     NULL,
+			     NULL,
+			     &c[ALPHA_I_PIX]);
       break;
 
     default:
@@ -345,7 +483,7 @@ gimp_drawable_mask_bounds (GimpDrawable *drawable,
 			   gint         *y2)
 {
   GimpImage *gimage;
-  gint off_x, off_y;
+  gint       off_x, off_y;
 
   g_return_val_if_fail (drawable != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -399,7 +537,8 @@ gimp_drawable_invalidate_preview (GimpDrawable *drawable,
  * associcated with an image.  It's needed because layers aren't
  * destroyed immediately, but kept around for undo purposes.  Connect
  * to the removed signal to update bits of UI that are tied to a
- * particular layer. */
+ * particular layer.
+ */
 void
 gimp_drawable_removed (GimpDrawable *drawable)
 {
@@ -407,28 +546,6 @@ gimp_drawable_removed (GimpDrawable *drawable)
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   gtk_signal_emit (GTK_OBJECT (drawable), gimp_drawable_signals[REMOVED]);
-}
-
-GimpImage *
-gimp_drawable_gimage (const GimpDrawable *drawable)
-{
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-
-  return drawable->gimage;
-}
-
-void
-gimp_drawable_set_gimage (GimpDrawable *drawable,
-			  GimpImage    *gimage)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (gimage == NULL)
-    drawable->tattoo = 0;
-  else if (drawable->tattoo == 0 || drawable->gimage != gimage )
-    drawable->tattoo = gimp_image_get_new_tattoo (gimage);
-
-  drawable->gimage = gimage;
 }
 
 gboolean
@@ -540,9 +657,9 @@ gimp_drawable_parasite_find (const GimpDrawable *drawable,
 }
 
 static void
-list_func (gchar          *key,
-	   GimpParasite   *p,
-	   gchar        ***cur)
+gimp_drawable_parasite_list_foreach_func (gchar          *key,
+					  GimpParasite   *p,
+					  gchar        ***cur)
 {
   *(*cur)++ = (gchar *) g_strdup (key);
 }
@@ -561,7 +678,9 @@ gimp_drawable_parasite_list (const GimpDrawable *drawable,
   *count = parasite_list_length (drawable->parasites);
   cur = list = g_new (gchar *, *count);
 
-  parasite_list_foreach (drawable->parasites, (GHFunc) list_func, &cur);
+  parasite_list_foreach (drawable->parasites,
+			 (GHFunc) gimp_drawable_parasite_list_foreach_func,
+			 &cur);
 
   return list;
 }
@@ -693,7 +812,7 @@ gimp_drawable_data (const GimpDrawable *drawable)
 TileManager *
 gimp_drawable_shadow (GimpDrawable *drawable)
 {
-  GImage *gimage;
+  GimpImage *gimage;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
@@ -705,7 +824,7 @@ gimp_drawable_shadow (GimpDrawable *drawable)
 }
 
 int
-gimp_drawable_bytes (GimpDrawable *drawable)
+gimp_drawable_bytes (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
@@ -713,7 +832,7 @@ gimp_drawable_bytes (GimpDrawable *drawable)
 }
 
 gint
-gimp_drawable_width (GimpDrawable *drawable)
+gimp_drawable_width (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
@@ -721,7 +840,7 @@ gimp_drawable_width (GimpDrawable *drawable)
 }
 
 gint
-gimp_drawable_height (GimpDrawable *drawable)
+gimp_drawable_height (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
@@ -729,9 +848,9 @@ gimp_drawable_height (GimpDrawable *drawable)
 }
 
 void
-gimp_drawable_offsets (GimpDrawable *drawable,
-		       gint         *off_x,
-		       gint         *off_y)
+gimp_drawable_offsets (const GimpDrawable *drawable,
+		       gint               *off_x,
+		       gint               *off_y)
 {
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
@@ -746,129 +865,8 @@ gimp_drawable_cmap (const GimpDrawable *drawable)
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
-  gimage = gimp_drawable_gimage (drawable);
-  g_return_val_if_fail (gimage != NULL, NULL);
+  if (! (gimage = gimp_drawable_gimage (drawable)))
+    return NULL;
 
   return gimage->cmap;
-}
-
-void
-gimp_drawable_deallocate (GimpDrawable *drawable)
-{
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-}
-
-static void
-gimp_drawable_init (GimpDrawable *drawable)
-{
-  drawable->tiles         = NULL;
-  drawable->visible       = FALSE;
-  drawable->width         = 0;
-  drawable->height        = 0;
-  drawable->offset_x      = 0;
-  drawable->offset_y      = 0;
-  drawable->bytes         = 0;
-  drawable->ID            = global_drawable_ID++;
-  drawable->tattoo        = 0;
-  drawable->gimage        = NULL;
-  drawable->type          = -1;
-  drawable->has_alpha     = FALSE;
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
-  drawable->parasites     = parasite_list_new ();
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
-
-  if (gimp_drawable_table == NULL)
-    gimp_drawable_table = g_hash_table_new (g_direct_hash, NULL);
-
-  g_hash_table_insert (gimp_drawable_table,
-		       GINT_TO_POINTER (drawable->ID),
-		       (gpointer) drawable);
-}
-
-static void
-gimp_drawable_destroy (GtkObject *object)
-{
-  GimpDrawable *drawable;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (object));
-
-  drawable = GIMP_DRAWABLE (object);
-
-  g_hash_table_remove (gimp_drawable_table, (gpointer) drawable->ID);
-
-  if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-
-  if (drawable->preview_cache)
-    gimp_preview_cache_invalidate (&drawable->preview_cache);
-
-  if (drawable->parasites)
-    gtk_object_unref (GTK_OBJECT (drawable->parasites));
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-void
-gimp_drawable_configure (GimpDrawable  *drawable,
-			 GimpImage     *gimage,
-			 gint           width,
-			 gint           height, 
-			 GimpImageType  type,
-			 const gchar   *name)
-{
-  gint     bpp;
-  gboolean alpha;
-
-  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
-
-  if (!name)
-    name = _("unnamed");
-
-  switch (type)
-    {
-    case RGB_GIMAGE:
-      bpp = 3; alpha = FALSE; break;
-    case GRAY_GIMAGE:
-      bpp = 1; alpha = FALSE; break;
-    case RGBA_GIMAGE:
-      bpp = 4; alpha = TRUE; break;
-    case GRAYA_GIMAGE:
-      bpp = 2; alpha = TRUE; break;
-    case INDEXED_GIMAGE:
-      bpp = 1; alpha = FALSE; break;
-    case INDEXEDA_GIMAGE:
-      bpp = 2; alpha = TRUE; break;
-    default:
-      g_message (_("Layer type %d not supported."), type);
-      return;
-    }
-
-  drawable->width     = width;
-  drawable->height    = height;
-  drawable->bytes     = bpp;
-  drawable->type      = type;
-  drawable->has_alpha = alpha;
-  drawable->offset_x  = 0;
-  drawable->offset_y  = 0;
-
-  if (drawable->tiles)
-    tile_manager_destroy (drawable->tiles);
-
-  drawable->tiles   = tile_manager_new (width, height, bpp);
-  drawable->visible = TRUE;
-
-  if (gimage)
-    gimp_drawable_set_gimage (drawable, gimage);
-
-  gimp_object_set_name (GIMP_OBJECT (drawable), name);
-
-  /*  preview variables  */
-  drawable->preview_cache = NULL;
-  drawable->preview_valid = FALSE;
 }

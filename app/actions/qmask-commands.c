@@ -213,7 +213,7 @@ qmask_activate (GtkWidget *widget,
       /* Set the defaults */
       color = gimg->qmask_color;
  
-      if ( (gmask = gimp_image_get_channel_by_name (gimg, "Qmask")) ) 
+      if ((gmask = gimp_image_get_channel_by_name (gimg, "Qmask"))) 
 	{
 	  gimg->qmask_state = TRUE; 
 	  /* if the user was clever and created his own */
@@ -224,21 +224,25 @@ qmask_activate (GtkWidget *widget,
 
       if (gimage_mask_is_empty (gimg))
 	{ 
+	  /* if no selection */
+
 	  if ((layer = gimp_image_floating_sel (gimg)))
 	    {
 	      floating_sel_to_layer (layer);
 	    }
-	  /* if no selection */
+
 	  gmask = channel_new (gimg, 
 			       gimg->width, 
 			       gimg->height,
 			       "Qmask",
 			       &color);
 	  gimp_image_add_channel (gimg, gmask, 0);
-	  gimp_drawable_fill (GIMP_DRAWABLE (gmask), 0, 0, 0, 0);
+	  drawable_fill (GIMP_DRAWABLE (gmask), TRANSPARENT_FILL);
 	}
       else
-	{ /* if selection */
+	{
+	  /* if selection */
+
 	  gmask = channel_copy (gimp_image_get_mask (gimg));
 	  gimp_image_add_channel (gimg, gmask, 0);
 	  channel_set_color (gmask, &color);
@@ -250,10 +254,11 @@ qmask_activate (GtkWidget *widget,
       undo_push_group_end (gimg);
       gdisp->gimage->qmask_state = TRUE;
       gdisplays_flush ();
-      
+
       /* connect to the removed signal, so the buttons get updated */
       gtk_signal_connect (GTK_OBJECT (gmask), "removed", 
-			  GTK_SIGNAL_FUNC (qmask_removed_callback), gdisp);
+			  GTK_SIGNAL_FUNC (qmask_removed_callback),
+			  gdisp);
     }
 }
 
@@ -269,10 +274,11 @@ edit_qmask_channel_query (GDisplay * gdisp)
   GtkObject        *opacity_scale_data;
 
   /* channel = gimp_image_get_channel_by_name (gdisp->gimage, "Qmask"); */
-  /*  the new options structure  */
-  options = g_new (EditQmaskOptions, 1);
-  options->gimage = gdisp->gimage;
 
+  /*  the new options structure  */
+  options = g_new0 (EditQmaskOptions, 1);
+
+  options->gimage      = gdisp->gimage;
   options->color_panel = gimp_color_panel_new (&options->gimage->qmask_color,
 					       GIMP_COLOR_AREA_LARGE_CHECKS, 
 					       48, 64);
@@ -326,7 +332,7 @@ edit_qmask_channel_query (GDisplay * gdisp)
 
   /*  The color panel  */
   gtk_signal_connect (GTK_OBJECT (options->color_panel), "color_changed",
-		      qmask_color_changed,
+		      GTK_SIGNAL_FUNC (qmask_color_changed),
 		      opacity_scale_data);		      
   gtk_box_pack_start (GTK_BOX (hbox), options->color_panel,
                       TRUE, TRUE, 0);
@@ -340,13 +346,14 @@ edit_qmask_channel_query (GDisplay * gdisp)
 
 static void 
 edit_qmask_query_ok_callback (GtkWidget *widget, 
-			      gpointer   client_data) 
+			      gpointer   data) 
 {
   EditQmaskOptions *options;
   Channel          *channel;
   GimpRGB           color;
 
-  options = (EditQmaskOptions *) client_data;
+  options = (EditQmaskOptions *) data;
+
   channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
 
   if (options->gimage && channel)
@@ -370,11 +377,11 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
 
 static void
 edit_qmask_query_cancel_callback (GtkWidget *widget,
-				  gpointer   client_data)
+				  gpointer   data)
 {
   EditQmaskOptions *options;
 
-  options = (EditQmaskOptions *) client_data;
+  options = (EditQmaskOptions *) data;
 
   gtk_widget_destroy (options->query_box);
   g_free (options);

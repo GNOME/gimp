@@ -1,3 +1,12 @@
+2001-01-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdrawable.[ch]: made gimp_drawable_fill() use GimpRGB,
+	added some "const", delete unused function, reordered some
+	functions.
+
+	* app/drawable.c
+	* app/qmask.c: follow the change.
+
 2001-01-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -68,13 +68,24 @@ struct _GimpDrawableClass
 
 GtkType         gimp_drawable_get_type           (void);
 
+void            gimp_drawable_configure          (GimpDrawable       *drawable,
+						  GimpImage          *gimage,
+						  gint                width,
+						  gint                height,
+						  GimpImageType       type,
+						  const gchar        *name);
+
+gint            gimp_drawable_get_ID             (GimpDrawable       *drawable);
+GimpDrawable  * gimp_drawable_get_by_ID          (gint                id);
+
+GimpImage     * gimp_drawable_gimage             (const GimpDrawable *drawable);
+void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
+						  GimpImage          *gimage);
+
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
 						  gint                undo);
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
-						  guchar              r,
-						  guchar              g,
-						  guchar              b,
-						  guchar              a);
+						  const GimpRGB      *color);
 
 gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 						  gint               *x1,
@@ -84,7 +95,7 @@ gboolean        gimp_drawable_mask_bounds        (GimpDrawable       *drawable,
 
 void            gimp_drawable_invalidate_preview (GimpDrawable       *drawable, 
 						  gboolean            emit_signal);
-void            gimp_drawable_removed            (GimpDrawable      *drawable);
+void            gimp_drawable_removed            (GimpDrawable       *drawable);
 
 gboolean        gimp_drawable_has_alpha          (const GimpDrawable *drawable);
 GimpImageType   gimp_drawable_type               (const GimpDrawable *drawable);
@@ -92,13 +103,13 @@ GimpImageType   gimp_drawable_type_with_alpha    (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_rgb             (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_gray            (const GimpDrawable *drawable);
 gboolean        gimp_drawable_is_indexed         (const GimpDrawable *drawable);
-TileManager *   gimp_drawable_data               (const GimpDrawable *drawable);
-TileManager *   gimp_drawable_shadow             (GimpDrawable *);
-gint            gimp_drawable_bytes              (GimpDrawable *);
-gint            gimp_drawable_width              (GimpDrawable *);
-gint            gimp_drawable_height             (GimpDrawable *);
+TileManager   * gimp_drawable_data               (const GimpDrawable *drawable);
+TileManager   * gimp_drawable_shadow             (GimpDrawable       *drawable);
+gint            gimp_drawable_bytes              (const GimpDrawable *drawable);
+gint            gimp_drawable_width              (const GimpDrawable *drawable);
+gint            gimp_drawable_height             (const GimpDrawable *drawable);
 gboolean	gimp_drawable_visible	         (const GimpDrawable *drawable);
-void            gimp_drawable_offsets            (GimpDrawable       *drawable, 
+void            gimp_drawable_offsets            (const GimpDrawable *drawable, 
 						  gint               *offset_x,
 						  gint               *offset_y);
 
@@ -119,20 +130,6 @@ gchar        ** gimp_drawable_parasite_list      (const GimpDrawable *drawable,
 Tattoo          gimp_drawable_get_tattoo         (const GimpDrawable *drawable);
 void            gimp_drawable_set_tattoo         (GimpDrawable       *drawable,
 						  Tattoo              tattoo);
-
-gint            gimp_drawable_get_ID             (GimpDrawable       *drawable);
-GimpDrawable *  gimp_drawable_get_by_ID          (gint                id);
-void		gimp_drawable_deallocate         (GimpDrawable       *drawable);
-GimpImage *     gimp_drawable_gimage             (const GimpDrawable *drawable);
-void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
-						  GimpImage          *gimage);
-
-void            gimp_drawable_configure          (GimpDrawable       *drawable,
-						  GimpImage          *gimage,
-						  gint                width,
-						  gint                height,
-						  GimpImageType       type,
-						  const gchar        *name);
 
 
 #endif /* __GIMP_DRAWABLE_H__ */

@@ -33,43 +33,39 @@ drawable_fill (GimpDrawable *drawable,
 	       GimpFillType  fill_type)
 {
   GimpRGB color;
-  guchar  r, g, b, a;
 
   g_return_if_fail (drawable != NULL);
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
-  a = 255;
+  color.a = 1.0;
 
   switch (fill_type)
     {
     case FOREGROUND_FILL:
       gimp_context_get_foreground (NULL, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
       break;
 
     case BACKGROUND_FILL:
       gimp_context_get_background (NULL, &color);
-      gimp_rgb_get_uchar (&color, &r, &g, &b);
       break;
 
     case WHITE_FILL:
-      r = g = b = 255;
+      gimp_rgb_set (&color, 1.0, 1.0, 1.0);
       break;
 
     case TRANSPARENT_FILL:
-      a = r = g = b = 0;
+      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
       break;
 
     case NO_FILL:
       return;
 
     default:
-      g_warning ("unknown fill type");
-      a = r = g = b = 0;
-      break;
+      g_warning ("drawable_fill(): unknown fill type");
+      return;
     }
 
-  gimp_drawable_fill (drawable, r, g, b, a);
+  gimp_drawable_fill (drawable, &color);
 
   drawable_update (drawable, 0, 0,
 		   gimp_drawable_width  (drawable),
