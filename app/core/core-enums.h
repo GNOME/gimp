@@ -317,6 +317,7 @@ typedef enum /*< pdb-skip >*/
 
   GIMP_UNDO_GROUP_IMAGE_SCALE,        /*< desc="Scale Image"                 >*/
   GIMP_UNDO_GROUP_IMAGE_RESIZE,       /*< desc="Resize Image"                >*/
+  GIMP_UNDO_GROUP_IMAGE_FLIP,         /*< desc="Flip Image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert Image"               >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop Image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge Layers"                >*/

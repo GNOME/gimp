@@ -31,6 +31,9 @@ void   image_resize_cmd_callback            (GtkWidget *widget,
 					     gpointer   data);
 void   image_scale_cmd_callback             (GtkWidget *widget,
 					     gpointer   data);
+void   image_flip_cmd_callback              (GtkWidget *widget,
+                                             gpointer   data,
+                                             guint      action);
 void   image_crop_cmd_callback              (GtkWidget *widget,
 					     gpointer   data);
 

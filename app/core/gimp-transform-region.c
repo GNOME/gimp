@@ -770,8 +770,11 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       else
         return FALSE;
 
-      if (layer)
-        gimp_layer_add_alpha (layer);
+      if (layer && (tile_manager_bpp (tiles) == 2 ||
+                    tile_manager_bpp (tiles) == 4))
+        {
+          gimp_layer_add_alpha (layer);
+        }
 
       floating_layer = gimp_image_floating_sel (gimage);
 

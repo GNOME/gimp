@@ -938,7 +938,6 @@ undo_pop_mask (GimpUndo            *undo,
   else
     {
       channel->boundary_known = FALSE;
-      GIMP_DRAWABLE (channel)->preview_valid = FALSE;
     }
 
   if (mu->tiles)
@@ -2216,20 +2215,30 @@ undo_pop_channel_mod (GimpUndo            *undo,
 
   channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
 
-  /*  Issue the first update  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_ITEM (channel)->width,
-			GIMP_ITEM (channel)->height);
+  if (channel != gimp_image_get_mask (undo->gimage))
+    {
+      /*  Issue the first update  */
+      gimp_drawable_update (GIMP_DRAWABLE (channel),
+                            0, 0,
+                            GIMP_ITEM (channel)->width,
+                            GIMP_ITEM (channel)->height);
+
+      channel->boundary_known = FALSE;
+    }
+  else
+    {
+      /* invalidate the current bounds and boundary of the mask */
+      gimp_image_mask_invalidate (undo->gimage);
+    }
 
   tiles = cmu->tiles;
 
   cmu->tiles = GIMP_DRAWABLE (channel)->tiles;
 
-  GIMP_DRAWABLE (channel)->tiles       = tiles;
-  GIMP_ITEM (channel)->width           = tile_manager_width (tiles);
-  GIMP_ITEM (channel)->height          = tile_manager_height (tiles);
-  GIMP_CHANNEL (channel)->bounds_known = FALSE; 
+  GIMP_DRAWABLE (channel)->tiles = tiles;
+  GIMP_ITEM (channel)->width     = tile_manager_width (tiles);
+  GIMP_ITEM (channel)->height    = tile_manager_height (tiles);
+  channel->bounds_known          = FALSE; 
 
   if (GIMP_ITEM (channel)->width  != tile_manager_width  (cmu->tiles) ||
       GIMP_ITEM (channel)->height != tile_manager_height (cmu->tiles))
@@ -2237,11 +2246,18 @@ undo_pop_channel_mod (GimpUndo            *undo,
       gimp_viewable_size_changed (GIMP_VIEWABLE (channel));
     }
 
-  /*  Issue the second update  */
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-			0, 0,
-			GIMP_ITEM (channel)->width,
-			GIMP_ITEM (channel)->height);
+  if (channel != gimp_image_get_mask (undo->gimage))
+    {
+      /*  Issue the second update  */
+      gimp_drawable_update (GIMP_DRAWABLE (channel),
+                            0, 0,
+                            GIMP_ITEM (channel)->width,
+                            GIMP_ITEM (channel)->height);
+    }
+  else
+    {
+      accum->mask_changed = TRUE;
+    }
 
   return TRUE;
 }

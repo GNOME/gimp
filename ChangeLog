@@ -1,3 +1,30 @@
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
+	Implemented "Flip Image". Fixes bug #23179:
+
+	* app/core/core-enums.[ch]: added GIMP_UNDO_GROUP_IMAGE_FLIP.
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-flip.[ch]: new files implementing
+	gimp_image_flip().
+
+	* app/gui/image-menu.c
+	* app/gui/image-commands.[ch]: added it to the "Image" menu.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-flip-horizontal-16.png
+	* themes/Default/images/stock-flip-vertical-16.png
+	* libgimpwidgets/gimpstock.[ch]: added icons for the new
+	menu items.
+
+	Bugs found while hacking the stuff above:
+
+	* app/core/gimpdrawable-transform.c (gimp_drawable_transform_paste):
+	only call gimp_layer_add_alpha() if the pasted tiles have alpha.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_channel_mod): fixed to
+	do the right thing if the channel is the selection mask.
+
 2003-05-18  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/psd_save.c: Translated Spanish comments to

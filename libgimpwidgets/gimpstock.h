@@ -145,6 +145,8 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_ROTATE_270           "gimp-rotate-270"
 #define GIMP_STOCK_RESIZE               "gimp-resize"
 #define GIMP_STOCK_SCALE                "gimp-scale"
+#define GIMP_STOCK_FLIP_HORIZONTAL      "gimp-flip-horizontal"
+#define GIMP_STOCK_FLIP_VERTICAL        "gimp-flip-vertical"
 
 #define GIMP_STOCK_IMAGE                "gimp-image"
 #define GIMP_STOCK_LAYER                "gimp-layer"

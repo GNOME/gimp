@@ -430,6 +430,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_NONE, N_("<<invalid>>"), "group-none" },
   { GIMP_UNDO_GROUP_IMAGE_SCALE, N_("Scale Image"), "group-image-scale" },
   { GIMP_UNDO_GROUP_IMAGE_RESIZE, N_("Resize Image"), "group-image-resize" },
+  { GIMP_UNDO_GROUP_IMAGE_FLIP, N_("Flip Image"), "group-image-flip" },
   { GIMP_UNDO_GROUP_IMAGE_CONVERT, N_("Convert Image"), "group-image-convert" },
   { GIMP_UNDO_GROUP_IMAGE_CROP, N_("Crop Image"), "group-image-crop" },
   { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge Layers"), "group-image-layers-merge" },

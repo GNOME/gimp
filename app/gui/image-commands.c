@@ -29,6 +29,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-flip.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
@@ -202,6 +203,25 @@ image_scale_cmd_callback (GtkWidget *widget,
 }
 
 void
+image_flip_cmd_callback (GtkWidget *widget,
+                         gpointer   data,
+                         guint      action)
+{
+  GimpDisplay  *gdisp;
+  GimpProgress *progress;
+  return_if_no_display (gdisp, data);
+
+  progress = gimp_progress_start (gdisp, _("Flipping..."), TRUE, NULL, NULL);
+
+  gimp_image_flip (gdisp->gimage, (GimpOrientationType) action,
+                   gimp_progress_update_and_flush, progress);
+
+  gimp_progress_end (progress);
+
+  gimp_image_flush (gdisp->gimage);
+}
+
+void
 image_crop_cmd_callback (GtkWidget *widget,
                          gpointer   data)
 {
@@ -216,6 +236,7 @@ image_crop_cmd_callback (GtkWidget *widget,
     }
 
   gimp_image_crop (gdisp->gimage, x1, y1, x2, y2, FALSE, TRUE);
+  gimp_image_flush (gdisp->gimage);
 }
 
 void
