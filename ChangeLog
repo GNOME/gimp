@@ -1,3 +1,9 @@
+2003-08-31  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/ccanalyze.c (analyze): Fix bug preventing the
+	plug-in from working properly with rectangular selections. It
+	still doesn't work properly with arbitrarily-shaped selections.
+
 2003-08-31  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimpitemfactory.c (gimp_item_factory_translate_func):

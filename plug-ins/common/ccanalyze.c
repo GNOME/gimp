@@ -298,7 +298,7 @@ analyze (GimpDrawable *drawable)
     {
       gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y, (x2 - x1));
 
-      for (x = x1; x < x2; x++)
+      for (x = 0; x < x2 - x1; x++)
         {
           /* 
            * If the image is indexed, fetch RGB values
