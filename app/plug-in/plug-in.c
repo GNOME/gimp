@@ -30,7 +30,6 @@
 #include <unistd.h>
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
-#include "libgimp/gimpmodule.h"
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -137,7 +136,6 @@ static Argument* message_handler_set_invoker (Argument *args);
 
 static Argument* plugin_temp_PDB_name_invoker (Argument *args);
 
-static void module_initialize (char *filename);
 
 
 static GSList *plug_in_defs = NULL;
@@ -484,75 +482,8 @@ plug_in_init ()
   g_slist_free (plug_in_defs);
 
 
-  /* Load and initialize gimp modules */
-
-  if (g_module_supported ())
-    datafiles_read_directories (module_path,
-				module_initialize, 0 /* no flags */);
 }
 
-
-/* name must be of the form lib*.so */
-/* TODO: need support for WIN32-style dll names.  Maybe this function
- * should live in libgmodule? */
-static gboolean
-valid_module_name (const char *filename)
-{
-  const char *basename;
-  int len;
-
-  basename = strrchr (filename, '/');
-  if (basename)
-    basename++;
-  else
-    basename = filename;
-
-  len = strlen (basename);
-
-  if (len < 3 + 1 + 3)
-    return FALSE;
-
-  if (strncmp (basename, "lib", 3))
-    return FALSE;
-
-  if (strcmp (basename + len - 3, ".so"))
-    return FALSE;
-
-  return TRUE;
-}
-
-static void
-module_initialize (char *filename)
-{
-  GModule *mod;
-  GimpModuleInitFunc init;
-  gpointer symbol;
-
-  if (!valid_module_name (filename))
-    return;
-
-  if ((be_verbose == TRUE) || (no_splash == TRUE))
-    g_print (_("load module: \"%s\"\n"), filename);
-
-  mod = g_module_open (filename, G_MODULE_BIND_LAZY);
-  if (!mod)
-    {
-      g_warning (_("module load error: %s: %s"), filename, g_module_error ());
-      return;
-    }
-
-  if (g_module_symbol (mod, "module_init", &symbol))
-    {
-      init = symbol;
-      if (init () == GIMP_MODULE_UNLOAD)
-	g_module_close (mod);
-    }
-  else
-    {
-      g_warning (_("%s: module_init() symbol not found"), filename);
-      g_module_close (mod);
-    }
-}
 
 
 void

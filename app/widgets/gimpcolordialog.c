@@ -147,6 +147,8 @@ color_notebook_new (int                    r,
 	    {
 	      label = gtk_label_new (info->name);
 	      gtk_widget_show (label);
+	      /* hide the frame, so it doesn't get selected by mistake */
+	      gtk_widget_hide (csel->frame);
 	      gtk_notebook_append_page (GTK_NOTEBOOK (cnp->notebook),
 					csel->frame, label);
 	    }

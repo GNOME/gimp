@@ -57,6 +57,7 @@
 #include "layers_dialog.h"
 #include "layer_select.h"
 #include "levels.h"
+#include "module_db.h"
 #include "palette.h"
 #include "patterns.h"
 #include "plug_in.h"
@@ -1103,6 +1104,16 @@ tips_dialog_cmd_callback (GtkWidget *widget,
 			  gpointer   client_data)
 {
   tips_dialog_create ();
+}
+
+void
+dialogs_module_browser_cmd_callback (GtkWidget *widget,
+				     gpointer   client_data)
+{
+  GtkWidget *w;
+
+  w = module_db_browser_new ();
+  gtk_widget_show (w);
 }
 
 

@@ -62,6 +62,7 @@ static const GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
+  { N_("/File/Dialogs/Module Browser..."), NULL, dialogs_module_browser_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
 };
 static guint n_toolbox_entries = sizeof (toolbox_entries) / sizeof (toolbox_entries[0]);
@@ -148,7 +149,6 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Image/Resize"), NULL, image_resize_cmd_callback, 0 },
   { N_("/Image/Scale"), NULL, image_scale_cmd_callback, 0 },
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
-  { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
   
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
   { N_("/Layers/Raise Layer"), "<control>F", layers_raise_cmd_callback, 0 },
@@ -191,7 +191,11 @@ static const GtkItemFactoryEntry image_entries[] =
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
 */
 
-  { N_("/Filters/"), NULL, NULL, 0 },
+  { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
+  { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
+  { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
+  { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
+
   { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
   { N_("/Filters/---"), NULL, NULL, 0, "<Separator>" },
@@ -297,7 +301,7 @@ void
 menus_tools_create (ToolInfo *tool_info)
 {
   GtkItemFactoryEntry entry;
-  
+
   entry.path = gettext(tool_info->menu_path);
   entry.accelerator = tool_info->menu_accel;
   entry.callback = tools_select_cmd_callback;

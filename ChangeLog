@@ -1,3 +1,28 @@
+Mon Jan 18 23:36:57 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/menus.c: include module browser, plus re-instate the 'swap
+	     colors' and other options that got killed by mistake.  Clean
+	     up the odd extra separator too.
+
+	* app/color_notebook.c: hide newly created colour selectors so we
+	     know the GIMP one will be the default page.
+
+	* app/module_db.[ch]: NEW FILEs: module database / browser.
+	* app/Makefile.am: add module_db.[ch] stuff
+	* app/app_procs.c: initialise the module_db
+	* app/commands.[ch]: callback to create a module browser.
+	* app/plug_in.c: move module loading out to module_db.c
+	* libgimp/gimpmodule.h: API change: module_init() should return
+	     additonal info (author, purpose, date, etc.)   Also optional
+	     module_unload() function.
+	* modules/colorsel_gtk.c: add module info, plus an unload function
+
+	* modules/Makefile.am: build triangle colour selector module
+	* modules/colorsel_triangle.c: NEW FILE: colour selector from 
+	     Simon Budig <Simon.Budig@unix-ag.org>.
+
+	* MAINTAINERS: changed my email address
+
 Mon Jan 18 22:55:19 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/gimpimage.c app/gimpimage.h:

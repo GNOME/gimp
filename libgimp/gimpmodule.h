@@ -30,15 +30,54 @@ typedef enum {
 } GimpModuleStatus;
 
 
+
+typedef struct {
+  void *shutdown_data;
+  const char *purpose;
+  const char *author;
+  const char *version;
+  const char *copyright;
+  const char *date;
+} GimpModuleInfo;
+
+
+
 /* GIMP modules should G_MODULE_EXPORT a function named "module_init"
  * of the following type: */
-typedef GimpModuleStatus (*GimpModuleInitFunc) (void);
+typedef GimpModuleStatus (GimpModuleInitFunc) (GimpModuleInfo **);
+
+GimpModuleInitFunc module_init;
 
 /* This function is called by the GIMP at startup, and should return
  * either GIMP_MODULE_OK if it sucessfully initialised or
  * GIMP_MODULE_UNLOAD if the module failed to hook whatever functions
  * it wanted.  GIMP_MODULE_UNLOAD causes the module to be closed, so
  * the module must not have registered any internal functions or given
- * out pointers to its data to anyone. */
+ * out pointers to its data to anyone.
+ *
+ * If the module returns GIMP_MODULE_OK, it should also return a
+ * GimpModuleInfo structure describing itself.
+ */
+
+
+/* If GIMP modules want to allow themselves to be unloaded, they
+ * should G_MODULE_EXPORT a function named "module_unload" with the
+ * following type: */
+typedef void (GimpModuleUnloadFunc) (void *shutdown_data,
+				      void (*completed_cb)(void *),
+				      void *completed_data);
+
+GimpModuleUnloadFunc module_unload;
+
+/* GIMP calls this unload request function to ask a module to
+ * prepare itself to be unloaded.  It is called with the value of
+ * shutdown_data supplied in the GimpModuleInfo struct.  The module
+ * should ensure that none of its code or data are being used, and
+ * then call the supplied "completed_cb" callback function with the
+ * data provided.  Typically the shutdown request function will queue
+ * de-registration activities then return.  Only when the
+ * de-registration has finished should the completed_cb be invoked. */
+
+
 
 #endif /* __GIMPMODULE_H__ */

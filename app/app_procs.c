@@ -55,6 +55,7 @@
 #include "palette.h"
 #include "patterns.h"
 #include "plug_in.h"
+#include "module_db.h"
 #include "procedural_db.h"
 #include "session.h"
 #include "temp_buf.h"
@@ -526,6 +527,7 @@ app_init (void)
   app_init_update_status (NULL, NULL, 1.00);
 
   plug_in_init ();         /*  initialize the plug in structures  */
+  module_db_init ();       /*  load any modules we need */
   RESET_BAR();
   file_ops_post_init ();   /*  post-initialize the file types  */
 

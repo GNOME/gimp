@@ -95,5 +95,6 @@ void dialogs_device_status_cmd_callback (GtkWidget *, gpointer);
 void dialogs_error_console_cmd_callback (GtkWidget *, gpointer);
 void about_dialog_cmd_callback (GtkWidget *, gpointer);
 void tips_dialog_cmd_callback (GtkWidget *, gpointer);
+void dialogs_module_browser_cmd_callback (GtkWidget *, gpointer);
 
 #endif /* __COMMANDS_H__ */

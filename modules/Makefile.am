@@ -8,7 +8,9 @@ INCLUDES = \
         $(GTK_CFLAGS)                   \
         -I$(includedir)
 
-module_LTLIBRARIES = libcolorsel_gtk.la
+module_LTLIBRARIES = libcolorsel_gtk.la libcolorsel_triangle.la
 
 libcolorsel_gtk_la_SOURCES = colorsel_gtk.c
+
+libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 

@@ -40,16 +40,45 @@ static GimpColorSelectorMethods methods =
   colorsel_gtk_setcolor
 };
 
+static GimpModuleInfo info = {
+    NULL,
+    "GTK colour selector as a pluggable colour selector",
+    "Austin Donnelly <austin@gimp.org>",
+    "v0.02",
+    "(c) 1999, released under the GPL",
+    "17 Jan 1999"
+};
+
 
 /* globaly exported init function */
 G_MODULE_EXPORT GimpModuleStatus
-module_init (void)
+module_init (GimpModuleInfo **inforet)
 {
-  if (gimp_color_selector_register ("GTK", &methods))
+  GimpColorSelectorID id;
+
+  id = gimp_color_selector_register ("GTK", &methods);
+
+  if (id)
+  {
+    info.shutdown_data = id;
+    *inforet = &info;
     return GIMP_MODULE_OK;
+  }
   else
+  {
     return GIMP_MODULE_UNLOAD;
+  }
 }
+
+
+G_MODULE_EXPORT void
+module_unload (void *shutdown_data,
+	       void (*completed_cb)(void *),
+	       void *completed_data)
+{
+  gimp_color_selector_unregister (shutdown_data, completed_cb, completed_data);
+}
+
 
 
 /**************************************************************/
