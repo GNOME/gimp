@@ -35,6 +35,7 @@ struct _TileBuf
   Tag        tag;
   int        width;
   int        height;
+  Canvas *   canvas;
 
   Tile16   * tiles;
 
@@ -61,7 +62,8 @@ TileBuf *
 tilebuf_new  (
               Tag tag,
               int w,
-              int h
+              int h,
+              Canvas * c
               )
 {
   TileBuf *t;
@@ -72,7 +74,8 @@ tilebuf_new  (
   t->tag = tag;
   t->width = w;
   t->height = h;
-
+  t->canvas = c;
+  
   n = tile16_index (t, w - 1, h - 1) + 1;
   t->tiles = g_new (Tile16, n);
   while (n--)
@@ -105,31 +108,6 @@ tilebuf_delete  (
         }
       g_free (t);
     }
-}
-
-
-TileBuf * 
-tilebuf_clone  (
-                TileBuf * t
-                )
-{
-  TileBuf *newt = NULL;
-
-  if (t)
-    {
-      newt = (TileBuf *) g_malloc (sizeof (TileBuf));
-
-      newt->tag = t->tag;
-      newt->width = t->width;
-      newt->height = t->height;
-
-      newt->bytes = t->bytes;
-      
-      g_warning ("finish writing tilebuf_clone()");
-      /* tile16_clone (t, newt); */
-    }
-  
-  return newt;
 }
 
 
@@ -234,33 +212,28 @@ tilebuf_height  (
 
 
 
-guint 
+RefRC 
 tilebuf_portion_ref  (
                       TileBuf * t,
                       int x,
                       int y
                       )
 {
-  guint rc = FALSE;
+  RefRC rc = REFRC_FAIL;
 
-  int i = tile16_index(t, x, y);
+  int i = tile16_index (t, x, y);
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
       
-      tile->ref_count++;
+      if (tile->valid == FALSE)
+        if (canvas_autoalloc (t->canvas) == AUTOALLOC_ON)
+          (void) tilebuf_portion_alloc (t, x, y);
       
-      if (tile->data == NULL)
+      if (tile->valid == TRUE)
         {
-          if (tile->valid == TRUE)
-            {
-              /* swap tile in */
-            }
-          else
-            {
-              /* user action required to alloc and init data buffer */
-              rc = TRUE;
-            }
+          tile->ref_count++;
+          rc = REFRC_OK;
         }
     }
   
@@ -268,25 +241,57 @@ tilebuf_portion_ref  (
 }
 
 
-void 
+RefRC 
+tilebuf_portion_refrw  (
+                        TileBuf * t,
+                        int x,
+                        int y
+                        )
+{
+  RefRC rc = REFRC_FAIL;
+
+  int i = tile16_index(t, x, y);
+  if (i >= 0)
+    {
+      Tile16 * tile = &t->tiles[i];
+      
+      if (tile->valid == FALSE)
+        if (canvas_autoalloc (t->canvas) == AUTOALLOC_ON)
+          (void) tilebuf_portion_alloc (t, x, y);
+
+      if (tile->valid == TRUE)
+        {
+          tile->ref_count++;
+          rc = REFRC_OK;
+        }
+    }
+  
+  return rc;
+}
+
+
+RefRC 
 tilebuf_portion_unref  (
                         TileBuf * t,
                         int x,
                         int y
                         )
 {
+  RefRC rc = REFRC_FAIL;
+
   int i = tile16_index(t, x, y);
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-
-      tile->ref_count--;
-      if ((tile->ref_count == 0) &&
-          (tile->valid == TRUE))
-        {
-          /* swap tile out */
-        }
+      if (tile->ref_count > 0)
+        tile->ref_count--;
+      else
+        g_warning ("tilebuf unreffing a tile with ref_count==0");
+      
+      rc = REFRC_OK;
     }
+
+  return rc;
 }
 
 
@@ -428,14 +433,20 @@ tilebuf_portion_alloc  (
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-      if (tile->valid == FALSE)
+      if (tile->valid == TRUE)
+        {
+          return TRUE;
+        }
+      else
         {
           int n = TILE16_WIDTH * TILE16_HEIGHT * t->bytes;
           tile->data = g_malloc (n);
           if (tile->data)
             {
-              tile->valid = TRUE;
               memset (tile->data, 0, n);
+              tile->valid = TRUE;
+              if (canvas_portion_init (t->canvas, x, y) != TRUE)
+                g_warning ("tilebuf failed to init portion...");
               return TRUE;
             }
         }
@@ -465,9 +476,6 @@ tilebuf_portion_unalloc  (
     }
   return FALSE;
 }
-
-
-
 
 
 

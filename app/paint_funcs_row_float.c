@@ -704,7 +704,7 @@ swap_row_float (
   gfloat *dest = (gfloat*)pixelrow_data (dest_row);
   gfloat *src  = (gfloat*)pixelrow_data (src_row);
   gfloat temp;
-  gint    width = pixelrow_width (dest_row);
+  gint    width = pixelrow_width (dest_row) * tag_num_channels (pixelrow_tag (src_row));
   
   while (width--)
     {

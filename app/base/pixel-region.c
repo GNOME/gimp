@@ -72,6 +72,7 @@ pixel_region_init (PR, tiles, x, y, w, h, dirty)
      int w, h;
      int dirty;
 {
+  g_warning ("pixel_region_init() was called");
   PR->tiles = tiles;
   PR->data = NULL;
   PR->bytes = tiles->levels[0].bpp;
@@ -312,6 +313,8 @@ pixel_regions_process (PRI_ptr)
   PRI->process_count++;
 
   /*  Unref all referenced tiles and increment the offsets  */
+
+  g_warning ("pixel_regions_process() was called");
 
   list = PRI->pixel_regions;
   while (list)

@@ -16,6 +16,8 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <string.h>
+
 #include "canvas.h"
 #include "flatbuf.h"
 #include "tilebuf.h"
@@ -61,11 +63,11 @@ canvas_new (
     {
     case STORAGE_FLAT:
       c->tile_data = NULL;
-      c->flat_data = flatbuf_new (tag, w, h);
+      c->flat_data = flatbuf_new (tag, w, h, c);
       break;
     case STORAGE_TILED:
       c->flat_data = NULL;
-      c->tile_data = tilebuf_new (tag, w, h);
+      c->tile_data = tilebuf_new (tag, w, h, c);
       break;
     default:
       g_free (c);
@@ -89,35 +91,6 @@ canvas_delete  (
         flatbuf_delete (c->flat_data);
       g_free (c);
     }
-}
-
-
-Canvas * 
-canvas_clone  (
-               Canvas * c
-               )
-{
-  if (c)
-    {
-      Canvas *new_c;
-
-      new_c = (Canvas *) g_malloc (sizeof (Canvas));
-
-      new_c->storage = c->storage;
-      new_c->autoalloc = c->autoalloc;
-      if (c->tile_data)
-        new_c->tile_data = tilebuf_clone (c->tile_data);
-      if (c->flat_data)
-        new_c->flat_data = flatbuf_clone (c->flat_data);
-      
-      new_c->tag = c->tag;
-      new_c->bytes = c->bytes;
-      new_c->width = c->width;
-      new_c->height = c->height;
-      
-      return new_c;
-    }
-  return NULL;
 }
 
 
@@ -216,6 +189,8 @@ canvas_set_autoalloc (
       case AUTOALLOC_OFF:
       case AUTOALLOC_ON:
         c->autoalloc = aa;
+
+      default:
         break;
       }
   return canvas_autoalloc (c);
@@ -251,51 +226,105 @@ canvas_bytes  (
 
 
 
+/* debugging counters */
+int ref_ro = 0;
+int ref_rw = 0;
+int ref_un = 0;
 
+int ref_fa = 0;
+int ref_uf = 0;
 
-
-/* this routine provides a little bit of value add.  the return code
-   semantics are the same as the underlying ref operation.  ie: true
-   means that user action is required.  however, since almost everyone
-   will want to do a portion_alloc immediately, we have the autoalloc
-   option to streamline this.  the user still gets the TRUE return
-   code in case they want to do further initialization */
-guint 
+RefRC 
 canvas_portion_ref  (
                      Canvas * c,
                      int x,
                      int y
                      )
 {
-  guint rc = FALSE;
-
-  if (c)
-    if (c->tile_data)
-      rc = tilebuf_portion_ref (c->tile_data, x, y);
-    else if (c->flat_data)
-      rc = flatbuf_portion_ref (c->flat_data, x, y);
+  RefRC rc = REFRC_FAIL;
   
-  if ((rc == TRUE) &&
-      (c->autoalloc == AUTOALLOC_ON) &&
-      (canvas_portion_alloc (c, x, y) == FALSE))
-    g_warning ("canvas failed to auto-alloc");
-
+  if (c)
+    {
+      if (c->tile_data)
+        rc = tilebuf_portion_ref (c->tile_data, x, y);
+      else if (c->flat_data)
+        rc = flatbuf_portion_ref (c->flat_data, x, y);
+    }
+  
+  switch (rc)
+    {
+    case REFRC_OK:
+      ref_ro++;
+      break;
+    case REFRC_FAIL:
+    default:
+      ref_fa++;
+      break;
+    }
   return rc;
 }
 
 
-void 
+RefRC 
+canvas_portion_refrw  (
+                       Canvas * c,
+                       int x,
+                       int y
+                       )
+{
+  RefRC rc = REFRC_FAIL;
+  
+  if (c)
+    {
+      if (c->tile_data)
+        rc = tilebuf_portion_refrw (c->tile_data, x, y);
+      else if (c->flat_data)
+        rc = flatbuf_portion_refrw (c->flat_data, x, y);
+    }
+  
+  switch (rc)
+    {
+    case REFRC_OK:
+      ref_rw++;
+      break;
+    case REFRC_FAIL:
+    default:
+      ref_fa++;
+      break;
+    }
+  return rc;
+}
+
+
+RefRC 
 canvas_portion_unref  (
                        Canvas * c,
                        int x,
                        int y
                        )
 {
+  RefRC rc = REFRC_FAIL;
+  
   if (c)
-    if (c->tile_data)
-      tilebuf_portion_unref (c->tile_data, x, y);
-    else if (c->flat_data)
-      flatbuf_portion_unref (c->flat_data, x, y);
+    {
+      if (c->tile_data)
+        rc = tilebuf_portion_unref (c->tile_data, x, y);
+      else if (c->flat_data)
+        rc = flatbuf_portion_unref (c->flat_data, x, y);
+    }
+  
+  switch (rc)
+    {
+    case REFRC_OK:
+      ref_un++;
+      break;
+    case REFRC_FAIL:
+    default:
+      ref_uf++;
+      break;
+    }
+
+  return rc;
 }
 
 
@@ -414,7 +443,7 @@ canvas_portion_alloced  (
     else if (c->flat_data)
       return flatbuf_portion_alloced (c->flat_data, x, y);
 
-  return 0;
+  return FALSE;
 }
 
 
@@ -452,5 +481,38 @@ canvas_portion_unalloc  (
 }
 
 
+/*
+   FIXME:
 
+   this doesn;t work right for tiles.  edge tiles only get the
+   "on-image" portion inited.  the part that lies off the image isn;t
+   inited because the potion_width and height ignore it.
 
+   the proper fix for this is to split portion out of canvas and deal
+   only with tiles at the canvas level.  for now we just memset the
+   chunk to zero in portion_alloc */
+
+guint 
+canvas_portion_init  (
+                      Canvas * c,
+                      int x,
+                      int y
+                      )
+{
+  if (c)
+    {
+      guint xx = canvas_portion_x (c, x, y);
+      guint yy = canvas_portion_y (c, x, y);
+      guint ww = canvas_portion_width (c, xx, yy);
+      guint hh = canvas_portion_height (c, xx, yy);
+      guint nn = ww * hh * canvas_bytes (c);
+      guchar * dd = canvas_portion_data (c, xx, yy);
+
+      if (dd != NULL)
+        {
+          memset (dd, 0, nn);
+          return TRUE;
+        }
+    }
+  return FALSE;
+}

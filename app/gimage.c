@@ -138,7 +138,6 @@ gimage_create (void)
 static void
 gimage_allocate_projection (GImage *gimage)
 {
-  trace_enter ("gimage_allocate_projection");
   if (gimage->projection)
     gimage_free_projection (gimage);
   /*  Find the number of bytes required for the projection.
@@ -165,7 +164,6 @@ gimage_allocate_projection (GImage *gimage)
   gimage->projection = tile_manager_new (gimage->width, gimage->height, gimage->proj_bytes);
   gimage->projection->user_data = (void *) gimage;
   tile_manager_set_validate_proc (gimage->projection, gimage_validate);
-  trace_exit();
 }
 
 static void
@@ -590,6 +588,8 @@ gimage_apply_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
   int operation;
   int active [MAX_CHANNELS];
 
+  g_warning ("gimage_apply_image() was called");
+
   /*  get the selection mask if one exists  */
   mask = (gimage_mask_is_empty (gimage)) ?
     NULL : gimage_get_mask (gimage);
@@ -725,7 +725,7 @@ gimage_apply_painthit  (
 
       /* apply the undo if the caller wants one */
       if (undo)
-        drawable_apply_image (drawable, x1, y1, x2, y2, NULL, FALSE);
+        drawable_apply_image_16 (drawable, x1, y1, x2, y2, NULL);
 
       /* the underlying image */
       pixelarea_init (&src1PR, src1, NULL,
@@ -795,6 +795,9 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
   unsigned char *temp_data;
   int operation;
   int active [MAX_CHANNELS];
+
+
+  g_warning ("gimage_replace_image() was called");
 
   /*  get the selection mask if one exists  */
   mask = (gimage_mask_is_empty (gimage)) ?
@@ -985,7 +988,7 @@ gimage_replace_painthit  (
 		    FALSE);
 
       pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
-      canvas_portion_ref ( temp_canvas, 0, 0 );
+      /* canvas_portion_ref ( temp_canvas, 0, 0 ); */
      
       /* copy selection mask to temp canvas */ 
       copy_area (&mask_area, &temp_area);
@@ -1601,6 +1604,12 @@ gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
   int tilex, tiley;
   int flat;
 
+  /* this will eventually be hooked into some form of
+     canvas_portion_init().  for now, just disable it cause it's not
+     doing anything */
+  return;
+
+  
   flat = gimage_is_flat (gimage);
   tm = gimage_projection (gimage);
 
@@ -1671,6 +1680,8 @@ gimage_validate (TileManager *tm, Tile *tile, int level)
   int x, y;
   int w, h;
 
+  g_warning ("gimage_validate() was called");
+  
   /*  Get the gimage from the tilemanager  */
   gimage = (GImage *) tm->user_data;
 
@@ -2986,6 +2997,8 @@ TileManager *
 gimage_projection (GImage *gimage)
 {
   Layer * layer;
+
+  g_warning ("gimage_projection() was called");
 
   /*  If the gimage is flat, we simply want the data of the
    *  first layer...Otherwise, we'll pass back the projection

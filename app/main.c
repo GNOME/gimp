@@ -217,7 +217,17 @@ main (int argc, char **argv)
   /* Main application loop */
   if (!app_exit_finish_done ())
     gtk_main ();
-  
+
+  {
+    extern int ref_ro, ref_rw,ref_un, ref_fa , ref_uf;
+    
+    g_warning ("Refs:   %d+%d = %d", ref_ro, ref_rw, (ref_ro+ref_rw));
+    g_warning ("Unrefs: %d", ref_un);
+    
+    g_warning ("Frefs:   %d", ref_fa);
+    g_warning ("Funrefs: %d", ref_uf);
+  }
+
   return 0;
 }
 

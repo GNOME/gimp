@@ -19,14 +19,14 @@
 #define __FLATBUF_H__
 
 #include "tag.h"
+#include "canvas.h"
 
 
 typedef struct _FlatBuf FlatBuf;
 
 
-FlatBuf *      flatbuf_new            (Tag, int w, int h);
+FlatBuf *      flatbuf_new            (Tag, int w, int h, Canvas *);
 void           flatbuf_delete         (FlatBuf *);
-FlatBuf *      flatbuf_clone          (FlatBuf *);
 void           flatbuf_info           (FlatBuf *);
 
 Tag            flatbuf_tag            (FlatBuf *);
@@ -40,9 +40,6 @@ guint          flatbuf_height         (FlatBuf *);
 
 
 
-guint          flatbuf_portion_ref       (FlatBuf *, int x, int y);
-void           flatbuf_portion_unref     (FlatBuf *, int x, int y);
-
 guint          flatbuf_portion_x         (FlatBuf *, int x, int y);
 guint          flatbuf_portion_y         (FlatBuf *, int x, int y);
 guint          flatbuf_portion_width     (FlatBuf *, int x, int y);
@@ -54,5 +51,9 @@ guint          flatbuf_portion_rowstride (FlatBuf *, int x, int y);
 guint          flatbuf_portion_alloced   (FlatBuf *, int x, int y);
 guint          flatbuf_portion_alloc     (FlatBuf *, int x, int y);
 guint          flatbuf_portion_unalloc   (FlatBuf *, int x, int y);
+
+RefRC          flatbuf_portion_ref       (FlatBuf *, int x, int y);
+RefRC          flatbuf_portion_refrw     (FlatBuf *, int x, int y);
+RefRC          flatbuf_portion_unref     (FlatBuf *, int x, int y);
 
 #endif /* __FLATBUF_H__ */

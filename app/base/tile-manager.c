@@ -58,6 +58,8 @@ tile_manager_new (int toplevel_width,
   int width, height;
   int i;
 
+  g_warning ("tile_manager_new() was called");
+  
   tm = g_new (TileManager, 1);
 
   tmp1 = tile_manager_calc_levels (toplevel_width, TILE_WIDTH);

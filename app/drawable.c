@@ -148,6 +148,8 @@ drawable_apply_image (GimpDrawable *drawable,
 		      int x1, int y1, int x2, int y2, 
 		      TileManager *tiles, int sparse)
 {
+  g_warning ("drawable_apply_image() was called");
+
   if (drawable)
     if (! tiles)
       undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
@@ -181,6 +183,8 @@ drawable_merge_shadow (GimpDrawable *drawable, int undo)
   GImage *gimage;
   PixelRegion shadowPR;
   int x1, y1, x2, y2;
+
+  g_warning ("drawable_merge_shadow() was called");
 
   if (! drawable) 
     return;
@@ -466,6 +470,8 @@ drawable_indexed (GimpDrawable *drawable)
 TileManager *
 drawable_data (GimpDrawable *drawable)
 {
+  g_warning ("drawable_data() was called");
+
   if (drawable) 
     return drawable->tiles;
   else
@@ -485,6 +491,8 @@ TileManager *
 drawable_shadow (GimpDrawable *drawable)
 {
   GImage *gimage;
+
+  g_warning ("drawable_shadow() was called");
 
   if (! (gimage = drawable_gimage (drawable)))
     return NULL;

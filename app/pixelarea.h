@@ -73,6 +73,8 @@ int               pixelarea_x             (PixelArea *);
 int               pixelarea_y             (PixelArea *);
 guchar *          pixelarea_data          (PixelArea *);
 int               pixelarea_rowstride     (PixelArea *);
+guint             pixelarea_ref           (PixelArea *);
+guint             pixelarea_unref         (PixelArea *);
 
 
 /* pixel area iterators */

@@ -220,7 +220,7 @@ create_default_brush (gint width, gint height)
   
   
   brush->mask_canvas = canvas_new (brush_tag, width, height, STORAGE_FLAT);
-  canvas_portion_ref (brush->mask_canvas,0,0);
+  /* canvas_portion_ref (brush->mask_canvas,0,0); */
   
   /* Fill the default brush canvas with white */
   {
@@ -242,7 +242,7 @@ create_default_brush (gint width, gint height)
     }
   }
   
-  canvas_portion_unref (brush->mask_canvas,0,0);
+  /* canvas_portion_unref (brush->mask_canvas,0,0); */
   
   return brush; 
 }

@@ -193,8 +193,7 @@ eraser_motion  (
                             (gfloat) get_brush_opacity (),
                             hard ? HARD : SOFT,
                             incremental ? INCREMENTAL : CONSTANT,
-                            get_brush_paint_mode ());
-
+                            ERASE_MODE);
 }
 
 

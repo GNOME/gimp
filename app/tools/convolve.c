@@ -274,8 +274,16 @@ convolve_motion (
      
     temp_tag = tag_set_alpha (tag, ALPHA_YES);
     temp_canvas = canvas_new ( temp_tag, paint_core->w, paint_core->h, STORAGE_FLAT);
+
+
+    /* these refs should really be done inside the area function via a
+       pixelarea_process() loop.  the idea with the area funcs is that
+       they handle all the messy details of reffing so that the high
+       level code doesn't need to worry about it */
     canvas_portion_ref ( temp_canvas, 0, 0 );
     canvas_portion_ref ( painthit_canvas, 0, 0 );
+
+    
     pixelarea_init (&temp_area, temp_canvas, NULL, 0 , 0 , 0, 0, TRUE);
     copy_area (&src_area, &temp_area);
 
@@ -288,8 +296,13 @@ convolve_motion (
     convolve_area (&temp_area, &painthit_area, matrix, matrix_size,
 		       matrix_divisor, NORMAL);
 
+
+
     canvas_portion_unref ( painthit_canvas, 0, 0 );
     canvas_portion_unref ( temp_canvas, 0, 0 );
+
+
+    
     canvas_delete ( temp_canvas );
   }
   else

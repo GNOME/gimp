@@ -118,6 +118,8 @@ temp_buf_new (width, height, bytes, x, y, col)
   unsigned char * init, * data;
   TempBuf * temp;
 
+  g_warning ("temp_buf_new() was called");
+
   temp = (TempBuf *) g_malloc (sizeof (TempBuf));
 
   temp->width  = width;

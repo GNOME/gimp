@@ -19,14 +19,14 @@
 #define __TILE_BUF_H__
 
 #include "tag.h"
+#include "canvas.h"
 
 
 typedef struct _TileBuf  TileBuf;
 
 
-TileBuf *        tilebuf_new            (Tag, int w, int h);
+TileBuf *        tilebuf_new            (Tag, int w, int h, Canvas *);
 void             tilebuf_delete         (TileBuf *);
-TileBuf *        tilebuf_clone          (TileBuf *);
 void             tilebuf_info           (TileBuf *);
 
 Tag              tilebuf_tag            (TileBuf *);
@@ -41,9 +41,6 @@ guint            tilebuf_height         (TileBuf *);
 
 
 
-guint            tilebuf_portion_ref       (TileBuf *, int x, int y);
-void             tilebuf_portion_unref     (TileBuf *, int x, int y);
-
 guint            tilebuf_portion_x         (TileBuf *, int x, int y);
 guint            tilebuf_portion_y         (TileBuf *, int x, int y);
 guint            tilebuf_portion_width     (TileBuf *, int x, int y);
@@ -55,5 +52,9 @@ guint            tilebuf_portion_rowstride (TileBuf *, int x, int y);
 guint            tilebuf_portion_alloced   (TileBuf *, int x, int y);
 guint            tilebuf_portion_alloc     (TileBuf *, int x, int y);
 guint            tilebuf_portion_unalloc   (TileBuf *, int x, int y);
+
+RefRC            tilebuf_portion_ref       (TileBuf *, int x, int y);
+RefRC            tilebuf_portion_refrw     (TileBuf *, int x, int y);
+RefRC            tilebuf_portion_unref     (TileBuf *, int x, int y);
 
 #endif /* __TILE_BUF_H__ */

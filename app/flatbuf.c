@@ -27,7 +27,7 @@ struct _FlatBuf
   Tag      tag;
   int      width;
   int      height;
-
+  Canvas * canvas;
 
   int      valid;
   int      ref_count;
@@ -42,7 +42,8 @@ FlatBuf *
 flatbuf_new (
              Tag  tag,
              int  w,
-             int  h
+             int  h,
+             Canvas * c
              )
 {
   FlatBuf *f;
@@ -52,7 +53,8 @@ flatbuf_new (
   f->tag = tag;
   f->width = w;
   f->height = h;
-
+  f->canvas = c;
+  
   f->valid = FALSE;
   f->ref_count = 0;
   f->data = NULL;
@@ -73,28 +75,6 @@ flatbuf_delete (
       flatbuf_portion_unalloc (f, 0, 0);
       g_free (f);
     }
-}
-
-
-FlatBuf *
-flatbuf_clone (
-               FlatBuf * f
-               )
-{
-  FlatBuf *newf = NULL;
-
-  if (f)
-    {
-      newf = (FlatBuf *) g_malloc (sizeof (FlatBuf));
-
-      newf->tag = f->tag;
-      newf->width = f->width;
-      newf->height = f->height;
-
-      g_warning ("finish writing flatbuf_clone()");
-    }
-  
-  return newf;
 }
 
 
@@ -184,29 +164,25 @@ flatbuf_height  (
 
 
 
-guint 
+RefRC 
 flatbuf_portion_ref  (
                       FlatBuf * f,
                       int x,
                       int y
                       )
 {
-  guint rc = FALSE;
+  RefRC rc = REFRC_FAIL;
   
   if (f && (x < f->width) && (y < f->height))
     {
-      f->ref_count++;
-      if (f->data == NULL)
+      if (f->valid == FALSE)
+        if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
+          (void) flatbuf_portion_alloc (f, x, y);
+      
+      if (f->valid == TRUE)
         {
-          if (f->valid == TRUE)
-            {
-              /* swap buffer in */
-            }
-          else
-            {
-              /* user action required to alloc and init data buffer */
-              rc = TRUE;
-            }
+          f->ref_count++;
+          rc = REFRC_OK;
         }
     }
 
@@ -214,22 +190,52 @@ flatbuf_portion_ref  (
 }
 
 
-void 
+RefRC 
+flatbuf_portion_refrw  (
+                        FlatBuf * f,
+                        int x,
+                        int y
+                        )
+{
+  RefRC rc = REFRC_FAIL;
+  
+  if (f && (x < f->width) && (y < f->height))
+    {
+      if (f->valid == FALSE)
+        if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
+          (void) flatbuf_portion_alloc (f, x, y);
+      
+      if (f->valid == TRUE)
+        {
+          f->ref_count++;
+          rc = REFRC_OK;
+        }
+    }
+
+  return rc;
+}
+
+
+RefRC 
 flatbuf_portion_unref  (
                         FlatBuf * f,
                         int x,
                         int y
                         )
 {
+  RefRC rc = REFRC_FAIL;
+
   if (f && (x < f->width) && (y < f->height))
     {
-      f->ref_count--;
-      if ((f->ref_count == 0) &&
-          (f->valid == TRUE))
-        {
-          /* swap buffer out */
-        }
+      if (f->ref_count > 0)
+        f->ref_count--;
+      else
+        g_warning ("flatbuf unreffing with ref_count==0");
+
+      rc = REFRC_OK;
     }
+  
+  return rc;
 }
 
 
@@ -334,14 +340,20 @@ flatbuf_portion_alloc  (
 {
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == FALSE)
+      if (f->valid == TRUE)
+        {
+          return TRUE;
+        }
+      else
         {
           int n = f->bytes * f->width * f->height;
           f->data = g_malloc (n);
           if (f->data)
             {
-              f->valid = TRUE;
               memset (f->data, 0, n);
+              f->valid = TRUE;
+              if (canvas_portion_init (f->canvas, x, y) != TRUE)
+                g_warning ("flatbuf failed to init portion...");
               return TRUE;
             }
         }
@@ -369,4 +381,5 @@ flatbuf_portion_unalloc  (
     }
   return FALSE;
 }
+
 

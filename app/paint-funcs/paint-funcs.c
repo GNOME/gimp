@@ -3667,6 +3667,8 @@ initial_region (PixelRegion   *src,
   unsigned char * buf;
   void * pr;
 
+  g_warning ("initial_region() was called");
+
   buf = paint_funcs_get_buffer (src->w * (src->bytes + 1));
 
   for (pr = pixel_regions_register (3, src, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
@@ -3746,6 +3748,8 @@ combine_regions (PixelRegion   *src1,
   unsigned char * d, * m;
   unsigned char * buf;
   void * pr;
+
+  g_warning ("combine_regions() was called");
 
   combine = 0;
 

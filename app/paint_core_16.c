@@ -304,8 +304,6 @@ paint_core_16_finish  (
    *  it is not done during the actual painting.
    */
   drawable_invalidate_preview (drawable);
-#define PAINT_CORE_16_3_cw
-  /*canvas_delete (paint_core->brush_mask);*/
 }
 
 
@@ -668,7 +666,7 @@ paint_core_16_area_original  (
     void * pag;
     int h;
     
-    for (pag = pixelarea_register (3, &srcPR, &undoPR, &destPR);
+    for (pag = pixelarea_register_noref (3, &srcPR, &undoPR, &destPR);
          pag != NULL;
          pag = pixelarea_process (pag))
       {
@@ -676,17 +674,29 @@ paint_core_16_area_original  (
         PixelArea *s, *d;
 
         d = &destPR;
-        if (pixelarea_data (&undoPR))
-          s = &undoPR;
-        else
-          s = &srcPR;
+        {
+          int x = pixelarea_x (&undoPR);
+          int y = pixelarea_y (&undoPR);
+          if (canvas_portion_alloced (undo_tiles, x, y) == TRUE)
+            s = &undoPR;
+          else
+            s = &srcPR;
+        }
         
-        h = pixelarea_height (&srcPR);
-        while (h--)
+        if (pixelarea_ref (s) == TRUE)
           {
-            pixelarea_getdata (s, &srow, h);
-            pixelarea_getdata (d, &drow, h);
-            copy_row (&srow, &drow);
+            if (pixelarea_ref (d) == TRUE)
+              {
+                h = pixelarea_height (s);
+                while (h--)
+                  {
+                    pixelarea_getdata (s, &srow, h);
+                    pixelarea_getdata (d, &drow, h);
+                    copy_row (&srow, &drow);
+                  }
+                pixelarea_unref (d);
+              }
+            pixelarea_unref (s);
           }
       }
   }
@@ -1074,7 +1084,7 @@ brush_mask_subsample  (
 
   /* temp hack */
   canvas_portion_ref (mask, 0, 0);
-  canvas_portion_ref (dest, 0, 0);
+  canvas_portion_refrw (dest, 0, 0);
 
   for (i = 0; i < canvas_height (mask); i++)
     {
@@ -1139,7 +1149,7 @@ brush_mask_solidify  (
                             canvas_height (brush_mask) ,
                             canvas_storage (brush_mask));
 #endif
-  canvas_portion_ref (solid_brush, 0, 0);
+  canvas_portion_refrw (solid_brush, 0, 0);
   canvas_portion_ref (brush_mask, 0, 0);
   
   /*  get the data and advance one line into it  */
@@ -1275,8 +1285,8 @@ brush_mask_enlarge  (
     copy_area (&src, &dest);
   }
   
-  canvas_portion_unref (solid_brush, 0, 0);
-  canvas_portion_unref (brush_mask, 0, 0);
+  /* canvas_portion_unref (solid_brush, 0, 0); */
+  /* canvas_portion_unref (brush_mask, 0, 0); */
   
   return solid_brush;
 }

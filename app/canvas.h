@@ -1,4 +1,3 @@
-
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -22,6 +21,7 @@
 #include "tag.h"
 
 
+/* what sort of physical representation to use */
 typedef struct _Canvas Canvas;
 
 typedef enum _Storage Storage;
@@ -30,8 +30,12 @@ enum _Storage
   STORAGE_NONE   = 0,
   STORAGE_FLAT   = 1,
   STORAGE_TILED  = 2,
+  STORAGE_SHM    = 3
 };
 
+
+/* should a ref of an unalloced portion automatically allocate the
+   memory or simply fail */
 typedef enum _AutoAlloc AutoAlloc;
 enum _AutoAlloc
 {
@@ -41,9 +45,19 @@ enum _AutoAlloc
 };
 
 
+/* the result of referencing a portion.  a successful ref means the
+   data pointer is non-null */
+typedef enum _RefRC RefRC;
+enum _RefRC
+{
+  REFRC_NONE   = 0,
+  REFRC_OK     = 1,
+  REFRC_FAIL   = 2
+};
+
+
 Canvas *       canvas_new            (Tag, int w, int h, Storage);
 void           canvas_delete         (Canvas *);
-Canvas *       canvas_clone          (Canvas *);
 void           canvas_info           (Canvas *);
 
 Tag            canvas_tag            (Canvas *);
@@ -62,10 +76,6 @@ int            canvas_bytes          (Canvas *);
 
 /* a portion is a rectangular area of a Canvas that resides on a
    single underlying chunk of memory (eg: a tile) */
-
-/* allocate and/or swap in the backing store for this pixel */
-guint          canvas_portion_ref       (Canvas *, int x, int y);
-void           canvas_portion_unref     (Canvas *, int x, int y);
 
 /* return the TOP LEFT coordinate of the tile this pixel lies on */
 guint          canvas_portion_x         (Canvas *, int x, int y);
@@ -87,5 +97,12 @@ guint          canvas_portion_alloced   (Canvas *, int x, int y);
 guint          canvas_portion_alloc     (Canvas *, int x, int y);
 guint          canvas_portion_unalloc   (Canvas *, int x, int y);
 
+/* allocate and/or swap in the backing store for this pixel */
+RefRC          canvas_portion_ref       (Canvas *, int x, int y);
+RefRC          canvas_portion_refrw     (Canvas *, int x, int y);
+RefRC          canvas_portion_unref     (Canvas *, int x, int y);
+
+/* initialize the backing store for this pixel */
+guint          canvas_portion_init      (Canvas *, int x, int y);
 
 #endif /* __CANVAS_H__ */

@@ -356,8 +356,24 @@ render_image (GDisplay *gdisp,
   render_image_init_info (&info, gdisp, x, y, w, h);
 
   image_type = gimage_projection_type (gdisp->gimage);
-  if ((image_type < 0) || (image_type > 5))
+  switch (image_type)
     {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      break;
+      
+    case 4:
+    case 5:
+      if (tag_precision (canvas_tag (info.src_canvas)) != PRECISION_U8)
+        {
+          g_warning ("indexed images not supported at this precision");
+          return;
+        }
+      break;
+
+    default:
       g_warning ("unknown gimage projection type: %d",
 		 gimage_projection_type (gdisp->gimage));
       return;
