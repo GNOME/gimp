@@ -1070,6 +1070,14 @@ procedural_db_query (Argument *args)
 
   g_hash_table_foreach (procedural_ht, procedural_db_query_entry, &pdb_query);
 
+  free (pdb_query.name_regex.buffer);
+  free (pdb_query.blurb_regex.buffer);
+  free (pdb_query.help_regex.buffer);
+  free (pdb_query.author_regex.buffer);
+  free (pdb_query.copyright_regex.buffer);
+  free (pdb_query.date_regex.buffer);
+  free (pdb_query.proc_type_regex.buffer);
+
   return_args = procedural_db_return_args (&procedural_db_query_proc, TRUE);
 
   return_args[1].value.pdb_int = pdb_query.num_procs;

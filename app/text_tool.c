@@ -1330,6 +1330,7 @@ text_insert_font (FontInfo **table,
 	  if (cmp == 0)
 	    {
 	      table[middle]->fontnames = g_slist_prepend (table[middle]->fontnames, g_strdup (fontname));
+	      g_free (family);
 	      return;
 	    }
 	  else if (cmp < 0)
@@ -1412,7 +1413,10 @@ text_insert_field (GSList  *list,
     }
 
   if (cmp == 0)
-    return list;
+    {
+      g_free (field);
+      return list;
+    }
 
   new_list = g_slist_alloc();
   new_list->data = field;

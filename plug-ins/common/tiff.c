@@ -764,9 +764,9 @@ save_image (char   *filename,
 
       for (i = 0; i < colors; i++)
 	{
-	  red[i] = *cmap++ << 8;
-	  grn[i] = *cmap++ << 8;
-	  blu[i] = *cmap++ << 8;
+	  red[i] = *cmap++ * 65535 / 255;
+	  grn[i] = *cmap++ * 65535 / 255;
+	  blu[i] = *cmap++ * 65535 / 255;
 	}
       break;
     case INDEXEDA_IMAGE:
