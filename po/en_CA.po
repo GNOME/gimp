@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-18 17:54-0500\n"
+"POT-Creation-Date: 2004-11-19 23:18+0100\n"
 "PO-Revision-Date: 2004-11-18 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -4384,7 +4384,7 @@ msgstr "Remove parasite"
 msgid "Import paths"
 msgstr "Import paths"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
 msgid "Plug-In"
 msgstr "Plug-In"
 
@@ -5346,6 +5346,7 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
+#. maybe we should just abort?
 #: app/core/gimppalette.c:484
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -7086,6 +7087,8 @@ msgstr "GIMP User Installation"
 msgid "Continue"
 msgstr "Continue"
 
+#. GPL_PAGE
+#. version number
 #: app/dialogs/user-install-dialog.c:765
 #, c-format
 msgid ""

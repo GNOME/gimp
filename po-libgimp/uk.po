@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2004-04-10 16:53+0200\n"
 "Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -192,7 +192,7 @@ msgstr "Вибір шрифту"
 msgid "Gradient Selection"
 msgstr "Вибір градієнта"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr ""
 
@@ -376,20 +376,24 @@ msgstr "Не вдається створити каталог файлів по�
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не вдається створити каталог файлів попереднього перегляду '%s'."
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
 msgstr "/_Колір переднього плану"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
 msgstr "/_Колір тла"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
+#: libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
 msgstr "/_Чорний"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
+#: libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
 msgstr "/_Білий"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -527,66 +531,70 @@ msgid "Anchor"
 msgstr "Прикріпити"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Дублювати"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "_Правка"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Пов'язані"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Вставити як нове"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Вставити у"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "С_кинути"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Видимий"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "Відстань між _буквами"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "Відстань між _рядками"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "Змінити _розмір"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "Мас_штаб"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Кадрувати"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "Пере_творити"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "Пов_ернути"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "С_трижка"
 

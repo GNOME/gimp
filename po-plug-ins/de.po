@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 20:02+0100\n"
+"POT-Creation-Date: 2004-11-19 23:19+0100\n"
 "PO-Revision-Date: 2004-11-19 20:05+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1266,7 +1266,7 @@ msgstr "Kann nicht mit unbekanntem Bildtyp arbeiten."
 #: plug-ins/common/postscript.c:1128 plug-ins/common/psd_save.c:1593
 #: plug-ins/common/sunras.c:518 plug-ins/common/tga.c:1035
 #: plug-ins/common/tiff.c:1814 plug-ins/common/xbm.c:1001
-#: plug-ins/common/xpm.c:632 plug-ins/common/xwd.c:582
+#: plug-ins/common/xpm.c:628 plug-ins/common/xwd.c:582
 #: plug-ins/fits/fits.c:455 plug-ins/gfli/gfli.c:682 plug-ins/sgi/sgi.c:545
 #: plug-ins/winicon/icosave.c:787 plug-ins/xjt/xjt.c:1682
 #, c-format
@@ -5827,7 +5827,7 @@ msgstr "S&W"
 msgid "Gray"
 msgstr "Grau"
 
-#: plug-ins/common/postscript.c:3004 plug-ins/common/xpm.c:470
+#: plug-ins/common/postscript.c:3004 plug-ins/common/xpm.c:469
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:151
 #: plug-ins/imagemap/imap_menu.c:306 plug-ins/print/gimp_main_window.c:1399
 msgid "Color"
@@ -8079,11 +8079,11 @@ msgstr "Fehler beim Öffnen der Datei '%s'"
 msgid "XPM file invalid"
 msgstr "Die XPM-Datei ist ungültig"
 
-#: plug-ins/common/xpm.c:785
+#: plug-ins/common/xpm.c:780
 msgid "Save as XPM"
 msgstr "Als XPM speichern"
 
-#: plug-ins/common/xpm.c:801
+#: plug-ins/common/xpm.c:796
 msgid "_Alpha threshold:"
 msgstr "_Alpha-Schwellwert:"
 

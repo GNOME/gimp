@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2003-06-05 07:55+0800\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -188,7 +188,7 @@ msgstr "글꼴 선택"
 msgid "Gradient Selection"
 msgstr "그라디언트 선택"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr ""
 
@@ -372,20 +372,24 @@ msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
 msgstr "/전경색(_F)"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
 msgstr "/배경색(_B)"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
+#: libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
 msgstr "/검정색(_K)"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
+#: libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
 msgstr "/흰색(_W)"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -522,66 +526,70 @@ msgid "Anchor"
 msgstr "고정점"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "복제(_D)"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "편집(_E)"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "연결됨"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "새로 붙여 넣기"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "안에 붙여 넣기"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "원래대로(_R)"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "보임"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "자간(_E)"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "행간(_I)"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "크기 조절(_R)"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "배율 조절(_S)"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "자르기"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "변형(_T)"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "회전(_R)"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "기울이기(_S)"
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-18 02:30+0100\n"
+"POT-Creation-Date: 2004-11-19 23:21+0100\n"
 "PO-Revision-Date: 2004-11-18 02:31+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -136,7 +136,7 @@ msgstr "Datum:"
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:603
+#: plug-ins/script-fu/script-fu-scripts.c:610
 #, c-format
 msgid ""
 "Error while executing\n"

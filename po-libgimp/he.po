@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2003-08-13 22:08+0300\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
@@ -196,7 +196,7 @@ msgstr "בחירת גופן"
 msgid "Gradient Selection"
 msgstr "בחירת מדרג צבעים"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr ""
 
@@ -382,24 +382,24 @@ msgstr ""
 msgid "Could not create thumbnail for %s: %s"
 msgstr ""
 
-#: libgimpwidgets/gimpcolorbutton.c:93
+#: libgimpwidgets/gimpcolorbutton.c:99
 #, fuzzy
-msgid "/_Foreground Color"
+msgid "_Foreground Color"
 msgstr "/צבע קדמה"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
+#: libgimpwidgets/gimpcolorbutton.c:103
 #, fuzzy
-msgid "/_Background Color"
+msgid "_Background Color"
 msgstr "/צבע רקע"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
+#: libgimpwidgets/gimpcolorbutton.c:107
 #, fuzzy
-msgid "/Blac_k"
+msgid "Blac_k"
 msgstr "/שחור"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
+#: libgimpwidgets/gimpcolorbutton.c:111
 #, fuzzy
-msgid "/_White"
+msgid "_White"
 msgstr "/לבן"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -539,66 +539,70 @@ msgid "Anchor"
 msgstr "עוגן"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_שכפול"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "_עריכה"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "מקושר"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "הדבק כחדש"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "הדבק לתוך"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_אתחול"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "נראה"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "_ריווח אותיות"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "ריווח _שורות"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "שינוי _גודל"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "שינוי _קנה מידה"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "גזיזה"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_עיבוד"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_סיבוב"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "_חתיכה"
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Română <ro@li.org>\n"
@@ -193,7 +193,7 @@ msgstr "Din selecţie"
 msgid "Gradient Selection"
 msgstr "Selectie Gradient"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr ""
 
@@ -383,24 +383,24 @@ msgstr "Nu am reuşit să citesc traseul din %s"
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nu am reuşit să citesc traseul din %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
+#: libgimpwidgets/gimpcolorbutton.c:99
 #, fuzzy
-msgid "/_Foreground Color"
+msgid "_Foreground Color"
 msgstr "Prim Plan "
 
-#: libgimpwidgets/gimpcolorbutton.c:95
+#: libgimpwidgets/gimpcolorbutton.c:103
 #, fuzzy
-msgid "/_Background Color"
+msgid "_Background Color"
 msgstr "Fundal"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
+#: libgimpwidgets/gimpcolorbutton.c:107
 #, fuzzy
-msgid "/Blac_k"
+msgid "Blac_k"
 msgstr "Numai negru"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
+#: libgimpwidgets/gimpcolorbutton.c:111
 #, fuzzy
-msgid "/_White"
+msgid "_White"
 msgstr "Alb"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -552,76 +552,81 @@ msgstr "Ancorează stratul"
 
 #: libgimpwidgets/gimpstock.c:114
 #, fuzzy
+msgid "C_enter"
+msgstr "Centru X:"
+
+#: libgimpwidgets/gimpstock.c:115
+#, fuzzy
 msgid "_Duplicate"
 msgstr "Clonează traseul"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 #, fuzzy
 msgid "_Edit"
 msgstr "Modifică"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 #, fuzzy
 msgid "Linked"
 msgstr "Linear"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Inserează ca nou"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Inserează în"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 #, fuzzy
 msgid "_Reset"
 msgstr "Iniţializează"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 #, fuzzy
 msgid "_Stroke"
 msgstr "/Modificare/Stanţă"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 #, fuzzy
 msgid "L_etter Spacing"
 msgstr "Spaţiere:"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 #, fuzzy
 msgid "L_ine Spacing"
 msgstr "Salvare de fişiere"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 #, fuzzy
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
@@ -4549,9 +4554,6 @@ msgstr "Presiune"
 
 #~ msgid "Rotation Information"
 #~ msgstr "Informaţii despre rotaţie"
-
-#~ msgid "Center X:"
-#~ msgstr "Centru X:"
 
 #~ msgid "Rotating..."
 #~ msgstr "Rotesc..."

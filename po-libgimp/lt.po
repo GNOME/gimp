@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2004-05-23 11:28+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -191,7 +191,7 @@ msgstr "Šriftų pasirinkimas"
 msgid "Gradient Selection"
 msgstr "Perėjimų pasirinkimas"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Tuščias)"
 
@@ -375,20 +375,24 @@ msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
 msgstr "/_Priekinio plano spalvą"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
 msgstr "/_Fono spalva"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
+#: libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
 msgstr "/_Juoda"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
+#: libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
 msgstr "/_Balta"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -524,66 +528,70 @@ msgid "Anchor"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Dublikuoti"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "K_eisti"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Sujungtas"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Įdėti kaip naują"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Įdėti į"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Atstatyti"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Matomas"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "T_arpai tarp raidžių"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "Tarpai tarp e_ilučių"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "_Keisti dydį"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "_Ištempti"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_Transformuoti"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_Pasukti"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "Tran_sformuoti"
 

@@ -50,7 +50,7 @@
 # or gigabytes. If no suffix is specified the size defaults to being
 # specified in kilobytes.
 # 
-# (tile-cache-size 64M)
+# (tile-cache-size 128M)
 
 # Sets the level of interpolation used for scaling and other transformations.
 #  Possible values are none, linear and cubic.
@@ -206,7 +206,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 4M)
+# (undo-size 16M)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
+"POT-Creation-Date: 2004-11-17 02:35+0100\n"
 "PO-Revision-Date: 2004-02-05 14:28+0100\n"
 "Last-Translator: Xavier Conde Rueda <xaviconde@eremas.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
@@ -193,7 +193,7 @@ msgstr "Selecció del tipus de lletra"
 msgid "Gradient Selection"
 msgstr "Selecció del gradient"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr ""
 
@@ -377,20 +377,24 @@ msgstr "No s'ha pogut crear la carpeta de miniatures '%s'."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "No s'ha pogut crear la carpeta de miniatures '%s'."
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
+#: libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
 msgstr "/_Color de primer pla"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
+#: libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
 msgstr "/Color de _fons"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
+#: libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
 msgstr "/_Negre"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
+#: libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
 msgstr "/_Blanc"
 
 #: libgimpwidgets/gimpcolorscales.c:133
@@ -530,66 +534,70 @@ msgid "Anchor"
 msgstr "Àncora"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Duplica"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "_Edita"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Enllaçat"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Enganxa com a un de nou"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Enganxa-hi a dins"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Redefineix"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Visible"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "_Espaiat de les lletres"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "Espa_iat de les línies"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "Canvia la _mida"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "E_scala"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Escapça"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_Transforma"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_Rotació"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "Re_talla"
 

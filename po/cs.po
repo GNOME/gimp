@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 03:04+0100\n"
+"POT-Creation-Date: 2004-11-19 23:18+0100\n"
 "PO-Revision-Date: 2004-11-17 11:21+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -2397,20 +2397,20 @@ msgstr "_Hračky"
 msgid "Reset all Filters..."
 msgstr "Přenastavit všechny filtry..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:335
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
 msgid "Repeat Last"
 msgstr "Opakovat poslední"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:337
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
 msgid "Re-Show Last"
 msgstr "Znovu zobrazit poslední"
 
-#: app/actions/plug-in-actions.c:321
+#: app/actions/plug-in-actions.c:344
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Z_opakovat \"%s\""
 
-#: app/actions/plug-in-actions.c:322
+#: app/actions/plug-in-actions.c:345
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "Znovu z_obrazit \"%s\""
@@ -4388,7 +4388,7 @@ msgstr "Odstranit parazita"
 msgid "Import paths"
 msgstr "Importovat cesty"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
@@ -6745,33 +6745,33 @@ msgstr "Adresáře s tématy"
 msgid "Select Theme Folders"
 msgstr "Zvolte adresář témat"
 
-#: app/dialogs/print-size-dialog.c:116
+#: app/dialogs/print-size-dialog.c:129
 msgid "Print Size"
 msgstr "Velikost tisku"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:142 app/widgets/gimpsizebox.c:240
+#: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Šířka:"
 
-#: app/dialogs/print-size-dialog.c:149 app/widgets/gimpsizebox.c:247
+#: app/dialogs/print-size-dialog.c:163 app/widgets/gimpsizebox.c:247
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "_Výška:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:190 app/widgets/gimpsizebox.c:329
+#: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "Rozlišení _X:"
 
-#: app/dialogs/print-size-dialog.c:197 app/widgets/gimpsizebox.c:336
+#: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "Rozlišení _Y:"
 
-#: app/dialogs/print-size-dialog.c:208 app/widgets/gimpsizebox.c:348
+#: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7483,7 +7483,7 @@ msgstr "Zásuvný modul navrátil stav ÚSPĚCH, ale nevrátil žádný obrázek
 msgid "Plug-In could not open image"
 msgstr "Zásuvný modul nemohl otevřít obrázek"
 
-#: app/file/file-open.c:413
+#: app/file/file-open.c:417
 msgid "Image doesn't contain any visible layers"
 msgstr "Obrázek neobsahuje viditelné vrstvy"
 
@@ -7829,12 +7829,12 @@ msgstr "Pomocná procedura"
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: app/plug-in/plug-in.c:543 app/plug-in/plug-in.c:573
+#: app/plug-in/plug-in.c:544 app/plug-in/plug-in.c:574
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Ukončuji zásuvný modul: '%s'\n"
 
-#: app/plug-in/plug-in.c:720
+#: app/plug-in/plug-in.c:730
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -9480,7 +9480,7 @@ msgstr "V bufferu nebyla nalezena žádná cesta"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Nemohu importovat cesty z '%s': %s"
 
-#: app/widgets/gimpactiongroup.c:800
+#: app/widgets/gimpactiongroup.c:801
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10038,11 +10038,11 @@ msgstr "Všechny filtry"
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s("
 
-#: app/widgets/gimpfileprocview.c:196
+#: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
 msgstr "Typ souboru"
 
-#: app/widgets/gimpfileprocview.c:215
+#: app/widgets/gimpfileprocview.c:253
 msgid "Extensions"
 msgstr "Přípony"
 
@@ -10455,7 +10455,7 @@ msgstr "[ Základní obrázek ]"
 msgid "Reorder path"
 msgstr "Přerovnat cestu"
 
-#: app/widgets/gimpvectorstreeview.c:288
+#: app/widgets/gimpvectorstreeview.c:289
 msgid "Empty Path"
 msgstr "Prázdná cesta"
 

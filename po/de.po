@@ -13,13 +13,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-17 15:52+0100\n"
+"POT-Creation-Date: 2004-11-19 23:18+0100\n"
 "PO-Revision-Date: 2004-11-17 15:53+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: app/app_procs.c:144
 msgid "(This console window will close in ten seconds)\n"
@@ -2422,20 +2422,20 @@ msgstr "Viel Spass"
 msgid "Reset all Filters..."
 msgstr "_Alle Filtereinstellungen zurücksetzen..."
 
-#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:335
+#: app/actions/plug-in-actions.c:93 app/actions/plug-in-actions.c:358
 msgid "Repeat Last"
 msgstr "Letzten Vorgang wiederholen"
 
-#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:337
+#: app/actions/plug-in-actions.c:98 app/actions/plug-in-actions.c:360
 msgid "Re-Show Last"
 msgstr "Letzten Vorgang nochmal anzeigen"
 
-#: app/actions/plug-in-actions.c:321
+#: app/actions/plug-in-actions.c:344
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "»%s« _wiederholen"
 
-#: app/actions/plug-in-actions.c:322
+#: app/actions/plug-in-actions.c:345
 #, c-format
 msgid "R_e-show \"%s\""
 msgstr "»%s« _nochmal anzeigen"
@@ -4460,7 +4460,7 @@ msgstr "Parasit entfernen"
 msgid "Import paths"
 msgstr "Pfade importieren"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
 msgid "Plug-In"
 msgstr "Plugin"
 
@@ -6871,33 +6871,33 @@ msgstr "Themenordner"
 msgid "Select Theme Folders"
 msgstr "Wählen Sie die Themenordner"
 
-#: app/dialogs/print-size-dialog.c:116
+#: app/dialogs/print-size-dialog.c:129
 msgid "Print Size"
 msgstr "Größe des Ausdrucks"
 
 #. the image size labels
-#: app/dialogs/print-size-dialog.c:142 app/widgets/gimpsizebox.c:240
+#: app/dialogs/print-size-dialog.c:156 app/widgets/gimpsizebox.c:240
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
 msgstr "_Breite:"
 
-#: app/dialogs/print-size-dialog.c:149 app/widgets/gimpsizebox.c:247
+#: app/dialogs/print-size-dialog.c:163 app/widgets/gimpsizebox.c:247
 #: app/widgets/gimptemplateeditor.c:243
 msgid "H_eight:"
 msgstr "Höh_e:"
 
 #. the resolution labels
-#: app/dialogs/print-size-dialog.c:190 app/widgets/gimpsizebox.c:329
+#: app/dialogs/print-size-dialog.c:211 app/widgets/gimpsizebox.c:329
 #: app/widgets/gimptemplateeditor.c:363
 msgid "_X resolution:"
 msgstr "_X Auflösung:"
 
-#: app/dialogs/print-size-dialog.c:197 app/widgets/gimpsizebox.c:336
+#: app/dialogs/print-size-dialog.c:218 app/widgets/gimpsizebox.c:336
 #: app/widgets/gimptemplateeditor.c:370
 msgid "_Y resolution:"
 msgstr "_Y Auflösung:"
 
-#: app/dialogs/print-size-dialog.c:208 app/widgets/gimpsizebox.c:348
+#: app/dialogs/print-size-dialog.c:229 app/widgets/gimpsizebox.c:348
 #: app/widgets/gimptemplateeditor.c:383
 #, c-format
 msgid "pixels/%a"
@@ -7632,7 +7632,7 @@ msgstr "Plugin lieferte ERFOLG, hat jedoch kein Bild geliefert"
 msgid "Plug-In could not open image"
 msgstr "Plugin konnte das Bild nicht öffnen"
 
-#: app/file/file-open.c:413
+#: app/file/file-open.c:417
 msgid "Image doesn't contain any visible layers"
 msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 
@@ -9637,7 +9637,7 @@ msgstr "Keine Pfade in der Ablage gefunden"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Fehler beim Pfad-Import aus »%s«: %s"
 
-#: app/widgets/gimpactiongroup.c:800
+#: app/widgets/gimpactiongroup.c:801
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -10196,11 +10196,11 @@ msgstr "Alle Dateien"
 msgid "Select File _Type (%s)"
 msgstr "Datei_typ %s:"
 
-#: app/widgets/gimpfileprocview.c:196
+#: app/widgets/gimpfileprocview.c:234
 msgid "File Type"
 msgstr "Füllart"
 
-#: app/widgets/gimpfileprocview.c:215
+#: app/widgets/gimpfileprocview.c:253
 msgid "Extensions"
 msgstr "Nach Endung"
 
@@ -10885,4 +10885,3 @@ msgstr "Bilder und Photos erstellen und bearbeiten"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
 msgstr "Bildeditor"
-

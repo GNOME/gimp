@@ -68,7 +68,7 @@ sets how many processors GIMP should use simultaneously.  This is an integer
 value.
 
 .TP
-(tile-cache-size 64M)
+(tile-cache-size 128M)
 
 The tile cache is used to make sure the GIMP doesn't thrash tiles between
 memory and disk. Setting this value higher will cause the GIMP to use less
@@ -253,7 +253,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 4M)
+(undo-size 16M)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as

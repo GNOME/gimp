@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-18 17:18+0100\n"
+"POT-Creation-Date: 2004-11-19 23:18+0100\n"
 "PO-Revision-Date: 2004-11-18 20:06+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <gnom@prevod.org>\n"
@@ -204,7 +204,8 @@ msgid ""
 "                           The procedure to process batch commands with.\n"
 msgstr ""
 "  --batch-interpreter <процедура>\n"
-"                           Процедура којом обрадити наредбе у пакетном режиму.\n"
+"                           Процедура којом обрадити наредбе у пакетном "
+"режиму.\n"
 
 #: app/main.c:534
 msgid "  -b, --batch <commands>   Process commands in batch mode.\n"
@@ -231,9 +232,11 @@ msgid ""
 "8 and you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Име директоријума који садржи подешавања корисника Гимпа се не може претворити у УТФ-8: %s\n"
+"Име директоријума који садржи подешавања корисника Гимпа се не може "
+"претворити у УТФ-8: %s\n"
 "\n"
-"Највероватније ваш систем датотека чува датотеке са кодирањем које није УТФ-8, а нисте то назначили.  Поставите променљиву окружења G_FILENAME_ENCODING."
+"Највероватније ваш систем датотека чува датотеке са кодирањем које није УТФ-"
+"8, а нисте то назначили.  Поставите променљиву окружења G_FILENAME_ENCODING."
 
 #. initialize the list of gimp brushes
 #: app/actions/actions.c:93 app/core/gimp.c:856 app/dialogs/dialogs.c:138
@@ -2660,7 +2663,8 @@ msgstr "Обриши шаблон"
 #, c-format
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
-msgstr "Да ли сте сигурни да желите да уклоните шаблон „%s“ из списка и са диска?"
+msgstr ""
+"Да ли сте сигурни да желите да уклоните шаблон „%s“ из списка и са диска?"
 
 #: app/actions/text-editor-actions.c:44
 msgid "Open"
@@ -3556,7 +3560,9 @@ msgid ""
 "If enabled, the move tool changes the active layer or path when a layer or "
 "path is being picked. This used to be the default behaviour in older "
 "versions."
-msgstr "Уколико је укључено, алат за премештање мења активни слој или путању када се бира слој или путања. Ово је било подразумевано понашање у старијим издањима."
+msgstr ""
+"Уколико је укључено, алат за премештање мења активни слој или путању када се "
+"бира слој или путања. Ово је било подразумевано понашање у старијим издањима."
 
 #: app/config/gimprc-blurbs.h:214
 msgid ""
@@ -3650,13 +3656,17 @@ msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
 "by pressing F1."
-msgstr "Када је укључено, у прозорчићима се приказује дугме за добијање одговарајуће странице помоћи. Без овог дугмета, до помоћи се може доћи притиском на F1. "
+msgstr ""
+"Када је укључено, у прозорчићима се приказује дугме за добијање одговарајуће "
+"странице помоћи. Без овог дугмета, до помоћи се може доћи притиском на F1. "
 
 #: app/config/gimprc-blurbs.h:284
 msgid ""
 "When enabled, the cursor will be shown over the image while using a paint "
 "tool."
-msgstr "Када је укључено, курзор ће бити приказан преко слике при употреби алата за цртање."
+msgstr ""
+"Када је укључено, курзор ће бити приказан преко слике при употреби алата за "
+"цртање."
 
 #: app/config/gimprc-blurbs.h:288
 msgid ""
@@ -3793,13 +3803,18 @@ msgstr ""
 msgid ""
 "Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
 "not create thumbnails if layer previews are disabled."
-msgstr "Поставља величину умањеног приказа који се приказује у прозорчету за отварање. Знајте да Гимп не може да чува умањене приказе ако су прегледи слојева искључени."
+msgstr ""
+"Поставља величину умањеног приказа који се приказује у прозорчету за "
+"отварање. Знајте да Гимп не може да чува умањене приказе ако су прегледи "
+"слојева искључени."
 
 #: app/config/gimprc-blurbs.h:369
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
-msgstr "Умањени приказ у прозорчету за отварање ће бити увек приказан ако је датотека мања од овде постављене величине."
+msgstr ""
+"Умањени приказ у прозорчету за отварање ће бити увек приказан ако је "
+"датотека мања од овде постављене величине."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
@@ -4384,7 +4399,7 @@ msgstr "Одстрани паразита"
 msgid "Import paths"
 msgstr "Увези путање"
 
-#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1693
+#: app/core/core-enums.c:1063 app/pdb/drawable_cmds.c:1690
 msgid "Plug-In"
 msgstr "Додатак"
 
@@ -4593,23 +4608,29 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Кобна грешка при обради датотеке са четкама „%s“: неподржана дубина четке %d.\n"
+"Кобна грешка при обради датотеке са четкама „%s“: неподржана дубина четке %"
+"d.\n"
 "Четке Гимпа морају бити СИВЕ или RGBA формата."
 
 #: app/core/gimpbrushgenerated.c:614
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Кобна грешка при обради датотеке са четкама „%s“: није Гимпова датотека са четком."
+msgstr ""
+"Кобна грешка при обради датотеке са четкама „%s“: није Гимпова датотека са "
+"четком."
 
 #: app/core/gimpbrushgenerated.c:630
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version."
-msgstr "Кобна грешка при обради датотеке са четкама „%s“: непознато издање четке Гимпа."
+msgstr ""
+"Кобна грешка при обради датотеке са четкама „%s“: непознато издање четке "
+"Гимпа."
 
 #: app/core/gimpbrushgenerated.c:669
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape."
-msgstr "Кобна грешка при обради датотеке са четкама „%s“: непознат облик четке Гимпа."
+msgstr ""
+"Кобна грешка при обради датотеке са четкама „%s“: непознат облик четке Гимпа."
 
 #: app/core/gimpbrushgenerated.c:750
 #, c-format
@@ -5412,7 +5433,8 @@ msgstr "Неисправна УТФ-8 ниска у датотеци са мус
 #: app/core/gimppdbprogress.c:260 app/widgets/gimppdbdialog.c:314
 #, c-format
 msgid "Unable to run %s callback. The corresponding plug-in may have crashed."
-msgstr "Не могу да покренем опозив за %s. Могуће је да је одговарајући додатак пукао."
+msgstr ""
+"Не могу да покренем опозив за %s. Могуће је да је одговарајући додатак пукао."
 
 #: app/core/gimpprogress.c:107 app/core/gimpprogress.c:154
 msgid "Please wait..."
@@ -5734,7 +5756,9 @@ msgstr "Покушавате да направите слику величине
 msgid ""
 "An image of the choosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr "Слика изабране величине захтева више меморије него што је подешено као „Највећа величина слика“ у прозорчету Поставке (тренутно %s)."
+msgstr ""
+"Слика изабране величине захтева више меморије него што је подешено као "
+"„Највећа величина слика“ у прозорчету Поставке (тренутно %s)."
 
 #: app/dialogs/image-scale-dialog.c:164
 msgid "Confirm Scaling"
@@ -5746,13 +5770,17 @@ msgid ""
 "Scaling the image to the choosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr "Размера слике на изабрану величину ће захтевати више меморије него што је сада подешено као „Највећа величина слике“ у прозорчету Поставки (тренутно %s)."
+msgstr ""
+"Размера слике на изабрану величину ће захтевати више меморије него што је "
+"сада подешено као „Највећа величина слике“ у прозорчету Поставки (тренутно %"
+"s)."
 
 #: app/dialogs/image-scale-dialog.c:214
 msgid ""
 "Scaling the image to the choosen size will shrink some layers completely "
 "away."
-msgstr "Размера на изабрану величину ће потпуно избацити неке слојеве из слике."
+msgstr ""
+"Размера на изабрану величину ће потпуно избацити неке слојеве из слике."
 
 #: app/dialogs/image-scale-dialog.c:218
 msgid "Is this what you want to do?"
@@ -6132,19 +6160,25 @@ msgstr "Подеси пречице са тастатуре"
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
-msgstr "Ваше пречице са тастатуре ће бити враћене на уобичајене када наредни пут покренете Гимп."
+msgstr ""
+"Ваше пречице са тастатуре ће бити враћене на уобичајене када наредни пут "
+"покренете Гимп."
 
 #: app/dialogs/preferences-dialog.c:600
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "Ваша подешавања прозора ће бити враћена на уобичајена када наредни пут покренете Гимп."
+msgstr ""
+"Ваша подешавања прозора ће бити враћена на уобичајена када наредни пут "
+"покренете Гимп."
 
 #: app/dialogs/preferences-dialog.c:634
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
-msgstr "Ваша подешавања улазних уређај ће бити враћена на уобичајена када наредни пут покренете Гимп."
+msgstr ""
+"Ваша подешавања улазних уређај ће бити враћена на уобичајена када наредни "
+"пут покренете Гимп."
 
 #: app/dialogs/preferences-dialog.c:1053
 msgid "Show _menubar"
@@ -6937,7 +6971,8 @@ msgstr ""
 msgid ""
 "This file holds a collection of standard media sizes that serve as image "
 "templates."
-msgstr "Ова датотека чува скуп стандардних величина које служе као шаблони за слике."
+msgstr ""
+"Ова датотека чува скуп стандардних величина које служе као шаблони за слике."
 
 #: app/dialogs/user-install-dialog.c:180
 msgid ""
@@ -7128,7 +7163,11 @@ msgid ""
 "under the terms of the GNU General Public License as published by the Free "
 "Software Foundation; either version 2 of the License, or (at your option) "
 "any later version."
-msgstr "Овај програм је слободан софтвер; можете га делити и/или мењати у складу са условима ГНУ Опште Јавне Лиценце објављеном од стране Задужбине за слободни софтвер (Free Software Foundation); или верзијом 2 Лиценце, или (по вашем избору) било које новије верзије."
+msgstr ""
+"Овај програм је слободан софтвер; можете га делити и/или мењати у складу са "
+"условима ГНУ Опште Јавне Лиценце објављеном од стране Задужбине за слободни "
+"софтвер (Free Software Foundation); или верзијом 2 Лиценце, или (по вашем "
+"избору) било које новије верзије."
 
 #: app/dialogs/user-install-dialog.c:794
 msgid ""
@@ -7484,7 +7523,7 @@ msgstr "Додатак је пријавио УСПЕХ али није врат
 msgid "Plug-In could not open image"
 msgstr "Додатак није могао да отвори слику"
 
-#: app/file/file-open.c:413
+#: app/file/file-open.c:417
 msgid "Image doesn't contain any visible layers"
 msgstr "Слика не садржи ниједан видљиви слој"
 
@@ -9484,7 +9523,7 @@ msgstr "Путање нису нађене у баферу"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Нисам успео да увезем путање из „%s“: %s"
 
-#: app/widgets/gimpactiongroup.c:800
+#: app/widgets/gimpactiongroup.c:801
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
