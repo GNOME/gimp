@@ -1,3 +1,10 @@
+Sat Jun  6 14:53:43 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/gfli/gfli.c: fixed gccism
+
+	* plug-ins/MapObject/mapobject_main.c: update display when
+	we're done (from seth)
+
 Sat Jun  6 20:23:16 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* fixed a bug in the screenshot plug-in

@@ -81,10 +81,7 @@ GParamDef save_args[] = {
 	{ PARAM_STRING, "filename", "The name of the file to save" },
 	{ PARAM_STRING, "raw_filename", "The name entered" },
 };
-GParamDef save_return_vals[] = {
-};
 gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
-gint nsave_return_vals = sizeof (save_return_vals) / sizeof (save_return_vals[0]);
 
 MAIN ()
 
@@ -114,8 +111,8 @@ static void query ()
                 "<Save>/FLI",
 		"INDEXED,GRAY",
                 PROC_PLUG_IN,
-                nsave_args, nsave_return_vals,
-                save_args, save_return_vals);
+                nsave_args, 0,
+                save_args, NULL);
 	gimp_register_save_handler ("file_fli_save", "fli", "");
 }
 
