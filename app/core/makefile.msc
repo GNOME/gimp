@@ -58,6 +58,7 @@ OBJECTS = \
 	gimpdrawable-blend.obj \
 	gimpdrawable-bucket-fill.obj \
 	gimpdrawable-combine.obj \
+	gimpdrawable-convert.obj \
 	gimpdrawable-desaturate.obj \
 	gimpdrawable-equalize.obj \
 	gimpdrawable-histogram.obj \

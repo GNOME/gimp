@@ -33,10 +33,7 @@
 #include "pixel-processor.h"
 #include "pixel-region.h"
 
-#ifdef ENABLE_MP
 #include "tile.h"
-#endif
-
 
 #define TILES_PER_THREAD  8
 #define PROGRESS_TIMEOUT  64

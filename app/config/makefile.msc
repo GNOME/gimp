@@ -22,22 +22,17 @@ PKG_LINK = \
 
 OBJECTS = \
 	gimpbaseconfig.obj \
-	gimpconfig.obj \
-	gimpconfig-deserialize.obj \
 	gimpconfig-dump.obj \
-	gimpconfig-error.obj \
-	gimpconfig-params.obj \
-	gimpconfig-path.obj \
-	gimpconfig-serialize.obj \
-	gimpconfig-types.obj \
+	gimpconfig-file.obj \
 	gimpconfig-utils.obj \
-	gimpconfigwriter.obj \
 	gimpcoreconfig.obj \
 	gimpdisplayconfig.obj \
 	gimpguiconfig.obj \
 	gimppluginconfig.obj \
+	gimprc-deserialize.obj \
+	gimprc-serialize.obj \
+	gimprc-unknown.obj \
 	gimprc.obj \
-	gimpscanner.obj \
 	gimpxmlparser.obj \
 	\
 !IFDEF DLLGIMP

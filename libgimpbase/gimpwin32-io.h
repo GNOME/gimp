@@ -50,6 +50,19 @@ G_BEGIN_DECLS
 #define S_IXUSR _S_IEXEC
 #endif
 
+#ifndef S_IRGRP
+#define S_IRGRP _S_IREAD
+#endif
+#ifndef S_IXGRP
+#define S_IXGRP _S_IEXEC
+#endif
+#ifndef S_IROTH
+#define S_IROTH _S_IREAD
+#endif
+#ifndef S_IXOTH
+#define S_IXOTH _S_IEXEC
+#endif
+
 #ifndef _O_BINARY
 #define _O_BINARY 0
 #endif

@@ -282,6 +282,7 @@ STOCK_VARS = \
 	stock_move_object images/stock-move-object.png	\
 	stock_move_point images/stock-move-point.png	\
 	stock_polygon images/stock-polygon.png	\
+	stock_rectangle images/stock-rectangle.png	\
 	stock_spiral images/stock-spiral.png	\
 	stock_star images/stock-star.png		\
 	stock_select_object images/stock-select-object.png \
@@ -320,6 +321,7 @@ OBJECTS = \
 	gfig-line.obj \
 	gfig-poly.obj \
 	gfig-preview.obj \
+	gfig-rectangle.obj \
 	gfig-spiral.obj \
 	gfig-star.obj \
 	gfig-style.obj \
@@ -592,6 +594,8 @@ gimpressionist.c: logo-pixbuf.h
 
 logo-pixbuf.h: logo.png
 	gdk-pixbuf-csource --rle --name=logo_data logo.png > $(@F)
+
+EXTRALIBS = $(GTK2_LIBS)
 
 OBJECTS = \
 	brush.obj \

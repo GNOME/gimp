@@ -48,6 +48,9 @@ OBJECTS = \
 	gimpcolorselector.obj \
 	gimpcontroller.obj \
 	gimpdialog.obj \
+	gimpenumcombobox.obj \
+	gimpenumstore.obj \
+	gimpenumwidgets.obj \
 	gimpfileentry.obj \
 	gimpframe.obj \
 	gimphelpui.obj \
@@ -61,6 +64,7 @@ OBJECTS = \
 	gimppixmap.obj \
 	gimppreviewarea.obj \
 	gimppreview.obj \
+	gimppropwidgets.obj \
 	gimpscrolledpreview.obj \
 	gimpquerybox.obj \
 	gimpsizeentry.obj \
@@ -84,6 +88,7 @@ gimpunit.obj : ..\app\gimpunit.c
 gimpwidgets-$(GIMP_VER).dll : $(OBJECTS) gimpwidgets.def
 	$(CC) $(CFLAGS) -LD -Fegimpwidgets-$(GIMP_VER).dll $(OBJECTS) \
 	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
 	$(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpwidgets.def
 

@@ -20,6 +20,7 @@ PKG_LINK = \
 OBJECTS = \
 	gimp-fonts.obj \
 	gimpfont.obj \
+	gimpfont-utils.obj \
 	gimpfontlist.obj \
 	gimptext.obj \
 	gimptext-parasite.obj \
@@ -33,6 +34,7 @@ OBJECTS = \
 	gimptext-compat.obj \
 	gimptext-xlfd.obj \
 	gimptextlayer.obj \
+	gimptextlayer-transform.obj \
 	gimptextlayer-xcf.obj \
 	gimptextlayout.obj \
 	gimptextlayout-render.obj \

@@ -28,11 +28,12 @@ OBJECTS = \
 	gimpdisplay.obj \
 	gimpdisplay-foreach.obj \
 	gimpdisplay-handlers.obj \
-#	gimpdisplayoptions.obj \
 	gimpdisplayshell.obj \
 	gimpdisplayshell-appearance.obj \
+	gimpdisplayshell-autoscroll.obj \
 	gimpdisplayshell-callbacks.obj \
 	gimpdisplayshell-close.obj \
+	gimpdisplayshell-coords.obj \
 	gimpdisplayshell-cursor.obj \
 	gimpdisplayshell-dnd.obj \
 	gimpdisplayshell-draw.obj \

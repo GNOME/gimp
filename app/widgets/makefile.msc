@@ -79,9 +79,6 @@ OBJECTS = \
 	gimpdrawabletreeview.obj \
 	gimpeditor.obj \
 	gimpenumaction.obj \
-	gimpenumcombobox.obj \
-	gimpenumstore.obj \
-	gimpenumwidgets.obj \
 	gimperrorconsole.obj \
 	gimperrordialog.obj \
 	gimpfgbgeditor.obj \

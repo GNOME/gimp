@@ -60,6 +60,7 @@ PKG_LINK = \
 	\
 	$(top_builddir)/libgimpbase/gimpbase-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
+	$(top_builddir)/libgimpconfig/gimpconfig-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpthumb/gimpthumb-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmodule/gimpmodule-$(LT_RELEASE).lib \

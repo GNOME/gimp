@@ -33,6 +33,7 @@
 
 #ifdef G_OS_WIN32
 #include <direct.h> /* _mkdir() */
+#include <libgimpbase/gimpwin32-io.h>
 #endif
 
 #include "libgimpbase/gimpbase.h"

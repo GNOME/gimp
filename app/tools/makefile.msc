@@ -27,7 +27,6 @@ PKG_LINK = \
 
 OBJECTS = \
 	gimpairbrushtool.obj \
-#	gimpbezierselecttool.obj \
 	gimpblendoptions.obj \
 	gimpblendtool.obj \
 	gimpbrightnesscontrasttool.obj \
@@ -68,6 +67,7 @@ OBJECTS = \
 	gimpmeasuretool.obj \
 	gimpmoveoptions.obj \
 	gimpmovetool.obj \
+	gimpnewrectselecttool.obj \
 	gimppaintbrushtool.obj \
 	gimppaintoptions-gui.obj \
 	gimppainttool.obj \

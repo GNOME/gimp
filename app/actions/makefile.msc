@@ -39,6 +39,8 @@ OBJECTS = \
 	debug-commands.obj \
 	dialogs-actions.obj \
 	dialogs-commands.obj \
+	dock-actions.obj \
+	dock-commands.obj \
 	dockable-actions.obj \
 	dockable-commands.obj \
 	documents-actions.obj \
@@ -88,6 +90,7 @@ OBJECTS = \
 	vectors-commands.obj \
 	view-actions.obj \
 	view-commands.obj \
+	window-actions.obj \
 
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
