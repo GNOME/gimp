@@ -350,7 +350,7 @@ gimp_stock_init (void)
 				    gimp_stock_menu_pixbufs[i].stock_id);
     }
 
-  for (i = 0; i < G_N_ELEMENTS (gimp_stock_menu_pixbufs); i++)
+  for (i = 0; i < G_N_ELEMENTS (gimp_stock_dialog_pixbufs); i++)
     {
       add_sized_with_same_fallback (gimp_stock_factory,
 				    gimp_stock_dialog_pixbufs[i].inline_data,

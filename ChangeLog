@@ -1,3 +1,7 @@
+2003-01-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpstock.c (gimp_stock_init): fixed my last commit.
+
 2003-01-10  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/tiff.c (load_image): added handling of 
