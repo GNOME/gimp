@@ -1,22 +1,23 @@
-# Copyright (C) 2001-2004 Free Software Foundation, Inc.
+# Copyright (C) 2001-2004, 2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
-# translators@gnome.pl
+# translators@gnomepl.pl
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp\n"
+"Project-Id-Version: gimp-libgimp.gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2004-03-19 23:17+0100\n"
-"Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"POT-Creation-Date: 2005-01-25 10:31+0100\n"
+"PO-Revision-Date: 2005-01-20 13:33+0100\n"
+"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
+"Language-Team:  <translators@gnomepl.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: libgimp/gimpbrushmenu.c:129
 msgid "Brush Selection"
@@ -47,7 +48,7 @@ msgstr "Format %s obsługuje warstwy wyłącznie jako ramki animacji"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
 msgid "Save as Animation"
-msgstr "Zapisz w postaci animacji"
+msgstr "Zapisz jako animację"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:252 libgimp/gimpexport.c:261
 msgid "Flatten Image"
@@ -61,7 +62,7 @@ msgstr "Format %s nie obsługuje przezroczystości"
 #: libgimp/gimpexport.c:269
 #, c-format
 msgid "%s can't handle layer masks"
-msgstr "Format %s nie obsługuje mask warstw"
+msgstr "Format %s nie obsługuje maski warstw"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
@@ -74,7 +75,7 @@ msgstr "Format %s obsługuje wyłącznie obrazy RGB"
 
 #: libgimp/gimpexport.c:279 libgimp/gimpexport.c:317 libgimp/gimpexport.c:326
 msgid "Convert to RGB"
-msgstr "Przekonwertuj na RGB"
+msgstr "Konwertuj na RGB"
 
 #: libgimp/gimpexport.c:287
 #, c-format
@@ -83,7 +84,7 @@ msgstr "Format %s obsługuje wyłącznie obrazy w odcieniach szarości"
 
 #: libgimp/gimpexport.c:288 libgimp/gimpexport.c:317 libgimp/gimpexport.c:338
 msgid "Convert to Grayscale"
-msgstr "Przekonwertuj na odcienie szarości"
+msgstr "Konwertuj na odcienie szarości"
 
 #: libgimp/gimpexport.c:296
 #, c-format
@@ -95,7 +96,7 @@ msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Przekonwertuj na indeksowany z użyciem ustawień domyślnych\n"
+"Konwertuj na indeksowany z użyciem ustawień domyślnych\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: libgimp/gimpexport.c:306
@@ -108,7 +109,7 @@ msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Przekonwertuj na indeksowany z użyciem ustawień domyślnych dla bitmap\n"
+"Konwertuj na indeksowany z użyciem ustawień domyślnych dla bitmap\n"
 "(ręczna konwersja pozwoli na lepsze dopasowanie ustawień)"
 
 #: libgimp/gimpexport.c:316
@@ -150,11 +151,11 @@ msgstr "Eksport pliku"
 
 #: libgimp/gimpexport.c:458
 msgid "_Ignore"
-msgstr "Z_ignoruj"
+msgstr "_Ignoruj"
 
 #: libgimp/gimpexport.c:460
 msgid "_Export"
-msgstr "Wy_eksportuj"
+msgstr "_Eksportuj"
 
 #. the headline
 #: libgimp/gimpexport.c:482
@@ -461,7 +462,7 @@ msgstr "Zapis szesnastkowy, używany w języku HTML i CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr "_Notacja HTML-owa"
+msgstr "_Notacja HTML-owa:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -526,15 +527,15 @@ msgstr "Zakotwicz"
 
 #: libgimpwidgets/gimpstock.c:114
 msgid "C_enter"
-msgstr ""
+msgstr "W_yśrodkuj"
 
 #: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
-msgstr "Z_duplikuj"
+msgstr "_Duplikuj"
 
 #: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
-msgstr "Z_modyfikuj"
+msgstr "_Modyfikuj"
 
 #: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
@@ -550,7 +551,7 @@ msgstr "Wklej do"
 
 #: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
-msgstr "Z_resetuj"
+msgstr "_Resetuj"
 
 #: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
@@ -781,33 +782,3 @@ msgstr "Akwarela"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Nacisk"
-
-#~ msgid "None"
-#~ msgstr "Brak"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "_Triplet szesnastkowy:"
-
-#~ msgid ""
-#~ "No %s in gimprc:\n"
-#~ "You need to add an entry like\n"
-#~ "(%s \"%s\")\n"
-#~ "to your %s file."
-#~ msgstr ""
-#~ "Brak ścieżki %s w pliku gimprc:\n"
-#~ "Do pliku %s należy dodać\n"
-#~ "pozycję postaci\n"
-#~ "(%s \"%s\")\n"
-#~ "."
-
-#~ msgid "Parameter Settings"
-#~ msgstr "Ustawienia parametru"
-
-#~ msgid "None (normal vision)"
-#~ msgstr "Brak (zwykłe widzenie)"
-
-#~ msgid "a channel (saved selection)"
-#~ msgstr "kanał (zapisane zaznaczenie)"
-
-#~ msgid "_Time"
-#~ msgstr "_Czas"
