@@ -28,6 +28,25 @@ $destdir = "$main::destdir/libgimp";
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
+use Text::Wrap qw(wrap);
+
+sub desc_wrap {
+    my ($str) = @_;
+    my $leading = ' * ';
+    $Text::Wrap::columns = 72;
+    wrap($leading, $leading, $str);
+}
+
+sub desc_clean {
+    my ($str) = @_;
+    $str =~ s/\(\s*%%desc%%\s*\)//g;
+    $str =~ s/:\s*%%desc%%//g;
+    $str =~ s/\{\s*%%desc%%\s*\}//g;
+    $str =~ s/\s*$//g;
+    $str =~ s/:$//g;
+    $str;
+}
+
 sub generate {
     my @procs = @{(shift)};
     my %out;
@@ -59,6 +78,7 @@ sub generate {
 	my @outargs = @{$proc->{outargs}} if exists $proc->{outargs};
 
 	my $funcname = "gimp_$name"; my $wrapped = ""; my %usednames;
+	my $retdesc = "";
 
 	# The 'color' argument is special cased to accept and return the
 	# individual color components. This is to maintain backwards
@@ -94,6 +114,8 @@ sub generate {
 	    }
 
 	    $retarg->{retval} = 1;
+
+	    $retdesc = &desc_clean ($retarg->{desc});
 	}
 	else {
 	    # No return values
@@ -101,9 +123,11 @@ sub generate {
 	}
 
 	# The parameters to the function
-	my $arglist = ""; my $argpass = ""; my $color = ""; my $privatevars = 0;
+	my $arglist = ""; my $argpass = ""; my $color = ""; my $privatevars = 0; 
+	my $argdesc = "";
 	foreach (@inargs) {
 	    my ($type) = &arg_parse($_->{type});
+	    my $desc = &desc_clean($_->{desc});
 	    my $arg = $arg_types{$type};
 	    my $id = exists $arg->{id_func} || $_->{type} =~ /guide/;
 
@@ -119,6 +143,10 @@ sub generate {
 		$arglist .= $_->{name};
 		$arglist .= '_ID' if $id;
 		$arglist .= ', ';
+
+		$argdesc .= " * \@$_->{name}";
+		$argdesc .= '_ID' if $id;
+		$argdesc .= ": $desc";
 	    }
 	    else {
 		# A color needs to stick the components into a 3-element array
@@ -132,6 +160,8 @@ sub generate {
 CODE
 
 		$arglist .= "guchar red, guchar green, guchar blue, ";
+
+		$argdesc .= " * \@red:\n * \@green:\n * \@blue: $desc";
 	    }
 
 	    # This is what's passed into gimp_run_procedure
@@ -147,6 +177,9 @@ CODE
 	    }
 
 	    $argpass .= ',';
+
+            unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
+            $argdesc .= "\n";
 	}
 
 	# This marshals the return value(s)
@@ -156,6 +189,7 @@ CODE
 	# return success/failure boolean if we don't have anything else
 	if ($rettype eq 'void') {
 	    $return_args .= "\n" . ' ' x 2 . "gboolean success = TRUE;";
+	    $retdesc = "TRUE on success.";
 	}
 
 	# We only need to bother with this if we have to return a value
@@ -257,10 +291,11 @@ CODE
 	    my $argc = 1; my ($numpos, $numtype);
 	    foreach (@outargs) {
 		my ($type) = &arg_parse($_->{type});
+                my $desc = &desc_clean($_->{desc});
 		my $arg = $arg_types{$type};
 		my $id = $arg->{id_ret_func} || $_->{type} =~ /guide/;
 		my $var;
-
+	    
 		my $ch = ""; my $cf = "";
 		if ($type =~ /^string(array)?/) {
 		    $ch = 'g_strdup (';
@@ -279,6 +314,7 @@ CODE
 		    $numtype = $type;
 		    if (!exists $_->{no_lib}) {
 			$arglist .= "gint \*$_->{libname}, ";
+			$argdesc .= " * \@$_->{libname}: $desc";
 		    }
 		}
 		elsif (exists $_->{array}) {
@@ -295,6 +331,7 @@ CODE
 			else {
 			    $arglist .= "$datatype **$_->{libname}";
 			}
+			$argdesc .= " * \@$_->{libname}: $desc";
 		    }
 
 		    if ($ch || $cf) {
@@ -314,7 +351,7 @@ CP1
       memcpy ($var, return_vals[$argc].data.d_$type,
 	      $numvar * sizeof ($datatype));
 CP2
-		}
+                }
 		elsif ($type ne 'color') {
 		    # The return value variable
 		    $var = "";
@@ -325,6 +362,10 @@ CP2
 			$arglist .= "*$_->{libname}";
 			$arglist .= '_ID' if $id;
 			$arglist .= ', ';
+
+			$argdesc .= " * \@$_->{libname}";
+			$argdesc .= '_ID' if $id;
+			$argdesc .= ": $desc";
 		    }
 
 		    $var = exists $_->{retval} ? "" : '*';
@@ -339,15 +380,20 @@ CODE
 		else {
 		    # Colors are returned in parts using pointers
 		    $arglist .= "guchar \*red, guchar \*green, guchar \*blue, ";
-		    $return_marshal .= <<CODE
+		    $return_marshal .= <<CODE;
     {
       \*red = return_vals[$argc].data.d_color.red;
       \*green = return_vals[$argc].data.d_color.green;
       \*blue = return_vals[$argc].data.d_color.blue;
     }
 CODE
+		    $argdesc .= " * \@red:\n * \@green:\n * \@blue: $desc";
 		}
 
+                if ($argdesc) {
+                    unless ($argdesc =~ /[\.\!\?]$/) { $argdesc .= '.' }
+                    unless ($argdesc =~ /\n$/)       { $argdesc .= "\n" }
+		}
 		$argc++;
 	    }
 
@@ -373,6 +419,7 @@ success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   return success;
 CODE
+
 	    chop $return_marshal;
 	}
 
@@ -420,8 +467,19 @@ CODE
 	my $padding = "\t" x $padtab . ' ' x $padspace;
 	$clist =~ s/\t/$padding/eg;
 
+        unless ($retdesc =~ /[\.\!\?]$/) { $retdesc .= '.' }
+
 	$out->{code} .= <<CODE;
 
+/**
+ * $wrapped$funcname:
+$argdesc *
+@{[ &desc_wrap($proc->{blurb}) ]}
+ *
+@{[ &desc_wrap($proc->{help}) ]}
+ *
+ * Returns: $retdesc
+ */
 $rettype
 $wrapped$funcname ($clist)
 {

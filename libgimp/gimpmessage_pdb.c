@@ -23,6 +23,17 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_message:
+ * @message: Message to display in the dialog.
+ *
+ * Displays a dialog box with a message.
+ *
+ * Displays a dialog box with a message. Useful for status or error
+ * reporting.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_message (gchar *message)
 {
@@ -42,6 +53,17 @@ gimp_message (gchar *message)
   return success;
 }
 
+/**
+ * gimp_message_get_handler:
+ *
+ * Returns the current state of where warning messages are displayed.
+ *
+ * This procedure returns the way g_message warnings are displayed.
+ * They can be shown in a dialog box or printed on the console where
+ * gimp was started.
+ *
+ * Returns: The current handler type.
+ */
 GimpMessageHandlerType
 gimp_message_get_handler (void)
 {
@@ -61,6 +83,18 @@ gimp_message_get_handler (void)
   return handler;
 }
 
+/**
+ * gimp_message_set_handler:
+ * @handler: The new handler type.
+ *
+ * Controls where warning messages are displayed.
+ *
+ * This procedure controls how g_message warnings are displayed. They
+ * can be shown in a dialog box or printed on the console where gimp
+ * was started.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_message_set_handler (GimpMessageHandlerType handler)
 {

@@ -23,6 +23,24 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_help:
+ * @prog_name: The plug-in's executable name or an empty string.
+ * @help_page: The location of the help page.
+ *
+ * Load a help page.
+ *
+ * This procedure loads the specified help page into the helpbrowser or
+ * what ever is configured as help viewer. The location of the help
+ * page is given relative to the help rootdir. The help rootdir is
+ * determined from the prog_name: if prog_name is NULL, we use the help
+ * rootdir of the main GIMP installation, if the plug-in's full
+ * executable name is passed as prog_name, the GIMP will use this
+ * information to look up the help path the plug-in has registered
+ * before with gimp-plugin-help-register.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_help (gchar *prog_name,
 	   gchar *help_page)

@@ -23,6 +23,24 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_gimprc_query:
+ * @token: The token to query for.
+ *
+ * Queries the gimprc file parser for information on a specified token.
+ *
+ * This procedure is used to locate additional information contained in
+ * the gimprc file considered extraneous to the operation of the GIMP.
+ * Plug-ins that need configuration information can expect it will be
+ * stored in the user gimprc file and can use this procedure to
+ * retrieve it. This query procedure will return the value associated
+ * with the specified token. This corresponds _only_ to entries with
+ * the format: (<token> <value>). The value must be a string. Entries
+ * not corresponding to this format will cause warnings to be issued on
+ * gimprc parsing a nd will not be queryable.
+ *
+ * Returns: The value associated with the queried token.
+ */
 gchar *
 gimp_gimprc_query (gchar *token)
 {
@@ -43,6 +61,25 @@ gimp_gimprc_query (gchar *token)
   return value;
 }
 
+/**
+ * gimp_gimprc_set:
+ * @token: The token to modify.
+ * @value: The value to set the token to.
+ *
+ * Sets a gimprc token to a value and saves it in the gimprc.
+ *
+ * This procedure is used to add or change additional information in
+ * the gimprc file that is considered extraneous to the operation of
+ * the GIMP. Plug-ins that need configuration information can use this
+ * function to store it, and gimp_gimprc_query to retrieve it. This
+ * will accept _only_ parameters in the format of (<token> <value>),
+ * where <token> and <value> must be strings. Entries not corresponding
+ * to this format will be eaten and no action will be performed. If the
+ * gimprc can not be written for whatever reason, gimp will complain
+ * loudly and the old gimprc will be saved in gimprc.old.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_gimprc_set (gchar *token,
 		 gchar *value)
@@ -64,6 +101,20 @@ gimp_gimprc_set (gchar *token,
   return success;
 }
 
+/**
+ * gimp_get_monitor_resolution:
+ * @xres: X resolution.
+ * @yres: Y resolution.
+ *
+ * Get the monitor resolution as specified in the Preferences.
+ *
+ * Returns the resolution of the monitor in pixels/inch. This value is
+ * taken from the Preferences (or the X-Server if this is set in the
+ * Preferences) and there's no guarantee for the value to be
+ * reasonable.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_get_monitor_resolution (gdouble *xres,
 			     gdouble *yres)

@@ -23,6 +23,27 @@
 
 #include "gimp.h"
 
+/**
+ * _gimp_layer_new:
+ * @image_ID: The image to which to add the layer.
+ * @width: The layer width.
+ * @height: The layer height.
+ * @type: The layer type.
+ * @name: The layer name.
+ * @opacity: The layer opacity.
+ * @mode: The layer combination mode.
+ *
+ * Create a new layer.
+ *
+ * This procedure creates a new layer with the specified width, height,
+ * and type. Name, opacity, and mode are also supplied parameters. The
+ * new layer still needs to be added to the image, as this is not
+ * automatic. Add the new layer with the 'gimp_image_add_layer'
+ * command. Other attributes such as layer mask modes, and offsets
+ * should be set with explicit procedure calls.
+ *
+ * Returns: The newly created layer.
+ */
 gint32
 _gimp_layer_new (gint32                image_ID,
 		 gint                  width,
@@ -55,6 +76,22 @@ _gimp_layer_new (gint32                image_ID,
   return layer_ID;
 }
 
+/**
+ * _gimp_layer_copy:
+ * @layer_ID: The layer to copy.
+ * @add_alpha: Add an alpha channel to the copied layer.
+ *
+ * Copy a layer.
+ *
+ * This procedure copies the specified layer and returns the copy. The
+ * newly copied layer is for use within the original layer's image. It
+ * should not be subsequently added to any other image. The copied
+ * layer can optionally have an added alpha channel. This is useful if
+ * the background layer in an image is being copied and added to the
+ * same image.
+ *
+ * Returns: The newly copied layer.
+ */
 gint32
 _gimp_layer_copy (gint32   layer_ID,
 		  gboolean add_alpha)
@@ -77,6 +114,25 @@ _gimp_layer_copy (gint32   layer_ID,
   return layer_copy_ID;
 }
 
+/**
+ * gimp_layer_create_mask:
+ * @layer_ID: The layer to which to add the mask.
+ * @mask_type: The type of mask.
+ *
+ * Create a layer mask for the specified specified layer.
+ *
+ * This procedure creates a layer mask for the specified layer. Layer
+ * masks serve as an additional alpha channel for a layer. Three
+ * different types of masks are allowed initially: completely white
+ * masks (which will leave the layer fully visible), completely black
+ * masks (which will give the layer complete transparency, and the
+ * layer's already existing alpha channel (which will leave the layer
+ * fully visible, but which may be more useful than a white mask). The
+ * layer mask still needs to be added to the layer. This can be done
+ * with a call to 'gimage_add_layer_mask'.
+ *
+ * Returns: The newly created mask.
+ */
 gint32
 gimp_layer_create_mask (gint32          layer_ID,
 			GimpAddMaskType mask_type)
@@ -99,6 +155,23 @@ gimp_layer_create_mask (gint32          layer_ID,
   return mask_ID;
 }
 
+/**
+ * gimp_layer_scale:
+ * @layer_ID: The layer.
+ * @new_width: New layer width.
+ * @new_height: New layer height.
+ * @local_origin: Use a local origin (as opposed to the image origin).
+ *
+ * Scale the layer to the specified extents.
+ *
+ * This procedure scales the layer so that it's new width and height
+ * are equal to the supplied parameters. The \"local_origin\" parameter
+ * specifies whether to scale from the center of the layer, or from the
+ * image origin. This operation only works if the layer has been added
+ * to an image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_scale (gint32   layer_ID,
 		  gint     new_width,
@@ -124,6 +197,23 @@ gimp_layer_scale (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_resize:
+ * @layer_ID: The layer.
+ * @new_width: New layer width.
+ * @new_height: New layer height.
+ * @offx: x offset between upper left corner of old and new layers: (new - old).
+ * @offy: y offset between upper left corner of old and new layers: (new - old).
+ *
+ * Resize the layer to the specified extents.
+ *
+ * This procedure resizes the layer so that it's new width and height
+ * are equal to the supplied parameters. Offsets are also provided
+ * which describe the position of the previous layer's content. This
+ * operation only works if the layer has been added to an image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_resize (gint32 layer_ID,
 		   gint   new_width,
@@ -151,6 +241,17 @@ gimp_layer_resize (gint32 layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_delete:
+ * @layer_ID: The layer to delete.
+ *
+ * Delete a layer.
+ *
+ * This procedure deletes the specified layer. This does not need to be
+ * done if a gimage containing this layer was already deleted.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_delete (gint32 layer_ID)
 {
@@ -170,6 +271,23 @@ gimp_layer_delete (gint32 layer_ID)
   return success;
 }
 
+/**
+ * gimp_layer_translate:
+ * @layer_ID: The layer.
+ * @offx: Offset in x direction.
+ * @offy: Offset in y direction.
+ *
+ * Translate the layer by the specified offsets.
+ *
+ * This procedure translates the layer by the amounts specified in the
+ * x and y arguments. These can be negative, and are considered offsets
+ * from the current position. This command only works if the layer has
+ * been added to an image. All additional layers contained in the image
+ * which have the linked flag set to TRUE w ill also be translated by
+ * the specified offsets.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_translate (gint32 layer_ID,
 		      gint   offx,
@@ -193,6 +311,21 @@ gimp_layer_translate (gint32 layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_add_alpha:
+ * @layer_ID: The layer.
+ *
+ * Add an alpha channel to the layer if it doesn't already have one.
+ *
+ * This procedure adds an additional component to the specified layer
+ * if it does not already possess an alpha channel. An alpha channel
+ * makes it possible to move a layer from the bottom of the layer stack
+ * and to clear and erase to transparency, instead of the background
+ * color. This transforms images of type RGB to RGBA, GRAY to GRAYA,
+ * and INDEXED to INDEXEDA.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_add_alpha (gint32 layer_ID)
 {
@@ -212,6 +345,20 @@ gimp_layer_add_alpha (gint32 layer_ID)
   return success;
 }
 
+/**
+ * gimp_layer_set_offsets:
+ * @layer_ID: The layer.
+ * @offx: Offset in x direction.
+ * @offy: Offset in y direction.
+ *
+ * Set the layer offsets.
+ *
+ * This procedure sets the offsets for the specified layer. The offsets
+ * are relative to the image origin and can be any values. This
+ * operation is valid only on layers which have been added to an image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_offsets (gint32 layer_ID,
 			gint   offx,
@@ -235,6 +382,17 @@ gimp_layer_set_offsets (gint32 layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the specified layer's mask if it exists.
+ *
+ * This procedure returns the specified layer's mask, or -1 if none
+ * exists.
+ *
+ * Returns: The layer mask.
+ */
 gint32
 gimp_layer_mask (gint32 layer_ID)
 {
@@ -255,6 +413,18 @@ gimp_layer_mask (gint32 layer_ID)
   return mask_ID;
 }
 
+/**
+ * gimp_layer_is_floating_sel:
+ * @layer_ID: The layer.
+ *
+ * Is the specified layer a floating selection?
+ *
+ * This procedure returns whether the layer is a floating selection.
+ * Floating selections are special cases of layers which are attached
+ * to a specific drawable.
+ *
+ * Returns: Non-zero if the layer is a floating selection.
+ */
 gboolean
 gimp_layer_is_floating_sel (gint32 layer_ID)
 {
@@ -275,6 +445,16 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
   return is_floating_sel;
 }
 
+/**
+ * gimp_layer_get_name:
+ * @layer_ID: The layer.
+ *
+ * Get the name of the specified layer.
+ *
+ * This procedure returns the specified layer's name.
+ *
+ * Returns: The layer name.
+ */
 gchar *
 gimp_layer_get_name (gint32 layer_ID)
 {
@@ -295,6 +475,17 @@ gimp_layer_get_name (gint32 layer_ID)
   return name;
 }
 
+/**
+ * gimp_layer_set_name:
+ * @layer_ID: The layer.
+ * @name: The new layer name.
+ *
+ * Set the name of the specified layer.
+ *
+ * This procedure sets the specified layer's name.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_name (gint32  layer_ID,
 		     gchar  *name)
@@ -316,6 +507,16 @@ gimp_layer_set_name (gint32  layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_visible:
+ * @layer_ID: The layer.
+ *
+ * Get the visibility of the specified layer.
+ *
+ * This procedure returns the specified layer's visibility.
+ *
+ * Returns: The layer visibility.
+ */
 gboolean
 gimp_layer_get_visible (gint32 layer_ID)
 {
@@ -336,6 +537,17 @@ gimp_layer_get_visible (gint32 layer_ID)
   return visible;
 }
 
+/**
+ * gimp_layer_set_visible:
+ * @layer_ID: The layer.
+ * @visible: The new layer visibility.
+ *
+ * Set the visibility of the specified layer.
+ *
+ * This procedure sets the specified layer's visibility.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_visible (gint32   layer_ID,
 			gboolean visible)
@@ -357,6 +569,17 @@ gimp_layer_set_visible (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_preserve_trans:
+ * @layer_ID: The layer.
+ *
+ * Get the preserve transperancy setting of the specified layer.
+ *
+ * This procedure returns the specified layer's preserve transperancy
+ * setting.
+ *
+ * Returns: The layer's preserve transperancy setting.
+ */
 gboolean
 gimp_layer_get_preserve_trans (gint32 layer_ID)
 {
@@ -377,6 +600,18 @@ gimp_layer_get_preserve_trans (gint32 layer_ID)
   return preserve_trans;
 }
 
+/**
+ * gimp_layer_set_preserve_trans:
+ * @layer_ID: The layer.
+ * @preserve_trans: The new layer's preserve transperancy setting.
+ *
+ * Set the preserve transperancy setting of the specified layer.
+ *
+ * This procedure sets the specified layer's preserve transperancy
+ * setting.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_preserve_trans (gint32   layer_ID,
 			       gboolean preserve_trans)
@@ -398,6 +633,18 @@ gimp_layer_set_preserve_trans (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_apply_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the apply mask setting of the specified layer.
+ *
+ * This procedure returns the specified layer's apply mask setting. If
+ * the value is non-zero, then the layer mask for this layer is
+ * currently being composited with the layer's alpha channel.
+ *
+ * Returns: The layer's apply mask setting.
+ */
 gboolean
 gimp_layer_get_apply_mask (gint32 layer_ID)
 {
@@ -418,6 +665,20 @@ gimp_layer_get_apply_mask (gint32 layer_ID)
   return apply_mask;
 }
 
+/**
+ * gimp_layer_set_apply_mask:
+ * @layer_ID: The layer.
+ * @apply_mask: The new layer's apply mask setting.
+ *
+ * Set the apply mask setting of the specified layer.
+ *
+ * This procedure sets the specified layer's apply mask setting. This
+ * controls whether the layer's mask is currently affecting the alpha
+ * channel. If there is no layer mask, this function will return an
+ * error.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_apply_mask (gint32   layer_ID,
 			   gboolean apply_mask)
@@ -439,6 +700,18 @@ gimp_layer_set_apply_mask (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_show_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the show mask setting of the specified layer.
+ *
+ * This procedure returns the specified layer's show mask setting. If
+ * the value is non-zero, then the layer mask for this layer is
+ * currently being shown instead of the layer.
+ *
+ * Returns: The layer's show mask setting.
+ */
 gboolean
 gimp_layer_get_show_mask (gint32 layer_ID)
 {
@@ -459,6 +732,20 @@ gimp_layer_get_show_mask (gint32 layer_ID)
   return show_mask;
 }
 
+/**
+ * gimp_layer_set_show_mask:
+ * @layer_ID: The layer.
+ * @show_mask: The new layer's show mask setting.
+ *
+ * Set the show mask setting of the specified layer.
+ *
+ * This procedure sets the specified layer's show mask setting. This
+ * controls whether the layer or it's mask is visible. Non-zero values
+ * indicate that the mask should be visible. If the layer has no mask,
+ * then this function returns an error.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_show_mask (gint32   layer_ID,
 			  gboolean show_mask)
@@ -480,6 +767,18 @@ gimp_layer_set_show_mask (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_edit_mask:
+ * @layer_ID: The layer.
+ *
+ * Get the show mask setting of the specified layer.
+ *
+ * This procedure returns the specified layer's show mask setting. If
+ * the value is non-zero, then the layer mask for this layer is
+ * currently active, and not the layer.
+ *
+ * Returns: The layer's show mask setting.
+ */
 gboolean
 gimp_layer_get_edit_mask (gint32 layer_ID)
 {
@@ -500,6 +799,20 @@ gimp_layer_get_edit_mask (gint32 layer_ID)
   return edit_mask;
 }
 
+/**
+ * gimp_layer_set_edit_mask:
+ * @layer_ID: The layer.
+ * @edit_mask: The new layer's show mask setting.
+ *
+ * Set the show mask setting of the specified layer.
+ *
+ * This procedure sets the specified layer's show mask setting. This
+ * controls whether the layer or it's mask is currently active for
+ * editing. If the specified layer has no layer mask, then this
+ * procedure will return an error.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_edit_mask (gint32   layer_ID,
 			  gboolean edit_mask)
@@ -521,6 +834,16 @@ gimp_layer_set_edit_mask (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_opacity:
+ * @layer_ID: The layer.
+ *
+ * Get the opacity of the specified layer.
+ *
+ * This procedure returns the specified layer's opacity.
+ *
+ * Returns: The layer opacity.
+ */
 gdouble
 gimp_layer_get_opacity (gint32 layer_ID)
 {
@@ -541,6 +864,17 @@ gimp_layer_get_opacity (gint32 layer_ID)
   return opacity;
 }
 
+/**
+ * gimp_layer_set_opacity:
+ * @layer_ID: The layer.
+ * @opacity: The new layer opacity.
+ *
+ * Set the opacity of the specified layer.
+ *
+ * This procedure sets the specified layer's opacity.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_opacity (gint32  layer_ID,
 			gdouble opacity)
@@ -562,6 +896,16 @@ gimp_layer_set_opacity (gint32  layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_mode:
+ * @layer_ID: The layer.
+ *
+ * Get the combination mode of the specified layer.
+ *
+ * This procedure returns the specified layer's combination mode.
+ *
+ * Returns: The layer combination mode.
+ */
 GimpLayerModeEffects
 gimp_layer_get_mode (gint32 layer_ID)
 {
@@ -582,6 +926,17 @@ gimp_layer_get_mode (gint32 layer_ID)
   return mode;
 }
 
+/**
+ * gimp_layer_set_mode:
+ * @layer_ID: The layer.
+ * @mode: The new layer combination mode.
+ *
+ * Set the combination mode of the specified layer.
+ *
+ * This procedure sets the specified layer's combination mode.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_mode (gint32               layer_ID,
 		     GimpLayerModeEffects mode)
@@ -603,6 +958,16 @@ gimp_layer_set_mode (gint32               layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_linked:
+ * @layer_ID: The layer.
+ *
+ * Get the linked state of the specified layer.
+ *
+ * This procedure returns the specified layer's linked state.
+ *
+ * Returns: The layer linked state (for moves).
+ */
 gboolean
 gimp_layer_get_linked (gint32 layer_ID)
 {
@@ -623,6 +988,17 @@ gimp_layer_get_linked (gint32 layer_ID)
   return linked;
 }
 
+/**
+ * gimp_layer_set_linked:
+ * @layer_ID: The layer.
+ * @linked: The new layer linked state.
+ *
+ * Set the linked state of the specified layer.
+ *
+ * This procedure sets the specified layer's linked state.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_linked (gint32   layer_ID,
 		       gboolean linked)
@@ -644,6 +1020,18 @@ gimp_layer_set_linked (gint32   layer_ID,
   return success;
 }
 
+/**
+ * gimp_layer_get_tattoo:
+ * @layer_ID: The layer.
+ *
+ * Get the tattoo of the specified layer.
+ *
+ * This procedure returns the specified layer's tattoo. A tattoo is a
+ * unique and permanent identifier attached to a layer that can be used
+ * to uniquely identify a layer within an image even between sessions
+ *
+ * Returns: The layer tattoo.
+ */
 gint
 gimp_layer_get_tattoo (gint32 layer_ID)
 {
@@ -664,6 +1052,19 @@ gimp_layer_get_tattoo (gint32 layer_ID)
   return tattoo;
 }
 
+/**
+ * gimp_layer_set_tattoo:
+ * @layer_ID: The layer.
+ * @tattoo: The new layer tattoo.
+ *
+ * Set the tattoo of the specified layer.
+ *
+ * This procedure sets the specified layer's tattoo. A tattoo is a
+ * unique and permanent identifier attached to a layer that can be used
+ * to uniquely identify a layer within an image even between sessions
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_layer_set_tattoo (gint32 layer_ID,
 		       gint   tattoo)

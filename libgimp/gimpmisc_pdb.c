@@ -23,6 +23,16 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_version:
+ *
+ * Returns the host gimp version.
+ *
+ * This procedure returns the version number of the currently running
+ * gimp.
+ *
+ * Returns: The gimp version.
+ */
 gchar *
 gimp_version (void)
 {

@@ -23,6 +23,23 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_airbrush:
+ * @drawable_ID: The affected drawable.
+ * @pressure: The pressure of the airbrush strokes.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush with varying pressure. Paint application
+ * is time-dependent.
+ *
+ * This tool simulates the use of an airbrush. Paint pressure
+ * represents the relative intensity of the paint application. High
+ * pressure results in a thicker layer of paint while low pressure
+ * results in a thinner layer.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_airbrush (gint32   drawable_ID,
 	       gdouble  pressure,
@@ -48,6 +65,22 @@ gimp_airbrush (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_airbrush_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush with varying pressure. Paint application
+ * is time-dependent.
+ *
+ * This tool simulates the use of an airbrush. It is similar to
+ * gimp_airbrush except that the pressure is derived from the airbrush
+ * tools options box. It the option has not been set the default for
+ * the option will be used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_airbrush_default (gint32   drawable_ID,
 		       gint     num_strokes,
@@ -71,6 +104,33 @@ gimp_airbrush_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_blend:
+ * @drawable_ID: The affected drawable.
+ * @blend_mode: The type of blend.
+ * @paint_mode: The paint application mode.
+ * @gradient_type: The type of gradient.
+ * @opacity: The opacity of the final blend.
+ * @offset: Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent.
+ * @repeat: Repeat mode.
+ * @supersample: Do adaptive supersampling.
+ * @max_depth: Maximum recursion levels for supersampling.
+ * @threshold: Supersampling threshold.
+ * @x1: The x coordinate of this blend's starting point.
+ * @y1: The y coordinate of this blend's starting point.
+ * @x2: The x coordinate of this blend's ending point.
+ * @y2: The y coordinate of this blend's ending point.
+ *
+ * Blend between the starting and ending coordinates with the specified
+ * blend mode and gradient type.
+ *
+ * This tool requires information on the paint application mode, the
+ * blend mode, and the gradient type. It creates the specified variety
+ * of blend using the starting and ending coordinates as defined for
+ * each gradient type.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_blend (gint32               drawable_ID,
 	    GimpBlendMode        blend_mode,
@@ -116,6 +176,35 @@ gimp_blend (gint32               drawable_ID,
   return success;
 }
 
+/**
+ * gimp_bucket_fill:
+ * @drawable_ID: The affected drawable.
+ * @fill_mode: The type of fill.
+ * @paint_mode: The paint application mode.
+ * @opacity: The opacity of the final bucket fill.
+ * @threshold: The threshold determines how extensive the seed fill will be. It's value is specified in terms of intensity levels . This parameter is only valid when there is no selection in the specified image.
+ * @sample_merged: Use the composite image, not the drawable.
+ * @x: The x coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.
+ * @y: The y coordinate of this bucket fill's application. This parameter is only valid when there is no selection in the specified image.
+ *
+ * Fill the area specified either by the current selection if there is
+ * one, or by a seed fill starting at the specified coordinates.
+ *
+ * This tool requires information on the paint application mode, and
+ * the fill mode, which can either be in the foreground color, or in
+ * the currently active pattern. If there is no selection, a seed fill
+ * is executed at the specified coordinates and extends outward in
+ * keeping with the threshold parameter. If there is a selection in the
+ * target image, the threshold, sample merged, x, and y arguments are
+ * unused. If the sample_merged parameter is non-zero, the data of the
+ * composite image will be used instead of that for the specified
+ * drawable. This is equivalent to sampling for colors after merging
+ * all visible layers. In the case of merged sampling, the x,y
+ * coordinates are relative to the image's origin; otherwise, they are
+ * relative to the drawable's origin.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_bucket_fill (gint32               drawable_ID,
 		  GimpBucketFillMode   fill_mode,
@@ -149,6 +238,38 @@ gimp_bucket_fill (gint32               drawable_ID,
   return success;
 }
 
+/**
+ * gimp_by_color_select:
+ * @drawable_ID: The affected drawable.
+ * @red:
+ * @green:
+ * @blue: The color to select.
+ * @threshold: Threshold in intensity levels %%desc%%.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius: Radius for feather operation.
+ * @sample_merged: Use the composite image, not the drawable.
+ *
+ * Create a selection by selecting all pixels (in the specified
+ * drawable) with the same (or similar) color to that specified.
+ *
+ * This tool creates a selection over the specified image. A by-color
+ * selection is determined by the supplied color under the constraints
+ * of the specified threshold. Essentially, all pixels (in the
+ * drawable) that have color sufficiently close to the specified color
+ * (as determined by the threshold value) are included in the
+ * selection. The antialiasing parameter allows the final selection
+ * mask to contain intermediate values based on close misses to the
+ * threshold bar. Feathering can be enabled optionally and is
+ * controlled with the \"feather_radius\" parameter. If the
+ * sample_merged parameter is non-zero, the data of the composite image
+ * will be used instead of that for the specified drawable. This is
+ * equivalent to sampling for colors after merging all visible layers.
+ * In the case of a merged sampling, the supplied drawable is ignored.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_by_color_select (gint32         drawable_ID,
 		      guchar         red,
@@ -189,6 +310,33 @@ gimp_by_color_select (gint32         drawable_ID,
   return success;
 }
 
+/**
+ * gimp_clone:
+ * @drawable_ID: The affected drawable.
+ * @src_drawable_ID: The source drawable.
+ * @clone_type: The type of clone.
+ * @src_x: The x coordinate in the source image.
+ * @src_y: The y coordinate in the source image.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Clone from the source to the dest drawable using the current brush
+ *
+ * This tool clones (copies) from the source drawable starting at the
+ * specified source coordinates to the dest drawable. If the
+ * \"clone_type\" argument is set to PATTERN-CLONE, then the current
+ * pattern is used as the source and the \"src_drawable\" argument is
+ * ignored. Pattern cloning assumes a tileable pattern and mods the sum
+ * of the src coordinates and subsequent stroke offsets with the width
+ * and height of the pattern. For image cloning, if the sum of the src
+ * coordinates and subsequent stroke offsets exceeds the extents of the
+ * src drawable, then no paint is transferred. The clone tool is
+ * capable of transforming between any image types including
+ * RGB->Indexed--although converting from any type to indexed is
+ * significantly slower.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_clone (gint32         drawable_ID,
 	    gint32         src_drawable_ID,
@@ -220,6 +368,23 @@ gimp_clone (gint32         drawable_ID,
   return success;
 }
 
+/**
+ * gimp_clone_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Clone from the source to the dest drawable using the current brush
+ *
+ * This tool clones (copies) from the source drawable starting at the
+ * specified source coordinates to the dest drawable. This function
+ * performs exactly the same as the gimp_clone function except that the
+ * tools arguments are obtained from the clones option dialog. It this
+ * dialog has not been activated then the dialogs default values will
+ * be used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_clone_default (gint32   drawable_ID,
 		    gint     num_strokes,
@@ -243,6 +408,36 @@ gimp_clone_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_color_picker:
+ * @image_ID: The image.
+ * @drawable_ID: The affected drawable.
+ * @x: x coordinate of upper-left corner of rectangle.
+ * @y: y coordinate of upper-left corner of rectangle.
+ * @sample_merged: Use the composite image, not the drawable.
+ * @sample_average: Average the color of all the pixels in a specified radius.
+ * @average_radius: The radius of pixels to average.
+ * @save_color: Save the color to the active palette.
+ * @red:
+ * @green:
+ * @blue: The return color.
+ *
+ * Determine the color at the given drawable coordinates
+ *
+ * This tool determines the color at the specified coordinates. The
+ * returned color is an RGB triplet even for grayscale and indexed
+ * drawables. If the coordinates lie outside of the extents of the
+ * specified drawable, then an error is returned. If the drawable has
+ * an alpha channel, the algorithm examines the alpha value of the
+ * drawable at the coordinates. If the alpha value is completely
+ * transparent (0), then an error is returned. If the sample_merged
+ * parameter is non-zero, the data of the composite image will be used
+ * instead of that for the specified drawable. This is equivalent to
+ * sampling for colors after merging all visible layers. In the case of
+ * a merged sampling, the supplied drawable is ignored.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_color_picker (gint32    image_ID,
 		   gint32    drawable_ID,
@@ -286,6 +481,23 @@ gimp_color_picker (gint32    image_ID,
   return success;
 }
 
+/**
+ * gimp_convolve:
+ * @drawable_ID: The affected drawable.
+ * @pressure: The pressure.
+ * @convolve_type: Convolve type.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Convolve (Blur, Sharpen) using the current brush.
+ *
+ * This tool convolves the specified drawable with either a sharpening
+ * or blurring kernel. The pressure parameter controls the magnitude of
+ * the operation. Like the paintbrush, this tool linearly interpolates
+ * between the specified stroke coordinates.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_convolve (gint32            drawable_ID,
 	       gdouble           pressure,
@@ -313,6 +525,22 @@ gimp_convolve (gint32            drawable_ID,
   return success;
 }
 
+/**
+ * gimp_convolve_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Convolve (Blur, Sharpen) using the current brush.
+ *
+ * This tool convolves the specified drawable with either a sharpening
+ * or blurring kernel. This function performs exactly the same as the
+ * gimp_convolve function except that the tools arguments are obtained
+ * from the convolve option dialog. It this dialog has not been
+ * activated then the dialogs default values will be used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_convolve_default (gint32   drawable_ID,
 		       gint     num_strokes,
@@ -336,6 +564,25 @@ gimp_convolve_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_crop:
+ * @image_ID: The image.
+ * @new_width: New image width: (0 < new_width <= width).
+ * @new_height: New image height: (0 < new_height <= height).
+ * @offx: x offset: (0 <= offx <= (width - new_width)).
+ * @offy: y offset: (0 <= offy <= (height - new_height)).
+ *
+ * Crop the image to the specified extents.
+ *
+ * This procedure crops the image so that it's new width and height are
+ * equal to the supplied parameters. Offsets are also provided which
+ * describe the position of the previous image's content. All channels
+ * and layers within the image are cropped to the new image extents;
+ * this includes the image selection mask. If any parameters are out of
+ * range, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_crop (gint32 image_ID,
 	   gint   new_width,
@@ -363,6 +610,21 @@ gimp_crop (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_dodgeburn:
+ * @drawable_ID: The affected drawable.
+ * @exposure: The exposer of the strokes.
+ * @dodgeburn_type: The type either dodge or burn.
+ * @dodgeburn_mode: The mode.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Dodgeburn image with varying exposure.
+ *
+ * Dodgebure. More details here later.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_dodgeburn (gint32             drawable_ID,
 		gdouble            exposure,
@@ -392,6 +654,21 @@ gimp_dodgeburn (gint32             drawable_ID,
   return success;
 }
 
+/**
+ * gimp_dodgeburn_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Dodgeburn image with varying exposure. This is the same as the
+ * gimp_dodgeburn function except that the exposure, type and mode are
+ * taken from the tools option dialog. If the dialog has not been
+ * activated then the defaults as used by the dialog will be used.
+ *
+ * Dodgebure. More details here later.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_dodgeburn_default (gint32   drawable_ID,
 			gint     num_strokes,
@@ -415,6 +692,32 @@ gimp_dodgeburn_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_ellipse_select:
+ * @image_ID: The image.
+ * @x: x coordinate of upper-left corner of ellipse bounding box.
+ * @y: y coordinate of upper-left corner of ellipse bounding box.
+ * @width: The width of the ellipse.
+ * @height: The height of the ellipse.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius: Radius for feather operation.
+ *
+ * Create an elliptical selection over the specified image.
+ *
+ * This tool creates an elliptical selection over the specified image.
+ * The elliptical region can be either added to, subtracted from, or
+ * replace the contents of the previous selection mask. If antialiasing
+ * is turned on, the edges of the elliptical region will contain
+ * intermediate values which give the appearance of a sharper, less
+ * pixelized edge. This should be set as TRUE most of the time. If the
+ * feather option is enabled, the resulting selection is blurred before
+ * combining. The blur is a gaussian blur with the specified feather
+ * radius.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_ellipse_select (gint32         image_ID,
 		     gdouble        x,
@@ -450,6 +753,24 @@ gimp_ellipse_select (gint32         image_ID,
   return success;
 }
 
+/**
+ * gimp_eraser:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @hardness: %%desc%%.
+ * @method: %%desc%%.
+ *
+ * Erase using the current brush.
+ *
+ * This tool erases using the current brush mask. If the specified
+ * drawable contains an alpha channel, then the erased pixels will
+ * become transparent. Otherwise, the eraser tool replaces the contents
+ * of the drawable with the background color. Like paintbrush, this
+ * tool linearly interpolates between the specified stroke coordinates.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_eraser (gint32                    drawable_ID,
 	     gint                      num_strokes,
@@ -477,6 +798,22 @@ gimp_eraser (gint32                    drawable_ID,
   return success;
 }
 
+/**
+ * gimp_eraser_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Erase using the current brush.
+ *
+ * This tool erases using the current brush mask. This function
+ * performs exactly the same as the gimp_eraser function except that
+ * the tools arguments are obtained from the eraser option dialog. It
+ * this dialog has not been activated then the dialogs default values
+ * will be used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_eraser_default (gint32   drawable_ID,
 		     gint     num_strokes,
@@ -500,6 +837,26 @@ gimp_eraser_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_flip:
+ * @drawable_ID: The affected drawable.
+ * @flip_type: Type of flip.
+ *
+ * Flip the specified drawable about its center either vertically or
+ * horizontally.
+ *
+ * This tool flips the specified drawable if no selection exists. If a
+ * selection exists, the portion of the drawable which lies under the
+ * selection is cut from the drawable and made into a floating
+ * selection which is then flipd by the specified amount. The return
+ * value is the ID of the flipped drawable. If there was no selection,
+ * this will be equal to the drawable ID supplied as input. Otherwise,
+ * this will be the newly created and flipped drawable. The flip type
+ * parameter indicates whether the flip will be applied horizontally or
+ * vertically.
+ *
+ * Returns: The flipped drawable.
+ */
 gint32
 gimp_flip (gint32              drawable_ID,
 	   GimpOrientationType flip_type)
@@ -522,6 +879,32 @@ gimp_flip (gint32              drawable_ID,
   return ret_drawable_ID;
 }
 
+/**
+ * gimp_free_select:
+ * @image_ID: The image.
+ * @num_segs: Number of points (count 1 coordinate as two points).
+ * @segs: Array of points: { p1.x, p1.y, p2.x, p2.y, ..., pn.x, pn.y}.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius: Radius for feather operation.
+ *
+ * Create a polygonal selection over the specified image.
+ *
+ * This tool creates a polygonal selection over the specified image.
+ * The polygonal region can be either added to, subtracted from, or
+ * replace the contents of the previous selection mask. The polygon is
+ * specified through an array of floating point numbers and its length.
+ * The length of array must be 2n, where n is the number of points.
+ * Each point is defined by 2 floating point values which correspond to
+ * the x and y coordinates. If the final point does not connect to the
+ * starting point, a connecting segment is automatically added. If the
+ * feather option is enabled, the resulting selection is blurred before
+ * combining. The blur is a gaussian blur with the specified feather
+ * radius.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_free_select (gint32          image_ID,
 		  gint            num_segs,
@@ -553,6 +936,42 @@ gimp_free_select (gint32          image_ID,
   return success;
 }
 
+/**
+ * gimp_fuzzy_select:
+ * @drawable_ID: The affected drawable.
+ * @x: x coordinate of initial seed fill point: (image coordinates).
+ * @y: y coordinate of initial seed fill point: (image coordinates).
+ * @threshold: Threshold in intensity levels %%desc%%.
+ * @operation: The selection operation.
+ * @antialias: Antialiasing.
+ * @feather: Feather option for selections.
+ * @feather_radius: Radius for feather operation.
+ * @sample_merged: Use the composite image, not the drawable.
+ *
+ * Create a fuzzy selection starting at the specified coordinates on
+ * the specified drawable.
+ *
+ * This tool creates a fuzzy selection over the specified image. A
+ * fuzzy selection is determined by a seed fill under the constraints
+ * of the specified threshold. Essentially, the color at the specified
+ * coordinates (in the drawable) is measured and the selection expands
+ * outwards from that point to any adjacent pixels which are not
+ * significantly different (as determined by the threshold value). This
+ * process continues until no more expansion is possible. The
+ * antialiasing parameter allows the final selection mask to contain
+ * intermediate values based on close misses to the threshold bar at
+ * pixels along the seed fill boundary. Feathering can be enabled
+ * optionally and is controlled with the \"feather_radius\" paramter.
+ * If the sample_merged parameter is non-zero, the data of the
+ * composite image will be used instead of that for the specified
+ * drawable. This is equivalent to sampling for colors after merging
+ * all visible layers. In the case of a merged sampling, the supplied
+ * drawable is ignored. If the sample is merged, the specified
+ * coordinates are relative to the image origin; otherwise, they are
+ * relative to the drawable's origin.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_fuzzy_select (gint32         drawable_ID,
 		   gdouble        x,
@@ -588,6 +1007,31 @@ gimp_fuzzy_select (gint32         drawable_ID,
   return success;
 }
 
+/**
+ * gimp_paintbrush:
+ * @drawable_ID: The affected drawable.
+ * @fade_out: Fade out parameter.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ * @method: %%desc%%.
+ * @gradient_length: Length of gradient to draw.
+ *
+ * Paint in the current brush with optional fade out parameter and pull
+ * colors from a gradient.
+ *
+ * This tool is the standard paintbrush. It draws linearly interpolated
+ * lines through the specified stroke coordinates. It operates on the
+ * specified drawable in the foreground color with the active brush.
+ * The \"fade_out\" parameter is measured in pixels and allows the
+ * brush stroke to linearly fall off. The pressure is set to the
+ * maximum at the beginning of the stroke. As the distance of the
+ * stroke nears the fade_out value, the pressure will approach zero.
+ * The gradient_length is the distance to spread the gradient over. It
+ * is measured in pixels. If the gradient_length is 0, no gradient is
+ * used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_paintbrush (gint32                    drawable_ID,
 		 gdouble                   fade_out,
@@ -617,6 +1061,31 @@ gimp_paintbrush (gint32                    drawable_ID,
   return success;
 }
 
+/**
+ * gimp_paintbrush_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush. The fade out parameter and pull colors
+ * from a gradient parameter are set from the paintbrush options
+ * dialog. If this dialog has not been activated then the dialog
+ * defaults will be used.
+ *
+ * This tool is similar to the standard paintbrush. It draws linearly
+ * interpolated lines through the specified stroke coordinates. It
+ * operates on the specified drawable in the foreground color with the
+ * active brush. The \"fade_out\" parameter is measured in pixels and
+ * allows the brush stroke to linearly fall off (value obtained from
+ * the option dialog). The pressure is set to the maximum at the
+ * beginning of the stroke. As the distance of the stroke nears the
+ * fade_out value, the pressure will approach zero. The gradient_length
+ * (value obtained from the option dialog) is the distance to spread
+ * the gradient over. It is measured in pixels. If the gradient_length
+ * is 0, no gradient is used.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_paintbrush_default (gint32   drawable_ID,
 			 gint     num_strokes,
@@ -640,6 +1109,23 @@ gimp_paintbrush_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_pencil:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Paint in the current brush without sub-pixel sampling.
+ *
+ * This tool is the standard pencil. It draws linearly interpolated
+ * lines through the specified stroke coordinates. It operates on the
+ * specified drawable in the foreground color with the active brush.
+ * The brush mask is treated as though it contains only black and white
+ * values. Any value below half is treated as black; any above half, as
+ * white.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_pencil (gint32   drawable_ID,
 	     gint     num_strokes,
@@ -663,6 +1149,43 @@ gimp_pencil (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_perspective:
+ * @drawable_ID: The affected drawable.
+ * @interpolation: Whether to use interpolation.
+ * @x0: The new x coordinate of upper-left corner of original bounding box.
+ * @y0: The new y coordinate of upper-left corner of original bounding box.
+ * @x1: The new x coordinate of upper-right corner of original bounding box.
+ * @y1: The new y coordinate of upper-right corner of original bounding box.
+ * @x2: The new x coordinate of lower-left corner of original bounding box.
+ * @y2: The new y coordinate of lower-left corner of original bounding box.
+ * @x3: The new x coordinate of lower-right corner of original bounding box.
+ * @y3: The new y coordinate of lower-right corner of original bounding box.
+ *
+ * Perform a possibly non-affine transformation on the specified
+ * drawable.
+ *
+ * This tool performs a possibly non-affine transformation on the
+ * specified drawable by allowing the corners of the original bounding
+ * box to be arbitrarily remapped to any values. The specified drawable
+ * is remapped if no selection exists. However, if a selection exists,
+ * the portion of the drawable which lies under the selection is cut
+ * from the drawable and made into a floating selection which is then
+ * remapped as specified. The interpolation parameter can be set to
+ * TRUE to indicate that either linear or cubic interpolation should be
+ * used to smooth the resulting remapped drawable. The return value is
+ * the ID of the remapped drawable. If there was no selection, this
+ * will be equal to the drawable ID supplied as input. Otherwise, this
+ * will be the newly created and remapped drawable. The 4 coordinates
+ * specify the new locations of each corner of the original bounding
+ * box. By specifying these values, any affine transformation
+ * (rotation, scaling, translation) can be affected. Additionally,
+ * these values can be specified such that the resulting transformed
+ * drawable will appear to have been projected via a perspective
+ * transform.
+ *
+ * Returns: The newly mapped drawable.
+ */
 gint32
 gimp_perspective (gint32   drawable_ID,
 		  gboolean interpolation,
@@ -701,6 +1224,28 @@ gimp_perspective (gint32   drawable_ID,
   return ret_drawable_ID;
 }
 
+/**
+ * gimp_rect_select:
+ * @image_ID: The image.
+ * @x: x coordinate of upper-left corner of rectangle.
+ * @y: y coordinate of upper-left corner of rectangle.
+ * @width: The width of the rectangle.
+ * @height: The height of the rectangle.
+ * @operation: The selection operation.
+ * @feather: Feather option for selections.
+ * @feather_radius: Radius for feather operation.
+ *
+ * Create a rectangular selection over the specified image;
+ *
+ * This tool creates a rectangular selection over the specified image.
+ * The rectangular region can be either added to, subtracted from, or
+ * replace the contents of the previous selection mask. If the feather
+ * option is enabled, the resulting selection is blurred before
+ * combining. The blur is a gaussian blur with the specified feather
+ * radius.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_rect_select (gint32         image_ID,
 		  gdouble        x,
@@ -734,6 +1279,28 @@ gimp_rect_select (gint32         image_ID,
   return success;
 }
 
+/**
+ * gimp_rotate:
+ * @drawable_ID: The affected drawable.
+ * @interpolation: Whether to use interpolation.
+ * @angle: The angle of rotation (radians).
+ *
+ * Rotate the specified drawable about its center through the specified
+ * angle.
+ *
+ * This tool rotates the specified drawable if no selection exists. If
+ * a selection exists, the portion of the drawable which lies under the
+ * selection is cut from the drawable and made into a floating
+ * selection which is then rotated by the specified amount. The
+ * interpolation parameter can be set to TRUE to indicate that either
+ * linear or cubic interpolation should be used to smooth the resulting
+ * rotated drawable. The return value is the ID of the rotated
+ * drawable. If there was no selection, this will be equal to the
+ * drawable ID supplied as input. Otherwise, this will be the newly
+ * created and rotated drawable.
+ *
+ * Returns: The rotated drawable.
+ */
 gint32
 gimp_rotate (gint32   drawable_ID,
 	     gboolean interpolation,
@@ -758,6 +1325,30 @@ gimp_rotate (gint32   drawable_ID,
   return ret_drawable_ID;
 }
 
+/**
+ * gimp_scale:
+ * @drawable_ID: The affected drawable.
+ * @interpolation: Whether to use interpolation.
+ * @x0: The new x coordinate of upper-left corner of newly scaled region.
+ * @y0: The new y coordinate of upper-left corner of newly scaled region.
+ * @x1: The new x coordinate of lower-right corner of newly scaled region.
+ * @y1: The new y coordinate of lower-right corner of newly scaled region.
+ *
+ * Scale the specified drawable.
+ *
+ * This tool scales the specified drawable if no selection exists. If a
+ * selection exists, the portion of the drawable which lies under the
+ * selection is cut from the drawable and made into a floating
+ * selection which is then scaled by the specified amount. The
+ * interpolation parameter can be set to TRUE to indicate that either
+ * linear or cubic interpolation should be used to smooth the resulting
+ * scaled drawable. The return value is the ID of the scaled drawable.
+ * If there was no selection, this will be equal to the drawable ID
+ * supplied as input. Otherwise, this will be the newly created and
+ * scaled drawable.
+ *
+ * Returns: The scaled drawable.
+ */
 gint32
 gimp_scale (gint32   drawable_ID,
 	    gboolean interpolation,
@@ -788,6 +1379,32 @@ gimp_scale (gint32   drawable_ID,
   return ret_drawable_ID;
 }
 
+/**
+ * gimp_shear:
+ * @drawable_ID: The affected drawable.
+ * @interpolation: Whether to use interpolation.
+ * @shear_type: Type of shear.
+ * @magnitude: The magnitude of the shear.
+ *
+ * Shear the specified drawable about its center by the specified
+ * magnitude.
+ *
+ * This tool shears the specified drawable if no selection exists. If a
+ * selection exists, the portion of the drawable which lies under the
+ * selection is cut from the drawable and made into a floating
+ * selection which is then sheard by the specified amount. The
+ * interpolation parameter can be set to TRUE to indicate that either
+ * linear or cubic interpolation should be used to smooth the resulting
+ * sheared drawable. The return value is the ID of the sheard drawable.
+ * If there was no selection, this will be equal to the drawable ID
+ * supplied as input. Otherwise, this will be the newly created and
+ * sheard drawable. The shear type parameter indicates whether the
+ * shear will be applied horizontally or vertically. The magnitude can
+ * be either positive or negative and indicates the extent (in pixels)
+ * to shear by.
+ *
+ * Returns: The sheared drawable.
+ */
 gint32
 gimp_shear (gint32              drawable_ID,
 	    gboolean            interpolation,
@@ -814,6 +1431,21 @@ gimp_shear (gint32              drawable_ID,
   return ret_drawable_ID;
 }
 
+/**
+ * gimp_smudge:
+ * @drawable_ID: The affected drawable.
+ * @pressure: The pressure of the smudge strokes.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Smudge image with varying pressure.
+ *
+ * This tool simulates a smudge using the current brush. High pressure
+ * results in a greater smudge of paint while low pressure results in a
+ * lesser smudge.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_smudge (gint32   drawable_ID,
 	     gdouble  pressure,
@@ -839,6 +1471,21 @@ gimp_smudge (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_smudge_default:
+ * @drawable_ID: The affected drawable.
+ * @num_strokes: Number of stroke control points (count each coordinate as 2 points).
+ * @strokes: Array of stroke coordinates: { s1.x, s1.y, s2.x, s2.y, ..., sn.x, sn.y }.
+ *
+ * Smudge image with varying pressure.
+ *
+ * This tool simulates a smudge using the current brush. It behaves
+ * exactly the same as gimp_smudge except that the pressure value is
+ * taken from the smudge tool options or the options default if the
+ * tools option dialog has not been activated.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_smudge_default (gint32   drawable_ID,
 		     gint     num_strokes,
@@ -862,6 +1509,35 @@ gimp_smudge_default (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_transform_2d:
+ * @drawable_ID: The affected drawable.
+ * @interpolation: Whether to use interpolation.
+ * @source_x: X coordinate of the transformation center.
+ * @source_y: Y coordinate of the transformation center.
+ * @scale_x: Amount to scale in x direction.
+ * @scale_y: Amount to scale in y direction.
+ * @angle: The angle of rotation (radians).
+ * @dest_x: X coordinate of where the centre goes.
+ * @dest_y: Y coordinate of where the centre goes.
+ *
+ * Transform the specified drawable in 2d.
+ *
+ * This tool transforms the specified drawable if no selection exists.
+ * If a selection exists, the portion of the drawable which lies under
+ * the selection is cut from the drawable and made into a floating
+ * selection which is then transformed. The interpolation parameter can
+ * be set to TRUE to indicate that either linear or cubic interpolation
+ * should be used to smooth the resulting drawable. The transformation
+ * is done by scaling the image by the x and y scale factors about the
+ * point (source_x, source_y), then rotating around the same point,
+ * then translating that point to the new position (dest_x, dest_y).
+ * The return value is the ID of the rotated drawable. If there was no
+ * selection, this will be equal to the drawable ID supplied as input.
+ * Otherwise, this will be the newly created and transformed drawable.
+ *
+ * Returns: The transformed drawable.
+ */
 gint32
 gimp_transform_2d (gint32   drawable_ID,
 		   gboolean interpolation,

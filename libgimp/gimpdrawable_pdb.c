@@ -23,6 +23,20 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_drawable_merge_shadow:
+ * @drawable_ID: The drawable.
+ * @undo: Push merge to undo stack?
+ *
+ * Merge the shadow buffer with the specified drawable.
+ *
+ * This procedure combines the contents of the image's shadow buffer
+ * (for temporary processing) with the specified drawable. The \"undo\"
+ * parameter specifies whether to add an undo step for the operation.
+ * Requesting no undo is useful for such applications as 'auto-apply'.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_drawable_merge_shadow (gint32   drawable_ID,
 			    gboolean undo)
@@ -44,6 +58,25 @@ gimp_drawable_merge_shadow (gint32   drawable_ID,
   return success;
 }
 
+/**
+ * gimp_drawable_fill:
+ * @drawable_ID: The drawable.
+ * @fill_type: The type of fill.
+ *
+ * Fill the drawable with the specified fill mode.
+ *
+ * This procedure fills the drawable with the fill mode. If the fill
+ * mode is foreground the current foreground color is used. If the fill
+ * mode is background, the current background color is used. If the
+ * fill type is white, then white is used. Transparent fill only
+ * affects layers with an alpha channel, in which case the alpha
+ * channel is set to transparent. If the drawable has no alpha channel,
+ * it is filled to white. No fill leaves the drawable's contents
+ * undefined. This procedure is unlike the bucket fill tool because it
+ * fills regardless of a selection
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_drawable_fill (gint32       drawable_ID,
 		    GimpFillType fill_type)
@@ -65,6 +98,23 @@ gimp_drawable_fill (gint32       drawable_ID,
   return success;
 }
 
+/**
+ * gimp_drawable_update:
+ * @drawable_ID: The drawable.
+ * @x: x coordinate of upper left corner of update region.
+ * @y: y coordinate of upper left corner of update region.
+ * @width: Width of update region.
+ * @height: Height of update region.
+ *
+ * Update the specified region of the drawable.
+ *
+ * This procedure updates the specified region of the drawable. The (x,
+ * y) coordinate pair is relative to the drawable's origin, not to the
+ * image origin. Therefore, the entire drawable can be updated with:
+ * {x->0, y->0, w->width, h->height }.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_drawable_update (gint32 drawable_ID,
 		      gint   x,
@@ -92,6 +142,24 @@ gimp_drawable_update (gint32 drawable_ID,
   return success;
 }
 
+/**
+ * gimp_drawable_mask_bounds:
+ * @drawable_ID: The drawable.
+ * @x1: x coordinate of the upper left corner of selection bounds.
+ * @y1: y coordinate of the upper left corner of selection bounds.
+ * @x2: x coordinate of the lower right corner of selection bounds.
+ * @y2: y coordinate of the lower right corner of selection bounds.
+ *
+ * Find the bounding box of the current selection in relation to the
+ * specified drawable.
+ *
+ * This procedure returns the whether there is a selection. If there is
+ * one, the upper left and lower righthand corners of its bounding box
+ * are returned. These coordinates are specified relative to the
+ * drawable's origin, and bounded by the drawable's extents.
+ *
+ * Returns: TRUE if there is a selection.
+ */
 gboolean
 gimp_drawable_mask_bounds (gint32  drawable_ID,
 			   gint   *x1,
@@ -122,6 +190,16 @@ gimp_drawable_mask_bounds (gint32  drawable_ID,
   return non_empty;
 }
 
+/**
+ * gimp_drawable_image:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's image.
+ *
+ * This procedure returns the drawable's image.
+ *
+ * Returns: The drawable's image.
+ */
 gint32
 gimp_drawable_image (gint32 drawable_ID)
 {
@@ -142,6 +220,16 @@ gimp_drawable_image (gint32 drawable_ID)
   return image_ID;
 }
 
+/**
+ * gimp_drawable_type:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's type.
+ *
+ * This procedure returns the drawable's type.
+ *
+ * Returns: The drawable's type.
+ */
 GimpImageType
 gimp_drawable_type (gint32 drawable_ID)
 {
@@ -162,6 +250,18 @@ gimp_drawable_type (gint32 drawable_ID)
   return type;
 }
 
+/**
+ * gimp_drawable_has_alpha:
+ * @drawable_ID: The drawable.
+ *
+ * Returns non-zero if the drawable has an alpha channel.
+ *
+ * This procedure returns whether the specified drawable has an alpha
+ * channel. This can only be true for layers, and the associated type
+ * will be one of: { RGBA , GRAYA, INDEXEDA }.
+ *
+ * Returns: Does the drawable have an alpha channel?
+ */
 gboolean
 gimp_drawable_has_alpha (gint32 drawable_ID)
 {
@@ -182,6 +282,19 @@ gimp_drawable_has_alpha (gint32 drawable_ID)
   return has_alpha;
 }
 
+/**
+ * gimp_drawable_type_with_alpha:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the drawable's type with alpha.
+ *
+ * This procedure returns the drawable's type if an alpha channel were
+ * added. If the type is currently Gray, for instance, the returned
+ * type would be GrayA. If the drawable already has an alpha channel,
+ * the drawable's type is simply returned.
+ *
+ * Returns: The drawable's type with alpha.
+ */
 GimpImageType
 gimp_drawable_type_with_alpha (gint32 drawable_ID)
 {
@@ -202,6 +315,17 @@ gimp_drawable_type_with_alpha (gint32 drawable_ID)
   return type_with_alpha;
 }
 
+/**
+ * gimp_drawable_is_rgb:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is an RGB type.
+ *
+ * This procedure returns non-zero if the specified drawable is of type
+ * { RGB, RGBA }.
+ *
+ * Returns: non-zero if the drawable is an RGB type.
+ */
 gboolean
 gimp_drawable_is_rgb (gint32 drawable_ID)
 {
@@ -222,6 +346,17 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
   return color;
 }
 
+/**
+ * gimp_drawable_is_gray:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is a grayscale type.
+ *
+ * This procedure returns non-zero if the specified drawable is of type
+ * { Gray, GrayA }.
+ *
+ * Returns: non-zero if the drawable is a grayscale type.
+ */
 gboolean
 gimp_drawable_is_gray (gint32 drawable_ID)
 {
@@ -242,6 +377,17 @@ gimp_drawable_is_gray (gint32 drawable_ID)
   return gray;
 }
 
+/**
+ * gimp_drawable_is_indexed:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is an indexed type.
+ *
+ * This procedure returns non-zero if the specified drawable is of type
+ * { Indexed, IndexedA }.
+ *
+ * Returns: non-zero if the drawable is an indexed type.
+ */
 gboolean
 gimp_drawable_is_indexed (gint32 drawable_ID)
 {
@@ -262,6 +408,17 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
   return indexed;
 }
 
+/**
+ * gimp_drawable_bytes:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the bytes per pixel.
+ *
+ * This procedure returns the number of bytes per pixel (or the number
+ * of channels) for the specified drawable.
+ *
+ * Returns: Bytes per pixel.
+ */
 gint
 gimp_drawable_bytes (gint32 drawable_ID)
 {
@@ -282,6 +439,16 @@ gimp_drawable_bytes (gint32 drawable_ID)
   return bytes;
 }
 
+/**
+ * gimp_drawable_width:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the width of the drawable.
+ *
+ * This procedure returns the specified drawable's width in pixels.
+ *
+ * Returns: Width of drawable.
+ */
 gint
 gimp_drawable_width (gint32 drawable_ID)
 {
@@ -302,6 +469,16 @@ gimp_drawable_width (gint32 drawable_ID)
   return width;
 }
 
+/**
+ * gimp_drawable_height:
+ * @drawable_ID: The drawable.
+ *
+ * Returns the height of the drawable.
+ *
+ * This procedure returns the specified drawable's height in pixels.
+ *
+ * Returns: Height of drawable.
+ */
 gint
 gimp_drawable_height (gint32 drawable_ID)
 {
@@ -322,6 +499,20 @@ gimp_drawable_height (gint32 drawable_ID)
   return height;
 }
 
+/**
+ * gimp_drawable_offsets:
+ * @drawable_ID: The drawable.
+ * @offset_x: x offset of drawable.
+ * @offset_y: y offset of drawable.
+ *
+ * Returns the offsets for the drawable.
+ *
+ * This procedure returns the specified drawable's offsets. This only
+ * makes sense if the drawable is a layer since channels are anchored.
+ * The offsets of a channel will be returned as 0.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_drawable_offsets (gint32  drawable_ID,
 		       gint   *offset_x,
@@ -352,6 +543,17 @@ gimp_drawable_offsets (gint32  drawable_ID,
   return success;
 }
 
+/**
+ * gimp_drawable_is_layer:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is a layer.
+ *
+ * This procedure returns non-zero if the specified drawable is a
+ * layer.
+ *
+ * Returns: Non-zero if the drawable is a layer.
+ */
 gboolean
 gimp_drawable_is_layer (gint32 drawable_ID)
 {
@@ -372,6 +574,17 @@ gimp_drawable_is_layer (gint32 drawable_ID)
   return layer;
 }
 
+/**
+ * gimp_drawable_is_layer_mask:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is a layer mask.
+ *
+ * This procedure returns non-zero if the specified drawable is a layer
+ * mask.
+ *
+ * Returns: Non-zero if the drawable is a layer mask.
+ */
 gboolean
 gimp_drawable_is_layer_mask (gint32 drawable_ID)
 {
@@ -392,6 +605,17 @@ gimp_drawable_is_layer_mask (gint32 drawable_ID)
   return layer_mask;
 }
 
+/**
+ * gimp_drawable_is_channel:
+ * @drawable_ID: The drawable.
+ *
+ * Returns whether the drawable is a channel.
+ *
+ * This procedure returns non-zero if the specified drawable is a
+ * channel.
+ *
+ * Returns: Non-zero if the drawable is a channel.
+ */
 gboolean
 gimp_drawable_is_channel (gint32 drawable_ID)
 {
@@ -412,6 +636,27 @@ gimp_drawable_is_channel (gint32 drawable_ID)
   return channel;
 }
 
+/**
+ * _gimp_drawable_thumbnail:
+ * @drawable_ID: The drawable.
+ * @width: The thumbnail width.
+ * @height: The thumbnail height.
+ * @ret_width: The previews width.
+ * @ret_height: The previews height.
+ * @bpp: The previews bpp.
+ * @thumbnail_data_count: The number of pixels in thumbnail data.
+ * @thumbnail_data: The thumbnail data.
+ *
+ * Get a thumbnail of a drawable.
+ *
+ * This function gets data from which a thumbnail of a drawable preview
+ * can be created. Maximum x or y dimension is 128 pixels. The pixels
+ * are returned in the RGB[A] format. The bpp return value gives the
+ * number of bytes in the image. The alpha channel also returned if the
+ * drawable has one.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 _gimp_drawable_thumbnail (gint32   drawable_ID,
 			  gint     width,

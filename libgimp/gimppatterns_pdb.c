@@ -23,6 +23,24 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_patterns_get_pattern_data:
+ * @name: the pattern name (\"\" means current active pattern).
+ * @width: The pattern width.
+ * @height: The pattern height.
+ * @mask_bpp: Pattern bytes per pixel.
+ * @length: Length of pattern mask data.
+ * @mask_data: The pattern mask data.
+ *
+ * Retrieve information about the currently active pattern (including
+ * data).
+ *
+ * This procedure retrieves information about the currently active
+ * pattern. This includes the pattern name, and the pattern extents
+ * (width and height). It also returns the pattern data.
+ *
+ * Returns: The pattern name.
+ */
 gchar *
 gimp_patterns_get_pattern_data (gchar   *name,
 				gint    *width,

@@ -23,6 +23,20 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_display_new:
+ * @image_ID: The image.
+ *
+ * Create a new display for the specified image.
+ *
+ * Creates a new display for the specified image. If the image already
+ * has a display, another is added. Multiple displays are handled
+ * transparently by the GIMP. The newly created display is returned and
+ * can be subsequently destroyed with a call to 'gimp-display-delete'.
+ * This procedure only makes sense for use with the GIMP UI.
+ *
+ * Returns: The new display.
+ */
 gint32
 gimp_display_new (gint32 image_ID)
 {
@@ -43,6 +57,18 @@ gimp_display_new (gint32 image_ID)
   return display_ID;
 }
 
+/**
+ * gimp_display_delete:
+ * @display_ID: The display to delete.
+ *
+ * Delete the specified display.
+ *
+ * This procedure removes the specified display. If this is the last
+ * remaining display for the underlying image, then the image is
+ * deleted also.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_display_delete (gint32 display_ID)
 {
@@ -62,6 +88,18 @@ gimp_display_delete (gint32 display_ID)
   return success;
 }
 
+/**
+ * gimp_displays_flush:
+ *
+ * Flush all internal changes to the user interface
+ *
+ * This procedure takes no arguments and returns nothing except a
+ * success status. Its purpose is to flush all pending updates of image
+ * manipulations to the user interface. It should be called whenever
+ * appropriate.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_displays_flush (void)
 {

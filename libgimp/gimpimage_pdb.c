@@ -23,6 +23,17 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_image_list:
+ * @num_images: The number of images currently open.
+ *
+ * Returns the list of images currently open.
+ *
+ * This procedure returns the list of images currently open in the
+ * GIMP.
+ *
+ * Returns: The list of images currently open.
+ */
 gint *
 gimp_image_list (gint *num_images)
 {
@@ -49,6 +60,23 @@ gimp_image_list (gint *num_images)
   return image_ids;
 }
 
+/**
+ * gimp_image_new:
+ * @width: The width of the image.
+ * @height: The height of the image.
+ * @type: The type of image.
+ *
+ * Creates a new image with the specified width, height, and type.
+ *
+ * Creates a new image, undisplayed with the specified extents and
+ * type. A layer should be created and added before this image is
+ * displayed, or subsequent calls to 'gimp_display_new' with this image
+ * as an argument will fail. Layers can be created using the
+ * 'gimp_layer_new' commands. They can be added to an image using the
+ * 'gimp_image_add_layer' command.
+ *
+ * Returns: The ID of the newly created image.
+ */
 gint32
 gimp_image_new (gint              width,
 		gint              height,
@@ -73,6 +101,27 @@ gimp_image_new (gint              width,
   return image_ID;
 }
 
+/**
+ * gimp_image_resize:
+ * @image_ID: The image.
+ * @new_width: New image width.
+ * @new_height: New image height.
+ * @offx: x offset between upper left corner of old and new images: (new - old).
+ * @offy: y offset between upper left corner of old and new images: (new - old).
+ *
+ * Resize the image to the specified extents.
+ *
+ * This procedure resizes the image so that it's new width and height
+ * are equal to the supplied parameters. Offsets are also provided
+ * which describe the position of the previous image's content. No
+ * bounds checking is currently provided, so don't supply parameters
+ * that are out of bounds. All channels within the image are resized
+ * according to the specified parameters; this includes the image
+ * selection mask. All layers within the image are repositioned
+ * according to the specified offsets.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_resize (gint32 image_ID,
 		   gint   new_width,
@@ -100,6 +149,25 @@ gimp_image_resize (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_scale:
+ * @image_ID: The image.
+ * @new_width: New image width.
+ * @new_height: New image height.
+ *
+ * Scale the image to the specified extents.
+ *
+ * This procedure scales the image so that it's new width and height
+ * are equal to the supplied parameters. Offsets are also provided
+ * which describe the position of the previous image's content. No
+ * bounds checking is currently provided, so don't supply parameters
+ * that are out of bounds. All channels within the image are scaled
+ * according to the specified parameters; this includes the image
+ * selection mask. All layers within the image are repositioned
+ * according to the specified offsets.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_scale (gint32 image_ID,
 		  gint   new_width,
@@ -123,6 +191,21 @@ gimp_image_scale (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_delete:
+ * @image_ID: The image.
+ *
+ * Delete the specified image.
+ *
+ * If there are no displays associated with this image it will be
+ * deleted. This means that you can not delete an image through the PDB
+ * that was created by the user. If the associated display was however
+ * created through the PDB and you know the display ID, you may delete
+ * the display. Removal of the last associated display will then delete
+ * the image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_delete (gint32 image_ID)
 {
@@ -142,6 +225,18 @@ gimp_image_delete (gint32 image_ID)
   return success;
 }
 
+/**
+ * gimp_image_free_shadow:
+ * @image_ID: The image.
+ *
+ * Free the specified image's shadow data (if it exists).
+ *
+ * This procedure is intended as a memory saving device. If any shadow
+ * memory has been allocated, it will be freed automatically on a call
+ * to 'gimp_image_delete'.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_free_shadow (gint32 image_ID)
 {
@@ -161,6 +256,18 @@ gimp_image_free_shadow (gint32 image_ID)
   return success;
 }
 
+/**
+ * gimp_image_get_layers:
+ * @image_ID: The image.
+ * @num_layers: The number of layers contained in the image.
+ *
+ * Returns the list of layers contained in the specified image.
+ *
+ * This procedure returns the list of layers contained in the specified
+ * image. The order of layers is from topmost to bottommost.
+ *
+ * Returns: The list of layers contained in the image.
+ */
 gint *
 gimp_image_get_layers (gint32  image_ID,
 		       gint   *num_layers)
@@ -189,6 +296,19 @@ gimp_image_get_layers (gint32  image_ID,
   return layer_ids;
 }
 
+/**
+ * gimp_image_get_channels:
+ * @image_ID: The image.
+ * @num_channels: The number of channels contained in the image.
+ *
+ * Returns the list of channels contained in the specified image.
+ *
+ * This procedure returns the list of channels contained in the
+ * specified image. This does not include the selection mask, or layer
+ * masks. The order is from topmost to bottommost.
+ *
+ * Returns: The list of channels contained in the image.
+ */
 gint *
 gimp_image_get_channels (gint32  image_ID,
 			 gint   *num_channels)
@@ -217,6 +337,19 @@ gimp_image_get_channels (gint32  image_ID,
   return channel_ids;
 }
 
+/**
+ * gimp_image_unset_active_channel:
+ * @image_ID: The image.
+ *
+ * Unsets the active channel in the specified image.
+ *
+ * If an active channel exists, it is unset. There then exists no
+ * active channel, and if desired, one can be set through a call to
+ * 'Set Active Channel'. No error is returned in the case of no
+ * existing active channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_unset_active_channel (gint32 image_ID)
 {
@@ -236,6 +369,22 @@ gimp_image_unset_active_channel (gint32 image_ID)
   return success;
 }
 
+/**
+ * gimp_image_pick_correlate_layer:
+ * @image_ID: The image.
+ * @x: The x coordinate for the pick.
+ * @y: The y coordinate for the pick.
+ *
+ * Find the layer visible at the specified coordinates.
+ *
+ * This procedure finds the layer which is visible at the specified
+ * coordinates. Layers which do not qualify are those whose extents do
+ * not pass within the specified coordinates, or which are transparent
+ * at the specified coordinates. This procedure will return -1 if no
+ * layer is found.
+ *
+ * Returns: The layer found at the specified coordinates.
+ */
 gint32
 gimp_image_pick_correlate_layer (gint32 image_ID,
 				 gint   x,
@@ -260,6 +409,19 @@ gimp_image_pick_correlate_layer (gint32 image_ID,
   return layer_ID;
 }
 
+/**
+ * gimp_image_raise_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer to raise.
+ *
+ * Raise the specified layer in the image's layer stack
+ *
+ * This procedure raises the specified layer one step in the existing
+ * layer stack. It will not move the layer if there is no layer above
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_raise_layer (gint32 image_ID,
 			gint32 layer_ID)
@@ -281,6 +443,19 @@ gimp_image_raise_layer (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_lower_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower.
+ *
+ * Lower the specified layer in the image's layer stack
+ *
+ * This procedure lowers the specified layer one step in the existing
+ * layer stack. It will not move the layer if there is no layer below
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_lower_layer (gint32 image_ID,
 			gint32 layer_ID)
@@ -302,6 +477,19 @@ gimp_image_lower_layer (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_raise_layer_to_top:
+ * @image_ID: The image.
+ * @layer_ID: The layer to raise to top.
+ *
+ * Raise the specified layer in the image's layer stack to top of stack
+ *
+ * This procedure raises the specified layer to top of the existing
+ * layer stack. It will not move the layer if there is no layer above
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_raise_layer_to_top (gint32 image_ID,
 			       gint32 layer_ID)
@@ -323,6 +511,20 @@ gimp_image_raise_layer_to_top (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_lower_layer_to_bottom:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower to bottom.
+ *
+ * Lower the specified layer in the image's layer stack to bottom of
+ * stack
+ *
+ * This procedure lowers the specified layer to bottom of the existing
+ * layer stack. It will not move the layer if there is no layer below
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_lower_layer_to_bottom (gint32 image_ID,
 				  gint32 layer_ID)
@@ -344,6 +546,22 @@ gimp_image_lower_layer_to_bottom (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_merge_visible_layers:
+ * @image_ID: The image.
+ * @merge_type: The type of merge.
+ *
+ * Merge the visible image layers into one.
+ *
+ * This procedure combines the visible layers into a single layer using
+ * the specified merge type. A merge type of EXPAND_AS_NECESSARY
+ * expands the final layer to encompass the areas of the visible
+ * layers. A merge type of CLIP_TO_IMAGE clips the final layer to the
+ * extents of the image. A merge type of CLIP_TO_BOTTOM_LAYER clips the
+ * final layer to the size of the bottommost layer.
+ *
+ * Returns: The resulting layer.
+ */
 gint32
 gimp_image_merge_visible_layers (gint32        image_ID,
 				 GimpMergeType merge_type)
@@ -366,6 +584,24 @@ gimp_image_merge_visible_layers (gint32        image_ID,
   return layer_ID;
 }
 
+/**
+ * gimp_image_merge_down:
+ * @image_ID: The image.
+ * @merge_layer_ID: The layer to merge down from.
+ * @merge_type: The type of merge.
+ *
+ * Merge the layer passed and the first visible layer below.
+ *
+ * This procedure combines the passed layer and the first visible layer
+ * below it using the specified merge type. A merge type of
+ * EXPAND_AS_NECESSARY expands the final layer to encompass the areas
+ * of the visible layers. A merge type of CLIP_TO_IMAGE clips the final
+ * layer to the extents of the image. A merge type of
+ * CLIP_TO_BOTTOM_LAYER clips the final layer to the size of the
+ * bottommost layer.
+ *
+ * Returns: The resulting layer.
+ */
 gint32
 gimp_image_merge_down (gint32        image_ID,
 		       gint32        merge_layer_ID,
@@ -390,6 +626,19 @@ gimp_image_merge_down (gint32        image_ID,
   return layer_ID;
 }
 
+/**
+ * gimp_image_flatten:
+ * @image_ID: The image.
+ *
+ * Flatten all visible layers into a single layer. Discard all
+ * invisible layers.
+ *
+ * This procedure combines the visible layers in a manner analogous to
+ * merging with the CLIP_TO_IMAGE merge type. Non-visible layers are
+ * discarded, and the resulting image is stripped of its alpha channel.
+ *
+ * Returns: The resulting layer.
+ */
 gint32
 gimp_image_flatten (gint32 image_ID)
 {
@@ -410,6 +659,22 @@ gimp_image_flatten (gint32 image_ID)
   return layer_ID;
 }
 
+/**
+ * gimp_image_add_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ * @position: The layer position.
+ *
+ * Add the specified layer to the image.
+ *
+ * This procedure adds the specified layer to the gimage at the given
+ * position. If the position is specified as -1, then the layer is
+ * inserted at the top of the layer stack. If the layer to be added has
+ * no alpha channel, it must be added at position 0. The layer type
+ * must be compatible with the image base type.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_add_layer (gint32 image_ID,
 		      gint32 layer_ID,
@@ -433,6 +698,21 @@ gimp_image_add_layer (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_remove_layer:
+ * @image_ID: The image.
+ * @layer_ID: The layer.
+ *
+ * Remove the specified layer from the image.
+ *
+ * This procedure removes the specified layer from the image. If the
+ * layer doesn't exist, an error is returned. If there are no layers
+ * left in the image, this call will fail. If this layer is the last
+ * layer remaining, the image will become empty and have no active
+ * layer.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_remove_layer (gint32 image_ID,
 			 gint32 layer_ID)
@@ -454,6 +734,23 @@ gimp_image_remove_layer (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_add_layer_mask:
+ * @image_ID: The image.
+ * @layer_ID: The layer to receive the mask.
+ * @mask_ID: The mask to add to the layer.
+ *
+ * Add a layer mask to the specified layer.
+ *
+ * This procedure adds a layer mask to the specified layer. Layer masks
+ * serve as an additional alpha channel for a layer. This procedure
+ * will fail if a number of prerequisites aren't met. The layer cannot
+ * already have a layer mask. The specified mask must exist and have
+ * the same dimensions as the layer. Both the mask and the layer must
+ * have been created for use with the specified image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_add_layer_mask (gint32 image_ID,
 			   gint32 layer_ID,
@@ -477,6 +774,19 @@ gimp_image_add_layer_mask (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_remove_layer_mask:
+ * @image_ID: The image.
+ * @layer_ID: The layer from which to remove mask.
+ * @mode: Removal mode.
+ *
+ * Remove the specified layer mask from the layer.
+ *
+ * This procedure removes the specified layer mask from the layer. If
+ * the mask doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_remove_layer_mask (gint32            image_ID,
 			      gint32            layer_ID,
@@ -500,6 +810,19 @@ gimp_image_remove_layer_mask (gint32            image_ID,
   return success;
 }
 
+/**
+ * gimp_image_raise_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel to raise.
+ *
+ * Raise the specified channel in the image's channel stack
+ *
+ * This procedure raises the specified channel one step in the existing
+ * channel stack. It will not move the channel if there is no channel
+ * above it.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_raise_channel (gint32 image_ID,
 			  gint32 channel_ID)
@@ -521,6 +844,19 @@ gimp_image_raise_channel (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_lower_channel:
+ * @image_ID: The image.
+ * @layer_ID: The layer to lower.
+ *
+ * Lower the specified layer in the image's layer stack
+ *
+ * This procedure lowers the specified layer one step in the existing
+ * layer stack. It will not move the layer if there is no layer below
+ * it, or the layer has no alpha channel.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_lower_channel (gint32 image_ID,
 			  gint32 layer_ID)
@@ -542,6 +878,20 @@ gimp_image_lower_channel (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_add_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ * @position: The channel position.
+ *
+ * Add the specified channel to the image.
+ *
+ * This procedure adds the specified channel to the image. The position
+ * channel is not currently used, so the channel is always inserted at
+ * the top of the channel stack.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_add_channel (gint32 image_ID,
 			gint32 channel_ID,
@@ -565,6 +915,18 @@ gimp_image_add_channel (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_remove_channel:
+ * @image_ID: The image.
+ * @channel_ID: The channel.
+ *
+ * Remove the specified channel from the image.
+ *
+ * This procedure removes the specified channel from the image. If the
+ * channel doesn't exist, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_remove_channel (gint32 image_ID,
 			   gint32 channel_ID)
@@ -586,6 +948,21 @@ gimp_image_remove_channel (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_active_drawable:
+ * @image_ID: The image.
+ *
+ * Get the image's active drawable
+ *
+ * This procedure returns the ID of the image's active drawable. This
+ * can be either a layer, a channel, or a layer mask. The active
+ * drawable is specified by the active image channel. If that is -1,
+ * then by the active image layer. If the active image layer has a
+ * layer mask and the layer mask is in edit mode, then the layer mask
+ * is the active drawable.
+ *
+ * Returns: The active drawable.
+ */
 gint32
 gimp_image_active_drawable (gint32 image_ID)
 {
@@ -606,6 +983,17 @@ gimp_image_active_drawable (gint32 image_ID)
   return drawable_ID;
 }
 
+/**
+ * gimp_image_base_type:
+ * @image_ID: The image.
+ *
+ * Get the base type of the image.
+ *
+ * This procedure returns the image's base type. Layers in the image
+ * must be of this subtype, but can have an optional alpha channel.
+ *
+ * Returns: The image's base type.
+ */
 GimpImageBaseType
 gimp_image_base_type (gint32 image_ID)
 {
@@ -626,6 +1014,21 @@ gimp_image_base_type (gint32 image_ID)
   return base_type;
 }
 
+/**
+ * _gimp_image_get_cmap:
+ * @image_ID: The image.
+ * @num_bytes: Number of bytes in the colormap array.
+ *
+ * Returns the image's colormap
+ *
+ * This procedure returns an actual pointer to the image's colormap, as
+ * well as the number of bytes contained in the colormap. The actual
+ * number of colors in the transmitted colormap will be \"num_bytes\" /
+ * 3. If the image is not of base type INDEXED, this pointer will be
+ * NULL.
+ *
+ * Returns: The image's colormap.
+ */
 guint8 *
 _gimp_image_get_cmap (gint32  image_ID,
 		      gint   *num_bytes)
@@ -654,6 +1057,22 @@ _gimp_image_get_cmap (gint32  image_ID,
   return cmap;
 }
 
+/**
+ * _gimp_image_set_cmap:
+ * @image_ID: The image.
+ * @num_bytes: Number of bytes in the colormap array.
+ * @cmap: The new colormap values.
+ *
+ * Sets the entries in the image's colormap.
+ *
+ * This procedure sets the entries in the specified image's colormap.
+ * The number of entries is specified by the \"num_bytes\" parameter
+ * and corresponds to the number of INT8 triples that must be contained
+ * in the \"cmap\" array. The actual number of colors in the
+ * transmitted colormap is \"num_bytes\" / 3.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 _gimp_image_set_cmap (gint32  image_ID,
 		      gint    num_bytes,
@@ -677,6 +1096,19 @@ _gimp_image_set_cmap (gint32  image_ID,
   return success;
 }
 
+/**
+ * gimp_image_undo_is_enabled:
+ * @image_ID: The image.
+ *
+ * Check if the image's undo stack is enabled.
+ *
+ * This procedure checks if the image's undo stack is currently enabled
+ * or disabled. This is useful when several plugins or scripts call
+ * each other and want to check if their caller has already used
+ * 'gimp_image_undo_disable' or 'gimp_image_undo_freeze'.
+ *
+ * Returns: True if undo is enabled for this image.
+ */
 gboolean
 gimp_image_undo_is_enabled (gint32 image_ID)
 {
@@ -697,6 +1129,19 @@ gimp_image_undo_is_enabled (gint32 image_ID)
   return enabled;
 }
 
+/**
+ * gimp_image_undo_enable:
+ * @image_ID: The image.
+ *
+ * Enable the image's undo stack.
+ *
+ * This procedure enables the image's undo stack, allowing subsequent
+ * operations to store their undo steps. This is generally called in
+ * conjunction with 'gimp_image_undo_disable' to temporarily disable an
+ * image undo stack.
+ *
+ * Returns: True if the image undo has been enabled.
+ */
 gboolean
 gimp_image_undo_enable (gint32 image_ID)
 {
@@ -717,6 +1162,20 @@ gimp_image_undo_enable (gint32 image_ID)
   return enabled;
 }
 
+/**
+ * gimp_image_undo_disable:
+ * @image_ID: The image.
+ *
+ * Disable the image's undo stack.
+ *
+ * This procedure disables the image's undo stack, allowing subsequent
+ * operations to ignore their undo steps. This is generally called in
+ * conjunction with 'gimp_image_undo_enable' to temporarily disable an
+ * image undo stack. This is advantageous because saving undo steps can
+ * be time and memory intensive.
+ *
+ * Returns: True if the image undo has been disabled.
+ */
 gboolean
 gimp_image_undo_disable (gint32 image_ID)
 {
@@ -737,6 +1196,25 @@ gimp_image_undo_disable (gint32 image_ID)
   return disabled;
 }
 
+/**
+ * gimp_image_undo_freeze:
+ * @image_ID: The image.
+ *
+ * Freeze the image's undo stack.
+ *
+ * This procedure freezes the image's undo stack, allowing subsequent
+ * operations to ignore their undo steps. This is generally called in
+ * conjunction with 'gimp_image_undo_thaw' to temporarily disable an
+ * image undo stack. This is advantageous because saving undo steps can
+ * be time and memory intensive. 'gimp_image_undo_{freeze,thaw}' and
+ * 'gimp_image_undo_{disable,enable}' differ in that the former does
+ * not free up all undo steps when undo is thawed, so is more suited to
+ * interactive in-situ previews. It is important in this case that the
+ * image is back to the same state it was frozen in before thawing,
+ * else 'undo' behaviour is undefined.
+ *
+ * Returns: True if the image undo has been frozen.
+ */
 gboolean
 gimp_image_undo_freeze (gint32 image_ID)
 {
@@ -757,6 +1235,25 @@ gimp_image_undo_freeze (gint32 image_ID)
   return frozen;
 }
 
+/**
+ * gimp_image_undo_thaw:
+ * @image_ID: The image.
+ *
+ * Thaw the image's undo stack.
+ *
+ * This procedure thaws the image's undo stack, allowing subsequent
+ * operations to store their undo steps. This is generally called in
+ * conjunction with 'gimp_image_undo_freeze' to temporarily freeze an
+ * image undo stack. 'gimp_image_undo_thaw' does NOT free the undo
+ * stack as 'gimp_image_undo_enable' does, so is suited for situations
+ * where one wishes to leave the undo stack in the same state in which
+ * one found it despite non-destructively playing with the image in the
+ * meantime. An example would be in-situ plugin previews. Balancing
+ * freezes and thaws and ensuring image consistancy is the
+ * responsibility of the caller.
+ *
+ * Returns: True if the image undo has been thawed.
+ */
 gboolean
 gimp_image_undo_thaw (gint32 image_ID)
 {
@@ -777,6 +1274,20 @@ gimp_image_undo_thaw (gint32 image_ID)
   return thawed;
 }
 
+/**
+ * gimp_image_clean_all:
+ * @image_ID: The image.
+ *
+ * Set the image dirty count to 0.
+ *
+ * This procedure sets the specified image's dirty count to 0, allowing
+ * operations to occur without having a 'dirtied' image. This is
+ * especially useful for creating and loading images which should not
+ * initially be considered dirty, even though layers must be created,
+ * filled, and installed in the image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_clean_all (gint32 image_ID)
 {
@@ -796,6 +1307,17 @@ gimp_image_clean_all (gint32 image_ID)
   return success;
 }
 
+/**
+ * gimp_image_floating_selection:
+ * @image_ID: The image.
+ *
+ * Return the floating selection of the image.
+ *
+ * This procedure returns the image's floating_sel, if it exists. If it
+ * doesn't exist, -1 is returned as the layer ID.
+ *
+ * Returns: The image's floating selection.
+ */
 gint32
 gimp_image_floating_selection (gint32 image_ID)
 {
@@ -816,6 +1338,18 @@ gimp_image_floating_selection (gint32 image_ID)
   return floating_sel_ID;
 }
 
+/**
+ * gimp_image_floating_sel_attached_to:
+ * @image_ID: The image.
+ *
+ * Return the drawable the floating selection is attached to.
+ *
+ * This procedure returns the drawable the image's floating selection
+ * is attached to, if it exists. If it doesn't exist, -1 is returned as
+ * the drawable ID.
+ *
+ * Returns: The drawable the floating selection is attached to.
+ */
 gint32
 gimp_image_floating_sel_attached_to (gint32 image_ID)
 {
@@ -836,6 +1370,27 @@ gimp_image_floating_sel_attached_to (gint32 image_ID)
   return drawable_ID;
 }
 
+/**
+ * _gimp_image_thumbnail:
+ * @image_ID: The image.
+ * @width: The thumbnail width.
+ * @height: The thumbnail height.
+ * @ret_width: The previews width.
+ * @ret_height: The previews height.
+ * @bpp: The previews bpp.
+ * @thumbnail_data_count: The number of bytes in thumbnail data.
+ * @thumbnail_data: The thumbnail data.
+ *
+ * Get a thumbnail of an image.
+ *
+ * This function gets data from which a thumbnail of an image preview
+ * can be created. Maximum x or y dimension is 128 pixels. The pixles
+ * are returned in the RGB[A] format. The bpp return value gives the
+ * number of bytes in the image. The alpha channel also returned if the
+ * image has one.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 _gimp_image_thumbnail (gint32   image_ID,
 		       gint     width,
@@ -881,6 +1436,28 @@ _gimp_image_thumbnail (gint32   image_ID,
   return success;
 }
 
+/**
+ * gimp_image_set_tattoo_state:
+ * @image_ID: The image.
+ * @tattoo: The new tattoo state of the image.
+ *
+ * Set the tattoo state associated with the image.
+ *
+ * This procedure sets the tattoo state of the image. Use only by
+ * save/load plugins that wish to preserve an images tattoo state.
+ * Using this function at other times will produce unexpected results.
+ * A full check of uniqueness of states in layers, channels and paths
+ * will be performed by this procedure and a execution failure will be
+ * returned if this fails. A failure will also be returned if the new
+ * tattoo state value is less than the maximum tattoo value from all of
+ * the tattoos from the paths,layers and channels. After the image data
+ * has been loaded and all the tattoos have been set then this is the
+ * last procedure that should be called. If effectively does a status
+ * check on the tattoo values that have been set to make sure that all
+ * is OK.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_tattoo_state (gint32 image_ID,
 			     gint   tattoo)
@@ -902,6 +1479,18 @@ gimp_image_set_tattoo_state (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_tattoo_state:
+ * @image_ID: The image.
+ *
+ * Returns the tattoo state associated with the image.
+ *
+ * This procedure returns the tattoo state of the image. Use only by
+ * save/load plugins that wish to preserve an images tattoo state.
+ * Using this function at other times will produce unexpected results.
+ *
+ * Returns: The tattoo state associated with the image.
+ */
 gint
 gimp_image_get_tattoo_state (gint32 image_ID)
 {
@@ -922,6 +1511,17 @@ gimp_image_get_tattoo_state (gint32 image_ID)
   return tattoo;
 }
 
+/**
+ * gimp_image_width:
+ * @image_ID: The image.
+ *
+ * Return the width of the image
+ *
+ * This procedure returns the image's width. This value is independent
+ * of any of the layers in this image. This is the \"canvas\" width.
+ *
+ * Returns: The image's width.
+ */
 gint
 gimp_image_width (gint32 image_ID)
 {
@@ -942,6 +1542,17 @@ gimp_image_width (gint32 image_ID)
   return width;
 }
 
+/**
+ * gimp_image_height:
+ * @image_ID: The image.
+ *
+ * Return the height of the image
+ *
+ * This procedure returns the image's width. This value is independent
+ * of any of the layers in this image. This is the \"canvas\" height.
+ *
+ * Returns: The image's height.
+ */
 gint
 gimp_image_height (gint32 image_ID)
 {
@@ -962,6 +1573,18 @@ gimp_image_height (gint32 image_ID)
   return height;
 }
 
+/**
+ * gimp_image_get_active_layer:
+ * @image_ID: The image.
+ *
+ * Returns if the specified image's active layer.
+ *
+ * If there is an active layer, its ID will be returned, otherwise, -1.
+ * If a channel is currently active, then no layer will be. If a layer
+ * mask is active, then this will return the associated layer.
+ *
+ * Returns: The active layer.
+ */
 gint32
 gimp_image_get_active_layer (gint32 image_ID)
 {
@@ -982,6 +1605,20 @@ gimp_image_get_active_layer (gint32 image_ID)
   return active_layer_ID;
 }
 
+/**
+ * gimp_image_set_active_layer:
+ * @image_ID: The image.
+ * @active_layer_ID: The new image active layer.
+ *
+ * Sets if the specified image's active layer.
+ *
+ * If the layer exists, it is set as the active layer in the image. Any
+ * previous active layer or channel is set to inactive. An exception is
+ * a previously existing floating selection, in which case this
+ * procedure will return an execution error.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_active_layer (gint32 image_ID,
 			     gint32 active_layer_ID)
@@ -1003,6 +1640,17 @@ gimp_image_set_active_layer (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_active_channel:
+ * @image_ID: The image.
+ *
+ * Returns if the specified image's active channel.
+ *
+ * If there is an active channel, this will return the channel ID,
+ * otherwise, -1.
+ *
+ * Returns: The active channel.
+ */
 gint32
 gimp_image_get_active_channel (gint32 image_ID)
 {
@@ -1023,6 +1671,20 @@ gimp_image_get_active_channel (gint32 image_ID)
   return active_channel_ID;
 }
 
+/**
+ * gimp_image_set_active_channel:
+ * @image_ID: The image.
+ * @active_channel_ID: The new image active channel.
+ *
+ * Sets if the specified image's active channel.
+ *
+ * If the channel exists, it is set as the active channel in the image.
+ * Any previous active channel or channel is set to inactive. An
+ * exception is a previously existing floating selection, in which case
+ * this procedure will return an execution error.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_active_channel (gint32 image_ID,
 			       gint32 active_channel_ID)
@@ -1044,6 +1706,17 @@ gimp_image_set_active_channel (gint32 image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_selection:
+ * @image_ID: The image.
+ *
+ * Returns if the specified image's selection.
+ *
+ * This will always return a valid ID for a selection--which is
+ * represented as a channel internally.
+ *
+ * Returns: The selection channel.
+ */
 gint32
 gimp_image_get_selection (gint32 image_ID)
 {
@@ -1064,6 +1737,20 @@ gimp_image_get_selection (gint32 image_ID)
   return selection_ID;
 }
 
+/**
+ * gimp_image_get_component_active:
+ * @image_ID: The image.
+ * @component: The image component.
+ *
+ * Returns if the specified image's image component is active.
+ *
+ * This procedure returns if the specified image's image component
+ * (i.e. Red, Green, Blue intensity channels in an RGB image) is active
+ * or inactive--whether or not it can be modified. If the specified
+ * component is not valid for the image type, an error is returned.
+ *
+ * Returns: Component is active.
+ */
 gboolean
 gimp_image_get_component_active (gint32          image_ID,
 				 GimpChannelType component)
@@ -1086,6 +1773,21 @@ gimp_image_get_component_active (gint32          image_ID,
   return active;
 }
 
+/**
+ * gimp_image_set_component_active:
+ * @image_ID: The image.
+ * @component: The image component.
+ * @active: Component is active.
+ *
+ * Sets if the specified image's image component is active.
+ *
+ * This procedure sets if the specified image's image component (i.e.
+ * Red, Green, Blue intensity channels in an RGB image) is active or
+ * inactive--whether or not it can be modified. If the specified
+ * component is not valid for the image type, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_component_active (gint32          image_ID,
 				 GimpChannelType component,
@@ -1109,6 +1811,21 @@ gimp_image_set_component_active (gint32          image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_component_visible:
+ * @image_ID: The image.
+ * @component: The image component.
+ *
+ * Returns if the specified image's image component is visible.
+ *
+ * This procedure returns if the specified image's image component
+ * (i.e. Red, Green, Blue intensity channels in an RGB image) is
+ * visible or invisible--whether or not it can be seen. If the
+ * specified component is not valid for the image type, an error is
+ * returned.
+ *
+ * Returns: Component is visible.
+ */
 gboolean
 gimp_image_get_component_visible (gint32          image_ID,
 				  GimpChannelType component)
@@ -1131,6 +1848,21 @@ gimp_image_get_component_visible (gint32          image_ID,
   return visible;
 }
 
+/**
+ * gimp_image_set_component_visible:
+ * @image_ID: The image.
+ * @component: The image component.
+ * @visible: Component is visible.
+ *
+ * Sets if the specified image's image component is visible.
+ *
+ * This procedure sets if the specified image's image component (i.e.
+ * Red, Green, Blue intensity channels in an RGB image) is visible or
+ * invisible--whether or not it can be seen. If the specified component
+ * is not valid for the image type, an error is returned.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_component_visible (gint32          image_ID,
 				  GimpChannelType component,
@@ -1154,6 +1886,17 @@ gimp_image_set_component_visible (gint32          image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_filename:
+ * @image_ID: The image.
+ *
+ * Returns if the specified image's filename.
+ *
+ * This procedure returns if the specified image's filename--if it was
+ * loaded or has since been saved. Otherwise, returns NULL.
+ *
+ * Returns: The filename.
+ */
 gchar *
 gimp_image_get_filename (gint32 image_ID)
 {
@@ -1174,6 +1917,17 @@ gimp_image_get_filename (gint32 image_ID)
   return filename;
 }
 
+/**
+ * gimp_image_set_filename:
+ * @image_ID: The image.
+ * @filename: The new image filename.
+ *
+ * Sets if the specified image's filename.
+ *
+ * This procedure sets if the specified image's filename.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_filename (gint32  image_ID,
 			 gchar  *filename)
@@ -1195,6 +1949,20 @@ gimp_image_set_filename (gint32  image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_resolution:
+ * @image_ID: The image.
+ * @xresolution: The resolutionin the x-axis, in dots per inch.
+ * @yresolution: The resolutionin the y-axis, in dots per inch.
+ *
+ * Returns if the specified image's resolution.
+ *
+ * This procedure returns if the specified image's resolution in dots
+ * per inch. This value is independent of any of the layers in this
+ * image.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_get_resolution (gint32   image_ID,
 			   gdouble *xresolution,
@@ -1225,6 +1993,20 @@ gimp_image_get_resolution (gint32   image_ID,
   return success;
 }
 
+/**
+ * gimp_image_set_resolution:
+ * @image_ID: The image.
+ * @xresolution: The new image resolution in the x-axis, in dots per inch.
+ * @yresolution: The new image resolution in the y-axis, in dots per inch.
+ *
+ * Sets if the specified image's resolution.
+ *
+ * This procedure sets if the specified image's resolution in dots per
+ * inch. This value is independent of any of the layers in this image.
+ * No scaling or resizing is performed.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_resolution (gint32  image_ID,
 			   gdouble xresolution,
@@ -1248,6 +2030,19 @@ gimp_image_set_resolution (gint32  image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_unit:
+ * @image_ID: The image.
+ *
+ * Returns if the specified image's unit.
+ *
+ * This procedure returns if the specified image's unit. This value is
+ * independent of any of the layers in this image. See the gimp_unit_*
+ * procedure definitions for the valid range of unit IDs and a
+ * description of the unit system.
+ *
+ * Returns: The unit.
+ */
 GimpUnit
 gimp_image_get_unit (gint32 image_ID)
 {
@@ -1268,6 +2063,20 @@ gimp_image_get_unit (gint32 image_ID)
   return unit;
 }
 
+/**
+ * gimp_image_set_unit:
+ * @image_ID: The image.
+ * @unit: The new image unit.
+ *
+ * Sets if the specified image's unit.
+ *
+ * This procedure sets if the specified image's unit. No scaling or
+ * resizing is performed. This value is independent of any of the
+ * layers in this image. See the gimp_unit_* procedure definitions for
+ * the valid range of unit IDs and a description of the unit system.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_image_set_unit (gint32   image_ID,
 		     GimpUnit unit)
@@ -1289,6 +2098,18 @@ gimp_image_set_unit (gint32   image_ID,
   return success;
 }
 
+/**
+ * gimp_image_get_layer_by_tattoo:
+ * @image_ID: The image.
+ * @tattoo: The tattoo of the layer to find.
+ *
+ * Find a layer with a given tattoo in an image.
+ *
+ * This procedure returns the layer with the given tattoo in the
+ * specified image.
+ *
+ * Returns: The layer with the specified tattoo.
+ */
 gint32
 gimp_image_get_layer_by_tattoo (gint32 image_ID,
 				gint   tattoo)
@@ -1311,6 +2132,18 @@ gimp_image_get_layer_by_tattoo (gint32 image_ID,
   return layer_ID;
 }
 
+/**
+ * gimp_image_get_channel_by_tattoo:
+ * @image_ID: The image.
+ * @tattoo: The tattoo of the channel to find.
+ *
+ * Find a channel with a given tattoo in an image.
+ *
+ * This procedure returns the channel with the given tattoo in the
+ * specified image.
+ *
+ * Returns: The channel with the specified tattoo.
+ */
 gint32
 gimp_image_get_channel_by_tattoo (gint32 image_ID,
 				  gint   tattoo)

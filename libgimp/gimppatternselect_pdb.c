@@ -23,6 +23,18 @@
 
 #include "gimp.h"
 
+/**
+ * gimp_patterns_popup:
+ * @pattern_callback: The callback PDB proc to call when pattern selection is made.
+ * @popup_title: Title to give the pattern popup window.
+ * @initial_pattern: The name of the pattern to set as the first selected.
+ *
+ * Invokes the Gimp pattern selection.
+ *
+ * This procedure popups the pattern selection dialog.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_patterns_popup (gchar *pattern_callback,
 		     gchar *popup_title,
@@ -46,6 +58,16 @@ gimp_patterns_popup (gchar *pattern_callback,
   return success;
 }
 
+/**
+ * gimp_patterns_close_popup:
+ * @pattern_callback: The name of the callback registered for this popup.
+ *
+ * Popdown the Gimp pattern selection.
+ *
+ * This procedure closes an opened pattern selection dialog.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_patterns_close_popup (gchar *pattern_callback)
 {
@@ -65,6 +87,17 @@ gimp_patterns_close_popup (gchar *pattern_callback)
   return success;
 }
 
+/**
+ * gimp_patterns_set_popup:
+ * @pattern_callback: The name of the callback registered for this popup.
+ * @pattern_name: The name of the pattern to set as selected.
+ *
+ * Sets the current pattern selection in a popup.
+ *
+ * Sets the current pattern selection in a popup.
+ *
+ * Returns: TRUE on success.
+ */
 gboolean
 gimp_patterns_set_popup (gchar *pattern_callback,
 			 gchar *pattern_name)
