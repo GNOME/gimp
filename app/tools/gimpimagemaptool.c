@@ -363,9 +363,7 @@ static gboolean
 gimp_image_tool_settings_load (GimpImageMapTool *tool,
                                gpointer          file)
 {
-  GimpImageMapToolClass *tool_class;
-
-  tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
   g_return_val_if_fail (tool_class->settings_load != NULL, FALSE);
 
@@ -382,9 +380,7 @@ static gboolean
 gimp_image_tool_settings_save (GimpImageMapTool *tool,
                                gpointer          file)
 {
-  GimpImageMapToolClass *tool_class;
-
-  tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
+  GimpImageMapToolClass *tool_class = GIMP_IMAGE_MAP_TOOL_GET_CLASS (tool);
 
   g_return_val_if_fail (tool_class->settings_save != NULL, FALSE);
 
@@ -530,8 +526,7 @@ settings_dialog_response (GtkWidget        *dialog,
                           gint              response_id,
                           GimpImageMapTool *tool)
 {
-  GimpImageMapOptions *options;
-  gboolean             save;
+  gboolean save;
 
   save = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (dialog), "save"));
 
@@ -554,10 +549,9 @@ settings_dialog_response (GtkWidget        *dialog,
           return;
         }
 
-      options = GIMP_IMAGE_MAP_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
-
-      g_free (options->settings);
-      options->settings = g_strdup (filename);
+      g_object_set (GIMP_TOOL (tool)->tool_info->tool_options,
+                    "settings", filename,
+                    NULL);
 
       if (save)
         {

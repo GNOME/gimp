@@ -498,7 +498,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (hbox);
 
   /*  low input spin  */
-  hbox2 = gtk_hbox_new (FALSE, 0);
+  hbox2 = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
@@ -533,7 +533,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
                     tool);
 
   /*  high input spin  */
-  hbox2 = gtk_hbox_new (FALSE, 0);
+  hbox2 = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_end (GTK_BOX (hbox), hbox2, FALSE, FALSE, 0);
   gtk_widget_show (hbox2);
 
