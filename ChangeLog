@@ -1,3 +1,10 @@
+Sat Feb 12 03:14:02 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpchainbutton.c: documenation and code cleanup
+
+	* app/gimpparasite.h
+	* libgimp/parasite.[ch]: use g* types
+
 Mon Feb  7 17:37:40 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 
 	* app/menus.c: Move Help as per gimp-devel. Try it and report back

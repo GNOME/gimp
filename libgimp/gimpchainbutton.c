@@ -18,7 +18,6 @@
  */
 
 #include "gimpchainbutton.h"
-
 #include "pixmaps/chain.xpm"
 
 static gchar **gimp_chain_xpm[] =
@@ -34,8 +33,8 @@ static gchar **gimp_chain_broken_xpm[] =
 };
 
 static void gimp_chain_button_destroy          (GtkObject       *object);
-static void gimp_chain_button_realize_callback (GtkWidget       *widget,
-						GimpChainButton *gcb);
+static void gimp_chain_button_realize          (GtkWidget       *widget);
+
 static void gimp_chain_button_clicked_callback (GtkWidget       *widget,
 						GimpChainButton *gcb);
 static void gimp_chain_button_draw_lines       (GtkWidget       *widget,
@@ -69,12 +68,16 @@ static void
 gimp_chain_button_class_init (GimpChainButtonClass *class)
 {
   GtkObjectClass *object_class;
+  GtkWidgetClass *widget_class;
 
   object_class = (GtkObjectClass*) class;
+  widget_class = (GtkWidgetClass *) class;
 
   parent_class = gtk_type_class (gtk_table_get_type ());
 
   object_class->destroy = gimp_chain_button_destroy;
+
+  widget_class->realize = gimp_chain_button_realize;
 }
 
 static void
@@ -93,12 +96,6 @@ gimp_chain_button_init (GimpChainButton *gcb)
 
   gtk_signal_connect (GTK_OBJECT(gcb->button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_chain_button_clicked_callback), gcb);
-  /* That's all we do here, since setting the pixmaps won't work before 
-     the parent window is realized.
-     We connect to the realized-signal instead and do the rest there. */
-  gtk_signal_connect (GTK_OBJECT (gcb), "realize",
-		      GTK_SIGNAL_FUNC (gimp_chain_button_realize_callback),
-		      gcb);
   gtk_signal_connect (GTK_OBJECT (gcb->line1), "expose_event",
 		      GTK_SIGNAL_FUNC (gimp_chain_button_draw_lines),
 		      gcb);
@@ -132,7 +129,23 @@ gimp_chain_button_get_type (void)
   return gcb_type;
 }
 
-
+/**
+ * gimp_chain_button_new:
+ * @position: The position you are going to use for the button
+ *            with respect to the widgets you want to chain.
+ * 
+ * Creates a new #GimpChainButton widget. This returns a button
+ * showing either a broken or a linked chain and small clamps
+ * attached to both sides that visually group the two widgets 
+ * you want to connect. This widget looks best when attached
+ * to a table taking up two columns (or rows respectively) next
+ * to the widgets that it is supposed to connect. It may work
+ * for more than two widgets, but the look is optimized for two.
+ *
+ * Returns: Pointer to the new #GimpChainButton, which is inactive
+ *          by default. Use gimp_chain_button_set_active() to 
+ *          change its state.
+ */
 GtkWidget *
 gimp_chain_button_new (GimpChainPosition position)
 {
@@ -166,23 +179,70 @@ gimp_chain_button_new (GimpChainPosition position)
   return GTK_WIDGET (gcb);
 }
 
-static void
-gimp_chain_button_realize_callback (GtkWidget       *widget,
-				    GimpChainButton *gcb)
+/** 
+ * gimp_chain_button_set_active:
+ * @gcb: Pointer to a #GimpChainButton.
+ * @is_active: The new state.
+ * 
+ * Sets the state of the #GimpChainButton to be either locked (TRUE) or 
+ * unlocked (FALSE) and changes the showed pixmap to reflect the new state.
+ */
+void       
+gimp_chain_button_set_active (GimpChainButton  *gcb,
+			      gboolean          is_active)
 {
-  GtkStyle  *style;
-  GtkWidget *parent;
+  g_return_if_fail (gcb != NULL);
+  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
-  parent = GTK_WIDGET (gcb)->parent;
-  if (!GTK_WIDGET_REALIZED (parent))
-    return;
+  if (gcb->active != is_active)
+    {
+      gcb->active = is_active;
+ 
+     if (!GTK_WIDGET_REALIZED (GTK_WIDGET (gcb)))
+	return;
 
-  style = gtk_widget_get_style (parent);
-  gcb->chain = gdk_pixmap_create_from_xpm_d (parent->window,
+     if (gcb->active)
+       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
+     else
+       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
+    }
+}
+
+/**
+ * gimp_chain_button_get_active
+ * @gcb: Pointer to a #GimpChainButton.
+ * 
+ * Checks the state of the #GimpChainButton. 
+ *
+ * Returns: TRUE if the #GimpChainButton is active (locked).
+ */
+gboolean   
+gimp_chain_button_get_active (GimpChainButton *gcb)
+{
+  g_return_val_if_fail (gcb != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (gcb), FALSE);
+
+  return gcb->active;
+}
+
+
+static void
+gimp_chain_button_realize (GtkWidget *widget)
+{
+  GimpChainButton *gcb;
+  GtkStyle *style;
+
+  gcb = GIMP_CHAIN_BUTTON (widget);
+
+  if (GTK_WIDGET_CLASS (parent_class)->realize)
+    (* GTK_WIDGET_CLASS (parent_class)->realize) (widget);
+
+  style = gtk_widget_get_style (widget);
+  gcb->chain = gdk_pixmap_create_from_xpm_d (widget->window,
 					     &gcb->chain_mask,
 					     &style->bg[GTK_STATE_NORMAL],
 					     gimp_chain_xpm[gcb->position % 2]);
-  gcb->broken = gdk_pixmap_create_from_xpm_d (parent->window,
+  gcb->broken = gdk_pixmap_create_from_xpm_d (widget->window,
 					      &gcb->broken_mask,
 					      &style->bg[GTK_STATE_NORMAL],
 					      gimp_chain_broken_xpm[gcb->position % 2]);
@@ -297,34 +357,4 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
 		    points,
 		    3,
 		    FALSE);
-}
-
-void       
-gimp_chain_button_set_active (GimpChainButton  *gcb,
-			      gboolean          is_active)
-{
-  g_return_if_fail (gcb != NULL);
-  g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
-
-  if (gcb->active != is_active)
-    {
-      gcb->active = is_active;
- 
-     if (!GTK_WIDGET_REALIZED (GTK_WIDGET (gcb)))
-	return;
-
-     if (gcb->active)
-       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->chain, gcb->chain_mask);
-     else
-       gtk_pixmap_set (GTK_PIXMAP(gcb->pixmap), gcb->broken, gcb->broken_mask);
-    }
-}
-
-gboolean   
-gimp_chain_button_get_active (GimpChainButton *gcb)
-{
-  g_return_val_if_fail (gcb != NULL, FALSE);
-  g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (gcb), FALSE);
-
-  return gcb->active;
 }

@@ -22,7 +22,8 @@
 
 #include <glib.h>
 #include <stdio.h>
-#include <libgimp/parasiteF.h>
+
+#include "libgimp/parasiteF.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -39,23 +40,27 @@ extern "C" {
 #define PARASITE_GRANDPARENT_PERSISTENT (PARASITE_PERSISTENT << 16)
 #define PARASITE_GRANDPARENT_UNDOABLE (PARASITE_UNDOABLE << 16)
 
-Parasite   *parasite_new      (const char *name, guint32 flags,
-			       guint32 size, const void *data);
-void        parasite_free     (Parasite *parasite);
+Parasite    *parasite_new           (const gchar    *name, 
+				     guint32         flags,
+				     guint32         size, 
+				     const gpointer  data);
+void         parasite_free          (Parasite       *parasite);
+  
+Parasite    *parasite_copy          (const Parasite *parasite);
 
-Parasite   *parasite_copy     (const Parasite *parasite);
+gboolean     parasite_compare       (const Parasite *a, 
+				     const Parasite *b);
 
-int         parasite_compare  (const Parasite *a, const Parasite *b);
-
-int         parasite_is_type       (const Parasite *parasite,
-				    const char *name);
-int         parasite_is_persistent (const Parasite *p);
-int         parasite_is_undoable   (const Parasite *p);
-int         parasite_has_flag      (const Parasite *p, gulong flag);
-gulong      parasite_flags         (const Parasite *p);
-const char *parasite_name          (const Parasite *p);
-void       *parasite_data          (const Parasite *p);
-long        parasite_data_size     (const Parasite *p);
+gboolean     parasite_is_type       (const Parasite *parasite,
+				     const gchar    *name);
+gboolean     parasite_is_persistent (const Parasite *p);
+gboolean     parasite_is_undoable   (const Parasite *p);
+gboolean     parasite_has_flag      (const Parasite *p, 
+				     gulong          flag);
+gulong       parasite_flags         (const Parasite *p);
+const gchar *parasite_name          (const Parasite *p);
+void        *parasite_data          (const Parasite *p);
+glong        parasite_data_size     (const Parasite *p);
 
 
 

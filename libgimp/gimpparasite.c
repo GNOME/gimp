@@ -37,10 +37,10 @@ static void
 parasite_print (Parasite *p)
 {
   if (p == NULL)
-  {
-    printf("(pid %d)attempt to print a null parasite\n", getpid());
-    return;
-  }
+    {
+      printf("(pid %d)attempt to print a null parasite\n", getpid());
+      return;
+    }
   printf("(pid %d), parasite: %p\n", getpid(), p);
   if (p->name)
     printf("\tname: %s\n", p->name);
@@ -54,10 +54,10 @@ parasite_print (Parasite *p)
 #endif
 
 Parasite *
-parasite_new (const char *name, 
-	      guint32     flags,
-	      guint32     size, 
-	      const void *data)
+parasite_new (const gchar    *name, 
+	      guint32         flags,
+	      guint32         size, 
+	      const gpointer  data)
 {
   Parasite *p;
   p = g_new (Parasite, 1);
@@ -91,7 +91,7 @@ parasite_free (Parasite *parasite)
 
 int
 parasite_is_type (const Parasite *parasite, 
-		  const char     *name)
+		  const gchar    *name)
 {
   if (!parasite || !parasite->name)
     return FALSE;
@@ -107,7 +107,7 @@ parasite_copy (const Parasite *parasite)
 		       parasite->size, parasite->data);
 }
 
-int
+gboolean
 parasite_compare (const Parasite *a, 
 		  const Parasite *b)
 {
@@ -130,7 +130,7 @@ parasite_flags (const Parasite *p)
   return p->flags;
 }
 
-int
+gboolean
 parasite_is_persistent (const Parasite *p)
 {
   if (p == NULL)
@@ -138,7 +138,7 @@ parasite_is_persistent (const Parasite *p)
   return (p->flags & PARASITE_PERSISTENT);
 }
 
-int
+gboolean
 parasite_is_undoable (const Parasite *p)
 {
   if (p == NULL)
@@ -146,7 +146,7 @@ parasite_is_undoable (const Parasite *p)
   return (p->flags & PARASITE_UNDOABLE);
 }
 
-int
+gboolean
 parasite_has_flag (const Parasite *p, 
 		   gulong          flag)
 {
@@ -155,7 +155,7 @@ parasite_has_flag (const Parasite *p,
   return (p->flags & flag);
 }
 
-const char *
+const gchar *
 parasite_name (const Parasite *p)
 {
   if (p)
@@ -171,7 +171,7 @@ parasite_data (const Parasite *p)
   return NULL;
 }
 
-long 
+glong 
 parasite_data_size (const Parasite *p)
 {
   if (p)
