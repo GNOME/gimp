@@ -1,3 +1,9 @@
+2004-01-28  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call): validate
+	the types of the individual list members when passing parasites.
+	Fixes #93806.
+
 2004-01-27  Manish Singh  <yosh@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: inlined rotate_pointers, changed

@@ -715,23 +715,47 @@ marshall_proc_db_call (LISP a)
 	  if (success)
 	    {
 	      args[i].type = GIMP_PDB_PARASITE;
+
 	      /* parasite->name */
 	      intermediate_val = car (a);
+
+	      if (!TYPEP (car (intermediate_val), tc_string))
+		{
+		  success = FALSE;
+		  break;
+		}
+
 	      args[i].data.d_parasite.name =
 		get_c_string (car (intermediate_val));
 
 	      /* parasite->flags */
 	      intermediate_val = cdr (intermediate_val);
-	      args[i].data.d_parasite.flags = get_c_long (car(intermediate_val));
+
+	      if (!TYPEP (car (intermediate_val), tc_flonum))
+		{
+		  success = FALSE;
+		  break;
+		}
+
+	      args[i].data.d_parasite.flags =
+		get_c_long (car (intermediate_val));
 
 	      /* parasite->size */
 	      intermediate_val = cdr (intermediate_val);
+
+	      if (!TYPEP (car (intermediate_val), tc_string) &&
+		  !TYPEP (car (intermediate_val), tc_byte_array))
+		{
+		  success = FALSE;
+		  break;
+		}
+
 	      args[i].data.d_parasite.size =
 		(car (intermediate_val))->storage_as.string.dim;
 
 	      /* parasite->data */
 	      args[i].data.d_parasite.data =
-		(void*) (car (intermediate_val))->storage_as.string.data;
+		(car (intermediate_val))->storage_as.string.data;
 	    }
 	  break;
 
