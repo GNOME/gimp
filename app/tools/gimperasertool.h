@@ -56,8 +56,7 @@ gboolean   eraser_non_gui            (GimpDrawable *drawable,
                                       gdouble      *stroke_array,
                                       gint          hardness,
                                       gint          method,
-                                      gboolean      anti_erase,
-                                      gboolean      color_erase);
+                                      gboolean      anti_erase);
 gboolean   eraser_non_gui_default    (GimpDrawable *paint_core,
                                       gint          num_strokes,
                                       gdouble      *stroke_array);

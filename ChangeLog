@@ -1,5 +1,14 @@
 2001-11-25  Simon Budig  <simon@gimp.org>
 
+	* app/tools/gimperasertool.c
+	* app/tools/gimperasertool.h
+	* tools/pdbgen/pdb/tools.pdb: Removed the color_erase option of
+	the eraser.
+
+	* app/pdb/tools_cmds.c: regenerated.
+
+2001-11-25  Simon Budig  <simon@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c: ANTI_ERASE had wrong
 	layer mode information (according to the comments).
 	Changed it to something sane. I did test it and no

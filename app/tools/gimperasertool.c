@@ -26,7 +26,6 @@
 
 #include "tools-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
@@ -47,7 +46,6 @@
 #define ERASER_DEFAULT_HARD        FALSE
 #define ERASER_DEFAULT_INCREMENTAL FALSE
 #define ERASER_DEFAULT_ANTI_ERASE  FALSE
-#define ERASER_DEFAULT_COLOR_ERASE FALSE
 
 
 typedef struct _EraserOptions EraserOptions;
@@ -63,10 +61,6 @@ struct _EraserOptions
   gboolean	anti_erase;
   gboolean	anti_erase_d;
   GtkWidget    *anti_erase_w;
-
-  gboolean	color_erase;
-  gboolean	color_erase_d;
-  GtkWidget    *color_erase_w;
 };
 
 
@@ -88,20 +82,16 @@ static void   gimp_eraser_tool_motion       (GimpPaintTool        *paint_tool,
                                              PaintPressureOptions *pressure_options,
                                              gboolean              hard,
                                              gboolean              incremental,
-                                             gboolean              anti_erase,
-                                             gboolean              color_erase);
+                                             gboolean              anti_erase);
 
 static GimpToolOptions * gimp_eraser_tool_options_new   (GimpToolInfo    *tool_info);
 static void              gimp_eraser_tool_options_reset (GimpToolOptions *tool_options);
-static void            gimp_eraser_tool_colortoalpha  (GimpRGB       *src,
-                                                       const GimpRGB *color);
 
 
 /*  local variables  */
 static gboolean   non_gui_hard        = ERASER_DEFAULT_HARD;
 static gboolean   non_gui_incremental = ERASER_DEFAULT_INCREMENTAL;
 static gboolean	  non_gui_anti_erase  = ERASER_DEFAULT_ANTI_ERASE;
-static gboolean	  non_gui_color_erase = ERASER_DEFAULT_COLOR_ERASE;
 
 static GimpPaintToolClass *parent_class = NULL;
 
@@ -213,7 +203,6 @@ gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
   gboolean              hard;
   gboolean              incremental;
   gboolean              anti_erase;
-  gboolean              color_erase;
 
   options = (EraserOptions *) GIMP_TOOL (paint_tool)->tool_info->tool_options;
 
@@ -223,7 +212,6 @@ gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
       hard             = options->hard;
       incremental      = options->paint_options.incremental;
       anti_erase       = options->anti_erase;
-      color_erase      = options->color_erase;
     }
   else
     {
@@ -231,7 +219,6 @@ gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
       hard             = non_gui_hard;
       incremental      = non_gui_incremental;
       anti_erase       = non_gui_anti_erase;
-      color_erase      = non_gui_color_erase;
     }
 
   switch (state)
@@ -245,8 +232,7 @@ gimp_eraser_tool_paint (GimpPaintTool *paint_tool,
                                pressure_options,
                                hard,
                                incremental,
-                               anti_erase,
-			       color_erase);
+                               anti_erase);
       break;
 
     case FINISH_PAINT:
@@ -263,8 +249,7 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
                          PaintPressureOptions *pressure_options,
                          gboolean              hard,
                          gboolean              incremental,
-                         gboolean              anti_erase,
-                         gboolean              color_erase)
+                         gboolean              anti_erase)
 {
   GimpImage   *gimage;
   GimpContext *context;
@@ -272,13 +257,6 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
   TempBuf     *area;
   guchar       col[MAX_CHANNELS];
   gdouble      scale;
-  TempBuf     *orig;
-  gint         x, y, x1, y1, x2, y2;
-  PixelRegion  srcPR, destPR;
-  gpointer     pr;
-  GimpRGB      bgcolor, color;
-  guchar      *s, *d;
-
 
   if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
@@ -296,118 +274,27 @@ gimp_eraser_tool_motion (GimpPaintTool        *paint_tool,
   if (! (area = gimp_paint_tool_get_paint_area (paint_tool, drawable, scale)))
     return;
 
-  if (anti_erase || !color_erase)
-    {
-      /*  set the alpha channel  */
-      col[area->bytes - 1] = OPAQUE_OPACITY;
+  /*  set the alpha channel  */
+  col[area->bytes - 1] = OPAQUE_OPACITY;
 
-      /*  color the pixels  */
-      color_pixels (temp_buf_data (area), col,
-                    area->width * area->height, area->bytes);
+  /*  color the pixels  */
+  color_pixels (temp_buf_data (area), col,
+		area->width * area->height, area->bytes);
 
-      opacity = 255 * gimp_context_get_opacity (context);
+  opacity = 255 * gimp_context_get_opacity (context);
 
-      if (pressure_options->opacity)
-        opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
+  if (pressure_options->opacity)
+    opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
 
-      /* paste the newly painted canvas to the gimage which is being
-       * worked on  */
-      gimp_paint_tool_paste_canvas (paint_tool, drawable, 
-                                    MIN (opacity, 255),
-                                    gimp_context_get_opacity (context) * 255,
-                                    anti_erase ? (color_erase ? BEHIND_MODE : ANTI_ERASE_MODE ) : ERASE_MODE,
-                                    hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
-                                    scale,
-                                    incremental ? INCREMENTAL : CONSTANT);
-    }
-  else
-    {
-      /* This is Simons evil Eraser Hack. Code is borrowed from the
-       * colortoalpha plugin by Seth Burgess. Algorithm has been
-       * described on IRC by clahey.
-       */
-  
-      gimp_rgb_set_uchar (&bgcolor, col[0], col[1], col[2]);
-      
-      if (!gimp_drawable_has_alpha (drawable))
-        return;
-
-      /* is this necessary? */
-      x1 = CLAMP (area->x, 0, gimp_drawable_width (drawable));
-      y1 = CLAMP (area->y, 0, gimp_drawable_height (drawable));
-      x2 = CLAMP (area->x + area->width,
-                  0, gimp_drawable_width (drawable));
-      y2 = CLAMP (area->y + area->height,
-                  0, gimp_drawable_height (drawable));
-
-      if (!(x2 - x1) || !(y2 - y1))
-        return;
-
-      /*  get the original image  */
-      orig = gimp_paint_tool_get_orig_image (paint_tool, drawable, x1, y1, x2, y2);
-
-      srcPR.bytes = orig->bytes;
-      srcPR.x = 0; srcPR.y = 0;
-      srcPR.w = x2 - x1;
-      srcPR.h = y2 - y1;
-      srcPR.rowstride = srcPR.bytes * orig->width;
-      srcPR.data = temp_buf_data (orig);
-
-      /*  configure the destination  */
-      destPR.bytes = area->bytes;
-      destPR.x = 0; destPR.y = 0;
-      destPR.w = srcPR.w;
-      destPR.h = srcPR.h;
-      destPR.rowstride = destPR.bytes * area->width;
-      destPR.data = temp_buf_data (area);
-
-      /* I am not sure, if this really is necessary.
-       * Probably the orig Tempbuf has the same size as the area Tempbuf */
-      pr = pixel_regions_register (2, &srcPR, &destPR);
-
-      for (; pr != NULL; pr = pixel_regions_process (pr))
-        {
-          s = srcPR.data;
-          d = destPR.data;
-          for (y = 0; y < destPR.h; y++)
-            {
-              for (x = 0; x < destPR.w; x++)
-                {
-                  
-                  gimp_rgba_set_uchar (&color, 
-                                       s[x*srcPR.bytes    ],
-                                       s[x*srcPR.bytes + 1],
-                                       s[x*srcPR.bytes + 2],
-                                       s[x*srcPR.bytes + 3]);
-
-                  gimp_eraser_tool_colortoalpha (&color, &bgcolor);
-
-                  gimp_rgba_get_uchar (&color, 
-                                       &(d[x*destPR.bytes    ]),
-                                       &(d[x*destPR.bytes + 1]),
-                                       &(d[x*destPR.bytes + 2]),
-                                       &(d[x*destPR.bytes + 3]));
-                }
-
-              s += srcPR.rowstride;
-              d += destPR.rowstride;
-            }
-        }
-
-      opacity = 255 * gimp_context_get_opacity (context);
-
-      if (pressure_options->opacity)
-        opacity = opacity * 2.0 * paint_tool->cur_coords.pressure;
-
-      /*  paste the newly painted canvas to the gimage which is
-       *  being worked on  */
-      gimp_paint_tool_replace_canvas (paint_tool, drawable, 
-                                    MIN (opacity, 255),
-                                    gimp_context_get_opacity (context) * 255,
-                                    hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
-                                    scale,
-                                    incremental ? INCREMENTAL : CONSTANT);
-    }
+  /* paste the newly painted canvas to the gimage which is being
+   * worked on  */
+  gimp_paint_tool_paste_canvas (paint_tool, drawable, 
+				MIN (opacity, 255),
+				gimp_context_get_opacity (context) * 255,
+				anti_erase ? ANTI_ERASE_MODE : ERASE_MODE,
+				hard ? HARD : (pressure_options->pressure ? PRESSURE : SOFT),
+				scale,
+				incremental ? INCREMENTAL : CONSTANT);
 }
 
 
@@ -423,7 +310,6 @@ eraser_non_gui_default (GimpDrawable *drawable,
   gboolean       hard        = ERASER_DEFAULT_HARD;
   gboolean       incremental = ERASER_DEFAULT_INCREMENTAL;
   gboolean       anti_erase  = ERASER_DEFAULT_ANTI_ERASE;
-  gboolean       color_erase = ERASER_DEFAULT_COLOR_ERASE;
 
   tool_info = tool_manager_get_info_by_type (drawable->gimage->gimp,
                                              GIMP_TYPE_ERASER_TOOL);
@@ -435,11 +321,10 @@ eraser_non_gui_default (GimpDrawable *drawable,
       hard        = options->hard;
       incremental = options->paint_options.incremental;
       anti_erase  = options->anti_erase;
-      color_erase = options->color_erase;
     }
 
   return eraser_non_gui (drawable, num_strokes, stroke_array,
-			 hard, incremental, anti_erase, color_erase);
+			 hard, incremental, anti_erase);
 }
 
 gboolean
@@ -448,8 +333,7 @@ eraser_non_gui (GimpDrawable *drawable,
 		gdouble      *stroke_array,
 		gint          hard,
 		gint          incremental,
-		gboolean      anti_erase,
-		gboolean      color_erase)
+		gboolean      anti_erase)
 {
   static GimpEraserTool *non_gui_eraser = NULL;
 
@@ -470,7 +354,6 @@ eraser_non_gui (GimpDrawable *drawable,
       non_gui_hard        = hard;
       non_gui_incremental = incremental;
       non_gui_anti_erase  = anti_erase;
-      non_gui_color_erase = color_erase;
 
       paint_tool->start_coords.x = paint_tool->last_coords.x = stroke_array[0];
       paint_tool->start_coords.y = paint_tool->last_coords.y = stroke_array[1];
@@ -513,7 +396,6 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 
   options->hard        = options->hard_d        = ERASER_DEFAULT_HARD;
   options->anti_erase  = options->anti_erase_d  = ERASER_DEFAULT_ANTI_ERASE;
-  options->color_erase = options->color_erase_d = ERASER_DEFAULT_COLOR_ERASE;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -538,16 +420,6 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
 				options->anti_erase_d);
   gtk_widget_show (options->anti_erase_w);
 
-  /* the color_erase toggle */
-  options->color_erase_w = gtk_check_button_new_with_label (_("Color Erase"));
-  gtk_box_pack_start (GTK_BOX (vbox), options->color_erase_w, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (options->color_erase_w), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->color_erase);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->color_erase_w),
-				options->color_erase_d);
-  gtk_widget_show (options->color_erase_w);
-
   return (GimpToolOptions *) options;
 }
 
@@ -564,71 +436,4 @@ gimp_eraser_tool_options_reset (GimpToolOptions *tool_options)
 				options->hard_d);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->color_erase_w),
-				options->color_erase_d);
 }
-
-
-static void
-gimp_eraser_tool_colortoalpha (GimpRGB       *src,
-                               const GimpRGB *color)
-{
-  GimpRGB alpha;
-  
-  alpha.a = src->a;
-
-  if (color->r < 0.0001)
-    alpha.r = src->r;
-  else if ( src->r > color->r )
-    alpha.r = (src->r - color->r) / (1.0 - color->r);
-  else if (src->r < color->r)
-    alpha.r = (color->r - src->r) / color->r;
-  else alpha.r = 0.0;
-
-  if (color->g < 0.0001)
-    alpha.g = src->g;
-  else if ( src->g > color->g )
-    alpha.g = (src->g - color->g) / (1.0 - color->g);
-  else if ( src->g < color->g )
-    alpha.g = (color->g - src->g) / (color->g);
-  else alpha.g = 0.0;
-
-  if (color->b < 0.0001)
-    alpha.b = src->b;
-  else if ( src->b > color->b )
-    alpha.b = (src->b - color->b) / (1.0 - color->b);
-  else if ( src->b < color->b )
-    alpha.b = (color->b - src->b) / (color->b);
-  else alpha.b = 0.0;
-
-  if ( alpha.r > alpha.g )
-    {
-      if ( alpha.r > alpha.b )
-        {
-          src->a = alpha.r;
-        }
-      else
-        {
-          src->a = alpha.b;
-        }
-    }
-  else if ( alpha.g > alpha.b )
-    {
-      src->a = alpha.g;
-    }
-  else
-    {
-      src->a = alpha.b;
-    }
-      
-  if (src->a < 0.0001)
-    return;
-
-  src->r = (src->r - color->r) / src->a + color->r;
-  src->g = (src->g - color->g) / src->a + color->g;
-  src->b = (src->b - color->b) / src->a + color->b;
-
-  src->a *= alpha.a;
-}
-
-

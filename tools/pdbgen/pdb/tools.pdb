@@ -509,7 +509,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimperasertool.h") ],
 	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE, FALSE);
+success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
 CODE
     );
 }
@@ -539,7 +539,7 @@ HELP
     %invoke = (
 	headers => [ qw("tools/gimperasertool.h") ],
 	code => <<'CODE'
-success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE, FALSE);
+success = eraser_non_gui (drawable, num_strokes, strokes, hardness, method, TRUE);
 CODE
     );
 }
