@@ -331,13 +331,12 @@ destroy_initialization_status_window(void)
 static void
 make_initialization_status_window(void)
 {
-  GtkStyle *style;
-
   if (no_interface == FALSE)
     {
       if (no_splash == FALSE)
 	{
 	  GtkWidget *vbox;
+	  GtkStyle *style;
 
 	  win_initstatus = gtk_window_new(GTK_WINDOW_DIALOG);
 
