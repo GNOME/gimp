@@ -1,3 +1,7 @@
+2000-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.c: added (empty) documentation headers.
+
 Fri Feb 18 19:16:26 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/Makefile.am: forgot to exclude airbrush_blob.[ch] from the

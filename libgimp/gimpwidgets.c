@@ -42,6 +42,14 @@ static void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
  *  Widget Constructors
  */
 
+/**
+ * gimp_option_menu_new:
+ * @menu_only:
+ * @...:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_option_menu_new (gboolean            menu_only,
 
@@ -132,6 +140,17 @@ gimp_option_menu_new (gboolean            menu_only,
   return menu;
 }
 
+/**
+ * gimp_option_menu_new2:
+ * @menu_only:
+ * @menu_item_callback:
+ * @data:
+ * @initial:
+ * @...:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_option_menu_new2 (gboolean        menu_only,
 		       GtkSignalFunc   menu_item_callback,
@@ -216,6 +235,12 @@ gimp_option_menu_new2 (gboolean        menu_only,
   return menu;
 }
 
+/**
+ * gimp_option_menu_set_history:
+ * @option_menu:
+ * @user_data:
+ *
+ */
 void
 gimp_option_menu_set_history (GtkOptionMenu *option_menu,
 			      gpointer       user_data)
@@ -246,6 +271,15 @@ gimp_option_menu_set_history (GtkOptionMenu *option_menu,
     gtk_option_menu_set_history (option_menu, history);
 }
 
+/**
+ * gimp_radio_group_new:
+ * @in_frame:
+ * @frame_title:
+ * @...:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_radio_group_new (gboolean            in_frame,
 		      gchar              *frame_title,
@@ -332,6 +366,18 @@ gimp_radio_group_new (gboolean            in_frame,
   return vbox;
 }
 
+/**
+ * gimp_radio_group_new2:
+ * @in_frame:
+ * @frame_title:
+ * @radio_button_callback:
+ * @data:
+ * @initial:
+ * @...:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_radio_group_new2 (gboolean        in_frame,
 		       gchar          *frame_title,
@@ -412,6 +458,21 @@ gimp_radio_group_new2 (gboolean        in_frame,
   return vbox;
 }
 
+/**
+ * gimp_spin_button_new:
+ * @adjustment:
+ * @value:
+ * @lower:
+ * @upper:
+ * @step_increment:
+ * @page_increment:
+ * @page_size:
+ * @climb_rate:
+ * @digits:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_spin_button_new (GtkObject **adjustment,  /* return value */
 		      gfloat      value,
@@ -449,6 +510,29 @@ gimp_scale_entry_unconstrained_adjustment_callback (GtkAdjustment *adjustment,
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (other_adj), adjustment);
 }
 
+/**
+ * gimp_scale_entry_new:
+ * @table:
+ * @column:
+ * @row:
+ * @text:
+ * @scale_usize:
+ * @spinbutton_usize:
+ * @value:
+ * @lower:
+ * @upper:
+ * @step_increment:
+ * @page_increment:
+ * @digits:
+ * @constrain:
+ * @unconstrained_lower:
+ * @unconstrained_upper:
+ * @tooltip:
+ * @private_tip:
+ *
+ * Returns:
+ *
+ */
 GtkObject *
 gimp_scale_entry_new (GtkTable *table,
 		      gint      column,
@@ -569,6 +653,18 @@ gimp_random_seed_toggle_update (GtkWidget *widget,
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
+/**
+ * gimp_random_seed_new:
+ * @seed:
+ * @seed_spinbutton:
+ * @use_time:
+ * @time_button:
+ * @time_true:
+ * @time_false:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_random_seed_new (gint       *seed,
 		      GtkWidget **seed_spinbutton,
@@ -701,6 +797,35 @@ gimp_coordinates_callback (GtkWidget *widget,
     }     
 }
 
+/**
+ * gimp_coordinates_new:
+ * @unit:
+ * @unit_format:
+ * @menu_show_pixels:
+ * @menu_show_percent:
+ * @spinbutton_usize:
+ * @update_policy:
+ * @chainbutton_active:
+ * @chain_constrains_ratio:
+ * @chainbutton:
+ * @xlabel:
+ * @x:
+ * @xres:
+ * @lower_boundary_x:
+ * @upper_boundary_x:
+ * @xsize_0:
+ * @xsize_100:
+ * @ylabel:
+ * @y:
+ * @yres:
+ * @lower_boundary_y:
+ * @upper_boundary_y:
+ * @ysize_0:
+ * @ysize_100:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_coordinates_new (GimpUnit         unit,
 		      gchar           *unit_format,
@@ -802,6 +927,13 @@ gimp_coordinates_new (GimpUnit         unit,
   return sizeentry;
 }
 
+/**
+ * gimp_pixmap_button_new:
+ * @xpm_data:
+ *
+ * Returns:
+ *
+ */
 GtkWidget *
 gimp_pixmap_button_new (gchar **xpm_data)
 {
@@ -848,6 +980,12 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
     }
 }
 
+/**
+ * gimp_toggle_button_update:
+ * @widget:
+ * @data:
+ *
+ */
 void
 gimp_toggle_button_update (GtkWidget *widget,
 			   gpointer   data)
@@ -864,6 +1002,12 @@ gimp_toggle_button_update (GtkWidget *widget,
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
+/**
+ * gimp_menu_item_update:
+ * @widget:
+ * @data:
+ *
+ */
 void
 gimp_menu_item_update (GtkWidget *widget,
 		       gpointer   data)
@@ -875,6 +1019,12 @@ gimp_menu_item_update (GtkWidget *widget,
   *item_val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
 }
 
+/**
+ * gimp_radio_button_update:
+ * @widget:
+ * @data:
+ *
+ */
 void
 gimp_radio_button_update (GtkWidget *widget,
 			  gpointer   data)
@@ -891,6 +1041,12 @@ gimp_radio_button_update (GtkWidget *widget,
   gimp_toggle_button_sensitive_update (GTK_TOGGLE_BUTTON (widget));
 }
 
+/**
+ * gimp_int_adjustment_update:
+ * @adjustment:
+ * @data:
+ *
+ */
 void
 gimp_int_adjustment_update (GtkAdjustment *adjustment,
 			    gpointer       data)
@@ -901,6 +1057,12 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
   *val = (gint) (adjustment->value + 0.5);
 }
 
+/**
+ * gimp_float_adjustment_update:
+ * @adjustment:
+ * @data:
+ *
+ */
 void
 gimp_float_adjustment_update (GtkAdjustment *adjustment,
 			      gpointer       data)
@@ -911,6 +1073,12 @@ gimp_float_adjustment_update (GtkAdjustment *adjustment,
   *val = adjustment->value;
 }
 
+/**
+ * gimp_double_adjustment_update:
+ * @adjustment:
+ * @data:
+ *
+ */
 void
 gimp_double_adjustment_update (GtkAdjustment *adjustment,
 			       gpointer       data)
@@ -921,6 +1089,12 @@ gimp_double_adjustment_update (GtkAdjustment *adjustment,
   *val = adjustment->value;
 }
 
+/**
+ * gimp_unit_menu_update:
+ * @widget:
+ * @data:
+ *
+ */
 void
 gimp_unit_menu_update (GtkWidget *widget,
 		       gpointer   data)
@@ -949,7 +1123,19 @@ gimp_unit_menu_update (GtkWidget *widget,
  *  Helper Functions
  */
 
-/*  add aligned label & widget to a table  */
+/**
+ * gimp_table_attach_aligned:
+ * @table:
+ * @column:
+ * @row:
+ * @label_text:
+ * @xalign:
+ * @yalign:
+ * @widget:
+ * @colspan:
+ * @left_align:
+ *
+ */
 void
 gimp_table_attach_aligned (GtkTable  *table,
 			   gint       column,

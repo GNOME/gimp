@@ -2,7 +2,7 @@
 gimpvector
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Utilities to set up and manipulate vectors.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -11,7 +11,10 @@ gimpvector
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GimpMatrix3
+</para>
+<para>
+#GimpMatrix4
 </para>
 
 <!-- ##### STRUCT GimpVector2 ##### -->

@@ -15,7 +15,13 @@ basic matrix manipulations and tests.
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
-
+#GimpVector2
+</para>
+<para>
+#GimpVector3
+</para>
+<para>
+#GimpVector4
 </para>
 
 <!-- ##### TYPEDEF GimpMatrix3[3][3] ##### -->

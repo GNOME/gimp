@@ -3779,145 +3779,41 @@ guchar  *rgb,gdouble  hue,gdouble  saturation,gdouble  value
 			  (g) * INTENSITY_GREEN + \
 			  (b) * INTENSITY_BLUE  + 0.001)
 </MACRO>
+<MACRO>
+<NAME>GIMP_TYPE_PIXMAP</NAME>
+#define GIMP_TYPE_PIXMAP            (gimp_pixmap_get_type ())
+</MACRO>
+<MACRO>
+<NAME>GIMP_PIXMAP</NAME>
+#define GIMP_PIXMAP(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PIXMAP, GimpPixmap))
+</MACRO>
+<MACRO>
+<NAME>GIMP_PIXMAP_CLASS</NAME>
+#define GIMP_PIXMAP_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PIXMAP, GimpPixmapClass))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_PIXMAP</NAME>
+#define GIMP_IS_PIXMAP(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PIXMAP))
+</MACRO>
+<MACRO>
+<NAME>GIMP_IS_PIXMAP_CLASS</NAME>
+#define GIMP_IS_PIXMAP_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIXMAP))
+</MACRO>
 <STRUCT>
-<NAME>GimpVector2</NAME>
+<NAME>GimpPixmap</NAME>
 </STRUCT>
 <STRUCT>
-<NAME>GimpVector3</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector4</NAME>
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector2</NAME>
-struct GimpVector2
-{
-  gdouble x, y;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector3</NAME>
-struct GimpVector3
-{
-  gdouble x, y, z;
-};
-</STRUCT>
-<STRUCT>
-<NAME>GimpVector4</NAME>
-struct GimpVector4
-{
-  gdouble x, y, z, w;
-};
+<NAME>GimpPixmapClass</NAME>
 </STRUCT>
 <FUNCTION>
-<NAME>gimp_vector2_inner_product</NAME>
-<RETURNS>gdouble  </RETURNS>
-GimpVector2 *vector1,GimpVector2 *vector2
+<NAME>gimp_pixmap_get_type</NAME>
+<RETURNS>GtkType  </RETURNS>
+void
 </FUNCTION>
 <FUNCTION>
-<NAME>gimp_vector2_cross_product</NAME>
-<RETURNS>GimpVector2  </RETURNS>
-GimpVector2 *vector1,GimpVector2 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_length</NAME>
-<RETURNS>gdouble  </RETURNS>
-GimpVector2 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_normalize</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_mul</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *vector,gdouble      factor
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_sub</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *result,GimpVector2 *vector1,GimpVector2 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_set</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *vector,gdouble      x,gdouble      y
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_add</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *result,GimpVector2 *vector1,GimpVector2 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_neg</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector2_rotate</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector2 *vector,gdouble      alpha
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_inner_product</NAME>
-<RETURNS>gdouble  </RETURNS>
-GimpVector3 *vector1,GimpVector3 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_cross_product</NAME>
-<RETURNS>GimpVector3  </RETURNS>
-GimpVector3 *vector1,GimpVector3 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_length</NAME>
-<RETURNS>gdouble  </RETURNS>
-GimpVector3 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_normalize</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_mul</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *vector,gdouble      factor
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_sub</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *result,GimpVector3 *vector1,GimpVector3 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_set</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *vector,gdouble      x,gdouble      y,gdouble      z
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_add</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *result,GimpVector3 *vector1,GimpVector3 *vector2
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_neg</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *vector
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector3_rotate</NAME>
-<RETURNS>void  </RETURNS>
-GimpVector3 *vector,gdouble      alpha,gdouble      beta,gdouble      gamma
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector_2d_to_3d</NAME>
-<RETURNS>void  </RETURNS>
-gint         sx,gint         sy,gint         w,gint         h,gint         x,gint         y,GimpVector3 *vp,GimpVector3 *p
-</FUNCTION>
-<FUNCTION>
-<NAME>gimp_vector_3d_to_2d</NAME>
-<RETURNS>void  </RETURNS>
-gint         sx,gint         sy,gint         w,gint         h,gdouble     *x,gdouble     *y,GimpVector3 *vp,GimpVector3 *p
+<NAME>gimp_pixmap_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+gchar **xpm_data
 </FUNCTION>
 <USER_FUNCTION>
 <NAME>GimpHelpFunc</NAME>
@@ -4167,39 +4063,143 @@ gchar                    *title,GimpHelpFunc              help_func,gchar       
 <RETURNS>GtkWidget  *</RETURNS>
 gchar                    *title,GimpHelpFunc              help_func,gchar                    *help_data,gboolean                  eek,gchar                    *message,gchar                    *true_button,gchar                    *false_button,GtkObject                *object,gchar                    *signal,GimpQueryBooleanCallback  callback,gpointer                  data
 </FUNCTION>
-<MACRO>
-<NAME>GIMP_TYPE_PIXMAP</NAME>
-#define GIMP_TYPE_PIXMAP            (gimp_pixmap_get_type ())
-</MACRO>
-<MACRO>
-<NAME>GIMP_PIXMAP</NAME>
-#define GIMP_PIXMAP(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_PIXMAP, GimpPixmap))
-</MACRO>
-<MACRO>
-<NAME>GIMP_PIXMAP_CLASS</NAME>
-#define GIMP_PIXMAP_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PIXMAP, GimpPixmapClass))
-</MACRO>
-<MACRO>
-<NAME>GIMP_IS_PIXMAP</NAME>
-#define GIMP_IS_PIXMAP(obj)         (GTK_CHECK_TYPE ((obj), GIMP_TYPE_PIXMAP))
-</MACRO>
-<MACRO>
-<NAME>GIMP_IS_PIXMAP_CLASS</NAME>
-#define GIMP_IS_PIXMAP_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PIXMAP))
-</MACRO>
 <STRUCT>
-<NAME>GimpPixmap</NAME>
+<NAME>GimpVector2</NAME>
 </STRUCT>
 <STRUCT>
-<NAME>GimpPixmapClass</NAME>
+<NAME>GimpVector3</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector4</NAME>
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector2</NAME>
+struct GimpVector2
+{
+  gdouble x, y;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector3</NAME>
+struct GimpVector3
+{
+  gdouble x, y, z;
+};
+</STRUCT>
+<STRUCT>
+<NAME>GimpVector4</NAME>
+struct GimpVector4
+{
+  gdouble x, y, z, w;
+};
 </STRUCT>
 <FUNCTION>
-<NAME>gimp_pixmap_get_type</NAME>
-<RETURNS>GtkType  </RETURNS>
-void
+<NAME>gimp_vector2_inner_product</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpVector2 *vector1,GimpVector2 *vector2
 </FUNCTION>
 <FUNCTION>
-<NAME>gimp_pixmap_new</NAME>
-<RETURNS>GtkWidget  *</RETURNS>
-gchar **xpm_data
+<NAME>gimp_vector2_cross_product</NAME>
+<RETURNS>GimpVector2  </RETURNS>
+GimpVector2 *vector1,GimpVector2 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_length</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpVector2 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_normalize</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_mul</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *vector,gdouble      factor
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_sub</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *result,GimpVector2 *vector1,GimpVector2 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *vector,gdouble      x,gdouble      y
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_add</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *result,GimpVector2 *vector1,GimpVector2 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_neg</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector2_rotate</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector2 *vector,gdouble      alpha
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_inner_product</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpVector3 *vector1,GimpVector3 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_cross_product</NAME>
+<RETURNS>GimpVector3  </RETURNS>
+GimpVector3 *vector1,GimpVector3 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_length</NAME>
+<RETURNS>gdouble  </RETURNS>
+GimpVector3 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_normalize</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_mul</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *vector,gdouble      factor
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_sub</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *result,GimpVector3 *vector1,GimpVector3 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_set</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *vector,gdouble      x,gdouble      y,gdouble      z
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_add</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *result,GimpVector3 *vector1,GimpVector3 *vector2
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_neg</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *vector
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector3_rotate</NAME>
+<RETURNS>void  </RETURNS>
+GimpVector3 *vector,gdouble      alpha,gdouble      beta,gdouble      gamma
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector_2d_to_3d</NAME>
+<RETURNS>void  </RETURNS>
+gint         sx,gint         sy,gint         w,gint         h,gint         x,gint         y,GimpVector3 *vp,GimpVector3 *p
+</FUNCTION>
+<FUNCTION>
+<NAME>gimp_vector_3d_to_2d</NAME>
+<RETURNS>void  </RETURNS>
+gint         sx,gint         sy,gint         w,gint         h,gdouble     *x,gdouble     *y,GimpVector3 *vp,GimpVector3 *p
 </FUNCTION>
