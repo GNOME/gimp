@@ -11,7 +11,12 @@ These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 
 	- pkg-config 0.7.0 (or a newer version)
-		Available from http://www.freedesktop.org/software/pkgconfig
+		
+Available from http://www.freedesktop.org/software/pkgconfig/.
+
+	- intltoolize 0.11.1 (or newer version)
+
+Available from ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/.
 
 
 Compilation
@@ -25,16 +30,19 @@ by running:
 Basically this does the following for you:
 
         cvsroot/gimp# aclocal; automake; autoconf
+        cvsroot/gimp# glib-gettextize; intltoolize
 
         The above commands create the "configure" script.  Now you
         can run the configure script in cvsroot/gimp to create all
         the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
-your path. Also make sure glib-2.0.m4 glib-gettext.m4 and gtk-2.0.m4 
-are either installed in the same $prefix/share/aclocal relative to 
-your automake/aclocal installation or call autogen.sh with
-'ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh'.
+your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-2.0.m4,
+pkg.m4 and intltool.m4 are either installed in the same 
+$prefix/share/aclocal relative to your automake/aclocal installation 
+or call autogen.sh with
+
+	'ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh'.
 
 Note that autogen.sh runs configure for you.  If you wish to pass
 options like --prefix=/usr to configure you can give those options to

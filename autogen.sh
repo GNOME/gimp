@@ -19,7 +19,6 @@ DIE=0
         echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
         DIE=1
 }
-
 (autoconf --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have autoconf installed to compile $PROJECT."
@@ -27,7 +26,6 @@ DIE=0
 	echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
 	DIE=1
 }
-
 (automake --version) < /dev/null > /dev/null 2>&1 || {
 	echo
 	echo "You must have automake installed to compile $PROJECT."
@@ -35,10 +33,24 @@ DIE=0
 	echo "(or a newer version if it is available)"
 	DIE=1
 }
+(glib-gettextize --version) < /dev/null > /dev/null 2>&1 || {
+	echo
+	echo "You must have glib-gettextize installed to compile $PROJECT."
+	echo "glib-gettextize is part of glib-2.0, so you should already"
+        echo "have it. Make sure it is in your PATH".
+	DIE=1
+}
+(intltoolize --version) < /dev/null > /dev/null 2>&1 || {
+	echo
+	echo "You must have intltoolize installed to compile $PROJECT."
+	echo "Get the latest version from"
+        echo "ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/"
+	DIE=1
+}
 
-echo "I am testing that you have the required versions of libtool, autoconf" 
-echo "and automake. This test is not foolproof, so if anything goes wrong,"
-echo "see the file HACKING for more information..."
+echo "I am testing that you have the required versions of libtool, autoconf," 
+echo "automake, glib-gettextize and intltoolize. This test is not foolproof,"
+echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 
 echo "Testing libtool... "
@@ -68,6 +80,23 @@ else
 	DIE=1
 fi
 
+echo "Testing glib-gettextize... "
+VER=`glib-gettextize --version | grep glib-gettextize | sed "s/.* \([0-9.]*\)/\1/"`
+if expr $VER \>= 1.3.14 >/dev/null; then
+        echo "looks OK."
+else
+        echo "too old! (Need 1.3.14, have $VER)"
+        DIE=1
+fi
+
+echo "Testing intltoolize... "
+VER=`intltoolize --version | grep intltoolize | sed "s/.* \([0-9.]*\)/\1/"`
+if expr $VER \>= 0.11 >/dev/null; then
+        echo "looks OK."
+else
+        echo "too old! (Need 1.11, have $VER)"
+        DIE=1
+fi
 echo
 
 if test "$DIE" -eq 1; then
@@ -91,7 +120,7 @@ esac
 if test -z "$ACLOCAL_FLAGS"; then
 
         acdir=`aclocal --print-ac-dir`
-        m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 pkg.m4"
+        m4list="glib-2.0.m4 glib-gettext.m4 gtk-2.0.m4 intltool.m4 pkg.m4"
 
         for file in $m4list
         do
@@ -114,6 +143,11 @@ aclocal $ACLOCAL_FLAGS
 
 automake --add-missing $am_opt
 autoconf
+
+echo "Running glib-gettextize"
+glib-gettextize --copy --force
+echo "Running intltoolize"
+intltoolize --copy --force --automake
 
 cd $ORIGDIR
 

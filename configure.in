@@ -32,10 +32,6 @@ LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
 VERSION=$GIMP_VERSION
 PACKAGE=gimp
 
-GETTEXT_PACKAGE=gimp14
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
-
 AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
 
 dnl Specify a configuration file
@@ -67,10 +63,12 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AC_PROG_CPP
 
+
 AC_ARG_ENABLE(debug, [  --enable-debug          turn on debugging [default=no]],
 if eval "test x$enable_debug = xyes"; then
   DEBUGFLAG="-g"
 fi)
+
 
 dnl Why the heck isn't there already a macro for this?
 
@@ -80,8 +78,10 @@ dnl if $ac_make -v 2>/dev/null | grep 'GNU Make' >/dev/null; then
 dnl   with_gnu_make=yes
 dnl fi)
 
+
 AC_ARG_ENABLE(ansi, [  --enable-ansi           turn on strict ansi [default=no]],
 		    , enable_ansi=no)
+
 
 dnl Possibly change default gimpdir from .gimp
 gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
@@ -111,11 +111,21 @@ AC_SUBST(STRIP_DUMMY)
 AC_SUBST(STRIP_BEGIN)
 AC_SUBST(STRIP_END)
 
+
 dnl i18n stuff
+
+GETTEXT_PACKAGE=gimp14
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE")
+
 ALL_LINGUAS="ca cs da de el en_GB es fi fr ga gl hu hr it ja ko nl no pl pt_BR ro ru sk sv tr uk zh_CN zh_TW"
+
+AC_PROG_INTLTOOL
 AM_GLIB_GNU_GETTEXT
 
+
 AC_PATH_XTRA
+
 
 AM_PATH_GLIB_2_0($GLIB_REQUIRED_VERSION,,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),

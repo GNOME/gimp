@@ -1,5 +1,20 @@
 2002-02-22  Sven Neumann  <sven@gimp.org>
 
+	* HACKING
+	* Makefile.am
+	* autogen.sh
+	* configure.in: depend on intltool for handling i18n stuff. This
+	means that you need intltool to compile The GIMP from CVS. Grab
+	it from ftp://ftp.gnome.org/pub/GNOME/stable/sources/intltool/
+	or out of gnomecvs module intltool. You shouldn't need it if you
+	compile The GIMP from tarball.
+	
+	* data/misc/Makefile.am
+	* data/misc/gimp.desktop.in.in: merge translations into the desktop
+	file. 
+
+2002-02-22  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in: cleaned up --with-sendmail, --enable-threads and
 	--enable-mp options. Added --with-gnome-desktop=PATH option.

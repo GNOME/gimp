@@ -1,3 +1,17 @@
+2002-02-22  Sven Neumann  <sven@gimp.org>
+
+	* po/Makefile.in.in: changed by glib-gettextize and intltoolize.
+	
+	* po/po2tbl.sed.in
+	* po/update.pl
+	* po/update.sh: removed, we use intltool now
+
+	* README.tools: mention intltool-update.
+	
+	* po/POTFILES.in: added data/misc/gimp.desktop.in.in
+	
+	* po/de.po: updated german translation
+
 2002-02-22  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: gimpprogress.c -> display/gimpprogress.c

@@ -160,3 +160,5 @@ app/xcf/xcf.c
 
 modules/colorsel_triangle.c
 modules/colorsel_water.c
+
+data/misc/gimp.desktop.in.in

@@ -52,9 +52,9 @@ EXTRA_DIST = \
 	TODO				\
 	TODO.xml			\
 	config.h.win32			\
-	po/po2tbl.sed.in		\
-	po/update.sh			\
-	po/update.pl			\
+	intltool-extract.in		\
+	intltool-merge.in		\
+	intltool-update.in		\
 	po-libgimp/update.sh		\
 	po-plug-ins/update.sh		\
 	po-script-fu/script-fu-xgettext	\
