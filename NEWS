@@ -37,9 +37,18 @@ Bugs fixed in GIMP 2.0pre3
 - 93806:  Validate script-fu input (Yosh)
 - 132214: Differentiate writable and readonly data directories (Mitch)
 - 131964: Zoom ratio problem (Simon)
+- 132969: Set help-id for tool on tool options dock (Mitch)
+- 132999: Make assembler code PIC safe (Yosh)
+- 119878: Use the same keyboard shortcuts in all GIMP windows
+  (except the toolbox window) (Mitch)
+- 131975 & 
+- 132297: Disable some warnings while loading TIFFs (Raphael)
+- 129529: Add a "randomize" toggle to random number widget (Dave Neary)
+- 133099: Duplicate PDB entries problem (Mitch)
 
 Other contributions:
-  Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer, Sven Neumann
+  Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer,
+  Sven Neumann, Kevin Cozens
 
 
 Bugs fixed in GIMP 2.0pre2
