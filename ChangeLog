@@ -1,3 +1,14 @@
+2004-03-20  Simon Budig  <simon@gimp.org>
+
+	* app/core/gimpundo.[ch]: Make it possible to refresh the preview
+	of an undo step.
+
+	* app/tools/gimpeditselectiontool.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c: refresh the preview when
+	compressing undos. This ensures that the last preview in the undo
+	history always reflects the current state of the image.
+
 2004-03-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (undo_pop_text_layer): fixed a
