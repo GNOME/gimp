@@ -256,15 +256,21 @@ file_utils_uri_to_utf8_filename (const gchar *uri)
 
   if (! strncmp (uri, "file:", strlen ("file:")))
     {
-      gchar *filename = g_filename_from_uri (uri, NULL, NULL);
-
+      gchar  *filename = g_filename_from_uri (uri, NULL, NULL);
       if (filename)
         {
-          gchar *utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, NULL);
+          GError *error = NULL;
+          gchar  *utf8;
 
+          utf8 = g_filename_to_utf8 (filename, -1, NULL, NULL, &error);
           g_free (filename);
 
-          return utf8;
+          if (utf8)
+            return utf8;
+
+          g_warning ("%s: cannot convert filename to UTF-8: %s",
+                     G_STRLOC, error->message);
+          g_error_free (error);
         }
     }
 

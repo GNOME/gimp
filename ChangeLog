@@ -1,3 +1,9 @@
+2004-10-29  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-utils.c (file_utils_uri_to_utf8_filename): when
+	the filename cannot be converted to UTF-8, warn and return the URI
+	instead. This is a workaround for the crash described in bug #153751.
+
 2004-10-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/dialogs.c (toplevel_entries): added foreign entries
