@@ -1,3 +1,8 @@
+2002-02-11  Nathan Summers  <rock@gimp.org>
+
+        * app/plug-in/plug-in.[ch]
+        * libgimp/gimp.c: added support for the init function in plug-ins.
+
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 
 	Made the interpolation type configurable in the scale and
