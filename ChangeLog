@@ -1,3 +1,9 @@
+2003-11-03  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogrameditor.c: update the histogram on
+	"invalidate_preview" instead of "update" because the paint core
+	doesn't call gimp_drawable_update().
+
 2003-11-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpbrushmenu.c 

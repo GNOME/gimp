@@ -295,10 +295,10 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
   if (editor->drawable)
     {
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            G_CALLBACK (gimp_histogram_editor_update),
+                                            gimp_histogram_editor_menu_update,
                                             editor);
       g_signal_handlers_disconnect_by_func (editor->drawable,
-                                            G_CALLBACK (gimp_histogram_editor_menu_update),
+                                            gimp_histogram_editor_update,
                                             editor);
       editor->drawable = NULL;
     }
@@ -311,11 +311,11 @@ gimp_histogram_editor_layer_changed (GimpImage           *gimage,
     {
       name = gimp_object_get_name (GIMP_OBJECT (editor->drawable));
 
+      g_signal_connect_object (editor->drawable, "invalidate_preview",
+                               G_CALLBACK (gimp_histogram_editor_update),
+                               editor, G_CONNECT_SWAPPED);
       g_signal_connect_object (editor->drawable, "alpha_changed",
                                G_CALLBACK (gimp_histogram_editor_menu_update),
-                               editor, G_CONNECT_SWAPPED);
-      g_signal_connect_object (editor->drawable, "update",
-                               G_CALLBACK (gimp_histogram_editor_update),
                                editor, G_CONNECT_SWAPPED);
 
       gimp_histogram_editor_update (editor);
