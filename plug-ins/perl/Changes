@@ -21,6 +21,7 @@ Revision history for Gimp-Perl extension.
         - added/updated examples/fade-alpha by Seth.
         - re-apply patches to examples/xachshadow, xachlego after I nuked
           them without knowing.
+        - updated examples/xachvision.
 
 1.201 Thu Aug 24 23:44:43 CEST 2000
 	** LAST VERSION THAT WORKS WITH 1.0 **

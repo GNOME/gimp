@@ -1,8 +1,5 @@
 #!/usr/app/bin/perl
 
-eval 'exec /usr/app/bin/perl  -S $0 ${1+"$@"}'
-    if 0; # not running under some shell
-
 # Once again, an effect of Xach's
 # Created by Seth Burgess <sjburges@gimp.org>
 
@@ -14,7 +11,7 @@ register "xachvision",
          "This makes an interlaced-looking machine vision type thing.",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
-         "1999-02-28",
+         "2000-11-25",
          N_"<Image>/Filters/Noise/Xach Vision...",
          "RGB*, GRAY*",
          [
@@ -30,7 +27,7 @@ register "xachvision",
 	$midlayer = $drawable->gimp_layer_copy(1);
 	$img->add_layer($midlayer, 0);
 
-	$toplayer = $drawable->gimp_layer_copy(0);	
+	$toplayer = $drawable->gimp_layer_copy(1);
 	$img->add_layer($toplayer, 0);
 
 	gimp_palette_set_background($color);
