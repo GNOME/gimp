@@ -23,6 +23,7 @@ firetext! AND _grayscale_ for map_gradient(!)
 sota-chrome pagesize of 2 is _wrong_
 
 bugs
+  * damnit libintl crazy shit
 [DONE]  * alow gimp_selection_shrink with a zero argument.
   * font_text with negative size? bug report #5523
   * gimp-perl list archives.. where and add this to the gimp.html page!

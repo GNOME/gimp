@@ -7,7 +7,7 @@ test -f MANIFEST || exec echo "must be started in plug-ins/perl/po"
    msgmerge -w 83 po/gimp-perl.pot - >gimp-perl.pot~ &&
    mv gimp-perl.pot~ po/gimp-perl.pot
 
-for po in po/*.po; do
-   msgmerge -w 83 $po po/gimp-perl.pot >$po~ && mv $po~ $po
-done
+#for po in po/*.po; do
+#   msgmerge -w 83 $po po/gimp-perl.pot >$po~ && mv $po~ $po
+#done
 

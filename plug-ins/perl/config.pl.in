@@ -1,8 +1,10 @@
 # this is ugly, but it makes Gimp installable from within CPAN
 
-$topdir=".";
+use Cwd 'abs_path';
 
-$topdir.="/.." while ! -f "$topdir/MANIFEST";
+$topdir = ".";
+$topdir .= "/.." while ! -f "$topdir/MANIFEST";
+$topdir = abs_path $topdir;
 
 $^W=0;
 
@@ -67,6 +69,7 @@ while (($k,$v)=each(%cfg)) {
 }
 
 $GIMPTOOL       = expand($GIMPTOOL);
+$INTLLIBS	= expand($INTLLIBS);
 
 if ($IN_GIMP) {
    $GIMP = $bindir."/gimp" if $IN_GIMP;
