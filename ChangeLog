@@ -1,5 +1,12 @@
 2004-08-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss.c (gauss_dialog): update the preview when
+	the blur radius is being changed. gimp_coordinates_new() seems to
+	be broken though; there shouldn't be two signal connections needed
+	here.
+
+2004-08-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablepreview.[ch]
 	* libgimpwidgets/gimppreview.[ch]: minor code cleanup, fixes to
 	gtk-doc comments and to the handling of object properties.

@@ -52,19 +52,19 @@ static void      run    (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static void      gauss  (GimpDrawable     *drawable,
-                         gdouble           horizontal,
-                         gdouble           vertical,
-                         BlurMethod        method,
-                         GtkWidget        *preview);
+static void      gauss             (GimpDrawable     *drawable,
+                                    gdouble           horizontal,
+                                    gdouble           vertical,
+                                    BlurMethod        method,
+                                    GtkWidget        *preview);
 
-void update_preview     (GtkWidget *preview,
-                         GtkWidget *size);
+static void      update_preview    (GtkWidget        *preview,
+                                    GtkWidget        *size);
 /*
  * Gaussian blur interface
  */
-static gboolean  gauss_dialog      (gint32        image_ID,
-                                    GimpDrawable *drawable);
+static gboolean  gauss_dialog      (gint32            image_ID,
+                                    GimpDrawable     *drawable);
 
 /*
  * Gaussian blur helper functions
@@ -284,10 +284,12 @@ run (const gchar      *name,
           if (! gauss_dialog (image_ID, drawable))
             return;
           break;
+
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
           if (nparams != 6)
             status = GIMP_PDB_CALLING_ERROR;
+
           if (status == GIMP_PDB_SUCCESS)
             {
               bvals.horizontal = param[3].data.d_float;
@@ -298,10 +300,12 @@ run (const gchar      *name,
               (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0))
             status = GIMP_PDB_CALLING_ERROR;
           break;
+
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly retrieve data  */
           gimp_get_data ("plug_in_gauss", &bvals);
           break;
+
         default:
           break;
         }
@@ -310,6 +314,7 @@ run (const gchar      *name,
     {
       if (nparams != 6)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           radius           = param[3].data.d_float;
@@ -317,9 +322,11 @@ run (const gchar      *name,
           bvals.vertical   = (param[5].data.d_int32) ? radius : 0.;
           bvals.method     = BLUR_IIR;
         }
+
       if (radius <= 0.0)
         status = GIMP_PDB_CALLING_ERROR;
-      if (run_mode==GIMP_RUN_INTERACTIVE)
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (! gauss_dialog (image_ID, drawable))
             return;
@@ -329,15 +336,18 @@ run (const gchar      *name,
     {
       if (nparams != 5)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           bvals.horizontal = param[3].data.d_float;
           bvals.vertical   = param[4].data.d_float;
           bvals.method     = BLUR_IIR;
         }
+
       if (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0)
         status = GIMP_PDB_CALLING_ERROR;
-      if (run_mode==GIMP_RUN_INTERACTIVE)
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (! gauss_dialog (image_ID, drawable))
             return;
@@ -347,6 +357,7 @@ run (const gchar      *name,
     {
       if (nparams != 6)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           radius           = param[3].data.d_float;
@@ -354,9 +365,11 @@ run (const gchar      *name,
           bvals.vertical   = (param[5].data.d_int32) ? radius : 0.;
           bvals.method     = BLUR_RLE;
         }
+
       if (radius <= 0.0)
         status = GIMP_PDB_CALLING_ERROR;
-      if (run_mode==GIMP_RUN_INTERACTIVE)
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (! gauss_dialog (image_ID, drawable))
             return;
@@ -366,15 +379,18 @@ run (const gchar      *name,
     {
       if (nparams != 5)
         status = GIMP_PDB_CALLING_ERROR;
+
       if (status == GIMP_PDB_SUCCESS)
         {
           bvals.horizontal = param[3].data.d_float;
           bvals.vertical   = param[4].data.d_float;
           bvals.method     = BLUR_RLE;
         }
+
       if (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0)
         status = GIMP_PDB_CALLING_ERROR;
-      if (run_mode==GIMP_RUN_INTERACTIVE)
+
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         {
           if (! gauss_dialog (image_ID, drawable))
             return;
@@ -431,6 +447,7 @@ gauss_dialog (gint32        image_ID,
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *size;
+  GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *preview;
 
@@ -450,19 +467,21 @@ gauss_dialog (gint32        image_ID,
 
                          NULL);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   preview = gimp_drawable_preview_new (drawable);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
-  
 
   hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   /*  parameter settings  */
@@ -487,14 +506,25 @@ gauss_dialog (gint32        image_ID,
                                _("_Vertical:"), bvals.vertical, yres,
                                0, 8 * MAX (drawable->width, drawable->height),
                                0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (size), 4);
+
+  gtk_container_set_border_width (GTK_CONTAINER (size), 6);
   gtk_container_add (GTK_CONTAINER (frame), size);
   gtk_widget_show (size);
 
-  g_signal_connect (preview, "updated",
-                    G_CALLBACK (update_preview), size);
-
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
+
+  /*  FIXME: Shouldn't need two signal connections here,
+             gimp_coordinates_new() seems to be severily broken.  */
+  g_signal_connect_swapped (size, "value_changed",
+                            G_CALLBACK (update_preview),
+                            preview);
+  g_signal_connect_swapped (size, "refval_changed",
+                            G_CALLBACK (update_preview),
+                            preview);
+
+  g_signal_connect (preview, "updated",
+                    G_CALLBACK (update_preview),
+                    size);
 
   frame = gimp_int_radio_group_new (TRUE, _("Blur Method"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -504,9 +534,9 @@ gauss_dialog (gint32        image_ID,
                                     _("_RLE"), BLUR_RLE, NULL,
 
                                     NULL);
+
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-
 
   gtk_widget_show (dlg);
 
@@ -523,13 +553,12 @@ gauss_dialog (gint32        image_ID,
   return run;
 }
 
-void update_preview (GtkWidget *preview,
-                     GtkWidget *size)
+static void
+update_preview (GtkWidget *preview,
+                GtkWidget *size)
 {
-  gdouble horizontal, vertical;
-
-  horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
-  vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
+  gdouble horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
+  gdouble vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
 
   gauss (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
          horizontal,
@@ -625,10 +654,10 @@ gauss (GimpDrawable *drawable,
   if (horz <= 0.0 && vert <= 0.0)
     return;
 
-
   if (preview)
     {
       gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+
       width  = gimp_preview_get_width  (GIMP_PREVIEW (preview));
       height = gimp_preview_get_height (GIMP_PREVIEW (preview));
     }
@@ -1002,7 +1031,7 @@ gauss (GimpDrawable *drawable,
 
           if (has_alpha)
             separate_alpha (dest, width, bytes);
-          
+
           if (preview)
             {
               memcpy (preview_buffer2 + row * width * bytes,
