@@ -444,11 +444,19 @@ compare_font_descriptions (const PangoFontDescription *a,
 static gint
 faces_sort_func (const void *a, const void *b)
 {
-  PangoFontDescription *desc_a = pango_font_face_describe (*(PangoFontFace **)a);
-  PangoFontDescription *desc_b = pango_font_face_describe (*(PangoFontFace **)b);
-  
-  gint ord = compare_font_descriptions (desc_a, desc_b);
+  PangoFontDescription *desc_a;
+  PangoFontDescription *desc_b;
+  gint ord;
 
+  desc_a = pango_font_face_describe (*(PangoFontFace **)a);
+  desc_b = pango_font_face_describe (*(PangoFontFace **)b);
+
+  /* FIXME: shouldn't need to check this, but there's a PangoFT2 bug */
+  if (desc_a && desc_b)
+    ord = compare_font_descriptions (desc_a, desc_b);
+  else
+    ord = 0;
+  
   pango_font_description_free (desc_a);
   pango_font_description_free (desc_b);
 
@@ -487,12 +495,11 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 
   if (dialog->family)
     {
-/*        g_print ("%s: %s\n",  */
-/*                 G_GNUC_FUNCTION, pango_font_family_get_name (dialog->family));  */
-/*        G_BREAKPOINT(); */
       pango_font_family_list_faces (dialog->family, &dialog->faces, &n_faces);
       
-      qsort (dialog->faces, n_faces, sizeof (PangoFontFace *), faces_sort_func);
+      if (n_faces > 0)
+        qsort (dialog->faces, n_faces, sizeof (PangoFontFace *), 
+               faces_sort_func);
     }
 
   gtk_clist_freeze (GTK_CLIST (dialog->font_style_clist));
@@ -501,7 +508,7 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
   for (i = 0; i < n_faces && row < 0; i++)
     {
       str = pango_font_face_get_face_name (dialog->faces[i]);
-      gtk_clist_append (GTK_CLIST (dialog->font_style_clist), (char **)&str);
+      gtk_clist_append (GTK_CLIST (dialog->font_style_clist), (gchar **)&str);
 
       if (old_desc)
 	{

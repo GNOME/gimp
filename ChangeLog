@@ -1,3 +1,8 @@
+2001-10-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfontselection-dialog.c: inserted some extra checks
+	to work around a bug in PangoFT2 version 0.20.
+	
 2001-10-02  Emese Kovacs  <emese@gnome.hu>
 
         * tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
