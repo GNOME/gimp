@@ -120,6 +120,11 @@ static void       gimp_layer_transform          (GimpItem           *item,
 static void    gimp_layer_invalidate_boundary   (GimpDrawable       *drawable);
 static void    gimp_layer_get_active_components (const GimpDrawable *drawable,
                                                  gboolean           *active);
+static void    gimp_layer_set_tiles             (GimpDrawable       *drawable,
+                                                 gboolean            push_undo,
+                                                 const gchar        *undo_desc,
+                                                 TileManager        *tiles,
+                                                 GimpImageType       type);
 
 static void       gimp_layer_transform_color    (GimpImage          *gimage,
                                                  PixelRegion        *layerPR,
@@ -246,6 +251,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
 
   drawable_class->invalidate_boundary   = gimp_layer_invalidate_boundary;
   drawable_class->get_active_components = gimp_layer_get_active_components;
+  drawable_class->set_tiles             = gimp_layer_set_tiles;
 
   klass->opacity_changed              = NULL;
   klass->mode_changed                 = NULL;
@@ -374,6 +380,23 @@ gimp_layer_get_active_components (const GimpDrawable *drawable,
 
   if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
     active[gimp_drawable_bytes (drawable) - 1] = FALSE;
+}
+
+static void
+gimp_layer_set_tiles (GimpDrawable *drawable,
+                      gboolean      push_undo,
+                      const gchar  *undo_desc,
+                      TileManager  *tiles,
+                      GimpImageType type)
+{
+  if (push_undo)
+    gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                    undo_desc,
+                                    GIMP_LAYER (drawable));
+
+  GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
+                                                 push_undo, undo_desc,
+                                                 tiles, type);
 }
 
 static void

@@ -941,15 +941,11 @@ gimp_image_convert (GimpImage              *gimage,
 	  break;
 	}
 
-      /*  Push the layer onto the undo stack  */
-      gimp_image_undo_push_layer_mod (gimage, NULL, layer);
+      gimp_drawable_set_tiles (GIMP_DRAWABLE (layer),
+                               TRUE, NULL,
+                               new_tiles, new_layer_type);
 
-      tile_manager_unref (GIMP_DRAWABLE (layer)->tiles);
-
-      GIMP_DRAWABLE (layer)->tiles     = new_tiles;
-      GIMP_DRAWABLE (layer)->type      = new_layer_type;
-      GIMP_DRAWABLE (layer)->bytes     = GIMP_IMAGE_TYPE_BYTES (new_layer_type);
-      GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_layer_type);
+      tile_manager_unref (new_tiles);
     }
 
   switch (new_type)

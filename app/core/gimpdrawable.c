@@ -107,6 +107,12 @@ static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               width,
                                                     gint               height);
 
+static void       gimp_drawable_real_set_tiles     (GimpDrawable      *drawable,
+                                                    gboolean           push_undo,
+                                                    const gchar       *undo_desc,
+                                                    TileManager       *tiles,
+                                                    GimpImageType      type);
+
 
 /*  private variables  */
 
@@ -200,6 +206,7 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   klass->get_active_components       = NULL;
   klass->apply_region                = gimp_drawable_real_apply_region;
   klass->replace_region              = gimp_drawable_real_replace_region;
+  klass->set_tiles                   = gimp_drawable_real_set_tiles;
 }
 
 static void
@@ -573,6 +580,24 @@ gimp_drawable_real_update (GimpDrawable *drawable,
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
+static void
+gimp_drawable_real_set_tiles (GimpDrawable *drawable,
+                              gboolean      push_undo,
+                              const gchar  *undo_desc,
+                              TileManager  *tiles,
+                              GimpImageType type)
+{
+  g_return_if_fail (tile_manager_bpp (tiles) == GIMP_IMAGE_TYPE_BYTES (type));
+
+  if (drawable->tiles)
+    tile_manager_unref (drawable->tiles);
+
+  drawable->tiles     = tile_manager_ref (tiles);
+  drawable->type      = type;
+  drawable->bytes     = tile_manager_bpp (tiles);
+  drawable->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+}
+
 void
 gimp_drawable_configure (GimpDrawable  *drawable,
 			 GimpImage     *gimage,
@@ -691,6 +716,21 @@ gimp_drawable_replace_region (GimpDrawable *drawable,
                                                       push_undo, undo_desc,
                                                       opacity, maskPR,
                                                       x, y);
+}
+
+void
+gimp_drawable_set_tiles (GimpDrawable *drawable,
+                         gboolean      push_undo,
+                         const gchar  *undo_desc,
+                         TileManager  *tiles,
+                         GimpImageType type)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+  g_return_if_fail (tiles != NULL);
+
+  GIMP_DRAWABLE_GET_CLASS (drawable)->set_tiles (drawable,
+                                                 push_undo, undo_desc,
+                                                 tiles, type);
 }
 
 void

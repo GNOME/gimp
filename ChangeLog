@@ -1,5 +1,19 @@
 2004-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpdrawable.[ch]: added new virtual function
+	GimpDrawable::set_tiles().
+
+	* app/core/gimpchannel.c
+	* app/core/gimplayer.c: push an undo before chaining up in
+	set_tiles().
+
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpimage-convert.c
+	* app/tools/gimptransformtool.c: use gimp_drawable_set_tiles()
+	instead of fiddling with the drawable's tile manager directly.
+
+2004-03-13  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimptransformoptions.c (gimp_transform_options_gui): for
 	consistency, changed the label from "Supersample" to "Supersampling".
 

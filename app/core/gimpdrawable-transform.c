@@ -1033,8 +1033,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                                gboolean      new_layer)
 {
   GimpImage   *gimage;
-  GimpLayer   *layer   = NULL;
-  GimpChannel *channel = NULL;
+  GimpLayer   *layer = NULL;
   GimpLayer   *floating_layer;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -1073,12 +1072,21 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
     }
   else
     {
+      const gchar *undo_desc;
+
       if (GIMP_IS_LAYER (drawable))
-        layer = GIMP_LAYER (drawable);
+        {
+          layer = GIMP_LAYER (drawable);
+          undo_desc = _("Transform Layer");
+        }
       else if (GIMP_IS_CHANNEL (drawable))
-        channel = GIMP_CHANNEL (drawable);
+        {
+          undo_desc = _("Transform Channel");
+        }
       else
-        return FALSE;
+        {
+          return FALSE;
+        }
 
       gimp_drawable_invalidate_boundary (drawable);
 
@@ -1099,26 +1107,15 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
                          GIMP_ITEM (drawable)->width,
                          GIMP_ITEM (drawable)->height);
 
-      /*  Push an undo  */
-      if (layer)
-        gimp_image_undo_push_layer_mod (gimage, _("Transform Layer"),
-                                        layer);
-      else if (channel)
-        gimp_image_undo_push_channel_mod (gimage, _("Transform Channel"),
-                                          channel);
+      gimp_drawable_set_tiles (drawable,
+                              TRUE, undo_desc,
+                              tiles, drawable->type);
 
-      /*  set the current layer's data  */
-      tile_manager_unref (drawable->tiles);
-      drawable->tiles = tile_manager_ref (tiles);
-
-      /*  Fill in the new layer's attributes  */
       GIMP_ITEM (drawable)->width  = tile_manager_width (tiles);
       GIMP_ITEM (drawable)->height = tile_manager_height (tiles);
       tile_manager_get_offsets (tiles,
                                 &GIMP_ITEM (drawable)->offset_x,
                                 &GIMP_ITEM (drawable)->offset_y);
-
-      drawable->bytes = tile_manager_bpp (tiles);
 
       if (floating_layer)
         floating_sel_rigor (floating_layer, TRUE);

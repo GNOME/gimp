@@ -974,10 +974,15 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
      case GIMP_TRANSFORM_TYPE_SELECTION:
       if (new_tiles)
         {
+          GimpDrawable *drawable = GIMP_DRAWABLE (active_item);
+
           gimp_channel_push_undo (gimp_image_get_mask (gdisp->gimage), NULL);
 
-          tile_manager_unref (GIMP_DRAWABLE (active_item)->tiles);
-          GIMP_DRAWABLE (active_item)->tiles = new_tiles;
+          gimp_drawable_set_tiles (drawable,
+                                   FALSE, NULL,
+                                   new_tiles, drawable->type);
+
+          tile_manager_unref (new_tiles);
 
           GIMP_CHANNEL (active_item)->bounds_known = FALSE;
 

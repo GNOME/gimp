@@ -81,6 +81,11 @@ struct _GimpDrawableClass
                                   PixelRegion          *maskPR,
                                   gint                  x,
                                   gint                  y);
+  void (* set_tiles)             (GimpDrawable         *drawable,
+                                  gboolean              push_undo,
+                                  const gchar          *undo_desc,
+                                  TileManager          *tiles,
+                                  GimpImageType         type);
 };
 
 
@@ -123,6 +128,13 @@ void            gimp_drawable_replace_region     (GimpDrawable       *drawable,
                                                   PixelRegion        *maskPR,
                                                   gint                x,
                                                   gint                y);
+
+void            gimp_drawable_set_tiles          (GimpDrawable       *drawable,
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc,
+                                                  TileManager        *tiles,
+                                                  GimpImageType       type);
+
 
 void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
                                                   const gchar        *undo_desc,

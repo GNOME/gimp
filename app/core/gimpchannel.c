@@ -110,7 +110,7 @@ static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
                                                 gboolean           *active);
 
-static void       gimp_channel_apply_region  (GimpDrawable     *drawable,
+static void      gimp_channel_apply_region   (GimpDrawable     *drawable,
                                               PixelRegion      *src2PR,
                                               gboolean          push_undo,
                                               const gchar      *undo_desc,
@@ -127,6 +127,11 @@ static void      gimp_channel_replace_region (GimpDrawable     *drawable,
                                               PixelRegion      *maskPR,
                                               gint              x,
                                               gint              y);
+static void      gimp_channel_set_tiles      (GimpDrawable     *drawable,
+                                              gboolean          push_undo,
+                                              const gchar      *undo_desc,
+                                              TileManager      *tiles,
+                                              GimpImageType     type);
 
 static gboolean   gimp_channel_real_boundary (GimpChannel      *channel,
                                               const BoundSeg  **segs_in,
@@ -247,6 +252,7 @@ gimp_channel_class_init (GimpChannelClass *klass)
   drawable_class->get_active_components = gimp_channel_get_active_components;
   drawable_class->apply_region          = gimp_channel_apply_region;
   drawable_class->replace_region        = gimp_channel_replace_region;
+  drawable_class->set_tiles             = gimp_channel_set_tiles;
 
   klass->boundary       = gimp_channel_real_boundary;
   klass->bounds         = gimp_channel_real_bounds;
@@ -742,6 +748,23 @@ gimp_channel_replace_region (GimpDrawable *drawable,
                                                       x, y);
 
   GIMP_CHANNEL (drawable)->bounds_known = FALSE;
+}
+
+static void
+gimp_channel_set_tiles (GimpDrawable *drawable,
+                        gboolean      push_undo,
+                        const gchar  *undo_desc,
+                        TileManager  *tiles,
+                        GimpImageType type)
+{
+  if (push_undo)
+    gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                      undo_desc,
+                                      GIMP_CHANNEL (drawable));
+
+  GIMP_DRAWABLE_CLASS (parent_class)->set_tiles (drawable,
+                                                 push_undo, undo_desc,
+                                                 tiles, type);
 }
 
 static gboolean
