@@ -1,5 +1,13 @@
 2003-10-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: guard callbacks
+	against being invoked during display destruction. Fixes crashes
+	when closing/opening images. Also fixes the crash reported by
+	Pedro Gimeno in the comment to bug #117884, but doesn't fix
+	#117884 since it's a different issue.
+
+2003-10-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/tool_manager.c (tool_manager_image_undo_start): HALT
 	the tool with the right display. Fixes some random tool crashes.
 

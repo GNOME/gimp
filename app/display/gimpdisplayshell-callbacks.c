@@ -112,9 +112,15 @@ gimp_display_shell_events (GtkWidget        *widget,
                            GdkEvent         *event,
                            GimpDisplayShell *shell)
 {
-  Gimp        *gimp        = shell->gdisp->gimage->gimp;
-  gboolean     set_display = FALSE;
+  Gimp        *gimp;
   GdkEventKey *kevent;
+  gboolean     set_display = FALSE;
+
+  /*  are we in destruction?  */
+  if (! shell->gdisp || ! shell->gdisp->shell)
+    return TRUE;
+
+  gimp = shell->gdisp->gimage->gimp;
 
   switch (event->type)
     {
@@ -308,6 +314,10 @@ gimp_display_shell_canvas_configure (GtkWidget         *widget,
                                      GdkEventConfigure *cevent,
                                      GimpDisplayShell  *shell)
 {
+  /*  are we in destruction?  */
+  if (! shell->gdisp || ! shell->gdisp->shell)
+    return TRUE;
+
   if ((shell->disp_width  != shell->canvas->allocation.width) ||
       (shell->disp_height != shell->canvas->allocation.height))
     {
@@ -330,6 +340,10 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   GdkRectangle *rects;
   gint          n_rects;
   gint          i;
+
+  /*  are we in destruction?  */
+  if (! shell->gdisp || ! shell->gdisp->shell)
+    return TRUE;
 
   gimp_display_shell_pause (shell);
 
@@ -422,6 +436,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       g_warning ("%s: called unrealized", G_STRLOC);
       return FALSE;
     }
+
+  /*  are we in destruction?  */
+  if (! shell->gdisp || ! shell->gdisp->shell)
+    return TRUE;
 
   gdisp  = shell->gdisp;
   gimage = gdisp->gimage;
