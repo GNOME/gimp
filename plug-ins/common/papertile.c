@@ -858,14 +858,16 @@ plugin_run (gchar   *name,
   p.run  = FALSE;
   p.run_mode = params[0].data.d_int32;
   p.image    = params[1].data.d_image;
-  p.drawable = gimp_drawable_get(params[2].data.d_drawable);
-  p.drawable_has_alpha = gimp_drawable_has_alpha(p.drawable->id);
+  p.drawable = gimp_drawable_get (params[2].data.d_drawable);
+  p.drawable_has_alpha = gimp_drawable_has_alpha (p.drawable->id);
 
   gimp_drawable_mask_bounds (p.drawable->id,
 			     &p.selection.x0, &p.selection.y0,
 			     &p.selection.x1, &p.selection.y1);
   p.selection.width  = p.selection.x1 - p.selection.x0;
   p.selection.height = p.selection.y1 - p.selection.y0;
+
+  gimp_tile_cache_ntiles (2 * (p.selection.width / gimp_tile_width () + 1));
 
   if (gimp_drawable_is_rgb (p.drawable->id))
     {
@@ -926,6 +928,8 @@ plugin_run (gchar   *name,
 	  gimp_displays_flush ();
 	}
     }
+
+  gimp_drawable_detach (p.drawable);
   
   {
     static GimpParam return_value[1];
