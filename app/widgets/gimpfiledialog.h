@@ -39,15 +39,15 @@ struct _GimpFileDialog
 {
   GtkFileChooserDialog  parent_instance;
 
-  Gimp             *gimp;
-  GimpUIManager    *manager;
-  PlugInProcDef    *file_proc;
+  PlugInProcDef        *file_proc;
 
-  GimpImage        *gimage;
-  gboolean          set_uri_and_proc;
-  gboolean          set_image_clean;
+  GimpImage            *gimage;
+  gboolean              set_uri_and_proc;
+  gboolean              set_image_clean;
 
-  GtkWidget        *thumb_box;
+  GtkWidget            *thumb_box;
+  GtkWidget            *proc_expander;
+  GtkWidget            *proc_view;
 };
 
 struct _GimpFileDialogClass
@@ -59,11 +59,7 @@ struct _GimpFileDialogClass
 GType       gimp_file_dialog_get_type      (void) G_GNUC_CONST;
 
 GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
-                                            GSList               *file_procs,
                                             GtkFileChooserAction  action,
-                                            GimpMenuFactory      *menu_factory,
-                                            const gchar          *menu_identifier,
-                                            const gchar          *ui_path,
                                             const gchar          *title,
                                             const gchar          *role,
                                             const gchar          *stock_id,
@@ -72,13 +68,13 @@ GtkWidget * gimp_file_dialog_new           (Gimp                 *gimp,
 void        gimp_file_dialog_set_file_proc (GimpFileDialog       *dialog,
                                             PlugInProcDef        *file_proc);
 
-void        gimp_file_dialog_set_uri       (GimpFileDialog  *dialog,
-                                            GimpImage       *gimage,
-                                            const gchar     *uri);
-void        gimp_file_dialog_set_image     (GimpFileDialog  *dialog,
-                                            GimpImage       *gimage,
-                                            gboolean         set_uri_and_proc,
-                                            gboolean         set_image_clean);
+void        gimp_file_dialog_set_uri       (GimpFileDialog       *dialog,
+                                            GimpImage            *gimage,
+                                            const gchar          *uri);
+void        gimp_file_dialog_set_image     (GimpFileDialog       *dialog,
+                                            GimpImage            *gimage,
+                                            gboolean              set_uri_and_proc,
+                                            gboolean              set_image_clean);
 
 
 G_END_DECLS

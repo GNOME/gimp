@@ -37,11 +37,11 @@
 #include "file/file-utils.h"
 
 #include "plug-in/plug-in-proc.h"
+#include "plug-in/plug-ins.h"
 
 #include "gimpfiledialog.h"
-#include "gimpmenufactory.h"
+#include "gimpfileprocview.h"
 #include "gimpthumbbox.h"
-#include "gimpuimanager.h"
 
 #include "gimppreviewrendererimagefile.h"
 #include "gimppreview.h"
@@ -49,21 +49,29 @@
 #include "gimp-intl.h"
 
 
-static void       gimp_file_dialog_class_init   (GimpFileDialogClass *klass);
-static void       gimp_file_dialog_init         (GimpFileDialog      *dialog);
+static void       gimp_file_dialog_class_init    (GimpFileDialogClass *klass);
 
-static void       gimp_file_dialog_destroy      (GtkObject           *object);
+static gboolean   gimp_file_dialog_delete_event  (GtkWidget        *widget,
+                                                  GdkEventAny      *event);
 
-static gboolean   gimp_file_dialog_delete_event (GtkWidget           *widget,
-                                                 GdkEventAny         *event);
+static void  gimp_file_dialog_add_preview        (GimpFileDialog   *dialog,
+                                                  Gimp             *gimp);
+static void  gimp_file_dialog_add_filters        (GimpFileDialog   *dialog,
+                                                  Gimp             *gimp,
+                                                  GSList           *file_procs);
+static void  gimp_file_dialog_add_proc_selection (GimpFileDialog   *dialog,
+                                                  Gimp             *gimp,
+                                                  GSList           *file_procs,
+                                                  const gchar      *automatic);
 
-static void  gimp_file_dialog_selection_changed (GtkFileChooser      *chooser,
-                                                 GimpFileDialog      *dialog);
-static void  gimp_file_dialog_update_preview    (GtkFileChooser      *chooser,
-                                                 GimpFileDialog      *dialog);
+static void  gimp_file_dialog_selection_changed  (GtkFileChooser   *chooser,
+                                                  GimpFileDialog   *dialog);
+static void  gimp_file_dialog_update_preview     (GtkFileChooser   *chooser,
+                                                  GimpFileDialog   *dialog);
 
+static void  gimp_file_dialog_proc_changed       (GimpFileProcView *view,
+                                                  GimpFileDialog   *dialog);
 
-static GtkFileChooserDialogClass *parent_class = NULL;
 
 
 GType
@@ -83,7 +91,7 @@ gimp_file_dialog_get_type (void)
         NULL,           /* class_data     */
         sizeof (GimpFileDialog),
         0,              /* n_preallocs    */
-        (GInstanceInitFunc) gimp_file_dialog_init,
+        NULL,           /* instance_init  */
       };
 
       dialog_type = g_type_register_static (GTK_TYPE_FILE_CHOOSER_DIALOG,
@@ -97,33 +105,9 @@ gimp_file_dialog_get_type (void)
 static void
 gimp_file_dialog_class_init (GimpFileDialogClass *klass)
 {
-  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->destroy      = gimp_file_dialog_destroy;
-
   widget_class->delete_event = gimp_file_dialog_delete_event;
-}
-
-static void
-gimp_file_dialog_init (GimpFileDialog *dialog)
-{
-}
-
-static void
-gimp_file_dialog_destroy (GtkObject *object)
-{
-  GimpFileDialog *dialog = GIMP_FILE_DIALOG (object);
-
-  if (dialog->manager)
-    {
-      g_object_unref (dialog->manager);
-      dialog->manager = NULL;
-    }
-
-  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static gboolean
@@ -138,32 +122,38 @@ gimp_file_dialog_delete_event (GtkWidget   *widget,
 
 GtkWidget *
 gimp_file_dialog_new (Gimp                 *gimp,
-                      GSList               *file_procs,
                       GtkFileChooserAction  action,
-                      GimpMenuFactory      *menu_factory,
-                      const gchar          *menu_identifier,
-                      const gchar          *ui_path,
                       const gchar          *title,
                       const gchar          *role,
                       const gchar          *stock_id,
                       const gchar          *help_id)
 {
   GimpFileDialog *dialog;
-  GtkWidget      *hbox;
-  GtkWidget      *option_menu;
-  GtkWidget      *label;
-  GtkFileFilter  *filter;
-  GSList         *list;
+  GSList         *file_procs;
+  const gchar    *automatic;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (file_procs != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
-  g_return_val_if_fail (menu_identifier != NULL, NULL);
-  g_return_val_if_fail (ui_path != NULL, NULL);
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (role != NULL, NULL);
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
+
+  switch (action)
+    {
+    case GTK_FILE_CHOOSER_ACTION_OPEN:
+      file_procs = gimp->load_procs;
+      automatic  = _("Automatic");
+      break;
+
+    case GTK_FILE_CHOOSER_ACTION_SAVE:
+      file_procs = gimp->save_procs;
+      automatic  = _("By Extension");
+      break;
+
+    default:
+      g_return_val_if_reached (NULL);
+      return NULL;
+    }
 
   dialog = g_object_new (GIMP_TYPE_FILE_DIALOG,
                          "title",  title,
@@ -178,86 +168,14 @@ gimp_file_dialog_new (Gimp                 *gimp,
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  gimp_help_connect (GTK_WIDGET (dialog), gimp_standard_help_func,
-                     help_id, NULL);
+  gimp_help_connect (GTK_WIDGET (dialog),
+                     gimp_standard_help_func, help_id, NULL);
 
-  dialog->gimp    = gimp;
-  dialog->manager = gimp_menu_factory_manager_new (menu_factory,
-                                                   menu_identifier,
-                                                   dialog,
-                                                   FALSE);
+  gimp_file_dialog_add_preview (dialog, gimp);
 
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog), hbox);
-  gtk_widget_show (hbox);
+  gimp_file_dialog_add_filters (dialog, gimp, file_procs);
 
-  option_menu = gtk_option_menu_new ();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                            gimp_ui_manager_ui_get (dialog->manager, ui_path));
-  gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
-  gtk_widget_show (option_menu);
-
-  label = gtk_label_new_with_mnemonic (_("Determine File _Type:"));
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
-  gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  if (gimp->config->thumbnail_size > 0)
-    {
-      g_signal_connect (dialog, "selection-changed",
-                        G_CALLBACK (gimp_file_dialog_selection_changed),
-                        dialog);
-      g_signal_connect (dialog, "update-preview",
-                        G_CALLBACK (gimp_file_dialog_update_preview),
-                        dialog);
-
-      dialog->thumb_box = gimp_thumb_box_new (gimp);
-      gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
-      gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
-                                           dialog->thumb_box);
-      gtk_widget_show (dialog->thumb_box);
-
-#ifdef ENABLE_FILE_SYSTEM_ICONS
-      GIMP_PREVIEW_RENDERER_IMAGEFILE (GIMP_PREVIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
-#endif
-
-      gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (dialog), FALSE);
-    }
-
-  filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("All Files"));
-  gtk_file_filter_add_pattern (filter, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
-
-  for (list = file_procs; list; list = g_slist_next (list))
-    {
-      PlugInProcDef *file_proc = list->data;
-
-      if (file_proc->menu_paths && file_proc->extensions_list)
-        {
-          const gchar *name;
-          GSList      *ext;
-
-          if (file_proc->menu_label)
-            name = file_proc->menu_label;
-          else
-            name = strrchr (file_proc->menu_paths->data, '/') + 1;
-
-          filter = gtk_file_filter_new ();
-          gtk_file_filter_set_name (filter, name);
-
-          for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
-            {
-              gchar *pattern = g_strdup_printf ("*.%s", (gchar *) ext->data);
-
-              gtk_file_filter_add_pattern (filter, pattern);
-              g_free (pattern);
-            }
-
-          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
-        }
-    }
+  gimp_file_dialog_add_proc_selection (dialog, gimp, file_procs, automatic);
 
   return GTK_WIDGET (dialog);
 }
@@ -266,49 +184,11 @@ void
 gimp_file_dialog_set_file_proc (GimpFileDialog *dialog,
                                 PlugInProcDef  *file_proc)
 {
-  GtkFileChooser *chooser;
-
   g_return_if_fail (GIMP_IS_FILE_DIALOG (dialog));
 
-  if (file_proc == dialog->file_proc)
-    return;
-
-  dialog->file_proc = file_proc;
-
-  chooser = GTK_FILE_CHOOSER (dialog);
-
-  if (file_proc && file_proc->extensions_list &&
-      gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
-    {
-      gchar *uri = gtk_file_chooser_get_uri (chooser);
-
-      if (uri && strlen (uri))
-        {
-          const gchar *last_dot = strrchr (uri, '.');
-
-          if (last_dot != uri)
-            {
-              GString *s = g_string_new (uri);
-              gchar   *basename;
-
-              if (last_dot)
-                g_string_truncate (s, last_dot - uri);
-
-              g_string_append (s, ".");
-              g_string_append (s, (gchar *) file_proc->extensions_list->data);
-
-              gtk_file_chooser_set_uri (chooser, s->str);
-
-              basename = file_utils_uri_to_utf8_basename (s->str);
-              gtk_file_chooser_set_current_name (chooser, basename);
-              g_free (basename);
-
-              g_string_free (s, TRUE);
-            }
-        }
-
-      g_free (uri);
-    }
+  if (file_proc != dialog->file_proc)
+    gimp_file_proc_view_set_proc (GIMP_FILE_PROC_VIEW (dialog->proc_view),
+                                  file_proc);
 }
 
 void
@@ -383,12 +263,116 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
   else
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), "");
 
-  gimp_ui_manager_update (dialog->manager,
-                          gimp_image_active_drawable (gimage));
+  gimp_file_dialog_set_file_proc (dialog, NULL);
 }
 
 
 /*  private functions  */
+
+static void
+gimp_file_dialog_add_preview (GimpFileDialog *dialog,
+                              Gimp           *gimp)
+{
+  if (gimp->config->thumbnail_size <= 0)
+    return;
+
+  gtk_file_chooser_set_use_preview_label (GTK_FILE_CHOOSER (dialog), FALSE);
+
+  g_signal_connect (dialog, "selection-changed",
+                    G_CALLBACK (gimp_file_dialog_selection_changed),
+                    dialog);
+  g_signal_connect (dialog, "update-preview",
+                    G_CALLBACK (gimp_file_dialog_update_preview),
+                    dialog);
+
+  dialog->thumb_box = gimp_thumb_box_new (gimp);
+  gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
+  gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
+                                       dialog->thumb_box);
+  gtk_widget_show (dialog->thumb_box);
+
+#ifdef ENABLE_FILE_SYSTEM_ICONS
+  GIMP_PREVIEW_RENDERER_IMAGEFILE (GIMP_PREVIEW (GIMP_THUMB_BOX (dialog->thumb_box)->preview)->renderer)->file_system = _gtk_file_chooser_get_file_system (GTK_FILE_CHOOSER (dialog));
+#endif
+}
+
+static void
+gimp_file_dialog_add_filters (GimpFileDialog *dialog,
+                              Gimp           *gimp,
+                              GSList         *file_procs)
+{
+  GtkFileFilter *filter;
+  GSList        *list;
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All Files"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  for (list = file_procs; list; list = g_slist_next (list))
+    {
+      PlugInProcDef *file_proc = list->data;
+
+      if (file_proc->menu_paths && file_proc->extensions_list)
+        {
+          const gchar *domain;
+          gchar       *label;
+          GSList      *ext;
+
+          domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
+          label = plug_in_proc_def_get_label (file_proc, domain);
+
+          filter = gtk_file_filter_new ();
+          gtk_file_filter_set_name (filter, label);
+          g_free (label);
+
+          for (ext = file_proc->extensions_list;
+               ext;
+               ext = g_slist_next (ext))
+            {
+              gchar *pattern = g_strdup_printf ("*.%s", (gchar *) ext->data);
+
+              gtk_file_filter_add_pattern (filter, pattern);
+              g_free (pattern);
+            }
+
+          gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+        }
+    }
+}
+
+static void
+gimp_file_dialog_add_proc_selection (GimpFileDialog *dialog,
+                                     Gimp           *gimp,
+                                     GSList         *file_procs,
+                                     const gchar    *automatic)
+{
+  GtkWidget *scrolled;
+
+  dialog->proc_expander = gtk_expander_new_with_mnemonic (NULL);
+  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog),
+                                     dialog->proc_expander);
+  gtk_widget_show (dialog->proc_expander);
+
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (dialog->proc_expander), scrolled);
+  gtk_widget_show (scrolled);
+
+  gtk_widget_set_size_request (scrolled, -1, 200);
+
+  dialog->proc_view = gimp_file_proc_view_new (gimp, file_procs, automatic);
+  gtk_container_add (GTK_CONTAINER (scrolled), dialog->proc_view);
+  gtk_widget_show (dialog->proc_view);
+
+  g_signal_connect (dialog->proc_view, "changed",
+                    G_CALLBACK (gimp_file_dialog_proc_changed),
+                    dialog);
+
+  gimp_file_proc_view_set_proc (GIMP_FILE_PROC_VIEW (dialog->proc_view), NULL);
+}
 
 static void
 gimp_file_dialog_selection_changed (GtkFileChooser *chooser,
@@ -407,4 +391,59 @@ gimp_file_dialog_update_preview (GtkFileChooser *chooser,
   gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
 
   g_free (uri);
+}
+
+static void
+gimp_file_dialog_proc_changed (GimpFileProcView *view,
+                               GimpFileDialog   *dialog)
+{
+  GtkFileChooser *chooser = GTK_FILE_CHOOSER (dialog);
+  gchar          *name;
+  gchar          *label;
+
+  dialog->file_proc = gimp_file_proc_view_get_proc (view, &name);
+
+  label = g_strdup_printf (_("Select File _Type (%s)"), name);
+
+  gtk_expander_set_label (GTK_EXPANDER (dialog->proc_expander), label);
+
+  g_free (label);
+  g_free (name);
+
+  if (gtk_file_chooser_get_action (chooser) == GTK_FILE_CHOOSER_ACTION_SAVE)
+    {
+      PlugInProcDef *proc = dialog->file_proc;
+
+      if (proc && proc->extensions_list)
+        {
+          gchar *uri = gtk_file_chooser_get_uri (chooser);
+
+          if (uri && strlen (uri))
+            {
+              const gchar *last_dot = strrchr (uri, '.');
+
+              if (last_dot != uri)
+                {
+                  GString *s = g_string_new (uri);
+                  gchar   *basename;
+
+                  if (last_dot)
+                    g_string_truncate (s, last_dot - uri);
+
+                  g_string_append (s, ".");
+                  g_string_append (s, (gchar *) proc->extensions_list->data);
+
+                  gtk_file_chooser_set_uri (chooser, s->str);
+
+                  basename = file_utils_uri_to_utf8_basename (s->str);
+                  gtk_file_chooser_set_current_name (chooser, basename);
+                  g_free (basename);
+
+                  g_string_free (s, TRUE);
+                }
+            }
+
+          g_free (uri);
+        }
+    }
 }

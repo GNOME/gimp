@@ -164,7 +164,7 @@ query (void)
   gimp_plugin_menu_register ("file_gz_load", "<Load>");
   gimp_register_file_handler_mime ("file_gz_load", "application/x-gzip");
   gimp_register_magic_load_handler ("file_gz_load",
-				    "xcf.gz,gz,xcfgz",
+				    "gz,xcfgz",
 				    "",
 				    "0,string,\037\213");
 
@@ -182,7 +182,7 @@ query (void)
 
   gimp_register_file_handler_mime ("file_gz_save", "application/x-gzip");
   gimp_register_save_handler ("file_gz_save",
-                              "xcf.gz,gz,xcfgz",
+                              "gz,xcfgz",
                               "");
 }
 

@@ -36,7 +36,6 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfiledialog.h"
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpmenufactory.h"
 
 #include "dialogs.h"
 #include "file-open-dialog.h"
@@ -46,16 +45,15 @@
 
 /*  local function prototypes  */
 
-static GtkWidget * file_open_dialog_create     (Gimp            *gimp,
-                                                GimpMenuFactory *menu_factory);
-static void        file_open_dialog_response   (GtkWidget       *open_dialog,
-                                                gint             response_id,
-                                                Gimp            *gimp);
-static gboolean    file_open_dialog_open_image (GtkWidget       *open_dialog,
-                                                Gimp            *gimp,
-                                                const gchar     *uri,
-                                                const gchar     *entered_filename,
-                                                PlugInProcDef   *load_proc);
+static GtkWidget * file_open_dialog_create     (Gimp          *gimp);
+static void        file_open_dialog_response   (GtkWidget     *open_dialog,
+                                                gint           response_id,
+                                                Gimp          *gimp);
+static gboolean    file_open_dialog_open_image (GtkWidget     *open_dialog,
+                                                Gimp          *gimp,
+                                                const gchar   *uri,
+                                                const gchar   *entered_filename,
+                                                PlugInProcDef *load_proc);
 
 
 /*  private variables  */
@@ -66,19 +64,17 @@ static GtkWidget *fileload  = NULL;
 /*  public functions  */
 
 void
-file_open_dialog_show (Gimp            *gimp,
-                       GimpImage       *gimage,
-                       const gchar     *uri,
-                       GimpMenuFactory *menu_factory,
-                       GtkWidget       *parent)
+file_open_dialog_show (Gimp        *gimp,
+                       GimpImage   *gimage,
+                       const gchar *uri,
+                       GtkWidget   *parent)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_MENU_FACTORY (menu_factory));
   g_return_if_fail (parent == NULL || GTK_IS_WIDGET (parent));
 
   if (! fileload)
-    fileload = file_open_dialog_create (gimp, menu_factory);
+    fileload = file_open_dialog_create (gimp);
 
   gimp_file_dialog_set_uri (GIMP_FILE_DIALOG (fileload), gimage, uri);
 
@@ -93,14 +89,12 @@ file_open_dialog_show (Gimp            *gimp,
 /*  private functions  */
 
 static GtkWidget *
-file_open_dialog_create (Gimp            *gimp,
-                         GimpMenuFactory *menu_factory)
+file_open_dialog_create (Gimp *gimp)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_file_dialog_new (gimp, gimp->load_procs,
+  dialog = gimp_file_dialog_new (gimp,
                                  GTK_FILE_CHOOSER_ACTION_OPEN,
-                                 menu_factory, "<Load>", "/file-open-popup",
                                  _("Open Image"), "gimp-file-open",
                                  GTK_STOCK_OPEN,
                                  GIMP_HELP_FILE_OPEN);
@@ -108,8 +102,7 @@ file_open_dialog_create (Gimp            *gimp,
   gtk_file_chooser_set_select_multiple (GTK_FILE_CHOOSER (dialog), TRUE);
 
   gimp_dialog_factory_add_foreign (global_dialog_factory,
-                                   "gimp-file-open-dialog",
-                                   dialog);
+                                   "gimp-file-open-dialog", dialog);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (file_open_dialog_response),

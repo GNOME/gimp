@@ -116,7 +116,7 @@ query (void)
   gimp_plugin_menu_register ("file_bz2_load", "<Load>");
   gimp_register_file_handler_mime ("file_bz2_load", "application/x-bzip");
   gimp_register_magic_load_handler ("file_bz2_load",
-                                    "xcf.bz2,bz2,xcfbz2",
+                                    "bz2,xcfbz2",
                                     "",
                                     "0,string,BZh");
 
@@ -134,7 +134,7 @@ query (void)
 
   gimp_register_file_handler_mime ("file_bz2_save", "application/x-bzip");
   gimp_register_save_handler ("file_bz2_save",
-                              "xcf.bz2,bz2,xcfbz2",
+                              "bz2,xcfbz2",
                               "");
 }
 

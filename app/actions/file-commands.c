@@ -79,7 +79,7 @@ file_open_cmd_callback (GtkAction *action,
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (gimp, NULL, NULL, global_menu_factory, widget);
+  file_open_dialog_show (gimp, NULL, NULL, widget);
 }
 
 void
@@ -91,8 +91,7 @@ file_open_from_image_cmd_callback (GtkAction *action,
   return_if_no_gimp (gimp, data);
   return_if_no_widget (widget, data);
 
-  file_open_dialog_show (gimp, action_data_get_image (data),
-                         NULL, global_menu_factory, widget);
+  file_open_dialog_show (gimp, action_data_get_image (data), NULL, widget);
 }
 
 void
@@ -204,7 +203,7 @@ file_save_as_cmd_callback (GtkAction *action,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_dialog_show (gdisp->gimage, global_menu_factory, gdisp->shell);
+  file_save_dialog_show (gdisp->gimage, gdisp->shell);
 }
 
 void
@@ -214,8 +213,7 @@ file_save_a_copy_cmd_callback (GtkAction *action,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  file_save_a_copy_dialog_show (gdisp->gimage, global_menu_factory,
-                                gdisp->shell);
+  file_save_a_copy_dialog_show (gdisp->gimage, gdisp->shell);
 }
 
 void
@@ -284,15 +282,15 @@ file_revert_cmd_callback (GtkAction *action,
                                           "disconnect",
                                           file_revert_confirm_callback,
                                           gdisp->gimage);
-      
+
       g_free (text);
 
       g_object_set_data (G_OBJECT (gdisp->gimage), REVERT_DATA_KEY,
                          query_box);
-      
+
       gtk_window_set_transient_for (GTK_WINDOW (query_box),
                                     GTK_WINDOW (gdisp->shell));
-      
+
       gtk_widget_show (query_box);
     }
 }
@@ -312,7 +310,7 @@ file_file_open_dialog (Gimp        *gimp,
                        const gchar *uri,
                        GtkWidget   *parent)
 {
-  file_open_dialog_show (gimp, NULL, uri, global_menu_factory, parent);
+  file_open_dialog_show (gimp, NULL, uri, parent);
 }
 
 

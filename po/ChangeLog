@@ -1,3 +1,7 @@
+2004-07-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/widgets/gimpfileprocview.c.
+
 2004-07-15  Dmitry G. Mastrukov  <dmitry@taurussoft.org>
 
 	* ru.po: Updated Russian translation

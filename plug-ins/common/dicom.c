@@ -131,7 +131,7 @@ query (void)
                           "Dov Grobgeld",
                           "Dov Grobgeld <dov@imagic.weizmann.ac.il>",
                           "2003",
-                          N_("Digital Imaging and Communications in Medicine image"),
+                          N_("DICOM image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
@@ -141,7 +141,7 @@ query (void)
   gimp_plugin_menu_register ("file_dicom_load", "<Load>");
   gimp_register_file_handler_mime ("file_dicom_load", "image/x-dcm");
   gimp_register_magic_load_handler ("file_dicom_load",
-				    "dcm,DCM,dicom,DICOM",
+				    "dcm,dicom",
 				    "",
 				    "128,string,DICM"
 				    );
@@ -166,7 +166,7 @@ query (void)
   gimp_plugin_menu_register ("file_dicom_save", "<Save>");
   gimp_register_file_handler_mime ("file_dicom_save", "image/x-dcm");
   gimp_register_save_handler ("file_dicom_save",
-                              "dicom,dcm,DCM,DICOM",
+                              "dcm,dicom",
                               "");
 }
 

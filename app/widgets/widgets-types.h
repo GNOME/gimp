@@ -100,6 +100,8 @@ typedef struct _GimpLayerTreeView       GimpLayerTreeView;
 typedef struct _GimpChannelTreeView     GimpChannelTreeView;
 typedef struct _GimpVectorsTreeView     GimpVectorsTreeView;
 
+typedef struct _GimpFileProcView        GimpFileProcView;
+
 typedef struct _GimpContainerEditor     GimpContainerEditor;
 typedef struct _GimpBufferView          GimpBufferView;
 typedef struct _GimpDocumentView        GimpDocumentView;

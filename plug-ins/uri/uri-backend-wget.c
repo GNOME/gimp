@@ -29,6 +29,7 @@
 #include <errno.h>
 
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -88,6 +89,8 @@ query (void)
   gimp_register_load_handler ("file_url_load",
 			      "",
 			      "http:,https:,ftp:");
+  gimp_plugin_icon_register ("file_url_load",
+                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
 }
 
 static void

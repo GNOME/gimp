@@ -292,6 +292,7 @@ app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
 app/widgets/gimpfiledialog.c
+app/widgets/gimpfileprocview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
 app/widgets/gimphelp.c

@@ -1,9 +1,35 @@
+2004-07-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpfileprocview.[ch]: added new widget that offers
+	a treeview on file procedures.
+
+	* app/widgets/gimpfiledialog.[ch]: replaced the file type option
+	menu with the new GimpFileProcView widget.
+	(gimp_file_dialog_set_image): reset the file type to Automatic
+	(fixes bug #141535).
+	
+	* app/actions/file-commands.c
+	* app/gui/file-open-dialog.[ch]
+	* app/gui/file-save-dialog.[ch]: changed accordingly.
+
+	* plug-ins/common/bz2.c
+	* plug-ins/common/gz.c: don't register "xcf.gz" and "xcf.bz2"
+	extension. It's redundant and breaks the code that sets the
+	extension from the selected file-type.
+
+	* plug-ins/common/dicom.c: register a shorter menu label.
+
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/url.c: register stock icons.
+
 2004-07-16  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 	
-	* plug-ins/Lighting/lighting_main.c
-	* plug-ins/Lighting/lighting_main.h
-	* plug-ins/Lighting/lighting_preview.c
-	* plug-ins/Lighting/lighting_preview.h
+	* plug-ins/Lighting/lighting_main.[ch]
+	* plug-ins/Lighting/lighting_preview.[ch]
 	* plug-ins/Lighting/lighting_shade.c
 	* plug-ins/Lighting/lighting_ui.c:  Made this plug-in support 
 	multiple light sources; implemented three, architecture now 
@@ -24,7 +50,7 @@
 	* tools/pdbgen/pdb/image.pdb: removed redundant #includes.
 
 	* tools/pdbgen/pdb/plug_in.pdb: standardized "success" logic.
-	Consistetly fail if there is no currently queried plugin.
+	Consistently fail if there is no currently queried plugin.
 
 	* app/pdb/*.c: regenerated.
 

@@ -201,6 +201,8 @@ query (void)
                           gih_load_args, gih_load_return_vals);
 
   gimp_plugin_menu_register ("file_gih_load", "<Load>");
+  gimp_plugin_icon_register ("file_gih_load",
+                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gih_load", "image/x-gimp-gih");
   gimp_register_magic_load_handler ("file_gih_load",
 				    "gih",
@@ -220,6 +222,8 @@ query (void)
 			  gih_save_args, NULL);
 
   gimp_plugin_menu_register ("file_gih_save", "<Save>");
+  gimp_plugin_icon_register ("file_gih_save",
+                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_BRUSH);
   gimp_register_file_handler_mime ("file_gih_save", "image/x-gimp-gih");
   gimp_register_save_handler ("file_gih_save",
 			      "gih",
