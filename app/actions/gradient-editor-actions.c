@@ -252,7 +252,7 @@ static GimpRadioActionEntry gradient_editor_blending_actions[] =
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 
   { "gradient-editor-blending-sine", NULL,
-    N_("_Sinusodial"), NULL, NULL,
+    N_("_Sinusoidal"), NULL, NULL,
     GIMP_GRAD_SINE,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING },
 

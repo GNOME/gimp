@@ -148,7 +148,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
                                        "xresolution",
-                                       N_("The horizonal image resolution."),
+                                       N_("The horizontal image resolution."),
                                        72.0,
                                        0);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
