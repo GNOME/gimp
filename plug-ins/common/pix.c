@@ -82,7 +82,7 @@ static void     run       (gchar    *name,
 /* Local Helper Functions */ 
 
 static gint32   load_image (gchar   *filename);
-static gint     save_image (gchar   *filename,
+static gboolean save_image (gchar   *filename,
 			    gint32   image_ID,
 			    gint32   drawable_ID);
 
@@ -164,6 +164,18 @@ query (void)
 			      "");
 }
 
+/* 
+ *  Description:
+ *      perform registered plug-in function 
+ *
+ *  Arguments:
+ *      name         - name of the function to perform
+ *      nparams      - number of parameters passed to the function
+ *      param        - parameters passed to the function
+ *      nreturn_vals - number of parameters returned by the function
+ *      return_vals  - parameters returned by the function
+ */
+
 static void 
 run (gchar   *name, 
      gint     nparams, 
@@ -171,17 +183,6 @@ run (gchar   *name,
      gint    *nreturn_vals,
      GimpParam **return_vals)
 {
-  /* 
-   *  Description:
-   *      perform registered plug-in function 
-   *
-   *  Arguments:
-   *      name         - name of the function to perform
-   *      nparams      - number of parameters passed to the function
-   *      param        - parameters passed to the function
-   *      nreturn_vals - number of parameters returned by the function
-   *      return_vals  - parameters returned by the function
-   */
   static GimpParam values[2];
   GimpRunMode  run_mode;
   GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
@@ -261,29 +262,31 @@ run (gchar   *name,
 }
 
 	
+/* 
+ * Description:
+ *     Reads a 16-bit integer from a file in such a way that the machine's
+ *     bit ordering should not matter 
+ */
+
 static guint16
 get_short (FILE *file)
 {
-  /* 
-   * Description:
-   *     Reads a 16-bit integer from a file in such a way that the machine's
-   *     bit ordering should not matter 
-   */
   guchar buf[2];
 
   fread (buf, 2, 1, file);
   return (buf[0] << 8) + (buf[1] << 0);
 }
 	
+/* 
+ * Description:
+ *     Reads a 16-bit integer from a file in such a way that the machine's
+ *     bit ordering should not matter 
+ */
+
 static void
 put_short (guint16  value, 
 	   FILE    *file)
 {
-  /* 
-   * Description:
-   *     Reads a 16-bit integer from a file in such a way that the machine's
-   *     bit ordering should not matter 
-   */
   guchar buf[2];
   buf[0] = (guchar) (value >> 8);
   buf[1] = (guchar) (value % 256);
@@ -291,20 +294,21 @@ put_short (guint16  value,
   fwrite (buf, 2, 1, file);
 }
 
+/*
+ *  Description:
+ *      load the given image into gimp
+ * 
+ *  Arguments:
+ *      filename      - name on the file to read
+ *
+ *  Return Value:
+ *      Image id for the loaded image
+ *      
+ */
+
 static gint32
 load_image (gchar *filename)
 {
-  /*
-   *  Description:
-   *      load the given image into gimp
-   * 
-   *  Arguments:
-   *      filename      - name on the file to read
-   *
-   *  Return Value:
-   *      Image id for the loaded image
-   *      
-   */
   gint       i, j, tile_height, row;	
   FILE      *file = NULL;
   gchar     *progMessage = ident;  /*  only to suppress compiler warnings  */
@@ -322,7 +326,7 @@ load_image (gchar *filename)
   /* Set up progress display */
   progMessage = g_strdup_printf (_("Loading %s:"), filename);
   gimp_progress_init (progMessage);
-  free (progMessage);
+  g_free (progMessage);
 
   PIX_DEBUG_PRINT ("Opening file: %s\n", filename);
 
@@ -388,7 +392,7 @@ load_image (gchar *filename)
 	{
 	  for (dest = dest_base, row = 0;
 	       row < tile_height && i < height;
-	       i += 1, row += 1)
+	       i++, row++)
 	    {
 	      guchar count;
 
@@ -417,7 +421,7 @@ load_image (gchar *filename)
 	  gimp_progress_update ((double) i / (double) height);
 	}
 
-      free (dest_base);
+      g_free (dest_base);
     }
   else
     {
@@ -431,7 +435,7 @@ load_image (gchar *filename)
 	{
 	  for (dest = dest_base, row = 0; 
 	       row < tile_height && i < height;
-	       i += 1, row += 1)
+	       i++, row++)
 	    {
 	      guchar count;
 
@@ -468,11 +472,6 @@ load_image (gchar *filename)
   return image_ID;
 }
 
-static gint 
-save_image (gchar  *filename,  
-	    gint32  image_ID, 
-	    gint32  drawable_ID)
-{
 /* 
  *  Description:
  *      save the given file out as an alias pix or matte file
@@ -482,8 +481,13 @@ save_image (gchar  *filename,
  *      image_ID    - ID of image to save
  *      drawable_ID - current drawable
  */
+
+static gboolean 
+save_image (gchar  *filename,  
+	    gint32  image_ID, 
+	    gint32  drawable_ID)
+{
   gint       depth, i, j, row, tile_height, writelen, rectHeight;
-  /* gboolean   savingAlpha = FALSE; */
   gboolean   savingColor = TRUE;
   guchar    *src; 
   guchar    *src_base;
@@ -498,27 +502,8 @@ save_image (gchar  *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
 		       drawable->height, FALSE, FALSE);
 
-  switch (gimp_drawable_type(drawable_ID))
-    {
-    case GIMP_GRAY_IMAGE:
-      savingColor = FALSE; 
-      depth = 1;
-      break;
-    case GIMP_GRAYA_IMAGE:
-      savingColor = FALSE;
-      depth = 2;
-      break;
-    case GIMP_RGB_IMAGE:
-      savingColor = TRUE;
-      depth = 3;
-      break;
-    case GIMP_RGBA_IMAGE:
-      savingColor = TRUE;
-      depth = 4;
-      break;
-    default:
-      return FALSE;
-    };
+  savingColor = gimp_drawable_is_rgb (drawable_ID);
+  depth = gimp_drawable_bytes (drawable_ID);
 
   /* Open the output file. */
   file = fopen (filename, "wb");
@@ -528,7 +513,7 @@ save_image (gchar  *filename,
   /* Set up progress display */
   progMessage = g_strdup_printf (_("Saving %s:"), filename);
   gimp_progress_init (progMessage);
-  free (progMessage);
+  g_free (progMessage);
 
   /* Write the image header */
   PIX_DEBUG_PRINT ("Width %hu\n", drawable->width);
@@ -537,14 +522,6 @@ save_image (gchar  *filename,
   put_short (drawable->height, file);
   put_short (0, file);
   put_short (0, file);
-  if (savingColor)
-    {
-      put_short (24, file);
-    }
-  else
-    {
-      put_short (8, file);
-    }
 
   tile_height = gimp_tile_height ();
   src_base    = g_new (guchar, tile_height * drawable->width * depth);
@@ -553,6 +530,8 @@ save_image (gchar  *filename,
     {
       /* Writing a 24-bit Pix image */
       guchar record[4];
+
+      put_short (24, file);
 
       for (i = 0; i < drawable->height;)
 	{
@@ -603,6 +582,8 @@ save_image (gchar  *filename,
     {
       /* Writing a 8-bit Matte (Mask) image */
       guchar record[2];
+
+      put_short (8, file);
 
       for (i = 0; i < drawable->height;)
 	{

@@ -1,3 +1,14 @@
+2002-06-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/tiler.c (tile): minor optimizations and code
+	cleanup.
+
+	* plug-ins/common/AlienMap.c: added mnemonis (#80804) plus minor
+	code cleanup.
+
+	* plug-ins/common/pix.c: minor code cleanup: g_new should have a 
+	matching g_free instead of free
+
 2002-06-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/dbbrowser/dbbrowser_utils.c (dialog_search_callback):

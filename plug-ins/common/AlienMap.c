@@ -880,7 +880,7 @@ static void      alienmap_render_row (const guchar *src_row,
 				      gint row_width,
 				      gint bytes, double, double, double);
 static void      alienmap_get_pixel  (int x, int y, guchar *pixel);
-static void    	 transform           (short int *, short int *, short int *,
+static void    	 transform           (guchar *, guchar *, guchar *,
 				      double, double, double);
 
 static void      build_preview_source_image( void);
@@ -973,14 +973,14 @@ query (void)
 }
 
 static void
-transform (short int *r,
-	   short int *g,
-	   short int *b,
+transform (guchar *r,
+	   guchar *g,
+	   guchar *b,
 	   double     redstretch,
 	   double     greenstretch,
 	   double     bluestretch)
 {
-  int red, green, blue;
+  gint red, green, blue;
   const double pi = G_PI;
 
   red = *r;
@@ -990,10 +990,10 @@ transform (short int *r,
   switch (wvals.redmode)
     {
     case SINUS:
-      red    = (int) redstretch*(1.0+sin((red/128.0-1)*pi));
+       red    = redstretch*(1.0+sin((red/128.0-1)*pi));
       break;
     case COSINUS:
-      red    = (int) redstretch*(1.0+cos((red/128.0-1)*pi));
+       red    = redstretch*(1.0+cos((red/128.0-1)*pi));
       break;
     default:
       break;
@@ -1002,10 +1002,10 @@ transform (short int *r,
   switch (wvals.greenmode)
     {
     case SINUS:
-      green    = (int) greenstretch*(1.0+sin((green/128.0-1)*pi));
+       green    = greenstretch*(1.0+sin((green/128.0-1)*pi));
       break;
     case COSINUS:
-      green    = (int) greenstretch*(1.0+cos((green/128.0-1)*pi));
+       green    = greenstretch*(1.0+cos((green/128.0-1)*pi));
       break;
     default:
       break;
@@ -1014,10 +1014,10 @@ transform (short int *r,
   switch (wvals.bluemode)
     {
     case SINUS:
-      blue    = (int) bluestretch*(1.0+sin((blue/128.0-1)*pi));
+      blue    = bluestretch*(1.0+sin((blue/128.0-1)*pi));
       break;
     case COSINUS:
-      blue    = (int) bluestretch*(1.0+cos((blue/128.0-1)*pi));
+      blue    = bluestretch*(1.0+cos((blue/128.0-1)*pi));
       break;
     default:
       break;
@@ -1040,7 +1040,6 @@ transform (short int *r,
   *g = green;
   *b = blue;
 }
-
 
 static void
 run (char       *name,
@@ -1247,23 +1246,24 @@ alienmap_render_row (const guchar *src_row,
 
   for (col = 0; col < row_width ; col++)
     {
-      short int v1, v2, v3;
+      guchar v1, v2, v3;
 
-      v1 = (short int)src_row[col*bytes];
-      v2 = (short int)src_row[col*bytes +1];
-      v3 = (short int)src_row[col*bytes +2];
+      v1 = src_row[0];
+      v2 = src_row[1];
+      v3 = src_row[2];
 
       transform(&v1, &v2, &v3, redstretch, greenstretch, bluestretch);
 
-      dest_row[col*bytes] = (int)v1;
-      dest_row[col*bytes +1] = (int)v2;
-      dest_row[col*bytes +2] = (int)v3;
+      dest_row[0] = v1;
+      dest_row[1] = v2;
+      dest_row[2] = v3;
 
-      if (bytes>3)
-        for (bytenum = 3; bytenum<bytes; bytenum++)
-          {
-            dest_row[col*bytes+bytenum] = src_row[col*bytes+bytenum];
-          }
+      for (bytenum = 3; bytenum < bytes; bytenum++)
+	{
+	  dest_row[bytenum] = src_row[bytenum];
+	}
+      src_row += bytes;
+      dest_row += bytes;
     }
 }
 
@@ -1279,28 +1279,19 @@ alienmap (GimpDrawable *drawable)
   gint x1, y1, x2, y2;
   double redstretch,greenstretch,bluestretch;
 
-  /* Get the input area. This is the bounding box of the selection in
-   *  the image (or the entire image if there is no selection). Only
-   *  operating on the input area is simply an optimization. It doesn't
-   *  need to be done for correct operation. (It simply makes it go
-   *  faster, since fewer pixels need to be operated on).
-   */
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = drawable->width;
-  height = drawable->height;
+  width = x2 - x1;
+  height = y2 - y1;
   bytes = drawable->bpp;
 
   /*  allocate row buffers  */
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
+  src_row = g_new (guchar, width * bytes);
+  dest_row = g_new (guchar, width * bytes);
 
   /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
 
   redstretch = wvals.redstretch;
   greenstretch = wvals.greenstretch;
@@ -1308,29 +1299,25 @@ alienmap (GimpDrawable *drawable)
 
   for (row = y1; row < y2; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, width);
 
-      alienmap_render_row (src_row,
-        		dest_row,
-        		row,
-        		(x2 - x1),
-        		bytes,
-        		redstretch, greenstretch, bluestretch);
+      alienmap_render_row (src_row, dest_row, row, width, bytes,
+			   redstretch, greenstretch, bluestretch);
 
       /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
+      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, width);
 
       if ((row % 10) == 0)
-        gimp_progress_update ((double) row / (double) (y2 - y1));
+        gimp_progress_update ((double) row / (double) height);
     }
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 
-  free (src_row);
-  free (dest_row);
+  g_free (src_row);
+  g_free (dest_row);
 }
 
 static void
@@ -1443,7 +1430,7 @@ alienmap_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Red:"), SCALE_WIDTH, 0,
+			      _("_Red:"), SCALE_WIDTH, 0,
 			      wvals.redstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the red channel"), NULL);
@@ -1452,7 +1439,7 @@ alienmap_dialog (void)
                     &wvals.redstretch);
 			      
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Green:"), SCALE_WIDTH, 0,
+			      _("_Green:"), SCALE_WIDTH, 0,
 			      wvals.greenstretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the green channel"), NULL);
@@ -1461,7 +1448,7 @@ alienmap_dialog (void)
                     &wvals.greenstretch);
 			      
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Blue:"), SCALE_WIDTH, 0,
+			      _("_Blue:"), SCALE_WIDTH, 0,
 			      wvals.bluestretch, 0, 128, 1, 8, 2,
 			      TRUE, 0, 0,
 			      _("Change intensity of the blue channel"), NULL);
@@ -1474,9 +1461,9 @@ alienmap_dialog (void)
 				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.redmode, (gpointer) wvals.redmode,
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("_Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
+				 _("_None"),   (gpointer) NONE, &toggle3,
 
 				 NULL);
 
@@ -1497,9 +1484,9 @@ alienmap_dialog (void)
 				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.greenmode, (gpointer) wvals.greenmode,
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("_Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
+				 _("_None"),   (gpointer) NONE, &toggle3,
 
 				 NULL);
 
@@ -1520,9 +1507,9 @@ alienmap_dialog (void)
 				 G_CALLBACK (alienmap_toggle_update),
 				 &wvals.bluemode, (gpointer) wvals.bluemode,
 
-				 _("Sine"),   (gpointer) SINUS, &toggle1,
-				 _("Cosine"), (gpointer) COSINUS, &toggle2,
-				 _("None"),   (gpointer) NONE, &toggle3,
+				 _("_Sine"),   (gpointer) SINUS, &toggle1,
+				 _("Cos_ine"), (gpointer) COSINUS, &toggle2,
+				 _("_None"),   (gpointer) NONE, &toggle3,
 
 				 NULL);
 
@@ -1565,7 +1552,7 @@ dialog_update_preview (void)
   int  px, py;
   int     x, y;
   double  redstretch, greenstretch, bluestretch;
-  short int r,g,b;
+  guchar r,g,b;
   double  scale_x, scale_y;
   guchar *p_ul, *i, *p;
 

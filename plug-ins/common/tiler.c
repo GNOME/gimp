@@ -169,13 +169,12 @@ scale (gint width,
 static void
 tile (GimpDrawable *drawable)
 {
-  glong      width, height;
   glong      bytes;
   glong      val;
   gint       wodd, hodd;
   GimpPixelRgn  srcPR, destPR;
   gint       x1, y1, x2, y2;
-  gint       row, col, x, y, c;
+  gint       row, col, width, height, c;
   guchar    *cur_row, *dest_cur, *dest_top, *dest_bot;
 
   /* Get the input */
@@ -183,79 +182,74 @@ tile (GimpDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   gimp_progress_init (_("Tiler..."));
   
-  width  = drawable->width;
-  height = drawable->height;
+  width = x2 - x1;
+  height = y2 - y1;
   bytes  = drawable->bpp;
 
   /*  allocate row buffers  */
-  cur_row  = g_new (guchar, (x2 - x1) * bytes);
-  dest_cur = g_new (guchar, (x2 - x1) * bytes);
-  dest_top = g_new (guchar, (x2 - x1) * bytes);
-  dest_bot = g_new (guchar, (x2 - x1) * bytes);
+  cur_row  = g_new (guchar, width * bytes);
+  dest_cur = g_new0 (guchar, width * bytes);
+  dest_top = g_new (guchar, width * bytes);
+  dest_bot = g_new (guchar, width * bytes);
 
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, width, height, TRUE, TRUE);
 
-  y = y2-y1;
-  x = x2-x1;
+  wodd = width & 1;
+  hodd = height & 1;
 
-  wodd = x&1;
-  hodd = y&1;
-
-  for (row = 0; row <y; row++)
+  for (row = 0; row  < height; row++)
     {
-      gimp_pixel_rgn_get_row (&destPR, dest_cur, x1, y1+row, (x2-x1));
-      memset (dest_cur, 0, x*bytes);
-      gimp_pixel_rgn_set_row (&destPR, dest_cur, x1, y1+row, (x2-x1));
+      gimp_pixel_rgn_set_row (&destPR, dest_cur, x1, y1 + row, width);
     }
 
-  for (row = 0; row < y; row++)
+  for (row = 0; row < height; row++)
     {
-      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1+row, (x2-x1));
-      gimp_pixel_rgn_get_row (&destPR, dest_cur, x1, y1+row, (x2-x1));
-      if (row >= y/2+hodd)
+      gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, y1 + row, width);
+      gimp_pixel_rgn_get_row (&destPR, dest_cur, x1, y1 + row, width);
+      if (row >= height/2+hodd)
 	gimp_pixel_rgn_get_row (&destPR, dest_top,
-				x1, y1+(row-y/2-hodd), (x2-x1));
-      if (row < y/2)
+				x1, y1+(row-height/2-hodd), width);
+      if (row < height/2)
 	gimp_pixel_rgn_get_row (&destPR, dest_bot,
-				x1, y1+(row+y/2+hodd), (x2-x1));
+				x1, y1+(row+height/2+hodd), width);
 
-      for (col = 0; col < x; col++)
+      for (col = 0; col < width; col++)
 	{
-	  for (c=0; c<bytes; c++)
+	  for (c = 0; c < bytes; c++)
 	    {
-	      val = scale (x, y, col, row, cur_row[col*bytes+c]);
+	      val = scale (width, height, col, row, cur_row[col*bytes+c]);
 
 	      /* Main image */
 	      dest_cur[col*bytes+c] += val;
 	      /* top left */
-	      if ((col>=x/2+wodd) && (row>=y/2+hodd))
-		dest_top[(col-x/2-wodd)*bytes+c] += val;
+	      if ((col>=width/2+wodd) && (row>=height/2+hodd))
+		dest_top[(col-width/2-wodd)*bytes+c] += val;
 	      /* top right */
-	      if ((col<x/2) && (row>=y/2+hodd))
-		dest_top[(x/2+col+wodd)*bytes+c] += val;
+	      if ((col<width/2) && (row>=height/2+hodd))
+		dest_top[(width/2+col+wodd)*bytes+c] += val;
 	      /* bottom left */
-	      if ((col>=x/2+wodd) && (row<y/2))
-		dest_bot[(col-x/2-wodd)*bytes+c] += val;
+	      if ((col>=width/2+wodd) && (row<height/2))
+		dest_bot[(col-width/2-wodd)*bytes+c] += val;
 	      /* bottom right */
-	      if ((col<x/2) && (row<y/2))
-		dest_bot[(col+x/2+wodd)*bytes+c] += val;
+	      if ((col<width/2) && (row<height/2))
+		dest_bot[(col+width/2+wodd)*bytes+c] += val;
 	    }
 	}
 
-      gimp_pixel_rgn_set_row (&destPR, dest_cur, x1, y1+row, (x2-x1));
-      if (row >= y/2+hodd)
+      gimp_pixel_rgn_set_row (&destPR, dest_cur, x1, y1+row, width);
+      if (row >= height/2+hodd)
 	gimp_pixel_rgn_set_row (&destPR, dest_top,
-				x1, y1+(row-y/2-hodd), (x2-x1));
-      if (row < y/2)
+				x1, y1+(row-height/2-hodd), width);
+      if (row < height/2)
 	gimp_pixel_rgn_set_row (&destPR, dest_bot,
-				x1, y1+(row+y/2+hodd), (x2-x1));
+				x1, y1+(row+height/2+hodd), width);
 
       if ((row % 5) == 0)
-	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
+	gimp_progress_update ((gdouble) row / (gdouble) height);
     }
 
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-  gimp_drawable_update (drawable->drawable_id, x1, y1, (x2-x1), (y2-y1));
+  gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
 }
