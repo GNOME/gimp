@@ -1734,8 +1734,8 @@ gimp_statusbar_new
 gimp_statusbar_push
 gimp_statusbar_push_coords
 gimp_statusbar_pop
-gimp_statusbar_update_cursor
-gimp_statusbar_resize_cursor
+gimp_statusbar_set_cursor
+gimp_statusbar_clear_cursor
 <SUBSECTION Standard>
 GimpStatusbarClass
 GIMP_STATUSBAR
@@ -2501,15 +2501,15 @@ GIMP_IS_CURVES_TOOL_CLASS
 <FILE>gimpdodgeburntool</FILE>
 <TITLE>GimpDodgeBurnTool</TITLE>
 GimpDodgeBurnTool
-gimp_dodgeburn_tool_register
+gimp_dodge_burn_tool_register
 <SUBSECTION Standard>
 GimpDodgeBurnToolClass
-GIMP_DODGEBURN_TOOL
-GIMP_IS_DODGEBURN_TOOL
-GIMP_TYPE_DODGEBURN_TOOL
-gimp_dodgeburn_tool_get_type
-GIMP_DODGEBURN_TOOL_CLASS
-GIMP_IS_DODGEBURN_TOOL_CLASS
+GIMP_DODGE_BURN_TOOL
+GIMP_IS_DODGE_BURN_TOOL
+GIMP_TYPE_DODGE_BURN_TOOL
+gimp_dodge_burn_tool_get_type
+GIMP_DODGE_BURN_TOOL_CLASS
+GIMP_IS_DODGE_BURN_TOOL_CLASS
 </SECTION>
 
 <SECTION>
@@ -3488,8 +3488,7 @@ gimp_enum_store_new
 gimp_enum_store_new_with_range
 gimp_enum_store_new_with_values
 gimp_enum_store_new_with_values_valist
-gimp_enum_store_lookup_by_value
-gimp_enum_store_set_icons
+gimp_enum_store_set_stock_prefix
 <SUBSECTION Standard>
 GimpEnumStoreClass
 GIMP_ENUM_STORE
@@ -3506,9 +3505,6 @@ GIMP_ENUM_STORE_GET_CLASS
 <TITLE>GimpEnumComboBox</TITLE>
 GimpEnumComboBox
 gimp_enum_combo_box_new
-gimp_enum_combo_box_new_with_model
-gimp_enum_combo_box_set_active
-gimp_enum_combo_box_get_active
 gimp_enum_combo_box_set_stock_prefix
 gimp_enum_combo_box_set_visible
 <SUBSECTION Standard>
@@ -3776,47 +3772,6 @@ GIMP_IS_CONTAINER_GRID_VIEW_CLASS
 GIMP_CONTAINER_GRID_VIEW_GET_CLASS
 </SECTION>
 
-<SECTION>
-<FILE>gimpcontainermenu</FILE>
-<TITLE>GimpContainerMenu</TITLE>
-GimpContainerMenu
-gimp_container_menu_set_container
-gimp_container_menu_set_context
-gimp_container_menu_set_preview_size
-gimp_container_menu_select_item
-gimp_container_menu_activate_item
-gimp_container_menu_context_item
-gimp_container_menu_item_selected
-gimp_container_menu_item_activated
-gimp_container_menu_item_context
-<SUBSECTION Standard>
-GimpContainerMenuClass
-GIMP_CONTAINER_MENU
-GIMP_IS_CONTAINER_MENU
-GIMP_TYPE_CONTAINER_MENU
-gimp_container_menu_get_type
-GIMP_CONTAINER_MENU_CLASS
-GIMP_IS_CONTAINER_MENU_CLASS
-GIMP_CONTAINER_MENU_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpcontainermenuimpl</FILE>
-<TITLE>GimpContainerMenuImpl</TITLE>
-GimpContainerMenuImpl
-gimp_container_menu_new
-<SUBSECTION Standard>
-GimpContainerMenuImplClass
-GIMP_CONTAINER_MENU_IMPL
-GIMP_IS_CONTAINER_MENU_IMPL
-GIMP_TYPE_CONTAINER_MENU_IMPL
-gimp_container_menu_impl_get_type
-GIMP_CONTAINER_MENU_IMPL_CLASS
-GIMP_IS_CONTAINER_MENU_IMPL_CLASS
-GIMP_CONTAINER_MENU_IMPL_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpcontainerpopup</FILE>
 <TITLE>GimpContainerPopup</TITLE>
 GimpContainerPopup
@@ -4441,22 +4396,6 @@ gimp_menu_factory_get_type
 GIMP_MENU_FACTORY_CLASS
 GIMP_IS_MENU_FACTORY_CLASS
 GIMP_MENU_FACTORY_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpmenuitem</FILE>
-<TITLE>GimpMenuItem</TITLE>
-GimpMenuItem
-gimp_menu_item_new
-<SUBSECTION Standard>
-GimpMenuItemClass
-GIMP_MENU_ITEM
-GIMP_IS_MENU_ITEM
-GIMP_TYPE_MENU_ITEM
-gimp_menu_item_get_type
-GIMP_MENU_ITEM_CLASS
-GIMP_IS_MENU_ITEM_CLASS
-GIMP_MENU_ITEM_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6756,8 +6695,8 @@ qmask_menu_update
 <FILE>resize-dialog</FILE>
 ResizeType
 ResizeTarget
-Resize
-resize_widget_new
+ResizeDialog
+resize_dialog_new
 </SECTION>
 
 <SECTION>

@@ -1,16 +1,23 @@
+2004-05-12  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: make it compile again.
+
+	* app/app-sections.txt
+	* app/app.types: some minor updates, needs a lot more work.
+
 2004-05-06  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_plugin_menu_register().
 
-	* devel-docs/libgimp/tmpl/gimpplugin.sgml: regenerated.
+	* libgimp/tmpl/gimpplugin.sgml: regenerated.
 
 2004-05-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
 
-	* devel-docs/libgimpwidgets/tmpl/gimpframe.sgml
-	* devel-docs/libgimpwidgets/tmpl/gimphelpui.sgml
-	* devel-docs/libgimpwidgets/tmpl/gimpoffsetarea.sgml: regenerated.
+	* libgimpwidgets/tmpl/gimpframe.sgml
+	* libgimpwidgets/tmpl/gimphelpui.sgml
+	* libgimpwidgets/tmpl/gimpoffsetarea.sgml: regenerated.
 
 2004-05-02  Sven Neumann  <sven@gimp.org>
 
