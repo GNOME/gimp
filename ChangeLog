@@ -1,3 +1,7 @@
+Tue Apr 20 00:48:18 CEST 1999 Marc Lehmann <pcg@goof.com>
+
+	* configure.in: bump minimum perl version from 5.004 to 5.004_4.
+
 Mon Apr 19 23:31:17 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap: Changes to the GAP plug-in as they were sent to
