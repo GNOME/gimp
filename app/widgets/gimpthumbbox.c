@@ -129,18 +129,22 @@ gimp_thumb_box_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+
+/*  public functions  */
+
 GtkWidget *
 gimp_thumb_box_new (Gimp *gimp)
 {
-  GimpThumbBox *box;
-  GtkWidget    *vbox;
-  GtkWidget    *vbox2;
-  GtkWidget    *ebox;
-  GtkWidget    *hbox;
-  GtkWidget    *button;
-  GtkWidget    *label;
-  GtkStyle     *style;
-  gchar        *str;
+  GimpThumbBox   *box;
+  GtkWidget      *vbox;
+  GtkWidget      *vbox2;
+  GtkWidget      *ebox;
+  GtkWidget      *hbox;
+  GtkWidget      *button;
+  GtkWidget      *label;
+  GtkStyle       *style;
+  gchar          *str;
+  GtkRequisition  requisition;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -208,6 +212,10 @@ gimp_thumb_box_new (Gimp *gimp)
 
   box->imagefile = gimp_imagefile_new (gimp, NULL);
 
+  g_signal_connect (box->imagefile, "info_changed",
+                    G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
+                    box);
+
   box->preview = gimp_preview_new (GIMP_VIEWABLE (box->imagefile),
                                    gimp->config->thumbnail_size, 0, FALSE);
 
@@ -227,42 +235,27 @@ gimp_thumb_box_new (Gimp *gimp)
                     G_CALLBACK (gimp_thumb_box_thumbnail_clicked),
                     box);
 
-  box->title = gtk_label_new (_("No Selection"));
-  gtk_box_pack_start (GTK_BOX (vbox2), box->title, FALSE, FALSE, 0);
-  gtk_widget_show (box->title);
+  box->filename = gtk_label_new (_("No Selection"));
+  gtk_box_pack_start (GTK_BOX (vbox2), box->filename, FALSE, FALSE, 0);
+  gtk_widget_show (box->filename);
 
-  box->label = gtk_label_new (" \n \n ");
-  gtk_misc_set_alignment (GTK_MISC (box->label), 0.5, 0.0);
-  gtk_label_set_justify (GTK_LABEL (box->label), GTK_JUSTIFY_CENTER);
-  gtk_box_pack_start (GTK_BOX (vbox2), box->label, FALSE, FALSE, 0);
-  gtk_widget_show (box->label);
-
-  /* eek */
-  {
-    GtkRequisition requisition;
-
-    gtk_widget_size_request (box->label, &requisition);
-    gtk_widget_set_size_request (box->label, -1, requisition.height);
-  }
-
-  g_signal_connect (box->imagefile, "info_changed",
-                    G_CALLBACK (gimp_thumb_box_imagefile_info_changed),
-                    box);
-
-  /*  The progress bar  */
+  box->info = gtk_label_new (" \n \n ");
+  gtk_misc_set_alignment (GTK_MISC (box->info), 0.5, 0.0);
+  gtk_label_set_justify (GTK_LABEL (box->info), GTK_JUSTIFY_CENTER);
+  gtk_box_pack_start (GTK_BOX (vbox2), box->info, FALSE, FALSE, 0);
+  gtk_widget_show (box->info);
 
   box->progress = gtk_progress_bar_new ();
+  gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "foo");
   gtk_box_pack_end (GTK_BOX (vbox2), box->progress, FALSE, FALSE, 0);
   /* don't gtk_widget_show (box->progress); */
 
   /* eek */
-  {
-    GtkRequisition requisition;
+  gtk_widget_size_request (box->info, &requisition);
+  gtk_widget_set_size_request (box->info, -1, requisition.height);
 
-    gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "foo");
-    gtk_widget_size_request (box->progress, &requisition);
-    gtk_widget_set_size_request (box->title, requisition.width, -1);
-  }
+  gtk_widget_size_request (box->progress, &requisition);
+  gtk_widget_set_size_request (box->filename, requisition.width, -1);
 
   return GTK_WIDGET (box);
 }
@@ -280,12 +273,12 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
       gchar *basename;
 
       basename = file_utils_uri_to_utf8_basename (uri);
-      gtk_label_set_text (GTK_LABEL (box->title), basename);
+      gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (box->title), _("No Selection"));
+      gtk_label_set_text (GTK_LABEL (box->filename), _("No Selection"));
     }
 
   gtk_widget_set_sensitive (GTK_WIDGET (box), uri != NULL);
@@ -334,7 +327,7 @@ static void
 gimp_thumb_box_imagefile_info_changed (GimpImagefile *imagefile,
                                        GimpThumbBox  *box)
 {
-  gtk_label_set_text (GTK_LABEL (box->label),
+  gtk_label_set_text (GTK_LABEL (box->info),
                       gimp_imagefile_get_desc_string (imagefile));
 }
 
@@ -364,7 +357,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
           gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), NULL);
           gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (box->progress), 0.0);
 
-          gtk_widget_hide (box->label);
+          gtk_widget_hide (box->info);
           gtk_widget_show (box->progress);
 
           for (list = box->uris->next, i = 0;
@@ -419,7 +412,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
       if (n_uris > 1)
         {
           gtk_widget_hide (box->progress);
-          gtk_widget_show (box->label);
+          gtk_widget_show (box->info);
         }
 
       gtk_widget_set_sensitive (gtk_widget_get_toplevel (GTK_WIDGET (box)),
@@ -440,7 +433,7 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
     {
       gchar *basename = file_utils_uri_to_utf8_basename (uri);
 
-      gtk_label_set_text (GTK_LABEL (box->title), basename);
+      gtk_label_set_text (GTK_LABEL (box->filename), basename);
       g_free (basename);
 
       gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
@@ -448,7 +441,9 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
       if (always_create ||
           gimp_thumbnail_peek_thumb (box->imagefile->thumbnail, size)
           < GIMP_THUMB_STATE_FAILED)
-        gimp_imagefile_create_thumbnail (box->imagefile, size);
+        {
+          gimp_imagefile_create_thumbnail (box->imagefile, size);
+        }
     }
 
   g_free (filename);

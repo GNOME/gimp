@@ -1,3 +1,7 @@
+2004-02-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpthumbbox.[ch]: renamed some members, cleanup.
+
 2004-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpprogress.c (gimp_progress_end): check

@@ -35,12 +35,11 @@ struct _GimpThumbBox
   GtkFrame       parent_instance;
 
   GimpImagefile *imagefile;
-
   GSList        *uris;
 
-  GtkWidget     *title;
   GtkWidget     *preview;
-  GtkWidget     *label;
+  GtkWidget     *filename;
+  GtkWidget     *info;
   GtkWidget     *progress;
 };
 
