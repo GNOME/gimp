@@ -5327,13 +5327,52 @@ rgb_to_hls (int *r,
 
       if (h < 0)
 	h += 255;
-      if (h > 255)
+      else if (h > 255)
 	h -= 255;
     }
 
   *r = h;
   *g = l;
   *b = s;
+}
+
+
+/* Just compute the luminosity component. */
+int
+rgb_to_l (int red,
+	  int green,
+	  int blue)
+{
+  float h, l, s;
+  int min, max;
+  int delta;
+
+  if (red > green)
+    {
+      if (red > blue)
+	max = red;
+      else
+	max = blue;
+
+      if (green < blue)
+	min = green;
+      else
+	min = blue;
+    }
+  else
+    {
+      if (green > blue)
+	max = green;
+      else
+	max = blue;
+
+      if (red < blue)
+	min = red;
+      else
+	min = blue;
+    }
+
+  return (max + min) / 2.0;
 }
 
 
