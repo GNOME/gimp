@@ -784,6 +784,14 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_TOOL_COLORIZE ##### -->
+<para>
+<inlinegraphic fileref="stock-tool-colorize-22.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-tool-colorize-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_TOOL_CROP ##### -->
 <para>
 <inlinegraphic fileref="stock-tool-crop-22.png" format="png"></inlinegraphic>

@@ -1,7 +1,8 @@
 2003-05-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
-	* libgimpwidgets/tmpl/gimpstock.sgml: added new flip icons.
+	* libgimpwidgets/tmpl/gimpstock.sgml: added new flip and colorize
+	icons.
 
 2003-05-15  Sven Neumann  <sven@gimp.org>
 
