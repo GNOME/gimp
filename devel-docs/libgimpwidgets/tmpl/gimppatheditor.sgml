@@ -50,7 +50,6 @@ the search path, the "path_changed" signal will be emitted.
 
 @gimppatheditor: the object which received the signal.
 
-
 <!-- ##### FUNCTION gimp_path_editor_new ##### -->
 <para>
 
