@@ -1,6 +1,6 @@
 gimp-@GIMP_APP_VERSION@
 	command=gimp-remote-@GIMP_APP_VERSION@
-	name=@GIMP_VISIBLE_NAME@
+	name=The GIMP
 	can_open_multiple_files=true
 	expects_uris=non-file
 	requires_terminal=false

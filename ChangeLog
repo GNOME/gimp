@@ -1,5 +1,10 @@
 2004-03-10  Manish Singh  <yosh@gimp.org>
 
+	* data/misc/gimp.applications.in: GIMP_VISIBLE_NAME doesn't exist
+	anymore. Just use "The GIMP".
+
+2004-03-10  Manish Singh  <yosh@gimp.org>
+
 	* acinclude.m4: #include <string.h> for gimp-print test. Fixes
 	#136747.
 
