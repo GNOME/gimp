@@ -1,3 +1,8 @@
+2004-08-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am: do not build test-preview-area by
+	default, put it into EXTRA_PROGRAMS. Fixes parallel builds.
+
 2004-08-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-proc.[ch] (plug_in_proc_def_get_sensitive):

@@ -219,7 +219,7 @@ $(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
 # test programs, not to be built by default and never installed
 #
 
-noinst_PROGRAMS = test-preview-area
+EXTRA_PROGRAMS = test-preview-area
 
 test_preview_area_SOURCES = test-preview-area.c 
 
