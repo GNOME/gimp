@@ -100,7 +100,6 @@ typedef struct
 typedef struct
 {
   IfsColor  *color;
-  guchar     char_color[3];
   gchar     *name;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
@@ -2034,10 +2033,6 @@ color_map_create (gchar    *name,
   color_map->color = data;
   color_map->fixed_point = fixed_point;
 
-  color_map->char_color[0] = (guchar)(data->vals[0] * 255.999);
-  color_map->char_color[1] = (guchar)(data->vals[1] * 255.999);
-  color_map->char_color[2] = (guchar)(data->vals[2] * 255.999);
-
   color_map->hbox = gtk_hbox_new (FALSE,2);
 
   frame = gtk_frame_new (NULL);
@@ -2060,9 +2055,9 @@ color_map_create (gchar    *name,
   gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
   gtk_widget_show (arrow);
 
-  color_map->button = gimp_color_button_new (color_map->name,
-					     COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE,
-					     color_map->char_color, 3);
+  color_map->button = gimp_color_button_double_new (color_map->name,
+						    COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE,
+						    color_map->color->vals, 3);
 
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button, 
 		      FALSE, FALSE, 0);
@@ -2082,10 +2077,6 @@ color_map_color_changed_cb (GtkWidget *widget,
   undo_begin ();
   undo_update (ifsD->current_element);
  
-  color_map->color->vals[0] = color_map->char_color[0] / 255.0;
-  color_map->color->vals[1] = color_map->char_color[1] / 255.0;
-  color_map->color->vals[2] = color_map->char_color[2] / 255.0;
-
   elements[ifsD->current_element]->v = ifsD->current_vals;
   elements[ifsD->current_element]->v.theta *= G_PI/180.0;
   aff_element_compute_color_trans(elements[ifsD->current_element]);
@@ -2099,9 +2090,6 @@ color_map_color_changed_cb (GtkWidget *widget,
 static void
 color_map_update (ColorMap *color_map)
 {
-  color_map->char_color[0] = (guchar)(color_map->color->vals[0] * 255.999);
-  color_map->char_color[1] = (guchar)(color_map->color->vals[1] * 255.999);
-  color_map->char_color[2] = (guchar)(color_map->color->vals[2] * 255.999);
   gimp_color_button_update (GIMP_COLOR_BUTTON (color_map->button));
 
   if (color_map->fixed_point)
