@@ -1,3 +1,9 @@
+2004-01-22  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: renamed ps to postscript, so automake
+	doesn't get confused.
+
 2004-01-22  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: libgimpmodule depends on gmodule-2.0 and gobject-2.0.

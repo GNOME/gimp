@@ -118,7 +118,7 @@ libexec_PROGRAMS = \
 	$(PNG) \
 	pnm \
 	polar \
-	ps \
+	postscript \
 	psd \
 	psd_save \
 	$(PSP) \
@@ -1365,10 +1365,10 @@ polar_LDADD = \
 	$(RT_LIBS)							\
 	$(INTLLIBS)
 
-ps_SOURCES = \
-	ps.c
+postscript_SOURCES = \
+	postscript.c
 
-ps_LDADD = \
+postscript_LDADD = \
 	$(libgimpui)							\
 	$(libgimpwidgets)						\
 	$(libgimp)							\

@@ -89,7 +89,7 @@
     'png' => { libdep => 'gtk', ui => 1, optional => 1 },
     'pnm' => { libdep => 'gtk', ui => 1 },
     'polar' => { libdep => 'gtk', ui => 1, libsupp => 'gimpoldpreview' },
-    'ps' => { libdep => 'gtk', ui => 1 },
+    'postscript' => { libdep => 'gtk', ui => 1 },
     'psd' => { libdep => 'glib' },
     'psd_save' => { libdep => 'gtk', ui => 1 },
     'psp' => { libdep => 'gtk', ui => 1, optional => 1, libopt => 'z' },
