@@ -68,6 +68,10 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
+if HAVE_WINDRES
+GIMPICONRC = gimprc.o
+endif
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
 	-DGIMP_APP_GLUE_COMPILATION	\
@@ -134,7 +138,8 @@ gimp_2_1_LDADD = \
 	$(GIMP_THREAD_LIBS)		\
 	$(GIMP_MP_LIBS)			\
 	$(RT_LIBS)			\
-	$(INTLLIBS)
+	$(INTLLIBS)			\
+	$(GIMPICONRC)
 
 
 if ENABLE_GIMP_CONSOLE
@@ -177,7 +182,8 @@ gimp_console_2_1_LDADD = \
 	$(GIMP_THREAD_LIBS)		\
 	$(GIMP_MP_LIBS)			\
 	$(RT_LIBS)			\
-	$(INTLLIBS)
+	$(INTLLIBS)			\
+	$(GIMPICONRC)
 
 endif
 
@@ -223,3 +229,6 @@ dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
+
+gimprc.o:
+	$(WINDRES) gimp.rc gimprc.o

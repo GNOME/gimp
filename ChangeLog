@@ -1,5 +1,11 @@
 2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
 
+	* app/Makefile.am: added checks and rules to build and link the
+	win32 icon resource if the resource compiler windres is found by
+	configure. First part of a fix for bug #148443.
+
+2004-08-01  Michael Schumacher <schumaml@cvs.gnome.org>
+
 	* libgimpwidgets/gimpwidgets.def: added gimp_preview_area_fill
 
 2004-08-01  Shlomi Fish  <shlomif@iglu.org.il>
