@@ -352,6 +352,7 @@ tools_new_paintbrush ()
   private->pick_colors = TRUE;
   private->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 
+
   return tool;
 }
 
@@ -441,7 +442,7 @@ paintbrush_motion (PaintCore            *paint_core,
 	 pixmap image into the are instead of the color */
       if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush) && !gradient_length)
 	{
-	  color_area_with_pixmap (paint_core, gimage, drawable, area);
+	  color_area_with_pixmap (paint_core, gimage, drawable, area, SOFT);
 	  paint_appl_mode = INCREMENTAL;
 	}
       else

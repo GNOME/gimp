@@ -47,6 +47,7 @@ TempBuf *gimp_brush_pixmap_pixmap (GimpBrushPixmap *);
 void           color_area_with_pixmap (PaintCore *paint_core,
 				       GImage *dest,
 				       GimpDrawable *drawable,
-				       TempBuf *area);
+				       TempBuf *area,
+				       int mode);
 
 #endif  /* __GIMPBRUSHPIPE_H__ */

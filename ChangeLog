@@ -1,3 +1,11 @@
+Wed Sep  1 00:56:37 EDT 1999 Adrian Likins <adrian@gimp.org>
+
+	* app/gimpbrushpip.[ch]
+	* app/airbrush.c
+	* app/pencil.c
+	* app/paintbrush.c: fix pencil tool for use with 
+	   pixmaps again 
+
 1999-09-01  Tor Lillqvist  <tml@iki.fi>
 
 	* app/tile_swap.c (tile_swap_open): Use _O_TEMPORARY. Removed

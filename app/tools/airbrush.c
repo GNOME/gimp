@@ -297,8 +297,8 @@ airbrush_motion (PaintCore	     *paint_core,
 
   if (GIMP_IS_BRUSH_PIXMAP (paint_core->brush))
     {
-      color_area_with_pixmap (paint_core, gimage, drawable, area);
       mode = INCREMENTAL;
+      color_area_with_pixmap (paint_core, gimage, drawable, area, SOFT);
     }
   else
     {
