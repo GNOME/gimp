@@ -642,7 +642,7 @@ tile_manager_get_memsize (const TileManager *tm,
           for (i = 0; i < tm->ntile_rows; i++)
             for (j = 0; j < tm->ntile_cols; j++, tiles++)
               {
-                if ((*tiles)->dirty)
+                if (tile_is_valid (*tiles))
                   memsize += size;
               }
         }

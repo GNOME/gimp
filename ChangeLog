@@ -1,5 +1,10 @@
 2004-09-19  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.c (tile_manager_get_memsize): count valid
+	tiles, not dirty ones.
+
+2004-09-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/bumpmap.c: some tweaks to the dialog layout.
 
 2004-09-19  Michael Natterer  <mitch@gimp.org>
