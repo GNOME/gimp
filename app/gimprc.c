@@ -188,7 +188,6 @@ static int parse_preview_size       (gpointer val1p, gpointer val2p);
 static int parse_nav_preview_size   (gpointer val1p, gpointer val2p);
 static int parse_units              (gpointer val1p, gpointer val2p);
 static int parse_plug_in            (gpointer val1p, gpointer val2p);
-static int parse_locale_def         (PlugInDef *plug_in_def);
 static int parse_plug_in_def        (gpointer val1p, gpointer val2p);
 static int parse_device             (gpointer val1p, gpointer val2p);
 static int parse_menu_path          (gpointer val1p, gpointer val2p);
@@ -197,9 +196,10 @@ static int parse_unit_info          (gpointer val1p, gpointer val2p);
 static int parse_parasite           (gpointer val1p, gpointer val2p);
 static int parse_help_browser       (gpointer val1p, gpointer val2p);
 
-static int parse_proc_def (PlugInProcDef **proc_def);
-static int parse_proc_arg (ProcArg *arg);
-static int parse_unknown  (char *token_sym);
+static int parse_locale_def (PlugInDef      *plug_in_def);
+static int parse_proc_def   (PlugInProcDef **proc_def);
+static int parse_proc_arg   (ProcArg        *arg);
+static int parse_unknown    (char           *token_sym);
 
 char* gimprc_value_to_str (char *name);
 static char* value_to_str (char *name);

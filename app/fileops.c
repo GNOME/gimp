@@ -187,7 +187,7 @@ file_ops_post_init (void)
       entry.help_page             = help_page;
       entry.description           = NULL;
 
-      menus_create_item_from_full_path (&entry, file_proc);
+      menus_create_item_from_full_path (&entry, NULL, file_proc);
     }
 
   for (tmp = save_procs; tmp; tmp = g_slist_next (tmp))
@@ -210,7 +210,7 @@ file_ops_post_init (void)
       entry.help_page             = help_page;
       entry.description           = NULL;
 
-      menus_create_item_from_full_path (&entry, file_proc);
+      menus_create_item_from_full_path (&entry, NULL, file_proc);
     }
 }
 

@@ -1,3 +1,24 @@
+Wed Feb 23 21:07:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/fileops.c
+	* app/main.c
+	* app/menus.[ch]
+	* app/plug_in.c: the ultimate solution to the i18n problem :-)
+
+	We bind to the gimp-std-plugins domain and additionally to all
+	domains explictely specified by plugins. When translating a
+	menu_entry, we use our knowledge about the domain the plug-in is
+	in and only search in that textdomain. No need to iterate through
+	all domains any more. 
+
+	There is a small hack to make the perl localisation work
+	that will be removed as soon as the perl-fu scripts use the
+	gimp_plugin_add_domain() function.
+
+	* app/gimprc.c
+	* app/plug_in_cmds.c
+	* tools/pdbgen/pdb/plug_in.pdb: small cleanups
+
 Wed Feb 23 19:04:08 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimprc.c

@@ -1952,7 +1952,10 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	  entry.help_page = help_page;
 	  entry.description = NULL;
 
-	  menus_create_item_from_full_path (&entry, proc);
+	  if (plug_in_def && plug_in_def->locale_domain)
+	    menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, proc);
+	  else
+	    menus_create_item_from_full_path (&entry, "gimp-std-plugins", proc);
 	}
       break;
     }
@@ -2377,39 +2380,92 @@ static void
 plug_in_make_menu (void)
 {
   GimpItemFactoryEntry entry;
+  PlugInDef *plug_in_def;
   PlugInProcDef *proc_def;
+  GSList *domains = NULL;
+  GSList *procs;
   GSList *tmp;
 
-  tmp = proc_defs;
+#ifdef ENABLE_NLS
+  bindtextdomain ("gimp-std-plugins", LOCALEDIR);
+  bindtextdomain ("gimp-perl", LOCALEDIR);          /* this will go away */
+#endif 
+
+  tmp = plug_in_defs;
   while (tmp)
     {
-      proc_def = tmp->data;
+      plug_in_def = tmp->data;
       tmp = tmp->next;
 
-      if (proc_def->prog && proc_def->menu_path && (!proc_def->extensions &&
-						    !proc_def->prefixes &&
-						    !proc_def->magics))
+      procs = plug_in_def->proc_defs;
+      
+      if (!procs)
+	continue;
+      
+#ifdef ENABLE_NLS
+      {
+	gchar *domain;
+	GSList *list;
+	gboolean found = FALSE;
+
+	if (plug_in_def->locale_domain)
+	  {
+	    domain = plug_in_def->locale_domain;
+	    for (list = domains; list && !found; list = list->next)
+	      {
+		if (strcmp (domain, (gchar*)(list->data)) == 0)
+		  found = TRUE;
+	      }
+	    if (!found)
+	      {
+		domains = g_slist_append (domains, domain);
+		if (plug_in_def->locale_path)
+		  bindtextdomain (domain, plug_in_def->locale_path);
+		else
+		  bindtextdomain (domain, LOCALEDIR);
+	      }
+	  }
+      }
+#endif  /*  ENABLE_NLS  */
+      
+      while (procs)
 	{
-	  gchar *help_page;
+	  proc_def = procs->data;
+	  procs = procs->next;
 
-	  help_page = g_strconcat ("filters/",
-				   g_basename (proc_def->prog),
-				   ".html",
-				   NULL);
-	  g_strdown (help_page);
-
-	  entry.entry.path = proc_def->menu_path;
-	  entry.entry.accelerator = proc_def->accelerator;
-	  entry.entry.callback = plug_in_callback;
-	  entry.entry.callback_action = 0;
-	  entry.entry.item_type = NULL;
-	  entry.help_page = help_page;
-	  entry.description = NULL;
-
-	  menus_create_item_from_full_path (&entry, &proc_def->db_info);
+	  if (proc_def->prog && proc_def->menu_path && (!proc_def->extensions &&
+							!proc_def->prefixes &&
+							!proc_def->magics))
+	    {
+	      gchar *help_page;
+	      
+	      help_page = g_strconcat ("filters/",
+				       g_basename (proc_def->prog),
+				       ".html",
+				       NULL);
+	      g_strdown (help_page);
+	      
+	      entry.entry.path = proc_def->menu_path;
+	      entry.entry.accelerator = proc_def->accelerator;
+	      entry.entry.callback = plug_in_callback;
+	      entry.entry.callback_action = 0;
+	      entry.entry.item_type = NULL;
+	      entry.help_page = help_page;
+	      entry.description = NULL;
+	      
+	      if (plug_in_def->locale_domain)
+		menus_create_item_from_full_path (&entry, plug_in_def->locale_domain, &proc_def->db_info);
+	      /* this will go away */
+	      else if (strncmp (proc_def->db_info.name, "perl_fu", 7) == 0)
+		menus_create_item_from_full_path (&entry, "gimp-perl", &proc_def->db_info);
+	      else
+		menus_create_item_from_full_path (&entry, "gimp-std-plugins", &proc_def->db_info);
+	    }
 	}
     }
+  g_slist_free (domains);
 }
+
 
 static void
 plug_in_callback (GtkWidget *widget,

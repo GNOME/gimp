@@ -924,6 +924,7 @@ menus_get_paths_menu (GtkWidget     **menu,
 
 void
 menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
+				  gchar                *domain_name,
 				  gpointer              callback_data)
 {
   GtkItemFactory *item_factory;
@@ -941,6 +942,8 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
       g_warning ("entry refers to unknown item factory: \"%s\"", path);
       return;
     }
+
+  gtk_object_set_data (GTK_OBJECT (item_factory), "textdomain", domain_name);
 
   if ((item_factory == image_factory) ||
       (item_factory == toolbox_factory))
@@ -1773,9 +1776,11 @@ menu_translate (const gchar *path,
 {
   static gchar *menupath = NULL;
 
+  GtkItemFactory *item_factory = NULL;
   gchar *retval;
   gchar *factory;
   gchar *translation;
+  gchar *domain = NULL;
   gint   i;
 
   factory = (gchar *) data;
@@ -1790,32 +1795,31 @@ menu_translate (const gchar *path,
       (strstr (path, "/MRU") != NULL))
     return retval;
 
-  /* 
-   * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
-   */
-  translation = gettext (menupath);
-  if (*translation == '/')
-    retval = translation;
-  else
-    g_warning ("bad translation for menupath: %s", menupath);
+  if (factory)
+    item_factory = gtk_item_factory_from_path (factory);
+  if (item_factory)
+    domain = gtk_object_get_data (GTK_OBJECT (item_factory), "textdomain");
 
-  i = 0;
-  while (i < n_plugin_domains && !strcmp (path, retval) && factory)
+  if (domain)   /* use the plugins textdomain */
     {
       g_free (menupath);
 
       menupath = g_strconcat (factory, path, NULL);
       
+      translation = dgettext (domain, menupath);
       /* 
-       * We compare the start of the translated string with the original menu 
-       * entry. This is not really necessary, but it helps to suppress badly
-       * translated menu_entries which tend to crash the app due to bug in 
-       * GTK+. 
+       * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
        */
-      translation = dgettext (plugin_domains[i++], menupath);
-
-      if (strncmp (factory, translation, strlen (factory)) == 0)
+     if (strncmp (factory, translation, strlen (factory)) == 0)
 	retval = translation + strlen (factory);
+      else
+	g_warning ("bad translation for menupath: %s", menupath);
+    }
+  else
+    {
+      translation = gettext (menupath);
+      if (*translation == '/')
+	retval = translation;
       else
 	g_warning ("bad translation for menupath: %s", menupath);
     }

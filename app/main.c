@@ -81,12 +81,6 @@ gchar  *alternate_gimprc        = NULL;
 gchar  *alternate_system_gimprc = NULL;
 gchar **batch_cmds              = NULL;
 
-#ifdef ENABLE_NLS
-gchar  *plugin_domains[] = { "gimp-std-plugins",
-			     "gimp-perl" };
-gint    n_plugin_domains = (sizeof (plugin_domains) /
-			    sizeof (plugin_domains[0]));
-#endif
 
 /* LOCAL data */
 static gint    gimp_argc = 0;
@@ -135,9 +129,6 @@ main (int    argc,
 
 #ifdef ENABLE_NLS
   bindtextdomain ("gimp-libgimp", LOCALEDIR);
-
-  for (i = 0; i < n_plugin_domains; i++)
-    bindtextdomain (plugin_domains[i], LOCALEDIR);
 #endif
 
   gtk_init (&argc, &argv);

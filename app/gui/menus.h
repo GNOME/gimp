@@ -46,6 +46,7 @@ void menus_get_paths_menu      (GtkWidget            **menu,
 				GtkAccelGroup        **accel_group);
 
 void menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,
+				       gchar                 *domain_name,
 				       gpointer               callback_data);
 
 void menus_reorder_plugins     (void);
