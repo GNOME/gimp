@@ -719,7 +719,7 @@ msgstr "Индекс:"
 
 #: app/color_picker.c:268
 msgid "Hex Triplet"
-msgstr "Шестнадцатиричный триплет"
+msgstr "Шестнадцатеричный триплет"
 
 #: app/color_picker.c:272 app/histogram_tool.c:259
 msgid "Intensity:"
@@ -863,7 +863,7 @@ msgstr "Использовать WWW-оптимизированную палитру"
 
 #: app/convert.c:654
 msgid "Use Black/White (1-Bit) Palette"
-msgstr "Использовать чернобелую (1-бит) палитру"
+msgstr "Использовать черно-белую (1-бит) палитру"
 
 #: app/convert.c:665
 msgid "Dither Options"
@@ -3540,7 +3540,7 @@ msgstr "/Фильтры/Искажения"
 
 #: app/menus.c:550
 msgid "/Filters/Artistic"
-msgstr "/Фильтры/Иммитация"
+msgstr "/Фильтры/Имитация"
 
 #: app/menus.c:552
 msgid "/Filters/Map"
@@ -5171,7 +5171,7 @@ msgstr "Аэрограф"
 
 #: app/tool_options.c:481
 msgid "Clone Tool"
-msgstr "Щтамп"
+msgstr "Штамп"
 
 #: app/tool_options.c:483
 msgid "Convolver"
