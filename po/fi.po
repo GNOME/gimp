@@ -45,7 +45,7 @@ msgstr "GIMP:n versio"
 #: app/main.c:269
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
-msgstr "Käyttö: %s [asetus ...] [tiedostot ...]\"
+msgstr "Käyttö: %s [asetus ...] [tiedostot ...]\n"
 
 #: app/main.c:270
 msgid "Valid options are:\n"
@@ -89,7 +89,7 @@ msgstr "  --verbose               Näytä käynnistys tiedot.\n"
 
 #: app/main.c:279
 msgid "  --no-splash              Do not show the startup window.\n"
-msgstr "  --no-splash             Älä näytä alkuikkunaa.\n "
+msgstr "  --no-splash             Älä näytä alkuikkunaa.\n"
 
 #: app/main.c:280
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
@@ -101,7 +101,7 @@ msgid ""
 "plugins.\n"
 msgstr ""
 "  --no-shm                 Älä käytä jaettua muistia GIMP:in ja sen "
-"lisäosien välillä.\n""
+"lisäosien välillä.\n"
 
 #: app/main.c:282
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -117,7 +117,7 @@ msgstr ""
 
 #: app/main.c:284
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers        "
+msgstr "  --debug-handlers        \n"
 
 #: app/main.c:285
 msgid ""
@@ -650,7 +650,7 @@ msgstr ""
 #: app/menus.c:414
 #, c-format
 msgid "Error opening file: %s\n"
-msgstr "Virhe tiedoston avauksessa: %s\n""
+msgstr "Virhe tiedoston avauksessa: %s\n"
 
 #: app/menus.c:436 app/menus.c:506
 #, c-format
