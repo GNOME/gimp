@@ -1,3 +1,14 @@
+2000-04-16  Jens Lautenbacher  <jtl@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/bumpmap.c: bumped version number to 3.0-pre1-ac1
+	 - Now able not to tile the bumpmap - this is the default.
+	 - Added new PDB call plug_in_bumpmap_tiled. 
+	 - Added scrollbars for preview.
+	 - Fixed slider feedback for bumpmap offset and set initial offsets
+	   from drawable offsets.
+	 - Make it work as intended from the very beginning... 
+
 Sat Apr 15 15:10:39 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* autogen.sh: tightened the regexs for build tool sanity checks

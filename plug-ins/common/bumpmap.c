@@ -2,10 +2,10 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * Bump map plug-in --- emboss an image by using another image as a bump map
- * Copyright (C) 1997 Federico Mena Quintero
- * federico@nuclecu.unam.mx
- * Copyright (C) 1997 Jens Lautenbacher
- * jens@lemming0.lem.uni-karlsruhe.de
+ * Copyright (C) 1997 Federico Mena Quintero <federico@nuclecu.unam.mx>
+ * Copyright (C) 1997-2000 Jens Lautenbacher <jtl@gimp.org>
+ * Copyright (C) 2000 Sven Neumann <sven@gimp.org>
+ * 
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,16 @@
  * bump-map to another image, producing a nice embossing effect.
  */
 
+/* Version 3.0-pre1-ac1:
+ *
+ * - Now able not to tile the bumpmap - this is the default.
+ * - Added new PDB call plug_in_bumpmap_tiled.
+ * - Added scrollbars for preview.
+ * - Fixed slider feedback for bumpmap offset and set initial offsets
+ *   from drawable offsets.
+ * - Make it work as intended from the very beginning...
+ */
+  
 /* Version 2.04:
  *
  * - The preview is now scrollable via draging with button 1 in the
@@ -103,8 +113,7 @@
 
 /***** Magic numbers *****/
 
-#define PLUG_IN_NAME    "plug_in_bump_map"
-#define PLUG_IN_VERSION "August 1997, 2.04"
+#define PLUG_IN_VERSION "April 2000, 3.0-pre1-ac1"
 
 #define PREVIEW_SIZE    128
 #define SCALE_WIDTH       0
@@ -138,49 +147,55 @@ typedef struct
   gint    compensate;
   gint    invert;
   gint    type;
+  gint    tiled;
 } bumpmap_vals_t;
 
 typedef struct
 {
-  int    lx, ly;       /* X and Y components of light vector */
-  int    nz2, nzlz;    /* nz^2, nz*lz */
-  int    background;   /* Shade for vertical normals */
-  double compensation; /* Background compensation */
-  guchar lut[256];     /* Look-up table for modes */
+  gint    lx, ly;       /* X and Y components of light vector */
+  gint    nz2, nzlz;    /* nz^2, nz*lz */
+  gint    background;   /* Shade for vertical normals */
+  gdouble compensation; /* Background compensation */
+  guchar  lut[256];     /* Look-up table for modes */
 } bumpmap_params_t;
 
 typedef struct
 {
-  GtkWidget  *preview;
-  int         preview_width;
-  int         preview_height;
-  int         mouse_x;
-  int         mouse_y;
-  int         preview_xofs;
-  int         preview_yofs;
-  int         drag_mode;
+  GtkWidget   *preview;
+  GtkObject   *preview_adj_x;
+  GtkObject   *preview_adj_y;
+  gint         preview_width;
+  gint         preview_height;
+  gint         mouse_x;
+  gint         mouse_y;
+  gint         preview_xofs;
+  gint         preview_yofs;
+  gint         drag_mode;
 
-  guchar     *check_row_0;
-  guchar     *check_row_1;
+  GtkObject   *offset_adj_x;
+  GtkObject   *offset_adj_y;
+  
+  guchar      *check_row_0;
+  guchar      *check_row_1;
 
-  guchar    **src_rows;
-  guchar    **bm_rows;
+  guchar     **src_rows;
+  guchar     **bm_rows;
 
-  int         src_yofs;
-  int         bm_yofs;
+  gint         src_yofs;
+  gint         bm_yofs;
 
-  GDrawable  *bm_drawable;
-  int         bm_width;
-  int         bm_height;
-  int         bm_bpp;
-  int         bm_has_alpha;
+  GDrawable   *bm_drawable;
+  gint         bm_width;
+  gint         bm_height;
+  gint         bm_bpp;
+  gint         bm_has_alpha;
 
-  GPixelRgn   src_rgn;
-  GPixelRgn   bm_rgn;
+  GPixelRgn    src_rgn;
+  GPixelRgn    bm_rgn;
 
   bumpmap_params_t params;
 
-  gint        run;
+  gint         run;
 } bumpmap_interface_t;
 
 
@@ -205,6 +220,8 @@ static void bumpmap_row         (guchar           *src_row,
 				 guchar           *bm_row3,
 				 gint              bm_width,
 				 gint              bm_xofs,
+				 gboolean          tiled,
+				 gboolean          row_in_bumpmap,       
 				 bumpmap_params_t *params);
 static void bumpmap_convert_row (guchar           *row,
 				 gint              width,
@@ -227,6 +244,7 @@ static void dialog_fill_bumpmap_rows    (gint start, gint how_many, gint yofs);
 
 static void dialog_compensate_callback  (GtkWidget *widget, gpointer data);
 static void dialog_invert_callback      (GtkWidget *widget, gpointer data);
+static void dialog_tiled_callback       (GtkWidget *widget, gpointer data);
 static void dialog_map_type_callback    (GtkWidget *widget, gpointer data);
 static gint dialog_constrain            (gint32 image_id, gint32 drawable_id,
 					 gpointer data);
@@ -259,12 +277,15 @@ static bumpmap_vals_t bmvals =
   0,      /* ambient */
   FALSE,  /* compensate */
   FALSE,  /* invert */
-  LINEAR  /* type */
+  LINEAR, /* type */
+  FALSE   /* tiled */
 };
 
 static bumpmap_interface_t bmint =
 {
   NULL,      /* preview */
+  NULL,      /* preview_adj_x */
+  NULL,      /* preview_adj_y */
   0,         /* preview_width */
   0,         /* preview_height */
   0,         /* mouse_x */
@@ -272,6 +293,8 @@ static bumpmap_interface_t bmint =
   0,         /* preview_xofs */
   0,         /* preview_yofs */
   DRAG_NONE, /* drag_mode */
+  NULL,      /* offset_adj_x */
+  NULL,      /* offset_adj_y */
   NULL,      /* check_row_0 */
   NULL,      /* check_row_1 */
   NULL,      /* src_rows */
@@ -291,10 +314,11 @@ static bumpmap_interface_t bmint =
 
 static GDrawable *drawable = NULL;
 
-static gint sel_x1, sel_y1, sel_x2, sel_y2;
-static gint sel_width, sel_height;
-static gint img_bpp, img_has_alpha;
-
+static gint       sel_x1, sel_y1;
+static gint       sel_x2, sel_y2;
+static gint       sel_width, sel_height;
+static gint       img_bpp;
+static gboolean   img_has_alpha;
 
 /***** Functions *****/
 
@@ -318,25 +342,43 @@ query (void)
     { PARAM_INT32,    "ambient",    "Ambient lighting factor" },
     { PARAM_INT32,    "compensate", "Compensate for darkening" },
     { PARAM_INT32,    "invert",     "Invert bumpmap" },
-    { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
+    { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" },
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
-  gimp_install_procedure (PLUG_IN_NAME,
+  gimp_install_procedure ("plug_in_bump_map",
 			  "Create an embossing effect using an image as a "
 			  "bump map",
 			  "This plug-in uses the algorithm described by John "
 			  "Schlag, \"Fast Embossing Effects on Raster Image "
 			  "Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). "
-			  "It takes a grayscale image to be applied as a bump "
+			  "It takes a drawable to be applied as a bump "
 			  "map to another image and produces a nice embossing "
 			  "effect.",
-			  "Federico Mena Quintero & Jens Lautenbacher",
-			  "Federico Mena Quintero & Jens Lautenbacher",
+			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
+			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Map/Bump Map..."),
+			  "RGB*, GRAY*",
+			  PROC_PLUG_IN,
+			  nargs, 0,
+			  args, NULL);
+
+  gimp_install_procedure ("plug_in_bump_map_tiled",
+			  "Create an embossing effect using a tiled image "
+			  "as a bump map",
+			  "This plug-in uses the algorithm described by John "
+			  "Schlag, \"Fast Embossing Effects on Raster Image "
+			  "Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). "
+			  "It takes a drawable to be tiled and applied as a "
+			  "bump map to another image and produces a nice "
+			  "embossing effect.",
+			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
+			  "Federico Mena Quintero, Jens Lautenbacher & Sven Neumann",
+			  PLUG_IN_VERSION,
+			  NULL,
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, 0,
@@ -381,7 +423,7 @@ run (gchar   *name,
     {
     case RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &bmvals);
+      gimp_get_data (name, &bmvals);
 
       /* Get information from the dialog */
       if (!bumpmap_dialog ())
@@ -409,12 +451,13 @@ run (gchar   *name,
 	  bmvals.compensate = param[11].data.d_int32;
 	  bmvals.invert     = param[12].data.d_int32;
 	  bmvals.type       = param[13].data.d_int32;
+	  bmvals.tiled      = strcmp (name, "plug_in_bump_map_tiled") == 0;  
 	}
       break;
 
     case RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
-      gimp_get_data (PLUG_IN_NAME, &bmvals);
+      gimp_get_data (name, &bmvals);
       break;
 
     default:
@@ -442,7 +485,7 @@ run (gchar   *name,
 
 	  /* Store data */
 	  if (run_mode == RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_NAME, &bmvals, sizeof (bumpmap_vals_t));
+	    gimp_set_data (name, &bmvals, sizeof (bumpmap_vals_t));
 	}
     }
   else
@@ -465,6 +508,7 @@ bumpmap (void)
   guchar           *src_row, *dest_row;
   gint              y;
   gint              progress;
+  gint              tmp;
 
 #if 0
   g_print ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -479,6 +523,9 @@ bumpmap (void)
   else
     bm_drawable = drawable;
 
+  if (!bm_drawable)
+    return;
+
   /* Get image information */
   bm_width     = gimp_drawable_width (bm_drawable->id);
   bm_height    = gimp_drawable_height (bm_drawable->id);
@@ -486,10 +533,11 @@ bumpmap (void)
   bm_has_alpha = gimp_drawable_has_alpha (bm_drawable->id);
 
   /* Initialize offsets */
-  if (bmvals.yofs < 0)
-    yofs2 = bm_height - (-bmvals.yofs % bm_height);
+  tmp = bmvals.yofs + sel_y1;
+  if (tmp < 0)
+    yofs2 = bm_height - (- tmp % bm_height);
   else
-    yofs2 = bmvals.yofs % bm_height;
+    yofs2 = tmp % bm_height;
 
   yofs1 = (yofs2 + bm_height - 1) % bm_height;
   yofs3 = (yofs2 + 1) % bm_height;
@@ -529,7 +577,10 @@ bumpmap (void)
       gimp_pixel_rgn_get_row (&src_rgn, src_row, sel_x1, y, sel_width);
 
       bumpmap_row (src_row, dest_row, sel_width, img_bpp, img_has_alpha,
-		   bm_row1, bm_row2, bm_row3, bm_width, bmvals.xofs, &params);
+		   bm_row1, bm_row2, bm_row3, bm_width, bmvals.xofs,
+		   bmvals.tiled, 
+		   y == CLAMP (y, - bmvals.yofs, - bmvals.yofs + bm_height),
+		   &params);
 
       gimp_pixel_rgn_set_row (&dest_rgn, dest_row, sel_x1, y, sel_width);
 
@@ -621,8 +672,8 @@ bumpmap_init_params (bumpmap_params_t *params)
 }
 
 static void
-bumpmap_row (guchar           *src_row,
-	     guchar           *dest_row,
+bumpmap_row (guchar           *src,
+	     guchar           *dest,
 	     gint              width,
 	     gint              bpp,
 	     gint              has_alpha,
@@ -631,9 +682,10 @@ bumpmap_row (guchar           *src_row,
 	     guchar           *bm_row3,
 	     gint              bm_width,
 	     gint              bm_xofs,
+	     gboolean          tiled,
+	     gboolean          row_in_bumpmap,       
 	     bumpmap_params_t *params)
 {
-  guchar *src, *dest;
   gint    xofs1, xofs2, xofs3;
   gint    shade;
   gint    ndotl;
@@ -641,31 +693,38 @@ bumpmap_row (guchar           *src_row,
   gint    x, k;
   gint    pbpp;
   gint    result;
+  gint    tmp;
 
   if (has_alpha)
     pbpp = bpp - 1;
   else
     pbpp = bpp;
 
-  if (bm_xofs < 0)
-    xofs2 = bm_width - (-bm_xofs % bm_width);
+  tmp = bm_xofs + sel_x1;
+  if (tmp < 0)
+    xofs2 = bm_width - (- tmp % bm_width);
   else
-    xofs2 = bm_xofs % bm_width;
+    xofs2 = tmp % bm_width;
 
   xofs1 = (xofs2 + bm_width - 1) % bm_width;
   xofs3 = (xofs2 + 1) % bm_width;
-
-  src  = src_row;
-  dest = dest_row;
 
   for (x = 0; x < width; x++)
     {
       /* Calculate surface normal from bump map */
 
-      nx = (bm_row1[xofs1] + bm_row2[xofs1] + bm_row3[xofs1] -
-	    bm_row1[xofs3] - bm_row2[xofs3] - bm_row3[xofs3]);
-      ny = (bm_row3[xofs1] + bm_row3[xofs2] + bm_row3[xofs3] -
-	    bm_row1[xofs1] - bm_row1[xofs2] - bm_row1[xofs3]);
+      if (tiled || (row_in_bumpmap &&
+		    x == CLAMP (x, - tmp, - tmp + bm_width)))
+	{
+	  nx = (bm_row1[xofs1] + bm_row2[xofs1] + bm_row3[xofs1] -
+		bm_row1[xofs3] - bm_row2[xofs3] - bm_row3[xofs3]);
+	  ny = (bm_row3[xofs1] + bm_row3[xofs2] + bm_row3[xofs3] -
+		bm_row1[xofs1] - bm_row1[xofs2] - bm_row1[xofs3]);
+	}
+       else 
+	 {
+	   nx = ny = 0;
+	 }
 
       /* Shade */
 
@@ -760,21 +819,24 @@ bumpmap_dialog (void)
   GtkWidget *top_vbox;
   GtkWidget *hbox;
   GtkWidget *frame;
+  GtkWidget *preview;
   GtkWidget *vbox;
   GtkWidget *sep;
   GtkWidget *abox;
   GtkWidget *pframe;
+  GtkWidget *ptable;
+  GtkWidget *scrollbar;
   GtkWidget *table;
   GtkWidget *right_vbox;
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *button;
   GtkObject *adj;
-  gint     argc;
-  gchar  **argv;
-  guchar  *color_cube;
-  gint     i;
-  gint     row;
+  gint       argc;
+  gchar    **argv;
+  guchar    *color_cube;
+  gint       i;
+  gint       row;
 
 #if 0 
   g_print  ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -825,28 +887,50 @@ bumpmap_dialog (void)
   gtk_widget_show (hbox);
 
   /* Preview */
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_add (GTK_CONTAINER (frame), abox);
+  gtk_box_pack_start (GTK_BOX (hbox), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
+  ptable = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (ptable), 4);
+  gtk_container_add (GTK_CONTAINER (abox), ptable);
+  gtk_widget_show (ptable);
+  
   pframe = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (pframe), GTK_SHADOW_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (pframe), 4);
-  gtk_container_add (GTK_CONTAINER (abox), pframe);
+  gtk_container_set_border_width (GTK_CONTAINER (pframe), 0);
+  gtk_table_attach (GTK_TABLE (ptable), pframe, 0, 1, 0, 1, 
+		    GTK_FILL | GTK_EXPAND, GTK_FILL | GTK_EXPAND, 0, 0);
   gtk_widget_show (pframe);
 
   bmint.preview_width  = MIN (sel_width, PREVIEW_SIZE);
   bmint.preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  bmint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  bmint.preview = preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (bmint.preview),
 		    bmint.preview_width, bmint.preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), bmint.preview);
   gtk_widget_show (bmint.preview);
+  
+  bmint.preview_adj_x = 
+    gtk_adjustment_new (0, 0, sel_width, 1, 10, bmint.preview_width);
+  if (sel_width > PREVIEW_SIZE)
+    {
+      scrollbar = gtk_hscrollbar_new (GTK_ADJUSTMENT (bmint.preview_adj_x));
+      gtk_table_attach (GTK_TABLE (ptable), scrollbar, 0, 1, 1, 2, 
+			GTK_FILL | GTK_EXPAND, 0, 0, 0);
+      gtk_widget_show (scrollbar);
+    }
+  
+  bmint.preview_adj_y = 
+    gtk_adjustment_new (0, 0, sel_height, 1, 10, bmint.preview_height);
+  if (sel_height > PREVIEW_SIZE)
+    {
+      scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (bmint.preview_adj_y));
+      gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0,1, 
+			0, GTK_FILL | GTK_EXPAND, 0, 0);
+      gtk_widget_show (scrollbar);
+    }
 
   gtk_widget_set_events (bmint.preview, 
 			 GDK_BUTTON_PRESS_MASK |
@@ -856,6 +940,12 @@ bumpmap_dialog (void)
   gtk_signal_connect (GTK_OBJECT (bmint.preview), "event",
 		      (GtkSignalFunc) dialog_preview_events,
 		      NULL);
+  gtk_signal_connect (GTK_OBJECT (bmint.preview_adj_x), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal), 
+		      &bmint.preview_xofs);
+  gtk_signal_connect (GTK_OBJECT (bmint.preview_adj_y), "value_changed",
+		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal), 
+		      &bmint.preview_yofs);
 
   dialog_init_preview ();
 
@@ -880,10 +970,9 @@ bumpmap_dialog (void)
   gtk_widget_show (sep);
 
   /* Compensate darkening */
-
   button = gtk_check_button_new_with_label (_("Compensate for Darkening"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.compensate ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (dialog_compensate_callback),
@@ -893,12 +982,22 @@ bumpmap_dialog (void)
   /* Invert bumpmap */
   button = gtk_check_button_new_with_label (_("Invert Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button),
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				bmvals.invert ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (dialog_invert_callback),
 		      NULL);
   gtk_widget_show (button);
+
+  /* Tile bumpmap */
+  button = gtk_check_button_new_with_label (_("Tile Bumpmap"));
+  gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				bmvals.tiled ? TRUE : FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "toggled",
+		      GTK_SIGNAL_FUNC (dialog_tiled_callback),
+		      NULL);
+  gtk_widget_show (button);  
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
@@ -958,7 +1057,7 @@ bumpmap_dialog (void)
 		      GTK_SIGNAL_FUNC (dialog_dscale_update),
 		      &bmvals.elevation);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row,
 			      _("Depth:"), SCALE_WIDTH, 0,
 			      bmvals.depth, 1.0, 65.0, 1.0, 5.0, 0,
 			      TRUE, 0, 0,
@@ -966,24 +1065,28 @@ bumpmap_dialog (void)
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.depth);
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("X Offset:"), SCALE_WIDTH, 0,
-			      bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+  bmint.offset_adj_x = adj = 
+    gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
+			  _("X Offset:"), SCALE_WIDTH, 0,
+			  bmvals.xofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			  TRUE, 0, 0,
+			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.xofs);
 
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
-			      _("Y Offset:"), SCALE_WIDTH, 0,
-			      bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+  bmint.offset_adj_y = adj = 
+    gimp_scale_entry_new (GTK_TABLE (table), 0, row,
+			  _("Y Offset:"), SCALE_WIDTH, 0,
+			  bmvals.yofs, -1000.0, 1001.0, 1.0, 10.0, 0,
+			  TRUE, 0, 0,
+			  NULL, NULL);
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      GTK_SIGNAL_FUNC (dialog_iscale_update_normal),
 		      &bmvals.yofs);
+  gtk_table_set_row_spacing (GTK_TABLE (table), row++, 8);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, row++,
 			      _("Waterlevel:"), SCALE_WIDTH, 0,
@@ -1006,9 +1109,6 @@ bumpmap_dialog (void)
   /* Done */
 
   gtk_widget_show (dialog);
-
-  dialog_new_bumpmap ();
-  dialog_update_preview ();
 
   gtk_main ();
   gdk_flush ();
@@ -1094,6 +1194,7 @@ dialog_preview_events (GtkWidget *widget,
       switch (bevent->button)
 	{
 	case 1:
+	case 2:  
 	  if (bevent->state & GDK_SHIFT_MASK)
 	    bmint.drag_mode = DRAG_BUMPMAP;
 	  else
@@ -1141,14 +1242,41 @@ dialog_preview_events (GtkWidget *widget,
 	  bmint.preview_xofs = CLAMP (bmint.preview_xofs - dx,
 				      0,
 				      sel_width - bmint.preview_width);
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.preview_adj_x), 
+					    &bmint.preview_xofs);
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_x), 
+				    bmint.preview_xofs);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.preview_adj_x), 
+					      &bmint.preview_xofs);
 	  bmint.preview_yofs = CLAMP (bmint.preview_yofs - dy,
 				      0,
 				      sel_height - bmint.preview_height);
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.preview_adj_y), 
+					    &bmint.preview_yofs);
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.preview_adj_y), 
+				    bmint.preview_yofs);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.preview_adj_y), 
+					      &bmint.preview_yofs);
+	  
 	  break;
 
 	case DRAG_BUMPMAP:
 	  bmvals.xofs = CLAMP (bmvals.xofs - dx, -1000, 1000);
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.offset_adj_x), 
+					    &bmvals.xofs);
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_x), 
+				    bmvals.xofs);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.offset_adj_x), 
+					      &bmvals.xofs);
+
 	  bmvals.yofs = CLAMP (bmvals.yofs - dy, -1000, 1000);
+	  gtk_signal_handler_block_by_data (GTK_OBJECT (bmint.offset_adj_y), 
+					    &bmvals.yofs);
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (bmint.offset_adj_y), 
+				    bmvals.yofs);
+	  gtk_signal_handler_unblock_by_data (GTK_OBJECT (bmint.offset_adj_y), 
+					      &bmvals.yofs);
+
 	  break;
 
 	default:
@@ -1156,6 +1284,7 @@ dialog_preview_events (GtkWidget *widget,
 	}
 
       dialog_update_preview ();
+
       break; 
 
     default:
@@ -1168,11 +1297,16 @@ dialog_preview_events (GtkWidget *widget,
 static void
 dialog_new_bumpmap (void)
 {
-  gint i;
-  gint yofs;
+  static gboolean  first_call = TRUE;
+  GtkAdjustment   *adj;
+  gint             i;
+  gint             yofs;
+  gint             bump_offset_x;
+  gint             bump_offset_y;
+  gint             draw_offset_y;
+  gint             draw_offset_x;
 
   /* Get drawable */
-
   if (bmint.bm_drawable && (bmint.bm_drawable != drawable))
     gimp_drawable_detach (bmint.bm_drawable);
 
@@ -1181,13 +1315,45 @@ dialog_new_bumpmap (void)
   else
     bmint.bm_drawable = drawable;
 
-  /* Get sizes */
+  if (!bmint.bm_drawable)
+    return;
 
+  /* Get sizes */
   bmint.bm_width     = gimp_drawable_width (bmint.bm_drawable->id);
   bmint.bm_height    = gimp_drawable_height (bmint.bm_drawable->id);
   bmint.bm_bpp       = gimp_drawable_bpp (bmint.bm_drawable->id);
   bmint.bm_has_alpha = gimp_drawable_has_alpha (bmint.bm_drawable->id);
 
+  if (!first_call || bmvals.bumpmap_id == -1)
+    {      
+      gimp_drawable_offsets (bmint.bm_drawable->id, &bump_offset_x, &bump_offset_y);
+      gimp_drawable_offsets (drawable->id, &draw_offset_x, &draw_offset_y);
+      
+      bmvals.xofs = draw_offset_x - bump_offset_x;
+      bmvals.yofs = draw_offset_y - bump_offset_y;
+    }
+
+  if (first_call)
+    first_call = FALSE;
+
+  adj = (GtkAdjustment *) bmint.offset_adj_x;
+  if (adj)
+    {
+      adj->value = bmvals.xofs;
+      gtk_signal_handler_block_by_data (GTK_OBJECT (adj), &bmvals.xofs);
+      gtk_adjustment_value_changed (adj);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), &bmvals.xofs);
+    }
+  
+  adj = (GtkAdjustment *) bmint.offset_adj_y;
+  if (adj)
+    {
+      adj->value = bmvals.yofs;
+      gtk_signal_handler_block_by_data (GTK_OBJECT (adj), &bmvals.yofs);
+      gtk_adjustment_value_changed (adj);
+      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adj), &bmvals.yofs);
+    }
+  
   /* Initialize pixel region */
 
   gimp_pixel_rgn_init (&bmint.bm_rgn, bmint.bm_drawable,
@@ -1200,16 +1366,16 @@ dialog_new_bumpmap (void)
   if (yofs < 0)
     yofs = bmint.bm_height - (-yofs % bmint.bm_height);
   else
-    yofs %= bmint.bm_height;
+    yofs = yofs % bmint.bm_height;
 
   bmint.bm_yofs = yofs;
 
   for (i = 0; i < (bmint.preview_height + 2); i++)
     {
       if (bmint.bm_rows[i])
-	g_free(bmint.bm_rows[i]);
+	g_free (bmint.bm_rows[i]);
 
-      bmint.bm_rows[i] = g_malloc(bmint.bm_width * bmint.bm_bpp * sizeof(guchar));
+      bmint.bm_rows[i] = g_new (guchar, bmint.bm_width * bmint.bm_bpp);
     }
 
   bumpmap_init_params (&bmint.params);
@@ -1243,8 +1409,18 @@ dialog_update_preview (void)
     {
       bumpmap_row (bmint.src_rows[y] + 4 * xofs, dest_row,
 		   bmint.preview_width, 4, TRUE,
-		   bmint.bm_rows[y], bmint.bm_rows[y + 1], bmint.bm_rows[y + 2],
-		   bmint.bm_width, xofs + bmvals.xofs, &bmint.params);
+/*  		   bmint.bm_rows[(y + sel_y1)     % bmint.bm_height],  */
+/*  		   bmint.bm_rows[(y + sel_y1 + 1) % bmint.bm_height],  */
+/*  		   bmint.bm_rows[(y + sel_y1 + 2) % bmint.bm_height], */
+		   bmint.bm_rows[y], 
+		   bmint.bm_rows[y + 1],
+		   bmint.bm_rows[y + 2],
+		   bmint.bm_width, xofs + bmvals.xofs,
+		   bmvals.tiled, 
+		   y == CLAMP (y, 
+			       - bmvals.yofs - bmint.preview_yofs - sel_y1 ,
+			       - bmvals.yofs - bmint.preview_yofs - sel_y1 + bmint.bm_height),
+		   &bmint.params);
 
       /* Paint row */
 
@@ -1410,7 +1586,7 @@ dialog_get_rows (GPixelRgn  *pr,
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
 
-  bpp       = pr->bpp;
+  bpp = pr->bpp;
 
   xstart = x;
   ystart = y;
@@ -1459,8 +1635,10 @@ dialog_fill_src_rows (gint start,
 		      gint how_many, 
 		      gint yofs)
 {
-  gint x, y;
-  guchar *sp, *p;
+  gint    x;
+  gint    y;
+  guchar *sp;
+  guchar *p;
 
   dialog_get_rows (&bmint.src_rgn,
 		   bmint.src_rows + start,
@@ -1507,6 +1685,13 @@ dialog_fill_bumpmap_rows (gint start,
   gint buf_row_ofs;
   gint remaining;
   gint this_pass;
+
+  /* Adapt to offset of selection */
+  yofs += sel_y1;
+  if (yofs < 0)
+    yofs = bmint.bm_height - (-yofs % bmint.bm_height);
+  else
+    yofs %= bmint.bm_height;
 
   buf_row_ofs = start;
   remaining   = how_many;
@@ -1555,6 +1740,17 @@ dialog_invert_callback (GtkWidget *widget,
 			gpointer   data)
 {
   bmvals.invert = GTK_TOGGLE_BUTTON (widget)->active;
+
+  bumpmap_init_params (&bmint.params);
+  dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
+  dialog_update_preview ();
+}
+
+static void
+dialog_tiled_callback (GtkWidget *widget, 
+			gpointer   data)
+{
+  bmvals.tiled = GTK_TOGGLE_BUTTON (widget)->active;
 
   bumpmap_init_params (&bmint.params);
   dialog_fill_bumpmap_rows (0, bmint.preview_height + 2, bmint.bm_yofs);
