@@ -77,12 +77,13 @@ file_dialog_actions_setup (GimpActionGroup *group,
           help_id = plug_in_proc_def_get_help_id (file_proc, help_domain);
         }
 
-      entry.name     = file_proc->db_info.name;
-      entry.stock_id = stock_id;
-      entry.label    = strstr (file_proc->menu_path, "/") + 1;
-      entry.tooltip  = NULL;
-      entry.proc_def = file_proc;
-      entry.help_id  = help_id;
+      entry.name        = file_proc->db_info.name;
+      entry.stock_id    = stock_id;
+      entry.label       = strstr (file_proc->menu_path, "/") + 1;
+      entry.accelerator = file_proc->accelerator;
+      entry.tooltip     = NULL;
+      entry.proc_def    = file_proc;
+      entry.help_id     = help_id;
 
       gimp_action_group_add_plug_in_actions (group, &entry, 1,
                                              G_CALLBACK (file_dialog_type_cmd_callback));
