@@ -1,5 +1,11 @@
 2004-07-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppatternmenu.c: ported to GimpPreviewArea.
+
+	* libgimp/gimpbrushmenu.c: some small changes for consistency.
+
+2004-07-31  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreviewarea.[ch]: added new function
 	gimp_preview_area_fill().
 

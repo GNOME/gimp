@@ -22,11 +22,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -79,6 +74,7 @@ static void     gimp_pattern_select_preview_update  (GtkWidget     *preview,
                                                      gint           height,
                                                      gint           bytes,
                                                      const guchar  *mask_data);
+static void     gimp_pattern_select_preview_resize  (PatternSelect *pattern_sel);
 static void     gimp_pattern_select_popup_open      (PatternSelect *pattern_sel,
                                                      gint           x,
                                                      gint           y);
@@ -127,16 +123,18 @@ gimp_pattern_select_widget_new (const gchar            *title,
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  pattern_sel->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_widget_set_events (pattern_sel->preview,
-                         GDK_EXPOSURE_MASK       |
+  pattern_sel->preview = gimp_preview_area_new ();
+  gtk_widget_add_events (pattern_sel->preview,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
-  gtk_preview_size (GTK_PREVIEW (pattern_sel->preview), CELL_SIZE, CELL_SIZE);
+  gtk_widget_set_size_request (pattern_sel->preview, CELL_SIZE, CELL_SIZE);
   gtk_container_add (GTK_CONTAINER (frame), pattern_sel->preview);
   gtk_widget_show (pattern_sel->preview);
 
+  g_signal_connect_swapped (pattern_sel->preview, "size_allocate",
+                            G_CALLBACK (gimp_pattern_select_preview_resize),
+                            pattern_sel);
   g_signal_connect (pattern_sel->preview, "event",
                     G_CALLBACK (gimp_pattern_select_preview_events),
                     pattern_sel);
@@ -160,13 +158,6 @@ gimp_pattern_select_widget_new (const gchar            *title,
                                     &pattern_sel->bytes,
                                     &mask_data_size,
                                     &pattern_sel->mask_data);
-
-  if (pattern_sel->pattern_name)
-    gimp_pattern_select_preview_update (pattern_sel->preview,
-                                        pattern_sel->width,
-                                        pattern_sel->height,
-                                        pattern_sel->bytes,
-                                        pattern_sel->mask_data);
 
   g_object_set_data (G_OBJECT (hbox), PATTERN_SELECT_DATA_KEY, pattern_sel);
 
@@ -316,6 +307,18 @@ gimp_pattern_select_widget_destroy (GtkWidget     *widget,
   g_free (pattern_sel);
 }
 
+static void
+gimp_pattern_select_preview_resize (PatternSelect *pattern_sel)
+{
+  if (pattern_sel->width > 0 && pattern_sel->height > 0)
+    gimp_pattern_select_preview_update (pattern_sel->preview,
+                                        pattern_sel->width,
+                                        pattern_sel->height,
+                                        pattern_sel->bytes,
+                                        pattern_sel->mask_data);
+
+}
+
 static gboolean
 gimp_pattern_select_preview_events (GtkWidget     *widget,
                                     GdkEvent      *event,
@@ -363,48 +366,24 @@ gimp_pattern_select_preview_update (GtkWidget    *preview,
                                     gint          bytes,
                                     const guchar *mask_data)
 {
-  const guchar *src;
-  guchar       *buf;
-  gint          x, y;
+  GimpImageType  type;
 
-  /*  Draw the pattern  */
-  buf = g_new (guchar, width * 3);
-  src = mask_data;
-
-  for (y = 0; y < CELL_SIZE && y < height; y++)
+  switch (bytes)
     {
-      switch (bytes)
-	{
-	case 1:
-	  for (x = 0; x < width && x < CELL_SIZE; x++)
-	    {
-	      buf[x*3+0] = src[x];
-	      buf[x*3+1] = src[x];
-	      buf[x*3+2] = src[x];
-	    }
-	  break;
-
-	case 3:
-	  for (x = 0; x < width && x < CELL_SIZE; x++)
-	    {
-	      buf[x*3+0] = src[x*3+0];
-	      buf[x*3+1] = src[x*3+1];
-	      buf[x*3+2] = src[x*3+2];
-	    }
-	  break;
-
-	default:
-	  break;
-	}
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
-			    0, y, (width < CELL_SIZE) ? width : CELL_SIZE);
-      src += width * bytes;
+    case 1:  type = GIMP_GRAY_IMAGE;   break;
+    case 2:  type = GIMP_GRAYA_IMAGE;  break;
+    case 3:  type = GIMP_RGB_IMAGE;    break;
+    case 4:  type = GIMP_RGBA_IMAGE;   break;
+    default:
+      return;
     }
 
-  g_free (buf);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, width, height,
+                          type,
+                          mask_data,
+                          width * bytes);
 
-  gtk_widget_queue_draw (preview);
 }
 
 static void
@@ -412,15 +391,13 @@ gimp_pattern_select_popup_open (PatternSelect *pattern_sel,
                                 gint           x,
                                 gint           y)
 {
-  GtkWidget    *frame;
-  GtkWidget    *preview;
-  const guchar *src;
-  guchar       *buf;
-  gint          x_org;
-  gint          y_org;
-  GdkScreen    *screen;
-  gint          scr_w;
-  gint          scr_h;
+  GtkWidget *frame;
+  GtkWidget *preview;
+  GdkScreen *screen;
+  gint       x_org;
+  gint       y_org;
+  gint       scr_w;
+  gint       scr_h;
 
   if (pattern_sel->popup)
     gimp_pattern_select_popup_close (pattern_sel);
@@ -435,9 +412,9 @@ gimp_pattern_select_popup_open (PatternSelect *pattern_sel,
   gtk_container_add (GTK_CONTAINER (pattern_sel->popup), frame);
   gtk_widget_show (frame);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview),
-		    pattern_sel->width, pattern_sel->height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview,
+                               pattern_sel->width, pattern_sel->height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
@@ -457,45 +434,13 @@ gimp_pattern_select_popup_open (PatternSelect *pattern_sel,
 
   gtk_window_move (GTK_WINDOW (pattern_sel->popup), x, y);
 
-  /*  Draw the pattern  */
-  buf = g_new (guchar, pattern_sel->width * 3);
-  src = pattern_sel->mask_data;
-
-  for (y = 0; y < pattern_sel->height; y++)
-    {
-      switch (pattern_sel->bytes)
-	{
-	case 1:
-	  for (x = 0; x < pattern_sel->width; x++)
-	    {
-	      buf[x*3+0] = src[x];
-	      buf[x*3+1] = src[x];
-	      buf[x*3+2] = src[x];
-	    }
-	  break;
-
-	case 3:
-	  for (x = 0; x < pattern_sel->width; x++)
-	    {
-	      buf[x*3+0] = src[x*3+0];
-	      buf[x*3+1] = src[x*3+1];
-	      buf[x*3+2] = src[x*3+2];
-	    }
-	  break;
-
-	default:
-	  break;
-	}
-
-      gtk_preview_draw_row (GTK_PREVIEW (preview), buf,
-			    0, y, pattern_sel->width);
-
-      src += pattern_sel->width * pattern_sel->bytes;
-    }
-
-  g_free (buf);
-
   gtk_widget_show (pattern_sel->popup);
+
+  /*  Draw the pattern  */
+  gimp_pattern_select_preview_update (preview,
+                                      pattern_sel->width, pattern_sel->height,
+                                      pattern_sel->bytes,
+                                      pattern_sel->mask_data);
 }
 
 static void

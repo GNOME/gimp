@@ -22,8 +22,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include "gimp.h"
 #include "gimpui.h"
 
@@ -141,8 +139,7 @@ gimp_brush_select_widget_new (const gchar          *title,
   gtk_widget_show (frame);
 
   brush_sel->preview = gimp_preview_area_new ();
-  gtk_widget_set_events (brush_sel->preview,
-                         GDK_EXPOSURE_MASK       |
+  gtk_widget_add_events (brush_sel->preview,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_BUTTON_RELEASE_MASK |
                          GDK_BUTTON1_MOTION_MASK);
