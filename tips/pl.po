@@ -1,4 +1,4 @@
-# Copyright (C) 2002-2005 Free Software Foundation, Inc.
+# Copyright (C) 2002-2003, 2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
@@ -10,12 +10,13 @@
 #
 # do przejrzenia !!! grep (TODO)
 # Artur Polaczyński <artii@o2.pl>, 2002-2003.
-# GNOME PL Team <translators@gnome.pl>, 2002-2005.
+# GNOME PL Team <translators@gnomepl.org>, 2002-2004.
+# Bartosz Kosiorek, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-29 16:35+0100\n"
+"POT-Creation-Date: 2005-01-30 18:34+0100\n"
 "PO-Revision-Date: 2005-01-28 22:43+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polski <translators@gnomepl.org>\n"
