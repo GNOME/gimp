@@ -173,13 +173,11 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_INTERACTIVE:
-          gimp_get_data ("file_svg_load", &load_vals);
 	  if (!load_dialog (param[1].data.d_string))
 	    status = GIMP_PDB_CANCEL;
           break;
 
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data ("file_svg_load", &load_vals);
           break;
 	}
 

@@ -140,32 +140,29 @@ run (const gchar      *name,
 
   if (strcmp (name, "file_wmf_load") == 0)
     {
+      gimp_get_data ("file_wmf_load", &load_vals);
+
       switch (run_mode)
         {
-        case GIMP_RUN_INTERACTIVE:
-          gimp_get_data ("file_wmf_load", &load_vals);
+        case GIMP_RUN_NONINTERACTIVE:
+          if (nparams > 3)
+            load_vals.scale = param[3].data.d_float;
+          break;
 
+        case GIMP_RUN_INTERACTIVE:
           if (!load_dialog (param[1].data.d_string))
             status = GIMP_PDB_CANCEL;
           break;
 
-        case GIMP_RUN_NONINTERACTIVE:
-          gimp_get_data ("file_wmf_load", &load_vals);
-          break;
-
         case GIMP_RUN_WITH_LAST_VALS:
-          gimp_get_data ("file_wmf_load", &load_vals);
-
-        default:
           break;
         }
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          load_vals.scale = CLAMP (load_vals.scale, 0.01, 100.0);
+          load_vals.scale = CLAMP (load_vals.scale, 1.0 / 64.0, 64.0);
 
           image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
-          gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
 
           if (image_ID != -1)
             {
@@ -174,11 +171,17 @@ run (const gchar      *name,
               values[1].data.d_image = image_ID;
             }
           else
-            status = GIMP_PDB_EXECUTION_ERROR;
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
+
+          gimp_set_data ("file_wmf_load", &load_vals, sizeof (load_vals));
         }
     }
   else
-    status = GIMP_PDB_CALLING_ERROR;
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
   values[0].data.d_status = status;
 }
@@ -191,6 +194,7 @@ load_dialog (const gchar *filename)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkObject *scale;
+  gdouble    value;
   gboolean   run = FALSE;
 
   gimp_ui_init ("wmf", FALSE);
@@ -225,9 +229,13 @@ load_dialog (const gchar *filename)
   gtk_widget_show (table);
 
   /* Scale slider */
+
+  value = CLAMP (load_vals.scale, 1.0 / 64.0, 64.0);
+  value = log (value) / log (2.0);
+
   scale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
                                 _("Scale (log 2):"), -1, -1,
-                                0.0, -2.0, 2.0,
+                                value, -6.0, 6.0,
                                 0.1, 0.5, 1,
                                 TRUE, 0.0, 0.0,
                                 NULL, NULL);
@@ -236,7 +244,7 @@ load_dialog (const gchar *filename)
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
-      load_vals.scale = pow (2,
+      load_vals.scale = pow (2.0,
                              gtk_adjustment_get_value (GTK_ADJUSTMENT (scale)));
       run = TRUE;
     }
@@ -398,14 +406,16 @@ load_image (const gchar *filename,
 
   if (image == -1)
     {
-      g_message ("Can't allocate new image: %s\n", filename);
+      g_message ("Can't allocate new image for %s", filename);
       gimp_quit ();
     }
 
   gimp_image_set_filename (image, filename);
 
-  layer = gimp_layer_new (image, _("Rendered WMF"),
-                          width, height, GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
+  layer = gimp_layer_new (image,
+                          _("Rendered WMF"),
+                          width, height,
+                          GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
 
   drawable = gimp_drawable_get (layer);
 

@@ -1,3 +1,10 @@
+2003-11-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c: removed redundant calls to gimp_get_data().
+
+	* plug-ins/common/wmf.c: fixed parameter handling and limits and
+	initial value of the logarithmic scale entry.
+
 2003-11-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/wmf.c (load_dialog): use a scale_entry instead
@@ -13,8 +20,8 @@
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/wmf.c: replaced the WMF plug-in with a plug-in
 	using libwmf2 written by Dom Lachowicz and Francis James Franklin.
-	Converted the plug-in to to new GimpDialog API and GIMP coding style.
-	Fixes bug #108653.
+	Converted the plug-in to the new GimpDialog API and GIMP coding
+	style. Fixes bug #108653.
 
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
