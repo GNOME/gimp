@@ -25,7 +25,7 @@
 #include "gimage.h"
 #include "gimage_cmds.h"
 #include "floating_sel.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 #include "undo.h"
 
 #include "layer_pvt.h"			/* ick. */
@@ -3511,7 +3511,8 @@ duplicate (GImage *gimage)
       list = g_slist_next (list);
 
       new_layer = layer_copy (layer, FALSE);
-      GIMP_DRAWABLE(new_layer)->gimage = new_gimage;
+
+      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_layer), new_gimage);
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       layer_set_name(GIMP_LAYER(new_layer),
@@ -3547,7 +3548,8 @@ duplicate (GImage *gimage)
       list = g_slist_next (list);
 
       new_channel = channel_copy (channel);
-      GIMP_DRAWABLE(new_channel)->gimage = new_gimage;
+
+      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_channel), new_gimage);
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_drawable_set_name(GIMP_DRAWABLE(new_channel),
@@ -4324,13 +4326,9 @@ ProcArg gimp_image_find_parasite_args[] =
     "the input image"
   },
   { PDB_STRING,
-    "creator",
-    "The creator ID of the parasite to find"
+    "name",
+    "The name of the parasite to find"
   },
-  { PDB_STRING,
-    "type",
-    "The type ID of the parasite to find"
-  }
 };
 
 ProcArg gimp_image_find_parasite_out_args[] =
@@ -4352,7 +4350,7 @@ ProcRecord gimp_image_find_parasite_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   gimp_image_find_parasite_args,
 
   /*  Output arguments  */
@@ -4371,7 +4369,7 @@ gimp_image_find_parasite_invoker (Argument *args)
   int int_value;
   GImage *gimage;
   Argument *return_args;
-  char *creator, *type;
+  char *name = NULL;
 
   /*  the gimage  */
   if (success)
@@ -4381,16 +4379,10 @@ gimp_image_find_parasite_invoker (Argument *args)
         success = FALSE;
     }
 
-  /*  creator  */
+  /*  name  */
   if (success)
     {
-      creator = (char *) args[1].value.pdb_pointer;
-    }
-
-  /*  type  */
-  if (success)
-    {
-      type = (char *) args[2].value.pdb_pointer;
+      name = (char *) args[1].value.pdb_pointer;
     }
 
   return_args = procedural_db_return_args (&gimp_image_find_parasite_proc,
@@ -4399,7 +4391,7 @@ gimp_image_find_parasite_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = 
-	gimp_image_find_parasite (gimage, creator, type);
+	gimp_image_find_parasite (gimage, name);
       if (return_args[1].value.pdb_pointer == NULL)
 	return_args[1].value.pdb_pointer = parasite_error();
     }
@@ -4489,16 +4481,16 @@ ProcArg gimp_image_detach_parasite_args[] =
     "image",
     "the input image"
   },
-  { PDB_PARASITE,
-    "parasite",
-    "The parasite to detach to the image"
+  { PDB_STRING,
+    "name",
+    "The name of the parasite to detach from the image"
   }
 };
 
 ProcRecord gimp_image_detach_parasite_proc =
 {
   "gimp_image_detach_parasite",
-  "Add a parasite to an image",
+  "Removes a parasite from an image",
   "This procedure detaches a parasite to an image.  It has no return values.",
   "Jay Cox",
   "Jay Cox",
@@ -4524,7 +4516,7 @@ gimp_image_detach_parasite_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   GImage *gimage;
-  Parasite *parasite = NULL;
+  char *parasite = NULL;
   Argument *return_args;
 
 
@@ -4538,7 +4530,7 @@ gimp_image_detach_parasite_invoker (Argument *args)
 
   if (success)
     {
-      parasite = (Parasite *)args[1].value.pdb_pointer;
+      parasite = (char *)args[1].value.pdb_pointer;
       if (parasite == NULL)
 	success = FALSE;
     }

@@ -1170,6 +1170,11 @@ layer_mask_preview (layer, w, h)
     }
 }
 
+guint32
+layer_get_tattoo(const Layer *layer)
+{
+  return (gimp_drawable_get_tattoo(GIMP_DRAWABLE(layer)));
+}
 
 void
 layer_invalidate_previews (GimpImage* gimage)

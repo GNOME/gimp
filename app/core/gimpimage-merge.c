@@ -25,7 +25,7 @@
 #include "gimage_mask.h"
 #include "paint_funcs.h"
 #include "palette.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 #include "undo.h"
 #include "gimpsignal.h"
 
@@ -137,6 +137,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->dirty = 1;
   gimage->undo_on = TRUE;
   gimage->construct_flag = -1;
+  gimage->tattoo_state = 0;
   gimage->projection = NULL;
   gimage->guides = NULL;
   gimage->layers = NULL;
@@ -152,6 +153,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview = NULL;
   gimage->parasites = NULL;
+  gimp_matrix_identity(gimage->transform);
   gimage->resolution = 72.0;  /* maybe should be rc-supplied default? */
 }
 
@@ -860,10 +862,9 @@ gimp_image_delete_guide (GimpImage *gimage,
 
 
 Parasite *
-gimp_image_find_parasite (const GimpImage *gimage,
-			  const char *creator, const char *type)
+gimp_image_find_parasite (const GimpImage *gimage, const char *name)
 {
-  return parasite_find_in_gslist(gimage->parasites, creator, type);
+  return parasite_find_in_gslist(gimage->parasites, name);
 }
 
 void
@@ -873,11 +874,20 @@ gimp_image_attach_parasite (GimpImage *gimage, const Parasite *parasite)
 }
 
 void
-gimp_image_detach_parasite (GimpImage *gimage, Parasite *parasite)
+gimp_image_detach_parasite (GimpImage *gimage, const char *parasite)
 {
-  gimage->parasites = g_slist_remove (gimage->parasites, parasite);
-  parasite_free(parasite);
+  Parasite *p;
+  if ((p = parasite_find_in_gslist(gimage->parasites, parasite)))
+    gimage->parasites = g_slist_remove (gimage->parasites, p);
+  parasite_free(p);
 }
+
+guint32
+gimp_image_get_new_tattoo(GimpImage *image)
+{
+  return (++image->tattoo_state);
+}
+
 
 /************************************************************/
 /*  Projection functions                                    */
@@ -1392,6 +1402,41 @@ Channel *
 gimp_image_get_active_channel (GimpImage *gimage)
 {
   return gimage->active_channel;
+}
+
+
+Layer *
+gimp_image_get_layer_by_tattoo (GimpImage *gimage, guint32 tattoo)
+{
+  Layer *layer;
+  GSList *layers = gimage->layers;
+
+  while (layers)
+  {
+    layer = (Layer *) layers->data;
+    if (layer_get_tattoo(layer) == tattoo)
+      return layer;
+    layers = g_slist_next (layers);
+  }
+
+  return NULL;
+}
+
+Channel *
+gimp_image_get_channel_by_tattoo (GimpImage *gimage, guint32 tattoo)
+{
+  Channel *channel;
+  GSList *channels = gimage->channels;
+
+  while (channels)
+  {
+    channel = (Channel *) channels->data;
+    if (channel_get_tattoo(channel) == tattoo)
+      return channel;
+    channels = g_slist_next (channels);
+  }
+
+  return NULL;
 }
 
 
@@ -2119,8 +2164,8 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
     gimage->floating_sel = float_layer;
 
   /*  let the layer know about the gimage  */
-  GIMP_DRAWABLE(float_layer)->gimage = gimage;
-
+  gimp_drawable_set_gimage(GIMP_DRAWABLE(float_layer), gimage);
+  
   /*  add the layer to the list at the specified position  */
   if (position == -1)
     position = gimp_image_get_layer_index (gimage, gimage->active_layer);

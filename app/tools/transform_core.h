@@ -21,6 +21,7 @@
 #include "info_dialog.h"
 #include "draw_core.h"
 #include "temp_buf.h"
+#include "libgimp/gimpmatrix.h"
 
 /* possible scaling functions */
 #define CREATING        0
@@ -45,8 +46,6 @@
 #define INTERACTIVE     1
 
 
-typedef double  Vector[3];
-typedef Vector  Matrix[3];
 typedef double  TranInfo[TRAN_INFO_SIZE];
 
 typedef void * (* TransformFunc)   (Tool *, void *, int);
@@ -83,7 +82,7 @@ struct _transform_core
   int             sx4, sy4;     /*                              */
   int             scx, scy;     /*  and center for rotation     */
 
-  Matrix          transform;    /*  transformation matrix       */
+  GimpMatrix      transform;    /*  transformation matrix       */
   TranInfo        trans_info;   /*  transformation info         */
 
   TileManager *   original;     /*  pointer to original tiles   */
@@ -137,20 +136,10 @@ void          transform_core_reset        (Tool *, void *);
 void	      transform_core_grid_density_changed (void);
 
 /*  transform functions  */
-TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, Matrix);
+TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
 TileManager * transform_core_cut          (GImage *, GimpDrawable *, int *);
 Layer *       transform_core_paste        (GImage *, GimpDrawable *, TileManager *, int);
-
-/*  matrix functions  */
-void          transform_bounding_box      (Tool *);
-void          transform_point             (Matrix, double, double, double *, double *);
-void          mult_matrix                 (Matrix, Matrix);
-void          identity_matrix             (Matrix);
-void          translate_matrix            (Matrix, double, double);
-void          scale_matrix                (Matrix, double, double);
-void          rotate_matrix               (Matrix, double);
-void          xshear_matrix               (Matrix, double);
-void          yshear_matrix               (Matrix, double);
+void          transform_bounding_box (Tool*);
 
 
 #endif  /*  __TRANSFORM_CORE_H__  */

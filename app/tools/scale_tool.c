@@ -45,7 +45,7 @@ char          x_ratio_buf     [MAX_INFO_BUF];
 char          y_ratio_buf     [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, TileManager *, int, Matrix);
+static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, TileManager *, int, GimpMatrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
@@ -128,7 +128,7 @@ tools_new_scale_tool ()
   private->trans_info[Y2] = 0;
 
   /*  assemble the transformation matrix  */
-  identity_matrix (private->transform);
+  gimp_matrix_identity (private->transform);
 
   return tool;
 }
@@ -407,10 +407,10 @@ scale_tool_recalc (tool, gdisp_ptr)
     }
 
   /*  assemble the transformation matrix  */
-  identity_matrix  (transform_core->transform);
-  translate_matrix (transform_core->transform, (double) -cx + diffx, (double) -cy + diffy);
-  scale_matrix     (transform_core->transform, scalex, scaley);
-  translate_matrix (transform_core->transform, (double) cx, (double) cy);
+  gimp_matrix_identity  (transform_core->transform);
+  gimp_matrix_translate (transform_core->transform, (double) -cx + diffx, (double) -cy + diffy);
+  gimp_matrix_scale     (transform_core->transform, scalex, scaley);
+  gimp_matrix_translate (transform_core->transform, (double) cx, (double) cy);
 
   /*  transform the bounding box  */
   transform_bounding_box (tool);
@@ -428,7 +428,7 @@ scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matr
      double *trans_info;
      TileManager *float_tiles;
      int interpolation;
-     Matrix matrix;
+     GimpMatrix matrix;
 {
   TileManager *new_tiles;
   int x1, y1, x2, y2;
@@ -538,7 +538,7 @@ scale_invoker (args)
   int int_value;
   TileManager *float_tiles;
   TileManager *new_tiles;
-  Matrix matrix;
+  GimpMatrix matrix;
   int new_layer;
   Layer *layer;
   Argument *return_args;
@@ -598,10 +598,10 @@ scale_invoker (args)
 	scaley = (trans_info[Y2] - trans_info[Y1]) / (double) float_tiles->height;
 
       /*  assemble the transformation matrix  */
-      identity_matrix  (matrix);
-      translate_matrix (matrix, float_tiles->x, float_tiles->y);
-      scale_matrix     (matrix, scalex, scaley);
-      translate_matrix (matrix, trans_info[X1], trans_info[Y1]);
+      gimp_matrix_identity  (matrix);
+      gimp_matrix_translate (matrix, float_tiles->x, float_tiles->y);
+      gimp_matrix_scale     (matrix, scalex, scaley);
+      gimp_matrix_translate (matrix, trans_info[X1], trans_info[Y1]);
 
       /*  scale the buffer  */
       new_tiles = scale_tool_scale (gimage, drawable, trans_info,

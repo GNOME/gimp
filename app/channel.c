@@ -27,7 +27,7 @@
 #include "gimage_mask.h"
 #include "layer.h"
 #include "paint_funcs.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 #include "temp_buf.h"
 #include "undo.h"
 
@@ -473,6 +473,12 @@ channel_invalidate_previews (GimpImage* gimage)
       drawable_invalidate_preview (GIMP_DRAWABLE(channel));
       tmp = g_slist_next (tmp);
     }
+}
+
+guint32
+channel_get_tattoo(const Channel *channel)
+{
+  return (gimp_drawable_get_tattoo(GIMP_DRAWABLE(channel)));
 }
 
 

@@ -1,3 +1,59 @@
+Tue Oct 13 19:24:03 1998  Jay Cox  (jaycox@earthlink.net)
+
+	* app/parasite.c
+	* app/parasite.h
+	* app/parasiteF.h
+	* app/parasiteP.h : use a single name field instead of seperate
+	creator/type fields.  moved to libgimp/parasite*
+
+	* libgimp/Makefile.am
+	* libgimp/gimp.c
+	* libgimp/gimp.h
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpimage.c
+	* libgimp/gimpprotocol.c
+	* libgimp/gimpprotocol.h
+	* app/Makefile.am
+	* app/channel.c
+	* app/channel.h
+	* app/channel_cmds.c
+	* app/channel_cmds.h
+	* app/drawable_cmds.c
+	* app/gimage_cmds.c
+	* app/gimpdrawable.c
+	* app/gimpdrawable.h
+	* app/gimpdrawableP.h
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpimageP.h
+	* app/internal_procs.c
+	* app/layer.c
+	* app/layer.h
+	* app/layer_cmds.c
+	* app/layer_cmds.h
+	* app/parasite_cmds.c
+	* app/plug_in.c
+	* app/procedural_db.c: Add tattoos to layers and drawables.
+	Use new style parasites.
+
+	* libgimp/gimpmatrix.c
+	* libgimp/gimpmatrix.h: new files for matrix math.
+
+	* app/perspective_tool.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c
+	* app/transform_core.c
+	* app/transform_core.h: use GimpMatrix instead of the old matrix
+	code from transform_core.
+
+	* ligimp/gimpparasite*: removed.  now useing the same source
+	for plug-ins and the core.
+
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/tiff/tiff.c
+	* plug-ins/gif/gif.c: updated to use new style parasites.
+
 Tue Oct 13 22:01:41 BST 1998  Andy Thomas <alt@picnic.demon.co.uk>
 
 	app/brush_select.[ch] Fixed problem with resizing the brush popup

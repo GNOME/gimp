@@ -263,7 +263,7 @@
 
 /* Does the version of GIMP we're compiling for support
    data attachments to images?  ('Parasites') */
-#ifdef _GIMPPARASITE_H_
+#ifdef _PARASITE_H_
 #define FACEHUGGERS aieee
 #endif
 /* PS: I know that technically facehuggers aren't parasites,
@@ -342,7 +342,7 @@ static guchar   highest_used_index;
 static gboolean promote_to_rgb   = FALSE;
 static guchar   gimp_cmap[768];
 #ifdef FACEHUGGERS
-GParasite*      comment_parasite = NULL;
+Parasite*      comment_parasite = NULL;
 #endif
 
 /* For compression code */
@@ -796,7 +796,7 @@ load_image (char *filename)
       if (comment_parasite != NULL)
 	{
 	  gimp_image_attach_parasite (image_ID, comment_parasite);
-	  gparasite_free (comment_parasite);
+	  parasite_free (comment_parasite);
 	  comment_parasite = NULL;
 	}
 #endif
@@ -885,10 +885,10 @@ DoExtension (FILE *fd,
 #ifdef FACEHUGGERS
 	  if (comment_parasite != NULL)
 	    {
-	      gparasite_free (comment_parasite);
+	      parasite_free (comment_parasite);
 	    }
 	    
-	  comment_parasite = gparasite_new ("GIF2","CMNT",TRUE,
+	  comment_parasite = parasite_new ("gimp-comment",TRUE,
 					    strlen(buf)+1, (void*)buf);
 #else
 	  if (showComment)
@@ -2059,7 +2059,7 @@ save_dialog ( gint32 image_ID )
   GtkWidget *menu;
   GtkWidget *disposal_option_menu;
 #ifdef FACEHUGGERS
-  GParasite* GIF2_CMNT;
+  Parasite* GIF2_CMNT;
 #endif
 
 
@@ -2141,8 +2141,8 @@ save_dialog ( gint32 image_ID )
       g_free(globalcomment);
     }
 #ifdef FACEHUGGERS
-    GIF2_CMNT = gimp_image_find_parasite (image_ID, "GIF2", "CMNT");
-    if (!gparasite_is_error(GIF2_CMNT))
+    GIF2_CMNT = gimp_image_find_parasite (image_ID, "gimp-comment");
+    if (!parasite_is_error(GIF2_CMNT))
       {
 	globalcomment = g_malloc(GIF2_CMNT->size);
 	strcpy(globalcomment, GIF2_CMNT->data);
@@ -2154,7 +2154,7 @@ save_dialog ( gint32 image_ID )
 	strcpy(globalcomment, DEFAULT_COMMENT);
 #ifdef FACEHUGGERS
       }
-    gparasite_free (GIF2_CMNT);
+    parasite_free (GIF2_CMNT);
 #endif
 
   gtk_entry_set_text (GTK_ENTRY (entry), globalcomment);

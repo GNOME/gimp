@@ -26,7 +26,7 @@
 #include "gdisplay.h"
 #include "plug_in.h"
 #include "procedural_db.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 #include "config.h"
 #include "regex.h"
 

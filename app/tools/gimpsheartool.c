@@ -51,7 +51,7 @@ static char        xshear_buf  [MAX_INFO_BUF];
 static char        yshear_buf  [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      shear_tool_shear   (GImage *, GimpDrawable *, TileManager *, int, Matrix);
+static void *      shear_tool_shear   (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
 static void *      shear_tool_recalc  (Tool *, void *);
 static void        shear_tool_motion  (Tool *, void *);
 static void        shear_info_update  (Tool *);
@@ -126,7 +126,7 @@ tools_new_shear_tool ()
   private->trans_func = shear_tool_transform;
 
   /*  assemble the transformation matrix  */
-  identity_matrix (private->transform);
+  gimp_matrix_identity (private->transform);
 
   return tool;
 }
@@ -323,18 +323,18 @@ shear_tool_recalc (tool, gdisp_ptr)
     height = 1;
 
   /*  assemble the transformation matrix  */
-  identity_matrix  (transform_core->transform);
-  translate_matrix (transform_core->transform, -cx, -cy);
+  gimp_matrix_identity  (transform_core->transform);
+  gimp_matrix_translate (transform_core->transform, -cx, -cy);
 
   /*  shear matrix  */
   if (transform_core->trans_info[HORZ_OR_VERT] == HORZ)
-    xshear_matrix (transform_core->transform,
+    gimp_matrix_xshear (transform_core->transform,
 		   (float) transform_core->trans_info [XSHEAR] / height);
   else
-    yshear_matrix (transform_core->transform,
+    gimp_matrix_yshear (transform_core->transform,
 		   (float) transform_core->trans_info [YSHEAR] / width);
 
-  translate_matrix (transform_core->transform, +cx, +cy);
+  gimp_matrix_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
   transform_bounding_box (tool);
@@ -352,7 +352,7 @@ shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix)
      GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
-     Matrix matrix;
+     GimpMatrix matrix;
 {
   return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
@@ -427,7 +427,7 @@ shear_invoker (args)
   int int_value;
   TileManager *float_tiles;
   TileManager *new_tiles;
-  Matrix matrix;
+  GimpMatrix matrix;
   int new_layer;
   Layer *layer;
   Argument *return_args;
@@ -488,14 +488,14 @@ shear_invoker (args)
       cx = float_tiles->x + float_tiles->width / 2.0;
       cy = float_tiles->y + float_tiles->height / 2.0;
 
-      identity_matrix  (matrix);
-      translate_matrix (matrix, -cx, -cy);
+      gimp_matrix_identity  (matrix);
+      gimp_matrix_translate (matrix, -cx, -cy);
       /*  shear matrix  */
       if (shear_type == HORZ)
-	xshear_matrix (matrix, shear_magnitude / float_tiles->height);
+	gimp_matrix_xshear (matrix, shear_magnitude / float_tiles->height);
       else if (shear_type == VERT)
-	yshear_matrix (matrix, shear_magnitude / float_tiles->width);
-      translate_matrix (matrix, +cx, +cy);
+	gimp_matrix_yshear (matrix, shear_magnitude / float_tiles->width);
+      gimp_matrix_translate (matrix, +cx, +cy);
 
       /*  shear the buffer  */
       new_tiles = shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix);

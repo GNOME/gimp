@@ -199,13 +199,13 @@ run (char    *name,
       /* get the image comment either from a parasite, or from our
        * compiled-in default */
       {
-	GParasite *parasite;
+	Parasite *parasite;
 
 	image_comment = NULL;
-	parasite = gimp_image_find_parasite(image, "GIF2", "CMNT");
-	if (!gparasite_is_error(parasite))
+	parasite = gimp_image_find_parasite(image, "gimp-comment");
+	if (!parasite_is_error(parasite))
 	  image_comment = g_strdup(parasite->data);
-	gparasite_free(parasite);
+	parasite_free(parasite);
 	if (!image_comment)
 	  image_comment = g_strdup(DEFAULT_COMMENT);	  
       }
@@ -214,16 +214,16 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	{
-	  GParasite *parasite;
+	  Parasite *parasite;
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
-	  parasite = gimp_image_find_parasite(image, "tiff", "sopt");
-	  if (!gparasite_is_error(parasite))
+	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
+	  if (!parasite_is_error(parasite))
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
-	  gparasite_free(parasite);
+	  parasite_free(parasite);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
@@ -254,15 +254,15 @@ run (char    *name,
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	{
-	  GParasite *parasite;
+	  Parasite *parasite;
 	  gimp_get_data ("file_tiff_save", &tsvals);
-	  parasite = gimp_image_find_parasite(image, "tiff", "sopt");
-	  if (!gparasite_is_error(parasite))
+	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
+	  if (!parasite_is_error(parasite))
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
 	  }
-	  gparasite_free(parasite);
+	  parasite_free(parasite);
 	}
 	  break;
 
@@ -316,7 +316,7 @@ static gint32 load_image (char *filename) {
   channel_data *channel= NULL;
 
   TiffSaveVals save_vals;
-  GParasite *parasite;
+  Parasite *parasite;
   guint16 tmp;
   tif = TIFFOpen (filename, "r");
   if (!tif) {
@@ -419,13 +419,14 @@ static gint32 load_image (char *filename) {
     save_vals.fillorder = FILLORDER_LSB2MSB;
   else
     save_vals.fillorder = tmp;
-  parasite = gparasite_new("tiff", "sopt", 0, sizeof(save_vals), &save_vals);
+  parasite = parasite_new("tiff-save-options", 0,
+			  sizeof(save_vals), &save_vals);
   gimp_image_attach_parasite(image, parasite);
-  gparasite_free(parasite);
+  parasite_free(parasite);
 
 
   /* Attach a parasite containing the image description.  Pretend to
-   * be a GIF2 comment so other plugins will use this description as
+   * be a gimp comment so other plugins will use this description as
    * an image comment where appropriate. */
   {
     char *img_desc;
@@ -438,9 +439,9 @@ static gint32 load_image (char *filename) {
       len = MIN(len, 241);
       img_desc[len-1] = '\000';
 
-      parasite = gparasite_new("GIF2", "CMNT", 1, len, img_desc);
+      parasite = parasite_new("gimp-comment", 1, len, img_desc);
       gimp_image_attach_parasite(image, parasite);
-      gparasite_free(parasite);
+      parasite_free(parasite);
     }
   }
 
@@ -866,13 +867,13 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
    * detaches a previous incarnation of the parasite. */
   if (image_comment && *image_comment != '\000')
   {
-    GParasite *parasite;
+    Parasite *parasite;
 
     TIFFSetField (tif, TIFFTAG_IMAGEDESCRIPTION, image_comment);
-    parasite = gparasite_new ("GIF2", "CMNT", 1,
+    parasite = parasite_new ("gimp-comment", 1,
 			      strlen(image_comment)+1, image_comment);
     gimp_image_attach_parasite (image, parasite);
-    gparasite_free (parasite);
+    parasite_free (parasite);
   }
 
   if (drawable_type == INDEXED_IMAGE)

@@ -19,7 +19,8 @@
 #include "gimpenums.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"
-#include "gimpparasite.h"
+#include "parasite.h"
+#include "parasiteP.h"
 #include <stdio.h>
 
 
@@ -911,10 +912,7 @@ _gp_params_read (int fd, GPParam **params, guint *nparams)
           break;
         case PARAM_PARASITE:
 	{
-	  if (!wire_read_int8 (fd, &((*params)[i].data.d_parasite.creator[0]),
-			       4))
-	    return;
-	  if (!wire_read_int8 (fd, &((*params)[i].data.d_parasite.type[0]), 4))
+	  if (!wire_read_string (fd, &(*params)[i].data.d_parasite.name, 1))
 	    return;
 	  if (!wire_read_int32 (fd, &((*params)[i].data.d_parasite.flags), 1))
 	    return;
@@ -1048,10 +1046,8 @@ _gp_params_write (int fd, GPParam *params, int nparams)
           break;
         case PARAM_PARASITE:
 	{
-	  GParasite *p = (GParasite *)&params[i].data.d_parasite;
-	  if (!wire_write_int8 (fd, &p->creator[0], 4))
-	    return;
-	  if (!wire_write_int8 (fd, &p->type[0], 4))
+	  Parasite *p = (Parasite *)&params[i].data.d_parasite;
+	  if (!wire_write_string (fd, &p->name, 1))
 	    return;
 	  if (!wire_write_int32 (fd, &p->flags, 1))
 	    return;

@@ -21,16 +21,15 @@
 #define _PARASITE_H_
 
 #include <glib.h>
-#include <parasiteF.h>
+#include <libgimp/parasiteF.h>
 
 #define PARASITE_PERSISTANT 1
 
-Parasite *parasite_new      (const char *creator, const char *type, guint32 flags,
+Parasite *parasite_new      (const char *name, guint32 flags,
 			     guint32 size, const void *data);
 void      parasite_free     (Parasite *parasite);
 
-int       parasite_has_type (const Parasite *parasite, const char *creator, 
-			     const char *type);
+int       parasite_is_type  (const Parasite *parasite, const char *name);
 Parasite *parasite_copy     (const Parasite *parasite);
 
 Parasite *parasite_error    ();
@@ -42,8 +41,7 @@ int       parasite_is_persistant (const Parasite *p);
 /* parasite list functions */
 
 GSList   *parasite_add_to_gslist  (const Parasite *parasite, GSList *list);
-Parasite *parasite_find_in_gslist (const GSList *list, const char *creator,
-				   const char *type);
+Parasite *parasite_find_in_gslist (const GSList *list, const char *name);
 
 GSList   *parasite_gslist_copy    (const GSList *list);
 void      parasite_gslist_destroy (GSList *list);

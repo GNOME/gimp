@@ -28,8 +28,8 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
-#include "parasite.h"
-#include "parasiteP.h" /* ick */
+#include "libgimp/parasite.h"
+#include "libgimp/parasiteP.h" /* ick */
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -2798,6 +2798,8 @@ plug_in_args_to_params (Argument *args,
 	      tmp = parasite_copy (args[i].value.pdb_pointer);
 	      if (tmp == NULL)
 	      {
+		params[i].data.d_parasite.name = 0;
+		params[i].data.d_parasite.flags = 0;
 		params[i].data.d_parasite.size = 0;
 		params[i].data.d_parasite.data = 0;
 	      }
@@ -2811,6 +2813,8 @@ plug_in_args_to_params (Argument *args,
 	    {
 	      if (args[i].value.pdb_pointer == NULL)
 	      {
+		params[i].data.d_parasite.name = 0;
+		params[i].data.d_parasite.flags = 0;
 		params[i].data.d_parasite.size = 0;
 		params[i].data.d_parasite.data = 0;
 	      }
@@ -2893,7 +2897,9 @@ plug_in_params_destroy (GPParam *params,
 	  if (full_destroy)
 	    if (params[i].data.d_parasite.data)
 	    {
+	      g_free (params[i].data.d_parasite.name);
 	      g_free (params[i].data.d_parasite.data);
+	      params[i].data.d_parasite.name = 0;
 	      params[i].data.d_parasite.data = 0;
 	    }
 	  break;
@@ -2976,7 +2982,7 @@ plug_in_args_destroy (Argument *args,
 	  if (full_destroy)
 	  {
 /*	    parasite_free ((Parasite *)(args[i].value.pdb_pointer));
-	    args[i].value.pdb_pointer = NULL; */
+	    args[i].value.pdb_pointer = NULL;*/
 	  }
 	  break;
 	case PDB_STATUS:

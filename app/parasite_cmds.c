@@ -17,7 +17,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "parasite.h"
+#include "libgimp/parasite.h"
 #include "procedural_db.h"
 #include "appenv.h"
 #include <stdio.h>
@@ -27,12 +27,8 @@ static Argument *parasite_new_invoker (Argument *args);
 ProcArg parasite_new_args[] =
 {
   { PDB_STRING,
-    "creator",
-    "The creator ID of the parasite to create"
-  },
-  { PDB_STRING,
-    "type",
-    "The type ID of the parasite to create"
+    "name",
+    "The name of the parasite to create"
   },
   { PDB_INT32,
     "flags",
@@ -67,7 +63,7 @@ ProcRecord parasite_new_proc =
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  5,
+  4,
   parasite_new_args,
 
   /*  Output arguments  */
@@ -83,26 +79,23 @@ parasite_new_invoker (Argument *args)
 {
   int success = TRUE;
   Argument *return_args;
-  char *creator, *type;
+  char *name;
   guint32 flags, size;
   void *data;
 
   /*  creator  */
   if (success)
-  { creator = (char *) args[0].value.pdb_pointer; }
-  /*  type  */
-  if (success)
-  {  type = (char *) args[1].value.pdb_pointer;   }
+  { name = (char *) args[0].value.pdb_pointer; }
   /*  flags  */
   if (success)
-  {  flags =  args[2].value.pdb_int;   }
+  {  flags =  args[1].value.pdb_int;   }
   /*  size  */
   if (success)
-  {  size =   args[3].value.pdb_int;   }
+  {  size =   args[2].value.pdb_int;   }
   /*  data  */
   if (success)
   {  
-    data =   args[4].value.pdb_pointer;
+    data =   args[3].value.pdb_pointer;
     if (size > 0 && data == 0)
       success = FALSE;
   }
@@ -113,7 +106,7 @@ parasite_new_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = 
-	parasite_new (creator, type, flags, size, data);
+	parasite_new (name, flags, size, data);
     }
 
   return return_args;

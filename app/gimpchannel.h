@@ -95,6 +95,8 @@ int             channel_toggle_visibility (Channel *);
 TempBuf *       channel_preview (Channel *, int, int);
 
 void            channel_invalidate_previews (GimpImage*);
+guint32         channel_get_tattoo(const Channel *);
+
 
 /* selection mask functions  */
 

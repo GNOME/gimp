@@ -52,7 +52,7 @@ static char	center_x_buf [MAX_INFO_BUF];
 static char	center_y_buf [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, Matrix);
+static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, GimpMatrix);
 static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
@@ -135,7 +135,7 @@ tools_new_rotate_tool ()
   private->trans_info[CENTER_Y]   = (private->y1 + private->y2) / 2;
 
   /*  assemble the transformation matrix  */
-  identity_matrix (private->transform);
+  gimp_matrix_identity (private->transform);
 
   return tool;
 }
@@ -339,10 +339,10 @@ rotate_tool_recalc (tool, gdisp_ptr)
   cy = transform_core->cy;
 
   /*  assemble the transformation matrix  */
-  identity_matrix  (transform_core->transform);
-  translate_matrix (transform_core->transform, -cx, -cy);
-  rotate_matrix    (transform_core->transform, transform_core->trans_info[ANGLE]);
-  translate_matrix (transform_core->transform, +cx, +cy);
+  gimp_matrix_identity  (transform_core->transform);
+  gimp_matrix_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix_rotate    (transform_core->transform, transform_core->trans_info[ANGLE]);
+  gimp_matrix_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */
   transform_bounding_box (tool);
@@ -365,7 +365,7 @@ rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix)
      double angle;
      TileManager *float_tiles;
      int interpolation;
-     Matrix matrix;
+     GimpMatrix matrix;
 {
   return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
@@ -435,7 +435,7 @@ rotate_invoker (args)
   int int_value;
   TileManager *float_tiles;
   TileManager *new_tiles;
-  Matrix matrix;
+  GimpMatrix matrix;
   int new_layer;
   Layer *layer;
   Argument *return_args;
@@ -483,10 +483,10 @@ rotate_invoker (args)
       cy = float_tiles->y + float_tiles->height / 2.0;
 
       /*  assemble the transformation matrix  */
-      identity_matrix  (matrix);
-      translate_matrix (matrix, -cx, -cy);
-      rotate_matrix    (matrix, angle);
-      translate_matrix (matrix, +cx, +cy);
+      gimp_matrix_identity  (matrix);
+      gimp_matrix_translate (matrix, -cx, -cy);
+      gimp_matrix_rotate    (matrix, angle);
+      gimp_matrix_translate (matrix, +cx, +cy);
 
       /*  rotate the buffer  */
       new_tiles = rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix);

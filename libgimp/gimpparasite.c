@@ -23,19 +23,15 @@
 #include <glib.h>
 
 Parasite *
-parasite_new (const char *creator, const char *type, guint32 flags,
+parasite_new (const char *name, guint32 flags,
 	      guint32 size, const void *data)
 {
   Parasite *p;
   p = (Parasite *)g_malloc(sizeof(Parasite));
-  if (creator)
-    memcpy(p->creator, creator, 4);
+  if (name)
+    p->name = g_strdup(name);
   else
-    memset(p->creator, 0, 4);
-  if (type)
-    memcpy(p->type, type, 4);
-  else
-    memset(p->type, 0, 4);
+    p->name = NULL;
   p->flags = flags;
   p->size = size;
   if (size)
@@ -49,25 +45,19 @@ void
 parasite_free (Parasite *parasite)
 {
   g_return_if_fail(parasite != NULL);
+  if (parasite->name)
+    g_free(parasite->name);
   if (parasite->data)
     g_free(parasite->data);
   g_free(parasite);
 }
 
 int
-parasite_has_type (const Parasite *parasite, const char *creator, const char *type)
+parasite_is_type (const Parasite *parasite, const char *name)
 {
   if (!parasite)
     return FALSE;
-  if (creator && parasite->creator && strncmp(creator, parasite->creator, 4) != 0)
-    return FALSE;
-  if (creator != 0 && parasite->creator == 0)
-    return FALSE;
-  if (type && parasite->type && strncmp(type, parasite->type, 4) != 0)
-    return FALSE;
-  if (type != 0 && parasite->type == 0)
-    return FALSE;
-  return TRUE;
+  return (strcmp(parasite->name, name) == 0);
 }
 
 Parasite *
@@ -75,8 +65,8 @@ parasite_copy (const Parasite *parasite)
 {
   if (parasite == NULL)
     return NULL;
-  return parasite_new (&parasite->creator[0], &parasite->type[0],
-		       parasite->flags, parasite->size, parasite->data);
+  return parasite_new (parasite->name, parasite->flags,
+		       parasite->size, parasite->data);
 }
 
 Parasite *
@@ -84,7 +74,7 @@ parasite_error()
 {
   static Parasite *error_p = NULL;
   if (!error_p)
-    error_p = parasite_new("eror", "eror", 0, 0, NULL);
+    error_p = parasite_new("error", 0, 0, NULL);
   return error_p;
 }
 
@@ -93,7 +83,7 @@ parasite_is_error(const Parasite *p)
 {
   if (p == NULL)
     return TRUE;
-  return parasite_has_type(p, "eror", "eror");
+  return parasite_is_type(p, "error");
 }
 
 int
@@ -107,11 +97,11 @@ parasite_is_persistant(const Parasite *p)
 /* parasite list functions */
 
 Parasite *
-parasite_find_in_gslist (const GSList *list, const char *creator, const char *type)
+parasite_find_in_gslist (const GSList *list, const char *name)
 {
   while (list)
   {
-    if (parasite_has_type((Parasite *)(list->data), creator, type))
+    if (parasite_is_type((Parasite *)(list->data), name))
       return (Parasite *)(list->data);
     list = list->next;
   }
@@ -124,7 +114,7 @@ parasite_add_to_gslist (const Parasite *parasite, GSList *list)
   Parasite *p;
   if (parasite_is_error(parasite))
     return list;
-  if ((p = parasite_find_in_gslist(list, parasite->creator, parasite->type)))
+  if ((p = parasite_find_in_gslist(list, parasite->name)))
   {
     list = g_slist_remove(list, p);
     parasite_free(p);

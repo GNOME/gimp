@@ -10,10 +10,16 @@ lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a
 
 libgimpi_a_SOURCES = \
+	gimpmatrix.c	\
+	gimpmatrix.h	\
 	gimpprotocol.c	\
 	gimpprotocol.h	\
 	gimpwire.c	\
-	gimpwire.h
+	gimpwire.h	\
+	parasite.c	\
+	parasite.h	\
+	parasiteF.h	\
+	parasiteP.h
 
 ## Evil hack to insure all deps are satisfied on first-run make
 libgimpi_a_DEPENDENCIES = libgimp.la
@@ -26,6 +32,8 @@ libgimp_la_SOURCES = \
 	gimpgradient.c	\
 	gimpimage.c	\
 	gimplayer.c	\
+	gimpmatrix.c	\
+	gimpmatrix.h	\
 	gimppalette.c	\
 	gimppixelrgn.c	\
 	gimpprotocol.c	\
@@ -33,8 +41,10 @@ libgimp_la_SOURCES = \
 	gimptile.c	\
 	gimpwire.c	\
 	gimpwire.h	\
-	gimpparasite.c	\
-	gimpparasite.h
+	parasite.c	\
+	parasite.h	\
+	parasiteF.h	\
+	parasiteP.h
 
 libgimpui_la_SOURCES = \
 	gimpmenu.c \
@@ -44,13 +54,16 @@ gimpinclude_HEADERS = \
 	gimp.h		\
 	gimpenums.h	\
 	gimpfeatures.h	\
+	gimpmatrix.h	\
 	gimpmenu.h	\
 	gimpui.h	\
 	gimpintl.h	\
-	gimpparasite.h
+	parasite.h	\
+	parasiteF.h	\
+	parasiteP.h
 
 libgimp_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE) -lm
 libgimpui_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)
 

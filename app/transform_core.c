@@ -57,7 +57,6 @@ static void *      transform_core_recalc     (Tool *, void *);
 static void        transform_core_doit       (Tool *, gpointer);
 static double      cubic                     (double, int, int, int, int);
 static void        transform_core_setup_grid (Tool *);
-static void	   invert		     (Matrix, Matrix);
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * ((1-dx)*jk + dx*j1k) + \
@@ -742,23 +741,23 @@ transform_bounding_box (tool)
 
   transform_core = (TransformCore *) tool->private;
 
-  transform_point (transform_core->transform,
-		   transform_core->x1, transform_core->y1,
-		   &transform_core->tx1, &transform_core->ty1);
-  transform_point (transform_core->transform,
-		   transform_core->x2, transform_core->y1,
-		   &transform_core->tx2, &transform_core->ty2);
-  transform_point (transform_core->transform,
-		   transform_core->x1, transform_core->y2,
-		   &transform_core->tx3, &transform_core->ty3);
-  transform_point (transform_core->transform,
-		   transform_core->x2, transform_core->y2,
-		   &transform_core->tx4, &transform_core->ty4);
+  gimp_matrix_transform_point (transform_core->transform,
+			       transform_core->x1, transform_core->y1,
+			       &transform_core->tx1, &transform_core->ty1);
+  gimp_matrix_transform_point (transform_core->transform,
+			       transform_core->x2, transform_core->y1,
+			       &transform_core->tx2, &transform_core->ty2);
+  gimp_matrix_transform_point (transform_core->transform,
+			       transform_core->x1, transform_core->y2,
+			       &transform_core->tx3, &transform_core->ty3);
+  gimp_matrix_transform_point (transform_core->transform,
+			       transform_core->x2, transform_core->y2,
+			       &transform_core->tx4, &transform_core->ty4);
 
   if (tool->type == ROTATE)
-    transform_point (transform_core->transform,
-		     transform_core->cx, transform_core->cy,
-		     &transform_core->tcx, &transform_core->tcy);
+    gimp_matrix_transform_point (transform_core->transform,
+				 transform_core->cx, transform_core->cy,
+				 &transform_core->tcx, &transform_core->tcy);
 
   if (transform_core->grid_coords != NULL &&
       transform_core->tgrid_coords != NULL)
@@ -767,202 +766,14 @@ transform_bounding_box (tool)
       k  = (transform_core->ngx + transform_core->ngy) * 2;
       for (i = 0; i < k; i++)
 	{
-	  transform_point (transform_core->transform,
-			   transform_core->grid_coords[gci],
-			   transform_core->grid_coords[gci+1],
-			   &(transform_core->tgrid_coords[gci]),
-			   &(transform_core->tgrid_coords[gci+1]));
+	  gimp_matrix_transform_point (transform_core->transform,
+				       transform_core->grid_coords[gci],
+				       transform_core->grid_coords[gci+1],
+				       &(transform_core->tgrid_coords[gci]),
+				       &(transform_core->tgrid_coords[gci+1]));
 	  gci += 2;
 	}
     }
-}
-
-void
-transform_point (m, x, y, nx, ny)
-     Matrix m;
-     double x, y;
-     double *nx, *ny;
-{
-  double xx, yy, ww;
-
-  xx = m[0][0] * x + m[0][1] * y + m[0][2];
-  yy = m[1][0] * x + m[1][1] * y + m[1][2];
-  ww = m[2][0] * x + m[2][1] * y + m[2][2];
-
-  if (!ww)
-    ww = 1.0;
-
-  *nx = xx / ww;
-  *ny = yy / ww;
-}
-
-void
-mult_matrix (m1, m2)
-     Matrix m1, m2;
-{
-  Matrix result;
-  int i, j, k;
-
-  for (i = 0; i < 3; i++)
-    for (j = 0; j < 3; j++)
-      {
-	result [i][j] = 0.0;
-	for (k = 0; k < 3; k++)
-	  result [i][j] += m1 [i][k] * m2[k][j];
-      }
-
-  /*  copy the result into matrix 2  */
-  for (i = 0; i < 3; i++)
-    for (j = 0; j < 3; j++)
-      m2 [i][j] = result [i][j];
-}
-
-void
-identity_matrix (m)
-     Matrix m;
-{
-  int i, j;
-
-  for (i = 0; i < 3; i++)
-    for (j = 0; j < 3; j++)
-      m[i][j] = (i == j) ? 1 : 0;
-
-}
-
-void
-translate_matrix (m, x, y)
-     Matrix m;
-     double x, y;
-{
-  Matrix trans;
-
-  identity_matrix (trans);
-  trans[0][2] = x;
-  trans[1][2] = y;
-  mult_matrix (trans, m);
-}
-
-void
-scale_matrix (m, x, y)
-     Matrix m;
-     double x, y;
-{
-  Matrix scale;
-
-  identity_matrix (scale);
-  scale[0][0] = x;
-  scale[1][1] = y;
-  mult_matrix (scale, m);
-}
-
-void
-rotate_matrix (m, theta)
-     Matrix m;
-     double theta;
-{
-  Matrix rotate;
-  double cos_theta, sin_theta;
-
-  cos_theta = cos (theta);
-  sin_theta = sin (theta);
-
-  identity_matrix (rotate);
-  rotate[0][0] = cos_theta;
-  rotate[0][1] = -sin_theta;
-  rotate[1][0] = sin_theta;
-  rotate[1][1] = cos_theta;
-  mult_matrix (rotate, m);
-}
-
-void
-xshear_matrix (m, shear)
-     Matrix m;
-     double shear;
-{
-  Matrix shear_m;
-
-  identity_matrix (shear_m);
-  shear_m[0][1] = shear;
-  mult_matrix (shear_m, m);
-}
-
-void
-yshear_matrix (m, shear)
-     Matrix m;
-     double shear;
-{
-  Matrix shear_m;
-
-  identity_matrix (shear_m);
-  shear_m[1][0] = shear;
-  mult_matrix (shear_m, m);
-}
-
-/*  find the determinate for a 3x3 matrix  */
-static double
-determinate (Matrix m)
-{
-  int i;
-  double det = 0;
-
-  for (i = 0; i < 3; i ++)
-    {
-      det += m[0][i] * m[1][(i+1)%3] * m[2][(i+2)%3];
-      det -= m[2][i] * m[1][(i+1)%3] * m[0][(i+2)%3];
-    }
-
-  return det;
-}
-
-/*  find the cofactor matrix of a matrix  */
-static void
-cofactor (Matrix m, Matrix m_cof)
-{
-  int i, j;
-  int x1, y1;
-  int x2, y2;
-
-  x1 = y1 = x2 = y2 = 0;
-
-  for (i = 0; i < 3; i++)
-    {
-      switch (i)
-	{
-	case 0 : y1 = 1; y2 = 2; break;
-	case 1 : y1 = 0; y2 = 2; break;
-	case 2 : y1 = 0; y2 = 1; break;
-	}
-      for (j = 0; j < 3; j++)
-	{
-	  switch (j)
-	    {
-	    case 0 : x1 = 1; x2 = 2; break;
-	    case 1 : x1 = 0; x2 = 2; break;
-	    case 2 : x1 = 0; x2 = 1; break;
-	    }
-	  m_cof[i][j] = (m[x1][y1] * m[x2][y2] - m[x1][y2] * m[x2][y1]) *
-	    (((i+j) % 2) ? -1 : 1);
-	}
-    }
-}
-
-/*  find the inverse of a 3x3 matrix  */
-static void
-invert (Matrix m, Matrix m_inv)
-{
-  double det = determinate (m);
-  int i, j;
-
-  if (det == 0.0)
-    return;
-
-  /*  Find the cofactor matrix of m, store it in m_inv  */
-  cofactor (m, m_inv);
-
-  /*  divide by the determinate  */
-  for (i = 0; i < 3; i++)
-    for (j = 0; j < 3; j++)
-      m_inv[i][j] = m_inv[i][j] / det;
 }
 
 void
@@ -1127,12 +938,12 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
      GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
-     Matrix matrix;
+     GimpMatrix matrix;
 {
   PixelRegion destPR;
   TileManager *tiles;
-  Matrix m;
-  Matrix im;
+  GimpMatrix m;
+  GimpMatrix im;
   int itx, ity;
   int tx1, ty1, tx2, ty2;
   int width, height;
@@ -1183,12 +994,12 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 
   if (transform_tool_direction () == TRANSFORM_CORRECTIVE)
     {
-      invert (matrix, im);
+      gimp_matrix_invert (matrix, im);
       matrix = im;
     }
 
   /*  Find the inverse of the transformation matrix  */
-  invert (matrix, m);
+  gimp_matrix_invert (matrix, m);
 
   x1 = float_tiles->x;
   y1 = float_tiles->y;
@@ -1207,10 +1018,10 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
     {
       double dx1, dy1, dx2, dy2, dx3, dy3, dx4, dy4;
 
-      transform_point (matrix, x1, y1, &dx1, &dy1);
-      transform_point (matrix, x2, y1, &dx2, &dy2);
-      transform_point (matrix, x1, y2, &dx3, &dy3);
-      transform_point (matrix, x2, y2, &dx4, &dy4);
+      gimp_matrix_transform_point (matrix, x1, y1, &dx1, &dy1);
+      gimp_matrix_transform_point (matrix, x2, y1, &dx2, &dy2);
+      gimp_matrix_transform_point (matrix, x1, y2, &dx3, &dy3);
+      gimp_matrix_transform_point (matrix, x2, y2, &dx4, &dy4);
 
       tx1 = MINIMUM (dx1, dx2);
       tx1 = MINIMUM (tx1, dx3);

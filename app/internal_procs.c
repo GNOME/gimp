@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 235;
+  gfloat total_pcount = 237;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -247,6 +247,7 @@ internal_procs_init ()
   procedural_db_register (&layer_set_offsets_proc); pcount++;
   procedural_db_register (&layer_mask_proc); pcount++;
   procedural_db_register (&layer_is_floating_sel_proc); pcount++;
+  procedural_db_register (&layer_get_tattoo_proc); pcount++;
 
   app_init_update_status(NULL, "Channel procedures",
 			 pcount/total_pcount);
@@ -265,6 +266,7 @@ internal_procs_init ()
   procedural_db_register (&channel_set_opacity_proc); pcount++;
   procedural_db_register (&channel_get_color_proc); pcount++;
   procedural_db_register (&channel_set_color_proc); pcount++;
+  procedural_db_register (&channel_get_tattoo_proc); pcount++;
 
   app_init_update_status(NULL, "Drawable procedures",
 			 pcount/total_pcount);

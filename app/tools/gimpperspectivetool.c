@@ -44,8 +44,8 @@
 static char        matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, Matrix);
-static void        perspective_find_transform   (double *, Matrix);
+static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
+static void        perspective_find_transform   (double *, GimpMatrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
 static void        perspective_info_update      (Tool *);
@@ -133,7 +133,7 @@ tools_new_perspective_tool ()
   private->trans_info[Y3] = 0;
 
   /*  assemble the transformation matrix  */
-  identity_matrix (private->transform);
+  gimp_matrix_identity (private->transform);
 
   return tool;
 }
@@ -219,7 +219,7 @@ perspective_tool_recalc (tool, gdisp_ptr)
 {
   TransformCore * transform_core;
   GDisplay * gdisp;
-  Matrix m;
+  GimpMatrix m;
   double cx, cy;
   double scalex, scaley;
 
@@ -241,10 +241,10 @@ perspective_tool_recalc (tool, gdisp_ptr)
     scaley = 1.0 / (transform_core->y2 - transform_core->y1);
 
   /*  assemble the transformation matrix  */
-  identity_matrix  (transform_core->transform);
-  translate_matrix (transform_core->transform, -cx, -cy);
-  scale_matrix     (transform_core->transform, scalex, scaley);
-  mult_matrix      (m, transform_core->transform);
+  gimp_matrix_identity  (transform_core->transform);
+  gimp_matrix_translate (transform_core->transform, -cx, -cy);
+  gimp_matrix_scale     (transform_core->transform, scalex, scaley);
+  gimp_matrix_mult      (m, transform_core->transform);
 
   /*  transform the bounding box  */
   transform_bounding_box (tool);
@@ -259,7 +259,7 @@ perspective_tool_recalc (tool, gdisp_ptr)
 static void
 perspective_find_transform (coords, m)
      double * coords;
-     Matrix m;
+     GimpMatrix m;
 {
   double dx1, dx2, dx3, dy1, dy2, dy3;
   double det1, det2;
@@ -312,7 +312,7 @@ perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matr
      GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
-     Matrix matrix;
+     GimpMatrix matrix;
 {
   return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
 }
@@ -410,7 +410,7 @@ perspective_invoker (args)
   int int_value;
   TileManager *float_tiles;
   TileManager *new_tiles;
-  Matrix matrix;
+  GimpMatrix matrix;
   int new_layer;
   Layer *layer;
   Argument *return_args;
@@ -457,7 +457,7 @@ perspective_invoker (args)
     {
       double cx, cy;
       double scalex, scaley;
-      Matrix m;
+      GimpMatrix m;
 
       /*  Start a transform undo group  */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -480,10 +480,10 @@ perspective_invoker (args)
 	scaley = 1.0 / float_tiles->height;
 
       /*  assemble the transformation matrix  */
-      identity_matrix  (matrix);
-      translate_matrix (matrix, -cx, -cy);
-      scale_matrix     (matrix, scalex, scaley);
-      mult_matrix      (m, matrix);
+      gimp_matrix_identity  (matrix);
+      gimp_matrix_translate (matrix, -cx, -cy);
+      gimp_matrix_scale     (matrix, scalex, scaley);
+      gimp_matrix_mult      (m, matrix);
 
       /*  perspective the buffer  */
       new_tiles = perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix);

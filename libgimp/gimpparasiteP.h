@@ -24,12 +24,11 @@
 
 struct _Parasite
 {
-  guchar creator[4];    /* the creator code of the plug-in/author   */
-  guchar type[4];       /* the data type of the parasite            */
-  guint32 flags;	/* save Parasite in XCF file, etc.          */
-  guint32 size;         /* amount of data                           */
-  void *data;           /* a pointer to the data.  plugin is        *
-			 * responsible for tracking byte order      */
+  char *name;           /* The name of the parasite. USE A UNIQUE PREFIX! */
+  guint32 flags;	/* save Parasite in XCF file, etc.                */
+  guint32 size;         /* amount of data                                 */
+  void *data;           /* a pointer to the data.  plugin is              *
+			 * responsible for tracking byte order            */
 };
 
 #endif _PARASITEP_H_

@@ -517,7 +517,7 @@ static LISP
 marshall_proc_db_call (LISP a)
 {
   GParam *args;
-  GParam *values;
+  GParam *values = NULL;
   int nvalues;
   char *proc_name;
   char *proc_blurb;
@@ -775,15 +775,10 @@ marshall_proc_db_call (LISP a)
 	    {
 	      args[i].type = PARAM_PARASITE;
 
-	      /* parasite->creator */
+	      /* parasite->name */
 	      intermediate_val = car (a);
-	      memcpy(args[i].data.d_parasite.creator,
-		     get_c_string (car (intermediate_val)), 4);
-
-	      /* parasite->type */
-	      intermediate_val = cdr (intermediate_val);
-	      memcpy(args[i].data.d_parasite.type,
-		     get_c_string (car (intermediate_val)), 4);
+	      args[i].data.d_parasite.name = 
+		get_c_string (car (intermediate_val));
 
 	      /* parasite->flags */
 	      intermediate_val = cdr (intermediate_val);
@@ -852,7 +847,7 @@ marshall_proc_db_call (LISP a)
 	      return_val = cons (flocons (values[i + 1].data.d_float), return_val);
 	      break;
 	    case PARAM_STRING:
-	      string = g_strdup ((gchar *) values[i + 1].data.d_string);
+	      string = (gchar *) values[i + 1].data.d_string;
 	      string_len = strlen (string);
 	      return_val = cons (strcons (string_len, string), return_val);
 	      break;
@@ -908,7 +903,7 @@ marshall_proc_db_call (LISP a)
 		for (j = 0; j < num_strings; j++)
 		  {
 		    string_len = strlen (array[j]);
-		    string_array = cons (strcons (string_len, g_strdup (array[j])), string_array);
+		    string_array = cons (strcons (string_len, array[j]), string_array);
 		  }
 
 		return_val = cons (nreverse (string_array), return_val);
@@ -950,17 +945,20 @@ marshall_proc_db_call (LISP a)
 	      break;
 	    case PARAM_PARASITE:
 	      {
-		LISP creator, type, flags, data;
-		creator = strcons (4, values[i + 1].data.d_parasite.creator);
-		type    = strcons (4, values[i + 1].data.d_parasite.type);
+		LISP name, flags, data;
+
+		string_len = strlen (values[i + 1].data.d_parasite.name);
+		name    = strcons (string_len,
+				   values[i + 1].data.d_parasite.name);
+
 		flags   = flocons (values[i + 1].data.d_parasite.flags);
-		data    = arcons (tc_byte_array, values[i+1].data.d_parasite.size, 0);
+		data    = arcons (tc_byte_array,
+				  values[i+1].data.d_parasite.size, 0);
 		memcpy(data->storage_as.string.data,
 		       values[i+1].data.d_parasite.data, 
 		       values[i+1].data.d_parasite.size); 
 
-		intermediate_val = cons (creator, cons(type, cons(flags,
-								  cons(data, NIL))));
+		intermediate_val = cons (name, cons(flags, cons(data, NIL)));
 		return_val = cons (intermediate_val, return_val);
 	      }
 	      break;

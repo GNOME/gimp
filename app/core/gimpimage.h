@@ -8,7 +8,7 @@
 #include "drawable.h"
 #include "channel.h"
 #include "layer.h"
-#include "parasiteF.h"
+#include <libgimp/parasiteF.h>
 #include "temp_buf.h"
 #include "tile_manager.h"
 
@@ -128,10 +128,12 @@ void            gimp_image_remove_guide           (GimpImage *, Guide *);
 void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
 Parasite *      gimp_image_find_parasite          (const GimpImage *,
-						   const char *creator,
-						   const char *type);
+						   const char *name);
 void            gimp_image_attach_parasite        (GimpImage *, const Parasite *);
-void            gimp_image_detach_parasite        (GimpImage *, Parasite *);
+void            gimp_image_detach_parasite        (GimpImage *, const char *);
+
+guint32         gimp_image_get_new_tattoo         (GimpImage *);
+
 
 /*  layer/channel functions  */
 
@@ -139,6 +141,8 @@ int             gimp_image_get_layer_index        (GimpImage *, Layer *);
 int             gimp_image_get_channel_index      (GimpImage *, Channel *);
 Layer *         gimp_image_get_active_layer       (GimpImage *);
 Channel *       gimp_image_get_active_channel     (GimpImage *);
+Layer *         gimp_image_get_layer_by_tattoo    (GimpImage *, guint32);
+Channel *       gimp_image_get_channel_by_tattoo  (GimpImage *, guint32);
 Channel *       gimp_image_get_mask               (GimpImage *);
 int             gimp_image_get_component_active   (GimpImage *, ChannelType);
 int             gimp_image_get_component_visible  (GimpImage *, ChannelType);
@@ -169,7 +173,6 @@ Channel *       gimp_image_remove_channel         (GimpImage *, Channel *);
 void            gimp_image_construct              (GimpImage *, int, int, int, int);
 void            gimp_image_invalidate             (GimpImage *, int, int, int, int, int, int, int, int);
 void            gimp_image_validate               (TileManager *, Tile *);
-
 
 /*  Access functions  */
 

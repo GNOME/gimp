@@ -119,6 +119,7 @@ TempBuf *       layer_preview (Layer *, int, int);
 TempBuf *       layer_mask_preview (Layer *, int, int);
 
 void            layer_invalidate_previews  (GimpImage*);
+guint32         layer_get_tattoo(const Layer *);
 
 
 #define drawable_layer GIMP_IS_LAYER

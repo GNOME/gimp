@@ -33,5 +33,6 @@ extern ProcRecord channel_get_opacity_proc;
 extern ProcRecord channel_set_opacity_proc;
 extern ProcRecord channel_get_color_proc;
 extern ProcRecord channel_set_color_proc;
+extern ProcRecord channel_get_tattoo_proc;
 
 #endif /* __CHANNEL_CMDS_H__ */

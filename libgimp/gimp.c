@@ -28,6 +28,7 @@
 #include <sys/time.h>
 #include <sys/param.h>
 #include <unistd.h>
+#include "parasiteP.h"
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -624,7 +625,7 @@ gimp_run_procedure (char *name,
           (void) va_arg (args, guchar*);
           break;
         case PARAM_PARASITE:
-          (void) va_arg (args, GParasite*);
+          (void) va_arg (args, Parasite*);
           break;
         case PARAM_REGION:
           break;
@@ -712,19 +713,13 @@ gimp_run_procedure (char *name,
           break;
         case PARAM_PARASITE:
 	{
-	  GParasite *p = va_arg (args, GParasite*);
+	  Parasite *p = va_arg (args, Parasite*);
 	  if (p == NULL)
-	    p = gparasite_error();
-	  memcpy(proc_run.params[i].data.d_parasite.creator, p->creator, 4);
-	  memcpy(proc_run.params[i].data.d_parasite.type, p->type, 4);
+	    p = parasite_error();
+	  proc_run.params[i].data.d_parasite.name    = p->name;
 	  proc_run.params[i].data.d_parasite.flags   = p->flags;
 	  proc_run.params[i].data.d_parasite.size    = p->size;
-	  if (p->size > 0)
-	    proc_run.params[i].data.d_parasite.data    = g_memdup (p->data,
-								   p->size);
-	  else
-	    proc_run.params[i].data.d_parasite.data    = NULL;
-	    
+	  proc_run.params[i].data.d_parasite.data    = p->data;
 	} break;
         case PARAM_STATUS:
 	  proc_run.params[i].data.d_status = va_arg (args, gint32);

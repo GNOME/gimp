@@ -22,7 +22,7 @@
 #include "gimage.h"
 #include "drawable.h"
 #include "drawable_cmds.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 
 #include "tile.h"			/* ick. */
 
@@ -1461,13 +1461,9 @@ ProcArg gimp_drawable_find_parasite_args[] =
     "the input drawable"
   },
   { PDB_STRING,
-    "creator",
-    "The creator ID of the parasite to find"
+    "name",
+    "The name of the parasite to find"
   },
-  { PDB_STRING,
-    "type",
-    "The type ID of the parasite to find"
-  }
 };
 
 ProcArg gimp_drawable_find_parasite_out_args[] =
@@ -1481,15 +1477,15 @@ ProcArg gimp_drawable_find_parasite_out_args[] =
 ProcRecord gimp_drawable_find_parasite_proc =
 {
   "gimp_drawable_find_parasite",
-  "Finds a parasite of a specified type and creator in an drawable.",
-  "Finds a parasite of a specified type and creator in an drawable.",
+  "Finds a parasite in a drawable.",
+  "Finds a parasite in a drawable.",
   "Jay Cox",
   "Jay Cox",
   "1998",
   PDB_INTERNAL,
 
   /*  Input arguments  */
-  3,
+  2,
   gimp_drawable_find_parasite_args,
 
   /*  Output arguments  */
@@ -1507,7 +1503,7 @@ gimp_drawable_find_parasite_invoker (Argument *args)
   int int_value;
   GimpDrawable *gdrawable;
   Argument *return_args;
-  char *creator, *type;
+  char *name = NULL;
 
   /*  the GimpDrawable  */
   if (success)
@@ -1520,13 +1516,7 @@ gimp_drawable_find_parasite_invoker (Argument *args)
   /*  creator  */
   if (success)
     {
-      creator = (char *) args[1].value.pdb_pointer;
-    }
-
-  /*  type  */
-  if (success)
-    {
-      type = (char *) args[2].value.pdb_pointer;
+      name = (char *) args[1].value.pdb_pointer;
     }
 
   return_args = procedural_db_return_args (&gimp_drawable_find_parasite_proc,
@@ -1535,7 +1525,7 @@ gimp_drawable_find_parasite_invoker (Argument *args)
   if (success)
     {
       return_args[1].value.pdb_pointer = 
-	gimp_drawable_find_parasite (gdrawable, creator, type);
+	gimp_drawable_find_parasite (gdrawable, name);
       if (return_args[1].value.pdb_pointer == NULL)
 	return_args[1].value.pdb_pointer = parasite_error();
     }
@@ -1625,9 +1615,9 @@ ProcArg gimp_drawable_detach_parasite_args[] =
     "drawable",
     "the input drawable"
   },
-  { PDB_PARASITE,
+  { PDB_STRING,
     "parasite",
-    "The parasite to detach to the drawable"
+    "The name of the parasite to detach from the drawable"
   }
 };
 
@@ -1660,7 +1650,7 @@ gimp_drawable_detach_parasite_invoker (Argument *args)
   int success = TRUE;
   int int_value;
   GimpDrawable *gdrawable;
-  Parasite *parasite = NULL;
+  char *parasite = NULL;
   Argument *return_args;
 
 
@@ -1674,7 +1664,7 @@ gimp_drawable_detach_parasite_invoker (Argument *args)
 
   if (success)
     {
-      parasite = (Parasite *)args[1].value.pdb_pointer;
+      parasite = (char *)args[1].value.pdb_pointer;
       if (parasite == NULL)
 	success = FALSE;
     }

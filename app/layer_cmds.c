@@ -2022,3 +2022,73 @@ ProcRecord layer_is_floating_sel_proc =
   /*  Exec method  */
   { { layer_is_floating_sel_invoker } },
 };
+
+
+/***************************/
+/*  LAYER_GET_TATTOO_PROC  */
+
+static Argument *
+layer_get_tattoo_invoker (Argument *args)
+{
+  Layer *layer;
+  int tattoo;
+  Argument *return_args;
+
+  tattoo = 0;
+
+  success = TRUE;
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if ((layer = layer_get_ID (int_value)))
+	tattoo = layer_get_tattoo (layer);
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&layer_get_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = tattoo;
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+ProcArg layer_get_tattoo_args[] =
+{
+  { PDB_LAYER,
+    "layer",
+    "the layer"
+  }
+};
+
+ProcArg layer_get_tattoo_out_args[] =
+{
+  { PDB_INT32,
+    "tattoo",
+    "the tattoo associated with the given layer"
+  }
+};
+
+ProcRecord layer_get_tattoo_proc =
+{
+  "gimp_layer_get_tattoo",
+  "Returns the tattoo associated with the specified layer.",
+  "This procedure returns the tattoo associated with the specified layer.  A tattoo is a unique and permenant identifier attached to a layer that can be used to uniquely identify a layer within an image even between sessions",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  1,
+  layer_get_tattoo_args,
+
+  /*  Output arguments  */
+  1,
+  layer_get_tattoo_out_args,
+
+  /*  Exec method  */
+  { { layer_get_tattoo_invoker } },
+};

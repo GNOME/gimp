@@ -123,8 +123,7 @@ struct _GPParam
     gint32 d_path;
     struct
     {
-      guchar creator[4];
-      guchar type[4];
+      char *name;
       guint32 flags;
       guint32 size;
       void *data;

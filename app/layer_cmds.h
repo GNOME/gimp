@@ -47,5 +47,6 @@ extern ProcRecord layer_set_mode_proc;
 extern ProcRecord layer_set_offsets_proc;
 extern ProcRecord layer_mask_proc;
 extern ProcRecord layer_is_floating_sel_proc;
+extern ProcRecord layer_get_tattoo_proc;
 
 #endif /* __LAYER_CMDS_H__ */

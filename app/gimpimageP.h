@@ -8,6 +8,7 @@
 #include "temp_buf.h"
 #include "channel.h"
 #include "layer.h"
+#include "libgimp/gimpmatrix.h"
 
 
 #define MAX_CHANNELS     4
@@ -30,6 +31,8 @@ struct _GimpImage
 
   int instance_count;                 /*  number of instances          */
   int ref_count;                      /*  number of references         */
+
+  guint32 tattoo_state;               /*  the next unique tattoo to use*/
 
   TileManager *shadow;                /*  shadow buffer tiles          */
 
@@ -54,6 +57,10 @@ struct _GimpImage
   Channel * selection_mask;           /*  selection mask channel       */
 
   GSList *parasites;                  /*  Plug-in parasite data        */
+
+  GimpMatrix transform;               /* a matrix describing all of the
+					 transformations this image
+					 has undergone */
 
   int visible [MAX_CHANNELS];         /*  visible channels             */
   int active  [MAX_CHANNELS];         /*  active channels              */

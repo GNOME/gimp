@@ -20,6 +20,7 @@
 
 #include "gimpobjectP.h"
 #include "gimpdrawable.h"
+#include "libgimp/gimpmatrix.h"
 
 struct _GimpDrawable
 {
@@ -34,11 +35,16 @@ struct _GimpDrawable
   int bytes;				/* bytes per pixel */
   int dirty;				/* dirty bit */
   int ID;				/* provides a unique ID */
+  guint32 tattoo;			/* provides a perminant ID */
   GimpImage* gimage;			/* gimage owner */
   int type;				/* type of drawable */
   int has_alpha;			/* drawable has alpha */
 
   GSList *parasites;                    /* Plug-in parasite data   */
+
+  GimpMatrix transform;                 /* a matrix describing all of the
+					   transformations this drawable
+					   has undergone */
 
   /*  Preview variables  */
   TempBuf *preview;			/* preview of the channel */

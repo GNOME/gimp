@@ -24,7 +24,7 @@
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
-#include "parasite.h"
+#include "libgimp/parasite.h"
 
 
 enum {
@@ -255,6 +255,18 @@ gimp_drawable_gimage (GimpDrawable *drawable)
 }
 
 
+void
+gimp_drawable_set_gimage (GimpDrawable *drawable, GimpImage *gimage)
+{
+  g_assert(GIMP_IS_DRAWABLE(drawable));
+  drawable->gimage = gimage;
+  if (gimage == NULL)
+    drawable->tattoo = 0;
+  else
+    drawable->tattoo = gimp_image_get_new_tattoo(gimage);
+}
+
+
 int
 gimp_drawable_type (GimpDrawable *drawable)
 {
@@ -361,10 +373,9 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
 
 
 Parasite *
-gimp_drawable_find_parasite (const GimpDrawable *drawable,
-			  const char *creator, const char *type)
+gimp_drawable_find_parasite (const GimpDrawable *drawable, const char *name)
 {
-  return parasite_find_in_gslist(drawable->parasites, creator, type);
+  return parasite_find_in_gslist(drawable->parasites, name);
 }
 
 void
@@ -374,12 +385,19 @@ gimp_drawable_attach_parasite (GimpDrawable *drawable, const Parasite *parasite)
 }
 
 void
-gimp_drawable_detach_parasite (GimpDrawable *drawable, Parasite *parasite)
+gimp_drawable_detach_parasite (GimpDrawable *drawable, const char *parasite)
 {
-  drawable->parasites = g_slist_remove (drawable->parasites, parasite);
-  parasite_free(parasite);
+  Parasite *p;
+  if ((p = parasite_find_in_gslist(drawable->parasites, parasite)))
+    drawable->parasites = g_slist_remove (drawable->parasites, p);
+  parasite_free(p);
 }
 
+guint32
+gimp_drawable_get_tattoo(const GimpDrawable *drawable)
+{
+  return drawable->tattoo;
+}
 
 int
 gimp_drawable_type_with_alpha (GimpDrawable *drawable)
@@ -539,6 +557,8 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
   drawable->parasites = FALSE;
+  drawable->tattoo = 0;
+  gimp_matrix_identity(drawable->transform);
 
   drawable->ID = global_drawable_ID++;
   if (gimp_drawable_table == NULL)
@@ -619,7 +639,8 @@ gimp_drawable_configure (GimpDrawable *drawable,
   drawable->dirty = FALSE;
   drawable->visible = TRUE;
 
-  drawable->gimage = gimage;
+  if (gimage)
+    gimp_drawable_set_gimage(drawable, gimage);
 
   gimp_drawable_set_name(drawable, name);
 
