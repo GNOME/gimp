@@ -1,3 +1,9 @@
+2004-12-13  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig.c: make the "gfig" layer parasites persistent,
+	so that they will be saved in xcf files.  Stop printing "GFig
+	parasite found" message.
+	
 2004-12-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimppdbdialog.[ch]: don't forget the context we

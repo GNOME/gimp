@@ -716,15 +716,7 @@ gfig_save_as_parasite (void)
 
   string = gfig_save_as_string ();
 
-  /* temporarily make the parasite non-persistent until the
-   * format has stabilized.
-   */
-#if 0
   parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
-                                datasize, data);
-#endif
-
-  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_UNDOABLE,
                                 string->len, string->str);
 
   g_string_free (string, TRUE);
@@ -760,8 +752,6 @@ gfig_load_from_parasite (void)
 
   if (!parasite)
     return NULL;
-
-  fprintf (stderr, "GFig parasite found.\n");
 
   fwrite (gimp_parasite_data (parasite),
           sizeof (guchar),
