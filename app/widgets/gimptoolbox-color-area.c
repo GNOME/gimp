@@ -380,7 +380,7 @@ color_area_edit (GimpContext *context,
 
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
-      color_notebook = color_notebook_new (title,
+      color_notebook = color_notebook_new (NULL, title, NULL, NULL,
                                            widget,
                                            toplevel_factory,
                                            "gimp-toolbox-color-dialog",

@@ -925,17 +925,17 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
           toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
           editor->color_notebook =
-            color_notebook_viewable_new (GIMP_VIEWABLE (gimage),
-                                         _("Edit Indexed Color"),
-                                         GIMP_STOCK_CONVERT_INDEXED,
-                                         _("Edit Indexed Image Palette Color"),
-                                         GTK_WIDGET (editor),
-                                         toplevel_factory,
-                                         "gimp-colormap-editor-color-dialog",
-                                         (const GimpRGB *) &color,
-                                         gimp_colormap_color_notebook_callback,
-                                         editor,
-                                         FALSE, FALSE);
+            color_notebook_new (GIMP_VIEWABLE (gimage),
+                                _("Edit Indexed Color"),
+                                GIMP_STOCK_CONVERT_INDEXED,
+                                _("Edit Indexed Image Palette Color"),
+                                GTK_WIDGET (editor),
+                                toplevel_factory,
+                                "gimp-colormap-editor-color-dialog",
+                                (const GimpRGB *) &color,
+                                gimp_colormap_color_notebook_callback,
+                                editor,
+                                FALSE, FALSE);
         }
       else
         {

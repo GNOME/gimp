@@ -1,5 +1,16 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/color-notebook.[ch]: removed color_notebook_new() and
+	renamed color_notebook_viewable_new() to color_notebook_new().
+
+	* app/gui/gradient-editor-commands.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpcolorpanel.c
+	* app/widgets/gimptoolbox-color-area.c: changed accordingly.
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorselection.c: added API docs for all
 	public functions.
 

@@ -257,7 +257,7 @@ gimp_color_panel_clicked (GtkButton *button)
   if (! panel->color_notebook)
     {
       panel->color_notebook =
-	color_notebook_new (GIMP_COLOR_BUTTON (button)->title,
+	color_notebook_new (NULL, GIMP_COLOR_BUTTON (button)->title, NULL, NULL,
                             GTK_WIDGET (button),
                             NULL, NULL,
 			    (const GimpRGB *) &color,

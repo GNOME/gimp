@@ -1088,17 +1088,17 @@ palette_editor_edit_clicked (GtkWidget         *widget,
       toplevel_factory = gimp_dialog_factory_from_name ("toplevel");
 
       editor->color_notebook =
-	color_notebook_viewable_new (GIMP_VIEWABLE (palette),
-                                     _("Edit Palette Color"),
-                                     GTK_STOCK_SELECT_COLOR,
-                                     _("Edit Color Palette Entry"),
-                                     GTK_WIDGET (editor),
-                                     toplevel_factory,
-                                     "gimp-palette-editor-color-dialog",
-                                     (const GimpRGB *) &editor->color->color,
-                                     palette_editor_color_notebook_callback,
-                                     editor,
-                                     FALSE, FALSE);
+	color_notebook_new (GIMP_VIEWABLE (palette),
+                            _("Edit Palette Color"),
+                            GTK_STOCK_SELECT_COLOR,
+                            _("Edit Color Palette Entry"),
+                            GTK_WIDGET (editor),
+                            toplevel_factory,
+                            "gimp-palette-editor-color-dialog",
+                            (const GimpRGB *) &editor->color->color,
+                            palette_editor_color_notebook_callback,
+                            editor,
+                            FALSE, FALSE);
     }
   else
     {

@@ -34,43 +34,33 @@ typedef void (* ColorNotebookCallback) (ColorNotebook      *cnb,
 					gpointer            callback_data);
 
 
-ColorNotebook * color_notebook_new          (const gchar           *title,
-                                             GtkWidget             *parent,
-                                             GimpDialogFactory     *dialog_factory,
-                                             const gchar           *dialog_identifier,
-                                             const GimpRGB         *color,
-                                             ColorNotebookCallback  callback,
-                                             gpointer               callback_data,
-                                             gboolean               wants_update,
-                                             gboolean               show_aplha);
+ColorNotebook * color_notebook_new (GimpViewable          *viewable,
+                                    const gchar           *title,
+                                    const gchar           *stock_id,
+                                    const gchar           *desc,
+                                    GtkWidget             *parent,
+                                    GimpDialogFactory     *dialog_factory,
+                                    const gchar           *dialog_identifier,
+                                    const GimpRGB         *color,
+                                    ColorNotebookCallback  callback,
+                                    gpointer               callback_data,
+                                    gboolean               wants_update,
+                                    gboolean               show_alpha);
 
-ColorNotebook * color_notebook_viewable_new (GimpViewable          *viewable,
-                                             const gchar           *title,
-                                             const gchar           *stock_id,
-                                             const gchar           *desc,
-                                             GtkWidget             *parent,
-                                             GimpDialogFactory     *dialog_factory,
-                                             const gchar           *dialog_identifier,
-                                             const GimpRGB         *color,
-                                             ColorNotebookCallback  callback,
-                                             gpointer               callback_data,
-                                             gboolean               wants_update,
-                                             gboolean               show_alpha);
+void   color_notebook_free         (ColorNotebook         *cnb);
 
-void            color_notebook_free         (ColorNotebook         *cnb);
+void   color_notebook_set_viewable (ColorNotebook         *cnb,
+                                    GimpViewable          *viewable);
+void   color_notebook_set_title    (ColorNotebook         *cnb,
+                                    const gchar           *title);
 
-void            color_notebook_set_viewable (ColorNotebook         *cnb,
-                                             GimpViewable          *viewable);
-void            color_notebook_set_title    (ColorNotebook         *cnb,
-                                             const gchar           *title);
+void   color_notebook_show         (ColorNotebook         *cnb);
+void   color_notebook_hide         (ColorNotebook         *cnb);
 
-void            color_notebook_show         (ColorNotebook         *cnb);
-void            color_notebook_hide         (ColorNotebook         *cnb);
-
-void            color_notebook_set_color    (ColorNotebook         *cnb,
-                                             const GimpRGB         *color);
-void            color_notebook_get_color    (ColorNotebook         *cnb,
-                                             GimpRGB               *color);
+void   color_notebook_set_color    (ColorNotebook         *cnb,
+                                    const GimpRGB         *color);
+void   color_notebook_get_color    (ColorNotebook         *cnb,
+                                    GimpRGB               *color);
 
 
 #endif /* __COLOR_NOTEBOOK_H__ */

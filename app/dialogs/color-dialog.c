@@ -32,6 +32,8 @@
 
 #include "gui-types.h"
 
+#include "core/gimpviewable.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -59,21 +61,6 @@ struct _ColorNotebook
 };
 
 
-static ColorNotebook *
-              color_notebook_new_internal  (GimpViewable          *viewable,
-                                            const gchar           *title,
-                                            const gchar           *role,
-                                            const gchar           *stock_id,
-                                            const gchar           *desc,
-                                            GtkWidget             *parent,
-                                            GimpDialogFactory     *dialog_factory,
-                                            const gchar           *dialog_identifier,
-                                            const GimpRGB         *color,
-                                            ColorNotebookCallback  callback,
-                                            gpointer               client_data,
-                                            gboolean               wants_updates,
-                                            gboolean               show_alpha);
-
 static void   color_notebook_help_func     (const gchar           *help_id,
                                             gpointer               help_data);
 
@@ -98,7 +85,10 @@ static GList *color_notebooks = NULL;
 /*  public functions  */
 
 ColorNotebook *
-color_notebook_new (const gchar           *title,
+color_notebook_new (GimpViewable          *viewable,
+                    const gchar           *title,
+                    const gchar           *stock_id,
+                    const gchar           *desc,
                     GtkWidget             *parent,
                     GimpDialogFactory     *dialog_factory,
                     const gchar           *dialog_identifier,
@@ -108,155 +98,13 @@ color_notebook_new (const gchar           *title,
                     gboolean               wants_updates,
                     gboolean               show_alpha)
 {
-  return color_notebook_new_internal (NULL,
-                                      title,
-                                      "gimp-color-selection",
-                                      NULL,
-                                      NULL,
-                                      parent,
-                                      dialog_factory,
-                                      dialog_identifier,
-                                      color,
-                                      callback, client_data,
-                                      wants_updates, show_alpha);
-}
-
-ColorNotebook *
-color_notebook_viewable_new (GimpViewable          *viewable,
-                             const gchar           *title,
-                             const gchar           *stock_id,
-                             const gchar           *desc,
-                             GtkWidget             *parent,
-                             GimpDialogFactory     *dialog_factory,
-                             const gchar           *dialog_identifier,
-                             const GimpRGB         *color,
-                             ColorNotebookCallback  callback,
-                             gpointer               client_data,
-                             gboolean               wants_updates,
-                             gboolean               show_alpha)
-{
-  return color_notebook_new_internal (viewable,
-                                      title,
-                                      "gimp-color-selection",
-                                      stock_id,
-                                      desc,
-                                      parent,
-                                      dialog_factory,
-                                      dialog_identifier,
-                                      color,
-                                      callback, client_data,
-                                      wants_updates, show_alpha);
-}
-
-void
-color_notebook_free (ColorNotebook *cnp)
-{
-  g_return_if_fail (cnp != NULL);
-
-  color_notebooks = g_list_remove (color_notebooks, cnp);
-
-  /*  may be already destroyed by dialog factory  */
-  if (cnp->shell)
-    {
-      g_object_remove_weak_pointer (G_OBJECT (cnp->shell),
-                                    (gpointer *) &cnp->shell);
-      gtk_widget_destroy (cnp->shell);
-    }
-
-  g_free (cnp);
-}
-
-void
-color_notebook_set_viewable (ColorNotebook *cnb,
-                             GimpViewable  *viewable)
-{
-  g_return_if_fail (cnb != NULL);
-
-  if (GIMP_IS_VIEWABLE_DIALOG (cnb->shell))
-    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (cnb->shell),
-                                       viewable);
-}
-
-void
-color_notebook_set_title (ColorNotebook *cnb,
-                          const gchar   *title)
-{
-  g_return_if_fail (cnb != NULL);
-  g_return_if_fail (title != NULL);
-
-  gtk_window_set_title (GTK_WINDOW (cnb->shell), title);
-}
-
-void
-color_notebook_set_color (ColorNotebook *cnp,
-			  const GimpRGB *color)
-{
-  g_return_if_fail (cnp != NULL);
-  g_return_if_fail (color != NULL);
-
-  g_signal_handlers_block_by_func (cnp->selection,
-                                   color_notebook_color_changed,
-                                   cnp);
-
-  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (cnp->selection), color);
-  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (cnp->selection),
-                                      color);
-
-  g_signal_handlers_unblock_by_func (cnp->selection,
-                                     color_notebook_color_changed,
-                                     cnp);
-}
-
-void
-color_notebook_get_color (ColorNotebook *cnp,
-			  GimpRGB       *color)
-{
-  g_return_if_fail (cnp != NULL);
-  g_return_if_fail (color != NULL);
-
-  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (cnp->selection), color);
-}
-
-void
-color_notebook_show (ColorNotebook *cnp)
-{
-  g_return_if_fail (cnp != NULL);
-
-  gtk_window_present (GTK_WINDOW (cnp->shell));
-}
-
-void
-color_notebook_hide (ColorNotebook *cnp)
-{
-  g_return_if_fail (cnp != NULL);
-
-  gtk_widget_hide (cnp->shell);
-}
-
-
-/*  private functions  */
-
-static ColorNotebook *
-color_notebook_new_internal (GimpViewable          *viewable,
-                             const gchar           *title,
-                             const gchar           *role,
-                             const gchar           *stock_id,
-                             const gchar           *desc,
-                             GtkWidget             *parent,
-                             GimpDialogFactory     *dialog_factory,
-                             const gchar           *dialog_identifier,
-                             const GimpRGB         *color,
-                             ColorNotebookCallback  callback,
-                             gpointer               client_data,
-                             gboolean               wants_updates,
-                             gboolean               show_alpha)
-{
   ColorNotebook *cnp;
   GtkWidget     *table;
   GtkWidget     *button;
   GtkWidget     *arrow;
   gint           i;
 
+  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (dialog_factory == NULL ||
                         GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
@@ -272,7 +120,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   if (desc)
     {
-      cnp->shell = gimp_viewable_dialog_new (viewable, title, role,
+      cnp->shell = gimp_viewable_dialog_new (viewable, title, dialog_identifier,
                                              stock_id, desc,
                                              parent,
                                              color_notebook_help_func, NULL,
@@ -282,7 +130,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
     }
   else
     {
-      cnp->shell = gimp_dialog_new (title, role,
+      cnp->shell = gimp_dialog_new (title, dialog_identifier,
                                     parent, 0,
                                     color_notebook_help_func, NULL,
                                     NULL);
@@ -384,6 +232,94 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   return cnp;
 }
+
+void
+color_notebook_free (ColorNotebook *cnp)
+{
+  g_return_if_fail (cnp != NULL);
+
+  color_notebooks = g_list_remove (color_notebooks, cnp);
+
+  /*  may be already destroyed by dialog factory  */
+  if (cnp->shell)
+    {
+      g_object_remove_weak_pointer (G_OBJECT (cnp->shell),
+                                    (gpointer *) &cnp->shell);
+      gtk_widget_destroy (cnp->shell);
+    }
+
+  g_free (cnp);
+}
+
+void
+color_notebook_set_viewable (ColorNotebook *cnb,
+                             GimpViewable  *viewable)
+{
+  g_return_if_fail (cnb != NULL);
+
+  if (GIMP_IS_VIEWABLE_DIALOG (cnb->shell))
+    gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (cnb->shell),
+                                       viewable);
+}
+
+void
+color_notebook_set_title (ColorNotebook *cnb,
+                          const gchar   *title)
+{
+  g_return_if_fail (cnb != NULL);
+  g_return_if_fail (title != NULL);
+
+  gtk_window_set_title (GTK_WINDOW (cnb->shell), title);
+}
+
+void
+color_notebook_set_color (ColorNotebook *cnp,
+			  const GimpRGB *color)
+{
+  g_return_if_fail (cnp != NULL);
+  g_return_if_fail (color != NULL);
+
+  g_signal_handlers_block_by_func (cnp->selection,
+                                   color_notebook_color_changed,
+                                   cnp);
+
+  gimp_color_selection_set_color (GIMP_COLOR_SELECTION (cnp->selection), color);
+  gimp_color_selection_set_old_color (GIMP_COLOR_SELECTION (cnp->selection),
+                                      color);
+
+  g_signal_handlers_unblock_by_func (cnp->selection,
+                                     color_notebook_color_changed,
+                                     cnp);
+}
+
+void
+color_notebook_get_color (ColorNotebook *cnp,
+			  GimpRGB       *color)
+{
+  g_return_if_fail (cnp != NULL);
+  g_return_if_fail (color != NULL);
+
+  gimp_color_selection_get_color (GIMP_COLOR_SELECTION (cnp->selection), color);
+}
+
+void
+color_notebook_show (ColorNotebook *cnp)
+{
+  g_return_if_fail (cnp != NULL);
+
+  gtk_window_present (GTK_WINDOW (cnp->shell));
+}
+
+void
+color_notebook_hide (ColorNotebook *cnp)
+{
+  g_return_if_fail (cnp != NULL);
+
+  gtk_widget_hide (cnp->shell);
+}
+
+
+/*  private functions  */
 
 static void
 color_notebook_help_func (const gchar *help_id,

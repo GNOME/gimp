@@ -82,18 +82,16 @@ gradient_editor_left_color_cmd_callback (GtkWidget *widget,
   editor->left_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_notebook =
-    color_notebook_viewable_new (GIMP_VIEWABLE (gradient),
-                                 _("Left Endpoint Color"),
-                                 GIMP_STOCK_TOOL_BLEND,
-                                 _("Gradient Segment's Left Endpoint Color"),
-                                 GTK_WIDGET (editor),
-                                 global_dialog_factory,
-                                 "gimp-gradient-editor-color-dialog",
-                                 &editor->control_sel_l->left_color,
-                                 gradient_editor_left_color_changed,
-                                 editor,
-                                 editor->instant_update,
-                                 TRUE);
+    color_notebook_new (GIMP_VIEWABLE (gradient),
+                        _("Left Endpoint Color"),
+                        GIMP_STOCK_TOOL_BLEND,
+                        _("Gradient Segment's Left Endpoint Color"),
+                        GTK_WIDGET (editor),
+                        global_dialog_factory,
+                        "gimp-gradient-editor-color-dialog",
+                        &editor->control_sel_l->left_color,
+                        gradient_editor_left_color_changed, editor,
+                        editor->instant_update, TRUE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
@@ -201,18 +199,16 @@ gradient_editor_right_color_cmd_callback (GtkWidget *widget,
   editor->right_saved_segments = gradient_editor_save_selection (editor);
 
   editor->color_notebook =
-    color_notebook_viewable_new (GIMP_VIEWABLE (gradient),
-                                 _("Right Endpoint Color"),
-                                 GIMP_STOCK_TOOL_BLEND,
-                                 _("Gradient Segment's Right Endpoint Color"),
-                                 GTK_WIDGET (editor),
-                                 global_dialog_factory,
-                                 "gimp-gradient-editor-color-dialog",
-                                 &editor->control_sel_l->right_color,
-                                 gradient_editor_right_color_changed,
-                                 editor,
-                                 editor->instant_update,
-                                 TRUE);
+    color_notebook_new (GIMP_VIEWABLE (gradient),
+                        _("Right Endpoint Color"),
+                        GIMP_STOCK_TOOL_BLEND,
+                        _("Gradient Segment's Right Endpoint Color"),
+                        GTK_WIDGET (editor),
+                        global_dialog_factory,
+                        "gimp-gradient-editor-color-dialog",
+                        &editor->control_sel_l->right_color,
+                        gradient_editor_right_color_changed, editor,
+                        editor->instant_update, TRUE);
 
   gtk_widget_set_sensitive (GTK_WIDGET (editor), FALSE);
 }
@@ -632,7 +628,7 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
 
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
-                              title, "gimp-gradient-segment_split-uniformly",
+                              title, "gimp-gradient-segment-split-uniformly",
                               GIMP_STOCK_TOOL_BLEND, desc,
                               GTK_WIDGET (editor),
                               gimp_standard_help_func,
