@@ -51,14 +51,16 @@ GimpLayer   * gimp_image_mask_float       (GimpImage    *gimage,
                                            gint          off_x,
                                            gint          off_y);
 
-void          gimp_image_mask_push_undo   (GimpImage    *gimage);
+void          gimp_image_mask_push_undo   (GimpImage    *gimage,
+                                           const gchar  *undo_desc);
 
 void          gimp_image_mask_feather     (GimpImage    *gimage,
                                            gdouble       feather_radius_x,
                                            gdouble       feather_radius_y);
 void          gimp_image_mask_sharpen     (GimpImage    *gimage);
 
-void          gimp_image_mask_clear       (GimpImage    *gimage);
+void          gimp_image_mask_clear       (GimpImage    *gimage,
+                                           const gchar  *undo_name);
 void          gimp_image_mask_all         (GimpImage    *gimage);
 void          gimp_image_mask_invert      (GimpImage    *gimage);
 

@@ -47,8 +47,6 @@
 #include "file-save-dialog.h"
 #include "menus.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

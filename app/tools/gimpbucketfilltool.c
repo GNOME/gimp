@@ -39,8 +39,6 @@
 #include "gimpbucketfilloptions.h"
 #include "gimpbucketfilltool.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

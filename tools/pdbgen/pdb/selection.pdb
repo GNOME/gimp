@@ -198,14 +198,18 @@ CODE
 }
 
 sub selection_clear {
-    &selection_simple_proc('clear');
-
     $blurb = 'Set the selection to none, clearing all previous content.';
 
     $help = <<'HELP';
 This procedure sets the selection mask to empty, assigning the value 0 to every
 pixel in the selection channel.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    %invoke = ( code => "gimp_image_mask_clear (gimage, NULL);" );
 }
 
 sub selection_invert {
@@ -243,14 +247,18 @@ HELP
 }
 
 sub selection_none {
-    &selection_simple_proc('clear');
-
     $blurb = 'Deselect the entire image.';
 
     $help = <<'HELP';
 This procedure deselects the entire image. Every pixel in the selection channel
 is set to 0.
 HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &std_image_arg );
+
+    %invoke = ( code => "gimp_image_mask_clear (gimage, NULL);" );
 }
 
 sub selection_feather {

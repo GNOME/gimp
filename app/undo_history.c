@@ -74,8 +74,6 @@
 
 #include "widgets/gimpviewabledialog.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 #include "pixmaps/yes.xpm"

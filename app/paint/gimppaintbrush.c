@@ -39,6 +39,8 @@
 #include "gimppaintbrush.h"
 #include "gimppaintoptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void   gimp_paintbrush_class_init (GimpPaintbrushClass *klass);
 static void   gimp_paintbrush_init       (GimpPaintbrush      *paintbrush);
@@ -59,7 +61,10 @@ void
 gimp_paintbrush_register (Gimp                      *gimp,
                           GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_PAINTBRUSH, GIMP_TYPE_PAINT_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_PAINTBRUSH,
+                GIMP_TYPE_PAINT_OPTIONS,
+                _("Paintbrush"));
 }
 
 GType

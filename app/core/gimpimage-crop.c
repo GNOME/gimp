@@ -34,11 +34,10 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -98,7 +97,6 @@ gimp_image_crop (GimpImage *gimage,
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
   GimpChannel *channel;
-  GList       *guide_list_ptr;
   GList       *list;
   gint         width, height;
   gint         lx1, ly1, lx2, ly2;
@@ -151,7 +149,7 @@ gimp_image_crop (GimpImage *gimage,
 	    floating_sel_relax (floating_layer, TRUE);
 
 	  /*  Push the image size to the stack  */
-	  undo_push_image_size (gimage);
+	  gimp_image_undo_push_image_size (gimage, NULL);
 
 	  /*  Set the new width and height  */
 	  gimage->width  = width;
@@ -217,12 +215,15 @@ gimp_image_crop (GimpImage *gimage,
 	  if (floating_layer)
 	    floating_sel_rigor (floating_layer, TRUE);
 
-	  guide_list_ptr = gimage->guides;
-	  while ( guide_list_ptr != NULL)
+	  for (list = gimage->guides; list; list = g_list_next (list))
 	    {
-	      undo_push_image_guide (gimage, (GimpGuide *) guide_list_ptr->data);
-	      guide_list_ptr = guide_list_ptr->next;
+              GimpGuide *guide;
+
+              guide = (GimpGuide *) list->data;
+
+	      gimp_image_undo_push_image_guide (gimage, NULL, guide);
 	    }
+
 	  gimp_image_undo_group_end (gimage);
   
 	  /* Adjust any guides we might have laying about */

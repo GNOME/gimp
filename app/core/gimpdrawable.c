@@ -43,13 +43,12 @@
 #include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
 #include "gimppreviewcache.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -344,7 +343,8 @@ gimp_drawable_update (GimpDrawable *drawable,
 }
 
 void
-gimp_drawable_push_undo (GimpDrawable *drawable, 
+gimp_drawable_push_undo (GimpDrawable *drawable,
+                         const gchar  *undo_desc,
                          gint          x1,
                          gint          y1,
                          gint          x2,
@@ -355,19 +355,22 @@ gimp_drawable_push_undo (GimpDrawable *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
 
   if (! tiles)
-    undo_push_image (gimp_item_get_image (GIMP_ITEM (drawable)),
-                     drawable, 
-		     x1, y1, x2, y2);
+    gimp_image_undo_push_image (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                undo_desc,
+                                drawable, 
+                                x1, y1, x2, y2);
   else
-    undo_push_image_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
-                         drawable, 
-			 x1, y1, x2, y2,
-                         tiles, sparse);
+    gimp_image_undo_push_image_mod (gimp_item_get_image (GIMP_ITEM (drawable)),
+                                    undo_desc,
+                                    drawable, 
+                                    x1, y1, x2, y2,
+                                    tiles, sparse);
 }
 
 void
 gimp_drawable_merge_shadow (GimpDrawable *drawable,
-			    gboolean      push_undo)
+			    gboolean      push_undo,
+                            const gchar  *undo_desc)
 {
   GimpImage   *gimage;
   PixelRegion  shadowPR;
@@ -387,7 +390,8 @@ gimp_drawable_merge_shadow (GimpDrawable *drawable,
   gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   pixel_region_init (&shadowPR, gimage->shadow, x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &shadowPR, push_undo,
+  gimp_image_apply_image (gimage, drawable, &shadowPR,
+                          push_undo, undo_desc,
                           GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                           NULL, x1, y1);
 }

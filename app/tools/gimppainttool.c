@@ -48,8 +48,6 @@
 #include "gimppainttool.h"
 #include "tool_manager.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -51,9 +51,7 @@ bye_sources = \
 	path.c			\
 	path.h			\
 	pathP.h			\
-	path_transform.h	\
-	undo.c			\
-	undo.h
+	path_transform.h
 
 ##
 ## stuff

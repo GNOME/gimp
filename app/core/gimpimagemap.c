@@ -47,6 +47,8 @@ struct _GimpImageMap
 
   gboolean               interactive;
   GimpDrawable          *drawable;
+  gchar                 *undo_desc;
+
   TileManager           *undo_tiles;
   gint		         undo_offset_x;
   gint		         undo_offset_y;
@@ -61,6 +63,8 @@ struct _GimpImageMap
 
 static void       gimp_image_map_class_init (GimpImageMapClass *klass);
 static void       gimp_image_map_init       (GimpImageMap      *image_map);
+
+static void       gimp_image_map_finalize   (GObject           *object);
 
 static gboolean   gimp_image_map_do         (GimpImageMap      *image_map);
 
@@ -101,6 +105,10 @@ gimp_image_map_get_type (void)
 static void
 gimp_image_map_class_init (GimpImageMapClass *klass)
 {
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
   parent_class = g_type_class_peek_parent (klass);
 
   image_map_signals[FLUSH] =
@@ -111,6 +119,8 @@ gimp_image_map_class_init (GimpImageMapClass *klass)
 		  NULL, NULL,
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
+
+  object_class->finalize = gimp_image_map_finalize;
 }
 
 static void
@@ -126,9 +136,26 @@ gimp_image_map_init (GimpImageMap *image_map)
   image_map->idle_id       = 0;
 }
 
+static void
+gimp_image_map_finalize (GObject *object)
+{
+  GimpImageMap *image_map;
+
+  image_map = GIMP_IMAGE_MAP (object);
+
+  if (image_map->undo_desc)
+    {
+      g_free (image_map->undo_desc);
+      image_map->undo_desc = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
 GimpImageMap *
 gimp_image_map_new (gboolean      interactive,
-                    GimpDrawable *drawable)
+                    GimpDrawable *drawable,
+                    const gchar  *undo_desc)
 {
   GimpImageMap *image_map;
   GimpImage    *gimage;
@@ -143,6 +170,7 @@ gimp_image_map_new (gboolean      interactive,
 
   image_map->interactive = interactive ? TRUE : FALSE;
   image_map->drawable    = drawable;
+  image_map->undo_desc   = g_strdup (undo_desc);
 
   /* Interactive tools based on image_map disable the undo stack
    * to avert any unintented undo interaction through the UI
@@ -298,6 +326,7 @@ gimp_image_map_commit (GimpImageMap *image_map)
       y2 = y1 + tile_manager_height (image_map->undo_tiles);
 
       gimp_drawable_push_undo (image_map->drawable,
+                               image_map->undo_desc,
                                x1, y1, x2, y2,
                                image_map->undo_tiles, FALSE);
     }
@@ -480,7 +509,8 @@ gimp_image_map_do (GimpImageMap *image_map)
 
   /*  apply the results  */
   pixel_region_init (&shadowPR, gimage->shadow, x, y, w, h, FALSE);
-  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR, FALSE,
+  gimp_image_apply_image (gimage, image_map->drawable, &shadowPR,
+                          FALSE, NULL,
                           GIMP_OPACITY_OPAQUE, GIMP_REPLACE_MODE,
                           NULL,
                           x, y);

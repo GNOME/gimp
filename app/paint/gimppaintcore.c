@@ -37,19 +37,21 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpgradient.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpmarshal.h"
+#include "core/gimppaintinfo.h"
 
 #include "gimppaintcore.h"
 #include "gimppaintcore-kernels.h"
+#include "gimppaintcore-undo.h"
 #include "gimppaintoptions.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -142,7 +144,7 @@ static void      paint_line_pixmap_mask           (GimpImage        *dest,
 
 static GimpObjectClass *parent_class = NULL;
 
-static gint global_core_ID = 0;
+static gint global_core_ID = 1;
 
 
 GType
@@ -419,7 +421,8 @@ void
 gimp_paint_core_finish (GimpPaintCore *core,
 			GimpDrawable  *drawable)
 {
-  GimpImage *gimage;
+  GimpPaintInfo *paint_info;
+  GimpImage     *gimage;
 
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
@@ -431,20 +434,19 @@ gimp_paint_core_finish (GimpPaintCore *core,
   /*  Determine if any part of the image has been altered--
    *  if nothing has, then just return...
    */
-
-  if ((core->x2 == core->x1) ||
-      (core->y2 == core->y1))
+  if ((core->x2 == core->x1) || (core->y2 == core->y1))
     return;
 
+  paint_info = (GimpPaintInfo *)
+    gimp_container_get_child_by_name (gimage->gimp->paint_info_list,
+                                      g_type_name (G_TYPE_FROM_INSTANCE (core)));
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_PAINT,
-                               _("Paint"));
+                               paint_info ? paint_info->blurb : _("Paint"));
 
-  undo_push_paint (gimage,
-                   core->ID,
-                   G_TYPE_FROM_INSTANCE (core),
-                   &core->start_coords);
+  gimp_paint_core_push_undo (gimage, NULL, core);
 
-  gimp_drawable_push_undo (drawable,
+  gimp_drawable_push_undo (drawable, NULL,
                            core->x1, core->y1,
                            core->x2, core->y2,
                            core->undo_tiles,
@@ -1452,7 +1454,7 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
-			  FALSE,
+			  FALSE, NULL,
                           image_opacity, paint_mode,
 			  alt,  /*  specify an alternative src1  */
 			  core->canvas_buf->x,
@@ -1564,7 +1566,7 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   /*  apply the paint area to the gimage  */
   gimp_image_replace_image (gimage, drawable, &srcPR,
-			    FALSE,
+			    FALSE, NULL,
                             image_opacity,
 			    &maskPR,
 			    core->canvas_buf->x,

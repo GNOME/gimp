@@ -26,8 +26,6 @@
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
 
-#include "undo.h"
-
 
 #define GUIDE_EPSILON 5
 

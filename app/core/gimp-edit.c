@@ -42,8 +42,6 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -222,7 +220,7 @@ gimp_edit_paste (GimpImage    *gimage,
    *  it seems like the correct behavior.
    */
   if (! gimp_image_mask_is_empty (gimage) && ! paste_into)
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, NULL);
 
   /*  if there's a drawable, add a new floating selection  */
   if (drawable != NULL)
@@ -314,7 +312,8 @@ gimp_edit_clear (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+  gimp_image_apply_image (gimage, drawable, &bufPR,
+                          TRUE, _("Clear"),
                           GIMP_OPACITY_OPAQUE, GIMP_ERASE_MODE,
                           NULL, x1, y1);
 
@@ -389,7 +388,8 @@ gimp_edit_fill (GimpImage    *gimage,
   color_region (&bufPR, col);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+  gimp_image_apply_image (gimage, drawable, &bufPR,
+                          TRUE, _("Fill"),
                           GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE,
                           NULL, x1, y1);
 

@@ -34,6 +34,7 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayermask.h"
@@ -49,8 +50,6 @@
 
 #include "layers-commands.h"
 #include "resize-dialog.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -768,7 +767,9 @@ edit_layer_query_ok_callback (GtkWidget *widget,
               floating_sel_to_layer (layer);
             }
 
-          undo_push_item_rename (options->gimage, GIMP_ITEM (layer));
+          gimp_image_undo_push_item_rename (options->gimage,
+                                            _("Rename Layer"),
+                                            GIMP_ITEM (layer));
 
           gimp_object_set_name (GIMP_OBJECT (layer), new_name);
 

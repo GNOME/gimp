@@ -57,7 +57,6 @@
 #include "app_procs.h"
 #include "path.h"
 #include "pathP.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -2916,6 +2915,7 @@ bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
 
   gimp_image_mask_select_channel (gdisp->gimage,
+                                  tool->tool_info->blurb,
                                   bezier_sel->mask,
                                   0, 0,
                                   op,

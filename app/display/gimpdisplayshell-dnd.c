@@ -39,8 +39,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-dnd.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -61,8 +61,6 @@
 #include "file-dialog-utils.h"
 #include "file-open-dialog.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

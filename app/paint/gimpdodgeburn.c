@@ -37,6 +37,8 @@
 #include "gimpdodgeburn.h"
 #include "gimpdodgeburnoptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void     gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass);
 static void     gimp_dodge_burn_init       (GimpDodgeBurn      *dodgeburn);
@@ -78,7 +80,10 @@ void
 gimp_dodge_burn_register (Gimp                      *gimp,
                           GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_DODGE_BURN, GIMP_TYPE_DODGE_BURN_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_DODGE_BURN,
+                GIMP_TYPE_DODGE_BURN_OPTIONS,
+                _("Dodge/Burn"));
 }
 
 GType

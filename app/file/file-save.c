@@ -56,8 +56,6 @@
 #include "file-save.h"
 #include "file-utils.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

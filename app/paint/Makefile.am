@@ -45,6 +45,8 @@ libapppaint_a_sources = \
 	gimppaintcore-kernels.h	\
 	gimppaintcore-stroke.c	\
 	gimppaintcore-stroke.h	\
+	gimppaintcore-undo.c	\
+	gimppaintcore-undo.h	\
 	gimppaintoptions.c	\
 	gimppaintoptions.h	\
 	gimppencil.c		\

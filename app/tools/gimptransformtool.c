@@ -41,6 +41,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
@@ -53,11 +54,11 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpprogress.h"
 
-#include "gimptransformtool.h"
 #include "gimptransformoptions.h"
+#include "gimptransformtool.h"
+#include "gimptransformtool-undo.h"
 #include "tool_manager.h"
 
-#include "undo.h"
 #include "path_transform.h"
 
 #include "libgimp/gimpintl.h"
@@ -319,7 +320,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  if (! tr_tool->notify_connected)
+  if (tr_tool->use_grid && ! tr_tool->notify_connected)
     {
       tr_tool->show_path =
         GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options)->show_path;
@@ -667,10 +668,11 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
   gint                  i, k, gci;
 
   tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (draw_tool)->tool_info->tool_options);
 
   if (! tr_tool->use_grid)
     return;
+
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (draw_tool)->tool_info->tool_options);
 
   /*  draw the bounding box  */
   gimp_draw_tool_draw_line (draw_tool,
@@ -825,7 +827,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
 
   /*  Start a transform undo group  */
   gimp_image_undo_group_start (gdisp->gimage, GIMP_UNDO_GROUP_TRANSFORM,
-                               _("Transform"));
+                               tool->tool_info->blurb);
 
   /* With the old UI, if original is NULL, then this is the
    * first transformation. In the new UI, it is always so, right?
@@ -866,12 +868,12 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
        */
       tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-      undo_push_transform (gdisp->gimage,
-                           tool->ID,
-                           G_TYPE_FROM_INSTANCE (tool),
-                           tr_tool->old_trans_info,
-                           NULL,
-                           path_undo);
+      gimp_transform_tool_push_undo (gdisp->gimage, NULL,
+                                     tool->ID,
+                                     G_TYPE_FROM_INSTANCE (tool),
+                                     tr_tool->old_trans_info,
+                                     NULL,
+                                     path_undo);
     }
 
   /*  push the undo group end  */

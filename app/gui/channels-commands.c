@@ -33,6 +33,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage-mask-select.h"
 
 #include "widgets/gimpcolorpanel.h"
@@ -42,8 +43,6 @@
 #include "display/gimpdisplay.h"
 
 #include "channels-commands.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -150,6 +149,7 @@ channels_channel_to_sel (GtkWidget      *widget,
   return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_mask_select_channel (gimage,
+                                  _("Channel to Selection"),
                                   active_channel,
                                   0, 0,
                                   op,
@@ -425,7 +425,9 @@ edit_channel_query_ok_callback (GtkWidget *widget,
 
       if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
         {
-          undo_push_item_rename (options->gimage, GIMP_ITEM (channel));
+          gimp_image_undo_push_item_rename (options->gimage,
+                                            _("Rename Channel"),
+                                            GIMP_ITEM (channel));
 
           gimp_object_set_name (GIMP_OBJECT (channel), new_name);
         }

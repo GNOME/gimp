@@ -47,6 +47,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#include "libgimp/gimpintl.h"
+
 static ProcRecord brightness_contrast_proc;
 static ProcRecord levels_proc;
 static ProcRecord posterize_proc;
@@ -126,7 +128,7 @@ brightness_contrast_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -251,7 +253,7 @@ levels_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -356,7 +358,7 @@ posterize_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -608,7 +610,7 @@ curves_spline_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -715,7 +717,7 @@ curves_explicit_invoker (Gimp     *gimp,
 					  &srcPR, &destPR);
     
 	  gimp_lut_free (lut);
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -832,7 +834,7 @@ color_balance_invoker (Gimp     *gimp,
 	      color_balance (&srcPR, &destPR, &cb);
 	    }
     
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -1128,7 +1130,7 @@ hue_saturation_invoker (Gimp     *gimp,
 	      hue_saturation (&srcPR, &destPR, &hs);
 	    }
     
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }
@@ -1226,7 +1228,7 @@ threshold_invoker (Gimp     *gimp,
 	  pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
 					  &srcPR, &destPR);
     
-	  gimp_drawable_merge_shadow (drawable, TRUE);
+	  gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
 	  gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 	}
     }

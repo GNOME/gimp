@@ -42,8 +42,6 @@
 #include "gimptext-compat.h"
 #include "gimptextlayer.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -100,7 +98,7 @@ text_render (GimpImage    *gimage,
    *  it seems like the correct behavior.
    */
   if (! gimp_image_mask_is_empty (gimage))
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, NULL);
   
   /*  If the drawable is NULL, create a new layer  */
   if (drawable == NULL)

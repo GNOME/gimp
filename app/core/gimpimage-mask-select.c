@@ -32,6 +32,8 @@
 #include "vectors/gimpstroke.h"
 #include "vectors/gimpvectors.h"
 
+#include "libgimp/gimpintl.h"
+
 
 void
 gimp_image_mask_select_rectangle (GimpImage      *gimage,
@@ -48,9 +50,9 @@ gimp_image_mask_select_rectangle (GimpImage      *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, _("Rectangular Selection"));
   else
-    gimp_image_mask_push_undo (gimage);
+    gimp_image_mask_push_undo (gimage, _("Rectangular Selection"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -95,9 +97,9 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, _("Ellipse Selection"));
   else
-    gimp_image_mask_push_undo (gimage);
+    gimp_image_mask_push_undo (gimage, _("Ellipse Selection"));
 
   /*  if feathering for rect, make a new mask with the
    *  rectangle and feather that with the old mask
@@ -129,14 +131,15 @@ gimp_image_mask_select_ellipse (GimpImage      *gimage,
 }
 
 void
-gimp_image_mask_select_polygon (GimpImage       *gimage,
-                                gint             n_points,
-                                GimpVector2     *points,
-                                GimpChannelOps   op,
-                                gboolean         antialias,
-                                gboolean         feather,
-                                gdouble          feather_radius_x,
-                                gdouble          feather_radius_y)
+gimp_image_mask_select_polygon (GimpImage      *gimage,
+                                const gchar    *undo_name,
+                                gint            n_points,
+                                GimpVector2    *points,
+                                GimpChannelOps  op,
+                                gboolean        antialias,
+                                gboolean        feather,
+                                gdouble         feather_radius_x,
+                                gdouble         feather_radius_y)
 {
   GimpScanConvert *scan_convert;
   GimpChannel     *mask;
@@ -147,9 +150,9 @@ gimp_image_mask_select_polygon (GimpImage       *gimage,
    *  or insure that a floating selection is anchored down...
    */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, undo_name);
   else
-    gimp_image_mask_push_undo (gimage);
+    gimp_image_mask_push_undo (gimage, undo_name);
 
 #define SUPERSAMPLE 3
 
@@ -219,6 +222,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
         }
 
       gimp_image_mask_select_polygon (GIMP_ITEM (vectors)->gimage,
+                                      _("Selection from Path"),
                                       coords->len,
                                       points,
                                       op,
@@ -234,6 +238,7 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
 
 void
 gimp_image_mask_select_channel (GimpImage      *gimage,
+                                const gchar    *undo_desc,
                                 GimpChannel    *channel,
                                 gint            offset_x,
                                 gint            offset_y,
@@ -247,9 +252,9 @@ gimp_image_mask_select_channel (GimpImage      *gimage,
 
   /*  if applicable, replace the current selection  */
   if (op == GIMP_CHANNEL_OP_REPLACE)
-    gimp_image_mask_clear (gimage);
+    gimp_image_mask_clear (gimage, undo_desc);
   else
-    gimp_image_mask_push_undo (gimage);
+    gimp_image_mask_push_undo (gimage, undo_desc);
 
   if (feather)
     gimp_channel_feather (channel,
@@ -302,6 +307,7 @@ gimp_image_mask_select_fuzzy (GimpImage      *gimage,
     }
 
   gimp_image_mask_select_channel (gimage,
+                                  _("Select Fuzzy"),
                                   mask,
                                   mask_x,
                                   mask_y,
@@ -352,6 +358,7 @@ gimp_image_mask_select_by_color (GimpImage      *gimage,
     }
 
   gimp_image_mask_select_channel (gimage,
+                                  _("Select by Color"),
                                   mask,
                                   mask_x,
                                   mask_y,

@@ -491,6 +491,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
           gimp_image_mask_select_channel (gdisp->gimage,
+                                          tool->tool_info->blurb,
                                           iscissors->mask,
                                           0, 0,
                                           GIMP_SELECTION_TOOL (tool)->op,

@@ -140,12 +140,11 @@
 #include "gimpimage.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplist.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimppalette.h"
-
-#include "undo.h"
 
 #include "cpercep.h"
 #include "gimpimage-convert-fsdither.h"
@@ -733,7 +732,8 @@ gimp_image_convert (GimpImage              *gimage,
   GimpImageBaseType  old_type;
   GList             *list;
   GimpImageType      new_layer_type;
-  TileManager       *new_tiles; 
+  TileManager       *new_tiles;
+  const gchar       *undo_desc = NULL;
 
   g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -747,15 +747,30 @@ gimp_image_convert (GimpImage              *gimage,
   /*  Get the floating layer if one exists  */
   floating_layer = gimp_image_floating_sel (gimage);
 
+  switch (new_type)
+    {
+    case GIMP_RGB:
+      undo_desc = _("Convert Image to RGB");
+      break;
+
+    case GIMP_GRAY:
+      undo_desc = _("Convert Image to Grayscale");
+      break;
+
+    case GIMP_INDEXED:
+      undo_desc = _("Convert Image to Indexed");
+      break;
+    }
+
   gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_CONVERT,
-                               _("Convert"));
+                               undo_desc);
 
   /*  Relax the floating selection  */
   if (floating_layer)
     floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image type to the stack  */
-  undo_push_image_type (gimage);
+  gimp_image_undo_push_image_type (gimage, NULL);
 
   /*  Set the new base type  */
   old_type = gimage->base_type;
@@ -928,7 +943,7 @@ gimp_image_convert (GimpImage              *gimage,
 	}
 
       /*  Push the layer onto the undo stack  */
-      undo_push_layer_mod (gimage, layer);
+      gimp_image_undo_push_layer_mod (gimage, NULL, layer);
 
       GIMP_DRAWABLE (layer)->tiles     = new_tiles;
       GIMP_DRAWABLE (layer)->type      = new_layer_type;

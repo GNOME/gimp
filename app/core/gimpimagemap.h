@@ -56,7 +56,8 @@ struct _GimpImageMapClass
 GType          gimp_image_map_get_type     (void) G_GNUC_CONST;
 
 GimpImageMap * gimp_image_map_new          (gboolean               interactive,
-                                            GimpDrawable          *drawable);
+                                            GimpDrawable          *drawable,
+                                            const gchar           *undo_desc);
 
 void           gimp_image_map_apply        (GimpImageMap          *image_map,
                                             GimpImageMapApplyFunc  apply_func,

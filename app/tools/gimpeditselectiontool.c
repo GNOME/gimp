@@ -50,7 +50,6 @@
 #include "tool_manager.h"
 
 #include "path_transform.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

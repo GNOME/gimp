@@ -47,7 +47,6 @@
 #include "gimpundostack.h"
 
 #include "path.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

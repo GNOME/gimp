@@ -80,6 +80,7 @@ gimp_paint_info_init (GimpPaintInfo *paint_info)
 {
   paint_info->gimp          = NULL;
   paint_info->paint_type    = G_TYPE_NONE;
+  paint_info->blurb         = NULL;
   paint_info->pdb_string    = NULL;
   paint_info->paint_options = NULL;
 }
@@ -90,6 +91,12 @@ gimp_paint_info_finalize (GObject *object)
   GimpPaintInfo *paint_info;
 
   paint_info = GIMP_PAINT_INFO (object);
+
+  if (paint_info->blurb)
+    {
+      g_free (paint_info->blurb);
+      paint_info->blurb = NULL;
+    }
 
   if (paint_info->pdb_string)
     {
@@ -104,11 +111,13 @@ GimpPaintInfo *
 gimp_paint_info_new (Gimp        *gimp,
                      GType        paint_type,
                      GType        paint_options_type,
+                     const gchar *blurb,
                      const gchar *pdb_string)
 {
   GimpPaintInfo *paint_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (pdb_string != NULL, NULL);
 
   paint_info = g_object_new (GIMP_TYPE_PAINT_INFO,
@@ -118,6 +127,7 @@ gimp_paint_info_new (Gimp        *gimp,
   paint_info->gimp               = gimp;
   paint_info->paint_type         = paint_type;
   paint_info->paint_options_type = paint_options_type;
+  paint_info->blurb              = g_strdup (blurb);
   paint_info->pdb_string         = g_strdup (pdb_string);
 
   return paint_info;

@@ -23,7 +23,7 @@ sub pdb_misc {
 }
 
 sub image_add_guide {
-    my ($desc, $type, $max, $pos) = @_;
+    my ($desc, $help_desc, $type, $max, $pos) = @_;
 
     $blurb = "Add a $desc guide to an image.";
 
@@ -55,7 +55,7 @@ HELP
   if (offset < gimage->$max)
     {
       guide = gimp_image_add_${func}guide (gimage);
-      undo_push_image_guide (gimage, guide);
+      gimp_image_undo_push_image_guide (gimage, _("${help_desc}"), guide);
       guide->position = offset;
       guide_ID = guide->guide_ID;
     }
@@ -69,11 +69,11 @@ CODE
 # The defs
 
 sub image_add_hguide {
-    &image_add_guide('horizontal', 'y', 'height', 'top');
+    &image_add_guide('horizontal', 'Add Horizontal Guide', 'y', 'height', 'top');
 }
 
 sub image_add_vguide {
-    &image_add_guide('vertical', 'x', 'width', 'left');
+    &image_add_guide('vertical', 'Add Vertical Guide', 'x', 'width', 'left');
 }
 
 sub image_delete_guide {
@@ -93,31 +93,23 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("undo.h") ],
 	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
   success = FALSE;
 
-  guides = gimage->guides;
-
-  while (guides)
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
     {
-      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	  (((GimpGuide *) guides->data)->position >= 0))
+      GimpGuide *g = (GimpGuide *) guides->data;
+
+      if ((g->guide_ID == guide) && (g->position >= 0))
 	{
-	  GList *tmp_next;
+	  gimp_image_undo_push_image_guide (gimage, _("Remove Guide"), g);
+          gimp_image_delete_guide (gimage, g);
 
 	  success = TRUE;
-
-	  tmp_next = guides->next;
-
-	  undo_push_image_guide (gimage, ((GimpGuide *) guides->data));
-          gimp_image_delete_guide (gimage, (GimpGuide *) guides->data);
-	  guides = tmp_next;
+	  break;
 	}
-      else
-	guides = guides->next;
     }
 }
 CODE
@@ -148,50 +140,38 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GList *guides' ],
+	vars => [ 'GList *guides', 'gboolean guide_found' ],
 	code => <<'CODE'
 {
-  guides = gimage->guides;
+  success     = FALSE;
+  guide_found = FALSE;
 
-  if (guides != NULL)
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
     {
-      if (guide == 0) /* init - Return first guide ID in list */
-	{
-	  while (guides && (((GimpGuide *) guides->data)->position < 0))
-	    guides = guides->next;
+      GimpGuide *g = (GimpGuide *) guides->data;
 
-	  if (guides) /* didn't just come to end of list */
-	    next_guide = ((GimpGuide *) guides->data)->guide_ID;
-	}
+      if (g->position < 0)
+        continue;
+
+      if (guide == 0)  /* init - Return first guide ID in list */
+        {
+          next_guide = g->guide_ID;
+
+          success = TRUE;
+          break;
+        }
+
+      if (! guide_found)
+        {
+          if (g->guide_ID == guide)
+            guide_found = TRUE;
+        }
       else
-	{
-	  success = FALSE;
-              
-	  while (guides)
-	    {
-	      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-		  (((GimpGuide *) guides->data)->position >= 0))
-		{
-		  GList* tmplist;
+        {
+          next_guide = g->guide_ID;
 
-		  success = TRUE;
-
-		  tmplist = guides->next;
-                      
-		  while (tmplist && (((GimpGuide *) tmplist->data)->position < 0))
-		    tmplist = tmplist->next;
-
-		  if (tmplist)
-		    next_guide = ((GimpGuide *) tmplist->data)->guide_ID;
-		  else
-		    next_guide = 0;
-
-                  break;
-                }
-
-	      guides = guides->next;
-            }
-
+          success = TRUE;
+          break;
 	}
     }
 }
@@ -225,21 +205,19 @@ HELP
 	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
-  guides = gimage->guides;
-
   success = FALSE;
 
-  while (guides)
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
     {
-      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	  (((GimpGuide *) guides->data)->position >= 0))
+      GimpGuide *g = (GimpGuide *) guides->data;
+
+      if ((g->guide_ID == guide) && (g->position >= 0))
 	{
-	  orientation = ((GimpGuide *) guides->data)->orientation;
+	  orientation = g->orientation;
+
 	  success = TRUE;
 	  break;
 	}
-
-      guides = guides->next;
     }
 }
 CODE
@@ -271,28 +249,27 @@ HELP
 	vars => [ 'GList *guides' ],
 	code => <<'CODE'
 {
-  guides = gimage->guides;
-
   success = FALSE;
 
-  while (guides)
+  for (guides = gimage->guides; guides; guides = g_list_next (guides))
     {
-      if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	  (((GimpGuide *) guides->data)->position >= 0))
+      GimpGuide *g = (GimpGuide *) guides->data;
+
+      if ((g->guide_ID == guide) && (g->position >= 0))
 	{
-	  position = ((GimpGuide *) guides->data)->position;
+	  position = g->position;
+
 	  success = TRUE;
 	  break;
 	}
-
-      guides = guides->next;
     } 
 }
 CODE
     );
 }
 
-@headers = qw("core/gimpimage-guides.h");
+@headers = qw("core/gimpimage-guides.h" "core/gimpimage-undo-push.h"
+              "libgimp/gimpintl.h");
 
 @procs = qw(image_add_hguide image_add_vguide image_delete_guide
 	    image_find_next_guide image_get_guide_orientation

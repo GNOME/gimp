@@ -40,8 +40,6 @@
 #include "gimpimage-mask.h"
 #include "gimppattern.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -313,7 +311,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
 
   /*  Apply it to the image  */
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+  gimp_image_apply_image (gimage, drawable, &bufPR,
+                          TRUE, _("Bucket Fill"),
 			  opacity, paint_mode,
                           NULL, x1, y1);
   tile_manager_destroy (buf_tiles);

@@ -42,6 +42,7 @@ void   gimp_image_mask_select_ellipse   (GimpImage      *gimage,
                                          gdouble         feather_radius_y);
 
 void   gimp_image_mask_select_polygon   (GimpImage      *gimage,
+                                         const gchar    *undo_desc,
                                          gint            n_points,
                                          GimpVector2    *points,
                                          GimpChannelOps  op,
@@ -59,6 +60,7 @@ void   gimp_image_mask_select_vectors   (GimpImage      *gimage,
                                          gdouble         feather_radius_y);
 
 void   gimp_image_mask_select_channel   (GimpImage      *gimage,
+                                         const gchar    *undo_desc,
                                          GimpChannel    *channel,
                                          gint            offset_x,
                                          gint            offset_y,

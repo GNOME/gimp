@@ -29,11 +29,10 @@
 #include "gimpimage-projection.h"
 #include "gimpimage-scale.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -80,7 +79,7 @@ gimp_image_scale (GimpImage             *gimage,
     floating_sel_relax (floating_layer, TRUE);
 
   /*  Push the image size to the stack  */
-  undo_push_image_size (gimage);
+  gimp_image_undo_push_image_size (gimage, NULL);
 
   /*  Set the new width and height  */
 
@@ -162,12 +161,12 @@ gimp_image_scale (GimpImage             *gimage,
       switch (guide->orientation)
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
-	  undo_push_image_guide (gimage, guide);
+	  gimp_image_undo_push_image_guide (gimage, NULL, guide);
 	  guide->position = (guide->position * new_height) / old_height;
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
-	  undo_push_image_guide (gimage, guide);
+	  gimp_image_undo_push_image_guide (gimage, NULL, guide);
 	  guide->position = (guide->position * new_width) / old_width;
 	  break;
 

@@ -38,6 +38,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -47,8 +48,6 @@
 #include "gimpinkoptions.h"
 #include "gimpinktool.h"
 #include "gimpinktool-blob.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -715,7 +714,7 @@ static void
 ink_finish (GimpInkTool  *ink_tool,
 	    GimpDrawable *drawable)
 {
-  gimp_drawable_push_undo (drawable,
+  gimp_drawable_push_undo (drawable, _("Ink"),
                            ink_tool->x1, ink_tool->y1,
                            ink_tool->x2, ink_tool->y2,
                            undo_tiles, TRUE);
@@ -1025,7 +1024,7 @@ ink_paste (GimpInkTool  *ink_tool,
 
   /*  apply the paint area to the gimage  */
   gimp_image_apply_image (gimage, drawable, &srcPR,
-			  FALSE, 
+			  FALSE, NULL,
 			  gimp_context_get_opacity (context),
 			  gimp_context_get_paint_mode (context),
 			  undo_tiles,  /*  specify an alternative src1  */

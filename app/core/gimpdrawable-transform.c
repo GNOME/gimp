@@ -39,10 +39,9 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -802,9 +801,11 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
 
       /*  Push an undo  */
       if (layer)
-	undo_push_layer_mod (gimage, layer);
+	gimp_image_undo_push_layer_mod (gimage, _("Transform Layer"),
+                                        layer);
       else if (channel)
-	undo_push_channel_mod (gimage, channel);
+	gimp_image_undo_push_channel_mod (gimage, _("Transform Channel"),
+                                          channel);
 
       /*  set the current layer's data  */
       drawable->tiles = tiles;

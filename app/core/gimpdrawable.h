@@ -78,7 +78,8 @@ void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                w,
 						  gint                h);
 
-void            gimp_drawable_push_undo          (GimpDrawable       *drawable, 
+void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
+                                                  const gchar        *undo_desc,
 						  gint                x1,
 						  gint                y1,
 						  gint                x2,
@@ -87,7 +88,8 @@ void            gimp_drawable_push_undo          (GimpDrawable       *drawable,
 						  gboolean            sparse);
 
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
-						  gboolean            push_undo);
+						  gboolean            push_undo,
+                                                  const gchar        *undo_desc);
 
 void            gimp_drawable_fill               (GimpDrawable       *drawable,
 						  const GimpRGB      *color);

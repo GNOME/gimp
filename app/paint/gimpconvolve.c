@@ -35,6 +35,8 @@
 #include "gimpconvolve.h"
 #include "gimpconvolveoptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 #define FIELD_COLS    4
 #define MIN_BLUR      64         /*  (8/9 original pixel)   */
@@ -114,7 +116,10 @@ void
 gimp_convolve_register (Gimp                      *gimp,
                         GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_CONVOLVE, GIMP_TYPE_CONVOLVE_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_CONVOLVE,
+                GIMP_TYPE_CONVOLVE_OPTIONS,
+                _("Convolve"));
 }
 
 GType

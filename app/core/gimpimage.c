@@ -44,6 +44,7 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-projection.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -57,7 +58,6 @@
 #include "vectors/gimpvectors.h"
 
 #include "path.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1124,7 +1124,8 @@ gimp_image_set_resolution (GimpImage *gimage,
   if ((ABS (gimage->xresolution - xresolution) >= 1e-5) ||
       (ABS (gimage->yresolution - yresolution) >= 1e-5))
     {
-      undo_push_image_resolution (gimage);
+      gimp_image_undo_push_image_resolution (gimage,
+                                             _("Change Image Reolution"));
 
       gimage->xresolution = xresolution;
       gimage->yresolution = yresolution;
@@ -1162,7 +1163,8 @@ gimp_image_set_unit (GimpImage *gimage,
 
   if (gimage->unit != unit)
     {
-      undo_push_image_resolution (gimage);
+      gimp_image_undo_push_image_resolution (gimage,
+                                             _("Change Image Unit"));
 
       gimage->unit = unit;
 
@@ -1840,6 +1842,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			GimpDrawable	     *drawable,
 			PixelRegion	     *src2PR,
 			gboolean              push_undo,
+                        const gchar          *undo_desc,
 			gdouble               opacity,
 			GimpLayerModeEffects  mode,
 			/*  alternative to using drawable tiles as src1: */
@@ -1897,7 +1900,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
@@ -1958,6 +1961,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  GimpDrawable *drawable, 
 			  PixelRegion  *src2PR,
 			  gboolean      push_undo, 
+                          const gchar  *undo_desc,
 			  gdouble       opacity,
 			  PixelRegion  *maskPR,
 			  gint          x, 
@@ -2014,7 +2018,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 
   /*  If the calling procedure specified an undo step...  */
   if (push_undo)
-    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, undo_desc, x1, y1, x2, y2, NULL, FALSE);
 
   /* configure the pixel regions
    *  If an alternative to using the drawable's data as src1 was provided...
@@ -2132,7 +2136,9 @@ gimp_image_parasite_attach (GimpImage    *gimage,
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
   if (gimp_parasite_is_undoable (parasite))
-    undo_push_image_parasite (gimage, parasite);
+    gimp_image_undo_push_image_parasite (gimage,
+                                         _("Attach Paraite to Image"),
+                                         parasite);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
       unusable (NULL on the stack) and prevented people from undoing after a 
@@ -2163,7 +2169,9 @@ gimp_image_parasite_detach (GimpImage   *gimage,
     return;
 
   if (gimp_parasite_is_undoable (p))
-    undo_push_image_parasite_remove (gimage, gimp_parasite_name (p));
+    gimp_image_undo_push_image_parasite_remove (gimage,
+                                                _("Remove Parasite from Image"),
+                                                gimp_parasite_name (p));
 
   gimp_parasite_list_remove (gimage->parasites, parasite);
 }
@@ -2674,10 +2682,11 @@ gimp_image_add_layer (GimpImage *gimage,
       return FALSE;
     }
 
-  undo_push_layer_add (gimage,
-                       layer,
-                       0,
-                       gimp_image_get_active_layer (gimage));
+  gimp_image_undo_push_layer_add (gimage,
+                                  _("Add Layer to Image"),
+                                  layer,
+                                  0,
+                                  gimp_image_get_active_layer (gimage));
 
   /*  If the layer is a floating selection, set the ID  */
   if (gimp_layer_is_floating_sel (layer))
@@ -2751,14 +2760,14 @@ gimp_image_remove_layer (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
-  g_return_if_fail (gimp_container_have (gimage->layers, 
-					 GIMP_OBJECT (layer)));
+  g_return_if_fail (gimp_container_have (gimage->layers, GIMP_OBJECT (layer)));
 
-  undo_push_layer_remove (gimage,
-                          layer,
-                          gimp_container_get_child_index (gimage->layers, 
-                                                          GIMP_OBJECT (layer)),
-                          layer);
+  gimp_image_undo_push_layer_remove (gimage,
+                                     _("Remove Layer from Image"),
+                                     layer,
+                                     gimp_container_get_child_index (gimage->layers, 
+                                                                     GIMP_OBJECT (layer)),
+                                     layer);
 
   g_object_ref (layer);
 
@@ -2951,7 +2960,9 @@ gimp_image_position_layer (GimpImage *gimage,
     }
 
   if (push_undo)
-    undo_push_layer_reposition (gimage, layer);
+    gimp_image_undo_push_layer_reposition (gimage,
+                                           _("Reorder Layer"),
+                                           layer);
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
@@ -2990,10 +3001,11 @@ gimp_image_add_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  undo_push_channel_add (gimage,
-                         channel,
-                         0,
-                         gimp_image_get_active_channel (gimage));
+  gimp_image_undo_push_channel_add (gimage,
+                                    _("Add Channel to Image"),
+                                    channel,
+                                    0,
+                                    gimp_image_get_active_channel (gimage));
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
@@ -3039,11 +3051,12 @@ gimp_image_remove_channel (GimpImage   *gimage,
   g_return_if_fail (gimp_container_have (gimage->channels, 
 					 GIMP_OBJECT (channel)));
 
-  undo_push_channel_remove (gimage,
-                            channel,
-                            gimp_container_get_child_index (gimage->channels,
-                                                            GIMP_OBJECT (channel)),
-                            gimp_image_get_active_channel (gimage));
+  gimp_image_undo_push_channel_remove (gimage,
+                                       _("Remove Layer from Image"),
+                                       channel,
+                                       gimp_container_get_child_index (gimage->channels,
+                                                                       GIMP_OBJECT (channel)),
+                                       gimp_image_get_active_channel (gimage));
 
   g_object_ref (channel);
 
@@ -3139,7 +3152,9 @@ gimp_image_position_channel (GimpImage   *gimage,
     return TRUE;
 
   if (push_undo)
-    undo_push_channel_reposition (gimage, channel);
+    gimp_image_undo_push_channel_reposition (gimage,
+                                             _("Reorder Channel"),
+                                             channel);
 
   gimp_container_reorder (gimage->channels, 
 			  GIMP_OBJECT (channel), new_index);
@@ -3175,10 +3190,11 @@ gimp_image_add_vectors (GimpImage   *gimage,
       return FALSE;
     }
 
-  undo_push_vectors_add (gimage,
-                         vectors,
-                         0,
-                         gimp_image_get_active_vectors (gimage));
+  gimp_image_undo_push_vectors_add (gimage,
+                                    _("Add Path to Image"),
+                                    vectors,
+                                    0,
+                                    gimp_image_get_active_vectors (gimage));
 
   gimp_item_set_image (GIMP_ITEM (vectors), gimage);
 
@@ -3219,11 +3235,12 @@ gimp_image_remove_vectors (GimpImage   *gimage,
   g_return_if_fail (gimp_container_have (gimage->vectors,
 					 GIMP_OBJECT (vectors)));
 
-  undo_push_vectors_remove (gimage,
-                            vectors,
-                            gimp_container_get_child_index (gimage->vectors,
-                                                            GIMP_OBJECT (vectors)),
-                            gimp_image_get_active_vectors (gimage));
+  gimp_image_undo_push_vectors_remove (gimage,
+                                       _("Remove Path from Image"),
+                                       vectors,
+                                       gimp_container_get_child_index (gimage->vectors,
+                                                                       GIMP_OBJECT (vectors)),
+                                       gimp_image_get_active_vectors (gimage));
 
   g_object_ref (vectors);
 
@@ -3319,7 +3336,9 @@ gimp_image_position_vectors (GimpImage   *gimage,
     return TRUE;
 
   if (push_undo)
-    undo_push_vectors_reposition (gimage, vectors);
+    gimp_image_undo_push_vectors_reposition (gimage,
+                                             _("Reorder Path"),
+                                             vectors);
 
   gimp_container_reorder (gimage->vectors,
 			  GIMP_OBJECT (vectors), new_index);

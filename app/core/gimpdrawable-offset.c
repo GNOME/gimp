@@ -38,6 +38,8 @@
 #include "gimpdrawable-offset.h"
 #include "gimpimage.h"
 
+#include "libgimp/gimpintl.h"
+
 
 void
 gimp_drawable_offset (GimpDrawable   *drawable,
@@ -307,7 +309,7 @@ gimp_drawable_offset (GimpDrawable   *drawable,
     }
 
   /*  push an undo  */
-  gimp_drawable_push_undo (drawable,
+  gimp_drawable_push_undo (drawable, _("Offset Drawable"),
                            0, 0,
                            gimp_drawable_width (drawable),
                            gimp_drawable_height (drawable),

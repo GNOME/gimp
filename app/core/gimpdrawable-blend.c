@@ -41,6 +41,8 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 
+#include "libgimp/gimpintl.h"
+
 
 typedef gdouble (* BlendRepeatFunc) (gdouble);
 
@@ -229,7 +231,8 @@ gimp_drawable_blend (GimpDrawable     *drawable,
     }
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
-  gimp_image_apply_image (gimage, drawable, &bufPR, TRUE,
+  gimp_image_apply_image (gimage, drawable, &bufPR,
+                          TRUE, _("Blend"),
 			  opacity, paint_mode,
                           NULL, x1, y1);
 

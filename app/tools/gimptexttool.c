@@ -52,8 +52,6 @@
 #include "gimptextoptions.h"
 #include "gimptexttool.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

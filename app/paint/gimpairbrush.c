@@ -37,6 +37,8 @@
 #include "gimpairbrush.h"
 #include "gimpairbrushoptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
 
@@ -74,7 +76,10 @@ void
 gimp_airbrush_register (Gimp                      *gimp,
                         GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_AIRBRUSH, GIMP_TYPE_AIRBRUSH_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_AIRBRUSH,
+                GIMP_TYPE_AIRBRUSH_OPTIONS,
+                _("Airbrush"));
 }
 
 GType

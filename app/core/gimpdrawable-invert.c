@@ -30,6 +30,8 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-invert.h"
 
+#include "libgimp/gimpintl.h"
+
 
 void
 gimp_drawable_invert (GimpDrawable *drawable)
@@ -51,7 +53,7 @@ gimp_drawable_invert (GimpDrawable *drawable)
 
   gimp_lut_free (lut);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE, _("Invert"));
 
   gimp_drawable_update (drawable,
 			x1, y1,

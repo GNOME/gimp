@@ -39,6 +39,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpviewabledialog.h"
@@ -51,8 +52,6 @@
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
 #include "tool_manager.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -288,7 +287,9 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		  if (create_hguide)
 		    {
 		      guide = gimp_image_add_hguide (gdisp->gimage);
-		      undo_push_image_guide (gdisp->gimage, guide);
+		      gimp_image_undo_push_image_guide (gdisp->gimage,
+                                                        _("Add Horizontal Guide"),
+                                                        guide);
 		      guide->position = measure_tool->y[i];
 
 		      gimp_image_update_guide (gdisp->gimage, guide);
@@ -297,7 +298,9 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		  if (create_vguide)
 		    {
 		      guide = gimp_image_add_vguide (gdisp->gimage);
-		      undo_push_image_guide (gdisp->gimage, guide);
+		      gimp_image_undo_push_image_guide (gdisp->gimage,
+                                                        _("Add Vertical Guide"),
+                                                        guide);
 		      guide->position = measure_tool->x[i];
 
 		      gimp_image_update_guide (gdisp->gimage, guide);

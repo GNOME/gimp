@@ -31,8 +31,6 @@
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

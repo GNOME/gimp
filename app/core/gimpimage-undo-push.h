@@ -16,146 +16,163 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __UNDO_H__
-#define __UNDO_H__
+#ifndef __GIMP_IMAGE_UNDO_PUSH_H__
+#define __GIMP_IMAGE_UNDO_PUSH_H__
 
 
 /*  image undos  */
 
-gboolean      undo_push_image                 (GimpImage     *gimage,
-                                               GimpDrawable  *drawable,
-                                               gint           x1,
-                                               gint           y1,
-                                               gint           x2,
-                                               gint           y2);
-gboolean      undo_push_image_mod             (GimpImage     *gimage,
-                                               GimpDrawable  *drawable,
-                                               gint           x1,
-                                               gint           y1,
-                                               gint           x2,
-                                               gint           y2,
-                                               TileManager   *tiles,
-                                               gboolean       sparse);
-gboolean      undo_push_image_type            (GimpImage     *gimage);
-gboolean      undo_push_image_size            (GimpImage     *gimage);
-gboolean      undo_push_image_resolution      (GimpImage     *gimage);
-gboolean      undo_push_image_qmask           (GimpImage     *gimage);
-gboolean      undo_push_image_guide           (GimpImage     *gimage,
-                                               GimpGuide     *guide);
+gboolean gimp_image_undo_push_image                 (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     gint           x1,
+                                                     gint           y1,
+                                                     gint           x2,
+                                                     gint           y2);
+gboolean gimp_image_undo_push_image_mod             (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpDrawable  *drawable,
+                                                     gint           x1,
+                                                     gint           y1,
+                                                     gint           x2,
+                                                     gint           y2,
+                                                     TileManager   *tiles,
+                                                     gboolean       sparse);
+gboolean gimp_image_undo_push_image_type            (GimpImage     *gimage,
+                                                     const gchar   *undo_desc);
+gboolean gimp_image_undo_push_image_size            (GimpImage     *gimage,
+                                                     const gchar   *undo_desc);
+gboolean gimp_image_undo_push_image_resolution      (GimpImage     *gimage,
+                                                     const gchar   *undo_desc);
+gboolean gimp_image_undo_push_image_qmask           (GimpImage     *gimage,
+                                                     const gchar   *undo_desc);
+gboolean gimp_image_undo_push_image_guide           (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpGuide     *guide);
 
 
 /*  mask undo  */
 
-gboolean      undo_push_mask                  (GimpImage     *gimage,
-                                               GimpChannel   *mask);
+gboolean gimp_image_undo_push_mask                  (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *mask);
 
 
 /*  item undos  */
 
-gboolean      undo_push_item_rename           (GimpImage     *gimage, 
-                                               GimpItem      *item);
+gboolean gimp_image_undo_push_item_rename           (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item);
 
 
 /*  layer undos  */
 
-gboolean      undo_push_layer_add             (GimpImage     *gimage,
-                                               GimpLayer     *layer,
-                                               gint           prev_position,
-                                               GimpLayer     *prev_layer);
-gboolean      undo_push_layer_remove          (GimpImage     *gimage,
-                                               GimpLayer     *layer,
-                                               gint           prev_position,
-                                               GimpLayer     *prev_layer);
-gboolean      undo_push_layer_mod             (GimpImage     *gimage,
-                                               GimpLayer     *layer);
-gboolean      undo_push_layer_mask_add        (GimpImage     *gimage, 
-                                               GimpLayer     *layer,
-                                               GimpLayerMask *mask);
-gboolean      undo_push_layer_mask_remove     (GimpImage     *gimage, 
-                                               GimpLayer     *layer,
-                                               GimpLayerMask *mask);
-gboolean      undo_push_layer_reposition      (GimpImage     *gimage, 
-                                               GimpLayer     *layer);
-gboolean      undo_push_layer_displace        (GimpImage     *gimage,
-                                               GimpLayer     *layer);
+gboolean gimp_image_undo_push_layer_add             (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     gint           prev_position,
+                                                     GimpLayer     *prev_layer);
+gboolean gimp_image_undo_push_layer_remove          (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     gint           prev_position,
+                                                     GimpLayer     *prev_layer);
+gboolean gimp_image_undo_push_layer_mod             (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer);
+gboolean gimp_image_undo_push_layer_mask_add        (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_mask_remove     (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer,
+                                                     GimpLayerMask *mask);
+gboolean gimp_image_undo_push_layer_reposition      (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer);
+gboolean gimp_image_undo_push_layer_displace        (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *layer);
 
 
 /*  channel undos  */
 
-gboolean      undo_push_channel_add           (GimpImage     *gimage, 
-                                               GimpChannel   *channel,
-                                               gint           prev_position,
-                                               GimpChannel   *prev_channel);
-gboolean      undo_push_channel_remove        (GimpImage     *gimage, 
-                                               GimpChannel   *channel,
-                                               gint           prev_position,
-                                               GimpChannel   *prev_channel);
-gboolean      undo_push_channel_mod           (GimpImage     *gimage, 
-                                               GimpChannel   *channel);
-gboolean      undo_push_channel_reposition    (GimpImage     *gimage, 
-                                               GimpChannel   *channel);
+gboolean gimp_image_undo_push_channel_add           (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *channel,
+                                                     gint           prev_position,
+                                                     GimpChannel   *prev_channel);
+gboolean gimp_image_undo_push_channel_remove        (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *channel,
+                                                     gint           prev_position,
+                                                     GimpChannel   *prev_channel);
+gboolean gimp_image_undo_push_channel_mod           (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *channel);
+gboolean gimp_image_undo_push_channel_reposition    (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpChannel   *channel);
 
 
 /*  vectors undos  */
 
-gboolean      undo_push_vectors_add           (GimpImage     *gimage, 
-                                               GimpVectors   *vectors,
-                                               gint           prev_position,
-                                               GimpVectors   *prev_vectors);
-gboolean      undo_push_vectors_remove        (GimpImage     *gimage, 
-                                               GimpVectors   *channel,
-                                               gint           prev_position,
-                                               GimpVectors   *prev_vectors);
-gboolean      undo_push_vectors_mod           (GimpImage     *gimage, 
-                                               GimpVectors   *vectors);
-gboolean      undo_push_vectors_reposition    (GimpImage     *gimage,
-                                               GimpVectors   *vectors);
+gboolean gimp_image_undo_push_vectors_add           (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpVectors   *vectors,
+                                                     gint           prev_position,
+                                                     GimpVectors   *prev_vectors);
+gboolean gimp_image_undo_push_vectors_remove        (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpVectors   *channel,
+                                                     gint           prev_position,
+                                                     GimpVectors   *prev_vectors);
+gboolean gimp_image_undo_push_vectors_mod           (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpVectors   *vectors);
+gboolean gimp_image_undo_push_vectors_reposition    (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpVectors   *vectors);
 
 
 /*  floating selection undos  */
 
-gboolean      undo_push_fs_to_layer           (GimpImage     *gimage,
-                                               GimpLayer     *floating_layer,
-                                               GimpDrawable  *drawable);
-gboolean      undo_push_fs_rigor              (GimpImage     *gimage, 
-                                               gint32         layer_ID);
-gboolean      undo_push_fs_relax              (GimpImage     *gimage, 
-                                               gint32         layer_ID);
-
-
-/*  transform/paint drawable undos  */
-
-gboolean      undo_push_transform             (GimpImage     *gimage,
-                                               gint           tool_ID,
-                                               GType          tool_type,
-                                               gdouble       *trans_info,
-                                               TileManager   *original,
-                                               GSList        *path_undo);
-gboolean      undo_push_paint                 (GimpImage     *gimage,
-                                               gint           core_ID,
-                                               GType          core_type,
-                                               GimpCoords    *last_coords);
+gboolean gimp_image_undo_push_fs_to_layer           (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *floating_layer,
+                                                     GimpDrawable  *drawable);
+gboolean gimp_image_undo_push_fs_rigor              (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *floating_layer);
+gboolean gimp_image_undo_push_fs_relax              (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpLayer     *floating_layer);
 
 
 /*  parasite undos  */
 
-gboolean      undo_push_image_parasite        (GimpImage     *gimage,
-                                               gpointer       parasite);
-gboolean      undo_push_image_parasite_remove (GimpImage     *gimage, 
-                                               const gchar   *name);
+gboolean gimp_image_undo_push_image_parasite        (GimpImage     *gimage,
+                                                     const gchar   *undo_desc,
+                                                     gpointer       parasite);
+gboolean gimp_image_undo_push_image_parasite_remove (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     const gchar   *name);
 
-gboolean      undo_push_item_parasite         (GimpImage     *gimage, 
-                                               GimpItem      *item,
-                                               gpointer       parasite);
-gboolean      undo_push_item_parasite_remove  (GimpImage     *gimage, 
-                                               GimpItem      *item,
-                                               const gchar   *name);
+gboolean gimp_image_undo_push_item_parasite         (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item,
+                                                     gpointer       parasite);
+gboolean gimp_image_undo_push_item_parasite_remove  (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item,
+                                                     const gchar   *name);
 
 
 /*  EEK undo  */
 
-gboolean      undo_push_cantundo              (GimpImage     *gimage, 
-                                               const gchar   *action);
+gboolean gimp_image_undo_push_cantundo              (GimpImage     *gimage, 
+                                                     const gchar   *undo_desc);
 
 
-#endif  /* __UNDO_H__ */
+#endif  /* __GIMP_IMAGE_UNDO_PUSH_H__ */

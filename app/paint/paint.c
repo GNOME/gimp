@@ -39,9 +39,10 @@
 
 /*  local function prototypes  */
 
-static void   paint_register (Gimp  *gimp,
-                              GType  paint_type,
-                              GType  paint_options_type);
+static void   paint_register (Gimp        *gimp,
+                              GType        paint_type,
+                              GType        paint_options_type,
+                              const gchar *blurb);
 
 
 /*  public functions  */
@@ -91,9 +92,10 @@ paint_exit (Gimp *gimp)
 /*  private functions  */
 
 static void
-paint_register (Gimp  *gimp,
-                GType  paint_type,
-                GType  paint_options_type)
+paint_register (Gimp        *gimp,
+                GType        paint_type,
+                GType        paint_options_type,
+                const gchar *blurb)
 {
   GimpPaintInfo *paint_info;
   const gchar   *pdb_string;
@@ -101,6 +103,7 @@ paint_register (Gimp  *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
   g_return_if_fail (g_type_is_a (paint_options_type, GIMP_TYPE_PAINT_OPTIONS));
+  g_return_if_fail (blurb != NULL);
   
   if (paint_type == GIMP_TYPE_PENCIL)
     {
@@ -142,6 +145,7 @@ paint_register (Gimp  *gimp,
   paint_info = gimp_paint_info_new (gimp,
                                     paint_type,
                                     paint_options_type,
+                                    blurb,
                                     pdb_string);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));

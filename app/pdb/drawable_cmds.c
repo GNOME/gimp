@@ -41,6 +41,8 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 
+#include "libgimp/gimpintl.h"
+
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;
 static ProcRecord drawable_update_proc;
@@ -108,7 +110,7 @@ drawable_merge_shadow_invoker (Gimp     *gimp,
   undo = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    gimp_drawable_merge_shadow (drawable, undo);
+    gimp_drawable_merge_shadow (drawable, undo, _("Plug-In"));
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
 }

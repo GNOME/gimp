@@ -116,7 +116,7 @@ select_none_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage, data);
 
-  gimp_image_mask_clear (gimage);
+  gimp_image_mask_clear (gimage, NULL);
   gimp_image_flush (gimage);
 }
 

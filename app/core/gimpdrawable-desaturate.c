@@ -28,6 +28,8 @@
 #include "gimpdrawable-desaturate.h"
 #include "gimpimage.h"
 
+#include "libgimp/gimpintl.h"
+
 
 void
 gimp_drawable_desaturate (GimpDrawable *drawable)
@@ -90,7 +92,7 @@ gimp_drawable_desaturate (GimpDrawable *drawable)
 	}
     }
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE, _("Desaturate"));
 
   gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

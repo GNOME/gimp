@@ -33,11 +33,10 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -215,9 +214,10 @@ floating_sel_to_layer (GimpLayer *layer)
   width  = gimp_drawable_width (layer->fs.drawable);
   height = gimp_drawable_height (layer->fs.drawable);
 
-  undo_push_fs_to_layer (gimage,
-                         layer,
-                         layer->fs.drawable);
+  gimp_image_undo_push_fs_to_layer (gimage,
+                                    _("Floating Selection to Layer"),
+                                    layer,
+                                    layer->fs.drawable);
 
   /*  clear the selection  */
   gimp_layer_invalidate_boundary (layer);
@@ -340,10 +340,8 @@ floating_sel_restore (GimpLayer *layer,
 
 void
 floating_sel_rigor (GimpLayer *layer,
-		    gboolean   undo)
+		    gboolean   push_undo)
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
-
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_store (layer,
 		      GIMP_DRAWABLE (layer)->offset_x,
@@ -352,16 +350,16 @@ floating_sel_rigor (GimpLayer *layer,
 		      GIMP_DRAWABLE (layer)->height);
   layer->fs.initial = TRUE;
 
-  if (undo)
-    undo_push_fs_rigor (gimage, GIMP_ITEM (layer)->ID);
+  if (push_undo)
+    gimp_image_undo_push_fs_rigor (gimp_item_get_image (GIMP_ITEM (layer)),
+                                   NULL,
+                                   layer);
 }
 
 void
 floating_sel_relax (GimpLayer *layer,
-		    gboolean   undo)
+		    gboolean   push_undo)
 {
-  GimpImage *gimage = gimp_item_get_image (GIMP_ITEM (layer));
-
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)
     floating_sel_restore (layer,
@@ -371,8 +369,10 @@ floating_sel_relax (GimpLayer *layer,
 			  GIMP_DRAWABLE (layer)->height);
   layer->fs.initial = TRUE;
 
-  if (undo)
-    undo_push_fs_relax (gimage, GIMP_ITEM (layer)->ID);
+  if (push_undo)
+    gimp_image_undo_push_fs_relax (gimp_item_get_image (GIMP_ITEM (layer)),
+                                   NULL,
+                                   layer);
 }
 
 void
@@ -381,7 +381,7 @@ floating_sel_composite (GimpLayer *layer,
 			gint       y,
 			gint       w,
 			gint       h,
-			gboolean   undo)
+			gboolean   push_undo)
 {
   PixelRegion  fsPR;
   GimpImage   *gimage;
@@ -466,7 +466,8 @@ floating_sel_composite (GimpLayer *layer,
 	  /*  apply the fs with the undo specified by the value
 	   *  passed to this function
 	   */
-	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR, undo,
+	  gimp_image_apply_image (gimage, layer->fs.drawable, &fsPR,
+                                  push_undo, NULL,
 				  layer->opacity,
 				  layer->mode,
 				  NULL,

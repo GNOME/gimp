@@ -103,7 +103,7 @@ HELP
 	  desc => 'Push merge to undo stack?' }
     );
 
-    %invoke = ( code => 'gimp_drawable_merge_shadow (drawable, undo);' );
+    %invoke = ( code => 'gimp_drawable_merge_shadow (drawable, undo, _("Plug-In"));' );
 }
 
 sub drawable_fill {
@@ -541,7 +541,8 @@ CODE
 
 @headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
               "core/gimpdrawable.h" "core/gimpdrawable-offset.h"
-	      "base/tile.h" "base/tile-manager.h" "base/temp-buf.h");
+	      "base/tile.h" "base/tile-manager.h" "base/temp-buf.h"
+              "libgimp/gimpintl.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

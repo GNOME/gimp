@@ -1,3 +1,112 @@
+2003-02-14  Michael Natterer  <mitch@gimp.org>
+
+	Moved the undo step implementations to the core and pass around
+	lots of "const gchar *undo_desc". Fixes bug #104367.
+
+	* app/Makefile.am
+	* app/undo.[ch]: removed...
+
+	* app/core/Makefile.am
+	* app/core/gimpimage-undo-push.[ch]: ...and added here.
+
+	* app/paint/Makefile.am
+	* app/tools/Makefile.am
+	* app/paint/gimppaintcore-undo.[ch]
+	* app/tools/gimptransformtool-undo.[ch]: new files for the
+	paint and transform undos.
+
+	* app/core/gimppaintinfo.[ch]: added a blurb.
+
+	* app/paint/gimpairbrush.c
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppencil.c
+	* app/paint/gimpsmudge.c
+	* app/paint/paint-types.h
+	* app/paint/paint.c: pass the blurb when registering the core.
+
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage.[ch]
+	* app/core/gimpimage-mask-select.[ch]
+	* app/core/gimpimage-mask.[ch]
+	* app/core/gimpimagemap.[ch]
+	* app/core/gimplayer-floating-sel.[ch]: added "undo_desc" parameters
+	to all undo pushing helper functions.
+
+	* app/undo_history.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable-bucket-fill.c
+	* app/core/gimpdrawable-desaturate.c
+	* app/core/gimpdrawable-equalize.c
+	* app/core/gimpdrawable-invert.c
+	* app/core/gimpdrawable-offset.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-qmask.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo.c
+	* app/core/gimpitem.c
+	* app/core/gimplayer.c
+	* app/core/gimplayermask.c
+	* app/display/gimpdisplayshell-dnd.c
+	* app/file/file-open.c
+	* app/file/file-save.c
+	* app/gui/channels-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-open-dialog.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/paths-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/vectors-commands.c
+	* app/text/gimptext-compat.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpselectioneditor.c
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/layer.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/selection_tools.pdb: changed accordingly: pass
+	"undo_desc" strings, changed includes or simply removed inclusion
+	of "undo.h". Some random cleanups.
+
+	* tools/pdbgen/pdb/guides.pdb: cleaned up a lot. Fixed
+	gimp_image_find_next_guide() to not return guides with
+	position < 0 (and made it shorter and readable).
+
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/guides_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
 2003-02-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayermask.c (gimp_layer_mask_duplicate): return the

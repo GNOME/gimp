@@ -35,6 +35,8 @@
 #include "gimperaser.h"
 #include "gimperaseroptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void   gimp_eraser_class_init    (GimpEraserClass    *klass);
 static void   gimp_eraser_init          (GimpEraser         *eraser);
@@ -56,7 +58,10 @@ void
 gimp_eraser_register (Gimp                      *gimp,
                       GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_ERASER, GIMP_TYPE_ERASER_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_ERASER,
+                GIMP_TYPE_ERASER_OPTIONS,
+                _("Eraser"));
 }
 
 GType

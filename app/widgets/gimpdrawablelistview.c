@@ -49,8 +49,6 @@
 #include "gimplistitem.h"
 #include "gimppreview.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

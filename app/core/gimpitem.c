@@ -33,6 +33,7 @@
 #include "gimpchannel.h"
 #include "gimpimage.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimpitem.h"
 #include "gimplayer.h"
 #include "gimplist.h"
@@ -40,8 +41,6 @@
 #include "gimpparasitelist.h"
 
 #include "vectors/gimpvectors.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -450,14 +449,15 @@ gimp_item_parasite_attach (GimpItem     *item,
       gimp_image_undo_group_start (item->gimage, GIMP_UNDO_GROUP_PARASITE_ATTACH,
                                    _("Attach Parasite"));
 
-      undo_push_item_parasite (item->gimage, item, parasite);
+      gimp_image_undo_push_item_parasite (item->gimage, NULL, item, parasite);
     }
   else if (gimp_parasite_is_persistent (parasite) &&
 	   ! gimp_parasite_compare (parasite,
 				    gimp_item_parasite_find
 				    (item, gimp_parasite_name (parasite))))
     {
-      undo_push_cantundo (item->gimage, _("parasite attached to item"));
+      gimp_image_undo_push_cantundo (item->gimage,
+                                     _("Attach Parasite to Item"));
     }
 
   gimp_parasite_list_add (item->parasites, parasite);
@@ -495,12 +495,15 @@ gimp_item_parasite_detach (GimpItem    *item,
 
   if (gimp_parasite_is_undoable (parasite))
     {
-      undo_push_item_parasite_remove (item->gimage, item,
-                                      gimp_parasite_name (parasite));
+      gimp_image_undo_push_item_parasite_remove (item->gimage,
+                                                 _("Remove Parasite from Item"),
+                                                 item,
+                                                 gimp_parasite_name (parasite));
     }
   else if (gimp_parasite_is_persistent (parasite))
     {
-      undo_push_cantundo (item->gimage, _("parasite detached from item"));
+      gimp_image_undo_push_cantundo (item->gimage,
+                                     _("Remove Parasite from Item"));
     }
 
   gimp_parasite_list_remove (item->parasites, name);

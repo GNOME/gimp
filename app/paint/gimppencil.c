@@ -37,6 +37,8 @@
 #include "gimppaintoptions.h"
 #include "gimppencil.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void   gimp_pencil_class_init (GimpPencilClass    *klass);
 static void   gimp_pencil_init       (GimpPencil         *pencil);
@@ -58,7 +60,10 @@ void
 gimp_pencil_register (Gimp                      *gimp,
                       GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_PENCIL, GIMP_TYPE_PAINT_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_PENCIL,
+                GIMP_TYPE_PAINT_OPTIONS,
+                _("Pencil"));
 }
 
 GType

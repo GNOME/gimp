@@ -39,11 +39,10 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "gimpimage.h"
+#include "gimpimage-undo-push.h"
 #include "gimpchannel.h"
 #include "gimplayer.h"
 #include "gimpparasitelist.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -59,7 +58,8 @@ static GimpItem * gimp_channel_duplicate   (GimpItem         *item,
                                             GType             new_type,
                                             gboolean          add_alpha);
 
-static void       gimp_channel_push_undo   (GimpChannel      *mask);
+static void       gimp_channel_push_undo   (GimpChannel      *mask,
+                                            const gchar      *undo_desc);
 static void       gimp_channel_validate    (TileManager      *tm,
                                             Tile             *tile);
 
@@ -212,7 +212,8 @@ gimp_channel_duplicate (GimpItem *item,
 }
 
 static void
-gimp_channel_push_undo (GimpChannel *mask)
+gimp_channel_push_undo (GimpChannel *mask,
+                        const gchar *undo_desc)
 {
   GimpImage *gimage;
 
@@ -220,7 +221,7 @@ gimp_channel_push_undo (GimpChannel *mask)
 
   g_return_if_fail (gimage != NULL);
 
-  undo_push_mask (gimage, mask);
+  gimp_image_undo_push_mask (gimage, undo_desc, mask);
 
   mask->boundary_known = FALSE;
 
@@ -382,7 +383,9 @@ gimp_channel_scale (GimpChannel           *channel,
   scale_region (&srcPR, &destPR, interpolation_type);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)), channel);
+  gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)),
+                                    _("Scale Channel"),
+                                    channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE (channel)->tiles  = new_tiles;
@@ -488,7 +491,9 @@ gimp_channel_resize (GimpChannel *channel,
     copy_region (&srcPR, &destPR);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)), channel);
+  gimp_image_undo_push_channel_mod (gimp_item_get_image (GIMP_ITEM (channel)),
+                                    _("Resize Channel"),
+                                    channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE (channel)->tiles  = new_tiles;
@@ -1293,7 +1298,7 @@ gimp_channel_feather (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Feather Channel"));
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
@@ -1315,7 +1320,7 @@ gimp_channel_sharpen (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Sharpen Channel"));
 
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
 		     0, 0,
@@ -1340,7 +1345,7 @@ gimp_channel_clear (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Clear Channel"));
 
   if (mask->bounds_known && !mask->empty)
     {
@@ -1378,7 +1383,7 @@ gimp_channel_all (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Fill Channel"));
 
   /*  clear the mask  */
   pixel_region_init (&maskPR, GIMP_DRAWABLE (mask)->tiles,
@@ -1403,7 +1408,7 @@ gimp_channel_invert (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Invert Channel"));
 
   if (mask->bounds_known && mask->empty)
     {
@@ -1469,7 +1474,7 @@ gimp_channel_border (GimpChannel *mask,
     y2 += radius_y;
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Border Channel"));
 
   pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1,
 		     (x2-x1), (y2-y1), TRUE);
@@ -1526,7 +1531,7 @@ gimp_channel_grow (GimpChannel *mask,
     y2 = GIMP_DRAWABLE (mask)->height;
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Grow Channel"));
 
   /*  need full extents for grow, not! */
   pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1, (x2 - x1),
@@ -1577,7 +1582,7 @@ gimp_channel_shrink (GimpChannel  *mask,
     y2++;
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Shrink Channel"));
 
   pixel_region_init (&bPR, GIMP_DRAWABLE (mask)->tiles, x1, y1, (x2 - x1),
 		     (y2 - y1), TRUE);
@@ -1602,7 +1607,7 @@ gimp_channel_translate (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Translate Channel"));
 
   gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
   x1 = CLAMP ((x1 + off_x), 0, GIMP_DRAWABLE (mask)->width);
@@ -1678,7 +1683,7 @@ gimp_channel_load (GimpChannel *mask,
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Channel Load"));
 
   /*  copy the channel to the mask  */
   pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
@@ -1707,7 +1712,7 @@ gimp_channel_layer_alpha (GimpChannel *mask,
   g_return_if_fail (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Channel from Alpha"));
 
   /*  clear the mask if it is not already known to be empty  */
   if (! (mask->bounds_known && mask->empty))
@@ -1744,7 +1749,7 @@ gimp_channel_layer_mask (GimpChannel *mask,
   g_return_if_fail (gimp_layer_get_mask (layer));
 
   if (push_undo)
-    gimp_channel_push_undo (mask);
+    gimp_channel_push_undo (mask, _("Channel from Mask"));
 
   /*  clear the mask if it is not already known to be empty  */
   if (! (mask->bounds_known && mask->empty))

@@ -195,6 +195,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 gimp_image_mask_select_polygon (gimage,
+                                _("Free Select"),
                                 num_segs,
                                 (GimpVector2 *) segs, 
                                 operation,
@@ -309,7 +310,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimpimage-mask-select.h");
+@headers = qw("core/gimpimage-mask-select.h" "libgimp/gimpintl.h");
 
 @procs = qw(by_color_select ellipse_select free_select fuzzy_select
 	    rect_select);

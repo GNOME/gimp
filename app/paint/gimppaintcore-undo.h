@@ -16,29 +16,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PAINT_TYPES_H__
-#define __PAINT_TYPES_H__
+#ifndef __GIMP_PAINT_CORE_UNDO_H__
+#define __GIMP_PAINT_CORE_UNDO_H__
 
 
-#include "core/core-types.h"
-#include "paint/paint-enums.h"
+gboolean   gimp_paint_core_push_undo (GimpImage     *gimage,
+                                      const gchar   *undo_desc,
+                                      GimpPaintCore *core);
 
 
-/*  objects  */
-
-typedef struct _GimpPaintCore    GimpPaintCore;
-typedef struct _GimpPaintOptions GimpPaintOptions;
-
-
-/*  functions  */
-
-typedef void (* GimpPaintRegisterCallback) (Gimp        *gimp,
-                                            GType        paint_type,
-                                            GType        paint_options_type,
-                                            const gchar *blurb);
-
-typedef void (* GimpPaintRegisterFunc)     (Gimp                      *gimp,
-                                            GimpPaintRegisterCallback  callback);
-
-
-#endif /* __PAINT_TYPES_H__ */
+#endif  /* __GIMP_PAINT_CORE_UNDO_H__ */

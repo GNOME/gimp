@@ -37,15 +37,15 @@ void       floating_sel_restore      (GimpLayer    *layer,
 				      gint          w,
 				      gint          h);
 void       floating_sel_rigor        (GimpLayer    *layer,
-				      gboolean      undo);
+				      gboolean      push_undo);
 void       floating_sel_relax        (GimpLayer    *layer,
-				      gboolean      undo);
+				      gboolean      push_undo);
 void       floating_sel_composite    (GimpLayer    *layer,
 				      gint          x,
 				      gint          y,
 				      gint          w,
 				      gint          h,
-				      gboolean      undo);
+				      gboolean      push_undo);
 BoundSeg * floating_sel_boundary     (GimpLayer    *layer,
 				      gint         *n_segs);
 void       floating_sel_invalidate   (GimpLayer    *layer);

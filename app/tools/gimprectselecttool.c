@@ -288,7 +288,7 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
             floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
           /*  Otherwise, clear the selection mask  */
           else
-            gimp_image_mask_clear (gdisp->gimage);
+            gimp_image_mask_clear (gdisp->gimage, NULL);
 
           gimp_image_flush (gdisp->gimage);
           return;
@@ -296,8 +296,6 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
 
       x2 = x1 + w;
       y2 = y1 + h;
-
-      g_print ("rect_select: %d x %d\n", w, h);
 
       gimp_rect_select_tool_rect_select (rect_sel,
                                          x1, y1, (x2 - x1), (y2 - y1));

@@ -35,13 +35,12 @@
 #include "gimpimage.h"
 #include "gimpimage-mask.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimppaintinfo.h"
 #include "gimptoolinfo.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -272,7 +271,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
    *  push an undo
    */
   if (cut_gimage && non_empty)
-    gimp_drawable_push_undo (drawable, x1, y1, x2, y2, NULL, FALSE);
+    gimp_drawable_push_undo (drawable, NULL, x1, y1, x2, y2, NULL, FALSE);
 
   gimp_drawable_offsets (drawable, &off_x, &off_y);
 
@@ -300,7 +299,7 @@ gimp_image_mask_extract (GimpImage    *gimage,
       if (cut_gimage)
 	{
 	  /*  Clear the region  */
-	  gimp_image_mask_clear (gimage);
+	  gimp_image_mask_clear (gimage, NULL);
 
 	  /*  Update the region  */
 	  gimp_image_update (gimage, 
@@ -415,7 +414,8 @@ gimp_image_mask_float (GimpImage    *gimage,
 
 
 void
-gimp_image_mask_push_undo (GimpImage *gimage)
+gimp_image_mask_push_undo (GimpImage   *gimage,
+                           const gchar *undo_desc)
 {
   GimpChannel *mask;
 
@@ -423,7 +423,7 @@ gimp_image_mask_push_undo (GimpImage *gimage)
 
   mask = gimp_image_get_mask (gimage);
 
-  undo_push_mask (gimage, mask);
+  gimp_image_undo_push_mask (gimage, undo_desc, mask);
 
   gimp_image_mask_invalidate (gimage);
 }
@@ -435,7 +435,7 @@ gimp_image_mask_feather (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Feather Selection"));
 
   gimp_channel_feather (gimp_image_get_mask (gimage),
 			feather_radius_x,
@@ -450,7 +450,7 @@ gimp_image_mask_sharpen (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Sharpen Selection"));
 
   gimp_channel_sharpen (gimp_image_get_mask (gimage), FALSE);
 
@@ -458,11 +458,15 @@ gimp_image_mask_sharpen (GimpImage *gimage)
 }
 
 void
-gimp_image_mask_clear (GimpImage *gimage)
+gimp_image_mask_clear (GimpImage   *gimage,
+                       const gchar *undo_desc)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  if (! undo_desc)
+    undo_desc = _("Select None");
+
+  gimp_image_mask_push_undo (gimage, undo_desc);
 
   gimp_channel_clear (gimp_image_get_mask (gimage), FALSE);
 
@@ -474,7 +478,7 @@ gimp_image_mask_all (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Select All"));
 
   gimp_channel_all (gimp_image_get_mask (gimage), FALSE);
 
@@ -486,7 +490,7 @@ gimp_image_mask_invert (GimpImage *gimage)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Invert Selection"));
 
   gimp_channel_invert (gimp_image_get_mask (gimage), FALSE);
 
@@ -500,7 +504,7 @@ gimp_image_mask_border (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Border Selection"));
 
   gimp_channel_border (gimp_image_get_mask (gimage),
 		       border_radius_x,
@@ -517,7 +521,7 @@ gimp_image_mask_grow (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Grow Selection"));
 
   gimp_channel_grow (gimp_image_get_mask (gimage),
 		     grow_pixels_x,
@@ -535,7 +539,7 @@ gimp_image_mask_shrink (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Shrink Selection"));
 
   gimp_channel_shrink (gimp_image_get_mask (gimage),
 		       shrink_pixels_x,
@@ -553,7 +557,7 @@ gimp_image_mask_load (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Selection from Channel"));
 
   /*  load the specified channel to the gimage mask  */
   gimp_channel_load (gimp_image_get_mask (gimage), channel, FALSE);
@@ -568,7 +572,7 @@ gimp_image_mask_translate (GimpImage *gimage,
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  gimp_image_mask_push_undo (gimage);
+  gimp_image_mask_push_undo (gimage, _("Translate Selection"));
 
   gimp_channel_translate (gimp_image_get_mask (gimage), off_x, off_y, FALSE);
 
@@ -585,7 +589,7 @@ gimp_image_mask_layer_alpha (GimpImage *gimage,
 
   if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
-      gimp_image_mask_push_undo (gimage);
+      gimp_image_mask_push_undo (gimage, _("Selection from Alpha"));
 
       /*  load the mask with the given layer's alpha channel  */
       gimp_channel_layer_alpha (gimp_image_get_mask (gimage), layer, FALSE);
@@ -609,7 +613,7 @@ gimp_image_mask_layer_mask (GimpImage *gimage,
 
   if (gimp_layer_get_mask (layer))
     {
-      gimp_image_mask_push_undo (gimage);
+      gimp_image_mask_push_undo (gimage, _("Selection from Mask"));
 
       /*  load the mask with the given layer's mask  */
       gimp_channel_layer_mask (gimp_image_get_mask (gimage), layer, FALSE);

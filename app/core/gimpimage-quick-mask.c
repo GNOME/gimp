@@ -33,9 +33,8 @@
 #include "gimpimage-mask.h"
 #include "gimpimage-qmask.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer-floating-sel.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -98,7 +97,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                   mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
                                                             G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
                                                             FALSE));
-                  gimp_image_mask_clear (gimage);  /* Clear the selection */
+                  gimp_image_mask_clear (gimage, NULL);  /* Clear the selection */
 
                   gimp_image_add_channel (gimage, mask, 0);
                   gimp_channel_set_color (mask, &color);
@@ -108,7 +107,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
               if (gimage->qmask_inverted)
                 gimp_channel_invert (mask, TRUE);
 
-              undo_push_image_qmask (gimage);
+              gimp_image_undo_push_image_qmask (gimage, NULL);
 
               gimp_image_undo_group_end (gimage);
 
@@ -131,7 +130,7 @@ gimp_image_set_qmask_state (GimpImage *gimage,
                *  call the qmask_removed_callback() which will set
                *  the qmask_state to FALSE
                */
-              undo_push_image_qmask (gimage);
+              gimp_image_undo_push_image_qmask (gimage, NULL);
 
               if (gimage->qmask_inverted)
                 gimp_channel_invert (mask, TRUE);

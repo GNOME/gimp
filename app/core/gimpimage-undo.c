@@ -308,7 +308,13 @@ gimp_image_undo_free_space (GimpImage *gimage)
   max_undo_levels = 1024; /* FIXME */
   undo_size       = gimage->gimp->config->undo_size;
 
-  /*  keep at least undo_levels undo steps  */
+#if 0
+  g_print ("undo_steps: %d    undo_bytes: %d\n",
+           gimp_container_num_children (container),
+           gimp_object_get_memsize (GIMP_OBJECT (container)));
+#endif
+
+  /*  keep at least min_undo_levels undo steps  */
   if (gimp_container_num_children (container) <= min_undo_levels)
     return;
 
@@ -316,6 +322,12 @@ gimp_image_undo_free_space (GimpImage *gimage)
          (gimp_container_num_children (container) > max_undo_levels))
     {
       gimp_undo_stack_free_bottom (gimage->undo_stack, GIMP_UNDO_MODE_UNDO);
+
+#if 0
+      g_print ("freed one step: undo_steps: %d    undo_bytes: %d\n",
+               gimp_container_num_children (container),
+               gimp_object_get_memsize (GIMP_OBJECT (container)));
+#endif
 
       gimp_image_undo_event (gimage, UNDO_EXPIRED);
 

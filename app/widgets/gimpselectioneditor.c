@@ -345,7 +345,7 @@ gimp_selection_editor_none_clicked (GtkWidget           *widget,
 {
   if (editor->gimage)
     {
-      gimp_image_mask_clear (editor->gimage);
+      gimp_image_mask_clear (editor->gimage, NULL);
       gimp_image_flush (editor->gimage);
     }
 }

@@ -183,21 +183,21 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
 				GimpDisplay *gdisp)
 {
   GimpImageMapTool *image_map_tool;
+  GimpToolInfo     *tool_info;
   GimpDrawable     *drawable;
 
   image_map_tool = GIMP_IMAGE_MAP_TOOL (tool);
+
+  tool_info = tool->tool_info;
 
   /*  set gdisp so the dialog can be hidden on display destruction  */
   tool->gdisp = gdisp;
 
   if (! image_map_tool->shell)
     {
-      GimpToolInfo *tool_info;
-      GtkWidget    *shell;
-      GtkWidget    *vbox;
-      GtkWidget    *toggle;
-
-      tool_info = tool->tool_info;
+      GtkWidget *shell;
+      GtkWidget *vbox;
+      GtkWidget *toggle;
 
       image_map_tool->shell = shell =
         gimp_viewable_dialog_new (NULL,
@@ -251,7 +251,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
   gtk_widget_show (image_map_tool->shell);
 
   image_map_tool->drawable  = drawable;
-  image_map_tool->image_map = gimp_image_map_new (TRUE, drawable);
+  image_map_tool->image_map = gimp_image_map_new (TRUE, drawable,
+                                                  tool_info->blurb);
 
   g_signal_connect (image_map_tool->image_map, "flush",
                     G_CALLBACK (gimp_image_map_tool_flush),

@@ -30,8 +30,10 @@
 
 #include "core/core-enums.h"
 #include "core/gimpimage-guides.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
-#include "undo.h"
+
+#include "libgimp/gimpintl.h"
 
 static ProcRecord image_add_hguide_proc;
 static ProcRecord image_add_vguide_proc;
@@ -75,7 +77,7 @@ image_add_hguide_invoker (Gimp     *gimp,
       if (offset < gimage->height)
 	{
 	  guide = gimp_image_add_hguide (gimage);
-	  undo_push_image_guide (gimage, guide);
+	  gimp_image_undo_push_image_guide (gimage, _("Add Horizontal Guide"), guide);
 	  guide->position = offset;
 	  guide_ID = guide->guide_ID;
 	}
@@ -154,7 +156,7 @@ image_add_vguide_invoker (Gimp     *gimp,
       if (offset < gimage->width)
 	{
 	  guide = gimp_image_add_vguide (gimage);
-	  undo_push_image_guide (gimage, guide);
+	  gimp_image_undo_push_image_guide (gimage, _("Add Vertical Guide"), guide);
 	  guide->position = offset;
 	  guide_ID = guide->guide_ID;
 	}
@@ -228,25 +230,18 @@ image_delete_guide_invoker (Gimp     *gimp,
     {
       success = FALSE;
     
-      guides = gimage->guides;
-    
-      while (guides)
+      for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
-	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	      (((GimpGuide *) guides->data)->position >= 0))
+	  GimpGuide *g = (GimpGuide *) guides->data;
+    
+	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
-	      GList *tmp_next;
+	      gimp_image_undo_push_image_guide (gimage, _("Remove Guide"), g);
+	      gimp_image_delete_guide (gimage, g);
     
 	      success = TRUE;
-    
-	      tmp_next = guides->next;
-    
-	      undo_push_image_guide (gimage, ((GimpGuide *) guides->data));
-	      gimp_image_delete_guide (gimage, (GimpGuide *) guides->data);
-	      guides = tmp_next;
+	      break;
 	    }
-	  else
-	    guides = guides->next;
 	}
     }
 
@@ -293,6 +288,7 @@ image_find_next_guide_invoker (Gimp     *gimp,
   gint32 guide;
   gint32 next_guide = 0;
   GList *guides;
+  gboolean guide_found;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -302,47 +298,35 @@ image_find_next_guide_invoker (Gimp     *gimp,
 
   if (success)
     {
-      guides = gimage->guides;
+      success     = FALSE;
+      guide_found = FALSE;
     
-      if (guides != NULL)
+      for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
-	  if (guide == 0) /* init - Return first guide ID in list */
-	    {
-	      while (guides && (((GimpGuide *) guides->data)->position < 0))
-		guides = guides->next;
+	  GimpGuide *g = (GimpGuide *) guides->data;
     
-	      if (guides) /* didn't just come to end of list */
-		next_guide = ((GimpGuide *) guides->data)->guide_ID;
+	  if (g->position < 0)
+	    continue;
+    
+	  if (guide == 0)  /* init - Return first guide ID in list */
+	    {
+	      next_guide = g->guide_ID;
+    
+	      success = TRUE;
+	      break;
+	    }
+    
+	  if (! guide_found)
+	    {
+	      if (g->guide_ID == guide)
+		guide_found = TRUE;
 	    }
 	  else
 	    {
-	      success = FALSE;
-		  
-	      while (guides)
-		{
-		  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-		      (((GimpGuide *) guides->data)->position >= 0))
-		    {
-		      GList* tmplist;
+	      next_guide = g->guide_ID;
     
-		      success = TRUE;
-    
-		      tmplist = guides->next;
-			  
-		      while (tmplist && (((GimpGuide *) tmplist->data)->position < 0))
-			tmplist = tmplist->next;
-    
-		      if (tmplist)
-			next_guide = ((GimpGuide *) tmplist->data)->guide_ID;
-		      else
-			next_guide = 0;
-    
-		      break;
-		    }
-    
-		  guides = guides->next;
-		}
-    
+	      success = TRUE;
+	      break;
 	    }
 	}
     }
@@ -413,21 +397,19 @@ image_get_guide_orientation_invoker (Gimp     *gimp,
 
   if (success)
     {
-      guides = gimage->guides;
-    
       success = FALSE;
     
-      while (guides)
+      for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
-	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	      (((GimpGuide *) guides->data)->position >= 0))
+	  GimpGuide *g = (GimpGuide *) guides->data;
+    
+	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
-	      orientation = ((GimpGuide *) guides->data)->orientation;
+	      orientation = g->orientation;
+    
 	      success = TRUE;
 	      break;
 	    }
-    
-	  guides = guides->next;
 	}
     }
 
@@ -497,21 +479,19 @@ image_get_guide_position_invoker (Gimp     *gimp,
 
   if (success)
     {
-      guides = gimage->guides;
-    
       success = FALSE;
     
-      while (guides)
+      for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	{
-	  if ((((GimpGuide *) guides->data)->guide_ID == guide) &&
-	      (((GimpGuide *) guides->data)->position >= 0))
+	  GimpGuide *g = (GimpGuide *) guides->data;
+    
+	  if ((g->guide_ID == guide) && (g->position >= 0))
 	    {
-	      position = ((GimpGuide *) guides->data)->position;
+	      position = g->position;
+    
 	      success = TRUE;
 	      break;
 	    }
-    
-	  guides = guides->next;
 	} 
     }
 

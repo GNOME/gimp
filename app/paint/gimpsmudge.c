@@ -37,6 +37,8 @@
 #include "gimpsmudge.h"
 #include "gimpsmudgeoptions.h"
 
+#include "libgimp/gimpintl.h"
+
 
 static void       gimp_smudge_class_init (GimpSmudgeClass     *klass);
 static void       gimp_smudge_init       (GimpSmudge          *smudge);
@@ -72,7 +74,10 @@ void
 gimp_smudge_register (Gimp                      *gimp,
                       GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_SMUDGE, GIMP_TYPE_SMUDGE_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_SMUDGE,
+                GIMP_TYPE_SMUDGE_OPTIONS,
+                _("Smudge"));
 }
 
 GType

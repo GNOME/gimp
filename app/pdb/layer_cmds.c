@@ -40,7 +40,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "pdb_glue.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

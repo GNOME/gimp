@@ -33,6 +33,7 @@
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
 
+#include "libgimp/gimpintl.h"
 #include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord by_color_select_proc;
@@ -323,6 +324,7 @@ free_select_invoker (Gimp     *gimp,
 
   if (success)
     gimp_image_mask_select_polygon (gimage,
+				    _("Free Select"),
 				    num_segs,
 				    (GimpVector2 *) segs, 
 				    operation,

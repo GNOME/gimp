@@ -36,6 +36,8 @@
 #include "gimpdrawable-histogram.h"
 #include "gimpimage.h"
 
+#include "libgimp/gimpintl.h"
+
 
 void
 gimp_drawable_equalize (GimpDrawable *drawable,
@@ -80,7 +82,7 @@ gimp_drawable_equalize (GimpDrawable *drawable,
   gimp_lut_free (lut);
   gimp_histogram_free (hist);
 
-  gimp_drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE, _("Equalize"));
 
   gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

@@ -74,7 +74,7 @@ HELP
 				      &srcPR, &destPR);
 
       gimp_lut_free (lut);
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Brightness-Contrast"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -157,7 +157,7 @@ HELP
 				      &srcPR, &destPR);
 
       gimp_lut_free (lut);
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Levels"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -207,7 +207,7 @@ HELP
 				      &srcPR, &destPR);
 
       gimp_lut_free (lut);
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Posterize"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -365,7 +365,7 @@ HELP
 				      &srcPR, &destPR);
 
       gimp_lut_free (lut);
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -431,7 +431,7 @@ HELP
 				      &srcPR, &destPR);
 
       gimp_lut_free (lut);
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Curves"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -505,7 +505,7 @@ HELP
           color_balance (&srcPR, &destPR, &cb);
         }
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Color Balance"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -677,7 +677,7 @@ HELP
           hue_saturation (&srcPR, &destPR, &hs);
         }
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Hue-Saturation"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -728,7 +728,7 @@ HELP
       pixel_regions_process_parallel ((p_func) threshold_2, &tr, 2,
 				      &srcPR, &destPR);
 
-      gimp_drawable_merge_shadow (drawable, TRUE);
+      gimp_drawable_merge_shadow (drawable, TRUE, _("Threshold"));
       gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
     }
 }
@@ -738,7 +738,8 @@ CODE
 
 @headers = qw("base/gimphistogram.h" "base/gimplut.h" "base/lut-funcs.h"
 	      "base/pixel-region.h" "base/pixel-processor.h"
-              "core/gimpdrawable.h" "core/gimpimage.h");
+              "core/gimpdrawable.h" "core/gimpimage.h"
+              "libgimp/gimpintl.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert
 	    curves_spline curves_explicit color_balance histogram

@@ -29,6 +29,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
@@ -43,8 +44,6 @@
 #include "gimpeditselectiontool.h"
 #include "gimpmoveoptions.h"
 #include "gimpmovetool.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -245,7 +244,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
       if (gdisp->draw_guides &&
 	  (guide = gimp_image_find_guide (gdisp->gimage, coords->x, coords->y)))
 	{
-	  undo_push_image_guide (gdisp->gimage, guide);
+	  gimp_image_undo_push_image_guide (gdisp->gimage,
+                                            _("Guide"),
+                                            guide);
 
 	  gimp_image_update_guide (gdisp->gimage, guide);
 	  gimp_image_remove_guide (gdisp->gimage, guide);
@@ -640,7 +641,9 @@ gimp_move_tool_start_guide (GimpTool            *tool,
 
   move->disp = gdisp;
 
-  undo_push_image_guide (gdisp->gimage, move->guide);
+  gimp_image_undo_push_image_guide (gdisp->gimage,
+                                    _("Add Guide"),
+                                    move->guide);
 
   gimp_tool_set_cursor (tool, gdisp,
                         GDK_HAND2,

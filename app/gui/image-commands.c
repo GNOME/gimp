@@ -45,8 +45,6 @@
 #include "image-commands.h"
 #include "resize-dialog.h"
 
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

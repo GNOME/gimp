@@ -39,13 +39,12 @@
 #include "gimpimage.h"
 #include "gimpimage-convert.h"
 #include "gimpimage-undo.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 #include "gimpparasitelist.h"
-
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -608,7 +607,8 @@ gimp_layer_add_mask (GimpLayer     *layer,
 			GIMP_DRAWABLE (layer)->height);
 
   if (push_undo)
-    undo_push_layer_mask_add (gimage, layer, mask);
+    gimp_image_undo_push_layer_mask_add (gimage, _("Add Mask to Layer"),
+                                         layer, mask);
 
   g_signal_emit (layer, layer_signals[MASK_CHANGED], 0);
 
@@ -791,7 +791,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
       gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_LAYER_APPLY_MASK,
                                    _("Apply Layer Mask"));
 
-      undo_push_layer_mask_remove (gimage, layer, layer->mask);
+      gimp_image_undo_push_layer_mask_remove (gimage, NULL, layer, layer->mask);
     }
 
   /*  check if applying the mask changes the projection  */
@@ -807,7 +807,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (mode == GIMP_MASK_APPLY)
     {
       if (push_undo)
-        gimp_drawable_push_undo (GIMP_DRAWABLE (layer),
+        gimp_drawable_push_undo (GIMP_DRAWABLE (layer), NULL,
                                  0, 0,
                                  GIMP_DRAWABLE (layer)->width,
                                  GIMP_DRAWABLE (layer)->height,
@@ -833,9 +833,7 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   layer->mask = NULL;
 
   if (push_undo)
-    {
-      gimp_image_undo_group_end (gimage);
-    }
+    gimp_image_undo_group_end (gimage);
 
   /*  If applying actually changed the view  */
   if (view_changed)
@@ -861,7 +859,9 @@ gimp_layer_translate (GimpLayer *layer,
   g_return_if_fail (GIMP_IS_LAYER (layer));
 
   /*  the undo call goes here  */
-  undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)), layer);
+  gimp_image_undo_push_layer_displace (gimp_item_get_image (GIMP_ITEM (layer)),
+                                       _("Move Layer"),
+                                       layer);
 
   /*  update the affected region  */
   gimp_drawable_update (GIMP_DRAWABLE (layer),
@@ -928,7 +928,8 @@ gimp_layer_add_alpha (GimpLayer *layer)
   add_alpha_region (&srcPR, &destPR);
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
+  gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)),
+                                  _("Add Alpha Channel"), layer);
 
   /*  Configure the new layer  */
   GIMP_DRAWABLE (layer)->tiles         = new_tiles;
@@ -992,7 +993,9 @@ gimp_layer_scale_lowlevel (GimpLayer             *layer,
     }
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
+  gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)),
+                                  _("Scale Layer"),
+                                  layer);
 
   /*  Configure the new layer  */
 
@@ -1283,7 +1286,9 @@ gimp_layer_resize (GimpLayer *layer,
     copy_region (&srcPR, &destPR);
 
   /*  Push the layer on the undo stack  */
-  undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)), layer);
+  gimp_image_undo_push_layer_mod (gimp_item_get_image (GIMP_ITEM (layer)),
+                                  _("Resize Layer"),
+                                  layer);
 
   /*  Configure the new layer  */
   GIMP_DRAWABLE (layer)->tiles = new_tiles;

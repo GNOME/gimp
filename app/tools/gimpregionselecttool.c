@@ -271,7 +271,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 	    floating_sel_anchor (gimp_image_floating_sel (gdisp->gimage));
 	  /*  Otherwise, clear the selection mask  */
 	  else
-	    gimp_image_mask_clear (gdisp->gimage);
+	    gimp_image_mask_clear (gdisp->gimage, NULL);
 
 	  gimp_image_flush (gdisp->gimage);
 	  return;
@@ -292,6 +292,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
         }
 
       gimp_image_mask_select_channel (gdisp->gimage,
+                                      tool->tool_info->blurb,
                                       fuzzy_sel->fuzzy_mask,
                                       off_x,
                                       off_y,

@@ -83,7 +83,10 @@ void
 gimp_clone_register (Gimp                      *gimp,
                      GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_CLONE, GIMP_TYPE_CLONE_OPTIONS);
+  (* callback) (gimp,
+                GIMP_TYPE_CLONE,
+                GIMP_TYPE_CLONE_OPTIONS,
+                _("Clone"));
 }
 
 GType

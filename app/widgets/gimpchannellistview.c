@@ -325,6 +325,7 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
       gimage = gimp_item_get_image (GIMP_ITEM (viewable));
 
       gimp_image_mask_select_channel (gimage,
+                                      _("Channel to Selection"),
                                       GIMP_CHANNEL (viewable),
                                       0, 0,
                                       operation,
