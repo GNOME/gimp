@@ -13,20 +13,20 @@
 	* app/parasitelist.[ch]: s/ParasiteList/GimpParasiteList/
 	s/parasite_list_*/gimp_patasite_list_*/
 
-	* app/widgets/gimpdatafactoryview.c: don't save the data in
-	gimp_data-factory_data_free().
+	* app/core/gimpdatafactory.c: don't save the data in
+	gimp_data_factory_data_free().
 
 	* app/app_procs.c
 	* app/gimprc.c
 	* app/undo.c
 	* app/core/gimpchannel.c
-	* app/core/gimpdatafactory.c
 	* app/core/gimpdrawable.[ch]
 	* app/core/gimpimage-duplicate.c
 	* app/core/gimpimage.[ch]
 	* app/core/gimplayer.c
 	* app/pdb/brushes_cmds.c
 	* app/pdb/parasite_cmds.c
+	* app/widgets/gimpdatafactoryview.c
 	* app/xcf/xcf-save.c
 	* tools/pdbgen/pdb/brushes.pdb
 	* tools/pdbgen/pdb/parasite.pdb: changed accordingly.
