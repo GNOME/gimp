@@ -1,3 +1,10 @@
+2002-05-15  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/tool-options.png:
+	* themes/Default/images/preferences/image-windows.png:
+	* themes/Default/images/preferences/display.png: 
+	  unique GIMP icons
+
 2002-05-15  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdocumentlist.c
