@@ -1353,7 +1353,7 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 {
   int i, j;
   int x0, x1, x2;
-  int val, last;
+  float val, last;
   float a_sqr, b_sqr, aob_sqr;
   float w_sqr, h_sqr;
   float y_sqr;
@@ -1421,9 +1421,9 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		    dist = -1.0;
 
 		  if (dist < -0.5)
-		    val = 255;
+		    val = 1.0;
 		  else if (dist < 0.5)
-		    val = (int)(255*(1 - (dist + 0.5)));
+		    val = 1 - (dist + 0.5);
 		  else
 		    val = 0;
 
@@ -1432,7 +1432,6 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 		      switch (op)
 			{
 			case ADD: case REPLACE:
-#define FIXME
 			  channel_add_segment (mask, x0, i, j - x0, last);
 			  break;
 			case SUB:
@@ -1453,7 +1452,6 @@ channel_combine_ellipse (Channel *mask, int op, int x, int y, int w, int h,
 	      if (last)
 		{
 		  if (op == ADD || op == REPLACE)
-#define FIXME
 		    channel_add_segment (mask, x0, i, j - x0, last);
 		  else if (op == SUB)
 		    channel_sub_segment (mask, x0, i, j - x0, last);

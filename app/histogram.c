@@ -49,8 +49,8 @@ typedef struct _HistogramPrivate
   void *                  user_data;
   int                     channel;
   HistogramValues         values;
-  int                     start;
-  int                     end;
+  int                     start;    /* bin to start with */
+  int                     end;      /* bin to end with */
   int                     bins;
 } HistogramPrivate;
 
@@ -58,9 +58,6 @@ typedef struct _HistogramPrivate
 /**************************/
 /*  Function definitions  */
 
-/*
- *  TBD - WRB -make work with float data
-*/
 static void
 histogram_draw (Histogram *histogram,
 		        int        update)
@@ -103,6 +100,9 @@ histogram_draw (Histogram *histogram,
       for (i = 0; i < histogram_p->bins; i++)
 	{
 	  x = (width * i) / histogram_p->bins + 1;
+#if 0
+	  printf("drawing bin: %d\n", x);
+#endif
 	  if (histogram_p->values[histogram_p->channel][i])
 	    y = (int) ((height * log (histogram_p->values[histogram_p->channel][i])) / max);
 	  else
@@ -125,9 +125,6 @@ histogram_draw (Histogram *histogram,
     }
 }
 
-/*
- *  TBD - WRB -make work with float data
-*/
 static gint
 histogram_events (GtkWidget *widget,
 		  GdkEvent  *event)
@@ -334,6 +331,14 @@ histogram_channel (Histogram *histogram,
 				   histogram_p->bins,
 				   histogram_p->values,
 				   histogram_p->user_data);
+}
+
+gint
+histogram_bins (Histogram *histogram)
+{
+  HistogramPrivate *histogram_p;
+  histogram_p = (HistogramPrivate *) histogram->private_part;
+  return histogram_p->bins;
 }
 
 HistogramValues *

@@ -23,6 +23,7 @@
 #include "brightness_contrast.h"
 #include "canvas.h"
 #include "drawable.h"
+#include "float16.h"
 #include "general.h"
 #include "gimage_mask.h"
 #include "gdisplay.h"
@@ -120,6 +121,9 @@ static void brightness_contrast_u16 (PixelArea *, PixelArea *, void *);
 static void brightness_contrast_init_transfers_float(void *);
 static void brightness_contrast_float (PixelArea *, PixelArea *, void *);
 
+static void brightness_contrast_init_transfers_float16(void *);
+static void brightness_contrast_float16 (PixelArea *, PixelArea *, void *);
+
 static void
 brightness_contrast_funcs (Tag drawable_tag)
 {
@@ -136,6 +140,10 @@ brightness_contrast_funcs (Tag drawable_tag)
   case PRECISION_FLOAT:
     brightness_contrast = brightness_contrast_float;
     brightness_contrast_init_transfers = brightness_contrast_init_transfers_float;
+    break;
+  case PRECISION_FLOAT16:
+    brightness_contrast = brightness_contrast_float16;
+    brightness_contrast_init_transfers = brightness_contrast_init_transfers_float16;
     break;
   default:
     brightness_contrast = NULL;
@@ -236,14 +244,24 @@ brightness_contrast_init_transfers_u16 (void * user_data)
 static void 
 brightness_contrast_init_transfers_float (void * user_data)
 {
-  g_warning ("brightness_contrast_init_transfers_float not implemented yet");
+}
+
+static void 
+brightness_contrast_init_transfers_float16 (void * user_data)
+{
 }
 
 static void 
 brightness_contrast_free_transfers (void)
 {
-  g_free (pixelrow_data (&brightness_lut));
-  g_free (pixelrow_data (&contrast_lut));
+  guchar * brightness_lut_data = pixelrow_data (&brightness_lut);
+  guchar * contrast_lut_data = pixelrow_data (&brightness_lut);
+
+  if (brightness_lut_data) 
+    g_free (brightness_lut_data);
+  if (contrast_lut_data)
+    g_free (contrast_lut_data);
+
   pixelrow_init (&brightness_lut, tag_null(), NULL, 0);
   pixelrow_init (&contrast_lut, tag_null(), NULL, 0);
 }
@@ -347,7 +365,97 @@ brightness_contrast_float (PixelArea *src_area,
 		        PixelArea *dest_area,
 		        void        *user_data)
 {
- g_warning ("brightness_contrast_float not implemented yet\n");
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  guchar *src, *dest;
+  gfloat *s, *d;
+  int has_alpha;
+  int alpha;
+  int w, h, b;
+  BrightnessContrastDialog *bcd = (BrightnessContrastDialog *) user_data;
+  gdouble brightness = (gfloat)bcd->brightness;
+  gdouble contrast = (gfloat)bcd->contrast;
+
+  src = (guchar *)pixelarea_data (src_area);
+  dest = (guchar *)pixelarea_data (dest_area);
+  
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
+  h = pixelarea_height (src_area);
+  while (h--)
+    {
+      s = (gfloat*)src;
+      d = (gfloat*)dest;
+      w = pixelarea_width (src_area);
+      while (w--)
+	{
+	  for (b = 0; b < alpha; b++)
+	    d[b] = contrast_func (brightness_func(s[b], brightness), contrast);
+
+	  if (has_alpha)
+	    d[alpha] = s[alpha];
+
+	  s += src_num_channels;
+	  d += dest_num_channels; 
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
+    }
+}
+
+static void
+brightness_contrast_float16 (PixelArea *src_area,
+		        PixelArea *dest_area,
+		        void        *user_data)
+{
+  Tag src_tag = pixelarea_tag (src_area);
+  Tag dest_tag = pixelarea_tag (dest_area);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  guchar *src, *dest;
+  guint16 *s, *d;
+  int has_alpha;
+  int alpha;
+  int w, h, b;
+  BrightnessContrastDialog *bcd = (BrightnessContrastDialog *) user_data;
+  gdouble brightness = (gfloat)bcd->brightness;
+  gdouble contrast = (gfloat)bcd->contrast;
+  ShortsFloat u;
+  gfloat sb, db;
+
+  src = (guchar *)pixelarea_data (src_area);
+  dest = (guchar *)pixelarea_data (dest_area);
+  
+  has_alpha = tag_alpha (src_tag) == ALPHA_YES ? TRUE: FALSE;
+  alpha = has_alpha ? src_num_channels - 1 : src_num_channels;
+  h = pixelarea_height (src_area);
+  while (h--)
+    {
+      s = (guint16*)src;
+      d = (guint16*)dest;
+      w = pixelarea_width (src_area);
+      while (w--)
+	{
+	  for (b = 0; b < alpha; b++)
+	  {
+	    sb = FLT (s[b], u);
+	    db = contrast_func (brightness_func(sb, brightness), contrast);
+	    d[b] = FLT16 (db, u);
+	  }
+
+	  if (has_alpha)
+	    d[alpha] = s[alpha];
+
+	  s += src_num_channels;
+	  d += dest_num_channels; 
+	}
+
+      src += pixelarea_rowstride (src_area);
+      dest += pixelarea_rowstride (dest_area);
+    }
 }
 
 static void

@@ -52,6 +52,7 @@ void             histogram_update  (Histogram *, GimpDrawable *, HistogramInfoFu
 void             histogram_range   (Histogram *, int, int);
 void             histogram_channel (Histogram *, int);
 HistogramValues *histogram_values  (Histogram *);
+gint             histogram_bins (Histogram *histogram);
 
 #endif /* __HISTOGRAM_H__ */
 

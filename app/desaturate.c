@@ -22,6 +22,7 @@
 #include "canvas.h"
 #include "drawable.h"
 #include "desaturate.h"
+#include "float16.h"
 #include "interface.h"
 #include "gimage.h"
 #include "pixelarea.h"
@@ -35,6 +36,7 @@ static DesaturateRowFunc desaturate_row_func (Tag row_tag);
 static void desaturate_row_u8 (PixelRow *, PixelRow *);
 static void desaturate_row_u16 (PixelRow *, PixelRow *);
 static void desaturate_row_float (PixelRow *, PixelRow *);
+static void desaturate_row_float16 (PixelRow *, PixelRow *);
 
 
 /*  Inverter  */
@@ -50,6 +52,8 @@ desaturate_row_func (Tag row_tag)
     return desaturate_row_u16; 
   case PRECISION_FLOAT:
     return desaturate_row_float; 
+  case PRECISION_FLOAT16:
+    return desaturate_row_float16; 
   default:
     return NULL;
   } 
@@ -189,6 +193,49 @@ desaturate_row_u16(
     }
 }
 
+static void 
+desaturate_row_float16( 
+		   PixelRow *src_row,
+		   PixelRow *dest_row
+		) 
+{
+  Tag src_tag = pixelrow_tag (src_row);
+  Tag dest_tag = pixelrow_tag (dest_row);
+  gint src_num_channels = tag_num_channels (src_tag);
+  gint dest_num_channels = tag_num_channels (dest_tag);
+  gint has_alpha = (tag_alpha (src_tag) == ALPHA_YES)? TRUE: FALSE; 
+  guint16 *s = (guint16*)pixelrow_data (src_row);
+  guint16 *d = (guint16*)pixelrow_data (dest_row);
+  int w;
+  int lightness, min, max;
+  gfloat r, g, b, l;
+  ShortsFloat u;
+  
+  w = pixelrow_width (src_row);
+  while (w--)
+    {
+      r = FLT (s[RED_PIX], u);
+      g = FLT (s[GREEN_PIX], u);
+      b = FLT (s[BLUE_PIX], u);
+      max = MAXIMUM (r, g);
+      max = MAXIMUM (max, b);
+      min = MINIMUM (r, g);
+      min = MINIMUM (min, b);
+
+      lightness = (max + min) / 2;
+
+      l = FLT16 (lightness, u);
+      d[RED_PIX] = l;
+      d[GREEN_PIX] = l;
+      d[BLUE_PIX] = l;
+
+      if (has_alpha)
+	d[ALPHA_PIX] = s[ALPHA_PIX];
+
+      d += dest_num_channels;
+      s += src_num_channels;
+    }
+}
 
 static void 
 desaturate_row_float( 
