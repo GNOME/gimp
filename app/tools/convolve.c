@@ -39,7 +39,7 @@ typedef enum
 } ConvolveType;
 
 /*  forward function declarations  */
-static void         calculate_matrix     (ConvolveType, double);
+static void         calculate_matrix     (ConvolveType, double, double);
 static void         integer_matrix       (float *, int *, int);
 static void         copy_matrix          (float *, float *, int);
 static int          sum_matrix           (int *, int);
@@ -99,9 +99,6 @@ convolve_scale_update (GtkAdjustment *adjustment,
 		       double        *scale_val)
 {
   *scale_val = adjustment->value;
-
-  /*  recalculate the matrix  */
-  calculate_matrix (convolve_options->type, convolve_options->pressure);
 }
 
 static void
@@ -109,8 +106,6 @@ convolve_type_callback (GtkWidget *w,
 			gpointer  client_data)
 {
   convolve_options->type = (ConvolveType) client_data;
-  /*  recalculate the matrix  */
-  calculate_matrix (convolve_options->type, convolve_options->pressure);
 }
 
 static ConvolveOptions *
@@ -194,16 +189,8 @@ convolve_paint_func (PaintCore *paint_core,
 {
   switch (state)
     {
-    case INIT_PAINT:
-      /*  calculate the matrix  */
-      calculate_matrix (convolve_options->type, convolve_options->pressure);
-      break;
-
     case MOTION_PAINT:
       convolve_motion (paint_core, drawable);
-      break;
-
-    case FINISH_PAINT:
       break;
     }
 
@@ -263,6 +250,9 @@ convolve_motion (PaintCore *paint_core,
   destPR.h = area->height;
   destPR.rowstride = area->width * destPR.bytes;
   destPR.data = temp_buf_data (area);
+
+  calculate_matrix (convolve_options->type, convolve_options->pressure,
+		    paint_core->curpressure);
 
   /*  convolve the source image with the convolve mask  */
   if (srcPR.w >= matrix_size && srcPR.h >= matrix_size)
@@ -337,12 +327,13 @@ convolve_motion (PaintCore *paint_core,
 
 static void
 calculate_matrix (ConvolveType type,
-		  double       pressure)
+		  double       pressure,
+		  double       curpressure)
 {
   float percent;
 
   /*  find percent of tool pressure  */
-  percent = pressure / 100.0;
+  percent = (pressure / 100.0) * curpressure;
 
   /*  get the appropriate convolution matrix and size and divisor  */
   switch (type)
@@ -541,9 +532,6 @@ convolve_invoker (Argument *args)
 
   if (success)
     {
-      /*  calculate the convolution kernel  */
-      calculate_matrix (type, pressure);
-
       /*  set the paint core's paint func  */
       non_gui_paint_core.paint_func = convolve_non_gui_paint_func;
 
