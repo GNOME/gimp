@@ -1,5 +1,10 @@
 2003-09-12  Simon Budig  <simon@gimp.org>
 
+	* app/vectors/gimpvectors-export.c: Don't lose the last
+	segment of closed paths when exporting...
+
+2003-09-12  Simon Budig  <simon@gimp.org>
+
 	* app/vectors/gimpvectors-export.c: Implemented more useful
 	SVG export.
 

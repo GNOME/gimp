@@ -172,9 +172,10 @@ gimp_vectors_path_data (const GimpVectors *vectors)
               g_string_append_printf (str, "\n           C");
             }
 
-          for (i=2; i < control_points->len - 1; i++)
+          for (i=2; i < (control_points->len + (closed ? 2 : - 1)); i++)
             {
-              anchor = &g_array_index (control_points, GimpAnchor, i);
+              anchor = &g_array_index (control_points, GimpAnchor,
+                                       i % control_points->len);
               g_ascii_formatd (x_string, G_ASCII_DTOSTR_BUF_SIZE,
                                "%.2f", anchor->position.x);
               g_ascii_formatd (y_string, G_ASCII_DTOSTR_BUF_SIZE,
