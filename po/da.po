@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-09-27 12:25-0700\n"
-"PO-Revision-Date: 2000-08-19 23:31+02:00\n"
+"PO-Revision-Date: 2000-09-27 23:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -1604,7 +1604,7 @@ msgstr "Lagtype %d ikke understøttet."
 
 #: app/gimphelp.c:190
 msgid "Could not find GIMP Help Browser"
-msgstr ""
+msgstr "Kunne ikke finde hjælpelæser for GIMP"
 
 #: app/gimphelp.c:192
 msgid ""
@@ -1618,7 +1618,7 @@ msgstr ""
 
 #: app/gimphelp.c:195
 msgid "Use Netscape instead"
-msgstr ""
+msgstr "Brug Netscape istedet"
 
 #: app/gimpimage.c:2322
 msgid "Layer cannot be raised any further"
@@ -2701,7 +2701,7 @@ msgstr "Behold gennemsigtighed"
 
 #: app/layers_dialog.c:405
 msgid "Keep Transparency"
-msgstr "Behold gennemsiktighed"
+msgstr "Behold gennemsigtighed"
 
 #: app/layers_dialog.c:1907
 msgid "Empty Layer Copy"
@@ -2857,99 +2857,90 @@ msgid "Zoom out"
 msgstr "Zoom ud"
 
 #: app/main.c:285
-#, fuzzy
 msgid ""
 "\n"
 "Invalid option.\n"
-msgstr "Gyldige flag:\n"
+msgstr ""
+"\n"
+"Ugyldigt flag.\n"
 
 #: app/main.c:301
 msgid "GIMP version"
 msgstr "GIMP version"
 
 #: app/main.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Usage: %s [option ... ] [file ... ]\n"
 "\n"
-msgstr "Brug: %s [flag ...] [filer ...]\n"
+msgstr ""
+"\n"
+"Brug: %s [flag ... ] [fil ... ]\n"
+"\n"
 
 #: app/main.c:306
-#, fuzzy
 msgid "Options:\n"
-msgstr "Indstillinger for gemning"
+msgstr "Alternativer:\n"
 
 #: app/main.c:307
-#, fuzzy
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr "  -b --batch <kommandoer>  Kør i batch-tilstand.\n"
+msgstr "  -b, --batch <kommandoer>   Kør i batch-modus.\n"
 
 #: app/main.c:308
-#, fuzzy
 msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  --console-messages       Vis advarsler i konsollen istedetfor i en "
+"  -c, --console-messages   Vis advarsler på konsollen i stedet for i en "
 "dialogboks.\n"
 
 #: app/main.c:309
-#, fuzzy
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
 msgstr ""
-"  --no-data                Indlæs ikke mønstre, gradienter, paletter og "
-"pensler.\n"
+"  -d, --no-                indlæs ikke pensler, gradienter, paletter, "
+"mønstre.\n"
 
 #: app/main.c:310
-#, fuzzy
 msgid "  -i, --no-interface       Run without a user interface.\n"
-msgstr "  -n --no-interface        Kør uden brugergrænseflade.\n"
+msgstr "  -i, --no-interface      Kør uden brugergrænsesnit.\n"
 
 #: app/main.c:311
-#, fuzzy
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g --gimprc <gimprc>     Brug en alternativ gimprc fil.\n"
+msgstr "  -g, --gimprc <gimprc>    Brug en alternativ gimprc fil.\n"
 
 #: app/main.c:312
-#, fuzzy
 msgid "  -h, --help               Output this help.\n"
-msgstr "  -h --help                Vis denne hjælpetekst.\n"
+msgstr "  -h, --help               Udskriv denne hjælpetekst.\n"
 
 #: app/main.c:313
-#, fuzzy
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r --restore-session     Prøv at gendanne en gemt session.\n"
+msgstr "  -r, --restore-session    Prøv at genoprette en gemt session.\n"
 
 #: app/main.c:314
-#, fuzzy
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  --no-splash              Vis ikke opstartsvinduet.\n"
+msgstr "  -s, --no-splash          Vis ikke opstartsvinduet.\n"
 
 #: app/main.c:315
-#, fuzzy
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
-msgstr "  --no-splash-image        Vis ikke billede i opstartsvinduet.\n"
+msgstr "  -S, --no-splash-image    Vis ikke billede i opstartsvinduet.\n"
 
 #: app/main.c:316
-#, fuzzy
 msgid "  -v, --version            Output version information.\n"
-msgstr "  -v --version             Vis versionsinformation.\n"
+msgstr "  -v, --version            Udskriv versionsinformation.\n"
 
 #: app/main.c:317
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Vis meddelelser under opstart.\n"
 
 #: app/main.c:318
-#, fuzzy
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
 msgstr ""
-"  --no-shm            Brug ikke delt hukommelse mellem GIMP og dens "
-"indstik.\n"
+"  --no-shm             Brug ikke delt hukommelse mellem GIMP og dens indstik.\n"
 
 #: app/main.c:319
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
@@ -2957,11 +2948,10 @@ msgstr ""
 "  --no-xshm                Brug ikke X-udvidelsen for delt hukommelse.\n"
 
 #: app/main.c:320
-#, fuzzy
 msgid ""
 "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
-"  --debug-handlers         Aktivér aflusningssignalbehandling for "
+"  --debug-handlers         Slå fejlsøgnings-signalhåndterere til for "
 "ikke-fatale signaler.\n"
 
 #: app/main.c:321
@@ -2973,11 +2963,12 @@ msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Brug en alternativ system gimprc fil.\n"
 
 #: app/main.c:324
-#, fuzzy
 msgid ""
 "                           Debugging mode for fatal signals.\n"
 "\n"
-msgstr "                            Aflusningsmodus for fatale signaler.\n"
+msgstr ""
+"                           Fejlsøgningsmodus for fatale signaler.\n"
+"\n"
 
 #: app/main.c:341
 msgid "(This console window will close in ten seconds)\n"
