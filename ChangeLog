@@ -1,3 +1,11 @@
+2004-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptooloptionseditor.[ch]: added the scrolled
+	window to the GimpToolOptionsEditor struct.
+
+	(gimp_tool_options_editor_tool_changed): set the active tool's
+	help ID on the scrolled window. Fixes bug #132969.
+
 2004-01-30  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c: map the Home button to

@@ -177,7 +177,7 @@ gimp_tool_options_editor_init (GimpToolOptionsEditor *editor)
                             editor);
   g_free (str);
 
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  editor->scrolled_window = scrolled_win = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
@@ -498,6 +498,9 @@ gimp_tool_options_editor_tool_changed (GimpContext           *context,
       gtk_widget_show (options_gui);
 
       editor->visible_tool_options = tool_info->tool_options;
+
+      gimp_help_set_help_data (editor->scrolled_window, NULL,
+                               tool_info->help_id);
     }
   else
     {

@@ -42,6 +42,7 @@ struct _GimpToolOptionsEditor
 
   Gimp            *gimp;
 
+  GtkWidget       *scrolled_window;
   GtkWidget       *options_vbox;
 
   GtkWidget       *save_button;
