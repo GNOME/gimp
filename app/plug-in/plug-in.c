@@ -661,6 +661,14 @@ plug_in_recv_message (GIOChannel   *channel,
 
   plug_in = (PlugIn *) data;
 
+#ifdef G_OS_WIN32
+  /* Workaround for GLib bug #137968: sometimes we are called for no
+   * reason...
+   */
+  if (cond == 0)
+    return TRUE;
+#endif
+
   if (plug_in->my_read == NULL)
     return TRUE;
 

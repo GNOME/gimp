@@ -1,3 +1,8 @@
+2004-03-22  Tor Lillqvist  <tml@iki.fi>
+
+	* app/plug-in/plug-in.c (plug_in_recv_message): Win32-only
+	workaround for bug #137968.
+
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.c: keep the text editor open as long as
