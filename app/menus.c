@@ -1686,7 +1686,6 @@ menu_translate (const gchar *path,
   GtkItemFactory *item_factory = NULL;
   gchar *retval;
   gchar *factory;
-  gchar *fullpath;
   gchar *translation;
   gchar *domain = NULL;
   gchar *complete = NULL;
@@ -1711,7 +1710,8 @@ menu_translate (const gchar *path,
 
   if (domain)   /* use the plugin textdomain */
     {
-      fullpath = g_strconcat (factory, path, NULL);
+      g_free (menupath);
+      menupath = g_strconcat (factory, path, NULL);
       complete = gtk_object_get_data (GTK_OBJECT (item_factory), "complete");
 
       if (complete)
@@ -1723,7 +1723,7 @@ menu_translate (const gchar *path,
 	  complete = g_strconcat (factory, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
-	  while (*complete && *translation && strcmp (complete, fullpath))
+	  while (*complete && *translation && strcmp (complete, menupath))
 	    {
 	      p = strrchr (complete, '/');
 	      t = strrchr (translation, '/');
@@ -1735,10 +1735,12 @@ menu_translate (const gchar *path,
 	      else
 		break;
 	    }
+
+	  g_free (complete);
 	}
       else
 	{
-	  translation = dgettext (domain, fullpath);
+	  translation = dgettext (domain, menupath);
 	}
 
       /* 
@@ -1747,10 +1749,16 @@ menu_translate (const gchar *path,
       if (strncmp (factory, translation, strlen (factory)) == 0)
 	{
 	  retval = translation + strlen (factory);
+	  if (complete)
+	    {
+	      g_free (menupath);
+	      menupath = translation;
+	    }
 	}
       else
 	{
-	  g_warning ("bad translation for menupath: %s (%s)", fullpath, translation);
+	  g_warning ("bad translation for menupath: %s", menupath);
+	  retval = menupath + strlen (factory);
 	  if (complete)
 	    g_free (translation);
 	}

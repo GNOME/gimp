@@ -1,7 +1,6 @@
 Wed Mar  8 23:37:38 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* app/menus.c: ooops, my last commit broke LANG=C
-	This is a quick fix and leaks memory. I'm working on a proper fix.
+	* app/menus.c: Oops, my last commit broke LANG=C. This is now fixed.
 
 Wed Mar  8 21:52:51 CET 2000  Sven Neumann <sven@gimp.org>
 
