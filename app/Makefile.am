@@ -35,21 +35,7 @@ scriptdata =
 
 bin_PROGRAMS = gimp-1.3
 
-##
-## stuff which is about to be replaced by new subsystems
-##
-bye_sources = \
-	ops_buttons.c		\
-	ops_buttons.h		\
-	path.c			\
-	path.h			\
-	pathP.h			\
-	path_transform.h
-
-##
-## stuff
-##
-stuff_sources = \
+gimp_1_3_SOURCES = \
 	appenv.h		\
 	app_procs.c		\
 	app_procs.h		\
@@ -61,10 +47,6 @@ stuff_sources = \
 	gimp-intl.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h
-
-gimp_1_3_SOURCES = \
-	$(bye_sources)		\
-	$(stuff_sources)
 
 EXTRA_DIST = \
 	makefile.msc			\
@@ -95,6 +77,7 @@ INCLUDES = \
 
 gimp_1_3_LDADD = \
 	$(gimp_exp)							\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	config/libappconfig.a						\
 	gui/libappgui.a							\
 	display/libappdisplay.a						\
@@ -114,7 +97,6 @@ gimp_1_3_LDADD = \
 	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
 	$(PANGOFT2_LIBS)						\
 	$(LIBART_LIBS)							\

@@ -42,8 +42,6 @@
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 
-#include "path.h"
-
 #include "gimp-intl.h"
 
 
@@ -61,7 +59,6 @@ gimp_image_duplicate (GimpImage *gimage)
   GimpDrawable     *new_floating_sel_drawable = NULL;
   GimpDrawable     *floating_sel_drawable     = NULL;
   GimpParasiteList *parasites;
-  PathList         *paths;
   gint              count;
 
   g_return_val_if_fail (gimage != NULL, NULL);
@@ -220,26 +217,6 @@ gimp_image_duplicate (GimpImage *gimage)
     {
       g_object_unref (new_gimage->parasites);
       new_gimage->parasites = gimp_parasite_list_copy (parasites);
-    }
-
-  /* Copy paths */
-  paths = gimp_image_get_paths (gimage);
-  if (paths)
-    {
-      GSList   *plist     = NULL;
-      GSList   *new_plist = NULL;
-      Path     *path;
-      PathList *new_paths;
-      
-      for (plist = paths->bz_paths; plist; plist = plist->next)
-	{
-	  path = plist->data;
-	  new_plist = g_slist_append (new_plist, path_copy (new_gimage, path));
-	}
-      
-      new_paths = path_list_new (new_gimage,
-                                 paths->last_selected_row, new_plist);
-      gimp_image_set_paths (new_gimage, new_paths);
     }
 
   gimp_image_undo_enable (new_gimage);

@@ -27,7 +27,6 @@
 #include "tool_manager.h"
 
 #include "gimpairbrushtool.h"
-#include "gimpbezierselecttool.h"
 #include "gimpblendtool.h"
 #include "gimpbrightnesscontrasttool.h"
 #include "gimpbucketfilltool.h"
@@ -119,7 +118,6 @@ tools_init (Gimp *gimp)
 
     /*  selection tools */
 
-    gimp_bezier_select_tool_register,
     gimp_iscissors_tool_register,
     gimp_by_color_select_tool_register,
     gimp_fuzzy_select_tool_register,

@@ -131,13 +131,6 @@ typedef struct _GimpPaletteEntry    GimpPaletteEntry;
 typedef struct _GimpPlugInDebug     GimpPlugInDebug;
 
 
-/*  EEK stuff  */
-
-typedef struct _Path                Path;
-typedef struct _PathPoint           PathPoint;
-typedef struct _PathList            PathList;
-
-
 /*  functions  */
 
 typedef void       (* GimpInitStatusFunc)       (const gchar         *text1,

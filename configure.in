@@ -1156,7 +1156,6 @@ docs/gimprc-1.3.5
 docs/gimptool-1.3.1
 docs/gimp-remote-1.3.1
 tips/Makefile
-pixmaps/Makefile
 cursors/Makefile
 themes/Makefile
 themes/Default/Makefile

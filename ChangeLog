@@ -1,5 +1,53 @@
 2003-05-21  Michael Natterer  <mitch@gimp.org>
 
+	Removed the old paths and the remaining legacy stuff it needed.
+	Fixes bug #104471.
+
+	* Makefile.am
+	* configure.in
+	* pixmaps/*: removed the pixmaps/ directory.
+
+	* app/ops_buttons.[ch]
+	* app/path.[ch]
+	* app/pathP.h
+	* app/path_transform.h
+	* app/gui/paths-dialog.[ch]
+	* app/tools/gimpbezierselecttool.[ch]: removed these files.
+
+	* app/Makefile.am
+	* app/gui/Makefile.am
+	* app/tools/Makefile.am: changed accordingly.
+
+	* app/core/core-types.h: removed the Path* types.
+
+	* app/core/gimpimage.[ch]
+	* app/core/gimpimage-duplicate.c: removed gimage->paths.
+
+	* app/gui/about-dialog.c: inline wilber2_xpm for now.
+
+	* app/gui/dialogs-constructors.c
+	* app/gui/dialogs-menu.c
+	* app/gui/dialogs.c
+	* app/gui/menus.c: removed the old paths dialog.
+
+	* app/gui/gui.c: removed gui_rotate_the_shield_harmonics() hack
+	which was broken anyway.
+
+	* app/tools/gimptransformtool.c: #if 0 path_transform preview stuff.
+
+	* app/tools/gimpiscissorstool.c: removed useless include.
+
+	* app/tools/tools.c: removed the bezier select tool.
+
+	* app/vectors/gimpvectors.c (gimp_vectors_real_stroke_add): use
+	g_list_append(), not g_list_prepend() so some ugly side conditions
+	of legacy path loading are honored.
+
+	* app/xcf/xcf-load.c
+	* app/xcf/xcf-save.c: load and save only GimpVectors.
+
+2003-05-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdrawable.[ch]: added GimpDrawable::alpha_changed()
 	signal.
 

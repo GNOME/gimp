@@ -9,8 +9,6 @@ libapptools_a_sources = \
 	tools.h				\
 	gimpairbrushtool.c		\
 	gimpairbrushtool.h		\
-	gimpbezierselecttool.c  	\
-	gimpbezierselecttool.h  	\
 	gimpblendoptions.c		\
 	gimpblendoptions.h		\
 	gimpblendtool.c			\

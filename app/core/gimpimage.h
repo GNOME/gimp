@@ -140,8 +140,6 @@ struct _GimpImage
 
   GimpParasiteList  *parasites;             /*  Plug-in parasite data        */
 
-  PathList          *paths;                 /*  Paths data for this image    */
-
   gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
   gboolean           active[MAX_CHANNELS];  /*  active channels              */
 
@@ -384,10 +382,6 @@ GimpTattoo      gimp_image_get_tattoo_state      (GimpImage          *gimage);
 GimpContainer * gimp_image_get_layers            (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_channels          (const GimpImage    *gimage);
 GimpContainer * gimp_image_get_vectors           (const GimpImage    *gimage);
-
-void            gimp_image_set_paths             (GimpImage          *gimage,
-                                                  PathList           *paths);
-PathList      * gimp_image_get_paths             (const GimpImage    *gimage);
 
 GimpDrawable  * gimp_image_active_drawable       (const GimpImage    *gimage);
 GimpLayer     * gimp_image_get_active_layer      (const GimpImage    *gimage);

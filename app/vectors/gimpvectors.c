@@ -657,7 +657,9 @@ static void
 gimp_vectors_real_stroke_add (GimpVectors *vectors,
                               GimpStroke  *stroke)
 {
-  vectors->strokes = g_list_prepend (vectors->strokes, stroke);
+  /*  Don't g_list_prepend() here.  See ChangeLog 2003-05-21 --Mitch  */
+
+  vectors->strokes = g_list_append (vectors->strokes, stroke);
   g_object_ref (stroke);
 }
 

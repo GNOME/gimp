@@ -4,7 +4,6 @@ SUBDIRS = \
 	m4macros		\
 	tools			\
 	regexrepl		\
-	pixmaps			\
 	cursors			\
 	themes			\
 	po			\

@@ -83,7 +83,6 @@
 #include "file-new-dialog.h"
 #include "layers-commands.h"
 #include "module-browser.h"
-#include "paths-dialog.h"
 #include "preferences-dialog.h"
 #include "templates-commands.h"
 #include "tips-dialog.h"
@@ -123,8 +122,6 @@ static void   dialogs_set_color_editor_context_func (GimpDockable     *dockable,
                                                      GimpContext      *context);
 static void   dialogs_set_image_item_context_func   (GimpDockable     *dockable,
                                                      GimpContext      *context);
-static void   dialogs_set_path_context_func         (GimpDockable     *dockable,
-                                                     GimpContext      *context);
 static void   dialogs_set_image_editor_context_func (GimpDockable     *dockable,
                                                      GimpContext      *context);
 static void   dialogs_set_navigation_context_func   (GimpDockable     *dockable,
@@ -141,9 +138,6 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 static void dialogs_image_item_view_image_changed  (GimpContext         *context,
                                                     GimpImage           *gimage,
                                                     GimpContainerView   *view);
-static void dialogs_path_view_image_changed        (GimpContext         *context,
-                                                    GimpImage           *gimage,
-                                                    GtkWidget           *view);
 static void dialogs_image_editor_image_changed     (GimpContext         *context,
                                                     GimpImage           *gimage,
                                                     GimpImageEditor     *editor);
@@ -741,32 +735,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
 }
 
 GtkWidget *
-dialogs_path_list_view_new (GimpDialogFactory *factory,
-			    GimpContext       *context,
-                            gint               preview_size)
-{
-  static GtkWidget *view = NULL;
-
-  GtkWidget *dockable;
-
-  if (view)
-    return NULL;
-
-  view = paths_dialog_create ();
-
-  g_object_add_weak_pointer (G_OBJECT (view), (gpointer *) &view);
-
-  dockable = dialogs_dockable_new (view,
-				   "Old Path List", "Old Paths", NULL,
-				   NULL, NULL,
-				   dialogs_set_path_context_func);
-
-  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
-
-  return dockable;
-}
-
-GtkWidget *
 dialogs_indexed_palette_new (GimpDialogFactory *factory,
 			     GimpContext       *context,
                              gint               preview_size)
@@ -1313,41 +1281,6 @@ dialogs_set_image_item_context_func (GimpDockable *dockable,
 }
 
 static void
-dialogs_set_path_context_func (GimpDockable *dockable,
-			       GimpContext  *context)
-{
-  GtkWidget *view;
-
-  view = (GtkWidget *) g_object_get_data (G_OBJECT (dockable),
-					  "gimp-dialogs-view");
-
-  if (! view)
-    return;
-
-  if (dockable->context)
-    {
-      g_signal_handlers_disconnect_by_func (dockable->context,
-                                            dialogs_path_view_image_changed,
-                                            view);
-    }
-
-  if (context)
-    {
-      g_signal_connect (context, "image_changed",
-                        G_CALLBACK (dialogs_path_view_image_changed),
-                        view);
-
-      dialogs_path_view_image_changed (context,
-                                       gimp_context_get_image (context),
-                                       view);
-    }
-  else
-    {
-      dialogs_path_view_image_changed (NULL, NULL, view);
-    }
-}
-
-static void
 dialogs_set_image_editor_context_func (GimpDockable *dockable,
                                        GimpContext  *context)
 {
@@ -1448,14 +1381,6 @@ dialogs_image_item_view_image_changed (GimpContext       *context,
                                        GimpContainerView *view)
 {
   gimp_item_tree_view_set_image (GIMP_ITEM_TREE_VIEW (view), gimage);
-}
-
-static void
-dialogs_path_view_image_changed (GimpContext *context,
-				 GimpImage   *gimage,
-				 GtkWidget   *widget)
-{
-  paths_dialog_update (gimage);
 }
 
 static void

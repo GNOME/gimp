@@ -54,10 +54,17 @@
 #include "xcf-read.h"
 #include "xcf-seek.h"
 
-#include "path.h"
-#include "pathP.h"
-
 #include "gimp-intl.h"
+
+
+typedef struct _XcfPathPoint PathPoint;
+
+struct _XcfPathPoint
+{
+  guint32 type;
+  gdouble x;
+  gdouble y;
+};
 
 
 static gboolean        xcf_load_image_props     (XcfInfo     *info,
@@ -90,9 +97,9 @@ static gboolean        xcf_load_tile_rle        (XcfInfo     *info,
                                                  Tile        *tile,
                                                  gint         data_length);
 static GimpParasite  * xcf_load_parasite        (XcfInfo     *info);
-static PathList      * xcf_load_old_paths       (XcfInfo     *info,
+static gboolean        xcf_load_old_paths       (XcfInfo     *info,
                                                  GimpImage   *gimage);
-static Path          * xcf_load_old_path        (XcfInfo     *info,
+static gboolean        xcf_load_old_path        (XcfInfo     *info,
                                                  GimpImage   *gimage);
 static PathPoint     * xcf_load_old_path_point1 (XcfInfo    *info,
                                                  GimpCoords *coords);
@@ -408,11 +415,7 @@ xcf_load_image_props (XcfInfo   *info,
 	  break;
 
 	case PROP_PATHS:
-	  {
-	    PathList *paths = xcf_load_old_paths (info, gimage);
-	    /* add to gimage */
-	    gimp_image_set_paths (gimage, paths);
-	  }
+          xcf_load_old_paths (info, gimage);
 	  break;
 
 	case PROP_USER_UNIT:
@@ -1305,15 +1308,12 @@ xcf_load_parasite (XcfInfo *info)
   return p;
 }
 
-static PathList *
+static gboolean
 xcf_load_old_paths (XcfInfo   *info,
                     GimpImage *gimage)
 {
-  guint32   num_paths;
-  guint32   last_selected_row;
-  PathList *paths;
-  GSList   *bzp_list = NULL;
-
+  guint32      num_paths;
+  guint32      last_selected_row;
   GimpVectors *active_vectors;
 
   info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
@@ -1322,14 +1322,7 @@ xcf_load_old_paths (XcfInfo   *info,
   g_print ("num_paths: %d  selected_row: %d\n", num_paths, last_selected_row);
 
   while (num_paths-- > 0)
-    {
-      Path *bzp;
-      /* Read in a path */
-      bzp = xcf_load_old_path (info, gimage);
-      bzp_list = g_slist_append (bzp_list, bzp);
-    }
-
-  paths = path_list_new (gimage, last_selected_row, bzp_list);
+    xcf_load_old_path (info, gimage);
 
   active_vectors = (GimpVectors *)
     gimp_container_get_child_by_index (gimage->vectors, last_selected_row);
@@ -1337,24 +1330,22 @@ xcf_load_old_paths (XcfInfo   *info,
   if (active_vectors)
     gimp_image_set_active_vectors (gimage, active_vectors);
 
-  return paths;
+  return TRUE;
 }
 
-static Path *
+static gboolean
 xcf_load_old_path (XcfInfo   *info,
                    GimpImage *gimage)
 {
-  Path       *bzp;
-  gchar      *name;
-  guint32     locked;
-  guint8      state;
-  guint32     closed;
-  guint32     num_points;
-  guint32     version; /* changed from num_paths */
-  GimpTattoo  tattoo = 0;
-  GSList     *pts_list = NULL;
-  PathType    ptype;
-
+  gchar       *name;
+  guint32      locked;
+  guint8       state;
+  guint32      closed;
+  guint32      num_points;
+  guint32      version; /* changed from num_paths */
+  GimpTattoo   tattoo = 0;
+  GSList      *pts_list = NULL;
+  GSList      *free_list = NULL;
   GimpVectors *vectors;
   GimpCoords  *coords;
   GimpCoords  *curr_coord;
@@ -1380,8 +1371,6 @@ xcf_load_old_path (XcfInfo   *info,
 
   if (version == 1)
     {
-      ptype = BEZIER;
-
       while (num_points-- > 0)
         {
           PathPoint *bpt;
@@ -1392,8 +1381,10 @@ xcf_load_old_path (XcfInfo   *info,
     }
   else if (version == 2)
     {
+      guint32 dummy;
+
       /* Had extra type field and points are stored as doubles */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy, 1);
 
       while (num_points-- > 0)
         {
@@ -1405,8 +1396,10 @@ xcf_load_old_path (XcfInfo   *info,
     }
   else if (version == 3)
     {
+      guint32 dummy;
+
       /* Has extra tatto field */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &dummy, 1);
       info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
 
       while (num_points-- > 0)
@@ -1424,13 +1417,12 @@ xcf_load_old_path (XcfInfo   *info,
 
   g_print ("\n");
   
-  bzp = path_new (gimage, 
-                  ptype, pts_list, closed, (gint) state, locked, tattoo, name);
-
   if (tattoo)
     GIMP_ITEM (vectors)->tattoo = tattoo;
 
   curr_coord = coords;
+
+  free_list = pts_list;
 
   while (num_coords > 0)
     {
@@ -1478,11 +1470,13 @@ xcf_load_old_path (XcfInfo   *info,
     }
 
   g_free (coords);
+  g_slist_foreach (free_list, (GFunc) g_free, NULL);
+  g_slist_free (free_list);
 
   gimp_image_add_vectors (gimage, vectors,
                           gimp_container_num_children (gimage->vectors));
 
-  return bzp;
+  return TRUE;
 }
 
 static PathPoint* 
@@ -1498,7 +1492,11 @@ xcf_load_old_path_point1 (XcfInfo    *info,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
 
-  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
+  ptr = g_new0 (PathPoint, 1);
+
+  ptr->type = type;
+  ptr->x    = x;
+  ptr->y    = y;
 
   coords->x        = x;
   coords->y        = y;
@@ -1525,7 +1523,11 @@ xcf_load_old_path_point (XcfInfo    *info,
 
   g_print ("path point type: %d   (at %f, %f)\n", type, x, y);
  
-  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
+  ptr = g_new0 (PathPoint, 1);
+
+  ptr->type = type;
+  ptr->x    = x;
+  ptr->y    = y;
 
   coords->x        = x;
   coords->y        = y;

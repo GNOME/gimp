@@ -63,8 +63,6 @@
 #include "gimptransformtool-undo.h"
 #include "tool_manager.h"
 
-#include "path_transform.h"
-
 #include "gimp-intl.h"
 
 
@@ -462,9 +460,11 @@ gimp_transform_tool_button_release (GimpTool        *tool,
 	}
       else
 	{
+#if 0
 	  /*  Only update the paths preview */
 	  path_transform_current_path (gdisp->gimage,
 				       tr_tool->transform, TRUE);
+#endif
 	}
     }
   else
@@ -480,9 +480,11 @@ gimp_transform_tool_button_release (GimpTool        *tool,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
+#if 0
       /* Update the paths preview */
       path_transform_current_path (gdisp->gimage,
 				   tr_tool->transform, TRUE);
+#endif
     }
 }
 
@@ -761,8 +763,10 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 	  gimp_matrix3_duplicate (tr_tool->transform, tmp_matrix);
 	}
 
+#if 0
       path_transform_draw_current (GIMP_TOOL (draw_tool)->gdisp,
                                    draw_tool, tmp_matrix);
+#endif
     }
 }
 

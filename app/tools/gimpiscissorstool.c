@@ -73,7 +73,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimpbezierselecttool.h"
 #include "gimpiscissorstool.h"
 #include "gimpeditselectiontool.h"
 #include "gimpselectionoptions.h"

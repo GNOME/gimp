@@ -43,15 +43,17 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
+#include "vectors/gimpanchor.h"
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
+
 #include "xcf-private.h"
 #include "xcf-read.h"
 #include "xcf-seek.h"
 #include "xcf-write.h"
 
-#include "path.h"
-#include "pathP.h"
-
 #include "gimp-intl.h"
+
 
 static gboolean xcf_save_image_props   (XcfInfo     *info,
                                         GimpImage   *gimage,
@@ -94,7 +96,7 @@ static void     xcf_save_parasite      (gchar        *key,
                                         GimpParasite *parasite, 
                                         XcfInfo      *info);
 static gboolean xcf_save_old_paths     (XcfInfo      *info,
-                                        PathList     *paths, 
+                                        GimpImage    *gimage,
                                         GError      **error);
 
 
@@ -414,8 +416,8 @@ xcf_save_image_props (XcfInfo   *info,
     xcf_check_error (xcf_save_prop (info, gimage, PROP_UNIT, 
                                     error, gimage->unit));
 
-  xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, 
-                                  error, gimage->paths));
+  if (gimp_container_num_children (gimage->vectors) > 0)
+    xcf_check_error (xcf_save_prop (info, gimage, PROP_PATHS, error));
 
   if (gimage->unit >= _gimp_unit_get_number_of_built_in_units (gimage->gimp))
     xcf_check_error (xcf_save_prop (info, gimage, PROP_USER_UNIT, 
@@ -852,34 +854,33 @@ xcf_save_prop (XcfInfo   *info,
       break;
     case PROP_PATHS:
       {
-	PathList *paths_list;
-	guint32   base, length;
-	glong     pos;
+	guint32 base, length;
+	glong   pos;
 
-	paths_list =  va_arg (args, PathList *);
+        xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
 
-	if (paths_list)
+        /* because we don't know how much room the paths list will take
+           we save the file position and write the length later 
+        */
+        pos = info->cp;
+        xcf_write_int32_check_error (info->fp, &length, 1);
+
+        base = info->cp;
+
+        xcf_check_error (xcf_save_old_paths (info, gimage, error));
+
+        length = info->cp - base;
+
+        /* go back to the saved position and write the length */
+        xcf_check_error (xcf_seek_pos (info, pos, error));
+        xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
+        if (tmp_error) 
           {
-            xcf_write_int32_check_error (info->fp, (guint32 *) &prop_type, 1);
-            /* because we don't know how much room the paths list will take
-               we save the file position and write the length later 
-             */
-            pos = info->cp;
-            xcf_write_int32_check_error (info->fp, &length, 1);
-            base = info->cp;
-            xcf_check_error (xcf_save_old_paths (info, paths_list, error));
-            length = info->cp - base;
-            /* go back to the saved position and write the length */
-            xcf_check_error (xcf_seek_pos (info, pos, error));
-	    xcf_write_int32 (info->fp, &length, 1, &tmp_error); 
-	    if (tmp_error) 
-	      {
-	        g_propagate_error (error, tmp_error);
-	        return FALSE;
-	      }
-	      
-            xcf_check_error (xcf_seek_end (info, error));
+            g_propagate_error (error, tmp_error);
+            return FALSE;
           }
+
+        xcf_check_error (xcf_seek_end (info, error));
       }
       break;
     case PROP_USER_UNIT:
@@ -1379,13 +1380,15 @@ xcf_save_parasite (gchar        *key,
 }
 
 static gboolean
-xcf_save_old_paths (XcfInfo   *info,
-                    PathList  *paths,
-                    GError   **error)
+xcf_save_old_paths (XcfInfo    *info,
+                    GimpImage  *gimage,
+                    GError    **error)
 {
-  guint32  num_paths;
-  GSList   *slist;
-  GError  *tmp_error = NULL;
+  GimpVectors *active_vectors;
+  guint32      num_paths;
+  guint32      active_index = 0;
+  GList       *list;
+  GError      *tmp_error = NULL;
 
   /* Write out the following:-
    *
@@ -1395,20 +1398,31 @@ xcf_save_old_paths (XcfInfo   *info,
    * then each path:-
    */
 
-  xcf_write_int32_check_error (info->fp,
-                               (guint32 *) &paths->last_selected_row, 1);
+  num_paths = gimp_container_num_children (gimage->vectors);
 
-  num_paths = g_slist_length (paths->bz_paths);
+  active_vectors = gimp_image_get_active_vectors (gimage);
+
+  if (active_vectors)
+    active_index = gimp_container_get_child_index (gimage->vectors,
+                                                   GIMP_OBJECT (active_vectors));
+
+  xcf_write_int32_check_error (info->fp, &active_index, 1);
   xcf_write_int32_check_error (info->fp, &num_paths, 1);
 
-  for (slist = paths->bz_paths; slist; slist = g_slist_next (slist))
+  for (list = GIMP_LIST (gimage->vectors)->list;
+       list;
+       list = g_list_next (list))
     {
-      Path    *bzp  = slist->data;
-      guint8   state = bzp->state;
-      guint32  num_points;
-      guint32  closed;
-      guint32  version;
-      GSList  *points;
+      GimpVectors *vectors = list->data;
+      gchar       *name;
+      guint32      locked;
+      guint8       state;
+      guint32      num_points = 0;
+      guint32      closed     = FALSE;
+      guint32      version;
+      guint32      pathtype;
+      guint32      tattoo;
+      GList       *strokes;
 
       /*
        * name (string)
@@ -1416,39 +1430,106 @@ xcf_save_old_paths (XcfInfo   *info,
        * state (gchar)
        * closed (gint)
        * number points (gint)
-       * number paths (gint unused)
+       * version (gint)
+       * pathtype (gint)
+       * tattoo (gint)
        * then each point.
        */
- 
-      xcf_write_string_check_error (info->fp, &bzp->name,    1);
-      xcf_write_int32_check_error  (info->fp, &bzp->locked,  1);
-      xcf_write_int8_check_error   (info->fp, &state,        1);
-  
-      closed = bzp->closed;
-      xcf_write_int32_check_error (info->fp, &closed,        1);
 
-      num_points = g_slist_length (bzp->path_details);
-      xcf_write_int32_check_error (info->fp, &num_points,    1);
-
-      version = 3;
-      xcf_write_int32_check_error (info->fp, &version,       1);
-      xcf_write_int32_check_error (info->fp, &bzp->pathtype, 1);
-      xcf_write_int32_check_error (info->fp, &bzp->tattoo,   1);
-
-      for (points = bzp->path_details; points; points = g_slist_next (points))
+      for (strokes = vectors->strokes; strokes; strokes = g_list_next (strokes))
         {
-          PathPoint *bpt    = points->data;
-          gfloat     xfloat = bpt->x;
-          gfloat     yfloat = bpt->y;
+          GimpStroke *stroke = strokes->data;
+          gint        n_anchors;
 
-          /* type (gint32)
-           * x (float)
-           * y (float)
-           */
+          g_assert (stroke->closed || ! strokes->next);
 
-          xcf_write_int32_check_error (info->fp, &bpt->type, 1);
-          xcf_write_float_check_error (info->fp, &xfloat,    1);
-          xcf_write_float_check_error (info->fp, &yfloat,    1);
+          n_anchors = g_list_length (stroke->anchors);
+
+          if (! stroke->closed)
+            n_anchors--;
+
+          num_points += n_anchors;
+
+          if (! strokes->next)
+            closed = stroke->closed;
+        }
+
+      name     = (gchar *) gimp_object_get_name (GIMP_OBJECT (vectors));
+      locked   = gimp_item_get_linked (GIMP_ITEM (vectors));
+      state    = closed ? 4 : 2;
+      version  = 3;
+      pathtype = 1;
+      tattoo   = gimp_item_get_tattoo (GIMP_ITEM (vectors));
+ 
+      xcf_write_string_check_error (info->fp, &name,       1);
+      xcf_write_int32_check_error  (info->fp, &locked,     1);
+      xcf_write_int8_check_error   (info->fp, &state,      1);
+      xcf_write_int32_check_error  (info->fp, &closed,     1);
+      xcf_write_int32_check_error  (info->fp, &num_points, 1);
+      xcf_write_int32_check_error  (info->fp, &version,    1);
+      xcf_write_int32_check_error  (info->fp, &pathtype,   1);
+      xcf_write_int32_check_error  (info->fp, &tattoo,     1);
+
+      for (strokes = vectors->strokes;
+           strokes;
+           strokes = g_list_next (strokes))
+        {
+          GimpStroke *stroke = strokes->data;
+          GList      *anchors;
+
+          for (anchors = stroke->anchors;
+               anchors;
+               anchors = g_list_next (anchors))
+            {
+              GimpAnchor *anchor = anchors->data;
+              guint32     type;
+              gfloat      x;
+              gfloat      y;
+
+              /*  skip the first anchor, will add it at the end if needed  */
+              if (! anchors->prev)
+                continue;
+
+              /* type (gint32)
+               * x (float)
+               * y (float)
+               */
+
+              switch (anchor->type)
+                {
+                case GIMP_ANCHOR_ANCHOR:
+                  if (strokes->prev && anchors->prev == stroke->anchors)
+                    type = 3; /* new stroke marker */
+                  else
+                    type = 1; /* ordinary anchor */
+                  break;
+
+                case GIMP_ANCHOR_CONTROL:
+                  type = 2;
+                  break;
+                }
+
+              x = anchor->position.x;
+              y = anchor->position.y;
+
+              xcf_write_int32_check_error (info->fp, &type, 1);
+              xcf_write_float_check_error (info->fp, &x,    1);
+              xcf_write_float_check_error (info->fp, &y,    1);
+
+              /*  write the skipped control point  */
+              if (! anchors->next && stroke->closed)
+                {
+                  anchor = (GimpAnchor *) stroke->anchors->data;
+
+                  type = 2;
+                  x    = anchor->position.x;
+                  y    = anchor->position.y;
+
+                  xcf_write_int32_check_error (info->fp, &type, 1);
+                  xcf_write_float_check_error (info->fp, &x,    1);
+                  xcf_write_float_check_error (info->fp, &y,    1);
+               }
+            }
         }
     }
 

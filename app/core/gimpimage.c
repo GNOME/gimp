@@ -60,8 +60,6 @@
 
 #include "vectors/gimpvectors.h"
 
-#include "path.h"
-
 #include "gimp-intl.h"
 
 
@@ -474,8 +472,6 @@ gimp_image_init (GimpImage *gimage)
 
   gimage->parasites             = gimp_parasite_list_new ();
 
-  gimage->paths                 = NULL;
-
   gimage->qmask_state           = FALSE;
   gimage->qmask_inverted        = FALSE;
   gimage->qmask_color.r         = 1.0;
@@ -640,8 +636,6 @@ gimp_image_get_memsize (GimpObject *object)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask));
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->parasites));
-
-  /* FIXME paths */
 
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack));
   memsize += gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack));
@@ -2066,7 +2060,7 @@ gimp_image_set_tattoo_state (GimpImage  *gimage,
 }
 
 
-/*  layers / channels / paths  */
+/*  layers / channels / vectors  */
 
 GimpContainer *
 gimp_image_get_layers (const GimpImage *gimage)
@@ -2090,23 +2084,6 @@ gimp_image_get_vectors (const GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->vectors;
-}
-
-void
-gimp_image_set_paths (GimpImage *gimage,
-		      PathList  *paths)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-
-  gimage->paths = paths;
-}
-
-PathList *
-gimp_image_get_paths (const GimpImage *gimage)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  return gimage->paths;
 }
 
 GimpDrawable *

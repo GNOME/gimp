@@ -43,8 +43,6 @@ dialogs_sources = \
 	palette-import-dialog.h		\
 	palette-select.c		\
 	palette-select.h		\
-	paths-dialog.c			\
-	paths-dialog.h			\
 	pattern-select.c		\
 	pattern-select.h		\
 	preferences-dialog.c		\

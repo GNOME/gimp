@@ -58,40 +58,34 @@
 
 #include "gimp-intl.h"
 
-#include "pixmaps/wilber2.xpm"
-
 
 /*  local function prototypes  */
 
-static void         gui_threads_enter               (Gimp        *gimp);
-static void         gui_threads_leave               (Gimp        *gimp);
-static void         gui_set_busy                    (Gimp        *gimp);
-static void         gui_unset_busy                  (Gimp        *gimp);
-static void         gui_message                     (Gimp        *gimp,
-                                                     const gchar *message);
-static GimpObject * gui_display_new                 (GimpImage   *gimage,
-                                                     guint        scale);
+static void         gui_threads_enter           (Gimp             *gimp);
+static void         gui_threads_leave           (Gimp             *gimp);
+static void         gui_set_busy                (Gimp             *gimp);
+static void         gui_unset_busy              (Gimp             *gimp);
+static void         gui_message                 (Gimp             *gimp,
+                                                 const gchar      *message);
+static GimpObject * gui_display_new             (GimpImage        *gimage,
+                                                 guint             scale);
 
-static void         gui_themes_dir_foreach_func     (GimpDatafileData *file_data);
-static gint         gui_rotate_the_shield_harmonics (GtkWidget   *widget,
-                                                     GdkEvent    *eevent,
-                                                     gpointer     data);
-
-static gboolean     gui_exit_callback               (Gimp        *gimp,
-                                                     gboolean     kill_it);
-static gboolean     gui_exit_finish_callback        (Gimp        *gimp,
-                                                     gboolean     kill_it);
-static void         gui_really_quit_callback        (GtkWidget   *button,
-                                                     gboolean     quit,
-                                                     gpointer     data);
-static void         gui_show_tooltips_notify        (GObject     *config,
-                                                     GParamSpec  *param_spec,
-                                                     Gimp        *gimp);
-static void         gui_display_changed             (GimpContext *context,
-                                                     GimpDisplay *display,
-                                                     Gimp        *gimp);
-static void         gui_image_disconnect            (GimpImage   *gimage,
-                                                     Gimp        *gimp);
+static void         gui_themes_dir_foreach_func (GimpDatafileData *file_data);
+static gboolean     gui_exit_callback           (Gimp             *gimp,
+                                                 gboolean          kill_it);
+static gboolean     gui_exit_finish_callback    (Gimp             *gimp,
+                                                 gboolean          kill_it);
+static void         gui_really_quit_callback    (GtkWidget        *button,
+                                                 gboolean          quit,
+                                                 gpointer          data);
+static void         gui_show_tooltips_notify    (GObject          *config,
+                                                 GParamSpec       *param_spec,
+                                                 Gimp             *gimp);
+static void         gui_display_changed         (GimpContext      *context,
+                                                 GimpDisplay      *display,
+                                                 Gimp             *gimp);
+static void         gui_image_disconnect        (GimpImage        *gimage,
+                                                 Gimp             *gimp);
 
 
 /*  private variables  */
@@ -102,7 +96,6 @@ static GHashTable *themes_hash = NULL;
 
 static GimpItemFactory *toolbox_item_factory = NULL;
 static GimpItemFactory *image_item_factory   = NULL;
-static GimpItemFactory *paths_item_factory   = NULL;
 
 
 /*  public functions  */
@@ -304,12 +297,6 @@ gui_restore (Gimp     *gimp,
                                                    gimp,
                                                    TRUE);
 
-  paths_item_factory = gimp_menu_factory_menu_new (global_menu_factory,
-                                                   "<Paths>",
-                                                   GTK_TYPE_MENU,
-                                                   gimp,
-                                                   FALSE);
-
   gimp_devices_restore (gimp);
 
   if (GIMP_GUI_CONFIG (gimp->config)->restore_session || restore_session)
@@ -438,8 +425,6 @@ gui_message (Gimp        *gimp,
     }
 }
 
-gboolean double_speed = FALSE;
-
 static GimpObject *
 gui_display_new (GimpImage *gimage,
                  guint      scale)
@@ -456,11 +441,6 @@ gui_display_new (GimpImage *gimage,
   gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
 
   gimp_item_factory_update (shell->menubar_factory, shell);
-
-  if (double_speed)
-    g_signal_connect_after (shell->canvas, "expose_event",
-                            G_CALLBACK (gui_rotate_the_shield_harmonics),
-                            NULL);
 
   return GIMP_OBJECT (gdisp);
 }
@@ -481,54 +461,6 @@ gui_themes_dir_foreach_func (GimpDatafileData *file_data)
   g_hash_table_insert (themes_hash,
 		       basename,
 		       g_strdup (file_data->filename));
-}
-
-static gint
-gui_rotate_the_shield_harmonics (GtkWidget *widget,
-				 GdkEvent  *eevent,
-				 gpointer   data)
-{
-  GdkPixmap *pixmap = NULL;
-  GdkBitmap *mask   = NULL;
-  gint       width  = 0;
-  gint       height = 0;
-
-  g_signal_handlers_disconnect_by_func (widget,
-					gui_rotate_the_shield_harmonics,
-					data);
-
-  pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
-					 &mask,
-					 NULL,
-					 wilber2_xpm);
-
-  gdk_drawable_get_size (pixmap, &width, &height);
-
-  if (widget->allocation.width  >= width &&
-      widget->allocation.height >= height)
-    {
-      gint x, y;
-
-      x = (widget->allocation.width  - width) / 2;
-      y = (widget->allocation.height - height) / 2;
-
-      gdk_gc_set_clip_mask (widget->style->black_gc, mask);
-      gdk_gc_set_clip_origin (widget->style->black_gc, x, y);
-
-      gdk_draw_drawable (widget->window,
-			 widget->style->black_gc,
-			 pixmap, 0, 0,
-			 x, y,
-			 width, height);
-
-      gdk_gc_set_clip_mask (widget->style->black_gc, NULL);
-      gdk_gc_set_clip_origin (widget->style->black_gc, 0, 0);
-    }
-
-  g_object_unref (pixmap);
-  g_object_unref (mask);
-
-  return FALSE;
 }
 
 static gboolean
@@ -587,9 +519,6 @@ gui_exit_finish_callback (Gimp     *gimp,
 
   g_object_unref (image_item_factory);
   image_item_factory = NULL;
-
-  g_object_unref (paths_item_factory);
-  paths_item_factory = NULL;
 
   menus_exit (gimp);
   render_exit (gimp);
