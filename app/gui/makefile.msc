@@ -15,6 +15,7 @@ PKG_LINK = \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\core\appcore-$(PKG_VER).lib \
+	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
@@ -34,6 +35,7 @@ OBJECTS = \
 	dialogs-commands.obj \
 	dialogs-constructors.obj \
 	edit-commands.obj \
+	error-console-dialog.obj \
 	file-commands.obj \
 	file-dialog-utils.obj \
 	file-new-dialog.obj \
@@ -90,6 +92,9 @@ RESOURCE = $(PACKAGE).res
 
 $(PACKAGE).lib : $(OBJECTS)
 	lib /out:$(PACKAGE).lib $(OBJECTS)
+
+$(PACKAGE)-$(PKG_VER).exp : $(OBJECTS) $(PACKAGE).def
+	lib /def:$(PACKAGE).DEF /out:$(PACKAGE)-$(PKG_VER).exp $(OBJECTS)
 
 $(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def

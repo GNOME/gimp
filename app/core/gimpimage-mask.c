@@ -46,6 +46,7 @@
 
 #include "libgimp/gimpintl.h"
 
+#include "display/display-funcs.h"
 
 /*  local variables  */
 static gboolean   gimage_mask_stroking = FALSE;

@@ -81,9 +81,9 @@ OBJECTS = \
 INCLUDES = \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
-	$(GTK2_CFLAGS) \
+	$(GTK2_CFLAGS) $(FREETYPE2_CFLAGS) \
 	-I$(includedir)
-
+	
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \

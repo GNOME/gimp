@@ -1570,7 +1570,7 @@ design_area_expose (GtkWidget      *widget,
 		       ifsDesign->pixmap,
 		       widget->style->fg_gc[widget->state],
 		       ifsDesign->selected_gc,
-		       ifsDesign->area->style->font);
+		       gtk_style_get_font (ifsDesign->area->style));
     }
 
   gdk_draw_drawable(widget->window,

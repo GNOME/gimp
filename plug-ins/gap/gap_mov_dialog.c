@@ -447,7 +447,6 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   GtkWidget *src_sel_frame;
   GtkWidget *check_button;
   GtkObject *adj;
-  guchar *color_cube;
   t_ok_data  ok_data;
 
   gchar **argv;
@@ -463,12 +462,8 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
   gtk_rc_parse (gimp_gtkrc ());
 
 
-  gdk_set_use_xshm (gimp_use_xshm ());
   gtk_preview_set_gamma (gimp_gamma ());
   gtk_preview_set_install_cmap (gimp_install_cmap ());
-  color_cube = gimp_color_cube ();
-  gtk_preview_set_color_cube (color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
 
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 

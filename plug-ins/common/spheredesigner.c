@@ -1844,8 +1844,8 @@ void fileselect(int action)
                               "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy),
                               GTK_OBJECT (windows[action]));
 
-    gimp_help_connect_help_accel (windows[action], gimp_standard_help_func,
-				  "filters/spheredesigner.html");
+    gimp_help_connect (windows[action], gimp_standard_help_func,
+			  "filters/spheredesigner.html");
   }
   gtk_widget_show (windows[action]);
 }

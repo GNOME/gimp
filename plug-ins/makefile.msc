@@ -291,13 +291,6 @@ OBJECTS = \
 	gdyntextcompat.obj
 !ENDIF
 
-!IFDEF EXTRA_gflare
-OBJECTS = \
-	asupsample.obj \
-	gflare.obj \
-	gtkmultioptionmenu.obj
-!ENDIF
-
 !IFDEF EXTRA_gfli
 OBJECTS = \
 	fli.obj \
@@ -585,7 +578,7 @@ RTL = -MDd
 
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
-CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GLIB_CFLAGS) $(GTK2_CFLAGS) -I$(INTL)
+CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) -I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) -I$(INTL)
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
@@ -618,7 +611,7 @@ $(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
 	..\..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\..\libgimpmath\gimpmath-$(GIMP_VER).lib \
 	..\..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
-	$(GTK2_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
+	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) $(EXTRALIBS) $(LDFLAGS)
 
 $(PLUGIN).res : $(PLUGIN).rc
 	rc -r -fo $(PLUGIN).res $(PLUGIN).rc
@@ -662,7 +655,7 @@ OBJECTS = $(MODULE).obj
 $(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) \
 	..\..\libgimp\gimp-$(GIMP_VER).lib ..\..\libgimp\gimpui-$(GIMP_VER).lib \
-	$(GTK2_LIBS) $(GLIB_LIBS) /def:$(MODULE).def
+	$(GLIB_LIBS) $(GTK2_LIBS) /def:$(MODULE).def
 !ENDIF
 
 .c.obj :

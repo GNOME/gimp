@@ -1,3 +1,54 @@
+2001-09-22  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc : need to link with pangof2
+
+	* app/display/display-funcs.h : new file to provide prototype
+	gdisplays_selection_visibility ()
+	* app/core/gimpimage-mask.c :
+	* app/core/gimplayer.c : use it
+
+	* app/core/makefile.msc : generate gimpmarshal.[hc]
+
+	* app/gui/makefile.msc : add error-console-dialog.obj, also
+	more trying for building as dll
+
+	* app/tools/gimpinktool.c(965) : avoid "fatal error C1021: invalid 
+	preprocessor command 'warning'", by wrapping it in #ifdef __GNUC__
+
+	* app/tools/makefile.msc : add FREETYPE2_CFLAGS
+
+	* app/widgets/gimpfontselction-dialog.c : use g_strcasecmp ()
+
+	* app/tools/makefile.msc : add FREETYPE2_CFLAGS and gimpfontselction*
+
+	* libgimp/gimp.def :
+	* libgimpwidgets/gimpwidgets.def : updated externals
+
+	* libgimpwidgets/makefile.msc : add gimpstock
+
+	* plug-ins/makefile.msc : gflare doesn't require EXTRA_gflare anymore
+
+	* plug-ins/common/spheredesigner.c : 
+	* plug-ins/helpbrowser/helpbrowser.c :
+	* plug-ins/imagemap/imap_main.c :
+	remove _help_accel from gimp_help_connect ()
+
+	* plug-ins/gap/gap_mov_dialog.c :
+	* plug-ins/gap/gap_navigator_dialog.c : remove references to 
+	use_xshm and gimp_color_cube ()
+
+	* plug-ins/gfig/gfig.c : don't access ->klass, but use 
+	G_OBJECT_GET_CLASS
+
+	* plug-ins/gimpressionist/repaint.c : the GtkButton::child
+	field is moved to the parent GtkBin.
+
+	* plug-ins/ifscompose/ifscompose.c : the GtkStyle::font field
+	isn't public anymore, use accessor gtk_style_get_font ()
+
+	* plug-ins/imagemap/imap_preferences.c : reflect GTK2 API change
+	gtk_notebook_set_current_page ()
+
 2001-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpdialog.[ch]: made a real object (GtkDialog

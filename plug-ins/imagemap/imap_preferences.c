@@ -590,7 +590,7 @@ do_preferences_dialog(void)
    if (!dialog) {
       dialog = create_preferences_dialog();
    }
-   gtk_notebook_set_page(GTK_NOTEBOOK(dialog->notebook), 0);
+   gtk_notebook_set_current_page(GTK_NOTEBOOK(dialog->notebook), 0);
    dialog->old_data = old_data = get_preferences();
    dialog->new_colors = dialog->old_colors = old_data->colors;
 

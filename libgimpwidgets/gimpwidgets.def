@@ -28,6 +28,7 @@ EXPORTS
 	gimp_coordinates_new
 	gimp_dialog_create_action_area
 	gimp_dialog_create_action_areav
+	gimp_dialog_get_type
 	gimp_dialog_new
 	gimp_dialog_newv
 	gimp_dialog_set_icon
@@ -37,7 +38,7 @@ EXPORTS
 	gimp_file_selection_new
 	gimp_file_selection_set_filename
 	gimp_float_adjustment_update
-	gimp_help_connect_help_accel
+	gimp_help_connect
 	gimp_help_disable_tooltips
 	gimp_help_enable_tooltips
 	gimp_help_free
@@ -89,6 +90,7 @@ EXPORTS
 	gimp_size_entry_set_value
 	gimp_size_entry_set_value_boundaries
 	gimp_spin_button_new
+	gimp_stock_init
 	gimp_standard_help_func
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update

@@ -961,9 +961,9 @@ ink_button_press (GimpTool       *tool,
   
   tool->gdisp = gdisp;
   tool->state = ACTIVE;
-
+#ifdef __GNUC__
 #warning FIXME: presure, tilt
-
+#endif
   b = ink_pen_ellipse (x, y,
 		       1.0, 0.5, 0.5,
 		       /* bevent->pressure, bevent->xtilt, bevent->ytilt, */
@@ -1148,13 +1148,15 @@ ink_motion (GimpTool       *tool,
   ink_tool->lastx = x;
   ink_tool->lasty = y;
 
+#ifdef __GNUC__
 #warning FIXME: tilt, pressure
-
+#endif
   pressure = 1.0; /* mevent->pressure; */
   velocity = 10.0 * sqrt ((dist) / (double) (thistime - lasttime));
 
+#ifdef __GNUC__
 #warning FIXME: tilt, pressure
-
+#endif
   b = ink_pen_ellipse (x, y, pressure, 0.5, 0.5,
 		       /* mevent->xtilt, mevent->ytilt, */ velocity);
   blob_union = blob_convex_union (ink_tool->last_blob, b);

@@ -21,7 +21,8 @@ GIMPDIR = _gimp$(GIMP_VER)
 INCLUDES = -I.. 
 # DEFINES = -DG_LOG_DOMAIN=\"LibGimpWidgets\"
 DEPCFLAGS = $(GLIB_CFLAGS) $(GTK2_CFLAGS) $(INTL_CFLAGS)
-DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS)
+DEPLIBS = $(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
+		$(GTK2)\gdk-pixbuf\gdk_pixbuf-$(GTK_VER).lib 
 
 all : \
 	..\config.h \
@@ -46,6 +47,7 @@ OBJECTS = \
 	gimpcolorbutton.obj \
 	gimphelpui.obj \
 	gimpsizeentry.obj \
+	gimpstock.obj \
 	gimpunitmenu.obj \
 	gimpoffsetarea.obj \
 	libgimp-glue.obj

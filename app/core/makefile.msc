@@ -15,7 +15,8 @@ PKG_LINK = \
 	..\base\appbase-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
-	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib
+	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
+	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib
 
 OBJECTS = \
 	gimp.obj \
@@ -31,6 +32,7 @@ OBJECTS = \
 	gimpdatafactory.obj \
 	gimpdatafiles.obj \
 	gimpdatalist.obj \
+	gimpdocuments.obj \
 	gimpdrawable.obj \
 	gimpdrawable-desaturate.obj \
 	gimpdrawable-equalize.obj \
@@ -48,6 +50,7 @@ OBJECTS = \
 	gimpimage-mask.obj \
 	gimpimage-new.obj \
 	gimpimage-undo.obj \
+	gimpimagefile.obj \
 	gimplayer.obj \
 	gimplayermask.obj \
 	gimplist.obj \
@@ -65,7 +68,6 @@ OBJECTS = \
 	gimpundostack.obj \
 	gimpunit.obj \
 	gimpviewable.obj \
-
 
 OTHER_FILES = \
 	\
@@ -87,9 +89,24 @@ INCLUDES = \
 
 all : \
 	$(PRJ_TOP)\config.h \
+	gimpmarshal.h \
+	gimpmarshal.c \
 	$(PACKAGE).lib \
 	$(PACKAGE)-$(PKG_VER).dll
 
+gimpmarshal.h : gimpmarshal.list
+	echo #ifndef __GIMP_MARSHAL_H__ > xgen-gmh
+	echo #define __GIMP_MARSHAL_H__ >> xgen-gmh
+	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal gimpmarshal.list --header >> xgen-gmh
+	echo #endif /* __GIMP_MARSHAL_H__ */ >> xgen-gmh
+	copy xgen-gmh gimpmarshal.h
+
+gimpmarshal.c : gimpmarshal.h gimpmarshal.list
+	echo #include "glib.h" > xgen-gmc
+	echo #include "glib-object.h" >> xgen-gmc
+	echo #include "gimpmarshal.h" >> xgen-gmc
+	$(GLIB)\gobject\glib-genmarshal --nostdinc --prefix=gimp_cclosure_marshal gimpmarshal.list --body >> xgen-gmc
+	copy xgen-gmc gimpmarshal.c
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h
@@ -108,3 +125,7 @@ $(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
 
 .c.obj :
 	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+
+clean ::
+	del gimpmarshal.c
+	del gimpmarshal.h

@@ -807,8 +807,8 @@ open_browser_dialog (gchar *help_path,
   gtk_window_set_wmclass (GTK_WINDOW (window), "helpbrowser", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
 
-  gimp_help_connect_help_accel (window, gimp_standard_help_func,
-				"dialogs/help.html");
+  gimp_help_connect (window, gimp_standard_help_func,
+			"dialogs/help.html");
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (window), vbox);

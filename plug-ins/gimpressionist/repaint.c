@@ -615,11 +615,7 @@ void repaint(struct ppm *p, struct ppm *a)
       } else {
 	char tmps[40];
 	sprintf(tmps, "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
-#if GTK_MINOR_VERSION == 0
-	gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), tmps);
-#else
-	gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), tmps);
-#endif
+	gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), tmps);
 	while(gtk_events_pending())
 	  gtk_main_iteration();
       }
@@ -873,11 +869,7 @@ void repaint(struct ppm *p, struct ppm *a)
       fprintf(stderr, ".\n"); fflush(stderr);
     }
   } else {
-#if GTK_MINOR_VERSION == 0
-    gtk_label_set(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _("Update"));
-#else
-    gtk_label_set_text(GTK_LABEL(GTK_BUTTON(previewbutton)->child), _("Update"));
-#endif
+    gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), _("Update"));
   }
   running = 0;
 }

@@ -47,6 +47,7 @@
 
 #include "libgimp/gimpintl.h"
 
+#include "display/display-funcs.h"
 
 enum
 {

@@ -39,7 +39,8 @@ PKG_LINK = \
 	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \
-	$(INTLLIBS)\
+	$(INTLLIBS) \
+	$(PANGO)\pango\pangoft2-$(PANGO_VER).lib
 
 gimp_LDFLAGS = \
 	-export-dynamic -export-symbols $(srcdir)/gimp.sym
@@ -60,7 +61,6 @@ OBJECTS = \
 	colormaps.obj \
 	devices.obj \
 	docindex.obj \
-	errorconsole.obj \
 	gimpprogress.obj \
 	nav_window.obj \
 	ops_buttons.obj \

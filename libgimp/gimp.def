@@ -49,7 +49,7 @@ EXPORTS
 	gimp_channel_set_visible
 	gimp_clone
 	gimp_clone_default
-	gimp_color_cube
+;	gimp_color_cube
 	gimp_color_picker
 	gimp_convert_grayscale
 	gimp_convert_indexed
@@ -119,6 +119,7 @@ EXPORTS
 	gimp_free_select
 	gimp_fuzzy_select
 	gimp_gamma
+	gimp_get_default_comment
 	gimp_get_monitor_resolution
 	gimp_get_path_by_tattoo
 	gimp_get_progname
@@ -318,6 +319,5 @@ EXPORTS
 	gimp_undo_push_group_start
 	gimp_uninstall_temp_proc
 	gimp_unit_get_factor
-	gimp_use_xshm
 	gimp_version
 	set_gimp_PLUG_IN_INFO_PTR
