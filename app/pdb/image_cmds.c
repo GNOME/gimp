@@ -3607,7 +3607,7 @@ image_get_name_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  gchar *name;
+  gchar *name = NULL;
   gchar *filename;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
@@ -3624,7 +3624,9 @@ image_get_name_invoker (Gimp     *gimp,
 	  g_free (filename);
 	}
       else
-	name = g_strdup (_("Untitled"));
+	{
+	  name = g_strdup (_("Untitled"));
+	}
     }
 
   return_args = procedural_db_return_args (&image_get_name_proc, success);

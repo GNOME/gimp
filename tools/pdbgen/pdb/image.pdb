@@ -1224,6 +1224,7 @@ CODE
 &image_accessors('name', 'string', 'name', 1,
 		 [ <<'CODE1', undef ]);
     delete @{$outargs[0]}{qw(alias no_declare)};
+    $outargs[0]->{init} = 1;
 
     %invoke = (
 	vars => [ 'gchar *filename' ],
@@ -1237,7 +1238,9 @@ CODE
       g_free (filename);
     }
   else
-    name = g_strdup (_("Untitled"));
+    {
+      name = g_strdup (_("Untitled"));
+    }
 }
 CODE2
     );

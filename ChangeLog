@@ -1,3 +1,10 @@
+2002-05-10  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb: initialize a variable to please the
+	compiler.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
 	We can always create GimpPreviews for any GtkIconSize, but
