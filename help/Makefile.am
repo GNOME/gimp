@@ -6,6 +6,7 @@ helpdata_DATA = \
 	welcome.html	\
 	contents.html	\
 	index.html	\
+	eek.png		\
 	wilber.png
 
 EXTRA_DIST = $(helpdata_DATA)

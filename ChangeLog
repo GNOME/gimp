@@ -1,6 +1,14 @@
 1999-06-28  Sven Neumann  <sven@gimp.org>
 	    Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* help/Makefile.am
+	* help/eek.png
+	* plug-ins/helpbrowser/helpbroswer.c: to see what this change
+	does, you'll have to compile it :)
+
+1999-06-28  Sven Neumann  <sven@gimp.org>
+	    Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/plug_in.c: return a PDB_EXECUTION_ERROR if a procedure
 	requested by a plugin doesn't exist.
 

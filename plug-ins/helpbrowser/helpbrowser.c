@@ -38,7 +38,7 @@
 
 /*  defines  */
 
-#define EEEK  23
+#define EEEK                    23
 #define GIMP_HELP_EXT_NAME      "extension_gimp_help_browser"
 #define GIMP_HELP_TEMP_EXT_NAME "extension_gimp_help_browser_temp"
 
@@ -81,22 +81,22 @@ typedef struct
 
 /*  constant strings  */
 
-static char *doc_not_found_string =
+static char *doc_not_found_format_string =
 "<html><head><title>Document not found</title></head>"
 "<body bgcolor=\"#ffffff\">"
 "<center>"
-"<h1>Error</h1>"
+"%s"
 "<h2>Couldn't find document</h2>"
 "%s"
 "</center>"
 "</body>"
 "</html>";
 
-static char *dir_not_found_string =
+static char *dir_not_found_format_string =
 "<html><head><title>Directory not found</title></head>"
 "<body bgcolor=\"#ffffff\">"
 "<center>"
-"<h1>Error</h1>"
+"%s"
 "<h2>Couldn't change to directory</h2>"
 "%s"
 "</center>"
@@ -136,10 +136,14 @@ static HelpPage pages[] =
 };
 
 static HelpPage  *current_page = &pages[HELP];
-static GtkWidget *back_button, *forward_button;
+static GList     *history = NULL;
+
+static GtkWidget *back_button;
+static GtkWidget *forward_button;
 static GtkWidget *notebook;
 static GtkWidget *combo;
-static GList     *history = NULL;
+
+static gchar     *eek_png_tag = "<h1>Eeek!</h1>\n";
 
 /*  GIMP plugin stuff  */
 
@@ -149,10 +153,10 @@ static void run   (char *name, int nparams, GParam *param,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,                         /* init_proc */
-  NULL,                         /* quit_proc */
-  query,                        /* query_proc */
-  run,                          /* run_proc */
+  NULL,   /*  init_proc   */
+  NULL,   /*  quit_proc   */
+  query,  /*  query_proc  */
+  run,    /*  run_proc    */
 };
 
 static gboolean temp_proc_installed = FALSE;
@@ -162,7 +166,6 @@ static gboolean temp_proc_installed = FALSE;
 static void load_page (HelpPage *source_page, HelpPage *dest_page,
 		       gchar *ref, gint pos, 
 		       gboolean add_to_queue, gboolean add_to_history);
-
 
 /*  functions  */
 
@@ -188,7 +191,7 @@ jump_to_anchor (HelpPage *page,
 {
   gint pos;
 
-  g_return_if_fail ( page != NULL && anchor != NULL );
+  g_return_if_fail (page != NULL && anchor != NULL);
 
   if (*anchor != '#') 
     {
@@ -217,7 +220,7 @@ forward_callback (GtkWidget *widget,
 
   load_page (current_page, current_page, ref, pos, FALSE, FALSE);
   queue_move_next (current_page->queue);
-	
+
   update_toolbar (current_page);
 }
 
@@ -241,30 +244,32 @@ static void
 entry_changed_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  GList    *list;
-  gchar    *entry_text;
-  gchar    *compare_text;
-  gboolean  found = FALSE;
+  GList       *list;
+  HistoryItem *item;
+  gchar       *entry_text;
+  gchar       *compare_text;
+  gboolean     found = FALSE;
 
   entry_text = gtk_entry_get_text (GTK_ENTRY (widget));
 
   for (list = history; list && !found; list = list->next)
     {
-      if (((HistoryItem *) list->data)->count)
+      item = (HistoryItem *) list->data;
+
+      if (item->count)
 	compare_text = g_strdup_printf ("%s <%i>",
-					((HistoryItem *) list->data)->title,
-					((HistoryItem *) list->data)->count + 1);
+					item->title,
+					item->count + 1);
       else
-	compare_text = ((HistoryItem *) list->data)->title;
+	compare_text = item->title;
 
       if (strcmp (compare_text, entry_text) == 0)
 	{
-	  load_page (&pages[HELP], &pages[HELP],
-		     ((HistoryItem *) list->data)->ref, 0, TRUE, FALSE);
+	  load_page (&pages[HELP], &pages[HELP], item->ref, 0, TRUE, FALSE);
 	  found = TRUE;
 	}
 
-      if (((HistoryItem *) list->data)->count)
+      if (item->count)
 	g_free (compare_text);
     }
 }
@@ -273,17 +278,19 @@ static void
 history_add (gchar *ref,
 	     gchar *title)
 {
-  GList      *list;
-  GList      *found = NULL;
-  HistoryItem *item = NULL;
+  GList       *list;
+  GList       *found = NULL;
+  HistoryItem *item;
   GList       *combo_list = NULL;
   gint         title_found_count = 0;
 
   for (list = history; list && !found; list = list->next)
     {
-      if (strcmp (((HistoryItem *) list->data)->title, title) == 0)
+      item = (HistoryItem *) list->data;
+
+      if (strcmp (item->title, title) == 0)
 	{
-	  if (strcmp (((HistoryItem *) list->data)->ref, ref) != 0)
+	  if (strcmp (item->ref, ref) != 0)
 	    {
 	      title_found_count++;
 	      continue;
@@ -312,12 +319,14 @@ history_add (gchar *ref,
     {
       gchar* combo_title;
 
-      if (((HistoryItem *) list->data)->count)
+      item = (HistoryItem *) list->data;
+
+      if (item->count)
 	combo_title = g_strdup_printf ("%s <%i>",
-				       ((HistoryItem *) list->data)->title,
-				       ((HistoryItem *) list->data)->count + 1);
+				       item->title,
+				       item->count + 1);
       else
-	combo_title = g_strdup (((HistoryItem *) list->data)->title);
+	combo_title = g_strdup (item->title);
 
       combo_list = g_list_prepend (combo_list, combo_title);
     }
@@ -405,7 +414,8 @@ load_page (HelpPage *source_page,
 
   if (chdir (new_dir) == -1)
     {
-      g_string_sprintf (file_contents, dir_not_found_string, new_dir);
+      g_string_sprintf (file_contents, dir_not_found_format_string,
+			eek_png_tag, new_dir);
       if (g_path_is_absolute (ref))
 	new_ref = g_strdup (ref);
       else
@@ -442,7 +452,8 @@ load_page (HelpPage *source_page,
   if (strlen (file_contents->str) <= 0)
     {
       chdir (old_dir);
-      g_string_sprintf (file_contents, doc_not_found_string, ref);
+      g_string_sprintf (file_contents, doc_not_found_format_string,
+			eek_png_tag, ref);
     }
   else
     page_valid = TRUE;
@@ -517,6 +528,7 @@ pixmap_button_new (gchar     **xpm,
 
   button = gtk_button_new ();
   gtk_container_set_border_width (GTK_CONTAINER (button), 0);
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (button), box);
 
   return (button);
@@ -633,6 +645,7 @@ open_browser_dialog (gchar *path)
   gchar  *initial_dir;
   gchar  *initial_ref;
   gchar  *root_dir;
+  gchar  *eek_png_path;
   gint    i;
   gint    argc;
   gchar **argv;
@@ -653,6 +666,12 @@ open_browser_dialog (gchar *path)
       return FALSE;
     }
 
+  eek_png_path = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
+			      "eek.png", NULL);
+  if (access (eek_png_path, R_OK) == 0)
+    eek_png_tag = g_strdup_printf ("<img src=\"%s\">\n", eek_png_path);
+
+  g_free (eek_png_path);
   g_free (root_dir);
   initial_dir = g_get_current_dir ();
 
@@ -694,6 +713,7 @@ open_browser_dialog (gchar *path)
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
 
   button = gtk_button_new_with_label ("Close");
+  gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
  		      GTK_SIGNAL_FUNC (close_callback), NULL);
@@ -832,7 +852,7 @@ run_temp_proc (char    *name,
   GStatusType status = STATUS_SUCCESS;
   gchar *path;
 
-  g_print ("starting idle page loader\n");
+  g_print ("starting idle page loader (%i)\n", getpid());
 
   /*  Make sure all the arguments are there!  */
   if (nparams != 1)
@@ -849,7 +869,7 @@ run_temp_proc (char    *name,
 
   gtk_idle_add (idle_load_page, path);
 
-  g_print ("idle page loader started\n");
+  g_print ("idle page loader started (%i)\n", getpid());
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -869,11 +889,11 @@ input_callback (GIOChannel   *channel,
 {
   /* We have some data in the wire - read it */
   /* The below will only ever run a single proc */
-  g_print ("before gimp_run_temp ()\n");
+  g_print ("before gimp_run_temp (%i)\n", getpid());
 
   gimp_run_temp ();
 
-  g_print ("after gimp_run_temp ()\n");
+  g_print ("after gimp_run_temp (%i)\n", getpid());
 
   return TRUE;
 }
@@ -927,7 +947,7 @@ open_url (gchar *path)
 				      PARAM_STRING, path,
 				      PARAM_END);
 
-  g_print ("after run_procedure()\n");
+  g_print ("after run_procedure(%i)\n", getpid());
 
   if (return_params[0].data.d_status == STATUS_SUCCESS)
     {
