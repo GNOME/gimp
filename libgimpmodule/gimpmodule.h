@@ -85,6 +85,7 @@ struct _GimpModule
 {
   GTypeModule      parent_instance;
 
+  /*< public >*/
   gchar           *filename;     /* path to the module                       */
   gboolean         verbose;      /* verbose error reporting                  */
   GimpModuleState  state;        /* what's happened to the module            */
@@ -92,10 +93,14 @@ struct _GimpModule
   gboolean         load_inhibit; /* user requests not to load at boot time   */
 
   /* stuff from now on may be NULL depending on the state the module is in   */
+  /*< private >*/
   GModule         *module;       /* handle on the module                     */
+
+  /*< public >*/
   GimpModuleInfo  *info;         /* returned values from module_query        */
   gchar           *last_module_error;
 
+  /*< private >*/
   GimpModuleQueryFunc     query_module;
   GimpModuleRegisterFunc  register_module;
 };

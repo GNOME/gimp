@@ -39,6 +39,7 @@ struct _GimpModuleDB
 {
   GObject   parent_instance;
 
+  /*< private >*/
   GList    *modules;
 
   gchar    *load_inhibit;

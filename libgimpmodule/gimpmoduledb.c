@@ -186,6 +186,15 @@ gimp_module_db_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+/**
+ * gimp_module_db_new:
+ * @verbose: Pass #TRUE to enable debugging output.
+ * 
+ * Creates a new #GimpModuleDB instance. The @verbose parameter will be
+ * passed to the created #GimpModule instances using gimp_module_new().
+ * 
+ * Return value: The new #GimpModuleDB instance.
+ **/
 GimpModuleDB *
 gimp_module_db_new (gboolean verbose)
 {
@@ -234,6 +243,15 @@ is_in_inhibit_list (const gchar *filename,
   return FALSE;
 }
 
+/**
+ * gimp_module_db_set_load_inhibit:
+ * @db:           A #GimpModuleDB.
+ * @load_inhibit: A #G_SEARCHPATH_SEPARATOR delimited list of module
+ *                filenames to exclude from auto-loading.
+ * 
+ * Sets the @load_inhibit flag for all #GimpModule's which are kept
+ * by @db (using gimp_module_set_load_inhibit()).
+ **/
 void
 gimp_module_db_set_load_inhibit (GimpModuleDB *db,
                                  const gchar  *load_inhibit)
@@ -258,6 +276,15 @@ gimp_module_db_set_load_inhibit (GimpModuleDB *db,
     }
 }
 
+/**
+ * gimp_module_db_get_load_inhibit:
+ * @db: A #GimpModuleDB.
+ * 
+ * Return the #G_SEARCHPATH_SEPARATOR selimited list of module filenames
+ * which are excluded from auto-loading.
+ * 
+ * Return value: the @db's @load_inhibit string.
+ **/
 const gchar *
 gimp_module_db_get_load_inhibit (GimpModuleDB *db)
 {
@@ -266,6 +293,16 @@ gimp_module_db_get_load_inhibit (GimpModuleDB *db)
   return db->load_inhibit;
 }
 
+/**
+ * gimp_module_db_load:
+ * @db:          A #GimpModuleDB.
+ * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
+ *               to load modules from.
+ * 
+ * Scans the directories contained in @module_path using
+ * gimp_datafiles_read_directories() and creates a #GimpModule
+ * instance for every loadable module contained in the directories.
+ **/
 void
 gimp_module_db_load (GimpModuleDB *db,
                      const gchar  *module_path)
@@ -284,6 +321,19 @@ gimp_module_db_load (GimpModuleDB *db,
 #endif
 }
 
+/**
+ * gimp_module_db_refresh:
+ * @db:          A #GimpModuleDB.
+ * @module_path: A #G_SEARCHPATH_SEPARATOR delimited list of directories
+ *               to load modules from.
+ * 
+ * Does the same as gimp_module_db_load(), plus removes all #GimpModule
+ * instances whose modules have been deleted from disk.
+ *
+ * Note that the #GimpModule's will just be removed from the internal
+ * list and not freed as this is not possible with #GTypeModule
+ * instances which actually implement types.
+ **/
 void
 gimp_module_db_refresh (GimpModuleDB *db,
                         const gchar  *module_path)
@@ -308,53 +358,6 @@ gimp_module_db_refresh (GimpModuleDB *db,
 				   gimp_module_db_module_initialize,
                                    db);
 }
-
-#if 0
-static void
-add_to_inhibit_string (gpointer data, 
-		       gpointer user_data)
-{
-  GimpModule *module = data;
-  GString    *str    = user_data;
-
-  if (module->load_inhibit)
-    {
-      str = g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
-      str = g_string_append (str, module->filename);
-    }
-}
-
-static gboolean
-gimp_modules_write_modulerc (Gimp *gimp)
-{
-  GString  *str;
-  gchar    *p;
-  gchar    *filename;
-  FILE     *fp;
-  gboolean  saved = FALSE;
-
-  str = g_string_new (NULL);
-  gimp_container_foreach (gimp->modules, add_to_inhibit_string, str);
-  if (str->len > 0)
-    p = str->str + 1;
-  else
-    p = "";
-
-  filename = gimp_personal_rc_file ("modulerc");
-  fp = fopen (filename, "wt");
-  g_free (filename);
-  if (fp)
-    {
-      fprintf (fp, "(module-load-inhibit \"%s\")\n", p);
-      fclose (fp);
-      saved = TRUE;
-    }
-
-  g_string_free (str, TRUE);
-
-  return saved;
-}
-#endif
 
 /* name must be of the form lib*.so (Unix) or *.dll (Win32) */
 static gboolean

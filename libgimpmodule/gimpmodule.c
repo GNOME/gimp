@@ -233,6 +233,16 @@ gimp_module_unload (GTypeModule *module)
 
 /*  public functions  */
 
+/**
+ * gimp_module_new:
+ * @filename:     The filename of a loadable module.
+ * @load_inhibit: Pass #TRUE to exclude this module from auto-loading.
+ * @verbose:      Pass #TRUE to enable debugging output.
+ * 
+ * Creates a new #GimpModule instance.
+ * 
+ * Return value: The new #GimpModule object.
+ **/
 GimpModule *
 gimp_module_new (const gchar *filename,
                  gboolean     load_inhibit,
@@ -265,6 +275,16 @@ gimp_module_new (const gchar *filename,
   return module;
 }
 
+/**
+ * gimp_module_query_module:
+ * @module: A #GimpModule.
+ * 
+ * Queries the module without actually registering any of the types it
+ * may implement. After successful query, the @info field of the
+ * #GimpModule struct will be available for further inspection.
+ * 
+ * Return value: #TRUE on success.
+ **/
 gboolean
 gimp_module_query_module (GimpModule *module)
 {
@@ -333,6 +353,13 @@ gimp_module_query_module (GimpModule *module)
   return TRUE;
 }
 
+/**
+ * gimp_module_modified:
+ * @module: A #GimpModule.
+ * 
+ * Emits the "modified" signal. Call it whenever you have modified the module
+ * manually (which you shouldn't do).
+ **/
 void
 gimp_module_modified (GimpModule *module)
 {
@@ -341,6 +368,13 @@ gimp_module_modified (GimpModule *module)
   g_signal_emit (G_OBJECT (module), module_signals[MODIFIED], 0);
 }
 
+/**
+ * gimp_module_set_load_inhibit:
+ * @module:       A #GimpModule.
+ * @load_inhibit: Pass #TRUE to exclude this module from auto-loading.
+ * 
+ * Sets the @load_inhibit property if the module. Emits "modified".
+ **/
 void
 gimp_module_set_load_inhibit (GimpModule *module,
                               gboolean    load_inhibit)
@@ -358,6 +392,15 @@ gimp_module_set_load_inhibit (GimpModule *module,
 
 /*  private functions  */
 
+/**
+ * gimp_module_state_name:
+ * @state: A #GimpModuleState.
+ * 
+ * Returns the translated textual representation of a #GimpModuleState.
+ * The returned string must not be freed.
+ * 
+ * Return value: The @state's name.
+ **/
 const gchar *
 gimp_module_state_name (GimpModuleState state)
 {
@@ -420,6 +463,19 @@ gimp_module_set_last_error (GimpModule  *module,
 
 /*  GimpModuleInfo functions  */
 
+/**
+ * gimp_module_info_new:
+ * @abi_version: The #GIMP_MODULE_ABI_VERSION the module was compiled against.
+ * @purpose:     The module's general purpose.
+ * @author:      The module's author.
+ * @version:     The module's version.
+ * @copyright:   The module's copyright.
+ * @date:        The module's release date.
+ * 
+ * Creates a newly allocated #GimpModuleInfo struct.
+ * 
+ * Return value: The new #GimpModuleInfo struct.
+ **/
 GimpModuleInfo *
 gimp_module_info_new (guint32      abi_version,
                       const gchar *purpose,
@@ -442,6 +498,14 @@ gimp_module_info_new (guint32      abi_version,
   return info;
 }
 
+/**
+ * gimp_module_info_copy:
+ * @info: The #GimpModuleInfo struct to copy.
+ * 
+ * Copies a #GimpModuleInfo struct.
+ * 
+ * Return value: The new copy.
+ **/
 GimpModuleInfo *
 gimp_module_info_copy (const GimpModuleInfo *info)
 {
@@ -455,6 +519,12 @@ gimp_module_info_copy (const GimpModuleInfo *info)
                                info->date);
 }
 
+/**
+ * gimp_module_info_free:
+ * @info: The #GimpModuleInfo struct to free
+ * 
+ * Frees the passed #GimpModuleInfo.
+ **/
 void
 gimp_module_info_free (GimpModuleInfo *info)
 {
