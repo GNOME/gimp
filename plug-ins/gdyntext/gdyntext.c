@@ -37,11 +37,15 @@
 
 
 
-static void gdt_query(void);
-static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals, GParam **return_vals);
+static void gdt_query (void);
+static void gdt_run   (char       *name, 
+		       int         nparams, 
+		       GimpParam  *param, 
+		       int        *nreturn_vals, 
+		       GimpParam **return_vals);
 
 
-GPlugInInfo PLUG_IN_INFO = 
+GimpPlugInInfo PLUG_IN_INFO = 
 {
 	NULL,
 	NULL,
@@ -62,7 +66,7 @@ static void gdt_query(void)
 	INIT_I18N_UI();
 
 	{
-		static GParamDef gdt_args[] = {
+		static GimpParamDef gdt_args[] = {
 			/* standard params */
 			{ PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
 			{ PARAM_IMAGE,    "image",           "Input image"                  },
@@ -77,7 +81,7 @@ static void gdt_query(void)
 			{ PARAM_INT32,    "layer_alignment", "Layer alignment { NONE = 0, BOTTOM_LEFT = 1, BOTTOM_CENTER = 2, BOTTOM_RIGHT = 3, MIDDLE_LEFT = 4, CENTER = 5, MIDDLE_RIGHT = 6, TOP_LEFT = 7, TOP_CENTER = 8, TOP_RIGHT = 9 }" },
 			{ PARAM_STRING,   "fontname",        "The fontname (conforming to the X Logical Font Description Conventions)" },
 		};
-		static GParamDef gdt_rets[] = {
+		static GimpParamDef gdt_rets[] = {
 			{ PARAM_LAYER,    "layer",           "The text layer"               },
 		};
 		static int ngdt_args = sizeof(gdt_args) / sizeof(gdt_args[0]);
@@ -97,11 +101,11 @@ static void gdt_query(void)
 }
 
 
-static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
-	GParam **return_vals)
+static void gdt_run(char *name, int nparams, GimpParam *param, int *nreturn_vals,
+		    GimpParam **return_vals)
 {
-	static GParam values[2];
-	GRunModeType run_mode;
+	static GimpParam values[2];
+	GimpRunModeType run_mode;
 	GdtVals oldvals;
 
 
@@ -262,7 +266,7 @@ void gdt_load(GdtVals *data)
 	strncpy(data->xlfd, params[XLFD], sizeof(data->xlfd));
 	strncpy(data->text, params[TEXT], sizeof(data->text));
 	{
-		gchar *text = strunescape(data->text);
+		gchar *text = gimp_strcompress(data->text);
 		g_snprintf(data->text, sizeof(data->text), "%s", text);
 		g_free(text);
 	}
@@ -276,7 +280,7 @@ void gdt_save(GdtVals *data)
 	gchar *lname, *text;
 	GimpParasite *parasite;
 
-	text = strescape(data->text);
+	text = gimp_strescape (data->text, NULL);
 	lname = g_strdup_printf(GDYNTEXT_MAGIC
 		"{%s}{%d}{%d}{%d}{%d}{%06X}{%d}{%s}",
 		text,
@@ -329,24 +333,18 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 		gimp_progress_init (_("GIMP Dynamic Text"));
 
 	/* undo start */
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,
-		PARAM_IMAGE, gdtvals.image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_undo_push_group_start (gdtvals.image_id);
 
 	/* save and remove current selection */
-	ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
-		PARAM_IMAGE, data->image_id, PARAM_END);
-	selection_empty = ret_vals[1].data.d_int32;
-	gimp_destroy_params(ret_vals, nret_vals);
+	selection_empty = gimp_selection_is_empty (data->image_id);
 	if (selection_empty == FALSE) {
 		/* there is an active selection to save */
 		ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
 			PARAM_IMAGE, data->image_id, PARAM_END);
 		selection_channel = ret_vals[1].data.d_int32;
 		gimp_destroy_params(ret_vals, nret_vals);
-		ret_vals = gimp_run_procedure("gimp_selection_none", &nret_vals,
-			PARAM_IMAGE, data->image_id, PARAM_END);
-		gimp_destroy_params(ret_vals, nret_vals);
+
+		gimp_selection_none (data->image_id);
 	}
 
 	text_xlfd = g_strsplit(data->xlfd, "-", -1);
@@ -362,22 +360,24 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	g_strfreev(text_xlfd);
 
 	/* retrieve space char width */
-	ret_vals = gimp_run_procedure("gimp_text_get_extents_fontname", &nret_vals,
-		PARAM_STRING, "A A",
-		PARAM_FLOAT, font_size,
-		PARAM_INT32, font_size_type,
-		PARAM_STRING, data->xlfd,
-		PARAM_END);
-	space_width = ret_vals[1].data.d_int32;
-	gimp_destroy_params(ret_vals, nret_vals);
-	ret_vals = gimp_run_procedure("gimp_text_get_extents_fontname", &nret_vals,
-		PARAM_STRING, "AA",
-		PARAM_FLOAT, font_size,
-		PARAM_INT32, font_size_type,
-		PARAM_STRING, data->xlfd,
-		PARAM_END);
-	space_width -= ret_vals[1].data.d_int32;
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_text_get_extents_fontname ("AA", 
+					font_size, 
+					font_size_type, 
+					data->xlfd,
+					&text_width,
+					&text_height,
+					&text_ascent,
+					&text_descent);
+	space_width = text_width;
+	gimp_text_get_extents_fontname ("AA", 
+					font_size, 
+					font_size_type, 
+					data->xlfd,
+					&text_width,
+					&text_height,
+					&text_ascent,
+					&text_descent);
+	space_width -= text_width;
 #ifdef DEBUG
 	printf("GDT: space width = %d\n", space_width);
 #endif
@@ -388,20 +388,17 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	text_lines_w = g_new0(gint32, i);
 	layer_width = layer_height = 0;
 	for (i = 0; text_lines[i]; i++) {
-		ret_vals = gimp_run_procedure("gimp_text_get_extents_fontname", &nret_vals,
-			PARAM_STRING, strlen(text_lines[i]) > 0 ? text_lines[i] : " ",
-			PARAM_FLOAT, font_size,
-			PARAM_INT32, font_size_type,
-			PARAM_STRING, data->xlfd,
-			PARAM_END);
-		text_width = ret_vals[1].data.d_int32;
-		text_height = ret_vals[2].data.d_int32;
-		text_ascent = ret_vals[3].data.d_int32;
-		text_descent = ret_vals[4].data.d_int32;
+	  gimp_text_get_extents_fontname (strlen(text_lines[i]) > 0 ? text_lines[i] : " ",
+					  font_size,
+					  font_size_type,
+					  data->xlfd,
+					  &text_width,
+					  &text_height,
+					  &text_ascent,
+					  &text_descent);
 #ifdef DEBUG
     printf("GDT: %4dx%4d A:%3d D:%3d [%s]\n", text_width, text_height, text_ascent, text_descent, text_lines[i]);
 #endif
-		gimp_destroy_params(ret_vals, nret_vals);
 		text_lines_w[i] = text_width;
 		if (layer_width < text_width)
 			layer_width = text_width;
@@ -427,28 +424,20 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 
 	/* clear layer */
 	gimp_layer_set_preserve_transparency(data->layer_id, 0);
-	ret_vals = gimp_run_procedure("gimp_edit_clear", &nret_vals,
-		PARAM_DRAWABLE, data->drawable_id,
-		PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_edit_clear (data->drawable_id);
 
 	/* get layer offsets */
 	gimp_drawable_offsets(data->layer_id, &layer_ox, &layer_oy);
 
 	/* get foreground color */
-	ret_vals = gimp_run_procedure("gimp_palette_get_foreground", &nret_vals,
-		PARAM_END);
-	memcpy(&old_color, &ret_vals[1].data.d_color, sizeof(GParamColor));
-	gimp_destroy_params(ret_vals, nret_vals);
-
+	gimp_palette_get_foreground (&old_color.red, 
+				     &old_color.green, 
+				     &old_color.blue);
+	
 	/* set foreground color to the wanted text color */
-	text_color.red = (data->color & 0xff0000) >> 16;
-	text_color.green = (data->color & 0xff00) >> 8;
-	text_color.blue = data->color & 0xff;
-	ret_vals = gimp_run_procedure("gimp_palette_set_foreground", &nret_vals,
-		PARAM_COLOR, &text_color,
-		PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_palette_set_foreground (text_color.red, 
+				     text_color.green, 
+				     text_color.blue);
 
 	/* write text */
 	for (i = 0; text_lines[i]; i++) {
@@ -465,31 +454,25 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 			default:
 				xoffs = 0;
 		}
-		ret_vals = gimp_run_procedure("gimp_text_fontname", &nret_vals,
-			PARAM_IMAGE, data->image_id,
-			PARAM_DRAWABLE, data->drawable_id,
-			PARAM_FLOAT, (gdouble)layer_ox + 
-				strspn(text_lines[i], " ") * space_width + xoffs,	/* x */
-			PARAM_FLOAT, (gdouble)layer_oy + i * (text_height + data->line_spacing),		/* y */
-			PARAM_STRING, text_lines[i],
-			PARAM_INT32, 0,																			/* border */
-			PARAM_INT32, data->antialias,
-			PARAM_FLOAT, font_size,
-			PARAM_INT32, font_size_type,
-			PARAM_STRING, data->xlfd,
-			PARAM_END);
-		layer_f = ret_vals[1].data.d_layer;
-		gimp_destroy_params(ret_vals, nret_vals);
-		
+		layer_f = gimp_text_fontname (data->image_id,
+					      data->drawable_id,
+					      (gdouble)layer_ox +
+					      strspn(text_lines[i], " ") * space_width + xoffs,	          /* x */
+					      (gdouble)layer_oy + i * (text_height + data->line_spacing), /* y */
+					      text_lines[i],
+					      0,  /* border */
+					      data->antialias,
+					      font_size,
+					      font_size_type,
+					      data->xlfd);
+
 		/* FIXME: ascent/descent stuff, use gimp_layer_translate */
 #ifdef DEBUG
 		printf("GDT: MH:%d LH:%d\n", text_height, gimp_drawable_height(layer_f));
 #endif
 
-		ret_vals = gimp_run_procedure("gimp_floating_sel_anchor", &nret_vals,
-			PARAM_LAYER, layer_f,
-			PARAM_END);
-		gimp_destroy_params(ret_vals, nret_vals);
+		gimp_floating_sel_anchor (layer_f);
+		
 		if (show_progress)
 			gimp_progress_update((double)(i + 2) * 100.0 * (double)text_height /
 				(double)layer_height);
@@ -498,19 +481,15 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	g_free(text_lines_w);
 
 	/* set foreground color to the old one */
-	ret_vals = gimp_run_procedure("gimp_palette_set_foreground", &nret_vals,
-		PARAM_COLOR, &old_color,
-		PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_palette_set_foreground (old_color.red, 
+				     old_color.green, 
+				     old_color.blue);
 
 	/* apply rotation */
 	if (data->rotation != 0 && abs(data->rotation) != 360) {
-		ret_vals = gimp_run_procedure("gimp_rotate", &nret_vals,
-			PARAM_DRAWABLE, data->drawable_id,
-			PARAM_INT32, TRUE,
-			PARAM_FLOAT, (double)data->rotation * M_PI / 180.0,
-			PARAM_END);
-		gimp_destroy_params(ret_vals, nret_vals);
+		gimp_rotate (data->drawable_id, 
+			     TRUE,
+			     (gdouble)data->rotation * M_PI / 180.0);
 		gimp_layer_set_offsets(data->layer_id, layer_ox, layer_oy);
 	}
 
@@ -570,9 +549,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	gdt_save(data);
 
 	/* undo end */
-	ret_vals = gimp_run_procedure("gimp_undo_push_group_end", &nret_vals,
-		PARAM_IMAGE, gdtvals.image_id, PARAM_END);
-	gimp_destroy_params(ret_vals, nret_vals);
+	gimp_undo_push_group_end (gdtvals.image_id);
 
 	if (show_progress)
 		gimp_progress_update(100.0);

@@ -1,3 +1,36 @@
+2000-08-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimputils.[ch]: added g_strcompress from glib-1.3
+
+	* plug-ins/gdyntext/gdyntextutil.[ch]: removed since it duplicated
+	gimp_strescape and the newly added gimp_strcompress.
+
+	* plug-ins/gdyntext/Makefile.am
+	* plug-ins/gdyntext/gdyntext.[ch]
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gdyntext/gdyntextcompat.c: use the new functions and
+	got rid of some gimp_run_procedure calls since we now have proper
+	wrappers in libgimp.
+
+	* plug-ins/common/autocrop.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/guillotine.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/zealouscrop.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu.c: replaced gimp_run_procedure
+	calls with functions from libgimp that wrap the PDB calls. 
+
+	Sorry, all this is untested but I will leave tomorrow and hope to 
+	get some hacking done at Mitch's place. So I wanted that stuff to 
+	be in CVS. There are good chances that it works...
+
 2000-07-31  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/gz.c (load_image,save_image): Change Win32

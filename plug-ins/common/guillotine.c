@@ -28,7 +28,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <libgimp/gimp.h>
@@ -137,8 +136,6 @@ guillotine (gint32 image_ID)
   gint* vguides;
   gchar filename[1024];
   gint i,x,y;
-  GParam *return_vals;
-  gint nreturn_vals;
 
   num_vguides = 0;
   num_hguides = 0;
@@ -166,12 +163,12 @@ guillotine (gint32 image_ID)
 
   if (num_vguides+num_hguides)
     {
-      printf("Yay... found %d horizontal guides and %d vertical guides.\n",
-	     num_hguides, num_vguides);
+      g_print ("Yay... found %d horizontal guides and %d vertical guides.\n",
+	       num_hguides, num_vguides);
     }
   else
     {
-      printf("Poopy, no guides.\n");
+      g_print ("Poopy, no guides.\n");
       return;
     }
 
@@ -197,7 +194,7 @@ guillotine (gint32 image_ID)
 	      hguides[num_hguides++] =
 		gimp_image_get_guide_position(image_ID, guide_num); break;
 	    default:
-	      printf("Aie!  Aie!  Aie!  Too!\n");
+	      g_print ("Aie!  Aie!  Aie!  Too!\n");
 	      gimp_quit();
 	    }
 	  guide_num = gimp_image_find_next_guide(image_ID, guide_num);
@@ -211,11 +208,11 @@ guillotine (gint32 image_ID)
   qsort(vguides, num_vguides, sizeof(gint), &unexciting);
 
   for (i=0;i<num_vguides;i++)
-    printf("%d,",vguides[i]);
-  printf("\n");
+    g_print ("%d,",vguides[i]);
+  g_print ("\n");
   for (i=0;i<num_hguides;i++)
-    printf("%d,",hguides[i]);
-  printf("\n");
+    g_print ("%d,",hguides[i]);
+  g_print ("\n");
 
 
   /* Do the actual dup'ing and cropping... this isn't a too naive a
@@ -226,16 +223,11 @@ guillotine (gint32 image_ID)
 	{
 	  gint32 new_image;
 
-	  return_vals =
-	    gimp_run_procedure("gimp_channel_ops_duplicate", &nreturn_vals,
-			       PARAM_IMAGE, image_ID,
-			       PARAM_END);
+	  new_image = gimp_channel_ops_duplicate (image_ID);
 
-	  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-	    new_image = return_vals[1].data.d_int32;
-	  else
+	  if (new_image == -1)
 	    {
-	      printf("Aie3!\n");
+	      g_print ("Aie3!\n");
 	      return;
 	    }
 
@@ -249,21 +241,17 @@ guillotine (gint32 image_ID)
 /* 		 vguides[x], hguides[y],x, y);  */
 
 
-	  gimp_run_procedure("gimp_crop", &nreturn_vals,
-                       PARAM_IMAGE, new_image,
-                       PARAM_INT32, (vguides[x+1]-vguides[x]),
-                       PARAM_INT32, (hguides[y+1]-hguides[y]),
-                       PARAM_INT32, vguides[x],
-                       PARAM_INT32, hguides[y],
-                       PARAM_END);
+	  gimp_crop (new_image, 
+		     vguides[x+1] - vguides[x], hguides[y+1] - hguides[y],
+		     vguides[x], hguides[y]);
 
 /*  	  gimp_undo_push_group_end (new_image); */
 
 	  gimp_image_undo_enable (new_image);
 
 	  /* show the rough coordinates of the image in the title */
-  	  sprintf(filename, "%s-(%i,%i)", gimp_image_get_filename (image_ID), 
-		     x, y);
+  	  g_snprintf (filename, sizeof (filename), "%s-(%i,%i)", gimp_image_get_filename (image_ID), 
+		      x, y);
 	  gimp_image_set_filename(new_image, filename);
 
 	  gimp_display_new (new_image);

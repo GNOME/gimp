@@ -23,6 +23,8 @@
 #include <string.h>
 #include <glib.h>
 
+#include "gimputils.h"
+
 /**
  * gimp_strescape:
  * @source: A string to escape special characters in.
@@ -118,6 +120,80 @@ gimp_strescape (const gchar *source,
       p++;
     }
   *q = 0;
+  return dest;
+}
+#endif  /* GLIB <= 1.3 */
+
+/**
+ * gimp_strcompress:
+ * @source: A string to that has special characters escaped.
+ * 
+ * Does the opposite of g_strescape(), that is it converts escaped
+ * characters back to their unescaped form.
+ *
+ * Escaped characters are either one of the sequences \b, \f, \n, \r,
+ * \t, \\, \", or a three-digit octal escape sequence \nnn.
+ *
+ * If glib > 1.3 is installed this function is identical to 
+ * g_strcompress(). For systems using glib-1.2 this function provides 
+ * the functionality from glib-1.3.
+ * 
+ * Returns: A newly allocated copy of the string, with all escaped 
+ * special characters converted to their unescaped form.
+ */
+#if !(defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
+gchar*
+gimp_strcompress (const gchar *source)
+{
+  const gchar *p = source, *octal;
+  gchar *dest = g_malloc (strlen (source) + 1);
+  gchar *q = dest;
+  
+  while (*p)
+    {
+      if (*p == '\\')
+	{
+	  p++;
+	  switch (*p)
+	    {
+	    case '0':  case '1':  case '2':  case '3':  case '4':
+	    case '5':  case '6':  case '7':
+	      *q = 0;
+	      octal = p;
+	      while ((p < octal + 3) && (*p >= '0') && (*p <= '7'))
+		{
+		  *q = (*q * 8) + (*p - '0');
+		  p++;
+		}
+	      q++;
+	      p--;
+	      break;
+	    case 'b':
+	      *q++ = '\b';
+	      break;
+	    case 'f':
+	      *q++ = '\f';
+	      break;
+	    case 'n':
+	      *q++ = '\n';
+	      break;
+	    case 'r':
+	      *q++ = '\r';
+	      break;
+	    case 't':
+	      *q++ = '\t';
+	      break;
+	    default:		/* Also handles \" and \\ */
+	      *q++ = *p;
+	      break;
+	    }
+	}
+      else
+	*q++ = *p;
+      p++;
+    }
+  *q = 0;
+  
   return dest;
 }
 #endif  /* GLIB <= 1.3 */

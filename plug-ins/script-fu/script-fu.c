@@ -372,26 +372,17 @@ init_procedures (void)
 static void
 init_constants (void)
 {
-  GParam *return_vals = NULL;
-  gint nreturn_vals;
+  gchar *gimp_plugin_dir;
 
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-				    &nreturn_vals,
-				    PARAM_STRING, "gimp_data_dir",
-				    PARAM_END);
+  setvar (cintern ("gimp-data-dir"), strcons (-1, gimp_data_directory ()), NIL);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    setvar (cintern ("gimp-data-dir"), strcons (-1, return_vals[1].data.d_string), NIL);
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-				    &nreturn_vals,
-				    PARAM_STRING, "gimp_plugin_dir",
-				    PARAM_END);
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
-    setvar (cintern ("gimp-plugin-dir"), strcons (-1, return_vals[1].data.d_string), NIL);
-  gimp_destroy_params (return_vals, nreturn_vals);
-
+  gimp_plugin_dir = gimp_gimprc_query ("gimp_plugin_dir");
+  if (gimp_plugin_dir)
+    {
+      setvar (cintern ("gimp-plugin-dir"), strcons (-1, gimp_plugin_dir), NIL);
+      g_free (gimp_plugin_dir);
+    }
+  
   /* Generated constants */
   init_generated_constants ();
 

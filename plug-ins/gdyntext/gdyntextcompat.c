@@ -142,7 +142,7 @@ gboolean gdt_compat_load(GdtVals *data)
 	
 	strncpy(data->text, params[C_TEXT], sizeof(data->text));
 	{
-		gchar *text = strunescape(data->text);
+		gchar *text = gimp_strcompress (data->text);
 		g_snprintf(data->text, sizeof(data->text), "%s", text);
 		g_free(text);
 	}

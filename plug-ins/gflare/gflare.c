@@ -972,8 +972,7 @@ plugin_run (gchar   *name,
 void
 plug_in_parse_gflare_path (void)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
+  gchar *gflare_path;  
 
   GList *fail_list = NULL;
   GList *list;
@@ -981,35 +980,29 @@ plug_in_parse_gflare_path (void)
   gimp_path_free (gflare_path_list);
   gflare_path_list = NULL;
 
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-				    &nreturn_vals,
-				    PARAM_STRING, "gflare-path",
-				    PARAM_END);
+  gflare_path = gimp_gimprc_query ("gflare-path");
 
-  if (return_vals[0].data.d_status != STATUS_SUCCESS ||
-      return_vals[1].data.d_string == NULL)
+  if (!gflare_path)
     {
       gchar *gimprc = gimp_personal_rc_file ("gimprc");
-      gchar *path = gimp_strescape
-	("${gimp_dir}" G_DIR_SEPARATOR_S "gflare"
-	 G_SEARCHPATH_SEPARATOR_S
-	 "${gimp_data_dir}" G_DIR_SEPARATOR_S "gflare",
-	 NULL);
+      gchar *path   = gimp_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare"
+				      G_SEARCHPATH_SEPARATOR_S
+				      "${gimp_data_dir}" G_DIR_SEPARATOR_S "gflare",
+				      NULL);
       g_message (_("No gflare-path in gimprc:\n"
 		   "You need to add an entry like\n"
 		   "(gflare-path \"%s\")\n"
 		   "to your %s file."), path, gimprc);
       g_free (gimprc);
       g_free (path);
-      gimp_destroy_params (return_vals, nreturn_vals);
+
       return;
     }
 
 
-  gflare_path_list = gimp_path_parse (return_vals[1].data.d_string,
+  gflare_path_list = gimp_path_parse (gflare_path,
 				      16, TRUE, &fail_list);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  g_free (gflare_path);
 
   if (fail_list)
     {

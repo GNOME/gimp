@@ -146,7 +146,6 @@ do_zcrop (GDrawable *drawable,
   GPixelRgn srcPR, destPR;
   gint    width, height, x, y;
   guchar *buffer;
-  gint    nreturn_vals;
   gint8  *killrows;
   gint8  *killcols;
   gint32  livingrows, livingcols, destrow, destcol;
@@ -263,25 +262,11 @@ do_zcrop (GDrawable *drawable,
     g_free(killcols);
 
     gimp_progress_update(1.00);
-
-    gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
-			PARAM_IMAGE, image_id,
-			PARAM_END);
-
+    gimp_undo_push_group_start (image_id);
     gimp_drawable_flush (drawable);
     gimp_drawable_merge_shadow (drawable->id, TRUE);
-
-    gimp_run_procedure("gimp_crop", &nreturn_vals,
-		       PARAM_IMAGE, image_id,
-		       PARAM_INT32, (gint32)livingcols,
-		       PARAM_INT32, (gint32)livingrows,
-		       PARAM_INT32, 0,
-		       PARAM_INT32, 0,
-		       PARAM_END);
-
-    gimp_run_procedure ("gimp_undo_push_group_end", &nreturn_vals,
-			PARAM_IMAGE, image_id,
-			PARAM_END);
+    gimp_crop (image_id, livingcols, livingrows, 0, 0);
+    gimp_undo_push_group_end (image_id);
 }
 
 

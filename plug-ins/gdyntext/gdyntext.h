@@ -113,7 +113,6 @@ typedef struct {
 
 
 #include "gdyntext_ui.h"
-#include "gdyntextutil.h"
 #include "gdyntextcompat.h"
 
 

@@ -141,7 +141,6 @@ doit (GDrawable *drawable,
   gint32 nx, ny, nw, nh;
   guchar *buffer;
   guchar color[4] = {0, 0, 0, 0};
-  gint nreturn_vals;
   
   width = drawable->width;
   height = drawable->height;
@@ -227,16 +226,9 @@ doit (GDrawable *drawable,
   g_free (buffer);
   
   gimp_drawable_detach (drawable);
+
   if (nw != width || nh != height)
-    {
-      gimp_run_procedure ("gimp_crop", &nreturn_vals,
-			  PARAM_IMAGE, image_id,
-			  PARAM_INT32, nw,
-			  PARAM_INT32, nh,
-			  PARAM_INT32, nx,
-			  PARAM_INT32, ny,
-			  PARAM_END);
-    }
+    gimp_crop (image_id, nw, nh, nx, ny);
 }
 
 static gint

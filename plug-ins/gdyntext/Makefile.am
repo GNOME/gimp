@@ -41,8 +41,6 @@ gdyntext_SOURCES = \
 	gdyntext.h		\
 	gdyntextcompat.c       	\
 	gdyntextcompat.h       	\
-	gdyntextutil.c		\
-	gdyntextutil.h		\
 	gdyntext_ui.c		\
 	gdyntext_ui.h		\
 	message_window.c	\

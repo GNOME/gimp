@@ -237,7 +237,6 @@ tile (gint32  image_id,
   gint width, height;
   gint i, j, k;
   gint progress, max_progress;
-  gint nreturn_vals;
   gpointer pr;
 
   /* initialize */
@@ -280,22 +279,10 @@ tile (gint32  image_id,
     {
       gimp_undo_push_group_start (image_id);
 
-      gimp_run_procedure ("gimp_image_resize", &nreturn_vals,
-			  PARAM_IMAGE, image_id,
-			  PARAM_INT32, tvals.new_width,
-			  PARAM_INT32, tvals.new_height,
-			  PARAM_INT32, 0,
-			  PARAM_INT32, 0,
-			  PARAM_END);
+      gimp_image_resize (image_id, tvals.new_width, tvals.new_height, 0, 0);
 
       if (gimp_drawable_is_layer (drawable_id))
-	gimp_run_procedure ("gimp_layer_resize", &nreturn_vals,
-			    PARAM_LAYER, drawable_id,
-			    PARAM_INT32, tvals.new_width,
-			    PARAM_INT32, tvals.new_height,
-			    PARAM_INT32, 0,
-			    PARAM_INT32, 0,
-			    PARAM_END);
+	gimp_layer_resize (drawable_id, tvals.new_width, tvals.new_height, 0, 0);
 
       /*  Get the specified drawable  */
       drawable = gimp_drawable_get (drawable_id);
@@ -356,9 +343,7 @@ tile (gint32  image_id,
       gimp_drawable_detach (new_layer);
     }
   else
-    gimp_run_procedure ("gimp_undo_push_group_end", &nreturn_vals,
-			PARAM_IMAGE, image_id,
-			PARAM_END);
+    gimp_undo_push_group_end (image_id);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);

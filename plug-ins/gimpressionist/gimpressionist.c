@@ -47,8 +47,6 @@ struct ppm inalpha = {0,0,NULL};
 
 GList * parsepath (void)
 {
-  GParam *return_vals;
-  gint nreturn_vals;
   static GList *lastpath = NULL;
   gchar *gimpdatasubdir, *defaultpath, *tmps;
   struct stat st;
@@ -78,12 +76,9 @@ GList * parsepath (void)
     tmps = g_strdup (defaultpath);
   else
     {
-      return_vals = gimp_run_procedure ("gimp_gimprc_query", &nreturn_vals,
-					PARAM_STRING, "gimpressionist-path",
-					PARAM_END);
+      tmps = gimp_gimprc_query ("gimpressionist-path");
 
-      if (return_vals[0].data.d_status != STATUS_SUCCESS ||
-	  return_vals[1].data.d_string == NULL)
+      if (!tmps)
 	{
 	  if (stat (gimpdatasubdir, &st) != 0
 	      || !S_ISDIR(st.st_mode))
@@ -103,11 +98,6 @@ GList * parsepath (void)
 	    }
 	  tmps = g_strdup (defaultpath);
 	}
-      else
-	{
-	  tmps = g_strdup (return_vals[1].data.d_string);
-	}
-      gimp_destroy_params (return_vals, nreturn_vals);
     }
 
   lastpath = gimp_path_parse (tmps, 16, FALSE, NULL);

@@ -779,7 +779,6 @@ boundscheck (gint32 image_ID)
   GDrawable *drawable;
   gint32 *layers;   
   gint nlayers;
-  gint nreturn_vals;
   gint i;
   gint offset_x, offset_y;
 
@@ -809,13 +808,9 @@ boundscheck (gint32 image_ID)
 	   * the user and they said yes. */
 	  if ((run_mode == RUN_NONINTERACTIVE) || badbounds_dialog ())
 	    {
-	      gimp_run_procedure("gimp_crop", &nreturn_vals,
-				 PARAM_IMAGE, image_ID,
-				 PARAM_INT32, gimp_image_width(image_ID),
-				 PARAM_INT32, gimp_image_height(image_ID),
-				 PARAM_INT32, 0,
-				 PARAM_INT32, 0,
-				 PARAM_END);
+	      gimp_crop (image_ID,
+			 gimp_image_width (image_ID), gimp_image_height (image_ID), 
+			 0, 0);
 	      return TRUE;
 	    }
 	  else

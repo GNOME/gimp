@@ -812,7 +812,6 @@ ReadImage (FILE *fd,
   gchar *framename;
   gchar *framename_ptr;
   gboolean alpha_frame = FALSE;
-  int nreturn_vals;
   static int previous_disposal;
 
 
@@ -889,9 +888,8 @@ ReadImage (FILE *fd,
 #ifdef GIFDEBUG
 		  g_print ("GIF: Promoting image to RGB...\n");
 #endif
-		  gimp_run_procedure("gimp_convert_rgb", &nreturn_vals,
-				     PARAM_IMAGE, image_ID,
-				     PARAM_END);
+		  gimp_convert_rgb (image_ID);
+
 		  break;
 		}
 	    }

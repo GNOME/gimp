@@ -1069,18 +1069,12 @@ clear_curled_region (void)
 static void
 page_curl (void)
 {
-  int nreturn_vals;
-  gimp_run_procedure ("gimp_undo_push_group_start", &nreturn_vals,
-		      PARAM_IMAGE, image_id,
-		      PARAM_END);
-
+  gimp_undo_push_group_start (image_id);
   gimp_progress_init ( _("Page Curl..."));
   init_calculation ();
   do_curl_effect ();
   clear_curled_region ();
-  gimp_run_procedure ("gimp_undo_push_group_end", &nreturn_vals,
-		      PARAM_IMAGE, image_id,
-		      PARAM_END);
+  gimp_undo_push_group_end (image_id);
 }
 
 /*

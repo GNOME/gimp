@@ -292,9 +292,7 @@ run (gchar   *name,
 			       run_mode);
 
 	  if (status == STATUS_SUCCESS)
-	    {
-	      gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
-	    }
+	    gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
 	}
     }
   else
@@ -467,24 +465,19 @@ save_dialog (void)
   GtkWidget *text;
   GtkWidget *vscrollbar;
 
-  gchar   buffer[BUFFER_SIZE];
-  gint    nreturn_vals;
-  GParam *return_vals;
+  gchar      buffer[BUFFER_SIZE];
+  gchar     *gump_from;
 
   gimp_ui_init ("mail", FALSE);
 
   /* check gimprc for a preffered "From:" address */
-  return_vals = gimp_run_procedure ("gimp_gimprc_query",
-                                    &nreturn_vals,
-                                    PARAM_STRING, "gump-from",
-                                    PARAM_END);         
+  gump_from = gimp_gimprc_query ("gump-from");         
 
-  /* check to see if we actually got a value */
-  if (return_vals[0].data.d_status == STATUS_SUCCESS &&
-      return_vals[1].data.d_string != NULL)
-    strncpy (mail_info.from, return_vals[1].data.d_string ,  BUFFER_SIZE);
-
-  gimp_destroy_params (return_vals, nreturn_vals);
+  if (gump_from)
+    {
+      strncpy (mail_info.from, gump_from, BUFFER_SIZE);
+      g_free (gump_from);
+    }
 
   dlg = gimp_dialog_new (_("Send to Mail"), "mail",
 			 gimp_standard_help_func, "filters/mail.html",

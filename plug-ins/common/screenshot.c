@@ -97,7 +97,6 @@ static void  shoot_ok_callback    (GtkWidget *widget,
 				   gpointer   data);
 static void  shoot_toggle_update  (GtkWidget *widget,
 				   gpointer   radio_button);
-static void  shoot_display_image  (gint32     image);
 static void  shoot_delay          (gint32     delay);
 static gint  shoot_delay_callback (gpointer   data);
 
@@ -231,7 +230,7 @@ run (gchar   *name,
 	  /* Store variable states for next run */
 	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
 	  /* display the image */
-	  shoot_display_image (image_ID);
+	  gimp_display_new (image_ID);
 	}
       /* set return values */
       *nreturn_vals = 2;
@@ -334,21 +333,7 @@ shoot (void)
   if (image_ID != -1)
     {
       /* figure out the monitor resolution and set the image to it */
-      params = gimp_run_procedure ("gimp_get_monitor_resolution",
-				   &retvals,
-				   PARAM_END);
-      if (params[0].data.d_status == STATUS_SUCCESS)
-	{
-	  xres = params[1].data.d_float;
-	  yres = params[2].data.d_float;
-	}
-      else
-	{ 
-	  xres = 72.0;
-	  yres = 72.0;
-	}
-      gimp_destroy_params (params, retvals);
-  
+      gimp_get_monitor_resolution (&xres, &yres);      
       gimp_image_set_resolution (image_ID, xres, yres);
 
       /* unset the image filename */
@@ -557,17 +542,3 @@ shoot_delay_callback (gpointer data)
   return (*seconds_left);
 }
 
-/* Display function */
-
-void
-shoot_display_image (gint32 image)
-{
-  GParam *params;
-  gint retvals;
- 
-  params = gimp_run_procedure ("gimp_display_new",
-			       &retvals,
-			       PARAM_IMAGE, image,
-			       PARAM_END);
-  gimp_destroy_params (params, retvals);
-}

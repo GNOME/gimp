@@ -32,16 +32,18 @@ extern "C" {
 
 
 /*  
- *  Right now all you find here is the g_strescape function out of 
- *  glib-1.3. We need its functionality, but don't want to rely on
- *  that version being installed 
+ *  Right now all you find here are the g_strescape and g_strcompress 
+ *  function out of glib-1.3. We need their functionality, but don't 
+ *  want to rely on that version being installed 
  */
 
 #if (defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1))
 #define gimp_strescape(string, exceptions) g_strescape (string, exceptions)
+#define gimp_strcompress(string)           g_strcompress (string)
 #else
-gchar* gimp_strescape (const gchar *source, 
-		       const gchar *exceptions);
+gchar * gimp_strescape   (const gchar *source, 
+			  const gchar *exceptions);
+gchar * gimp_strcompress (const gchar *source);
 #endif  /* GLIB <= 1.3 */
 
 
@@ -50,3 +52,6 @@ gchar* gimp_strescape (const gchar *source,
 #endif /* __cplusplus */
 
 #endif /* __GIMPUTILS_H__ */
+
+
+
