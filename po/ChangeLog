@@ -1,3 +1,7 @@
+2004-07-26  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added app/actions/plug-in-commands.c.
+
 2004-07-24  Roman Joost <roman@bromeco.de>
 
 	* de.po: Updated few msgstrs and fixed typos
