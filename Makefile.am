@@ -47,14 +47,11 @@ EXTRA_DIST = \
 	HACKING			\
 	INSTALL			\
 	LICENSE			\
-	MAINTAINERS		\
 	NEWS			\
 	NEWS.pre-2-0		\
-	PLUGIN_MAINTAINERS	\
 	README			\
 	README.i18n		\
 	README.win32		\
-	TODO.xml		\
 	config.h.win32		\
 	gimp-zip.in		\
 	gimpdefs.msc		\
