@@ -88,16 +88,14 @@ typedef struct
 /***** Prototypes *****/
 
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
-static pixel_fetcher_t *pixel_fetcher_new          (GimpDrawable *drawable);
-static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
-						    guchar r, guchar g,
-						    guchar b, guchar a);
+static pixel_fetcher_t *pixel_fetcher_new          (GimpDrawable    *drawable);
+static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf);
 static void             pixel_fetcher_get_pixel    (pixel_fetcher_t *pf,
 						    int x, int y, guchar *pixel);
 static void             pixel_fetcher_destroy       (pixel_fetcher_t *pf);
@@ -107,9 +105,9 @@ static void 		mblur_linear (void);
 static void 	        mblur_radial (void);
 static void 	        mblur_zoom   (void);
 
-static void       dialog_ok_callback   (GtkWidget *, gpointer);
+static void             dialog_ok_callback   (GtkWidget *, gpointer);
 
-static gboolean   mblur_dialog         (void);
+static gboolean         mblur_dialog         (void);
 
 /***** Variables *****/
 
@@ -132,7 +130,7 @@ static gboolean mb_run = FALSE;
 
 static GimpDrawable *drawable;
 
-static gint img_width, img_height, img_bpp, img_has_alpha;
+static gint img_width, img_height, img_bpp;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
 static gint sel_width, sel_height;
 
@@ -172,15 +170,14 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-
-  GimpRunModeType run_mode;
+  static GimpParam   values[1];
+  GimpRunModeType    run_mode;
   GimpPDBStatusType  status;
 
   status   = GIMP_PDB_SUCCESS;
@@ -196,10 +193,9 @@ run (gchar   *name,
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  img_width     = gimp_drawable_width (drawable->id);
-  img_height    = gimp_drawable_height (drawable->id);
-  img_bpp       = gimp_drawable_bpp (drawable->id);
-  img_has_alpha = gimp_drawable_has_alpha (drawable->id);
+  img_width  = gimp_drawable_width (drawable->id);
+  img_height = gimp_drawable_height (drawable->id);
+  img_bpp    = gimp_drawable_bpp (drawable->id);
 
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
@@ -208,8 +204,8 @@ run (gchar   *name,
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
 
-  cen_x = (double) (sel_x1 + sel_x2 - 1) / 2.0;
-  cen_y = (double) (sel_y1 + sel_y2 - 1) / 2.0;
+  cen_x = (gdouble) (sel_x1 + sel_x2 - 1) / 2.0;
+  cen_y = (gdouble) (sel_y1 + sel_y2 - 1) / 2.0;
 
   switch (run_mode)
     {
@@ -285,28 +281,25 @@ run (gchar   *name,
 static void 
 mblur_linear (void)
 {
-  GimpPixelRgn	dest_rgn;
+  GimpPixelRgn	   dest_rgn;
   pixel_fetcher_t *pft;
-  gpointer	pr;
+  gpointer	   pr;
 
-  guchar	*dest, *d;
-  guchar	pixel[4], bg_color[4];
-  gint32	sum[4];
-
-  gint          progress, max_progress;
-  gint		c;
-
-  int 		x, y, i, xx, yy, n;
-  int 		dx, dy, px, py, swapdir, err, e, s1, s2;
+  guchar *dest;
+  guchar *d;
+  guchar  pixel[4];
+  gint32  sum[4];
+  gint    progress, max_progress;
+  gint	  c;
+  gint    x, y, i, xx, yy, n;
+  gint    dx, dy, px, py, swapdir, err, e, s1, s2;
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
   
   pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
-			      (img_has_alpha ? 0 : 255));
+  pixel_fetcher_set_bg_color (pft);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -427,15 +420,16 @@ mblur_radial (void)
   pixel_fetcher_t *pft;
   gpointer	pr;
 
-  guchar	*dest, *d;
-  guchar	pixel[4], bg_color[4];
+  guchar       *dest;
+  guchar       *d;
+  guchar	pixel[4];
   gint32	sum[4];
 
   gint          progress, max_progress, c;
 
-  int 		x, y, i, n, xr, yr;
-  int 		count, R, r, w, h, step;
-  float 	angle, theta, * ct, * st, offset, xx, yy;
+  gint 		x, y, i, n, xr, yr;
+  gint 		count, R, r, w, h, step;
+  gfloat 	angle, theta, * ct, * st, offset, xx, yy;
 
   /* initialize */
 
@@ -447,9 +441,7 @@ mblur_radial (void)
   
   pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
-			      (img_has_alpha ? 0 : 255));
+  pixel_fetcher_set_bg_color (pft);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -541,7 +533,7 @@ mblur_zoom (void)
   gpointer	pr;
 
   guchar	*dest, *d;
-  guchar	pixel[4], bg_color[4];
+  guchar	pixel[4];
   gint32	sum[4];
 
   gint          progress, max_progress;
@@ -558,9 +550,7 @@ mblur_zoom (void)
 
   pft = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color (pft, bg_color[0], bg_color[1], bg_color[2],
-			      (img_has_alpha ? 0 : 255));
+  pixel_fetcher_set_bg_color (pft);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -672,18 +662,25 @@ pixel_fetcher_new (GimpDrawable *drawable)
 }
 
 static void
-pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
-			    guchar           r,
-			    guchar           g,
-			    guchar           b,
-			    guchar           a)
+pixel_fetcher_set_bg_color (pixel_fetcher_t *pf)
 {
-  pf->bg_color[0] = r;
-  pf->bg_color[1] = g;
-  pf->bg_color[2] = b;
+  GimpRGB  background;
 
-  if (pf->img_has_alpha)
-    pf->bg_color[pf->img_bpp - 1] = a;
+  gimp_palette_get_background_rgb (&background);
+
+  switch (pf->img_bpp)
+    {
+    case 1:
+    case 2:
+      pf->bg_color[0] = gimp_rgb_intensity_uchar (&background);
+      break;
+
+    case 3:
+    case 4:
+      gimp_rgb_get_uchar (&background,
+			  pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
+      break;
+    }
 }
 
 static void

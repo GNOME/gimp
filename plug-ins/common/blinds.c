@@ -128,7 +128,7 @@ static void      blinds_button_update  (GtkWidget     *widget,
 static void      dialog_update_preview (void);
 static void	 cache_preview         (void);
 static void      apply_blinds          (void);
-static int       blinds_get_bg         (guchar        *bg);
+static void      blinds_get_bg         (guchar        *bg);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -647,44 +647,44 @@ blindsapply (guchar *srow,
     }
 }
 
-static int
+static void
 blinds_get_bg (guchar *bg)
 {
-  /* Get the background color */
-  int retval = FALSE; /*Return TRUE if of GREYA type */
+  GimpRGB  background;
+
+  gimp_palette_get_background_rgb (&background);
 
   switch (gimp_drawable_type (blindsdrawable->id))
     {
-    case GIMP_RGBA_IMAGE:
-      bg[3] = bvals.bg_trans ? 0 : 255;
-      break;
-
     case GIMP_RGB_IMAGE :
-      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
+      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
+      bg[3] = 255;
       break;
 
-    case GIMP_GRAYA_IMAGE:
-      retval = TRUE;
+    case GIMP_RGBA_IMAGE:
+      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
       bg[3] = bvals.bg_trans ? 0 : 255;
       break;
 
     case GIMP_GRAY_IMAGE:
-      bg[2] = 0;
-      bg[1] = 0;
-      bg[0] = 0;
+      bg[0] = gimp_rgb_intensity_uchar (&background);
+      bg[1] = 255;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      bg[0] = gimp_rgb_intensity_uchar (&background);
+      bg[1] = bvals.bg_trans ? 0 : 255;
       break;
 
     default:
       break;
     }
-
-  return retval;
 }
 
 static void
 dialog_update_preview (void)
 {
-  int     y;
+  gint    y;
   guchar *p;
   guchar  bg[4];
   gint    check, check_0, check_1;
@@ -702,39 +702,42 @@ dialog_update_preview (void)
 
 	  if ((y / GIMP_CHECK_SIZE) & 1)
 	    {
-	      check_0 = GIMP_CHECK_DARK * 255;
-	      check_1 = GIMP_CHECK_LIGHT * 255;
+	      check_0 = GIMP_CHECK_DARK  * 255.0;
+	      check_1 = GIMP_CHECK_LIGHT * 255.0;
 	    }
 	  else
 	    {
-	      check_0 = GIMP_CHECK_LIGHT * 255;
-	      check_1 = GIMP_CHECK_DARK * 255;
+	      check_0 = GIMP_CHECK_LIGHT * 255.0;
+	      check_1 = GIMP_CHECK_DARK  * 255.0;
 	    }
 
 	  if (bint.img_bpp > 3)
 	    {
-	      int i,j;
-	    for (i = 0, j = 0 ; i < sizeof(bint.preview_row); i += 4, j += 3 )
-	      {
-		gint alphaval;
-		if (((i/4) / GIMP_CHECK_SIZE) & 1)
-		  check = check_0;
-		else
-		  check = check_1;
+	      gint i,j;
 
-		alphaval = bint.preview_row[i + 3];
-
- 		bint.preview_row[j] = 
-		  check + (((bint.preview_row[i] - check)*alphaval)/255);
- 		bint.preview_row[j + 1] = 
-		  check + (((bint.preview_row[i + 1] - check)*alphaval)/255);
- 		bint.preview_row[j + 2] = 
-		  check + (((bint.preview_row[i + 2] - check)*alphaval)/255);
-	      }
-	  }
+	      for (i = 0, j = 0 ; 
+		   i < sizeof(bint.preview_row); 
+		   i += 4, j += 3 )
+		{
+		  gint alphaval;
+		  if (((i/4) / GIMP_CHECK_SIZE) & 1)
+		    check = check_0;
+		  else
+		    check = check_1;
+		  
+		  alphaval = bint.preview_row[i + 3];
+		  
+		  bint.preview_row[j] = 
+		    check + (((bint.preview_row[i] - check) * alphaval) / 255);
+		  bint.preview_row[j + 1] = 
+		    check + (((bint.preview_row[i + 1] - check) * alphaval) / 255);
+		  bint.preview_row[j + 2] = 
+		    check + (((bint.preview_row[i + 2] - check) * alphaval) / 255);
+		}
+	    }
 	
-	  gtk_preview_draw_row(GTK_PREVIEW(bint.preview),
-			       bint.preview_row, 0, y, preview_width);
+	  gtk_preview_draw_row (GTK_PREVIEW (bint.preview),
+				bint.preview_row, 0, y, preview_width);
 	
 	  p += preview_width * bint.img_bpp;
 	} 
@@ -746,10 +749,10 @@ dialog_update_preview (void)
        * this act as a transfomation matrix for the 
        * rows. Make row 0 invalid so we can find it again!
        */
-      int i;
-      int loop1,loop2;
-      guchar *sr = g_new(guchar,(preview_height)*4);
-      guchar *dr = g_new(guchar,(preview_height)*4);
+      gint i;
+      gint loop1,loop2;
+      guchar *sr = g_new (guchar, preview_height * 4);
+      guchar *dr = g_new (guchar, preview_height * 4);
       guchar dummybg[4];
       /* Copy into here after translation*/
       guchar copy_row[PREVIEW_SIZE*4]; 
@@ -760,8 +763,8 @@ dialog_update_preview (void)
       /* Fill in with background color ? */
       for (i = 0 ; i < preview_width ; i++)
 	{
-	  int j;
-	  int bd = bint.img_bpp;
+	  gint j;
+	  gint bd = bint.img_bpp;
 	  guchar *dst;
 	  dst = &bint.preview_row[i*bd];
 	  
@@ -857,9 +860,7 @@ apply_blinds (void)
   int x,y;
   guchar bg[4];
 
-  /* Adjust aplha channel if GREYA */
-  if (blinds_get_bg (bg) == TRUE)
-    bg[1] = bvals.bg_trans  ? 0 : 255;
+  blinds_get_bg (bg);
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);

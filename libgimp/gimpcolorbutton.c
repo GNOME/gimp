@@ -226,7 +226,8 @@ gimp_color_button_new (const gchar *title,
   gtk_item_factory_set_translate_func (gcb->item_factory,
 				       gimp_color_button_menu_translate,
 	  			       NULL, NULL);
-  gtk_item_factory_create_items (gcb->item_factory, nmenu_items, menu_items, gcb);
+  gtk_item_factory_create_items (gcb->item_factory, 
+				 nmenu_items, menu_items, gcb);
   gtk_signal_connect (GTK_OBJECT (gcb), "button_press_event",
 		      GTK_SIGNAL_FUNC (gimp_color_button_menu_popup),
 		      gcb);
@@ -411,18 +412,12 @@ gimp_color_button_use_fg (gpointer   callback_data,
 			  GtkWidget *widget)
 {
   GimpRGB  color;
-  guchar   fg_color[3];
 
   g_return_if_fail (callback_data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
-  gimp_palette_get_foreground (&fg_color[0], &fg_color[1], &fg_color[2]);
-
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_rgb_set (&color, 
-		fg_color[0] / 255.0,
-		fg_color[1] / 255.0,
-		fg_color[2] / 255.0);
+  gimp_palette_get_foreground_rgb (&color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
 }
 
@@ -432,19 +427,12 @@ gimp_color_button_use_bg (gpointer   callback_data,
 			  GtkWidget *widget)
 {
   GimpRGB  color;
-  guchar   bg_color[3];
 
   g_return_if_fail (callback_data != NULL);
   g_return_if_fail (GIMP_IS_COLOR_BUTTON (callback_data));
 
-  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
-
   gimp_color_button_get_color (GIMP_COLOR_BUTTON (callback_data), &color);
-  gimp_rgb_set (&color, 
-		bg_color[0] / 255.0,
-		bg_color[1] / 255.0,
-		bg_color[2] / 255.0);
-
+  gimp_palette_get_background_rgb (&color);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (callback_data), &color);
 }
 

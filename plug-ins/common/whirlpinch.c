@@ -118,9 +118,7 @@ static int    calc_undistorted_coords (double wx, double wy,
 static guchar bilinear (double x, double y, guchar *values);
 
 static pixel_fetcher_t *pixel_fetcher_new (GimpDrawable *drawable);
-static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
-						    guchar r, guchar g,
-						    guchar b, guchar a);
+static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf);
 static void             pixel_fetcher_get_pixel (pixel_fetcher_t *pf, int x,
 						 int y, guchar *pixel);
 static void             pixel_fetcher_destroy (pixel_fetcher_t *pf);
@@ -372,7 +370,6 @@ whirl_pinch (void)
   double           cx, cy;
   int              ix, iy;
   int              i;
-  guchar           bg_color[4];
   pixel_fetcher_t *pft, *pfb;
 
   /* Initialize rows */
@@ -386,17 +383,8 @@ whirl_pinch (void)
   pft = pixel_fetcher_new (drawable);
   pfb = pixel_fetcher_new (drawable);
 
-  gimp_palette_get_background (&bg_color[0], &bg_color[1], &bg_color[2]);
-  pixel_fetcher_set_bg_color (pft,
-			      bg_color[0],
-			      bg_color[1],
-			      bg_color[2],
-			      (img_has_alpha ? 0 : 255));
-  pixel_fetcher_set_bg_color (pfb,
-			      bg_color[0],
-			      bg_color[1],
-			      bg_color[2],
-			      (img_has_alpha ? 0 : 255));
+  pixel_fetcher_set_bg_color (pft);
+  pixel_fetcher_set_bg_color (pfb);
 
   progress     = 0;
   max_progress = sel_width * sel_height;
@@ -636,18 +624,25 @@ pixel_fetcher_new (GimpDrawable *drawable)
 }
 
 static void
-pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
-			    guchar           r,
-			    guchar           g,
-			    guchar           b,
-			    guchar           a)
+pixel_fetcher_set_bg_color (pixel_fetcher_t *pf)
 {
-  pf->bg_color[0] = r;
-  pf->bg_color[1] = g;
-  pf->bg_color[2] = b;
+  GimpRGB  background;
 
-  if (pf->img_has_alpha)
-    pf->bg_color[pf->img_bpp - 1] = a;
+  gimp_palette_get_background_rgb (&background);
+
+  switch (pf->img_bpp)
+    {
+    case 1:
+    case 2:
+      pf->bg_color[0] = gimp_rgb_intensity (&background) * 255.0;
+      break;
+
+    case 3:
+    case 4:
+      gimp_rgb_get_uchar (&background,
+			  pf->bg_color, pf->bg_color + 1, pf->bg_color + 2);
+      break;
+    }
 }
 
 static void
@@ -913,14 +908,30 @@ dialog_update_preview (void)
   guchar  *check_ul, *check_lr;
   gint     check;
   guchar   outside[4];
+  GimpRGB  background;
 
-  gimp_palette_get_background(&outside[0], &outside[1], &outside[2]);
-  outside[3] = (img_has_alpha ? 0 : 255);
+  gimp_palette_get_background_rgb (&background);
 
-  if (img_bpp < 3)
+  switch (img_bpp)
     {
-      outside[1] = outside[0];
-      outside[2] = outside[0];
+    case 1:
+      outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
+      outside[3] = 255;
+      break;
+
+    case 2:
+      outside[0] = outside[1] = outside [2] = gimp_rgb_intensity_uchar (&background);
+      outside[3] = 0;
+
+    case 3:
+      gimp_rgb_get_uchar (&background,
+			  &outside[0], &outside[1], &outside[2]);
+      outside[3] = 255;
+    case 4:
+      gimp_rgb_get_uchar (&background,
+			  &outside[0], &outside[1], &outside[2]);
+      outside[3] = 0;
+      break;
     }
 
   left   = sel_x1;

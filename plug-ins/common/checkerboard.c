@@ -187,14 +187,17 @@ static void
 check (GimpDrawable *drawable)
 {
   GimpPixelRgn dest_rgn;
-  guchar *dest_row;
-  guchar *dest;
-  gint row, col;
-  gint progress, max_progress;
-  gint x1, y1, x2, y2, x, y;
-  guchar fg[4],bg[4];
-  gint bp;
-  gpointer pr;
+  guchar   *dest_row;
+  guchar   *dest;
+  gint      row, col;
+  gint      progress, max_progress;
+  gint      x1, y1, x2, y2, x, y;
+  GimpRGB   foreground;
+  GimpRGB   background;
+  guchar    fg[4];
+  guchar    bg[4];
+  gint      bp;
+  gpointer  pr;
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   gimp_pixel_rgn_init (&dest_rgn, drawable,
@@ -205,22 +208,27 @@ check (GimpDrawable *drawable)
 
   /* Get the foreground and background colors */
 
-  switch ( gimp_drawable_type (drawable->id) )
+  gimp_palette_get_foreground_rgb (&foreground);
+  gimp_palette_get_background_rgb (&background);
+
+  switch (gimp_drawable_type (drawable->id))
     {
     case GIMP_RGBA_IMAGE:
       fg[3] = 255;
       bg[3] = 255;
     case GIMP_RGB_IMAGE:
-      gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
-      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
+      gimp_rgb_get_uchar (&foreground, &fg[0], &fg[1], &fg[2]);
+      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
       break;
+
     case GIMP_GRAYA_IMAGE:
       fg[1] = 255;
       bg[1] = 255;
     case GIMP_GRAY_IMAGE:
-      fg[0] = 255;
-      bg[0] = 0;
+      fg[0] = gimp_rgb_intensity_uchar (&foreground);
+      bg[0] = gimp_rgb_intensity_uchar (&background);
       break;
+
     default:
       break;
     }
@@ -260,15 +268,19 @@ check (GimpDrawable *drawable)
 		}
 	      for (bp = 0; bp < dest_rgn.bpp; bp++)
 		dest[bp] = val ? fg[bp] : bg[bp];
+
 	      dest += dest_rgn.bpp;
 	      x++;
 	    }
+
 	  dest_row += dest_rgn.rowstride;
 	  y++;
 	}
+
       progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
+
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));

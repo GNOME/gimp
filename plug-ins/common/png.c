@@ -854,16 +854,20 @@ save_image (gchar  *filename,	        /* I - File to save to */
      possible file size she can turn them all off */
 
 #if PNG_LIBPNG_VER > 99
-  if (pngvals.bkgd) {
-    gimp_palette_get_background(&red, &green, &blue);
+  if (pngvals.bkgd) 
+    {
+      GimpRGB color;
+
+      gimp_palette_get_background_rgb (&color);
+      gimp_rgb_get_uchar (&color, &red, &green, &blue);
       
-    background.index = 0;
-    background.red = red;
-    background.green = green;
-    background.blue = blue;
-    background.gray = (red + green + blue) / 3;
-    png_set_bKGD(pp, info, &background);
-  }
+      background.index = 0;
+      background.red   = red;
+      background.green = green;
+      background.blue  = blue;
+      background.gray  = gimp_rgb_intensity_uchar (&color);
+      png_set_bKGD(pp, info, &background);
+    }
 
   if (pngvals.gama) {
     gamma = gimp_gamma();
@@ -1000,18 +1004,21 @@ save_ok_callback (GtkWidget *widget,
 static void respin_cmap (png_structp pp, png_infop info, gint32 image_ID) {
   static const guchar trans[] = { 0 };
   static guchar after[3 * 256];
-  gint colors;
+  gint    colors;
   guchar *before;
 
   before= gimp_image_get_cmap(image_ID, &colors);
 
 #if PNG_LIBPNG_VER > 99
   if (colors < 256) { /* spare space in palette :) */
+    GimpRGB color;
+
     memcpy(after + 3, before, colors * 3);
 
     /* Apps with no natural background will use this instead, see
        elsewhere for the bKGD chunk being written to use index 0 */
-    gimp_palette_get_background(after+0, after+1, after+2);
+    gimp_palette_get_background_rgb (&color);
+    gimp_rgb_get_uchar (&color, after+0, after+1, after+2);
 
     /* One transparent palette entry, alpha == 0 */
     png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);

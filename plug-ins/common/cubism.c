@@ -62,17 +62,17 @@ typedef struct
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar      *name,
-			 gint        nparams,
+static void      run    (gchar         *name,
+			 gint           nparams,
 			 GimpParam     *param,
-			 gint       *nreturn_vals,
+			 gint          *nreturn_vals,
 			 GimpParam    **return_vals);
 static void      cubism (GimpDrawable  *drawable);
 
 static void      render_cubism        (GimpDrawable *drawable);
-static void      fill_poly_color      (Polygon   *poly,
+static void      fill_poly_color      (Polygon      *poly,
 				       GimpDrawable *drawable,
-				       guchar    *col);
+				       guchar       *col);
 static void      convert_segment      (gint       x1,
 				       gint       y1,
 				       gint       x2,
@@ -168,10 +168,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam values[1];
@@ -206,9 +206,9 @@ run (gchar   *name,
 	status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  cvals.tile_size = param[3].data.d_float;
+	  cvals.tile_size       = param[3].data.d_float;
 	  cvals.tile_saturation = param[4].data.d_float;
-	  cvals.bg_color = param[5].data.d_int32;
+	  cvals.bg_color        = param[5].data.d_int32;
 	}
       if (status == GIMP_PDB_SUCCESS &&
 	  (cvals.bg_color < BLACK || cvals.bg_color > BG))
@@ -259,19 +259,37 @@ run (gchar   *name,
 static void
 cubism (GimpDrawable *drawable)
 {
-  gint x1, y1, x2, y2;
+  GimpRGB background;
+  gint    x1, y1, x2, y2;
 
   /*  find the drawable mask bounds  */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
   /*  determine the background color  */
   if (cvals.bg_color == BLACK)
-    bg_col[0] = bg_col[1] = bg_col[2] = 0;
+    {
+      bg_col[0] = bg_col[1] = bg_col[2] = bg_col[3] = 0;
+    }
   else
-    gimp_palette_get_background (&bg_col[0], &bg_col[1], &bg_col[2]);
+    {
+      gimp_palette_get_background_rgb (&background);
+      switch (gimp_drawable_type (drawable->id))
+	{
+	case GIMP_RGBA_IMAGE:
+	  bg_col[3] = 0;
+	case GIMP_RGB_IMAGE:
+	  gimp_rgb_get_uchar (&background, 
+			      &bg_col[0], &bg_col[1], &bg_col[2]);
+	  break;
+	case GIMP_GRAYA_IMAGE:
+	  bg_col[1] = 0;
+	case GIMP_GRAY_IMAGE:
+	  bg_col[0] = gimp_rgb_intensity_uchar (&background);
 
-  if (gimp_drawable_has_alpha (drawable->id))
-    bg_col[drawable->bpp - 1] = 0;
+	default:
+	  break;
+	}
+    }
 
   gimp_progress_init (_("Cubistic Transformation"));
 
@@ -433,10 +451,14 @@ render_cubism (GimpDrawable *drawable)
     {
       i = random_indices[count] / (cols + 1);
       j = random_indices[count] % (cols + 1);
-      x = j * cvals.tile_size + (cvals.tile_size / 4.0) - fp_rand (cvals.tile_size/2.0) + x1;
-      y = i * cvals.tile_size + (cvals.tile_size / 4.0) - fp_rand (cvals.tile_size/2.0) + y1;
-      width = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) * cvals.tile_saturation;
-      height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) - cvals.tile_size / 8.0) * cvals.tile_saturation;
+      x = j * cvals.tile_size + (cvals.tile_size / 4.0) 
+	- fp_rand (cvals.tile_size/2.0) + x1;
+      y = i * cvals.tile_size + (cvals.tile_size / 4.0) 
+	- fp_rand (cvals.tile_size/2.0) + y1;
+      width = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) 
+	       - cvals.tile_size / 8.0) * cvals.tile_saturation;
+      height = (cvals.tile_size + fp_rand (cvals.tile_size / 4.0) 
+		- cvals.tile_size / 8.0) * cvals.tile_saturation;
       theta = fp_rand (2 * G_PI);
       polygon_reset (&poly);
       polygon_add_point (&poly, -width / 2.0, -height / 2.0);

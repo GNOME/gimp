@@ -374,19 +374,21 @@ query (void)
 
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 
 {
-  static GimpParam values[1];
-  GimpRunModeType run_mode;
-  GimpDrawable *drawable = NULL;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  guchar *c = (guchar *)ident;
-  int j;
+  static GimpParam   values[1];
+  GimpRunModeType    run_mode;
+  GimpDrawable      *drawable = NULL;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  guchar *c;
+  gint    j;
+
+  c = (guchar *)ident;
 
   INIT_I18N_UI();
 

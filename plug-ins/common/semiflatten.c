@@ -173,15 +173,17 @@ static void
 semiflatten (GimpDrawable *drawable)
 {
   GimpPixelRgn srcPR, destPR;
-  gint    width, height;
-  gint    bytes;
-  guchar *src_row;
-  guchar *dest_row;
-  gint    row;
-  gint    x1, y1, x2, y2;
+  GimpRGB      background;
+  gint         width, height;
+  gint         bytes;
+  guchar      *src_row;
+  guchar      *dest_row;
+  gint         row;
+  gint         x1, y1, x2, y2;
 
   /* Fetch the GIMP current background colour, to semi-flatten against */
-  gimp_palette_get_background (&bgred, &bggreen, &bgblue);
+  gimp_palette_get_background_rgb (&background);
+  gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
   /* Get the input area. This is the bounding box of the selection in
    *  the image (or the entire image if there is no selection). Only

@@ -731,7 +731,9 @@ init_calculation (void)
   gdouble      alpha, beta;
   gdouble      angle;
   GimpVector2  v1, v2;
-  gint32      *image_layers, nlayers;
+  gint32      *image_layers;
+  gint32       nlayers;
+  GimpRGB      color;
 
   gimp_layer_add_alpha (drawable->id);
 
@@ -798,24 +800,27 @@ init_calculation (void)
 
   /* Colors */
 
-  gimp_palette_get_foreground (&fore_color[0], &fore_color[1], &fore_color[2]);
-  gimp_palette_get_background (&back_color[0], &back_color[1], &back_color[2]);
+  gimp_palette_get_foreground_rgb (&color);
+  gimp_rgb_get_uchar (&color, &fore_color[0], &fore_color[1], &fore_color[2]);
+
+  gimp_palette_get_background_rgb (&color);
+  gimp_rgb_get_uchar (&color, &back_color[0], &back_color[1], &back_color[2]);
 }
 
 static void
 do_curl_effect (void)
 {
-  gint         x, y, color_image;
-  gint         x1, y1, k;
-  guint        alpha_pos, progress, max_progress;
-  gdouble      intensity, alpha, beta;
-  GimpVector2  v, dl, dr;
-  gdouble      dl_mag, dr_mag, angle, factor;
-  guchar      *pp, *dest, fore_grayval, back_grayval;
-  guchar      *gradsamp;
-  GimpPixelRgn    dest_rgn;
-  gpointer     pr;
-  guchar      *grad_samples = NULL;
+  gint          x, y, color_image;
+  gint          x1, y1, k;
+  guint         alpha_pos, progress, max_progress;
+  gdouble       intensity, alpha, beta;
+  GimpVector2   v, dl, dr;
+  gdouble       dl_mag, dr_mag, angle, factor;
+  guchar       *pp, *dest, fore_grayval, back_grayval;
+  guchar       *gradsamp;
+  GimpPixelRgn  dest_rgn;
+  gpointer      pr;
+  guchar       *grad_samples = NULL;
 
   color_image = gimp_drawable_is_rgb (drawable->id);
   curl_layer =

@@ -79,7 +79,8 @@ gdouble   gimp_rgb_min        (const GimpRGB *rgb);
 void      gimp_rgb_clamp      (GimpRGB       *rgb);
 void      gimp_rgb_gamma      (GimpRGB       *rgb,
  			       gdouble        gamma);
-gdouble   gimp_rgb_intensity  (const GimpRGB *rgb);
+gdouble   gimp_rgb_intensity        (const GimpRGB *rgb);
+guchar    gimp_rgb_intensity_uchar  (const GimpRGB *rgb);
 
 void      gimp_rgb_composite  (GimpRGB              *color1,
 			       const GimpRGB        *color2,

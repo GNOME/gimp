@@ -2551,12 +2551,13 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
   /* Given the name of a brush then paint it and return the ID of the image 
    * the preview can be got from
    */
-  static gint32 layer_ID = -1;
-  guchar fR, fG, fB;
-  guchar bR, bG, bB;
-  gchar *saved_bname;
-  gint32 width, height;
+  static  gint32 layer_ID = -1;
+  gchar  *saved_bname;
+  gint32  width, height;
   gdouble line_pnts[2];
+  GimpRGB foreground;
+  GimpRGB background;
+  GimpRGB color;
 
   if (brush_image_ID == -1)
     {
@@ -2588,12 +2589,16 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
    * restore colours
    */
 
-  gimp_palette_get_foreground (&fR, &fG, &fB);
-  gimp_palette_get_background (&bR, &bG, &bB);
+  gimp_palette_get_foreground_rgb (&foreground);
+  gimp_palette_get_background_rgb (&background);
+
   saved_bname = mygimp_brush_get ();
 
-  gimp_palette_set_background ((guchar) -1, (guchar) -1, (guchar) -1);
-  gimp_palette_set_foreground (0, 0, 0);
+  gimp_rgba_set (&color, 1.0, 1.0, 1.0, 1.0);
+  gimp_palette_set_background_rgb (&color);
+  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
+  gimp_palette_set_foreground_rgb (&color);
+
   mygimp_brush_set (bdesc->bname);
 
   mygimp_brush_info (&width, &height);
@@ -2612,8 +2617,9 @@ gfig_gen_brush_preview (BrushDesc *bdesc)
 	      layer_ID,
 	      2, line_pnts);
 
-  gimp_palette_set_background (bR, bG, bB);  
-  gimp_palette_set_foreground (fR, fG, fB);
+  gimp_palette_set_background_rgb (&background);  
+  gimp_palette_set_foreground_rgb (&foreground);
+
   mygimp_brush_set (saved_bname);
 
   return layer_ID;

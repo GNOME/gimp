@@ -844,28 +844,29 @@ save_image (gchar  *filename,
   GimpDrawable *drawable;
   GimpImageType drawable_type;
   FILE *outfile;
-  int Red[MAXCOLORS];
-  int Green[MAXCOLORS];
-  int Blue[MAXCOLORS];
+  gint Red[MAXCOLORS];
+  gint Green[MAXCOLORS];
+  gint Blue[MAXCOLORS];
   guchar *cmap;
   guint rows, cols;
-  int BitsPerPixel, liberalBPP=0, useBPP=0;
-  int colors;
-  char *temp_buf;
-  int i;
-  int transparent;
+  gint BitsPerPixel, liberalBPP=0, useBPP=0;
+  gint colors;
+  gchar *temp_buf;
+  gint i;
+  gint transparent;
   gint offset_x, offset_y;
 
   gint32 *layers;   
-  int nlayers;
+  gint    nlayers;
 
   gboolean is_gif89 = FALSE;
 
-  int Delay89;
-  int Disposal;
-  char *layer_name;
+  gint   Delay89;
+  gint   Disposal;
+  gchar *layer_name;
 
-  unsigned char bgred, bggreen, bgblue;
+  GimpRGB background;
+  guchar  bgred, bggreen, bgblue;
 
 
 #ifdef FACEHUGGERS
@@ -906,19 +907,20 @@ save_image (gchar  *filename,
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image_ID, &colors);
       
-      gimp_palette_get_background(&bgred, &bggreen, &bgblue);
+      gimp_palette_get_background_rgb (&background);
+      gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
       for (i = 0; i < colors; i++)
 	{
-	  Red[i] = *cmap++;
+	  Red[i]   = *cmap++;
 	  Green[i] = *cmap++;
-	  Blue[i] = *cmap++;
+	  Blue[i]  = *cmap++;
 	}
       for ( ; i < 256; i++)
 	{
-	  Red[i] = bgred;
+	  Red[i]   = bgred;
 	  Green[i] = bggreen;
-	  Blue[i] = bgblue;
+	  Blue[i]  = bgblue;
 	}
       break;
     case GIMP_GRAYA_IMAGE:

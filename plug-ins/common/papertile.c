@@ -510,6 +510,7 @@ filter (void)
   static void (* overlap)(guchar *, const guchar *);
   GimpPixelRgn  src;
   GimpPixelRgn  dst;
+  GimpRGB       color;
   guchar     pixel[4];
   gint       division_x;
   gint       division_y;
@@ -704,7 +705,8 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_FOREGROUND:
-      gimp_palette_get_foreground (&pixel[0], &pixel[1], &pixel[2]);
+      gimp_palette_get_foreground_rgb (&color);
+      gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
 	{
@@ -720,7 +722,8 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_BACKGROUND:
-      gimp_palette_get_background (&pixel[0], &pixel[1], &pixel[2]);
+      gimp_palette_get_background_rgb (&color);
+      gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
 	{

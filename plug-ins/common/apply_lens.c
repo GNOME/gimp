@@ -246,20 +246,24 @@ find_projected_pos (gfloat  a,
 static void
 drawlens (GimpDrawable *drawable)
 {
-  GimpPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  gint row;
-  gint x1, y1, x2, y2;
-  guchar *src, *dest;
-  gint i, col;
-  gfloat regionwidth, regionheight, dx, dy, xsqr, ysqr;
-  gfloat a, b, asqr, bsqr, x, y;
-  glong pixelpos, pos;
-  guchar bgr_red, bgr_blue, bgr_green, alphaval;
   GimpImageType drawtype = gimp_drawable_type (drawable->id);
+  GimpPixelRgn  srcPR, destPR;
+  gint     width, height;
+  gint     bytes;
+  gint     row;
+  gint     x1, y1, x2, y2;
+  guchar  *src, *dest;
+  gint     i, col;
+  gfloat   regionwidth, regionheight, dx, dy, xsqr, ysqr;
+  gfloat   a, b, asqr, bsqr, x, y;
+  glong    pixelpos, pos;
+  GimpRGB  background;
+  guchar   bgr_red, bgr_blue, bgr_green;
+  guchar   alphaval;
 
-  gimp_palette_get_background (&bgr_red, &bgr_green, &bgr_blue);
+  gimp_palette_get_background_rgb (&background);
+  gimp_rgb_get_uchar (&background, 
+		      &bgr_red, &bgr_green, &bgr_blue);
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   regionwidth = x2 - x1;

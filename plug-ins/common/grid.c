@@ -366,9 +366,9 @@ doit (gint32        image_ID,
 	  break;
 
 	case GIMP_GRAY:
-	  hcolor[0] = gimp_rgb_intensity (&grid_cfg.hcolor) * 255.999;
-	  vcolor[0] = gimp_rgb_intensity (&grid_cfg.vcolor) * 255.999;
-	  vcolor[0] = gimp_rgb_intensity (&grid_cfg.vcolor) * 255.999;
+	  hcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.hcolor);
+	  vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
+	  vcolor[0] = gimp_rgb_intensity_uchar (&grid_cfg.vcolor);
 	  blend = TRUE;
 	  break;
 

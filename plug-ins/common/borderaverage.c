@@ -32,16 +32,16 @@
 /* Declare local functions.
  */
 static void      query  (void);
-static void      run    (gchar     *name,
-			 gint       nparams,
-			 GimpParam    *param,
-			 gint      *nreturn_vals,
-			 GimpParam   **return_vals);
+static void      run    (gchar      *name,
+			 gint        nparams,
+			 GimpParam  *param,
+			 gint       *nreturn_vals,
+			 GimpParam **return_vals);
 
 static void      borderaverage (GimpDrawable *drawable,
-				guchar    *res_r,
-				guchar    *res_g,
-				guchar    *res_b);
+				guchar       *res_r,
+				guchar       *res_g,
+				guchar       *res_b);
 
 static gint      borderaverage_dialog (void);
 
@@ -49,6 +49,7 @@ static void      add_new_color (gint    bytes,
 				guchar *buffer,
 				gint   *cube,
 				gint    bucket_expo);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {

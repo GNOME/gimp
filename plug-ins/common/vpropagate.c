@@ -44,7 +44,7 @@
 #define	PLUG_IN_NAME	"plug_in_vpropagate"
 #define SHORT_NAME	"vpropagate"
 
-typedef guchar CH;
+
 #define	VP_RGB	        (1 << 0)
 #define VP_GRAY	        (1 << 1)
 #define VP_WITH_ALPHA	(1 << 2)
@@ -56,20 +56,20 @@ typedef guchar CH;
 #define Top2Bottom	3
 
 static void	    query	               (void);
-static void	    run                        (gchar         *name,
-					        gint           nparams,
-					        GimpParam        *param,   
-                                                gint          *nreturn_vals,
-					        GimpParam      **return_vals);
+static void	    run                        (gchar             *name,
+					        gint               nparams,
+					        GimpParam         *param,   
+                                                gint              *nreturn_vals,
+					        GimpParam        **return_vals);
 
-static GimpPDBStatusType  value_propagate            (gint           drawable_id);
-static void         value_propagate_body       (gint           drawable_id);
-static int	    vpropagate_dialog          (GimpImageBaseType     image_type);
-static void	    prepare_row                (GimpPixelRgn     *pixel_rgn,
-						guchar        *data,
-						int            x,
-						int            y,
-						int            w);
+static GimpPDBStatusType  value_propagate      (gint               drawable_id);
+static void         value_propagate_body       (gint               drawable_id);
+static int	    vpropagate_dialog          (GimpImageBaseType  image_type);
+static void	    prepare_row                (GimpPixelRgn      *pixel_rgn,
+						guchar            *data,
+						gint               x,
+						gint               y,
+					        gint               w);
 
 static void         vpropagate_ok_callback     (GtkWidget     *widget,
 						gpointer       data);
@@ -81,21 +81,21 @@ static GtkWidget *  gtk_table_add_toggle       (GtkWidget     *table,
 						GtkSignalFunc  update,
 						gint	      *value);
 
-static int	    value_difference_check  (CH *, CH *, int);
-static void         set_value               (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    initialize_white        (GimpImageBaseType, int, CH *, CH *, void **);
-static void	    propagate_white         (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    initialize_black        (GimpImageBaseType, int, CH *, CH *, void **);
-static void         propagate_black         (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    initialize_middle       (GimpImageBaseType, int, CH *, CH *, void **);
-static void	    propagate_middle        (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    set_middle_to_peak      (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    set_foreground_to_peak  (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    initialize_foreground   (GimpImageBaseType, int, CH *, CH *, void **);
-static void	    initialize_background   (GimpImageBaseType, int, CH *, CH *, void **);
-static void	    propagate_a_color       (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    propagate_opaque        (GimpImageBaseType, int, CH *, CH *, CH *, void *);
-static void	    propagate_transparent   (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static int	    value_difference_check  (guchar *, guchar *, int);
+static void         set_value               (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    initialize_white        (GimpImageBaseType, int, guchar *, guchar *, void **);
+static void	    propagate_white         (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    initialize_black        (GimpImageBaseType, int, guchar *, guchar *, void **);
+static void         propagate_black         (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    initialize_middle       (GimpImageBaseType, int, guchar *, guchar *, void **);
+static void	    propagate_middle        (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    set_middle_to_peak      (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    set_foreground_to_peak  (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    initialize_foreground   (GimpImageBaseType, int, guchar *, guchar *, void **);
+static void	    initialize_background   (GimpImageBaseType, int, guchar *, guchar *, void **);
+static void	    propagate_a_color       (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    propagate_opaque        (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
+static void	    propagate_transparent   (GimpImageBaseType, int, guchar *, guchar *, guchar *, void *);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -223,10 +223,10 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
   static GimpParam	 values[1];
@@ -326,6 +326,7 @@ value_propagate_body (gint drawable_id)
   gint        begx, begy, endx, endy, x, y, dx;
   gint        left_index, right_index, up_index, down_index;
   void       *tmp;
+  GimpRGB     foreground;
 
   /* calculate neighbors' indexes */
   left_index	= (vpvals.direction_mask & (1 << Left2Right)) ? -1 : 0;
@@ -363,7 +364,8 @@ value_propagate_body (gint drawable_id)
   best = g_new (guchar, bytes);
 
   gimp_progress_init (_("Value propagating..."));
-  gimp_palette_get_foreground (fore+0, fore+1, fore+2);
+  gimp_palette_get_foreground_rgb (&foreground);
+  gimp_rgb_get_uchar (&foreground, fore+0, fore+1, fore+2);
 
   /* start real job */
   for (y = begy ; y < endy ; y++) 
@@ -468,7 +470,7 @@ set_value (GimpImageBaseType  dtype,
   for (ch = 0; ch < value_chs; ch++)
     {
       if (vpvals.propagating_channel & PROPAGATING_VALUE) /* value channel */
-	*dest++ = (CH)(vpvals.propagating_rate * best[ch]
+	*dest++ = (guchar)(vpvals.propagating_rate * best[ch]
 		       + (1.0 - vpvals.propagating_rate) * here[ch]);
       else
 	*dest++ = here[ch];
@@ -476,7 +478,7 @@ set_value (GimpImageBaseType  dtype,
   if (alpha)
     {
       if (vpvals.propagating_channel & PROPAGATING_ALPHA) /* alpha channel */
-	*dest++ = (CH)(vpvals.propagating_rate * best[alpha]
+	*dest++ = (guchar)(vpvals.propagating_rate * best[alpha]
 		       + (1.0 - vpvals.propagating_rate) * here[alpha]);
       else
 	*dest++ = here[alpha];
@@ -484,8 +486,8 @@ set_value (GimpImageBaseType  dtype,
 }
 
 static int
-value_difference_check (CH  *pos1, 
-			CH  *pos2, 
+value_difference_check (guchar  *pos1, 
+			guchar  *pos2, 
 			gint ch)
 {
   gint	index;
@@ -505,8 +507,8 @@ value_difference_check (CH  *pos1,
 static void
 initialize_white (GimpImageBaseType   dtype, 
 		  gint         bytes, 
-		  CH          *best, 
-		  CH          *here, 
+		  guchar          *best, 
+		  guchar          *here, 
 		  void       **tmp)
 {
   if (*tmp == NULL)
@@ -519,9 +521,9 @@ initialize_white (GimpImageBaseType   dtype,
 static void
 propagate_white (GimpImageBaseType  dtype, 
 		 gint        bytes, 
-		 CH         *orig, 
-		 CH         *here, 
-		 CH         *best, 
+		 guchar         *orig, 
+		 guchar         *here, 
+		 guchar         *best, 
 		 void       *tmp)
 {
   float	v_here;
@@ -536,7 +538,7 @@ propagate_white (GimpImageBaseType  dtype,
      if (*(float *)tmp < v_here && value_difference_check(orig, here, 3))
 	{
 	  *(float *)tmp = v_here;
-	  memcpy(best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy(best, here, 3 * sizeof(guchar)); /* alpha channel holds old value */
 	}
       break;
     case GIMP_GRAYA_IMAGE:
@@ -552,8 +554,8 @@ propagate_white (GimpImageBaseType  dtype,
 static void
 initialize_black (GimpImageBaseType   dtype, 
 		  gint         channels, 
-		  CH          *best, 
-		  CH          *here, 
+		  guchar          *best, 
+		  guchar          *here, 
 		  void       **tmp)
 {
   if (*tmp == NULL)
@@ -566,9 +568,9 @@ initialize_black (GimpImageBaseType   dtype,
 static void
 propagate_black (GimpImageBaseType  image_type, 
 		 gint        channels, 
-		 CH         *orig, 
-		 CH         *here, 
-		 CH         *best, 
+		 guchar         *orig, 
+		 guchar         *here, 
+		 guchar         *best, 
 		 void       *tmp)
 {
   float	v_here;
@@ -583,7 +585,7 @@ propagate_black (GimpImageBaseType  image_type,
       if (v_here < *(float *)tmp && value_difference_check(orig, here, 3))
 	{	
 	  *(float *)tmp = v_here;
-	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy (best, here, 3 * sizeof(guchar)); /* alpha channel holds old value */
 	}
       break;
     case GIMP_GRAYA_IMAGE:
@@ -602,16 +604,16 @@ typedef struct
   gshort max_modified;
   glong  original_value;
   glong  minv;
-  CH     min[3];
+  guchar     min[3];
   glong  maxv;
-  CH     max[3];
+  guchar     max[3];
 } MiddlePacket;
 
 static void
 initialize_middle (GimpImageBaseType   image_type, 
 		   gint         channels, 
-		   CH          *best, 
-		   CH          *here, 
+		   guchar          *best, 
+		   guchar          *here, 
 		   void       **tmp)
 {
   int index;
@@ -644,9 +646,9 @@ initialize_middle (GimpImageBaseType   image_type,
 static void
 propagate_middle (GimpImageBaseType  image_type, 
 		  gint        channels, 
-		  CH         *orig, 
-		  CH         *here, 
-		  CH         *best, 
+		  guchar         *orig, 
+		  guchar         *here, 
+		  guchar         *best, 
 		  void       *tmp)
 {
   float	v_here;
@@ -664,13 +666,13 @@ propagate_middle (GimpImageBaseType  image_type,
       if ((v_here <= data->minv) && value_difference_check(orig, here, 3))
 	{	
 	  data->minv = v_here;
-	  memcpy (data->min, here, 3*sizeof(CH));
+	  memcpy (data->min, here, 3*sizeof(guchar));
 	  data->min_modified = 1;
 	}
       if (data->maxv <= v_here && value_difference_check(orig, here, 3))
 	{	
 	  data->maxv = v_here;
-	  memcpy (data->max, here, 3*sizeof(CH));
+	  memcpy (data->max, here, 3*sizeof(guchar));
 	  data->max_modified = 1;
 	}
       break;
@@ -695,9 +697,9 @@ propagate_middle (GimpImageBaseType  image_type,
 static void
 set_middle_to_peak (GimpImageBaseType  image_type, 
 		    gint        channels, 
-		    CH         *here, 
-		    CH         *best, 
-		    CH         *dest, 
+		    guchar         *here, 
+		    guchar         *best, 
+		    guchar         *dest, 
 		    void       *tmp)
 {
   gint	value_chs = 0;
@@ -736,7 +738,7 @@ set_middle_to_peak (GimpImageBaseType  image_type,
   for (ch = 0; ch < value_chs; ch++)
     {
       if (vpvals.propagating_channel & PROPAGATING_VALUE) /* value channel */
-	*dest++ = (CH)(vpvals.propagating_rate * 0.5 * (data->min[ch] + data->max[ch])
+	*dest++ = (guchar)(vpvals.propagating_rate * 0.5 * (data->min[ch] + data->max[ch])
 		       + (1.0 - vpvals.propagating_rate) * here[ch]);
       else
 	*dest++ = here[ch];
@@ -744,7 +746,7 @@ set_middle_to_peak (GimpImageBaseType  image_type,
   if (alpha)
     {
       if (vpvals.propagating_channel & PROPAGATING_ALPHA) /* alpha channel */
-	*dest++ = (CH)(vpvals.propagating_rate * best[alpha]
+	*dest++ = (guchar)(vpvals.propagating_rate * best[alpha]
 		       + (1.0 - vpvals.propagating_rate) * here[alpha]);
       else
 	*dest++ = here[alpha];
@@ -754,9 +756,9 @@ set_middle_to_peak (GimpImageBaseType  image_type,
 static void
 set_foreground_to_peak (GimpImageBaseType  image_type, 
 			gint        channels, 
-			CH         *here, 
-			CH         *best, 
-			CH         *dest, 
+			guchar         *here, 
+			guchar         *best, 
+			guchar         *dest, 
 			void       *tmp)
 {
   gint	value_chs = 0;
@@ -795,7 +797,7 @@ set_foreground_to_peak (GimpImageBaseType  image_type,
   for (ch = 0; ch < value_chs; ch++)
     {
       if (vpvals.propagating_channel & PROPAGATING_VALUE) /* value channel */
-	*dest++ = (CH)(vpvals.propagating_rate*fore[ch]
+	*dest++ = (guchar)(vpvals.propagating_rate*fore[ch]
 		       + (1.0 - vpvals.propagating_rate)*here[ch]);
       else
 	*dest++ = here[ch];
@@ -805,46 +807,50 @@ set_foreground_to_peak (GimpImageBaseType  image_type,
 static void
 initialize_foreground (GimpImageBaseType   image_type, 
 		       gint         channels, 
-		       CH          *here, 
-		       CH          *best, 
+		       guchar          *here, 
+		       guchar          *best, 
 		       void       **tmp)
 {
-  CH *ch;
+  GimpRGB  foreground;
+  guchar  *ch;
 
   if (*tmp == NULL)
     {
-      *tmp = (void *) g_new (CH, 3);
-      ch = (CH *)*tmp;
-      gimp_palette_get_foreground (&ch[0], &ch[1], &ch[2]);
+      *tmp = (void *) g_new (guchar, 3);
+      ch = (guchar *)*tmp;
+      gimp_palette_get_foreground_rgb (&foreground);
+      gimp_rgb_get_uchar (&foreground, &ch[0], &ch[1], &ch[2]);
     }
 }
 
 static void
 initialize_background (GimpImageBaseType   image_type, 
 		       gint         channels, 
-		       CH          *here, 
-		       CH          *best, 
+		       guchar          *here, 
+		       guchar          *best, 
 		       void       **tmp)
 {
-  CH *ch;
+  GimpRGB  background;
+  guchar  *ch;
 
   if (*tmp == NULL)
     {
-      *tmp = (void *) g_new (CH, 3);
-      ch = (CH *)*tmp;
-      gimp_palette_get_background (&ch[0], &ch[1], &ch[2]);
+      *tmp = (void *) g_new (guchar, 3);
+      ch = (guchar *)*tmp;
+      gimp_palette_get_background_rgb (&background);
+      gimp_rgb_get_uchar (&background, &ch[0], &ch[1], &ch[2]);
     }
 }
 
 static void
 propagate_a_color (GimpImageBaseType  image_type, 
 		   gint        channels, 
-		   CH         *orig, 
-		   CH         *here, 
-		   CH         *best, 
+		   guchar         *orig, 
+		   guchar         *here, 
+		   guchar         *best, 
 		   void       *tmp)
 {
-  CH *fg = (CH *)tmp;
+  guchar *fg = (guchar *)tmp;
 
   switch (image_type)
     {
@@ -853,7 +859,7 @@ propagate_a_color (GimpImageBaseType  image_type,
       if (here[0] == fg[0] && here[1] == fg[1] && here[2] == fg[2] &&
 	  value_difference_check(orig, here, 3))
 	{
-	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
+	  memcpy (best, here, 3 * sizeof(guchar)); /* alpha channel holds old value */
 	}
       break;
     case GIMP_GRAYA_IMAGE:
@@ -867,20 +873,20 @@ propagate_a_color (GimpImageBaseType  image_type,
 static void
 propagate_opaque (GimpImageBaseType  image_type, 
 		  gint        channels, 
-		  CH         *orig, 
-		  CH         *here, 
-		  CH         *best, 
+		  guchar         *orig, 
+		  guchar         *here, 
+		  guchar         *best, 
 		  void       *tmp)
 {
   switch (image_type)
     {
     case GIMP_RGBA_IMAGE:
       if (best[3] < here[3] && value_difference_check(orig, here, 3))
-	memcpy(best, here, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(guchar));
       break;
     case GIMP_GRAYA_IMAGE:
       if (best[1] < here[1] && value_difference_check(orig, here, 1))
-	memcpy(best, here, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(guchar));
       break;
     default:
       break;
@@ -890,20 +896,20 @@ propagate_opaque (GimpImageBaseType  image_type,
 static void
 propagate_transparent (GimpImageBaseType  image_type, 
 		       gint        channels, 
-		       CH         *orig, 
-		       CH         *here, 
-		       CH         *best, 
+		       guchar         *orig, 
+		       guchar         *here, 
+		       guchar         *best, 
 		       void       *tmp)
 {
   switch (image_type)
     {
     case GIMP_RGBA_IMAGE:
       if (here[3] < best[3] && value_difference_check(orig, here, 3))
-	memcpy(best, here, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(guchar));
       break;
     case GIMP_GRAYA_IMAGE:
       if (here[1] < best[1] && value_difference_check(orig, here, 1))
-	memcpy(best, here, channels * sizeof(CH));
+	memcpy(best, here, channels * sizeof(guchar));
       break;
     default:
       break;

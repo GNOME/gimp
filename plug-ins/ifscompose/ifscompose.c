@@ -1326,17 +1326,17 @@ ifs_options_dialog (void)
 static void
 ifs_compose (GimpDrawable *drawable)
 {
-  gint i,j;
   GimpImageType type = gimp_drawable_type (drawable->id);
-  gchar *buffer;
-
-  gint width = drawable->width;
-  gint height = drawable->height;
-  gint num_bands,band_height,band_y,band_no;
-  guchar *data;
-  guchar *mask = NULL;
-  guchar *nhits;
-  guchar rc,gc,bc;
+  gchar   *buffer;
+  gint     width  = drawable->width;
+  gint     height = drawable->height;
+  gint     num_bands, band_height, band_y, band_no;
+  gint     i, j;
+  guchar  *data;
+  guchar  *mask = NULL;
+  guchar  *nhits;
+  guchar   rc, gc, bc;
+  GimpRGB  color;
 
   num_bands = ceil((gdouble)(width*height*SQR(ifsvals.subdivide)*5)
 		   / (1024 * ifsvals.max_memory));
@@ -1348,7 +1348,9 @@ ifs_compose (GimpDrawable *drawable)
   mask = g_new(guchar,width*band_height*SQR(ifsvals.subdivide));
   data = g_new(guchar,width*band_height*SQR(ifsvals.subdivide)*3);
   nhits = g_new(guchar,width*band_height*SQR(ifsvals.subdivide));
-  gimp_palette_get_background ( &rc, &gc, &bc );
+  
+  gimp_palette_get_background_rgb (&color);
+  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   band_y = 0;
   for (band_no = 0; band_no < num_bands; band_no++)
@@ -2634,16 +2636,18 @@ ifs_compose_preview_callback (GtkWidget *widget,
 			      GtkWidget *preview)
 {
   /* Expansion isn't really supported for previews */
-  gint i;
-  gint width = GTK_WIDGET(ifsD->preview)->requisition.width;
-  gint height = GTK_WIDGET(ifsD->preview)->requisition.height;
-  guchar rc,gc,bc;
-  guchar *ptr;
+  gint     i;
+  gint     width  = GTK_WIDGET(ifsD->preview)->requisition.width;
+  gint     height = GTK_WIDGET(ifsD->preview)->requisition.height;
+  guchar   rc,gc,bc;
+  guchar  *ptr;
+  GimpRGB  color;
 
   if (!ifsD->preview_data)
     ifsD->preview_data = g_new(guchar,3*width*height);
 
-  gimp_palette_get_background ( &rc, &gc, &bc );
+  gimp_palette_get_background_rgb (&color);
+  gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
   ptr = ifsD->preview_data;
   for (i=0;i<width*height;i++)

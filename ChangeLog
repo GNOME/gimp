@@ -1,3 +1,34 @@
+2001-01-15  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpcolor.[ch]: added function gimp_rgb_intensity_uchar()
+
+	* libgimp/gimpcolorbutton.c
+	* plug-ins/common/apply_lens.c
+	* plug-ins/common/blinds.c
+	* plug-ins/common/borderaverage.c
+	* plug-ins/common/checkerboard.c
+	* plug-ins/common/cubism.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/png.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/semiflatten.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/whirlpinch.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gdyntext/gdyntext.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/maze/handy.c
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/pagecurl/pagecurl.c: replaced all occurences of 
+	gimp_palette_[get|set]_[back|fore]ground() with the respective
+	gimp_palette_[get|set]_[back|fore]ground_rgb() functions.
+
 2001-01-14  Simon Budig  <simon@gimp.org>
 
 	* app/tools.c:

@@ -595,6 +595,7 @@ save_image (gchar  *filename,
   guchar *fb, *ofb;
   guchar cm[768];
   GimpPixelRgn pixel_rgn;
+  GimpRGB      background;
   s_fli_header fli_header;
 
   gint cnt;
@@ -629,7 +630,8 @@ save_image (gchar  *filename,
       to_frame = nframes;
     }
 
-  gimp_palette_get_background (&red, &green, &blue);
+  gimp_palette_get_background_rgb (&background);
+  gimp_rgb_get_uchar (&background, &red, &green, &blue);
 
   switch (gimp_image_base_type (image_id))
     {

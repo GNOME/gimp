@@ -886,6 +886,7 @@ fspike (GimpPixelRgn *src_rgn,
   gint    i;
   gint    bytes;
   gint    ok;
+  GimpRGB gimp_color;
   guchar  pixel[MAX_CHANNELS];
   guchar  color[MAX_CHANNELS];
 
@@ -894,28 +895,32 @@ fspike (GimpPixelRgn *src_rgn,
   row = -1;
   col = -1;
 
+  switch (svals.colortype)
+    {
+    case NATURAL:
+      break;
+
+    case FOREGROUND:
+      gimp_palette_get_foreground_rgb (&gimp_color);
+      gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
+      break;
+	
+    case BACKGROUND:
+      gimp_palette_get_background_rgb (&gimp_color);
+      gimp_rgb_get_uchar (&gimp_color, &pixel[0], &pixel[1], &pixel[2]);
+      break;
+    }
+
   /* draw the major spikes */
   for (i = 0; i < svals.spike_pts; i++)
     {
-      gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
-
-      switch (svals.colortype)
-      {
-	case FOREGROUND:
-	gimp_palette_get_foreground (&color[0], &color[1], &color[2]);
-	break;
-	
-	case BACKGROUND:
-	gimp_palette_get_background (&color[0], &color[1], &color[2]);
-	break;
-	
-	default:
-	color[0] = pixel[0];
-	color[1] = pixel[1];
-	color[2] = pixel[2];
-	break;	
-      }
+      if (svals.colortype == NATURAL)
+	gimp_pixel_rgn_get_pixel (dest_rgn, pixel, xr, yr);
       
+      color[0] = pixel[0];
+      color[1] = pixel[1];
+      color[2] = pixel[2];
+
       if (svals.invers)
 	{
 	  color[0] = 255 - color[0];

@@ -210,7 +210,8 @@ gdt_load (GdtVals *data)
   gchar  *gdtparams  = NULL;
   gchar  *gdtparams0 = NULL;
   gchar **params     = NULL;
-  GimpParamColor  col;
+  GimpRGB  color;
+  guchar   red, green, blue;
   GimpParasite   *parasite = NULL;  
 	
   if (gdt_compat_load (data))
@@ -236,8 +237,10 @@ gdt_load (GdtVals *data)
 	  strcpy (data->text, "");
 	  strcpy (data->xlfd, "");
 
-	  gimp_palette_get_foreground (&col.red, &col.green, &col.blue);
-	  data->color = (col.red << 16) + (col.green << 8) + col.blue;
+	  gimp_palette_get_foreground_rgb (&color);
+	  gimp_rgb_get_uchar (&color, &red, &green, &blue);
+
+	  data->color = (red << 16) + (green << 8) + blue;
 
 	  data->antialias         = TRUE;
 	  data->alignment 	  = LEFT;
@@ -346,7 +349,7 @@ gdt_render_text_p (GdtVals  *data,
   gint32 font_size_type;
   gchar **text_xlfd, **text_lines;
   gint32 *text_lines_w;
-  GimpParamColor  old_color, text_color;
+  GimpRGB  old_color, text_color;
   
   if (show_progress)
     gimp_progress_init (_("GIMP Dynamic Text"));
@@ -456,17 +459,14 @@ gdt_render_text_p (GdtVals  *data,
   gimp_drawable_offsets (data->layer_id, &layer_ox, &layer_oy);
   
   /* get foreground color */
-  gimp_palette_get_foreground (&old_color.red, 
-			       &old_color.green, 
-			       &old_color.blue);
+  gimp_palette_get_foreground_rgb (&old_color);
   
   /* set foreground color to the wanted text color */
-  text_color.red   = (data->color & 0xff0000) >> 16;
-  text_color.green = (data->color & 0xff00) >> 8;
-  text_color.blue  = data->color & 0xff;
-  gimp_palette_set_foreground (text_color.red, 
-			       text_color.green, 
-			       text_color.blue);
+  gimp_rgb_set_uchar (&text_color, 
+		      (data->color & 0xff0000) >> 16,
+		      (data->color & 0xff00) >> 8,
+		      data->color & 0xff);
+  gimp_palette_set_foreground_rgb (&text_color);
   
   /* write text */
   for (i = 0; text_lines[i]; i++) 
@@ -511,9 +511,7 @@ gdt_render_text_p (GdtVals  *data,
   g_free (text_lines_w);
   
   /* set foreground color to the old one */
-  gimp_palette_set_foreground (old_color.red, 
-			       old_color.green, 
-			       old_color.blue);
+  gimp_palette_set_foreground_rgb (&old_color);
   
   /* apply rotation */
   if (data->rotation != 0 && abs(data->rotation) != 360) 

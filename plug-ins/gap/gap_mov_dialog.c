@@ -2367,9 +2367,10 @@ render_preview ( GtkWidget *preview, GimpPixelRgn *srcrgn )
 static void
 mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update )
 {
-  gint l_idx;
+  gint     l_idx;
   GdkColor fg;
-  guchar l_red, l_green, l_blue;
+  GimpRGB  foreground;
+  guchar   l_red, l_green, l_blue;
 
   if( update & PREVIEW )
     {
@@ -2394,7 +2395,8 @@ mov_path_prevw_draw ( t_mov_path_preview *path_ptr, gint update )
          gtk_widget_draw(path_ptr->preview, NULL);
       }
  
-      gimp_palette_get_foreground(&l_red, &l_green, &l_blue);
+      gimp_palette_get_foreground_rgb (&foreground);
+      gimp_rgb_get_uchar (&foreground, &l_red, &l_green, &l_blue);
       fg.pixel = gdk_rgb_xpixel_from_rgb ((l_red << 16) | (l_green << 8) | l_blue);
         
       gdk_gc_set_foreground (path_ptr->preview->style->black_gc, &fg);

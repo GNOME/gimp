@@ -441,8 +441,10 @@ run (gchar      *name,
 static void
 mosaic (GimpDrawable *drawable)
 {
-  gint x1, y1, x2, y2;
-  gint alpha;
+  gint     x1, y1, x2, y2;
+  gint     alpha;
+  GimpRGB  foreground;
+  GimpRGB  background;
 
   /*  Find the mask bounds  */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
@@ -479,11 +481,25 @@ mosaic (GimpDrawable *drawable)
       back[0] = back[1] = back[2] = 0;
       break;
     case FG_BG:
-      gimp_palette_get_foreground (&fore[0], &fore[1], &fore[2]);
-      gimp_palette_get_background (&back[0], &back[1], &back[2]);
+      gimp_palette_get_foreground_rgb (&foreground);
+      gimp_palette_get_background_rgb (&background);
+      switch (gimp_drawable_type (drawable->id))
+	{
+	case GIMP_RGB_IMAGE:
+	case GIMP_RGBA_IMAGE:
+	  gimp_rgb_get_uchar (&foreground, &fore[0], &fore[1], &fore[2]);
+	  gimp_rgb_get_uchar (&background, &back[0], &back[1], &back[2]);
+	  break;
+	case GIMP_GRAY_IMAGE:
+	case GIMP_GRAYA_IMAGE:
+	  fore[0] = gimp_rgb_intensity_uchar (&foreground);
+	  back[0] = gimp_rgb_intensity_uchar (&background);
+	  break;
+	default:
+	  break;
+	}
       break;
     }
-
 
   alpha = drawable->bpp - 1;
   if (gimp_drawable_has_alpha (drawable->id))

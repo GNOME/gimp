@@ -165,10 +165,9 @@ compute_preview (gint x,
   gdouble      realw;
   gdouble      realh;
   GimpVector3  p1, p2;
-  GimpRGB       color;
-  GimpRGB       lightcheck, darkcheck;
-  GimpRGB       temp;
-  guchar       r, g, b;
+  GimpRGB      color;
+  GimpRGB      lightcheck, darkcheck;
+  GimpRGB      temp;
   gint         xcnt, ycnt, f1, f2;
   glong        index = 0;
 
@@ -198,11 +197,8 @@ compute_preview (gint x,
     }
   else
     {
-      gimp_palette_get_background (&r, &g, &b);
-      background.r = (gdouble) r / 255.0;
-      background.g = (gdouble) g / 255.0;
-      background.b = (gdouble) b / 255.0;
-      background.a = 1.0;
+      gimp_palette_get_background_rgb (&background);
+      gimp_rgb_set_alpha (&background, 1.0);
     }
 
   gimp_rgb_set (&lightcheck, 0.75, 0.75, 0.75);

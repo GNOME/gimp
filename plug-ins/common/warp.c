@@ -289,11 +289,12 @@ run (gchar  *name,
      gint   *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpDrawable *map_x = NULL;   /* satisfy compiler complaints */
-  GimpDrawable *map_y = NULL;
-  gint32 image_ID;           /* image id of drawable */
+  static GimpParam  values[1];
+  GimpDrawable     *drawable;
+  GimpDrawable     *map_x = NULL;   /* satisfy compiler complaints */
+  GimpDrawable     *map_y = NULL;
+  gint32            image_ID;       /* image id of drawable */
+  GimpRGB           color;
 
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint pcnt;                 /* parameter counter for scanning input params. */
@@ -304,9 +305,11 @@ run (gchar  *name,
   tile_height = gimp_tile_height();
 
   /* get currently selected foreground pixel color */
-  gimp_palette_get_foreground (&color_pixel[0],
-			       &color_pixel[1],
-			       &color_pixel[2]);
+  gimp_palette_get_foreground_rgb (&color);
+  gimp_rgb_get_uchar (&color, 
+		      &color_pixel[0],
+		      &color_pixel[1],
+		      &color_pixel[2]);
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
