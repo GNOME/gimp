@@ -120,6 +120,7 @@ gimp_coordinates_new()
 @row: 
 @column: 
 @alignment: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_size_entry_set_resolution ##### -->
