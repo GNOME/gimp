@@ -3632,7 +3632,7 @@ msgstr "Centro del destello FX"
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:846 plug-ins/common/nova.c:669
 msgid "Show Cursor"
-msgstr "Mostrar color"
+msgstr "Mostrar gu√as"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
