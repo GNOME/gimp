@@ -1,5 +1,11 @@
 2003-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_data_drop_handle): check for
+	NULL pointers in the GimpDndDataDef array before using them.
+	Might happen with the changed dockable DND code :(
+
+2003-10-06  Sven Neumann  <sven@gimp.org>
+
 	* Made 1.3.21 release.
 
 2003-10-05  Sven Neumann  <sven@gimp.org>
