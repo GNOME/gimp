@@ -40,6 +40,8 @@
 				  s-offset-y)
   (let* ((width (car (gimp-drawable-width logo-layer)))
          (height (car (gimp-drawable-height logo-layer)))
+         (posx (- (car (gimp-drawable-offsets logo-layer))))
+         (posy (- (cadr (gimp-drawable-offsets logo-layer))))
          (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
          (grow-me (car (gimp-layer-copy logo-layer TRUE)))
 
@@ -48,9 +50,10 @@
          (old-fg (car (gimp-palette-get-foreground)))
          (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-image-resize img width height 0 0)
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-layer-set-name grow-me "Grow-me")
     (gimp-image-add-layer img grow-me 1)
+    (gimp-layer-translate grow-me posx posy)
     (gimp-image-add-layer img bg-layer 2)
 
     (gimp-palette-set-background bg-color)

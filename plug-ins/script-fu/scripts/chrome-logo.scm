@@ -19,7 +19,7 @@
 	 (layer-mask (car (gimp-layer-create-mask layer1 BLACK-MASK)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    (gimp-image-resize img width height 0 0)
+    (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img background 1)
     (gimp-image-add-layer img shadow 1)
     (gimp-image-add-layer img layer3 1)
