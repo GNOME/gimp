@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-11-03 01:00+0100\n"
+"POT-Creation-Date: 2003-11-07 00:25+0800\n"
 "PO-Revision-Date: 2003-10-30 08:00+0800\n"
 "Last-Translator: Mimos Open Source Development Group <syed@mimos.my>\n"
 "Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
@@ -21,7 +21,7 @@ msgstr "Pemilihan Berus"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Layar..."
 
 #: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 #, c-format
@@ -110,37 +110,27 @@ msgstr "%s memerlukan saluran alfa"
 msgid "Add Alpha Channel"
 msgstr "Tambahkan Saluran Alfa"
 
-#.
-#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:370
+#: libgimp/gimpexport.c:328
 msgid "Confirm Save"
 msgstr "Sahkan Simpan"
 
-#: libgimp/gimpexport.c:378
+#: libgimp/gimpexport.c:333
 msgid "Confirm"
 msgstr "Sahkan"
 
-#.
-#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
-#. *  Otherwise bad things will happen now!!
-#.
-#. the dialog
-#: libgimp/gimpexport.c:431
+#: libgimp/gimpexport.c:388
 msgid "Export File"
 msgstr "Eksport Fail"
 
-#: libgimp/gimpexport.c:436
+#: libgimp/gimpexport.c:392
 msgid "Ignore"
 msgstr "Abai"
 
-#: libgimp/gimpexport.c:442
+#: libgimp/gimpexport.c:394
 msgid "Export"
 msgstr "Eksport"
 
-#: libgimp/gimpexport.c:468
+#: libgimp/gimpexport.c:415
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -149,11 +139,11 @@ msgstr ""
 "berikut;"
 
 #. the footline
-#: libgimp/gimpexport.c:541
+#: libgimp/gimpexport.c:488
 msgid "The export conversion won't modify your original image."
 msgstr "Penukaran eksport tidak akan mengubah suai imej asal anda."
 
-#: libgimp/gimpexport.c:611
+#: libgimp/gimpexport.c:575
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -162,7 +152,7 @@ msgstr ""
 "Anda akan menyimpan topeng lapisan sebagai %s.\n"
 "Cara ini tidak akan menyimpan lapisan yang dapat dilihat."
 
-#: libgimp/gimpexport.c:617
+#: libgimp/gimpexport.c:581
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -201,9 +191,8 @@ msgstr ""
 "ke fail %s anda."
 
 #: libgimp/gimpmiscui.c:556
-#, fuzzy
 msgid "Parameter Settings"
-msgstr "Pemilihan Corak"
+msgstr "Seting Parameter"
 
 #: libgimp/gimppatternmenu.c:115
 msgid "Pattern Selection"
@@ -215,7 +204,7 @@ msgstr "peratus"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(rentetan UTF-8 tak sah)"
 
 #: libgimpbase/gimputils.c:189
 #, c-format
@@ -464,15 +453,15 @@ msgstr "_Ricih"
 msgid "More..."
 msgstr "Lagi..."
 
-#: libgimpwidgets/gimpunitmenu.c:576
+#: libgimpwidgets/gimpunitmenu.c:578
 msgid "Unit Selection"
 msgstr "Pemilihan Unit"
 
-#: libgimpwidgets/gimpunitmenu.c:622
+#: libgimpwidgets/gimpunitmenu.c:625
 msgid "Unit"
 msgstr "Unit"
 
-#: libgimpwidgets/gimpunitmenu.c:626
+#: libgimpwidgets/gimpunitmenu.c:629
 msgid "Factor"
 msgstr "Faktor"
 
@@ -586,7 +575,7 @@ msgstr "Hitam"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Tarik Keluar Hitam (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
