@@ -1,3 +1,8 @@
+2004-09-29  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpui.def
+	* libgimpwidgets/gimpwidgets.def: updated.
+
 2004-09-29  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimppreview.c
