@@ -224,7 +224,7 @@ sub interact($$$@) {
                  $fs->set_font_name ($val);
               }
               
-              my($n,$t)=xlfd_size($val);
+              my($n,$t)=Gimp::xlfd_size($val);
               $l->set((split(/-/,$val))[2]."\@$n".($t ? "p" : ""));
            };
            

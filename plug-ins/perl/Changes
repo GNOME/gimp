@@ -1,6 +1,7 @@
 Revision history for Gimp-Perl extension.
 
 	- scm2scm and scm2perl will now be installed in INST_SCRIPT
+        - fixed a bug in interact/PF_FONT
 
 1.053 Mon Feb 15 01:35:04 CET 1999
 	- more errornous argument types are detected now, without
