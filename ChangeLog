@@ -1,3 +1,10 @@
+1999-08-22  Tor Lillqvist  <tml@iki.fi>
+
+	* app/convert.c: Use spinbutton for number of colours.
+
+	* app/preferences_dialog.h: Export gimp_spin_button_new. Not the
+	most logical place for it, though.
+
 Sat Aug 21 17:34:53 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in: version number bump

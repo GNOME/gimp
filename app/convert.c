@@ -87,6 +87,7 @@
 #include "interface.h"
 #include "undo.h"
 #include "palette.h"
+#include "preferences_dialog.h"	/* ick. */
 
 #include "libgimp/gimpintl.h"
 
@@ -316,9 +317,12 @@ convert_to_indexed (GimpImage *gimage)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *text;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
   GtkWidget *frame;
   GtkWidget *toggle;
   GSList *group = NULL;
+  gint maxval;
 
   dialog = g_new(IndexedDialog, 1);
   dialog->gimage = gimage;
@@ -368,40 +372,37 @@ convert_to_indexed (GimpImage *gimage)
   gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 
-  text = gtk_entry_new ();
-  {
-    if (dialog->num_cols == 256)
-      {
-	if ((!gimage_is_empty (gimage))
-	    &&
-	    (
-	     gimage->layers->next
-	     ||
-	     layer_has_alpha((Layer *) gimage->layers->data)
-	     )
-	    )
-	  {
-	    gtk_entry_set_text (GTK_ENTRY (text), "255");
-	    dialog->num_cols = 255;
-	  }      
-	else
-	  {
-	    gtk_entry_set_text (GTK_ENTRY (text), "256");
-	  }
-      }
-    else
-      {
-	gchar tempstr[50];
-	g_snprintf (tempstr, sizeof (tempstr), "%d", dialog->num_cols);
-	gtk_entry_set_text (GTK_ENTRY (text), tempstr);
-      }
-    gtk_widget_set_usize (text, 50, 25);
-    gtk_box_pack_start (GTK_BOX (hbox), text, FALSE, FALSE, 0);
-    gtk_signal_connect (GTK_OBJECT (text), "changed",
-			(GtkSignalFunc) indexed_num_cols_update,
-			dialog);
-  }
-  gtk_widget_show (text);
+  if (dialog->num_cols == 256)
+    {
+      if ((!gimage_is_empty (gimage))
+	  &&
+	  (
+	   gimage->layers->next
+	   ||
+	   layer_has_alpha((Layer *) gimage->layers->data)
+	   )
+	  )
+	{
+	  maxval = 255;
+	  dialog->num_cols = 255;
+	}      
+      else
+	{
+	  maxval = 256;
+	}
+    }
+  else
+    {
+      maxval = 256;
+    }
+
+  spinbutton = gimp_spin_button_new (&adjustment, dialog->num_cols,
+				     2, maxval, 1, 5, 0, 1, 0);
+  gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
+		      (GtkSignalFunc) indexed_num_cols_update,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
   gtk_widget_show (hbox);
 
   if (TRUE /* gimage->base_type == RGB */ )
@@ -701,12 +702,7 @@ static void
 indexed_num_cols_update (GtkWidget *w,
 			 gpointer   data)
 {
-  IndexedDialog *dialog;
-  char *str;
-
-  str = gtk_entry_get_text (GTK_ENTRY (w));
-  dialog = (IndexedDialog *) data;
-  dialog->num_cols = BOUNDS(((int) atof (str)), 1, 256);
+  ((IndexedDialog *) data)->num_cols = GTK_ADJUSTMENT (w)->value;
 }
 
 static void

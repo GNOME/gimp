@@ -20,5 +20,14 @@
 #define __PREFERENCES_DIALOG_H__
 
 void file_pref_cmd_callback (GtkWidget *, gpointer);
+GtkWidget* gimp_spin_button_new (GtkObject **,
+				 gfloat,
+				 gfloat,
+				 gfloat,
+				 gfloat,
+				 gfloat,
+				 gfloat,
+				 gfloat,
+				 guint);
 
 #endif /* __PREFERENCES_DIALOG_H__ */
