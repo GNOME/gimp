@@ -1,3 +1,24 @@
+2004-05-07  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-colormap.[ch]: added a const qualifier.
+
+	Changed how the image unit and dot-for-dot mode is handled. Might
+	break things and certainly needs more changes (mainly in tools):
+	
+	* app/core/gimptemplate.c: allow GIMP_UNIT_PIXEL as image unit.
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpstatusbar.c: always use the image unit for the
+	rulers and to display lengths.
+
+	* app/widgets/gimptemplateeditor.c: redone GimpTemplateEditor
+	based on a dialog mockup from Jimmac and Tigert.
+
+	* app/core/core-enums.[ch]: changed some descriptions used by the
+	template editor.
+
 2004-05-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/AlienMap2.c

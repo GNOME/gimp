@@ -675,18 +675,16 @@ img2real (GimpDisplayShell *shell,
 	  gboolean          xdir,
 	  gdouble           len)
 {
-  GimpImage *gimage;
+  GimpImage *image = shell->gdisp->gimage;
   gdouble    res;
 
-  if (shell->dot_for_dot)
+  if (image->unit == GIMP_UNIT_PIXEL)
     return len;
 
-  gimage = shell->gdisp->gimage;
-
   if (xdir)
-    res = gimage->xresolution;
+    res = image->xresolution;
   else
-    res = gimage->yresolution;
+    res = image->yresolution;
 
-  return len * gimp_image_unit_get_factor (gimage) / res;
+  return len * gimp_image_unit_get_factor (image) / res;
 }

@@ -50,10 +50,10 @@ gimp_image_get_colormap_size (const GimpImage *gimage)
 }
 
 void
-gimp_image_set_colormap (GimpImage *gimage,
-                         guchar    *cmap,
-                         gint       n_colors,
-                         gboolean   push_undo)
+gimp_image_set_colormap (GimpImage    *gimage,
+                         const guchar *cmap,
+                         gint          n_colors,
+                         gboolean      push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (cmap != NULL || n_colors == 0);

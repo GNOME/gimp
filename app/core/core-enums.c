@@ -185,10 +185,10 @@ gimp_gravity_type_get_type (void)
 
 static const GEnumValue gimp_fill_type_enum_values[] =
 {
-  { GIMP_FOREGROUND_FILL, N_("Foreground"), "foreground-fill" },
-  { GIMP_BACKGROUND_FILL, N_("Background"), "background-fill" },
+  { GIMP_FOREGROUND_FILL, N_("Foreground Color"), "foreground-fill" },
+  { GIMP_BACKGROUND_FILL, N_("Background Color"), "background-fill" },
   { GIMP_WHITE_FILL, N_("White"), "white-fill" },
-  { GIMP_TRANSPARENT_FILL, N_("Transparent"), "transparent-fill" },
+  { GIMP_TRANSPARENT_FILL, N_("Transparency"), "transparent-fill" },
   { GIMP_PATTERN_FILL, N_("Pattern"), "pattern-fill" },
   { GIMP_NO_FILL, N_("None"), "no-fill" },
   { 0, NULL, NULL }
@@ -345,9 +345,9 @@ gimp_dash_preset_get_type (void)
 
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
-  { GIMP_RGB, N_("RGB"), "rgb" },
+  { GIMP_RGB, N_("RGB Color"), "rgb" },
   { GIMP_GRAY, N_("Grayscale"), "gray" },
-  { GIMP_INDEXED, N_("Indexed"), "indexed" },
+  { GIMP_INDEXED, N_("Indexed Color"), "indexed" },
   { 0, NULL, NULL }
 };
 

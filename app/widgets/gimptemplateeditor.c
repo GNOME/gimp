@@ -44,7 +44,7 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH            10
+#define SB_WIDTH            8
 #define MAX_COMMENT_LENGTH  512  /* arbitrary */
 
 enum
@@ -184,21 +184,18 @@ gimp_template_editor_constructor (GType                  type,
   GimpTemplateEditor *editor;
   GObject            *object;
   GtkWidget          *aspect_box;
-  GtkWidget          *vbox;
   GtkWidget          *frame;
   GtkWidget          *hbox;
   GtkWidget          *table;
-  GtkWidget          *table2;
   GtkWidget          *label;
   GtkObject          *adjustment;
-  GtkWidget          *width_pixels;
-  GtkWidget          *height_pixels;
-  GtkWidget          *width_units;
-  GtkWidget          *height_units;
+  GtkWidget          *width;
+  GtkWidget          *height;
   GtkWidget          *xres;
   GtkWidget          *yres;
   GtkWidget          *chainbutton;
   GtkWidget          *expander;
+  GtkWidget          *combo;
   GtkWidget          *scrolled_window;
   GtkWidget          *text_view;
   GtkTextBuffer      *text_buffer;
@@ -218,118 +215,72 @@ gimp_template_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_widget_show (vbox);
-
-  table = gtk_table_new (7, 2, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 6);
-  gtk_table_set_row_spacing (GTK_TABLE (table), 4, 4);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  /*  the pixel size labels  */
+  /*  the image size labels  */
   label = gtk_label_new (_("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  /*  the unit size labels  */
-  label = gtk_label_new (_("Width:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Height:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /*  create the sizeentry which keeps it all together  */
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 3, 5);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
-  editor->size_se = gimp_size_entry_new (0, editor->template->unit, "%a",
-                                         FALSE, FALSE, TRUE, SB_WIDTH,
-                                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (editor->size_se), 1, 4);
-  gtk_table_set_row_spacing (GTK_TABLE (editor->size_se), 1, 2);
+  width = gimp_spin_button_new (&adjustment,
+                                1, 1, 1, 1, 10, 0,
+                                1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (width), SB_WIDTH);
+
+  height = gimp_spin_button_new (&adjustment,
+                                 1, 1, 1, 1, 10, 0,
+                                 1, 2);
+  gtk_entry_set_width_chars (GTK_ENTRY (height), SB_WIDTH);
+
+  editor->size_se =
+    gimp_size_entry_new (0, editor->template->unit,_("%p"),
+                         TRUE, FALSE, FALSE, SB_WIDTH,
+                         GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_table_set_col_spacing (GTK_TABLE (editor->size_se), 1, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (editor->size_se), 0, 2);
+
   gtk_box_pack_start (GTK_BOX (hbox), editor->size_se, FALSE, FALSE, 0);
   gtk_widget_show (editor->size_se);
 
-  /*  height in units  */
-  height_units = gimp_spin_button_new (&adjustment,
-                                       1, 1, 1, 1, 10, 0,
-                                       1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (height_units), SB_WIDTH);
-  /*  add the "height in units" spinbutton to the sizeentry  */
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height_units,
-			     0, 1, 2, 3);
-  gtk_widget_show (height_units);
-
-  /*  height in pixels  */
-  table2 = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table2), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table2), 2);
-  gtk_table_attach_defaults (GTK_TABLE (table), table2, 1, 2, 0, 2);
-  gtk_widget_show (table2);
-
-  height_pixels = gimp_spin_button_new (&adjustment,
-                                        1, 1, 1, 1, 10, 0,
-                                        1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (height_pixels), SB_WIDTH);
-  gtk_table_attach (GTK_TABLE (table2), height_pixels, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (height_pixels);
-
-  label = gtk_label_new (_("Pixels"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table2), label, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  editor->memsize_label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table2), editor->memsize_label, 2, 3, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (editor->memsize_label);
-
-  /*  register the height spinbuttons with the sizeentry  */
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-                             GTK_SPIN_BUTTON (height_units),
-			     GTK_SPIN_BUTTON (height_pixels));
+			     GTK_SPIN_BUTTON (width), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width,
+			     0, 1, 0, 1);
+  gtk_widget_show (width);
 
-  /*  width in units  */
-  width_units = gimp_spin_button_new (&adjustment,
-                                      1, 1, 1, 1, 10, 0,
-                                      1, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (width_units), SB_WIDTH);
-  /*  add the "width in units" spinbutton to the sizeentry  */
-  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), width_units,
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
+			     GTK_SPIN_BUTTON (height), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (editor->size_se), height,
 			     0, 1, 1, 2);
-  gtk_widget_show (width_units);
+  gtk_widget_show (height);
 
-  /*  width in pixels  */
-  width_pixels = gimp_spin_button_new (&adjustment,
-                                       1, 1, 1, 1, 10, 0,
-                                       1, 0);
-  gtk_entry_set_width_chars (GTK_ENTRY (width_pixels), SB_WIDTH);
-  gtk_table_attach (GTK_TABLE (table2), width_pixels, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (width_pixels);
+  gimp_prop_coordinates_connect (G_OBJECT (editor->template),
+                                 "width", "height", "unit",
+                                 editor->size_se, NULL,
+                                 editor->template->xresolution,
+                                 editor->template->yresolution);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 3, 2, 3);
+  gtk_widget_show (hbox);
 
   aspect_box = gimp_enum_stock_box_new (GIMP_TYPE_ASPECT_TYPE,
                                         "gimp", GTK_ICON_SIZE_MENU,
@@ -338,49 +289,52 @@ gimp_template_editor_constructor (GType                  type,
                                         &editor->aspect_button);
   gtk_widget_hide (editor->aspect_button); /* hide "square" */
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table2), hbox, 2, 3, 0, 1);
-  gtk_widget_show (hbox);
-
-  gtk_box_pack_end (GTK_BOX (hbox), aspect_box, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), aspect_box, FALSE, FALSE, 0);
   gtk_widget_show (aspect_box);
 
-  /*  register the width spinbuttons with the sizeentry  */
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (editor->size_se),
-                             GTK_SPIN_BUTTON (width_units),
-			     GTK_SPIN_BUTTON (width_pixels));
+  editor->memsize_label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (editor->memsize_label), 1.0, 1.0);
+  gtk_box_pack_start (GTK_BOX (hbox), editor->memsize_label, TRUE, TRUE, 0);
+  gtk_widget_show (editor->memsize_label);
 
-  /*  initialize the sizeentry  */
-  gimp_prop_coordinates_connect (G_OBJECT (editor->template),
-                                 "width", "height", "unit",
-                                 editor->size_se, NULL,
-                                 editor->template->xresolution,
-                                 editor->template->yresolution);
+  text = g_strdup_printf ("<b>%s</b>", _("_Advanced Options"));
+  expander = g_object_new (GTK_TYPE_EXPANDER,
+                           "label",         text,
+                           "use_markup",    TRUE,
+                           "use_underline", TRUE,
+                           NULL);
+  g_free (text);
 
-  focus_chain = g_list_append (focus_chain, width_pixels);
-  focus_chain = g_list_append (focus_chain, height_pixels);
-  focus_chain = g_list_append (focus_chain, aspect_box);
+  gtk_box_pack_start (GTK_BOX (editor), expander, TRUE, TRUE, 0);
+  gtk_widget_show (expander);
 
-  gtk_container_set_focus_chain (GTK_CONTAINER (table2), focus_chain);
-  g_list_free (focus_chain);
-  focus_chain = NULL;
+  frame = gimp_frame_new ("<expander>");
+  gtk_container_add (GTK_CONTAINER (expander), frame);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (5, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   /*  the resolution labels  */
   label = gtk_label_new (_("Resolution X:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  label = gtk_label_new (_("Y:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
+  label = gtk_label_new (_("Resolution Y:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   /*  the resolution sizeentry  */
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 5, 7);
+  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, 0, 2);
   gtk_widget_show (hbox);
 
   xres = gimp_spin_button_new (&adjustment,
@@ -394,8 +348,7 @@ gimp_template_editor_constructor (GType                  type,
   gtk_entry_set_width_chars (GTK_ENTRY (yres), SB_WIDTH);
 
   editor->resolution_se =
-    gimp_size_entry_new (0, editor->template->resolution_unit,
-                         _("pixels/%a"),
+    gimp_size_entry_new (0, editor->template->resolution_unit, _("pixels/%a"),
                          FALSE, FALSE, FALSE, SB_WIDTH,
                          GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (editor->resolution_se), 1, 2);
@@ -445,43 +398,20 @@ gimp_template_editor_constructor (GType                  type,
                                  focus_chain);
   g_list_free (focus_chain);
 
-  /*  hbox containing the Image type and fill type frames  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (editor->template),
+                                        "image-type",
+                                        GIMP_RGB, GIMP_GRAY);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Color_space:"), 0.0, 0.5,
+                             combo, 1, FALSE);
 
-  /*  frame for Image Type  */
-  frame = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->template),
-                                          "image-type",
-                                          _("Image Type"),
-                                          GIMP_RGB, GIMP_GRAY);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  /* frame for Fill Type */
-  frame = gimp_prop_enum_radio_frame_new (G_OBJECT (editor->template),
-                                          "fill-type",
-                                          _("Fill Type"),
-                                          GIMP_FOREGROUND_FILL,
-                                          GIMP_TRANSPARENT_FILL);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  /* frame for Comment */
-  text = g_strdup_printf ("<b>%s</b>", _("Image Co_mment"));
-  expander = g_object_new (GTK_TYPE_EXPANDER,
-                           "label",         text,
-                           "use_markup",    TRUE,
-                           "use_underline", TRUE,
-                           NULL);
-  g_free (text);
-
-  gtk_box_pack_start (GTK_BOX (editor), expander, TRUE, TRUE, 0);
-  gtk_widget_show (expander);
-
-  frame = gimp_frame_new ("<expander>");
-  gtk_container_add (GTK_CONTAINER (expander), frame);
-  gtk_widget_show (frame);
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (editor->template),
+                                        "fill-type",
+                                        GIMP_FOREGROUND_FILL,
+                                        GIMP_TRANSPARENT_FILL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("_Fill with:"), 0.0, 0.5,
+                             combo, 1, FALSE);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -489,8 +419,9 @@ gimp_template_editor_constructor (GType                  type,
 				  GTK_POLICY_AUTOMATIC);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
                                        GTK_SHADOW_ETCHED_IN);
-  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
-  gtk_widget_show (scrolled_window);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+                             _("Co_mment:"), 0.0, 0.0,
+                             scrolled_window, 1, FALSE);
 
   text_buffer = gimp_prop_text_buffer_new (G_OBJECT (editor->template),
                                            "comment", MAX_COMMENT_LENGTH);

@@ -323,39 +323,41 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
               }
               break;
 
+	    case 'W': /* width in real-world units */
+              if (gimage->unit != GIMP_UNIT_PIXEL)
+                {
+                  gchar unit_format[8];
+
+                  g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                              gimp_image_unit_get_digits (gimage) + 1);
+                  i += print (title, title_len, i, unit_format,
+                              (gimage->width *
+                               gimp_image_unit_get_factor (gimage) /
+                               gimage->xresolution));
+                  break;
+                }
+              /* else fallthru */
 	    case 'w': /* width in pixels */
 	      i += print (title, title_len, i, "%d", gimage->width);
 	      break;
 
-	    case 'W': /* width in real-world units */
-              {
-                gchar unit_format[8];
+	    case 'H': /* height in real-world units */
+              if (gimage->unit != GIMP_UNIT_PIXEL)
+                {
+                  gchar unit_format[8];
 
-                g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                            gimp_image_unit_get_digits (gimage) + 1);
-                i += print (title, title_len, i, unit_format,
-                            (gimage->width *
-                             gimp_image_unit_get_factor (gimage) /
-                             gimage->xresolution));
-              }
-              break;
-
+                  g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
+                              gimp_image_unit_get_digits (gimage) + 1);
+                  i += print (title, title_len, i, unit_format,
+                              (gimage->height *
+                               gimp_image_unit_get_factor (gimage) /
+                               gimage->yresolution));
+                  break;
+                }
+              /* else fallthru */
 	    case 'h': /* height in pixels */
 	      i += print (title, title_len, i, "%d", gimage->height);
 	      break;
-
-	    case 'H': /* height in real-world units */
-              {
-                gchar unit_format[8];
-
-                g_snprintf (unit_format, sizeof (unit_format), "%%.%df",
-                            gimp_image_unit_get_digits (gimage) + 1);
-                i += print (title, title_len, i, unit_format,
-                            (gimage->height *
-                             gimp_image_unit_get_factor (gimage) /
-                             gimage->yresolution));
-              }
-              break;
 
 	    case 'u': /* unit symbol */
 	      i += print (title, title_len, i, "%s",

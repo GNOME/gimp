@@ -199,13 +199,16 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                             const gchar   *separator,
                             gdouble        y)
 {
-  gchar  buf[256];
+  GimpImage *gimage;
+  gchar      buf[CURSOR_STR_LENGTH];
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
 
-  if (statusbar->shell->dot_for_dot)
+  gimage = statusbar->shell->gdisp->gimage;
+
+  if (gimage->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
@@ -215,11 +218,7 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
     }
   else /* show real world units */
     {
-      GimpImage *gimage;
-      gdouble    unit_factor;
-
-      gimage = statusbar->shell->gdisp->gimage;
-      unit_factor = gimp_image_unit_get_factor (gimage);
+      gdouble unit_factor = gimp_image_unit_get_factor (gimage);
 
       g_snprintf (buf, sizeof (buf), statusbar->cursor_format_str,
 		  title,
@@ -265,9 +264,12 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
     }
   else
     {
-      gchar buffer[CURSOR_STR_LENGTH];
+      GimpImage *gimage;
+      gchar      buffer[CURSOR_STR_LENGTH];
 
-      if (shell->dot_for_dot)
+      gimage = statusbar->shell->gdisp->gimage;
+
+      if (gimage->unit == GIMP_UNIT_PIXEL)
 	{
 	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
                       "",
@@ -277,11 +279,7 @@ gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
 	}
       else /* show real world units */
 	{
-          GimpImage *gimage;
-	  gdouble    unit_factor;
-
-          gimage = statusbar->shell->gdisp->gimage;
-          unit_factor = gimp_image_unit_get_factor (gimage);
+	  gdouble  unit_factor = gimp_image_unit_get_factor (gimage);
 
 	  g_snprintf (buffer, sizeof (buffer), statusbar->cursor_format_str,
                       "",
@@ -300,6 +298,7 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
   static PangoLayout *layout = NULL;
 
   GimpDisplayShell *shell;
+  GimpImage        *gimage;
   gchar             buffer[CURSOR_STR_LENGTH];
   gint              cursor_label_width;
   gint              label_frame_size_difference;
@@ -307,8 +306,9 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
 
   shell = statusbar->shell;
+  gimage = shell->gdisp->gimage;
 
-  if (shell->dot_for_dot)
+  if (gimage->unit == GIMP_UNIT_PIXEL)
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -320,11 +320,7 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
     }
   else /* show real world units */
     {
-      GimpImage *gimage;
-      gdouble    unit_factor;
-
-      gimage = shell->gdisp->gimage;
-      unit_factor = gimp_image_unit_get_factor (gimage);
+      gdouble  unit_factor = gimp_image_unit_get_factor (gimage);
 
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
@@ -362,10 +358,4 @@ gimp_statusbar_resize_cursor (GimpStatusbar *statusbar)
                                  cursor_label_width +
                                  label_frame_size_difference,
                                  -1);
-
-#if 0
-  gimp_display_shell_update_cursor (shell,
-                                    shell->cursor_x,
-                                    shell->cursor_y);
-#endif
 }

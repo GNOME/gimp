@@ -143,7 +143,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_UNIT, "unit",
                                  N_("The unit used for coordinate display "
                                     "when not in dot-for-dot mode."),
-                                 FALSE, FALSE, GIMP_UNIT_INCH,
+                                 TRUE, FALSE, GIMP_UNIT_PIXEL,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
@@ -415,6 +415,7 @@ gimp_template_create_image (Gimp         *gimp,
 
   gimp_image_set_resolution (gimage,
                              template->xresolution, template->yresolution);
+
   gimp_image_set_unit (gimage, template->unit);
 
   width  = gimp_image_get_width (gimage);

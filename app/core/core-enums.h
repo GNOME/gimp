@@ -153,12 +153,12 @@ GType gimp_fill_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_FOREGROUND_FILL,   /*< desc="Foreground"     >*/
-  GIMP_BACKGROUND_FILL,   /*< desc="Background"     >*/
-  GIMP_WHITE_FILL,        /*< desc="White"          >*/
-  GIMP_TRANSPARENT_FILL,  /*< desc="Transparent"    >*/
-  GIMP_PATTERN_FILL,      /*< desc="Pattern"        >*/
-  GIMP_NO_FILL            /*< desc="None", pdb-skip >*/
+  GIMP_FOREGROUND_FILL,   /*< desc="Foreground Color" >*/
+  GIMP_BACKGROUND_FILL,   /*< desc="Background Color" >*/
+  GIMP_WHITE_FILL,        /*< desc="White"            >*/
+  GIMP_TRANSPARENT_FILL,  /*< desc="Transparency"     >*/
+  GIMP_PATTERN_FILL,      /*< desc="Pattern"          >*/
+  GIMP_NO_FILL            /*< desc="None",   pdb-skip >*/
 } GimpFillType;
 
 
@@ -257,9 +257,9 @@ GType gimp_image_base_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_RGB,     /*< desc="RGB"       >*/
-  GIMP_GRAY,    /*< desc="Grayscale" >*/
-  GIMP_INDEXED  /*< desc="Indexed"   >*/
+  GIMP_RGB,     /*< desc="RGB Color"     >*/
+  GIMP_GRAY,    /*< desc="Grayscale"     >*/
+  GIMP_INDEXED  /*< desc="Indexed Color" >*/
 } GimpImageBaseType;
 
 
