@@ -104,18 +104,21 @@ static GHashTable *themes_hash = NULL;
 
 /*  public functions  */
 
-void
+gboolean
 gui_libs_init (gint    *argc,
 	       gchar ***argv)
 {
-  g_return_if_fail (argc != NULL);
-  g_return_if_fail (argv != NULL);
+  g_return_val_if_fail (argc != NULL, FALSE);
+  g_return_val_if_fail (argv != NULL, FALSE);
 
-  gtk_init (argc, argv);
+  if (!gtk_init_check (argc, argv))
+    return FALSE;
 
   gimp_widgets_init ();
 
   g_type_class_ref (GIMP_TYPE_COLOR_SELECT);
+  
+  return TRUE;
 }
 
 void

@@ -54,9 +54,14 @@
 #ifdef G_OS_WIN32
 #include <windows.h>
 #else
-static void   gimp_sigfatal_handler (gint sig_num);
-static void   gimp_sigchld_handler  (gint sig_num);
+static void   gimp_sigfatal_handler  (gint         sig_num);
+static void   gimp_sigchld_handler   (gint         sig_num);
 #endif
+
+
+static void   gimp_show_version      (void);
+static void   gimp_show_help         (const gchar *progname);
+static void   gimp_text_console_exit (gboolean     fail);
 
 
 /*  command line options  */
@@ -103,7 +108,6 @@ int
 main (int    argc,
       char **argv)
 {
-  gboolean  show_version = FALSE;
   gboolean  show_help    = FALSE;
   gint      i, j;
 
@@ -128,7 +132,10 @@ main (int    argc,
 
   textdomain (GETTEXT_PACKAGE);
 
-  /*  check argv[] for "--no-interface" before trying to initialize gtk+  */
+  /* Check argv[] for "--no-interface" before trying to initialize gtk+.
+   * We also check for "--help" or "--version" here since those shouldn't
+   * require gui libs either.
+   */
   for (i = 1; i < argc; i++)
     {
       if ((strcmp (argv[i], "--no-interface") == 0) ||
@@ -136,16 +143,32 @@ main (int    argc,
 	{
 	  no_interface = TRUE;
 	}
+      else if ((strcmp (argv[i], "--version") == 0) ||
+               (strcmp (argv[i], "-v") == 0))
+	{
+	  gimp_show_version ();
+	  gimp_text_console_exit (FALSE);
+	}
+      else if ((strcmp (argv[i], "--help") == 0) ||
+	       (strcmp (argv[i], "-h") == 0))
+	{
+	  gimp_show_help (argv[0]);
+	  gimp_text_console_exit (FALSE);
+	}
     }
 
   if (no_interface)
     {
-      setlocale (LC_ALL, "");
       g_type_init ();
     }
   else
     {
-      gui_libs_init (&argc, &argv);
+      if (! gui_libs_init (&argc, &argv))
+	{
+	  g_print (_("ERROR: GIMP could not initialize the GUI.\n\n"));
+	  g_print (_("Make sure a proper setup for your display environment exists.\n"));
+	  gimp_text_console_exit (TRUE);
+	}
     }
 
 #if defined (HAVE_SHM_H) || defined (G_OS_WIN32)
@@ -212,18 +235,6 @@ main (int    argc,
 	      alternate_gimprc = argv[i];
 	      argv[i] = NULL;
             }
-	}
-      else if ((strcmp (argv[i], "--help") == 0) ||
-	       (strcmp (argv[i], "-h") == 0))
-	{
-	  show_help = TRUE;
- 	  argv[i] = NULL;
-	}
-      else if ((strcmp (argv[i], "--version") == 0) ||
-               (strcmp (argv[i], "-v") == 0))
-	{
-	  show_version = TRUE;
- 	  argv[i] = NULL;
 	}
       else if ((strcmp (argv[i], "--no-data") == 0) ||
 	       (strcmp (argv[i], "-d") == 0))
@@ -317,61 +328,17 @@ main (int    argc,
 #ifdef G_OS_WIN32
   /* Common windoze apps don't have a console at all. So does Gimp 
    * - if appropiate. This allows to compile as console application
-   * with all it's benfits (like inheriting the console) but hide
+   * with all it's benefits (like inheriting the console) but hide
    * it, if the user doesn't want it.
    */
-  if (!show_help && !show_version && !be_verbose && !console_messages)
+  if (!show_help && !be_verbose && !console_messages)
     FreeConsole ();
 #endif
 
-  if (show_version || show_help)
-    {
-      g_print ( "%s %s\n", _("GIMP version"), GIMP_VERSION);
-    }
-
   if (show_help)
     {
-      g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), argv[0]);
-      g_print (_("Options:\n"));
-      g_print (_("  -b, --batch <commands>   Run in batch mode.\n"));
-      g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
-      g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
-      g_print (_("  -i, --no-interface       Run without a user interface.\n"));
-      g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
-      g_print (_("  -h, --help               Output this help.\n"));
-      g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
-      g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
-      g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
-      g_print (_("  -v, --version            Output version information.\n"));
-      g_print (_("  --verbose                Show startup messages.\n"));	  
-      g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
-      g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
-      g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
-      g_print (_("  --display <display>      Use the designated X display.\n"));
-      g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
-      g_print ("  --enable-stack-trace <never | query | always>\n");
-      g_print (_("                           Debugging mode for fatal signals.\n\n"));
-    }
-
-  if (show_version || show_help)
-    {
-#ifdef G_OS_WIN32
-      /* Give them time to read the message if it was printed in a
-       * separate console window. I would really love to have
-       * some way of asking for confirmation to close the console
-       * window.
-       */
-      HANDLE console;
-      DWORD mode;
-
-      console = GetStdHandle (STD_OUTPUT_HANDLE);
-      if (GetConsoleMode (console, &mode) != 0)
-	{
-	  g_print (_("(This console window will close in ten seconds)\n"));
-	  Sleep(10000);
-	}
-#endif
-      exit (0);
+      gimp_show_help (argv[0]);
+      gimp_text_console_exit (TRUE);
     }
 
   g_log_set_handler ("Gimp",
@@ -469,6 +436,62 @@ main (int    argc,
 	    argv + 1);
 
   return 0;
+}
+
+
+static void
+gimp_show_version (void)
+{
+  g_print ("%s %s\n", _("GIMP version"), GIMP_VERSION);
+}
+
+static void
+gimp_show_help (const gchar *progname)
+{
+  gimp_show_version ();
+
+  g_print (_("\nUsage: %s [option ... ] [file ... ]\n\n"), progname);
+  g_print (_("Options:\n"));
+  g_print (_("  -b, --batch <commands>   Run in batch mode.\n"));
+  g_print (_("  -c, --console-messages   Display warnings to console instead of a dialog box.\n"));
+  g_print (_("  -d, --no-data            Do not load brushes, gradients, palettes, patterns.\n"));
+  g_print (_("  -i, --no-interface       Run without a user interface.\n"));
+  g_print (_("  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"));
+  g_print (_("  -h, --help               Output this help.\n"));
+  g_print (_("  -r, --restore-session    Try to restore saved session.\n"));
+  g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
+  g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
+  g_print (_("  -v, --version            Output version information.\n"));
+  g_print (_("  --verbose                Show startup messages.\n"));	  
+  g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
+  g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
+  g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
+  g_print (_("  --display <display>      Use the designated X display.\n"));
+  g_print (_("  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"));
+  g_print ("  --enable-stack-trace <never | query | always>\n");
+  g_print (_("                           Debugging mode for fatal signals.\n\n"));
+}
+
+static void
+gimp_text_console_exit (gboolean fail)
+{
+#ifdef G_OS_WIN32
+  /* Give them time to read the message if it was printed in a
+   * separate console window. I would really love to have
+   * some way of asking for confirmation to close the console
+   * window.
+   */
+  HANDLE console;
+  DWORD mode;
+
+  console = GetStdHandle (STD_OUTPUT_HANDLE);
+  if (GetConsoleMode (console, &mode) != 0)
+    {
+      g_print (_("(This console window will close in ten seconds)\n"));
+      Sleep(10000);
+    }
+#endif
+  exit (fail ? 1 : 0);
 }
 
 

@@ -1,3 +1,13 @@
+2003-01-08  Manish Singh  <yosh@gimp.org>
+
+	* app/gui.[ch]: make gui_libs_init() use gtk_init_check() and return
+	a gboolean on success or failure.
+
+	* app/main.c: reorganized so that --help and --version never need
+	the gui to be initialized. Print a proper message when the gui cannot
+	be initialized (perhaps recommend --no-interface?). Return nonzero
+	exit status on failures.
+
 2003-01-08  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/psd.c (do_layer_record): setting the layer name to

@@ -20,7 +20,7 @@
 #define __GUI_H__
 
 
-void          gui_libs_init             (gint      *argc,
+gboolean      gui_libs_init             (gint      *argc,
                                          gchar   ***argv);
 
 void          gui_environ_init          (Gimp      *gimp);
