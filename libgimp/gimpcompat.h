@@ -25,11 +25,16 @@
 
 G_BEGIN_DECLS
 
-/* This file contains aliases that are kept for historical
- * reasons, because a wide code base depends on them.
+/* This file contains aliases that are kept for historical reasons,
+ * because a wide code base depends on them. We suggest that you
+ * only use this header temporarily while porting a plug-in to the
+ * new API.
  *
  * These defines will be removed in the next development cycle.
  */
+
+#ifndef GIMP_DISABLE_DEPRECATED
+
 
 #define GimpRunModeType                         GimpRunMode
 #define GimpExportReturnType                    GimpExportReturn
@@ -64,6 +69,10 @@ G_BEGIN_DECLS
 #define gimp_pattern_select_widget              gimp_pattern_select_widget_new
 #define gimp_pattern_select_widget_set_popup    gimp_pattern_select_widget_set
 #define gimp_pattern_select_widget_close_popup  gimp_pattern_select_widget_close
+#define INTENSITY(r,g,b)                        GIMP_RGB_INTENSITY(r,g,b)
+#define INTENSITY_RED                           GIMP_RGB_INTENSITY_RED
+#define INTENSITY_GREEN                         GIMP_RGB_INTENSITY_GREEN
+#define INTENSITY_BLUE                          GIMP_RGB_INTENSITY_BLUE
 
 
 enum
@@ -139,6 +148,9 @@ enum
   GIMP_SPIRAL_CLOCKWISE     = GIMP_GRADIENT_SPIRAL_CLOCKWISE,
   GIMP_SPIRAL_ANTICLOCKWISE = GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE
 };
+
+
+#endif  /* GIMP_DISABLE_DEPRECATED */
 
 G_END_DECLS
 
