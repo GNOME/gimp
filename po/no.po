@@ -5,29 +5,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.21\n"
-"POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-05-18 19:58+02:00\n"
+"POT-Creation-Date: 2000-06-04 01:11+0200\n"
+"PO-Revision-Date: 2000-06-04 01:12+02:00\n"
 "Last-Translator: Kjartan Maraas <kmaraas@online.no>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:192
+#: app/about_dialog.c:193
 msgid "About the GIMP"
 msgstr "Om GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:243
+#: app/about_dialog.c:244
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:253
+#: app/about_dialog.c:254
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Versjon %s brakt til deg av"
 
-#: app/about_dialog.c:293
+#: app/about_dialog.c:294
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "Vennligst se http://www.gimp.org/ for mer informasjon"
 
@@ -81,7 +81,7 @@ msgid "Brushes"
 msgstr "Pensler"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:558 app/internal_procs.c:143 app/preferences_dialog.c:2469
+#: app/app_procs.c:558 app/internal_procs.c:140 app/preferences_dialog.c:2469
 msgid "Patterns"
 msgstr "Mønstre"
 
@@ -91,7 +91,7 @@ msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:562 app/internal_procs.c:113 app/preferences_dialog.c:2477
+#: app/app_procs.c:562 app/internal_procs.c:104 app/preferences_dialog.c:2477
 msgid "Gradients"
 msgstr "Gradienter"
 
@@ -142,7 +142,7 @@ msgstr "Korrupt kurve"
 msgid "Curve not closed!"
 msgstr "Kurve ikke lukket!"
 
-#: app/bezier_select.c:3228 app/gimage_mask.c:618
+#: app/bezier_select.c:3228 app/gimage_mask.c:620
 msgid "Paintbrush operation failed."
 msgstr "Paintbrush operasjon feilet."
 
@@ -479,7 +479,7 @@ msgid "copy"
 msgstr "kopier"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1745
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1746
 #, c-format
 msgid "%s copy"
 msgstr "%s kopier"
@@ -737,15 +737,15 @@ msgstr "I/T"
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
-msgstr ""
+msgstr "S"
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
@@ -1488,14 +1488,6 @@ msgstr ""
 "Endringer er gjort i %s.\n"
 "Lukk likevel?"
 
-#: app/gimage_cmds.c:3463
-msgid ""
-"Image resolution is out of bounds,\n"
-"using the default resolution instead."
-msgstr ""
-"Bildeoppløsningen er utenfor grensene,\n"
-"bruker standard oppløsning istedet."
-
 #: app/gimage_mask.c:208
 msgid ""
 "Unable to cut/copy because the selected\n"
@@ -1596,19 +1588,19 @@ msgstr "Klarte ikke å lese bildebørste."
 msgid "Can't fill unknown image type."
 msgstr "Kan ikke fylle ut ukjent bildetype."
 
-#: app/gimpdrawable.c:501
+#: app/gimpdrawable.c:505
 msgid "parasite attach to drawable"
 msgstr "parasitt festet til tegnet objekt"
 
-#: app/gimpdrawable.c:536
+#: app/gimpdrawable.c:540
 msgid "detach parasite from drawable"
 msgstr "løsriv parasitt fra tegnet objekt"
 
-#: app/gimpdrawable.c:743
+#: app/gimpdrawable.c:747
 msgid "unnamed"
 msgstr "uten navn"
 
-#: app/gimpdrawable.c:760
+#: app/gimpdrawable.c:764
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Lagtype %d ikke støttet."
@@ -1781,49 +1773,49 @@ msgid "GIMP Message"
 msgstr "GIMP melding"
 
 #. pseudo unit
-#: app/gimpunit.c:58
+#: app/gimpunit.c:63
 msgid "pixel"
 msgstr "piksel"
 
-#: app/gimpunit.c:58 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
+#: app/gimpunit.c:63 app/measure.c:504 app/measure.c:508 app/paint_core.c:472
 msgid "pixels"
 msgstr "piksler"
 
 #. standard units
-#: app/gimpunit.c:61
+#: app/gimpunit.c:66
 msgid "inch"
 msgstr "tomme"
 
-#: app/gimpunit.c:61
+#: app/gimpunit.c:66
 msgid "inches"
 msgstr "tommer"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:67
 msgid "millimeter"
 msgstr "millimeter"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:67
 msgid "millimeters"
 msgstr "millimetre"
 
 #. professional units
-#: app/gimpunit.c:65
+#: app/gimpunit.c:70
 msgid "point"
 msgstr "punkt"
 
-#: app/gimpunit.c:65
+#: app/gimpunit.c:70
 msgid "points"
 msgstr "punkter"
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:71
 msgid "pica"
 msgstr "pica"
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:71
 msgid "picas"
 msgstr "picas"
 
-#: app/gimpunit.c:73
+#: app/gimpunit.c:78
 msgid "percent"
 msgstr "prosent"
 
@@ -2280,6 +2272,14 @@ msgstr "Lysverdi:"
 msgid "Saturation:"
 msgstr "Metning:"
 
+#: app/image_cmds.c:3463
+msgid ""
+"Image resolution is out of bounds,\n"
+"using the default resolution instead."
+msgstr ""
+"Bildeoppløsningen er utenfor grensene,\n"
+"bruker standard oppløsning istedet."
+
 #: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1624
 msgid "Grayscale"
@@ -2507,87 +2507,87 @@ msgid "Convert"
 msgstr "Konverter"
 
 #: app/internal_procs.c:86
-msgid "Drawable procedures"
-msgstr "Prosedyrer for tegnede objekter"
-
-#: app/internal_procs.c:89
-msgid "Edit procedures"
-msgstr "Prosedyrer for redigering"
-
-#: app/internal_procs.c:92
-msgid "File Operations"
-msgstr "Filoperasjoner"
-
-#: app/internal_procs.c:95
-msgid "Floating selections"
-msgstr "Flytende utvalg"
-
-#: app/internal_procs.c:98
 msgid "GDisplay procedures"
 msgstr "Prosedyrer for GDisplay"
 
-#: app/internal_procs.c:101 app/palette.c:3182
-msgid "Image"
-msgstr "Bilde"
+#: app/internal_procs.c:89
+msgid "Drawable procedures"
+msgstr "Prosedyrer for tegnede objekter"
 
-#: app/internal_procs.c:104
-msgid "Image mask"
-msgstr "Bildemaske"
+#: app/internal_procs.c:92
+msgid "Edit procedures"
+msgstr "Prosedyrer for redigering"
 
-#: app/internal_procs.c:107
+#: app/internal_procs.c:95
+msgid "File Operations"
+msgstr "Filoperasjoner"
+
+#: app/internal_procs.c:98
+msgid "Floating selections"
+msgstr "Flytende utvalg"
+
+#: app/internal_procs.c:101
 msgid "Gimprc procedures"
 msgstr "Prosedyrer for gimprc"
 
-#: app/internal_procs.c:110
-msgid "Help procedures"
-msgstr "Hjelpeprosedyrer"
-
-#: app/internal_procs.c:116
+#: app/internal_procs.c:107
 msgid "Gradient UI"
 msgstr "Gradient UI"
 
-#: app/internal_procs.c:119
+#: app/internal_procs.c:110
 msgid "Guide procedures"
 msgstr "Prosedyrer for guide"
+
+#: app/internal_procs.c:113
+msgid "Help procedures"
+msgstr "Hjelpeprosedyrer"
+
+#: app/internal_procs.c:116 app/palette.c:3182
+msgid "Image"
+msgstr "Bilde"
+
+#. the layer name label
+#: app/internal_procs.c:119 app/layer_select.c:137
+msgid "Layer"
+msgstr "Lag"
 
 #: app/internal_procs.c:122 app/preferences_dialog.c:1774
 #: app/preferences_dialog.c:1776
 msgid "Interface"
 msgstr "Grensesnitt"
 
-#. the layer name label
-#: app/internal_procs.c:125 app/layer_select.c:137
-msgid "Layer"
-msgstr "Lag"
-
-#: app/internal_procs.c:128
+#: app/internal_procs.c:125
 msgid "Miscellaneous"
 msgstr "Forskjellig"
 
-#: app/internal_procs.c:131 app/palette.c:2197 app/palette.c:2209
+#: app/internal_procs.c:128 app/palette.c:2197 app/palette.c:2209
 #: app/palette_select.c:87
 msgid "Palette"
 msgstr "Palett"
 
-#: app/internal_procs.c:134
+#: app/internal_procs.c:131
 msgid "Parasite procedures"
 msgstr "Parasitt-prosedyrer"
 
-#: app/internal_procs.c:137 app/lc_dialog.c:179
+#: app/internal_procs.c:134 app/lc_dialog.c:179
 msgid "Paths"
 msgstr "Stier"
 
-#: app/internal_procs.c:140
+#: app/internal_procs.c:137
 msgid "Pattern UI"
 msgstr "Mønster UI"
 
-#: app/internal_procs.c:146
+#: app/internal_procs.c:143
 msgid "Plug-in"
 msgstr "Tillegg"
 
-#: app/internal_procs.c:149
+#: app/internal_procs.c:146
 msgid "Procedural database"
 msgstr "Prosedyre-database"
+
+#: app/internal_procs.c:149
+msgid "Image mask"
+msgstr "Bildemaske"
 
 #: app/internal_procs.c:152
 msgid "Text procedures"
@@ -3817,7 +3817,7 @@ msgstr "Navigasjon: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigasjon: Ikke noe bilde"
 
-#: app/paint_core.c:745
+#: app/paint_core.c:706
 msgid "No brushes available for use with this tool."
 msgstr "Ingen pensler tilgjengelig for bruk med dette verktøyet."
 
@@ -5216,9 +5216,8 @@ msgid "Magnify"
 msgstr "Forstørr"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Verktøy/Transformeringsverktøy/Transformer"
+msgstr "/Verktøy/Transformeringsverktøy/Forstørr"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -6352,6 +6351,3 @@ msgstr "Vannfarge"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Fargehistorikk"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Verktøy/Forstørr"
