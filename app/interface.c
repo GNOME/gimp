@@ -554,6 +554,7 @@ create_display_shell (GDisplay* gdisp,
   GtkWidget *table;
   GtkWidget *table_inner;
   GtkWidget *hbox;
+  GtkWidget *frame;
   GtkWidget *arrow;
   int n_width, n_height;
   int s_width, s_height;
@@ -701,7 +702,19 @@ create_display_shell (GDisplay* gdisp,
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
-  /* statusbar, progressbar  */
+  gtk_container_set_resize_mode(GTK_CONTAINER(hbox), GTK_RESIZE_QUEUE);
+
+  /* cursor, statusbar, progressbar  */
+  frame = gtk_frame_new(NULL);
+  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, TRUE, 0);
+
+  gdisp->cursor_label = gtk_label_new(" 0000, 0000 ");
+  /* This usize should be more intelligent and get the information
+   * size of the above string or some similar method */
+  gtk_widget_set_usize(gdisp->cursor_label, 50, -1);
+  gtk_container_add(GTK_CONTAINER (frame), gdisp->cursor_label);
+
   gdisp->statusbar = gtk_statusbar_new();
   gtk_container_set_resize_mode (GTK_CONTAINER (gdisp->statusbar),
 				 GTK_RESIZE_QUEUE);
@@ -713,7 +726,7 @@ create_display_shell (GDisplay* gdisp,
 		     title);
   
   gdisp->progressbar = gtk_progress_bar_new();
-  gtk_widget_set_usize(gdisp->progressbar, 100, -1);
+  gtk_widget_set_usize(gdisp->progressbar, 80, -1);
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->progressbar, FALSE, TRUE, 0);
   
   gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
@@ -733,6 +746,8 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (gdisp->hrule);
   gtk_widget_show (gdisp->vrule);
   gtk_widget_show (gdisp->canvas);
+  gtk_widget_show (frame);
+  gtk_widget_show (gdisp->cursor_label);
   gtk_widget_show (gdisp->statusbar);
   gtk_widget_show (gdisp->progressbar);
   gtk_widget_show (gdisp->cancelbutton);

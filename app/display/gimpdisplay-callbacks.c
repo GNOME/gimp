@@ -104,6 +104,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
   gint return_val = FALSE;
   static gboolean scrolled = FALSE;
   static guint key_signal_id = 0;
+  int update_cursor = 1;
+
+  tx = ty = 0;
 
   gdisp = (GDisplay *) gtk_object_get_user_data (GTK_OBJECT (canvas));
 
@@ -162,13 +165,15 @@ gdisplay_canvas_events (GtkWidget *canvas,
       break;
 
     case GDK_LEAVE_NOTIFY:
-      gdisp->proximity = FALSE;
-      gdisplay_update_cursor (gdisp, 0, 0);
-      break;
-
     case GDK_PROXIMITY_OUT:
       gdisp->proximity = FALSE;
       gdisplay_update_cursor (gdisp, 0, 0);
+      gtk_label_set(GTK_LABEL (gdisp->cursor_label), "");
+      update_cursor = 0;
+      break;
+
+    case GDK_ENTER_NOTIFY:
+      update_cursor = 0; /* Actually, should figure out tx,ty here */
       break;
 
     case GDK_BUTTON_PRESS:
@@ -419,7 +424,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
     }
 
-  gdisplay_update_cursor (gdisp, tx, ty);
+  if (update_cursor)
+    gdisplay_update_cursor (gdisp, tx, ty);
 
   return return_val;
 }
