@@ -47,7 +47,7 @@
  * to change if we support bigger formats. We'll do it so for now because
  * masking is always cheaper than passing parameters over the stack.      */
 /* FIXME: Move to a global place */
-#define HAS_ALPHA(bytes) (~##bytes & 1)
+#define HAS_ALPHA(bytes) (~bytes & 1)
   
 /* FIXME: Move to a more global place */
 struct apply_layer_mode_struct

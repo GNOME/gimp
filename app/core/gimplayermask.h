@@ -39,9 +39,9 @@ struct _GimpLayerMask
 
   GimpLayer   *layer;
 
-  gboolean     apply_mask;    /*  controls mask application  */
-  gboolean     edit_mask;     /*  edit mask or layer?        */
-  gboolean     show_mask;     /*  show mask or layer?        */
+  guint        apply_mask : 1;    /*  controls mask application  */
+  guint        edit_mask : 1;     /*  edit mask or layer?        */
+  guint        show_mask : 1;     /*  show mask or layer?        */
 };
 
 struct _GimpLayerMaskClass

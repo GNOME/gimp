@@ -40,24 +40,24 @@ struct _GimpDialogFactoryEntry
 {
   gchar             *identifier;
   GimpDialogNewFunc  new_func;
-  gint               preview_size;
-  gboolean           singleton;
-  gboolean           session_managed;
-  gboolean           remember_size;
-  gboolean           remember_if_open;
+  guint              preview_size;
+  guint              singleton : 1;
+  guint              session_managed : 1;
+  guint              remember_size : 1;
+  guint              remember_if_open : 1;
 };
 
 struct _GimpSessionInfo
 {
   gint       x;
   gint       y;
-  gint       width;
-  gint       height;
+  guint      width;
+  guint      height;
 
   GtkWidget *widget;
 
   /*  only valid while restoring and saving the session  */
-  gboolean   open;
+  guint      open : 1;
 
   /*  GList of gchar* of optional additional dialog specific info  */
   GList     *aux_info;

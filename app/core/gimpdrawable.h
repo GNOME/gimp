@@ -38,22 +38,22 @@ struct _GimpDrawable
   GimpViewable      parent_instance;
 
   TileManager      *tiles;              /* tiles for drawable data        */
-  gboolean          visible;            /* controls visibility            */
-  gint              width, height;      /* size of drawable               */
+  guint             visible : 1;        /* controls visibility            */
+  guint             width, height;      /* size of drawable               */
   gint              offset_x, offset_y; /* offset of layer in image       */
 
-  gint              bytes;              /* bytes per pixel                */
+  guint             bytes : 4;          /* bytes per pixel                */
+  guint             has_alpha : 1;      /* drawable has alpha             */
   gint              ID;                 /* provides a unique ID           */
   guint32           tattoo;             /* provides a perminant ID        */
   GimpImage        *gimage;             /* gimage owner                   */
   GimpImageType     type;               /* type of drawable               */
-  gboolean          has_alpha;          /* drawable has alpha             */
 
   GimpParasiteList *parasites;          /* Plug-in parasite data          */
 
   /*  Preview variables  */
   GSList           *preview_cache;     	/* preview caches of the channel  */
-  gboolean          preview_valid;      /* is the preview valid?          */
+  guint             preview_valid : 1;  /* is the preview valid?          */
 };
 
 struct _GimpDrawableClass
@@ -71,8 +71,8 @@ GType           gimp_drawable_get_type           (void) G_GNUC_CONST;
 
 void            gimp_drawable_configure          (GimpDrawable       *drawable,
 						  GimpImage          *gimage,
-						  gint                width,
-						  gint                height,
+						  guint               width,
+						  guint               height,
 						  GimpImageType       type,
 						  const gchar        *name);
 
@@ -87,8 +87,8 @@ void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
 void            gimp_drawable_update             (GimpDrawable       *drawable,
 						  gint                x,
 						  gint                y,
-						  gint                w,
-						  gint                h);
+						  guint               w,
+						  guint               h);
 
 void            gimp_drawable_apply_image        (GimpDrawable       *drawable, 
 						  gint                x1,
@@ -96,7 +96,7 @@ void            gimp_drawable_apply_image        (GimpDrawable       *drawable,
 						  gint                x2,
 						  gint                y2, 
 						  TileManager        *tiles,
-						  gint                sparse);
+						  gboolean            sparse);
 
 void            gimp_drawable_merge_shadow       (GimpDrawable       *drawable,
 						  gboolean            undo);

@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -60,8 +61,8 @@ typedef struct
 {
   PixelRegion *PR;
   guchar      *row_data;
-  gint         bytes;
-  gint         width;
+  guint        bytes;
+  guint        width;
 } PutPixelData;
 
 

@@ -32,7 +32,7 @@
 
 struct _GimpGuide
 {
-  gint                     ref_count;
+  guint                    ref_count;
   gint                     position;
   InternalOrientationType  orientation;
   guint32                  guide_ID;
@@ -59,7 +59,7 @@ struct _GimpImage
 
   PlugInProcDef     *save_proc;             /*  last PDB save proc used      */
 
-  gint               width, height;         /*  width and height attributes  */
+  guint              width, height;         /*  width and height attributes  */
   gdouble            xresolution;           /*  image x-res, in dpi          */
   gdouble            yresolution;           /*  image y-res, in dpi          */
   GimpUnit           unit;                  /*  image unit                   */
@@ -68,18 +68,18 @@ struct _GimpImage
   guchar            *cmap;                  /*  colormap--for indexed        */
   gint               num_cols;              /*  number of cols--for indexed  */
 
-  gint               dirty;                 /*  dirty flag -- # of ops       */
-  gboolean           undo_on;               /*  Is undo enabled?             */
+  guint              dirty;                 /*  dirty flag -- # of ops       */
+  guint              undo_on : 1;           /*  Is undo enabled?             */
 
-  gint               instance_count;        /*  number of instances          */
-  gint               disp_count;            /*  number of displays           */
+  guint              instance_count;        /*  number of instances          */
+  guint              disp_count;            /*  number of displays           */
 
   GimpTattoo         tattoo_state;          /*  the next unique tattoo to use*/
 
   TileManager       *shadow;                /*  shadow buffer tiles          */
 
   /*  Projection attributes  */
-  gboolean           construct_flag;        /*  flag for construction        */
+  guint              construct_flag : 1;    /*  flag for construction        */
   GimpImageType      proj_type;             /*  type of the projection image */
   gint               proj_bytes;            /*  bpp in projection image      */
   gint               proj_level;            /*  projection level             */
@@ -102,19 +102,19 @@ struct _GimpImage
 
   PathList          *paths;                 /*  Paths data for this image    */
 
-  gboolean           visible[MAX_CHANNELS]; /*  visible channels             */
-  gboolean           active[MAX_CHANNELS];  /*  active channels              */
+  gboolean           visible[MAX_CHANNELS]; /*  visible channels         */
+  gboolean           active[MAX_CHANNELS];  /*  active channels          */
 
-  gboolean           qmask_state;           /*  TRUE if qmask is on          */
-  gboolean           qmask_inverted;        /*  TRUE if qmask is inverted    */
+  guint              qmask_state : 1;           /* TRUE if qmask is on       */
+  guint              qmask_inverted : 1;        /* TRUE if qmask is inverted */
   GimpRGB            qmask_color;           /*  rgba triplet of the color    */
 
   /*  Old undo apparatus  */
   GSList            *undo_stack;            /*  stack for undo operations    */
   GSList            *redo_stack;            /*  stack for redo operations    */
-  gint               undo_bytes;            /*  bytes in undo stack          */
-  gint               undo_levels;           /*  levels in undo stack         */
-  gint               group_count;           /*  nested undo groups           */
+  guint              undo_bytes;            /*  bytes in undo stack          */
+  guint              undo_levels;           /*  levels in undo stack         */
+  guint              group_count;           /*  nested undo groups           */
   UndoType           pushing_undo_group;    /*  undo group status flag       */
 
   /*  New undo apparatus  */
@@ -123,7 +123,7 @@ struct _GimpImage
 
   /*  Composite preview  */
   TempBuf           *comp_preview;          /*  the composite preview        */
-  gboolean           comp_preview_valid;    /*  preview valid-1/channel      */
+  guint              comp_preview_valid : 1;/*  preview valid-1/channel      */
 };
 
 struct _GimpImageClass

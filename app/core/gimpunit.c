@@ -186,8 +186,8 @@ gchar *
 _gimp_unit_get_identifier (Gimp     *gimp,
 			   GimpUnit  unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) && 
-			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) && 
+			 (unit < (GIMP_UNIT_END + gimp->n_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].identifier);
 
@@ -204,8 +204,8 @@ gchar *
 _gimp_unit_get_symbol (Gimp     *gimp,
 		       GimpUnit  unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + gimp->n_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].symbol);
 
@@ -222,8 +222,8 @@ gchar *
 _gimp_unit_get_abbreviation (Gimp     *gimp,
 			     GimpUnit  unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + gimp->n_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gimp_unit_defs[GIMP_UNIT_INCH].abbreviation);
 
@@ -240,8 +240,8 @@ gchar *
 _gimp_unit_get_singular (Gimp     *gimp,
 			 GimpUnit  unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + gimp->n_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].singular));
 
@@ -258,8 +258,8 @@ gchar *
 _gimp_unit_get_plural (Gimp     *gimp,
 		       GimpUnit  unit)
 {
-  g_return_val_if_fail ((unit >= GIMP_UNIT_PIXEL) &&
-			(unit < (GIMP_UNIT_END + gimp->n_user_units)) ||
+  g_return_val_if_fail (((unit >= GIMP_UNIT_PIXEL) &&
+			 (unit < (GIMP_UNIT_END + gimp->n_user_units))) ||
 			(unit == GIMP_UNIT_PERCENT),
 			gettext (gimp_unit_defs[GIMP_UNIT_INCH].plural));
 

@@ -30,7 +30,7 @@ struct _GradientSelect
 
   GimpContext  *context;
   gchar        *callback_name;
-  gint          sample_size;
+  guint         sample_size;
 };
 
 

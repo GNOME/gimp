@@ -33,8 +33,8 @@ struct _BoundSeg
   gint     y1;
   gint     x2;
   gint     y2;
-  gboolean open;
-  gboolean visited;
+  guint    open : 1;
+  guint    visited : 1;
 };
 
 

@@ -31,11 +31,11 @@
 void
 pixel_surround_init (PixelSurround *ps,
 		     TileManager   *tm,
-		     gint           w,
-		     gint           h,
+		     guint          w,
+		     guint          h,
 		     guchar         bg[MAX_CHANNELS])
 {
-  gint i;
+  guint i;
 
   for (i = 0; i < MAX_CHANNELS; ++i)
     {
@@ -55,10 +55,10 @@ pixel_surround_init (PixelSurround *ps,
 
 guchar *
 pixel_surround_lock (PixelSurround *ps,
-		     gint           x,
-		     gint           y)
+		     guint          x,
+		     guint          y)
 {
-  gint    i, j;
+  guint   i, j;
   guchar *k;
   guchar *ptr;
 
@@ -119,7 +119,7 @@ pixel_surround_lock (PixelSurround *ps,
   return ps->buff;
 }
 
-gint
+guint
 pixel_surround_rowstride (PixelSurround *ps)
 {
   return ps->row_stride;

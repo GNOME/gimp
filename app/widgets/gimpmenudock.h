@@ -42,7 +42,7 @@ struct _GimpImageDock
 
   GimpContainer *image_container;
 
-  gboolean       show_image_menu;
+  guint          show_image_menu : 1;
   gboolean       auto_follow_active;
 
   GtkWidget     *option_menu;

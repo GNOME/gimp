@@ -53,9 +53,8 @@ struct _GimpPalette
   GimpData  parent_instance;
 
   GList      *colors;
-  gint        n_colors;
-
-  gint        n_columns;
+  guint       n_colors;
+  guint       n_columns;
 };
 
 struct _GimpPaletteClass

@@ -402,7 +402,7 @@ typedef ColorFreq *CFHistogram;
 #define HIST_RGB(hist_ptr,r,g,b) (&(hist_ptr)[REF_FUNC((r),(g),(b))])
 */  
 static inline
-ColorFreq * HIST_RGB(const ColorFreq *hist_ptr,
+ColorFreq * HIST_RGB(ColorFreq *hist_ptr,
 		     const int r, const int g, const int b)
 {
   return (&(hist_ptr)[

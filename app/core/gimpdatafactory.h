@@ -59,7 +59,7 @@ struct _GimpDataFactory
   const gchar                      **data_path;
 
   const GimpDataFactoryLoaderEntry  *loader_entries;
-  gint                               n_loader_entries;
+  guint                              n_loader_entries;
 
   GimpDataNewFunc                    data_new_func;
   GimpDataGetStandardFunc            data_get_standard_func;
@@ -76,7 +76,7 @@ GType             gimp_data_factory_get_type (void) G_GNUC_CONST;
 GimpDataFactory * gimp_data_factory_new      (GType                              data_type,
 					      const gchar                      **data_path,
 					      const GimpDataFactoryLoaderEntry  *loader_entries,
-					      gint                               n_loader_entries,
+					      guint                               n_loader_entries,
 					      GimpDataNewFunc                    new_func,
 					      GimpDataGetStandardFunc            standard_func);
 

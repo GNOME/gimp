@@ -39,8 +39,8 @@ struct _GimpFreeSelectTool
   GimpSelectionTool  parent_instance;
 
   GimpVector2       *points;
-  gint               num_points;
-  gint               max_segs;
+  guint              num_points;
+  guint              max_segs;
 };
 
 struct _GimpFreeSelectToolClass

@@ -322,7 +322,7 @@ tile_mark_valid (Tile *tile)
 void
 tile_attach (Tile *tile,
 	     void *tm,
-	     gint  tile_num)
+	     guint tile_num)
 {
   TileLink *tmp;
 
@@ -351,7 +351,7 @@ tile_attach (Tile *tile,
 void
 tile_detach (Tile *tile,
 	     void *tm,
-	     gint  tile_num)
+	     guint tile_num)
 {
   TileLink **link;
   TileLink  *tmp;

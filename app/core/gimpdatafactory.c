@@ -117,7 +117,7 @@ GimpDataFactory *
 gimp_data_factory_new (GType                              data_type,
 		       const gchar                      **data_path,
 		       const GimpDataFactoryLoaderEntry  *loader_entries,
-		       gint                               n_loader_entries,
+		       guint                              n_loader_entries,
 		       GimpDataNewFunc                    new_func,
 		       GimpDataGetStandardFunc            standard_func)
 {
@@ -261,7 +261,7 @@ gimp_data_factory_data_load_callback (const gchar *filename,
 				      gpointer     callback_data)
 {
   GimpDataFactory *factory;
-  gint             i;
+  guint            i;
 
   factory = (GimpDataFactory *) callback_data;
 

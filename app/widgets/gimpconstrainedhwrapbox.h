@@ -41,8 +41,8 @@ struct _GimpConstrainedHWrapBox
 {
   GtkHWrapBox  parent_instance;
 
-  gint         rows;
-  gint         columns;
+  guint        rows;
+  guint        columns;
 };
 
 struct _GimpConstrainedHWrapBoxClass

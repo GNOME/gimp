@@ -27,14 +27,14 @@ struct _PixelRegion
   Tile        *curtile;        /*  current tile                  */
   gint         offx;           /*  tile offsets                  */
   gint         offy;           /*  tile offsets                  */
-  gint         rowstride;      /*  bytes per pixel row           */
+  guint        rowstride;      /*  bytes per pixel row           */
   gint         x;              /*  origin                        */
   gint         y;              /*  origin                        */
-  gint         w;              /*  width of region               */
-  gint         h;              /*  height of region              */
-  gint         bytes;          /*  bytes per pixel               */
-  gboolean     dirty;          /*  will this region be dirtied?  */
-  gint         process_count;  /*  used internally               */
+  guint        w;              /*  width of region               */
+  guint        h;              /*  height of region              */
+  guint        bytes;          /*  bytes per pixel               */
+  guint        dirty : 1;      /*  will this region be dirtied?  */
+  guint        process_count;  /*  used internally               */
 };
 
 struct _PixelRegionHolder
@@ -43,18 +43,18 @@ struct _PixelRegionHolder
   guchar      *original_data;
   gint         startx;
   gint         starty;
-  gint         count;
+  guint        count;
 };
 
 struct _PixelRegionIterator
 {
   GSList *pixel_regions;
-  gint    dirty_tiles;
-  gint    region_width;
-  gint    region_height;
-  gint    portion_width;
-  gint    portion_height;
-  gint    process_count;
+  guint   dirty_tiles;
+  guint   region_width;
+  guint   region_height;
+  guint   portion_width;
+  guint   portion_height;
+  guint   process_count;
 };
 
 

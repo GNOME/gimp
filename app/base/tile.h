@@ -101,10 +101,10 @@ void        * tile_data_pointer      (Tile        *tile,
 
 void          tile_attach            (Tile        *tile,
 				      void        *tm,
-				      gint         tile_num);
+				      guint        tile_num);
 void          tile_detach            (Tile        *tile,
 				      void        *tm,
-				      gint         tile_num);
+				      guint        tile_num);
 
 
 #endif /* __TILE_H__ */

@@ -45,7 +45,7 @@ struct _GimpMenuItem
   GtkWidget           *name_label;
 
   /*< protected >*/
-  gint                 preview_size;
+  guint                preview_size;
 
   /*< private >*/
   GimpItemGetNameFunc  get_name_func;

@@ -43,7 +43,7 @@ struct _GimpUndo
 
   gpointer          data;           /* data to implement the undo */
   glong             size;           /* size of undo item          */
-  gboolean          dirties_image;  /* TRUE if undo mutates image */
+  guint             dirties_image : 1;  /* TRUE if undo mutates image */
 
   GimpUndoPopFunc   pop_func;       /* function pointer to undo pop proc  */
   GimpUndoFreeFunc  free_func;      /* function pointer to free undo data */

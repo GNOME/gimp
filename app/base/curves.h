@@ -70,7 +70,7 @@ struct _CurvesDialog
 
   gint            color;
   gint            channel;
-  gboolean        preview;
+  guint           preview : 1;
 
   gint            grab_point;
   gint            last;

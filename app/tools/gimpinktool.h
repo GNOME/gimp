@@ -59,7 +59,7 @@ struct _GimpInkTool
   gdouble   last_time;     /*  previous time of a motion event      */
   gdouble   lastx, lasty;  /*  previous position of a motion event  */
 
-  gboolean  init_velocity;
+  guint     init_velocity : 1;
 };
 
 struct _GimpInkToolClass

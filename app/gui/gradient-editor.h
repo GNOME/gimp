@@ -61,12 +61,12 @@ struct _GradientEditor
   GtkObject   *scroll_data;
 
   /*  Instant update  */
-  gboolean     instant_update;
+  guint        instant_update : 1;
 
   /*  Gradient preview  */
   guchar      *preview_rows[2]; /* For caching redraw info */
   gint         preview_last_x;
-  gboolean     preview_button_down;
+  guint        preview_button_down : 1;
 
   /*  Gradient control  */
   GdkPixmap              *control_pixmap;
@@ -75,7 +75,7 @@ struct _GradientEditor
   GimpGradientSegment    *control_sel_r;        /* Right segment of selection */
   GradientEditorDragMode  control_drag_mode;    /* What is being dragged? */
   guint32                 control_click_time;   /* Time when mouse was pressed */
-  gboolean                control_compress;     /* Compressing/expanding handles */
+  guint                   control_compress : 1; /* Compressing/expanding handles */
   gint                    control_last_x;       /* Last mouse position when dragging */
   gdouble                 control_last_gx;      /* Last position (wrt gradient) when dragging */
   gdouble                 control_orig_pos;     /* Original click position when dragging */
@@ -91,10 +91,10 @@ struct _GradientEditor
 
   /*  Color dialogs  */
   GimpGradientSegment *left_saved_segments;
-  gboolean             left_saved_dirty;
-
   GimpGradientSegment *right_saved_segments;
-  gboolean             right_saved_dirty;
+  
+  guint left_saved_dirty : 1;
+  guint right_saved_dirty : 1;
 };
 
 

@@ -42,10 +42,10 @@ struct _Selection
   gint              index_layer;      /*  index of current stipple pattern  */
   gint              state;            /*  internal drawing state            */
   gint              paused;           /*  count of pause requests           */
-  gboolean          recalc;           /*  flag to recalculate the selection */
-  gint              speed;            /*  speed of marching ants            */
-  gboolean          hidden;           /*  is the selection hidden?          */
-  gboolean          layer_hidden;     /*  is the layer boundary hidden?     */
+  guint             speed;            /*  speed of marching ants            */
+  guint             recalc : 1;       /*  flag to recalculate the selection */
+  guint             hidden : 1;       /*  is the selection hidden?          */
+  guint             layer_hidden : 1; /*  is the layer boundary hidden?     */
   guint             timeout_id;       /*  timer for successive draws        */
   gint              cycle;            /*  color cycling turned on           */
   GdkPixmap        *cycle_pix;        /*  cycling pixmap                    */

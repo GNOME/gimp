@@ -118,7 +118,6 @@ gimp_channel_init (GimpChannel *channel)
   channel->y1             = 0;
   channel->x2             = 0;
   channel->y2             = 0;
-  
 }
 
 static void
@@ -156,8 +155,8 @@ gimp_channel_validate (TileManager *tm,
 
 GimpChannel *
 gimp_channel_new (GimpImage     *gimage,
-		  gint           width,
-		  gint           height,
+		  guint          width,
+		  guint          height,
 		  const gchar   *name,
 		  const GimpRGB *color)
 {
@@ -172,7 +171,6 @@ gimp_channel_new (GimpImage     *gimage,
 
   /*  set the channel color and opacity  */
   channel->color = *color;
-
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
@@ -270,17 +268,17 @@ gimp_channel_get_color (const GimpChannel *channel)
   return &channel->color;
 }
 
-gint
+guint
 gimp_channel_get_opacity (const GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
 
-  return (gint) (channel->color.a * 100.999);
+  return (guint) (channel->color.a * 100.999);
 }
 
 void 
 gimp_channel_set_opacity (GimpChannel *channel,
-			  gint         opacity)
+			  guint        opacity)
 {
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
 
@@ -291,8 +289,8 @@ gimp_channel_set_opacity (GimpChannel *channel,
 
 void
 gimp_channel_scale (GimpChannel *channel,
-		    gint         new_width,
-		    gint         new_height)
+		    guint        new_width,
+		    guint        new_height)
 {
   PixelRegion  srcPR, destPR;
   TileManager *new_tiles;
@@ -341,8 +339,8 @@ gimp_channel_scale (GimpChannel *channel,
 
 void
 gimp_channel_resize (GimpChannel *channel,
-		     gint         new_width,
-		     gint         new_height,
+		     guint        new_width,
+		     guint        new_height,
 		     gint         offx,
 		     gint         offy)
 {
@@ -445,8 +443,8 @@ gimp_channel_resize (GimpChannel *channel,
 
 GimpChannel *
 gimp_channel_new_mask (GimpImage *gimage,
-		       gint       width,
-		       gint       height)
+		       guint      width,
+		       guint      height)
 {
   GimpRGB      black = { 0.0, 0.0, 0.0, 0.5 };
   GimpChannel *new_channel;
@@ -536,13 +534,13 @@ gimp_channel_boundary (GimpChannel  *mask,
   return TRUE;
 }
 
-gint
+guchar
 gimp_channel_value (GimpChannel *mask,
 		    gint         x,
 		    gint         y)
 {
   Tile *tile;
-  gint  val;
+  guchar val;
 
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), 0);
 
@@ -741,8 +739,8 @@ void
 gimp_channel_add_segment (GimpChannel *mask,
 			  gint         x,
 			  gint         y,
-			  gint         width,
-			  gint         value)
+			  guint        width,
+			  guint        value)
 {
   PixelRegion  maskPR;
   guchar      *data;
@@ -786,8 +784,8 @@ void
 gimp_channel_sub_segment (GimpChannel *mask,
 			  gint         x,
 			  gint         y,
-			  gint         width,
-			  gint         value)
+			  guint        width,
+			  guint        value)
 {
   PixelRegion  maskPR;
   guchar      *data;
@@ -831,8 +829,8 @@ gimp_channel_combine_rect (GimpChannel *mask,
 			   ChannelOps   op,
 			   gint         x,
 			   gint         y,
-			   gint         w,
-			   gint         h)
+			   guint        w,
+			   guint        h)
 {
   gint        x2, y2;
   PixelRegion maskPR;
@@ -893,8 +891,8 @@ gimp_channel_combine_ellipse (GimpChannel *mask,
 			      ChannelOps   op,
 			      gint         x,
 			      gint         y,
-			      gint         w,
-			      gint         h,
+			      guint        w,
+			      guint        h,
 			      gboolean     antialias)
 {
   gint   i, j;
@@ -1343,16 +1341,13 @@ gimp_channel_all (GimpChannel *mask)
 
 void
 gimp_channel_border (GimpChannel *mask,
-		     gint         radius_x,
-		     gint         radius_y)
+		     guint        radius_x,
+		     guint        radius_y)
 {
   PixelRegion bPR;
   gint        x1, y1, x2, y2;
 
   g_return_if_fail (GIMP_IS_CHANNEL (mask));
-
-  if (radius_x < 0 || radius_y < 0)
-    return;
 
   if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
@@ -1390,8 +1385,8 @@ gimp_channel_border (GimpChannel *mask,
 
 void
 gimp_channel_grow (GimpChannel *mask,
-		   gint         radius_x,
-		   gint         radius_y)
+		   gint        radius_x,
+		   gint        radius_y)
 {
   PixelRegion bPR;
   gint        x1, y1, x2, y2;
@@ -1401,17 +1396,15 @@ gimp_channel_grow (GimpChannel *mask,
   if (radius_x == 0 && radius_y == 0)
     return;
 
-  if (radius_x <= 0 && radius_y <= 0)
+  if (radius_x < 0 && radius_y < 0)
     {
       gimp_channel_shrink (mask, -radius_x, -radius_y, FALSE);
       return;
     }
 
-  if (radius_x < 0 || radius_y < 0)
-    return;
-  
   if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
+  
   if (gimp_channel_is_empty (mask))
     return;
 
@@ -1458,15 +1451,12 @@ gimp_channel_shrink (GimpChannel  *mask,
   if (radius_x == 0 && radius_y == 0)
     return;
 
-  if (radius_x <= 0 && radius_y <= 0)
+  if (radius_x < 0 && radius_y < 0)
     {
       gimp_channel_grow (mask, -radius_x, -radius_y);
       return;
     }
 
-  if (radius_x < 0 || radius_y < 0)
-    return;
-  
   if (! gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
   if (gimp_channel_is_empty (mask))

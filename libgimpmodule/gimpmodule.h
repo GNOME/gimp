@@ -54,8 +54,8 @@ struct _GimpModuleInfoObj
 
   gchar           *fullpath;     /* path to the module                        */
   GimpModuleState  state;        /* what's happened to the module             */
-  gboolean         on_disk;      /* TRUE if file still exists                 */
-  gboolean         load_inhibit; /* user requests not to load at boot time    */
+  guint        on_disk : 1;      /* TRUE if file still exists                 */
+  guint        load_inhibit : 1; /* user requests not to load at boot time    */
 
   /* Count of times main gimp is within the module.  Normally, this
    * will be 1, and we assume that the module won't call its
@@ -64,7 +64,7 @@ struct _GimpModuleInfoObj
    * unload function, to stop the module attempting to unload
    * itself.
    */
-  gint             refs;
+  guint            refs;
 
   /* stuff from now on may be NULL depending on the state the module is in   */
   GimpModuleInfo  *info;         /* returned values from module_init          */

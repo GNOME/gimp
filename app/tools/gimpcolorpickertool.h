@@ -40,7 +40,6 @@ struct _GimpColorPickerTool
 
   gint          centerx;    /*  starting x coord    */
   gint          centery;    /*  starting y coord    */
-	
 };
 
 struct _GimpColorPickerToolClass

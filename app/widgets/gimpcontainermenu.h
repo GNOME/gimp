@@ -49,7 +49,7 @@ struct _GimpContainerMenu
 
   GHashTable          *hash_table;
 
-  gint                 preview_size;
+  guint                preview_size;
 
   GimpItemGetNameFunc  get_name_func;
 };

@@ -45,7 +45,7 @@ struct _BlobSpan
 struct _Blob
 {
   gint     y;
-  gint     height;
+  guint    height;
   BlobSpan data[1];
 };
 

@@ -29,19 +29,19 @@ typedef struct _PixelSurround
   Tile        *tile;
   TileManager *mgr;
   guchar      *buff;
-  gint         buff_size;
-  gint         bpp;
-  gint         w;
-  gint         h;
+  guint        buff_size;
+  guint        bpp;
+  guint        w;
+  guint        h;
   guchar       bg[MAX_CHANNELS];
-  gint         row_stride;
+  guint        row_stride;
 } PixelSurround;
 
 
 void     pixel_surround_init      (PixelSurround *ps,
 				   TileManager   *tm,
-				   gint           w,
-				   gint           h,
+				   guint          w,
+				   guint          h,
 				   guchar         bg[MAX_CHANNELS]);
 
 /* return a pointer to a buffer which contains all the surrounding pixels
@@ -49,10 +49,10 @@ void     pixel_surround_init      (PixelSurround *ps,
  * otherwise just copy into our own malloced buffer and return that
  */
 guchar * pixel_surround_lock      (PixelSurround *ps,
-				   gint           x,
-				   gint           y);
+				   guint          x,
+				   guint          y);
 
-gint     pixel_surround_rowstride (PixelSurround *ps);
+guint    pixel_surround_rowstride (PixelSurround *ps);
 
 void     pixel_surround_release   (PixelSurround *ps);
 

@@ -1,3 +1,112 @@
+2001-12-02  Daniel Egger  <degger@fhm.edu>
+
+	* app/gimprc.c: Convert ugly comments into named structure fields.
+	Much cleaner and less errorprone though may cause troubles on
+	older compilers and then needs to be reverted. Please report!
+
+	* app/base/base-types.h: Add FIXME reminder.
+
+	* app/base/gimplut.c: Use CLAMP macro instead of if-cascade. 
+	
+	* app/base/temp-buf.c: Remove duplicated calculations and simplify
+	checks.
+	
+	* app/base/tile-manager.c: 
+	- (tile_manager_get_tile_num): Return success and take an additional
+	  pointer for the tilenumber.
+	- Simplify logic in the rest of the file as a result.
+	- Remove rotten debugging cruft. 
+	
+	* app/core/gimpbrushgenerated.c: Fix two stylistic nits.
+
+	* app/app_procs.c: Include <stdlib.h> for exit () prototype.
+
+	* app/core/gimpdrawable-blend.c: Include <stdlib.h> for abs () 
+	prototype.
+
+	* app/display/gimpdisplay.c: Include <string.h> for memcpy () 
+	prototype.
+	
+	* app/core/gimpimage-convert.c: (HIST_RGB): First parameter is
+	not const. Fixes a gcc warning for a wrong return value.
+
+	* libgimpwidgets/gimpunitmenu.c	
+	* app/core/gimpunit.c: Add suggested (by gcc 3.1 cvs) parentheses 
+	to group correct logic tests together.
+
+	* app/paint-funcs/paint-funcs-generic.h: Fix my HAS_ALPHA macro
+	to avoid gcc 3.1 cvs warning.
+	
+	* app/gimprc.h
+	* pathP.h
+	* base-config.h
+	* app/base/boundary.h
+	* app/base/gimplut.[ch]
+	* app/base/pixel-region.h
+	* app/base/pixel-surround.[ch]
+	* app/base/temp-buf.[ch]
+	* app/base/tile-manager-private.h
+	* app/base/tile-manager.c
+	* app/base/tile-private.h
+	* app/base/tile.[ch]
+	* app/core/gimp.h
+	* app/core/gimpbrushgenerated.h	
+	* app/core/gimpbrushpipe.h
+	* app/core/gimpchannel.[ch]
+	* app/core/gimpcontainer.h
+	* app/core/gimpcoreconfig.h	
+	* app/core/gimpdata.h
+	* app/core/gimpdatafactory.[ch]	
+	* app/core/gimpdrawable-blend.c	
+	* app/core/gimpdrawable.[ch]
+	* app/core/gimpimage.h
+	* app/core/gimpimagefile.h
+	* app/core/gimplayer.h
+	* app/core/gimplayermask.h
+	* app/core/gimpmoduleinfo.h
+	* app/core/gimppalette.h
+	* app/core/gimpundo.h
+	* app/display/gimpdisplay.h
+	* app/display/gimpdisplayshell-selection.h
+	* app/display/gimpdisplayshell.h
+	* app/gui/brush-select.h
+	* app/gui/gradient-editor.h
+	* app/gui/gradient-select.h
+	* app/gui/info-dialog.h	
+	* app/gui/resize-dialog.h
+	* app/tools/gimpbezierselecttool.h
+	* app/tools/gimpcolorbalancetool.h
+	* app/tools/gimpcolorpickertool.h
+	* app/tools/gimpcurvestool.h
+	* app/tools/gimpdodgeburntool.c	
+	* app/tools/gimpfreeselecttool.h
+	* app/tools/gimpfuzzyselecttool.h
+	* app/tools/gimphuesaturationtool.h
+	* app/tools/gimpinktool-blob.h
+	* app/tools/gimpinktool.h
+	* app/tools/gimpiscissorstool.h
+	* app/tools/gimpmagnifytool.h
+	* app/tools/gimpmeasuretool.h
+	* app/tools/gimppainttool.h
+	* app/tools/gimppathtool.h
+	* app/tools/gimprectselecttool.h
+	* app/tools/gimpthresholdtool.h
+	* app/tools/gimptool.h
+	* app/tools/gimptransformtool.h
+	* app/tools/path_toolP.h
+	* app/widgets/gimpbrushfactoryview.h
+	* app/widgets/gimpconstrainedhwrapbox.h
+	* app/widgets/gimpcontainermenu.h
+	* app/widgets/gimpcontainerview.h 
+	* app/widgets/gimpdialogfactory.h
+	* app/widgets/gimpimagedock.h
+	* app/widgets/gimplistitem.h
+	* app/widgets/gimpmenuitem.h
+	* app/widgets/gimpnavigationpreview.h
+	* app/widgets/gimppreview.h: Unsignify lots of variables and
+	parameters and use bitfields in structs where possible. First
+	part of a huge cleanup all over the code...
+
 2001-12-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/errors.c: forgot a "return".

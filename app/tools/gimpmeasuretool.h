@@ -54,7 +54,7 @@ struct _GimpMeasureTool
   gint             last_x;      /*  last x coordinate          */
   gint             last_y;      /*  last y coordinate          */
   gint             point;       /*  what are we manipulating?  */
-  gint             num_points;  /*  how many points?           */
+  guint            num_points;  /*  how many points?           */
   gint             x[3];        /*  three x coordinates        */
   gint             y[3];        /*  three y coordinates        */
   gdouble          angle1;      /*  first angle                */

@@ -24,7 +24,7 @@
 
 
 /*  magic constants  */
-
+/* FIXME: Remove magic constants! */
 #define MAX_CHANNELS     4
 
 #define GRAY_PIX         0

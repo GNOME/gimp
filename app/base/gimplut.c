@@ -58,9 +58,9 @@ void
 gimp_lut_setup (GimpLut     *lut, 
 		GimpLutFunc  func,
 		void        *user_data, 
-		gint         nchannels)
+		guint        nchannels)
 {
-  gint    i, v;
+  guint   i, v;
   gdouble val;
 
   if (lut->luts)
@@ -83,12 +83,7 @@ gimp_lut_setup (GimpLut     *lut,
 	  /* to add gamma correction use func(v ^ g) ^ 1/g instead. */
 	  val = 255.0 * func (user_data, lut->nchannels, i, v/255.0) + 0.5;
 
-	  if (val < 0.0)
-	    lut->luts[i][v] = 0;
-	  else if (val >= 255.0)
-	    lut->luts[i][v] = 255;
-	  else
-	    lut->luts[i][v] = val;
+	  lut->luts[i][v] = CLAMP (val, 0, 255);
 	}
     }
 }
@@ -97,7 +92,7 @@ void
 gimp_lut_setup_exact (GimpLut     *lut, 
 		      GimpLutFunc  func,
 		      void        *user_data, 
-		      gint         nchannels)
+		      guint        nchannels)
 {
   gimp_lut_setup (lut, func, user_data, nchannels);
 }
@@ -107,7 +102,7 @@ gimp_lut_process (GimpLut     *lut,
 		  PixelRegion *srcPR,
 		  PixelRegion *destPR)
 {
-  gint    h, width, src_r_i, dest_r_i;
+  guint   h, width, src_r_i, dest_r_i;
   guchar *src, *dest;
   guchar *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
 
@@ -189,7 +184,7 @@ void
 gimp_lut_process_inline (GimpLut     *lut,
 			 PixelRegion *srcPR)
 {
-  gint    h, width, src_r_i;
+  guint   h, width, src_r_i;
   guchar *src;
   guchar *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
 

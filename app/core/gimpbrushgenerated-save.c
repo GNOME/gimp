@@ -440,7 +440,7 @@ gimp_brush_generated_thaw (GimpBrushGenerated *brush)
   if (brush->freeze > 0)
     brush->freeze--;
 
-  if (brush->freeze == 0)
+  if (!brush->freeze)
     gimp_data_dirty (GIMP_DATA (brush));
 }
 
@@ -460,7 +460,7 @@ gimp_brush_generated_set_radius (GimpBrushGenerated *brush,
 
   brush->radius = radius;
 
-  if (! brush->freeze)
+  if (!brush->freeze)
     gimp_data_dirty (GIMP_DATA (brush));
 
   return brush->radius;

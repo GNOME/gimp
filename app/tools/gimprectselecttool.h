@@ -39,7 +39,7 @@ struct _GimpRectSelectTool
   GimpSelectionTool  parent_instance;
 
   gint               x, y;        /*  upper left hand coordinate  */
-  gint               w, h;        /*  width and height  */
+  guint              w, h;        /*  width and height  */
   gint               center;      /*  is the selection being created from the
                                    *  center out?  */
 

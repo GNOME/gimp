@@ -22,10 +22,10 @@
 struct _PixelDataHandle 
 {
   guchar                 *data;
-  gint                    width;
-  gint	                  height;
-  gint                    stride;
-  gint			  bpp;
+  guint                   width;
+  guint	                  height;
+  guint                   stride;
+  guint			  bpp;
 };
 
 /* Creates a new tile manager with the specified
@@ -38,9 +38,9 @@ struct _PixelDataHandle
  *  hierarchy is "nlevels - 1". That level will be smaller
  *  than TILE_WIDTH x TILE_HEIGHT
  */
-TileManager * tile_manager_new               (gint toplevel_width,
-					      gint toplevel_height,
-					      gint bpp);
+TileManager * tile_manager_new               (guint toplevel_width,
+					      guint toplevel_height,
+					      guint bpp);
 
 /* Destroy a tile manager and all the tiles it contains.
  */
@@ -60,15 +60,15 @@ void          tile_manager_set_validate_proc (TileManager      *tm,
 Tile        * tile_manager_get_tile          (TileManager *tm,
 					      gint         xpixel,
 					      gint         ypixel,
-					      gint         wantread,
-					      gint         wantwrite);
+					      gboolean     wantread,
+					      gboolean     wantwrite);
 
 /* Get a specified tile from a tile manager.
  */
 Tile        * tile_manager_get               (TileManager *tm,
-					      gint         tile_num,
-					      gint         wantread,
-					      gint         wantwrite);
+					      guint        tile_num,
+					      gboolean     wantread,
+					      gboolean     wantwrite);
 
 /* Request that (if possible) the tile at x,y be swapped
  * in.  This is only a hint to improve performance; no guarantees.
@@ -95,7 +95,7 @@ void          tile_manager_validate          (TileManager  *tm,
 
 void          tile_invalidate                (Tile        **tile_ptr,
 					      TileManager  *tm,
-					      gint          tile_num);
+					      guint         tile_num);
 void          tile_invalidate_tile           (Tile        **tile_ptr,
 					      TileManager  *tm, 
 					      gint          xpixel,

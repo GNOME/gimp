@@ -50,7 +50,7 @@ struct _InfoDialog
   GtkWidget   *info_notebook;
 
   GSList      *field_list;
-  gint         nfields;
+  guint        nfields;
 
   void        *user_data;
 };

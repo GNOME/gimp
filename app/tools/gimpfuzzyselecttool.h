@@ -38,12 +38,12 @@ struct _GimpFuzzySelectTool
 {
   GimpSelectionTool  parent_instance;
 
-  gint               x, y;             /*  Point from which to execute seed fill   */
-  gint               first_x;          /*                                          */
-  gint               first_y;          /*  variables to keep track of sensitivity  */
-  gdouble            first_threshold;  /*  initial value of threshold slider       */
+  gint         x, y;             /*  Point from which to execute seed fill   */
+  gint         first_x;          /*                                          */
+  gint         first_y;          /*  variables to keep track of sensitivity  */
+  gdouble      first_threshold;  /*  initial value of threshold slider       */
 
-  GimpChannel       *fuzzy_mask;
+  GimpChannel *fuzzy_mask;
 };
 
 struct _GimpFuzzySelectToolClass

@@ -42,7 +42,7 @@ struct _GimpBrushFactoryView
   GtkWidget           *spacing_scale;
   GtkAdjustment       *spacing_adjustment;
 
-  gboolean             change_brush_spacing;
+  guint                change_brush_spacing : 1;
   GQuark               spacing_changed_handler_id;
 };
 

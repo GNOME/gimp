@@ -35,7 +35,7 @@ typedef struct _TileLink TileLink;
 struct _TileLink
 {
   TileLink    *next;
-  gint         tile_num; /* the number of this tile within the drawable */
+  guint        tile_num; /* the number of this tile within the drawable */
   TileManager *tm;       /* A pointer to the tile manager for this tile.
 			  *  We need this in order to call the tile managers 
 			  *  validate proc whenever the tile is referenced 
@@ -45,20 +45,20 @@ struct _TileLink
 
 struct _Tile
 {
-  gshort  ref_count;   /* reference count. when the reference count is
+  gushort  ref_count;  /* reference count. when the reference count is
  		        *  non-zero then the "data" for this tile must
 		        *  be valid. when the reference count for a tile
 		        *  is 0 then the "data" for this tile must be
 		        *  NULL.
 		        */
-  gshort  write_count; /* write count: number of references that are
+  gushort  write_count;/* write count: number of references that are
 			  for write access */ 
-  gshort  share_count; /* share count: number of tile managers that
+  gushort  share_count;/* share count: number of tile managers that
 			  hold this tile */
   guint   dirty : 1;   /* is the tile dirty? has it been modified? */
   guint   valid : 1;   /* is the tile valid? */
 
-  guchar  bpp;         /* the bytes per pixel (1, 2, 3 or 4) */
+  guint   bpp : 4;     /* the bytes per pixel (1, 2, 3 or 4) */
   gushort ewidth;      /* the effective width of the tile */
   gushort eheight;     /* the effective height of the tile
 		        *  a tile's effective width and height may be smaller
@@ -72,7 +72,7 @@ struct _Tile
 		       *  case the tile data is on disk.
 		       */
 
-  gint swap_num;      /* the index into the file table of the file to be used
+  guint swap_num;     /* the index into the file table of the file to be used
 		       * for swapping. swap_num 1 is always the global
 		       * swap file.
 		       */
@@ -97,6 +97,5 @@ struct _Tile
 #define TILE_MUTEX_LOCK(tile) /* nothing */
 #define TILE_MUTEX_UNLOCK(tile) /* nothing */
 #endif
-
 
 #endif /* __TILE_PRIVATE_H__ */

@@ -30,7 +30,7 @@ struct _Path
 {
   GSList     *path_details;
   gint        pathtype; /* Only beziers to start with */
-  gboolean    closed;
+  guint       closed : 1;
   guint32     state;
   guint32     locked;   /* Only bottom bit used */
   GimpTattoo  tattoo;   /* The tattoo for the path */
