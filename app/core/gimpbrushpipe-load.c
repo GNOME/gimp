@@ -60,6 +60,7 @@ static GimpBrushClass* gimp_brush_class;
 static GtkObjectClass* gimp_object_class;
 
 static GimpBrush *gimp_brush_pixmap_select_brush (PaintCore *paint_core);
+static gboolean gimp_brush_pixmap_want_null_motion (PaintCore *paint_core);
 
 static void paint_line_pixmap_mask(GImage	   *dest,
 				   GimpDrawable    *drawable,
@@ -97,6 +98,7 @@ gimp_brush_pixmap_class_init (GimpBrushPixmapClass *klass)
 
   object_class->destroy =  gimp_brush_pixmap_destroy;
   brush_class->select_brush = gimp_brush_pixmap_select_brush;
+  brush_class->want_null_motion = gimp_brush_pixmap_want_null_motion;
 }
 
 void
@@ -187,6 +189,26 @@ gimp_brush_pixmap_select_brush (PaintCore *paint_core)
   pipe->current = pipe->brushes[brushix];
 
   return GIMP_BRUSH (pipe->current);
+}
+
+static gboolean
+gimp_brush_pixmap_want_null_motion (PaintCore *paint_core)
+{
+  GimpBrushPipe *pipe;
+  int i;
+
+  g_return_val_if_fail (GIMP_IS_BRUSH_PIXMAP (paint_core->brush), TRUE);
+
+  pipe = GIMP_BRUSH_PIXMAP (paint_core->brush)->pipe;
+
+  if (pipe->nbrushes == 1)
+    return TRUE;
+
+  for (i = 0; i < pipe->dimension; i++)
+    if (pipe->select[i] == PIPE_SELECT_ANGULAR)
+      return FALSE;
+
+  return TRUE;
 }
 
 static void

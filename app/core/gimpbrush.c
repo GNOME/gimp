@@ -34,6 +34,7 @@ enum{
 };
 
 static GimpBrush *gimp_brush_select_brush (PaintCore *paint_core);
+static gboolean gimp_brush_want_null_motion (PaintCore *paint_core);
 
 static guint gimp_brush_signals[LAST_SIGNAL];
 static GimpObjectClass* parent_class;
@@ -67,6 +68,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
   object_class->destroy =  gimp_brush_destroy;
 
   klass->select_brush = gimp_brush_select_brush;
+  klass->want_null_motion = gimp_brush_want_null_motion;
 
   gimp_brush_signals[DIRTY] =
     gimp_signal_new ("dirty",  GTK_RUN_FIRST, type, 0, gimp_sigtype_void);
@@ -124,6 +126,12 @@ static GimpBrush *
 gimp_brush_select_brush (PaintCore *paint_core)
 {
   return paint_core->brush;
+}
+
+static gboolean
+gimp_brush_want_null_motion (PaintCore *paint_core)
+{
+  return TRUE;
 }
 
 TempBuf *

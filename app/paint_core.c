@@ -273,11 +273,22 @@ paint_core_button_press (Tool           *tool,
     }
   else
     {
-      if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
-	paint_core->brush =
-	  (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
-			       ->klass)->select_brush) (paint_core);
-      (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+      /* If we current point == last point, check if the brush
+       * wants to be painted in that case. (Direction dependent
+       * pixmap brush pipes don't, as they don't know which
+       * pixmap to select.)
+       */
+      if (paint_core->lastx != paint_core->curx
+	  || paint_core->lasty != paint_core->cury
+	  || (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+				  ->klass)->want_null_motion) (paint_core))
+	{
+	  if (paint_core->flags & TOOL_CAN_HANDLE_CHANGING_BRUSH)
+	    paint_core->brush =
+	      (* GIMP_BRUSH_CLASS (GTK_OBJECT (paint_core->brush)
+				   ->klass)->select_brush) (paint_core);
+	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
+	}
     }
 
   gdisplay_flush_now (gdisp);

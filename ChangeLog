@@ -8,6 +8,20 @@
 	* app/gimpbrushlist.c (brushes_free): Portability fixes. Use
 	g_strconcat. Free allocated strings.
 
+	* app/gimpbrush.h (GimpBrushClass): Add a new method, gboolean
+	want_null_motion(), that tells if the brush wants to be painted
+	when we don't know the direction yet. This is needed (so far) by
+	brush pipes that select the brush based on direction.
+
+	* app/gimpbrush.c: Implement above method returning always TRUE.
+
+	* app/gimpbrushpipe.c: Here, implement it returning FALSE or TRUE
+	on whether the brush pipe has any angular (direction) dependent
+	dimension or not.
+
+	* app/paint_core.c (paint_core_button_press): Call the method
+	if current point == last point.
+
 Mon Aug 30 22:15:29 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c: use the new [gimp|pattern]_preview_widgets.

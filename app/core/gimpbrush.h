@@ -42,6 +42,7 @@ struct _GimpBrushClass
 {
   GimpObjectClass parent_class;
   GimpBrush *(* select_brush) (PaintCore *);
+  gboolean (* want_null_motion) (PaintCore *);
 };
 
 #define GIMP_BRUSH_CLASS(klass) \
