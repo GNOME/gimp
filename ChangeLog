@@ -1,5 +1,12 @@
 1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/brush_select.c
+	* app/pattern_select.c
+	* app/gradient.c: wheelmouse support for the brush/pattern lists
+	and for the gradient preview.
+
+1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/color_picker.[ch]: set the "preserve" flag to FALSE. This
 	way the tool doesn't have to detect drawable changes by itself.
 	Misc stuff like below.

@@ -755,6 +755,25 @@ pattern_select_events (GtkWidget      *widget,
 		pattern_popup_open (psp, bevent->x, bevent->y, pattern);
 	    }
 	}
+
+      /*  wheelmouse support  */
+      else if (bevent->button == 4)
+	{
+	  GtkAdjustment *adj = psp->sbar_data;
+	  gfloat new_value = adj->value - adj->page_increment / 2;
+	  new_value =
+	    CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	  gtk_adjustment_set_value (adj, new_value);
+	}
+      else if (bevent->button == 5)
+	{
+	  GtkAdjustment *adj = psp->sbar_data;
+	  gfloat new_value = adj->value + adj->page_increment / 2;
+	  new_value =
+	    CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	  gtk_adjustment_set_value (adj, new_value);
+	}
+
       break;
 
     case GDK_BUTTON_RELEASE:

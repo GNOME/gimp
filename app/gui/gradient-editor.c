@@ -2012,6 +2012,27 @@ prev_events (GtkWidget *widget,
 	  cpopup_do_popup ();
 	  break;
 
+	  /*  wheelmouse support  */
+	case 4:
+	  {
+	    GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
+	    gfloat new_value = adj->value - adj->page_increment / 2;
+	    new_value =
+	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	    gtk_adjustment_set_value (adj, new_value);
+	  }
+	  break;
+
+	case 5:
+	  {
+	    GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
+	    gfloat new_value = adj->value + adj->page_increment / 2;
+	    new_value =
+	      CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	    gtk_adjustment_set_value (adj, new_value);
+	  }
+	  break;
+
 	default:
 	  break;
 	}
@@ -2427,116 +2448,151 @@ control_do_hint(gint x, gint y)
 /*****/
 
 static void
-control_button_press(gint x, gint y, guint button, guint state)
+control_button_press (gint  x,
+		      gint  y,
+		      guint button,
+		      guint state)
 {
-	grad_segment_t      *seg;
-	control_drag_mode_t  handle;
-	double               xpos;
-	int                  in_handle;
+  grad_segment_t      *seg;
+  control_drag_mode_t  handle;
+  double               xpos;
+  gint                 in_handle;
 
-	/* See which button was pressed */
+  /* See which button was pressed */
 
-	switch (button) {
-		case 1:
-			break;
+  switch (button)
+    {
+    case 1:
+      break;
 
-		case 3:
-			cpopup_do_popup();
-			return;
+    case 3:
+      cpopup_do_popup();
+      return;
 
-		default:
-			return;
-	} /* switch */
+      /*  wheelmouse support  */
+    case 4:
+      {
+	GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
+	gfloat new_value = adj->value - adj->page_increment / 2;
+	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	gtk_adjustment_set_value (adj, new_value);
+      }
+      return;
 
-	/* Find the closest handle */
+    case 5:
+      {
+	GtkAdjustment *adj = GTK_ADJUSTMENT (g_editor->scroll_data);
+	gfloat new_value = adj->value + adj->page_increment / 2;
+	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	gtk_adjustment_set_value (adj, new_value);
+      }
+      return;
 
-	xpos = control_calc_g_pos(x);
+    default:
+      return;
+    }
 
-	seg_get_closest_handle(curr_gradient, xpos, &seg, &handle);
+  /* Find the closest handle */
 
-	in_handle = control_point_in_handle(x, y, seg, handle);
+  xpos = control_calc_g_pos (x);
 
-	/* Now see what we have */
+  seg_get_closest_handle (curr_gradient, xpos, &seg, &handle);
 
-	if (in_handle)
-		switch (handle) {
-			case GRAD_DRAG_LEFT:
-				if (seg != NULL) {
-					/* Left handle of some segment */
+  in_handle = control_point_in_handle (x, y, seg, handle);
 
-					if (state & GDK_SHIFT_MASK) {
-						if (seg->prev != NULL) {
-							g_editor->control_drag_mode    = GRAD_DRAG_LEFT;
-							g_editor->control_drag_segment = seg;
-							g_editor->control_compress     = 1;
-						} else {
-							control_extend_selection(seg, xpos);
+  /* Now see what we have */
 
-							ed_update_editor(GRAD_UPDATE_CONTROL);
-						} /* else */
-					} else
-						if (seg->prev != NULL) {
-							g_editor->control_drag_mode    = GRAD_DRAG_LEFT;
-							g_editor->control_drag_segment = seg;
-						} else {
-							control_select_single_segment(seg);
+  if (in_handle)
+    {
+      switch (handle)
+	{
+	case GRAD_DRAG_LEFT:
+	  if (seg != NULL)
+	    {
+	      /* Left handle of some segment */
+	      if (state & GDK_SHIFT_MASK)
+		{
+		  if (seg->prev != NULL)
+		    {
+		      g_editor->control_drag_mode    = GRAD_DRAG_LEFT;
+		      g_editor->control_drag_segment = seg;
+		      g_editor->control_compress     = 1;
+		    }
+		  else
+		    {
+		      control_extend_selection (seg, xpos);
+		      ed_update_editor (GRAD_UPDATE_CONTROL);
+		    }
+		}
+	      else if (seg->prev != NULL)
+		{
+		  g_editor->control_drag_mode    = GRAD_DRAG_LEFT;
+		  g_editor->control_drag_segment = seg;
+		}
+	      else
+		{
+		  control_select_single_segment (seg);
+		  ed_update_editor (GRAD_UPDATE_CONTROL);
+		}
 
-							ed_update_editor(GRAD_UPDATE_CONTROL);
-						} /* else */
+	      return;
+	    }
+	  else  /* seg == NULL */
+	    {
+	      /* Right handle of last segment */
+	      seg = seg_get_last_segment (curr_gradient->segments);
 
-					return;
-				} else {
-					/* Right handle of last segment */
+	      if (state & GDK_SHIFT_MASK)
+		{
+		  control_extend_selection (seg, xpos);
+		  ed_update_editor (GRAD_UPDATE_CONTROL);
+		}
+	      else
+		{
+		  control_select_single_segment (seg);
+		  ed_update_editor (GRAD_UPDATE_CONTROL);
+		}
 
-					seg = seg_get_last_segment(curr_gradient->segments);
+	      return;
+	    }
 
-					if (state & GDK_SHIFT_MASK) {
-						control_extend_selection(seg, xpos);
+	  break;
 
-						ed_update_editor(GRAD_UPDATE_CONTROL);
-					} else {
-						control_select_single_segment(seg);
+	case GRAD_DRAG_MIDDLE:
+	  if (state & GDK_SHIFT_MASK)
+	    {
+	      control_extend_selection(seg, xpos);
+	      ed_update_editor(GRAD_UPDATE_CONTROL);
+	    }
+	  else
+	    {
+	      g_editor->control_drag_mode    = GRAD_DRAG_MIDDLE;
+	      g_editor->control_drag_segment = seg;
+	    }
 
-						ed_update_editor(GRAD_UPDATE_CONTROL);
-					} /* else */
+	  return;
 
-					return;
-				} /* else */
+	default:
+	  g_message ("control_button_press(): oops, in_handle is true "
+		     "yet we got handle type %d", (int) handle);
+	  return;
+	}
+    }
+  else  /* !in_handle */
+    {
+      seg = seg_get_segment_at (curr_gradient, xpos);
 
-				break;
+      g_editor->control_drag_mode    = GRAD_DRAG_ALL;
+      g_editor->control_drag_segment = seg;
+      g_editor->control_last_gx      = xpos;
+      g_editor->control_orig_pos     = xpos;
 
-			case GRAD_DRAG_MIDDLE:
-				if (state & GDK_SHIFT_MASK) {
-					control_extend_selection(seg, xpos);
+      if (state & GDK_SHIFT_MASK)
+	g_editor->control_compress = 1;
 
-					ed_update_editor(GRAD_UPDATE_CONTROL);
-				} else {
-					g_editor->control_drag_mode    = GRAD_DRAG_MIDDLE;
-					g_editor->control_drag_segment = seg;
-				} /* else */
-
-				return;
-
-			default:
-				g_message ("control_button_press(): oops, in_handle is true "
-					"yet we got handle type %d", (int) handle);
-				return;
-		} /* switch */
-	else {
-		seg = seg_get_segment_at(curr_gradient, xpos);
-
-		g_editor->control_drag_mode    = GRAD_DRAG_ALL;
-		g_editor->control_drag_segment = seg;
-		g_editor->control_last_gx      = xpos;
-		g_editor->control_orig_pos     = xpos;
-
-		if (state & GDK_SHIFT_MASK)
-			g_editor->control_compress = 1;
-
-		return;
-	} /* else */
-} /* control_button_press */
-
+      return;
+    }
+}
 
 /*****/
 
