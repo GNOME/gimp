@@ -1,3 +1,8 @@
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpbufferview.[ch]: added a preview of the global
+	buffer.
+
 2004-07-12  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: make sure that gimp-console is enabled for

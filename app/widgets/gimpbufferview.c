@@ -27,7 +27,7 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp-edit.h"
+#include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -37,16 +37,24 @@
 #include "gimpbufferview.h"
 #include "gimpdnd.h"
 #include "gimphelp-ids.h"
+#include "gimppreview.h"
+#include "gimppreviewrenderer.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
 
-static void   gimp_buffer_view_class_init    (GimpBufferViewClass *klass);
-static void   gimp_buffer_view_init          (GimpBufferView      *view);
+static void   gimp_buffer_view_class_init     (GimpBufferViewClass *klass);
+static void   gimp_buffer_view_init           (GimpBufferView      *view);
 
-static void   gimp_buffer_view_activate_item (GimpContainerEditor *editor,
-                                              GimpViewable        *viewable);
+static void   gimp_buffer_view_activate_item  (GimpContainerEditor *editor,
+                                               GimpViewable        *viewable);
+
+static void   gimp_buffer_view_buffer_changed (Gimp                *gimp,
+                                               GimpBufferView      *buffer_view);
+static void   gimp_buffer_view_preview_notify (GimpContainerView   *view,
+                                               GParamSpec          *pspec,
+                                               GimpBufferView      *buffer_view);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -109,12 +117,14 @@ gimp_buffer_view_new (GimpViewType     view_type,
 {
   GimpBufferView      *buffer_view;
   GimpContainerEditor *editor;
+  GtkWidget           *frame;
+  GtkWidget           *hbox;
 
   buffer_view = g_object_new (GIMP_TYPE_BUFFER_VIEW, NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
                                          view_type,
-                                         container,context,
+                                         container, context,
                                          preview_size, preview_border_width,
                                          menu_factory, "<Buffers>",
                                          "/buffers-popup"))
@@ -124,6 +134,47 @@ gimp_buffer_view_new (GimpViewType     view_type,
     }
 
   editor = GIMP_CONTAINER_EDITOR (buffer_view);
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
+  gtk_box_reorder_child (GTK_BOX (editor), frame, 0);
+  gtk_widget_show (frame);
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  buffer_view->global_preview = gimp_preview_new_by_types (GIMP_TYPE_PREVIEW,
+                                                           GIMP_TYPE_BUFFER,
+                                                           preview_size,
+                                                           preview_border_width,
+                                                           FALSE);
+  gtk_widget_set_size_request (buffer_view->global_preview,
+                               preview_size + 2 * preview_border_width,
+                               preview_size + 2 * preview_border_width);
+  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_preview,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (buffer_view->global_preview);
+
+  g_signal_connect_object (editor->view, "notify::preview-size",
+                           G_CALLBACK (gimp_buffer_view_preview_notify),
+                           buffer_view, 0);
+  g_signal_connect_object (editor->view, "notify::preview-border-width",
+                           G_CALLBACK (gimp_buffer_view_preview_notify),
+                           buffer_view, 0);
+
+  buffer_view->global_label = gtk_label_new (_("(None)"));
+  gtk_box_pack_start (GTK_BOX (hbox), buffer_view->global_label,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (buffer_view->global_label);
+
+  g_signal_connect_object (context->gimp, "buffer-changed",
+                           G_CALLBACK (gimp_buffer_view_buffer_changed),
+                           G_OBJECT (buffer_view), 0);
+
+  gimp_buffer_view_buffer_changed (context->gimp, buffer_view);
 
   buffer_view->paste_button =
     gimp_editor_add_action_button (GIMP_EDITOR (editor->view), "buffers",
@@ -175,4 +226,45 @@ gimp_buffer_view_activate_item (GimpContainerEditor *editor,
     {
       gtk_button_clicked (GTK_BUTTON (view->paste_button));
     }
+}
+
+static void
+gimp_buffer_view_buffer_changed (Gimp           *gimp,
+                                 GimpBufferView *buffer_view)
+{
+  gimp_preview_set_viewable (GIMP_PREVIEW (buffer_view->global_preview),
+                             (GimpViewable *) gimp->global_buffer);
+
+  if (gimp->global_buffer)
+    {
+      gchar *desc;
+
+      desc = gimp_viewable_get_description (GIMP_VIEWABLE (gimp->global_buffer),
+                                            NULL);
+      gtk_label_set_text (GTK_LABEL (buffer_view->global_label), desc);
+      g_free (desc);
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (buffer_view->global_label), _("(None)"));
+    }
+}
+
+static void
+gimp_buffer_view_preview_notify (GimpContainerView *view,
+                                 GParamSpec        *pspec,
+                                 GimpBufferView    *buffer_view)
+{
+  GimpPreview *preview = GIMP_PREVIEW (buffer_view->global_preview);
+  gint         preview_size;
+  gint         preview_border_width;
+
+  preview_size = gimp_container_view_get_preview_size (view,
+                                                       &preview_border_width);
+
+  gimp_preview_renderer_set_size (preview->renderer,
+                                  preview_size, preview_border_width);
+  gtk_widget_set_size_request (buffer_view->global_preview,
+                               preview_size + 2 * preview_border_width,
+                               preview_size + 2 * preview_border_width);
 }
