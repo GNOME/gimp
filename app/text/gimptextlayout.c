@@ -250,18 +250,18 @@ gimp_text_layout_get_offsets (GimpTextLayout *layout,
 }
 
 TileManager *
-gimp_text_layout_render (GimpTextLayout *layout)
+gimp_text_layout_render (GimpTextLayout *layout,
+                         gint            width,
+                         gint            height)
 {
   TileManager  *mask;
   FT_Bitmap     bitmap;
   PixelRegion   maskPR;
   gint          i;
   gint          x, y;
-  gint          width, height;
 
   g_return_val_if_fail (GIMP_IS_TEXT_LAYOUT (layout), NULL);
 
-  gimp_text_layout_get_size    (layout, &width, &height);
   gimp_text_layout_get_offsets (layout, &x, &y);
 
   bitmap.width = width;
@@ -271,7 +271,7 @@ gimp_text_layout_render (GimpTextLayout *layout)
     bitmap.pitch += 4 - (bitmap.pitch & 3);
 
   bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
-      
+  
   pango_ft2_render_layout (&bitmap, layout->layout, x, y);
 
   mask = tile_manager_new (width, height, 1);

@@ -155,7 +155,7 @@ gimp_text_layer_new (GimpImage *image,
 
   layer->text = g_object_ref (text);
 
-  if (!gimp_text_layer_render (layer))
+  if (! gimp_text_layer_render (layer))
     {
       g_object_unref (layer);
       return NULL;
@@ -208,7 +208,7 @@ static void
 gimp_text_layer_notify_text (GimpTextLayer *layer)
 {
   if (layer->idle_render_id)
-    return;
+    g_source_remove (layer->idle_render_id);
 
   layer->idle_render_id =
     g_idle_add_full (G_PRIORITY_LOW,
@@ -235,38 +235,33 @@ gimp_text_layer_render (GimpTextLayer *layer)
   gint            width;
   gint            height;
 
-  image = gimp_item_get_image (GIMP_ITEM (layer));
+  image    = gimp_item_get_image (GIMP_ITEM (layer));
+  drawable = GIMP_DRAWABLE (layer);
 
   layout = gimp_text_layout_new (layer->text, image);
 
   gimp_text_layout_get_size (layout, &width, &height);
 
-  if (! gimp_text_layout_get_size (layout, &width, &height))
+  if (gimp_text_layout_get_size (layout, &width, &height))
     {
-      g_object_unref (layout);
-      return FALSE;
-    }
+      if (width  != gimp_drawable_width (drawable) ||
+          height != gimp_drawable_height (drawable))
+        {
+          gimp_drawable_update (drawable,
+                                0, 0,
+                                gimp_drawable_width (drawable),
+                                gimp_drawable_height (drawable));
+          
+          drawable->width  = width;
+          drawable->height = height;
+          
+          if (drawable->tiles)
+            tile_manager_destroy (drawable->tiles);
+          
+          drawable->tiles = tile_manager_new (width, height, drawable->bytes);
 
-  drawable = GIMP_DRAWABLE (layer);
-
-  if (width  != gimp_drawable_width (drawable) ||
-      height != gimp_drawable_height (drawable))
-    {
-      gimp_drawable_update (GIMP_DRAWABLE (layer),
-                            0, 0,
-                            gimp_drawable_width (drawable),
-                            gimp_drawable_height (drawable));
-
-
-      drawable->width  = width;
-      drawable->height = height;
-
-      if (drawable->tiles)
-        tile_manager_destroy (drawable->tiles);
-
-      drawable->tiles = tile_manager_new (width, height, drawable->bytes);
-
-      gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
+          gimp_viewable_size_changed (GIMP_VIEWABLE (layer));
+        }
     }
 
   gimp_object_set_name_safe (GIMP_OBJECT (layer), layer->text->text);
@@ -274,10 +269,9 @@ gimp_text_layer_render (GimpTextLayer *layer)
   gimp_text_layer_render_layout (layer, layout);
   g_object_unref (layout);
 
-  gimp_drawable_update (drawable, 0, 0, width, height);
   gimp_image_flush (image);
 
-  return TRUE;
+  return (width > 0 && height > 0);
 }
 
 static void
@@ -296,14 +290,14 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
   width  = gimp_drawable_width  (drawable);
   height = gimp_drawable_height (drawable);
 
-  mask = gimp_text_layout_render (layout);
+  mask = gimp_text_layout_render (layout, width, height);
 
-  pixel_region_init (&textPR,
-		     GIMP_DRAWABLE (layer)->tiles, 0, 0, width, height, TRUE);
-  pixel_region_init (&maskPR,
-		     mask, 0, 0, width, height, FALSE);
+  pixel_region_init (&textPR, drawable->tiles, 0, 0, width, height, TRUE);
+  pixel_region_init (&maskPR, mask, 0, 0, width, height, FALSE);
 
   apply_mask_to_region (&textPR, &maskPR, OPAQUE_OPACITY);
   
   tile_manager_destroy (mask);
+
+  gimp_drawable_update (drawable, 0, 0, width, height);
 }
