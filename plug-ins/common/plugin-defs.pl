@@ -91,6 +91,7 @@
     'sample_colorize' => { libdep => 'gtk', ui => 1 },
     'scatter_hsv' => { libdep => 'gtk' },
     'screenshot' => { libdep => 'gtk' },
+    'sel_gauss' => { libdep => 'gtk' },
     'semiflatten' => { libdep => 'glib' },
     'sharpen' => { libdep => 'gtk' },
     'shift' => { libdep => 'gtk' },

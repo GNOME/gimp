@@ -94,6 +94,7 @@ rotators
 sample_colorize
 scatter_hsv
 screenshot
+sel_gauss
 semiflatten
 sharpen
 shift

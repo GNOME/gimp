@@ -109,6 +109,7 @@ libexec_PROGRAMS = \
 	sample_colorize \
 	scatter_hsv \
 	screenshot \
+	sel_gauss \
 	semiflatten \
 	sharpen \
 	shift \
@@ -907,6 +908,14 @@ screenshot_SOURCES = \
 	screenshot.c
 
 screenshot_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+sel_gauss_SOURCES = \
+	sel_gauss.c
+
+sel_gauss_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
