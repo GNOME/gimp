@@ -43,9 +43,9 @@ gimp_config_substitute_path (GObject     *object,
                              gboolean     use_env)
 {
   const gchar *subst;
-  const gchar *tmp;
+  const gchar *p;
   gchar       *new_path = NULL;
-  gchar       *tmp2;
+  gchar       *n;
   gchar       *token;
   glong        length = 0;
   GSList      *list;
@@ -54,19 +54,19 @@ gimp_config_substitute_path (GObject     *object,
   g_return_val_if_fail (G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (path != NULL, NULL);
 
-  tmp = path;
+  p = path;
 
-  while (*tmp)
+  while (*p)
     {
 #ifndef G_OS_WIN32
-      if (*tmp == '~')
+      if (*p == '~')
 	{
 	  length += strlen (g_get_home_dir ());
-	  tmp += 1;
+	  p += 1;
 	}
       else
 #endif
-      if ((token = extract_token (&tmp)) != NULL)
+      if ((token = extract_token (&p)) != NULL)
         {
 	  subst = gimp_config_lookup_unknown_token (object, token);
 
@@ -104,7 +104,7 @@ gimp_config_substitute_path (GObject     *object,
         }
       else
 	{
-          tmp = jump_to_next_char (tmp, &length);
+          p = jump_to_next_char (p, &length);
 	}
     }
 
@@ -113,22 +113,22 @@ gimp_config_substitute_path (GObject     *object,
 
   new_path = g_new (gchar, length + 1);
 
-  tmp = path;
-  tmp2 = new_path;
+  p = path;
+  n = new_path;
 
-  while (*tmp)
+  while (*p)
     {
 #ifndef G_OS_WIN32
-      if (*tmp == '~')
+      if (*p == '~')
 	{
-	  *tmp2 = '\0';
-	  strcat (tmp2, g_get_home_dir ());
-	  tmp2 += strlen (g_get_home_dir ());
-	  tmp += 1;
+	  *n = '\0';
+	  strcat (n, g_get_home_dir ());
+	  n += strlen (g_get_home_dir ());
+	  p += 1;
 	}
       else
 #endif
-      if ((token = extract_token (&tmp)) != NULL)
+      if ((token = extract_token (&p)) != NULL)
         {
           for (list = substitutions; list; list = g_slist_next (list))
             {
@@ -136,9 +136,9 @@ gimp_config_substitute_path (GObject     *object,
                 {
                   list = g_slist_next (list);
 
-                  *tmp2 = '\0';
-                  strcat (tmp2, (const gchar *) list->data);
-                  tmp2 += strlen (list->data);
+                  *n = '\0';
+                  strcat (n, (const gchar *) list->data);
+                  n += strlen (list->data);
 
                   break;
                 }
@@ -148,11 +148,11 @@ gimp_config_substitute_path (GObject     *object,
 	}
       else
 	{
-	  *tmp2++ = *tmp++;
+	  *n++ = *p++;
 	}
     }
 
-  *tmp2 = '\0';
+  *n = '\0';
 
  cleanup:
   for (list = substitutions; list; list = g_slist_next (list))
