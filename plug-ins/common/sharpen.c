@@ -44,6 +44,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.10  1999/04/22 14:05:58  asbjoer
+ *   use MAIN macro
+ *
  *   Revision 1.9  1999/03/28 22:03:12  raph
  *   Fixed a silly bug causing sharpen to not work in the non-rgb cases.
  *
@@ -222,13 +225,8 @@ intpos		pos_lut[256];		/* Positive coefficient LUT */
  * 'main()' - Main entry - just call gimp_main()...
  */
 
-int
-main(int  argc,		/* I - Number of command-line args */
-     char *argv[])	/* I - Command-line args */
-{
-  return (gimp_main(argc, argv));
-}
 
+MAIN()
 
 /*
  * 'query()' - Respond to a plug-in query...

@@ -55,9 +55,7 @@ size_t data_length= 0;
 
 /* Let GIMP library handle initialisation (and inquisitive users) */
 
-int main(int argc, char *argv[]) {
-  return gimp_main(argc, argv);
-}
+MAIN()
 
 /* GIMP queries plug-in for parameters etc. */
 
