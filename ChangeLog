@@ -1,3 +1,8 @@
+2004-07-05  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_proof.c: use object properties for the
+	configurable values.
+
 2004-07-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.[ch]: added signal "color-changed" and emit
