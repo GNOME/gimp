@@ -1,5 +1,12 @@
 2003-03-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimplayer.c
+	* app/gui/image-menu.c
+	* app/gui/layers-menu.c: there doesn't seem to be a good reason to
+	disallow the creation of layer masks on indexed images.
+
+2003-03-23  Sven Neumann  <sven@gimp.org>
+
 	* Made 1.3.13 release.
 
 2003-03-23  Michael Natterer  <mitch@gimp.org>

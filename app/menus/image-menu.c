@@ -1351,10 +1351,10 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/Layer/Colors/Auto/Equalize",          lp && ! is_indexed);
   SET_SENSITIVE ("/Layer/Colors/Histogram...",           lp);
 
-  SET_SENSITIVE ("/Layer/Mask/Add Layer Mask...", lp && !aux && !lm && alpha && ! is_indexed);
-  SET_SENSITIVE ("/Layer/Mask/Apply Layer Mask",  lp && !aux && lm);
-  SET_SENSITIVE ("/Layer/Mask/Delete Layer Mask", lp && !aux && lm);
-  SET_SENSITIVE ("/Layer/Mask/Mask to Selection", lp && !aux && lm);
+  SET_SENSITIVE ("/Layer/Mask/Add Layer Mask...", lp && !fs && !aux && !lm && alpha);
+  SET_SENSITIVE ("/Layer/Mask/Apply Layer Mask",  lp && !fs && !aux && lm);
+  SET_SENSITIVE ("/Layer/Mask/Delete Layer Mask", lp && !fs && !aux && lm);
+  SET_SENSITIVE ("/Layer/Mask/Mask to Selection", lp && !fs && !aux && lm);
 
   SET_SENSITIVE ("/Layer/Transparency/Alpha to Selection", lp && !aux && alpha);
   SET_SENSITIVE ("/Layer/Transparency/Add Alpha Channel",  lp && !aux && !fs && !lm && !alpha);

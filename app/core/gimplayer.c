@@ -593,28 +593,21 @@ gimp_layer_add_mask (GimpLayer     *layer,
 
   if (! gimage)
     {
-      g_message (_("Cannot add layer mask to layer\n"
+      g_message (_("Cannot add layer mask to layer "
                    "which is not part of an image."));
       return NULL;
     }
 
   if (layer->mask)
     {
-      g_message(_("Unable to add a layer mask since\n"
-                  "the layer already has one."));
-      return NULL;
-    }
-
-  if (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)))
-    {
-      g_message(_("Unable to add a layer mask to a\n"
-                  "layer in an indexed image."));
+      g_message (_("Unable to add a layer mask since "
+		   "the layer already has one."));
       return NULL;
     }
 
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
-      g_message (_("Cannot add layer mask to a layer\n"
+      g_message (_("Cannot add layer mask to a layer "
                    "with no alpha channel."));
       return NULL;
     }
@@ -624,7 +617,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
       (gimp_drawable_height (GIMP_DRAWABLE (layer)) !=
        gimp_drawable_height (GIMP_DRAWABLE (mask))))
     {
-      g_message(_("Cannot add layer mask of different\n"
+      g_message(_("Cannot add layer mask of different "
                   "dimensions than specified layer."));
       return NULL;
     }

@@ -220,7 +220,7 @@ layers_menu_update (GtkItemFactory *factory,
   SET_SENSITIVE ("/Layer to Imagesize",     !ac && gimage && lp);
   SET_SENSITIVE ("/Scale Layer...",         !ac && gimage && lp);
 
-  SET_SENSITIVE ("/Add Layer Mask...", !fs && !ac && gimage && !lm && lp && alpha && !indexed);
+  SET_SENSITIVE ("/Add Layer Mask...", !fs && !ac && gimage && !lm && lp && alpha);
   SET_SENSITIVE ("/Apply Layer Mask",  !fs && !ac && gimage && lm && lp);
   SET_SENSITIVE ("/Delete Layer Mask", !fs && !ac && gimage && lm && lp);
   SET_SENSITIVE ("/Mask to Selection", !fs && !ac && gimage && lm && lp);
