@@ -1,3 +1,87 @@
+2003-02-05  Michael Natterer  <mitch@gimp.org>
+
+	Made GimpToolOptions a GimpContext subclass and objectified
+	all tool options types.
+
+	* app/core/core-types.h: replaced GimpToolOptionsNewFunc by
+	GimpToolOptionsGUIFunc.
+
+	* libgimpproxy/gimpproxytypes.h: regenerated.
+
+	* app/core/gimppaintinfo.[ch]: added "GType paint_options_type".
+
+	* app/core/gimptoolinfo.[ch]: added "GType tool_options_type",
+	removed tool_info->context since GimpToolOptions are a GimpContext
+	now. Added "gboolean use_context" as a temp_hack.
+
+	* libgimptool/gimptooltypes.h: added the tool_options_type to
+	the tool registering callback.
+
+	* app/tools/tool_options.[ch]: is a real GimpContext subclass now.
+
+	* app/paint/paint-types.h
+	* app/paint/paint.c: added the paint_options_type to the paint
+	registering stuff.
+
+	* app/paint/gimppaintoptions.[ch]: is a real GimpToolOptions
+	subclass now.
+
+	* app/paint/Makefile.am
+	* app/paint/gimpairbrushoptions.[ch]
+	* app/paint/gimpcloneoptions.[ch]
+	* app/paint/gimpconvolveoptions.[ch]
+	* app/paint/gimpdodgeburnoptions.[ch]
+	* app/paint/gimperaseroptions.[ch]
+	* app/paint/gimpsmudgeoptions.[ch]: new files holding
+	GimpPaintOptions subclasses.
+
+	* app/paint/gimpairbrush.[ch]
+	* app/paint/gimpclone.[ch]
+	* app/paint/gimpconvolve.[ch]
+	* app/paint/gimpdodgeburn.[ch]
+	* app/paint/gimperaser.[ch]
+	* app/paint/gimppaintbrush.c
+	* app/paint/gimppaintcore.c
+	* app/paint/gimppencil.[ch]
+	* app/paint/gimpsmudge.[ch]: removed paint options stuff, lots
+	of related changed & cleanups.
+
+	* tools/pdbgen/pdb/paint_tools.pdb: changed accordingly.
+
+	* app/pdb/paint_tools_cmds.c: regenerated.
+
+	* app/tools/Makefile.am
+	* app/tools/gimpblendoptions.[ch]
+	* app/tools/gimpbucketfilloptions.[ch]
+	* app/tools/gimpcolorpickeroptions.[ch]
+	* app/tools/gimpcropoptions.[ch]
+	* app/tools/gimpflipoptions.[ch]
+	* app/tools/gimpinkoptions.[ch]
+	* app/tools/gimpmagnifyoptions.[ch]
+	* app/tools/gimpmeasureoptions.[ch]
+	* app/tools/gimpmoveoptions.[ch]
+	* app/tools/gimptextoptions.[ch]
+	* app/tools/gimpvectoroptions.[ch]: new files holding the various
+	tool options classes.
+
+	* app/tools/selection_options.[ch]
+	* app/tools/transform_options.[ch]: made them objects.
+
+	* app/tools/paint_options.[ch]: contains only the paint_options
+	GUI and reset stuff.
+
+	* app/tools/tools-types.h: removed SelectionOptions typedef for
+	now.
+
+	* app/tools/[all tools]: removed the tool options stuff except
+	some GUI constructors. Tons of related changes.
+
+	* app/tools/tool_manager.[ch]: changed tool registration / restore /
+	switching accordingly.
+
+	* app/widgets/gimpdrawablelistview.c
+	* app/widgets/gimpselectioneditor.c: changed accordingly.
+
 2003-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.c: added some blurbs that will show up as

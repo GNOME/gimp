@@ -27,6 +27,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpdodgeburn.h"
+#include "paint/gimpdodgeburnoptions.h"
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -50,8 +51,8 @@ static void   gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
                                                  GdkModifierType  state,
                                                  GimpDisplay     *gdisp);
 
-static GimpToolOptions * gimp_dodgeburn_tool_options_new   (GimpToolInfo    *tool_info);
-static void              gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options);
+static void   gimp_dodge_burn_options_gui       (GimpToolOptions *tool_options);
+static void   gimp_dodge_burn_options_reset     (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -62,7 +63,8 @@ gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_DODGEBURN_TOOL,
-                gimp_dodgeburn_tool_options_new,
+                GIMP_TYPE_DODGE_BURN_OPTIONS,
+                gimp_dodge_burn_options_gui,
                 TRUE,
                 "gimp-dodgeburn-tool",
                 _("Dodge/Burn"),
@@ -128,7 +130,7 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_BURN_TOOL_CURSOR);
 
-  paint_tool->core = g_object_new (GIMP_TYPE_DODGEBURN, NULL);
+  paint_tool->core = g_object_new (GIMP_TYPE_DODGE_BURN, NULL);
 }
 
 static void
@@ -182,8 +184,8 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
+static void
+gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
 {
   GimpDodgeBurnOptions *options;
   GtkWidget            *vbox;
@@ -191,11 +193,11 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   GtkWidget            *frame;
   gchar                *str;
 
-  options = gimp_dodgeburn_options_new (tool_info->context);
+  options = GIMP_DODGE_BURN_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_dodgeburn_tool_options_reset;
+  ((GimpToolOptions *) options)->reset_func = gimp_dodge_burn_options_reset;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -245,18 +247,16 @@ gimp_dodgeburn_tool_options_new (GimpToolInfo *tool_info)
   g_signal_connect (options->exposure_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->exposure);
-
-  return (GimpToolOptions *) options;
 }
 
 static void
-gimp_dodgeburn_tool_options_reset (GimpToolOptions *tool_options)
+gimp_dodge_burn_options_reset (GimpToolOptions *tool_options)
 {
   GimpDodgeBurnOptions *options;
 
-  options = (GimpDodgeBurnOptions *) tool_options;
+  options = GIMP_DODGE_BURN_OPTIONS (tool_options);
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
 			    options->exposure_d);

@@ -27,6 +27,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpsmudge.h"
+#include "paint/gimpsmudgeoptions.h"
 
 #include "gimpsmudgetool.h"
 #include "paint_options.h"
@@ -34,11 +35,11 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_smudge_tool_class_init     (GimpSmudgeToolClass *klass);
-static void   gimp_smudge_tool_init           (GimpSmudgeTool      *tool);
+static void   gimp_smudge_tool_class_init (GimpSmudgeToolClass *klass);
+static void   gimp_smudge_tool_init       (GimpSmudgeTool      *tool);
 
-static GimpToolOptions * smudge_options_new   (GimpToolInfo        *tool_info);
-static void              smudge_options_reset (GimpToolOptions     *tool_options);
+static void   gimp_smudge_options_gui     (GimpToolOptions     *tool_options);
+static void   gimp_smudge_options_reset   (GimpToolOptions     *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -51,7 +52,8 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SMUDGE_TOOL,
-                smudge_options_new,
+                GIMP_TYPE_SMUDGE_OPTIONS,
+                gimp_smudge_options_gui,
                 TRUE,
                 "gimp-smudge-tool",
                 _("Smudge"),
@@ -118,21 +120,20 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-smudge_options_new (GimpToolInfo *tool_info)
+static void
+gimp_smudge_options_gui (GimpToolOptions *tool_options)
 {
   GimpSmudgeOptions *options;
   GtkWidget         *vbox;
   GtkWidget         *table;
 
-  options = gimp_smudge_options_new (tool_info->context);
+  options = GIMP_SMUDGE_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = smudge_options_reset;
+  tool_options->reset_func = gimp_smudge_options_reset;
 
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
+  vbox = tool_options->main_vbox;
 
   /*  the rate scale  */
   table = gtk_table_new (1, 3, FALSE);
@@ -150,18 +151,16 @@ smudge_options_new (GimpToolInfo *tool_info)
   g_signal_connect (options->rate_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->rate);
-
-  return (GimpToolOptions *) options;
 }
 
 static void
-smudge_options_reset (GimpToolOptions *tool_options)
+gimp_smudge_options_reset (GimpToolOptions *tool_options)
 {
   GimpSmudgeOptions *options;
 
-  options = (GimpSmudgeOptions *) tool_options;
+  options = GIMP_SMUDGE_OPTIONS (tool_options);
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w), options->rate_d);
 }

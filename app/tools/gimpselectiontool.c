@@ -119,15 +119,14 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  GimpSelectionTool *selection_tool;
-  SelectionOptions  *sel_options;
-  SelectOps          button_op;
+  GimpSelectionTool    *selection_tool;
+  GimpSelectionOptions *options;
+  SelectOps             button_op;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
+  options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  button_op = sel_options->op;
+  button_op = options->op;
 
   if (key == GDK_SHIFT_MASK || key == GDK_CONTROL_MASK)
     {
@@ -137,7 +136,7 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
             {
               /*  first modifier pressed  */
 
-              selection_tool->saved_op = sel_options->op;
+              selection_tool->saved_op = options->op;
             }
         }
       else
@@ -163,9 +162,9 @@ gimp_selection_tool_modifier_key (GimpTool        *tool,
           button_op = SELECTION_SUBTRACT;
         }
 
-      if (button_op != sel_options->op)
+      if (button_op != options->op)
         {
-          gimp_radio_group_set_active (GTK_RADIO_BUTTON (sel_options->op_w[0]),
+          gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->op_w[0]),
                                        GINT_TO_POINTER (button_op));
         }
     }
@@ -177,14 +176,13 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
                                  GdkModifierType  state,
                                  GimpDisplay     *gdisp)
 {
-  GimpSelectionTool *selection_tool;
-  SelectionOptions  *sel_options;
-  GimpLayer         *layer;
-  GimpLayer         *floating_sel;
+  GimpSelectionTool    *selection_tool;
+  GimpSelectionOptions *options;
+  GimpLayer            *layer;
+  GimpLayer            *floating_sel;
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options        = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
   floating_sel = gimp_image_floating_sel (gdisp->gimage);
@@ -219,7 +217,7 @@ gimp_selection_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      selection_tool->op = sel_options->op;
+      selection_tool->op = options->op;
     }
 }
 

@@ -91,7 +91,8 @@ gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FUZZY_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-fuzzy-select-tool",
                 _("Fuzzy Select"),
@@ -207,18 +208,17 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
                                      GdkModifierType  state,
                                      GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool *fuzzy_sel;
-  SelectionOptions    *sel_options;
+  GimpFuzzySelectTool  *fuzzy_sel;
+  GimpSelectionOptions *options;
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   fuzzy_sel->x               = coords->x;
   fuzzy_sel->y               = coords->y;
   fuzzy_sel->first_x         = fuzzy_sel->x;
   fuzzy_sel->first_y         = fuzzy_sel->y;
-  fuzzy_sel->first_threshold = sel_options->threshold;
+  fuzzy_sel->first_threshold = options->threshold;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -249,12 +249,11 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool *fuzzy_sel;
-  SelectionOptions    *sel_options;
+  GimpFuzzySelectTool  *fuzzy_sel;
+  GimpSelectionOptions *options;
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -278,7 +277,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 	  return;
 	}
 
-      if (sel_options->sample_merged)
+      if (options->sample_merged)
         {
           off_x = 0;
           off_y = 0;
@@ -297,9 +296,9 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
                                       off_x,
                                       off_y,
                                       GIMP_SELECTION_TOOL (tool)->op,
-                                      sel_options->feather,
-                                      sel_options->feather_radius,
-                                      sel_options->feather_radius);
+                                      options->feather,
+                                      options->feather_radius,
+                                      options->feather_radius);
 
       g_object_unref (fuzzy_sel->fuzzy_mask);
       fuzzy_sel->fuzzy_mask = NULL;
@@ -323,22 +322,21 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpFuzzySelectTool *fuzzy_sel;
-  GimpSelectionTool   *sel_tool;
-  SelectionOptions    *sel_options;
-  GdkSegment          *new_segs;
-  gint                 num_new_segs;
-  gint                 diff_x, diff_y;
-  gdouble              diff;
+  GimpFuzzySelectTool  *fuzzy_sel;
+  GimpSelectionTool    *sel_tool;
+  GimpSelectionOptions *options;
+  GdkSegment           *new_segs;
+  gint                  num_new_segs;
+  gint                  diff_x, diff_y;
+  gdouble               diff;
 
   static guint32 last_time = 0;
 
   fuzzy_sel = GIMP_FUZZY_SELECT_TOOL (tool);
   sel_tool  = GIMP_SELECTION_TOOL (tool);
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  if (!gimp_tool_control_is_active (tool->control))
+  if (! gimp_tool_control_is_active (tool->control))
     return;
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */
@@ -352,7 +350,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2.0;
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (sel_options->threshold_w), 
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w), 
 			    fuzzy_sel->first_threshold + diff);
 
   /*  calculate the new fuzzy boundary  */
@@ -389,22 +387,21 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
                                   GimpDisplay         *gdisp,
                                   gint                *num_segs)
 {
-  GimpTool         *tool;
-  GimpDisplayShell *shell;
-  SelectionOptions *sel_options;
-  PixelRegion       maskPR;
-  GimpChannel      *new;
-  GdkSegment       *segs;
-  BoundSeg         *bsegs;
-  GimpDrawable     *drawable;
-  gint              i;
-  gint              x, y;
+  GimpTool             *tool;
+  GimpSelectionOptions *options;
+  GimpDisplayShell     *shell;
+  PixelRegion           maskPR;
+  GimpChannel          *new;
+  GdkSegment           *segs;
+  BoundSeg             *bsegs;
+  GimpDrawable         *drawable;
+  gint                  i;
+  gint                  x, y;
 
-  tool = GIMP_TOOL (fuzzy_sel);
+  tool    = GIMP_TOOL (fuzzy_sel);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -413,7 +410,7 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
   x = fuzzy_sel->x;
   y = fuzzy_sel->y;
 
-  if (! sel_options->sample_merged)
+  if (! options->sample_merged)
     {
       gint off_x, off_y;
 
@@ -424,10 +421,10 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
     }
 
   new = gimp_image_contiguous_region_by_seed (gdisp->gimage, drawable, 
-                                              sel_options->sample_merged,
-                                              sel_options->antialias,
-                                              sel_options->threshold,
-                                              sel_options->select_transparent,
+                                              options->sample_merged,
+                                              options->antialias,
+                                              options->threshold,
+                                              options->select_transparent,
                                               x, y);
 
   if (fuzzy_sel->fuzzy_mask)
@@ -456,14 +453,14 @@ gimp_fuzzy_select_tool_calculate (GimpFuzzySelectTool *fuzzy_sel,
       gimp_display_shell_transform_xy (shell,
                                        bsegs[i].x1, bsegs[i].y1,
                                        &x, &y,
-                                       ! sel_options->sample_merged);
+                                       ! options->sample_merged);
       segs[i].x1 = x;
       segs[i].y1 = y;
 
       gimp_display_shell_transform_xy (shell,
                                        bsegs[i].x2, bsegs[i].y2,
                                        &x, &y,
-                                       ! sel_options->sample_merged);
+                                       ! options->sample_merged);
       segs[i].x2 = x;
       segs[i].y2 = y;
     }

@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpsmudge.h"
+#include "gimpsmudgeoptions.h"
 
 
 static void       gimp_smudge_class_init (GimpSmudgeClass     *klass);
@@ -72,7 +73,7 @@ void
 gimp_smudge_register (Gimp                      *gimp,
                       GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_SMUDGE);
+  (* callback) (gimp, GIMP_TYPE_SMUDGE, GIMP_TYPE_SMUDGE_OPTIONS);
 }
 
 GType
@@ -419,25 +420,3 @@ gimp_smudge_allocate_accum_buffer (GimpSmudge *smudge,
       color_region (&smudge->accumPR, (const guchar *) do_fill);
     }
 }
-
-
-/*  paint options stuff  */
-
-#define SMUDGE_DEFAULT_RATE 50.0
-
-GimpSmudgeOptions *
-gimp_smudge_options_new (GimpContext *context)
-{
-  GimpSmudgeOptions *options;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  options = g_new0 (GimpSmudgeOptions, 1);
-
-  gimp_paint_options_init ((GimpPaintOptions *) options, context);
-
-  options->rate = options->rate_d = SMUDGE_DEFAULT_RATE;
-
-  return options;
-}
-

@@ -22,31 +22,164 @@
 
 #include "tools-types.h"
 
+#include "config/gimpconfig.h"
+
+#include "core/gimptoolinfo.h"
+
 #include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
 
-void
-tool_options_init (GimpToolOptions *options,
-		   GimpToolInfo    *tool_info)
+enum
 {
-  options->main_vbox = gtk_vbox_new (FALSE, 2);
-  options->tool_info = tool_info;
+  PROP_0,
+  PROP_TOOL_INFO
+};
+
+
+static void   gimp_tool_options_init       (GimpToolOptions      *options);
+static void   gimp_tool_options_class_init (GimpToolOptionsClass *options_class);
+
+static void   gimp_tool_options_set_property (GObject         *object,
+                                              guint            property_id,
+                                              const GValue    *value,
+                                              GParamSpec      *pspec);
+static void   gimp_tool_options_get_property (GObject         *object,
+                                              guint            property_id,
+                                              GValue          *value,
+                                              GParamSpec      *pspec);
+
+static void   gimp_tool_options_real_reset   (GimpToolOptions *tool_options);
+
+
+static GimpContextClass *parent_class = NULL;
+
+
+GType
+gimp_tool_options_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    {
+      static const GTypeInfo info =
+      {
+        sizeof (GimpToolOptionsClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_tool_options_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpToolOptions),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_tool_options_init,
+      };
+
+      type = g_type_register_static (GIMP_TYPE_CONTEXT,
+                                     "GimpToolOptions",
+                                     &info, 0);
+    }
+
+  return type;
 }
 
-GimpToolOptions *
-tool_options_new (GimpToolInfo *tool_info)
+static void 
+gimp_tool_options_class_init (GimpToolOptionsClass *klass)
+{
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  object_class->set_property = gimp_tool_options_set_property;
+  object_class->get_property = gimp_tool_options_get_property;
+
+  klass->reset               = gimp_tool_options_real_reset;
+
+  g_object_class_install_property (object_class, PROP_TOOL_INFO,
+                                   g_param_spec_object ("tool-info",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_TOOL_INFO,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+}
+
+static void
+gimp_tool_options_init (GimpToolOptions *options)
+{
+  options->tool_info  = NULL;
+  options->main_vbox  = gtk_vbox_new (FALSE, 2);
+  options->reset_func = NULL;
+}
+
+static void
+gimp_tool_options_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
 {
   GimpToolOptions *options;
-  GtkWidget       *label;
 
-  options = g_new0 (GimpToolOptions, 1);
-  tool_options_init (options, tool_info);
+  options = GIMP_TOOL_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL_INFO:
+      options->tool_info = g_value_get_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_options_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpToolOptions *options;
+
+  options = GIMP_TOOL_OPTIONS (object);
+
+  switch (property_id)
+    {
+    case PROP_TOOL_INFO:
+      g_value_set_object (value, options->tool_info);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_tool_options_real_reset (GimpToolOptions *tool_options)
+{
+  gimp_config_reset (G_OBJECT (tool_options));
+}
+
+void
+gimp_tool_options_reset (GimpToolOptions *tool_options)
+{
+  g_return_if_fail (GIMP_IS_TOOL_OPTIONS (tool_options));
+
+  GIMP_TOOL_OPTIONS_GET_CLASS (tool_options)->reset (tool_options);
+}
+
+void
+gimp_tool_options_gui (GimpToolOptions *tool_options)
+{
+  GtkWidget *label;
 
   label = gtk_label_new (_("This tool has no options."));
-  gtk_box_pack_start (GTK_BOX (options->main_vbox), label, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (tool_options->main_vbox), label,
+                      FALSE, FALSE, 6);
   gtk_widget_show (label);
-
-  return options;
 }

@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "paint/gimppencil.h"
+#include "paint/gimppaintoptions.h"
 
 #include "gimppenciltool.h"
 #include "paint_options.h"
@@ -46,7 +47,8 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PENCIL_TOOL,
-                paint_options_new,
+                GIMP_TYPE_PAINT_OPTIONS,
+                gimp_paint_options_gui,
                 TRUE,
                 "gimp-pencil-tool",
                 _("Pencil"),

@@ -10,10 +10,14 @@ libapptools_a_SOURCES = \
 	gimpairbrushtool.h		\
 	gimpbezierselecttool.c  	\
 	gimpbezierselecttool.h  	\
+	gimpblendoptions.c		\
+	gimpblendoptions.h		\
 	gimpblendtool.c			\
 	gimpblendtool.h			\
 	gimpbrightnesscontrasttool.c	\
 	gimpbrightnesscontrasttool.h	\
+	gimpbucketfilloptions.c		\
+	gimpbucketfilloptions.h		\
 	gimpbucketfilltool.c		\
 	gimpbucketfilltool.h		\
 	gimpbycolorselecttool.c		\
@@ -22,10 +26,14 @@ libapptools_a_SOURCES = \
 	gimpclonetool.h			\
 	gimpcolorbalancetool.c		\
 	gimpcolorbalancetool.h		\
+	gimpcolorpickeroptions.c	\
+	gimpcolorpickeroptions.h	\
 	gimpcolorpickertool.c		\
 	gimpcolorpickertool.h		\
 	gimpconvolvetool.c		\
 	gimpconvolvetool.h		\
+	gimpcropoptions.c		\
+	gimpcropoptions.h		\
 	gimpcroptool.c			\
 	gimpcroptool.h			\
 	gimpcurvestool.c		\
@@ -40,6 +48,8 @@ libapptools_a_SOURCES = \
 	gimpellipseselecttool.h		\
 	gimperasertool.c		\
 	gimperasertool.h		\
+	gimpflipoptions.c		\
+	gimpflipoptions.h		\
 	gimpfliptool.c			\
 	gimpfliptool.h			\
 	gimpfreeselecttool.c		\
@@ -52,6 +62,8 @@ libapptools_a_SOURCES = \
 	gimphuesaturationtool.h		\
 	gimpimagemaptool.c		\
 	gimpimagemaptool.h		\
+	gimpinkoptions.c		\
+	gimpinkoptions.h		\
 	gimpinktool.c			\
 	gimpinktool.h			\
 	gimpinktool-blob.c		\
@@ -62,8 +74,14 @@ libapptools_a_SOURCES = \
 	gimplevelstool.h		\
 	gimpmagnifytool.c		\
 	gimpmagnifytool.h		\
+	gimpmagnifyoptions.c		\
+	gimpmagnifyoptions.h		\
+	gimpmeasureoptions.c		\
+	gimpmeasureoptions.h		\
 	gimpmeasuretool.c		\
 	gimpmeasuretool.h		\
+	gimpmoveoptions.c		\
+	gimpmoveoptions.h		\
 	gimpmovetool.c			\
 	gimpmovetool.h			\
 	gimppaintbrushtool.c		\
@@ -90,6 +108,8 @@ libapptools_a_SOURCES = \
 	gimpsheartool.h			\
 	gimpsmudgetool.c		\
 	gimpsmudgetool.h		\
+	gimptextoptions.c		\
+	gimptextoptions.h		\
 	gimptexttool.c			\
 	gimptexttool.h			\
 	gimpthresholdtool.c		\
@@ -101,6 +121,8 @@ libapptools_a_SOURCES = \
 	gimptoolmodule.h		\
 	gimptransformtool.c		\
 	gimptransformtool.h		\
+	gimpvectoroptions.c		\
+	gimpvectoroptions.h		\
 	gimpvectortool.c		\
 	gimpvectortool.h		\
 	transform_options.c     	\

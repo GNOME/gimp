@@ -86,7 +86,8 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                                 gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FREE_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-free-select-tool",
                 _("Free Select"),
@@ -223,12 +224,11 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       GdkModifierType  state,
                                       GimpDisplay     *gdisp)
 {
-  GimpFreeSelectTool *free_sel;
-  SelectionOptions   *sel_options;
+  GimpFreeSelectTool   *free_sel;
+  GimpSelectionOptions *options;
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -254,10 +254,10 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
                                       free_sel->num_points,
                                       free_sel->points,
                                       GIMP_SELECTION_TOOL (tool)->op,
-                                      sel_options->antialias,
-                                      sel_options->feather,
-                                      sel_options->feather_radius,
-                                      sel_options->feather_radius);
+                                      options->antialias,
+                                      options->feather,
+                                      options->feather_radius,
+                                      options->feather_radius);
 
       gimp_image_flush (gdisp->gimage);
     }

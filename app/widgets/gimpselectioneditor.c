@@ -365,13 +365,13 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
                                      GdkEventButton      *bevent,
                                      GimpSelectionEditor *editor)
 {
-  GimpToolInfo     *tool_info;
-  SelectionOptions *sel_options;
-  GimpDrawable     *drawable;
-  SelectOps         operation = SELECTION_REPLACE;
-  gint              x, y;
-  guchar           *col;
-  GimpRGB           color;
+  GimpToolInfo         *tool_info;
+  GimpSelectionOptions *options;
+  GimpDrawable         *drawable;
+  SelectOps             operation = SELECTION_REPLACE;
+  gint                  x, y;
+  guchar               *col;
+  GimpRGB               color;
 
   if (! editor->gimage)
     return TRUE;
@@ -379,7 +379,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   tool_info = tool_manager_get_info_by_type (editor->gimage->gimp,
                                              GIMP_TYPE_BY_COLOR_SELECT_TOOL);
 
-  sel_options = (SelectionOptions *) tool_info->tool_options;
+  options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (editor->gimage);
 
@@ -402,7 +402,7 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
       operation = SELECTION_SUBTRACT;
     }
 
-  if (sel_options->sample_merged)
+  if (options->sample_merged)
     {
       x = editor->gimage->width  * bevent->x / editor->preview->allocation.width;
       y = editor->gimage->height * bevent->y / editor->preview->allocation.height;
@@ -438,15 +438,15 @@ gimp_selection_preview_button_press (GtkWidget           *widget,
   g_free (col);
 
   gimp_image_mask_select_by_color (editor->gimage, drawable,
-                                   sel_options->sample_merged,
+                                   options->sample_merged,
                                    &color,
-                                   sel_options->threshold,
-                                   sel_options->select_transparent,
+                                   options->threshold,
+                                   options->select_transparent,
                                    operation,
-                                   sel_options->antialias,
-                                   sel_options->feather,
-                                   sel_options->feather_radius,
-                                   sel_options->feather_radius);
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius);
 
   gimp_image_flush (editor->gimage);
 
@@ -458,10 +458,10 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
                                   const GimpRGB *color,
                                   gpointer       data)
 {
-  GimpToolInfo        *tool_info;
-  SelectionOptions    *sel_options;
-  GimpDrawable        *drawable;
-  GimpSelectionEditor *editor;
+  GimpToolInfo         *tool_info;
+  GimpSelectionOptions *options;
+  GimpDrawable         *drawable;
+  GimpSelectionEditor  *editor;
 
   editor = GIMP_SELECTION_EDITOR (data);
 
@@ -471,7 +471,7 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
   tool_info = tool_manager_get_info_by_type (editor->gimage->gimp,
                                              GIMP_TYPE_BY_COLOR_SELECT_TOOL);
 
-  sel_options = (SelectionOptions *) tool_info->tool_options;
+  options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (editor->gimage);
 
@@ -479,15 +479,15 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
     return;
 
   gimp_image_mask_select_by_color (editor->gimage, drawable,
-                                   sel_options->sample_merged,
+                                   options->sample_merged,
                                    color,
-                                   sel_options->threshold,
-                                   sel_options->select_transparent,
-                                   sel_options->op,
-                                   sel_options->antialias,
-                                   sel_options->feather,
-                                   sel_options->feather_radius,
-                                   sel_options->feather_radius);
+                                   options->threshold,
+                                   options->select_transparent,
+                                   options->op,
+                                   options->antialias,
+                                   options->feather,
+                                   options->feather_radius,
+                                   options->feather_radius);
 
   gimp_image_flush (editor->gimage);
 }

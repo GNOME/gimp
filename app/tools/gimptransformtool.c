@@ -492,9 +492,9 @@ gimp_transform_tool_modifier_key (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  TransformOptions *options;
+  GimpTransformOptions *options;
 
-  options = (TransformOptions *) tool->tool_info->tool_options;
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_CONTROL_MASK && options->constrain_1_w)
     {
@@ -628,16 +628,15 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_transform_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTransformTool *tr_tool;
-  TransformOptions  *options;
-  gint               i, k, gci;
+  GimpTransformTool    *tr_tool;
+  GimpTransformOptions *options;
+  gint                  i, k, gci;
 
   tr_tool = GIMP_TRANSFORM_TOOL (draw_tool);
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (draw_tool)->tool_info->tool_options);
 
   if (! tr_tool->use_grid)
     return;
-
-  options = (TransformOptions *) GIMP_TOOL (draw_tool)->tool_info->tool_options;
 
   /*  draw the bounding box  */
   gimp_draw_tool_draw_line (draw_tool,
@@ -735,15 +734,14 @@ static TileManager *
 gimp_transform_tool_real_transform (GimpTransformTool *tr_tool,
                                     GimpDisplay       *gdisp)
 {
-  GimpTool         *tool;
-  GimpDrawable     *drawable;
-  TransformOptions *options;
-  GimpProgress     *progress;
-  TileManager      *ret;
+  GimpTool             *tool;
+  GimpDrawable         *drawable;
+  GimpTransformOptions *options;
+  GimpProgress         *progress;
+  TileManager          *ret;
 
-  tool = GIMP_TOOL (tr_tool);
-
-  options = (TransformOptions *) tool->tool_info->tool_options;
+  tool    = GIMP_TOOL (tr_tool);
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
 
   if (tr_tool->info_dialog)
     gtk_widget_set_sensitive (GTK_WIDGET (tr_tool->info_dialog->shell), FALSE);
@@ -997,9 +995,9 @@ gimp_transform_tool_show_path_changed (GimpTransformTool *tr_tool,
 static void
 gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
 {
-  TransformOptions *options;
+  GimpTransformOptions *options;
 
-  options = (TransformOptions *) GIMP_TOOL (tr_tool)->tool_info->tool_options;
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   if (tr_tool->grid_coords != NULL)
     {

@@ -22,6 +22,7 @@
 
 #include "paint-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 
 #include "gimppaintoptions.h"
@@ -44,43 +45,71 @@
 #define DEFAULT_GRADIENT_TYPE   GIMP_GRADIENT_LOOP_TRIANGLE
 
 
+static void   gimp_paint_options_init       (GimpPaintOptions      *options);
+static void   gimp_paint_options_class_init (GimpPaintOptionsClass *options_class);
+
 static GimpPressureOptions * gimp_pressure_options_new (void);
 static GimpGradientOptions * gimp_gradient_options_new (void);
 
 
-/*  public functions  */
-
-GimpPaintOptions *
-gimp_paint_options_new (GimpContext *context)
+GType
+gimp_paint_options_get_type (void)
 {
-  GimpPaintOptions *options;
+  static GType type = 0;
 
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  if (! type)
+    {
+      static const GTypeInfo info =
+      {
+        sizeof (GimpPaintOptionsClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_paint_options_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpPaintOptions),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_paint_options_init,
+      };
 
-  options = g_new0 (GimpPaintOptions, 1);
+      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
+                                     "GimpPaintOptions",
+                                     &info, 0);
+    }
 
-  gimp_paint_options_init (options, context);
-
-  return options;
+  return type;
 }
 
-void
-gimp_paint_options_init (GimpPaintOptions *options,
-                         GimpContext      *context)
+static void 
+gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 {
-  g_return_if_fail (options != NULL);
-  g_return_if_fail (GIMP_IS_CONTEXT (context));
+}
 
-  options->opacity_w        = NULL;
-  options->paint_mode_w     = NULL;
-  options->context          = context;
-  options->incremental_w    = NULL;
-
+static void
+gimp_paint_options_init (GimpPaintOptions *options)
+{
   options->incremental      = options->incremental_d = DEFAULT_INCREMENTAL;
   options->incremental_save = DEFAULT_INCREMENTAL;
 
   options->pressure_options = gimp_pressure_options_new ();
   options->gradient_options = gimp_gradient_options_new ();
+}
+
+GimpPaintOptions *
+gimp_paint_options_new (Gimp  *gimp,
+                        GType  options_type)
+{
+  GimpPaintOptions *options;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (g_type_is_a (options_type, GIMP_TYPE_PAINT_OPTIONS),
+                        NULL);
+
+  options = g_object_new (options_type,
+                          "gimp", gimp,
+                          NULL);
+
+  return options;
 }
 
 

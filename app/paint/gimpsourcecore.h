@@ -21,7 +21,6 @@
 
 
 #include "gimppaintcore.h"
-#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_CLONE            (gimp_clone_get_type ())
@@ -67,29 +66,10 @@ struct _GimpCloneClass
 };
 
 
-typedef struct _GimpCloneOptions GimpCloneOptions;
-
-struct _GimpCloneOptions
-{
-  GimpPaintOptions    paint_options;
-
-  GimpCloneType       type;
-  GimpCloneType       type_d;
-  GtkWidget          *type_w;
-
-  GimpCloneAlignMode  aligned;
-  GimpCloneAlignMode  aligned_d;
-  GtkWidget          *aligned_w;
-};
-
-
 void    gimp_clone_register (Gimp                      *gimp,
                              GimpPaintRegisterCallback  callback);
 
 GType   gimp_clone_get_type (void) G_GNUC_CONST;
-
-
-GimpCloneOptions * gimp_clone_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_CLONE_H__  */

@@ -102,7 +102,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HUE_SATURATION_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),

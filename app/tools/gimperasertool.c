@@ -27,6 +27,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimperaser.h"
+#include "paint/gimperaseroptions.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
@@ -49,8 +50,8 @@ static void   gimp_eraser_tool_cursor_update (GimpTool             *tool,
                                               GdkModifierType       state,
                                               GimpDisplay          *gdisp);
 
-static GimpToolOptions * gimp_eraser_tool_options_new   (GimpToolInfo    *tool_info);
-static void              gimp_eraser_tool_options_reset (GimpToolOptions *tool_options);
+static void   gimp_eraser_options_gui        (GimpToolOptions   *tool_options);
+static void   gimp_eraser_options_reset      (GimpToolOptions   *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -61,7 +62,8 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ERASER_TOOL,
-                gimp_eraser_tool_options_new,
+                GIMP_TYPE_ERASER_OPTIONS,
+                gimp_eraser_options_gui,
                 TRUE,
                 "gimp-eraser-tool",
                 _("Eraser"),
@@ -169,18 +171,18 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
+static void
+gimp_eraser_options_gui (GimpToolOptions *tool_options)
 {
   GimpEraserOptions *options;
   GtkWidget         *vbox;
   gchar             *str;
 
-  options = gimp_eraser_options_new (tool_info->context);
+  options = GIMP_ERASER_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = gimp_eraser_tool_options_reset;
+  ((GimpToolOptions *) options)->reset_func = gimp_eraser_options_reset;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -210,18 +212,16 @@ gimp_eraser_tool_options_new (GimpToolInfo *tool_info)
   g_signal_connect (options->hard_w, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &options->hard);
-
-  return (GimpToolOptions *) options;
 }
 
 static void
-gimp_eraser_tool_options_reset (GimpToolOptions *tool_options)
+gimp_eraser_options_reset (GimpToolOptions *tool_options)
 {
   GimpEraserOptions *options;
 
-  options = (GimpEraserOptions *) tool_options;
+  options = GIMP_ERASER_OPTIONS (tool_options);
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
 				options->anti_erase_d);

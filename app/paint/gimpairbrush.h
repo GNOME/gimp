@@ -21,7 +21,6 @@
 
 
 #include "gimppaintcore.h"
-#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_AIRBRUSH            (gimp_airbrush_get_type ())
@@ -46,29 +45,10 @@ struct _GimpAirbrushClass
 };
 
 
-typedef struct _GimpAirbrushOptions GimpAirbrushOptions;
-
-struct _GimpAirbrushOptions
-{
-  GimpPaintOptions  paint_options;
-
-  gdouble           rate;
-  gdouble           rate_d;
-  GtkObject        *rate_w;
-
-  gdouble           pressure;
-  gdouble           pressure_d;
-  GtkObject        *pressure_w;
-};
-
-
 void    gimp_airbrush_register (Gimp                      *gimp,
                                 GimpPaintRegisterCallback  callback);
 
 GType   gimp_airbrush_get_type (void) G_GNUC_CONST;
-
-
-GimpAirbrushOptions * gimp_airbrush_options_new (GimpContext *context);
 
 
 #endif  /*  __GIMP_AIRBRUSH_H__  */

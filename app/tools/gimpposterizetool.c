@@ -70,7 +70,7 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_POSTERIZE_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-posterize-tool",
                 _("Posterize"),

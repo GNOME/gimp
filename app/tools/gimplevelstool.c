@@ -154,7 +154,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_LEVELS_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-levels-tool",
                 _("Levels"),

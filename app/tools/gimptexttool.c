@@ -48,25 +48,12 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimptextoptions.h"
 #include "gimptexttool.h"
-#include "tool_options.h"
 
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
-
-
-/*  the text tool structures  */
-
-typedef struct _TextOptions TextOptions;
-
-struct _TextOptions
-{
-  GimpToolOptions  tool_options;
-
-  GimpText        *text;
-  GtkTextBuffer   *buffer;
-};
 
 
 /*  local function prototypes  */
@@ -97,9 +84,6 @@ static void     gimp_text_tool_connect         (GimpTextTool    *tool,
 
 static void     text_tool_create_layer         (GimpTextTool    *text_tool);
 
-static GimpToolOptions * text_tool_options_new   (GimpToolInfo    *tool_info);
-static void              text_tool_options_reset (GimpToolOptions *tool_options);
-
 static void     text_tool_editor               (GimpTextTool    *text_tool);
 static void     text_tool_editor_response      (GtkWidget       *editor,
 						GtkResponseType  response,
@@ -118,7 +102,8 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_TEXT_TOOL,
-                text_tool_options_new,
+                GIMP_TYPE_TEXT_OPTIONS,
+                gimp_text_options_gui,
                 FALSE,
                 "gimp-text-tool",
                 _("Text"),
@@ -276,16 +261,16 @@ text_tool_cursor_update (GimpTool        *tool,
 static void
 text_tool_create_layer (GimpTextTool *text_tool)
 {
-  TextOptions *options;
-  GimpImage   *gimage;
-  GimpText    *text;
-  GimpLayer   *layer;
+  GimpTextOptions *options;
+  GimpImage       *gimage;
+  GimpText        *text;
+  GimpLayer       *layer;
 
   g_return_if_fail (text_tool->text == NULL);
 
-  gimage = text_tool->gdisp->gimage;
+  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
-  options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
+  gimage = text_tool->gdisp->gimage;
 
   text = GIMP_TEXT (gimp_config_duplicate (G_OBJECT (options->text)));
 
@@ -329,12 +314,12 @@ static void
 gimp_text_tool_connect (GimpTextTool *tool,
                         GimpText     *text)
 {
-  TextOptions *options;
+  GimpTextOptions *options;
 
   if (tool->text == text)
     return;
 
-  options = (TextOptions *) GIMP_TOOL (tool)->tool_info->tool_options;
+  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (tool)->tool_info->tool_options);
 
   if (tool->text)
     {
@@ -359,94 +344,13 @@ gimp_text_tool_connect (GimpTextTool *tool,
     }
 }
 
-/*  tool options stuff  */
-
-static GimpToolOptions *
-text_tool_options_new (GimpToolInfo *tool_info)
-{
-  TextOptions *options;
-  GObject     *text;
-  GtkWidget   *vbox;
-  GtkWidget   *table;
-  GtkWidget   *button;
-  GtkWidget   *unit_menu;
-  GtkWidget   *font_selection;
-  GtkWidget   *spinbutton;
-  gint         digits;
-
-  options = g_new0 (TextOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = text_tool_options_reset;
-
-  text = g_object_new (GIMP_TYPE_TEXT, NULL);
-
-  options->text = GIMP_TEXT (text);
-
-  options->buffer = gimp_prop_text_buffer_new (text, "text", -1);
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  table = gtk_table_new (4, 4, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacing  (GTK_TABLE (table), 3, 12);
-  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  font_selection = gimp_prop_font_selection_new (text, "font");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Font:"), 1.0, 0.5,
-                             font_selection, 2, FALSE);
-
-  digits = gimp_unit_get_digits (GIMP_TEXT (text)->font_size_unit);
-  spinbutton = gimp_prop_spin_button_new (text, "font-size",
-					  1.0, 10.0, digits); 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("Size:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
-
-  unit_menu = gimp_prop_unit_menu_new (text, "font-size-unit", "%a");
-  g_object_set_data (G_OBJECT (unit_menu), "set_digits", spinbutton);
-  gtk_table_attach (GTK_TABLE (table), unit_menu, 2, 3, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-  gtk_widget_show (unit_menu);
-
-  button = gimp_prop_color_button_new (text, "color", _("Text Color"),
-				       48, 24, GIMP_COLOR_AREA_FLAT); 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("Color:"), 1.0, 0.5, button, 2, TRUE);
-
-  spinbutton = gimp_prop_spin_button_new (text, "letter-spacing", 0.1, 1.0, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 0, 3,
-                           GIMP_STOCK_LETTER_SPACING, spinbutton);
-
-  spinbutton = gimp_prop_spin_button_new (text, "line-spacing", 0.1, 1.0, 2);
-  gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);
-  gimp_table_attach_stock (GTK_TABLE (table), 0, 4,
-                           GIMP_STOCK_LINE_SPACING, spinbutton);
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-text_tool_options_reset (GimpToolOptions *tool_options)
-{
-  TextOptions *options = (TextOptions *) tool_options;
-
-  gimp_config_reset (G_OBJECT (options->text));
-}
-
 
 /* text editor */
 
 static void
 text_tool_editor (GimpTextTool *text_tool)
 {
-  TextOptions *options;
+  GimpTextOptions *options;
 
   if (text_tool->editor)
     {
@@ -454,7 +358,7 @@ text_tool_editor (GimpTextTool *text_tool)
       return;
     }
 
-  options = (TextOptions *) GIMP_TOOL (text_tool)->tool_info->tool_options;
+  options = GIMP_TEXT_OPTIONS (GIMP_TOOL (text_tool)->tool_info->tool_options);
 
   text_tool->editor = gimp_text_editor_new (options->buffer,
 					    _("GIMP Text Editor"),
@@ -488,5 +392,3 @@ text_tool_editor_response (GtkWidget       *editor,
       break;
     }
 }
-
-

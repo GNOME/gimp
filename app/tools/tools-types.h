@@ -32,12 +32,4 @@ typedef struct _GimpBezierSelectPoint  GimpBezierSelectPoint;
 typedef struct _GimpBezierSelectTool   GimpBezierSelectTool;
 
 
-/*  stuff  */
-
-typedef struct _SelectionOptions    SelectionOptions;
-
-
-/*  functions  */
-
-
 #endif /* __TOOLS_TYPES_H__ */

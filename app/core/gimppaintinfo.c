@@ -103,6 +103,7 @@ gimp_paint_info_finalize (GObject *object)
 GimpPaintInfo *
 gimp_paint_info_new (Gimp        *gimp,
                      GType        paint_type,
+                     GType        paint_options_type,
                      const gchar *pdb_string)
 {
   GimpPaintInfo *paint_info;
@@ -114,10 +115,10 @@ gimp_paint_info_new (Gimp        *gimp,
                              "name", g_type_name (paint_type),
                              NULL);
 
-  paint_info->gimp            = gimp;
-  paint_info->paint_type      = paint_type;
-
-  paint_info->pdb_string      = g_strdup (pdb_string);
+  paint_info->gimp               = gimp;
+  paint_info->paint_type         = paint_type;
+  paint_info->paint_options_type = paint_options_type;
+  paint_info->pdb_string         = g_strdup (pdb_string);
 
   return paint_info;
 }

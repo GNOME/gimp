@@ -77,7 +77,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-brightness-contrast-tool",
                 _("Brightness-Contrast"),

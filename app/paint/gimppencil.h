@@ -34,6 +34,7 @@
 #define GIMP_IS_PENCIL_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PENCIL))
 #define GIMP_PENCIL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PENCIL, GimpPencilClass))
 
+
 typedef struct _GimpPencil      GimpPencil;
 typedef struct _GimpPencilClass GimpPencilClass;
 

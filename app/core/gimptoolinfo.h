@@ -42,6 +42,7 @@ struct _GimpToolInfo
   Gimp             *gimp;
 
   GType             tool_type;
+  GType             tool_options_type;
 
   gchar            *blurb;
   gchar            *help;
@@ -55,10 +56,7 @@ struct _GimpToolInfo
   gchar            *stock_id;
   GdkPixbuf        *stock_pixbuf;
 
-  /*  temp_hack, will be a GType once tool_options are GimpContext derived  */
-  GimpToolOptionsNewFunc  options_new_func;
-
-  GimpContext      *context;
+  gboolean          use_context;
   GimpToolOptions  *tool_options;
   GimpPaintInfo    *paint_info;
 };
@@ -72,8 +70,8 @@ struct _GimpToolInfoClass
 GType          gimp_tool_info_get_type     (void) G_GNUC_CONST;
 
 GimpToolInfo * gimp_tool_info_new          (Gimp         *gimp,
-                                            GimpContext  *context,
 					    GType         tool_type,
+                                            GType         tool_options_type,
 					    gboolean      tool_context,
 					    const gchar  *identifier,
 					    const gchar  *blurb,

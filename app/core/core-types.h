@@ -194,7 +194,7 @@ typedef struct _PathList            PathList;
 
 typedef struct _GimpToolOptions     GimpToolOptions;  /*< proxy-include >*/
 
-typedef GimpToolOptions * (* GimpToolOptionsNewFunc) (GimpToolInfo *tool_info);  /*< proxy-include >*/
+typedef void (* GimpToolOptionsGUIFunc) (GimpToolOptions *tool_options);  /*< proxy-include >*/
 
 
 /*  functions  */

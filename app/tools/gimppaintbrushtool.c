@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "paint/gimppaintbrush.h"
+#include "paint/gimppaintoptions.h"
 
 #include "gimppaintbrushtool.h"
 #include "paint_options.h"
@@ -46,7 +47,8 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                                gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PAINTBRUSH_TOOL,
-                paint_options_new,
+                GIMP_TYPE_PAINT_OPTIONS,
+                gimp_paint_options_gui,
                 TRUE,
                 "gimp-paintbrush-tool",
                 _("Paintbrush"),

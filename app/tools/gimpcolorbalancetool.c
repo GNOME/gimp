@@ -89,7 +89,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-color-balance-tool",
                 _("Color Balance"),

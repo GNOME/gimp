@@ -83,33 +83,19 @@ static void   paint_options_gradient_toggle_callback  (GtkWidget        *widget,
                                                        GimpPaintOptions *options);
 
 
-GimpToolOptions *
-paint_options_new (GimpToolInfo *tool_info)
+void
+gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
   GimpPaintOptions *options;
+  GtkWidget        *vbox;
+  GtkWidget        *table;
+  GtkWidget        *mode_label;
 
-  options = gimp_paint_options_new (tool_info->context);
+  options = GIMP_PAINT_OPTIONS (tool_options);
 
-  paint_options_init (options, tool_info);
+  tool_options->reset_func = gimp_paint_options_reset;
 
-  return (GimpToolOptions *) options;
-}
-
-void
-paint_options_init (GimpPaintOptions *options,
-                    GimpToolInfo     *tool_info)
-{
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *mode_label;
-
-  /*  initialize the tool options structure  */
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = paint_options_reset;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  vbox = tool_options->main_vbox;
 
   /*  the main table  */
   table = gtk_table_new (3, 3, FALSE);
@@ -122,16 +108,16 @@ paint_options_init (GimpPaintOptions *options,
   options->opacity_w =
     gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			  _("Opacity:"), -1, -1,
-			  gimp_context_get_opacity (tool_info->context) * 100,
+			  gimp_context_get_opacity (GIMP_CONTEXT (options)) * 100,
 			  0.0, 100.0, 1.0, 10.0, 1,
 			  TRUE, 0.0, 0.0,
 			  NULL, NULL);
 
   g_signal_connect (options->opacity_w, "value_changed",
                     G_CALLBACK (paint_options_opacity_adjustment_update),
-                    tool_info->context);
+                    options);
 
-  g_signal_connect (tool_info->context, "opacity_changed",
+  g_signal_connect (options, "opacity_changed",
                     G_CALLBACK (paint_options_opacity_changed),
                     options->opacity_w);
 
@@ -140,34 +126,34 @@ paint_options_init (GimpPaintOptions *options,
     gimp_paint_mode_menu_new (G_CALLBACK (paint_options_paint_mode_update),
                               options,
                               TRUE,
-                              gimp_context_get_paint_mode (tool_info->context));
+                              gimp_context_get_paint_mode (GIMP_CONTEXT (options)));
   mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                                           _("Mode:"), 1.0, 0.5,
                                           options->paint_mode_w, 2, TRUE);
 
-  g_signal_connect (tool_info->context, "paint_mode_changed",
+  g_signal_connect (options, "paint_mode_changed",
                     G_CALLBACK (paint_options_paint_mode_changed),
                     options->paint_mode_w);
 
-  if (tool_info->tool_type == GIMP_TYPE_ERASER_TOOL    ||
-      tool_info->tool_type == GIMP_TYPE_CONVOLVE_TOOL  ||
-      tool_info->tool_type == GIMP_TYPE_DODGEBURN_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_SMUDGE_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_ERASER_TOOL    ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_CONVOLVE_TOOL  ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_DODGEBURN_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
       gtk_widget_set_sensitive (options->paint_mode_w, FALSE);
       gtk_widget_set_sensitive (mode_label, FALSE);
     }
 
   /*  the brush preview  */
-  if (tool_info->tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
-      tool_info->tool_type != GIMP_TYPE_BLEND_TOOL       &&
-      tool_info->tool_type != GIMP_TYPE_INK_TOOL)
+  if (tool_options->tool_info->tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
+      tool_options->tool_info->tool_type != GIMP_TYPE_BLEND_TOOL       &&
+      tool_options->tool_info->tool_type != GIMP_TYPE_INK_TOOL)
     {
       GimpBrush *brush;
       GtkWidget *button;
       GtkWidget *preview;
 
-      brush = gimp_context_get_brush (options->context);
+      brush = gimp_context_get_brush (GIMP_CONTEXT (options));
 
       button = gtk_button_new ();
       preview = gimp_preview_new_full (GIMP_VIEWABLE (brush),
@@ -180,7 +166,7 @@ paint_options_init (GimpPaintOptions *options,
                                  _("Brush:"), 1.0, 0.5,
                                  button, 2, TRUE);
 
-      g_signal_connect_object (options->context, "brush_changed",
+      g_signal_connect_object (options, "brush_changed",
                                G_CALLBACK (gimp_preview_set_viewable),
                                preview,
                                G_CONNECT_SWAPPED);
@@ -190,7 +176,7 @@ paint_options_init (GimpPaintOptions *options,
     }
 
   /*  a separator after the common paint options  */
-  if (tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
       GtkWidget *separator;
 
@@ -200,15 +186,15 @@ paint_options_init (GimpPaintOptions *options,
     }
 
   /*  the "incremental" toggle  */
-  if (tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
-      tool_info->tool_type == GIMP_TYPE_ERASER_TOOL     ||
-      tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
       options->incremental_w =
 	gtk_check_button_new_with_label (_("Incremental"));
-      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-			  options->incremental_w, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w,
+                          FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental);
       gtk_widget_show (options->incremental_w);
@@ -220,54 +206,53 @@ paint_options_init (GimpPaintOptions *options,
 
   pressure_options_init (options->pressure_options,
                          options,
-                         tool_info->tool_type);
+                         tool_options->tool_info->tool_type);
 
   if (options->pressure_options->frame)
     {
-      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-			  options->pressure_options->frame, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), options->pressure_options->frame,
+                          FALSE, FALSE, 0);
       gtk_widget_show (options->pressure_options->frame);
     }
 
   gradient_options_init (options->gradient_options,
                          options,
-                         tool_info->tool_type);
+                         tool_options->tool_info->tool_type);
 
   if (options->gradient_options->fade_frame)
     {
-      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-			  options->gradient_options->fade_frame,
+      gtk_box_pack_start (GTK_BOX (vbox), options->gradient_options->fade_frame,
                           FALSE, FALSE, 0);
       gtk_widget_show (options->gradient_options->fade_frame);
     }
 
   if (options->gradient_options->gradient_frame)
     {
-      gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
-			  options->gradient_options->gradient_frame,
+      gtk_box_pack_start (GTK_BOX (vbox),
+                          options->gradient_options->gradient_frame,
                           FALSE, FALSE, 0);
       gtk_widget_show (options->gradient_options->gradient_frame);
     }
 }
 
 void
-paint_options_reset (GimpToolOptions *tool_options)
+gimp_paint_options_reset (GimpToolOptions *tool_options)
 {
   GimpPaintOptions *options;
   GimpContext      *default_context;
 
-  options = (GimpPaintOptions *) tool_options;
+  options = GIMP_PAINT_OPTIONS (tool_options);
 
   default_context = gimp_get_default_context (tool_options->tool_info->gimp);
 
   if (options->opacity_w)
     {
-      gimp_context_set_opacity (GIMP_CONTEXT (options->context),
+      gimp_context_set_opacity (GIMP_CONTEXT (options),
 				gimp_context_get_opacity (default_context));
     }
   if (options->paint_mode_w)
     {
-      gimp_context_set_paint_mode (GIMP_CONTEXT (options->context),
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options),
 				   gimp_context_get_paint_mode (default_context));
     }
   if (options->incremental_w)
@@ -655,13 +640,13 @@ paint_options_paint_mode_update (GtkWidget *widget,
 
   options = (GimpPaintOptions *) data;
 
-  g_signal_handlers_block_by_func (options->context,
+  g_signal_handlers_block_by_func (options,
 				   paint_options_paint_mode_changed,
 				   options->paint_mode_w);
 
-  gimp_context_set_paint_mode (GIMP_CONTEXT (options->context), paint_mode);
+  gimp_context_set_paint_mode (GIMP_CONTEXT (options), paint_mode);
 
-  g_signal_handlers_unblock_by_func (options->context,
+  g_signal_handlers_unblock_by_func (options,
 				     paint_options_paint_mode_changed,
 				     options->paint_mode_w);
 }

@@ -29,10 +29,10 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpairbrush.h"
+#include "paint/gimpairbrushoptions.h"
 
 #include "gimpairbrushtool.h"
 #include "paint_options.h"
-
 
 #include "libgimp/gimpintl.h"
 
@@ -43,8 +43,8 @@
 static void   gimp_airbrush_tool_class_init (GimpAirbrushToolClass *klass);
 static void   gimp_airbrush_tool_init       (GimpAirbrushTool      *airbrush);
 
-static GimpToolOptions * airbrush_options_new   (GimpToolInfo    *tool_info);
-static void              airbrush_options_reset (GimpToolOptions *tool_options);
+static void   gimp_airbrush_options_gui     (GimpToolOptions *tool_options);
+static void   gimp_airbrush_options_reset   (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class = NULL;
@@ -57,7 +57,8 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
 			     gpointer                  data)
 {
   (* callback) (GIMP_TYPE_AIRBRUSH_TOOL,
-                airbrush_options_new,
+                GIMP_TYPE_AIRBRUSH_OPTIONS,
+                gimp_airbrush_options_gui,
                 TRUE,
                 "gimp-airbrush-tool",
                 _("Airbrush"),
@@ -124,18 +125,18 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-airbrush_options_new (GimpToolInfo *tool_info)
+static void
+gimp_airbrush_options_gui (GimpToolOptions *tool_options)
 {
   GimpAirbrushOptions *options;
   GtkWidget           *vbox;
   GtkWidget           *table;
 
-  options = gimp_airbrush_options_new (tool_info->context);
+  options = GIMP_AIRBRUSH_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = airbrush_options_reset;
+  ((GimpToolOptions *) options)->reset_func = gimp_airbrush_options_reset;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -168,18 +169,16 @@ airbrush_options_new (GimpToolInfo *tool_info)
   g_signal_connect (options->pressure_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->pressure);
-
-  return (GimpToolOptions *) options;
 }
 
 static void
-airbrush_options_reset (GimpToolOptions *tool_options)
+gimp_airbrush_options_reset (GimpToolOptions *tool_options)
 {
   GimpAirbrushOptions *options;
 
   options = (GimpAirbrushOptions *) tool_options;
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
 			    options->rate_d);

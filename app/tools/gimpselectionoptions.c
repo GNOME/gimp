@@ -45,40 +45,54 @@
 
 /*  local function prototypes  */
 
-static void   selection_options_fixed_mode_update (GtkWidget        *widget,
-                                                   SelectionOptions *options);
+static void   gimp_selection_options_init       (GimpSelectionOptions      *options);
+static void   gimp_selection_options_class_init (GimpSelectionOptionsClass *options_class);
+
+static void   selection_options_fixed_mode_update (GtkWidget            *widget,
+                                                   GimpSelectionOptions *options);
 
 
-/*  public functions  */
-
-void
-selection_options_init (SelectionOptions *options,
-                        GimpToolInfo     *tool_info)
+GType
+gimp_selection_options_get_type (void)
 {
-  GtkWidget *vbox;
+  static GType type = 0;
 
-  /*  initialize the tool options structure  */
-  tool_options_init ((GimpToolOptions *) options, tool_info);
+  if (! type)
+    {
+      static const GTypeInfo info =
+      {
+        sizeof (GimpSelectionOptionsClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_selection_options_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpSelectionOptions),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_selection_options_init,
+      };
 
-  ((GimpToolOptions *) options)->reset_func = selection_options_reset;
+      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
+                                     "GimpSelectionOptions",
+                                     &info, 0);
+    }
 
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
+  return type;
+}
 
-  /*  initialize the selection options structure  */
+static void 
+gimp_selection_options_class_init (GimpSelectionOptionsClass *klass)
+{
+}
+
+static void
+gimp_selection_options_init (GimpSelectionOptions *options)
+{
   options->op                 = options->op_d                 = SELECTION_REPLACE;
   options->feather            = options->feather_d            = FALSE;
   options->feather_radius     = options->feather_radius_d     = 10.0;
-
-  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
-    options->antialias        = options->antialias_d          = FALSE;
-  else
-    options->antialias        = options->antialias_d          = TRUE;
-
   options->select_transparent = options->select_transparent_d = TRUE;
   options->sample_merged      = options->sample_merged_d      = FALSE;
-  options->threshold          =
-    GIMP_GUI_CONFIG (tool_info->gimp->config)->default_threshold;
   options->auto_shrink        = options->auto_shrink_d        = FALSE;
   options->shrink_merged      = options->shrink_merged_d      = FALSE;
   options->fixed_mode         = options->fixed_mode_d         = GIMP_RECT_SELECT_MODE_FREE;
@@ -86,20 +100,27 @@ selection_options_init (SelectionOptions *options,
   options->fixed_width        = options->fixed_width_d        = 1;
   options->fixed_unit         = options->fixed_unit_d         = GIMP_UNIT_PIXEL;
   options->interactive        = options->interactive_d        = FALSE;
+}
 
-  options->feather_w            = NULL;
-  options->feather_radius_w     = NULL;
-  options->antialias_w          = NULL;
-  options->select_transparent_w = NULL;
-  options->sample_merged_w      = NULL;
-  options->threshold_w          = NULL;
-  options->auto_shrink_w        = NULL;
-  options->shrink_merged_w      = NULL;
-  options->fixed_mode_w         = NULL;
-  options->fixed_height_w       = NULL;
-  options->fixed_width_w        = NULL;
-  options->fixed_unit_w         = NULL;
-  options->interactive_w        = NULL;
+void
+gimp_selection_options_gui (GimpToolOptions *tool_options)
+{
+  GimpSelectionOptions *options;
+  GtkWidget            *vbox;
+
+  options = GIMP_SELECTION_OPTIONS (tool_options);
+
+  tool_options->reset_func = gimp_selection_options_reset;
+
+  vbox = tool_options->main_vbox;
+
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+    options->antialias        = options->antialias_d          = FALSE;
+  else
+    options->antialias        = options->antialias_d          = TRUE;
+
+  options->threshold          =
+    GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold;
 
   /*  the selection operation radio buttons  */
   {
@@ -179,7 +200,7 @@ selection_options_init (SelectionOptions *options,
 
   gimp_help_set_help_data (options->antialias_w, _("Smooth edges"), NULL);
 
-  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL)
     {
       gtk_widget_set_sensitive (options->antialias_w, FALSE);
     }
@@ -234,11 +255,11 @@ selection_options_init (SelectionOptions *options,
 
 #if 0
   /*  a separator between the common and tool-specific selection options  */
-  if (tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
-      tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
-      tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
-      tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
       GtkWidget *separator;
 
@@ -249,7 +270,7 @@ selection_options_init (SelectionOptions *options,
 #endif
 
   /* selection tool with an interactive boundary that can be toggled */
-  if (tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
       options->interactive_w =
 	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
@@ -265,8 +286,8 @@ selection_options_init (SelectionOptions *options,
     }
 
   /*  selection tools which operate on colors or contiguous regions  */
-  if (tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
@@ -334,8 +355,8 @@ selection_options_init (SelectionOptions *options,
     }
 
   /*  widgets for fixed size select  */
-  if (tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
-      tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
       GtkWidget *frame;
       GtkWidget *vbox2;
@@ -449,24 +470,12 @@ selection_options_init (SelectionOptions *options,
     }
 }
 
-GimpToolOptions *
-selection_options_new (GimpToolInfo *tool_info)
-{
-  SelectionOptions *options;
-
-  options = g_new0 (SelectionOptions, 1);
-
-  selection_options_init (options, tool_info);
-
-  return (GimpToolOptions *) options;
-}
-
 void
-selection_options_reset (GimpToolOptions *tool_options)
+gimp_selection_options_reset (GimpToolOptions *tool_options)
 {
-  SelectionOptions *options;
+  GimpSelectionOptions *options;
 
-  options = (SelectionOptions *) tool_options;
+  options = GIMP_SELECTION_OPTIONS (tool_options);
 
   if (options->op_w[0])
     {
@@ -552,8 +561,8 @@ selection_options_reset (GimpToolOptions *tool_options)
 /*  private functions  */
 
 static void
-selection_options_fixed_mode_update (GtkWidget        *widget,
-                                     SelectionOptions *options)
+selection_options_fixed_mode_update (GtkWidget            *widget,
+                                     GimpSelectionOptions *options)
 {
   gimp_menu_item_update (widget, &options->fixed_mode);
 

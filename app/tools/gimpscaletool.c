@@ -89,7 +89,8 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SCALE_TOOL,
-                transform_options_new,
+                GIMP_TYPE_TRANSFORM_OPTIONS,
+                gimp_transform_options_gui,
                 FALSE,
                 "gimp-scale-tool",
                 _("Scale"),
@@ -264,17 +265,17 @@ static void
 gimp_scale_tool_motion (GimpTransformTool *tr_tool,
 		        GimpDisplay       *gdisp)
 {
-  TransformOptions *options;
-  gdouble           ratio;
-  gdouble          *x1;
-  gdouble          *y1;
-  gdouble          *x2;
-  gdouble          *y2;
-  gint              w, h;
-  gint              dir_x, dir_y;
-  gdouble           diff_x, diff_y;
+  GimpTransformOptions *options;
+  gdouble               ratio;
+  gdouble              *x1;
+  gdouble              *y1;
+  gdouble              *x2;
+  gdouble              *y2;
+  gint                  w, h;
+  gint                  dir_x, dir_y;
+  gdouble               diff_x, diff_y;
 
-  options = (TransformOptions *) GIMP_TOOL (tr_tool)->tool_info->tool_options;
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   diff_x = tr_tool->curx - tr_tool->lastx;
   diff_y = tr_tool->cury - tr_tool->lasty;

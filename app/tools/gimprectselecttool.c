@@ -86,7 +86,8 @@ gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
                                 gpointer                  data)
 {
   (* callback) (GIMP_TYPE_RECT_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-rect-select-tool",
                 _("Rect Select"),
@@ -169,26 +170,25 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpRectSelectTool *rect_sel;
-  GimpSelectionTool  *sel_tool;
-  SelectionOptions   *sel_options;
-  GimpUnit            unit = GIMP_UNIT_PIXEL;
-  gdouble             unit_factor;
+  GimpRectSelectTool   *rect_sel;
+  GimpSelectionTool    *sel_tool;
+  GimpSelectionOptions *options;
+  GimpUnit              unit = GIMP_UNIT_PIXEL;
+  gdouble               unit_factor;
 
   rect_sel = GIMP_RECT_SELECT_TOOL (tool);
   sel_tool = GIMP_SELECTION_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   rect_sel->x = RINT (coords->x);
   rect_sel->y = RINT (coords->y);
   rect_sel->w = 0;
   rect_sel->h = 0;
 
-  rect_sel->fixed_mode   = sel_options->fixed_mode;
-  rect_sel->fixed_width  = sel_options->fixed_width;
-  rect_sel->fixed_height = sel_options->fixed_height;
-  unit = sel_options->fixed_unit;
+  rect_sel->fixed_mode   = options->fixed_mode;
+  rect_sel->fixed_width  = options->fixed_width;
+  rect_sel->fixed_height = options->fixed_height;
+  unit                   = options->fixed_unit;
 
   switch (unit)
     {
@@ -489,21 +489,20 @@ gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_tool,
                                         gint                w,
                                         gint                h)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *sel_tool;
-  SelectionOptions  *sel_options;
+  GimpTool             *tool;
+  GimpSelectionTool    *sel_tool;
+  GimpSelectionOptions *options;
 
   tool     = GIMP_TOOL (rect_tool);
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_image_mask_select_rectangle (tool->gdisp->gimage,
                                     x, y, w, h,
                                     sel_tool->op,
-                                    sel_options->feather,
-                                    sel_options->feather_radius,
-                                    sel_options->feather_radius);
+                                    options->feather,
+                                    options->feather_radius,
+                                    options->feather_radius);
 }
 
 void
@@ -513,16 +512,15 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool         *tool;
-  SelectionOptions *sel_options;
+  GimpTool             *tool;
+  GimpSelectionOptions *options;
 
   g_return_if_fail (GIMP_IS_RECT_SELECT_TOOL (rect_tool));
 
-  tool = GIMP_TOOL (rect_tool);
+  tool    = GIMP_TOOL (rect_tool);
+  options = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
-
-  if (sel_options->auto_shrink)
+  if (options->auto_shrink)
     {
       gint x2, y2;
 
@@ -534,7 +532,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
       if (w < 1 || h < 1)
         return;
 
-      if (! sel_options->shrink_merged)
+      if (! options->shrink_merged)
         {
           GimpDrawable *drawable;
           gint          off_x, off_y;
@@ -554,7 +552,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
       if (gimp_image_crop_auto_shrink (tool->gdisp->gimage,
                                        x, y,
                                        x + w, y + h,
-                                       ! sel_options->shrink_merged,
+                                       ! options->shrink_merged,
                                        &x, &y,
                                        &x2, &y2))
         {

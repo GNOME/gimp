@@ -95,7 +95,6 @@ tool_manager_init (Gimp *gimp)
 {
   GimpToolManager *tool_manager;
   GimpContext     *user_context;
-  GimpContext     *tool_context;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -143,12 +142,13 @@ tool_manager_init (Gimp *gimp)
 
   if (tool_manager->active_tool)
     {
-      tool_context = tool_manager->active_tool->tool_info->context;
+      GimpToolInfo *tool_info;
 
-      if (tool_context)
-	{
-	  gimp_context_set_parent (tool_context, user_context);
-	}
+      tool_info = tool_manager->active_tool->tool_info;
+
+      if (tool_info->use_context)
+        gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
+                                 gimp_get_user_context (gimp));
     }
 
   gimp_container_thaw (gimp->tool_info_list);
@@ -169,16 +169,15 @@ tool_manager_restore (Gimp *gimp)
        list;
        list = g_list_next (list))
     {
+      GimpToolOptionsGUIFunc options_gui_func;
+
       tool_info = GIMP_TOOL_INFO (list->data);
 
-      if (tool_info->options_new_func)
-        {
-          tool_info->tool_options = tool_info->options_new_func (tool_info);
-        }
-      else
-        {
-          tool_info->tool_options = tool_options_new (tool_info);
-        }
+      options_gui_func = g_object_get_data (G_OBJECT (tool_info),
+                                            "gimp-tool-options-gui-func");
+
+      if (options_gui_func)
+        options_gui_func (tool_info->tool_options);
     }
 }
 
@@ -481,7 +480,8 @@ tool_manager_cursor_update_active (Gimp            *gimp,
 
 void
 tool_manager_register_tool (GType                   tool_type,
-                            GimpToolOptionsNewFunc  options_new_func,
+                            GType                   tool_options_type,
+                            GimpToolOptionsGUIFunc  options_gui_func,
 			    gboolean                tool_context,
 			    const gchar            *identifier,
 			    const gchar            *blurb,
@@ -503,6 +503,14 @@ tool_manager_register_tool (GType                   tool_type,
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
+  g_return_if_fail (tool_options_type == G_TYPE_NONE ||
+                    g_type_is_a (tool_options_type, GIMP_TYPE_TOOL_OPTIONS));
+
+  if (tool_options_type == G_TYPE_NONE && options_gui_func == NULL)
+    {
+      tool_options_type = GIMP_TYPE_TOOL_OPTIONS;
+      options_gui_func  = gimp_tool_options_gui;
+    }
 
   if (tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
@@ -559,8 +567,8 @@ tool_manager_register_tool (GType                   tool_type,
   tool_manager = tool_manager_get (gimp);
 
   tool_info = gimp_tool_info_new (gimp,
-                                  tool_manager->global_tool_context,
 				  tool_type,
+                                  tool_options_type,
 				  tool_context,
 				  identifier,
 				  blurb,
@@ -575,7 +583,23 @@ tool_manager_register_tool (GType                   tool_type,
 
   g_object_unref (pixbuf);
 
-  tool_info->options_new_func = options_new_func;
+  g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
+                     options_gui_func);
+
+  tool_info->tool_options = g_object_new (tool_info->tool_options_type,
+                                          "gimp",      gimp,
+                                          "tool-info", tool_info,
+                                          NULL);
+
+  if (tool_info->use_context)
+    {
+      GIMP_CONTEXT (tool_info->tool_options)->defined_props =
+        tool_manager->global_tool_context->defined_props;
+
+      gimp_context_copy_properties (tool_manager->global_tool_context,
+                                    GIMP_CONTEXT (tool_info->tool_options),
+                                    GIMP_CONTEXT_ALL_PROPS_MASK);
+    }
 
   gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
   g_object_unref (tool_info);
@@ -653,7 +677,6 @@ tool_manager_tool_changed (GimpContext  *user_context,
 {
   GimpToolManager *tool_manager;
   GimpTool        *new_tool     = NULL;
-  GimpContext     *tool_context = NULL;
 
   if (! tool_info)
     return;
@@ -700,17 +723,24 @@ tool_manager_tool_changed (GimpContext  *user_context,
       return;
     }
 
-  if (tool_manager->active_tool &&
-      (tool_context = tool_manager->active_tool->tool_info->context))
+  /*  disconnect the old tool's context  */
+  if (tool_manager->active_tool->tool_info->use_context)
     {
-      gimp_context_unset_parent (tool_context);
+      GimpToolInfo *old_tool_info;
+
+      old_tool_info = tool_manager->active_tool->tool_info;
+
+      gimp_context_unset_parent (GIMP_CONTEXT (old_tool_info->tool_options));
     }
 
-  if ((tool_context = tool_info->context))
+  /*  connect the new tool's context  */
+  if (tool_info->use_context)
     {
-      gimp_context_copy_properties (tool_context, user_context,
+      gimp_context_copy_properties (GIMP_CONTEXT (tool_info->tool_options),
+                                    user_context,
                                     PAINT_OPTIONS_MASK);
-      gimp_context_set_parent (tool_context, user_context);
+      gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
+                               user_context);
     }
 
   tool_manager_select_tool (user_context->gimp, new_tool);

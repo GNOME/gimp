@@ -44,54 +44,81 @@
 
 /*  local function prototypes  */
 
-static void gimp_transform_tool_grid_type_update    (GtkWidget        *widget,
-                                                     TransformOptions *options);
-static void gimp_transform_tool_grid_density_update (GtkAdjustment    *adj,
-                                                     TransformOptions *options);
-static void gimp_transform_tool_show_path_update    (GtkWidget        *widget,
-                                                     TransformOptions *options);
+static void   gimp_transform_options_init       (GimpTransformOptions      *options);
+static void   gimp_transform_options_class_init (GimpTransformOptionsClass *options_class);
+
+static void gimp_transform_tool_grid_type_update    (GtkWidget            *widget,
+                                                     GimpTransformOptions *options);
+static void gimp_transform_tool_grid_density_update (GtkAdjustment        *adj,
+                                                     GimpTransformOptions *options);
+static void gimp_transform_tool_show_path_update    (GtkWidget            *widget,
+                                                     GimpTransformOptions *options);
 
 
-/*  public functions  */
-
-GimpToolOptions *
-transform_options_new (GimpToolInfo *tool_info)
+GType
+gimp_transform_options_get_type (void)
 {
-  TransformOptions *options;
+  static GType type = 0;
 
-  options = g_new0 (TransformOptions, 1);
+  if (! type)
+    {
+      static const GTypeInfo info =
+      {
+        sizeof (GimpTransformOptionsClass),
+	(GBaseInitFunc) NULL,
+	(GBaseFinalizeFunc) NULL,
+	(GClassInitFunc) gimp_transform_options_class_init,
+	NULL,           /* class_finalize */
+	NULL,           /* class_data     */
+	sizeof (GimpTransformOptions),
+	0,              /* n_preallocs    */
+	(GInstanceInitFunc) gimp_transform_options_init,
+      };
 
-  transform_options_init (options, tool_info);
+      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
+                                     "GimpTransformOptions",
+                                     &info, 0);
+    }
 
-  return (GimpToolOptions *) options;
+  return type;
 }
 
-void
-transform_options_init (TransformOptions *options,
-                        GimpToolInfo     *tool_info)
+static void 
+gimp_transform_options_class_init (GimpTransformOptionsClass *klass)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *grid_density;
+}
 
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = transform_options_reset;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
+static void
+gimp_transform_options_init (GimpTransformOptions *options)
+{
   options->direction     = options->direction_d    = GIMP_TRANSFORM_FORWARD;
-  options->interpolation = tool_info->gimp->config->interpolation_type;
   options->show_path     = options->show_path_d    = TRUE;
   options->clip          = options->clip_d         = FALSE;
   options->grid_type     = options->grid_type_d    = TRANSFORM_GRID_TYPE_N_LINES;
   options->grid_size     = options->grid_size_d    = 15;
   options->constrain_1   = options->constrain_1_d  = FALSE;
   options->constrain_2   = options->constrain_2_d  = FALSE;
+}
+
+void
+gimp_transform_options_gui (GimpToolOptions *tool_options)
+{
+  GimpTransformOptions *options;
+  GtkWidget            *vbox;
+  GtkWidget            *hbox;
+  GtkWidget            *label;
+  GtkWidget            *frame;
+  GtkWidget            *table;
+  GtkWidget            *grid_density;
+
+  options = GIMP_TRANSFORM_OPTIONS (tool_options);
+
+  tool_options->reset_func = gimp_transform_options_reset;
+
+  vbox = tool_options->main_vbox;
+
+  options->interpolation =
+    tool_options->tool_info->gimp->config->interpolation_type;
 
   frame = gimp_enum_radio_frame_new (GIMP_TYPE_TRANSFORM_DIRECTION,
                                      gtk_label_new (_("Transform Direction")),
@@ -186,8 +213,8 @@ transform_options_init (TransformOptions *options,
                     G_CALLBACK (gimp_transform_tool_show_path_update),
                     options);
 
-  if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
-      tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+  if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL ||
+      tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
     {
       GtkWidget *vbox2;
       gchar     *str;
@@ -202,7 +229,7 @@ transform_options_init (TransformOptions *options,
       gtk_container_add (GTK_CONTAINER (frame), vbox2);
       gtk_widget_show (vbox2);
 
-      if (tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
+      if (tool_options->tool_info->tool_type == GIMP_TYPE_ROTATE_TOOL)
         {
           str = g_strdup_printf (_("15 Degrees  %s"),
                                  gimp_get_mod_name_control ());
@@ -218,7 +245,7 @@ transform_options_init (TransformOptions *options,
                             G_CALLBACK (gimp_toggle_button_update),
                             &options->constrain_1);
         }
-      else if (tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
+      else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
           str = g_strdup_printf (_("Keep Height  %s"),
                                  gimp_get_mod_name_control ());
@@ -261,15 +288,15 @@ transform_options_init (TransformOptions *options,
     }
 
   /* Set options to default values */
-  transform_options_reset ((GimpToolOptions *) options);
+  gimp_transform_options_reset (tool_options);
 }
 
 void
-transform_options_reset (GimpToolOptions *tool_options)
+gimp_transform_options_reset (GimpToolOptions *tool_options)
 {
-  TransformOptions *options;
+  GimpTransformOptions *options;
 
-  options = (TransformOptions *) tool_options;
+  options = GIMP_TRANSFORM_OPTIONS (tool_options);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->direction_w),
                                GINT_TO_POINTER (options->direction_d));
@@ -320,13 +347,13 @@ transform_options_reset (GimpToolOptions *tool_options)
 /*  private functions  */
 
 static void
-gimp_transform_tool_grid_type_update (GtkWidget        *widget,
-        	 		      TransformOptions *options)
+gimp_transform_tool_grid_type_update (GtkWidget            *widget,
+        	 		      GimpTransformOptions *options)
 {
   GimpToolOptions *tool_options;
   GimpTool        *active_tool;
 
-  tool_options = (GimpToolOptions *) options;
+  tool_options = GIMP_TOOL_OPTIONS (options);
 
   gimp_menu_item_update (widget, &options->grid_type);
 
@@ -340,13 +367,13 @@ gimp_transform_tool_grid_type_update (GtkWidget        *widget,
 }
 
 static void
-gimp_transform_tool_grid_density_update (GtkAdjustment    *adj,
-                                         TransformOptions *options)
+gimp_transform_tool_grid_density_update (GtkAdjustment        *adj,
+                                         GimpTransformOptions *options)
 {
   GimpToolOptions *tool_options;
   GimpTool        *active_tool;
 
-  tool_options = (GimpToolOptions *) options;
+  tool_options = GIMP_TOOL_OPTIONS (options);
 
   options->grid_size = (gint) (adj->value + 0.5);
 
@@ -357,8 +384,8 @@ gimp_transform_tool_grid_density_update (GtkAdjustment    *adj,
 }
 
 static void
-gimp_transform_tool_show_path_update (GtkWidget        *widget,
-				      TransformOptions *options)
+gimp_transform_tool_show_path_update (GtkWidget            *widget,
+				      GimpTransformOptions *options)
 {
   GimpToolOptions *tool_options;
   GimpTool        *active_tool;
@@ -371,7 +398,7 @@ gimp_transform_tool_show_path_update (GtkWidget        *widget,
       return;
     }
 
-  tool_options = (GimpToolOptions *) options;
+  tool_options = GIMP_TOOL_OPTIONS (options);
 
   active_tool = tool_manager_get_active (tool_options->tool_info->gimp);
 

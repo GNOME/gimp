@@ -45,10 +45,9 @@
 
 #include "gui/info-dialog.h"
 
-#include "gimpdrawtool.h"
+#include "gimpcolorpickeroptions.h"
 #include "gimpcolorpickertool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -98,10 +97,6 @@ static gboolean   gimp_color_picker_tool_pick_color     (GimpImage            *g
                                                          gboolean              update_active,
                                                          GimpUpdateColorState  update_state);
 
-
-static GimpToolOptions * gimp_color_picker_tool_options_new   (GimpToolInfo    *tool_info);
-static void              gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options);
-
 static InfoDialog * gimp_color_picker_tool_info_create (GimpDrawable *drawable);
 static void         gimp_color_picker_tool_info_close  (GtkWidget    *widget,
                                                         gpointer      data);
@@ -130,7 +125,8 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                                  gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_PICKER_TOOL,
-                gimp_color_picker_tool_options_new,
+                GIMP_TYPE_COLOR_PICKER_OPTIONS,
+                gimp_color_picker_options_gui,
                 FALSE,
                 "gimp-color-picker-tool",
                 _("Color Picker"),
@@ -249,13 +245,12 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
 				     GdkModifierType  state,
 			   	     GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool        *cp_tool;
-  GimpColorPickerToolOptions *options;
-  gint                        off_x, off_y;
+  GimpColorPickerTool    *cp_tool;
+  GimpColorPickerOptions *options;
+  gint                    off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
-
-  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
 
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp    = gdisp;
@@ -320,12 +315,11 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
 				       GdkModifierType  state,
 				       GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool        *cp_tool;
-  GimpColorPickerToolOptions *options;
+  GimpColorPickerTool    *cp_tool;
+  GimpColorPickerOptions *options;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
-
-  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
 
   gimp_color_picker_tool_info_update
     (tool,
@@ -351,13 +345,12 @@ gimp_color_picker_tool_motion (GimpTool        *tool,
 		               GdkModifierType  state,
 		               GimpDisplay     *gdisp)
 {
-  GimpColorPickerTool        *cp_tool;
-  GimpColorPickerToolOptions *options;
-  gint                        off_x, off_y;
+  GimpColorPickerTool    *cp_tool;
+  GimpColorPickerOptions *options;
+  gint                    off_x, off_y;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
-
-  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -411,14 +404,13 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
 static void
 gimp_color_picker_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpColorPickerTool        *cp_tool;
-  GimpColorPickerToolOptions *options;
-  GimpTool                   *tool;
+  GimpColorPickerTool    *cp_tool;
+  GimpColorPickerOptions *options;
+  GimpTool               *tool;
 
   cp_tool = GIMP_COLOR_PICKER_TOOL (draw_tool);
   tool    = GIMP_TOOL (draw_tool);
-
-  options = (GimpColorPickerToolOptions *) tool->tool_info->tool_options;
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
 
   if (options->sample_average)
     {
@@ -672,113 +664,4 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
 
   info_dialog_update (gimp_color_picker_tool_info);
   info_dialog_popup (gimp_color_picker_tool_info);
-}
-
-
-/*  tool options stuff  */
-
-static GimpToolOptions *
-gimp_color_picker_tool_options_new (GimpToolInfo *tool_info)
-{
-  GimpColorPickerToolOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *table;
-
-  options = g_new0 (GimpColorPickerToolOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = gimp_color_picker_tool_options_reset;
-
-  options->sample_merged  = options->sample_merged_d  = FALSE;
-  options->sample_average = options->sample_average_d = FALSE;
-  options->average_radius = options->average_radius_d = 1.0;
-  options->update_active  = options->update_active_d  = TRUE;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  the sample merged toggle button  */
-  options->sample_merged_w =
-    gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged);
-  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->sample_merged_w);
-
-  g_signal_connect (options->sample_merged_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_merged);
-
-  /*  the sample average options  */
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
-
-  options->sample_average_w =
-    gtk_check_button_new_with_label (_("Sample Average"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), options->sample_average_w);
-  gtk_widget_show (options->sample_average_w);
-
-  g_signal_connect (options->sample_average_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->sample_average);
-
-  gtk_widget_set_sensitive (table, options->sample_average);
-  g_object_set_data (G_OBJECT (options->sample_average_w), "set_sensitive",
-		     table);
-
-  options->average_radius_w =
-    gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			  _("Radius:"), -1, -1,
-			  options->average_radius,
-			  1.0, 15.0, 1.0, 3.0, 0,
-			  TRUE, 0.0, 0.0,
-			  NULL, NULL);
-
-  g_signal_connect (options->average_radius_w, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &options->average_radius);
-
-  /*  the update active color toggle button  */
-  options->update_active_w =
-    gtk_check_button_new_with_label (_("Update Active Color"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active);
-  gtk_box_pack_start (GTK_BOX (vbox), options->update_active_w, FALSE, FALSE, 0);
-  gtk_widget_show (options->update_active_w);
-
-  g_signal_connect (options->update_active_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->update_active);
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-gimp_color_picker_tool_options_reset (GimpToolOptions *tool_options)
-{
-  GimpColorPickerToolOptions *options;
-
-  options = (GimpColorPickerToolOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
-				options->sample_merged_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_average_w),
-				options->sample_average_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->average_radius_w),
-			    options->average_radius_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->update_active_w),
-				options->update_active_d);
 }

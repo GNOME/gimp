@@ -19,6 +19,7 @@
 #ifndef __GIMP_TEXT_TOOL_H__
 #define __GIMP_TEXT_TOOL_H__
 
+
 #include "libgimptool/gimptool.h"
 
 

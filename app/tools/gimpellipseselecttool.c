@@ -62,7 +62,8 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data) 
 {
   (* callback) (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-ellipse-select-tool",
                 _("Ellipse Select"),
@@ -155,20 +156,19 @@ gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
                                       gint                w,
                                       gint                h)
 {
-  GimpTool          *tool;
-  GimpSelectionTool *sel_tool;
-  SelectionOptions  *sel_options;
+  GimpTool             *tool;
+  GimpSelectionTool    *sel_tool;
+  GimpSelectionOptions *options;
 
   tool     = GIMP_TOOL (rect_tool);
   sel_tool = GIMP_SELECTION_TOOL (rect_tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   gimp_image_mask_select_ellipse (tool->gdisp->gimage,
                                   x, y, w, h,
                                   sel_tool->op,
-                                  sel_options->antialias,
-                                  sel_options->feather,
-                                  sel_options->feather_radius,
-                                  sel_options->feather_radius);
+                                  options->antialias,
+                                  options->feather,
+                                  options->feather_radius,
+                                  options->feather_radius);
 }

@@ -270,7 +270,8 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ISCISSORS_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-iscissors-tool",
                 _("Scissors"),
@@ -424,12 +425,11 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                   GdkModifierType  state,
                                   GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool *iscissors;
-  SelectionOptions  *sel_options;
+  GimpIscissorsTool    *iscissors;
+  GimpSelectionOptions *options;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   iscissors->x = coords->x;
   iscissors->y = coords->y;
@@ -494,9 +494,9 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                           iscissors->mask,
                                           0, 0,
                                           GIMP_SELECTION_TOOL (tool)->op,
-                                          sel_options->feather,
-                                          sel_options->feather_radius,
-                                          sel_options->feather_radius);
+                                          options->feather,
+                                          options->feather_radius,
+                                          options->feather_radius);
 
 	  gimp_iscissors_tool_reset (iscissors);
 
@@ -513,7 +513,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 	  iscissors->state = SEED_PLACEMENT;
 	  iscissors->draw  = DRAW_CURRENT_SEED;
 
-          if (sel_options->interactive)
+          if (options->interactive)
             iscissors->draw |= DRAW_LIVEWIRE;
 
 	  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
@@ -576,13 +576,12 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool *iscissors;
-  SelectionOptions  *sel_options;
-  ICurve            *curve;
+  GimpIscissorsTool    *iscissors;
+  GimpSelectionOptions *options;
+  ICurve               *curve;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -595,7 +594,7 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
     {
     case SEED_PLACEMENT:
       iscissors->draw = DRAW_CURVE | DRAW_CURRENT_SEED;
-      if (sel_options->interactive)
+      if (options->interactive)
 	iscissors->draw |= DRAW_LIVEWIRE;
       break;
     case SEED_ADJUSTMENT:
@@ -691,12 +690,11 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
                             GdkModifierType  state,
                             GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool *iscissors;
-  SelectionOptions  *sel_options;
+  GimpIscissorsTool    *iscissors;
+  GimpSelectionOptions *options;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   if (!gimp_tool_control_is_active (tool->control) || iscissors->state == NO_ACTION)
     return;
@@ -705,7 +703,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
     {
       iscissors->draw = DRAW_CURRENT_SEED;
 
-      if (sel_options->interactive)
+      if (options->interactive)
 	iscissors->draw |= DRAW_LIVEWIRE;
     }
   else if (iscissors->state == SEED_ADJUSTMENT)
@@ -1256,14 +1254,13 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
 static gboolean
 clicked_on_curve (GimpTool *tool)
 {
-  GimpIscissorsTool *iscissors;
-  SelectionOptions  *sel_options;
-  GSList            *list, *new_link;
-  ICurve            *curve, *new_curve;
+  GimpIscissorsTool    *iscissors;
+  GimpSelectionOptions *options;
+  GSList               *list, *new_link;
+  ICurve               *curve, *new_curve;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options   = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   /*  traverse through the list, getting back the curve segment's list
    *  element if the current cursor position is on a curve...

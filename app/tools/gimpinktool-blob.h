@@ -30,6 +30,13 @@ typedef struct _BlobPoint BlobPoint;
 typedef struct _BlobSpan  BlobSpan;
 typedef struct _Blob      Blob;
 
+typedef Blob * (* BlobFunc) (gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble,
+			     gdouble);
+
 struct _BlobPoint
 {
   gint x;

@@ -36,53 +36,54 @@
 #include "core/gimpimage.h"
 
 #include "gimpdodgeburn.h"
+#include "gimpdodgeburnoptions.h"
 
 
-static void     gimp_dodgeburn_class_init (GimpDodgeBurnClass *klass);
-static void     gimp_dodgeburn_init       (GimpDodgeBurn      *dodgeburn);
+static void     gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass);
+static void     gimp_dodge_burn_init       (GimpDodgeBurn      *dodgeburn);
 
-static void     gimp_dodgeburn_finalize   (GObject            *object);
+static void     gimp_dodge_burn_finalize   (GObject            *object);
 
-static void     gimp_dodgeburn_paint      (GimpPaintCore      *paint_core,
-                                           GimpDrawable       *drawable,
-                                           GimpPaintOptions   *paint_options,
-                                           GimpPaintCoreState  paint_state);
-static void     gimp_dodgeburn_motion     (GimpPaintCore      *paint_core,
-                                           GimpDrawable       *drawable,
-                                           GimpPaintOptions   *paint_options);
+static void     gimp_dodge_burn_paint      (GimpPaintCore      *paint_core,
+                                            GimpDrawable       *drawable,
+                                            GimpPaintOptions   *paint_options,
+                                            GimpPaintCoreState  paint_state);
+static void     gimp_dodge_burn_motion     (GimpPaintCore      *paint_core,
+                                            GimpDrawable       *drawable,
+                                            GimpPaintOptions   *paint_options);
 
-static void     gimp_dodgeburn_make_luts  (GimpDodgeBurn      *dodgeburn,
-                                           gdouble             db_exposure,
-                                           GimpDodgeBurnType   type,
-                                           GimpTransferMode    mode,
-                                           GimpDrawable       *drawable);
+static void     gimp_dodge_burn_make_luts  (GimpDodgeBurn      *dodgeburn,
+                                            gdouble             db_exposure,
+                                            GimpDodgeBurnType   type,
+                                            GimpTransferMode    mode,
+                                            GimpDrawable       *drawable);
 
-static gfloat   gimp_dodgeburn_highlights_lut_func (gpointer   user_data,
-                                                    gint       nchannels,
-                                                    gint       channel,
-                                                    gfloat     value);
-static gfloat   gimp_dodgeburn_midtones_lut_func   (gpointer   user_data,
-                                                    gint       nchannels,
-                                                    gint       channel,
-                                                    gfloat     value);
-static gfloat   gimp_dodgeburn_shadows_lut_func    (gpointer   user_data,
-                                                    gint       nchannels,
-                                                    gint       channel,
-                                                    gfloat     value);
+static gfloat   gimp_dodge_burn_highlights_lut_func (gpointer   user_data,
+                                                     gint       nchannels,
+                                                     gint       channel,
+                                                     gfloat     value);
+static gfloat   gimp_dodge_burn_midtones_lut_func   (gpointer   user_data,
+                                                     gint       nchannels,
+                                                     gint       channel,
+                                                     gfloat     value);
+static gfloat   gimp_dodge_burn_shadows_lut_func    (gpointer   user_data,
+                                                     gint       nchannels,
+                                                     gint       channel,
+                                                     gfloat     value);
 
 
 static GimpPaintCoreClass *parent_class = NULL;
 
 
 void
-gimp_dodgeburn_register (Gimp                      *gimp,
-                         GimpPaintRegisterCallback  callback)
+gimp_dodge_burn_register (Gimp                      *gimp,
+                          GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_DODGEBURN);
+  (* callback) (gimp, GIMP_TYPE_DODGE_BURN, GIMP_TYPE_DODGE_BURN_OPTIONS);
 }
 
 GType
-gimp_dodgeburn_get_type (void)
+gimp_dodge_burn_get_type (void)
 {
   static GType type = 0;
 
@@ -93,12 +94,12 @@ gimp_dodgeburn_get_type (void)
         sizeof (GimpDodgeBurnClass),
 	(GBaseInitFunc) NULL,
 	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_dodgeburn_class_init,
+	(GClassInitFunc) gimp_dodge_burn_class_init,
 	NULL,           /* class_finalize */
 	NULL,           /* class_data     */
 	sizeof (GimpDodgeBurn),
 	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_dodgeburn_init,
+	(GInstanceInitFunc) gimp_dodge_burn_init,
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
@@ -110,7 +111,7 @@ gimp_dodgeburn_get_type (void)
 }
 
 static void
-gimp_dodgeburn_class_init (GimpDodgeBurnClass *klass)
+gimp_dodge_burn_class_init (GimpDodgeBurnClass *klass)
 {
   GObjectClass       *object_class;
   GimpPaintCoreClass *paint_core_class;
@@ -120,13 +121,13 @@ gimp_dodgeburn_class_init (GimpDodgeBurnClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize  = gimp_dodgeburn_finalize;
+  object_class->finalize  = gimp_dodge_burn_finalize;
 
-  paint_core_class->paint = gimp_dodgeburn_paint;
+  paint_core_class->paint = gimp_dodge_burn_paint;
 }
 
 static void
-gimp_dodgeburn_init (GimpDodgeBurn *dodgeburn)
+gimp_dodge_burn_init (GimpDodgeBurn *dodgeburn)
 {
   GimpPaintCore *paint_core;
 
@@ -136,11 +137,11 @@ gimp_dodgeburn_init (GimpDodgeBurn *dodgeburn)
 }
 
 static void
-gimp_dodgeburn_finalize (GObject *object)
+gimp_dodge_burn_finalize (GObject *object)
 {
   GimpDodgeBurn *dodgeburn;
 
-  dodgeburn = GIMP_DODGEBURN (object);
+  dodgeburn = GIMP_DODGE_BURN (object);
 
   if (dodgeburn->lut)
     {
@@ -152,32 +153,31 @@ gimp_dodgeburn_finalize (GObject *object)
 }
 
 static void
-gimp_dodgeburn_paint (GimpPaintCore      *paint_core,
-                      GimpDrawable       *drawable,
-                      GimpPaintOptions   *paint_options,
-                      GimpPaintCoreState  paint_state)
+gimp_dodge_burn_paint (GimpPaintCore      *paint_core,
+                       GimpDrawable       *drawable,
+                       GimpPaintOptions   *paint_options,
+                       GimpPaintCoreState  paint_state)
 {
-  GimpDodgeBurnOptions *options;
   GimpDodgeBurn        *dodgeburn;
+  GimpDodgeBurnOptions *options;
 
-  options = (GimpDodgeBurnOptions *) paint_options;
-
-  dodgeburn = GIMP_DODGEBURN (paint_core);
+  dodgeburn = GIMP_DODGE_BURN (paint_core);
+  options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
 
   switch (paint_state)
     {
     case INIT_PAINT:
       dodgeburn->lut = gimp_lut_new ();
 
-      gimp_dodgeburn_make_luts (dodgeburn,
-                                options->exposure,
-                                options->type,
-                                options->mode,
-                                drawable);
+      gimp_dodge_burn_make_luts (dodgeburn,
+                                 options->exposure,
+                                 options->type,
+                                 options->mode,
+                                 drawable);
       break;
 
     case MOTION_PAINT:
-      gimp_dodgeburn_motion (paint_core, drawable, paint_options);
+      gimp_dodge_burn_motion (paint_core, drawable, paint_options);
       break;
 
     case FINISH_PAINT:
@@ -194,9 +194,9 @@ gimp_dodgeburn_paint (GimpPaintCore      *paint_core,
 }
 
 static void
-gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
-                       GimpDrawable     *drawable,
-                       GimpPaintOptions *paint_options)
+gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
+                        GimpDrawable     *drawable,
+                        GimpPaintOptions *paint_options)
 {
   GimpDodgeBurn        *dodgeburn;
   GimpDodgeBurnOptions *options;
@@ -209,9 +209,8 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   gdouble               opacity;
   gdouble               scale;
 
-  dodgeburn = GIMP_DODGEBURN (paint_core);
-
-  options = (GimpDodgeBurnOptions *) paint_options;
+  dodgeburn = GIMP_DODGE_BURN (paint_core);
+  options   = GIMP_DODGE_BURN_OPTIONS (paint_options);
 
   pressure_options = paint_options->pressure_options;
 
@@ -305,12 +304,12 @@ gimp_dodgeburn_motion (GimpPaintCore    *paint_core,
   g_free (temp_data);
 }
 
-static void 
-gimp_dodgeburn_make_luts (GimpDodgeBurn     *dodgeburn,
-                          gdouble            db_exposure,
-                          GimpDodgeBurnType  type,
-                          GimpTransferMode   mode,
-                          GimpDrawable      *drawable)
+static void
+gimp_dodge_burn_make_luts (GimpDodgeBurn     *dodgeburn,
+                           gdouble            db_exposure,
+                           GimpDodgeBurnType  type,
+                           GimpTransferMode   mode,
+                           GimpDrawable      *drawable)
 {
   GimpLutFunc   lut_func;
   gint          nchannels = gimp_drawable_bytes (drawable);
@@ -325,13 +324,13 @@ gimp_dodgeburn_make_luts (GimpDodgeBurn     *dodgeburn,
   switch (mode)
     {
     case GIMP_HIGHLIGHTS:
-      lut_func = gimp_dodgeburn_highlights_lut_func; 
+      lut_func = gimp_dodge_burn_highlights_lut_func; 
       break;
     case GIMP_MIDTONES:
-      lut_func = gimp_dodgeburn_midtones_lut_func; 
+      lut_func = gimp_dodge_burn_midtones_lut_func; 
       break;
     case GIMP_SHADOWS:
-      lut_func = gimp_dodgeburn_shadows_lut_func; 
+      lut_func = gimp_dodge_burn_shadows_lut_func; 
       break;
     default:
       lut_func = NULL; 
@@ -343,11 +342,11 @@ gimp_dodgeburn_make_luts (GimpDodgeBurn     *dodgeburn,
 			nchannels);
 }
 
-static gfloat 
-gimp_dodgeburn_highlights_lut_func (gpointer  user_data, 
-                                    gint      nchannels, 
-                                    gint      channel, 
-                                    gfloat    value)
+static gfloat
+gimp_dodge_burn_highlights_lut_func (gpointer  user_data, 
+                                     gint      nchannels, 
+                                     gint      channel, 
+                                     gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
   gfloat  exposure     = *exposure_ptr;
@@ -360,11 +359,11 @@ gimp_dodgeburn_highlights_lut_func (gpointer  user_data,
   return factor * value;
 }
 
-static gfloat 
-gimp_dodgeburn_midtones_lut_func (gpointer  user_data, 
-                                  gint      nchannels, 
-                                  gint      channel, 
-                                  gfloat    value)
+static gfloat
+gimp_dodge_burn_midtones_lut_func (gpointer  user_data, 
+                                   gint      nchannels, 
+                                   gint      channel, 
+                                   gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
   gfloat  exposure     = *exposure_ptr;
@@ -382,11 +381,11 @@ gimp_dodgeburn_midtones_lut_func (gpointer  user_data,
   return pow (value, factor); 
 }
 
-static gfloat 
-gimp_dodgeburn_shadows_lut_func (gpointer  user_data, 
-                                 gint      nchannels, 
-                                 gint      channel, 
-                                 gfloat    value)
+static gfloat
+gimp_dodge_burn_shadows_lut_func (gpointer  user_data, 
+                                  gint      nchannels, 
+                                  gint      channel, 
+                                  gfloat    value)
 {
   gfloat *exposure_ptr = (gfloat *) user_data;
   gfloat  exposure     = *exposure_ptr;
@@ -412,29 +411,4 @@ gimp_dodgeburn_shadows_lut_func (gpointer  user_data,
     }
 
   return new_value; 
-}
-
-
-/*  paint options stuff  */
-
-#define DODGEBURN_DEFAULT_EXPOSURE 50.0
-#define DODGEBURN_DEFAULT_TYPE     GIMP_DODGE
-#define DODGEBURN_DEFAULT_MODE     GIMP_MIDTONES
-
-GimpDodgeBurnOptions *
-gimp_dodgeburn_options_new (GimpContext *context)
-{
-  GimpDodgeBurnOptions *options;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  options = g_new0 (GimpDodgeBurnOptions, 1);
-
-  gimp_paint_options_init ((GimpPaintOptions *) options, context);
-
-  options->type     = options->type_d     = DODGEBURN_DEFAULT_TYPE;
-  options->exposure = options->exposure_d = DODGEBURN_DEFAULT_EXPOSURE;
-  options->mode     = options->mode_d     = DODGEBURN_DEFAULT_MODE;
-
-  return options;
 }

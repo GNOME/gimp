@@ -20,8 +20,8 @@
 #define __GIMP_PAINT_OPTIONS_H__
 
 
-#include "tools/tools-types.h"  /* temp hack */
-#include "tools/tool_options.h" /* temp hack */
+#include "tools/tools-types.h"
+#include "tools/tool_options.h"
 
 
 typedef struct _GimpPressureOptions GimpPressureOptions;
@@ -90,16 +90,23 @@ struct _GimpGradientOptions
 };
 
 
+#define GIMP_TYPE_PAINT_OPTIONS            (gimp_paint_options_get_type ())
+#define GIMP_PAINT_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptions))
+#define GIMP_PAINT_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptionsClass))
+#define GIMP_IS_PAINT_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PAINT_OPTIONS))
+#define GIMP_IS_PAINT_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PAINT_OPTIONS))
+#define GIMP_PAINT_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINT_OPTIONS, GimpPaintOptionsClass))
+
+
+typedef struct _GimpPaintOptionsClass GimpPaintOptionsClass;
+
 struct _GimpPaintOptions
 {
-  GimpToolOptions  tool_options;
+  GimpToolOptions  parent_instance;
 
   /*  options used by all paint tools  */
   GtkObject   *opacity_w;
   GtkWidget   *paint_mode_w;
-
-  /*  this tool's private context  */
-  GimpContext *context;
 
   /*  the incremental toggle  */
   gboolean     incremental;
@@ -115,13 +122,16 @@ struct _GimpPaintOptions
   GimpGradientOptions *gradient_options;
 };
 
+struct _GimpPaintOptionsClass
+{
+  GimpToolOptionsClass  parent_instance;
+};
 
-/*  paint tool options functions  */
 
-GimpPaintOptions * gimp_paint_options_new  (GimpContext      *context);
+GType              gimp_paint_options_get_type (void) G_GNUC_CONST;
 
-void               gimp_paint_options_init (GimpPaintOptions *options,
-                                            GimpContext      *context);
+GimpPaintOptions * gimp_paint_options_new      (Gimp  *gimp,
+                                                GType  options_type);
 
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

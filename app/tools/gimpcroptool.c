@@ -44,9 +44,9 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "gimpcropoptions.h"
 #include "gimpcroptool.h"
 #include "tool_manager.h"
-#include "tool_options.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -62,26 +62,6 @@ enum
   RESIZING_LEFT,
   RESIZING_RIGHT,
   CROPPING
-};
-
-
-typedef struct _CropOptions CropOptions;
-
-struct _CropOptions
-{
-  GimpToolOptions  tool_options;
-
-  gboolean      layer_only;
-  gboolean      layer_only_d;
-  GtkWidget    *layer_only_w;
-
-  gboolean      allow_enlarge;
-  gboolean      allow_enlarge_d;
-  GtkWidget    *allow_enlarge_w;
-
-  GimpCropType  type;
-  GimpCropType  type_d;
-  GtkWidget    *type_w;
 };
 
 
@@ -155,9 +135,6 @@ static void   crop_origin_changed           (GtkWidget       *widget,
 static void   crop_size_changed             (GtkWidget       *widget,
 					     GimpCropTool    *crop);
 
-static GimpToolOptions * crop_options_new   (GimpToolInfo    *tool_info);
-static void              crop_options_reset (GimpToolOptions *tool_options);
-
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -169,7 +146,8 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CROP_TOOL,
-                crop_options_new,
+                GIMP_TYPE_CROP_OPTIONS,
+                gimp_crop_options_gui,
                 FALSE,
                 "gimp-crop-tool",
                 _("Crop & Resize"),
@@ -396,12 +374,11 @@ gimp_crop_tool_button_release (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  GimpCropTool *crop;
-  CropOptions  *options;
+  GimpCropTool    *crop;
+  GimpCropOptions *options;
 
-  crop = GIMP_CROP_TOOL (tool);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  crop    = GIMP_CROP_TOOL (tool);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   gimp_tool_pop_status (tool);
 
@@ -439,17 +416,16 @@ gimp_crop_tool_motion (GimpTool        *tool,
 		       GdkModifierType  state,
 		       GimpDisplay     *gdisp)
 {
-  GimpCropTool     *crop;
-  CropOptions      *options;
-  GimpLayer        *layer;
-  gint              x1, y1, x2, y2;
-  gint              curx, cury;
-  gint              inc_x, inc_y;
-  gint              min_x, min_y, max_x, max_y; 
+  GimpCropTool    *crop;
+  GimpCropOptions *options;
+  GimpLayer       *layer;
+  gint             x1, y1, x2, y2;
+  gint             curx, cury;
+  gint             inc_x, inc_y;
+  gint             min_x, min_y, max_x, max_y; 
 
-  crop = GIMP_CROP_TOOL (tool);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  crop    = GIMP_CROP_TOOL (tool);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   /*  This is the only case when the motion events should be ignored--
       we're just waiting for the button release event to crop the image  */
@@ -575,16 +551,15 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 			  GdkEventKey *kevent,
 			  GimpDisplay *gdisp)
 {
-  GimpCropTool *crop;
-  CropOptions  *options;
-  GimpLayer    *layer;
-  gint          inc_x, inc_y;
-  gint          min_x, min_y;
-  gint          max_x, max_y;
+  GimpCropTool    *crop;
+  GimpCropOptions *options;
+  GimpLayer       *layer;
+  gint             inc_x, inc_y;
+  gint             min_x, min_y;
+  gint             max_x, max_y;
 
-  crop = GIMP_CROP_TOOL (tool);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  crop    = GIMP_CROP_TOOL (tool);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_tool_control_is_active (tool->control))
     {
@@ -661,9 +636,9 @@ gimp_crop_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  CropOptions *options;
+  GimpCropOptions *options;
 
-  options = (CropOptions *) tool->tool_info->tool_options;
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (state & GDK_MOD1_MASK)
     {
@@ -708,14 +683,13 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 {
   GimpCropTool      *crop;
   GimpDrawTool      *draw_tool;
-  CropOptions       *options;
+  GimpCropOptions   *options;
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
   crop      = GIMP_CROP_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  options   = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   if (!gimp_tool_control_is_active (tool->control) ||
       (gimp_tool_control_is_active (tool->control) && tool->gdisp != gdisp))
@@ -1070,12 +1044,11 @@ static void
 crop_crop_callback (GtkWidget    *widget,
 		    GimpCropTool *crop)
 {
-  GimpTool    *tool;
-  CropOptions *options;
+  GimpTool        *tool;
+  GimpCropOptions *options;
 
-  tool = GIMP_TOOL (crop);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  tool    = GIMP_TOOL (crop);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   crop_tool_crop_image (tool->gdisp->gimage,
                         crop->x1, crop->y1,
@@ -1090,12 +1063,11 @@ static void
 crop_resize_callback (GtkWidget    *widget,
 		      GimpCropTool *crop)
 {
-  GimpTool    *tool;
-  CropOptions *options;
+  GimpTool        *tool;
+  GimpCropOptions *options;
 
-  tool = GIMP_TOOL (crop);
-
-  options = (CropOptions *) tool->tool_info->tool_options;
+  tool    = GIMP_TOOL (crop);
+  options = GIMP_CROP_OPTIONS (tool->tool_info->tool_options);
 
   crop_tool_crop_image (tool->gdisp->gimage,
                         crop->x1, crop->y1,
@@ -1123,12 +1095,12 @@ static void
 crop_selection_callback (GtkWidget    *widget,
 			 GimpCropTool *crop)
 {
-  CropOptions *options;
-  GimpLayer   *layer;
-  GimpDisplay *gdisp;
+  GimpCropOptions *options;
+  GimpLayer       *layer;
+  GimpDisplay     *gdisp;
 
-  options = (CropOptions *) GIMP_TOOL (crop)->tool_info->tool_options;
- 
+  options = GIMP_CROP_OPTIONS (GIMP_TOOL (crop)->tool_info->tool_options);
+
   gdisp = GIMP_TOOL (crop)->gdisp;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (crop));
@@ -1162,18 +1134,18 @@ static void
 crop_automatic_callback (GtkWidget    *widget,
 			 GimpCropTool *crop)
 {
-  CropOptions  *options;
-  GimpDisplay  *gdisp;
-  GimpDrawable *active_drawable;
-  gint          offset_x, offset_y;
-  gint          width, height;
-  gint          x1, y1, x2, y2;
-  gint          shrunk_x1;
-  gint          shrunk_y1;
-  gint          shrunk_x2;
-  gint          shrunk_y2;
+  GimpCropOptions *options;
+  GimpDisplay     *gdisp;
+  GimpDrawable    *active_drawable;
+  gint             offset_x, offset_y;
+  gint             width, height;
+  gint             x1, y1, x2, y2;
+  gint             shrunk_x1;
+  gint             shrunk_y1;
+  gint             shrunk_x2;
+  gint             shrunk_y2;
 
-  options = (CropOptions *) GIMP_TOOL (crop)->tool_info->tool_options;
+  options = GIMP_CROP_OPTIONS (GIMP_TOOL (crop)->tool_info->tool_options);
 
   gdisp = GIMP_TOOL (crop)->gdisp;
 
@@ -1271,92 +1243,4 @@ crop_size_changed (GtkWidget    *widget,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (crop));
     }
-}
-
-
-/*  tool options stuff  */
-
-static GimpToolOptions *
-crop_options_new (GimpToolInfo *tool_info)
-{
-  CropOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *frame;
-  gchar       *str;
-
-  options = g_new0 (CropOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = crop_options_reset;
-
-  options->layer_only    = options->layer_only_d    = FALSE;
-  options->allow_enlarge = options->allow_enlarge_d = FALSE;
-  options->type          = options->type_d          = GIMP_CROP;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
-
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_CROP_TYPE,
-                                     gtk_label_new (str),
-                                     2,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->type,
-                                     &options->type_w);
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_free (str);
-
-  /*  layer toggle  */
-  options->layer_only_w =
-    gtk_check_button_new_with_label (_("Current Layer only"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only);
-  gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->layer_only_w);
-
-  g_signal_connect (options->layer_only_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->layer_only);
-
-  /*  enlarge toggle  */
-  str = g_strdup_printf (_("Allow Enlarging  %s"), gimp_get_mod_name_alt ());
-
-  options->allow_enlarge_w = gtk_check_button_new_with_label (str);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_enlarge_w),
-				options->allow_enlarge);
-  gtk_box_pack_start (GTK_BOX (vbox), options->allow_enlarge_w,
-		      FALSE, FALSE, 0);
-  gtk_widget_show (options->allow_enlarge_w);
-
-  g_free (str);
-
-  g_signal_connect (options->allow_enlarge_w, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &options->allow_enlarge);
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-crop_options_reset (GimpToolOptions *tool_options)
-{
-  CropOptions *options;
-
-  options = (CropOptions *) tool_options;
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
-				options->layer_only_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->allow_enlarge_w),
-				options->allow_enlarge_d);
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
-                               GINT_TO_POINTER (options->type_d));
 }

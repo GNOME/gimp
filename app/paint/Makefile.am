@@ -22,14 +22,24 @@ libapppaint_a_sources = \
 	paint.h			\
 	gimpairbrush.c		\
 	gimpairbrush.h		\
+	gimpairbrushoptions.c	\
+	gimpairbrushoptions.h	\
 	gimpclone.c		\
 	gimpclone.h		\
+	gimpcloneoptions.c	\
+	gimpcloneoptions.h	\
 	gimpconvolve.c		\
 	gimpconvolve.h		\
+	gimpconvolveoptions.c	\
+	gimpconvolveoptions.h	\
 	gimpdodgeburn.c		\
 	gimpdodgeburn.h		\
+	gimpdodgeburnoptions.c	\
+	gimpdodgeburnoptions.h	\
 	gimperaser.c		\
 	gimperaser.h		\
+	gimperaseroptions.c	\
+	gimperaseroptions.h	\
 	gimppaintcore.c		\
 	gimppaintcore.h		\
 	gimppaintcore-kernels.h	\
@@ -42,7 +52,9 @@ libapppaint_a_sources = \
 	gimppaintbrush.c	\
 	gimppaintbrush.h	\
 	gimpsmudge.c		\
-	gimpsmudge.h
+	gimpsmudge.h		\
+	gimpsmudgeoptions.c	\
+	gimpsmudgeoptions.h
 
 libapppaint_a_built_sources = paint-enums.c
 

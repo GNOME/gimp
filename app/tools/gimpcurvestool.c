@@ -167,7 +167,7 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CURVES_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-curves-tool",
                 _("Curves"),

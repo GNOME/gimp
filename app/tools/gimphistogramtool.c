@@ -114,7 +114,7 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HISTOGRAM_TOOL,
-                NULL,
+                G_TYPE_NONE, NULL,
                 FALSE,
                 "gimp-histogram-tool",
                 _("Histogram"),

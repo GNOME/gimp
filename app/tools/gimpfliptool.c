@@ -37,24 +37,12 @@
 
 #include "display/gimpdisplay.h"
 
+#include "gimpflipoptions.h"
 #include "gimpfliptool.h"
-#include "tool_options.h"
 
 #include "path_transform.h"
 
 #include "libgimp/gimpintl.h"
-
-
-typedef struct _FlipOptions FlipOptions;
-
-struct _FlipOptions
-{
-  GimpToolOptions          tool_options;
-
-  InternalOrientationType  type;
-  InternalOrientationType  type_d;
-  GtkWidget               *type_w[2];
-};
 
 
 /*  local function prototypes  */
@@ -75,9 +63,6 @@ static void          gimp_flip_tool_cursor_update (GimpTool          *tool,
 static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
 						   GimpDisplay       *gdisp);
 
-static GimpToolOptions * flip_options_new         (GimpToolInfo      *tool_info);
-static void              flip_options_reset       (GimpToolOptions   *tool_options);
-
 
 static GimpTransformToolClass *parent_class = NULL;
 
@@ -89,7 +74,8 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FLIP_TOOL,
-                flip_options_new,
+                GIMP_TYPE_FLIP_OPTIONS,
+                gimp_flip_options_gui,
                 FALSE,
                 "gimp-flip-tool",
                 _("Flip"),
@@ -177,9 +163,9 @@ gimp_flip_tool_modifier_key (GimpTool        *tool,
 			     GdkModifierType  state,
 			     GimpDisplay     *gdisp)
 {
-  FlipOptions *options;
+  GimpFlipOptions *options;
 
-  options = (FlipOptions *) tool->tool_info->tool_options;
+  options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
   if (key == GDK_CONTROL_MASK)
     {
@@ -205,11 +191,11 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDrawable *drawable;
-  FlipOptions  *options;
-  gboolean      bad_cursor = TRUE;
+  GimpDrawable    *drawable;
+  GimpFlipOptions *options;
+  gboolean         bad_cursor = TRUE;
 
-  options = (FlipOptions *) tool->tool_info->tool_options;
+  options = GIMP_FLIP_OPTIONS (tool->tool_info->tool_options);
 
   if ((drawable = gimp_image_active_drawable (gdisp->gimage)))
     {
@@ -252,72 +238,14 @@ static TileManager *
 gimp_flip_tool_transform (GimpTransformTool *trans_tool,
 			  GimpDisplay       *gdisp)
 {
-  FlipOptions  *options;
-  GimpDrawable *drawable;
+  GimpFlipOptions *options;
+  GimpDrawable    *drawable;
 
-  options = (FlipOptions *) GIMP_TOOL (trans_tool)->tool_info->tool_options;
+  options = GIMP_FLIP_OPTIONS (GIMP_TOOL (trans_tool)->tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
   return gimp_drawable_transform_tiles_flip (drawable,
                                              trans_tool->original, 
                                              options->type);
-}
-
-
-/*  tool options stuff  */
-
-static GimpToolOptions *
-flip_options_new (GimpToolInfo *tool_info)
-{
-  FlipOptions *options;
-  GtkWidget   *vbox;
-  GtkWidget   *frame;
-  gchar       *str;
- 
-  options = g_new0 (FlipOptions, 1);
-
-  tool_options_init ((GimpToolOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = flip_options_reset;
-
-  options->type = options->type_d = ORIENTATION_HORIZONTAL;
-
-  /*  the main vbox  */
-  vbox = options->tool_options.main_vbox;
-
-  /*  tool toggle  */
-  str = g_strdup_printf (_("Tool Toggle  %s"), gimp_get_mod_name_control ());
-
-  frame = gimp_radio_group_new2 (TRUE, str,
-                                 G_CALLBACK (gimp_radio_button_update),
-                                 &options->type,
-                                 GINT_TO_POINTER (options->type),
-
-                                 _("Horizontal"),
-                                 GINT_TO_POINTER (ORIENTATION_HORIZONTAL),
-                                 &options->type_w[0],
-
-                                 _("Vertical"),
-                                 GINT_TO_POINTER (ORIENTATION_VERTICAL),
-                                 &options->type_w[1],
-
-                                 NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_free (str);
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-flip_options_reset (GimpToolOptions *tool_options)
-{
-  FlipOptions *options;
-
-  options = (FlipOptions *) tool_options;
-
-  gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w[0]),
-                               GINT_TO_POINTER (options->type_d));
 }

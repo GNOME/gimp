@@ -277,7 +277,8 @@ gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BEZIER_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-bezier-select-tool",
                 _("Bezier Select"),
@@ -2904,22 +2905,22 @@ bezier_to_sel_internal (GimpBezierSelectTool *bezier_sel,
                         GimpDisplay          *gdisp,
                         GimpChannelOps        op)
 {
-  SelectionOptions *sel_options;
+  GimpSelectionOptions *options;
 
-  sel_options = (SelectionOptions *) GIMP_TOOL (bezier_sel)->tool_info->tool_options;
+  options = GIMP_SELECTION_OPTIONS (GIMP_TOOL (bezier_sel)->tool_info->tool_options);
 
   /*  If we're antialiased, then recompute the mask...
    */
-  if (sel_options->antialias)
+  if (options->antialias)
     bezier_convert (bezier_sel, tool->gdisp, SUBDIVIDE, TRUE);
 
   gimp_image_mask_select_channel (gdisp->gimage,
                                   bezier_sel->mask,
                                   0, 0,
                                   op,
-                                  sel_options->feather,
-                                  sel_options->feather_radius, 
-                                  sel_options->feather_radius);
+                                  options->feather,
+                                  options->feather_radius, 
+                                  options->feather_radius);
   
   /*  show selection on all views  */
   gimp_image_flush (gdisp->gimage);

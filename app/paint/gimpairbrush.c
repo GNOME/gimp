@@ -36,10 +36,7 @@
 #include "core/gimpimage.h"
 
 #include "gimpairbrush.h"
-
-
-#define AIRBRUSH_DEFAULT_RATE     80.0
-#define AIRBRUSH_DEFAULT_PRESSURE 10.0
+#include "gimpairbrushoptions.h"
 
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
@@ -78,7 +75,7 @@ void
 gimp_airbrush_register (Gimp                      *gimp,
                         GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_AIRBRUSH);
+  (* callback) (gimp, GIMP_TYPE_AIRBRUSH, GIMP_TYPE_AIRBRUSH_OPTIONS);
 }
 
 GType
@@ -321,24 +318,4 @@ gimp_airbrush_timeout (gpointer client_data)
     }
 
   return FALSE;
-}
-
-
-/*  paint options stuff  */
-
-GimpAirbrushOptions *
-gimp_airbrush_options_new (GimpContext *context)
-{
-  GimpAirbrushOptions *options;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  options = g_new0 (GimpAirbrushOptions, 1);
-
-  gimp_paint_options_init ((GimpPaintOptions *) options, context);
-
-  options->rate     = options->rate_d     = AIRBRUSH_DEFAULT_RATE;
-  options->pressure = options->pressure_d = AIRBRUSH_DEFAULT_PRESSURE;
-
-  return options;
 }

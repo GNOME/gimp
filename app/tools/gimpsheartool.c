@@ -91,7 +91,8 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SHEAR_TOOL,
-                transform_options_new,
+                GIMP_TYPE_TRANSFORM_OPTIONS,
+                gimp_transform_options_gui,
                 FALSE,
                 "gimp-shear-tool",
                 _("Shear"),

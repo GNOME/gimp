@@ -24,11 +24,11 @@
 #include "gimppaintoptions.h"
 
 
-#define GIMP_TYPE_DODGEBURN            (gimp_dodgeburn_get_type ())
-#define GIMP_DODGEBURN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGEBURN, GimpDodgeBurn))
-#define GIMP_IS_DODGEBURN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGEBURN))
-#define GIMP_DODGEBURN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGEBURN, GimpDodgeBurnClass))
-#define GIMP_IS_DODGEBURN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGEBURN))
+#define GIMP_TYPE_DODGE_BURN            (gimp_dodge_burn_get_type ())
+#define GIMP_DODGE_BURN(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DODGE_BURN, GimpDodgeBurn))
+#define GIMP_IS_DODGE_BURN(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DODGE_BURN))
+#define GIMP_DODGE_BURN_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DODGEBURN, GimpDodgeBurnClass))
+#define GIMP_IS_DODGE_BURN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGE_BURN))
 
 
 typedef struct _GimpDodgeBurn      GimpDodgeBurn;
@@ -47,33 +47,10 @@ struct _GimpDodgeBurnClass
 };
 
 
-typedef struct _GimpDodgeBurnOptions GimpDodgeBurnOptions;
+void    gimp_dodge_burn_register (Gimp                      *gimp,
+                                  GimpPaintRegisterCallback  callback);
 
-struct _GimpDodgeBurnOptions
-{
-  GimpPaintOptions   paint_options;
-
-  GimpDodgeBurnType  type;
-  GimpDodgeBurnType  type_d;
-  GtkWidget         *type_w;
-
-  GimpTransferMode   mode;     /*highlights, midtones, shadows*/
-  GimpTransferMode   mode_d;
-  GtkWidget         *mode_w;
-
-  gdouble            exposure;
-  gdouble            exposure_d;
-  GtkObject         *exposure_w;
-};
+GType   gimp_dodge_burn_get_type (void) G_GNUC_CONST;
 
 
-void    gimp_dodgeburn_register (Gimp                      *gimp,
-                                 GimpPaintRegisterCallback  callback);
-
-GType   gimp_dodgeburn_get_type (void) G_GNUC_CONST;
-
-
-GimpDodgeBurnOptions * gimp_dodgeburn_options_new (GimpContext *context);
-
-
-#endif  /*  __GIMP_DODGEBURN_H__  */
+#endif  /*  __GIMP_DODGE_BURN_H__  */

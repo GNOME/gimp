@@ -96,7 +96,8 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ROTATE_TOOL,
-                transform_options_new,
+                GIMP_TYPE_TRANSFORM_OPTIONS,
+                gimp_transform_options_gui,
                 FALSE,
                 "gimp-rotate-tool",
                 _("Rotate"),
@@ -265,10 +266,10 @@ static void
 gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
                          GimpDisplay       *gdisp)
 {
-  TransformOptions *options;
-  gdouble           angle1, angle2, angle;
-  gdouble           cx, cy;
-  gdouble           x1, y1, x2, y2;
+  GimpTransformOptions *options;
+  gdouble               angle1, angle2, angle;
+  gdouble               cx, cy;
+  gdouble               x1, y1, x2, y2;
 
   if (tr_tool->function == TRANSFORM_HANDLE_CENTER)
     {
@@ -280,7 +281,7 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
       return;
     }
 
-  options = (TransformOptions *) GIMP_TOOL (tr_tool)->tool_info->tool_options;
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   cx = tr_tool->trans_info[CENTER_X];
   cy = tr_tool->trans_info[CENTER_Y];

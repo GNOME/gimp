@@ -20,19 +20,8 @@
 #define __PAINT_OPTIONS_H__
 
 
-#include "tool_options.h"
-
-
-/*  paint tool options functions  */
-
-GimpToolOptions * paint_options_new   (GimpToolInfo     *tool_info);
-
-void              paint_options_reset (GimpToolOptions  *tool_options);
-
-
-/*  to be used by "derived" paint options only  */
-void              paint_options_init  (GimpPaintOptions *options,
-                                       GimpToolInfo     *tool_info);
+void   gimp_paint_options_gui   (GimpToolOptions *tool_options);
+void   gimp_paint_options_reset (GimpToolOptions *tool_options);
 
 
 #endif  /*  __PAINT_OPTIONS_H__  */

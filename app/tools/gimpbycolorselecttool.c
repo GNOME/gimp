@@ -72,7 +72,8 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                                     gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
-                selection_options_new,
+                GIMP_TYPE_SELECTION_OPTIONS,
+                gimp_selection_options_gui,
                 FALSE,
                 "gimp-by-color-select-tool",
                 _("Select By Color"),
@@ -151,11 +152,10 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
                                         GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_color_sel;
-  SelectionOptions      *sel_options;
+  GimpSelectionOptions  *options;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options      = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -165,7 +165,7 @@ gimp_by_color_select_tool_button_press (GimpTool        *tool,
   by_color_sel->x = coords->x;
   by_color_sel->y = coords->y;
 
-  if (! sel_options->sample_merged)
+  if (! options->sample_merged)
     {
       gint off_x, off_y;
 
@@ -186,15 +186,14 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
 {
   GimpByColorSelectTool *by_color_sel;
   GimpSelectionTool     *sel_tool;
-  SelectionOptions      *sel_options;
+  GimpSelectionOptions  *options;
   GimpDrawable          *drawable;
   guchar                *col;
   GimpRGB                color;
 
   by_color_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
   sel_tool     = GIMP_SELECTION_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options      = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -209,7 +208,7 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
           by_color_sel->y < gimp_drawable_height (drawable))
 	{
 	  /*  Get the start color  */
-	  if (sel_options->sample_merged)
+	  if (options->sample_merged)
 	    {
 	      if (!(col = gimp_image_projection_get_color_at (gdisp->gimage,
                                                               by_color_sel->x,
@@ -228,15 +227,15 @@ gimp_by_color_select_tool_button_release (GimpTool        *tool,
 	  g_free (col);
 
 	  gimp_image_mask_select_by_color (gdisp->gimage, drawable,
-                                           sel_options->sample_merged,
+                                           options->sample_merged,
                                            &color,
-                                           sel_options->threshold,
-                                           sel_options->select_transparent,
+                                           options->threshold,
+                                           options->select_transparent,
                                            sel_tool->op,
-                                           sel_options->antialias,
-                                           sel_options->feather,
-                                           sel_options->feather_radius,
-                                           sel_options->feather_radius);
+                                           options->antialias,
+                                           options->feather,
+                                           options->feather_radius,
+                                           options->feather_radius);
 
 	  gimp_image_flush (gdisp->gimage);
 	}
@@ -249,15 +248,14 @@ gimp_by_color_select_tool_oper_update (GimpTool        *tool,
                                        GdkModifierType  state,
                                        GimpDisplay     *gdisp)
 {
-  GimpSelectionTool *sel_tool;
-  SelectionOptions  *sel_options;
+  GimpSelectionTool    *sel_tool;
+  GimpSelectionOptions *options;
 
   if (gimp_tool_control_is_active (tool->control))
     return;
 
   sel_tool = GIMP_SELECTION_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options  = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
     {
@@ -273,7 +271,7 @@ gimp_by_color_select_tool_oper_update (GimpTool        *tool,
     }
   else
     {
-      sel_tool->op = sel_options->op;
+      sel_tool->op = options->op;
     }
 }
 
@@ -284,16 +282,15 @@ gimp_by_color_select_tool_cursor_update (GimpTool        *tool,
                                          GimpDisplay     *gdisp)
 {
   GimpByColorSelectTool *by_col_sel;
-  SelectionOptions      *sel_options;
+  GimpSelectionOptions  *options;
   GimpLayer             *layer;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
-
-  sel_options = (SelectionOptions *) tool->tool_info->tool_options;
+  options    = GIMP_SELECTION_OPTIONS (tool->tool_info->tool_options);
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
-  if (! sel_options->sample_merged &&
+  if (! options->sample_merged &&
       layer && layer != gdisp->gimage->active_layer)
     {
       gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);

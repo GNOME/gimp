@@ -23,7 +23,6 @@
 #include "base/pixel-region.h"
 
 #include "gimppaintcore.h"
-#include "gimppaintoptions.h"
 
 
 #define GIMP_TYPE_SMUDGE            (gimp_smudge_get_type ())
@@ -52,25 +51,10 @@ struct _GimpSmudgeClass
 };
 
 
-typedef struct _GimpSmudgeOptions GimpSmudgeOptions;
+void    gimp_smudge_register (Gimp                      *gimp,
+                              GimpPaintRegisterCallback  callback);
 
-struct _GimpSmudgeOptions
-{
-  GimpPaintOptions  paint_options;
-
-  gdouble           rate;
-  gdouble           rate_d;
-  GtkObject        *rate_w;
-};
-
-
-void    gimp_smudge_register    (Gimp                      *gimp,
-                                 GimpPaintRegisterCallback  callback);
-
-GType   gimp_smudge_get_type    (void) G_GNUC_CONST;
-
-
-GimpSmudgeOptions * gimp_smudge_options_new (GimpContext *context);
+GType   gimp_smudge_get_type (void) G_GNUC_CONST;
 
 
 #endif  /*  __GIMP_SMUDGE_H__  */

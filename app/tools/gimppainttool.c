@@ -36,6 +36,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintcore.h"
+#include "paint/gimppaintoptions.h"
 
 #include "widgets/gimpdevices.h"
 
@@ -43,6 +44,7 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpstatusbar.h"
 
+#include "gimpcolorpickeroptions.h"
 #include "gimpcolorpickertool.h"
 #include "gimppainttool.h"
 #include "tool_manager.h"
@@ -198,7 +200,7 @@ gimp_paint_tool_control (GimpTool       *tool,
     case HALT:
       gimp_paint_core_paint (paint_tool->core,
                              drawable,
-                             (GimpPaintOptions *) tool->tool_info->tool_options,
+                             GIMP_PAINT_OPTIONS (tool->tool_info->tool_options),
                              FINISH_PAINT);
       gimp_paint_core_cleanup (paint_tool->core);
 
@@ -244,19 +246,18 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 {
   GimpDrawTool     *draw_tool;
   GimpPaintTool    *paint_tool;
-  GimpPaintCore    *core;
   GimpPaintOptions *paint_options;
+  GimpPaintCore    *core;
   GimpBrush        *current_brush;
   GimpDrawable     *drawable;
   GimpCoords        curr_coords;
   gboolean          draw_line = FALSE;
 
-  draw_tool  = GIMP_DRAW_TOOL (tool);
-  paint_tool = GIMP_PAINT_TOOL (tool);
+  draw_tool     = GIMP_DRAW_TOOL (tool);
+  paint_tool    = GIMP_PAINT_TOOL (tool);
+  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
-
-  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -389,15 +390,14 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 				GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool;
-  GimpPaintCore    *core;
   GimpPaintOptions *paint_options;
+  GimpPaintCore    *core;
   GimpDrawable     *drawable;
 
-  paint_tool = GIMP_PAINT_TOOL (tool);
+  paint_tool    = GIMP_PAINT_TOOL (tool);
+  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
-
-  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -430,15 +430,14 @@ gimp_paint_tool_motion (GimpTool        *tool,
 			GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool;
-  GimpPaintCore    *core;
   GimpPaintOptions *paint_options;
+  GimpPaintCore    *core;
   GimpDrawable     *drawable;
 
-  paint_tool = GIMP_PAINT_TOOL (tool);
+  paint_tool    = GIMP_PAINT_TOOL (tool);
+  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   core = paint_tool->core;
-
-  paint_options = (GimpPaintOptions *) tool->tool_info->tool_options;
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
@@ -613,13 +612,13 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
 
   if (paint_tool->pick_state)
     {
-      GimpToolInfo               *info;
-      GimpColorPickerToolOptions *options;
+      GimpToolInfo           *info;
+      GimpColorPickerOptions *options;
 
       info = tool_manager_get_info_by_type (GIMP_TOOL (draw_tool)->tool_info->gimp,
                                             GIMP_TYPE_COLOR_PICKER_TOOL);
 
-      options = (GimpColorPickerToolOptions *) info->tool_options;
+      options = GIMP_COLOR_PICKER_OPTIONS (info->tool_options);
 
       if (options->sample_average)
         {
@@ -672,17 +671,17 @@ gimp_paint_tool_sample_color (GimpDrawable *drawable,
 			      gint          y,
 			      gint          state)
 {
-  GimpToolInfo               *picker_info;
-  GimpColorPickerToolOptions *picker_options;
-  GimpImage                  *gimage;
-  GimpRGB                     color;
+  GimpToolInfo           *picker_info;
+  GimpColorPickerOptions *picker_options;
+  GimpImage              *gimage;
+  GimpRGB                 color;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
   picker_info = tool_manager_get_info_by_type (gimage->gimp,
                                                GIMP_TYPE_COLOR_PICKER_TOOL);
 
-  picker_options = (GimpColorPickerToolOptions *) picker_info->tool_options;
+  picker_options = GIMP_COLOR_PICKER_OPTIONS (picker_info->tool_options);
 
   if (gimp_image_pick_color (gimage,
                              drawable,

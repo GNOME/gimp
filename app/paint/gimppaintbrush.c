@@ -60,7 +60,7 @@ void
 gimp_paintbrush_register (Gimp                      *gimp,
                           GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_PAINTBRUSH);
+  (* callback) (gimp, GIMP_TYPE_PAINTBRUSH, GIMP_TYPE_PAINT_OPTIONS);
 }
 
 GType

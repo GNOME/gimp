@@ -20,26 +20,42 @@
 #define __TOOL_OPTIONS_H__
 
 
-/*  the tool options structures  */
+#include "core/gimpcontext.h"
+
+
+#define GIMP_TYPE_TOOL_OPTIONS            (gimp_tool_options_get_type ())
+#define GIMP_TOOL_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptions))
+#define GIMP_TOOL_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptionsClass))
+#define GIMP_IS_TOOL_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_TOOL_OPTIONS))
+#define GIMP_IS_TOOL_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_TOOL_OPTIONS))
+#define GIMP_TOOL_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_OPTIONS, GimpToolOptionsClass))
+
+
+typedef struct _GimpToolOptionsClass GimpToolOptionsClass;
 
 struct _GimpToolOptions
 {
-  GtkWidget                *main_vbox;
+  GimpContext               parent_instance;
 
   GimpToolInfo             *tool_info;
+
+  GtkWidget                *main_vbox;
   GimpToolOptionsResetFunc  reset_func;
 };
 
-/*  create a dummy tool options structure
- *  (to be used by tools without options)
- */
-GimpToolOptions * tool_options_new  (GimpToolInfo    *tool_info);
+struct _GimpToolOptionsClass
+{
+  GimpContextClass parent_class;
 
-/*  initialize an already allocated ToolOptions structure
- *  (to be used by derived tool options only)
- */
-void              tool_options_init (GimpToolOptions *options,
-                                     GimpToolInfo    *tool_info);
+  void (* reset) (GimpToolOptions *tool_options);
+};
+
+
+GType   gimp_tool_options_get_type (void) G_GNUC_CONST;
+
+void    gimp_tool_options_reset    (GimpToolOptions *tool_options);
+
+void    gimp_tool_options_gui      (GimpToolOptions *tool_options);
 
 
 #endif  /*  __TOOL_OPTIONS_H__  */

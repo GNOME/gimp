@@ -30,6 +30,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpclone.h"
+#include "paint/gimpcloneoptions.h"
 
 #include "display/gimpdisplay.h"
 
@@ -75,8 +76,8 @@ static void   gimp_clone_pretrace_callback     (GimpClone       *clone,
 static void   gimp_clone_posttrace_callback    (GimpClone       *clone,
                                                 gpointer         data);
 
-static GimpToolOptions * clone_options_new     (GimpToolInfo    *tool_info);
-static void              clone_options_reset   (GimpToolOptions *options);
+static void   gimp_clone_options_gui           (GimpToolOptions *tool_options);
+static void   gimp_clone_options_reset         (GimpToolOptions *tool_options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -89,7 +90,8 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CLONE_TOOL,
-                clone_options_new,
+                GIMP_TYPE_CLONE_OPTIONS,
+                gimp_clone_options_gui,
                 TRUE,
                 "gimp-clone-tool",
                 _("Clone"),
@@ -361,18 +363,18 @@ gimp_clone_posttrace_callback (GimpClone *clone,
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-clone_options_new (GimpToolInfo *tool_info)
+static void
+gimp_clone_options_gui (GimpToolOptions *tool_options)
 {
   GimpCloneOptions *options;
   GtkWidget        *vbox;
   GtkWidget        *frame;
 
-  options = gimp_clone_options_new (tool_info->context);
+  options = GIMP_CLONE_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = clone_options_reset;
+  ((GimpToolOptions *) options)->reset_func = gimp_clone_options_reset;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -400,18 +402,16 @@ clone_options_new (GimpToolInfo *tool_info)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
-  
-  return (GimpToolOptions *) options;
 }
 
 static void
-clone_options_reset (GimpToolOptions *tool_options)
+gimp_clone_options_reset (GimpToolOptions *tool_options)
 {
   GimpCloneOptions *options;
 
-  options = (GimpCloneOptions *) tool_options;
+  options = GIMP_CLONE_OPTIONS (tool_options);
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));

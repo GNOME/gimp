@@ -76,7 +76,8 @@ const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
 
 
 void           tool_manager_register_tool         (GType             tool_type,
-                                                   GimpToolOptionsNewFunc  options_new_func,
+                                                   GType             tool_options_type,
+                                                   GimpToolOptionsGUIFunc  options_gui_func,
 						   gboolean          tool_context,
 						   const gchar      *identifier,
 						   const gchar      *blurb,

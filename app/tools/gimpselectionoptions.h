@@ -23,11 +23,20 @@
 #include "tool_options.h"
 
 
-/*  the selection options structures  */
+#define GIMP_TYPE_SELECTION_OPTIONS            (gimp_selection_options_get_type ())
+#define GIMP_SELECTION_OPTIONS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptions))
+#define GIMP_SELECTION_OPTIONS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptionsClass))
+#define GIMP_IS_SELECTION_OPTIONS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_SELECTION_OPTIONS))
+#define GIMP_IS_SELECTION_OPTIONS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_SELECTION_OPTIONS))
+#define GIMP_SELECTION_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SELECTION_OPTIONS, GimpSelectionOptionsClass))
 
-struct _SelectionOptions
+
+typedef struct _GimpSelectionOptions GimpSelectionOptions;
+typedef struct _GimpToolOptionsClass GimpSelectionOptionsClass;
+
+struct _GimpSelectionOptions
 {
-  GimpToolOptions  tool_options;
+  GimpToolOptions     parent_instance;
 
   /*  options used by all selection tools  */
   SelectOps           op;
@@ -91,17 +100,10 @@ struct _SelectionOptions
 };
 
 
-/*  selection tool options functions
- */
-GimpToolOptions * selection_options_new   (GimpToolInfo     *tool_info);
+GType   gimp_selection_options_get_type (void) G_GNUC_CONST;
 
-void              selection_options_reset (GimpToolOptions  *tool_options);
-
-
-/*  to be used by "derived" selection options only
- */
-void              selection_options_init  (SelectionOptions *options,
-                                           GimpToolInfo     *tool_info);
+void    gimp_selection_options_gui      (GimpToolOptions *tool_options);
+void    gimp_selection_options_reset    (GimpToolOptions *tool_options);
 
 
 #endif  /*  __SELCTION_OPTIONS_H__  */

@@ -93,23 +93,23 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 static void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
-  tool_info->tool_type       = G_TYPE_NONE;
+  tool_info->tool_type         = G_TYPE_NONE;
+  tool_info->tool_options_type = G_TYPE_NONE;
 
-  tool_info->blurb           = NULL;
-  tool_info->help            = NULL;
+  tool_info->blurb             = NULL;
+  tool_info->help              = NULL;
 
-  tool_info->menu_path       = NULL;
-  tool_info->menu_accel      = NULL;
+  tool_info->menu_path         = NULL;
+  tool_info->menu_accel        = NULL;
 
-  tool_info->help_domain     = NULL;
-  tool_info->help_data       = NULL;
+  tool_info->help_domain       = NULL;
+  tool_info->help_data         = NULL;
 
-  tool_info->stock_id        = NULL;
-  tool_info->stock_pixbuf    = NULL;
+  tool_info->stock_id          = NULL;
+  tool_info->stock_pixbuf      = NULL;
 
-  tool_info->context         = NULL;
-  tool_info->tool_options    = NULL;
-  tool_info->paint_info      = NULL;
+  tool_info->tool_options      = NULL;
+  tool_info->paint_info        = NULL;
 }
 
 static void
@@ -161,6 +161,12 @@ gimp_tool_info_finalize (GObject *object)
     {
       g_object_unref (tool_info->stock_pixbuf);
       tool_info->stock_pixbuf = NULL;
+    }
+
+  if (tool_info->tool_options)
+    {
+      g_object_unref (tool_info->tool_options);
+      tool_info->tool_options = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -234,8 +240,8 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 
 GimpToolInfo *
 gimp_tool_info_new (Gimp         *gimp,
-                    GimpContext  *context,
 		    GType         tool_type,
+                    GType         tool_options_type,
                     gboolean      tool_context,
 		    const gchar  *identifier,
 		    const gchar  *blurb,
@@ -252,7 +258,6 @@ gimp_tool_info_new (Gimp         *gimp,
   GimpToolInfo  *tool_info;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (identifier != NULL, NULL);
   g_return_val_if_fail (blurb != NULL, NULL);
   g_return_val_if_fail (help != NULL, NULL);
@@ -270,25 +275,25 @@ gimp_tool_info_new (Gimp         *gimp,
                             "name", identifier,
                             NULL);
 
-  tool_info->paint_info = paint_info;
+  tool_info->use_context       = tool_context;
+  tool_info->tool_options      = NULL;
+  tool_info->paint_info        = paint_info;
 
-  if (tool_context)
-    tool_info->context = gimp_context_new (gimp, identifier, context);
+  tool_info->gimp              = gimp;
+  tool_info->tool_type         = tool_type;
+  tool_info->tool_options_type = tool_options_type;
 
-  tool_info->gimp            = gimp;
-  tool_info->tool_type       = tool_type;
+  tool_info->blurb             = g_strdup (blurb);
+  tool_info->help              = g_strdup (help);
 
-  tool_info->blurb           = g_strdup (blurb);
-  tool_info->help            = g_strdup (help);
+  tool_info->menu_path         = g_strdup (menu_path);
+  tool_info->menu_accel        = g_strdup (menu_accel);
 
-  tool_info->menu_path       = g_strdup (menu_path);
-  tool_info->menu_accel      = g_strdup (menu_accel);
+  tool_info->help_domain       = g_strdup (help_domain);
+  tool_info->help_data         = g_strdup (help_data);
 
-  tool_info->help_domain     = g_strdup (help_domain);
-  tool_info->help_data       = g_strdup (help_data);
-
-  tool_info->stock_id        = g_strdup (stock_id);
-  tool_info->stock_pixbuf    = stock_pixbuf;
+  tool_info->stock_id          = g_strdup (stock_id);
+  tool_info->stock_pixbuf      = stock_pixbuf;
 
   if (stock_pixbuf)
     g_object_ref (stock_pixbuf);

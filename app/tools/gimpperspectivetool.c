@@ -74,7 +74,8 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                                 gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PERSPECTIVE_TOOL,
-                transform_options_new,
+                GIMP_TYPE_TRANSFORM_OPTIONS,
+                gimp_transform_options_gui,
                 FALSE,
                 "gimp-perspective-tool",
                 _("Perspective"),

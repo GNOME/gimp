@@ -38,6 +38,7 @@
 #include "core/gimppattern.h"
 
 #include "gimpclone.h"
+#include "gimpcloneoptions.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -83,7 +84,7 @@ void
 gimp_clone_register (Gimp                      *gimp,
                      GimpPaintRegisterCallback  callback)
 {
-  (* callback) (gimp, GIMP_TYPE_CLONE);
+  (* callback) (gimp, GIMP_TYPE_CLONE, GIMP_TYPE_CLONE_OPTIONS);
 }
 
 GType
@@ -561,27 +562,4 @@ gimp_clone_set_src_drawable (GimpClone    *clone,
                         G_CALLBACK (gimp_clone_src_drawable_disconnect_cb),
                         clone);
     }
-}
-
-
-/*  paint options stuff  */
-
-#define CLONE_DEFAULT_TYPE     GIMP_IMAGE_CLONE
-#define CLONE_DEFAULT_ALIGNED  GIMP_CLONE_ALIGN_NO
-
-GimpCloneOptions *
-gimp_clone_options_new (GimpContext *context)
-{
-  GimpCloneOptions *options;
-
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
-
-  options = g_new0 (GimpCloneOptions, 1);
-
-  gimp_paint_options_init ((GimpPaintOptions *) options, context);
-
-  options->type    = options->type_d    = CLONE_DEFAULT_TYPE;
-  options->aligned = options->aligned_d = CLONE_DEFAULT_ALIGNED;
-
-  return options;
 }

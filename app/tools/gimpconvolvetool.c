@@ -38,6 +38,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimpconvolve.h"
+#include "paint/gimpconvolveoptions.h"
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -68,8 +69,8 @@ static void   gimp_convolve_tool_cursor_update  (GimpTool              *tool,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *gdisp);
 
-static GimpToolOptions * convolve_options_new   (GimpToolInfo          *tool_info);
-static void              convolve_options_reset (GimpToolOptions       *options);
+static void    gimp_convolve_options_gui        (GimpToolOptions       *options);
+static void    gimp_convolve_options_reset      (GimpToolOptions       *options);
 
 
 static GimpPaintToolClass *parent_class;
@@ -82,7 +83,8 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CONVOLVE_TOOL,
-                convolve_options_new,
+                GIMP_TYPE_CONVOLVE_OPTIONS,
+                gimp_convolve_options_gui,
                 TRUE,
                 "gimp-convolve-tool",
                 _("Convolve"),
@@ -204,8 +206,8 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
 /*  tool options stuff  */
 
-static GimpToolOptions *
-convolve_options_new (GimpToolInfo *tool_info)
+static void
+gimp_convolve_options_gui (GimpToolOptions *tool_options)
 {
   GimpConvolveOptions *options;
   GtkWidget           *vbox;
@@ -213,11 +215,11 @@ convolve_options_new (GimpToolInfo *tool_info)
   GtkWidget           *frame;
   gchar               *str;
 
-  options = gimp_convolve_options_new (tool_info->context);
+  options = GIMP_CONVOLVE_OPTIONS (tool_options);
 
-  paint_options_init ((GimpPaintOptions *) options, tool_info);
+  gimp_paint_options_gui (tool_options);
 
-  ((GimpToolOptions *) options)->reset_func = convolve_options_reset;
+  ((GimpToolOptions *) options)->reset_func = gimp_convolve_options_reset;
 
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
@@ -254,18 +256,16 @@ convolve_options_new (GimpToolInfo *tool_info)
   g_signal_connect (options->rate_w, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->rate);
-
-  return (GimpToolOptions *) options;
 }
 
 static void
-convolve_options_reset (GimpToolOptions *tool_options)
+gimp_convolve_options_reset (GimpToolOptions *tool_options)
 {
   GimpConvolveOptions *options;
 
-  options = (GimpConvolveOptions *) tool_options;
+  options = GIMP_CONVOLVE_OPTIONS (tool_options);
 
-  paint_options_reset (tool_options);
+  gimp_paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
 			    options->rate_d);

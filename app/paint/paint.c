@@ -40,7 +40,8 @@
 /*  local function prototypes  */
 
 static void   paint_register (Gimp  *gimp,
-                              GType  paint_type);
+                              GType  paint_type,
+                              GType  paint_options_type);
 
 
 /*  public functions  */
@@ -51,7 +52,7 @@ paint_init (Gimp *gimp)
   GimpPaintRegisterFunc register_funcs[] =
   {
     gimp_smudge_register,
-    gimp_dodgeburn_register,
+    gimp_dodge_burn_register,
     gimp_convolve_register,
     gimp_clone_register,
     gimp_airbrush_register,
@@ -91,13 +92,15 @@ paint_exit (Gimp *gimp)
 
 static void
 paint_register (Gimp  *gimp,
-                GType  paint_type)
+                GType  paint_type,
+                GType  paint_options_type)
 {
   GimpPaintInfo *paint_info;
   const gchar   *pdb_string;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
+  g_return_if_fail (g_type_is_a (paint_options_type, GIMP_TYPE_PAINT_OPTIONS));
   
   if (paint_type == GIMP_TYPE_PENCIL)
     {
@@ -127,7 +130,7 @@ paint_register (Gimp  *gimp,
     {
       pdb_string = "gimp_smudge_default";
     }
-  else if (paint_type == GIMP_TYPE_DODGEBURN)
+  else if (paint_type == GIMP_TYPE_DODGE_BURN)
     {
       pdb_string = "gimp_dodgeburn_default";
     }
@@ -138,6 +141,7 @@ paint_register (Gimp  *gimp,
 
   paint_info = gimp_paint_info_new (gimp,
                                     paint_type,
+                                    paint_options_type,
                                     pdb_string);
 
   gimp_container_add (gimp->paint_info_list, GIMP_OBJECT (paint_info));

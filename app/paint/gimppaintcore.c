@@ -361,7 +361,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
    */
 
   if (core->grr_brush &&
-      core->grr_brush != gimp_context_get_brush (paint_options->context))
+      core->grr_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
     {
       g_signal_handlers_disconnect_by_func (core->grr_brush,
                                             gimp_paint_core_invalidate_cache,
@@ -369,7 +369,7 @@ gimp_paint_core_start (GimpPaintCore    *core,
       g_object_unref (core->grr_brush);
     }
 
-  core->grr_brush = gimp_context_get_brush (paint_options->context);
+  core->grr_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
   if (! core->grr_brush)
     {

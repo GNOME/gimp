@@ -44,28 +44,19 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
+#include "gimpvectoroptions.h"
 #include "gimpvectortool.h"
-#include "selection_options.h"
 
 #include "libgimp/gimpintl.h"
 
 
-/*  definitions  */
 #define  TARGET         9
 #define  ARC_RADIUS     30
 #define  STATUSBAR_SIZE 128
 
 
-/*  the vector tool options  */
-typedef struct _VectorOptions VectorOptions;
-
-struct _VectorOptions
-{
-  SelectionOptions  selection_options;
-};
-
-
 /*  local function prototypes  */
+
 static void   gimp_vector_tool_class_init      (GimpVectorToolClass *klass);
 static void   gimp_vector_tool_init            (GimpVectorTool      *tool);
 static void   gimp_vector_tool_finalize        (GObject             *object);
@@ -96,11 +87,6 @@ static void   gimp_vector_tool_cursor_update   (GimpTool        *tool,
 static void   gimp_vector_tool_draw            (GimpDrawTool    *draw_tool);
 
 
-
-static GimpToolOptions * vector_tool_options_new     (GimpToolInfo    *tool_info);
-static void              vector_tool_options_reset   (GimpToolOptions *tool_options);
-
-
 static GimpSelectionToolClass *parent_class = NULL;
 
 
@@ -109,7 +95,8 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_VECTOR_TOOL,
-                vector_tool_options_new,
+                GIMP_TYPE_VECTOR_OPTIONS,
+                gimp_vector_options_gui,
                 FALSE,
                 "gimp-vector-tool",
                 _("Vectors"),
@@ -239,14 +226,13 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpVectorTool *vector_tool;
-  VectorOptions  *options;
-  GimpAnchor     *anchor = NULL;
-  GimpStroke     *stroke = NULL;
+  GimpVectorTool    *vector_tool;
+  GimpVectorOptions *options;
+  GimpAnchor        *anchor = NULL;
+  GimpStroke        *stroke = NULL;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  options = (VectorOptions *) tool->tool_info->tool_options;
+  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
@@ -388,13 +374,12 @@ gimp_vector_tool_motion (GimpTool        *tool,
                          GdkModifierType  state,
                          GimpDisplay     *gdisp)
 {
-  GimpVectorTool *vector_tool;
-  VectorOptions  *options;
-  GimpAnchor     *anchor;
+  GimpVectorTool    *vector_tool;
+  GimpVectorOptions *options;
+  GimpAnchor        *anchor;
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
-
-  options = (VectorOptions *) tool->tool_info->tool_options;
+  options     = GIMP_VECTOR_OPTIONS (tool->tool_info->tool_options);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (vector_tool));
 
@@ -630,35 +615,4 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
       gimp_draw_tool_start (draw_tool, tool->gdisp);
     }
-}
-
-
-/*  tool options stuff  */
-
-static GimpToolOptions *
-vector_tool_options_new (GimpToolInfo *tool_info)
-{
-  VectorOptions *options;
-  GtkWidget      *vbox;
-
-  options = g_new0 (VectorOptions, 1);
-
-  selection_options_init ((SelectionOptions *) options, tool_info);
-
-  ((GimpToolOptions *) options)->reset_func = vector_tool_options_reset;
-
-  /*  the main vbox  */
-  vbox = ((GimpToolOptions *) options)->main_vbox;
-
-  return (GimpToolOptions *) options;
-}
-
-static void
-vector_tool_options_reset (GimpToolOptions *tool_options)
-{
-  VectorOptions *options;
-
-  options = (VectorOptions *) tool_options;
-
-  selection_options_reset (tool_options);
 }
