@@ -350,7 +350,16 @@ posterize_preview_update (GtkWidget *widget,
       posterize_preview (pd);
     }
   else
-    pd->preview = FALSE;
+    {
+      pd->preview = FALSE;
+      if (pd->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (pd->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
 }
 
 static void

@@ -94,6 +94,7 @@ struct _LevelsDialog
   GimpHistogram   *hist;
 
   GimpDrawable   *drawable;
+
   ImageMap        image_map;
 
   gint            color;
@@ -851,10 +852,11 @@ levels_preview (LevelsDialog *ld)
 {
   if (!ld->image_map)
     {
-      g_warning ("No image map");
+      g_warning ("levels_preview: No Image Map");
       return;
     }
-
+  if (!ld->preview)
+    return;
   active_tool->preserve = TRUE;
   image_map_apply (ld->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) ld->lut);
@@ -1080,7 +1082,17 @@ levels_preview_update (GtkWidget *widget,
       levels_preview (ld);
     }
   else
-    ld->preview = FALSE;
+    {
+      ld->preview = FALSE;
+      if (ld->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (ld->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
+
 }
 
 static void

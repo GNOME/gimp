@@ -22,7 +22,6 @@
 #include "gdisplay.h"
 #include "gimpui.h"
 #include "histogram_tool.h"
-#include "image_map.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"

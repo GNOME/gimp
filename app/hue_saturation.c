@@ -743,7 +743,16 @@ hue_saturation_preview_update (GtkWidget *widget,
       hue_saturation_preview (hsd);
     }
   else
-    hsd->preview = FALSE;
+    {
+      hsd->preview = FALSE;
+      if (hsd->image_map)
+	{
+	  active_tool->preserve = TRUE;
+	  image_map_clear (hsd->image_map);
+	  active_tool->preserve = FALSE;
+	  gdisplays_flush ();
+	}
+    }
 }
 
 static void

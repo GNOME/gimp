@@ -1,3 +1,18 @@
+2000-06-13  Jay Cox  <jaycox@gimp.org>
+
+        These files should have been commited in my 2000-05-08 commit
+	but somehow they didnt make it.
+	
+	* app/hue_saturation.c
+	* app/levels.c
+	* app/posterize.c
+	* app/threshold.c: Add a call to image_map_clear in the
+	preview toggle button callback.  This makes the preview toggle
+	button behave as expected.
+	
+	* app/histogram_tool: remove an unnecessary include.
+
+
 2000-06-13  Sven Neumann  <sven@gimp.org>
 
 	* gimp.1: removed
@@ -1389,7 +1404,7 @@ Mon May 15 22:48:17 PDT 2000 Manish Singh <yosh@gimp.org>
 	* plug-ins/common/tiff.c: Don't bother checking for CODEC
 	* plug-ins/bmp/bmpread.c: Misc. crash bugs fixed
 
-2000-05-12  Jay Cox  <jaycox@earthlink.net>
+2000-05-12  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimpimage.c: Copy the name, tatto and parasites of the 
 	bottom layer to the new merged layer in gimp_image_merge_layers.
@@ -1465,7 +1480,7 @@ Wed May 10 04:58:13 CEST 2000  Marc Lehmann <pcg@goof.com>
         * plug-ins/script-fu/scripts/asc2img.scm: Change image_types argument
         from "bar" to "".
 
-2000-05-08  Jay Cox  <jaycox@earthlink.net>
+2000-05-08  Jay Cox  <jaycox@gimp.org>
 
 	* app/image_map.[ch]: new function image_map_clear that removes
 	the preview without freeing the image_map.
@@ -1660,7 +1675,7 @@ Wed May 10 04:58:13 CEST 2000  Marc Lehmann <pcg@goof.com>
 	* modules/cdisplay_gamma.c
 	* modules/cdisplay_highcontrast.c: call dialog_[un]register().
 
-2000-05-05  Jay Cox  <jaycox@earthlink.net>
+2000-05-05  Jay Cox  <jaycox@gimp.org>
 
 	* app/pixel_processor.c: try to minimize the overhead of
 	multiprocessor support.  This should fix bug #9296
@@ -1904,7 +1919,7 @@ Sun Apr 30 14:45:16 PDT 2000 Manish Singh <yosh@gimp.org>
 	
 	* libgimp/gimpmath.h (FINITE): #define FINITE(x) isfinite(x) for OS/2
 
-2000-04-29  Jay Cox  <jaycox@earthlink.net>
+2000-04-29  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimage_mask.c: Fix the end of group check in 
 	gimage_mask_stroke.  This fixes bug #8699
@@ -1916,13 +1931,13 @@ Sun Apr 30 14:45:16 PDT 2000 Manish Singh <yosh@gimp.org>
 	* libgimp/gimpsignal.h: #define SA_RESTART SA_SYSV
 	SA_RESTART isnt't defined for OS/2!
 
-2000-04-29  Jay Cox  <jaycox@earthlink.net>
+2000-04-29  Jay Cox  <jaycox@gimp.org>
 
 	* modules/Makefile.am
 	* modules/cdisplay_highcontrast.c: Implement a high contrast 
 	display filter.
 
-2000-04-28  Jay Cox  <jaycox@earthlink.net>
+2000-04-28  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c: Correctly initialize the max arrays in
  	thin_region. Fixes bug #8351
@@ -2867,7 +2882,7 @@ Sun Apr  2 04:39:10 PDT 2000 Manish Singh <yosh@gimp.org>
 	* plug-ins/script-fu/scripts/pupi-button.scm: 
 	corrected spelling errors and unified strings
 
-2000-04-02  Jay Cox  <jaycox@earthlink.net>
+2000-04-02  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/tiff.c: Added a missing break statement so that
 	the compression argument in calls to file_tiff_save is honored.
@@ -2927,7 +2942,7 @@ Sun Apr  2 04:39:10 PDT 2000 Manish Singh <yosh@gimp.org>
 	* plug-ins/flame/flame.c: general ui cleanup, added some sanity
 	checks when opening a flame file, indentation.
 
-2000-04-01  Jay Cox  <jaycox@earthlink.net>
+2000-04-01  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c: Fixed the off by one error that was the cause
  	of bug #4980.  Fixed a bug that caused images to have their
@@ -3467,7 +3482,7 @@ Mon Mar 20 19:15:19 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 	from GUADEC.. this will sometimes be used once mitch gets around
 	to actually implement the stuff in layers dialog (ph3ar!) :)
 
-2000-03-18  Jay Cox  <jaycox@earthlink.net>
+2000-03-18  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c:  Make sure we don't divide by zero in
  	scale_region.  Fixes bugs #4783 and #6907.
@@ -5763,7 +5778,7 @@ Sat Feb  5 13:22:47 CET 2000  Sven Neumann <sven@gimp.org>
 	* plug-ins/makefile.{cygwin,msc}
 	* modules/makefile.{cygwin,msc}: Updates.
 
-2000-02-05  Jay Cox  <jaycox@earthlink.net>
+2000-02-05  Jay Cox  <jaycox@gimp.org>
 
 	* app/paths_cmds.c, tools/pdbgen/pdb/paths.pdb:
 	removed the gimp_path_set_tattoo function because tattoos are
@@ -6627,7 +6642,7 @@ Thu Jan 15 14:43:23 CET 2000  Daniel Egger <Daniel.Egger@suse.de>
 	  If this is the case avoid compiling it and use the standard one,
 	  thus reducing compile time and code and saveing diskspace.
     
-Sun Jan 23 23:08:18  2000  Jay Cox  <jaycox@earthlink.net>
+Sun Jan 23 23:08:18  2000  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/common/psd.c:  load the resolution info from the psd file.
 
@@ -13461,7 +13476,7 @@ Thu Sep  2 16:46:35 MEST 1999  Sven Neumann <sven@gimp.org>
 	* app/gradient_select.c: update the gradient_preview in the toolbox
 	when editing a gradient.
 
-Thu Sep  2 02:12:20 1999  Jay Cox  (jaycox@earthlink.net)
+Thu Sep  2 02:12:20 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/app_procs.c: free the brush dialog before freeing the brushes.
 
@@ -13761,7 +13776,7 @@ Mon Aug 30 22:15:29 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/xjt/xjt.c: correct a gccism
 
-Mon Aug 30 03:37:28 1999  Jay Cox  (jaycox@earthlink.net)
+Mon Aug 30 03:37:28 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/brush_edit.[ch]: Allow the user to change a brush's name.
 
@@ -14158,7 +14173,7 @@ Tue Aug 24 20:32:39 MEST 1999  Sven Neumann <sven.gimp.org>
 	
 	We need more units support in the plug-ins!!
 
-Mon Aug 23 22:41:52 1999  Jay Cox  (jaycox@earthlink.net)
+Mon Aug 23 22:41:52 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/paint_funcs.c: fixed bug in scale_region that caused what
 	looks like scan line swapping.
@@ -14305,7 +14320,7 @@ Mon Aug 23 10:15:32 EDT 1999  Austin Donnelly  <austin@gimp.org>
 	* app/interface.c: drop a color to the display to bucket fill the
 	selected region.
 
-Mon Aug 23 02:19:12 1999  Jay Cox  (jaycox@earthlink.net)
+Mon Aug 23 02:19:12 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/paint_funcs.c: fixed a couple of bugs in the scale_region code.
 
@@ -14516,7 +14531,7 @@ Sat Aug 21 13:30:38 MEST 1999  Sven Neumann <sven@gimp.org>
 	the possibility to use an info window (e.g. for the case
 	that the user chooses not to have a statusbar)
 
-Sat Aug 21 01:18:08 1999  Jay Cox  (jaycox@earthlink.net)
+Sat Aug 21 01:18:08 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/gimprc.[ch]: removed cubic_interpolation variable.
 	* app/transform_core.c: use the interpolation_type variable 
@@ -14561,7 +14576,7 @@ Sat Aug 21 00:07:37 BST 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/layer.[ch]: new function layer_mask_get_layer().
 
-Fri Aug 20 02:17:18 1999  Jay Cox  (jaycox@earthlink.net)
+Fri Aug 20 02:17:18 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/apptypes.h: added InterpolationType enum.
 	* app/gimprc.[ch], app/preferences_dialog.c: replaced 
@@ -14730,12 +14745,12 @@ Mon Aug 16 20:48:33 1999 Adrian Likins <alikins@redhat.com>
 	* app/makefile.msc
 	* plug-ins/makefile.msc: Misc fixes.
 
-Mon Aug 16 03:46:43 1999  Jay Cox  (jaycox@earthlink.net)
+Mon Aug 16 03:46:43 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/transform_core.c: put the gimp_matrix_is_simple 
 	optimization back in.
 
-Mon Aug 16 01:24:42 1999  Jay Cox  (jaycox@earthlink.net)
+Mon Aug 16 01:24:42 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/transform_core.c: data access optimizations from
 	David Hodson <hodsond@acm.org>
@@ -15021,7 +15036,7 @@ Tue Aug  3 18:13:47 CEST 1999  Marc Lehmann <pcg@goof.com>
         * app/interface.c: Display multi-line messages left-justified
         instead of centered.
 
-Tue Aug  3 02:13:57 1999  Jay Cox  (jaycox@earthlink.net)
+Tue Aug  3 02:13:57 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/transform_core.c: Improvements to the transform_core_do and 
 	cubic routines by David Hodson <hodsond@acm.org>
@@ -15131,7 +15146,7 @@ Thu Jul 29 23:58:08 1999  Tor Lillqvist  <tml@iki.fi>
 	* plug-ins/makefile.{cygwin,msc}: Install also GIMPressionist
  	brushes, papers and presets.
 
-Thu Jul 29 03:20:36 1999  Jay Cox  <jaycox@earthlink.net>
+Thu Jul 29 03:20:36 1999  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c, app/transform_core.c:  replace the cubic 
 	functions with a better/faster version supplied by
@@ -15263,7 +15278,7 @@ Wed Jul 28 19:41:08 MEST 1999  Sven Neumann <sven@gimp.org>
 	arbitrarily misplaced layers now.
 	Fixed some strange dnd special cases and cleaned up the dnd code.
 
-Wed Jul 28 03:42:34 1999  Jay Cox  (jaycox@earthlink.net)
+Wed Jul 28 03:42:34 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/pixel_regionP.h: new file that shold have gone with my last
 	commit.
@@ -15273,7 +15288,7 @@ Tue Jul 27 22:47:33 MEST 1999  Sven Neumann <sven@gimp.org>
 	* plug-ins/script-fu/script-fu-scripts.c: fixed a bug that was 
 	introduced by the latest portability changes
 
-Tue Jul 27 01:21:02 1999  Jay Cox  (jaycox@earthlink.net)
+Tue Jul 27 01:21:02 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/clone.c: more cursor support.
 	* app/cursorutil.[ch], cursors/{bad,badmsk}: new cursor
@@ -15333,7 +15348,7 @@ Mon Jul 26 20:11:01 MEST 1999  Sven Neumann <sven@gimp.org>
 	* pixmaps/toselection.xpm 
 	* pixmaps/anchor.xpm: some icons
 
-Sun Jul 25 23:37:48 1999  Jay Cox  (jaycox@earthlink.net)
+Sun Jul 25 23:37:48 1999  Jay Cox  (jaycox@gimp.org)
 
 	* paint_core.c: fixed long standing roundoff error in
 	paint_core_subsample_mask.  A couple of minor code cleanups.
@@ -17255,7 +17270,7 @@ Sat May 29 09:28:40 PDT 1999 Manish Singh <yosh@gimp.org>
 	* modules/makefile.msc: Update GLib and GTk+ version paths to
  	current preferences.
 
-Thu May 27 22:04:49 1999  Jay Cox  (jaycox@earthlink.net)
+Thu May 27 22:04:49 1999  Jay Cox  (jaycox@gimp.org)
 
 	* app/channel.c: applied fix for the channel_bounds bug from
 	Didier Gautheron <dgautheron@magic.fr>. (slightly modified)
@@ -17277,7 +17292,7 @@ Thu May 27 12:10:46 MEST 1999 Sven Neumann <sven@gimp.org>
 	* plug-ins/gap/sel-to-anim-img.scm: bugfix as provided by Wolfgang
 	Hofer, the GAP author
 
-Thu May 27 01:59:35 1999  Jay Cox  (jaycox@earthlink.net)
+Thu May 27 01:59:35 1999  Jay Cox  (jaycox@gimp.org)
 
 	* cursors/{mouse1_u,mouse1_umsk}: new mouse cursor for intersection
 	operations.
@@ -17486,7 +17501,7 @@ Mon May 17 14:25:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 
 	* plug-ins/mail/mail.c (save_image): Add OS/2 patches. popen(),spawnl,,
 
-1999-05-17  Jay Cox  <jaycox@earthlink.net>
+1999-05-17  Jay Cox  <jaycox@gimp.org>
 
 	* app/xcf.c: fixed bogus computation of the maximum size
  	of a compressed tile in xcf_load_level and xcf_save_level.
@@ -17562,7 +17577,7 @@ Sat May 15 00:06:06 BST 1999 Andy Thomas <alt@gimp.org>
 	Fixed problem where paths preview not resized correctly when
 	image was resized.
 
-1999-05-13  Jay Cox  <jaycox@earthlink.net>
+1999-05-13  Jay Cox  <jaycox@gimp.org>
 
 	* app/pencil.c: use the new color picking feature of paint_core.
 
@@ -17616,7 +17631,7 @@ Thu May 13 22:41:26 BST 1999 Andy Thomas <alt@gimp.org>
 	the currently selected channel. MB1 + CNTRL will add the point
 	to all channels. (Thanks to Carey Bunks for the initial idea).
 
-1999-05-13  Jay Cox  <jaycox@earthlink.net>
+1999-05-13  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_core.[ch]: set the fg or bg color if ctrl or alt is
  	held.  use the new dropper cursor.
@@ -17832,7 +17847,7 @@ Wed May  5 12:40:54 MEST 1999 Sven Neumann <sven@gimp.org>
 	directory 'cursors'. Added the files to the Makefile.
 	Now its up to TigerT to provide a set of rocking cursors for us ;-)
 
-1999-05-05  Jay Cox  <jaycox@earthlink.net>
+1999-05-05  Jay Cox  <jaycox@gimp.org>
 
 	* pixmaps/mouse1*: new bitmap files containing the new mouse
  	cursors. (based on the work of Tuomas Kuosmanen)
@@ -18437,7 +18452,7 @@ Fri Apr 23 08:31:50 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 	* plug-ins/png/png.c: 
 	* plug-ins/sgi/sgi.c:  Use MAIN() macro.
 
-1999-04-22  Jay Cox  <jaycox@earthlink.net>
+1999-04-22  Jay Cox  <jaycox@gimp.org>
 
 	* app/edit_selection.c: removed some nonfunctional code.
 
@@ -19077,7 +19092,7 @@ Fri Apr  9 21:45:10 PDT 1999 Manish Singh <yosh@gimp.org>
 	* app/convert_cmds.c
 	* app/paths_cmds.c: slight pdbgen changes
 
-1999-04-09  Jay Cox  <jaycox@earthlink.net>
+1999-04-09  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimphistogramF.h: new file containing typedef for
  	GimpHistogram.
@@ -19096,7 +19111,7 @@ Fri Apr  9 18:58:41 1999  Raph Levien  <raph@gimp.org>
 	file as some modules seem to do, but chose this because it seemed
 	like a less drastic fix.
 
-1999-04-08  Jay Cox  <jaycox@earthlink.net>
+1999-04-08  Jay Cox  <jaycox@gimp.org>
 
 	* app/Makefile.am: build color_cmds, lut_funcs, and pixel_processor
 	* app/app_procs.c: feedback in the splash screen when loading
@@ -19556,7 +19571,7 @@ Thu Mar 25 22:40:36 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	The paths .pdb stub for Yosh to look at.
 
-1999-03-25  Jay Cox  <jaycox@earthlink.net>
+1999-03-25  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.[ch]: Added an edge_lock parameter to
  	thin_region.  Split the radius parameter into xradius and yradius
@@ -19694,7 +19709,7 @@ Fri Mar 19 04:01:04 EST 1999 Adrian Likins <adrian@gimp.org>
 	so it at least builds. Probabaly not the right fix,
 	but while I'm committing...
 
-1999-03-18  Jay Cox  <jaycox@earthlink.net>
+1999-03-18  Jay Cox  <jaycox@gimp.org>
 
 	* app/ops_buttons.h: removed a c++ style comment
 
@@ -19866,7 +19881,7 @@ Sun Mar 14 13:26:11 MET 1999 Sven Neumann <sven@gimp.org>
 	wrong. The current behaviour is probably not perfect and I'll try
 	to fix that.
 
-1999-03-14  Jay Cox  <jaycox@earthlink.net>
+1999-03-14  Jay Cox  <jaycox@gimp.org>
 
 	* app/xcf.c:
 
@@ -19970,7 +19985,7 @@ Fri Mar 12 22:15:49 CET 1999 Marc Lehmann <pcg@goof.com>
 	* libgimp/gimpsizeentry.c: fixed the update bug reported by Marc.
 	Works now but still needs discussion...
 
-1999-03-11  Jay Cox  <jaycox@earthlink.net>
+1999-03-11  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c: made the INT_MULT3 macro be more accurate.
 
@@ -20008,7 +20023,7 @@ Thu Mar 11 19:42:12 CET 1999 Marc Lehmann <pcg@goof.com>
 	* configure.in, config.h.in: added test for _exit (mirrors the
 	change in plug-ins/perl/etc/configure.frag)
 
-1999-03-10  Jay Cox  <jaycox@earthlink.net>
+1999-03-10  Jay Cox  <jaycox@gimp.org>
 
 	* plug-ins/wind/wind.c, plug-ins/bumpmap/bumpmap.c: Set
  	appropriate values for the tile cache.  This makes a large speed
@@ -20051,7 +20066,7 @@ Mon Mar  8 21:23:10 CET 1999 Marc Lehmann <pcg@goof.com>
 	* app/layer_cmds.c: updated gimp_layer_new and gimp_layer_set_mode to
 	accept a DIVIDE_MODE argument.
 
-1999-03-08  Jay Cox  <jaycox@earthlink.net>
+1999-03-08  Jay Cox  <jaycox@gimp.org>
 
 	* app/plug_in.c: use g_io_channel_close/unref pairs instead of close
 	in plug_in_open().
@@ -20165,7 +20180,7 @@ Mon Mar  8 21:23:10 CET 1999 Marc Lehmann <pcg@goof.com>
 	calls. Register having corresponding SF-FONT parameters. Thanks to
 	Piet van Oostrum for this.
 
-1999-03-07  Jay Cox  <jaycox@earthlink.net>
+1999-03-07  Jay Cox  <jaycox@gimp.org>
 
 	* app/brush_select.c: pop up the brush-edit dialog whenever the
  	user creates a new brush.
@@ -20304,7 +20319,7 @@ Tue Mar  2 01:24:41 MET 1999 Sven Neumann <sven@gimp.org>
 	* app/file_new_dialogs: a first attempt to make the dialog 
 	easier to use w/o loosing the flexibility it provided.
 
-1999-02-28  Jay Cox  <jaycox@earthlink.net>
+1999-02-28  Jay Cox  <jaycox@gimp.org>
 
 	* app/Makefile.am: added gimphistogram*, histogramwidget*, 
 	removed histogram.[ch]
@@ -20448,7 +20463,7 @@ Mon Feb 22 14:08:59 CET 1999 Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/psd/psd.c: debugging turned off
 
-1999-02-22  Jay Cox  <jaycox@earthlink.net>
+1999-02-22  Jay Cox  <jaycox@gimp.org>
 
 	* app/channel.c: fixed bug in channel_bounds
 
@@ -20592,16 +20607,16 @@ Wed Feb 17 23:36:45 1999  Tor Lillqvist  <tml@iki.fi>
 	* app/color_balance.c (struct _ColorBalanceDialog): lookup tables
  	should be size 256, not 255.
 
-1999-02-16  Jay Cox  <jaycox@earthlink.net>
+1999-02-16  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimplutP.h: fixed error in struct declaration
 	
-1999-02-16  Jay Cox  <jaycox@earthlink.net>
+1999-02-16  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimplut[FP].h: oops, these should have been added with the
  	last commit.
 
-1999-02-16  Jay Cox  <jaycox@earthlink.net>
+1999-02-16  Jay Cox  <jaycox@gimp.org>
 
 	* app/gimplut.[ch]: new source files that implement pixel Look Up
  	Table functions.
@@ -20706,7 +20721,7 @@ Sun Feb 14 02:33:42 CET 1999 Marc Lehmann <pcg@goof.com>
 	* docs/parasites.txt: Add some thoughts about parasite
 	data formats.
 
-1999-02-14  Jay Cox  <jaycox@earthlink.net>
+1999-02-14  Jay Cox  <jaycox@gimp.org>
 
 	* app/layers_dialog.c: applied Michael Natterer's fix for the
  	layer movement bug.
@@ -20881,7 +20896,7 @@ Sat Feb  6 15:11:26 GMT 1999  Austin Donnelly  <austin@gimp.org>
 	* app/module_db.c: make module_info a proper object emitting a
 	    modified signal.
 
-1999-02-05  Jay Cox  <jaycox@earthlink.net>
+1999-02-05  Jay Cox  <jaycox@gimp.org>
 
 	* app/clone.c: merged the registered clone option from the
  	hollywood branch.  Made the source for unaligned clones reset
@@ -20977,7 +20992,7 @@ Tue Feb 02 20:58:40 1999  Tor Lillqvist  <tml@iki.fi>
  	after adding the same name several times. Thanks to Piet van Oostrum
 	for reporting and diagnosing this.
 
-1999-01-31  Jay Cox  <jaycox@earthlink.net>
+1999-01-31  Jay Cox  <jaycox@gimp.org>
 
 	* app/color_balance.c: optimized by using a lookup table
 	
@@ -21125,7 +21140,7 @@ Sat Jan 23 18:43:23 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* plug-ins/jpeg/jpeg.c: Minor code comment amendments.
 
-1999-01-22  Jay Cox  <jaycox@earthlink.net>
+1999-01-22  Jay Cox  <jaycox@gimp.org>
 
 	* app/pixel_region.c, app/pixel_region.h: new function 
 	pixel_regions_process_parallel
@@ -21214,12 +21229,12 @@ Wed Jan 20 22:37:13 GMT 1999  Adam D. Moss  <adam@gimp.org>
 	probably don't show yet when this is active.  Report strangeness.
 	Thanks.
 
-1999-01-20  Jay Cox  <jaycox@earthlink.net>
+1999-01-20  Jay Cox  <jaycox@gimp.org>
 
 	* app/layers_dialog.c: connect the destroy signal of images to
  	lc_dialog_update_cb
 
-1999-01-19  Jay Cox  <jaycox@earthlink.net>
+1999-01-19  Jay Cox  <jaycox@gimp.org>
 
 	* app/brush_select.c: make the edit button active if the default
  	brush is a generated brush.  Make sure brush spacing >= 1.0
@@ -21770,7 +21785,7 @@ Thu Dec 17 03:37:43 PST 1998 Manish Singh <yosh@gimp.org>
 	* app/crop.c
 	* app/gimpimage.c: warning pogrom
 
-1998-12-16  Jay Cox  <jaycox@earthlink.net>
+1998-12-16  Jay Cox  <jaycox@gimp.org>
 
 	* app/xcf.c: fixed bug in the resolution saving code and
 	added a sanity check to the resolution loading.
@@ -21780,12 +21795,12 @@ Wed Dec 16 13:27:23 PST 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/gfig/gfig.c: removed my_gtk_label_set, since the underlying
 	implementation changed. Why was this there anyway?
 
-1998-12-16  Jay Cox  <jaycox@earthlink.net>
+1998-12-16  Jay Cox  <jaycox@gimp.org>
 
 	* app/paint_funcs.c: fixed a bug in combine_inten_and_inten_a_pixels.
 	Use INT_MULT and friends everywhere possible.
 
-1998-12-16  Jay Cox  <jaycox@earthlink.net>
+1998-12-16  Jay Cox  <jaycox@gimp.org>
 
 	* libgimp/gserialize.c
 	* libgimp/gserialize.h: Changed the enum values to allow for
@@ -22175,7 +22190,7 @@ Fri Nov 13 16:48:10 CET 1998 Marc Lehmann <pcg@goof.com>
 	API-mega-break-it-all patch part one: removed the unnecessary
 	PDB_IMAGE argument from many functions.
 
-1998-11-12  Jay Cox  <jaycox@earthlink.net>
+1998-11-12  Jay Cox  <jaycox@gimp.org>
 
 	* app/drawable_cmds.c, app/gimage_cmds.c
 	* app/parasite_cmds.c, libgimp/parasite.[ch],
@@ -22236,7 +22251,7 @@ Sun Nov  8 17:51:52 PST 1998 Manish Singh <yosh@gimp.org>
 	* configure.in (sendmail_path): Prefer /usr/sbin/sendmail to
 	/usr/lib/sendmail.
 
-1998-11-07  Jay Cox  <jaycox@earthlink.net>
+1998-11-07  Jay Cox  <jaycox@gimp.org>
 
 	* libgimp/{gimp.h, gimpchannel.c, gimpdrawable.c, gimplayer.c}:
 	export the tattoo functions to the plug-ins
@@ -22384,7 +22399,7 @@ Tue Oct  6 11:07:56 CEST 1998 Marc Lehmann <pcg@goof.com>
 
 	* app/drawable_cmds.c: corrected documentation for gimp_drawable_fill.
 
-Fri Oct 30 01:53:56 1998  Jay Cox  (jaycox@earthlink.net)
+Fri Oct 30 01:53:56 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/parasitelist.c
 	* app/parasitelist.h
@@ -22607,7 +22622,7 @@ Wed Oct 14 22:58:04 BST 1998  Austin Donnelly  <austin@greenend.org.uk>
  	redraw of crosshair.
 	* HACKING: update of anon-cvs info to track new location.
 
-Tue Oct 13 19:24:03 1998  Jay Cox  (jaycox@earthlink.net)
+Tue Oct 13 19:24:03 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/parasite.c
 	* app/parasite.h
@@ -22720,7 +22735,7 @@ Fri Oct  9 18:52:52 BST 1998  Adam D. Moss  <adam@gimp.org>
 	* docs/parasites.txt: Started a central list of parasite types
 	and their creators.
 
-Thu Oct  8 01:01:18 1998  Jay Cox  (jaycox@earthlink.net)
+Thu Oct  8 01:01:18 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/Makefile.am
 	* app/channel.c
@@ -22968,7 +22983,7 @@ Thu Sep 24 12:39:27 BST 1998  Adam D. Moss <adam@gimp.org>
 	Still needs to be ratified w.r.t. multiple gimages, but
 	it's there.
 
-Wed Sep 23 18:07:54 1998  Jay Cox  (jaycox@earthlink.net)
+Wed Sep 23 18:07:54 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/channel.[ch]
 	* app/channel_cmds.c
@@ -23066,7 +23081,7 @@ Tue Sep 15 21:27:10 BST 1998  Adam D. Moss <adam@gimp.org>
 
 	* app/ink.c: #include <string.h> for a memset
 
-Mon Sep 14 18:51:54 1998  Jay Cox  (jaycox@earthlink.net)
+Mon Sep 14 18:51:54 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/gimpbrushgenerated.c app/gimpbrushgenerated.h
 	* app/paint_funcs.c app/paint_funcs.h:
@@ -23115,7 +23130,7 @@ Wed Sep  9 03:02:17 PDT 1998 Manish Singh <yosh@gimp.org>
 	* po/sv.po: added a preliminary Swedish translation from
 	Tomas Ogren <stric@ing.umu.se>
 
-Tue Sep  8 18:28:44 1998  Jay Cox  (jaycox@earthlink.net)
+Tue Sep  8 18:28:44 1998  Jay Cox  (jaycox@gimp.org)
 
 	* app/brush_generated.c: more carefull when the active brush
 	  changes
@@ -23783,7 +23798,7 @@ Sun Jul 26 23:47:33 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/rect_select.c: More statusbar stuff (should be finished now,
 	but who knows...)
 
-Sat Jul 25 04:11:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Sat Jul 25 04:11:31 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/pixel_region.c: optimized pixel_region_[gs]et_row,
 	minor optimization to pixel_region_[gs]et_col
@@ -23793,7 +23808,7 @@ Sat Jul 25 11:09:58 BST 1998  Adam D. Moss <adam@gimp.org>
 	* app/convert.c: Convert-to-indexed now remembers the last
 	invocation's settings.  Also, GRAY->INDEXED more flexible.
 
-Sat Jul 25 03:09:02 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Sat Jul 25 03:09:02 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/gimpbrushgenerated.c: swap out the mask if
 	stingy_memory_use is set.
@@ -23827,7 +23842,7 @@ Fri Jul 24 12:01:31 CDT 1998  Larry Ewing  <lewing@gimp.org>
 	allocation problem that failed to account for the trailing \0
 	(removed time sensitve calculation/malloc in the process).
 
-Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Fri Jul 24 01:33:13 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/vector2d.[ch] Makefile.am: new files for vector math.
 	Very minimal.
@@ -23910,7 +23925,7 @@ Mon Jul 20 11:07:32 EDT 1998  Matthew Wilson  <msw@gimp.org>
 	TO MAKE AN ENTRY IN gtkfeatures.h SO WE CAN #ifdef THIS.
 	(I suppose I should... but what can I say - I'm lazy)
 
-Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/brush_select.c app/gimpbrush.c app/gimpbrush.h
 	* app/gimpbrushgenerated.c app/gimpbrushlist.c
@@ -23922,7 +23937,7 @@ Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@earthlink.net>
 	Look ahead in the event queue and process as many arrow
 	keys as we can at once.
 
-Sun Jul 19 15:26:11 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Sun Jul 19 15:26:11 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/brush_select.c
 	recalc the scrollbar when a brush is added/removed.
@@ -23936,7 +23951,7 @@ Sun Jul 19 20:55:36 BST 1998 Adam D. Moss <adam@gimp.org>
 	* plug-ins/animationplay/animationplay.c: Another
 	speedup for some types of shaped animation.
 
-Sun Jul 19 10:23:58 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Sun Jul 19 10:23:58 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/paint_funcs.c
 	new and improved color_pixels now 4-7 times as fast and 8-12
@@ -24018,7 +24033,7 @@ Thu Jul 16 13:13:23 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* updated MapObject again
 
-Thu Jul 16 04:38:19 PDT 1998 Jay Cox  <jaycox@earthlink.net>
+Thu Jul 16 04:38:19 PDT 1998 Jay Cox  <jaycox@gimp.org>
 
 	* brush_edit.[ch]: added a zoom indicator on the preview
 
@@ -24037,7 +24052,7 @@ Thu Jul 16 02:43:51 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	updated MapObject plug-in
 
-Wed Jul 15 04:55:30 PDT 1998 Jay Cox <jaycox@earthlink.net>
+Wed Jul 15 04:55:30 PDT 1998 Jay Cox <jaycox@gimp.org>
 
 	* app/gimpbrushgenerated.c
 	* app/gimpbrushgenerated.h
@@ -24118,7 +24133,7 @@ Tue Jul 14 00:26:49 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/menus.c
 	* app/preferences_dialog.c: fixed a few bugs in the new MRU list
 
-Mon Jul 13 03:00:46 PDT 1998 Jay Cox  <jaycox@earthlink.net>
+Mon Jul 13 03:00:46 PDT 1998 Jay Cox  <jaycox@gimp.org>
 
 	* brush_select.c gimpbrushlist.c: fixed brush ref counting
 
@@ -24164,7 +24179,7 @@ Sun Jul 12 15:56:01 BST 1998 Adam D. Moss <adam@gimp.org>
 	* plug-ins/psd/psd.c: Turned debugging on again, since we
 	are in a development cycle...
 
-Sun Jul 12 04:16:17 PDT 1998 Jay Cox <jaycox@earthlink.net>
+Sun Jul 12 04:16:17 PDT 1998 Jay Cox <jaycox@gimp.org>
 	* gimplist{.c,.h,F.h,P.h}
 	New class for lists
 
@@ -24294,7 +24309,7 @@ Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/Makefile.am (gimp_SOURCES): Added docindexif.c and docindexif.h.
 
-Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@earthlink.net>
+Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@gimp.org>
 
 	* paint_core.c paint_core.h gimpbrushlist.h gimpbrushlist.c
 	  gimpbrushgenerated.c brush_select.h brush_select.c
@@ -24325,7 +24340,7 @@ Thu Jul  9 22:04:04 EDT 1998  Michael K. Johnson <johnsonm@redhat.com>
 	* app/clone.c: clone_motion: silently ignore cloning if the
 	  clone source hasn't been selected or no longer exists.
 
-Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
+Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@gimp.org>
 
 	* app/brushes.c app/brushes.h:  removed files
 
