@@ -29,13 +29,13 @@
 # s/narzędzia/przybory/ ???
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Paweł Dziekoński <pdziekonski@mml.ch.pwr.wroc.pl>, 1999-2000.
-# Bartosz Kosiorek, 2005.
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-30 18:30+0100\n"
-"PO-Revision-Date: 2005-01-30 10:19+0100\n"
+"POT-Creation-Date: 2005-02-03 09:25+0100\n"
+"PO-Revision-Date: 2005-02-02 23:19+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
@@ -1867,11 +1867,11 @@ msgstr "_Rozmiar wydruku..."
 
 #: app/actions/image-actions.c:90
 msgid "_Scale Image..."
-msgstr "Prze_skaluj obraz..."
+msgstr "_Skaluj obraz..."
 
 #: app/actions/image-actions.c:95
 msgid "_Crop Image"
-msgstr "Wy_kadruj obraz"
+msgstr "_Kadruj obraz"
 
 #: app/actions/image-actions.c:100
 msgid "_Duplicate"
@@ -2106,11 +2106,11 @@ msgstr "Dop_asuj wymiary warstwy do obrazu"
 
 #: app/actions/layers-actions.c:158
 msgid "_Scale Layer..."
-msgstr "Prze_skaluj warstwę..."
+msgstr "_Skaluj warstwę..."
 
 #: app/actions/layers-actions.c:163
 msgid "Cr_op Layer"
-msgstr "Wy_kadruj warstwę"
+msgstr "_Kadruj warstwę"
 
 #: app/actions/layers-actions.c:168
 msgid "Add La_yer Mask..."
@@ -2203,7 +2203,7 @@ msgstr "Ustawienie wymiarów granic warstwy"
 
 #: app/actions/layers-commands.c:512 app/core/gimplayer.c:253
 msgid "Scale Layer"
-msgstr "Przeskaluj warstwę"
+msgstr "Skaluj warstwę"
 
 #: app/actions/layers-commands.c:545
 msgid "Crop Layer"
@@ -2576,7 +2576,7 @@ msgstr "Wyo_strz"
 
 #: app/actions/select-actions.c:83
 msgid "S_hrink..."
-msgstr "_Nachyl..."
+msgstr "_Zmniejsz..."
 
 #: app/actions/select-actions.c:88
 msgid "_Grow..."
@@ -2628,7 +2628,7 @@ msgstr "Stopień zmniejszenia zaznaczenia"
 
 #: app/actions/select-commands.c:184
 msgid "Shrink from image border"
-msgstr "Zmniejszenie od granic obrazu"
+msgstr "Zmniejszaj od granic obrazu"
 
 #: app/actions/select-commands.c:205 app/core/gimpselection.c:207
 msgid "Grow Selection"
@@ -2644,7 +2644,7 @@ msgstr "Obramowanie zaznaczenia"
 
 #: app/actions/select-commands.c:232
 msgid "Border selection by"
-msgstr "Rozmiar obramowania zaznaczenia"
+msgstr "Odległość obramowania od zaznaczenia"
 
 #: app/actions/select-commands.c:275 app/actions/select-commands.c:301
 #: app/actions/vectors-commands.c:365 app/actions/vectors-commands.c:392
@@ -5075,23 +5075,23 @@ msgstr "Zmiana elementu palety kolorów"
 msgid "Add Color to Colormap"
 msgstr "Dodanie koloru do palety kolorów"
 
-#: app/core/gimpimage-convert.c:788
+#: app/core/gimpimage-convert.c:789
 msgid "Convert Image to RGB"
 msgstr "Konwersja obrazu na format RGB"
 
-#: app/core/gimpimage-convert.c:792
+#: app/core/gimpimage-convert.c:793
 msgid "Convert Image to Grayscale"
 msgstr "Konwersja obrazu na odcienie szarości"
 
-#: app/core/gimpimage-convert.c:796
+#: app/core/gimpimage-convert.c:797
 msgid "Convert Image to Indexed"
 msgstr "Konwersja obrazu na tryb indeksowany"
 
-#: app/core/gimpimage-convert.c:875
+#: app/core/gimpimage-convert.c:879
 msgid "Converting to indexed (stage 2)..."
 msgstr "Konwersja obrazu na tryb indeksowany (2. etap)..."
 
-#: app/core/gimpimage-convert.c:919
+#: app/core/gimpimage-convert.c:923
 msgid "Converting to indexed (stage 3)..."
 msgstr "Konwersja obrazu na tryb indeksowany (3. etap)..."
 
@@ -6115,7 +6115,7 @@ msgstr "_Nazwa warstwy:"
 #: app/dialogs/layer-options-dialog.c:127 app/tools/gimpcroptool.c:1046
 #: app/tools/gimpselectionoptions.c:529
 msgid "Width:"
-msgstr "Szerokość: "
+msgstr "Szerokość:"
 
 #: app/dialogs/layer-options-dialog.c:133 app/tools/gimpcroptool.c:1050
 #: app/tools/gimpscaletool.c:166 app/tools/gimpselectionoptions.c:537
@@ -6957,7 +6957,7 @@ msgstr "Rozmiar wydruku"
 #: app/dialogs/print-size-dialog.c:155 app/widgets/gimpsizebox.c:223
 #: app/widgets/gimptemplateeditor.c:236
 msgid "_Width:"
-msgstr "_Szerokość: "
+msgstr "_Szerokość:"
 
 #: app/dialogs/print-size-dialog.c:162 app/widgets/gimpsizebox.c:227
 #: app/widgets/gimptemplateeditor.c:243
@@ -8657,7 +8657,7 @@ msgstr "Początkowy X: "
 
 #: app/tools/gimpcroptool.c:1033
 msgid "Origin Y:"
-msgstr "Początkowy X:"
+msgstr "Początkowy Y:"
 
 #: app/tools/gimpcroptool.c:1071 app/widgets/gimpbrusheditor.c:194
 msgid "Aspect ratio:"
@@ -8774,7 +8774,7 @@ msgstr "_Gumka"
 #: app/tools/gimperasertool.c:185
 #, c-format
 msgid "Anti erase  %s"
-msgstr "Wycofywanie gumowania  %s"
+msgstr "Cofanie wycierania  %s"
 
 #: app/tools/gimpflipoptions.c:161 app/tools/gimpmoveoptions.c:211
 #: app/tools/gimptransformoptions.c:323
@@ -9283,7 +9283,7 @@ msgstr "Aktualna szerokość:"
 
 #: app/tools/gimpscaletool.c:174
 msgid "Current height:"
-msgstr "Aktualna szerokość:"
+msgstr "Aktualna wysokość:"
 
 #: app/tools/gimpscaletool.c:189
 msgid "Scale ratio X:"

@@ -8,15 +8,15 @@
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # GNOME PL Team <translators@gnomepl.org>, 1999-2003.
 # Artur Polaczyński <artie@kmfms.com>, 1999,2000.
-# Bartosz Kosiorek , 2005.
+# Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-30 18:33+0100\n"
-"PO-Revision-Date: 2005-01-28 16:33+0100\n"
+"POT-Creation-Date: 2005-02-03 09:27+0100\n"
+"PO-Revision-Date: 2005-02-02 23:10+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polski <translators@gnomepl.org>\n"
+"Language-Team: Polish <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1641,7 +1641,7 @@ msgstr "Kierunek"
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: plug-ins/script-fu/scripts/guides-new.scm.h:2
 msgid "Horizontal"
-msgstr "Rozmycie poziome"
+msgstr "Poziome"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
 msgid "New Guide (by _Percent)..."
@@ -1650,12 +1650,12 @@ msgstr "Nowa prowadnica (w _procentach)"
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
 #, no-c-format
 msgid "Position (in %)"
-msgstr "Pozycja (w %)"
+msgstr "Położenie (w %)"
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #: plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "Vertical"
-msgstr "Rozmycie pionowe"
+msgstr "Pionowe"
 
 #: plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "New _Guide..."
