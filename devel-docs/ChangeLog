@@ -1,5 +1,6 @@
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/app.types
 	* app/app-docs.sgml
 	* app/app-sections.txt: added GimpColorFrame stuff, updates.
 
