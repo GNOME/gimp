@@ -451,7 +451,7 @@ load_image (const gchar *filename)
             short_float.u[1] = 0;
 #endif
 
-            brush_buf[i] = (guchar) (short_float.f *= 255.9999);
+            brush_buf[i] = (guchar) (short_float.f * 255.0 + 0.5);
           }
 
         bh.bytes = 1;

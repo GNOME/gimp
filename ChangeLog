@@ -1,5 +1,11 @@
 2003-11-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrush.c (gimp_brush_load_brush)
+	* plug-ins/common/gbr.c (load_image): use proper conversion from
+	16bit float to 8bit integer.
+
+2003-11-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/svg.c: removed redundant calls to gimp_get_data().
 
 	* plug-ins/common/wmf.c: fixed parameter handling and limits and

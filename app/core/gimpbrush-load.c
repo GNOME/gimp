@@ -676,7 +676,7 @@ gimp_brush_load_brush (gint          fd,
                     short_float.u[1] = 0;
 #endif
 
-                    *mask = (guchar) (short_float.f *= 255.9999);
+                    *mask = (guchar) (short_float.f * 255.0 + 0.5);
                   }
               }
           }
