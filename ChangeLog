@@ -9,7 +9,7 @@
         * libgimpbase/gimpprotocol.ch: send a new gimpwire message,
         GP_HAS_INIT during the query stage if the plug-in needs to be
         initialized.  Only invoke the plug-in in init mode if the plug-in
-        has an init function.
+        has an init function.  Incremented the interface age.
 
 	(inspired by a patch by Tor Lillqvist available at 
 	http://bugzilla.gnome.org/showattachment.cgi?attach_id=6214
