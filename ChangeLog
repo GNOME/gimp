@@ -1,3 +1,10 @@
+2003-02-24  Sven Neumann  <sven@gimp.org>
+
+	* autogen.sh: prefer automake-1.7 over automake-1.6.
+
+	* configure.in: removed the call to AC_PROG_RANLIB again since
+	according to automake it is rendered obsolete by AC_PROG_LIBTOOL.
+
 2003-02-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainerview.[ch]: added "GDestroyNotify

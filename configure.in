@@ -90,7 +90,6 @@ dnl Initialize libtool
 AC_PROG_CC
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
-AC_PROG_RANLIB
 
 
 #################
