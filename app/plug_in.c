@@ -1844,12 +1844,24 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 
   if (proc_install->menu_path)
     {
+      if (strchr (proc_install->menu_path, '_'))
+	{
+	  g_message ("Plug-In \"%s\" (%s)\n"
+		     "attempted to install procedure \"%s\"\n"
+		     "with a menu path that contains an underscore. "
+		     "This is not supported.",
+		     g_basename (current_plug_in->args[0]),
+		     current_plug_in->args[0],
+		     proc_install->name);
+	  return;
+	}
+
       if (strncmp (proc_install->menu_path, "<Toolbox>", 9) == 0)
 	{
 	  if ((proc_install->nparams < 1) ||
 	      (proc_install->params[0].type != PDB_INT32))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
+	      g_message ("Plug-In \"%s\" (%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
 			 g_basename (current_plug_in->args[0]),
@@ -1865,7 +1877,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_IMAGE) ||
 	      (proc_install->params[2].type != PDB_DRAWABLE))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
+	      g_message ("Plug-In \"%s\" (%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
 			 g_basename (current_plug_in->args[0]),
@@ -1881,7 +1893,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[1].type != PDB_STRING) ||
 	      (proc_install->params[2].type != PDB_STRING))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
+	      g_message ("Plug-In \"%s\" (%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
 			 g_basename (current_plug_in->args[0]),
@@ -1899,7 +1911,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	      (proc_install->params[3].type != PDB_STRING) ||
 	      (proc_install->params[4].type != PDB_STRING))
 	    {
-	      g_message ("Plug-In \"%s\"\n(%s)\n"
+	      g_message ("Plug-In \"%s\" (%s)\n"
 			 "attempted to install procedure \"%s\"\n"
 			 "which does not take the standard Plug-In args.",
 			 g_basename (current_plug_in->args[0]),
@@ -1910,7 +1922,7 @@ plug_in_handle_proc_install (GPProcInstall *proc_install)
 	}
       else
 	{
-	  g_message ("Plug-In \"%s\"\n(%s)\n"
+	  g_message ("Plug-In \"%s\" (%s)\n"
 		     "attempted to install procedure \"%s\"\n"
 		     "in an invalid menu location.\n"
 		     "Use either \"<Toolbox>\", \"<Image>\", "

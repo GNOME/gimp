@@ -1,3 +1,9 @@
+2003-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/plug_in.c (plug_in_handle_proc_install): refuse to install
+	procedures that attempt to register a menu path that contain an
+	underscore (bug #107556).
+
 2003-03-03  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/common/edge.c (edge): fixed a typo in the kernel for
