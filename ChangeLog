@@ -1,3 +1,7 @@
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreview.c: some minor changes, mainly cleanup.
+
 2004-09-01  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py

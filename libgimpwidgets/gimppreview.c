@@ -47,37 +47,36 @@ enum
 };
 
 
-static void     gimp_preview_class_init         (GimpPreviewClass *klass);
-static void     gimp_preview_init               (GimpPreview      *preview);
-static void     gimp_preview_dispose            (GObject          *object);
-static void     gimp_preview_get_property       (GObject          *object,
-                                                 guint             property_id,
-                                                 GValue           *value,
-                                                 GParamSpec       *pspec);
-static void     gimp_preview_set_property       (GObject          *object,
-                                                 guint             property_id,
-                                                 const GValue     *value,
-                                                 GParamSpec       *pspec);
+static void      gimp_preview_class_init         (GimpPreviewClass *klass);
+static void      gimp_preview_init               (GimpPreview      *preview);
+static void      gimp_preview_dispose            (GObject          *object);
+static void      gimp_preview_get_property       (GObject          *object,
+                                                  guint             property_id,
+                                                  GValue           *value,
+                                                  GParamSpec       *pspec);
+static void      gimp_preview_set_property       (GObject          *object,
+                                                  guint             property_id,
+                                                  const GValue     *value,
+                                                  GParamSpec       *pspec);
+static void      gimp_preview_draw               (GimpPreview      *preview);
 
-static void     gimp_preview_draw               (GimpPreview      *preview);
+static void      gimp_preview_area_realize       (GtkWidget        *widget,
+                                                  GimpPreview      *preview);
+static void      gimp_preview_area_unrealize     (GtkWidget        *widget,
+                                                  GimpPreview      *preview);
+static void      gimp_preview_area_size_allocate (GtkWidget        *widget,
+                                                  GtkAllocation    *allocation,
+                                                  GimpPreview      *preview);
+static gboolean  gimp_preview_area_event         (GtkWidget        *area,
+                                                  GdkEvent         *event,
+                                                  GimpPreview      *preview);
 
-static void     gimp_preview_area_realize       (GtkWidget        *widget,
-                                                 GimpPreview      *preview);
-static void     gimp_preview_area_unrealize     (GtkWidget        *widget,
-                                                 GimpPreview      *preview);
-static void     gimp_preview_area_size_allocate (GtkWidget        *widget,
-                                                 GtkAllocation    *allocation,
-                                                 GimpPreview      *preview);
-
-static void     gimp_preview_h_scroll           (GtkAdjustment    *hadj,
-                                                 GimpPreview      *preview);
-static void     gimp_preview_v_scroll           (GtkAdjustment    *vadj,
-                                                 GimpPreview      *preview);
-static gboolean gimp_preview_area_event         (GtkWidget        *area,
-                                                 GdkEvent         *event,
-                                                 GimpPreview      *preview);
-static void     gimp_preview_toggle_callback    (GtkWidget        *toggle,
-                                                 GimpPreview      *preview);
+static void      gimp_preview_h_scroll           (GtkAdjustment    *hadj,
+                                                  GimpPreview      *preview);
+static void      gimp_preview_v_scroll           (GtkAdjustment    *vadj,
+                                                  GimpPreview      *preview);
+static void      gimp_preview_toggle_callback    (GtkWidget        *toggle,
+                                                  GimpPreview      *preview);
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
 
@@ -89,7 +88,7 @@ gimp_preview_get_type (void)
 {
   static GType preview_type = 0;
 
-  if (!preview_type)
+  if (! preview_type)
     {
       static const GTypeInfo preview_info =
       {
@@ -209,7 +208,7 @@ gimp_preview_init (GimpPreview *preview)
   gtk_container_add (GTK_CONTAINER (frame), preview->area);
   gtk_widget_show (preview->area);
 
-  gtk_widget_set_events (preview->area,
+  gtk_widget_add_events (preview->area,
                          GDK_BUTTON_PRESS_MASK        |
                          GDK_BUTTON_RELEASE_MASK      |
                          GDK_POINTER_MOTION_HINT_MASK |
@@ -370,7 +369,7 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
       adj->upper          = width;
       adj->page_size      = preview->width;
       adj->step_increment = 1.0;
-      adj->page_increment = adj->page_size / 2;
+      adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
 
       gtk_adjustment_changed (adj);
 
@@ -391,7 +390,7 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
       adj->upper          = height;
       adj->page_size      = preview->height;
       adj->step_increment = 1.0;
-      adj->page_increment = adj->page_size / 2;
+      adj->page_increment = MAX (adj->page_size / 2.0, adj->step_increment);
 
       gtk_adjustment_changed (adj);
 
@@ -411,35 +410,6 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
   gimp_preview_invalidate (preview);
 }
 
-static void
-gimp_preview_h_scroll (GtkAdjustment *hadj,
-                       GimpPreview   *preview)
-{
-  preview->xoff = hadj->value;
-
-  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
-                                 preview->xoff, preview->yoff);
-
-  if (! preview->in_drag)
-    gimp_preview_draw (preview);
-
-  gimp_preview_invalidate (preview);
-}
-
-static void
-gimp_preview_v_scroll (GtkAdjustment *vadj,
-                       GimpPreview   *preview)
-{
-  preview->yoff = vadj->value;
-
-  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
-                                 preview->xoff, preview->yoff);
-
-  if (! preview->in_drag)
-    gimp_preview_draw (preview);
-
-  gimp_preview_invalidate (preview);
-}
 
 static gboolean
 gimp_preview_area_event (GtkWidget   *area,
@@ -502,6 +472,38 @@ gimp_preview_area_event (GtkWidget   *area,
     }
 
   return FALSE;
+}
+
+static void
+gimp_preview_h_scroll (GtkAdjustment *hadj,
+                       GimpPreview   *preview)
+{
+  preview->xoff = hadj->value;
+
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
+                                 preview->xoff, preview->yoff);
+
+  if (! preview->in_drag)
+    {
+      gimp_preview_draw (preview);
+      gimp_preview_invalidate (preview);
+    }
+}
+
+static void
+gimp_preview_v_scroll (GtkAdjustment *vadj,
+                       GimpPreview   *preview)
+{
+  preview->yoff = vadj->value;
+
+  gimp_preview_area_set_offsets (GIMP_PREVIEW_AREA (preview->area),
+                                 preview->xoff, preview->yoff);
+
+  if (! preview->in_drag)
+    {
+      gimp_preview_draw (preview);
+      gimp_preview_invalidate (preview);
+    }
 }
 
 static void
