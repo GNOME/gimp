@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-05 00:12+0100\n"
-"PO-Revision-Date: 2004-02-20 06:33+0100\n"
+"PO-Revision-Date: 2004-03-09 06:13+0100\n"
 "Last-Translator: Aleksandar Urošević <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,6 @@ msgstr ""
 "boje crtanja."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -76,7 +75,6 @@ msgstr ""
 "meni za obavljanje ovih akcija."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
@@ -85,9 +83,8 @@ msgid ""
 msgstr ""
 "Nakon što omogućite dinamičke prečice sa tastature u prozorčetu za postavke, "
 "moći ćete da promenite prečice. To radite tako što prikažete meni, izaberete "
-"stavku menija, i pritisnete željenu kombinaciju tastera. Ukoliko je "
-"uključeno čuvanje prečica sa tastature, izmene će biti sačuvane kada "
-"zatvorite GIMP."
+"stavku menija, i pritisnete željenu kombinaciju tastera. Ukoliko je uključeno "
+"čuvanje prečica sa tastature, izmene će biti sačuvane kada zatvorite GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -113,7 +110,6 @@ msgstr ""
 "Krivulje)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -130,11 +126,9 @@ msgid ""
 msgstr ""
 "Ako Vam se čini da je raspored dijaloga na ekranu neuredan, možete "
 "pritisnuti taster <tt>Tab</tt> nekoliko puta u okviru prozora neke slike "
-"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih "
-"dijaloga."
+"kako bi omogućili sakrivanje ili prikazivanje palete alata i ostalih dijaloga."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -154,7 +148,6 @@ msgstr ""
 "greška se može opozvati..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -242,8 +235,8 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</"
-"tt>-klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
+"Kada koristite alat za crtanje (Četkica, Mlaznicu ili Olovku), <tt>Shift</tt>-"
+"klik će iscrtati pravu liniju od poslednje iscrtane tačke do trenutne "
 "pozicije kursora. Ako pritisnete <tt>Ctrl</tt>, moći ćete da liniju rotirate "
 "pod uglom od 15°."
 
@@ -278,15 +271,13 @@ msgstr ""
 "prevlačite kursor levo i desno."
 
 #: tips/gimp-tips.xml.in.h:26
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"Možete napraviti i uređivati složene izbore pomoću alata za putanje. "
-"Prozorče za putanje dozvoljava rad sa više putanja i pretvaranje istih u "
-"izbore."
+"Možete napraviti i uređivati složene izbore pomoću alata za putanje. Prozorče "
+"za putanje dozvoljava rad sa više putanja i pretvaranje istih u izbore."
 
 #: tips/gimp-tips.xml.in.h:27
 msgid ""
@@ -303,12 +294,11 @@ msgid ""
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current image or selection with that color."
 msgstr ""
-"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje "
-"sa palete alata ili sa palete boja i puštanjem na sliku, učinićete da se "
-"slika ili selekcija oboje odabranom bojom."
+"Možete prevući i pustiti puno stvari u Gimpu. Na primer, prevlačenjem boje sa "
+"palete alata ili sa palete boja i puštanjem na sliku, učinićete da se slika "
+"ili selekcija oboje odabranom bojom."
 
 #: tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -341,8 +331,8 @@ msgid ""
 "circle, or to have it centered on its starting point."
 msgstr ""
 "Možete pritisnuti i otpustiti tastere <tt>Shift</tt> i <tt>Ctrl</tt> kada "
-"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili "
-"radi njihovog centriranja u odnosu na početnu njihovu tačku."
+"kreirate selekciju u cilju iscrtavanja savršenog kvadrate ili kruga, ili radi "
+"njihovog centriranja u odnosu na početnu njihovu tačku."
 
 #: tips/gimp-tips.xml.in.h:33
 msgid ""
@@ -352,9 +342,9 @@ msgid ""
 "selection."
 msgstr ""
 "Možete sačuvati izbor u kanal (Izbori-&gt;Sačuvaj u kanal) i potom menjati "
-"taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na kartici "
-"„Kanali“ u prozorčetu „Slojevi, kanali i putanje“, možete odrediti "
-"vidljivost tog novog kanala ili ga pretvoriti u izbor."
+"taj kanal bilo kojim alatom za bojenje. Upotrebom dugmadi na kartici „Kanali“ "
+"u prozorčetu „Slojevi, kanali i putanje“, možete odrediti vidljivost tog novog "
+"kanala ili ga pretvoriti u izbor."
 
 #: tips/gimp-tips.xml.in.h:34
 msgid ""
@@ -370,8 +360,8 @@ msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
 msgstr ""
-"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako "
-"je veća od prozora u kome je prikazana."
+"Možete koristiti srednji taster miša za pomeranje vidljivog dela slike, ako je "
+"veća od prozora u kome je prikazana."
 
 #: tips/gimp-tips.xml.in.h:36
 msgid ""
