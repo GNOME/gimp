@@ -50,6 +50,14 @@ void   gimp_image_mask_select_polygon   (GimpImage     *gimage,
                                          gdouble        feather_radius_x,
                                          gdouble        feather_radius_y);
 
+void   gimp_image_mask_select_vectors   (GimpImage     *gimage,
+                                         GimpVectors   *vectors,
+                                         ChannelOps     op,
+                                         gboolean       antialias,
+                                         gboolean       feather,
+                                         gdouble        feather_radius_x,
+                                         gdouble        feather_radius_y);
+
 void   gimp_image_mask_select_channel   (GimpImage     *gimage,
                                          GimpDrawable  *drawable,
                                          gboolean       sample_merged,

@@ -29,6 +29,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
@@ -42,6 +43,7 @@
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "tools/gimppainttool.h"
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
 
@@ -150,9 +152,9 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
     }
 }
 
-void
-vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
-                                     gpointer   data)
+static void
+vectors_vectors_to_sel (GtkWidget  *widget,
+                        ChannelOps  op)
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
@@ -166,130 +168,42 @@ vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
 
   if (active_vectors)
     {
-      GimpChannel *vectors_mask;
-
-      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
-
-      gimp_image_mask_load (gimage, vectors_mask);
-
-      g_object_unref (G_OBJECT (vectors_mask));
+      gimp_image_mask_select_vectors (gimage,
+                                      active_vectors,
+                                      op,
+                                      TRUE,
+                                      FALSE, 0, 0);
 
       gdisplays_flush ();
     }
+}
+
+void
+vectors_vectors_to_sel_cmd_callback (GtkWidget *widget,
+                                     gpointer   data)
+{
+  vectors_vectors_to_sel (widget, CHANNEL_OP_REPLACE);
 }
 
 void
 vectors_add_vectors_to_sel_cmd_callback (GtkWidget *widget,
                                          gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      GimpChannel *vectors_mask;
-      GimpChannel *new_mask;
-
-      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
-
-      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                    TRUE);
-
-      gimp_channel_combine_mask (new_mask,
-				 vectors_mask,
-				 CHANNEL_OP_ADD, 
-				 0, 0);  /* off x/y */
-
-      gimp_image_mask_load (gimage, new_mask);
-
-      g_object_unref (G_OBJECT (new_mask));
-
-      gdisplays_flush ();
-    }
+  vectors_vectors_to_sel (widget, CHANNEL_OP_ADD);
 }
 
 void
 vectors_sub_vectors_from_sel_cmd_callback (GtkWidget *widget,
                                            gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      GimpChannel *vectors_mask;
-      GimpChannel *new_mask;
-
-      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
-
-      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                    TRUE);
-
-      gimp_channel_combine_mask (new_mask,
-				 vectors_mask,
-				 CHANNEL_OP_SUB,
-				 0, 0);  /* off x/y */
-
-      gimp_image_mask_load (gimage, new_mask);
-
-      g_object_unref (G_OBJECT (new_mask));
-
-      gdisplays_flush ();
-    }
+  vectors_vectors_to_sel (widget, CHANNEL_OP_SUB);
 }
 
 void
 vectors_intersect_vectors_with_sel_cmd_callback (GtkWidget *widget,
                                                  gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpVectors *active_vectors;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  active_vectors = gimp_image_get_active_vectors (gimage);
-
-  if (active_vectors)
-    {
-      GimpChannel *vectors_mask;
-      GimpChannel *new_mask;
-
-      vectors_mask = NULL; /*gimp_vectors_to_channel (active_vectors);*/
-
-      new_mask = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                    G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                    TRUE);
-
-      gimp_channel_combine_mask (new_mask,
-				 vectors_mask,
-				 CHANNEL_OP_INTERSECT,
-				 0, 0);  /* off x/y */
-
-      gimp_image_mask_load (gimage, new_mask);
-
-      g_object_unref (G_OBJECT (new_mask));
-
-      gdisplays_flush ();
-    }
+  vectors_vectors_to_sel (widget, CHANNEL_OP_INTERSECT);
 }
 
 void
@@ -335,17 +249,29 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
 
   if (active_vectors && active_vectors->strokes)
     {
+      GimpTool         *active_tool;
       GimpPaintCore    *core;
       GType             core_type;
       GimpToolInfo     *tool_info;
       GimpPaintOptions *paint_options;
       GimpDisplay      *gdisp;
 
-      tool_info = (GimpToolInfo *)
-        gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
-                                          "gimp:paintbrush_tool");
+      active_tool = tool_manager_get_active (gimage->gimp);
+
+      if (GIMP_IS_PAINT_TOOL (active_tool))
+        {
+          tool_info = active_tool->tool_info;
+        }
+      else
+        {
+          tool_info = (GimpToolInfo *)
+            gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
+                                              "gimp:paintbrush_tool");
+        }
 
       paint_options = (GimpPaintOptions *) tool_info->tool_options;
+
+      g_print ("core_name: %s\n", tool_info->paint_core_name);
 
       core_type = g_type_from_name (tool_info->paint_core_name);
 

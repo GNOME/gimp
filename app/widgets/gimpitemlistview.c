@@ -37,7 +37,10 @@
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimpmarshal.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "display/gimpdisplay-foreach.h"
 
@@ -48,6 +51,7 @@
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
+#include "gimpvectorslistview.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -308,6 +312,14 @@ gimp_item_list_view_new (gint                  preview_size,
   else if (item_type == GIMP_TYPE_CHANNEL)
     {
       list_view = g_object_new (GIMP_TYPE_CHANNEL_LIST_VIEW, NULL);
+    }
+  else if (item_type == GIMP_TYPE_DRAWABLE)
+    {
+      list_view = g_object_new (GIMP_TYPE_DRAWABLE_LIST_VIEW, NULL);
+    }
+  else if (item_type == GIMP_TYPE_VECTORS)
+    {
+      list_view = g_object_new (GIMP_TYPE_VECTORS_LIST_VIEW, NULL);
     }
   else
     {

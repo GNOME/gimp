@@ -76,7 +76,7 @@ gimp_pencil_get_type (void)
       };
 
       type = g_type_register_static (GIMP_TYPE_PAINT_CORE,
-                                     "GimpPencilCore", 
+                                     "GimpPencil", 
                                      &info, 0);
     }
 

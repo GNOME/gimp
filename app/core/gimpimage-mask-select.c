@@ -29,6 +29,9 @@
 #include "gimpimage-mask-select.h"
 #include "gimpscanconvert.h"
 
+#include "vectors/gimpstroke.h"
+#include "vectors/gimpvectors.h"
+
 
 void
 gimp_image_mask_select_rectangle (GimpImage  *gimage,
@@ -166,6 +169,63 @@ gimp_image_mask_select_polygon (GimpImage   *gimage,
 
       gimp_channel_combine_mask (gimp_image_get_mask (gimage), mask, op, 0, 0);
       g_object_unref (G_OBJECT (mask));
+    }
+}
+
+void
+gimp_image_mask_select_vectors (GimpImage     *gimage,
+                                GimpVectors   *vectors,
+                                ChannelOps     op,
+                                gboolean       antialias,
+                                gboolean       feather,
+                                gdouble        feather_radius_x,
+                                gdouble        feather_radius_y)
+{
+  GimpStroke *stroke;
+  GimpCoords *coords = NULL;
+  gint        n_coords;
+  gboolean    closed;
+
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  /*  gimp_stroke_interpolate() may return NULL, so iterate over the
+   *  list of strokes until one returns coords
+   */
+  for (stroke = vectors->strokes; stroke; stroke = stroke->next)
+    {
+      coords = gimp_stroke_interpolate (stroke, 1.0,
+                                        &n_coords,
+                                        &closed);
+
+      if (coords)
+        break;
+    }
+
+  if (coords)
+    {
+      GimpVector2 *points;
+      gint         i;
+
+      points = g_new0 (GimpVector2, n_coords);
+
+      for (i = 0; i < n_coords; i++)
+        {
+          points[i].x = coords[i].x;
+          points[i].y = coords[i].y;
+        }
+
+      g_free (coords);
+
+      gimp_image_mask_select_polygon (GIMP_ITEM (vectors)->gimage,
+                                      n_coords,
+                                      points,
+                                      op,
+                                      antialias,
+                                      feather,
+                                      feather_radius_x,
+                                      feather_radius_y);
+
+      g_free (points);
     }
 }
 

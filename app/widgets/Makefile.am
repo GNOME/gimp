@@ -98,6 +98,8 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimppreview.h			\
 	gimptoolinfopreview.c		\
 	gimptoolinfopreview.h		\
+	gimpvectorslistview.c		\
+	gimpvectorslistview.h		\
 	gimpwidgets-constructors.c	\
 	gimpwidgets-constructors.h	\
 	gimpwidgets-utils.c		\

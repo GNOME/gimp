@@ -1,5 +1,27 @@
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-mask-select.[ch]: implemented
+	gimp_image_mask_select_vectors() as simple wrapper around
+	gimp_image_mask_select_polygon().
+
+	* app/gui/vectors-commands.c: call it from the "to selection"
+	callbacks.
+
+	* app/gui/channels-commands.c: use gimp_image_mask_select_channel()
+	instead of doing the same manually.
+
+	* app/paint/gimppencil.c: register as "GimpPencil", not
+	"GimpPencilCore".
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpvectorslistview.[ch]: new GimpItemListView
+	subclass featuring a "To Selection" and "Stroke" button.
+
+	* app/widgets/gimpitemlistview.c: create GimpVectorsListViews.
+
+2002-02-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore-stroke.[ch]: added
 	gimp_paint_core_stroke_vectors() which strokes the whole vector
 	using one undo step.

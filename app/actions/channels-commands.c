@@ -29,6 +29,7 @@
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
+#include "core/gimpimage-mask-select.h"
 #include "core/gimplist.h"
 
 #include "display/gimpdisplay-foreach.h"
@@ -138,9 +139,9 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
     }
 }
 
-void
-channels_channel_to_sel_cmd_callback (GtkWidget *widget,
-				      gpointer   data)
+static void
+channels_channel_to_sel (GtkWidget  *widget,
+                         ChannelOps  op)
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
@@ -152,93 +153,42 @@ channels_channel_to_sel_cmd_callback (GtkWidget *widget,
 
   if ((active_channel = gimp_image_get_active_channel (gimage)))
     {
-      gimp_image_mask_load (gimage, active_channel);
+      gimp_image_mask_select_channel (gimage,
+                                      NULL, FALSE,
+                                      active_channel,
+                                      op,
+                                      FALSE, 0, 0);
+
       gdisplays_flush ();
     }
+}
+
+void
+channels_channel_to_sel_cmd_callback (GtkWidget *widget,
+				      gpointer   data)
+{
+  channels_channel_to_sel (widget, CHANNEL_OP_REPLACE);
 }
 
 void
 channels_add_channel_to_sel_cmd_callback (GtkWidget *widget,
 					  gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpChannel *active_channel;
-  GimpChannel *new_channel;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                       G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                       TRUE);
-      gimp_channel_combine_mask (new_channel,
-				 active_channel,
-				 CHANNEL_OP_ADD, 
-				 0, 0);  /* off x/y */
-      gimp_image_mask_load (gimage, new_channel);
-      g_object_unref (G_OBJECT (new_channel));
-      gdisplays_flush ();
-    }
+  channels_channel_to_sel (widget, CHANNEL_OP_ADD);
 }
 
 void
 channels_sub_channel_from_sel_cmd_callback (GtkWidget *widget,
 					    gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpChannel *active_channel;
-  GimpChannel *new_channel;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-       new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                        G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                        TRUE);
-       gimp_channel_combine_mask (new_channel,
-				  active_channel,
-				  CHANNEL_OP_SUB, 
-				  0, 0);  /* off x/y */
-      gimp_image_mask_load (gimage, new_channel);
-      g_object_unref (G_OBJECT (new_channel));
-      gdisplays_flush ();
-    }
+  channels_channel_to_sel (widget, CHANNEL_OP_SUB);
 }
 
 void
 channels_intersect_channel_with_sel_cmd_callback (GtkWidget *widget,
 						  gpointer   data)
 {
-  GimpImage   *gimage;
-  GimpChannel *active_channel;
-  GimpChannel *new_channel;
-
-  gimage = (GimpImage *) gimp_widget_get_callback_context (widget);
-
-  if (! gimage)
-    return;
-
-  if ((active_channel = gimp_image_get_active_channel (gimage)))
-    {
-      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage),
-                                       G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                       TRUE);
-      gimp_channel_combine_mask (new_channel,
-				 active_channel,
-				 CHANNEL_OP_INTERSECT, 
-				 0, 0);  /* off x/y */
-      gimp_image_mask_load (gimage, new_channel);
-      g_object_unref (G_OBJECT (new_channel));
-      gdisplays_flush ();
-    }
+  channels_channel_to_sel (widget, CHANNEL_OP_INTERSECT);
 }
 
 void
