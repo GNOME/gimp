@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "config.h"
 #include "imap_cmd_delete_point.h"
 #include "imap_cmd_insert_point.h"
 #include "libgimp/stdplugins-intl.h"
@@ -388,11 +389,14 @@ polygon_create_info_widget(GtkWidget *frame)
    gint max_width = get_image_width();
    gint max_height = get_image_height();
    gchar *titles[] = {N_("x (pixels)"), N_("y (pixels)")};
+   gint i;
 
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
+   for (i = 0; i < 2; i++)
+     titles[i] = gettext(titles[i]);
    props->list = list = gtk_clist_new_with_titles(2, titles);
    gtk_clist_column_titles_passive(GTK_CLIST(list));
 

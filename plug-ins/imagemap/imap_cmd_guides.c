@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 
+#include "config.h"
 #include "imap_cmd_create.h"
 #include "imap_default_dialog.h"
 #include "imap_cmd_guides.h"

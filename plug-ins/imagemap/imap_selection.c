@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 
+#include "config.h"
 #include "imap_cmd_edit_object.h"
 #include "imap_cmd_select.h"
 #include "imap_cmd_unselect.h"
@@ -159,19 +160,19 @@ make_selection_toolbar(Selection_t *data, GtkWidget *window)
    gtk_toolbar_set_space_size(GTK_TOOLBAR(toolbar), 5);
 
    data->arrow_up = make_toolbar_icon(toolbar, window, arrow_up_xpm, "MoveUp",
-				      "Move up", selection_command, 
+				      _("Move up"), selection_command, 
 				      &data->cmd_move_up);
    data->arrow_down = make_toolbar_icon(toolbar, window, arrow_down_xpm, 
-					"MoveDown", "Move down", 
+					"MoveDown", _("Move down"), 
 					selection_command, 
 					&data->cmd_move_down);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    data->edit = make_toolbar_icon(toolbar, window, edit_xpm, "Edit",
-				  "Edit", selection_command, 
+				  _("Edit"), selection_command, 
 				  &data->cmd_edit);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    data->remove = make_toolbar_icon(toolbar, window, delete_xpm, "Delete",
-				    "Delete", selection_command, 
+				    _("Delete"), selection_command, 
 				    &data->cmd_delete);
 
    gtk_widget_show(toolbar);
@@ -333,6 +334,7 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    GtkWidget *toolbar;
    GtkWidget *list;
    gchar     *titles[] = {"#", N_("URL"), N_("Target"), N_("Comment")};
+   gint      i;
 
    data->object_list = object_list;
    data->selected_child = NULL;
@@ -358,6 +360,8 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    gtk_container_add(GTK_CONTAINER(hbox), frame);
    gtk_widget_show(frame);
 
+   for (i = 0; i < 4; i++)
+     titles[i] = gettext(titles[i]);
    data->list = list = gtk_clist_new_with_titles(4, titles);
    GTK_WIDGET_UNSET_FLAGS(data->list, GTK_CAN_FOCUS);
    gtk_clist_column_titles_passive(GTK_CLIST(list));

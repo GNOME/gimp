@@ -1,3 +1,24 @@
+2000-02-17  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/imagemap/imap_circle.c
+	* plug-ins/imagemap/imap_cmd_guides.c
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_edit_area_info.c
+	* plug-ins/imagemap/imap_file.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_polygon.c
+	* plug-ins/imagemap/imap_popup.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_rectangle.c
+	* plug-ins/imagemap/imap_selection.c
+	* plug-ins/imagemap/imap_settings.c
+	* plug-ins/imagemap/imap_toolbar.c
+	* plug-ins/imagemap/imap_tools.c
+	* po-plug-ins/POTFILES.in: include config.h and more gettext
+	tagging.
+
 2000-02-16 Garry R. Osgood <gosgood@idt.net>
 	*app/paint_funcs.c: replace_pixels() was
 	naively zeroing RGB components of RGBA pixels

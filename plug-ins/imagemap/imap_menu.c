@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "imap_circle.h"
@@ -226,7 +227,7 @@ make_file_menu(GtkWidget *menu_bar)
    item = make_item_with_label(file_menu, _("Close"), menu_command,
 			       &_menu.cmd_close);
    add_accelerator(item, 'W', GDK_CONTROL_MASK);
-   item = make_item_with_label(file_menu, "Quit", menu_command,
+   item = make_item_with_label(file_menu, _("Quit"), menu_command,
 			       &_menu.cmd_quit);
    add_accelerator(item, 'Q', GDK_CONTROL_MASK);
 }

@@ -24,6 +24,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#include "config.h"
 #include "imap_default_dialog.h"
 #include "imap_file.h"
 #include "libgimp/stdplugins-intl.h"

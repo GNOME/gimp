@@ -21,6 +21,7 @@
  *
  */
 
+#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
@@ -107,8 +108,8 @@ make_toolbar(GtkWidget *main_vbox, GtkWidget *window)
 
    make_toolbar_icon(toolbar, window, open_xpm, "Open",
 		     _("Open"), toolbar_command, &data->cmd_open);
-   make_toolbar_icon(toolbar, window, save_xpm, _("Save"),
-		     "Save", toolbar_command, &data->cmd_save);
+   make_toolbar_icon(toolbar, window, save_xpm, "Save",
+		     _("Save"), toolbar_command, &data->cmd_save);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    make_toolbar_icon(toolbar, window, preferences_xpm, "Preferences",
 		     _("Preferences"), toolbar_command, 

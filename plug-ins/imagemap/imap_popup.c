@@ -21,6 +21,7 @@
  *
  */
 
+#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "imap_edit_area_info.h"

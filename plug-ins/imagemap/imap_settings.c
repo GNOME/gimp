@@ -21,6 +21,7 @@
  *
  */
 
+#include "config.h"
 #include "imap_browse.h"
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"

@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "config.h"
 #include "gdk/gdkkeysyms.h" /* for keyboard values */
 #include "gtk/gtk.h"
 
@@ -131,8 +132,6 @@ static void query()
    static int nargs = sizeof (args) / sizeof (args[0]);
    static int nreturn_vals = 0;
    
-   INIT_I18N();
-
    gimp_install_procedure("plug_in_imagemap",
 			  "Creates a clickable imagemap.",
 			  "",
@@ -502,13 +501,13 @@ set_all_sensitivities(void)
 static void
 main_set_title(const char *filename)
 {
-   char title[256];
-   char *p;
+   char *title, *p;
    
    g_strreplace(&_filename, filename);
    p = (filename) ? g_basename(filename) : _("<Untitled>");
-   sprintf(title, "%s - ImageMap 1.3", p);
+   title = g_strdup_printf("%s - ImageMap 1.3", p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);
+   g_free(title);
 }
 
 void 
@@ -871,7 +870,7 @@ save_as(const gchar *filename)
       main_set_title(filename);
       object_list_clear_changed(_shapes);
    } else {
-      do_file_error_dialog("Couldn't save file:", filename);
+      do_file_error_dialog( _("Couldn't save file:"), filename);
    }
 }
 
@@ -896,12 +895,12 @@ do_image_size_changed_dialog(void)
    static DefaultDialog_t *dialog;
 
    if (!dialog) {
-      dialog = make_default_dialog("Image size changed");
+      dialog = make_default_dialog( _("Image size changed"));
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 "   Image size has changed.   \n"
-	 "Resize Area's?");
+	 _("   Image size has changed.   \n"
+	 "Resize Area's?"));
 
       default_dialog_set_ok_cb(dialog, resize_image_ok_cb, NULL);
       default_dialog_set_cancel_cb(dialog, resize_image_cancel_cb, NULL);
@@ -931,7 +930,7 @@ really_load(gpointer data)
    } else if (load_cern(filename)) {
       _map_info.map_format = CERN;
    } else {
-      do_file_error_dialog("Couldn't read file:", filename);
+      do_file_error_dialog( _("Couldn't read file:"), filename);
       selection_thaw(_selection);
       close_current();
       return;

@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "config.h"
 #include "imap_browse.h"
 #include "imap_cmd_edit_object.h"
 #include "imap_default_dialog.h"
@@ -223,7 +224,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
       table, 2, 0,
       _("URL to activate when this area is clicked: (required)"));
 
-   browse = browse_widget_new("Select HTML file");
+   browse = browse_widget_new( _("Select HTML file"));
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
    gtk_table_attach_defaults(GTK_TABLE(table), browse->hbox, 0, 1, 3, 4);
    dialog->url = browse->file;
@@ -291,7 +292,7 @@ create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 
    dialog->infotab = obj->class->create_info_widget(frame);
 
-   label = gtk_label_new(obj->class->name);
+   label = gtk_label_new( gettext(obj->class->name));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 
