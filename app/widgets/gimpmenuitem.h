@@ -42,15 +42,18 @@ typedef struct _GimpMenuItemClass  GimpMenuItemClass;
 
 struct _GimpMenuItem
 {
-  GtkMenuItem    parent_instance;
+  GtkMenuItem          parent_instance;
 
-  GtkWidget     *hbox;
+  GtkWidget           *hbox;
 
-  GtkWidget     *preview;
-  GtkWidget     *name_label;
+  GtkWidget           *preview;
+  GtkWidget           *name_label;
 
   /*< protected >*/
-  gint           preview_size;
+  gint                 preview_size;
+
+  /*< private >*/
+  GimpItemGetNameFunc  get_name_func;
 };
 
 struct _GimpMenuItemClass
@@ -62,9 +65,12 @@ struct _GimpMenuItemClass
 };
 
 
-GtkType     gimp_menu_item_get_type        (void);
-GtkWidget * gimp_menu_item_new             (GimpViewable   *viewable,
-                                            gint            preview_size);
+GtkType     gimp_menu_item_get_type      (void);
+GtkWidget * gimp_menu_item_new           (GimpViewable        *viewable,
+					  gint                 preview_size);
+
+void        gimp_menu_item_set_name_func (GimpMenuItem        *menu_item,
+					  GimpItemGetNameFunc  get_name_func);
 
 
 #ifdef __cplusplus

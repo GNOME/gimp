@@ -40,14 +40,16 @@ typedef struct _GimpContainerMenuClass  GimpContainerMenuClass;
 
 struct _GimpContainerMenu
 {
-  GtkMenu        parent_instance;
+  GtkMenu              parent_instance;
 
-  GimpContainer *container;
-  GimpContext   *context;
+  GimpContainer       *container;
+  GimpContext         *context;
 
-  GHashTable    *hash_table;
+  GHashTable          *hash_table;
 
-  gint           preview_size;
+  gint                 preview_size;
+
+  GimpItemGetNameFunc  get_name_func;
 };
 
 struct _GimpContainerMenuClass
@@ -72,6 +74,9 @@ struct _GimpContainerMenuClass
   void     (* activate_item)    (GimpContainerMenu *menu,
 				 GimpViewable      *object,
 				 gpointer           insert_data);
+  void     (* context_item)     (GimpContainerMenu *menu,
+				 GimpViewable      *object,
+				 gpointer           insert_data);
   void     (* clear_items)      (GimpContainerMenu *menu);
   void     (* set_preview_size) (GimpContainerMenu *menu);
 };
@@ -79,16 +84,21 @@ struct _GimpContainerMenuClass
 
 GtkType   gimp_container_menu_get_type         (void);
 
-void      gimp_container_menu_set_container    (GimpContainerMenu *menu,
-						GimpContainer     *container);
-void      gimp_container_menu_set_context      (GimpContainerMenu *menu,
-						GimpContext       *context);
-void      gimp_container_menu_set_preview_size (GimpContainerMenu *menu,
-						gint               preview_size);
-void      gimp_container_menu_select_item      (GimpContainerMenu *menu,
-						GimpViewable      *viewable);
-void      gimp_container_menu_activate_item    (GimpContainerMenu *menu,
-						GimpViewable      *viewable);
+void      gimp_container_menu_set_container    (GimpContainerMenu   *menu,
+						GimpContainer       *container);
+void      gimp_container_menu_set_context      (GimpContainerMenu   *menu,
+						GimpContext         *context);
+void      gimp_container_menu_set_preview_size (GimpContainerMenu   *menu,
+						gint                 preview_size);
+void      gimp_container_menu_set_name_func    (GimpContainerMenu   *menu,
+						GimpItemGetNameFunc  get_name_func);
+
+void      gimp_container_menu_select_item      (GimpContainerMenu   *menu,
+						GimpViewable        *viewable);
+void      gimp_container_menu_activate_item    (GimpContainerMenu   *menu,
+						GimpViewable        *viewable);
+void      gimp_container_menu_context_item     (GimpContainerMenu   *menu,
+						GimpViewable        *viewable);
 
 
 /*  private  */
@@ -96,6 +106,8 @@ void      gimp_container_menu_activate_item    (GimpContainerMenu *menu,
 void      gimp_container_menu_item_selected    (GimpContainerMenu *menu,
 						GimpViewable      *item);
 void      gimp_container_menu_item_activated   (GimpContainerMenu *menu,
+						GimpViewable      *item);
+void      gimp_container_menu_item_context     (GimpContainerMenu *menu,
 						GimpViewable      *item);
 
 

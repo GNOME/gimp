@@ -333,4 +333,6 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
     }
 
   gtk_list_insert_items (GTK_LIST (view->component_list), list, 0);
+
+  gtk_widget_queue_resize (GTK_WIDGET (view->component_frame));
 }

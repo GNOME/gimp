@@ -40,6 +40,7 @@ enum
   REORDER_ITEM,
   SELECT_ITEM,
   ACTIVATE_ITEM,
+  CONTEXT_ITEM,
   CLEAR_ITEMS,
   SET_PREVIEW_SIZE,
   LAST_SIGNAL
@@ -179,6 +180,17 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
                     GIMP_TYPE_OBJECT,
 		    GTK_TYPE_POINTER);
 
+  menu_signals[CONTEXT_ITEM] =
+    gtk_signal_new ("context_item",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerMenuClass,
+                                       context_item),
+                    gtk_marshal_NONE__POINTER_POINTER,
+                    GTK_TYPE_NONE, 2,
+                    GIMP_TYPE_OBJECT,
+		    GTK_TYPE_POINTER);
+
   menu_signals[CLEAR_ITEMS] =
     gtk_signal_new ("clear_items",
                     GTK_RUN_FIRST,
@@ -207,6 +219,7 @@ gimp_container_menu_class_init (GimpContainerMenuClass *klass)
   klass->reorder_item     = NULL;
   klass->select_item      = NULL;
   klass->activate_item    = NULL;
+  klass->context_item     = NULL;
   klass->clear_items      = gimp_container_menu_real_clear_items;
   klass->set_preview_size = NULL;
 }
@@ -379,9 +392,25 @@ gimp_container_menu_set_preview_size (GimpContainerMenu *menu,
   g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
   g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
 
-  menu->preview_size = preview_size;
+  if (menu->preview_size != preview_size)
+    {
+      menu->preview_size = preview_size;
 
-  gtk_signal_emit (GTK_OBJECT (menu), menu_signals[SET_PREVIEW_SIZE]);
+      gtk_signal_emit (GTK_OBJECT (menu), menu_signals[SET_PREVIEW_SIZE]);
+    }
+}
+
+void
+gimp_container_menu_set_name_func (GimpContainerMenu   *menu,
+				   GimpItemGetNameFunc  get_name_func)
+{
+  g_return_if_fail (menu != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
+
+  if (menu->get_name_func != get_name_func)
+    {
+      menu->get_name_func = get_name_func;
+    }
 }
 
 void
@@ -418,6 +447,23 @@ gimp_container_menu_activate_item (GimpContainerMenu *menu,
 }
 
 void
+gimp_container_menu_context_item (GimpContainerMenu *menu,
+				  GimpViewable      *viewable)
+{
+  gpointer insert_data;
+
+  g_return_if_fail (menu != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  insert_data = g_hash_table_lookup (menu->hash_table, viewable);
+
+  gtk_signal_emit (GTK_OBJECT (menu), menu_signals[CONTEXT_ITEM],
+		   viewable, insert_data);
+}
+
+void
 gimp_container_menu_item_selected (GimpContainerMenu *menu,
 				   GimpViewable      *viewable)
 {
@@ -446,6 +492,18 @@ gimp_container_menu_item_activated (GimpContainerMenu *menu,
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
   gimp_container_menu_activate_item (menu, viewable);
+}
+
+void
+gimp_container_menu_item_context (GimpContainerMenu *menu,
+				  GimpViewable      *viewable)
+{
+  g_return_if_fail (menu != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_MENU (menu));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gimp_container_menu_context_item (menu, viewable);
 }
 
 static void

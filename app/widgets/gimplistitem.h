@@ -42,20 +42,21 @@ typedef struct _GimpListItemClass  GimpListItemClass;
 
 struct _GimpListItem
 {
-  GtkListItem    parent_instance;
+  GtkListItem          parent_instance;
 
-  GtkWidget     *hbox;
+  GtkWidget           *hbox;
 
-  GtkWidget     *preview;
-  GtkWidget     *name_label;
+  GtkWidget           *preview;
+  GtkWidget           *name_label;
 
   /*< protected >*/
-  gint           preview_size;
+  gint                 preview_size;
 
   /*< private >*/
-  gboolean       reorderable;
-  GimpContainer *container;
-  GimpDropType   drop_type;
+  gboolean             reorderable;
+  GimpContainer       *container;
+  GimpDropType         drop_type;
+  GimpItemGetNameFunc  get_name_func;
 };
 
 struct _GimpListItemClass
@@ -68,14 +69,16 @@ struct _GimpListItemClass
 
 
 GtkType     gimp_list_item_get_type        (void);
-GtkWidget * gimp_list_item_new             (GimpViewable   *viewable,
-                                            gint            preview_size);
+GtkWidget * gimp_list_item_new             (GimpViewable        *viewable,
+                                            gint                 preview_size);
 
-void        gimp_list_item_set_viewable    (GimpListItem   *list_item,
-					    GimpViewable   *viewable);
-void        gimp_list_item_set_reorderable (GimpListItem   *list_item,
-                                            gboolean        reorderable,
-                                            GimpContainer  *container);
+void        gimp_list_item_set_viewable    (GimpListItem        *list_item,
+					    GimpViewable        *viewable);
+void        gimp_list_item_set_reorderable (GimpListItem        *list_item,
+                                            gboolean             reorderable,
+                                            GimpContainer       *container);
+void        gimp_list_item_set_name_func   (GimpListItem        *list_item,
+					    GimpItemGetNameFunc  get_name_func);
 
 
 /*  protected  */

@@ -50,7 +50,6 @@ EXTRA_DIST = \
 enum_headers = \
 	../../app/appenums.h			\
 	../../app/appenv.h			\
-	../../app/apptypes.h			\
 	../../app/errors.h			\
 	../../app/gimpdrawable-offset.h		\
 	../../app/gimpimage.h			\

@@ -37,14 +37,16 @@ typedef struct _GimpContainerViewClass  GimpContainerViewClass;
 
 struct _GimpContainerView
 {
-  GtkVBox        parent_instance;
+  GtkVBox              parent_instance;
 
-  GimpContainer *container;
-  GimpContext   *context;
+  GimpContainer       *container;
+  GimpContext         *context;
 
-  GHashTable    *hash_table;
+  GHashTable          *hash_table;
 
-  gint           preview_size;
+  gint                 preview_size;
+
+  GimpItemGetNameFunc  get_name_func;
 };
 
 struct _GimpContainerViewClass
@@ -85,6 +87,9 @@ void      gimp_container_view_set_context      (GimpContainerView *view,
 						GimpContext       *context);
 void      gimp_container_view_set_preview_size (GimpContainerView *view,
 						gint               preview_size);
+void      gimp_container_view_set_name_func    (GimpContainerView *view,
+						GimpItemGetNameFunc  get_name_func);
+
 void      gimp_container_view_select_item      (GimpContainerView *view,
 						GimpViewable      *viewable);
 void      gimp_container_view_activate_item    (GimpContainerView *view,

@@ -37,27 +37,31 @@
 #include "gimpimagepreview.h"
 #include "gimppreview.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "pixmaps/eye.xpm"
 
 
-static void   gimp_component_list_item_class_init (GimpComponentListItemClass *klass);
-static void   gimp_component_list_item_init       (GimpComponentListItem      *list_item);
+static void    gimp_component_list_item_class_init (GimpComponentListItemClass *klass);
+static void    gimp_component_list_item_init       (GimpComponentListItem      *list_item);
 
-static void   gimp_component_list_item_set_viewable       (GimpListItem *list_item,
-							   GimpViewable *viewable);
+static void    gimp_component_list_item_set_viewable       (GimpListItem *list_item,
+							    GimpViewable *viewable);
 
-static void   gimp_component_list_item_eye_toggled        (GtkWidget    *widget,
-							   gpointer      data);
+static void    gimp_component_list_item_eye_toggled        (GtkWidget    *widget,
+							    gpointer      data);
 
-static void   gimp_component_list_item_visibility_changed (GimpImage    *gimage,
-							   ChannelType   channel,
-							   gpointer      data);
+static void    gimp_component_list_item_visibility_changed (GimpImage    *gimage,
+							    ChannelType   channel,
+							    gpointer      data);
 
-static void   gimp_component_list_item_state_changed      (GtkWidget    *widget,
-							   GtkStateType  previous_state);
-static void   gimp_component_list_item_active_changed     (GimpImage    *gimage,
-							   ChannelType   channel,
-							   gpointer      data);
+static void    gimp_component_list_item_state_changed      (GtkWidget    *widget,
+							    GtkStateType  previous_state);
+static void    gimp_component_list_item_active_changed     (GimpImage    *gimage,
+							    ChannelType   channel,
+							    gpointer      data);
+
+static gchar * gimp_component_list_item_get_name           (GtkWidget    *widget);
 
 
 static GimpListItemClass *parent_class = NULL;
@@ -152,7 +156,8 @@ gimp_component_list_item_new (GimpImage   *gimage,
 
   list_item = gtk_type_new (GIMP_TYPE_COMPONENT_LIST_ITEM);
 
-  list_item->preview_size = preview_size;
+  list_item->preview_size  = preview_size;
+  list_item->get_name_func = gimp_component_list_item_get_name;
 
   GIMP_COMPONENT_LIST_ITEM (list_item)->channel = channel;
 
@@ -398,4 +403,23 @@ gimp_component_list_item_active_changed (GimpImage   *gimage,
     gtk_item_select (GTK_ITEM (data));
   else
     gtk_item_deselect (GTK_ITEM (data));
+}
+
+static gchar *
+gimp_component_list_item_get_name (GtkWidget *widget)
+{
+  GimpComponentListItem *component_item;
+
+  component_item = GIMP_COMPONENT_LIST_ITEM (widget);
+
+  switch (component_item->channel)
+    {
+    case RED_CHANNEL:     return g_strdup (_("Red"));     break;
+    case GREEN_CHANNEL:   return g_strdup (_("Green"));   break;
+    case BLUE_CHANNEL:    return g_strdup (_("Blue"));    break;
+    case GRAY_CHANNEL:    return g_strdup (_("Gray"));    break;
+    case INDEXED_CHANNEL: return g_strdup (_("Indexed")); break;
+    case ALPHA_CHANNEL:   return g_strdup (_("Alpha"));   break;
+    default:              return g_strdup ("EEK");        break;
+    }
 }

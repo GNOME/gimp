@@ -179,6 +179,9 @@ gimp_container_menu_impl_insert_item (GimpContainerMenu *menu,
 
   menu_item = gimp_menu_item_new (viewable, menu->preview_size);
 
+  gimp_menu_item_set_name_func (GIMP_MENU_ITEM (menu_item),
+				menu->get_name_func);
+
   gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 		      GTK_SIGNAL_FUNC (gimp_container_menu_impl_item_selected),
 		      menu);

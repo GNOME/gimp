@@ -67,7 +67,7 @@ static gboolean       gimp_list_item_drag_drop     (GtkWidget         *widget,
                                                     guint              time);
 
 static void           gimp_list_item_name_changed  (GimpViewable      *viewable,
-                                                    GtkLabel          *label);
+                                                    GimpListItem      *list_item);
 static GimpViewable * gimp_list_item_drag_viewable (GtkWidget         *widget,
                                                     gpointer           data);
 
@@ -139,14 +139,15 @@ gimp_list_item_init (GimpListItem *list_item)
   gtk_container_add (GTK_CONTAINER (list_item), list_item->hbox);
   gtk_widget_show (list_item->hbox);
 
-  list_item->preview      = NULL;
-  list_item->name_label   = NULL;
+  list_item->preview       = NULL;
+  list_item->name_label    = NULL;
 
-  list_item->preview_size = 0;
+  list_item->preview_size  = 0;
 
-  list_item->reorderable  = FALSE;
-  list_item->drop_type    = GIMP_DROP_NONE;
-  list_item->container    = NULL;
+  list_item->reorderable   = FALSE;
+  list_item->drop_type     = GIMP_DROP_NONE;
+  list_item->container     = NULL;
+  list_item->get_name_func = NULL;
 }
 
 static void
@@ -305,16 +306,17 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
                       FALSE, FALSE, 0);
   gtk_widget_show (list_item->preview);
 
-  list_item->name_label =
-    gtk_label_new (gimp_object_get_name (GIMP_OBJECT (viewable)));
+  list_item->name_label = gtk_label_new (NULL);
   gtk_box_pack_start (GTK_BOX (list_item->hbox), list_item->name_label,
                       FALSE, FALSE, 0);
   gtk_widget_show (list_item->name_label);
 
+  gimp_list_item_name_changed (viewable, list_item);
+
   gtk_signal_connect_while_alive (GTK_OBJECT (viewable), "name_changed",
                                   GTK_SIGNAL_FUNC (gimp_list_item_name_changed),
-                                  list_item->name_label,
-                                  GTK_OBJECT (list_item->name_label));
+                                  list_item,
+                                  GTK_OBJECT (list_item));
 
   gimp_gtk_drag_source_set_by_type (GTK_WIDGET (list_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
@@ -353,6 +355,26 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
       list_item->container = NULL;
 
       gtk_drag_dest_unset (GTK_WIDGET (list_item));
+    }
+}
+
+void
+gimp_list_item_set_name_func (GimpListItem        *list_item,
+			      GimpItemGetNameFunc  get_name_func)
+{
+  g_return_if_fail (list_item != NULL);
+  g_return_if_fail (GIMP_IS_LIST_ITEM (list_item));
+
+  if (list_item->get_name_func != get_name_func)
+    {
+      GimpViewable *viewable;
+
+      list_item->get_name_func = get_name_func;
+
+      viewable = GIMP_PREVIEW (list_item->preview)->viewable;
+
+      if (viewable)
+	gimp_list_item_name_changed (viewable, list_item);
     }
 }
 
@@ -468,9 +490,23 @@ gimp_list_item_button_state_changed (GtkWidget    *widget,
 
 static void
 gimp_list_item_name_changed (GimpViewable *viewable,
-                             GtkLabel     *label)
+                             GimpListItem *list_item)
 {
-  gtk_label_set_text (label, gimp_object_get_name (GIMP_OBJECT (viewable)));
+  if (list_item->get_name_func)
+    {
+      gchar *name;
+
+      name = list_item->get_name_func (GTK_WIDGET (list_item));
+
+      gtk_label_set_text (GTK_LABEL (list_item->name_label), name);
+
+      g_free (name);
+    }
+  else
+    {
+      gtk_label_set_text (GTK_LABEL (list_item->name_label),
+			  gimp_object_get_name (GIMP_OBJECT (viewable)));
+    }
 }
 
 static GimpViewable *

@@ -219,6 +219,9 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 
   list_item = gimp_list_item_new (viewable, view->preview_size);
 
+  gimp_list_item_set_name_func (GIMP_LIST_ITEM (list_item),
+				view->get_name_func);
+
   gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
 		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activated),
 		      list_view);

@@ -1,5 +1,35 @@
 2001-05-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/apptypes.h: removed typedefs from the widgets/ subdir.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: new file.
+
+	* app/widgets/gimpcontainermenu.[ch]
+	* app/widgets/gimpcontainerview.[ch]: synced them again and added a
+	"get_name_func" 
+
+	* app/widgets/gimplistitem.[ch]
+	* app/widgets/gimpmenuitem.[ch]: add a "get_name_func" and use it
+	to get the item's name.
+
+	* app/widgets/gimpcontainerlistview.c
+	* app/widgets/gimpcontainermenuimpl.c: pass the get_name_func to
+	the created items.
+
+	* app/widgets/gimpchannellistview.c: gtk_widget_queue_resize() the
+	component frame after changing the image.
+
+	* app/widgets/gimpcomponentlistitem.c: set a custom
+	get_name_func() so the components are named Red, Green, ... again.
+
+	* app/widgets/gimpimagedock.c: set a custom get_name_func() which
+	returns names like in the old L&C dialog's image menu.
+
+	* tools/pdbgen/Makefile.am: don't scan apptypes.h for enums.
+
+2001-05-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c: don't #include "gui/color-select.h"
 
 	* app/disp_callbacks.[ch]: renamed gdisplay_drop_viewable() to

@@ -421,9 +421,25 @@ gimp_container_view_set_preview_size (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (preview_size > 0 && preview_size <= 256 /* FIXME: 64 */);
 
-  view->preview_size = preview_size;
+  if (view->preview_size != preview_size)
+    {
+      view->preview_size = preview_size;
 
-  gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_PREVIEW_SIZE]);
+      gtk_signal_emit (GTK_OBJECT (view), view_signals[SET_PREVIEW_SIZE]);
+    }
+}
+
+void
+gimp_container_view_set_name_func (GimpContainerView   *view,
+				   GimpItemGetNameFunc  get_name_func)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+
+  if (view->get_name_func != get_name_func)
+    {
+      view->get_name_func = get_name_func;
+    }
 }
 
 void

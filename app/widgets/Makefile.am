@@ -68,7 +68,8 @@ libappwidgets_la_SOURCES = \
 	gtkvwrapbox.c			\
 	gtkvwrapbox.h			\
 	gimpconstrainedhwrapbox.c	\
-	gimpconstrainedhwrapbox.h
+	gimpconstrainedhwrapbox.h	\
+	widgets-types.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Widgets\"
