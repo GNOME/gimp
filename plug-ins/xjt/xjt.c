@@ -34,10 +34,14 @@
  */
 
 /* TODO:
- *   load tattoos (code is prepared for tattos)
+ *  - support units and user units 
+ *  - load tattoos (code is prepared for tattos)
  */
 
 /* revision history:
+ * version 1.1.15b; 2000/01/28  hof: save/load paths  (load is not activated PDB-bug)
+ *                                   continued save/load parasites,
+ *                                   replaced static buffers by dynamic allocated memory (goodbye to sprintf)
  * version 1.1.15a; 2000/01/23  hof: NLS_macros, save/load parasites, \" and \n characters in names
  *                                   use G_DIR_SEPARATOR (but you still need UNIX tar to run this plugin)
  *                                   older gimp releases (prior to 1.1.15) are not supported any more.
@@ -72,15 +76,14 @@
 #define GIMP_XJ_IMAGE  "GIMP_XJ_IMAGE"
 
 #define SCALE_WIDTH 125
-#define MAX_LINE_LEN  10000
 
+#define XJT_ORIENTATION_HORIZONTAL 0
+#define XJT_ORIENTATION_VERTICAL   1
 
-static gint     xjt_debug = FALSE;
+       gint     xjt_debug = FALSE;
 static pid_t    g_pid;
 static gchar   *global_parasite_prop_lines = NULL;
 static gint     global_parasite_id = 0;
-static gchar  **global_all_parasite_names = NULL;
-static gint32   global_num_parasites = 0;
 
 typedef struct
 {
@@ -117,13 +120,22 @@ typedef enum
   PROP_RESOLUTION = 19,
   PROP_TATTOO = 20,
   PROP_PARASITES = 21,
+  PROP_UNIT = 22,
+  PROP_PATHS = 23,
+  PROP_USER_UNIT = 24,
 
+  PROP_PATH_LOCKED = 86,
+  PROP_PATH_CURRENT = 87,
+  PROP_PATH_TYPE = 88,
+  PROP_PATH_POINTS = 89,
   PROP_NAME = 90,
   PROP_DIMENSION = 91,
   PROP_TYPE = 92,
   PROP_VERSION = 93,
   PROP_FLOATING_ATTACHED = 94,
   PROP_PARASITE_FLAGS = 95,
+  PROP_GIMP_VERSION = 96,
+  
   PROP_SYNTAX_ERROR = 99
 } t_proptype;
 
@@ -137,7 +149,8 @@ typedef enum
   PTYP_2xINT = 5,
   PTYP_3xINT = 6,
   PTYP_2xFLT = 7,
-  PTYP_3xFLT = 8
+  PTYP_3xFLT = 8,
+  PTYP_FLIST = 9
 } t_param_typ;
 
 typedef enum
@@ -150,35 +163,41 @@ typedef enum
 
 typedef enum
 {
-  XJT_RGB,
-  XJT_GRAY,
-  XJT_INDEXED
+  XJT_RGB = 0,
+  XJT_GRAY = 1
+  /* XJT_INDEXED = 2 */  /* xjt does not support indexed images */
 } XJTImageBaseType;
 
 typedef enum
 {
-  XJT_NORMAL_MODE,
-  XJT_DISSOLVE_MODE,
-  XJT_BEHIND_MODE,
-  XJT_MULTIPLY_MODE,
-  XJT_SCREEN_MODE,
-  XJT_OVERLAY_MODE,
-  XJT_DIFFERENCE_MODE,
-  XJT_ADDITION_MODE,
-  XJT_SUBTRACT_MODE,
-  XJT_DARKEN_ONLY_MODE,
-  XJT_LIGHTEN_ONLY_MODE,
-  XJT_HUE_MODE,
-  XJT_SATURATION_MODE,
-  XJT_COLOR_MODE,
-  XJT_VALUE_MODE,
-  XJT_DIVIDE_MODE
+  XJT_PATHTYPE_UNDEF = 0,
+  XJT_PATHTYPE_BEZIER = 1
+} XJTPathType;
+
+typedef enum
+{
+  XJT_NORMAL_MODE = 0,
+  XJT_DISSOLVE_MODE = 1,
+  XJT_BEHIND_MODE = 2,
+  XJT_MULTIPLY_MODE = 3,
+  XJT_SCREEN_MODE = 4,
+  XJT_OVERLAY_MODE = 5,
+  XJT_DIFFERENCE_MODE = 6,
+  XJT_ADDITION_MODE = 7,
+  XJT_SUBTRACT_MODE = 8,
+  XJT_DARKEN_ONLY_MODE = 9,
+  XJT_LIGHTEN_ONLY_MODE = 10,
+  XJT_HUE_MODE = 11,
+  XJT_SATURATION_MODE = 12,
+  XJT_COLOR_MODE = 13,
+  XJT_VALUE_MODE = 14,
+  XJT_DIVIDE_MODE = 15
 } XJTLayerModeEffects;
 
 typedef struct
 {
   t_proptype   prop_id;
-  char        *prop_mnemonic;
+  gchar       *prop_mnemonic;
   t_param_typ  param_typ;
   gdouble      default_val1;
   gdouble      default_val2;
@@ -194,7 +213,9 @@ typedef struct
   gdouble  flt_val1;
   gdouble  flt_val2;
   gdouble  flt_val3;
-  char    *string_val;
+  gint32   num_fvals;
+  gdouble *flt_val_list;
+  gchar   *string_val;
 }  t_param_prop;
 
 typedef struct
@@ -202,10 +223,22 @@ typedef struct
   t_parasitetype  parasite_type;   
   gint32          parasite_id;
   gint32          flags;
-  char           *name;
+  gchar          *name;
   gint32          obj_pos;
   void           *next;
 } t_parasite_props;
+
+typedef struct
+{
+  gint32          path_type;   
+  gint32          path_locked;
+  gint32          path_closed;
+  gint32          current_flag;
+  gchar          *name;
+  gint32          num_points;
+  gdouble        *path_points;
+  void           *next;
+} t_path_props;
 
 typedef struct
 {
@@ -220,7 +253,7 @@ typedef struct
   guchar   color_b;
   gint32   offx;            /* do channels have offset ?? */
   gint32   offy;
-  char     *name;
+  gchar   *name;
   gint32   tattoo;
 
   gint     channel_pos;
@@ -242,7 +275,7 @@ typedef struct
   gint     show_mask;
   gint32   offx;
   gint32   offy;
-  char     *name;
+  gchar   *name;
   gint32   tattoo;
   
   gint     layer_pos;
@@ -262,6 +295,9 @@ typedef struct
 typedef struct
 {
   gchar            *version;
+  gint              gimp_major_version;
+  gint              gimp_minor_version;
+  gint              gimp_micro_version;
   GImageType        image_type;
   gint              image_width;
   gint              image_height;
@@ -275,10 +311,11 @@ typedef struct
   t_channel_props  *mask_props;
   t_guide_props    *guide_props;
   t_parasite_props *parasite_props;
+  t_path_props     *path_props;
 } t_image_props;
 
 
-#define PROP_TABLE_ENTRIES 28
+#define PROP_TABLE_ENTRIES 33
 t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {             
   /* t_proptype              mnemonic   t_paramtyp             default values */
   { PROP_END,                   "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
@@ -303,13 +340,17 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   { PROP_RESOLUTION,            "res",    PTYP_2xFLT,              72.0, 72.0,  0.0 } ,
   { PROP_TATTOO,                "tto",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
   { PROP_PARASITES,             "pte",	  PTYP_INT,		    0.0,  0.0,  0.0 } ,
-
-
+ 
+  { PROP_PATH_POINTS,           "php",    PTYP_FLIST,               0.0,  0.0,  0.0 } ,
+  { PROP_PATH_TYPE,             "pht",    PTYP_INT,                 1.0,  0.0,  0.0 } ,
+  { PROP_PATH_CURRENT,          "pha",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
+  { PROP_PATH_LOCKED,           "phl",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
   { PROP_PARASITE_FLAGS,        "ptf",    PTYP_INT,                 1.0,  0.0,  0.0 } ,
   { PROP_FLOATING_ATTACHED,     "fa",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_NAME,                  "n",      PTYP_STRING,              0.0,  0.0,  0.0 } ,
   { PROP_DIMENSION,             "w/h",    PTYP_2xINT,               0.0,  0.0,  0.0 } ,
   { PROP_TYPE,                  "typ",    PTYP_INT,                 0.0,  0.0,  0.0 } ,
+  { PROP_GIMP_VERSION,          "gimp",   PTYP_3xINT,               0.0,  0.0,  0.0 } ,
   { PROP_VERSION,               "ver",    PTYP_STRING,              0.0,  0.0,  0.0 }
 };
 
@@ -360,7 +401,7 @@ p_invert(gint value)
   return(FALSE);
 }
 
-int p_system(char *cmd)
+int p_system(gchar *cmd)
 {
   int l_rc;
   int l_rc2;
@@ -418,7 +459,7 @@ query (void)
 			  _("loads files of the jpeg-tar file format"),
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Jan-23",
+                          "2000-Jan-30",
 			  "<Load>/xjt",
 			  NULL,
                           PROC_PLUG_IN,
@@ -430,7 +471,7 @@ query (void)
 			  _("saves files in the jpeg-tar file format"),
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "2000-Jan-23",
+                          "2000-Jan-30",
                           "<Save>/xjt",
 			  "RGB*, GRAY*",
                           PROC_PLUG_IN,
@@ -572,6 +613,19 @@ run (gchar   *name,
 
 /* -- type transformer routines XJT -- GIMP internal enums ----------------- */
 
+gint32
+p_to_GimpOrientation(gint32 orientation)
+{
+  if(orientation == XJT_ORIENTATION_VERTICAL) return(ORIENTATION_VERTICAL);
+  return(ORIENTATION_HORIZONTAL);
+}
+gint32
+p_to_XJTOrientation(gint32 orientation)
+{
+  if(orientation == ORIENTATION_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
+  return(XJT_ORIENTATION_HORIZONTAL);
+}
+
 GimpLayerModeEffects
 p_to_GimpLayerModeEffects(XJTLayerModeEffects intype)
 {
@@ -593,6 +647,11 @@ p_to_GimpLayerModeEffects(XJTLayerModeEffects intype)
     case XJT_COLOR_MODE:          return(GIMP_COLOR_MODE);
     case XJT_VALUE_MODE:          return(GIMP_VALUE_MODE);
     case XJT_DIVIDE_MODE:         return(GIMP_DIVIDE_MODE);
+  }
+  printf (_("XJT file contains unknown layermode %d"), (int)intype);
+  if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
+  {
+    return((GimpLayerModeEffects)intype);
   }
   return(GIMP_NORMAL_MODE);
 }
@@ -619,8 +678,47 @@ p_to_XJTLayerModeEffects(GimpLayerModeEffects intype)
     case GIMP_VALUE_MODE:          return(XJT_VALUE_MODE);
     case GIMP_DIVIDE_MODE:         return(XJT_DIVIDE_MODE);
   }
+  printf (_("Warning: unsupported layermode %d saved to XJT"), (int)intype);
+  if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
+  {
+    return((XJTLayerModeEffects)intype);
+  }
   return(XJT_NORMAL_MODE);
 }
+
+gint32
+p_to_GimpPathType(XJTPathType intype)
+{
+  switch(intype)
+  {
+    case XJT_PATHTYPE_UNDEF:      return(0);
+    case XJT_PATHTYPE_BEZIER:     return(1);
+  }
+  printf (_("XJT file contains unknown pathtype %d"), (int)intype);
+  if((gint32)intype > (gint32)XJT_PATHTYPE_BEZIER)
+  {
+    return((gint32)intype);
+  }
+  return(0);
+}
+
+XJTPathType
+p_to_XJTPathType(gint32 intype)
+{
+  switch(intype)
+  {
+    case 0:      return(XJT_PATHTYPE_UNDEF);
+    case 1:      return(XJT_PATHTYPE_BEZIER);
+  }
+  printf (_("Warning: unsupported pathtype %d saved to XJT"), (int)intype);
+  if((gint32)intype > (gint32)XJT_PATHTYPE_BEZIER)
+  {
+    return((XJTPathType)intype);
+  }
+  return(XJT_PATHTYPE_UNDEF);
+}
+
+
 /* ---------------------- SAVE DIALOG procedures  -------------------------- */
 
 static gint
@@ -747,6 +845,30 @@ p_get_property_index(t_proptype proptype)
   return 0;  /* index of PROP_END -- not supported */
 }	/* end p_get_property_index */
 
+/* ============================================================================
+ * p_float_to_str
+ *   create string from float.
+ * ============================================================================
+ */
+gchar *
+p_float_to_str(gdouble  flt_val)
+{
+   gchar *l_str;
+   gint  l_idx;
+
+   /* XJT float precision is limited to 5 digits */
+   l_str = g_strdup_printf("%.5f", (float)flt_val);
+
+   /* delete trailing '0' and '.' characters */
+   l_idx = strlen(l_str) -1;
+   while(l_idx > 0)
+   {
+     if((l_str[l_idx] == '0') || (l_str[l_idx] == '.')) l_str[l_idx] = '\0';
+     else break;
+     l_idx--;
+   }
+   return(l_str);
+}
 
 /* ============================================================================
  * p_namedup
@@ -754,12 +876,12 @@ p_get_property_index(t_proptype proptype)
  *   characters are escaped by a backslash
  * ============================================================================
  */
-char *
-p_namedup(char *name)
+gchar *
+p_namedup(gchar *name)
 {
-  char *l_name;
-  char *l_str;
-  char *l_ptr;
+  gchar *l_name;
+  gchar *l_str;
+  gchar *l_ptr;
   gint  l_len;
 
   l_str = name;
@@ -803,6 +925,7 @@ p_namedup(char *name)
  
 /* ============================================================================
  * p_write_prop_string
+ *   allocate buffer and
  *   write out the property mnemonic to buffer
  *   and parameter(s) according to the property type
  *
@@ -812,17 +935,18 @@ p_namedup(char *name)
  * ============================================================================
  */
 
-static void
-p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint wr_all_prp)
+gchar *
+p_write_prop_string(t_proptype proptype, t_param_prop *param, gint wr_all_prp)
 {
   int l_prop_idx;
-  int l_idx;
-  char f_buff[100];
-  char *l_str;
+  int l_idp;
+  gchar *l_f1;
+  gchar *l_f2;
+  gchar *l_f3;  
+  gchar *l_str;
+  gchar *buffer;
 
-  if(buffer == NULL) return;
-  *buffer = '\0';
-  
+  buffer = NULL;
   l_prop_idx = p_get_property_index(proptype);
  
   switch (g_prop_table[l_prop_idx].param_typ)
@@ -831,13 +955,13 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          /* boolean properties are written if they are not FALSE */
          if(param->int_val1)
          {
-            sprintf(buffer, " %s", g_prop_table[l_prop_idx].prop_mnemonic);
+	    buffer = g_strdup_printf(" %s", g_prop_table[l_prop_idx].prop_mnemonic);
          }
          else
          {
            if(wr_all_prp)
            {
-              sprintf(buffer, " %s!", g_prop_table[l_prop_idx].prop_mnemonic);
+              buffer = g_strdup_printf(" %s!", g_prop_table[l_prop_idx].prop_mnemonic);
            }
          }
          break;
@@ -846,7 +970,7 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          if((param->int_val1 != g_prop_table[l_prop_idx].default_val1) 
          || (wr_all_prp))
          {
-           sprintf(buffer, " %s:%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           buffer = g_strdup_printf(" %s:%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1);
          }
          break;
@@ -854,16 +978,9 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          if((param->flt_val1 != g_prop_table[l_prop_idx].default_val1)
          || (wr_all_prp))
          {
-	   sprintf(f_buff, "%.3f", (float)param->flt_val1);
-	   l_idx = strlen(f_buff) -1;
-	   while(l_idx > 0)
-	   {
-	     if((f_buff[l_idx] == '0') &&(f_buff[l_idx -1] == '0') ) f_buff[l_idx] = '\0';
-	     else break;
-	     l_idx--;
-	   }
-	   
-           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+	   l_f1 = p_float_to_str(param->flt_val1);
+           buffer = g_strdup_printf(" %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, l_f1);
+	   g_free(l_f1);
          }
          break;
      case PTYP_2xFLT:
@@ -871,17 +988,11 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          || (param->flt_val2 != g_prop_table[l_prop_idx].default_val2)
          || (wr_all_prp))
          {
-	   sprintf(f_buff, "%.3f,%.3f", (float)param->flt_val1,
-	                                (float)param->flt_val2);
-	   l_idx = strlen(f_buff) -1;
-	   while(l_idx > 0)
-	   {
-	     if((f_buff[l_idx] == '0') &&(f_buff[l_idx -1] == '0') ) f_buff[l_idx] = '\0';
-	     else break;
-	     l_idx--;
-	   }
-	   
-           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+	   l_f1 = p_float_to_str(param->flt_val1);
+	   l_f2 = p_float_to_str(param->flt_val2);
+           buffer = g_strdup_printf(" %s:%s,%s", g_prop_table[l_prop_idx].prop_mnemonic, l_f1, l_f2);
+	   g_free(l_f1);
+	   g_free(l_f2);
          }
          break;
      case PTYP_3xFLT:
@@ -890,19 +1001,30 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          || (param->flt_val3 != g_prop_table[l_prop_idx].default_val3)
          || (wr_all_prp))
          {
-	   sprintf(f_buff, "%.3f,%.3f,%.3f", (float)param->flt_val1,
-	                                     (float)param->flt_val2,
-	                                     (float)param->flt_val3);
-	   l_idx = strlen(f_buff) -1;
-	   while(l_idx > 0)
-	   {
-	     if((f_buff[l_idx] == '0') &&(f_buff[l_idx -1] == '0') ) f_buff[l_idx] = '\0';
-	     else break;
-	     l_idx--;
-	   }
-	   
-           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+	   l_f1 = p_float_to_str(param->flt_val1);
+	   l_f2 = p_float_to_str(param->flt_val2);
+	   l_f3 = p_float_to_str(param->flt_val3);
+           buffer = g_strdup_printf(" %s:%s,%s,%s", g_prop_table[l_prop_idx].prop_mnemonic, l_f1, l_f2, l_f3);
+	   g_free(l_f1);
+	   g_free(l_f2);
+	   g_free(l_f3);
          }
+         break;
+     case PTYP_FLIST:
+         if(param->num_fvals > 0)
+	 {
+ 	   l_f1 = p_float_to_str(param->flt_val_list[0]);
+           buffer = g_strdup_printf(" %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, l_f1);
+	   g_free(l_f1);	   
+           for(l_idp = 1; l_idp < param->num_fvals; l_idp++)
+	   {
+	      l_f1 = p_float_to_str(param->flt_val_list[l_idp]);
+	      l_str = g_strdup_printf("%s,%s", buffer, l_f1);
+              g_free(buffer);
+	      buffer = l_str;
+              g_free(l_f1);	   
+	   }
+	 }
          break;
      case PTYP_STRING:
          if(param->string_val != NULL)
@@ -913,7 +1035,7 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
 	      l_str = p_namedup(param->string_val);
 	      if(l_str)
 	      {
-                sprintf(buffer, " %s:\"%s\"", g_prop_table[l_prop_idx].prop_mnemonic, l_str);
+                buffer = g_strdup_printf(" %s:\"%s\"", g_prop_table[l_prop_idx].prop_mnemonic, l_str);
                 g_free(l_str);
 	      }
            }
@@ -924,7 +1046,7 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          || (param->int_val2 != g_prop_table[l_prop_idx].default_val2)
          || (wr_all_prp))
          {
-           sprintf(buffer, " %s:%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           buffer = g_strdup_printf(" %s:%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1, (int)param->int_val2);
          }
          break;
@@ -934,7 +1056,7 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
          || (param->int_val3 != g_prop_table[l_prop_idx].default_val3)
          || (wr_all_prp))
          {
-           sprintf(buffer, " %s:%d,%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           buffer = g_strdup_printf(" %s:%d,%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1, 
 				 (int)param->int_val2,
 				 (int)param->int_val3);
@@ -943,7 +1065,12 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
     default:  /*  PTYP_NOT_SUPPORTED */
          break;
   }
-
+  
+  if(buffer == NULL)
+  {
+    buffer = g_strdup("\0");
+  }
+  return (buffer);
 }	/* end p_write_prop_string */
 
 /* ============================================================================
@@ -960,13 +1087,14 @@ p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint
 static void
 p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp)
 {
-  char    l_buff[300];
-  p_write_prop_string(l_buff, proptype, param, wr_all_prp);
+  gchar    *l_buff;
+  l_buff = p_write_prop_string(proptype, param, wr_all_prp);
   
   if(l_buff[0] != '\0')
   {
     fprintf(fp, "%s", l_buff);
   }
+  g_free(l_buff);
 }	/* end p_write_prop */
 
 
@@ -980,14 +1108,14 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
  */
 
 gint
-p_write_parasite(char *dirname, FILE *fp,
+p_write_parasite(gchar *dirname, FILE *fp,
                  Parasite *parasite, gint wr_all_prp)
 {
-  char *l_new_parasite_prop_lines;
-  char  l_parasite_buff[1000];
-  char  l_parasite_file[512];
-  char  l_buff[300];
-  char  l_buff2[50];
+  gchar *l_new_parasite_prop_lines;
+  gchar *l_parasite_buff;
+  gchar *l_parasite_file;
+  gchar *l_buff;
+  gchar *l_buff2;
   FILE *l_fp_pte;
   t_param_prop   l_param;
   
@@ -1004,17 +1132,18 @@ p_write_parasite(char *dirname, FILE *fp,
       * (the buffer is written as last block to the PRP file)
       */
      l_param.string_val = parasite->name;
-     p_write_prop_string(l_buff, PROP_NAME, &l_param, wr_all_prp);
+     l_buff = p_write_prop_string(PROP_NAME, &l_param, wr_all_prp);
 
      l_param.int_val1 = parasite->flags;
-     p_write_prop_string(l_buff2, PROP_PARASITE_FLAGS, &l_param, wr_all_prp);
+     l_buff2 = p_write_prop_string(PROP_PARASITE_FLAGS, &l_param, wr_all_prp);
 
-     sprintf(l_parasite_buff, "p%d%s%s\n"
+     l_parasite_buff = g_strdup_printf("p%d%s%s\n"
              , (int)global_parasite_id
 	     , l_buff
              , l_buff2
 	      );
-     
+     g_free(l_buff);
+     g_free(l_buff2);
 
      if(global_parasite_prop_lines == NULL)
      {
@@ -1022,61 +1151,135 @@ p_write_parasite(char *dirname, FILE *fp,
      }
      else
      {
-       l_new_parasite_prop_lines = g_malloc(strlen(global_parasite_prop_lines) + strlen(l_parasite_buff));
-       sprintf(l_new_parasite_prop_lines, "%s%s", global_parasite_prop_lines, l_parasite_buff);
+       l_new_parasite_prop_lines = g_strdup_printf("%s%s", global_parasite_prop_lines, l_parasite_buff);
        g_free(global_parasite_prop_lines);
        global_parasite_prop_lines = l_new_parasite_prop_lines;
      }
+     g_free(l_parasite_buff);
 
      /* write the parasite data to a file named p1.pte */
-     sprintf (l_parasite_file, "%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)global_parasite_id);
+     l_parasite_file = g_strdup_printf("%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)global_parasite_id);
      l_fp_pte = fopen(l_parasite_file, "wb");
      if(l_fp_pte == NULL)
      {
        g_message (_("Can't open (write): %s"), l_parasite_file);
+       g_free(l_parasite_file);
        return -1;
      }
      else
      {
        fwrite(parasite->data, parasite->size, 1, l_fp_pte);
        fclose(l_fp_pte);
+       g_free(l_parasite_file);
      }
   }
   return 0;
 }
 
 void
-p_write_image_parasites(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
+p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
 {
-  Parasite  *l_parasite;
   gint32     l_idx;
+  gchar    **l_path_names = NULL;
+  gchar     *l_current_pathname = NULL;
+  gint32     l_num_paths = 0;
+  gdouble   *l_path_points;
+  gint32     l_path_type;
+  gint32     l_path_closed;
+  gint32     l_num_points = 0;
+  t_param_prop   l_param;
+
+  l_path_names = p_gimp_path_list(image_id, &l_num_paths);
+  if(l_path_names == NULL) return;
+
+  l_current_pathname = p_gimp_path_get_current(image_id);
   
-  for(l_idx = 0; l_idx < global_num_parasites; l_idx++)
+  for(l_idx = 0; l_idx < l_num_paths; l_idx++)
   {
-    l_parasite = gimp_image_parasite_find(image_id, global_all_parasite_names[l_idx]);
-    if(l_parasite)
+    if(xjt_debug) printf("p_write_image_paths NAME:%s:\n",  l_path_names[l_idx]);
+    
+    l_path_points = p_gimp_path_get_points(image_id, l_path_names[l_idx],
+	                           &l_path_type, &l_path_closed, &l_num_points);
+
+    if(l_path_points)
     {
-       if(xjt_debug) printf("p_write_image_parasites NAME:%s:\n",  global_all_parasite_names[l_idx]);
-       p_write_parasite(dirname, fp, l_parasite, wr_all_prp);
+       /* write PATH line identifier */
+      fprintf(fp, "PATH");
+
+      l_param.int_val1 = p_to_XJTPathType(l_path_type);
+      p_write_prop (fp, PROP_PATH_TYPE, &l_param, wr_all_prp);
+
+      l_param.string_val = l_path_names[l_idx];
+      p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
+
+      /* current path flag */
+      l_param.int_val1 = FALSE;
+      if(l_current_pathname)
+      {
+	if(strcmp(l_current_pathname, l_path_names[l_idx]) == 0)
+	{
+           l_param.int_val1 = TRUE;
+           p_write_prop (fp, PROP_PATH_CURRENT, &l_param, wr_all_prp);
+	}
+      }
+
+      l_param.num_fvals = l_num_points;
+      l_param.flt_val_list = l_path_points;
+      p_write_prop (fp, PROP_PATH_POINTS, &l_param, wr_all_prp);
+
+      fprintf(fp, "\n");
+      g_free(l_path_points);
     }
   }
+
+  g_free(l_current_pathname);
+  g_free(l_path_names);
 }
 
 void
-p_write_drawable_parasites(char *dirname, FILE *fp, gint32 drawable_id, gint wr_all_prp)
+p_write_image_parasites(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 {
   Parasite  *l_parasite;
   gint32     l_idx;
+  gchar    **l_parasite_names = NULL;
+  gint32     l_num_parasites = 0;
+
+  l_parasite_names = p_gimp_image_parasite_list (image_id, &l_num_parasites);
+  if(l_parasite_names == NULL) return;
   
-  for(l_idx = 0; l_idx < global_num_parasites; l_idx++)
+  for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
   {
-    l_parasite = gimp_drawable_parasite_find(drawable_id, global_all_parasite_names[l_idx]);
+    l_parasite = gimp_image_parasite_find(image_id, l_parasite_names[l_idx]);
     if(l_parasite)
     {
-       if(xjt_debug) printf("p_write_drawable_parasites NAME:%s:\n",  global_all_parasite_names[l_idx]);
+       if(xjt_debug) printf("p_write_image_parasites NAME:%s:\n",  l_parasite_names[l_idx]);
        p_write_parasite(dirname, fp, l_parasite, wr_all_prp);
     }
   }
+  g_free(l_parasite_names);
+}
+
+void
+p_write_drawable_parasites(gchar *dirname, FILE *fp, gint32 drawable_id, gint wr_all_prp)
+{
+  Parasite  *l_parasite;
+  gint32     l_idx;
+  gchar    **l_parasite_names = NULL;
+  gint32     l_num_parasites = 0;
+
+  l_parasite_names = p_gimp_drawable_parasite_list (drawable_id, &l_num_parasites);
+  if(l_parasite_names == NULL) return;
+  
+  for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
+  {
+    l_parasite = gimp_drawable_parasite_find(drawable_id, l_parasite_names[l_idx]);
+    if(l_parasite)
+    {
+       if(xjt_debug) printf("p_write_drawable_parasites NAME:%s:\n",  l_parasite_names[l_idx]);
+       p_write_parasite(dirname, fp, l_parasite, wr_all_prp);
+    }
+  }
+  g_free(l_parasite_names);
 }
 
 /* ============================================================================
@@ -1086,8 +1289,8 @@ p_write_drawable_parasites(char *dirname, FILE *fp, gint32 drawable_id, gint wr_
  */
 
 static void
-p_write_layer_prp(char *dirname,
-                  FILE *fp,  char *layer_shortname,
+p_write_layer_prp(gchar *dirname,
+                  FILE *fp,  gchar *layer_shortname,
 		  gint32  image_id,
 		  gint32  layer_id,
 		  gint    wr_all_prp)
@@ -1157,8 +1360,8 @@ p_write_layer_prp(char *dirname,
  */
 
 static void
-p_write_channel_prp(char *dirname,
-                  FILE *fp,  char *channel_shortname,
+p_write_channel_prp(gchar *dirname,
+                  FILE *fp,  gchar *channel_shortname,
 		  gint32  image_id,
 		  gint32  channel_id,
 		  gint    wr_all_prp)
@@ -1220,7 +1423,7 @@ p_write_channel_prp(char *dirname,
  */
 
 static void
-p_write_image_prp(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
+p_write_image_prp(gchar *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 {
    GImageType l_image_type;
    guint   l_width, l_height;
@@ -1234,10 +1437,14 @@ p_write_image_prp(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
    l_image_type = gimp_image_base_type(image_id);
  
    fprintf(fp, "%s", GIMP_XJ_IMAGE);
-   
- 
-   l_param.string_val = "1.1.15a";
+    
+   l_param.string_val = "1.1.15b";
    p_write_prop (fp, PROP_VERSION, &l_param, wr_all_prp);
+
+   l_param.int_val1 = GIMP_MAJOR_VERSION;
+   l_param.int_val2 = GIMP_MINOR_VERSION;
+   l_param.int_val3 = GIMP_MICRO_VERSION;
+   p_write_prop (fp, PROP_GIMP_VERSION, &l_param, wr_all_prp);
   
    l_param.int_val1 = l_width;
    l_param.int_val2 = l_height;
@@ -1261,7 +1468,7 @@ p_write_image_prp(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
       /* get position and orientation for the current guide ID */
 
      l_param.int_val1 = p_gimp_image_get_guide_position(image_id, l_guide_id);
-     l_param.int_val2 = p_gimp_image_get_guide_orientation(image_id, l_guide_id);
+     l_param.int_val2 = p_to_XJTOrientation(p_gimp_image_get_guide_orientation(image_id, l_guide_id));
      p_write_prop (fp, PROP_GUIDES, &l_param, wr_all_prp);
 
      /* findnext returns 0 if no (more) guides there
@@ -1283,25 +1490,26 @@ p_write_image_prp(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
    p_write_image_parasites(dirname, fp, image_id, wr_all_prp);
 
    fprintf(fp, "\n");
-
+   
+   p_write_image_paths(fp, image_id, wr_all_prp);
 }	/* end p_write_image_prp */
 
 
 /* ---------------------- SAVE  -------------------------- */
 
 static gint
-save_xjt_image (char   *filename,
+save_xjt_image (gchar   *filename,
 	    gint32  image_id,
 	    gint32  drawable_id)
 {
    int     l_rc;
    int     l_len;
    int     l_idx;
-   char    l_dirname[512];
-   char    l_prop_file[512];
-   char    l_jpg_file[512];
-   char    l_cmd[1024];
-   char   *l_name;
+   gchar  *l_dirname;
+   gchar  *l_prop_file;
+   gchar  *l_jpg_file;
+   gchar  *l_cmd;
+   gchar  *l_name;
    FILE   *l_fp_prp;
    mode_t  l_mode_dir;
    
@@ -1324,33 +1532,15 @@ save_xjt_image (char   *filename,
    l_fp_prp = NULL;
    l_layers_list = NULL;
    l_channels_list = NULL;
+   l_dirname = NULL;
+   l_prop_file = NULL;
+   l_jpg_file = NULL;
    l_wr_all_prp = FALSE;     /* FALSE write only non-default properties
                               * TRUE  write all properties (should be used for DEBUG only)
 			      */
    global_parasite_id = 0;
    global_parasite_prop_lines = NULL;
     
-   /* get the list of all parasite names */
-   /* global_all_parasite_names = p_gimp_parasite_list (&global_num_parasites); */
-
-   /* TODO:
-    * the PDB Procedure gimp_parasite_list returns a list
-    * of all gimp global parasites.
-    * this list does NOT contain image and drawable specific parasites
-    * 
-    * - for xjt we need one or two PDB-Procedure(s) to get all the names
-    *   of the image and drawable specific parasites !!!
-    *
-    * For DEBUG reasons we init the list of parasite names
-    * with one known drawable-parasite name ("gdyntext-parasite")
-    * so we can test save and load of parasites
-    */
-
-   { /* START of debug code */
-   global_num_parasites = 1;
-   global_all_parasite_names = g_malloc(sizeof(char *) * global_num_parasites);
-   global_all_parasite_names[0] = g_strdup("gdyntext-parasite");
-   }   /* END of debug code */
 
    /* get info about the image */
    l_image_type = gimp_image_base_type(image_id);
@@ -1374,8 +1564,8 @@ save_xjt_image (char   *filename,
    g_free (l_name);
    
    /* create temporary directory  <filename>.tmpdir.<PID> */
-   sprintf (l_dirname, "%s.tmpdir.%d", filename, (int)g_pid);
-   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
+   l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
+   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
    l_mode_dir = 0777;
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
@@ -1415,7 +1605,7 @@ save_xjt_image (char   *filename,
       if(xjt_debug) printf("Layer [%d] id=%d\n", (int)l_idx, (int)l_layer_id);
 
       /* save layer as jpeg file */  
-      sprintf (l_jpg_file, "%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
+      l_jpg_file = g_strdup_printf("%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
       if(xjt_debug) printf("XJT-DEBUG: saving layer to file %s\n", l_jpg_file);  
 
       if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1425,16 +1615,18 @@ save_xjt_image (char   *filename,
 				    &jsvals))
       {   goto cleanup;
       }
+      g_free(l_jpg_file);
 
       /* write out the layer properties */
-      if(gimp_drawable_has_alpha(l_layer_id)) { sprintf (l_jpg_file, "L%d", l_idx); }
-      else                                    { sprintf (l_jpg_file, "l%d", l_idx); }
+      if(gimp_drawable_has_alpha(l_layer_id)) { l_jpg_file = g_strdup_printf("L%d", l_idx); }
+      else                                    { l_jpg_file = g_strdup_printf("l%d", l_idx); }
       p_write_layer_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_layer_id, l_wr_all_prp);
+      g_free(l_jpg_file);
       
       /* check, and save alpha channel */
       if(gimp_drawable_has_alpha(l_layer_id))
       {
-         sprintf (l_jpg_file, "%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
+         l_jpg_file = g_strdup_printf("%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
          if(xjt_debug) printf("XJT-DEBUG: saving alpha-channel to file %s\n", l_jpg_file);  
          
          if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1444,13 +1636,14 @@ save_xjt_image (char   *filename,
 				    &jsvals ))
          { goto cleanup;
 	 }
+         g_free(l_jpg_file);
       }
       
       /* check and save layer_mask channel */
        l_channel_id = gimp_layer_get_mask_id(l_layer_id);
        if(l_channel_id >= 0)
        {
-          sprintf (l_jpg_file, "%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
+          l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
           if(xjt_debug) printf("XJT-DEBUG: saving layer-mask to file %s\n", l_jpg_file);  
 
           if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1460,10 +1653,12 @@ save_xjt_image (char   *filename,
 				        &jsvals))
           {   goto cleanup;
           }
+          g_free(l_jpg_file);
 
           /* write out the layer_mask (== channel) properties */
-          sprintf (l_jpg_file, "m%d", l_idx);
+          l_jpg_file = g_strdup_printf("m%d", l_idx);
           p_write_channel_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
+          g_free(l_jpg_file);
        }
    }  	/* end foreach layer */
 
@@ -1488,7 +1683,7 @@ save_xjt_image (char   *filename,
       if(xjt_debug) printf("channel [%d] id=%d\n", (int)l_idx, (int)l_channel_id);
 
       /* save channel as jpeg file */  
-      sprintf (l_jpg_file, "%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
+      l_jpg_file = g_strdup_printf ("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
       if(xjt_debug) printf("XJT-DEBUG: saving channel to file %s\n", l_jpg_file);  
       
       if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1498,11 +1693,13 @@ save_xjt_image (char   *filename,
 				    &jsvals))
       {   goto cleanup;
       }
+      g_free(l_jpg_file);
 
       /* write out the channel properties */
-      sprintf (l_jpg_file, "c%d", l_idx);
+      l_jpg_file = g_strdup_printf ("c%d", l_idx);
       p_write_channel_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
-      
+      g_free(l_jpg_file);
+     
    }    	/* end foreach channel */
 
 
@@ -1517,9 +1714,11 @@ save_xjt_image (char   *filename,
    /* store properties and  all layers and cannels in a
     * tar archive with filename.tar
     */
-   sprintf(l_cmd, "cd %s; tar -cf \"%s\" *; cd ..", l_dirname, filename);
+   l_cmd = g_strdup_printf("cd %s; tar -cf \"%s\" *; cd ..", l_dirname, filename);
    l_rc = p_system(l_cmd);
-   
+   g_free(l_cmd);
+
+    
    l_len = strlen(filename);
    if((l_len > 3) && (l_rc == 0))
    { 
@@ -1534,17 +1733,21 @@ save_xjt_image (char   *filename,
       */
      if(strcmp(&filename[l_len - 3], "bz2") == 0)
      {
-       sprintf(l_cmd, "bzip2 -cf \"%s\" >\"%s.tmp_bz2\"",filename , filename);
+       l_cmd = g_strdup_printf("bzip2 -cf \"%s\" >\"%s.tmp_bz2\"",filename , filename);
        l_rc = p_system(l_cmd);
-       sprintf(l_cmd, "mv \"%s.tmp_bz2\" \"%s\"" ,filename , filename);
+       g_free(l_cmd);       
+       l_cmd = g_strdup_printf("mv \"%s.tmp_bz2\" \"%s\"" ,filename , filename);
        l_rc = p_system(l_cmd);
+       g_free(l_cmd);
      }
      else if(strcmp(&filename[l_len - 2], "gz") == 0)
      {
-       sprintf(l_cmd, "gzip -cf <\"%s\" >\"%s.tmp_gz\"",filename , filename);
+       l_cmd = g_strdup_printf("gzip -cf <\"%s\" >\"%s.tmp_gz\"",filename , filename);
        l_rc = p_system(l_cmd);
-       sprintf(l_cmd, "mv \"%s.tmp_gz\" \"%s\"" ,filename , filename);
+       g_free(l_cmd);       
+       l_cmd = g_strdup_printf("mv \"%s.tmp_gz\" \"%s\"" ,filename , filename);
        l_rc = p_system(l_cmd);
+       g_free(l_cmd);       
      }
    }
    
@@ -1566,9 +1769,14 @@ cleanup:
    if(l_channels_list) g_free (l_channels_list);
 
    /* remove the temorary directory */
-   sprintf(l_cmd, "rm -rf \"%s\"", l_dirname);
+   l_cmd = g_strdup_printf("rm -rf \"%s\"", l_dirname);
 
    if(!xjt_debug) p_system(l_cmd);
+   g_free(l_cmd);       
+   
+   if(l_dirname) g_free(l_dirname);
+   if(l_prop_file) g_free(l_prop_file);
+   if(l_jpg_file) g_free(l_jpg_file);
    
    return(l_rc);
 
@@ -1588,8 +1796,6 @@ t_layer_props * p_new_layer_prop()
   t_layer_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_layer_props));
-  if(l_new_prop != NULL)
-  {
     l_new_prop->active_layer       = g_prop_table[p_get_property_index(PROP_ACTIVE_LAYER)].default_val1;
     l_new_prop->floating_selection = g_prop_table[p_get_property_index(PROP_FLOATING_SELECTION)].default_val1;
     l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
@@ -1609,8 +1815,6 @@ t_layer_props * p_new_layer_prop()
     l_new_prop->layer_pos = -1;
     l_new_prop->has_alpha = FALSE;
     l_new_prop->next = NULL;
-  }
-    
   return(l_new_prop);
 
 }	/* end p_new_layer_prop */
@@ -1626,8 +1830,6 @@ t_channel_props * p_new_channel_prop()
   t_channel_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_channel_props));
-  if(l_new_prop != NULL)
-  {
     l_new_prop->active_channel    = g_prop_table[p_get_property_index(PROP_ACTIVE_CHANNEL)].default_val1;
     l_new_prop->selection         = g_prop_table[p_get_property_index(PROP_SELECTION)].default_val1;
     l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
@@ -1644,10 +1846,7 @@ t_channel_props * p_new_channel_prop()
   
     l_new_prop->channel_pos = -1;
     l_new_prop->next = NULL;
-  }
-    
   return(l_new_prop);
-
 }	/* end p_new_channel_prop */
 
 
@@ -1661,15 +1860,10 @@ t_guide_props * p_new_guide_prop()
   t_guide_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_guide_props));
-  if(l_new_prop != NULL)
-  {
     l_new_prop->position = 0;
     l_new_prop->orientation = 0;
     l_new_prop->next = NULL;
-  }
-    
   return(l_new_prop);
-
 }	/* end p_new_guide_prop */
 
 /* ============================================================================
@@ -1682,19 +1876,35 @@ t_parasite_props * p_new_parasite_prop()
   t_parasite_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_parasite_props));
-  if(l_new_prop != NULL)
-  {
     l_new_prop->parasite_type = XJT_IMAGE_PARASITE;
     l_new_prop->parasite_id = -1;
     l_new_prop->name = NULL;
     l_new_prop->obj_pos = -1;
     l_new_prop->flags = PARASITE_PERSISTENT;
     l_new_prop->next = NULL;
-  }
-    
   return(l_new_prop);
-
 }	/* end p_new_parasite_prop */
+
+/* ============================================================================
+ * p_new_path_prop
+ *   allocate new parasite_properties element and init with default values
+ * ============================================================================
+ */
+t_path_props * p_new_path_prop()
+{
+  t_path_props  *l_new_prop;
+
+  l_new_prop = g_malloc(sizeof(t_path_props));
+    l_new_prop->path_type = p_to_GimpPathType(XJT_PATHTYPE_BEZIER);
+    l_new_prop->path_locked = FALSE;
+    l_new_prop->path_closed = FALSE;
+    l_new_prop->current_flag = FALSE;
+    l_new_prop->name = NULL;
+    l_new_prop->num_points = 0;
+    l_new_prop->path_points = NULL;
+    l_new_prop->next = NULL;
+  return(l_new_prop);
+}	/* end p_new_path_prop */
 
 /* ============================================================================
  * p_new_image_prop
@@ -1706,8 +1916,6 @@ t_image_props * p_new_image_prop()
   t_image_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_image_props));
-  if(l_new_prop != NULL)
-  {
     l_new_prop->image_type       = g_prop_table[p_get_property_index(PROP_TYPE)].default_val1;
     l_new_prop->image_width      = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val1;
     l_new_prop->image_height     = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val2;
@@ -1721,10 +1929,8 @@ t_image_props * p_new_image_prop()
     l_new_prop->mask_props = NULL;
     l_new_prop->guide_props = NULL;
     l_new_prop->parasite_props = NULL;
-  }
-    
+    l_new_prop->path_props = NULL;
   return(l_new_prop);
-
 }	/* end p_new_image_prop */
 
 
@@ -1733,7 +1939,8 @@ t_image_props * p_new_image_prop()
  *   
  * ============================================================================
  */
-static char * p_skip_blanks(char* scan_ptr)
+static gchar *
+p_skip_blanks(gchar* scan_ptr)
 {
   while((*scan_ptr == ' ') || (*scan_ptr == '\t'))
   {
@@ -1752,14 +1959,17 @@ static char * p_skip_blanks(char* scan_ptr)
  * ============================================================================
  */
 
-static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *prop_id)
+static gchar *
+p_scann_token(gchar* scan_ptr, t_param_prop *param, t_proptype *prop_id)
 {
   int   l_idx;
   int   l_ids;
-  char  l_token[ MAX_LINE_LEN];
-  char  l_string_buff[ MAX_LINE_LEN];
-  char  *l_ptr;
-  char  *l_ptr2;
+  int   l_max_line_len;
+  int   l_num_fvals;
+  gchar  *l_token;
+  gchar  *l_string_buff;
+  gchar  *l_ptr;
+  gchar  *l_ptr2;
 
 
   /* check for end of property line */
@@ -1770,10 +1980,13 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
   }
 
   *prop_id  = PROP_SYNTAX_ERROR;
+
+  l_max_line_len = strlen(scan_ptr);
+  l_token = g_malloc(l_max_line_len + 1);
   
   /* extract current token at scann_ptr position */
   l_ptr = scan_ptr; 
-  for (l_idx = 0; l_idx < (MAX_LINE_LEN -1); l_idx++)
+  for (l_idx = 0; l_idx < (l_max_line_len -1); l_idx++)
   {
      if ((*l_ptr == ' ')
      ||  (*l_ptr == '\n')
@@ -1964,6 +2177,68 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
               }
            }
            break;
+       case PTYP_FLIST:
+           if(*l_ptr != ':')
+           {
+              fprintf(stderr, "XJT: PRP syntax error (floatlist property %s not terminated with :)\n",
+                     l_token);
+              *prop_id  = PROP_SYNTAX_ERROR;
+           }
+           else
+           {
+              l_ptr++;
+	      /* counting ',' to guess how much values are in the list */
+	      l_num_fvals = 1;
+	      l_ptr2 = l_ptr;
+	      while(1)
+	      {
+	        if((*l_ptr2 == '\0')
+		|| (*l_ptr2 == '\n'))
+		{
+		  break;
+		}
+	        if(*l_ptr2 == ',')
+		{
+		  l_num_fvals++;
+		}
+		l_ptr2++;
+	      }
+	      
+	      param->num_fvals = 0;
+	      param->flt_val_list = g_malloc0(sizeof(gdouble) * l_num_fvals);
+	      while(1)
+	      {
+        	param->flt_val_list[param->num_fvals] = strtod(l_ptr, &l_ptr2);
+        	if (l_ptr == l_ptr2 )
+        	{
+		   if(param->num_fvals == 0)
+		   {
+                     fprintf(stderr, "XJT: PRP syntax error (floatlist property %s :no float value found)\n",
+                            l_token);
+                     *prop_id  = PROP_SYNTAX_ERROR;
+		     return(l_ptr);
+		   }
+		   break;
+        	}
+        	l_ptr = l_ptr2;
+                if(xjt_debug)    printf("%f char:%c\n", param->flt_val_list[param->num_fvals], *l_ptr);
+		param->num_fvals++;
+                if(*l_ptr != ',')
+		{
+	          if((*l_ptr2 != '\0')
+		  && (*l_ptr2 != '\n'))
+		  {
+                     fprintf(stderr, "XJT: PRP syntax error (floatlist property %s :list contains illegal character: %c)\n",
+                            l_token, *l_ptr);
+                     *prop_id  = PROP_SYNTAX_ERROR;
+		     return(l_ptr);
+		  }
+		  break;
+		}
+                l_ptr++;
+	      }
+           }
+           break;
        case PTYP_STRING:
            if(*l_ptr != ':')
            {
@@ -1981,7 +2256,8 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
 	       return (l_ptr);
            }
            l_ptr++;
-           for(l_ids= 0; l_ids < (MAX_LINE_LEN-2); l_ids++)
+           l_string_buff = g_malloc(l_max_line_len + 2);
+           for(l_ids= 0; l_ids < (l_max_line_len -2); l_ids++)
            {
               if(*l_ptr == '\0')
               {
@@ -2027,13 +2303,14 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
              param->string_val = g_malloc(strlen(l_string_buff) +1);
              strcpy(param->string_val, l_string_buff);
              if(xjt_debug) printf("%s", param->string_val);  
-           }
+          }
            else
            {
              fprintf(stderr, "XJT: PRP syntax error (string property %s terminating \" is missing)\n",
                   l_token);
              *prop_id  = PROP_SYNTAX_ERROR;
            }
+           g_free(l_string_buff);
            break;
        default:
            fprintf(stderr, "XJT: ** Warning ** PRP file with unsupported property %s\n", l_token);
@@ -2066,7 +2343,8 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
   {
     fprintf(stderr, "XJT: ** Warning ** PRP file skipping property: %s\n", l_token);
   }
-    
+
+  g_free(l_token);    
   return(l_ptr);
 }	/* end p_scann_token */
 
@@ -2082,17 +2360,22 @@ t_parasite_props*
 p_find_parasite(t_parasite_props *parasite_props, gint32 parasite_id)
 {
   t_parasite_props  *l_prop;
+
+  if(xjt_debug) printf("XJT: p_find_parasite search parasite_id (1): %d\n", (int)parasite_id );
   
   l_prop = parasite_props;
   while(l_prop)
   {
+     if(xjt_debug) printf("XJT: p_find_parasite (2) listid=%d\n", (int)l_prop->parasite_id );
      if(l_prop->parasite_id == parasite_id)
      {
+       if(xjt_debug) printf("XJT: p_find_parasite (3) listid=%d\n", (int)l_prop->parasite_id );
        return(l_prop);
      }
      l_prop = (t_parasite_props *)l_prop->next;
   }
-  
+
+  if(xjt_debug) printf("XJT: p_find_parasite (4) NULL\n"); 
   return(NULL);
 }
 /* ============================================================================
@@ -2100,15 +2383,15 @@ p_find_parasite(t_parasite_props *parasite_props, gint32 parasite_id)
  * ============================================================================
  */
 gint
-p_create_and_attach_parasite(gint32 gimp_obj_id, char *dirname, t_parasite_props *parasite_props)
+p_create_and_attach_parasite(gint32 gimp_obj_id, gchar *dirname, t_parasite_props *parasite_props)
 {
-  char  l_parasite_file[512];
+  gchar             *l_parasite_file;
   Parasite          l_parasite;
   struct stat       l_stat_buf;
   FILE *l_fp_pte;
 
   /* create filename dirname/p1.pte  1 == parasite_id */
-  sprintf (l_parasite_file, "%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)parasite_props->parasite_id);
+  l_parasite_file = g_strdup_printf("%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)parasite_props->parasite_id);
 
   if (0 != stat(l_parasite_file, &l_stat_buf))
   {
@@ -2124,6 +2407,8 @@ p_create_and_attach_parasite(gint32 gimp_obj_id, char *dirname, t_parasite_props
      return(-1);
   }
 
+  g_free(l_parasite_file);
+  
   l_parasite.size = l_stat_buf.st_size;
   l_parasite.data = g_malloc(l_parasite.size);
   l_parasite.flags = parasite_props->flags | PARASITE_PERSISTENT;
@@ -2146,19 +2431,14 @@ p_create_and_attach_parasite(gint32 gimp_obj_id, char *dirname, t_parasite_props
    */
   if(parasite_props->parasite_type == XJT_IMAGE_PARASITE)
   {
-     gimp_image_attach_new_parasite(gimp_obj_id,
-                                       l_parasite.name,
-				       l_parasite.flags,
-				       l_parasite.size,
-				       l_parasite.data);
+     if(xjt_debug) printf("XJT:   gimp_image_parasite_attach  name:%s\n", l_parasite.name);
+     gimp_image_parasite_attach(gimp_obj_id, &l_parasite);
+     
   }
   else
   {
-     gimp_drawable_attach_new_parasite(gimp_obj_id,
-                                       l_parasite.name,
-				       l_parasite.flags,
-				       l_parasite.size,
-				       l_parasite.data);
+     if(xjt_debug) printf("XJT:   gimp_drawable_parasite_attach  name:%s\n", l_parasite.name);
+     gimp_drawable_parasite_attach(gimp_obj_id, &l_parasite);
   }
   
   if(l_parasite.data) g_free(l_parasite.data);
@@ -2172,25 +2452,22 @@ p_create_and_attach_parasite(gint32 gimp_obj_id, char *dirname, t_parasite_props
  *   find parasite by type and pos (obj_pos)
  * ============================================================================
  */
-gint
-p_check_and_add_parasite(gint32 gimp_obj_id, char *dirname,
+void
+p_check_and_add_parasite(gint32 gimp_obj_id, gchar *dirname,
                          t_parasite_props *parasite_props, gint32 pos, t_parasitetype  parasite_type)
 {
   t_parasite_props  *l_prop;
-  gint l_rc;
-  
+
   l_prop = parasite_props;
   while(l_prop)
   {
      if((l_prop->parasite_type == parasite_type)
      && (l_prop->obj_pos == pos))
      {
-       l_rc = p_create_and_attach_parasite(gimp_obj_id, dirname, l_prop);
-       return (l_rc);
+        p_create_and_attach_parasite(gimp_obj_id, dirname, l_prop);
      }
      l_prop = (t_parasite_props *)l_prop->next;
   }
-  return (0); /*OK */
 }	/* end p_check_and_add_parasite */
 
 /* ============================================================================
@@ -2198,20 +2475,16 @@ p_check_and_add_parasite(gint32 gimp_obj_id, char *dirname,
  *   scann one inputline for layer properties (also used for layer_mask props)
  * ============================================================================
  */
-gint p_scann_layer_prop(char* scan_ptr, t_image_props *image_prop)
+gint p_scann_layer_prop(gchar* scan_ptr, t_image_props *image_prop)
 {
 
   t_layer_props  *l_new_prop;
   t_parasite_props *l_parasite_prop;
-  char           *l_ptr;
+  gchar          *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
 
   l_new_prop = p_new_layer_prop();
-  if(l_new_prop == NULL)
-  {
-     return -1;
-  }
 
   /* add the new element to the layer_props list */
   l_new_prop->next = image_prop->layer_props;
@@ -2313,21 +2586,17 @@ gint p_scann_layer_prop(char* scan_ptr, t_image_props *image_prop)
  *   scann one inputline for channel properties (also used for layer_mask props)
  * ============================================================================
  */
-gint p_scann_channel_prop(char* scan_ptr, t_image_props *image_prop)
+gint p_scann_channel_prop(gchar* scan_ptr, t_image_props *image_prop)
 {
 
   t_channel_props  *l_new_prop;
   t_parasite_props *l_parasite_prop;
-  char           *l_ptr;
+  gchar          *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
   t_parasitetype  l_parasite_type;   
 
   l_new_prop = p_new_channel_prop();
-  if(l_new_prop == NULL)
-  {
-     return -1;
-  }
 
   l_new_prop->channel_pos = strtol(&scan_ptr[1], &l_ptr, 10);   /*  Scan integer (base = 10)  */
   if(l_ptr == scan_ptr)
@@ -2426,9 +2695,9 @@ gint p_scann_channel_prop(char* scan_ptr, t_image_props *image_prop)
  *   
  * ============================================================================
  */
-gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
+gint p_scann_image_prop(gchar* scan_ptr, t_image_props *image_prop)
 {
-  char           *l_ptr;
+  gchar          *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
   t_guide_props  *l_guide_prop;
@@ -2454,6 +2723,11 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
             break;
        case PROP_VERSION:
             image_prop->version = l_param.string_val;
+            break;
+       case PROP_GIMP_VERSION:
+            image_prop->gimp_major_version = l_param.int_val1;
+            image_prop->gimp_minor_version = l_param.int_val2;
+            image_prop->gimp_micro_version = l_param.int_val3;
             break;
        case PROP_TYPE:
  	    switch(l_param.int_val1)
@@ -2482,7 +2756,7 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
               image_prop->guide_props = l_guide_prop;
 
               l_guide_prop->position = l_param.int_val1;
-              l_guide_prop->orientation = l_param.int_val2;
+              l_guide_prop->orientation = p_to_GimpOrientation(l_param.int_val2);
             }
             break;
        case PROP_PARASITES:
@@ -2522,11 +2796,11 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
  *   scann one inputline for parasite properties
  * ============================================================================
  */
-gint p_scann_parasite_prop(char* scan_ptr, t_image_props *image_prop)
+gint p_scann_parasite_prop(gchar* scan_ptr, t_image_props *image_prop)
 {
 
   t_parasite_props  *l_new_prop;
-  char           *l_ptr;
+  gchar          *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
   gint32          l_parasite_id;
@@ -2578,6 +2852,159 @@ gint p_scann_parasite_prop(char* scan_ptr, t_image_props *image_prop)
   }
 }	/* end p_scann_parasite_prop */
 
+
+/* ============================================================================
+ * p_scann_path_prop
+ *   scann one inputline for path properties
+ * ============================================================================
+ */
+gint p_scann_path_prop(gchar* scan_ptr, t_image_props *image_prop)
+{
+
+  t_path_props  *l_new_prop;
+  gchar          *l_ptr;
+  t_param_prop    l_param;
+  t_proptype      l_prop_id;
+
+  l_new_prop = p_new_path_prop();
+
+  /* add the new element to the path_props list */
+  l_new_prop->next = image_prop->path_props;
+  image_prop->path_props = l_new_prop;
+
+  if(strncmp(scan_ptr, "PATH", strlen("PATH")) != 0)
+  {
+     fprintf(stderr, "XJT: PRP scanned bad line:\n%s\n", scan_ptr);
+     return -1; 
+  }
+  l_ptr = scan_ptr + strlen("PATH");
+  
+  while(1)
+  {
+     l_ptr = p_skip_blanks(l_ptr);
+     l_ptr = p_scann_token(l_ptr, &l_param, &l_prop_id);
+
+     switch(l_prop_id)
+     {
+       case PROP_END:
+            return 0;
+            break;
+       case PROP_PATH_TYPE:
+            l_new_prop->path_type = p_to_GimpPathType(l_param.int_val1);
+            break;
+       case PROP_NAME:
+            l_new_prop->name  = l_param.string_val;
+            break;
+       case PROP_PATH_CURRENT:
+            l_new_prop->current_flag = l_param.int_val1;
+            break;
+       case PROP_PATH_POINTS:
+            l_new_prop->num_points = l_param.num_fvals;
+            l_new_prop->path_points = l_param.flt_val_list;
+            break;
+       default :
+            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+            /* return -1; */ /* skip unknow tokens */
+            break;
+     }
+  }
+
+}	/* end p_scann_path_prop */
+
+
+/* ============================================================================
+ * p_add_paths
+ * ============================================================================
+ */
+void
+p_add_paths(gint32 image_id, t_path_props *path_props)
+{
+  gchar     *l_current_pathname = NULL;
+  t_path_props  *l_prop;
+  
+  l_prop = path_props;
+  while(l_prop)
+  {
+     if(l_prop->num_points > 0)
+     {
+       if(xjt_debug) printf("XJT: p_add_path name:%s num_points:%d\n", l_prop->name, (int)l_prop->num_points);
+       if(xjt_debug) printf("XJT:                :path_type %d point[0]:%f\n", (int)l_prop->path_type, (float)l_prop->path_points[0]);
+       if(l_prop->current_flag)
+       {
+	 l_current_pathname = l_prop->name;	 
+       }
+       p_gimp_path_set_points(image_id, l_prop->name,
+	                      l_prop->path_type, l_prop->num_points, l_prop->path_points);
+     }
+     l_prop = (t_path_props *)l_prop->next;
+  }
+  
+  if(l_current_pathname)
+  {
+     if(xjt_debug) printf("XJT: p_add_path current:%s\n", l_current_pathname);
+     p_gimp_path_set_current(image_id, l_current_pathname);
+  }
+}	/* end p_add_paths */
+
+
+gchar *
+p_load_linefile(gchar *filename, gint32 *len)
+{
+  FILE *l_fp;
+  struct stat  stat_buf;
+  gchar  *l_file_buff;
+  gint32  l_idx;
+
+  *len = 0;
+  /* get file length */
+  if (0 != stat(filename, &stat_buf))
+  {
+    return(NULL);
+  }
+  *len = stat_buf.st_size;
+
+  l_file_buff = g_malloc0(*len +1);
+
+  /* read file into buffer */  
+  l_fp = fopen(filename, "r");  
+  if(l_fp == NULL)
+  {
+    return(NULL);
+  }
+  fread(l_file_buff, *len, 1, l_fp);
+  fclose(l_fp);
+
+  /* replace all '\n' characters by '\0' */
+  for(l_idx = 0; l_idx < *len; l_idx++)
+  {
+    if(l_file_buff[l_idx] == '\n')
+    {
+      l_file_buff[l_idx] = '\0';
+    }
+  }
+  
+  return(l_file_buff);
+}
+
+
+gint32
+p_next_lineindex(gchar *file_buff, gint32 max_len, gint32 pos)
+{
+  if (pos < 0)       { return (-1); }
+  
+  while(pos < max_len)
+  {
+    if(file_buff[pos] == '\0')
+    {
+      pos++;
+      break;
+    }
+    pos++;
+  }
+  if(pos >= max_len) { return (-1); }  
+  return(pos);
+}
+
 /* ============================================================================
  * p_load_prop_file
  *   read all properties from file "PRP"
@@ -2585,43 +3012,39 @@ gint p_scann_parasite_prop(char* scan_ptr, t_image_props *image_prop)
  * ============================================================================
  */
 
-t_image_props * p_load_prop_file(char *prop_filename)
+t_image_props * p_load_prop_file(gchar *prop_filename)
 {
-  FILE *l_fp_prp;
-  char  l_file_buffer[MAX_LINE_LEN];
-  char *l_ptr;
-  char *l_ret;
+  gint32 l_filesize;
+  gint32 l_line_idx;
+  gchar *l_file_buff;
+  gchar *l_line_ptr;
+  gchar *l_ptr;
   t_image_props *l_image_prop;
   gint  l_rc;
 
   if(xjt_debug) printf("p_load_prop_file: %s\n", prop_filename);
 
-  l_rc = -1;
+  l_rc = -1;  
   l_image_prop = p_new_image_prop();
-  if(l_image_prop == NULL)
-  {
-     return NULL;
-  }
- 
 
-  l_fp_prp = fopen(prop_filename, "r");  
-  if(l_fp_prp == NULL)
+  l_file_buff = p_load_linefile(prop_filename, &l_filesize);
+  if(l_file_buff == NULL)
   {
-    fprintf(stderr, "XJT: Error, No Properties %s found\n", prop_filename);
+    g_message(_("Error: Cant read XJT propertyfile %s"), prop_filename);
+    goto cleanup;
+  }
+  if(l_filesize == 0)
+  {
+    g_message(_("Error,XJT propertyfile %s is empty"), prop_filename);
     goto cleanup;
   }
 
-  /* read and parse 1.st line (image properties) */
-  l_ret = fgets (l_file_buffer, (MAX_LINE_LEN -1), l_fp_prp);
-  if(l_ret == NULL)
-  {
-    fprintf(stderr, "XJT: Error, %s is empty\n", prop_filename);
-    goto cleanup;
-  }
+  /* parse 1.st line (image properties) */
+  l_line_idx = 0;
+  l_line_ptr = l_file_buff;
 
-  if(xjt_debug) printf("\nXJT:PRP_LINE:%s:\n", l_file_buffer);
-
-  l_rc = p_scann_image_prop(l_file_buffer, l_image_prop);
+  if(xjt_debug) printf("\nXJT:PRP_LINE:%s:\n", l_line_ptr);
+  l_rc = p_scann_image_prop(l_line_ptr, l_image_prop);
   if(l_rc != 0)
   {
     goto cleanup;
@@ -2629,15 +3052,17 @@ t_image_props * p_load_prop_file(char *prop_filename)
   
   while(1)
   {
-     l_ret = fgets (l_file_buffer, (MAX_LINE_LEN -1), l_fp_prp);
-     if(l_ret == NULL)
+     l_line_idx = p_next_lineindex(l_file_buff, l_filesize, l_line_idx);
+  
+     if(l_line_idx < 0)
      {
         break;   /* end of file */
      }
+     l_line_ptr = &l_file_buff[l_line_idx];
  
-     if(xjt_debug) printf("\nXJT:PRP_LINE:%s:\n", l_file_buffer);
+     if(xjt_debug) printf("\nXJT:PRP_LINE:%s:\n", l_line_ptr);
 
-     l_ptr = p_skip_blanks(&l_file_buffer[0]);
+     l_ptr = p_skip_blanks(&l_line_ptr[0]);
      
      if(*l_ptr == '#')  continue;  /* skip commentlines */
      if(*l_ptr == '\n') continue;  /* skip empty lines */
@@ -2645,26 +3070,33 @@ t_image_props * p_load_prop_file(char *prop_filename)
      
      if((*l_ptr == 'l') || (*l_ptr == 'L'))
      {
-         l_rc = p_scann_layer_prop(l_file_buffer, l_image_prop);
+         l_rc = p_scann_layer_prop(l_line_ptr, l_image_prop);
 	 l_image_prop->n_layers++;
      }
      else
      {
        if((*l_ptr == 'c') || (*l_ptr == 'm'))
        {
-         l_rc = p_scann_channel_prop(l_file_buffer, l_image_prop);
+         l_rc = p_scann_channel_prop(l_line_ptr, l_image_prop);
 	 l_image_prop->n_channels++;
        }
        else
        {
          if(*l_ptr == 'p')
          {
-           l_rc = p_scann_parasite_prop(l_file_buffer, l_image_prop);
+           l_rc = p_scann_parasite_prop(l_line_ptr, l_image_prop);
          }
 	 else
-         {
-           fprintf(stderr, "XJT: Warning, undefined PRP line scanned:\n%s\n", l_file_buffer);
-           /* goto cleanup; */
+	 {
+           if(*l_ptr == 'P')
+           {
+             l_rc = p_scann_path_prop(l_line_ptr, l_image_prop);
+           }
+	   else
+           {
+             fprintf(stderr, "XJT: Warning, undefined PRP line scanned:\n%s\n", l_line_ptr);
+             /* goto cleanup; */
+	   }
 	 }
        }
      }
@@ -2672,7 +3104,7 @@ t_image_props * p_load_prop_file(char *prop_filename)
  
   
 cleanup:  
-  if(l_fp_prp != NULL) fclose(l_fp_prp);
+  if(l_file_buff) g_free(l_file_buff);
   
   if(l_rc == 0)
   {
@@ -2687,15 +3119,15 @@ cleanup:
 /* ---------------------- LOAD  -------------------------- */
 
 static gint32
-load_xjt_image (char *filename)
+load_xjt_image (gchar *filename)
 {
    int     l_rc;
    int     l_len;
-   char    l_dirname[512];
-   char    l_prop_file[512];
-   char    l_jpg_file[512];
-   char    l_cmd[1024];
-   char   *l_name;
+   gchar  *l_dirname;
+   gchar  *l_prop_file;
+   gchar  *l_jpg_file;
+   gchar  *l_cmd;
+   gchar  *l_name;
    mode_t  l_mode_dir;
    
    gint32 *l_layers_list;
@@ -2717,6 +3149,9 @@ load_xjt_image (char *filename)
    l_layers_list = NULL;
    l_channels_list = NULL;
    l_image_prp_ptr = NULL;
+   l_dirname = NULL;
+   l_prop_file = NULL;
+   l_jpg_file = NULL;
    l_active_layer_id = -1;
    l_active_channel_id = -1;
    l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
@@ -2727,8 +3162,8 @@ load_xjt_image (char *filename)
    g_free (l_name);
    
    /* create temporary directory  <filename>.tmpdir.<PID> */
-   sprintf (l_dirname, "%s.tmpdir.%d", filename, (int)g_pid);
-   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
+   l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
+   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
    l_mode_dir = 0777;
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
@@ -2742,12 +3177,12 @@ load_xjt_image (char *filename)
    || (filename[1] == ':'))
    {
       /* filename with absolute path */
-      sprintf(l_cmd, "cd %s; tar -xf \"%s\"; cd ..", l_dirname, filename);
+      l_cmd = g_strdup_printf("cd %s; tar -xf \"%s\"; cd ..", l_dirname, filename);
    }
    else
    {
       /* filename with relative path */
-      sprintf(l_cmd, "cd %s; tar -xf \"..%c%s\" *; cd ..", l_dirname, G_DIR_SEPARATOR, filename);
+      l_cmd = g_strdup_printf("cd %s; tar -xf \"..%c%s\" *; cd ..", l_dirname, G_DIR_SEPARATOR, filename);
    }
 
    l_len = strlen(filename);
@@ -2766,28 +3201,31 @@ load_xjt_image (char *filename)
       */
      if(strcmp(&filename[l_len - 3], "bz2") == 0)
      {
-       sprintf(l_cmd, "bunzip2 <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
+       g_free(l_cmd);
+       l_cmd = g_strdup_printf("bunzip2 <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
        l_rc = p_system(l_cmd);
-       sprintf(l_cmd, "cd %s; tar -xf arc.tar; cd ..", l_dirname);
+       g_free(l_cmd);       
+       l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
      }
      else if(strcmp(&filename[l_len - 2], "gz") == 0)
      {
-       sprintf(l_cmd, "gzip -cdf <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
+       g_free(l_cmd);
+       l_cmd = g_strdup_printf("gzip -cdf <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
        l_rc = p_system(l_cmd);
-       sprintf(l_cmd, "cd %s; tar -xf arc.tar; cd ..", l_dirname);
+       g_free(l_cmd);       
+       l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
      }
    }
 
 
    /* now we can extract the unpacked tar archive */
    l_rc = p_system(l_cmd);
+   g_free(l_cmd);       
 
    if (l_rc != 0)
       goto cleanup;
 
    /* check and read Property file (PRP must exist in each xjt archive) */
-   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
-   
    l_image_prp_ptr = p_load_prop_file(l_prop_file);
    if (l_image_prp_ptr == NULL)
    {  l_rc = -1;
@@ -2820,7 +3258,7 @@ load_xjt_image (char *filename)
        l_layer_prp_ptr != NULL;
        l_layer_prp_ptr = (t_layer_props *)l_layer_prp_ptr->next)
    {
-     sprintf(l_jpg_file, "%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+     l_jpg_file = g_strdup_printf("%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
      if(xjt_debug) printf("XJT-DEBUG: loading layer from file %s\n", l_jpg_file);  
 
      l_layer_id = xjpg_load_layer (l_jpg_file,
@@ -2830,6 +3268,7 @@ load_xjt_image (char *filename)
 			           l_layer_prp_ptr->opacity,
 			           l_layer_prp_ptr->mode);
 
+     g_free(l_jpg_file);
      if(l_layer_id < 0)
      {
         l_rc = -1;
@@ -2854,7 +3293,7 @@ load_xjt_image (char *filename)
      /* check for alpha channel */
      if(l_layer_prp_ptr->has_alpha)
      {
-       sprintf(l_jpg_file, "%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+       l_jpg_file = g_strdup_printf("%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
        if(xjt_debug) printf("XJT-DEBUG: loading alpha-channel from file %s\n", l_jpg_file);  
 
        if( xjpg_load_layer_alpha (l_jpg_file, l_image_id, l_layer_id) != 0)
@@ -2862,6 +3301,7 @@ load_xjt_image (char *filename)
           l_rc = -1;
           break;
        }
+       g_free(l_jpg_file);
      }
      
      /* adjust offsets and other layerproperties */
@@ -2891,7 +3331,7 @@ load_xjt_image (char *filename)
         if(l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
         {
            /* layermask properties found: load the layermask */
-           sprintf(l_jpg_file, "%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+           l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
            if(xjt_debug) printf("XJT-DEBUG: loading layer-mask from file %s\n", l_jpg_file);  
 
            l_channel_id = gimp_layer_create_mask(l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
@@ -2906,7 +3346,7 @@ load_xjt_image (char *filename)
 			               l_channel_prp_ptr->color_r,
 			               l_channel_prp_ptr->color_g,
 			               l_channel_prp_ptr->color_b);
-
+           g_free(l_jpg_file);
            if(l_channel_id >= 0)
            {
            
@@ -2943,7 +3383,7 @@ load_xjt_image (char *filename)
        l_channel_prp_ptr != NULL;
        l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
    {
-     sprintf(l_jpg_file, "%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
+     l_jpg_file = g_strdup_printf("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
      if(xjt_debug) printf("XJT-DEBUG: loading channel from file %s\n", l_jpg_file);  
 
      l_channel_id = xjpg_load_channel (l_jpg_file,
@@ -2955,6 +3395,7 @@ load_xjt_image (char *filename)
 			           l_channel_prp_ptr->color_g,
 			           l_channel_prp_ptr->color_b);
 
+     g_free(l_jpg_file);
      if(l_channel_id < 0)
      {
         l_rc = -1;
@@ -3026,11 +3467,7 @@ load_xjt_image (char *filename)
        gimp_image_set_active_layer(l_image_id, l_active_layer_id);
    }
 
-   /* set guides
-    * You need GIMP 1.1 or higher for that feature
-    * (in GIMP 1.0.2 there is no interface for that job
-    * and guides will be ignored.)
-    */
+   /* set guides */
    for(l_guide_prp_ptr = l_image_prp_ptr->guide_props;
        l_guide_prp_ptr != NULL;
        l_guide_prp_ptr = (t_guide_props *)l_guide_prp_ptr->next)
@@ -3040,14 +3477,67 @@ load_xjt_image (char *filename)
                              l_guide_prp_ptr->orientation);
    }
 
+
+   /* create paths */
+
+   /* hof: 2000.01.30
+    * The  PDB-interface of
+    *   gimp_path_set_points gimp 1.1.15
+    *   --------------------
+    *   does not work, especially if the image has no display.
+    *   Most of the time it crashed and
+    *   in some cases cases it just brings unusable results.
+    *
+    * for debug reasons i added a display
+    *
+    *   but (as usual in file load plugins), the gimp
+    *   main app opens a new display at success
+    *   and our image gets 2 displays
+    *   -- so this is not a usable workaround
+    *   If somebody can fix the problem until gimp 1.2
+    *   we can remove the ugly WARNING printf's
+    *   and the call to
+    *      gimp_display_new(l_image_id);
+    */
+   if(l_image_prp_ptr->path_props)
+   {
+     guchar *l_env;
+     
+     l_env = getenv("XJT_DEBUG");
+     if(l_env != NULL)
+     {
+       if(*l_env == '1')
+       {
+         gimp_display_new(l_image_id);
+       }
+       p_add_paths(l_image_id,  l_image_prp_ptr->path_props);
+     }
+     else
+     {
+         printf("XJT: WARNING paths found in file %s were not attached to the image\n", filename);
+         printf("     because the PDB interface of gimp_path_set_points does not work in gimp 1.1.15\n");
+         printf("     you may try to set the XJT_DEBUG Environmentvariable and restart the gimp\n");
+	 printf("       XJT_DEBUG=1    ... try workaround (results in opening of 2 displays)\n");
+	 printf("       XJT_DEBUG=2    ... try the (buggy) call without workaround, and test the crash\n");
+
+         /* activate the next line when the Bug in gimp_path_set_points is fixed */
+         /* p_add_paths(l_image_id,  l_image_prp_ptr->path_props); */
+      }
+   }
+
 cleanup:
 
    if(l_layers_list) g_free (l_layers_list);
    if(l_channels_list) g_free (l_channels_list);
 
    /* remove the temorary directory */
-   sprintf(l_cmd, "rm -rf \"%s\"", l_dirname);
+   l_cmd = g_strdup_printf("rm -rf \"%s\"", l_dirname);
    p_system(l_cmd);
+   g_free(l_cmd);
+   
+   if(l_dirname) g_free(l_dirname);
+   if(l_prop_file) g_free(l_prop_file);
+   if(l_jpg_file) g_free(l_jpg_file);
    
    if(l_rc == 0) 
    {

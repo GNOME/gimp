@@ -28,6 +28,7 @@
  */
 
 /* revision history:
+ * 1.1.15b  2000/01/30   hof: handle image specific parasites
  * 1.1.15a  2000/01/25   hof: stopped gimp 1.0.x support (removed p_copy_content)
  *                            handle pathes
  * 0.98.00; 1998/11/30   hof: 1.st release
@@ -92,14 +93,17 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
    gint32  l_x1, l_x2, l_y1, l_y2;
    guchar *l_cmap;
    gint    l_ncolors;
-   char   **l_path_names;
-   char    *l_current_pathname;
+   gchar   **l_path_names;
+   gchar    *l_current_pathname;
    gint32   l_num_paths;
    gdouble *l_path_points;
    gint32   l_path_type;
    gint32   l_path_closed;
    gint32   l_num_points;
-   
+   Parasite  *l_parasite;
+   gchar    **l_parasite_names = NULL;
+   gint32     l_num_parasites = 0;
+ 
    l_rc = -1;  /* init retcode to Errorstate */
    l_layers_list = NULL;
    l_channels_list = NULL;
@@ -267,11 +271,7 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
        gimp_image_set_cmap(dst_image_id, l_cmap, l_ncolors);
    }
 
-   /* copy guides
-    * You need GIMP 1.1 or higher for that feature
-    * (in GIMP 1.0.2 there is no interface for that job
-    * and guides will be ignored.)
-    */
+   /* copy guides */
    l_guide_id = p_gimp_image_findnext_guide(src_image_id, 0);  /* get 1.st guide */
    while(l_guide_id > 0)
    {
@@ -309,6 +309,33 @@ p_steal_content(gint32 dst_image_id, gint32 src_image_id)
       }
    }
    if(l_path_names) g_free(l_path_names);
+
+   /* copy image specific parasites
+    *  (drawable specific parasites are handled implicite
+    *   by stealing layers and channels)
+    */
+   l_parasite_names = p_gimp_image_parasite_list (src_image_id, &l_num_parasites);
+
+   for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
+   {
+     l_parasite = gimp_image_parasite_find(src_image_id, l_parasite_names[l_idx]);
+     if(l_parasite)
+     {
+	if(gap_debug) printf("copy image_parasite NAME:%s:\n",  l_parasite_names[l_idx]);
+
+	gimp_image_attach_new_parasite(dst_image_id,
+                                	l_parasite->name,
+					l_parasite->flags,
+					l_parasite->size,
+					l_parasite->data);
+	if(l_parasite->data) g_free(l_parasite->data);
+	if(l_parasite->name) g_free(l_parasite->name);
+	g_free(l_parasite);
+     }
+     g_free(l_parasite_names[l_idx]);
+   }
+   g_free(l_parasite_names);
+ 
 
    l_rc = 0;
    
@@ -348,8 +375,10 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
    gint32  l_channel_id;
    gint32  l_guide_id;
    gint32  l_old_bg_layer_id;
-   char   **l_path_names;
+   gchar  **l_path_names;
    gint32   l_num_paths;
+   gchar    **l_parasite_names = NULL;
+   gint32     l_num_parasites = 0;
 
    if(gap_debug) printf("\nGAP-DEBUG: START p_replace_img img_id=%d \n", (int)image_id);
 
@@ -394,6 +423,19 @@ p_replace_img(gint32 image_id, gint32 src_image_id)
       }
    }
    if(l_path_names) g_free(l_path_names);
+
+   /* remove image specific parasites */   
+   l_parasite_names = p_gimp_image_parasite_list (image_id, &l_num_parasites);
+   if(l_parasite_names)
+   {
+     for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
+     {
+       if(gap_debug) printf("detach image_parasite NAME:%s:\n",  l_parasite_names[l_idx]);
+       gimp_image_parasite_detach(image_id, l_parasite_names[l_idx]);
+       g_free(l_parasite_names[l_idx]);
+     }
+     g_free(l_parasite_names);
+   }
 
    /* get list of all (old) dst_layers to delete */
    l_layers_list = gimp_image_get_layers(image_id, &l_nlayers);

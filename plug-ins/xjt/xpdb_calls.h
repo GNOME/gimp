@@ -20,6 +20,7 @@
  */
 
 /* revision history:
+ * version 1.1.15b; 2000/01/28  hof: parasites part2
  * version 1.1.15;  2000/01/20  hof: parasites
  * version 1.02.00; 1999/02/01  hof: PDB-calls to load/save resolution tattoos and parasites
  *                                   (needs GIMP 1.1.1)-- UNDER CONSTRUCTION ---
@@ -32,7 +33,7 @@
 
 #include "libgimp/gimp.h"
 
-gint p_procedure_available(char *proc_name);
+gint p_procedure_available(gchar *proc_name);
 gint p_get_gimp_selection_bounds (gint32 image_id, gint32 *x1, gint32 *y1, gint32 *x2, gint32 *y2);
 gint p_gimp_selection_load (gint32 image_id, gint32 channel_id);
 int  p_layer_set_linked (gint32 layer_id, gint32 new_state);
@@ -48,14 +49,22 @@ gint32 p_gimp_image_findnext_guide(gint32 image_id, gint32 guide_id);
 gint32 p_gimp_image_get_guide_position(gint32 image_id, gint32 guide_id);
 gint32 p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id);
 
-
-void   p_gimp_add_busy_cursors();
-void   p_gimp_remove_busy_cursors(void *);
 gint   p_gimp_image_get_resolution(gint32 image_id, float *xresolution, float *yresolution);
 gint   p_gimp_image_set_resolution(gint32 image_id, float xresolution, float yresolution);
 gint32 p_gimp_layer_get_tattoo(gint32 layer_id);
 gint32 p_gimp_channel_get_tattoo(gint32 channel_id);
 
-char** p_gimp_parasite_list (gint32 *num_parasites);
+gchar** p_gimp_drawable_parasite_list (gint32 drawable_id, gint32 *num_parasites);
+gchar** p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites);
+
+gint    p_gimp_path_set_points(gint32 image_id, gchar *name,
+                       gint32 path_type, gint32 num_points, gdouble *path_points);
+gdouble* p_gimp_path_get_points(gint32 image_id, gchar *name,
+                       gint32 *path_type, gint32 *path_closed, gint32 *num_points);
+
+gchar**  p_gimp_path_list(gint32 image_id, gint32 *num_paths);
+gchar*   p_gimp_path_get_current(gint32 image_id);
+gint     p_gimp_path_set_current(gint32 image_id, gchar *name);
+
 
 #endif

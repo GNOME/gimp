@@ -1,12 +1,9 @@
 ------------------------------ 
 XJT Fileformat specification:   
 ------------------------------
-TODO: 
-  extend and implement xjt fileformat for 
-  - load/save pathes, 
-  - load/save units and user_units
-  
- (XJT 1.1.15,   2000.01.23)
+
+ (XJT 1.1.15b,  2000.01.30)  paths
+ (XJT 1.1.15a,  2000.01.23)
  (XJT 1.1,      1998.10.31 - 1999.03.16)
 
    XJT Fileformat was designed to save compressed GIMP Images with
@@ -31,6 +28,7 @@ TODO:
 Restrictions:
 -------------
    ** XJT does not support INDEXED Images. **
+   
 
 
 
@@ -122,11 +120,12 @@ Syntax of the PRP -file
 
        followed by a List of Image properties seperated by Blank:
 	  PROP_VERSION
+	  PROP_GIMP_VERSION
 	  PROP_DIMENSION
 	  PROP_RESOLUTION
-	  PROP_TYPE            0 == RGB, 1 = GRAY
-	  PROP_GUIDES         position, orientation     (can occure more than 1 time)
-          PROP_PARASITES
+	  PROP_TYPE
+	  PROP_GUIDES        (can occure more than 1 time)
+          PROP_PARASITES     (can occure more than 1 time)
 
  
   Layer Properties:
@@ -157,7 +156,7 @@ Syntax of the PRP -file
            PROP_SHOW_MASK
            PROP_OFFSETS
            PROP_TATTOO
-           PROP_PARASITES
+           PROP_PARASITES   (can occure more than 1 time)
            PROP_NAME
  
   Channel Properties:
@@ -182,7 +181,7 @@ Syntax of the PRP -file
           PROP_SHOW_MASKED
           PROP_COLOR
           PROP_TATTOO
-          PROP_PARASITES
+          PROP_PARASITES   (can occure more than 1 time)
           PROP_NAME
 
   Parasite Properties:
@@ -192,11 +191,28 @@ Syntax of the PRP -file
                      the parasite data is stored 1:1 in a
 		     file named p<nr>.pte
  
-       followed by a List of Layer properties seperated by Blank:
+       followed by a List of Parasite properties seperated by Blank:
        (properties for the default values are not written)
 
            PROP_NAME
 	   PROP_PARASITE_FLAGS
+            
+
+  Path Properties:
+  ====================
+      The line starts with
+       PATH    Path identstring.
+                     the parasite data is stored 1:1 in a
+		     file named p<nr>.pte
+ 
+       followed by a List of Path properties seperated by Blank:
+       (properties for the default values are not written)
+
+           PROP_NAME
+	   PROP_PATH_TYPE
+	   PROP_PATH_CURRENT
+           PROP_PATH_LOCKED
+	   PROP_PATH_POINT
 
 --------------------------
 Properties Summary
@@ -204,6 +220,7 @@ Properties Summary
 
 
 Property types:
+--------------------------
   PTYP_BOOLEAN
          mnemonic
   PTYP_INT
@@ -216,8 +233,25 @@ Property types:
          mnemonic:float_value
   PTYP_2xFLT
          mnemonic:float_value,float_value
+  PTYP_FLIST
+         mnemonic:float_value[,float_value ...]
+	 	 
+	 xjt uses max 5 digits behind the comma.
+	 precision of max 5 digits
+	 17.00000999  is truncated to     17
+	  2.00001999  is truncated to      2.00001
   PTYP_STRING
          mnemonic:"string_value"
+	 
+	 If a String contains DoublleQuote Backslash
+	 or newline Characters, they are escaped by
+	 a preceeding Backslash character.
+	 
+	 Example:
+	    the text: 
+	       hello "quotes" and \backslash
+	    is encoded as:
+	       n:"hello \"quotes\" and \\backslash"
 
 Properties are written as short mnemonics (1 upto 3 characters) to identify the Property.
 Non-boolean Property-mnemonics require a Value seperated by ':'. 
@@ -228,7 +262,7 @@ Boolean tokens default always to FALSE and become TRUE when specified.
 
 
 
-  /* propery                   mnemonic   type                     default values */
+  /* property                  mnemonic   type                     default values */
    PROP_END,		       "*",	 PTYP_NOT_SUPPORTED,	   0, 
    PROP_COLORMAP,	       "*",	 PTYP_NOT_SUPPORTED,	   0, 
    PROP_ACTIVE_LAYER,	       "acl",	 PTYP_BOOLEAN,  	   FALSE, 
@@ -259,9 +293,18 @@ Boolean tokens default always to FALSE and become TRUE when specified.
    PROP_TYPE,		       "typ",	 PTYP_INT,		   0,
    PROP_VERSION,	       "ver",	 PTYP_STRING,		   0,
 
+   PROP_GIMP_VERSION,	       "gimp",	 PTYP_3xINT,		   0,
+   PROP_PATH_POINT,	       "php",	 PTYP_FLIST,		   0.0, 0.0, 0.0
+   PROP_PATH_TYPE,	       "pht",	 PTYP_INT,		   1,   /* BEZIER */
+   PROP_PATH_CURRENT,	       "pha",	 PTYP_BOOLEAN,  	   FALSE, 
+   PROP_PATH_LOCKED,	       "phl",	 PTYP_BOOLEAN,  	   FALSE, 
+
+
+Property Values (Valid Ranges)
+------------------------------
 
 PROP_OPACITY  valid values are 
-              0.0        ( full transparent)
+              0.0        (full transparent)
 	        upto 
 	      100.0      (full opaque)
 	      
@@ -288,7 +331,9 @@ PROP_MODE     valid values are:
 	      15 ...  XJT_DIVIDE_MODE
  
 PROP_GUIDES
-    valid values for the 1.st integer are positve integers
+    valid values for the 1.st integer are
+             positve integers, representing x or y
+	     position (depends on the 2.nd value)
     valid values for the 2.nd integer are:
               0 ... XJT_ORIENTATION_HORIZONTAL
 	      1 ... XJT_ORIENTATION_VERTICAL
@@ -300,36 +345,38 @@ PROP_GUIDES
      to the xjt guide orientation property.
      Unforunately this gimp internal representation has changed
 
+PROP_PATH_TYPE  valid values are:
+              1 ...  XJT_BEZIER_PATH
+              
+   
+PROP_PATH_POINT
+     This property is a list of float values.
+     For Paths of the type XJT_BEZIER_PATH 
+     each point is represented by a float value triplet
+     x,y,type
+     
+     where type can be 1  (BEZIER_ANCHOR point)
+                    or 2  (BEZIER_CONTROL point)
 
------------------------------------------------------------
-changelog:
-------------------------------------------------
- - XJT Version 1.1
- 
-     XJT Format 1.1 was extended for
-            RESOLUTION, TATTOO's, and PARASITES
-            
-            Please note that TATTOO's and PARASITES are only defined
-            but not implemented.
-            (Gimp 1.1.3 has no PDB-Interfaces to enable Plug-Ins
-            to Load/Save TATTOO's and PARASITES)
 
 
+-------------------------------
+Extended Example of PRP file:
+-------------------------------
 
   PARASITES: The parasite data is stored in a seperate file for each
              parasite. The file is named p<id>.pte, where
              <id> is a unique integer parasite Id.
              
+
              A Layer, Channel or Image can have 0 or more PROP_PARASITE
              Properties (pte:1 pte:2 ...), where the integer parameter
              refers to the unique parasite id.
-             
-             Parasite entries can have a Name Property. 
-  
-
-    Extended Example of PRP file with resolution, and parasites:
+   
+    Example of PRP file with resolution, parasites and paths:
     -------------------------------------------------------------
        GIMP_XJ_IMAGE ver:"1.1" w/h:256,256 res:72.0,100.5 pte:1
+       PATH n:"Path 1" php:103,65,1,103,65,2,176,15,2,177,15,1,178,15,2,198,229,2,198,229,1,198,229,2
        L0 acl fsl pt o:35,116 n:"Pasted Layer"
        L1 ln pt aml eml o:0,7 n:"Pasted Layer" pte:2 pte:3
        m1 smc o:0,7 n:"Pasted Layer mask"

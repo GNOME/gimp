@@ -23,6 +23,7 @@
  */
 
 /* revision history:
+ * version 1.1.15b; 2000/01/30  hof: image parasites
  * version 1.1.15a; 2000/01/26  hof: pathes
  *                                   removed old gimp 1.0.x PDB Interfaces
  * version 1.1.14a; 2000/01/09  hof: thumbnail save/load,
@@ -865,6 +866,36 @@ p_gimp_path_set_current(gint32 image_id, char *name)
    printf("GAP: Error: PDB call of %s failed\n", l_called_proc);
    return(-1);
 }	/* end p_gimp_path_set_current */
+
+
+/* ============================================================================
+ * p_gimp_image_parasite_list
+ * ============================================================================
+ */
+
+gchar **
+p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites)
+{
+   static gchar    *l_procname = "gimp_image_parasite_list";
+   GParam          *return_vals;
+   int              nreturn_vals;
+
+   return_vals = gimp_run_procedure (l_procname,
+                                    &nreturn_vals,
+                                    PARAM_IMAGE,  image_id,
+                                    PARAM_END);
+                                    
+   if (return_vals[0].data.d_status == STATUS_SUCCESS)
+   {
+      *num_parasites = return_vals[1].data.d_int32;
+      return(return_vals[2].data.d_stringarray);    /* OK, return name list */
+   }
+   printf("GAP: Error: PDB call of %s failed\n", l_procname);
+
+   *num_parasites = 0;
+   return(NULL);
+}	/* end p_gimp_image_parasite_list */
+
 
 /* ============================================================================
  * Procedures to get/set the video_info_file 

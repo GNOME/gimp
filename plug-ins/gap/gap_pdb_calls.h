@@ -21,6 +21,7 @@
  */
 
 /* revision history:
+ * version 1.1.15b; 2000/01/30  hof: image parasites
  * version 1.1.15a; 2000/01/26  hof: pathes, removed gimp 1.0.x support
  * version 1.1.14a; 2000/01/06  hof: thumbnail save/load,
  *                              Procedures for video_info file
@@ -83,6 +84,7 @@ gint     p_gimp_path_delete(gint32 image_id, char *name);
 char   **p_gimp_path_list(gint32 image_id, gint32 *num_paths);
 gint     p_gimp_path_set_current(gint32 image_id, char *name);
 char    *p_gimp_path_get_current(gint32 image_id);
+gchar** p_gimp_image_parasite_list (gint32 image_id, gint32 *num_parasites);
 
 
 char *p_alloc_video_info_name(char *basename);
