@@ -1,3 +1,10 @@
+2005-01-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_name_canceled): removed debug output.
+	(gimp_container_tree_view_remove_item)
+	(gimp_container_tree_view_clear_items): removed compiler warnings.
+
 2005-01-03  Sven Neumann  <neumann@jpk.com>
 
 	* libgimp/gimp.def: added missing symbols.
