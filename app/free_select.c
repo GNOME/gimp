@@ -172,6 +172,8 @@ free_select_button_press (Tool           *tool,
     case SELECTION_MOVE:
       init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
       return;
+    default:
+      /*  fallthrough  */
     }
 
   add_point (0, bevent->x, bevent->y);

@@ -47,7 +47,7 @@ struct _GimpImage
   GimpImageBaseType  base_type;       /*  base gimp_image type         */
 
   guchar *cmap;                       /*  colormap--for indexed        */
-  int     num_cols;                   /*  number of cols--for indexed  */
+  gint     num_cols;                  /*  number of cols--for indexed  */
 
   gint      dirty;                    /*  dirty flag -- # of ops       */
   gboolean  undo_on;                  /*  Is undo enabled?             */
@@ -104,7 +104,7 @@ struct _GimpImage
 
                                       /*  Composite preview  */
   TempBuf *comp_preview;              /*  the composite preview        */
-  gint comp_preview_valid[3];         /*  preview valid-1/channel      */
+  gboolean comp_preview_valid[3];     /*  preview valid-1/channel      */
 };
 
 struct _GimpImageClass

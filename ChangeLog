@@ -1,3 +1,20 @@
+2000-04-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimplimits.h: changed GIMP_MIN_RESOLUTION to 5e-3 so 
+	it does not display as 0.000 in the UI. The new limit still allows
+	you to have pixels as large as 25 m^2. Should be enough IMO...
+
+	Changed GIMP_CHECK_DARK and GIMP_CHECK_LIGHT to match the default
+	check colors (GRAY_CHECKS) as defined in app/image_render.[ch].
+
+	* app/free_select.c: fixed warnings
+
+	* app/fileops.c: made an end to the "incidentally gimage already 
+	has a valid preview" message
+	
+	* app/gimpimageP.h
+	* app/gimpimage.c: use gboolean for boolean values
+	
 2000-04-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/commands.c

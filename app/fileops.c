@@ -848,13 +848,14 @@ file_save_thumbnail (GimpImage  *gimage,
       return FALSE;
     }
 
-  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
-    {
-      /* just for debugging */
-      g_print ("(incidentally, gimage already has a valid preview - %dx%d)\n",
-	       gimage->comp_preview->width,
-	       gimage->comp_preview->height);
-    }
+  /* just for debugging 
+   *  if (gimp_image_preview_valid (gimage, GRAY_CHANNEL))
+   *   {
+   *     g_print ("(incidentally, gimage already has a valid preview - %dx%d)\n",
+   *	         gimage->comp_preview->width,
+   *	         gimage->comp_preview->height);
+   *   }
+   */
 
   pathname = g_dirname (full_source_filename);
   filename = g_basename (full_source_filename); /* Don't free! */

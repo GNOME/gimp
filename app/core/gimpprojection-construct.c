@@ -3799,18 +3799,18 @@ gimp_image_composite_preview (GimpImage   *gimage,
     }
 }
 
-gint
+gboolean
 gimp_image_preview_valid (GimpImage   *gimage, 
 			  ChannelType  type)
 {
   switch (type)
     {
-    case RED_CHANNEL:     return gimage->comp_preview_valid[RED_PIX]; break;
-    case GREEN_CHANNEL:   return gimage->comp_preview_valid[GREEN_PIX]; break;
-    case BLUE_CHANNEL:    return gimage->comp_preview_valid[BLUE_PIX]; break;
-    case GRAY_CHANNEL:    return gimage->comp_preview_valid[GRAY_PIX]; break;
+    case RED_CHANNEL:     return gimage->comp_preview_valid[RED_PIX];     break;
+    case GREEN_CHANNEL:   return gimage->comp_preview_valid[GREEN_PIX];   break;
+    case BLUE_CHANNEL:    return gimage->comp_preview_valid[BLUE_PIX];    break;
+    case GRAY_CHANNEL:    return gimage->comp_preview_valid[GRAY_PIX];    break;
     case INDEXED_CHANNEL: return gimage->comp_preview_valid[INDEXED_PIX]; break;
-    default: return TRUE;
+    default:              return TRUE;
     }
 }
 
