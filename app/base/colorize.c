@@ -51,22 +51,24 @@ colorize_init (Colorize *colorize)
 void
 colorize_calculate (Colorize *colorize)
 {
-  GimpRGB color;
+  GimpHSL hsl;
+  GimpRGB rgb;
   gint    i;
 
   g_return_if_fail (colorize != NULL);
 
-  gimp_hsl_to_rgb (colorize->hue,
-                   colorize->saturation / 100.0,
-                   colorize->lightness  / 100.0,
-                   &color);
+  hsl.h = colorize->hue        / 360.0;
+  hsl.s = colorize->saturation / 100.0;
+  hsl.l = colorize->lightness  / 100.0;
+
+  gimp_hsl_to_rgb (&hsl, &rgb);
 
   /*  Calculate transfers  */
   for (i = 0; i < 256; i ++)
     {
-      colorize->final_red_lookup[i]   = i * color.r;
-      colorize->final_green_lookup[i] = i * color.g;
-      colorize->final_blue_lookup[i]  = i * color.b;
+      colorize->final_red_lookup[i]   = i * rgb.r;
+      colorize->final_green_lookup[i] = i * rgb.g;
+      colorize->final_blue_lookup[i]  = i * rgb.b;
     }
 }
 

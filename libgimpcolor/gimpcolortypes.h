@@ -30,18 +30,22 @@ G_BEGIN_DECLS
  */
 
 typedef struct _GimpRGB GimpRGB;
+typedef struct _GimpHSV GimpHSV;
+typedef struct _GimpHSL GimpHSL;
 
 struct _GimpRGB
 {
   gdouble r, g, b, a;
 };
 
-
-typedef struct _GimpHSV GimpHSV;
-
 struct _GimpHSV
 {
   gdouble h, s, v, a;
+};
+
+struct _GimpHSL
+{
+  gdouble h, s, l, a;
 };
 
 

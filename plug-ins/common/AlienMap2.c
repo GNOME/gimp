@@ -960,38 +960,43 @@ transform (guchar *r,
 {
   if (wvals.colormodel == HSL_MODEL)
     {
-      gdouble h, s, l;
+      GimpHSL hsl;
       GimpRGB rgb;
 
       gimp_rgb_set_uchar (&rgb, *r, *g, *b);
-      gimp_rgb_to_hsl (&rgb, &h, &s, &l);
-      h /= 360.0;
+      gimp_rgb_to_hsl (&rgb, &hsl);
 
       if (wvals.redmode)
-	h = 0.5*(1.0+sin(((2*h-1.0)*wvals.redfrequency+
-			  wvals.redangle/180.0)*G_PI));
-      if (wvals.greenmode)
-	s = 0.5*(1.0+sin(((2*s-1.0)*wvals.greenfrequency+
-			  wvals.greenangle/180.0)*G_PI));
-      if (wvals.bluemode)
-	l = 0.5*(1.0+sin(((2*l-1.0)*wvals.bluefrequency+
-			  wvals.blueangle/180.0)*G_PI));
+	hsl.h = 0.5 * (1.0 + sin (((2 * hsl.h - 1.0) * wvals.redfrequency +
+                                   wvals.redangle / 180.0) * G_PI));
 
-      h *= 360.0;
-      gimp_hsl_to_rgb (h, s, l, &rgb);
+      if (wvals.greenmode)
+	hsl.s = 0.5 * (1.0 + sin (((2 * hsl.s - 1.0) * wvals.greenfrequency +
+                                   wvals.greenangle / 180.0) * G_PI));
+
+      if (wvals.bluemode)
+	hsl.l = 0.5 * (1.0 + sin (((2 * hsl.l - 1.0) * wvals.bluefrequency +
+                                   wvals.blueangle / 180.0) * G_PI));
+
+      gimp_hsl_to_rgb (&hsl, &rgb);
       gimp_rgb_get_uchar (&rgb, r, g, b);
     }
   else if (wvals.colormodel == RGB_MODEL)
     {
       if (wvals.redmode)
-	*r = (int) (127.5*(1.0+sin(((*r/127.5-1.0)*wvals.redfrequency+
-				    wvals.redangle/180.0)*G_PI))+0.5);
+	*r = ROUND (127.5 * (1.0 +
+                             sin (((*r / 127.5 - 1.0) * wvals.redfrequency +
+                                   wvals.redangle / 180.0) * G_PI)));
+
       if (wvals.greenmode)
-	*g = (int) (127.5*(1.0+sin(((*g/127.5-1.0)*wvals.greenfrequency
-				    +wvals.greenangle/180.0)*G_PI))+0.5);
+	*g = ROUND (127.5 * (1.0 +
+                             sin (((*g / 127.5 - 1.0) * wvals.greenfrequency +
+                                   wvals.greenangle / 180.0) * G_PI)));
+
       if (wvals.bluemode)
-	*b = (int) (127.5*(1.0+sin(((*b/127.5-1.0)*wvals.bluefrequency
-				    +wvals.blueangle/180.0)*G_PI))+0.5);
+        *b = ROUND (127.5 * (1.0 +
+                             sin (((*b / 127.5 - 1.0) * wvals.bluefrequency +
+                                   wvals.blueangle / 180.0) * G_PI)));
     }
 }
 

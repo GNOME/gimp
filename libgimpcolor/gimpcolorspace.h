@@ -32,18 +32,12 @@ G_BEGIN_DECLS
 
 void   gimp_rgb_to_hsv          (const GimpRGB *rgb,
 				 GimpHSV       *hsv);
-
 void   gimp_rgb_to_hsl          (const GimpRGB *rgb,
-				 gdouble       *hue,
-				 gdouble       *saturation,
-				 gdouble       *lightness);
+				 GimpHSL       *hsl);
 
 void   gimp_hsv_to_rgb          (const GimpHSV *hsv,
 				 GimpRGB       *rgb);
-
-void   gimp_hsl_to_rgb          (gdouble        hue,
-				 gdouble        saturation,
-				 gdouble        lightness,
+void   gimp_hsl_to_rgb          (const GimpHSL *hsl,
 				 GimpRGB       *rgb);
 
 void   gimp_rgb_to_hwb          (const GimpRGB *rgb,

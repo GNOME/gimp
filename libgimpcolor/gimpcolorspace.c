@@ -162,33 +162,29 @@ gimp_hsv_to_rgb (const GimpHSV *hsv,
 
 void
 gimp_rgb_to_hsl (const GimpRGB *rgb,
-		 gdouble       *hue,
-		 gdouble       *saturation,
-		 gdouble       *lightness)
+                 GimpHSL       *hsl)
 {
   gdouble max, min, delta;
 
   g_return_if_fail (rgb != NULL);
-  g_return_if_fail (hue != NULL);
-  g_return_if_fail (saturation != NULL);
-  g_return_if_fail (lightness != NULL);
+  g_return_if_fail (hsl != NULL);
 
   max = gimp_rgb_max (rgb);
   min = gimp_rgb_min (rgb);
 
-  *lightness = (max + min) / 2.0;
+  hsl->l = (max + min) / 2.0;
 
   if (max == min)
     {
-      *saturation = 0.0;
-      *hue = GIMP_HSL_UNDEFINED;
+      hsl->s = 0.0;
+      hsl->h = GIMP_HSL_UNDEFINED;
     }
   else
     {
-      if (*lightness <= 0.5)
-        *saturation = (max - min) / (max + min);
+      if (hsl->l <= 0.5)
+        hsl->s = (max - min) / (max + min);
       else
-        *saturation = (max - min) / (2.0 - max - min);
+        hsl->s = (max - min) / (2.0 - max - min);
 
       delta = max - min;
 
@@ -197,22 +193,24 @@ gimp_rgb_to_hsl (const GimpRGB *rgb,
 
       if (rgb->r == max)
         {
-          *hue = (rgb->g - rgb->b) / delta;
+          hsl->h = (rgb->g - rgb->b) / delta;
         }
       else if (rgb->g == max)
         {
-          *hue = 2.0 + (rgb->b - rgb->r) / delta;
+          hsl->h = 2.0 + (rgb->b - rgb->r) / delta;
         }
       else if (rgb->b == max)
         {
-          *hue = 4.0 + (rgb->r - rgb->g) / delta;
+          hsl->h = 4.0 + (rgb->r - rgb->g) / delta;
         }
 
-      *hue = *hue * 60.0;
+      hsl->h /= 6.0;
 
-      if (*hue < 0.0)
-        *hue = *hue + 360.0;
+      if (hsl->h < 0.0)
+        hsl->h += 1.0;
     }
+
+  hsl->a = rgb->a;
 }
 
 static gdouble
@@ -222,17 +220,17 @@ gimp_hsl_value (gdouble n1,
 {
   gdouble val;
 
-  if (hue > 360.0)
-    hue = hue - 360.0;
+  if (hue > 6.0)
+    hue -= 6.0;
   else if (hue < 0.0)
-    hue = hue + 360.0;
+    hue += 6.0;
 
-  if (hue < 60.0)
-    val = n1 + (n2 - n1) * hue / 60.0;
-  else if (hue < 180.0)
+  if (hue < 1.0)
+    val = n1 + (n2 - n1) * hue;
+  else if (hue < 3.0)
     val = n2;
-  else if (hue < 240.0)
-    val = n1 + (n2 - n1) * (240.0 - hue) / 60.0;
+  else if (hue < 4.0)
+    val = n1 + (n2 - n1) * (4.0 - hue);
   else
     val = n1;
 
@@ -240,36 +238,36 @@ gimp_hsl_value (gdouble n1,
 }
 
 void
-gimp_hsl_to_rgb (gdouble  hue,
-		 gdouble  saturation,
-		 gdouble  lightness,
-		 GimpRGB *rgb)
+gimp_hsl_to_rgb (const GimpHSL *hsl,
+		 GimpRGB       *rgb)
 {
-
+  g_return_if_fail (hsl != NULL);
   g_return_if_fail (rgb != NULL);
 
-  if (saturation == 0)
+  if (hsl->s == 0)
     {
       /*  achromatic case  */
-      rgb->r = lightness;
-      rgb->g = lightness;
-      rgb->b = lightness;
+      rgb->r = hsl->l;
+      rgb->g = hsl->l;
+      rgb->b = hsl->l;
     }
   else
     {
       gdouble m1, m2;
 
-      if (lightness <= 0.5)
-        m2 = lightness * (1.0 + saturation);
+      if (hsl->l <= 0.5)
+        m2 = hsl->l * (1.0 + hsl->s);
       else
-        m2 = lightness + saturation - lightness * saturation;
+        m2 = hsl->l + hsl->s - hsl->l * hsl->s;
 
-      m1 = 2.0 * lightness - m2;
+      m1 = 2.0 * hsl->l - m2;
 
-      rgb->r = gimp_hsl_value (m1, m2, hue + 120.0);
-      rgb->g = gimp_hsl_value (m1, m2, hue);
-      rgb->b = gimp_hsl_value (m1, m2, hue - 120.0);
+      rgb->r = gimp_hsl_value (m1, m2, hsl->h * 6.0 + 2.0);
+      rgb->g = gimp_hsl_value (m1, m2, hsl->h * 6.0);
+      rgb->b = gimp_hsl_value (m1, m2, hsl->h * 6.0 - 2.0);
     }
+
+  rgb->a = hsl->a;
 }
 
 #define GIMP_RETURN_RGB(x, y, z) { rgb->r = x; rgb->g = y; rgb->b = z; return; }

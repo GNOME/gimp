@@ -1,5 +1,20 @@
+2003-05-20  Michael Natterer  <mitch@gimp.org>
+
+	Some color API cleanup:
+
+	* libgimpcolor/gimpcolortypes.h: added struct GimpHSL. All values
+	are doubles in a [0.0..1.0] range.
+
+	* libgimpcolor/gimpcolorspace.[ch]: changed the GimpRGB <-> HSL
+	functions to use the new struct instead of separate hue, saturation
+	and lightness doubles. Note that the hue range has changed from
+	[0.0..360.0] to [0.0..1.0].
+
+	* app/base/colorize.c (colorize_calculate)
+	* plug-ins/common/AlienMap2.c (transform): changed accordingly.
+
 2003-05-19  Manish Singh  <yosh@gimp.org>
-                                                                                
+
 	* plug-ins/script-fu/script-fu-console.c: Add SIOD banner to console
 	startup.
 
