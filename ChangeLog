@@ -1,7 +1,9 @@
 2001-02-10  Stanislav Brabec  <utx@penguin.cz>
 
+        On request of Martin Weber <martweb@gmx.net>.
 	* plugins/common/despeckle.c: Fixed comparison *sort_ptr > black_level.
-        Patch from Martin Weber <martweb@gmx.net>.
+	Only adopting white_level had a visual effect. This fix causes
+	that also adopting blck_level works also.
 
 2001-02-07  Daniel Egger  <egger@suse.de>
 
