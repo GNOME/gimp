@@ -41,11 +41,6 @@
 #include <string.h>
 #include <errno.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -188,6 +183,8 @@ typedef struct
 
   gint       drawable_width;
   gint       drawable_height;
+  gint       preview_width;
+  gint       preview_height;
 
   AffElement     *selected_orig;
   gint            current_element;
@@ -795,6 +792,8 @@ ifs_compose_dialog (GimpDrawable *drawable)
   ifsD->auto_preview  = TRUE;
   ifsD->drawable_width = drawable->width;
   ifsD->drawable_height = drawable->height;
+  ifsD->preview_width = design_width;
+  ifsD->preview_height = design_height;
 
   ifsD->selected_orig = NULL;
 
@@ -859,8 +858,10 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME (aspect_frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 0);
 
-  ifsD->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (ifsD->preview), design_width, design_height);
+  ifsD->preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (ifsD->preview,
+                               ifsD->preview_width,
+                               ifsD->preview_height);
   gtk_container_add (GTK_CONTAINER (aspect_frame), ifsD->preview);
   gtk_widget_show (ifsD->preview);
 
@@ -1054,8 +1055,6 @@ ifs_compose_dialog (GimpDrawable *drawable)
   if (ifsvals.num_elements == 0)
     {
       ifs_compose_set_defaults ();
-      if (ifsD->auto_preview)
-        ifs_compose_preview ();
     }
   else
     {
@@ -1118,13 +1117,13 @@ ifs_compose_dialog (GimpDrawable *drawable)
          when the design_area gets a ConfigureNotify event */
 
       set_current_element (0);
-      if (ifsD->auto_preview)
-        ifs_compose_preview ();
 
       ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
     }
 
   gtk_widget_show (dlg);
+  if (ifsD->auto_preview)
+    ifs_compose_preview ();
   gtk_main ();
 
   g_object_unref (ifsDesign->op_menu);
@@ -1640,7 +1639,7 @@ design_area_configure (GtkWidget         *widget,
   ifsDesign->pixmap = gdk_pixmap_new (widget->window,
                                      widget->allocation.width,
                                      widget->allocation.height,
-                                     gtk_preview_get_visual ()->depth);
+                                     -1); /* Is this correct? */
 
   return FALSE;
 }
@@ -2822,8 +2821,8 @@ ifs_compose_delete_callback (GtkWidget *widget,
 static gint
 preview_idle_render (gpointer data)
 {
-  gint width  = GTK_WIDGET (ifsD->preview)->requisition.width;
-  gint height = GTK_WIDGET (ifsD->preview)->requisition.height;
+  gint width  = ifsD->preview_width;
+  gint height = ifsD->preview_height;
   gint iterations = PREVIEW_RENDER_CHUNK;
   gint i;
 
@@ -2846,11 +2845,11 @@ preview_idle_render (gpointer data)
 
   ifsD->preview_iterations -= iterations;
 
-  for (i = 0; i < height; i++)
-    gtk_preview_draw_row (GTK_PREVIEW (ifsD->preview),
-                          ifsD->preview_data + i * width * 3,
-                          0, i, width);
-  gtk_widget_queue_draw (ifsD->preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (ifsD->preview),
+                          0, 0, width, height,
+                          GIMP_RGB_IMAGE,
+                          ifsD->preview_data,
+                          width * 3);
 
   return (ifsD->preview_iterations != 0);
 }
@@ -2860,8 +2859,8 @@ ifs_compose_preview (void)
 {
   /* Expansion isn't really supported for previews */
   gint     i;
-  gint     width  = GTK_WIDGET (ifsD->preview)->requisition.width;
-  gint     height = GTK_WIDGET (ifsD->preview)->requisition.height;
+  gint     width  = ifsD->preview_width;
+  gint     height = ifsD->preview_height;
   guchar   rc, gc, bc;
   guchar  *ptr;
   GimpRGB  color;

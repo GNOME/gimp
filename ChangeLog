@@ -1,5 +1,9 @@
 2004-08-03  DindinX  <david@dindinx.org>
 
+	* plug-ins/ifscompose/ifscompose.c: ported to GimpPreviewArea.
+
+2004-08-03  DindinX  <david@dindinx.org>
+
 	* plug-ins/fp/fp.c: converted to GimpPreviewArea.
 
 2004-08-03  DindinX  <david@dindinx.org>
