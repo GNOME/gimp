@@ -1,5 +1,10 @@
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/text/Makefile.am: removed PANGO_DISABLE_DEPRECATED again since
+	we have to use Pango API that is deprecated in the HEAD branch.
+
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/compose.c
 	* plug-ins/common/decompose.c: merged in enhancements done by
 	Alexey Dyachenko: support for LAB colorspace and an option to
