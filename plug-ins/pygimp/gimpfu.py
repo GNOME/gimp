@@ -58,12 +58,12 @@ PF_INT         = PF_INT32
 PF_FLOAT       = PDB_FLOAT
 PF_STRING      = PDB_STRING
 PF_VALUE       = PF_STRING
-PF_INT8ARRAY   = PDB_INT8ARRAY
-PF_INT16ARRAY  = PDB_INT16ARRAY
-PF_INT32ARRAY  = PDB_INT32ARRAY
-PF_INTARRAY    = PF_INT32ARRAY
-PF_FLOATARRAY  = PDB_FLOATARRAY
-PF_STRINGARRAY = PDB_STRINGARRAY
+#PF_INT8ARRAY   = PDB_INT8ARRAY
+#PF_INT16ARRAY  = PDB_INT16ARRAY
+#PF_INT32ARRAY  = PDB_INT32ARRAY
+#PF_INTARRAY    = PF_INT32ARRAY
+#PF_FLOATARRAY  = PDB_FLOATARRAY
+#PF_STRINGARRAY = PDB_STRINGARRAY
 PF_COLOR       = PDB_COLOR
 PF_COLOUR      = PF_COLOR
 PF_REGION      = PDB_REGION
@@ -96,11 +96,11 @@ _type_mapping = {
     PF_INT32       : PDB_INT32,
     PF_FLOAT       : PDB_FLOAT,
     PF_STRING      : PDB_STRING,
-    PF_INT8ARRAY   : PDB_INT8ARRAY,
-    PF_INT16ARRAY  : PDB_INT16ARRAY,
-    PF_INT32ARRAY  : PDB_INT32ARRAY,
-    PF_FLOATARRAY  : PDB_FLOATARRAY,
-    PF_STRINGARRAY : PDB_STRINGARRAY,
+    #PF_INT8ARRAY   : PDB_INT8ARRAY,
+    #PF_INT16ARRAY  : PDB_INT16ARRAY,
+    #PF_INT32ARRAY  : PDB_INT32ARRAY,
+    #PF_FLOATARRAY  : PDB_FLOATARRAY,
+    #PF_STRINGARRAY : PDB_STRINGARRAY,
     PF_COLOUR      : PDB_COLOR,
     PF_REGION      : PDB_REGION,
     PF_IMAGE       : PDB_IMAGE,
@@ -142,7 +142,7 @@ def register(func_name, blurb, help, author, copyright, date, menupath,
 	if type(ent[0]) != type(42):
 	    raise error, "parameter types must be integers"
 	if not letterCheck(ent[1]):
-	    raise error,"parameter name contains ilegal characters"
+	    raise error, "parameter name contains ilegal characters"
     for ent in results:
 	if len(ent) < 3:
 	    raise error, "sequence not long enough for "+ent[0]
@@ -271,9 +271,9 @@ def _interact(func_name):
 		return float(self.get_text())
 	    except ValueError, e:
 		raise EntryValueError, e.args
-    class ArrayEntry(StringEntry):
-	def get_value(self):
-	    return eval(self.get_text(), {}, {})
+#    class ArrayEntry(StringEntry):
+#	def get_value(self):
+#	    return eval(self.get_text(), {}, {})
     class SliderEntry(gtk.HScale):
 	# bounds is (upper, lower, step)
 	def __init__(self, default=0, bounds=(0, 100, 5)):
@@ -337,11 +337,11 @@ def _interact(func_name):
 	PF_INT32       : IntEntry,
 	PF_FLOAT       : FloatEntry,
 	PF_STRING      : StringEntry,
-	PF_INT8ARRAY   : ArrayEntry,
-	PF_INT16ARRAY  : ArrayEntry,
-	PF_INT32ARRAY  : ArrayEntry,
-	PF_FLOATARRAY  : ArrayEntry,
-	PF_STRINGARRAY : ArrayEntry,
+	#PF_INT8ARRAY   : ArrayEntry,
+	#PF_INT16ARRAY  : ArrayEntry,
+	#PF_INT32ARRAY  : ArrayEntry,
+	#PF_FLOATARRAY  : ArrayEntry,
+	#PF_STRINGARRAY : ArrayEntry,
 	PF_COLOUR      : gimpui.ColourSelector,
 	PF_REGION      : IntEntry,  # should handle differently ...
 	PF_IMAGE       : gimpui.ImageSelector,
