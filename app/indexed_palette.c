@@ -337,7 +337,7 @@ indexed_palette_clear ()
 static void
 indexed_palette_update (GimpImage* gimage)
 {
-  if (!indexedP)
+  if (!indexedP || !gimage)
     return;
 
   if (gimage_base_type (gimage) == INDEXED)

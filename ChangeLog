@@ -1,3 +1,10 @@
+Wed Jan  6 23:30:03 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/indexed_palette.c
+
+	Fixed crash when image->dialog->indexed palette invoked on
+	an RGB image.
+
 Mon Jan  4 23:21:56 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	* app/blend.c
