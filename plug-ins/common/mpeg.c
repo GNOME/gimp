@@ -88,13 +88,13 @@
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 static gint32 load_image (char   *filename);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -108,15 +108,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -130,7 +130,7 @@ query (void)
                           "1997",
                           "<Load>/MPEG",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -143,21 +143,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   INIT_I18N();
 
@@ -168,17 +168,17 @@ run (gchar   *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -209,8 +209,8 @@ MPEG_frame_period_ms (gint mpeg_rate_code)
 static gint32
 load_image (gchar *filename)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   gint32 image_ID;
   gint32 layer_ID;
   gchar *temp;
@@ -305,7 +305,7 @@ load_image (gchar *filename)
       layer_ID = gimp_layer_new (image_ID, layername,
 				 wwidth,
 				 wheight,
-				 RGBA_IMAGE, 100, NORMAL_MODE);
+				 GIMP_RGBA_IMAGE, 100, GIMP_NORMAL_MODE);
       g_free(layername);
       gimp_image_add_layer (image_ID, layer_ID, 0);
       drawable = gimp_drawable_get (layer_ID);

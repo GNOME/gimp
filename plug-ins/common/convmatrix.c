@@ -75,7 +75,7 @@ typedef enum
   MIRROR
 } BorderMode;
 
-GDrawable *drawable;
+GimpDrawable *drawable;
 
 gchar * const channel_labels[] =
 {
@@ -97,16 +97,16 @@ gchar * const bmode_labels[] =
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint dialog (void);
 
 static void doit         (void);
 static void check_config (void);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,   /* init_proc  */
   NULL,   /* quit_proc  */
@@ -166,18 +166,18 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
-    /*	{ PARAM_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
-	{ PARAM_INT32, "alpha_alg", "Enable weighting by alpha channel" },
-	{ PARAM_FLOAT, "divisor", "Divisor" },
-	{ PARAM_FLOAT, "offset", "Offset" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    /*	{ GIMP_PDB_FLOATARRAY, "matrix", "The 5x5 convolution matrix" },
+	{ GIMP_PDB_INT32, "alpha_alg", "Enable weighting by alpha channel" },
+	{ GIMP_PDB_FLOAT, "divisor", "Divisor" },
+	{ GIMP_PDB_FLOAT, "offset", "Offset" },
 
-	{ PARAM_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
-	{ PARAM_INT32, "bmode", "Mode for treating image borders" }
+	{ GIMP_PDB_INT32ARRAY, "channels", "Mask of the channels to be filtered" },
+	{ GIMP_PDB_INT32, "bmode", "Mode for treating image borders" }
     */
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
@@ -190,7 +190,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Generic/Convolution Matrix..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -198,13 +198,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   int x,y;
 
   INIT_I18N_UI();
@@ -219,10 +219,10 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   my_config = default_config;
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       if (nparams != 9)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       else
 	{
 	  for (y = 0; y < 5; y++)
@@ -241,7 +241,7 @@ run (gchar   *name,
     {
       gimp_get_data ("plug_in_convmatrix", &my_config);
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /*  Oh boy. We get to do a dialog box, because we can't really
 	   *  expect the user to set us up with the right values using gdb.
@@ -250,12 +250,12 @@ run (gchar   *name,
 	  if (!dialog())
 	    {
 	      /* The dialog was closed, or something similarly evil happened. */
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb(drawable->id) ||
@@ -267,20 +267,20 @@ run (gchar   *name,
 
 	  doit ();
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_convmatrix", &my_config, sizeof (my_config));
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       gimp_drawable_detach (drawable);
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -290,7 +290,7 @@ run (gchar   *name,
  */
 
 static void
-my_get_row (GPixelRgn *PR,
+my_get_row (GimpPixelRgn *PR,
 	    guchar    *dest,
 	    int        x,
 	    int        y,
@@ -464,7 +464,7 @@ calcmatrix (guchar **srcrow,
 static void
 doit (void)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height, row, col;
   int w, h, i;
   guchar *destrow[3], *srcrow[5], *temprow;

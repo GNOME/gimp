@@ -106,7 +106,7 @@ typedef struct REFLECT
 
 typedef struct
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   gint       dwidth;
   gint       dheight;
   gint       bpp;
@@ -122,21 +122,21 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void FlareFX                    (GDrawable *drawable, 
+static void FlareFX                    (GimpDrawable *drawable, 
 					gint       preview_mode);
 static void fill_preview_with_thumb    (GtkWidget *preview_widget, 
 					gint32     drawable_ID);
-static GtkWidget *preview_widget       (GDrawable *drawable);
+static GtkWidget *preview_widget       (GimpDrawable *drawable);
 
-static gint flare_dialog               (GDrawable *drawable);
+static gint flare_dialog               (GimpDrawable *drawable);
 static void flare_ok_callback          (GtkWidget *widget,
 					gpointer   data);
 
-static GtkWidget * flare_center_create            (GDrawable     *drawable);
+static GtkWidget * flare_center_create            (GimpDrawable     *drawable);
 static void	   flare_center_destroy           (GtkWidget     *widget,
 						   gpointer       data);
 static void	   flare_center_draw              (FlareCenter   *center,
@@ -162,7 +162,7 @@ static void mrt3    (guchar *s, gint i, gint col, gint row);
 static void mrt4    (guchar *s, gint i, gint col, gint row);
 
 /* --- Variables --- */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -198,13 +198,13 @@ MAIN ()
 static void
 query (void) 
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "posx", "X-position" },
-    { PARAM_INT32, "posy", "Y-position" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "posx", "X-position" },
+    { GIMP_PDB_INT32, "posy", "Y-position" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -216,7 +216,7 @@ query (void)
 			  "May 2000",
 			  N_("<Image>/Filters/Light Effects/FlareFX..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -224,21 +224,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   
   /*  Get the specified drawable  */
@@ -246,7 +246,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
@@ -259,19 +259,19 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  fvals.posx = (gint) param[3].data.d_int32;
 	  fvals.posy = (gint) param[4].data.d_int32;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_flarefx", &fvals);
@@ -281,7 +281,7 @@ run (gchar   *name,
       break;
     }
   
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -292,18 +292,18 @@ run (gchar   *name,
 	  
 	  FlareFX (drawable, 0);
 	  
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush (); 
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_flarefx", &fvals, sizeof (FlareValues));
 	    g_free(preview_bits);
 	}
       else
 	{
 	  /* gimp_message ("FlareFX: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -314,7 +314,7 @@ run (gchar   *name,
 
 
 static gint
-flare_dialog (GDrawable *drawable)
+flare_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -373,10 +373,10 @@ flare_ok_callback (GtkWidget *widget,
 
 /* --- Filter functions --- */
 static void
-FlareFX (GDrawable *drawable, 
+FlareFX (GimpDrawable *drawable, 
 	 gboolean   preview_mode)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   guchar *dest, *d;
@@ -744,7 +744,7 @@ mrt4 (guchar *s,
  */
 
 static GtkWidget *
-flare_center_create (GDrawable *drawable)
+flare_center_create (GimpDrawable *drawable)
 {
   FlareCenter *center;
   GtkWidget   *frame;
@@ -881,7 +881,7 @@ flare_center_destroy (GtkWidget *widget,
  */
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   GtkWidget *preview;
   gint       size;

@@ -130,11 +130,11 @@
 static void   query (void);
 static void   run   (gchar   *name,
 		     gint     nparams,
-		     GParam  *param,
+		     GimpParam  *param,
 		     gint    *nreturn_vals,
-		     GParam **return_vals);
+		     GimpParam **return_vals);
 
-static GStatusType save_image (gchar  *filename,
+static GimpPDBStatusType save_image (gchar  *filename,
 			       gint32  image_ID,
 			       gint32  drawable_ID,
 			       gint32  run_mode);
@@ -158,7 +158,7 @@ static void   output64chunk  (gint   c1,
 			      gint   pads,
 			      FILE  *outfile);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -197,17 +197,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "receipt", "The email address to send to" },
-    { PARAM_STRING, "from", "The email address for the From: field" },
-    { PARAM_STRING, "subject", "The subject" },
-    { PARAM_STRING, "comment", "The Comment" },
-    { PARAM_INT32,  "encapsulation", "Uuencode, MIME" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "receipt", "The email address to send to" },
+    { GIMP_PDB_STRING, "from", "The email address for the From: field" },
+    { GIMP_PDB_STRING, "subject", "The subject" },
+    { GIMP_PDB_STRING, "comment", "The Comment" },
+    { GIMP_PDB_INT32,  "encapsulation", "Uuencode, MIME" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -219,7 +219,7 @@ query (void)
 			  "1995-1997",
 			  N_("<Image>/File/Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -227,13 +227,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
 
@@ -245,24 +245,24 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "plug_in_mail_image") == 0)
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  gimp_get_data ("plug_in_mail_image", &mail_info);
 	  if (!save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 9)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -276,7 +276,7 @@ run (gchar   *name,
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("plug_in_mail_image", &mail_info);
 	  break;
 	  
@@ -284,32 +284,32 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  status = save_image (mail_info.filename,
 			       image_ID,
 			       drawable_ID,
 			       run_mode);
 
-	  if (status == STATUS_SUCCESS)
+	  if (status == GIMP_PDB_SUCCESS)
 	    gimp_set_data ("plug_in_mail_image", &mail_info, sizeof(m_info));
 	}
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
 }
 
-static GStatusType
+static GimpPDBStatusType
 save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  GParam *params;
+  GimpParam *params;
   gint    retvals;
   gchar  *ext;
   gchar  *tmpname;
@@ -321,13 +321,13 @@ save_image (gchar  *filename,
   FILE   *infile;
 
   if (NULL == (ext = find_extension (filename)))
-    return STATUS_CALLING_ERROR;
+    return GIMP_PDB_CALLING_ERROR;
 
   /* get a temp name with the right extension and save into it. */
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
-			       PARAM_STRING, ext + 1,
-			       PARAM_END);
+			       GIMP_PDB_STRING, ext + 1,
+			       GIMP_PDB_END);
 
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
@@ -350,12 +350,12 @@ save_image (gchar  *filename,
 
   params = gimp_run_procedure ("gimp_file_save",
 			       &retvals,
-			       PARAM_INT32, run_mode,
-			       PARAM_IMAGE, image_ID,
-			       PARAM_DRAWABLE, drawable_ID,
-			       PARAM_STRING, tmpname,
-			       PARAM_STRING, tmpname,
-			       PARAM_END);
+			       GIMP_PDB_INT32, run_mode,
+			       GIMP_PDB_IMAGE, image_ID,
+			       GIMP_PDB_DRAWABLE, drawable_ID,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_END);
   
 
   /*  need to figure a way to make sure the user is trying to save
@@ -365,7 +365,7 @@ save_image (gchar  *filename,
   status = params[0].data.d_status;
 
   if (! valid_file (tmpname) ||
-      status != STATUS_SUCCESS)
+      status != GIMP_PDB_SUCCESS)
     {
       unlink (tmpname);
       g_free (tmpname);
@@ -380,7 +380,7 @@ save_image (gchar  *filename,
 	{
 	  g_message ("mail: fork failed: %s\n", g_strerror (errno));
 	  g_free (tmpname);
-	  return STATUS_EXECUTION_ERROR;
+	  return GIMP_PDB_EXECUTION_ERROR;
 	}
       else if (pid == 0)
 	{
@@ -408,7 +408,7 @@ save_image (gchar  *filename,
 	  g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
 	  close (tfd);
 	  g_free (tmpname);
-	  return STATUS_EXECUTION_ERROR;
+	  return GIMP_PDB_EXECUTION_ERROR;
 	}
       fcntl (tfd, F_SETFD, FD_CLOEXEC);
       pid = spawnlp (P_NOWAIT, UUENCODE, UUENCODE, tmpname, filename, NULL);
@@ -419,7 +419,7 @@ save_image (gchar  *filename,
 	{
 	  g_message ("mail: spawn failed: %s\n", g_strerror (errno));
 	  g_free (tmpname);
-	  return STATUS_EXECUTION_ERROR;
+	  return GIMP_PDB_EXECUTION_ERROR;
 	}
 #endif
         {
@@ -430,7 +430,7 @@ save_image (gchar  *filename,
 	    {
 	      g_message ("mail: mail didnt work or something on file %s\n", tmpname);
 	      g_free (tmpname);
-	      return STATUS_EXECUTION_ERROR;
+	      return GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
     }
@@ -449,7 +449,7 @@ save_image (gchar  *filename,
   unlink (tmpname);
   g_free (tmpname);
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 

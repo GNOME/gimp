@@ -54,11 +54,11 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam     *param,
+			 GimpParam     *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
-static void      gauss_iir        (GDrawable *drawable,
+static void      gauss_iir        (GimpDrawable *drawable,
 				   gdouble    horizontal,
 				   gdouble    vertical);
 
@@ -67,7 +67,7 @@ static void      gauss_iir        (GDrawable *drawable,
  */
 static gint      gauss_iir_dialog   (void);
 static gint      gauss_iir2_dialog  (gint32     image_ID, 
-				     GDrawable *drawable);
+				     GimpDrawable *drawable);
 
 /*
  * Gaussian blur helper functions
@@ -88,7 +88,7 @@ static void      transfer_pixels  (gdouble * src1,
 static void      gauss_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -120,24 +120,24 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-    { PARAM_INT32, "horizontal", "Blur in horizontal direction" },
-    { PARAM_INT32, "vertical", "Blur in vertical direction" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
+    { GIMP_PDB_INT32, "horizontal", "Blur in horizontal direction" },
+    { GIMP_PDB_INT32, "vertical", "Blur in vertical direction" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef args2[] =
+  static GimpParamDef args2[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "horizontal", "Horizontal radius of gaussian blur (in pixels)" },
-    { PARAM_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "horizontal", "Horizontal radius of gaussian blur (in pixels)" },
+    { GIMP_PDB_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels)" }
   };
   static gint nargs2 = sizeof (args2) / sizeof (args2[0]);
 
@@ -159,7 +159,7 @@ query (void)
 			  "1995-1996",
 			  NULL,
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 
@@ -182,7 +182,7 @@ query (void)
 			  "1995-2000",
 			  N_("<Image>/Filters/Blur/Gaussian Blur (IIR)..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs2, 0,
 			  args2, NULL);
 }
@@ -190,22 +190,22 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   gint32 image_ID;
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified image and drawable  */
@@ -216,7 +216,7 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  INIT_I18N_UI();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
@@ -226,22 +226,22 @@ run (gchar   *name,
 	    return;
 	  break;
 	  
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    status = GIMP_PDB_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      bvals.radius     = param[3].data.d_float;
 	      bvals.horizontal = (param[4].data.d_int32) ? TRUE : FALSE;
 	      bvals.vertical   = (param[5].data.d_int32) ? TRUE : FALSE;
 	    }
-	  if (status == STATUS_SUCCESS && (bvals.radius < 1.0))
-	    status = STATUS_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS && (bvals.radius < 1.0))
+	    status = GIMP_PDB_CALLING_ERROR;
 	  INIT_I18N();
 	  break;
 	  
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  INIT_I18N();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir", &bvals);
@@ -254,14 +254,14 @@ run (gchar   *name,
       if (!(bvals.horizontal || bvals.vertical))
 	{
 	  gimp_message ( _("gauss_iir: you must specify either horizontal or vertical (or both)"));
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
     }
   else if (strcmp (name, "plug_in_gauss_iir2") == 0)
     {
       switch (run_mode)
 	{	  
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  INIT_I18N_UI();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
@@ -270,21 +270,21 @@ run (gchar   *name,
 	  if (! gauss_iir2_dialog (image_ID, drawable))
 	    return;
 	  break;
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 5)
-	    status = STATUS_CALLING_ERROR;
-	  if (status == STATUS_SUCCESS)
+	    status = GIMP_PDB_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      b2vals.horizontal = param[3].data.d_float;
 	      b2vals.vertical   = param[4].data.d_float;
 	    }
-	  if (status == STATUS_SUCCESS && (b2vals.horizontal < 1.0 && b2vals.vertical < 1.0))
-	    status = STATUS_CALLING_ERROR;
+	  if (status == GIMP_PDB_SUCCESS && (b2vals.horizontal < 1.0 && b2vals.vertical < 1.0))
+	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	  
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  INIT_I18N();
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("plug_in_gauss_iir2", &b2vals);
@@ -295,9 +295,9 @@ run (gchar   *name,
 	}
     }
   else
-    status = STATUS_CALLING_ERROR;
+    status = GIMP_PDB_CALLING_ERROR;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -316,7 +316,7 @@ run (gchar   *name,
                                    (bvals.vertical ? bvals.radius : 0.0));
 	      
 	      /*  Store data  */
-	      if (run_mode == RUN_INTERACTIVE)
+	      if (run_mode == GIMP_RUN_INTERACTIVE)
 		gimp_set_data ("plug_in_gauss_iir", &bvals, sizeof (BlurValues));
 	    } 
 	  else
@@ -324,17 +324,17 @@ run (gchar   *name,
 	      gauss_iir (drawable, b2vals.horizontal, b2vals.vertical);
 	  
 	      /*  Store data  */
-	      if (run_mode == RUN_INTERACTIVE)
+	      if (run_mode == GIMP_RUN_INTERACTIVE)
 		gimp_set_data ("plug_in_gauss_iir2", &b2vals, sizeof (Blur2Values));
 	    }
 
-          if (run_mode != RUN_NONINTERACTIVE)
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
         }
       else
         {
           gimp_message ( "gauss_iir: cannot operate on indexed color images");
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
 
       gimp_drawable_detach (drawable);
@@ -429,7 +429,7 @@ gauss_iir_dialog (void)
 
 static gint
 gauss_iir2_dialog (gint32     image_ID,
-		   GDrawable *drawable)
+		   GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -554,11 +554,11 @@ separate_alpha (guchar *buf,
 }
 
 static void
-gauss_iir (GDrawable *drawable,
+gauss_iir (GimpDrawable *drawable,
 	   gdouble    horz,
 	   gdouble    vert)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint width, height;
   gint bytes;
   gint has_alpha;

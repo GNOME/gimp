@@ -41,9 +41,9 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint   load_palette   (FILE   *fp,
 			      guchar  palette[]);
@@ -57,7 +57,7 @@ static void   palette_dialog (gchar  *title);
 
 /* Globals... */
 
-GPlugInInfo	PLUG_IN_INFO =
+GimpPlugInInfo	PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -77,29 +77,29 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "Filename to load image from" },
-    { PARAM_STRING, "raw_filename", "Name entered" },
-    { PARAM_STRING, "palette_filename", "Filename to load palette from" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "Filename to load image from" },
+    { GIMP_PDB_STRING, "raw_filename", "Name entered" },
+    { GIMP_PDB_STRING, "palette_filename", "Filename to load palette from" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "Filename to save image to" },
-    { PARAM_STRING, "raw_filename", "Name entered" },
-    { PARAM_STRING, "palette_filename", "Filename to save palette to" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "Filename to save image to" },
+    { GIMP_PDB_STRING, "raw_filename", "Name entered" },
+    { GIMP_PDB_STRING, "palette_filename", "Filename to save palette to" },
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -111,7 +111,7 @@ query (void)
 			  "May 1998",
 			  "<Load>/CEL",
 			  NULL,
-			  PROC_PLUG_IN, 
+			  GIMP_PLUGIN, 
 			  nload_args, nload_return_vals,
 			  load_args, load_return_vals);
 
@@ -123,7 +123,7 @@ query (void)
 			  "May 1998",
 			  "<Save>/CEL",
 			  "INDEXEDA",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nsave_args, 0,
 			  save_args, NULL);
 
@@ -139,13 +139,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	values[2]; /* Return values */
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam	values[2]; /* Return values */
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image;
 
   run_mode = param[0].data.d_int32;
@@ -154,10 +154,10 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -168,7 +168,7 @@ run (gchar   *name,
 
   if (strcmp (name, "file_cel_load") == 0)
     {
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  gimp_get_data ("file_cel_save:length", &data_length);
 	  if (data_length > 0)
@@ -183,12 +183,12 @@ run (gchar   *name,
 	    }
 	}
 
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
 	{
 	  palette_file = param[3].data.d_string;
 	  data_length = strlen(palette_file) + 1;
 	}
-      else if (run_mode == RUN_INTERACTIVE)
+      else if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /* Let user choose KCF palette (cancel ignores) */
 	  palette_dialog (_("Load KISS Palette"));
@@ -201,12 +201,12 @@ run (gchar   *name,
       if (image != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_cel_save") == 0)
@@ -214,7 +214,7 @@ run (gchar   *name,
       if (! save_image (param[3].data.d_string, param[4].data.d_string,
 			param[1].data.d_int32, param[2].data.d_int32))
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -224,7 +224,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -248,8 +248,8 @@ load_image (gchar *file,
   guchar    *palette,       /* 24 bit palette */
             *buffer,        /* Temporary buffer */
             *line;          /* Pixel data */
-  GDrawable *drawable;      /* Drawable for layer */
-  GPixelRgn  pixel_rgn;     /* Pixel region for layer */
+  GimpDrawable *drawable;      /* Drawable for layer */
+  GimpPixelRgn  pixel_rgn;     /* Pixel region for layer */
 
   gint       i, j, k;       /* Counters */
 
@@ -289,7 +289,7 @@ load_image (gchar *file,
       offy = header[10] + (256 * header[11]);
     }
 
-  image = gimp_image_new (width + offx, height + offy, INDEXED);
+  image = gimp_image_new (width + offx, height + offy, GIMP_INDEXED);
 
   if (image == -1)
     {
@@ -302,7 +302,7 @@ load_image (gchar *file,
   /* Create an indexed-alpha layer to hold the image... */
 
   layer = gimp_layer_new (image, _("Background"), width, height,
-			  INDEXEDA_IMAGE, 100, NORMAL_MODE);
+			  GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image, layer, 0);
   gimp_layer_set_offsets (layer, offx, offy);
 
@@ -480,14 +480,14 @@ save_image (gchar  *file,
 
   guchar	*buffer,	/* Temporary buffer */
   		*line;		/* Pixel data */
-  GDrawable	*drawable;	/* Drawable for layer */
-  GPixelRgn	pixel_rgn;	/* Pixel region for layer */
+  GimpDrawable	*drawable;	/* Drawable for layer */
+  GimpPixelRgn	pixel_rgn;	/* Pixel region for layer */
 
   int		i, j, k;	/* Counters */
 
   /* Check that this is an indexed image, fail otherwise */
   type = gimp_drawable_type (layer);
-  if (type != INDEXEDA_IMAGE)
+  if (type != GIMP_INDEXEDA_IMAGE)
     {
       g_message (_("Only an indexed-alpha image can be saved in CEL format"));
       return FALSE;

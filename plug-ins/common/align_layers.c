@@ -72,11 +72,11 @@ enum
 static void	query	(void);
 static void	run	(gchar   *name,
 			 gint     nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
-static GStatusType align_layers                   (gint32  image_id);
+static GimpPDBStatusType align_layers                   (gint32  image_id);
 static void        align_layers_get_align_offsets (gint32  drawable_id,
 						   gint	  *x,
 						   gint	  *y);
@@ -85,7 +85,7 @@ static gint align_layers_dialog      (void);
 static void align_layers_ok_callback (GtkWidget *widget,
 				      gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -133,13 +133,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args [] =
+  static GimpParamDef args [] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    { PARAM_IMAGE, "image", "Input image"},
-    { PARAM_DRAWABLE, "drawable", "Input drawable (not used)"},
-    { PARAM_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
-    { PARAM_INT32, "use-bottom", "use the bottom layer as the base of alignment"}
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE, "image", "Input image"},
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)"},
+    { GIMP_PDB_INT32, "link-afteer-alignment", "Link the visible layers after alignment"},
+    { GIMP_PDB_INT32, "use-bottom", "use the bottom layer as the base of alignment"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -151,7 +151,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Layers/Align Visible Layers..."),
 			  "RGB*,GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -159,13 +159,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	values[1];
-  GStatusType	status = STATUS_EXECUTION_ERROR;
-  GRunModeType	run_mode;
+  static GimpParam	values[1];
+  GimpPDBStatusType	status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType	run_mode;
   gint		image_id, layer_num;
   
   run_mode = param[0].data.d_int32;
@@ -174,12 +174,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch ( run_mode )
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_image_get_layers (image_id, &layer_num);
       if (layer_num < 2)
@@ -191,10 +191,10 @@ run (gchar   *name,
       if (! align_layers_dialog ())
 	return;
       break;
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       break;
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
@@ -202,16 +202,16 @@ run (gchar   *name,
 
   status = align_layers (image_id);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
-static GStatusType
+static GimpPDBStatusType
 align_layers (gint32 image_id)
 {
   gint	layer_num = 0;
@@ -362,7 +362,7 @@ align_layers (gint32 image_id)
   
   gimp_undo_push_group_end (image_id);
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 static void
@@ -370,7 +370,7 @@ align_layers_get_align_offsets (gint32	drawable_id,
 				gint   *x,
 				gint   *y)
 {
-  GDrawable	*layer = gimp_drawable_get (drawable_id);
+  GimpDrawable	*layer = gimp_drawable_get (drawable_id);
   
   switch (VALS.h_base)
     {

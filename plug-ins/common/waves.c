@@ -86,7 +86,7 @@ static gint do_preview = TRUE;
 
 static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
                                             struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GDrawable        *drawable);
+static struct mwPreview * mw_preview_build (GimpDrawable        *drawable);
 
 static struct mwPreview *mwp;
 
@@ -94,9 +94,9 @@ static struct mwPreview *mwp;
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparam,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nretvals,
-		   GParam **retvals);
+		   GimpParam **retvals);
 
 static gint pluginCore       (struct piArgs *argp,
 			      gint32         drawable);
@@ -123,7 +123,7 @@ static guchar bilinear (gdouble x,
 
 #define WITHIN(a, b, c) ((((a) <= (b)) && ((b) <= (c))) ? TRUE : FALSE)
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -136,16 +136,16 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "The Image" },
-    { PARAM_DRAWABLE, "drawable", "The Drawable" },
-    { PARAM_FLOAT, "amplitude", "The Amplitude of the Waves" },
-    { PARAM_FLOAT, "phase", "The Phase of the Waves" },
-    { PARAM_FLOAT, "wavelength", "The Wavelength of the Waves" },
-    { PARAM_INT32, "type", "Type of waves, black/smeared" },
-    { PARAM_INT32, "reflective", "Use Reflection" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "The Image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "The Drawable" },
+    { GIMP_PDB_FLOAT, "amplitude", "The Amplitude of the Waves" },
+    { GIMP_PDB_FLOAT, "phase", "The Phase of the Waves" },
+    { GIMP_PDB_FLOAT, "wavelength", "The Wavelength of the Waves" },
+    { GIMP_PDB_INT32, "type", "Type of waves, black/smeared" },
+    { GIMP_PDB_INT32, "reflective", "Use Reflection" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -157,7 +157,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Waves..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -165,11 +165,11 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparam,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nretvals,
-     GParam **retvals)
+     GimpParam **retvals)
 {
-  static GParam rvals[1];
+  static GimpParam rvals[1];
 
   struct piArgs args;
 
@@ -180,13 +180,13 @@ run (gchar   *name,
   args.type = -1;
   gimp_get_data ("plug_in_waves", &args);
 
-  rvals[0].type = PARAM_STATUS;
-  rvals[0].data.d_status = STATUS_SUCCESS;
+  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
   switch (param[0].data.d_int32)
     {
-      GDrawable *drawable;
+      GimpDrawable *drawable;
 
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.type == -1)
@@ -203,7 +203,7 @@ run (gchar   *name,
 
       if (pluginCoreIA(&args, param[2].data.d_drawable) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -212,12 +212,12 @@ run (gchar   *name,
 
     break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 8)
 	{
-	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
       args.amplitude  = param[3].data.d_float;
@@ -228,17 +228,17 @@ run (gchar   *name,
 
       if (pluginCore (&args, param[2].data.d_drawable) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
     break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args, param[2].data.d_drawable) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       break;
     }
@@ -249,8 +249,8 @@ pluginCore (struct piArgs *argp,
 	    gint32         drawable)
 {
   gint retval=0;
-  GDrawable *drw;
-  GPixelRgn srcPr, dstPr;
+  GimpDrawable *drw;
+  GimpPixelRgn srcPr, dstPr;
   guchar *src, *dst;
   guint width, height, Bpp;
 
@@ -504,7 +504,7 @@ mw_preview_toggle_callback (GtkWidget *widget,
 }
 
 static struct mwPreview *
-mw_preview_build_virgin (GDrawable *drawable)
+mw_preview_build_virgin (GimpDrawable *drawable)
 {
   struct mwPreview *mwp;
 
@@ -530,13 +530,13 @@ mw_preview_build_virgin (GDrawable *drawable)
 }
 
 static struct mwPreview *
-mw_preview_build (GDrawable *drawable)
+mw_preview_build (GimpDrawable *drawable)
 {
   struct mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drawableBits;
-  GPixelRgn pr;
+  GimpPixelRgn pr;
 
   mwp = mw_preview_build_virgin (drawable);
 

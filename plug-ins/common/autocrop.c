@@ -25,23 +25,23 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint colors_equal  (guchar    *col1,
 			   guchar    *col2,
 			   gint       bytes);
-static gint guess_bgcolor (GPixelRgn *pr,
+static gint guess_bgcolor (GimpPixelRgn *pr,
 			   gint       width,
 			   gint       height,
 			   gint       bytes,
 			   guchar    *color);
 
-static void doit          (GDrawable *drawable,
+static void doit          (GimpDrawable *drawable,
 			   gint32     image_id);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	  /* init_proc  */
   NULL,   /* quit_proc  */
@@ -56,11 +56,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -72,7 +72,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Image/Transforms/Autocrop"),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -80,14 +80,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     n_params,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32 image_id;
   
   *nreturn_vals = 1;
@@ -97,13 +97,13 @@ run (gchar   *name,
 
   INIT_I18N();
   
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       if (n_params != 3)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Get the specified drawable  */
       drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -118,24 +118,24 @@ run (gchar   *name,
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
 	  doit (drawable, image_id);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	} 
       else 
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
 
-      values[0].type = PARAM_STATUS;
+      values[0].type = GIMP_PDB_STATUS;
       values[0].data.d_status = status;
     }
 }
 
 static void
-doit (GDrawable *drawable,
+doit (GimpDrawable *drawable,
       gint32     image_id)
 {
-  GPixelRgn srcPR;
+  GimpPixelRgn srcPR;
   gint width, height;
   gint x, y, abort;
   gint32 nx, ny, nw, nh;
@@ -232,7 +232,7 @@ doit (GDrawable *drawable,
 }
 
 static gint
-guess_bgcolor (GPixelRgn *pr,
+guess_bgcolor (GimpPixelRgn *pr,
 	       gint       width,
 	       gint       height,
 	       gint       bytes,

@@ -189,14 +189,14 @@ typedef struct
   gint         src_yofs;
   gint         bm_yofs;
 
-  GDrawable   *bm_drawable;
+  GimpDrawable   *bm_drawable;
   gint         bm_width;
   gint         bm_height;
   gint         bm_bpp;
   gint         bm_has_alpha;
 
-  GPixelRgn    src_rgn;
-  GPixelRgn    bm_rgn;
+  GimpPixelRgn    src_rgn;
+  GimpPixelRgn    bm_rgn;
 
   bumpmap_params_t params;
 
@@ -209,9 +209,9 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static void bumpmap             (void);
 static void bumpmap_init_params (bumpmap_params_t *params);
@@ -241,7 +241,7 @@ static void dialog_update_preview       (void);
 static gint dialog_preview_events       (GtkWidget *widget, GdkEvent *event);
 static void dialog_scroll_src           (void);
 static void dialog_scroll_bumpmap       (void);
-static void dialog_get_rows             (GPixelRgn *pr, guchar **rows,
+static void dialog_get_rows             (GimpPixelRgn *pr, guchar **rows,
 					 gint x, gint y,
 					 gint width, gint height);
 static void dialog_fill_src_rows        (gint start, gint how_many, gint yofs);
@@ -262,7 +262,7 @@ static void dialog_ok_callback          (GtkWidget *widget, gpointer data);
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -317,7 +317,7 @@ static bumpmap_interface_t bmint =
   FALSE      /* run */
 };
 
-static GDrawable *drawable = NULL;
+static GimpDrawable *drawable = NULL;
 
 static gint       sel_x1, sel_y1;
 static gint       sel_x2, sel_y2;
@@ -332,22 +332,22 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",   "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",      "Input image" },
-    { PARAM_DRAWABLE, "drawable",   "Input drawable" },
-    { PARAM_DRAWABLE, "bumpmap",    "Bump map drawable" },
-    { PARAM_FLOAT,    "azimuth",    "Azimuth" },
-    { PARAM_FLOAT,    "elevation",  "Elevation" },
-    { PARAM_INT32,    "depth",      "Depth" },
-    { PARAM_INT32,    "xofs",       "X offset" },
-    { PARAM_INT32,    "yofs",       "Y offset" },
-    { PARAM_INT32,    "waterlevel", "Level that full transparency should represent" },
-    { PARAM_INT32,    "ambient",    "Ambient lighting factor" },
-    { PARAM_INT32,    "compensate", "Compensate for darkening" },
-    { PARAM_INT32,    "invert",     "Invert bumpmap" },
-    { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_DRAWABLE, "bumpmap",    "Bump map drawable" },
+    { GIMP_PDB_FLOAT,    "azimuth",    "Azimuth" },
+    { GIMP_PDB_FLOAT,    "elevation",  "Elevation" },
+    { GIMP_PDB_INT32,    "depth",      "Depth" },
+    { GIMP_PDB_INT32,    "xofs",       "X offset" },
+    { GIMP_PDB_INT32,    "yofs",       "Y offset" },
+    { GIMP_PDB_INT32,    "waterlevel", "Level that full transparency should represent" },
+    { GIMP_PDB_INT32,    "ambient",    "Ambient lighting factor" },
+    { GIMP_PDB_INT32,    "compensate", "Compensate for darkening" },
+    { GIMP_PDB_INT32,    "invert",     "Invert bumpmap" },
+    { GIMP_PDB_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -365,7 +365,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Map/Bump Map..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 
@@ -383,7 +383,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  NULL,
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -391,21 +391,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 
-  GRunModeType run_mode;
-  GStatusType  status;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType  status;
 
   INIT_I18N_UI();
 
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -424,7 +424,7 @@ run (gchar   *name,
   /* See how we will run */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data (name, &bmvals);
   
@@ -434,11 +434,11 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 14)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -458,7 +458,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data (name, &bmvals);
       break;
@@ -469,7 +469,7 @@ run (gchar   *name,
 
   /* Bumpmap the image */
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if ((gimp_drawable_is_rgb(drawable->id) ||
 	   gimp_drawable_is_gray(drawable->id)))
@@ -483,16 +483,16 @@ run (gchar   *name,
 	  bumpmap ();
 
 	  /* If run mode is interactive, flush displays */
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /* Store data */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data (name, &bmvals, sizeof (bumpmap_vals_t));
 	}
     }
   else
-    status = STATUS_EXECUTION_ERROR;
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
@@ -503,8 +503,8 @@ static void
 bumpmap (void)
 {
   bumpmap_params_t  params;
-  GDrawable        *bm_drawable;
-  GPixelRgn         src_rgn, dest_rgn, bm_rgn;
+  GimpDrawable        *bm_drawable;
+  GimpPixelRgn         src_rgn, dest_rgn, bm_rgn;
   gint              bm_width, bm_height, bm_bpp, bm_has_alpha;
   gint              yofs1, yofs2, yofs3;
   guchar           *bm_row1, *bm_row2, *bm_row3, *bm_tmprow;
@@ -1532,7 +1532,7 @@ dialog_scroll_bumpmap (void)
 }
 
 static void
-dialog_get_rows (GPixelRgn  *pr, 
+dialog_get_rows (GimpPixelRgn  *pr, 
 		 guchar    **rows, 
 		 gint        x, 
 		 gint        y, 
@@ -1545,7 +1545,7 @@ dialog_get_rows (GPixelRgn  *pr,
    * rows instead of one big linear region.
    */
 
-  GTile  *tile;
+  GimpTile  *tile;
   guchar *src, *dest;
   gint    xstart, ystart;
   gint    xend, yend;

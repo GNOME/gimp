@@ -91,11 +91,11 @@ typedef struct _DepthMerge
   DepthMergeInterface *interface;
   DepthMergeParams     params;
 
-  GDrawable           *resultDrawable;
-  GDrawable           *source1Drawable;
-  GDrawable           *source2Drawable;
-  GDrawable           *depthMap1Drawable;
-  GDrawable           *depthMap2Drawable;
+  GimpDrawable           *resultDrawable;
+  GimpDrawable           *source1Drawable;
+  GimpDrawable           *source2Drawable;
+  GimpDrawable           *depthMap1Drawable;
+  GimpDrawable           *depthMap2Drawable;
   gint                 selectionX0;
   gint                 selectionY0;
   gint                 selectionX1;
@@ -137,7 +137,7 @@ void dialogValueEntryUpdateCallback (GtkWidget *widget, gpointer data);
 
 void util_fillReducedBuffer (guchar *dest, gint destWidth, gint destHeight,
 			     gint destBPP, gint destHasAlpha,
-			     GDrawable *sourceDrawable,
+			     GimpDrawable *sourceDrawable,
 			     gint x0, gint y0,
 			     gint sourceWidth, gint sourceHeight);
 void util_convertColorspace (guchar *dest,
@@ -151,11 +151,11 @@ void util_convertColorspace (guchar *dest,
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -168,21 +168,21 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",     "Input image (unused)" },
-    { PARAM_DRAWABLE, "result",    "Result" },
-    { PARAM_DRAWABLE, "source1",   "Source 1" },
-    { PARAM_DRAWABLE, "source2",   "Source 2" },
-    { PARAM_DRAWABLE, "depthMap1", "Depth map 1" },
-    { PARAM_DRAWABLE, "depthMap2", "Depth map 2" },
-    { PARAM_FLOAT,    "overlap",   "Overlap" },
-    { PARAM_FLOAT,    "offset",    "Depth relative offset" },
-    { PARAM_FLOAT,    "scale1",    "Depth relative scale 1" },
-    { PARAM_FLOAT,    "scale2",    "Depth relative scale 2" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "result",    "Result" },
+    { GIMP_PDB_DRAWABLE, "source1",   "Source 1" },
+    { GIMP_PDB_DRAWABLE, "source2",   "Source 2" },
+    { GIMP_PDB_DRAWABLE, "depthMap1", "Depth map 1" },
+    { GIMP_PDB_DRAWABLE, "depthMap2", "Depth map 2" },
+    { GIMP_PDB_FLOAT,    "overlap",   "Overlap" },
+    { GIMP_PDB_FLOAT,    "offset",    "Depth relative offset" },
+    { GIMP_PDB_FLOAT,    "scale1",    "Depth relative scale 1" },
+    { GIMP_PDB_FLOAT,    "scale2",    "Depth relative scale 2" }
   };
-  static gint numArgs = sizeof (args) / sizeof (GParamDef);
+  static gint numArgs = sizeof (args) / sizeof (GimpParamDef);
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Combine two images using corresponding "
@@ -197,7 +197,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Combine/Depth Merge..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  numArgs, 0,
 			  args, NULL);
 }
@@ -205,41 +205,41 @@ query (void)
 static void
 run (gchar   *name,
      gint     numParams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *numReturnVals,
-     GParam **returnVals)
+     GimpParam **returnVals)
 {
-  static GParam    values[1];
-  GRunModeType     runMode;
-  GStatusType      status;
+  static GimpParam    values[1];
+  GimpRunModeType     runMode;
+  GimpPDBStatusType      status;
   DepthMerge       dm;
 
   INIT_I18N_UI();
 
-  runMode = (GRunModeType) param[0].data.d_int32;
-  status = STATUS_SUCCESS;
+  runMode = (GimpRunModeType) param[0].data.d_int32;
+  status = GIMP_PDB_SUCCESS;
   *numReturnVals = 1;
   *returnVals    = values;
 
   switch (runMode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       DepthMerge_initParams (&dm);
       gimp_get_data (PLUG_IN_NAME, &(dm.params));
       dm.params.result = param[2].data.d_drawable;
       DepthMerge_construct (&dm);
       if (!DepthMerge_dialog (&dm))
 	{
-	  values[0].type = PARAM_STATUS;
-	  values[0].data.d_status = STATUS_SUCCESS;
+	  values[0].type = GIMP_PDB_STATUS;
+	  values[0].data.d_status = GIMP_PDB_SUCCESS;
 	  return;
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       DepthMerge_initParams (&dm);
       if (numParams != 11)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       else
 	{
 	  dm.params.result    = param[ 2].data.d_drawable;
@@ -255,28 +255,28 @@ run (gchar   *name,
       DepthMerge_construct (&dm);
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       DepthMerge_initParams (&dm);
       gimp_get_data (PLUG_IN_NAME, &(dm.params));
       DepthMerge_construct (&dm);
       break;
 
     default:
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_tile_cache_ntiles ((dm.resultDrawable->width + gimp_tile_width() - 1) /
 			      gimp_tile_width());
 
       if (!DepthMerge_execute (&dm))
-	status = STATUS_EXECUTION_ERROR;
+	status = GIMP_PDB_EXECUTION_ERROR;
       else
 	{
-	  if (runMode != RUN_NONINTERACTIVE)
+	  if (runMode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
-	  if (runMode == RUN_INTERACTIVE)
+	  if (runMode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data (PLUG_IN_NAME,
 			   &(dm.params), sizeof (DepthMergeParams));
 	}
@@ -369,7 +369,7 @@ gint32
 DepthMerge_execute (DepthMerge *dm)
 {
   int       x, y;
-  GPixelRgn source1Rgn, source2Rgn, depthMap1Rgn, depthMap2Rgn,
+  GimpPixelRgn source1Rgn, source2Rgn, depthMap1Rgn, depthMap2Rgn,
             resultRgn;
   guchar    *source1Row, *source2Row, *depthMap1Row, *depthMap2Row,
             *resultRow,
@@ -1096,13 +1096,13 @@ util_fillReducedBuffer (guchar    *dest,
 			gint       destHeight,
 			gint       destBPP,
 			gint       destHasAlpha,
-			GDrawable *sourceDrawable,
+			GimpDrawable *sourceDrawable,
 			gint       x0,
 			gint       y0,
 			gint       sourceWidth,
 			gint       sourceHeight)
 {
-  GPixelRgn rgn;
+  GimpPixelRgn rgn;
   guchar    *sourceBuffer, *reducedRowBuffer,
             *sourceBufferRow, *sourceBufferPos, *reducedRowBufferPos;
   int       x, y, i, yPrime, sourceHasAlpha, sourceBpp;

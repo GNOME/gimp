@@ -64,9 +64,9 @@
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 
 /* Plugin function prototypes
  */
@@ -79,7 +79,7 @@ static int CB_PasteImage (gboolean   interactive,
 						  gint32  drawable_ID);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -93,11 +93,11 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef copy_args[] =
+  static GimpParamDef copy_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" }
   };
   static gint ncopy_args = sizeof (copy_args) / sizeof (copy_args[0]);
 
@@ -109,7 +109,7 @@ query ()
                           "1999",
                           N_("<Image>/Edit/Copy to Clipboard"),
                           "INDEXED*, RGB*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           ncopy_args, 0,
                           copy_args, NULL);
 
@@ -121,7 +121,7 @@ query ()
                           "1999",
                           N_("<Image>/Edit/Paste from Clipboard"),
                           "INDEXED*, RGB*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           ncopy_args, 0,
                           copy_args, NULL);
 
@@ -133,7 +133,7 @@ query ()
                           "1999",
                           N_("<Toolbox>/File/Acquire/From Clipboard"),
                           "",
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
                           ncopy_args, 0,
                           copy_args, NULL);
 
@@ -142,51 +142,51 @@ query ()
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   INIT_I18N();
 
   if (strcmp (name, "plug_in_clipboard_copy") == 0)
   {
 	  *nreturn_vals = 1;
-      if (CB_CopyImage (RUN_INTERACTIVE==run_mode,
+      if (CB_CopyImage (GIMP_RUN_INTERACTIVE==run_mode,
 					    param[1].data.d_int32, 
 						param[2].data.d_int32))
-		values[0].data.d_status = STATUS_SUCCESS;
+		values[0].data.d_status = GIMP_PDB_SUCCESS;
       else
-		values[0].data.d_status = STATUS_EXECUTION_ERROR;
+		values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (strcmp (name, "plug_in_clipboard_paste") == 0)
 	{
 	  *nreturn_vals = 1;
-      if (CB_PasteImage (RUN_INTERACTIVE==run_mode,
+      if (CB_PasteImage (GIMP_RUN_INTERACTIVE==run_mode,
 		                 param[1].data.d_int32, 
 						 param[2].data.d_int32))
-		values[0].data.d_status = STATUS_SUCCESS;
+		values[0].data.d_status = GIMP_PDB_SUCCESS;
       else
-		values[0].data.d_status = STATUS_EXECUTION_ERROR;
+		values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
   else if (strcmp (name, "extension_clipboard_paste") == 0)
 	{
 	  *nreturn_vals = 1;
-      if (CB_PasteImage (RUN_INTERACTIVE==run_mode,
+      if (CB_PasteImage (GIMP_RUN_INTERACTIVE==run_mode,
 		                 IMAGE_NONE,
 						 IMAGE_NONE))
-		values[0].data.d_status = STATUS_SUCCESS;
+		values[0].data.d_status = GIMP_PDB_SUCCESS;
       else
-		values[0].data.d_status = STATUS_EXECUTION_ERROR;
+		values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
 }
 
@@ -197,9 +197,9 @@ CB_CopyImage (gboolean interactive,
 			  gint32   image_ID,
 			  gint32   drawable_ID)
 {
-	GDrawable *drawable;
-	GDrawableType drawable_type;
-	GPixelRgn pixel_rgn;
+	GimpDrawable *drawable;
+	GimpImageType drawable_type;
+	GimpPixelRgn pixel_rgn;
 	gchar* sStatus = NULL;
 
 	int nSizeDIB=0;
@@ -214,7 +214,7 @@ CB_CopyImage (gboolean interactive,
 	gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, FALSE, FALSE);
 
 	/* allocate room for DIB */
-	if (INDEXED_IMAGE == drawable_type)
+	if (GIMP_INDEXED_IMAGE == drawable_type)
 	{
 	  nSizeLine = ((drawable->width-1)/4+1)*4;
 	  nSizeDIB = sizeof(RGBQUAD) * 256 /* always full color map size */
@@ -248,13 +248,13 @@ CB_CopyImage (gboolean interactive,
 		  pInfo->biWidth  = drawable->width;
 		  pInfo->biHeight = drawable->height;
 		  pInfo->biPlanes = 1;
-		  pInfo->biBitCount = (INDEXED_IMAGE == drawable_type ? 8 : 24);
+		  pInfo->biBitCount = (GIMP_INDEXED_IMAGE == drawable_type ? 8 : 24);
 		  pInfo->biCompression = BI_RGB; /* none */
 		  pInfo->biSizeImage = 0; /* not calculated/needed */
 		  pInfo->biXPelsPerMeter =
 		  pInfo->biYPelsPerMeter = 0;
 		  /* color map size */
-		  pInfo->biClrUsed = (INDEXED_IMAGE == drawable_type ? 256 : 0);
+		  pInfo->biClrUsed = (GIMP_INDEXED_IMAGE == drawable_type ? 256 : 0);
 		  pInfo->biClrImportant = 0; /* all */
 
 		  GlobalUnlock(hDIB);
@@ -265,7 +265,7 @@ CB_CopyImage (gboolean interactive,
 	}
 
 	/* fill color map */
-	if (bRet && (INDEXED_IMAGE == drawable_type))
+	if (bRet && (GIMP_INDEXED_IMAGE == drawable_type))
 	{
 	  char*    pBmp;
 
@@ -331,7 +331,7 @@ CB_CopyImage (gboolean interactive,
 
 		  if (pLine)
 		  {
-			  if (INDEXED_IMAGE == drawable_type)
+			  if (GIMP_INDEXED_IMAGE == drawable_type)
 			  {
 				  int x, y;
 				  for (y = 0; y < drawable->height; y++)
@@ -490,10 +490,10 @@ CB_PasteImage (gboolean interactive,
 
 	if ((0 != nWidth) && (0 != nHeight))
 	{
-		GDrawable* drawable;
-		GPixelRgn pixel_rgn;
+		GimpDrawable* drawable;
+		GimpPixelRgn pixel_rgn;
 		char* pData;
-		GParam *params;
+		GimpParam *params;
 		gint retval;
 		gboolean bIsNewImage = TRUE;
 		gint oldBPP=0;
@@ -513,16 +513,16 @@ CB_PasteImage (gboolean interactive,
 			image_ID = gimp_image_new (nWidth, nHeight, nBitsPS <= 8 ? INDEXED : RGB);
 			gimp_image_undo_disable(image_ID);
 			drawable_ID = gimp_layer_new (image_ID, _("Background"), nWidth, nHeight, 
-										  nBitsPS <= 8 ? INDEXED_IMAGE : RGB_IMAGE, 
-										  100, NORMAL_MODE);
+										  nBitsPS <= 8 ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE, 
+										  100, GIMP_NORMAL_MODE);
 		}
 		else
 		{
 			/* ??? gimp_convert_rgb(image_ID);
 			 */
 			drawable_ID = gimp_layer_new (image_ID, _("Pasted"), nWidth, nHeight, 
-										  nBitsPS <= 8 ? INDEXED_IMAGE : RGB_IMAGE, 
-								          100, NORMAL_MODE);
+										  nBitsPS <= 8 ? GIMP_INDEXED_IMAGE : GIMP_RGB_IMAGE, 
+								          100, GIMP_NORMAL_MODE);
 			bIsNewImage = FALSE;
 		}
 		

@@ -40,14 +40,14 @@
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 static void      guillotine (gint32 image_ID);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -61,11 +61,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -77,7 +77,7 @@ query (void)
 			  "1998",
 			  N_("<Image>/Image/Transforms/Guillotine"),
 			  "RGB*, INDEXED*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -85,18 +85,18 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   gint32 image_ID;
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   INIT_I18N();
@@ -104,7 +104,7 @@ run (gchar   *name,
   /*  Get the specified drawable  */
   image_ID = param[1].data.d_image;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Guillotine..."));
       guillotine (image_ID);
@@ -148,9 +148,9 @@ guillotine (gint32 image_ID)
 	{
 	  switch (gimp_image_get_guide_orientation(image_ID, guide_num))
 	    {
-	    case ORIENTATION_VERTICAL:
+	    case GIMP_VERTICAL:
 	      num_vguides++; break;
-	    case ORIENTATION_HORIZONTAL:
+	    case GIMP_HORIZONTAL:
 	      num_hguides++; break;
 	    default:
 	      g_print ("Aie!  Aie!  Aie!\n");
@@ -187,10 +187,10 @@ guillotine (gint32 image_ID)
 	{
 	  switch (gimp_image_get_guide_orientation(image_ID, guide_num))
 	    {
-	    case ORIENTATION_VERTICAL:
+	    case GIMP_VERTICAL:
 	      vguides[num_vguides++] =
 		gimp_image_get_guide_position(image_ID, guide_num); break;
-	    case ORIENTATION_HORIZONTAL:
+	    case GIMP_HORIZONTAL:
 	      hguides[num_hguides++] =
 		gimp_image_get_guide_position(image_ID, guide_num); break;
 	    default:

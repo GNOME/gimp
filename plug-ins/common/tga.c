@@ -170,9 +170,9 @@ static struct
 static void   query               (void);
 static void   run                 (gchar   *name,
 				   gint     nparams,
-				   GParam  *param,
+				   GimpParam  *param,
 				   gint    *nreturn_vals,
-				   GParam **return_vals);
+				   GimpParam **return_vals);
 
 static gint32 load_image           (gchar  *filename);
 static gint   save_image           (gchar  *filename,
@@ -183,7 +183,7 @@ static gint   save_dialog          (void);
 static void   save_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -201,29 +201,29 @@ static int verbose = VERBOSE;
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "rle", "Enable RLE compression" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32, "rle", "Enable RLE compression" }
   } ;
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -235,7 +235,7 @@ query (void)
                           "1997",
                           "<Load>/TGA",
                           NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -247,7 +247,7 @@ query (void)
                           "1997",
                           "<Save>/TGA",
 			  "RGB*, GRAY*, INDEXED*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -263,13 +263,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
@@ -282,8 +282,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
 #ifdef VERBOSE
   if (verbose)
@@ -303,12 +303,12 @@ run (gchar   *name,
       if (image_ID != -1)
         {
           *nreturn_vals = 2;
-          values[1].type         = PARAM_IMAGE;
+          values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
         {
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else if (strcmp (name, "file_tga_save") == 0)
@@ -322,8 +322,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA", 
 				      (CAN_HANDLE_RGB |
 				       CAN_HANDLE_GRAY |
@@ -331,7 +331,7 @@ run (gchar   *name,
 				       CAN_HANDLE_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -341,20 +341,20 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tga_save", &tsvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -362,7 +362,7 @@ run (gchar   *name,
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tga_save", &tsvals);
 	  break;
@@ -375,7 +375,7 @@ run (gchar   *name,
       times (&tbuf1);
 #endif
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
@@ -384,7 +384,7 @@ run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
 
@@ -393,7 +393,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -783,11 +783,11 @@ ReadImage (FILE              *fp,
   static gint32 image_ID;
   gint32 layer_ID;
 
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   guchar *data, *buffer;
-  GDrawableType dtype;
-  GImageType itype;
+  GimpImageType dtype;
+  GimpImageBaseType itype;
   guchar *alphas;
 
   int width, height, bpp, abpp, pbpp, nalphas;
@@ -843,7 +843,7 @@ ReadImage (FILE              *fp,
     case TGA_TYPE_MAPPED_RLE:
       rle = 1;
     case TGA_TYPE_MAPPED:
-      itype = INDEXED;
+      itype = GIMP_INDEXED;
 
       /* Find the size of palette elements. */
       pbpp = MIN (hdr->colorMapSize / 3, 8) * 3;
@@ -866,15 +866,15 @@ ReadImage (FILE              *fp,
 	}
 
       if (abpp)
-	dtype = INDEXEDA_IMAGE;
+	dtype = GIMP_INDEXEDA_IMAGE;
       else
-	dtype = INDEXED_IMAGE;
+	dtype = GIMP_INDEXED_IMAGE;
       break;
 
     case TGA_TYPE_GRAY_RLE:
       rle = 1;
     case TGA_TYPE_GRAY:
-      itype = GRAY;
+      itype = GIMP_GRAY;
 #ifdef VERBOSE
       if (verbose)
 	printf ("TGA: %d bit grayscale image, %d bit alpha\n",
@@ -882,24 +882,24 @@ ReadImage (FILE              *fp,
 #endif
 
       if (abpp)
-	dtype = GRAYA_IMAGE;
+	dtype = GIMP_GRAYA_IMAGE;
       else
-	dtype = GRAY_IMAGE;
+	dtype = GIMP_GRAY_IMAGE;
       break;
 
     case TGA_TYPE_COLOR_RLE:
       rle = 1;
     case TGA_TYPE_COLOR:
-      itype = RGB;
+      itype = GIMP_RGB;
 #ifdef VERBOSE
       if (verbose)
 	printf ("TGA: %d bit color image, %d bit alpha\n", pbpp, abpp);
 #endif
 
       if (abpp)
-	dtype = RGBA_IMAGE;
+	dtype = GIMP_RGBA_IMAGE;
       else
-	dtype = RGB_IMAGE;
+	dtype = GIMP_RGB_IMAGE;
       break;
 
     default:
@@ -908,8 +908,8 @@ ReadImage (FILE              *fp,
     }
 
   if ((abpp && abpp != 8) ||
-      ((itype == RGB || itype == INDEXED) && pbpp != 24) ||
-      (itype == GRAY && pbpp != 8))
+      ((itype == GIMP_RGB || itype == GIMP_INDEXED) && pbpp != 24) ||
+      (itype == GIMP_GRAY && pbpp != 8))
     {
       /* FIXME: We haven't implemented bit-packed fields yet. */
       printf ("TGA: channel sizes other than 8 bits are unimplemented\n");
@@ -917,7 +917,7 @@ ReadImage (FILE              *fp,
     }
 
   /* Check that we have a color map only when we need it. */
-  if (itype == INDEXED)
+  if (itype == GIMP_INDEXED)
     {
       if (hdr->colorMapType != 1)
 	{
@@ -1015,7 +1015,7 @@ ReadImage (FILE              *fp,
 			     width, height,
 			     dtype,
 			     100,
-			     NORMAL_MODE);
+			     GIMP_NORMAL_MODE);
 
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
@@ -1173,9 +1173,9 @@ save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType dtype;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType dtype;
   int width, height;
   FILE *fp;
   guchar *name_buf;
@@ -1204,24 +1204,24 @@ save_image (gchar  *filename,
   /* Choose the imageType based on our drawable and compression option. */
   switch (dtype)
     {
-    case INDEXEDA_IMAGE:
-    case INDEXED_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       hdr.bpp = 8;
       hdr.imageType = TGA_TYPE_MAPPED;
       break;
 
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       hdr.bpp = 8;
       hdr.descriptor |= 8;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       hdr.bpp += 8;
       hdr.imageType = TGA_TYPE_GRAY;
       break;
 
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       hdr.bpp = 8;
       hdr.descriptor |= 8;
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       hdr.bpp += 24;
       hdr.imageType = TGA_TYPE_COLOR;
       break;
@@ -1274,7 +1274,7 @@ save_image (gchar  *filename,
       /* If we already have more than 256 colors, then ignore the
 	 alpha channel.  Otherwise, create an entry for any completely
 	 transparent pixels. */
-      if (dtype == INDEXEDA_IMAGE && colors < 256)
+      if (dtype == GIMP_INDEXEDA_IMAGE && colors < 256)
 	{
 	  transparent = colors;
 	  hdr.colorMapSize = 32;
@@ -1394,7 +1394,7 @@ save_image (gchar  *filename,
 	      /* If this is an indexed image, and data[j] (alpha
 		 channel) is zero, then we should write our transparent
 		 pixel's index. */
-	      if (dtype == INDEXEDA_IMAGE && transparent && data[j] == 0)
+	      if (dtype == GIMP_INDEXEDA_IMAGE && transparent && data[j] == 0)
 		data[k - 1] = transparent;
 
 	      /* Increment J to the next pixel. */

@@ -497,22 +497,22 @@ static const gint cspace_nchans[] =
 static void	query	(void);
 static void	run	(gchar	 *name,
 			 gint	 nparams,
-			 GParam	 *param,
+			 GimpParam	 *param,
 			 gint	 *nreturn_vals,
-			 GParam	 **return_vals);
+			 GimpParam	 **return_vals);
 
-static gint	newsprint_dialog        (GDrawable *drawable);
+static gint	newsprint_dialog        (GimpDrawable *drawable);
 static void	newsprint_ok_callback   (GtkWidget *widget,
 					 gpointer   data);
 static void	newsprint_cspace_update (GtkWidget *widget,
 					 gpointer   data);
 
-static void	newsprint	(GDrawable *drawable);
+static void	newsprint	(GimpDrawable *drawable);
 static guchar *	spot2thresh	(gint       type,
 				 gint       width);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -528,27 +528,27 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
 
-    { PARAM_INT32, "cell_width", "screen cell width, in pixels" },
+    { GIMP_PDB_INT32, "cell_width", "screen cell width, in pixels" },
 
-    { PARAM_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
-    { PARAM_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
+    { GIMP_PDB_INT32, "colorspace", "separate to 0:RGB, 1:CMYK, 2:Intensity" },
+    { GIMP_PDB_INT32, "k_pullout", "Percentage of black to pullout (CMYK only)" },
 
-    { PARAM_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
-    { PARAM_INT32, "gry_spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
-    { PARAM_FLOAT, "red_ang", "Red/cyan screen angle (degrees)" },
-    { PARAM_INT32, "red_spotfn", "Red/cyan spot function (values as gry_spotfn)" },
-    { PARAM_FLOAT, "grn_ang", "Green/magenta screen angle (degrees)" },
-    { PARAM_INT32, "grn_spotfn", "Green/magenta spot function (values as gry_spotfn)" },
-    { PARAM_FLOAT, "blu_ang", "Blue/yellow screen angle (degrees)" },
-    { PARAM_INT32, "blu_spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT, "gry_ang", "Grey/black screen angle (degrees)" },
+    { GIMP_PDB_INT32, "gry_spotfn", "Grey/black spot function (0=dots, 1=lines, 2=diamonds, 3=euclidean dot, 4=PS diamond)" },
+    { GIMP_PDB_FLOAT, "red_ang", "Red/cyan screen angle (degrees)" },
+    { GIMP_PDB_INT32, "red_spotfn", "Red/cyan spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT, "grn_ang", "Green/magenta screen angle (degrees)" },
+    { GIMP_PDB_INT32, "grn_spotfn", "Green/magenta spot function (values as gry_spotfn)" },
+    { GIMP_PDB_FLOAT, "blu_ang", "Blue/yellow screen angle (degrees)" },
+    { GIMP_PDB_INT32, "blu_spotfn", "Blue/yellow spot function (values as gry_spotfn)" },
 
-    { PARAM_INT32, "oversample", "how many times to oversample spot fn" }
+    { GIMP_PDB_INT32, "oversample", "how many times to oversample spot fn" }
     /* 15 args */
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
@@ -565,7 +565,7 @@ query (void)
 			  "1998 (" VERSION ")",
 			  N_("<Image>/Filters/Distorts/Newsprint..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -573,21 +573,21 @@ query (void)
 static void
 run (gchar   *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* basic defaults */
@@ -599,7 +599,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
@@ -613,12 +613,12 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 15)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
 
@@ -643,11 +643,11 @@ run (gchar   *name,
 	  !VALID_CS (pvals.colourspace) ||
 	  pvals.k_pullout < 0 || pvals.k_pullout > 100)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_newsprint", &pvals);
@@ -657,7 +657,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -671,11 +671,11 @@ run (gchar   *name,
 	  /*  run the newsprint effect  */
 	  newsprint (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
 	      gimp_set_data ("plug_in_newsprint",
 			     &pvals, sizeof (NewsprintValues));
@@ -686,7 +686,7 @@ run (gchar   *name,
       else
 	{
 	  /*gimp_message ("newsprint: cannot operate on indexed images");*/
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -1167,7 +1167,7 @@ gen_channels (NewsprintDialog_st *st,
 
 
 static gint
-newsprint_dialog (GDrawable *drawable)
+newsprint_dialog (GimpDrawable *drawable)
 {
   /* widgets we need from callbacks stored here */
   NewsprintDialog_st st;
@@ -1737,9 +1737,9 @@ spot2thresh (gint type,
 
 /* This function operates on the image, striding across it in tiles. */
 static void
-newsprint (GDrawable *drawable)
+newsprint (GimpDrawable *drawable)
 {
-  GPixelRgn  src_rgn, dest_rgn;
+  GimpPixelRgn  src_rgn, dest_rgn;
   guchar    *src_row, *dest_row;
   guchar    *src, *dest;
   guchar    *thresh[4];

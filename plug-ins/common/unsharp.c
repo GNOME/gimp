@@ -74,9 +74,9 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static inline void blur_line     (gdouble    *ctable,
 				  gdouble    *cmatrix,
@@ -89,8 +89,8 @@ static int gen_convolve_matrix   (gdouble     std_dev,
 				  gdouble   **cmatrix);
 static gdouble* gen_lookup_table (gdouble*    cmatrix,
 				  gint        cmatrix_length);
-static void unsharp_region       (GPixelRgn   srcPTR,
-				  GPixelRgn   dstPTR,
+static void unsharp_region       (GimpPixelRgn   srcPTR,
+				  GimpPixelRgn   dstPTR,
 				  gint        width,
 				  gint        height,
 				  gint        bytes,
@@ -101,7 +101,7 @@ static void unsharp_region       (GPixelRgn   srcPTR,
 				  gint        y1,
 				  gint        y2);
 
-static void unsharp_mask         (GDrawable *drawable,
+static void unsharp_mask         (GimpDrawable *drawable,
 				  gint       radius,
 				  gdouble    amount);
 
@@ -146,7 +146,7 @@ static UnsharpMaskParams unsharp_params =
 /* static UnsharpMaskInterface umint = { FALSE }; */
 
 /* Setting PLUG_IN_INFO */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -159,14 +159,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "(unused)" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to draw on" },
-    { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-    { PARAM_FLOAT, "amount", "Strength of effect" },
-    { PARAM_FLOAT, "threshold", "Threshold" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "(unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to draw on" },
+    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
+    { GIMP_PDB_FLOAT, "amount", "Strength of effect" },
+    { GIMP_PDB_FLOAT, "threshold", "Threshold" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 	
@@ -184,7 +184,7 @@ query (void)
 			  "1999",
 			  N_("<Image>/Filters/Enhance/Unsharp Mask..."),
 			  "GRAY*, RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -193,14 +193,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
 #ifdef TIMER
   timerstart();
@@ -208,7 +208,7 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   *return_vals = values;
   *nreturn_vals = 1;
@@ -217,15 +217,15 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
       if (! unsharp_mask_dialog ()) return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 6)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -236,11 +236,11 @@ run (gchar   *name,
 	  /* make sure there are legal values */
 	  if ((unsharp_params.radius < 0.0) ||
 	      (unsharp_params.amount<0.0))
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_unsharp_mask", &unsharp_params);
       break;
 
@@ -248,7 +248,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
@@ -275,11 +275,11 @@ run (gchar   *name,
 
 /* -------------------------- Unsharp Mask ------------------------- */
 static void
-unsharp_mask (GDrawable *drawable,
+unsharp_mask (GimpDrawable *drawable,
 	      gint       radius,
 	      gdouble    amount)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   glong width, height;
   glong bytes;
   gint  x1, y1, x2, y2;
@@ -309,8 +309,8 @@ unsharp_mask (GDrawable *drawable,
    a subregion to act upon.  Everything outside the subregion is unaffected.
   */
 static void
-unsharp_region (GPixelRgn srcPR,
-		GPixelRgn destPR,
+unsharp_region (GimpPixelRgn srcPR,
+		GimpPixelRgn destPR,
 		gint      width,
 		gint      height,
 		gint      bytes,

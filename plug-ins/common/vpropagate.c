@@ -57,14 +57,14 @@ typedef guchar CH;
 static void	    query	               (void);
 static void	    run                        (gchar         *name,
 					        gint           nparams,
-					        GParam        *param,   
+					        GimpParam        *param,   
                                                 gint          *nreturn_vals,
-					        GParam      **return_vals);
+					        GimpParam      **return_vals);
 
-static GStatusType  value_propagate            (gint           drawable_id);
+static GimpPDBStatusType  value_propagate            (gint           drawable_id);
 static void         value_propagate_body       (gint           drawable_id);
-static int	    vpropagate_dialog          (GImageType     image_type);
-static void	    prepare_row                (GPixelRgn     *pixel_rgn,
+static int	    vpropagate_dialog          (GimpImageBaseType     image_type);
+static void	    prepare_row                (GimpPixelRgn     *pixel_rgn,
 						guchar        *data,
 						int            x,
 						int            y,
@@ -81,22 +81,22 @@ static GtkWidget *  gtk_table_add_toggle       (GtkWidget     *table,
 						gint	      *value);
 
 static int	    value_difference_check  (CH *, CH *, int);
-static void         set_value               (GImageType, int, CH *, CH *, CH *, void *);
-static void	    initialize_white        (GImageType, int, CH *, CH *, void **);
-static void	    propagate_white         (GImageType, int, CH *, CH *, CH *, void *);
-static void	    initialize_black        (GImageType, int, CH *, CH *, void **);
-static void         propagate_black         (GImageType, int, CH *, CH *, CH *, void *);
-static void	    initialize_middle       (GImageType, int, CH *, CH *, void **);
-static void	    propagate_middle        (GImageType, int, CH *, CH *, CH *, void *);
-static void	    set_middle_to_peak      (GImageType, int, CH *, CH *, CH *, void *);
-static void	    set_foreground_to_peak  (GImageType, int, CH *, CH *, CH *, void *);
-static void	    initialize_foreground   (GImageType, int, CH *, CH *, void **);
-static void	    initialize_background   (GImageType, int, CH *, CH *, void **);
-static void	    propagate_a_color       (GImageType, int, CH *, CH *, CH *, void *);
-static void	    propagate_opaque        (GImageType, int, CH *, CH *, CH *, void *);
-static void	    propagate_transparent   (GImageType, int, CH *, CH *, CH *, void *);
+static void         set_value               (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    initialize_white        (GimpImageBaseType, int, CH *, CH *, void **);
+static void	    propagate_white         (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    initialize_black        (GimpImageBaseType, int, CH *, CH *, void **);
+static void         propagate_black         (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    initialize_middle       (GimpImageBaseType, int, CH *, CH *, void **);
+static void	    propagate_middle        (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    set_middle_to_peak      (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    set_foreground_to_peak  (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    initialize_foreground   (GimpImageBaseType, int, CH *, CH *, void **);
+static void	    initialize_background   (GimpImageBaseType, int, CH *, CH *, void **);
+static void	    propagate_a_color       (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    propagate_opaque        (GimpImageBaseType, int, CH *, CH *, CH *, void *);
+static void	    propagate_transparent   (GimpImageBaseType, int, CH *, CH *, CH *, void *);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -194,17 +194,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (not used)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "propagate-mode", "propagate 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent" },
-    { PARAM_INT32, "propagating-channel", "channels which values are propagated" },
-    { PARAM_FLOAT, "propagating-rate", "0.0 <= propagatating_rate <= 1.0" },
-    { PARAM_INT32, "direction-mask", "0 <= direction-mask <= 15" },
-    { PARAM_INT32, "lower-limit", "0 <= lower-limit <= 255" },
-    { PARAM_INT32, "upper-limit", "0 <= upper-limit <= 255" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "propagate-mode", "propagate 0:white, 1:black, 2:middle value 3:foreground to peak, 4:foreground, 5:background, 6:opaque, 7:transparent" },
+    { GIMP_PDB_INT32, "propagating-channel", "channels which values are propagated" },
+    { GIMP_PDB_FLOAT, "propagating-rate", "0.0 <= propagatating_rate <= 1.0" },
+    { GIMP_PDB_INT32, "direction-mask", "0 <= direction-mask <= 15" },
+    { GIMP_PDB_INT32, "lower-limit", "0 <= lower-limit <= 255" },
+    { GIMP_PDB_INT32, "upper-limit", "0 <= upper-limit <= 255" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -216,7 +216,7 @@ query (void)
 			  "1996-1997",
 			  N_("<Image>/Filters/Distorts/Value Propagate..."),
 			  "RGB*,GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -224,13 +224,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	 values[1];
-  GStatusType	status = STATUS_SUCCESS;
-  GRunModeType	run_mode;
+  static GimpParam	 values[1];
+  GimpPDBStatusType	status = GIMP_PDB_SUCCESS;
+  GimpRunModeType	run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
@@ -238,12 +238,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &vpvals);
       /* building the values of dialog variables from vpvals. */
@@ -260,7 +260,7 @@ run (gchar   *name,
       if (! vpropagate_dialog (gimp_drawable_type(drawable_id)))
 	return;
       break;
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       vpvals.propagate_mode = param[3].data.d_int32;
       vpvals.propagating_channel = param[4].data.d_int32;
@@ -269,7 +269,7 @@ run (gchar   *name,
       vpvals.lower_limit = param[7].data.d_int32;
       vpvals.upper_limit = param[8].data.d_int32;
       break;
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &vpvals);
       break;
@@ -277,48 +277,48 @@ run (gchar   *name,
   
   status = value_propagate (drawable_id);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &vpvals, sizeof (VPValueType));
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 /* registered function entry */
-static GStatusType
+static GimpPDBStatusType
 value_propagate (gint drawable_id)
 {
   /* check the validness of parameters */
   if (!(vpvals.propagating_channel & (PROPAGATING_VALUE | PROPAGATING_ALPHA)))
     {
       /* gimp_message ("No channel selected."); */
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   if (vpvals.direction_mask == 0)
     {
       /* gimp_message ("No direction selected."); */
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   if ((vpvals.lower_limit < 0) || (255 < vpvals.lower_limit) ||
        (vpvals.upper_limit < 0) || (255 < vpvals.lower_limit) ||
        (vpvals.upper_limit < vpvals.lower_limit))
     {
       /* gimp_message ("Limit values are not valid."); */
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   value_propagate_body (drawable_id);
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 static void
 value_propagate_body (gint drawable_id)
 {
-  GDrawable  *drawable;
-  GImageType  dtype;
+  GimpDrawable  *drawable;
+  GimpImageBaseType  dtype;
   ModeParam   operation;
-  GPixelRgn   srcRgn, destRgn;
+  GimpPixelRgn   srcRgn, destRgn;
   guchar     *here, *best, *dest;
   guchar     *dest_row, *prev_row, *cur_row, *next_row, *pr, *cr, *nr, *swap;
   gint        width, height, bytes, index;
@@ -410,7 +410,7 @@ value_propagate_body (gint drawable_id)
 }
 
 static void
-prepare_row (GPixelRgn *pixel_rgn,
+prepare_row (GimpPixelRgn *pixel_rgn,
 	     guchar    *data,
 	     gint       x,
 	     gint       y,
@@ -434,7 +434,7 @@ prepare_row (GPixelRgn *pixel_rgn,
 }
 
 static void
-set_value (GImageType  dtype, 
+set_value (GimpImageBaseType  dtype, 
 	   gint        bytes, 
 	   guchar     *best, 
 	   guchar     *here, 
@@ -447,17 +447,17 @@ set_value (GImageType  dtype,
 
   switch (dtype)
     {
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       value_chs = 3;
       break;
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       value_chs = 3;
       alpha = 3;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       value_chs = 1;
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       value_chs = 1;
       alpha = 1;
       break;
@@ -502,7 +502,7 @@ value_difference_check (CH  *pos1,
 
 /* mothods for each mode */
 static void
-initialize_white (GImageType   dtype, 
+initialize_white (GimpImageBaseType   dtype, 
 		  gint         bytes, 
 		  CH          *best, 
 		  CH          *here, 
@@ -516,7 +516,7 @@ initialize_white (GImageType   dtype,
 }
 
 static void
-propagate_white (GImageType  dtype, 
+propagate_white (GimpImageBaseType  dtype, 
 		 gint        bytes, 
 		 CH         *orig, 
 		 CH         *here, 
@@ -527,8 +527,8 @@ propagate_white (GImageType  dtype,
 
   switch (dtype)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       v_here = sqrt (channel_mask[0] * here[0] * here[0] 
 		     + channel_mask[1] * here[1] * here[1] 
 		     + channel_mask[2] * here[2] * here[2]);
@@ -538,8 +538,8 @@ propagate_white (GImageType  dtype,
 	  memcpy(best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       if (*best < *here && value_difference_check(orig, here, 1))
 	*best = *here;
       break;
@@ -549,7 +549,7 @@ propagate_white (GImageType  dtype,
 }
 
 static void
-initialize_black (GImageType   dtype, 
+initialize_black (GimpImageBaseType   dtype, 
 		  gint         channels, 
 		  CH          *best, 
 		  CH          *here, 
@@ -563,7 +563,7 @@ initialize_black (GImageType   dtype,
 }
 
 static void
-propagate_black (GImageType  image_type, 
+propagate_black (GimpImageBaseType  image_type, 
 		 gint        channels, 
 		 CH         *orig, 
 		 CH         *here, 
@@ -574,8 +574,8 @@ propagate_black (GImageType  image_type,
 
   switch (image_type)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       v_here = sqrt (channel_mask[0] * here[0] * here[0] 
 		     + channel_mask[1] * here[1] * here[1] 
 		     + channel_mask[2] * here[2] * here[2]);
@@ -585,8 +585,8 @@ propagate_black (GImageType  image_type,
 	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       if (*here < *best && value_difference_check(orig, here, 1))
 	*best = *here;
       break;
@@ -607,7 +607,7 @@ typedef struct
 } MiddlePacket;
 
 static void
-initialize_middle (GImageType   image_type, 
+initialize_middle (GimpImageBaseType   image_type, 
 		   gint         channels, 
 		   CH          *best, 
 		   CH          *here, 
@@ -623,14 +623,14 @@ initialize_middle (GImageType   image_type,
     data->min[index] = data->max[index] = here[index];
   switch (image_type)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       data->original_value = sqrt (channel_mask[0] * here[0] * here[0]
 				   + channel_mask[1] * here[1] * here[1] 
 				   + channel_mask[2] * here[2] * here[2]);
       break;
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       data->original_value = *here;
       break;
     default:
@@ -641,7 +641,7 @@ initialize_middle (GImageType   image_type,
 }
   
 static void
-propagate_middle (GImageType  image_type, 
+propagate_middle (GimpImageBaseType  image_type, 
 		  gint        channels, 
 		  CH         *orig, 
 		  CH         *here, 
@@ -655,8 +655,8 @@ propagate_middle (GImageType  image_type,
 
   switch (image_type)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       v_here = sqrt (channel_mask[0] * here[0] * here[0] 
 		     + channel_mask[1] * here[1] * here[1] 
 		     + channel_mask[2] * here[2] * here[2]);
@@ -673,8 +673,8 @@ propagate_middle (GImageType  image_type,
 	  data->max_modified = 1;
 	}
       break;
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       if ((*here <= data->min[0]) && value_difference_check(orig, here, 1))
 	{
 	  data->min[0] = *here;
@@ -692,7 +692,7 @@ propagate_middle (GImageType  image_type,
 }
 
 static void
-set_middle_to_peak (GImageType  image_type, 
+set_middle_to_peak (GimpImageBaseType  image_type, 
 		    gint        channels, 
 		    CH         *here, 
 		    CH         *best, 
@@ -715,17 +715,17 @@ set_middle_to_peak (GImageType  image_type,
 
   switch (image_type)
     {
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       value_chs = 3;
       break;
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       value_chs = 3;
       alpha = 3;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       value_chs = 1;
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       value_chs = 1;
       alpha = 1;
       break;
@@ -751,7 +751,7 @@ set_middle_to_peak (GImageType  image_type,
 }
 
 static void
-set_foreground_to_peak (GImageType  image_type, 
+set_foreground_to_peak (GimpImageBaseType  image_type, 
 			gint        channels, 
 			CH         *here, 
 			CH         *best, 
@@ -774,17 +774,17 @@ set_foreground_to_peak (GImageType  image_type,
 
   switch (image_type)
     {
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       value_chs = 3;
       break;
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       value_chs = 3;
       alpha = 3;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       value_chs = 1;
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       value_chs = 1;
       alpha = 1;
       break;
@@ -802,7 +802,7 @@ set_foreground_to_peak (GImageType  image_type,
 }
 
 static void
-initialize_foreground (GImageType   image_type, 
+initialize_foreground (GimpImageBaseType   image_type, 
 		       gint         channels, 
 		       CH          *here, 
 		       CH          *best, 
@@ -819,7 +819,7 @@ initialize_foreground (GImageType   image_type,
 }
 
 static void
-initialize_background (GImageType   image_type, 
+initialize_background (GimpImageBaseType   image_type, 
 		       gint         channels, 
 		       CH          *here, 
 		       CH          *best, 
@@ -836,7 +836,7 @@ initialize_background (GImageType   image_type,
 }
 
 static void
-propagate_a_color (GImageType  image_type, 
+propagate_a_color (GimpImageBaseType  image_type, 
 		   gint        channels, 
 		   CH         *orig, 
 		   CH         *here, 
@@ -847,16 +847,16 @@ propagate_a_color (GImageType  image_type,
 
   switch (image_type)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       if (here[0] == fg[0] && here[1] == fg[1] && here[2] == fg[2] &&
 	  value_difference_check(orig, here, 3))
 	{
 	  memcpy (best, here, 3 * sizeof(CH)); /* alpha channel holds old value */
 	}
       break;
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       break;
     default:
       break;
@@ -864,7 +864,7 @@ propagate_a_color (GImageType  image_type,
 }
 
 static void
-propagate_opaque (GImageType  image_type, 
+propagate_opaque (GimpImageBaseType  image_type, 
 		  gint        channels, 
 		  CH         *orig, 
 		  CH         *here, 
@@ -873,11 +873,11 @@ propagate_opaque (GImageType  image_type,
 {
   switch (image_type)
     {
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       if (best[3] < here[3] && value_difference_check(orig, here, 3))
 	memcpy(best, here, channels * sizeof(CH));
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       if (best[1] < here[1] && value_difference_check(orig, here, 1))
 	memcpy(best, here, channels * sizeof(CH));
       break;
@@ -887,7 +887,7 @@ propagate_opaque (GImageType  image_type,
 }
 
 static void
-propagate_transparent (GImageType  image_type, 
+propagate_transparent (GimpImageBaseType  image_type, 
 		       gint        channels, 
 		       CH         *orig, 
 		       CH         *here, 
@@ -896,11 +896,11 @@ propagate_transparent (GImageType  image_type,
 {
   switch (image_type)
     {
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       if (here[3] < best[3] && value_difference_check(orig, here, 3))
 	memcpy(best, here, channels * sizeof(CH));
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       if (here[1] < best[1] && value_difference_check(orig, here, 1))
 	memcpy(best, here, channels * sizeof(CH));
       break;
@@ -912,7 +912,7 @@ propagate_transparent (GImageType  image_type,
 /* dialog stuff */
 
 static int
-vpropagate_dialog (GImageType image_type)
+vpropagate_dialog (GimpImageBaseType image_type)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
@@ -1025,7 +1025,7 @@ vpropagate_dialog (GImageType image_type)
   gtk_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
 			GTK_SIGNAL_FUNC (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
-  if ((image_type == RGBA_IMAGE) | (image_type == GRAYA_IMAGE))
+  if ((image_type == GIMP_RGBA_IMAGE) | (image_type == GIMP_GRAYA_IMAGE))
     {
       sep = gtk_hseparator_new ();
       gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 7, 8, GTK_FILL, 0, 0, 0);

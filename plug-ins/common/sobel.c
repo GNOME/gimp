@@ -61,11 +61,11 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar   *name,
 			 gint     nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
-static void      sobel  (GDrawable *drawable,
+static void      sobel  (GimpDrawable *drawable,
 			 gint       horizontal,
 			 gint       vertical,
 			 gint       keep_sign);
@@ -81,14 +81,14 @@ static gint      sobel_dialog (void);
 static void      sobel_ok_callback     (GtkWidget *widget,
 					gpointer   data);
 
-static void      sobel_prepare_row (GPixelRgn  *pixel_rgn,
+static void      sobel_prepare_row (GimpPixelRgn  *pixel_rgn,
 				    guchar     *data,
 				    gint        x,
 				    gint        y,
 				    gint        w);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -114,14 +114,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "horizontal", "Sobel in horizontal direction" },
-    { PARAM_INT32, "vertical", "Sobel in vertical direction" },
-    { PARAM_INT32, "keep_sign", "Keep sign of result (one direction only)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "horizontal", "Sobel in horizontal direction" },
+    { GIMP_PDB_INT32, "vertical", "Sobel in vertical direction" },
+    { GIMP_PDB_INT32, "keep_sign", "Keep sign of result (one direction only)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -141,7 +141,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Edge-Detect/Sobel..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -149,26 +149,26 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
    {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sobel", &bvals);
@@ -178,12 +178,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -193,7 +193,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sobel", &bvals);
@@ -214,18 +214,18 @@ run (gchar   *name,
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       sobel (drawable, bvals.horizontal, bvals.vertical, bvals.keep_sign);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_sobel", &bvals, sizeof (bvals));    
     }
   else
     {
       /* g_message ("sobel: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   gimp_drawable_detach (drawable);
@@ -304,7 +304,7 @@ sobel_dialog (void)
 }
 
 static void
-sobel_prepare_row (GPixelRgn *pixel_rgn,
+sobel_prepare_row (GimpPixelRgn *pixel_rgn,
 		   guchar    *data,
 		   gint       x,
 		   gint       y,
@@ -331,12 +331,12 @@ sobel_prepare_row (GPixelRgn *pixel_rgn,
 #define RMS(a,b) (sqrt (pow ((a),2) + pow ((b), 2)))
 
 static void
-sobel (GDrawable *drawable,
+sobel (GimpDrawable *drawable,
        gint       do_horizontal,
        gint       do_vertical,
        gint       keep_sign)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint    width, height;
   gint    bytes;
   gint    gradient, hor_gradient, ver_gradient;

@@ -151,31 +151,31 @@ rgb_to_bgr(guchar *rgbin,
 static void
 query(void)
 {
-  static GParamDef	print_args[] =
+  static GimpParamDef	print_args[] =
   {
-    { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { PARAM_IMAGE,	"image",	"Input image" },
-    { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
-    { PARAM_STRING,	"printer",	"Printer" },
-    { PARAM_STRING,	"ppd_file",	"PPD file" },
-    { PARAM_INT32,	"output_type",	"Output type (0 = gray, 1 = color)" },
-    { PARAM_STRING,	"resolution",	"Resolution (\"300\", \"720\", etc.)" },
-    { PARAM_STRING,	"media_size",	"Media size (\"Letter\", \"A4\", etc.)" },
-    { PARAM_STRING,	"media_type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
-    { PARAM_STRING,	"media_source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
-    { PARAM_INT32,	"brightness",	"Brightness (0-200%)" },
-    { PARAM_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
-    { PARAM_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
-    { PARAM_INT32,	"left",		"Left offset (points, -1 = centered)" },
-    { PARAM_INT32,	"top",		"Top offset (points, -1 = centered)" }
+    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,	"image",	"Input image" },
+    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
+    { GIMP_PDB_STRING,	"printer",	"Printer" },
+    { GIMP_PDB_STRING,	"ppd_file",	"PPD file" },
+    { GIMP_PDB_INT32,	"output_type",	"Output type (0 = gray, 1 = color)" },
+    { GIMP_PDB_STRING,	"resolution",	"Resolution (\"300\", \"720\", etc.)" },
+    { GIMP_PDB_STRING,	"media_size",	"Media size (\"Letter\", \"A4\", etc.)" },
+    { GIMP_PDB_STRING,	"media_type",	"Media type (\"Plain\", \"Glossy\", etc.)" },
+    { GIMP_PDB_STRING,	"media_source",	"Media source (\"Tray1\", \"Manual\", etc.)" },
+    { GIMP_PDB_INT32,	"brightness",	"Brightness (0-200%)" },
+    { GIMP_PDB_FLOAT,	"scaling",	"Output scaling (0-100%, -PPI)" },
+    { GIMP_PDB_INT32,	"orientation",	"Output orientation (-1 = auto, 0 = portrait, 1 = landscape)" },
+    { GIMP_PDB_INT32,	"left",		"Left offset (points, -1 = centered)" },
+    { GIMP_PDB_INT32,	"top",		"Top offset (points, -1 = centered)" }
   };
   static gint print_nargs = sizeof (print_args) / sizeof (print_args[0]);
 
-  static GParamDef	pagesetup_args[] =
+  static GimpParamDef	pagesetup_args[] =
   {
-    { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { PARAM_IMAGE,	"image",	"Input image" },
-    { PARAM_DRAWABLE,	"drawable",	"Input drawable" }
+    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,	"image",	"Input image" },
+    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" }
   };
   static gint pagesetup_nargs = (sizeof (pagesetup_args) /
 				 sizeof (pagesetup_args[0]));
@@ -188,7 +188,7 @@ query(void)
 			  "$Id$",
 			  N_("<Image>/File/Print"),
 			  "RGB*,GRAY*,INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  print_nargs, 0,
 			  print_args, NULL);
 
@@ -200,7 +200,7 @@ query(void)
 			  "$Id$",
 			  N_("<Image>/File/Page Setup"),
 			  "RGB*,GRAY*,INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  pagesetup_nargs, 0,
 			  pagesetup_args, NULL);
 }
@@ -212,15 +212,15 @@ query(void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GDrawable    *drawable;
-  GRunModeType	run_mode;
-  GStatusType   status = STATUS_SUCCESS;
-  GParam       *values;
-  GPixelRgn	rgn;
+  GimpDrawable    *drawable;
+  GimpRunModeType	run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  GimpParam       *values;
+  GimpPixelRgn	rgn;
   guchar       *cmap;		/* Colourmap (indexed images only) */
   DEVMODE      *dmp;
   int		ncolours;
@@ -245,9 +245,9 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
-  values = g_new(GParam, 1);
+  values = g_new(GimpParam, 1);
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -264,7 +264,7 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  if (gimp_get_data_size (NAME_PRINT) > 0)
 	    {
 	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
@@ -302,14 +302,14 @@ run (gchar   *name,
 	      if (CommDlgExtendedError ())
 		g_message (_("PrintDlg failed: %d"),
 			   CommDlgExtendedError ());
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      break;
 	    }
 	  hDevMode = vars.prDlg.hDevMode;
 	  hDevNames = vars.prDlg.hDevNames;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams >= 3)	/* Printer name? */
 	    {
 	      
@@ -318,11 +318,11 @@ run (gchar   *name,
 	    {
 	      /* Ignored */
 	    }
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 
 	default:
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
 
@@ -330,17 +330,17 @@ run (gchar   *name,
        * Print the image.
        */
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  /* Check if support for BitBlt */
 	  if (!(GetDeviceCaps(vars.prDlg.hDC, RASTERCAPS) & RC_BITBLT)) 
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      g_message (_("Printer doesn't support bitmaps"));
 	    }
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  /* Set the tile cache size. */
 	  
@@ -370,15 +370,15 @@ run (gchar   *name,
 	  docInfo.fwType = 0;
 
 	  if (StartDoc (vars.prDlg.hDC, &docInfo) == SP_ERROR)
-	    status = STATUS_EXECUTION_ERROR;
+	    status = GIMP_PDB_EXECUTION_ERROR;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  /* Prepare printer to accept a page. */
 	  if (StartPage (vars.prDlg.hDC) <= 0)
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      g_message (_("StartPage failed"));
 	      AbortDoc (vars.prDlg.hDC);
 	    }
@@ -386,7 +386,7 @@ run (gchar   *name,
       
       /* Actually print. */
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  gimp_progress_init(_("Printing..."));
 
@@ -419,13 +419,13 @@ run (gchar   *name,
 				      0);
 	  if (hBitmap == NULL)
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      g_message (_("CreateDIBSection failed"));
 	      AbortDoc (vars.prDlg.hDC);
 	    }
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  void (*pixel_transfer)(guchar *, guchar *, int, int, guchar *, int);
 
@@ -516,7 +516,7 @@ run (gchar   *name,
 				       devW, iDevYstep,
 				       hdcMem, x, 0, w, 1, SRCCOPY))
 			{
-			  status = STATUS_EXECUTION_ERROR;
+			  status = GIMP_PDB_EXECUTION_ERROR;
 			  g_message (_("StretchBlt (hDC, %d, %d, "
 				       "%d, %d, "
 				       "hdcMem, %d, 0, %d, 1, SRCCOPY) "
@@ -541,17 +541,17 @@ run (gchar   *name,
 	  gimp_progress_update (1.0);
 	}
       
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (EndPage (vars.prDlg.hDC) <= 0)
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      g_message (_("EndPage failed"));
 	      EndDoc (vars.prDlg.hDC);
 	    }
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  EndDoc (vars.prDlg.hDC);
 	}
@@ -562,7 +562,7 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  if (gimp_get_data_size (NAME_PRINT) > 0)
 	    {
 	      g_assert (gimp_get_data_size (NAME_PRINT) == sizeof (vars));
@@ -595,7 +595,7 @@ run (gchar   *name,
 	      if (CommDlgExtendedError ())
 		g_message (_("PageSetupDlg failed: %d"),
 			   CommDlgExtendedError ());
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	      break;
 	    }
 	  vars.psDlg.Flags |= PSD_MARGINS;
@@ -604,16 +604,16 @@ run (gchar   *name,
 	  break;
 
 	default:
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
     }
   else
-    status = STATUS_CALLING_ERROR;
+    status = GIMP_PDB_CALLING_ERROR;
 
 
   /* Store data. */
-  if (status == STATUS_SUCCESS && run_mode == RUN_INTERACTIVE)
+  if (status == GIMP_PDB_SUCCESS && run_mode == GIMP_RUN_INTERACTIVE)
     {
       /* Save DEVMODE */
       dmp = GlobalLock (hDevMode);
@@ -678,7 +678,7 @@ run (gchar   *name,
   gimp_drawable_detach(drawable);
 }
 
-GPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
+GimpPlugInInfo	PLUG_IN_INFO =		/* Plug-in information */
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */

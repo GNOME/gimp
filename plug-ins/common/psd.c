@@ -59,7 +59,7 @@
  *       by Photoshop 4 and 5.
  *
  *  1998.07.31 / v1.9.9.9f / Adam D. Moss
- *       Use OVERLAY_MODE if available.
+ *       Use GIMP_OVERLAY_MODE if available.
  *
  *  1998.07.31 / v1.9.9.9e / Adam D. Moss
  *       Worked around some buggy PSD savers (suspect PS4 on Mac) - ugh.
@@ -283,13 +283,13 @@ typedef struct PsdImage
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 
-static GDrawableType  psd_type_to_gimp_type      (psd_imagetype  psdtype);
-static GImageType     psd_type_to_gimp_base_type (psd_imagetype  psdtype);
-static GLayerMode     psd_lmode_to_gimp_lmode    (gchar          modekey[4]);
+static GimpImageType  psd_type_to_gimp_type      (psd_imagetype  psdtype);
+static GimpImageBaseType     psd_type_to_gimp_base_type (psd_imagetype  psdtype);
+static GimpLayerModeEffects     psd_lmode_to_gimp_lmode    (gchar          modekey[4]);
 static GimpUnit       psd_unit_to_gimp_unit      (gint           psdunit);
 
 static gint32         load_image                 (gchar         *filename);
@@ -298,7 +298,7 @@ static gint32         load_image                 (gchar         *filename);
 
 /* Various local variables...
  */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -380,15 +380,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -402,7 +402,7 @@ query (void)
                           "1996-1998",
                           "<Load>/PSD",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -416,21 +416,21 @@ query (void)
 static void
 run (char    *name,
      int      nparams,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType run_mode;
-  /*  GStatusType status = STATUS_SUCCESS;*/
+  static GimpParam values[2];
+  GimpRunModeType run_mode;
+  /*  GimpPDBStatusType status = GIMP_PDB_SUCCESS;*/
   gint32 image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   if (strcmp (name, "file_psd_load") == 0)
     {
@@ -439,89 +439,89 @@ run (char    *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[0].data.d_status = STATUS_SUCCESS;
-	  values[1].type = PARAM_IMAGE;
+	  values[0].data.d_status = GIMP_PDB_SUCCESS;
+	  values[1].type = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 }
 
 
-static GDrawableType
+static GimpImageType
 psd_type_to_gimp_type (psd_imagetype psdtype)
 {
   switch(psdtype)
     {
-    case PSD_RGBA_IMAGE: return(RGBA_IMAGE);
-    case PSD_RGB_IMAGE: return(RGB_IMAGE);
-    case PSD_GRAYA_IMAGE: return(GRAYA_IMAGE);
-    case PSD_GRAY_IMAGE: return(GRAY_IMAGE);
-    case PSD_INDEXEDA_IMAGE: return(INDEXEDA_IMAGE);
-    case PSD_INDEXED_IMAGE: return(INDEXED_IMAGE);
-    case PSD_BITMAP_IMAGE: return(GRAY_IMAGE);
-    default: return(RGB_IMAGE);
+    case PSD_RGBA_IMAGE: return(GIMP_RGBA_IMAGE);
+    case PSD_RGB_IMAGE: return(GIMP_RGB_IMAGE);
+    case PSD_GRAYA_IMAGE: return(GIMP_GRAYA_IMAGE);
+    case PSD_GRAY_IMAGE: return(GIMP_GRAY_IMAGE);
+    case PSD_INDEXEDA_IMAGE: return(GIMP_INDEXEDA_IMAGE);
+    case PSD_INDEXED_IMAGE: return(GIMP_INDEXED_IMAGE);
+    case PSD_BITMAP_IMAGE: return(GIMP_GRAY_IMAGE);
+    default: return(GIMP_RGB_IMAGE);
     }
 }
 
 
 
-static GLayerMode
+static GimpLayerModeEffects
 psd_lmode_to_gimp_lmode (gchar modekey[4])
 {
-  if (strncmp(modekey, "norm", 4)==0) return(NORMAL_MODE);
-  if (strncmp(modekey, "dark", 4)==0) return(DARKEN_ONLY_MODE);
-  if (strncmp(modekey, "lite", 4)==0) return(LIGHTEN_ONLY_MODE);
-  if (strncmp(modekey, "hue ", 4)==0) return(HUE_MODE);
-  if (strncmp(modekey, "sat ", 4)==0) return(SATURATION_MODE);
-  if (strncmp(modekey, "colr", 4)==0) return(COLOR_MODE);
-  if (strncmp(modekey, "mul ", 4)==0) return(MULTIPLY_MODE);
-  if (strncmp(modekey, "scrn", 4)==0) return(SCREEN_MODE);
-  if (strncmp(modekey, "diss", 4)==0) return(DISSOLVE_MODE);
-  if (strncmp(modekey, "diff", 4)==0) return(DIFFERENCE_MODE);
-  if (strncmp(modekey, "lum ", 4)==0) return(VALUE_MODE);
+  if (strncmp(modekey, "norm", 4)==0) return(GIMP_NORMAL_MODE);
+  if (strncmp(modekey, "dark", 4)==0) return(GIMP_DARKEN_ONLY_MODE);
+  if (strncmp(modekey, "lite", 4)==0) return(GIMP_LIGHTEN_ONLY_MODE);
+  if (strncmp(modekey, "hue ", 4)==0) return(GIMP_HUE_MODE);
+  if (strncmp(modekey, "sat ", 4)==0) return(GIMP_SATURATION_MODE);
+  if (strncmp(modekey, "colr", 4)==0) return(GIMP_COLOR_MODE);
+  if (strncmp(modekey, "mul ", 4)==0) return(GIMP_MULTIPLY_MODE);
+  if (strncmp(modekey, "scrn", 4)==0) return(GIMP_SCREEN_MODE);
+  if (strncmp(modekey, "diss", 4)==0) return(GIMP_DISSOLVE_MODE);
+  if (strncmp(modekey, "diff", 4)==0) return(GIMP_DIFFERENCE_MODE);
+  if (strncmp(modekey, "lum ", 4)==0) return(GIMP_VALUE_MODE);
 
 #if (GIMP_MAJOR_VERSION > 0) && (GIMP_MINOR_VERSION > 0)
-  if (strncmp(modekey, "over", 4)==0) return(OVERLAY_MODE);
+  if (strncmp(modekey, "over", 4)==0) return(GIMP_OVERLAY_MODE);
 
   printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
 	 "'overlay' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
-  if (strncmp(modekey, "hLit", 4)==0) return(/**/OVERLAY_MODE);
-  if (strncmp(modekey, "sLit", 4)==0) return(/**/OVERLAY_MODE);
+  if (strncmp(modekey, "hLit", 4)==0) return(/**/GIMP_OVERLAY_MODE);
+  if (strncmp(modekey, "sLit", 4)==0) return(/**/GIMP_OVERLAY_MODE);
 #else
   printf("PSD: Warning - unsupported layer-blend mode '%c%c%c%c', using "
 	 "'addition' mode\n", modekey[0], modekey[1], modekey[2], modekey[3]);
-  if (strncmp(modekey, "over", 4)==0) return(ADDITION_MODE); /* ? */
-  if (strncmp(modekey, "hLit", 4)==0) return(/**/ADDITION_MODE);
-  if (strncmp(modekey, "sLit", 4)==0) return(/**/ADDITION_MODE);
+  if (strncmp(modekey, "over", 4)==0) return(GIMP_ADDITION_MODE); /* ? */
+  if (strncmp(modekey, "hLit", 4)==0) return(/**/GIMP_ADDITION_MODE);
+  if (strncmp(modekey, "sLit", 4)==0) return(/**/GIMP_ADDITION_MODE);
 #endif
 
   printf("PSD: Warning - UNKNOWN layer-blend mode, reverting to 'normal'\n");
 
-  return(NORMAL_MODE);
+  return(GIMP_NORMAL_MODE);
 }
 
 
 
-static GImageType
+static GimpImageBaseType
 psd_type_to_gimp_base_type (psd_imagetype psdtype)
 {
   switch(psdtype)
     {
     case PSD_RGBA_IMAGE:
-    case PSD_RGB_IMAGE: return(RGB);
+    case PSD_RGB_IMAGE: return(GIMP_RGB);
     case PSD_BITMAP_IMAGE:
     case PSD_GRAYA_IMAGE:
-    case PSD_GRAY_IMAGE: return(GRAY);
+    case PSD_GRAY_IMAGE: return(GIMP_GRAY);
     case PSD_INDEXEDA_IMAGE:
-    case PSD_INDEXED_IMAGE: return(INDEXED);
+    case PSD_INDEXED_IMAGE: return(GIMP_INDEXED);
     default:
       g_message ("PSD: Error: Can't convert PSD imagetype to GIMP imagetype\n");
       gimp_quit();
-      return(RGB);
+      return(GIMP_RGB);
     }
 }
 
@@ -548,18 +548,18 @@ psd_unit_to_gimp_unit (int psdunit)
 
 
 
-GImageType
+GimpImageBaseType
 psd_mode_to_gimp_base_type (gushort psdtype)
 {
   switch(psdtype)
     {
-    case 1: return(GRAY);
-    case 2: return(INDEXED);
-    case 3: return(RGB);
+    case 1: return(GIMP_GRAY);
+    case 2: return(GIMP_INDEXED);
+    case 3: return(GIMP_RGB);
     default:
       g_message ("PSD: Error: Can't convert PSD mode to GIMP base imagetype\n");
       gimp_quit();
-      return(RGB);
+      return(GIMP_RGB);
     }
 }
 
@@ -1531,12 +1531,12 @@ gboolean psd_layer_has_alpha(PSDlayer* layer)
 
 static
 void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
-			       gint32 image_ID, GDrawable* drawable,
+			       gint32 image_ID, GimpDrawable* drawable,
 			       gint width, gint height)
 {
   guchar* primary_data;
   guchar* aux_data;
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
 
   IFDBG printf("Extracting primary channel data (%d channels)\n"
 	 "\tand %d auxiliary channels.\n", gimpstep, psstep-gimpstep);
@@ -1570,7 +1570,7 @@ void extract_data_and_channels(guchar* src, gint gimpstep, gint psstep,
   {
     int pix, chan;
     gint32 channel_ID;
-    GDrawable* chdrawable;
+    GimpDrawable* chdrawable;
     guchar colour[3]= {0, 0, 0};
 
 
@@ -1613,7 +1613,7 @@ void extract_channels(guchar* src, gint num_wanted, gint psstep,
 		      gint width, gint height)
 {
   guchar* aux_data;
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
 
   IFDBG printf("Extracting %d/%d auxiliary channels.\n", num_wanted, psstep);
 
@@ -1621,7 +1621,7 @@ void extract_channels(guchar* src, gint num_wanted, gint psstep,
   {
     int pix, chan;
     gint32 channel_ID;
-    GDrawable* chdrawable;
+    GimpDrawable* chdrawable;
     guchar colour[3]= {0, 0, 0};
 
     for (chan=psstep-num_wanted; chan<psstep; chan++)
@@ -1703,8 +1703,8 @@ load_image(char *name)
   int cmyk = 0, step = 1;
   gint32 image_ID = -1;
   gint32 layer_ID = -1;
-  GDrawable *drawable = NULL;
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable = NULL;
+  GimpPixelRgn pixel_rgn;
   gint32 iter;
   fpos_t tmpfpos;
 
@@ -1725,7 +1725,7 @@ load_image(char *name)
   if (psd_image.num_layers > 0) /* PS3-style */
     {
       int lnum;
-      GImageType gimagetype;
+      GimpImageBaseType gimagetype;
 
       gimagetype = psd_mode_to_gimp_base_type(PSDheader.mode);
       image_ID =
@@ -1756,7 +1756,7 @@ load_image(char *name)
 	  
 	  switch (gimagetype)
 	    {
-	    case GRAY:
+	    case GIMP_GRAY:
 	      {
 		IFDBG printf("It's GRAY.\n");
 		if (!psd_layer_has_alpha(&psd_image.layer[lnum]))
@@ -1791,12 +1791,13 @@ load_image(char *name)
 					   psd_image.layer[lnum].name,
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
-					   (numc==1) ? GRAY_IMAGE : GRAYA_IMAGE,
+					   (numc==1) ? GIMP_GRAY_IMAGE : GIMP_GRAYA_IMAGE,
 					   (100.0*(double)psd_image.layer[lnum].opacity)/255.0,
 					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
 
-	      }; break; /* case GRAY */
-	    case RGB:
+	      }; break; /* case GIMP_GRAY */
+
+	    case GIMP_RGB:
 	      {
 		IFDBG printf("It's RGB, %dx%d.\n",
 			     psd_image.layer[lnum].width,
@@ -1857,14 +1858,15 @@ load_image(char *name)
 					   psd_image.layer[lnum].name,
 					   psd_image.layer[lnum].width,
 					   psd_image.layer[lnum].height,
-					   (numc==3) ? RGB_IMAGE : RGBA_IMAGE,
+					   (numc==3) ? GIMP_RGB_IMAGE : GIMP_RGBA_IMAGE,
 					   (100.0*(double)psd_image.layer[lnum].opacity)/255.0,
 					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
 		
 		IFDBG
 		  fprintf(stderr, "YAH2\n");
 
-	      }; break; /* case RGB */
+	      }; break; /* case GIMP_RGB */
+
 	    default:
 	      {
 		printf("Error: Sorry, can't deal with a layered image of this type.\n");
@@ -2073,7 +2075,7 @@ load_image(char *name)
 	  image_ID = gimp_image_new (PSDheader.columns, PSDheader.rows,
 				     psd_type_to_gimp_base_type(imagetype));
 	  gimp_image_set_filename (image_ID, name);
-	  if (psd_type_to_gimp_base_type(imagetype) == INDEXED)
+	  if (psd_type_to_gimp_base_type(imagetype) == GIMP_INDEXED)
 	    {
 	      if ((psd_image.colmaplen%3)!=0)
 		printf("PSD: Colourmap looks screwed! Aiee!\n");
@@ -2094,7 +2096,7 @@ load_image(char *name)
 	  layer_ID = gimp_layer_new (image_ID, _("Background"),
 				     PSDheader.columns, PSDheader.rows,
 				     psd_type_to_gimp_type(imagetype),
-				     100, NORMAL_MODE);
+				     100, GIMP_NORMAL_MODE);
 
 	  g_free(name_buf);
 
@@ -2208,7 +2210,7 @@ load_image(char *name)
 	  if (channels == step) /* gimp bpp == psd bpp */
 	    {
 
-	      if (psd_type_to_gimp_type(imagetype)==INDEXEDA_IMAGE)
+	      if (psd_type_to_gimp_type(imagetype)==GIMP_INDEXEDA_IMAGE)
 		{
 		  printf("@@@@ Didn't know that this could happen...\n");
 		  for (iter=0; iter<drawable->width*drawable->height; iter++)

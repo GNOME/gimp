@@ -82,11 +82,11 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void diffraction (GDrawable *drawable);
+static void diffraction (GimpDrawable *drawable);
 
 static void   diff_init_luts (void);
 static void   diff_diffract  (gdouble  x,
@@ -112,7 +112,7 @@ static void dialog_ok_callback     (GtkWidget *widget,
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -156,23 +156,23 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Input drawable" },
-    { PARAM_FLOAT,    "lam_r",        "Light frequency (red)" },
-    { PARAM_FLOAT, 	  "lam_g",        "Light frequency (green)" },
-    { PARAM_FLOAT, 	  "lam_b",        "Light frequency (blue)" },
-    { PARAM_FLOAT, 	  "contour_r",    "Number of contours (red)" },
-    { PARAM_FLOAT, 	  "contour_g",    "Number of contours (green)" },
-    { PARAM_FLOAT, 	  "contour_b",    "Number of contours (blue)" },
-    { PARAM_FLOAT, 	  "edges_r",      "Number of sharp edges (red)" },
-    { PARAM_FLOAT, 	  "edges_g",      "Number of sharp edges (green)" },
-    { PARAM_FLOAT, 	  "edges_b",      "Number of sharp edges (blue)" },
-    { PARAM_FLOAT, 	  "brightness",   "Brightness and shifting/fattening of contours" },
-    { PARAM_FLOAT, 	  "scattering",   "Scattering (Speed vs. quality)" },
-    { PARAM_FLOAT, 	  "polarization", "Polarization" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_FLOAT,    "lam_r",        "Light frequency (red)" },
+    { GIMP_PDB_FLOAT, 	  "lam_g",        "Light frequency (green)" },
+    { GIMP_PDB_FLOAT, 	  "lam_b",        "Light frequency (blue)" },
+    { GIMP_PDB_FLOAT, 	  "contour_r",    "Number of contours (red)" },
+    { GIMP_PDB_FLOAT, 	  "contour_g",    "Number of contours (green)" },
+    { GIMP_PDB_FLOAT, 	  "contour_b",    "Number of contours (blue)" },
+    { GIMP_PDB_FLOAT, 	  "edges_r",      "Number of sharp edges (red)" },
+    { GIMP_PDB_FLOAT, 	  "edges_g",      "Number of sharp edges (green)" },
+    { GIMP_PDB_FLOAT, 	  "edges_b",      "Number of sharp edges (blue)" },
+    { GIMP_PDB_FLOAT, 	  "brightness",   "Brightness and shifting/fattening of contours" },
+    { GIMP_PDB_FLOAT, 	  "scattering",   "Scattering (Speed vs. quality)" },
+    { GIMP_PDB_FLOAT, 	  "polarization", "Polarization" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -184,7 +184,7 @@ query (void)
 			  "April 1997, 0.5",
 			  N_("<Image>/Filters/Render/Pattern/Diffraction Patterns..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -192,24 +192,24 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 
-  GDrawable    *active_drawable;
-  GRunModeType  run_mode;
-  GStatusType   status;
+  GimpDrawable    *active_drawable;
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status;
 
   /* Initialize */
 
   diff_init_luts ();
 
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -217,7 +217,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
 
       /* Possibly retrieve data */
@@ -229,14 +229,14 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
 
       /* Make sure all the arguments are present */
       if (nparams != 15)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  dvals.lam_r 	     = param[3].data.d_float;
 	  dvals.lam_g 	     = param[4].data.d_float;
@@ -254,7 +254,7 @@ run (gchar   *name,
 
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
 
       /* Possibly retrieve data */
@@ -269,7 +269,7 @@ run (gchar   *name,
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /* Create the diffraction pattern */
-  if ((status == STATUS_SUCCESS) && gimp_drawable_is_rgb(active_drawable->id))
+  if ((status == GIMP_PDB_SUCCESS) && gimp_drawable_is_rgb(active_drawable->id))
     {
       /* Set the tile cache size */
       gimp_tile_cache_ntiles ((active_drawable->width + gimp_tile_width() - 1) /
@@ -279,16 +279,16 @@ run (gchar   *name,
       diffraction (active_drawable);
 
       /* If run mode is interactive, flush displays */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /* Store data */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_diffraction",
 		       &dvals, sizeof(diffraction_vals_t));
     }
-  else if (status == STATUS_SUCCESS)
-    status = STATUS_EXECUTION_ERROR;
+  else if (status == GIMP_PDB_SUCCESS)
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
@@ -296,9 +296,9 @@ run (gchar   *name,
 }
 
 static void
-diffraction (GDrawable *drawable)
+diffraction (GimpDrawable *drawable)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   gpointer  pr;
   gint      x1, y1, x2, y2;
   gint      width, height;

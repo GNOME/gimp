@@ -52,11 +52,11 @@ static CheckInterface cint =
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
-static void      check   (GDrawable *drawable);
+static void      check   (GimpDrawable *drawable);
 static gint      inblock (gint       pos,
 			  gint       size);
 
@@ -64,7 +64,7 @@ static gint      check_dialog      (void);
 static void      check_ok_callback (GtkWidget *widget,
 				    gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -83,13 +83,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "check_mode", "Regular or Physcobilly" },
-    { PARAM_INT32, "check_size", "Size of the checks" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "check_mode", "Regular or Physcobilly" },
+    { GIMP_PDB_INT32, "check_size", "Size of the checks" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -101,7 +101,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Render/Pattern/Checkerboard..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -109,14 +109,14 @@ query (void)
 static void
 run    (gchar    *name,
 	gint      nparams,
-	GParam   *param,
+	GimpParam   *param,
 	gint     *nreturn_vals,
-	GParam  **return_vals)
+	GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
@@ -125,14 +125,14 @@ run    (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_checkerboard", &cvals);
       if (! check_dialog())
 	{
@@ -141,17 +141,17 @@ run    (gchar    *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  cvals.mode = param[3].data.d_int32;
 	  cvals.size = param[4].data.d_int32;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_checkerboard", &cvals);
       break;
 
@@ -166,15 +166,15 @@ run    (gchar    *name,
 
       check (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_checkerboard", &cvals, sizeof (CheckVals));
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -184,9 +184,9 @@ run    (gchar    *name,
 
 
 static void
-check (GDrawable *drawable)
+check (GimpDrawable *drawable)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   guchar *dest_row;
   guchar *dest;
   gint row, col;
@@ -207,17 +207,17 @@ check (GDrawable *drawable)
 
   switch ( gimp_drawable_type (drawable->id) )
     {
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       fg[3] = 255;
       bg[3] = 255;
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       fg[1] = 255;
       bg[1] = 255;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       fg[0] = 255;
       bg[0] = 0;
       break;

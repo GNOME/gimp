@@ -60,19 +60,19 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
                          gint       nparams,
-                         GParam    *param,
+                         GimpParam    *param,
                          gint      *nreturn_vals,
-                         GParam   **return_vals);
+                         GimpParam   **return_vals);
 
-static void      oilify_rgb         (GDrawable *drawable);
-static void      oilify_intensity   (GDrawable *drawable);
+static void      oilify_rgb         (GimpDrawable *drawable);
+static void      oilify_intensity   (GimpDrawable *drawable);
 
 static gint      oilify_dialog      (void);
 
 static void      oilify_ok_callback (GtkWidget *widget,
 				     gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -97,13 +97,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "mask_size", "Oil paint mask size" },
-    { PARAM_INT32, "mode", "Algorithm {RGB (0), INTENSITY (1)}" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "mask_size", "Oil paint mask size" },
+    { GIMP_PDB_INT32, "mode", "Algorithm {RGB (0), INTENSITY (1)}" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -118,7 +118,7 @@ query (void)
 			  "1996",
 			  N_("<Image>/Filters/Artistic/Oilify..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -126,14 +126,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
@@ -142,12 +142,12 @@ run (gchar   *name,
   *nreturn_vals = 2;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_oilify", &ovals);
 
@@ -156,11 +156,11 @@ run (gchar   *name,
         return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
         {
@@ -170,11 +170,11 @@ run (gchar   *name,
 	  if ((ovals.mask_size < 1.0) ||
 	      ((ovals.mode != MODE_INTEN) &&
 	       (ovals.mode != MODE_RGB)))
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_oilify", &ovals);
       break;
@@ -187,7 +187,7 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (drawable->id) ||
        gimp_drawable_is_gray (drawable->id)))
     {
@@ -199,17 +199,17 @@ run (gchar   *name,
       else
         oilify_rgb (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data ("plug_in_oilify", &ovals, sizeof (OilifyVals));
     }
   else
     {
       /* gimp_message ("oilify: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -223,9 +223,9 @@ run (gchar   *name,
  * at (x,y).
  */
 static void
-oilify_rgb (GDrawable *drawable)
+oilify_rgb (GimpDrawable *drawable)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint bytes;
   gint width, height;
   guchar *src_row, *src;
@@ -335,9 +335,9 @@ oilify_rgb (GDrawable *drawable)
  * at (x,y). Histogram is based on intensity.
  */
 static void
-oilify_intensity (GDrawable *drawable)
+oilify_intensity (GimpDrawable *drawable)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint bytes;
   gint width, height;
   guchar *src_row, *src;

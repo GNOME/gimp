@@ -71,15 +71,15 @@ static char rcsid[] = "$Id$";
 static void	 query		(void);
 static void	 run		(gchar	 *name,
 				 gint	 nparams,
-				 GParam	 *param,
+				 GimpParam	 *param,
 				 gint	 *nreturn_vals,
-				 GParam	 **return_vals);
+				 GimpParam	 **return_vals);
 
-static void	 gradmap	(GDrawable *drawable);
-static guchar *	 get_samples	(GDrawable *drawable );
+static void	 gradmap	(GimpDrawable *drawable);
+static guchar *	 get_samples	(GimpDrawable *drawable );
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -92,11 +92,11 @@ MAIN ()
 static void
 query()
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
     {
-      { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-      { PARAM_IMAGE, "image", "Input image (unused)" },
-      { PARAM_DRAWABLE, "drawable", "Input drawable" }
+      { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+      { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+      { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
    };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -117,7 +117,7 @@ query()
 			  "1997",
 			  N_("<Image>/Filters/Colors/Map/Gradient Map"),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -125,14 +125,14 @@ query()
 static void
 run (gchar   *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -141,7 +141,7 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -156,13 +156,13 @@ run (gchar   *name,
 
       gradmap (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
   else
     {
       /* g_message ("gradmap: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -171,9 +171,9 @@ run (gchar   *name,
 }
 
 static void
-gradmap (GDrawable *drawable)
+gradmap (GimpDrawable *drawable)
 {
-  GPixelRgn	src_rgn, dest_rgn;
+  GimpPixelRgn	src_rgn, dest_rgn;
   gpointer	pr;
   guchar	*src_row, *dest_row;
   guchar	*src, *dest;
@@ -250,7 +250,7 @@ gradmap (GDrawable *drawable)
   Each sample has (gimp_drawable_bpp (drawable->id)) bytes.
  */
 static guchar *
-get_samples (GDrawable *drawable)
+get_samples (GimpDrawable *drawable)
 {
   gdouble	*f_samples, *f_samp;	/* float samples */
   guchar	*b_samples, *b_samp;	/* byte samples */

@@ -53,9 +53,9 @@ typedef struct
 static void	query		(void);
 static void	run		(gchar   *name,
 				 gint     nparams,
-				 GParam  *param,
+				 GimpParam  *param,
 				 gint    *nreturn_vals,
-				 GParam	**return_vals);
+				 GimpParam	**return_vals);
 
 static gint	save_image	(Config  *config,
 				 gint32   image_ID,
@@ -64,7 +64,7 @@ static gboolean	run_save_dialog	(Config  *config);
 
 
 /* --- variables --- */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -92,13 +92,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -110,7 +110,7 @@ query (void)
                           "1999",
                           "<Save>/C-Source",
 			  "RGB*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
   
@@ -122,39 +122,39 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpExportReturnType export = EXPORT_CANCEL;
   
   run_mode = param[0].data.d_int32;
   
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == RUN_INTERACTIVE &&
+  if (run_mode == GIMP_RUN_INTERACTIVE &&
       strcmp (name, "file_csource_save") == 0)
     {
       gint32 image_ID    = param[1].data.d_int32;
       gint32 drawable_ID = param[2].data.d_int32;
       GimpParasite *parasite;
       gchar *x;
-      GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
+      GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
 
       gimp_get_data ("file_csource_save", &config);
       config.prefixed_name = "gimp_image";
       config.comment       = NULL;
 
       config.file_name = param[3].data.d_string;
-      config.alpha = (drawable_type == RGBA_IMAGE ||
-		      drawable_type == GRAYA_IMAGE ||
-		      drawable_type == INDEXEDA_IMAGE);
+      config.alpha = (drawable_type == GIMP_RGBA_IMAGE ||
+		      drawable_type == GIMP_GRAYA_IMAGE ||
+		      drawable_type == GIMP_INDEXEDA_IMAGE);
 
       INIT_I18N_UI();
 
@@ -175,7 +175,7 @@ run (gchar   *name,
 				   CAN_HANDLE_ALPHA));
       if (export == EXPORT_CANCEL)
 	{
-	  values[0].data.d_status = STATUS_CANCEL;
+	  values[0].data.d_status = GIMP_PDB_CANCEL;
 	  return;
 	}
 
@@ -199,7 +199,7 @@ run (gchar   *name,
 
 	  if (! save_image (&config, image_ID, drawable_ID))
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	  else
 	    {
@@ -208,7 +208,7 @@ run (gchar   *name,
 	}
       else
 	{
-	  status = STATUS_CANCEL;
+	  status = GIMP_PDB_CANCEL;
 	}
 
       if (export == EXPORT_EXPORT)
@@ -216,7 +216,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -377,9 +377,9 @@ save_image (Config *config,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  GDrawable *drawable         = gimp_drawable_get (drawable_ID);
-  GDrawableType drawable_type = gimp_drawable_type (drawable_ID);
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable         = gimp_drawable_get (drawable_ID);
+  GimpImageType drawable_type = gimp_drawable_type (drawable_ID);
+  GimpPixelRgn pixel_rgn;
   gchar *s_uint_8, *s_uint_32, *s_uint, *s_char, *s_null;
   FILE *fp;
   guint c;
@@ -412,7 +412,7 @@ save_image (Config *config,
 	    for (x = 0; x < drawable->width; x++)
 	      {
 		guint8 *d = data + x * drawable->bpp;
-		gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
+		gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
 		
 		alpha *= config->opacity / 100.0;
 		*(p++) = d[0];
@@ -424,7 +424,7 @@ save_image (Config *config,
 	    for (x = 0; x < drawable->width; x++)
 	      {
 		guint8 *d = data + x * drawable->bpp;
-		gdouble alpha = drawable_type == RGBA_IMAGE ? d[3] : 0xff;
+		gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
 		
 		alpha *= config->opacity / 25600.0;
 		*(p++) = 0.5 + alpha * (gdouble) d[0];
@@ -597,8 +597,8 @@ save_image (Config *config,
     }
   switch (drawable_type)
     {
-    case RGB_IMAGE:
-    case RGBA_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_RGBA_IMAGE:
       do
 	c = save_uchar (fp, c, *(img_buffer++), config);
       while (img_buffer < img_buffer_end);

@@ -120,19 +120,19 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",   "Interactive, non-interactive"},
-    { PARAM_IMAGE,    "image",      "Input image" },
-    { PARAM_DRAWABLE, "drawable",   "Input drawable" },
-    { PARAM_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees" },
-    { PARAM_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE,    "image",      "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_INT32,    "angle",      "Angle { 90 (1), 180 (2), 270 (3) } degrees" },
+    { GIMP_PDB_INT32,    "everything", "Rotate the whole image? { TRUE, FALSE }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GimpParamDef menuargs[] =
   {
-    { PARAM_INT32,    "run_mode",   "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",      "Input image" },
-    { PARAM_DRAWABLE, "drawable",   "Input drawable"}
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"}
   };
   static gint nmenuargs = sizeof (menuargs) / sizeof (menuargs[0]);
 
@@ -147,7 +147,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  NULL,
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,		
+			  GIMP_PLUGIN,		
 			  nargs, 0,
 			  args, NULL);
 
@@ -159,7 +159,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Layers/Rotate/90 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
   gimp_install_procedure ("plug_in_layer_rot180",
@@ -170,7 +170,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Layers/Rotate/180 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
   gimp_install_procedure ("plug_in_layer_rot270",
@@ -181,7 +181,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Layers/Rotate/270 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
 
@@ -193,7 +193,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Image/Transforms/Rotate/90 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
   gimp_install_procedure ("plug_in_image_rot180",
@@ -204,7 +204,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Image/Transforms/Rotate/180 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
   gimp_install_procedure ("plug_in_image_rot270",
@@ -215,7 +215,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Image/Transforms/Rotate/270 degrees"),
 			  PLUG_IN_IMAGE_TYPES,
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nmenuargs, 0,
 			  menuargs, NULL);
 }
@@ -232,13 +232,13 @@ run (gchar      *name,
   
   /* status variable, use it to check for errors in invocation usualy only 
      during non-interactive calling */	
-  GimpPDBStatusType status = STATUS_SUCCESS;	 
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;	 
   
   /*always return at least the status to the caller. */
   static GimpParam values[1];
   
   /* initialize the return of the status */ 	
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
@@ -255,8 +255,8 @@ run (gchar      *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /* check to see if invoked with the correct number of parameters */
 	  if (nparams == 5)
 	    {
@@ -267,9 +267,9 @@ run (gchar      *name,
 	      gimp_set_data ("plug_in_rotate", &rotvals, sizeof (RotateValues));
 	    }
 	  else
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /* Possibly retrieve data from a previous run */
 	  gimp_get_data ("plug_in_rotate", &rotvals);
 	  rotvals.angle = rotvals.angle % 4;
@@ -309,16 +309,16 @@ run (gchar      *name,
       rotvals.everything = TRUE;
     }
   else 
-    status = STATUS_CALLING_ERROR;
+    status = GIMP_PDB_CALLING_ERROR;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /* Run the main function */
       rotate ();
       
       /* If run mode is interactive, flush displays, else (script) don't 
 	 do it, as the screen updates would make the scripts slow */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
 
@@ -367,7 +367,7 @@ rotate_compute_offsets (gint *offsetx,
 
 
 static void
-rotate_drawable (GDrawable *drawable)
+rotate_drawable (GimpDrawable *drawable)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height;
@@ -594,7 +594,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		  if (guide->orientation == GIMP_HORIZONTAL)
 		    gimp_image_add_vguide (image_ID, height - guide->position);
 		  else
 		    gimp_image_add_hguide (image_ID, guide->position);
@@ -605,7 +605,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		  if (guide->orientation == GIMP_HORIZONTAL)
 		    gimp_image_add_hguide (image_ID, height - guide->position);
 		  else
 		    gimp_image_add_vguide (image_ID, width - guide->position);
@@ -616,7 +616,7 @@ rotate (void)
 	      for (list = guides; list; list = list->next)  
 		{
 		  guide = (GuideInfo *)list->data;
-		  if (guide->orientation == ORIENTATION_HORIZONTAL)
+		  if (guide->orientation == GIMP_HORIZONTAL)
 		    gimp_image_add_vguide (image_ID, guide->position);
 		  else
 		    gimp_image_add_hguide (image_ID, width - guide->position);

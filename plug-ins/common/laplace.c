@@ -43,19 +43,19 @@
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
-static void      laplace             (GDrawable  *drawable);
-static void      laplace_prepare_row (GPixelRgn  *pixel_rgn,
+static void      laplace             (GimpDrawable  *drawable);
+static void      laplace_prepare_row (GimpPixelRgn  *pixel_rgn,
 				      guchar     *data,
 				      gint        x,
 				      gint        y,
 				      gint        w);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -69,11 +69,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -90,7 +90,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Edge-Detect/Laplace"),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -98,14 +98,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -121,26 +121,26 @@ run (gchar   *name,
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       laplace (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
   else
     {
       /* gimp_message ("laplace: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
 }
 
 static void
-laplace_prepare_row (GPixelRgn *pixel_rgn,
+laplace_prepare_row (GimpPixelRgn *pixel_rgn,
 		     guchar    *data,
 		     gint       x,
 		     gint       y,
@@ -190,9 +190,9 @@ minmax  (gint  x1,
 }
 
 static void
-laplace (GDrawable *drawable)
+laplace (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   gint current;

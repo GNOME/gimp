@@ -50,7 +50,7 @@
  * - etc...
  *
  * Changes from version 1.1112 to version 1.1114:
- * - Modified proc args to PARAM_COLOR, also included nspoke.
+ * - Modified proc args to GIMP_PDB_COLOR, also included nspoke.
  * - nova_int_entryscale_new(): Fixed caption was guchar -> gchar, etc.
  * - Now nova renders properly with alpha channel.
  *   (Very thanks to Spencer Kimball and Federico Mena !)
@@ -123,7 +123,7 @@ typedef struct
 
 typedef struct
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   gint       dwidth;
   gint       dheight;
   gint       bpp;
@@ -141,22 +141,22 @@ typedef struct
 static void        query (void);
 static void        run   (gchar    *name,
 			  gint      nparams,
-			  GParam   *param,
+			  GimpParam   *param,
 			  gint     *nreturn_vals,
-			  GParam  **return_vals);
+			  GimpParam  **return_vals);
 
 static void        fill_preview_with_thumb (GtkWidget *preview_widget, 
 					    gint32     drawable_ID);
-static GtkWidget  *preview_widget          (GDrawable *drawable);
+static GtkWidget  *preview_widget          (GimpDrawable *drawable);
 
-static void        nova                    (GDrawable *drawable, 
+static void        nova                    (GimpDrawable *drawable, 
 					    gboolean   preview_mode);
 
-static gint        nova_dialog             (GDrawable *drawable);
+static gint        nova_dialog             (GimpDrawable *drawable);
 static void        nova_ok_callback        (GtkWidget *widget,
 				            gpointer   data);
 
-static GtkWidget * nova_center_create            (GDrawable     *drawable);
+static GtkWidget * nova_center_create            (GimpDrawable     *drawable);
 static void        nova_center_destroy           (GtkWidget     *widget,
 						  gpointer       data);
 static void        nova_center_draw              (NovaCenter    *center,
@@ -171,7 +171,7 @@ static gint        nova_center_preview_events    (GtkWidget     *widget,
 						  GdkEvent      *event,
 						  gpointer       data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -199,17 +199,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",     "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
-    { PARAM_INT32,    "xcenter",   "X coordinates of the center of supernova" },
-    { PARAM_INT32,    "ycenter",   "Y coordinates of the center of supernova" },
-    { PARAM_COLOR,    "color",     "Color of supernova" },
-    { PARAM_INT32,    "radius",    "Radius of supernova" },
-    { PARAM_INT32,    "nspoke",    "Number of spokes" },
-    { PARAM_INT32,    "randomhue", "Random hue" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,    "xcenter",   "X coordinates of the center of supernova" },
+    { GIMP_PDB_INT32,    "ycenter",   "Y coordinates of the center of supernova" },
+    { GIMP_PDB_COLOR,    "color",     "Color of supernova" },
+    { GIMP_PDB_INT32,    "radius",    "Radius of supernova" },
+    { GIMP_PDB_INT32,    "nspoke",    "Number of spokes" },
+    { GIMP_PDB_INT32,    "randomhue", "Random hue" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -225,7 +225,7 @@ query (void)
                           "May 2000",
                           N_("<Image>/Filters/Light Effects/SuperNova..."),
                           "RGB*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nargs, 0,
                           args, NULL);
 }
@@ -233,14 +233,14 @@ query (void)
 static void
 run (gchar    *name,
      gint      nparams,
-     GParam   *param,
+     GimpParam   *param,
      gint     *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
@@ -249,7 +249,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -257,7 +257,7 @@ run (gchar    *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_nova", &pvals);
 
@@ -269,11 +269,11 @@ run (gchar    *name,
         }
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 9)
-        status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+        status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
         {
           pvals.xcenter   = param[3].data.d_int32;
           pvals.ycenter   = param[4].data.d_int32;
@@ -284,12 +284,12 @@ run (gchar    *name,
           pvals.nspoke    = param[7].data.d_int32;
 	  pvals.randomhue = param[8].data.d_int32;
         }
-      if ((status == STATUS_SUCCESS) &&
+      if ((status == GIMP_PDB_SUCCESS) &&
 	  pvals.radius <= 0)
-        status = STATUS_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_nova", &pvals);
       break;
@@ -298,7 +298,7 @@ run (gchar    *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -309,18 +309,18 @@ run (gchar    *name,
 
           nova (drawable, 0);
 
-          if (run_mode != RUN_NONINTERACTIVE)
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();
 
           /*  Store data  */
-          if (run_mode == RUN_INTERACTIVE)
+          if (run_mode == GIMP_RUN_INTERACTIVE)
             gimp_set_data ("plug_in_nova", &pvals, sizeof (NovaValues));
 	    g_free(preview_bits); /* this is allocated during preview render */
         }
       else
         {
           /* gimp_message ("nova: cannot operate on indexed color images"); */
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
 
@@ -330,7 +330,7 @@ run (gchar    *name,
 }
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
   GtkWidget *preview;
@@ -446,7 +446,7 @@ fill_preview_with_thumb (GtkWidget *widget,
 /*******************/
 
 static gint
-nova_dialog (GDrawable *drawable)
+nova_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
@@ -566,7 +566,7 @@ nova_ok_callback (GtkWidget *widget,
  * Create new CenterFrame, and return it (GtkFrame).
  */
 static GtkWidget *
-nova_center_create (GDrawable *drawable)
+nova_center_create (GimpDrawable *drawable)
 {
   NovaCenter *center;
   GtkWidget  *frame;
@@ -884,10 +884,10 @@ gauss (void)
 }
 
 static void
-nova (GDrawable *drawable, 
+nova (GimpDrawable *drawable, 
       gboolean   preview_mode)
 {
-   GPixelRgn src_rgn, dest_rgn;
+   GimpPixelRgn src_rgn, dest_rgn;
    gpointer pr;
    guchar *src_row, *dest_row;
    guchar *src, *dest, *save_dest;

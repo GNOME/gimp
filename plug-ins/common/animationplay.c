@@ -154,9 +154,9 @@ typedef enum
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static        void do_playback        (void);
 
@@ -199,7 +199,7 @@ static int is_ms_tag (const char *str,
 
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -226,10 +226,10 @@ static gint32          image_id;
 static gint32          total_frames;
 static guint           frame_number;
 static gint32         *layers;
-static GDrawable      *drawable;
+static GimpDrawable      *drawable;
 static gboolean        playing = FALSE;
 static gint            timer = 0;
-static GImageType      imagetype;
+static GimpImageBaseType      imagetype;
 static guchar         *palette;
 static gint            ncolours;
 static GtkWidget      *psbutton;
@@ -253,11 +253,11 @@ MAIN ()
 static void 
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",    "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable (unused)" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (unused)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -269,7 +269,7 @@ query (void)
 			  "1997, 1998...",
 			  N_("<Image>/Filters/Animation/Animation Playback..."),
 			  "RGB*, INDEXED*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -277,24 +277,24 @@ query (void)
 static void 
 run (gchar   *name, 
      gint     n_params, 
-     GParam  *param, 
+     GimpParam  *param, 
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_NONINTERACTIVE) 
+  if (run_mode == GIMP_RUN_NONINTERACTIVE) 
     {
       if (n_params != 3) 
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       INIT_I18N();
     } 
@@ -303,17 +303,17 @@ run (gchar   *name,
       INIT_I18N_UI();
     }
 
-  if (status == STATUS_SUCCESS) 
+  if (status == GIMP_PDB_SUCCESS) 
     {
       image_id = param[1].data.d_image;
       
       do_playback();
       
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -644,7 +644,7 @@ preview_pressed (GtkWidget      *widget,
 
 
 static void
-build_dialog (GImageType  basetype,
+build_dialog (GimpImageBaseType  basetype,
 	      char       *imagename)
 {
   gchar* windowname;
@@ -897,9 +897,9 @@ do_playback (void)
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
 
-  if (imagetype == INDEXED)
+  if (imagetype == GIMP_INDEXED)
     palette = gimp_image_get_cmap(image_id, &ncolours);
-  else if (imagetype == GRAY)
+  else if (imagetype == GIMP_GRAY)
     {
       /* This is a bit sick, until this plugin ever gets
 	 real GRAY support (not worth it?) */
@@ -954,7 +954,7 @@ do_playback (void)
 static void
 render_frame (gint32 whichframe)
 {
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
   static guchar *rawframe = NULL;
   static gint rawwidth=0, rawheight=0, rawbpp=0;
   gint rawx=0, rawy=0;
@@ -1036,7 +1036,7 @@ render_frame (gint32 whichframe)
 
   switch (imagetype)
     {
-    case RGB:
+    case GIMP_RGB:
       if ((rawwidth==width) &&
 	  (rawheight==height) &&
 	  (rawx==0) &&
@@ -1308,8 +1308,8 @@ render_frame (gint32 whichframe)
 	}
       break;
 
-    case GRAY:
-    case INDEXED:
+    case GIMP_GRAY:
+    case GIMP_INDEXED:
       if ((rawwidth==width) &&
 	  (rawheight==height) &&
 	  (rawx==0) &&

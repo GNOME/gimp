@@ -58,23 +58,23 @@
 static void   query  (void);
 static void   run    (gchar   *name,
 		      gint     nparams,
-		      GParam  *param,
+		      GimpParam  *param,
 		      gint    *nreturn_vals,
-		      GParam **return_vals);
+		      GimpParam **return_vals);
 
 static guchar      best_cmap_match (guchar    *cmap, 
 				    gint       ncolors,
 				    guchar    *color);
 static void        doit            (gint32     image_ID, 
-				    GDrawable *drawable, 
+				    GimpDrawable *drawable, 
 				    gboolean   preview_mode);
 static gint        dialog          (gint32     image_ID, 
-				    GDrawable *drawable);
-static GtkWidget * preview_widget  (GDrawable *drawable);
+				    GimpDrawable *drawable);
+static GtkWidget * preview_widget  (GimpDrawable *drawable);
 static void        fill_preview    (GtkWidget *preview_widget, 
-				    GDrawable *drawable);
+				    GimpDrawable *drawable);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -121,29 +121,29 @@ MAIN ()
 static 
 void query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",    "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
 
-    { PARAM_INT32,    "hwidth",   "Horizontal Width   (>= 0)" },
-    { PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 1)" },
-    { PARAM_INT32,    "hoffset",  "Horizontal Offset  (>= 0)" },
-    { PARAM_COLOR,    "hcolor",   "Horizontal Colour" },
-    { PARAM_INT8,     "hopacity", "Horizontal Opacity (0...255)" },
+    { GIMP_PDB_INT32,    "hwidth",   "Horizontal Width   (>= 0)" },
+    { GIMP_PDB_INT32,    "hspace",   "Horizontal Spacing (>= 1)" },
+    { GIMP_PDB_INT32,    "hoffset",  "Horizontal Offset  (>= 0)" },
+    { GIMP_PDB_COLOR,    "hcolor",   "Horizontal Colour" },
+    { GIMP_PDB_INT8,     "hopacity", "Horizontal Opacity (0...255)" },
 
-    { PARAM_INT32,    "vwidth",   "Vertical Width   (>= 0)" },
-    { PARAM_INT32,    "vspace",   "Vertical Spacing (>= 1)" },
-    { PARAM_INT32,    "voffset",  "Vertical Offset  (>= 0)" },
-    { PARAM_COLOR,    "vcolor",   "Vertical Colour" },
-    { PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)" },
+    { GIMP_PDB_INT32,    "vwidth",   "Vertical Width   (>= 0)" },
+    { GIMP_PDB_INT32,    "vspace",   "Vertical Spacing (>= 1)" },
+    { GIMP_PDB_INT32,    "voffset",  "Vertical Offset  (>= 0)" },
+    { GIMP_PDB_COLOR,    "vcolor",   "Vertical Colour" },
+    { GIMP_PDB_INT8,     "vopacity", "Vertical Opacity (0...255)" },
 
-    { PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)" },
-    { PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)" },
-    { PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)" },
-    { PARAM_COLOR,    "icolor",   "Intersection Colour" },
-    { PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)" }
+    { GIMP_PDB_INT32,    "iwidth",   "Intersection Width   (>= 0)" },
+    { GIMP_PDB_INT32,    "ispace",   "Intersection Spacing (>= 0)" },
+    { GIMP_PDB_INT32,    "ioffset",  "Intersection Offset  (>= 0)" },
+    { GIMP_PDB_COLOR,    "icolor",   "Intersection Colour" },
+    { GIMP_PDB_INT8,     "iopacity", "Intersection Opacity (0...255)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -156,7 +156,7 @@ void query (void)
 			  "1997 - 2000",
 			  N_("<Image>/Filters/Render/Pattern/Grid..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -164,15 +164,15 @@ void query (void)
 static void
 run (gchar   *name, 
      gint     n_params, 
-     GParam  *param, 
+     GimpParam  *param, 
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
   gint32 image_ID;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -183,12 +183,12 @@ run (gchar   *name,
   image_ID = param[1].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       if (n_params != 18)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  grid_cfg.hwidth    = MAX (0, param[3].data.d_int32);
 	  grid_cfg.hspace    = MAX (1, param[4].data.d_int32);
@@ -221,38 +221,38 @@ run (gchar   *name,
       gimp_get_data ("plug_in_grid", &grid_cfg);
     }
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (!dialog (image_ID, drawable))
 	{
 	  /* The dialog was closed, or something similarly evil happened. */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       g_free(preview_bits);
     }
 
   if (grid_cfg.hspace <= 0 || grid_cfg.vspace <= 0)
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Drawing Grid..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       
       doit (image_ID, drawable, FALSE);
       
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
       
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_grid", &grid_cfg, sizeof (grid_cfg));
 
       gimp_drawable_detach (drawable);
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -326,10 +326,10 @@ pix_composite (guchar   *p1,
 
 static void
 doit (gint32     image_ID,
-      GDrawable *drawable,
+      GimpDrawable *drawable,
       gboolean   preview_mode)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height, bytes;
   gint x_offset, y_offset;
   guchar *dest;
@@ -603,7 +603,7 @@ static void
 update_preview_callback (GtkWidget *widget, 
 			 gpointer   data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   GtkWidget *entry;
 
   drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
@@ -628,7 +628,7 @@ update_preview_callback (GtkWidget *widget,
 
 static gint
 dialog (gint32     image_ID,
-	GDrawable *drawable)
+	GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_hbox;
@@ -965,7 +965,7 @@ dialog (gint32     image_ID,
 }
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
   GtkWidget *preview;
@@ -981,9 +981,9 @@ preview_widget (GDrawable *drawable)
 
 static void
 fill_preview (GtkWidget *widget, 
-	      GDrawable *drawable)
+	      GimpDrawable *drawable)
 {
-  GPixelRgn  srcPR;
+  GimpPixelRgn  srcPR;
   gint       width;
   gint       height;
   gint       x1, x2, y1, y2;

@@ -112,8 +112,8 @@ typedef struct
   gint       img_width, img_height, img_bpp, img_has_alpha;
   gint       tile_width, tile_height;
   guchar     bg_color[4];
-  GDrawable *drawable;
-  GTile     *tile;
+  GimpDrawable *drawable;
+  GimpTile     *tile;
 } pixel_fetcher_t;
 
 
@@ -122,16 +122,16 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static void   polarize(void);
 static int    calc_undistorted_coords(double wx, double wy,
 				      double *x, double *y);
 static guchar bilinear(double x, double y, guchar *values);
 
-static pixel_fetcher_t *pixel_fetcher_new(GDrawable *drawable);
+static pixel_fetcher_t *pixel_fetcher_new(GimpDrawable *drawable);
 static void             pixel_fetcher_set_bg_color(pixel_fetcher_t *pf, guchar r, guchar g, guchar b, guchar a);
 static void             pixel_fetcher_get_pixel(pixel_fetcher_t *pf, int x, int y, guchar *pixel);
 static void             pixel_fetcher_destroy(pixel_fetcher_t *pf);
@@ -148,7 +148,7 @@ static void polar_toggle_callback (GtkWidget *widget, gpointer data);
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -175,7 +175,7 @@ static polarize_interface_t pcint =
   FALSE  /* run */
 };
 
-static GDrawable *drawable;
+static GimpDrawable *drawable;
 
 static gint img_width, img_height, img_bpp, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
@@ -192,16 +192,16 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",     "Input image" },
-    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
-    { PARAM_FLOAT,    "circle",    "Circle depth in %" },
-    { PARAM_FLOAT,    "angle",     "Offset angle" },
-    { PARAM_INT32,    "backwards",    "Map backwards?" },
-    { PARAM_INT32,    "inverse",     "Map from top?" },
-    { PARAM_INT32,    "polrec",     "Polar to rectangular?" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %" },
+    { GIMP_PDB_FLOAT,    "angle",     "Offset angle" },
+    { GIMP_PDB_INT32,    "backwards",    "Map backwards?" },
+    { GIMP_PDB_INT32,    "inverse",     "Map from top?" },
+    { GIMP_PDB_INT32,    "polrec",     "Polar to rectangular?" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -214,7 +214,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Distorts/Polar Coords..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -222,21 +222,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 
-  GRunModeType run_mode;
-  GStatusType  status;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType  status;
   double       xhsiz, yhsiz;
   int          pwidth, pheight;
 
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -300,7 +300,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
 
       /* Possibly retrieve data */
@@ -312,13 +312,13 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
 
       /* Make sure all the arguments are present */
       if (nparams != 8)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -330,7 +330,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
 
       /* Possibly retrieve data */
@@ -342,7 +342,7 @@ run (gchar   *name,
     }
 
   /* Distort the image */
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (drawable->id) ||
        gimp_drawable_is_gray (drawable->id)))
     {
@@ -354,15 +354,15 @@ run (gchar   *name,
       polarize ();
 
       /* If run mode is interactive, flush displays */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /* Store data */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data (PLUG_IN_NAME, &pcvals, sizeof (polarize_vals_t));
     }
-  else if (status == STATUS_SUCCESS)
-    status = STATUS_EXECUTION_ERROR;
+  else if (status == GIMP_PDB_SUCCESS)
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
@@ -372,7 +372,7 @@ run (gchar   *name,
 static void
 polarize (void)
 {
-  GPixelRgn  dest_rgn;
+  GimpPixelRgn  dest_rgn;
   guchar    *dest, *d;
   guchar     pixel[4][4];
   guchar     pixel2[4];
@@ -714,7 +714,7 @@ bilinear (gdouble  x,
 }
 
 static pixel_fetcher_t *
-pixel_fetcher_new (GDrawable *drawable)
+pixel_fetcher_new (GimpDrawable *drawable)
 {
   pixel_fetcher_t *pf;
 

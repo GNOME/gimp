@@ -62,8 +62,8 @@ typedef struct
 typedef struct
 {
   gint32     ID;
-  GDrawable *drawable;
-  GPixelRgn  pixel_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn  pixel_rgn;
   guchar    *pixels;
   guchar    *pixel;
 } channel_data;
@@ -73,9 +73,9 @@ typedef struct
 static void   query   (void);
 static void   run     (gchar   *name,
 		       gint     nparams,
-		       GParam  *param,
+		       GimpParam  *param,
 		       gint    *nreturn_vals,
-		       GParam **return_vals);
+		       GimpParam **return_vals);
 
 static gint32 load_image    (gchar        *filename);
 
@@ -148,7 +148,7 @@ static void   comment_entry_callback (GtkWidget *widget,
 
 #define DEFAULT_COMMENT "Created with The GIMP"
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -173,28 +173,28 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32, "compression", "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -206,7 +206,7 @@ query (void)
                           "1995-1996,1998-2000",
                           "<Load>/Tiff",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -218,7 +218,7 @@ query (void)
                           "1995-1996,2000",
                           "<Save>/Tiff",
 			  "RGB*, GRAY*, INDEXED",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -234,13 +234,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
 #ifdef GIMP_HAVE_PARASITES
   GimpParasite *parasite;
 #endif /* GIMP_HAVE_PARASITES */
@@ -253,8 +253,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_tiff_load") == 0)
     {
@@ -264,12 +264,12 @@ run (gchar   *name,
       if (image != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_tiff_save") == 0)
@@ -283,8 +283,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
 	  gimp_ui_init ("tiff", FALSE);
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
@@ -294,7 +294,7 @@ run (gchar   *name,
 				       CAN_HANDLE_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -314,7 +314,7 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 
@@ -330,15 +330,15 @@ run (gchar   *name,
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -349,12 +349,12 @@ run (gchar   *name,
 		case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
 		case 3: tsvals.compression = COMPRESSION_DEFLATE;  break;
 		case 4: tsvals.compression = COMPRESSION_JPEG;  break;
-		default: status = STATUS_CALLING_ERROR; break;
+		default: status = GIMP_PDB_CALLING_ERROR; break;
 		}
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
 
@@ -373,7 +373,7 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string, image, drawable, orig_image))
 	    {
@@ -382,7 +382,7 @@ run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
 
@@ -391,7 +391,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -416,8 +416,8 @@ load_image (gchar *filename)
   TIFF    *tif;
   gushort  bps, spp, photomet;
   gint     cols, rows, alpha;
-  gint     image, image_type = RGB;
-  gint     layer, layer_type = RGB_IMAGE;
+  gint     image, image_type = GIMP_RGB;
+  gint     layer, layer_type = GIMP_RGB_IMAGE;
   gushort  extra, *extra_types;
   channel_data *channel= NULL;
 
@@ -500,18 +500,18 @@ load_image (gchar *filename)
   switch (photomet) {
     case PHOTOMETRIC_MINISBLACK:
     case PHOTOMETRIC_MINISWHITE:
-      image_type = GRAY;
-      layer_type = (alpha) ? GRAYA_IMAGE : GRAY_IMAGE;
+      image_type = GIMP_GRAY;
+      layer_type = (alpha) ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
 
     case PHOTOMETRIC_RGB:
-      image_type = RGB;
-      layer_type = (alpha) ? RGBA_IMAGE : RGB_IMAGE;
+      image_type = GIMP_RGB;
+      layer_type = (alpha) ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
 
     case PHOTOMETRIC_PALETTE:
-      image_type = INDEXED;
-      layer_type = (alpha) ? INDEXEDA_IMAGE : INDEXED_IMAGE;
+      image_type = GIMP_INDEXED;
+      layer_type = (alpha) ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
       break;
 
     default:
@@ -519,8 +519,8 @@ load_image (gchar *filename)
   }
 
   if (worst_case) {
-    image_type = RGB;
-    layer_type = RGBA_IMAGE;
+    image_type = GIMP_RGB;
+    layer_type = GIMP_RGBA_IMAGE;
   }
 
   if ((image = gimp_image_new (cols, rows, image_type)) == -1) {
@@ -536,10 +536,10 @@ load_image (gchar *filename)
          * that can handle ICC profiles. Otherwise just ignore this section. */
   if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile)) {
 #ifdef GIMP_HAVE_PARASITES
-    parasite = parasite_new("icc-profile", 0,
+    parasite = gimp_parasite_new("icc-profile", 0,
 			    profile_size, icc_profile);
     gimp_image_parasite_attach(image, parasite);
-    parasite_free(parasite);
+    gimp_parasite_free(parasite);
 #endif
   }    
 #endif
@@ -654,7 +654,7 @@ load_image (gchar *filename)
 
 
   /* Install colormap for INDEXED images only */
-  if (image_type == INDEXED) 
+  if (image_type == GIMP_INDEXED) 
     {
       if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap)) 
 	{
@@ -674,7 +674,7 @@ load_image (gchar *filename)
   /* Allocate channel_data for all channels, even the background layer */
   channel = g_new (channel_data, extra + 1);
   layer = gimp_layer_new (image, _("Background"), cols, rows, layer_type,
-			     100, NORMAL_MODE);
+			     100, GIMP_NORMAL_MODE);
   channel[0].ID= layer;
   gimp_image_add_layer (image, layer, 0);
   channel[0].drawable= gimp_drawable_get(layer);
@@ -1249,9 +1249,9 @@ save_image (gchar   *filename,
   guchar        *cmap;
   gint           colors;
   gint           success;
-  GDrawable     *drawable;
-  GDrawableType  drawable_type;
-  GPixelRgn      pixel_rgn;
+  GimpDrawable     *drawable;
+  GimpImageType  drawable_type;
+  GimpPixelRgn      pixel_rgn;
   gint           tile_height;
   gint           y, yend;
   gchar         *name;
@@ -1293,7 +1293,7 @@ save_image (gchar   *filename,
 
   switch (drawable_type)
     {
-    case RGB_IMAGE:
+    case GIMP_RGB_IMAGE:
       predictor = 2;
       samplesperpixel = 3;
       bitspersample = 8;
@@ -1301,14 +1301,14 @@ save_image (gchar   *filename,
       bytesperrow = cols * 3;
       alpha = 0;
       break;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       bitspersample = 8;
       photometric = PHOTOMETRIC_MINISBLACK;
       bytesperrow = cols;
       alpha = 0;
       break;
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       predictor = 2;
       samplesperpixel = 4;
       bitspersample = 8;
@@ -1316,14 +1316,14 @@ save_image (gchar   *filename,
       bytesperrow = cols * 4;
       alpha = 1;
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       samplesperpixel = 2;
       bitspersample = 8;
       photometric = PHOTOMETRIC_MINISBLACK;
       bytesperrow = cols * 2;
       alpha = 1;
       break;
-    case INDEXED_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       samplesperpixel = 1;
       bitspersample = 8;
       photometric = PHOTOMETRIC_PALETTE;
@@ -1339,7 +1339,7 @@ save_image (gchar   *filename,
 	  blu[i] = *cmap++ * 65535 / 255;
 	}
       break;
-    case INDEXEDA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       return 0;
      default:
       return 0;
@@ -1422,24 +1422,24 @@ save_image (gchar   *filename,
 #ifdef GIMP_HAVE_PARASITES
 #ifdef TIFFTAG_ICCPROFILE
   {
-    Parasite *parasite;
+    GimpParasite *parasite;
     uint32 profile_size;
     guchar *icc_profile;
 
     parasite = gimp_image_parasite_find (orig_image, "icc-profile");
     if (parasite)
       {
-        profile_size = parasite_data_size(parasite);
-	icc_profile = parasite_data(parasite);
+        profile_size = gimp_parasite_data_size(parasite);
+	icc_profile = gimp_parasite_data(parasite);
 
 	TIFFSetField(tif, TIFFTAG_ICCPROFILE, profile_size, icc_profile);
-        parasite_free(parasite);
+        gimp_parasite_free(parasite);
       }
   }
 #endif
 #endif
 
-  if (drawable_type == INDEXED_IMAGE)
+  if (drawable_type == GIMP_INDEXED_IMAGE)
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
 
   /* array to rearrange data */
@@ -1460,13 +1460,13 @@ save_image (gchar   *filename,
 
 	  switch (drawable_type)
 	    {
-	    case INDEXED_IMAGE:
+	    case GIMP_INDEXED_IMAGE:
 	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
 	      break;
-	    case GRAY_IMAGE:
+	    case GIMP_GRAY_IMAGE:
 	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
 	      break;
-	    case GRAYA_IMAGE:
+	    case GIMP_GRAYA_IMAGE:
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
 		  /* pre-multiply gray by alpha */
@@ -1475,10 +1475,10 @@ save_image (gchar   *filename,
 		}
 	      success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
 	      break;
-	    case RGB_IMAGE:
+	    case GIMP_RGB_IMAGE:
 	      success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
 	      break;
-	    case RGBA_IMAGE:
+	    case GIMP_RGBA_IMAGE:
 	      for (col = 0; col < cols*samplesperpixel; col+=samplesperpixel)
 		{
 		  /* pre-multiply rgb by alpha */

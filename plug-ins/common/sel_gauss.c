@@ -64,11 +64,11 @@ typedef struct
 static void   query  (void);
 static void   run    (gchar     *name,
 		      gint       nparams,
-		      GParam     *param,
+		      GimpParam     *param,
 		      gint      *nreturn_vals,
-		      GParam   **return_vals);
+		      GimpParam   **return_vals);
 
-static void   sel_gauss (GDrawable *drawable,
+static void   sel_gauss (GimpDrawable *drawable,
 			 gdouble    radius,
 			 gint       maxdelta);
 
@@ -76,7 +76,7 @@ static gint   sel_gauss_dialog      (void);
 static void   sel_gauss_ok_callback (GtkWidget *widget,
 				     gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -100,13 +100,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-    { PARAM_INT32, "maxdelta", "Maximum delta" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
+    { GIMP_PDB_INT32, "maxdelta", "Maximum delta" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -124,7 +124,7 @@ query (void)
 			  "1999",
 			  N_("<Image>/Filters/Blur/Selective Gaussian Blur..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -132,14 +132,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	values[1];
-  GRunModeType	run_mode;
-  GStatusType	status = STATUS_SUCCESS;
-  GDrawable	*drawable;
+  static GimpParam	values[1];
+  GimpRunModeType	run_mode;
+  GimpPDBStatusType	status = GIMP_PDB_SUCCESS;
+  GimpDrawable	*drawable;
   gdouble	radius;
 
   run_mode = param[0].data.d_int32;
@@ -149,12 +149,12 @@ run (gchar   *name,
 
   INIT_I18N_UI(); 
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_sel_gauss", &bvals);
 
@@ -163,20 +163,20 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /* Make sure all the arguments are there! */
       if (nparams != 7)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  bvals.radius   = param[3].data.d_float;
 	  bvals.maxdelta = CLAMP (param[4].data.d_int32, 0, 255);
 	}
-      if (status == STATUS_SUCCESS && (bvals.radius < 1.0))
-	status = STATUS_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS && (bvals.radius < 1.0))
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data */
       gimp_get_data ("plug_in_sel_gauss", &bvals);
       break;
@@ -185,7 +185,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status != STATUS_SUCCESS)
+  if (status != GIMP_PDB_SUCCESS)
     {
       values[0].data.d_status = status;
       return;
@@ -206,17 +206,17 @@ run (gchar   *name,
       sel_gauss (drawable, radius, bvals.maxdelta);
 
       /* Store data */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_sel_gauss",
 		       &bvals, sizeof (BlurValues));
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
     }
   else
     {
       gimp_message (_("sel_gauss: Cannot operate on indexed color images"));
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   gimp_drawable_detach (drawable);
@@ -392,11 +392,11 @@ matrixmult (guchar   *src,
 }
 
 static void
-sel_gauss (GDrawable *drawable,
+sel_gauss (GimpDrawable *drawable,
 	   gdouble    radius,
 	   gint       maxdelta)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint      width, height;
   gint      bytes;
   gint      has_alpha;

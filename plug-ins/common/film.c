@@ -91,18 +91,18 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 
 static gint32    create_new_image   (gchar          *filename,
 				     guint           width,
 				     guint           height,
-				     GDrawableType   gdtype,
+				     GimpImageType   gdtype,
 				     gint32         *layer_ID,
-				     GDrawable     **drawable,
-				     GPixelRgn      *pixel_rgn);
+				     GimpDrawable     **drawable,
+				     GimpPixelRgn      *pixel_rgn);
 
 static gchar   * compose_image_name (gint32          image_ID);
 
@@ -110,7 +110,7 @@ static gint32    film               (void);
 
 static gint      check_filmvals     (void);
 
-static void      convert_to_rgb     (GDrawable      *srcdrawable,
+static void      convert_to_rgb     (GimpDrawable      *srcdrawable,
 				     gint            numpix,
 				     guchar         *src,
 				     guchar         *dst);
@@ -133,7 +133,7 @@ static gint      scale_layer        (gint32          src_layer,
 static guchar  * create_hole_rgb    (gint            width,
 				     gint            height);
 
-static void      draw_hole_rgb      (GDrawable      *drw,
+static void      draw_hole_rgb      (GimpDrawable      *drw,
 				     gint            x,
 				     gint            y,
 				     gint            width,
@@ -164,7 +164,7 @@ static void        film_reset_callback    (GtkWidget *widget,
 					   gpointer   data);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -213,7 +213,7 @@ static FilmInterface filmint =
 };
 
 
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 
 
 MAIN ()
@@ -221,26 +221,26 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (only used as default image in interactive mode)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { PARAM_INT32, "film_height", "Height of film (0: fit to images)" },
-    { PARAM_COLOR, "film_color", "Color of the film" },
-    { PARAM_INT32, "number_start", "Start index for numbering" },
-    { PARAM_STRING, "number_fontf", "Font family for drawing numbers" },
-    { PARAM_COLOR, "number_color", "Color for numbers" },
-    { PARAM_INT32, "at_top", "Flag for drawing numbers at top of film" },
-    { PARAM_INT32, "at_bottom", "Flag for drawing numbers at bottom of film" },
-    { PARAM_INT32, "num_images", "Number of images to be used for film" },
-    { PARAM_INT32ARRAY, "image_ids", "num_images image IDs to be used for film"}
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (only used as default image in interactive mode)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)" },
+    { GIMP_PDB_INT32, "film_height", "Height of film (0: fit to images)" },
+    { GIMP_PDB_COLOR, "film_color", "Color of the film" },
+    { GIMP_PDB_INT32, "number_start", "Start index for numbering" },
+    { GIMP_PDB_STRING, "number_fontf", "Font family for drawing numbers" },
+    { GIMP_PDB_COLOR, "number_color", "Color for numbers" },
+    { GIMP_PDB_INT32, "at_top", "Flag for drawing numbers at top of film" },
+    { GIMP_PDB_INT32, "at_bottom", "Flag for drawing numbers at bottom of film" },
+    { GIMP_PDB_INT32, "num_images", "Number of images to be used for film" },
+    { GIMP_PDB_INT32ARRAY, "image_ids", "num_images image IDs to be used for film"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
@@ -252,7 +252,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Combine/Film..."),
 			  "INDEXED*, GRAY*, RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -260,12 +260,12 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32 image_ID;
   gint k;
 
@@ -276,14 +276,14 @@ run (gchar   *name,
   *nreturn_vals = 2;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = PARAM_IMAGE;
+  values[1].type = GIMP_PDB_IMAGE;
   values[1].data.d_int32 = -1;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_film", &filmvals);
 
@@ -292,12 +292,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       /* Also we want to have some images to compose */
       if ((nparams != 12) || (param[10].data.d_int32 < 1))
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -324,7 +324,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_film", &filmvals);
       break;
@@ -334,30 +334,30 @@ run (gchar   *name,
     }
 
   if (check_filmvals () < 0)
-    status = STATUS_CALLING_ERROR;
+    status = GIMP_PDB_CALLING_ERROR;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_progress_init (_("Composing Images..."));
 
       image_ID = film ();
 
       if (image_ID < 0)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
 	  values[1].data.d_int32 = image_ID;
 	  gimp_image_undo_enable (image_ID);
 	  gimp_image_clean_all (image_ID);
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_display_new (image_ID);
 	}
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data ("plug_in_film", &filmvals, sizeof (FilmVals));
     }
 
@@ -381,8 +381,8 @@ film (void)
   gint num_layers;
   gint32 *image_ID_src, image_ID_dst, layer_ID_src, layer_ID_dst;
   gint32 *layers;
-  GDrawable *drawable_dst;
-  GPixelRgn pixel_rgn_dst;
+  GimpDrawable *drawable_dst;
+  GimpPixelRgn pixel_rgn_dst;
 
   /* initialize */
 
@@ -454,7 +454,7 @@ film (void)
 
   image_ID_dst = create_new_image (_("Untitled"),
 				   (guint) film_width, (guint) film_height,
-				   RGB_IMAGE, &layer_ID_dst,
+				   GIMP_RGB_IMAGE, &layer_ID_dst,
 				   &drawable_dst, &pixel_rgn_dst);
 
   dst = g_new (guchar, film_width * tile_height * 3);
@@ -556,7 +556,7 @@ film (void)
 
 	  picture_x0 += picture_width + (picture_space/2);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_update (((gdouble) (picture_count + 1)) /
 				  (gdouble) num_pictures);
 
@@ -600,7 +600,7 @@ check_filmvals (void)
 
 /* Converts numpix pixels from src to RGB at dst */
 static void
-convert_to_rgb (GDrawable *srcdrawable,
+convert_to_rgb (GimpDrawable *srcdrawable,
 		gint       numpix,
 		guchar    *src,
 		guchar    *dst)
@@ -613,11 +613,11 @@ convert_to_rgb (GDrawable *srcdrawable,
 
  switch (gimp_drawable_type (srcdrawable->id))
    {
-   case RGB_IMAGE:
+   case GIMP_RGB_IMAGE:
      memcpy ((char *)dst, (char *)src, numpix*3);
      break;
 
-   case RGBA_IMAGE:
+   case GIMP_RGBA_IMAGE:
      from = src;
      to = dst;
      k = numpix;
@@ -628,7 +628,7 @@ convert_to_rgb (GDrawable *srcdrawable,
        }
      break;
 
-   case GRAY_IMAGE:
+   case GIMP_GRAY_IMAGE:
      from = src;
      to = dst;
      k = numpix;
@@ -639,7 +639,7 @@ convert_to_rgb (GDrawable *srcdrawable,
        }
      break;
 
-   case GRAYA_IMAGE:
+   case GIMP_GRAYA_IMAGE:
      from = src;
      to = dst;
      k = numpix;
@@ -651,8 +651,8 @@ convert_to_rgb (GDrawable *srcdrawable,
        }
      break;
 
-   case INDEXED_IMAGE:
-   case INDEXEDA_IMAGE:
+   case GIMP_INDEXED_IMAGE:
+   case GIMP_INDEXEDA_IMAGE:
      cmap = gimp_image_get_cmap (gimp_drawable_image_id (srcdrawable->id),
                                  &ncols);
      if (cmap)
@@ -724,8 +724,8 @@ scale_layer (gint32  src_layer,
   gint tile_height, i, scan_lines, numpix;
   guchar *src, *tmp = (guchar *) ident; /* Just to satisfy gcc */
   gint32 tmp_image, tmp_layer;
-  GDrawable *tmp_drawable, *src_drawable, *dst_drawable;
-  GPixelRgn tmp_pixel_rgn, src_pixel_rgn, dst_pixel_rgn;
+  GimpDrawable *tmp_drawable, *src_drawable, *dst_drawable;
+  GimpPixelRgn tmp_pixel_rgn, src_pixel_rgn, dst_pixel_rgn;
 
   tile_height = gimp_tile_height ();
 
@@ -734,7 +734,7 @@ scale_layer (gint32  src_layer,
   /*** Get a RGB copy of the source region ***/
 
   tmp_image = create_new_image (_("Temporary"), src_width, src_height,
-				RGB_IMAGE,
+				GIMP_RGB_IMAGE,
 				&tmp_layer, &tmp_drawable, &tmp_pixel_rgn);
 
   src = g_new (guchar, src_width * tile_height * src_drawable->bpp);
@@ -850,14 +850,14 @@ create_hole_rgb (gint width,
 
 /* Draw the hole at the specified position */
 static void
-draw_hole_rgb (GDrawable *drw,
+draw_hole_rgb (GimpDrawable *drw,
                gint       x,
                gint       y,
                gint       width,
                gint       height,
                guchar    *hole)
 {
-  GPixelRgn rgn;
+  GimpPixelRgn rgn;
   guchar *data;
   gint tile_height = gimp_tile_height ();
   gint i, j, scan_lines, d_width = gimp_drawable_width (drw->id);
@@ -981,26 +981,26 @@ static gint32
 create_new_image (gchar          *filename,
                   guint           width,
                   guint           height,
-                  GDrawableType   gdtype,
+                  GimpImageType   gdtype,
                   gint32         *layer_ID,
-                  GDrawable     **drawable,
-                  GPixelRgn       *pixel_rgn)
+                  GimpDrawable     **drawable,
+                  GimpPixelRgn       *pixel_rgn)
 {
   gint32 image_ID;
-  GImageType gitype;
+  GimpImageBaseType gitype;
 
-  if ((gdtype == GRAY_IMAGE) || (gdtype == GRAYA_IMAGE))
-    gitype = GRAY;
-  else if ((gdtype == INDEXED_IMAGE) || (gdtype == INDEXEDA_IMAGE))
-    gitype = INDEXED;
+  if ((gdtype == GIMP_GRAY_IMAGE) || (gdtype == GIMP_GRAYA_IMAGE))
+    gitype = GIMP_GRAY;
+  else if ((gdtype == GIMP_INDEXED_IMAGE) || (gdtype == GIMP_INDEXEDA_IMAGE))
+    gitype = GIMP_INDEXED;
   else
-    gitype = RGB;
+    gitype = GIMP_RGB;
 
   image_ID = gimp_image_new (width, height, gitype);
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      gdtype, 100, NORMAL_MODE);
+			      gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   if (drawable != NULL)
@@ -1325,7 +1325,7 @@ film_dialog (gint32 image_ID)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   /* Get a list of all image names */
-  image_id_list = gimp_query_images (&nimages);
+  image_id_list = gimp_image_list (&nimages);
   filmint.image_list_all = add_image_list (1, nimages, image_id_list, hbox);
 
   /* Get a list of the images used for the film */

@@ -56,9 +56,9 @@ typedef struct
 static void	query (void);
 static void	run   (gchar   *name,
 		       gint     nparams,
-		       GParam  *param,
+		       GimpParam  *param,
 		       gint    *nreturn_vals,
-		       GParam **return_vals);
+		       GimpParam **return_vals);
 
 static void	exchange              (void);
 static void	real_exchange         (gint, gint, gint, gint, gboolean);
@@ -70,11 +70,11 @@ static void	color_button_callback (GtkWidget *, gpointer);
 static void	scale_callback        (GtkAdjustment *, gpointer);
 
 /* some global variables */
-static GDrawable *drw;
+static GimpDrawable *drw;
 static gboolean   has_alpha;
 static myParams   xargs = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 static gint       running = 0;
-static GPixelRgn  origregion;
+static GimpPixelRgn  origregion;
 static GtkWidget *preview;
 static GtkWidget *from_colorbutton;
 static GtkWidget *to_colorbutton;
@@ -83,7 +83,7 @@ static gint       prev_width, prev_height, sel_width, sel_height;
 static gboolean   lock_threshold = FALSE;
 
 /* lets declare what we want to do */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -98,20 +98,20 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT8, "fromred", "Red value (from)" },
-    { PARAM_INT8, "fromgreen", "Green value (from)" },
-    { PARAM_INT8, "fromblue", "Blue value (from)" },
-    { PARAM_INT8, "tored", "Red value (to)" },
-    { PARAM_INT8, "togreen", "Green value (to)" },
-    { PARAM_INT8, "toblue", "Blue value (to)" },
-    { PARAM_INT8, "red_threshold", "Red threshold" },
-    { PARAM_INT8, "green_threshold", "Green threshold" },
-    { PARAM_INT8, "blue_threshold", "Blue threshold" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT8, "fromred", "Red value (from)" },
+    { GIMP_PDB_INT8, "fromgreen", "Green value (from)" },
+    { GIMP_PDB_INT8, "fromblue", "Blue value (from)" },
+    { GIMP_PDB_INT8, "tored", "Red value (to)" },
+    { GIMP_PDB_INT8, "togreen", "Green value (to)" },
+    { GIMP_PDB_INT8, "toblue", "Blue value (to)" },
+    { GIMP_PDB_INT8, "red_threshold", "Red threshold" },
+    { GIMP_PDB_INT8, "green_threshold", "Green threshold" },
+    { GIMP_PDB_INT8, "blue_threshold", "Blue threshold" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -124,7 +124,7 @@ query (void)
 			  "June 17th, 1997",
 			  N_("<Image>/Filters/Colors/Map/Color Exchange..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -133,18 +133,18 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	values[1];
-  GRunModeType	runmode;
-  GStatusType 	status = STATUS_SUCCESS;
+  static GimpParam	values[1];
+  GimpRunModeType	runmode;
+  GimpPDBStatusType 	status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   runmode        = param[0].data.d_int32;
@@ -154,7 +154,7 @@ run (gchar   *name,
 
   switch (runmode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* retrieve stored arguments (if any) */
       gimp_get_data ("plug_in_exchange", &xargs);
@@ -179,7 +179,7 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data ("plug_in_exchange", &xargs);
       /* 
@@ -192,11 +192,11 @@ run (gchar   *name,
 				   &xargs.fromblue);
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams != 10)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -215,7 +215,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if (gimp_drawable_is_rgb (drw->id))
 	{
@@ -225,15 +225,15 @@ run (gchar   *name,
 	  gimp_drawable_detach( drw);
 
 	  /* store our settings */
-	  if (runmode == RUN_INTERACTIVE)
+	  if (runmode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_exchange", &xargs, sizeof (myParams));
 
 	  /* and flush */
-	  if (runmode != RUN_NONINTERACTIVE)
+	  if (runmode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	}
       else
-	status = STATUS_EXECUTION_ERROR;
+	status = GIMP_PDB_EXECUTION_ERROR;
     }
   values[0].data.d_status = status;
 }
@@ -570,7 +570,7 @@ real_exchange (gint     x1,
 	       gint     y2,
 	       gboolean do_preview)
 {
-  GPixelRgn  srcPR, destPR;
+  GimpPixelRgn  srcPR, destPR;
   guchar    *src_row, *dest_row;
   gint       x, y, bpp = drw->bpp;
   gint       width, height;

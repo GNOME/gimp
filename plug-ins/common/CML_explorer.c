@@ -304,11 +304,11 @@ static gchar *channel_names[] =
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static GStatusType   CML_main_function     (gint       preview_p);
+static GimpPDBStatusType   CML_main_function     (gint       preview_p);
 static void          CML_compute_next_step (gint       size,
 					    gdouble  **h,
 					    gdouble  **s,
@@ -391,7 +391,7 @@ static gdouble parse_line_to_gdouble       (FILE      *file,
 					    gint      *flag);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -449,12 +449,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args [] =
+  static GimpParamDef args [] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    { PARAM_IMAGE, "image", "Input image (not used)"},
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE, "image", "Input image (not used)"},
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -462,7 +462,7 @@ query (void)
 			  "Make an image of Coupled-Map Lattice",
 			  "Make an image of Coupled-Map Lattice (CML). CML is "
 			  "a kind of Cellula Automata on continuous (value) "
-			  "domain. In RUN_NONINTERACTIVE, the name of a "
+			  "domain. In GIMP_RUN_NONINTERACTIVE, the name of a "
 			  "prameter file is passed as the 4th arg. You can "
 			  "control CML_explorer via parameter file.",
 			  /*  Or do you want to call me with over 50 args? */
@@ -472,7 +472,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Render/Pattern/CML Explorer..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -480,13 +480,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GStatusType   status = STATUS_EXECUTION_ERROR;
-  GRunModeType  run_mode;
+  static GimpParam values[1];
+  GimpPDBStatusType   status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType  run_mode;
 
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_drawable;
@@ -494,18 +494,18 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (! CML_explorer_dialog ())
 	return;
       break;
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       {
 	gchar *filename = param[3].data.d_string;
 
@@ -513,7 +513,7 @@ run (gchar   *name,
 	  return;
 	break;
       }
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
@@ -521,9 +521,9 @@ run (gchar   *name,
   gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
   status = CML_main_function (FALSE);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
 
   if (mem_chank0)
@@ -533,15 +533,15 @@ run (gchar   *name,
   if (mem_chank2)
     g_free (mem_chank2);
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
-static GStatusType
+static GimpPDBStatusType
 CML_main_function (gint preview_p)
 {
-  GDrawable *drawable = NULL;
-  GPixelRgn  dest_rgn, src_rgn;
+  GimpDrawable *drawable = NULL;
+  GimpPixelRgn  dest_rgn, src_rgn;
   guchar    *dest_buffer = NULL;
   guchar    *src_buffer = NULL;
   gint       x1, x2, y1, y2;
@@ -864,7 +864,7 @@ CML_main_function (gint preview_p)
       gimp_drawable_detach (drawable);
     }
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 static void

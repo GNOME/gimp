@@ -73,9 +73,9 @@
 static void	query (void);
 static void	run   (gchar   *name,
 		       gint     nparams,
-		       GParam  *param,
+		       GimpParam  *param,
 		       gint    *nreturn_vals,
-		       GParam **returm_vals);
+		       GimpParam **returm_vals);
 
 static void	compute_luts   (void);
 static void	sharpen        (void);
@@ -107,7 +107,7 @@ static void	rgba_filter  (int width, guchar *src, guchar *dst, intneg *neg0,
  * Globals...
  */
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -129,7 +129,7 @@ static guchar    *preview_image;	/* Preview RGB image */
 static GtkObject *hscroll_data;		/* Horizontal scrollbar data */
 static GtkObject *vscroll_data;		/* Vertical scrollbar data */
 
-static GDrawable *drawable = NULL;	/* Current image */
+static GimpDrawable *drawable = NULL;	/* Current image */
 static gint       sel_x1;      		/* Selection bounds */
 static gint       sel_y1;
 static gint       sel_x2;
@@ -149,12 +149,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef	args[] =
+  static GimpParamDef	args[] =
   {
-    { PARAM_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { PARAM_IMAGE,	"image",	"Input image" },
-    { PARAM_DRAWABLE,	"drawable",	"Input drawable" },
-    { PARAM_INT32,	"percent",	"Percent sharpening (default = 10)" }
+    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,	"image",	"Input image" },
+    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
+    { GIMP_PDB_INT32,	"percent",	"Percent sharpening (default = 10)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -166,7 +166,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Enhance/Sharpen..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -174,24 +174,24 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GRunModeType	run_mode;	/* Current run mode */
-  GStatusType	status;		/* Return status */
-  GParam	*values;	/* Return values */
+  GimpRunModeType	run_mode;	/* Current run mode */
+  GimpPDBStatusType	status;		/* Return status */
+  GimpParam	*values;	/* Return values */
 
   /*
    * Initialize parameter data...
    */
 
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values = g_new (GParam, 1);
+  values = g_new (GimpParam, 1);
 
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -215,7 +215,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*
        * Possibly retrieve data...
@@ -229,18 +229,18 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*
        * Make sure all the arguments are present...
        */
       if (nparams != 4)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       else
 	sharpen_percent = param[3].data.d_int32;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*
        * Possibly retrieve data...
@@ -249,7 +249,7 @@ run (gchar   *name,
       break;
 
     default:
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
       break;;
     };
 
@@ -257,7 +257,7 @@ run (gchar   *name,
    * Sharpen the image...
    */
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if ((gimp_drawable_is_rgb (drawable->id) ||
 	   gimp_drawable_is_gray (drawable->id)))
@@ -276,18 +276,18 @@ run (gchar   *name,
 	  /*
 	   * If run mode is interactive, flush displays...
 	   */
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*
 	   * Store data...
 	   */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data (PLUG_IN_NAME,
 			   &sharpen_percent, sizeof (sharpen_percent));
 	}
       else
-	status = STATUS_EXECUTION_ERROR;
+	status = GIMP_PDB_EXECUTION_ERROR;
     };
 
   /*
@@ -326,7 +326,7 @@ compute_luts (void)
 static void
 sharpen (void)
 {
-  GPixelRgn	src_rgn,	/* Source image region */
+  GimpPixelRgn	src_rgn,	/* Source image region */
 		dst_rgn;	/* Destination image region */
   guchar	*src_rows[4],	/* Source pixel rows */
 		*src_ptr,	/* Current source pixel */
@@ -678,7 +678,7 @@ preview_scroll_callback (void)
 static void
 preview_update (void)
 {
-  GPixelRgn	src_rgn;	/* Source image region */
+  GimpPixelRgn	src_rgn;	/* Source image region */
   guchar	*src_ptr,	/* Current source pixel */
 		*dst_ptr,	/* Current destination pixel */
   		*image_ptr;	/* Current image pixel */

@@ -67,9 +67,9 @@ typedef enum
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint jigsaw     (gboolean preview_mode);
 
@@ -77,7 +77,7 @@ static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
 static void  dialog_box (void);
 static void  fill_preview_with_thumb (GtkWidget *preview_widget, 
 				      gint32     drawable_ID);
-static GtkWidget *preview_widget  (GDrawable *drawable);
+static GtkWidget *preview_widget  (GimpDrawable *drawable);
 
 static void run_callback          (GtkWidget *widget, gpointer   data);
 static void check_button_callback (GtkWidget *widget, gpointer   data);
@@ -287,7 +287,7 @@ do {							\
 } while (0)
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -318,7 +318,7 @@ static config_t config =
 
 struct globals_tag
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   gint  *cachex1[4];
   gint  *cachex2[4];
   gint  *cachey1[4];
@@ -371,16 +371,16 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, Non-interactive, Last-Vals" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "x", "Number of tiles across > 0" },
-    { PARAM_INT32, "y", "Number of tiles down > 0" },
-    { PARAM_INT32, "style", "The style/shape of the jigsaw puzzle, 0 or 1" },
-    { PARAM_INT32, "blend_lines", "Number of lines for shading bevels >= 0" },
-    { PARAM_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, Non-interactive, Last-Vals" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "x", "Number of tiles across > 0" },
+    { GIMP_PDB_INT32, "y", "Number of tiles down > 0" },
+    { GIMP_PDB_INT32, "style", "The style/shape of the jigsaw puzzle, 0 or 1" },
+    { GIMP_PDB_INT32, "blend_lines", "Number of lines for shading bevels >= 0" },
+    { GIMP_PDB_FLOAT, "blend_amount", "The power of the light highlights 0 =< 5" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -392,7 +392,7 @@ query (void)
 			  "May 2000",
 			  N_("<Image>/Filters/Render/Pattern/Jigsaw..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -400,14 +400,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
@@ -416,7 +416,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams == 8)
 	{
@@ -427,29 +427,29 @@ run (gchar   *name,
 	  config.blend_amount = param[7].data.d_float;
 	  if (jigsaw(0) == -1)
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
       else
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
       
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data("plug_in_jigsaw", &config);
       gimp_get_data(PLUG_IN_STORAGE, &globals.tooltips);
       dialog_box();
       if (globals.dialog_result == -1)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
       gimp_progress_init( _("Assembling Jigsaw"));
       if (jigsaw(0) == -1)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
       gimp_set_data("plug_in_jigsaw", &config, sizeof(config_t));
@@ -459,12 +459,12 @@ run (gchar   *name,
       g_free(preview_bits);
       break;
       
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data("plug_in_jigsaw", &config);
       if (jigsaw(0) == -1)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  gimp_message("An execution error occured.");
 	}
       else
@@ -478,7 +478,7 @@ run (gchar   *name,
   
   *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   return;
@@ -487,9 +487,9 @@ run (gchar   *name,
 static gint
 jigsaw (gboolean preview_mode)
 {
-  GPixelRgn src_pr, dest_pr;
+  GimpPixelRgn src_pr, dest_pr;
   guchar *buffer;
-  GDrawable *drawable = globals.drawable;
+  GimpDrawable *drawable = globals.drawable;
   gint width;
   gint height;
   gint bytes;
@@ -2461,7 +2461,7 @@ check_config (gint width,
 static void
 dialog_box (void)
 {
-  GDrawable *drawable = globals.drawable;
+  GimpDrawable *drawable = globals.drawable;
   GtkWidget *dlg;
   GtkWidget *main_hbox;
   GtkWidget *abox;
@@ -2696,7 +2696,7 @@ jigsaw_radio_button_update (GtkWidget *widget,
 /* preview library */
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
   GtkWidget *preview;

@@ -53,9 +53,9 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 static gint32    decompose (gint32  image_id,
                             gint32  drawable_ID,
@@ -65,10 +65,10 @@ static gint32    decompose (gint32  image_id,
 static gint32 create_new_image (gchar       *filename,
 				guint        width,
 				guint        height,
-				GImageType   type,
+				GimpImageBaseType   type,
 				gint32      *layer_ID,
-				GDrawable  **drawable,
-				GPixelRgn   *pixel_rgn);
+				GimpDrawable  **drawable,
+				GimpPixelRgn   *pixel_rgn);
 
 static void extract_rgb      (guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_red      (guchar *src, gint bpp, gint numpix, guchar **dst);
@@ -152,7 +152,7 @@ typedef struct
   gint run;
 } DecoInterface;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -171,7 +171,7 @@ static DecoInterface decoint =
   FALSE     /*  run  */
 };
 
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 
 
 MAIN ()
@@ -179,19 +179,19 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_STRING, "decompose_type", "What to decompose: RGB, Red, Green, Blue, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_STRING, "decompose_type", "What to decompose: RGB, Red, Green, Blue, HSV, Hue, Saturation, Value, CMY, Cyan, Magenta, Yellow, CMYK, Cyan_K, Magenta_K, Yellow_K, Alpha" }
   };
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output gray image" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" }
+    { GIMP_PDB_IMAGE, "new_image", "Output gray image" },
+    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
+    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
+    { GIMP_PDB_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
@@ -205,7 +205,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Image/Mode/Decompose..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -213,13 +213,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[MAX_EXTRACT_IMAGES+1];
-  GStatusType status = STATUS_SUCCESS;
-  GDrawableType drawable_type;
+  static GimpParam values[MAX_EXTRACT_IMAGES+1];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpImageType drawable_type;
   gint32 num_images;
   gint32 image_ID_extract[MAX_EXTRACT_IMAGES];
   gint j;
@@ -231,17 +231,17 @@ run (gchar   *name,
   *nreturn_vals = MAX_EXTRACT_IMAGES+1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   for (j = 0; j < MAX_EXTRACT_IMAGES; j++)
     {
-      values[j+1].type = PARAM_IMAGE;
+      values[j+1].type = GIMP_PDB_IMAGE;
       values[j+1].data.d_int32 = -1;
     }
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_decompose", &decovals);
 
@@ -250,11 +250,11 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 4)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -264,7 +264,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_decompose", &decovals);
       break;
@@ -275,14 +275,14 @@ run (gchar   *name,
 
   /*  Make sure that the drawable is RGB color  */
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
-  if ((drawable_type != RGB_IMAGE) && (drawable_type != RGBA_IMAGE))
+  if ((drawable_type != GIMP_RGB_IMAGE) && (drawable_type != GIMP_RGBA_IMAGE))
     {
       g_message ("decompose: Can only work on RGB*_IMAGE");
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_progress_init (_("Decomposing..."));
       
       num_images = decompose (param[1].data.d_image, param[2].data.d_drawable,
@@ -290,7 +290,7 @@ run (gchar   *name,
       
       if (num_images <= 0)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -299,12 +299,12 @@ run (gchar   *name,
 	      values[j+1].data.d_int32 = image_ID_extract[j];
 	      gimp_image_undo_enable (image_ID_extract[j]);
 	      gimp_image_clean_all (image_ID_extract[j]);
-	      if (run_mode != RUN_NONINTERACTIVE)
+	      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 		gimp_display_new (image_ID_extract[j]);
 	    }
 	  
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_decompose", &decovals, sizeof (DecoVals));
 	}
     }
@@ -329,8 +329,8 @@ decompose (gint32  image_ID,
   gchar *filename;
   guchar *dst[MAX_EXTRACT_IMAGES];
   gint32 layer_ID_dst[MAX_EXTRACT_IMAGES];
-  GDrawable *drawable_src, *drawable_dst[MAX_EXTRACT_IMAGES];
-  GPixelRgn pixel_rgn_src, pixel_rgn_dst[MAX_EXTRACT_IMAGES];
+  GimpDrawable *drawable_src, *drawable_dst[MAX_EXTRACT_IMAGES];
+  GimpPixelRgn pixel_rgn_src, pixel_rgn_dst[MAX_EXTRACT_IMAGES];
 
   extract_idx = -1;   /* Search extract type */
   for (j = 0; j < NUM_EXTRACT_TYPES; j++)
@@ -396,7 +396,7 @@ decompose (gint32  image_ID,
 		     gettext (extract[extract_idx].channel_name[j]));
       }
 
-      image_ID_dst[j] = create_new_image (filename, width, height, GRAY,
+      image_ID_dst[j] = create_new_image (filename, width, height, GIMP_GRAY,
 					  layer_ID_dst+j, drawable_dst+j,
 					  pixel_rgn_dst+j);
       g_free (filename);
@@ -421,7 +421,7 @@ decompose (gint32  image_ID,
 				 scan_lines);
       i += scan_lines;
       
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_progress_update (((gdouble)i) / (gdouble)height);
     }
   g_free (src);
@@ -444,26 +444,26 @@ static gint32
 create_new_image (gchar       *filename,
                   guint        width,
                   guint        height,
-                  GImageType   type,
+                  GimpImageBaseType   type,
                   gint32      *layer_ID,
-                  GDrawable  **drawable,
-                  GPixelRgn   *pixel_rgn)
+                  GimpDrawable  **drawable,
+                  GimpPixelRgn   *pixel_rgn)
 {
   gint32 image_ID;
-  GDrawableType gdtype;
+  GimpImageType gdtype;
   
-  if (type == GRAY) 
-    gdtype = GRAY_IMAGE;
-  else if (type == INDEXED) 
-    gdtype = INDEXED_IMAGE;
+  if (type == GIMP_GRAY) 
+    gdtype = GIMP_GRAY_IMAGE;
+  else if (type == GIMP_INDEXED) 
+    gdtype = GIMP_INDEXED_IMAGE;
   else 
-    gdtype = RGB_IMAGE;
+    gdtype = GIMP_RGB_IMAGE;
   
   image_ID = gimp_image_new (width, height, type);
   gimp_image_set_filename (image_ID, filename);
   
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      gdtype, 100, NORMAL_MODE);
+			      gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
   
   *drawable = gimp_drawable_get (*layer_ID);

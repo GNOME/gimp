@@ -161,16 +161,16 @@ typedef struct {
 
 
 typedef struct {
-   GDrawable *drawable;
+   GimpDrawable *drawable;
    void      *sel_gdrw;
-   GPixelRgn  pr;
+   GimpPixelRgn  pr;
    gint       x1;
    gint       y1;
    gint       x2;
    gint       y2;
    gint       index_alpha;   /* 0 == no alpha, 1 == GREYA, 3 == RGBA */
    gint       bpp;
-   GTile     *tile;
+   GimpTile     *tile;
    gint       tile_row;
    gint       tile_col;
    gint       tile_width;
@@ -204,9 +204,9 @@ static gint    g_show_progress = FALSE;
 static void	 query		(void);
 static void	 run		(gchar	 *name,
 				 gint	  nparams,
-				 GParam	 *param,
+				 GimpParam	 *param,
 				 gint	 *nreturn_vals,
-				 GParam	 **return_vals);
+				 GimpParam	 **return_vals);
 
 static gint      p_main_colorize(gint);
 static void	 p_get_filevalues (void);
@@ -220,7 +220,7 @@ static gint      p_level_in_events (GtkWidget *widget, GdkEvent *event, gpointer
 static gint      p_level_out_events (GtkWidget *widget, GdkEvent *event, gpointer data);
 static void      p_calculate_level_transfers (void);
 static void      p_get_pixel(t_GDRW *gdrw, gint32 x, gint32 y, guchar *pixel);
-static void      p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, gint dirty, gint shadow);
+static void      p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow);
 static void      p_end_gdrw(t_GDRW *gdrw);
 static gint32    p_is_layer_alive(gint32 drawable_id);
 static void      p_remap_pixel(guchar *pixel, guchar *original, gint bpp2);
@@ -231,7 +231,7 @@ static void      p_gradient_callback(GtkWidget *w, gint32 id);
 static void      p_get_gradient (gint mode);
 static void      p_clear_preview(GtkWidget *preview);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -244,21 +244,21 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "dst_drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
-    { PARAM_DRAWABLE, "sample_drawable", "Sample drawable (should be of Type RGB or RGBA)" },
-    { PARAM_INT32, "hold_inten", "hold brightness intensity levels (TRUE, FALSE)" },
-    { PARAM_INT32, "orig_inten", "TRUE: hold brightness of original intensity levels. FALSE: Hold Intensity of input levels" },
-    { PARAM_INT32, "rnd_subcolors", "TRUE: Use all subcolors of same intensity, FALSE: use only one color per intensity" },
-    { PARAM_INT32, "guess_missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
-    { PARAM_INT32, "in_low",   "intensity of lowest input (0 <= in_low <= 254)" },
-    { PARAM_INT32, "in_high",  "intensity of highest input (1 <= in_high <= 255)" },
-    { PARAM_FLOAT, "gamma",  "gamma correction factor (0.1 <= gamma <= 10) where 1.0 is linear" },
-    { PARAM_INT32, "out_low",   "lowest sample color intensity (0 <= out_low <= 254)" },
-    { PARAM_INT32, "out_high",  "highest sample color intensity (1 <= out_high <= 255)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "dst_drawable", "The drawable to be colorized (Type GRAY* or RGB*)" },
+    { GIMP_PDB_DRAWABLE, "sample_drawable", "Sample drawable (should be of Type RGB or RGBA)" },
+    { GIMP_PDB_INT32, "hold_inten", "hold brightness intensity levels (TRUE, FALSE)" },
+    { GIMP_PDB_INT32, "orig_inten", "TRUE: hold brightness of original intensity levels. FALSE: Hold Intensity of input levels" },
+    { GIMP_PDB_INT32, "rnd_subcolors", "TRUE: Use all subcolors of same intensity, FALSE: use only one color per intensity" },
+    { GIMP_PDB_INT32, "guess_missing", "TRUE: guess samplecolors for the missing intensity values FALSE: use only colors found in the sample" },
+    { GIMP_PDB_INT32, "in_low",   "intensity of lowest input (0 <= in_low <= 254)" },
+    { GIMP_PDB_INT32, "in_high",  "intensity of highest input (1 <= in_high <= 255)" },
+    { GIMP_PDB_FLOAT, "gamma",  "gamma correction factor (0.1 <= gamma <= 10) where 1.0 is linear" },
+    { GIMP_PDB_INT32, "out_low",   "lowest sample color intensity (0 <= out_low <= 254)" },
+    { GIMP_PDB_INT32, "out_high",  "highest sample color intensity (1 <= out_high <= 255)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -304,7 +304,7 @@ query (void)
 			  "02/2000",
 			  N_("<Image>/Filters/Colors/Map/Sample Colorize..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -312,14 +312,14 @@ query (void)
 static void
 run (gchar   *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *dst_drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *dst_drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gchar       *l_env;
 
   l_env = g_getenv ("SAMPLE_COLORIZE_DEBUG");
@@ -336,7 +336,7 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   g_values.lvl_out_min = 0;
@@ -363,7 +363,7 @@ run (gchar   *name,
   {
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
       
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
       {
          INIT_I18N_UI();
          p_smp_dialog();
@@ -372,7 +372,7 @@ run (gchar   *name,
       }
       else
       {
-        if(run_mode == RUN_NONINTERACTIVE)
+        if(run_mode == GIMP_RUN_NONINTERACTIVE)
         {
           INIT_I18N();
           if(nparams == NUMBER_IN_ARGS)
@@ -390,22 +390,22 @@ run (gchar   *name,
           }
           else
           {
-            status = STATUS_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
           }
         }
 
-        if(status != STATUS_CALLING_ERROR)
+        if(status != GIMP_PDB_CALLING_ERROR)
         {
           p_main_colorize(MC_ALL);
           p_free_colors();
         }
       }
-      if (run_mode != RUN_NONINTERACTIVE) { gimp_displays_flush (); }
+      if (run_mode != GIMP_RUN_NONINTERACTIVE) { gimp_displays_flush (); }
   }
   else
   {
 	  /* gimp_message ("Sample Colorize: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
   }
 
   values[0].data.d_status = status;
@@ -916,7 +916,7 @@ p_update_pv (GtkWidget *preview,
 void
 p_update_preview(gint32 *id_ptr)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   t_GDRW     l_gdrw;
 
   if(g_Sdebug)  printf("UPD PREVIEWS   ID:%d ENABLE_UPD:%d\n", (int)*id_ptr, (int)g_di.enable_preview_update);
@@ -2541,7 +2541,7 @@ p_is_layer_alive(gint32 drawable_id)
  *   }
  */
 
-  images = gimp_query_images(&nimages);
+  images = gimp_image_list(&nimages);
   l_idi = nimages -1;
   l_found = FALSE;
   while((l_idi >= 0) && images)
@@ -2604,7 +2604,7 @@ p_end_gdrw(t_GDRW *gdrw)
 
 
 void
-p_init_gdrw(t_GDRW *gdrw, GDrawable *drawable, gint dirty, gint shadow)
+p_init_gdrw(t_GDRW *gdrw, GimpDrawable *drawable, gint dirty, gint shadow)
 {
   gint32 l_image_id;
   gint32 l_sel_channel_id;
@@ -3063,9 +3063,9 @@ p_remap_pixel(guchar *pixel, guchar *original, gint bpp2)
 void
 p_colorize_drawable(gint32 drawable_id)
 {
-   GDrawable *drawable;
-   GPixelRgn  pixel_rgn;
-   GPixelRgn  shadow_rgn;
+   GimpDrawable *drawable;
+   GimpPixelRgn  pixel_rgn;
+   GimpPixelRgn  shadow_rgn;
    gpointer	pr;
    gint         l_row, l_col;
    gint         l_bpp2;
@@ -3151,8 +3151,8 @@ p_colorize_drawable(gint32 drawable_id)
 int
 p_main_colorize(gint mc_flags)
 {
-   GDrawable *dst_drawable;
-   GDrawable *sample_drawable;
+   GimpDrawable *dst_drawable;
+   GimpDrawable *sample_drawable;
    t_GDRW  l_sample_gdrw;
    gint32  l_max;
    gint32  l_id;

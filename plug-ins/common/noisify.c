@@ -68,25 +68,25 @@ typedef struct
 static void       query  (void);
 static void       run    (gchar     *name,
 			  gint       nparams,
-			  GParam    *param,
+			  GimpParam    *param,
 			  gint      *nreturn_vals,
-			  GParam   **return_vals);
+			  GimpParam   **return_vals);
 
-static void       noisify (GDrawable *drawable, gboolean preview_mode);
+static void       noisify (GimpDrawable *drawable, gboolean preview_mode);
 static gdouble    gauss   (void);
 
 static void       fill_preview   (GtkWidget *preview_widget, 
-				  GDrawable *drawable);
-static GtkWidget *preview_widget (GDrawable *drawable);
+				  GimpDrawable *drawable);
+static GtkWidget *preview_widget (GimpDrawable *drawable);
 
-static gint       noisify_dialog                   (GDrawable *drawable, 
+static gint       noisify_dialog                   (GimpDrawable *drawable, 
 						    gint           channels);
 static void       noisify_ok_callback              (GtkWidget     *widget,
 						    gpointer       data);
 static void       noisify_double_adjustment_update (GtkAdjustment *adjustment,
 						    gpointer       data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
@@ -118,16 +118,16 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "independent", "Noise in channels independent" },
-    { PARAM_FLOAT, "noise_1", "Noise in the first channel (red, gray)" },
-    { PARAM_FLOAT, "noise_2", "Noise in the second channel (green, gray_alpha)" },
-    { PARAM_FLOAT, "noise_3", "Noise in the third channel (blue)" },
-    { PARAM_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "independent", "Noise in channels independent" },
+    { GIMP_PDB_FLOAT, "noise_1", "Noise in the first channel (red, gray)" },
+    { GIMP_PDB_FLOAT, "noise_2", "Noise in the second channel (green, gray_alpha)" },
+    { GIMP_PDB_FLOAT, "noise_3", "Noise in the third channel (blue)" },
+    { GIMP_PDB_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -139,7 +139,7 @@ query (void)
 			  "May 2000",
 			  N_("<Image>/Filters/Noise/Noisify..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -147,21 +147,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -169,7 +169,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_noisify", &nvals);
@@ -182,12 +182,12 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 8)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -199,7 +199,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_noisify", &nvals);
@@ -222,11 +222,11 @@ run (gchar   *name,
       /*  compute the luminosity which exceeds the luminosity threshold  */
       noisify (drawable, FALSE);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE) {
+      if (run_mode == GIMP_RUN_INTERACTIVE) {
 	gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
 	g_free(preview_cache);
       }
@@ -234,7 +234,7 @@ run (gchar   *name,
   else
     {
       /* gimp_message ("blur: cannot operate on indexed color images"); ??? BLUR ??? */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -315,10 +315,10 @@ preview_do_row(gint    row,
 }
 
 static void
-noisify (GDrawable *drawable, 
+noisify (GimpDrawable *drawable, 
 	 gboolean   preview_mode)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   guchar *src_row, *dest_row;
   guchar *src, *dest, *dest_data;
   gint row, col, b;
@@ -465,7 +465,7 @@ noisify (GDrawable *drawable,
 }
 
 static gint
-noisify_dialog (GDrawable *drawable, 
+noisify_dialog (GimpDrawable *drawable, 
 		gint       channels)
 {
   GtkWidget *dlg;
@@ -728,7 +728,7 @@ static void
 noisify_double_adjustment_update (GtkAdjustment *adjustment,
 				  gpointer       data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   
   gimp_double_adjustment_update (adjustment, data);
   drawable = gtk_object_get_data (GTK_OBJECT (adjustment), "drawable");
@@ -746,7 +746,7 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
 }
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
 
@@ -758,9 +758,9 @@ preview_widget (GDrawable *drawable)
 
 static void
 fill_preview (GtkWidget *widget, 
-	      GDrawable *drawable)
+	      GimpDrawable *drawable)
 {
-  GPixelRgn  srcPR;
+  GimpPixelRgn  srcPR;
   gint       width;
   gint       height;
   gint       x1, x2, y1, y2;

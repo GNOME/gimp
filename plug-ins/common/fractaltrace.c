@@ -43,13 +43,13 @@
 static void query  (void);
 static void run    (gchar   *name,
 		    gint     nparams,
-		    GParam  *param,
+		    GimpParam  *param,
 		    gint    *nreturn_vals,
-		    GParam **return_vals);
+		    GimpParam **return_vals);
 
-static void filter      (GDrawable *drawable);
+static void filter      (GimpDrawable *drawable);
 
-static void pixels_init (GDrawable *drawable);
+static void pixels_init (GimpDrawable *drawable);
 static void pixels_free (void);
 
 static int  dialog_show         (void);
@@ -57,7 +57,7 @@ static void dialog_preview_draw (void);
 
 /******************************************************************************/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -102,17 +102,17 @@ static parameter_t parameters =
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",     "interactive / non-interactive"    },
-    { PARAM_IMAGE,    "image",        "input image (not used)"           },
-    { PARAM_DRAWABLE, "drawable",     "input drawable"                   },
-    { PARAM_FLOAT,    "xmin",         "xmin fractal image delimiter"     },
-    { PARAM_FLOAT,    "xmax",         "xmax fractal image delimiter"     },
-    { PARAM_FLOAT,    "ymin",         "ymin fractal image delimiter"     },
-    { PARAM_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
-    { PARAM_INT32,    "depth",        "trace depth"                      },
-    { PARAM_INT32,    "outside_type", "outside type"
+    { GIMP_PDB_INT32,    "run_mode",     "interactive / non-interactive"    },
+    { GIMP_PDB_IMAGE,    "image",        "input image (not used)"           },
+    { GIMP_PDB_DRAWABLE, "drawable",     "input drawable"                   },
+    { GIMP_PDB_FLOAT,    "xmin",         "xmin fractal image delimiter"     },
+    { GIMP_PDB_FLOAT,    "xmax",         "xmax fractal image delimiter"     },
+    { GIMP_PDB_FLOAT,    "ymin",         "ymin fractal image delimiter"     },
+    { GIMP_PDB_FLOAT,    "ymax",         "ymax fractal image delimiter"     },
+    { GIMP_PDB_INT32,    "depth",        "trace depth"                      },
+    { GIMP_PDB_INT32,    "outside_type", "outside type"
                                       "(0=WRAP/1=TRANS/2=BLACK/3=WHITE)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
@@ -125,7 +125,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Map/Fractal Trace..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -160,17 +160,17 @@ static image_t     image;
 static void
 run (gchar   *name,
      gint     argc,
-     GParam  *args,
+     GimpParam  *args,
      gint    *retc,
-     GParam **rets)
+     GimpParam **rets)
 {
-  GDrawable     *drawable;
-  GRunModeType   run_mode;
-  GStatusType    status;
-  static GParam  returns[1];
+  GimpDrawable     *drawable;
+  GimpRunModeType   run_mode;
+  GimpPDBStatusType    status;
+  static GimpParam  returns[1];
 
   run_mode = args[0].data.d_int32;
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
 
   drawable     = gimp_drawable_get (args[2].data.d_drawable);
   image.width  = gimp_drawable_width( drawable->id);
@@ -189,31 +189,31 @@ run (gchar   *name,
   if (!gimp_drawable_is_rgb(drawable->id) && 
       !gimp_drawable_is_gray(drawable->id))
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   switch (run_mode)
     {
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       break;
 
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (!dialog_show ())
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (parameter_t));
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (argc != 9)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -228,11 +228,11 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
       filter (drawable);
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
     }
 
@@ -240,7 +240,7 @@ run (gchar   *name,
 
   pixels_free ();
 
-  returns[0].type          = PARAM_STATUS;
+  returns[0].type          = GIMP_PDB_STATUS;
   returns[0].data.d_status = status;
   *retc = 1;
   *rets = returns;
@@ -250,8 +250,8 @@ run (gchar   *name,
 
 static guchar    **spixels;
 static guchar    **dpixels;
-static GPixelRgn   sPR;
-static GPixelRgn   dPR;
+static GimpPixelRgn   sPR;
+static GimpPixelRgn   dPR;
 
 typedef struct
 {
@@ -262,7 +262,7 @@ typedef struct
 } pixel_t;
 
 static void
-pixels_init (GDrawable *drawable)
+pixels_init (GimpDrawable *drawable)
 {
   gint y;
 
@@ -440,7 +440,7 @@ mandelbrot (gdouble  x,
 /******************************************************************************/
 
 static void
-filter (GDrawable *drawable)
+filter (GimpDrawable *drawable)
 {
   gint    x, y;
   pixel_t pixel;

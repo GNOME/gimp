@@ -143,33 +143,33 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { PARAM_INT32,  "run_mode",     "Interactive, non-interactive" },
-    { PARAM_STRING, "filename",     "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32,  "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,  "image",        "Output image" }
+    { GIMP_PDB_IMAGE,  "image",        "Output image" }
   };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
   static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",       "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",          "Input image" },
-    { PARAM_DRAWABLE, "drawable",       "Drawable to save" },
-    { PARAM_STRING,   "filename",       "The name of the file to save" },
-    { PARAM_STRING,   "raw_filename",   "The name entered" },
-    { PARAM_STRING,   "comment",        "Image description (maximum 72 bytes)" },
-    { PARAM_INT32,    "x10",            "Save in X10 format" },
-    { PARAM_INT32,    "x_hot",          "X coordinate of hotspot" },
-    { PARAM_INT32,    "y_hot",          "Y coordinate of hotspot" },
-    { PARAM_STRING,   "prefix",         "Identifier prefix [determined from filename]"},
-    { PARAM_INT32,    "write_mask",     "(0 = ignore, 1 = save as extra file)" },
-    { PARAM_STRING,   "mask_extension", "Extension of the mask file" }
+    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",       "The name of the file to save" },
+    { GIMP_PDB_STRING,   "raw_filename",   "The name entered" },
+    { GIMP_PDB_STRING,   "comment",        "Image description (maximum 72 bytes)" },
+    { GIMP_PDB_INT32,    "x10",            "Save in X10 format" },
+    { GIMP_PDB_INT32,    "x_hot",          "X coordinate of hotspot" },
+    { GIMP_PDB_INT32,    "y_hot",          "Y coordinate of hotspot" },
+    { GIMP_PDB_STRING,   "prefix",         "Identifier prefix [determined from filename]"},
+    { GIMP_PDB_INT32,    "write_mask",     "(0 = ignore, 1 = save as extra file)" },
+    { GIMP_PDB_STRING,   "mask_extension", "Extension of the mask file" }
   } ;
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -181,7 +181,7 @@ query (void)
                           "1998",
                           "<Load>/XBM",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -193,7 +193,7 @@ query (void)
                           "1998",
                           "<Save>/XBM",
 			  "INDEXED",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -235,7 +235,7 @@ run (gchar      *name,
 {
   static GimpParam   values[2];
   GimpRunModeType    run_mode;
-  GimpPDBStatusType  status = STATUS_SUCCESS;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
   GimpParasite      *parasite;
@@ -249,8 +249,8 @@ run (gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
 #ifdef VERBOSE
   if (verbose)
@@ -264,12 +264,12 @@ run (gchar      *name,
       if (image_ID != -1)
         {
           *nreturn_vals = 2;
-          values[1].type         = PARAM_IMAGE;
+          values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
         {
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else if (strcmp (name, "file_xbm_save") == 0)
@@ -280,15 +280,15 @@ run (gchar      *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("xbm", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "XBM",
 				      CAN_HANDLE_INDEXED |
 				      CAN_HANDLE_ALPHA);
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	  }
 	  break;
@@ -298,8 +298,8 @@ run (gchar      *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_xbm_save", &xsvals);
 
@@ -307,11 +307,11 @@ run (gchar      *name,
 	  mask_filename = g_strdup (init_prefix (param[3].data.d_string));
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the required arguments are there!  */
 	  if (nparams < 5)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -359,7 +359,7 @@ run (gchar      *name,
 	      i ++;
 	      /* Too many arguments. */
 	      if (nparams > i)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  break;
 
@@ -403,14 +403,14 @@ run (gchar      *name,
 	  gimp_parasite_free (parasite);
 	}
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /*  Acquire information with a dialog  */
 	  if (! save_dialog (drawable_ID))
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  gchar *temp;
 	  gchar *mask_prefix;
@@ -462,7 +462,7 @@ run (gchar      *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 
 	  g_free (mask_prefix);
@@ -474,7 +474,7 @@ run (gchar      *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -705,8 +705,8 @@ load_image (gchar *filename)
   FILE *fp;
   gint32 image_ID, layer_ID;
 
-  GPixelRgn  pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn  pixel_rgn;
+  GimpDrawable *drawable;
   guchar *data;
   gint    intbits;
   gint    width = 0;
@@ -833,7 +833,7 @@ load_image (gchar *filename)
       return -1;
     }
 
-  image_ID = gimp_image_new (width, height, INDEXED);
+  image_ID = gimp_image_new (width, height, GIMP_INDEXED);
   gimp_image_set_filename (image_ID, filename);
 
   if (comment)
@@ -872,9 +872,9 @@ load_image (gchar *filename)
   layer_ID = gimp_layer_new (image_ID,
 			     _("Background"),
 			     width, height,
-			     INDEXED_IMAGE,
+			     GIMP_INDEXED_IMAGE,
 			     100,
-			     NORMAL_MODE);
+			     GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);

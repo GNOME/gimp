@@ -70,18 +70,18 @@ typedef struct
 static void    query  (void);
 static void    run    (gchar    *name,
 		       gint      nparams,
-		       GParam   *param,
+		       GimpParam   *param,
 		       gint     *nreturn_vals,
-		       GParam  **return_vals);
+		       GimpParam  **return_vals);
 
-static void    ripple             (GDrawable *drawable);
+static void    ripple             (GimpDrawable *drawable);
 
 static gint    ripple_dialog      (void);
 static void    ripple_ok_callback (GtkWidget *widget,
 				   gpointer   data);
 
-static GTile * ripple_pixel (GDrawable *drawable,
-			     GTile     *tile,
+static GimpTile * ripple_pixel (GimpDrawable *drawable,
+			     GimpTile     *tile,
 			     gint        x1,
 			     gint        y1,
 			     gint        x2,
@@ -101,7 +101,7 @@ static guchar  averagefour     (gdouble  location,
 
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -132,18 +132,18 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "period", "period; number of pixels for one wave to complete" },
-    { PARAM_INT32, "amplitude", "amplitude; maximum displacement of wave" },
-    { PARAM_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
-    { PARAM_INT32, "edges", "edges; 0 = smear, 1 =  wrap, 2 = black" },
-    { PARAM_INT32, "waveform", "0 = sawtooth, 1 = sine wave" },
-    { PARAM_INT32, "antialias", "antialias; True or False" },
-    { PARAM_INT32, "tile", "tile; if this is true, the image will retain it's tilability" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "period", "period; number of pixels for one wave to complete" },
+    { GIMP_PDB_INT32, "amplitude", "amplitude; maximum displacement of wave" },
+    { GIMP_PDB_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
+    { GIMP_PDB_INT32, "edges", "edges; 0 = smear, 1 =  wrap, 2 = black" },
+    { GIMP_PDB_INT32, "waveform", "0 = sawtooth, 1 = sine wave" },
+    { GIMP_PDB_INT32, "antialias", "antialias; True or False" },
+    { GIMP_PDB_INT32, "tile", "tile; if this is true, the image will retain it's tilability" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -155,7 +155,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Ripple..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -163,14 +163,14 @@ query (void)
 static void
 run (gchar  *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint   *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -180,12 +180,12 @@ run (gchar  *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_ripple", &rvals);
@@ -195,12 +195,12 @@ run (gchar  *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -213,11 +213,11 @@ run (gchar  *name,
           rvals.tile = (param[9].data.d_int32) ? TRUE : FALSE;
 
 	  if (rvals.edges < SMEAR || rvals.edges > BLACK)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_ripple", &rvals);
@@ -227,7 +227,7 @@ run (gchar  *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -241,17 +241,17 @@ run (gchar  *name,
 	  /*  run the ripple effect  */
 	  ripple (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_ripple", &rvals, sizeof (RippleValues));
 	}
       else
 	{
 	  /* gimp_message ("ripple: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -261,10 +261,10 @@ run (gchar  *name,
 }
 
 static void
-ripple (GDrawable *drawable)
+ripple (GimpDrawable *drawable)
 {
-  GPixelRgn dest_rgn;
-  GTile   * tile = NULL;
+  GimpPixelRgn dest_rgn;
+  GimpTile   * tile = NULL;
   gint      row = -1;
   gint      col = -1;
   gpointer  pr;
@@ -715,9 +715,9 @@ ripple_dialog (void)
   return rpint.run;
 }
 
-static GTile *
-ripple_pixel (GDrawable *drawable,
-	      GTile     *tile,
+static GimpTile *
+ripple_pixel (GimpDrawable *drawable,
+	      GimpTile     *tile,
 	      gint       x1,
 	      gint       y1,
 	      gint       x2,

@@ -87,9 +87,9 @@ static ScreenShotInterface shootint =
 static void  query (void);
 static void  run   (gchar   *name,
 		    gint     nparams,      /* number of parameters passed in */
-		    GParam  *param,        /* parameters passed in */
+		    GimpParam  *param,        /* parameters passed in */
 		    gint    *nreturn_vals, /* number of parameters returned */
-		    GParam **return_vals); /* parameters to be returned */
+		    GimpParam **return_vals); /* parameters to be returned */
 
 static void  shoot                (void);
 static gint  shoot_dialog         (void);
@@ -101,7 +101,7 @@ static void  shoot_delay          (gint32     delay);
 static gint  shoot_delay_callback (gpointer   data);
 
 /* Global Variables */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -119,17 +119,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,  "run_mode",  "Interactive, non-interactive" },
-    { PARAM_INT32,  "root",      "Root window { TRUE, FALSE }" },
-    { PARAM_STRING, "window_id", "Window id" }
+    { GIMP_PDB_INT32,  "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_INT32,  "root",      "Root window { TRUE, FALSE }" },
+    { GIMP_PDB_STRING, "window_id", "Window id" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
@@ -148,7 +148,7 @@ query (void)
 			  "v0.9.4 (99/12/28)",
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
-			  PROC_EXTENSION,		
+			  GIMP_EXTENSION,		
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -156,23 +156,23 @@ query (void)
 static void 
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
   /* Get the runmode from the in-parameters */
-  GRunModeType run_mode = param[0].data.d_int32;	
+  GimpRunModeType run_mode = param[0].data.d_int32;	
 
   /* status variable, use it to check for errors in invocation usualy only 
    * during non-interactive calling
    */
-  GStatusType status = STATUS_SUCCESS;	 
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;	 
 
   /* always return at least the status to the caller. */
-  static GParam values[1];
+  static GimpParam values[1];
 
   /* initialize the return of the status */ 	
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
@@ -180,7 +180,7 @@ run (gchar   *name,
   /* how are we running today? */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
       shootvals.window_id = NULL;
@@ -192,7 +192,7 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 3) 
 	{
 	  shootvals.root      = (gint) param[1].data.d_int32;
@@ -201,10 +201,10 @@ run (gchar   *name,
 	  shootvals.decor     = FALSE;
 	}
       else
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /* Possibly retrieve data from a previous run */
       gimp_get_data (PLUG_IN_NAME, &shootvals);
       break;
@@ -213,7 +213,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if (shootvals.delay > 0)
 	shoot_delay (shootvals.delay);
@@ -221,11 +221,11 @@ run (gchar   *name,
       shoot ();
     }
 
-  status = (image_ID != -1) ? STATUS_SUCCESS : STATUS_EXECUTION_ERROR;
+  status = (image_ID != -1) ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  /* Store variable states for next run */
 	  gimp_set_data (PLUG_IN_NAME, &shootvals, sizeof (ScreenShotValues));
@@ -234,7 +234,7 @@ run (gchar   *name,
 	}
       /* set return values */
       *nreturn_vals = 2;
-      values[1].type = PARAM_IMAGE;
+      values[1].type = GIMP_PDB_IMAGE;
       values[1].data.d_image = image_ID;
     }
   values[0].data.d_status = status; 
@@ -245,7 +245,7 @@ run (gchar   *name,
 static void 
 shoot (void)
 {
-  GParam  *params;
+  GimpParam  *params;
   gint     retvals;
   gchar   *tmpname;
   gchar   *xwdargv[7]; /* only need a maximum of 7 arguments to xwd */
@@ -257,8 +257,8 @@ shoot (void)
   /* get a temp name with the right extension and save into it. */
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
-			       PARAM_STRING, "xwd",
-			       PARAM_END);
+			       GIMP_PDB_STRING, "xwd",
+			       GIMP_PDB_END);
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
 
@@ -316,11 +316,11 @@ shoot (void)
   /* now load the tmpfile using the xwd-plug-in */
   params = gimp_run_procedure ("file_xwd_load",
 			       &retvals,
-			       PARAM_INT32, 1,
-			       PARAM_STRING, tmpname,
-			       PARAM_STRING, tmpname,
-			       PARAM_END);
-  if (params[0].data.d_status == STATUS_SUCCESS)
+			       GIMP_PDB_INT32, 1,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_END);
+  if (params[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       image_ID = params[1].data.d_image;
     }

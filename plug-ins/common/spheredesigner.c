@@ -67,11 +67,11 @@
 static void      query  (void);
 static void      run    (gchar   *name,
                          gint     nparams,
-                         GParam  *param,
+                         GimpParam  *param,
                          gint    *nreturn_vals,
-                         GParam **return_vals);
+                         GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -265,7 +265,7 @@ gint restartrender(void);
 void drawcolor1(GtkWidget *w);
 void drawcolor2(GtkWidget *w);
 void render(void);
-void realrender(GDrawable *drawable);
+void realrender(GimpDrawable *drawable);
 void fileselect(int);
 
 #define COLORBUTTONWIDTH 30
@@ -2749,7 +2749,7 @@ void render(void)
   drawit(img);
 }
 
-void realrender(GDrawable *drawable)
+void realrender(GimpDrawable *drawable)
 {
   int x, y, alpha;
   ray r;
@@ -2758,7 +2758,7 @@ void realrender(GDrawable *drawable)
   gint x1, y1, x2, y2;
   guchar *dest;
   int bpp;
-  GPixelRgn pr, dpr;
+  GimpPixelRgn pr, dpr;
   guchar *buffer, *ibuffer;
 
   if(running > 0) return; /* Fixme: abort preview-render instead! */
@@ -2820,11 +2820,11 @@ void realrender(GDrawable *drawable)
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -2836,13 +2836,13 @@ query (void)
                           "1999",
                           N_("<Image>/Filters/Render/Sphere Designer..."),
                           "RGB*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
 			  nargs, 0,
                           args, NULL);
 }
 
 
-int sphere_main(GDrawable *drawable)
+int sphere_main(GimpDrawable *drawable)
 {
   initworld ();
 
@@ -2866,27 +2866,27 @@ int sphere_main(GDrawable *drawable)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch(run_mode) {
-  case RUN_INTERACTIVE:
+  case GIMP_RUN_INTERACTIVE:
     INIT_I18N_UI();
     s.com.numtexture = 0;
     gimp_get_data(PLUG_IN_NAME, &s);
@@ -2895,7 +2895,7 @@ run (gchar   *name,
       return;
     }
     break;
-  case RUN_WITH_LAST_VALS:
+  case GIMP_RUN_WITH_LAST_VALS:
     INIT_I18N();
     s.com.numtexture = 0;
     gimp_get_data(PLUG_IN_NAME, &s);
@@ -2904,7 +2904,7 @@ run (gchar   *name,
       return;
     }
     break;
-  case RUN_NONINTERACTIVE:
+  case GIMP_RUN_NONINTERACTIVE:
   default:
     /* Not implementet yet... */
     gimp_drawable_detach(drawable);
@@ -2919,7 +2919,7 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   
   gimp_drawable_detach (drawable);

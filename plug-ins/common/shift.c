@@ -61,18 +61,18 @@ typedef struct
 static void    query  (void);
 static void    run    (gchar    *name,
 		       gint      nparams,
-		       GParam   *param,
+		       GimpParam   *param,
 		       gint     *nreturn_vals,
-		       GParam  **return_vals);
+		       GimpParam  **return_vals);
 
-static void    shift  (GDrawable *drawable);
+static void    shift  (GimpDrawable *drawable);
 
 static gint    shift_dialog      (void);
 static void    shift_ok_callback (GtkWidget *widget,
 				  gpointer   data);
 
-static GTile * shift_pixel (GDrawable *drawable,
-			    GTile     *tile,
+static GimpTile * shift_pixel (GimpDrawable *drawable,
+			    GimpTile     *tile,
 			    gint       x1,
 			    gint       y1,
 			    gint       x2,
@@ -86,7 +86,7 @@ static GTile * shift_pixel (GDrawable *drawable,
 
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -112,13 +112,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
-    { PARAM_INT32, "orientation", "vertical, horizontal orientation" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
+    { GIMP_PDB_INT32, "orientation", "vertical, horizontal orientation" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -130,7 +130,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Shift..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -138,14 +138,14 @@ query (void)
 static void
 run (gchar  *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint   *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -155,12 +155,12 @@ run (gchar  *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_shift", &shvals);
@@ -170,12 +170,12 @@ run (gchar  *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -183,11 +183,11 @@ run (gchar  *name,
           shvals.orientation = (param[4].data.d_int32) ? HORIZONTAL : VERTICAL;
 
 	  if (shvals.shift_amount < 0 || shvals.shift_amount > 200)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_shift", &shvals);
@@ -197,7 +197,7 @@ run (gchar  *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -211,17 +211,17 @@ run (gchar  *name,
 	  /*  run the shift effect  */
 	  shift (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_shift", &shvals, sizeof (ShiftValues));
 	}
       else
 	{
 	  /* gimp_message ("shift: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -231,10 +231,10 @@ run (gchar  *name,
 }
 
 static void
-shift (GDrawable *drawable)
+shift (GimpDrawable *drawable)
 {
-  GPixelRgn dest_rgn;
-  GTile   * tile = NULL;
+  GimpPixelRgn dest_rgn;
+  GimpTile   * tile = NULL;
   gint      row = -1;
   gint      col = -1;
   gpointer  pr;
@@ -437,9 +437,9 @@ shift_ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static GTile *
-shift_pixel (GDrawable *drawable,
-	     GTile     *tile,
+static GimpTile *
+shift_pixel (GimpDrawable *drawable,
+	     GimpTile     *tile,
 	     gint       x1,
 	     gint       y1,
 	     gint       x2,

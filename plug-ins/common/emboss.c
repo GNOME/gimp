@@ -102,16 +102,16 @@ static gint do_preview = TRUE;
 
 static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
 					    struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GDrawable        *drw);
+static struct mwPreview * mw_preview_build (GimpDrawable        *drw);
 
 
 
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparam,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nretvals,
-		   GParam **retvals);
+		   GimpParam **retvals);
 
 static gint pluginCore        (struct piArgs *argp);
 static gint pluginCoreIA      (struct piArgs *argp);
@@ -130,7 +130,7 @@ static inline void EmbossRow  (guchar  *src,
 
 #define DtoR(d) ((d)*(G_PI/(gdouble)180))
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -145,15 +145,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "img", "The Image" },
-    { PARAM_DRAWABLE, "drw", "The Drawable" },
-    { PARAM_FLOAT, "azimuth", "The Light Angle (degrees)" },
-    { PARAM_FLOAT, "elevation", "The Elevation Angle (degrees)" },
-    { PARAM_INT32, "depth", "The Filter Width" },
-    { PARAM_INT32, "embossp", "Emboss or Bumpmap" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "img", "The Image" },
+    { GIMP_PDB_DRAWABLE, "drw", "The Drawable" },
+    { GIMP_PDB_FLOAT, "azimuth", "The Light Angle (degrees)" },
+    { GIMP_PDB_FLOAT, "elevation", "The Elevation Angle (degrees)" },
+    { GIMP_PDB_INT32, "depth", "The Filter Width" },
+    { GIMP_PDB_INT32, "embossp", "Emboss or Bumpmap" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -166,7 +166,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Emboss..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -174,25 +174,25 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparam,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nretvals,
-     GParam **retvals)
+     GimpParam **retvals)
 {
-  static GParam rvals[1];
+  static GimpParam rvals[1];
   struct piArgs args;
-  GDrawable *drw;
+  GimpDrawable *drw;
 
   *nretvals = 1;
   *retvals = rvals;
 
   memset(&args, (int) 0, sizeof (struct piArgs));
 
-  rvals[0].type = PARAM_STATUS;
-  rvals[0].data.d_status = STATUS_SUCCESS;
+  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
 
   switch (param[0].data.d_int32)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       args.img = args.drw = 0;
       gimp_get_data ("plug_in_emboss", &args);
@@ -211,7 +211,7 @@ run (gchar   *name,
 
       if (pluginCoreIA (&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -220,10 +220,10 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparam != 7)
 	{
-	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
 
@@ -237,19 +237,19 @@ run (gchar   *name,
 
       if (pluginCore(&args)==-1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data("plug_in_emboss", &args);
       /* use this image and drawable, even with last args */
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
       if (pluginCore(&args)==-1) {
-        rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+        rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
       }
     break;
   }
@@ -375,8 +375,8 @@ EmbossRow (guchar *src,
 static gint
 pluginCore (struct piArgs *argp)
 {
-  GDrawable *drw;
-  GPixelRgn src, dst;
+  GimpDrawable *drw;
+  GimpPixelRgn src, dst;
   gint p_update;
   gint y;
   gint x1, y1, x2, y2;
@@ -670,7 +670,7 @@ mw_preview_toggle_callback (GtkWidget *widget,
 }
 
 static struct mwPreview *
-mw_preview_build_virgin (GDrawable *drw)
+mw_preview_build_virgin (GimpDrawable *drw)
 {
   struct mwPreview *mwp;
 
@@ -696,13 +696,13 @@ mw_preview_build_virgin (GDrawable *drw)
 }
 
 static struct mwPreview *
-mw_preview_build (GDrawable *drw)
+mw_preview_build (GimpDrawable *drw)
 {
   struct mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drwBits;
-  GPixelRgn pr;
+  GimpPixelRgn pr;
 
   mwp = mw_preview_build_virgin (drw);
 

@@ -38,16 +38,16 @@
 static void query  (void);
 static void run    (gchar   *name,
 		    gint     nparams,
-		    GParam  *param,
+		    GimpParam  *param,
 		    gint    *nreturn_vals,
-		    GParam **return_vals);
+		    GimpParam **return_vals);
 
 static gint   dialog (void);
 
-static gint32 doit   (GDrawable *drawable,
+static gint32 doit   (GimpDrawable *drawable,
 		      gint32    *layer_id);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -62,15 +62,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "width", "Width" },
-    { PARAM_INT32, "height", "Height" },
-    { PARAM_INT32, "ntries", "Search Time" },
-    { PARAM_INT32, "show_image","Show Image?" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "width", "Width" },
+    { GIMP_PDB_INT32, "height", "Height" },
+    { GIMP_PDB_INT32, "ntries", "Search Time" },
+    { GIMP_PDB_INT32, "show_image","Show Image?" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -82,7 +82,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Colors/Smooth Palette..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -106,39 +106,39 @@ static struct
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[3];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
-  GDrawable *drawable;
+  static GimpParam values[3];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpDrawable *drawable;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 3;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = PARAM_IMAGE;
-  values[2].type = PARAM_LAYER;
+  values[1].type = GIMP_PDB_IMAGE;
+  values[2].type = GIMP_PDB_LAYER;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data ("plug_in_smooth_palette", &config);
       if (! dialog ())
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams != 7)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -148,13 +148,13 @@ run (gchar   *name,
 	  config.show_image = param[6].data.d_int32 ? TRUE : FALSE;
 	}
 
-      if (status == STATUS_SUCCESS && 
+      if (status == GIMP_PDB_SUCCESS && 
 	  ((config.width <= 0) || (config.height <= 0) || config.ntries <= 0))
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_smooth_palette", &config);
@@ -164,7 +164,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       if (gimp_drawable_is_rgb (drawable->id))
@@ -173,13 +173,13 @@ run (gchar   *name,
 	  gimp_tile_cache_ntiles (2 * (drawable->width + 1) /
 				  gimp_tile_width ());
 	  values[1].data.d_image = doit (drawable, &values[2].data.d_layer);
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
 	  if (config.show_image)
 	    gimp_display_new (values[1].data.d_image);
 	}
       else
-	status = STATUS_EXECUTION_ERROR;
+	status = GIMP_PDB_EXECUTION_ERROR;
       gimp_drawable_detach (drawable);
   }
 
@@ -224,23 +224,23 @@ pix_swap (guchar *pal,
 }
 
 static gint32
-doit (GDrawable *drawable,
+doit (GimpDrawable *drawable,
       gint32    *layer_id)
 {
   gint32     new_image_id;
-  GDrawable *new_layer;
+  GimpDrawable *new_layer;
   gint       psize, i, j;
   guchar    *pal;
   gint       bpp = drawable->bpp;
-  GPixelRgn  pr;
+  GimpPixelRgn  pr;
 
   srand(time(0));
 
-  new_image_id = gimp_image_new (config.width, config.height, RGB);
+  new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
   *layer_id = gimp_layer_new (new_image_id, _("Background"),
 			      config.width, config.height,
 			      gimp_drawable_type (drawable->id),
-			      100, NORMAL_MODE);
+			      100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (new_image_id, *layer_id, 0);
   new_layer = gimp_drawable_get (*layer_id);
 

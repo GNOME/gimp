@@ -47,25 +47,25 @@
 static void	query	(void);
 static void	run	(gchar  *name,
 			 gint    nparams,
-			 GParam *param,
+			 GimpParam *param,
 			 gint   *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
 static void        fill_preview_with_thumb (GtkWidget *preview_widget, 
 					    gint32     drawable_id);
-static GtkWidget  *preview_widget          (GDrawable *drawable);
+static GtkWidget  *preview_widget          (GimpDrawable *drawable);
 
-static GStatusType main_function  (GDrawable *drawable, 
+static GimpPDBStatusType main_function  (GimpDrawable *drawable, 
 				   gboolean   preview_mode);
 
-static gint	   dialog         (GDrawable *drawable);
+static gint	   dialog         (GimpDrawable *drawable);
 static void        ok_callback    (GtkWidget *widget,
 				   gpointer   data);
 static void        radio_callback (GtkWidget *widget, 
 				   gpointer   data);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -107,12 +107,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args [] =
+  static GimpParamDef args [] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive"},
-    { PARAM_IMAGE,    "image",    "Input image (not used)"},
-    { PARAM_DRAWABLE, "drawable", "Input drawable"},
-    { PARAM_INT32,    "max_p",    "1 for maximizing, 0 for minimizing"}
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"},
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
+    { GIMP_PDB_INT32,    "max_p",    "1 for maximizing, 0 for minimizing"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -127,7 +127,7 @@ query (void)
 			  "May 2000",
                           N_("<Image>/Filters/Colors/Max RGB..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -135,14 +135,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GDrawable    *drawable;
-  static GParam	values[1];
-  GStatusType	status = STATUS_EXECUTION_ERROR;
-  GRunModeType	run_mode;
+  GimpDrawable    *drawable;
+  static GimpParam	values[1];
+  GimpPDBStatusType	status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType	run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -150,12 +150,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       /* Since a channel might be selected, we must check wheter RGB or not. */
@@ -167,11 +167,11 @@ run (gchar   *name,
       if (! dialog (drawable))
 	return;
       break;
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /* You must copy the values of parameters to pvals or dialog variables. */
       break;
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &pvals);
       break;
@@ -179,21 +179,21 @@ run (gchar   *name,
   
   status = main_function (drawable, FALSE);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS)
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS)
     gimp_set_data (PLUG_IN_NAME, &pvals, sizeof (ValueType));
     g_free(preview_bits);
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
-static GStatusType
-main_function (GDrawable *drawable, 
+static GimpPDBStatusType
+main_function (GimpDrawable *drawable, 
 	       gboolean   preview_mode)
 {
-  GPixelRgn  src_rgn, dest_rgn;
+  GimpPixelRgn  src_rgn, dest_rgn;
   guchar    *src, *dest, *save_dest, *src_data, *dest_data;
   gpointer   pr = NULL;
   gint       x, y, x1, x2, y1, y2;
@@ -320,13 +320,13 @@ main_function (GDrawable *drawable,
      gimp_drawable_detach (drawable);
    }
  
- return STATUS_SUCCESS;
+ return GIMP_PDB_SUCCESS;
 }
  
 
 /* dialog stuff */
 static gint
-dialog (GDrawable *drawable)
+dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -404,7 +404,7 @@ static void
 radio_callback (GtkWidget *widget, 
 		gpointer  data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
 
   gimp_radio_button_update (widget, data);
 
@@ -425,7 +425,7 @@ ok_callback (GtkWidget *widget,
 }
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
   GtkWidget *preview;

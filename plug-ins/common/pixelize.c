@@ -44,7 +44,7 @@
  * - Algorithm is modified to work around with the tile management.
  *   The way of pixelizing is switched by the value of pixelwidth.  If
  *   pixelwidth is greater than (or equal to) tile width, then this
- *   plug-in makes GPixelRgn with that width and proceeds. Otherwise,
+ *   plug-in makes GimpPixelRgn with that width and proceeds. Otherwise,
  *   it makes the region named `PixelArea', whose size is smaller than
  *   tile width and is multiply of pixel width, and acts onto it.
  */
@@ -102,23 +102,23 @@ typedef struct
 static void	query	(void);
 static void	run	(gchar	 *name,
 			 gint	 nparams,
-			 GParam	 *param,
+			 GimpParam	 *param,
 			 gint	 *nreturn_vals,
-			 GParam	 **return_vals);
+			 GimpParam	 **return_vals);
 
 static gint	pixelize_dialog      (void);
 static void	pixelize_ok_callback (GtkWidget *widget,
 				      gpointer   data);
 
-static void	pixelize	(GDrawable *drawable);
-static void	pixelize_large	(GDrawable *drawable, gint pixelwidth);
-static void	pixelize_small	(GDrawable *drawable, gint pixelwidth,
+static void	pixelize	(GimpDrawable *drawable);
+static void	pixelize_large	(GimpDrawable *drawable, gint pixelwidth);
+static void	pixelize_small	(GimpDrawable *drawable, gint pixelwidth,
 				 gint tile_width);
 static void	pixelize_sub    (gint pixelwidth, gint bpp);
 
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -145,12 +145,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "pixelwidth", "Pixel width	 (the decrease in resolution)" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -162,7 +162,7 @@ query (void)
 			  "1995",
 			  N_("<Image>/Filters/Blur/Pixelize..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -170,21 +170,21 @@ query (void)
 static void
 run (gchar   *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -192,7 +192,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_pixelize", &pvals);
@@ -205,21 +205,21 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 4)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  pvals.pixelwidth = (gdouble) param[3].data.d_int32;
 	}
-      if ((status == STATUS_SUCCESS) &&
+      if ((status == GIMP_PDB_SUCCESS) &&
 	  pvals.pixelwidth <= 0)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_pixelize", &pvals);
@@ -229,7 +229,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) ||
@@ -243,17 +243,17 @@ run (gchar   *name,
 	  /*  run the pixelize effect  */
 	  pixelize (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_pixelize", &pvals, sizeof (PixelizeValues));
 	}
       else
 	{
 	  /* g_message ("pixelize: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -335,7 +335,7 @@ pixelize_ok_callback (GtkWidget *widget,
  */
 
 static void
-pixelize (GDrawable *drawable)
+pixelize (GimpDrawable *drawable)
 {
   gint tile_width;
   gint pixelwidth;
@@ -356,13 +356,13 @@ pixelize (GDrawable *drawable)
 
 /*
   This function operates on the image when pixelwidth >= tile_width.
-  It simply sets the size of GPixelRgn as pixelwidth and proceeds.
+  It simply sets the size of GimpPixelRgn as pixelwidth and proceeds.
  */
 static void
-pixelize_large (GDrawable *drawable,
+pixelize_large (GimpDrawable *drawable,
 		gint       pixelwidth)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   guchar *src_row, *dest_row;
   guchar *src, *dest;
   gulong *average;
@@ -470,11 +470,11 @@ pixelize_large (GDrawable *drawable,
    or height is the remainder.
  */
 static void
-pixelize_small (GDrawable *drawable,
+pixelize_small (GimpDrawable *drawable,
 		gint       pixelwidth,
 		gint       tile_width)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint bpp;
   gint x1, y1, x2, y2;
   gint progress, max_progress;

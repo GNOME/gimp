@@ -105,14 +105,14 @@
 static void          query       (void);
 static void          run         (gchar       *name,
 				  gint         nparams,
-				  GParam      *param,
+				  GimpParam      *param,
 				  gint        *nreturn_vals,
-				  GParam     **return_vals);
+				  GimpParam     **return_vals);
 
 static gint32        load_image  (gchar       *filename,
 				  gint32       run_mode,
-				  GStatusType *status /* return value */);
-static GStatusType   save_image  (gchar       *filename,
+				  GimpPDBStatusType *status /* return value */);
+static GimpPDBStatusType   save_image  (gchar       *filename,
 				  gint32       image_ID,
 				  gint32       drawable_ID,
 				  gint32       run_mode);
@@ -120,7 +120,7 @@ static GStatusType   save_image  (gchar       *filename,
 static gboolean   valid_file     (gchar       *filename);
 static gchar    * find_extension (gchar       *filename);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -133,27 +133,27 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" },
+    { GIMP_PDB_IMAGE, "image", "Output image" },
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -165,7 +165,7 @@ query (void)
                           "1995-1997",
                           "<Load>/gzip",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -177,7 +177,7 @@ query (void)
                           "1995-1997",
                           "<Save>/gzip",
 			  "RGB*, GRAY*, INDEXED*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -193,13 +193,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
 
   run_mode = param[0].data.d_int32;
@@ -208,8 +208,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gz_load") == 0)
     {
@@ -218,10 +218,10 @@ run (gchar   *name,
 			     &status);
 
       if (image_ID != -1 &&
-	  status == STATUS_SUCCESS)
+	  status == GIMP_PDB_SUCCESS)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
     }
@@ -229,21 +229,21 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  break;
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 4)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  break;
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  break;
 
 	default:
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  status = save_image (param[3].data.d_string,
 			       param[1].data.d_int32,
@@ -253,7 +253,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -299,13 +299,13 @@ spawn_gzip (gchar *filename,
 }
 #endif
 
-static GStatusType
+static GimpPDBStatusType
 save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID,
 	    gint32  run_mode)
 {
-  GParam* params;
+  GimpParam* params;
   gint retvals;
   gchar *ext;
   gchar *tmpname;
@@ -329,23 +329,23 @@ save_image (gchar  *filename,
 
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
-			       PARAM_STRING, ext + 1,
-			       PARAM_END);
+			       GIMP_PDB_STRING, ext + 1,
+			       GIMP_PDB_END);
 
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
 
   params = gimp_run_procedure ("gimp_file_save",
 			       &retvals,
- 			       PARAM_INT32, run_mode,
-			       PARAM_IMAGE, image_ID,
-			       PARAM_DRAWABLE, drawable_ID,
-			       PARAM_STRING, tmpname,
-			       PARAM_STRING, tmpname,
-			       PARAM_END);
+ 			       GIMP_PDB_INT32, run_mode,
+			       GIMP_PDB_IMAGE, image_ID,
+			       GIMP_PDB_DRAWABLE, drawable_ID,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_END);
 
   if (!valid_file (tmpname) ||
-      params[0].data.d_status != STATUS_SUCCESS)
+      params[0].data.d_status != GIMP_PDB_SUCCESS)
     {
       unlink (tmpname);
       g_free (tmpname);
@@ -364,7 +364,7 @@ save_image (gchar  *filename,
     {
       g_message ("gz: fork failed: %s\n", g_strerror (errno));
       g_free (tmpname);
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
   else if (pid == 0)
     {
@@ -391,7 +391,7 @@ save_image (gchar  *filename,
   if (spawn_gzip (filename, tmpname, "-cf", &pid) == -1)  
     {
       g_free (tmpname);
-      return STATUS_EXECUTION_ERROR;
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 #endif
     {
@@ -437,15 +437,15 @@ save_image (gchar  *filename,
   unlink (tmpname);
   g_free (tmpname);
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 static gint32
 load_image (gchar       *filename,
 	    gint32       run_mode,
-	    GStatusType *status /* return value */)
+	    GimpPDBStatusType *status /* return value */)
 {
-  GParam* params;
+  GimpParam* params;
   gint retvals;
   gchar *ext;
   gchar *tmpname;
@@ -467,8 +467,8 @@ load_image (gchar       *filename,
   /* find a temp name */
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
-			       PARAM_STRING, ext + 1,
-			       PARAM_END);
+			       GIMP_PDB_STRING, ext + 1,
+			       GIMP_PDB_END);
 
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
@@ -480,7 +480,7 @@ load_image (gchar       *filename,
     {
       g_message ("gz: fork failed: %s\n", g_strerror (errno));
       g_free (tmpname);
-      *status = STATUS_EXECUTION_ERROR;
+      *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
     }
   else if (pid == 0)  /* child process */
@@ -511,7 +511,7 @@ load_image (gchar       *filename,
    if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
      {
        g_free (tmpname);
-       *status = STATUS_EXECUTION_ERROR;
+       *status = GIMP_PDB_EXECUTION_ERROR;
        return -1;
      }
 #endif
@@ -523,7 +523,7 @@ load_image (gchar       *filename,
 	{
 	  g_message ("gz: gzip exited abnormally on file %s\n", filename);
 	  g_free (tmpname);
-	  *status = STATUS_EXECUTION_ERROR;
+	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;
 	}
     }
@@ -562,16 +562,16 @@ load_image (gchar       *filename,
 
   params = gimp_run_procedure ("gimp_file_load",
 			       &retvals,
-			       PARAM_INT32, run_mode,
-			       PARAM_STRING, tmpname,
-			       PARAM_STRING, tmpname,
-			       PARAM_END);
+			       GIMP_PDB_INT32, run_mode,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_END);
   unlink (tmpname);
   g_free (tmpname);
 
   *status = params[0].data.d_status;
 
-  if (params[0].data.d_status != STATUS_SUCCESS)
+  if (params[0].data.d_status != GIMP_PDB_SUCCESS)
     {
       return -1;
     }

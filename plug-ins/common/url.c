@@ -66,15 +66,15 @@ query (void)
 {
   static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
 
   static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
@@ -87,7 +87,7 @@ query (void)
                           "1995-1997",
                           "<Load>/URL",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -105,15 +105,15 @@ run (gchar      *name,
 {
   static GimpParam  values[2];
   GimpRunModeType   run_mode;
-  GimpPDBStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32            image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_url_load") == 0)
     {
@@ -122,16 +122,16 @@ run (gchar      *name,
 			     &status);
 
       if (image_ID != -1 &&
-	  status == STATUS_SUCCESS)
+	  status == GIMP_PDB_SUCCESS)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -153,14 +153,14 @@ load_image (gchar             *filename,
   if (!ext || ext[1] == 0 || strchr(ext, '/'))
     {
       g_message ("url: can't open URL without an extension");
-      *status = STATUS_CALLING_ERROR;
+      *status = GIMP_PDB_CALLING_ERROR;
       return -1;
     }
 
   params = gimp_run_procedure ("gimp_temp_name",
 			       &retvals,
-			       PARAM_STRING, ext + 1,
-			       PARAM_END);
+			       GIMP_PDB_STRING, ext + 1,
+			       GIMP_PDB_END);
 
   tmpname = g_strdup (params[1].data.d_string);
   gimp_destroy_params (params, retvals);
@@ -170,7 +170,7 @@ load_image (gchar             *filename,
     {
       g_message ("url: pipe() failed: %s", g_strerror (errno));
       g_free (tmpname);
-      *status = STATUS_EXECUTION_ERROR;
+      *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
     }
 
@@ -178,7 +178,7 @@ load_image (gchar             *filename,
     {
       g_message ("url: fork() failed: %s", g_strerror (errno));
       g_free (tmpname);
-      *status = STATUS_EXECUTION_ERROR;
+      *status = GIMP_PDB_EXECUTION_ERROR;
       return -1;
     }
   else if (pid == 0)
@@ -195,7 +195,7 @@ load_image (gchar             *filename,
     }
   else
     {
-      if (run_mode == RUN_NONINTERACTIVE)
+      if (run_mode == GIMP_RUN_NONINTERACTIVE)
 	{
 	  waitpid (pid, &process_status, 0);
 
@@ -204,7 +204,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: wget exited abnormally on URL %s", filename);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	}
@@ -238,7 +238,7 @@ load_image (gchar             *filename,
 	       *  that wget was not found
 	       */
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 
@@ -249,7 +249,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 
@@ -263,7 +263,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	  else if (strstr (buf, "connected"))
@@ -281,7 +281,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	  else if (! connected)
@@ -291,7 +291,7 @@ load_image (gchar             *filename,
 	      DEBUG (buf);
 
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 
@@ -302,7 +302,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: wget exited abnormally on URL\n%s", filename);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	  else if (strstr (buf, "Length"))
@@ -316,7 +316,7 @@ load_image (gchar             *filename,
 	      DEBUG (buf);
 
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 
@@ -326,7 +326,7 @@ load_image (gchar             *filename,
 	    {
 	      g_message ("url: could not parse wget's file length message");
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 
@@ -393,7 +393,7 @@ load_image (gchar             *filename,
 			 filename);
 	      unlink (tmpname);
 	      g_free (tmpname);
-	      *status = STATUS_EXECUTION_ERROR;
+	      *status = GIMP_PDB_EXECUTION_ERROR;
 	      return -1;
 	    }
 	}
@@ -408,7 +408,7 @@ load_image (gchar             *filename,
       {
 	g_message ("url: spawn failed: %s", g_strerror (errno));
 	g_free (tmpname);
-	*status = STATUS_EXECUTION_ERROR;
+	*status = GIMP_PDB_EXECUTION_ERROR;
 	return -1;
       }
 
@@ -419,7 +419,7 @@ load_image (gchar             *filename,
       {
 	g_message ("url: wget exited abnormally on URL %s", filename);
 	g_free (tmpname);
-	*status = STATUS_EXECUTION_ERROR;
+	*status = GIMP_PDB_EXECUTION_ERROR;
 	return -1;
       }
   }
@@ -427,17 +427,17 @@ load_image (gchar             *filename,
 
   params = gimp_run_procedure ("gimp_file_load",
 			       &retvals,
-			       PARAM_INT32, 0,
-			       PARAM_STRING, tmpname,
-			       PARAM_STRING, tmpname,
-			       PARAM_END);
+			       GIMP_PDB_INT32, 0,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_STRING, tmpname,
+			       GIMP_PDB_END);
 
   unlink (tmpname);
   g_free (tmpname);
 
   *status = params[0].data.d_status;
 
-  if (params[0].data.d_status != STATUS_SUCCESS)
+  if (params[0].data.d_status != GIMP_PDB_SUCCESS)
     {
       return -1;
     }

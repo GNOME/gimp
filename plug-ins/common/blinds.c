@@ -36,7 +36,7 @@
  * Changes required to work with 0.99.10.
  *
  * Version 0.4 20 May 1997.
- * Fixed problem with using this plugin in RUN_NONINTERACTIVE mode
+ * Fixed problem with using this plugin in GIMP_RUN_NONINTERACTIVE mode
  *
  * Version 0.3 8 May 1997.
  * Make preview work in Quartics words "The Right Way".
@@ -106,14 +106,14 @@ static BlindsInterface bint =
 
 gint fanwidths[MAX_FANS];
 
-GDrawable *blindsdrawable;
+GimpDrawable *blindsdrawable;
 
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
 static gint      blinds_dialog       (void);
 
@@ -130,7 +130,7 @@ static void	 cache_preview         (void);
 static void      apply_blinds          (void);
 static int       blinds_get_bg         (guchar        *bg);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,    /* init_proc */
   NULL,    /* quit_proc */
@@ -159,15 +159,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "angle_dsp", "Angle of Displacement " },
-    { PARAM_INT32, "number_of_segments", "Number of segments in blinds" },
-    { PARAM_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
-    { PARAM_INT32, "backgndg_trans", "background transparent; FALSE,TRUE" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "angle_dsp", "Angle of Displacement " },
+    { GIMP_PDB_INT32, "number_of_segments", "Number of segments in blinds" },
+    { GIMP_PDB_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
+    { GIMP_PDB_INT32, "backgndg_trans", "background transparent; FALSE,TRUE" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -181,7 +181,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/Blinds..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -189,14 +189,14 @@ query (void)
 static void
 run (gchar    *name,
      gint      nparams,
-     GParam   *param,
+     GimpParam   *param,
      gint     *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   gint pwidth, pheight;
 
@@ -205,10 +205,10 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -243,7 +243,7 @@ run (gchar    *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_blinds", &bvals);
       if (! blinds_dialog())
 	{
@@ -252,10 +252,10 @@ run (gchar    *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 7)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  bvals.angledsp = param[3].data.d_int32;
 	  bvals.numsegs = param[4].data.d_int32;
@@ -264,7 +264,7 @@ run (gchar    *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_blinds", &bvals);
       break;
 
@@ -279,15 +279,15 @@ run (gchar    *name,
 
       apply_blinds ();
    
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_blinds", &bvals, sizeof (BlindVals));
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -486,7 +486,7 @@ blinds_scale_update (GtkAdjustment *adjustment,
 static void
 cache_preview (void)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   int y,x;
   guchar *src_rows;
   guchar *p;
@@ -509,8 +509,8 @@ cache_preview (void)
 
   switch (gimp_drawable_type (blindsdrawable->id))
     {
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       isgrey = 1;
     default:
       break;
@@ -655,20 +655,20 @@ blinds_get_bg (guchar *bg)
 
   switch (gimp_drawable_type (blindsdrawable->id))
     {
-    case RGBA_IMAGE:
+    case GIMP_RGBA_IMAGE:
       bg[3] = bvals.bg_trans ? 0 : 255;
       break;
 
-    case RGB_IMAGE :
+    case GIMP_RGB_IMAGE :
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
 
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       retval = TRUE;
       bg[3] = bvals.bg_trans ? 0 : 255;
       break;
 
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       bg[2] = 0;
       bg[1] = 0;
       bg[0] = 0;
@@ -851,8 +851,8 @@ dialog_update_preview (void)
 static void
 apply_blinds (void)
 {
-  GPixelRgn des_rgn;
-  GPixelRgn src_rgn;
+  GimpPixelRgn des_rgn;
+  GimpPixelRgn src_rgn;
   guchar *src_rows,*des_rows;
   int x,y;
   guchar bg[4];

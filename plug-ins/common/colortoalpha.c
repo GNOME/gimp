@@ -57,24 +57,24 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
-static void      toalpha            (GDrawable  *drawable);
+static void      toalpha            (GimpDrawable  *drawable);
 
 static void      toalpha_render_row (const guchar *src_row,
 				     guchar       *dest_row,
 				     gint          row_width,
 				     const gint    bytes);
 /* UI stuff */
-static gint 	colortoalpha_dialog      (GDrawable *drawable);
+static gint 	colortoalpha_dialog      (GimpDrawable *drawable);
 static void 	colortoalpha_ok_callback (GtkWidget *widget,
 					  gpointer   data);
 
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -102,12 +102,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",    "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_COLOR,    "color",    "Color to remove" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_COLOR,    "color",    "Color to remove" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -121,7 +121,7 @@ query (void)
 			  "7th Aug 1999",
 			  N_("<Image>/Filters/Colors/Color to Alpha..."),
 			  "RGBA",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -129,15 +129,15 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
   gint32 image_ID;
 
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -146,7 +146,7 @@ run (gchar   *name,
 
   INIT_I18N_UI();
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -155,7 +155,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       if (! colortoalpha_dialog (drawable ))
 	{ 
@@ -164,10 +164,10 @@ run (gchar   *name,
 	}
       break;
  
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 3)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  pvals.color[0] = param[3].data.d_color.red;
 	  pvals.color[1] = param[3].data.d_color.green;
@@ -175,27 +175,27 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       break;
     default:
       break;
     }  
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
-      if (gimp_drawable_color (drawable->id) && 
+      if (gimp_drawable_is_rgb (drawable->id) && 
           gimp_drawable_has_alpha(drawable->id))
 	{
-          if (run_mode != RUN_NONINTERACTIVE)
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init ("Removing color...");
              
 	  toalpha (drawable);
 	  gimp_displays_flush ();
 	}
     }
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_set_data ("plug_in_colortoalpha", &pvals, sizeof (pvals));
 
   values[0].data.d_status = status;
@@ -314,8 +314,8 @@ toalpha_render_row (const guchar *src_data,
 }
 
 static void
-toalpha_render_region (const GPixelRgn srcPR,
-		       const GPixelRgn destPR)
+toalpha_render_region (const GimpPixelRgn srcPR,
+		       const GimpPixelRgn destPR)
 {
   gint row;
   guchar* src_ptr  = srcPR.data;
@@ -338,9 +338,9 @@ toalpha_render_region (const GPixelRgn srcPR,
 }
 
 static void
-toalpha (GDrawable *drawable)
+toalpha (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint x1, y1, x2, y2;
   gpointer pr;
   gint total_area, area_so_far;
@@ -370,7 +370,7 @@ toalpha (GDrawable *drawable)
     {
       toalpha_render_region (srcPR, destPR);
 
-      if ((run_mode != RUN_NONINTERACTIVE))
+      if ((run_mode != GIMP_RUN_NONINTERACTIVE))
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (((progress_skip++)%10) == 0)
@@ -385,7 +385,7 @@ toalpha (GDrawable *drawable)
 }
 
 static gint 
-colortoalpha_dialog (GDrawable *drawable)
+colortoalpha_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;

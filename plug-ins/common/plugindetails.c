@@ -103,7 +103,7 @@ query (void)
                           "1999",
 			  N_("<Toolbox>/Xtns/Plugin Details..."),
 			  "",
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
 			  nargs, 0,
                           args, NULL);
 }
@@ -803,7 +803,7 @@ static void
 get_plugin_info (PDesc *pdesc,
 		 gchar *search_text)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;
   gint  row_count = 0;
   gchar **menu_strs;
@@ -820,10 +820,10 @@ get_plugin_info (PDesc *pdesc,
 
   return_vals = gimp_run_procedure ("gimp_plugins_query",
                                     &nreturn_vals,
-				    PARAM_STRING,search_text,
-                                    PARAM_END);
+				    GIMP_PDB_STRING,search_text,
+                                    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
     {
       int loop;
       pdesc->num_plugins = return_vals[1].data.d_int32;

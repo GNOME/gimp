@@ -94,7 +94,7 @@ static struct mwPreview *thePreview;
 
 static GtkWidget        * mw_preview_new   (GtkWidget        *parent,
                                             struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build (GDrawable        *drw);
+static struct mwPreview * mw_preview_build (GimpDrawable        *drw);
 
 
 /* function protos */
@@ -102,9 +102,9 @@ static struct mwPreview * mw_preview_build (GDrawable        *drw);
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparam,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nretvals,
-		   GParam **retvals);
+		   GimpParam **retvals);
 
 static gint pluginCore        (struct piArgs *argp);
 static gint pluginCoreIA      (struct piArgs *argp);
@@ -120,7 +120,7 @@ static inline void nlfiltRow  (guchar     *src,
 			       gint        Bpp,
 			       gint        filtno);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -133,14 +133,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "img", "The Image to Filter" },
-    { PARAM_DRAWABLE, "drw", "The Drawable" },
-    { PARAM_FLOAT, "alpha", "The amount of the filter to apply" },
-    { PARAM_FLOAT, "radius", "The filter radius" },
-    { PARAM_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "img", "The Image to Filter" },
+    { GIMP_PDB_DRAWABLE, "drw", "The Drawable" },
+    { GIMP_PDB_FLOAT, "alpha", "The amount of the filter to apply" },
+    { GIMP_PDB_FLOAT, "radius", "The filter radius" },
+    { GIMP_PDB_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -152,7 +152,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Enhance/NL Filter..."),
 			  "RGB,GRAY",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -160,11 +160,11 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparam,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nretvals,
-     GParam **retvals)
+     GimpParam **retvals)
 {
-  static GParam rvals[1];
+  static GimpParam rvals[1];
 
   struct piArgs args;
 
@@ -178,13 +178,13 @@ run (gchar   *name,
   args.img = param[1].data.d_image;
   args.drw = param[2].data.d_drawable;
 
-  rvals[0].type = PARAM_STATUS;
-  rvals[0].data.d_status = STATUS_SUCCESS;
+  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
 
   switch (param[0].data.d_int32)
     {
-      GDrawable *drw;
-    case RUN_INTERACTIVE:
+      GimpDrawable *drw;
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.radius == -1)
@@ -198,7 +198,7 @@ run (gchar   *name,
 
       if (pluginCoreIA (&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -206,12 +206,12 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 6)
 	{
-	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
       args.alpha  = param[3].data.d_float;
@@ -220,17 +220,17 @@ run (gchar   *name,
 
       if (pluginCore (&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       break;
   }
@@ -239,8 +239,8 @@ run (gchar   *name,
 static gint
 pluginCore (struct piArgs *argp)
 {
-  GDrawable *drw;
-  GPixelRgn srcPr, dstPr;
+  GimpDrawable *drw;
+  GimpPixelRgn srcPr, dstPr;
   guchar *srcbuf, *dstbuf;
   guint width, height, Bpp;
   gint filtno, y, rowsize, p_update;
@@ -496,7 +496,7 @@ mw_preview_toggle_callback (GtkWidget *widget,
 }
 
 static struct mwPreview *
-mw_preview_build_virgin (GDrawable *drw)
+mw_preview_build_virgin (GimpDrawable *drw)
 {
   struct mwPreview *mwp;
 
@@ -522,13 +522,13 @@ mw_preview_build_virgin (GDrawable *drw)
 }
 
 static struct mwPreview *
-mw_preview_build (GDrawable *drw)
+mw_preview_build (GimpDrawable *drw)
 {
   struct mwPreview *mwp;
   gint x, y, b;
   guchar *bc;
   guchar *drwBits;
-  GPixelRgn pr;
+  GimpPixelRgn pr;
 
   mwp = mw_preview_build_virgin (drw);
 

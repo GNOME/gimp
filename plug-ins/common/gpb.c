@@ -68,7 +68,7 @@ static GimpPixPipeParams gihparms;
 
 typedef struct
 {
-  GOrientation orientation;
+  GimpOrientationType orientation;
   gint32 image;
   gint32 toplayer;
   gint nguides;
@@ -90,12 +90,12 @@ typedef struct
 static void   query    (void);
 static void   run      (gchar   *name,
 			gint     nparams,
-			GParam  *param,
+			GimpParam  *param,
 			gint    *nreturn_vals,
-			GParam **return_vals);
+			GimpParam **return_vals);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -109,28 +109,28 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef gpb_save_args[] =
+  static GimpParamDef gpb_save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the brush in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the brush in" },
-    { PARAM_INT32,    "spacing",      "Spacing of the brush" },
-    { PARAM_STRING,   "description",  "Short description of the brush" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush in" },
+    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
+    { GIMP_PDB_STRING,   "description",  "Short description of the brush" }
   };
   static gint ngpb_save_args = (sizeof (gpb_save_args) /
 				sizeof (gpb_save_args[0]));
 
-  static GParamDef gih_save_args[] =
+  static GimpParamDef gih_save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the brush pipe in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
-    { PARAM_INT32,    "spacing",      "Spacing of the brush" },
-    { PARAM_STRING,   "description",  "Short description of the brush pipe" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the brush pipe in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the brush pipe in" },
+    { GIMP_PDB_INT32,    "spacing",      "Spacing of the brush" },
+    { GIMP_PDB_STRING,   "description",  "Short description of the brush pipe" }
   };
   static gint ngih_save_args = (sizeof (gih_save_args) /
 				sizeof (gih_save_args[0]));
@@ -143,7 +143,7 @@ query (void)
                           "1999",
                           "<Save>/GPB",
 			  "RGBA",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           ngpb_save_args, 0,
                           gpb_save_args, NULL);
 
@@ -159,7 +159,7 @@ query (void)
                           "1999",
                           "<Save>/GIH",
 			  "RGBA",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           ngih_save_args, 0,
                           gih_save_args, NULL);
 
@@ -189,7 +189,7 @@ size_adjustment_callback (GtkWidget *widget,
 
   *(adj->value) = GTK_ADJUSTMENT (widget)->value;
 
-  if (adj->orientation == ORIENTATION_VERTICAL)
+  if (adj->orientation == GIMP_VERTICAL)
     {
       size = gimp_image_width (adj->image);
       newn = size / *(adj->value);
@@ -394,7 +394,7 @@ gih_save_dialog (gint32 image_ID)
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
 
   layer_ID = gimp_image_get_layers (image_ID, &nlayers);
-  cellw_adjust.orientation = ORIENTATION_VERTICAL;
+  cellw_adjust.orientation = GIMP_VERTICAL;
   cellw_adjust.image = image_ID;
   cellw_adjust.toplayer = layer_ID[nlayers-1];
   cellw_adjust.nguides = 0;
@@ -414,7 +414,7 @@ gih_save_dialog (gint32 image_ID)
 				     2, gimp_image_height (image_ID), 1, 1, 1,
 				     1, 0);
   gtk_box_pack_start (GTK_BOX (box), spinbutton, FALSE, FALSE, 0);
-  cellh_adjust.orientation = ORIENTATION_HORIZONTAL;
+  cellh_adjust.orientation = GIMP_HORIZONTAL;
   cellh_adjust.image = image_ID;
   cellh_adjust.toplayer = layer_ID[nlayers-1];
   cellh_adjust.nguides = 0;
@@ -608,7 +608,7 @@ try_fwrite (gpointer buffer,
 
 static gboolean
 save_one_gpb (FILE      *file,
-	      GPixelRgn *pixel_rgn,
+	      GimpPixelRgn *pixel_rgn,
 	      int	 index,
 	      int        total)
 {
@@ -749,8 +749,8 @@ gpb_save_image (char   *filename,
 		gint32  image_ID,
 		gint32  drawable_ID)
 {
-  GDrawable *drawable;
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
   FILE *file;
   gchar *temp;
 
@@ -791,8 +791,8 @@ gih_save_image (char   *filename,
 		gint32  orig_image_ID,
 		gint32  drawable_ID)
 {
-  GDrawable *drawable;
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
   FILE *file;
   GimpParasite *pipe_parasite;
   gchar *msg, *parstring, *ncells;
@@ -891,13 +891,13 @@ gih_save_image (char   *filename,
 static void
 run (char    *name,
      int      nparams,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   GimpParasite *pipe_parasite;
   gint32        image_ID;
   gint32        orig_image_ID;
@@ -911,10 +911,10 @@ run (char    *name,
 
   *return_vals  = values;
   *nreturn_vals = 1;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -931,8 +931,8 @@ run (char    *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GPB", 
 				      (CAN_HANDLE_RGB |
@@ -940,7 +940,7 @@ run (char    *name,
 				       NEEDS_ALPHA ));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -950,17 +950,17 @@ run (char    *name,
 
       switch (run_mode) 
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gpb_save", &info);
 	  if (!gpb_save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 	  
-	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
+	case GIMP_RUN_NONINTERACTIVE:  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
 	  if (nparams != 7)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -970,12 +970,12 @@ run (char    *name,
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_gpb_save", &info);
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (gpb_save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
@@ -983,7 +983,7 @@ run (char    *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
     }
@@ -995,8 +995,8 @@ run (char    *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gpb", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIH", 
 				      (CAN_HANDLE_RGB |
@@ -1005,7 +1005,7 @@ run (char    *name,
 				       NEEDS_ALPHA));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -1031,7 +1031,7 @@ run (char    *name,
 			  nlayers, num_layers_with_alpha);
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_gih_save", &info);
 	  pipe_parasite =
@@ -1042,13 +1042,13 @@ run (char    *name,
 	    gimp_pixpipe_params_parse (pipe_parasite->data, &gihparms);
 
 	  if (!gih_save_dialog (image_ID))
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:  /* FIXME - need a real RUN_NONINTERACTIVE */
+	case GIMP_RUN_NONINTERACTIVE:  /* FIXME - need a real GIMP_RUN_NONINTERACTIVE */
 	  if (nparams != 7)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -1058,7 +1058,7 @@ run (char    *name,
 	    }
 	  break;
 	  
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_gih_save", &info);
 	  pipe_parasite =
 	    gimp_image_parasite_find (orig_image_ID,
@@ -1069,7 +1069,7 @@ run (char    *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (gih_save_image (param[3].data.d_string, 
 			      image_ID, orig_image_ID, drawable_ID))
@@ -1078,7 +1078,7 @@ run (char    *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
     }

@@ -47,7 +47,7 @@
  *
  * 98/10/09
  * 2.01.00 - Added support for persistent GIF Comments through
- *           the GIMP 1.1 Parasite mechanism where available.
+ *           the GIMP 1.1 GimpParasite mechanism where available.
  *           Did some user-interface tweaks.
  *           Fixed a bug when trying to save a GIF smaller
  *           than five pixels high as interlaced.
@@ -315,9 +315,9 @@ typedef struct
 static void   query                    (void);
 static void   run                      (gchar   *name,
 					gint     nparams,
-					GParam  *param,
+					GimpParam  *param,
 					gint    *nreturn_vals,
-					GParam **return_vals);
+					GimpParam **return_vals);
 static gint   save_image               (gchar   *filename,
 					gint32   image_ID,
 					gint32   drawable_ID,
@@ -337,7 +337,7 @@ static void   comment_entry_callback   (GtkWidget *widget, gpointer   data);
 static gboolean comment_was_edited = FALSE;
 
 static gboolean can_crop = FALSE;
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 #ifdef FACEHUGGERS
 GimpParasite * comment_parasite = NULL;
 #endif
@@ -346,7 +346,7 @@ GimpParasite * comment_parasite = NULL;
 static gint Interlace;
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -374,17 +374,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",        "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",           "Image to save" },
-    { PARAM_DRAWABLE, "drawable",        "Drawable to save" },
-    { PARAM_STRING,   "filename",        "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename",    "The name entered" },
-    { PARAM_INT32,    "interlace",       "Try to save as interlaced" },
-    { PARAM_INT32,    "loop",            "(animated gif) loop infinitely" },
-    { PARAM_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
-    { PARAM_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
+    { GIMP_PDB_INT32,    "run_mode",        "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",           "Image to save" },
+    { GIMP_PDB_DRAWABLE, "drawable",        "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",        "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename",    "The name entered" },
+    { GIMP_PDB_INT32,    "interlace",       "Try to save as interlaced" },
+    { GIMP_PDB_INT32,    "loop",            "(animated gif) loop infinitely" },
+    { GIMP_PDB_INT32,    "default_delay",   "(animated gif) Default delay between framese in milliseconds" },
+    { GIMP_PDB_INT32,    "default_dispose", "(animated gif) Default disposal type (0=`don't care`, 1=combine, 2=replace)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -396,7 +396,7 @@ query (void)
                           "1995-1997",
                           "<Save>/GIF",
 			  "INDEXED*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -408,12 +408,12 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   gint32        orig_image_ID;
@@ -423,8 +423,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gif_save") == 0)
     {
@@ -437,8 +437,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF", 
 				      (CAN_HANDLE_INDEXED |
 				       CAN_HANDLE_GRAY | 
@@ -446,7 +446,7 @@ run (gchar   *name,
 				       CAN_HANDLE_LAYERS_AS_ANIMATION));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -460,20 +460,20 @@ run (gchar   *name,
 	{
 	  switch (run_mode)
 	    {
-	    case RUN_INTERACTIVE:
+	    case GIMP_RUN_INTERACTIVE:
 	      /*  Possibly retrieve data  */
 	      gimp_get_data ("file_gif_save", &gsvals);
 		
 	      /*  First acquire information with a dialog  */
 	      if (! save_dialog (image_ID))
-		status = STATUS_CANCEL;
+		status = GIMP_PDB_CANCEL;
 	      break;
 	      
-	    case RUN_NONINTERACTIVE:
+	    case GIMP_RUN_NONINTERACTIVE:
 	      /*  Make sure all the arguments are there!  */
 	      if (nparams != 9)
 		{
-		  status = STATUS_CALLING_ERROR;
+		  status = GIMP_PDB_CALLING_ERROR;
 		}
 	      else
 		{
@@ -485,7 +485,7 @@ run (gchar   *name,
 		}
 	      break;
 	      
-	    case RUN_WITH_LAST_VALS:
+	    case GIMP_RUN_WITH_LAST_VALS:
 	      /*  Possibly retrieve data  */
 	      gimp_get_data ("file_gif_save", &gsvals);
 	      break;
@@ -494,7 +494,7 @@ run (gchar   *name,
 	      break;
 	    }
 
-	  if (status == STATUS_SUCCESS)
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      if (save_image (param[3].data.d_string,
 			      image_ID,
@@ -506,14 +506,14 @@ run (gchar   *name,
 		}
 	      else
 		{
-		  status = STATUS_EXECUTION_ERROR;
+		  status = GIMP_PDB_EXECUTION_ERROR;
 		}
 	    }
 	}
       else /* Some layers were out of bounds and the user wishes
 	      to abort.  */
 	{
-	  status = STATUS_CANCEL;
+	  status = GIMP_PDB_CANCEL;
 	}
 
       if (export == EXPORT_EXPORT)
@@ -776,7 +776,7 @@ parse_disposal_tag (char *str)
 static gboolean
 boundscheck (gint32 image_ID)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   gint32 *layers;   
   gint nlayers;
   gint i;
@@ -806,7 +806,7 @@ boundscheck (gint32 image_ID)
 
 	  /* Do the crop if we can't talk to the user, or if we asked
 	   * the user and they said yes. */
-	  if ((run_mode == RUN_NONINTERACTIVE) || badbounds_dialog ())
+	  if ((run_mode == GIMP_RUN_NONINTERACTIVE) || badbounds_dialog ())
 	    {
 	      gimp_crop (image_ID,
 			 gimp_image_width (image_ID), gimp_image_height (image_ID), 
@@ -834,9 +834,9 @@ save_image (gchar  *filename,
 	    gint32  drawable_ID,
 	    gint32  orig_image_ID)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   FILE *outfile;
   int Red[MAXCOLORS];
   int Green[MAXCOLORS];
@@ -895,9 +895,9 @@ save_image (gchar  *filename,
 
   switch (drawable_type)
     {
-    case INDEXEDA_IMAGE:
+    case GIMP_INDEXEDA_IMAGE:
       is_gif89 = TRUE;
-    case INDEXED_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image_ID, &colors);
       
       gimp_palette_get_background(&bgred, &bggreen, &bgblue);
@@ -915,9 +915,9 @@ save_image (gchar  *filename,
 	  Blue[i] = bgblue;
 	}
       break;
-    case GRAYA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       is_gif89 = TRUE;
-    case GRAY_IMAGE:
+    case GIMP_GRAY_IMAGE:
       colors = 256;                   /* FIXME: Not ideal. */
       for ( i = 0;  i < 256; i++)
 	{
@@ -931,7 +931,7 @@ save_image (gchar  *filename,
       break;
     }
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       /* init the progress meter */    
       temp_buf = g_strdup_printf (_("Saving %s:"), filename);
@@ -957,14 +957,14 @@ save_image (gchar  *filename,
 	 so that we don't accidentally come under this when doing
 	 clever transparency stuff where we can re-use wasted indices. */
       liberalBPP = BitsPerPixel =
-	colorstobpp (colors + ((drawable_type==INDEXEDA_IMAGE) ? 1 : 0));
+	colorstobpp (colors + ((drawable_type==GIMP_INDEXEDA_IMAGE) ? 1 : 0));
     }
   else
     {
       liberalBPP = BitsPerPixel =
 	colorstobpp (256);
 
-      if (drawable_type==INDEXEDA_IMAGE)
+      if (drawable_type==GIMP_INDEXEDA_IMAGE)
 	{
 	  g_print ("GIF: Too many colours?\n");
 	}
@@ -1012,15 +1012,15 @@ save_image (gchar  *filename,
       
       pixels = (guchar *) g_malloc (drawable->width *
 				    drawable->height *
-				    (((drawable_type == INDEXEDA_IMAGE)||
-				      (drawable_type == GRAYA_IMAGE)) ? 2:1) );
+				    (((drawable_type == GIMP_INDEXEDA_IMAGE)||
+				      (drawable_type == GIMP_GRAYA_IMAGE)) ? 2:1) );
       
       gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
 			       drawable->width, drawable->height);
 
 
       /* sort out whether we need to do transparency jiggery-pokery */
-      if ((drawable_type == INDEXEDA_IMAGE)||(drawable_type == GRAYA_IMAGE))
+      if ((drawable_type == GIMP_INDEXEDA_IMAGE)||(drawable_type == GIMP_GRAYA_IMAGE))
 	{
 	  /* Try to find an entry which isn't actually used in the
 	     image, for a transparency index. */
@@ -1476,7 +1476,7 @@ BumpPixel (void)
    */
   if (curx == Width)
     {
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  cur_progress++;
 	  if ((cur_progress % 16) == 0)

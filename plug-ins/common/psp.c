@@ -289,9 +289,9 @@ typedef struct
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 static gint32 load_image (gchar  *filename);
 static gint   save_image (gchar  *filename,
 			  gint32  image_ID,
@@ -299,7 +299,7 @@ static gint   save_image (gchar  *filename,
 
 /* Various local variables...
  */
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -336,28 +336,28 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-/*    static GParamDef save_args[] = */
+/*    static GimpParamDef save_args[] = */
 /*    { */
-/*      { PARAM_INT32, "run_mode", "Interactive, non-interactive" }, */
-/*      { PARAM_IMAGE, "image", "Input image" }, */
-/*      { PARAM_DRAWABLE, "drawable", "Drawable to save" }, */
-/*      { PARAM_STRING, "filename", "The name of the file to save the image in" }, */
-/*      { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }, */
-/*      { PARAM_INT32, "compression", "Specify 0 for no compression, " */
+/*      { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" }, */
+/*      { GIMP_PDB_IMAGE, "image", "Input image" }, */
+/*      { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" }, */
+/*      { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" }, */
+/*      { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }, */
+/*      { GIMP_PDB_INT32, "compression", "Specify 0 for no compression, " */
 /*        "1 for RLE, and 2 for LZ77" } */
 /*    }; */
 /*    static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
@@ -373,7 +373,7 @@ query (void)
                           "1999",
                           "<Load>/PSP",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -389,7 +389,7 @@ query (void)
                           "1999",
                           "<Save>/PSP",
 			  "RGB*, GRAY*, INDEXED*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 */
@@ -793,38 +793,38 @@ swab_rect (guint32 *rect)
   rect[3] = GUINT32_FROM_LE (rect[3]);
 }
 
-static GLayerMode
+static GimpLayerModeEffects
 gimp_layer_mode_from_psp_blend_mode (PSPLayerBlendModes mode)
 {
   switch (mode)
     {
     case PSP_BLEND_NORMAL:
-      return NORMAL_MODE;
+      return GIMP_NORMAL_MODE;
     case PSP_BLEND_DARKEN:
-      return DARKEN_ONLY_MODE;
+      return GIMP_DARKEN_ONLY_MODE;
     case PSP_BLEND_LIGHTEN:
-      return LIGHTEN_ONLY_MODE;
+      return GIMP_LIGHTEN_ONLY_MODE;
     case PSP_BLEND_HUE:
-      return HUE_MODE;
+      return GIMP_HUE_MODE;
     case PSP_BLEND_SATURATION:
-      return SATURATION_MODE;
+      return GIMP_SATURATION_MODE;
     case PSP_BLEND_COLOR:
-      return COLOR_MODE;
+      return GIMP_COLOR_MODE;
     case PSP_BLEND_LUMINANCE:
-      return VALUE_MODE;	/* ??? */
+      return GIMP_VALUE_MODE;	/* ??? */
     case PSP_BLEND_MULTIPLY:
-      return MULTIPLY_MODE;
+      return GIMP_MULTIPLY_MODE;
     case PSP_BLEND_SCREEN:
-      return SCREEN_MODE;
+      return GIMP_SCREEN_MODE;
     case PSP_BLEND_DISSOLVE:
-      return DISSOLVE_MODE;
+      return GIMP_DISSOLVE_MODE;
     case PSP_BLEND_OVERLAY:
-      return OVERLAY_MODE;
+      return GIMP_OVERLAY_MODE;
     case PSP_BLEND_HARD_LIGHT:
     case PSP_BLEND_SOFT_LIGHT:
       return -1;
     case PSP_BLEND_DIFFERENCE:
-      return DIFFERENCE_MODE;
+      return GIMP_DIFFERENCE_MODE;
     case PSP_BLEND_DODGE:
     case PSP_BLEND_BURN:
     case PSP_BLEND_EXCLUSION:
@@ -932,7 +932,7 @@ read_channel_data (FILE       *f,
 		   guchar    **pixels,
 		   guint       bytespp,
 		   guint       offset,
-		   GDrawable  *drawable,
+		   GimpDrawable  *drawable,
 		   guint32     compressed_len)
 {
   gint i, y, width = drawable->width, height = drawable->height;
@@ -1078,16 +1078,16 @@ read_layer_block (FILE     *f,
   guint32 image_rect[4], saved_image_rect[4], mask_rect[4], saved_mask_rect[4];
   gboolean null_layer = FALSE;
   guint16 bitmap_count, channel_count;
-  GDrawableType drawable_type;
+  GimpImageType drawable_type;
   guint32 layer_ID = 0;
-  GLayerMode layer_mode;
+  GimpLayerModeEffects layer_mode;
   guint32 channel_init_len, channel_total_len;
   guint32 compressed_len, uncompressed_len;
   guint16 bitmap_type, channel_type;
   gint width, height, bytespp, offset;
   guchar **pixels, *pixel;
-  GDrawable *drawable;
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
 
   block_start = ftell (f);
 
@@ -1188,7 +1188,7 @@ read_layer_block (FILE     *f,
 	  g_message ("PSP: Unsupported PSP layer blend mode %s "
 		     "for layer %s, setting layer invisible",
 		     blend_mode_name (blend_mode), name);
-	  layer_mode = NORMAL_MODE;
+	  layer_mode = GIMP_NORMAL_MODE;
 	  visibility = FALSE;
 	}
 
@@ -1226,14 +1226,14 @@ read_layer_block (FILE     *f,
 
       if (ia->greyscale)
 	if (!null_layer && bitmap_count == 1)
-	  drawable_type = GRAY_IMAGE, bytespp = 1;
+	  drawable_type = GIMP_GRAY_IMAGE, bytespp = 1;
 	else
-	  drawable_type = GRAYA_IMAGE, bytespp = 1;
+	  drawable_type = GIMP_GRAYA_IMAGE, bytespp = 1;
       else
 	if (!null_layer && bitmap_count == 1)
-	  drawable_type = RGB_IMAGE, bytespp = 3;
+	  drawable_type = GIMP_RGB_IMAGE, bytespp = 3;
 	else
-	  drawable_type = RGBA_IMAGE, bytespp = 4;
+	  drawable_type = GIMP_RGBA_IMAGE, bytespp = 4;
 
       layer_ID = gimp_layer_new (image_ID, name,
 				 width, height,
@@ -1584,7 +1584,7 @@ load_image (gchar *filename)
 			      compression_name (ia.compression));
 
 	  image_ID = gimp_image_new (ia.width, ia.height,
-				     ia.greyscale ? GRAY : RGB);
+				     ia.greyscale ? GIMP_GRAY : GIMP_RGB);
 	  if (image_ID == -1)
 	    return -1;
 
@@ -1683,13 +1683,13 @@ save_image (gchar  *filename,
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
@@ -1700,8 +1700,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_psp_load") == 0)
     {
@@ -1710,12 +1710,12 @@ run (gchar   *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_psp_save") == 0)
@@ -1726,8 +1726,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  INIT_I18N_UI();
 	  gimp_ui_init ("psp", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
@@ -1738,7 +1738,7 @@ run (gchar   *name,
 				       CAN_HANDLE_LAYERS));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	  break;
@@ -1748,21 +1748,21 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -1770,10 +1770,10 @@ run (gchar   *name,
 
 	      if (param[5].data.d_int32 < 0 ||
 		  param[5].data.d_int32 > PSP_COMP_LZ77)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	    }
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_psp_save", &psvals);
 	  break;
 
@@ -1781,7 +1781,7 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
@@ -1789,7 +1789,7 @@ run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
 
@@ -1798,7 +1798,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;

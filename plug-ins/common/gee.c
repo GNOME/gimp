@@ -46,9 +46,9 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static void do_playback (void);
 
@@ -66,7 +66,7 @@ static void         show_frame          (void);
 static void         init_preview_misc   (void);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -100,8 +100,8 @@ static GtkPreview *preview = NULL;
 static gint32      image_id;
 static gint32      total_frames;
 static gint32     *layers;
-static GDrawable  *drawable;
-static GImageType  imagetype;
+static GimpDrawable  *drawable;
+static GimpImageBaseType  imagetype;
 static guchar     *palette;
 static gint        ncolours;
 
@@ -117,11 +117,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Always interactive" },
-    { PARAM_IMAGE, "image", "Input Image" },
-    { PARAM_DRAWABLE, "drawable", "Input Drawable" },
+    { GIMP_PDB_INT32, "run_mode", "Always interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input Image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -134,7 +134,7 @@ query (void)
 			 N_("<Image>/Filters/Toys/The Egg..."),
 			 /*NULL,*/
 			 "RGB*, INDEXED*, GRAY*",
-			 PROC_PLUG_IN,
+			 GIMP_PLUGIN,
 			 nargs, 0,
 			 args, NULL);
 }
@@ -142,13 +142,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     n_params,
-     GParam  *param, 
+     GimpParam  *param, 
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
@@ -159,31 +159,31 @@ run (gchar   *name,
 
   INIT_I18N_UI();
 
-  /*  if (run_mode == RUN_NONINTERACTIVE) {*/
+  /*  if (run_mode == GIMP_RUN_NONINTERACTIVE) {*/
     if (n_params != 3)
       {
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       }
     /*  }*/
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       image_id = param[1].data.d_image;
 
       do_playback();
-      /*    if (run_mode != RUN_NONINTERACTIVE)
+      /*    if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush();*/
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
 
 
 static void
-build_dialog (GImageType basetype,
+build_dialog (GimpImageBaseType basetype,
 	      char*      imagename)
 {
   GtkWidget *dlg;
@@ -294,7 +294,7 @@ static void init_lut(void)
     {
       wigglelut[i] = RINT((double)(wiggleamp<<11))*(sin((double)(i) /
 					    ((double)LUTSIZEMASK /
-					     31.4159265358979323)));
+					     10 * G_PI)));
     }
 }
 
@@ -304,7 +304,7 @@ static void do_playback(void)
   layers    = gimp_image_get_layers (image_id, &total_frames);
   imagetype = gimp_image_base_type(image_id);
 
-  if (imagetype == INDEXED)
+  if (imagetype == GIMP_INDEXED)
     palette = gimp_image_get_cmap(image_id, &ncolours);
 
   /* cache hint */
@@ -665,11 +665,11 @@ show_frame(void)
 static void
 init_preview_misc(void)
 {
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
   int i;
   gboolean has_alpha;
 
-  if ((imagetype == RGB)||(imagetype == INDEXED))
+  if ((imagetype == GIMP_RGB) || (imagetype == GIMP_INDEXED))
     rgb_mode = TRUE;
   else
     rgb_mode = FALSE;
@@ -747,7 +747,7 @@ init_preview_misc(void)
   /* convert the image data of varying types into flat grey or rgb. */
   switch (imagetype)
     {
-    case INDEXED:
+    case GIMP_INDEXED:
       if (has_alpha)
 	{
 	  for (i=width*height;i>0;i--)
@@ -773,7 +773,8 @@ init_preview_misc(void)
 	    }
 	}
       break;
-    case GRAY:
+
+    case GIMP_GRAY:
       if (has_alpha)
 	{
 	  for (i=0;i<width*height;i++)
@@ -784,7 +785,8 @@ init_preview_misc(void)
 	    }
 	}
       break;
-    case RGB:
+
+    case GIMP_RGB:
       if (has_alpha)
 	{
 	  for (i=0;i<width*height;i++)
@@ -801,6 +803,7 @@ init_preview_misc(void)
 	    }
 	}
       break;
+
     default:
       break;
     }

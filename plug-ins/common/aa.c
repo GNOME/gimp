@@ -29,9 +29,9 @@
 static void       query      (void);
 static void       run        (gchar      *name, 
 			      gint        nparams, 
-			      GParam     *param, 
+			      GimpParam     *param, 
 			      gint       *nreturn_vals, 
-			      GParam    **return_vals);
+			      GimpParam    **return_vals);
 static gboolean   aa_savable (gint32      drawable_ID);
 static gboolean   save_aa    (gint        output_type, 
 			      gchar      *filename, 
@@ -51,7 +51,7 @@ static void   type_dialog_cancel_callback (GtkWidget *widget,
  * Some global variables.
  */
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -70,14 +70,14 @@ MAIN ()
 static void 
 query (void)
 {
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    {PARAM_INT32,    "run_mode",     "Interactive, non-interactive"},
-    {PARAM_IMAGE,    "image",        "Input image"},
-    {PARAM_DRAWABLE, "drawable",     "Drawable to save"},
-    {PARAM_STRING,   "filename",     "The name of the file to save the image in"},
-    {PARAM_STRING,   "raw_filename", "The name entered"},
-    {PARAM_STRING,   "file_type",    "File type to use"}
+    {GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive"},
+    {GIMP_PDB_IMAGE,    "image",        "Input image"},
+    {GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save"},
+    {GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in"},
+    {GIMP_PDB_STRING,   "raw_filename", "The name entered"},
+    {GIMP_PDB_STRING,   "file_type",    "File type to use"}
   };
   static gint nsave_args = sizeof(save_args) / sizeof(save_args[0]);
 
@@ -89,7 +89,7 @@ query (void)
 			  "1997",
 			  "<Save>/AA",
 			  "GRAY*",		/* support grayscales */
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nsave_args, 0,
 			  save_args, NULL);
 
@@ -124,13 +124,13 @@ get_type_from_string (gchar *string)
 static void 
 run (gchar   *name, 
      gint     nparams, 
-     GParam  *param, 
+     GimpParam  *param, 
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint          output_type = 0;
   static int    last_type = 0;
   gint32        image_ID;
@@ -140,8 +140,8 @@ run (gchar   *name,
   /* Set us up to return a status. */
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   run_mode    = param[0].data.d_int32;
   image_ID    = param[1].data.d_int32;
@@ -150,8 +150,8 @@ run (gchar   *name,
   /*  eventually export the image */ 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_INTERACTIVE:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N_UI();
       gimp_ui_init ("aa", FALSE);
       export = gimp_export_image (&image_ID, &drawable_ID, "AA", 
@@ -159,7 +159,7 @@ run (gchar   *name,
 				   CAN_HANDLE_ALPHA));
       if (export == EXPORT_CANCEL)
 	{
-	  values[0].data.d_status = STATUS_CANCEL;
+	  values[0].data.d_status = GIMP_PDB_CANCEL;
 	  return;
 	}
       break;
@@ -170,35 +170,35 @@ run (gchar   *name,
 
   if (!aa_savable (drawable_ID)) 
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       switch (run_mode) 
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  gimp_get_data ("file_aa_save", &last_type);
 	  output_type = type_dialog (last_type);
 	  if (output_type < 0)
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
 	      output_type = get_type_from_string (param[5].data.d_string);
 	      if (output_type < 0)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("file_aa_save", &last_type);
 	  output_type = last_type;
 	  break;
@@ -208,11 +208,11 @@ run (gchar   *name,
 	}
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if (save_aa (output_type, param[3].data.d_string, image_ID, drawable_ID))
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
@@ -239,7 +239,7 @@ save_aa (gint    output_type,
 {
   aa_savedata savedata = {NULL, NULL};
   aa_context *context  = NULL;
-  GDrawable *drawable  = NULL;
+  GimpDrawable *drawable  = NULL;
   aa_format format;
 
   /*fprintf(stderr, "save %s\n", filename); */
@@ -275,8 +275,8 @@ gimp2aa (gint32      image,
 {
   gint width, height, x, y;
   guchar *buffer;
-  GDrawable *drawable = NULL;
-  GPixelRgn pixel_rgn;
+  GimpDrawable *drawable = NULL;
+  GimpPixelRgn pixel_rgn;
   aa_renderparams *renderparams = NULL;
   gint bpp;
 
@@ -312,11 +312,11 @@ gimp2aa (gint32      image,
 static gboolean 
 aa_savable (gint32 drawable_ID)
 {
-  GDrawableType drawable_type;
+  GimpImageType drawable_type;
 
   drawable_type = gimp_drawable_type (drawable_ID);
 
-  if (drawable_type != GRAY_IMAGE && drawable_type != GRAYA_IMAGE)
+  if (drawable_type != GIMP_GRAY_IMAGE && drawable_type != GIMP_GRAYA_IMAGE)
     return FALSE;
 
   return TRUE;

@@ -96,38 +96,38 @@ typedef struct
 static void	query	(void);
 static void	run	(gchar   *name,
 			 gint    nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
 static GtkWidget *preview_widget         (void);
-static gint	plasma_dialog            (GDrawable *drawable);
+static gint	plasma_dialog            (GimpDrawable *drawable);
 static void     plasma_ok_callback       (GtkWidget *widget, 
 					  gpointer   data);
 
-static void	plasma	     (GDrawable *drawable, 
+static void	plasma	     (GimpDrawable *drawable, 
 			      gboolean   preview_mode);
 static void     random_rgb   (guchar    *d);
 static void     add_random   (guchar    *d,
 			      gint       amnt);
-static void     init_plasma  (GDrawable *drawable, 
+static void     init_plasma  (GimpDrawable *drawable, 
 			      gboolean   preview_mode);
-static void     provide_tile (GDrawable *drawable,
+static void     provide_tile (GimpDrawable *drawable,
 			      gint       col,
 			      gint       row);
-static void     end_plasma   (GDrawable *drawable,
+static void     end_plasma   (GimpDrawable *drawable,
 			      gboolean   preview_mode);
-static void     get_pixel    (GDrawable *drawable,
+static void     get_pixel    (GimpDrawable *drawable,
 			      gint       x,
 			      gint       y,
 			      guchar    *pixel,
 			      gboolean   preview_mode);
-static void     put_pixel    (GDrawable *drawable,
+static void     put_pixel    (GimpDrawable *drawable,
 			      gint       x,
 			      gint       y,
 			      guchar    *pixel,
 			      gboolean   preview_mode);
-static gint     do_plasma    (GDrawable *drawable,
+static gint     do_plasma    (GimpDrawable *drawable,
 			      gint       x1,
 			      gint       y1,
 			      gint       x2,
@@ -138,7 +138,7 @@ static gint     do_plasma    (GDrawable *drawable,
 
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -168,13 +168,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[]=
+  static GimpParamDef args[]=
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "seed", "Random seed" },
-    { PARAM_FLOAT, "turbulence", "Turbulence of plasma" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "seed", "Random seed" },
+    { GIMP_PDB_FLOAT, "turbulence", "Turbulence of plasma" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -186,7 +186,7 @@ query (void)
 			  "May 2000",
 			  N_("<Image>/Filters/Render/Clouds/Plasma..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -194,21 +194,21 @@ query (void)
 static void
 run (gchar   *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -216,7 +216,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
@@ -229,12 +229,12 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -243,11 +243,11 @@ run (gchar   *name,
           pvals.timeseed = FALSE;
 
 	  if (pvals.turbulence <= 0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_plasma", &pvals);
@@ -257,7 +257,7 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
@@ -267,18 +267,18 @@ run (gchar   *name,
 
 	  plasma (drawable, FALSE);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == RUN_INTERACTIVE || 
-	      (pvals.timeseed && run_mode == RUN_WITH_LAST_VALS))
+	  if (run_mode == GIMP_RUN_INTERACTIVE || 
+	      (pvals.timeseed && run_mode == GIMP_RUN_WITH_LAST_VALS))
 	    gimp_set_data ("plug_in_plasma", &pvals, sizeof (PlasmaValues));
 	}
       else
 	{
 	  /* gimp_message ("plasma: cannot operate on indexed color images"); */
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -287,7 +287,7 @@ run (gchar   *name,
 }
 
 static gint
-plasma_dialog (GDrawable *drawable)
+plasma_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
@@ -409,7 +409,7 @@ plasma_ok_callback (GtkWidget *widget,
  */
 
 static gint	ix1, iy1, ix2, iy2;	/* Selected image size. */
-static GTile   *tile=NULL;
+static GimpTile   *tile=NULL;
 static gint     tile_row, tile_col;
 static gint     tile_width, tile_height;
 static gint     tile_dirty;
@@ -422,7 +422,7 @@ static glong	max_progress, progress;
  */
 
 static void
-plasma (GDrawable *drawable, 
+plasma (GimpDrawable *drawable, 
 	gboolean    preview_mode)
 {
   gint  depth;
@@ -449,7 +449,7 @@ plasma (GDrawable *drawable,
 }
 
 static void
-init_plasma (GDrawable *drawable,
+init_plasma (GimpDrawable *drawable,
 	     gboolean   preview_mode)
 {
   if (pvals.timeseed)
@@ -491,7 +491,7 @@ init_plasma (GDrawable *drawable,
 }
 
 static void
-provide_tile (GDrawable *drawable,
+provide_tile (GimpDrawable *drawable,
 	      gint       col,
 	      gint       row)
 {
@@ -509,7 +509,7 @@ provide_tile (GDrawable *drawable,
 }
 
 static void
-end_plasma (GDrawable *drawable,
+end_plasma (GimpDrawable *drawable,
 	    gboolean   preview_mode)
 {
   if (preview_mode) 
@@ -531,7 +531,7 @@ end_plasma (GDrawable *drawable,
 }
 
 static void
-get_pixel (GDrawable *drawable,
+get_pixel (GimpDrawable *drawable,
 	   gint       x,
 	   gint       y,
 	   guchar    *pixel,
@@ -566,7 +566,7 @@ get_pixel (GDrawable *drawable,
 }
 
 static void
-put_pixel (GDrawable *drawable,
+put_pixel (GimpDrawable *drawable,
 	   gint       x,
 	   gint       y,
 	   guchar    *pixel,
@@ -645,7 +645,7 @@ add_random (guchar *d,
 }
 
 static gint
-do_plasma (GDrawable *drawable,
+do_plasma (GimpDrawable *drawable,
 	   gint       x1,
 	   gint       y1,
 	   gint       x2,

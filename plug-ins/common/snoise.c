@@ -107,11 +107,11 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void    solid_noise      (GDrawable *drawable);
+static void    solid_noise      (GimpDrawable *drawable);
 static void    solid_noise_init (void);
 static gdouble plain_noise      (gdouble    x,
 				 gdouble    y,
@@ -126,7 +126,7 @@ static void    dialog_ok_callback    (GtkWidget *widget,
 
 /*---- Variables ----*/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -164,17 +164,17 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "tilable", "Create a tilable output (n=0/y=1)" },
-    { PARAM_INT32, "turbulent", "Make a turbulent noise (n=0/y=1)" },
-    { PARAM_INT32, "seed", "Random seed" },
-    { PARAM_INT32, "detail", "Detail level (0 - 15)" },
-    { PARAM_FLOAT, "xsize", "Horizontal texture size" },
-    { PARAM_FLOAT, "ysize", "Vertical texture size" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "tilable", "Create a tilable output (n=0/y=1)" },
+    { GIMP_PDB_INT32, "turbulent", "Make a turbulent noise (n=0/y=1)" },
+    { GIMP_PDB_INT32, "seed", "Random seed" },
+    { GIMP_PDB_INT32, "detail", "Detail level (0 - 15)" },
+    { GIMP_PDB_FLOAT, "xsize", "Horizontal texture size" },
+    { GIMP_PDB_FLOAT, "ysize", "Vertical texture size" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -186,7 +186,7 @@ query (void)
 			  "Apr 1998, v1.03",
 			  N_("<Image>/Filters/Render/Clouds/Solid Noise..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -195,20 +195,20 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status;
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status;
   
-  status = STATUS_SUCCESS;
+  status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -220,7 +220,7 @@ run (gchar   *name,
   /*  See how we will run  */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data("plug_in_solid_noise", &snvals);
@@ -230,12 +230,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Test number of arguments  */
       if (nparams != 9)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -248,7 +248,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_solid_noise", &snvals);
@@ -259,7 +259,7 @@ run (gchar   *name,
     }
   
   /*  Create texture  */
-  if ((status == STATUS_SUCCESS) && (gimp_drawable_is_rgb (drawable->id) ||
+  if ((status == GIMP_PDB_SUCCESS) && (gimp_drawable_is_rgb (drawable->id) ||
 				     gimp_drawable_is_gray (drawable->id)))
     {
       /*  Set the tile cache size  */
@@ -270,18 +270,18 @@ run (gchar   *name,
       solid_noise (drawable);
 
       /*  If run mode is interactive, flush displays  */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE || run_mode == RUN_WITH_LAST_VALS)
+      if (run_mode == GIMP_RUN_INTERACTIVE || run_mode == GIMP_RUN_WITH_LAST_VALS)
         gimp_set_data ("plug_in_solid_noise", &snvals,
 		       sizeof (SolidNoiseValues));
     }
   else
     {
       /* gimp_message ("solid noise: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }  
 
   values[0].data.d_status = status;
@@ -291,9 +291,9 @@ run (gchar   *name,
 
 
 static void
-solid_noise (GDrawable *drawable)
+solid_noise (GimpDrawable *drawable)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   gint      chns, i, has_alpha, row, col;
   gint      sel_x1, sel_y1, sel_x2, sel_y2;
   gint      sel_width, sel_height;

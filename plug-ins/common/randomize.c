@@ -162,13 +162,13 @@ static RandomizeInterface rndm_int =
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void randomize                    (GDrawable *drawable);
+static void randomize                    (GimpDrawable *drawable);
 
-static inline void randomize_prepare_row (GPixelRgn *pixel_rgn,
+static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  guchar    *data,
 					  gint       x,
 					  gint       y,
@@ -180,7 +180,7 @@ static void randomize_ok_callback        (GtkWidget *widget,
 
 /************************************ Guts ***********************************/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -201,15 +201,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
-    { PARAM_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
-    { PARAM_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
-    { PARAM_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
+    { GIMP_PDB_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
+    { GIMP_PDB_INT32, "seed_type", "Seed type (10 = current time, 11 = seed value)" },
+    { GIMP_PDB_INT32, "rndm_seed", "Seed value (used only if seed type is 11)" }
   };
   static gint nargs = sizeof(args) / sizeof (args[0]);
 
@@ -239,7 +239,7 @@ query (void)
 			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Hurl..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 
@@ -251,7 +251,7 @@ query (void)
 			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Pick..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 
@@ -263,7 +263,7 @@ query (void)
 			  (gchar *) copyright_date,
 			  N_("<Image>/Filters/Noise/Slur..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -280,16 +280,16 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;        /* assume the best! */
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;        /* assume the best! */
   gchar *rndm_type_str = '\0';
   gchar prog_label[32];
-  static GParam values[1];
+  static GimpParam values[1];
   /*
    *  Get the specified drawable, do standard initialization.
    */
@@ -303,7 +303,7 @@ run (gchar   *name,
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   *nreturn_vals = 1;
   *return_vals = values;
@@ -319,7 +319,7 @@ run (gchar   *name,
 	  /*
 	   *  If we're running interactively, pop up the dialog box.
 	   */
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  INIT_I18N_UI();
 	  gimp_get_data(PLUG_IN_NAME[rndm_type - 1], &pivals);
 	  if (!randomize_dialog())        /* return on Cancel */
@@ -331,10 +331,10 @@ run (gchar   *name,
 	   *  we don't use the dialog box.  Make sure they all
 	   *  parameters have legitimate values.
 	   */
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams != 7)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -349,14 +349,14 @@ run (gchar   *name,
 		  (pivals.rndm_pct < 1.0 || pivals.rndm_pct > 100.0) ||
 		  (pivals.rndm_rcount < 1.0 || pivals.rndm_rcount > 100.0))
 		{
-		  status = STATUS_CALLING_ERROR;
+		  status = GIMP_PDB_CALLING_ERROR;
 		}
 	    }
 	  break;
 	  /*
 	   *  If we're running with the last set of values, get those values.
 	   */
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data (PLUG_IN_NAME[rndm_type - 1], &pivals);
 	  break;
 	  /*
@@ -365,7 +365,7 @@ run (gchar   *name,
 	default:
 	  break;
         }
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  /*
 	   *  JUST DO IT!
@@ -392,14 +392,14 @@ run (gchar   *name,
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
 	   */
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
 	      gimp_displays_flush();
             }
 	  /*
 	   *  If we use the dialog popup, set the data for future use.
 	   */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
 	      gimp_set_data(PLUG_IN_NAME[rndm_type - 1], &pivals,
 			    sizeof(RandomizeVals));
@@ -411,7 +411,7 @@ run (gchar   *name,
       /*
        *  If we got the wrong drawable type, we need to complain.
        */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
   /*
    *  DONE!
@@ -432,7 +432,7 @@ run (gchar   *name,
  ********************************/
 
 static inline void
-randomize_prepare_row (GPixelRgn *pixel_rgn,
+randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 		       guchar    *data,
 		       int        x,
 		       int        y,
@@ -471,9 +471,9 @@ randomize_prepare_row (GPixelRgn *pixel_rgn,
  ********************************/
 
 static void
-randomize (GDrawable *drawable)
+randomize (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
+  GimpPixelRgn srcPR, destPR, destPR2, *sp, *dp, *tp;
   gint width, height;
   gint bytes;
   guchar *dest, *d;

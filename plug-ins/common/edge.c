@@ -83,11 +83,11 @@ typedef struct
 
 typedef struct
 {
-  GTile     *tile;
+  GimpTile     *tile;
   gint	     row, col;	/* tile's row, col */
   gint       bpp;
   gint       tile_width, tile_height;
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   gint       drawable_width, drawable_height;
 } TileBuf;
 
@@ -98,17 +98,17 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
-static void      edge        (GDrawable *drawable);
-static gint      edge_dialog (GDrawable *drawable);
+static void      edge        (GimpDrawable *drawable);
+static gint      edge_dialog (GimpDrawable *drawable);
 
 static long      long_sqrt   (long n);
 
 static void   init_tile_buf  (TileBuf   *buf,
-			      GDrawable *drawable);
+			      GimpDrawable *drawable);
 static void   get_tile_pixel (TileBuf   *buf,
 			      gint       x,
 			      gint       y, 
@@ -118,7 +118,7 @@ static void   end_tile_buf   (TileBuf   *buf);
 
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init  */
   NULL,  /* quit  */
@@ -144,13 +144,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "amount", "Edge detection amount" },
-    { PARAM_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "amount", "Edge detection amount" },
+    { GIMP_PDB_INT32, "wrapmode", "Edge detection behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -167,7 +167,7 @@ query (void)
 			  "1996",
 			  N_("<Image>/Filters/Edge-Detect/Edge..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -175,14 +175,14 @@ query (void)
 static void
 run (gchar  *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint   *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -192,12 +192,12 @@ run (gchar  *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
@@ -207,11 +207,11 @@ run (gchar  *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  evals.amount   = param[3].data.d_float;
 	  evals.wrapmode = param[4].data.d_int32;
@@ -219,7 +219,7 @@ run (gchar  *name,
       INIT_I18N();
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_edge", &evals);
       INIT_I18N();
@@ -241,17 +241,17 @@ run (gchar  *name,
       /*  run the edge effect  */
       edge (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_edge", &evals, sizeof (EdgeVals));
     }
   else
      {
       /* gimp_message ("edge: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -268,7 +268,7 @@ run (gchar  *name,
 
 static void
 init_tile_buf (TileBuf   *buf,
-	       GDrawable *drawable)
+	       GimpDrawable *drawable)
 {
   buf->tile = NULL;
   buf->col = 0;
@@ -459,13 +459,13 @@ long_sqrt (long n)
 /********************************************************/
 
 static void
-edge (GDrawable *drawable)
+edge (GimpDrawable *drawable)
 {
   /*
    * this function is too long, so I must split this into a few
    * functions later ...  -- taka
    */
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gpointer pr;
   TileBuf buf;
   guchar *srcrow, *src;
@@ -626,7 +626,7 @@ edge_ok_callback (GtkWidget *widget,
 }
 
 static gint
-edge_dialog (GDrawable *drawable)
+edge_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *frame;

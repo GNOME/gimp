@@ -53,9 +53,9 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 static gint32    tile   (gint32     image_id,
 			 gint32     drawable_id,
@@ -67,7 +67,7 @@ static gint      tile_dialog              (gint32         image_ID,
 static void      tile_ok_callback         (GtkWidget     *widget,
 					   gpointer       data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -94,21 +94,21 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "new_width", "New (tiled) image width" },
-    { PARAM_INT32, "new_height", "New (tiled) image height" },
-    { PARAM_INT32, "new_image", "Create a new image?" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "new_width", "New (tiled) image width" },
+    { GIMP_PDB_INT32, "new_height", "New (tiled) image height" },
+    { GIMP_PDB_INT32, "new_image", "Create a new image?" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
-    { PARAM_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image (N/A if new_image == FALSE)" },
+    { GIMP_PDB_LAYER, "new_layer", "Output layer (N/A if new_image == FALSE)" }
   };
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
@@ -125,7 +125,7 @@ query (void)
 			  "1996-1997",
 			  N_("<Image>/Filters/Map/Tile..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
@@ -133,13 +133,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[3];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[3];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        new_layer;
   gint          width, height;
 
@@ -148,17 +148,17 @@ run (gchar   *name,
   *nreturn_vals = 3;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = PARAM_IMAGE;
-  values[2].type = PARAM_LAYER;
+  values[1].type = GIMP_PDB_IMAGE;
+  values[2].type = GIMP_PDB_LAYER;
 
   width  = gimp_drawable_width (param[2].data.d_drawable);
   height = gimp_drawable_height (param[2].data.d_drawable);
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_tile", &tvals);
@@ -169,12 +169,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -183,11 +183,11 @@ run (gchar   *name,
 	  tvals.new_image  = param[5].data.d_int32 ? TRUE : FALSE;
 
 	  if (tvals.new_width < 0 || tvals.new_height < 0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_tile", &tvals);
@@ -198,7 +198,7 @@ run (gchar   *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Tiling..."));
       gimp_tile_cache_ntiles (2 * (width + 1) / gimp_tile_width ());
@@ -209,10 +209,10 @@ run (gchar   *name,
       values[2].data.d_layer = new_layer;
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_tile", &tvals, sizeof (TileVals));
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  if (tvals.new_image)
 	    gimp_display_new (values[1].data.d_image);
@@ -229,9 +229,9 @@ tile (gint32  image_id,
       gint32  drawable_id,
       gint32 *layer_id)
 {
-  GPixelRgn src_rgn, dest_rgn;
-  GDrawable *drawable, *new_layer;
-  GImageType image_type;
+  GimpPixelRgn src_rgn, dest_rgn;
+  GimpDrawable *drawable, *new_layer;
+  GimpImageBaseType image_type;
   gint32 new_image_id;
   gint old_width, old_height;
   gint width, height;
@@ -241,7 +241,7 @@ tile (gint32  image_id,
 
   /* initialize */
 
-  image_type = RGB;
+  image_type = GIMP_RGB;
   new_image_id = 0;
 
   old_width  = gimp_drawable_width (drawable_id);
@@ -252,14 +252,14 @@ tile (gint32  image_id,
       /*  create  a new image  */
       switch (gimp_drawable_type (drawable_id))
 	{
-	case RGB_IMAGE : case RGBA_IMAGE:
-	  image_type = RGB;
+	case GIMP_RGB_IMAGE : case GIMP_RGBA_IMAGE:
+	  image_type = GIMP_RGB;
 	  break;
-	case GRAY_IMAGE : case GRAYA_IMAGE:
-	  image_type = GRAY;
+	case GIMP_GRAY_IMAGE : case GIMP_GRAYA_IMAGE:
+	  image_type = GIMP_GRAY;
 	  break;
-	case INDEXED_IMAGE : case INDEXEDA_IMAGE:
-	  image_type = INDEXED;
+	case GIMP_INDEXED_IMAGE : case GIMP_INDEXEDA_IMAGE:
+	  image_type = GIMP_INDEXED;
 	  break;
 	}
 
@@ -268,7 +268,7 @@ tile (gint32  image_id,
       *layer_id = gimp_layer_new (new_image_id, _("Background"),
 				  tvals.new_width, tvals.new_height,
 				  gimp_drawable_type (drawable_id),
-				  100, NORMAL_MODE);
+				  100, GIMP_NORMAL_MODE);
       gimp_image_add_layer (new_image_id, *layer_id, 0);
       new_layer = gimp_drawable_get (*layer_id);
 
@@ -327,7 +327,7 @@ tile (gint32  image_id,
     }
 
   /*  copy the colormap, if necessary  */
-  if (image_type == INDEXED && tvals.new_image)
+  if (image_type == GIMP_INDEXED && tvals.new_image)
     {
       gint    ncols;
       guchar *cmap;

@@ -74,25 +74,25 @@ typedef enum
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void dialog_box       (GDrawable   *drawable);
+static void dialog_box       (GimpDrawable   *drawable);
 static void ok_callback      (GtkWidget   *widget, 
 			      gpointer     data);
 static void radio_callback   (GtkWidget   *widget, 
 			      gpointer     data);
 
-static gint render_effect    (GDrawable   *drawable, 
+static gint render_effect    (GimpDrawable   *drawable, 
 			      gboolean     preview_mode);
-static void render_wind      (GDrawable   *drawable, 
+static void render_wind      (GimpDrawable   *drawable, 
 			      gint         threshold, 
 			      gint         strength,
 			      direction_t  direction, 
 			      edge_t       edge, 
 			      gboolean     preview_mode);
-static void render_blast     (GDrawable   *drawable, 
+static void render_blast     (GimpDrawable   *drawable, 
 			      gint         threshold, 
 			      gint         strength,
 			      direction_t  direction, 
@@ -130,11 +130,11 @@ static void reverse_buffer     (guchar  *buffer,
 				gint     bytes);
 
 static void       fill_preview   (GtkWidget *preview_widget, 
-				  GDrawable *drawable);
-static GtkWidget *preview_widget (GDrawable *drawable);
+				  GimpDrawable *drawable);
+static GtkWidget *preview_widget (GimpDrawable *drawable);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -182,16 +182,16 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "threshold", "Controls where blending will be done >= 0" },
-    { PARAM_INT32, "direction", "Left or Right: 0 or 1" },
-    { PARAM_INT32, "strength", "Controls the extent of the blending > 1" },
-    { PARAM_INT32, "alg", "WIND, BLAST" },
-    { PARAM_INT32, "edge", "LEADING, TRAILING, or BOTH" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "threshold", "Controls where blending will be done >= 0" },
+    { GIMP_PDB_INT32, "direction", "Left or Right: 0 or 1" },
+    { GIMP_PDB_INT32, "strength", "Controls the extent of the blending > 1" },
+    { GIMP_PDB_INT32, "alg", "WIND, BLAST" },
+    { GIMP_PDB_INT32, "edge", "LEADING, TRAILING, or BOTH" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -203,7 +203,7 @@ query (void)
 			  "May 2000",
 			  N_("<Image>/Filters/Distorts/Wind..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -211,25 +211,25 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
   gimp_tile_cache_ntiles(2 * (drawable->width / gimp_tile_width() + 1));
   switch (run_mode)
     {
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       if (nparams != 8)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -240,22 +240,22 @@ run (gchar   *name,
 	  config.edge = param[7].data.d_int32;
 
 	  if (render_effect(drawable, 0) == -1)
-	    status = STATUS_EXECUTION_ERROR;
+	    status = GIMP_PDB_EXECUTION_ERROR;
 	}
       break;
       
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data("plug_in_wind", &config);
       dialog_box(drawable);
       if (dialog_result == -1)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
       if (render_effect(drawable, 0) == -1)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
       g_free(preview_cache);
@@ -263,12 +263,12 @@ run (gchar   *name,
       gimp_displays_flush();
       break;
       
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data("plug_in_wind", &config);
       if (render_effect (drawable, FALSE) == -1)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  gimp_message("An execution error occured.");
 	}
       else
@@ -281,14 +281,14 @@ run (gchar   *name,
   
   *nreturn_vals = 1;
   *return_vals = values;
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   return;
 }
 
 static gint
-render_effect (GDrawable *drawable, 
+render_effect (GimpDrawable *drawable, 
 	       gboolean   preview_mode)
 {
   if (config.alg == RENDER_WIND)
@@ -377,7 +377,7 @@ preview_do_row(gint    row,
 }
 
 static void
-render_blast (GDrawable   *drawable,
+render_blast (GimpDrawable   *drawable,
 	      gint         threshold,
 	      gint         strength,
 	      direction_t  direction,
@@ -389,7 +389,7 @@ render_blast (GDrawable   *drawable,
   gint height;
   gint bytes = drawable->bpp;
   guchar *buffer;
-  GPixelRgn src_region, dest_region;
+  GimpPixelRgn src_region, dest_region;
   gint row;
   gint row_stride;
   gint marker = 0;
@@ -508,14 +508,14 @@ render_blast (GDrawable   *drawable,
 }
 
 static void
-render_wind (GDrawable   *drawable,
+render_wind (GimpDrawable   *drawable,
 	     gint         threshold,
 	     gint         strength,
 	     direction_t  direction,
 	     edge_t       edge,
 	     gboolean     preview_mode)
 {
-  GPixelRgn src_region, dest_region;
+  GimpPixelRgn src_region, dest_region;
   gint width;
   gint height;
   gint bytes;
@@ -971,7 +971,7 @@ static void
 radio_callback (GtkWidget *widget, 
 		gpointer   data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
 
   gimp_radio_button_update (widget, data);
 
@@ -984,7 +984,7 @@ radio_callback (GtkWidget *widget,
 }
 
 static void
-dialog_box (GDrawable *drawable)
+dialog_box (GimpDrawable *drawable)
 {
   GtkWidget *main_vbox;
   GtkWidget *vbox;
@@ -1174,7 +1174,7 @@ dialog_box (GDrawable *drawable)
 
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   gint       size;
 
@@ -1187,9 +1187,9 @@ preview_widget (GDrawable *drawable)
 
 static void
 fill_preview (GtkWidget *widget, 
-	      GDrawable *drawable)
+	      GimpDrawable *drawable)
 {
-  GPixelRgn  srcPR;
+  GimpPixelRgn  srcPR;
   gint       width;
   gint       height;
   gint       x1, x2, y1, y2;

@@ -123,37 +123,37 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
-static void      blur16           (GDrawable *drawable);
+static void      blur16           (GimpDrawable *drawable);
 
-static void      diff             (GDrawable *drawable, 
+static void      diff             (GimpDrawable *drawable, 
 				   gint32    *xl_id, 
 				   gint32    *yl_id);
 
-static void      diff_prepare_row (GPixelRgn  *pixel_rgn,
+static void      diff_prepare_row (GimpPixelRgn  *pixel_rgn,
 				   guchar     *data,
 				   int         x,
 				   int         y,
 				   int         w);
 
-static void      warp_one         (GDrawable *draw, 
-				   GDrawable *new,
-				   GDrawable *map_x, 
-				   GDrawable *map_y,
-				   GDrawable *mag_draw,
+static void      warp_one         (GimpDrawable *draw, 
+				   GimpDrawable *new,
+				   GimpDrawable *map_x, 
+				   GimpDrawable *map_y,
+				   GimpDrawable *mag_draw,
 				   gint       first_time,
 				   gint       step);
 
-static void      warp        (GDrawable  *drawable,
-			      GDrawable **map_x_p,
-			      GDrawable **map_y_p);
+static void      warp        (GimpDrawable  *drawable,
+			      GimpDrawable **map_x_p,
+			      GimpDrawable **map_y_p);
  
-static gint      warp_dialog (GDrawable *drawable);
-static GTile *   warp_pixel  (GDrawable *drawable,
-			      GTile     *tile,
+static gint      warp_dialog (GimpDrawable *drawable);
+static GimpTile *   warp_pixel  (GimpDrawable *drawable,
+			      GimpTile     *tile,
 			      gint       width,
 			      gint       height,
 			      gint       x1,
@@ -196,7 +196,7 @@ static gdouble   warp_map_mag_give_value  (guchar    *pt,
 /*   Variables global over entire plug-in scope                               */
 /* -------------------------------------------------------------------------- */
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -232,7 +232,7 @@ static WarpInterface dint =
 /* static gint         display_diff_map = TRUE;   show 16-bit diff. vectormap */
 static gint         progress = 0;              /* progress indicator bar      */
 static guint        tile_width, tile_height;   /* size of an image tile       */
-static GRunModeType run_mode;                  /* interactive, non-, etc.     */
+static GimpRunModeType run_mode;                  /* interactive, non-, etc.     */
 static guchar       color_pixel[4] = {0, 0, 0, 255};  /* current fg color     */
 
 /* -------------------------------------------------------------------------- */
@@ -244,25 +244,25 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "amount", "Pixel displacement multiplier" },
-    { PARAM_DRAWABLE, "warp_map", "Displacement control map" },
-    { PARAM_INT32, "iter", "Iteration count (last required argument)" },
-    { PARAM_FLOAT, "dither", "Random dither amount (first optional argument)" },
-    { PARAM_FLOAT, "angle", "Angle of gradient vector rotation" },
-    { PARAM_INT32, "wrap_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), COLOR (3) }" },
-    { PARAM_DRAWABLE, "mag_map", "Magnitude control map" },
-    { PARAM_INT32, "mag_use", "Use magnitude map: { FALSE (0), TRUE (1) }" },
-    { PARAM_INT32, "substeps", "Substeps between image updates" },
-    { PARAM_INT32, "grad_map", "Gradient control map" },
-    { PARAM_FLOAT, "grad_scale", "Scaling factor for gradient map (0=don't use)" },
-    { PARAM_INT32, "vector_map", "Fixed vector control map" },
-    { PARAM_FLOAT, "vector_scale", "Scaling factor for fixed vector map (0=don't use)" },
-    { PARAM_FLOAT, "vector_angle", "Angle for fixed vector map" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "amount", "Pixel displacement multiplier" },
+    { GIMP_PDB_DRAWABLE, "warp_map", "Displacement control map" },
+    { GIMP_PDB_INT32, "iter", "Iteration count (last required argument)" },
+    { GIMP_PDB_FLOAT, "dither", "Random dither amount (first optional argument)" },
+    { GIMP_PDB_FLOAT, "angle", "Angle of gradient vector rotation" },
+    { GIMP_PDB_INT32, "wrap_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2), COLOR (3) }" },
+    { GIMP_PDB_DRAWABLE, "mag_map", "Magnitude control map" },
+    { GIMP_PDB_INT32, "mag_use", "Use magnitude map: { FALSE (0), TRUE (1) }" },
+    { GIMP_PDB_INT32, "substeps", "Substeps between image updates" },
+    { GIMP_PDB_INT32, "grad_map", "Gradient control map" },
+    { GIMP_PDB_FLOAT, "grad_scale", "Scaling factor for gradient map (0=don't use)" },
+    { GIMP_PDB_INT32, "vector_map", "Fixed vector control map" },
+    { GIMP_PDB_FLOAT, "vector_scale", "Scaling factor for fixed vector map (0=don't use)" },
+    { GIMP_PDB_FLOAT, "vector_angle", "Angle for fixed vector map" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -277,7 +277,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Map/Warp..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -285,17 +285,17 @@ query (void)
 static void
 run (gchar  *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint   *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GDrawable *map_x = NULL;   /* satisfy compiler complaints */
-  GDrawable *map_y = NULL;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpDrawable *map_x = NULL;   /* satisfy compiler complaints */
+  GimpDrawable *map_y = NULL;
   gint32 image_ID;           /* image id of drawable */
 
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint pcnt;                 /* parameter counter for scanning input params. */
 
   run_mode = param[0].data.d_int32;
@@ -313,12 +313,12 @@ run (gchar  *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_warp", &dvals);
@@ -328,14 +328,14 @@ run (gchar  *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure minimum args
        *  (mode, image, draw, amount, warp_map, iter) are there 
        */
       if (nparams < MIN_ARGS)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -357,7 +357,7 @@ run (gchar  *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_warp", &dvals);
       break;
@@ -366,7 +366,7 @@ run (gchar  *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  set the tile cache size  */
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
@@ -375,7 +375,7 @@ run (gchar  *name,
       warp (drawable, &map_x, &map_y);
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_warp", &dvals, sizeof (WarpVals));
     }
 
@@ -399,12 +399,12 @@ run (gchar  *name,
   gimp_drawable_detach (map_x);
   gimp_drawable_detach (map_y);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
 }
 
 static int
-warp_dialog (GDrawable *drawable)
+warp_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
@@ -718,12 +718,12 @@ warp_dialog (GDrawable *drawable)
 /* ---------------------------------------------------------------------- */
 
 static void
-blur16 (GDrawable *drawable)
+blur16 (GimpDrawable *drawable)
 {
   /*  blur a 2-or-more byte-per-pixel drawable,
    *  1st 2 bytes interpreted as a 16-bit height field.
    */
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint src_bytes;
   gint dest_bytes;
@@ -825,7 +825,7 @@ blur16 (GDrawable *drawable)
 /* Get one row of pixels from the PixelRegion and put them in 'data'      */
 
 static void
-diff_prepare_row (GPixelRgn *pixel_rgn,
+diff_prepare_row (GimpPixelRgn *pixel_rgn,
 		  guchar    *data,
 		  int        x,
 		  int        y,
@@ -854,18 +854,18 @@ diff_prepare_row (GPixelRgn *pixel_rgn,
 /* -------------------------------------------------------------------------- */
 
 static void
-diff (GDrawable *drawable, 
+diff (GimpDrawable *drawable, 
       gint32    *xl_id, 
       gint32    *yl_id)
 {
-  GDrawable *draw_xd, *draw_yd;  /* vector disp. drawables */
-  GDrawable *mdraw, *vdraw, *gdraw;
+  GimpDrawable *draw_xd, *draw_yd;  /* vector disp. drawables */
+  GimpDrawable *mdraw, *vdraw, *gdraw;
   gint32 image_id;           /* image holding X and Y diff. arrays */
   gint32 new_image_id;       /* image holding X and Y diff. layers */
   gint32 layer_active;       /* currently active layer */
   gint32 xlayer_id, ylayer_id;   /* individual X and Y layer ID numbers */
-  GPixelRgn srcPR, destxPR, destyPR;
-  GPixelRgn vecPR, magPR, gradPR;
+  GimpPixelRgn srcPR, destxPR, destyPR;
+  GimpPixelRgn vecPR, magPR, gradPR;
   gint width, height;
   gint src_bytes;
   gint mbytes=0;
@@ -930,23 +930,23 @@ diff (GDrawable *drawable,
   image_id = gimp_layer_get_image_id(drawable->id);
   layer_active = gimp_image_get_active_layer(image_id);
 
-  new_image_id = gimp_image_new(width, height, RGB); /* create new image for X,Y diff */
+  new_image_id = gimp_image_new(width, height, GIMP_RGB); /* create new image for X,Y diff */
 
   xlayer_id = gimp_layer_new(new_image_id, "Warp_X_Vectors",
 			     width, height,
-			     RGB_IMAGE, 100.0, NORMAL_MODE);
+			     GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
 
   ylayer_id = gimp_layer_new(new_image_id, "Warp_Y_Vectors",
 			     width, height,
-			     RGB_IMAGE, 100.0, NORMAL_MODE);
+			     GIMP_RGB_IMAGE, 100.0, GIMP_NORMAL_MODE);
 
   draw_yd = gimp_drawable_get (ylayer_id);
   draw_xd = gimp_drawable_get (xlayer_id);
  
     gimp_image_add_layer (new_image_id, xlayer_id, 1);
     gimp_image_add_layer (new_image_id, ylayer_id, 1);
-    gimp_drawable_fill(xlayer_id, BG_IMAGE_FILL);
-    gimp_drawable_fill(ylayer_id, BG_IMAGE_FILL);
+    gimp_drawable_fill(xlayer_id, GIMP_BG_IMAGE_FILL);
+    gimp_drawable_fill(ylayer_id, GIMP_BG_IMAGE_FILL);
     gimp_image_set_active_layer(image_id, layer_active);
 
   dest_bytes = draw_xd->bpp;                /* bytes per pixel in destination drawable(s) */
@@ -1187,12 +1187,12 @@ diff (GDrawable *drawable,
 /* -------------------------------------------------------------------------- */
 
 static void      
-warp (GDrawable  *orig_draw,
-      GDrawable **map_x,
-      GDrawable **map_y)
+warp (GimpDrawable  *orig_draw,
+      GimpDrawable **map_x,
+      GimpDrawable **map_y)
 {
-  GDrawable *disp_map;    /* Displacement map, ie, control array */
-  GDrawable *mag_draw;    /* Magnitude multiplier factor map */
+  GimpDrawable *disp_map;    /* Displacement map, ie, control array */
+  GimpDrawable *mag_draw;    /* Magnitude multiplier factor map */
 
   gchar *string;          /* string to hold title of progress bar window */
 
@@ -1240,7 +1240,7 @@ warp (GDrawable  *orig_draw,
 
    for (warp_iter = 0; warp_iter < dvals.iter; warp_iter++)
    {
-     if (run_mode != RUN_NONINTERACTIVE) {
+     if (run_mode != GIMP_RUN_NONINTERACTIVE) {
        string = g_strdup_printf (_("Flow Step %d..."), warp_iter+1);
        gimp_progress_init (string);
        g_free (string);
@@ -1251,7 +1251,7 @@ warp (GDrawable  *orig_draw,
 
      gimp_drawable_update (orig_draw->id, x1, y1, (x2 - x1), (y2 - y1));
 
-     if (run_mode != RUN_NONINTERACTIVE)
+     if (run_mode != GIMP_RUN_NONINTERACTIVE)
        gimp_displays_flush();
 
 
@@ -1266,22 +1266,22 @@ warp (GDrawable  *orig_draw,
 /* -------------------------------------------------------------------------- */
 
 static void
-warp_one (GDrawable *draw, 
-	  GDrawable *new,
-	  GDrawable *map_x, 
-	  GDrawable *map_y,
-	  GDrawable *mag_draw,
+warp_one (GimpDrawable *draw, 
+	  GimpDrawable *new,
+	  GimpDrawable *map_x, 
+	  GimpDrawable *map_y,
+	  GimpDrawable *mag_draw,
 	  gint       first_time,
 	  gint       step)
 {
-  GPixelRgn src_rgn;
-  GPixelRgn dest_rgn;
-  GPixelRgn map_x_rgn;
-  GPixelRgn map_y_rgn;
-  GPixelRgn mag_rgn;
-  GTile   * tile = NULL;
-  GTile   * xtile = NULL;
-  GTile   * ytile = NULL;
+  GimpPixelRgn src_rgn;
+  GimpPixelRgn dest_rgn;
+  GimpPixelRgn map_x_rgn;
+  GimpPixelRgn map_y_rgn;
+  GimpPixelRgn mag_rgn;
+  GimpTile   * tile = NULL;
+  GimpTile   * xtile = NULL;
+  GimpTile   * ytile = NULL;
   gint row=-1;
   gint xrow=-1;
   gint yrow=-1;
@@ -1565,9 +1565,9 @@ warp_map_mag_give_value (guchar *pt,
 }
 
 
-static GTile *
-warp_pixel (GDrawable *drawable,
-	    GTile     *tile,
+static GimpTile *
+warp_pixel (GimpDrawable *drawable,
+	    GimpTile     *tile,
 	    gint       width,
 	    gint       height,
 	    gint       x1,
@@ -1689,9 +1689,9 @@ warp_map_constrain (gint32     image_id,
 		    gint32     drawable_id,
 		    gpointer   data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
 
-  drawable = (GDrawable *) data;
+  drawable = (GimpDrawable *) data;
 
   if (drawable_id == -1)
     return TRUE;

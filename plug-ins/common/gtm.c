@@ -113,12 +113,12 @@ static GTMValues gtmvals =
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 
 static gint   save_image  (gchar     *filename,
-			   GDrawable *drawable);
+			   GimpDrawable *drawable);
 static gint   save_dialog (gint32     image_ID);
 
 static gint   color_comp               (guchar    *buffer,
@@ -134,7 +134,7 @@ static void   gtm_clwidth_callback     (GtkWidget *widget,
 static void   gtm_clheight_callback    (GtkWidget *widget,
 					gpointer   data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -148,13 +148,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to save the image in" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to save the image in" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -166,7 +166,7 @@ query (void)
                           "1998",
                           "<Save>/HTML",
 			  "RGB*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -178,13 +178,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GStatusType   status = STATUS_SUCCESS;
-  GDrawable *drawable;
+  static GimpParam values[2];
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
+  GimpDrawable *drawable;
 
   INIT_I18N_UI();
 
@@ -192,8 +192,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   gimp_get_data ("file_GTM_save", &gtmvals);
 
@@ -205,12 +205,12 @@ run (gchar   *name,
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else
     {
-      status = STATUS_CANCEL;
+      status = GIMP_PDB_CANCEL;
     }
 
   values[0].data.d_status = status;
@@ -218,7 +218,7 @@ run (gchar   *name,
 
 static gint
 save_image (gchar     *filename,
-	    GDrawable *drawable)
+	    GimpDrawable *drawable)
 {
   int row,col, cols, rows, x, y;
   int colcount, colspan, rowspan;
@@ -228,7 +228,7 @@ save_image (gchar     *filename,
   int *palloc;
   guchar *buffer, *buf2;
   gchar *width, *height;
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
   char *name;
 
   FILE *fp, *fopen();

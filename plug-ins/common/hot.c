@@ -161,9 +161,9 @@ static gint	icompos_lim;         /* composite amplitude limit (scaled integer) *
 static void query        (void);
 static void run          (gchar   *name,
 			  gint     nparam,
-			  GParam  *param,
+			  GimpParam  *param,
 			  gint    *nretvals,
-			  GParam **retvals);
+			  GimpParam **retvals);
 
 static gint pluginCore   (struct piArgs *argp);
 static gint pluginCoreIA (struct piArgs *argp);
@@ -196,7 +196,7 @@ static void build_tab    (int m);
 #define pix_decode(v)  ((double)v / (double)MAXPIX)
 #define pix_encode(v)  ((int)(v * (double)MAXPIX + 0.5))
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -209,14 +209,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "The Image" },
-    { PARAM_DRAWABLE, "drawable", "The Drawable" },
-    { PARAM_INT32, "mode", "Mode -- NTSC/PAL" },
-    { PARAM_INT32, "action", "The action to perform" },
-    { PARAM_INT32, "new_layerp", "Create a new layer iff True" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "The Image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "The Drawable" },
+    { GIMP_PDB_INT32, "mode", "Mode -- NTSC/PAL" },
+    { GIMP_PDB_INT32, "action", "The action to perform" },
+    { GIMP_PDB_INT32, "new_layerp", "Create a new layer iff True" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -233,7 +233,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Colors/Hot..."),
 			  "RGB",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -241,11 +241,11 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparam,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nretvals,
-     GParam **retvals)
+     GimpParam **retvals)
 {
-  static GParam rvals[1];
+  static GimpParam rvals[1];
 
   struct piArgs args;
 
@@ -260,11 +260,11 @@ run (gchar   *name,
   args.image = param[1].data.d_image;
   args.drawable = param[2].data.d_drawable;
 
-  rvals[0].type = PARAM_STATUS;
-  rvals[0].data.d_status = STATUS_SUCCESS;
+  rvals[0].type = GIMP_PDB_STATUS;
+  rvals[0].data.d_status = GIMP_PDB_SUCCESS;
   switch (param[0].data.d_int32)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /* XXX: add code here for interactive running */
       if (args.mode == -1)
@@ -276,18 +276,18 @@ run (gchar   *name,
 
       if (pluginCoreIA(&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
       gimp_set_data ("plug_in_hot", &args, sizeof (struct piArgs));
 
     break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /* XXX: add code here for non-interactive running */
       if (nparam != 6)
 	{
-	  rvals[0].data.d_status = STATUS_CALLING_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
       args.mode       = param[3].data.d_int32;
@@ -296,17 +296,17 @@ run (gchar   *name,
 
       if (pluginCore(&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
     break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /* XXX: add code here for last-values running */
       if (pluginCore (&args) == -1)
 	{
-	  rvals[0].data.d_status = STATUS_EXECUTION_ERROR;
+	  rvals[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 	}
     break;
   }
@@ -315,8 +315,8 @@ run (gchar   *name,
 static gint
 pluginCore (struct piArgs *argp)
 {
-  GDrawable *drw, *ndrw=NULL;
-  GPixelRgn srcPr, dstPr;
+  GimpDrawable *drw, *ndrw=NULL;
+  GimpPixelRgn srcPr, dstPr;
   gint retval = 0;
   gint nl=0;
   gint y, x, i;
@@ -356,9 +356,9 @@ pluginCore (struct piArgs *argp)
 		  action_names[argp->action]);
 
       nl = gimp_layer_new (argp->image, name, width, height,
-			   RGBA_IMAGE, (gdouble)100, NORMAL_MODE);
+			   GIMP_RGBA_IMAGE, (gdouble)100, GIMP_NORMAL_MODE);
       ndrw = gimp_drawable_get (nl);
-      gimp_drawable_fill (nl, TRANS_IMAGE_FILL);
+      gimp_drawable_fill (nl, GIMP_TRANS_IMAGE_FILL);
       gimp_image_add_layer (argp->image, nl, 0);
     }
 

@@ -55,19 +55,19 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint engrave_dialog      (void);
 static void engrave_ok_callback (GtkWidget *widget,
 				 gpointer   data);
 
-static void engrave       (GDrawable *drawable);
-static void engrave_large (GDrawable *drawable,
+static void engrave       (GimpDrawable *drawable);
+static void engrave_large (GimpDrawable *drawable,
 			   gint       height,
 			   gint       limit);
-static void engrave_small (GDrawable *drawable,
+static void engrave_small (GimpDrawable *drawable,
 			   gint       height,
 			   gint       limit,
 			   gint       tile_width);
@@ -76,7 +76,7 @@ static void engrave_sub   (gint       height,
 			   gint       bpp,
 			   gint       color_n);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -100,13 +100,13 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "height", "Resolution in pixels" },
-    { PARAM_INT32, "limit", "If true, limit line width" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "height", "Resolution in pixels" },
+    { GIMP_PDB_INT32, "limit", "If true, limit line width" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -118,7 +118,7 @@ query (void)
 			  "1995,1996,1997",
 			  N_("<Image>/Filters/Distorts/Engrave..."),
 			  "RGBA, GRAYA",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -126,21 +126,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -148,7 +148,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_engrave", &pvals);
@@ -161,22 +161,22 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  pvals.height = param[3].data.d_int32;
 	  pvals.limit  = (param[4].data.d_int32) ? TRUE : FALSE;
 	}
-      if ((status == STATUS_SUCCESS) &&
+      if ((status == GIMP_PDB_SUCCESS) &&
 	  pvals.height < 0)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_engrave", &pvals);
@@ -186,18 +186,18 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Engraving..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       engrave (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_engrave", &pvals, sizeof (EngraveValues));
     }
   values[0].data.d_status = status;
@@ -283,7 +283,7 @@ engrave_ok_callback (GtkWidget *widget,
 }
 
 static void
-engrave (GDrawable *drawable)
+engrave (GimpDrawable *drawable)
 {
   gint tile_width;
   gint height;
@@ -299,11 +299,11 @@ engrave (GDrawable *drawable)
 }
 
 static void
-engrave_large (GDrawable *drawable,
+engrave_large (GimpDrawable *drawable,
 	       gint       height,
 	       gint       limit)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   guchar *src_row, *dest_row;
   guchar *src, *dest;
   gulong *average;
@@ -417,12 +417,12 @@ typedef struct
 PixelArea area;
 
 static void
-engrave_small (GDrawable *drawable,
+engrave_small (GimpDrawable *drawable,
 	       gint       height,
 	       gint       limit,
 	       gint       tile_width)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gint bpp, color_n;
   gint x1, y1, x2, y2;
   gint progress, max_progress;

@@ -78,9 +78,9 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar   *name,
 			 gint     nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
 static gint      sparkle_dialog        (void);
 static void      sparkle_ok_callback   (GtkWidget *widget,
@@ -89,12 +89,12 @@ static void      sparkle_ok_callback   (GtkWidget *widget,
 static gint      compute_luminosity    (guchar    *pixel,
 					gint       gray,
 					gint       has_alpha);
-static gint      compute_lum_threshold (GDrawable *drawable,
+static gint      compute_lum_threshold (GimpDrawable *drawable,
 					gdouble    percentile);
-static void      sparkle               (GDrawable *drawable,
+static void      sparkle               (GimpDrawable *drawable,
 					gint       threshold);
-static void      fspike                (GPixelRgn *src_rgn,
-					GPixelRgn *dest_rgn,
+static void      fspike                (GimpPixelRgn *src_rgn,
+					GimpPixelRgn *dest_rgn,
 					gint       gray,
 					gint       x1,
 					gint       y1,
@@ -107,8 +107,8 @@ static void      fspike                (GPixelRgn *src_rgn,
 					gdouble    inten,
 					gdouble    length,
 					gdouble    angle);
-static GTile*    rpnt                  (GDrawable *drawable,
-					GTile     *tile,
+static GimpTile*    rpnt                  (GimpDrawable *drawable,
+					GimpTile     *tile,
 					gint       x1,
 					gint       y1,
 					gint       x2,
@@ -123,7 +123,7 @@ static GTile*    rpnt                  (GDrawable *drawable,
 					gdouble    inten,
 					guchar     color[MAX_CHANNELS]);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -161,24 +161,24 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "lum_threshold", "Luminosity threshold (0.0 - 1.0)" },
-    { PARAM_FLOAT, "flare_inten", "Flare intensity (0.0 - 1.0)" },
-    { PARAM_INT32, "spike_len", "Spike length (in pixels)" },
-    { PARAM_INT32, "spike_pts", "# of spike points" },
-    { PARAM_INT32, "spike_angle", "Spike angle (0-360 degrees, -1: random)" },
-    { PARAM_FLOAT, "density", "Spike density (0.0 - 1.0)" },
-    { PARAM_FLOAT, "opacity", "Opacity (0.0 - 1.0)" },
-    { PARAM_FLOAT, "random_hue", "Random hue (0.0 - 1.0)" },
-    { PARAM_FLOAT, "random_saturation", "Random saturation (0.0 - 1.0)" },
-    { PARAM_INT32, "preserve_luminosity", "Preserve luminosity (TRUE/FALSE)" },
-    { PARAM_INT32, "invers", "Invers (TRUE/FALSE)" },
-    { PARAM_INT32, "border", "Add border (TRUE/FALSE)" },
-    { PARAM_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "lum_threshold", "Luminosity threshold (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT, "flare_inten", "Flare intensity (0.0 - 1.0)" },
+    { GIMP_PDB_INT32, "spike_len", "Spike length (in pixels)" },
+    { GIMP_PDB_INT32, "spike_pts", "# of spike points" },
+    { GIMP_PDB_INT32, "spike_angle", "Spike angle (0-360 degrees, -1: random)" },
+    { GIMP_PDB_FLOAT, "density", "Spike density (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT, "opacity", "Opacity (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT, "random_hue", "Random hue (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT, "random_saturation", "Random saturation (0.0 - 1.0)" },
+    { GIMP_PDB_INT32, "preserve_luminosity", "Preserve luminosity (TRUE/FALSE)" },
+    { GIMP_PDB_INT32, "invers", "Invers (TRUE/FALSE)" },
+    { GIMP_PDB_INT32, "border", "Add border (TRUE/FALSE)" },
+    { GIMP_PDB_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -190,7 +190,7 @@ query (void)
 			  "Version 1.26, December 1998",
 			  N_("<Image>/Filters/Light Effects/Sparkle..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -198,14 +198,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint threshold, x1, y1, x2, y2;
 
   run_mode = param[0].data.d_int32;
@@ -213,12 +213,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sparkle", &svals);
@@ -228,12 +228,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 16)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -252,30 +252,30 @@ run (gchar   *name,
 	  svals.colortype = param[15].data.d_int32;
 
 	  if (svals.lum_threshold < 0.0 || svals.lum_threshold > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.flare_inten < 0.0 || svals.flare_inten > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.spike_len < 0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.spike_pts < 0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.spike_angle < -1 || svals.spike_angle > 360)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.density < 0.0 || svals.density > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.opacity < 0.0 || svals.opacity > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.random_hue < 0.0 || svals.random_hue > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.random_saturation < 0.0 ||
 		   svals.random_saturation > 1.0)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	  else if (svals.colortype < NATURAL || svals.colortype > BACKGROUND)
-	    status = STATUS_CALLING_ERROR;
+	    status = GIMP_PDB_CALLING_ERROR;
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_sparkle", &svals);
@@ -307,17 +307,17 @@ run (gchar   *name,
           
       sparkle (drawable, threshold);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store mvals data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_sparkle", &svals, sizeof (SparkleVals));
     }
   else
     {
       /* gimp_message ("sparkle: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -587,10 +587,10 @@ compute_luminosity (guchar *pixel,
 }
 
 static gint
-compute_lum_threshold (GDrawable *drawable,
+compute_lum_threshold (GimpDrawable *drawable,
 		       gdouble    percentile)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gpointer  pr;
   guchar   *data;
   gint      values[256];
@@ -643,10 +643,10 @@ compute_lum_threshold (GDrawable *drawable,
 }
 
 static void
-sparkle (GDrawable *drawable,
+sparkle (GimpDrawable *drawable,
 	 gint       threshold)
 {
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   guchar   *src, *dest;
   gdouble   nfrac, length, inten, spike_angle;
   gint      cur_progress, max_progress;
@@ -776,9 +776,9 @@ sparkle (GDrawable *drawable,
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static inline GTile *
-rpnt (GDrawable *drawable,
-      GTile     *tile,
+static inline GimpTile *
+rpnt (GimpDrawable *drawable,
+      GimpTile     *tile,
       gint       x1,
       gint       y1,
       gint       x2,
@@ -860,8 +860,8 @@ rpnt (GDrawable *drawable,
 }
 
 static void
-fspike (GPixelRgn *src_rgn,
-	GPixelRgn *dest_rgn,
+fspike (GimpPixelRgn *src_rgn,
+	GimpPixelRgn *dest_rgn,
 	gint       gray,
 	gint       x1,
 	gint       y1,
@@ -882,7 +882,7 @@ fspike (GPixelRgn *src_rgn,
   gdouble theta;
   gdouble sfac;
   gint    r, g, b;
-  GTile  *tile = NULL;
+  GimpTile  *tile = NULL;
   gint    row, col;
   gint    i;
   gint    bytes;

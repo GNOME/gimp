@@ -85,14 +85,14 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
+			 GimpParam  **return_vals);
 
-static void      displace        (GDrawable *drawable);
-static gint      displace_dialog (GDrawable *drawable);
-static GTile *   displace_pixel  (GDrawable * drawable,
-				  GTile *     tile,
+static void      displace        (GimpDrawable *drawable);
+static gint      displace_dialog (GimpDrawable *drawable);
+static GimpTile *   displace_pixel  (GimpDrawable * drawable,
+				  GimpTile *     tile,
 				  gint        width,
 				  gint        height,
 				  gint        x1,
@@ -122,7 +122,7 @@ static gdouble   displace_map_give_value   (guchar* ptr,
 					    gint    bytes);
 /***** Local vars *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -153,18 +153,18 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "amount_x", "Displace multiplier for X direction" },
-    { PARAM_FLOAT, "amount_y", "Displace multiplier for Y direction" },
-    { PARAM_INT32, "do_x", "Displace in X direction?" },
-    { PARAM_INT32, "do_y", "Displace in Y direction?" },
-    { PARAM_DRAWABLE, "displace_map_x", "Displacement map for X direction" },
-    { PARAM_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
-    { PARAM_INT32, "displace_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "amount_x", "Displace multiplier for X direction" },
+    { GIMP_PDB_FLOAT, "amount_y", "Displace multiplier for Y direction" },
+    { GIMP_PDB_INT32, "do_x", "Displace in X direction?" },
+    { GIMP_PDB_INT32, "do_y", "Displace in Y direction?" },
+    { GIMP_PDB_DRAWABLE, "displace_map_x", "Displacement map for X direction" },
+    { GIMP_PDB_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
+    { GIMP_PDB_INT32, "displace_type", "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -175,14 +175,14 @@ query (void)
 			  "'amount_y' multiplied by the intensity of "
 			  "corresponding pixels in the 'displace_map' "
 			  "drawables.  Both 'displace_map' drawables must be "
-			  "of type GRAY_IMAGE for this operation to succeed.",
+			  "of type GIMP_GRAY_IMAGE for this operation to succeed.",
 			  "Stephen Robert Norris & (ported to 1.0 by) "
 			  "Spencer Kimball",
 			  "Stephen Robert Norris",
 			  "1996",
 			  N_("<Image>/Filters/Map/Displace..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -190,14 +190,14 @@ query (void)
 static void
 run (gchar  *name,
      gint    nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint   *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -206,12 +206,12 @@ run (gchar  *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       INIT_I18N_UI();
       gimp_get_data ("plug_in_displace", &dvals);
@@ -221,12 +221,12 @@ run (gchar  *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 10)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -240,7 +240,7 @@ run (gchar  *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_displace", &dvals);
       break;
@@ -249,7 +249,7 @@ run (gchar  *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS && (dvals.do_x || dvals.do_y))
+  if (status == GIMP_PDB_SUCCESS && (dvals.do_x || dvals.do_y))
     {
       gimp_progress_init (_("Displacing..."));
 
@@ -259,11 +259,11 @@ run (gchar  *name,
       /*  run the displace effect  */
       displace (drawable);
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_displace", &dvals, sizeof (DisplaceVals));
     }
 
@@ -273,7 +273,7 @@ run (gchar  *name,
 }
 
 static int
-displace_dialog (GDrawable *drawable)
+displace_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -448,14 +448,14 @@ displace_dialog (GDrawable *drawable)
 /* The displacement is done here. */
 
 static void
-displace (GDrawable *drawable)
+displace (GimpDrawable *drawable)
 {
-  GDrawable *map_x;
-  GDrawable *map_y;
-  GPixelRgn dest_rgn;
-  GPixelRgn map_x_rgn;
-  GPixelRgn map_y_rgn;
-  GTile   * tile = NULL;
+  GimpDrawable *map_x;
+  GimpDrawable *map_y;
+  GimpPixelRgn dest_rgn;
+  GimpPixelRgn map_x_rgn;
+  GimpPixelRgn map_y_rgn;
+  GimpTile   * tile = NULL;
   gint      row = -1;
   gint      col = -1;
   gpointer  pr;
@@ -665,9 +665,9 @@ displace_map_give_value (guchar *pt,
 }
 
 
-static GTile *
-displace_pixel (GDrawable *drawable,
-		GTile     *tile,
+static GimpTile *
+displace_pixel (GimpDrawable *drawable,
+		GimpTile     *tile,
 		gint       width,
 		gint       height,
 		gint       x1,
@@ -763,9 +763,9 @@ displace_map_constrain (gint32   image_id,
 			gint32   drawable_id,
 			gpointer data)
 {
-  GDrawable *drawable;
+  GimpDrawable *drawable;
 
-  drawable = (GDrawable *) data;
+  drawable = (GimpDrawable *) data;
 
   if (drawable_id == -1)
     return TRUE;

@@ -97,23 +97,23 @@
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 static gint32 load_image (gchar   *filename);
 
 
 static guchar   used_cmap[3][256];
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 static guchar   highest_used_index;
 static gboolean promote_to_rgb   = FALSE;
 static guchar   gimp_cmap[768];
 #ifdef FACEHUGGERS
-Parasite*      comment_parasite = NULL;
+GimpParasite*      comment_parasite = NULL;
 #endif
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -127,15 +127,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name entered" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name entered" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
@@ -149,7 +149,7 @@ query (void)
                           "1995-1997",
                           "<Load>/GIF",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -163,20 +163,20 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_gif_load") == 0)
     {
@@ -205,17 +205,17 @@ run (gchar   *name,
       if (image_ID != -1)
         {
 	  *nreturn_vals = 2;
-          values[1].type         = PARAM_IMAGE;
+          values[1].type         = GIMP_PDB_IMAGE;
           values[1].data.d_image = image_ID;
         }
       else
         {
-          status = STATUS_EXECUTION_ERROR;
+          status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -301,7 +301,7 @@ load_image (gchar *filename)
       return -1;
     }
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     {
       name_buf = g_strdup_printf (_("Loading %s:"), filename);
       gimp_progress_init (name_buf);
@@ -442,7 +442,7 @@ load_image (gchar *filename)
       if (comment_parasite != NULL)
 	{
 	  gimp_image_parasite_attach (image_ID, comment_parasite);
-	  parasite_free (comment_parasite);
+	  gimp_parasite_free (comment_parasite);
 	  comment_parasite = NULL;
 	}
 #endif
@@ -531,10 +531,10 @@ DoExtension (FILE *fd,
 #ifdef FACEHUGGERS
 	  if (comment_parasite != NULL)
 	    {
-	      parasite_free (comment_parasite);
+	      gimp_parasite_free (comment_parasite);
 	    }
 	    
-	  comment_parasite = parasite_new ("gimp-comment",PARASITE_PERSISTENT,
+	  comment_parasite = gimp_parasite_new ("gimp-comment",GIMP_PARASITE_PERSISTENT,
 					    strlen(buf)+1, (void*)buf);
 #else
 	  if (showComment)
@@ -801,8 +801,8 @@ ReadImage (FILE *fd,
   static gint frame_number = 1;
 
   gint32 layer_ID;
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   guchar *dest, *temp;
   guchar c;
   gint xpos = 0, ypos = 0, pass = 0;
@@ -833,7 +833,7 @@ ReadImage (FILE *fd,
 
   if (frame_number == 1 )
     {
-      image_ID = gimp_image_new (screenwidth, screenheight, INDEXED);
+      image_ID = gimp_image_new (screenwidth, screenheight, GIMP_INDEXED);
       gimp_image_set_filename (image_ID, filename);
 
       for (i = 0, j = 0; i < ncols; i++)
@@ -856,13 +856,13 @@ ReadImage (FILE *fd,
 	{
 	  layer_ID = gimp_layer_new (image_ID, framename,
 				     len, height,
-				     INDEXED_IMAGE, 100, NORMAL_MODE);
+				     GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
 	}
       else
 	{
 	  layer_ID = gimp_layer_new (image_ID, framename,
 				     len, height,
-				     INDEXEDA_IMAGE, 100, NORMAL_MODE);
+				     GIMP_INDEXEDA_IMAGE, 100, GIMP_NORMAL_MODE);
 	  alpha_frame=TRUE;
 	}
 
@@ -941,8 +941,8 @@ ReadImage (FILE *fd,
 
       layer_ID = gimp_layer_new (image_ID, framename,
 				 len, height,
-				 promote_to_rgb ? RGBA_IMAGE : INDEXEDA_IMAGE,
-				 100, NORMAL_MODE);
+				 promote_to_rgb ? GIMP_RGBA_IMAGE : GIMP_INDEXEDA_IMAGE,
+				 100, GIMP_NORMAL_MODE);
       alpha_frame = TRUE;
       g_free (framename);
     }
@@ -1048,7 +1048,7 @@ ReadImage (FILE *fd,
 	      ypos++;
 	    }
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
 	      cur_progress++;
 	      if ((cur_progress % 16) == 0)

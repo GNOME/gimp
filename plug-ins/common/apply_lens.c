@@ -64,15 +64,15 @@
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static void drawlens    (GDrawable *drawable);
+static void drawlens    (GimpDrawable *drawable);
 
-static gint lens_dialog (GDrawable *drawable);
+static gint lens_dialog (GimpDrawable *drawable);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -111,15 +111,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "refraction", "Lens refraction index" },
-    { PARAM_INT32, "keep_surroundings", "Keep lens surroundings" },
-    { PARAM_INT32, "set_background", "Set lens surroundings to bkgr value" },
-    { PARAM_INT32, "set_transparent", "Set lens surroundings transparent" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "refraction", "Lens refraction index" },
+    { GIMP_PDB_INT32, "keep_surroundings", "Keep lens surroundings" },
+    { GIMP_PDB_INT32, "set_background", "Set lens surroundings to bkgr value" },
+    { GIMP_PDB_INT32, "set_transparent", "Set lens surroundings transparent" }
   };
   static gint nargs = sizeof (args)/ sizeof (args[0]);
 
@@ -131,7 +131,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Glass Effects/Apply Lens..."),
 			  "RGB*, GRAY*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -139,20 +139,20 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   
   *nreturn_vals = 1;
@@ -162,17 +162,17 @@ run (gchar   *name,
 
   switch(run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data ("plug_in_applylens", &lvals);
       if(!lens_dialog (drawable))
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 7)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  lvals.refraction = param[3].data.d_float;
 	  lvals.keep_surr = param[4].data.d_int32;
@@ -180,11 +180,11 @@ run (gchar   *name,
 	  lvals.set_transparent = param[6].data.d_int32;
 	}
 
-      if (status == STATUS_SUCCESS && (lvals.refraction < 1.0))
-	status = STATUS_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS && (lvals.refraction < 1.0))
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_applylens", &lvals);
       break;
     
@@ -196,9 +196,9 @@ run (gchar   *name,
   gimp_progress_init (_("Applying lens..."));
   drawlens (drawable);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_set_data ("plug_in_applylens", &lvals, sizeof (LensValues));
 
   values[0].data.d_status = status;
@@ -244,9 +244,9 @@ find_projected_pos (gfloat  a,
 }
 
 static void
-drawlens (GDrawable *drawable)
+drawlens (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   gint row;
@@ -257,7 +257,7 @@ drawlens (GDrawable *drawable)
   gfloat a, b, asqr, bsqr, x, y;
   glong pixelpos, pos;
   guchar bgr_red, bgr_blue, bgr_green, alphaval;
-  GDrawableType drawtype = gimp_drawable_type (drawable->id);
+  GimpImageType drawtype = gimp_drawable_type (drawable->id);
 
   gimp_palette_get_background (&bgr_red, &bgr_green, &bgr_blue);
 
@@ -319,23 +319,23 @@ drawlens (GDrawable *drawable)
 
 		  switch (drawtype)
 		    {
-		    case INDEXEDA_IMAGE:
+		    case GIMP_INDEXEDA_IMAGE:
 		      dest[pixelpos + 1] = alphaval;
-		    case INDEXED_IMAGE:
+		    case GIMP_INDEXED_IMAGE:
 		      dest[pixelpos + 0] = 0;
 		      break;
 
-		    case RGBA_IMAGE:
+		    case GIMP_RGBA_IMAGE:
 		      dest[pixelpos + 3] = alphaval;
-		    case RGB_IMAGE:
+		    case GIMP_RGB_IMAGE:
 		      dest[pixelpos + 0] = bgr_red;
 		      dest[pixelpos + 1] = bgr_green;
 		      dest[pixelpos + 2] = bgr_blue;
 		      break;
 
-		    case GRAYA_IMAGE:
+		    case GIMP_GRAYA_IMAGE:
 		      dest[pixelpos + 1] = alphaval;
-		    case GRAY_IMAGE:
+		    case GIMP_GRAY_IMAGE:
 		      dest[pixelpos+0] = bgr_red;
 		      break;
 		    }
@@ -366,7 +366,7 @@ lens_ok_callback (GtkWidget *widget,
 }
 
 static gint
-lens_dialog (GDrawable *drawable)
+lens_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *label;
@@ -378,7 +378,7 @@ lens_dialog (GDrawable *drawable)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GSList *group = NULL;
-  GDrawableType drawtype;
+  GimpImageType drawtype;
 
   drawtype = gimp_drawable_type (drawable->id);
 
@@ -421,8 +421,8 @@ lens_dialog (GDrawable *drawable)
 
   toggle =
     gtk_radio_button_new_with_label (group,
-				     drawtype == INDEXEDA_IMAGE ||
-				     drawtype == INDEXED_IMAGE ?
+				     drawtype == GIMP_INDEXEDA_IMAGE ||
+				     drawtype == GIMP_INDEXED_IMAGE ?
 				     _("Set Surroundings to Index 0") :
 				     _("Set Surroundings to Background Color"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
@@ -433,9 +433,9 @@ lens_dialog (GDrawable *drawable)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), lvals.use_bkgr);
   gtk_widget_show (toggle);
 
-  if ((drawtype == INDEXEDA_IMAGE) ||
-      (drawtype == GRAYA_IMAGE) ||
-      (drawtype == RGBA_IMAGE))
+  if ((drawtype == GIMP_INDEXEDA_IMAGE) ||
+      (drawtype == GIMP_GRAYA_IMAGE) ||
+      (drawtype == GIMP_RGBA_IMAGE))
     {
       toggle =
 	gtk_radio_button_new_with_label (group,

@@ -47,15 +47,15 @@
 static void      query  (void);
 static void      run    (gchar   *name,
 			 gint     nparam,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
-static void      filter                  (GDrawable *drawable);
+static void      filter                  (GimpDrawable *drawable);
 static void      filter_preview          (void);
 static void      fill_preview_with_thumb (GtkWidget *preview_widget, 
 					  gint32     drawable_ID);
-static gboolean  dialog                  (GDrawable *drawable);
+static gboolean  dialog                  (GimpDrawable *drawable);
 
 /******************************************************************************/
 
@@ -68,7 +68,7 @@ typedef struct
 
 /******************************************************************************/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -98,12 +98,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",  "interactive / non-interactive" },
-    { PARAM_IMAGE,    "image",     "input image" },
-    { PARAM_DRAWABLE, "drawable",  "input drawable" },
-    { PARAM_INT32,    "division",  "the number of divisions" }
+    { GIMP_PDB_INT32,    "run_mode",  "interactive / non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "input drawable" },
+    { GIMP_PDB_INT32,    "division",  "the number of divisions" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);;
 
@@ -115,7 +115,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Map/Illusion..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -125,14 +125,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *params,
+     GimpParam  *params,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GDrawable     *drawable;
-  GRunModeType   run_mode;
-  static GParam  returnv[1];
-  GStatusType    status = STATUS_SUCCESS;
+  GimpDrawable     *drawable;
+  GimpRunModeType   run_mode;
+  static GimpParam  returnv[1];
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
 
   run_mode = params[0].data.d_int32;
   drawable = gimp_drawable_get (params[2].data.d_drawable);
@@ -144,7 +144,7 @@ run (gchar   *name,
   /* switch the run mode */
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &parameters);
       if (! dialog(drawable))
@@ -153,10 +153,10 @@ run (gchar   *name,
       g_free(preview_cache);
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 6)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -166,12 +166,12 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &parameters);
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       if (gimp_drawable_is_rgb (drawable->id) || 
 	  gimp_drawable_is_gray (drawable->id))
@@ -179,16 +179,16 @@ run (gchar   *name,
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
   	  gimp_progress_init (_("Illusion..."));
 	  filter (drawable);
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
-  returnv[0].type          = PARAM_STATUS;
+  returnv[0].type          = GIMP_PDB_STATUS;
   returnv[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -197,9 +197,9 @@ run (gchar   *name,
 /******************************************************************************/
 
 static void
-filter (GDrawable *drawable)
+filter (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   guchar  **pixels;
   guchar  **destpixels;
   
@@ -475,7 +475,7 @@ filter_preview (void)
 }
 
 static GtkWidget *
-preview_widget (GDrawable *drawable)
+preview_widget (GimpDrawable *drawable)
 {
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
@@ -538,7 +538,7 @@ dialog_ok_handler (GtkWidget *widget,
 /******************************************************************************/
 
 static gboolean
-dialog (GDrawable *mangle)
+dialog (GimpDrawable *mangle)
 {
   GtkWidget *dlg;  
   GtkWidget *main_vbox;

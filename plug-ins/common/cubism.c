@@ -64,14 +64,14 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar      *name,
 			 gint        nparams,
-			 GParam     *param,
+			 GimpParam     *param,
 			 gint       *nreturn_vals,
-			 GParam    **return_vals);
-static void      cubism (GDrawable  *drawable);
+			 GimpParam    **return_vals);
+static void      cubism (GimpDrawable  *drawable);
 
-static void      render_cubism        (GDrawable *drawable);
+static void      render_cubism        (GimpDrawable *drawable);
 static void      fill_poly_color      (Polygon   *poly,
-				       GDrawable *drawable,
+				       GimpDrawable *drawable,
 				       guchar    *col);
 static void      convert_segment      (gint       x1,
 				       gint       y1,
@@ -125,7 +125,7 @@ static CubismInterface cint =
   FALSE         /* run */
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -143,14 +143,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
-    { PARAM_FLOAT, "tile_saturation", "Expand tiles by this amount" },
-    { PARAM_INT32, "bg_color", "Background color: { BLACK (0), BG (1) }" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_FLOAT, "tile_size", "Average diameter of each tile (in pixels)" },
+    { GIMP_PDB_FLOAT, "tile_saturation", "Expand tiles by this amount" },
+    { GIMP_PDB_INT32, "bg_color", "Background color: { BLACK (0), BG (1) }" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -162,7 +162,7 @@ query (void)
 			  "1996",
 			  N_("<Image>/Filters/Artistic/Cubism..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -170,14 +170,14 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *active_drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *active_drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N_UI();
 
@@ -186,12 +186,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_cubism", &cvals);
 
@@ -200,22 +200,22 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  cvals.tile_size = param[3].data.d_float;
 	  cvals.tile_saturation = param[4].data.d_float;
 	  cvals.bg_color = param[5].data.d_int32;
 	}
-      if (status == STATUS_SUCCESS &&
+      if (status == GIMP_PDB_SUCCESS &&
 	  (cvals.bg_color < BLACK || cvals.bg_color > BG))
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_cubism", &cvals);
       break;
@@ -228,7 +228,7 @@ run (gchar   *name,
   active_drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   /*  Render the cubism effect  */
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb (active_drawable->id) ||
        gimp_drawable_is_gray (active_drawable->id)))
     {
@@ -238,17 +238,17 @@ run (gchar   *name,
       cubism (active_drawable);
 
       /*  If the run mode is interactive, flush the displays  */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /*  Store mvals data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_cubism", &cvals, sizeof (CubismVals));
     }
-  else if (status == STATUS_SUCCESS)
+  else if (status == GIMP_PDB_SUCCESS)
     {
       /* gimp_message ("cubism: cannot operate on indexed color images"); */
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -257,7 +257,7 @@ run (gchar   *name,
 }
 
 static void
-cubism (GDrawable *drawable)
+cubism (GimpDrawable *drawable)
 {
   gint x1, y1, x2, y2;
 
@@ -374,9 +374,9 @@ cubism_ok_callback (GtkWidget *widget,
 }
 
 static void
-render_cubism (GDrawable *drawable)
+render_cubism (GimpDrawable *drawable)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gdouble img_area, tile_area;
   gdouble x, y;
   gdouble width, height;
@@ -495,10 +495,10 @@ calc_alpha_blend (gdouble *vec,
 
 static void
 fill_poly_color (Polygon   *poly,
-		 GDrawable *drawable,
+		 GimpDrawable *drawable,
 		 guchar    *col)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gdouble dmin_x, dmin_y;
   gdouble dmax_x, dmax_y;
   gint xs, ys;

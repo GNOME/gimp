@@ -93,9 +93,9 @@ typedef struct _info
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
 static gint dialog_create          (void);
 static void dialog_new_variations  (GtkWidget *widget,
@@ -308,7 +308,7 @@ qbist (s_info  info,
 
 /** Plugin interface *********************************************************/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,	 /* init_proc  */
   NULL,	 /* quit_proc  */
@@ -321,11 +321,11 @@ MAIN ()
 static void
 query (void)
 {
-  GParamDef args[] =
+  GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -337,7 +337,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -345,28 +345,28 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
   gint sel_x1, sel_y1, sel_x2, sel_y2;
   gint img_height, img_width, img_bpp, img_has_alpha;
 
-  GDrawable 	*drawable;
-  GRunModeType	run_mode;
-  GStatusType	status;
+  GimpDrawable 	*drawable;
+  GimpRunModeType	run_mode;
+  GimpPDBStatusType	status;
 
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  status = STATUS_SUCCESS;
+  status = GIMP_PDB_SUCCESS;
 
-  if (param[0].type!=PARAM_INT32)
-    status=STATUS_CALLING_ERROR;
+  if (param[0].type!=GIMP_PDB_INT32)
+    status=GIMP_PDB_CALLING_ERROR;
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -375,8 +375,8 @@ run (gchar   *name,
       INIT_I18N();
     }
 
-  if (param[2].type!=PARAM_DRAWABLE)
-    status=STATUS_CALLING_ERROR;
+  if (param[2].type!=GIMP_PDB_DRAWABLE)
+    status=GIMP_PDB_CALLING_ERROR;
   drawable = gimp_drawable_get(param[2].data.d_drawable);
 
   img_width     = gimp_drawable_width(drawable->id);
@@ -386,43 +386,43 @@ run (gchar   *name,
   gimp_drawable_mask_bounds (drawable->id, &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   if (!gimp_drawable_is_rgb(drawable->id))
-    status=STATUS_CALLING_ERROR;
+    status=GIMP_PDB_CALLING_ERROR;
 		
-  if (status==STATUS_SUCCESS)
+  if (status==GIMP_PDB_SUCCESS)
     {
       create_info(&qbist_info);
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /* Possibly retrieve data */
 	  gimp_get_data(PLUG_IN_NAME, &qbist_info);
 
           /* Get information from the dialog */
 	  if (dialog_create())
 	    {
-	      status=STATUS_SUCCESS;
+	      status=GIMP_PDB_SUCCESS;
 	      gimp_set_data(PLUG_IN_NAME, &qbist_info, sizeof(s_info));
 	    }
 	  else
-	    status=STATUS_EXECUTION_ERROR;
+	    status=GIMP_PDB_EXECUTION_ERROR;
 	  break;
 
-	case RUN_NONINTERACTIVE:
-	  status=STATUS_CALLING_ERROR;
+	case GIMP_RUN_NONINTERACTIVE:
+	  status=GIMP_PDB_CALLING_ERROR;
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /* Possibly retrieve data */
 	  gimp_get_data(PLUG_IN_NAME, &qbist_info);
-	  status=STATUS_SUCCESS;
+	  status=GIMP_PDB_SUCCESS;
 	  break;
 	default:
-	  status=STATUS_CALLING_ERROR;
+	  status=GIMP_PDB_CALLING_ERROR;
 	  break;
 	} 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
-	  GPixelRgn imagePR;
+	  GimpPixelRgn imagePR;
 	  guchar *row_data;
 	  gint row;
 
@@ -450,7 +450,7 @@ run (gchar   *name,
 	} 
     }
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
   gimp_drawable_detach(drawable);
 }

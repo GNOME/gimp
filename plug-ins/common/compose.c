@@ -60,9 +60,9 @@ static char ident[] = "@(#) GIMP Compose plug-in v1.03 17-Mar-99";
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 static gint32    compose (gchar *compose_type,
                           gint32 *compose_ID,
@@ -71,10 +71,10 @@ static gint32    compose (gchar *compose_type,
 static gint32    create_new_image (gchar          *filename,
 				   guint           width,
 				   guint           height,
-				   GDrawableType   gdtype,
+				   GimpImageType   gdtype,
 				   gint32         *layer_ID,
-				   GDrawable     **drawable,
-				   GPixelRgn      *pixel_rgn);
+				   GimpDrawable     **drawable,
+				   GimpPixelRgn      *pixel_rgn);
 
 static void  compose_rgb  (guchar **src, gint *incr, gint numpix, guchar *dst);
 static void  compose_rgba (guchar **src, gint *incr, gint numpix, guchar *dst);
@@ -161,7 +161,7 @@ typedef struct
   gint   run;
 } ComposeInterface;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -185,7 +185,7 @@ static ComposeInterface composeint =
   FALSE     /* run */
 };
 
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 
 
 MAIN ()
@@ -193,36 +193,36 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image1", "First input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { PARAM_IMAGE, "image2", "Second input image" },
-    { PARAM_IMAGE, "image3", "Third input image" },
-    { PARAM_IMAGE, "image4", "Fourth input image" },
-    { PARAM_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image1", "First input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable (not used)" },
+    { GIMP_PDB_IMAGE, "image2", "Second input image" },
+    { GIMP_PDB_IMAGE, "image3", "Third input image" },
+    { GIMP_PDB_IMAGE, "image4", "Fourth input image" },
+    { GIMP_PDB_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
-  static GParamDef return_vals[] =
+  static GimpParamDef return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
   static gint nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
-  static GParamDef drw_args[] =
+  static GimpParamDef drw_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image1", "First input image (not used)" },
-    { PARAM_DRAWABLE, "drawable1", "First input drawable" },
-    { PARAM_DRAWABLE, "drawable2", "Second input drawable" },
-    { PARAM_DRAWABLE, "drawable3", "Third input drawable" },
-    { PARAM_DRAWABLE, "drawable4", "Fourth input drawable" },
-    { PARAM_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image1", "First input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable1", "First input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable2", "Second input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable3", "Third input drawable" },
+    { GIMP_PDB_DRAWABLE, "drawable4", "Fourth input drawable" },
+    { GIMP_PDB_STRING, "compose_type", "What to compose: RGB, RGBA, HSV, CMY, CMYK" }
   };
-  static GParamDef drw_return_vals[] =
+  static GimpParamDef drw_return_vals[] =
   {
-    { PARAM_IMAGE, "new_image", "Output image" }
+    { GIMP_PDB_IMAGE, "new_image", "Output image" }
   };
   static gint drw_nargs = sizeof (args) / sizeof (args[0]);
   static gint drw_nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
@@ -236,7 +236,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Image/Mode/Compose..."),
 			  "GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 
@@ -249,7 +249,7 @@ query (void)
 			  "1998",
 			  NULL,   /* It is not available in interactive mode */
 			  "GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  drw_nargs, drw_nreturn_vals,
 			  drw_args, drw_return_vals);
 }
@@ -258,12 +258,12 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   gint32 image_ID, drawable_ID;
   gint compose_by_drawable;
 
@@ -275,14 +275,14 @@ run (gchar   *name,
   *nreturn_vals = 2;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  values[1].type = PARAM_IMAGE;
+  values[1].type = GIMP_PDB_IMAGE;
   values[1].data.d_int32 = -1;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data (name , &composevals);
 
@@ -312,11 +312,11 @@ run (gchar   *name,
 
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 7)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -331,7 +331,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data (name, &composevals);
       break;
@@ -340,9 +340,9 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_progress_init (_("Composing..."));
 
       image_ID = compose (composevals.compose_type,
@@ -351,19 +351,19 @@ run (gchar   *name,
 
       if (image_ID < 0)
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
       else
 	{
 	  values[1].data.d_int32 = image_ID;
 	  gimp_image_undo_enable (image_ID);
 	  gimp_image_clean_all (image_ID);
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_display_new (image_ID);
 	}
 
       /*  Store data  */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
         gimp_set_data (name, &composevals, sizeof (ComposeVals));
     }
 
@@ -383,9 +383,9 @@ compose (gchar  *compose_type,
   gint num_layers;
   gint32 layer_ID_dst, image_ID_dst;
   guchar *src[MAX_COMPOSE_IMAGES], *dst = (guchar *)ident;
-  GDrawableType gdtype_dst;
-  GDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
-  GPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
+  GimpImageType gdtype_dst;
+  GimpDrawable *drawable_src[MAX_COMPOSE_IMAGES], *drawable_dst;
+  GimpPixelRgn pixel_rgn_src[MAX_COMPOSE_IMAGES], pixel_rgn_dst;
   
   /* Search type of composing */
   compose_idx = -1;
@@ -474,7 +474,7 @@ compose (gchar  *compose_type,
   
   /* Create new image */
   gdtype_dst = (compose_dsc[compose_idx].compose_fun == compose_rgba)
-    ? RGBA_IMAGE : RGB_IMAGE;
+    ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
   image_ID_dst = create_new_image (compose_dsc[compose_idx].filename,
 				   width, height, gdtype_dst,
 				   &layer_ID_dst, &drawable_dst, &pixel_rgn_dst);
@@ -499,7 +499,7 @@ compose (gchar  *compose_type,
 
       i += scan_lines;
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_progress_update (((gdouble)i) / (gdouble)height);
     }
 
@@ -522,26 +522,26 @@ static gint32
 create_new_image (gchar          *filename,
                   guint           width,
                   guint           height,
-                  GDrawableType   gdtype,
+                  GimpImageType   gdtype,
                   gint32         *layer_ID,
-                  GDrawable     **drawable,
-                  GPixelRgn      *pixel_rgn)
+                  GimpDrawable     **drawable,
+                  GimpPixelRgn      *pixel_rgn)
 {
   gint32 image_ID;
-  GImageType gitype;
+  GimpImageBaseType gitype;
 
-  if ((gdtype == GRAY_IMAGE) || (gdtype == GRAYA_IMAGE))
-    gitype = GRAY;
-  else if ((gdtype == INDEXED_IMAGE) || (gdtype == INDEXEDA_IMAGE))
-    gitype = INDEXED;
+  if ((gdtype == GIMP_GRAY_IMAGE) || (gdtype == GIMP_GRAYA_IMAGE))
+    gitype = GIMP_GRAY;
+  else if ((gdtype == GIMP_INDEXED_IMAGE) || (gdtype == GIMP_INDEXEDA_IMAGE))
+    gitype = GIMP_INDEXED;
   else
-    gitype = RGB;
+    gitype = GIMP_RGB;
 
   image_ID = gimp_image_new (width, height, gitype);
   gimp_image_set_filename (image_ID, filename);
 
   *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
-			      gdtype, 100, NORMAL_MODE);
+			      gdtype, 100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, *layer_ID, 0);
 
   *drawable = gimp_drawable_get (*layer_ID);
@@ -886,7 +886,7 @@ check_gray (gint32   image_id,
             gpointer data)
 
 {
-  return ((gimp_image_base_type (image_id) == GRAY) &&
+  return ((gimp_image_base_type (image_id) == GIMP_GRAY) &&
 	  (gimp_image_width (image_id) == composeint.width) &&
 	  (gimp_image_height (image_id) == composeint.height));
 }

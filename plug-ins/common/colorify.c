@@ -50,11 +50,11 @@
 static void      query (void);
 static void      run   (gchar     *name,
 			gint       nparams,
-			GParam    *param,
+			GimpParam    *param,
 			gint      *nreturn_vals,
-			GParam   **return_vals);
+			GimpParam   **return_vals);
 
-static void colorify     (GDrawable *drawable);
+static void colorify     (GimpDrawable *drawable);
 static void colorify_row (guchar    *row,
 			  gint       width,
 			  gint       bpp);
@@ -109,7 +109,7 @@ static ButtonColor button_color[] =
   { 255, 255, 255 },
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,
@@ -135,12 +135,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_COLOR, "color", "Color to apply"}
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_COLOR, "color", "Color to apply"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -153,7 +153,7 @@ query (void)
 			  "0.0.1",
 			  N_("<Image>/Filters/Colors/Colorify..."), 
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -161,21 +161,21 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  GRunModeType run_mode;
-  GStatusType status;
-  static GParam values[1];
-  GDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
 
   INIT_I18N_UI();
 
-  status = STATUS_SUCCESS;
+  status = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -190,17 +190,17 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       gimp_get_data (PLUG_IN_NAME, &cvals);
       if (!colorify_dialog (cvals.color[0], cvals.color[1], cvals.color[2]))
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  cvals.color[0] = param[3].data.d_color.red;
 	  cvals.color[1] = param[3].data.d_color.green;
@@ -208,7 +208,7 @@ run (gchar   *name,
 	}
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data (PLUG_IN_NAME, &cvals);
       break;
@@ -217,16 +217,16 @@ run (gchar   *name,
       break;
     }
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       gimp_progress_init (_("Colorifying..."));
 
       colorify (drawable);
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data (PLUG_IN_NAME, &cvals, sizeof (ColorifyVals));
 
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  gimp_displays_flush ();
 	}
@@ -236,9 +236,9 @@ run (gchar   *name,
 }
 
 static void
-colorify (GDrawable *drawable)
+colorify (GimpDrawable *drawable)
 {
-  GPixelRgn source_region, dest_region;
+  GimpPixelRgn source_region, dest_region;
   guchar *row;
   gint bpp;
   gint y = 0;

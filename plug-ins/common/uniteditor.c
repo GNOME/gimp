@@ -38,13 +38,13 @@
 static void   query              (void);
 static void   run                (gchar   *name,
 				  gint     nparams,
-				  GParam  *param,
+				  GimpParam  *param,
 				  gint    *nreturn_vals,
-				  GParam **return_vals);
+				  GimpParam **return_vals);
 
 static void   unit_editor_dialog (void);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -57,9 +57,9 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -71,7 +71,7 @@ query (void)
                           "2000",
 			  N_("<Toolbox>/Xtns/Unit Editor..."),
 			  "",
-                          PROC_EXTENSION,
+                          GIMP_EXTENSION,
 			  nargs, 0,
                           args, NULL);
 }
@@ -79,23 +79,23 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam  values[2];
-  GRunModeType   run_mode;
+  static GimpParam  values[2];
+  GimpRunModeType   run_mode;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_CALLING_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
   if (strcmp (name, "extension_gimp_unit_editor") == 0)
     {
-      values[0].data.d_status = STATUS_SUCCESS;
+      values[0].data.d_status = GIMP_PDB_SUCCESS;
 
       INIT_I18N_UI();
 

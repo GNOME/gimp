@@ -81,8 +81,8 @@ typedef struct
   gint       img_width, img_height, img_bpp, img_has_alpha;
   gint       tile_width, tile_height;
   guchar     bg_color[4];
-  GDrawable *drawable;
-  GTile     *tile;
+  GimpDrawable *drawable;
+  GimpTile     *tile;
 } pixel_fetcher_t;
 
 /***** Prototypes *****/
@@ -90,11 +90,11 @@ typedef struct
 static void query (void);
 static void run   (gchar   *name,
 		   gint     nparams,
-		   GParam  *param,
+		   GimpParam  *param,
 		   gint    *nreturn_vals,
-		   GParam **return_vals);
+		   GimpParam **return_vals);
 
-static pixel_fetcher_t *pixel_fetcher_new          (GDrawable *drawable);
+static pixel_fetcher_t *pixel_fetcher_new          (GimpDrawable *drawable);
 static void             pixel_fetcher_set_bg_color (pixel_fetcher_t *pf,
 						    guchar r, guchar g,
 						    guchar b, guchar a);
@@ -113,7 +113,7 @@ static gboolean   mblur_dialog         (void);
 
 /***** Variables *****/
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -130,7 +130,7 @@ static mblur_vals_t mbvals =
 
 static gboolean mb_run = FALSE;
 
-static GDrawable *drawable;
+static GimpDrawable *drawable;
 
 static gint img_width, img_height, img_bpp, img_has_alpha;
 static gint sel_x1, sel_y1, sel_x2, sel_y2;
@@ -145,14 +145,14 @@ MAIN()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",     "Input image" },
-    { PARAM_DRAWABLE, "drawable",  "Input drawable" },
-    { PARAM_INT32,     "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
-    { PARAM_INT32,     "length",    "Length" },
-    { PARAM_INT32,     "angle",     "Angle" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,     "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
+    { GIMP_PDB_INT32,     "length",    "Length" },
+    { GIMP_PDB_INT32,     "angle",     "Angle" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -166,7 +166,7 @@ query (void)
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Blur/Motion Blur..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -174,19 +174,19 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
+  static GimpParam values[1];
 
-  GRunModeType run_mode;
-  GStatusType  status;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType  status;
 
-  status   = STATUS_SUCCESS;
+  status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
 
-  values[0].type          = PARAM_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   *nreturn_vals = 1;
@@ -213,7 +213,7 @@ run (gchar   *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
 
       /* Possibly retrieve data */
@@ -224,14 +224,14 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
 
       /* Make sure all the arguments are present */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
+	status = GIMP_PDB_CALLING_ERROR;
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  mbvals.mblur_type = param[3].data.d_int32;
 	  mbvals.length     = param[4].data.d_int32;
@@ -239,10 +239,10 @@ run (gchar   *name,
 	}
 
     if ((mbvals.mblur_type < 0) && (mbvals.mblur_type > MBLUR_ZOOM))
-      status= STATUS_CALLING_ERROR;
+      status= GIMP_PDB_CALLING_ERROR;
     break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
 
       /* Possibly retrieve data */
@@ -255,7 +255,7 @@ run (gchar   *name,
 
   /* Blur the image */
 
-  if ((status == STATUS_SUCCESS) &&
+  if ((status == GIMP_PDB_SUCCESS) &&
       (gimp_drawable_is_rgb(drawable->id) ||
        gimp_drawable_is_gray(drawable->id)))
     {
@@ -267,15 +267,15 @@ run (gchar   *name,
       mblur ();
 
       /* If run mode is interactive, flush displays */
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
       /* Store data */
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data (PLUG_IN_NAME, &mbvals, sizeof(mblur_vals_t));
     }
-  else if (status == STATUS_SUCCESS)
-    status = STATUS_EXECUTION_ERROR;
+  else if (status == GIMP_PDB_SUCCESS)
+    status = GIMP_PDB_EXECUTION_ERROR;
 
   values[0].data.d_status = status;
 
@@ -285,7 +285,7 @@ run (gchar   *name,
 static void 
 mblur_linear (void)
 {
-  GPixelRgn	dest_rgn;
+  GimpPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
   gpointer	pr;
 
@@ -423,7 +423,7 @@ mblur_linear (void)
 static void
 mblur_radial (void)
 {
-  GPixelRgn	dest_rgn;
+  GimpPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
   gpointer	pr;
 
@@ -536,7 +536,7 @@ mblur_radial (void)
 static void
 mblur_zoom (void)
 {
-  GPixelRgn	dest_rgn;
+  GimpPixelRgn	dest_rgn;
   pixel_fetcher_t *pft;
   gpointer	pr;
 
@@ -646,7 +646,7 @@ mblur (void)
  ****************************************/
 
 static pixel_fetcher_t *
-pixel_fetcher_new (GDrawable *drawable)
+pixel_fetcher_new (GimpDrawable *drawable)
 {
   pixel_fetcher_t *pf;
 

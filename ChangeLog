@@ -1,3 +1,7 @@
+2000-08-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/*.c: removed COMPAT_CRUFT.
+
 Tue Aug 22 02:12:36 CEST 2000 Daniel Egger  <egger@suse.de>
 
 	* plug-ins/AlienMap/AlienMap.c:

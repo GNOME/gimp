@@ -105,10 +105,10 @@ static gdouble minv   = -2.5;
 static gdouble maxv   =  2.5;
 static gdouble isteps = 20.0;
 
-static GDrawable *input_drawable;
-static GDrawable *output_drawable;
-static GPixelRgn  source_region;
-static GPixelRgn  dest_region;
+static GimpDrawable *input_drawable;
+static GimpDrawable *output_drawable;
+static GimpPixelRgn  source_region;
+static GimpPixelRgn  dest_region;
 
 static gint    width, height, in_channels;
 static gint    border_x1, border_y1, border_x2, border_y2;
@@ -193,7 +193,7 @@ poke (gint      x,
 /****************************************/
 
 static gint
-image_setup (GDrawable *drawable,
+image_setup (GimpDrawable *drawable,
 	     gint       interactive)
 {
   /* Get some useful info on the input drawable */
@@ -664,7 +664,7 @@ get_brightness (rgbpixel *col,
 }
 
 static void
-rgb_to_hue (GDrawable  *image,
+rgb_to_hue (GimpDrawable  *image,
 	    guchar    **map)
 {
   guchar *themap, data[4];
@@ -672,7 +672,7 @@ rgb_to_hue (GDrawable  *image,
   rgbpixel color;
   gdouble val;
   glong maxc, index = 0;
-  GPixelRgn region;
+  GimpPixelRgn region;
 
   w = image->width;
   h = image->height;
@@ -705,7 +705,7 @@ rgb_to_hue (GDrawable  *image,
 }
 
 static void
-rgb_to_saturation (GDrawable  *image,
+rgb_to_saturation (GimpDrawable  *image,
 		   guchar    **map)
 {
   guchar *themap, data[4];
@@ -713,7 +713,7 @@ rgb_to_saturation (GDrawable  *image,
   rgbpixel color;
   gdouble val;
   glong maxc, index = 0;
-  GPixelRgn region;
+  GimpPixelRgn region;
 
   w = image->width;
   h = image->height;
@@ -746,7 +746,7 @@ rgb_to_saturation (GDrawable  *image,
 }
 
 static void
-rgb_to_brightness (GDrawable  *image,
+rgb_to_brightness (GimpDrawable  *image,
 		   guchar    **map)
 {
   guchar *themap, data[4];
@@ -754,7 +754,7 @@ rgb_to_brightness (GDrawable  *image,
   rgbpixel color;
   gdouble val;
   glong maxc, index = 0;
-  GPixelRgn region;
+  GimpPixelRgn region;
 
   w = image->width;
   h = image->height;
@@ -888,22 +888,22 @@ static void
 compute_image (void)
 {
   gint32 new_image_id = -1, new_layer_id = -1;
-  GDrawable *effect;
+  GimpDrawable *effect;
 
   if (licvals.create_new_image)
     {
       /* Create a new image */
       /* ================== */
 
-      new_image_id = gimp_image_new (width, height, RGB);
+      new_image_id = gimp_image_new (width, height, GIMP_RGB);
       gimp_image_undo_disable (new_image_id);
       
       /* Create a "normal" layer */
       /* ======================= */
 
       new_layer_id = gimp_layer_new (new_image_id, _("Background"),
-				     width, height, RGB_IMAGE,
-				     100.0, NORMAL_MODE);
+				     width, height, GIMP_RGB_IMAGE,
+				     100.0, GIMP_NORMAL_MODE);
       gimp_image_add_layer (new_image_id, new_layer_id, 0);
       output_drawable = gimp_drawable_get (new_layer_id);
     }
@@ -1176,9 +1176,9 @@ create_main_dialog (void)
 /* Implementation */
 /******************/
 
-static void lic_interactive    (GDrawable *drawable);
+static void lic_interactive    (GimpDrawable *drawable);
 /*
-static void lic_noninteractive (GDrawable *drawable);
+static void lic_noninteractive (GimpDrawable *drawable);
 */
 
 /*************************************/
@@ -1203,11 +1203,11 @@ set_default_settings (void)
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -1219,7 +1219,7 @@ query (void)
 			  "Version 0.14, September 24 1997",
 			  N_("<Image>/Filters/Map/Van Gogh (LIC)..."),
 			  "RGB",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -1227,18 +1227,18 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
-  if (run_mode == RUN_INTERACTIVE)
+  if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       INIT_I18N_UI();
     }
@@ -1250,7 +1250,7 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /* Set default values */
@@ -1268,7 +1268,7 @@ run (gchar   *name,
   
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /* Make sure that the drawable is RGBA or RGB color */
       /* ================================================ */
@@ -1282,11 +1282,11 @@ run (gchar   *name,
 
           switch (run_mode)
             {
-              case RUN_INTERACTIVE:
+              case GIMP_RUN_INTERACTIVE:
                 lic_interactive (drawable);
                 gimp_set_data ("plug_in_lic", &licvals, sizeof (LicValues));
               break;
-              case RUN_WITH_LAST_VALS:
+              case GIMP_RUN_WITH_LAST_VALS:
                 image_setup (drawable, FALSE);
                 compute_image ();
                 break;
@@ -1295,14 +1295,14 @@ run (gchar   *name,
             }
         }
       else
-        status = STATUS_EXECUTION_ERROR;
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
   gimp_drawable_detach (drawable);
 }
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -1311,7 +1311,7 @@ GPlugInInfo PLUG_IN_INFO =
 };
 
 static void
-lic_interactive (GDrawable *drawable)
+lic_interactive (GimpDrawable *drawable)
 {
   gimp_ui_init ("lic", TRUE);
 
@@ -1334,7 +1334,7 @@ lic_interactive (GDrawable *drawable)
 
 /*
 static void
-lic_noninteractive (GDrawable *drawable)
+lic_noninteractive (GimpDrawable *drawable)
 {
   g_message ("Noninteractive not yet implemented! Sorry.\n");
 }

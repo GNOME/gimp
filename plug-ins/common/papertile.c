@@ -81,7 +81,7 @@ static struct
   PluginParams  params;
 
   gint32        image;
-  GDrawable    *drawable;
+  GimpDrawable    *drawable;
   gboolean      drawable_has_alpha;
   
   struct
@@ -94,7 +94,7 @@ static struct
     gint        height;
   } selection;
   
-  GRunModeType  run_mode;
+  GimpRunModeType  run_mode;
   gboolean      run;
 } p =
 {
@@ -116,7 +116,7 @@ static struct
 
   { 0, 0, 0, 0, 0, 0 },         /* selection             */
   
-  RUN_INTERACTIVE,              /* run_mode              */
+  GIMP_RUN_INTERACTIVE,              /* run_mode              */
   FALSE                         /* run                   */
 };
 
@@ -505,8 +505,8 @@ static inline void
 filter (void)
 {
   static void (* overlap)(guchar *, const guchar *);
-  GPixelRgn  src;
-  GPixelRgn  dst;
+  GimpPixelRgn  src;
+  GimpPixelRgn  dst;
   guchar     pixel[4];
   gint       division_x;
   gint       division_y;
@@ -813,20 +813,20 @@ filter (void)
 static void
 plugin_query (void)
 {
-  static GParamDef     args[]            =
+  static GimpParamDef     args[]            =
   {
-    { PARAM_INT32,    "run_mode",         "run mode"                         },
-    { PARAM_IMAGE,    "image",            "input image"                      },
-    { PARAM_DRAWABLE, "drawable",         "input drawable"                   },
-    { PARAM_INT32,    "tile_size",        "tile size (pixels)"               },
-    { PARAM_FLOAT,    "move_max",         "max move rate (%)"                },
-    { PARAM_INT32,    "fractional_type",  "0:Background 1:Ignore 2:Force"    },
-    { PARAM_INT32,    "wrap_around",      "wrap around (bool)"               },
-    { PARAM_INT32,    "centering",        "centering (bool)"                 },
-    { PARAM_INT32,    "background_type",
+    { GIMP_PDB_INT32,    "run_mode",         "run mode"                         },
+    { GIMP_PDB_IMAGE,    "image",            "input image"                      },
+    { GIMP_PDB_DRAWABLE, "drawable",         "input drawable"                   },
+    { GIMP_PDB_INT32,    "tile_size",        "tile size (pixels)"               },
+    { GIMP_PDB_FLOAT,    "move_max",         "max move rate (%)"                },
+    { GIMP_PDB_INT32,    "fractional_type",  "0:Background 1:Ignore 2:Force"    },
+    { GIMP_PDB_INT32,    "wrap_around",      "wrap around (bool)"               },
+    { GIMP_PDB_INT32,    "centering",        "centering (bool)"                 },
+    { GIMP_PDB_INT32,    "background_type",
       "0:Transparent 1:Inverted 2:Image? 3:FG 4:BG 5:Color"                  },
-    { PARAM_INT32,    "background_color", "background color (for bg-type 5)" },
-    { PARAM_INT32,    "background_alpha", "opacity (for bg-type 5)"          }
+    { GIMP_PDB_INT32,    "background_color", "background color (for bg-type 5)" },
+    { GIMP_PDB_INT32,    "background_alpha", "opacity (for bg-type 5)"          }
   };
   static gint numof_args        = sizeof args / sizeof args[0];
 
@@ -838,7 +838,7 @@ plugin_query (void)
 			  _("September 31, 1999"),
 			  N_("<Image>/Filters/Map/Paper Tile..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  numof_args, 0,
 			  args, NULL);
 }
@@ -846,15 +846,15 @@ plugin_query (void)
 static void
 plugin_run (gchar   *name,
 	    gint     numof_params,
-	    GParam  *params,
+	    GimpParam  *params,
 	    gint    *numof_return_vals,
-	    GParam **return_vals)
+	    GimpParam **return_vals)
 {
-  GStatusType status;
+  GimpPDBStatusType status;
 
   INIT_I18N_UI();
 
-  status = STATUS_SUCCESS;
+  status = GIMP_PDB_SUCCESS;
   p.run  = FALSE;
   p.run_mode = params[0].data.d_int32;
   p.image    = params[1].data.d_image;
@@ -871,12 +871,12 @@ plugin_run (gchar   *name,
     {
       switch (p.run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  params_load_from_gimp ();
 	  open_dialog ();
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  if (numof_params == 11)
 	    {
 	      p.params.tile_size  = params[3].data.d_int32;
@@ -895,11 +895,11 @@ plugin_run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  params_load_from_gimp ();
 	  p.run = TRUE;
 	  break;
@@ -907,12 +907,12 @@ plugin_run (gchar   *name,
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if (status == STATUS_SUCCESS && p.run)
+  if (status == GIMP_PDB_SUCCESS && p.run)
     {
-      if(p.run_mode == RUN_INTERACTIVE)
+      if(p.run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  params_save_to_gimp ();
 	  gimp_undo_push_group_start (p.image);
@@ -920,7 +920,7 @@ plugin_run (gchar   *name,
 
       filter ();
 
-      if (p.run_mode == RUN_INTERACTIVE)
+      if (p.run_mode == GIMP_RUN_INTERACTIVE)
 	{
 	  gimp_undo_push_group_end (p.image);
 	  gimp_displays_flush ();
@@ -928,15 +928,15 @@ plugin_run (gchar   *name,
     }
   
   {
-    static GParam return_value[1];
-    return_value[0].type          = PARAM_STATUS;
+    static GimpParam return_value[1];
+    return_value[0].type          = GIMP_PDB_STATUS;
     return_value[0].data.d_status = status;
     *numof_return_vals            = 1;
     *return_vals                  = return_value;
   }
 }
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,
   NULL,

@@ -91,18 +91,18 @@ static TileItInterface tint =
   FALSE, /* run */
 };
 
-static GDrawable *tileitdrawable;
+static GimpDrawable *tileitdrawable;
 static gint       tile_width, tile_height;
-static GTile     *the_tile = NULL;
+static GimpTile     *the_tile = NULL;
 static gint       img_width, img_height,img_bpp;
 
 static void      query  (void);
 static void      run    (gchar    *name,
 			 gint      nparams,
-			 GParam   *param,
+			 GimpParam   *param,
 			 gint     *nreturn_vals,
-			 GParam  **return_vals);
-/* static void      check  (GDrawable * drawable); */
+			 GimpParam  **return_vals);
+/* static void      check  (GimpDrawable * drawable); */
 
 static gint      tileit_dialog          (void);
 
@@ -136,7 +136,7 @@ static gint      tileit_preview_events (GtkWidget *widget,
 					GdkEvent  *event);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -217,12 +217,12 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "number_of_tiles", "Number of tiles to make" } 
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "number_of_tiles", "Number of tiles to make" } 
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -234,7 +234,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Map/Small Tiles..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -242,14 +242,14 @@ query (void)
 static void
 run (gchar    *name,
      gint      nparams,
-     GParam   *param,
+     GimpParam   *param,
      gint     *nreturn_vals,
-     GParam  **return_vals)
+     GimpParam  **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   gint pwidth, pheight;
 
@@ -258,7 +258,7 @@ run (gchar    *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   tileitdrawable = 
@@ -291,7 +291,7 @@ run (gchar    *name,
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data ("plug_in_tileit", &itvals);
       if (! tileit_dialog ())
@@ -301,10 +301,10 @@ run (gchar    *name,
 	}
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	}
       else
 	{
@@ -313,7 +313,7 @@ run (gchar    *name,
       INIT_I18N();
       break;
 
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data ("plug_in_tileit", &itvals);
       break;
@@ -334,15 +334,15 @@ run (gchar    *name,
 
       do_tiles ();
    
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
-      if (run_mode == RUN_INTERACTIVE)
+      if (run_mode == GIMP_RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_tileit", &itvals, sizeof (TileItVals));
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -920,7 +920,7 @@ tileit_exp_update_f (GtkWidget *widget,
 static void
 cache_preview (void)
 {
-  GPixelRgn src_rgn;
+  GimpPixelRgn src_rgn;
   gint y,x;
   guchar *src_rows;
   guchar *p;
@@ -946,8 +946,8 @@ cache_preview (void)
 
   switch (gimp_drawable_type (tileitdrawable->id))
     {
-    case GRAYA_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY_IMAGE:
       isgrey = TRUE;
       break;
     default:
@@ -1029,7 +1029,7 @@ tileit_get_pixel (gint    x,
 static void
 do_tiles(void)
 {
-  GPixelRgn dest_rgn;
+  GimpPixelRgn dest_rgn;
   gpointer  pr;
   gint      progress, max_progress;
   guchar   *dest_row;

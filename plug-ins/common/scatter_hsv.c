@@ -40,11 +40,11 @@
 static void   query (void);
 static void   run   (gchar   *name,
 		     gint     nparams,
-		     GParam  *param,
+		     GimpParam  *param,
 		     gint    *nreturn_vals,
-		     GParam **return_vals);
+		     GimpParam **return_vals);
 
-static GStatusType scatter_hsv         (gint32  drawable_id);
+static GimpPDBStatusType scatter_hsv         (gint32  drawable_id);
 static void        scatter_hsv_scatter (guchar *r,
 					guchar *g,
 					guchar *b);
@@ -71,7 +71,7 @@ static void     scatter_hsv_iscale_update  (GtkAdjustment *adjustment,
 static gint preview_width  = PREVIEW_WIDTH;
 static gint preview_height = PREVIEW_HEIGHT;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -122,15 +122,15 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args [] =
+  static GimpParamDef args [] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
-    { PARAM_IMAGE, "image", "Input image (not used)"},
-    { PARAM_DRAWABLE, "drawable", "Input drawable"},
-    { PARAM_INT32, "holdness", "convolution strength"},
-    { PARAM_INT32, "hue_distance", "distribution distance on hue axis [0,255]"},
-    { PARAM_INT32, "saturation_distance", "distribution distance on saturation axis [0,255]"},
-    { PARAM_INT32, "value_distance", "distribution distance on value axis [0,255]"}
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+    { GIMP_PDB_IMAGE, "image", "Input image (not used)"},
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
+    { GIMP_PDB_INT32, "holdness", "convolution strength"},
+    { GIMP_PDB_INT32, "hue_distance", "distribution distance on hue axis [0,255]"},
+    { GIMP_PDB_INT32, "saturation_distance", "distribution distance on saturation axis [0,255]"},
+    { GIMP_PDB_INT32, "value_distance", "distribution distance on value axis [0,255]"}
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -142,7 +142,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Noise/Scatter HSV..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -150,13 +150,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam	values[1];
-  GStatusType   status = STATUS_EXECUTION_ERROR;
-  GRunModeType  run_mode;
+  static GimpParam	values[1];
+  GimpPDBStatusType   status = GIMP_PDB_EXECUTION_ERROR;
+  GimpRunModeType  run_mode;
   
   run_mode = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
@@ -164,12 +164,12 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
   
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       if (!gimp_drawable_is_rgb (drawable_id))
@@ -180,14 +180,14 @@ run (gchar   *name,
       if (! scatter_hsv_dialog ())
 	return;
       break;
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       VALS.holdness = param[3].data.d_int32;
       VALS.hue_distance = param[4].data.d_int32;
       VALS.saturation_distance = param[5].data.d_int32;
       VALS.value_distance = param[6].data.d_int32;
       break;
-    case RUN_WITH_LAST_VALS:
+    case GIMP_RUN_WITH_LAST_VALS:
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
@@ -195,20 +195,20 @@ run (gchar   *name,
   
   status = scatter_hsv (drawable_id);
 
-  if (run_mode != RUN_NONINTERACTIVE)
+  if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush();
-  if (run_mode == RUN_INTERACTIVE && status == STATUS_SUCCESS )
+  if (run_mode == GIMP_RUN_INTERACTIVE && status == GIMP_PDB_SUCCESS )
     gimp_set_data (PLUG_IN_NAME, &VALS, sizeof (ValueType));
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
-static GStatusType
+static GimpPDBStatusType
 scatter_hsv (gint32 drawable_id)
 {
-  GDrawable *drawable;
-  GPixelRgn  src_rgn, dest_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn  src_rgn, dest_rgn;
   guchar    *src, *dest;
   gpointer   pr;
   gint       x, y, x1, x2, y1, y2;
@@ -272,7 +272,7 @@ scatter_hsv (gint32 drawable_id)
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
   gimp_drawable_detach (drawable);
 
-  return STATUS_SUCCESS;
+  return GIMP_PDB_SUCCESS;
 }
 
 static gint
@@ -549,8 +549,8 @@ preview_event_handler (GtkWidget *widget,
 static void
 scatter_hsv_preview_update (void)
 {
-  GDrawable	*drawable;
-  GPixelRgn	src_rgn;
+  GimpDrawable	*drawable;
+  GimpPixelRgn	src_rgn;
   gint	scale;
   gint	x, y, dx, dy;
   gint	bound_start_x, bound_start_y, bound_end_x, bound_end_y;

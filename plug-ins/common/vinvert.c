@@ -40,11 +40,11 @@
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
-static void      vinvert            (GDrawable    *drawable);
+static void      vinvert            (GimpDrawable    *drawable);
 static void      indexed_vinvert    (gint32        image_ID);
 static void      vinvert_render_row (const guchar *src_row,
 				     guchar       *dest_row,
@@ -52,9 +52,9 @@ static void      vinvert_render_row (const guchar *src_row,
 				     const gint    bytes);
 
 
-static GRunModeType run_mode;
+static GimpRunModeType run_mode;
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -68,11 +68,11 @@ MAIN ()
 static void
 query ()
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (used for indexed images)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -90,7 +90,7 @@ query ()
 			  "27th March 1997",
 			  N_("<Image>/Filters/Colors/Value Invert"),
 			  "RGB*, INDEXED*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -98,21 +98,21 @@ query ()
 static void
 run (char    *name,
      int      nparams,
-     GParam  *param,
+     GimpParam  *param,
      int     *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
   gint32 image_ID;
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
 
@@ -120,31 +120,31 @@ run (char    *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_ID = param[1].data.d_image;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    {
 	      INIT_I18N();
 	      gimp_progress_init ("Value Invert...");
 	    }
 
 	  vinvert (drawable);
-          if (run_mode != RUN_NONINTERACTIVE)
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 	}
       else
 	if (gimp_drawable_is_indexed (drawable->id))
 	  {
 	    indexed_vinvert (image_ID);
-            if (run_mode != RUN_NONINTERACTIVE)
+            if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	      gimp_displays_flush ();
 	  }
 	else
 	  {
-	    status = STATUS_EXECUTION_ERROR;
+	    status = GIMP_PDB_EXECUTION_ERROR;
 	  }
     }
 
@@ -214,8 +214,8 @@ vinvert_render_row (const guchar *src_data,
 
 
 static void
-vinvert_render_region (const GPixelRgn srcPR,
-		       const GPixelRgn destPR)
+vinvert_render_region (const GimpPixelRgn srcPR,
+		       const GimpPixelRgn destPR)
 {
   gint row;
   guchar* src_ptr  = srcPR.data;
@@ -233,9 +233,9 @@ vinvert_render_region (const GPixelRgn srcPR,
 }
 
 static void
-vinvert (GDrawable *drawable)
+vinvert (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint      x1, y1, x2, y2;
   gpointer  pr;
   gint      total_area, area_so_far;
@@ -266,7 +266,7 @@ vinvert (GDrawable *drawable)
     {
       vinvert_render_region (srcPR, destPR);
 
-      if ((run_mode != RUN_NONINTERACTIVE))
+      if ((run_mode != GIMP_RUN_NONINTERACTIVE))
 	{
 	  area_so_far += srcPR.w * srcPR.h;
 	  if (((progress_skip++)%10) == 0)

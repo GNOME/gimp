@@ -1777,11 +1777,11 @@ static VideoInterface vint =
 static void      query  (void);
 static void      run    (gchar   *name,
 			 gint     nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
-static void      video  (GDrawable  *drawable);
+static void      video  (GimpDrawable  *drawable);
 
 
 static gint      video_dialog          (void);
@@ -1803,7 +1803,7 @@ static void      video_render_row      (const guchar *src_row,
 					gint          row_width,
 					gint          bytes);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -1816,14 +1816,14 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_INT32, "pattern_number", "Type of RGB pattern to use" },
-    { PARAM_INT32, "additive", "Whether the function adds the result to the original image" },
-    { PARAM_INT32, "rotated", "Whether to rotate the RGB pattern by ninety degrees" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32, "pattern_number", "Type of RGB pattern to use" },
+    { GIMP_PDB_INT32, "additive", "Whether the function adds the result to the original image" },
+    { GIMP_PDB_INT32, "rotated", "Whether to rotate the RGB pattern by ninety degrees" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -1835,7 +1835,7 @@ query (void)
 			  "2nd March 1997",
 			  N_("<Image>/Filters/Distorts/Video..."),
 			  "RGB*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -1843,26 +1843,26 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   switch (run_mode)
     {
-    case RUN_INTERACTIVE:
+    case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_video", &vvals);
@@ -1872,12 +1872,12 @@ run (gchar   *name,
 	return;
       break;
 
-    case RUN_NONINTERACTIVE:
+    case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	status = GIMP_PDB_CALLING_ERROR;
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  vvals.pattern_number = param[3].data.d_int32;
 	  vvals.additive = param[4].data.d_int32;
@@ -1885,7 +1885,7 @@ run (gchar   *name,
 	}
       break;
 
-      case RUN_WITH_LAST_VALS:
+      case GIMP_RUN_WITH_LAST_VALS:
         INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_video", &vvals);
@@ -1899,7 +1899,7 @@ run (gchar   *name,
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
@@ -1909,16 +1909,16 @@ run (gchar   *name,
 				       + 1));
 	  video (drawable);
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_displays_flush ();
 
 	  /*  Store vvals data  */
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data ("plug_in_video", &vvals, sizeof (VideoValues));
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -2016,9 +2016,9 @@ video_render_row (const guchar *src_row,
 }
 
 static void
-video (GDrawable *drawable)
+video (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint width, height;
   gint bytes;
   guchar *src_row;

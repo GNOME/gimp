@@ -79,7 +79,7 @@ typedef struct _PNMInfo
   gint       asciibody;		/* 1 if ascii body, 0 if raw body */
   jmp_buf    jmpbuf;		/* Where to jump to on an error loading */
   /* Routine to use to load the pnm body */
-  void    (* loader) (PNMScanner *, struct _PNMInfo *, GPixelRgn *);
+  void    (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *);
 } PNMInfo;
 
 /* Contains the information needed to write out PNM rows */
@@ -118,9 +118,9 @@ typedef struct
 static void   query      (void);
 static void   run        (gchar   *name,
                           gint     nparams,
-                          GParam  *param,
+                          GimpParam  *param,
                           gint    *nreturn_vals,
-                          GParam **return_vals);
+                          GimpParam **return_vals);
 static gint32 load_image (gchar  *filename);
 static gint   save_image (gchar  *filename,
 			  gint32  image_ID,
@@ -132,13 +132,13 @@ static void   save_ok_callback         (GtkWidget *widget,
 
 static void   pnm_load_ascii           (PNMScanner *scan,
 					PNMInfo    *info,
-					GPixelRgn  *pixel_rgn);
+					GimpPixelRgn  *pixel_rgn);
 static void   pnm_load_raw             (PNMScanner *scan,
 					PNMInfo    *info,
-					GPixelRgn  *pixel_rgn);
+					GimpPixelRgn  *pixel_rgn);
 static void   pnm_load_rawpbm          (PNMScanner *scan,
 					PNMInfo    *info,
-					GPixelRgn  *pixel_rgn);
+					GimpPixelRgn  *pixel_rgn);
 
 static void   pnmsaverow_ascii         (PNMRowInfo *ri,
 					guchar     *data);
@@ -177,7 +177,7 @@ static struct struct_pnm_types
   gint    np;
   gint    asciibody;
   gint    maxval;
-  void (* loader) (PNMScanner *, struct _PNMInfo *, GPixelRgn *pixel_rgn);
+  void (* loader) (PNMScanner *, struct _PNMInfo *, GimpPixelRgn *pixel_rgn);
 } pnm_types[] =
 {
   { '1', 0, 1,   1, pnm_load_ascii },  /* ASCII PBM */
@@ -189,7 +189,7 @@ static struct struct_pnm_types
   {  0 , 0, 0,   0, NULL}
 };
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -213,28 +213,28 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_STRING, "filename", "The name of the file to load" },
-    { PARAM_STRING, "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_STRING, "filename", "The name of the file to load" },
+    { GIMP_PDB_STRING, "raw_filename", "The name of the file to load" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE, "image", "Output image" }
+    { GIMP_PDB_IMAGE, "image", "Output image" }
   };
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_INT32,    "raw",          "Specify non-zero for raw output, zero for ascii output" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -246,7 +246,7 @@ query (void)
                           "1996",
                           "<Load>/PNM",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -258,7 +258,7 @@ query (void)
                           "1996",
                           "<Save>/PNM",
 			  "RGB, GRAY, INDEXED",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -275,13 +275,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   GimpExportReturnType export = EXPORT_CANCEL;
@@ -290,10 +290,10 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  if (run_mode == RUN_NONINTERACTIVE)
+  if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       INIT_I18N();
     }
@@ -309,12 +309,12 @@ run (gchar   *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_pnm_save") == 0)
@@ -325,8 +325,8 @@ run (gchar   *name,
       /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("pnm", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "PNM", 
 				      (CAN_HANDLE_RGB |
@@ -334,7 +334,7 @@ run (gchar   *name,
 				       CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	    }
 	break;
@@ -344,27 +344,27 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
 	      psvals.raw = (param[5].data.d_int32) ? TRUE : FALSE;
 	    }
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 	  break;
@@ -373,7 +373,7 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
@@ -382,7 +382,7 @@ run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
 
@@ -391,7 +391,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -400,10 +400,10 @@ run (gchar   *name,
 static gint32
 load_image (gchar *filename)
 {
-  GPixelRgn pixel_rgn;
+  GimpPixelRgn pixel_rgn;
   gint32 volatile image_ID = -1;
   gint32 layer_ID;
-  GDrawable *drawable;
+  GimpDrawable *drawable;
   int fd;			/* File descriptor */
   char *temp;
   char buf[BUFLEN];		/* buffer for random things like scanning */
@@ -496,13 +496,13 @@ load_image (gchar *filename)
   /* Create a new image of the proper size and associate the filename with it.
    */
   image_ID = gimp_image_new (pnminfo->xres, pnminfo->yres,
-			     (pnminfo->np >= 3) ? RGB : GRAY);
+			     (pnminfo->np >= 3) ? GIMP_RGB : GIMP_GRAY);
   gimp_image_set_filename (image_ID, filename);
 
   layer_ID = gimp_layer_new (image_ID, _("Background"),
 			     pnminfo->xres, pnminfo->yres,
-			     (pnminfo->np >= 3) ? RGB_IMAGE : GRAY_IMAGE,
-			     100, NORMAL_MODE);
+			     (pnminfo->np >= 3) ? GIMP_RGB_IMAGE : GIMP_GRAY_IMAGE,
+			     100, GIMP_NORMAL_MODE);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
   drawable = gimp_drawable_get (layer_ID);
@@ -530,7 +530,7 @@ load_image (gchar *filename)
 static void
 pnm_load_ascii (PNMScanner *scan,
 		PNMInfo    *info,
-		GPixelRgn  *pixel_rgn)
+		GimpPixelRgn  *pixel_rgn)
 {
   unsigned char *data, *d;
   int            x, y, i, b;
@@ -592,7 +592,7 @@ pnm_load_ascii (PNMScanner *scan,
 static void
 pnm_load_raw (PNMScanner *scan,
 	      PNMInfo    *info,
-	      GPixelRgn  *pixel_rgn)
+	      GimpPixelRgn  *pixel_rgn)
 {
   unsigned char *data, *d;
   int            x, y, i;
@@ -637,7 +637,7 @@ pnm_load_raw (PNMScanner *scan,
 static void
 pnm_load_rawpbm (PNMScanner *scan,
 		 PNMInfo    *info,
-		 GPixelRgn  *pixel_rgn)
+		 GimpPixelRgn  *pixel_rgn)
 {
   unsigned char *buf;
   unsigned char  curbyte;
@@ -753,9 +753,9 @@ save_image (gchar  *filename,
 	    gint32  image_ID,
 	    gint32  drawable_ID)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   PNMRowInfo rowinfo;
   void (*saverow) (PNMRowInfo *, unsigned char *) = NULL;
   unsigned char red[256];
@@ -803,19 +803,19 @@ save_image (gchar  *filename,
   if (psvals.raw == FALSE)
     switch (drawable_type)
       {
-      case GRAY_IMAGE:
+      case GIMP_GRAY_IMAGE:
 	write(fd, "P2\n", 3);
 	np = 1;
 	rowbufsize = xres * 4;
 	saverow = pnmsaverow_ascii;
 	break;
-      case RGB_IMAGE:
+      case GIMP_RGB_IMAGE:
 	write(fd, "P3\n", 3);
 	np = 3;
 	rowbufsize = xres * 12;
 	saverow = pnmsaverow_ascii;
 	break;
-      case INDEXED_IMAGE:
+      case GIMP_INDEXED_IMAGE:
 	write(fd, "P3\n", 3);
 	np = 1;
 	rowbufsize = xres * 12;
@@ -828,19 +828,19 @@ save_image (gchar  *filename,
   else if (psvals.raw == TRUE)
     switch (drawable_type)
       {
-      case GRAY_IMAGE:
+      case GIMP_GRAY_IMAGE:
 	write(fd, "P5\n", 3);
 	np = 1;
 	rowbufsize = xres;
 	saverow = pnmsaverow_raw;
 	break;
-      case RGB_IMAGE:
+      case GIMP_RGB_IMAGE:
 	write(fd, "P6\n", 3);
 	np = 3;
 	rowbufsize = xres * 3;
 	saverow = pnmsaverow_raw;
 	break;
-      case INDEXED_IMAGE:
+      case GIMP_INDEXED_IMAGE:
 	write(fd, "P6\n", 3);
 	np = 1;
 	rowbufsize = xres * 3;
@@ -851,7 +851,7 @@ save_image (gchar  *filename,
 	return FALSE;
     }
 
-  if (drawable_type == INDEXED_IMAGE)
+  if (drawable_type == GIMP_INDEXED_IMAGE)
     {
       int i;
       guchar *cmap;

@@ -169,7 +169,7 @@ static gint32           orig_image_ID_global;
 static gint32           drawable_ID_global = -1;
 static gint32           layer_ID_global = -1;
 static GtkWidget       *preview_size = NULL;
-static GDrawable       *drawable_global = NULL;
+static GimpDrawable       *drawable_global = NULL;
 
 typedef struct
 {
@@ -199,8 +199,8 @@ typedef struct
   guchar    *temp;
   guchar    *data;
   guchar    *src;
-  GDrawable *drawable;
-  GPixelRgn  pixel_rgn;
+  GimpDrawable *drawable;
+  GimpPixelRgn  pixel_rgn;
   gchar     *file_name;
   gint       abort_me;
 } preview_persistent;
@@ -212,11 +212,11 @@ gint *abort_me = NULL;
 static void   query                     (void);
 static void   run                       (gchar         *name,
 					 gint           nparams,
-					 GParam        *param,
+					 GimpParam        *param,
 					 gint          *nreturn_vals,
-					 GParam       **return_vals);
+					 GimpParam       **return_vals);
 static gint32 load_image                (gchar         *filename, 
-					 GRunModeType   runmode, 
+					 GimpRunModeType   runmode, 
 					 gint           preview);
 static gint   save_image                (gchar         *filename,
 					 gint32         image_ID,
@@ -248,7 +248,7 @@ static void   subsmp_callback            (GtkWidget *widget,
 static void   dct_callback               (GtkWidget *widget, 
 					  gpointer data);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -284,36 +284,36 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef load_args[] =
+  static GimpParamDef load_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_STRING,   "filename",     "The name of the file to load" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to load" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to load" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to load" }
   };
-  static GParamDef load_return_vals[] =
+  static GimpParamDef load_return_vals[] =
   {
-    { PARAM_IMAGE,   "image",         "Output image" }
+    { GIMP_PDB_IMAGE,   "image",         "Output image" }
   };
   static gint nload_args        = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
 
-  static GParamDef save_args[] =
+  static GimpParamDef save_args[] =
   {
-    { PARAM_INT32,    "run_mode",     "Interactive, non-interactive" },
-    { PARAM_IMAGE,    "image",        "Input image" },
-    { PARAM_DRAWABLE, "drawable",     "Drawable to save" },
-    { PARAM_STRING,   "filename",     "The name of the file to save the image in" },
-    { PARAM_STRING,   "raw_filename", "The name of the file to save the image in" },
-    { PARAM_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
-    { PARAM_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { PARAM_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
-    { PARAM_INT32,    "progressive",  "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
-    { PARAM_STRING,   "comment",      "Image comment" },
-    { PARAM_INT32,    "subsmp",       "The subsampling option number" },
-    { PARAM_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
-    { PARAM_INT32,    "restart",      "Frequency of restart markers (in rows, 0 = no restart markers)" },
-    { PARAM_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename", "The name of the file to save the image in" },
+    { GIMP_PDB_FLOAT,    "quality",      "Quality of saved image (0 <= quality <= 1)" },
+    { GIMP_PDB_FLOAT,    "smoothing",    "Smoothing factor for saved image (0 <= smoothing <= 1)" },
+    { GIMP_PDB_INT32,    "optimize",     "Optimization of entropy encoding parameters (0/1)" },
+    { GIMP_PDB_INT32,    "progressive",  "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
+    { GIMP_PDB_STRING,   "comment",      "Image comment" },
+    { GIMP_PDB_INT32,    "subsmp",       "The subsampling option number" },
+    { GIMP_PDB_INT32,    "baseline",     "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
+    { GIMP_PDB_INT32,    "restart",      "Frequency of restart markers (in rows, 0 = no restart markers)" },
+    { GIMP_PDB_INT32,    "dct",          "DCT algorithm to use (speed/quality tradeoff)" }
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -325,7 +325,7 @@ query (void)
                           "1995-1999",
 			  "<Load>/Jpeg",
 			  NULL,
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
@@ -337,7 +337,7 @@ query (void)
                           "1995-1999",
                           "<Save>/JPEG",
 			  "RGB*, GRAY*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nsave_args, 0,
                           save_args, NULL);
 
@@ -353,13 +353,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[2];
-  GRunModeType  run_mode;
-  GStatusType   status = STATUS_SUCCESS;
+  static GimpParam values[2];
+  GimpRunModeType  run_mode;
+  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
   gint32        image_ID;
   gint32        drawable_ID;
   gint32        orig_image_ID;
@@ -374,8 +374,8 @@ run (gchar   *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  values[0].type          = PARAM_STATUS;
-  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
@@ -386,12 +386,12 @@ run (gchar   *name,
       if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
-	  values[1].type         = PARAM_IMAGE;
+	  values[1].type         = GIMP_PDB_IMAGE;
 	  values[1].data.d_image = image_ID;
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
   else if (strcmp (name, "file_jpeg_save") == 0)
@@ -404,8 +404,8 @@ run (gchar   *name,
        /*  eventually export the image */ 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_INTERACTIVE:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("jpeg", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "JPEG", 
 				      (CAN_HANDLE_RGB |
@@ -420,7 +420,7 @@ run (gchar   *name,
 	    case EXPORT_IGNORE:
 	      break;
 	    case EXPORT_CANCEL:
-	      values[0].data.d_status = STATUS_CANCEL;
+	      values[0].data.d_status = GIMP_PDB_CANCEL;
 	      return;
 	      break;
 	    }
@@ -457,7 +457,7 @@ run (gchar   *name,
 
       switch (run_mode)
 	{
-	case RUN_INTERACTIVE:
+	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 
@@ -499,16 +499,16 @@ run (gchar   *name,
 	  gimp_undo_push_group_end (image_ID); 
 
           if (!err)
-	    status = STATUS_CANCEL;
+	    status = GIMP_PDB_CANCEL;
 	  break;
 
-	case RUN_NONINTERACTIVE:
+	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  /*  pw - added two more progressive and comment */
 	  /*  sg - added subsampling, preview, baseline, restarts and DCT */
 	  if (nparams != 14)
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  else
 	    {
@@ -530,17 +530,17 @@ run (gchar   *name,
 	      image_comment = g_strdup (param[9].data.d_string);
 
 	      if (jsvals.quality < 0.0 || jsvals.quality > 1.0)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	      else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	      else if (jsvals.subsmp < 0 || jsvals.subsmp > 2)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	      else if (jsvals.dct < 0 || jsvals.dct > 2)
-		status = STATUS_CALLING_ERROR;
+		status = GIMP_PDB_CALLING_ERROR;
 	    }
 	  break;
 
-	case RUN_WITH_LAST_VALS:
+	case GIMP_RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_jpeg_save", &jsvals);
 #ifdef GIMP_HAVE_PARASITES
@@ -566,7 +566,7 @@ run (gchar   *name,
 	  break;
 	}
 
-      if (status == STATUS_SUCCESS)
+      if (status == GIMP_PDB_SUCCESS)
 	{
 	  if (save_image (param[3].data.d_string,
 			  image_ID,
@@ -579,7 +579,7 @@ run (gchar   *name,
 	    }
 	  else
 	    {
-	      status = STATUS_EXECUTION_ERROR;
+	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
 
@@ -619,7 +619,7 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_CALLING_ERROR;
+      status = GIMP_PDB_CALLING_ERROR;
     }
 
   values[0].data.d_status = status;
@@ -704,11 +704,11 @@ my_error_exit (j_common_ptr cinfo)
 
 static gint32
 load_image (gchar        *filename, 
-	    GRunModeType  runmode, 
+	    GimpRunModeType  runmode, 
 	    gint          preview)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
   gint32 volatile image_ID;
   gint32 layer_ID;
   struct jpeg_decompress_struct cinfo;
@@ -741,7 +741,7 @@ load_image (gchar        *filename,
       gimp_quit ();
     }
 
-  if (runmode != RUN_NONINTERACTIVE)
+  if (runmode != GIMP_RUN_NONINTERACTIVE)
     {
       name = g_strdup_printf (_("Loading %s:"), filename);
       gimp_progress_init (name);
@@ -865,12 +865,12 @@ load_image (gchar        *filename,
   switch (cinfo.output_components)
     {
     case 1:
-      image_type = GRAY;
-      layer_type = preview ? GRAYA_IMAGE : GRAY_IMAGE;
+      image_type = GIMP_GRAY;
+      layer_type = preview ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
       break;
     case 3:
-      image_type = RGB;
-      layer_type = preview ? RGBA_IMAGE : RGB_IMAGE;
+      image_type = GIMP_RGB;
+      layer_type = preview ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
       break;
     default:
       g_message ("don't know how to load JPEGs\nwith %d color channels",
@@ -894,14 +894,14 @@ load_image (gchar        *filename,
       layer_ID_global = layer_ID = gimp_layer_new (image_ID, _("JPEG preview"),
 						   cinfo.output_width,
 						   cinfo.output_height,
-						   layer_type, 100, NORMAL_MODE);
+						   layer_type, 100, GIMP_NORMAL_MODE);
     }
   else 
     {
       layer_ID = gimp_layer_new (image_ID, _("Background"),
 				 cinfo.output_width,
 				 cinfo.output_height,
-				 layer_type, 100, NORMAL_MODE);
+				 layer_type, 100, GIMP_NORMAL_MODE);
     }
 
   drawable_global = drawable = gimp_drawable_get (layer_ID);
@@ -1001,7 +1001,7 @@ load_image (gchar        *filename,
       gimp_pixel_rgn_set_rect (&pixel_rgn, preview ? padded_buf : buf,
 			       0, start, drawable->width, scanlines);
 
-      if (runmode != RUN_NONINTERACTIVE)
+      if (runmode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  gimp_progress_update ((double) cinfo.output_scanline / (double) cinfo.output_height);
 	}
@@ -1117,7 +1117,7 @@ background_jpeg_save (gpointer *ptr)
 	  gtk_label_set_text (GTK_LABEL (preview_size), temp);
 	
 	  /* and load the preview */
-	  load_image (pp->file_name, RUN_NONINTERACTIVE, TRUE);
+	  load_image (pp->file_name, GIMP_RUN_NONINTERACTIVE, TRUE);
 	}
 
       /* we cleanup here (load_image doesn't run in the background) */
@@ -1172,9 +1172,9 @@ save_image (char   *filename,
 	    gint32  orig_image_ID,
 	    int     preview)
 {
-  GPixelRgn pixel_rgn;
-  GDrawable *drawable;
-  GDrawableType drawable_type;
+  GimpPixelRgn pixel_rgn;
+  GimpDrawable *drawable;
+  GimpImageType drawable_type;
   struct jpeg_compress_struct cinfo;
   struct my_error_mgr jerr;
   FILE * volatile outfile;
@@ -1246,20 +1246,20 @@ save_image (char   *filename,
    */
   switch (drawable_type)
     {
-    case RGB_IMAGE:
-    case GRAY_IMAGE:
+    case GIMP_RGB_IMAGE:
+    case GIMP_GRAY_IMAGE:
       /* # of color components per pixel */
       cinfo.input_components = drawable->bpp;
       has_alpha = 0;
       break;
-    case RGBA_IMAGE:
-    case GRAYA_IMAGE:
+    case GIMP_RGBA_IMAGE:
+    case GIMP_GRAYA_IMAGE:
       /*gimp_message ("jpeg: image contains a-channel info which will be lost");*/
       /* # of color components per pixel (minus the GIMP alpha channel) */
       cinfo.input_components = drawable->bpp - 1;
       has_alpha = 1;
       break;
-    case INDEXED_IMAGE:
+    case GIMP_INDEXED_IMAGE:
       /*gimp_message ("jpeg: cannot operate on indexed color images");*/
       return FALSE;
       break;
@@ -1278,8 +1278,8 @@ save_image (char   *filename,
   cinfo.image_width = drawable->width;
   cinfo.image_height = drawable->height;
   /* colorspace of input image */
-  cinfo.in_color_space = (drawable_type == RGB_IMAGE ||
-			  drawable_type == RGBA_IMAGE)
+  cinfo.in_color_space = (drawable_type == GIMP_RGB_IMAGE ||
+			  drawable_type == GIMP_RGBA_IMAGE)
     ? JCS_RGB : JCS_GRAYSCALE;
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,
@@ -1585,7 +1585,7 @@ save_dialog (void)
   GtkWidget *vscrollbar;
   
   GtkWidget *prv_frame;
-  GDrawableType dtype;
+  GimpImageType dtype;
 
   dlg = gimp_dialog_new (_("Save as JPEG"), "jpeg",
 			 gimp_standard_help_func, "filters/jpeg.html",
@@ -1818,7 +1818,7 @@ save_dialog (void)
   gtk_option_menu_set_history (GTK_OPTION_MENU (dct_menu), 1);
 
   dtype = gimp_drawable_type (drawable_ID_global);
-  if (dtype != RGB_IMAGE && dtype != RGBA_IMAGE) 
+  if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE) 
     {
       gtk_widget_set_sensitive (subsmp_menu, FALSE);
     }

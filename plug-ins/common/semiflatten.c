@@ -40,11 +40,11 @@
 static void      query  (void);
 static void      run    (gchar   *name,
 			 gint     nparams,
-			 GParam  *param,
+			 GimpParam  *param,
 			 gint    *nreturn_vals,
-			 GParam **return_vals);
+			 GimpParam **return_vals);
 
-static void      semiflatten            (GDrawable    *drawable);
+static void      semiflatten            (GimpDrawable    *drawable);
 static void      semiflatten_render_row (const guchar *src_row,
 					 guchar       *dest_row,
 					 gint          row,
@@ -55,7 +55,7 @@ static void      semiflatten_render_row (const guchar *src_row,
 static guchar bgred, bggreen, bgblue;
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -68,11 +68,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -88,7 +88,7 @@ query (void)
 			  "27th January 1998",
 			  N_("<Image>/Filters/Colors/Semi-Flatten"),
 			  "RGBA",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -97,19 +97,19 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GDrawable *drawable;
+  static GimpParam values[1];
+  GimpDrawable *drawable;
   gint32 image_ID;
-  GStatusType status = STATUS_SUCCESS;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   INIT_I18N();
@@ -118,7 +118,7 @@ run (gchar   *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
   image_ID = param[1].data.d_image;
 
-  if (status == STATUS_SUCCESS)
+  if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
@@ -131,7 +131,7 @@ run (gchar   *name,
 	}
       else
 	{
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
 
@@ -170,9 +170,9 @@ semiflatten_render_row (const guchar *src_row,
 
 
 static void
-semiflatten (GDrawable *drawable)
+semiflatten (GimpDrawable *drawable)
 {
-  GPixelRgn srcPR, destPR;
+  GimpPixelRgn srcPR, destPR;
   gint    width, height;
   gint    bytes;
   guchar *src_row;

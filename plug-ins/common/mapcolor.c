@@ -95,11 +95,11 @@ static gboolean run_flag = FALSE;
 static void   query (void);
 static void   run   (gchar   *name,
 		     gint     nparams,
-		     GParam  *param,
+		     GimpParam  *param,
 		     gint    *nreturn_vals,
-		     GParam **return_vals);
+		     GimpParam **return_vals);
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -128,11 +128,11 @@ static void   add_color_button        (gint       csel_index,
 				       gint       top,
 				       GtkWidget *table);
 
-static void   color_mapping           (GDrawable *drawable);
+static void   color_mapping           (GimpDrawable *drawable);
 
 
 /* The run mode */
-static GRunModeType l_run_mode;
+static GimpRunModeType l_run_mode;
 
 static gchar *csel_title[4] =
 {
@@ -228,8 +228,8 @@ static IMG_PREVIEW *
 img_preview_create_from_drawable (guint  maxsize, 
 				  gint32 drawable_ID)
 {
- GDrawable *drw;
- GPixelRgn pixel_rgn;
+ GimpDrawable *drw;
+ GimpPixelRgn pixel_rgn;
  guint drw_width, drw_height;
  guint prv_width, prv_height;
  gint  src_x, src_y, x, y;
@@ -312,24 +312,24 @@ static void
 query (void)
 
 {
-  static GParamDef adjust_args[] =
+  static GimpParamDef adjust_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (not used)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable to adjust" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable to adjust" }
   };
   static gint nadjust_args = sizeof (adjust_args) / sizeof (adjust_args[0]);
 
-  static GParamDef map_args[] =
+  static GimpParamDef map_args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (not used)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable where colors are to map" },
-    { PARAM_COLOR, "srccolor_1", "First source color" },
-    { PARAM_COLOR, "srccolor_2", "Second source color" },
-    { PARAM_COLOR, "dstcolor_1", "First destination color" },
-    { PARAM_COLOR, "dstcolor_2", "Second destination color" },
-    { PARAM_INT32, "map_mode", "Mapping mode (0: linear, others reserved)" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable where colors are to map" },
+    { GIMP_PDB_COLOR, "srccolor_1", "First source color" },
+    { GIMP_PDB_COLOR, "srccolor_2", "Second source color" },
+    { GIMP_PDB_COLOR, "dstcolor_1", "First destination color" },
+    { GIMP_PDB_COLOR, "dstcolor_2", "Second destination color" },
+    { GIMP_PDB_INT32, "map_mode", "Mapping mode (0: linear, others reserved)" }
   };
   static gint nmap_args = sizeof (map_args) / sizeof (map_args[0]);
 
@@ -345,7 +345,7 @@ query (void)
                           dversio,
                           N_("<Image>/Filters/Colors/Map/Adjust FG-BG"),
                           "RGB*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nadjust_args, 0,
                           adjust_args, NULL);
 
@@ -360,7 +360,7 @@ query (void)
                           dversio,
                           N_("<Image>/Filters/Colors/Map/Color Range Mapping..."),
                           "RGB*",
-                          PROC_PLUG_IN,
+                          GIMP_PLUGIN,
                           nmap_args, 0,
                           map_args, NULL);
 }
@@ -369,15 +369,15 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GDrawable *drawable = NULL;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpDrawable *drawable = NULL;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
   guchar *c = (guchar *)ident;
   int j;
 
@@ -388,14 +388,14 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  while (status == STATUS_SUCCESS)
+  while (status == GIMP_PDB_SUCCESS)
     {
       if (nparams < 3)
 	{
-	  status = STATUS_CALLING_ERROR;
+	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
 
@@ -404,7 +404,7 @@ run (gchar   *name,
       if (!gimp_drawable_is_rgb (drawable->id))
 	{
 	  g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
-	  status = STATUS_EXECUTION_ERROR;
+	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
 
@@ -412,7 +412,7 @@ run (gchar   *name,
 	{
 	  if (nparams != 3)  /* Make sure all the arguments are there */
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	      break;
 	    }
 
@@ -430,7 +430,7 @@ run (gchar   *name,
 
 	  plvals.map_mode = 0;
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init (_("Adjusting Foreground/Background"));
 
 	  color_mapping (drawable);
@@ -439,11 +439,11 @@ run (gchar   *name,
 
       if (strcmp (name, "plug_in_color_map") == 0)
 	{
-	  if (run_mode == RUN_NONINTERACTIVE)
+	  if (run_mode == GIMP_RUN_NONINTERACTIVE)
 	    {
 	      if (nparams != 8)  /* Make sure all the arguments are there */
 		{
-		  status = STATUS_CALLING_ERROR;
+		  status = GIMP_PDB_CALLING_ERROR;
 		  break;
 		}
 
@@ -455,7 +455,7 @@ run (gchar   *name,
 		}
 	      plvals.map_mode = param[7].data.d_int32;
 	    }
-	  else if (run_mode == RUN_INTERACTIVE)
+	  else if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
 	      gimp_get_data (name, &plvals);
 
@@ -468,31 +468,31 @@ run (gchar   *name,
 	      if (!dialog (param[2].data.d_drawable))
 		break;
 	    }
-	  else if (run_mode == RUN_WITH_LAST_VALS)
+	  else if (run_mode == GIMP_RUN_WITH_LAST_VALS)
 	    {
 	      gimp_get_data (name, &plvals);
 	    }
 	  else
 	    {
-	      status = STATUS_CALLING_ERROR;
+	      status = GIMP_PDB_CALLING_ERROR;
 	      break;
 	    }
 
-	  if (run_mode != RUN_NONINTERACTIVE)
+	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init (_("Mapping colors"));
 
 	  color_mapping (drawable);
 
-	  if (run_mode == RUN_INTERACTIVE)
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    gimp_set_data (name, &plvals, sizeof (plvals));
 
 	  break;
 	}
 
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
-  if ((status == STATUS_SUCCESS) && (run_mode != RUN_NONINTERACTIVE))
+  if ((status == GIMP_PDB_SUCCESS) && (run_mode != GIMP_RUN_NONINTERACTIVE))
     gimp_displays_flush ();
 
   if (drawable != NULL) gimp_drawable_detach (drawable);
@@ -722,13 +722,13 @@ get_mapping (guchar *src_col1,
 }
 
 static void
-color_mapping (GDrawable *drawable)
+color_mapping (GimpDrawable *drawable)
 
 {
   int processed, total;
   gint x, y, xmin, xmax, ymin, ymax, bpp = (gint)drawable->bpp;
   unsigned char *src, *dest;
-  GPixelRgn src_rgn, dest_rgn;
+  GimpPixelRgn src_rgn, dest_rgn;
   gpointer pr;
   double progress;
   unsigned char redmap[256], greenmap[256], bluemap[256];
@@ -781,7 +781,7 @@ color_mapping (GDrawable *drawable)
 	      processed++;
 	    }
 	}
-      if (l_run_mode != RUN_NONINTERACTIVE)
+      if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
 	{
 	  if ((double)processed/(double)total - progress > 0.1)
 	    {
@@ -790,7 +790,7 @@ color_mapping (GDrawable *drawable)
 	    }
 	}
     }
-  if (l_run_mode != RUN_NONINTERACTIVE)
+  if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_progress_update (1.0);
 
   gimp_drawable_flush (drawable);

@@ -91,9 +91,9 @@ typedef struct
 static void      query  (void);
 static void      run    (gchar     *name,
 			 gint       nparams,
-			 GParam    *param,
+			 GimpParam    *param,
 			 gint      *nreturn_vals,
-			 GParam   **return_vals);
+			 GimpParam   **return_vals);
 
 static void      iwarp                   (void);
 static void      iwarp_frame             (void);
@@ -180,7 +180,7 @@ static void      iwarp_move              (gint       x,
 					  gint       yy);
 
 
-GPlugInInfo PLUG_IN_INFO =
+GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
   NULL,  /* quit_proc  */
@@ -204,8 +204,8 @@ static iwarp_vals_t iwarp_vals =
   2
 }; 
 
-static GDrawable   *drawable = NULL;
-static GDrawable   *destdrawable = NULL;
+static GimpDrawable   *drawable = NULL;
+static GimpDrawable   *destdrawable = NULL;
 static GtkWidget   *preview = NULL;
 static guchar      *srcimage = NULL;
 static guchar      *dstimage = NULL;
@@ -223,7 +223,7 @@ static gboolean     do_animate_ping_pong = FALSE;
 static gdouble      supersample_threshold_2;
 static gint         xl, yl, xh, yh;
 static gint         tile_width, tile_height;
-static GTile       *tile = NULL;
+static GimpTile       *tile = NULL;
 static gdouble      pre2img, img2pre;
 static gint         preview_bpp;
 static gdouble      animate_deform_value = 1.0;
@@ -238,11 +238,11 @@ MAIN ()
 static void
 query (void)
 {
-  static GParamDef args[] =
+  static GimpParamDef args[] =
   {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image (unused)" },
-    { PARAM_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
@@ -254,7 +254,7 @@ query (void)
 			  "1997",
 			  N_("<Image>/Filters/Distorts/IWarp..."),
 			  "RGB*, GRAY*",
-			  PROC_PLUG_IN,
+			  GIMP_PLUGIN,
 			  nargs, 0,
 			  args, NULL);
 }
@@ -262,13 +262,13 @@ query (void)
 static void
 run (gchar   *name,
      gint     nparams,
-     GParam  *param,
+     GimpParam  *param,
      gint    *nreturn_vals,
-     GParam **return_vals)
+     GimpParam **return_vals)
 {
-  static GParam values[1];
-  GRunModeType run_mode;
-  GStatusType status = STATUS_SUCCESS;
+  static GimpParam values[1];
+  GimpRunModeType run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -282,7 +282,7 @@ run (gchar   *name,
     {
       switch (run_mode)
 	{
-        case RUN_INTERACTIVE:
+        case GIMP_RUN_INTERACTIVE:
           INIT_I18N_UI();
           gimp_get_data ("plug_in_iwarp", &iwarp_vals);
           gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
@@ -293,12 +293,12 @@ run (gchar   *name,
  	  gimp_displays_flush ();
 	  break;
 
-        case RUN_NONINTERACTIVE:
-	  status = STATUS_CALLING_ERROR;
+        case GIMP_RUN_NONINTERACTIVE:
+	  status = GIMP_PDB_CALLING_ERROR;
         break;
 
-        case RUN_WITH_LAST_VALS:
-	  status = STATUS_CALLING_ERROR;
+        case GIMP_RUN_WITH_LAST_VALS:
+	  status = GIMP_PDB_CALLING_ERROR;
         break;
 
         default:
@@ -307,13 +307,13 @@ run (gchar   *name,
     }
   else
     {
-      status = STATUS_EXECUTION_ERROR;
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   *nreturn_vals = 1;
   *return_vals = values;
 
-  values[0].type = PARAM_STATUS;
+  values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
@@ -632,7 +632,7 @@ iwarp_supersample (gint    sxl,
 static void
 iwarp_frame (void)
 {
-  GPixelRgn  dest_rgn;
+  GimpPixelRgn  dest_rgn;
   gpointer   pr;
   guchar    *dest_row, *dest;
   gint       row, col;
@@ -836,7 +836,7 @@ static void
 iwarp_init (void)
 {
   gint       y, x, xi, i;
-  GPixelRgn  srcrgn;
+  GimpPixelRgn  srcrgn;
   guchar    *pts;
   guchar    *linebuffer = NULL;
   gdouble    dx, dy;
