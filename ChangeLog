@@ -1,3 +1,9 @@
+2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/tools/gimpcurvestool.c: added Store/Recall buttons for
+	one-click saving and loading of curves.  Should create stock
+	labels for them.  Hopefully resolves bug #75558.
+	
 2004-06-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c
