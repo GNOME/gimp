@@ -1854,7 +1854,6 @@ color_erase_inten_pixels (const guchar   *src1,
 			  guint           length,
 			  guint           bytes)
 {
-  gint          alpha;
   guchar        src2_alpha;
   const guchar *m;
   glong         tmp;
@@ -1865,30 +1864,38 @@ color_erase_inten_pixels (const guchar   *src1,
   else
     m = &no_mask;
 
-  alpha = bytes - 1;
   while (length --)
     {
-      src2_alpha = INT_MULT3(src2[alpha], *m, opacity, tmp);
+      switch (bytes)
+        {
+        case 2:
+          src2_alpha = INT_MULT3 (src2[1], *m, opacity, tmp);
 
-      gimp_rgba_set_uchar (&color,
-                           src1 [0],
-                           src1 [1],
-                           src1 [2],
-                           src1 [3]);
+          gimp_rgba_set_uchar (&color,
+                               src1[0], src1[0], src1[0], src1[1]);
 
-      gimp_rgba_set_uchar (&bgcolor,
-                           src2 [0],
-                           src2 [1],
-                           src2 [2],
-                           src2_alpha);
+          gimp_rgba_set_uchar (&bgcolor,
+                               src2[0], src2[0], src2[0], src2_alpha);
 
-      color_erase_helper (&color, &bgcolor);
+          color_erase_helper (&color, &bgcolor);
 
-      gimp_rgba_get_uchar (&color,
-                           &(dest[0]),
-                           &(dest[1]),
-                           &(dest[2]),
-                           &(dest[3]));
+          gimp_rgba_get_uchar (&color, dest, NULL, NULL, dest + 1);
+          break;
+
+        case 4:
+          src2_alpha = INT_MULT3 (src2[3], *m, opacity, tmp);
+
+          gimp_rgba_set_uchar (&color,
+                               src1[0], src1[1], src1[2], src1[3]);
+
+          gimp_rgba_set_uchar (&bgcolor,
+                               src2[0], src2[1], src2[2], src2_alpha);
+
+          color_erase_helper (&color, &bgcolor);
+
+          gimp_rgba_get_uchar (&color, dest, dest + 1, dest + 2, dest + 3);
+          break;
+        }
 
       if (mask)
 	m++;

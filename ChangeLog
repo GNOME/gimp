@@ -1,5 +1,10 @@
 2003-11-22  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (color_erase_inten_pixels): handle
+	grayscale buffers (bug #127666).
+
+2003-11-22  Sven Neumann  <sven@gimp.org>
+
 	Fixed some selection editor problems (bug #127644):
 
 	* plug-ins/sel2path/sel2path.c: use the given image_ID, ignore the
