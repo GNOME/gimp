@@ -1748,6 +1748,7 @@ menu_translate (const gchar *path,
 
   gchar *retval;
   gchar *factory;
+  gchar *translation;
   gint   i;
 
   factory = (gchar *) data;
@@ -1770,8 +1771,16 @@ menu_translate (const gchar *path,
       g_free (menupath);
 
       menupath = g_strconcat (factory, path, NULL);
+      
+      /* 
+       * We compare the start of the translated string with the original menu 
+       * entry. This is not really necessary, but it helps to suppress badly
+       * translated menu_entries which tend to crash the app 
+       */
+      translation = dgettext (plugin_domains[i++], menupath);
 
-      retval = dgettext (plugin_domains[i++], menupath) + strlen (factory);
+      if (strncmp (factory, translation, strlen (factory)) == 0)
+	retval = translation + strlen (factory);
     }
 
   return retval;

@@ -1,3 +1,9 @@
+Mit Feb  9 15:32:39 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: an attempt to guard us against badly translated
+	menu_entries which may result in a crash when passed to 
+	gtk_item_factory_parse_path (). This might fix bug #6052.
+
 2000-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/film.c: hacked the ui and added widgets for
