@@ -362,6 +362,8 @@ object_operation_start (GdkPoint *pnt,
   if (!operation_obj)
     return;/* None to work on */
 
+  gfig_context->selected_obj = operation_obj;
+
   setup_undo ();
 
   switch (selvals.otype)
@@ -418,6 +420,9 @@ object_operation_start (GdkPoint *pnt,
       break;
     case DEL_OBJ:
       remove_obj_from_list (gfig_context->current_obj, operation_obj);
+      break;
+    case SELECT_OBJ:
+      /* don't need to do anything */
       break;
     case MOVE_COPY_OBJ: /* Never when button down */
     default:
@@ -515,6 +520,7 @@ object_operation (GdkPoint *to_pnt,
         }
       break;
     case DEL_OBJ:
+    case SELECT_OBJ:
       break;
     case COPY_OBJ: /* Should have been changed to MOVE_COPY_OBJ */
     default:
@@ -545,39 +551,39 @@ remove_obj_from_list (GFigObj *obj,
                       Dobject *del_obj)
 {
   /* Nearest object to given point or NULL */
-  DAllObjs *all;
-  DAllObjs *prev_all = NULL;
+  DAllObjs *entry;
+  DAllObjs *prev_entry = NULL;
   
   g_assert (del_obj != NULL);
 
-  all = obj->obj_list;
+  entry = obj->obj_list;
 
-  while (all)
+  while (entry)
     {
-      if (all->obj == del_obj)
+      if (entry->obj == del_obj)
         {
           /* Found the one to delete */
-          if (prev_all)
-            prev_all->next = all->next;
+          if (prev_entry)
+            prev_entry->next = entry->next;
           else
-            obj->obj_list = all->next;
+            obj->obj_list = entry->next;
 
           /* Draw obj (which will actually undraw it! */
           del_obj->class->drawfunc (del_obj);
 
           free_one_obj (del_obj);
-          g_free (all);
+          g_free (entry);
 
           if (obj_show_single != -1)
             {
               /* We've just deleted the only visible one */
               draw_grid_clear ();
-              obj_show_single = -1; /* Show all again */
+              obj_show_single = -1; /* Show entry again */
             }
           return;
         }
-      prev_all = all;
-      all = all->next;
+      prev_entry = entry;
+      entry = entry->next;
     }
   g_warning (_("Hey where has the object gone ?"));
 }

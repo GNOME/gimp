@@ -157,6 +157,7 @@ typedef enum
   COPY_OBJ,
   MOVE_COPY_OBJ,
   DEL_OBJ,
+  SELECT_OBJ,
   NULL_OPER
 } DobjType;
 

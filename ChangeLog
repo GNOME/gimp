@@ -1,3 +1,10 @@
+2004-07-11  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.[ch]
+	* plug-ins/gfig/gfig.c: added buttons to select an object, and
+	raise or lower the selected object; also a few minor cleanups.
+	
 2004-07-11  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/widgets/gimpdevices.c (gimp_devices_check_change): Applied

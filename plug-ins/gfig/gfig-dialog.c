@@ -203,10 +203,19 @@ static GtkWidget *but_with_pix             (const gchar  *stock_id,
 static gint     bezier_button_press        (GtkWidget      *widget,
                                             GdkEventButton *event,
                                             gpointer        data);
-static GtkWidget *obj_select_buttons       (void);
 static void     paint_combo_callback       (GtkWidget *widget,
                                             gpointer   data);
 
+static void     select_button_clicked      (GtkWidget *widget,
+                                            gpointer   data);
+static void     raise_selected_obj_to_top  (GtkWidget *widget,
+                                            gpointer   data);
+static void     lower_selected_obj_to_bottom (GtkWidget *widget,
+                                              gpointer   data);
+static void     raise_selected_obj         (GtkWidget *widget,
+                                            gpointer   data);
+static void     lower_selected_obj         (GtkWidget *widget,
+                                            gpointer   data);
 
 gint
 gfig_dialog (void)
@@ -774,16 +783,21 @@ create_save_file_chooser (GFigObj   *obj,
   gtk_window_present (GTK_WINDOW (window));
 }
 
-#define ADVANCE   ++col; if (col == ncol) { ++row; col = 0; }
-
 #define SKIP_ROW   if (col != 0) {++row; col = 0;} \
-                   gtk_table_set_row_spacing (GTK_TABLE (table), row, 12); ++row;
+                   gtk_table_set_row_spacing (GTK_TABLE (table), row, 12); ++row
+
+#define TABLE_APPEND(button, text) \
+  gtk_table_attach_defaults (GTK_TABLE (table), (button), col, col+1, row, row+1);\
+  gtk_widget_show (button);\
+  gimp_help_set_help_data (button, (text), NULL);\
+  ++col; if (col == ncol) { ++row; col = 0; }
 
 static GtkWidget *
 draw_buttons (GtkWidget *ww)
 {
   GtkWidget *button;
   GtkWidget *frame;
+  GtkWidget *image;
   GSList    *group = NULL;
   GtkWidget *table;
   gint       col, row;
@@ -802,113 +816,326 @@ draw_buttons (GtkWidget *ww)
 
   /* Put buttons in */
   button = but_with_pix (GFIG_STOCK_LINE, &group, LINE);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create line"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create line"));
 
   button = but_with_pix (GFIG_STOCK_CIRCLE, &group, CIRCLE);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create circle"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create circle"));
 
   button = but_with_pix (GFIG_STOCK_ELLIPSE, &group, ELLIPSE);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create ellipse"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create ellipse"));
 
   button = but_with_pix (GFIG_STOCK_CURVE, &group, ARC);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Create arch"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create arc"));
 
   button = but_with_pix (GFIG_STOCK_POLYGON, &group, POLY);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (poly_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create reg polygon"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create reg polygon"));
 
   button = but_with_pix (GFIG_STOCK_STAR, &group, STAR);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (star_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create star"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create star"));
 
   button = but_with_pix (GFIG_STOCK_SPIRAL, &group, SPIRAL);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (spiral_button_press),
                     NULL);
-  gimp_help_set_help_data (button, _("Create spiral"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Create spiral"));
 
   button = but_with_pix (GFIG_STOCK_BEZIER, &group, BEZIER);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
   g_signal_connect (button, "button_press_event",
                     G_CALLBACK (bezier_button_press),
                     NULL);
+  TABLE_APPEND (button, _("Create bezier curve. "
+                          "Shift + Button ends object creation."));
 
-  gimp_help_set_help_data (button,
-                        _("Create bezier curve. "
-                          "Shift + Button ends object creation."), NULL);
-
-  SKIP_ROW
+  SKIP_ROW;
 
   button = but_with_pix (GFIG_STOCK_MOVE_OBJECT, &group, MOVE_OBJ);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Move an object"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Move an object"));
 
   button = but_with_pix (GFIG_STOCK_MOVE_POINT, &group, MOVE_POINT);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Move a single point"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Move a single point"));
 
   button = but_with_pix (GFIG_STOCK_COPY_OBJECT, &group, COPY_OBJ);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Copy an object"), NULL);
-
-  ADVANCE
+  TABLE_APPEND (button, _("Copy an object"));
 
   button = but_with_pix (GFIG_STOCK_DELETE_OBJECT, &group, DEL_OBJ);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+1, row, row+1);
-  gtk_widget_show (button);
-  gimp_help_set_help_data (button, _("Delete an object"), NULL);
+  TABLE_APPEND (button, _("Delete an object"));
 
-  SKIP_ROW
+  button = but_with_pix (GIMP_STOCK_TOOL_RECT_SELECT, &group, SELECT_OBJ);
+  TABLE_APPEND (button, _("Select an object"));
 
-  button = obj_select_buttons ();
-  gtk_table_attach_defaults (GTK_TABLE (table), button, col, col+2, row, row+2);
-  gtk_widget_show (button);
+  SKIP_ROW;
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (raise_selected_obj),
+                    NULL);
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_UP,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Raise selected object"));
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (lower_selected_obj),
+                    NULL);
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_DOWN,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Lower selected object"));
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (raise_selected_obj_to_top),
+                    NULL);
+  image = gtk_image_new_from_stock (GTK_STOCK_GOTO_TOP,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Raise selected object to top"));
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (lower_selected_obj_to_bottom),
+                    NULL);
+  image = gtk_image_new_from_stock (GTK_STOCK_GOTO_BOTTOM,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Lower selected object to bottom"));
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (select_button_clicked),
+                    GINT_TO_POINTER (OBJ_SELECT_LT));
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Show previous object"));
+
+  button = gtk_button_new ();
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (select_button_clicked),
+                    GINT_TO_POINTER (OBJ_SELECT_GT));
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
+                                    GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+  TABLE_APPEND (button, _("Show next object"));
+
+  button = gtk_button_new_with_label (_("All"));
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (select_button_clicked),
+                    GINT_TO_POINTER (OBJ_SELECT_EQ));
+  TABLE_APPEND (button, _("Show all objects"));
 
   gtk_widget_show (frame);
 
   return frame;
+}
+
+static void
+raise_selected_obj_to_top (GtkWidget *widget,
+                           gpointer   data)
+{
+  DAllObjs *entry;
+  DAllObjs *prev_entry  = NULL;
+  DAllObjs *found_entry = NULL;
+
+  if (!gfig_context->selected_obj)
+    return;
+
+  entry = gfig_context->current_obj->obj_list;
+
+  while (entry)
+    {
+      if (entry->obj == gfig_context->selected_obj)
+        {
+          /* Found the entry to raise, remove it from list */
+          found_entry = entry;
+
+          if (prev_entry)
+            prev_entry->next = entry->next;
+          else
+            gfig_context->current_obj->obj_list = entry->next;
+        }
+
+      prev_entry = entry;
+      entry = entry->next;
+    }
+
+  if (!found_entry)
+    {
+      g_message ("Trying to raise object that does not exist.");
+      return;
+    }
+
+  /* tack found entry onto end of list */
+  prev_entry->next = found_entry;
+  found_entry->next = NULL;
+
+  gfig_paint_callback ();
+}
+
+static void
+lower_selected_obj_to_bottom (GtkWidget *widget,
+                              gpointer   data)
+{
+  DAllObjs *entry;
+  DAllObjs *prev_entry  = NULL;
+  DAllObjs *found_entry = NULL;
+
+  if (!gfig_context->selected_obj)
+    return;
+
+  entry = gfig_context->current_obj->obj_list;
+
+  while (entry)
+    {
+      if (entry->obj == gfig_context->selected_obj)
+        {
+          /* Found the entry to lower, remove it from list */
+          found_entry = entry;
+
+          if (prev_entry)
+            {
+              prev_entry->next = found_entry->next;
+              break;
+            }
+          else
+            /* it's already at the bottom */
+            return;
+        }
+
+      prev_entry = entry;
+      entry = entry->next;
+    }
+
+  if (!found_entry)
+    {
+      g_message ("Trying to raise object that does not exist.");
+      return;
+    }
+
+  /* stick found entry into beginning of list */
+  found_entry->next = gfig_context->current_obj->obj_list;
+  gfig_context->current_obj->obj_list = found_entry;
+
+  gfig_paint_callback ();
+}
+
+static void
+raise_selected_obj (GtkWidget *widget,
+                    gpointer   data)
+{
+  DAllObjs *entry;
+  DAllObjs *prev_entry      = NULL;
+  DAllObjs *following_entry = NULL;
+  DAllObjs *found_entry     = NULL;
+
+  if (!gfig_context->selected_obj)
+    return;
+
+  entry = gfig_context->current_obj->obj_list;
+
+  while (entry)
+    {
+      if (entry->obj == gfig_context->selected_obj)
+        {
+          /* Found the entry to raise, remove it from list */
+          found_entry = entry;
+
+          following_entry = found_entry->next;
+
+          /* see if already on top */
+          if (!following_entry)
+            return;
+
+          if (prev_entry)
+            prev_entry->next = following_entry;
+          else
+            gfig_context->current_obj->obj_list = following_entry;
+
+          found_entry->next = following_entry->next;
+
+          following_entry->next = found_entry;
+
+          break;
+        }
+
+      prev_entry = entry;
+      entry = entry->next;
+    }
+
+  if (!found_entry)
+    {
+      g_message ("Trying to raise object that does not exist.");
+      return;
+    }
+
+  gfig_paint_callback ();
+}
+
+
+static void
+lower_selected_obj (GtkWidget *widget,
+                    gpointer   data)
+{
+  DAllObjs *entry;
+  DAllObjs *prev_prev_entry = NULL;
+  DAllObjs *prev_entry      = NULL;
+  DAllObjs *following_entry = NULL;
+  DAllObjs *found_entry     = NULL;
+
+  if (!gfig_context->selected_obj)
+    return;
+
+  entry = gfig_context->current_obj->obj_list;
+
+  while (entry)
+    {
+      if (entry->obj == gfig_context->selected_obj)
+        {
+          /* Found the entry to lower, remove it from list */
+          found_entry = entry;
+
+          following_entry = found_entry->next;
+
+          /* see if already on bottom */
+          if (!prev_entry)
+            return;
+
+          prev_entry->next  = following_entry;
+          found_entry->next = prev_entry;
+ 
+          if (prev_prev_entry)
+            prev_prev_entry->next = found_entry;
+          else
+            gfig_context->current_obj->obj_list = found_entry;
+
+          break;
+        }
+
+      prev_prev_entry = prev_entry;
+      prev_entry = entry;
+      entry = entry->next;
+    }
+
+  if (!found_entry)
+    {
+      g_message ("Trying to raise object that does not exist.");
+      return;
+    }
+
+  gfig_paint_callback ();
 }
 
 
@@ -1335,57 +1562,6 @@ select_button_clicked (GtkWidget *widget,
     gfig_select_obj_by_number (obj_show_single);
 
   draw_grid_clear ();
-}
-
-static GtkWidget *
-obj_select_buttons (void)
-{
-  GtkWidget *button;
-  GtkWidget *image;
-  GtkWidget *hbox, *vbox;
-
-  vbox = gtk_vbox_new (TRUE, 0);
-  gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new ();
-  gimp_help_set_help_data (button, _("Show previous object"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (select_button_clicked),
-                    GINT_TO_POINTER (OBJ_SELECT_LT));
-  gtk_widget_show (button);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
-                                    GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  button = gtk_button_new ();
-  gimp_help_set_help_data (button, _("Show next object"), NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (select_button_clicked),
-                    GINT_TO_POINTER (OBJ_SELECT_GT));
-  gtk_widget_show (button);
-
-  image = gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
-                                    GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
-  gtk_widget_show (image);
-
-  button = gtk_button_new_with_label (_("All"));
-  gimp_help_set_help_data (button, _("Show all objects"), NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), button, TRUE, TRUE, 0);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (select_button_clicked),
-                    GINT_TO_POINTER (OBJ_SELECT_EQ));
-  gtk_widget_show (button);
-
-  return vbox;
 }
 
 static GtkWidget *
