@@ -30,7 +30,7 @@ sub brush_args {(
 	       spacing)' },
     { name => 'paint_mode',
       type => 'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)',
-      desc => 'The initial paint mode: { %%desc%%'  }
+      desc => 'The initial paint mode: { %%desc%% }'  }
 )}
 
 sub brushes_popup {
@@ -65,7 +65,7 @@ sub brushes_popup {
 	newdialog = brush_select_new (title, NULL, 0.0, 0, 0);
 
       /* Add to list of proc to run when brush changes */
-      /* change_callbacks = g_list_append (change_callbacks, g_strdup(name)); */
+      /* change_callbacks = g_list_append (change_callbacks, g_strdup (name)); */
       newdialog->callback_name = g_strdup (name);
 
       /* Add to active brush dialogs list */
@@ -78,7 +78,7 @@ CODE
     );
 }
 
-sub brush_close_popup {
+sub brushes_close_popup {
     $blurb = 'Popdown the Gimp brush selection.';
 
     $help = 'This procedure closes an opened brush selection dialog.';
@@ -116,7 +116,7 @@ CODE
     );
 }
 
-sub brush_set_popup {
+sub brushes_set_popup {
     $blurb = 'Sets the current brush selection in a popup.';
 
     $help = $blurb;
@@ -152,10 +152,12 @@ sub brush_set_popup {
 	  bsp->paint_mode = paint_mode;
 
 	  bsp->spacing_data->value = bsp->spacing_value;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data),
+				   "value_changed");
 
 	  bsp->opacity_data->value = bsp->opacity_value * 100.0;
-	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data), "value_changed");
+	  gtk_signal_emit_by_name (GTK_OBJECT (bsp->opacity_data),
+				   "value_changed");
           
 	  gtk_option_menu_set_history (GTK_OPTION_MENU (bsp->option_menu), bsp->paint_mode);
 
@@ -170,100 +172,11 @@ CODE
     );
 }
 
-sub brush_get_brush_data {
-    $blurb = <<'BLURB';
-Retrieve information about the specified brush (including data).
-BLURB
-
-    $help = <<'HELP';
-This procedure retrieves information about the brush. This includes the
-brush name, and the sample data for the brush.
-HELP
-
-    &pdb_misc;
-
-    @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The brush name ("" means current active brush)' },
-	&sample_size_arg
-    );
-
-    @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The brush name',
-	  alias => 'g_strdup (grad->name)', no_declare => 1 },
-	{ name => 'grad_data', type => 'floatarray', alias => 'values',
-	  desc => 'The brush sample data',
-	  array => { name => 'width',
-		     desc => 'The brush sample width (r,g,b,a)',
-		     alias => 'sample_size * 4', no_declare => 1 } }
-    );
-
-    %invoke = (
-	headers => [ qw("brush_select.h") ],
-	vars => ['brush_t *grad'],
-	code => <<'CODE'
-{
-  if (strlen (name))
-    {
-      GSList *list = brush_list;
-
-      success = FALSE;
-
-      while (list)
-	{
-	  grad = list->data;
-
-	  if (!strcmp (grad->name, name))
-	    {
-	      success = TRUE;
-	      break;      /* We found it! */
-	    }
-
-	  list = list->next;
-	}
-    }
-  else
-    success = (grad = curr_brush) != NULL;
-
-  if (success)
-    {
-      gdouble *values, *pv;
-      gdouble pos, delta;
-      gdouble r, g, b, a;
-      int i = sample_size;
-
-      pos = 0.0;
-      delta = 1.0 / (i - 1);
-
-      pv = values = g_new (gdouble, i * 4);
-
-      curr_brush = grad;
-
-      while (i--)
-	{
-	  grad_get_color_at (pos, &r, &g, &b, &a);
-
-	  *pv++ = r;
-	  *pv++ = g;
-	  *pv++ = b;
-	  *pv++ = a;
-
-	  pos += delta;
-	}
-
-      curr_brush = oldgrad;
-    }
-}
-CODE
-    );
-}
-
 @headers = qw("brush_select.h");
 
 $extra{app}->{code} = <<'CODE';
 static BrushSelectP
-brush_get_brushselect(gchar *name)
+brush_get_brushselect (gchar *name)
 {
   GSList *list = active_dialogs;
   BrushSelectP bsp;
@@ -282,8 +195,7 @@ brush_get_brushselect(gchar *name)
 }
 CODE
 
-@procs = qw(brushes_popup brushes_close_popup brushes_set_popup
-	    brushes_get_brush_data);
+@procs = qw(brushes_popup brushes_close_popup brushes_set_popup);
 %exports = (app => [@procs]);
 
 $desc = 'Brush UI';

@@ -72,9 +72,6 @@ my $footer = <<'FOOTER';
 :1;
 FOOTER
 
-$header =~ s/^://mg;
-$footer =~ s/^://mg;
-
 my ($enumname, $contig, $symbols, @nicks, @mapping, $before, $chop);
 
 # Most of this enum parsing stuff was swiped from makeenums.pl in GTK+
@@ -233,16 +230,18 @@ while (<>) {
 	}
 
 	$code .= <<ENTRY;
-    $enumname =>
-	{ contig => $contig,
-	  symbols => [ qw($symbols) ],
-	  mapping => { $mapping }$nicks
-	},
+:    $enumname =>
+:	{ contig => $contig,
+:	  symbols => [ qw($symbols) ],
+:	  mapping => { $mapping }$nicks
+:	},
 ENTRY
     }
 }
 
 $code =~ s/,\n$/\n/s;
+
+foreach ($header, $code, $footer) { s/^://mg }
 
 $outfile = "$destdir/enums.pl$FILE_EXT";
 open OUTFILE, "> $outfile";

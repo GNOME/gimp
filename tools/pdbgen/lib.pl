@@ -220,6 +220,7 @@ CODE
 		    $var = $_->{name};
 		    $var .= '_ID' if $id;
 
+		    $return_marshal .= ' ' x 2 if $#outargs;
 		    $return_marshal .= <<CODE
     $var = ${head}return_vals[$argc].data.d_$type${foot};
 CODE

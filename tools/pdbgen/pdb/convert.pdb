@@ -82,7 +82,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  success = (gimage_base_type (gimage) != INDEXED);
+  success = gimage_base_type (gimage) != INDEXED;
 
   if (num_cols < 1 || num_cols > MAXNUMCOLORS)
     success = FALSE;
@@ -114,7 +114,7 @@ HELP
 	{ name => 'dither', type => 'boolean',
 	  desc => 'Floyd-Steinberg dithering' },
 	{ name => 'palette_type', type => 'enum ConvertPaletteType',
-	  desc => 'The type of palette to use: %%desc%%', no_success => 1 },
+	  desc => 'The type of palette to use: { %%desc%% }', no_success => 1 },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'the number of colors to quantize to, ignored unless
 		   (palette_type == MAKE_PALETTE)' },
@@ -149,10 +149,10 @@ HELP
 	  if (!palette_entries_list)
 	    palette_init_palettes (FALSE);
 
-	  for (list = palette_entries_list; list; list = g_slist_next (list))
+	  for (list = palette_entries_list; list; list = list->next)
 	    {
 	      entries = (PaletteEntriesP) list->data;
-	      if (strcmp (palette_name, entries->name) == 0)
+	      if (!strcmp (palette_name, entries->name))
 		{
 		  the_palette = entries;
 		  break;

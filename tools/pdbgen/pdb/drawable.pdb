@@ -200,7 +200,7 @@ CODE
     );
 }
 
-sub drawable_gimage {
+sub drawable_image {
     $blurb = "Returns the drawable's image.";
 
     $help = "This procedure returns the drawable's image.";
@@ -409,13 +409,13 @@ CODE
 @headers = qw("drawable.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
-	    drawable_mask_bounds drawable_gimage drawable_type
+	    drawable_mask_bounds drawable_image drawable_type
 	    drawable_has_alpha drawable_type_with_alpha drawable_color
 	    drawable_gray drawable_indexed drawable_bytes drawable_width
 	    drawable_height drawable_offsets drawable_layer
 	    drawable_layer_mask drawable_channel drawable_set_pixel
 	    drawable_get_pixel);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';
 

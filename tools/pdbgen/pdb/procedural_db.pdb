@@ -551,7 +551,7 @@ CODE
 	    procedural_db_proc_arg procedural_db_proc_val
 	    procedural_db_get_data procedural_db_get_data_size
 	    procedural_db_set_data);
-%exports = (app => [@procs], lib => [@procs[5..7], @procs[1..2]]);
+%exports = (app => [@procs], lib => [@procs[1..2, 5..7]]);
 
 $desc = 'Procedural database';
 

@@ -124,7 +124,18 @@ sub declare_args {
     }
 
     $result;
-} 
+}
+
+sub declare_vars {
+    my $proc = shift;
+    my $code = "";
+    if (exists $proc->{invoke}->{vars}) {
+	foreach (@{$proc->{invoke}->{vars}}) {
+	   $code .= ' ' x 2 . $_ . ";\n";
+	}
+    }
+    $code;
+}
 
 sub make_arg_recs {
     my $proc = shift;
@@ -212,7 +223,7 @@ CODE
 	    $result .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
 	    $result .= ";\n";
 
-	    if ($pdbtype eq 'string') {
+	    if ($pdbtype eq 'string' || $pdbtype eq 'parasite') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 					  "$var == NULL");
 	    }
@@ -276,12 +287,35 @@ CODE
 		if ($pdbtype eq 'enum') {
 		    my $symbols = $enums{shift @typeinfo}->{symbols};
 
-		    foreach (@typeinfo) { $extra .= " || $var == $_" }
+		    my ($start, $end) = (0, $#$symbols);
 
-		    $typeinfo[0] = $symbols->[0];
-		    $typeinfo[1] = '<';
-		    $typeinfo[2] = $symbols->[$#$symbols];
-		    $typeinfo[3] = '>';
+		    my $syms = "@$symbols "; my $test = $syms;
+		    foreach (@typeinfo) { $test =~ s/$_ // }
+
+		    if ($syms =~ /$test/g) {
+			if (pos $syms  == length $syms) {
+			    $start = @typeinfo;
+			}
+			else {
+			    $end -= @typeinfo;
+			}
+		    }
+		    else {
+			foreach (@typeinfo) {
+			    $extra .= " || $var == $_";
+			}
+		    }
+
+		    $typeinfo[0] = $symbols->[$start];
+		    if ($start != $end) {
+			$typeinfo[1] = '<';
+			$typeinfo[2] = $symbols->[$end];
+			$typeinfo[3] = '>';
+		    }
+		    else {
+			$typeinfo[1] = '!=';
+			undef @typeinf[2..3];
+		    }
 		}
 		elsif ($pdbtype eq 'float') {
 		    foreach (@typeinfo[0, 2]) {
@@ -421,12 +455,15 @@ CODE
 	    }
 
 	    $code .= &declare_args($tempproc, $out, qw(inargs)) . "\n";
+	    $code .= &declare_vars($proc);
 
 	    my $marshal = "";
 	    foreach (@{$tempproc->{inargs}}) {
 		my $argproc; $argproc->{inargs} = [ $_ ];
 		$marshal .= &marshal_inargs($argproc, $_->{argpos});
+		chop $marshal;
 	    }
+	    $marshal .= "\n" if $marshal;
 
 	    if ($success) {
 		$marshal .= <<CODE;
@@ -479,12 +516,7 @@ CODE
 	
 	    $invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, qw(inargs outargs));
-
-	    if (exists $proc->{invoke}->{vars}) {
-		foreach (@{$proc->{invoke}->{vars}}) {
-		   $invoker .= ' ' x 2 . $_ . ";\n";
-		}
-	    }
+	    $invoker .= &declare_vars($proc);
 
 	    $invoker .= &marshal_inargs($proc, 0);
 	    $invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;

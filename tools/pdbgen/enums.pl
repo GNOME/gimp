@@ -190,6 +190,82 @@ package Gimp::CodeGen::enums;
 		       DIVIDE_MODE => 'DIVIDE/DODGE',
 		       ERASE_MODE => 'ERASE',
 		       REPLACE_MODE => 'REPLACE' }
+	},
+    GradientType =>
+	{ contig => 1,
+	  symbols => [ qw(Linear BiLinear Radial Square ConicalSymmetric
+			  ConicalAsymmetric ShapeburstAngular
+			  ShapeburstSpherical ShapeburstDimpled
+			  SpiralClockwise SpiralAntiClockwise) ],
+	  mapping => { Linear => '0',
+		       BiLinear => '1',
+		       Radial => '2',
+		       Square => '3',
+		       ConicalSymmetric => '4',
+		       ConicalAsymmetric => '5',
+		       ShapeburstAngular => '6',
+		       ShapeburstSpherical => '7',
+		       ShapeburstDimpled => '8',
+		       SpiralClockwise => '9',
+		       SpiralAntiClockwise => '10' }
+	},
+    BlendMode =>
+	{ contig => 1,
+	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
+			  CUSTOM_MODE) ],
+	  mapping => { FG_BG_RGB_MODE => '0',
+		       FG_BG_HSV_MODE => '1',
+		       FG_TRANS_MODE => '2',
+		       CUSTOM_MODE => '3' }
+	},
+    RepeatMode =>
+	{ contig => 1,
+	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
+	  mapping => { REPEAT_NONE => '0',
+		       REPEAT_SAWTOOTH => '1',
+		       REPEAT_TRIANGULAR => '2' }
+	},
+    FillMode =>
+	{ contig => 1,
+	  symbols => [ qw(FgColorFill BgColorFill PatternFill) ],
+	  mapping => { FgColorFill => '0',
+		       BgColorFill => '1',
+		       PatternFill => '2' }
+	},
+    CloneType =>
+	{ contig => 1,
+	  symbols => [ qw(ImageClone PatternClone) ],
+	  mapping => { ImageClone => '0',
+		       PatternClone => '1' }
+	},
+    ConvolveType =>
+	{ contig => 1,
+	  symbols => [ qw(Blur Sharpen Custom) ],
+	  mapping => { Blur => '0',
+		       Sharpen => '1',
+		       Custom => '2' }
+	},
+    ChannelOps =>
+	{ contig => 1,
+	  symbols => [ qw(ADD SUB REPLACE INTERSECT) ],
+	  mapping => { ADD => '0',
+		       SUB => '1',
+		       REPLACE => '2',
+		       INTERSECT => '3' }
+	},
+    BrushApplicationMode =>
+	{ contig => 1,
+	  symbols => [ qw(HARD SOFT PRESSURE) ],
+	  mapping => { HARD => '0',
+		       SOFT => '1',
+		       PRESSURE => '2' }
+	},
+    PaintApplicationMode =>
+	{ contig => 1,
+	  symbols => [ qw(CONSTANT INCREMENTAL) ],
+	  mapping => { CONSTANT => '0',
+		       INCREMENTAL => '1' },
+	  nicks   => { CONSTANT => 'CONTINUOUS' }
 	}
 );
 

@@ -61,18 +61,24 @@ sub render_args () {(
     &size_args
 )}
 
-@props = qw(foundry family weight slant set-width spacing registry encoding);
+@props = qw(foundry family weight slant set_width spacing registry encoding);
 
 sub font_prop_args {
    my @result;
    foreach (@props) {
-	my $var = $_;
-	$var =~ s/-/_/g;
-
-	push @result, { name => $var, type => 'string',
-			desc => qq/The font $_, "*" for any/ }
+	(my $desc = $_) =~ s/_/-/g;
+	push @result, { name => $_, type => 'string',
+			desc => qq/The font $desc, "*" for any/ }
    }
    @result;
+}
+
+sub fontname_makearg {
+    my $arg = { type => 'string', code => "%%arg%% =\n  text_xlfd_create (" };
+    foreach (@props) { $arg->{code} .= "\t\t    $_,\n" }
+    $arg->{code} =~ s/\(\s+/(/;
+    $arg->{code} =~ s/,\n$/);\n/s;
+    $arg;
 }
 
 sub render_outargs {
@@ -87,98 +93,6 @@ sub extents_outargs {
 	push @outargs, { name => $_, type => 'int32',
 			 desc => "The $_ of the specified font" }
     }
-}
-
-sub fontname_makeargs {
-    my @args;
-    foreach (map { s/-/_/; uc } @props) {
-	push @args, { type => 'string',
-		      code => "%%arg%% = text_get_field (fontname, $_);" }
-    }
-    @args;
-}
-
-sub text {
-    $blurb = <<'BLURB';
-Add text at the specified location as a floating selection or a new layer.
-BLURB
-
-    $help = <<'HELP';
-This tool requires font information in the form of nine parameters: size,
-foundry, family, weight, slant, set_width, spacing, registry, encoding. The
-font size can either be specified in units of pixels or points, and the
-appropriate metric is specified using the size_type argument. The x and y
-parameters together control the placement of the new text by specifying the
-upper left corner of the text bounding box. If the antialias parameter is
-non-zero, the generated text will blend more smoothly with underlying layers.
-This option requires more time and memory to compute than non-antialiased text;
-the resulting floating selection or layer, however, will require the same
-amount of memory with or without antialiasing. If the specified drawable
-parameter is valid, the text will be created as a floating selection attached
-to the drawable. If the drawable parameter is not valid (-1), the text will
-appear as a new layer. Finally, a border can be specified around the final
-rendered text. The border is measured in pixels.
-HELP
-
-    &pdb_misc;
-
-    @inargs = (
-	&render_args,
-        &font_prop_args
-    );
-
-    &render_outargs;
-
-    %invoke = (
-	vars => ['gchar *fontname[2048]'],
-	code => <<'CODE'
-{
-  if (antialias)
-    size *= SUPERSAMPLE;
-
-  if (drawable)
-    success = drawable_gimage (GIMP_DRAWABLE (drawable)) == gimage;
-
-  if (success)
-    success = text_get_xlfd (size, size_type, foundry, family, weight,
-			     slant, set_width, spacing, registry, encoding,
-			     fontname);
-
-  if (success)
-    {
-      text_layer = text_render (gimage, drawable, x, y, fontname, text,
-				border, antialias);
-      success = text_layer != NULL;
-    }
-}
-CODE
-   );
-}
-
-sub text_get_extents {
-    $blurb = 'Get extents of the bounding box for the specified text.';
-
-    $help = <<'HELP';
-This tool returns the width and height of a bounding box for the specified text
-string with the specified font information. Ascent and descent for the
-specified font are returned as well.
-HELP
-
-    &pdb_misc;
-
-    @inargs = (
-	&text_arg,
-	&size_args,
-	&font_prop_args
-    );
-
-    &extents_outargs;
-
-    %invoke = (
-	pass_through => 'text_get_extents_fontname',
-	pass_args => [ 0..2 ],
-	make_args => [ &fontname_makeargs ]
-    );
 }
 
 sub text_fontname {
@@ -213,9 +127,21 @@ HELP
     &render_outargs;
 
     %invoke = (
-	pass_through => 'text',
-	pass_args => [ 0..8 ],
-	make_args => [ &fontname_makeargs ]
+	vars => [ 'gchar *real_fontname' ],
+	code => <<'CODE'
+{
+  real_fontname = text_xlfd_insert_size (fontname, size, size_type,
+					 antialias);
+
+  text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
+			    border, antialias);
+
+  if (text_layer == NULL)
+    success = FALSE;
+
+  g_free (real_fontname);
+}
+CODE
     );
 }
 
@@ -240,64 +166,150 @@ HELP
     &extents_outargs;
 
     %invoke = (
+	vars => [ 'gchar *real_fontname' ],
 	code => <<'CODE'
-success = text_get_extents (fontname, text,
-			    &width, &height,
-			    &ascent, &descent);
+{
+  real_fontname = text_xlfd_insert_size (fontname, size, size_type, FALSE);
+
+  success = text_get_extents (real_fontname, text,
+			      &width, &height,
+			      &ascent, &descent);
+
+  g_free (real_fontname);
+}
 CODE
     );
 }
 
-@headers = qw("text_tool.h" <string.h>);
+sub text {
+    $blurb = <<'BLURB';
+Add text at the specified location as a floating selection or a new layer.
+BLURB
+
+    $help = <<'HELP';
+This tool requires font information in the form of nine parameters: size,
+foundry, family, weight, slant, set_width, spacing, registry, encoding. The
+font size can either be specified in units of pixels or points, and the
+appropriate metric is specified using the size_type argument. The x and y
+parameters together control the placement of the new text by specifying the
+upper left corner of the text bounding box. If the antialias parameter is
+non-zero, the generated text will blend more smoothly with underlying layers.
+This option requires more time and memory to compute than non-antialiased text;
+the resulting floating selection or layer, however, will require the same
+amount of memory with or without antialiasing. If the specified drawable
+parameter is valid, the text will be created as a floating selection attached
+to the drawable. If the drawable parameter is not valid (-1), the text will
+appear as a new layer. Finally, a border can be specified around the final
+rendered text. The border is measured in pixels.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&render_args,
+        &font_prop_args
+    );
+
+    &render_outargs;
+
+    %invoke = (
+	pass_through => 'text_fontname',
+	pass_args => [ 0..8 ],
+	make_args => [ &fontname_makearg ]
+   );
+}
+
+sub text_get_extents {
+    $blurb = 'Get extents of the bounding box for the specified text.';
+
+    $help = <<'HELP';
+This tool returns the width and height of a bounding box for the specified text
+string with the specified font information. Ascent and descent for the
+specified font are returned as well.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&text_arg,
+	&size_args,
+	&font_prop_args
+    );
+
+    &extents_outargs;
+
+    %invoke = (
+	pass_through => 'text_get_extents_fontname',
+	pass_args => [ 0..2 ],
+	make_args => [ &fontname_makearg ]
+    );
+}
+
+@headers = qw("text_tool.h" <stdio.h>);
 
 $extra{app}->{code} = <<'CODE';
-static int
-text_get_xlfd (double  size,
-	       int     size_type,
-	       char   *foundry,
-	       char   *family,
-	       char   *weight,
-	       char   *slant,
-	       char   *set_width,
-	       char   *spacing,
-	       char   *registry,
-	       char   *encoding,
-	       char   *fontname)
+static gchar *
+text_xlfd_insert_size (gchar    *fontname,
+		       gdouble   size,
+		       SizeType  metric,
+		       gboolean  antialias)
 {
-  char pixel_size[12], point_size[12];
+  gchar *newfont, *workfont;
+  gchar buffer[16];
+  gint pos = 0;
 
-  if (size > 0)
+  if (size <= 0)
+    return NULL;
+
+  if (antialias)
+    size *= SUPERSAMPLE;
+
+  sprintf (buffer, "%d", (int) size);
+
+  newfont = workfont = g_new (char, strlen (fontname) + 16);
+
+  while (*fontname)
     {
-      switch (size_type)
-	{
-	case PIXELS:
-	  sprintf (pixel_size, "%d", (int) size);
-	  sprintf (point_size, "*");
-	  break;
-	case POINTS:
-	  sprintf (pixel_size, "*");
-	  sprintf (point_size, "%d", (int) (size * 10));
-	  break;
-	}
+      *workfont++ = *fontname;
 
-      /* create the fontname */
-      g_snprintf (fontname, "-%s-%s-%s-%s-%s-*-%s-%s-75-75-%s-*-%s-%s",
-	       foundry,
-	       family,
-	       weight,
-	       slant,
-	       set_width,
-	       pixel_size, point_size,
-	       spacing,
-	       registry, encoding);
-      return TRUE;
+      if (*fontname++ == '-')
+	{
+	  pos++;
+	  if ((pos == 7 && metric == PIXELS) ||
+	      (pos == 8 && metric == POINTS))
+	    {
+	      int len = strlen (buffer);
+	      memcpy (workfont, buffer, len);
+	      workfont += len;
+
+	      while (*fontname != '-')
+		fontname++;
+	    }
+	}
     }
-  else
-    return FALSE;
+
+   *workfont = '\0';
+   return newfont;
+}
+
+static gchar *
+text_xlfd_create (gchar    *foundry,
+		  gchar    *family,
+		  gchar    *weight,
+		  gchar    *slant,
+		  gchar    *set_width,
+		  gchar    *spacing,
+		  gchar    *registry,
+		  gchar    *encoding)
+{
+  /* create the fontname */
+  return g_strdup_printf ("-%s-%s-%s-%s-%s-*-*-*-*-*-%s-*-%s-%s",
+			  foundry, family, weight, slant, set_width,
+			  spacing, registry, encoding);
 }
 CODE
 
-@procs = qw(text text_get_extents text_fontname text_get_extents_fontname);
+@procs = qw(text_fontname text_get_extents_fontname text text_get_extents);
 %exports = (app => [@procs]);
 
 $desc = 'Text procedures';

@@ -42,7 +42,7 @@ sub sample_merged_arg () {{
 
 sub operation_arg () {{
     name => 'operation',
-    type => 'enum Selection',
+    type => 'enum ChannelOps',
     desc => 'The selection operation: %%desc%%'
 }}
 
@@ -114,7 +114,7 @@ HELP
 	&drawable_arg,
         { name => 'blend_mode', type => 'enum BlendMode',
 	  desc => 'The type of blend: %%desc%%' },
-	{ name => 'gradient_type',  type => 'enum PaintMode',
+	{ name => 'gradient_type',  type => 'enum GradientType',
 	  desc => 'The paint application mode: %%desc%%' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final blend %%desc%%' },
@@ -185,7 +185,7 @@ HELP
 	&drawable_arg,
 	{ name => 'fill_mode', type => 'enum FillMode',
 	  desc => 'The type of fill: %%desc%%' },
-	{ name => paint_mode, type => 'enum PaintMode',
+	{ name => paint_mode, type => 'enum LayerMode',
 	  desc => 'The paint application mode: %%desc%%' },
 	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final bucket fill %%desc%%' },
@@ -478,9 +478,9 @@ HELP
     @inargs = (
 	&drawable_arg,
 	&stroke_arg,
-	{ name => 'hardness', type => 'enum EraserHardness',
+	{ name => 'hardness', type => 'enum BrushApplicationMode (no PRESSURE)',
 	  desc => '%%desc%%' },
-	{ name => 'method', type => 'enum EraserMethod',
+	{ name => 'method', type => 'enum PaintApplicationMode',
 	  desc => '%%desc%%' }
     );
 
@@ -513,7 +513,7 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'flip_type', type => 'enum FlipType',
+	{ name => 'flip_type', type => 'enum PaintApplicationMode', # FIXME
 	  desc => 'Type of flip: %%desc%%' }
     );
 
@@ -680,7 +680,7 @@ HELP
 	{ name => 'fade_out', type => '0 < float',
 	  desc => 'Fade out parameter: %%desc%%' },
 	&stroke_arg,
-	{ name => 'method', type => 'enum PaintMethod',
+	{ name => 'method', type => 'enum PaintApplicationMode',
 	  desc => '%%desc%%' }
     );
 

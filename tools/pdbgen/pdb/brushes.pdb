@@ -17,6 +17,20 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub brush_arg () {{
+    name => 'name',
+    type => 'string',
+    desc => 'The brush name'
+}}
+
+sub dim_args {
+    my @args;
+    foreach (qw(width height)) {
+	push @args, { name => $_, type => 'int32', desc => "The brush $_" };
+    }
+    @args;
+}
+
 sub opacity_arg () {{
     name => 'opacity',
     type => '0 <= float <= 100',
@@ -34,6 +48,17 @@ sub paint_mode_arg () {{
     type => 'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)',
     desc => 'The paint mode: { %%desc%% }'
 }}
+
+
+sub brush_outargs {
+    foreach (@outargs) {
+	my $alias = "brushp->$_->{name}";
+	$alias = "g_strdup ($alias)" if $_->{type} eq 'string';
+	$alias =~ s/brushp/brushp->mask/ if $_->{name} =~ /width|height/;
+	$_->{alias} = $alias;
+	$_->{no_declare} = 1;
+    }
+}
 
 # The defs
 
@@ -78,19 +103,12 @@ HELP
     &std_pdb_misc;
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The brush name',
-	  alias => 'g_strdup (brushp->name)', no_declare => 1 },
-	{ name => 'width', type => 'int32',
-	  desc => 'The brush width',
-	  alias => 'brushp->mask->width', no_declare => 1 },
-	{ name => 'height', type => 'int32',
-	  desc => 'The brush height',
-	  alias => 'brushp->mask->height', no_declare => 1 },
-	{ name => 'spacing', type => 'int32',
-	  desc => 'The brush spacing: (% of MAX [width, height])',
-	  alias => 'brushp->spacing', no_declare => 1 }
+	&brush_arg,
+	&dim_args,
+	&spacing_arg
     );
+
+    &brush_outargs;
 
     %invoke = (
 	vars => ['GimpBrush *brushp'],
@@ -111,10 +129,7 @@ HELP
 
     &std_pdb_misc;
 
-    @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The brush name' }
-    );
+    @inargs = ( &brush_arg );
 
     %invoke = (
 	vars => ['GimpBrush *brushp'],
@@ -228,11 +243,121 @@ HELP
     %invoke = ( code => 'gimp_brush_set_paint_mode (paint_mode);' );
 }
 
+sub brushes_list {
+    $blurb = 'Retrieve a complete listing of the available brushes.';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available GIMP brushes. Each name
+returned can be used as input to the 'gimp_brushes_set_brush'.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{ name => 'brush_list', type => 'stringarray',
+	  desc => 'The list of brush names',
+	  alias => 'brushes',
+	  array => { name => 'num_brushes',
+		     desc => 'The number of brushes in the brush list',
+		     alias => 'brush_list->num_brushes', no_declare => 1 } }
+    );
+
+    %invoke = (
+	vars => [ 'GSList *list', 'int i = 0' ],
+	code => <<'CODE'
+{
+  brushes = g_new (char *, brush_list->num_brushes);
+
+  success = (list = GIMP_LIST (brush_list)->list) != NULL;
+
+  while (list)
+    {
+      brushes[i++] = g_strdup (((GimpBrush *) list->data)->name);
+      list = list->next;
+    }
+}
+CODE
+    );
+}
+
+sub brushes_get_brush_data {
+    $blurb = <<'BLURB';
+Retrieve information about the currently active brush (including data).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the currently active brush. This
+includes the brush name, and the brush extents (width and height). It also
+returns the brush data.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+
+    @inargs = ( &brush_arg );
+    $inargs[0]->{desc} = 'the brush name ("" means current active pattern)';
+
+    @outargs = (
+	&brush_arg,
+	&opacity_arg,
+	&spacing_arg,
+	&paint_mode_arg,
+	&dim_args,
+    );
+
+    &brush_outargs;
+
+    $outargs[1]->{alias} = '1.0';
+    $outargs[3]->{alias} = '0';
+
+    push @outargs, { name => 'mask_data', type => 'int8array',
+		     desc => 'The brush mask data',
+		     array => { name => 'length',
+				desc => 'Length of brush mask data' } };
+    
+    %invoke = (
+	vars => ['GimpBrushP brushp = NULL'],
+	code => <<'CODE'
+{
+  if (strlen (name))
+    {
+      GSList list = GIMP_LIST (brush_list)->list;
+
+      success = FALSE;
+
+      while (list)
+	{
+	  brushp = (GimpBrushP) list->data;
+
+	  if (!strcmp (brushp->name, name))
+	    {
+	      success = TRUE;
+	      break;
+	    }
+
+	  list = list->next;
+	}
+    }
+  else
+    success = (brushp = get_active_brush ()) != NULL;
+
+  if (success)
+    {
+      length = brushp->mask->height * brushp->mask->width;
+      mask_data = g_new (gint8, length);
+      g_memmove (mask_data, temp_buf_data (brushp->mask), length);
+    }
+}
+CODE
+    );
+}
+
 @headers = qw("gimpbrushlist.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing
-	    brushes_set_spacing brushes_get_paint_mode brushes_set_paint_mode);
+	    brushes_set_spacing brushes_get_paint_mode brushes_set_paint_mode
+	    brushes_list brushes_get_brush_data);
 %exports = (app => [@procs]);
 
 $desc = 'Brushes';

@@ -37,6 +37,21 @@ sub parasite_outarg {{
     desc => "The $_[0] parasite"
 }}
 
+sub drawable_arg () {{
+    name => 'drawable',
+    type => 'drawable',
+    desc => 'The drawable'
+}}
+
+sub drawable_convert {
+    foreach ($blurb, $help, $inargs[0]->{desc}) { s/the gimp/a drawable/ }
+
+    unshift @inargs, &drawable_arg;
+
+    $invoke{code} =~ s/gimp/gimp_drawable/;
+    $invoke{code} =~ s/\((.*?(?:parasite|name))/(drawable, $1/;
+}
+
 sub parasite_new {
     $blurb = 'Creates a new parasite.';
 
@@ -139,7 +154,35 @@ sub parasite_list {
     %invoke = ( code => 'parasites = gimp_parasite_list (&num_parasites);' );
 }
 
-@headers = qw("libgimp/parasite.h" "gimpparasite.h");
+sub drawable_parasite_find {
+    &parasite_find;
+
+    $blurb =~ s/\.$/in a drawable./;
+    $help =~ s/the gimp/a drawable/;
+
+    unshift @inargs, &drawable_arg;
+
+    $invoke{code} =~ s/gimp/gimp_drawable/;
+}
+
+sub drawable_parasite_attach {
+    &parasite_attach;
+    &drawable_convert;
+}
+
+sub drawable_parasite_detach {
+    &parasite_detach;
+    &drawable_convert;
+}
+
+sub drawable_parasite_list {
+    &parasite_list;
+    @inargs = ( &drawable_arg );
+    &drawable_convert;
+    @inargs = ( &drawable_arg );
+}
+
+@headers = qw("libgimp/parasite.h" "gimpparasite.h" "gimpdrawable.h");
 
 $extra{lib}->{protos} = <<'CODE';
 void gimp_parasite_attach_new (const char *name, int flags, int size
@@ -159,6 +202,7 @@ CODE
 
 @procs = qw(parasite_new parasite_find parasite_attach parasite_detach
 	    parasite_list);
+push @procs, map { 'drawable_' . $_ } @procs[1..4];
 %exports = (app => [@procs], lib => [@procs[1..3]]);
 
 $desc = 'Parasite procedures';
