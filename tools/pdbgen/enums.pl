@@ -128,6 +128,18 @@ package Gimp::CodeGen::enums;
 		       GIMP_STACK_TRACE_QUERY => '1',
 		       GIMP_STACK_TRACE_ALWAYS => '2' }
 	},
+    GimpProgressCommand =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_PROGRESS_COMMAND_START
+			  GIMP_PROGRESS_COMMAND_END
+			  GIMP_PROGRESS_COMMAND_SET_TEXT
+			  GIMP_PROGRESS_COMMAND_SET_VALUE) ],
+	  mapping => { GIMP_PROGRESS_COMMAND_START => '0',
+		       GIMP_PROGRESS_COMMAND_END => '1',
+		       GIMP_PROGRESS_COMMAND_SET_TEXT => '2',
+		       GIMP_PROGRESS_COMMAND_SET_VALUE => '3' }
+	},
     GimpHistogramChannel =>
 	{ contig => 1,
 	  header => 'base/base-enums.h',

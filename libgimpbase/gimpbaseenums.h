@@ -133,6 +133,14 @@ typedef enum  /*< skip >*/
   GIMP_STACK_TRACE_ALWAYS
 } GimpStackTraceMode;
 
+typedef enum  /*< skip >*/
+{
+  GIMP_PROGRESS_COMMAND_START,
+  GIMP_PROGRESS_COMMAND_END,
+  GIMP_PROGRESS_COMMAND_SET_TEXT,
+  GIMP_PROGRESS_COMMAND_SET_VALUE
+} GimpProgressCommand;
+
 
 G_END_DECLS
 

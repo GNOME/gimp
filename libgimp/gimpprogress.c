@@ -29,9 +29,6 @@ typedef struct _GimpProgressData GimpProgressData;
 struct _GimpProgressData
 {
   gchar                     *progress_callback;
-#if 0
-  guint                      idle_id;
-#endif
   GimpProgressStartCallback  start_callback;
   GimpProgressEndCallback    end_callback;
   GimpProgressTextCallback   text_callback;
@@ -142,11 +139,6 @@ gimp_progress_uninstall (const gchar *progress_callback)
       return;
     }
 
-#if 0
-  if (progress_data->idle_id)
-    g_source_remove (progress_data->idle_id);
-#endif
-
   _gimp_progress_uninstall (progress_callback);
   gimp_uninstall_temp_proc (progress_callback);
 
@@ -174,37 +166,26 @@ gimp_temp_progress_run (const gchar      *name,
     }
   else
     {
-#if 0
-      if (! progress_data->idle_id)
-        progress_data->idle_id =
-          g_idle_add ((GSourceFunc) gimp_temp_progress_run_idle,
-                      progress_data);
-#endif
+      GimpProgressCommand command = param[0].data.d_int32;
 
-      g_print ("%s: command = %d, text = %s, value = %f\n",
-               G_STRFUNC,
-               param[0].data.d_int32,
-               param[1].data.d_string,
-               param[2].data.d_float);
-
-      switch (param[0].data.d_int32)
+      switch (command)
         {
-        case 0:
+        case GIMP_PROGRESS_COMMAND_START:
           progress_data->start_callback (param[1].data.d_string,
                                          param[2].data.d_float != 0.0,
                                          progress_data->data);
           break;
 
-        case 1:
+        case GIMP_PROGRESS_COMMAND_END:
           progress_data->end_callback (progress_data->data);
           break;
 
-        case 2:
+        case GIMP_PROGRESS_COMMAND_SET_TEXT:
           progress_data->text_callback (param[1].data.d_string,
                                         progress_data->data);
           break;
 
-        case 3:
+        case GIMP_PROGRESS_COMMAND_SET_VALUE:
           progress_data->value_callback (param[2].data.d_float,
                                          progress_data->data);
           break;
@@ -215,38 +196,9 @@ gimp_temp_progress_run (const gchar      *name,
         }
     }
 
-  g_print ("%s: callback finished\n", G_STRFUNC);
-
-  while (g_main_context_pending (NULL))
-    g_main_context_iteration (NULL, TRUE);
-
   *nreturn_vals = 1;
   *return_vals  = values;
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 }
-
-#if 0
-static gboolean
-gimp_temp_progress_run_idle (GimpProgressData *progress_data)
-{
-  progress_data->idle_id = 0;
-
-  if (progress_data->callback)
-    progress_data->callback (progress_data->progress_name,
-                             progress_data->closing,
-                             progress_data->data);
-
-  if (progress_data->closing)
-    {
-      gchar *progress_callback = progress_data->progress_callback;
-
-      progress_data->progress_callback = NULL;
-      gimp_progress_select_destroy (progress_callback);
-    }
-
-  return FALSE;
-}
-#endif
-

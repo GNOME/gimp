@@ -53,14 +53,12 @@ plug_in_progress_start (PlugIn      *plug_in,
   if (! plug_in->progress)
     {
       plug_in->progress = gimp_new_progress (plug_in->gimp, display_ID);
-      plug_in->progress_cancel_id = 0;
 
       if (plug_in->progress)
         {
           plug_in->progress_created = TRUE;
 
-          g_object_add_weak_pointer (G_OBJECT (plug_in->progress),
-                                     (gpointer *) &plug_in->progress);
+          g_object_ref (plug_in->progress);
         }
     }
 
@@ -121,6 +119,7 @@ plug_in_progress_end (PlugIn *plug_in)
       if (plug_in->progress_created)
         {
           gimp_free_progress (plug_in->gimp, plug_in->progress);
+          g_object_unref (plug_in->progress);
           plug_in->progress = NULL;
         }
     }
@@ -133,25 +132,21 @@ plug_in_progress_install (PlugIn      *plug_in,
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (progress_callback != NULL);
 
-#if 0
   if (plug_in->progress)
     {
       plug_in_progress_end (plug_in);
 
-      if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
-        g_object_unref (plug_in->progress);
-      else
-        g_object_remove_weak_pointer (G_OBJECT (plug_in->progress),
-                                      (gpointer *) &plug_in->progress);
-
-      plug_in->progress = NULL;
+      if (plug_in->progress)
+        {
+          g_object_unref (plug_in->progress);
+          plug_in->progress = NULL;
+        }
     }
 
   plug_in->progress = g_object_new (GIMP_TYPE_PDB_PROGRESS,
                                     "context",       plug_in->context,
                                     "callback-name", progress_callback,
                                     NULL);
-#endif
 }
 
 void
@@ -161,14 +156,12 @@ plug_in_progress_uninstall (PlugIn      *plug_in,
   g_return_if_fail (plug_in != NULL);
   g_return_if_fail (progress_callback != NULL);
 
-#if 0
   if (GIMP_IS_PDB_PROGRESS (plug_in->progress))
     {
       plug_in_progress_end (plug_in);
       g_object_unref (plug_in->progress);
       plug_in->progress = NULL;
     }
-#endif
 }
 
 void

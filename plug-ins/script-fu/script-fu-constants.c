@@ -216,6 +216,11 @@ init_generated_constants (void)
   setvar (cintern ("PAINT-CONSTANT"), flocons (0), NIL);
   setvar (cintern ("PAINT-INCREMENTAL"), flocons (1), NIL);
 
+  setvar (cintern ("PROGRESS-COMMAND-START"), flocons (0), NIL);
+  setvar (cintern ("PROGRESS-COMMAND-END"), flocons (1), NIL);
+  setvar (cintern ("PROGRESS-COMMAND-SET-TEXT"), flocons (2), NIL);
+  setvar (cintern ("PROGRESS-COMMAND-SET-VALUE"), flocons (3), NIL);
+
   setvar (cintern ("REPEAT-NONE"), flocons (0), NIL);
   setvar (cintern ("REPEAT-SAWTOOTH"), flocons (1), NIL);
   setvar (cintern ("REPEAT-TRIANGULAR"), flocons (2), NIL);

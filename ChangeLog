@@ -1,3 +1,28 @@
+2004-08-30  Michael Natterer  <mitch@gimp.org>
+
+	Brought the PDB progress into a working state. Fixes bug #6010,
+	addressed bugs #97266 and #135185 and unfortunately reopens bug
+	#150194 (will fix that later).
+
+	* libgimpbase/gimpbaseenums.h: added enum GimpProgressCommand.
+
+	* app/core/gimppdbprogress.c
+	* libgimp/gimpprogress.c: use the enum instead of integer
+	constants for the different progress commands. Cleanup.
+
+	* app/plug-in/plug-in-progress.c
+	* app/plug-in/plug-in-run.c
+	* app/plug-in/plug-in.c: switch bach to real refcouting for
+	plug_in->progress (reopens bug #150194) and enabled the PDB
+	progress code.
+
+	* plug-ins/script-fu/script-fu-scripts.c: cleaned up the
+	progress stuff and the script-fu interface a bit.
+
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2004-08-29  Manish Singh  <yosh@gimp.org>
 
 	* app/plug-in/plug-in.c (plug_in_open): set can_recurse on the

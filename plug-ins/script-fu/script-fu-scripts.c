@@ -128,11 +128,18 @@ typedef struct
 typedef struct
 {
   GtkWidget     *dialog;
-  GtkWidget    **args_widgets;
+
   GtkWidget     *status;
-  GtkWidget     *about_dialog;
+
+  GtkWidget     *args_table;
+  GtkWidget    **args_widgets;
+
+  GtkWidget     *progress_label;
   GtkWidget     *progress;
   const gchar   *progress_callback;
+
+  GtkWidget     *about_dialog;
+
   gchar         *title;
   gchar         *last_command;
   gint           command_count;
@@ -664,13 +671,13 @@ script_fu_report_cc (gchar *command)
 
       new_command = g_strdup_printf ("%s <%d>",
 				     command, sf_interface->command_count);
-      gtk_label_set_text (GTK_LABEL (sf_interface->status), new_command);
+      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), new_command);
       g_free (new_command);
     }
   else
     {
       sf_interface->command_count = 1;
-      gtk_label_set_text (GTK_LABEL (sf_interface->status), command);
+      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), command);
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
     }
@@ -806,7 +813,8 @@ script_fu_script_proc (const gchar      *name,
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != (script->num_args + 1))
-	    status = GIMP_PDB_CALLING_ERROR;
+            status = GIMP_PDB_CALLING_ERROR;
+
 	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      guchar color[3];
@@ -967,9 +975,9 @@ script_fu_script_proc (const gchar      *name,
     }
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 }
 
@@ -1105,6 +1113,10 @@ script_fu_progress_start (const gchar *message,
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
                              message ? message : " ");
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
+
+  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration (NULL, TRUE);
 }
 
 static void
@@ -1114,6 +1126,10 @@ script_fu_progress_end (gpointer user_data)
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
   gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (sf_interface->progress), 0.0);
+
+  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration (NULL, TRUE);
 }
 
 static void
@@ -1124,6 +1140,10 @@ script_fu_progress_text (const gchar *message,
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress),
                              message ? message : " ");
+
+  if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration (NULL, TRUE);
 }
 
 static void
@@ -1136,7 +1156,8 @@ script_fu_progress_value (gdouble  percentage,
                                  percentage);
 
   if (GTK_WIDGET_DRAWABLE (sf_interface->progress))
-    gdk_window_process_updates (sf_interface->progress->window, TRUE);
+    while (g_main_context_pending (NULL))
+      g_main_context_iteration (NULL, TRUE);
 }
 
 static void
@@ -1146,8 +1167,8 @@ script_fu_interface (SFScript *script)
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *menu;
-  GtkWidget *table;
   GtkWidget *vbox;
+  GtkWidget *vbox2;
   GtkWidget *hbox;
   GSList    *list;
   gchar     *title;
@@ -1246,11 +1267,15 @@ script_fu_interface (SFScript *script)
   gtk_widget_show (frame);
 
   /*  The argument table  */
-  table = gtk_table_new (script->num_args + 1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_widget_show (table);
+  if (script->image_based)
+    sf_interface->args_table = gtk_table_new (script->num_args - 1, 3, FALSE);
+  else
+    sf_interface->args_table = gtk_table_new (script->num_args + 1, 3, FALSE);
+
+  gtk_table_set_col_spacings (GTK_TABLE (sf_interface->args_table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (sf_interface->args_table), 6);
+  gtk_container_add (GTK_CONTAINER (frame), sf_interface->args_table);
+  gtk_widget_show (sf_interface->args_table);
 
   start_args = (script->image_based) ? 2 : 0;
 
@@ -1261,6 +1286,10 @@ script_fu_interface (SFScript *script)
       gfloat     label_yalign = 0.5;
       gboolean   leftalign    = FALSE;
       gint      *ID_ptr       = NULL;
+      gint       row          = i;
+
+      if (script->image_based)
+        row -= 2;
 
       /*  we add a colon after the label;
           some languages want an extra space here  */
@@ -1344,7 +1373,8 @@ script_fu_interface (SFScript *script)
 	    {
 	    case SF_SLIDER:
 	      script->arg_values[i].sfa_adjustment.adj = (GtkAdjustment *)
-		gimp_scale_entry_new (GTK_TABLE (table), 0, i,
+		gimp_scale_entry_new (GTK_TABLE (sf_interface->args_table),
+                                      0, row,
 				      label_text, SLIDER_WIDTH, -1,
 				      script->arg_values[i].sfa_adjustment.value,
 				      script->arg_defaults[i].sfa_adjustment.lower,
@@ -1454,14 +1484,16 @@ script_fu_interface (SFScript *script)
         {
           if (label_text)
             {
-              gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
+              gimp_table_attach_aligned (GTK_TABLE (sf_interface->args_table),
+                                         0, row,
                                          label_text, 0.0, label_yalign,
                                          widget, 2, leftalign);
               g_free (label_text);
             }
           else
             {
-              gtk_table_attach (GTK_TABLE (table), widget, 0, 3, i, i+1,
+              gtk_table_attach (GTK_TABLE (sf_interface->args_table),
+                                widget, 0, 3, row, row + 1,
                                 GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
               gtk_widget_show (widget);
             }
@@ -1470,9 +1502,24 @@ script_fu_interface (SFScript *script)
       sf_interface->args_widgets[i] = widget;
     }
 
+  /* the script progress frame */
+  frame = gimp_frame_new (_("Script Progress"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox2 = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox2);
+  gtk_widget_show (vbox2);
+
+  sf_interface->progress_label = gtk_label_new (_("(none)"));
+  gtk_misc_set_alignment (GTK_MISC (sf_interface->progress_label), 0.0, 0.5);
+  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress_label,
+                      FALSE, FALSE, 0);
+  gtk_widget_show (sf_interface->progress_label);
+
   sf_interface->progress = gtk_progress_bar_new ();
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (sf_interface->progress), " ");
-  gtk_box_pack_start (GTK_BOX (vbox), sf_interface->progress, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), sf_interface->progress, FALSE, FALSE, 0);
   gtk_widget_show (sf_interface->progress);
 
   sf_interface->progress_callback =
@@ -1625,6 +1672,10 @@ script_fu_response (GtkWidget *widget,
       break;
 
     case GTK_RESPONSE_OK:
+      gtk_widget_set_sensitive (sf_interface->args_table, FALSE);
+      gtk_widget_set_sensitive (GTK_DIALOG (sf_interface->dialog)->action_area,
+                                FALSE);
+
       script_fu_ok (script);
       /* fallthru */
 

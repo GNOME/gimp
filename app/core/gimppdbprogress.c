@@ -232,10 +232,10 @@ gimp_pdb_progress_set_property (GObject      *object,
 }
 
 static void
-gimp_pdb_progress_run_callback (GimpPdbProgress *progress,
-                                gint             command,
-                                const gchar     *text,
-                                gdouble          value)
+gimp_pdb_progress_run_callback (GimpPdbProgress     *progress,
+                                GimpProgressCommand  command,
+                                const gchar         *text,
+                                gdouble              value)
 {
   if (! progress->callback_busy)
     {
@@ -243,9 +243,6 @@ gimp_pdb_progress_run_callback (GimpPdbProgress *progress,
       gint      n_return_vals;
 
       progress->callback_busy = TRUE;
-
-      g_print ("%s: command = %d, text = %s, value = %f\n",
-               G_STRFUNC, command, text, value);
 
       return_vals = procedural_db_run_proc (progress->context->gimp,
                                             progress->context,
@@ -268,8 +265,6 @@ gimp_pdb_progress_run_callback (GimpPdbProgress *progress,
       if (return_vals)
         procedural_db_destroy_args (return_vals, n_return_vals);
 
-      g_print ("%s: callback finished\n", G_STRFUNC);
-
       progress->callback_busy = FALSE;
     }
 }
@@ -283,7 +278,9 @@ gimp_pdb_progress_progress_start (GimpProgress *progress,
 
   if (! pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress, 0, message, 0.0);
+      gimp_pdb_progress_run_callback (pdb_progress,
+                                      GIMP_PROGRESS_COMMAND_START,
+                                      message, 0.0);
 
       pdb_progress->active = TRUE;
       pdb_progress->value  = 0.0;
@@ -301,7 +298,9 @@ gimp_pdb_progress_progress_end (GimpProgress *progress)
 
   if (pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress, 1, NULL, 0.0);
+      gimp_pdb_progress_run_callback (pdb_progress,
+                                      GIMP_PROGRESS_COMMAND_END,
+                                      NULL, 0.0);
 
       pdb_progress->active = FALSE;
       pdb_progress->value  = 0.0;
@@ -323,7 +322,9 @@ gimp_pdb_progress_progress_set_text (GimpProgress *progress,
   GimpPdbProgress *pdb_progress = GIMP_PDB_PROGRESS (progress);
 
   if (pdb_progress->active)
-    gimp_pdb_progress_run_callback (pdb_progress, 2, message, 0.0);
+    gimp_pdb_progress_run_callback (pdb_progress,
+                                    GIMP_PROGRESS_COMMAND_SET_TEXT,
+                                    message, 0.0);
 }
 
 static void
@@ -334,7 +335,9 @@ gimp_pdb_progress_progress_set_value (GimpProgress *progress,
 
   if (pdb_progress->active)
     {
-      gimp_pdb_progress_run_callback (pdb_progress, 3, NULL, percentage);
+      gimp_pdb_progress_run_callback (pdb_progress,
+                                      GIMP_PROGRESS_COMMAND_SET_VALUE,
+                                      NULL, percentage);
       pdb_progress->value = percentage;
     }
 }
