@@ -47,10 +47,10 @@ static void    gimp_stroke_get_property              (GObject      *object,
                                                       guint         property_id,
                                                       GValue       *value,
                                                       GParamSpec   *pspec);
-static void    gimp_stroke_finalize                  (GObject          *object);
+static void    gimp_stroke_finalize                  (GObject      *object);
 
-static gsize   gimp_stroke_get_memsize               (GimpObject       *object,
-                                                      gsize            *gui_size);
+static gint64  gimp_stroke_get_memsize               (GimpObject   *object,
+                                                      gint64       *gui_size);
 
 static gdouble gimp_stroke_real_nearest_point_get    (const GimpStroke *stroke,
                                                       const GimpCoords *coord,
@@ -362,12 +362,12 @@ gimp_stroke_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_stroke_get_memsize (GimpObject *object,
-                         gsize      *gui_size)
+                         gint64     *gui_size)
 {
   GimpStroke *stroke;
-  gsize       memsize = 0;
+  gint64      memsize = 0;
 
   stroke = GIMP_STROKE (object);
 

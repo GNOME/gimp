@@ -53,7 +53,7 @@ GimpUndo * gimp_item_undo_new      (GimpImage           *gimage,
                                     GimpUndoType         undo_type,
                                     const gchar         *name,
                                     gpointer             data,
-                                    gsize                size,
+                                    gint64               size,
                                     gboolean             dirties_image,
                                     GimpUndoPopFunc      pop_func,
                                     GimpUndoFreeFunc     free_func);

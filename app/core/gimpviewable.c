@@ -65,8 +65,8 @@ static void    gimp_viewable_get_property           (GObject        *object,
                                                      GValue         *value,
                                                      GParamSpec     *pspec);
 
-static gsize   gimp_viewable_get_memsize             (GimpObject    *object,
-                                                      gsize         *gui_size);
+static gint64  gimp_viewable_get_memsize             (GimpObject    *object,
+                                                      gint64        *gui_size);
 
 static void    gimp_viewable_real_invalidate_preview (GimpViewable  *viewable);
 
@@ -248,9 +248,9 @@ gimp_viewable_get_property (GObject    *object,
     }
 }
 
-static gsize
+static gint64
 gimp_viewable_get_memsize (GimpObject *object,
-                           gsize      *gui_size)
+                           gint64     *gui_size)
 {
   TempBuf   *temp_buf;
   GdkPixbuf *pixbuf;

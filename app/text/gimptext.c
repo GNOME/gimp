@@ -73,19 +73,19 @@ enum
   PROP_BORDER
 };
 
-static void    gimp_text_class_init           (GimpTextClass *klass);
-static void    gimp_text_finalize             (GObject       *object);
-static void    gimp_text_get_property         (GObject       *object,
-                                               guint          property_id,
-                                               GValue        *value,
-                                               GParamSpec    *pspec);
-static void    gimp_text_set_property         (GObject       *object,
-                                               guint          property_id,
-                                               const GValue  *value,
-                                               GParamSpec    *pspec);
-static gsize   gimp_text_get_memsize          (GimpObject    *object,
-                                               gsize         *gui_size);
-static gchar * gimp_text_get_default_language (void);
+static void     gimp_text_class_init           (GimpTextClass *klass);
+static void     gimp_text_finalize             (GObject       *object);
+static void     gimp_text_get_property         (GObject       *object,
+                                                guint          property_id,
+                                                GValue        *value,
+                                                GParamSpec    *pspec);
+static void     gimp_text_set_property         (GObject       *object,
+                                                guint          property_id,
+                                                const GValue  *value,
+                                                GParamSpec    *pspec);
+static gint64   gimp_text_get_memsize          (GimpObject    *object,
+                                                gint64        *gui_size);
+static gchar  * gimp_text_get_default_language (void);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -479,12 +479,12 @@ gimp_text_set_property (GObject      *object,
     }
 }
 
-static gsize
+static gint64
 gimp_text_get_memsize (GimpObject *object,
-                       gsize      *gui_size)
+                       gint64     *gui_size)
 {
   GimpText *text;
-  gsize     memsize = 0;
+  gint64    memsize = 0;
 
   text = GIMP_TEXT (object);
 

@@ -63,8 +63,8 @@ static void    gimp_data_init         (GimpData      *data);
 static void    gimp_data_finalize     (GObject       *object);
 
 static void    gimp_data_name_changed (GimpObject    *object);
-static gsize   gimp_data_get_memsize  (GimpObject    *object,
-                                       gsize         *gui_size);
+static gint64  gimp_data_get_memsize  (GimpObject    *object,
+                                       gint64        *gui_size);
 
 static void    gimp_data_real_dirty   (GimpData      *data);
 
@@ -167,12 +167,12 @@ gimp_data_name_changed (GimpObject *object)
   gimp_data_dirty (GIMP_DATA (object));
 }
 
-static gsize
+static gint64
 gimp_data_get_memsize (GimpObject *object,
-                       gsize      *gui_size)
+                       gint64     *gui_size)
 {
   GimpData *data;
-  gsize     memsize = 0;
+  gint64    memsize = 0;
 
   data = GIMP_DATA (object);
 

@@ -47,8 +47,8 @@ static void    gimp_data_factory_init          (GimpDataFactory      *factory);
 
 static void    gimp_data_factory_finalize      (GObject              *object);
 
-static gsize   gimp_data_factory_get_memsize   (GimpObject           *object,
-                                                gsize                *gui_size);
+static gint64  gimp_data_factory_get_memsize   (GimpObject           *object,
+                                                gint64               *gui_size);
 
 static void    gimp_data_factory_load_data   (const GimpDatafileData *file_data,
                                               gpointer                user_data);
@@ -135,12 +135,12 @@ gimp_data_factory_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_data_factory_get_memsize (GimpObject *object,
-                               gsize      *gui_size)
+                               gint64     *gui_size)
 {
   GimpDataFactory *factory;
-  gsize            memsize = 0;
+  gint64           memsize = 0;
 
   factory = GIMP_DATA_FACTORY (object);
 

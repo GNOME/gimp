@@ -51,8 +51,8 @@ enum
 static void     gimp_parasite_list_class_init  (GimpParasiteListClass *klass);
 static void     gimp_parasite_list_init        (GimpParasiteList      *list);
 static void     gimp_parasite_list_finalize          (GObject     *object);
-static gsize    gimp_parasite_list_get_memsize       (GimpObject  *object,
-                                                      gsize       *gui_size);
+static gint64   gimp_parasite_list_get_memsize       (GimpObject  *object,
+                                                      gint64      *gui_size);
 
 static void     gimp_parasite_list_config_iface_init (gpointer     iface,
                                                       gpointer     iface_data);
@@ -197,22 +197,22 @@ gimp_parasite_list_get_memsize_foreach (gpointer key,
                                         gpointer m)
 {
   GimpParasite *parasite;
-  gsize        *memsize;
+  gint64       *memsize;
 
   parasite = (GimpParasite *) p;
-  memsize  = (gsize *) m;
+  memsize  = (gint64 *) m;
 
   *memsize += (sizeof (GimpParasite) +
                strlen (parasite->name) + 1 +
                parasite->size);
 }
 
-static gsize
+static gint64
 gimp_parasite_list_get_memsize (GimpObject *object,
-                                gsize      *gui_size)
+                                gint64     *gui_size)
 {
   GimpParasiteList *list;
-  gsize             memsize = 0;
+  gint64            memsize = 0;
 
   list = GIMP_PARASITE_LIST (object);
 

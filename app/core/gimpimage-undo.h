@@ -31,7 +31,7 @@ gboolean   gimp_image_undo_group_start (GimpImage        *gimage,
 gboolean   gimp_image_undo_group_end   (GimpImage        *gimage);
 
 GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
-                                        gsize             size,
+                                        gint64            size,
                                         gsize             struct_size,
                                         GimpUndoType      type,
                                         const gchar      *name,
@@ -40,7 +40,7 @@ GimpUndo * gimp_image_undo_push        (GimpImage        *gimage,
                                         GimpUndoFreeFunc  free_func);
 GimpUndo * gimp_image_undo_push_item   (GimpImage        *gimage,
                                         GimpItem         *item,
-                                        gsize             size,
+                                        gint64            size,
                                         gsize             struct_size,
                                         GimpUndoType      type,
                                         const gchar      *name,

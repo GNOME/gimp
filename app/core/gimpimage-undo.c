@@ -185,7 +185,7 @@ gimp_image_undo_group_end (GimpImage *gimage)
 
 GimpUndo *
 gimp_image_undo_push (GimpImage        *gimage,
-                      gsize             size,
+                      gint64            size,
                       gsize             struct_size,
                       GimpUndoType      type,
                       const gchar      *name,
@@ -202,7 +202,7 @@ gimp_image_undo_push (GimpImage        *gimage,
 GimpUndo *
 gimp_image_undo_push_item (GimpImage        *gimage,
                            GimpItem         *item,
-                           gsize             size,
+                           gint64            size,
                            gsize             struct_size,
                            GimpUndoType      type,
                            const gchar      *name,
@@ -334,7 +334,7 @@ gimp_image_undo_free_space (GimpImage *gimage)
   GimpContainer *container;
   gint           min_undo_levels;
   gint           max_undo_levels;
-  gulong         undo_size;
+  gint64         undo_size;
 
   container = gimage->undo_stack->undos;
 

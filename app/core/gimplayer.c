@@ -65,8 +65,8 @@ static void       gimp_layer_init               (GimpLayer          *layer);
 static void       gimp_layer_dispose            (GObject            *object);
 static void       gimp_layer_finalize           (GObject            *object);
 
-static gsize      gimp_layer_get_memsize        (GimpObject         *object,
-                                                 gsize              *gui_size);
+static gint64     gimp_layer_get_memsize        (GimpObject         *object,
+                                                 gint64             *gui_size);
 
 static void       gimp_layer_invalidate_preview (GimpViewable       *viewable);
 
@@ -304,12 +304,12 @@ gimp_layer_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_layer_get_memsize (GimpObject *object,
-                        gsize      *gui_size)
+                        gint64     *gui_size)
 {
   GimpLayer *layer;
-  gsize      memsize = 0;
+  gint64     memsize = 0;
 
   layer = GIMP_LAYER (object);
 

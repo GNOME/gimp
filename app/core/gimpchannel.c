@@ -57,8 +57,8 @@ static void       gimp_channel_init          (GimpChannel      *channel);
 
 static void       gimp_channel_finalize      (GObject          *object);
 
-static gsize      gimp_channel_get_memsize   (GimpObject       *object,
-                                              gsize            *gui_size);
+static gint64     gimp_channel_get_memsize   (GimpObject       *object,
+                                              gint64           *gui_size);
 
 static GimpItem * gimp_channel_duplicate     (GimpItem         *item,
                                               GType             new_type,
@@ -306,13 +306,11 @@ gimp_channel_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_channel_get_memsize (GimpObject *object,
-                          gsize      *gui_size)
+                          gint64     *gui_size)
 {
-  GimpChannel *channel;
-
-  channel = GIMP_CHANNEL (object);
+  GimpChannel *channel = GIMP_CHANNEL (object);
 
   *gui_size += channel->num_segs_in  * sizeof (BoundSeg);
   *gui_size += channel->num_segs_out * sizeof (BoundSeg);
@@ -463,9 +461,7 @@ gimp_channel_scale (GimpItem              *item,
                     gint                   new_offset_y,
                     GimpInterpolationType  interpolation_type)
 {
-  GimpChannel *channel;
-
-  channel = GIMP_CHANNEL (item);
+  GimpChannel *channel = GIMP_CHANNEL (item);
 
   gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
                                     _("Scale Channel"),
@@ -492,9 +488,7 @@ gimp_channel_resize (GimpItem *item,
 		     gint      offset_x,
 		     gint      offset_y)
 {
-  GimpChannel *channel;
-
-  channel = GIMP_CHANNEL (item);
+  GimpChannel *channel = GIMP_CHANNEL (item);
 
   gimp_image_undo_push_channel_mod (gimp_item_get_image (item),
                                     _("Resize Channel"),

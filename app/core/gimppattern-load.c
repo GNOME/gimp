@@ -61,8 +61,8 @@ static void       gimp_pattern_init            (GimpPattern      *pattern);
 
 static void       gimp_pattern_finalize        (GObject          *object);
 
-static gsize      gimp_pattern_get_memsize     (GimpObject       *object,
-                                                gsize            *gui_size);
+static gint64     gimp_pattern_get_memsize     (GimpObject       *object,
+                                                gint64           *gui_size);
 
 static gboolean   gimp_pattern_get_popup_size  (GimpViewable     *viewable,
                                                 gint              width,
@@ -147,9 +147,7 @@ gimp_pattern_init (GimpPattern *pattern)
 static void
 gimp_pattern_finalize (GObject *object)
 {
-  GimpPattern *pattern;
-
-  pattern = GIMP_PATTERN (object);
+  GimpPattern *pattern = GIMP_PATTERN (object);
 
   if (pattern->mask)
     {
@@ -160,12 +158,12 @@ gimp_pattern_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_pattern_get_memsize (GimpObject *object,
-                          gsize      *gui_size)
+                          gint64     *gui_size)
 {
   GimpPattern *pattern;
-  gsize        memsize = 0;
+  gint64       memsize = 0;
 
   pattern = GIMP_PATTERN (object);
 
@@ -184,9 +182,7 @@ gimp_pattern_get_popup_size (GimpViewable *viewable,
                              gint         *popup_width,
                              gint         *popup_height)
 {
-  GimpPattern *pattern;
-
-  pattern = GIMP_PATTERN (viewable);
+  GimpPattern *pattern = GIMP_PATTERN (viewable);
 
   if (pattern->mask->width > width || pattern->mask->height > height)
     {
@@ -228,9 +224,7 @@ static gchar *
 gimp_pattern_get_description (GimpViewable  *viewable,
                               gchar        **tooltip)
 {
-  GimpPattern *pattern;
-
-  pattern = GIMP_PATTERN (viewable);
+  GimpPattern *pattern = GIMP_PATTERN (viewable);
 
   if (tooltip)
     *tooltip = NULL;

@@ -1,3 +1,46 @@
+2003-11-16  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpbaseconfig.h
+	* app/config/gimpcoreconfig.h: use gint64 for all memsize properties.
+
+	* app/base/tile-manager.[ch] (tile_manager_get_memsize): since
+	tiles can be swapped out, a tilemanager can be larger than gsize
+	(on 32bit platforms). Use a gint64 to avoid an overflow.
+
+	* app/core/gimp.c
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushpipe.c
+	* app/core/gimpbuffer.c
+	* app/core/gimpchannel.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpcontext.c
+	* app/core/gimpdata.c
+	* app/core/gimpdatafactory.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpgradient.c
+	* app/core/gimpimage-undo-push.c
+	* app/core/gimpimage-undo.[ch]
+	* app/core/gimpimage.c
+	* app/core/gimpitem.c
+	* app/core/gimpitemundo.[ch]
+	* app/core/gimplayer.c
+	* app/core/gimplist.c
+	* app/core/gimpobject.[ch]
+	* app/core/gimppalette.c
+	* app/core/gimpparasitelist.c
+	* app/core/gimppattern.c
+	* app/core/gimpundo.[ch]
+	* app/core/gimpundostack.c
+	* app/core/gimpviewable.c
+	* app/text/gimptext.c
+	* app/text/gimptextlayer.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors.c: use gint64 for gimp_object_get_memsize()
+	and all its implementations.
+
+	* app/display/gimpdisplayshell-title.c
+	* app/gui/info-window.c: changed accordingly.
+
 2003-11-16  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/Makefile.am: added libgimpbase variable definition

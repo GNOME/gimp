@@ -19,7 +19,7 @@
 #ifndef __TILE_MANAGER_H__
 #define __TILE_MANAGER_H__
 
-struct _PixelDataHandle 
+struct _PixelDataHandle
 {
   guchar                 *data;
   gint                    width;
@@ -56,7 +56,7 @@ void          tile_manager_unref             (TileManager *tm);
 void          tile_manager_set_validate_proc (TileManager      *tm,
 					      TileValidateProc  proc);
 
-/* Get a specified tile from a tile manager. 
+/* Get a specified tile from a tile manager.
  */
 Tile        * tile_manager_get_tile          (TileManager *tm,
 					      gint         xpixel,
@@ -98,7 +98,7 @@ void          tile_invalidate                (Tile        **tile_ptr,
 					      TileManager  *tm,
 					      gint          tile_num);
 void          tile_invalidate_tile           (Tile        **tile_ptr,
-					      TileManager  *tm, 
+					      TileManager  *tm,
 					      gint          xpixel,
 					      gint          ypixel);
 
@@ -123,7 +123,7 @@ void          tile_manager_set_offsets       (TileManager       *tm,
 					      gint               x,
 					      gint               y);
 
-gsize         tile_manager_get_memsize       (const TileManager *tm);
+gint64        tile_manager_get_memsize       (const TileManager *tm);
 
 void          tile_manager_get_tile_coordinates (TileManager *tm,
 						 Tile        *tile,

@@ -60,8 +60,8 @@ static void        gimp_brush_pipe_init             (GimpBrushPipe      *pipe);
 
 static void        gimp_brush_pipe_finalize         (GObject      *object);
 
-static gsize       gimp_brush_pipe_get_memsize      (GimpObject   *object,
-                                                     gsize        *gui_size);
+static gint64      gimp_brush_pipe_get_memsize      (GimpObject   *object,
+                                                     gint64       *gui_size);
 
 static gboolean    gimp_brush_pipe_get_popup_size   (GimpViewable *viewable,
                                                      gint          width,
@@ -196,12 +196,12 @@ gimp_brush_pipe_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_brush_pipe_get_memsize (GimpObject *object,
-                             gsize      *gui_size)
+                             gint64     *gui_size)
 {
   GimpBrushPipe *pipe;
-  gsize          memsize = 0;
+  gint64         memsize = 0;
   gint           i;
 
   pipe = GIMP_BRUSH_PIPE (object);

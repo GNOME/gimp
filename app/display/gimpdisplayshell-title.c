@@ -267,15 +267,15 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'm': /* memory used by image */
               {
-                gulong  memsize;
-                gchar  *memsize_str;
+                GimpObject *object = GIMP_OBJECT (gimage);
+                gchar      *str;
 
-                memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
-                memsize_str = gimp_memsize_to_string (memsize);
+                str = gimp_memsize_to_string (gimp_object_get_memsize (object,
+                                                                       NULL));
 
-                i += print (title, title_len, i, "%s", memsize_str);
+                i += print (title, title_len, i, "%s", str);
 
-                g_free (memsize_str);
+                g_free (str);
               }
               break;
 

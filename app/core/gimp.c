@@ -88,8 +88,8 @@ static void       gimp_init                 (Gimp              *gimp);
 static void       gimp_dispose              (GObject           *object);
 static void       gimp_finalize             (GObject           *object);
 
-static gsize      gimp_get_memsize          (GimpObject        *object,
-                                             gsize             *gui_size);
+static gint64     gimp_get_memsize          (GimpObject        *object,
+                                             gint64            *gui_size);
 
 static void       gimp_real_initialize      (Gimp              *gimp,
                                              GimpInitStatusFunc status_callback);
@@ -484,12 +484,12 @@ gimp_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_get_memsize (GimpObject *object,
-                  gsize      *gui_size)
+                  gint64     *gui_size)
 {
-  Gimp  *gimp;
-  gsize  memsize = 0;
+  Gimp   *gimp;
+  gint64  memsize = 0;
 
   gimp = GIMP (object);
 

@@ -59,8 +59,8 @@ static void       gimp_vectors_init         (GimpVectors      *vectors);
 
 static void       gimp_vectors_finalize     (GObject          *object);
 
-static gsize      gimp_vectors_get_memsize  (GimpObject       *object,
-                                             gsize            *gui_size);
+static gint64     gimp_vectors_get_memsize  (GimpObject       *object,
+                                             gint64           *gui_size);
 
 static GimpItem * gimp_vectors_duplicate    (GimpItem         *item,
                                              GType             new_type,
@@ -265,13 +265,13 @@ gimp_vectors_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_vectors_get_memsize (GimpObject *object,
-                          gsize      *gui_size)
+                          gint64     *gui_size)
 {
   GimpVectors *vectors;
   GList       *list;
-  gsize        memsize = 0;
+  gint64       memsize = 0;
 
   vectors = GIMP_VECTORS (object);
 

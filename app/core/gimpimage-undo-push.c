@@ -93,7 +93,7 @@ gimp_image_undo_push_image (GimpImage    *gimage,
 {
   GimpUndo *new;
   GimpItem *item;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -160,7 +160,7 @@ gimp_image_undo_push_image_mod (GimpImage    *gimage,
 {
   GimpUndo *new;
   GimpItem *item;
-  gsize     size;
+  gint64    size;
   gint      dwidth, dheight;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -911,7 +911,7 @@ gimp_image_undo_push_mask (GimpImage   *gimage,
   TileManager *undo_tiles;
   gint         x1, y1, x2, y2;
   GimpUndo    *new;
-  gsize        size;
+  gint64       size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
@@ -1089,7 +1089,7 @@ gimp_image_undo_push_item_rename (GimpImage   *gimage,
                                   GimpItem    *item)
 {
   GimpUndo    *new;
-  gsize        size;
+  gint64       size;
   const gchar *name;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
@@ -1444,7 +1444,7 @@ undo_push_layer (GimpImage    *gimage,
                  GimpLayer    *prev_layer)
 {
   GimpUndo *new;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -1497,7 +1497,8 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  remove layer  */
 
-      g_print ("undo_pop_layer: taking ownership, size += %u\n",
+      g_print ("undo_pop_layer: taking ownership, size += "
+               "%" G_GINT64_FORMAT "\n",
                gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
 
       undo->size += gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
@@ -1553,7 +1554,8 @@ undo_pop_layer (GimpUndo            *undo,
     {
       /*  restore layer  */
 
-      g_print ("undo_pop_layer: dropping ownership, size -= %u\n",
+      g_print ("undo_pop_layer: dropping ownership, size -= "
+               "%" G_GINT64_FORMAT "\n",
                gimp_object_get_memsize (GIMP_OBJECT (layer), NULL));
 
       undo->size -= gimp_object_get_memsize (GIMP_OBJECT (layer), NULL);
@@ -1622,7 +1624,7 @@ gimp_image_undo_push_layer_mod (GimpImage   *gimage,
 {
   GimpUndo    *new;
   TileManager *tiles;
-  gsize        size;
+  gint64       size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -1790,7 +1792,7 @@ undo_push_layer_mask (GimpImage     *gimage,
                       GimpLayerMask *mask)
 {
   GimpUndo *new;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
@@ -2134,7 +2136,7 @@ undo_push_channel (GimpImage    *gimage,
                    GimpChannel  *prev_channel)
 {
   GimpUndo *new;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
@@ -2257,7 +2259,7 @@ gimp_image_undo_push_channel_mod (GimpImage   *gimage,
 {
   TileManager *tiles;
   GimpUndo    *new;
-  gsize        size;
+  gint64       size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
@@ -2551,7 +2553,7 @@ undo_push_vectors (GimpImage    *gimage,
                    GimpVectors  *prev_vectors)
 {
   GimpUndo *new;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);
@@ -2678,7 +2680,7 @@ gimp_image_undo_push_vectors_mod (GimpImage   *gimage,
                                   GimpVectors *vectors)
 {
   GimpUndo *new;
-  gsize     size;
+  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), FALSE);

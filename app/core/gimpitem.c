@@ -65,8 +65,8 @@ static void       gimp_item_init           (GimpItem      *item);
 static void       gimp_item_finalize       (GObject       *object);
 
 static void       gimp_item_name_changed   (GimpObject    *object);
-static gsize      gimp_item_get_memsize    (GimpObject    *object,
-                                            gsize         *gui_size);
+static gint64     gimp_item_get_memsize    (GimpObject    *object,
+                                            gint64        *gui_size);
 
 static GimpItem * gimp_item_real_duplicate (GimpItem      *item,
                                             GType          new_type,
@@ -253,12 +253,12 @@ gimp_item_name_changed (GimpObject *object)
     gimp_list_uniquefy_name (list, object, FALSE);
 }
 
-static gsize
+static gint64
 gimp_item_get_memsize (GimpObject *object,
-                       gsize      *gui_size)
+                       gint64     *gui_size)
 {
   GimpItem *item;
-  gsize     memsize = 0;
+  gint64    memsize = 0;
 
   item = GIMP_ITEM (object);
 

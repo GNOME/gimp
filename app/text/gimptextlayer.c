@@ -58,8 +58,8 @@ static void       gimp_text_layer_init          (GimpTextLayer  *layer);
 static void       gimp_text_layer_dispose       (GObject        *object);
 static void       gimp_text_layer_finalize      (GObject        *object);
 
-static gsize      gimp_text_layer_get_memsize   (GimpObject     *object,
-                                                 gsize          *gui_size);
+static gint64     gimp_text_layer_get_memsize   (GimpObject     *object,
+                                                 gint64         *gui_size);
 static TempBuf  * gimp_text_layer_get_preview   (GimpViewable   *viewable,
                                                  gint            width,
                                                  gint            height);
@@ -181,12 +181,12 @@ gimp_text_layer_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_text_layer_get_memsize (GimpObject *object,
-                             gsize      *gui_size)
+                             gint64     *gui_size)
 {
   GimpTextLayer *text_layer;
-  gsize          memsize = 0;
+  gint64         memsize = 0;
 
   text_layer = GIMP_TEXT_LAYER (object);
 

@@ -87,8 +87,8 @@ static void       gimp_context_get_property   (GObject               *object,
                                                guint                  property_id,
                                                GValue                *value,
                                                GParamSpec            *pspec);
-static gsize      gimp_context_get_memsize    (GimpObject            *object,
-                                               gsize                 *gui_size);
+static gint64    gimp_context_get_memsize    (GimpObject            *object,
+                                              gint64                *gui_size);
 
 static gboolean   gimp_context_serialize            (GimpConfig       *config,
                                                      GimpConfigWriter *writer,
@@ -1044,12 +1044,12 @@ gimp_context_get_property (GObject    *object,
     }
 }
 
-static gsize
+static gint64
 gimp_context_get_memsize (GimpObject *object,
-                          gsize      *gui_size)
+                          gint64     *gui_size)
 {
   GimpContext *context = GIMP_CONTEXT (object);
-  gsize        memsize = 0;
+  gint64       memsize = 0;
 
   if (context->tool_name)
     memsize += strlen (context->tool_name) + 1;

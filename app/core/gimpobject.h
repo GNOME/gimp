@@ -45,12 +45,12 @@ struct _GimpObjectClass
   GObjectClass  parent_class;
 
   /*  signals  */
-  void  (* disconnect)   (GimpObject *object);
-  void  (* name_changed) (GimpObject *object);
+  void    (* disconnect)   (GimpObject *object);
+  void    (* name_changed) (GimpObject *object);
 
   /*  virtual functions  */
-  gsize (* get_memsize)  (GimpObject *object,
-                          gsize      *gui_size);
+  gint64  (* get_memsize)  (GimpObject *object,
+                            gint64     *gui_size);
 };
 
 
@@ -66,9 +66,9 @@ void          gimp_object_name_free     (GimpObject       *object);
 
 gint          gimp_object_name_collate  (GimpObject       *object1,
                                          GimpObject       *object2);
-gsize         gimp_object_get_memsize   (GimpObject       *object,
-                                         gsize            *gui_size);
-gsize         gimp_g_object_get_memsize (GObject          *object);
+gint64        gimp_object_get_memsize   (GimpObject       *object,
+                                         gint64           *gui_size);
+gint64        gimp_g_object_get_memsize (GObject          *object);
 
 
 #endif  /* __GIMP_OBJECT_H__ */

@@ -47,8 +47,8 @@ static void       gimp_palette_init             (GimpPalette       *palette);
 
 static void       gimp_palette_finalize         (GObject           *object);
 
-static gsize      gimp_palette_get_memsize      (GimpObject        *object,
-                                                 gsize             *gui_size);
+static gint64     gimp_palette_get_memsize      (GimpObject        *object,
+                                                 gint64            *gui_size);
 
 static void       gimp_palette_get_preview_size (GimpViewable      *viewable,
                                                  gint               size,
@@ -151,11 +151,7 @@ gimp_palette_init (GimpPalette *palette)
 static void
 gimp_palette_finalize (GObject *object)
 {
-  GimpPalette *palette;
-
-  g_return_if_fail (GIMP_IS_PALETTE (object));
-
-  palette = GIMP_PALETTE (object);
+  GimpPalette *palette = GIMP_PALETTE (object);
 
   if (palette->colors)
     {
@@ -167,21 +163,19 @@ gimp_palette_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_palette_get_memsize (GimpObject *object,
-                          gsize      *gui_size)
+                          gint64     *gui_size)
 {
   GimpPalette *palette;
   GList       *list;
-  gsize        memsize = 0;
+  gint64       memsize = 0;
 
   palette = GIMP_PALETTE (object);
 
   for (list = palette->colors; list; list = g_list_next (list))
     {
-      GimpPaletteEntry *entry;
-
-      entry = (GimpPaletteEntry *) list->data;
+      GimpPaletteEntry *entry = (GimpPaletteEntry *) list->data;
 
       memsize += sizeof (GList) + sizeof (GimpPaletteEntry);
 
@@ -315,9 +309,7 @@ static gchar *
 gimp_palette_get_description (GimpViewable  *viewable,
                               gchar        **tooltip)
 {
-  GimpPalette *palette;
-
-  palette = GIMP_PALETTE (viewable);
+  GimpPalette *palette = GIMP_PALETTE (viewable);
 
   if (tooltip)
     *tooltip = NULL;

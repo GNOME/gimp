@@ -98,8 +98,8 @@ static void       gimp_container_get_property    (GObject            *object,
                                                   GValue             *value,
                                                   GParamSpec         *pspec);
 
-static gsize      gimp_container_get_memsize     (GimpObject         *object,
-                                                  gsize              *gui_size);
+static gint64     gimp_container_get_memsize     (GimpObject         *object,
+                                                  gint64             *gui_size);
 
 static gboolean   gimp_container_serialize       (GimpConfig         *config,
                                                   GimpConfigWriter   *writer,
@@ -337,13 +337,13 @@ gimp_container_get_property (GObject    *object,
     }
 }
 
-static gsize
+static gint64
 gimp_container_get_memsize (GimpObject *object,
-                            gsize      *gui_size)
+                            gint64     *gui_size)
 {
   GimpContainer *container;
   GList         *list;
-  gsize          memsize = 0;
+  gint64         memsize = 0;
 
   container = GIMP_CONTAINER (object);
 

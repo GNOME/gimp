@@ -60,8 +60,8 @@ static void       gimp_drawable_init               (GimpDrawable      *drawable)
 
 static void       gimp_drawable_finalize           (GObject           *object);
 
-static gsize      gimp_drawable_get_memsize        (GimpObject        *object,
-                                                    gsize             *gui_size);
+static gint64     gimp_drawable_get_memsize        (GimpObject        *object,
+                                                    gint64            *gui_size);
 
 static void       gimp_drawable_invalidate_preview (GimpViewable      *viewable);
 
@@ -225,12 +225,12 @@ gimp_drawable_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_drawable_get_memsize (GimpObject *object,
-                           gsize      *gui_size)
+                           gint64     *gui_size)
 {
   GimpDrawable *drawable;
-  gsize         memsize = 0;
+  gint64        memsize = 0;
 
   drawable = GIMP_DRAWABLE (object);
 

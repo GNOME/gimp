@@ -107,8 +107,8 @@ static void     gimp_image_dispose               (GObject        *object);
 static void     gimp_image_finalize              (GObject        *object);
 
 static void     gimp_image_name_changed          (GimpObject     *object);
-static gsize    gimp_image_get_memsize           (GimpObject     *object,
-                                                  gsize          *gui_size);
+static gint64   gimp_image_get_memsize           (GimpObject     *object,
+                                                  gint64         *gui_size);
 
 static void     gimp_image_invalidate_preview    (GimpViewable   *viewable);
 static void     gimp_image_size_changed          (GimpViewable   *viewable);
@@ -687,12 +687,12 @@ gimp_image_name_changed (GimpObject *object)
     }
 }
 
-static gsize
+static gint64
 gimp_image_get_memsize (GimpObject *object,
-                        gsize      *gui_size)
+                        gint64     *gui_size)
 {
   GimpImage *gimage;
-  gsize      memsize = 0;
+  gint64     memsize = 0;
 
   gimage = GIMP_IMAGE (object);
 

@@ -55,12 +55,12 @@ struct _GimpUndo
 
   GimpUndoType      undo_type;      /* undo type                          */
   gpointer          data;           /* data to implement the undo         */
-  gsize             size;           /* size of undo item                  */
+  gint64            size;           /* size of undo item                  */
   gboolean          dirties_image;  /* TRUE if undo mutates image         */
 
   GimpUndoPopFunc   pop_func;       /* function pointer to undo pop proc  */
   GimpUndoFreeFunc  free_func;      /* function pointer to free undo data */
-  
+
   TempBuf          *preview;
   guint             preview_idle_id;
 };
@@ -83,7 +83,7 @@ GimpUndo * gimp_undo_new            (GimpImage           *gimage,
                                      GimpUndoType         undo_type,
                                      const gchar         *name,
                                      gpointer             data,
-                                     gsize                size,
+                                     gint64               size,
                                      gboolean             dirties_image,
                                      GimpUndoPopFunc      pop_func,
                                      GimpUndoFreeFunc     free_func);

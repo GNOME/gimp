@@ -532,15 +532,14 @@ info_window_update (GimpDisplay *gdisp)
 
   /*  size in memory  */
   {
-    gulong  memsize;
-    gchar  *memsize_str;
+    GimpObject *object = GIMP_OBJECT (gimage);
+    gchar      *str;
 
-    memsize = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
-    memsize_str = gimp_memsize_to_string (memsize);
+    str = gimp_memsize_to_string (gimp_object_get_memsize (object, NULL));
 
-    g_snprintf (iwd->memsize_str, MAX_BUF, "%s", memsize_str);
+    g_snprintf (iwd->memsize_str, MAX_BUF, "%s", str);
 
-    g_free (memsize_str);
+    g_free (str);
   }
 
   type = gimp_image_base_type (gimage);

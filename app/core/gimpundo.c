@@ -43,8 +43,8 @@ static void      gimp_undo_init                (GimpUndo            *undo);
 
 static void      gimp_undo_finalize            (GObject             *object);
 
-static gsize     gimp_undo_get_memsize         (GimpObject          *object,
-                                                gsize               *gui_size);
+static gint64    gimp_undo_get_memsize         (GimpObject          *object,
+                                                gint64              *gui_size);
 
 static gboolean  gimp_undo_get_popup_size      (GimpViewable        *viewable,
                                                 gint                 width,
@@ -178,12 +178,12 @@ gimp_undo_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static gsize
+static gint64
 gimp_undo_get_memsize (GimpObject *object,
-                       gsize      *gui_size)
+                       gint64     *gui_size)
 {
   GimpUndo *undo;
-  gsize     memsize = 0;
+  gint64    memsize = 0;
 
   undo = GIMP_UNDO (object);
 
@@ -278,7 +278,7 @@ gimp_undo_new (GimpImage        *gimage,
                GimpUndoType      undo_type,
                const gchar      *name,
                gpointer          data,
-               gsize             size,
+               gint64            size,
                gboolean          dirties_image,
                GimpUndoPopFunc   pop_func,
                GimpUndoFreeFunc  free_func)
