@@ -3,9 +3,9 @@
 # Dongsu Jang <iolo@hellocity.net>, 2004
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.3.26\n"
+"Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-04 01:58+0100\n"
+"POT-Creation-Date: 2004-03-16 23:47+0900\n"
 "PO-Revision-Date: 2004-01-20 19:30+0900\n"
 "Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -416,11 +416,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:30
 msgid "Ask for confirmation before closing an image without saving."
-msgstr "이미지를 저장하지 않고 닫을 때 다시 확인"
+msgstr "이미지를 저장하지 않고 닫을 때 다시 확인합니다."
 
 #: app/config/gimprc-blurbs.h:33
 msgid "Sets the mode of cursor the GIMP will use."
-msgstr "김프가 사용할 커서 모드를 지정하십시오."
+msgstr "김프가 사용할 커서 모드를 지정합니다."
 
 #: app/config/gimprc-blurbs.h:36
 msgid ""
@@ -438,7 +438,7 @@ msgstr "선택하면, 이미지의 한 픽셀이 화면의 한 픽셀에 대응�
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr ""
+msgstr "안내선과 모눈으로 당겨 맞출 거리를 픽셀 단위로 지정합니다."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -1809,11 +1809,11 @@ msgstr "모눈의 배경색; 이점쇄선 형태에서만 사용됩니다."
 
 #: app/core/gimpgrid.c:145
 msgid "Horizontal spacing of grid lines."
-msgstr "모눈 선의 가로 간격"
+msgstr "모눈 선의 가로 간격."
 
 #: app/core/gimpgrid.c:150
 msgid "Vertical spacing of grid lines."
-msgstr "모눈 선의 세로 간격"
+msgstr "모눈 선의 세로 간격."
 
 #: app/core/gimpgrid.c:159
 msgid ""
@@ -1874,7 +1874,7 @@ msgstr "합치려면 두 개 이상의 보이는 레이어가 필요합니다."
 
 #: app/core/gimpimage-merge.c:138
 msgid "Flatten Image"
-msgstr "이미지 평탄화"
+msgstr "이미지 배경으로 합치기"
 
 #: app/core/gimpimage-merge.c:187
 msgid "Merge Down"
@@ -2034,7 +2034,7 @@ msgstr "폴더"
 
 #: app/core/gimpimagefile.c:463
 msgid "Special File"
-msgstr ""
+msgstr "특수 파일"
 
 #: app/core/gimpimagefile.c:490
 msgid "No preview available"
@@ -2437,12 +2437,11 @@ msgstr "새 경로 끌어서-놓기"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:73
 msgid "Color Display Filters"
-msgstr "색상 출력 필터"
+msgstr "화면 색상 표시 필터"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:76
-#, fuzzy
 msgid "Configure Color Display Filters"
-msgstr "색상 출력 필터"
+msgstr "화면 색상 표시 필터 설정"
 
 #: app/display/gimpdisplayshell-layer-select.c:123
 msgid "Layer Select"
@@ -2461,9 +2460,8 @@ msgid "Zoom Ratio:"
 msgstr "확대 배율:"
 
 #: app/display/gimpdisplayshell-scale.c:567
-#, fuzzy
 msgid "Zoom:"
-msgstr "1:1 배율"
+msgstr "확대:"
 
 #: app/display/gimpdisplayshell-title.c:219
 msgid "RGB-empty"
@@ -2558,11 +2556,11 @@ msgstr "URI의 글자 배열이 잘못되었습니다"
 #: app/gui/about-dialog.c:45
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "버젼 %s 제작"
+msgstr "버젼 %s 제작진"
 
 #: app/gui/about-dialog.c:51
 msgid "Translation by"
-msgstr "번역"
+msgstr "번역한 사람들"
 
 #. Translators: insert your names here, separated by newline
 #. we'd prefer just the names, please no email adresses.
@@ -2574,7 +2572,7 @@ msgstr ""
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
-msgstr "공헌"
+msgstr "공헌한 사람들"
 
 #: app/gui/about-dialog.c:158
 msgid "About The GIMP"
@@ -2758,7 +2756,7 @@ msgstr "최종 색상표에서 사용 안한 색상 지우기"
 
 #: app/gui/convert-dialog.c:268
 msgid "Use Custom Palette:"
-msgstr "사용자 색상표 사용"
+msgstr "사용자 색상표 사용:"
 
 #. the dither type
 #: app/gui/convert-dialog.c:308
@@ -2881,7 +2879,7 @@ msgstr "네비게이션"
 
 #: app/gui/dialogs-constructors.c:843
 msgid "Display Navigation"
-msgstr "디스플레이 네비게이션"
+msgstr "화면 표시 네비게이션"
 
 #: app/gui/dialogs-constructors.c:861
 msgid "FG/BG"
@@ -3142,21 +3140,19 @@ msgstr "이름붙여 복사"
 #: app/gui/edit-commands.c:290 app/gui/stroke-dialog.c:295
 #: app/gui/vectors-commands.c:292
 msgid "There is no active layer or channel to stroke to."
-msgstr "따라 그리기할 활성 레이어나 채널이 없습니다."
+msgstr "따라 그릴 활성 레이어나 채널이 없습니다."
 
 #: app/gui/edit-commands.c:316
-#, fuzzy
 msgid "There is no active layer or channel to cut from."
-msgstr "따라 그리기할 활성 레이어나 채널이 없습니다."
+msgstr "잘라낼 활성 레이어나 채널이 없습니다."
 
 #: app/gui/edit-commands.c:327 app/gui/edit-commands.c:363
 msgid "(Unnamed Buffer)"
 msgstr "(이름없는 버퍼)"
 
 #: app/gui/edit-commands.c:352
-#, fuzzy
 msgid "There is no active layer or channel to copy from."
-msgstr "따라 그리기할 활성 레이어나 채널이 없습니다."
+msgstr "붙여 넣을 활성 레이어나 채널이 없습니다."
 
 #: app/gui/error-console-menu.c:39
 msgid "/_Clear Errors"
@@ -3945,49 +3941,40 @@ msgid "/View/Zoom/Zoom to _Fit Window"
 msgstr "/보기/확대/창 크기에 맞추기(_F)"
 
 #: app/gui/image-menu.c:383
-#, fuzzy
 msgid "/View/Zoom/16:1  (1600%)"
-msgstr "/보기/확대/16:1"
+msgstr "/보기/확대/16:1  (1600%)"
 
 #: app/gui/image-menu.c:387
-#, fuzzy
 msgid "/View/Zoom/8:1  (800%)"
-msgstr "/보기/확대/8:1"
+msgstr "/보기/확대/8:1  (800%)"
 
 #: app/gui/image-menu.c:391
-#, fuzzy
 msgid "/View/Zoom/4:1  (400%)"
-msgstr "/보기/확대/4:1"
+msgstr "/보기/확대/4:1  (400%)"
 
 #: app/gui/image-menu.c:395
-#, fuzzy
 msgid "/View/Zoom/2:1  (200%)"
-msgstr "/보기/확대/2:1"
+msgstr "/보기/확대/2:1  (200%)"
 
 #: app/gui/image-menu.c:399
-#, fuzzy
 msgid "/View/Zoom/1:1  (100%)"
-msgstr "/보기/확대/1:1"
+msgstr "/보기/확대/1:1  (100%)"
 
 #: app/gui/image-menu.c:403
-#, fuzzy
 msgid "/View/Zoom/1:2  (50%)"
-msgstr "/보기/확대/1:2"
+msgstr "/보기/확대/1:2  (50%)"
 
 #: app/gui/image-menu.c:407
-#, fuzzy
 msgid "/View/Zoom/1:4  (25%)"
-msgstr "/보기/확대/1:2"
+msgstr "/보기/확대/1:4  (25%)"
 
 #: app/gui/image-menu.c:411
-#, fuzzy
 msgid "/View/Zoom/1:8  (12.5%)"
-msgstr "/보기/확대/1:1"
+msgstr "/보기/확대/1:8  (12.5%)"
 
 #: app/gui/image-menu.c:415
-#, fuzzy
 msgid "/View/Zoom/1:16  (6.25%)"
-msgstr "/보기/확대/1:16"
+msgstr "/보기/확대/1:16  (6.25%)"
 
 #: app/gui/image-menu.c:429
 msgid "/View/_Info Window"
@@ -4073,7 +4060,7 @@ msgstr "/이미지/모드/그레이스케일(_G)"
 
 #: app/gui/image-menu.c:527
 msgid "/Image/Mode/_Indexed..."
-msgstr "/이미지/모드/인덱스됨...(_I)"
+msgstr "/이미지/모드/인덱스됨(_I)..."
 
 #. <Image>/Image/Transform
 #: app/gui/image-menu.c:535
@@ -4123,7 +4110,7 @@ msgstr "/이미지/보이는 레이어 합치기(_L)..."
 
 #: app/gui/image-menu.c:598
 msgid "/Image/_Flatten Image"
-msgstr "/레이어/이미지 평탄화(_F)"
+msgstr "/레이어/이미지 배경으로 합치기(_F)"
 
 #: app/gui/image-menu.c:605
 msgid "/Image/Configure G_rid..."
@@ -4613,14 +4600,14 @@ msgid "_Redo"
 msgstr "재실행(_R)"
 
 #: app/gui/image-menu.c:1744
-#, fuzzy, c-format
+#, c-format
 msgid "Other (%s) ..."
-msgstr "기타 (%d:%d) ..."
+msgstr "기타 (%s) ..."
 
 #: app/gui/image-menu.c:1753
-#, fuzzy, c-format
+#, c-format
 msgid "_Zoom (%s)"
-msgstr "확대(_Z) (%d:%d)"
+msgstr "확대(_Z) (%s)"
 
 #: app/gui/images-menu.c:42
 msgid "/_Raise Views"
@@ -4705,7 +4692,7 @@ msgstr "이미지 정보"
 #. add the information fields
 #: app/gui/info-window.c:251
 msgid "Pixel Dimensions:"
-msgstr "픽셀 크기"
+msgstr "픽셀 크기:"
 
 #: app/gui/info-window.c:253
 msgid "Print Size:"
@@ -4729,7 +4716,7 @@ msgstr "메모리 내의 크기:"
 
 #: app/gui/info-window.c:263
 msgid "Display Type:"
-msgstr "표시 형식:"
+msgstr "화면 표시 형식:"
 
 #: app/gui/info-window.c:265
 msgid "Visual Class:"
@@ -5388,9 +5375,8 @@ msgid "_Enable Layer & Channel Previews"
 msgstr "레이어와 채널 미리보기 사용(_E)"
 
 #: app/gui/preferences-dialog.c:1175
-#, fuzzy
 msgid "Default _Layer & Channel Preview Size:"
-msgstr "레이어와 채널 미리보기 크기(_L):"
+msgstr "기본 레이어와 채널 미리보기 크기(_L):"
 
 #: app/gui/preferences-dialog.c:1178
 msgid "_Navigation Preview Size:"
@@ -5403,7 +5389,7 @@ msgstr "대화상자 동작"
 
 #: app/gui/preferences-dialog.c:1185
 msgid "_Info Window Per Display"
-msgstr "디스플레이 별로 정보 창 사용(_I)"
+msgstr "화면 표시 별로 정보 창 사용(_I)"
 
 #. Menus
 #: app/gui/preferences-dialog.c:1189
@@ -5463,7 +5449,7 @@ msgstr "도움말 브라우저"
 
 #: app/gui/preferences-dialog.c:1324
 msgid "Help _Browser to Use:"
-msgstr "사용할 도움말 브라우저(_B)"
+msgstr "사용할 도움말 브라우저(_B):"
 
 #. Web Browser
 #: app/gui/preferences-dialog.c:1328 app/widgets/widgets-enums.c:55
@@ -5481,12 +5467,11 @@ msgstr "사용할 웹 브라우저:"
 #. Snapping Distance
 #: app/gui/preferences-dialog.c:1355
 msgid "Guide and Grid Snapping"
-msgstr ""
+msgstr "안내선과 모눈으로 당겨 맞추기"
 
 #: app/gui/preferences-dialog.c:1360
-#, fuzzy
 msgid "_Snap Distance:"
-msgstr "거리:"
+msgstr "당겨 맞출 거리(_S):"
 
 #. Contiguous Regions
 #: app/gui/preferences-dialog.c:1364
@@ -5629,7 +5614,7 @@ msgstr "이미지 상태표시줄 형식"
 
 #: app/gui/preferences-dialog.c:1634 app/gui/preferences-dialog.c:1637
 msgid "Display"
-msgstr "디스플레이"
+msgstr "표시"
 
 #. Transparency
 #: app/gui/preferences-dialog.c:1644
@@ -5647,7 +5632,7 @@ msgstr "격자 크기(_S):"
 #. 8-Bit Displays
 #: app/gui/preferences-dialog.c:1655
 msgid "8-Bit Displays"
-msgstr "8비트 디스플레이"
+msgstr "8비트 화면 표시"
 
 #: app/gui/preferences-dialog.c:1666
 msgid "Minimum Number of Colors:"
@@ -5696,7 +5681,7 @@ msgstr "창 유형 힌트"
 
 #: app/gui/preferences-dialog.c:1810
 msgid "Window Type Hint for the _Toolbox:"
-msgstr "도구상자의 창 유형 힌트(_T)"
+msgstr "도구상자의 창 유형 힌트(_T):"
 
 #: app/gui/preferences-dialog.c:1814
 msgid "Window Type Hint for the _Docks:"
@@ -6028,7 +6013,7 @@ msgstr "가운데(_E)"
 
 #: app/gui/resize-dialog.c:549
 msgid "Print Size & Display Unit"
-msgstr "인쇄 크기와 디스플레이 단위"
+msgstr "인쇄 크기와 화면 표시 단위"
 
 #. the resolution labels
 #: app/gui/resize-dialog.c:631 app/widgets/gimptemplateeditor.c:374
@@ -6215,19 +6200,19 @@ msgstr "저장된 선택사항의 새 이름을 입력하십시오"
 
 #: app/gui/tool-options-menu.c:57
 msgid "/_Save Options to/_New Entry..."
-msgstr "/선택사항 저장(_S)/새 항목(_N)..."
+msgstr "/선택사항 저장(S)/새 항목(_N)..."
 
 #: app/gui/tool-options-menu.c:68
 msgid "/_Restore Options from/(None)"
-msgstr "/선택사항 복원(_R)/(없음)"
+msgstr "/선택사항 복원(R)/(없음)"
 
 #: app/gui/tool-options-menu.c:74
 msgid "/Re_name Saved Options/(None)"
-msgstr "/선택사항 이름 바꾸기(_N)/(없음)"
+msgstr "/선택사항 이름 바꾸기(N)/(없음)"
 
 #: app/gui/tool-options-menu.c:80
 msgid "/_Delete Saved Options/(None)"
-msgstr "/선택사항 지우기(_D)/(없음)"
+msgstr "/선택사항 지우기(D)/(없음)"
 
 #: app/gui/tool-options-menu.c:89
 msgid "/R_eset Tool Options"
@@ -6397,7 +6382,7 @@ msgid ""
 msgstr ""
 "gimprc는 김프의 기본 동작에 영향을 미치는 기본 설정을 저장하기 위해 사용됩니"
 "다.  이 파일에 브러시, 색상표, 그라디언트, 무늬, 플러그인, 모듈의 찾기 경로"
-"를 설정할 수 있습니다"
+"를 설정할 수 있습니다."
 
 #: app/gui/user-install-dialog.c:141
 msgid ""
@@ -7380,7 +7365,7 @@ msgstr "옵셋:"
 
 #: app/tools/gimpblendoptions.c:254
 msgid "Shape:"
-msgstr "모양"
+msgstr "모양:"
 
 #: app/tools/gimpblendoptions.c:260 app/tools/gimppaintoptions-gui.c:478
 msgid "Repeat:"
@@ -7446,7 +7431,7 @@ msgstr "명도(_B):"
 
 #: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
-msgstr "대비(_T)"
+msgstr "대비(_T):"
 
 #: app/tools/gimpbucketfilloptions.c:133
 msgid "Allow completely transparent regions to be filled"
@@ -7470,17 +7455,15 @@ msgstr "채우기 유형 %s"
 #: app/tools/gimpbucketfilloptions.c:266
 #, c-format
 msgid "Affected Area  %s"
-msgstr ""
+msgstr "영향을 받는 영역  %s"
 
 #: app/tools/gimpbucketfilloptions.c:269
-#, fuzzy
 msgid "Fill Whole Selection"
-msgstr "선택 띄우기"
+msgstr "전체 선택 채우기"
 
 #: app/tools/gimpbucketfilloptions.c:270
-#, fuzzy
 msgid "Fill Similar Colors"
-msgstr "비슷한 색상 찾기"
+msgstr "비슷한 색상 채우기"
 
 #: app/tools/gimpbucketfilloptions.c:276 app/tools/gimpselectionoptions.c:474
 msgid "Finding Similar Colors"
@@ -7606,7 +7589,7 @@ msgstr "색상(_H):"
 
 #: app/tools/gimpcolorizetool.c:268 app/tools/gimphuesaturationtool.c:391
 msgid "_Saturation:"
-msgstr "채도(_S)"
+msgstr "채도(_S):"
 
 #: app/tools/gimpcolorizetool.c:282 app/tools/gimphuesaturationtool.c:377
 msgid "_Lightness:"
@@ -7645,7 +7628,7 @@ msgstr "색상 추출 정보"
 
 #: app/tools/gimpconvolvetool.c:91
 msgid "Blur or Sharpen"
-msgstr "흐리게 혹은 선명하게"
+msgstr "흐릿하게 혹은 선명하게"
 
 #: app/tools/gimpconvolvetool.c:92
 msgid "/Tools/Paint Tools/Con_volve"
@@ -8352,27 +8335,27 @@ msgstr "선택 자동 줄임"
 
 #: app/tools/gimpsheartool.c:100
 msgid "Shear"
-msgstr "절단"
+msgstr "기울이기"
 
 #: app/tools/gimpsheartool.c:101
 msgid "Shear the layer or selection"
-msgstr "레이어 또는 선택 절단"
+msgstr "레이어 또는 선택 기울이기"
 
 #: app/tools/gimpsheartool.c:102
 msgid "/Tools/Transform Tools/S_hear"
-msgstr "/도구/변형 도구/절단(_H)"
+msgstr "/도구/변형 도구/기울이기(_H)"
 
 #: app/tools/gimpsheartool.c:160
 msgid "Shearing Information"
-msgstr "절단 정보"
+msgstr "기울이기 정보"
 
 #: app/tools/gimpsheartool.c:161
 msgid "Shearing..."
-msgstr "절단 중..."
+msgstr "기울이기 중..."
 
 #: app/tools/gimpsheartool.c:168
 msgid "Shear Magnitude X:"
-msgstr "절단 크기 X:"
+msgstr "기울이기 크기 X:"
 
 #: app/tools/gimpsmudgetool.c:57
 msgid "Smudge image"
@@ -8408,7 +8391,7 @@ msgstr "글자 색상"
 
 #: app/tools/gimptextoptions.c:361
 msgid "Color:"
-msgstr "색상"
+msgstr "색상:"
 
 #: app/tools/gimptextoptions.c:366
 msgid "Justify:"
@@ -8664,11 +8647,11 @@ msgstr "클릭으로 경로를 시작하십시오."
 
 #: app/tools/gimpvectortool.c:1203
 msgid "Click to make this node angular."
-msgstr "클릭으로 이 노드를 뾰족하게 만드십시오. "
+msgstr "클릭으로 이 노드를 뾰족하게 만드십시오."
 
 #: app/tools/gimpvectortool.c:1844
 msgid "There is no active layer or channel to stroke to"
-msgstr "따라 그리기할 활성 레이어나 채널이 없습니다"
+msgstr "따라 그릴 활성 레이어나 채널이 없습니다"
 
 #: app/vectors/gimpvectors.c:229
 msgid "Path"
@@ -8712,9 +8695,9 @@ msgid "No paths found in the buffer"
 msgstr "버퍼에서 경로를 찾을 수 없습니다"
 
 #: app/vectors/gimpvectors-import.c:304
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "%d바이트를 '%s'에서 읽을 수 없습니다: %s"
+msgstr "'%s'에서 경로를 들여올 수 없습니다: %s"
 
 #: app/widgets/gimpbrusheditor.c:143
 msgid "Hardness:"
@@ -8779,11 +8762,11 @@ msgstr "가용한 필터"
 
 #: app/widgets/gimpcolordisplayeditor.c:205
 msgid "Add the selected filter to the list of active filters."
-msgstr "선택한 필터를 활성 필터 목록에 더하기"
+msgstr "선택한 필터를 활성 필터 목록에 더하기."
 
 #: app/widgets/gimpcolordisplayeditor.c:222
 msgid "Remove the selected filter from the list of active filters."
-msgstr "선택한 필터를 현재 필터 목록에서 지우기"
+msgstr "선택한 필터를 현재 필터 목록에서 지우기."
 
 #: app/widgets/gimpcolordisplayeditor.c:236
 msgid "Move the selected filter up"
@@ -8901,7 +8884,7 @@ msgstr "색상 색인:"
 
 #: app/widgets/gimpcolormapeditor.c:393
 msgid "He_x Triplet:"
-msgstr "3개의 16진수:"
+msgstr "세개의 16진수:"
 
 #: app/widgets/gimpcolormapeditor.c:906
 msgid "Edit Indexed Color"
@@ -9208,7 +9191,7 @@ msgstr "김프 도움말 브라우저를 시작할 수 없습니다"
 
 #: app/widgets/gimphelp.c:247
 msgid "Could not start the GIMP Help Browser."
-msgstr "김프 도움말 브라우저를 시작할 수 없습니다"
+msgstr "김프 도움말 브라우저를 시작할 수 없습니다."
 
 #: app/widgets/gimphistogrameditor.c:124
 msgid "Mean:"
@@ -9781,37 +9764,3 @@ msgstr "XCF 오류: XCF 파일 버젼 %d은(는) 지원되지 않습니다."
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "이미지나 사진을 만들고 편집합니다"
-
-#~ msgid "Could not open"
-#~ msgstr "열기 실패"
-
-#~ msgid ""
-#~ "Click to update preview\n"
-#~ "%s  Click to force update even if preview is up-to-date"
-#~ msgstr ""
-#~ "미리보기를 갱신하려면 클릭하십시오\n"
-#~ "최신의 미리보기라도 강제로 갱신하려면 %s 클릭하십시오."
-
-#~ msgid "No Selection"
-#~ msgstr "선택 없음."
-
-#~ msgid "Thumbnail %d of %d"
-#~ msgstr "썸네일 %d / %d"
-
-#~ msgid "Modify Curves for Channel:"
-#~ msgstr "채널의 곡선 수정:"
-
-#~ msgid "Modify Levels for Channel:"
-#~ msgstr "채널의 레벨 변경:"
-
-#~ msgid "/View/Zoom/1:4"
-#~ msgstr "/보기/확대/1:4"
-
-#~ msgid "/View/Zoom/1:8"
-#~ msgstr "/보기/확대/1:8"
-
-#~ msgid "Cannot create folder: %s"
-#~ msgstr "폴더를 만들 수 없습니다: %s"
-
-#~ msgid "The GIMP (unstable)"
-#~ msgstr "김프 (개발버전)"
