@@ -168,11 +168,13 @@ void  gimp_dnd_color_dest_remove   (GtkWidget            *widget);
 
 /*  svg dnd functions  */
 
-typedef GimpVectors * (* GimpDndDragSvgFunc) (GtkWidget     *widget,
-                                              gpointer       data);
-typedef void          (* GimpDndDropSvgFunc) (GtkWidget     *widget,
-                                              GimpVectors   *vectors,
-                                              gpointer       data);
+typedef guchar * (* GimpDndDragSvgFunc) (GtkWidget    *widget,
+                                         gint         *svg_data_len,
+                                         gpointer      data);
+typedef void     (* GimpDndDropSvgFunc) (GtkWidget    *widget,
+                                         const guchar *svg_data,
+                                         gint          svg_data_len,
+                                         gpointer      data);
 
 void  gimp_dnd_svg_source_add    (GtkWidget          *widget,
                                   GimpDndDragSvgFunc  get_svg_func,

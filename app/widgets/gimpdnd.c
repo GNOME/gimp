@@ -1406,17 +1406,16 @@ gimp_dnd_get_svg_data (GtkWidget *widget,
                        gint      *format,
                        gint      *length)
 {
-  GimpVectors *vectors;
-  guint8      *vals;
+  guchar *svg_data;
+  gint    svg_data_length;
 
-  vectors = (* (GimpDndDragSvgFunc) get_svg_func) (widget, get_svg_data);
+  svg_data = (* (GimpDndDragSvgFunc) get_svg_func) (widget, &svg_data_length,
+                                                    get_svg_data);
 
-  vals = NULL;
+  *format = 8;
+  *length = svg_data_length;
 
-  *format = 0;
-  *length = 0;
-
-  return (guchar *) vals;
+  return svg_data;
 }
 
 static void
@@ -1427,20 +1426,13 @@ gimp_dnd_set_svg_data (GtkWidget *widget,
                        gint       format,
                        gint       length)
 {
-  GimpVectors *vectors;
-  guint8      *svg_data;
-
   if (format != 8)
     {
       g_warning ("Received invalid SVG data!");
       return;
     }
 
-  svg_data = (guint8 *) vals;
-
-  vectors = NULL;
-
-  (* (GimpDndDropSvgFunc) set_svg_func) (widget, vectors, set_svg_data);
+  (* (GimpDndDropSvgFunc) set_svg_func) (widget, vals, length, set_svg_data);
 }
 
 void

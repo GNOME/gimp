@@ -1,5 +1,10 @@
 2003-12-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.[ch]: changed unused SVG dnd API to speak in
+	terms of "guchar *data", "gint data_len" instead of GimpVectors.
+
+2003-12-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.h: sanitized DND identifiers
 	(e.g. GIMP_BRUSH -> application/x-gimp-brush-name).
 
