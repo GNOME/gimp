@@ -1,3 +1,10 @@
+2003-05-11  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/guides.pdb: added a missing break that broke
+	gimp_image_find_next_guide(). Fixes bug #112717.
+
+	* app/pdb/guides_cmds.c: regenerated.
+	
 2003-05-09  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpselectioneditor.[ch]: added a "Stroke Selection"

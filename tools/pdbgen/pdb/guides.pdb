@@ -167,6 +167,7 @@ HELP
           else
             {
               next_guide = g->guide_ID;
+	      break;
             }
         }
 

@@ -319,6 +319,7 @@ image_find_next_guide_invoker (Gimp     *gimp,
 	      else
 		{
 		  next_guide = g->guide_ID;
+		  break;
 		}
 	    }
     
