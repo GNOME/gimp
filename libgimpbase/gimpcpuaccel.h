@@ -16,13 +16,33 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DETECT_MMX_H__
-#define __DETECT_MMX_H__
+/*
+ * CPU acceleration detection was taken from DirectFB but seems to be
+ * originating from mpeg2dec with the following copyright:
+ *
+ * Copyright (C) 1999-2001 Aaron Holtzman <aholtzma@ess.engr.uvic.ca>
+ */
+
+#ifndef __CPU_ACCEL_H__
+#define __CPU_ACCEL_H__
 
 
-#ifdef HAVE_ASM_MMX
-gulong  intel_cpu_features (void);
-#endif
+/* generic accelerations */
+#define CPU_ACCEL_MLIB           0x00000001
+
+/* x86 accelerations */
+#define CPU_ACCEL_X86_MMX        0x80000000
+#define CPU_ACCEL_X86_3DNOW      0x40000000
+#define CPU_ACCEL_X86_MMXEXT     0x20000000
+#define CPU_ACCEL_X86_SSE        0x10000000
+#define CPU_ACCEL_X86_SSE2       0x08000000
+
+/* powerpc accelerations */
+#define CPU_ACCEL_PPC_ALTIVEC    0x04000000
 
 
-#endif  /* __DETECT_MMX__ */
+guint32  cpu_accel (void) G_GNUC_CONST;
+
+
+#endif  /* __CPU_ACCEL_H__ */
+

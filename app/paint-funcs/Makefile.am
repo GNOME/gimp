@@ -2,19 +2,11 @@
 
 noinst_LIBRARIES = libapppaint-funcs.a
 
-if HAVE_ASM_MMX
-mmx_sources = paint-funcs-simd.S
-else
-mmx_sources =
-endif
-
 libapppaint_funcs_a_SOURCES = \
 	paint-funcs-types.h	\
 	paint-funcs.c		\
 	paint-funcs.h		\
-	paint-funcs-generic.h	\
-	paint-funcs-mmx.h	\
-	$(mmx_sources)
+	paint-funcs-generic.h
 
 INCLUDES = \
 	-I$(top_srcdir)		\

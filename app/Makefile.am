@@ -26,24 +26,22 @@ scriptdata =
 bin_PROGRAMS = gimp-1.3
 
 gimp_1_3_SOURCES = \
-	appenv.h		\
-	app_procs.c		\
-	app_procs.h		\
-	main.c			\
-	batch.c			\
-	batch.h			\
-	errors.c		\
-	errors.h		\
-	gimp-intl.h		\
-	libgimp_glue.c		\
+	appenv.h	\
+	app_procs.c	\
+	app_procs.h	\
+	main.c		\
+	batch.c		\
+	batch.h		\
+	errors.c	\
+	errors.h	\
+	gimp-intl.h	\
+	libgimp_glue.c	\
 	libgimp_glue.h
 
 EXTRA_DIST = \
-	makefile.msc			\
-	gimp.rc				\
-	wilber.ico			\
-	arch/i386/mmx/detect_mmx.S	\
-	arch/i386/mmx/paint_funcs_mmx.S
+	makefile.msc	\
+	gimp.rc		\
+	wilber.ico
 
 if HAVE_GLIBC_REGEX
 REGEXREPL =

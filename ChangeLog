@@ -1,3 +1,25 @@
+2003-07-04  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: redone target platform detection and MMX assembly
+	checks. Basically copied from DirectFB.
+
+	* app/Makefile.am
+	* app/arch/i386/mmx/detect_mmx.S
+	* app/arch/i386/mmx/paint_funcs_mmx.S
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/paint-funcs-mmx.h
+	* app/paint-funcs/paint-funcs-simd.S: removed the old MMX routines.
+	New ones will come instead.
+
+	* app/base/Makefile.am
+	* app/base/detect-mmx.[Sh]: removed these two files...
+
+	* app/base/cpu-accel.[ch]: ... and added new ones that do more
+	fine-grained cpu acceleration detection. Again taken from DirectFB
+	but the code is originally from mpeg2dec.
+
+	* app/base/base.c: print results from cpu feature tests.
+
 2003-07-04  Dave Neary  <bolsh@gimp.org>
 
 	* app/core/gimpdrawable-bucket-fill.c: Add alpha channel

@@ -2,12 +2,6 @@
 
 noinst_LIBRARIES = libappbase.a
 
-if HAVE_ASM_MMX
-mmx_sources = detect-mmx.S
-else
-mmx_sources =
-endif
-
 libappbase_a_SOURCES = \
 	base.c			\
 	base.h			\
@@ -24,8 +18,8 @@ libappbase_a_SOURCES = \
 	colorize.h		\
 	curves.c		\
 	curves.h		\
-	$(mmx_sources)		\
-	detect-mmx.h		\
+	cpu-accel.c		\
+	cpu-accel.h		\
 	gimphistogram.c		\
 	gimphistogram.h		\
 	gimplut.c		\

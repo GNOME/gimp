@@ -41,7 +41,7 @@
 #include "paint-funcs/paint-funcs.h"
 
 #include "base.h"
-#include "detect-mmx.h"
+#include "cpu-accel.h"
 #include "temp-buf.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
@@ -71,11 +71,24 @@ base_init (GimpBaseConfig *config,
 
   base_config = config;
 
-#ifdef ENABLE_MMX
-#ifdef HAVE_ASM_MMX
-  use_mmx = use_mmx && (intel_cpu_features() & (1 << 23)) ? 1 : 0;
-  g_print ("using MMX: %s\n", use_mmx ? "yes" : "no");
+#ifdef USE_MMX
+  if (use_mmx)
+    {
+#ifdef ARCH_X86
+      g_printerr ("Testing CPU features...\n");
+      g_printerr ("  mmx    : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_MMX)    ? "yes" : "no");
+      g_printerr ("  3dnow  : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_3DNOW)  ? "yes" : "no");
+      g_printerr ("  mmxext : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_MMXEXT) ? "yes" : "no");
+      g_printerr ("  sse    : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_SSE)    ? "yes" : "no");
+      g_printerr ("  sse2   : %s\n",
+		  (cpu_accel() & CPU_ACCEL_X86_SSE2)   ? "yes" : "no");
+      g_printerr ("\n");
 #endif
+    }
 #endif
 
   tile_cache_init (config->tile_cache_size);
