@@ -167,8 +167,9 @@ gimp_config_serialize_changed_properties (GObject *new,
 
   for (list = diff; list; list = g_list_next (list))
     {
-      GParamSpec *prop_spec;
-      GValue      new_value = { 0, };
+      GParamSpec  *prop_spec;
+      const gchar *blurb;
+      GValue       new_value = { 0, };
 
       prop_spec = (GParamSpec *) list->data;
 
