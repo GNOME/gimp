@@ -68,37 +68,6 @@ gimp_displays_delete (Gimp *gimp)
     }
 }
 
-GimpDisplay *
-gdisplays_check_valid (GimpDisplay *gtest,
-		       GimpImage   *gimage)
-{
-  /* Give a gdisp check that it is still valid and points to the required
-   * GimpImage. If not return the first gDisplay that does point to the
-   * gimage. If none found return NULL;
-   */
-
-  GimpDisplay *gdisp;
-  GimpDisplay *gdisp_found = NULL;
-  GList       *list;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  for (list = GIMP_LIST (gimage->gimp->displays)->list;
-       list;
-       list = g_list_next (list))
-    {
-      gdisp = (GimpDisplay *) list->data;
-
-      if (gdisp == gtest)
-	return gtest;
-
-      if (!gdisp_found && gdisp->gimage == gimage)
-	gdisp_found = gdisp;
-    }
-
-  return gdisp_found;
-}
-
 /* Force all gdisplays to finish their idlerender projection */
 void
 gimp_displays_finish_draw (Gimp *gimp)

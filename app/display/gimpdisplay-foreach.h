@@ -20,18 +20,15 @@
 #define __GIMP_DISPLAY_FOREACH_H__
 
 
-GimpDisplay * gdisplays_check_valid             (GimpDisplay *gdisp,
-                                                 GimpImage   *gimage);
+gboolean   gimp_displays_dirty       (Gimp      *gimp);
+void       gimp_displays_delete      (Gimp      *gimp);
+void       gimp_displays_finish_draw (Gimp      *gimp);
+void       gimp_displays_reconnect   (Gimp      *gimp,
+                                      GimpImage *old,
+                                      GimpImage *new);
 
-gboolean      gimp_displays_dirty               (Gimp        *gimp);
-void          gimp_displays_delete              (Gimp        *gimp);
-void          gimp_displays_finish_draw         (Gimp        *gimp);
-void          gimp_displays_reconnect           (Gimp        *gimp,
-                                                 GimpImage   *old,
-                                                 GimpImage   *new);
-
-void          gimp_displays_set_busy            (Gimp        *gimp);
-void          gimp_displays_unset_busy          (Gimp        *gimp);
+void       gimp_displays_set_busy    (Gimp      *gimp);
+void       gimp_displays_unset_busy  (Gimp      *gimp);
 
 
 #endif /*  __GIMP_DISPLAY_FOREACH_H__  */

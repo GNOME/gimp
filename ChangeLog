@@ -1,3 +1,32 @@
+2003-10-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_tool_events): call
+	tool_manager_oper_active_update() also on GDK_ENTER_NOTIFY,
+	GDK_LEAVE_NOTIFY, GDK_PROXIMITY_IN and GDK_PROXIMITY_OUT so the
+	active tool's state is updated when the current device
+	enters/leaves the canvas area.
+
+	* app/tools/gimpmovetool.[ch]: added GimpTool::oper_update() and
+	prelight the guide which will be moved there. Prelight the guide
+	only while the while the cursor is in the guide's sensitive area,
+	not until another guide is selected.
+	Feels better and fixes bug #125474.
+
+	Removed "guide_disp" member from the GimpMoveTool because
+	GipmTool::oper_update() is called reliably now and we don't need
+	to worry about guide prelighting across different displays any
+	more.
+
+	(gimp_move_tool_cursor_update): removed guide prelighting code,
+	cleaned up and simplified.
+
+	(gimp_move_tool_button_press): never activate the tool after
+	calling init_edit_selection(). Fixes more tool control warnings.
+
+	* app/display/gimpdisplay-foreach.[ch]: removed
+	gdisplays_check_valid().
+
 2003-10-27  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-regression.c: Added functions to

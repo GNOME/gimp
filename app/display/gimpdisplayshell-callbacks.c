@@ -455,6 +455,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           return TRUE;
 
         update_cursor = TRUE;
+
+        tool_manager_oper_update_active (gimp,
+                                         &image_coords, state,
+                                         gdisp);
       }
       break;
 
@@ -469,15 +473,26 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         shell->proximity = FALSE;
         gimp_display_shell_update_cursor (shell, -1, -1);
+
+        tool_manager_oper_update_active (gimp,
+                                         &image_coords, state,
+                                         gdisp);
       }
       break;
 
     case GDK_PROXIMITY_IN:
+      tool_manager_oper_update_active (gimp,
+                                       &image_coords, state,
+                                       gdisp);
       break;
 
     case GDK_PROXIMITY_OUT:
       shell->proximity = FALSE;
       gimp_display_shell_update_cursor (shell, -1, -1);
+
+      tool_manager_oper_update_active (gimp,
+                                       &image_coords, state,
+                                       gdisp);
       break;
 
     case GDK_FOCUS_CHANGE:
