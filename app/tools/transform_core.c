@@ -1581,6 +1581,11 @@ transform_core_paste (GImage       *gimage,
     {
       layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), tiles, _("Transformation"),
 				    OPAQUE_OPACITY, NORMAL_MODE);
+      if (!layer)
+        {
+          g_message(_("transform_core_paste: layer_new_frome_tiles() failed"));
+          return NULL;
+        }
       GIMP_DRAWABLE (layer)->offset_x = tiles->x;
       GIMP_DRAWABLE (layer)->offset_y = tiles->y;
 

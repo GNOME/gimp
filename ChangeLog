@@ -1,3 +1,9 @@
+Sat Jan 21 21:00:00 CST 2000 Seth Burgess <sjburges@gimp.org>
+
+	* app/transform_core.c: applied Steinar's 
+        <sgunderson@bigfoot.com> fix for a NULL pointer 
+        dereference in the transform core.
+        
 Sat Jan 22 01:47:30 GMT 2000 Nick Lamb <njl195@zepler.org.uk>
 
 	* plug-ins/common/tiff.c: Fix bug reported by Marc Lehmann
