@@ -86,6 +86,7 @@ gimp_OBJECTS = \
 	gimpparasite.obj\
 	gimppixelrgn.obj\
 	gimpprotocol.obj\
+	gimpselection.obj\
 	gimptile.obj	\
 	gimpunit.obj	\
 	gimpwire.obj	\

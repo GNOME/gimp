@@ -24,7 +24,7 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate rotators
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd randomize ripple rotate
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each

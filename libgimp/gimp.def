@@ -225,6 +225,8 @@ EXPORTS
 	gimp_run_procedure
 	gimp_run_procedure2
 	gimp_run_temp
+	gimp_selection_float
+	gimp_selection_is_empty
 	gimp_set_data
 	gimp_tile_cache_ntiles
 	gimp_tile_cache_size

@@ -1,3 +1,13 @@
+1999-11-14  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimpexport.c: Include config.h for ENABLE_NLS.
+
+	* libgimp/makefile.{cygwin,msc}: Add gimpselection.
+
+	* libgimp/gimp.def: Add its entry points.
+
+	* plug-ins/makefile.{cygwin,msc}: Remove rotators.
+
 Sat Nov 13 22:13:01 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/Makefile.am
