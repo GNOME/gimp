@@ -954,10 +954,10 @@ gimp_channel_bounds (GimpChannel *mask,
 
   mask->bounds_known = TRUE;
 
-  *x1 = tx1;
-  *x2 = tx2;
-  *y1 = ty1;
-  *y2 = ty2;
+  *x1 = mask->x1;
+  *x2 = mask->x2;
+  *y1 = mask->y1;
+  *y2 = mask->y2;
 
   return !mask->empty;
 }

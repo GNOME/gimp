@@ -1,5 +1,14 @@
 2003-06-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_bounds): always return
+	channel->x1,y1,x2,y2, *not* tx1,ty1,tx2,ty2 since the latter
+	contain bogus values if the mask is empty. Fixes bug #114419.
+
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: cleaned up
+	while searching the bug.
+
+2003-06-05  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/predator.scm (script-fu-predator): 
 	moved gimp-undo-push-group-end to the end of the script.
 	Fixes bug #114416.
