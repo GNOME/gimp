@@ -5,15 +5,24 @@
 <book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
 
   <bookinfo>
-    <title>GIMP Base Library Reference Manual</title>
+    <title>GIMP Config Library Reference Manual</title>
     <releaseinfo>
       for GIMP <xi:include href="version" parse="text"/>
     </releaseinfo>
   </bookinfo>
 
-  <part id="libgimpbase">
+  <part id="libgimpconfig">
     <title>GIMP Config Library</title>
-    <xi:include href="xml/gimpbaseenums.xml" />
+    <xi:include href="xml/gimpconfig-deserialize.xml" />
+    <xi:include href="xml/gimpconfig-error.xml" />
+    <xi:include href="xml/gimpconfig-iface.xml" />
+    <xi:include href="xml/gimpconfig-params.xml" />
+    <xi:include href="xml/gimpconfig-path.xml" />
+    <xi:include href="xml/gimpconfig-serialize.xml" />
+    <xi:include href="xml/gimpconfigtypes.xml" />
+    <xi:include href="xml/gimpconfig-utils.xml" />
+    <xi:include href="xml/gimpconfigwriter.xml" />
+    <xi:include href="xml/gimpscanner.xml" />
   </part>
 
 </book>

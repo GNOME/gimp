@@ -1,0 +1,320 @@
+<!-- ##### SECTION ./tmpl/gimpbaseenums.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpbaseenums.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpbaseenums.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpbaseenums.sgml:Title ##### -->
+gimpbaseenums
+
+
+<!-- ##### SECTION ./tmpl/gimpbasetypes.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpbasetypes.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpbasetypes.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpbasetypes.sgml:Title ##### -->
+gimpbasetypes
+
+
+<!-- ##### SECTION ./tmpl/gimpchecks.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpchecks.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpchecks.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpchecks.sgml:Title ##### -->
+gimpchecks
+
+
+<!-- ##### SECTION ./tmpl/gimpdatafiles.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpdatafiles.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpdatafiles.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpdatafiles.sgml:Title ##### -->
+gimpdatafiles
+
+
+<!-- ##### SECTION ./tmpl/gimpenv.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpenv.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpenv.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpenv.sgml:Title ##### -->
+gimpenv
+
+
+<!-- ##### SECTION ./tmpl/gimplimits.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimplimits.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimplimits.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimplimits.sgml:Title ##### -->
+gimplimits
+
+
+<!-- ##### SECTION ./tmpl/gimpmemsize.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpmemsize.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpmemsize.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpmemsize.sgml:Title ##### -->
+gimpmemsize
+
+
+<!-- ##### SECTION ./tmpl/gimpparasite.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpparasite.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpparasite.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpparasite.sgml:Title ##### -->
+gimpparasite
+
+
+<!-- ##### SECTION ./tmpl/gimpparasiteio.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpparasiteio.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpparasiteio.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpparasiteio.sgml:Title ##### -->
+gimpparasiteio
+
+
+<!-- ##### SECTION ./tmpl/gimppath.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimppath.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimppath.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimppath.sgml:Title ##### -->
+gimppath
+
+
+<!-- ##### SECTION ./tmpl/gimpprotocol.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpprotocol.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpprotocol.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpprotocol.sgml:Title ##### -->
+gimpprotocol
+
+
+<!-- ##### SECTION ./tmpl/gimpsignal.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpsignal.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpsignal.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpsignal.sgml:Title ##### -->
+gimpsignal
+
+
+<!-- ##### SECTION ./tmpl/gimpunit.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpunit.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpunit.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpunit.sgml:Title ##### -->
+gimpunit
+
+
+<!-- ##### SECTION ./tmpl/gimputils.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimputils.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimputils.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimputils.sgml:Title ##### -->
+gimputils
+
+
+<!-- ##### SECTION ./tmpl/gimpversion.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpversion.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpversion.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpversion.sgml:Title ##### -->
+gimpversion
+
+
+<!-- ##### SECTION ./tmpl/gimpwire.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpwire.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/gimpwire.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/gimpwire.sgml:Title ##### -->
+gimpwire
+
+

@@ -10,13 +10,17 @@ Serializing interface for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
 
 <!-- ##### FUNCTION gimp_config_serialize_properties ##### -->
 <para>
 
 </para>
 
-@config:
+@config: 
 @writer: 
 @Returns: 
 
@@ -26,7 +30,18 @@ Serializing interface for libgimpconfig.
 
 </para>
 
-@config:
+@config: 
+@writer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_serialize_property ##### -->
+<para>
+
+</para>
+
+@config: 
+@param_spec: 
 @writer: 
 @Returns: 
 
@@ -36,8 +51,8 @@ Serializing interface for libgimpconfig.
 
 </para>
 
-@value:
-@str:
+@value: 
+@str: 
 @escaped: 
 @Returns: 
 

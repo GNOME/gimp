@@ -1,7 +1,26 @@
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	libgimpconfig/version: oop, removed
-	libgimpconfig/.cvsignore: added
+	* Makefile.am: add libgimpconfig to subdirs
+	
+	* libgimpconfig/libgimpconfig-docs.sgml
+	* libgimpconfig/libgimpconfig-sections.txt
+	* libgimpconfig/tmpl/gimpconfig-deserialize.sgml
+	* libgimpconfig/tmpl/gimpconfig-error.sgml
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml
+	* libgimpconfig/tmpl/gimpconfig-params.sgml
+	* libgimpconfig/tmpl/gimpconfig-path.sgml
+	* libgimpconfig/tmpl/gimpconfig-serialize.sgml
+	* libgimpconfig/tmpl/gimpconfig-utils.sgml
+	* libgimpconfig/tmpl/gimpconfigtypes.sgml
+	* libgimpconfig/tmpl/gimpconfigwriter.sgml
+	* libgimpconfig/tmpl/gimpscanner.sgml
+	* libgimpconfig/tmpl/libgimpconfig-unused.sgml: added or
+	corrected
+
+2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpconfig/version: oop, removed
+	* libgimpconfig/.cvsignore: added
 
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 

@@ -10,14 +10,30 @@ Deserializing code for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
 
 <!-- ##### FUNCTION gimp_config_deserialize_properties ##### -->
 <para>
 
 </para>
 
-@config:
-@scanner:
+@config: 
+@scanner: 
 @nest_level: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_deserialize_property ##### -->
+<para>
+
+</para>
+
+@config: 
+@scanner: 
+@nest_level: 
+@Returns: 
+
 

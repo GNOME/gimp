@@ -10,27 +10,39 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION See_Also ##### -->
+<para>
 
+</para>
 
 <!-- ##### FUNCTION gimp_config_writer_new_file ##### -->
 <para>
 
 </para>
 
-@filename:
-@atomic:
-@header:
+@filename: 
+@atomic: 
+@header: 
 @error: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_config_writer_comment_mode ##### -->
+<!-- ##### FUNCTION gimp_config_writer_new_fd ##### -->
 <para>
 
 </para>
 
-@writer:
-@enable:
+@fd: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_new_string ##### -->
+<para>
+
+</para>
+
+@string: 
+@Returns: 
 
 
 <!-- ##### FUNCTION gimp_config_writer_open ##### -->
@@ -38,8 +50,17 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
-@writer:
-@name:
+@writer: 
+@name: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_comment_mode ##### -->
+<para>
+
+</para>
+
+@writer: 
+@enable: 
 
 
 <!-- ##### FUNCTION gimp_config_writer_print ##### -->
@@ -47,9 +68,9 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
-@writer:
-@string:
-@len:
+@writer: 
+@string: 
+@len: 
 
 
 <!-- ##### FUNCTION gimp_config_writer_printf ##### -->
@@ -57,18 +78,9 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
-@writer:
-@format:
-@Varargs:
-
-
-<!-- ##### FUNCTION gimp_config_writer_string ##### -->
-<para>
-
-</para>
-
-@writer:
-@string:
+@writer: 
+@format: 
+@Varargs: 
 
 
 <!-- ##### FUNCTION gimp_config_writer_identifier ##### -->
@@ -76,33 +88,27 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
-@writer:
-@identifier:
+@writer: 
+@identifier: 
 
 
-<!-- ##### FUNCTION gimp_config_writer_revert ##### -->
+<!-- ##### FUNCTION gimp_config_writer_string ##### -->
 <para>
 
 </para>
 
-@writer:
+@writer: 
+@string: 
 
 
-<!-- ##### FUNCTION gimp_config_writer_close ##### -->
+<!-- ##### FUNCTION gimp_config_writer_data ##### -->
 <para>
 
 </para>
 
-@writer:
-
-<!-- ##### FUNCTION gimp_config_writer_finish ##### -->
-<para>
-
-</para>
-
-@writer:
-@footer:
-@error:
+@writer: 
+@length: 
+@data: 
 
 
 <!-- ##### FUNCTION gimp_config_writer_comment ##### -->
@@ -110,5 +116,42 @@ Functions for writing config info to a file for libgimpconfig.
 
 </para>
 
-@writer:
-@comment:
+@writer: 
+@comment: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_linefeed ##### -->
+<para>
+
+</para>
+
+@writer: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_revert ##### -->
+<para>
+
+</para>
+
+@writer: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_close ##### -->
+<para>
+
+</para>
+
+@writer: 
+
+
+<!-- ##### FUNCTION gimp_config_writer_finish ##### -->
+<para>
+
+</para>
+
+@writer: 
+@footer: 
+@error: 
+@Returns: 
+
+

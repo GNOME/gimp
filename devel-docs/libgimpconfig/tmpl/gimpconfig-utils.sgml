@@ -10,6 +10,33 @@ Miscellaneous utility functions for libgimpconfig.
 
 </para>
 
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_config_diff ##### -->
+<para>
+
+</para>
+
+@a: 
+@b: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_sync ##### -->
+<para>
+
+</para>
+
+@src: 
+@dest: 
+@flags: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_config_reset_properties ##### -->
 <para>
 
@@ -17,12 +44,13 @@ Miscellaneous utility functions for libgimpconfig.
 
 @config: 
 
+
 <!-- ##### FUNCTION gimp_config_string_append_escaped ##### -->
 <para>
 
 </para>
 
-@string:
-@val:
- 
+@string: 
+@val: 
+
 
