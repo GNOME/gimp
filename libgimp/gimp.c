@@ -113,14 +113,14 @@
 /* Maybe this should go in a public header if we add other things to it */
 typedef enum
 {
-  GIMP_DEBUG_PID                = 1 << 0,
-  GIMP_DEBUG_FATAL_WARNINGS     = 1 << 1,
-  GIMP_DEBUG_QUERY              = 1 << 2,
-  GIMP_DEBUG_INIT               = 1 << 3,
-  GIMP_DEBUG_RUN                = 1 << 4,
-  GIMP_DEBUG_QUIT               = 1 << 5,
+  GIMP_DEBUG_PID            = 1 << 0,
+  GIMP_DEBUG_FATAL_WARNINGS = 1 << 1,
+  GIMP_DEBUG_QUERY          = 1 << 2,
+  GIMP_DEBUG_INIT           = 1 << 3,
+  GIMP_DEBUG_RUN            = 1 << 4,
+  GIMP_DEBUG_QUIT           = 1 << 5,
 
-  GIMP_DEBUG_DEFAULT            = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
+  GIMP_DEBUG_DEFAULT        = (GIMP_DEBUG_RUN | GIMP_DEBUG_FATAL_WARNINGS)
 } GimpDebugFlag;
 
 #define WRITE_BUFFER_SIZE  1024
@@ -281,7 +281,8 @@ gimp_main (const GimpPlugInInfo *info,
 
   if ((argc != 6) || (strcmp (argv[1], "-gimp") != 0))
     {
-      g_printerr ("%s is a gimp plug-in and must be run by the gimp to be used\n", argv[0]);
+      g_printerr ("%s is a GIMP plug-in and must be run by GIMP to be used\n",
+                  argv[0]);
       return 1;
     }
 
@@ -367,7 +368,8 @@ gimp_main (const GimpPlugInInfo *info,
     GimpUnitVTable vtable;
 
     vtable.unit_get_number_of_units = _gimp_unit_cache_get_number_of_units;
-    vtable.unit_get_number_of_built_in_units = _gimp_unit_cache_get_number_of_built_in_units;
+    vtable.unit_get_number_of_built_in_units =
+      _gimp_unit_cache_get_number_of_built_in_units;
     vtable.unit_new                 = _gimp_unit_cache_new;
     vtable.unit_get_deletion_flag   = _gimp_unit_cache_get_deletion_flag;
     vtable.unit_set_deletion_flag   = _gimp_unit_cache_set_deletion_flag;
@@ -943,11 +945,12 @@ gimp_run_procedure2 (const gchar     *name,
   switch (return_vals[0].data.d_status)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      /*g_warning ("an execution error occured while trying to run: \"%s\"", name);*/
       break;
+
     case GIMP_PDB_CALLING_ERROR:
-      g_warning ("a calling error occured while trying to run: \"%s\"", name);
+      g_printerr ("a calling error occured while trying to run: \"%s\"", name);
       break;
+
     default:
       break;
     }
