@@ -1,3 +1,9 @@
+2001-10-08  Dave Neary <nearyd@eircom.net>
+
+        * HACKING
+        * RELEASE-TO-CVS.patch: Added file, and instructions on
+        why/how to use it to HACKING
+
 2001-10-07  DindinX <dindinx@wanadoo.fr>
 
 	* plug-ins/common/apply_lens.c: little optimisation by avoiding some

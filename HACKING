@@ -56,7 +56,15 @@ We will try our best to keep the GIMP CVS tree compileable against
 the latest development releases of glib, pango, atk and gtk+. Since
 it is sometimes difficult to get a working state out of CVS, you may
 prefer to use these releases instead. Get them from 
-ftp://ftp.gtk.org/pub/gtk/v1.3/.
+ftp://ftp.gtk.org/pub/gtk/v1.3/. 
+
+As we said above, GIMP CVS will, as far as possible, be kept 
+compatible with the most current release. This means that
+occasionally it will not build with CVS glib, gtk+, atk and
+pango. To allow people to build with the CVS versions of these,
+the file RELEASE-TO-CVS.patch is included. To patch GIMP CVS 
+with this file, run patch -p0 < RELEASE-TO-CVS.patch in the root 
+gimp directory.
 
 
 Patches
