@@ -898,6 +898,8 @@ file_save_ok_callback (GtkWidget *w,
     {
       s = g_string_new ("Save failed: ");
       g_string_append (s, raw_filename);
+      g_string_append (s, "\nYou might have tried to save an RGB image with");
+      g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
     }
 
   message_box (s->str, NULL, NULL);
@@ -999,6 +1001,8 @@ file_overwrite_yes_callback (GtkWidget *w,
       s = g_string_new ("Save failed: ");
 
       g_string_append (s, overwrite_box->raw_filename);
+      g_string_append (s, "\nYou might have tried to save an RGB image with");
+      g_string_append (s, "\na plug-in that only supports Indexed or Gray images");
 
       message_box (s->str, NULL, NULL);
 

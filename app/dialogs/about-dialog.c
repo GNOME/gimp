@@ -45,7 +45,7 @@ static char *scroll_text[] =
   "Roberto Boyd",
   "Seth Burgess",
   "Brent Burton",
-  "Francisco Bustamente",
+  "Francisco Bustamante",
   "Ed Connel",
   "Andreas Dilger",
   "Misha Dynin",
