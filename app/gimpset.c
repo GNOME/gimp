@@ -20,6 +20,7 @@ enum
 {
   ADD,
   REMOVE,
+  ACTIVE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -53,6 +54,7 @@ gimp_set_init (GimpSet* set)
 	set->list=NULL;
 	set->type=GTK_TYPE_OBJECT;
 	set->handlers=g_array_new(FALSE, FALSE, sizeof(GimpSetHandler));
+	set->active_element=NULL;
 }
 
 static void
@@ -69,6 +71,8 @@ gimp_set_class_init (GimpSetClass* klass)
 		gimp_signal_new ("add", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
 	gimp_set_signals[REMOVE]=
 		gimp_signal_new ("remove", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
+	gimp_set_signals[ACTIVE_CHANGED]=
+		gimp_signal_new ("active_changed", GTK_RUN_FIRST, type, 0, gimp_sigtype_pointer);
 	gtk_object_class_add_signals (object_class,
 				      gimp_set_signals,
 				      LAST_SIGNAL);
@@ -220,6 +224,24 @@ gimp_set_foreach(GimpSet* set, GFunc func, gpointer user_data)
 GtkType
 gimp_set_type (GimpSet* set){
 	return set->type;
+}
+
+void
+gimp_set_set_active (GimpSet* set, gpointer ob)
+{
+	if (ob != set->active_element && gimp_set_have(set, ob)) {
+		/* g_warning("Gimp_Set got new active element"); */
+		set->active_element = ob;
+        	gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[ACTIVE_CHANGED], ob);
+	}
+}
+
+gpointer
+gimp_set_get_active(GimpSet* set)
+{
+	if (gimp_set_have(set, set->active_element))
+		return set->active_element;
+	return NULL;
 }
 
 GimpSetHandlerId

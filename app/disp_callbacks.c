@@ -25,6 +25,7 @@
 #include "gdisplay.h"
 #include "general.h"
 #include "gimprc.h"
+#include "gimpset.h"
 #include "interface.h"
 #include "layer_select.h"
 #include "move.h"
@@ -195,6 +196,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_BUTTON_PRESS:
       bevent = (GdkEventButton *) event;
       state = bevent->state;
+
+      /* Set the active Image to the image where the user clicked */
+      gimp_set_set_active(image_context, gdisp->gimage);
 
       switch (bevent->button)
 	{
@@ -383,6 +387,9 @@ gdisplay_canvas_events (GtkWidget *canvas,
     case GDK_KEY_PRESS:
       kevent = (GdkEventKey *) event;
       state = kevent->state;
+
+      /* Set the active Image to the image where the user typed */
+      gimp_set_set_active(image_context, gdisp->gimage);
 
       switch (kevent->keyval)
 	{

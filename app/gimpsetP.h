@@ -10,6 +10,7 @@ struct _GimpSet{
 	GSList* list;
 	GArray* handlers;
 	gboolean weak;
+	gpointer active_element;
 };
 
 struct _GimpSetClass{

@@ -104,6 +104,7 @@ struct _LayersDialog {
   GimpImage* gimage;
   Layer * active_layer;
   Channel * active_channel;
+  gboolean auto_follow_active;
   Layer * floating_sel;
   GSList * layer_widgets;
 };
@@ -172,9 +173,11 @@ static void layers_dialog_flatten_image_callback (GtkWidget *, gpointer);
 static void layers_dialog_alpha_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_mask_select_callback (GtkWidget *, gpointer);
 static void layers_dialog_add_alpha_channel_callback (GtkWidget *, gpointer);
+static gint lc_dialog_auto_callback (GtkWidget *, gpointer);
 static gint lc_dialog_close_callback (GtkWidget *, gpointer);
 
 static void lc_dialog_update_cb (GimpSet *, GimpImage *, gpointer);
+static void lc_dialog_change_image (GimpSet *, GimpImage *, gpointer);
 
 /*  layer widget function prototypes  */
 static LayerWidget *layer_widget_get_ID (Layer *);
@@ -314,6 +317,7 @@ void
 lc_dialog_create (GimpImage* gimage)
 {
   GtkWidget *util_box;
+  GtkWidget *auto_button;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *notebook;
@@ -363,6 +367,16 @@ lc_dialog_create (GimpImage* gimage)
 	gtk_option_menu_set_history (GTK_OPTION_MENU (image_option_menu), default_index);
       gtk_widget_show (label);
 
+      /*  The Auto-button */
+
+      auto_button = gtk_toggle_button_new_with_label (_("Auto"));
+      gtk_box_pack_start (GTK_BOX (util_box), auto_button, FALSE, FALSE, 2);
+      gtk_signal_connect_object (GTK_OBJECT (auto_button), "clicked",
+			  (GtkSignalFunc) lc_dialog_auto_callback,
+                          GTK_OBJECT(auto_button));
+      gtk_widget_show (auto_button);
+      /* State will be set, when LayersD exists (see below) */
+
       gtk_widget_show (util_box);
 
       separator = gtk_hseparator_new ();
@@ -378,6 +392,10 @@ lc_dialog_create (GimpImage* gimage)
 				layers_dialog_create (),
 				label);
       gtk_widget_show (label);
+
+      /* Now layersD exists, we can set the Auto-togglebutton */
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (auto_button),
+				    layersD->auto_follow_active);
 
       label = gtk_label_new (_("Channels"));
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
@@ -424,6 +442,8 @@ lc_dialog_create (GimpImage* gimage)
 			  GTK_SIGNAL_FUNC (lc_dialog_update_cb), NULL);
       gtk_signal_connect (GTK_OBJECT (image_context), "remove",
 			  GTK_SIGNAL_FUNC(lc_dialog_update_cb), NULL);
+      gtk_signal_connect (GTK_OBJECT (image_context), "active_changed",
+			  GTK_SIGNAL_FUNC(lc_dialog_change_image), NULL);
       
       layers_dialog_update (gimage);
       channels_dialog_update (gimage);
@@ -1989,6 +2009,16 @@ layers_dialog_add_alpha_channel_callback (GtkWidget *w,
 
 
 static gint
+lc_dialog_auto_callback (GtkWidget *toggle_button, gpointer client_data)
+{
+  if (layersD) 
+    layersD->auto_follow_active = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(toggle_button));
+
+  return TRUE;
+}
+
+
+static gint
 lc_dialog_close_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
@@ -2007,6 +2037,21 @@ lc_dialog_update_cb (GimpSet   *set,
 		     gpointer   user_data)
 {
   lc_dialog_update_image_list ();
+}
+
+
+static void
+lc_dialog_change_image (GimpSet   *set,
+		        GimpImage *gimage,
+		        gpointer   user_data)
+{
+  if (layersD && layersD->auto_follow_active && gimage) {
+    layers_dialog_update (gimage);
+    channels_dialog_update (gimage);
+    paths_dialog_update (gimage);
+    lc_dialog_update_image_list ();
+    gdisplays_flush ();
+  }
 }
 
 

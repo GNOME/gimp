@@ -1,3 +1,14 @@
+1999-06-02  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/disp_callbacks.c
+	* app/gimpset.[ch]
+	* app/gimpsetP.h
+	* app/layers_dialog.c: applied Simon's <Simon.Budig@unix-ag.org>
+	active image patch.
+	GimpSet has an "active_changed" signal now. The image_context
+	emits it whenever there is a button or key event in the gdisplay
+	and the L&C dlg. connects to it for the new auto-update feature.
+
 1999-06-01  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/commands.[ch]
