@@ -35,6 +35,9 @@ static ProcRecord path_get_point_at_dist_proc;
 static ProcRecord path_get_tattoo_proc;
 static ProcRecord get_path_by_tattoo_proc;
 static ProcRecord path_delete_proc;
+static ProcRecord path_get_locked_proc;
+static ProcRecord path_set_locked_proc;
+static ProcRecord path_set_tattoo_proc;
 
 void
 register_paths_procs (void)
@@ -49,6 +52,9 @@ register_paths_procs (void)
   procedural_db_register (&path_get_tattoo_proc);
   procedural_db_register (&get_path_by_tattoo_proc);
   procedural_db_register (&path_delete_proc);
+  procedural_db_register (&path_get_locked_proc);
+  procedural_db_register (&path_set_locked_proc);
+  procedural_db_register (&path_set_tattoo_proc);
 }
 
 static Argument *
@@ -853,4 +859,273 @@ static ProcRecord path_delete_proc =
   0,
   NULL,
   { { path_delete_invoker } }
+};
+
+static Argument *
+path_get_locked_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *pname;
+  gint32 lockstatus = 0;
+  PathsList *plist;
+  PATHP pptr = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      /* Get the path with the given name */
+      plist = gimage->paths;
+	  
+      if (plist && plist->bz_paths)
+	{
+	  GSList *pl = plist->bz_paths;
+    
+	  while (pl)
+	    {
+	      pptr = pl->data;
+    
+	      if (!strcmp (pname, pptr->name->str))
+		break; /* Found the path */
+    
+	      pl = pl->next;
+	      pptr = NULL;
+	    }
+    
+	  if (pl && pptr)
+	    lockstatus = pptr->locked;
+	  else
+	    success = FALSE;
+	}
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&path_get_locked_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = lockstatus;
+
+  return return_args;
+}
+
+static ProcArg path_get_locked_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "pathname",
+    "the name of the path whose locked status should be obtained"
+  }
+};
+
+static ProcArg path_get_locked_outargs[] =
+{
+  {
+    PDB_INT32,
+    "lockstatus",
+    "The lock status associated with the name path. 0 returned if the path is not locked. 1 is returned if the path is locked"
+  }
+};
+
+static ProcRecord path_get_locked_proc =
+{
+  "gimp_path_get_locked",
+  "Returns the locked status associated with the name path.",
+  "This procedure returns the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  path_get_locked_inargs,
+  1,
+  path_get_locked_outargs,
+  { { path_get_locked_invoker } }
+};
+
+static Argument *
+path_set_locked_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *pname;
+  gint32 lockstatus = 0;
+  PathsList *plist;
+  PATHP pptr = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
+
+  lockstatus = args[2].value.pdb_int;
+
+  if (success)
+    {
+      /* Get the path with the given name */
+      plist = gimage->paths;
+	  
+      if (plist && plist->bz_paths)
+	{
+	  GSList *pl = plist->bz_paths;
+    
+	  while (pl)
+	    {
+	      pptr = pl->data;
+    
+	      if (!strcmp (pname, pptr->name->str))
+		break; /* Found the path */
+    
+	      pl = pl->next;
+	      pptr = NULL;
+	    }
+    
+	  if (pl && pptr && lockstatus >=0 && lockstatus <= 1)
+	    pptr->locked = lockstatus;
+	  else
+	    success = FALSE;
+	}
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&path_set_locked_proc, success);
+}
+
+static ProcArg path_set_locked_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "pathname",
+    "the name of the path whose locked status should be set"
+  },
+  {
+    PDB_INT32,
+    "lockstatus",
+    "The lock status associated with the name path. 0 if the path is not locked. 1 if the path is to be locked"
+  }
+};
+
+static ProcRecord path_set_locked_proc =
+{
+  "gimp_path_set_locked",
+  "Set the locked status associated with the name path.",
+  "This procedure sets the lock status associated with the specified path. A path can be \"locked\" which means that the transformation tool operations will also apply to the path.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  path_set_locked_inargs,
+  0,
+  NULL,
+  { { path_set_locked_invoker } }
+};
+
+static Argument *
+path_set_tattoo_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gchar *pname;
+  gint32 tattovalue = 0;
+  PathsList *plist;
+  PATHP pptr = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
+
+  tattovalue = args[2].value.pdb_int;
+
+  if (success)
+    {
+      /* Get the path with the given name */
+      plist = gimage->paths;
+	  
+      if (plist && plist->bz_paths)
+	{
+	  GSList *pl = plist->bz_paths;
+    
+	  while (pl)
+	    {
+	      pptr = pl->data;
+    
+	      if (!strcmp (pname, pptr->name->str))
+		break; /* Found the path */
+    
+	      pl = pl->next;
+	      pptr = NULL;
+	    }
+    
+	  if (pl && pptr)
+	    pptr->tattoo = tattovalue ;
+	  else
+	    success = FALSE;
+	}
+      else
+	success = FALSE;
+    }
+
+  return procedural_db_return_args (&path_set_tattoo_proc, success);
+}
+
+static ProcArg path_set_tattoo_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    PDB_STRING,
+    "pathname",
+    "the name of the path whose tattoo should be set"
+  },
+  {
+    PDB_INT32,
+    "tattovalue",
+    "The tattoo associated with the name path. Only values returned from 'path_get_tattoo' should be used here"
+  }
+};
+
+static ProcRecord path_set_tattoo_proc =
+{
+  "gimp_path_set_tattoo",
+  "Sets the tattoo associated with the name path.",
+  "This procedure sets the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions. Note that the value passed to this function must have been obtained from a previous call to path_get_tattoo.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  3,
+  path_set_tattoo_inargs,
+  0,
+  NULL,
+  { { path_set_tattoo_invoker } }
 };
