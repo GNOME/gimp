@@ -671,20 +671,21 @@ gdisplay_drag_drop (GtkWidget      *widget,
        */
       if (drawable)
 	{
-          GImage      *gimage;
-	  Layer       *new_layer;
-	  GImage      *dest_gimage;
-	  gint         width, height;
-	  gint         dest_width, dest_height;
-	  gint         off_x, off_y;
-	  TileManager *tiles;
-	  PixelRegion  srcPR, destPR;
-	  guchar       bg[MAX_CHANNELS];
-	  gint         bytes, type;
+          GImage           *src_gimage;
+	  Layer            *new_layer;
+	  GImage           *dest_gimage;
+	  gint              src_width, src_height;
+	  gint              dest_width, dest_height;
+	  gint              off_x, off_y;
+	  TileManager      *tiles;
+	  PixelRegion       srcPR, destPR;
+	  guchar            bg[MAX_CHANNELS];
+	  gint              bytes; 
+          GimpImageBaseType type;
 
-	  gimage = gimp_drawable_gimage (drawable);
-          width  = gimp_drawable_width  (drawable);
-          height = gimp_drawable_height (drawable);
+	  src_gimage = gimp_drawable_gimage (drawable);
+          src_width  = gimp_drawable_width  (drawable);
+          src_height = gimp_drawable_height (drawable);
 
 	  /*  How many bytes in the temp buffer?  */
 	  switch (drawable_type (drawable))
@@ -703,14 +704,14 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	      break;
 	    }
 
-	  gimage_get_background (gimage, drawable, bg);
+	  gimage_get_background (src_gimage, drawable, bg);
 
-	  tiles = tile_manager_new (width, height, bytes);
+	  tiles = tile_manager_new (src_width, src_height, bytes);
 
 	  pixel_region_init (&srcPR, drawable_data (drawable),
-			     0, 0, width, height, FALSE);
+			     0, 0, src_width, src_height, FALSE);
 	  pixel_region_init (&destPR, tiles,
-			     0, 0, width, height, TRUE);
+			     0, 0, src_width, src_height, TRUE);
 
 	  if (type == INDEXED)
 	    /*  If the layer is indexed...we need to extract pixels  */
@@ -729,7 +730,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	  dest_height = dest_gimage->height;
 
 	  new_layer =
-	    layer_new_from_tiles (dest_gimage, tiles, 
+	    layer_new_from_tiles (dest_gimage, gimp_image_base_type_with_alpha(dest_gimage), tiles, 
 				  _("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
 	  tile_manager_destroy (tiles);
@@ -740,8 +741,8 @@ gdisplay_drag_drop (GtkWidget      *widget,
 
 	      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_layer), dest_gimage);
 
-	      off_x = (dest_gimage->width - width) / 2;
-	      off_y = (dest_gimage->height - height) / 2;
+	      off_x = (dest_gimage->width - src_width) / 2;
+	      off_y = (dest_gimage->height - src_height) / 2;
 
 	      layer_translate (new_layer, off_x, off_y);
 

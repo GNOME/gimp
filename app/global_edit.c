@@ -286,7 +286,7 @@ edit_paste (GImage       *gimage,
   int cx, cy;
 
   /*  Make a new layer  */
-  layer = layer_new_from_tiles (gimage, paste, 
+  layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), paste, 
 				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   if (layer)
@@ -355,7 +355,7 @@ edit_paste_as_new (GImage       *invoke,
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
   
-  layer = layer_new_from_tiles (gimage, paste, 
+  layer = layer_new_from_tiles (gimage, gimp_image_base_type_with_alpha (gimage), paste, 
 				_("Pasted Layer"), OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  add the new layer to the image  */

@@ -1579,7 +1579,7 @@ transform_core_paste (GImage       *gimage,
 
   if (new_layer)
     {
-      layer = layer_new_from_tiles (gimage, tiles, _("Transformation"),
+      layer = layer_new_from_tiles (gimage, gimp_drawable_type_with_alpha(drawable), tiles, _("Transformation"),
 				    OPAQUE_OPACITY, NORMAL_MODE);
       GIMP_DRAWABLE (layer)->offset_x = tiles->x;
       GIMP_DRAWABLE (layer)->offset_y = tiles->y;

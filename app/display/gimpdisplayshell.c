@@ -1166,7 +1166,9 @@ toolbox_drag_drop (GtkWidget      *widget,
 
 	      add_alpha_region (&srcPR, &destPR);
 
-	      new_layer = layer_new_from_tiles (new_gimage, tiles,
+	      new_layer = layer_new_from_tiles (new_gimage, 
+                                                gimp_image_base_type_with_alpha(new_gimage), 
+                                                tiles,
 						"", OPAQUE_OPACITY, NORMAL_MODE);
 
 	      tile_manager_destroy (tiles);

@@ -1,3 +1,31 @@
+2000-01-11  Garry R. Osgood <gosgood@idt.net>
+	* app/disp_callbacks.c
+	* app/gimage_mask.c
+	* app/global_edit.c
+	* app/interface.c
+	* app/layer.c
+	* app/layer.h
+	* app/transform_core.c
+	
+	Followup to #4708. Some clients
+	of layer_new_from_tiles() need to specify the
+	kind of layer they need; added a GimpImageType
+	parameter for this purpose. (A reference to a
+	whole Drawable once was used for this purpose;
+	Sven factored this out. Good Riddance). Function 
+	internals are correct only with alpha-equipped image
+	types, so don't ask for alpha-less types or
+	furnish alpha-less tiles. <imho>This function is 
+	not robust and is overused; its scope is to
+	fatten TileManagers referenced by cut buffers
+	into Layers. If you already have a layer, 
+	consider yourself blessed and work with it.</imho> 
+	Closes #5045.
+	
+	* app/paths_dialog.c paths_dialog_set_default_op() 
+	now checks for the existence of the path_dialog
+	before manipulating its internals. Closes #5049; 
+	
 Tue Jan 11 21:41:23 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/rotate.c: fixed the progressbar on 270 degree (bug #5108)

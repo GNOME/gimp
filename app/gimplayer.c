@@ -394,13 +394,13 @@ layer_copy (Layer    *layer,
 
 Layer *
 layer_new_from_tiles (GimpImage        *gimage,
+                      GimpImageType     layer_type,
 		      TileManager      *tiles,
 		      gchar            *name,
 		      gint              opacity,
 		      LayerModeEffects  mode)
 {
   Layer * new_layer;
-  GimpImageType layer_type;
   PixelRegion layerPR, bufPR;
 
   /*  Function copies buffer to a layer
@@ -412,9 +412,7 @@ layer_new_from_tiles (GimpImage        *gimage,
   if (!gimage || !tiles )
     return NULL;
 
-  layer_type = gimp_image_base_type_with_alpha (gimage);
-
-  /*  Create the new layer  */
+   /*  Create the new layer  */
   new_layer = layer_new (0, tiles->width, tiles->height,
 			 layer_type, name, opacity, mode);
 

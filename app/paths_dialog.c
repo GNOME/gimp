@@ -285,8 +285,11 @@ paths_dialog_set_menu_sensitivity (void)
 void
 paths_dialog_set_default_op (void)
 {
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (point_ops_buttons[0].widget),
-				TRUE);
+  if(paths_dialog != NULL) /* Bug #5049: Clients may call this because it is possible */
+                           /* to create a path before the L&C dialog exists.          */
+ 
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (point_ops_buttons[0].widget),
+	 			  TRUE);
 }
 
 GtkWidget *
