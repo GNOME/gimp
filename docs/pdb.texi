@@ -460,6 +460,38 @@ HRZ saving handles all image types except those with alpha channels.--@strong{GI
 @end defun
 @emph{Albert Cahalan}
 
+@defun file_icon_load run_mode, filename, raw_filename
+Loads files of Windows ICO file format--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{filename} (PDB_STRING)--The name of the file to load
+@item @emph{raw_filename} (PDB_STRING)--The name entered
+@end itemize
+
+
+@strong{Outputs}
+@itemize @bullet
+@item @emph{image} (PDB_IMAGE)--Output image
+@end itemize
+@end defun
+@emph{Lance Dillon}
+
+@defun file_icon_save run_mode, image, drawable, filename, raw_filename
+Saves files in Windows ICO file format--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image
+@item @emph{drawable} (PDB_DRAWABLE)--Drawable to save
+@item @emph{filename} (PDB_STRING)--The name of the file to save the image in
+@item @emph{raw_filename} (PDB_STRING)--The name entered
+@end itemize
+@end defun
+@emph{Lance Dillon}
+
 @defun file_jpeg_load run_mode, filename, raw_filename
 FIXME: write help for jpeg_load--@strong{GIMP Plug-In}
 
@@ -494,24 +526,6 @@ FIXME: write help for jpeg_save--@strong{GIMP Plug-In}
 @end itemize
 @end defun
 @emph{Spencer Kimball & Peter Mattis}
-
-@defun file_mpeg_load run_mode, filename, raw_filename
-FIXME: write help for mpeg_load--@strong{GIMP Plug-In}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{filename} (PDB_STRING)--The name of the file to load
-@item @emph{raw_filename} (PDB_STRING)--The name entered
-@end itemize
-
-
-@strong{Outputs}
-@itemize @bullet
-@item @emph{image} (PDB_IMAGE)--Output image
-@end itemize
-@end defun
-@emph{Adam D. Moss}
 
 @defun file_pat_load run_mode, filename, raw_filename
 FIXME: write help--@strong{GIMP Plug-In}
@@ -714,7 +728,7 @@ load file of PostScript/PDF file format--@strong{GIMP Plug-In}
 @item @emph{image} (PDB_IMAGE)--Output image
 @end itemize
 @end defun
-@emph{Peter Kirchgessner}
+@emph{Peter Kirchgessner <pkirchg@@aol.com>}
 
 @defun file_ps_load_setargs resolution, width, height, check_bbox, pages, coloring, TextAlphaBits, GraphicsAlphaBits
 set additional parameters for procedure file_ps_load--@strong{GIMP Plug-In}
@@ -731,9 +745,9 @@ set additional parameters for procedure file_ps_load--@strong{GIMP Plug-In}
 @item @emph{GraphicsAlphaBits} (PDB_INT32)--1, 2, or 4
 @end itemize
 @end defun
-@emph{Peter Kirchgessner}
+@emph{Peter Kirchgessner <pkirchg@@aol.com>}
 
-@defun file_ps_save run_mode, image, drawable, filename, raw_filename, width, height, x_offset, y_offset, unit, keep_ratio, rotation
+@defun file_ps_save run_mode, image, drawable, filename, raw_filename, width, height, x_offset, y_offset, unit, keep_ratio, rotation, eps_flag, preview
 PostScript saving handles all image types except those with alpha channels.--@strong{GIMP Plug-In}
 
 @strong{Inputs}
@@ -747,12 +761,14 @@ PostScript saving handles all image types except those with alpha channels.--@st
 @item @emph{height} (PDB_FLOAT)--Height of image in PostScript file
 @item @emph{x_offset} (PDB_FLOAT)--X-offset to image from lower left corner
 @item @emph{y_offset} (PDB_FLOAT)--Y-offset to image from lower left corner
-@item @emph{unit} (PDB_INT32)--0: inches, 1: millimeters
+@item @emph{unit} (PDB_INT32)--Unit for width/height/offset. 0: inches, 1: millimeters
 @item @emph{keep_ratio} (PDB_INT32)--0: use width/height, 1: keep aspect ratio
 @item @emph{rotation} (PDB_INT32)--0, 90, 180, 270
+@item @emph{eps_flag} (PDB_INT32)--0: PostScript, 1: Encapsulated PostScript
+@item @emph{preview} (PDB_INT32)--0: no preview, >0: max. size of preview
 @end itemize
 @end defun
-@emph{Peter Kirchgessner}
+@emph{Peter Kirchgessner <pkirchg@@aol.com>}
 
 @defun file_psd_load run_mode, filename, raw_filename
 FIXME: write help for psd_load--@strong{GIMP Plug-In}
@@ -941,38 +957,6 @@ You need to have GNU Wget installed.--@strong{GIMP Plug-In}
 @end defun
 @emph{Spencer Kimball & Peter Mattis}
 
-@defun file_xd_load run_mode, filename, raw_filename
---@strong{GIMP Plug-In}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{filename} (PDB_STRING)--The name of the file to load
-@item @emph{raw_filename} (PDB_STRING)--The name entered
-@end itemize
-
-
-@strong{Outputs}
-@itemize @bullet
-@item @emph{image} (PDB_IMAGE)--Output image
-@end itemize
-@end defun
-@emph{Josh MacDonald}
-
-@defun file_xd_save run_mode, image, drawable, filename, raw_filename
---@strong{GIMP Plug-In}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{image} (PDB_IMAGE)--Input image
-@item @emph{drawable} (PDB_DRAWABLE)--Drawable to save
-@item @emph{filename} (PDB_STRING)--The name of the file to save the image in
-@item @emph{raw_filename} (PDB_STRING)--The name of the file to save the image in
-@end itemize
-@end defun
-@emph{Josh MacDonald}
-
 @defun file_xpm_load run_mode, filename, raw_filename
 FIXME: write help for xpm_load--@strong{GIMP Plug-In}
 
@@ -991,7 +975,7 @@ FIXME: write help for xpm_load--@strong{GIMP Plug-In}
 @end defun
 @emph{Spencer Kimball & Peter Mattis & Ray Lehtiniemi}
 
-@defun file_xpm_save run_mode, image, drawable, filename, raw_filename
+@defun file_xpm_save run_mode, image, drawable, filename, raw_filename, alpha_threshold
 FIXME: write help for xpm--@strong{GIMP Plug-In}
 
 @strong{Inputs}
@@ -1001,6 +985,7 @@ FIXME: write help for xpm--@strong{GIMP Plug-In}
 @item @emph{drawable} (PDB_DRAWABLE)--Drawable to save
 @item @emph{filename} (PDB_STRING)--The name of the file to save the image in
 @item @emph{raw_filename} (PDB_STRING)--The name of the file to save the image in
+@item @emph{alpha_threshold} (PDB_FLOAT)--Alpha cutoff threshold
 @end itemize
 @end defun
 @emph{Spencer Kimball & Peter Mattis & Ray Lehtiniemi}
@@ -4547,7 +4532,7 @@ Emboss or Bumpmap the given drawable, specifying the angle and elevation for the
 @end defun
 @emph{Eric L. Hernes, John Schlag}
 
-@defun plug_in_encript run_mode, image, drawable, password, warning
+@defun plug_in_encrypt run_mode, image, drawable, password, warning, compatibility, remember
 --@strong{GIMP Plug-In}
 
 @strong{Inputs}
@@ -4555,8 +4540,10 @@ Emboss or Bumpmap the given drawable, specifying the angle and elevation for the
 @item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
 @item @emph{image} (PDB_IMAGE)--Input image (unused)
 @item @emph{drawable} (PDB_DRAWABLE)--Input drawable
-@item @emph{password} (PDB_INT8)--Numeric password (used to encript and decript)
+@item @emph{password} (PDB_STRING)--Password (used to encrypt and decrypt)
 @item @emph{warning} (PDB_INT8)--Disable warning message toggle (only in RUN_INTERACTIVE)
+@item @emph{compatibility} (PDB_INT8)--Use version 1.0x compatibility mode
+@item @emph{remember} (PDB_INT8)--Remember the password after execution
 @end itemize
 @end defun
 @emph{Daniel Cotting (cotting@@mygale.org, http://www.mygale.org/~cotting)}
@@ -4619,7 +4606,7 @@ Compose several images to a roll film--@strong{GIMP Plug-In}
 @item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
 @item @emph{image} (PDB_IMAGE)--Input image (only used as default image in interactive mode)
 @item @emph{drawable} (PDB_DRAWABLE)--Input drawable (not used)
-@item @emph{film_height} (PDB_INT32)--Height of film
+@item @emph{film_height} (PDB_INT32)--Height of film (0: fit to images)
 @item @emph{film_color} (PDB_COLOR)--Color of the film
 @item @emph{number_start} (PDB_INT32)--Start index for numbering
 @item @emph{number_fontf} (PDB_STRING)--Font family for drawing numbers
@@ -4681,6 +4668,36 @@ transform image with the Mandelbrot Fractal--@strong{GIMP Plug-In}
 @end defun
 @emph{Hirotsuna Mizuno <s1041150@@u-aizu.ac.jp>}
 
+@defun plug_in_fractalexplorer run_mode, image, drawable, fractaltype, xmin, xmax, ymin, ymax, iter, cx, cy, colormode, redstretch, greenstretch, bluestretch, redmode, greenmode, bluemode, redinvert, greeninvert, blueinvert
+No help yet.--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image
+@item @emph{drawable} (PDB_DRAWABLE)--Input drawable
+@item @emph{fractaltype} (PDB_INT8)--0: Mandelbrot; 1: Julia; 2: Barnsley 1; 3: Barnsley 2; 4: Barnsley 3; 5: Spider; 6: ManOWar; 7: Lambda; 8: Sierpinski
+@item @emph{xmin} (PDB_FLOAT)--Xmin fractal image delimiter
+@item @emph{xmax} (PDB_FLOAT)--Xmax fractal image delimiter
+@item @emph{ymin} (PDB_FLOAT)--Ymin fractal image delimiter
+@item @emph{ymax} (PDB_FLOAT)--Ymax fractal image delimiter
+@item @emph{iter} (PDB_FLOAT)--Iteration value
+@item @emph{cx} (PDB_FLOAT)--Cx value ( only Julia)
+@item @emph{cy} (PDB_FLOAT)--Cy value ( only Julia)
+@item @emph{colormode} (PDB_INT8)--0: Apply colormap as specified by the parameters below; 1: Apply active gradient to final image
+@item @emph{redstretch} (PDB_FLOAT)--Red stretching factor
+@item @emph{greenstretch} (PDB_FLOAT)--Green stretching factor
+@item @emph{bluestretch} (PDB_FLOAT)--Blue stretching factor
+@item @emph{redmode} (PDB_INT8)--Red application mode (0:SIN;1:COS;2:NONE)
+@item @emph{greenmode} (PDB_INT8)--Green application mode (0:SIN;1:COS;2:NONE)
+@item @emph{bluemode} (PDB_INT8)--Blue application mode (0:SIN;1:COS;2:NONE)
+@item @emph{redinvert} (PDB_INT8)--Red inversion mode (1: enabled; 0: disabled)
+@item @emph{greeninvert} (PDB_INT8)--Green inversion mode (1: enabled; 0: disabled)
+@item @emph{blueinvert} (PDB_INT8)--Green inversion mode (1: enabled; 0: disabled)
+@end itemize
+@end defun
+@emph{Daniel Cotting (cotting@@mygale.org, www.mygale.org/~cotting)}
+
 @defun plug_in_fuse run_mode, image, drawable
 uhm, image dissociation--@strong{GIMP Plug-In}
 
@@ -4722,6 +4739,19 @@ Applies a gaussian blur to the drawable, with specified radius of affect.  The s
 @end itemize
 @end defun
 @emph{Spencer Kimball & Peter Mattis}
+
+@defun plug_in_gfig run_mode, image, drawable, dummy
+More here later--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image (unused)
+@item @emph{drawable} (PDB_DRAWABLE)--Input drawable
+@item @emph{dummy} (PDB_INT32)--Dummy
+@end itemize
+@end defun
+@emph{Andy Thomas}
 
 @defun plug_in_gflare run_mode, image, drawable, gflare_name, xcenter, ycenter, radius, rotation, hue, vangle, vlength, use_asupsample, asupsample_max_depth, asupsample_threshold
  This plug-in produces a lense flare effect using custom gradients. In interactive call, the user can edit his/her own favorite lense flare (GFlare) and render it. Edited gflare is saved automatically to the directory in gflare-path, if it is defined in gimprc. In non-interactive call, the user can only render one of GFlare which has been stored in gflare-path already.--@strong{GIMP Plug-In}
@@ -5286,7 +5316,7 @@ This function randomly ``blurs'' the specified drawable, using either a 3x3 blur
 @end defun
 @emph{Miles O'Neal  <meo@@rru.com>  http://www.rru.com/~meo/}
 
-@defun plug_in_refract run_mode, image, drawable, lensmap, depth, dist, na, nb, wrap, newl, xofs, yofs
+@defun plug_in_refract run_mode, image, drawable, lensmap, thick, dist, na, nb, edge, newl, xofs, yofs
 Distorts the image by refracting it through a height field 'lens' with a specified index of refraction.--@strong{GIMP Plug-In}
 
 @strong{Inputs}
@@ -5295,11 +5325,11 @@ Distorts the image by refracting it through a height field 'lens' with a specifi
 @item @emph{image} (PDB_IMAGE)--Input image
 @item @emph{drawable} (PDB_DRAWABLE)--Input drawable
 @item @emph{lensmap} (PDB_DRAWABLE)--Lens map drawable
-@item @emph{depth} (PDB_INT32)--Lens depth
+@item @emph{thick} (PDB_INT32)--Lens thickness
 @item @emph{dist} (PDB_INT32)--Lens distance from image
 @item @emph{na} (PDB_FLOAT)--Index of Refraction A
 @item @emph{nb} (PDB_FLOAT)--Index of Refraction B
-@item @emph{wrap} (PDB_INT32)--Wrap (0), Background (1)
+@item @emph{edge} (PDB_INT32)--Background (0), Outside (1), Wrap (2)
 @item @emph{newl} (PDB_INT32)--New layer?
 @item @emph{xofs} (PDB_INT32)--X offset
 @item @emph{yofs} (PDB_INT32)--Y offset
@@ -5382,6 +5412,25 @@ Shifts the pixels of the specified drawable. Each row will be displaced a random
 @end itemize
 @end defun
 @emph{Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero}
+
+@defun plug_in_signature run_mode, image, drawable, signature[50], e-mail[30], homepage[50], date[20], mode, licence, contents
+--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image (unused)
+@item @emph{drawable} (PDB_DRAWABLE)--Input drawable
+@item @emph{signature[50]} (PDB_STRING)--Signature (Name of author, company etc.)
+@item @emph{e-mail[30]} (PDB_STRING)--E-mail address
+@item @emph{homepage[50]} (PDB_STRING)--Address of the homepage
+@item @emph{date[20]} (PDB_STRING)--Date of creation
+@item @emph{mode} (PDB_INT8)--FALSE: Write signature; TRUE: Read signature
+@item @emph{licence} (PDB_INT8)--FALSE: Freely distributable; TRUE: Restricted distribution
+@item @emph{contents} (PDB_INT8)--TRUE: Adult only contents
+@end itemize
+@end defun
+@emph{Daniel Cotting (cotting@@mygale.org, http://www.mygale.org/~cotting)}
 
 @defun plug_in_sinus run_mode, image, drawable, xscale, yscale, complex, seed, tiling, perturb, colors, alpha1, alpha2, blend, blend_power
 FIX ME: sinus help--@strong{GIMP Plug-In}
@@ -5481,6 +5530,20 @@ Spreads the pixels of the specified drawable.  Pixels are randomly moved to anot
 @end itemize
 @end defun
 @emph{Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero}
+
+@defun plug_in_stegano run_mode, image, drawable, mode, filename[128]
+--@strong{GIMP Plug-In}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Input image (unused)
+@item @emph{drawable} (PDB_DRAWABLE)--Input drawable
+@item @emph{mode} (PDB_INT8)--FALSE: Hide file in image; TRUE: Get hidden file
+@item @emph{filename[128]} (PDB_STRING)--Name of the file to hide in an image (only of importance if mode=FALSE
+@end itemize
+@end defun
+@emph{Daniel Cotting (cotting@@mygale.org, http://www.mygale.org/~cotting)}
 
 @defun plug_in_stereogram run_mode, image, heightmap, type, pat
 Based on the Stereogram FAQ--@strong{GIMP Plug-In}
@@ -6066,21 +6129,6 @@ Chalk scribbled logos--@strong{Temporary Procedure}
 @end defun
 @emph{Manish Singh <msingh@@uclink4.berkeley.edu>}
 
-@defun script-fu-chalk-test-logo run_mode, value, value, value, color, color
-Chalk scribbled logos--@strong{Temporary Procedure}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{value} (PDB_STRING)--Text String
-@item @emph{value} (PDB_STRING)--Font Size (in pixels)
-@item @emph{value} (PDB_STRING)--Font
-@item @emph{color} (PDB_COLOR)--Background Color
-@item @emph{color} (PDB_COLOR)--Chalk Color
-@end itemize
-@end defun
-@emph{Manish Singh <msingh@@uclink4.berkeley.edu>}
-
 @defun script-fu-chrome-logo run_mode, value, value, value, color
 Somewhat simplistic, but cool chromed logos--@strong{Temporary Procedure}
 
@@ -6147,6 +6195,46 @@ Render the specified text along the perimeter of a circle--@strong{Temporary Pro
 @end itemize
 @end defun
 @emph{Tim Newsome <drz@@froody.bloke.com>}
+
+@defun script-fu-colorcycling-anim run_mode, image, drawable, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value, value
+Creates an animation with the help of the alienmap plug-in--@strong{Temporary Procedure}
+
+@strong{Inputs}
+@itemize @bullet
+@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
+@item @emph{image} (PDB_IMAGE)--Image
+@item @emph{drawable} (PDB_DRAWABLE)--Drawable
+@item @emph{value} (PDB_STRING)--Number of frames
+@item @emph{value} (PDB_STRING)--Start: red intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--Start: green intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--Start: blue intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--End: red intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--End: green intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--End: blue intensity factor (max. 128)
+@item @emph{value} (PDB_STRING)--Red color mode (sin:0/cos:1/none:2)
+@item @emph{value} (PDB_STRING)--Green color mode (sin:0/cos:1/none:2)
+@item @emph{value} (PDB_STRING)--Blue color mode (sin:0/cos:1/none:2)
+@item @emph{value} (PDB_STRING)--Red inversion before transformation
+@item @emph{value} (PDB_STRING)--Green inversion before transformation
+@item @emph{value} (PDB_STRING)--Blue inversion before transformation
+@item @emph{value} (PDB_STRING)--Start: red phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--Start: green phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--Start: blue phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--End: red phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--End: green phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--End: blue phase displacement (RAD)
+@item @emph{value} (PDB_STRING)--Start: red frequency (> 0)
+@item @emph{value} (PDB_STRING)--Start: green frequency (> 0)
+@item @emph{value} (PDB_STRING)--Start: blue frequency (> 0)
+@item @emph{value} (PDB_STRING)--End: red frequency (> 0)
+@item @emph{value} (PDB_STRING)--End: green frequency (> 0)
+@item @emph{value} (PDB_STRING)--End: blue frequency (> 0)
+@item @emph{value} (PDB_STRING)--Red inversion after transformation
+@item @emph{value} (PDB_STRING)--Green inversion after transformation
+@item @emph{value} (PDB_STRING)--Blue inversion after transformation
+@end itemize
+@end defun
+@emph{Daniel Cotting (cotting@@mygale.org)}
 
 @defun script-fu-cool-metal-logo run_mode, value, value, value, color, toggle
 Metallic logos with reflections and perspective shadows--@strong{Temporary Procedure}
@@ -6327,38 +6415,6 @@ Draph the graph of H/S/V values on the drawable--@strong{Temporary Procedure}
 @end defun
 @emph{Shuji Narazaki (narazaki@@InetQ.or.jp)}
 
-@defun script-fu-kanji-circle run_mode, value, value, value, value, value, value, toggle
-Kanji Circle (version 0.3)--@strong{Temporary Procedure}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{value} (PDB_STRING)--Kanji Text
-@item @emph{value} (PDB_STRING)--Radius
-@item @emph{value} (PDB_STRING)--Start-angle
-@item @emph{value} (PDB_STRING)--Fill-angle
-@item @emph{value} (PDB_STRING)--Font name
-@item @emph{value} (PDB_STRING)--Font Size
-@item @emph{toggle} (PDB_INT32)--Antialias
-@end itemize
-@end defun
-@emph{Shuji Narazaki <narazaki@@InetQ.or.jp>}
-
-@defun script-fu-kanji-neon run_mode, color, value, value, value, value
-Kanji Neon Text Cyan (0.3)--@strong{Temporary Procedure}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{color} (PDB_COLOR)--Glow Color
-@item @emph{value} (PDB_STRING)--Tube Hue
-@item @emph{value} (PDB_STRING)--Text (ill-displayed)
-@item @emph{value} (PDB_STRING)--Font Size (in pixels)
-@item @emph{value} (PDB_STRING)--Font (string)
-@end itemize
-@end defun
-@emph{Shuji Narazaki <narazaki@@InetQ.or.jp>}
-
 @defun script-fu-labels-gimp-org run_mode, value, value, value, value, value, value, color, color, color, toggle, toggle, value, value, value, value, value
 Tube Button Label Header for gimp.org--@strong{Temporary Procedure}
 
@@ -6531,19 +6587,6 @@ Add a perspective shadow--@strong{Temporary Procedure}
 @end itemize
 @end defun
 @emph{Sven Neumann (neumanns@@uni-duesseldorf.de)}
-
-@defun script-fu-pie-chart run_mode, value, value, value
-Pie chart--@strong{Temporary Procedure}
-
-@strong{Inputs}
-@itemize @bullet
-@item @emph{run_mode} (PDB_INT32)--Interactive, non-interactive
-@item @emph{value} (PDB_STRING)--Width
-@item @emph{value} (PDB_STRING)--Value/color list
-@item @emph{value} (PDB_STRING)--Start angle
-@end itemize
-@end defun
-@emph{Federico Mena Quintero}
 
 @defun script-fu-predator run_mode, image, drawable, value, toggle, value, toggle, toggle
 Fills the current selection with test--@strong{Temporary Procedure}

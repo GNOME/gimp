@@ -7,10 +7,10 @@ GIMP_MAJOR_VERSION_NUMBER=0
 dnl $Format: "GIMP_MINOR_VERSION_NUMBER=$ReleaseMinorVersion$" $
 GIMP_MINOR_VERSION_NUMBER=99
 dnl $Format: "GIMP_MICRO_VERSION_NUMBER=$ReleaseMicroVersion$" $
-GIMP_MICRO_VERSION_NUMBER=16
+GIMP_MICRO_VERSION_NUMBER=17
 
 dnl $Format: "AM_INIT_AUTOMAKE(gimp, $ReleaseVersion$)" $
-AM_INIT_AUTOMAKE(gimp, 0.99.16)
+AM_INIT_AUTOMAKE(gimp, 0.99.17)
 
 dnl Specify a header configuration file
 AM_CONFIG_HEADER(config.h)
@@ -68,10 +68,10 @@ AC_DEFUN(AC_GIMP_CHECK,
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
 
 	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for glib and gtk])
+	AC_MSG_CHECKING([for glib and gtk >= 0.99.1])
         AC_TRY_COMPILE(
 [#include <gtk/gtk.h>],
-[gtk_button_new ();],
+[gtk_pixmap_unref ();],
 gtk_found=yes,
 gtk_found=no)
 	AC_MSG_RESULT($gtk_found)
@@ -344,7 +344,7 @@ plug-ins/gag-0.3/Makefile
 plug-ins/Anamorphose/Makefile
 plug-ins/CentralReflection/Makefile
 plug-ins/Curtain/Makefile
-plug-ins/Encript_Decript/Makefile
+plug-ins/Encrypt_Decrypt/Makefile
 plug-ins/Julia/Makefile
 plug-ins/Mandelbrot/Makefile
 plug-ins/MapObject/Makefile
@@ -353,11 +353,8 @@ plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/blur/Makefile
 plug-ins/gfig/Makefile
-plug-ins/gfig/gfig-examples/Makefile
 plug-ins/flame/Makefile
 plug-ins/gimptcl/Makefile
-plug-ins/gimptcl/frags/Makefile
-plug-ins/gimptcl/misc/Makefile
 plug-ins/gimptcl/scripts/Makefile
 plug-ins/fuse/Makefile
 plug-ins/mathmap/Makefile
@@ -366,7 +363,6 @@ plug-ins/refract/Makefile
 plug-ins/struc/Makefile
 plug-ins/twist/Makefile
 plug-ins/user_filter/Makefile
-plug-ins/user_filter/doc/Makefile
 plug-ins/warp/Makefile
 plug-ins/zealouscrop/Makefile
 plug-ins/xwd/Makefile
@@ -421,6 +417,10 @@ plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
+plug-ins/DigitalSignature/Makefile
+plug-ins/FractalExplorer/Makefile
+plug-ins/stegano/Makefile
+plug-ins/fs/Makefile
 app/Makefile
 docs/Makefile
 )

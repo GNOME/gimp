@@ -1,12 +1,12 @@
 The GIMP: the GNU Image Manipulation Program
 --------------------------------------------
 
-This is version 0.99.16 of the GIMP. For the most part it contains all
+This is version 0.99.17 of the GIMP. For the most part it contains all
 of the features that will be in version 1.0 of the GIMP. It does,
 however, lack a) documentation, b) robustness and c) some of the
 plug-ins found in the 0.54 version.
 
-The main difference between v0.99.16 and much earlier versions is the
+The main difference between v0.99.17 and much earlier versions is the
 use of a tile based memory management for images. This allows the GIMP
 to work with images much larger than physical memory in a usable
 fashion. Before such memory management, the GIMP was nearly unusable

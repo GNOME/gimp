@@ -19,11 +19,17 @@
 #include <math.h>
 #include "appenv.h"
 #include "app_procs.h"
+#include "brushes.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
-#include "colormaps.h"
+#include "gradient.h"
+#include "palette.h"
+#include "patterns.h"
+#include "plug_in.h"
+#include "temp_buf.h"
+#include "tile_swap.h"
 
 
 GdkVisual *g_visual = NULL;
@@ -194,8 +200,23 @@ get_standard_colormaps ()
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
   info = gtk_preview_get_info ();
-
   g_visual = info->visual;
+
+  if (g_visual->depth == 8 && info->reserved_pixels == NULL) {
+    g_print("GIMP cannot get enough colormaps to boot.\n");
+    g_print("Try exiting other color intensive applications.\n");
+    swapping_free ();
+    brushes_free ();
+    patterns_free ();
+    palettes_free ();
+    gradients_free ();
+    palette_free ();
+    procedural_db_free ();
+    plug_in_kill ();
+    tile_swap_exit ();
+    gtk_exit(0);
+  }
+
   g_cmap = info->cmap;
   color_pixel_vals = info->color_pixels;
   gray_pixel_vals = info->gray_pixels;

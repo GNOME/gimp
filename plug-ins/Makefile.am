@@ -8,9 +8,10 @@ SUBDIRS = 			\
 	Anamorphose		\
 	CentralReflection	\
 	Curtain			\
-	Encript_Decript		\
+	Encrypt_Decrypt		\
 	Julia			\
 	Mandelbrot		\
+	DigitalSignature	\
 	dbbrowser		\
 	fuse			\
 	gflare			\
@@ -121,6 +122,7 @@ SUBDIRS = 			\
 	sobel			\
 	sparkle			\
 	spread			\
+	stegano			\
 	stereogram		\
 	sunras			\
 	tga			\

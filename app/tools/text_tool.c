@@ -1511,6 +1511,7 @@ text_render (GImage *gimage,
   unsigned char color[MAX_CHANNELS];
   char *str;
   int nstrs;
+  int crop;
   int line_width, line_height;
   int pixmap_width, pixmap_height;
   int text_width, text_height;
@@ -1529,6 +1530,10 @@ text_render (GImage *gimage,
     antialias = SUPERSAMPLE;
   else
     antialias = 1;
+
+  /* Dont crop the text if border is negative */
+  crop = (border >= 0);
+  if (!crop) border = 0;
 
   /* load the font in */
   font = gdk_font_load (fontname);
@@ -1627,7 +1632,7 @@ text_render (GImage *gimage,
     }
 
   /*  Crop the mask buffer  */
-  newmask = crop_buffer (mask, border);
+  newmask = crop ? crop_buffer (mask, border) : mask;
   if (newmask != mask)
     tile_manager_destroy (mask);
 
@@ -2000,7 +2005,7 @@ text_tool_invoker (Argument *args)
   if (success)
     {
       int_value = args[5].value.pdb_int;
-      if (int_value >= 0)
+      if (int_value >= -1)
 	border = int_value;
       else
 	success = FALSE;

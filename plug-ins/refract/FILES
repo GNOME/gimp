@@ -1,0 +1,12 @@
+Files that should be in refract distributions:
+FILES		- this file
+INSTALL		- Installation instructions (if not part of GIMP distrib) 
+Makefile
+README
+TODO
+refguts.c	- source file containing the actual distort refract code
+refmain.c	- source file containing query, run, and dialog things
+refract.h	- common header file, contains configurable settings
+
+Additional file included in refract-bin distributions:
+refract		- the compiled plug-in executable for linux-ELF-i386

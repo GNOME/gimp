@@ -1493,7 +1493,7 @@ Julia_logo_dialog()
   xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
   temp = g_malloc((logo_width+10)*3);
-  datapointer=header_data;
+  datapointer=header_data+logo_width*logo_height-1;
   for (y = 0; y < logo_height; y++){
     temp2=temp;
     for (x = 0; x< logo_width; x++) {

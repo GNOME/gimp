@@ -543,7 +543,8 @@ file_save_callback (GtkWidget *w,
 	  file_save_as_callback (w, client_data);
 	}
       else
-	file_save (gdisplay->gimage->ID, gimage_filename (gdisplay->gimage), gimage_filename(gdisplay->gimage));
+	file_save (gdisplay->gimage->ID, gimage_filename (gdisplay->gimage),
+		   prune_filename (gimage_filename(gdisplay->gimage)));
     }
 }
 
@@ -788,7 +789,7 @@ file_save (int   image_ID,
       gimage_clean_all (gimage);
 
       /*  set the image title  */
-      gimage_set_filename (gimage, prune_filename (filename));
+      gimage_set_filename (gimage, filename);
     }
 
   g_free (return_vals);

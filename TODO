@@ -3,9 +3,6 @@ discovered.
 
 * Fix srand/srandom and rand/random confusion in plugins
 
-* Fix megawidget link ordering in deinterlace, emboss, hot, nlfilt,
-  sinus, and waves plugins
-
 * configure: SunOS 4 SEEK_* and RAND_MAX defines
 
 * configure: check for regex library presence 

@@ -43,6 +43,7 @@ gimp_layer_copy (gint32 layer_ID)
   return_vals = gimp_run_procedure ("gimp_layer_copy",
 				    &nreturn_vals,
 				    PARAM_LAYER, layer_ID,
+				    PARAM_INT32, 0,
 				    PARAM_END);
 
   layer_ID = -1;

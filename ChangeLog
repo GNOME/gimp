@@ -1,3 +1,28 @@
+Sat Jan  3 16:48:02 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* app/colormaps.c: check for NULL pointer access when not enough
+	colormaps for standard colormaps (gimp-joke-971219-0)
+
+	* app/fileops.c: fix for saving files in the wrong place
+
+	* app/fuzzy_select.c: now less aggressive (doesn't grab the whole
+	image with diagonal 1-pixel wide line) Too conservative now?
+
+	* app/text_tool.c: negative border-value disables autocropping
+	of text
+
+	* libgimp/gimplayer.c: gimp_layer_copy pdb called with correct args
+
+	* docs/Wilber.xcf.gz: added logo to docs dir :)
+
+	* Added DigitalSignature, FractalExplorer (not made by default),
+	facesaver (not made by default), and Stegano plugins
+
+	* Updated Encrypt_Decrypt, changing the dir name (no more
+	Encript_Decript)
+
+	* Updated plugins with their new registry versions
+
 Thu Dec 25 23:04:00 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Updates from the plugin registry: Compose, Film, FITS, ps,

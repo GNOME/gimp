@@ -227,7 +227,7 @@ find_contiguous_region_helper (PixelRegion *mask, PixelRegion *src,
 				  antialias, threshold, x, &start, &end))
     return;
 
-  for (i = start; i < end; i++)
+  for (i = start + 1; i < end; i++)
     {
       find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, i, y - 1, col);
       find_contiguous_region_helper (mask, src, has_alpha, antialias, threshold, i, y + 1, col);

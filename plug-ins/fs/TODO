@@ -1,0 +1,21 @@
+
+Add all the autoconfig/automake stuff, so that the standard build
+procedures and such can be used.
+
+Figure out why the fs executable is as large as it is, and fix it,
+unless the automake fix cures this as well.
+
+Handle non-square pixels properly.  If px!=ix or py!=iy, there should
+be an option to correct the display.  I'm not sure whether this
+correction should be on or off by default.  Turning it on loses
+information; leaving it off distorts the image display.  Sigh,
+decisions, decisions...
+
+Save header lines on input so that they can be restored on output.
+The "Image:" line will have to be special cased, depending on what
+gets done about non-square pixels.  All other lines can just be cached
+on input and restored on output.
+
+Write some help information.
+
+

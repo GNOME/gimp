@@ -1,14 +1,10 @@
 /**********************************************************************
- *  Curtain Plug-In (Version 1.01)
+ *  Curtain Plug-In (Version 1.03)
  *  Daniel Cotting (cotting@mygale.org)
  **********************************************************************
- *  Official Homepage: http://www.mygale.org/~cotting
- **********************************************************************
- *  Homepages under construction: http://www.chez.com/cotting
- *                                http://www.cyberbrain.com/cotting
- *  You won't be able to see anything yet, as I don't really have the 
- *  time to build up these two sites :-( 
- *  Have a look at www.mygale.org/~cotting instead!
+ *  Official homepages: http://www.mygale.org/~cotting
+ *                      http://cotting.citeweb.net
+ *                      http://village.cyberbrain.com/cotting
  **********************************************************************    
  */
 
@@ -228,9 +224,11 @@ drawCurtain(GDrawable *drawable)
 	  ix=(int)x;
 	  iy=(int)y;
 	  
-/* 	  Flags horiz and vert inversed by mistake! */
-/* 	  Corrected this with a small hack in the next lines. */
-/* 	  (one more inversion) */
+	  /* 
+	     Flags horiz and vert inversed by mistake!
+	     Corrected this with a small hack in the next lines.
+	     (one more inversion)
+	  */	     
 	  
           if ((((int)((float)ix/2.0))*2==ix) && (wvals.vert)) {
              pos = ((gint)(regionheight-1-iy)*regionwidth) * bytes;
@@ -424,8 +422,8 @@ curtain_logo_dialog()
   GtkWidget *xvbox;
   GtkWidget *xhbox;
   char *text;
-  gchar *temp,*temp2;
-  char *datapointer;
+  guchar *temp,*temp2;
+  guchar *datapointer;
   gint y,x;
   xdlg = logodlg = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(xdlg), "About");
@@ -467,7 +465,7 @@ curtain_logo_dialog()
   xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
   temp = g_malloc((logo_width+10)*3);
-  datapointer=header_data;
+  datapointer=header_data+logo_height*logo_width-1;
   for (y = 0; y < logo_height; y++){
     temp2=temp;
     for (x = 0; x< logo_width; x++) {
@@ -491,7 +489,7 @@ curtain_logo_dialog()
 	 "cotting@mygale.org\n"
 	 "http://www.mygale.org/~cotting\n\n"
           "Curtain Plug-In for the GIMP\n"
-          "Version 1.01\n";
+          "Version 1.03\n";
   xlabel = gtk_label_new(text);
   gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
   gtk_widget_show(xlabel);

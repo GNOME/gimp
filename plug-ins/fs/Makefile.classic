@@ -1,0 +1,15 @@
+CC		= gcc
+CFLAGS		= -g -O2 -Wall
+LDFLAGS 	= -g
+LDLIBS		= -L/usr/X11R6/lib -lgimp -lgtk -lgdk -lglib -lXext -lX11 -lm
+
+fs:		fs.o
+
+install:	fs
+	cp fs $(HOME)/.gimp/plug-ins/fs
+
+clean:
+	$(RM) *.o core *~
+
+fs2pgm:		fs2pgm.o
+	$(CC) -g -o $@ $<
