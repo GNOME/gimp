@@ -342,6 +342,7 @@ plug_in_menus_update (GimpItemFactory *item_factory,
             {
               const gchar *progname;
               const gchar *path;
+              gchar       *stripped;
               gchar       *basename;
               gchar       *ellipses;
               gchar       *repeat;
@@ -353,7 +354,10 @@ plug_in_menus_update (GimpItemFactory *item_factory,
                                                        progname, NULL),
                                proc_def->menu_path);
 
-              basename = g_path_get_basename (path);
+              stripped = gimp_menu_path_strip_uline (path);
+              basename = g_path_get_basename (stripped);
+
+              g_free (stripped);
 
               ellipses = strstr (basename, "...");
 

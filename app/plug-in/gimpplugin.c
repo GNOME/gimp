@@ -85,6 +85,8 @@
 #include "gui/palette-select.h"
 #include "gui/pattern-select.h"
 
+#include "widgets/gimpwidgets-utils.h"
+
 #include "plug-in.h"
 #include "plug-ins.h"
 #include "plug-in-debug.h"
@@ -884,6 +886,7 @@ gchar *
 plug_in_get_undo_desc (PlugIn *plug_in)
 {
   PlugInProcDef *proc_def;
+  gchar         *stripped;
   gchar         *undo_desc;
 
   g_return_val_if_fail (plug_in != NULL, NULL);
@@ -906,7 +909,9 @@ plug_in_get_undo_desc (PlugIn *plug_in)
                                                plug_in->prog, NULL),
                        proc_def->menu_path);
 
-      undo_desc = g_path_get_basename (path);
+      stripped  = gimp_menu_path_strip_uline (path);
+      undo_desc = g_path_get_basename (stripped);
+      g_free (stripped);
 
       ellipses = strstr (undo_desc, "...");
 
