@@ -182,6 +182,41 @@ if eval "test x$GCC = xyes"; then
   fi
 fi
 
+# Ensure MSVC-compatible struct packing convention is used when
+# compiling for Win32 with gcc.
+# What flag to depends on gcc version: gcc3 uses "-mms-bitfields", while
+# gcc2 uses "-fnative-struct".
+if test x"$os_win32" = xyes; then
+  if test x"$GCC" = xyes; then
+    msnative_struct=''
+    AC_MSG_CHECKING([how to get MSVC-compatible struct packing])
+    if test -z "$ac_cv_prog_CC"; then
+      our_gcc="$CC"
+    else
+      our_gcc="$ac_cv_prog_CC"
+    fi
+    case `$our_gcc --version | sed -e 's,\..*,.,' -e q` in
+      2.)
+	if $our_gcc -v --help 2>/dev/null | grep fnative-struct >/dev/null; then
+	  msnative_struct='-fnative-struct'
+	fi
+	;;
+      *)
+	if $our_gcc -v --help 2>/dev/null | grep ms-bitfields >/dev/null; then
+	  msnative_struct='-mms-bitfields'
+	fi
+	;;
+    esac
+    if test x"$msnative_struct" = x ; then
+      AC_MSG_RESULT([no way])
+      AC_MSG_WARN([build will be incompatible with GLib and GTK+ DLLs])
+    else
+      CFLAGS="$CFLAGS $msnative_struct"
+      AC_MSG_RESULT([${msnative_struct}])
+    fi
+  fi
+fi
+
 
 AC_HEADER_DIRENT
 AC_HEADER_STDC
@@ -1067,29 +1102,20 @@ dnl plug-ins/plugin-helper/Makefile
 dnl plug-ins/tools/common/Makefile
 
 AC_OUTPUT([
-build/Makefile
-build/win32/Makefile
-build/win32/dirent/Makefile
 tools/Makefile
 tools/authorsgen/Makefile
 tools/pdbgen/Makefile
 regexrepl/Makefile
 libgimp/Makefile
-libgimp/makefile.mingw
 libgimpbase/gimpversion.h
 libgimpbase/Makefile
-libgimpbase/makefile.mingw
 libgimpcolor/Makefile
-libgimpcolor/makefile.mingw
 libgimpmath/Makefile
-libgimpmath/makefile.mingw
 libgimpmodule/Makefile
 libgimpproxy/Makefile
 libgimptool/Makefile
 libgimpwidgets/Makefile
-libgimpwidgets/makefile.mingw
 app/Makefile
-app/makefile.mingw
 app/base/Makefile
 app/config/Makefile
 app/core/Makefile
@@ -1105,7 +1131,6 @@ app/vectors/Makefile
 app/widgets/Makefile
 app/xcf/Makefile
 plug-ins/Makefile
-plug-ins/makefile.mingw
 plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/dbbrowser/Makefile
@@ -1147,7 +1172,6 @@ plug-ins/sel2path/Makefile
 plug-ins/sgi/Makefile
 plug-ins/tools/Makefile
 modules/Makefile
-modules/makefile.mingw
 devel-docs/Makefile
 devel-docs/libgimp/Makefile
 devel-docs/libgimpbase/Makefile

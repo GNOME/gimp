@@ -27,8 +27,7 @@ SUBDIRS = \
 	$(GIMP_MODULES)		\
 	$(GIMP_PLUGINS)		\
 	docs			\
-	devel-docs		\
-	build
+	devel-docs
 
 bin_SCRIPTS = gimptool-1.3 @GIMPINSTALL@
 

@@ -1,3 +1,13 @@
+2002-12-23  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in: When bulding with GCC for Win32, use either
+	-fnative-struct or -mms-bitfields depending on GCC version. Don't
+	output the build/.../Makefiles, the build subdir isn't needed here
+	any longer (see 2001-02-17 entry by Hans Breuer). Don't output the
+	*/makefile.mingw as they are seriously obsolete anyway.
+
+	* Makefile.am (SUBDIRS): Remove build subdir here, too.
+
 2002-12-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/imagemap/imap_csim.l: add "<string.h> to remove warning.
