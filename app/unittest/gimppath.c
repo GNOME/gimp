@@ -18,6 +18,9 @@
 
 #include "unittest.h"
 #include "globals.c"
+#if 1
+#include "../gimprc.c"
+#endif
 
 void show_personal(const char *filename)
 {
@@ -48,6 +51,7 @@ void show_gimp_dirs(void)
   g_print ("%-50s = gimp_directory();\n",gimp_directory());
   g_print ("%-50s = gimp_data_directory();\n",gimp_data_directory());
   g_print ("%-50s = gimp_gtkrc();\n",gimp_gtkrc());
+  g_print ("%-50s = gimp_system_rc_file();\n",gimp_system_rc_file());
 }
 
 int
