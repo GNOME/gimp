@@ -13,7 +13,7 @@ static const GEnumValue gimp_add_mask_type_enum_values[] =
   { GIMP_ADD_WHITE_MASK, N_("_White (Full Opacity)"), "white-mask" },
   { GIMP_ADD_BLACK_MASK, N_("_Black (Full Transparency)"), "black-mask" },
   { GIMP_ADD_ALPHA_MASK, N_("Layer's _Alpha Channel"), "alpha-mask" },
-  { GIMP_ADD_ALPHA_MASK_TRANSFER, N_("_Transfer Layer's Alpha Channel"), "alpha-mask-transfer" },
+  { GIMP_ADD_ALPHA_TRANSFER_MASK, N_("_Transfer Layer's Alpha Channel"), "alpha-transfer-mask" },
   { GIMP_ADD_SELECTION_MASK, N_("_Selection"), "selection-mask" },
   { GIMP_ADD_COPY_MASK, N_("_Grayscale Copy of Layer"), "copy-mask" },
   { 0, NULL, NULL }

@@ -45,7 +45,7 @@ typedef enum
   GIMP_ADD_WHITE_MASK,          /*< desc="_White (Full Opacity)"           >*/
   GIMP_ADD_BLACK_MASK,          /*< desc="_Black (Full Transparency)"      >*/
   GIMP_ADD_ALPHA_MASK,          /*< desc="Layer's _Alpha Channel"          >*/
-  GIMP_ADD_ALPHA_MASK_TRANSFER, /*< desc="_Transfer Layer's Alpha Channel" >*/
+  GIMP_ADD_ALPHA_TRANSFER_MASK, /*< desc="_Transfer Layer's Alpha Channel" >*/
   GIMP_ADD_SELECTION_MASK,      /*< desc="_Selection"                      >*/
   GIMP_ADD_COPY_MASK            /*< desc="_Grayscale Copy of Layer"        >*/
 } GimpAddMaskType;

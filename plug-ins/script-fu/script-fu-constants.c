@@ -26,7 +26,7 @@ init_generated_constants (void)
   setvar (cintern ("ADD-WHITE-MASK"), flocons (0), NIL);
   setvar (cintern ("ADD-BLACK-MASK"), flocons (1), NIL);
   setvar (cintern ("ADD-ALPHA-MASK"), flocons (2), NIL);
-  setvar (cintern ("ADD-ALPHA-MASK-TRANSFER"), flocons (3), NIL);
+  setvar (cintern ("ADD-ALPHA-TRANSFER-MASK"), flocons (3), NIL);
   setvar (cintern ("ADD-SELECTION-MASK"), flocons (4), NIL);
   setvar (cintern ("ADD-COPY-MASK"), flocons (5), NIL);
 

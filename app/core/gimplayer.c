@@ -1041,7 +1041,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
       break;
 
     case GIMP_ADD_ALPHA_MASK:
-    case GIMP_ADD_ALPHA_MASK_TRANSFER:
+    case GIMP_ADD_ALPHA_TRANSFER_MASK:
       if (gimp_drawable_has_alpha (drawable))
 	{
 	  pixel_region_init (&srcPR, drawable->tiles,
@@ -1051,7 +1051,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
 	  extract_alpha_region (&srcPR, NULL, &destPR);
 
-          if (add_mask_type == GIMP_ADD_ALPHA_MASK_TRANSFER)
+          if (add_mask_type == GIMP_ADD_ALPHA_TRANSFER_MASK)
             {
               void   *pr;
               gint    w, h;

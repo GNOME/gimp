@@ -1,5 +1,18 @@
 2003-11-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-enums.[ch]: eek, it should be
+	GIMP_ADD_ALPHA_TRANSFER_MASK, not GIMP_ADD_ALPHA_MASK_TRANSFER.
+
+	* app/core/gimplayer.c (gimp_layer_create_mask): changed accordingly.
+
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2003-11-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch]: added enum values
 	GIMP_ADD_ALPHA_MASK_TRANSFER and GIMP_UNDO_GROUP_LAYER_ADD_MASK.
 
