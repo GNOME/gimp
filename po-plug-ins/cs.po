@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.1.17\n"
-"POT-Creation-Date: 2000-02-14 11:19+0100\n"
-"PO-Revision-Date: 2000-02-14 12:33+01:00\n"
+"POT-Creation-Date: 2000-02-17 00:32+0100\n"
+"PO-Revision-Date: 2000-02-17 00:36+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,8 +39,8 @@ msgstr "O programu"
 #: plug-ins/AlienMap2/AlienMap2.c:626 plug-ins/AlienMap2/AlienMap2.c:912
 #: plug-ins/FractalExplorer/Dialogs.c:300
 #: plug-ins/FractalExplorer/Dialogs.c:1393
-#: plug-ins/FractalExplorer/FractalExplorer.c:831
-#: plug-ins/FractalExplorer/FractalExplorer.c:1560 plug-ins/bmp/bmpwrite.c:562
+#: plug-ins/FractalExplorer/FractalExplorer.c:853
+#: plug-ins/FractalExplorer/FractalExplorer.c:1582 plug-ins/bmp/bmpwrite.c:562
 #: plug-ins/borderaverage/borderaverage.c:401
 #: plug-ins/common/CML_explorer.c:1188 plug-ins/common/CML_explorer.c:1946
 #: plug-ins/common/CML_explorer.c:2266 plug-ins/common/aa.c:363
@@ -50,13 +50,13 @@ msgstr "O programu"
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:418
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
-#: plug-ins/common/curve_bend.c:1380 plug-ins/common/decompose.c:862
+#: plug-ins/common/curve_bend.c:1387 plug-ins/common/decompose.c:862
 #: plug-ins/common/deinterlace.c:278 plug-ins/common/depthmerge.c:661
 #: plug-ins/common/despeckle.c:638 plug-ins/common/destripe.c:572
 #: plug-ins/common/diffraction.c:565 plug-ins/common/displace.c:306
 #: plug-ins/common/edge.c:656 plug-ins/common/emboss.c:535
 #: plug-ins/common/engrave.c:234 plug-ins/common/exchange.c:302
-#: plug-ins/common/film.c:1205 plug-ins/common/flarefx.c:338
+#: plug-ins/common/film.c:1206 plug-ins/common/flarefx.c:338
 #: plug-ins/common/fractaltrace.c:738 plug-ins/common/gauss_iir.c:352
 #: plug-ins/common/gauss_iir.c:442 plug-ins/common/gauss_rle.c:349
 #: plug-ins/common/gauss_rle.c:439 plug-ins/common/gbr.c:473
@@ -84,8 +84,8 @@ msgstr "O programu"
 #: plug-ins/common/sparkle.c:356 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:380 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:274
-#: plug-ins/common/tiff.c:1448 plug-ins/common/tile.c:397
-#: plug-ins/common/tileit.c:405 plug-ins/common/unsharp.c:796
+#: plug-ins/common/tiff.c:1468 plug-ins/common/tile.c:397
+#: plug-ins/common/tileit.c:405 plug-ins/common/unsharp.c:794
 #: plug-ins/common/video.c:2175 plug-ins/common/vpropagate.c:942
 #: plug-ins/common/warp.c:443 plug-ins/common/waves.c:356
 #: plug-ins/common/whirlpinch.c:829 plug-ins/common/wind.c:703
@@ -113,16 +113,16 @@ msgstr "O programu"
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
 #: plug-ins/sgi/sgi.c:655 plug-ins/sinus/sinus.c:753
 #: plug-ins/struc/struc.c:261 plug-ins/webbrowser/webbrowser.c:286
-#: plug-ins/xjt/xjt.c:747
+#: plug-ins/xjt/xjt.c:796
 msgid "OK"
 msgstr "OK"
 
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
 #: plug-ins/FractalExplorer/Dialogs.c:302
-#: plug-ins/FractalExplorer/FractalExplorer.c:719
-#: plug-ins/FractalExplorer/FractalExplorer.c:840
-#: plug-ins/FractalExplorer/FractalExplorer.c:1594
+#: plug-ins/FractalExplorer/FractalExplorer.c:747
+#: plug-ins/FractalExplorer/FractalExplorer.c:862
+#: plug-ins/FractalExplorer/FractalExplorer.c:1616
 #: plug-ins/Lighting/lighting_ui.c:1071 plug-ins/bmp/bmpwrite.c:564
 #: plug-ins/borderaverage/borderaverage.c:403
 #: plug-ins/common/CML_explorer.c:1190 plug-ins/common/CML_explorer.c:2268
@@ -132,13 +132,13 @@ msgstr "OK"
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:420 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
-#: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1382
+#: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1389
 #: plug-ins/common/decompose.c:864 plug-ins/common/deinterlace.c:280
 #: plug-ins/common/depthmerge.c:663 plug-ins/common/despeckle.c:640
 #: plug-ins/common/destripe.c:574 plug-ins/common/diffraction.c:567
 #: plug-ins/common/displace.c:308 plug-ins/common/edge.c:658
 #: plug-ins/common/emboss.c:537 plug-ins/common/engrave.c:236
-#: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1207
+#: plug-ins/common/exchange.c:304 plug-ins/common/film.c:1208
 #: plug-ins/common/flarefx.c:340 plug-ins/common/fractaltrace.c:740
 #: plug-ins/common/gauss_iir.c:354 plug-ins/common/gauss_iir.c:444
 #: plug-ins/common/gauss_rle.c:351 plug-ins/common/gauss_rle.c:441
@@ -167,8 +167,8 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:358 plug-ins/common/spheredesigner.c:2240
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:276
-#: plug-ins/common/tiff.c:1450 plug-ins/common/tile.c:399
-#: plug-ins/common/tileit.c:407 plug-ins/common/unsharp.c:798
+#: plug-ins/common/tiff.c:1470 plug-ins/common/tile.c:399
+#: plug-ins/common/tileit.c:407 plug-ins/common/unsharp.c:796
 #: plug-ins/common/video.c:2177 plug-ins/common/vpropagate.c:944
 #: plug-ins/common/warp.c:445 plug-ins/common/waves.c:358
 #: plug-ins/common/whirlpinch.c:831 plug-ins/common/wind.c:760
@@ -196,7 +196,7 @@ msgstr "OK"
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
 #: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
-#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:749
+#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:798
 msgid "Cancel"
 msgstr "Zru¹it"
 
@@ -275,7 +275,7 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:447 plug-ins/common/align_layers.c:480
 #: plug-ins/common/ps.c:2385 plug-ins/common/ps.c:2398
-#: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1469
+#: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1489
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:286
 msgid "None"
 msgstr "Nic"
@@ -445,7 +445,7 @@ msgstr "O cizím mapování 2"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1214
 #: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
-#: plug-ins/common/curve_bend.c:1508 plug-ins/common/destripe.c:597
+#: plug-ins/common/curve_bend.c:1515 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:319
 #: plug-ins/common/fractaltrace.c:759 plug-ins/common/nlfilt.c:586
 #: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
@@ -598,7 +598,7 @@ msgid "Load a fractal from file"
 msgstr "Naèíst fraktál ze souboru"
 
 #: plug-ins/FractalExplorer/Dialogs.c:544 plug-ins/common/convmatrix.c:812
-#: plug-ins/common/curve_bend.c:1372 plug-ins/common/iwarp.c:967
+#: plug-ins/common/curve_bend.c:1379 plug-ins/common/iwarp.c:967
 #: plug-ins/common/spheredesigner.c:2238 plug-ins/common/tileit.c:486
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:804
@@ -824,13 +824,13 @@ msgid "Click here to cancel save procedure"
 msgstr "Klepnutím zde lze zru¹it zápisovou proceduru"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1984
-#: plug-ins/FractalExplorer/FractalExplorer.c:1266
+#: plug-ins/FractalExplorer/FractalExplorer.c:1288
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
 msgstr "Soubor '%s' není souborem pro badatele fraktálù"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1989
-#: plug-ins/FractalExplorer/FractalExplorer.c:1274
+#: plug-ins/FractalExplorer/FractalExplorer.c:1296
 #, c-format
 msgid ""
 "File '%s' is corrupt.\n"
@@ -839,50 +839,50 @@ msgstr ""
 "Soubor '%s' je po¹kozený.\n"
 "Øádek %d Nesprávná sekce voleb"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:220
+#: plug-ins/FractalExplorer/FractalExplorer.c:221
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
 msgstr "<Image>/Filtry/Vyobrazení/Vzorky/Badatel fraktálù..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:359
+#: plug-ins/FractalExplorer/FractalExplorer.c:360
 msgid "Rendering Fractal..."
 msgstr "Poèítá se fraktál..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:681
-msgid "Delete fractal"
+#: plug-ins/FractalExplorer/FractalExplorer.c:738
+#: plug-ins/gflare/gflare.c:3386
+#, c-format
+msgid ""
+"Are you sure you want to delete\n"
+"\"%s\" from the list and from disk?"
+msgstr ""
+"Opravdu chcete smazat\n"
+"\"%s\" ze seznamu a z disku?"
+
+#: plug-ins/FractalExplorer/FractalExplorer.c:742
+msgid "Delete Fractal"
 msgstr "Smazat fraktál"
 
-#. Question
-#: plug-ins/FractalExplorer/FractalExplorer.c:693 plug-ins/gfig/gfig.c:6244
-msgid "Are you sure you want to delete"
-msgstr "Opravdu chcete smazat"
-
-#: plug-ins/FractalExplorer/FractalExplorer.c:698
-#, c-format
-msgid "\"%s\" from the list and from disk?"
-msgstr "\"%s\" ze seznamu a z disku?"
-
 #. Buttons
-#: plug-ins/FractalExplorer/FractalExplorer.c:709
-#: plug-ins/FractalExplorer/FractalExplorer.c:1445 plug-ins/gfig/gfig.c:6261
+#: plug-ins/FractalExplorer/FractalExplorer.c:747
+#: plug-ins/FractalExplorer/FractalExplorer.c:1467 plug-ins/gfig/gfig.c:6261
 #: plug-ins/gflare/gflare.c:3119 plug-ins/gflare/gflare.c:3395
 #: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:802
 #: plug-ins/imagemap/imap_cmd_delete.c:53
 msgid "Delete"
 msgstr "Smazat"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:810
+#: plug-ins/FractalExplorer/FractalExplorer.c:832
 msgid "Edit fractal name"
 msgstr "Zmìnit jméno fraktálu"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:821
+#: plug-ins/FractalExplorer/FractalExplorer.c:843
 msgid "Fractal name:"
 msgstr "Jméno fraktálu:"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:862
+#: plug-ins/FractalExplorer/FractalExplorer.c:884
 msgid "New Fractal"
 msgstr "Nový fraktál"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1140
+#: plug-ins/FractalExplorer/FractalExplorer.c:1162
 msgid ""
 "No fractalexplorer-path in gimprc:\n"
 "You need to add an entry like\n"
@@ -896,7 +896,7 @@ msgstr ""
 "\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
 "do souboru ~/.gimp-1.1/gimprc\n"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1187
+#: plug-ins/FractalExplorer/FractalExplorer.c:1209
 #, c-format
 msgid ""
 "fractalexplorer-path miss-configured - \n"
@@ -905,37 +905,37 @@ msgstr ""
 "fractalexplorer-path ¹patnì nastavena -\n"
 "cesta `%.100s' nebyla nalezena\n"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1387
+#: plug-ins/FractalExplorer/FractalExplorer.c:1409
 msgid "My first fractal"
 msgstr "Mùj první fraktál"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1404
+#: plug-ins/FractalExplorer/FractalExplorer.c:1426
 msgid "Choose Fractal by double-clicking on it"
 msgstr "Dvojitým poklepem lze zvolit fraktál"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1435
+#: plug-ins/FractalExplorer/FractalExplorer.c:1457
 msgid "Rescan"
 msgstr "Zaktualizovat"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1442
+#: plug-ins/FractalExplorer/FractalExplorer.c:1464
 msgid "Select directory and rescan collection"
 msgstr "Volba adresáøe a aktualizace sbírky"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1453
+#: plug-ins/FractalExplorer/FractalExplorer.c:1475
 msgid "Delete currently selected fractal"
 msgstr "Smazat právì zvolený fraktál"
 
 #. Call up the file sel dialogue
-#: plug-ins/FractalExplorer/FractalExplorer.c:1490
+#: plug-ins/FractalExplorer/FractalExplorer.c:1512
 msgid "Add FractalExplorer path"
 msgstr "Pøidat cestu pro badatele fraktálù"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1524
+#: plug-ins/FractalExplorer/FractalExplorer.c:1546
 msgid "Rescan for fractals"
 msgstr "Zaktualizovat fraktály"
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:1582
+#: plug-ins/FractalExplorer/FractalExplorer.c:1604
 msgid "Add dir"
 msgstr "Pøidat adresáø"
 
@@ -1067,7 +1067,7 @@ msgid "Depth:"
 msgstr "Hloubka:"
 
 #: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:297
-#: plug-ins/common/unsharp.c:839 plug-ins/common/wind.c:857
+#: plug-ins/common/unsharp.c:837 plug-ins/common/wind.c:857
 #: plug-ins/gflare/gflare.c:3041
 msgid "Threshold:"
 msgstr "Práh:"
@@ -1300,11 +1300,11 @@ msgstr "<Image>/Filtry/Mapování/Mapování objektu..."
 #: plug-ins/common/pix.c:329 plug-ins/common/png.c:414
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
-#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:423
+#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
 #: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
-#: plug-ins/xjt/xjt.c:3169
+#: plug-ins/xjt/xjt.c:3238
 #, c-format
 msgid "Loading %s:"
 msgstr "Ète se %s:"
@@ -1339,7 +1339,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/bmp/bmpread.c:288 plug-ins/bmp/bmpread.c:297
 #: plug-ins/bmp/bmpread.c:304 plug-ins/common/CEL.c:306
 #: plug-ins/common/blinds.c:399 plug-ins/common/compose.c:545
-#: plug-ins/common/decompose.c:446 plug-ins/common/film.c:1006
+#: plug-ins/common/decompose.c:446 plug-ins/common/film.c:1007
 #: plug-ins/common/gbr.c:346 plug-ins/common/gifload.c:848
 #: plug-ins/common/hrz.c:381 plug-ins/common/jpeg.c:901
 #: plug-ins/common/lic.c:903 plug-ins/common/papertile.c:314
@@ -1348,7 +1348,7 @@ msgstr "%s: ¹patná barevná mapa\n"
 #: plug-ins/common/png.c:545 plug-ins/common/pnm.c:500
 #: plug-ins/common/psd.c:2088 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
-#: plug-ins/common/tiff.c:633 plug-ins/common/tile.c:264
+#: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2359
 #: plug-ins/common/xbm.c:642 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
@@ -1375,10 +1375,10 @@ msgstr "nelze otevøít %s\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:781 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1204 plug-ins/common/xbm.c:790
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
-#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1571
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
 #, c-format
 msgid "Saving %s:"
 msgstr "Zapisuje se %s:"
@@ -1988,11 +1988,11 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
 #: plug-ins/common/snoise.c:539 plug-ins/common/sobel.c:274
 #: plug-ins/common/sparkle.c:370 plug-ins/common/threshold_alpha.c:285
-#: plug-ins/common/unsharp.c:807 plug-ins/common/video.c:2187
+#: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
 #: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:772
 #: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
-#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:759
+#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:808
 msgid "Parameter Settings"
 msgstr "Nastavení parametrù"
 
@@ -2601,7 +2601,7 @@ msgid "Prefixed Name:"
 msgstr "Jméno s pøedponou:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1482 plug-ins/common/xbm.c:1025
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1025
 msgid "Comment:"
 msgstr "Komentáø:"
 
@@ -2665,105 +2665,105 @@ msgstr "Velikost dla¾dice:"
 msgid "Tile Saturation:"
 msgstr "Sytost dla¾dice:"
 
-#: plug-ins/common/curve_bend.c:347
+#: plug-ins/common/curve_bend.c:350
 msgid "Upper"
 msgstr "Horní"
 
-#: plug-ins/common/curve_bend.c:348
+#: plug-ins/common/curve_bend.c:351
 msgid "Lower"
 msgstr "Dolní"
 
-#: plug-ins/common/curve_bend.c:354
+#: plug-ins/common/curve_bend.c:357
 msgid "Smooth"
 msgstr "Plynulá"
 
-#: plug-ins/common/curve_bend.c:355
+#: plug-ins/common/curve_bend.c:358
 msgid "Free"
 msgstr "Volná"
 
-#: plug-ins/common/curve_bend.c:680
+#: plug-ins/common/curve_bend.c:683
 msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/Filtry/Zkreslení/Zkøivit..."
 
-#: plug-ins/common/curve_bend.c:815
+#: plug-ins/common/curve_bend.c:818
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
 "Zkøivení pracuje pouze s vrstvami (ale bylo voláno na kanál nebo masku)"
 
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1367
+#: plug-ins/common/curve_bend.c:1374
 msgid "Curve Bend"
 msgstr "Zkøivení"
 
-#: plug-ins/common/curve_bend.c:1374 plug-ins/gfig/gfig.c:6535
+#: plug-ins/common/curve_bend.c:1381 plug-ins/gfig/gfig.c:6535
 #: plug-ins/gflare/gflare.c:3118 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:286 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Kopírovat"
 
-#: plug-ins/common/curve_bend.c:1376
+#: plug-ins/common/curve_bend.c:1383
 msgid "CopyInv"
 msgstr "InvKopírovat"
 
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1385
 msgid "Swap"
 msgstr "Prohodit"
 
 #. The Load button
-#: plug-ins/common/curve_bend.c:1397
+#: plug-ins/common/curve_bend.c:1404
 msgid "LoadCurve"
 msgstr "Naèíst køivku"
 
 #. The Save button
-#: plug-ins/common/curve_bend.c:1405
+#: plug-ins/common/curve_bend.c:1412
 msgid "SaveCurve"
 msgstr "Zapsat køivku"
 
-#: plug-ins/common/curve_bend.c:1412
+#: plug-ins/common/curve_bend.c:1419
 msgid "Rotate: "
 msgstr "Rotace: "
 
-#: plug-ins/common/curve_bend.c:1425
+#: plug-ins/common/curve_bend.c:1432
 msgid "Curve for Border: "
 msgstr "Køivka hranic: "
 
 #. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1438
+#: plug-ins/common/curve_bend.c:1445
 msgid "Curve Type: "
 msgstr "Typ køivky: "
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1499
+#: plug-ins/common/curve_bend.c:1506
 msgid "PreviewOnce"
 msgstr "Náhled jednou"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1525
 msgid "Smoothing"
 msgstr "Plynulost"
 
 #. The antialias toggle
-#: plug-ins/common/curve_bend.c:1528
+#: plug-ins/common/curve_bend.c:1535
 msgid "Antialias"
 msgstr "Vyhladit"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1538
+#: plug-ins/common/curve_bend.c:1545
 msgid "Work on Copy"
 msgstr "Pracovat na kopii"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2186
+#: plug-ins/common/curve_bend.c:2193
 msgid "Load Curve Points from file"
 msgstr "Ètení bodù køivky ze souboru"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2216
+#: plug-ins/common/curve_bend.c:2223
 msgid "Save Curve Points to file"
 msgstr "Zápis bodù køivky do souboru"
 
-#: plug-ins/common/curve_bend.c:3353
+#: plug-ins/common/curve_bend.c:3360
 msgid "Curve Bend ..."
 msgstr "Zkøivení..."
 
@@ -2975,7 +2975,7 @@ msgid "Recursive"
 msgstr "Rekurzivní"
 
 #: plug-ins/common/despeckle.c:763 plug-ins/common/nlfilt.c:421
-#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:821
+#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:819
 #: plug-ins/common/whirlpinch.c:898 plug-ins/gflare/gflare.c:2928
 #: plug-ins/imagemap/imap_circle.c:272
 msgid "Radius:"
@@ -3118,7 +3118,7 @@ msgid "Edge Detection"
 msgstr "Detekce hran"
 
 #: plug-ins/common/edge.c:681 plug-ins/common/spheredesigner.c:2637
-#: plug-ins/common/unsharp.c:830
+#: plug-ins/common/unsharp.c:828
 msgid "Amount:"
 msgstr "Míra:"
 
@@ -3160,7 +3160,7 @@ msgstr "Rytina"
 msgid "Limit Line Width"
 msgstr "Omezení ¹íøky øádku"
 
-#: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1262
+#: plug-ins/common/engrave.c:266 plug-ins/common/film.c:1263
 #: plug-ins/common/gtm.c:545 plug-ins/common/ps.c:2336
 #: plug-ins/common/ps.c:2511 plug-ins/common/smooth_palette.c:440
 #: plug-ins/common/tile.c:424 plug-ins/imagemap/imap_rectangle.c:392
@@ -3225,111 +3225,111 @@ msgid "Untitled"
 msgstr "Bez názvu"
 
 #. ** Get a RGB copy of the source region **
-#: plug-ins/common/film.c:737
+#: plug-ins/common/film.c:738
 msgid "Temporary"
 msgstr "Pomocný"
 
-#: plug-ins/common/film.c:1118
+#: plug-ins/common/film.c:1119
 msgid "Available Images:"
 msgstr "Dostupné obrázky:"
 
-#: plug-ins/common/film.c:1119
+#: plug-ins/common/film.c:1120
 msgid "On Film:"
 msgstr "Na filmu:"
 
-#: plug-ins/common/film.c:1146
+#: plug-ins/common/film.c:1147
 msgid "Add >>"
 msgstr "Pøidat >>"
 
-#: plug-ins/common/film.c:1146 plug-ins/common/iwarp.c:925
+#: plug-ins/common/film.c:1147 plug-ins/common/iwarp.c:925
 #: plug-ins/imagemap/imap_polygon.c:460
 msgid "Remove"
 msgstr "Odstranit"
 
 #. Film height/colour
-#: plug-ins/common/film.c:1200 plug-ins/common/film.c:1233
+#: plug-ins/common/film.c:1201 plug-ins/common/film.c:1234
 msgid "Film"
 msgstr "Film"
 
 #. Keep maximum image height
-#: plug-ins/common/film.c:1242
+#: plug-ins/common/film.c:1243
 msgid "Fit Height to Images"
 msgstr "Lícovat vý¹ku obrázkù"
 
 #. Film color
-#: plug-ins/common/film.c:1274
+#: plug-ins/common/film.c:1275
 msgid "Select Film Color"
 msgstr "Výbìr barev filmu"
 
-#: plug-ins/common/film.c:1278 plug-ins/common/film.c:1322
+#: plug-ins/common/film.c:1279 plug-ins/common/film.c:1323
 #: plug-ins/common/nova.c:395 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
 msgstr "Barva:"
 
 #. Film numbering: Startindex/Font/colour
-#: plug-ins/common/film.c:1285
+#: plug-ins/common/film.c:1286
 msgid "Numbering"
 msgstr "Èíslování"
 
-#: plug-ins/common/film.c:1306
+#: plug-ins/common/film.c:1307
 msgid "Start Index:"
 msgstr "Poèáteèní index:"
 
-#: plug-ins/common/film.c:1314
+#: plug-ins/common/film.c:1315
 msgid "Font:"
 msgstr "Písmo:"
 
 #. Numbering color
-#: plug-ins/common/film.c:1318
+#: plug-ins/common/film.c:1319
 msgid "Select Number Color"
 msgstr "Výbìr poètu barev"
 
-#: plug-ins/common/film.c:1328
+#: plug-ins/common/film.c:1329
 msgid "At Bottom"
 msgstr "Dole"
 
-#: plug-ins/common/film.c:1328
+#: plug-ins/common/film.c:1329
 msgid "At Top"
 msgstr "Nahoøe"
 
 #. ** The right frame keeps the image selection **
-#: plug-ins/common/film.c:1343
+#: plug-ins/common/film.c:1344
 msgid "Image Selection"
 msgstr "Výbìr obrázku"
 
-#: plug-ins/common/film.c:1360
+#: plug-ins/common/film.c:1361
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
 msgstr "Roz¹íøená nastavení (v¹echny hodnoty jsou díly vý¹ky filmu)"
 
-#: plug-ins/common/film.c:1376
+#: plug-ins/common/film.c:1377
 msgid "Image Height:"
 msgstr "Vý¹ka obrázku:"
 
-#: plug-ins/common/film.c:1387
+#: plug-ins/common/film.c:1394
 msgid "Image Spacing:"
 msgstr "Rozestup obrázkù:"
 
-#: plug-ins/common/film.c:1405
+#: plug-ins/common/film.c:1418
 msgid "Hole Offset:"
 msgstr "Posun dìr:"
 
-#: plug-ins/common/film.c:1416
+#: plug-ins/common/film.c:1435
 msgid "Hole Width:"
 msgstr "©íøka dìr:"
 
-#: plug-ins/common/film.c:1427
+#: plug-ins/common/film.c:1452
 msgid "Hole Height:"
 msgstr "Vý¹ka dìr:"
 
-#: plug-ins/common/film.c:1438
+#: plug-ins/common/film.c:1469
 msgid "Hole Spacing:"
 msgstr "Rozestup dìr:"
 
-#: plug-ins/common/film.c:1456
+#: plug-ins/common/film.c:1493
 msgid "Number Height:"
 msgstr "Vý¹ka èíslic:"
 
-#: plug-ins/common/film.c:1478
+#: plug-ins/common/film.c:1521
 msgid "Reset to Defaults"
 msgstr "Nastavit na implicitní hodnody"
 
@@ -3850,11 +3850,11 @@ msgstr "<Image>/Obrázek/Transformace/Gilotina"
 msgid "Guillotine..."
 msgstr "Gilotina..."
 
-#: plug-ins/common/gz.c:327
+#: plug-ins/common/gz.c:328
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
 msgstr "gz: chybí rozli¹ující koncovka, zapisuje se jako gzipovaný xcf\n"
 
-#: plug-ins/common/gz.c:481
+#: plug-ins/common/gz.c:482
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr ""
 "gz: chybí rozli¹ující koncovka, pokus o ètení za pomocí souborù magických "
@@ -4095,11 +4095,11 @@ msgstr "Náhled obrázku"
 msgid "Preview (in Image Window)"
 msgstr "Náhled (v oknì obrázku)"
 
-#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:790
+#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:839
 msgid "Quality:"
 msgstr "Kvalita:"
 
-#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:799
+#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:848
 msgid "Smoothing:"
 msgstr "Vyhlazování:"
 
@@ -4111,7 +4111,7 @@ msgstr "Restartovací znaèky"
 msgid "Restart Frequency (Rows):"
 msgstr "Èetnost restartovacích znaèek (øádky):"
 
-#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:770
+#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:819
 msgid "Optimize"
 msgstr "Optimalizovat"
 
@@ -5872,23 +5872,23 @@ msgstr "Práh alfy: Barvení prùhlednosti..."
 msgid "Threshold Alpha"
 msgstr "Práh alfy"
 
-#: plug-ins/common/tiff.c:642
+#: plug-ins/common/tiff.c:659
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: plug-ins/common/tiff.c:1443
+#: plug-ins/common/tiff.c:1463
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
-#: plug-ins/common/tiff.c:1465
+#: plug-ins/common/tiff.c:1485
 msgid "Compression"
 msgstr "Komprese"
 
-#: plug-ins/common/tiff.c:1470
+#: plug-ins/common/tiff.c:1490
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/common/tiff.c:1471
+#: plug-ins/common/tiff.c:1491
 msgid "Pack Bits"
 msgstr "Pakování bitù"
 
@@ -5965,15 +5965,15 @@ msgstr "<Image>/Filtry/Mapování/Odstranit ¹vy..."
 msgid "Tiler..."
 msgstr "Dla¾dicování..."
 
-#: plug-ins/common/unsharp.c:181
+#: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
 msgstr "<Image>/Filtry/Vylep¹ení/Maskovat rozostøení..."
 
-#: plug-ins/common/unsharp.c:399
+#: plug-ins/common/unsharp.c:394
 msgid "Merging..."
 msgstr "Spojuje se..."
 
-#: plug-ins/common/unsharp.c:791
+#: plug-ins/common/unsharp.c:789
 msgid "Unsharp Mask"
 msgstr "Maskování rozostøení"
 
@@ -6292,7 +6292,7 @@ msgid "Pasted"
 msgstr "Vlo¾ené"
 
 #: plug-ins/common/winclipboard.c:534
-msgid "Pasteing ..."
+msgid "Pasting ..."
 msgstr "Vkládá se..."
 
 #: plug-ins/common/wind.c:163
@@ -7892,7 +7892,7 @@ msgstr "Zakt. Náhled"
 
 #: plug-ins/gap/gap_mov_dialog.c:485
 msgid ""
-"Show PreviewFame with Selected       \n"
+"Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
 msgstr ""
 
@@ -9185,6 +9185,11 @@ msgstr ""
 msgid "Delete gfig drawing"
 msgstr "Smazat gfig kresbu"
 
+#. Question
+#: plug-ins/gfig/gfig.c:6244
+msgid "Are you sure you want to delete"
+msgstr "Opravdu chcete smazat"
+
 #: plug-ins/gfig/gfig.c:6297 plug-ins/gfig/gfig.c:6336
 msgid "<NONE>"
 msgstr "<NIC>"
@@ -9346,15 +9351,6 @@ msgstr "Zadejte jméno pro zkopírovanou P-záøi:"
 #: plug-ins/gflare/gflare.c:3380
 msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Nelze smazat. Musí zde být alespoò jedna P-záøe."
-
-#: plug-ins/gflare/gflare.c:3386
-#, c-format
-msgid ""
-"Are you sure you want to delete\n"
-"\"%s\" from the list and from disk?"
-msgstr ""
-"Opravdu chcete smazat\n"
-"\"%s\" ze seznamu a z disku?"
 
 #: plug-ins/gflare/gflare.c:3390
 msgid "Delete GFlare"
@@ -11766,69 +11762,79 @@ msgstr "Nabrat celou pracovní plochu"
 msgid "No data captured"
 msgstr "®ádná data nebyla získána"
 
-#: plug-ins/xjt/xjt.c:651
+#: plug-ins/xjt/xjt.c:660
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT soubor obsahuje neznámý re¾im vrstvy %d"
 
-#: plug-ins/xjt/xjt.c:681
+#: plug-ins/xjt/xjt.c:690
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Varování: nepodporovaný re¾im vrstvy %d ulo¾en do XJT"
 
-#: plug-ins/xjt/xjt.c:697
+#: plug-ins/xjt/xjt.c:706
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT soubor obsahuje neznámý typ cesty %d"
 
-#: plug-ins/xjt/xjt.c:713
+#: plug-ins/xjt/xjt.c:722
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Varování: nepodporovaný typ cesty %d ulo¾en do XJT"
 
 #: plug-ins/xjt/xjt.c:742
+#, c-format
+msgid "XJT file contains unknown unittype %d"
+msgstr "XJT soubor obsahuje neznámý druh jednotek %d"
+
+#: plug-ins/xjt/xjt.c:763
+#, c-format
+msgid "Warning: unsupported unittype %d saved to XJT"
+msgstr "Varování: nepodporovaný druh jednotek %d ulo¾en do XJT"
+
+#: plug-ins/xjt/xjt.c:791
 msgid "Save as XJT"
 msgstr "Zapsat jako XJT"
 
-#: plug-ins/xjt/xjt.c:779
+#: plug-ins/xjt/xjt.c:828
 msgid "Clear Transparent"
 msgstr "Vymazat prùhledné"
 
-#: plug-ins/xjt/xjt.c:1174
+#: plug-ins/xjt/xjt.c:1223
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Nelze otevøít (zápis): %s"
 
-#: plug-ins/xjt/xjt.c:1562
+#: plug-ins/xjt/xjt.c:1615
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: neumí pracovat s indexovanými barevnými obrázky"
 
-#: plug-ins/xjt/xjt.c:1566
+#: plug-ins/xjt/xjt.c:1619
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: neumí pracovat s neznámými typy obrázku"
 
-#: plug-ins/xjt/xjt.c:1581 plug-ins/xjt/xjt.c:3179
+#: plug-ins/xjt/xjt.c:1634 plug-ins/xjt/xjt.c:3248
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Nelze vytvoøit pracovní adresáø: %s"
 
-#: plug-ins/xjt/xjt.c:1590
+#: plug-ins/xjt/xjt.c:1643
 #, c-format
 msgid "Can't open : %s"
 msgstr "Nelze otevøít: %s"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2408 plug-ins/xjt/xjt.c:2415
+#: plug-ins/xjt/xjt.c:2463 plug-ins/xjt/xjt.c:2470
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Nelze otevøít (ètení): %s"
 
-#: plug-ins/xjt/xjt.c:3042
+#: plug-ins/xjt/xjt.c:3111
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
 msgstr ""
 
-#: plug-ins/xjt/xjt.c:3047
+#: plug-ins/xjt/xjt.c:3116
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr ""

@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-02-14 11:19+0100\n"
-"PO-Revision-Date: 2000-02-14 11:49+01:00\n"
+"POT-Creation-Date: 2000-02-17 00:31+0100\n"
+"PO-Revision-Date: 2000-02-17 00:34+01:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,22 +76,22 @@ msgid "Parasites"
 msgstr "Cizopasníci"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:541 app/internal_procs.c:71 app/preferences_dialog.c:2467
+#: app/app_procs.c:541 app/internal_procs.c:71 app/preferences_dialog.c:2468
 msgid "Brushes"
 msgstr "Stopy"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:543 app/internal_procs.c:143 app/preferences_dialog.c:2475
+#: app/app_procs.c:543 app/internal_procs.c:143 app/preferences_dialog.c:2476
 msgid "Patterns"
 msgstr "Vzorky"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:545 app/preferences_dialog.c:2479
+#: app/app_procs.c:545 app/preferences_dialog.c:2480
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:547 app/internal_procs.c:113 app/preferences_dialog.c:2483
+#: app/app_procs.c:547 app/internal_procs.c:113 app/preferences_dialog.c:2484
 msgid "Gradients"
 msgstr "Pøechody"
 
@@ -113,7 +113,7 @@ msgstr ""
 msgid "Quit"
 msgstr "Konec"
 
-#: app/app_procs.c:741 app/brightness_contrast.c:218 app/channel_ops.c:91
+#: app/app_procs.c:741 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2464 app/channels_dialog.c:2638
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:199 app/file_new_dialog.c:370
@@ -128,19 +128,19 @@ msgstr "Konec"
 msgid "Cancel"
 msgstr "Zru¹it"
 
-#: app/bezier_select.c:469
+#: app/bezier_select.c:476
 msgid "Bezier path already closed."
 msgstr "Bézierova køivka je ji¾ uzavøená."
 
-#: app/bezier_select.c:490
+#: app/bezier_select.c:497
 msgid "Corrupt curve"
 msgstr "Poru¹ená køivka"
 
-#: app/bezier_select.c:2855
+#: app/bezier_select.c:2862
 msgid "Curve not closed!"
 msgstr "Køivka není uzavøená!"
 
-#: app/bezier_select.c:3142 app/gimage_mask.c:605
+#: app/bezier_select.c:3149 app/gimage_mask.c:605
 msgid "Paintbrush operation failed."
 msgstr "©tìtec selhal."
 
@@ -264,7 +264,7 @@ msgstr "Mísení..."
 msgid "Blend: "
 msgstr "Mísení: "
 
-#: app/brightness_contrast.c:127 app/brightness_contrast.c:209 app/tools.c:634
+#: app/brightness_contrast.c:127 app/brightness_contrast.c:209 app/tools.c:637
 msgid "Brightness-Contrast"
 msgstr "Jas-kontrast"
 
@@ -272,7 +272,7 @@ msgstr "Jas-kontrast"
 msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Jas-kontrast nefunguje na indexovaných obrazovkách."
 
-#: app/brightness_contrast.c:214 app/channel_ops.c:89
+#: app/brightness_contrast.c:214 app/channel_ops.c:91
 #: app/channels_dialog.c:2462 app/channels_dialog.c:2636
 #: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:555 app/file_new_dialog.c:197 app/file_new_dialog.c:366
@@ -287,7 +287,7 @@ msgstr "OK"
 #: app/brightness_contrast.c:216 app/by_color_select.c:630
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:368
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
-#: app/threshold.c:273 app/tools.c:1045 app/transform_core.c:413
+#: app/threshold.c:273 app/tools.c:1048 app/transform_core.c:412
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Obnovit"
@@ -322,7 +322,7 @@ msgstr "Editor stop"
 #: app/lc_dialog.c:195 app/measure.c:273 app/nav_window.c:1369
 #: app/palette.c:2091 app/palette.c:2107 app/palette.c:3153
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1047
+#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1050
 #: app/undo_history.c:762
 msgid "Close"
 msgstr "Zavøít"
@@ -464,50 +464,50 @@ msgid "copy"
 msgstr "kopie"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1620 app/layer.c:318 app/layer.c:1543
+#: app/channel.c:195 app/gradient.c:1620 app/layer.c:318 app/layer.c:1550
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
 
-#: app/channel.c:607
+#: app/channel.c:613
 msgid "Selection Mask"
 msgstr "Maska výbìru"
 
-#: app/channel_ops.c:83 app/resize.c:392
+#: app/channel_ops.c:85 app/resize.c:392
 msgid "Offset"
 msgstr "Posun:"
 
 #. The offset labels
-#: app/channel_ops.c:107
+#: app/channel_ops.c:109
 msgid "Offset X:"
 msgstr "Posun X:"
 
-#: app/channel_ops.c:113 app/crop.c:1063 app/file_new_dialog.c:543
+#: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:543
 #: app/resize.c:330 app/resize.c:415 app/resize.c:573 app/rotate_tool.c:106
 #: app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
 
 #. The wrap around option
-#: app/channel_ops.c:162
+#: app/channel_ops.c:164
 msgid "Wrap Around"
 msgstr "Oøíznout kolem"
 
-#: app/channel_ops.c:168
+#: app/channel_ops.c:170
 msgid "Fill Options"
 msgstr "Volby vyplòování"
 
-#: app/channel_ops.c:172 app/image_new.c:69 app/image_new.c:223
+#: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
 #: app/layers_dialog.c:3405
 msgid "Background"
 msgstr "Pozadí"
 
-#: app/channel_ops.c:173 app/image_new.c:79 app/layers_dialog.c:3407
+#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3407
 msgid "Transparent"
 msgstr "Prùhledný"
 
 #. The by half height and half width option
-#: app/channel_ops.c:185
+#: app/channel_ops.c:187
 msgid "Offset by (x/2),(y/2)"
 msgstr "Posun o (x/2),(y/2)"
 
@@ -617,7 +617,7 @@ msgid "No patterns available for this operation."
 msgstr "Nejsou k dispozici ¾ádné vzorky pro tuto operaci."
 
 #. The shell and main vbox
-#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:617
+#: app/color_balance.c:168 app/color_balance.c:266 app/tools.c:620
 msgid "Color Balance"
 msgstr "Vyvá¾ení barev"
 
@@ -940,7 +940,7 @@ msgid "Auto Shrink"
 msgstr "Automaticky zmen¹it"
 
 #. The shell and main vbox
-#: app/curves.c:390 app/curves.c:550 app/tools.c:702
+#: app/curves.c:390 app/curves.c:550 app/tools.c:705
 msgid "Curves"
 msgstr "Køivky"
 
@@ -996,7 +996,7 @@ msgid "Load/Save Curves"
 msgstr "Naèíst/Zapsat køivky"
 
 #: app/curves.c:1609 app/curves.c:1627 app/levels.c:1428 app/levels.c:1446
-#: app/paths_dialog.c:2226
+#: app/paths_dialog.c:1930
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Nepodaøilo se otevøít soubor %s"
@@ -1100,11 +1100,11 @@ msgstr "Tmavnutí"
 msgid "Mode"
 msgstr "Re¾im"
 
-#: app/edit_selection.c:177
+#: app/edit_selection.c:178
 msgid "Move: 0, 0"
 msgstr "Pøesun: 0, 0"
 
-#: app/edit_selection.c:410 app/edit_selection.c:420
+#: app/edit_selection.c:411 app/edit_selection.c:421
 msgid "Move: "
 msgstr "Pøesun: "
 
@@ -1315,12 +1315,12 @@ msgid "Flip Tool"
 msgstr "Pøeklopení"
 
 #: app/flip_tool.c:95 app/preferences_dialog.c:1591
-#: app/preferences_dialog.c:2354
+#: app/preferences_dialog.c:2355
 msgid "Horizontal"
 msgstr "Vodorovnì"
 
 #: app/flip_tool.c:97 app/preferences_dialog.c:1593
-#: app/preferences_dialog.c:2356
+#: app/preferences_dialog.c:2357
 msgid "Vertical"
 msgstr "Svisle"
 
@@ -1471,11 +1471,11 @@ msgstr "parazit pøipojen k obrazovce"
 msgid "detach parasite from drawable"
 msgstr "parazit odpojen od obrazovky"
 
-#: app/gimpdrawable.c:726
+#: app/gimpdrawable.c:734
 msgid "unnamed"
 msgstr "beze jména"
 
-#: app/gimpdrawable.c:743
+#: app/gimpdrawable.c:751
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Typ vrstvy %d není podporován."
@@ -1498,31 +1498,31 @@ msgstr "parazit pøipojen k obrázku"
 msgid "detach parasite from image"
 msgstr "parazit odpojen od obrázku"
 
-#: app/gimpimage.c:2122
+#: app/gimpimage.c:2213
 msgid "Layer cannot be raised any further"
 msgstr "Vrstva nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:2148
+#: app/gimpimage.c:2239
 msgid "Layer cannot be lowered any further"
 msgstr "Vrstva nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:2172
+#: app/gimpimage.c:2263
 msgid "Layer is already on top"
 msgstr "Vrstva je ji¾ navrch"
 
-#: app/gimpimage.c:2178
+#: app/gimpimage.c:2269
 msgid "Can't raise Layer without alpha"
 msgstr "Nelze dát vý¹ vrstvu bez alfa"
 
-#: app/gimpimage.c:2205
+#: app/gimpimage.c:2296
 msgid "Layer is already on bottom"
 msgstr "Vrstva je ji¾ vespod"
 
-#: app/gimpimage.c:2260
+#: app/gimpimage.c:2351
 msgid "BG has no alpha, layer was placed above"
 msgstr "Pozadí nemá alfa, vrstva byla umístìna nad nìj"
 
-#: app/gimpimage.c:2329
+#: app/gimpimage.c:2420
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1530,11 +1530,11 @@ msgstr ""
 "Není dostatek viditelných vrstev.\n"
 "Ke slouèení jsou nutné alespoò dvì."
 
-#: app/gimpimage.c:2409
+#: app/gimpimage.c:2500
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ke slouèení dolù není dostatek viditelných vrstev."
 
-#: app/gimpimage.c:2805
+#: app/gimpimage.c:2896
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1542,7 +1542,7 @@ msgstr ""
 "Nelze pøidat masku vrstvy, pokud\n"
 "vrstva ji¾ masku má."
 
-#: app/gimpimage.c:2809
+#: app/gimpimage.c:2900
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1550,7 +1550,7 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "indexovaného obrázku."
 
-#: app/gimpimage.c:2813
+#: app/gimpimage.c:2904
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1558,19 +1558,19 @@ msgstr ""
 "Nelze pøidat masku do vrstvy\n"
 "bez alfa kanálu."
 
-#: app/gimpimage.c:2820
+#: app/gimpimage.c:2911
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Nelze pøidat masku jiných rozmìrù ne¾ je vrstva."
 
-#: app/gimpimage.c:2923
+#: app/gimpimage.c:3014
 msgid "Channel cannot be raised any further"
 msgstr "Kanál nemù¾e být je¹tì vý¹"
 
-#: app/gimpimage.c:2972
+#: app/gimpimage.c:3063
 msgid "Channel cannot be lowered any further"
 msgstr "Kanál nemù¾e být je¹tì ní¾"
 
-#: app/gimpimage.c:3178 app/palette.c:379 app/palette.c:956 app/palette.c:1092
+#: app/gimpimage.c:3269 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2037 app/palette.c:2784 app/palette.c:2916
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -2080,7 +2080,7 @@ msgid "Gradient Selection"
 msgstr "Výbìr pøechodu"
 
 #. The shell and main vbox
-#: app/histogram_tool.c:166 app/histogram_tool.c:270 app/tools.c:736
+#: app/histogram_tool.c:166 app/histogram_tool.c:270 app/tools.c:739
 msgid "Histogram"
 msgstr "Histogram"
 
@@ -2117,7 +2117,7 @@ msgid "Information on Channel:"
 msgstr "Informace o kanálu:"
 
 #. The shell and main vbox
-#: app/hue_saturation.c:248 app/hue_saturation.c:368 app/tools.c:651
+#: app/hue_saturation.c:248 app/hue_saturation.c:368 app/tools.c:654
 msgid "Hue-Saturation"
 msgstr "Odstín-sytost"
 
@@ -3122,8 +3122,8 @@ msgid "Clipped to bottom layer"
 msgstr "Oøíznout dle spodní vrstvy"
 
 #: app/lc_dialog.c:99
-msgid "Layers & Channels"
-msgstr "Vrstvy a kanály"
+msgid "Layers, Channels & Paths"
+msgstr "Vrstvy, kanály a cesty"
 
 #. The Auto-button
 #: app/lc_dialog.c:147 app/levels.c:588
@@ -3139,7 +3139,7 @@ msgid "Channels"
 msgstr "Kanály"
 
 #. The shell and main vbox
-#: app/levels.c:197 app/levels.c:332 app/tools.c:719
+#: app/levels.c:197 app/levels.c:332 app/tools.c:722
 msgid "Levels"
 msgstr "Úrovnì"
 
@@ -3427,8 +3427,8 @@ msgid "/File/Dialogs"
 msgstr "/Soubor/Dialogy"
 
 #: app/menus.c:150
-msgid "/File/Dialogs/Layers & Channels..."
-msgstr "/Soubor/Dialogy/Vrstvy a kanály..."
+msgid "/File/Dialogs/Layers, Channels & Paths..."
+msgstr "/Soubor/Dialogy/Vrstvy, kanály a cesty..."
 
 #: app/menus.c:152
 msgid "/File/Dialogs/Tool Options..."
@@ -3817,8 +3817,8 @@ msgid "/Layers"
 msgstr "/Vrstvy"
 
 #: app/menus.c:476
-msgid "/Layers/Layers & Channels..."
-msgstr "/Vrstvy/Vrstvy a kanály..."
+msgid "/Layers/Layers, Channels & Paths..."
+msgstr "/Vrstvy/Vrstvy, kanály a cesty..."
 
 #. <Image>/Layers/Stack
 #: app/menus.c:481
@@ -3917,8 +3917,8 @@ msgid "/Dialogs"
 msgstr "/Dialogy"
 
 #: app/menus.c:555
-msgid "/Dialogs/Layers & Channels..."
-msgstr "/Dialogy/Vrstvy a kanály..."
+msgid "/Dialogs/Layers, Channels & Paths..."
+msgstr "/Dialogy/Vrstvy, kanály a cesty..."
 
 #: app/menus.c:557
 msgid "/Dialogs/Tool Options..."
@@ -4545,93 +4545,93 @@ msgstr "Výbìr palety"
 msgid "Path Tool"
 msgstr "Cesta"
 
-#: app/paths_dialog.c:169
+#: app/paths_dialog.c:156
 msgid "New Path"
 msgstr "Nová cesta"
 
-#: app/paths_dialog.c:173
+#: app/paths_dialog.c:160
 msgid "Duplicate Path"
 msgstr "Duplikovat cestu"
 
-#: app/paths_dialog.c:177
+#: app/paths_dialog.c:164
 msgid "Path to Selection"
 msgstr "Cesta do výbìru"
 
-#: app/paths_dialog.c:181
+#: app/paths_dialog.c:168
 msgid "Selection to Path"
 msgstr "Výbìr do cesty"
 
-#: app/paths_dialog.c:185
+#: app/paths_dialog.c:172
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
-#: app/paths_dialog.c:189
+#: app/paths_dialog.c:176
 msgid "Delete Path"
 msgstr "Smazat cestu"
 
-#: app/paths_dialog.c:198
+#: app/paths_dialog.c:185
 msgid "New Point"
 msgstr "Nový bod"
 
-#: app/paths_dialog.c:202
+#: app/paths_dialog.c:189
 msgid "Add Point"
 msgstr "Pøidat bod"
 
-#: app/paths_dialog.c:206
+#: app/paths_dialog.c:193
 msgid "Delete Point"
 msgstr "Smazat bod"
 
-#: app/paths_dialog.c:210
+#: app/paths_dialog.c:197
 msgid "Edit Point"
 msgstr "Zmìny bodu"
 
-#: app/paths_dialog.c:457
+#: app/paths_dialog.c:425
 #, c-format
 msgid "Path %d"
 msgstr "Cesta %d"
 
-#: app/paths_dialog.c:1239
+#: app/paths_dialog.c:1013
 msgid "Edit Path Attributes"
 msgstr "Úpravy vlastností cesty"
 
-#: app/paths_dialog.c:1242
+#: app/paths_dialog.c:1016
 msgid "Enter a new name for the path"
 msgstr "Zadejte nové jméno cesty"
 
-#: app/paths_dialog.c:2240
+#: app/paths_dialog.c:1944
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Nepodaøilo se naèíst z %s"
 
-#: app/paths_dialog.c:2255
+#: app/paths_dialog.c:1959
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Nepodaøilo se naèíst cestu z %s"
 
-#: app/paths_dialog.c:2262
+#: app/paths_dialog.c:1966
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "V souboru cesty %s nebyly zadány ¾ádné body"
 
-#: app/paths_dialog.c:2273
+#: app/paths_dialog.c:1977
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "<Nepodaøilo se naèíst body cesty z %s"
 
-#: app/paths_dialog.c:2346 app/xcf.c:419
+#: app/paths_dialog.c:2050 app/xcf.c:420
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "otevøení %s selhalo: %s\n"
 
-#: app/paths_dialog.c:2368
+#: app/paths_dialog.c:2072
 msgid "Load/Store Bezier Curves"
 msgstr "Naèíst/Zapsat Bézierovy køivky"
 
-#: app/paths_dialog.c:2408
+#: app/paths_dialog.c:2112
 msgid "Load Path"
 msgstr "Naèíst cestu"
 
-#: app/paths_dialog.c:2430
+#: app/paths_dialog.c:2134
 msgid "Store Path"
 msgstr "Uschovat cestu"
 
@@ -4704,7 +4704,7 @@ msgstr "nepodaøilo se nalézt zásuvný modul: \"%s\""
 msgid "Posterize does not operate on indexed drawables."
 msgstr "Posterizace nefunguje na indexovaných obrazovkách."
 
-#: app/posterize.c:192 app/tools.c:668
+#: app/posterize.c:192 app/tools.c:671
 msgid "Posterize"
 msgstr "Posterizace"
 
@@ -4807,7 +4807,7 @@ msgstr "Vý¹ka"
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Implicitní rozli¹ení obrázku a jednotky rozli¹ení"
 
-#: app/preferences_dialog.c:1595 app/preferences_dialog.c:2358
+#: app/preferences_dialog.c:1595 app/preferences_dialog.c:2359
 msgid "dpi"
 msgstr "dpi"
 
@@ -5035,7 +5035,7 @@ msgid "Disable Cursor Updating"
 msgstr "Zakázat aktualizaci kurzoru"
 
 #: app/preferences_dialog.c:2062 app/preferences_dialog.c:2064
-#: app/tools.c:1039
+#: app/tools.c:1042
 msgid "Tool Options"
 msgstr "Volby nástrojù"
 
@@ -5131,124 +5131,124 @@ msgstr "Zapsat polohy oken pøi skonèení"
 msgid "Clear Saved Window Positions Now"
 msgstr "Vymazat zapsané polohy oken"
 
-#: app/preferences_dialog.c:2292
+#: app/preferences_dialog.c:2293
 msgid "Always Try to Restore Session"
 msgstr "V¾dy se pokusit o obnovu sezení"
 
-#: app/preferences_dialog.c:2301
+#: app/preferences_dialog.c:2302
 msgid "Devices"
 msgstr "Zaøízení"
 
-#: app/preferences_dialog.c:2303
+#: app/preferences_dialog.c:2304
 msgid "Save Device Status on Exit"
 msgstr "Zapsat stav zaøízení pøi skonèení"
 
-#: app/preferences_dialog.c:2314 app/preferences_dialog.c:2316
+#: app/preferences_dialog.c:2315 app/preferences_dialog.c:2317
 msgid "Monitor"
 msgstr "Monitor"
 
-#: app/preferences_dialog.c:2324
+#: app/preferences_dialog.c:2325
 msgid "Get Monitor Resolution"
 msgstr "Rozli¹ení monitoru získat"
 
-#: app/preferences_dialog.c:2332
+#: app/preferences_dialog.c:2333
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(nyní %d × %d dpi)"
 
-#: app/preferences_dialog.c:2383
+#: app/preferences_dialog.c:2384
 msgid "From X Server"
 msgstr "z X serveru"
 
-#: app/preferences_dialog.c:2398
+#: app/preferences_dialog.c:2399
 msgid "Manually:"
 msgstr "Ruènì:"
 
-#: app/preferences_dialog.c:2411 app/preferences_dialog.c:2413
+#: app/preferences_dialog.c:2412 app/preferences_dialog.c:2414
 msgid "Directories"
 msgstr "Adresáøe"
 
-#: app/preferences_dialog.c:2430
+#: app/preferences_dialog.c:2431
 msgid "Temp Dir:"
 msgstr "Pomocný adresáø:"
 
-#: app/preferences_dialog.c:2430
+#: app/preferences_dialog.c:2431
 msgid "Select Temp Dir"
 msgstr "Zvolte pomocný adresáø"
 
-#: app/preferences_dialog.c:2431
+#: app/preferences_dialog.c:2432
 msgid "Swap Dir:"
 msgstr "Odkládací adresáø:"
 
-#: app/preferences_dialog.c:2431
+#: app/preferences_dialog.c:2432
 msgid "Select Swap Dir"
 msgstr "Zvolte odkládací adresáø"
 
-#: app/preferences_dialog.c:2467
+#: app/preferences_dialog.c:2468
 msgid "Brushes Directories"
 msgstr "Adresáøe stop"
 
-#: app/preferences_dialog.c:2469
+#: app/preferences_dialog.c:2470
 msgid "Select Brushes Dir"
 msgstr "Zvolte adresáø stop"
 
-#: app/preferences_dialog.c:2471
+#: app/preferences_dialog.c:2472
 msgid "Generated Brushes"
 msgstr "Generované stopy"
 
-#: app/preferences_dialog.c:2471
+#: app/preferences_dialog.c:2472
 msgid "Generated Brushes Directories"
 msgstr "Adresáøe generovaných stop"
 
-#: app/preferences_dialog.c:2473
+#: app/preferences_dialog.c:2474
 msgid "Select Generated Brushes Dir"
 msgstr "Zvolte adresáø generovaných stop"
 
-#: app/preferences_dialog.c:2475
+#: app/preferences_dialog.c:2476
 msgid "Patterns Directories"
 msgstr "Adresáøe vzorkù"
 
-#: app/preferences_dialog.c:2477
+#: app/preferences_dialog.c:2478
 msgid "Select Patterns Dir"
 msgstr "Zvolte adresáø vzorkù"
 
-#: app/preferences_dialog.c:2479
+#: app/preferences_dialog.c:2480
 msgid "Palettes Directories"
 msgstr "Adresáøe palet"
 
-#: app/preferences_dialog.c:2481
+#: app/preferences_dialog.c:2482
 msgid "Select Palettes Dir"
 msgstr "Zvolte adresáø palet"
 
-#: app/preferences_dialog.c:2483
+#: app/preferences_dialog.c:2484
 msgid "Gradients Directories"
 msgstr "Adresáøe pøechodù"
 
-#: app/preferences_dialog.c:2485
+#: app/preferences_dialog.c:2486
 msgid "Select Gradients Dir"
 msgstr "Zvolte adresáø pøechodù"
 
-#: app/preferences_dialog.c:2487
+#: app/preferences_dialog.c:2488
 msgid "Plug-Ins"
 msgstr "Zásuvné moduly"
 
-#: app/preferences_dialog.c:2487
+#: app/preferences_dialog.c:2488
 msgid "Plug-Ins Directories"
 msgstr "Adresáøe zásuvných modulù"
 
-#: app/preferences_dialog.c:2489
+#: app/preferences_dialog.c:2490
 msgid "Select Plug-Ins Dir"
 msgstr "Zvolte adresáø zásuvných modulù"
 
-#: app/preferences_dialog.c:2491
+#: app/preferences_dialog.c:2492
 msgid "Modules"
 msgstr "Moduly"
 
-#: app/preferences_dialog.c:2491
+#: app/preferences_dialog.c:2492
 msgid "Modules Directories"
 msgstr "Adresáøe modulù"
 
-#: app/preferences_dialog.c:2493
+#: app/preferences_dialog.c:2494
 msgid "Select Modules Dir"
 msgstr "Zvolte adresáø modulù"
 
@@ -5392,7 +5392,7 @@ msgstr "Aktuální ¹íøka:"
 msgid "Scale Ratio X:"
 msgstr "Zvìt¹ení X:"
 
-#: app/scale_tool.c:502
+#: app/scale_tool.c:503
 msgid "Scaling..."
 msgstr "Zvìt¹uje se..."
 
@@ -5443,7 +5443,7 @@ msgstr ""
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
-#: app/threshold.c:171 app/threshold.c:266 app/tools.c:685
+#: app/threshold.c:171 app/threshold.c:266 app/tools.c:688
 msgid "Threshold"
 msgstr "Práh"
 
@@ -5573,10 +5573,6 @@ msgstr "Zesvìtlování nebo tmavnutí"
 msgid "Smudge Tool"
 msgstr "Rozmazávání"
 
-#: app/tool_options.c:473 app/tools.c:547
-msgid "Xinput Airbrush"
-msgstr "Rozpra¹ovaè Xinput"
-
 #: app/tool_options.c:590
 msgid "Incremental"
 msgstr "Postupná"
@@ -5699,7 +5695,7 @@ msgstr "Oøez obrázku nebo nastavení rozmìrù plátna"
 
 #. the transform type radio buttons
 #: app/tools.c:241 app/tools.c:258 app/tools.c:275 app/tools.c:292
-#: app/transform_core.c:260 app/transform_tool.c:211
+#: app/transform_core.c:259 app/transform_tool.c:211
 msgid "Transform"
 msgstr "Transformace"
 
@@ -5843,127 +5839,107 @@ msgstr "Rozmazávání"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Nástroje/Nástroje kreslení/Rozmazávání"
 
-#: app/tools.c:548
-msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/Nástroje/Nástroje kreslení/Rozpra¹ovaè Xinput"
-
-#: app/tools.c:552
-msgid "Natural Airbrush"
-msgstr "Pøirozený rozpra¹ovaè"
-
-#: app/tools.c:564
+#: app/tools.c:566
 msgid "Measure"
 msgstr "Mìøení"
 
-#: app/tools.c:565
+#: app/tools.c:567
 msgid "/Tools/Measure"
 msgstr "/Nástroje/Mìøení"
 
-#: app/tools.c:569
+#: app/tools.c:571
 msgid "Measure distances and angles"
 msgstr "Mìøení vzdáleností a úhlù"
 
-#: app/tools.c:581
-msgid "Path"
-msgstr "Cesta"
-
-#: app/tools.c:582
-msgid "/Tools/Path"
-msgstr "/Nástroje/Cesta"
-
-#: app/tools.c:586
-msgid "Manipulate paths"
-msgstr "Práce s cestami"
-
-#: app/tools.c:600
+#: app/tools.c:603
 msgid "By Color Select"
 msgstr "Výbìr podle barvy"
 
-#: app/tools.c:601
+#: app/tools.c:604
 msgid "/Select/By Color..."
 msgstr "/Výbìr/Podle barvy..."
 
-#: app/tools.c:605
+#: app/tools.c:608
 msgid "Select regions by color"
 msgstr "Výbìr oblastí ohranièených barvou"
 
-#: app/tools.c:618
+#: app/tools.c:621
 msgid "/Image/Colors/Color Balance..."
 msgstr "/Obrázek/Barvy/Vyvá¾ení barev..."
 
-#: app/tools.c:622
+#: app/tools.c:625
 msgid "Adjust color balance"
 msgstr "Nastavení vyvá¾ení barev"
 
-#: app/tools.c:635
+#: app/tools.c:638
 msgid "/Image/Colors/Brightness-Contrast..."
 msgstr "/Obrázek/Barvy/Jas-kontrast..."
 
-#: app/tools.c:639
+#: app/tools.c:642
 msgid "Adjust brightness and contrast"
 msgstr "Nastavení jasu a kontrastu"
 
-#: app/tools.c:652
+#: app/tools.c:655
 msgid "/Image/Colors/Hue-Saturation..."
 msgstr "/Obrázek/Barvy/Odstín-sytost..."
 
-#: app/tools.c:656
+#: app/tools.c:659
 msgid "Adjust hue and saturation"
 msgstr "Nastavení odstínu a sytosti"
 
-#: app/tools.c:669
+#: app/tools.c:672
 msgid "/Image/Colors/Posterize..."
 msgstr "/Obrázek/Barvy/Posterizace..."
 
-#: app/tools.c:673
+#: app/tools.c:676
 msgid "Reduce image to a fixed numer of colors"
 msgstr "Redukuje obrázek do pevného poètu barev"
 
-#: app/tools.c:686
+#: app/tools.c:689
 msgid "/Image/Colors/Threshold..."
 msgstr "/Obrázek/Barvy/Práh..."
 
-#: app/tools.c:690
+#: app/tools.c:693
 msgid "Reduce image to two colors using a threshold"
 msgstr "Redukuje obrázek do dvou barev s pou¾itím prahu"
 
-#: app/tools.c:703
+#: app/tools.c:706
 msgid "/Image/Colors/Curves..."
 msgstr "/Obrázek/Barvy/Køivky..."
 
-#: app/tools.c:707
+#: app/tools.c:710
 msgid "Adjust color curves"
 msgstr "Nastavení barevných køivek"
 
-#: app/tools.c:720
+#: app/tools.c:723
 msgid "/Image/Colors/Levels..."
 msgstr "/Obrázek/Barvy/Úrovnì..."
 
-#: app/tools.c:724
+#: app/tools.c:727
 msgid "Adjust color levels"
 msgstr "Nastavení úrovní barev"
 
-#: app/tools.c:737
+#: app/tools.c:740
 msgid "/Image/Histogram..."
 msgstr "/Obrázek/Histogram..."
 
-#: app/tools.c:741
+#: app/tools.c:744
 msgid "View image histogram"
 msgstr "Zobrazit histogram obrázku"
 
-#: app/transform_core.c:257
+#: app/transform_core.c:256
 msgid "Rotate"
 msgstr "Rotovat"
 
-#: app/transform_core.c:258
+#: app/transform_core.c:257
 msgid "Scale"
 msgstr "Velikost"
 
-#: app/transform_core.c:259
+#: app/transform_core.c:258
 msgid "Shear"
 msgstr "Naklonit"
 
-#: app/transform_core.c:368
+#: app/transform_core.c:367
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
@@ -5971,7 +5947,7 @@ msgstr ""
 "Transformace nefunguje na vrstvách,\n"
 "které obsahují masky."
 
-#: app/transform_core.c:1582
+#: app/transform_core.c:1581
 msgid "Transformation"
 msgstr "Transformace"
 
@@ -6028,191 +6004,191 @@ msgstr "Zobrazit cestu"
 msgid "Clip Result"
 msgstr "Oøíznout výsledek"
 
-#: app/undo.c:2832
+#: app/undo.c:2833
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
 
-#: app/undo.c:2863
+#: app/undo.c:2864
 msgid "<<invalid>>"
 msgstr "<<neplatné>>"
 
-#: app/undo.c:2864
+#: app/undo.c:2865
 msgid "image"
 msgstr "obrázek"
 
-#: app/undo.c:2865
+#: app/undo.c:2866
 msgid "image mod"
 msgstr "zmìna obrázku"
 
-#: app/undo.c:2866
+#: app/undo.c:2867
 msgid "mask"
 msgstr "maska"
 
-#: app/undo.c:2867
+#: app/undo.c:2868
 msgid "layer move"
 msgstr "pøesun vrstvy"
 
 #. ok
-#: app/undo.c:2868
+#: app/undo.c:2869
 msgid "transform"
 msgstr "transformace"
 
-#: app/undo.c:2869
+#: app/undo.c:2870
 msgid "paint"
 msgstr "kreslení"
 
-#: app/undo.c:2870
+#: app/undo.c:2871
 msgid "new layer"
 msgstr "nová vrstva"
 
-#: app/undo.c:2871
+#: app/undo.c:2872
 msgid "delete layer"
 msgstr "smazání vrstvu"
 
-#: app/undo.c:2872
+#: app/undo.c:2873
 msgid "layer mod"
 msgstr "zmìna vrstvy"
 
-#: app/undo.c:2873
+#: app/undo.c:2874
 msgid "add layer mask"
 msgstr "pøidání masky vrstvy"
 
 #. ok
-#: app/undo.c:2874
+#: app/undo.c:2875
 msgid "delete layer mask"
 msgstr "smazání masky vrstvy"
 
 #. ok
-#: app/undo.c:2875
+#: app/undo.c:2876
 msgid "rename layer"
 msgstr "pøejmenování vrstvy"
 
-#: app/undo.c:2876
+#: app/undo.c:2877
 msgid "layer reposition"
 msgstr "pøevrstvení"
 
 #. ok
-#: app/undo.c:2877
+#: app/undo.c:2878
 msgid "new channel"
 msgstr "nový kanál"
 
-#: app/undo.c:2878
+#: app/undo.c:2879
 msgid "delete channel"
 msgstr "smazání kanálu"
 
-#: app/undo.c:2879
+#: app/undo.c:2880
 msgid "channel mod"
 msgstr "zmìna kanálu"
 
-#: app/undo.c:2880
+#: app/undo.c:2881
 msgid "FS to layer"
 msgstr "výbìr do vrstvy"
 
 #. ok
-#: app/undo.c:2881
+#: app/undo.c:2882
 msgid "gimage"
 msgstr "g-obrázek"
 
-#: app/undo.c:2882
+#: app/undo.c:2883
 msgid "FS rigor"
 msgstr "upevnìní výbìru"
 
-#: app/undo.c:2883
+#: app/undo.c:2884
 msgid "FS relax"
 msgstr "uvolnìní výbìru"
 
-#: app/undo.c:2884
+#: app/undo.c:2885
 msgid "guide"
 msgstr "vodítko"
 
-#: app/undo.c:2885
+#: app/undo.c:2886
 msgid "text"
 msgstr "text"
 
-#: app/undo.c:2886
+#: app/undo.c:2887
 msgid "float selection"
 msgstr "plovoucí výbìr"
 
-#: app/undo.c:2887
+#: app/undo.c:2888
 msgid "paste"
 msgstr "vlo¾ení"
 
-#: app/undo.c:2888
+#: app/undo.c:2889
 msgid "cut"
 msgstr "vyøíznutí"
 
-#: app/undo.c:2889
+#: app/undo.c:2890
 msgid "transform core"
 msgstr "transformaèní akce"
 
-#: app/undo.c:2890
+#: app/undo.c:2891
 msgid "paint core"
 msgstr "kreslící akce"
 
-#: app/undo.c:2891
+#: app/undo.c:2892
 msgid "floating layer"
 msgstr "plovoucí vrstva"
 
 #. unused!
-#: app/undo.c:2892
+#: app/undo.c:2893
 msgid "linked layer"
 msgstr "svázání vrstvy"
 
-#: app/undo.c:2893
+#: app/undo.c:2894
 msgid "apply layer mask"
 msgstr "pou¾ití masky vrstvy"
 
 #. ok
-#: app/undo.c:2894
+#: app/undo.c:2895
 msgid "layer merge"
 msgstr "slouèení vrstev"
 
-#: app/undo.c:2895
+#: app/undo.c:2896
 msgid "FS anchor"
 msgstr "pohlcení výbìru"
 
-#: app/undo.c:2896
+#: app/undo.c:2897
 msgid "gimage mod"
 msgstr "zmìna g-obrázku"
 
-#: app/undo.c:2897
+#: app/undo.c:2898
 msgid "crop"
 msgstr "oøíznutí"
 
-#: app/undo.c:2898
+#: app/undo.c:2899
 msgid "layer scale"
 msgstr "velikost vrstvy"
 
-#: app/undo.c:2899
+#: app/undo.c:2900
 msgid "layer resize"
 msgstr "rozmìry plátna vrstvy"
 
-#: app/undo.c:2900
+#: app/undo.c:2901
 msgid "quickmask"
 msgstr "rychlá maska"
 
-#: app/undo.c:2901
+#: app/undo.c:2902
 msgid "attach parasite"
 msgstr "pøipojení parazita"
 
-#: app/undo.c:2902
+#: app/undo.c:2903
 msgid "remove parasite"
 msgstr "odstranìní parazita"
 
-#: app/undo.c:2903
+#: app/undo.c:2904
 msgid "resolution change"
 msgstr "zmìna rozli¹ení"
 
-#: app/undo.c:2904
+#: app/undo.c:2905
 msgid "image scale"
 msgstr "velikost obrázku"
 
-#: app/undo.c:2905
+#: app/undo.c:2906
 msgid "image resize"
 msgstr "rozmìry plátna"
 
-#: app/undo.c:2906
+#: app/undo.c:2907
 msgid "misc"
 msgstr "rùzné"
 
@@ -6229,12 +6205,12 @@ msgstr "[ základní obrázek ]"
 msgid "Redo"
 msgstr "Zru¹it vrácení"
 
-#: app/xcf.c:365
+#: app/xcf.c:366
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "chyba XCF: nalezena nepodporovaná verze %d XCF souboru"
 
-#: app/xcf.c:1777
+#: app/xcf.c:1785
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
