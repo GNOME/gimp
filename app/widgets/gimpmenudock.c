@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpimagedock.c
- * Copyright (C) 2001 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2004 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -33,6 +34,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
@@ -223,6 +225,7 @@ gimp_image_dock_constructor (GType                  type,
   GimpImageDock   *dock;
   GimpMenuFactory *menu_factory;
   GtkItemFactory  *item_factory;
+  GList           *list;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -273,6 +276,22 @@ gimp_image_dock_constructor (GType                  type,
   DESTROY ("/Layer/Stack/Lower Layer");
   DESTROY ("/Layer/Stack/Layer to Top");
   DESTROY ("/Layer/Stack/Layer to Bottom");
+
+  DESTROY ("/Tools/Toolbox");
+  DESTROY ("/Tools/Default Colors");
+  DESTROY ("/Tools/Swap Colors");
+
+  for (list = GIMP_LIST (GIMP_DOCK (dock)->context->gimp->tool_info_list)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpToolInfo *tool_info = list->data;
+      gchar        *menu_path;
+
+      menu_path = gimp_strip_uline (tool_info->menu_path);
+      DESTROY (menu_path);
+      g_free (menu_path);
+    }
 
 #undef DESTROY
 

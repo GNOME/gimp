@@ -1,3 +1,11 @@
+2004-02-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpimagedock.c (gimp_image_dock_constructor):
+	also destroy the <Image> factory's "Tools" submenu because menu
+	shortcuts with no or <shift> modifier prevent this key to be
+	entered in text entries. This really badly baldy cries for
+	GTK+ 2.4's GtkActions...
+
 2004-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpconfig-path.c (gimp_config_path_expand_only):
