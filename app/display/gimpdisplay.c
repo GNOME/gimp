@@ -1005,6 +1005,19 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Image/Grayscale", (base_type != GRAY));
   menus_set_sensitive ("<Image>/Image/Indexed", (base_type != INDEXED));
 
+  menus_set_sensitive ("<Image>/Image/Colors/Threshold", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Posterize", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Equalize", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Invert", (base_type != INDEXED));
+
+  menus_set_sensitive ("<Image>/Image/Colors/Color Balance", (base_type == RGB));
+  menus_set_sensitive ("<Image>/Image/Colors/Brightness-Contrast", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Hue-Saturation", (base_type == RGB));
+  menus_set_sensitive ("<Image>/Image/Colors/Curves", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Levels", (base_type != INDEXED));
+
+  menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
+
   menus_set_sensitive ("<Image>/Select", lp);
   menus_set_sensitive ("<Image>/Edit/Cut", lp);
   menus_set_sensitive ("<Image>/Edit/Copy", lp);

@@ -1,3 +1,17 @@
+Wed Jan 28 22:03:42 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* Fixed carve-it.scm and circuit.scm (circuit broke due
+	 to a plugin update, carve-it broke due to theadd-layer stuff)
+
+	* Added a close button to the color picker info window
+
+	* changed index_palette.c a bit...now if you click with
+	MB11, it changes the current active color, clicking with MB3
+	opens the color in the color selector for editing
+
+	* Made some of the <Image>/Colr/* menus sensitive to the image
+	type (gdisplay.c)
+
 Wed Jan 28 13:17:06 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage.c (gimage_add_channel): Added safety code for add

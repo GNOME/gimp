@@ -25,6 +25,18 @@
     (cond ((< mean 127) (+ 1.0 (* 0.5 (/ (- 127 mean) 127.0))))
 	  ((>= mean 127) (- 1.0 (* 0.5 (/ (- mean 127) 127.0)))))))
 
+
+(define (copy-layer-carve-it dest-image dest-drawable source-image source-drawable)
+  (gimp-selection-all dest-image)
+  (gimp-edit-clear dest-image dest-drawable)
+  (gimp-selection-none dest-image)
+  (gimp-selection-all source-image)
+  (gimp-edit-copy source-image source-drawable)
+      (let ((floating-sel (car (gimp-edit-paste dest-image dest-drawable FALSE))))
+	(gimp-floating-sel-anchor floating-sel)))
+
+
+
 (define (script-fu-carve-it mask-img mask-drawable bg-layer carve-white)
   (let* ((width (car (gimp-drawable-width mask-drawable)))
 	 (height (car (gimp-drawable-height mask-drawable)))
@@ -53,13 +65,27 @@
 	 (csl-mask 0)
 	 (inset-layer 0)
 	 (il-mask 0)
-	 (layer1 (car (gimp-layer-copy bg-layer TRUE)))
-	 (old-fg (car (gimp-palette-get-foreground)))
+	 (bg-height (car (gimp-drawable-height bg-layer)))
+	 (bg-width (car (gimp-drawable-width bg-layer)))
+	 (bg-type (car (gimp-drawable-type bg-layer)))
+	 (bg-image (car (gimp-drawable-image bg-layer)))
+	 (layer1 (car (gimp-layer-new img bg-height bg-width bg-type "Layer1" 100 NORMAL)))
+	 (inset-layer (car (gimp-layer-new img bg-height bg-width bg-type "inset1" 100 NORMAL)))
+ 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-brush (car (gimp-brushes-get-brush))))
     (gimp-image-disable-undo img)
+    (gimp-selection-all img)
+    (gimp-edit-clear img inset-layer)
+    (gimp-edit-clear img layer1)
+    (gimp-selection-none img)
+    (copy-layer-carve-it img layer1 bg-image bg-layer)
+
+    (gimp-edit-clear img inset-layer)
+
     (gimp-edit-copy mask-img mask-drawable)
     (gimp-image-add-channel img mask 0)
+
     (gimp-image-add-layer img layer1 0)
     (plug-in-tile 1 img layer1 width height FALSE)
     (set! mask-fs (car (gimp-edit-paste img mask FALSE)))
@@ -119,8 +145,8 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill img csl-mask)
 
-    (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
-    (gimp-image-add-layer img inset-layer 1)
+   (set! inset-layer (car (gimp-layer-copy layer1 TRUE)))
+   (gimp-image-add-layer img inset-layer 1)
 
     (set! il-mask (car (gimp-layer-create-mask inset-layer BLACK-MASK)))
     (gimp-image-add-layer-mask img inset-layer il-mask)
@@ -128,9 +154,8 @@
     (gimp-palette-set-background '(255 255 255))
     (gimp-edit-fill img il-mask)
     (gimp-selection-none img)
-
+    (gimp-selection-none bg-image)
     (gimp-levels img inset-layer 0 0 255 inset-gamma 0 255)
-
     (gimp-image-remove-channel img mask)
     (gimp-image-remove-channel img mask-fat)
     (gimp-image-remove-channel img mask-highlight)

@@ -24,6 +24,7 @@
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "color_select.h"
+#include "color_area.h"
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage.h"
@@ -32,6 +33,7 @@
 #include "image_render.h"
 #include "interface.h"
 #include "indexed_palette.h"
+#include "palette.h"
 #include "undo.h"
 
 #define EVENT_MASK     GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
@@ -117,6 +119,7 @@ indexed_palette_create (int gimage_id)
   GtkWidget *ops_menu;
   GtkWidget *menu_bar;
   GtkWidget *menu_bar_item;
+  GtkWidget *hbox;
   GtkAcceleratorTable *table;
   int default_index;
 
@@ -197,6 +200,14 @@ indexed_palette_create (int gimage_id)
       gtk_widget_show (indexedP->palette);
       gtk_widget_show (frame);
 
+      /* some helpful hints */
+      hbox = gtk_hbox_new(FALSE, 1);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 1);
+      label = gtk_label_new (" Click to select color.  Right-click to edit color");
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 1);
+
+      gtk_widget_show (hbox);
+      gtk_widget_show (label);
       /*  The action area  */
       action_items[0].user_data = indexedP;
       build_action_area (GTK_DIALOG (indexedP->shell), action_items, 1, 0);
@@ -408,6 +419,18 @@ indexed_palette_area_events (GtkWidget *widget,
       bevent = (GdkEventButton *) event;
 
       if (bevent->button == 1)
+	{
+	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
+	  r = gimage->cmap[indexedP->col_index * 3 + 0];
+	  g = gimage->cmap[indexedP->col_index * 3 + 1];
+	  b = gimage->cmap[indexedP->col_index * 3 + 2];
+	  if (active_color == FOREGROUND) 
+	    palette_set_foreground (r, g, b);
+	  else if (active_color == BACKGROUND)
+	    palette_set_background (r, g, b); 
+	}
+ 
+        if (bevent->button == 3)
 	{
 	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
 	  r = gimage->cmap[indexedP->col_index * 3 + 0];
