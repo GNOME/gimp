@@ -1,3 +1,24 @@
+Sun Dec  7 15:27:14 EST 1997  Adrian Likins <adrian@gimp.org>
+
+	* fixed refract.c to look for megawidget.h in the proper place
+	
+	* fixed the makefile.am in plugins/script-fu/script to install
+	the texture files too
+
+	* added a check in channels_dialog.c to make the aspect ratio 
+	really go away
+
+	* fixed a minor error in the alien-glow-* scripts with an 
+	extra parenthesis
+
+	* added the new wilber.h
+
+	* patched convert.c with Adam D. Moss's patch to avoid color counting when
+	not needed
+
+	* patched gif.c with Adam D. Moss's patch to fix some weirdness with
+	transparncy in anim gifs	
+
 Sat Dec  6 15:27:23 EST 1997  Adrian Likins <adrian@gimp.org>
 
 	* Added a check in some of the layer/channel preview code
