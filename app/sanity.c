@@ -74,11 +74,11 @@ sanity_check_glib (void)
     {
       return g_strdup_printf
         ("%s\n\n"
-         "The GIMP requires GLib+ version %d.%d.%d or later.\n"
-         "Installed GLib+ version is %d.%d.%d.\n\n"
+         "The GIMP requires GLib version %d.%d.%d or later.\n"
+         "Installed GLib version is %d.%d.%d.\n\n"
          "Somehow you or your software packager managed\n"
-         "to install The GIMP with an older GLib+ version.\n\n"
-         "Please upgrade to GLib+ version %d.%d.%d or later.",
+         "to install The GIMP with an older GLib version.\n\n"
+         "Please upgrade to GLib version %d.%d.%d or later.",
          mismatch,
          GLIB_REQUIRED_MAJOR, GLIB_REQUIRED_MINOR, GLIB_REQUIRED_MICRO,
          glib_major_version, glib_minor_version, glib_micro_version,
