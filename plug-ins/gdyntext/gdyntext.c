@@ -303,9 +303,6 @@ void gdt_get_values(GdtVals *data)
 		gdtparams = gimp_layer_get_name(data->layer_id);
 
 	if (!gimp_drawable_has_alpha(data->drawable_id) || strncmp(gdtparams, "GDT", 3) != 0) {
-		data->messages = g_list_append(data->messages,
-			_("Current layer isn't a GDynText layer or it has no alpha channel.\n"
-			  "  Forcing new layer creation.\n"));
 		data->new_layer = TRUE;
 		strcpy(data->text, "");
 		strcpy(data->font_family, "");

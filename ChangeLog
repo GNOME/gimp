@@ -1,3 +1,9 @@
+2000-05-29  Tuomas Kuosmanen  <tigert@gimp.org>
+
+	* plug-ins/gdyntext/gdyntext.c (gdt_get_values): We dont need to say 
+	this to the user every time. Since the user just needs to click "ok" 
+	anyway.
+
 Sun May 28 10:21:50 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.23 release (1.2pre)
