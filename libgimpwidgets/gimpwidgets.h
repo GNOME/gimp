@@ -153,26 +153,41 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
         gtk_spin_button_get_adjustment \
         (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (adj), "spinbutton")))
 
-GtkObject * gimp_scale_entry_new   (GtkTable           *table,
-				    gint                column,
-				    gint                row,
-				    const gchar        *text,
-				    gint                scale_width,
-				    gint                spinbutton_width,
-				    gfloat              value,
-				    gfloat              lower,
-				    gfloat              upper,
-				    gfloat              step_increment,
-				    gfloat              page_increment,
-				    guint               digits,
-				    gboolean            constrain,
-				    gfloat              unconstrained_lower,
-				    gfloat              unconstrained_upper,
-				    const gchar        *tooltip,
-				    const gchar        *help_data);
+GtkObject * gimp_scale_entry_new       (GtkTable           *table,
+                                        gint                column,
+                                        gint                row,
+                                        const gchar        *text,
+                                        gint                scale_width,
+                                        gint                spinbutton_width,
+                                        gfloat              value,
+                                        gfloat              lower,
+                                        gfloat              upper,
+                                        gfloat              step_increment,
+                                        gfloat              page_increment,
+                                        guint               digits,
+                                        gboolean            constrain,
+                                        gfloat              unconstrained_lower,
+                                        gfloat              unconstrained_upper,
+                                        const gchar        *tooltip,
+                                        const gchar        *help_data);
 
-void   gimp_scale_entry_set_sensitive (GtkObject       *adjustment,
-                                       gboolean         sensitive);
+GtkObject * gimp_color_scale_entry_new (GtkTable           *table,
+                                        gint                column,
+                                        gint                row,
+                                        const gchar        *text,
+                                        gint                scale_width,
+                                        gint                spinbutton_width,
+                                        gfloat              value,
+                                        gfloat              lower,
+                                        gfloat              upper,
+                                        gfloat              step_increment,
+                                        gfloat              page_increment,
+                                        guint               digits,
+                                        const gchar        *tooltip,
+                                        const gchar        *help_data);
+
+void    gimp_scale_entry_set_sensitive (GtkObject          *adjustment,
+                                        gboolean            sensitive);
 
 
 #define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
