@@ -743,7 +743,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
               cursor      = GIMP_CURSOR_MOUSE;
-              tool_cursor = GIMP_TOOL_CURSOR_RECT_SELECT;
+              tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
 	    }
 	  else if (layer == gimp_image_get_active_layer (gdisp->gimage))

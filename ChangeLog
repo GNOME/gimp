@@ -1,3 +1,9 @@
+2004-12-17  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_cursor_update): don't
+	use the rect-select cursor if the tool is in move-layer mode.
+	Spotted by Joao S. O. Bueno, bug #161465.
+
 2004-12-17  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpcurvestool.c: Kill some nonsensical code that
