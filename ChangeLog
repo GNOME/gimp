@@ -1,3 +1,8 @@
+Mon Nov 29 23:43:15 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/layers_dialog.c: 
+	get rid of the "gdisplays_flush() called recursively." warning
+
 1999-11-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/preferances_dialog.c: oops, all frames said "General" after

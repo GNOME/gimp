@@ -598,6 +598,9 @@ layers_dialog_flush (void)
   if (!layersD || !(gimage = layersD->gimage))
     return;
 
+  /*  Make sure the gimage is not notified of this change  */
+  suspend_gimage_notify++;
+
   /*  Check if the gimage extents have changed  */
   if ((gimage->width != layersD->gimage_width) ||
       (gimage->height != layersD->gimage_height))
@@ -665,6 +668,8 @@ layers_dialog_flush (void)
 
   gtk_container_foreach (GTK_CONTAINER (layersD->layer_list),
 			 layer_widget_layer_flush, NULL);
+
+  suspend_gimage_notify--;
 }
 
 void
