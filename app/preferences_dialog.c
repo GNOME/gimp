@@ -41,109 +41,116 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef enum {
+typedef enum
+{
   PREFS_OK,
   PREFS_CORRUPT,
   PREFS_RESTART
 } PrefsState;
 
-/*  preferences local functions  */
-static PrefsState file_prefs_check_settings        (void);
-static void file_prefs_ok_callback                 (GtkWidget *, GtkWidget *);
-static void file_prefs_save_callback               (GtkWidget *, GtkWidget *);
-static void file_prefs_cancel_callback             (GtkWidget *, GtkWidget *);
 
-static void file_prefs_toggle_callback             (GtkWidget *, gpointer);
-static void file_prefs_preview_size_callback       (GtkWidget *, gpointer);
-static void file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
-static void file_prefs_mem_size_callback           (GtkWidget *, gpointer);
-static void file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
-static void file_prefs_string_callback             (GtkWidget *, gpointer);
-static void file_prefs_filename_callback           (GtkWidget *, gpointer);
-static void file_prefs_path_callback               (GtkWidget *, gpointer);
-static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
-static void file_prefs_default_size_callback       (GtkWidget *, gpointer);
-static void file_prefs_default_resolution_callback (GtkWidget *, gpointer);
-static void file_prefs_res_source_callback         (GtkWidget *, gpointer);
-static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
-static void file_prefs_restart_notification        (void);
+/*  preferences local functions  */
+static PrefsState  file_prefs_check_settings        (void);
+static void        file_prefs_ok_callback           (GtkWidget *, GtkWidget *);
+static void        file_prefs_save_callback         (GtkWidget *, GtkWidget *);
+static void        file_prefs_cancel_callback       (GtkWidget *, GtkWidget *);
+
+static void  file_prefs_toggle_callback             (GtkWidget *, gpointer);
+static void  file_prefs_preview_size_callback       (GtkWidget *, gpointer);
+static void  file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
+static void  file_prefs_mem_size_callback           (GtkWidget *, gpointer);
+static void  file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
+static void  file_prefs_string_callback             (GtkWidget *, gpointer);
+static void  file_prefs_filename_callback           (GtkWidget *, gpointer);
+static void  file_prefs_path_callback               (GtkWidget *, gpointer);
+static void  file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
+static void  file_prefs_default_size_callback       (GtkWidget *, gpointer);
+static void  file_prefs_default_resolution_callback (GtkWidget *, gpointer);
+static void  file_prefs_res_source_callback         (GtkWidget *, gpointer);
+static void  file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
+static void  file_prefs_restart_notification        (void);
+
 
 /*  static variables  */
-static int        old_perfectmouse;
-static int        old_transparency_type;
-static int        old_transparency_size;
-static int        old_levels_of_undo;
-static int        old_marching_speed;
-static int        old_allow_resize_windows;
-static int        old_auto_save;
-static int        old_preview_size;
-static int        old_nav_preview_size;
-static int        old_no_cursor_updating;
-static int        old_show_tool_tips;
-static int        old_show_rulers;
-static int        old_show_statusbar;
-static InterpolationType old_interpolation_type;
-static int        old_confirm_on_close;
-static int        old_save_session_info;
-static int        old_save_device_status;
-static int        old_always_restore_session;
-static int        old_default_width;
-static int        old_default_height;
-static GUnit      old_default_units;
-static double     old_default_xresolution;
-static double     old_default_yresolution;
-static GUnit      old_default_resolution_units;
-static int        old_default_type;
-static int        old_default_dot_for_dot;
-static int        old_stingy_memory_use;
-static int        old_tile_cache_size;
-static int        old_install_cmap;
-static int        old_cycled_marching_ants;
-static int        old_last_opened_size;
-static char *     old_temp_path;
-static char *     old_swap_path;
-static char *     old_plug_in_path;
-static char *     old_module_path;
-static char *     old_brush_path;
-static char *     old_brush_vbr_path;
-static char *     old_pattern_path;
-static char *     old_palette_path;
-static char *     old_gradient_path;
-static double     old_monitor_xres;
-static double     old_monitor_yres;
-static int        old_using_xserver_resolution;
-static int        old_num_processors;
-static char *     old_image_title_format;
-static int        old_global_paint_options;
-static int        old_max_new_image_size;
-static int        old_thumbnail_mode;
-static int 	  old_show_indicators;
-static int	  old_trust_dirty_flag;
-static int        old_use_help;
-static int        old_nav_window_per_display;
-static int        old_info_window_follows_mouse;
-static int        old_help_browser;
+static gint               old_perfectmouse;
+static gint               old_transparency_type;
+static gint               old_transparency_size;
+static gint               old_levels_of_undo;
+static gint               old_marching_speed;
+static gint               old_allow_resize_windows;
+static gint               old_auto_save;
+static gint               old_preview_size;
+static gint               old_nav_preview_size;
+static gint               old_no_cursor_updating;
+static gint               old_show_tool_tips;
+static gint               old_show_rulers;
+static gint               old_show_statusbar;
+static InterpolationType  old_interpolation_type;
+static gint               old_confirm_on_close;
+static gint               old_save_session_info;
+static gint               old_save_device_status;
+static gint               old_always_restore_session;
+static gint               old_default_width;
+static gint               old_default_height;
+static GUnit              old_default_units;
+static gdouble            old_default_xresolution;
+static gdouble            old_default_yresolution;
+static GUnit              old_default_resolution_units;
+static gint               old_default_type;
+static gint               old_default_dot_for_dot;
+static gint               old_stingy_memory_use;
+static gint               old_tile_cache_size;
+static gint               old_install_cmap;
+static gint               old_cycled_marching_ants;
+static gint               old_last_opened_size;
+static gchar *            old_temp_path;
+static gchar *            old_swap_path;
+static gchar *            old_plug_in_path;
+static gchar *            old_module_path;
+static gchar *            old_brush_path;
+static gchar *            old_brush_vbr_path;
+static gchar *            old_pattern_path;
+static gchar *            old_palette_path;
+static gchar *            old_gradient_path;
+static gdouble            old_monitor_xres;
+static gdouble            old_monitor_yres;
+static gint               old_using_xserver_resolution;
+static gint               old_num_processors;
+static gchar *            old_image_title_format;
+static gint               old_global_paint_options;
+static gint               old_max_new_image_size;
+static gint               old_thumbnail_mode;
+static gint 	          old_show_indicators;
+static gint	          old_trust_dirty_flag;
+static gint               old_use_help;
+static gint               old_nav_window_per_display;
+static gint               old_info_window_follows_mouse;
+static gint               old_help_browser;
 
 /*  variables which can't be changed on the fly  */
-static int        edit_stingy_memory_use;
-static int        edit_tile_cache_size;
-static int        edit_install_cmap;
-static int        edit_cycled_marching_ants;
-static int        edit_last_opened_size;
-static int        edit_num_processors;
-static char *     edit_temp_path = NULL;
-static char *     edit_swap_path = NULL;
-static char *     edit_plug_in_path = NULL;
-static char *     edit_module_path = NULL;
-static char *     edit_brush_path = NULL;
-static char *     edit_brush_vbr_path = NULL;
-static char *     edit_pattern_path = NULL;
-static char *     edit_palette_path = NULL;
-static char *     edit_gradient_path = NULL;
-static int        edit_nav_window_per_display;
-static int        edit_info_window_follows_mouse;
+static gint               edit_stingy_memory_use;
+static gint               edit_install_cmap;
+static gint               edit_cycled_marching_ants;
+static gint               edit_last_opened_size;
+static gint               edit_num_processors;
+static gint               edit_show_indicators;
+static gint               edit_nav_window_per_display;
+static gint               edit_info_window_follows_mouse;
+static gchar *            edit_temp_path      = NULL;
+static gchar *            edit_swap_path      = NULL;
+static gchar *            edit_brush_path     = NULL;
+static gchar *            edit_brush_vbr_path = NULL;
+static gchar *            edit_pattern_path   = NULL;
+static gchar *            edit_palette_path   = NULL;
+static gchar *            edit_gradient_path  = NULL;
+static gchar *            edit_plug_in_path   = NULL;
+static gchar *            edit_module_path    = NULL;
 
-static GtkWidget *prefs_dlg = NULL;
+/*  variables which will be changed _after_ closing the dialog  */
+static gint               edit_tile_cache_size;
+
+static GtkWidget *        prefs_dlg = NULL;
+
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
    updated by Michael Natterer 27/3/99
@@ -153,21 +160,21 @@ static GtkWidget *prefs_dlg = NULL;
    so they're set on the fly is not hard).
 
    stingy-memory-use
-   tile-cache-size
    install-cmap
    cycled-marching-ants
    last-opened-size
    num-processors
+   show-indicators
+   nav-window-per-display
+   info_window_follows_mouse
    temp-path
    swap-path
-   plug-in-path
-   module-path
    brush-path
    pattern-path
    palette-path
    gradient-path
-   nav-window-per-display
-   info_window_follows_mouse
+   plug-in-path
+   module-path
 
    All of these now have variables of the form edit_temp_path, which
    are copied from the actual variables (e.g. temp_path) the first time
@@ -195,8 +202,9 @@ static GtkWidget *prefs_dlg = NULL;
    callback checks against the init_ variable rather than the old_.
 */
 
-/* Copy the string from source to destination, freeing the string stored
-   in the destination if there is one there already. */
+/*  Copy the string from source to destination, freeing the string stored
+ *  in the destination if there is one there already.
+ */
 static void
 file_prefs_strset (gchar **dst,
 		   gchar  *src)
@@ -207,14 +215,14 @@ file_prefs_strset (gchar **dst,
   *dst = g_strdup (src);
 }
 
-/* Duplicate the string, but treat NULL as the empty string. */
+/*  Duplicate the string, but treat NULL as the empty string.  */
 static gchar *
 file_prefs_strdup (gchar *src)
 {
   return g_strdup (src == NULL ? "" : src);
 }
 
-/* Compare two strings, but treat NULL as the empty string. */
+/*  Compare two strings, but treat NULL as the empty string.  */
 static int
 file_prefs_strcmp (gchar *src1,
 		   gchar *src2)
@@ -226,16 +234,11 @@ file_prefs_strcmp (gchar *src1,
 static PrefsState
 file_prefs_check_settings (void)
 {
+  /*  First, check for invalid values...  */
   if (levels_of_undo < 0) 
     {
       g_message (_("Error: Levels of undo must be zero or greater."));
       levels_of_undo = old_levels_of_undo;
-      return PREFS_CORRUPT;
-    }
-  if (num_processors < 1 || num_processors > 30) 
-    {
-      g_message (_("Error: Number of processors must be between 1 and 30."));
-      num_processors = old_num_processors;
       return PREFS_CORRUPT;
     }
   if (marching_speed < 50)
@@ -293,39 +296,36 @@ file_prefs_check_settings (void)
       return PREFS_CORRUPT;
     }
 
-  if (edit_stingy_memory_use != stingy_memory_use)
-    return PREFS_RESTART;
-  if (edit_install_cmap != old_install_cmap)
-    return PREFS_RESTART;
-  if (edit_cycled_marching_ants != cycled_marching_ants)
-    return PREFS_RESTART;
-  if (edit_last_opened_size != last_opened_size)
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (temp_path, edit_temp_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (swap_path, edit_swap_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (module_path, edit_module_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (brush_path, edit_brush_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (pattern_path, edit_pattern_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (palette_path, edit_palette_path))
-    return PREFS_RESTART;
-  if (file_prefs_strcmp (gradient_path, edit_gradient_path))
-    return PREFS_RESTART;
-  if (show_indicators != old_show_indicators)
-    return PREFS_RESTART;
-  if (edit_nav_window_per_display != old_nav_window_per_display)
-    return PREFS_RESTART;
-  if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
-    return PREFS_RESTART;
-    
+  if (edit_num_processors < 1 || edit_num_processors > 30) 
+    {
+      g_message (_("Error: Number of processors must be between 1 and 30."));
+      edit_num_processors = old_num_processors;
+      return PREFS_CORRUPT;
+    }
+
+  /*  ...then check if we need a restart notification  */
+  if (edit_stingy_memory_use         != old_stingy_memory_use         ||
+      edit_install_cmap              != old_install_cmap              ||
+      edit_cycled_marching_ants      != old_cycled_marching_ants      ||
+      edit_last_opened_size          != old_last_opened_size          ||
+      edit_num_processors            != old_num_processors            ||
+      edit_show_indicators           != old_show_indicators           ||
+      edit_nav_window_per_display    != old_nav_window_per_display    ||
+      edit_info_window_follows_mouse != old_info_window_follows_mouse ||
+
+      file_prefs_strcmp (old_temp_path,      edit_temp_path)      ||
+      file_prefs_strcmp (old_swap_path,      edit_swap_path)      ||
+      file_prefs_strcmp (old_brush_path,     edit_brush_path)     ||
+      file_prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path) ||
+      file_prefs_strcmp (old_pattern_path,   edit_pattern_path)   ||
+      file_prefs_strcmp (old_palette_path,   edit_palette_path)   ||
+      file_prefs_strcmp (old_gradient_path,  edit_gradient_path)  ||
+      file_prefs_strcmp (old_plug_in_path,   edit_plug_in_path)   ||
+      file_prefs_strcmp (old_module_path,    edit_module_path))
+    {
+      return PREFS_RESTART;
+    }
+
   return PREFS_OK;
 }
 
@@ -337,26 +337,28 @@ file_prefs_restart_notification_save_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-/* The user pressed OK and not Save, but has changed some settings that
-   only take effect after he restarts the GIMP. Allow him to save the
-   settings. */
+/*  The user pressed OK and not Save, but has changed some settings that
+ *  only take effect after he restarts the GIMP. Allow him to save the
+ *  settings.
+ */
 static void
 file_prefs_restart_notification (void)
 {
   GtkWidget *dlg;
   GtkWidget *hbox;
   GtkWidget *label;
-  
+
   dlg = gimp_dialog_new (_("Save Preferences ?"), "gimp_message",
-			 NULL, NULL,
+			 gimp_standard_help_func,
+			 "dialogs/preferences/preferences.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, FALSE, FALSE,
-			 
+
 			 _("Save"), file_prefs_restart_notification_save_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Close"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
-			 
+
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -422,18 +424,19 @@ static void
 file_prefs_save_callback (GtkWidget *widget,
 			  GtkWidget *dlg)
 {
-  GList *update = NULL; /* options that should be updated in .gimprc */
-  GList *remove = NULL; /* options that should be commented out */
-  
+  GList *update = NULL; /*  options that should be updated in .gimprc  */
+  GList *remove = NULL; /*  options that should be commented out       */
+
   PrefsState state;
 
-  int    save_stingy_memory_use;
-  int    save_install_cmap;
-  int    save_cycled_marching_ants;
-  int    save_last_opened_size;
-  int    save_num_processors;
-  int    save_nav_window_per_display;
-  int    save_info_window_follows_mouse;
+  gint   save_stingy_memory_use;
+  gint   save_install_cmap;
+  gint   save_cycled_marching_ants;
+  gint   save_last_opened_size;
+  gint   save_num_processors;
+  gint   save_show_indicators;
+  gint   save_nav_window_per_display;
+  gint   save_info_window_follows_mouse;
   gchar *save_temp_path;
   gchar *save_swap_path;
   gchar *save_plug_in_path;
@@ -449,7 +452,7 @@ file_prefs_save_callback (GtkWidget *widget,
   else
     gimp_help_disable_tooltips ();
 
-  if (edit_tile_cache_size != tile_cache_size)
+  if (edit_tile_cache_size != old_tile_cache_size)
     tile_cache_set_size (edit_tile_cache_size);
 
   state = file_prefs_check_settings ();
@@ -460,7 +463,8 @@ file_prefs_save_callback (GtkWidget *widget,
       break;
     case PREFS_RESTART:
       gtk_widget_set_sensitive (prefs_dlg, FALSE);
-      g_message (_("You will need to restart GIMP for these changes to take effect."));
+      g_message (_("You will need to restart GIMP for these "
+		   "changes to take effect."));
       /* don't break */
     case PREFS_OK:
     default:
@@ -469,30 +473,34 @@ file_prefs_save_callback (GtkWidget *widget,
   gtk_widget_destroy (prefs_dlg);
   prefs_dlg = NULL;
 
-  /* Save variables so that we can restore them later */
-  save_stingy_memory_use = stingy_memory_use;
-  save_install_cmap = install_cmap;
-  save_cycled_marching_ants = cycled_marching_ants;
-  save_last_opened_size = last_opened_size;
-  save_num_processors = num_processors;
-  save_temp_path = temp_path;
-  save_swap_path = swap_path;
-  save_plug_in_path = plug_in_path;
-  save_module_path = module_path;
-  save_brush_path = brush_path;
-  save_brush_vbr_path = brush_vbr_path;
-  save_pattern_path = pattern_path;
-  save_palette_path = palette_path;
-  save_gradient_path = gradient_path;
-  save_nav_window_per_display = nav_window_per_display;
+  /*  Save variables so that we can restore them later  */
+  save_stingy_memory_use         = stingy_memory_use;
+  save_install_cmap              = install_cmap;
+  save_cycled_marching_ants      = cycled_marching_ants;
+  save_last_opened_size          = last_opened_size;
+  save_num_processors            = num_processors;
+  save_show_indicators           = show_indicators;
+  save_nav_window_per_display    = nav_window_per_display;
   save_info_window_follows_mouse = info_window_follows_mouse;
 
+  save_temp_path      = temp_path;
+  save_swap_path      = swap_path;
+  save_brush_path     = brush_path;
+  save_brush_vbr_path = brush_vbr_path;
+  save_pattern_path   = pattern_path;
+  save_palette_path   = palette_path;
+  save_gradient_path  = gradient_path;
+  save_plug_in_path   = plug_in_path;
+  save_module_path    = module_path;
+
   if (levels_of_undo != old_levels_of_undo)
-    update = g_list_append (update, "undo-levels");
+    {
+      update = g_list_append (update, "undo-levels");
+    }
   if (marching_speed != old_marching_speed)
-    update = g_list_append (update, "marching-ants-speed");
-  if (last_opened_size != old_last_opened_size)
-    update = g_list_append (update, "last-opened-size");
+    {
+      update = g_list_append (update, "marching-ants-speed");
+    }
   if (allow_resize_windows != old_allow_resize_windows)
     {
       update = g_list_append (update, "allow-resize-windows");
@@ -524,7 +532,9 @@ file_prefs_save_callback (GtkWidget *widget,
       remove = g_list_append (remove, "dont-show-statusbar");
     }
   if (interpolation_type != old_interpolation_type)
-    update = g_list_append (update, "interpolation-type");
+    {
+      update = g_list_append (update, "interpolation-type");
+    }
   if (confirm_on_close != old_confirm_on_close)
     {
       update = g_list_append (update, "confirm-on-close");
@@ -540,77 +550,70 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "save-device-status");
       remove = g_list_append (remove, "dont-save-device-status");
     }
-  if (show_indicators != old_show_indicators)
-    {
-      update = g_list_append (update, "show-indicators");
-      remove = g_list_append (remove, "dont-show-indicators");
-    }
   if (always_restore_session != old_always_restore_session)
-    update = g_list_append (update, "always-restore-session");
+    {
+      update = g_list_append (update, "always-restore-session");
+    }
   if (default_width != old_default_width ||
       default_height != old_default_height)
-    update = g_list_append (update, "default-image-size");
+    {
+      update = g_list_append (update, "default-image-size");
+    }
   if (default_units != old_default_units)
-    update = g_list_append (update, "default-units");
-  if (ABS(default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
-    update = g_list_append (update, "default-xresolution");
-  if (ABS(default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
-    update = g_list_append (update, "default-yresolution");
+    {
+      update = g_list_append (update, "default-units");
+    }
+  if (ABS (default_xresolution - old_default_xresolution) > GIMP_MIN_RESOLUTION)
+    {
+      update = g_list_append (update, "default-xresolution");
+    }
+  if (ABS (default_yresolution - old_default_yresolution) > GIMP_MIN_RESOLUTION)
+    {
+      update = g_list_append (update, "default-yresolution");
+    }
   if (default_resolution_units != old_default_resolution_units)
-    update = g_list_append (update, "default-resolution-units");
+    {
+      update = g_list_append (update, "default-resolution-units");
+    }
   if (default_type != old_default_type)
-    update = g_list_append (update, "default-image-type");
+    {
+      update = g_list_append (update, "default-image-type");
+    }
   if (default_dot_for_dot != old_default_dot_for_dot)
     {
       update = g_list_append (update, "default-dot-for-dot");
       remove = g_list_append (remove, "dont-default-dot-for-dot");
     }
   if (preview_size != old_preview_size)
-    update = g_list_append (update, "preview-size");
+    {
+      update = g_list_append (update, "preview-size");
+    }
   if (nav_preview_size != old_nav_preview_size)
-    update = g_list_append (update, "nav-preview-size");
+    {
+      update = g_list_append (update, "nav-preview-size");
+    }
   if (perfectmouse != old_perfectmouse)
-    update = g_list_append (update, "perfect-mouse");
+    {
+      update = g_list_append (update, "perfect-mouse");
+    }
   if (transparency_type != old_transparency_type)
-    update = g_list_append (update, "transparency-type");
+    {
+      update = g_list_append (update, "transparency-type");
+    }
   if (transparency_size != old_transparency_size)
-    update = g_list_append (update, "transparency-size");
+    {
+      update = g_list_append (update, "transparency-size");
+    }
   if (using_xserver_resolution != old_using_xserver_resolution ||
       ABS(monitor_xres - old_monitor_xres) > GIMP_MIN_RESOLUTION)
-    update = g_list_append (update, "monitor-xresolution");
+    {
+      update = g_list_append (update, "monitor-xresolution");
+    }
   if (using_xserver_resolution != old_using_xserver_resolution ||
       ABS(monitor_yres - old_monitor_yres) > GIMP_MIN_RESOLUTION)
-    update = g_list_append (update, "monitor-yresolution");
-  if (edit_num_processors != num_processors)
-    update = g_list_append (update, "num-processors");
-  if (edit_tile_cache_size != tile_cache_size)
-    update = g_list_append (update, "tile-cache-size");
-  if (edit_stingy_memory_use != stingy_memory_use)
-    update = g_list_append (update, "stingy-memory-use");
-  if (edit_install_cmap != old_install_cmap)
-    update = g_list_append (update, "install-colormap");
-  if (edit_cycled_marching_ants != cycled_marching_ants)
-    update = g_list_append (update, "colormap-cycling");
-  if (edit_last_opened_size != last_opened_size)
-    update = g_list_append (update, "last-opened-size");
-  if (file_prefs_strcmp (temp_path, edit_temp_path))
-    update = g_list_append (update, "temp-path");
-  if (file_prefs_strcmp (swap_path, edit_swap_path))
-    update = g_list_append (update, "swap-path");
-  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
-    update = g_list_append (update, "plug-in-path");
-  if (file_prefs_strcmp (module_path, edit_module_path))
-    update = g_list_append (update, "module-path");
-  if (file_prefs_strcmp (brush_path, edit_brush_path))
-    update = g_list_append (update, "brush-path");
-  if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
-    update = g_list_append (update, "brush-vbr-path");
-  if (file_prefs_strcmp (pattern_path, edit_pattern_path))
-    update = g_list_append (update, "pattern-path");
-  if (file_prefs_strcmp (palette_path, edit_palette_path))
-    update = g_list_append (update, "palette-path");
-  if (file_prefs_strcmp (gradient_path, edit_gradient_path))
-    update = g_list_append (update, "gradient-path");
+    {
+      update = g_list_append (update, "monitor-yresolution");
+    }
   if (using_xserver_resolution)
     {
       /* special value of 0 for either x or y res in the gimprc file
@@ -619,16 +622,22 @@ file_prefs_save_callback (GtkWidget *widget,
       monitor_yres = 0.0;
     }
   if (file_prefs_strcmp (image_title_format, old_image_title_format))
-    update = g_list_append (update, "image-title-format");
+    {
+      update = g_list_append (update, "image-title-format");
+    }
   if (global_paint_options != old_global_paint_options)
     {
       update = g_list_append (update, "global-paint-options");
       remove = g_list_append (remove, "no-global-paint-options");
     }
   if (max_new_image_size != old_max_new_image_size)
-    update = g_list_append (update, "max-new-image-size");
+    {
+      update = g_list_append (update, "max-new-image-size");
+    }
   if (thumbnail_mode != old_thumbnail_mode)
-    update = g_list_append (update, "thumbnail-mode");
+    {
+      update = g_list_append (update, "thumbnail-mode");
+    }
   if (trust_dirty_flag != old_trust_dirty_flag)
     {
       update = g_list_append (update, "trust-dirty-flag");
@@ -639,43 +648,137 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "use-help");
       remove = g_list_append (remove, "dont-use-help");
     }
+  if (help_browser != old_help_browser)
+    {
+      update = g_list_append (update, "help-browser");
+    }
+
+
+  /*  values which can't be changed on the fly  */
+  if (edit_stingy_memory_use != old_stingy_memory_use)
+    {
+      stingy_memory_use = edit_stingy_memory_use;
+      update = g_list_append (update, "stingy-memory-use");
+    }
+  if (edit_install_cmap != old_install_cmap)
+    {
+      install_cmap = edit_install_cmap;
+      update = g_list_append (update, "install-colormap");
+    }
+  if (edit_cycled_marching_ants != old_cycled_marching_ants)
+    {
+      cycled_marching_ants = edit_cycled_marching_ants;
+      update = g_list_append (update, "colormap-cycling");
+    }
+  if (edit_last_opened_size != old_last_opened_size)
+    {
+      last_opened_size = edit_last_opened_size;
+      update = g_list_append (update, "last-opened-size");
+    }
+  if (edit_num_processors != old_num_processors)
+    {
+      num_processors = edit_num_processors;
+      update = g_list_append (update, "num-processors");
+    }
+  if (edit_show_indicators != old_show_indicators)
+    {
+      show_indicators = edit_show_indicators;
+      update = g_list_append (update, "show-indicators");
+      remove = g_list_append (remove, "dont-show-indicators");
+    }
   if (edit_nav_window_per_display != old_nav_window_per_display)
     {
+      nav_window_per_display = edit_nav_window_per_display;
       update = g_list_append (update, "nav-window-per-display");
       remove = g_list_append (remove, "nav-window-follows-auto");
-      nav_window_per_display = edit_nav_window_per_display;
     }
   if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
     {
+      info_window_follows_mouse = edit_info_window_follows_mouse;
       update = g_list_append (update, "info-window-follows-mouse");
       remove = g_list_append (remove, "info-window-per-display");
-      info_window_follows_mouse = edit_info_window_follows_mouse;
     }
-  if (help_browser != old_help_browser)
-    update = g_list_append (update, "help-browser");
+
+  if (file_prefs_strcmp (old_temp_path, edit_temp_path))
+    {
+      temp_path = edit_temp_path;
+      update = g_list_append (update, "temp-path");
+    }
+  if (file_prefs_strcmp (old_swap_path, edit_swap_path))
+    {
+      swap_path = edit_swap_path;
+      update = g_list_append (update, "swap-path");
+    }
+  if (file_prefs_strcmp (old_brush_path, edit_brush_path))
+    {
+      brush_path = edit_brush_path;
+      update = g_list_append (update, "brush-path");
+    }
+  if (file_prefs_strcmp (old_brush_vbr_path, edit_brush_vbr_path))
+    {
+      brush_vbr_path = edit_brush_vbr_path;
+      update = g_list_append (update, "brush-vbr-path");
+    }
+  if (file_prefs_strcmp (old_pattern_path, edit_pattern_path))
+    {
+      pattern_path = edit_pattern_path;
+      update = g_list_append (update, "pattern-path");
+    }
+  if (file_prefs_strcmp (old_palette_path, edit_palette_path))
+    {
+      palette_path = edit_palette_path;
+      update = g_list_append (update, "palette-path");
+    }
+  if (file_prefs_strcmp (old_gradient_path, edit_gradient_path))
+    {
+      gradient_path = edit_gradient_path;
+      update = g_list_append (update, "gradient-path");
+    }
+  if (file_prefs_strcmp (old_plug_in_path, edit_plug_in_path))
+    {
+      plug_in_path = edit_plug_in_path;
+      update = g_list_append (update, "plug-in-path");
+    }
+  if (file_prefs_strcmp (old_module_path, edit_module_path))
+    {
+      module_path = edit_module_path;
+      update = g_list_append (update, "module-path");
+    }
+
+  /*  values which are changed on "OK" or "Save"  */
+  if (edit_tile_cache_size != old_tile_cache_size)
+    {
+      update = g_list_append (update, "tile-cache-size");
+    }
+
 
   save_gimprc (&update, &remove);
+
 
   if (using_xserver_resolution)
     gdisplay_xserver_resolution (&monitor_xres, &monitor_yres);
 
-  /* Restore variables which must not change */
-  stingy_memory_use = save_stingy_memory_use;
-  install_cmap = save_install_cmap;
-  cycled_marching_ants = save_cycled_marching_ants;
-  last_opened_size = save_last_opened_size;
-  num_processors = save_num_processors;
-  temp_path = save_temp_path;
-  swap_path = save_swap_path;
-  plug_in_path = save_plug_in_path;
-  module_path = save_module_path;
-  brush_path = save_brush_path;
-  brush_vbr_path = save_brush_vbr_path;
-  pattern_path = save_pattern_path;
-  palette_path = save_palette_path;
-  gradient_path = save_gradient_path;
-  nav_window_per_display = save_nav_window_per_display;
+  /*  restore variables which must not change  */
+  stingy_memory_use         = save_stingy_memory_use;
+  install_cmap              = save_install_cmap;
+  cycled_marching_ants      = save_cycled_marching_ants;
+  last_opened_size          = save_last_opened_size;
+  num_processors            = save_num_processors;
+  show_indicators           = save_show_indicators;
+  nav_window_per_display    = save_nav_window_per_display;
   info_window_follows_mouse = save_info_window_follows_mouse;
+
+  temp_path      = save_temp_path;
+  swap_path      = save_swap_path;
+  brush_path     = save_brush_path;
+  brush_vbr_path = save_brush_vbr_path;
+  pattern_path   = save_pattern_path;
+  palette_path   = save_palette_path;
+  gradient_path  = save_gradient_path;
+  plug_in_path   = save_plug_in_path;
+  module_path    = save_module_path;
+
+  /*  no need to restore values which are only changed on "OK" and "Save"  */
 
   g_list_free (update);
   g_list_free (remove);
@@ -688,52 +791,48 @@ file_prefs_cancel_callback (GtkWidget *widget,
   gtk_widget_destroy (dlg);
   prefs_dlg = NULL;
 
-  levels_of_undo = old_levels_of_undo;
-  marching_speed = old_marching_speed;
-  allow_resize_windows = old_allow_resize_windows;
-  auto_save = old_auto_save;
-  no_cursor_updating = old_no_cursor_updating;
-  perfectmouse = old_perfectmouse;
-  show_tool_tips = old_show_tool_tips;
-  show_rulers = old_show_rulers;
-  show_statusbar = old_show_statusbar;
-  interpolation_type = old_interpolation_type;
-  confirm_on_close = old_confirm_on_close;
-  save_session_info = old_save_session_info;
-  save_device_status = old_save_device_status;
-  default_width = old_default_width;
-  default_height = old_default_height;
-  default_units = old_default_units;
-  default_xresolution = old_default_xresolution;
-  default_yresolution = old_default_yresolution;
+  /*  restore ordinary gimprc variables  */
+  levels_of_undo           = old_levels_of_undo;
+  marching_speed           = old_marching_speed;
+  allow_resize_windows     = old_allow_resize_windows;
+  auto_save                = old_auto_save;
+  no_cursor_updating       = old_no_cursor_updating;
+  perfectmouse             = old_perfectmouse;
+  show_tool_tips           = old_show_tool_tips;
+  show_rulers              = old_show_rulers;
+  show_statusbar           = old_show_statusbar;
+  interpolation_type       = old_interpolation_type;
+  confirm_on_close         = old_confirm_on_close;
+  save_session_info        = old_save_session_info;
+  save_device_status       = old_save_device_status;
+  default_width            = old_default_width;
+  default_height           = old_default_height;
+  default_units            = old_default_units;
+  default_xresolution      = old_default_xresolution;
+  default_yresolution      = old_default_yresolution;
   default_resolution_units = old_default_resolution_units;
-  default_type = old_default_type;
-  default_dot_for_dot = old_default_dot_for_dot;
-  monitor_xres = old_monitor_xres;
-  monitor_yres = old_monitor_yres;
+  default_type             = old_default_type;
+  default_dot_for_dot      = old_default_dot_for_dot;
+  monitor_xres             = old_monitor_xres;
+  monitor_yres             = old_monitor_yres;
   using_xserver_resolution = old_using_xserver_resolution;
-  num_processors = old_num_processors;
-  max_new_image_size = old_max_new_image_size;
-  thumbnail_mode = old_thumbnail_mode;
-  show_indicators = old_show_indicators;
-  trust_dirty_flag = old_trust_dirty_flag;
-  use_help = old_use_help;
-  nav_window_per_display = old_nav_window_per_display;
-  info_window_follows_mouse = old_info_window_follows_mouse;
-  help_browser = old_help_browser;
+  max_new_image_size       = old_max_new_image_size;
+  thumbnail_mode           = old_thumbnail_mode;
+  trust_dirty_flag         = old_trust_dirty_flag;
+  use_help                 = old_use_help;
+  help_browser             = old_help_browser;
 
+  /*  restore variables which need some magic  */
   if (preview_size != old_preview_size)
     {
       lc_dialog_rebuild (old_preview_size);
       layer_select_update_preview_size ();
     }
-
   if (nav_preview_size != old_nav_preview_size)
     {
       nav_preview_size = old_nav_preview_size;
-      gdisplays_nav_preview_resized();
+      gdisplays_nav_preview_resized ();
     }
-
   if ((transparency_type != old_transparency_type) ||
       (transparency_size != old_transparency_size))
     {
@@ -747,104 +846,102 @@ file_prefs_cancel_callback (GtkWidget *widget,
       gdisplays_flush ();
     }
 
-  edit_stingy_memory_use = old_stingy_memory_use;
-  edit_tile_cache_size = old_tile_cache_size;
-  edit_install_cmap = old_install_cmap;
-  edit_cycled_marching_ants = old_cycled_marching_ants;
-  edit_last_opened_size = old_last_opened_size;
-  edit_nav_window_per_display = nav_window_per_display;
-  edit_info_window_follows_mouse = info_window_follows_mouse;
-
-  file_prefs_strset (&edit_temp_path, old_temp_path);
-  file_prefs_strset (&edit_swap_path, old_swap_path);
-  file_prefs_strset (&edit_plug_in_path, old_plug_in_path);
-  file_prefs_strset (&edit_module_path, old_module_path);
-  file_prefs_strset (&edit_brush_path, old_brush_path);
-  file_prefs_strset (&edit_brush_vbr_path, old_brush_vbr_path);
-  file_prefs_strset (&edit_pattern_path, old_pattern_path);
-  file_prefs_strset (&edit_palette_path, old_palette_path);
-  file_prefs_strset (&edit_gradient_path, old_gradient_path);
-
   file_prefs_strset (&image_title_format, old_image_title_format);
 
   context_manager_set_global_paint_options (old_global_paint_options);
+
+  /*  restore values which need a restart  */
+  edit_stingy_memory_use         = old_stingy_memory_use;
+  edit_install_cmap              = old_install_cmap;
+  edit_cycled_marching_ants      = old_cycled_marching_ants;
+  edit_last_opened_size          = old_last_opened_size;
+  edit_num_processors            = old_num_processors;
+  edit_show_indicators           = old_show_indicators;
+  edit_nav_window_per_display    = old_nav_window_per_display;
+  edit_info_window_follows_mouse = old_info_window_follows_mouse;
+
+  file_prefs_strset (&edit_temp_path,      old_temp_path);
+  file_prefs_strset (&edit_swap_path,      old_swap_path);
+  file_prefs_strset (&edit_brush_path,     old_brush_path);
+  file_prefs_strset (&edit_brush_vbr_path, old_brush_vbr_path);
+  file_prefs_strset (&edit_pattern_path,   old_pattern_path);
+  file_prefs_strset (&edit_palette_path,   old_palette_path);
+  file_prefs_strset (&edit_gradient_path,  old_gradient_path);
+  file_prefs_strset (&edit_plug_in_path,   old_plug_in_path);
+  file_prefs_strset (&edit_module_path,    old_module_path);
+
+  /*  no need to restore values which are only changed on "OK" and "Save"  */
 }
 
 static void
 file_prefs_toggle_callback (GtkWidget *widget,
 			    gpointer   data)
 {
-  int *val;
+  gint *val;
 
-  if (data == &allow_resize_windows)
-    allow_resize_windows = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &auto_save)
-    auto_save = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &no_cursor_updating)
-    no_cursor_updating = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &perfectmouse)
-    perfectmouse = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &show_tool_tips)
-    show_tool_tips = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &show_rulers)
-    show_rulers = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &show_statusbar)
-    show_statusbar = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &confirm_on_close)
-    confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &save_session_info)
-    save_session_info = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &save_device_status)
-    save_device_status = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &always_restore_session)
-    always_restore_session = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &edit_stingy_memory_use)
-    edit_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &edit_install_cmap)
-    edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &edit_cycled_marching_ants)
-    edit_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &default_type)
+  val = (gint *) data;
+
+  /*  toggle buttos  */
+  if (data == &allow_resize_windows   ||
+      data == &auto_save              ||
+      data == &no_cursor_updating     ||
+      data == &perfectmouse           ||
+      data == &show_tool_tips         ||
+      data == &show_rulers            ||
+      data == &show_statusbar         ||
+      data == &confirm_on_close       ||
+      data == &save_session_info      ||
+      data == &save_device_status     ||
+      data == &always_restore_session ||
+      data == &default_dot_for_dot    ||
+      data == &use_help               ||
+
+      data == &edit_stingy_memory_use         ||
+      data == &edit_install_cmap              ||
+      data == &edit_cycled_marching_ants      ||
+      data == &edit_show_indicators           ||
+      data == &edit_nav_window_per_display    ||
+      data == &edit_info_window_follows_mouse)
     {
-      default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
-    } 
-  else if (data == &default_dot_for_dot)
-    default_dot_for_dot = GTK_TOGGLE_BUTTON (widget)->active;
+      *val = GTK_TOGGLE_BUTTON (widget)->active;
+    }
+
+  /*  radio buttons  */
+  else if (data == &thumbnail_mode     ||
+	   data == &interpolation_type ||
+           data == &trust_dirty_flag   ||
+	   data == &help_browser       ||
+	   data == &default_type)
+    {
+      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+    }
+
+  /*  values which need some magic  */
   else if ((data == &transparency_type) ||
 	   (data == &transparency_size))
     {
-      val = data;
-      *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
+      *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+
       render_setup (transparency_type, transparency_size);
-      gimage_foreach ((GFunc)layer_invalidate_previews, NULL);
+      gimage_foreach ((GFunc) layer_invalidate_previews, NULL);
       gimage_invalidate_previews ();
       gdisplays_expose_full ();
       gdisplays_flush ();
     }
   else if (data == &global_paint_options)
-    context_manager_set_global_paint_options (GTK_TOGGLE_BUTTON (widget)->active);
-  else if (data == &show_indicators)
-    show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &thumbnail_mode ||
-	   data == &interpolation_type ||
-           data == &trust_dirty_flag ||
-	   data == &help_browser)
     {
-      val = data;
-      *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
+      context_manager_set_global_paint_options
+	(GTK_TOGGLE_BUTTON (widget)->active);
     }
-  else if (data == &use_help)
-    use_help = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &edit_nav_window_per_display)
-    edit_nav_window_per_display = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &edit_info_window_follows_mouse)
-    edit_info_window_follows_mouse = GTK_TOGGLE_BUTTON (widget)->active;
+
+  /*  no matching varible found  */
   else
     {
-      /* Are you a gimp-hacker who is getting this message?  You
-	 probably want to do the same as the &thumbnail_mode case
-	 above is doing. */
-      g_warning("Unknown file_prefs_toggle_callback() invoker - ignored.");
+      /*  Are you a gimp-hacker who is getting this message?  You
+       *  probably have to set your preferences value in one of the
+       *  branches above...
+       */
+      g_warning ("Unknown file_prefs_toggle_callback() invoker - ignored.");
     }
 }
 
@@ -953,10 +1050,10 @@ file_prefs_path_callback (GtkWidget *widget,
 			  gpointer   data)
 {
   gchar **val;
-  gchar *path;
+  gchar  *path;
 
-  val = data;
-  path =  gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget));
+  val  = (gchar **) data;
+  path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (widget));
   file_prefs_strset (val, path);
   g_free (path);
 }
@@ -974,9 +1071,9 @@ file_prefs_default_size_callback (GtkWidget *widget,
 				  gpointer   data)
 {
   default_width = 
-    (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
+    (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0) + 0.5);
   default_height =
-    (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
+    (gint) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1) + 0.5);
   default_units = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 }
 
@@ -1255,80 +1352,95 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   if (edit_temp_path == NULL)
     {
-      /* first time dialog is opened - copy config vals to edit
-	 variables. */
-      edit_stingy_memory_use = stingy_memory_use;
-      edit_tile_cache_size = tile_cache_size;
-      edit_install_cmap = install_cmap;
-      edit_cycled_marching_ants = cycled_marching_ants;
-      edit_last_opened_size = last_opened_size;
-      edit_temp_path = file_prefs_strdup (temp_path);	
-      edit_swap_path = file_prefs_strdup (swap_path);
-      edit_brush_path = file_prefs_strdup (brush_path);
-      edit_brush_vbr_path = file_prefs_strdup (brush_vbr_path);
-      edit_pattern_path = file_prefs_strdup (pattern_path);
-      edit_palette_path = file_prefs_strdup (palette_path);
-      edit_plug_in_path = file_prefs_strdup (plug_in_path);
-      edit_module_path = file_prefs_strdup (module_path);
-      edit_gradient_path = file_prefs_strdup (gradient_path);
-      edit_nav_window_per_display = nav_window_per_display;
+      /*  first time dialog is opened -
+       *  copy config vals to edit variables.
+       */
+      edit_stingy_memory_use         = stingy_memory_use;
+      edit_install_cmap              = install_cmap;
+      edit_cycled_marching_ants      = cycled_marching_ants;
+      edit_last_opened_size          = last_opened_size;
+      edit_num_processors            = num_processors;
+      edit_show_indicators           = show_indicators;
+      edit_nav_window_per_display    = nav_window_per_display;
       edit_info_window_follows_mouse = info_window_follows_mouse;
+
+      edit_temp_path      = file_prefs_strdup (temp_path);	
+      edit_swap_path      = file_prefs_strdup (swap_path);
+      edit_plug_in_path   = file_prefs_strdup (plug_in_path);
+      edit_module_path    = file_prefs_strdup (module_path);
+      edit_brush_path     = file_prefs_strdup (brush_path);
+      edit_brush_vbr_path = file_prefs_strdup (brush_vbr_path);
+      edit_pattern_path   = file_prefs_strdup (pattern_path);
+      edit_palette_path   = file_prefs_strdup (palette_path);
+      edit_gradient_path  = file_prefs_strdup (gradient_path);
     }
-  old_perfectmouse = perfectmouse;
-  old_transparency_type = transparency_type;
-  old_transparency_size = transparency_size;
-  old_levels_of_undo = levels_of_undo;
-  old_marching_speed = marching_speed;
-  old_allow_resize_windows = allow_resize_windows;
-  old_auto_save = auto_save;
-  old_preview_size = preview_size;
-  old_nav_preview_size = nav_preview_size;
-  old_no_cursor_updating = no_cursor_updating;
-  old_show_tool_tips = show_tool_tips;
-  old_show_rulers = show_rulers;
-  old_show_statusbar = show_statusbar;
-  old_interpolation_type = interpolation_type;
-  old_confirm_on_close = confirm_on_close;
-  old_save_session_info = save_session_info;
-  old_save_device_status = save_device_status;
-  old_always_restore_session = always_restore_session;
-  old_default_width = default_width;
-  old_default_height = default_height;
-  old_default_units = default_units;
-  old_default_xresolution = default_xresolution;
-  old_default_yresolution = default_yresolution;
+
+  /*  assign edit variables for values which get changed on "OK" and "Save"
+   *  but not on the fly.
+   */
+  edit_tile_cache_size = tile_cache_size;
+
+  /*  remember all old values  */
+  old_perfectmouse             = perfectmouse;
+  old_transparency_type        = transparency_type;
+  old_transparency_size        = transparency_size;
+  old_levels_of_undo           = levels_of_undo;
+  old_marching_speed           = marching_speed;
+  old_allow_resize_windows     = allow_resize_windows;
+  old_auto_save                = auto_save;
+  old_preview_size             = preview_size;
+  old_nav_preview_size         = nav_preview_size;
+  old_no_cursor_updating       = no_cursor_updating;
+  old_show_tool_tips           = show_tool_tips;
+  old_show_rulers              = show_rulers;
+  old_show_statusbar           = show_statusbar;
+  old_interpolation_type       = interpolation_type;
+  old_confirm_on_close         = confirm_on_close;
+  old_save_session_info        = save_session_info;
+  old_save_device_status       = save_device_status;
+  old_always_restore_session   = always_restore_session;
+  old_default_width            = default_width;
+  old_default_height           = default_height;
+  old_default_units            = default_units;
+  old_default_xresolution      = default_xresolution;
+  old_default_yresolution      = default_yresolution;
   old_default_resolution_units = default_resolution_units;
-  old_default_type = default_type;
-  old_default_dot_for_dot = default_dot_for_dot;
-  old_stingy_memory_use = edit_stingy_memory_use;
-  old_tile_cache_size = edit_tile_cache_size;
-  old_install_cmap = edit_install_cmap;
-  old_cycled_marching_ants = edit_cycled_marching_ants;
-  old_last_opened_size = edit_last_opened_size;
-  old_monitor_xres = monitor_xres;
-  old_monitor_yres = monitor_yres;
+  old_default_type             = default_type;
+  old_default_dot_for_dot      = default_dot_for_dot;
+  old_monitor_xres             = monitor_xres;
+  old_monitor_yres             = monitor_yres;
   old_using_xserver_resolution = using_xserver_resolution;
-  old_num_processors = num_processors;
-  old_global_paint_options = global_paint_options;
-  old_max_new_image_size = max_new_image_size;
-  old_thumbnail_mode = thumbnail_mode;
-  old_show_indicators = show_indicators;
-  old_trust_dirty_flag = trust_dirty_flag;
-  old_use_help = use_help;
-  old_nav_window_per_display = nav_window_per_display;
-  old_info_window_follows_mouse = info_window_follows_mouse;
-  old_help_browser = help_browser;
+  old_global_paint_options     = global_paint_options;
+  old_max_new_image_size       = max_new_image_size;
+  old_thumbnail_mode           = thumbnail_mode;
+  old_trust_dirty_flag         = trust_dirty_flag;
+  old_use_help                 = use_help;
+  old_help_browser             = help_browser;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
-  file_prefs_strset (&old_temp_path, edit_temp_path);
-  file_prefs_strset (&old_swap_path, edit_swap_path);
-  file_prefs_strset (&old_plug_in_path, edit_plug_in_path);
-  file_prefs_strset (&old_module_path, edit_module_path);
-  file_prefs_strset (&old_brush_path, edit_brush_path);
+
+  /*  values which will need a restart  */
+  old_stingy_memory_use         = edit_stingy_memory_use;
+  old_install_cmap              = edit_install_cmap;
+  old_cycled_marching_ants      = edit_cycled_marching_ants;
+  old_last_opened_size          = edit_last_opened_size;
+  old_num_processors            = edit_num_processors;
+  old_show_indicators           = edit_show_indicators;
+  old_nav_window_per_display    = edit_nav_window_per_display;
+  old_info_window_follows_mouse = edit_info_window_follows_mouse;
+
+  file_prefs_strset (&old_temp_path,      edit_temp_path);
+  file_prefs_strset (&old_swap_path,      edit_swap_path);
+  file_prefs_strset (&old_plug_in_path,   edit_plug_in_path);
+  file_prefs_strset (&old_module_path,    edit_module_path);
+  file_prefs_strset (&old_brush_path,     edit_brush_path);
   file_prefs_strset (&old_brush_vbr_path, edit_brush_vbr_path);
-  file_prefs_strset (&old_pattern_path, edit_pattern_path);
-  file_prefs_strset (&old_palette_path, edit_palette_path);
-  file_prefs_strset (&old_gradient_path, edit_gradient_path);
+  file_prefs_strset (&old_pattern_path,   edit_pattern_path);
+  file_prefs_strset (&old_palette_path,   edit_palette_path);
+  file_prefs_strset (&old_gradient_path,  edit_gradient_path);
+
+  /*  values which will be changed on "OK" and "Save"  */
+  old_tile_cache_size = edit_tile_cache_size;
 
   /* Create the dialog */
   prefs_dlg =
@@ -1622,7 +1734,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   button = gtk_check_button_new_with_label(_("Install Colormap"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				install_cmap);
+				edit_install_cmap);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &edit_install_cmap);
@@ -1631,7 +1743,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   button = gtk_check_button_new_with_label(_("Colormap Cycling"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				cycled_marching_ants);
+				edit_cycled_marching_ants);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &edit_cycled_marching_ants);
@@ -1716,11 +1828,11 @@ file_pref_cmd_callback (GtkWidget *widget,
   button = gtk_check_button_new_with_label
     (_("Display Brush, Pattern and Gradient Indicators"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				show_indicators);
+				edit_show_indicators);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
-		      &show_indicators);
+		      &edit_show_indicators);
   gtk_widget_show (button);
 
   vbox2 = file_prefs_frame_new (_("Dialog Behaviour"), GTK_BOX (vbox));
@@ -1969,7 +2081,8 @@ file_pref_cmd_callback (GtkWidget *widget,
   vbox2 = file_prefs_frame_new (_("Resource Consumption"), GTK_BOX (vbox));
 
   button = gtk_check_button_new_with_label(_("Conservative Memory Usage"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), stingy_memory_use);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+				edit_stingy_memory_use);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &edit_stingy_memory_use);
@@ -2042,11 +2155,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
 #ifdef ENABLE_MP
   spinbutton =
-    gimp_spin_button_new (&adjustment,
-			  num_processors, 1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
+    gimp_spin_button_new (&adjustment, edit_num_processors,
+			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &num_processors);
+		      &edit_num_processors);
   gimp_table_attach_aligned (GTK_TABLE (table), 2,
 			     _("Number of Processors to Use:"), 1.0, 0.5,
 			     spinbutton, TRUE);
@@ -2109,14 +2222,14 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   optionmenu =
     gimp_option_menu_new (file_prefs_toggle_callback,
-			  & trust_dirty_flag, (gpointer) trust_dirty_flag,
+			  &trust_dirty_flag, (gpointer) trust_dirty_flag,
 
-			  _("Only when modified"), (gpointer) 1, NULL,
+			  _("Only when Modified"), (gpointer) 1, NULL,
 			  _("Always"),             (gpointer) 0, NULL,
 
 			  NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 1,
-                             _("'File > Save' saves the image:"), 1.0, 0.5,
+                             _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
                                optionmenu, TRUE);
                                      
 
