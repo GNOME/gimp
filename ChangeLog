@@ -1,5 +1,13 @@
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptextlayer.c (gimp_text_layer_render): if there's a
+	layer mask, resize it with the layer.
+
+	* app/tools/gimptexttool.c: don't change text_tool->layer before
+	calling gimp_text_tool_connect().
+
+2004-03-19  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: updated PS keybindings contributed by Eric Pierce.
 
 2004-03-19  Sven Neumann  <sven@gimp.org>

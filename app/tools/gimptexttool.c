@@ -313,6 +313,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
     }
 
   /*  create a new text layer  */
+  gimp_text_tool_connect (text_tool, NULL);
   gimp_text_tool_editor (text_tool);
 }
 
@@ -462,6 +463,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
     }
 
   g_return_if_fail (text_tool->text != NULL);
+  g_return_if_fail (text_tool->layer != NULL);
 
   src  = G_OBJECT (text_tool->proxy);
   dest = G_OBJECT (text_tool->text);
@@ -659,8 +661,8 @@ gimp_text_tool_confirm_response (GtkWidget    *widget,
           break;
 
         case GTK_RESPONSE_OK:
-          text_tool->layer = layer;
           gimp_text_tool_connect (text_tool, text_layer->text);
+          text_tool->layer = layer;
           break;
 
         default:
@@ -792,20 +794,22 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
 
   if (drawable && GIMP_IS_LAYER (drawable))
     {
-      text_tool->layer = GIMP_LAYER (drawable);
-
       if (GIMP_IS_TEXT_LAYER (drawable) && GIMP_TEXT_LAYER (drawable)->text)
         {
           GimpTextLayer *text_layer = GIMP_TEXT_LAYER (drawable);
 
           if (text_layer->text == text_tool->text)
-            return TRUE;
+            {
+              text_tool->layer = GIMP_LAYER (drawable);
+              return TRUE;
+            }
 
           if (text_layer->modified)
             {
               if (confirm)
                 {
                   gimp_text_tool_connect (text_tool, NULL);
+                  text_tool->layer = GIMP_LAYER (drawable);
                   gimp_text_tool_confirm_dialog (text_tool);
                   return TRUE;
                 }
@@ -813,16 +817,15 @@ gimp_text_tool_set_drawable (GimpTextTool *text_tool,
           else
             {
               gimp_text_tool_connect (text_tool, text_layer->text);
+              text_tool->layer = GIMP_LAYER (drawable);
               return TRUE;
             }
         }
     }
-  else
-    {
-      text_tool->layer = NULL;
-    }
 
   gimp_text_tool_connect (text_tool, NULL);
+  text_tool->layer = NULL;
+
   return FALSE;
 }
 
