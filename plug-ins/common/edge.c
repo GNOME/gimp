@@ -276,7 +276,7 @@ edge (GimpDrawable *drawable)
     evals.amount = 1.0;
 
   pft = gimp_pixel_fetcher_new (drawable);
-  gimp_pixel_fetcher_set_edgemode (pft, evals.wrapmode);
+  gimp_pixel_fetcher_set_edge_mode (pft, evals.wrapmode);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
