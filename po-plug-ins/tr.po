@@ -6,18 +6,18 @@ msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-11-24 01:38+0100\n"
-"PO-Revision-Date: 2001-03-15 16:23+0100\n"
+"PO-Revision-Date: 2003-12-31 17:49+0000\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:522
 #: plug-ins/FractalExplorer/Dialogs.c:1611 plug-ins/gfig/gfig.c:2617
 #: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:368
 msgid "About"
-msgstr "Bilgi"
+msgstr "Hakkında"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:547 plug-ins/Lighting/lighting_ui.c:1131
@@ -68,9 +68,8 @@ msgid "Redo last zoom"
 msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:668
-#, fuzzy
 msgid "_Parameters"
-msgstr "Kapat"
+msgstr "_Parametreler"
 
 #: plug-ins/FractalExplorer/Dialogs.c:671
 msgid "Fractal Parameters"
@@ -193,18 +192,17 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:871 plug-ins/common/sinus.c:885
 #: plug-ins/imagemap/imap_preferences.c:515
-#, fuzzy
 msgid "Co_lors"
-msgstr "Renkler"
+msgstr "_Renkler"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:875 plug-ins/common/borderaverage.c:396
 msgid "Number of Colors"
-msgstr ""
+msgstr "Renk Sayısı"
 
 #: plug-ins/FractalExplorer/Dialogs.c:888
 msgid "Number of colors:"
-msgstr ""
+msgstr "Renk sayısı:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:891
 msgid "Change the number of colors in the mapping"
@@ -544,9 +542,8 @@ msgstr ""
 #. NULL);
 #.
 #: plug-ins/Lighting/lighting_ui.c:372
-#, fuzzy
 msgid "T_ransparent Background"
-msgstr "Şeffaf"
+msgstr "_Şeffaf Arkaplan"
 
 #: plug-ins/Lighting/lighting_ui.c:382
 msgid "Make destination image transparent where bump height is zero"
@@ -554,7 +551,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:385
 msgid "Cre_ate New Image"
-msgstr ""
+msgstr "_Yeni Resim Oluştur"
 
 #: plug-ins/Lighting/lighting_ui.c:395 plug-ins/MapObject/mapobject_ui.c:588
 msgid "Create a new image when applying filter"
@@ -562,7 +559,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:397
 msgid "High _Quality Preview"
-msgstr ""
+msgstr "_Yüksek Kaliteli Önizleme"
 
 #: plug-ins/Lighting/lighting_ui.c:407
 msgid "Enable/disable high quality preview"
@@ -570,14 +567,13 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:415
 msgid "E_nable Antialiasing"
-msgstr ""
+msgstr "_Yumuşatma Kullan"
 
 #: plug-ins/Lighting/lighting_ui.c:436 plug-ins/MapObject/mapobject_ui.c:621
 #: plug-ins/common/bumpmap.c:1063 plug-ins/common/emboss.c:546
 #: plug-ins/common/fractaltrace.c:844 plug-ins/common/struc.c:1287
-#, fuzzy
 msgid "_Depth:"
-msgstr "Azami Derinlik:"
+msgstr "_Derinlik:"
 
 #: plug-ins/Lighting/lighting_ui.c:439 plug-ins/MapObject/mapobject_ui.c:624
 msgid "Antialiasing quality. Higher is better, but slower"
@@ -597,44 +593,43 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:509
 msgid "Directional"
-msgstr ""
+msgstr "Doğrusal"
 
 #: plug-ins/Lighting/lighting_ui.c:510
 msgid "Point"
-msgstr ""
+msgstr "Nokta"
 
 #: plug-ins/Lighting/lighting_ui.c:515
-#, fuzzy
 msgid "L_ight Type:"
-msgstr "Resim"
+msgstr "Işı_k Türü:"
 
 #: plug-ins/Lighting/lighting_ui.c:518 plug-ins/MapObject/mapobject_ui.c:692
 msgid "Type of light source to apply"
-msgstr ""
+msgstr "Uygulanacak ışık kaynağının türü"
 
 #: plug-ins/Lighting/lighting_ui.c:520 plug-ins/MapObject/mapobject_ui.c:694
 msgid "Select Lightsource Color"
-msgstr ""
+msgstr "Işık Kaynağı Rengini Seç"
 
 #: plug-ins/Lighting/lighting_ui.c:531
 msgid "Lig_ht Color:"
-msgstr ""
+msgstr "Işık _Rengi:"
 
 #: plug-ins/Lighting/lighting_ui.c:535 plug-ins/MapObject/mapobject_ui.c:707
 msgid "Set light source color"
-msgstr ""
+msgstr "Işık kaynağı rengini seçin"
 
 #: plug-ins/Lighting/lighting_ui.c:537 plug-ins/MapObject/mapobject_ui.c:709
 #: plug-ins/MapObject/mapobject_ui.c:1018
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Position"
-msgstr ""
+msgstr "Konum"
 
 #: plug-ins/Lighting/lighting_ui.c:555 plug-ins/common/flarefx.c:741
 #: plug-ins/common/nova.c:443 plug-ins/common/papertile.c:269
 #: plug-ins/flame/flame.c:1176 plug-ins/gflare/gflare.c:2625
 msgid "_X:"
-msgstr ""
+msgstr "_X:"
 
 #: plug-ins/Lighting/lighting_ui.c:566 plug-ins/MapObject/mapobject_ui.c:734
 msgid "Light source X position in XYZ space"
@@ -645,7 +640,7 @@ msgstr ""
 #: plug-ins/common/svg.c:798 plug-ins/common/xbm.c:1238
 #: plug-ins/flame/flame.c:1190 plug-ins/gflare/gflare.c:2629
 msgid "_Y:"
-msgstr ""
+msgstr "_Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:583 plug-ins/MapObject/mapobject_ui.c:748
 msgid "Light source Y position in XYZ space"
@@ -653,7 +648,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:589
 msgid "_Z:"
-msgstr ""
+msgstr "_Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:599 plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Z position in XYZ space"
@@ -661,7 +656,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:602 plug-ins/MapObject/mapobject_ui.c:765
 msgid "Direction Vector"
-msgstr ""
+msgstr "Doğrultu Vektörü"
 
 #. X
 #: plug-ins/Lighting/lighting_ui.c:618 plug-ins/MapObject/mapobject_ui.c:726
@@ -669,7 +664,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1030
 #: plug-ins/MapObject/mapobject_ui.c:1077 plug-ins/ifscompose/ifscompose.c:555
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:629 plug-ins/MapObject/mapobject_ui.c:789
 msgid "Light source X direction in XYZ space"
@@ -682,7 +677,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1087
 #: plug-ins/MapObject/mapobject_ui.c:1186 plug-ins/ifscompose/ifscompose.c:569
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:644 plug-ins/MapObject/mapobject_ui.c:802
 msgid "Light source Y direction in XYZ space"
@@ -694,7 +689,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1097
 #: plug-ins/MapObject/mapobject_ui.c:1198
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:659 plug-ins/MapObject/mapobject_ui.c:815
 msgid "Light source Z direction in XYZ space"
@@ -702,7 +697,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:685 plug-ins/MapObject/mapobject_ui.c:840
 msgid "Intensity Levels"
-msgstr ""
+msgstr "Yoğunluk Seviyeleri"
 
 #: plug-ins/Lighting/lighting_ui.c:703
 msgid "_Ambient:"
@@ -722,7 +717,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:759 plug-ins/MapObject/mapobject_ui.c:906
 msgid "Reflectivity"
-msgstr ""
+msgstr "Yansıma"
 
 #: plug-ins/Lighting/lighting_ui.c:777
 msgid "D_iffuse:"
@@ -734,16 +729,15 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:808
 msgid "_Specular:"
-msgstr ""
+msgstr "_Öbek:"
 
 #: plug-ins/Lighting/lighting_ui.c:827 plug-ins/MapObject/mapobject_ui.c:964
 msgid "Controls how intense the highlights will be"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:839
-#, fuzzy
 msgid "_Highlight:"
-msgstr "Yükseklik:"
+msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:857 plug-ins/MapObject/mapobject_ui.c:990
 msgid "Higher values makes the highlights more focused"
@@ -763,37 +757,35 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:927 plug-ins/flame/flame.c:704
 msgid "Linear"
-msgstr ""
+msgstr "Doğrusal"
 
 #: plug-ins/Lighting/lighting_ui.c:928
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmik"
 
 #: plug-ins/Lighting/lighting_ui.c:929 plug-ins/flame/flame.c:705
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sinüssel"
 
 #: plug-ins/Lighting/lighting_ui.c:930 plug-ins/flame/flame.c:706
 msgid "Spherical"
-msgstr ""
+msgstr "Küresel"
 
 #: plug-ins/Lighting/lighting_ui.c:933
 msgid "Cu_rve:"
-msgstr ""
+msgstr "Eğri:"
 
 #: plug-ins/Lighting/lighting_ui.c:939
-#, fuzzy
 msgid "Ma_ximum Height:"
-msgstr "Yükseklik:"
+msgstr "A_zami Yükseklik:"
 
 #: plug-ins/Lighting/lighting_ui.c:946
 msgid "Maximum height for bumps"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:952
-#, fuzzy
 msgid "M_inimum Height:"
-msgstr "Yükseklik:"
+msgstr "A_sgari Yükseklik:"
 
 #: plug-ins/Lighting/lighting_ui.c:959
 msgid "Minimum height for bumps"
@@ -824,19 +816,16 @@ msgid "Environment image to use"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1053
-#, fuzzy
 msgid "Op_tions"
-msgstr "Seçenekler"
+msgstr "Seçenekle_r"
 
 #: plug-ins/Lighting/lighting_ui.c:1057 plug-ins/MapObject/mapobject_ui.c:1319
-#, fuzzy
 msgid "_Light"
-msgstr "Hafif"
+msgstr "_Işık"
 
 #: plug-ins/Lighting/lighting_ui.c:1061 plug-ins/MapObject/mapobject_ui.c:1323
-#, fuzzy
 msgid "_Material"
-msgstr "Dikey"
+msgstr "_Madde"
 
 #: plug-ins/Lighting/lighting_ui.c:1065
 msgid "_Bump Map"
@@ -848,13 +837,12 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1112
 msgid "Lighting Effects"
-msgstr ""
+msgstr "Işıklandırma Etkileri"
 
 #: plug-ins/Lighting/lighting_ui.c:1169 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
-#, fuzzy
 msgid "_Update"
-msgstr "Önizleme"
+msgstr "_Güncelle"
 
 #: plug-ins/Lighting/lighting_ui.c:1176 plug-ins/MapObject/mapobject_ui.c:1426
 msgid "Recompute preview image"
@@ -862,16 +850,15 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1178
 msgid "I_nteractive"
-msgstr ""
+msgstr "_Etkileşimli"
 
 #: plug-ins/Lighting/lighting_ui.c:1193
 msgid "Enable/disable real time preview of changes"
 msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:1196
-#, fuzzy
 msgid "Preview Options"
-msgstr "Kaydetme seçenekleri"
+msgstr "Önizleme Seçenekleri"
 
 #: plug-ins/MapObject/mapobject_main.c:202
 msgid "<Image>/Filters/Map/Map _Object..."
@@ -884,9 +871,8 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:266
 #: plug-ins/MapObject/mapobject_ui.c:1339
-#, fuzzy
 msgid "C_ylinder"
-msgstr "Devam"
+msgstr "_Silindir"
 
 #: plug-ins/MapObject/mapobject_ui.c:530
 msgid "Map to:"
@@ -1060,14 +1046,12 @@ msgid "Z scale (size)"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1225
-#, fuzzy
 msgid "_Top:"
-msgstr "Tepe:"
+msgstr "_Tepe:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1225
-#, fuzzy
 msgid "_Bottom:"
-msgstr "Alt:"
+msgstr "_Alt:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1230
 msgid "Images for the Cap Faces"
@@ -1087,32 +1071,28 @@ msgid "Cylinder radius"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:775
-#, fuzzy
 msgid "L_ength:"
-msgstr "Sol:"
+msgstr "_Uzunluk:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1288
 msgid "Cylinder length"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1315
-#, fuzzy
 msgid "O_ptions"
-msgstr "Seçenekler"
+msgstr "_Seçenekler"
 
 #: plug-ins/MapObject/mapobject_ui.c:1327
-#, fuzzy
 msgid "O_rientation"
-msgstr "Konum"
+msgstr "_Konum"
 
 #: plug-ins/MapObject/mapobject_ui.c:1363
 msgid "Map to Object"
 msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1417 plug-ins/common/diffraction.c:479
-#, fuzzy
 msgid "_Preview!"
-msgstr "Önizleme"
+msgstr "Ön_izleme"
 
 #: plug-ins/MapObject/mapobject_ui.c:1440
 msgid "Zoom out (make image smaller)"
@@ -1131,9 +1111,8 @@ msgid "Show/hide preview wireframe"
 msgstr ""
 
 #: plug-ins/bmp/bmpread.c:67
-#, fuzzy
 msgid "Bad colormap"
-msgstr "Renk"
+msgstr "Hatalı renk haritası"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:258
@@ -1212,9 +1191,9 @@ msgstr ""
 #: plug-ins/common/xbm.c:997 plug-ins/common/xpm.c:617
 #: plug-ins/common/xwd.c:535 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:682
 #: plug-ins/sgi/sgi.c:534 plug-ins/xjt/xjt.c:1692
-#, fuzzy, c-format
+#, c-format
 msgid "Saving '%s'..."
-msgstr "Farklı Kaydet..."
+msgstr "%s kaydediliyor..."
 
 #: plug-ins/bmp/bmpwrite.c:542
 msgid "Save as BMP"
@@ -1249,9 +1228,8 @@ msgstr "Hakkında..."
 #: plug-ins/common/diffraction.c:543 plug-ins/common/diffraction.c:581
 #: plug-ins/common/exchange.c:411 plug-ins/common/noisify.c:355
 #: plug-ins/common/noisify.c:362
-#, fuzzy
 msgid "_Red:"
-msgstr "Kırmızı:"
+msgstr "K_ırmızı:"
 
 #: plug-ins/common/AlienMap.c:1205
 msgid "Change intensity of the red channel"
@@ -1261,9 +1239,8 @@ msgstr ""
 #: plug-ins/common/diffraction.c:552 plug-ins/common/diffraction.c:590
 #: plug-ins/common/exchange.c:455 plug-ins/common/noisify.c:356
 #: plug-ins/common/noisify.c:363
-#, fuzzy
 msgid "_Green:"
-msgstr "Yeşil:"
+msgstr "_Yeşil:"
 
 #: plug-ins/common/AlienMap.c:1215
 msgid "Change intensity of the green channel"
@@ -1273,9 +1250,8 @@ msgstr ""
 #: plug-ins/common/diffraction.c:561 plug-ins/common/diffraction.c:599
 #: plug-ins/common/exchange.c:499 plug-ins/common/noisify.c:357
 #: plug-ins/common/noisify.c:364
-#, fuzzy
 msgid "_Blue:"
-msgstr "Mavi:"
+msgstr "_Mavi:"
 
 #: plug-ins/common/AlienMap.c:1224
 msgid "Change intensity of the blue channel"
@@ -1283,21 +1259,18 @@ msgstr ""
 
 #: plug-ins/common/AlienMap.c:1234 plug-ins/common/AlienMap.c:1257
 #: plug-ins/common/AlienMap.c:1280
-#, fuzzy
 msgid "_Sine"
-msgstr "Boyut"
+msgstr "_Sinüs"
 
 #: plug-ins/common/AlienMap.c:1235 plug-ins/common/AlienMap.c:1258
 #: plug-ins/common/AlienMap.c:1281
-#, fuzzy
 msgid "Cos_ine"
-msgstr "Devam"
+msgstr "_Kosinüs"
 
 #: plug-ins/common/AlienMap.c:1236 plug-ins/common/AlienMap.c:1259
 #: plug-ins/common/AlienMap.c:1282 plug-ins/common/tiff.c:1792
-#, fuzzy
 msgid "_None"
-msgstr "Yok"
+msgstr "_Hiçbiri"
 
 #: plug-ins/common/AlienMap.c:1241
 msgid "Use sine-function for red component."
@@ -1710,9 +1683,8 @@ msgid "_Value"
 msgstr "Değer"
 
 #: plug-ins/common/CML_explorer.c:1268
-#, fuzzy
 msgid "_Advanced"
-msgstr "Uzman"
+msgstr "_Gelişmiş"
 
 #: plug-ins/common/CML_explorer.c:1281
 msgid "Channel Independed Parameters"
@@ -1751,9 +1723,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1395
-#, fuzzy
 msgid "O_thers"
-msgstr "Diğer"
+msgstr "_Diğer"
 
 #: plug-ins/common/CML_explorer.c:1407
 msgid "Copy Settings"
@@ -1950,9 +1921,8 @@ msgid "Snap to Grid"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:422
-#, fuzzy
 msgid "_Horizontal Style:"
-msgstr "Ufki"
+msgstr ""
 
 #: plug-ins/common/align_layers.c:429
 msgid "Left Edge"
@@ -1981,9 +1951,8 @@ msgid "Fill (bottom to top)"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:450
-#, fuzzy
 msgid "_Vertical Style:"
-msgstr "Dikey:"
+msgstr "_Dikey Stil:"
 
 #: plug-ins/common/align_layers.c:457
 msgid "Top Edge"
@@ -1994,9 +1963,8 @@ msgid "Bottom Edge"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:463
-#, fuzzy
 msgid "Ver_tical Base:"
-msgstr "Dikey:"
+msgstr "Dikey Teme_l:"
 
 #: plug-ins/common/align_layers.c:467
 msgid "_Ignore the Bottom Layer even if Visible"
@@ -2007,9 +1975,8 @@ msgid "_Use the (Invisible) Bottom Layer as the Base"
 msgstr ""
 
 #: plug-ins/common/align_layers.c:488
-#, fuzzy
 msgid "_Grid Size:"
-msgstr "Büyüklük:"
+msgstr "_Kılavuz Boyutu:"
 
 #: plug-ins/common/animationplay.c:240
 msgid "<Image>/Filters/Animation/_Playback..."
@@ -2145,21 +2112,18 @@ msgstr "Konum"
 
 #: plug-ins/common/blinds.c:304 plug-ins/common/ripple.c:478
 #: plug-ins/common/tileit.c:433
-#, fuzzy
 msgid "_Horizontal"
-msgstr "Ufki"
+msgstr "_Yatay"
 
 #: plug-ins/common/blinds.c:305 plug-ins/common/ripple.c:479
 #: plug-ins/common/tileit.c:443
-#, fuzzy
 msgid "_Vertical"
-msgstr "Dikey"
+msgstr "_Dikey"
 
 #: plug-ins/common/blinds.c:320 plug-ins/common/fractaltrace.c:785
 #: plug-ins/common/papertile.c:367
-#, fuzzy
 msgid "_Transparent"
-msgstr "Şeffaf"
+msgstr "Şeff_af"
 
 #: plug-ins/common/blinds.c:339
 msgid "_Displacement:"
@@ -2181,9 +2145,8 @@ msgid "Blurring..."
 msgstr ""
 
 #: plug-ins/common/blur.c:579
-#, fuzzy
 msgid "Blur"
-msgstr "Mavi"
+msgstr "Bulanık"
 
 #: plug-ins/common/blur.c:598 plug-ins/common/randomize.c:704
 #: plug-ins/common/snoise.c:507
@@ -2199,9 +2162,8 @@ msgid "Percentage of pixels to be filtered"
 msgstr ""
 
 #: plug-ins/common/blur.c:619 plug-ins/common/randomize.c:725
-#, fuzzy
 msgid "R_epeat:"
-msgstr "Tekrarlama:"
+msgstr "_Tekrarlama:"
 
 #: plug-ins/common/blur.c:622 plug-ins/common/randomize.c:728
 msgid "Number of times to apply filter"
@@ -2372,9 +2334,9 @@ msgid "Number of unique colors: %d"
 msgstr ""
 
 #: plug-ins/common/ccanalyze.c:599
-#, fuzzy, c-format
+#, c-format
 msgid "Filename: %s"
-msgstr "Dosya adı:"
+msgstr "Dosya adı: %s"
 
 #: plug-ins/common/ccanalyze.c:603
 #, c-format
@@ -2404,9 +2366,8 @@ msgstr ""
 
 #: plug-ins/common/checkerboard.c:355 plug-ins/common/papertile.c:289
 #: plug-ins/gimpressionist/sizemap.c:508
-#, fuzzy
 msgid "_Size:"
-msgstr "Büyüklük:"
+msgstr "Büyüklü_k:"
 
 #: plug-ins/common/color_enhance.c:92
 msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
@@ -2626,24 +2587,20 @@ msgid "Channel Representations"
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:87
-#, fuzzy
 msgid "Gr_ey"
-msgstr "Gri"
+msgstr "G_ri"
 
 #: plug-ins/common/convmatrix.c:88
-#, fuzzy
 msgid "Re_d"
-msgstr "Kırmızı"
+msgstr "_Kırmızı"
 
 #: plug-ins/common/convmatrix.c:89 plug-ins/common/newsprint.c:380
-#, fuzzy
 msgid "_Green"
-msgstr "Yeşil:"
+msgstr "Yeşi_l"
 
 #: plug-ins/common/convmatrix.c:90 plug-ins/common/newsprint.c:388
-#, fuzzy
 msgid "_Blue"
-msgstr "Mavi:"
+msgstr "Mav_i"
 
 #: plug-ins/common/convmatrix.c:91
 msgid "_Alpha"
@@ -2659,9 +2616,8 @@ msgid "_Wrap"
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:98
-#, fuzzy
 msgid "Cro_p"
-msgstr "Kes"
+msgstr "Kı_rp"
 
 #: plug-ins/common/convmatrix.c:194
 msgid "<Image>/Filters/Generic/_Convolution Matrix..."
@@ -2692,9 +2648,8 @@ msgid "O_ffset:"
 msgstr ""
 
 #: plug-ins/common/convmatrix.c:972
-#, fuzzy
 msgid "A_utomatic"
-msgstr "Otomatik"
+msgstr "_Otomatik"
 
 #: plug-ins/common/convmatrix.c:981
 msgid "A_lpha-weighting"
@@ -2717,9 +2672,8 @@ msgid "_Prefixed Name:"
 msgstr ""
 
 #: plug-ins/common/csource.c:668
-#, fuzzy
 msgid "Co_mment:"
-msgstr "Açıklama"
+msgstr "_Açıklama:"
 
 #. Use Comment
 #.
@@ -2764,14 +2718,12 @@ msgid "Cubism"
 msgstr ""
 
 #: plug-ins/common/cubism.c:264
-#, fuzzy
 msgid "_Use Background Color"
-msgstr "Arkaplan"
+msgstr "Arkaplan R_engi Kullan"
 
 #: plug-ins/common/cubism.c:277
-#, fuzzy
 msgid "_Tile Size:"
-msgstr "Büyüklük:"
+msgstr "Döşeme _Boyutu:"
 
 #: plug-ins/common/cubism.c:287
 msgid "T_ile Saturation:"
@@ -2797,15 +2749,13 @@ msgstr ""
 
 #. The preview button
 #: plug-ins/common/curve_bend.c:1258
-#, fuzzy
 msgid "_Preview Once"
-msgstr "Önizleme"
+msgstr "Bir Kez _Önizleme"
 
 #. The preview toggle
 #: plug-ins/common/curve_bend.c:1267
-#, fuzzy
 msgid "Automatic Pre_view"
-msgstr "Önizleme"
+msgstr "_Otomatik Önizleme"
 
 #. Options area, bottom of column
 #: plug-ins/common/curve_bend.c:1277 plug-ins/common/mosaic.c:528
@@ -2815,9 +2765,8 @@ msgstr "Seçenekler"
 
 #. Rotate spinbutton
 #: plug-ins/common/curve_bend.c:1292
-#, fuzzy
 msgid "Rotat_e:"
-msgstr "Kırmızı:"
+msgstr "Ç_evir:"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1310
@@ -2845,33 +2794,29 @@ msgid "Curve for Border"
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:1373
-#, fuzzy
 msgid "_Upper"
-msgstr "Kağıt"
+msgstr "_Yukarı"
 
 #: plug-ins/common/curve_bend.c:1374
 msgid "_Lower"
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:1384
-#, fuzzy
 msgid "Curve Type"
-msgstr "Resim"
+msgstr ""
 
 #: plug-ins/common/curve_bend.c:1388
 msgid "Smoot_h"
 msgstr ""
 
 #: plug-ins/common/curve_bend.c:1389
-#, fuzzy
 msgid "_Free"
-msgstr "Yeşil:"
+msgstr "_Serbest"
 
 #. The Copy button
 #: plug-ins/common/curve_bend.c:1404
-#, fuzzy
 msgid "_Copy"
-msgstr "Kopyala"
+msgstr "_Kopyala"
 
 #: plug-ins/common/curve_bend.c:1409
 msgid "Copy the active curve to the other border"
@@ -2879,9 +2824,8 @@ msgstr ""
 
 #. The CopyInv button
 #: plug-ins/common/curve_bend.c:1416
-#, fuzzy
 msgid "_Mirror"
-msgstr "Hata"
+msgstr "_Yansıla"
 
 #: plug-ins/common/curve_bend.c:1421
 msgid "Mirror the active curve to the other border"
@@ -3187,9 +3131,8 @@ msgid "_Adaptive"
 msgstr ""
 
 #: plug-ins/common/despeckle.c:712
-#, fuzzy
 msgid "R_ecursive"
-msgstr "Yeniden boyutlandır"
+msgstr "Ö_zyineli"
 
 #: plug-ins/common/despeckle.c:729 plug-ins/common/nlfilt.c:371
 #: plug-ins/common/nova.c:347 plug-ins/common/unsharp.c:653
@@ -3227,9 +3170,8 @@ msgstr ""
 #: plug-ins/common/smooth_palette.c:427 plug-ins/common/tile.c:407
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
-#, fuzzy
 msgid "_Width:"
-msgstr "Genişlik:"
+msgstr "_Genişlik:"
 
 #: plug-ins/common/dicom.c:315
 #, c-format
@@ -3249,37 +3191,32 @@ msgid "Diffraction Patterns"
 msgstr ""
 
 #: plug-ins/common/diffraction.c:531
-#, fuzzy
 msgid "_Frequencies"
-msgstr "Tercihler"
+msgstr "_Frekanslar"
 
 #: plug-ins/common/diffraction.c:569
-#, fuzzy
 msgid "Co_ntours"
-msgstr "Renkler"
+msgstr "_Konturlar"
 
 #: plug-ins/common/diffraction.c:607
 msgid "_Sharp edges"
 msgstr ""
 
 #: plug-ins/common/diffraction.c:619 plug-ins/flame/flame.c:993
-#, fuzzy
 msgid "_Brightness:"
-msgstr "Yükseklik:"
+msgstr "_Parlaklık:"
 
 #: plug-ins/common/diffraction.c:628
-#, fuzzy
 msgid "Sc_attering:"
-msgstr "Boşluk:"
+msgstr "_Dağılma:"
 
 #: plug-ins/common/diffraction.c:637
 msgid "Po_latization:"
 msgstr ""
 
 #: plug-ins/common/diffraction.c:645
-#, fuzzy
 msgid "O_ther options"
-msgstr "Seçenekler"
+msgstr "Diğer _seçenekler"
 
 #: plug-ins/common/displace.c:155
 msgid "<Image>/Filters/Map/_Displace..."
@@ -3322,9 +3259,8 @@ msgstr ""
 #: plug-ins/common/displace.c:403 plug-ins/common/edge.c:703
 #: plug-ins/common/fractaltrace.c:787 plug-ins/common/newsprint.c:425
 #: plug-ins/common/ripple.c:494
-#, fuzzy
 msgid "_Black"
-msgstr "Siyah"
+msgstr "_Siyah"
 
 #: plug-ins/common/edge.c:152
 msgid "<Image>/Filters/Edge-Detect/_Edge..."
@@ -3353,29 +3289,24 @@ msgid "_Prewitt"
 msgstr "Kapat"
 
 #: plug-ins/common/edge.c:653 plug-ins/common/lic.c:744
-#, fuzzy
 msgid "_Gradient"
-msgstr "Yeşil:"
+msgstr "_Gradyan"
 
 #: plug-ins/common/edge.c:654
-#, fuzzy
 msgid "_Roberts"
-msgstr "Noktalar"
+msgstr "_Roberts"
 
 #: plug-ins/common/edge.c:655
-#, fuzzy
 msgid "_Differential"
-msgstr "Fark"
+msgstr ""
 
 #: plug-ins/common/edge.c:656
-#, fuzzy
 msgid "_Laplace"
-msgstr "Üstüne yaz"
+msgstr "_Laplace"
 
 #: plug-ins/common/edge.c:667 plug-ins/common/unsharp.c:662
-#, fuzzy
 msgid "_Amount:"
-msgstr "Yazar:"
+msgstr "_Miktar:"
 
 #: plug-ins/common/emboss.c:154
 msgid "<Image>/Filters/Distorts/_Emboss..."
@@ -3402,9 +3333,8 @@ msgid "E_levation:"
 msgstr ""
 
 #: plug-ins/common/emboss.c:717 plug-ins/common/sinus.c:1059
-#, fuzzy
 msgid "Do _Preview"
-msgstr "Önizleme"
+msgstr ""
 
 #: plug-ins/common/engrave.c:106
 msgid "<Image>/Filters/Distorts/En_grave..."
@@ -3427,9 +3357,8 @@ msgstr ""
 #: plug-ins/common/ps.c:2831 plug-ins/common/smooth_palette.c:432
 #: plug-ins/common/tile.c:411 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
-#, fuzzy
 msgid "_Height:"
-msgstr "Yükseklik:"
+msgstr "_Yükseklik:"
 
 #: plug-ins/common/exchange.c:138
 msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
@@ -3507,9 +3436,8 @@ msgid "On Film:"
 msgstr ""
 
 #: plug-ins/common/film.c:1193
-#, fuzzy
 msgid "_Selection"
-msgstr "Seç"
+msgstr "_Seçim"
 
 #. Film height/colour
 #: plug-ins/common/film.c:1201 plug-ins/common/film.c:1485
@@ -3528,9 +3456,8 @@ msgstr ""
 
 #: plug-ins/common/film.c:1250 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:336
-#, fuzzy
 msgid "Co_lor:"
-msgstr "Renk"
+msgstr "_Renk:"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1258
@@ -3542,9 +3469,8 @@ msgid "Start _Index:"
 msgstr ""
 
 #: plug-ins/common/film.c:1290
-#, fuzzy
 msgid "_Font:"
-msgstr "Yazar:"
+msgstr "Yazıtipi:"
 
 #. Numbering color
 #: plug-ins/common/film.c:1294
@@ -3571,24 +3497,20 @@ msgid "All Values are Fractions of the Film Heigh"
 msgstr ""
 
 #: plug-ins/common/film.c:1355
-#, fuzzy
 msgid "Ad_vanced"
-msgstr "Uzman"
+msgstr "_Gelişmiş"
 
 #: plug-ins/common/film.c:1373
-#, fuzzy
 msgid "Image _Height:"
-msgstr "Yükseklik:"
+msgstr "Resim _Yüksekliği:"
 
 #: plug-ins/common/film.c:1384
-#, fuzzy
 msgid "Image Spac_ing:"
-msgstr "Boşluk:"
+msgstr "Resim _Boşluğu:"
 
 #: plug-ins/common/film.c:1402
-#, fuzzy
 msgid "_Hole Offset:"
-msgstr "Açı:"
+msgstr ""
 
 #: plug-ins/common/film.c:1413
 #, fuzzy
@@ -3596,9 +3518,8 @@ msgid "Ho_le Width:"
 msgstr "Yeni Genişlik:"
 
 #: plug-ins/common/film.c:1424
-#, fuzzy
 msgid "Hol_e Height:"
-msgstr "Yükseklik:"
+msgstr "Delik _Yüksekliği:"
 
 #: plug-ins/common/film.c:1435
 #, fuzzy
@@ -3658,23 +3579,23 @@ msgstr "Beyaz"
 
 #: plug-ins/common/fractaltrace.c:796
 msgid "Mandelbrot Parameters"
-msgstr ""
+msgstr "Mandelbrot Parametreleri"
 
 #: plug-ins/common/fractaltrace.c:808
 msgid "X_1:"
-msgstr ""
+msgstr "X_1:"
 
 #: plug-ins/common/fractaltrace.c:817
 msgid "X_2:"
-msgstr ""
+msgstr "X_2:"
 
 #: plug-ins/common/fractaltrace.c:826
 msgid "Y_1:"
-msgstr ""
+msgstr "Y_1:"
 
 #: plug-ins/common/fractaltrace.c:835
 msgid "Y_2:"
-msgstr ""
+msgstr "Y_2:"
 
 #: plug-ins/common/gauss_iir.c:164
 msgid "<Image>/Filters/Blur/Gaussian Blur (_IIR)..."
@@ -3833,7 +3754,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1198
 msgid "GIF Warning"
-msgstr ""
+msgstr "GIF Uyarısı"
 
 #: plug-ins/common/gif.c:1217
 msgid ""
@@ -3853,7 +3774,7 @@ msgstr ""
 #. regular gif parameter settings
 #: plug-ins/common/gif.c:1279
 msgid "GIF Options"
-msgstr ""
+msgstr "GIF Seçenekleri"
 
 #: plug-ins/common/gif.c:1287 plug-ins/common/mng.c:1209
 msgid "Interlace"
@@ -3861,12 +3782,12 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1303
 msgid "GIF Comment:"
-msgstr ""
+msgstr "GIF Açıklaması:"
 
 #. additional animated gif parameter settings
 #: plug-ins/common/gif.c:1364
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "Canlandırmalı GIF Seçenekleri"
 
 #: plug-ins/common/gif.c:1372
 msgid "Loop forever"
@@ -3878,7 +3799,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1398
 msgid "Milliseconds"
-msgstr ""
+msgstr "Milisaniye"
 
 #: plug-ins/common/gif.c:1408
 msgid "Frame Disposal where Unspecified: "
@@ -3914,7 +3835,7 @@ msgstr ""
 #: plug-ins/common/iwarp.c:811
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "Çerçeve %d"
 
 #: plug-ins/common/gifload.c:909
 #, c-format
@@ -3952,11 +3873,11 @@ msgstr "Piksel"
 
 #: plug-ins/common/gih.c:928
 msgid "Cell Size:"
-msgstr ""
+msgstr "Hücre Boyu:"
 
 #: plug-ins/common/gih.c:940
 msgid "Number of Cells:"
-msgstr ""
+msgstr "Hücre Sayısı:"
 
 #: plug-ins/common/gih.c:965
 msgid " Rows of "
@@ -3980,7 +3901,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:999
 msgid "Dimension:"
-msgstr ""
+msgstr "Boyut:"
 
 #: plug-ins/common/gih.c:1037
 msgid "Ranks:"
@@ -3988,7 +3909,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:1074
 msgid "Selection:"
-msgstr ""
+msgstr "Seçim:"
 
 #: plug-ins/common/glasstile.c:113
 msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
@@ -4052,7 +3973,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:164
 msgid "Grid"
-msgstr ""
+msgstr "Kılavuz"
 
 #. attach labels
 #: plug-ins/common/grid.c:723 plug-ins/pagecurl/pagecurl.c:574
@@ -4065,7 +3986,7 @@ msgstr "Dikey"
 
 #: plug-ins/common/grid.c:727
 msgid "Intersection"
-msgstr ""
+msgstr "Kesişim"
 
 #. Width and Height
 #: plug-ins/common/grid.c:729 plug-ins/common/svg.c:696
@@ -4076,15 +3997,15 @@ msgstr "Genişlik:"
 
 #: plug-ins/common/grid.c:892
 msgid "Horizontal Color"
-msgstr ""
+msgstr "Yatay Renk"
 
 #: plug-ins/common/grid.c:911
 msgid "Vertical Color"
-msgstr ""
+msgstr "Dikey Renk"
 
 #: plug-ins/common/grid.c:930
 msgid "Intersection Color"
-msgstr ""
+msgstr "Kesişim Rengi"
 
 #: plug-ins/common/gtm.c:399
 msgid "GIMP Table Magic"
@@ -4104,11 +4025,11 @@ msgstr ""
 #. HTML Page Options
 #: plug-ins/common/gtm.c:440
 msgid "HTML Page Options"
-msgstr ""
+msgstr "HTML Sayfa Seçenekleri"
 
 #: plug-ins/common/gtm.c:449
 msgid "_Generate Full HTML Document"
-msgstr ""
+msgstr "_Tam HTML Belgesi Oluştur"
 
 #: plug-ins/common/gtm.c:455
 msgid ""
@@ -4119,7 +4040,7 @@ msgstr ""
 #. HTML Table Creation Options
 #: plug-ins/common/gtm.c:468
 msgid "Table Creation Options"
-msgstr ""
+msgstr "Tablo Oluşturma Seçenekleri"
 
 #: plug-ins/common/gtm.c:478
 msgid "_Use Cellspan"
@@ -4167,11 +4088,11 @@ msgstr ""
 #. HTML Table Options
 #: plug-ins/common/gtm.c:557
 msgid "Table Options"
-msgstr ""
+msgstr "Tablo Seçenekleri"
 
 #: plug-ins/common/gtm.c:570
 msgid "_Border:"
-msgstr ""
+msgstr "_Kenarlık:"
 
 #: plug-ins/common/gtm.c:574
 msgid "The number of pixels in the table border."
@@ -4221,15 +4142,15 @@ msgstr "Hakkında..."
 
 #: plug-ins/common/hot.c:568
 msgid "Hot"
-msgstr ""
+msgstr "Sıcak"
 
 #: plug-ins/common/hot.c:586
 msgid "Create _New Layer"
-msgstr ""
+msgstr "Yeni _Katman Oluştur"
 
 #: plug-ins/common/hot.c:607
 msgid "Action"
-msgstr ""
+msgstr "Eylem"
 
 #: plug-ins/common/hot.c:611
 msgid "Reduce _Luminance"
@@ -4303,11 +4224,11 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:980
 msgid "A_nimate"
-msgstr ""
+msgstr "_Canlandır"
 
 #: plug-ins/common/iwarp.c:1000
 msgid "Number of _Frames:"
-msgstr ""
+msgstr "_Çerçeve Sayısı:"
 
 #: plug-ins/common/iwarp.c:1009
 #, fuzzy
@@ -4316,11 +4237,11 @@ msgstr "Yeniden boyutlandır"
 
 #: plug-ins/common/iwarp.c:1018
 msgid "_Ping Pong"
-msgstr ""
+msgstr "_Ping Pong"
 
 #: plug-ins/common/iwarp.c:1031
 msgid "_Animate"
-msgstr ""
+msgstr "_Canlandır"
 
 #: plug-ins/common/iwarp.c:1059
 msgid "_Deform Radius:"
@@ -4341,7 +4262,7 @@ msgstr "Taşı"
 
 #: plug-ins/common/iwarp.c:1093
 msgid "_Grow"
-msgstr ""
+msgstr "_Genişle"
 
 #: plug-ins/common/iwarp.c:1094
 msgid "S_wirl CCW"
@@ -4354,7 +4275,7 @@ msgstr "Sil"
 
 #: plug-ins/common/iwarp.c:1096
 msgid "S_hrink"
-msgstr ""
+msgstr "_Daralt"
 
 #: plug-ins/common/iwarp.c:1097
 msgid "Sw_irl CW"
@@ -4380,7 +4301,7 @@ msgstr ""
 #: plug-ins/common/iwarp.c:1177 plug-ins/common/sinus.c:765
 #: plug-ins/gflare/gflare.c:2770
 msgid "_Settings"
-msgstr ""
+msgstr "_Ayarlar"
 
 #: plug-ins/common/iwarp.c:1194
 msgid "IWarp"

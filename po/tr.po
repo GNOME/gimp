@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD.tr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-12-28 21:39+0000\n"
-"PO-Revision-Date: 2003-12-31 08:35+0000\n"
+"PO-Revision-Date: 2003-12-31 16:56+0000\n"
 "Last-Translator: Görkem Çetin <gorkem@kde.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,11 +25,10 @@ msgid ""
 msgstr ""
 
 #: app/app_procs.c:266
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' failed: %s"
 msgstr ""
-"Açma başarısız oldu.\n"
-"%s"
+"%s dosyasını açma başarısız oldu: %s"
 
 #: app/main.c:217
 msgid ""
@@ -1615,18 +1614,18 @@ msgid "Select by Color"
 msgstr "Renk ile Seç"
 
 #: app/core/gimpdata.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "Could not delete '%s': %s"
-msgstr "'%s' dosyası açılamadı"
+msgstr "'%s' dosyası açılamadı: %s"
 
 #: app/core/gimpdatafactory.c:267 app/widgets/gimpdataeditor.c:412
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Warning: Failed to save data:\n"
 "%s"
 msgstr ""
-"Uyarı: veri okunması başarısız\n"
-"'%s'"
+"Uyarı: veri kaydı başarısız:\n"
+"%s"
 
 #: app/core/gimpdatafactory.c:382 app/core/gimpdatafactory.c:385
 #: app/core/gimpitem.c:296 app/core/gimpitem.c:299
@@ -1991,15 +1990,15 @@ msgstr "Önizleme yok"
 
 #: app/core/gimpimagefile.c:466
 msgid "Loading preview ..."
-msgstr ""
+msgstr "Önizleme yükleniyor..."
 
 #: app/core/gimpimagefile.c:470
 msgid "Preview is out of date"
-msgstr ""
+msgstr "Önizlemenin tarihi geçmiş"
 
 #: app/core/gimpimagefile.c:474
 msgid "Cannot create preview"
-msgstr "Önizleme oluşturulamadı"
+msgstr "Önizleme oluşturulamıyor"
 
 #: app/core/gimpimagefile.c:481 app/gui/info-window.c:505
 #, c-format
@@ -2408,11 +2407,10 @@ msgid "Close %s?"
 msgstr "%s Kapatılsın mı?"
 
 #: app/display/gimpdisplayshell.c:1743
-#, fuzzy, c-format
+#, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr ""
-"%s dosyasına değişiklikler yapılmıştır.\n"
-"Buna rağmen kapatılsın mı?"
+"%s dosyasında değişiklikler yapılmıştır. Pencere kapatılsın mı?"
 
 #: app/display/gimpdisplayshell-dnd.c:78
 msgid "Drop New Layer"
@@ -3015,9 +3013,8 @@ msgid "/Preview Size/_Enormous"
 msgstr "Önizleme Boyutu:"
 
 #: app/gui/dialogs-menu.c:150
-#, fuzzy
 msgid "/Preview Size/_Gigantic"
-msgstr "Önizleme Boyutu:"
+msgstr "/Önizleme Boyutu/_Dev"
 
 #: app/gui/dialogs-menu.c:152
 msgid "/_Tab Style"
@@ -3061,7 +3058,7 @@ msgstr ""
 
 #: app/gui/dialogs-menu.c:184
 msgid "/Move to Screen..."
-msgstr ""
+msgstr "/Ekrana Taşı..."
 
 #: app/gui/documents-menu.c:43
 msgid "/_Open Image"
@@ -5271,9 +5268,8 @@ msgstr "Resim"
 
 #. The "Import" frame
 #: app/gui/palette-import-dialog.c:285
-#, fuzzy
 msgid "Import Options"
-msgstr "Alet Seçenekleri"
+msgstr "Alma Seçenekleri"
 
 #: app/gui/palette-import-dialog.c:299
 #, fuzzy
@@ -5470,19 +5466,16 @@ msgid "Maximum New Image Size:"
 msgstr "Azami Resim Boyutu:"
 
 #: app/gui/preferences-dialog.c:1133
-#, fuzzy
 msgid "Default Image Grid"
-msgstr "Öntanımlı Resim _Türü:"
+msgstr "Öntanımlı Resim Kılavuzu"
 
 #: app/gui/preferences-dialog.c:1136
-#, fuzzy
 msgid "Default Grid"
-msgstr "Öntanımlı"
+msgstr "Öntanımlı Kılavuz"
 
 #: app/gui/preferences-dialog.c:1156
-#, fuzzy
 msgid "User Interface"
-msgstr "Arayüz"
+msgstr "Kullanıcı Arayüzü"
 
 #: app/gui/preferences-dialog.c:1159
 msgid "Interface"
@@ -5533,15 +5526,13 @@ msgid "Keyboard Shortcuts"
 msgstr "Klavye Kısayolları"
 
 #: app/gui/preferences-dialog.c:1205
-#, fuzzy
 msgid "Use Dynamic _Keyboard Shortcuts"
-msgstr "Dinamik _Klavye Kısayolları"
+msgstr "Dinamik _Klavye Kısayollarını Kullan"
 
 #. Themes
 #: app/gui/preferences-dialog.c:1209
-#, fuzzy
 msgid "Select Theme"
-msgstr "Tema Dizinlerini Seç"
+msgstr "Tema Seç"
 
 #: app/gui/preferences-dialog.c:1239
 msgid "Theme"
@@ -5644,9 +5635,8 @@ msgid "Zoom & Resize Behavior"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1436
-#, fuzzy
 msgid "Resize Window on _Zoom"
-msgstr "Odaklamada Pencereyi Boyutlandır"
+msgstr "_Odaklamada Pencereyi Boyutlandır"
 
 #: app/gui/preferences-dialog.c:1439
 #, fuzzy
@@ -5658,9 +5648,8 @@ msgid "Fit to Window"
 msgstr "Pencereye Uydur"
 
 #: app/gui/preferences-dialog.c:1447
-#, fuzzy
 msgid "Inital Zoom Ratio:"
-msgstr "Ölçek Oranı:"
+msgstr "İlk Ölçek Oranı:"
 
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1451
@@ -5672,19 +5661,16 @@ msgid "Show _Brush Outline"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1458
-#, fuzzy
 msgid "Perfect-but-Slow _Pointer Tracking"
-msgstr "Mükemmel-ama-Yavaş Fare İzleme"
+msgstr "Mükemmel / Yavaş Fare İzleme"
 
 #: app/gui/preferences-dialog.c:1461
-#, fuzzy
 msgid "Enable Cursor _Updating"
-msgstr "İmleç Güncellemesini Kullanma"
+msgstr "İmleç _Güncellemesini Etkinleştir"
 
 #: app/gui/preferences-dialog.c:1467
-#, fuzzy
 msgid "Cursor M_ode:"
-msgstr "İmleç Kipi:"
+msgstr "İ_mleç Kipi:"
 
 #: app/gui/preferences-dialog.c:1476
 msgid "Image Window Appearance"
@@ -5799,12 +5785,11 @@ msgstr "_Elle"
 
 #: app/gui/preferences-dialog.c:1786 app/gui/preferences-dialog.c:1789
 msgid "Window Management"
-msgstr ""
+msgstr "Pencere Yönetimi"
 
 #: app/gui/preferences-dialog.c:1795
-#, fuzzy
 msgid "Window Type Hints"
-msgstr "Pencere Boyutları"
+msgstr "Pencere İpuçları"
 
 #: app/gui/preferences-dialog.c:1801
 msgid "Window Type Hint for the _Toolbox:"
@@ -5815,9 +5800,8 @@ msgid "Window Type Hint for the _Docks:"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1808
-#, fuzzy
 msgid "Focus"
-msgstr "punto"
+msgstr "Odaklama"
 
 #: app/gui/preferences-dialog.c:1812
 msgid "Activate the _Focused Image"
@@ -5882,9 +5866,8 @@ msgid "Session Management"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1887
-#, fuzzy
 msgid "Session"
-msgstr "Sürüm:"
+msgstr "Oturum"
 
 #. Window Positions
 #: app/gui/preferences-dialog.c:1894
@@ -5989,14 +5972,12 @@ msgid "Select Gradient Folders"
 msgstr "Gradyan Dizinini Seç"
 
 #: app/gui/preferences-dialog.c:2063
-#, fuzzy
 msgid "Font Folders"
-msgstr "Dizinler"
+msgstr "Yazıtipi Dizinleri"
 
 #: app/gui/preferences-dialog.c:2065
-#, fuzzy
 msgid "Select Font Folders"
-msgstr "Gradyan Dizinini Seç"
+msgstr "Yazıtipi Dizinlerini Seç"
 
 #: app/gui/preferences-dialog.c:2067
 msgid "Plug-Ins"
@@ -6071,23 +6052,20 @@ msgid "/_QMask Active"
 msgstr ""
 
 #: app/gui/qmask-menu.c:51
-#, fuzzy
 msgid "/Mask _Selected Areas"
-msgstr "/Maskeden Seçime"
+msgstr "/Seçilen Bölgeleri Maskele"
 
 #: app/gui/qmask-menu.c:55
-#, fuzzy
 msgid "/Mask _Unselected Areas"
-msgstr "/Maskeden Seçime"
+msgstr "/Seçi_lmeyen Bölgeleri Maskele"
 
 #: app/gui/qmask-menu.c:62
 msgid "/_Configure Color and Opacity..."
 msgstr ""
 
 #: app/gui/resize-dialog.c:205
-#, fuzzy
 msgid "Scale Layer Options"
-msgstr "Yeni Katman Seçenekleri"
+msgstr "Katman Ölçeklendirme Seçenekleri"
 
 #: app/gui/resize-dialog.c:207 app/gui/resize-dialog.c:239
 #: app/tools/gimppaintoptions-gui.c:345
@@ -6180,9 +6158,8 @@ msgid "_Vertical:"
 msgstr "_Dikey:"
 
 #: app/gui/select-commands.c:155
-#, fuzzy
 msgid "Feather selection by"
-msgstr "Seçimi Yumuşatma miktarı:"
+msgstr ""
 
 #: app/gui/select-commands.c:191
 #, fuzzy
@@ -6208,27 +6185,24 @@ msgid "GIMP Startup"
 msgstr "GIMP Başlangıcı"
 
 #: app/gui/stroke-dialog.c:106
-#, fuzzy
 msgid "Stroke Options"
-msgstr "Kaydetme seçenekleri"
+msgstr "Darbeleme Seçenekleri"
 
 #: app/gui/stroke-dialog.c:108
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "Darbeleme Yöntemini Seç"
 
 #: app/gui/stroke-dialog.c:139
-#, fuzzy
 msgid "Stroke"
-msgstr "Yolu Darbele"
+msgstr "Darbele"
 
 #: app/gui/stroke-dialog.c:169
 msgid "Stroke Using a Paint Tool"
 msgstr ""
 
 #: app/gui/stroke-dialog.c:195
-#, fuzzy
 msgid "Paint Tool:"
-msgstr "Metin Aleti"
+msgstr "Boyama Aleti:"
 
 #: app/gui/templates-commands.c:127
 msgid "New Template"
@@ -6259,14 +6233,13 @@ msgid "/_Edit Template..."
 msgstr "/Şab_lonu Düzenle..."
 
 #: app/gui/templates-menu.c:66
-#, fuzzy
 msgid "/_Delete Template"
-msgstr "/Katmanı Sil"
+msgstr "/Ş_ablonu Sil"
 
 #: app/gui/themes.c:231 app/plug-in/plug-ins.c:218
-#, fuzzy, c-format
+#, c-format
 msgid "Writing '%s'\n"
-msgstr "\"%s\" ayrıştırılıyor\n"
+msgstr "\"%s\" yazılıyor\n"
 
 #: app/gui/themes.c:283
 #, c-format
@@ -6285,7 +6258,6 @@ msgstr ""
 "bulunması gerekiyor. Lütfen kurulumu yeniden gözden geçirin."
 
 #: app/gui/tips-dialog.c:102
-#, fuzzy
 msgid "<b>The GIMP tips file could not be parsed!</b>"
 msgstr "<b>GIMP ipuçları dosyası okunamadı!</b>"
 
@@ -6319,20 +6291,17 @@ msgid "Save Tool Options"
 msgstr "Kaydetme Aracı Seçenekleri"
 
 #: app/gui/tool-options-commands.c:95
-#, fuzzy
 msgid "Enter a name for the saved options"
-msgstr "Yol için yeni bir isim belirle"
+msgstr "Kaydedilen seçenekler için bir yol adı girin"
 
 #: app/gui/tool-options-commands.c:96 app/gui/tool-options-commands.c:178
 #: app/gui/tool-options-commands.c:198
-#, fuzzy
 msgid "Saved Options"
-msgstr "Kaydetme seçenekleri"
+msgstr "Kayıtlı Seçenekler"
 
 #: app/gui/tool-options-commands.c:121
-#, fuzzy
 msgid "Rename Saved Tool Options"
-msgstr "Kaydetme seçenekleri"
+msgstr ""
 
 #: app/gui/tool-options-commands.c:125
 #, fuzzy
@@ -6782,7 +6751,7 @@ msgid ""
 "Click \"Continue\" to proceed."
 msgstr ""
 "Kurulum başarıyla tamamlandı.\n"
-"Devam etmek için \"Devam et\" düğmesine tıklayın."
+"Devam etmek için \"Devam\" düğmesine tıklayın."
 
 #: app/gui/user-install-dialog.c:403
 msgid ""
@@ -6864,24 +6833,24 @@ msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Kişisel GIMP dizininizin oluşturulması için \"Devam\"a basın."
 
 #: app/gui/user-install-dialog.c:849
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
 "'<b>%s</b>' needs to be created."
 msgstr ""
-"GIMP kurulumu için %s isimli bir alt dizininin\n"
-"oluşturulması gerek."
+"GIMP kurulumu için <b>%s</b> isimli bir alt dizininin\n"
+"oluşturulması gereklidir."
 
 #: app/gui/user-install-dialog.c:856
-#, fuzzy
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
 "to get more information about the selected item."
 msgstr ""
-"Bu alt dizin birçok önemli dosyayı barındıracak.\n"
+"Bu alt dizin bir çok önemli dosyayı barındıracaktır.\n"
 "Herhangi bir alt dizin veya dosya hakkında daha\n"
-"fazla bilgi almak için ağaçta üzerlerine tıklayın."
+"fazla bilgi almak için yandaki ağaçta üzerine tıklamak\n"
+"yeterlidir."
 
 #: app/gui/user-install-dialog.c:942
 msgid "User Installation Log"
@@ -6905,24 +6874,22 @@ msgid "Click \"Continue\" to accept the settings above."
 msgstr "Yukarıdaki seçenekleri kabul etmek için \"Devam\"a basın."
 
 #: app/gui/user-install-dialog.c:955
-#, fuzzy
 msgid ""
 "<b>For optimal GIMP performance, some settings may have to be adjusted.</b>"
 msgstr ""
-"Optimum GIMP perfomansı için bazı ayarların değiştirilmesi gerekebilir."
+"<b>Optimum GIMP perfomansı için bazı ayarların değiştirilmesi gerekebilir.</b>"
 
 #: app/gui/user-install-dialog.c:961
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "GIMP'i başlatmak içim \"Devam\"a basın."
 
 #: app/gui/user-install-dialog.c:965
-#, fuzzy
 msgid ""
 "<b>To display images in their natural size, GIMP needs to know your monitor "
 "resolution.</b>"
 msgstr ""
-"Resimleri doğal boyutlarında gösterebilmek için, GIMP'in ekran "
-"çözünürlüğünüzü bilmesi gerekir."
+"<b>Resimleri doğal boyutlarında gösterebilmek için, GIMP'in ekran "
+"çözünürlüğünüzü bilmesi gerekir.</b>"
 
 #: app/gui/user-install-dialog.c:970
 msgid "Aborting Installation..."
@@ -6966,13 +6933,12 @@ msgid ""
 "with enough free space (several hundred MB). On a UNIX system, you\n"
 "may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
 msgstr ""
-"Döşeme Önbelleğine sığmayan tüm resim ve geri alma verileri bir takas\n"
+"Döşeme önbelleğine sığmayan tüm resim ve geri alma verileri bir takas\n"
 "dosyasında saklanır. Bu dosya yeterince boş yeri (birkaç yüz MB) olan\n"
 "yerel bir dosyalama sisteminde olmalıdır. UNIX sisteminde, sistemin\n"
 "geçici dizinini kullanabilirsiniz (\"/tmp\" veya \"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1196
-#, fuzzy
 msgid "Swap Folder:"
 msgstr "Takas Dizini:"
 
@@ -6990,11 +6956,12 @@ msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Çözünürlüğü pencereleme sisteminden al (Şu anda %d x %d dpi)"
 
 #: app/gui/user-install-dialog.c:1275
-#, fuzzy
 msgid ""
 "Alternatively, you can set\n"
 "the monitor resolution manually."
-msgstr "Alternatif olarak, ekran çözünürlüğünü kendiniz ayarlayabilirsiniz."
+msgstr "Alternatif olarak, ekran \n"
+"çözünürlüğünü kendiniz de\n"
+"ayarlayabilirsiniz."
 
 #: app/gui/user-install-dialog.c:1320
 msgid ""
@@ -7024,9 +6991,8 @@ msgid "New Path"
 msgstr "Yeni Yol"
 
 #: app/gui/vectors-commands.c:457
-#, fuzzy
 msgid "New Path Options"
-msgstr "Yeni Katman Seçenekleri"
+msgstr "Yeni Yol Seçenekleri"
 
 #. The name entry hbox, label and entry
 #: app/gui/vectors-commands.c:492 app/gui/vectors-commands.c:610
@@ -7997,9 +7963,8 @@ msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Dizinli çizilebilirlerin eğrileri ayarlanamaz."
 
 #: app/tools/gimpcurvestool.c:507 app/tools/gimplevelstool.c:430
-#, fuzzy
 msgid "R_eset Channel"
-msgstr "Kanalı Yükselt"
+msgstr "Kanalı _Sıfırla"
 
 #: app/tools/gimpcurvestool.c:516
 msgid "Modify Curves for Channel:"
@@ -8007,9 +7972,8 @@ msgstr "Eğrisi Değiştirilecek Kanal:"
 
 #. Horizontal button box for load / save
 #: app/tools/gimpcurvestool.c:593 app/tools/gimplevelstool.c:653
-#, fuzzy
 msgid "All Channels"
-msgstr "Kanal"
+msgstr "Tüm Kanallar"
 
 #: app/tools/gimpcurvestool.c:607
 #, fuzzy
@@ -8317,9 +8281,8 @@ msgstr "Kanalın Seviyelerini Ayarla:"
 
 #. Input levels frame
 #: app/tools/gimplevelstool.c:440
-#, fuzzy
 msgid "Input Levels"
-msgstr "Giriş Seviyeleri:"
+msgstr "Giriş Seviyeleri"
 
 #: app/tools/gimplevelstool.c:545
 msgid "Gamma"
@@ -8327,23 +8290,20 @@ msgstr ""
 
 #. Output levels frame
 #: app/tools/gimplevelstool.c:575
-#, fuzzy
 msgid "Output Levels"
-msgstr "Çıkış Seviyeleri:"
+msgstr "Çıkış Seviyeleri"
 
 #: app/tools/gimplevelstool.c:671
 msgid "Read levels settings from file"
 msgstr ""
 
 #: app/tools/gimplevelstool.c:681
-#, fuzzy
 msgid "Save levels settings to file"
-msgstr "Çıkarken Aygıt Durumlarını Kaydet"
+msgstr "Seviye ayarlarını dosyaya kaydet"
 
 #: app/tools/gimplevelstool.c:693
-#, fuzzy
 msgid "_Auto"
-msgstr "Otomatik"
+msgstr "_Otomatik"
 
 #: app/tools/gimplevelstool.c:695
 msgid "Adjust levels automatically"
@@ -8370,18 +8330,16 @@ msgid "Zoom in & out"
 msgstr "Yakınlaşma & Uzaklaşma"
 
 #: app/tools/gimpmagnifytool.c:98
-#, fuzzy
 msgid "/Tools/M_agnify"
-msgstr "Büyüteç"
+msgstr ""
 
 #: app/tools/gimpmeasureoptions.c:171
 msgid "Use Info Window"
 msgstr "Bilgi Penceresini Kullan"
 
 #: app/tools/gimpmeasuretool.c:113
-#, fuzzy
 msgid "Measure"
-msgstr "Ölçüm Aleti"
+msgstr "Ölçüm"
 
 #: app/tools/gimpmeasuretool.c:114
 #, fuzzy
@@ -9097,7 +9055,7 @@ msgstr "Görüntü Oranı:"
 
 #: app/widgets/gimpbrushfactoryview.c:115
 msgid "Spacing:"
-msgstr "Boşuk:"
+msgstr "Boşluk:"
 
 #: app/widgets/gimpbrushfactoryview.c:118
 msgid "Percentage of width of brush"
@@ -9319,14 +9277,12 @@ msgid "(None)"
 msgstr "Yok"
 
 #: app/widgets/gimpcontainerpopup.c:505
-#, fuzzy
 msgid "Smaller Previews"
-msgstr "Önizleme"
+msgstr "Daha Küçük Önizlemeler"
 
 #: app/widgets/gimpcontainerpopup.c:510
-#, fuzzy
 msgid "Larger Previews"
-msgstr "Önizleme"
+msgstr "Daha Büyük Önizlemeler"
 
 #: app/widgets/gimpdataeditor.c:154
 msgid "Save"
@@ -9948,9 +9904,9 @@ msgid ""
 msgstr ""
 
 #: app/widgets/gimptooloptionseditor.c:268
-#, fuzzy, c-format
+#, c-format
 msgid "%s Options"
-msgstr "Seçenekler:\n"
+msgstr "%s Seçenekleri"
 
 #: app/widgets/gimptooloptionseditor.c:411
 #, fuzzy
