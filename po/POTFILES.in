@@ -108,6 +108,7 @@ app/gui/gradient-editor-menu.c
 app/gui/gradient-select.c
 app/gui/gradients-commands.c
 app/gui/gradients-menu.c
+app/gui/grid-dialog.c
 app/gui/gui.c
 app/gui/image-commands.c
 app/gui/image-menu.c
