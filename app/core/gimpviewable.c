@@ -37,6 +37,8 @@
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
 
+#include "themes/Default/images/gimp-core-pixbufs.h"
+
 
 enum
 {
@@ -200,9 +202,7 @@ gimp_viewable_config_iface_init (GimpConfigInterface *config_iface)
 static void
 gimp_viewable_finalize (GObject *object)
 {
-  GimpViewable *viewable;
-
-  viewable = GIMP_VIEWABLE (object);
+  GimpViewable *viewable = GIMP_VIEWABLE (object);
 
   if (viewable->stock_id)
     {
@@ -561,14 +561,59 @@ gimp_viewable_get_dummy_preview (GimpViewable  *viewable,
                                  gint           height,
                                  gint           bpp)
 {
-  guchar col[MAX_CHANNELS] = { 255, 255, 255, 255 };
+  GdkPixbuf *icon;
+  GdkPixbuf *pixbuf;
+  TempBuf   *buf;
+  guchar    *src;
+  guchar    *dest;
+  gdouble    ratio;
+  gint       w, h;
 
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
-  g_return_val_if_fail (bpp > 0, NULL);
+  g_return_val_if_fail (bpp == 3 || bpp == 4, NULL);
 
-  return temp_buf_new (width, height, bpp, 0, 0, col);
+  icon = gdk_pixbuf_new_from_inline (-1, stock_question_64, FALSE, NULL);
+
+  g_return_val_if_fail (icon != NULL, NULL);
+
+  w = gdk_pixbuf_get_width (icon);
+  h = gdk_pixbuf_get_height (icon);
+
+  ratio = (gdouble) MIN (width, height) / (gdouble) MAX (w, h);
+  ratio = MIN (ratio, 1.0);
+
+  w = RINT (ratio * (gdouble) w);
+  h = RINT (ratio * (gdouble) h);
+
+  pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, (bpp == 4), 8, width, height);
+  gdk_pixbuf_fill (pixbuf, 0xffffffff);
+
+  if (w && h)
+    gdk_pixbuf_composite (icon, pixbuf,
+                          (width - w) / 2, (height - h) / 2, w, h,
+                          (width - w) / 2, (height - h) / 2, ratio, ratio,
+                          GDK_INTERP_BILINEAR, 0xFF);
+
+  g_object_unref (icon);
+
+  buf = temp_buf_new (width, height, bpp, 0, 0, NULL);
+
+  src  = gdk_pixbuf_get_pixels (pixbuf);
+  dest = temp_buf_data (buf);
+
+  while (height--)
+    {
+      memcpy (dest, src, width * bpp);
+
+      src  += gdk_pixbuf_get_rowstride (pixbuf);
+      dest += width * bpp;
+    }
+
+  g_object_unref (pixbuf);
+
+  return buf;
 }
 
 GdkPixbuf *

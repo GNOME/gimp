@@ -8,10 +8,10 @@ themedatadir = $(gimpdatadir)/themes/Default/images
 ## A warning Wilber that is used from the core
 
 CORE_IMAGES = \
-	stock-warning-64.png
+	stock-question-64.png
 
 CORE_VARIABLES = \
-	stock_warning_64 $(srcdir)/stock-warning-64.png
+	stock_question_64 $(srcdir)/stock-question-64.png
 
 
 ## Wilber icons for the window managaer, compiled in

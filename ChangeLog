@@ -1,5 +1,13 @@
 2004-02-10  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am (CORE_IMAGES): use the
+	question stock icon instead of the warning one.
+
+	* app/core/gimpviewable.c (gimp_viewable_get_dummy_preview):
+	return a question icon as dummy preview.
+
+2004-02-10  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/Makefile.am: added a rule to create a
 	header containing a warning pixbuf that we can use from the core.
 
