@@ -1,3 +1,11 @@
+Thu Jan 20 23:28:35 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	Added new plug-ins from Martin Weber <martweb@gmx.net>:
+	* plug-ins/common/kaleidoscope.c: New file.
+	* plug-ins/gimp_ace: New directory.
+	* plug-ins/common/Makefile.am:  Updated.
+	* configure.in: Updated.
+
 Thu Jan 20 18:07:21 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/channel.c
