@@ -1,3 +1,12 @@
+Fri Jul  9 18:39:03 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/clone.c
+	* app/dodgeburn.c
+	* app/pencil.c
+	* app/smudge.c: applied a patch from Olof S Kylander
+	<olof@frozenriver.com> that enables pressure sensitivity for all
+	the tools that were missing it
+
 Fri Jul  9 16:47:04 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpmatrix.[ch]: added a few functions to test for

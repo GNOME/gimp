@@ -459,6 +459,7 @@ clone_motion (PaintCore    *paint_core,
   int has_alpha = -1;
   PixelRegion srcPR, destPR;
   GPatternP pattern;
+  gint opacity;
 
   pr      = NULL;
   pattern = NULL;
@@ -587,8 +588,16 @@ clone_motion (PaintCore    *paint_core,
 	}
     }
 
+  /*Make the clone tool pressure sencitive */
+
+  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
+  if (opacity > 255)
+    opacity = 255;    
+
+
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
+  paint_core_paste_canvas (paint_core, drawable, opacity,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
 			   SOFT, CONSTANT);

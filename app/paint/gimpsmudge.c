@@ -314,7 +314,9 @@ smudge_motion (PaintCore    *paint_core,
 	area->x, area->y, area->width, area->height, FALSE);
 
   brush_opacity = gimp_context_get_opacity (NULL);
-  pressure = (smudge_options->pressure)/100.0;
+
+  /* Enable pressure sensitive pressure */
+  pressure = ((smudge_options->pressure)/100.0 * (paint_core->curpressure)/0.5);
  
   /* The tempPR will be the built up buffer (for smudge) */ 
   tempPR.bytes = accumPR.bytes;

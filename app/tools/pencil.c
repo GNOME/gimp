@@ -107,6 +107,7 @@ pencil_motion (PaintCore    *paint_core,
   GImage *gimage;
   TempBuf * area;
   unsigned char col[MAX_CHANNELS];
+  gint opacity;
 
   if (! (gimage = drawable_gimage (drawable)))
     return;
@@ -124,8 +125,16 @@ pencil_motion (PaintCore    *paint_core,
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
 
+  /*Make the opacity dependent on the current pressure 
+    This makes a more natural pencil since light pressure
+    on a graphite pen will give transparent line */
+
+  opacity = 255 * gimp_context_get_opacity (NULL) * (paint_core->curpressure / 0.5);
+  if (opacity > 255)
+    opacity = 255; 
+
   /*  paste the newly painted canvas to the gimage which is being worked on  */
-  paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
+  paint_core_paste_canvas (paint_core, drawable, opacity,
 			   (int) (gimp_context_get_opacity (NULL) * 255),
 			   gimp_context_get_paint_mode (NULL),
 			   HARD, CONSTANT);

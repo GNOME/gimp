@@ -372,7 +372,9 @@ dodgeburn_motion (PaintCore *paint_core,
   tempPR.data = temp_data;
 
   brush_opacity = gimp_context_get_opacity (NULL);
-  exposure = (dodgeburn_options->exposure)/100.0;
+
+  /* Enable pressure sensitive exposure */
+  exposure = ((dodgeburn_options->exposure)/100.0 * (paint_core->curpressure)/0.5);
 
   /*  DodgeBurn the region  */
   gimp_lut_process (dodgeburn_options->lut, &srcPR, &tempPR);
