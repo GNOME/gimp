@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimpimage.h"
+#include "gimpimage-undo-push.h"
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"

@@ -1764,7 +1764,6 @@ undo_pop_layer_mask_properties (GimpUndo            *undo,
                                 GimpUndoAccumulator *accum)
 {
   LayerMaskPropertyUndo *lmp_undo = undo->data;
-  GimpLayer             *layer    = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
   GimpLayerMask         *mask;
   gboolean               val;
   mask = lmp_undo->mask;
