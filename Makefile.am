@@ -6,7 +6,7 @@ gimptool_win32_program = gimptool-win32
 gimptool_win32_CFLAGS = @GLIB_CFLAGS@
 gimptool_win32_LDADD = @GLIB_LIBS@
 else
-gimptool_script = gimptool
+gimptool_script = gimptool-1.2
 user_install = user_install
 endif
 
@@ -33,7 +33,7 @@ bin_SCRIPTS = $(gimptool_script) @GIMPINSTALL@
 
 noinst_PROGRAMS = $(gimptool_win32_program)
 
-EXTRA_SCRIPTS = gimptool gimpinstall
+EXTRA_SCRIPTS = gimptool-1.2 gimpinstall-1.2
 
 EXTRA_PROGRAMS = gimptool-win32
 
@@ -223,15 +223,15 @@ gimpsysconf_DATA = \
 
 gimpdata_SCRIPTS = $(user_install)
 
-man_MANS = gimp.1 gimptool.1 gimp-remote.1 gimprc.5
+man_MANS = gimp-1.2.1 gimptool-1.2.1 gimp-remote-1.2.1 gimprc-1.2.5
 
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gimp.m4
 
 scriptdata =
 
-gimpinstall:
-	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
+gimpinstall-1.2:
+	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-1.2
 
 install-exec-hook:
 if OS_WIN32
@@ -239,14 +239,47 @@ if OS_WIN32
 else
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp-config \
-	&& $(LN_S) gimptool gimp-config
+	&& $(LN_S) gimptool-1.2 gimp-config
+if DEFAULT_BINARY
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimptool \
+	&& $(LN_S) gimptool-1.2 gimptool
 endif
+endif
+
+install-data-hook:
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+          n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo "cd $(DESTDIR)$(mandir)/man$$s"; \
+	  cd $(DESTDIR)$(mandir)/man$$s; \
+	  echo "rm -f $$f"; \
+	  rm -f $$f; \
+	  echo "ln -s $$i $$f"; \
+	  ln -s $$i $$f; \
+	done
 
 uninstall-local:
 if OS_WIN32
+	@echo " rm -f $(DESTDIR)$(bindir)/gimptool.exe"; \
 	rm -f $(DESTDIR)$(bindir)/gimptool.exe
 else
+	@echo " rm -f $(DESTDIR)$(bindir)/gimp-config"; \
 	rm -f $(DESTDIR)$(bindir)/gimp-config
+if DEFAULT_BINARY
+	@echo " rm -f $(DESTDIR)$(bindir)/gimptool"; \
+	rm -f $(DESTDIR)$(bindir)/gimptool
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+          n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo " rm -f $(DESTDIR)$(mandir)/man$$s/$$f"; \
+	  rm -f $(DESTDIR)$(mandir)/man$$s/$$f; \
+	done
+endif
 endif
 
 .PHONY: files populate checkin release

@@ -13,12 +13,12 @@ endif
 bin_PROGRAMS = $(GIMP_REMOTE)
 
 EXTRA_PROGRAMS = \
-	gimp-remote	\
+	gimp-remote-1.2	\
 	kernelgen
 
-gimp_remote_SOURCES = gimp-remote.c
+gimp_remote_1_2_SOURCES = gimp-remote.c
 
-gimp_remote_LDADD = \
+gimp_remote_1_2_LDADD = \
 	$(GTK_LIBS)	\
 	$(LIBXMU)
 
@@ -38,3 +38,13 @@ INCLUDES = \
 SUBDIRS = $(D_pdbgen) $(D_authorgen) #$(D_gcg)
 
 EXTRA_DIST = gimppath2svg.py
+
+if DEFAULT_BINARY
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimp-remote \
+	&& $(LN_S) gimp-remote-1.2 gimp-remote
+
+uninstall-local:
+	rm -f $(DESTDIR)$(bindir)/gimp-remote
+endif

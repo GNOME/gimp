@@ -252,9 +252,6 @@ strdup __argz_count __argz_stringify __argz_next])
      dnl cannot handle comments.
      sed -e '/^#/d' $srcdir/po/$msgformat-msg.sed > po/po2msg.sed
    fi
-   dnl po2tbl.sed is always needed.
-   sed -e '/^#.*[^\\]$/d' -e '/^#$/d' \
-     $srcdir/po/po2tbl.sed.in > po/po2tbl.sed
 
    dnl If the AC_CONFIG_AUX_DIR macro for autoconf is used we possibly
    dnl find the mkinstalldirs script in another subdir but ($top_srcdir).

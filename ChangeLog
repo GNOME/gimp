@@ -1,3 +1,16 @@
+Sat Feb  2 19:23:14 PST 2002 Manish Singh <yosh@gimp.org>
+
+	* acinclude.m4: sync with glib CVS (gar)
+
+	* configure.in
+	* Makefile.am
+	* app/Makefile.am
+	* plug-ins/print/Makefile.am
+	* tools/Makefile.am
+	* (the various manpages): versioned the binaries and manpages.
+	Added an --enable-default-binary switch to configure to make
+	symlinks for unversioned things (defaults to yes for 1.2)
+
 2002-01-31  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/rcm/rcm.c: register as "plug_in_rotate_colormap"

@@ -20,7 +20,7 @@ endif
 
 scriptdata =
 
-bin_PROGRAMS = gimp
+bin_PROGRAMS = gimp-1.2
 noinst_LIBRARIES = libgimpim.a
 
 libgimpim_a_SOURCES = \
@@ -40,7 +40,7 @@ libgimpim_a_SOURCES = \
 	gimpsignal.c		\
 	gimpsignal.h
 
-gimp_SOURCES = \
+gimp_1_2_SOURCES = \
 	about_dialog.c		\
 	about_dialog.h		\
 	airbrush.c		\
@@ -446,7 +446,7 @@ EXTRA_DIST = \
 	libgimpapp.la
 
 
-gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
+gimp_1_2_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym $(mwindows)
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
@@ -462,7 +462,7 @@ INCLUDES = \
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
-gimp_LDADD = \
+gimp_1_2_LDADD = \
 	$(gimp_exp)				\
 	$(gimp_win32_resource)			\
 	libgimpim.a				\
@@ -474,6 +474,16 @@ gimp_LDADD = \
 
 gimp-win32res.o : gimp.rc
 	$(top_srcdir)/build/win32/compile-resource gimp.rc gimp-win32res.o
+
+if DEFAULT_BINARY
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimp \
+	&& $(LN_S) gimp-1.2 gimp
+
+uninstall-local:
+	rm -f $(DESTDIR)$(bindir)/gimp
+endif
 
 .PHONY: files
 

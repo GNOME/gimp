@@ -12,7 +12,7 @@ EXTRA_DIST = print-printers.c
 
 libexec_PROGRAMS = print
 
-bin_PROGRAMS = escputil
+bin_PROGRAMS = escputil-1.2
 
 print_SOURCES = \
 	print-canon.c		\
@@ -32,9 +32,9 @@ print_SOURCES = \
 	gimp_main_window.c	\
 	print_gimp.h
 
-escputil_SOURCES = escputil.c
+escputil_1_2_SOURCES = escputil.c
 
-man_MANS = escputil.1
+man_MANS = escputil-1.2.1
 
 INCLUDES = \
 	-I$(top_srcdir)			\
@@ -53,7 +53,40 @@ LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
-escputil_LDADD =
+escputil_1_2_LDADD =
+
+if DEFAULT_BINARY
+install-exec-hook:
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f escputil \
+	&& $(LN_S) escputil-1.2 escputil
+
+install-data-hook:
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo "cd $(DESTDIR)$(mandir)/man$$s"; \
+	  cd $(DESTDIR)$(mandir)/man$$s; \
+	  echo "rm -f $$f"; \
+	  rm -f $$f; \
+	  echo "ln -s $$i $$f"; \
+	  ln -s $$i $$f; \
+	done
+
+uninstall-local:
+	@echo " rm -f $(DESTDIR)$(bindir)/escputil"; \
+	rm -f $(DESTDIR)$(bindir)/escputil
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo " rm -f $(DESTDIR)$(mandir)/man$$s/$$f"; \
+	  rm -f $(DESTDIR)$(mandir)/man$$s/$$f; \
+	done
+endif
 
 .PHONY: files
 
