@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.3\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
-"PO-Revision-Date: 2001-11-16 15:15+0100\n"
+"POT-Creation-Date: 2001-11-16 13:26+0100\n"
+"PO-Revision-Date: 2001-12-04 17:49+0100\n"
 "Last-Translator: Stanislav Brabec <utx@penguin.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -156,7 +156,7 @@ msgstr "Exportní konverze by nemìla zmìnit pùvodní obrázek."
 
 #: libgimp/gimpexport.c:569
 msgid "a layer mask"
-msgstr "maska vrstvy"
+msgstr "masku vrstvy"
 
 #: libgimp/gimpexport.c:571
 msgid "a channel (saved selection)"
