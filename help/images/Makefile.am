@@ -6,13 +6,13 @@ helpdata_DATA = \
 	eek.png				\
 	wilber.png			\
 	\
-	anchor_layer_icon.png		\
+	anchor_icon.png			\
 	delete_icon.png			\
 	duplicate_icon.png		\
-	lower_layer_icon.png		\
+	lower_icon.png			\
 	new_icon.png			\
 	path_to_selection_icon.png	\
-	raise_layer_icon.png		\
+	raise_icon.png			\
 	stroke_icon.png			\
 	\
 	layers_example.png		\

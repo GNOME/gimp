@@ -1,3 +1,17 @@
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* images/Makefile.am
+	* images/anchor_layer_icon.png
+	* images/lower_layer_icon.png
+	* images/raise_layer_icon.png: removed.
+
+	* images/anchor_icon.png
+	* images/lower_icon.png
+	* images/raise_icon.png: added.
+
+	This breaks the links to these files temporarily until I checkin
+	the HTML files later today.
+
 2000-12-15  Michael Natterer  <mitch@gimp.org>
 
 	* makedummyhelpfile.sh
