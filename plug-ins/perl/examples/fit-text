@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 # <sjburges@gimp.org>
 # This is adrian and xachs idea - take a rectangluar selection, and select
 # font type and string.  Then fill it with whatever size is needed.
@@ -39,7 +41,7 @@ register "fit_text",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "1999-03-21",
-         __"<Image>/Filters/Render/Fit Text",
+         "<Image>/Filters/Render/Fit Text",
          "*",
          [
            [PF_FONT, "font", "What font type to use - size will be ignored", $defaultfont],

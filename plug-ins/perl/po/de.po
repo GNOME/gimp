@@ -263,13 +263,11 @@ msgstr "Server beendet sich..."
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr "Ich versuche, gimp mit den Schaltern \"$opt\" zu starten\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-msgstr "<Toolbox>/Xtn/"
+msgstr "<Toolbox>/Xtn/Animation/Seth's Dreher"
 
-#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Noise/Rastern"
 
 msgid "expected perl-server at other end of socket, got @r\n"
 msgstr ""
@@ -280,9 +278,8 @@ msgstr "zu viele"
 msgid "pdl height != region height"
 msgstr "pdl Höhe != Höhe der Region"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Render/Add Glow"
 
 msgid "received QUIT request"
 msgstr "QUIT-Anfrage erhalten"
@@ -604,9 +601,8 @@ msgstr "Dateiauswahl for $name"
 msgid "accepting connections on port $port"
 msgstr "Akzeptiere Verbindungen auf port $port"
 
-#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Verschiedenes/Rahmenfarbe"
 
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
@@ -626,20 +622,17 @@ msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 "Menüpfad _muß_ mit <Image>, <Toolbox>, <Load>, <Save> oder <None> anfangen!"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Terral Text"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Render/Terraltext"
 
 msgid "illegal parasite specification, arrayref expected"
 msgstr ""
 
-#, fuzzy
 msgid "<Image>/Filters/Misc/Burst"
-msgstr "<Image>/Filter/"
+msgstr "<Image>/Filter/Verschiedenes/Ausbruch"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr "<Toolbox>/Xtn/Perl/Server"
+msgstr "<Toolbox>/Xtn/Render/Povray/Textur"
 
 msgid "unable to fork: $!"
 msgstr "Konnte nicht forken: $!"

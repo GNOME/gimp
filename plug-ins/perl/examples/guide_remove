@@ -1,5 +1,7 @@
 #!/usr/bin/perl
  
+eval 'exec /usr/bin/perl  -S $0 ${1+"$@"}'
+    if 0; # not running under some shell
 #
 # 11/7/99 <brendy@swipnet.se>
 # Guides are pretty good, but I want to be able to remove them.
@@ -17,7 +19,7 @@ register "guide_remove",
          "Brendon Humphrey",
          "Brendon Humphrey <brendy\@swipnet.se>",
          "1999-07-20",
-         __"<Image>/Guides/Remove Guides",
+         "<Image>/Guides/Remove Guides",
          "*",
          [],
          [],
@@ -31,15 +33,15 @@ register "guide_remove",
     $i=$img->find_next_guide(0);
     while ($i != 0) {
       $img->delete_guide($i);
-      $i=$img->find_next_guide($i);
+      $i=$img->find_next_guide(0);
     }         
 
     #
     # Refresh the display (probably not good, works for me!)
     #
-    #$img->selection_all();
-    #$img->selection_none();        
+    $img->selection_all();
+    $img->selection_none();        
  
-    ();
+    return();
 };
 exit main;                                        

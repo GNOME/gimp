@@ -24,7 +24,7 @@ register "guide_grid",
   "Seth Burgess",
   "Seth Burgess <sjburges\@gimp.org>",
   "1999-03-20",
-  __"<Image>/Guides/Guide Grid",
+  "<Image>/Guides/Guide Grid",
   "*",
   [
    [PF_SPINNER, "x_spacing", "How far to space grid horizontally", 24, [1,1000,1]],

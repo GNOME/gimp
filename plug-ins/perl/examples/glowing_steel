@@ -96,7 +96,7 @@ sub perl_fu_add_glow {
 
   gimp_undo_push_group_start($image);
 
-  if (!gimp_drawable_layer($drawable)) {
+  if (!gimp_drawable_is_layer($drawable)) {
     die("add_glow: Only layers can have glow added");
   }
 
@@ -167,11 +167,12 @@ sub perl_fu_brushed_metal {
   $y1-=$length;
   $x2+=$length;
   $y2+=$length;
-  my $width = $x2-$x1;
-  my $height = $y2-$y1;
+  my $width = abs($x2-$x1);
+  my $height = abs($y2-$y1);
   my $templ = gimp_layer_new($image, $width, $height, RGBA_IMAGE, "Temp",
 			     100, NORMAL_MODE);
   gimp_image_add_layer($image, $templ, 0);
+  gimp_layer_set_offsets($templ, $x1+$length, $y1+$length);
   my $target_select = gimp_selection_save($image);
   gimp_selection_none($image);
   
@@ -206,7 +207,7 @@ sub perl_fu_highlight_edges {
 
   gimp_undo_push_group_start($image);
 
-  if (!gimp_drawable_layer($drawable)) {
+  if (!gimp_drawable_is_layer($drawable)) {
     gimp_message("highlight_edges: Only layers can be highlighted!");
     return;
   }

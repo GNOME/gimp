@@ -29,7 +29,7 @@
 #                   in a directory more suitable than the lame "Misc"
 # Here's the boring start of every script...
 
-use Gimp qw(:auto __);
+use Gimp;
 use Gimp::Fu;
 
 register "xach_blocks",
@@ -39,7 +39,7 @@ register "xach_blocks",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
          "2-15-98",
-         __"<Image>/Filters/Map/Xach Blocks",
+         "<Image>/Filters/Map/Xach Blocks",
          "*",
          [
           [PF_SLIDER,	"block_size",	"The size of the blocks...", 10, [0, 255, 1]],

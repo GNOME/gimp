@@ -19,8 +19,8 @@ register "random_blends",
          "A random approach to art.  Just try it. It might be good.",
          "Seth Burgess", 
          "Seth Burgess <sjburges\@gimp.org>", 
-         "1999-03-18a",
-         __"<Image>/Filters/Render/Random Blends", 
+         "1999-03-18",
+         "<Image>/Filters/Render/Random Blends", 
          "RGB*, GRAY*", 
          [ 
            [PF_SPINNER, "number", "How many gradients to apply", 7, [1,255,1]], 
@@ -31,13 +31,13 @@ register "random_blends",
     my($img,$layer,$numgradients) =@_;
     eval { $img->undo_push_group_start };  # undo is broked for this one.
 # add this to the get_state (after its working?)
-	$oldgradient = Gimp->gradients_get_active();
+	$oldgradient = gimp_gradients_get_active();
     ($sel,$x1,$y1,$x2,$y2) = $img->gimp_selection_bounds;
     srand();
 
-    @gradientlist = Gimp->gradients_get_list();  
+    @gradientlist = gimp_gradients_get_list();  
     for ($i=0; $i<=$numgradients; $i++) {
-        Gimp->gradients_set_active(@gradientlist[randint($#gradientlist)]);
+        gimp_gradients_set_active(@gradientlist[randint($#gradientlist)]);
         $layer->gimp_blend(CUSTOM,  
                            6,              # DIFFERENCE
 # I'd really like to alternate how many arguments in gradient type depending
@@ -54,7 +54,7 @@ register "random_blends",
                            );
         }
     eval { $img->undo_push_group_end };
-	Gimp->gradients_set_active($oldgradient);
+	gimp_gradients_set_active($oldgradient);
     return();
 };
 exit main;
