@@ -1,3 +1,20 @@
+2005-01-04  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* configure.in: add check for libexif version >= 0.6.0,
+	necessary because of nasty incompatible api change.
+	
+	* plug-ins/jpeg/exif-handling.txt: removed from here...
+
+	* devel-docs/exif-handling.txt: ...and added here
+	
+	* plug-ins/jpeg/jpeg-exif.c
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg.c
+	* plug-ins/jpeg/jpeg.h: extract info from exif on loading,
+	and add info to exif on saving, addresses bug #56433,
+	bug #61499, and bug #121810.
+	
 2005-01-04  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-close.c

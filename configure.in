@@ -1043,10 +1043,21 @@ if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
     AC_MSG_WARN([libexif not found!
 EXIF support will not be built into the JPEG plug-in. 
 libexif is available from http://www.sourceforge.net/projects/libexif]))
+  AC_MSG_CHECKING([if libexif is version 0.6.0 or newer])
+  if $PKG_CONFIG --atleast-version=0.6.0 libexif; then
+    have_exif_0_6=yes
+  else
+    have_exif_0_6=no
+  fi
+  AC_MSG_RESULT($have_exif_0_6)
+  if test x$have_exif_0_6 == xyes; then
+    AC_DEFINE(HAVE_EXIF_0_6, 1, "Define to 1 if libexif is at least version 0.6.0")
+  fi
 fi
 
 AC_SUBST(EXIF_CFLAGS)
 AC_SUBST(EXIF_LIBS)
+
 
 #################
 # Check for libaa

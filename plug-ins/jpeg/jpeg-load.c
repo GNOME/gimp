@@ -95,11 +95,6 @@ load_image (const gchar *filename,
 
   GimpParasite * volatile comment_parasite = NULL;
 
-#ifdef HAVE_EXIF
-  GimpParasite *exif_parasite = NULL;
-  ExifData     *exif_data     = NULL;
-#endif
-
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
@@ -456,31 +451,10 @@ load_image (const gchar *filename,
         }
 
 #ifdef HAVE_EXIF
-#define EXIF_HEADER_SIZE 8
 
       if (! GPOINTER_TO_INT (cinfo.client_data))
-        {
-          exif_data = exif_data_new_from_file (filename);
-          if (exif_data)
-            {
-              guchar *exif_buf;
-              guint   exif_buf_len;
+        jpeg_apply_exif_data_to_image (filename, image_ID);
 
-              exif_data_save_data (exif_data, &exif_buf, &exif_buf_len);
-              exif_data_unref (exif_data);
-
-              if (exif_buf_len > EXIF_HEADER_SIZE)
-                {
-                  exif_parasite = gimp_parasite_new ("exif-data",
-                                                     GIMP_PARASITE_PERSISTENT,
-                                                     exif_buf_len, exif_buf);
-                  gimp_image_parasite_attach (image_ID, exif_parasite);
-                  gimp_parasite_free (exif_parasite);
-                }
-
-              free (exif_buf);
-            }
-        }
 #endif
     }
 

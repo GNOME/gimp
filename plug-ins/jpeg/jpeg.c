@@ -174,6 +174,18 @@ run (const gchar      *name,
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
+      switch (run_mode)
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("jpeg", FALSE);
+          load_interactive = TRUE;
+          break;
+        default:
+          load_interactive = FALSE;
+          break;
+        }
+
       image_ID = load_image (param[1].data.d_string, run_mode, FALSE);
 
       if (image_ID != -1)
@@ -186,6 +198,7 @@ run (const gchar      *name,
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
     }
 
 #ifdef HAVE_EXIF
@@ -265,11 +278,6 @@ run (const gchar      *name,
           break;
         }
 
-#ifdef HAVE_EXIF
-      exif_data_unref (exif_data);
-      exif_data = NULL;
-#endif /* HAVE_EXIF */
-
       g_free (image_comment);
       image_comment = NULL;
 
@@ -288,6 +296,9 @@ run (const gchar      *name,
         {
           exif_data = exif_data_new_from_data (gimp_parasite_data (parasite),
                                                gimp_parasite_data_size (parasite));
+
+          jpeg_setup_exif_for_save (exif_data, orig_image_ID);
+
           gimp_parasite_free (parasite);
         }
 
