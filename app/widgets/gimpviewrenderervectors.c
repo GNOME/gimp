@@ -80,9 +80,7 @@ gimp_view_renderer_vectors_get_type (void)
 static void
 gimp_view_renderer_vectors_class_init (GimpViewRendererVectorsClass *klass)
 {
-  GimpViewRendererClass *renderer_class;
-
-  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 

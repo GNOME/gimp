@@ -1,5 +1,15 @@
 2004-09-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpviewrendererbrush.c
+	* app/widgets/gimpviewrendererdrawable.c
+	* app/widgets/gimpviewrenderergradient.c
+	* app/widgets/gimpviewrendererimage.c
+	* app/widgets/gimpviewrendererimagefile.c
+	* app/widgets/gimpviewrendererlayer.c
+	* app/widgets/gimpviewrenderervectors.c: purely cosmetic cleanup.
+
+2004-09-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppdbdialog.c (gimp_pdb_dialog_constructor): use
 	g_type_name(dialog_type) instead of just "pdb dialog" as name for
 	the dialog's private context.

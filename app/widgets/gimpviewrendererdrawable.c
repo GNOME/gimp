@@ -36,7 +36,6 @@
 
 
 static void   gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass);
-static void   gimp_view_renderer_drawable_init       (GimpViewRendererDrawable      *renderer);
 
 static void   gimp_view_renderer_drawable_render     (GimpViewRenderer *renderer,
                                                       GtkWidget        *widget);
@@ -62,7 +61,7 @@ gimp_view_renderer_drawable_get_type (void)
         NULL,           /* class_data */
         sizeof (GimpViewRendererDrawable),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_view_renderer_drawable_init,
+        NULL            /* instance_init */
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_VIEW_RENDERER,
@@ -76,18 +75,11 @@ gimp_view_renderer_drawable_get_type (void)
 static void
 gimp_view_renderer_drawable_class_init (GimpViewRendererDrawableClass *klass)
 {
-  GimpViewRendererClass *renderer_class;
-
-  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   renderer_class->render = gimp_view_renderer_drawable_render;
-}
-
-static void
-gimp_view_renderer_drawable_init (GimpViewRendererDrawable *renderer)
-{
 }
 
 static void
@@ -148,7 +140,7 @@ gimp_view_renderer_drawable_render (GimpViewRenderer *renderer,
       TempBuf *temp_buf;
 
       temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                item->width, 
+                                                item->width,
                                                 item->height);
 
       if (temp_buf)

@@ -37,9 +37,9 @@
 static void   gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass);
 static void   gimp_view_renderer_brush_init       (GimpViewRendererBrush      *renderer);
 
-static void   gimp_view_renderer_brush_finalize (GObject          *object);
-static void   gimp_view_renderer_brush_render   (GimpViewRenderer *renderer,
-                                                    GtkWidget        *widget);
+static void   gimp_view_renderer_brush_finalize   (GObject          *object);
+static void   gimp_view_renderer_brush_render     (GimpViewRenderer *renderer,
+                                                   GtkWidget        *widget);
 
 static gboolean gimp_view_renderer_brush_render_timeout (gpointer  data);
 
@@ -78,11 +78,8 @@ gimp_view_renderer_brush_get_type (void)
 static void
 gimp_view_renderer_brush_class_init (GimpViewRendererBrushClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpViewRendererClass *renderer_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -116,13 +113,11 @@ static void
 gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  GimpViewRendererBrush *renderbrush;
+  GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
   GimpBrush             *brush;
   TempBuf               *temp_buf;
   gint                   brush_width;
   gint                   brush_height;
-
-  renderbrush = GIMP_VIEW_RENDERER_BRUSH (renderer);
 
   if (renderbrush->pipe_timeout_id)
     {
@@ -321,14 +316,11 @@ gimp_view_renderer_brush_render (GimpViewRenderer *renderer,
 static gboolean
 gimp_view_renderer_brush_render_timeout (gpointer data)
 {
-  GimpViewRendererBrush *renderbrush;
-  GimpViewRenderer      *renderer;
+  GimpViewRendererBrush *renderbrush = GIMP_VIEW_RENDERER_BRUSH (data);
+  GimpViewRenderer      *renderer    = GIMP_VIEW_RENDERER (data);
   GimpBrushPipe         *brush_pipe;
   GimpBrush             *brush;
   TempBuf               *temp_buf;
-
-  renderbrush = GIMP_VIEW_RENDERER_BRUSH (data);
-  renderer    = GIMP_VIEW_RENDERER (data);
 
   if (! renderer->viewable)
     {

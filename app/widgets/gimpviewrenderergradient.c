@@ -85,11 +85,8 @@ gimp_view_renderer_gradient_get_type (void)
 static void
 gimp_view_renderer_gradient_class_init (GimpViewRendererGradientClass *klass)
 {
-  GObjectClass          *object_class;
-  GimpViewRendererClass *renderer_class;
-
-  object_class   = G_OBJECT_CLASS (klass);
-  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  GObjectClass          *object_class   = G_OBJECT_CLASS (klass);
+  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -112,9 +109,7 @@ gimp_view_renderer_gradient_init (GimpViewRendererGradient *renderer)
 static void
 gimp_view_renderer_gradient_finalize (GObject *object)
 {
-  GimpViewRendererGradient *renderer;
-
-  renderer = GIMP_VIEW_RENDERER_GRADIENT (object);
+  GimpViewRendererGradient *renderer = GIMP_VIEW_RENDERER_GRADIENT (object);
 
   if (renderer->even)
     {
@@ -136,15 +131,15 @@ gimp_view_renderer_gradient_render (GimpViewRenderer *renderer,
                                     GtkWidget        *widget)
 {
   GimpViewRendererGradient *rendergrad;
-  GimpGradient *gradient;
-  guchar       *even;
-  guchar       *odd;
-  guchar       *buf;
-  gint          x;
-  gint          y;
-  gint          a;
-  gdouble       dx, cur_x;
-  GimpRGB       color;
+  GimpGradient             *gradient;
+  guchar                   *even;
+  guchar                   *odd;
+  guchar                   *buf;
+  gint                      x;
+  gint                      y;
+  gint                      a;
+  gdouble                   dx, cur_x;
+  GimpRGB                   color;
 
   rendergrad = GIMP_VIEW_RENDERER_GRADIENT (renderer);
 

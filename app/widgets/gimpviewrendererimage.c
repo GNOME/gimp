@@ -68,16 +68,14 @@ gimp_view_renderer_image_get_type (void)
                                               "GimpViewRendererImage",
                                               &renderer_info, 0);
     }
-  
+
   return renderer_type;
 }
 
 static void
 gimp_view_renderer_image_class_init (GimpViewRendererImageClass *klass)
 {
-  GimpViewRendererClass *renderer_class;
-
-  renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
+  GimpViewRendererClass *renderer_class = GIMP_VIEW_RENDERER_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -94,14 +92,12 @@ static void
 gimp_view_renderer_image_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
-  GimpViewRendererImage *rendererimage;
+  GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
   GimpImage             *gimage;
   gint                   view_width;
   gint                   view_height;
   gboolean               scaling_up;
   TempBuf               *render_buf = NULL;
-
-  rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
 
   gimage = GIMP_IMAGE (renderer->viewable);
 
