@@ -1,5 +1,9 @@
 2004-10-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/dbbrowser/plugin-browser.c: it's Plug-In, not Plugin.
+
+2004-10-01  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcroptool.c (crop_response): destroy the info
 	dialog instead of hiding it. Fixes session management.
 

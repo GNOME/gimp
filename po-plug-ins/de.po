@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-30 12:31+0200\n"
-"PO-Revision-Date: 2004-09-30 12:31+0200\n"
+"POT-Creation-Date: 2004-10-01 17:02+0200\n"
+"PO-Revision-Date: 2004-10-01 17:06+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -7288,7 +7288,7 @@ msgstr "Der Plural der Einheit."
 msgid "_Unit Editor"
 msgstr "_Einheiten bearbeiten"
 
-#: plug-ins/common/uniteditor.c:124 plug-ins/dbbrowser/plugin-browser.c:154
+#: plug-ins/common/uniteditor.c:124 plug-ins/dbbrowser/plugin-browser.c:158
 #: plug-ins/dbbrowser/procedure-browser.c:96
 msgid "<Toolbox>/Xtns/Extensions"
 msgstr "<Toolbox>/Xtns/Erweiterungen"
@@ -8106,7 +8106,7 @@ msgstr ""
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:127
 #: plug-ins/dbbrowser/gimpprocbrowser.c:141
-#: plug-ins/dbbrowser/plugin-browser.c:802
+#: plug-ins/dbbrowser/plugin-browser.c:543
 msgid "Search by _Name"
 msgstr "Nach _Name suchen"
 
@@ -8116,29 +8116,31 @@ msgid "Search by _Blurb"
 msgstr "Nach _Beschreibung suchen"
 
 #: plug-ins/dbbrowser/gimpprocbrowser.c:219
-#: plug-ins/dbbrowser/plugin-browser.c:968
+#: plug-ins/dbbrowser/plugin-browser.c:713
 msgid "_Search:"
 msgstr "_Suchen:"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:426
+#: plug-ins/dbbrowser/gimpprocbrowser.c:383
+#: plug-ins/dbbrowser/plugin-browser.c:397
 msgid "Searching by name - please wait"
 msgstr "Nach Name wird gesucht - bitte warten"
 
 # blurb ?
-#: plug-ins/dbbrowser/gimpprocbrowser.c:450
+#: plug-ins/dbbrowser/gimpprocbrowser.c:407
 msgid "Searching by blurb - please wait"
 msgstr "Nach Beschreibung wird gesucht - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:460
+#: plug-ins/dbbrowser/gimpprocbrowser.c:418
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:466
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Prozeduren"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:508
+#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/plugin-browser.c:511
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -8148,99 +8150,95 @@ msgstr "Keine Treffer"
 #.
 #. *	Scales
 #.
-#: plug-ins/dbbrowser/gimpprocview.c:123 plug-ins/gflare/gflare.c:2665
+#: plug-ins/dbbrowser/gimpprocview.c:133 plug-ins/gflare/gflare.c:2665
 #: plug-ins/gflare/gflare.c:3462 plug-ins/gflare/gflare.c:3567
 #: plug-ins/gflare/gflare.c:3704
 msgid "Parameters"
 msgstr "Parameter"
 
-#: plug-ins/dbbrowser/gimpprocview.c:136
-msgid "Return Values"
-msgstr ""
-
 #: plug-ins/dbbrowser/gimpprocview.c:146
-#, fuzzy
-msgid "Additional Information"
-msgstr "Raumtransformation"
+msgid "Return Values"
+msgstr "Rückgabewerte"
 
-#: plug-ins/dbbrowser/gimpprocview.c:177
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr "Zusätzliche Informationen"
+
+#: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/gimpprocview.c:185
+#: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
 # Urheberrecht?
-#: plug-ins/dbbrowser/gimpprocview.c:193
+#: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/gimpprocview.c:290
+#: plug-ins/dbbrowser/gimpprocview.c:319
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP Prozedur"
 
-#: plug-ins/dbbrowser/gimpprocview.c:291
+#: plug-ins/dbbrowser/gimpprocview.c:320
 msgid "GIMP Plug-In"
 msgstr "GIMP Plugin"
 
-#: plug-ins/dbbrowser/gimpprocview.c:292
+#: plug-ins/dbbrowser/gimpprocview.c:321
 msgid "GIMP Extension"
 msgstr "GIMP Erweiterung"
 
-#: plug-ins/dbbrowser/gimpprocview.c:293
+#: plug-ins/dbbrowser/gimpprocview.c:322
 msgid "Temporary Procedure"
 msgstr "Temporäre Prozedur"
 
-#: plug-ins/dbbrowser/plugin-browser.c:147
-msgid "_Plugin Browser"
+#: plug-ins/dbbrowser/plugin-browser.c:151
+msgid "_Plug-In Browser"
 msgstr "_Plugin Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:613
-#, fuzzy, c-format
-msgid "%d Plugin Interfaces"
-msgstr "Anzahl der Plugin-Interfaces: %d"
+#: plug-ins/dbbrowser/plugin-browser.c:417
+#, c-format
+msgid "%d Plug-In Interfaces"
+msgstr "%d Plugin Interfaces"
 
-#: plug-ins/dbbrowser/plugin-browser.c:798
-msgid "Plugin Browser"
+#: plug-ins/dbbrowser/plugin-browser.c:539
+msgid "Plug-In Browser"
 msgstr "Plugin Browser"
 
-#: plug-ins/dbbrowser/plugin-browser.c:849
+#: plug-ins/dbbrowser/plugin-browser.c:590
 msgid "Name"
 msgstr "Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:857
-#: plug-ins/dbbrowser/plugin-browser.c:924
-#, fuzzy
+#: plug-ins/dbbrowser/plugin-browser.c:598
+#: plug-ins/dbbrowser/plugin-browser.c:667
 msgid "Insertion Date"
-msgstr "Punkt hinzufügen"
+msgstr "Installationsdatum"
 
-#: plug-ins/dbbrowser/plugin-browser.c:865
-#, fuzzy
+#: plug-ins/dbbrowser/plugin-browser.c:606
 msgid "Menu Path"
-msgstr "Menupfad:"
+msgstr "Menupfad"
 
-#: plug-ins/dbbrowser/plugin-browser.c:873
-#: plug-ins/dbbrowser/plugin-browser.c:932
-#, fuzzy
+#: plug-ins/dbbrowser/plugin-browser.c:614
+#: plug-ins/dbbrowser/plugin-browser.c:676
 msgid "Image Types"
 msgstr "Bildtypen"
 
-#: plug-ins/dbbrowser/plugin-browser.c:896
+#: plug-ins/dbbrowser/plugin-browser.c:638
 msgid "List View"
 msgstr "Listenansicht"
 
-#: plug-ins/dbbrowser/plugin-browser.c:916
+#: plug-ins/dbbrowser/plugin-browser.c:658
 msgid "Menu Path/Name"
 msgstr "Menupfad/Name"
 
-#: plug-ins/dbbrowser/plugin-browser.c:954
+#: plug-ins/dbbrowser/plugin-browser.c:699
 msgid "Tree view"
 msgstr "Baumansicht"
 
 #: plug-ins/dbbrowser/procedure-browser.c:89
 msgid "Procedure _Browser"
-msgstr ""
+msgstr "Prozeduren _Browser"
 
 #: plug-ins/faxg3/faxg3.c:100
 msgid "G3 fax image"

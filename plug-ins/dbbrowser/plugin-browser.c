@@ -138,17 +138,17 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_plug_in_details",
-                          "Displays plugin details",
-                          "Helps browse the plugin menus system. You can "
-                          "search for plugin names, sort by name or menu "
+                          "Displays plug-in details",
+                          "Allows to browse the plug-in menus system. You can "
+                          "search for plug-in names, sort by name or menu "
                           "location and you can view a tree representation "
-                          "of the plugin menus. Can also be of help to find "
-                          "where new plugins have installed themselves in "
-                          "the menuing system",
+                          "of the plug-in menus. Can also be of help to find "
+                          "where new plug-ins have installed themselves in "
+                          "the menus.",
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-                          N_("_Plugin Browser"),
+                          N_("_Plug-In Browser"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -414,7 +414,7 @@ get_plugin_info (PluginBrowser *browser,
       time_ints            = return_vals[10].data.d_int32array;
       realname_strs        = return_vals[12].data.d_stringarray;
 
-      str = g_strdup_printf (_("%d Plugin Interfaces"), browser->num_plugins);
+      str = g_strdup_printf (_("%d Plug-In Interfaces"), browser->num_plugins);
       gtk_label_set_text (GTK_LABEL (browser->count_label), str);
       g_free (str);
 
@@ -536,7 +536,7 @@ browser_dialog_new (void)
 
   /* the dialog box */
   browser->dialog =
-    gimp_dialog_new (_("Plugin Browser"), "plugindetails",
+    gimp_dialog_new (_("Plug-In Browser"), "plugindetails",
                      NULL, 0,
                      gimp_standard_help_func, "plug-in-plug-in-details",
 
@@ -563,7 +563,7 @@ browser_dialog_new (void)
   gtk_paned_pack1 (GTK_PANED (paned), vbox, FALSE, TRUE);
   gtk_widget_show (vbox);
 
-  browser->count_label = gtk_label_new ("0 Plugin Interfaces");
+  browser->count_label = gtk_label_new ("0 Plug-In Interfaces");
   gtk_misc_set_alignment (GTK_MISC (browser->count_label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), browser->count_label, FALSE, FALSE, 0);
   gtk_widget_show (browser->count_label);

@@ -320,6 +320,6 @@ GimpPDBProcType_to_string (GimpPDBProcType type)
     case GIMP_PLUGIN:    return _("GIMP Plug-In");
     case GIMP_EXTENSION: return _("GIMP Extension");
     case GIMP_TEMPORARY: return _("Temporary Procedure");
-    default:             return "UNKNOWN?";
+    default:             return "UNKNOWN";
     }
 }
