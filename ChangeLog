@@ -1,3 +1,8 @@
+2004-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am: fix typo in the uninstall-local target for
+	gimp-console.
+
 2004-01-14  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/plugindetails.c: callbacks attached to the "changed"

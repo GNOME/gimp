@@ -152,7 +152,7 @@ uninstall-local:
 if DEFAULT_BINARY
 	rm -f $(DESTDIR)$(bindir)/gimp$(EXEEXT)
 if ENABLE_GIMP_CONSOLE
-	rm -f $(DESTDIR)$(bindir)/gimp-console-$(EXEEXT)
+	rm -f $(DESTDIR)$(bindir)/gimp-console$(EXEEXT)
 endif
 endif
 
