@@ -1,3 +1,10 @@
+Tue Jul 28 18:10:33 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* tile_manager.c, tile_manager.h: provided some encapsulations
+	functions for tile managers
+	* gimpimage.c: rewrote to use encaps, got rid of
+	tile_manager_pvt.h include (yay)
+
 Tue Jul 28 17:07:41 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* plug-ins/mail/mail.c: added a text entry to GUMP,
