@@ -1,3 +1,11 @@
+Wed Oct 20 12:18:12 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm: corrected these
+	scripts (gimp-convert-indexed and plug-in-map-object changed their 
+	parameters). There's still something severly wrong with Script-Fu...
+
 Wed Oct 20 03:42:08 MEST 1999  Sven Neumann <sven@gimp.org>
 	
 	* plug-ins/common/Makefile.am

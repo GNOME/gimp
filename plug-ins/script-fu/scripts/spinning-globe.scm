@@ -21,62 +21,80 @@
 
 ; Define the function:
 
-(define (script-fu-spinning-globe inImage inLayer inFrames inFromLeft inTransparent inIndex inCopy)
+(define (script-fu-spinning-globe inImage 
+				  inLayer 
+				  inFrames 
+				  inFromLeft 
+				  inTransparent 
+				  inIndex 
+				  inCopy)
+  (set! theImage (if (= inCopy TRUE)
+		     (car (gimp-channel-ops-duplicate inImage))
+		     inImage))
+  (set! theLayer (car (gimp-image-get-active-layer theImage)))
+  (gimp-layer-add-alpha theLayer)
+  
+  (set! n 0)
+  (set! ang (* (/ 360 inFrames) 
+	       (if (= inFromLeft TRUE) 1 -1) ))
+  (while (> inFrames n)
+	 (set! n (+ n 1))
+	 (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
+	 (gimp-image-add-layer theImage theFrame 0)
+	 (gimp-layer-set-name theFrame 
+			      (string-append "Anim Frame: " 
+					     (number->string (- inFrames n) 10)))
+	 (plug-in-map-object RUN-NONINTERACTIVE
+			     theImage theFrame 
+			                ; mapping
+			     1
+					; viewpoint
+			     0.5 0.5 2.0
+					; object pos 
+			     0.5 0.5 0.0
+					; first axis
+			     1.0 0.0 0.0
+					; 2nd axis
+			     0.0 1.0 0.0
+					; axis rotation
+			     0.0 (* n ang) 0.0
+					; light (type, color)
+			     0 '(255 255 255)
+					; light position
+			     -0.5 -0.5 2.0
+					; light direction
+			     -1.0 -1.0 1.0
+					; material (amb, diff, refl, spec, high)
+			     0.3 1.0 0.5 0.0 27.0
+			               ; antialias 
+			     TRUE 
+			               ; tile
+			     FALSE
+			               ; new image 
+			     FALSE 
+			               ; transparency
+			     inTransparent 
+			               ; radius
+			     0.25
+			               ; unused parameters
+			     1.0 1.0 1.0 1.0
+			     0 0 0 0 0 0 0 0)
+	 ; end while: 
+	 )
+  (gimp-image-remove-layer theImage theLayer)
+  (plug-in-autocrop RUN-NONINTERACTIVE theImage theFrame)
+  
+  (if (= inIndex 0)
+      ()
+      (gimp-convert-indexed theImage FS-DITHER MAKE-PALETTE inIndex FALSE FALSE ""))
 
-        (set! theImage (if (= inCopy TRUE)
-                       (car (gimp-channel-ops-duplicate inImage))
-                       inImage)
-        )
-	(set! theLayer (car(gimp-image-get-active-layer theImage)))
-	(gimp-layer-add-alpha theLayer)
+  (if (= inCopy TRUE)
+      (begin  
+	(gimp-image-clean-all theImage)
+	(gimp-display-new theImage))
+      ())
 
-        (set! n 0)
-        (set! ang (* (/ 360 inFrames) (if (= inFromLeft TRUE) 1 -1) ))
-(while (> inFrames n)
-        (set! n (+ n 1))
-
-        (set! theFrame (car (gimp-layer-copy theLayer FALSE)))
-	(gimp-image-add-layer theImage theFrame 0)
-        (gimp-layer-set-name theFrame (string-append "Anim Frame: " (number->string (- inFrames n) 10)))
-	(plug-in-map-object TRUE theImage theFrame 1
-;viewpoint
-0.5 0.5 2.0
-;obj pos?
-0.5 0.5 0
-;first axis
-1.0 0 0
-;2nd axis
-0.0 1.0 0.0
-; axis rotation
-0 (* n ang) 0
-
-; light
-0 '(255 255 255)
-; light pos
--0.5 -0.5 2.0
-
-; light dir
--1.0 -1.0 1.0
-
-; amb and stuff
-.3 1 .5 0 27
-TRUE FALSE FALSE inTransparent 0.25)
-; end while:
-)
-	(gimp-image-remove-layer theImage theLayer)
-        (plug-in-autocrop TRUE theImage theFrame)
-
-        (if     (= inIndex 0)
-                ()
-                (gimp-convert-indexed theImage TRUE inIndex)
-        )
-        (if     (= inCopy TRUE)
-                (begin  (gimp-image-clean-all theImage)
-                        (gimp-display-new theImage)
-                )
-                ()
-        )
-        (gimp-displays-flush)
+  (gimp-displays-flush)
 )
 
 ; Register the function with the GIMP:
@@ -84,7 +102,7 @@ TRUE FALSE FALSE inTransparent 0.25)
 (script-fu-register
     "script-fu-spinning-globe"
     "<Image>/Script-Fu/Animators/Spinning Globe"
-    "foo"
+    "Maps the image on an animated spinning globe"
     "Chris Gutteridge"
     "1998, Chris Gutteridge / ECS dept, University of Southampton, England."
     "16th April 1998"

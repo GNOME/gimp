@@ -104,7 +104,7 @@
 	 (plug-in-autocrop 1 img text-layer))
 
     (if (= index TRUE)
-	(gimp-convert-indexed img TRUE num-colors))
+	(gimp-convert-indexed img FS-DITHER MAKE-PALETTE num-colors FALSE FALSE ""))
     
 
     (gimp-palette-set-foreground old-fg)
