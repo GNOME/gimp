@@ -1,5 +1,10 @@
 2003-05-31  Tor Lillqvist  <tml@iki.fi>
 
+	* README.win32: Update.
+
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.mingw.in: Remove. Unmaintained for a long time.
+
 	* app/gimp.sym: Remove. No gimp library uses symbols from the
 	gimp executable any longer, says Mitch.
 
