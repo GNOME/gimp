@@ -83,7 +83,6 @@ tips_dialog_create (Gimp *gimp)
                                    "gimp-tips.xml", NULL);
 
       tips = gimp_tips_from_file (filename, &error);
-      g_free (filename);
 
       if (!tips)
         {
@@ -112,6 +111,8 @@ tips_dialog_create (Gimp *gimp)
                       filename, error->message);
           g_error_free (error);
         }
+
+      g_free (filename);
     }
 
   tips_count = g_list_length (tips);

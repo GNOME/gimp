@@ -1,3 +1,8 @@
+2004-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tips-dialog.c (tips_dialog_create): don't free the
+	filename too early.
+
 2004-01-09  Dave Neary  <bolsh@gimp.org>
 
 	* app/display/gimpdisplayshell-scale.c: Modify behaviour of 
