@@ -23,7 +23,7 @@
  */
 
 #include <stdlib.h>
-#include <strings.h>
+#include <string.h>
 
 #include "gtk/gtk.h"
 

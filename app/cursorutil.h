@@ -21,7 +21,7 @@
 #include <gdk/gdktypes.h>
 #if defined (GDK_WINDOWING_WIN32) || defined (GDK_WINDOWING_X11)
 /* Stopgap measure to detect build with current CVS GTk+ */
-//#include <gdk/gdkcursor.h>
+#include <gdk/gdkcursor.h>
 #endif
 
 typedef enum

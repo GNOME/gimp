@@ -71,12 +71,17 @@
  *                 this enables to apply an animated bumpmap.
  * 1998.01.29 hof: 1st release
  */
+#include "config.h"
  
 /* SYTEM (UNIX) includes */ 
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"

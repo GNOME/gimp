@@ -252,25 +252,25 @@ rectangle_near_sash(Object_t *obj, gint x, gint y)
 {
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    if (near_sash(rectangle->x, rectangle->y, x, y))
-      return MoveUpperLeftSash;
+      return &MoveUpperLeftSash;
    else if (near_sash(rectangle->x + rectangle->width / 2, rectangle->y, x, y))
-      return MoveUpperSash;
+      return &MoveUpperSash;
    else if (near_sash(rectangle->x + rectangle->width, rectangle->y, x, y))
-      return MoveUpperRightSash;
+      return &MoveUpperRightSash;
    else if (near_sash(rectangle->x, rectangle->y + rectangle->height / 2, 
 		      x, y))
-      return MoveLeftSash;
+      return &MoveLeftSash;
    else if (near_sash(rectangle->x + rectangle->width, 
 		      rectangle->y + rectangle->height / 2, x, y))
-      return MoveRightSash;
+      return &MoveRightSash;
    else if (near_sash(rectangle->x, rectangle->y + rectangle->height, x, y))
-      return MoveLowerLeftSash;
+      return &MoveLowerLeftSash;
    else if (near_sash(rectangle->x + rectangle->width / 2, 
 		      rectangle->y + rectangle->height, x, y))
-      return MoveLowerSash;
+      return &MoveLowerSash;
    else if (near_sash(rectangle->x + rectangle->width, 
 		      rectangle->y + rectangle->height, x, y))
-      return MoveLowerRightSash;
+      return &MoveLowerRightSash;
    return NULL;
 }
 

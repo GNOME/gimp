@@ -29,13 +29,18 @@
 /* revision history:
  * version 0.97.00              hof: - created module (as extract gap_filter_foreach)
  */
- 
+#include "config.h"
+
 /* SYTEM (UNIX) includes */ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef HAVE_SYS_WAIT_H
 #include <sys/wait.h>
+#endif
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"

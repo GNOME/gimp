@@ -28,12 +28,12 @@
 /* revision history:
  * version 0.97.00  1998.10.14  hof: - created module 
  */
+#include "config.h"
  
 /* SYSTEM (UNIX) includes */ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <ctype.h>
 
 

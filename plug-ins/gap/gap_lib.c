@@ -51,24 +51,40 @@
  * 0.93.01               hof: fixup bug when frames are not in the current directory
  * 0.90.00;              hof: 1.st (pre) release
  */
+#include "config.h"
  
 /* SYTEM (UNIX) includes */ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#ifdef HAVE_SYS_TIMES_H
 #include <sys/times.h>
+#endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
+#ifdef HAVE_DIRENT_H
 #include <dirent.h>
+#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 #include "libgimp/gimp.h"
+
+#ifdef G_OS_WIN32
+#include <io.h>
+#  ifndef S_ISDIR
+#    define S_ISDIR(m) ((m) & _S_IFDIR)
+#  endif
+#  ifndef S_ISREG
+#    define S_ISREG(m) ((m) & _S_IFREG)
+#  endif
+#endif
 
 /* GAP includes */
 #include "gap_layer_copy.h"

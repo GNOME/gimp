@@ -306,8 +306,6 @@ GPlugInInfo PLUG_IN_INFO =
   run,     /* run_proc */
 };
 
-static const gchar *prog_name = "PSP";
-
 /* Save info  */
 typedef struct
 {

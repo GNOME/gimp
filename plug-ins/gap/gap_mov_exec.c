@@ -29,6 +29,7 @@
  * version 0.93.04              hof: Window with Info Message if no Source Image was selected in MovePath
  * version 0.90.00;             hof: 1.st (pre) release 14.Dec.1997
  */
+#include "config.h"
 
 /* SYTEM (UNIX) includes */ 
 #include <stdio.h>
@@ -36,7 +37,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <errno.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"

@@ -1,3 +1,36 @@
+1999-10-25  Tor Lillqvist  <tml@iki.fi>
+
+	* app/cursorutil.h: Uncomment the inclusion of gdkcursor.h that
+	should happen only with GTk+ 1.3, anyway? Why was it commented
+	out?
+
+	* app/tile_swap.c: Close before unlinking on Win32, too.
+
+	* libgimp/gimp.def: Updates, sorted.
+
+	* plug-ins/makefile.{cygwin,msc}: Add the gap and imagemap
+	plug-ins. Remove palette plug-in (what happened to it?).
+
+	Portability fixes from Hans Breuer:
+	
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/gap/*.c: 
+	* plug-ins/gimpressionist/gimpressionist.c: 
+	* plug-ins/common/spheredesigner.c: Ifdefify system-dependent includes.
+
+	* plug-ins/common/psp.c: Remove an unused variable.
+
+	* plug-ins/imagemap/{imap_csim.y,imap_csim_parse.c}: Use
+	<string.h>, not <strings.h>.
+
+	* plug-ins/imagemap/imap_rectangle.c (rectangle_near_sash): Use
+	the & operator for function names to return pointers to them.
+
+	* plug-ins/winsnap/winsnap.c (sendBMPToGimp):
+	gimp_drawable_flush() should be called before resizing the layer
+	and image. Now the snapshot of a window is returned the correct
+	size, it's not padded in width to a multiple of four pixels.
+
 Mon Oct 25 18:31:30 CEST 1999  Sven Neumann <sven@gimp.org>
 
         * pixmaps/raise.xpm

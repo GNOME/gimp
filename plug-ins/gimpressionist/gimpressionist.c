@@ -27,6 +27,13 @@
 #define GIMP_CHECK_VERSION(a,b,c) 0
 #endif
 
+#ifdef G_OS_WIN32
+# ifndef S_ISDIR
+#  define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
+#  define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
+# endif
+#endif
+
 GtkWidget *window = NULL;
 GtkTooltips *tooltips = NULL;
 

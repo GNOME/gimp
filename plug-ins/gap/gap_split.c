@@ -37,6 +37,7 @@
  *                            layers need alpha (to be raise/lower able) 
  * 0.90.00               first development release
  */
+#include "config.h"
  
 /* SYTEM (UNIX) includes */ 
 #include <stdio.h>
@@ -44,7 +45,9 @@
 #include <string.h>
 #include <sys/types.h>
 #include <errno.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 /* GIMP includes */
 #include "gtk/gtk.h"

@@ -49,7 +49,7 @@
 /*
  * Plug-in Definitions
  */
-#define PLUG_IN_NAME        "extension-winsnap"
+#define PLUG_IN_NAME        "extension_winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
 #define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
@@ -135,7 +135,7 @@ GPlugInInfo PLUG_IN_INFO =
  * create is of type RGB, i.e. three bytes per pixel, too. Thus in
  * order to be able to quickly transfer all of the image at a time, we
  * must use a DIB section and pixel region the scanline width in
- * bytesof which is evenly divisible with both 3 and 4. I.e. it must
+ * bytes of which is evenly divisible with both 3 and 4. I.e. it must
  * be a multiple of 12 bytes, or in pixels, a multiple of four pixels.
  */
 
@@ -1209,14 +1209,14 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   gimp_pixel_rgn_set_rect(&pixel_rgn, (guchar *) capBytes,
 			  0, 0, ROUND4(width), height);
 
-#if 0 /* The layer resizing causes image corruption along the right border! */
+  /* //HB: update data BEFORE size change */
+  gimp_drawable_flush(drawable);
   /* Now resize the layer down to the correct size if necessary. */
   if (width != ROUND4(width)) {
     gimp_layer_resize (layer_id, width, height, 0, 0);
+    gimp_image_resize (image_id, width, height, 0, 0);
   }
-#endif
   /* Finish up */
-  gimp_drawable_flush(drawable);
   gimp_drawable_detach(drawable);
   params = gimp_run_procedure ("gimp_display_new", &retval,
 			       PARAM_IMAGE, image_id, PARAM_END);

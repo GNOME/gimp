@@ -25,18 +25,18 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 COMMON1 = CEL CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur bumpmap c_astretch checkerboard colorify compose convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe diffraction displace edge emboss engrave exchange film flarefx fractaltrace
 COMMON3 = gauss_iir gauss_rle gbr gee gicon gif gifload glasstile gpb gqbist gradmap grid gtm guillotine gz header hot hrz illusion iwarp jigsaw jpeg laplace lic
-COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify palette papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate rotators
+COMMON4 = mapcolor max_rgb mblur newsprint nlfilt noisify normalize nova oilify papertile pat pcx pix pixelize plasma plugindetails png pnm polar ps psd psp randomize ripple rotate rotators
 COMMON5 = sample_colorize scatter_hsv semiflatten sharpen shift smooth_palette snoise sobel sparkle spheredesigner spread sunras tga threshold_alpha tiff tile tileit tiler video vinvert vpropagate waves whirlpinch winclipboard wind winprint wmf xbm xwd zealouscrop
 
 # These have own subdirectories each
-SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gfig gfli gimpressionist ifscompose maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
+SEPARATE = AlienMap FractalExplorer Lighting MapObject bmp borderaverage dbbrowser faxg3 fits flame fp gap gfig gfli gimpressionist ifscompose imagemap maze mosaic pagecurl rcm sel2path sgi sinus struc twain unsharp winsnap
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
 # ../unofficial-plug-ins directory, go there, and do "make -f
 # makefile.cygwin unofficial".
 
-UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash pmosaic sel_gauss user_filter
+UNOFFICIAL = Anamorphose RGB_Displace ccanalyze fuse gimp_ace guash sel_gauss user_filter
 
 # The main target
 
@@ -109,7 +109,9 @@ sub-one-separate :
 	cd $(DIR); $(MAKE) -f ../makefile.cygwin TOP=../.. PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
 
 
-data-install : gimpressionist-data-install
+data-install : gimpressionist-data-install script-fu-data-install
+
+script-fu-data-install:
 	-mkdir $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.scm $(GIMP)/scripts
 	$(INSTALL) script-fu/scripts/*.jpg $(GIMP)/scripts
@@ -120,7 +122,7 @@ gimpressionist-data-install :
 	-mkdir $(GIMP)/gimpressionist $(GIMP)/gimpressionist/Brushes $(GIMP)/gimpressionist/Paper $(GIMP)/gimpressionist/Presets
 	$(INSTALL) gimpressionist/Brushes/*.p?m $(GIMP)/gimpressionist/Brushes
 	$(INSTALL) gimpressionist/Paper/*.p?m $(GIMP)/gimpressionist/Paper
-	$(INSTALL) gimpressionist/Presets/* $(GIMP)/gimpressionist/Presets
+	-$(INSTALL) gimpressionist/Presets/* $(GIMP)/gimpressionist/Presets
 	-rm $(GIMP)/gimpressionist/Presets/Makefile.am
 
 endif # ifndef PLUGIN
@@ -205,6 +207,28 @@ OBJECTS = \
 	fp_misc.o
 endif
 
+ifdef EXTRA_gap
+OBJECTS = \
+	gap_main.o \
+	gap_mov_exec.o \
+	gap_range_ops.o \
+	gap_arr_dialog.o \
+	gap_mov_dialog.o \
+	gap_layer_copy.o \
+	gap_split.o \
+	gap_resi_dialog.o \
+	gap_mpege.o \
+	gap_mod_layer.o \
+	gap_filter_pdb.o \
+	gap_filter_codegen.o \
+	gap_dbbrowser_utils.o \
+	gap_match.o \
+	gap_lib.o \
+	gap_exchange_image.o \
+	gap_pdb_calls.o \
+	resize.o
+endif
+
 ifdef EXTRA_gdyntext
 # Doesn't compile yet, though, so not included in list above
 OBJECTS = \
@@ -233,6 +257,73 @@ OBJECTS = \
 	ifscompose.o \
 	ifscompose_storage.o \
 	ifscompose_utils.o
+endif
+
+ifdef EXTRA_imagemap
+OBJECTS = \
+	imap_cmd_copy_object.o \
+	imap_about.o \
+	imap_browse.o \
+	imap_cern_lex.o \
+	imap_cern_parse.o \
+	imap_circle.o \
+	imap_cmd_clear.o \
+	imap_cmd_copy.o \
+	imap_cmd_create.o \
+	imap_cmd_cut.o \
+	imap_cmd_cut_object.o \
+	imap_cmd_delete.o \
+	imap_cmd_delete_point.o \
+	imap_cmd_edit_object.o \
+	imap_cmd_guides.o \
+	imap_cmd_insert_point.o \
+	imap_cmd_move.o \
+	imap_cmd_move_down.o \
+	imap_cmd_move_sash.o \
+	imap_cmd_move_selected.o \
+	imap_cmd_move_to_front.o \
+	imap_cmd_move_up.o \
+	imap_cmd_object_down.o \
+	imap_cmd_object_move.o \
+	imap_cmd_object_up.o \
+	imap_cmd_paste.o \
+	imap_cmd_select.o \
+	imap_cmd_select_all.o \
+	imap_cmd_select_next.o \
+	imap_cmd_select_prev.o \
+	imap_cmd_select_region.o \
+	imap_cmd_send_to_back.o \
+	imap_cmd_unselect.o \
+	imap_cmd_unselect_all.o \
+	imap_command.o \
+	imap_csim_lex.o \
+	imap_csim_parse.o \
+	imap_default_dialog.o \
+	imap_edit_area_info.o \
+	imap_file.o \
+	imap_grid.o \
+	imap_main.o \
+	imap_menu.o \
+	imap_menu_funcs.o \
+	imap_misc.o \
+	imap_mru.o \
+	imap_ncsa_lex.o \
+	imap_ncsa_parse.o \
+	imap_object.o \
+	imap_object_popup.o \
+	imap_polygon.o \
+	imap_popup.o \
+	imap_preferences.o \
+	imap_preview.o \
+	imap_rectangle.o \
+	imap_selection.o \
+	imap_settings.o \
+	imap_source.o \
+	imap_statusbar.o \
+	imap_string.o \
+	imap_table.o \
+	imap_toolbar.o \
+	imap_tools.o
 endif
 
 ifdef EXTRA_jpeg
@@ -289,9 +380,13 @@ OBJECTS = \
 	script-fu-constants.o \
 	script-fu-scripts.o \
 	regex.o \
-	../dbbrowser/dbbrowser_utils.o
-EXTRACFLAGS = -DREGEX_MALLOC
+	dbbrowser_utils.o
+
+EXTRACFLAGS = -DREGEX_MALLOC -I../dbbrowser
 HAVE_RESOURCE = YES
+
+dbbrowser_utils.c : ../dbbrowser/dbbrowser_utils.c
+	cp $< $@
 endif
 
 ifdef EXTRA_sel2path

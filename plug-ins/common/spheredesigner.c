@@ -29,7 +29,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <gtk/gtk.h>
+#ifdef HAVE_SYS_TIME_H
 #include <sys/time.h>
+#endif
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
