@@ -24,27 +24,7 @@ if ($ARGV[0] ne "--writemakefile") {
    }
    
    do './config.pl';
-   if(defined $EXTENSIVE_TESTS) {
-      print "\nFetched some defaults from an earlier Makefile.PL run.\n";
-      print "Run \"make realclean\" if you don't want this\n";
-   } else {
-      print "
-This module usually does only a very short installation check.
-Alternatively, it can do more extensive tests, but these tests might fail
-even if everything is in fact correct.  And it has only been tested with
-gimp-1.1 ;)
-
-If you decide to run these tests (please!), I'd be glad to hear
-success stories (and of course any bug-reports ;)
-
-Do you want me to run these tests [y]? ";
-      
-      print "y\n";
-      $EXTENSIVE_TESTS = 1;
-      #$EXTENSIVE_TESTS = (<STDIN> !~ /^[nN]/) ? 1 : 0;
-   }
-   
-   print "\n";
+   $EXTENSIVE_TESTS = 1;
    
    $ENV{'EXTENSIVE_TESTS'} = $EXTENSIVE_TESTS;
    $ENV{CC}=$Config{cc};
@@ -64,7 +44,9 @@ import ExtUtils::MakeMaker;
 @INC = grep /^\//,@INC;
 eval { $Gimp::no_SIG=1; require Gimp };
 unless($@) {
-   $old_prefix = eval { Gimp::_gimp_prefix() };
+   eval { require Gimp::Config };
+   $old_prefix = eval { $Gimp::Config{GIMP_PREFIX} };
+   $old_prefix = eval { Gimp::_gimp_prefix() } unless $old_prefix;
    if ($@) {
       print <<EOF;
 
@@ -170,11 +152,6 @@ WARNING: version 0.3 of Gtk is _required_ for this module to
 EOF
 }
 
-# we do no longer do these dirty things
-#for(@shebang) {
-#   system ($Config{perlpath},"-pi","-e","\$. == 1 and \$_ = '#!$Config{perlpath}\n'",$_);
-#}
-
 sub MY::install {
    package MY;
    my $install = shift->SUPER::install(@_);
@@ -245,6 +222,32 @@ open C,">Gimp/Config.pm" or die "Gimp/Config.pm: $!\n";
 print C <<'EOF';
 package Gimp::Config;
 
+=cut
+
+=head1 NAME
+
+  Gimp::Config - config options found during configure time.
+
+=head1 DESCRIPTION
+
+The Gimp::Config module creates a tied hash %Gimp::Config which contains
+all the definitions the configure script and perl deduced from the system
+configuration at configure time. You can access these values just like you
+access any other values, i.e.  C<$Gimp::Config{KEY}>. Some important keys are:
+
+  IN_GIMP	=> true when gimp-perl was part of the Gimp distribution.
+  GIMP		=> the path of the gimp executable
+  prefix	=> the installation prefix
+  libdir	=> the gimp systemwide libdir
+  bindir	=> paths where gimp binaries are installed
+  gimpplugindir	=> the gimp plug-in directory (without the /plug-ins-suffix)
+
+=head1 SEE ALSO
+
+L<Gimp>.
+
+=cut
+
 sub TIEHASH {
    my $pkg = shift;
    my $self;
@@ -314,7 +317,7 @@ WriteMakefile(
     'DEFINE'	=> "$DEFINE1 $DEFS",
     'EXE_FILES'	=> ['scm2perl','scm2scm'],
     'macro'	=> \%cfg,
-    'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h" },
+    'realclean'	=> { FILES => "config.status config.cache config.log config.pl config.h Gimp/Config.pm" },
     'clean'	=> { FILES => "Makefile.old stamp-h" },
 );
 
@@ -336,9 +339,9 @@ all install check:
 
 clean mostlyclean objclean:
 
-distclean maintainer-clean: clean
+distclean maintainer-clean realclean clobber: clean
 	rm -f Makefile config.cache config.pl config.log config.h config.status stamp-h Makefile.old
-        rm -rf test-dir inst-temp
+        rm -rf test-dir inst-temp Gimp/Config.pm
 EOF
    close MAKEFILE;
    exit;

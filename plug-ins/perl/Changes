@@ -1,5 +1,19 @@
 Revision history for Gimp-Perl extension.
 
+1.083 Wed May 12 03:36:10 CEST 1999
+	- took a modified enums.pl to autogenerate constants. Some constants
+          have changed:
+          RED, GREEN etc.. => RED_LUT, GREEN_LUT
+          the shear constants got a _SHEAR suffix.
+          the flip constants got a _FLIP suffix.
+          SHARPEN/BLUR => SHARPEN_CONVOLVE/...
+        - got rid of _gimp_prefix and _gimp_path functions.
+        - removed debugging trace from Gimp::Compat. Ugh.
+        - improved documentation for Gimp::Config.
+        - reenabled all of t/run.t again, fixed to to actually _work_.
+        - rearranged gimp link flags into LDDLFLAGS (hack! bug in gtk/gimp!).
+        - fixed RUN_FULLINTERACTIVE.
+        
 1.082 Tue May 11 19:02:30 CEST 1999
 	- fixed sunos/solaris socketpair "protocol not implemented" problem.
         - added the Gimp::register_callback function and made Gimp::Fu use it.

@@ -92,22 +92,36 @@ sub gimp_call_procedure {
    if ($trace_level) {
       $req="TRCE".args2net($trace_level,@_);
       print $server_fh pack("N",length($req)).$req;
-      read($server_fh,$len,4) == 4 or die "protocol error";
-      $len=unpack("N",$len);
-      read($server_fh,$req,$len) == $len or die "protocol error";
-      ($trace,$req,@args)=net2args($req);
-      if (ref $trace_res eq "SCALAR") {
-         $$trace_res = $trace;
-      } else {
-         print $trace_res $trace;
-      }
+      do {
+         read($server_fh,$len,4) == 4 or die "protocol error";
+         $len=unpack("N",$len);
+         read($server_fh,$req,abs($len)) == $len or die "protocol error";
+         if ($len<0) {
+            ($req,@args)=net2args($req);
+            print "ignoring callback $req\n";
+            redo;
+         }
+         ($trace,$req,@args)=net2args($req);
+         if (ref $trace_res eq "SCALAR") {
+            $$trace_res = $trace;
+         } else {
+            print $trace_res $trace;
+         }
+      } while 0;
    } else {
       $req="EXEC".args2net(@_);
       print $server_fh pack("N",length($req)).$req;
-      read($server_fh,$len,4) == 4 or die "protocol error";
-      $len=unpack("N",$len);
-      read($server_fh,$req,$len) == $len or die "protocol error";
-      ($req,@args)=net2args($req);
+      do {
+         read($server_fh,$len,4) == 4 or die "protocol error";
+         $len=unpack("N",$len);
+         read($server_fh,$req,abs($len)) == $len or die "protocol error";
+         if ($len<0) {
+            ($req,@args)=net2args($req);
+            print "ignoring callback $req\n";
+            redo;
+         }
+         ($req,@args)=net2args($req);
+      } while 0;
    }
    croak $req if $req;
    wantarray ? @args : $args[0];
@@ -161,7 +175,8 @@ sub start_server {
                  (&Gimp::_PS_FLAG_BATCH | &Gimp::_PS_FLAG_QUIET)." ".
                  fileno($gimp_fh);
       { # block to suppress warning with broken perls (e.g. 5.004)
-         exec &Gimp::_gimp_path,
+         require Gimp::Config;
+         exec $Gimp::Config{GIMP_PATH},
               "-n","-b","(extension-perl-server $args)",
               "(extension_perl_server $args)",
               "(gimp_quit 0)",

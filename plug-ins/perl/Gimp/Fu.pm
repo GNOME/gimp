@@ -629,7 +629,7 @@ sub net {
    }
    
    # Go for it
-   $this->[0]->($interact>0 ? $this->[6]=~/^<Image>/ ? (&Gimp::RUN_FULLINTERACTIVE,undef,undef,@args)
+   $this->[0]->($interact>0 ? $this->[7]=~/^<Image>/ ? (&Gimp::RUN_FULLINTERACTIVE,undef,undef,@args)
                                                      : (&Gimp::RUN_INTERACTIVE,@args)
                             : (&Gimp::RUN_NONINTERACTIVE,@args));
 }

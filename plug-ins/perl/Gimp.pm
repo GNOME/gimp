@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.082;
+$VERSION = 1.083;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -24,132 +24,64 @@ $VERSION = 1.082;
 );
 
 # constants that, in some earlier version, were autoloaded
-@_consts = (@_param,qw(
-	ADDITION_MODE	ALPHA_MASK	APPLY		BEHIND_MODE	BG_BUCKET_FILL
-	BG_IMAGE_FILL	BILINEAR	BLACK_MASK	BLUE_CHANNEL	BLUR
-	CLIP_TO_BOTTOM_LAYER		CLIP_TO_IMAGE	COLOR_MODE	CONICAL_ASYMMETRIC
-	CONICAL_SYMMETRIC	CUSTOM	DARKEN_ONLY_MODE		DIFFERENCE_MODE
-	DISCARD		DISSOLVE_MODE	EXPAND_AS_NECESSARY		FG_BG_HSV
-	FG_BG_RGB	FG_BUCKET_FILL	FG_TRANS	GRAY		GRAYA_IMAGE
-	GRAY_CHANNEL	GRAY_IMAGE	GREEN_CHANNEL	HUE_MODE	IMAGE_CLONE
-	INDEXED		INDEXEDA_IMAGE	INDEXED_CHANNEL	INDEXED_IMAGE	LIGHTEN_ONLY_MODE
-	LINEAR		MULTIPLY_MODE	NORMAL_MODE	NO_IMAGE_FILL	OVERLAY_MODE
-	PATTERN_CLONE	PIXELS		POINTS		PATTERN_BUCKET_FILL
-	PROC_EXTENSION	PROC_PLUG_IN	PROC_TEMPORARY	RADIAL		RED_CHANNEL
-	REPEAT_NONE	REPEAT_SAWTOOTH	FG_IMAGE_FILL	WHITE_MASK	REPEAT_TRIANGULAR
-	RGBA_IMAGE	RGB_IMAGE	RUN_INTERACTIVE	RUN_NONINTERACTIVE
-	SATURATION_MODE	SCREEN_MODE	SELECTION_ADD	RGB		RUN_WITH_LAST_VALS
-	SELECTION_INTERSECT		SELECTION_REPLACE		SELECTION_SUB
-	SHAPEBURST_ANGULAR		SHAPEBURST_DIMPLED		SHAPEBURST_SPHERICAL
-	SHARPEN		SQUARE		STATUS_CALLING_ERROR		STATUS_EXECUTION_ERROR
-	STATUS_PASS_THROUGH		STATUS_SUCCESS	SUBTRACT_MODE	TRANS_IMAGE_FILL
-	VALUE_MODE	DIVIDE_MODE	PARASITE_PERSISTANT		WHITE_IMAGE_FILL
-        SPIRAL_CLOCKWISE		SPIRAL_ANTICLOCKWISE		PARASITE_ATTACH_PARENT
-        PARASITE_PARENT_PERSISTENT	PARASITE_GRANDPARENT_PERSISTENT	PARASITE_ATTACH_GRANDPARENT
-	
-	TRACE_NONE	TRACE_CALL	TRACE_TYPE	TRACE_NAME	TRACE_DESC
-	TRACE_ALL
-	
-	MESSAGE_BOX	CONSOLE
-	
-	ALL_HUES	RED_HUES	YELLOW_HUES	GREEN_HUES	CYAN_HUES
-	BLUE_HUES	MAGENTA_HUES
-	
-	HORIZONTAL	VERTICAL
-
-        VALUE		RED		GREEN		BLUE
-
-        WRAP		SMEAR		BLACK
-));
-
-@_procs = qw(
-	main
+@_consts = (@_param,
+#ENUM_NAME#
+'PRESSURE',            'SOFT',                'HARD',                'INDEXEDA_IMAGE',      'RGBA_IMAGE',          'GRAYA_IMAGE',         'RGB_IMAGE',           
+'INDEXED_IMAGE',       'GRAY_IMAGE',          'TRANS_IMAGE_FILL',    'WHITE_IMAGE_FILL',    'BG_IMAGE_FILL',       'FG_IMAGE_FILL',       'NO_IMAGE_FILL',       
+'VERTICAL_FLIP',       'HORIZONTAL_FLIP',     'LOOP_SAWTOOTH',       'ONCE_BACKWARDS',      'ONCE_FORWARD',        'ONCE_END_COLOR',      'LOOP_TRIANGLE',       
+'CYAN_HUES',           'RED_HUES',            'GREEN_HUES',          'YELLOW_HUES',         'ALL_HUES',            'MAGENTA_HUES',        'BLUE_HUES',           
+'MONO_PALETTE',        'WEB_PALETTE',         'MAKE_PALETTE',        'REUSE_PALETTE',       'CUSTOM_PALETTE',      'POINTS',              'PIXELS',              
+'SATURATION_MODE',     'ADDITION_MODE',       'NORMAL_MODE',         'HUE_MODE',            'SUBTRACT_MODE',       'DIVIDE_MODE',         'SCREEN_MODE',         
+'BEHIND_MODE',         'MULTIPLY_MODE',       'DISSOLVE_MODE',       'DIFFERENCE_MODE',     'DARKEN_ONLY_MODE',    'VALUE_MODE',          'LIGHTEN_ONLY_MODE',   
+'REPLACE_MODE',        'COLOR_MODE',          'OVERLAY_MODE',        'ERASE_MODE',          'CUSTOM',              'FG_TRANS',            'FG_BG_HSV',           
+'FG_BG_RGB',           'CONTINUOUS',          'INCREMENTAL',         'APPLY',               'DISCARD',             'BLUE_CHANNEL',        'GREEN_CHANNEL',       
+'GRAY_CHANNEL',        'AUXILLARY_CHANNEL',   'INDEXED_CHANNEL',     'RED_CHANNEL',         'HORIZONTAL_SHEAR',    'VERTICAL_SHEAR',      'BLUR_CONVOLVE',       
+'CUSTOM_CONVOLVE',     'SHARPEN_CONVOLVE',    'SELECTION_SUB',       'SELECTION_INTERSECT', 'SELECTION_ADD',       'SELECTION_REPLACE',   'SHADOWS',             
+'MIDTONES',            'HIGHLIGHTS',          'IMAGE_CLONE',         'PATTERN_CLONE',       'INDEXED',             'RGB',                 'GRAY',                
+'ADD_BLACK_MASK',      'ADD_WHITE_MASK',      'ADD_ALPHA_MASK',      'BILINEAR',            'SPIRAL_CLOCKWISE',    'SQUARE',              'RADIAL',              
+'CONICAL_SYMMETRIC',   'SHAPEBURST_DIMPLED',  'CONICAL_ASYMMETRIC',  'LINEAR',              'SPIRAL_ANTICLOCKWISE','SHAPEBURST_ANGULAR',  'SHAPEBURST_SPHERICAL',
+'ALPHA_LUT',           'GREEN_LUT',           'BLUE_LUT',            'VALUE_LUT',           'RED_LUT',             'HORIZONTAL_GUIDE',    'VERTICAL_GUIDE',      
+'OFFSET_BACKGROUND',   'OFFSET_TRANSPARENT',  'MESSAGE_BOX',         'ERROR_CONSOLE',       'CONSOLE',             'RUN_INTERACTIVE',     'RUN_WITH_LAST_VALS',  
+'RUN_NONINTERACTIVE',  'EXPAND_AS_NECESSARY', 'CLIP_TO_BOTTOM_LAYER','CLIP_TO_IMAGE',       'FLATTEN_IMAGE',       'REPEAT_NONE',         'REPEAT_SAWTOOTH',     
+'REPEAT_TRIANGULAR',   'BG_BUCKET_FILL',      'FG_BUCKET_FILL',      'PATTERN_BUCKET_FILL', 
+#ENUM_NAME#
+	'STATUS_CALLING_ERROR',		'STATUS_EXECUTION_ERROR',	'STATUS_PASS_THROUGH',
+        'STATUS_SUCCESS',		'PARASITE_PERSISTANT',		'PARASITE_ATTACH_PARENT',
+        'PARASITE_PARENT_PERSISTENT',	'PARASITE_ATTACH_GRANDPARENT',	'PARASITE_GRANDPARENT_PERSISTENT',
+	'TRACE_NONE',	'TRACE_CALL',	'TRACE_TYPE',	'TRACE_NAME',	'TRACE_DESC',	'TRACE_ALL',
 );
+
+@_procs = ('main','xlfd_size');
 
 bootstrap Gimp $VERSION;
 
-# defs missing from libgimp
-
-sub BEHIND_MODE		(){ 2 }
-
-sub FG_BG_RGB		(){ 0 }
-sub FG_BG_HSV		(){ 1 }
-sub FG_TRANS		(){ 2 }
-sub CUSTOM		(){ 3 }
-
-sub LINEAR		(){ 0 }
-sub BILINEAR		(){ 1 }
-sub RADIAL		(){ 2 }
-sub SQUARE		(){ 3 }
-sub CONICAL_SYMMETRIC	(){ 4 }
-sub CONICAL_ASYMMETRIC	(){ 5 }
-sub SHAPEBURST_ANGULAR	(){ 6 }
-sub SHAPEBURST_SPHERICAL(){ 7 }
-sub SHAPEBURST_DIMPLED	(){ 8 }
-sub SPIRAL_CLOCKWISE	(){ 9 }
-sub SPIRAL_ANTICLOCKWISE(){10 }
-
-sub REPEAT_NONE		(){ 0 }
-sub REPEAT_SAWTOOTH	(){ 1 }
-sub REPEAT_TRIANGULAR	(){ 2 }
-
-sub FG_BUCKET_FILL	(){ 0 }
-sub BG_BUCKET_FILL	(){ 1 }
-sub PATTERN_BUCKET_FILL	(){ 2 }
-
-sub RED_CHANNEL		(){ 0 }
-sub GREEN_CHANNEL	(){ 1 }
-sub BLUE_CHANNEL	(){ 2 }
-sub GRAY_CHANNEL	(){ 3 }
-sub INDEXED_CHANNEL	(){ 4 }
-
-sub WHITE_MASK		(){ 0 }
-sub BLACK_MASK		(){ 1 }
-sub ALPHA_MASK		(){ 2 }
-
-sub APPLY		(){ 0 }
-sub DISCARD		(){ 1 }
-
-sub EXPAND_AS_NECESSARY	(){ 0 }
-sub CLIP_TO_IMAGE	(){ 1 }
-sub CLIP_TO_BOTTOM_LAYER(){ 2 }
-
-sub SELECTION_ADD	(){ 0 }
-sub SELECTION_SUB	(){ 1 }
-sub SELECTION_REPLACE	(){ 2 }
-sub SELECTION_INTERSECT	(){ 3 }
-
-sub PIXELS		(){ 0 }
-sub POINTS		(){ 1 }
-
-sub IMAGE_CLONE		(){ 0 }
-sub PATTERN_CLONE	(){ 1 }
-
-sub BLUR		(){ 0 }
-sub SHARPEN		(){ 1 }
-
-sub ALL_HUES		(){ 0 }
-sub RED_HUES		(){ 1 }
-sub YELLOW_HUES		(){ 2 }
-sub GREEN_HUES		(){ 3 }
-sub CYAN_HUES		(){ 4 }
-sub BLUE_HUES		(){ 5 }
-sub MAGENTA_HUES	(){ 6 }
-
-sub MESSAGE_BOX		(){ 0 }
-sub CONSOLE		(){ 1 }
-
-sub SHADOWS		(){ 0 }
-sub MIDTONES		(){ 1 }
-sub HIGHLIGHTS		(){ 2 }
-
-sub HORIZONTAL		(){ 0 }
-sub VERTICAL		(){ 1 }
-
-sub VALUE		(){ 0 }
-sub RED			(){ 1 }
-sub GREEN		(){ 2 }
-sub BLUE		(){ 3 }
+#ENUM_DEFS#
+sub PRESSURE            (){ 2} sub SOFT                (){ 1} sub HARD                (){ 0} sub INDEXEDA_IMAGE      (){ 5} sub RGBA_IMAGE          (){ 1}
+sub GRAYA_IMAGE         (){ 3} sub RGB_IMAGE           (){ 0} sub INDEXED_IMAGE       (){ 4} sub GRAY_IMAGE          (){ 2} sub TRANS_IMAGE_FILL    (){ 3}
+sub WHITE_IMAGE_FILL    (){ 2} sub BG_IMAGE_FILL       (){ 1} sub FG_IMAGE_FILL       (){ 0} sub NO_IMAGE_FILL       (){ 4} sub VERTICAL_FLIP       (){ 1}
+sub HORIZONTAL_FLIP     (){ 0} sub LOOP_SAWTOOTH       (){ 2} sub ONCE_BACKWARDS      (){ 1} sub ONCE_FORWARD        (){ 0} sub ONCE_END_COLOR      (){ 4}
+sub LOOP_TRIANGLE       (){ 3} sub CYAN_HUES           (){ 4} sub RED_HUES            (){ 1} sub GREEN_HUES          (){ 3} sub YELLOW_HUES         (){ 2}
+sub ALL_HUES            (){ 0} sub MAGENTA_HUES        (){ 6} sub BLUE_HUES           (){ 5} sub MONO_PALETTE        (){ 3} sub WEB_PALETTE         (){ 2}
+sub MAKE_PALETTE        (){ 0} sub REUSE_PALETTE       (){ 1} sub CUSTOM_PALETTE      (){ 4} sub POINTS              (){ 1} sub PIXELS              (){ 0}
+sub SATURATION_MODE     (){12} sub ADDITION_MODE       (){ 7} sub NORMAL_MODE         (){ 0} sub HUE_MODE            (){11} sub SUBTRACT_MODE       (){ 8}
+sub DIVIDE_MODE         (){15} sub SCREEN_MODE         (){ 4} sub BEHIND_MODE         (){ 2} sub MULTIPLY_MODE       (){ 3} sub DISSOLVE_MODE       (){ 1}
+sub DIFFERENCE_MODE     (){ 6} sub DARKEN_ONLY_MODE    (){ 9} sub VALUE_MODE          (){14} sub LIGHTEN_ONLY_MODE   (){10} sub REPLACE_MODE        (){17}
+sub COLOR_MODE          (){13} sub OVERLAY_MODE        (){ 5} sub ERASE_MODE          (){16} sub CUSTOM              (){ 3} sub FG_TRANS            (){ 2}
+sub FG_BG_HSV           (){ 1} sub FG_BG_RGB           (){ 0} sub CONTINUOUS          (){ 0} sub INCREMENTAL         (){ 1} sub APPLY               (){ 0}
+sub DISCARD             (){ 1} sub BLUE_CHANNEL        (){ 2} sub GREEN_CHANNEL       (){ 1} sub GRAY_CHANNEL        (){ 3} sub AUXILLARY_CHANNEL   (){ 5}
+sub INDEXED_CHANNEL     (){ 4} sub RED_CHANNEL         (){ 0} sub HORIZONTAL_SHEAR    (){ 0} sub VERTICAL_SHEAR      (){ 1} sub BLUR_CONVOLVE       (){ 0}
+sub CUSTOM_CONVOLVE     (){ 2} sub SHARPEN_CONVOLVE    (){ 1} sub SELECTION_SUB       (){ 1} sub SELECTION_INTERSECT (){ 3} sub SELECTION_ADD       (){ 0}
+sub SELECTION_REPLACE   (){ 2} sub SHADOWS             (){ 0} sub MIDTONES            (){ 1} sub HIGHLIGHTS          (){ 2} sub IMAGE_CLONE         (){ 0}
+sub PATTERN_CLONE       (){ 1} sub INDEXED             (){ 2} sub RGB                 (){ 0} sub GRAY                (){ 1} sub ADD_BLACK_MASK      (){ 1}
+sub ADD_WHITE_MASK      (){ 0} sub ADD_ALPHA_MASK      (){ 2} sub BILINEAR            (){ 1} sub SPIRAL_CLOCKWISE    (){ 9} sub SQUARE              (){ 3}
+sub RADIAL              (){ 2} sub CONICAL_SYMMETRIC   (){ 4} sub SHAPEBURST_DIMPLED  (){ 8} sub CONICAL_ASYMMETRIC  (){ 5} sub LINEAR              (){ 0}
+sub SPIRAL_ANTICLOCKWISE(){10} sub SHAPEBURST_ANGULAR  (){ 6} sub SHAPEBURST_SPHERICAL(){ 7} sub ALPHA_LUT           (){ 4} sub GREEN_LUT           (){ 2}
+sub BLUE_LUT            (){ 3} sub VALUE_LUT           (){ 0} sub RED_LUT             (){ 1} sub HORIZONTAL_GUIDE    (){ 1} sub VERTICAL_GUIDE      (){ 2}
+sub OFFSET_BACKGROUND   (){ 0} sub OFFSET_TRANSPARENT  (){ 1} sub MESSAGE_BOX         (){ 0} sub ERROR_CONSOLE       (){ 2} sub CONSOLE             (){ 1}
+sub RUN_INTERACTIVE     (){ 0} sub RUN_WITH_LAST_VALS  (){ 2} sub RUN_NONINTERACTIVE  (){ 1} sub EXPAND_AS_NECESSARY (){ 0} sub CLIP_TO_BOTTOM_LAYER(){ 2}
+sub CLIP_TO_IMAGE       (){ 1} sub FLATTEN_IMAGE       (){ 3} sub REPEAT_NONE         (){ 0} sub REPEAT_SAWTOOTH     (){ 1} sub REPEAT_TRIANGULAR   (){ 2}
+sub BG_BUCKET_FILL      (){ 1} sub FG_BUCKET_FILL      (){ 0} sub PATTERN_BUCKET_FILL (){ 2}
+#ENUM_DEFS#
 
 sub WRAP		(){ 0 }
 sub SMEAR		(){ 1 }
@@ -170,7 +102,7 @@ sub import($;@) {
 
    # make a quick but dirty guess ;)
    
-   @_=qw(main xlfd_size :auto) unless @_;
+   @_=(@_procs,':auto') unless @_;
    
    for(@_) {
       if ($_ eq ":auto") {
@@ -247,15 +179,15 @@ sub canonicalize_colour {
    } else {
       unless (defined %rgb_db) {
          if ($rgb_db_path) {
-            open RGB,"<$rgb_db_path" or croak "unable to open $rgb_db_path";
+            open RGB_TEXT,"<$rgb_db_path" or croak "unable to open $rgb_db_path";
          } else {
-            *RGB=*DATA;
+            *RGB_TEXT=*DATA;
          }
-         while(<RGB>) {
+         while(<RGB_TEXT>) {
             next unless /^\s*(\d+)\s+(\d+)\s+(\d+)\s+(.+?)\s*$/;
             $rgb_db{lc($4)}=[$1,$2,$3];
          }
-         close RGB if defined $rgb_db_path;
+         close RGB_TEXT if defined $rgb_db_path;
       }
       if ($rgb_db{lc($_[0])}) {
          return $rgb_db{lc($_[0])};
@@ -1067,7 +999,7 @@ Marc Lehmann <pcg@goof.com>
 =head1 SEE ALSO
 
 perl(1), gimp(1), L<Gimp::OO>, L<Gimp::Data>, L<Gimp::Pixel>, L<Gimp::PDL>, L<Gimp::Util>, L<Gimp::UI>, L<Gimp::Feature>, L<Gimp::Net>,
-L<Gimp::Lib>, L<scm2perl> and L<scm2scm>.
+L<Gimp::Compat>, L<Gimp::Config>, L<Gimp::Lib>, L<Gimp::Module>, L<scm2perl> and L<scm2scm>.
 
 =cut
 

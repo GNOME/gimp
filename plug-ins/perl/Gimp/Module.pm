@@ -48,6 +48,10 @@ sub _deinit {
 
 =back
 
+=head1 SEE ALSO
+
+L<Gimp>.
+
 =head1 AUTHOR
 
 Marc Lehmann <pcg@goof.com>

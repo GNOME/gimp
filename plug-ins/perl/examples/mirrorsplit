@@ -30,19 +30,19 @@ register	"mirror_split",
 		gimp_image_add_layer($img, $temp1, 0);
 
 		if ($mirror == 0) {	# upper half
-			$temp2 = gimp_flip($temp1, VERTICAL);
+			$temp2 = gimp_flip($temp1, VERTICAL_FLIP);
 			gimp_rect_select($img, 0, 0, $w, $hspan, SELECTION_REPLACE, 0, 0);
 		};
 		if ($mirror == 1) {	# lower half
-			$temp2 = gimp_flip($temp1, VERTICAL);
+			$temp2 = gimp_flip($temp1, VERTICAL_FLIP);
 			gimp_rect_select($img, 0, $hspan, $w, $h - $hspan, SELECTION_REPLACE, 0, 0);
 		};
 		if ($mirror == 2) {	# left half
-			$temp2 = gimp_flip($temp1, HORIZONTAL);
+			$temp2 = gimp_flip($temp1, HORIZONTAL_FLIP);
 			gimp_rect_select($img, 0, 0, $wspan, $h, SELECTION_REPLACE, 0, 0);
 		};
 		if ($mirror == 3) {	# right half
-			$temp2 = gimp_flip($temp1, HORIZONTAL);
+			$temp2 = gimp_flip($temp1, HORIZONTAL_FLIP);
 			gimp_rect_select($img, $wspan, 0, $w - $wspan, $h, SELECTION_REPLACE, 0, 0);
 		};
 

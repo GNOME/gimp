@@ -23,9 +23,13 @@ $image->xyzzy, if the module is available.
 
 =over 4
 
-=item gimp_text_fontname
+=item gimp_text_fontname, gimp_get_extents_fontname
 
-=item gimp_get_extents_fontname
+These are emulated in 1.0.
+
+=item gimp_paintbrush
+
+The last two arguments only available in 1.1 are simply dropped.
 
 =back
 
@@ -100,7 +104,6 @@ sub fun {
    my($major,$minor,$name,$sub)=@_;
    if (Gimp->major_version < $major
        || (Gimp->major_version == $major && Gimp->minor_version < $minor)) {
-      print "overwriting Gimp::Lib::$name ($major,$minor)\n";
       *{"Gimp::Lib::$name"}=$sub;
    }
 }
@@ -118,6 +121,15 @@ fun 1,1,gimp_text_fontname,sub {
    
    Gimp->text_ext($drw, $x, $y, $string, $border, $antialias,
                   xlfd_unpack($xlfd, $xlfd_size, $xlfd_unit));
+};
+
+fun 1,1,gimp_paintbrush,sub {
+   shift if $_[0]->isa('Gimp::Image');
+   my $drawable = shift;
+   my $fade_out = shift;
+   shift unless ref $_[0];
+   my $strokes = shift;
+   Gimp::gimp_call_procedure('gimp_paintbrush',$drawable,$fade_out,$strokes);
 };
 
 1;

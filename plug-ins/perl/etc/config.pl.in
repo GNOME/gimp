@@ -66,6 +66,7 @@ if ($IN_GIMP) {
 }
 
 $cfg{GIMP_PREFIX}=$GIMP_PREFIX;
+$cfg{GIMP_PATH}  =$GIMP;
 
 if (!$IN_GIMP) {
    $cfg{gimpplugindir} = `$GIMPTOOL -n --install-admin-bin /bin/sh`;
@@ -73,7 +74,7 @@ if (!$IN_GIMP) {
    $cfg{gimpplugindir} =~ s{/plug-ins$}{} or die "\nFATAL: unable to deduce plugindir from gimptool script\n\n";
 }
 
-$cfg{_DEFS} = $DEFS = ' -DGIMP_PREFIX=\"'.$GIMP_PREFIX.'\" -DGIMP_PATH=\"'.$GIMP.'\"';
+$cfg{_DEFS} = $DEFS;
 
 # $...1 variables should be put in front of the corresponding MakeMaker values.
 $INC1     = "-I$topdir";

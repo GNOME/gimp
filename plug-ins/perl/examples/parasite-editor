@@ -2,16 +2,14 @@
 
 #BEGIN {$^W=1};
 
-use Gimp::Feature qw(perl-5.005 gtk);
+use Gimp::Feature qw(perl-5.005 gtk-1.2);
 use Gimp ();
 use Gimp::Fu;
 use Gtk;
 
 Gtk->init;
 
-$gtk_10 = Gtk->major_version==1 && Gtk->minor_version==0;
-
-$VERSION=0.3;
+$VERSION=0.4;
 
 #Gimp::set_trace(TRACE_ALL);
 
@@ -161,11 +159,11 @@ sub create_main {
    $w->vbox->add ($v);
 
    my $top = new Gtk::HBox (0,5);
-   $v->add($top);
+   $v->pack_start($top,0,1,5);
    my $bot = new Gtk::HBox (0,5);
    $v->add($bot);
    my $cmd = new Gtk::HBox (0,5);
-   $v->add ($cmd);
+   $v->pack_start($cmd,0,1,5);
 
    $top->set_usize (-1, $eX+5);
 
@@ -173,7 +171,7 @@ sub create_main {
 
    my $cs = new Gtk::ScrolledWindow undef,undef;
    $cs->set_policy(-automatic,-automatic);
-   $gtk_10 ? $cs->add ($clist) : $cs->add_with_viewport ($clist);
+   $cs->add_with_viewport ($clist);
    $bot->add ($cs);
 
    my $parbox = new Gtk::VBox (0,5);
