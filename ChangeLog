@@ -1,3 +1,13 @@
+2003-10-10  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/widgets/gimptoolbox.c (gimp_toolbox_init): Set the default
+	aspect ratio of the toolbox wrap box to 5:6.
+	(gimp_toolbox_set_geometry): Don't enforce min_height in the
+	toolbox window. Fixes bug #116937 and works around bug #113228.
+
+	* plug-ins/common/png.c (save_image): Round the values passed to
+	png_set_pHYs so that they don't decrease on every save.
+
 2003-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/config/Makefile.am: fixed dependencies for test-config.
@@ -768,7 +778,8 @@
 2003-10-05  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint-funcs/paint-funcs.c (shrink_line): Use gint instead
-	of guint. Fixes Debian bug report #205889.
+	of guint. Fixes Debian bug report #205889 (spotted by Falk
+	Hueffner).
 
 2003-10-05  Sven Neumann  <sven@gimp.org>
 

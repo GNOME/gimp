@@ -1087,7 +1087,7 @@ save_image (const gchar *filename,
   if (pngvals.phys)
     {
       gimp_image_get_resolution (orig_image_ID, &xres, &yres);
-      png_set_pHYs (pp, info, xres * 39.37, yres * 39.37,
+      png_set_pHYs (pp, info, RINT (xres / 0.0254), RINT (yres / 0.0254),
                     PNG_RESOLUTION_METER);
     }
 

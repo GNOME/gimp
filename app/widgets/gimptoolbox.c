@@ -193,6 +193,7 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);
   gtk_wrap_box_set_line_justify (GTK_WRAP_BOX (toolbox->wbox),
                                  GTK_JUSTIFY_LEFT);
+  gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (toolbox->wbox), 5.0 / 6.0);
 
   gtk_box_pack_start (GTK_BOX (vbox), toolbox->wbox, FALSE, FALSE, 0);
   gtk_widget_show (toolbox->wbox);
@@ -407,13 +408,7 @@ gimp_toolbox_set_geometry (GimpToolbox *toolbox)
 
       geometry.min_width  = (2 * border_width +
                              2 * button_requisition.width);
-      geometry.min_height = (2 * border_width +
-                             spacing          +
-                             separator_height +
-                             button_requisition.height  +
-                             menubar_requisition.height +
-                             MAX (color_requisition.height,
-                                  indicator_requisition.height));
+      geometry.min_height = -1;
       geometry.width_inc  = button_requisition.width;
       geometry.height_inc = (GIMP_DOCK (toolbox)->dockbooks ?
                              1 : button_requisition.height);
