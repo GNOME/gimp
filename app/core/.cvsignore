@@ -6,4 +6,3 @@ Makefile.in
 libappcore.la
 gimpmarshal.c
 gimpmarshal.h
-stamp-gimpmarshal.h

@@ -147,7 +147,6 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 @STRIP_END@
 
 libappcore_a_built_sources = @STRIP_BEGIN@ \
-	stamp-gimpmarshal.h		\
 	gimpmarshal.c			\
 	gimpmarshal.h			\
 @STRIP_END@
@@ -169,12 +168,11 @@ EXTRA_DIST = \
 gen_sources = xgen-gmh xgen-gmc
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/stamp-gimpmarshal.h: $(srcdir)/gimpmarshal.list gimpmarshal.h
+$(srcdir)/gimpmarshal.h: $(srcdir)/gimpmarshal.list
 	glib-genmarshal --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
 	&& (cmp -s xgen-gmh $(srcdir)/gimpmarshal.h || cp xgen-gmh $(srcdir)/gimpmarshal.h) \
-	&& rm -f xgen-gmh xgen-gmh~ \
-	&& echo timestamp > $@
-$(srcdir)/gimpmarshal.c: $(srcdir)/stamp-gimpmarshal.h
+	&& rm -f xgen-gmh xgen-gmh~
+$(srcdir)/gimpmarshal.c: $(srcdir)/gimpmarshal.h
 	echo "#include <glib.h>" > xgen-gmc \
 	&& echo "#include <glib-object.h>" >> xgen-gmc \
 	&& echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
