@@ -38,7 +38,7 @@
 
 #include "base/base-config.h"
 
-#include "core/gimpunit.h"
+#include "core/gimpunits.h"
 
 #include "gui.h"
 #include "resolution-calibrate-dialog.h"

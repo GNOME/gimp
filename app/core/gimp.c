@@ -52,7 +52,7 @@
 #include "gimppattern.h"
 #include "gimpparasite.h"
 #include "gimptoolinfo.h"
-#include "gimpunit.h"
+#include "gimpunits.h"
 
 #include "libgimp/gimpintl.h"
 

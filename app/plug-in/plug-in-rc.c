@@ -21,21 +21,13 @@
 
 #include "config.h"
 
-#include <errno.h>
-#include <fcntl.h>
 #include <stdio.h>
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
-#include <sys/types.h>
 
 #include <glib-object.h>
 
-#ifdef G_OS_WIN32
-#include <io.h>
-#endif
-
 #include "plug-in-types.h"
+
+#include "config/gimpscanner.h"
 
 #include "plug-in.h"
 #include "plug-ins.h"
@@ -47,7 +39,7 @@
 
 
 /*  
- *  All functions return G_TOKEN_LEFT_PAREN on success,
+ *  All deserialize functions return G_TOKEN_LEFT_PAREN on success,
  *  or the GTokenType they would have expected but didn't get.
  */
 
@@ -63,19 +55,10 @@ static GTokenType plug_in_help_def_deserialize   (GScanner      *scanner,
 static GTokenType plug_in_has_init_deserialize   (GScanner      *scanner,
                                                   PlugInDef     *plug_in_def);
 
-static inline gboolean parse_token               (GScanner      *scanner,
-                                                  GTokenType     token);
-static inline gboolean parse_string              (GScanner      *scanner,
-                                                  gchar        **dest);
-static inline gboolean parse_string_no_validate  (GScanner      *scanner,
-                                                  gchar        **dest);
-static inline gboolean parse_int                 (GScanner      *scanner,
-                                                  gint          *dest);
-
 
 enum
 {
-  PLUG_IN_DEF,
+  PLUG_IN_DEF = 1,
   PROC_DEF,
   LOCALE_DEF,
   HELP_DEF,
@@ -87,36 +70,27 @@ enum
 gboolean
 plug_in_rc_parse (const gchar *filename)
 {
-  gint        fd;
   GScanner   *scanner;
   GTokenType  token;
 
   g_return_val_if_fail (filename != NULL, FALSE);
 
-  fd = open (filename, O_RDONLY);
+  scanner = gimp_scanner_new (filename);
 
-  if (fd == -1)
+  if (! scanner)
     return TRUE;
 
-  scanner = g_scanner_new (NULL);
-
-  scanner->config->cset_identifier_first = ( G_CSET_a_2_z );
-  scanner->config->cset_identifier_nth   = ( G_CSET_a_2_z "-_" );
-
-  g_scanner_input_file (scanner, fd);
-  scanner->input_name = filename;
-
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, 0,
                               "plug-in-def", GINT_TO_POINTER (PLUG_IN_DEF));
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "proc-def", GINT_TO_POINTER (PROC_DEF));
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "locale-def", GINT_TO_POINTER (LOCALE_DEF));
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "help-def", GINT_TO_POINTER (HELP_DEF));
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "has-init", GINT_TO_POINTER (HAS_INIT));
-  g_scanner_scope_add_symbol (scanner, 0, 
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "proc-arg", GINT_TO_POINTER (PROC_ARG));
 
   token = G_TOKEN_LEFT_PAREN;
@@ -135,8 +109,12 @@ plug_in_rc_parse (const gchar *filename)
           break;
 
         case G_TOKEN_SYMBOL:
-          if (scanner->value.v_symbol == PLUG_IN_DEF)
-            token = plug_in_def_deserialize (scanner);
+          if (scanner->value.v_symbol == GINT_TO_POINTER (PLUG_IN_DEF))
+            {
+              g_scanner_set_scope (scanner, PLUG_IN_DEF);
+              token = plug_in_def_deserialize (scanner);
+              g_scanner_set_scope (scanner, 0);
+            }
           break;
 
         case G_TOKEN_RIGHT_PAREN:
@@ -156,8 +134,7 @@ plug_in_rc_parse (const gchar *filename)
                              _("fatal parse error"), TRUE);
     }
 
-  g_scanner_destroy (scanner);
-  close (fd);
+  gimp_scanner_destroy (scanner);
 
   return (token != G_TOKEN_EOF);
 }
@@ -170,13 +147,13 @@ plug_in_def_deserialize (GScanner *scanner)
   PlugInProcDef *proc_def;
   GTokenType     token;
 
-  if (!parse_string (scanner, &name))
+  if (! gimp_scanner_parse_string (scanner, &name))
     return G_TOKEN_STRING;
 
   plug_in_def = plug_in_def_new (name);
   g_free (name);
 
-  if (!parse_int (scanner, (gint *) &plug_in_def->mtime))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &plug_in_def->mtime))
     {
       plug_in_def_free (plug_in_def, TRUE);
       return G_TOKEN_INT;
@@ -245,7 +222,7 @@ plug_in_def_deserialize (GScanner *scanner)
     {
       token = G_TOKEN_RIGHT_PAREN;
 
-      if (parse_token (scanner, token))
+      if (gimp_scanner_parse_token (scanner, token))
         {
           plug_ins_def_add (plug_in_def);
           return G_TOKEN_LEFT_PAREN;
@@ -264,37 +241,37 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
   GTokenType token;
   gint       i;
 
-  if (!parse_string (scanner, &proc_def->db_info.name))
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.name))
     return G_TOKEN_STRING;
-  if (!parse_int (scanner, (gint *) &proc_def->db_info.proc_type)) 
+  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.proc_type)) 
     return G_TOKEN_INT;
-  if (!parse_string (scanner, &proc_def->db_info.blurb))
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.blurb))
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->db_info.help))
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.help))
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->db_info.author)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.author)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->db_info.copyright)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.copyright)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->db_info.date)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->db_info.date)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->menu_path)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->menu_path)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->extensions)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->extensions)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->prefixes)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->prefixes)) 
     return G_TOKEN_STRING;
-  if (!parse_string_no_validate (scanner, &proc_def->magics)) 
+  if (! gimp_scanner_parse_string_no_validate (scanner, &proc_def->magics)) 
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &proc_def->image_types)) 
+  if (! gimp_scanner_parse_string (scanner, &proc_def->image_types)) 
     return G_TOKEN_STRING;
 
   proc_def->image_types_val = 
     plug_ins_image_types_parse (proc_def->image_types);
 
-  if (!parse_int (scanner, (gint *) &proc_def->db_info.num_args)) 
+  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.num_args)) 
     return G_TOKEN_INT;
-  if (!parse_int (scanner, (gint *) &proc_def->db_info.num_values)) 
+  if (! gimp_scanner_parse_int (scanner, (gint *) &proc_def->db_info.num_values)) 
     return G_TOKEN_INT;
  
   if (proc_def->db_info.num_args > 0)
@@ -319,7 +296,7 @@ plug_in_proc_def_deserialize (GScanner      *scanner,
         return token;
     }
   
-  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
   return G_TOKEN_LEFT_PAREN;
@@ -329,21 +306,21 @@ static GTokenType
 plug_in_proc_arg_deserialize (GScanner *scanner,
                               ProcArg  *arg)
 {
-  if (!parse_token (scanner, G_TOKEN_LEFT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_LEFT_PAREN))
     return G_TOKEN_LEFT_PAREN;
 
-  if (!parse_token (scanner, G_TOKEN_SYMBOL) ||
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL) ||
       GPOINTER_TO_INT (scanner->value.v_symbol) != PROC_ARG)
     return G_TOKEN_SYMBOL;
 
-  if (!parse_int (scanner, (gint *) &arg->arg_type))
+  if (! gimp_scanner_parse_int (scanner, (gint *) &arg->arg_type))
     return G_TOKEN_INT;
-  if (!parse_string (scanner, &arg->name))
+  if (! gimp_scanner_parse_string (scanner, &arg->name))
     return G_TOKEN_STRING;
-  if (!parse_string (scanner, &arg->description))
+  if (! gimp_scanner_parse_string (scanner, &arg->description))
     return G_TOKEN_STRING;
   
-  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
   return G_TOKEN_LEFT_PAREN;
@@ -353,12 +330,12 @@ static GTokenType
 plug_in_locale_def_deserialize (GScanner  *scanner,
                                 PlugInDef *plug_in_def)
 {
-  if (!parse_string (scanner, &plug_in_def->locale_domain))
+  if (! gimp_scanner_parse_string (scanner, &plug_in_def->locale_domain))
     return G_TOKEN_STRING;
 
-  parse_string (scanner, &plug_in_def->locale_path);
+  gimp_scanner_parse_string (scanner, &plug_in_def->locale_path);
 
-  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
   return G_TOKEN_LEFT_PAREN;
@@ -368,10 +345,10 @@ static GTokenType
 plug_in_help_def_deserialize (GScanner  *scanner,
                               PlugInDef *plug_in_def)
 {
-  if (!parse_string (scanner, &plug_in_def->help_path))
+  if (! gimp_scanner_parse_string (scanner, &plug_in_def->help_path))
     return G_TOKEN_STRING;
 
-  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
   return G_TOKEN_LEFT_PAREN;
@@ -383,78 +360,10 @@ plug_in_has_init_deserialize (GScanner  *scanner,
 {
   plug_in_def->has_init = TRUE;
 
-  if (!parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
 
   return G_TOKEN_LEFT_PAREN;
-}
-
-
-/* helper functions */
-
-
-static inline gboolean
-parse_token (GScanner   *scanner,
-             GTokenType  token)
-{
-  if (g_scanner_peek_next_token (scanner) != token)
-    return FALSE;
-
-  g_scanner_get_next_token (scanner);
-
-  return TRUE;
-}
-
-static inline gboolean
-parse_string (GScanner  *scanner,
-              gchar    **dest)
-{
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
-    return FALSE;
-
-  g_scanner_get_next_token (scanner);
-
-  if (*scanner->value.v_string)
-    {
-      if (!g_utf8_validate (scanner->value.v_string, -1, NULL))
-        {
-          g_scanner_warn (scanner, _("invalid UTF-8 string"));
-          return FALSE;
-        }
-      
-      *dest = g_strdup (scanner->value.v_string);
-    }
-
-  return TRUE;
-}
-
-static inline gboolean
-parse_string_no_validate (GScanner  *scanner,
-                          gchar    **dest)
-{
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_STRING)
-    return FALSE;
-
-  g_scanner_get_next_token (scanner);
-
-  if (*scanner->value.v_string)
-    *dest = g_strdup (scanner->value.v_string);
-
-  return TRUE;
-}
-
-static inline gboolean
-parse_int (GScanner  *scanner,
-           gint      *dest)
-{
-  if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
-    return FALSE;
-
-  g_scanner_get_next_token (scanner);
-
-  *dest = scanner->value.v_int;
-
-  return TRUE;
 }
 
 
@@ -618,4 +527,3 @@ plug_in_rc_write (GSList      *plug_in_defs,
 
   return TRUE;
 }
-

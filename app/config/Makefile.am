@@ -28,6 +28,8 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpguiconfig.h			\
 	gimprc.c			\
 	gimprc.h			\
+	gimpscanner.c			\
+	gimpscanner.h			\
 @STRIP_END@
 
 AM_CPPFLAGS = @STRIP_BEGIN@ 		\

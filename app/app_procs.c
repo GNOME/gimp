@@ -40,7 +40,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
-#include "core/gimpunit.h"
+#include "core/gimpunits.h"
 
 #include "plug-in/plug-ins.h"
 

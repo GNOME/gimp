@@ -21,9 +21,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -32,8 +29,6 @@
 
 #include "gimp.h"
 #include "gimpunit.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -270,97 +265,4 @@ _gimp_unit_get_plural (Gimp     *gimp,
     return gettext (gimp_unit_percent.plural);
 
   return gettext (_gimp_unit_get_user_unit (gimp, unit)->plural);
-}
-
-
-/*  unitrc functions  **********/
-
-void
-gimp_units_init (Gimp *gimp)
-{
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gimp->user_units   = NULL;
-  gimp->n_user_units = 0;
-}
-
-void
-gimp_units_exit (Gimp *gimp)
-{
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  if (gimp->user_units)
-    {
-      g_list_foreach (gimp->user_units, (GFunc) g_free, NULL);
-      g_list_free (gimp->user_units);
-
-      gimp->user_units   = NULL;
-      gimp->n_user_units = 0;
-    }
-}
-
-void
-gimp_unitrc_load (Gimp *gimp)
-{
-  gchar *filename;
-
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  filename = gimp_personal_rc_file ("unitrc");
-  gimprc_parse_file (filename);
-  g_free (filename);
-}
-
-void
-gimp_unitrc_save (Gimp *gimp)
-{
-  gint   i;
-  gchar *filename;
-  FILE  *fp;
-
-  g_return_if_fail (gimp != NULL);
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  filename = gimp_personal_rc_file ("unitrc");
-
-  fp = fopen (filename, "w");
-  g_free (filename);
-  if (!fp)
-    return;
-
-  fprintf (fp,
-	   "# GIMP unitrc\n" 
-	   "# This file contains your user unit database. You can\n"
-	   "# modify this list with the unit editor. You are not\n"
-	   "# supposed to edit it manually, but of course you can do.\n"
-	   "# This file will be entirely rewritten every time you\n"
-	   "# quit the gimp.\n\n");
-
-  /*  save user defined units  */
-  for (i = gimp_unit_get_number_of_built_in_units ();
-       i < gimp_unit_get_number_of_units ();
-       i++)
-    if (gimp_unit_get_deletion_flag (i) == FALSE)
-      {
-	fprintf (fp,
-		 "(unit-info \"%s\"\n"
-		 "   (factor %f)\n"
-		 "   (digits %d)\n"
-		 "   (symbol \"%s\")\n"
-		 "   (abbreviation \"%s\")\n"
-		 "   (singular \"%s\")\n"
-		 "   (plural \"%s\"))\n\n",
-		 gimp_unit_get_identifier (i),
-		 gimp_unit_get_factor (i),
-		 gimp_unit_get_digits (i),
-		 gimp_unit_get_symbol (i),
-		 gimp_unit_get_abbreviation (i),
-		 gimp_unit_get_singular (i),
-		 gimp_unit_get_plural (i));
-      }
-
-  fclose (fp);
 }

@@ -42,8 +42,6 @@
 
 #include "core/gimp.h"
 #include "core/gimpcoreconfig.h"
-#include "core/gimpimagefile.h"
-#include "core/gimplist.h"
 #include "core/gimpparasite.h"
 #include "core/gimptoolinfo.h"
 
@@ -87,17 +85,14 @@ typedef enum
   TT_INTERP,
   TT_XPREVSIZE,
   TT_XUNIT,
-  TT_XMENUPATH,
   TT_XDEVICE,
   TT_XSESSIONINFO,
   TT_XCOLORHISTORY,
-  TT_XUNITINFO,
   TT_XPARASITE,
   TT_XNAVPREVSIZE,
   TT_XHELPBROWSER,
   TT_XCURSORMODE,
-  TT_XCOMMENT,
-  TT_XDOCUMENT
+  TT_XCOMMENT
 } TokenType;
 
 
@@ -138,14 +133,11 @@ static gint           parse_preview_size        (gpointer val1p, gpointer val2p)
 static gint           parse_nav_preview_size    (gpointer val1p, gpointer val2p);
 static gint           parse_units               (gpointer val1p, gpointer val2p);
 static gint           parse_device              (gpointer val1p, gpointer val2p);
-static gint           parse_menu_path           (gpointer val1p, gpointer val2p);
 static gint           parse_session_info        (gpointer val1p, gpointer val2p);
-static gint           parse_unit_info           (gpointer val1p, gpointer val2p);
 static gint           parse_parasite            (gpointer val1p, gpointer val2p);
 static gint           parse_help_browser        (gpointer val1p, gpointer val2p);
 static gint           parse_cursor_mode         (gpointer val1p, gpointer val2p);
 static gint           parse_color_history       (gpointer val1p, gpointer val2p);
-static gint           parse_document            (gpointer val1p, gpointer val2p);
 
 static gint           parse_color               (GimpRGB        *color);
 static gint           parse_unknown             (gchar          *token_sym);
@@ -289,12 +281,9 @@ static ParseFunc funcs[] =
   { "theme",                         TT_STRING,        &gimprc.theme, NULL                     },
 
   { "parasite",                      TT_XPARASITE,     NULL, NULL },
-  { "menu-path",                     TT_XMENUPATH,     NULL, NULL },
   { "device",                        TT_XDEVICE,       NULL, NULL },
   { "session-info",                  TT_XSESSIONINFO,  NULL, NULL },
-  { "color-history",                 TT_XCOLORHISTORY, NULL, NULL },
-  { "unit-info",                     TT_XUNITINFO,     NULL, NULL },
-  { "document",                      TT_XDOCUMENT,     NULL, NULL }
+  { "color-history",                 TT_XCOLORHISTORY, NULL, NULL }
 };
 
 
@@ -907,16 +896,12 @@ parse_statement (void)
 	  return parse_nav_preview_size (func->val1p, func->val2p);
 	case TT_XUNIT:
 	  return parse_units (func->val1p, func->val2p);
-	case TT_XMENUPATH:
-	  return parse_menu_path (func->val1p, func->val2p);
 	case TT_XDEVICE:
 	  return parse_device (func->val1p, func->val2p);
 	case TT_XSESSIONINFO:
 	  return parse_session_info (func->val1p, func->val2p);
 	case TT_XCOLORHISTORY:
 	  return parse_color_history (func->val1p, func->val2p);
-	case TT_XUNITINFO:
-	  return parse_unit_info (func->val1p, func->val2p);
 	case TT_XPARASITE:
 	  return parse_parasite (func->val1p, func->val2p);
 	case TT_XHELPBROWSER:
@@ -925,8 +910,6 @@ parse_statement (void)
 	  return parse_cursor_mode (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return parse_string (func->val1p, func->val2p);
-	case TT_XDOCUMENT:
-	  return parse_document (func->val1p, func->val2p);
 	}
     }
 
@@ -1466,42 +1449,6 @@ parse_color (GimpRGB *color)
   token = get_next_token ();
 
   return OK;
-}
-
-static gint
-parse_menu_path (gpointer val1p,
-		 gpointer val2p)
-{
-  gchar *menu_path   = NULL;
-  gchar *accelerator = NULL;
-  gint   token;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  menu_path = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    goto error;
-  token = get_next_token ();
-
-  accelerator = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  return OK;
-
- error:
-  g_free (menu_path);
-  g_free (accelerator);
-
-  return ERROR;
 }
 
 static gchar *
@@ -2124,124 +2071,6 @@ parse_color_history (gpointer val1p,
 }
 
 static gint
-parse_unit_info (gpointer val1p, 
-		 gpointer val2p)
-{
-  gint      token;
-  GimpUnit  unit;
-
-  gchar    *identifier   = NULL;
-  gdouble   factor       = 1.0;
-  gint      digits       = 2.0;
-  gchar    *symbol       = NULL;
-  gchar    *abbreviation = NULL;
-  gchar    *singular     = NULL;
-  gchar    *plural       = NULL;
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_STRING))
-    return ERROR;
-  token = get_next_token ();
-
-  identifier = g_strdup (token_str);
-
-  /* Parse options for unit info */
-
-  while (peek_next_token () == TOKEN_LEFT_PAREN)
-    {
-      token = get_next_token ();
-
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_SYMBOL))
-	goto error;
-      token = get_next_token ();
-
-      if (!strcmp ("factor", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  factor = token_num;
-	}
-      else if (!strcmp ("digits", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_NUMBER))
-	    goto error;
-	  token = get_next_token ();
-	  digits = token_int;
-	}
-      else if (!strcmp ("symbol", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-	  symbol = g_strdup (token_str);
-	}
-      else if (!strcmp ("abbreviation", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-	  abbreviation = g_strdup (token_str);
-	}
-      else if (!strcmp ("singular", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-	  singular = g_strdup (token_str);
-	}
-      else if (!strcmp ("plural", token_sym))
-	{
-	  token = peek_next_token ();
-	  if (!token || (token != TOKEN_STRING))
-	    goto error;
-	  token = get_next_token ();
-	  plural = g_strdup (token_str);
-	}
-      else
-	goto error;
-      
-      token = peek_next_token ();
-      if (!token || (token != TOKEN_RIGHT_PAREN))
-	goto error;
-      token = get_next_token ();
-    }
-
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  unit = gimp_unit_new (identifier, factor, digits,
-			symbol, abbreviation, singular, plural);
-
-  /*  make the unit definition persistent  */
-  gimp_unit_set_deletion_flag (unit, FALSE);
-
-  g_free (identifier);
-  g_free (symbol);
-  g_free (abbreviation);
-  g_free (singular);
-  g_free (plural);
-
-  return OK;
-
- error:
-  g_free (identifier);
-  g_free (symbol);
-  g_free (abbreviation);
-  g_free (singular);
-  g_free (plural);
-
-  return ERROR;
-}
-
-static gint
 parse_parasite (gpointer val1p, 
 		gpointer val2p)
 {
@@ -2331,43 +2160,6 @@ parse_cursor_mode (gpointer val1p,
   token = get_next_token ();
 
   return OK;
-}
-
-static gint
-parse_document (gpointer val1p, 
-		gpointer val2p)
-{
-  gint           token    = 0;
-  gchar         *filename = NULL;
-  GimpImagefile *imagefile;
-
-  token = peek_next_token ();
-  if (!token || token != TOKEN_STRING)
-    goto error;
-
-  token = get_next_token ();
-  filename = g_strdup (token_str);
-
-  token = peek_next_token ();
-  if (!token || (token != TOKEN_RIGHT_PAREN))
-    goto error;
-  token = get_next_token ();
-
-  imagefile = gimp_imagefile_new (filename);
-
-  g_free (filename);
-
-  GIMP_LIST (the_gimp->documents)->list =
-    g_list_append (GIMP_LIST (the_gimp->documents)->list, imagefile);
-
-  the_gimp->documents->num_children++;
-
-  return OK;
-
- error:
-  g_free (filename);
-
-  return ERROR;
 }
 
 static gint
@@ -2466,13 +2258,10 @@ gimprc_value_to_str (const gchar *name)
 	  return cursor_mode_to_str (func->val1p, func->val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (func->val1p, func->val2p);
-	case TT_XMENUPATH:
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
 	case TT_XCOLORHISTORY:
-	case TT_XUNITINFO:
 	case TT_XPARASITE:
-	case TT_XDOCUMENT:
 	  return NULL;
 	}
     }

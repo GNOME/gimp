@@ -40,7 +40,6 @@
 #include "gimpimage-mask.h"
 #include "gimppattern.h"
 
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

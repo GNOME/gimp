@@ -29,12 +29,14 @@
 
 #include "core-types.h"
 
+#include "config/gimpscanner.h"
+
 #include "gimp.h"
 #include "gimpdocuments.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
 
-#include "gimprc.h"
+#include "libgimp/gimpintl.h"
 
 
 void
@@ -63,13 +65,79 @@ gimp_documents_exit (Gimp *gimp)
 void
 gimp_documents_load (Gimp *gimp)
 {
-  gchar *filename;
+  gchar      *filename;
+  GScanner   *scanner;
+  GTokenType  token;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   filename = gimp_personal_rc_file ("documents");
-  gimprc_parse_file (filename);
+  scanner = gimp_scanner_new (filename);
   g_free (filename);
+
+  if (! scanner)
+    return;
+
+  g_scanner_scope_add_symbol (scanner, 0,
+                              "document", GINT_TO_POINTER (1));
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  do
+    {
+      if (g_scanner_peek_next_token (scanner) != token)
+        break;
+
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_SYMBOL;
+          break;
+
+        case G_TOKEN_SYMBOL:
+          token = G_TOKEN_RIGHT_PAREN;
+          if (scanner->value.v_symbol == GINT_TO_POINTER (1))
+            {
+              gchar         *uri;
+              GimpImagefile *imagefile;
+
+              if (! gimp_scanner_parse_string (scanner, &uri))
+                {
+                  token = G_TOKEN_STRING;
+                  break;
+                }
+
+              imagefile = gimp_imagefile_new (uri);
+
+              g_free (uri);
+
+              GIMP_LIST (gimp->documents)->list =
+                g_list_append (GIMP_LIST (gimp->documents)->list, imagefile);
+
+              gimp->documents->num_children++;
+            }
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default: /* do nothing */
+          break;
+        }
+    }
+  while (token != G_TOKEN_EOF);
+
+  if (token != G_TOKEN_LEFT_PAREN)
+    {
+      g_scanner_get_next_token (scanner);
+      g_scanner_unexp_token (scanner, token, NULL, NULL, NULL,
+                             _("fatal parse error"), TRUE);
+    }
+
+  gimp_scanner_destroy (scanner);
 }
 
 static void

@@ -152,6 +152,8 @@ libappcore_a_sources = @STRIP_BEGIN@ \
 	gimptoolinfo.h			\
 	gimpunit.c			\
 	gimpunit.h			\
+	gimpunits.c			\
+	gimpunits.h			\
 	gimpundo.c			\
 	gimpundo.h			\
 	gimpundostack.c			\
