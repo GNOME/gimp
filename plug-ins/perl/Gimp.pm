@@ -749,8 +749,10 @@ Very old perls may need:
 =head1 SPECIAL FUNCTIONS
 
 In this section, you can find descriptions of special functions, functions
-having different calling conventions/semantics than I would expect (I cannot
-speak for you), or just plain interesting functions.
+having different calling conventions/semantics than I would expect (I
+cannot speak for you), or just plain interesting functions. All of these
+functions must either be imported explicitly or called using a namespace
+override (C<Gimp::>), not as Methods (C<Gimp-E<gt>>).
 
 =over 4
 
@@ -793,13 +795,36 @@ Currently, these functions only lock the current Perl-Server instance
 against exclusive access, they are nops when used via the Gimp::Lib
 interface.
 
+=item Gimp::set_rgb_db(filespec)
+
+Use the given rgb database instead of the default one. The format is the
+same as the one used by the X11 Consortiums rgb database (you might have a
+copy in /usr/lib/X11/rgb.txt). You can view the default database with
+C<perldoc -m Gimp>, at the end of the file.
+
+=item Gimp::initialized ()
+
+this function returns true whenever it is safe to clal gimp functions. This is
+usually only the case after gimp_main or gimp_init have been called.
+
+=back
+
+=head1 SPECIAL METHODS
+
+This chapter descibes methods that behave differently than you might
+expect, or methods uniquely implemented in perl (that is, not in the
+PDB). All of these must be invoked using the method syntax (C<Gimp-E<gt>>
+or C<$object-E<gt>>).
+
+=over 4
+
 =item gimp_install_procedure(name, blurb, help, author, copyright, date, menu_path, image_types, type, [params], [return_vals])
 
 Mostly same as gimp_install_procedure. The parameters and return values for
 the functions are specified as an array ref containing either integers or
 array-refs with three elements, [PARAM_TYPE, \"NAME\", \"DESCRIPTION\"].
 
-=item gimp_progress_init(message)
+=item gimp_progress_init(message,[])
 
 Initializes a progress bar. In networked modules this is a no-op.
 
@@ -833,12 +858,13 @@ channels. The reason why this is documented is that the usual way to return
 C<PARAM_INT32ARRAY>'s would be to return a B<reference> to an B<array of
 integers>, rather than blessed objects.
 
-=item set_rgb_db filespec
+=item server_eval(string)
 
-Use the given rgb database instead of the default one. The format is the
-same as the one used by the X11 Consortiums rgb database (you might have a
-copy in /usr/lib/X11/rgb.txt). You can view the default database with
-C<perldoc -m Gimp>, at the end of the file.
+This evaluates the given string in array context and returns the
+results. It's similar to C<eval>, but with two important differences: the
+evaluating always takes place on the server side/server machine (which
+might be the same as the local one) and compilation/runtime errors are
+reported as runtime errors (i.e. throwing an exception).
 
 =back
 
@@ -859,7 +885,7 @@ you how Gimp can help you debugging your scripts:
 
 =over 4
 
-=item set_trace (tracemask)
+=item Gimp::set_trace (tracemask)
 
 Tracking down bugs in gimp scripts is difficult: no sensible error messages.
 If anything goes wrong, you only get an execution failure. Switch on
@@ -900,20 +926,15 @@ all of the above.
 
 C<set_trace> returns the old tracemask.
 
-=item set_trace(\$tracevar)
+=item Gimp::set_trace(\$tracevar)
 
 write trace into $tracevar instead of printing it to STDERR. $tracevar only
 contains the last command traces, i.e. it's cleared on every PDB invocation
 invocation.
 
-=item set_trace(*FILEHANDLE)
+=item Gimp::set_trace(*FILEHANDLE)
 
 write trace to FILEHANDLE instead of STDERR.
-
-=item initialized ()
-
-this function returns true whenever it is safe to clal gimp functions. This is
-usually only the case after gimp_main or gimp_init have been called.
 
 =back
 

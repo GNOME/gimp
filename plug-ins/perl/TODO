@@ -22,7 +22,7 @@ important issues
   * Gimp::IO (?)
   * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
   * generic config query mechanism
-  * Gimp->server_eval()
+[DONE]  * Gimp->server_eval()
 [DONE]  * supply a gimp-1.1 compatible gimp_progress_init
   * install scripts in share/
 [DONE]  * fix auto-edit shebang for check-ins

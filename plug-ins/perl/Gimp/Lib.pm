@@ -39,6 +39,7 @@ bootstrap Gimp::Lib $VERSION;
 
 sub gimp_progress_init {
    push @_,-1 if @_<2;
+   print "proggress_init yeah @_\n";
    eval { gimp_call_procedure "gimp_progress_init",@_ };
    gimp_call_procedure "gimp_progress_init",shift if $@;
 }
@@ -79,6 +80,13 @@ sub gimp_tile_eheight		{ $_[0]->{_eheight}	}
 sub gimp_tile_bpp		{ $_[0]->{_bpp}		}
 sub gimp_tile_shadow		{ $_[0]->{_shadow}	}
 sub gimp_tile_gdrawable		{ $_[0]->{_gdrawable}	}
+
+# "server-side" perl code evaluation
+sub server_eval {
+   my @res = eval shift;
+   die $@ if $@;
+   @res;
+}
 
 # be careful not to require AUTOLOAD here
 sub Gimp::PixelRgn::DESTROY {

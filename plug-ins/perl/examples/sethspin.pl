@@ -17,7 +17,7 @@
 # Seth Burgess
 # <sjburges@gimp.org>
 
-use Gimp 1.06;
+use Gimp;
 use Gimp::Fu;
 use Gimp::Util;
 
@@ -44,6 +44,7 @@ sub spin_layer { # the function for actually spinning the layer
     # Now lets spin it!
 	$stepsize = 3.14159/$numframes; # in radians 
 	for ($i=0; $i<=3.14159; $i+=$stepsize) {
+        	Gimp->progress_update ($i/0.0314159);
 		# create a new layer for spinning
 		$framelay = ($i < 3.14159/2.0) ?  $spin->copy(1) : $dest->copy(1);
 		$img->add_layer($framelay, 0);
@@ -80,16 +81,16 @@ register "seth_spin",
          "Take one image.  Spin it about the horizontal axis, and end up with another image.  I made it for easy web buttons.",
          "Seth Burgess",
          "Seth Burgess <sjburges\@gimp.org>",
-         "1.0.1",
+         "1.3",
          "<Toolbox>/Xtns/Animation/Seth Spin",
          "*",
          [
           [PF_DRAWABLE, "Source", "What drawable to spin from?"],
           [PF_DRAWABLE, "Destination","What drawable to spin to?"],
-	  [PF_INT8, "Frames", "How many frames to use?", 16],
-	  [PF_COLOR, "Background", "What color to use for background if not transparent", [0,0,0]],
-	  [PF_SLIDER, "Perspective", "How much perspective effect to get", 40, [0,255,5]],
-	  [PF_TOGGLE, "Spin Back", "Also spin back?" , 1],
+		  [PF_INT8, "Frames", "How many frames to use?", 16],
+		  [PF_COLOR, "Background", "What color to use for background if not transparent", [0,0,0]],
+		  [PF_SLIDER, "Perspective", "How much perspective effect to get", 40, [0,255,5]],
+		  [PF_TOGGLE, "Spin Back", "Also spin back?" , 1],
           [PF_TOGGLE, "Convert Indexed", "Convert to indexed?", 1],
          ],
          [],
@@ -99,6 +100,8 @@ register "seth_spin",
 	$maxwide = ($src->width > $dest->width) ? $src->width : $dest->width;
 	$maxhigh = ($src->height > $dest->height) ? $src->height: $dest->height;
 	$img = gimp_image_new($maxwide, $maxhigh, RGB);
+
+        Gimp->progress_init("Seth Spin...",-1);
 
 	$tmpimglayer = $img->add_new_layer(0,3,1); 
 
@@ -157,6 +160,7 @@ register "seth_spin",
 	if ($indexed) { $img->convert_indexed(1,255); } 
 
 	gimp_palette_set_background($oldbackground);
+	gimp_displays_flush();
 	return();
 };
 
