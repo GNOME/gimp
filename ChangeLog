@@ -1,3 +1,7 @@
+2000-12-18  Michael Natterer  <mitch@gimp.org>
+
+	* po-plug-ins/POTFILES.in: removed gpb.c, added gih.c
+
 2000-12-18  Sven Neumann  <sven@gimp.org>
 	    Jens Lautenbacher <jtl@gimp.org>
 

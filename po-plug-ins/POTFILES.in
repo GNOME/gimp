@@ -57,8 +57,8 @@ plug-ins/common/gee.c
 plug-ins/common/gicon.c
 plug-ins/common/gif.c
 plug-ins/common/gifload.c
+plug-ins/common/gih.c
 plug-ins/common/glasstile.c
-plug-ins/common/gpb.c
 plug-ins/common/gqbist.c
 plug-ins/common/gradmap.c
 plug-ins/common/grid.c
