@@ -224,4 +224,17 @@
 # gfig pattern directory
 (gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
 
+# This string sets how image window titles are formatted.
+# The following percent expansions are performed:
+#   %%  literal percent sign
+#   %f  bare filename, or "Untiltled"
+#   %F  full path to file
+#   %p  PDB image id
+#   %i  view instance number
+#   %t  image type (RGB, indexed, greyscale)
+#   %z  zoom factor as a percentage
+#   %s  source scale factor
+#   %d  destination scale factor
+(image-title-format "%f-%p.%i (%t) %z%%")
+
 # [end of file]

@@ -155,6 +155,9 @@ change_scale (GDisplay *gdisp,
       resize_display (gdisp, allow_resize_windows, TRUE);
 
     }
+
+  /* title may have changed if it includes the zoom ratio */
+  gdisplay_update_title (gdisp);
 }
 
 

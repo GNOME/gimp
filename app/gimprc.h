@@ -71,6 +71,7 @@ extern float     monitor_xres;
 extern float     monitor_yres;
 extern int       using_xserver_resolution;
 extern int       num_processors;
+extern char *    image_title_format;
 
 
 /*  function prototypes  */

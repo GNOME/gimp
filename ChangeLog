@@ -1,3 +1,15 @@
+Sat Feb  6 18:16:57 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/gdisplay.c: gdisplay_format_title now parses a format string
+	      set by the user to control what goes in the image window
+	      titles. 
+	* app/gdisplay.h: gdisplay_update_title() prototype.
+	* app/gimprc.c
+	* app/gimprc.h: image-title-format added.
+	* app/scale.c: update a display's title when zooming in/out
+	
+	* gimprc.in: sample image-title-format setting
+
 Sat Feb  6 16:22:36 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
 
 	Changed:-

@@ -58,7 +58,7 @@ static int             display_num  = 1;
 static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 /*  Local functions  */
-static void       gdisplay_format_title     (GimpImage *, char *);
+static void       gdisplay_format_title     (GDisplay *, char *, int);
 static void       gdisplay_delete           (GDisplay *);
 static GSList *   gdisplay_free_area_list   (GSList *);
 static GSList *   gdisplay_process_area_list(GSList *, GArea *);
@@ -80,18 +80,10 @@ gdisplay_new (GimpImage       *gimage,
 {
   GDisplay *gdisp;
   char title [MAX_TITLE_BUF];
-  int instance;
 
   /*  If there isn't an interface, never create a gdisplay  */
   if (no_interface)
     return NULL;
-
-  /* format the title */
-  gdisplay_format_title (gimage, title);
-
-  instance = gimage->instance_count;
-  gimage->instance_count++;
-  gimage->ref_count++;
 
   /*
    *  Set all GDisplay parameters...
@@ -106,7 +98,7 @@ gdisplay_new (GimpImage       *gimage,
   gdisp->depth = g_visual->depth;
   gdisp->select = NULL;
   gdisp->ID = display_num++;
-  gdisp->instance = instance;
+  gdisp->instance = gimage->instance_count;
   gdisp->update_areas = NULL;
   gdisp->display_areas = NULL;
   gdisp->disp_xoffset = 0;
@@ -126,6 +118,9 @@ gdisplay_new (GimpImage       *gimage,
   /*gdisp->idle_render.handlerid = -1;*/
   gdisp->idle_render.update_areas = NULL;
   gdisp->idle_render.active = FALSE;
+
+  /* format the title */
+  gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
 
   /*  add the new display to the list so that it isn't lost  */
   display_list = g_slist_append (display_list, (void *) gdisp);
@@ -147,16 +142,45 @@ gdisplay_new (GimpImage       *gimage,
   /*  set the current tool cursor  */
   gdisplay_install_tool_cursor (gdisp, default_gdisplay_cursor);
 
+  gimage->instance_count++;
+  gimage->ref_count++;
+
   return gdisp;
 }
 
 
-static void
-gdisplay_format_title (GimpImage *gimage,
-		       char   *title)
+
+static int print (char *, int, int, const char *, ...) G_GNUC_PRINTF (4, 5);
+
+static int
+print (char *buf, int len, int start, const char *fmt, ...)
 {
+  va_list args;
+  int printed;
+
+  va_start (args, fmt);
+
+  printed = g_vsnprintf (buf + start, len - start, fmt, args);
+  if (printed < 0)
+    printed = len - start;
+
+  va_end (args);
+
+  return printed;
+}
+
+static void
+gdisplay_format_title (GDisplay *gdisp,
+		       char   *title,
+		       int     title_len)
+{
+  GimpImage *gimage;
   char *image_type_str;
   int empty;
+  int i;
+  char *format;
+
+  gimage = gdisp->gimage;
 
   empty = gimage_is_empty (gimage);
 
@@ -175,11 +199,78 @@ gdisplay_format_title (GimpImage *gimage,
       image_type_str = NULL;
     }
 
-  g_snprintf (title, MAX_TITLE_BUF, "%s-%d.%d (%s)",
-	      prune_filename (gimage_filename (gimage)),
-	      pdb_image_to_id (gimage),
-	      gimage->instance_count,
-	      image_type_str);
+  i = 0;
+  format = image_title_format;
+
+  while (i < title_len && *format)
+  {
+    switch (*format) {
+    case '%':
+      format++;
+      switch (*format) {
+      case 0:
+	  g_warning (_("image-title-format string ended within %%-sequence"));
+	  break;
+
+      case '%':
+	  title[i++] = '%';
+	  break;
+
+      case 'f': /* pruned filename */
+	  i += print (title, title_len, i,
+		      "%s", prune_filename (gimage_filename (gimage)));
+	  break;
+
+      case 'F': /* full filename */
+	  i += print (title, title_len, i, "%s", gimage_filename (gimage));
+	  break;
+
+      case 'p': /* PDB id */
+	  i += print (title, title_len, i, "%d", pdb_image_to_id (gimage));
+	  break;
+
+      case 'i': /* instance */
+	  i += print (title, title_len, i, "%d", gdisp->instance);
+	  break;
+
+      case 't': /* type */
+	  i += print (title, title_len, i, "%s", image_type_str);
+	  break;
+
+      case 's': /* user source zoom factor */
+	  i += print (title, title_len, i, "%d", SCALESRC (gdisp));
+	  break;
+
+      case 'd': /* user destination zoom factor */
+	  i += print (title, title_len, i, "%d", SCALEDEST (gdisp));
+	  break;
+
+      case 'z': /* user zoom factor (percentage) */
+	  i += print (title, title_len, i,
+		      "%d", 100 * SCALEDEST (gdisp) / SCALESRC (gdisp));
+	  break;
+
+	  /* other cool things to be added:
+	   * %m = memory used by picture
+	   * some kind of resolution / image size thing
+	   * people seem to want to know the active layer name
+	   */
+
+      default:
+	  g_warning (_("image-title-format contains unknown format sequence '%%%c'"), *format);
+	  break;
+      }
+      break;
+
+    default:
+      title[i++] = *format;
+      break;
+    }
+
+    format++;
+  }
+
+  title[MIN(i, title_len)] = 0;
 }
 
 
@@ -1563,27 +1654,34 @@ gdisplay_get_ID (int ID)
 
 
 void
+gdisplay_update_title (GDisplay *gdisp)
+{
+  char title [MAX_TITLE_BUF];
+  guint context_id;
+
+  /* format the title */
+  gdisplay_format_title (gdisp, title, MAX_TITLE_BUF);
+  gdk_window_set_title (gdisp->shell->window, title);
+
+  /* update the statusbar */
+  context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "title");
+  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), context_id);
+  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), context_id, title);
+}
+
+
+void
 gdisplays_update_title (GimpImage *gimage)
 {
   GDisplay *gdisp;
   GSList *list = display_list;
-  char title [MAX_TITLE_BUF];
-  guint context_id;
 
   /*  traverse the linked list of displays, handling each one  */
   while (list)
     {
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage)
-	{
-	  /* format the title */
-	  gdisplay_format_title (gdisp->gimage, title);
-	  gdk_window_set_title (gdisp->shell->window, title);
-	  /* update the statusbar */
-	  context_id = gtk_statusbar_get_context_id (GTK_STATUSBAR (gdisp->statusbar), "title");
-	  gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), context_id);
-	  gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), context_id, title);
-	}
+	   gdisplay_update_title (gdisp);
 
       list = g_slist_next (list);
     }
@@ -1600,9 +1698,7 @@ gdisplays_resize_cursor_label (GimpImage *gimage)
     {
       gdisp = (GDisplay *) list->data;
       if (gdisp->gimage == gimage)
-	{
 	  gdisplay_resize_cursor_label(gdisp);
-	}
 
       list = g_slist_next (list);
     }
@@ -1902,7 +1998,6 @@ gdisplay_hash (GDisplay *display)
 void
 gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
 {
-  char title [MAX_TITLE_BUF];
   int instance;
 
   if (gdisp->idle_render.active)
@@ -1920,7 +2015,6 @@ gdisplay_reconnect (GDisplay *gdisp, GimpImage *gimage)
   gdisp->gimage = gimage;
   gdisp->instance = instance;
 
-  gdisplay_format_title (gimage, title);
   gdisplays_update_title (gimage);
 
   gdisplay_expose_full (gdisp);

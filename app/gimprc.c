@@ -135,6 +135,7 @@ float     monitor_xres = 72.0;
 float     monitor_yres = 72.0;
 int       using_xserver_resolution = FALSE;
 int       num_processors = 1;
+char *    image_title_format = NULL;
 
 static int get_next_token (void);
 static int peek_next_token (void);
@@ -255,9 +256,10 @@ static ParseFunc funcs[] =
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
   { "device",                TT_XDEVICE,    NULL, NULL },
   { "session-info",          TT_XSESSIONINFO, NULL, NULL},
-  { "monitor-xresolution",   TT_FLOAT,     &monitor_xres, NULL },
-  { "monitor-yresolution",   TT_FLOAT,     &monitor_yres, NULL },
-  { "num-processors",        TT_INT,       &num_processors, NULL }
+  { "monitor-xresolution",   TT_FLOAT,      &monitor_xres, NULL },
+  { "monitor-yresolution",   TT_FLOAT,      &monitor_yres, NULL },
+  { "num-processors",        TT_INT,        &num_processors, NULL },
+  { "image-title-format",    TT_STRING,     &image_title_format, NULL },
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -280,6 +282,8 @@ extern char* alternate_gimprc;
 extern char* alternate_system_gimprc;
 
 #define MAX_GIMPDIR_LEN 500
+
+#define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
 
 char *
 gimp_directory ()
@@ -374,6 +378,9 @@ parse_gimprc ()
       }
       parse_gimprc_file (filename);
     }
+
+  if (!image_title_format)
+    image_title_format = DEFAULT_IMAGE_TITLE_FORMAT;
 }
 
 void

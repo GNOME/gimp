@@ -183,6 +183,7 @@ void       gdisplay_resize_cursor_label    (GDisplay *);
 
 GDisplay * gdisplay_active                 (void);
 GDisplay * gdisplay_get_ID                 (int);
+void       gdisplay_update_title           (GDisplay*);
 void       gdisplays_update_title          (GimpImage*);
 void       gdisplays_resize_cursor_label   (GimpImage*);
 void       gdisplays_update_area           (GimpImage*, int, int, int, int);
