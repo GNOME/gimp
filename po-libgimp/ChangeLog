@@ -1,3 +1,9 @@
+2001-11-15  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.Big5.po -> zh_TW.po: Replace translation with the
+	  one from stable branch, rename to avoid encoding naming
+	  problem, and try to resolve the resulting CVS conflict (my error)
+
 2001-11-08  Wang Jian  <lark@linux.net.cn>
 
 	* zh_CN.po: Updated Simpified Chinese translation by

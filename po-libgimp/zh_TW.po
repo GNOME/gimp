@@ -1,94 +1,103 @@
 # Traditional chinese translation for gimp-libgimp.
 # Copyright (C) 2001 Free Software Foundation, Inc.
+# Chun-Chung Chen <cjj@u.washington.edu>, 2001.
+# æ—ä½³å® <object@mis.mgt.ncu.edu.tw>, 2001.
 # Abel Cheung <maddog@linux.org.hk>, 2001.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 1.2.2\n"
-"POT-Creation-Date: 2001-11-11 22:48+0100\n"
-"PO-Revision-Date: 2001-07-21 04:52+0800\n"
+"Project-Id-Version: gimp-libgimp 1.2.3\n"
+"POT-Creation-Date: 2001-10-25 19:35+0800\n"
+"PO-Revision-Date: 2001-10-25 21:14+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=big5\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: libgimp/gimpcolorbutton.c:121
+msgid "/Use Foreground Color"
+msgstr "/ä½¿ç”¨å‰æ™¯é¡è‰²"
+
+#: libgimp/gimpcolorbutton.c:122
+msgid "/Use Background Color"
+msgstr "/ä½¿ç”¨èƒŒæ™¯é¡è‰²"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
-msgstr "µLªk³B²z¹Ï¼h"
+msgstr "ç„¡æ³•è™•ç†åœ–å±¤"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "µ²¦X¥i¨£ªº¹Ï¼h"
+msgstr "åˆä½µå¯è¦‹åœ–å±¤"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "µLªk³B²z¹Ï¼h"
+msgstr "ç„¡æ³•è™•ç†åœ–å±¤çš„åç§»ã€å°ºå¯¸æˆ–é€æ˜åº¦"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
-msgstr "¥u¯à¥H°Êµe¤è¦¡³B²z¹Ï¼h"
+msgstr "åªèƒ½ä»¥å‹•ç•«å½±æ ¼çš„æ–¹å¼è™•ç†åœ–å±¤"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
-msgstr "¥H°Êµe¤è¦¡Àx¦s"
+msgstr "å„²å­˜ç‚ºå‹•ç•«"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
-msgstr "¹Ï¹³¥­­±¤Æ"
+msgstr "åœ–åƒå¹³é¢åŒ–"
 
 #: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
-msgstr "µLªk³B²z³z©ú«×"
+msgstr "ç„¡æ³•è™•ç†é€æ˜åº¦"
 
 #: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
-msgstr "¥u¯à³B²z RGB ¹Ï¹³"
+msgstr "åªèƒ½è™•ç† RGB åœ–åƒ"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
-msgstr "Âà´«¬° RGB"
+msgstr "è½‰æ›æˆ RGB"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
-msgstr "¥u¯à³B²z¦Ç¶¥¹Ï¹³"
+msgstr "åªèƒ½è™•ç†ç°éšåœ–åƒ"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
-msgstr "Âà´«¬°¦Ç¶¥"
+msgstr "è½‰æ›æˆç°éš"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
-msgstr "¥u¯à³B²z¯Á¤Ş¦â¹Ï¹³"
+msgstr "åªèƒ½è™•ç†ç´¢å¼•è‰²åœ–åƒ"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Âà´«¬°¹w³]ªº¯Á¤Ş¦â\n"
-"¡]­n§ïÅÜ®ÄªG½Ğ¥Î¤H¤âÂà´«¡^"
+"ä½¿ç”¨é è¨­å€¼è½‰æ›æˆç´¢å¼•è‰²åœ–åƒ\n"
+"ï¼ˆè«‹è‡ªè¡Œèª¿æ•´çµæœï¼‰"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
-msgstr "¥u¯àÂà´«¬° RGB ©Î¦Ç¶¥¹Ï¹³"
+msgstr "åªèƒ½è™•ç† RGB æˆ–ç°éšåœ–åƒ"
 
 #: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
-msgstr "¥u¯à³B²z RGB ©Î¯Á¤Ş¦â¹Ï¹³"
+msgstr "åªèƒ½è™•ç† RGB æˆ–ç´¢å¼•è‰²åœ–åƒ"
 
 #: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
-msgstr "¥u¯à³B²z¦Ç¶¥©Î¯Á¤Ş¦â¹Ï¹³"
+msgstr "åªèƒ½è™•ç†ç°éšæˆ–ç´¢å¼•è‰²åœ–åƒ"
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "»İ­n alpha ¦âÀW"
+msgstr "éœ€è¦ alpha è‰²ç‰ˆ"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "·s¼W Alpha ¦âÀW"
+msgstr "æ–°å¢ Alpha è‰²ç‰ˆ"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -97,15 +106,18 @@ msgstr "·s¼W Alpha ¦âÀW"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "ç¢ºå®šå„²å­˜"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "ç¢ºå®š"
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
+#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
+#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
+#: libgimp/gimpunitmenu.c:505
 msgid "Cancel"
-msgstr "¨ú®ø"
+msgstr "å–æ¶ˆ"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -113,6 +125,8 @@ msgid ""
 "You are about to save %s as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"å°‡æœƒå„²å­˜ %s ç‚º %sã€‚\n"
+"é€™æ¨£å°‡ä¸æœƒå„²å­˜å¯è¦‹çš„åœ–å±¤ã€‚"
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -121,139 +135,134 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:414
 msgid "Export File"
-msgstr "¶×¥XÀÉ®×"
+msgstr "åŒ¯å‡ºæª”æ¡ˆ"
 
 #: libgimp/gimpexport.c:419
 msgid "Export"
-msgstr "¶×¥X"
+msgstr "åŒ¯å‡º"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
-msgstr "©¿²¤"
+msgstr "å¿½ç•¥"
 
 #: libgimp/gimpexport.c:438
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "§Aªº¹Ï¹³¦bÀx¦s«e¥²¶·¶×¥X¡A³o¬O¦]¬°¡G"
+msgstr "åœ–åƒåœ¨å„²å­˜å‰å¿…é ˆåŒ¯å‡ºï¼ŒåŸå› å¦‚ä¸‹ï¼š"
 
 #. the footline
-#: libgimp/gimpexport.c:503
+#: libgimp/gimpexport.c:501
 msgid "The export conversion won't modify your original image."
-msgstr "¶×¥X¥\¯à¤£·|­×§ï­ì¦³ªº¹Ï¹³¡C"
+msgstr "åŒ¯å‡ºæ™‚çš„åœ–åƒè½‰æ›ä¸æœƒæ›´æ”¹åŸæœ‰çš„åœ–åƒã€‚"
+
+#: libgimp/gimpexport.c:569
+msgid "a layer mask"
+msgstr "åœ–å±¤é®ç½©"
 
 #: libgimp/gimpexport.c:571
-msgid "a layer mask"
-msgstr ""
-
-#: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
-msgstr ""
+msgstr "è‰²ç‰ˆï¼ˆå·²å„²å­˜çš„é¸æ“‡å€åŸŸï¼‰"
+
+#: libgimp/gimpfileselection.c:388
+msgid "Select File"
+msgstr "é¸æ“‡æª”æ¡ˆ"
+
+#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
+#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
+#: libgimp/gimpunitmenu.c:503
+msgid "OK"
+msgstr "ç¢ºå®š"
+
+#: libgimp/gimpunitmenu.c:241
+msgid "More..."
+msgstr "æ›´å¤š..."
+
+#: libgimp/gimpunitmenu.c:498
+msgid "Unit Selection"
+msgstr "é¸æ“‡å–®ä½"
+
+#: libgimp/gimpunitmenu.c:535
+msgid "Unit"
+msgstr "å–®ä½"
+
+#: libgimp/gimpunitmenu.c:536
+msgid "Factor"
+msgstr "æ¯”ä¾‹"
 
 #. pseudo unit
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:49
 msgid "pixel"
-msgstr "µe¯À"
+msgstr "åƒç´ "
 
-#: libgimp/gimpunit.c:52
+#: libgimp/gimpunit.c:49
 msgid "pixels"
-msgstr "µe¯À"
+msgstr "åƒç´ "
 
 #. standard units
-#: libgimp/gimpunit.c:55
+#: libgimp/gimpunit.c:52
 msgid "inch"
-msgstr "¤o"
+msgstr "è‹±å‹"
 
-#: libgimp/gimpunit.c:55
+#: libgimp/gimpunit.c:52
 msgid "inches"
-msgstr "¤o"
+msgstr "è‹±å‹"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:53
 msgid "millimeter"
-msgstr "­½¦Ì"
+msgstr "æ¯«ç±³"
 
-#: libgimp/gimpunit.c:56
+#: libgimp/gimpunit.c:53
 msgid "millimeters"
-msgstr "­½¦Ì"
+msgstr "æ¯«ç±³"
 
 #. professional units
-#: libgimp/gimpunit.c:59
+#: libgimp/gimpunit.c:56
 msgid "point"
-msgstr "ÂI"
+msgstr "é»"
 
-#: libgimp/gimpunit.c:59
+#: libgimp/gimpunit.c:56
 msgid "points"
-msgstr "ÂI"
+msgstr "é»"
 
-#: libgimp/gimpunit.c:60
+#: libgimp/gimpunit.c:57
 msgid "pica"
-msgstr "pica"
+msgstr "picaï¼ˆé‰›é»ï¼‰"
 
-#: libgimp/gimpunit.c:60
+#: libgimp/gimpunit.c:57
 msgid "picas"
-msgstr "pica"
+msgstr "picaï¼ˆé‰›é»ï¼‰"
 
-#: libgimp/gimpunit.c:67
+#: libgimp/gimpunit.c:64
 msgid "percent"
-msgstr "¦Ê¤À¤ñ"
+msgstr "ç™¾åˆ†æ¯”"
 
-#: libgimpwidgets/gimpcolorbutton.c:78
-msgid "/Use Foreground Color"
-msgstr "/¨Ï¥Î«e´ºÃC¦â"
-
-#: libgimpwidgets/gimpcolorbutton.c:79
-msgid "/Use Background Color"
-msgstr "/¨Ï¥Î­I´ºÃC¦â"
-
-#: libgimpwidgets/gimpfileselection.c:362
-msgid "Select File"
-msgstr "¿ï¾ÜÀÉ®×"
-
-#: libgimpwidgets/gimpunitmenu.c:265
-msgid "More..."
-msgstr "§ó¦h..."
-
-#: libgimpwidgets/gimpunitmenu.c:526
-msgid "Unit Selection"
-msgstr "³æ¦ì¿ï¾Ü"
-
-#: libgimpwidgets/gimpunitmenu.c:570
-msgid "Unit"
-msgstr "³æ¦ì"
-
-#: libgimpwidgets/gimpunitmenu.c:574
-msgid "Factor"
-msgstr "¤ñ¨Ò"
-
-#: libgimpwidgets/gimpwidgets.c:724
+#: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"¦pªG¤£«ö¡u®É¶¡¡v«ö¶s¡A±N·|¨Ï¥Î¦¹¼Æ­È§@¬°¶Ã¼Æ²£¥Í¾¹\n"
-"ªººØ¤l - ³o¼Ë¤¹³\§A­«½Æ¦a²£¥Í¦P¤@¨t¦Cªº¶Ã¼Æ"
+"å¦‚æœä¸æŒ‰ã€Œæ™‚é–“ã€æŒ‰éˆ•ï¼Œå°‡æœƒä½¿ç”¨æ­¤æ•¸å€¼ä½œç‚ºäº‚æ•¸ç”¢ç”Ÿå™¨\n"
+"çš„ç¨®å­ - é€™æ¨£å…è¨±ä½ é‡è¤‡åœ°ç”¢ç”ŸåŒä¸€ç³»åˆ—çš„äº‚æ•¸"
 
-#: libgimpwidgets/gimpwidgets.c:729
+#: libgimp/gimpwidgets.c:720
 msgid "Time"
-msgstr "®É¶¡"
+msgstr "æ™‚é–“"
 
-#: libgimpwidgets/gimpwidgets.c:738
+#: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "¶Ã¼Æ²£¥Í¾¹·|¨Ï¥Î²{¦bªº®É¶¡¬°ºØ¤l - ³o¼Ë·|«Oµı¶Ã¼Æ·|¬OÀH¾÷²£¥Íªº¡C"
+msgstr "ä»¥ç›®å‰çš„æ™‚é–“ä½œç‚ºéš¨æ©Ÿæ•¸ç”¢ç”Ÿå™¨çš„ç¨®å­ - é€™ä¿è­‰ä¸€å®šç¨‹åº¦çš„éš¨æ©ŸåŒ–"
 
-#: libgimpwidgets/gimpwidgets.c:1052
+#: libgimp/gimpwidgets.c:1042
 msgid "Bytes"
-msgstr "¦ì¤¸²Õ"
+msgstr "ä½å…ƒçµ„"
 
-#: libgimpwidgets/gimpwidgets.c:1053
+#: libgimp/gimpwidgets.c:1043
 msgid "KiloBytes"
-msgstr "¤d¦ì¤¸²Õ"
+msgstr "åƒä½å…ƒçµ„"
 
-#: libgimpwidgets/gimpwidgets.c:1054
+#: libgimp/gimpwidgets.c:1044
 msgid "MegaBytes"
-msgstr "¦Ê¸U¦ì¤¸²Õ"
-
-#~ msgid "OK"
-#~ msgstr "½T©w"
+msgstr "ç™¾è¬ä½å…ƒçµ„"
