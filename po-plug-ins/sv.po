@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-10 08:43+0100\n"
-"PO-Revision-Date: 2003-01-10 08:48+0100\n"
+"POT-Creation-Date: 2003-01-12 16:40+0100\n"
+"PO-Revision-Date: 2003-01-12 16:40+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -302,7 +302,7 @@ msgstr "Cosinus"
 #: plug-ins/common/CML_explorer.c:170 plug-ins/common/align_layers.c:443
 #: plug-ins/common/align_layers.c:476 plug-ins/common/ps.c:2743
 #: plug-ins/common/ps.c:2756 plug-ins/common/psp.c:444
-#: plug-ins/common/tiff.c:1610 plug-ins/fits/fits.c:1030
+#: plug-ins/fits/fits.c:1030
 msgid "None"
 msgstr "Ingen"
 
@@ -1149,10 +1149,10 @@ msgstr "%s: felaktig färgkarta"
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1651
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:446 plug-ins/common/xbm.c:737
-#: plug-ins/common/xpm.c:332 plug-ins/common/xwd.c:436
-#: plug-ins/faxg3/faxg3.c:195 plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325
-#: plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3268
+#: plug-ins/common/xbm.c:737 plug-ins/common/xpm.c:332
+#: plug-ins/common/xwd.c:436 plug-ins/faxg3/faxg3.c:195
+#: plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325 plug-ins/sgi/sgi.c:327
+#: plug-ins/xjt/xjt.c:3268
 #, c-format
 msgid "Loading %s:"
 msgstr "Läser in %s:"
@@ -1189,7 +1189,7 @@ msgstr "%s: fel vid läsning av BMP-filhuvud"
 #: plug-ins/common/png.c:600 plug-ins/common/pnm.c:496
 #: plug-ins/common/psd.c:1998 plug-ins/common/smooth_palette.c:248
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
-#: plug-ins/common/tiff.c:664 plug-ins/common/tile.c:279
+#: plug-ins/common/tiff.c:668 plug-ins/common/tile.c:279
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2144
 #: plug-ins/common/xbm.c:875 plug-ins/faxg3/faxg3.c:447
 #: plug-ins/fits/fits.c:518 plug-ins/gfig/gfig.c:2829
@@ -1216,7 +1216,7 @@ msgstr "Kan inte öppna %s"
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:849
 #: plug-ins/common/png.c:851 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
-#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1345
+#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1410
 #: plug-ins/common/xbm.c:985 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1650
@@ -1294,7 +1294,7 @@ msgid "Cos_ine"
 msgstr "Cos_inus"
 
 #: plug-ins/common/AlienMap.c:1337 plug-ins/common/AlienMap.c:1360
-#: plug-ins/common/AlienMap.c:1383
+#: plug-ins/common/AlienMap.c:1383 plug-ins/common/tiff.c:1675
 msgid "_None"
 msgstr "_Ingen"
 
@@ -2700,7 +2700,7 @@ msgstr "Prefixnamn:"
 
 # src/header_stuff.c:462
 #: plug-ins/common/csource.c:692 plug-ins/common/mail.c:530
-#: plug-ins/common/tiff.c:1635 plug-ins/common/xbm.c:1214
+#: plug-ins/common/tiff.c:1700 plug-ins/common/xbm.c:1214
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -6355,34 +6355,60 @@ msgstr "Tröskla alfa"
 msgid "Threshold:"
 msgstr "Tröskelvärde:"
 
-#: plug-ins/common/tiff.c:673
+#: plug-ins/common/tiff.c:445
+#, c-format
+msgid "TIFF: Can't open '%s'"
+msgstr "TIFF: kan ej öppna \"%s\""
+
+#: plug-ins/common/tiff.c:450
+#, c-format
+msgid "Loading '%s' ..."
+msgstr "Läser in \"%s\" ..."
+
+#: plug-ins/common/tiff.c:677
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:1584
+#: plug-ins/common/tiff.c:685
+msgid ""
+"TIFF warning:\n"
+"The image you are loading has 16 bits per channel. GIMP can only handle 8 "
+"bit, so it will be converted for you. Information will be lost because of "
+"this conversion."
+msgstr ""
+"TIFF varning:\n"
+"Bilden du läser in har 16 bitar per kanal. GIMP kan endast hantera 8 bitar "
+"så den blir konverterad åt dig. På grund av konverteringen kommer "
+"information att förloras."
+
+#: plug-ins/common/tiff.c:1649
 msgid "Save as TIFF"
 msgstr "Spara som TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:1605
+#: plug-ins/common/tiff.c:1670
 msgid "Compression"
 msgstr "Komprimering"
 
-#: plug-ins/common/tiff.c:1613
-msgid "LZW"
-msgstr "LZW"
+#: plug-ins/common/tiff.c:1678
+msgid "_LZW"
+msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:1616
-msgid "Pack Bits"
-msgstr "Packa bitar"
+#: plug-ins/common/tiff.c:1681
+msgid "_Pack Bits"
+msgstr "_Packa bitar"
 
-#: plug-ins/common/tiff.c:1619
-msgid "Deflate"
-msgstr "Packa ihop"
+#: plug-ins/common/tiff.c:1684
+msgid "_Deflate"
+msgstr "_Packa ihop"
 
-#: plug-ins/common/tiff.c:1622
-msgid "JPEG"
-msgstr "JPEG"
+#: plug-ins/common/tiff.c:1687
+msgid "_JPEG"
+msgstr "_JPEG"
+
+#: plug-ins/common/tiff.c:1745
+msgid "TIFF: Your comment string is too long."
+msgstr "TIFF: Din kommentarsträng är för lång."
 
 #: plug-ins/common/tile.c:127
 msgid "<Image>/Filters/Map/Tile..."
@@ -6462,7 +6488,7 @@ msgstr "<Image>/Filter/Mappa/Gör kantlös"
 msgid "Tiler..."
 msgstr "Plattläggare..."
 
-#: plug-ins/common/uniteditor.c:77
+#: plug-ins/common/uniteditor.c:74
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -6470,18 +6496,18 @@ msgstr ""
 "En enhetsdefinition sparas innan GIMP avslutas endast om kolumnen är "
 "markerad."
 
-#: plug-ins/common/uniteditor.c:79
+#: plug-ins/common/uniteditor.c:76
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Den här strängen används för att identifiera en enhet i GIMP's "
 "konfigurationsfiler."
 
-#: plug-ins/common/uniteditor.c:81
+#: plug-ins/common/uniteditor.c:78
 msgid "How many units make up an inch."
 msgstr "Hur många enheter går det på en tum."
 
-#: plug-ins/common/uniteditor.c:82
+#: plug-ins/common/uniteditor.c:79
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -6491,7 +6517,7 @@ msgstr ""
 "noggrannhet fältet bör använda för att få ungefär samma noggrannhet som "
 "inmatning i tum med två siffrors noggrannhet."
 
-#: plug-ins/common/uniteditor.c:86
+#: plug-ins/common/uniteditor.c:83
 msgid ""
 "The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
 "abbreviation if it doesn't have a symbol."
@@ -6499,111 +6525,103 @@ msgstr ""
 "Enhetens symbol, om det har någon (t.ex. \"'\" för tum). Använd enhetens "
 "förkortning om den inte har en symbol."
 
-#: plug-ins/common/uniteditor.c:88
+#: plug-ins/common/uniteditor.c:85
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Enhetens förkortning (t.ex. \"cm\" för centimeter)."
 
-#: plug-ins/common/uniteditor.c:89
+#: plug-ins/common/uniteditor.c:86
 msgid "The unit's singular form."
 msgstr "Enhetens namn i singular."
 
-#: plug-ins/common/uniteditor.c:90
+#: plug-ins/common/uniteditor.c:87
 msgid "The unit's plural form."
 msgstr "Enhetens namn i plural."
 
-#: plug-ins/common/uniteditor.c:108
+#: plug-ins/common/uniteditor.c:105
 msgid "<Toolbox>/Xtns/Unit Editor..."
 msgstr "<Toolbox>/Xtns/Enhetseditor..."
 
-#: plug-ins/common/uniteditor.c:172
+#: plug-ins/common/uniteditor.c:169
 msgid "New Unit"
 msgstr "Ny enhet"
 
-#: plug-ins/common/uniteditor.c:203
+#: plug-ins/common/uniteditor.c:200
 msgid "_ID:"
 msgstr "_ID:"
 
-#: plug-ins/common/uniteditor.c:214
+#: plug-ins/common/uniteditor.c:211
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: plug-ins/common/uniteditor.c:224
+#: plug-ins/common/uniteditor.c:221
 msgid "_Digits:"
 msgstr "_Decimaler:"
 
-#: plug-ins/common/uniteditor.c:236
+#: plug-ins/common/uniteditor.c:233
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: plug-ins/common/uniteditor.c:248
+#: plug-ins/common/uniteditor.c:245
 msgid "_Abbreviation:"
 msgstr "_Förkortning:"
 
-#: plug-ins/common/uniteditor.c:260
+#: plug-ins/common/uniteditor.c:257
 msgid "Si_ngular:"
 msgstr "_Singular:"
 
-#: plug-ins/common/uniteditor.c:272
+#: plug-ins/common/uniteditor.c:269
 msgid "_Plural:"
 msgstr "_Plural:"
 
-#: plug-ins/common/uniteditor.c:309
+#: plug-ins/common/uniteditor.c:306
 msgid "Unit factor must not be 0."
 msgstr "Enhetsfaktorn får inte vara 0."
 
-#: plug-ins/common/uniteditor.c:319
+#: plug-ins/common/uniteditor.c:316
 msgid "All text fields must contain a value."
 msgstr "Alla textfält måste innehålla ett värde."
 
-#: plug-ins/common/uniteditor.c:536
+#: plug-ins/common/uniteditor.c:533
 msgid "Unit Editor"
 msgstr "Enhetseditor"
 
-#: plug-ins/common/uniteditor.c:575
+#: plug-ins/common/uniteditor.c:572
 msgid "Saved"
 msgstr "Sparad"
 
-#: plug-ins/common/uniteditor.c:590
+#: plug-ins/common/uniteditor.c:587
 msgid "ID"
 msgstr "ID"
 
-#: plug-ins/common/uniteditor.c:599
+#: plug-ins/common/uniteditor.c:596
 msgid "Factor"
 msgstr "Faktor"
 
-#: plug-ins/common/uniteditor.c:607
+#: plug-ins/common/uniteditor.c:604
 msgid "Digits"
 msgstr "Decimaler"
 
-#: plug-ins/common/uniteditor.c:615
+#: plug-ins/common/uniteditor.c:612
 msgid "Symbol"
 msgstr "Symbol"
 
-#: plug-ins/common/uniteditor.c:623
+#: plug-ins/common/uniteditor.c:620
 msgid "Abbreviation"
 msgstr "Förkortning"
 
-#: plug-ins/common/uniteditor.c:631
+#: plug-ins/common/uniteditor.c:628
 msgid "Singular"
 msgstr "Singular"
 
-#: plug-ins/common/uniteditor.c:639
+#: plug-ins/common/uniteditor.c:636
 msgid "Plural"
 msgstr "Plural"
 
-#: plug-ins/common/uniteditor.c:652
-msgid "_New Unit"
-msgstr "_Ny enhet"
-
-#: plug-ins/common/uniteditor.c:660
+#: plug-ins/common/uniteditor.c:657
 msgid "Create a new unit from scratch."
 msgstr "Skapa en ny enhet från början."
 
-#: plug-ins/common/uniteditor.c:662
-msgid "_Duplicate Unit"
-msgstr "_Duplicera enhet"
-
-#: plug-ins/common/uniteditor.c:670
+#: plug-ins/common/uniteditor.c:667
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
 
@@ -11209,6 +11227,12 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil %s"
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fel: XJT egenskapsfil %s är tom"
 
+#~ msgid "_New Unit"
+#~ msgstr "_Ny enhet"
+
+#~ msgid "_Duplicate Unit"
+#~ msgstr "_Duplicera enhet"
+
 #~ msgid "Unnamed channel"
 #~ msgstr "Namnlös kanal"
 
@@ -11564,17 +11588,14 @@ msgstr "Fel: XJT egenskapsfil %s är tom"
 #~ msgid "Loop"
 #~ msgstr "Loop"
 
-#, fuzzy
 #~ msgid "Frame Loop"
-#~ msgstr "Bildruta %d"
+#~ msgstr "Bildruteloop"
 
-#, fuzzy
 #~ msgid "Frame Loop Reverse"
-#~ msgstr "Loopa för evigt"
+#~ msgstr "Loopa baklänges"
 
-#, fuzzy
 #~ msgid "Frame Once"
-#~ msgstr "Bildruta %d"
+#~ msgstr "Bildruta en gång"
 
 #, fuzzy
 #~ msgid "Frame None"
