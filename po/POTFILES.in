@@ -145,7 +145,6 @@ app/gui/grid-dialog.c
 app/gui/gui.c
 app/gui/info-dialog.c
 app/gui/info-window.c
-app/gui/menus.c
 app/gui/module-browser.c
 app/gui/offset-dialog.c
 app/gui/palette-import-dialog.c
@@ -160,7 +159,6 @@ app/gui/stroke-dialog.c
 app/gui/themes.c
 app/gui/tips-dialog.c
 app/gui/tips-parser.c
-app/gui/tool-options-menu.c
 app/gui/user-install-dialog.c
 
 app/paint/gimpairbrush.c
