@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-09-07 22:52+0200\n"
-"PO-Revision-Date: 2003-08-13 22:03+0300\n"
+"PO-Revision-Date: 2003-09-24 13:40+0200\n"
 "Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4365,7 +4365,7 @@ msgstr "/תיבות דו-שיח/_נתיבים..."
 
 #: app/gui/image-menu.c:956
 msgid "/Dialogs/_Indexed Palette..."
-msgstr "חלומות שרות/_לוח צבעים ממופתח..."
+msgstr "/חלומות שרות/_לוח צבעים ממופתח..."
 
 #: app/gui/image-menu.c:961
 msgid "/Dialogs/_Selection Editor..."
@@ -6128,7 +6128,7 @@ msgstr "/עזרה/_עזרה..."
 
 #: app/gui/toolbox-menu.c:257
 msgid "/Help/_Context Help..."
-msgstr "עזרה/עזרה לפי ה_קשר..."
+msgstr "/עזרה/עזרה לפי ה_קשר..."
 
 #: app/gui/toolbox-menu.c:262
 msgid "/Help/_Tip of the Day..."
