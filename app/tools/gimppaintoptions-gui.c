@@ -69,6 +69,15 @@ static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type,
                                          GtkWidget           *incremental_toggle);
+static void        brush_button_add     (GimpPaintOptions    *paint_options,
+                                         GtkTable            *table,
+                                         gint                 row);
+static void        pattern_button_add   (GimpPaintOptions    *paint_options,
+                                         GtkTable            *table,
+                                         gint                 row);
+static void        gradient_button_add  (GimpPaintOptions    *paint_options,
+                                         GtkTable            *table,
+                                         gint                 row);
 
 static void gradient_options_reverse_notify (GimpPaintOptions *paint_options,
                                              GParamSpec       *pspec,
@@ -80,21 +89,17 @@ static void gradient_options_reverse_notify (GimpPaintOptions *paint_options,
 GtkWidget *
 gimp_paint_options_gui (GimpToolOptions *tool_options)
 {
-  GObject           *config  = G_OBJECT (tool_options);
-  GimpContext       *context = GIMP_CONTEXT (tool_options);
-  GimpPaintOptions  *options = GIMP_PAINT_OPTIONS (tool_options);
-  GimpDialogFactory *dialog_factory;
-  GtkWidget         *vbox;
-  GtkWidget         *frame;
-  GtkWidget         *table;
-  GtkWidget         *optionmenu;
-  GtkWidget         *mode_label;
-  GtkWidget         *button;
-  GtkWidget         *incremental_toggle = NULL;
-  gint               table_row          = 0;
-  GType              tool_type;
-
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  GObject          *config  = G_OBJECT (tool_options);
+  GimpPaintOptions *options = GIMP_PAINT_OPTIONS (tool_options);
+  GtkWidget        *vbox;
+  GtkWidget        *frame;
+  GtkWidget        *table;
+  GtkWidget        *menu;
+  GtkWidget        *label;
+  GtkWidget        *button;
+  GtkWidget        *incremental_toggle = NULL;
+  gint              table_row          = 0;
+  GType             tool_type;
 
   vbox = gimp_tool_options_gui (tool_options);
 
@@ -115,36 +120,34 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
                                _("Opacity:"));
 
   /*  the paint mode menu  */
-  optionmenu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
-  mode_label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                          _("Mode:"), 0.0, 0.5,
-                                          optionmenu, 2, TRUE);
+  menu = gimp_prop_paint_mode_menu_new (config, "paint-mode", TRUE);
+  label = gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
+                                     _("Mode:"), 0.0, 0.5,
+                                     menu, 2, TRUE);
 
   if (tool_type == GIMP_TYPE_ERASER_TOOL     ||
       tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
       tool_type == GIMP_TYPE_DODGE_BURN_TOOL ||
       tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-      gtk_widget_set_sensitive (optionmenu, FALSE);
-      gtk_widget_set_sensitive (mode_label, FALSE);
+      gtk_widget_set_sensitive (menu, FALSE);
+      gtk_widget_set_sensitive (label, FALSE);
     }
 
-  /*  the brush view  */
   if (tool_type != GIMP_TYPE_BUCKET_FILL_TOOL &&
       tool_type != GIMP_TYPE_BLEND_TOOL       &&
       tool_type != GIMP_TYPE_INK_TOOL)
     {
-      button = gimp_viewable_button_new (context->gimp->brush_factory->container,
-                                         context,
-                                         GIMP_VIEW_SIZE_SMALL, 1,
-                                         dialog_factory,
-                                         "gimp-brush-grid|gimp-brush-list",
-                                         GIMP_STOCK_BRUSH,
-                                         _("Open the brush selection dialog"));
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
-                                 _("Brush:"), 0.0, 0.5,
-                                 button, 2, TRUE);
+      brush_button_add (options, GTK_TABLE (table), table_row++);
+    }
+  else if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+           tool_type == GIMP_TYPE_CLONE_TOOL)
+    {
+      pattern_button_add (options, GTK_TABLE (table), table_row++);
+    }
+  else if (tool_type == GIMP_TYPE_BLEND_TOOL)
+    {
+      gradient_button_add (options, GTK_TABLE (table), table_row++);
     }
 
   frame = pressure_options_gui (options->pressure_options,
@@ -187,30 +190,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
       button = gimp_prop_check_button_new (config, "hard", _("Hard edge"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
-    }
-
-  /*  the pattern view table  */
-  table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /*  the pattern view  */
-  if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
-      tool_type == GIMP_TYPE_CLONE_TOOL)
-    {
-      button = gimp_viewable_button_new (context->gimp->pattern_factory->container,
-                                         context,
-                                         GIMP_VIEW_SIZE_SMALL, 1,
-                                         dialog_factory,
-                                         "gimp-pattern-grid|gimp-pattern-list",
-                                         GIMP_STOCK_PATTERN,
-                                         _("Open the pattern selection dialog"));
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Pattern:"), 0.0, 0.5,
-                                 button, 2, TRUE);
     }
 
   frame = gradient_options_gui (options->gradient_options,
@@ -385,23 +364,16 @@ gradient_options_gui (GimpGradientOptions *gradient,
                       GType                tool_type,
                       GtkWidget           *incremental_toggle)
 {
-  GObject           *config  = G_OBJECT (paint_options);
-  GimpContext       *context = GIMP_CONTEXT (paint_options);
-  GimpDialogFactory *dialog_factory;
-  GtkWidget         *frame   = NULL;
-  GtkWidget         *table;
-  GtkWidget         *spinbutton;
-  GtkWidget         *button;
-  GtkWidget         *unitmenu;
-  GtkWidget         *combo;
-  GtkWidget         *hbox;
-  GtkWidget         *gradient_button;
-  GtkWidget         *preview;
-
-  dialog_factory = gimp_dialog_factory_from_name ("dock");
+  GObject   *config = G_OBJECT (paint_options);
+  GtkWidget *frame  = NULL;
+  GtkWidget *table;
+  GtkWidget *spinbutton;
+  GtkWidget *button;
+  GtkWidget *unitmenu;
+  GtkWidget *combo;
 
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL))
-   {
+    {
       frame = gimp_frame_new (NULL);
 
       table = gtk_table_new (3, 3, FALSE);
@@ -422,42 +394,7 @@ gradient_options_gui (GimpGradientOptions *gradient,
                          incremental_toggle);
 
       /*  the gradient view  */
-      gradient_button =
-        gimp_viewable_button_new (context->gimp->gradient_factory->container,
-                                  context,
-                                  GIMP_VIEW_SIZE_LARGE, 1,
-                                  dialog_factory,
-                                  "gimp-gradient-list|gimp-gradient-grid",
-                                  GIMP_STOCK_GRADIENT,
-                                  _("Open the gradient selection dialog"));
-
-      /*  use smaller previews for the popup  */
-      GIMP_VIEWABLE_BUTTON (gradient_button)->preview_size =
-        GIMP_VIEW_SIZE_SMALL;
-
-      hbox = gtk_hbox_new (FALSE, 4);
-
-      gtk_box_pack_start (GTK_BOX (hbox), gradient_button, FALSE, FALSE, 0);
-      gtk_widget_show (gradient_button);
-
-      button = gimp_prop_check_button_new (config, "gradient-reverse",
-                                           _("Reverse"));
-      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-      gtk_widget_show (button);
-
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                                 _("Gradient:"), 0.0, 0.5,
-                                 hbox, 2, FALSE);
-
-      preview = GTK_BIN (gradient_button)->child;
-
-      g_signal_connect_object (config, "notify::gradient-reverse",
-                               G_CALLBACK (gradient_options_reverse_notify),
-                               G_OBJECT (preview), 0);
-
-      gradient_options_reverse_notify (GIMP_PAINT_OPTIONS (config),
-                                       NULL,
-                                       GIMP_VIEW (preview));
+      gradient_button_add (paint_options, GTK_TABLE (table), 0);
 
       /*  the gradient length scale  */
       spinbutton = gimp_prop_spin_button_new (config, "gradient-length",
@@ -486,6 +423,102 @@ gradient_options_gui (GimpGradientOptions *gradient,
     }
 
   return frame;
+}
+
+static void
+brush_button_add (GimpPaintOptions *paint_options,
+                  GtkTable         *table,
+                  gint              row)
+{
+  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpDialogFactory *dialog_factory;
+  GtkWidget         *button;
+
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
+
+  button = gimp_viewable_button_new (context->gimp->brush_factory->container,
+                                     context,
+                                     GIMP_VIEW_SIZE_SMALL, 1,
+                                     dialog_factory,
+                                     "gimp-brush-grid|gimp-brush-list",
+                                     GIMP_STOCK_BRUSH,
+                                     _("Open the brush selection dialog"));
+
+  gimp_table_attach_aligned (table, 0, row,
+                             _("Brush:"), 0.0, 0.5,
+                             button, 2, TRUE);
+}
+
+static void
+pattern_button_add (GimpPaintOptions *paint_options,
+                    GtkTable         *table,
+                    gint              row)
+{
+  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpDialogFactory *dialog_factory;
+  GtkWidget         *button;
+
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
+
+  button = gimp_viewable_button_new (context->gimp->pattern_factory->container,
+                                     context,
+                                     GIMP_VIEW_SIZE_SMALL, 1,
+                                     dialog_factory,
+                                     "gimp-pattern-grid|gimp-pattern-list",
+                                     GIMP_STOCK_PATTERN,
+                                     _("Open the pattern selection dialog"));
+
+  gimp_table_attach_aligned (table, 0, row,
+                             _("Pattern:"), 0.0, 0.5,
+                             button, 2, TRUE);
+}
+
+static void
+gradient_button_add (GimpPaintOptions *paint_options,
+                     GtkTable         *table,
+                     gint              row)
+{
+  GObject           *config  = G_OBJECT (paint_options);
+  GimpContext       *context = GIMP_CONTEXT (paint_options);
+  GimpDialogFactory *dialog_factory;
+  GtkWidget         *hbox;
+  GtkWidget         *button;
+  GtkWidget         *toggle;
+  GtkWidget         *preview;
+
+  dialog_factory = gimp_dialog_factory_from_name ("dock");
+
+  hbox = gtk_hbox_new (FALSE, 4);
+
+  button = gimp_viewable_button_new (context->gimp->gradient_factory->container,
+                                     context,
+                                     GIMP_VIEW_SIZE_LARGE, 1,
+                                     dialog_factory,
+                                     "gimp-gradient-list|gimp-gradient-grid",
+                                     GIMP_STOCK_GRADIENT,
+                                     _("Open the gradient selection dialog"));
+  GIMP_VIEWABLE_BUTTON (button)->preview_size = GIMP_VIEW_SIZE_SMALL;
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  toggle = gimp_prop_check_button_new (config, "gradient-reverse",
+                                       _("Reverse"));
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
+  gtk_widget_show (toggle);
+
+  gimp_table_attach_aligned (table, 0, row,
+                             _("Gradient:"), 0.0, 0.5,
+                             hbox, 2, FALSE);
+
+  preview = GTK_BIN (button)->child;
+
+  g_signal_connect_object (config, "notify::gradient-reverse",
+                           G_CALLBACK (gradient_options_reverse_notify),
+                           G_OBJECT (preview), 0);
+
+  gradient_options_reverse_notify (GIMP_PAINT_OPTIONS (config),
+                                   NULL,
+                                   GIMP_VIEW (preview));
 }
 
 static void

@@ -1,5 +1,12 @@
 2004-10-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c: the gradient button in blend
+	options got lost, added it back. Also moved creation of the brush,
+	pattern and gradient buttons to utility functions and cleaned up
+	the whole file a bit.
+
+2004-10-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c (gimp_display_shell_real_scaled)
 	(gimp_display_shell_flush)
 	* app/gui/gui-vtable.c (gui_display_create): always pass a
