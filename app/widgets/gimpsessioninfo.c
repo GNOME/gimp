@@ -676,7 +676,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
       gtk_widget_show (GTK_WIDGET (dock));
     }
 
-  g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
+  g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
   g_list_free (info->aux_info);
   info->aux_info = NULL;
 }
