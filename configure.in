@@ -64,7 +64,6 @@ AC_PROG_CPP
 dnl i18n stuff
 ALL_LINGUAS=""
 AM_GNU_GETTEXT
-AC_LINK_FILES($nls_cv_header_libgt, $nls_cv_header_intl)
 
 dnl Check for GTK+
 AM_PATH_GTK(1.1.0,,
