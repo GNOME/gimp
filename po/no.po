@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-22 10:34+0200\n"
-"PO-Revision-Date: 2004-04-22 10:33+0200\n"
+"POT-Creation-Date: 2004-05-03 11:04+0200\n"
+"PO-Revision-Date: 2004-05-03 11:12+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -22,21 +22,17 @@ msgid ""
 "User installation was skipped because the '--no-interface' flag was used.\n"
 "To perform user installation, run the GIMP without the '--no-interface' flag."
 msgstr ""
-"GIMP er ikke korrekt installert for denne brukerprofilen.\n"
-"Profilinstallasjonen ble omgått ved bruk av «--no-interface»-flagget.\n"
-"For å gjennomføre profilinstallasjonen, kjør GIMP uten «--no-interface»-"
-"flagget."
+"GIMP er ikke korrekt installert for denne brukeren.\n"
+"Brukerinstallasjonen ble omgått fordi «--no-interface»-flagget ble brukt.\n"
+"For å gjennomføre brukerinstallasjonen, kjør GIMP uten «--no-interface»-flagget."
 
 #: app/app_procs.c:225
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr ""
-"Kan ikke åpne en mellomlagerfilprøve. Kontroller plassering og rettigheter "
-"for mellomlagermappen som er angitt i dine brukervalg (for tiden «%s») for å "
-"unngå tap av data."
+msgstr "Ikke i stand til å åpne en mellomlagerfilprøve. For å unngå tap av data, se etter at plassering og rettigheter er korrekt for mellomlagermappen som er angitt i dine brukervalg (for tiden «%s»)."
 
 #: app/app_procs.c:281
 #, c-format
@@ -7996,9 +7992,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Glød-Metning opererer kun på RGB-fargelag."
 
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
-msgstr "_Mester"
+msgstr "M_ester"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
