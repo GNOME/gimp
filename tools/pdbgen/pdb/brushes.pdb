@@ -113,7 +113,7 @@ HELP
 
     %invoke = (
 	vars => [ 'GimpBrush *brush' ],
-	code => 'success = (brush = gimp_context_get_brush (NULL)) != NULL;'
+	code => 'success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;'
     );
 }
 
@@ -140,7 +140,8 @@ HELP
 					     name);
 
   if (object)
-    gimp_context_set_brush (NULL, GIMP_BRUSH (object));
+    gimp_context_set_brush (gimp_get_current_context (gimp),
+                            GIMP_BRUSH (object));
   else
     success = FALSE;
 }
@@ -160,7 +161,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &opacity_arg );
-    $outargs[0]->{alias} = 'gimp_context_get_opacity (NULL) * 100.0';
+    $outargs[0]->{alias} = 'gimp_context_get_opacity (gimp_get_current_context (gimp)) * 100.0';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -177,7 +178,7 @@ HELP
 
     @inargs = ( &opacity_arg );
 
-    %invoke = ( code => 'gimp_context_set_opacity (NULL, opacity / 100.0);' );
+    %invoke = ( code => 'gimp_context_set_opacity (gimp_get_current_context (gimp), opacity / 100.0);' );
 }
 
 sub brushes_get_spacing {
@@ -193,7 +194,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &spacing_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (NULL))';
+    $outargs[0]->{alias} = 'gimp_brush_get_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)))';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -211,7 +212,7 @@ HELP
     @inargs = ( &spacing_arg );
 
     %invoke = (
-	code => 'gimp_brush_set_spacing (gimp_context_get_brush (NULL), spacing);'
+	code => 'gimp_brush_set_spacing (gimp_context_get_brush (gimp_get_current_context (gimp)), spacing);'
     );
 }
 
@@ -228,7 +229,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &paint_mode_arg );
-    $outargs[0]->{alias} = 'gimp_context_get_paint_mode (NULL)';
+    $outargs[0]->{alias} = 'gimp_context_get_paint_mode (gimp_get_current_context (gimp))';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -245,7 +246,7 @@ HELP
 
     @inargs = ( &paint_mode_arg );
 
-    %invoke = ( code => 'gimp_context_set_paint_mode (NULL, paint_mode);' );
+    %invoke = ( code => 'gimp_context_set_paint_mode (gimp_get_current_context (gimp), paint_mode);' );
 }
 
 sub brushes_list {
@@ -345,7 +346,7 @@ HELP
 	}
     }
   else
-    success = (brush = gimp_context_get_brush (NULL)) != NULL;
+    success = (brush = gimp_context_get_brush (gimp_get_current_context (gimp))) != NULL;
 
   if (success)
     {

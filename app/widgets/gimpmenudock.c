@@ -27,6 +27,7 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -42,10 +43,10 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_image_dock_class_init    (GimpImageDockClass *klass);
-static void   gimp_image_dock_init          (GimpImageDock      *dock);
+static void   gimp_image_dock_class_init            (GimpImageDockClass *klass);
+static void   gimp_image_dock_init                  (GimpImageDock      *dock);
 
-static void   gimp_image_dock_destroy       (GtkObject          *object);
+static void   gimp_image_dock_destroy               (GtkObject          *object);
 
 static void   gimp_image_dock_factory_image_changed (GimpContext        *context,
 						     GimpImage          *gimage,
@@ -165,8 +166,8 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 
   dock->factory = factory;
 
-  dock->context = gimp_context_new (factory->context->gimp,
-				    "Dock Context", NULL);
+  dock->context = gimp_create_context (factory->context->gimp,
+				       "Dock Context", NULL);
   gimp_context_define_args (dock->context,
 			    GIMP_CONTEXT_ALL_ARGS_MASK &
 			    ~(GIMP_CONTEXT_IMAGE_MASK |

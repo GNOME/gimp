@@ -47,7 +47,6 @@
 #include "gui/file-open-dialog.h"
 
 #include "app_procs.h"
-#include "gimprc.h"
 
 #include "gimpdnd.h"
 #include "gimppreview.h"

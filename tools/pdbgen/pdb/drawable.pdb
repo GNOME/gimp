@@ -128,7 +128,7 @@ HELP
 	  desc => 'The type of fill: %%desc%%' }
     );
 
-    %invoke = ( code => 'drawable_fill (drawable, (GimpFillType) fill_type);' );
+    %invoke = ( code => 'drawable_fill (drawable, gimp_get_current_context (gimp), (GimpFillType) fill_type);' );
 }
 
 sub drawable_update {
@@ -536,7 +536,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimplayermask.h" "core/gimpchannel.h"
+@headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
               "core/gimpdrawable.h" "drawable.h"
 	      "pdb_glue.h" "base/tile.h" "base/tile-manager.h"
               "base/temp-buf.h");

@@ -40,7 +40,6 @@
 
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

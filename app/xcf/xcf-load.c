@@ -35,6 +35,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -46,7 +47,6 @@
 #include "xcf-seek.h"
 
 #include "floating_sel.h"
-#include "gimprc.h"
 #include "parasitelist.h"
 #include "path.h"
 #include "pathP.h"
@@ -474,8 +474,8 @@ xcf_load_image_props (XcfInfo   *info,
 		yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
 	      {
 		g_message ("Warning, resolution out of range in XCF file");
-		xres = gimprc.default_xresolution;
-		yres = gimprc.default_yresolution;
+		xres = core_config->default_xresolution;
+		yres = core_config->default_yresolution;
 	      }
 	    gimage->xresolution = xres;
 	    gimage->yresolution = yres;

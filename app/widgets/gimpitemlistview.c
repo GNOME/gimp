@@ -35,15 +35,14 @@
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
 
-#include "gdisplay.h"
-#include "gimprc.h"
-
 #include "gimpchannellistview.h"
 #include "gimpdnd.h"
 #include "gimpdrawablelistview.h"
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
+
+#include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -349,7 +348,8 @@ gimp_drawable_list_view_destroy (GtkObject *object)
 }
 
 GtkWidget *
-gimp_drawable_list_view_new (GimpImage               *gimage,
+gimp_drawable_list_view_new (gint                     preview_size,
+			     GimpImage               *gimage,
 			     GtkType                  drawable_type,
 			     const gchar             *signal_name,
 			     GimpGetContainerFunc     get_container_func,
@@ -366,6 +366,7 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
   GimpDrawableListView *list_view;
   GimpContainerView    *view;
 
+  g_return_val_if_fail (preview_size > 0 && preview_size <= 64, NULL);
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
   g_return_val_if_fail (get_container_func != NULL, NULL);
@@ -394,7 +395,7 @@ gimp_drawable_list_view_new (GimpImage               *gimage,
 
   view = GIMP_CONTAINER_VIEW (list_view);
 
-  view->preview_size = gimprc.preview_size;
+  view->preview_size = preview_size;
 
   list_view->drawable_type         = drawable_type;
   list_view->signal_name           = g_strdup (signal_name);
