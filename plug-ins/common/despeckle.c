@@ -44,21 +44,21 @@
  * Constants...
  */
 
-#define PLUG_IN_NAME	 "plug_in_despeckle"
-#define PLUG_IN_VERSION	 "1.3.2 - 17 May 1998"
+#define PLUG_IN_NAME     "plug_in_despeckle"
+#define PLUG_IN_VERSION  "1.3.2 - 17 May 1998"
 #define HELP_ID          "plug-in-despeckle"
-#define PREVIEW_SIZE	 128
-#define SCALE_WIDTH	 100
-#define ENTRY_WIDTH	   3
-#define MAX_RADIUS	  20
+#define PREVIEW_SIZE     128
+#define SCALE_WIDTH      100
+#define ENTRY_WIDTH        3
+#define MAX_RADIUS        20
 
-#define FILTER_ADAPTIVE	 0x01
+#define FILTER_ADAPTIVE  0x01
 #define FILTER_RECURSIVE 0x02
 
-#define despeckle_radius (despeckle_vals[0])	/* Radius of filter */
-#define filter_type	 (despeckle_vals[1])	/* Type of filter */
-#define black_level	 (despeckle_vals[2])	/* Black level */
-#define white_level	 (despeckle_vals[3])	/* White level */
+#define despeckle_radius (despeckle_vals[0])    /* Radius of filter */
+#define filter_type      (despeckle_vals[1])    /* Type of filter */
+#define black_level      (despeckle_vals[2])    /* Black level */
+#define white_level      (despeckle_vals[3])    /* White level */
 
 /*
  * Local functions...
@@ -98,26 +98,26 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 static GtkWidget      *preview;                 /* Preview widget */
-static gint            preview_width,		/* Width of preview widget */
-  		       preview_height,		/* Height of preview widget */
-		       preview_x1,		/* Upper-left X of preview */
-		       preview_y1,		/* Upper-left Y of preview */
-		       preview_x2,		/* Lower-right X of preview */
-		       preview_y2;		/* Lower-right Y of preview */
-static guchar	      *preview_src = NULL,	/* Source pixel rows */
-	       	      *preview_dst,		/* Destination pixel row */
-	       	      *preview_sort;		/* Pixel value sort array */
-static GtkObject      *hscroll_data,		/* Horizontal scrollbar data */
-	       	      *vscroll_data;		/* Vertical scrollbar data */
+static gint            preview_width,           /* Width of preview widget */
+                       preview_height,          /* Height of preview widget */
+                       preview_x1,              /* Upper-left X of preview */
+                       preview_y1,              /* Upper-left Y of preview */
+                       preview_x2,              /* Lower-right X of preview */
+                       preview_y2;              /* Lower-right Y of preview */
+static guchar         *preview_src = NULL,      /* Source pixel rows */
+                      *preview_dst,             /* Destination pixel row */
+                      *preview_sort;            /* Pixel value sort array */
+static GtkObject      *hscroll_data,            /* Horizontal scrollbar data */
+                      *vscroll_data;            /* Vertical scrollbar data */
 
-static GimpDrawable   *drawable = NULL;		/* Current image */
-static gint	       sel_x1,			/* Selection bounds */
-		       sel_y1,
-		       sel_x2,
-		       sel_y2;
-static gint	       sel_width,		/* Selection width */
-		       sel_height;		/* Selection height */
-static gint	       img_bpp;			/* Bytes-per-pixel in image */
+static GimpDrawable   *drawable = NULL;         /* Current image */
+static gint            sel_x1,                  /* Selection bounds */
+                       sel_y1,
+                       sel_x2,
+                       sel_y2;
+static gint            sel_width,               /* Selection width */
+                       sel_height;              /* Selection height */
+static gint            img_bpp;                 /* Bytes-per-pixel in image */
 
 static gint despeckle_vals[4] =
 {
@@ -141,7 +141,7 @@ MAIN ()
 static void
 query (void)
 {
-  static GimpParamDef	args[] =
+  static GimpParamDef   args[] =
   {
     { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",    "Input image" },
@@ -153,18 +153,18 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Despeckle filter, typically used to \'despeckle\' "
-			  "a photographic image.",
-			  "This plug-in selectively performs a median or "
-			  "adaptive box filter on an image.",
-			  "Michael Sweet <mike@easysw.com>",
-			  "Copyright 1997-1998 by Michael Sweet",
-			  PLUG_IN_VERSION,
-			  N_("Des_peckle..."),
-			  "RGB*, GRAY*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Despeckle filter, typically used to \'despeckle\' "
+                          "a photographic image.",
+                          "This plug-in selectively performs a median or "
+                          "adaptive box filter on an image.",
+                          "Michael Sweet <mike@easysw.com>",
+                          "Copyright 1997-1998 by Michael Sweet",
+                          PLUG_IN_VERSION,
+                          N_("Des_peckle..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_NAME,
                              N_("<Image>/Filters/Enhance"));
@@ -182,9 +182,9 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode	     run_mode;
+  GimpRunMode        run_mode;
   GimpPDBStatusType  status;
-  GimpParam	     *values;
+  GimpParam          *values;
 
   INIT_I18N ();
 
@@ -210,7 +210,7 @@ run (const gchar      *name,
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
-			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+                             &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
@@ -234,7 +234,7 @@ run (const gchar      *name,
        */
 
       if (!despeckle_dialog ())
-	return;
+        return;
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
@@ -243,35 +243,35 @@ run (const gchar      *name,
        */
 
       if (nparams < 4 || nparams > 7)
-	status = GIMP_PDB_CALLING_ERROR;
+        status = GIMP_PDB_CALLING_ERROR;
       else if (nparams == 4)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = FILTER_ADAPTIVE;
-	  black_level      = 7;
-	  white_level      = 248;
-	}
+        {
+          despeckle_radius = param[3].data.d_int32;
+          filter_type      = FILTER_ADAPTIVE;
+          black_level      = 7;
+          white_level      = 248;
+        }
       else if (nparams == 5)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = 7;
-	  white_level      = 248;
-	}
+        {
+          despeckle_radius = param[3].data.d_int32;
+          filter_type      = param[4].data.d_int32;
+          black_level      = 7;
+          white_level      = 248;
+        }
       else if (nparams == 6)
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = param[5].data.d_int32;
-	  white_level      = 248;
-	}
+        {
+          despeckle_radius = param[3].data.d_int32;
+          filter_type      = param[4].data.d_int32;
+          black_level      = param[5].data.d_int32;
+          white_level      = 248;
+        }
       else
-	{
-	  despeckle_radius = param[3].data.d_int32;
-	  filter_type      = param[4].data.d_int32;
-	  black_level      = param[5].data.d_int32;
-	  white_level      = param[6].data.d_int32;
-	};
+        {
+          despeckle_radius = param[3].data.d_int32;
+          filter_type      = param[4].data.d_int32;
+          black_level      = param[5].data.d_int32;
+          white_level      = param[6].data.d_int32;
+        };
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -281,8 +281,8 @@ run (const gchar      *name,
 
       INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, despeckle_vals);
-	break;
-	
+        break;
+        
     default:
       status = GIMP_PDB_CALLING_ERROR;
       break;
@@ -295,38 +295,38 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       if ((gimp_drawable_is_rgb(drawable->drawable_id) ||
-	   gimp_drawable_is_gray(drawable->drawable_id)))
-	{
-	  /*
-	   * Set the tile cache size...
-	   */
+           gimp_drawable_is_gray(drawable->drawable_id)))
+        {
+          /*
+           * Set the tile cache size...
+           */
 
-	  gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
-				  gimp_tile_width() + 1);
+          gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width() - 1) /
+                                  gimp_tile_width() + 1);
 
-	  /*
-	   * Run!
-	   */
+          /*
+           * Run!
+           */
 
-	  despeckle ();
+          despeckle ();
 
-	  /*
-	   * If run mode is interactive, flush displays...
-	   */
+          /*
+           * If run mode is interactive, flush displays...
+           */
 
-	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush ();
+          if (run_mode != GIMP_RUN_NONINTERACTIVE)
+            gimp_displays_flush ();
 
-	  /*
-	   * Store data...
-	   */
+          /*
+           * Store data...
+           */
 
-	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_NAME,
-			   despeckle_vals, sizeof (despeckle_vals));
-	}
+          if (run_mode == GIMP_RUN_INTERACTIVE)
+            gimp_set_data (PLUG_IN_NAME,
+                           despeckle_vals, sizeof (despeckle_vals));
+        }
       else
-	status = GIMP_PDB_EXECUTION_ERROR;
+        status = GIMP_PDB_EXECUTION_ERROR;
     };
 
   /*
@@ -358,29 +358,29 @@ run (const gchar      *name,
 static void
 despeckle (void)
 {
-  GimpPixelRgn	src_rgn,	/* Source image region */
-		dst_rgn;	/* Destination image region */
-  guchar      **src_rows,	/* Source pixel rows */
-	       *dst_row,	/* Destination pixel row */
-	       *src_ptr,	/* Source pixel pointer */
-	       *sort,		/* Pixel value sort array */
-	       *sort_ptr;	/* Current sort value */
-  gint		sort_count,	/* Number of soft values */
-		i, j, t, d,	/* Looping vars */
-		x, y,		/* Current location in image */
-		row,		/* Current row in src_rows */
-		rowcount,	/* Number of rows loaded */
-		lasty,		/* Last row loaded in src_rows */
-		trow,		/* Looping var */
-		startrow,	/* Starting row for loop */
-		endrow,		/* Ending row for loop */
-		max_row,	/* Maximum number of filled src_rows */
-		size,		/* Width/height of the filter box */
-		width,		/* Byte width of the image */
-		xmin, xmax, tx,	/* Looping vars */
-		radius,		/* Current radius */
-		hist0,		/* Histogram count for 0 values */
-		hist255;	/* Histogram count for 255 values */
+  GimpPixelRgn  src_rgn,        /* Source image region */
+                dst_rgn;        /* Destination image region */
+  guchar      **src_rows,       /* Source pixel rows */
+               *dst_row,        /* Destination pixel row */
+               *src_ptr,        /* Source pixel pointer */
+               *sort,           /* Pixel value sort array */
+               *sort_ptr;       /* Current sort value */
+  gint          sort_count,     /* Number of soft values */
+                i, j, t, d,     /* Looping vars */
+                x, y,           /* Current location in image */
+                row,            /* Current row in src_rows */
+                rowcount,       /* Number of rows loaded */
+                lasty,          /* Last row loaded in src_rows */
+                trow,           /* Looping var */
+                startrow,       /* Starting row for loop */
+                endrow,         /* Ending row for loop */
+                max_row,        /* Maximum number of filled src_rows */
+                size,           /* Width/height of the filter box */
+                width,          /* Byte width of the image */
+                xmin, xmax, tx, /* Looping vars */
+                radius,         /* Current radius */
+                hist0,          /* Histogram count for 0 values */
+                hist255;        /* Histogram count for 255 values */
 
   /*
    * Let the user know what we're doing...
@@ -393,9 +393,9 @@ despeckle (void)
    */
 
   gimp_pixel_rgn_init (&src_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height,
-		       FALSE, FALSE);
+                       FALSE, FALSE);
   gimp_pixel_rgn_init (&dst_rgn, drawable, sel_x1, sel_y1, sel_width, sel_height,
-		       TRUE, TRUE);
+                       TRUE, TRUE);
 
   size     = despeckle_radius * 2 + 1;
   max_row  = 2 * gimp_tile_height ();
@@ -420,7 +420,7 @@ despeckle (void)
     rowcount = gimp_tile_height ();
 
   gimp_pixel_rgn_get_rect (&src_rgn, src_rows[0], sel_x1, sel_y1, sel_width,
-			   rowcount);
+                           rowcount);
 
   row   = rowcount;
   lasty = sel_y1 + rowcount;
@@ -432,23 +432,23 @@ despeckle (void)
   for (y = sel_y1 ; y < sel_y2; y ++)
     {
       if ((y + despeckle_radius) >= lasty &&
-	  lasty < sel_y2)
-	{
-	  /*
-	   * Load the next block of rows...
-	   */
+          lasty < sel_y2)
+        {
+          /*
+           * Load the next block of rows...
+           */
 
-	  rowcount -= gimp_tile_height();
-	  if ((i = sel_y2 - lasty) > gimp_tile_height())
-	    i = gimp_tile_height();
+          rowcount -= gimp_tile_height();
+          if ((i = sel_y2 - lasty) > gimp_tile_height())
+            i = gimp_tile_height();
 
-	  gimp_pixel_rgn_get_rect (&src_rgn, src_rows[row],
-				   sel_x1, lasty, sel_width, i);
+          gimp_pixel_rgn_get_rect (&src_rgn, src_rows[row],
+                                   sel_x1, lasty, sel_width, i);
 
-	  rowcount += i;
-	  lasty    += i;
-	  row      = (row + i) % max_row;
-	};
+          rowcount += i;
+          lasty    += i;
+          row      = (row + i) % max_row;
+        };
 
       /*
        * Now find the median pixels and save the results...
@@ -459,100 +459,100 @@ despeckle (void)
       memcpy (dst_row, src_rows[(row + y - lasty + max_row) % max_row], width);
 
       if (y >= (sel_y1 + radius) && y < (sel_y2 - radius))
-	{
-	  for (x = 0; x < width; x ++)
-	    {
-	      hist0   = 0;
-	      hist255 = 0;
-	      xmin    = x - radius * img_bpp;
-	      xmax    = x + (radius + 1) * img_bpp;
+        {
+          for (x = 0; x < width; x ++)
+            {
+              hist0   = 0;
+              hist255 = 0;
+              xmin    = x - radius * img_bpp;
+              xmax    = x + (radius + 1) * img_bpp;
 
-	      if (xmin < 0)
-		xmin = x % img_bpp;
+              if (xmin < 0)
+                xmin = x % img_bpp;
 
-	      if (xmax > width)
-		xmax = width;
+              if (xmax > width)
+                xmax = width;
 
-	      startrow = (row + y - lasty - radius + max_row) % max_row;
-	      endrow   = (row + y - lasty + radius + 1 + max_row) % max_row;
+              startrow = (row + y - lasty - radius + max_row) % max_row;
+              endrow   = (row + y - lasty + radius + 1 + max_row) % max_row;
 
-	      for (sort_ptr = sort, trow = startrow;
-		   trow != endrow;
-		   trow = (trow + 1) % max_row)
-		for (tx = xmin, src_ptr = src_rows[trow] + xmin;
-		     tx < xmax;
-		     tx += img_bpp, src_ptr += img_bpp)
-		  {
-		    if ((*sort_ptr = *src_ptr) <= black_level)
-		      hist0 ++;
-		    else if (*sort_ptr >= white_level)
-		      hist255 ++;
+              for (sort_ptr = sort, trow = startrow;
+                   trow != endrow;
+                   trow = (trow + 1) % max_row)
+                for (tx = xmin, src_ptr = src_rows[trow] + xmin;
+                     tx < xmax;
+                     tx += img_bpp, src_ptr += img_bpp)
+                  {
+                    if ((*sort_ptr = *src_ptr) <= black_level)
+                      hist0 ++;
+                    else if (*sort_ptr >= white_level)
+                      hist255 ++;
 
-		    if (*sort_ptr < white_level && *sort_ptr > black_level)
-		      sort_ptr ++;
-		  };
+                    if (*sort_ptr < white_level && *sort_ptr > black_level)
+                      sort_ptr ++;
+                  };
 
-	      /*
-	       * Shell sort the color values...
-	       */
+              /*
+               * Shell sort the color values...
+               */
 
-	      sort_count = sort_ptr - sort;
+              sort_count = sort_ptr - sort;
 
-	      if (sort_count > 1)
-		{
-		  for (d = sort_count / 2; d > 0; d = d / 2)
-		    for (i = d; i < sort_count; i ++)
-		      for (j = i - d, sort_ptr = sort + j;
-			   j >= 0 && sort_ptr[0] > sort_ptr[d];
-			   j -= d, sort_ptr -= d)
-			{
-			  t           = sort_ptr[0];
-			  sort_ptr[0] = sort_ptr[d];
-			  sort_ptr[d] = t;
-			};
+              if (sort_count > 1)
+                {
+                  for (d = sort_count / 2; d > 0; d = d / 2)
+                    for (i = d; i < sort_count; i ++)
+                      for (j = i - d, sort_ptr = sort + j;
+                           j >= 0 && sort_ptr[0] > sort_ptr[d];
+                           j -= d, sort_ptr -= d)
+                        {
+                          t           = sort_ptr[0];
+                          sort_ptr[0] = sort_ptr[d];
+                          sort_ptr[d] = t;
+                        };
 
-		  /*
-		   * Assign the median value...
-		   */
+                  /*
+                   * Assign the median value...
+                   */
 
-		  t = sort_count / 2;
+                  t = sort_count / 2;
 
-		  if (sort_count & 1)
-		    dst_row[x] = (sort[t] + sort[t + 1]) / 2;
-		  else
-		    dst_row[x] = sort[t];
+                  if (sort_count & 1)
+                    dst_row[x] = (sort[t] + sort[t + 1]) / 2;
+                  else
+                    dst_row[x] = sort[t];
 
-		  /*
-		   * Save the change to the source image too if the user
-		   * wants the recursive method...
-		   */
+                  /*
+                   * Save the change to the source image too if the user
+                   * wants the recursive method...
+                   */
 
-		  if (filter_type & FILTER_RECURSIVE)
-		    src_rows[(row + y - lasty + max_row) % max_row][x] =
-		      dst_row[x];
-		};
+                  if (filter_type & FILTER_RECURSIVE)
+                    src_rows[(row + y - lasty + max_row) % max_row][x] =
+                      dst_row[x];
+                };
 
-	      /*
-	       * Check the histogram and adjust the radius accordingly...
-	       */
+              /*
+               * Check the histogram and adjust the radius accordingly...
+               */
 
-	      if (filter_type & FILTER_ADAPTIVE)
-		{
-		  if (hist0 >= radius || hist255 >= radius)
-		    {
-		      if (radius < despeckle_radius)
-			radius ++;
-		    }
-		  else if (radius > 1)
-		    radius --;
-		};
-	    };
-	};
+              if (filter_type & FILTER_ADAPTIVE)
+                {
+                  if (hist0 >= radius || hist255 >= radius)
+                    {
+                      if (radius < despeckle_radius)
+                        radius ++;
+                    }
+                  else if (radius > 1)
+                    radius --;
+                };
+            };
+        };
 
       gimp_pixel_rgn_set_row (&dst_rgn, dst_row, sel_x1, y, sel_width);
 
       if ((y & 15) == 0)
-	gimp_progress_update ((double) (y - sel_y1) / (double) sel_height);
+        gimp_progress_update ((double) (y - sel_y1) / (double) sel_height);
     };
 
   /*
@@ -571,7 +571,7 @@ despeckle (void)
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id,
-			sel_x1, sel_y1, sel_width, sel_height);
+                        sel_x1, sel_y1, sel_width, sel_height);
 }
 
 
@@ -598,17 +598,17 @@ despeckle_dialog (void)
 
   dialog = gimp_dialog_new (_("Despeckle"), "despeckle",
                             NULL, 0,
-			    gimp_standard_help_func, HELP_ID,
+                            gimp_standard_help_func, HELP_ID,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
-		      TRUE, TRUE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
   hbox = gtk_hbox_new (FALSE, 12);
@@ -631,14 +631,14 @@ despeckle_dialog (void)
   preview_width  = MIN (sel_width, PREVIEW_SIZE);
   preview_height = MIN (sel_height, PREVIEW_SIZE);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), preview_width, preview_height);
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   hscroll_data = gtk_adjustment_new (0, 0, sel_width - 1, 1.0,
-				     MIN (preview_width, sel_width),
-				     MIN (preview_width, sel_width));
+                                     MIN (preview_width, sel_width),
+                                     MIN (preview_width, sel_width));
 
   g_signal_connect (hscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
@@ -651,8 +651,8 @@ despeckle_dialog (void)
   gtk_widget_show (scrollbar);
 
   vscroll_data = gtk_adjustment_new (0, 0, sel_height - 1, 1.0,
-				     MIN (preview_height, sel_height),
-				     MIN (preview_height, sel_height));
+                                     MIN (preview_height, sel_height),
+                                     MIN (preview_height, sel_height));
 
   g_signal_connect (vscroll_data, "value_changed",
                     G_CALLBACK (preview_scroll_callback),
@@ -661,7 +661,7 @@ despeckle_dialog (void)
   scrollbar = gtk_vscrollbar_new (GTK_ADJUSTMENT (vscroll_data));
   gtk_range_set_update_policy (GTK_RANGE (scrollbar), GTK_UPDATE_CONTINUOUS);
   gtk_table_attach (GTK_TABLE (ptable), scrollbar, 1, 2, 0, 1, 0,
-		    GTK_FILL, 0, 0);
+                    GTK_FILL, 0, 0);
   gtk_widget_show (scrollbar);
 
   preview_init ();
@@ -686,7 +686,7 @@ despeckle_dialog (void)
   button = gtk_check_button_new_with_mnemonic (_("_Adaptive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				(filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
+                                (filter_type & FILTER_ADAPTIVE) ? TRUE : FALSE);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
@@ -696,7 +696,7 @@ despeckle_dialog (void)
   button = gtk_check_button_new_with_mnemonic (_("R_ecursive"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				(filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
+                                (filter_type & FILTER_RECURSIVE) ? TRUE : FALSE);
   gtk_widget_show (button);
 
   g_signal_connect (button, "toggled",
@@ -714,10 +714,10 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Radius:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              despeckle_radius, 1, MAX_RADIUS, 1, 5, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &despeckle_radius);
@@ -727,10 +727,10 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      black_level, -1, 255, 1, 8, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              black_level, -1, 255, 1, 8, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &black_level);
@@ -740,10 +740,10 @@ despeckle_dialog (void)
    */
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
-			      white_level, 0, 256, 1, 8, 0,
-			      TRUE, 0, 0,
-			      NULL, NULL);
+                              _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
+                              white_level, 0, 256, 1, 8, 0,
+                              TRUE, 0, 0,
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_iscale_update),
                     &white_level);
@@ -781,8 +781,8 @@ despeckle_dialog (void)
 static void
 preview_init (void)
 {
-  gint	size,		/* Size of filter box */
-	width;		/* Byte width of the image */
+  gint  size,           /* Size of filter box */
+        width;          /* Byte width of the image */
 
   /*
    * Setup for preview filter...
@@ -798,7 +798,7 @@ preview_init (void)
       g_free (preview_sort);
     }
 
-  preview_src  = (guchar *) g_new (guchar *, width * preview_height);
+  preview_src  = g_new (guchar, width * preview_height);
   preview_dst  = g_new (guchar, width);
   preview_sort = g_new (guchar, size * size);
 }
@@ -827,31 +827,29 @@ preview_scroll_callback (void)
 static void
 preview_update (void)
 {
-  GimpPixelRgn	src_rgn;	/* Source image region */
-  guchar       *sort_ptr,	/* Current preview_sort value */
-	       *src_ptr,	/* Current source pixel */
-	       *dst_ptr;	/* Current destination pixel */
-  gint		sort_count,	/* Number of soft values */
-		i, j, t, d,	/* Looping vars */
-		x, y,		/* Current location in image */
-		size,		/* Width/height of the filter box */
-		width,		/* Byte width of the image */
-		xmin, xmax, tx,	/* Looping vars */
-		radius,		/* Current radius */
-		hist0,		/* Histogram count for 0 values */
-		hist255;	/* Histogram count for 255 values */
-  guchar	check,		/* Checkerboard pattern */
-		rgb[PREVIEW_SIZE * PREVIEW_SIZE * 3],
-				/* Output image */
-	       *rgb_ptr;	/* Pixel pointer for output */
+  GimpPixelRgn  src_rgn;        /* Source image region */
+  guchar       *sort_ptr,       /* Current preview_sort value */
+               *src_ptr,        /* Current source pixel */
+               *dst_ptr;        /* Current destination pixel */
+  gint          sort_count,     /* Number of soft values */
+                i, j, t, d,     /* Looping vars */
+                x, y,           /* Current location in image */
+                size,           /* Width/height of the filter box */
+                width,          /* Byte width of the image */
+                xmin, xmax, tx, /* Looping vars */
+                radius,         /* Current radius */
+                hist0,          /* Histogram count for 0 values */
+                hist255;        /* Histogram count for 255 values */
+  guchar        rgba[PREVIEW_SIZE * PREVIEW_SIZE * 4], /* Output image */
+               *rgba_ptr;        /* Pixel pointer for output */
 
  /*
   * Setup for filter...
   */
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
-		       preview_x1, preview_y1, preview_width, preview_height,
-		       FALSE, FALSE);
+                       preview_x1, preview_y1, preview_width, preview_height,
+                       FALSE, FALSE);
 
   /*
    * Pre-load the preview rectangle...
@@ -861,7 +859,7 @@ preview_update (void)
   width = preview_width * img_bpp;
 
   gimp_pixel_rgn_get_rect (&src_rgn, preview_src, preview_x1, preview_y1,
-			   preview_width, preview_height);
+                           preview_width, preview_height);
 
   /*
    * Despeckle...
@@ -878,174 +876,146 @@ preview_update (void)
       memcpy (preview_dst, preview_src + y * width, width);
 
       if (y >= radius && y < (preview_height - radius))
-	{
-	  for (x = 0, dst_ptr = preview_dst; x < width; x ++, dst_ptr ++)
-	    {
-	      hist0   = 0;
-	      hist255 = 0;
-	      xmin    = x - radius * img_bpp;
-	      xmax    = x + (radius + 1) * img_bpp;
+        {
+          for (x = 0, dst_ptr = preview_dst; x < width; x ++, dst_ptr ++)
+            {
+              hist0   = 0;
+              hist255 = 0;
+              xmin    = x - radius * img_bpp;
+              xmax    = x + (radius + 1) * img_bpp;
 
-	      if (xmin < 0)
-		xmin = x % img_bpp;
+              if (xmin < 0)
+                xmin = x % img_bpp;
 
-	      if (xmax > width)
-		xmax = width;
+              if (xmax > width)
+                xmax = width;
 
-	      for (i = -radius, sort_ptr = preview_sort,
-		     src_ptr = preview_src + width * (y - radius);
-		   i <= radius;
-		   i ++, src_ptr += width)
-		for (tx = xmin; tx < xmax; tx += img_bpp)
-		  {
-		    if ((*sort_ptr = src_ptr[tx]) <= black_level)
-		      hist0 ++;
-		    else if (*sort_ptr >= white_level)
-		      hist255 ++;
+              for (i = -radius, sort_ptr = preview_sort,
+                     src_ptr = preview_src + width * (y - radius);
+                   i <= radius;
+                   i ++, src_ptr += width)
+                for (tx = xmin; tx < xmax; tx += img_bpp)
+                  {
+                    if ((*sort_ptr = src_ptr[tx]) <= black_level)
+                      hist0 ++;
+                    else if (*sort_ptr >= white_level)
+                      hist255 ++;
 
-		    if (*sort_ptr < white_level && *sort_ptr > black_level)
-		      sort_ptr ++;
-		  };
+                    if (*sort_ptr < white_level && *sort_ptr > black_level)
+                      sort_ptr ++;
+                  };
 
-	      /*
-	       * Shell preview_sort the color values...
-	       */
+              /*
+               * Shell preview_sort the color values...
+               */
 
-	      sort_count = sort_ptr - preview_sort;
+              sort_count = sort_ptr - preview_sort;
 
-	      if (sort_count > 1)
-		{
-		  for (d = sort_count / 2; d > 0; d = d / 2)
-		    for (i = d; i < sort_count; i ++)
-		      for (j = i - d, sort_ptr = preview_sort + j;
-			   j >= 0 && sort_ptr[0] > sort_ptr[d];
-			   j -= d, sort_ptr -= d)
-			{
-			  t           = sort_ptr[0];
-			  sort_ptr[0] = sort_ptr[d];
-			  sort_ptr[d] = t;
-			};
+              if (sort_count > 1)
+                {
+                  for (d = sort_count / 2; d > 0; d = d / 2)
+                    for (i = d; i < sort_count; i ++)
+                      for (j = i - d, sort_ptr = preview_sort + j;
+                           j >= 0 && sort_ptr[0] > sort_ptr[d];
+                           j -= d, sort_ptr -= d)
+                        {
+                          t           = sort_ptr[0];
+                          sort_ptr[0] = sort_ptr[d];
+                          sort_ptr[d] = t;
+                        };
 
-		  /*
-		   * Assign the median value...
-		   */
+                  /*
+                   * Assign the median value...
+                   */
 
-		  t = sort_count / 2;
+                  t = sort_count / 2;
 
-		  if (sort_count & 1)
-		    *dst_ptr = (preview_sort[t] + preview_sort[t + 1]) / 2;
-		  else
-		    *dst_ptr = preview_sort[t];
+                  if (sort_count & 1)
+                    *dst_ptr = (preview_sort[t] + preview_sort[t + 1]) / 2;
+                  else
+                    *dst_ptr = preview_sort[t];
 
-		  /*
-		   * Save the change to the source image too if the user
-		   * wants the recursive method...
-		   */
+                  /*
+                   * Save the change to the source image too if the user
+                   * wants the recursive method...
+                   */
 
-		  if (filter_type & FILTER_RECURSIVE)
-		    preview_src[y * width + x] = *dst_ptr;
-		};
+                  if (filter_type & FILTER_RECURSIVE)
+                    preview_src[y * width + x] = *dst_ptr;
+                };
 
-	      /*
-	       * Check the histogram and adjust the radius accordingly...
-	       */
+              /*
+               * Check the histogram and adjust the radius accordingly...
+               */
 
-	      if (filter_type & FILTER_ADAPTIVE)
-		{
-		  if (hist0 >= radius || hist255 >= radius)
-		    {
-		      if (radius < despeckle_radius)
-			radius ++;
-		    }
-		  else if (radius > 1)
-		    radius --;
-		};
-	    };
-	};
+              if (filter_type & FILTER_ADAPTIVE)
+                {
+                  if (hist0 >= radius || hist255 >= radius)
+                    {
+                      if (radius < despeckle_radius)
+                        radius ++;
+                    }
+                  else if (radius > 1)
+                    radius --;
+                };
+            };
+        };
 
       /*
        * Draw this row...
        */
 
-      rgb_ptr = rgb + y * preview_width * 3;
+      rgba_ptr = rgba + y * preview_width * 4;
 
       switch (img_bpp)
-	{
-	case 1:
+        {
+        case 1:
           for (x = preview_width, dst_ptr = preview_dst;
                x > 0;
-               x --, dst_ptr ++, rgb_ptr += 3)
-            rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
+               x --, dst_ptr ++, rgba_ptr += 4)
+          {
+            rgba_ptr[0] = rgba_ptr[1] = rgba_ptr[2] = *dst_ptr;
+            rgba_ptr[3] = 255;
+          }
           break;
 
-	case 2:
-	  for (x = preview_width, dst_ptr = preview_dst;
-	       x > 0;
-	       x --, dst_ptr += 2, rgb_ptr += 3)
-	    if (dst_ptr[1] == 255)
-	      rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = *dst_ptr;
-	    else
-	      {
-		if ((y & GIMP_CHECK_SIZE) ^ (x & GIMP_CHECK_SIZE))
-		  check = GIMP_CHECK_LIGHT * 255;
-		else
-		  check = GIMP_CHECK_DARK * 255;
-
-		if (dst_ptr[1] == 0)
-		  rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
-		else
-		  rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] =
-                    check + ((dst_ptr[0] - check) * dst_ptr[1]) / 255;
-	      };
+        case 2:
+          for (x = preview_width, dst_ptr = preview_dst;
+               x > 0;
+               x --, dst_ptr += 2, rgba_ptr += 4)
+          {
+            rgba_ptr[0] = rgba_ptr[1] = rgba_ptr[2] = dst_ptr[0];
+            rgba_ptr[3] = dst_ptr[1];
+          }
           break;
 
-	case 3:
-          memcpy (rgb_ptr, preview_dst, preview_width * 3);
+        case 3:
+          for (x = preview_width, dst_ptr = preview_dst;
+               x > 0;
+               x --, dst_ptr += 3, rgba_ptr += 4)
+          {
+            rgba_ptr[0] = dst_ptr[0];
+            rgba_ptr[1] = dst_ptr[1];
+            rgba_ptr[2] = dst_ptr[2];
+            rgba_ptr[3] = 255;
+          }
           break;
 
-	case 4:
-	  for (x = preview_width, dst_ptr = preview_dst;
-	       x > 0;
-	       x --, dst_ptr += 4, rgb_ptr += 3)
-	    if (dst_ptr[3] == 255)
-	      {
-		rgb_ptr[0] = dst_ptr[0];
-		rgb_ptr[1] = dst_ptr[1];
-		rgb_ptr[2] = dst_ptr[2];
-	      }
-	    else
-	      {
-		if ((y & GIMP_CHECK_SIZE) ^ (x & GIMP_CHECK_SIZE))
-		  check = GIMP_CHECK_LIGHT * 255;
-		else
-		  check = GIMP_CHECK_DARK * 255;
-
-		if (dst_ptr[3] == 0)
-		  rgb_ptr[0] = rgb_ptr[1] = rgb_ptr[2] = check;
-		else
-		  {
-		    rgb_ptr[0] =
-		      check + ((dst_ptr[0] - check) * dst_ptr[3]) / 255;
-		    rgb_ptr[1] =
-		      check + ((dst_ptr[1] - check) * dst_ptr[3]) / 255;
-		    rgb_ptr[2] =
-		      check + ((dst_ptr[2] - check) * dst_ptr[3]) / 255;
-		  };
-	      };
+        case 4:
+          memcpy (rgba_ptr, preview_dst, preview_width * 4);
           break;
-	};
+        };
     };
 
   /*
    * Update the screen...
    */
 
-  for (y = 0, rgb_ptr = rgb;
-       y < preview_height;
-       y ++, rgb_ptr += preview_width * 3)
-    gtk_preview_draw_row (GTK_PREVIEW (preview), rgb_ptr, 0, y, preview_width);
-
-  gtk_widget_queue_draw (preview);
+  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
+                          0, 0, preview_width, preview_height,
+                          GIMP_RGBA_IMAGE,
+                          rgba,
+                          preview_height * 4);
 }
 
 static void
@@ -1058,7 +1028,7 @@ preview_exit (void)
 
 static void
 dialog_iscale_update (GtkAdjustment *adjustment,
-		      gint          *value)
+                      gint          *value)
 {
   *value = adjustment->value;
 
@@ -1070,7 +1040,7 @@ dialog_iscale_update (GtkAdjustment *adjustment,
 
 static void
 dialog_adaptive_callback (GtkWidget *widget,
-			  gpointer   data)
+                          gpointer   data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     filter_type |= FILTER_ADAPTIVE;
@@ -1082,7 +1052,7 @@ dialog_adaptive_callback (GtkWidget *widget,
 
 static void
 dialog_recursive_callback (GtkWidget *widget,
-			   gpointer  data)
+                           gpointer  data)
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     filter_type |= FILTER_RECURSIVE;
