@@ -1,3 +1,8 @@
+2003-04-05  Manish Singh  <yosh@gimp.org>
+
+	* themes/Default/gtkrc: remove gtk-can-change-accels setting, since
+	there is a UI for it (that overrides it)
+
 2003-04-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.c: cosmetic.

@@ -11,9 +11,6 @@
 # widget_class <widget_class_set> style <style_name>
 
 
-gtk-can-change-accels = 1
-
-
 # Don't define icons for the Default theme as they are compiled in
 #
 # include "imagerc"
