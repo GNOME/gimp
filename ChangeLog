@@ -1,3 +1,7 @@
+Wed Jul  1 14:13:45 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/jpeg/jpeg.c: fix for non-interactive mode
+
 Wed Jul  1 10:14:41 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* ltconfig: fix for properly detecting shared lib support on

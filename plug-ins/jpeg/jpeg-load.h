@@ -201,7 +201,7 @@ run (char    *name,
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
-	  if (nparams != 7)
+	  if (nparams != 8)
 	    status = STATUS_CALLING_ERROR;
 	  if (status == STATUS_SUCCESS)
 	    {
@@ -215,6 +215,7 @@ run (char    *name,
 	  if (status == STATUS_SUCCESS &&
 	      (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0))
 	    status = STATUS_CALLING_ERROR;
+	  break;
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
