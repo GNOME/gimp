@@ -1,5 +1,10 @@
 2004-01-02  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/animationplay.c (build_dialog): NULL-terminate
+	the list of strings passed to g_strconcat().
+
+2004-01-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppainttool.c: removed GimpTool::cursor_update()
 	implementation (which was there only to stop drawing the brush
 	preview when the mouse leaves the canvas). Instead, look at

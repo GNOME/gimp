@@ -495,7 +495,7 @@ build_dialog (GimpImageBaseType  basetype,
   {
     /* The 'playback' half of the dialog */
     if (total_frames > 1)
-      windowname = g_strconcat (_("Playback: "), imagename);
+      windowname = g_strconcat (_("Playback: "), imagename, NULL);
     else
       windowname = g_strdup (imagename);
     frame = gtk_frame_new (windowname);
