@@ -1,5 +1,5 @@
 /*
- * Animation Optimizer plug-in version 1.1.1
+ * Animation Optimizer plug-in version 1.1.2
  *
  * (c) Adam D. Moss, 1997-2003
  *     adam@gimp.org
@@ -10,6 +10,11 @@
 
 /*
  * REVISION HISTORY:
+ *
+ * 2003-11-23 : version 1.1.2
+ *              Improved optimization for GIF and file formats using
+ *              compression on a line-by-line basis.  See bug #66367.
+ *              (Raphaël Quinet)
  *
  * 2003-08-12 : version 1.1.1
  *              Disable the semi-broken background/foreground stuff
@@ -116,7 +121,8 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static      gint32 do_optimizations   (GimpRunMode run_mode);
+static      gint32 do_optimizations   (GimpRunMode run_mode,
+				       gboolean    diff_only);
 
 
 /* tag util functions*/
@@ -177,12 +183,35 @@ query (void)
   gimp_install_procedure ("plug_in_animationoptimize",
 			  "This procedure applies various optimizations to"
 			  " a GIMP layer-based animation in an attempt to"
-			  " reduce the final file size.",
+			  " reduce the final file size.  If a frame of the"
+			  " animation can use the 'combine' mode, this"
+			  " procedure attempts to maximize the number of"
+			  " ajdacent pixels having the same color, which"
+			  " improves the compression for some image formats"
+			  " such as GIF or MNG.",
+			  "",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "Adam D. Moss <adam@gimp.org>",
+			  "1997-2003",
+			  N_("<Image>/Filters/Animation/_Optimize (for GIF)"),
+			  "RGB*, INDEXED*, GRAY*",
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (args),
+                          G_N_ELEMENTS (return_args),
+			  args, return_args);
+
+  gimp_install_procedure ("plug_in_animationoptimize_diff",
+			  "This procedure applies various optimizations to"
+			  " a GIMP layer-based animation in an attempt to"
+			  " reduce the final file size.  If a frame of the"
+			  " animation can use the 'combine' mode, this"
+			  " procedure uses a simple difference between the"
+			  " frames.",
 			  "",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "Adam D. Moss <adam@gimp.org>",
 			  "1997-2001",
-			  N_("<Image>/Filters/Animation/_Optimize"),
+			  N_("<Image>/Filters/Animation/_Optimize (difference)"),
 			  "RGB*, INDEXED*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
@@ -250,6 +279,7 @@ run (const gchar      *name,
   static GimpParam values[2];
   GimpRunMode run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gboolean diff_only = FALSE;
 
   *nreturn_vals = 2;
   *return_vals = values;
@@ -267,6 +297,11 @@ run (const gchar      *name,
      what needs to be done. */
   if (strcmp(name,"plug_in_animationoptimize")==0)
     opmode = OPOPTIMIZE;
+  else if (strcmp(name,"plug_in_animationoptimize_diff")==0)
+    {
+      opmode = OPOPTIMIZE;
+      diff_only = TRUE;
+    }
   else if (strcmp(name,"plug_in_animationunoptimize")==0)
     opmode = OPUNOPTIMIZE;
   else if (strcmp(name,"plug_in_animation_find_backdrop")==0)
@@ -280,7 +315,7 @@ run (const gchar      *name,
     {
       image_id = param[1].data.d_image;
 
-      new_image_id = do_optimizations(run_mode);
+      new_image_id = do_optimizations (run_mode, diff_only);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
@@ -400,7 +435,8 @@ compose_row(int frame_num,
 
 
 static gint32
-do_optimizations(GimpRunMode run_mode)
+do_optimizations(GimpRunMode run_mode,
+		 gboolean    diff_only)
 {
   GimpPixelRgn pixel_rgn;
   static guchar* rawframe = NULL;
@@ -881,6 +917,101 @@ g_warning("stat fun");
 
 	      bbox_right++;
 	      bbox_bottom++;
+
+	      if (can_combine && !diff_only)
+		{
+		  /* Try to optimize the pixel data for RLE or LZW compression
+		   * by making some transparent pixels non-transparent if they
+		   * would have the same color as the adjacent pixels.  This
+		   * gives a better compression if the algorithm compresses
+		   * the image line by line.
+		   * See: http://bugzilla.gnome.org/show_bug.cgi?id=66367
+		   * It may not be very efficient to add two additional passes
+		   * over the pixels, but this hopefully makes the code easier
+		   * to maintain and less error-prone.
+		   */
+		  for (yit = bbox_top; yit < bbox_bottom; yit++)
+		    {
+		      /* Compare with previous pixels from left to right */
+		      for (xit = bbox_left + 1; xit < bbox_right; xit++)
+			{
+			  if (!(opti_frame[yit*width*pixelstep
+					   + xit*pixelstep
+					   + pixelstep-1]&128)
+			      && (opti_frame[yit*width*pixelstep
+					     + (xit-1)*pixelstep
+					     + pixelstep-1]&128)
+			      && (last_frame[yit*width*pixelstep
+					     + xit*pixelstep
+					     + pixelstep-1]&128))
+			    {
+			      for (byteit=0; byteit<pixelstep-1; byteit++)
+				{
+				  if (opti_frame[yit*width*pixelstep
+						 + (xit-1)*pixelstep
+						 + byteit]
+				      !=
+				      last_frame[yit*width*pixelstep
+						 + xit*pixelstep
+						 + byteit])
+				    {
+				      goto skip_right;
+				    }
+				}
+			      /* copy the color and alpha */
+			      for (byteit=0; byteit<pixelstep; byteit++)
+				{
+				  opti_frame[yit*width*pixelstep
+					     + xit*pixelstep
+					     + byteit]
+				    = last_frame[yit*width*pixelstep
+						 + xit*pixelstep
+						 + byteit];
+				}
+			    }
+			skip_right:
+			} /* xit */
+		      /* Compare with next pixels from right to left */
+		      for (xit = bbox_right - 2; xit >= bbox_left; xit--)
+			{
+			  if (!(opti_frame[yit*width*pixelstep
+					   + xit*pixelstep
+					   + pixelstep-1]&128)
+			      && (opti_frame[yit*width*pixelstep
+					     + (xit+1)*pixelstep
+					     + pixelstep-1]&128)
+			      && (last_frame[yit*width*pixelstep
+					     + xit*pixelstep
+					     + pixelstep-1]&128))
+			    {
+			      for (byteit=0; byteit<pixelstep-1; byteit++)
+				{
+				  if (opti_frame[yit*width*pixelstep
+						 + (xit+1)*pixelstep
+						 + byteit]
+				      !=
+				      last_frame[yit*width*pixelstep
+						 + xit*pixelstep
+						 + byteit])
+				    {
+				      goto skip_left;
+				    }
+				}
+			      /* copy the color and alpha */
+			      for (byteit=0; byteit<pixelstep; byteit++)
+				{
+				  opti_frame[yit*width*pixelstep
+					     + xit*pixelstep
+					     + byteit]
+				    = last_frame[yit*width*pixelstep
+						 + xit*pixelstep
+						 + byteit];
+				}
+			    }
+			skip_left:
+			} /* xit */
+		    } /* yit */
+		}
 
 	      /*
 	       * Collapse opti_frame data down such that the data
