@@ -1,3 +1,7 @@
+2003-07-30  Dave Neary  <bolsh@gimp.org>
+
+	plug-ins/common/edge.c: Trivial clean-up.
+
 2003-07-29  Manish Singh  <yosh@gimp.org>
 
 	* tools/pdbgen/app.pl: added a utf8 option for string input

@@ -443,9 +443,6 @@ sobel (guchar *data)
 
   gint i;
   gint    v_grad, h_grad;
-  gdouble amp;
-
-  amp = evals.amount;
 
   v_grad = 0;
   h_grad = 0;
@@ -455,8 +452,8 @@ sobel (guchar *data)
       v_grad += v_kernel[i] * data[i];
       h_grad += h_kernel[i] * data[i];
     }
-  return CLAMP(sqrt (v_grad * v_grad * amp + 
-        h_grad * h_grad * amp), 0, 255);
+  return CLAMP(sqrt (v_grad * v_grad * evals.amount + 
+        h_grad * h_grad * evals.amount), 0, 255);
 }
 
 /*
@@ -468,9 +465,6 @@ prewitt (guchar *data)
 {
   gint    k, max;
   gint    m[8];
-  gdouble amp;
-
-  amp =  evals.amount ;
 
   m[0] =   data [0] +   data [1] + data [2] 
          + data [3] - 2*data [4] + data [5] 
@@ -502,7 +496,7 @@ prewitt (guchar *data)
     if (max < m[k])
       max = m[k];
   
-  return CLAMP(amp * max, 0, 255);
+  return CLAMP(evals.amount * max, 0, 255);
 }
 
 
@@ -521,9 +515,6 @@ gradient (guchar *data)
 
   gint i;
   gint    v_grad, h_grad;
-  gdouble amp;
-
-  amp = evals.amount;
 
   v_grad = 0;
   h_grad = 0;
@@ -534,8 +525,8 @@ gradient (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * amp +
-                      h_grad * h_grad * amp), 0, 255);
+  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
+                      h_grad * h_grad * evals.amount), 0, 255);
 }
 
 
@@ -555,9 +546,6 @@ roberts (guchar *data)
 
   gint i;
   gint    v_grad, h_grad;
-  gdouble amp;
-
-  amp = evals.amount;
 
   v_grad = 0;
   h_grad = 0;
@@ -568,8 +556,8 @@ roberts (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * amp +
-                      h_grad * h_grad * amp), 0, 255);
+  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
+                      h_grad * h_grad * evals.amount), 0, 255);
 
 }
 
@@ -590,9 +578,6 @@ differential (guchar *data)
 
   gint i;
   gint    v_grad, h_grad;
-  gdouble amp;
-
-  amp = evals.amount;
 
   v_grad = 0;
   h_grad = 0;
@@ -603,8 +588,8 @@ differential (guchar *data)
       h_grad += h_kernel[i] * data[i];
     }
 
-  return  CLAMP(sqrt (v_grad * v_grad * amp +
-                      h_grad * h_grad * amp), 0, 255);
+  return  CLAMP(sqrt (v_grad * v_grad * evals.amount +
+                      h_grad * h_grad * evals.amount), 0, 255);
 }
 
 
@@ -620,9 +605,6 @@ laplace (guchar *data)
 
   gint i;
   gint    grad;
-  gdouble amp;
-
-  amp = evals.amount;
 
   grad = 0;
   
@@ -631,7 +613,7 @@ laplace (guchar *data)
       grad += kernel[i] * data[i];
     }
 
-  return  CLAMP(grad * amp, 0, 255);
+  return  CLAMP(grad * evals.amount, 0, 255);
 
 }
 
