@@ -1,22 +1,7 @@
-2001-08-11  Emese Kovacs  <emese@gnome.hu>
+2001-08-13  Abel Chueng  <maddog@linux.org.hk>
 
-	* hu.po: Updated Hungarian translation.
-
-2001-08-07  Andras Timar  <timar@gnome.hu>
-
-	* hu.po: Updated Hungarian translation.
-
-2001-08-01  Andras Timar  <timar@gnome.hu>
-
-	* hu.po: Updated Hungarian translation, thanks to Emese.
-
-2001-07-29  Zbigniew Chyla  <cyba@gnome.pl>
-
-	* pl.po: Updated Polish translation.
-
-2001-07-27  Andras Timar  <timar@gnome.hu>
-
-	* hu.po: Updated Hungarian translation.
+	* zh_TW.Big5.po: Fixed a previous incorrect translation, and add
+	  some more.
 
 2001-07-26  Sven Neumann  <sven@gimp.org>
 

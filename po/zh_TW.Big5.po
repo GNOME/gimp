@@ -1,16 +1,17 @@
 # Traditional chinese translation for gimp.
 # Copyright (C) 2001 Free Software Foundation, Inc.
+# Based on translation from 陳英傑 <r5224205@ms.cc.ntu.edu.tw>
 # Abel Cheung <maddog@linux.org.hk>, 2001.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-07-26 12:19+0800\n"
+"POT-Creation-Date: 2001-08-13 15:24+0800\n"
+"PO-Revision-Date: 2001-07-07 08:03+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=big5\n"
+"Content-Type: text/plain; charset=Big5\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
 #: app/about_dialog.c:137
@@ -25,7 +26,7 @@ msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 #: app/about_dialog.c:209
 #, c-format
 msgid "Version %s brought to you by"
-msgstr "版本 %s 由以下人仕編寫："
+msgstr "版本 %s 提供自"
 
 #: app/about_dialog.c:259
 msgid "Please visit http://www.gimp.org/ for more info"
@@ -57,7 +58,7 @@ msgstr ""
 
 #: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
-msgstr "由以下人仕編寫："
+msgstr "提供自："
 
 #: app/app_procs.c:378
 msgid "GIMP Startup"
@@ -66,7 +67,7 @@ msgstr "啟動 GIMP"
 #: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:456
 #, c-format
 msgid "parsing \"%s\"\n"
-msgstr "分析 \"%s\"\n"
+msgstr "分析 \"%s\" 中\n"
 
 #. initialize the xcf file format routines
 #: app/app_procs.c:569
@@ -90,7 +91,7 @@ msgstr "樣式"
 #. initialize the list of gimp patterns
 #: app/app_procs.c:575 app/preferences_dialog.c:2547
 msgid "Palettes"
-msgstr "色盤"
+msgstr "調色盤"
 
 #. initialize the list of gimp palettes
 #: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
@@ -107,9 +108,9 @@ msgid ""
 "\n"
 "Quit the GIMP?"
 msgstr ""
-"還有未儲存的檔案。\n"
+"某些檔案還未儲存。\n"
 "\n"
-"確定要離開 GIMP？"
+"要離開 GIMP 嗎？"
 
 #: app/app_procs.c:772
 msgid "Quit"
@@ -133,7 +134,7 @@ msgstr "取消"
 
 #: app/bezier_select.c:481
 msgid "Bezier path already closed."
-msgstr ""
+msgstr "Bezier 路徑已經關閉。"
 
 #: app/bezier_select.c:502
 msgid "Corrupt curve"
@@ -141,27 +142,27 @@ msgstr "曲線已損毀"
 
 #: app/bezier_select.c:3000
 msgid "Curve not closed!"
-msgstr "不是關閉曲線！"
+msgstr "曲線未封閉！"
 
 #: app/bezier_select.c:3287 app/gimage_mask.c:625
 msgid "Paintbrush operation failed."
-msgstr "畫筆程序已失敗。"
+msgstr "畫筆操作失敗。"
 
 #: app/blend.c:299
 msgid "Offset:"
-msgstr "位移："
+msgstr "偏移："
 
 #: app/blend.c:310
 msgid "FG to BG (RGB)"
-msgstr "由前景至背景 (RGB)"
+msgstr "由前景到背景(RGB)"
 
 #: app/blend.c:311
 msgid "FG to BG (HSV)"
-msgstr "由前景至背景 (HSV)"
+msgstr "由前景到背景(HSV)"
 
 #: app/blend.c:312
 msgid "FG to Transparent"
-msgstr "由前景至透明"
+msgstr "由前景到透明"
 
 #: app/blend.c:313
 msgid "Custom Gradient"
@@ -169,7 +170,7 @@ msgstr "自訂的漸變色"
 
 #: app/blend.c:317
 msgid "Blend:"
-msgstr ""
+msgstr "混合："
 
 #: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
@@ -181,19 +182,19 @@ msgstr ""
 
 #: app/blend.c:327
 msgid "Radial"
-msgstr ""
+msgstr "放射狀"
 
 #: app/blend.c:328
 msgid "Square"
-msgstr ""
+msgstr "方形"
 
 #: app/blend.c:329
 msgid "Conical (symmetric)"
-msgstr ""
+msgstr "圓錐形（對稱）"
 
 #: app/blend.c:330
 msgid "Conical (asymmetric)"
-msgstr ""
+msgstr "圓錐形（非對稱）"
 
 #: app/blend.c:331
 msgid "Shapeburst (angular)"
@@ -233,7 +234,7 @@ msgstr ""
 
 #: app/blend.c:353
 msgid "Repeat:"
-msgstr "重覆："
+msgstr "重複："
 
 #: app/blend.c:372
 msgid "Adaptive Supersampling"
@@ -241,7 +242,7 @@ msgstr ""
 
 #: app/blend.c:400
 msgid "Max Depth:"
-msgstr ""
+msgstr "最大深度："
 
 #: app/blend.c:413 app/bucket_fill.c:139 app/tool_options.c:290
 msgid "Threshold:"
@@ -249,32 +250,32 @@ msgstr "臨界值："
 
 #: app/blend.c:440
 msgid "Blend: Invalid for indexed images."
-msgstr ""
+msgstr "混合：不適用於索引化圖像。"
 
 #: app/blend.c:465
 msgid "Blend: 0, 0"
-msgstr ""
+msgstr "混合：0，0"
 
 #: app/blend.c:528
 msgid "Blend operation failed."
-msgstr ""
+msgstr "混合操作失敗。"
 
 #: app/blend.c:534
 msgid "Blending..."
-msgstr ""
+msgstr "混合中..."
 
 #: app/blend.c:612 app/blend.c:622
 msgid "Blend: "
-msgstr ""
+msgstr "混合："
 
 #: app/brightness_contrast.c:132 app/brightness_contrast.c:221
 #: app/tools.c:1054
 msgid "Brightness-Contrast"
-msgstr "光亮度及反差度"
+msgstr "光光度及反差度"
 
 #: app/brightness_contrast.c:175
 msgid "Brightness-Contrast does not operate on indexed drawables."
-msgstr "光度及反差不適用於索引色圖像。"
+msgstr "光度及反差不適用於索引化圖像。"
 
 #: app/brightness_contrast.c:226 app/channel_ops.c:97
 #: app/channels_dialog.c:2539 app/channels_dialog.c:2702
@@ -341,7 +342,7 @@ msgstr "硬度："
 
 #: app/brush_edit.c:317
 msgid "Aspect Ratio:"
-msgstr "比例："
+msgstr "長寬比例："
 
 #: app/brush_edit.c:330 app/ink.c:326 app/measure.c:322 app/rotate_tool.c:93
 msgid "Angle:"
@@ -355,11 +356,11 @@ msgstr "筆掃形狀選擇"
 #: app/brush_select.c:285 app/gradient.c:916 app/module_db.c:355
 #: app/palette.c:2056 app/pattern_select.c:176
 msgid "Refresh"
-msgstr "重新顯示"
+msgstr "重新整理"
 
 #: app/brush_select.c:413
 msgid "No Brushes available"
-msgstr "沒有筆掃形狀可供使用"
+msgstr "沒有可用的筆掃形狀"
 
 #: app/brush_select.c:454 app/layers_dialog.c:420 app/tool_options.c:531
 msgid "Opacity:"
@@ -410,19 +411,19 @@ msgstr "填色類型"
 
 #: app/bucket_fill.c:163
 msgid "FG Color Fill"
-msgstr "用前景色彩填滿"
+msgstr "填入前景顏色"
 
 #: app/bucket_fill.c:166
 msgid "BG Color Fill"
-msgstr "用背景色彩填滿"
+msgstr "填入背景顏色"
 
 #: app/bucket_fill.c:169
 msgid "Pattern Fill"
-msgstr "以樣式填滿"
+msgstr "填入樣式"
 
 #: app/bucket_fill.c:248
 msgid "Bucket Fill operation failed."
-msgstr "填色程序已失敗。"
+msgstr "填色操作失敗。"
 
 #: app/bucket_fill.c:372
 msgid "No available patterns for this operation."
@@ -431,7 +432,7 @@ msgstr "此程序沒有可供使用的樣式。"
 #. The shell and main vbox
 #: app/by_color_select.c:720
 msgid "By Color Selection"
-msgstr "以色彩選擇"
+msgstr "以顏色選擇"
 
 #: app/by_color_select.c:776
 msgid "Inactive"
@@ -443,7 +444,7 @@ msgstr "選擇模式"
 
 #: app/by_color_select.c:789 app/paint_funcs.c:105
 msgid "Replace"
-msgstr ""
+msgstr "取代"
 
 #: app/by_color_select.c:791 app/colormap_dialog.i.c:130
 msgid "Add"
@@ -467,7 +468,7 @@ msgstr "選擇區域"
 
 #: app/by_color_select.c:834
 msgid "Invert"
-msgstr ""
+msgstr "反向"
 
 #: app/by_color_select.c:841
 msgid "All"
@@ -489,12 +490,12 @@ msgstr ""
 
 #: app/channel_ops.c:91 app/resize.c:436
 msgid "Offset"
-msgstr "位移"
+msgstr "偏移"
 
 #. The offset labels
 #: app/channel_ops.c:115
 msgid "Offset X:"
-msgstr "位移 X："
+msgstr "偏移量 X："
 
 #: app/channel_ops.c:121 app/crop.c:1082 app/file_new_dialog.c:535
 #: app/resize.c:374 app/resize.c:466 app/resize.c:604 app/rotate_tool.c:111
@@ -519,7 +520,7 @@ msgstr "透明"
 #. The by half height and half width option
 #: app/channel_ops.c:193
 msgid "Offset by (x/2),(y/2)"
-msgstr "位移 (x/2),(y/2)"
+msgstr "偏移 (x/2),(y/2)"
 
 #: app/channels_dialog.c:231 app/channels_dialog.c:2577
 msgid "New Channel"
@@ -531,7 +532,7 @@ msgstr "提升頻道"
 
 #: app/channels_dialog.c:239
 msgid "Lower Channel"
-msgstr "下降頻道"
+msgstr "降低頻道"
 
 #: app/channels_dialog.c:243
 msgid "Duplicate Channel"
@@ -627,19 +628,19 @@ msgstr "此程序沒有可供使用的樣式。"
 #. The shell and main vbox
 #: app/color_balance.c:173 app/color_balance.c:277 app/tools.c:1026
 msgid "Color Balance"
-msgstr "色彩平衡"
+msgstr "顏色平衡"
 
 #: app/color_balance.c:217
 msgid "Color balance operates only on RGB color drawables."
-msgstr "色彩平衡只能在 RGB 色彩圖像裡使用。"
+msgstr "顏色平衡只能在 RGB 顏色圖像裡使用。"
 
 #: app/color_balance.c:266 app/dodgeburn.c:186
 msgid "Shadows"
-msgstr ""
+msgstr "陰影"
 
 #: app/color_balance.c:267 app/dodgeburn.c:184
 msgid "Midtones"
-msgstr ""
+msgstr "半調色"
 
 #: app/color_balance.c:268 app/dodgeburn.c:182
 msgid "Highlights"
@@ -667,19 +668,19 @@ msgstr "黃"
 #. The preserve luminosity toggle
 #: app/color_balance.c:442
 msgid "Preserve Luminosity"
-msgstr "保留亮度"
+msgstr "保留光度"
 
 #: app/color_notebook.c:120
 msgid "Color Selection"
-msgstr "色彩選擇"
+msgstr "顏色選擇"
 
 #: app/color_notebook.c:128
 msgid "Revert to Old Color"
-msgstr "還原成以前的色彩"
+msgstr "還原成以前的顏色"
 
 #: app/color_picker.c:150 app/color_picker.c:254 app/tools.c:573
 msgid "Color Picker"
-msgstr "色彩選擇器"
+msgstr "顏色選擇器"
 
 #: app/color_picker.c:177
 msgid "Sample Average"
@@ -687,7 +688,7 @@ msgstr ""
 
 #: app/color_picker.c:220
 msgid "Update Active Color"
-msgstr "更新使用中的色彩"
+msgstr "更新使用中的顏色"
 
 #: app/color_picker.c:261 app/color_picker.c:270
 msgid "Red:"
@@ -712,7 +713,7 @@ msgstr ""
 
 #: app/color_picker.c:269 app/colormap_dialog.i.c:267
 msgid "Index:"
-msgstr ""
+msgstr "索引："
 
 #: app/color_picker.c:274
 msgid "Hex Triplet"
@@ -720,7 +721,7 @@ msgstr ""
 
 #: app/color_picker.c:278 app/histogram_tool.c:278
 msgid "Intensity:"
-msgstr ""
+msgstr "強度："
 
 #: app/color_picker.c:638 app/color_picker.c:639 app/color_picker.c:640
 #: app/color_picker.c:641 app/color_picker.c:642 app/color_picker.c:643
@@ -759,22 +760,22 @@ msgstr "B"
 #: app/color_select.c:251 app/layers_dialog.c:389 app/paint_funcs.c:99
 #: app/tool_options.c:934
 msgid "Hue"
-msgstr ""
+msgstr "色調"
 
 #: app/color_select.c:252 app/layers_dialog.c:390 app/paint_funcs.c:100
 #: app/tool_options.c:935
 msgid "Saturation"
-msgstr ""
+msgstr "飽和度"
 
 #: app/color_select.c:253 app/curves.c:591 app/histogram_tool.c:321
 #: app/layers_dialog.c:392 app/levels.c:378 app/paint_funcs.c:102
 #: app/tool_options.c:937
 msgid "Value"
-msgstr ""
+msgstr "數值"
 
 #: app/colormap_dialog.i.c:191
 msgid "Indexed Color Palette"
-msgstr "索引化色盤"
+msgstr "索引顏色調色盤"
 
 #. The GIMP image option menu
 #: app/colormap_dialog.i.c:206 app/lc_dialog.c:149
@@ -787,7 +788,7 @@ msgstr "無"
 
 #: app/commands.c:340
 msgid "Feather Selection"
-msgstr ""
+msgstr "羽化選取範圍"
 
 #: app/commands.c:343
 msgid "Feather Selection by:"
@@ -795,7 +796,7 @@ msgstr ""
 
 #: app/commands.c:376
 msgid "Shrink Selection"
-msgstr ""
+msgstr "收縮選取範圍"
 
 #: app/commands.c:379
 msgid "Shrink Selection by:"
@@ -803,11 +804,11 @@ msgstr ""
 
 #: app/commands.c:388
 msgid "Shrink from image border"
-msgstr ""
+msgstr "從圖像邊界收縮"
 
 #: app/commands.c:410
 msgid "Grow Selection"
-msgstr ""
+msgstr "延展選取範圍"
 
 #: app/commands.c:413
 msgid "Grow Selection by:"
@@ -823,44 +824,44 @@ msgstr ""
 
 #: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr "改變大小發生錯誤：寬和高都一定要大於零。"
+msgstr "重定大小發生錯誤：寬和高都一定要大於零。"
 
 #: app/convert.c:509
 msgid "Indexed Color Conversion"
-msgstr "索引化色彩轉換"
+msgstr "索引化顏色轉換"
 
 #: app/convert.c:528
 msgid "General Palette Options"
-msgstr "一般色盤選項"
+msgstr "一般調色盤選項"
 
 #: app/convert.c:541
 msgid "Generate Optimal Palette:"
-msgstr "產生最優化的色盤："
+msgstr "產生最優化的調色盤："
 
 #: app/convert.c:574
 msgid "# of Colors:"
-msgstr "色彩的數目："
+msgstr "顏色的數目："
 
 #. create the custom_frame here, it'll be added later
 #: app/convert.c:590
 msgid "Custom Palette Options"
-msgstr "自訂色盤選項"
+msgstr "自訂調色盤選項"
 
 #: app/convert.c:596
 msgid "Remove Unused Colors from Final Palette"
-msgstr "由最終的色盤中移除不使用的色彩"
+msgstr "由最終的調色盤中移除未用的顏色"
 
 #: app/convert.c:608
 msgid "Use Custom Palette:"
-msgstr "使用自訂色盤："
+msgstr "使用自訂調色盤："
 
 #: app/convert.c:642
 msgid "Use WWW-Optimized Palette"
-msgstr "使用適合網頁的色盤"
+msgstr "使用適合網頁的調色盤"
 
 #: app/convert.c:658
 msgid "Use Black/White (1-Bit) Palette"
-msgstr "使用黑白（1 位元）色盤"
+msgstr "使用黑白（1 位元）調色盤"
 
 #: app/convert.c:669
 msgid "Dither Options"
@@ -899,16 +900,16 @@ msgid ""
 msgstr ""
 "你正在嘗試將一個有透明度或圖層的圖像\n"
 "由 RGB/灰階色系轉為索引化色系。\n"
-"如果你打算由此圖像建立一個透明或動畫\n"
-"GIF，不可產生一個多於 255 色的色盤。"
+"如果你打算由此圖像建立一個透明或動態 GIF 檔，你不應該產生一個多於 255 色的調"
+"色盤。"
 
 #: app/convert.c:997
 msgid "Select Custom Palette"
-msgstr "選擇自訂色盤"
+msgstr "選擇自訂調色盤"
 
 #: app/convolve.c:187
 msgid "Convolve Type"
-msgstr ""
+msgstr "旋繞類型"
 
 #: app/convolve.c:191
 msgid "Blur"
@@ -920,11 +921,11 @@ msgstr "清淅化"
 
 #: app/crop.c:184 app/tools.c:377
 msgid "Crop & Resize"
-msgstr "切除邊沿和改變大小"
+msgstr "切除邊沿和重定大小"
 
 #: app/crop.c:195
 msgid "Current Layer only"
-msgstr "只是現時的圖層"
+msgstr "僅目前圖層"
 
 #. enlarge toggle
 #: app/crop.c:206
@@ -942,7 +943,7 @@ msgstr "切除邊沿"
 
 #: app/crop.c:223 app/crop.c:1071
 msgid "Resize"
-msgstr "改變大小"
+msgstr "重定大小"
 
 #: app/crop.c:522 app/crop.c:530
 msgid "Crop: "
@@ -955,7 +956,7 @@ msgstr "切除邊沿：0 x 0"
 #. create the info dialog
 #: app/crop.c:1063
 msgid "Crop & Resize Information"
-msgstr "切除邊沿和改變大小的資訊"
+msgstr "切除邊沿和重定大小的資訊"
 
 #. add the information fields
 #: app/crop.c:1079
@@ -980,7 +981,7 @@ msgstr "使用選擇區域"
 
 #: app/crop.c:1126
 msgid "Auto Shrink"
-msgstr "自動縮小"
+msgstr "自動收縮"
 
 #. The shell and main vbox
 #: app/curves.c:401 app/curves.c:562 app/tools.c:1166
@@ -989,7 +990,7 @@ msgstr "曲線"
 
 #: app/curves.c:448
 msgid "Curves for indexed drawables cannot be adjusted."
-msgstr "索引色圖像裡的曲線不能調整。"
+msgstr "索引化圖像裡的曲線不能調整。"
 
 #: app/curves.c:584
 msgid "Modify Curves for Channel:"
@@ -1060,7 +1061,7 @@ msgid ""
 msgstr ""
 "開啟所選擇的項目\n"
 "<Shift> 若視窗已開啟則提升視窗\n"
-"<Ctrl> 載入圖像視窗"
+"<Ctrl> 載入圖像對話窗"
 
 #: app/docindex.c:121
 msgid ""
@@ -1080,7 +1081,7 @@ msgstr ""
 
 #: app/docindex.c:129
 msgid "Remove the selected entry from the index"
-msgstr "移走索引裡所選的項目"
+msgstr "移除索引裡所選的項目"
 
 #: app/docindex.c:770
 msgid "Document Index"
@@ -1140,10 +1141,9 @@ msgstr "無法儲存，沒有選擇任何東西！"
 
 #: app/errorconsole.c:194
 msgid "Save error log to file..."
-msgstr "將錯誤紀錄儲存為..."
+msgstr "儲存錯誤紀錄到檔案..."
 
 #: app/errorconsole.c:276
-#, fuzzy
 msgid "GIMP Error Console"
 msgstr "GIMP 錯誤訊息監視器"
 
@@ -1153,11 +1153,11 @@ msgstr "清除"
 
 #: app/errorconsole.c:305
 msgid "Write all errors to file..."
-msgstr "將所有錯誤訊息儲存為..."
+msgstr "寫入所有錯誤訊息到檔案..."
 
 #: app/errorconsole.c:312
 msgid "Write selection to file..."
-msgstr "將選擇區域儲存為..."
+msgstr "寫入選擇區域到檔案..."
 
 #: app/file_new_dialog.c:195
 #, no-c-format
@@ -1174,7 +1174,7 @@ msgid ""
 "setting (currently %s) in the\n"
 "preferences dialog."
 msgstr ""
-"你正在嘗試建立大小為 %s 的圖像。\n"
+"你正在嘗試建立初始大小為 %s 的圖像。\n"
 "\n"
 "如果肯定請選擇「確定」。\n"
 "如果你並不想建立這麼大的圖像，\n"
@@ -1182,11 +1182,11 @@ msgstr ""
 "\n"
 "如果想避免此對話窗再次出現，\n"
 "請在偏好設定裡增大「最大圖像\n"
-"大小」選項（現在設定為 %s）"
+"大小」選項（現時為 %s）"
 
 #: app/file_new_dialog.c:207
 msgid "Confirm Image Size"
-msgstr "確定圖像大小"
+msgstr "確認圖像大小"
 
 #: app/file_new_dialog.c:294
 #, c-format
@@ -1279,7 +1279,7 @@ msgstr ""
 "%s\n"
 "\n"
 "（所有變更將會失去，\n"
-"包括所有還原的資料）"
+"包括所有復原的資訊）"
 
 #: app/fileops.c:633
 msgid "Revert Image?"
@@ -1309,7 +1309,7 @@ msgid ""
 "%s is not a regular file."
 msgstr ""
 "%s 失敗。\n"
-"%s 不是普通檔案。"
+"%s 不是正規檔案。"
 
 #: app/fileops.c:779
 #, c-format
@@ -1340,7 +1340,7 @@ msgid ""
 "%s is not a regular file."
 msgstr ""
 "儲存失敗。\n"
-"%s 不是普通檔案。"
+"%s 不是正規檔案。"
 
 #: app/fileops.c:1187
 #, c-format
@@ -1365,11 +1365,11 @@ msgstr "（已關閉縮圖儲存功能）"
 
 #: app/fileops.c:1449
 msgid "(Could not write thumbnail file)"
-msgstr "（無法寫入縮圖）"
+msgstr "（無法寫入縮圖檔）"
 
 #: app/fileops.c:1453
 msgid "(Thumbnail file not written)"
-msgstr "（沒有寫入縮圖）"
+msgstr "（沒有寫入縮圖檔）"
 
 #: app/fileops.c:1471
 msgid "No preview available"
@@ -1377,7 +1377,7 @@ msgstr "沒有預覽"
 
 #: app/fileops.c:1581
 msgid "(could not make preview)"
-msgstr "（無法建立預覽）"
+msgstr "（無法產生預覽）"
 
 #: app/fileops.c:1662 app/fileops.c:1707
 #, c-format
@@ -1470,7 +1470,7 @@ msgid ""
 "Close anyway?"
 msgstr ""
 "%s 曾被修改。\n"
-"確定要關閉？"
+"仍然要關閉？"
 
 #: app/gimage_mask.c:213
 msgid ""
@@ -1480,7 +1480,7 @@ msgstr "無法剪下或複製，因為選擇區域是空的。"
 
 #: app/gimage_mask.c:351
 msgid "Float Selection: No selection to float."
-msgstr "浮動選擇區域：沒有選擇任何區域。"
+msgstr "浮動選擇區域：未選擇浮動區域。"
 
 #: app/gimage_mask.c:363
 msgid "Floated Layer"
@@ -1492,7 +1492,7 @@ msgid ""
 "to convert to a selection."
 msgstr ""
 "使用中的圖層沒有 alpha 頻道，\n"
-"不可將之轉換為選擇區域。"
+"不能轉換為選擇區域。"
 
 #: app/gimage_mask.c:518
 msgid ""
@@ -1566,7 +1566,7 @@ msgstr ""
 
 #: app/gimpdrawable.c:176
 msgid "Can't fill unknown image type."
-msgstr "無法填滿不明的圖像類型"
+msgstr "無法填滿未知的圖像類型"
 
 #: app/gimpdrawable.c:509
 msgid "parasite attach to drawable"
@@ -1609,7 +1609,7 @@ msgstr "不可再提升圖層"
 
 #: app/gimpimage.c:2352
 msgid "Layer cannot be lowered any further"
-msgstr "不可再下降圖層"
+msgstr "不可再降低圖層"
 
 #: app/gimpimage.c:2378
 msgid "Layer is already on top"
@@ -1625,15 +1625,15 @@ msgstr "圖層已經在底層"
 
 #: app/gimpimage.c:2467
 msgid "BG has no alpha, layer was placed above"
-msgstr "背景沒有透明度，圖層會放在上面"
+msgstr "背景沒有透明度，圖層已放在上面"
 
 #: app/gimpimage.c:2539
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
-"可合併的可見圖層數目不足夠。\n"
-"最少應有兩層。"
+"沒有足夠的可見圖層來合併。\n"
+"至少需要兩層。"
 
 #: app/gimpimage.c:2623
 msgid "There are not enough visible layers for a merge down."
@@ -1667,7 +1667,7 @@ msgstr "不可再提升頻道"
 
 #: app/gimpimage.c:3253
 msgid "Channel cannot be lowered any further"
-msgstr "不可再下降頻道"
+msgstr "不可再降低頻道"
 
 #: app/gimpimage.c:3474 app/palette.c:358 app/palette.c:936 app/palette.c:1072
 #: app/palette.c:2014 app/palette.c:2740 app/palette.c:2872
@@ -1695,7 +1695,7 @@ msgstr "  於第 %d 行第 %d 列\n"
 #: app/gimprc.c:477
 #, c-format
 msgid "  unexpected token: %s\n"
-msgstr ""
+msgstr "  未預期的標記：%s\n"
 
 #: app/gimprc.c:1452
 msgid "error parsing pluginrc"
@@ -1714,7 +1714,7 @@ msgstr "無法將 %s 改名為 %s.old；%s"
 #: app/gimprc.c:2952
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr "無法重新開啟 %s\n"
+msgstr "無法再開啟 %s\n"
 
 #: app/gimprc.c:2964
 #, c-format
@@ -1756,11 +1756,11 @@ msgstr "像素"
 #. standard units
 #: app/gimpunit.c:66
 msgid "inch"
-msgstr "寸"
+msgstr "英吋"
 
 #: app/gimpunit.c:66
 msgid "inches"
-msgstr "寸"
+msgstr "英吋"
 
 #: app/gimpunit.c:67
 msgid "millimeter"
@@ -1801,7 +1801,7 @@ msgstr "貼到"
 
 #: app/global_edit.c:769
 msgid "Paste as New"
-msgstr "貼上新檔"
+msgstr "貼到新檔"
 
 #: app/global_edit.c:783
 msgid "Paste Named Buffer"
@@ -1829,7 +1829,7 @@ msgstr ""
 
 #: app/gradient.c:645
 msgid "Sinusoidal"
-msgstr ""
+msgstr "正弦曲線"
 
 #: app/gradient.c:646
 msgid "Spherical (increasing)"
@@ -1845,11 +1845,11 @@ msgstr "普通 RGB"
 
 #: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
-msgstr ""
+msgstr "HSV（逆時針色調）"
 
 #: app/gradient.c:654
 msgid "HSV (clockwise hue)"
-msgstr ""
+msgstr "HSV（順時針色調）"
 
 #: app/gradient.c:910
 msgid "Gradient Editor"
@@ -1889,7 +1889,7 @@ msgstr "重新命名漸變色"
 
 #: app/gradient.c:1027 app/gradient.c:1940
 msgid "Save as POV-Ray"
-msgstr "以 POV-Ray 形式儲存"
+msgstr "另存為 POV-Ray"
 
 #. Zoom all button
 #: app/gradient.c:1045
@@ -1937,7 +1937,7 @@ msgstr "為漸變色輸入新的名稱"
 msgid ""
 "Are you sure you want to delete\n"
 "\"%s\" from the list and from disk?"
-msgstr "是否確定要在列表和硬碟裡刪除 \"%s\"？"
+msgstr "是否確定要在列表和磁碟裡刪除 \"%s\"？"
 
 #: app/gradient.c:2102
 #, c-format
@@ -1954,12 +1954,12 @@ msgstr ""
 #: app/gradient.c:2383
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "前景色彩設為 RGB（%d，%d，%d）<->（%0.3f，%0.3f，%0.3f）"
+msgstr "前景顏色設為 RGB（%d，%d，%d）<->（%0.3f，%0.3f，%0.3f）"
 
 #: app/gradient.c:2407
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-msgstr "背景色彩設為 RGB（%d，%d，%d）<->（%0.3f，%0.3f，%0.3f）"
+msgstr "背景顏色設為 RGB（%d，%d，%d）<->（%0.3f，%0.3f，%0.3f）"
 
 #: app/gradient.c:2698
 msgid "Drag: move    Shift+drag: move & compress"
@@ -1967,23 +1967,23 @@ msgstr "拖曳：移動    Shift+拖曳：移動並壓縮"
 
 #: app/gradient.c:2700 app/gradient.c:2704
 msgid "Click: select    Shift+click: extend selection"
-msgstr "按掣：選擇     Shift+按掣：擴展選擇區"
+msgstr "點選：選擇     Shift+點選：擴展選擇區"
 
 #: app/gradient.c:2710
 msgid "Click: select    Shift+click: extend selection    Drag: move"
-msgstr "按掣：選擇     Shift+按掣：擴展選擇區    拖曳：移動"
+msgstr "點選：選擇     Shift+點選：擴展選擇區    拖曳：移動"
 
 #: app/gradient.c:2722
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"按掣：選擇     Shift+按掣：擴展選擇區    拖曳：移動    Shift+拖曳：移動並壓縮"
+"點選：選擇     Shift+點選：擴展選擇區    拖曳：移動    Shift+拖曳：移動並壓縮"
 
 #: app/gradient.c:2971 app/gradient.c:2980
 #, c-format
 msgid "Handle position: %0.6f"
-msgstr ""
+msgstr "控制點位置：%0.6f"
 
 #: app/gradient.c:2998
 #, c-format
@@ -1992,7 +1992,7 @@ msgstr "距離：%0.6f"
 
 #: app/gradient.c:3490 app/gradient.c:4553
 msgid "Left endpoint's color"
-msgstr "左邊端點的色彩"
+msgstr "左邊端點的顏色"
 
 #: app/gradient.c:3501 app/gradient.c:3543
 msgid "Load from"
@@ -2012,7 +2012,7 @@ msgstr "儲存為"
 
 #: app/gradient.c:3532 app/gradient.c:4631
 msgid "Right endpoint's color"
-msgstr "右邊端點的色彩"
+msgstr "右邊端點的顏色"
 
 #: app/gradient.c:3547
 msgid "Right neighbor's left endpoint"
@@ -2036,11 +2036,11 @@ msgstr "區段的填色類型"
 
 #: app/gradient.c:3835
 msgid "Split segment at midpoint"
-msgstr "在中間點分割區段"
+msgstr "在中點分割區段"
 
 #: app/gradient.c:3837 app/gradient.c:4934
 msgid "Split segment uniformly"
-msgstr "平均地分割區段"
+msgstr "均勻地分割區段"
 
 #: app/gradient.c:3839
 msgid "Delete segment"
@@ -2048,7 +2048,7 @@ msgstr "刪除區段"
 
 #: app/gradient.c:3841
 msgid "Re-center segment's midpoint"
-msgstr "定出區段的中間點"
+msgstr "重新瞄準區段中點"
 
 #: app/gradient.c:3843
 msgid "Re-distribute handles in segment"
@@ -2060,7 +2060,7 @@ msgstr "翻轉區段"
 
 #: app/gradient.c:3847 app/gradient.c:5495
 msgid "Replicate segment"
-msgstr ""
+msgstr "重複區段"
 
 #: app/gradient.c:3852
 msgid "Blending function for selection"
@@ -2072,11 +2072,11 @@ msgstr "區段的填色類型"
 
 #: app/gradient.c:3856
 msgid "Split segments at midpoints"
-msgstr "在中間點分割區段"
+msgstr "在中點分割區段"
 
 #: app/gradient.c:3858 app/gradient.c:4935
 msgid "Split segments uniformly"
-msgstr "平均地分割區段"
+msgstr "均勻地分割區段"
 
 #: app/gradient.c:3860
 msgid "Delete selection"
@@ -2084,7 +2084,7 @@ msgstr "刪除選擇區"
 
 #: app/gradient.c:3862
 msgid "Re-center midpoints in selection"
-msgstr "定出選擇區的中間點"
+msgstr "重新瞄準選擇區中點"
 
 #: app/gradient.c:3864
 msgid "Re-distribute handles in selection"
@@ -2096,11 +2096,11 @@ msgstr "翻轉選擇區"
 
 #: app/gradient.c:3868 app/gradient.c:5496
 msgid "Replicate selection"
-msgstr ""
+msgstr "重複選擇區"
 
 #: app/gradient.c:4152
 msgid "FG color"
-msgstr "前景色彩"
+msgstr "前景顏色"
 
 #: app/gradient.c:4200
 #, c-format
@@ -2130,7 +2130,7 @@ msgstr ""
 
 #: app/gradient.c:5323
 msgid "Blend endpoints' colors"
-msgstr ""
+msgstr "混合端點顏色"
 
 #: app/gradient.c:5335
 msgid "Blend endpoints' opacity"
@@ -2138,7 +2138,7 @@ msgstr ""
 
 #: app/gradient.c:5503
 msgid "Replicate"
-msgstr ""
+msgstr "重複"
 
 #. Instructions
 #: app/gradient.c:5516
@@ -2161,7 +2161,7 @@ msgstr "漸變色選擇"
 #. The shell and main vbox
 #: app/histogram_tool.c:171 app/histogram_tool.c:288 app/tools.c:1222
 msgid "Histogram"
-msgstr ""
+msgstr "統計圖"
 
 #: app/histogram_tool.c:209
 msgid "Histogram does not operate on indexed drawables."
@@ -2173,7 +2173,7 @@ msgstr "平均值："
 
 #: app/histogram_tool.c:275
 msgid "Std Dev:"
-msgstr ""
+msgstr "標準偏差："
 
 #: app/histogram_tool.c:276
 msgid "Median:"
@@ -2189,11 +2189,11 @@ msgstr "數目："
 
 #: app/histogram_tool.c:280
 msgid "Percentile:"
-msgstr ""
+msgstr "百分值："
 
 #: app/histogram_tool.c:313
 msgid "Information on Channel:"
-msgstr ""
+msgstr "頻道資訊："
 
 #. The shell and main vbox
 #: app/hue_saturation.c:248 app/hue_saturation.c:374 app/tools.c:1082
@@ -2206,7 +2206,7 @@ msgstr ""
 
 #: app/hue_saturation.c:360
 msgid "Master"
-msgstr ""
+msgstr "主要"
 
 #: app/hue_saturation.c:362
 msgid "Y"
@@ -2222,22 +2222,22 @@ msgstr "M"
 
 #: app/hue_saturation.c:451
 msgid "Hue / Lightness / Saturation Adjustments"
-msgstr ""
+msgstr "色調 / 光度 / 飽和度調整"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:463
 msgid "Hue:"
-msgstr ""
+msgstr "色調："
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:497
 msgid "Lightness:"
-msgstr ""
+msgstr "光度："
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:531
 msgid "Saturation:"
-msgstr ""
+msgstr "飽和度："
 
 #: app/image_cmds.c:3459
 msgid ""
@@ -2329,11 +2329,11 @@ msgstr ""
 
 #: app/info_window.c:73
 msgid "Pseudo Color"
-msgstr ""
+msgstr "假色"
 
 #: app/info_window.c:74
 msgid "True Color"
-msgstr ""
+msgstr "全彩"
 
 #: app/info_window.c:75
 msgid "Direct Color"
@@ -2374,7 +2374,7 @@ msgstr "大小比例："
 
 #: app/info_window.c:288
 msgid "Display Type:"
-msgstr ""
+msgstr "顯示類型："
 
 #: app/info_window.c:290
 msgid "Visual Class:"
@@ -2388,7 +2388,7 @@ msgstr ""
 #: app/info_window.c:320
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr "資料：%s-%d.%d"
+msgstr "資訊：%s-%d.%d"
 
 #: app/info_window.c:514
 #, c-format
@@ -2403,20 +2403,20 @@ msgstr "%g x %g dpi"
 
 #: app/info_window.c:538
 msgid "RGB Color"
-msgstr "RGB 色彩"
+msgstr "RGB 顏色"
 
 #: app/info_window.c:543
 msgid "Indexed Color"
-msgstr "索引化色彩"
+msgstr "索引化顏色"
 
 #: app/info_window.c:543
 msgid "colors"
-msgstr "色彩"
+msgstr "顏色"
 
 #. adjust sliders
 #: app/ink.c:296
 msgid "Adjustment"
-msgstr ""
+msgstr "調整"
 
 #: app/ink.c:313 app/ink.c:351
 msgid "Size:"
@@ -2456,16 +2456,16 @@ msgstr "筆掃形狀介面"
 
 #: app/internal_procs.c:74
 msgid "Channel"
-msgstr ""
+msgstr "頻道"
 
 #: app/internal_procs.c:77
 msgid "Channel Ops"
-msgstr ""
+msgstr "頻道操作"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:391 app/paint_funcs.c:101
 #: app/tool_options.c:821 app/tool_options.c:936
 msgid "Color"
-msgstr "色彩"
+msgstr "顏色"
 
 #: app/internal_procs.c:83
 msgid "Convert"
@@ -2473,7 +2473,7 @@ msgstr "轉換"
 
 #: app/internal_procs.c:86
 msgid "GDisplay procedures"
-msgstr ""
+msgstr "GDisplay 程序"
 
 #: app/internal_procs.c:89
 msgid "Drawable procedures"
@@ -2489,7 +2489,7 @@ msgstr "檔案處理"
 
 #: app/internal_procs.c:98
 msgid "Floating selections"
-msgstr ""
+msgstr "浮動選擇區域"
 
 #: app/internal_procs.c:101
 msgid "Gimprc procedures"
@@ -2509,7 +2509,7 @@ msgstr "輔助說明程序"
 
 #: app/internal_procs.c:116 app/palette.c:3175
 msgid "Image"
-msgstr ""
+msgstr "圖像"
 
 #. the layer name label
 #: app/internal_procs.c:119 app/layer_select.c:149
@@ -2528,7 +2528,7 @@ msgstr "其它"
 #: app/internal_procs.c:128 app/palette.c:2184 app/palette.c:2196
 #: app/palette_select.c:91
 msgid "Palette"
-msgstr "色盤"
+msgstr "調色盤"
 
 #: app/internal_procs.c:131
 msgid "Parasite procedures"
@@ -2536,7 +2536,7 @@ msgstr ""
 
 #: app/internal_procs.c:134 app/lc_dialog.c:201
 msgid "Paths"
-msgstr ""
+msgstr "路徑"
 
 #: app/internal_procs.c:137
 msgid "Pattern UI"
@@ -2552,7 +2552,7 @@ msgstr "程序資料庫"
 
 #: app/internal_procs.c:149
 msgid "Image mask"
-msgstr ""
+msgstr "圖像遮罩"
 
 #: app/internal_procs.c:152
 msgid "Text procedures"
@@ -2585,7 +2585,7 @@ msgstr "不允許圖層的寬或高為零。"
 #: app/layer.c:532
 #, c-format
 msgid "%s mask"
-msgstr ""
+msgstr "%s 遮罩"
 
 #: app/layer_select.c:109
 msgid "Layer Select"
@@ -2601,16 +2601,15 @@ msgid ""
 "<Shift> To Top"
 msgstr ""
 "提升圖層    \n"
-"<Shift>至頂層"
+"<Shift> 至頂層"
 
 #: app/layers_dialog.c:279
-#, fuzzy
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
 msgstr ""
-"下降圖層    \n"
-"<Shift>至底層"
+"降低圖層       \n"
+"<Shift> 至底層"
 
 #: app/layers_dialog.c:284
 msgid "Duplicate Layer"
@@ -2630,7 +2629,7 @@ msgstr "正常"
 
 #: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:923
 msgid "Dissolve"
-msgstr ""
+msgstr "分解"
 
 #: app/layers_dialog.c:380 app/paint_funcs.c:91 app/tool_options.c:925
 msgid "Multiply (Burn)"
@@ -2646,7 +2645,7 @@ msgstr "螢幕"
 
 #: app/layers_dialog.c:383 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Overlay"
-msgstr ""
+msgstr "重疊"
 
 #: app/layers_dialog.c:384 app/paint_funcs.c:94 app/tool_options.c:929
 msgid "Difference"
@@ -2749,7 +2748,7 @@ msgstr "最後，固定的圖層應該："
 
 #: app/layers_dialog.c:4124
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "必要時延展開"
 
 #: app/layers_dialog.c:4126
 msgid "Clipped to image"
@@ -2815,15 +2814,15 @@ msgstr "放大鏡工具"
 
 #: app/magnify.c:127
 msgid "Allow Window Resizing"
-msgstr "允許改變視窗大小"
+msgstr "允許重定視窗大小"
 
 #: app/magnify.c:142
 msgid "Zoom in"
-msgstr "放大"
+msgstr "拉近"
 
 #: app/magnify.c:144
 msgid "Zoom out"
-msgstr "縮小"
+msgstr "拉遠"
 
 #: app/main.c:289
 msgid ""
@@ -2854,7 +2853,7 @@ msgstr "選項：\n"
 
 #: app/main.c:311
 msgid "  -b, --batch <commands>   Run in batch mode.\n"
-msgstr ""
+msgstr "  -b, --batch <指令>       以批次檔模式執行。\n"
 
 #: app/main.c:312
 msgid ""
@@ -2866,7 +2865,7 @@ msgstr ""
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data            不要載入筆掃形狀、漸變色、色盤和樣式。\n"
+msgstr "  -d, --no-data            不要載入筆掃形狀、漸變色、調色盤和樣式。\n"
 
 #: app/main.c:314
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -2874,7 +2873,7 @@ msgstr "  -i, --no-interface       不使用任何介面。\n"
 
 #: app/main.c:315
 msgid "  -g, --gimprc <gimprc>    Use an alternate gimprc file.\n"
-msgstr "  -g, --gimprc <gimprc>    使用其它 gimprc 檔案\n"
+msgstr "  -g, --gimprc <gimprc>    使用另一個 gimprc 檔案。\n"
 
 #: app/main.c:316
 msgid "  -h, --help               Output this help.\n"
@@ -2886,7 +2885,7 @@ msgstr "  -r, --restore-session    嘗試回復已儲存的工作階段。\n"
 
 #: app/main.c:318
 msgid "  -s, --no-splash          Do not show the startup window.\n"
-msgstr "  -s, --no-splash          不顯示啟動圖像。\n"
+msgstr "  -s, --no-splash          不顯示啟動視窗。\n"
 
 #: app/main.c:319
 msgid "  -S, --no-splash-image    Do not add an image to the startup window.\n"
@@ -2908,7 +2907,7 @@ msgstr ""
 
 #: app/main.c:323
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
-msgstr ""
+msgstr "  --no-xshm                不使用 X 分享記憶體延伸。\n"
 
 #: app/main.c:324
 msgid ""
@@ -2917,7 +2916,7 @@ msgstr ""
 
 #: app/main.c:325
 msgid "  --display <display>      Use the designated X display.\n"
-msgstr ""
+msgstr "  --display <顯示>         使用指定的 X 視窗顯示。\n"
 
 #: app/main.c:326
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
@@ -2931,15 +2930,15 @@ msgstr ""
 
 #: app/main.c:345
 msgid "(This console window will close in ten seconds)\n"
-msgstr ""
+msgstr "（此監控視窗將在十秒後關閉）\n"
 
 #: app/measure.c:126 app/measure.c:319
 msgid "Measure Tool"
-msgstr "量度工具"
+msgstr "測量工具"
 
 #: app/measure.c:135
 msgid "Use Info Window"
-msgstr "使用資訊對話窗"
+msgstr "使用資訊視窗"
 
 #: app/measure.c:321
 msgid "Distance:"
@@ -2947,7 +2946,7 @@ msgstr "距離："
 
 #: app/measure.c:512 app/measure.c:517 app/measure.c:525 app/measure.c:553
 msgid "degrees"
-msgstr ""
+msgstr "度"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
@@ -2994,11 +2993,11 @@ msgstr "/檔案/對話窗/漸變色..."
 
 #: app/menus.c:135
 msgid "/File/Dialogs/Palette..."
-msgstr "/檔案/對話窗/色盤..."
+msgstr "/檔案/對話窗/調色盤..."
 
 #: app/menus.c:137
 msgid "/File/Dialogs/Indexed Palette..."
-msgstr "/檔案/對話窗/索引化色盤..."
+msgstr "/檔案/對話窗/索引化調色盤..."
 
 #: app/menus.c:142
 msgid "/File/Dialogs/Input Devices..."
@@ -3046,11 +3045,11 @@ msgstr "/說明/輔助說明..."
 
 #: app/menus.c:186
 msgid "/Help/Context Help..."
-msgstr ""
+msgstr "/說明/內容說明..."
 
 #: app/menus.c:188
 msgid "/Help/Tip of the Day..."
-msgstr "/說明/今日貼士..."
+msgstr "/說明/每日提示..."
 
 #: app/menus.c:190
 msgid "/Help/About..."
@@ -3103,7 +3102,7 @@ msgstr "/編輯/貼到"
 
 #: app/menus.c:249
 msgid "/Edit/Paste as New"
-msgstr "/編輯/貼上新檔"
+msgstr "/編輯/貼到新檔"
 
 #. <Image>/Edit/Buffer
 #: app/menus.c:254
@@ -3124,11 +3123,11 @@ msgstr "/編輯/清除"
 
 #: app/menus.c:265
 msgid "/Edit/Fill with FG Color"
-msgstr "/編輯/用前景色彩填滿"
+msgstr "/編輯/用前景顏色填滿"
 
 #: app/menus.c:267
 msgid "/Edit/Fill with BG Color"
-msgstr "/編輯/用背景色彩填滿"
+msgstr "/編輯/用背景顏色填滿"
 
 #: app/menus.c:269
 msgid "/Edit/Stroke"
@@ -3153,7 +3152,7 @@ msgstr "/選擇/浮動"
 
 #: app/menus.c:288
 msgid "/Select/Feather..."
-msgstr ""
+msgstr "/選擇/羽狀..."
 
 #: app/menus.c:290
 msgid "/Select/Sharpen"
@@ -3161,7 +3160,7 @@ msgstr "/選擇/清淅化"
 
 #: app/menus.c:292
 msgid "/Select/Shrink..."
-msgstr "/選擇/縮小..."
+msgstr "/選擇/收縮..."
 
 #: app/menus.c:294
 msgid "/Select/Grow..."
@@ -3173,16 +3172,16 @@ msgstr "/選擇/邊界..."
 
 #: app/menus.c:301
 msgid "/Select/Save to Channel"
-msgstr ""
+msgstr "/選擇/儲存至頻道"
 
 #. <Image>/View
 #: app/menus.c:306
 msgid "/View/Zoom In"
-msgstr "/觀看/放大"
+msgstr "/觀看/拉近"
 
 #: app/menus.c:308
 msgid "/View/Zoom Out"
-msgstr "/觀看/縮小"
+msgstr "/觀看/拉遠"
 
 #. <Image>/View/Zoom
 #: app/menus.c:313
@@ -3227,11 +3226,11 @@ msgstr "/觀看/點對點"
 
 #: app/menus.c:337
 msgid "/View/Info Window..."
-msgstr "/觀看/資料對話窗..."
+msgstr "/觀看/資料視窗..."
 
 #: app/menus.c:339
 msgid "/View/Nav. Window..."
-msgstr ""
+msgstr "/觀看/導覽視窗..."
 
 #: app/menus.c:344
 msgid "/View/Toggle Selection"
@@ -3296,7 +3295,7 @@ msgstr ""
 #. <Image>/Image/Transforms
 #: app/menus.c:399
 msgid "/Image/Transforms/Offset..."
-msgstr "/圖像/變形/位移..."
+msgstr "/圖像/變形/偏移..."
 
 #: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
@@ -3338,15 +3337,15 @@ msgstr "/圖層/堆疊/提升圖層"
 
 #: app/menus.c:435
 msgid "/Layers/Stack/Lower Layer"
-msgstr "/圖層/堆疊/下降圖層"
+msgstr "/圖層/堆疊/降低圖層"
 
 #: app/menus.c:437
 msgid "/Layers/Stack/Layer to Top"
-msgstr "/圖層/堆疊/提升至頂層"
+msgstr "/圖層/堆疊/圖層升至頂層"
 
 #: app/menus.c:439
 msgid "/Layers/Stack/Layer to Bottom"
-msgstr "/圖層/堆疊/下降至底層"
+msgstr "/圖層/堆疊/圖層降至底層"
 
 #. <Image>/Layers/Rotate
 #: app/menus.c:446
@@ -3363,7 +3362,7 @@ msgstr "/圖層/堆疊/合併可見的圖層..."
 
 #: app/menus.c:455
 msgid "/Layers/Flatten Image"
-msgstr ""
+msgstr "/圖層/圖像平坦化"
 
 #: app/menus.c:460
 msgid "/Layers/Mask to Selection"
@@ -3384,11 +3383,11 @@ msgstr "/工具/工具箱"
 
 #: app/menus.c:477
 msgid "/Tools/Default Colors"
-msgstr "/工具/預設色彩"
+msgstr "/工具/預設顏色"
 
 #: app/menus.c:479
 msgid "/Tools/Swap Colors"
-msgstr "/工具/交換色彩"
+msgstr "/工具/交換顏色"
 
 #. <Image>/Dialogs
 #: app/menus.c:486
@@ -3413,11 +3412,11 @@ msgstr "/對話窗/漸變色..."
 
 #: app/menus.c:499
 msgid "/Dialogs/Palette..."
-msgstr "/對話窗/色盤..."
+msgstr "/對話窗/調色盤..."
 
 #: app/menus.c:501
 msgid "/Dialogs/Indexed Palette..."
-msgstr "/對話窗/索引化色盤..."
+msgstr "/對話窗/索引化調色盤..."
 
 #: app/menus.c:506
 msgid "/Dialogs/Input Devices..."
@@ -3458,7 +3457,7 @@ msgstr "/過濾器/模糊化"
 
 #: app/menus.c:539
 msgid "/Filters/Colors"
-msgstr "/過濾器/色彩"
+msgstr "/過濾器/顏色"
 
 #: app/menus.c:541
 msgid "/Filters/Noise"
@@ -3466,7 +3465,7 @@ msgstr "/過濾器/雜點"
 
 #: app/menus.c:543
 msgid "/Filters/Edge-Detect"
-msgstr ""
+msgstr "/過濾器/邊緣偵測"
 
 #: app/menus.c:545
 msgid "/Filters/Enhance"
@@ -3474,7 +3473,7 @@ msgstr ""
 
 #: app/menus.c:547
 msgid "/Filters/Generic"
-msgstr ""
+msgstr "/過濾器/一般性"
 
 #: app/menus.c:552
 msgid "/Filters/Glass Effects"
@@ -3502,19 +3501,19 @@ msgstr ""
 
 #: app/menus.c:564
 msgid "/Filters/Web"
-msgstr ""
+msgstr "/過濾器/網頁"
 
 #: app/menus.c:569
 msgid "/Filters/Animation"
-msgstr ""
+msgstr "/過濾器/動畫"
 
 #: app/menus.c:571
 msgid "/Filters/Combine"
-msgstr "/過濾器/結合"
+msgstr "/過濾器/合併"
 
 #: app/menus.c:576
 msgid "/Filters/Toys"
-msgstr ""
+msgstr "/過濾器/玩具"
 
 #: app/menus.c:587
 msgid "/Automatic"
@@ -3535,15 +3534,15 @@ msgstr "/堆疊/提升圖層"
 
 #: app/menus.c:622
 msgid "/Stack/Lower Layer"
-msgstr "/堆疊/下降圖層"
+msgstr "/堆疊/降低圖層"
 
 #: app/menus.c:624
 msgid "/Stack/Layer to Top"
-msgstr "/堆疊/提升至頂層"
+msgstr "/堆疊/圖層提至頂層"
 
 #: app/menus.c:626
 msgid "/Stack/Layer to Bottom"
-msgstr "/堆疊/下降至底層"
+msgstr "/堆疊/圖層降至底層"
 
 #: app/menus.c:629
 msgid "/Duplicate Layer"
@@ -3579,7 +3578,7 @@ msgstr ""
 
 #: app/menus.c:651
 msgid "/Flatten Image"
-msgstr ""
+msgstr "/圖像平坦化"
 
 #: app/menus.c:656
 msgid "/Add Layer Mask..."
@@ -3619,7 +3618,7 @@ msgstr "/提升頻道"
 
 #: app/menus.c:689
 msgid "/Lower Channel"
-msgstr "/下降頻道"
+msgstr "/降低頻道"
 
 #: app/menus.c:691
 msgid "/Duplicate Channel"
@@ -3712,11 +3711,11 @@ msgstr "載入失敗"
 
 #: app/module_db.c:69
 msgid "Unload requested"
-msgstr ""
+msgstr "要求卸載"
 
 #: app/module_db.c:70
 msgid "Unloaded OK"
-msgstr ""
+msgstr "卸載成功"
 
 #: app/module_db.c:309
 msgid "Module DB"
@@ -3743,11 +3742,11 @@ msgstr "<沒有模組>"
 
 #: app/module_db.c:835 app/module_db.c:844
 msgid "on disk"
-msgstr ""
+msgstr "在磁碟中"
 
 #: app/module_db.c:835
 msgid "only in memory"
-msgstr ""
+msgstr "僅在記憶體中"
 
 #: app/module_db.c:844
 msgid "nowhere (click 'refresh')"
@@ -3755,7 +3754,7 @@ msgstr ""
 
 #: app/module_db.c:879 app/module_db.c:884
 msgid "Unload"
-msgstr ""
+msgstr "卸載"
 
 #: app/module_db.c:900
 msgid "Purpose:"
@@ -3797,11 +3796,11 @@ msgstr "移動工具"
 #: app/nav_window.c:1308
 #, c-format
 msgid "Navigation: %s-%d.%d"
-msgstr ""
+msgstr "導覽：%s-%d.%d"
 
 #: app/nav_window.c:1613
 msgid "Navigation: No Image"
-msgstr ""
+msgstr "導覽：沒有圖像"
 
 #: app/paint_core.c:805
 msgid "No brushes available for use with this tool."
@@ -3821,7 +3820,7 @@ msgstr ""
 
 #: app/paintbrush.c:224
 msgid "Fade Out"
-msgstr ""
+msgstr "淡出"
 
 #. the gradient type
 #: app/paintbrush.c:303
@@ -3830,19 +3829,19 @@ msgstr "類型："
 
 #: app/paintbrush.c:317
 msgid "Once Forward"
-msgstr ""
+msgstr "向前漸變色"
 
 #: app/paintbrush.c:318
 msgid "Once Backward"
-msgstr ""
+msgstr "向後漸變色"
 
 #: app/paintbrush.c:319
 msgid "Loop Sawtooth"
-msgstr ""
+msgstr "鋸齒式循環漸變色"
 
 #: app/paintbrush.c:320
 msgid "Loop Triangle"
-msgstr ""
+msgstr "三角型循環漸變色"
 
 #: app/palette.c:408
 #, c-format
@@ -3852,10 +3851,10 @@ msgid ""
 "missing magic header\n"
 "Does this file need converting from DOS?"
 msgstr ""
-"正在載入色盤 %s：\n"
-"色盤已損毀：\n"
+"正在載入調色盤 %s：\n"
+"調色盤已損毀：\n"
 "遺漏了標頭\n"
-"是否需要由 DOS 轉換此檔案？"
+"是否需要由 DOS 轉換此檔案過來？"
 
 #: app/palette.c:413
 #, c-format
@@ -3863,6 +3862,8 @@ msgid ""
 "Loading palette %s:\n"
 "Corrupt palette: missing magic header"
 msgstr ""
+"正在載入調色盤 %s：\n"
+"調色盤已損毀：遺漏了標頭"
 
 #: app/palette.c:426
 #, c-format
@@ -3870,7 +3871,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Read error"
 msgstr ""
-"載入色盤 %s（第 %d 行）：\n"
+"載入調色盤 %s（第 %d 行）：\n"
 "讀入發生錯誤"
 
 #. maybe we should just abort?
@@ -3880,7 +3881,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing RED component"
 msgstr ""
-"載入色盤 %s（第 %d 行）：\n"
+"載入調色盤 %s（第 %d 行）：\n"
 "遺漏了紅色部份"
 
 #: app/palette.c:449
@@ -3889,7 +3890,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing GREEN component"
 msgstr ""
-"載入色盤 %s（第 %d 行）：\n"
+"載入調色盤 %s（第 %d 行）：\n"
 "遺漏了綠色部份"
 
 #: app/palette.c:456
@@ -3898,7 +3899,7 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "Missing BLUE component"
 msgstr ""
-"載入色盤 %s（第 %d 行）：\n"
+"載入調色盤 %s（第 %d 行）：\n"
 "遺漏了藍色部份"
 
 #: app/palette.c:465
@@ -3907,13 +3908,13 @@ msgid ""
 "Loading palette %s (line %d):\n"
 "RGB value out of range"
 msgstr ""
-"載入色盤 %s（第 %d 行）：\n"
+"載入調色盤 %s（第 %d 行）：\n"
 "遺漏了藍色部份"
 
 #: app/palette.c:514
 #, c-format
 msgid "Can't save palette \"%s\"\n"
-msgstr "無法儲存色盤 \"%s\"\n"
+msgstr "無法儲存調色盤 \"%s\"\n"
 
 #: app/palette.c:1157
 msgid "Black"
@@ -3925,23 +3926,23 @@ msgstr "未定義"
 
 #: app/palette.c:1763
 msgid "New Palette"
-msgstr "新增色盤"
+msgstr "新增調色盤"
 
 #: app/palette.c:1766
 msgid "Enter a name for new palette"
-msgstr "為新的色盤命名"
+msgstr "為新的調色盤命名"
 
 #: app/palette.c:1820
 msgid "Delete Palette"
-msgstr "刪除色盤"
+msgstr "刪除調色盤"
 
 #: app/palette.c:1899
 msgid "Merge Palette"
-msgstr "結合色盤"
+msgstr "合併調色盤"
 
 #: app/palette.c:1902
 msgid "Enter a name for merged palette"
-msgstr "為已結合的色盤命名"
+msgstr "為已合併的調色盤命名"
 
 #: app/palette.c:2048
 msgid "Color Palette Edit"
@@ -3961,7 +3962,7 @@ msgstr ""
 
 #: app/palette.c:2217
 msgid "Palette Ops"
-msgstr "色盤處理"
+msgstr "調色盤處理"
 
 #. The "Import" frame
 #: app/palette.c:2248 app/palette.c:3109 app/palette.c:3123
@@ -3970,11 +3971,11 @@ msgstr "匯入"
 
 #: app/palette.c:2259
 msgid "Merge"
-msgstr "結合"
+msgstr "合併"
 
 #: app/palette.c:3103
 msgid "Import Palette"
-msgstr "匯入色盤"
+msgstr "匯入調色盤"
 
 #. The source's name
 #: app/palette.c:3139
@@ -3992,7 +3993,7 @@ msgstr "來源："
 
 #: app/palette.c:3185
 msgid "Indexed Palette"
-msgstr "索引化色盤"
+msgstr "索引化調色盤"
 
 #. The sample size
 #: app/palette.c:3198
@@ -4007,7 +4008,7 @@ msgstr ""
 #. The shell and main vbox
 #: app/palette_select.c:61
 msgid "Palette Selection"
-msgstr "色盤選擇"
+msgstr "調色盤選擇"
 
 #: app/paths_dialog.c:167
 msgid "New Path"
@@ -4035,19 +4036,19 @@ msgstr ""
 
 #: app/paths_dialog.c:196
 msgid "New Point"
-msgstr ""
+msgstr "新增端點"
 
 #: app/paths_dialog.c:200
 msgid "Add Point"
-msgstr ""
+msgstr "增加端點"
 
 #: app/paths_dialog.c:204
 msgid "Delete Point"
-msgstr ""
+msgstr "刪除端點"
 
 #: app/paths_dialog.c:208
 msgid "Edit Point"
-msgstr ""
+msgstr "編輯端點"
 
 #: app/paths_dialog.c:436
 #, c-format
@@ -4106,7 +4107,7 @@ msgstr "選擇樣式"
 
 #: app/pattern_select.c:233
 msgid "No Patterns available"
-msgstr "沒有樣式可供使用"
+msgstr "沒有可用的樣式"
 
 #: app/patterns.c:210
 #, fuzzy, c-format
@@ -4125,7 +4126,7 @@ msgstr "GIMP 樣式檔案似乎是被截短了：\"%s\"。"
 
 #: app/perspective_tool.c:65
 msgid "Perspective Transform Information"
-msgstr ""
+msgstr "透視法變形資訊"
 
 #: app/perspective_tool.c:68
 msgid "Matrix:"
@@ -4133,11 +4134,11 @@ msgstr "矩陣："
 
 #: app/perspective_tool.c:308
 msgid "Perspective..."
-msgstr ""
+msgstr "透視法..."
 
 #: app/plug_in.c:332
 msgid "Resource configuration"
-msgstr "資源設定"
+msgstr "資源組態"
 
 #: app/plug_in.c:339
 msgid "Plug-ins"
@@ -4184,15 +4185,16 @@ msgstr ""
 
 #: app/posterize.c:116 app/posterize.c:203 app/tools.c:1110
 msgid "Posterize"
-msgstr "曝光"
+msgstr "海報化"
 
 #: app/posterize.c:158
+#, fuzzy
 msgid "Posterize does not operate on indexed drawables."
-msgstr "曝光不適用於索引色圖像。"
+msgstr "海報化不適用於索引化圖像。"
 
 #: app/posterize.c:225
 msgid "Posterize Levels:"
-msgstr "曝光度："
+msgstr "海報化程度："
 
 #: app/preferences_dialog.c:267
 msgid "Error: Levels of undo must be zero or greater."
@@ -4372,7 +4374,7 @@ msgstr "8 位元顯示"
 
 #: app/preferences_dialog.c:1780
 msgid "Minimum Number of Colors:"
-msgstr "最小色彩數目："
+msgstr "最小顏色數目："
 
 #: app/preferences_dialog.c:1783
 msgid "Install Colormap"
@@ -4396,7 +4398,7 @@ msgstr "預覽圖大小："
 
 #: app/preferences_dialog.c:1862
 msgid "Nav Preview Size:"
-msgstr ""
+msgstr "導覽預覽圖大小："
 
 #: app/preferences_dialog.c:1872
 msgid "Recent Documents List Size:"
@@ -4420,7 +4422,6 @@ msgid "Navigation Window per Display"
 msgstr ""
 
 #: app/preferences_dialog.c:1899
-#, fuzzy
 msgid "Info Window Follows Mouse"
 msgstr "資訊視窗跟隨滑鼠顯示"
 
@@ -4434,7 +4435,7 @@ msgstr "顯示工具提示"
 
 #: app/preferences_dialog.c:1932
 msgid "Context Sensitive Help with \"F1\""
-msgstr ""
+msgstr "按「F1」顯示有關內容的輔助說明"
 
 #: app/preferences_dialog.c:1941
 msgid "Help Browser"
@@ -4500,7 +4501,7 @@ msgstr "顯示縮放比例"
 
 #: app/preferences_dialog.c:2055
 msgid "Show reversed zoom ratio"
-msgstr ""
+msgstr "顯示相反的縮放比例"
 
 #: app/preferences_dialog.c:2066
 msgid "Image Title Format:"
@@ -4521,15 +4522,15 @@ msgstr "不更新游標"
 
 #: app/preferences_dialog.c:2101
 msgid "Tool Icon"
-msgstr ""
+msgstr "工具圖示"
 
 #: app/preferences_dialog.c:2103
 msgid "Tool Icon with Crosshair"
-msgstr ""
+msgstr "工具圖示配合十字記號"
 
 #: app/preferences_dialog.c:2105
 msgid "Crosshair only"
-msgstr ""
+msgstr "只有十字記號"
 
 #: app/preferences_dialog.c:2110
 msgid "Cursor Mode:"
@@ -4562,7 +4563,7 @@ msgstr "系統環境"
 
 #: app/preferences_dialog.c:2176
 msgid "Resource Consumption"
-msgstr "資源使用"
+msgstr "資源消耗量"
 
 #: app/preferences_dialog.c:2178
 msgid "Conservative Memory Usage"
@@ -4602,11 +4603,11 @@ msgstr "檔案儲存"
 
 #: app/preferences_dialog.c:2280 app/preferences_dialog.c:2293
 msgid "Always"
-msgstr "一定會"
+msgstr "一定"
 
 #: app/preferences_dialog.c:2281
 msgid "Never"
-msgstr "永遠不會"
+msgstr "永不"
 
 #: app/preferences_dialog.c:2285
 msgid "Try to Write a Thumbnail File:"
@@ -4618,7 +4619,7 @@ msgstr "只在修改後"
 
 #: app/preferences_dialog.c:2297
 msgid "\"File > Save\" Saves the Image:"
-msgstr "「檔案 > 儲存」會否儲存圖像："
+msgstr "「檔案→儲存」會否儲存圖像："
 
 #: app/preferences_dialog.c:2303
 msgid "Session Management"
@@ -4727,11 +4728,11 @@ msgstr "選擇樣式目錄"
 
 #: app/preferences_dialog.c:2547
 msgid "Palettes Directories"
-msgstr "色盤目錄"
+msgstr "調色盤目錄"
 
 #: app/preferences_dialog.c:2549
 msgid "Select Palettes Dir"
-msgstr "選擇色盤目錄"
+msgstr "選擇調色盤目錄"
 
 #: app/preferences_dialog.c:2551
 msgid "Gradients Directories"
@@ -4903,7 +4904,7 @@ msgstr "調校螢幕解析度"
 
 #: app/resolution_calibrate.c:221
 msgid "Measure the rulers and enter their lengths below."
-msgstr "量度尺規的長度並在下列的欄位填上。"
+msgstr "測量尺規的長度並在下列的欄位填上。"
 
 #: app/resolution_calibrate.c:241
 msgid "Horizontal:"
@@ -4960,7 +4961,7 @@ msgstr "文字工具"
 
 #: app/text_tool.c:167 app/tool_options.c:239
 msgid "Antialiasing"
-msgstr ""
+msgstr "反鋸齒"
 
 #: app/text_tool.c:181
 msgid "Border:"
@@ -4968,7 +4969,7 @@ msgstr "邊界："
 
 #: app/text_tool.c:207
 msgid "Use Dynamic Text"
-msgstr ""
+msgstr "使用動態文字"
 
 #: app/text_tool.c:613
 #, c-format
@@ -4999,7 +5000,7 @@ msgstr "臨界值"
 
 #: app/threshold.c:217
 msgid "Threshold does not operate on indexed drawables."
-msgstr "臨界值不適用於索引色圖像。"
+msgstr "臨界值不適用於索引化圖像。"
 
 #: app/threshold.c:298
 msgid "Threshold Range:"
@@ -5011,7 +5012,7 @@ msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:87
 msgid "GIMP Tip of the Day"
-msgstr "GIMP 今日提示"
+msgstr "GIMP 每日提示"
 
 #: app/tips_dialog.c:148
 msgid "Show tip next time GIMP starts"
@@ -5067,7 +5068,7 @@ msgstr "智慧型剪刀"
 
 #: app/tool_options.c:162
 msgid "By-Color Selection"
-msgstr "以色彩選擇區域"
+msgstr "以顏色選擇區域"
 
 #: app/tool_options.c:195
 msgid "Feather"
@@ -5087,7 +5088,7 @@ msgstr "填色"
 
 #: app/tool_options.c:476
 msgid "Blend Tool"
-msgstr ""
+msgstr "混合工具"
 
 #: app/tool_options.c:478 app/tools.c:657
 msgid "Pencil"
@@ -5103,7 +5104,7 @@ msgstr "膠擦"
 
 #: app/tool_options.c:484 app/tools.c:741
 msgid "Airbrush"
-msgstr "噴漆"
+msgstr "噴槍"
 
 #: app/tool_options.c:486
 msgid "Clone Tool"
@@ -5131,7 +5132,7 @@ msgstr ""
 
 #: app/tool_options.c:715
 msgid "Pressure Sensitivity"
-msgstr ""
+msgstr "壓力敏感度"
 
 #: app/tool_options.c:734
 msgid "Opacity"
@@ -5191,7 +5192,7 @@ msgstr "/工具/選擇工具/模糊區域選擇"
 
 #: app/tools.c:243
 msgid "Select contiguous regions"
-msgstr "選擇連續色彩的區域"
+msgstr "選擇連續顏色的區域"
 
 #: app/tools.c:265
 msgid "Bezier Select"
@@ -5239,7 +5240,7 @@ msgstr "放大和縮小"
 
 #: app/tools.c:378
 msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/工具/變形工具/切除邊沿和改變大小"
+msgstr "/工具/變形工具/切除邊沿和重定大小"
 
 #: app/tools.c:383
 msgid "Crop or resize the image"
@@ -5285,11 +5286,11 @@ msgstr "將文字加進圖像裡"
 
 #: app/tools.c:574
 msgid "/Tools/Color Picker"
-msgstr "/工具/色彩選擇器"
+msgstr "/工具/顏色選擇器"
 
 #: app/tools.c:579
 msgid "Pick colors from the image"
-msgstr "由圖像選擇色彩"
+msgstr "由圖像選擇顏色"
 
 #: app/tools.c:602
 msgid "/Tools/Paint Tools/Bucket Fill"
@@ -5297,15 +5298,15 @@ msgstr "/工具/繪圖工具/填色"
 
 #: app/tools.c:607
 msgid "Fill with a color or pattern"
-msgstr "以色彩或樣式填滿"
+msgstr "以顏色或樣式填滿"
 
 #: app/tools.c:629
 msgid "Blend"
-msgstr ""
+msgstr "混合"
 
 #: app/tools.c:630
 msgid "/Tools/Paint Tools/Blend"
-msgstr ""
+msgstr "/工具/繪圖工具/混合"
 
 #: app/tools.c:635
 msgid "Fill with a color gradient"
@@ -5337,11 +5338,11 @@ msgstr "將圖像擦成底色或透明"
 
 #: app/tools.c:742
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/工具/繪圖工具/噴漆"
+msgstr "/工具/繪圖工具/噴槍"
 
 #: app/tools.c:747
 msgid "Airbrush with variable pressure"
-msgstr "使用可變壓的噴漆"
+msgstr "使用可變壓的噴槍"
 
 #: app/tools.c:769
 msgid "Clone"
@@ -5357,11 +5358,11 @@ msgstr "使用樣式或圖像某區域來繪畫"
 
 #: app/tools.c:797
 msgid "Convolve"
-msgstr ""
+msgstr "旋繞"
 
 #: app/tools.c:798
 msgid "/Tools/Paint Tools/Convolve"
-msgstr ""
+msgstr "/工具/繪圖工具/旋繞"
 
 #: app/tools.c:803
 msgid "Blur or sharpen"
@@ -5393,39 +5394,39 @@ msgstr ""
 
 #: app/tools.c:939
 msgid "Measure"
-msgstr "量度"
+msgstr "測量"
 
 #: app/tools.c:940
 msgid "/Tools/Measure"
-msgstr "/工具/量度"
+msgstr "/工具/測量"
 
 #: app/tools.c:945
 msgid "Measure distances and angles"
-msgstr "量度距離和角度"
+msgstr "測量距離和角度"
 
 #: app/tools.c:998
 msgid "By Color Select"
-msgstr "依色彩選擇"
+msgstr "依顏色選擇"
 
 #: app/tools.c:999
 msgid "/Select/By Color..."
-msgstr "/選擇/依色彩..."
+msgstr "/選擇/依顏色..."
 
 #: app/tools.c:1004
 msgid "Select regions by color"
-msgstr "依色彩選擇區域"
+msgstr "依顏色選擇區域"
 
 #: app/tools.c:1027
 msgid "/Image/Colors/Color Balance..."
-msgstr "/圖像/色彩/色彩平衡..."
+msgstr "/圖像/顏色/顏色平衡..."
 
 #: app/tools.c:1032
 msgid "Adjust color balance"
-msgstr ""
+msgstr "調整顏色平衡"
 
 #: app/tools.c:1055
 msgid "/Image/Colors/Brightness-Contrast..."
-msgstr "/圖像/色彩/光度及反差..."
+msgstr "/圖像/顏色/光度及反差..."
 
 #: app/tools.c:1060
 msgid "Adjust brightness and contrast"
@@ -5433,11 +5434,11 @@ msgstr "調校光度和反差"
 
 #: app/tools.c:1083
 msgid "/Image/Colors/Hue-Saturation..."
-msgstr ""
+msgstr "/圖像/顏色/色調、飽和度..."
 
 #: app/tools.c:1088
 msgid "Adjust hue and saturation"
-msgstr ""
+msgstr "調整色調及飽和度"
 
 #: app/tools.c:1111
 msgid "/Image/Colors/Posterize..."
@@ -5445,39 +5446,39 @@ msgstr ""
 
 #: app/tools.c:1116
 msgid "Reduce image to a fixed numer of colors"
-msgstr "減少圖像所使用的色彩"
+msgstr "減少圖像所使用的顏色"
 
 #: app/tools.c:1139
 msgid "/Image/Colors/Threshold..."
-msgstr "/圖像/色彩/臨界值..."
+msgstr "/圖像/顏色/臨界值..."
 
 #: app/tools.c:1144
 msgid "Reduce image to two colors using a threshold"
-msgstr "將圖像的色彩減為兩個，由某臨界值決定"
+msgstr "將圖像的顏色減為兩個，由某臨界值決定"
 
 #: app/tools.c:1167
 msgid "/Image/Colors/Curves..."
-msgstr "/圖像/色彩/曲線..."
+msgstr "/圖像/顏色/曲線..."
 
 #: app/tools.c:1172
 msgid "Adjust color curves"
-msgstr "調校色彩曲線"
+msgstr "調校顏色曲線"
 
 #: app/tools.c:1195
 msgid "/Image/Colors/Levels..."
-msgstr ""
+msgstr "/圖像/顏色/色階..."
 
 #: app/tools.c:1200
 msgid "Adjust color levels"
-msgstr ""
+msgstr "調整色階"
 
 #: app/tools.c:1223
 msgid "/Image/Histogram..."
-msgstr ""
+msgstr "/圖像/統計圖..."
 
 #: app/tools.c:1228
 msgid "View image histogram"
-msgstr ""
+msgstr "檢視圖像的統計圖"
 
 #: app/transform_core.c:254
 msgid "Rotate"
@@ -5515,7 +5516,7 @@ msgstr ""
 
 #: app/transform_tool.c:224
 msgid "Perspective"
-msgstr ""
+msgstr "透視法"
 
 #. the second radio frame and box, for transform direction
 #: app/transform_tool.c:239
@@ -5704,7 +5705,7 @@ msgstr ""
 
 #: app/undo.c:2940
 msgid "crop"
-msgstr ""
+msgstr "切除邊沿"
 
 #: app/undo.c:2941
 msgid "layer scale"
@@ -5712,7 +5713,7 @@ msgstr "圖層伸縮"
 
 #: app/undo.c:2942
 msgid "layer resize"
-msgstr ""
+msgstr "重定圖層大小"
 
 #: app/undo.c:2943
 msgid "quickmask"
@@ -5736,7 +5737,7 @@ msgstr "圖像伸縮"
 
 #: app/undo.c:2948
 msgid "image resize"
-msgstr ""
+msgstr "重定圖像大小"
 
 #: app/undo.c:2949
 msgid "misc"
@@ -5779,7 +5780,7 @@ msgid ""
 "here."
 msgstr ""
 "gimprc 檔案是用來儲存影響 GIMP 表現的個人偏好。\n"
-"筆掃形狀、色盤、漸變色、樣式、plug-in 和模組的路徑\n"
+"筆掃形狀、調色盤、漸變色、樣式、plug-in 和模組的路徑\n"
 "也是在這裡設定的。"
 
 #: app/user_install.c:163
@@ -5791,7 +5792,6 @@ msgstr ""
 "將 GIMP 的外觀改至與其它 GTK 程式不同。"
 
 #: app/user_install.c:168
-#, fuzzy
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -5839,8 +5839,8 @@ msgid ""
 "points and picas.  This file is overwritten each time\n"
 "you quit the GIMP."
 msgstr ""
-"unitrc 檔是用來儲存自訂的量度單位的。\n"
-"你可以像使用內建的量度單位（寸、毫米、\n"
+"unitrc 檔是用來儲存自訂的測量單位的。\n"
+"你可以像使用內建的測量單位（寸、毫米、\n"
 "點和 pica）一樣地使用自行定樣的單位。\n"
 "這個檔案在每次離開 GIMP 時都會被覆寫。"
 
@@ -5890,6 +5890,12 @@ msgid ""
 "palettes during GIMP execution to persist across\n"
 "sessions."
 msgstr ""
+"此目錄是用來儲存自訂的調色盤。在搜尋\n"
+"調色盤時，預設的 gimprc 檔只會檢查此\n"
+"副目錄（而不是系統目錄）。當安裝時，\n"
+"系統的調色盤會被複製到這裡。這樣做是\n"
+"為了保存在執行 GIMP 時對調色盤的修改，\n"
+"即使在其它作業階段也不會遺失所有變更。"
 
 #: app/user_install.c:234
 msgid ""
@@ -5899,6 +5905,9 @@ msgid ""
 "wide GIMP patterns installation when searching for\n"
 "patterns."
 msgstr ""
+"此目錄是用來儲存自訂的樣式。在搜尋\n"
+"樣式時，預設的 gimprc 檔除了會檢查\n"
+"系統已安裝的樣式外，也會檢查此目錄。"
 
 #: app/user_install.c:242
 msgid ""
@@ -5908,6 +5917,10 @@ msgid ""
 "this subdirectory in addition to the systemwide\n"
 "GIMP plug-in directories when searching for plug-ins."
 msgstr ""
+"此目錄是用來儲存使用者建立、暫時性或系統\n"
+"不支援的 plug-in。在搜尋 plug-in 時，預設\n"
+"的 gimprc 檔除了會檢查系統已安裝的 plug-in\n"
+"外，也會檢查此目錄。"
 
 #: app/user_install.c:250
 msgid ""
@@ -5917,6 +5930,11 @@ msgid ""
 "in addition to the system-wide GIMP module directory\n"
 "when searching for modules to load when initializing."
 msgstr ""
+"此目錄是用來儲存使用者建立、暫時性\n"
+"或系統不支援的 DLL 模組。在搜尋啟動\n"
+"時載入的 DLL 模組時，預設的 gimprc\n"
+"檔除了會檢查系統已安裝的 DLL 模組\n"
+"外，也會檢查此目錄。"
 
 #: app/user_install.c:258
 msgid ""
@@ -5939,13 +5957,13 @@ msgstr ""
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Curves tool."
-msgstr ""
+msgstr "此副目錄是用來儲存曲線工具所用的參數檔案。"
 
 #: app/user_install.c:278
 msgid ""
 "This subdirectory is used to store parameter files for\n"
 "the Levels tool."
-msgstr ""
+msgstr "此副目錄是用來儲存色階工具所用的參數檔案。"
 
 #: app/user_install.c:283
 msgid ""
@@ -6204,7 +6222,7 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF 警告。版本 0 的 XCF 檔案格式不能\n"
-"正確地儲存索引化色盤。以灰階色彩代替。"
+"正確地儲存索引化調色盤。以灰階顏色代替。"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
@@ -6228,4 +6246,4 @@ msgstr "水彩"
 
 #: modules/colorsel_water.c:640
 msgid "Color History"
-msgstr "色彩紀錄"
+msgstr "顏色紀錄"
