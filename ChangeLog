@@ -1,3 +1,8 @@
+2004-11-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/module-dialog.c: use gtk_tree_model_get_iter_first()
+	instead of the deprecated _get_iter_root().
+
 2004-11-03  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/base/gimphistogram.h: %s/historgam/histogram/

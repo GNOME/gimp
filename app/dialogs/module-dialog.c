@@ -210,7 +210,7 @@ module_dialog_new (Gimp *gimp)
                     G_CALLBACK (dialog_select_callback),
                     dialog);
 
-  if (gtk_tree_model_get_iter_root (GTK_TREE_MODEL (dialog->list), &iter))
+  if (gtk_tree_model_get_iter_first (GTK_TREE_MODEL (dialog->list), &iter))
     gtk_tree_selection_select_iter (sel, &iter);
 
   /* hook the GimpModuleDB signals so we can refresh the display
@@ -375,7 +375,7 @@ dialog_info_remove (GimpModuleDB *db,
 
   /* FIXME: Use gtk_list_store_foreach_remove when it becomes available */
 
-  if (! gtk_tree_model_get_iter_root (GTK_TREE_MODEL (dialog->list), &iter))
+  if (! gtk_tree_model_get_iter_first (GTK_TREE_MODEL (dialog->list), &iter))
     return;
 
   do
