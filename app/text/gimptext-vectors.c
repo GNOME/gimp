@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 #include <pango/pangoft2.h>
+#include <freetype/ftoutln.h>
 
 #include "text/text-types.h"
 
@@ -36,12 +37,23 @@
 #include "gimptextlayout-render.h"
 
 
-static void  gimp_text_render_vectors (PangoFont   *font,
-				       PangoGlyph  *glyph,
-				       gint         flags,
-				       gint         x,
-				       gint         y,
-				       GimpVectors *vectors);
+typedef struct _RenderContext  RenderContext;
+
+struct _RenderContext
+{
+  GimpVectors  *vectors;
+  
+  FT_Vector     current_point;
+  FT_Vector     last_point;
+};
+
+
+static void  gimp_text_render_vectors (PangoFont     *font,
+				       PangoGlyph    *glyph,
+				       gint           flags,
+				       gint           x,
+				       gint           y,
+				       RenderContext *context);
 
 
 GimpVectors *
@@ -50,6 +62,7 @@ gimp_text_vectors_new (GimpImage *image,
 {
   GimpVectors    *vectors;
   GimpTextLayout *layout;
+  RenderContext   context = { 0, };
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT (text), NULL);
@@ -62,9 +75,11 @@ gimp_text_vectors_new (GimpImage *image,
 
       layout = gimp_text_layout_new (text, image);
 
+      context.vectors = vectors;
+
       gimp_text_layout_render (layout,
 			       (GimpTextRenderFunc) gimp_text_render_vectors,
-			       vectors);
+			       &context);
 
       g_object_unref (layout);
     }
@@ -73,13 +88,66 @@ gimp_text_vectors_new (GimpImage *image,
 }
 
 
-static void
-gimp_text_render_vectors (PangoFont   *font,
-			  PangoGlyph  *glyph,
-			  gint         flags,
-			  gint         x,
-			  gint         y,
-			  GimpVectors *vectors)
+static gint 
+moveto (FT_Vector *to,
+	gpointer   data)
 {
-  /*  FIXME: implement  */
+  RenderContext *context = (RenderContext *) data;
+
+  return 0;
+}
+
+static gint 
+lineto (FT_Vector *to,
+	gpointer   data)       
+{
+  RenderContext *context = (RenderContext *) data;
+
+  return 0;
+}
+
+static gint 
+conicto (FT_Vector *control,
+	 FT_Vector *to,
+	 gpointer   data)
+{
+  RenderContext *context = (RenderContext *) data;
+
+  return 0;
+}
+
+static gint 
+cubicto (FT_Vector *control1,
+	 FT_Vector *control2,
+	 FT_Vector *to,
+	 gpointer   data)
+{
+  RenderContext *context = (RenderContext *) data;
+
+  return 0;
+}
+
+
+static void
+gimp_text_render_vectors (PangoFont     *font,
+			  PangoGlyph    *glyph,
+			  gint           flags,
+			  gint           x,
+			  gint           y,
+			  RenderContext *context)
+{
+  FT_Face                 face;
+  const FT_Outline_Funcs  outline_funcs = 
+  {
+    moveto,
+    lineto,
+    conicto,
+    cubicto
+  };
+
+  face = pango_ft2_font_get_face (font);
+  
+  FT_Load_Glyph (face, (FT_UInt) glyph, flags);
+
+  FT_Outline_Decompose ((FT_Outline *) face->glyph, &outline_funcs, &context);
 }
