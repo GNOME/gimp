@@ -1,3 +1,7 @@
+Sat Dec 13 19:41:35 CST 1997 Shawn T. Amundson <amundson@gimp.org>
+	
+	* plug-ins/fuse/Makefile.am: fuse.c couldn't find gck/gck.h
+
 Fri Dec 12 02:07:26 PST 1997 Manish Singh <yosh@gimp.org>
 
 	* Updated gif and animationplay with the new versions

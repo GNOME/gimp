@@ -10,6 +10,7 @@ fuse_SOURCES = \
 INCLUDES = \
 	$(X_CFLAGS)			\
 	-I$(top_srcdir)			\
+        -I$(top_srcdir)/plug-ins/libgck \
 	-I$(includedir)
 
 LDADD = \
