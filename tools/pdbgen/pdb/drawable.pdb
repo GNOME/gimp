@@ -423,6 +423,16 @@ CODE
 &drawable_accessors('visible', 'boolean', 'visibility', 1, undef,
                     'item', 'GIMP_ITEM (drawable)');
 
+&drawable_accessors('linked', 'boolean', 'linked state', 1,
+                    <<'CODE', 'item', 'GIMP_ITEM (drawable)');
+    $author = $copyright = 'Wolfgang Hofer';
+    $date = '1998';
+
+    if (scalar @outargs) {
+        $outargs[0]->{desc} .= ' (for moves)'
+    }
+CODE
+
 &drawable_accessors('tattoo', 'tattoo', 'tattoo', 0,
                     <<'CODE', 'item', 'GIMP_ITEM (drawable)');
     $help .= <<'HELP';
@@ -695,6 +705,7 @@ CODE
             drawable_is_layer drawable_is_layer_mask drawable_is_channel
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible
+            drawable_get_linked drawable_set_linked
             drawable_get_tattoo drawable_set_tattoo
             drawable_get_pixel drawable_set_pixel drawable_set_image
             drawable_thumbnail drawable_offset drawable_delete);

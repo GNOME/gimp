@@ -589,16 +589,6 @@ CODE2
 
 &layer_accessors('mode', 'enum GimpLayerModeEffects', 'combination mode', 0, 1);
 
-&layer_accessors('linked', 'boolean', 'linked state', 0, 1,
-		 <<'CODE', 'item', 'GIMP_ITEM (layer)');
-    $author = $copyright = 'Wolfgang Hofer';
-    $date = '1998';
-
-    if (scalar @outargs) {
-	$outargs[0]->{desc} .= ' (for moves)'
-    }
-CODE
-
 @headers = qw("config/gimpcoreconfig.h" "core/gimp.h" "core/gimpimage-undo.h"
               "core/gimpitem-linked.h" "pdb_glue.h" "gimp-intl.h");
 
