@@ -1,3 +1,9 @@
+2003-07-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-install-dialog.c: lots of purely cosmetic stuff
+	(spacing, separator removal, bold labels, icons in the
+	installation log, ...).
+
 2003-07-11  Sven Neumann  <sven@gimp.org>
 
 	* app/base/boundary.c (find_empty_segs): silence the compiler.
