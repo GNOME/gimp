@@ -1778,6 +1778,7 @@ GimpPaintCoreClass
 gimp_paint_core_paint
 gimp_paint_core_start
 gimp_paint_core_finish
+gimp_paint_core_cancel
 gimp_paint_core_cleanup
 gimp_paint_core_constrain
 gimp_paint_core_interpolate
@@ -2359,6 +2360,7 @@ gimp_draw_tool_draw_arc_by_anchor
 gimp_draw_tool_draw_cross_by_anchor
 gimp_draw_tool_draw_handle
 gimp_draw_tool_on_handle
+gimp_draw_tool_on_vectors
 gimp_draw_tool_on_vectors_curve
 gimp_draw_tool_on_vectors_handle
 gimp_draw_tool_draw_lines
@@ -3174,6 +3176,7 @@ gimp_vectors_stroke_get_length
 gimp_vectors_get_length
 gimp_vectors_get_distance
 gimp_vectors_interpolate
+gimp_vectors_bounds
 gimp_vectors_make_bezier
 gimp_vectors_art_stroke
 <SUBSECTION Standard>

@@ -35,6 +35,7 @@ IGNORE_HFILES = \
 	gimp-composite-sse.h			\
 	gimp-composite-sse2.h			\
 	gimp-composite-vis.h			\
+	gimp-composite-x86.h			\
 	gimpimage-convert-data.h		\
 	gimpimage-convert-fsdither.h		\
 	gimphelp-ids.h				\
@@ -60,7 +61,14 @@ GTKDOC_CFLAGS = \
 	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
+unused_symbols = \
+	-u gimp_container_get_filtered_name_array	\
+	-u gimp_xml_parser_new				\
+	-u gimp_xml_parser_parse_file			\
+	-u gimp_xml_parser_free
+
 GTKDOC_LIBS = \
+	$(unused_symbols)				\
         $(top_builddir)/app/app_procs.o					\
         $(top_builddir)/app/batch.o					\
         $(top_builddir)/app/errors.o					\
@@ -95,7 +103,7 @@ GTKDOC_LIBS = \
         $(GIMP_MP_LIBS)                                                 \
         $(INTLLIBS)                                                     \
         $(REGEXREPL)
- 
+
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)
 GTKDOC_LD = $(LIBTOOL) --mode=link $(CC)
 

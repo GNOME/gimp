@@ -1,3 +1,10 @@
+2003-09-17  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am: added another file to ignore, added -u hack to
+	make the scan application link again.
+
+	* app-sections.txt: updated.
+
 2003-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/app-docs.sgml
