@@ -1304,11 +1304,13 @@ CML_explorer_dialog (void)
 			      gtk_label_new_with_mnemonic (_("_Advanced")));
 
     {
-      GtkWidget *table;
-      GtkWidget *combo;
-      GtkWidget *frame;
-      GtkWidget *vbox;
-      GtkObject *adj;
+      GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+      GtkWidget    *table;
+      GtkWidget    *label;
+      GtkWidget    *combo;
+      GtkWidget    *frame;
+      GtkWidget    *vbox;
+      GtkObject    *adj;
 
       vbox = gtk_vbox_new (FALSE, 12);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1335,15 +1337,18 @@ CML_explorer_dialog (void)
 
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
 				    combo, &VALS.initial_value);
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Initial Value:"), 0.0, 0.5,
-				 combo, 2, FALSE);
+      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                         _("Initial Value:"), 0.0, 0.5,
+                                         combo, 2, FALSE);
+      gtk_size_group_add_widget (group, label);
+      g_object_unref (group);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Zoom Scale:"), SCALE_WIDTH, 3,
 				  VALS.scale, 1, 10, 1, 2, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][1],
 				   adj, &VALS.scale);
 
@@ -1352,6 +1357,7 @@ CML_explorer_dialog (void)
 				  VALS.start_offset, 0, 100, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][2],
 				   adj, &VALS.start_offset);
 
@@ -1371,6 +1377,7 @@ CML_explorer_dialog (void)
 				  VALS.seed, 0, (guint32) -1, 1, 10, 0,
 				  TRUE, 0, 0,
 				  NULL, NULL);
+      gtk_size_group_add_widget (group, GIMP_SCALE_ENTRY_LABEL (adj));
       CML_explorer_int_entry_init (&widget_pointers[3][3],
 				   adj, &VALS.seed);
 
@@ -1403,10 +1410,12 @@ CML_explorer_dialog (void)
     }
 
     {
-      GtkWidget	*table;
-      GtkWidget *frame;
-      GtkWidget *combo;
-      GtkWidget *vbox;
+      GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+      GtkWidget    *table;
+      GtkWidget    *frame;
+      GtkWidget    *label;
+      GtkWidget    *combo;
+      GtkWidget    *vbox;
 
       vbox = gtk_vbox_new (FALSE, 12);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -1430,9 +1439,11 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &copy_source);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Source Channel:"), 0.0, 0.5,
-				 combo, 1, FALSE);
+      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                         _("Source Channel:"), 0.0, 0.5,
+                                         combo, 1, FALSE);
+      gtk_size_group_add_widget (group, label);
+      g_object_unref (group);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
                                             channel_names);
@@ -1443,9 +1454,10 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &copy_destination);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Destination Channel:"), 0.0, 0.5,
-				 combo, 1, FALSE);
+      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                         _("Destination Channel:"), 0.0, 0.5,
+                                         combo, 1, FALSE);
+      gtk_size_group_add_widget (group, label);
 
       button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
@@ -1475,9 +1487,11 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &selective_load_source);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				 _("Source Channel in File:"), 0.0, 0.5,
-				 combo, 1, FALSE);
+      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                                         _("Source Channel in File:"),
+                                         0.0, 0.5,
+                                         combo, 1, FALSE);
+      gtk_size_group_add_widget (group, label);
 
       combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
                                             load_channel_names);
@@ -1488,9 +1502,11 @@ CML_explorer_dialog (void)
                         G_CALLBACK (gimp_int_combo_box_get_active),
                         &selective_load_destination);
 
-      gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				 _("Destination Channel:"), 0.0, 0.5,
-				 combo, 1, FALSE);
+      label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                                         _("Destination Channel:"),
+                                         0.0, 0.5,
+                                         combo, 1, FALSE);
+      gtk_size_group_add_widget (group, label);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 				gtk_label_new_with_mnemonic (_("_Misc Ops.")));

@@ -658,15 +658,15 @@ sinus_dialog (void)
 
                          NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
 		      TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   /* Create preview */
   /* ============== */
-  vbox = gtk_vbox_new (TRUE, 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -682,17 +682,16 @@ sinus_dialog (void)
 
   /* Create the drawing settings frame */
   /* ================================= */
-  page = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (_("Drawing Settings"));
+  frame = gimp_frame_new (_("Drawing Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new(3, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  table = gtk_table_new (3, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER(frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -724,17 +723,16 @@ sinus_dialog (void)
 
   gtk_widget_show (table);
 
-  frame= gtk_frame_new (_("Calculation Settings"));
+  frame= gimp_frame_new (_("Calculation Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  table = gtk_table_new(3, 1, FALSE);
-  gtk_table_set_col_spacings(GTK_TABLE(table), 4);
+  table = gtk_table_new (3, 1, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   hbox = gimp_random_seed_new (&svals.seed, &svals.random_seed);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -765,7 +763,6 @@ sinus_dialog (void)
 
                                     NULL);
 
-  gtk_container_set_border_width (GTK_CONTAINER (vbox2), 0);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
@@ -775,17 +772,16 @@ sinus_dialog (void)
 
   /* Color settings dialog: */
   /* ====================== */
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   if (drawable_is_grayscale)
     {
-      frame = gtk_frame_new (_("Colors"));
+      frame = gimp_frame_new (_("Colors"));
       gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, 0);
       gtk_widget_show (frame);
 
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+      vbox = gtk_vbox_new (FALSE, 6);
       gtk_container_add (GTK_CONTAINER (frame), vbox);
       gtk_widget_show (vbox);
 
@@ -815,8 +811,7 @@ sinus_dialog (void)
 
       vbox = GTK_BIN (frame)->child;
 
-      hbox = gtk_hbox_new (TRUE, 20);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      hbox = gtk_hbox_new (FALSE, 12);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
       push_col1 = gimp_color_button_new (_("First Color"), 32, 32,
@@ -842,7 +837,7 @@ sinus_dialog (void)
       gtk_widget_show (hbox);
     }
 
-  frame = gtk_frame_new (_("Alpha Channels"));
+  frame = gimp_frame_new (_("Alpha Channels"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -850,9 +845,8 @@ sinus_dialog (void)
 			    gimp_drawable_has_alpha (drawable->drawable_id));
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -893,16 +887,15 @@ sinus_dialog (void)
 
   /* blend settings dialog: */
   /* ====================== */
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (_("Blend Settings"));
+  frame = gimp_frame_new (_("Blend Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_widget_show (vbox);
 
   frame =
@@ -920,7 +913,7 @@ sinus_dialog (void)
   gtk_widget_show (frame);
 
   table = gtk_table_new (1, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (vbox), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
@@ -1036,27 +1029,21 @@ mw_preview_new (GtkWidget *parent,
 {
   GtkWidget *preview;
   GtkWidget *frame;
-  GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (parent), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  pframe = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
-  gtk_widget_show (pframe);
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), mwp->width, mwp->height);
-  gtk_container_add (GTK_CONTAINER (pframe), preview);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 
   button = gtk_check_button_new_with_mnemonic (_("Do _Preview"));

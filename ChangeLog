@@ -1,5 +1,12 @@
 2004-05-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/maze/maze_face.c: added size groups.
+
+	* plug-ins/common/sinus.c: HIG-ified.
+
+2004-05-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_ui.c: tuned dialog layout for
 	consistency.
 

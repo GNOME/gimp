@@ -225,8 +225,8 @@ maze_dialog (void)
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
 			     _("Pieces:"), 0.0, 0.5,
-			     hbox, 1, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table), trow, 8);
+			     hbox, 1, TRUE);
+  gtk_table_set_row_spacing (GTK_TABLE (table), trow, 12);
   trow++;
 
   entry = entscale_int_new (table, 0, trow, _("Height (Pixels):"),
@@ -241,8 +241,8 @@ maze_dialog (void)
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
 			     _("Pieces:"), 0.0, 0.5,
-			     hbox, 1, FALSE);
-  gtk_table_set_row_spacing (GTK_TABLE (table), trow, 8);
+			     hbox, 1, TRUE);
+  gtk_table_set_row_spacing (GTK_TABLE (table), trow, 12);
   trow++;
 
 #ifdef SHOW_PRNG_PRIVATES
@@ -674,7 +674,7 @@ entscale_int_new (GtkWidget *table,
   userdata = g_new (EntscaleIntData, 1);
 
   label = gtk_label_new (caption);
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
   /*
     If the first arg of gtk_adjustment_new() isn't between min and
