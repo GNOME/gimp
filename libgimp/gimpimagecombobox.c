@@ -22,6 +22,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -41,6 +43,17 @@ static void  gimp_image_combo_box_model_add (GtkListStore            *store,
                                              gint32                  *images,
                                              GimpImageConstraintFunc  constraint,
                                              gpointer                 data);
+
+static void  gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
+                                                      GdkDragContext   *context,
+                                                      gint              x,
+                                                      gint              y,
+                                                      GtkSelectionData *selection,
+                                                      guint             info,
+                                                      guint             time);
+
+
+static const GtkTargetEntry target = { "application/x-gimp-image-id", 0 };
 
 
 /**
@@ -89,6 +102,17 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
   if (gtk_tree_model_get_iter_first (model, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
 
+  gtk_drag_dest_set (combo_box,
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
+
+  g_signal_connect (combo_box, "drag-data-received",
+                    G_CALLBACK (gimp_image_combo_box_drag_data_received),
+                    NULL);
+
   return combo_box;
 }
 
@@ -131,4 +155,29 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
           g_free (label);
         }
     }
+}
+
+static void
+gimp_image_combo_box_drag_data_received (GtkWidget        *widget,
+                                         GdkDragContext   *context,
+                                         gint              x,
+                                         gint              y,
+                                         GtkSelectionData *selection,
+                                         guint             info,
+                                         guint             time)
+{
+  gchar *id;
+  gint   ID;
+
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid image ID data!");
+      return;
+    }
+
+  id = g_strndup (selection->data, selection->length);
+  ID = atoi (id);
+  g_free (id);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget), ID);
 }

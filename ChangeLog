@@ -1,5 +1,10 @@
 2005-03-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpimagecombobox.c: accept DND of image / drawable IDs.
+
+2005-03-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptoolbox-image-area.c: added a hint about XDS to
 	the tooltip, but only if compiled for X11.
 
