@@ -1,3 +1,10 @@
+Apparently, you invoke gcg as follows:
+
+gcg -I<include-path> -o colormap_dialog.c colormap_dialog.gc
+
+The README I found follows, but seems to be out of date:
+
+
 GCG - docs forthcoming (hopefully)
 
 GCG is under development, it doesn't do much of anything sensible yet. What
