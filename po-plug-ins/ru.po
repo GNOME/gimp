@@ -10572,7 +10572,7 @@ msgstr "Детали объекта"
 
 #: plug-ins/gfig/gfig.c:3742
 msgid "Collection Details"
-msgstr "Дитали набора"
+msgstr "Детали набора"
 
 #: plug-ins/gfig/gfig.c:3749
 msgid "Draw Name:"
