@@ -1,3 +1,7 @@
+Fri Jul  9 23:35 CST 1999 Seth Burgess <sjburges@gimp.org>
+	* app/qmask.c : fixed some small lil' bugs, made no selection not
+	automatically select all.  More features later.
+
 1999-07-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/disp_callbacks.c (gdisplay_canvas_events): added wheelmouse

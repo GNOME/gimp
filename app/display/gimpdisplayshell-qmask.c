@@ -94,7 +94,9 @@ if (gdisp)
   	gdisp->gimage->qmask_state = 0;
         gdisplays_flush (); 
 	}
-  
+  else
+        gdisp->gimage->qmask_state = 0;
+ 
   undo_push_group_end (gimg);
   }
 }
@@ -105,6 +107,7 @@ qmask_activate(GtkWidget *w,
 {
 GimpImage *gimg;
 GimpChannel *gmask;
+GimpLayer *layer;
 
 unsigned char color[3] = {255,0,0};
 double opacity = 50;
@@ -122,7 +125,13 @@ if (gdisp)
     return; /* do nothing if Qmask already exists */
   undo_push_group_start (gimg, QMASK_UNDO);
   if (gimage_mask_is_empty(gimg))
-    { /* if no selection */
+    { 
+    if ((layer = gimage_floating_sel (gimg)))
+      {
+      floating_sel_to_layer (layer);
+      printf ("111111!!!11!\n");
+      }
+   /* if no selection */
     gmask = channel_new(gimg, 
                         gimg->width, 
                         gimg->height,
@@ -130,7 +139,8 @@ if (gdisp)
     	                (int)(255*opacity)/100,
                         color);
     gimp_image_add_channel (gimg, gmask, 0);
-    edit_clear(gimg,GIMP_DRAWABLE(gmask)); 
+    gimp_drawable_fill (GIMP_DRAWABLE(gmask), 0, 0, 0, 0);
+    /* edit_clear(gimg,GIMP_DRAWABLE(gmask));  */
     undo_push_qmask(gimg,0);
     gdisp->gimage->qmask_state = 1;
     gdisplays_flush();  
