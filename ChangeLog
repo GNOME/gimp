@@ -1,3 +1,18 @@
+2000-01-09  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/tga.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/tiler.c
+	* plug-ins/common/url.c
+	* plug-ins/common/video.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/common/vpropagate.c
+	* po-plug-ins/POTFILES.in: added gettext support.	
+
+	* plug-ins/common/threshold_alpha.c: fixed typo.
+
 2000-01-08  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/plugin-defs.pl

@@ -1,6 +1,6 @@
 /* vpropagate.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1998/04/11 19:46:08 narazaki@InetQ.or.jp>
+ * Time-stamp: <2000-01-09 15:50:46 yasuhiro>
  * Version: 0.89a
  *
  * Copyright (C) 1996-1997 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -31,16 +31,16 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 #include <libgimp/gimpmath.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define	PLUG_IN_NAME	"plug_in_vpropagate"
 #define SHORT_NAME	"vpropagate"
-#define PROGRESS_NAME	"value propagating..."
-#define MENU_POSITION	"<Image>/Filters/Distorts/Value Propagate..."
 
 typedef guchar CH;
 #define	VP_RGB	        (1 << 0)
@@ -187,21 +187,21 @@ typedef struct
 #define num_mode 8
 static ModeParam modes[num_mode] = 
 {
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "more white (larger value)",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("more white (larger value)"),
     initialize_white,      propagate_white,       set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "more black (smaller value)",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("more black (smaller value)"),
     initialize_black,      propagate_black,       set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "middle value to peaks",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("middle value to peaks"),
     initialize_middle,     propagate_middle,      set_middle_to_peak,     FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, "foreground to peaks",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA, N_("foreground to peaks"),
     initialize_middle,     propagate_middle,      set_foreground_to_peak, FALSE},
-  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           "only foreground",
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           N_("only foreground"),
     initialize_foreground, propagate_a_color,     set_value,              FALSE},
-  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           "only background",
+  { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,           N_("only background"),
     initialize_background, propagate_a_color,     set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               "more opaque",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               N_("more opaque"),
     NULL,                  propagate_opaque,      set_value,              FALSE},
-  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               "more transparent",
+  { VP_RGB | VP_GRAY | VP_WITH_ALPHA,               N_("more transparent"),
     NULL,                  propagate_transparent, set_value,              FALSE}
 };
 
@@ -233,14 +233,16 @@ query ()
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
+
+  INIT_I18N();
   
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Propagate values of the layer",
-			  "Propagate values of the layer",
+			  _("Propagate values of the layer"),
+			  _("Propagate values of the layer"),
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
-			  MENU_POSITION,
+              N_("<Image>/Filters/Distorts/Value Propagate..."),
 			  "RGB*,GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -270,6 +272,7 @@ run (char       *name,
   switch ( run_mode )
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data (PLUG_IN_NAME, &vpvals);
       /* building the values of dialog variables from vpvals. */
       modes[vpvals.propagate_mode].selected = TRUE;
@@ -287,6 +290,7 @@ run (char       *name,
 	return;
       break;
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       vpvals.propagate_mode = param[3].data.d_int32;
       vpvals.propagating_channel = param[4].data.d_int32;
       vpvals.propagating_rate = param[5].data.d_float;
@@ -295,6 +299,7 @@ run (char       *name,
       vpvals.upper_limit = param[8].data.d_int32;
       break;
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data (PLUG_IN_NAME, &vpvals);
       break;
     }
@@ -385,7 +390,7 @@ value_propagate_body (gint	drawable_id)
 
   best = (guchar *) malloc (bytes);
 
-  gimp_progress_init (PROGRESS_NAME);
+  gimp_progress_init ( _("value propagating..."));
   gimp_palette_get_foreground (fore+0, fore+1, fore+2);
 
   /* start real job */
@@ -955,16 +960,14 @@ vpropagate_dialog (GImageType image_type)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
   
-  dlg = gimp_dialog_new ("Value Propagate", "vpropagate",
+  dlg = gimp_dialog_new ( _("Value Propagate"), "vpropagate",
 			 gimp_plugin_help_func, "filters/vpropagate.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
-
-			 "OK", vpropagate_ok_callback,
+			 _("OK"), vpropagate_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
-
 			 NULL);
 
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
@@ -980,11 +983,11 @@ vpropagate_dialog (GImageType image_type)
     GSList *group = NULL;
     gint	index = 0;
 
-    frame = gtkW_frame_new ("Propagate Mode", hbox);
+    frame = gtkW_frame_new ( _("Propagate Mode"), hbox);
     toggle_vbox = gtkW_vbox_new (frame);
     
     for (index = 0; index < num_mode ; index++ )
-      group = gtkW_vbox_add_radio_button (toggle_vbox, modes[index].name, group,
+      group = gtkW_vbox_add_radio_button (toggle_vbox, gettext(modes[index].name), group,
 					  (GtkSignalFunc) gtkW_toggle_update,
 					  &modes[index].selected);
     gtk_widget_show (toggle_vbox);
@@ -992,19 +995,19 @@ vpropagate_dialog (GImageType image_type)
   }
 
   /* Parameter settings */
-  frame = gtkW_frame_new ("Parameter Settings", hbox);
+  frame = gtkW_frame_new ( _("Parameter Settings"), hbox);
   table = gtk_table_new (9,2, FALSE); /* 4 raw, 2 columns(name and value) */
   
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  gtkW_table_add_gint (table, "Lower threshold", 0, 0,
+  gtkW_table_add_gint (table, _("Lower threshold"), 0, 0,
 		       (GtkSignalFunc) gtkW_gint_update,
 		       &vpvals.lower_limit, buffer[0]);
-  gtkW_table_add_gint (table, "Upper threshold", 0, 1,
+  gtkW_table_add_gint (table, _("Upper threshold"), 0, 1,
 		       (GtkSignalFunc) gtkW_gint_update,
 		       &vpvals.upper_limit, buffer[1]);
-  gtkW_table_add_scale (table, "Propagating Rate", 0, 2, 
+  gtkW_table_add_scale (table, _("Propagating Rate"), 0, 2, 
 			(GtkSignalFunc) gtkW_scale_update,
 			&vpvals.propagating_rate, 0.0, 1.0, 0.01);
 
@@ -1012,16 +1015,16 @@ vpropagate_dialog (GImageType image_type)
   gtk_table_attach (GTK_TABLE (table), sep, 0, 2, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (sep);
 
-  gtkW_table_add_toggle (table, "to Left", 0, 1, 4,
+  gtkW_table_add_toggle (table, _("to Left"), 0, 1, 4,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &direction_mask_vec[Right2Left]);
-  gtkW_table_add_toggle (table, "to Right", 1, 2, 4,
+  gtkW_table_add_toggle (table, _("to Right"), 1, 2, 4,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &direction_mask_vec[Left2Right]);
-  gtkW_table_add_toggle (table, "to Top", 0, 1, 5,
+  gtkW_table_add_toggle (table, _("to Top"), 0, 1, 5,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &direction_mask_vec[Bottom2Top]);
-  gtkW_table_add_toggle (table, "to Bottom", 1, 2, 5,
+  gtkW_table_add_toggle (table, _("to Bottom"), 1, 2, 5,
 			 (GtkSignalFunc) gtkW_toggle_update,
 			 &direction_mask_vec[Top2Bottom]);
   if ((image_type == RGBA_IMAGE) | (image_type == GRAYA_IMAGE))
@@ -1035,7 +1038,7 @@ vpropagate_dialog (GImageType image_type)
       {
 	GtkWidget *toggle;
 	
-	toggle = gtkW_table_add_toggle (table, "Propagating Alpha Channel",
+	toggle = gtkW_table_add_toggle (table, _("Propagating Alpha Channel"),
 					0, 2, 7,
 					(GtkSignalFunc) gtkW_toggle_update,
 					&propagate_alpha);
@@ -1045,7 +1048,7 @@ vpropagate_dialog (GImageType image_type)
 	    gtk_widget_set_sensitive (toggle, FALSE);
 	  }
       }
-      gtkW_table_add_toggle (table, "Propagating Value Channel", 0, 2, 8,
+      gtkW_table_add_toggle (table, _("Propagating Value Channel"), 0, 2, 8,
 			     (GtkSignalFunc) gtkW_toggle_update,
 			     &propagate_value);
     }

@@ -35,8 +35,10 @@
 #include <string.h>
 #include <tiffio.h>
 
+#include "config.h"
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 typedef struct
 {
@@ -158,8 +160,10 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_tiff_load",
-                          "loads files of the tiff file format",
+                          _("loads files of the tiff file format"),
                           "FIXME: write help for tiff_load",
                           "Spencer Kimball, Peter Mattis & Nick Lamb",
                           "Nick Lamb <njl195@zepler.org.uk>",
@@ -171,7 +175,7 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_tiff_save",
-                          "saves files in the tiff file format",
+                          _("saves files in the tiff file format"),
                           "FIXME: write help for tiff_save",
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
@@ -217,6 +221,7 @@ run (char    *name,
 
   if (strcmp (name, "file_tiff_load") == 0)
     {
+      INIT_I18N();
       image = load_image (param[1].data.d_string);
 
       if (image != -1)
@@ -244,6 +249,7 @@ run (char    *name,
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
+      INIT_I18N_UI();
 	  init_gtk ();
 	  export = gimp_export_image (&image, &drawable, "TIFF", 
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED | 
@@ -291,6 +297,7 @@ run (char    *name,
 	break;
 
 	case RUN_NONINTERACTIVE:
+      INIT_I18N();
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams != 6)
 	    status = STATUS_CALLING_ERROR;
@@ -369,8 +376,7 @@ load_image (char *filename)
     gimp_quit ();
   }
 
-  name = g_malloc (strlen (filename) + 12);
-  sprintf (name, "Loading %s:", filename);
+  name = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (name);
   g_free (name);
 
@@ -579,7 +585,7 @@ load_image (char *filename)
 
   /* Allocate channel_data for all channels, even the background layer */
   channel = g_new (channel_data, extra + 1);
-  layer = gimp_layer_new (image, "Background", cols, rows, layer_type,
+  layer = gimp_layer_new (image, _("Background"), cols, rows, layer_type,
 			     100, NORMAL_MODE);
   channel[0].ID= layer;
   gimp_image_add_layer (image, layer, 0);
@@ -588,7 +594,7 @@ load_image (char *filename)
   if (extra > 0 && !worst_case) {
     /* Add alpha channels as appropriate */
     for (i= 1; i <= extra; ++i) {
-      channel[i].ID= gimp_channel_new(image, "TIFF Channel", cols, rows,
+      channel[i].ID= gimp_channel_new(image, _("TIFF Channel"), cols, rows,
                                                             100.0, colors);
       gimp_image_add_channel(image, channel[i].ID, 0);
       channel[i].drawable= gimp_drawable_get (channel[i].ID);
@@ -1151,8 +1157,7 @@ static gint save_image (char   *filename,
       return 0;
     }
 
-  name = malloc (strlen (filename) + 11);
-  sprintf (name, "Saving %s:", filename);
+  name = g_strdup_printf( _("Saving %s:"), filename);
   gimp_progress_init (name);
   free (name);
 
@@ -1396,14 +1401,14 @@ save_dialog (void)
   gint use_lzw      = (tsvals.compression == COMPRESSION_LZW);
   gint use_packbits = (tsvals.compression == COMPRESSION_PACKBITS);
 
-  dlg = gimp_dialog_new ("Save as TIFF", "tiff",
+  dlg = gimp_dialog_new ( _("Save as TIFF"), "tiff",
 			 gimp_plugin_help_func, "filters/tiff.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", save_ok_callback,
+			 _("OK"), save_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -1416,7 +1421,7 @@ save_dialog (void)
   hbox = gtk_hbox_new (FALSE, 6);
 
   /*  compression  */
-  frame = gtk_frame_new ("Compression");
+  frame = gtk_frame_new ( _("Compression"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, FALSE, 0);
@@ -1426,7 +1431,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), toggle_vbox);
 
   group = NULL;
-  toggle = gtk_radio_button_new_with_label (group, "None");
+  toggle = gtk_radio_button_new_with_label (group, _("None"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1435,7 +1440,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_none);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "LZW");
+  toggle = gtk_radio_button_new_with_label (group, _("LZW"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1444,7 +1449,7 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), use_lzw);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (group, "Pack Bits");
+  toggle = gtk_radio_button_new_with_label (group, _("Pack Bits"));
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -1469,7 +1474,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new ("Comment:");
+  label = gtk_label_new ( _("Comment:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 

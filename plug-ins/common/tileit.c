@@ -41,12 +41,12 @@
 #include <string.h>
 #include <signal.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-
-
+#include "libgimp/stdplugins-intl.h"
 
 /***** Magic numbers *****/
 
@@ -211,13 +211,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_small_tiles",
-			  "Tiles image into smaller versions of the orginal",
+			  _("Tiles image into smaller versions of the orginal"),
 			  "More here later",
 			  "Andy Thomas",
 			  "Andy Thomas",
 			  "1997",
-			  "<Image>/Filters/Map/Small Tiles...",
+			  N_("<Image>/Filters/Map/Small Tiles..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -275,6 +277,7 @@ run    (gchar    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       gimp_get_data ("plug_in_tileit", &itvals);
       if (! tileit_dialog())
 	{
@@ -290,9 +293,11 @@ run    (gchar    *name,
 	{
 	  itvals.numtiles = param[3].data.d_int32;
 	}
+      INIT_I18N();
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       gimp_get_data ("plug_in_tileit", &itvals);
       break;
 
@@ -306,7 +311,7 @@ run    (gchar    *name,
 
       gimp_tile_cache_ntiles((drawable->width + gimp_tile_width() - 1) / gimp_tile_width());
 
-      gimp_progress_init ("Tiling ...");
+      gimp_progress_init ( _("Tiling..."));
 
       do_tiles();
    
@@ -371,14 +376,14 @@ tileit_dialog (void)
   cache_preview (); /* Get the preview image and store it also set has_alpha */
 
   /* Start buildng the dialog up */
-  dlg = gimp_dialog_new ("TileIt", "tileit",
+  dlg = gimp_dialog_new ( _("TileIt"), "tileit",
 			 gimp_plugin_help_func, "filters/tileit.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", tileit_ok_callback,
+			 _("OK"), tileit_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -397,7 +402,7 @@ tileit_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new ("Preview");
+  frame = gtk_frame_new ( _("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -427,7 +432,7 @@ tileit_dialog (void)
 
   /* Area for buttons etc */
 
-  frame = gtk_frame_new ("Flipping");
+  frame = gtk_frame_new ( _("Flipping"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
@@ -441,7 +446,7 @@ tileit_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  toggle = gtk_check_button_new_with_label ("Horizontal");
+  toggle = gtk_check_button_new_with_label ( _("Horizontal"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tileit_hvtoggle_update,
@@ -449,7 +454,7 @@ tileit_dialog (void)
   gtk_widget_show (toggle);
   res_call.htoggle = toggle;
 
-  toggle = gtk_check_button_new_with_label ("Vertical");
+  toggle = gtk_check_button_new_with_label ( _("Vertical"));
   gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) tileit_hvtoggle_update,
@@ -457,7 +462,7 @@ tileit_dialog (void)
   gtk_widget_show (toggle);
   res_call.vtoggle = toggle;
 
-  xframe = gtk_frame_new("Applied to Tile");
+  xframe = gtk_frame_new( _("Applied to Tile"));
   gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (vbox), xframe, FALSE, FALSE, 0);
   gtk_widget_show(xframe);
@@ -470,7 +475,7 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (xframe), table);
   gtk_widget_show (table);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group, "All Tiles");
+  toggle = gtk_radio_button_new_with_label (orientation_group, _("All Tiles"));
   orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 0, 1,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -480,7 +485,7 @@ tileit_dialog (void)
   gtk_widget_show (toggle);
 
   toggle = gtk_radio_button_new_with_label (orientation_group,
-					    "Alternate Tiles");
+					    _("Alternate Tiles"));
   orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 1, 2,
 		    GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
@@ -489,13 +494,14 @@ tileit_dialog (void)
 		      (gpointer)ALT);
   gtk_widget_show (toggle);
 
-  toggle = gtk_radio_button_new_with_label (orientation_group, "Explict Tile");
+  toggle = gtk_radio_button_new_with_label (orientation_group,
+                                            _("Explicit Tile"));
   orientation_group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));  
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
 
-  label = gtk_label_new ("Row:");
+  label = gtk_label_new (_("Row:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
 		    GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
@@ -516,7 +522,7 @@ tileit_dialog (void)
 		      &exp_call);
   exp_call.r_entry = entry;
 
-  label = gtk_label_new ("Column:");
+  label = gtk_label_new ( _("Column:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_widget_show (label); 
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
@@ -541,7 +547,7 @@ tileit_dialog (void)
 		      (GtkSignalFunc) tileit_toggle_update,
 		      (gpointer)EXPLICT);
 
-  button = gtk_button_new_with_label ("Apply");
+  button = gtk_button_new_with_label ( _("Apply"));
   gtk_widget_set_sensitive (button, FALSE);
   gtk_table_attach (GTK_TABLE (table), button, 3, 4, 2, 4, 0, 0, 0, 0);
   gtk_widget_show (button);
@@ -551,7 +557,7 @@ tileit_dialog (void)
   exp_call.applybut = button;
 
   /* Widget for selecting the Opacity */
-  label = gtk_label_new ("Opacity:");
+  label = gtk_label_new ( _("Opacity:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
@@ -588,7 +594,7 @@ tileit_dialog (void)
     gtk_widget_set_sensitive (entry,FALSE);
   gtk_widget_show (entry);
 
-  button = gtk_button_new_with_label ("Reset");
+  button = gtk_button_new_with_label ( _("Reset"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
@@ -599,7 +605,7 @@ tileit_dialog (void)
 
   /* Lower frame saying howmany segments */
 
-  frame = gtk_frame_new ("Segment Setting");
+  frame = gtk_frame_new ( _("Segment Setting"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);

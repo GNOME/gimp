@@ -111,7 +111,16 @@ plug-ins/common/sparkle.c
 plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
 plug-ins/common/sunras.c
+plug-ins/common/tga.c
+plug-ins/common/tiff.c
 plug-ins/common/threshold_alpha.c
+plug-ins/common/tile.c
+plug-ins/common/tileit.c
+plug-ins/common/tiler.c
+plug-ins/common/url.c
+plug-ins/common/video.c
+plug-ins/common/vinvert.c
+plug-ins/common/vpropagate.c
 plug-ins/common/warp.c
 plug-ins/common/winprint.c
 plug-ins/common/xbm.c

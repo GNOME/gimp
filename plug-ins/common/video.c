@@ -23,10 +23,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define MAX_PATTERNS 9
 
@@ -35,15 +37,15 @@
 const gint pattern_width[MAX_PATTERNS] = {2,4,1,1,2,3,6,6,5};
 const gint pattern_height[MAX_PATTERNS] = {6,12,3,6,12,3,6,18,15};
 const char *pattern_name[MAX_PATTERNS] = {
-  "Staggered",
-  "Large staggered",
-  "Striped",
-  "Wide-striped",
-  "Long-staggered",
-  "3x3",
-  "Large 3x3",
-  "Hex",
-  "Dots",
+  N_("Staggered"),
+  N_("Large staggered"),
+  N_("Striped"),
+  N_("Wide-striped"),
+  N_("Long-staggered"),
+  N_("3x3"),
+  N_("Large 3x3"),
+  N_("Hex"),
+  N_("Dots")
 };
 
 const gint pattern[MAX_PATTERNS][MAX_PATTERN_SIZE] =
@@ -1827,13 +1829,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_video",
-			  "Apply low-dotpitch RGB simulation to the specified drawable",
-			  "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
+			  _("Apply low-dotpitch RGB simulation to the specified drawable"),
+			  _("This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable."),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "2nd March 1997",
-			  "<Image>/Filters/Distorts/Video...",
+			  N_("<Image>/Filters/Distorts/Video..."),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -1863,6 +1867,7 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_video", &vvals);
 
@@ -1872,6 +1877,7 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	status = STATUS_CALLING_ERROR;
@@ -1884,6 +1890,7 @@ run (char    *name,
       break;
 
       case RUN_WITH_LAST_VALS:
+        INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_video", &vvals);
       break;
@@ -1901,7 +1908,7 @@ run (char    *name,
       /*  Make sure that the drawable is gray or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-	  gimp_progress_init ("Video/RGB...");
+	  gimp_progress_init ( _("Video/RGB..."));
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
 				       + 1));
 	  video (drawable);
@@ -2191,14 +2198,14 @@ video_dialog ()
   gtk_widget_set_default_visual (gtk_preview_get_visual ());
   gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-  dlg = gimp_dialog_new ("Video", "video",
+  dlg = gimp_dialog_new ( _("Video"), "video",
 			 gimp_plugin_help_func, "filters/video.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", video_ok_callback,
+			 _("OK"), video_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -2208,7 +2215,7 @@ video_dialog ()
 		      NULL);
 
   /*  main parameter frame  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new ( _("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -2218,7 +2225,7 @@ video_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), box);
 
   /* frame for the radio buttons */
-  radioframe = gtk_frame_new ("RGB Pattern Type");
+  radioframe = gtk_frame_new ( _("RGB Pattern Type"));
   gtk_frame_set_shadow_type (GTK_FRAME (radioframe), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (box), radioframe, FALSE, FALSE, 0);
 
@@ -2229,7 +2236,7 @@ video_dialog ()
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (preview), PREVIEW_WIDTH, PREVIEW_HEIGHT);
 
-  toggle = gtk_check_button_new_with_label ("Additive");
+  toggle = gtk_check_button_new_with_label ( _("Additive"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
@@ -2237,7 +2244,7 @@ video_dialog ()
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vvals.additive);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("Rotated");
+  toggle = gtk_check_button_new_with_label ( _("Rotated"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) video_toggle_update,
@@ -2266,7 +2273,8 @@ video_dialog ()
   /* radio buttons */
   for (y = 0; y < MAX_PATTERNS; y++)
     {
-      toggle = gtk_radio_button_new_with_label (group, pattern_name[y]);
+      toggle = gtk_radio_button_new_with_label (group,
+                                                gettext(pattern_name[y]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (toggle));
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

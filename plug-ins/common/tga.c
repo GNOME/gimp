@@ -85,6 +85,7 @@
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 /* Round up a division to the nearest integer. */
 #define ROUNDUP_DIVIDE(n,d) (((n) + (d - 1)) / (d))
@@ -226,21 +227,23 @@ query ()
   } ;
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_tga_load",
-                          "Loads files of Targa file format",
+                          _("Loads files of Targa file format"),
                           "FIXME: write help for tga_load",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "1997",
                           "<Load>/TGA",
-			  NULL,
+                          NULL,
                           PROC_PLUG_IN,
                           nload_args, nload_return_vals,
                           load_args, load_return_vals);
 
 
   gimp_install_procedure ("file_tga_save",
-                          "saves files in the Targa file format",
+                          _("saves files in the Targa file format"),
                           "FIXME: write help for tga_save",
 			  "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
@@ -289,6 +292,7 @@ run (char    *name,
 
   if (strcmp (name, "file_tga_load") == 0)
     {
+      INIT_I18N();
 #ifdef PROFILE
       times (&tbuf1);
 #endif
@@ -308,6 +312,7 @@ run (char    *name,
     }
   else if (strcmp (name, "file_tga_save") == 0)
     {
+      INIT_I18N_UI();
       init_gtk ();
       
       image_ID     = param[1].data.d_int32;
@@ -406,8 +411,7 @@ load_image (char *filename)
       return -1;
     }
 
-  name_buf = g_malloc (strlen (filename) + 11);
-  sprintf (name_buf, "Loading %s:", filename);
+  name_buf = g_strdup_printf( _("Loading %s:"), filename);
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
@@ -991,7 +995,7 @@ ReadImage (FILE              *fp,
 
   /* Continue initializing. */
   layer_ID = gimp_layer_new (image_ID,
-			     "Background",
+			     _("Background"),
 			     width, height,
 			     dtype,
 			     100,
@@ -1173,8 +1177,7 @@ save_image (char   *filename,
   width = drawable->width;
   height = drawable->height;
 
-  name_buf = (guchar *) g_malloc(strlen(filename) + 11);
-  sprintf((char *)name_buf, "Saving %s:", filename);
+  name_buf = g_strdup_printf( _("Saving %s:"), filename);
   gimp_progress_init((char *)name_buf);
   g_free(name_buf);
 
@@ -1434,14 +1437,14 @@ save_dialog (void)
   GtkWidget *frame;
   GtkWidget *vbox;
 
-  dlg = gimp_dialog_new ("Save as TGA", "tga",
+  dlg = gimp_dialog_new (_("Save as TGA"), "tga",
 			 gimp_plugin_help_func, "filters/tga.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", save_ok_callback,
+			 _("OK"), save_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -1451,7 +1454,7 @@ save_dialog (void)
 		      NULL);
 
   /* regular tga parameter settings */
-  frame = gtk_frame_new ("Targa Options");
+  frame = gtk_frame_new ( _("Targa Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -1460,7 +1463,7 @@ save_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   /*  rle  */
-  toggle = gtk_check_button_new_with_label ("RLE compression");
+  toggle = gtk_check_button_new_with_label ( _("RLE compression"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      (GtkSignalFunc) save_toggle_update,

@@ -29,9 +29,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "config.h"
 #include "libgimp/gimp.h"
 #include "libgimp/gimpcolorspace.h"
-
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.
  */
@@ -76,13 +77,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_vinvert",
-			  "Invert the 'value' componant of an indexed/RGB image in HSV colourspace",
-			  "This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the colour and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Sometimes produces unpleasant colour artifacts on images from lossy sources (ie. JPEG).",
+			  _("Invert the 'value' componant of an indexed/RGB image in HSV colourspace"),
+			  _("This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the colour and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Sometimes produces unpleasant colour artifacts on images from lossy sources (ie. JPEG)."),
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
-			  "<Image>/Filters/Colors/Value Invert",
+			  N_("<Image>/Filters/Colors/Value Invert"),
 			  "RGB*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -119,8 +122,10 @@ run (char    *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_is_rgb (drawable->id))
 	{
-          if (run_mode != RUN_NONINTERACTIVE)
+      if (run_mode != RUN_NONINTERACTIVE) {
+        INIT_I18N();
 	    gimp_progress_init ("Value Invert...");
+      }
 
 	  vinvert (drawable);
           if (run_mode != RUN_NONINTERACTIVE)

@@ -25,7 +25,9 @@
 #ifdef __EMX__
 #include <process.h>
 #endif
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Author: Josh MacDonald. */
 
@@ -65,9 +67,11 @@ query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("file_url_load",
-                          "loads files given a URL",
-                          "You need to have GNU Wget installed.",
+                          _("loads files given a URL"),
+                          _("You need to have GNU Wget installed."),
                           "Spencer Kimball & Peter Mattis",
                           "Spencer Kimball & Peter Mattis",
                           "1995-1997",

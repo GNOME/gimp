@@ -1,6 +1,6 @@
 /* threshold_alpha.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <1999-09-05 04:24:02 yasuhiro>
+ * Time-stamp: <2000-01-09 13:25:30 yasuhiro>
  * Version: 0.13A (the 'A' is for Adam who hacked in greyscale
  *                 support - don't know if there's a more recent official
  *                 version)
@@ -387,7 +387,7 @@ ERROR_DIALOG (gint gtk_was_not_initialized, gchar *message)
       gtk_rc_parse (gimp_gtkrc ());
     }
   
-  dlg = gimp_dialog_new (_("Threshold Aplha"), "threshold_alpha",
+  dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
 			 gimp_plugin_help_func, "filters/threshold_alpha.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,

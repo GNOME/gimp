@@ -23,10 +23,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "config.h"
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
+#include "libgimp/stdplugins-intl.h"
 
 #define ENTRY_WIDTH     60
 #define ENTRY_HEIGHT    25
@@ -119,13 +121,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_tile",
-			  "Create a new image which is a tiled version of the input drawable",
-			  "This function creates a new image with a single layer sized to the specified 'new_width' and 'new_height' parameters.  The specified drawable is tiled into this layer.  The new layer will have the same type as the specified drawable and the new image will have a corresponding base type",
+			  _("Create a new image which is a tiled version of the input drawable"),
+			  _("This function creates a new image with a single layer sized to the specified 'new_width' and 'new_height' parameters.  The specified drawable is tiled into this layer.  The new layer will have the same type as the specified drawable and the new image will have a corresponding base type"),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1996-1997",
-			  "<Image>/Filters/Map/Tile...",
+			  N_("<Image>/Filters/Map/Tile..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -161,6 +165,7 @@ run (char    *name,
   switch (run_mode)
     {
     case RUN_INTERACTIVE:
+      INIT_I18N_UI();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_tile", &tvals);
 
@@ -170,6 +175,7 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
+      INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
 	status = STATUS_CALLING_ERROR;
@@ -184,6 +190,7 @@ run (char    *name,
       break;
 
     case RUN_WITH_LAST_VALS:
+      INIT_I18N();
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_tile", &tvals);
       break;
@@ -195,7 +202,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (status == STATUS_SUCCESS)
     {
-      gimp_progress_init ("Tiling...");
+      gimp_progress_init ( _("Tiling..."));
       gimp_tile_cache_ntiles (2 * (width + 1) / gimp_tile_width ());
 
       values[1].data.d_image = tile (param[1].data.d_image, param[2].data.d_drawable, &new_layer);
@@ -258,7 +265,7 @@ tile (gint32     image_id,
 	}
 
       new_image_id = gimp_image_new (tvals.new_width, tvals.new_height, image_type);
-      *layer_id = gimp_layer_new (new_image_id, "Background",
+      *layer_id = gimp_layer_new (new_image_id, _("Background"),
 				  tvals.new_width, tvals.new_height,
 				  gimp_drawable_type (drawable_id),
 				  100, NORMAL_MODE);
@@ -381,14 +388,14 @@ tile_dialog (gint width, gint height)
   tvals.new_width = width;
   tvals.new_height = height;
 
-  dlg = gimp_dialog_new ("Tile", "tile",
+  dlg = gimp_dialog_new ( _("Tile"), "tile",
 			 gimp_plugin_help_func, "filters/tile.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 "OK", tile_ok_callback,
+			 _("OK"), tile_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
-			 "Cancel", gtk_widget_destroy,
+			 _("Cancel"), gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -398,7 +405,7 @@ tile_dialog (gint width, gint height)
 		      NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Tile to New Size");
+  frame = gtk_frame_new ( _("Tile to New Size"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -409,7 +416,7 @@ tile_dialog (gint width, gint height)
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
 
-  label = gtk_label_new ("Width:");
+  label = gtk_label_new ( _("Width:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -426,7 +433,7 @@ tile_dialog (gint width, gint height)
 		      &tvals.new_width);
   gtk_widget_show (tint.width_entry);
 
-  label = gtk_label_new ("Height:");
+  label = gtk_label_new ( _("Height:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
 		    GTK_FILL, GTK_FILL, 0, 0);
@@ -443,7 +450,7 @@ tile_dialog (gint width, gint height)
 		      &tvals.new_height);
   gtk_widget_show (tint.height_entry);
 
-  toggle = gtk_check_button_new_with_label ("Constrain Ratio");
+  toggle = gtk_check_button_new_with_label ( _("Constrain Ratio"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
@@ -452,7 +459,7 @@ tile_dialog (gint width, gint height)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.constrain);
   gtk_widget_show (toggle);
 
-  toggle = gtk_check_button_new_with_label ("New Image");
+  toggle = gtk_check_button_new_with_label ( _("New Image"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 3, 4,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",

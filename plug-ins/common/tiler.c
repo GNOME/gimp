@@ -18,7 +18,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "config.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions.
  */
@@ -52,13 +54,15 @@ query ()
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = 0;
 
+  INIT_I18N();
+
   gimp_install_procedure ("plug_in_make_seamless",
-			  "Seamless tile creation",
-			  "This plugin creates a seamless tileable from the input image",
+			  _("Seamless tile creation"),
+			  _("This plugin creates a seamless tileable from the input image"),
 			  "Tim Rowley",
 			  "Tim Rowley",
 			  "1997",
-			  "<Image>/Filters/Map/Make Seamless",
+			  N_("<Image>/Filters/Map/Make Seamless"),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -79,6 +83,8 @@ run (char    *name,
   GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
+
+  INIT_I18N();
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -161,7 +167,7 @@ tile(GDrawable *drawable)
   /* Get the input */
 
   gimp_drawable_mask_bounds(drawable->id, &x1, &y1, &x2, &y2);
-  gimp_progress_init("Tiler");
+  gimp_progress_init( _("Tiler..."));
   
   width = drawable->width;
   height = drawable->height;
