@@ -233,6 +233,7 @@ gimp_drawable_merge_shadow
 gimp_drawable_fill
 gimp_drawable_update
 gimp_drawable_mask_bounds
+gimp_drawable_mask_intersect
 gimp_drawable_get_image
 gimp_drawable_set_image
 gimp_drawable_has_alpha

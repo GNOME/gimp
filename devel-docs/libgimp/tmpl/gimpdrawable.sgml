@@ -258,6 +258,19 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_mask_intersect ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@x: 
+@y: 
+@width: 
+@height: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_image ##### -->
 <para>
 
