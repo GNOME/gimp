@@ -106,6 +106,7 @@ static int        old_global_paint_options;
 static int        old_max_new_image_size;
 static int        old_thumbnail_mode;
 static int 	  old_show_indicators;
+static int	  old_trust_dirty_flag;
 
 /*  variables which can't be changed on the fly  */
 static int        edit_stingy_memory_use;
@@ -525,6 +526,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "max-new-image-size");
   if (thumbnail_mode != old_thumbnail_mode)
     update = g_list_append (update, "thumbnail-mode");
+  if (trust_dirty_flag != old_trust_dirty_flag)
+    update = g_list_append (update, "trust-dirty-flag");
 
   save_gimprc (&update, &remove);
 
@@ -590,6 +593,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   max_new_image_size = old_max_new_image_size;
   thumbnail_mode = old_thumbnail_mode;
   show_indicators = old_show_indicators;
+  trust_dirty_flag = old_trust_dirty_flag;
 
   if (preview_size != old_preview_size)
     {
@@ -690,7 +694,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     context_manager_set_global_paint_options (GTK_TOGGLE_BUTTON (widget)->active);
   else if (data == &show_indicators)
     show_indicators = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data == &thumbnail_mode || data == &interpolation_type)
+  else if (data == &thumbnail_mode || data == &interpolation_type ||
+           data == &trust_dirty_flag)
     {
       val = data;
       *val = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1483,6 +1488,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_max_new_image_size = max_new_image_size;
   old_thumbnail_mode = thumbnail_mode;
   old_show_indicators = show_indicators;
+  old_trust_dirty_flag = trust_dirty_flag;
 
   file_prefs_strset (&old_temp_path, edit_temp_path);
   file_prefs_strset (&old_swap_path, edit_swap_path);
@@ -2193,7 +2199,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  frame = gtk_frame_new (_("File Previews / Thumbnails")); 
+  frame = gtk_frame_new (_("File Saving")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -2206,7 +2212,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
       
-  table = gtk_table_new (1, 2, FALSE);
+  table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -2222,6 +2228,16 @@ file_pref_cmd_callback (GtkWidget *widget,
   gimp_table_attach_aligned (GTK_TABLE (table), 0,
 			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
 			     optionmenu, TRUE);
+
+  optionmenu = gimp_option_menu_new (file_prefs_toggle_callback,
+                                     (gpointer) trust_dirty_flag,
+                                     _("Only when modified"), &trust_dirty_flag, (gpointer) 1,
+                                     _("Always"), &trust_dirty_flag, (gpointer) 0,
+                                     NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 1,
+                             _("'File > Save' saves the image:"), 1.0, 0.5,
+                               optionmenu, TRUE);
+                                     
 
   /* Session Management */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

@@ -80,6 +80,7 @@ extern int       global_paint_options;
 extern int       show_indicators;
 extern int       max_new_image_size;
 extern int       thumbnail_mode;
+extern int	 trust_dirty_flag;
 
 
 /*  function prototypes  */

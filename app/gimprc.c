@@ -156,6 +156,7 @@ int       global_paint_options = TRUE;
 int       show_indicators = TRUE;
 int       max_new_image_size = 33554432;  /* 32 MB */
 int       thumbnail_mode = 1;
+int	  trust_dirty_flag = 0;
 
 extern char * module_db_load_inhibit;
 
@@ -304,7 +305,8 @@ static ParseFunc funcs[] =
   { "no-global-paint-options",   TT_BOOLEAN,    NULL, &global_paint_options },
   { "module-load-inhibit",       TT_PATH,       &module_db_load_inhibit, NULL },
   { "max-new-image-size",        TT_MEMSIZE,    &max_new_image_size, NULL },
-  { "thumbnail-mode",            TT_INT,        &thumbnail_mode, NULL }
+  { "thumbnail-mode",            TT_INT,        &thumbnail_mode, NULL },
+  { "trust-dirty-flag",		 TT_INT,	&trust_dirty_flag, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
