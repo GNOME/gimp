@@ -1,3 +1,8 @@
+2003-03-27  Christian Rose  <menthos@menthos.com>
+
+	* configure.in: Added "yi" to ALL_LINGUAS again. Po files for
+	libgimp, plug-ins, and script-fu have now been provided.
+
 2003-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimptexteditor.c: enlarged it a little.
