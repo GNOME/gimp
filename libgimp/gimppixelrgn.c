@@ -77,12 +77,11 @@ static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
  * gimp_pixel_rgn_init:
  * @pr:        a pointer to a #GimpPixelRgn variable.
  * @drawable:  the #GimpDrawable the new region will be attached to.
- * @x:         the abscisse of the top-left pixel of the region in the @drawable.
- * @y:         the ordinate of the top-left pixel of the region in the @drawable.
+ * @x:         the x coordinate of the top-left pixel of the region in the @drawable.
+ * @y:         the y coordinate of the top-left pixel of the region in the @drawable.
  * @width:     the width of the region.
  * @height:    the height of the region.
- * @dirty:     a #gboolean indicating whether changing this region should
- *             makes the @drawable "dirty".
+ * @dirty:     a #gboolean indicating whether the @drawable should be marked as "dirty".
  * @shadow:    a #gboolean indicating whether the region is attached to the
  *             shadow tiles or the real @drawable tiles.
  *
@@ -118,8 +117,8 @@ gimp_pixel_rgn_init (GimpPixelRgn *pr,
 /**
  * gimp_pixel_rgn_resize:
  * @pr:      a pointer to a previously initialized #GimpPixelRgn.
- * @x:       the abscisse of the new position of the region's top-left corner.
- * @y:       the ordinate of the new position of the region's top-left corner.
+ * @x:       the x coordinate of the new position of the region's top-left corner.
+ * @y:       the y coordinate of the new position of the region's top-left corner.
  * @width:   the new width of the region.
  * @height:  the new height of the region.
  *
@@ -150,8 +149,8 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
  * gimp_pixel_rgn_get_pixel:
  * @pr:    a pointer to a previously initialized #GimpPixelRgn.
  * @buf:   a pointer to an array of #guchar
- * @x:     the abscisse of the wanted pixel (relative to the drawable)
- * @y:     the ordinate of the wanted pixel (relative to the drawable)
+ * @x:     the x coordinate of the wanted pixel (relative to the drawable)
+ * @y:     the y coordinate of the wanted pixel (relative to the drawable)
  *
  * Fill the buffer pointed by @buf with the value of the pixel at (@x, @y)
  * in the region @pr. @buf should be large enough to hold the pixel value
@@ -188,8 +187,8 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
  * gimp_pixel_rgn_get_row:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @width:  the number of pixels to get.
  *
  * Get several pixels of a region in a row. This function fills the buffer
@@ -253,8 +252,8 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
  * gimp_pixel_rgn_get_col:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @height: the number of pixels to get.
  *
  * Get several pixels of a region's column. This function fills the buffer
@@ -308,8 +307,8 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
  * gimp_pixel_rgn_get_rect:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @width:  the width of the rectangle.
  * @height: the height of the rectangle.
  *
@@ -399,8 +398,8 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
  * gimp_pixel_rgn_set_pixel:
  * @pr:   a pointer to a previously initialized #GimpPixelRgn.
  * @buf:  a pointer to an array of #guchar.
- * @x:    the abscisse of the pixel (relative to the drawable).
- * @y:    the ordinate of the pixel (relative to the drawable).
+ * @x:    the x coordinate of the pixel (relative to the drawable).
+ * @y:    the y coordinate of the pixel (relative to the drawable).
  *
  * Set the pixel at (@x, @y) to the values from @buf.
  **/
@@ -435,8 +434,8 @@ gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
  * gimp_pixel_rgn_set_row:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @width:  the number of pixels to set.
  *
  * Set several pixels of a region in a row. This function draws the pixels
@@ -498,8 +497,8 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
  * gimp_pixel_rgn_set_col:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @height: the number of pixels to set.
  *
  * Set several pixels of a region's column. This function draws the pixels
@@ -552,8 +551,8 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
  * gimp_pixel_rgn_set_rect:
  * @pr:     a pointer to a previously initialized #GimpPixelRgn.
  * @buf:    a pointer to an array of #guchar
- * @x:      the abscisse of the first pixel (relative to the drawable).
- * @y:      the ordinate of the first pixel (relative to the drawable).
+ * @x:      the x coordinate of the first pixel (relative to the drawable).
+ * @y:      the y coordinate of the first pixel (relative to the drawable).
  * @width:  the width of the rectangle.
  * @height: the height of the rectangle.
  *
@@ -645,15 +644,16 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
  * @nrgns: the number of regions to register.
  * @prs:   an array of @nrgns pointers to initialized #GimpPixelRgn.
  *
- * This function is hard to describe by itself.  It takes a number of 
- * initialized regions, all of the same size.  These regions will be split
- * into tile-sized regions, and an iterator mechanism will then be used to
- * iterate with each tile that compose a region.
+ * This function is hard to describe by itself.  It takes a number of
+ * initialized regions of the same size and provides a pixel region iterator
+ * the iterator can be used to iterate over the registered pixel regions.
+ * While iterating the registered pixel regions will cover subsets of the
+ * original pixel regions.
  * 
- * After the call to this function, the regions will have their size reduced
- * to a tile, and an iterator will be returned. This iterator could then
- * be used with the #gimp_pixel_rgns_process function to change all the
- * regions to the next tile of the original regions.
+ * The subsets are choosen to use the tile cache as well as possible.
+ *
+ * Note that the given regions themselves are changed by this function, so
+ * they are resized to the first subsets.
  * 
  * Returns: a #gpointer to a regions iterator.
  **/

@@ -1,5 +1,10 @@
 2004-09-12  DindinX  <david@dindinx.org>
 
+	* libgimp/gimppixelrgn.c: nomis helped me to make some correction to
+	the documentation.
+
+2004-09-12  DindinX  <david@dindinx.org>
+
 	* libgimp/gimppixelrgn.c: more documentation.
 
 2004-09-11  DindinX  <david@dindinx.org>
