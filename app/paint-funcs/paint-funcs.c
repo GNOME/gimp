@@ -4203,8 +4203,10 @@ initial_sub_region (struct initial_regions_struct *st,
   affect  = st->affect;
   type    = st->type;
 
+#if 0
   if (src->w * (src->bytes + 1) > 512)
     g_printerr ("initial_sub_region:: error :: src->w * (src->bytes + 1) > 512\n");
+#endif
 
   s = src->data;
   d = dest->data;
@@ -4370,8 +4372,10 @@ combine_sub_region (struct combine_regions_struct *st,
   d = dest->data;
   m = (mask) ? mask->data : NULL;
 
+#if 0
   if (src1->w > 128)
-    g_error("combine_sub_region::src1->w = %d\n", src1->w);
+    g_printerr ("combine_sub_region::src1->w = %d\n", src1->w);
+#endif
 
   if (transparency_quickskip_possible || opacity_quickskip_possible)
     {

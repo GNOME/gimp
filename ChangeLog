@@ -1,3 +1,21 @@
+2002-05-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c commented out a warning in
+	initial_sub_region and a g_error() in combine_sub_region which
+	didn't expect to get chunks of pixels with a width of > 128
+	passed. I guess it was an assertion to ensure the integrity of
+	some higher level code (see gimpdisplay.c:
+	gimp_display_idlerenderer_callback()).  The assertion went off
+	whenever we wanted to render a preview with a width of > 128,
+	which is however handled absolutely correctly by the two
+	functions. (fixes #26072)
+
+	* app/core/gimpcontext.c (gimp_context_get_by_type): unref objects
+	before returning them. Fixes our biggest memleak (whole images).
+
+	* app/display/gimpdisplay-handlers.c: commented out debugging
+	g_print()s which track the image's refcount.
+
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmenu.c: use gimp_image_get_name().

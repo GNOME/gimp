@@ -1249,6 +1249,12 @@ gimp_context_get_by_type (GimpContext *context,
 		gimp_context_prop_names[prop], &object,
 		NULL);
 
+  /*  g_object_get() refs the object, this function however is a getter,
+   *  which usually doesn't ref it's return value
+   */
+  if (object)
+    g_object_unref (G_OBJECT (object));
+
   return object;
 }
 
