@@ -1,5 +1,11 @@
 2003-07-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpitemfactory.c: misc cleanup.
+	(gimp_item_factory_create_item): use gimp_menu_path_strip_uline()
+	here too.
+
+2003-07-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.[ch] (gimp_menu_path_strip_uline):
 	new function which takes menu_paths with mnemonics and removes
 	them so they can be used as identifiers.

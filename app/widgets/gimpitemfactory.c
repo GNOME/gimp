@@ -55,10 +55,10 @@ static void     gimp_item_factory_create_branches (GimpItemFactory      *factory
                                                    GimpItemFactoryEntry *entry,
                                                    const gchar          *textdomain);
 static void     gimp_item_factory_item_realize    (GtkWidget            *widget,
-                                                   gpointer              data);
+                                                   GimpItemFactory      *factory);
 static gboolean gimp_item_factory_item_key_press  (GtkWidget            *widget,
                                                    GdkEventKey          *kevent,
-                                                   gpointer              data);
+                                                   GimpItemFactory      *factory);
 static gchar *  gimp_item_factory_translate_func  (const gchar          *path,
                                                    gpointer              data);
 
@@ -272,6 +272,7 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
                                gboolean               static_entry)
 {
   GtkWidget *menu_item;
+  gchar     *menu_path;
   gboolean   tearoffs;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
@@ -315,8 +316,12 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
   if (textdomain)
     g_object_set_data (G_OBJECT (item_factory), "textdomain", NULL);
 
+  menu_path = gimp_menu_path_strip_uline (((GtkItemFactoryEntry *) entry)->path);
+
   menu_item = gtk_item_factory_get_item (GTK_ITEM_FACTORY (item_factory),
-					 ((GtkItemFactoryEntry *) entry)->path);
+                                         menu_path);
+
+  g_free (menu_path);
 
   if (menu_item)
     {
@@ -817,8 +822,8 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 }
 
 static void
-gimp_item_factory_item_realize (GtkWidget *widget,
-                                gpointer   data)
+gimp_item_factory_item_realize (GtkWidget       *widget,
+                                GimpItemFactory *item_factory)
 {
   if (GTK_IS_MENU_SHELL (widget->parent))
     {
@@ -833,7 +838,7 @@ gimp_item_factory_item_realize (GtkWidget *widget,
 	{
 	  g_signal_connect (widget->parent, "key_press_event",
                             G_CALLBACK (gimp_item_factory_item_key_press),
-                            data);
+                            item_factory);
 
 	  g_object_set_qdata (G_OBJECT (widget->parent),
                               quark_key_press_connected,
@@ -843,25 +848,22 @@ gimp_item_factory_item_realize (GtkWidget *widget,
 }
 
 static gboolean
-gimp_item_factory_item_key_press (GtkWidget   *widget,
-                                  GdkEventKey *kevent,
-                                  gpointer     data)
+gimp_item_factory_item_key_press (GtkWidget       *widget,
+                                  GdkEventKey     *kevent,
+                                  GimpItemFactory *item_factory)
 {
-  GtkItemFactory *item_factory      = NULL;
-  GtkWidget      *active_menu_item  = NULL;
-  gchar          *factory_help_path = NULL;
-  gchar          *help_path         = NULL;
-  gchar          *help_page         = NULL;
+  GtkWidget *active_menu_item;
+  gchar     *factory_help_path = NULL;
+  gchar     *help_path         = NULL;
+  gchar     *help_page         = NULL;
 
-  item_factory     = (GtkItemFactory *) data;
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
   /*  first, get the help page from the item
    */
   if (active_menu_item)
     {
-      help_page = (gchar *) g_object_get_data (G_OBJECT (active_menu_item),
-                                               "help_page");
+      help_page = g_object_get_data (G_OBJECT (active_menu_item), "help_page");
 
       if (help_page && ! *help_page)
         help_page = NULL;
@@ -873,10 +875,9 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
    */
   if (kevent->keyval != GDK_F1)
     {
-      if (help_page &&
-          gtk_accelerator_valid (kevent->keyval, 0) &&
-	  (item_factory ==
-           (GtkItemFactory *) gimp_item_factory_from_path ("<Toolbox>")) &&
+      if (help_page                                                   &&
+          gtk_accelerator_valid (kevent->keyval, 0)                   &&
+          (item_factory == gimp_item_factory_from_path ("<Toolbox>")) &&
 	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
 	   strcmp (help_page, "help/context_help.html") == 0))
 	{
@@ -890,8 +891,7 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
 
   /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
 
-  factory_help_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
-                                                   "help_path");
+  factory_help_path = g_object_get_data (G_OBJECT (item_factory), "help_path");
 
   if (! help_page)
     help_page = "index.html";
@@ -916,8 +916,7 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
 	  help_string = g_strdup_printf ("%s/%s", factory_help_path, help_page);
 	}
 
-      gimp_help (GIMP_ITEM_FACTORY (item_factory)->gimp,
-                 help_path, help_string);
+      gimp_help (item_factory->gimp, help_path, help_string);
 
       g_free (help_string);
       g_free (help_page);
@@ -1013,7 +1012,7 @@ gimp_item_factory_translate_func (const gchar *path,
 	   */
 	  complete    = g_strdup (complete);
 	  translation = g_strdup (gettext (complete));
-	  
+
 	  while (*complete && *translation && strcmp (complete, menupath))
 	    {
 	      p = strrchr (complete, '/');
@@ -1045,6 +1044,6 @@ gimp_item_factory_translate_func (const gchar *path,
 	    g_free (translation);
 	}
     }
-  
+
   return retval;
 }
