@@ -115,9 +115,15 @@ struct _GimpStrokeClass
                                           GimpAnchor            *neighbor);
 
   gboolean      (* is_empty)             (const GimpStroke      *stroke);
-  gdouble       (* get_length)           (const GimpStroke      *stroke);
+  gdouble       (* get_length)           (const GimpStroke      *stroke,
+                                          const gdouble          precision);
   gdouble       (* get_distance)         (const GimpStroke      *stroke,
                                           const GimpCoords      *coord);
+  gboolean      (* get_point_at_dist)    (const GimpStroke      *stroke,
+                                          const gdouble          dist,
+                                          const gdouble          precision,
+                                          GimpCoords            *position,
+                                          gdouble               *gradient);
 
   GArray      * (* interpolate)          (const GimpStroke      *stroke,
                                           const gdouble          precision,
@@ -237,13 +243,20 @@ gboolean     gimp_stroke_is_empty             (const GimpStroke      *stroke);
 
 /* accessing the shape of the curve */
 
-gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke);
+gdouble      gimp_stroke_get_length           (const GimpStroke      *stroke,
+                                               const gdouble          precision);
 gdouble      gimp_stroke_get_distance         (const GimpStroke      *stroke,
                                                const GimpCoords      *coord);
 
+gboolean     gimp_stroke_get_point_at_dist    (const GimpStroke      *stroke,
+                                               const gdouble          dist,
+                                               const gdouble          precision,
+                                               GimpCoords            *position,
+                                               gdouble               *gradient);
+ 
 /* returns an array of valid coordinates */
 GArray     * gimp_stroke_interpolate          (const GimpStroke      *stroke,
-                                               gdouble                precision,
+                                               const gdouble          precision,
                                                gboolean              *closed);
 
 GimpStroke * gimp_stroke_duplicate            (const GimpStroke      *stroke);
@@ -264,7 +277,6 @@ void         gimp_stroke_transform            (GimpStroke            *stroke,
 GList      * gimp_stroke_get_draw_anchors     (const GimpStroke      *stroke);
 GList      * gimp_stroke_get_draw_controls    (const GimpStroke      *stroke);
 GArray     * gimp_stroke_get_draw_lines       (const GimpStroke      *stroke);
-
 
 #endif /* __GIMP_STROKE_H__ */
 
