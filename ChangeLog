@@ -1,5 +1,10 @@
 2005-03-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpmenu.c: added gtk-doc comments explaining what
+	functions to use instead of these deprecated ones.
+
+2005-03-23  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-swap.c (tile_swap_init): create the swap directory
 	if it doesn't exist. Will still fail if the parent directory is not
 	available. Still good enough to close bug #167506.

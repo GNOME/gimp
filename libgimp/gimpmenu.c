@@ -56,6 +56,17 @@ static void        gimp_menu_callback      (GtkWidget          *widget,
 
 /*  public functions  */
 
+/**
+ * gimp_image_menu_new:
+ * @constraint:
+ * @callback:
+ * @data:
+ * @active_image:
+ *
+ * Use gimp_image_combo_box_new() instead.
+ *
+ * Return value:
+ */
 GtkWidget *
 gimp_image_menu_new (GimpConstraintFunc constraint,
 		     GimpMenuCallback   callback,
@@ -110,6 +121,17 @@ gimp_image_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
+/**
+ * gimp_layer_menu_new:
+ * @constraint:
+ * @callback:
+ * @data:
+ * @active_layer:
+ *
+ * Use gimp_layer_combo_box_new() instead.
+ *
+ * Return value:
+ */
 GtkWidget *
 gimp_layer_menu_new (GimpConstraintFunc constraint,
 		     GimpMenuCallback   callback,
@@ -176,6 +198,17 @@ gimp_layer_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
+/**
+ * gimp_channel_menu_new:
+ * @constraint:
+ * @callback:
+ * @data:
+ * @active_channel:
+ *
+ * Use gimp_channel_combo_box_new() instead.
+ *
+ * Return value:
+ */
 GtkWidget *
 gimp_channel_menu_new (GimpConstraintFunc constraint,
 		       GimpMenuCallback   callback,
@@ -244,6 +277,17 @@ gimp_channel_menu_new (GimpConstraintFunc constraint,
   return menu;
 }
 
+/**
+ * gimp_drawable_menu_new:
+ * @constraint:
+ * @callback:
+ * @data:
+ * @active_drawable:
+ *
+ * Use gimp_drawable_combo_box_new() instead.
+ *
+ * Return value:
+ */
 GtkWidget *
 gimp_drawable_menu_new (GimpConstraintFunc constraint,
 			GimpMenuCallback   callback,
