@@ -45,6 +45,7 @@
 #include "tools/gimp-tools.h"
 
 #include "widgets/gimpactiongroup.h"
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
@@ -62,7 +63,6 @@
 
 #include "menus/menus.h"
 
-#include "clipboard.h"
 #include "color-history.h"
 #include "dialogs.h"
 #include "gui.h"
@@ -325,11 +325,11 @@ gui_restore_callback (Gimp               *gimp,
 
   actions_init (gimp);
   menus_init (gimp);
-  clipboard_init (gimp);
   render_init (gimp);
 
   dialogs_init (gimp);
 
+  gimp_clipboard_init (gimp);
   gimp_devices_init (gimp, gui_device_change_notify);
   gimp_controllers_init (gimp);
   session_init (gimp);
@@ -455,7 +455,6 @@ gui_exit_after_callback (Gimp     *gimp,
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 
-  clipboard_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
   render_exit (gimp);
@@ -463,6 +462,7 @@ gui_exit_after_callback (Gimp     *gimp,
   dialogs_exit (gimp);
   gimp_controllers_exit (gimp);
   gimp_devices_exit (gimp);
+  gimp_clipboard_exit (gimp);
 
   themes_exit (gimp);
 

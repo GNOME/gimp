@@ -20,7 +20,7 @@
 
 #include <gtk/gtk.h>
 
-#include "gui-types.h"
+#include "widgets-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -29,10 +29,9 @@
 #include "core/gimpbuffer.h"
 #include "core/gimpviewable.h"
 
-#include "widgets/gimpdnd.h"
-#include "widgets/gimpselectiondata.h"
-
-#include "clipboard.h"
+#include "gimpclipboard.h"
+#include "gimpdnd.h"
+#include "gimpselectiondata.h"
 
 #include "gimp-intl.h"
 
@@ -40,43 +39,42 @@
 static  const GtkTargetEntry  target_entry = GIMP_TARGET_PNG;
 
 
-static void      clipboard_buffer_changed    (Gimp             *gimp);
-static void      clipboard_set               (Gimp             *gimp,
-                                              GimpBuffer       *buffer);
+static void      gimp_clipboard_buffer_changed    (Gimp             *gimp);
+static void      gimp_clipboard_set               (Gimp             *gimp,
+                                                   GimpBuffer       *buffer);
 
-static void      clipboard_get               (GtkClipboard     *clipboard,
-                                              GtkSelectionData *selection_data,
-                                              guint             info,
-                                              Gimp             *gimp);
-static gboolean  clipboard_wait_is_available (void);
+static void      gimp_clipboard_get               (GtkClipboard     *clipboard,
+                                                   GtkSelectionData *selection_data,
+                                                   guint             info,
+                                                   Gimp             *gimp);
+static gboolean  gimp_clipboard_wait_is_available (void);
 
 
 void
-clipboard_init (Gimp *gimp)
+gimp_clipboard_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  clipboard_set (gimp, gimp->global_buffer);
+  gimp_clipboard_set (gimp, gimp->global_buffer);
 
   g_signal_connect_object (gimp, "buffer_changed",
-                           G_CALLBACK (clipboard_buffer_changed),
+                           G_CALLBACK (gimp_clipboard_buffer_changed),
                            NULL, 0);
-
 }
 
 void
-clipboard_exit (Gimp *gimp)
+gimp_clipboard_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   g_signal_handlers_disconnect_by_func (gimp,
-                                        G_CALLBACK (clipboard_buffer_changed),
+                                        G_CALLBACK (gimp_clipboard_buffer_changed),
                                         NULL);
-  clipboard_set (gimp, NULL);
+  gimp_clipboard_set (gimp, NULL);
 }
 
 /**
- * clipboard_is_available:
+ * gimp_clipboard_is_available:
  * @gimp: pointer to #Gimp
  *
  * Tests if there's image data in the clipboard. If the global cut
@@ -88,14 +86,14 @@ clipboard_exit (Gimp *gimp)
  * Return value: %TRUE if there's image data in the clipboard, %FALSE otherwise
  **/
 gboolean
-clipboard_is_available (Gimp *gimp)
+gimp_clipboard_is_available (Gimp *gimp)
 {
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
   if (gimp->global_buffer)
     return TRUE;
 
-  return clipboard_wait_is_available ();
+  return gimp_clipboard_wait_is_available ();
 }
 
 
@@ -133,7 +131,7 @@ tile_manager_new_from_pixbuf (GdkPixbuf *pixbuf)
 }
 
 /**
- * clipboard_get_buffer:
+ * gimp_clipboard_get_buffer:
  * @gimp: pointer to #Gimp
  *
  * Retrieves either image data from %GDK_SELECTION_CLIPBOARD or from
@@ -146,7 +144,7 @@ tile_manager_new_from_pixbuf (GdkPixbuf *pixbuf)
  *               image data
  **/
 GimpBuffer *
-clipboard_get_buffer (Gimp *gimp)
+gimp_clipboard_get_buffer (Gimp *gimp)
 {
   GimpBuffer   *buffer = NULL;
   GtkClipboard *clipboard;
@@ -158,7 +156,7 @@ clipboard_get_buffer (Gimp *gimp)
 
   if (clipboard                                              &&
       gtk_clipboard_get_owner (clipboard) != G_OBJECT (gimp) &&
-      clipboard_wait_is_available ())
+      gimp_clipboard_wait_is_available ())
     {
       GtkSelectionData *data;
       GdkAtom           atom = gdk_atom_intern (target_entry.target, FALSE);
@@ -193,14 +191,14 @@ clipboard_get_buffer (Gimp *gimp)
 }
 
 static void
-clipboard_buffer_changed (Gimp *gimp)
+gimp_clipboard_buffer_changed (Gimp *gimp)
 {
-  clipboard_set (gimp, gimp->global_buffer);
+  gimp_clipboard_set (gimp, gimp->global_buffer);
 }
 
 static void
-clipboard_set (Gimp       *gimp,
-               GimpBuffer *buffer)
+gimp_clipboard_set (Gimp       *gimp,
+                    GimpBuffer *buffer)
 {
   GtkClipboard *clipboard;
 
@@ -213,7 +211,7 @@ clipboard_set (Gimp       *gimp,
     {
       gtk_clipboard_set_with_owner (clipboard,
                                     &target_entry, 1,
-                                    (GtkClipboardGetFunc)   clipboard_get,
+                                    (GtkClipboardGetFunc)   gimp_clipboard_get,
                                     (GtkClipboardClearFunc) NULL,
                                     G_OBJECT (gimp));
     }
@@ -224,7 +222,7 @@ clipboard_set (Gimp       *gimp,
 }
 
 static gboolean
-clipboard_wait_is_available (void)
+gimp_clipboard_wait_is_available (void)
 {
   GtkClipboard *clipboard;
   gboolean      result = FALSE;
@@ -250,8 +248,12 @@ clipboard_wait_is_available (void)
               gint     i;
 
               for (i = 0; i < n_targets; i++)
-                if (targets[i] == atom)
-                  result = TRUE;
+                {
+                  g_print ("offered type: %s\n", gdk_atom_name (targets[i]));
+
+                  if (targets[i] == atom)
+                    result = TRUE;
+                }
 
               g_free (targets);
             }
@@ -264,10 +266,10 @@ clipboard_wait_is_available (void)
 }
 
 static void
-clipboard_get (GtkClipboard     *clipboard,
-               GtkSelectionData *selection_data,
-               guint             info,
-               Gimp             *gimp)
+gimp_clipboard_get (GtkClipboard     *clipboard,
+                    GtkSelectionData *selection_data,
+                    guint             info,
+                    Gimp             *gimp)
 {
   GimpBuffer *buffer = gimp->global_buffer;
   GdkPixbuf  *pixbuf;

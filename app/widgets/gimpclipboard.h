@@ -16,15 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __CLIPBOARD_H__
-#define __CLIPBOARD_H__
+#ifndef __GIMP_CLIPBOARD_H__
+#define __GIMP_CLIPBOARD_H__
 
 
-void         clipboard_init         (Gimp *gimp);
-void         clipboard_exit         (Gimp *gimp);
+void         gimp_clipboard_init         (Gimp *gimp);
+void         gimp_clipboard_exit         (Gimp *gimp);
 
-gboolean     clipboard_is_available (Gimp *gimp);
-GimpBuffer * clipboard_get_buffer   (Gimp *gimp);
+gboolean     gimp_clipboard_is_available (Gimp *gimp);
+GimpBuffer * gimp_clipboard_get_buffer   (Gimp *gimp);
 
 
-#endif /* __CLIPBOARD_H__ */
+#endif /* __GIMP_CLIPBOARD_H__ */

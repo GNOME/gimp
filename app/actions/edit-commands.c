@@ -38,11 +38,11 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "widgets/gimpclipboard.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpdialogfactory.h"
 
 #include "gui/dialogs.h"
-#include "gui/clipboard.h"
 
 #include "actions.h"
 #include "edit-commands.h"
@@ -164,7 +164,7 @@ edit_paste_as_new_cmd_callback (GtkAction *action,
   GimpBuffer *buffer;
   return_if_no_gimp (gimp, data);
 
-  buffer = clipboard_get_buffer (gimp);
+  buffer = gimp_clipboard_get_buffer (gimp);
 
   if (buffer)
     {
@@ -262,7 +262,7 @@ static void
 edit_paste (GimpDisplay *gdisp,
             gboolean     paste_into)
 {
-  GimpBuffer *buffer = clipboard_get_buffer (gdisp->gimage->gimp);
+  GimpBuffer *buffer = gimp_clipboard_get_buffer (gdisp->gimage->gimp);
 
   if (buffer)
     {

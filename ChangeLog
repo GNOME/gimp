@@ -1,5 +1,16 @@
 2004-07-07  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/Makefile.am
+	* app/gui/clipboard.[ch]: removed...
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpclipboard.[ch]: ...and added here.
+
+	* app/actions/edit-commands.c
+	* app/gui/gui.c: changed accordingly.
+
+2004-07-07  Michael Natterer  <mitch@gimp.org>
+
 	Made the undo system robust against the currently pushed undo
 	being too large according to prefs settings. Fixes bug #145379.
 
