@@ -1,9 +1,9 @@
 # Danish translation of the libgimp.
-# Copyright (C) 1999, 2000, 01, 02, 03 Free Software Foundation, Inc.
+# Copyright (C) 1999, 2000, 01, 02, 03, 04 Free Software Foundation, Inc.
 # Kenneth Christiansen <kenneth@ripen.dk>, 1999.
 # Birger Langkjer <birger.langkjer@image.dk>, 2000.
 # Keld Simonsen <keld@dkuug.dk>, 2000.
-# Ole Laursen <olau@hardworking.dk>, 2001, 02, 03.
+# Ole Laursen <olau@hardworking.dk>, 2001, 02, 03, 04.
 #
 # Se ../po/da.po for en konventionsliste for hele Gimp'en.
 #
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-19 03:08+0100\n"
-"PO-Revision-Date: 2003-08-27 17:23+0200\n"
+"POT-Creation-Date: 2004-01-22 18:20+0100\n"
+"PO-Revision-Date: 2004-01-22 18:20+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr "Penselvalg"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Gennemse..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, c-format
@@ -60,13 +60,13 @@ msgid "%s can't handle transparency"
 msgstr "%s kan ikke håndtere gennemsigtighed"
 
 #: libgimp/gimpexport.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer masks"
-msgstr "%s kan ikke håndtere lag"
+msgstr "%s kan ikke håndtere lagmasker"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "Anvend lagmasker"
 
 #: libgimp/gimpexport.c:278
 #, c-format
@@ -100,17 +100,16 @@ msgstr ""
 "(gør det manuelt for at finindstille resultatet)"
 
 #: libgimp/gimpexport.c:306
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s kan kun håndtere RGB- eller indekserede billeder"
+msgstr "%s kan kun håndtere bitmap-indekserede (to farver) billeder"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Omdan til indekseret vha. standardindstillingerne\n"
+"Omdan til indekseret vha. bitmap-standardindstillingerne\n"
 "(gør det manuelt for at finindstille resultatet)"
 
 #: libgimp/gimpexport.c:316
@@ -141,37 +140,36 @@ msgstr "Tilføj alfakanel"
 msgid "Confirm Save"
 msgstr "Bekræft gemning"
 
-#: libgimp/gimpexport.c:387
+#: libgimp/gimpexport.c:388
 msgid "Confirm"
 msgstr "Bekræft"
 
-#: libgimp/gimpexport.c:456
+#: libgimp/gimpexport.c:457
 msgid "Export File"
 msgstr "Eksportér fil"
 
-#: libgimp/gimpexport.c:460
-#, fuzzy
+#: libgimp/gimpexport.c:461
 msgid "_Ignore"
-msgstr "Ignorér"
+msgstr "_Ignorér"
 
-#: libgimp/gimpexport.c:462
-#, fuzzy
+#: libgimp/gimpexport.c:463
 msgid "_Export"
-msgstr "Eksportér"
+msgstr "_Eksportér"
 
 #. the headline
-#: libgimp/gimpexport.c:484
-#, fuzzy, c-format
+#: libgimp/gimpexport.c:485
+#, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "Af følgende årsager skal billedet eksporteres før det kan gemmes:"
+msgstr ""
+"Af følgende årsager skal billedet eksporteres før det kan gemmes som %s:"
 
-#: libgimp/gimpexport.c:562
+#: libgimp/gimpexport.c:563
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre det oprindelige billede."
 
-#: libgimp/gimpexport.c:664
+#: libgimp/gimpexport.c:665
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -180,7 +178,7 @@ msgstr ""
 "Du er ved at gemme en lagmaske som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: libgimp/gimpexport.c:670
+#: libgimp/gimpexport.c:671
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -211,7 +209,7 @@ msgstr "procent"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(ugyldig UTF-8-streng)"
 
 #: libgimpbase/gimputils.c:244
 #, c-format
@@ -244,24 +242,24 @@ msgid "%.1f MB"
 msgstr "%.1f Mb"
 
 #: libgimpbase/gimputils.c:272
-#, fuzzy, c-format
+#, c-format
 msgid "%d MB"
-msgstr "%d kb"
+msgstr "%d Mb"
 
 #: libgimpbase/gimputils.c:279
-#, fuzzy, c-format
+#, c-format
 msgid "%.2f GB"
-msgstr "%.2f Mb"
+msgstr "%.2f Gb"
 
 #: libgimpbase/gimputils.c:283
-#, fuzzy, c-format
+#, c-format
 msgid "%.1f GB"
-msgstr "%.1f Mb"
+msgstr "%.1f Gb"
 
 #: libgimpbase/gimputils.c:287
-#, fuzzy, c-format
+#, c-format
 msgid "%d GB"
-msgstr "%d kb"
+msgstr "%d Gb"
 
 #: libgimpmodule/gimpmodule.c:178
 #, c-format
@@ -271,11 +269,9 @@ msgstr "Indlæser modul: '%s'\n"
 #: libgimpmodule/gimpmodule.c:200 libgimpmodule/gimpmodule.c:220
 #: libgimpmodule/gimpmodule.c:341 libgimpmodule/gimpmodule.c:373
 #: libgimpmodule/gimpmodule.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Module '%s' load error: %s"
-msgstr ""
-"Indlæsningsfejl for modul '%s':\n"
-"%s"
+msgstr "Indlæsningsfejl for modul '%s': %s"
 
 #: libgimpmodule/gimpmodule.c:293
 #, c-format
@@ -301,27 +297,23 @@ msgstr "Ikke indlæst"
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Kunne ikke oprette miniaturemappen '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/Forgrundsfarve"
+msgstr "/_Forgrundsfarve"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/Baggrundsfarve"
+msgstr "/_Baggrundsfarve"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
-msgstr "/Sort"
+msgstr "/_Sort"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
-#, fuzzy
 msgid "/_White"
-msgstr "/Hvid"
+msgstr "/_Hvid"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -394,11 +386,11 @@ msgstr "He_x-triplet:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Nuværende:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Tidligere:"
 
 #: libgimpwidgets/gimpfileentry.c:336
 msgid "Select Folder"
@@ -500,11 +492,11 @@ msgstr "Flere..."
 msgid "Unit Selection"
 msgstr "Enhedsvalg"
 
-#: libgimpwidgets/gimpunitmenu.c:661
+#: libgimpwidgets/gimpunitmenu.c:660
 msgid "Unit"
 msgstr "Enhed"
 
-#: libgimpwidgets/gimpunitmenu.c:665
+#: libgimpwidgets/gimpunitmenu.c:664
 msgid "Factor"
 msgstr "Faktor"
 
@@ -533,9 +525,8 @@ msgid "Color Deficient Vision"
 msgstr "Farveblindt syn"
 
 #: modules/cdisplay_colorblind.c:464
-#, fuzzy
 msgid "Color _Deficiency Type:"
-msgstr "Farveblindhedstype:"
+msgstr "Farve_blindhedstype:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
@@ -558,9 +549,8 @@ msgid "Gamma"
 msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Gamma:"
+msgstr "_Gamma:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -571,45 +561,44 @@ msgid "Contrast"
 msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Kontrastcyklusser:"
+msgstr "Kontrastc_yklusser:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Farveprøvefilter vha. ICC-farveprofil"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Farveprøve"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Perceptisk"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Relativ kulørimetrisk"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Absolut kulørimetrisk"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Formål:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Vælg en ICC-farveprofil"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "_Sortpunktskompensation"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -653,7 +642,7 @@ msgstr "Sort"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Sort udtræk (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
@@ -688,10 +677,6 @@ msgstr "Tryk"
 #~ "Du skal tilføje et punkt ligesom\n"
 #~ "(%s \"%s\")\n"
 #~ "til din %s-fil."
-
-#, fuzzy
-#~ msgid "Parameter Settings"
-#~ msgstr "Mønstervalg"
 
 #~ msgid "None (normal vision)"
 #~ msgstr "Ingen (normalt syn)"
