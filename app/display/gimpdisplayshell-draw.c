@@ -38,6 +38,9 @@
 
 #include "pixmaps.h"
 
+/* This #define is also in gdisplay.c and should */
+/* probably be moved in to gdisplay.h instead.   */
+#define CURSOR_STR_LENGTH 256
 
 /*  local functions  */
 static void  tools_select_update   (GtkWidget *widget,
@@ -559,6 +562,8 @@ create_display_shell (GDisplay* gdisp,
   int s_width, s_height;
   int scalesrc, scaledest;
   int contextid;
+  char buffer[CURSOR_STR_LENGTH];
+  int cursor_label_width;
 
   /*  adjust the initial scale -- so that window fits on screen */
   {
@@ -711,9 +716,10 @@ create_display_shell (GDisplay* gdisp,
   gtk_box_pack_start (GTK_BOX (gdisp->statusarea), frame, FALSE, TRUE, 0);
 
   gdisp->cursor_label = gtk_label_new (" 0000, 0000 ");
-  /* This usize should be more intelligent and get the information
-   * size of the above string or some similar method */
-  gtk_widget_set_usize (gdisp->cursor_label, 50, -1);
+
+  g_snprintf (buffer, sizeof(buffer), " %d, %d ", width, height);
+  cursor_label_width = gdk_string_measure ( gtk_widget_get_style(gdisp->cursor_label)->font, buffer );
+  gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
   gtk_container_add (GTK_CONTAINER (frame), gdisp->cursor_label);
 
   gdisp->statusbar = gtk_statusbar_new ();

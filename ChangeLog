@@ -1,3 +1,12 @@
+Fri Nov 13 23:07:22 MET 1998 Sven Neumann <sven@gimp.org>
+
+	* app/gdisplay.[ch]
+	* app/interface.c: applied the patch from 
+	Kevin Cozens <kcozens@interlog.com>:
+
+	size of area displaying cursor position
+ 	is now adjusted to fit maximum possible cursor values
+ 	
 Fri Nov 13 16:48:10 CET 1998 Marc Lehmann <pcg@goof.com>
 
 	* app/airbrush.c, app/blend.c, app/brightness_contrast.c,

@@ -40,6 +40,10 @@
 /* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
 
 
+/* maximal width of the strinf holding the cursor-coordinates for
+   the status line */
+#define CURSOR_STR_LENGTH 256
+
 typedef struct _IdleRenderStruct
 {
   int width;

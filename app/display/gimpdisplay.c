@@ -856,8 +856,6 @@ gdisplay_draw_cursor (GDisplay *gdisp)
 		 x+1, y - 7, x+1, y + 7);
 }
 
-#define CURSOR_STR_LENGTH 256
-
 void
 gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
 {
