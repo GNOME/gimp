@@ -1,30 +1,30 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Finnish translation of GIMP 1.1
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Ville Hautam‰ki <villeh@cs.joensuu.fi>, 1998.
+# Tor Lillqvist <tml@Ìki.fi>, 1999, 2000.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2000-02-12 05:50+0200\n"
+"Last-Translator: Tor Lillqvist tml@iki.fi>\n"
+"Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/AlienMap/AlienMap.c:180
 msgid "<Image>/Filters/Colors/Map/Alien Map..."
-msgstr ""
+msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map..."
 
 #: plug-ins/AlienMap/AlienMap.c:378
 msgid "AlienMap: Transforming ..."
-msgstr ""
+msgstr "AlienMap: Muunnos k‰ynniss‰..."
 
 #: plug-ins/AlienMap/AlienMap.c:627
 msgid "AlienMap"
-msgstr ""
+msgstr "AlienMap"
 
 #: plug-ins/AlienMap/AlienMap.c:632 plug-ins/AlienMap2/AlienMap2.c:624
 #: plug-ins/FractalExplorer/Dialogs.c:298
@@ -33,7 +33,7 @@ msgstr ""
 #: plug-ins/script-fu/script-fu-scripts.c:1461
 #: plug-ins/webbrowser/webbrowser.c:273
 msgid "About"
-msgstr ""
+msgstr "Tietoja"
 
 #. the 3 Action Buttons
 #: plug-ins/AlienMap/AlienMap.c:634 plug-ins/AlienMap/AlienMap.c:898
@@ -116,7 +116,7 @@ msgstr ""
 #: plug-ins/struc/struc.c:261 plug-ins/webbrowser/webbrowser.c:286
 #: plug-ins/xjt/xjt.c:747
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. the  Action Button
 #: plug-ins/AlienMap/AlienMap.c:636 plug-ins/AlienMap2/AlienMap2.c:628
@@ -199,7 +199,7 @@ msgstr ""
 #: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
 #: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:749
 msgid "Cancel"
-msgstr ""
+msgstr "Peru"
 
 #.
 #. * Red slider...
@@ -211,11 +211,11 @@ msgstr ""
 #: plug-ins/common/noisify.c:405 plug-ins/common/noisify.c:438
 #: plug-ins/fp/fp_gtk.c:149 plug-ins/print/print.c:1163
 msgid "Red:"
-msgstr ""
+msgstr "Punainen:"
 
 #: plug-ins/AlienMap/AlienMap.c:678
 msgid "Change intensity of the red channel"
-msgstr ""
+msgstr "S‰‰d‰ punaisen v‰rikanavan voimakkuutta"
 
 #.
 #. * Green slider...
@@ -227,11 +227,11 @@ msgstr ""
 #: plug-ins/common/noisify.c:415 plug-ins/common/noisify.c:448
 #: plug-ins/fp/fp_gtk.c:150 plug-ins/print/print.c:1198
 msgid "Green:"
-msgstr ""
+msgstr "Vihre‰:"
 
 #: plug-ins/AlienMap/AlienMap.c:687
 msgid "Change intensity of the green channel"
-msgstr ""
+msgstr "S‰‰d‰ vihre‰n v‰rikanavan voimakkuutta"
 
 #.
 #. * Blue slider...
@@ -243,32 +243,32 @@ msgstr ""
 #: plug-ins/common/noisify.c:425 plug-ins/common/noisify.c:458
 #: plug-ins/fp/fp_gtk.c:151 plug-ins/print/print.c:1233
 msgid "Blue:"
-msgstr ""
+msgstr "Sininen:"
 
 #: plug-ins/AlienMap/AlienMap.c:696
 msgid "Change intensity of the blue channel"
-msgstr ""
+msgstr "S‰‰d‰ sinisen v‰rikanavan voimakkuutta"
 
 #. Redmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:702 plug-ins/FractalExplorer/Dialogs.c:729
 #: plug-ins/common/convmatrix.c:82 plug-ins/common/decompose.c:115
 #: plug-ins/common/newsprint.c:394
 msgid "Red"
-msgstr ""
+msgstr "Punainen"
 
 #: plug-ins/AlienMap/AlienMap.c:706 plug-ins/AlienMap/AlienMap.c:729
 #: plug-ins/AlienMap/AlienMap.c:752 plug-ins/FractalExplorer/Dialogs.c:733
 #: plug-ins/FractalExplorer/Dialogs.c:774
 #: plug-ins/FractalExplorer/Dialogs.c:815 plug-ins/common/ripple.c:682
 msgid "Sine"
-msgstr ""
+msgstr "sini"
 
 #: plug-ins/AlienMap/AlienMap.c:707 plug-ins/AlienMap/AlienMap.c:730
 #: plug-ins/AlienMap/AlienMap.c:753 plug-ins/FractalExplorer/Dialogs.c:735
 #: plug-ins/FractalExplorer/Dialogs.c:776
 #: plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Cosine"
-msgstr ""
+msgstr "kosini"
 
 #: plug-ins/AlienMap/AlienMap.c:708 plug-ins/AlienMap/AlienMap.c:731
 #: plug-ins/AlienMap/AlienMap.c:754 plug-ins/FractalExplorer/Dialogs.c:737
@@ -279,166 +279,168 @@ msgstr ""
 #: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1469
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:286
 msgid "None"
-msgstr ""
+msgstr "ei mik‰‰n"
 
 #: plug-ins/AlienMap/AlienMap.c:713
 msgid "Use sine-function for red component."
-msgstr ""
+msgstr "K‰yt‰ punaiselle v‰rikanavalle sinifunktiota."
 
 #: plug-ins/AlienMap/AlienMap.c:715
 msgid "Use cosine-function for red component."
-msgstr ""
+msgstr "K‰yt‰ punaiselle v‰rikanavalle kosinifunktiota."
 
 #: plug-ins/AlienMap/AlienMap.c:717
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
-msgstr ""
+msgstr "K‰yt‰ punaiselle v‰rikanavalle lineaarista kuvausta."
 
 #. Greenmode toggle box
 #: plug-ins/AlienMap/AlienMap.c:725 plug-ins/FractalExplorer/Dialogs.c:770
 #: plug-ins/common/convmatrix.c:83 plug-ins/common/decompose.c:116
 #: plug-ins/common/newsprint.c:402
 msgid "Green"
-msgstr ""
+msgstr "Vihre‰"
 
 #: plug-ins/AlienMap/AlienMap.c:736
 msgid "Use sine-function for green component."
-msgstr ""
+msgstr "K‰yt‰ vihre‰lle v‰rikanavalle sinifunktiota."
 
 #: plug-ins/AlienMap/AlienMap.c:738
 msgid "Use cosine-function for green component."
-msgstr ""
+msgstr "K‰yt‰ vihre‰lle v‰rikanavalle kosinifunktiota."
 
 #: plug-ins/AlienMap/AlienMap.c:740
 msgid ""
 "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"K‰yt‰ vihre‰lle v‰rikanavalle lineaarista kuvausta."
 
 #. Bluemode toggle box
 #: plug-ins/AlienMap/AlienMap.c:748 plug-ins/FractalExplorer/Dialogs.c:811
 #: plug-ins/common/convmatrix.c:84 plug-ins/common/decompose.c:117
 #: plug-ins/common/newsprint.c:410
 msgid "Blue"
-msgstr ""
+msgstr "Sininen"
 
 #: plug-ins/AlienMap/AlienMap.c:759
 msgid "Use sine-function for blue component."
-msgstr ""
+msgstr "K‰yt‰ siniselle v‰rikanavalle sinifunktiota"
 
 #: plug-ins/AlienMap/AlienMap.c:761
 msgid "Use cosine-function for blue component."
-msgstr ""
+msgstr "K‰yt‰ siniselle v‰rikanavalle kosinifunktiota"
 
 #: plug-ins/AlienMap/AlienMap.c:763
 msgid ""
 "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
+"K‰yt‰ siniselle v‰rikanavalle lineaarista kuvausta."
 
 #: plug-ins/AlienMap/AlienMap.c:893
 msgid "About AlienMap"
-msgstr ""
+msgstr "Tietoja AlienMap:ista"
 
 #: plug-ins/AlienMap2/AlienMap2.c:205
 msgid "<Image>/Filters/Colors/Map/Alien Map 2..."
-msgstr ""
+msgstr "<Image>/Suotimet/V‰rit/Kuvaus/Alien Map2..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:380
 msgid "AlienMap2: Transforming ..."
-msgstr ""
+msgstr "AlienMap2: Muunnos k‰ynniss‰..."
 
 #: plug-ins/AlienMap2/AlienMap2.c:619
 msgid "AlienMap2"
-msgstr ""
+msgstr "AlienMap2"
 
 #: plug-ins/AlienMap2/AlienMap2.c:668
 msgid "R/H-Frequency:"
-msgstr ""
+msgstr "R/H-taajuus:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:671
 msgid "Change frequency of the red/hue channel"
-msgstr ""
+msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavan taajuutta"
 
 #: plug-ins/AlienMap2/AlienMap2.c:678
 msgid "R/H-Phaseshift:"
-msgstr ""
+msgstr "R/H-vaihesiirto:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:681
 msgid "Change angle of the red/hue channel"
-msgstr ""
+msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavan vaihetta"
 
 #: plug-ins/AlienMap2/AlienMap2.c:688
 msgid "G/S-Frequency:"
-msgstr ""
+msgstr "G/S-taajuus:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:691
 msgid "Change frequency of the green/saturation channel"
-msgstr ""
+msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (H) kanavan taajuutta"
 
 #: plug-ins/AlienMap2/AlienMap2.c:698
 msgid "G/S-Phaseshift:"
-msgstr ""
+msgstr "G/S-vaihesiirto:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:701
 msgid "Change angle of the green/saturation channel"
-msgstr ""
+msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavan vaihetta"
 
 #: plug-ins/AlienMap2/AlienMap2.c:708
 msgid "B/L-Frequency:"
-msgstr ""
+msgstr "B/L-taajuus:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:711
 msgid "Change frequency of the blue/luminance channel"
-msgstr ""
+msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavan taajuutta"
 
 #: plug-ins/AlienMap2/AlienMap2.c:718
 msgid "B/L-Phaseshift:"
-msgstr ""
+msgstr "B/L-vaihesiirto:"
 
 #: plug-ins/AlienMap2/AlienMap2.c:721
 msgid "Change angle of the blue/luminance channel"
-msgstr ""
+msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavan vaihetta"
 
 #. * Gray: Operation-Mode *
 #: plug-ins/AlienMap2/AlienMap2.c:729 plug-ins/common/deinterlace.c:295
 #: plug-ins/common/hot.c:623 plug-ins/common/waves.c:381
 #: plug-ins/rcm/rcm_dialog.c:471
 msgid "Mode"
-msgstr ""
+msgstr "Toimintatapa"
 
 #: plug-ins/AlienMap2/AlienMap2.c:733
 msgid "RGB Color Model"
-msgstr ""
+msgstr "RGB-v‰rimalli"
 
 #: plug-ins/AlienMap2/AlienMap2.c:734
 msgid "HSL Color Model"
-msgstr ""
+msgstr "HSL-v‰rimalli"
 
 #: plug-ins/AlienMap2/AlienMap2.c:746
 msgid "Modify Red/Hue Channel"
-msgstr ""
+msgstr "S‰‰d‰ punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavaa"
 
 #: plug-ins/AlienMap2/AlienMap2.c:753
 msgid "Use function for red/hue component"
-msgstr ""
+msgstr "K‰yt‰ funktiota punaisen v‰rin (R) tai v‰ris‰vyn (H) kanavalle"
 
 #: plug-ins/AlienMap2/AlienMap2.c:756
 msgid "Modify Green/Saturation Channel"
-msgstr ""
+msgstr "S‰‰d‰ vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavaa"
 
 #: plug-ins/AlienMap2/AlienMap2.c:764
 msgid "Use function for green/saturation component"
-msgstr ""
+msgstr "K‰yt‰ funktiota vihre‰n v‰rin (G) tai v‰rikyll‰isyyden (S) kanavalle"
 
 #: plug-ins/AlienMap2/AlienMap2.c:767
 msgid "Modify Blue/Luminance Channel"
-msgstr ""
+msgstr "S‰‰d‰ sinisen v‰rin (B) tai valoisuuden (L) kanavaa"
 
 #: plug-ins/AlienMap2/AlienMap2.c:775
 msgid "Use function for blue/luminance component"
-msgstr ""
+msgstr "K‰yt‰ funktiota sinisen v‰rin (B) tai valoisuuden (L) kanavalle"
 
 #: plug-ins/AlienMap2/AlienMap2.c:907
 msgid "About AlienMap2"
-msgstr ""
+msgstr "Tietoja AlienMap2:sta"
 
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1216
@@ -458,52 +460,52 @@ msgstr ""
 #: plug-ins/imagemap/imap_grid.c:231 plug-ins/rcm/rcm_dialog.c:115
 #: plug-ins/rcm/rcm_dialog.c:627 plug-ins/sinus/sinus.c:1184
 msgid "Preview"
-msgstr ""
+msgstr "Esikatselu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:368
 msgid "Realtime Preview"
-msgstr ""
+msgstr "Tosiaikainen esikatselu"
 
 #: plug-ins/FractalExplorer/Dialogs.c:375
 msgid "If you enable this option the preview will be redrawn automatically"
-msgstr ""
+msgstr "Jos valitset t‰m‰n esikatselukuva muodostetaan automaattisesti"
 
 #: plug-ins/FractalExplorer/Dialogs.c:378
 msgid "Redraw"
-msgstr ""
+msgstr "Virkist‰"
 
 #: plug-ins/FractalExplorer/Dialogs.c:384
 msgid "Redraw preview"
-msgstr ""
+msgstr "Virkist‰ esikatselukuva"
 
 #. Zoom Options
 #: plug-ins/FractalExplorer/Dialogs.c:387
 msgid "Zoom Options"
-msgstr ""
+msgstr "Zoom-asetukset"
 
 #: plug-ins/FractalExplorer/Dialogs.c:397
 msgid "Undo Zoom"
-msgstr ""
+msgstr "Peru zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:403
 msgid "Undo last zoom"
-msgstr ""
+msgstr "Peru ‰skeinen zoom"
 
 #: plug-ins/FractalExplorer/Dialogs.c:405
 msgid "Redo Zoom"
-msgstr ""
+msgstr "Zoomaa uudestaan"
 
 #: plug-ins/FractalExplorer/Dialogs.c:411
 msgid "Redo last zoom"
-msgstr ""
+msgstr "Zoomaa uudestaan saman verran"
 
 #: plug-ins/FractalExplorer/Dialogs.c:413
 msgid "Step In"
-msgstr ""
+msgstr "Askella sis‰‰n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:420
 msgid "Step Out"
-msgstr ""
+msgstr "Askella ulos"
 
 #.
 #. *  Scales
@@ -512,82 +514,88 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3755 plug-ins/gflare/gflare.c:3865
 #: plug-ins/gflare/gflare.c:4007
 msgid "Parameters"
-msgstr ""
+msgstr "Parametreja"
 
 #: plug-ins/FractalExplorer/Dialogs.c:440
 msgid "Fractal Parameters"
-msgstr ""
+msgstr "Fraktaalin parametrit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:454
 msgid "XMIN:"
-msgstr ""
+msgstr "XMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:457
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr ""
+msgstr "S‰‰d‰ x-koordinaatin v‰himm‰israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:465
 msgid "XMAX:"
-msgstr ""
+msgstr "XMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:468
 msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr ""
+msgstr "S‰‰d‰ x-koordinaatin enimm‰israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:476
 msgid "YMIN:"
-msgstr ""
+msgstr "YMIN:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:479
 msgid "Change the first (minimal) y-coordinate delimitation"
-msgstr ""
+msgstr "S‰‰d‰ y-koordinaatin v‰himm‰israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:487
 msgid "YMAX:"
-msgstr ""
+msgstr "YMAX:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:490
 msgid "Change the second (maximal) y-coordinate delimitation"
-msgstr ""
+msgstr "S‰‰d‰ y-koordinaatin enimm‰israjaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:498
 msgid "ITER:"
-msgstr ""
+msgstr "ITER:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:501
 msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
+"S‰‰d‰ iteraatiokierrosten lukum‰‰r‰‰. Mit‰ suurempi arvo on, sit‰ enemm‰n "
+"yksityiskohtia lasketaan, mik‰ vie enemm‰n aikaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:510
 msgid "CX:"
-msgstr ""
+msgstr "CX"
 
 #: plug-ins/FractalExplorer/Dialogs.c:513
 msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
+"S‰‰d‰ CX-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
+"fraktaaleihin paitsi Mandelbrot ja Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:522
 msgid "CY:"
-msgstr ""
+msgstr "CY:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:525
 msgid ""
 "Change the CY value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
+"S‰‰d‰ CY-arvoa (muuttaa fraktaalin aspektia, vaikuttaa kaikkiin "
+"fraktaaleihin paitsi Mandelbrot ja Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:536 plug-ins/common/CML_explorer.c:1243
 #: plug-ins/common/gqbist.c:707 plug-ins/common/spheredesigner.c:2333
 msgid "Load"
-msgstr ""
+msgstr "Lataa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:542
 msgid "Load a fractal from file"
-msgstr ""
+msgstr "Lataa fraktaali tiedostosta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:544 plug-ins/common/convmatrix.c:812
 #: plug-ins/common/curve_bend.c:1372 plug-ins/common/iwarp.c:967
@@ -595,125 +603,125 @@ msgstr ""
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:804
 msgid "Reset"
-msgstr ""
+msgstr "Palauta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:550
 msgid "Reset parameters to default values"
-msgstr ""
+msgstr "Palauta parametrit oletusarvoisiksi"
 
 #: plug-ins/FractalExplorer/Dialogs.c:553 plug-ins/common/CML_explorer.c:1236
 #: plug-ins/common/gqbist.c:715 plug-ins/common/spheredesigner.c:2340
 #: plug-ins/gfig/gfig.c:4886 plug-ins/gfig/gfig.c:6508
 #: plug-ins/imagemap/imap_menu.c:217 plug-ins/imagemap/imap_toolbar.c:110
 msgid "Save"
-msgstr ""
+msgstr "Tallenna"
 
 #: plug-ins/FractalExplorer/Dialogs.c:559
 msgid "Save active fractal to file"
-msgstr ""
+msgstr "Tallenna fraktaali tiedostoon"
 
 #. Fractal type toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:562
 msgid "Fractal Type"
-msgstr ""
+msgstr "Fraktaalin tyyppi"
 
 #: plug-ins/FractalExplorer/Dialogs.c:575
 msgid "Mandelbrot"
-msgstr ""
+msgstr "Mandelbrot"
 
 #: plug-ins/FractalExplorer/Dialogs.c:577
 msgid "Julia"
-msgstr ""
+msgstr "Julia"
 
 #: plug-ins/FractalExplorer/Dialogs.c:579
 msgid "Barnsley 1"
-msgstr ""
+msgstr "Barnsley 1"
 
 #: plug-ins/FractalExplorer/Dialogs.c:581
 msgid "Barnsley 2"
-msgstr ""
+msgstr "Barnsley 2"
 
 #: plug-ins/FractalExplorer/Dialogs.c:583
 msgid "Barnsley 3"
-msgstr ""
+msgstr "Barnsley 3"
 
 #: plug-ins/FractalExplorer/Dialogs.c:585
 msgid "Spider"
-msgstr ""
+msgstr "H‰m‰h‰kki"
 
 #: plug-ins/FractalExplorer/Dialogs.c:587
 msgid "Man'o'war"
-msgstr ""
+msgstr "Man'o'war"
 
 #: plug-ins/FractalExplorer/Dialogs.c:589
 msgid "Lambda"
-msgstr ""
+msgstr "Lambda"
 
 #: plug-ins/FractalExplorer/Dialogs.c:591
 msgid "Sierpinski"
-msgstr ""
+msgstr "Sierpinski"
 
 #: plug-ins/FractalExplorer/Dialogs.c:637 plug-ins/common/mapcolor.c:349
 #: plug-ins/sinus/sinus.c:910 plug-ins/sinus/sinus.c:928
 #: plug-ins/sinus/sinus.c:1014
 msgid "Colors"
-msgstr ""
+msgstr "V‰rit"
 
 #. Number of Colors frame
 #: plug-ins/FractalExplorer/Dialogs.c:641
 #: plug-ins/borderaverage/borderaverage.c:439 plug-ins/gap/gap_range_ops.c:333
 msgid "Number of Colors"
-msgstr ""
+msgstr "V‰rien lukum‰‰r‰"
 
 #: plug-ins/FractalExplorer/Dialogs.c:654
 msgid "Number of Colors:"
-msgstr ""
+msgstr "V‰rien lukum‰‰r‰:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:657
 msgid "Change the number of colors in the mapping"
-msgstr ""
+msgstr "S‰‰d‰ kuvauksen k‰ytt‰m‰‰ v‰rilukum‰‰r‰‰"
 
 #: plug-ins/FractalExplorer/Dialogs.c:664
 msgid "Use loglog Smoothing"
-msgstr ""
+msgstr "K‰yt‰ kaksoislogaritmista pehmennyst‰"
 
 #: plug-ins/FractalExplorer/Dialogs.c:671
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "K‰yt‰ kaksoislogaritmista pehmennyst‰ raitojen v‰ltt‰miseksi"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:675
 msgid "Color Density"
-msgstr ""
+msgstr "V‰ritiheys"
 
 #: plug-ins/FractalExplorer/Dialogs.c:692
 msgid "Change the intensity of the red channel"
-msgstr ""
+msgstr "S‰‰d‰ punaisen v‰rikanavan voimakkuutta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:702
 msgid "Change the intensity of the green channel"
-msgstr ""
+msgstr "S‰‰d‰ vihre‰n v‰rikanavan voimakkuutta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:712
 msgid "Change the intensity of the blue channel"
-msgstr ""
+msgstr "S‰‰d‰ sinisen v‰rikanavan voimakkuutta"
 
 #. Color Function frame
 #: plug-ins/FractalExplorer/Dialogs.c:718
 msgid "Color Function"
-msgstr ""
+msgstr "V‰rifunktio"
 
 #: plug-ins/FractalExplorer/Dialogs.c:742
 #: plug-ins/FractalExplorer/Dialogs.c:783
 #: plug-ins/FractalExplorer/Dialogs.c:824
 msgid "Use sine-function for this color component"
-msgstr ""
+msgstr "K‰yt‰ t‰lle v‰rikanavalle sinifunktiota"
 
 #: plug-ins/FractalExplorer/Dialogs.c:745
 #: plug-ins/FractalExplorer/Dialogs.c:786
 #: plug-ins/FractalExplorer/Dialogs.c:827
 msgid "Use cosine-function for this color component"
-msgstr ""
+msgstr "K‰yt‰ t‰lle v‰rikanavalle kosinifunktiota"
 
 #: plug-ins/FractalExplorer/Dialogs.c:748
 #: plug-ins/FractalExplorer/Dialogs.c:789
@@ -722,12 +730,13 @@ msgid ""
 "Use linear mapping instead of any trigonometrical function for this color "
 "channel"
 msgstr ""
+"K‰yt‰ t‰lle v‰rikanavalle lineaarista kuvausta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:757
 #: plug-ins/FractalExplorer/Dialogs.c:798
 #: plug-ins/FractalExplorer/Dialogs.c:839
 msgid "Inversion"
-msgstr ""
+msgstr "K‰‰nteinen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:765
 #: plug-ins/FractalExplorer/Dialogs.c:806
@@ -736,85 +745,87 @@ msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
 msgstr ""
+"Jos k‰yt‰t t‰t‰, voimakkaat ja heikot v‰rit vaihtavat paikkaa"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:852
 msgid "Color Mode"
-msgstr ""
+msgstr "V‰ritila"
 
 #: plug-ins/FractalExplorer/Dialogs.c:863
 msgid "As Specified above"
-msgstr ""
+msgstr "Kuten yll‰"
 
 #: plug-ins/FractalExplorer/Dialogs.c:874
 msgid ""
 "Create a color-map with the options you specified above (color "
 "density/function). The result is visible in the preview image"
 msgstr ""
+"Muodosta v‰rikuvaus yll‰olevilla asetuksilla. Tulos n‰kyy esikatselukuvassa."
 
 #: plug-ins/FractalExplorer/Dialogs.c:884
 msgid "Apply Active Gradient to Final Image"
-msgstr ""
+msgstr "Sovella k‰ytˆss‰ oleva v‰riliukuma lopulliseen kuvaan"
 
 #: plug-ins/FractalExplorer/Dialogs.c:895
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr ""
+msgstr "Muodosta v‰rikuvaus k‰ytt‰en v‰riliukumamuokkainta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:900
 msgid "FractalExplorer Gradient"
-msgstr ""
+msgstr "FraktalExplorer-v‰riliukuma"
 
 #: plug-ins/FractalExplorer/Dialogs.c:932
 msgid "Fractals"
-msgstr ""
+msgstr "Fraktaaleja"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1581
 #, c-format
 msgid "Error opening '%.100s' could not save"
-msgstr ""
+msgstr "Tiedostoa %.100s ei voitu avata tallennusta varten"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1594
 msgid "Failed to write file\n"
-msgstr ""
+msgstr "Tiedoston kirjoittaminen ep‰onnistui\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1616
 msgid "Save: No filename given"
-msgstr ""
+msgstr "Tiedoston nimi puuttuu"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1626
 msgid "Save: Can't save to a directory"
-msgstr ""
+msgstr "Tallenna: Kansioon ei voi tallentaa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1675
 msgid "Load Fractal Parameters"
-msgstr ""
+msgstr "Lataa fraktaaliparametrit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1686
 msgid "Click here to load your file"
-msgstr ""
+msgstr "Napsauta t‰st‰ lataaksesi tiedostoa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1692
 msgid "Click here to cancel load procedure"
-msgstr ""
+msgstr "Napsauta t‰st‰ peruaksesi latauksen"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1710
 msgid "Save Fractal Parameters"
-msgstr ""
+msgstr "Tallenna fraktaaliparametrit"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1721
 msgid "Click here to save your file"
-msgstr ""
+msgstr "Napsauta t‰st‰ tallentaaksesi tiedostoa"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1727
 msgid "Click here to cancel save procedure"
-msgstr ""
+msgstr "Napsauta t‰st‰ peruaksesi tallennusta"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1984
 #: plug-ins/FractalExplorer/FractalExplorer.c:1266
 #, c-format
 msgid "File '%s' is not a FractalExplorer file"
-msgstr ""
+msgstr "'%s' ei ole FractalExplorer-tiedosto"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1989
 #: plug-ins/FractalExplorer/FractalExplorer.c:1274
@@ -823,28 +834,29 @@ msgid ""
 "File '%s' is corrupt.\n"
 "Line %d Option section incorrect"
 msgstr ""
+"Tiedosto '%s' on ep‰kelpo. Virhe havaittu rivill‰ %d."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:220
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
-msgstr ""
+msgstr "<Image>/Suotimet/Kuvan muodostus/Kuviot/Fractal Explorer..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:359
 msgid "Rendering Fractal..."
-msgstr ""
+msgstr "Muodostan fraktaalia..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:681
 msgid "Delete fractal"
-msgstr ""
+msgstr "Poista fraktaali"
 
 #. Question
 #: plug-ins/FractalExplorer/FractalExplorer.c:693 plug-ins/gfig/gfig.c:6244
 msgid "Are you sure you want to delete"
-msgstr ""
+msgstr "Oletko varma ett‰ haluat poistaa"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:698
 #, c-format
 msgid "\"%s\" from the list and from disk?"
-msgstr ""
+msgstr "'%s' sek‰ listalta ett‰ levylt‰?"
 
 #. Buttons
 #: plug-ins/FractalExplorer/FractalExplorer.c:709
@@ -853,19 +865,19 @@ msgstr ""
 #: plug-ins/gimpressionist/presets.c:648 plug-ins/ifscompose/ifscompose.c:802
 #: plug-ins/imagemap/imap_cmd_delete.c:53
 msgid "Delete"
-msgstr ""
+msgstr "Poista"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:810
 msgid "Edit fractal name"
-msgstr ""
+msgstr "Muokkaa fraktaalin nime‰"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:821
 msgid "Fractal name:"
-msgstr ""
+msgstr "Fraktaalin nimi:"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:862
 msgid "New Fractal"
-msgstr ""
+msgstr "Uusi fraktaali"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1140
 msgid ""
@@ -875,6 +887,7 @@ msgid ""
 "\"${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer\")\n"
 "to your ~/.gimp-1.1/gimprc file\n"
 msgstr ""
+"gimprc-tiedostosta puuttuu fractalexplorer-path.\n"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1187
 #, c-format
@@ -882,124 +895,125 @@ msgid ""
 "fractalexplorer-path miss-configured - \n"
 "Path `%.100s' not found\n"
 msgstr ""
+"fractalexplorer-path on ep‰kelpo. Kansiota '%.100s' ei ole\n"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1387
 msgid "My first fractal"
-msgstr ""
+msgstr "Ensimm‰inen fraktaalini"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1404
 msgid "Choose Fractal by double-clicking on it"
-msgstr ""
+msgstr "Valitse fraktaali kaksoisnapsauttamalla sit‰"
 
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1435
 msgid "Rescan"
-msgstr ""
+msgstr "Ker‰‰ uudelleen"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1442
 msgid "Select directory and rescan collection"
-msgstr ""
+msgstr "Valitse kansio ja ker‰‰ sielt‰ kokoelma uudelleen "
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1453
 msgid "Delete currently selected fractal"
-msgstr ""
+msgstr "Poista valittu fraktaali"
 
 #. Call up the file sel dialogue
 #: plug-ins/FractalExplorer/FractalExplorer.c:1490
 msgid "Add FractalExplorer path"
-msgstr ""
+msgstr "Lis‰‰ FractalExplorer-polku"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1524
 msgid "Rescan for fractals"
-msgstr ""
+msgstr "Ker‰‰ fraktaaleja uudelleen"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1582
 msgid "Add dir"
-msgstr ""
+msgstr "Lis‰‰ kansio"
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
-msgstr ""
+msgstr "<Image>/Suotimet/Valoefektit/Valaistusefektit..."
 
 #: plug-ins/Lighting/lighting_ui.c:34
 msgid "Point light"
-msgstr ""
+msgstr "pistem‰inen valol‰hde"
 
 #: plug-ins/Lighting/lighting_ui.c:35
 msgid "Directional light"
-msgstr ""
+msgstr "suunnattu valol‰hde"
 
 #: plug-ins/Lighting/lighting_ui.c:36
 msgid "Spot light"
-msgstr ""
+msgstr "valonheitin"
 
 #: plug-ins/Lighting/lighting_ui.c:37
 msgid "No light"
-msgstr ""
+msgstr "ei valoa"
 
 #: plug-ins/Lighting/lighting_ui.c:43
 msgid "From image"
-msgstr ""
+msgstr "kuvasta"
 
 #: plug-ins/Lighting/lighting_ui.c:44 plug-ins/common/waves.c:351
 msgid "Waves"
-msgstr ""
+msgstr "aaltoja"
 
 #: plug-ins/Lighting/lighting_ui.c:50 plug-ins/common/mblur.c:804
 #: plug-ins/flame/flame.c:667 plug-ins/sinus/sinus.c:1039
 msgid "Linear"
-msgstr ""
+msgstr "lineaarinen"
 
 #: plug-ins/Lighting/lighting_ui.c:51
 msgid "Logarithmic"
-msgstr ""
+msgstr "logaritminen"
 
 #: plug-ins/Lighting/lighting_ui.c:52 plug-ins/flame/flame.c:668
 msgid "Sinusoidal"
-msgstr ""
+msgstr "sinik‰yr‰n mukainen"
 
 #: plug-ins/Lighting/lighting_ui.c:53 plug-ins/flame/flame.c:669
 msgid "Spherical"
-msgstr ""
+msgstr "pallomainen"
 
 #: plug-ins/Lighting/lighting_ui.c:210 plug-ins/Lighting/lighting_ui.c:1016
 #: plug-ins/common/spheredesigner.c:2612
 msgid "Bump"
-msgstr ""
+msgstr "kuhmurainen"
 
 #: plug-ins/Lighting/lighting_ui.c:238 plug-ins/Lighting/lighting_ui.c:1025
 msgid "Env"
-msgstr ""
+msgstr "env"
 
 #: plug-ins/Lighting/lighting_ui.c:569
 msgid "General options"
-msgstr ""
+msgstr "Yleiset asetukset"
 
 #: plug-ins/Lighting/lighting_ui.c:572
 msgid "Use bump mapping"
-msgstr ""
+msgstr "K‰yt‰ kuhmukuvausta"
 
 #: plug-ins/Lighting/lighting_ui.c:574
 msgid "Use environment mapping"
-msgstr ""
+msgstr "K‰yt‰ ymp‰ristˆkuvausta"
 
 #. togglerefraction=gck_checkbutton_new("Use refraction mapping",vbox,mapvals.ref_mapped,
 #. (GtkSignalFunc)togglerefraction_update);
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Transparent background"
-msgstr ""
+msgstr "L‰pin‰kyv‰ tausta"
 
 #: plug-ins/Lighting/lighting_ui.c:580
 msgid "Create new image"
-msgstr ""
+msgstr "Muodosta uusi kuva"
 
 #: plug-ins/Lighting/lighting_ui.c:582
 msgid "High preview quality"
-msgstr ""
+msgstr "Korkealuokkainen esikatselukuva"
 
 #: plug-ins/Lighting/lighting_ui.c:584
 msgid "Enable tooltips"
-msgstr ""
+msgstr "N‰yt‰ vihjeit‰"
 
 #: plug-ins/Lighting/lighting_ui.c:587
 msgid "Enable/disable bump-mapping (image depth)"
