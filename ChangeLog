@@ -1,3 +1,10 @@
+2003-05-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/xbm.c (save_dialog): Reverted some of the
+	changes that Dave Neary committed on 2002-11-07 since they
+	disabled some useful features without a good reason (see bug
+	#82763).
+
 2003-05-26  Raphael Quinet  <quinet@gamers.org>
 
 	* plug-ins/imagemap/imap_csim.y

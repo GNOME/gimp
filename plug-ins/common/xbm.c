@@ -1194,7 +1194,6 @@ save_dialog (gint32 drawable_ID)
                       GTK_SIGNAL_FUNC (prefix_entry_callback),
                       NULL);
 
-#if 0
   /* comment string. */
 #if 0
   /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
@@ -1275,7 +1274,6 @@ save_dialog (gint32 drawable_ID)
   gtk_signal_connect (GTK_OBJECT (entry), "changed",
                       GTK_SIGNAL_FUNC (mask_ext_entry_callback),
                       NULL);
-#endif
 
   gtk_object_set_data (GTK_OBJECT (toggle), "set_sensitive", entry);
   gtk_widget_set_sensitive (entry, xsvals.write_mask);
