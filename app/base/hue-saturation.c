@@ -75,10 +75,11 @@ hue_saturation_calculate_transfers (HueSaturation *hs)
 	/*  Lightness  */
 	value = (hs->lightness[0] + hs->lightness[hue + 1]) * 127.0 / 100.0;
 	value = CLAMP (value, -255, 255);
+
 	if (value < 0)
-	  hs->lightness_transfer[hue][i] = (unsigned char) ((i * (255 + value)) / 255);
+	  hs->lightness_transfer[hue][i] = (guchar) ((i * (255 + value)) / 255);
 	else
-	  hs->lightness_transfer[hue][i] = (unsigned char) (i + ((255 - i) * value) / 255);
+	  hs->lightness_transfer[hue][i] = (guchar) (i + ((255 - i) * value) / 255);
 
 	/*  Saturation  */
 	value = (hs->saturation[0] + hs->saturation[hue + 1]) * 255.0 / 100.0;
@@ -91,25 +92,22 @@ hue_saturation_calculate_transfers (HueSaturation *hs)
 	   colors more or less evenly. For enhancing the color in photos,
 	   the new behavior is exactly what you want. It's hard for me
 	   to imagine a case in which the old behavior is better.
-	*/
+	 */
 	hs->saturation_transfer[hue][i] = CLAMP ((i * (255 + value)) / 255, 0, 255);
       }
 }
 
 void
-hue_saturation (PixelRegion *srcPR,
-		PixelRegion *destPR,
-		gpointer     data)
+hue_saturation (PixelRegion   *srcPR,
+		PixelRegion   *destPR,
+		HueSaturation *hs)
 {
-  HueSaturation *hs;
-  guchar        *src, *s;
-  guchar        *dest, *d;
-  gint           alpha;
-  gint           w, h;
-  gint           r, g, b;
-  gint           hue;
-
-  hs = (HueSaturation *) data;
+  guchar *src, *s;
+  guchar *dest, *d;
+  gint    alpha;
+  gint    w, h;
+  gint    r, g, b;
+  gint    hue;
 
   /*  Set the transfer arrays  (for speed)  */
   h     = srcPR->h;
@@ -122,6 +120,7 @@ hue_saturation (PixelRegion *srcPR,
       w = srcPR->w;
       s = src;
       d = dest;
+
       while (w--)
 	{
 	  r = s[RED_PIX];
@@ -130,18 +129,22 @@ hue_saturation (PixelRegion *srcPR,
 
 	  gimp_rgb_to_hls_int (&r, &g, &b);
 
-	  if (r < 43)
+          hue = (r + (128 / 6)) / 6;
+
+	  if (r < 21)
 	    hue = 0;
-	  else if (r < 85)
+	  else if (r < 64)
 	    hue = 1;
-	  else if (r < 128)
+	  else if (r < 106)
 	    hue = 2;
-	  else if (r < 171)
+	  else if (r < 149)
 	    hue = 3;
-	  else if (r < 213)
+	  else if (r < 192)
 	    hue = 4;
-	  else
+	  else if (r < 234)
 	    hue = 5;
+          else
+            hue = 0;
 
 	  r = hs->hue_transfer[hue][r];
 	  g = hs->lightness_transfer[hue][g];

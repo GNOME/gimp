@@ -1,5 +1,15 @@
 2003-03-07  Sven Neumann  <sven@gimp.org>
 
+	* app/base/hue-saturation.[ch]: changed the hue_saturation()
+	function as suggested by Martin Weber in bug #94067.  Changed the
+	function signature to use a typed instead of a void pointer.
+
+	* app/tools/gimphuesaturationtool.c (gimp_hue_saturation_tool_map):
+	cast the hue_saturation() function pointer to a GimpImageMapApplyFunc
+	here.
+	
+2003-03-07  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/guides.pdb: allow to add guides with an offset
 	of 0 (spotted by Paul Doidge, bug #90629).
 

@@ -228,7 +228,7 @@ gimp_hue_saturation_tool_map (GimpImageMapTool *image_map_tool)
   hs_tool = GIMP_HUE_SATURATION_TOOL (image_map_tool);
 
   gimp_image_map_apply (image_map_tool->image_map,
-                        hue_saturation,
+                        (GimpImageMapApplyFunc) hue_saturation,
                         hs_tool->hue_saturation);
 }
 
