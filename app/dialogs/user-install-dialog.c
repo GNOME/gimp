@@ -19,12 +19,12 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <errno.h>
-#include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/types.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
@@ -47,19 +47,25 @@
 
 #include "libgimp/gimpintl.h"
 
-
 #ifdef G_OS_WIN32
 #  include <io.h>
 #  define mkdir(path, mode) _mkdir(path)
 #endif
 
 
-#define NUM_PAGES    6
-#define EEK_PAGE     (NUM_PAGES - 1)
-
 #define PAGE_STYLE(widget)  gtk_widget_modify_style (widget, page_style)
 #define TITLE_STYLE(widget) gtk_widget_modify_style (widget, title_style)
 
+enum
+{
+  GPL_PAGE,
+  TREE_PAGE,
+  LOG_PAGE,
+  TUNING_PAGE,
+  RESOLUTION_PAGE,
+  EEK_PAGE,
+  NUM_PAGES
+};
 
 enum
 {
@@ -71,9 +77,9 @@ enum
 
 
 static void     user_install_continue_callback (GtkWidget *widget,
-						GimpRc    *gimprc);
+                                                GimpRc    *gimprc);
 static void     user_install_cancel_callback   (GtkWidget *widget,
-						gpointer   data);
+                                                gpointer   data);
 
 static gboolean user_install_run               (void);
 static void     user_install_tuning            (GimpRc    *gimprc);
@@ -107,19 +113,19 @@ static GdkColor    title_color;
 
 typedef enum
 {
-  TREE_ITEM_DONT,		 /*  Don't pre-create             */
-  TREE_ITEM_MKDIR_ONLY,	 /*  Just mkdir                   */
-  TREE_ITEM_FROM_SYSCONF_DIR,	 /*  Copy from sysconf directory  */
-  TREE_ITEM_FROM_DATA_DIR	 /*  ... from data directory      */
+  TREE_ITEM_DONT,              /* Don't pre-create            */
+  TREE_ITEM_MKDIR_ONLY,        /* Just mkdir                  */
+  TREE_ITEM_FROM_SYSCONF_DIR,  /* Copy from sysconf directory */
+  TREE_ITEM_FROM_DATA_DIR      /* ... from data directory     */
 } TreeItemType;
 
 static struct
 {
-  gboolean  directory;
-  gchar    *text;
-  gchar    *description;
-  TreeItemType type;
-  gchar       *source_filename;	/* If NULL, use text */
+  gboolean      directory;
+  gchar        *text;
+  gchar        *description;
+  TreeItemType  type;
+  gchar        *source_filename;  /* If NULL, use text */
 }
 tree_items[] =
 {
@@ -175,17 +181,16 @@ tree_items[] =
     TREE_ITEM_FROM_SYSCONF_DIR, NULL
   },
   {
+    TRUE, "themes",
+    N_("This folder is searched for user-installed themes."),
+    TREE_ITEM_MKDIR_ONLY, NULL
+  },
+  {
     TRUE, "brushes",
     N_("This folder is used to store user defined brushes.\n"
        "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP brushes installation when searching for\n"
        "brushes."),
-    TREE_ITEM_MKDIR_ONLY, NULL
-  },
-  {
-    TRUE, "generated_brushes",
-    N_("This folder is used to store brushes that are created\n"
-       "with the brush editor."),
     TREE_ITEM_MKDIR_ONLY, NULL
   },
   {
@@ -301,19 +306,18 @@ tree_items[] =
     TREE_ITEM_MKDIR_ONLY, NULL
   }  
 };
-static gint num_tree_items = G_N_ELEMENTS (tree_items);
 
 
 static void
 user_install_notebook_set_page (GtkNotebook *notebook,
 				gint         index)
 {
-  gchar *title;
-  gchar *footer;
   GtkWidget *page;
-  
+  gchar     *title;
+  gchar     *footer;
+
   page = gtk_notebook_get_nth_page (notebook, index);
-  
+
   title  = g_object_get_data (G_OBJECT (page), "title");
   footer = g_object_get_data (G_OBJECT (page), "footer");
 
@@ -344,41 +348,51 @@ static void
 user_install_continue_callback (GtkWidget *widget,
 				GimpRc    *gimprc)
 {
-  static gint notebook_index = 0;
+  static gint notebook_index = GPL_PAGE;
 
   switch (notebook_index)
     {
-    case 0:
+    case GPL_PAGE:
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
       break;
-      
-    case 1:
-      /*  Creatring the directories can take some time on NFS, so inform
+
+    case TREE_PAGE:
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
+
+      /*  Creating the directories can take some time on NFS, so inform
        *  the user and set the buttons insensitive
        */
       gtk_widget_set_sensitive (continue_button, FALSE);
       gtk_widget_set_sensitive (cancel_button, FALSE);
-      gtk_label_set_text (GTK_LABEL (footer_label),
-			  _("Please wait while your personal\n"
-			    "GIMP folder is being created..."));
-
-      while (gtk_events_pending ())
-	gtk_main_iteration ();
 
       if (user_install_run ())
-	gtk_widget_set_sensitive (continue_button, TRUE);
+        {
+          gtk_widget_set_sensitive (continue_button, TRUE);
+          gtk_label_set_text (GTK_LABEL (footer_label),
+                              _("Installation successful.\n"
+                                "Click \"Continue\" to proceed."));
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (footer_label),
+                              _("Installation failed.\n"
+                                "Contact system administrator."));
+        }
 
       gtk_widget_set_sensitive (cancel_button, TRUE);
       break;
 
-    case 2:
+    case LOG_PAGE:
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
       user_install_tuning (gimprc);
       break;
 
-    case 3:
+    case TUNING_PAGE:
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
       user_install_resolution (gimprc);
       break;
 
-    case 4:
+    case RESOLUTION_PAGE:
       gimp_rc_save (gimprc);
       
       g_object_unref (G_OBJECT (title_style));
@@ -390,28 +404,23 @@ user_install_continue_callback (GtkWidget *widget,
       return;
       break;
 
-    case EEK_PAGE:
     default:
       g_assert_not_reached ();
     }
-
-  if (notebook_index < NUM_PAGES - 1)
-    user_install_notebook_set_page (GTK_NOTEBOOK (notebook), ++notebook_index);
 }
-
 
 static void
 user_install_cancel_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  static gint timeout = 0;
+  static guint timeout_id = 0;
 
-  if (timeout)
+  if (timeout_id)
     exit (0);
 
   gtk_widget_destroy (continue_button);
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-  timeout = g_timeout_add (1024, (GSourceFunc) exit, NULL);
+  timeout_id = g_timeout_add (1024, (GSourceFunc) exit, NULL);
 }
 
 static gboolean
@@ -424,7 +433,7 @@ user_install_corner_expose (GtkWidget      *widget,
   /* call default handler explicitly, then draw the corners */
   if (GTK_WIDGET_GET_CLASS (widget)->expose_event)
     GTK_WIDGET_GET_CLASS (widget)->expose_event (widget, eevent);
-  
+
   corner = GPOINTER_TO_INT (data);
 
   switch (corner)
@@ -439,7 +448,7 @@ user_install_corner_expose (GtkWidget      *widget,
 		    90 * 64,
 		    180 * 64);
       break;
-      
+
     case GTK_CORNER_BOTTOM_LEFT:
       gdk_draw_arc (widget->window,
 		    widget->style->white_gc,
@@ -450,7 +459,7 @@ user_install_corner_expose (GtkWidget      *widget,
 		    180 * 64,
 		    270 * 64);
       break;
-      
+
     case GTK_CORNER_TOP_RIGHT:
       gdk_draw_arc (widget->window,
 		    widget->style->white_gc,
@@ -461,7 +470,7 @@ user_install_corner_expose (GtkWidget      *widget,
 		    0 * 64,
 		    90 * 64);
       break;
-      
+
     case GTK_CORNER_BOTTOM_RIGHT:
       gdk_draw_arc (widget->window,
 		    widget->style->white_gc,
@@ -472,7 +481,7 @@ user_install_corner_expose (GtkWidget      *widget,
 		    270 * 64,
 		    360 * 64);
       break;
-      
+
     default:
       break;
     }
@@ -486,7 +495,7 @@ user_install_notebook_append_page (GtkNotebook *notebook,
 				   gchar       *footer)
 {
   GtkWidget *page;
-  
+
   page = gtk_vbox_new (FALSE, 6);
   g_object_set_data (G_OBJECT (page), "title", title);
   g_object_set_data (G_OBJECT (page), "footer", footer);
@@ -508,7 +517,7 @@ add_label (GtkBox   *box,
 
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (box, label, FALSE, FALSE, 0);
-  
+
   gtk_widget_show (label);
 }
 
@@ -748,7 +757,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
        "along with this program; if not, write to the Free Software\n"
        "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
        "MA 02111-1307, USA."));
-  
+
   /*  Page 2  */
   {
     GtkWidget         *hbox;
@@ -807,7 +816,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
     gtk_widget_show (vbox);
 
     str = g_strdup_printf (_("For a proper GIMP installation, a folder named\n"
-			     "%s needs to be created."), gimp_directory ());
+			     "'%s' needs to be created."), gimp_directory ());
     add_label (GTK_BOX (vbox), str);
     g_free (str);
 
@@ -847,7 +856,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 			DESC_COLUMN, 0,
 			-1);
 
-    for (i = 0; i < num_tree_items; i++)
+    for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
       {
 	gtk_tree_store_append (tree, &child, &iter);
 	gtk_tree_store_set (tree, &child,
@@ -884,7 +893,8 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
   page = log_page =
     user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				       _("User Installation Log"),
-				       NULL);
+                                       _("Please wait while your personal\n"
+                                         "GIMP folder is being created..."));
 
   /*  Page 4  */
   page = tuning_page = 
@@ -904,7 +914,7 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
     user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
 				       _("Monitor Resolution"),
 				       _("Click \"Continue\" to start The GIMP."));
-  
+
   add_label (GTK_BOX (resolution_page),
 	     _("To display images in their natural size, "
 	       "GIMP needs to know your monitor resolution."));
@@ -932,13 +942,12 @@ user_install_dialog_create (const gchar *alternate_system_gimprc,
 
 static gboolean
 copy_file (gchar   *source,
-	   gchar   *dest,
+           gchar   *dest,
            GError **error)
 {
-  FILE  *sfile;
-  FILE  *dfile;
   gchar  buffer[4096];
-  gsize  nbytes;
+  FILE  *sfile, *dfile;
+  gint   nbytes;
 
   sfile = fopen (source, "rb");
   if (sfile == NULL)
@@ -946,7 +955,6 @@ copy_file (gchar   *source,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot open '%s' for reading: %s"),
                    source, g_strerror (errno));
-
       return FALSE;
     }
 
@@ -957,7 +965,6 @@ copy_file (gchar   *source,
                    _("Cannot open '%s' for writing: %s"),
                    dest, g_strerror (errno));
       fclose (sfile);
-
       return FALSE;
     }
 
@@ -965,12 +972,11 @@ copy_file (gchar   *source,
     {
       if (fwrite (buffer, 1, nbytes, dfile) < nbytes)
 	{
-          g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Error writing to '%s': %s"),
+	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                       _("Error while writing '%s': %s"),
                        dest, g_strerror (errno));
 	  fclose (sfile);
 	  fclose (dfile);
-
 	  return FALSE;
 	}
     }
@@ -978,16 +984,22 @@ copy_file (gchar   *source,
   if (ferror (sfile))
     {
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Error reading from '%s': %s"),
+                   _("Error while reading '%s': %s"),
                    source, g_strerror (errno));
       fclose (sfile);
       fclose (dfile);
-
       return FALSE;
     }
 
   fclose (sfile);
-  fclose (dfile);
+
+  if (fclose (dfile) == EOF)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error while closing '%s': %s"),
+                   dest, g_strerror (errno));
+      return FALSE;
+    }
 
   return TRUE;
 }
@@ -1003,7 +1015,7 @@ user_install_run (void)
   gchar          source[1000];
   gchar          log_line[1000];
   gint           i;
-  
+
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
@@ -1015,35 +1027,34 @@ user_install_run (void)
 
   log_view = gtk_text_view_new_with_buffer (log_buffer);
   g_object_unref (log_buffer);
-  
+
   PAGE_STYLE (log_view);
   gtk_text_view_set_editable (GTK_TEXT_VIEW (log_view), FALSE);
-  
+
   gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
   gtk_widget_show (log_view);
-  
-  for (i = 0; i < num_tree_items; i++)
+
+  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'\n"),
+              gimp_directory ());
+  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
+  if (mkdir (gimp_directory (), 0755) == -1)
     {
-      if (i == 0)
-	{
-	  g_snprintf (log_line, sizeof (log_line),
-                      _("Creating folder %s\n"), gimp_directory ());
-	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Cannot create folder '%s': %s"),
+                   gimp_directory (), g_strerror (errno));
+      goto break_out_of_loop;
+    }
+  gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
 
-	  if (mkdir (gimp_directory (),
-                     S_IRUSR | S_IWUSR | S_IXUSR |
-                     S_IRGRP | S_IXGRP |
-                     S_IROTH | S_IXOTH) == -1)
-	    {
-              g_set_error (&error,
-                           G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Cannot create folder: %s"), g_strerror (errno));
-	      goto break_out_of_loop;
-	    }
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
 
-	  gtk_text_buffer_insert_at_cursor (log_buffer, _("  Success\n"), -1);
-	}
-
+  for (i = 0; i < G_N_ELEMENTS (tree_items); i++)
+    {
       g_snprintf (dest, sizeof (dest), "%s%c%s",
 		  gimp_directory (), G_DIR_SEPARATOR, tree_items[i].text);
 
@@ -1053,9 +1064,12 @@ user_install_run (void)
 	  break;
 
 	case TREE_ITEM_MKDIR_ONLY:
-	  g_snprintf (log_line, sizeof (log_line),
-                      _("Creating folder %s\n"), dest);
+	  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'\n"),
+		      dest);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
 
 	  if (mkdir (dest,
                      S_IRUSR | S_IWUSR | S_IXUSR |
@@ -1081,15 +1095,19 @@ user_install_run (void)
 		      gimp_data_directory (), G_DIR_SEPARATOR,
 		      tree_items[i].source_filename ?
 		      tree_items[i].source_filename : tree_items[i].text);
+
 	do_copy:
-	  g_assert (!tree_items[i].directory);
+          g_assert (! tree_items[i].directory);
 	  g_snprintf (log_line, sizeof (log_line),
-                      _("Copying file %s from %s\n"), dest, source);
+                      _("Copying file '%s' from '%s'\n"),
+		      dest, source);
 	  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
 
-	  if (!copy_file (source, dest, &error))
-	    goto break_out_of_loop;
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
 
+          if (! copy_file (source, dest, &error))
+            goto break_out_of_loop;
 	  break;
 
 	default:
@@ -1106,14 +1124,9 @@ user_install_run (void)
   if (error)
     {
       g_snprintf (log_line, sizeof (log_line), _("  Failure: %s\n"),
-                  error->message);
+		  error->message);
+      g_clear_error (&error);
       gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-
-      add_label (GTK_BOX (log_page),
-		 _("Installation failed.  Contact system administrator."));
-
-      g_error_free (error);
-
       return FALSE;
     }
 
@@ -1207,7 +1220,7 @@ user_install_resolution (GimpRc *gimprc)
   GimpChainButton   *chain;
   GtkWidget         *toggle;
   GtkWidget         *button;
-  GList             *list; 
+  GList             *list;
   gdouble            xres, yres;
   gchar             *pixels_per_unit;
   gchar             *str;
@@ -1299,7 +1312,7 @@ user_install_resolution (GimpRc *gimprc)
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, !config->monitor_res_from_gdk);
   gtk_widget_show (button);
-  
+
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (user_install_resolution_calibrate),
                     entry);

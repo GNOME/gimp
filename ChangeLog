@@ -1,3 +1,10 @@
+2002-12-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/user-install-dialog.c: some more cleanup: check the
+	return value of fclose() in copy_file(), added an enum for the
+	notebook pages, added '' around displayed filenames, update the
+	GUI while creating the user directory, misc stuff.
+
 2002-12-30  Sven Neumann  <sven@gimp.org>
 
 	* data/environ/Makefile.am
