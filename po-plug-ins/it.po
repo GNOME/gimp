@@ -8106,7 +8106,7 @@ msgstr "<Image>/Video/Posizione/Frame finale"
 
 #: plug-ins/gap/gap_main.c:530
 msgid "<Image>/Video/Goto/Any Frame..."
-msgstr "<Image>/Video/Posizione/Frame successivo"
+msgstr "<Image>/Video/Posizione/Singolo Frame..."
 
 #: plug-ins/gap/gap_main.c:542
 msgid "<Image>/Video/Delete Frames..."
