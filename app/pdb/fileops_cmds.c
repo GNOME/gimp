@@ -336,7 +336,7 @@ file_save_thumbnail_invoker (Gimp     *gimp,
   const gchar *image_uri;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   filename = (gchar *) args[1].value.pdb_pointer;

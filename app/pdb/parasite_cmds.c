@@ -269,7 +269,7 @@ drawable_parasite_find_invoker (Gimp     *gimp,
   GimpParasite *parasite = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -338,7 +338,7 @@ drawable_parasite_attach_invoker (Gimp     *gimp,
   GimpParasite *parasite;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
@@ -390,7 +390,7 @@ drawable_parasite_detach_invoker (Gimp     *gimp,
   gchar *name;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -444,7 +444,7 @@ drawable_parasite_list_invoker (Gimp     *gimp,
   gchar **parasites = NULL;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   if (success)
@@ -511,7 +511,7 @@ image_parasite_find_invoker (Gimp     *gimp,
   GimpParasite *parasite = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -580,7 +580,7 @@ image_parasite_attach_invoker (Gimp     *gimp,
   GimpParasite *parasite;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   parasite = (GimpParasite *) args[1].value.pdb_pointer;
@@ -632,7 +632,7 @@ image_parasite_detach_invoker (Gimp     *gimp,
   gchar *name;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -686,7 +686,7 @@ image_parasite_list_invoker (Gimp     *gimp,
   gchar **parasites = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)

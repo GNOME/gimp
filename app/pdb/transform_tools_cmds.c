@@ -65,7 +65,7 @@ flip_invoker (Gimp     *gimp,
   gint32 flip_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   flip_type = args[1].value.pdb_int;
@@ -142,7 +142,7 @@ perspective_invoker (Gimp     *gimp,
   GimpInterpolationType interpolation_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
@@ -294,7 +294,7 @@ rotate_invoker (Gimp     *gimp,
   GimpInterpolationType interpolation_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
@@ -389,7 +389,7 @@ scale_invoker (Gimp     *gimp,
   GimpInterpolationType interpolation_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
@@ -517,7 +517,7 @@ shear_invoker (Gimp     *gimp,
   GimpInterpolationType interpolation_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;
@@ -631,7 +631,7 @@ transform_2d_invoker (Gimp     *gimp,
   GimpInterpolationType interpolation_type;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   interpolation = args[1].value.pdb_int ? TRUE : FALSE;

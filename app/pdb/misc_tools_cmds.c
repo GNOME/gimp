@@ -72,7 +72,7 @@ blend_invoker (Gimp     *gimp,
   gdouble y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   blend_mode = args[1].value.pdb_int;
@@ -246,7 +246,7 @@ bucket_fill_invoker (Gimp     *gimp,
   gdouble y;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   fill_mode = args[1].value.pdb_int;
@@ -365,7 +365,7 @@ color_picker_invoker (Gimp     *gimp,
   GimpRGB color;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);

@@ -88,7 +88,7 @@ brightness_contrast_invoker (Gimp     *gimp,
   int x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   brightness = args[1].value.pdb_int;
@@ -189,7 +189,7 @@ levels_invoker (Gimp     *gimp,
   int high_output[5];
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   channel = args[1].value.pdb_int;
@@ -333,7 +333,7 @@ posterize_invoker (Gimp     *gimp,
   int x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   levels = args[1].value.pdb_int;
@@ -408,7 +408,7 @@ desaturate_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   if (success)
@@ -456,7 +456,7 @@ equalize_invoker (Gimp     *gimp,
   gboolean mask_only;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   mask_only = args[1].value.pdb_int ? TRUE : FALSE;
@@ -510,7 +510,7 @@ invert_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   if (success)
@@ -565,7 +565,7 @@ curves_spline_invoker (Gimp     *gimp,
   GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   channel = args[1].value.pdb_int;
@@ -678,7 +678,7 @@ curves_explicit_invoker (Gimp     *gimp,
   GimpLut *lut;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   channel = args[1].value.pdb_int;
@@ -787,7 +787,7 @@ color_balance_invoker (Gimp     *gimp,
   gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   transfer_mode = args[1].value.pdb_int;
@@ -926,7 +926,7 @@ histogram_invoker (Gimp     *gimp,
   GimpChannel *mask;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   channel = args[1].value.pdb_int;
@@ -1090,7 +1090,7 @@ hue_saturation_invoker (Gimp     *gimp,
   gint x1, y1, x2, y2;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   hue_range = args[1].value.pdb_int;
@@ -1210,7 +1210,7 @@ threshold_invoker (Gimp     *gimp,
   PixelRegion srcPR, destPR;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   low_threshold = args[1].value.pdb_int;

@@ -78,7 +78,7 @@ path_list_invoker (Gimp     *gimp,
   PathList *plist;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -166,7 +166,7 @@ path_get_points_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -302,7 +302,7 @@ path_get_current_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -367,7 +367,7 @@ path_set_current_invoker (Gimp     *gimp,
   gchar *pname;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -423,7 +423,7 @@ path_set_points_invoker (Gimp     *gimp,
   gboolean pclosed = FALSE;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -508,7 +508,7 @@ path_stroke_current_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -572,7 +572,7 @@ path_get_point_at_dist_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   distance = args[1].value.pdb_float;
@@ -667,7 +667,7 @@ path_get_tattoo_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -762,7 +762,7 @@ get_path_by_tattoo_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   tattoo = args[1].value.pdb_int;
@@ -837,7 +837,7 @@ path_delete_invoker (Gimp     *gimp,
   gchar *pname;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -893,7 +893,7 @@ path_get_locked_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -988,7 +988,7 @@ path_set_locked_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;
@@ -1076,7 +1076,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
   Path *pptr = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   pname = (gchar *) args[1].value.pdb_pointer;

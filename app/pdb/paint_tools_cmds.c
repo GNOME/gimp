@@ -128,7 +128,7 @@ airbrush_invoker (Gimp     *gimp,
   GimpAirbrushOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   pressure = args[1].value.pdb_float;
@@ -210,7 +210,7 @@ airbrush_default_invoker (Gimp     *gimp,
   GimpAirbrushOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -285,11 +285,11 @@ clone_invoker (Gimp     *gimp,
   GimpCloneOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   src_drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (src_drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (src_drawable))
     success = FALSE;
 
   clone_type = args[2].value.pdb_int;
@@ -398,7 +398,7 @@ clone_default_invoker (Gimp     *gimp,
   GimpCloneOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -471,7 +471,7 @@ convolve_invoker (Gimp     *gimp,
   GimpConvolveOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   pressure = args[1].value.pdb_float;
@@ -563,7 +563,7 @@ convolve_default_invoker (Gimp     *gimp,
   GimpConvolveOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -637,7 +637,7 @@ dodgeburn_invoker (Gimp     *gimp,
   GimpDodgeBurnOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   exposure = args[1].value.pdb_float;
@@ -739,7 +739,7 @@ dodgeburn_default_invoker (Gimp     *gimp,
   GimpDodgeBurnOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -812,7 +812,7 @@ eraser_invoker (Gimp     *gimp,
   GimpEraserOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -905,7 +905,7 @@ eraser_default_invoker (Gimp     *gimp,
   GimpEraserOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -979,7 +979,7 @@ paintbrush_invoker (Gimp     *gimp,
   GimpPaintOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   fade_out = args[1].value.pdb_float;
@@ -1082,7 +1082,7 @@ paintbrush_default_invoker (Gimp     *gimp,
   GimpPaintOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -1153,7 +1153,7 @@ pencil_invoker (Gimp     *gimp,
   GimpPaintOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;
@@ -1225,7 +1225,7 @@ smudge_invoker (Gimp     *gimp,
   GimpSmudgeOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   pressure = args[1].value.pdb_float;
@@ -1307,7 +1307,7 @@ smudge_default_invoker (Gimp     *gimp,
   GimpSmudgeOptions *options;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   num_strokes = args[1].value.pdb_int;

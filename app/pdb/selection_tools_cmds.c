@@ -67,7 +67,7 @@ by_color_select_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   color = args[1].value.pdb_color;
@@ -183,7 +183,7 @@ ellipse_select_invoker (Gimp     *gimp,
   gdouble feather_radius;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   x = args[1].value.pdb_float;
@@ -300,7 +300,7 @@ free_select_invoker (Gimp     *gimp,
   gdouble feather_radius;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   num_segs = args[1].value.pdb_int;
@@ -406,7 +406,7 @@ fuzzy_select_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   x = args[1].value.pdb_float;
@@ -530,7 +530,7 @@ rect_select_invoker (Gimp     *gimp,
   gdouble feather_radius;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   x = args[1].value.pdb_float;

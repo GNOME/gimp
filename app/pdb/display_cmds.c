@@ -56,7 +56,7 @@ display_new_invoker (Gimp     *gimp,
   GimpDisplay *gdisp = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -116,7 +116,7 @@ display_delete_invoker (Gimp     *gimp,
   GimpDisplay *gdisp;
 
   gdisp = gimp_display_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gdisp == NULL)
+  if (! GIMP_IS_DISPLAY (gdisp))
     success = FALSE;
 
   if (success)

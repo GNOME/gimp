@@ -88,7 +88,7 @@ channel_new_invoker (Gimp     *gimp,
   GimpChannel *channel = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   width = args[1].value.pdb_int;
@@ -195,7 +195,7 @@ channel_copy_invoker (Gimp     *gimp,
   GimpChannel *copy = NULL;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   if (success)
@@ -251,7 +251,7 @@ channel_delete_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   if (success)
@@ -304,11 +304,11 @@ channel_combine_masks_invoker (Gimp     *gimp,
   gint32 offy;
 
   channel1 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel1 == NULL)
+  if (! GIMP_IS_CHANNEL (channel1))
     success = FALSE;
 
   channel2 = (GimpChannel *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (channel2 == NULL)
+  if (! GIMP_IS_CHANNEL (channel2))
     success = FALSE;
 
   operation = args[2].value.pdb_int;
@@ -381,7 +381,7 @@ channel_get_name_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_name_proc, success);
@@ -435,7 +435,7 @@ channel_set_name_invoker (Gimp     *gimp,
   gchar *name;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   name = (gchar *) args[1].value.pdb_pointer;
@@ -487,7 +487,7 @@ channel_get_visible_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_visible_proc, success);
@@ -541,7 +541,7 @@ channel_set_visible_invoker (Gimp     *gimp,
   gboolean visible;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   visible = args[1].value.pdb_int ? TRUE : FALSE;
@@ -591,7 +591,7 @@ channel_get_show_masked_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_show_masked_proc, success);
@@ -645,7 +645,7 @@ channel_set_show_masked_invoker (Gimp     *gimp,
   gboolean show_masked;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   show_masked = args[1].value.pdb_int ? TRUE : FALSE;
@@ -695,7 +695,7 @@ channel_get_opacity_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_opacity_proc, success);
@@ -749,7 +749,7 @@ channel_set_opacity_invoker (Gimp     *gimp,
   gdouble opacity;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   opacity = args[1].value.pdb_float;
@@ -802,7 +802,7 @@ channel_get_color_invoker (Gimp     *gimp,
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   if (success)
@@ -861,7 +861,7 @@ channel_set_color_invoker (Gimp     *gimp,
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   color = args[1].value.pdb_color;
@@ -916,7 +916,7 @@ channel_get_tattoo_invoker (Gimp     *gimp,
   GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   return_args = procedural_db_return_args (&channel_get_tattoo_proc, success);
@@ -970,7 +970,7 @@ channel_set_tattoo_invoker (Gimp     *gimp,
   gint32 tattoo;
 
   channel = (GimpChannel *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (channel == NULL)
+  if (! GIMP_IS_CHANNEL (channel))
     success = FALSE;
 
   tattoo = args[1].value.pdb_int;

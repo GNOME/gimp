@@ -87,7 +87,7 @@ text_fontname_invoker (Gimp     *gimp,
   gchar *real_fontname;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);

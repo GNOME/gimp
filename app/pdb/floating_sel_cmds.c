@@ -58,7 +58,7 @@ floating_sel_remove_invoker (Gimp     *gimp,
   GimpLayer *floating_sel;
 
   floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (floating_sel == NULL)
+  if (! GIMP_IS_LAYER (floating_sel))
     success = FALSE;
 
   if (success)
@@ -105,7 +105,7 @@ floating_sel_anchor_invoker (Gimp     *gimp,
   GimpLayer *floating_sel;
 
   floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (floating_sel == NULL)
+  if (! GIMP_IS_LAYER (floating_sel))
     success = FALSE;
 
   if (success)
@@ -152,7 +152,7 @@ floating_sel_to_layer_invoker (Gimp     *gimp,
   GimpLayer *floating_sel;
 
   floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (floating_sel == NULL)
+  if (! GIMP_IS_LAYER (floating_sel))
     success = FALSE;
 
   if (success)
@@ -200,11 +200,11 @@ floating_sel_attach_invoker (Gimp     *gimp,
   GimpDrawable *drawable;
 
   layer = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (layer == NULL)
+  if (! GIMP_IS_LAYER (layer))
     success = FALSE;
 
   drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[1].value.pdb_int);
-  if (drawable == NULL)
+  if (! GIMP_IS_DRAWABLE (drawable))
     success = FALSE;
 
   if (success)
@@ -252,7 +252,7 @@ floating_sel_rigor_invoker (Gimp     *gimp,
   gboolean undo;
 
   floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (floating_sel == NULL)
+  if (! GIMP_IS_LAYER (floating_sel))
     success = FALSE;
 
   undo = args[1].value.pdb_int ? TRUE : FALSE;
@@ -307,7 +307,7 @@ floating_sel_relax_invoker (Gimp     *gimp,
   gboolean undo;
 
   floating_sel = (GimpLayer *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
-  if (floating_sel == NULL)
+  if (! GIMP_IS_LAYER (floating_sel))
     success = FALSE;
 
   undo = args[1].value.pdb_int ? TRUE : FALSE;

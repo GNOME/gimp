@@ -63,7 +63,7 @@ image_add_hguide_invoker (Gimp     *gimp,
   GimpGuide *guide;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   offset = args[1].value.pdb_int;
@@ -142,7 +142,7 @@ image_add_vguide_invoker (Gimp     *gimp,
   GimpGuide *guide;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   offset = args[1].value.pdb_int;
@@ -219,7 +219,7 @@ image_delete_guide_invoker (Gimp     *gimp,
   GList *guides;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
@@ -295,7 +295,7 @@ image_find_next_guide_invoker (Gimp     *gimp,
   GList *guides;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
@@ -406,7 +406,7 @@ image_get_guide_orientation_invoker (Gimp     *gimp,
   GList *guides;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   guide = args[1].value.pdb_int;
@@ -490,7 +490,7 @@ image_get_guide_position_invoker (Gimp     *gimp,
   GList *guides;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   guide = args[1].value.pdb_int;

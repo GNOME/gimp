@@ -49,7 +49,7 @@ undo_push_group_start_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -91,7 +91,7 @@ undo_push_group_end_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)

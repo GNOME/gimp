@@ -56,7 +56,7 @@ convert_rgb_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -99,7 +99,7 @@ convert_grayscale_invoker (Gimp     *gimp,
   GimpImage *gimage;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   if (success)
@@ -148,7 +148,7 @@ convert_indexed_invoker (Gimp     *gimp,
   gchar *palette_name;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (gimage == NULL)
+  if (! GIMP_IS_IMAGE (gimage))
     success = FALSE;
 
   dither_type = args[1].value.pdb_int;
