@@ -1,3 +1,15 @@
+2002-08-22  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/gimprc.pdb
+	* app/pdb/gimprc_cmds.c (gimprc_query_invoker): don't leak the
+	result of gimprc_value_to_str().
+
+	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_scale):
+	use g_new0() instead of g_new() followed by memset().
+
+	* plug-ins/script-fu/script-fu-server.c (server_log): free the
+	string after logging it.
+
 2002-08-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/paint.c: unref the paint info objects after adding

@@ -53,7 +53,7 @@ gimprc_query_invoker (Gimp     *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   gchar *token;
-  const gchar *value = NULL;
+  gchar *value = NULL;
 
   token = (gchar *) args[0].value.pdb_pointer;
   if (token == NULL)
@@ -61,7 +61,7 @@ gimprc_query_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = (value = gimprc_find_token (token)) != NULL;
+      success = (value = g_strdup (gimprc_find_token (token))) != NULL;
     
       if (!success) /* custom ones failed, try the standard ones */
 	success = (value = gimprc_value_to_str (token)) != NULL;
@@ -70,7 +70,7 @@ gimprc_query_invoker (Gimp     *gimp,
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (value);
+    return_args[1].value.pdb_pointer = value;
 
   return return_args;
 }

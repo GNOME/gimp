@@ -227,7 +227,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
   y_rat = (gdouble) orig_height / (gdouble) height;
 
   /*  allocate an array to help with the calculations  */
-  row    = g_new (gdouble, width * bytes);
+  row    = g_new0 (gdouble, width * bytes);
   x_frac = g_new (gdouble, width + orig_width);
 
   /*  initialize the pre-calculated pixel fraction array  */
@@ -249,9 +249,6 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	}
       x_last += x_frac[i];
     }
-
-  /*  clear the "row" array  */
-  memset (row, 0, sizeof (gdouble) * width * bytes);
 
   /*  counters...  */
   src_row = 0;

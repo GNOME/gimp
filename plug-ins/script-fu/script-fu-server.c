@@ -541,6 +541,7 @@ server_log (gchar *format, ...)
   va_end (args);
 
   fputs (buf, server_log_file);
+  g_free (buf);
   if (server_log_file != stdout)
     fflush (server_log_file);
 }

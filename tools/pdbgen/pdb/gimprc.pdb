@@ -48,14 +48,14 @@ HELP
     @outargs = (
 	{ name => 'value', type => 'string',
 	  desc => 'The value associated with the queried token',
-	  alias => 'g_strdup (value)', no_declare => 1 }
+	  no_declare => 1 }
     );
 
     %invoke = (
-	vars => [ 'const gchar *value = NULL' ],
+	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
-  success = (value = gimprc_find_token (token)) != NULL;
+  success = (value = g_strdup (gimprc_find_token (token))) != NULL;
 
   if (!success) /* custom ones failed, try the standard ones */
     success = (value = gimprc_value_to_str (token)) != NULL;
