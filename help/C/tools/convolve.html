@@ -4,7 +4,8 @@
 >Convolver</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,25 +71,174 @@ NAME="TOOLS-CONVOLVE"
 >Convolver</A
 ></H1
 ><A
-NAME="AEN2342"
+NAME="AEN2594"
 ></A
-><P
->    Sorry, but the help page for "Convolver" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2345"
->Additional Information</A
+NAME="TOOLS-CONVOLVE-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>convolve</SPAN
+> tool uses the current brush to
+      blur or sharpen your image.
+    </P
+><P
+>      See also:
+      <A
+HREF="../dialogs/brush_selection.html"
+>        Brush Selection
+      </A
+>.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-CONVOLVE-OPTIONS"
+>Convolver Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Convolve Settings</B
+></P
+><DL
+><DT
+>Pressure Sensitivity</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Pressure Sensitivity</SPAN
+> section sets
+            whether <SPAN
+CLASS="GUIBUTTON"
+>hardness</SPAN
+>,
+            <SPAN
+CLASS="GUIBUTTON"
+>rate</SPAN
+> or <SPAN
+CLASS="GUIBUTTON"
+>size</SPAN
+>
+            will be effected by pressure for input devices that support
+            this option.
+          </P
+></DD
+><DT
+>Rate</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>rate</SPAN
+> slider sets the strength of
+            the convolve effect.
+          </P
+></DD
+><DT
+>Convolve Type</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Blur</SPAN
+> mode blurs the image colours
+                into each other. The result will be a smooth transition
+                between colours, but will always be darker than the
+                original colours.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Sharpen</SPAN
+> mode causes neighbouring
+                pixels with similar colours to converge. Used
+                judiciously, blurry edges can be sharpened somewhat, but
+                if applied repeatedly it can produce unusual results.
+              </P
+><P
+>                See also:
+                <A
+HREF="../filters/sharpen.html"
+>                  Sharpen Filter
+                </A
+> 
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >V</B
 >
     </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key modifier:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>
+          places the convolve tool into straight line mode. Holding
+          <B
+CLASS="KEYCAP"
+>Shift</B
+> while clicking
+          <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> will convolve in a straight
+          line. Consecutive clicks will continue convolving in straight
+          lines that originate from the end of the last line.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          will switch between blur and sharpen modes. The mode will
+          change back when
+          <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> is released.
+        </P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV

@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Blinds Filter</TITLE
+>Blinds</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,10 +13,10 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The Apply Canvas Filter"
+TITLE="Apply Canvas"
 HREF="../filters/applycanvas.html"><LINK
 REL="NEXT"
-TITLE="The Blur Filter"
+TITLE="Blur"
 HREF="../filters/blur.html"></HEAD
 ><BODY
 CLASS="SECT1"
@@ -67,44 +68,119 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-BLINDS"
->The <SPAN
-CLASS="QUOTE"
->"Blinds"</SPAN
-> Filter</A
+>Blinds</A
 ></H1
 ><A
-NAME="AEN3929"
+NAME="AEN5413"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BLINDS-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    The Blinds filter allows you to remove bands of your image at
-    regular intervals, giving the blinds-like efect.
-  </P
+>      The Blinds filter allows you to remove bands of your image at
+      regular intervals, giving a blinds-like effect.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BLINDS-OPTIONS"
+>Blinds Options</A
+></H2
 ><P
->    The color of the <SPAN
-CLASS="QUOTE"
->"slats"</SPAN
-> of the blind is defined by
-    the background color in the toolbox. If you'd prefer the slats to
-    be transparent you first need to add an Alpha channel (from the
-    layers dialog menu), and then click the
-    <SPAN
-CLASS="GUIBUTTON"
->Transparent</SPAN
-> check box.
-  </P
+></P
+><DIV
+CLASS="VARIABLELIST"
 ><P
->    Altering the displacement changes the height (or width depending
-    on the option selected in <SPAN
+><B
+>Blinds Settings</B
+></P
+><DL
+><DT
+>Orientation</DT
+><DD
+><P
+>            The two available options for
+            <SPAN
 CLASS="GUILABEL"
 >Orientation</SPAN
->) of
-    each slat. The <SPAN
+> are
+            <SPAN
 CLASS="GUIBUTTON"
->Num Segments slider</SPAN
-> defines how many
-    slats are in the blind. These slats are distributed evenly over
-    the selection.
-  </P
+>Horizontal</SPAN
+> and
+            <SPAN
+CLASS="GUIBUTTON"
+>Vertical</SPAN
+>. They align the blinds
+            accordingly.
+          </P
+></DD
+><DT
+>Background</DT
+><DD
+><P
+>            The color of the of the blinds is defined by the background
+            color in the
+            <A
+HREF="../toolbox/toolbox.html"
+>              Toolbox
+            </A
+>
+              . If transparent blinds are required, an
+            <A
+HREF="../glossary.html#GLOSSARY-ALPHA"
+>              Alpha
+            </A
+>
+              channel must first be added using the 
+            <A
+HREF="../layers/add_alpha_channel.html"
+>              Add Alpha Channel
+            </A
+>
+            function. Clicking the <SPAN
+CLASS="GUIBUTTON"
+>Transparent</SPAN
+>
+            check box will accomplish this once the alpha layer has been
+            added.
+          </P
+></DD
+><DT
+>Displacement</DT
+><DD
+><P
+>            Altering the displacement changes the height or width of the
+            blinds depending on which <SPAN
+CLASS="GUILABEL"
+>Orientation</SPAN
+>
+            has been selected
+          </P
+></DD
+><DT
+>Num Segments</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Num Segments</SPAN
+> slider defines how
+            many slats are in the blind. These slats are distributed
+            evenly over the selection.
+          </P
+></DD
+></DL
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -146,10 +222,7 @@ HREF="../filters/blur.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Apply Canvas"</SPAN
-> Filter</TD
+>Apply Canvas</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -162,10 +235,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Blur"</SPAN
-> Filter</TD
+>Blur</TD
 ></TR
 ></TABLE
 ></DIV

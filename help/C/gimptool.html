@@ -4,7 +4,8 @@
 >GIMP Tool</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="contents.html"><LINK
@@ -66,11 +67,11 @@ CLASS="SECT1"
 ><H1
 CLASS="SECT1"
 ><A
-NAME="AEN5408"
+NAME="AEN8534"
 >GIMP Tool</A
 ></H1
 ><A
-NAME="AEN5410"
+NAME="AEN8536"
 ></A
 ><P
 >      gimptool is a support script for <SPAN
@@ -83,15 +84,20 @@ CLASS="APPLICATION"
 CLASS="APPLICATION"
 >GIMP</SPAN
 > was compiled with. The
-      format is: <B
-CLASS="COMMAND"
->gimptool [options ... ]</B
+      format is: <P
+>[gimptool <TT
+CLASS="REPLACEABLE"
+><I
+>options ...</I
+></TT
+>]</P
 >
     </P
 ><P
 >      <P
 ></P
-><DL
+><DIV
+CLASS="VARIABLELIST"
 ><P
 ><B
 ><SPAN
@@ -99,10 +105,10 @@ CLASS="APPLICATION"
 >GIMP</SPAN
 > Tool Options</B
 ></P
+><DL
 ><DT
-><B
-CLASS="COMMAND"
->--help</B
+><P
+>[--help]</P
 ></DT
 ><DD
 ><P
@@ -111,9 +117,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--version</B
+><P
+>[--version]</P
 ></DT
 ><DD
 ><P
@@ -125,9 +130,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--quiet</B
+><P
+>[--quiet]</P
 ></DT
 ><DD
 ><P
@@ -135,9 +139,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-n, --dry-run</B
+><P
+>[-n] [--dry-run]</P
 ></DT
 ><DD
 ><P
@@ -146,9 +149,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--bindir</B
+><P
+>[--bindir]</P
 ></DT
 ><DD
 ><P
@@ -160,9 +162,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--sbindir</B
+><P
+>[--sbindir]</P
 ></DT
 ><DD
 ><P
@@ -174,9 +175,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--libexecdir</B
+><P
+>[--libexecdir]</P
 ></DT
 ><DD
 ><P
@@ -188,9 +188,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--datadir</B
+><P
+>[--datadir]</P
 ></DT
 ><DD
 ><P
@@ -202,9 +201,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--sysconfdir</B
+><P
+>[--sysconfdir]</P
 ></DT
 ><DD
 ><P
@@ -216,9 +214,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--sharedstatedir</B
+><P
+>[--sharedstatedir]</P
 ></DT
 ><DD
 ><P
@@ -230,9 +227,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--localstatedir</B
+><P
+>[--localstatedir]</P
 ></DT
 ><DD
 ><P
@@ -244,9 +240,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--libdir</B
+><P
+>[--libdir]</P
 ></DT
 ><DD
 ><P
@@ -258,9 +253,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--infodir</B
+><P
+>[--infodir]</P
 ></DT
 ><DD
 ><P
@@ -272,9 +266,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--mandir</B
+><P
+>[--mandir]</P
 ></DT
 ><DD
 ><P
@@ -286,9 +279,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--includedir</B
+><P
+>[--includedir]</P
 ></DT
 ><DD
 ><P
@@ -300,9 +292,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--gimpdatadir</B
+><P
+>[--gimpdatadir]</P
 ></DT
 ><DD
 ><P
@@ -315,9 +306,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--plugindir</B
+><P
+>[--plugindir]</P
 ></DT
 ><DD
 ><P
@@ -329,9 +319,11 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--build &lt;plug-in.c&gt;</B
+><P
+>[--build <TT
+CLASS="OPTION"
+>plug-in.c</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -343,9 +335,11 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--build-strip &lt;plug-in.c&gt;</B
+><P
+>[--build-strip <TT
+CLASS="OPTION"
+>plug-in.c</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -357,9 +351,11 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install &lt;plug-in.c&gt;</B
+><P
+>[--install <TT
+CLASS="OPTION"
+>plug-in.c</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -371,13 +367,16 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-strip &lt;plug-in.c&gt;</B
+><P
+>[--install-strip <TT
+CLASS="OPTION"
+>plug-in.c</TT
+>]</P
 ></DT
 ><DD
 ><P
->	      Compile, link, strip and install plug-in.c into the users personal
+>	      Compile, link, strip and install plug-in.c into the
+	      users personal
 	      plug-in directory - <TT
 CLASS="FILENAME"
 >~/.gimp-1.2/plug-ins</TT
@@ -385,9 +384,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-admin &lt;plug-in.c&gt;</B
+><P
+>[--install-admin <TT
+CLASS="OPTION"
+>plug-in.c</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -400,9 +401,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-bin &lt;plug-in&gt;</B
+><P
+>[--install-bin <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -415,9 +418,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-admin-bin &lt;plug-in&gt;</B
+><P
+>[--install-admin-bin <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -430,13 +435,15 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-bin-strip &lt;plug-in&gt;</B
+><P
+>[--install-bin-strip <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
->	      Install a striped plug-in, which has already been compiled
+>	      Install a stripped plug-in, which has already been compiled
 	      and linked, into the users personal plug-in directory - 
 	      <TT
 CLASS="FILENAME"
@@ -445,13 +452,15 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-admin-bin-strip &lt;plug-in&gt;</B
+><P
+>[--install-admin-bin-strip <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
->	      Install a striped plug-in, which has already been compiled
+>	      Install a stripped plug-in, which has already been compiled
 	      and linked, into the system-wide plug-in directory - 
 	      <TT
 CLASS="FILENAME"
@@ -460,9 +469,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-script &lt;script.scm&gt;</B
+><P
+>[--install-script <TT
+CLASS="OPTION"
+>script.scm</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -474,9 +485,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--install-admin-script &lt;script.scm&gt;</B
+><P
+>[--install-admin-script <TT
+CLASS="OPTION"
+>script.scm</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -488,9 +501,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--uninstall-bin &lt;plug-in&gt;</B
+><P
+>[--uninstall-bin <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -502,9 +517,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--uninstall-admin-bin &lt;plug-in&gt;</B
+><P
+>[--uninstall-admin-bin <TT
+CLASS="OPTION"
+>plug-in</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -516,9 +533,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--uninstall-script &lt;script.scm&gt;</B
+><P
+>[--uninstall-script <TT
+CLASS="OPTION"
+>script.scm</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -530,9 +549,11 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--uninstall-admin-script &lt;script.scm&gt;</B
+><P
+>[--uninstall-admin-script <TT
+CLASS="OPTION"
+>script.scm</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -544,13 +565,12 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--libs</B
+><P
+>[--libs]</P
 ></DT
 ><DD
 ><P
->	      Print the linker flags that are nessecery to link a
+>	      Print the linker flags that are necessary to link a
 	      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -558,13 +578,12 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--libs-noui</B
+><P
+>[--libs-noui]</P
 ></DT
 ><DD
 ><P
->	      Print the linker flags that are nessecery to link a
+>	      Print the linker flags that are necessary to link a
 	      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -573,13 +592,12 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--cflags</B
+><P
+>[--cflags]</P
 ></DT
 ><DD
 ><P
->	      Print the compiler flags that are nessecery to link a
+>	      Print the compiler flags that are necessary to link a
 	      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -587,13 +605,12 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--cflags-noui</B
+><P
+>[--cflags-noui]</P
 ></DT
 ><DD
 ><P
->	      Print the compiler flags that are nessecery to link a
+>	      Print the compiler flags that are necessary to link a
 	      <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -602,9 +619,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--prefix=PREFIX</B
+><P
+>[--prefix=PREFIX]</P
 ></DT
 ><DD
 ><P
@@ -617,9 +633,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--exec-prefix=PREFIX</B
+><P
+>[--exec-prefix=PREFIX]</P
 ></DT
 ><DD
 ><P
@@ -630,6 +645,7 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ></DL
+></DIV
 >
     </P
 ></DIV

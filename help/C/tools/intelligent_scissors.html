@@ -4,7 +4,8 @@
 >Intelligent Scissors</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,28 +71,153 @@ NAME="TOOLS-INTELLIGENT-SCISSORS"
 >Intelligent Scissors</A
 ></H1
 ><A
-NAME="AEN2475"
+NAME="AEN3277"
 ></A
 ><A
-NAME="AEN2477"
+NAME="AEN3279"
 ></A
-><P
->    Sorry, but the help page for "Intelligent Scissors" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2480"
->Additional Information</A
+NAME="TOOLS-INTELLIGENT-SCISSORS-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Intelligent Scissors</SPAN
+> can be used to
+      select contiguous areas of similar color weight in a fashion
+      similar to the <A
+HREF="../tools/fuzzy_select.html"
+>Fuzzy Selection
+      Tool</A
+>. The primary difference is that the scissor tool
+      creates the selection area one line at a time. Clicking with
+      <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> will create nodes that are
+      intelligently joined using lines that attempt to follow color
+      weights. Once the area is closed, clicking inside the new area
+      will render the selection area. It is at this time that the key
+      modifications can be used to change the selection method.
+    </P
+><P
+>      See Also: <A
+HREF="../dialogs/paths/paths.html"
+>Paths Dialog
+      Help</A
+> for additional help with path style area creation.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-INTELLIGENT-SCISSORS-OPTIONS"
+>Intelligent Scissors Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Intelligent Scissor Settings</B
+></P
+><DL
+><DT
+>Feather</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> slider sets the amount of
+            feathering to create around the rendered selection area.
+            Feathering softens the edge of the selection by the
+            specified number of pixels. See also: <A
+HREF="../dialogs/feather_selection.html"
+>Feather
+            Selection</A
+>.
+          </P
+></DD
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+> button toggles the
+            rendering of aliased edges on the selection boundary.
+            Aliasing produces smoother curves and angles and is
+            recommended for most uses.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >I</B
 >
     </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to add to existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to subtract from existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to produce selection intersections. This is also known
+          as union selections.
+        </P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV

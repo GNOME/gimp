@@ -4,7 +4,8 @@
 >Blend</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,25 +71,323 @@ NAME="TOOLS-BLEND"
 >Blend</A
 ></H1
 ><A
-NAME="AEN2274"
+NAME="AEN2230"
 ></A
 ><A
-NAME="AEN2276"
+NAME="AEN2232"
 ></A
 ><A
-NAME="AEN2278"
+NAME="AEN2234"
 ></A
-><P
->    Sorry, but the help page for "Blend" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2281"
->Additional Information</A
+NAME="TOOLS-BLEND-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>blend</SPAN
+> tool renders a gradient based on
+      the current foreground and background colors. The start and end
+      points are set using the mouse. Simply drag and drop a line, and
+      the gradient will be rendered using the foreground color as the
+      start and the background color as the end. The quality of the
+      resulting gradient will depend on the maximum number of colors
+      available to the <SPAN
+CLASS="GUIBUTTON"
+>blend</SPAN
+> tool.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-BLEND-OPTIONS"
+>Blend Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Blend Settings</B
+></P
+><DL
+><DT
+>Offset</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Offset</SPAN
+> slider changes the
+            distance from the start point that the gradient is rendered.
+            A setting of zero will render the gradient across the entire
+            gradient area. Higher settings will force the gradient to
+            start rendering at a later point.
+          </P
+></DD
+><DT
+>Blend</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>FG to BG (RGB)</SPAN
+>: Renders the
+                gradient in <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> color space.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>FG to BG (HSV)</SPAN
+>: Renders the
+                gradient in <SPAN
+CLASS="ACRONYM"
+>HSV</SPAN
+> color space.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>FG to Transparent</SPAN
+>: Renders the
+                gradient using the foreground color and fades that color
+                into transparent over the length of the gradient.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Custom Gradient</SPAN
+>: Renders the
+                gradient using the currently selected gradient.
+              </P
+><P
+>                See <A
+HREF="../dialogs/gradient_selection.html"
+>Gradient
+                Selection</A
+> for further information.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Gradient</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Linear</SPAN
+>: Maps the rendered gradient
+                along a linear path directly from start to end. This is
+                the default behaviour.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Bi-Linear</SPAN
+>: Maps the complete
+                gradient along half of the total distance, then reverses
+                the gradient for the remainder.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Radial</SPAN
+>: Maps the gradient in a
+                circle. The start point for the gradient represents the
+                center of the circle and the end point marks the radius.
+                The colors are rendered such that the gradient fades
+                from the center of the circle to the outer edge, from
+                foreground to background.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Square</SPAN
+>: Maps the gradient as a
+                square. The gradient will always be rendered as a perfect
+                square with the sides facing left, up, right, and down.
+                The start point sets the center of the square and the end
+                point sets the outer edge of the square.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Conical (symmetric)</SPAN
+>: Creates a
+                gradient that is mapped to a circle. The gradient is
+                rendered around the start point which represents the
+                anchor around which the render takes place. The unseen
+                line between the start and end points sets the start of
+                the gradient. Directly opposite this is where the
+                gradient is completed and reversed creating a conical
+                effect.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Conical (asymmetric)</SPAN
+>: Creates a
+                gradient similar in detail to the <SPAN
+CLASS="GUIBUTTON"
+>Conical
+                (symmetric)</SPAN
+> one, but the gradient is not
+                reversed at the half-way point.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Shapeburst (angular)</SPAN
+>: Maps the
+                layer or selection shape prior to rendering the
+                gradient. The resulting blend effect is based on that
+                shape. The start and end points do not matter.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Shapeburst (spherical)</SPAN
+>: This
+                method is similar to the <SPAN
+CLASS="GUIBUTTON"
+>Shapeburst
+                (angular)</SPAN
+> method except that the shape of
+                the final render is less angular. Start and end points
+                are inconsequential.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Shapeburst (dimpled)</SPAN
+>: Again
+                similar to the <SPAN
+CLASS="GUIBUTTON"
+>Shapeburst
+                (angular)</SPAN
+> method, but is rendered in a
+                collapsed way. The start and end points do not affect
+                this technique.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Spiral (clockwise)</SPAN
+>: This renders a
+                spiral shape in a clockwise direction.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Spiral (anticlockwise)</SPAN
+>: This
+                renders a spiral shape in an anti-clockwise direction.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Repeat</DT
+><DD
+><P
+>            This option is not available for all
+            <SPAN
+CLASS="GUIBUTTON"
+>Gradient</SPAN
+> settings. It provides three
+            options.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>None</SPAN
+>: This option renders the
+                gradient normally.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Sawtooth Wave</SPAN
+>: This renders the
+                gradient normally, but repeats the gradient from the start
+                and end points.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Triangular Wave</SPAN
+>: This option
+                renders the gradient normally and repeats the gradient
+                in the same fashion as <SPAN
+CLASS="GUIBUTTON"
+>Sawtooth
+                Wave</SPAN
+>, but reverses the gradient for every
+                second iteration.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"

@@ -1,12 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->    The GIMP Table Magic
-    Plug-In
-  </TITLE
+>GIMP Table Magic</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -14,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The GIH File Plug-In"
-HREF="../filters/gih.html"><LINK
+TITLE="Grid"
+HREF="../filters/grid.html"><LINK
 REL="NEXT"
-TITLE="The IIR Gaussian Blur Filter"
-HREF="../filters/gauss_iir.html"></HEAD
+TITLE="Remove Guides"
+HREF="../filters/guide_remove.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -42,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/gih.html"
+HREF="../filters/grid.html"
 >Prev</A
 ></TD
 ><TD
@@ -55,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/gauss_iir.html"
+HREF="../filters/guide_remove.html"
 >Next</A
 ></TD
 ></TR
@@ -69,103 +68,122 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-GTM"
->The <SPAN
-CLASS="QUOTE"
->"<SPAN
+><SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> Table Magic"</SPAN
->
-    Plug-In</A
+> Table Magic</A
 ></H1
 ><A
-NAME="AEN4027"
+NAME="AEN6538"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GTM-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    Allows you to configure settings for saving an image as a 
-    formatted <SPAN
+>      Allows you to configure settings for saving an image as a 
+      formatted <SPAN
 CLASS="ACRONYM"
 >HTML</SPAN
 > table.
-  </P
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GTM-OPTIONS"
+>GIMP Table Magic Options</A
+></H2
 ><P
->    If <SPAN
+>      If <SPAN
 CLASS="GUIBUTTON"
 >Generate Full HTML Document</SPAN
 > is
-    selected, Gimp will create a full document with
-    &lt;<TT
+      selected, The GIMP will create a full document with
+      &lt;<TT
 CLASS="SGMLTAG"
 >HTML</TT
 >&gt;,
-    &lt;<TT
+      &lt;<TT
 CLASS="SGMLTAG"
 >BODY</TT
 >&gt;, etc. instead of just producing
-    the code for the table.
-  </P
+      the code for the table.
+    </P
 ><P
->    The <SPAN
+>      The <SPAN
 CLASS="GUIBUTTON"
 >Use Cellspan</SPAN
 > option makes the
-    resulting HTML table use the &lt;<TT
+      resulting HTML table use the &lt;<TT
 CLASS="SGMLTAG"
 >ROWSPAN</TT
 >&gt;
-    and &lt;<TT
+      and &lt;<TT
 CLASS="SGMLTAG"
 >COLSPAN</TT
 >&gt; tags to merge contiguous
-    cells of the same color into one large cell. This will make the
-    resulting document smaller but may not show correctly in older
-    browsers.
-  </P
+      cells of the same color into one large cell. This will make the
+      resulting document smaller but may not show correctly in older
+      browsers.
+    </P
 ><P
->    The <SPAN
+>      The <SPAN
 CLASS="GUIBUTTON"
 >Compress TD Tags</SPAN
 > option makes Table
-    Magic leave no space between the &lt;<TT
+      Magic leave no space between the &lt;<TT
 CLASS="SGMLTAG"
 >TD</TT
 >&gt;
-    tag and the cell contents.  This improves the layout quality of
-    the result.
-  </P
+      tag and the cell contents.  This improves the layout quality of
+      the result.
+    </P
 ><P
->    A caption can be added to the table by using the
-    <SPAN
+>      A caption can be added to the table by using the
+      <SPAN
 CLASS="GUIBUTTON"
 >Caption</SPAN
 > option.
-  </P
+    </P
 ><P
->    Each cell will usually need some content to allow the cell to be
-    visible. You can use any character her, including
-    <SPAN
+>      Each cell will usually need some content to allow the cell to be
+      visible. You can use any character her, including
+      <SPAN
 CLASS="ACRONYM"
 >HTML</SPAN
 > escape codes.  The default is
-    <SPAN
+      <SPAN
 CLASS="QUOTE"
 >"&amp;nbsp;"</SPAN
 > which enters a non-breaking space
-    which appears like a normal space but allow the cell to be
-    visible.  A normal space character is not sufficient to force
-    the cell to be visible.
-  </P
+      which appears like a normal space but allows the cell to be
+      visible.  A normal space character is not sufficient to force
+      the cell to be visible.
+    </P
 ><P
->    <SPAN
+>      <SPAN
 CLASS="GUILABEL"
 >Table options</SPAN
 > defines the standard
-    <SPAN
+      <SPAN
 CLASS="ACRONYM"
 >HTML</SPAN
 > options for the table:
-
-    <P
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>GTM Settings</B
 ></P
 ><DL
 ><DT
@@ -175,8 +193,8 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    The number of pixels in the table border.
-	  </P
+>        	    The number of pixels in the table border.
+        	  </P
 ></DD
 ><DT
 ><SPAN
@@ -185,9 +203,9 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    The width for each table cell, either in pixels or
-	    percent.
-	  </P
+>        	    The width for each table cell, either in pixels or
+        	    percent.
+        	  </P
 ></DD
 ><DT
 ><SPAN
@@ -196,9 +214,9 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    The height for each table cell, either in pixels or
-	    percent.
-	  </P
+>      	    The height for each table cell, either in pixels or
+      	    percent.
+      	  </P
 ></DD
 ><DT
 ><SPAN
@@ -207,9 +225,9 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    The distance between a cell edge and its contents in
-	    pixels.
-	  </P
+>      	    The distance between a cell edge and its contents in
+      	    pixels.
+      	  </P
 ></DD
 ><DT
 ><SPAN
@@ -218,12 +236,12 @@ CLASS="GUILABEL"
 ></DT
 ><DD
 ><P
->	    The distance between cells in pixels.
-	  </P
+>      	    The distance between cells in pixels.
+      	  </P
 ></DD
 ></DL
->
-  </P
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -240,7 +258,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/gih.html"
+HREF="../filters/grid.html"
 >Prev</A
 ></TD
 ><TD
@@ -256,7 +274,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/gauss_iir.html"
+HREF="../filters/guide_remove.html"
 >Next</A
 ></TD
 ></TR
@@ -265,10 +283,7 @@ HREF="../filters/gauss_iir.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->GIH</SPAN
-> File Plug-In</TD
+>Grid</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -281,13 +296,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"<SPAN
-CLASS="ACRONYM"
->IIR</SPAN
-> Gaussian Blur"</SPAN
-> Filter</TD
+>Remove Guides</TD
 ></TR
 ></TABLE
 ></DIV

@@ -4,7 +4,8 @@
 >Elliptical Selection</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,28 +71,217 @@ NAME="TOOLS-ELLIPSE-SELECT"
 >Elliptical Selection</A
 ></H1
 ><A
-NAME="AEN2387"
+NAME="AEN2839"
 ></A
 ><A
-NAME="AEN2389"
+NAME="AEN2841"
 ></A
-><P
->    Sorry, but the help page for "Elliptical Selection" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2392"
->Additional Information</A
+NAME="TOOLS-ELLIPSE-SELECT-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      <SPAN
+CLASS="GUIBUTTON"
+>Elliptical Selection</SPAN
+> creates circular
+      selection areas. The Selection is constructed by clicking and
+      dragging over the area that is to be selected.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-ELLIPSE-SELECT-OPTIONS"
+>Elliptical Selection Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Elliptical Selection Settings</B
+></P
+><DL
+><DT
+>Feather</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> slider sets the amount of
+            feathering to create around the rendered selection area.
+            Feathering softens the edge of the selection by the
+            specified number of pixels. See also: <A
+HREF="../dialogs/feather_selection.html"
+>Feather
+            Selection</A
+>.
+          </P
+></DD
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+> button toggles the
+            rendering of aliased edges on the selection boundary.
+            Aliasing produces smoother curves and angles and is
+            recommended for most uses.
+          </P
+></DD
+><DT
+>Fixed Size / Aspect Ratio</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Fixed Size / Aspect Ratio</SPAN
+> option
+            allows more controlled creation of the selection region. By
+            setting the size to the desired amount, predetermined areas
+            can be selected with ease. The area can also be specified as
+            a percentage of the total layer.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >E</B
 >
     </P
+><P
+>      Certain key commands can affect the way that the selection area is
+      rendered. These are described below.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to add to existing selections or to constrain the
+          selection shape such that the height and width remain equal.
+          If needs require addition without constraint, simply release
+          <B
+CLASS="KEYCAP"
+>Shift</B
+> prior to releasing
+          <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to subtract from existing selections and constrain the
+          origin of the selection such that the initial click determines
+          the center of the selection. Simply release
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+> prior to releasing
+          <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> if non constrained
+          selection subtraction is required.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Alt</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to move an existing selection.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          can be used to constrain the selection generation to equal
+          height and width, as well as forcing the selection to generate
+          from the point first clicked. It also serves the purpose of
+          intersection selections.
+        </P
+></LI
+></UL
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/warning.png"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        When moving selections beyond the boundaries of the image, the
+        selection area will be cropped to the image area. Selections
+        cannot exist outside image areas. Selection movements and
+        changes are kept in the undo history just in case.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV

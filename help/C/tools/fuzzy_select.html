@@ -4,7 +4,8 @@
 >Fuzzy Selection</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,28 +71,226 @@ NAME="TOOLS-FUZZY-SELECT"
 >Fuzzy Selection</A
 ></H1
 ><A
-NAME="AEN2437"
+NAME="AEN3042"
 ></A
 ><A
-NAME="AEN2439"
+NAME="AEN3044"
 ></A
-><P
->    Sorry, but the help page for "Fuzzy Selection" is not written yet.
-  </P
+><A
+NAME="AEN3046"
+></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2442"
->Additional Information</A
+NAME="TOOLS-FUZZY-SELECT-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Fuzzy Selection</SPAN
+> tool is used to select
+      contiguous regions of similar color weight.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-FUZZY-SELECT-OPTIONS"
+>Fuzzy Selection Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Fuzzy Selection Settings</B
+></P
+><DL
+><DT
+>Feather</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> slider sets the amount of
+            feathering to create around the rendered selection area.
+            Feathering softens the edge of the selection by the
+            specified number of pixels. See also: <A
+HREF="../dialogs/feather_selection.html"
+>Feather
+            Selection</A
+>.
+          </P
+></DD
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+> button toggles the
+            rendering of aliased edges on the selection boundary.
+            Aliasing produces smoother curves and angles and is
+            recommended for most uses.
+          </P
+><P
+>            See:
+            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              Anti-aliasing glossary entry
+            </A
+>
+          </P
+></DD
+><DT
+>Sample Merged</DT
+><DD
+><P
+>            Sample merging takes the information needed for the
+            operation from the sub-pixel layer of the image.
+          </P
+><P
+>            See:
+            <A
+HREF="../glossary.html#GLOSSARY-SAMPLE-MERGE"
+>              Sample merge glossary entry
+            </A
+>
+          </P
+></DD
+><DT
+>Threshold</DT
+><DD
+><P
+>            This slider changes the threshold of the selection area. A
+            higher setting will cause more areas to selected. A lower
+            one will decrease the final selection area. This setting can
+            be adjusted dynamically by holding
+            <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> while making the
+            selection. Moving the pointer up will dynamically decrease
+            the <SPAN
+CLASS="GUIBUTTON"
+>Threshold</SPAN
+> slider and moving the
+            pointer down will increase the
+            <SPAN
+CLASS="GUIBUTTON"
+>Threshold</SPAN
+> slider.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >B</B
 >
     </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to add to existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to subtract from existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Alt</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to move an existing selection.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to produce selection intersections. This is also known
+          as a union selection.
+        </P
+></LI
+></UL
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/warning.png"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        When moving selections beyond the boundaries of the image, the
+        selection area will be cropped to the image area. Selections
+        cannot exist outside image areas. Selection movements and
+        changes are kept in the undo history just in case.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV

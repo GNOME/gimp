@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Blur Filter</TITLE
+>Blur</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The Blinds Filter"
+TITLE="Blinds"
 HREF="../filters/blinds.html"><LINK
 REL="NEXT"
-TITLE="The BZ2 File Plug-In"
-HREF="../filters/bz2.html"></HEAD
+TITLE="Burst"
+HREF="../filters/burst.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/bz2.html"
+HREF="../filters/burst.html"
 >Next</A
 ></TD
 ></TR
@@ -67,37 +68,135 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-BLUR"
->The <SPAN
-CLASS="QUOTE"
->"Blur"</SPAN
-> Filter</A
+>Blur</A
 ></H1
 ><A
-NAME="AEN3941"
+NAME="AEN5449"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BLUR-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    The Blur filter makes your image look out of focus by randomly
-    displacing pixels. You can alter the amount by which the image is
-    blurred (the distance that pixels are displaced) by adjusting
-    <SPAN
+>      The Blur filter makes your image look out of focus by randomly
+      displacing pixels. You can alter the amount by which the image is
+      blurred (the distance that pixels are displaced) by adjusting the
+      <SPAN
 CLASS="GUILABEL"
 >repeat value</SPAN
 > (between 1 and 100).
-  </P
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BLUR-OPTIONS"
+>Blur Options</A
+></H2
 ><P
->    The <SPAN
-CLASS="GUILABEL"
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Blur Settings</B
+></P
+><DL
+><DT
+>Random Seed</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
 >Random Seed</SPAN
-> is how
-    <SPAN
-CLASS="APPLICATION"
->GIMP</SPAN
-> calculates which pixels to
-    displace &mdash; you can either set a numeric value which will
-    cause all repeats (if a repeat value is set) to use the same seed,
-    or you can use the current time, which will mean that each repeat
-    will use a different seed.
-  </P
+> setting controls the
+            randomization element of the blur. Selecting a numeric value
+            here will allow you to haphazardly control the randomization
+            element of the blur.
+          </P
+></DD
+><DT
+>Time</DT
+><DD
+><P
+>            A subset of the <SPAN
+CLASS="GUIBUTTON"
+>Random Seed</SPAN
+>,
+            <SPAN
+CLASS="GUIBUTTON"
+>Time</SPAN
+> will initialize every blurring
+            using the clock of the hardware platform. This ensures
+            better randomization results than using numeric seeds.
+          </P
+></DD
+><DT
+>Randomization %</DT
+><DD
+><P
+>            This slider represents how much randomization will take
+            place during the blur. Higher values will lead to more
+            blurring.
+          </P
+></DD
+><DT
+>Repeat</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Repeat</SPAN
+> slider determines how many
+            times the filter will be run over the active layer or
+            selection. A high <SPAN
+CLASS="GUIBUTTON"
+>Repeat</SPAN
+> value will
+            lead to more blurring.
+          </P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="90%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.png"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>              Be aware that <SPAN
+CLASS="GUIBUTTON"
+>Repeat</SPAN
+> sets the
+              number of times the filter runs, so selecting very high
+              values may take a considerable amount of time to render.
+            </P
+></TD
+></TR
+></TABLE
+></DIV
+></DD
+></DL
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -130,7 +229,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/bz2.html"
+HREF="../filters/burst.html"
 >Next</A
 ></TD
 ></TR
@@ -139,10 +238,7 @@ HREF="../filters/bz2.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Blinds"</SPAN
-> Filter</TD
+>Blinds</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -155,10 +251,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->BZ2</SPAN
-> File Plug-In</TD
+>Burst</TD
 ></TR
 ></TABLE
 ></DIV

@@ -4,7 +4,8 @@
 >Free-Hand Selection</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,28 +71,184 @@ NAME="TOOLS-FREE-SELECT"
 >Free-Hand Selection</A
 ></H1
 ><A
-NAME="AEN2425"
+NAME="AEN2987"
 ></A
 ><A
-NAME="AEN2427"
+NAME="AEN2989"
 ></A
-><P
->    Sorry, but the help page for "Free-Hand Selection" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2430"
->Additional Information</A
+NAME="TOOLS-FREE-SELECT-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      <SPAN
+CLASS="GUIBUTTON"
+>Free-Hand Selection</SPAN
+> allows hand drawn
+      selection areas. Simply click and drag with
+      <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> to create a free-hand selection
+      area.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-FREE-SELECT-OPTIONS"
+>Free-Hand Selection Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Free-Hand Selection Settings</B
+></P
+><DL
+><DT
+>Feather</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> slider sets the amount of
+            feathering to create around the rendered selection area.
+            Feathering softens the edge of the selection by the
+            specified number of pixels. See also: <A
+HREF="../dialogs/feather_selection.html"
+>Feather
+            Selection</A
+>.
+          </P
+></DD
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Antialiasing</SPAN
+> button toggles the
+            rendering of aliased edges on the selection boundary.
+            Aliasing produces smoother curves and angles and is
+            recommended for most uses.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >F</B
 >
     </P
+><P
+>      Certain key commands can affect the way that the selection area is
+      rendered. These are described below.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to add to existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to subtract from existing selections.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Alt</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to move an existing selection.
+        </P
+></LI
+><LI
+><P
+>          The key combination:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>-<B
+CLASS="KEYCAP"
+>Ctrl</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>
+          is used to produce selection intersections. This is also known
+          as union selections.
+        </P
+></LI
+></UL
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/warning.png"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        When moving selections beyond the boundaries of the image, the
+        selection area will be cropped to the image area. Selections
+        cannot exist outside image areas. Selection movements and
+        changes are kept in the undo history just in case.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
 ></DIV
 ></DIV
 ><DIV

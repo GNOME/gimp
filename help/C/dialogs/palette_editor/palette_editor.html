@@ -4,7 +4,8 @@
 >The Palette Editor</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../../contents.html"><LINK
@@ -70,24 +71,29 @@ NAME="DIALOGS-PALETTE-EDITOR-PALETTE-EDITOR"
 >The Palette Editor</A
 ></H1
 ><A
-NAME="AEN3624"
+NAME="AEN4975"
 ></A
 ><A
-NAME="AEN3626"
+NAME="AEN4977"
 ></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN3628"
+NAME="AEN4979"
 >General</A
 ></H2
 ><P
->      In the Palette Pditor you can edit palettes, create new
-      palettes, import palettes, merge and delete palettes. You also
-      have a option to refresh palettes.  You have to use this option
-      to make palettes installed after you started Gimp available and
+>      In the Palette Editor, you can edit
+      palettes, create new
+      palettes, import palettes, merge palettes, and delete palettes. You also
+      have an option to refresh palettes.  You have to use this option
+      to make palettes installed after you started
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> available and
       ready for use.
     </P
 ><DIV
@@ -95,34 +101,56 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3631"
+NAME="AEN4983"
 >Edit Palette</A
 ></H3
 ><P
 >	Either you can choose the palette to edit in the palette
-	select dialog or you activate it in the palette editor with a
-	single left clicking on it.  The palette that you are about to
+	select dialog or you activate it in the
+	palette editor with a
+	single left click on it.  The palette that you are about to
 	edit will now appear in the edit area.  If the palette has a
-	large amount of colors then each color cell in the palette can
+	large number of colors, each color cell in the palette can
 	be rather small. To be able to view and edit the palette you
 	can therefore zoom in and out with the zoom buttons.
       </P
 ><P
->	To change the name of a color cell you first mark it by left
-	clicking on it. The Name field next to the zoom buttons will
+>	To change the name of a color cell, you first mark it by left
+	clicking on it. The <SPAN
+CLASS="GUILABEL"
+>Name</SPAN
+> field next to
+	the zoom buttons will
 	be activated and you can change the name.
       </P
 ><P
->	The edit menu will appear if you right click in the edit
-	frame. Choose to edit and the standard Gimp Color selector
-	will appear and you will be able to change to color in the
-	color cell that you right-clicked in. New will add a color at
+>	A <SPAN
+CLASS="MOUSEBUTTON"
+>right</SPAN
+> click in the edit frame
+	opens the menu.  Choose <SPAN
+CLASS="GUIMENUITEM"
+>Edit</SPAN
+> and
+	the standard GIMP Color Selector
+	will appear. This allows modification of the color of the
+	selected cell.  <SPAN
+CLASS="GUIMENUITEM"
+>New</SPAN
+> will add a color at
 	the end of the palette. The new color cell will inherit the
-	color of the cell that you brought up the menu in. To alter
-	the newly created cell you have to right-click in it and
-	choose edit. Delete in the right click pop up menu will delete
-	the color cell from which you brought up the menu in (you will
-	not get a confirmation window).
+	color of the current cell. To alter
+	the newly created cell, right-click in it and
+	choose
+	<SPAN
+CLASS="GUIMENUITEM"
+>Edit</SPAN
+>.
+	<SPAN
+CLASS="GUIMENUITEM"
+>Delete</SPAN
+> in the menu will delete
+	the current cell.
       </P
 ></DIV
 ><DIV
@@ -130,18 +158,22 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3636"
+NAME="AEN4994"
 >New Palette</A
 ></H3
 ><P
->	Will create a new empty palette in the edit frame, a
-	confirmation window with where you <A
+>	Will create a new, empty palette in the edit frame.  A
+	confirmation window with a <A
 HREF="../../dialogs/palette_editor/new_palette.html"
 >name</A
-> the
-	new palette will appear.  When you have created your new
+> field
+	will appear.  When you have created your new
 	palette, you have to insert color cells. You do that by
-	right-clicking anywhere in the edit area and choose new from
+	right-clicking anywhere in the edit area and selecting
+	<SPAN
+CLASS="GUIMENUITEM"
+>New</SPAN
+> from
 	the popup menu.
       </P
 ></DIV
@@ -150,7 +182,7 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3640"
+NAME="AEN4999"
 >Delete Palette</A
 ></H3
 ><P
@@ -162,16 +194,16 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3643"
+NAME="AEN5002"
 >Import Palette</A
 ></H3
 ><P
 >	Will bring up the <A
 HREF="../../dialogs/palette_editor/import_palette.html"
-> Import</A
+>Import</A
 >
 	dialog where you can create a new platte from a gradient,
-	image or indexed palette.
+	image, or indexed palette.
       </P
 ></DIV
 ><DIV
@@ -179,18 +211,22 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3647"
+NAME="AEN5006"
 >Merge Palette</A
 ></H3
 ><P
->	You are able to merge palettes in the editor, the new palette
+>	You are able to merge palettes in the editor.  The new palette
 	is a combination of the selected palettes. To merge two or
 	several palettes you have to mark the palettes that you want
-	to merge and click on Merge which will bring up the <A
+	to merge and click on <SPAN
+CLASS="GUIBUTTON"
+>Merge</SPAN
+>.  This
+	opens the <A
 HREF="../../dialogs/palette_editor/merge_palette.html"
 >Name</A
 >
-	dialog. There are two ways to mark palettes either you
+	dialog. There are two ways to mark palettes.  Either you
 	&lt;Modkey&gt; click, you will then mark a single palette each
 	time (or unmark). You can also &lt;Modkey&gt; click which will
 	mark all palettes from the first marked to the last marked
@@ -239,10 +275,7 @@ HREF="../../dialogs/palette_editor/delete_palette.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="INTERFACE"
->Color Palette</SPAN
-> Dialog</TD
+>The Color Palette Dialog</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"

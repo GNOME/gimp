@@ -4,7 +4,8 @@
 >Crop</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,22 +71,157 @@ NAME="TOOLS-CROP"
 >Crop</A
 ></H1
 ><A
-NAME="AEN2352"
+NAME="AEN2650"
 ></A
 ><A
-NAME="AEN2354"
+NAME="AEN2652"
 ></A
-><P
->    Sorry, but the help page for "Crop" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2357"
->Additional Information</A
+NAME="TOOLS-CROP-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Crop</SPAN
+> tool is used to crop or resize the
+      image or the current layer.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-CROP-OPTIONS"
+>Crop Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Crop Settings</B
+></P
+><DL
+><DT
+>Current Layer only</DT
+><DD
+><P
+>            This option forces the <SPAN
+CLASS="GUIBUTTON"
+>Crop and Resize</SPAN
+>
+            tool to affect the currently selected layer only. Any cropping
+            or resizing will only affect the current layer.
+          </P
+></DD
+><DT
+>Allow Enlarging</DT
+><DD
+><P
+>            If this toggle is set, any operation that extends beyond the
+            image boundary will increase the size of the canvas
+            appropriately.
+          </P
+></DD
+><DT
+>Tool Toggle</DT
+><DD
+><P
+>            This option will toggle between <SPAN
+CLASS="GUIBUTTON"
+>Crop</SPAN
+>
+            and <SPAN
+CLASS="GUIBUTTON"
+>Resize</SPAN
+>. <SPAN
+CLASS="GUIBUTTON"
+>Crop</SPAN
+>
+            will do exactly that. It will crop the image to the selected
+            area. <SPAN
+CLASS="GUIBUTTON"
+>Resize</SPAN
+> will crop the canvas, but
+            leave the original layer sizes as they were. This toggle can
+            be switched dynamically by holding the <B
+CLASS="KEYCAP"
+>Ctrl</B
+>
+            key.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-CROP-INFO"
+>Crop and Resize Information</A
+></H2
+><P
+>      This dialog becomes available when the cropping region is mapped by
+      clicking and dragging an area of the image.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Origin, Width, and Height</DT
+><DD
+><P
+>            These settings show the origin in X and Y style coordinates of
+            the cropping selection area, and the
+            <SPAN
+CLASS="GUIBUTTON"
+>Width</SPAN
+> and <SPAN
+CLASS="GUIBUTTON"
+>Height</SPAN
+>
+            of the cropping area. They can be manually changed to provide
+            precise control over the cropping area.
+          </P
+></DD
+><DT
+>From Selection</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>From Selection</SPAN
+> button automatically
+            resizes the crop selection to encapsulate the current
+            selection area. It will do so in a rectangular fashion. Any
+            pre-existing selection area is suitable.
+          </P
+></DD
+><DT
+>Auto Shrink</DT
+><DD
+><P
+>            This button when pressed will try to automatically shrink the
+            cropping area to a heavily color weighted area in the image
+            that is enclosed by the cropping selection region.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"

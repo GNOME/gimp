@@ -3,13 +3,12 @@
 helpdatadir = $(gimpdatadir)/help/C/channels
 
 helpdata_DATA = \
-        channel_to_selection.html \
-        channels.html \
-        delete_channel.html \
-        duplicate_channel.html \
-        index.html \
-        lower_channel.html \
-        raise_channel.html 
+        channel_to_selection.html 	\
+        delete_channel.html		\
+        duplicate_channel.html		\
+        index.html			\
+        lower_channel.html		\
+        raise_channel.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

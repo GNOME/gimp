@@ -1,0 +1,508 @@
+<HTML
+><HEAD
+><TITLE
+>Rotate Color Map</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Repeat and Duplicate"
+HREF="../filters/repdup.html"><LINK
+REL="NEXT"
+TITLE="Ripple"
+HREF="../filters/ripple.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/repdup.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/ripple.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-RCM"
+>Rotate Color Map</A
+></H1
+><A
+NAME="AEN7341"
+></A
+><A
+NAME="AEN7343"
+></A
+><P
+>    The <SPAN
+CLASS="GUILABEL"
+>Color Map Rotation</SPAN
+> filter is used to select
+    a range of colors and replace them with a differing range of colors
+    both of which are specified by the user.
+  </P
+><P
+>    The main window shows a preview of both the
+    <SPAN
+CLASS="GUILABEL"
+>Original</SPAN
+> and the <SPAN
+CLASS="GUILABEL"
+>Rotated</SPAN
+>
+    images. Primary controls are found on the
+    <SPAN
+CLASS="GUIBUTTON"
+>Main</SPAN
+> tab. These are used to select the range
+    of colors for both the <SPAN
+CLASS="GUILABEL"
+>Original</SPAN
+> and
+    <SPAN
+CLASS="GUILABEL"
+>Rotated</SPAN
+> images. This is achieved by utilizing
+    color wheels.
+  </P
+><P
+>    Also contained within the main window is the
+    <SPAN
+CLASS="GUIBUTTON"
+>Misc</SPAN
+> tab. This tab contains various options
+    that further control the <SPAN
+CLASS="GUILABEL"
+>Color Map Rotation</SPAN
+>
+    tool.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-RCM-MAIN"
+>Main Tab</A
+></H2
+><P
+>      As discussed previously, the <SPAN
+CLASS="GUIBUTTON"
+>Main</SPAN
+> tab
+      provides tools for the selection of color ranges. The top half of
+      the tab is dedicated to the selection of colors to alter.
+      Conversely the lower half of the tab is where color ranges are
+      selected that will be used to replace the range selected above.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>From</B
+></P
+><DL
+><DT
+>Overview</DT
+><DD
+><P
+>            The upper half of the <SPAN
+CLASS="GUIBUTTON"
+>Main</SPAN
+> tab
+            contains a color wheel, selection manipulation buttons, and
+            manual angle selection entry fields.
+          </P
+></DD
+><DT
+>Color Wheel</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Color Wheel</SPAN
+> is used to select the
+            color range that will be selected for transformation. The
+            current selection is displayed using an angle indicator. The
+            angle can be adjusted bu clicking and holding
+            <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+>, then dragging in the
+            desired direction. Clicking in an area between the arrows
+            and moving will alter the entire color area. Clicking and
+            dragging the arrows themselves will alter the angle.
+          </P
+></DD
+><DT
+>Switch to clockwise</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Switch to clockwise</SPAN
+> button
+            reverses the direction of the map angle. Upon clicking
+            <SPAN
+CLASS="GUIBUTTON"
+>Switch to clockwise</SPAN
+> the button will
+            change to <SPAN
+CLASS="GUIBUTTON"
+>Switch to c/clockwise</SPAN
+>.
+          </P
+></DD
+><DT
+>Change order of arrows</DT
+><DD
+><P
+>            This option inverts the arrow direction.
+          </P
+></DD
+><DT
+>Select all</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Select all</SPAN
+> button changes the
+            selection to include all colors.
+          </P
+></DD
+><DT
+>From / To</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>From</SPAN
+> and
+            <SPAN
+CLASS="GUIBUTTON"
+>To</SPAN
+> entry boxes allow manual selection
+            of the selection angle. The units displayed here can be
+            changed on the <SPAN
+CLASS="GUIBUTTON"
+>Misc</SPAN
+> tab.
+          </P
+></DD
+></DL
+></DIV
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>To</B
+></P
+><DL
+><DT
+>Overview</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>To</SPAN
+> section behaves in the same
+            manner as the <SPAN
+CLASS="GUIBUTTON"
+>From</SPAN
+> section except
+            that the color range selected affects the destination color
+            map.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-RCM-MISC"
+>Misc Tab</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Gray</B
+></P
+><DL
+><DT
+>Color Wheel</DT
+><DD
+><P
+>            This color wheel is used for selection of a color used to
+            replace grey tones on an image. Any color value here will
+            affect the final color map. Using the
+            <SPAN
+CLASS="GUIBUTTON"
+>Hue</SPAN
+> and
+            <SPAN
+CLASS="GUIBUTTON"
+>Saturation</SPAN
+> entry boxes will allow
+            manual entry.
+          </P
+></DD
+><DT
+>Mode</DT
+><DD
+><P
+>            There are two options:
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Treat as this</SPAN
+>:
+                Selecting <SPAN
+CLASS="GUIBUTTON"
+>Treat as this</SPAN
+> will
+                change the color map such that any operation will be
+                conducted against this color.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Change to this</SPAN
+>:
+                This option changes the color map such that the adjusted
+                color map uses this color as its base selection color.
+              </P
+></LI
+></UL
+></DD
+><DT
+>What is Gray?</DT
+><DD
+><P
+>            This entry box increases the amount of gray in the color
+            wheel. Increasing the value here will dynamically display an
+            adjusted gray ring within the color wheel.
+          </P
+></DD
+></DL
+></DIV
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Preview</B
+></P
+><DL
+><DT
+></DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Continuous update</SPAN
+>:
+                This toggle button switches the dynamic preview on or
+                off. When <SPAN
+CLASS="GUIBUTTON"
+>Continuous update</SPAN
+> is
+                toggle <SPAN
+CLASS="QUOTE"
+>"on"</SPAN
+>, the preview will update with
+                any change made to the settings.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Area</SPAN
+>:
+                The three options here alter what is shown in the
+                preview area.
+              </P
+><P
+></P
+><UL
+><LI
+><P
+>                    <SPAN
+CLASS="GUIBUTTON"
+>Entire Image</SPAN
+>:
+                    This option will display the entire image in the
+                    preview area.
+                  </P
+></LI
+><LI
+><P
+>                    <SPAN
+CLASS="GUIBUTTON"
+>Selection</SPAN
+>:
+                    This option will display zoom the preview area such
+                    that any currently selected areas will fill the
+                    preview area.
+                  </P
+></LI
+><LI
+><P
+>                    <SPAN
+CLASS="GUIBUTTON"
+>Context</SPAN
+>:
+                  </P
+></LI
+></UL
+></LI
+></UL
+></DD
+></DL
+></DIV
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Units</B
+></P
+><DL
+><DT
+></DT
+><DD
+><P
+>            The units of measurement can be selected here.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/repdup.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/ripple.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Repeat and Duplicate</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Ripple</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -4,7 +4,8 @@
 >Eraser</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,22 +71,118 @@ NAME="TOOLS-ERASER"
 >Eraser</A
 ></H1
 ><A
-NAME="AEN2399"
+NAME="AEN2902"
 ></A
 ><A
-NAME="AEN2401"
+NAME="AEN2904"
 ></A
-><P
->    Sorry, but the help page for "Eraser" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2404"
->Additional Information</A
+NAME="TOOLS-ERASER-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Eraser</SPAN
+> is used to remove blocks of
+      color from the current layer, selection, or image. If the
+      <SPAN
+CLASS="GUIBUTTON"
+>Eraser</SPAN
+> is used on on the
+      <SPAN
+CLASS="GUIBUTTON"
+>Background</SPAN
+> layer, the eraser will remove
+      color areas and replace them with the current background color. If
+      used on a normal floating layer, the color will be replaced with
+      transparency. The same rules apply to non-alpha images.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-ERASER-OPTIONS"
+>Eraser Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Eraser Settings</B
+></P
+><DL
+><DT
+>Incremental</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Incremental</SPAN
+> mode paints each brush
+            stroke directly onto the active layer. Without this option
+            set, there is a canvas buffer that is composited with the
+            active layer.
+          </P
+></DD
+><DT
+>Pressure Sensitivity</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Pressure Sensitivity</SPAN
+> section sets
+            the sensitivity levels for input devices that support this
+            option.
+          </P
+></DD
+><DT
+>Hard Edge</DT
+><DD
+><P
+>            By default the <SPAN
+CLASS="GUIBUTTON"
+>Eraser</SPAN
+> tool softens
+            the edges of and area erased. The <SPAN
+CLASS="GUIBUTTON"
+>Hard
+            Edge</SPAN
+> toggle changes this behaviour. Any area
+            erased while this option is active will be erased with no
+            softening of the edge of the brush used.
+          </P
+></DD
+><DT
+>Anti Erase</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Anti Erase</SPAN
+> function of the
+            <SPAN
+CLASS="GUIBUTTON"
+>Erase</SPAN
+> tool can un-erase areas of an
+            image. This feature only works when used on images with an
+            alpha channel.
+          </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
@@ -95,6 +192,24 @@ CLASS="KEYCAP"
 >E</B
 >
     </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key modifier:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>
+          toggles between <SPAN
+CLASS="GUIBUTTON"
+>Anti Erase</SPAN
+> and normal
+          erase modes.
+        </P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV

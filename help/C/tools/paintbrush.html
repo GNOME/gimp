@@ -4,7 +4,8 @@
 >Paintbrush</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,28 +71,235 @@ NAME="TOOLS-PAINTBRUSH"
 >Paintbrush</A
 ></H1
 ><A
-NAME="AEN2526"
+NAME="AEN3497"
 ></A
 ><A
-NAME="AEN2528"
+NAME="AEN3499"
 ></A
-><P
->    Sorry, but the help page for "Paintbrush" is not written yet.
-  </P
+><A
+NAME="AEN3501"
+></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2531"
->Additional Information</A
+NAME="TOOLS-PAINTBRUSH-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>paintbrush</SPAN
+> tool paints fuzzy brush
+      strokes. All strokes are rendered using the current brush.
+    </P
+><P
+>      See also:
+      <A
+HREF="../dialogs/brush_selection.html"
+>        Brush Selection
+      </A
+>.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-PAINTBRUSH-OPTIONS"
+>Paintbrush Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Paintbrush Settings</B
+></P
+><DL
+><DT
+>Incremental</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Incremental</SPAN
+> mode paints each brush
+            stroke directly onto the active layer. Without this option
+            set, there is a canvas buffer that is composited with the
+            active layer.
+          </P
+><P
+>            This option is not available if
+            <SPAN
+CLASS="GUIBUTTON"
+>Gradient</SPAN
+> is toggled on.
+          </P
+></DD
+><DT
+>Pressure Sensitivity</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Pressure Sensitivity</SPAN
+> section sets
+            the sensitivity levels for input devices that support this
+            option.
+          </P
+></DD
+><DT
+>Fade Out</DT
+><DD
+><P
+>            This option sets the stroke to fade out after the specified
+            distance. The stroke will fade to transparency at the
+            completion of the set distance.
+          </P
+></DD
+><DT
+>Gradient</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Gradient</SPAN
+> setting toggles the use
+            of the currently selected gradient in stead of the current
+            foreground color. There are four ways that the gradient can
+            be rendered.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Once Forward</SPAN
+>: Renders the
+                gradient once during the stroke. It is painted in a
+                forward direction. The entire color sequence of the
+                gradient will be rendered within the distance set.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Once Backward</SPAN
+>: Renders the
+                gradient once during the stroke. It is painted in a
+                reverse order of colors. The entire color sequence of
+                the gradient will be rendered within the distance set.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Loop Sawtooth</SPAN
+>: Renders the
+                gradient repeatedly. At each expiry of the distance that
+                has been set, the gradient will begin rerendering from
+                the beginning.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Loop Triangle</SPAN
+>: Renders the
+                gradient repeatedly. At each expiry of the distance that
+                has been set, the gradient will reverse direction and
+                render in that direction until the expiry of the
+                distance once more. At this point, it will begin again
+                until the stroke is complete.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >P</B
 >
     </P
+><P
+></P
+><UL
+><LI
+><P
+>          The key modifier:
+          <B
+CLASS="KEYCAP"
+>Shift</B
+>
+          places the <SPAN
+CLASS="GUIBUTTON"
+>paintbrush</SPAN
+> tool into
+          straight line mode. Holding <B
+CLASS="KEYCAP"
+>Shift</B
+> while
+          clicking <SPAN
+CLASS="MOUSEBUTTON"
+>Button1</SPAN
+> will generate a
+          straight line. Consecutive clicks will continue drawing
+          straight lines that originate from the end of the last line.
+        </P
+></LI
+><LI
+><P
+>          The key modifier:
+          <B
+CLASS="KEYCAP"
+>Ctrl</B
+>
+          changes the paintbrush to a
+          <A
+HREF="../tools/color_picker.html"
+>            <SPAN
+CLASS="GUIBUTTON"
+>Color Picker</SPAN
+> 
+          </A
+>
+          that will set the foreground color.
+        </P
+></LI
+><LI
+><P
+>          The key modifier:
+          <B
+CLASS="KEYCAP"
+>Alt</B
+>
+          changes the paintbrush to a
+          <A
+HREF="../tools/color_picker.html"
+>            <SPAN
+CLASS="GUIBUTTON"
+>Color Picker</SPAN
+>
+          </A
+>
+          that will set the background color.
+        </P
+></LI
+></UL
 ></DIV
 ></DIV
 ><DIV

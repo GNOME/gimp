@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Apply Canvas Filter</TITLE
+>Apply Canvas</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,10 +13,10 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="Repeat Last Filter"
-HREF="../filters/repeat_last.html"><LINK
+TITLE="Autostretch HSV"
+HREF="../filters/autostretch_hsv.html"><LINK
 REL="NEXT"
-TITLE="The Blinds Filter"
+TITLE="Blinds"
 HREF="../filters/blinds.html"></HEAD
 ><BODY
 CLASS="SECT1"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/repeat_last.html"
+HREF="../filters/autostretch_hsv.html"
 >Prev</A
 ></TD
 ><TD
@@ -67,30 +68,23 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-APPLYCANVAS"
->The <SPAN
-CLASS="QUOTE"
->"Apply Canvas"</SPAN
-> Filter</A
+>Apply Canvas</A
 ></H1
 ><A
-NAME="AEN3910"
+NAME="AEN5390"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-APPLYCANVAS-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    Located in <SPAN
-CLASS="GUISUBMENU"
->Filters</SPAN
->
-    <SPAN
-CLASS="GUISUBMENU"
->Artistic</SPAN
-> <SPAN
-CLASS="GUIMENUITEM"
->Apply
-    Canvas</SPAN
->, this filter applies a canvas-like effect to
-    the current image.  It textures the image as if it were an
-    artist's canvas.
-  </P
+>      This filter applies a canvas-like effect to the current image.  It
+      textures the image as if it were an artist's canvas.
+    </P
 ><DIV
 CLASS="TIP"
 ><P
@@ -105,55 +99,66 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/tip.gif"
+SRC="../../images/tip.png"
 HSPACE="5"
 ALT="Tip"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->      Compare this filter to the  GIMPressionist filter  .
-    </P
+>        This filter is comparable to the
+         GIMPressionist filter
+         .
+      </P
 ></TD
 ></TR
 ></TABLE
+></DIV
 ></DIV
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="FILTERS-APPLYCANVAS-CANVAS-DIALOG"
->The Apply Canvas Dialog</A
+NAME="FILTERS-APPLYCANVAS-OPTIONS"
+>The Apply Canvas Options</A
 ></H2
 ><P
->  
-      The first four selections, the radio buttons
-      <SPAN
-CLASS="GUIBUTTON"
->Top-Right</SPAN
->,
-      <SPAN
-CLASS="GUIBUTTON"
->Top-Left</SPAN
->,
-      <SPAN
-CLASS="GUIBUTTON"
->Bottom-Left</SPAN
->, and
-      <SPAN
-CLASS="GUIBUTTON"
->Bottom-Right</SPAN
->, determine the direction in
-      which the canvas is drawn.  It causes a slight variation in the
-      effect. <SPAN
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Apply Canvas Settings</B
+></P
+><DL
+><DT
+>Direction</DT
+><DD
+><P
+>            The four selectable diretions make very little difference to
+            the final render. The <SPAN
+CLASS="GUILABEL"
+>Direction</SPAN
+> sets
+            the starting direction of the canvas render.
+          </P
+></DD
+><DT
+>Depth</DT
+><DD
+><P
+>            The <SPAN
 CLASS="GUIBUTTON"
 >Depth</SPAN
-> determines how intense the
-      effect is. A deeper canvas is more pronounced. Only
-      experimentation can allow you to find the appropriate depth for
-      your purposes.
-    </P
+> slider controls the
+            apparent depth of the rendered canvas effect. A higher
+            setting here will render the canvas in a more intense
+            fashion.
+          </P
+></DD
+></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV
@@ -171,7 +176,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/repeat_last.html"
+HREF="../filters/autostretch_hsv.html"
 >Prev</A
 ></TD
 ><TD
@@ -196,7 +201,7 @@ HREF="../filters/blinds.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->Repeat Last Filter</TD
+>Autostretch HSV</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -209,10 +214,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Blinds"</SPAN
-> Filter</TD
+>Blinds</TD
 ></TR
 ></TABLE
 ></DIV

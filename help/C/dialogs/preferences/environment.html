@@ -4,7 +4,8 @@
 >Environment Settings</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../../contents.html"><LINK
@@ -70,14 +71,14 @@ NAME="DIALOGS-PREFERENCES-ENVIRONMENT"
 >Environment Settings</A
 ></H1
 ><A
-NAME="AEN3199"
+NAME="AEN4568"
 ></A
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN3201"
+NAME="AEN4570"
 >Resource Consumption</A
 ></H2
 ><DIV
@@ -85,24 +86,28 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3203"
+NAME="AEN4572"
 >Conservative Memory Usage</A
 ></H3
 ><P
 >	The <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> is optimized to speed
-	i.e. speed is more important than memory usage. Enabling
+> is optimized to speed i.e.
+	speed is more important than memory usage. Enabling
 	<SPAN
 CLASS="QUOTE"
 >"Conservative Memory Usage"</SPAN
-> will "optimize" GIMP
-	to use less memory. The tradeoff is of course speed but if
-	your system is low on memory then it can be an option to use
+> will
 	<SPAN
 CLASS="QUOTE"
->"Conservative Memory Usage"</SPAN
+>"optimize"</SPAN
+> GIMP to use less memory. The tradeoff
+	is of course speed but if your system is low on memory then it
+	can be an option to use <SPAN
+CLASS="QUOTE"
+>"Conservative Memory
+	Usage"</SPAN
 >.
       </P
 ></DIV
@@ -111,7 +116,7 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3209"
+NAME="AEN4579"
 >Levels of Undo</A
 ></H3
 ><P
@@ -130,7 +135,7 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3213"
+NAME="AEN4583"
 >Tile Cache Size</A
 ></H3
 ><P
@@ -138,7 +143,7 @@ NAME="AEN3213"
 	<SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> has, if you set it to low
+> has.  If you set it too low,
 	<SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -147,7 +152,7 @@ CLASS="APPLICATION"
 	<SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> i.e give
+>.  That is to say, give
 	<SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -171,7 +176,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN3222"
+NAME="AEN4592"
 >Scaling</A
 ></H2
 ><DIV
@@ -179,29 +184,29 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3224"
+NAME="AEN4594"
 >Interpolation Type</A
 ></H3
 ><P
->	When you scale a image (make it bigger) you have to fill in
-	missing pixels what color and value that those pixels should
+>	When you scale an image (make it bigger), you have to fill in
+	missing pixels.  The color and value that those pixels should
 	have is calculated in a interpolation
 	algorithm. <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > uses a Linear
-	interpolation algorithm by default. Linear is a gives you a
-	mid quality interpolation.  Linear interpolation has less
-	quality trade off for speed that Nearest Neighbour
+	interpolation algorithm by default. Linear gives you a
+	mid-quality interpolation.  Linear interpolation has less
+	quality trade off for speed than Nearest Neighbour
 	interpolation algorithm does. Nearest Neighbour is the fastest
-	way to interpolate but it has the lowest quality of the
+	way to interpolate, but it has the lowest quality of the
 	interpolation algorithms. The Cubic interpolation algorithm
 	produces the highest quality of the three interpolation types
 	supported by <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 >. However it is
-	considerably slower that the linear interpolation algorithm.
+	considerably slower than the linear interpolation algorithm.
       </P
 ></DIV
 ></DIV
@@ -210,7 +215,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN3229"
+NAME="AEN4599"
 >File Saving</A
 ></H2
 ><DIV
@@ -218,15 +223,22 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3231"
+NAME="AEN4601"
 >Try to Write a Thumbnail File</A
 ></H3
 ><P
->	By default when you save a image a thumbnail file will be
-	created storing a little image of your image. When you mark a
-	image in the file open dialog you will see this thumbnail. If
-	you set this option to Never you have to press on the
-	thumbnail button in the <A
+>	By default when you save an image, a thumbnail file will be
+	created &mdash; storing a little image of your image. When you mark an
+	image in the file open dialog, you will see this thumbnail. If
+	you set this option to <SPAN
+CLASS="GUILABEL"
+>Never</SPAN
+>, you have to
+	press the
+	<SPAN
+CLASS="GUIBUTTON"
+>Thumbnail</SPAN
+> button in the <A
 HREF="../../dialogs/file_open.html"
 >File
 	Open</A
@@ -239,23 +251,23 @@ CLASS="SECT3"
 ><H3
 CLASS="SECT3"
 ><A
-NAME="AEN3235"
+NAME="AEN4607"
 >"File &gt; Save" Saves the Image</A
 ></H3
 ><P
 >	This is by default set to <SPAN
 CLASS="QUOTE"
 >"Always"</SPAN
-> but if you e.g.
-	saves your image on a networked disk (<SPAN
+> but if you
+	save your image on a networked disk (<SPAN
 CLASS="ACRONYM"
 >NFS</SPAN
 >,
 	<SPAN
 CLASS="ACRONYM"
 >SMB</SPAN
-> etc.) then
-	saves some times are slow and saving always isn't that
+> etc.),
+	saves are sometimes slow and saving isn't always that
 	necessary. Instead you will only save when the file is really
 	changed.
       </P

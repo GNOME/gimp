@@ -4,7 +4,8 @@
 >Add Layer Mask</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../../contents.html"><LINK
@@ -70,17 +71,17 @@ NAME="DIALOGS-LAYERS-ADD-LAYER-MASK"
 >Add Layer Mask</A
 ></H1
 ><A
-NAME="AEN1782"
+NAME="AEN1700"
 ></A
 ><A
-NAME="AEN1784"
+NAME="AEN1702"
 ></A
 ><P
->    Will add a layer mask to the currently active layer. A layer mask
-    is a one to control the transparency of the current layer . The
-    mask itself is a grayscale "image" where black pixels will make
-    the layer totally transparent and white pixels will make it
-    opaque.
+>    Adds a layer mask to the currently active layer. A layer mask
+    controls the transparency of the current layer . The mask itself is
+    a grayscale image where black pixels are transparent and white
+    pixels are opaque. This works on a grey level also, allowing
+    gradiented masking.
   </P
 ><DIV
 CLASS="NOTE"
@@ -96,20 +97,20 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../../images/note.gif"
+SRC="../../../images/note.png"
 HSPACE="5"
 ALT="Note"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->      Adding a mask to a layer has the same effect like if you could
-      add a second <A
+>      Adding a mask to a layer has the same effect as adding a second
+      <A
 HREF="../../layers/add_alpha_channel.html"
->Alpha
-      Channel</A
-> for that Layer. In fact, both are applied to the
-      layer in the same way, first Alpha, then Mask.
+>Alpha Channel</A
+> for
+      that layer. In fact, both are applied to the layer in the same
+      way, first Alpha, then Mask.
     </P
 ></TD
 ></TR
@@ -117,20 +118,26 @@ HREF="../../layers/add_alpha_channel.html"
 ></DIV
 ><P
 >    The <SPAN
-CLASS="QUOTE"
->"Fill"</SPAN
-> frame enables you to choose the initial
-    fill of the layer mask.  Black which will make the layer totally
-    transparent, White which will make the layer totally opace or the
+CLASS="GUILABEL"
+>Add Mask Options</SPAN
+> dialog allows you to
+    choose the initial fill of the layer mask.
+    <SPAN
+CLASS="GUIBUTTON"
+>Black</SPAN
+> will make the layer totally
+    transparent; <SPAN
+CLASS="GUIBUTTON"
+>White</SPAN
+> will make the layer
+    totally opaque, or you can choose to initialize the mask using the
     alpha channel of the layer. When you choose the alpha channel the
-    transparency of each pixels will be mapped to a grayscale value in
+    transparency of each pixel will be mapped to a grayscale value in
     the mask. If you want to further manipulate the transparency in a
-    layer this can be a very good option (e.g. maybe you have softly
-    erased some parts of the image and want to continue to manipulate
-    the transparency).
+    layer, this option can be useful.
   </P
 ><P
->    To paint on the layer mask you have to activate it, you do that by
+>    To paint on the layer mask you have to activate it.  You do that by
     clicking on the thumbnail image of the mask. However you will not
     see the mask, you will just see the result of your mask applied to
     the layer. To see the mask you have to

@@ -76,7 +76,7 @@ shear_tool_transform (Tool           *tool,
 	{
 	  transform_info = info_dialog_new (_("Shear Information"),
 					    gimp_standard_help_func,
-					    "tools/transform_shear.html");
+					    "tools/transform.html#TOOLS-TRANSFORM-SHEARING");
 
 	  info_dialog_add_spinbutton (transform_info,
 				      _("Shear Magnitude X:"),

@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Cubism Filter</TITLE
+>Cubism</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The BZ2 File Plug-In"
-HREF="../filters/bz2.html"><LINK
+TITLE="Compose"
+HREF="../filters/compose.html"><LINK
 REL="NEXT"
-TITLE="The FITS File Plug-In"
-HREF="../filters/fits.html"></HEAD
+TITLE="Decompose"
+HREF="../filters/decompose.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/bz2.html"
+HREF="../filters/compose.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/fits.html"
+HREF="../filters/decompose.html"
 >Next</A
 ></TD
 ></TR
@@ -67,115 +68,92 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-CUBISM"
->The <SPAN
-CLASS="QUOTE"
->"Cubism"</SPAN
-> Filter</A
+>Cubism</A
 ></H1
 ><A
-NAME="AEN3969"
+NAME="AEN5699"
 ></A
-><P
->    Located under <SPAN
-CLASS="GUISUBMENU"
->Filters</SPAN
->
-    <SPAN
-CLASS="GUISUBMENU"
->Artistic</SPAN
->
-    <SPAN
-CLASS="GUIMENUITEM"
->Cubism...</SPAN
->, this
-    plug-in modifies your image so that it appears to be constructed
-    of small squares of semitransparent tissue paper.  It is very
-    useful for things such a background images.  The level of
-    distortion makes it less useful for a photograph.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="FILTERS-CUBISM-DIALOG"
->The Cubism Dialog</A
+NAME="FILTERS-CUBISM-OVERVIEW"
+>Overview</A
 ></H2
 ><P
-> 
-      When you select <SPAN
+>      The <SPAN
 CLASS="GUIMENUITEM"
->Cubism...</SPAN
-> from the menu,
-      the <SPAN
-CLASS="INTERFACE"
->Cubism Dialog</SPAN
-> is opened.  It contains
-      three options that allow you to control the effect of the filter.
+>Cubism</SPAN
+>plug-in modifies the image
+      such that it appears to be constructed of small squares of
+      semitransparent tissue paper.
     </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-CUBISM-OPTIONS"
+>The Cubism Options</A
+></H2
 ><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Cubism Settings</B
 ></P
 ><DL
 ><DT
-><SPAN
-CLASS="GUIBUTTON"
->Use Background Color</SPAN
-></DT
+>Use Background Color</DT
 ><DD
 ><P
->	    This select box determines whether or not the background
-	    color displayed in the <SPAN
-CLASS="INTERFACE"
->Toolbox</SPAN
+>            This selection box determines whether or not the background
+            color displayed in the
+            <A
+HREF="../toolbox/toolbox.html"
+>              Toolbox
+            </A
 >
-	    should be used when applying the filter.  If it is not
-	    checked, black will be used instead.
-	  </P
+            should be used when applying the filter.  If it is not
+            checked, black will be used instead.
+        	</P
 ></DD
 ><DT
-><SPAN
-CLASS="GUIBUTTON"
->Tile Size</SPAN
-></DT
+>Tile Size</DT
 ><DD
 ><P
->	    This variable determines the size, in pixels, of the
-	    squares to be used.  This is, in effect, the size of the
-	    little squares of tissue paper to used in generating the
-	    new image.  The slider can be used or the exact pixel size
-	    can be entered into the text box, or the arrow buttons can
-	    be used.
-	  </P
+>            This variable determines the size, in pixels, of the squares
+            to be used. This is, in effect, the size of the little
+            squares of tissue paper used in generating the new image.
+            The slider can be used or the exact pixel size can be
+            entered into the text box, or the arrow buttons can be used.
+        	</P
 ></DD
 ><DT
-><SPAN
-CLASS="GUIBUTTON"
->Tile Saturation</SPAN
-></DT
+>Tile Saturation</DT
 ><DD
 ><P
->	    This variable specifies how intense the color of the
-	    squares should be.  This is, in effect, the opacity of the
-	    little squares of tissue paper.  A high number makes the
-	    squares very strongly defined and doesn't allow lower squares
-	    to show through.  A low number allows the lower squares to be
-	    more visible through the higher ones and causes a little more
-	    blending in the colors.  If this is set to 0 and
-	    <SPAN
+>            This variable specifies how intense the color of the squares
+            should be. This affects the opacity of the squares . A high
+            value will render the squares very strongly and does not
+            allow lower squares to show through.  A lower value allows
+            the lower squares to be more visible through the higher ones
+            and causes a more blending in the colors.  If this is set to
+            0 and <SPAN
 CLASS="GUIBUTTON"
 >Use Background Color</SPAN
-> is not checked,
-	    the entire area will be black.  If it is checked and the value
-	    here is zero, the background color will fill the entire
-	    area.
-	  </P
+> is not
+            checked, the entire layer will be rendered black.  If it is
+            checked and the value here is zero, the background color
+            will fill the entire layer.
+        	</P
 ></DD
 ></DL
-><P
->      A little experimentation will enable you to find the result you
-      desire.  It is possible to undo this process either from the
-      menu or with the undo shortcut, so experiment freely.
-    </P
+></DIV
 ><DIV
 CLASS="TIP"
 ><P
@@ -190,29 +168,29 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/tip.gif"
+SRC="../../images/tip.png"
 HSPACE="5"
 ALT="Tip"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	If you are using this to generate background images for webpages
-	and the like, work with a small range of colors painted
-	randomly on a small square.  Then apply the Cubism filter with
-	the desired settings.  As a last step, try
-	<SPAN
+>        If you are using this to generate background images for webpages
+        and the like, work with a small range of colors painted randomly
+        on a small square.  Then apply the Cubism filter with the
+        desired settings.  As a last step, try
+        <SPAN
 CLASS="GUISUBMENU"
 >Filters</SPAN
 > <SPAN
 CLASS="GUISUBMENU"
 >Map</SPAN
 >
-	<SPAN
+        <SPAN
 CLASS="GUIMENUITEM"
 >Make Seamless</SPAN
-> to make the image so
-	it will tile seamlessly in your background.
+> to make the image so it
+        will tile seamlessly in your background.
       </P
 ></TD
 ></TR
@@ -235,7 +213,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/bz2.html"
+HREF="../filters/compose.html"
 >Prev</A
 ></TD
 ><TD
@@ -251,7 +229,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/fits.html"
+HREF="../filters/decompose.html"
 >Next</A
 ></TD
 ></TR
@@ -260,10 +238,7 @@ HREF="../filters/fits.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->BZ2</SPAN
-> File Plug-In</TD
+>Compose</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -276,10 +251,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->FITS</SPAN
-> File Plug-In</TD
+>Decompose</TD
 ></TR
 ></TABLE
 ></DIV

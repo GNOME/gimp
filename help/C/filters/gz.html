@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The GZ File Plug-In</TITLE
+>GZ</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The RLE Gaussian Blur Filter"
-HREF="../filters/gauss_rle.html"><LINK
+TITLE="Guillotine"
+HREF="../filters/guillotine.html"><LINK
 REL="NEXT"
-TITLE="The HRZ File Plug-In"
-HREF="../filters/hrz.html"></HEAD
+TITLE="Hot"
+HREF="../filters/hot.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/gauss_rle.html"
+HREF="../filters/guillotine.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/hrz.html"
+HREF="../filters/hot.html"
 >Next</A
 ></TD
 ></TR
@@ -67,61 +68,139 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-GZ"
->The <SPAN
-CLASS="ACRONYM"
->GZ</SPAN
-> File Plug-In</A
+>GZ</A
 ></H1
 ><A
-NAME="AEN4103"
+NAME="AEN6634"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GZ-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    <SPAN
+>      <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
-> can load and save images which
-    have been gzip compressed. To save a gziped file, you can either
-    use <SPAN
+>The GIMP</SPAN
+> is capable of loading and
+      saving images which have been gzip compressed.  In order to save
+      a gzipped file, either <SPAN
 CLASS="GUIBUTTON"
 >Save By Extension</SPAN
 > or
-    <SPAN
+      the <SPAN
 CLASS="GUIBUTTON"
 >gz</SPAN
->. You need to name your file in the
-    format <TT
+> extension can be used. The file
+      must be named in a similar format to:
+      <TT
 CLASS="FILENAME"
 >filename.extension.gz</TT
-> where extension
-    is an extension for a supported file format. For example, to save
-    a gziped <SPAN
+>, where
+      <TT
+CLASS="REPLACEABLE"
+><I
+>extension</I
+></TT
+> is an extension for a
+      supported file format.
+    </P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN6644"
+></A
+><P
+><B
+>Example 13-2. Saving a gzipped <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
-> file called "foo", you would
-    enter <TT
+></B
+></P
+><P
+>        If the file is called <TT
+CLASS="FILENAME"
+>foo</TT
+>, you could enter
+        either <TT
 CLASS="FILENAME"
 >foo.tif.gz</TT
+> or
+        <TT
+CLASS="FILENAME"
+>foo.tiff.gz</TT
 > as the filename.
-  </P
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GZ-OPTIONS"
+>GZ : Further Information</A
+></H2
 ><P
->    For this plug-in to work you need <SPAN
+>      For this plug-in to work, the <SPAN
 CLASS="APPLICATION"
 >gzip</SPAN
 >
-    &mdash; you can check if you have this by typing <B
+      application is required. To check if this application is present,
+      type <B
 CLASS="COMMAND"
->gzip
-    --version</B
-> at a terminal window. If you get
-    <TT
+>gzip --version</B
+> in a terminal window. If
+      there is output similar to: <TT
 CLASS="COMPUTEROUTPUT"
->gzip: command not found</TT
-> (or
-    similar) you don't have <SPAN
+>gzip: command not
+      found</TT
+> then <SPAN
 CLASS="APPLICATION"
 >gzip</SPAN
+>is not
+      installed, and can not use this plugin.
+    </P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.png"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        <SPAN
+CLASS="APPLICATION"
+>gzip</SPAN
+> is available from
+        <A
+HREF="http://www.gzip.org/"
+TARGET="_top"
+>          The gzip Homepage
+        </A
 >.
-  </P
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -138,7 +217,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/gauss_rle.html"
+HREF="../filters/guillotine.html"
 >Prev</A
 ></TD
 ><TD
@@ -154,7 +233,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/hrz.html"
+HREF="../filters/hot.html"
 >Next</A
 ></TD
 ></TR
@@ -163,13 +242,7 @@ HREF="../filters/hrz.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"<SPAN
-CLASS="ACRONYM"
->RLE</SPAN
-> Gaussian Blur"</SPAN
-> Filter</TD
+>Guillotine</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -182,10 +255,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->HRZ</SPAN
-> File Plug-In</TD
+>Hot</TD
 ></TR
 ></TABLE
 ></DIV

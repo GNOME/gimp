@@ -1,3 +1,10 @@
+2001-07-02  Sven Neumann  <sven@gimp.org>
+
+	* app/perspective_tool.c
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c: changed location of help files.
+
 2001-07-01  Sven Neumann  <sven@gimp.org>
 
 	* gimptool.in: take glib_cflags and glib_libs from glib-config instead

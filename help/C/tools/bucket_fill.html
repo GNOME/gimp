@@ -4,7 +4,8 @@
 >Bucket Fill</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,22 +71,120 @@ NAME="TOOLS-BUCKET-FILL"
 >Bucket Fill</A
 ></H1
 ><A
-NAME="AEN2295"
+NAME="AEN2363"
 ></A
 ><A
-NAME="AEN2297"
+NAME="AEN2365"
 ></A
-><P
->    Sorry, but the help page for "Bucket Fill" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2300"
->Additional Information</A
+NAME="TOOLS-BUCKET-FILL-OVERVIEW"
+>Overview</A
 ></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Bucket Fill</SPAN
+> tool is used to fill areas
+      of a layer or selection with either color or a pattern.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-BUCKET-FILL-OPTIONS"
+>Bucket Fill Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Bucket Fill Settings</B
+></P
+><DL
+><DT
+>Sample Merged</DT
+><DD
+><P
+>            This option toggles the sampling from all layers. If
+            <SPAN
+CLASS="GUIBUTTON"
+>Sample Merged</SPAN
+> is active, fills can be
+            made on a lower layer, while the color information used for
+            threshold checking is located further up. Simply select the
+            lower level and ensure that a layer above is visible for
+            color weighting.
+          </P
+></DD
+><DT
+>Threshold</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Threshold</SPAN
+> slider sets the level
+            at which color weights are measured for fill boundaries. A
+            higher setting will fill more of a multi colored image and
+            conversely, a lower setting will fill less area.
+          </P
+></DD
+><DT
+>Fill Type</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>FG Color Fill</SPAN
+>: This sets the fill
+                color to the currently selected foreground color.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>BG Color Fill</SPAN
+>: This sets the fill
+                color to the currently selected background color.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Pattern Fill</SPAN
+>: This option sets the
+                fill color to the currently selected pattern.
+              </P
+><P
+>                See also:
+                <A
+HREF="../dialogs/pattern_selection.html"
+>                  Pattern Selection
+                </A
+>.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
 ><P
 >      Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
@@ -94,6 +193,21 @@ CLASS="KEYCAP"
 CLASS="KEYCAP"
 >B</B
 >
+    </P
+><P
+>      The key modifier:
+      <B
+CLASS="KEYCAP"
+>Ctrl</B
+>
+      will toggle the use of <SPAN
+CLASS="GUIBUTTON"
+>BG Color Fill</SPAN
+> or
+      <SPAN
+CLASS="GUIBUTTON"
+>FG Color Fill</SPAN
+> on the fly.
     </P
 ></DIV
 ></DIV

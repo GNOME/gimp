@@ -1,0 +1,235 @@
+<HTML
+><HEAD
+><TITLE
+>Maze</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Max RGB"
+HREF="../filters/max_rgb.html"><LINK
+REL="NEXT"
+TITLE="Motion Blur"
+HREF="../filters/mblur.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/max_rgb.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/mblur.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-MAZE"
+>Maze</A
+></H1
+><A
+NAME="AEN6821"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-MAZE-OVERVIEW"
+>Overview</A
+></H2
+><P
+>    The <SPAN
+CLASS="GUILABEL"
+>Maze</SPAN
+> filter fills the active
+    selection or layer with a maze. Every square in the maze
+    is accessable from every other, if you can find the right
+    path. There are no loops. Features include a choice of
+    maze generation algorithms (Prim's Algorithm or
+    depth-first), tileable mazes, and non-rectangular shaped
+    mazes.
+  </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-MAZE-OPTIONS"
+>Maze Options</A
+></H2
+><P
+>    <SPAN
+CLASS="GUILABEL"
+>Parameter Settings</SPAN
+> changes the width and height
+    of the wall and passage blocks (currently there is no support for
+    making the two different sizes). The
+    <SPAN
+CLASS="GUILABEL"
+>pieces</SPAN
+> selectors are provided as
+    semi-intelligent aides to choosing a proper size, taking into
+    account the tileable mode and image size. They will only choose
+    sizes that divide more or less evenly into the image size, an even
+    or odd number of times, depending on whether the maze is to be
+    tileable or not. However, in the end, it is the width and height
+    settings which are used to produce the maze, so results may not
+    exactly match the <SPAN
+CLASS="GUILABEL"
+>pieces</SPAN
+> setting if you did
+    something weird to it.
+  </P
+><P
+>    The maze plug-in can generate tileable mazes; that is, make passages
+    going off the right (or bottom) edge wrap around and be continued on
+    the left (or top). This is useful for wallpapering and the like.
+  </P
+><P
+>    This places some constraints on the passage size. There must be an
+    even number of divisions, and the passage size should divide evenly
+    into the image size. Note that non-tileable mazes have an odd
+    number of divisions. Maze silently enforces this rule.
+  </P
+><P
+>    The <SPAN
+CLASS="GUILABEL"
+>random seed</SPAN
+> used to generate the maze. Use
+    the same seed with the same maze size and wall width, and you'll end
+    up with the same maze. Pressing the <SPAN
+CLASS="GUIBUTTON"
+>Time</SPAN
+>
+    button will use the current time as the random seed.
+  </P
+><P
+>    The plug-in knows two different ways to make mazes: the
+    <SPAN
+CLASS="GUILABEL"
+>depth-first</SPAN
+> method and <SPAN
+CLASS="GUILABEL"
+>Prim's
+    algorithm</SPAN
+>. Depth-first is <I
+CLASS="EMPHASIS"
+>much</I
+>
+    faster than Prim's algorithm, and generally produces long, twisty
+    passages. Prim's algorithm is typically characterized by many very
+    short passages with frequent branches.
+  </P
+><P
+>    If there is an active selection, maze will keep non-selected
+    portions of the layer as wall and create maze passages within the
+    selection. If the selection is disjointed, the plug-in will draw as
+    many mazes as needed to fill all portions of the selection.
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/max_rgb.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/mblur.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Max RGB</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Motion Blur</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

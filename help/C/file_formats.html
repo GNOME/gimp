@@ -4,7 +4,8 @@
 >File Formats</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="contents.html"><LINK
@@ -70,10 +71,10 @@ NAME="FILE-FORMATS"
 >File Formats</A
 ></H1
 ><A
-NAME="AEN347"
+NAME="AEN304"
 ></A
 ><A
-NAME="AEN349"
+NAME="AEN306"
 ></A
 ><P
 >    The <SPAN
@@ -87,7 +88,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN353"
+NAME="AEN310"
 >Supported Formats</A
 ></H2
 ><P
@@ -99,6 +100,9 @@ CLASS="APPLICATION"
     </P
 ><DIV
 CLASS="TABLE"
+><A
+NAME="AEN314"
+></A
 ><P
 ><B
 >Table 2-1. File Formats</B
@@ -106,6 +110,7 @@ CLASS="TABLE"
 ><TABLE
 BORDER="1"
 CLASS="CALSTABLE"
+><THEAD
 ><TR
 ><TH
 WIDTH="33%"
@@ -123,6 +128,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >Write</TH
 ></TR
+></THEAD
+><TBODY
 ><TR
 ><TD
 WIDTH="33%"
@@ -249,8 +256,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >GIF - Graphics Interchange Format
 	      <A
-NAME="AEN399"
-HREF="#FTN.AEN399"
+NAME="AEN356"
+HREF="#FTN.AEN356"
 >[a]</A
 >
 	    </TD
@@ -639,11 +646,12 @@ ALIGN="LEFT"
 VALIGN="TOP"
 >Y</TD
 ></TR
+></TBODY
 ><TR
 ><TD
 COLSPAN="3"
 >Notes:<BR><A
-NAME="FTN.AEN399"
+NAME="FTN.AEN356"
 >a. </A
 > 
 		  You need a license from Unisys to legally save files
@@ -658,7 +666,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN491"
+NAME="AEN448"
 >What Format Should I Use?</A
 ></H2
 ><P
@@ -668,6 +676,8 @@ NAME="AEN491"
     </P
 ><P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
@@ -724,9 +734,23 @@ CLASS="ACRONYM"
 >XCF</SPAN
 >.
 	  </P
+><P
+>      See also:
+      <A
+HREF="glossary.html#GLOSSARY-XCF"
+>        <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> Glossary entry
+      </A
+>
+    </P
 ></DD
 ><DT
->PNG: Portable Network Graphics</DT
+><SPAN
+CLASS="ACRONYM"
+>PNG</SPAN
+>: Portable Network Graphics</DT
 ><DD
 ><P
 >	    <SPAN
@@ -741,19 +765,21 @@ CLASS="ACRONYM"
 >	    Although <SPAN
 CLASS="ACRONYM"
 >PNG</SPAN
-> supports smooth
-	    transparency, today's most popular web browsers still
-	    don't. While we wait for Microsoft to catch up, you'll
-	    probably want to stick with non-transparent PNGs on web
-	    pages. You can use transparency effectively elsewhere
-	    though.
+> supports smooth transparency,
+	    today's most popular web browsers still don't. While we wait for
+	    Microsoft to catch up, you'll probably want to stick with
+	    non-transparent <SPAN
+CLASS="ACRONYM"
+>PNG</SPAN
+> files on web pages. You can
+	    use transparency effectively elsewhere though.
 	  </P
 ></DD
 ><DT
 ><SPAN
 CLASS="ACRONYM"
 >JPEG</SPAN
->: Compressed Photographic images</DT
+>: Joint Picture Expert Group</DT
 ><DD
 ><P
 >	    Photographs and other images from the real world (which
@@ -781,35 +807,40 @@ CLASS="ACRONYM"
 	    loss is exaggerated by repeated use.
 	  </P
 ><P
->	    <SPAN
+>	    The <SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+> filter used by <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
->'s JPEG filter uses JFIF
-	    files for compatability with most existing software. It
-	    allows you to adjust the <SPAN
-CLASS="QUOTE"
->"quality"</SPAN
-> of the
-	    image and see immediately how the saved image will look
-	    and how big the file will be.
+>The
+	    GIMP</SPAN
+> utilizes <SPAN
+CLASS="ACRONYM"
+>JFIF</SPAN
+> compression
+	    for compatability with most existing software. It allows you to
+	    adjust the quality of the image and see immediately
+	    how the saved image will look and how big the file will be.
 	  </P
 ></DD
 ><DT
->GIF: Compuserve GIF</DT
+><SPAN
+CLASS="ACRONYM"
+>GIF</SPAN
+>: Graphics Interchange Format</DT
 ><DD
 ><P
 >	    Unlike all the other file formats described here
 	    <SPAN
 CLASS="ACRONYM"
 >GIF</SPAN
-> requires the use of a colormap.
-	    This means that a maximum of 256 different colors will be
-	    preserved in the saved image.
-	    <SPAN
+> requires the use of a colormap. This means
+	    that a maximum of 256 different colors will be preserved in the
+	    saved image. <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> can handle the conversion
-	    automatically, but the results may sometimes be
+> can handle the
+	    conversion automatically, but the results may sometimes be
 	    disappointing due to this limitation of <SPAN
 CLASS="ACRONYM"
 >GIF</SPAN
@@ -846,7 +877,7 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../images/warning.gif"
+SRC="../images/warning.png"
 HSPACE="5"
 ALT="Warning"></TD
 ><TD
@@ -866,28 +897,40 @@ CLASS="APPLICATION"
 ></DIV
 ></DD
 ><DT
->BMP: Windows Bitmap</DT
+><SPAN
+CLASS="ABBREV"
+>BMP</SPAN
+>: <SPAN
+CLASS="APPLICATION"
+>Windows</SPAN
+> Bitmap</DT
 ><DD
 ><P
 >	    This format is often used by applications for Microsoft
 	    <SPAN
 CLASS="APPLICATION"
 >Windows</SPAN
->. Full color images can
-	    be stored in this format, but shortcomings of the
-	    compression scheme mean that the resulting files may be
-	    quite large. Image resolution is preserved, but no other
-	    metadata is stored in the BMP format.
+>. Full color images can be
+	    stored in this format, but shortcomings of the compression
+	    scheme mean that the resulting files may be quite large. Image
+	    resolution is preserved, but no other metadata is stored in the
+	    <SPAN
+CLASS="ABBREV"
+>BMP</SPAN
+> format.
 	  </P
 ><P
 >	    Some web browsers have included support for viewing
-	    BMP images but this is not common, so you should avoid
-	    using them on the web.
+	    <SPAN
+CLASS="ABBREV"
+>BMP</SPAN
+> images but this is not common, so you should
+	    avoid using them on the web.
 	  </P
 ></DD
 ><DT
 ><SPAN
-CLASS="ACRONYM"
+CLASS="ABBREV"
 >XPM</SPAN
 >: X Pixmap</DT
 ><DD
@@ -903,13 +946,19 @@ CLASS="APPLICATION"
 	    know if this feature is useful to you.
 	  </P
 ><P
->	    Some web browsers have included support for viewing XPM
-	    images but this is not common, so you should avoid using
-	    them on the web.
+>	    Some web browsers have included support for viewing
+	    <SPAN
+CLASS="ABBREV"
+>XPM</SPAN
+> images but this is not common, so you should
+	    avoid using them on the web.
 	  </P
 ></DD
 ><DT
->TIFF: Tagged Image File Format</DT
+><SPAN
+CLASS="ACRONYM"
+>TIFF</SPAN
+>: Tagged Image File Format</DT
 ><DD
 ><P
 >	    One of the oldest formats still commonly in use today,
@@ -942,6 +991,7 @@ CLASS="ACRONYM"
 	  </P
 ></DD
 ></DL
+></DIV
 ></DIV
 ></DIV
 ><DIV

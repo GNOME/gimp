@@ -80,7 +80,7 @@ scale_tool_transform (Tool           *tool,
 	{
 	  transform_info = info_dialog_new (_("Scaling Information"),
 					    gimp_standard_help_func,
-					    "tools/transform_scale.html");
+					    "tools/transform.html#TOOLS-TRANSFORM-SCALING");
 
 	  info_dialog_add_label (transform_info, _("Original Width:"),
 				 orig_width_buf);

@@ -4,7 +4,8 @@
 >Directories</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../../contents.html"><LINK
@@ -70,24 +71,28 @@ NAME="DIALOGS-PREFERENCES-DIRECTORIES"
 >Directories</A
 ></H1
 ><A
-NAME="AEN3288"
+NAME="AEN4663"
 ></A
 ><P
 >    <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > uses several directories to store
-    such things as addon filters (Plug-Ins), scripts, brushes etc. but
-    also it's swap and temporary files.
+    such things as add-on filters (plug-ins), scripts, brushes, etc., but
+    also its swap and temporary files.
   </P
 ><P
->    The top view in Directories controls Temp Dir and Swap Dir. The
-    Swap Dir is by default in your personal
+>    The top view in <SPAN
+CLASS="GUILABEL"
+>Directories</SPAN
+> controls Temp Dir
+    and Swap Dir. The
+    Swap Dir is, by default, in your personal
     <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > directory located in your home
-    directory. It's quite usual that your home dir is on a
+    directory. Often your home directory is on an
     <SPAN
 CLASS="ACRONYM"
 >NFS</SPAN
@@ -98,17 +103,17 @@ CLASS="ACRONYM"
     <SPAN
 CLASS="TRADEMARK"
 >Windows</SPAN
->&trade; server. If it is then
+>&trade; server. If it is,
     <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
-> will memory swap slowed down due
-    to network latency. It's therefore very important that the
+> will have its memory swap slowed down due
+    to network latency. It is therefore very important that the
     <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > directory is a local directory
-    such as e.g. <TT
+    such as <TT
 CLASS="FILENAME"
 >/tmp</TT
 > under
@@ -120,13 +125,12 @@ CLASS="FILENAME"
 CLASS="TRADEMARK"
 >Windows</SPAN
 >&trade;. The temp dir is a directory where
-    Gimp will store temporary files such as palettes that you work
+    GIMP will store temporary files such as palettes that you work
     with. The temp dir should not be in a public directory such as
-    /tmp and but a directory that only you read and write have access
-    to.
+    /tmp, but a directory to which only you have read and write access.
   </P
 ><P
->    The sub categories such as Brushes, Patterns, Plug-Ins controls
+>    The subcategories such as Brushes, Patterns, and Plug-Ins controls
     where <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -135,13 +139,22 @@ CLASS="APPLICATION"
   </P
 ><P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 >Change a Search Path</DT
 ><DD
 ><P
->	  Mark it by clicking on it, type the changed path or browse
-	  the files system with ... browse button, press enter to
+>	  Mark it by clicking on it.  Type the changed path or browse
+	  the files system with the <SPAN
+CLASS="GUIBUTTON"
+>...</SPAN
+> browse
+	  button.  Press <B
+CLASS="KEYCAP"
+>Enter</B
+> to
 	  activate the new path.
 	</P
 ></DD
@@ -153,7 +166,7 @@ CLASS="APPLICATION"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/raise_icon.png"
+SRC="../../../images/raise_directory.png"
 ></IMG
 ></SPAN
 >
@@ -161,7 +174,7 @@ SRC="../../../images/raise_icon.png"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/lower_icon.png"
+SRC="../../../images/lower_directory.png"
 ></IMG
 ></SPAN
 >
@@ -176,15 +189,19 @@ SRC="../../../images/lower_icon.png"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/new_icon.png"
+SRC="../../../images/new_directory.png"
 ></IMG
 ></SPAN
 >
-	  button type the path or browse the files system with
+	  button.  Type the path or browse the files system with the
 	  <SPAN
 CLASS="GUIBUTTON"
 >...</SPAN
-> browse button, press enter to
+> browse button.  Press
+	  <B
+CLASS="KEYCAP"
+>Enter</B
+> to
 	  activate the path.
 	</P
 ></DD
@@ -196,7 +213,7 @@ CLASS="GUIBUTTON"
 	  <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/delete_icon.png"
+SRC="../../../images/delete_directory.png"
 ></IMG
 ></SPAN
 >
@@ -204,6 +221,7 @@ SRC="../../../images/delete_icon.png"
 	</P
 ></DD
 ></DL
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -258,10 +276,7 @@ HREF="../../dialogs/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="INTERFACE"
->Brush Selection</SPAN
-> Dialog</TD
+>The Brush Selection Dialog</TD
 ></TR
 ></TABLE
 ></DIV

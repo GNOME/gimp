@@ -4,7 +4,8 @@
 >The Paths Dialog</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../../contents.html"><LINK
@@ -67,24 +68,21 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="DIALOGS-PATHS-PATHS"
->The <SPAN
-CLASS="INTERFACE"
->Paths Dialog</SPAN
-></A
+>The Paths Dialog</A
 ></H1
 ><A
-NAME="AEN1992"
+NAME="AEN1909"
 ></A
 ><A
-NAME="AEN1994"
+NAME="AEN1911"
 ></A
 ><P
 >    Basically paths are a way to store <A
 HREF="../../tools/bezier_select.html"
 >bezier selections</A
 >. Limiting
-    paths to that statement misses a lot of their functionality
-    though. A better way to see it is as a way to manage vector
+    paths to that statement misses a lot of their functionality,
+    however. A better way to see it is as a way to manage vector
     curves.  If you are familiar with vector drawing programs such as
     <SPAN
 CLASS="APPLICATION"
@@ -97,11 +95,11 @@ CLASS="APPLICATION"
     something very familiar.
   </P
 ><P
->    You will work with paths just like you work with bezier curves.
-    Bezier curves are, as a matter of fact, Paths. You may just not be
+>    Work with paths just like you work with bezier curves.
+    Bezier curves are, as a matter of fact, paths. You may just not be
     aware of the power that is hidden within them. The big difference
     is that you can edit your curve, you can paint with your curve, or
-    even save, import and export the curve.
+    even save, import, and export the curve.
   </P
 ><P
 >    There are three command areas in the Paths dialog:
@@ -131,26 +129,28 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2009"
+NAME="AEN1926"
 >Control area</A
 ></H2
 ><P
 >      From left to right we count:
       <P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
 CLASS="GUILABEL"
 >New Path</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/new_icon.png"
+SRC="../../../images/new_path.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      You will create a new path and activate the bezier tool.
@@ -161,16 +161,13 @@ CLASS="REPLACEABLE"
 ></TT
 >
 	      <A
-NAME="AEN2022"
-HREF="#FTN.AEN2022"
+NAME="AEN1939"
+HREF="#FTN.AEN1939"
 >[1]</A
 >.
-	      If you want to rename it you have to double click on the
-	      path in the path area. If you do so a <SPAN
-CLASS="INTERFACE"
->name
-	      dialog</SPAN
-> will appear.
+	      If you want to rename it, double click on the
+	      path in the path area. A name
+	      dialog will appear.
 	    </P
 ></DD
 ><DT
@@ -178,17 +175,17 @@ CLASS="INTERFACE"
 CLASS="GUILABEL"
 >Duplicate Path</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/duplicate_icon.png"
+SRC="../../../images/duplicate_path.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
->	      Will duplicate the active path. To activate/mark a path
-	      you single click on it in the path area. The name is, by
+>	      Will duplicate the active path. To activate a path,
+	      single click on it in the path area. The name is, by
 	      default, OldName#<TT
 CLASS="REPLACEABLE"
 ><I
@@ -196,8 +193,8 @@ CLASS="REPLACEABLE"
 ></TT
 >
 	      <A
-NAME="AEN2034"
-HREF="#FTN.AEN2034"
+NAME="AEN1950"
+HREF="#FTN.AEN1950"
 >[2]</A
 >.
 	    </P
@@ -207,19 +204,19 @@ HREF="#FTN.AEN2034"
 CLASS="GUILABEL"
 >Path to Selection</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/to_selection_icon.png"
+SRC="../../images/path_to_selection.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will create a selection out of a path. Notice that the
 	      path doesn't have to be closed. The created selection
 	      will simply join the endpoints with a line that will
-	      follow the curves direction in each endpoint.
+	      follow the curve's direction in each endpoint.
 	    </P
 ></DD
 ><DT
@@ -227,13 +224,13 @@ SRC="../../../images/to_selection_icon.png"
 CLASS="GUILABEL"
 >Selection to Path</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/selection_to_path_icon.png"
+SRC="../../../images/selection_to_path.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will create a path out of a selection. Beware of
@@ -247,18 +244,18 @@ SRC="../../../images/selection_to_path_icon.png"
 CLASS="GUILABEL"
 >Stroke Path</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/stroke_icon.png"
+SRC="../../../images/stroke_path.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will stroke the path with the brush of the active
-	      device. The path doesn't have to be closed. The stoke
-	      will stroke from one endpoint to another.
+	      device. The path doesn't have to be closed. The stroke
+	      will come from one endpoint to the other.
 	    </P
 ></DD
 ><DT
@@ -266,13 +263,13 @@ SRC="../../../images/stroke_icon.png"
 CLASS="GUILABEL"
 >Delete Path</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/delete_icon.png"
+SRC="../../../images/delete_path.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will delete the active path.
@@ -291,7 +288,7 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../../images/warning.gif"
+SRC="../../../images/warning.png"
 HSPACE="5"
 ALT="Warning"></TD
 ><TD
@@ -308,6 +305,7 @@ VALIGN="TOP"
 	    </P
 ></DD
 ></DL
+></DIV
 >
     </P
 ></DIV
@@ -316,35 +314,37 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2070"
+NAME="AEN1986"
 >Edit area</A
 ></H2
 ><P
->      To be able to edit a path, the bezier tool must be active.  If
+>      To edit a path, the bezier tool must be active.  If
       it isn't, you will not be able to edit a path. In the top edit
-      area we count from left to right.
+      area we count from left to right:
       <P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
 CLASS="GUILABEL"
 >New Point</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/pen_normal_icon.png"
+SRC="../../../images/new_point.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      This command will add a control point to the path and
 	      make a line from the last control point to the new
-	      point. There a two ways to create a path. You can just
+	      point. There are two ways to create a path. You can just
 	      click to add a point. This will create a curve with
-	      sharp corners. If instead you click and drag you will
+	      sharp corners. If instead you click and drag, you will
 	      stretch and form the curve related to the added control
 	      point. If you create the path this way, you will end up
 	      with a curve with smooth <SPAN
@@ -356,41 +356,48 @@ CLASS="QUOTE"
 ><P
 >	      You close your path by joining the first and last point
 	      (this is done by adding the last point really close to
-	      the first point) a <SPAN
+	      the first point).  A <SPAN
 CLASS="GUIBUTTON"
 >square</SPAN
 > sign
 	      will now appear inside the path. This command will turn
 	      the path into a selection. Clicking outside the
 	      previously closed curve will start a new bezier curve.
-	      The square path to selection command will now be
+	      The square <SPAN
+CLASS="GUIBUTTON"
+>path to selection</SPAN
+>
+	      command will now be
 	      deactivated and you can add more points inside the
 	      previously closed curve. You can have as many closed
 	      curves as you want, but you can only have one that isn't
-	      closed in the same Path. This may look like a
+	      closed in the same path. This may look like a
 	      limitation, but you can have as many paths as you like.
 	      This will enable you to have as many unclosed curves as
-	      you want as long as they are in separate paths.
+	      you want, as long as they are in separate paths.
 	    </P
 ></DD
 ></DL
+></DIV
 >
 
       <P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
 CLASS="GUILABEL"
 >Add Point</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/pen_add_icon.png"
+SRC="../../../images/add_point.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will add a point to your curve. The new point must be
@@ -404,17 +411,20 @@ CLASS="GUIBUTTON"
 CLASS="GUIBUTTON"
 >+</SPAN
 >
-	      sign appears it means that you are able to add a point
+	      sign appears, it means that you are able to add a point
 	      by clicking on the curve. The new point will be adjusted
 	      to fit the curve and the curve's shape will not be
 	      altered.
 	    </P
 ></DD
 ></DL
+></DIV
 >
 
       <P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
@@ -424,7 +434,7 @@ CLASS="GUILABEL"
 	    (<SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/pen_delete_icon.png"
+SRC="../../../images/remove_point.png"
 ></IMG
 ></SPAN
 >)</DT
@@ -437,23 +447,26 @@ SRC="../../../images/pen_delete_icon.png"
 	    </P
 ></DD
 ></DL
+></DIV
 >
 
       <P
 ></P
+><DIV
+CLASS="VARIABLELIST"
 ><DL
 ><DT
 ><SPAN
 CLASS="GUILABEL"
 >Edit Point</SPAN
 >
-	    (<SPAN
+	    <SPAN
 CLASS="INLINEMEDIAOBJECT"
 ><IMG
-SRC="../../../images/pen_edit_icon.png"
+SRC="../../../images/edit_point.png"
 ></IMG
 ></SPAN
->)</DT
+></DT
 ><DD
 ><P
 >	      Will allow you to adjust the curve. When you click on an
@@ -472,6 +485,7 @@ CLASS="KEYCAP"
 	    </P
 ></DD
 ></DL
+></DIV
 >
     </P
 ></DIV
@@ -480,7 +494,7 @@ CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2116"
+NAME="AEN2033"
 >Path area</A
 ></H2
 ><P
@@ -518,8 +532,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 WIDTH="5%"
 ><A
-NAME="FTN.AEN2022"
-HREF="../../dialogs/paths/paths.html#AEN2022"
+NAME="FTN.AEN1939"
+HREF="../../dialogs/paths/paths.html#AEN1939"
 >[1]</A
 ></TD
 ><TD
@@ -536,8 +550,8 @@ ALIGN="LEFT"
 VALIGN="TOP"
 WIDTH="5%"
 ><A
-NAME="FTN.AEN2034"
-HREF="../../dialogs/paths/paths.html#AEN2034"
+NAME="FTN.AEN1950"
+HREF="../../dialogs/paths/paths.html#AEN1950"
 >[2]</A
 ></TD
 ><TD

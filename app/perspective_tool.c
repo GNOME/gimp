@@ -64,7 +64,7 @@ perspective_tool_transform (Tool           *tool,
 	  transform_info =
 	    info_dialog_new (_("Perspective Transform Information"),
 			     gimp_standard_help_func,
-			     "tools/transform_perspective.html");
+			     "tools/transform.html#TOOLS-TRANSFORM-PERSPECTIVE");
 	  info_dialog_add_label (transform_info, _("Matrix:"),
 				 matrix_row_buf[0]);
 	  info_dialog_add_label (transform_info, "", matrix_row_buf[1]);

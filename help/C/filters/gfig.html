@@ -1,0 +1,1630 @@
+<HTML
+><HEAD
+><TITLE
+>GFig</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="GeeZoom!"
+HREF="../filters/gee_zoom.html"><LINK
+REL="NEXT"
+TITLE="GIH"
+HREF="../filters/gih.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/gee_zoom.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/gih.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-GFIG"
+>GFig</A
+></H1
+><A
+NAME="AEN5999"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GFIG-OVERVIEW"
+>Overview</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> plug-in is a versitile plug-in that is
+      used to create geometric shapes. It makes use of definable paths and
+      the currently selected brush.
+      The <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> dialog window is neatly divided into
+      three areas.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-GFIG-OPTIONS"
+>GFig Options</A
+></H2
+><P
+></P
+><UL
+><LI
+><P
+>          <SPAN
+CLASS="GUILABEL"
+>Ops</SPAN
+> contains the shape creation tools.
+          These are the tools that are used to control the shapes that
+          are created with <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+>.
+        </P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> contains the shape preview area,
+          the <SPAN
+CLASS="GUILABEL"
+>Object Details</SPAN
+>, and the
+          <SPAN
+CLASS="GUILABEL"
+>Collection Details</SPAN
+>. The main preview
+          window is where the creation of shapes will occur.
+        </P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUILABEL"
+>Settings</SPAN
+> shows many control options. This
+          area includes save and delete tools for shapes. Also a
+          mini-preview can be seen. <SPAN
+CLASS="GUILABEL"
+>Grid</SPAN
+> settings
+          are found here, as well as the rendering options.
+        </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6022"
+>Object Settings</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Object</SPAN
+> section, inside
+      <SPAN
+CLASS="GUILABEL"
+>Settings</SPAN
+>, offers the loading, creation, and
+      saving features of the plug-in. 
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Rescan</DT
+><DD
+><P
+>            This allows the rescanning of the list of available shapes
+            from the filesystem. Any shapes that are saved to the
+            filesystem can be loaded into the list via this button.
+            Clicking the <SPAN
+CLASS="GUIBUTTON"
+>Rescan</SPAN
+> button will
+            display a dialog that shows the currently loaded shape
+            paths. New paths can be added by clicking the icon in the
+            top left.
+            A browse button is provided in the top right of the dialog.
+          </P
+></DD
+><DT
+>Load</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Load</SPAN
+> button is used for loading
+            individual shapes into the editor. If there is a GFig file
+            located somewhere on the filesystem, this button is used to
+            load the shape.
+          </P
+></DD
+><DT
+>New</DT
+><DD
+><P
+>            Clicking this button will remove all of the
+            current shape settings and create a new shape file. After
+            clicking the <SPAN
+CLASS="GUIBUTTON"
+>New</SPAN
+> button, a dialog
+            will request a filename for the new shape.
+          </P
+></DD
+><DT
+>Delete</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Delete</SPAN
+> is the button used to delete a
+            saved shape.
+          </P
+></DD
+><DT
+>Edit</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Edit</SPAN
+> button is used to transfer
+            the currently displayed small preview into the main preview
+            window.
+          </P
+></DD
+><DT
+>Merge</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Merge</SPAN
+> button is used to merge the
+            current shape with the shape in the main preview window.
+            This function adds the new shape to the current one.
+          </P
+></DD
+></DL
+></DIV
+><P
+>      Upon editing an existing shape or creating a new shape, a disk
+      icon will appear next to the name of the shape. This icon
+      indicates that the shape has not yet been written to disk. A red
+      cross indicates that the file is read-only and cannot be saved.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6059"
+>Grid Options</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Grid</SPAN
+> settings located below the
+      <SPAN
+CLASS="GUILABEL"
+>Object</SPAN
+> settings control the editing grid
+      layout and behaviour.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Snap to Grid</DT
+><DD
+><P
+>            This checkbox toggles grid snaps. When grid snaps are
+            active, drawing nodes are forced to the nearest grid
+            intersection.
+          </P
+></DD
+><DT
+>Display Grid</DT
+><DD
+><P
+>            This toggles the visibility of the editing grid.
+          </P
+></DD
+><DT
+>Grid Spacing</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUILABEL"
+>Grid Spacing</SPAN
+> adjusts the density of the
+            grid. A higher setting here will space the grid further
+            apart. A lower setting will make the grid spacing smaller.
+          </P
+></DD
+></DL
+></DIV
+><P
+>      The tab section located below <SPAN
+CLASS="GUILABEL"
+>Grid</SPAN
+> settings
+      controls the rendering settings.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6080"
+>Paint Tab</A
+></H2
+><P
+>      The first tab, <SPAN
+CLASS="GUILABEL"
+>Paint</SPAN
+>, contains basic brush
+      options.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Draw on</DT
+><DD
+><P
+>            These options control the layer that will be used for the
+            shape render.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Original</SPAN
+> will render the shapes
+                onto the existing layer.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>New</SPAN
+>
+                will force the creation of a new layer for the shape.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Multiple</SPAN
+> option will render each
+                of the individual, unjoined shape components to a
+                separate layer.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Using</DT
+><DD
+><P
+>            This dropdown list allows the
+            selection of the method by which the shape will be rendered.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Brush</SPAN
+> will render the shape
+                using the currently selected brush. The
+                <SPAN
+CLASS="GUILABEL"
+>Brush</SPAN
+> tab contains the options that
+                affect this choice.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Selection</SPAN
+> will render the shape
+                as a selection area.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Selection+Fill</SPAN
+> will render the
+                shape as a filled selection area.
+              </P
+></LI
+></UL
+><P
+>            Choosing either of the selection render methods will change
+            the <SPAN
+CLASS="GUILABEL"
+>Brush</SPAN
+> tab to a
+            <SPAN
+CLASS="GUILABEL"
+>Select</SPAN
+> tab. The
+            <SPAN
+CLASS="GUILABEL"
+>Select</SPAN
+> tab controls settings that
+            affect the selection render methods.
+          </P
+></DD
+><DT
+>With BG of</DT
+><DD
+><P
+>            This dropdown is available only if the
+            <SPAN
+CLASS="GUILABEL"
+>Draw on</SPAN
+> dropdown has either
+            <SPAN
+CLASS="GUIBUTTON"
+>New</SPAN
+> or
+            <SPAN
+CLASS="GUIBUTTON"
+>Multiple</SPAN
+> selected. The available
+            options here change the background setting for the rendered
+            shape.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                The <SPAN
+CLASS="GUIBUTTON"
+>Transparent</SPAN
+> setting renders
+                the shape onto a transparent bacground.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Background</SPAN
+> uses the currently
+                selected background color for the shape background.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Foreground</SPAN
+> uses the currently
+                selected foreground color to render the the background
+                for the shape.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>White</SPAN
+> will render the shape onto
+                a white background.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Copy</SPAN
+> will use a copy of the
+                current layer for the background.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Scale to Image</DT
+><DD
+><P
+>            Selecting the <SPAN
+CLASS="GUILABEL"
+>Scale to Image</SPAN
+> toggle
+            will scale the rendered shape to the size of the image where
+            rendering will take place. If this option is not checked,
+            then the <SPAN
+CLASS="GUILABEL"
+>Scale to Image</SPAN
+> slider will
+            become active allowing controlled resizing of the shape at
+            render time. A setting of <SPAN
+CLASS="QUOTE"
+>"1.00"</SPAN
+> will render
+            the shape at 1:1 scale.
+          </P
+></DD
+><DT
+>Reverse Line</DT
+><DD
+><P
+>            This option will render the shapes in reverse. When creating
+            shapes there is at least a start node and an end node. By
+            this logic, these nodes, and consequently all encapsulated
+            between them, can be rendered in reverse order. Rendering
+            nodes in reverse can be useful for those choosing to use a
+            brush that fades out, for example.
+          </P
+></DD
+><DT
+>Approx. Circles/Ellipses</DT
+><DD
+><P
+>            This option, when activated, will create an
+            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              anti-aliasing
+            </A
+>
+            effect when rendering the arcs of circles.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6157"
+>Brush Tab</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Brush Selection</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Brush</SPAN
+> dropdown allows selection
+            of the brush type.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                Brush, pencil, and airbrush correspond to the
+                <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> equivalents that are
+                found in the Toolbox.
+              </P
+></LI
+><LI
+><P
+>                Pattern fills the brush area with the currently selected
+                pattern. Pattern is only applicable to circles and
+                ellipses if <SPAN
+CLASS="GUILABEL"
+>Approx.
+                Circles/Ellipses</SPAN
+> is active in the
+                <SPAN
+CLASS="GUILABEL"
+>Paint</SPAN
+> tab.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Set Brush...</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Set Brush...</SPAN
+> button can be
+            clicked to set up the brush in more detail. Clicking this
+            button will bring forth the brush selection dialog.
+          </P
+></DD
+><DT
+>Fade Out</DT
+><DD
+><P
+>            This option is only available if
+            <SPAN
+CLASS="GUIBUTTON"
+>Brush</SPAN
+> is the selected brush type. The
+            slider sets the number of pixels over which the stroke
+            should be faded.  A low setting is recommended to begin
+            with until more
+            skill is gained judging the lengths of the strokes.
+          </P
+></DD
+><DT
+>Gradient</DT
+><DD
+><P
+>            This option is only available if
+            <SPAN
+CLASS="GUIBUTTON"
+>Brush</SPAN
+> is the selected brush type. The
+            gradient slider selects the number of pixels along a stroke
+            to render the current gradient. For example, a setting of
+            fifty would render the gradient every fifty pixels.
+          </P
+></DD
+><DT
+>Pressure</DT
+><DD
+><P
+>            This option is only available if
+            <SPAN
+CLASS="GUIBUTTON"
+>Airbrush</SPAN
+> is the selected brush type.
+            <SPAN
+CLASS="GUILABEL"
+>Pressure</SPAN
+> is a slider that sets the
+            amount of ink allowed into the brush shape. A low setting
+            will produce a faint brush, whereas a higher setting will
+            result in a more solid one.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6194"
+>Select Tab</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Select Tab</SPAN
+> is only made available if
+      <SPAN
+CLASS="GUIBUTTON"
+>Selection</SPAN
+> is the active option in the
+      <SPAN
+CLASS="GUILABEL"
+>Paint</SPAN
+> tab.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Selection Type</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Selection Type</SPAN
+> can be set to one of
+            four things.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Add</SPAN
+> will merge any existing
+                selection with the shape that will be rendered. If no
+                selection exists, <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> will create
+                one.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Subtract</SPAN
+> will take the existing
+                selection area and remove the shape from that area. If
+                no exisiting selection is present,
+                <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> will do nothing.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Replace</SPAN
+> will remove existing
+                selections and replace them with the current shape.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Intersect</SPAN
+> will change the current
+                selection to an intersection with the shape. Any area that
+                that the shape overlaps will be kept. Any other areas will
+                be discarded. If no selection exists, nothing will
+                occur.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Fill Type</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUILABEL"
+>Fill Type</SPAN
+> is only applicable if
+            <SPAN
+CLASS="GUIBUTTON"
+>Selection+fill</SPAN
+> is the active
+            selection in the <SPAN
+CLASS="GUILABEL"
+>Paint</SPAN
+> tab. There are
+            three options.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Foreground</SPAN
+> will fill the
+                selection with the current foreground color from the
+                Toolbox.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Background</SPAN
+> will fill the
+                selection with the current background color from the
+                Toolbox.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Pattern</SPAN
+> will fill the selection
+                with the current pattern fill from the Toolbox.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Fill after</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Fill after</SPAN
+> settings control how
+            selection areas are painted with a pattern. This option is
+            only available if <SPAN
+CLASS="GUIBUTTON"
+>Selection+Fill</SPAN
+> is
+            the active <SPAN
+CLASS="GUILABEL"
+>Paint</SPAN
+> option.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Each Selection</SPAN
+> ensures that
+                selections are painted after each segment of the shape
+                is rendered.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>All Selections</SPAN
+> fills the selected
+                areas only after all shape segments have been rendered.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Antialiasing</DT
+><DD
+><P
+>            Checking the <SPAN
+CLASS="GUILABEL"
+>Antialiasing</SPAN
+> option will
+            turn on the anti-aliasing features of the renderer.
+            Anti-aliasing can give the effect of smoothness between two
+            areas of differing color.
+          </P
+><P
+>            See also:
+            <A
+HREF="../glossary.html#GLOSSARY-ANTI-ALIASING"
+>              Anti-aliasing glossary entry
+            </A
+>
+          </P
+></DD
+><DT
+>Fill Opacity</DT
+><DD
+><P
+>            This slider sets the level of opacity that the rendered
+            shape will have. A high setting here will result in more
+            opacity and a lower one in less. Opacity is defined as
+            <SPAN
+CLASS="QUOTE"
+>"The quality or state of being opaque"</SPAN
+>.
+            A layer or shape with less opacity will allow color
+            information from underneath it to be visible to some extent
+            through it. The extent is based on the level of opacity.
+          </P
+></DD
+><DT
+>Feather</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> toggle allows specification
+            of feathering of the selection area. If
+            <SPAN
+CLASS="GUIBUTTON"
+>Feather</SPAN
+> is checked, the selection
+            will be feathered to the amount set by the
+            <SPAN
+CLASS="GUIBUTTON"
+>Radius</SPAN
+> slider. Feathering produces a
+            faded edge on a selection. This can help to smooth a layer
+            or shape into a background that may not quite match the
+            shape in color weight.
+          </P
+></DD
+><DT
+>Radius</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Radius</SPAN
+> slider is a subset of the
+            <SPAN
+CLASS="GUILABEL"
+>Feather</SPAN
+> option. The slider sets the
+            amount of feathering that will be created against the
+            selection. A high setting here will result in more
+            feathering.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6277"
+>Options Tab</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Options Tab</SPAN
+> sets many of the
+      <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> options.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Show Image</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Show Image</SPAN
+> checkbox toggles whether
+            the current image or layer is shown in the main
+            <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> window.
+          </P
+></DD
+><DT
+>Reload Image</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Reload Image</SPAN
+> reloads the active
+            image or layer into the main <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+>
+            window. This option can be used to update the window
+            contents in the event that the image has been changed or
+            modified while <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> is in use.
+          </P
+></DD
+><DT
+>Grid Type</DT
+><DD
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Rectangular</SPAN
+> shows the grid as a
+                standard 90<SUP
+>o</SUP
+> line grid. This
+                is the default for most grid based applications.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Polar</SPAN
+> displays the grid as a
+                polar grid. Polar grids are circular, as if looking at a
+                wireframe sphere from above.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Isometric</SPAN
+> grids are common to
+                technical drawing fields.
+                <SPAN
+CLASS="GUIBUTTON"
+>Isometric</SPAN
+> layouts are also
+                frequently seen in reference to three dimensional work.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Grid Color</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Grid Color</SPAN
+> settings control the
+            color of the displayed grid. It can be useful to change
+            these settings if an image has been loaded into the main
+            <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> window which might obscure the
+            normal grid.
+          </P
+></DD
+><DT
+>Max Undo</DT
+><DD
+><P
+>            This slider adjusts the number of possible undo operations
+            for the drawing. Any change made to the drawing can be reverted
+            or undone by using the <SPAN
+CLASS="GUIBUTTON"
+>Undo</SPAN
+> button.
+            The <SPAN
+CLASS="GUIBUTTON"
+>Max Undo</SPAN
+> slider controls the exact
+            number of operations that can be undone.
+          </P
+></DD
+><DT
+>Show Position</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Show Position</SPAN
+> checkbox toggles the
+            display of the current X,Y co-ordinates in the
+            <SPAN
+CLASS="GUILABEL"
+>Object Details</SPAN
+> area, underneath the
+            main <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> window. The coordinates
+            represent the mouse cursor position within the drawing
+            window.
+          </P
+></DD
+><DT
+>Hide Control Points</DT
+><DD
+><P
+>            This option toggles the display of the control points. The
+            control points are the squares that are displayed on the
+            start and end points of the shape lines.
+          </P
+></DD
+><DT
+>Show Tooltips</DT
+><DD
+><P
+>            This option toggles the display of the floating tip windows
+            that are displayed if the mouse cursor is hovered over a
+            button or slider for a set period of time.
+          </P
+></DD
+><DT
+>About</DT
+><DD
+><P
+>            This button displays the <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+>
+            About
+            dialog window. This window provides information about the
+            authors.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6343"
+>Ops</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Ops</SPAN
+> panel is located on the far left side
+      of the <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> window. This panel is used for
+      the actual creation of shapes.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Line Tool</DT
+><DD
+><P
+>            The line tool is located at the top of the
+            <SPAN
+CLASS="GUILABEL"
+>Ops</SPAN
+> panel. This is the tool used to
+            draw straight lines. Lines are created by clicking and
+            dragging the mouse cursor. The initial click point is the
+            start of the line, and the drop point is the end of the
+            line.
+          </P
+></DD
+><DT
+>Tool</DT
+><DD
+><P
+>            The circle tool is the second tool in the
+            <SPAN
+CLASS="GUILABEL"
+>Ops</SPAN
+> panel. The circle tool is used to
+            create perfect circles. Circles are created by clicking and
+            dragging the mouse cursor. The initial click point becomes
+            the center of the circle and the drop point sets the radius
+            of the circle.
+          </P
+></DD
+><DT
+>Ellipse Tool</DT
+><DD
+><P
+>            The ellipse tool is used to create non-symetrical circles.
+            The ellipses have either a horizontal or a vertical
+            alignment. Ellipses are created by dragging the mouse
+            cursor. The initial click point becomes the center of the
+            ellipse and the drop point sets the X and Y extremities of
+            the ellipse.
+          </P
+></DD
+><DT
+>Curve Tool</DT
+><DD
+><P
+>            The curve tool draws part of a circle. To create a curve,
+            <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> the start point of the arc,
+            <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> the radius of the arc, and 
+            finally <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> the endpoint of the
+            arc.
+          </P
+></DD
+><DT
+>Polygon Tool</DT
+><DD
+><P
+>            The polygon tool draws equilateral polygons between three
+            sided and two hundred sided. To set the number of sides,
+            <SPAN
+CLASS="MOUSEBUTTON"
+>double click</SPAN
+> the tool button. To
+            create the polygon, <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> and
+            drag a line. The initial <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+>
+            point becomes the center of the polygon, and the drop point
+            becomes the radius.
+          </P
+></DD
+><DT
+>Star Tool</DT
+><DD
+><P
+>            The star tool creates star shapes between three points and
+            two hundred points. To set the number of points simply
+            <SPAN
+CLASS="MOUSEBUTTON"
+>double click</SPAN
+> the tool button. To
+            create the star shape, <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> and
+            drag the mouse cursor. The initial
+            <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> sets the center of the
+            star, and the drop point sets the maximum radius.
+          </P
+></DD
+><DT
+>Spiral Tool</DT
+><DD
+><P
+>            The spiral tool, like the Polygon and Star tools, can be
+            double clicked. This will display the tool options
+            assosiated with the spiral tool. Both the direction of the
+            spiral and the number of turns can be set. The creation of a
+            spiral is similar to that of a circle. Simply click and drag
+            a line to set the center and the radius and endpoint of the
+            spiral.
+          </P
+></DD
+><DT
+>Bezier Tool</DT
+><DD
+><P
+>            The bezier tool can create abstract curves. The tool can be
+            double clicked to display the tool specific options.
+            Within those options are two settings.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                  <SPAN
+CLASS="GUILABEL"
+>Closed</SPAN
+> toggles whether to close
+                  the bezier curve upon completion.
+                </P
+></LI
+><LI
+><P
+>                  <SPAN
+CLASS="GUILABEL"
+>Show Line Frame</SPAN
+> toggles the
+                  display of the control lines between nodes during
+                  curve creation.
+                </P
+></LI
+></UL
+><P
+>              Creation of a bezier curve requires at least three
+              <SPAN
+CLASS="MOUSEBUTTON"
+>clicks</SPAN
+>. The first click sets
+              the start point. All consecutive
+              <SPAN
+CLASS="MOUSEBUTTON"
+>clicks</SPAN
+> set the controls for the
+              curve. To complete the curve,
+              <B
+CLASS="KEYCAP"
+>shift</B
+>-<SPAN
+CLASS="MOUSEBUTTON"
+>leftclick</SPAN
+>.
+              If <SPAN
+CLASS="GUILABEL"
+>Closed</SPAN
+> has been toggled, the curve
+              will close automatically.
+          </P
+></DD
+><DT
+>Move Tool</DT
+><DD
+><P
+>            This tool allows the movement of a shape. In order to move a
+            shape, <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> one of the control
+            points that belong to the image and drag it. If
+            <SPAN
+CLASS="GUILABEL"
+>Hide Control Points</SPAN
+> is toggled, the
+            control points will still be able to be clicked for
+            movement, but will not be visible. This will make it rather
+            difficult to move the shape.
+          </P
+></DD
+><DT
+>Move Single Point</DT
+><DD
+><P
+>            This tool is used to move control points without moving the
+            entire shape. This can be useful when changing the actual
+            shape, and not just the position of the shape. Each of the
+            primitives is affected differently by this tool.
+            Of particular note are the following:
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                Circles and Ellipses can be moved with the center
+                control point. This will however relocate the center
+                control point, but not the radius control point.
+              </P
+></LI
+><LI
+><P
+>                The Star shape, when created, contains a third control
+                point located between the center and the radius. This
+                point controls the length of the spokes.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Copy Tool</DT
+><DD
+><P
+>            The copy tool is used to copy shapes.
+            <SPAN
+CLASS="MOUSEBUTTON"
+>Click</SPAN
+> any control point that
+            belongs to the shape that is to be moved and drag the point
+            to a new location.
+          </P
+></DD
+><DT
+>Delete Tool</DT
+><DD
+><P
+>            This tool deletes shapes.
+            <SPAN
+CLASS="MOUSEBUTTON"
+>Clicking</SPAN
+> on a control point will
+            remove the shape that owns the control point.
+          </P
+></DD
+><DT
+><SPAN
+CLASS="QUOTE"
+>"&#60;"</SPAN
+>
+            , 
+          <SPAN
+CLASS="QUOTE"
+>"&#62;"</SPAN
+>
+            , and
+          <SPAN
+CLASS="QUOTE"
+>"=="</SPAN
+></DT
+><DD
+><P
+>            These three tools control what shapes are displayed in the
+            main <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> window.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                The <SPAN
+CLASS="QUOTE"
+>"&#60;"</SPAN
+> and <SPAN
+CLASS="QUOTE"
+>"&#62;"</SPAN
+> tools cycle
+                through each shape individually. These tools can be
+                useful for painting shapes by themselves.
+              </P
+></LI
+><LI
+><P
+>                The <SPAN
+CLASS="QUOTE"
+>"=="</SPAN
+> button redisplays all the shapes
+                that may be hidden after using the <SPAN
+CLASS="QUOTE"
+>"&#60;"</SPAN
+> and
+                <SPAN
+CLASS="QUOTE"
+>"&#62;"</SPAN
+> tools.
+              </P
+></LI
+></UL
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN6449"
+>Operation Buttons</A
+></H2
+><P
+>      The list of buttons located at the bottom of the
+      <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> dialog window produce, clear, and undo
+      the work in the main <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> window.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><DL
+><DT
+>Done</DT
+><DD
+><P
+>            <SPAN
+CLASS="MOUSEBUTTON"
+>Clicking</SPAN
+> will end the current
+            <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> session.
+          </P
+></DD
+><DT
+>Paint</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Paint</SPAN
+> will render the visible shape
+            with the current settings.
+          </P
+></DD
+><DT
+>Save</DT
+><DD
+><P
+>            This button saves the current shape. If the shape has never
+            been saved to disk before, <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+> will
+            ask for a filename and location.
+          </P
+></DD
+><DT
+>Clear</DT
+><DD
+><P
+>            This will clear the active <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> and
+            any changes will be lost.
+          </P
+></DD
+><DT
+>Undo</DT
+><DD
+><P
+>            As discussed <A
+HREF="../filters/gfig.html#MAXUNDO"
+>earlier</A
+>, this
+            button will revoke the last change made to the shape or
+            drawing.
+          </P
+></DD
+><DT
+>Cancel</DT
+><DD
+><P
+>            This button will close <SPAN
+CLASS="GUILABEL"
+>GFig</SPAN
+>.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/gee_zoom.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/gih.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>GeeZoom!</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>GIH</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

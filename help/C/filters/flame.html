@@ -1,0 +1,365 @@
+<HTML
+><HEAD
+><TITLE
+>Flame</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Fit Text"
+HREF="../filters/fit-text.html"><LINK
+REL="NEXT"
+TITLE="Filter Pack"
+HREF="../filters/fp.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/fit-text.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/fp.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-FLAME"
+>Flame</A
+></H1
+><A
+NAME="AEN5866"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-FLAME-OVERVIEW"
+>Overview</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Flame</SPAN
+> filter is a complex rendering tool
+      in the <SPAN
+CLASS="GUISUBMENU"
+>Nature</SPAN
+> menu. There are many
+      available options which will affect the result.
+    </P
+><P
+>      The top left area of the Flame window shows a preview pane. Any
+      changes made to the <SPAN
+CLASS="GUILABEL"
+>Flame</SPAN
+> settings will be
+      displayed here.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-FLAME-OPTIONS"
+>Flame Options</A
+></H2
+><P
+>      Clicking the <SPAN
+CLASS="GUILABEL"
+>Edit Flame</SPAN
+> button will provide
+      an options window. Displayed are nine versions of the
+      <SPAN
+CLASS="GUILABEL"
+>Flame</SPAN
+>. The center version represents the
+      current flame. The surrounding eight neighbors represent the
+      alternates based on the <SPAN
+CLASS="GUILABEL"
+>Controls</SPAN
+> located
+      below the nine previews. Clicking the center image will regenerate
+      the surrounding flame previews using the same mathematics as the
+      center flame. Clicking any of the other eight will move the
+      selected flame into the center, and re-render the surrounding
+      flames using the new center flame as the base.
+    </P
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Controls</SPAN
+> gives control over the actual flame
+      render. This is achieved through three settings.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Speed</SPAN
+> affects the mathematical velocity
+          of the flame render.  This setting can be changed with either
+          the slider or the input box.
+        </P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Randomize</SPAN
+> randomizes the creation
+          method of the flame. Clicking this button will produce totally
+          random results.
+        </P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Variation</SPAN
+> provides a drop-box with a
+          choice of mathematical algorithms. It is beyond the scope of
+          this document to describe the mathematics involved here, but
+          many users with a pure maths background will understand this.
+        </P
+></LI
+></UL
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN5893"
+>Flame Rendering Options</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Rendering</SPAN
+> options section of the main
+      Flame dialog window provide many post-render settings.
+    </P
+><P
+></P
+><UL
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Brightness</SPAN
+> controls the overall
+          brightness of the flame render.
+      	</P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Contrast</SPAN
+> sets the contrast of the
+          render. A higher contrast will result in a sharper render at
+          the expense of color information.
+      	</P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Gamma</SPAN
+> adjusts the gamma of the render.
+      	</P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Sample Density</SPAN
+> controls the amount of
+          render detail used. A higher setting here will produce a more
+          detailed render.  A lower setting will utilize fewer pixels to
+          describe the flame.
+      	</P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Spatial Oversample</SPAN
+> When this is
+          activated, the effect is calculated on a grid smaller than
+          pixel-size and then resampled for display.  This does not
+          appear to be activated yet in this filter.
+      	</P
+></LI
+><LI
+><P
+>          <SPAN
+CLASS="GUIBUTTON"
+>Spatial Filter Radius</SPAN
+> determines the
+          amount of blur filtering that will be rendered with the flame.
+          A higher setting will result in a blurred flame.
+      	</P
+></LI
+></UL
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Colormap</SPAN
+> sets the color gradient that will be
+      used with the flame render. This setting changes the color map
+      that colors the final render. Clicking the name of the currently
+      selected color map will allow changes to be made here. Gradients,
+      Layers, and Images can be used as valid color maps.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN5918"
+>Flame Camera</A
+></H2
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Camera</SPAN
+> settings affect the visual
+      rendering of the flame artifact. <SPAN
+CLASS="GUILABEL"
+>Zoom</SPAN
+> changes
+      the visual closeness to the flame. Valid settings are between
+      -4.00 and +4.00. <I
+CLASS="EMPHASIS"
+>Warning</I
+>: Changing this
+      setting using the slider can be processor intensive.
+      <SPAN
+CLASS="GUILABEL"
+>X</SPAN
+> and <SPAN
+CLASS="GUILABEL"
+>Y</SPAN
+> change the
+      position of the flame on the <SPAN
+CLASS="GUILABEL"
+>X</SPAN
+> and
+      <SPAN
+CLASS="GUILABEL"
+>Y</SPAN
+> axis.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/fit-text.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/fp.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Fit Text</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Filter Pack</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -4,7 +4,8 @@
 >By Color Selection</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -70,14 +71,201 @@ NAME="TOOLS-BY-COLOR-SELECT"
 >By Color Selection</A
 ></H1
 ><A
-NAME="AEN2308"
+NAME="AEN2412"
 ></A
 ><A
-NAME="AEN2310"
+NAME="AEN2414"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-BY-COLOR-SELECT-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    Sorry, but the help page for "By Color Selection" is not written yet.
-  </P
+>      The <SPAN
+CLASS="GUILABEL"
+>Select by Color</SPAN
+> tool is capable of
+      selecting areas of the current layer using color. Unlike the
+      <A
+HREF="../tools/fuzzy_select.html"
+>        Fuzzy Selection Tool
+      </A
+>
+      , the <SPAN
+CLASS="GUIBUTTON"
+>Select by Color</SPAN
+> tool will make
+      selections across the entire layer, not just adjoining areas.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-BY-COLOR-SELECT-OPTIONS"
+>Select by Color Options</A
+></H2
+><P
+>      There are many options that make <SPAN
+CLASS="GUIBUTTON"
+>Select by
+      Color</SPAN
+> very powerful.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Select by Color Settings</B
+></P
+><DL
+><DT
+>Selection Preview</DT
+><DD
+><P
+>            To the left of the dialog is an area which previews the
+            current selection using black or white. Black areas are
+            unselected and white areas are selelcted regions.
+          </P
+></DD
+><DT
+>Selection Mode</DT
+><DD
+><P
+>            There are four selection modes:
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Replace</SPAN
+>: This mode will create a
+                new selection region with each click in the image
+                window.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Add</SPAN
+>: This mode will add to the
+                current selection with each additional click in the
+                image window.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Subtract</SPAN
+>: This mode removes the
+                newly selected area from the existing selection area if
+                it exists.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Intersect</SPAN
+>: This mode uses logical
+                intersection to determine the resulting selection area.
+                After clicking in the image window to indicate the new
+                region, the selection area will be reduced to include
+                only those regions with were overlapping. That is, where
+                the old selection area and the new selection area
+                intersected.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Fuzziness Threshold</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Fuzziness Threshold</SPAN
+> slider
+            adjusts the selection threshold. Lower thresholds result in
+            greater areas being selected with each click.
+          </P
+></DD
+><DT
+>Selection</DT
+><DD
+><P
+>            The three buttons in this section modify the selection area
+            quickly.
+          </P
+><P
+></P
+><UL
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>Invert</SPAN
+>: This button inverts the
+                current selection.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>All</SPAN
+>: This button selects the
+                entire layer.
+              </P
+></LI
+><LI
+><P
+>                <SPAN
+CLASS="GUIBUTTON"
+>None</SPAN
+>: This button removes the
+                current selection.
+              </P
+></LI
+></UL
+></DD
+><DT
+>Reset / Close</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button resets the selection
+            options to the defaults.
+          </P
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Close</SPAN
+> button closes the
+            <SPAN
+CLASS="GUIBUTTON"
+>Select by Color</SPAN
+> dialog maintaining
+            the selection area.
+          </P
+></DD
+></DL
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"

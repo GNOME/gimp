@@ -4,7 +4,8 @@
 >Glossary</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="contents.html"><LINK
@@ -56,8 +57,19 @@ WIDTH="100%"></DIV
 CLASS="GLOSSARY"
 ><H1
 ><A
-NAME="AEN5679"
+NAME="AEN8870"
 >Glossary</A
+></H1
+><A
+NAME="AEN8872"
+></A
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8874"
+>A</A
 ></H1
 ><DL
 ><DT
@@ -69,13 +81,113 @@ NAME="GLOSSARY-ALPHA"
 ></DT
 ><DD
 ><P
->	Refers to transparency, for example, an <SPAN
-CLASS="QUOTE"
->"Alpha
-	Channel"</SPAN
-> allows variable transpency.
+>        Refers to transparency. An Alpha Channel allows transpency
+        control. Certain image formats may only contain a single Alpha
+        Channel allowing a transparency of on or off. Other formats
+        allow a variable level of transparency.
       </P
 ></DD
+><DT
+><A
+NAME="GLOSSARY-ANTI-ALIASING"
+><B
+>Anti Aliasing</B
+></A
+></DT
+><DD
+><P
+>        A technique used to make diagonal or curved edges appear
+        smoother by setting pixels near the edge to intermediate colors
+        according to where the edge crosses the underlying color.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8884"
+>C</A
+></H1
+><DL
+><DT
+><A
+NAME="GLOSSARY-CHANNELS"
+><B
+>Channels</B
+></A
+></DT
+><DD
+><P
+>        Each image is divided up into separate channels and then
+        recombined before being sent to the output device. An output
+        device is most usually a screen. The channels that are used when
+        rendering images to a screen are Red, Green, and Blue. Other
+        output devices may use different channels. Channels can be
+        useful when working on images that need adjustment to one
+        particular color. If, for example, the removal of
+        <SPAN
+CLASS="QUOTE"
+>"red-eye"</SPAN
+> is the goal, work on the Red channel is
+        most obviously a ready solution. Channels can be seen as masks
+        that allow or restrict the output of the color that the channel
+        represents. By running filters against this channel information,
+        many varied and subtle effects can be put in to play by the
+        experienced <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> user.
+      </P
+></DD
+><DT
+><A
+NAME="GLOSSARY-DITHERING"
+><B
+>Dithering</B
+></A
+></DT
+><DD
+><P
+>        Dithering refers to the maths and voodoo invovled in rendering
+        an image that has few colors seem like it has many. Dithering is
+        accomplished in different ways depending on the output device
+        and the program. One particularly effective method is clustering
+        pixels of color together in an attempt to simulate another
+        color. This is achieved by the human eye and the tendancy for it
+        to mix colors while viewing complex color patterns. A common
+        dithering effect is seen on television screens or in newspaper
+        print. From a distance the images seem to be contructed of many
+        varied colors or shades, but upon closer inspection this is
+        certainly not the case. A color television uses only three
+        colors clustered together in various states of on or off. A
+        black and white newspaper uses only black ink, yet pictures in
+        newspapers appear to be constructed of grey tones. Furthermore,
+        there are techniques used to acheive greater success in
+        dithering. <SPAN
+CLASS="APPLICATION"
+>The GIMP</SPAN
+> can utilize the
+        Floyd-Steinburg dithering technique, for example. This dithering
+        method is simply put, a mathematical way of clustering the
+        pixels to accomplish better results than other dithering
+        methods. Of course, there are always exceptions and there are
+        many different dithering models that are in use today.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8897"
+>F</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-FILE-FORMAT"
@@ -85,13 +197,13 @@ NAME="GLOSSARY-FILE-FORMAT"
 ></DT
 ><DD
 ><P
->	A way that an image is written. You should select a file
-	format which is suitable to your
-	situation. <SPAN
+>        A way that an image is written. You should select a file format
+        which is suitable for your situation. <SPAN
 CLASS="ACRONYM"
 >JPEG</SPAN
-> and PostScript are examples
-	of file formats.  </P
+>
+        and PostScript are examples of file formats.
+      </P
 ></DD
 ><DT
 ><A
@@ -109,6 +221,17 @@ HREF="glossary.html#GLOSSARY-PLUG-IN"
 >Plug-In</A
 ></P
 ></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8907"
+>G</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-GNU"
@@ -121,21 +244,65 @@ CLASS="ACRONYM"
 ></DT
 ><DD
 ><P
->	<SPAN
+>        <SPAN
 CLASS="ACRONYM"
 >GNU</SPAN
 >'s Not Unix, an organization devoted to
-	the creation and support of Open Source
-	software. <SPAN
+        the creation and support of Open Source software.
+        <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > is an official
-	<SPAN
+        <SPAN
 CLASS="ACRONYM"
 >GNU</SPAN
 > application.
       </P
 ></DD
+><DT
+><A
+NAME="GLOSSARY-GUIDES"
+><B
+>Guides</B
+></A
+></DT
+><DD
+><P
+>        Guides are a convenient way to help you align layers and tool
+        functions on your drawable image, layer, or selection. Guides
+        are created manually by clicking and dragging from either the
+        top or left rulers in to the image area. They appear as blue
+        dashed lines. They do not print. There are some useful options
+        available to the user to help utilize guides efficiently, such
+        as
+        <A
+HREF="image/view/snap_to_guides.html"
+>          Snap to Guides
+        </A
+>,
+        <A
+HREF="image/view/toggle_guides.html"
+>          Toggle Guides
+        </A
+>, and
+        <A
+HREF="filters/centerguide.html"
+>          Center Guide
+        </A
+>.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8924"
+>H</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-HEX-TRIPLET"
@@ -145,11 +312,18 @@ NAME="GLOSSARY-HEX-TRIPLET"
 ></DT
 ><DD
 ><P
->	A way of representing color in the form #rrggbb. Used in
-	<SPAN
-CLASS="ACRONYM"
->HTML</SPAN
->.
+>        A way of representing color in the form #rrggbb where
+        <SPAN
+CLASS="QUOTE"
+>"rr"</SPAN
+> represents red, <SPAN
+CLASS="QUOTE"
+>"gg"</SPAN
+> green, and
+        <SPAN
+CLASS="QUOTE"
+>"bb"</SPAN
+> blue. Commonly used in web design.
       </P
 ></DD
 ><DT
@@ -157,6 +331,25 @@ CLASS="ACRONYM"
 NAME="GLOSSARY-HSB"
 ><B
 >HSB</B
+></A
+></DT
+><DD
+><P
+><EM
+>See: </EM
+><A
+HREF="glossary.html#GLOSSARY-HSV"
+><SPAN
+CLASS="ACRONYM"
+>HSV</SPAN
+></A
+></P
+></DD
+><DT
+><A
+NAME="GLOSSARY-HSL"
+><B
+>HSL</B
 ></A
 ></DT
 ><DD
@@ -183,12 +376,26 @@ CLASS="ACRONYM"
 ></DT
 ><DD
 ><P
->	Hue Saturation Value, a way of representing color. The Hue is
-	the color like red or blue, the Saturation is how strong the
-	color is and the Value is the brightness. This is sometimes
-	called "HSB" (Hue Saturation Brightness).
+>        Hue Saturation Value, a way of representing color. The Hue is
+        the color like red or blue, the Saturation is how strong the
+        color is and the Value is the brightness. This is sometimes
+        called <SPAN
+CLASS="ACRONYM"
+>HSB</SPAN
+> or Hue Saturation Brightness.
       </P
 ></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8945"
+>M</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-MARCHING-ANTS"
@@ -198,9 +405,20 @@ NAME="GLOSSARY-MARCHING-ANTS"
 ></DT
 ><DD
 ><P
->	The name for the dotted line which deliniates a selection.
+>      	The name for the dotted line which deliniates a selection.
       </P
 ></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8951"
+>P</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-PARASITE"
@@ -210,8 +428,8 @@ NAME="GLOSSARY-PARASITE"
 ></DT
 ><DD
 ><P
->	A piece of information which is included in a file such as the
-	compression type or a comment.
+>        A piece of information which is included in a file such as the
+        compression type or a comment.
       </P
 ></DD
 ><DT
@@ -223,8 +441,8 @@ NAME="GLOSSARY-PERL"
 ></DT
 ><DD
 ><P
->	A scripting language which can be used for
-	<SPAN
+>        A scripting language which can be used for
+        <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > plug-ins.
@@ -239,11 +457,39 @@ NAME="GLOSSARY-PLUG-IN"
 ></DT
 ><DD
 ><P
->	Extensions to the standard <SPAN
+>        Extensions to the standard <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 >
-	feature set.
+        feature set.
+      </P
+></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8967"
+>S</A
+></H1
+><DL
+><DT
+><A
+NAME="GLOSSARY-SAMPLE-MERGE"
+><B
+>Sample Merge</B
+></A
+></DT
+><DD
+><P
+>        Sample Merging refers to the system of taking sampling
+        information from the sub-pixel layer of the image. Normally
+        all pixel changes are based on a lowest resolution of one
+        pixel. Sub-pixel operations take the information from a layer
+        that has no lowest resolution. It is a mathematical level that
+        uses vectors to describe the operations.
       </P
 ></DD
 ><DT
@@ -255,8 +501,8 @@ NAME="GLOSSARY-SCRIPT-FU"
 ></DT
 ><DD
 ><P
->	A scripting language designed specifically for
-	<SPAN
+>      	A scripting language designed specifically for
+      	<SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 >.
@@ -271,8 +517,8 @@ NAME="GLOSSARY-STROKE"
 ></DT
 ><DD
 ><P
->	A function for making a selection, path or channel into a solid
-	line using the paintbrush.
+>      	A function for making a selection, path or channel into a solid
+      	line using the paintbrush.
       </P
 ></DD
 ><DT
@@ -284,15 +530,26 @@ NAME="GLOSSARY-SWAP-DIRECTORY"
 ></DT
 ><DD
 ><P
->	An area on your hard disk which effectively extends the amount
-	of main memory available to <SPAN
+>      	An area on your hard disk which effectively extends the amount
+      	of main memory available to <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 >
-	meaning larger images or more complex operations can be
-	performed.
+      	meaning larger images or more complex operations can be
+      	performed.
       </P
 ></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN8987"
+>T</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-TILE-CACHE"
@@ -302,11 +559,11 @@ NAME="GLOSSARY-TILE-CACHE"
 ></DT
 ><DD
 ><P
->	A way that <SPAN
+>      	A way that <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 > speeds up image
-	display by keeping the data in memory.
+      	display by keeping the data in memory.
       </P
 ></DD
 ><DT
@@ -318,10 +575,26 @@ NAME="GLOSSARY-TOOL"
 ></DT
 ><DD
 ><P
->	A mode for manipulating image functions &mdash; paintbrush and
-	ink are examples of tools.
+>        A mode for manipulating image functions. <A
+HREF="tools/paintbrush.html"
+>Paintbrush</A
+> and <A
+HREF="tools/clone.html"
+>Clone</A
+> are examples of tools.
       </P
 ></DD
+></DL
+></DIV
+><DIV
+CLASS="GLOSSDIV"
+><H1
+CLASS="GLOSSDIV"
+><A
+NAME="AEN9000"
+>X</A
+></H1
+><DL
 ><DT
 ><A
 NAME="GLOSSARY-XCF"
@@ -331,13 +604,43 @@ NAME="GLOSSARY-XCF"
 ></DT
 ><DD
 ><P
->	The native file format used by <SPAN
+>        The native file format used by <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
 >.
+        <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> is an acronym for the eXperimental
+        Computing Facility which is located at the University of
+        California at Berkeley where <SPAN
+CLASS="APPLICATION"
+>The GIMP</SPAN
+>
+        was originally written.
+        The <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> file format supports the storage of
+        many <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> features, such as
+        <A
+HREF="layers/index.html#LAYERS-LAYERS-INTRODUCTION"
+>          Layers
+        </A
+>,
+        <A
+HREF="glossary.html#GLOSSARY-ALPHA"
+>          Alpha
+        </A
+>, and
+        Guides.
       </P
 ></DD
 ></DL
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"

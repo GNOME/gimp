@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The BZ2 File Plug-In</TITLE
+>BZ2</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The Blur Filter"
-HREF="../filters/blur.html"><LINK
+TITLE="Burst"
+HREF="../filters/burst.html"><LINK
 REL="NEXT"
-TITLE="The Cubism Filter"
-HREF="../filters/cubism.html"></HEAD
+TITLE="Stretch Contrast"
+HREF="../filters/c_astretch.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/blur.html"
+HREF="../filters/burst.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/cubism.html"
+HREF="../filters/c_astretch.html"
 >Next</A
 ></TD
 ></TR
@@ -67,65 +68,139 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-BZ2"
->The <SPAN
-CLASS="ACRONYM"
->BZ2</SPAN
-> File Plug-In</A
+>BZ2</A
 ></H1
 ><A
-NAME="AEN3951"
+NAME="AEN5547"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BZ2-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    <SPAN
+>      <SPAN
 CLASS="APPLICATION"
->GIMP</SPAN
-> can load and save images which
-    have been bzip2 compressed.  To save a bziped file, you can either
-    use <SPAN
+>The GIMP</SPAN
+> is capable of loading and
+      saving images which have been bzip2 compressed.  In order to save
+      a bzipped file, either <SPAN
 CLASS="GUIBUTTON"
 >Save By Extension</SPAN
 > or
-    <SPAN
+      the <SPAN
 CLASS="GUIBUTTON"
 >bz2</SPAN
->. You need to name your file in the
-    format <TT
+> extension can be used. The file
+      must be named in a similar format to:
+      <TT
 CLASS="FILENAME"
 >filename.extension.bz2</TT
-> where extension
-    is an extension for a supported file format. For example, to save
-    a bziped <SPAN
+>, where
+      <TT
+CLASS="REPLACEABLE"
+><I
+>extension</I
+></TT
+> is an extension for a
+      supported file format.
+    </P
+><DIV
+CLASS="EXAMPLE"
+><A
+NAME="AEN5557"
+></A
+><P
+><B
+>Example 13-1. Saving a bziped <SPAN
 CLASS="ACRONYM"
 >TIFF</SPAN
-> file called
-    <TT
+></B
+></P
+><P
+>        If the file is called <TT
 CLASS="FILENAME"
 >foo</TT
->, you would enter
-    <TT
+>, you could enter
+        either <TT
 CLASS="FILENAME"
 >foo.tif.bz2</TT
-> as the filename.
-  </P
-><P
->    For this plug-in to work you need <SPAN
-CLASS="APPLICATION"
->bzip2</SPAN
->
-    &mdash; you can check if you have this by typing <B
-CLASS="COMMAND"
->bzip2
-    --version</B
-> at a terminal window. If you get
-    <TT
-CLASS="COMPUTEROUTPUT"
->bzip: command not found</TT
 > or
-    similar, you don't have <SPAN
+        <TT
+CLASS="FILENAME"
+>foo.tiff.bz2</TT
+> as the filename.
+      </P
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-BZ2-OPTIONS"
+>BZ2 : Further Information</A
+></H2
+><P
+>      For this plug-in to work, the <SPAN
 CLASS="APPLICATION"
->bzip2</SPAN
+>Bzip2</SPAN
+>
+      application is required. To check if this application is present,
+      type <B
+CLASS="COMMAND"
+>bzip2 --version</B
+> in a terminal window. If
+      there is output similar to: <TT
+CLASS="COMPUTEROUTPUT"
+>bzip: command not
+      found</TT
+> then <SPAN
+CLASS="APPLICATION"
+>Bzip2</SPAN
+>is not
+      installed, and can not use this plugin.
+    </P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.png"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        <SPAN
+CLASS="APPLICATION"
+>Bzip2</SPAN
+> is available from
+        <A
+HREF="http://sourceware.cygnus.com/bzip2/"
+TARGET="_top"
+>          Cygnus Sourceware
+        </A
 >.
-  </P
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -142,7 +217,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/blur.html"
+HREF="../filters/burst.html"
 >Prev</A
 ></TD
 ><TD
@@ -158,7 +233,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/cubism.html"
+HREF="../filters/c_astretch.html"
 >Next</A
 ></TD
 ></TR
@@ -167,10 +242,7 @@ HREF="../filters/cubism.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Blur"</SPAN
-> Filter</TD
+>Burst</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -183,10 +255,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Cubism"</SPAN
-> Filter</TD
+>Stretch Contrast</TD
 ></TR
 ></TABLE
 ></DIV

@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Motion Blur Filter</TITLE
+>Motion Blur</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The PSP File Plug-In"
-HREF="../filters/psp.html"><LINK
+TITLE="Maze"
+HREF="../filters/maze.html"><LINK
 REL="NEXT"
-TITLE="The Qbist Filter"
-HREF="../filters/gqbist.html"></HEAD
+TITLE="MIFF"
+HREF="../filters/miff.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/psp.html"
+HREF="../filters/maze.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/gqbist.html"
+HREF="../filters/miff.html"
 >Next</A
 ></TD
 ></TR
@@ -67,103 +68,118 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-MBLUR"
->The <SPAN
-CLASS="QUOTE"
->"Motion Blur"</SPAN
-> Filter</A
+>Motion Blur</A
 ></H1
 ><A
-NAME="AEN4521"
+NAME="AEN6845"
 ></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-MBLUR-OVERVIEW"
+>Overview</A
+></H2
 ><P
->    The Motion Blur filter is a filter that will <SPAN
+>      The Motion Blur filter is a filter that will <SPAN
 CLASS="QUOTE"
 >"push"</SPAN
 >
-    the pixels of your image for you, creating a movement blur. The
-    filter is capable of <SPAN
+      the pixels of your image for you, creating a movement blur. The
+      filter is capable of <SPAN
 CLASS="GUILABEL"
 >Linear</SPAN
 >,
-    <SPAN
+      <SPAN
 CLASS="GUILABEL"
 >Radial</SPAN
 >, and <SPAN
 CLASS="GUILABEL"
 >Zoom</SPAN
 >
-    movements. Each of these movements can be further adjusted, with
-    <SPAN
+      movements. Each of these movements can be further adjusted, with
+      <SPAN
 CLASS="GUILABEL"
 >Length</SPAN
 >, and <SPAN
 CLASS="GUILABEL"
 >Angle</SPAN
 >
-    settings available.
-  </P
+      settings available.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="FILTERS-MBLUR-OPTIONS"
+>Motion Blur Options</A
+></H2
 ><P
->    <SPAN
+>      <SPAN
 CLASS="GUILABEL"
 >Linear</SPAN
 > motion is a blur that travels in a
-    single direction, horizontally, for example. In this case,
-    <SPAN
+      single direction, horizontally, for example. In this case,
+      <SPAN
 CLASS="GUILABEL"
 >Length</SPAN
-> will affect the percieved distance
-    that the pixels are moved from their original position. More
-    <SPAN
+> will affect the perceived distance
+      that the pixels are moved from their original positions. More
+      <SPAN
 CLASS="GUILABEL"
 >Length</SPAN
 > will result in more blurring.
-    <SPAN
+      <SPAN
 CLASS="GUILABEL"
 >Angle</SPAN
 > describes the actual angle of the
-    movement. Thus, a setting of 90 will produce a verticle blur, and
-    a setting of 0 will produce a horizontal blur.
-  </P
+      movement. Thus, a setting of 90 will produce a verticle blur, and
+      a setting of 0 will produce a horizontal blur.
+    </P
 ><P
->    <SPAN
+>      <SPAN
 CLASS="GUILABEL"
 >Radial</SPAN
 > motion blur creates a circular blur.
-    The <SPAN
+      The <SPAN
 CLASS="GUILABEL"
 >Length</SPAN
 > slider is not important with this
-    type of blur. <SPAN
+      type of blur. <SPAN
 CLASS="GUILABEL"
 >Angle</SPAN
 > on the other hand, is the
-    primary setting that will affect the blur. More
-    <SPAN
+      primary setting that will affect the blur. More
+      <SPAN
 CLASS="GUILABEL"
 >Angle</SPAN
 > will result in more blurring in a
-    circular direction. The <SPAN
+      circular direction. The <SPAN
 CLASS="GUILABEL"
 >Radial</SPAN
 > motion blur is
-    similar to the effect of a spinning object. The center of the spin
-    in this case, is the center of the image.
-  </P
+      similar to the effect of a spinning object. The center of the spin
+      in this case, is the center of the image.
+    </P
 ><P
->    <SPAN
+>      <SPAN
 CLASS="GUILABEL"
 >Zoom</SPAN
 > blurring produces a blur that radiates
-    out from the center of the image. The center of the image remains
-    relatively calm, whilst the outer areas become blurred toward the
-    center. This filter option produces a percieved forward movement,
-    into the image. <SPAN
+      out from the center of the image. The center of the image remains
+      relatively calm, whilst the outer areas become blurred toward the
+      center. This filter option produces a perceived forward movement,
+      into the image. <SPAN
 CLASS="GUILABEL"
 >Length</SPAN
 > is the main setting
-    here, and affects the amount of speed, as it were, toward the
-    center of the image.
-  </P
+      here, and affects the amount of speed, as it were, toward the
+      center of the image.
+    </P
+></DIV
 ></DIV
 ><DIV
 CLASS="NAVFOOTER"
@@ -180,7 +196,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/psp.html"
+HREF="../filters/maze.html"
 >Prev</A
 ></TD
 ><TD
@@ -196,7 +212,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/gqbist.html"
+HREF="../filters/miff.html"
 >Next</A
 ></TD
 ></TR
@@ -205,10 +221,7 @@ HREF="../filters/gqbist.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="ACRONYM"
->PSP</SPAN
-> File Plug-In</TD
+>Maze</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -221,10 +234,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Qbist"</SPAN
-> Filter</TD
+>MIFF</TD
 ></TR
 ></TABLE
 ></DIV

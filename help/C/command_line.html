@@ -4,7 +4,8 @@
 >Command Line Options</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="contents.html"><LINK
@@ -74,7 +75,7 @@ CLASS="TOC"
 ></DT
 ><DT
 ><A
-HREF="command_line.html#AEN5301"
+HREF="command_line.html#AEN8395"
 >GIMP</A
 ></DT
 ><DT
@@ -93,18 +94,18 @@ CLASS="APPLICATION"
 ></DL
 ></DIV
 ><A
-NAME="AEN5299"
+NAME="AEN8393"
 ></A
 ><DIV
 CLASS="SECT1"
 ><H1
 CLASS="SECT1"
 ><A
-NAME="AEN5301"
+NAME="AEN8395"
 >GIMP</A
 ></H1
 ><A
-NAME="AEN5303"
+NAME="AEN8397"
 ></A
 ><P
 >      When you launch <SPAN
@@ -128,13 +129,23 @@ CLASS="APPLICATION"
       you can pass several options to it. These are in the format:
       <B
 CLASS="COMMAND"
->gimp [options ... ] [files ... ]</B
+>gimp</B
+> [<SPAN
+CLASS="OPTIONAL"
+>options</SPAN
+>] 
+      <TT
+CLASS="REPLACEABLE"
+><I
+>files ...</I
+></TT
 >
     </P
 ><P
 >      <P
 ></P
-><DL
+><DIV
+CLASS="VARIABLELIST"
 ><P
 ><B
 ><SPAN
@@ -142,10 +153,10 @@ CLASS="APPLICATION"
 >GIMP</SPAN
 > Options</B
 ></P
+><DL
 ><DT
-><B
-CLASS="COMMAND"
->-h, --help</B
+><P
+>[-h] [--help]</P
 ></DT
 ><DD
 ><P
@@ -154,9 +165,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-v, --version</B
+><P
+>[-v] [--version]</P
 ></DT
 ><DD
 ><P
@@ -168,9 +178,13 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-b, --batch &lt;commands&gt;</B
+><P
+>[-b] [--batch <TT
+CLASS="REPLACEABLE"
+><I
+>commands</I
+></TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -178,14 +192,27 @@ CLASS="COMMAND"
 CLASS="APPLICATION"
 >GIMP</SPAN
 > in batch
-	      (non-interactive) mode. Can someone explain how this
-	      works please!!
+	      (non-interactive) mode.
+              Any paramenters used as commands for <TT
+CLASS="OPTION"
+>-b</TT
+>
+              will be passed to <SPAN
+CLASS="APPLICATION"
+>The GIMP</SPAN
+> to
+              be interpreted by <SPAN
+CLASS="APPLICATION"
+>script-fu</SPAN
+>.
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-g, --gimprc &lt;gimprc&gt;</B
+><P
+>[-g] [--gimprc <TT
+CLASS="OPTION"
+>gimprc</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -206,9 +233,8 @@ CLASS="FILENAME"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-n, --no-interface</B
+><P
+>[-n] [--no-interface]</P
 ></DT
 ><DD
 ><P
@@ -216,9 +242,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->-r, --restore-session</B
+><P
+>[-r] [--restore-session]</P
 ></DT
 ><DD
 ><P
@@ -231,9 +256,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--no-data</B
+><P
+>[--no-data]</P
 ></DT
 ><DD
 ><P
@@ -242,7 +266,7 @@ CLASS="APPLICATION"
 >GIMP</SPAN
 > without loading
 	      patterns, gradients, palettes and brushes. This
-	      significantly reduces the startup time, and is often
+	      significantly reduces the start-up time, and is often
 	      useful when using <SPAN
 CLASS="APPLICATION"
 >GIMP</SPAN
@@ -251,9 +275,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--verbose</B
+><P
+>[--verbose]</P
 ></DT
 ><DD
 ><P
@@ -263,25 +286,22 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--no-splash</B
+><P
+>[--no-splash]</P
 ></DT
 ><DD
 ><P
 >	      Do not show the splash screen. This significantly
 	      decreases the load time, although you will not see the
 	      progress bar from the splash screen. This automatically
-	      implies <B
-CLASS="COMMAND"
->--verbose</B
+	      implies <P
+>[--verbose]</P
 >.
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--no-splash-image</B
+><P
+>[--no-splash-image]</P
 ></DT
 ><DD
 ><P
@@ -295,9 +315,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--no-shm</B
+><P
+>[--no-shm]</P
 ></DT
 ><DD
 ><P
@@ -315,9 +334,8 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--no-xshm</B
+><P
+>[--no-xshm]</P
 ></DT
 ><DD
 ><P
@@ -333,9 +351,11 @@ CLASS="APPLICATION"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--display &lt;display&gt;</B
+><P
+>[--display <TT
+CLASS="OPTION"
+>display</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -343,9 +363,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--console-messages</B
+><P
+>[--console-messages]</P
 ></DT
 ><DD
 ><P
@@ -354,9 +373,8 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--debug-handlers</B
+><P
+>[--debug-handlers]</P
 ></DT
 ><DD
 ><P
@@ -365,9 +383,11 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ><DT
-><B
-CLASS="COMMAND"
->--system-gimprc &lt;gimprc&gt;</B
+><P
+>[--system-gimprc <TT
+CLASS="OPTION"
+>gimprc</TT
+>]</P
 ></DT
 ><DD
 ><P
@@ -375,6 +395,7 @@ CLASS="COMMAND"
 	    </P
 ></DD
 ></DL
+></DIV
 >
     </P
 ></DIV

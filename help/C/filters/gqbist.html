@@ -1,10 +1,11 @@
 <HTML
 ><HEAD
 ><TITLE
->The Qbist Filter</TITLE
+>Qbist</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -12,11 +13,11 @@ REL="UP"
 TITLE="Filters"
 HREF="../filters/index.html"><LINK
 REL="PREVIOUS"
-TITLE="The Motion Blur Filter"
-HREF="../filters/mblur.html"><LINK
+TITLE="PSP"
+HREF="../filters/psp.html"><LINK
 REL="NEXT"
-TITLE="The Ripple Filter"
-HREF="../filters/ripple.html"></HEAD
+TITLE="Random Blends"
+HREF="../filters/randomblends.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -40,7 +41,7 @@ WIDTH="10%"
 ALIGN="left"
 VALIGN="bottom"
 ><A
-HREF="../filters/mblur.html"
+HREF="../filters/psp.html"
 >Prev</A
 ></TD
 ><TD
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../filters/ripple.html"
+HREF="../filters/randomblends.html"
 >Next</A
 ></TD
 ></TR
@@ -67,13 +68,10 @@ CLASS="SECT1"
 CLASS="SECT1"
 ><A
 NAME="FILTERS-QBIST"
->The <SPAN
-CLASS="QUOTE"
->"Qbist"</SPAN
-> Filter</A
+>Qbist</A
 ></H1
 ><A
-NAME="AEN4547"
+NAME="AEN7291"
 ></A
 ><P
 >    Located in <SPAN
@@ -95,7 +93,7 @@ CLASS="GUIMENUITEM"
     display of algorthmic disco.
   </P
 ><P
->    To be more concise, it provides nine sets of equations which
+>    To be more precise, it provides nine sets of equations which
     alter the image's appearance drastically.  The resulting effect is
     a specific mesh of colours, arranged in varying ways, according to
     the output of the given equation.  Generally, this is some number
@@ -108,28 +106,28 @@ CLASS="SECT2"
 CLASS="SECT2"
 ><A
 NAME="FILTERS-QBIST-DIALOG"
->The Qbist dialog</A
+>The Qbist Dialog</A
 ></H2
 ><P
->      In the dialogue, nine preview boxes are displayed.  The
-      preview in the center is the active one.  That is, without
-      further input, the preview displayed in the center will be
-      rendered into the image.  Each of the previews are image
-      buttons.  Selecting any preview enacts a corresponding
-      equation.  The selected equation is applied to the active
-      preview and changes all 9 previews to reflect a new set of
-      input parameters.  When a desirable effect results, pressing
-      the <SPAN
+>    In the dialog, nine preview boxes are displayed.  The
+    preview in the center is the active one.  That is, without
+    further input, the preview displayed in the center will be
+    rendered into the image.  Each of the previews are image
+    buttons.  Selecting any preview enacts a corresponding
+    equation.  The selected equation is applied to the active
+    preview and changes all 9 previews to reflect a new set of
+    input parameters.  When a desirable effect results, pressing
+    the <SPAN
 CLASS="GUIBUTTON"
 >OK</SPAN
 > button applies the center
-      preview to the current image.  <SPAN
+    preview to the current image.  <SPAN
 CLASS="GUIBUTTON"
 >Cancel</SPAN
 >
-      will close the dialog without making any changes to the
-      original image.
-    </P
+    will close the dialog without making any changes to the
+    original image.
+  </P
 ><DIV
 CLASS="NOTE"
 ><P
@@ -144,30 +142,36 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/note.gif"
+SRC="../../images/note.png"
 HSPACE="5"
 ALT="Note"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	The generated images do not relate in any signifigant way to
-	the original image content.  The same equations will not
-	always correspond to the same preview button.  Qbist is,
-	effectively, a randomizer.
-      </P
+>      The generated images do not relate in any signifigant way to
+      the original image content.  The same equations will not
+      always correspond to the same preview button.  Qbist is,
+      effectively, a randomizer.
+    </P
 ></TD
 ></TR
 ></TABLE
 ></DIV
 ><P
->      This filter includes a 'Load and Save' function for presets.
-      Because the generated images and equations do not rely on the
-      original image content, there is no exact way to guarantee an
-      absolute reproduction of any set of effects.  Therefore, as an
-      alternate, the user may save at least the current, center
-      preview parameters.
-    </P
+>    This filter includes a <SPAN
+CLASS="GUIBUTTON"
+>Load</SPAN
+> and
+    <SPAN
+CLASS="GUIBUTTON"
+>Save</SPAN
+> function for presets. Because the
+    generated images and equations do not rely on the original image
+    content, there is no exact way to guarantee an absolute reproduction
+    of any set of effects.  Therefore, as an alternate, the user may
+    save at least the current, center preview parameters.
+  </P
 ><DIV
 CLASS="TIP"
 ><P
@@ -182,36 +186,27 @@ WIDTH="25"
 ALIGN="CENTER"
 VALIGN="TOP"
 ><IMG
-SRC="../../images/tip.gif"
+SRC="../../images/tip.png"
 HSPACE="5"
 ALT="Tip"></TD
 ><TD
 ALIGN="LEFT"
 VALIGN="TOP"
 ><P
->	Qbist works best by repeatedly hitting any of the various
-	preview buttons until a desirable effect is observed.  Being
-	run largely on random outputs based on random inputs, it
-	tends to be not so useful if the user advances with some
-	strategy.  It seems better to simply request new renders
-	repeatedly until the user sees something
-	attractive.
-      </P
+>      Qbist works best by repeatedly <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+>
+      any of the various preview buttons until a desirable effect is
+      observed.  Being run largely on random outputs based on random
+      inputs, it tends to be not so useful if the user advances with
+      some strategy.  It seems better to simply request new renders
+      repeatedly until the user sees something attractive.
+    </P
 ></TD
 ></TR
 ></TABLE
 ></DIV
-><P
->      Quote from the author:
-
-      <SPAN
-CLASS="QUOTE"
->"	This plug-in generates images
-	from genetic formulas. It's based on an algorithm I've seen in
-	a magazine.
-      "</SPAN
->
-    </P
 ></DIV
 ></DIV
 ><DIV
@@ -229,7 +224,7 @@ WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
 ><A
-HREF="../filters/mblur.html"
+HREF="../filters/psp.html"
 >Prev</A
 ></TD
 ><TD
@@ -245,7 +240,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../filters/ripple.html"
+HREF="../filters/randomblends.html"
 >Next</A
 ></TD
 ></TR
@@ -254,10 +249,7 @@ HREF="../filters/ripple.html"
 WIDTH="33%"
 ALIGN="left"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Motion Blur"</SPAN
-> Filter</TD
+>PSP</TD
 ><TD
 WIDTH="34%"
 ALIGN="center"
@@ -270,10 +262,7 @@ HREF="../filters/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->The <SPAN
-CLASS="QUOTE"
->"Ripple"</SPAN
-> Filter</TD
+>Random Blends</TD
 ></TR
 ></TABLE
 ></DIV

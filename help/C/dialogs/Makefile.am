@@ -36,7 +36,6 @@ helpdata_DATA = \
         pattern_selection.html		\
         really_close.html		\
         really_quit.html		\
-	revert_image.html		\
         scale_image.html		\
 	scale_layer_warn.html		\
 	set_canvas_size.html		\

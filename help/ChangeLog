@@ -1,3 +1,11 @@
+2001-07-02  Sven Neumann  <sven@gimp.org>
+
+	Touched just about every file and added a whole bunch of new ones.
+
+	Imported a slightly tweaked snapshot of the rendered help pages from 
+	the gimp-help module dated late April for the 1.2.2 release. Thanks to
+	Mel Boyce  <syngin@gimp.no> for building the tarball.
+
 2001-01-22  Michael Natterer  <mitch@gimp.org>
 
 	* C/bug_submission.html

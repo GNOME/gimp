@@ -37,11 +37,7 @@ helpdata_DATA = \
         smudge.html			\
         text.html			\
         threshold.html			\
-        transform.html			\
-        transform_perspective.html	\
-        transform_rotate.html		\
-        transform_scale.html		\
-        transform_shear.html
+	transform.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

@@ -6,7 +6,8 @@ helpdata_DATA = \
         close.html		\
         index.html		\
         last_opened.html	\
-        quit.html
+        quit.html		\
+	revert.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

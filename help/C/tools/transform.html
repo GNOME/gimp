@@ -4,7 +4,8 @@
 >Transform</TITLE
 ><META
 NAME="GENERATOR"
-CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+CONTENT="Modular DocBook HTML Stylesheet Version 1.64
+"><LINK
 REL="HOME"
 TITLE="GIMP User Manual"
 HREF="../contents.html"><LINK
@@ -15,8 +16,8 @@ REL="PREVIOUS"
 TITLE="Threshold"
 HREF="../tools/threshold.html"><LINK
 REL="NEXT"
-TITLE="Perspective Transform"
-HREF="../tools/transform_perspective.html"></HEAD
+TITLE="File"
+HREF="../file/index.html"></HEAD
 ><BODY
 CLASS="SECT1"
 BGCOLOR="#FFFFFF"
@@ -53,7 +54,7 @@ WIDTH="10%"
 ALIGN="right"
 VALIGN="bottom"
 ><A
-HREF="../tools/transform_perspective.html"
+HREF="../file/index.html"
 >Next</A
 ></TD
 ></TR
@@ -70,31 +71,662 @@ NAME="TOOLS-TRANSFORM"
 >Transform</A
 ></H1
 ><A
-NAME="AEN2602"
+NAME="AEN3812"
 ></A
 ><A
-NAME="AEN2604"
+NAME="AEN3814"
 ></A
-><P
->    Sorry, but the help page for "Transform" is not written yet.
-  </P
 ><DIV
 CLASS="SECT2"
 ><H2
 CLASS="SECT2"
 ><A
-NAME="AEN2607"
->Additional Information</A
+NAME="TOOLS-TRANSFORM-OVERVIEW"
+>Overview</A
 ></H2
 ><P
->      Default Keyboard Shortcut: <B
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Transform</SPAN
+> tool is used to modify the
+      active selection or layer in one of four ways.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-TRANSFORM-OPTIONS"
+>Transform Tool Options</A
+></H2
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Transform Settings</B
+></P
+><DL
+><DT
+>Transform</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUILABEL"
+>Transform</SPAN
+> section of the
+            <SPAN
+CLASS="GUILABEL"
+>Transform Tool Options</SPAN
+> allows the
+            selection of type of transform that will be applied.
+          </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Modes</B
+></P
+><DL
+><DT
+>Rotation</DT
+><DD
+><P
+>                This mode rotates the layer or selelction.
+                See:
+                <A
+HREF="../tools/transform.html#TOOLS-TRANSFORM-ROTATION"
+>                  Rotation
+                </A
+>.
+              </P
+></DD
+><DT
+>Scaling</DT
+><DD
+><P
+>                This mode scales the active layer or selection.
+                See:
+                <A
+HREF="../tools/transform.html#TOOLS-TRANSFORM-SCALING"
+>                  Scaling
+                </A
+>.
+              </P
+></DD
+><DT
+>Shearing</DT
+><DD
+><P
+>                This mode shears the active layer or selection.
+                See:
+                <A
+HREF="../tools/transform.html#TOOLS-TRANSFORM-SHEARING"
+>                  Shearing
+                </A
+>.
+              </P
+></DD
+><DT
+>Perspective</DT
+><DD
+><P
+>                This mode changes the perspective of the active layer or
+                selection.
+                See:
+                <A
+HREF="../tools/transform.html#TOOLS-TRANSFORM-PERSPECTIVE"
+>                  Perspective
+                </A
+>
+              </P
+></DD
+></DL
+></DIV
+></DD
+><DT
+>Tool Paradigm</DT
+><DD
+><P
+>            There are two settings here. The first,
+            <SPAN
+CLASS="GUIBUTTON"
+>Traditional</SPAN
+>, is the default rendering
+            mechanism for the transform tool and will render the tranform
+            normally. The second, <SPAN
+CLASS="GUIBUTTON"
+>Corrective</SPAN
+>,
+            renders the transform in reverse.
+          </P
+></DD
+><DT
+>Grid Settings</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Show Grid</SPAN
+> checkbox toggles the
+            visiblity of the grid during the transform.
+          </P
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Density</SPAN
+> input box changes the
+            number of grid divisions within the transform grid.
+          </P
+></DD
+><DT
+>Smoothing</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Smoothing</SPAN
+> checkbox toggles the
+            smoothing of the resulting transformation. This has no effect
+            on indexed images.
+          </P
+></DD
+><DT
+>Clip Result</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Clip Result</SPAN
+> checkbox will clip any
+            area of the final render to the edges of the original area.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-TRANSFORM-ROTATION"
+>Rotation</A
+></H2
+><A
+NAME="AEN3877"
+></A
+><A
+NAME="AEN3879"
+></A
+><P
+>      <SPAN
+CLASS="GUIBUTTON"
+>Rotation</SPAN
+> mode performs arbitrary rotations
+      to the active layer or selection. To perform a rotation,
+      <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> the area that will be rotated.
+      Using the <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+> to
+      <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+> and drag, or the <B
+CLASS="KEYCAP"
+>up
+      arrow</B
+> / <B
+CLASS="KEYCAP"
+>down arrow</B
+>, rotate the displayed
+      grid or box to the required angle. Finalize the change by
+      <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+> <SPAN
+CLASS="GUIBUTTON"
+>Rotate</SPAN
+>
+      in the <SPAN
+CLASS="GUILABEL"
+>Roatation Information</SPAN
+> window.
+    </P
+><P
+>      The <SPAN
+CLASS="GUILABEL"
+>Rotation Information</SPAN
+> window displays the
+      current rotation information for the selection or layer.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Rotation Information</B
+></P
+><DL
+><DT
+>Angle</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Angle</SPAN
+> displays the current angle of
+            the active rotation. It also allows the entry of numeric
+            data for manual angle entry. There is also a
+            <SPAN
+CLASS="GUIBUTTON"
+>slider</SPAN
+> that can be used to
+            accomplish this.
+          </P
+></DD
+><DT
+>Center</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Center X</SPAN
+> displays or sets the
+            X-axis for the rotation axis point. The axis can be moved
+            with the <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+> by
+            <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+> and dragging.
+          </P
+><P
+>            <SPAN
+CLASS="GUIBUTTON"
+>Center Y</SPAN
+> displays or sets the
+            Y-axis for the rotation axis point. The axis can be moved
+            with the <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+> by
+            <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+> and dragging.
+          </P
+></DD
+><DT
+>Rotate</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Rotate</SPAN
+> button tells the tool to
+            perform the rotation.
+          </P
+></DD
+><DT
+>Reset</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button resets the rotation
+            settings to the original values. That is, those values that
+            were present prior to modification.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-TRANSFORM-SCALING"
+>Scaling</A
+></H2
+><A
+NAME="AEN3924"
+></A
+><A
+NAME="AEN3926"
+></A
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Scaling</SPAN
+> trasform mode is used to scale
+      the active layer or selection. This is achieved by
+      <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+> the area and dragging with the
+      <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+>.
+    </P
+><DIV
+CLASS="WARNING"
+><P
+></P
+><TABLE
+CLASS="WARNING"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/warning.png"
+HSPACE="5"
+ALT="Warning"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>        The <SPAN
+CLASS="GUIBUTTON"
+>Scaling</SPAN
+> mode does not constrain
+        aspect ratio. This means that after scaling, the image may not
+        have the same aspect ratio as before.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>      Changes are finalized by <SPAN
+CLASS="MOUSEBUTTON"
+>clicking</SPAN
+>
+      <SPAN
+CLASS="GUIBUTTON"
+>Scale</SPAN
+> in the <SPAN
+CLASS="GUILABEL"
+>Scaling
+      Information</SPAN
+> window.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Scaling Information</B
+></P
+><DL
+><DT
+>Original Width / Height</DT
+><DD
+><P
+>            This area located at the top of the <SPAN
+CLASS="GUILABEL"
+>Scaling
+            Information</SPAN
+> window shows the height and width of
+            the orginal layer / selection.
+          </P
+></DD
+><DT
+>Current Width</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Current Width</SPAN
+> displays or sets
+            the width of the scaled region.
+          </P
+></DD
+><DT
+>Current Height</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Current Height</SPAN
+> displays or sets
+            the height of the scaled region.
+          </P
+></DD
+><DT
+>Scale Ratio</DT
+><DD
+><P
+>            <SPAN
+CLASS="GUILABEL"
+>Scale Ratio X</SPAN
+> and <SPAN
+CLASS="GUILABEL"
+>Scale Ratio
+            Y</SPAN
+> display the ratio of the active region in
+            comparison to the original layer or selection. This is
+            useful for maintaining the aspect ratio for the resulting
+            layer or selection.
+          </P
+></DD
+><DT
+>Scale</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Scale</SPAN
+> button tells the transform
+            tool to actually perform the scaling operation.
+          </P
+></DD
+><DT
+>Reset</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button resets all changed
+            values to their previous settings.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-TRANSFORM-SHEARING"
+>Shearing</A
+></H2
+><A
+NAME="AEN3974"
+></A
+><A
+NAME="AEN3976"
+></A
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Shearing</SPAN
+> tool is used to shear a layer
+      or selection, vertically or horizontally. To shear simply click
+      the layer or selection and drag the <SPAN
+CLASS="HARDWARE"
+>mouse</SPAN
+>
+      cursor vertically or horizontally.
+    </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Shear Information</B
+></P
+><DL
+><DT
+>Shear Magnitude</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Shear Magnitude X</SPAN
+> and
+            <SPAN
+CLASS="GUIBUTTON"
+>Shear Magnitude Y</SPAN
+> input boxes display
+            the vertical (Y) or horizontal (X) magnitude of the current
+            shear. The magnitude can aslo be manually entered here.
+          </P
+></DD
+><DT
+>Shear</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Shear</SPAN
+> button tells the tool to
+            perform the current shearing operation.
+          </P
+></DD
+><DT
+>Reset</DT
+><DD
+><P
+>            The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button resets the shearing
+            magnitudes to zero.
+          </P
+></DD
+></DL
+></DIV
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="TOOLS-TRANSFORM-PERSPECTIVE"
+>Perspective</A
+></H2
+><A
+NAME="AEN4001"
+></A
+><A
+NAME="AEN4003"
+></A
+><P
+>    The <SPAN
+CLASS="GUIBUTTON"
+>Perspective</SPAN
+> tool changes the visual
+    perspective angles of the current layer or selection.
+    <SPAN
+CLASS="GUIBUTTON"
+>Perspective</SPAN
+> can be altered for each of the
+    four corners of the area. Simply <SPAN
+CLASS="MOUSEBUTTON"
+>click</SPAN
+>
+    and drag the corner grid to the required location.
+  </P
+><P
+></P
+><DIV
+CLASS="VARIABLELIST"
+><P
+><B
+>Perspective Information</B
+></P
+><DL
+><DT
+>Matrix</DT
+><DD
+><P
+>          The <SPAN
+CLASS="GUILABEL"
+>Matrix</SPAN
+> information describes the
+          <SPAN
+CLASS="GUIBUTTON"
+>Perspective</SPAN
+> transformation using matrix
+          based mathematics.
+        </P
+></DD
+><DT
+>Transform</DT
+><DD
+><P
+>          The <SPAN
+CLASS="GUIBUTTON"
+>Transform</SPAN
+> button tells the tool to
+          perform the <SPAN
+CLASS="GUIBUTTON"
+>Perspective</SPAN
+> adjustments.
+        </P
+></DD
+><DT
+>Reset</DT
+><DD
+><P
+>          The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button will reest the
+          <SPAN
+CLASS="GUIBUTTON"
+>Perspective</SPAN
+> settings to the original
+          layer or selection values.
+        </P
+></DD
+></DL
+></DIV
+><H2
+CLASS="BRIDGEHEAD"
+>Additional Information</H2
+><P
+>    Default Keyboard Shortcut: <B
 CLASS="KEYCAP"
 >Shift</B
 >-<B
 CLASS="KEYCAP"
 >T</B
 >
-    </P
+  </P
 ></DIV
 ></DIV
 ><DIV
@@ -128,7 +760,7 @@ WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
 ><A
-HREF="../tools/transform_perspective.html"
+HREF="../file/index.html"
 >Next</A
 ></TD
 ></TR
@@ -150,7 +782,7 @@ HREF="../tools/index.html"
 WIDTH="33%"
 ALIGN="right"
 VALIGN="top"
->Perspective Transform</TD
+>File</TD
 ></TR
 ></TABLE
 ></DIV
