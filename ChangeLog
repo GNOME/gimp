@@ -1,3 +1,7 @@
+2001-01-11  Valek Filippov  <frob@df.ru>
+
+	* plug-ins/script-fu.c: changed INIT_I18N() to INIT_I18N_UI().
+
 2001-01-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpcolorarea.[ch]: finished new GimpColorArea widget which
