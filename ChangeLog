@@ -1,5 +1,16 @@
 2004-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpuimanager.[ch]: added utility function
+	gimp_ui_manager_get_action() which takes "group_name" and
+	"action_name".
+
+	* app/display/gimpdisplayshell-close.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptooloptionseditor.c: use it.
+
+2004-10-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/channels-actions.c
 	* app/actions/colormap-editor-actions.c
 	* app/actions/documents-actions.c

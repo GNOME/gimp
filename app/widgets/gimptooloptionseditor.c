@@ -351,21 +351,14 @@ gimp_tool_options_editor_save_clicked (GtkWidget             *widget,
     }
   else
     {
-      GimpActionGroup *group;
+      GtkAction *action;
 
-      group = gimp_ui_manager_get_action_group (GIMP_EDITOR (editor)->ui_manager,
-                                                "tool-options");
+      action = gimp_ui_manager_get_action (GIMP_EDITOR (editor)->ui_manager,
+                                           "tool-options",
+                                           "tool-options-save-new");
 
-      if (group)
-        {
-          GtkAction *action;
-
-          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                "tool-options-save-new");
-
-          if (action)
-            gtk_action_activate (action);
-        }
+      if (action)
+        gtk_action_activate (action);
     }
 }
 

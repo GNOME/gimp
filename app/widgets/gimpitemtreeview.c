@@ -785,21 +785,14 @@ gimp_item_tree_view_activate_item (GimpContainerView *view,
 
   if (item_view_class->activate_action)
     {
-      GimpActionGroup *group;
+      GtkAction *action;
 
-      group = gimp_ui_manager_get_action_group (GIMP_EDITOR (view)->ui_manager,
-                                                item_view_class->action_group);
+      action = gimp_ui_manager_get_action (GIMP_EDITOR (view)->ui_manager,
+                                           item_view_class->action_group,
+                                           item_view_class->activate_action);
 
-      if (group)
-        {
-          GtkAction *action;
-
-          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                item_view_class->activate_action);
-
-          if (action)
-            gtk_action_activate (action);
-        }
+      if (action)
+        gtk_action_activate (action);
     }
 }
 
@@ -919,26 +912,17 @@ gimp_item_tree_view_new_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (container, GIMP_OBJECT (viewable)) &&
       item_view_class->new_default_action)
     {
-      GimpActionGroup *group;
+      GtkAction *action;
 
-      group = gimp_ui_manager_get_action_group (GIMP_EDITOR (view)->ui_manager,
-                                                item_view_class->action_group);
+      action = gimp_ui_manager_get_action (GIMP_EDITOR (view)->ui_manager,
+                                           item_view_class->action_group,
+                                           item_view_class->new_default_action);
 
-      if (group)
+      if (action)
         {
-          GtkAction *action;
-
-          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
-                                                item_view_class->new_default_action);
-
-          if (action)
-            {
-              g_object_set (action, "viewable", viewable, NULL);
-
-              gtk_action_activate (action);
-
-              g_object_set (action, "viewable", NULL, NULL);
-            }
+          g_object_set (action, "viewable", viewable, NULL);
+          gtk_action_activate (action);
+          g_object_set (action, "viewable", NULL, NULL);
         }
     }
 }

@@ -423,6 +423,25 @@ gimp_ui_manager_get_action_group (GimpUIManager   *manager,
   return NULL;
 }
 
+GtkAction *
+gimp_ui_manager_get_action (GimpUIManager *manager,
+                            const gchar   *group_name,
+                            const gchar   *action_name)
+{
+  GimpActionGroup *group;
+
+  g_return_val_if_fail (GIMP_IS_UI_MANAGER (manager), NULL);
+  g_return_val_if_fail (group_name != NULL, NULL);
+  g_return_val_if_fail (action_name != NULL, NULL);
+
+  group = gimp_ui_manager_get_action_group (manager, group_name);
+
+  if (group)
+    return gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  return NULL;
+}
+
 void
 gimp_ui_manager_ui_register (GimpUIManager          *manager,
                              const gchar            *ui_path,

@@ -745,12 +745,11 @@ toolbox_create_tools (GimpToolbox *toolbox,
 
       if (ui_manager)
         {
-          GimpActionGroup *group;
-          GtkAction       *action;
-          const gchar     *identifier;
-          gchar           *tmp;
-          gchar           *name;
-          GClosure        *accel_closure = NULL;
+          GtkAction   *action;
+          const gchar *identifier;
+          gchar       *tmp;
+          gchar       *name;
+          GClosure    *accel_closure = NULL;
 
           identifier = gimp_object_get_name (GIMP_OBJECT (tool_info));
 
@@ -759,8 +758,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
           name = g_strdup_printf ("tools-%s", tmp);
           g_free (tmp);
 
-          group = gimp_ui_manager_get_action_group (ui_manager, "tools");
-          action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
+          action = gimp_ui_manager_get_action (ui_manager, "tools", name);
 
           g_free (name);
 
