@@ -2699,16 +2699,16 @@ msgstr ""
 
 #: plug-ins/common/csource.c:665
 msgid "Save as C-Source"
-msgstr ""
+msgstr "Зберегти як вих╕дний файл на C"
 
 #: plug-ins/common/csource.c:697
 msgid "Prefixed Name:"
-msgstr ""
+msgstr "Преф╕кс назви:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
 #: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1196
 msgid "Comment:"
-msgstr ""
+msgstr "Коментар:"
 
 #. Use Comment
 #.
@@ -3536,11 +3536,11 @@ msgstr ""
 #: plug-ins/common/gbr.c:402
 #, c-format
 msgid "Unable to open %s"
-msgstr ""
+msgstr "Невдалося в╕дкрити %s"
 
 #: plug-ins/common/gbr.c:468
 msgid "Save as Brush"
-msgstr ""
+msgstr "Зберегти як пензель"
 
 #: plug-ins/common/gbr.c:495
 msgid "Spacing:"
@@ -3571,7 +3571,7 @@ msgstr ""
 
 #: plug-ins/common/gicon.c:480
 msgid "Icon Name:"
-msgstr ""
+msgstr "Назва п╕ктограми:"
 
 #: plug-ins/common/gif.c:673
 msgid ""
@@ -3588,11 +3588,11 @@ msgstr ""
 #: plug-ins/common/gif.c:947
 #, c-format
 msgid "GIF: can't open %s\n"
-msgstr ""
+msgstr "GIF: не вдалося в╕дкрити %s\n"
 
 #: plug-ins/common/gif.c:1150
 msgid "GIF Warning"
-msgstr ""
+msgstr "Попередження GIF"
 
 #: plug-ins/common/gif.c:1176
 msgid ""
@@ -3607,7 +3607,7 @@ msgstr ""
 
 #: plug-ins/common/gif.c:1221
 msgid "Save as GIF"
-msgstr ""
+msgstr "Зберегти як GIF"
 
 #. regular gif parameter settings
 #: plug-ins/common/gif.c:1243
@@ -4184,7 +4184,7 @@ msgstr ""
 
 #: plug-ins/common/jpeg.c:1604
 msgid "Save as Jpeg"
-msgstr ""
+msgstr "Зберегти як Jpeg"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1627
@@ -4744,7 +4744,7 @@ msgstr "<Image>/Ф╕льтри/Мапа/Paper Tile..."
 
 #: plug-ins/common/pat.c:423
 msgid "Save as Pattern"
-msgstr ""
+msgstr "Зберегти як шаблон"
 
 #: plug-ins/common/pixelize.c:166
 msgid "<Image>/Filters/Blur/Pixelize..."
@@ -5102,7 +5102,7 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2671
 msgid "Save as PostScript"
-msgstr ""
+msgstr "Зберегти як PostScript"
 
 #. Image Size
 #: plug-ins/common/ps.c:2701
@@ -5157,7 +5157,7 @@ msgstr ""
 
 #: plug-ins/common/psp.c:438
 msgid "Save as PSP"
-msgstr ""
+msgstr "Зберегти як PSP"
 
 #. file save type
 #: plug-ins/common/psp.c:455
@@ -5726,16 +5726,16 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:1849
 msgid "Open file"
-msgstr ""
+msgstr "В╕дкрити файл"
 
 #: plug-ins/common/spheredesigner.c:1849
 msgid "Save file"
-msgstr ""
+msgstr "Зберегти файл"
 
 #: plug-ins/common/spheredesigner.c:2110 plug-ins/common/spheredesigner.c:2148
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
-msgstr ""
+msgstr "Д╕алог вибору кольору"
 
 #: plug-ins/common/spheredesigner.c:2231
 msgid "Sphere Designer"
@@ -5775,7 +5775,7 @@ msgstr ""
 
 #: plug-ins/common/spheredesigner.c:2375
 msgid "Colors:"
-msgstr ""
+msgstr "Кольори:"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2412 plug-ins/gimpressionist/paper.c:169
@@ -5884,7 +5884,7 @@ msgstr ""
 
 #: plug-ins/common/sunras.c:520 plug-ins/fits/fits.c:467
 msgid "Can't open file for writing"
-msgstr ""
+msgstr "Неможливо в╕дкрити файл на запис"
 
 #: plug-ins/common/sunras.c:1028 plug-ins/common/sunras.c:1119
 #: plug-ins/common/sunras.c:1200 plug-ins/common/sunras.c:1295
@@ -5956,7 +5956,7 @@ msgstr "Зберегти TIFF"
 
 #: plug-ins/common/tiff.c:1485
 msgid "Compression"
-msgstr ""
+msgstr "Стиснення"
 
 #: plug-ins/common/tiff.c:1490
 msgid "LZW"
@@ -7296,7 +7296,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:688
 msgid "Split MPEG1 Video to Frames"
-msgstr ""
+msgstr "Розбити MPEG1-в╕део на кадри"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:689 plug-ins/gap/gap_decode_xanim.c:297
 #: plug-ins/gap/gap_range_ops.c:1422
@@ -7338,7 +7338,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:180
 msgid "XANIM Information"
-msgstr ""
+msgstr "╤нформац╕я XANIM"
 
 #: plug-ins/gap/gap_decode_xanim.c:213
 msgid "Video:"
@@ -7723,7 +7723,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:403
 msgid "<Image>/Video/Delete Frames"
-msgstr ""
+msgstr "<Image>/В╕део/Стерти кадри..."
 
 #: plug-ins/gap/gap_main.c:415
 msgid "<Image>/Video/Duplicate Frames..."
@@ -7739,7 +7739,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:451
 msgid "<Image>/Video/Frames to Image..."
-msgstr ""
+msgstr "<Image>/В╕део/Кадри в зображення..."
 
 #: plug-ins/gap/gap_main.c:463
 msgid "<Image>/Video/Frames Flatten..."
@@ -8249,12 +8249,12 @@ msgstr ""
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1566
 msgid "X Coordinate"
-msgstr ""
+msgstr "X-координата"
 
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:1584
 msgid "Y Coordinate"
-msgstr ""
+msgstr "Y-координата"
 
 #. label text
 #. scalesize spinsize
@@ -8316,7 +8316,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:1725
 msgid "Add Point"
-msgstr ""
+msgstr "Додати точку"
 
 #: plug-ins/gap/gap_mov_dialog.c:1733
 msgid ""
@@ -8340,7 +8340,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:683
 msgid "Insert Point"
-msgstr ""
+msgstr "Вставити точку"
 
 #: plug-ins/gap/gap_mov_dialog.c:1762
 msgid ""
@@ -8352,7 +8352,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
-msgstr ""
+msgstr "Стерти точку"
 
 #: plug-ins/gap/gap_mov_dialog.c:1774
 msgid "Delete current Controlpoint"
@@ -8845,7 +8845,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:325
 msgid "Palette Type"
-msgstr ""
+msgstr "Тип пал╕три"
 
 #: plug-ins/gap/gap_range_ops.c:332
 msgid "Custom Palette"
@@ -8899,15 +8899,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:430
 msgid "Convert to RGB"
-msgstr ""
+msgstr "Перетворити в RGB"
 
 #: plug-ins/gap/gap_range_ops.c:431
 msgid "Convert to Gray"
-msgstr ""
+msgstr "Перетворити в градац╕╖ с╕рого"
 
 #: plug-ins/gap/gap_range_ops.c:432
 msgid "Convert to Indexed"
-msgstr ""
+msgstr "Перетворити в ╕ндексоване"
 
 #: plug-ins/gap/gap_range_ops.c:456
 msgid ""
@@ -9512,17 +9512,17 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2200
 msgid "Copy an object"
-msgstr ""
+msgstr "Скоп╕ювати об'╓кт"
 
 #: plug-ins/gfig/gfig.c:2205
 msgid "Delete an object"
-msgstr ""
+msgstr "Стерти об'╓кт"
 
 #: plug-ins/gfig/gfig.c:2364 plug-ins/gfig/gfig.c:2804
 #: plug-ins/gfig/gfig.c:4002 plug-ins/gimpressionist/brush.c:351
 #: plug-ins/gimpressionist/brush.c:356
 msgid "Brush"
-msgstr ""
+msgstr "Пензель"
 
 #: plug-ins/gfig/gfig.c:2365
 msgid "Airbrush"
@@ -9627,7 +9627,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:3008
 msgid "Pressure:"
-msgstr ""
+msgstr "Натиск:"
 
 #: plug-ins/gfig/gfig.c:3026
 msgid "No Options..."
@@ -10032,7 +10032,7 @@ msgstr ""
 #: plug-ins/gflare/gflare.c:3270
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr ""
+msgstr "Назву \"%s\" вже використано!"
 
 #: plug-ins/gflare/gflare.c:3319
 msgid "Copy GFlare"
@@ -10176,7 +10176,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:4825
 msgid "More..."
-msgstr ""
+msgstr "Ще..."
 
 #: plug-ins/gfli/gfli.c:439 plug-ins/gfli/gfli.c:478 plug-ins/gfli/gfli.c:723
 #, c-format
@@ -10206,7 +10206,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/brush.c:189
 msgid "Save brush"
-msgstr ""
+msgstr "Зберегти пензель"
 
 #: plug-ins/gimpressionist/brush.c:392
 msgid "Brush Preview:"
@@ -10397,7 +10397,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientation.c:73
 msgid "Directions:"
-msgstr ""
+msgstr "Напрямки:"
 
 #: plug-ins/gimpressionist/orientation.c:77
 msgid "Start angle:"
@@ -10501,15 +10501,15 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:522
 msgid "Select previous vector"
-msgstr ""
+msgstr "Вибрати попередн╕й вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:529
 msgid "Select next vector"
-msgstr ""
+msgstr "Вибрати наступний вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:536
 msgid "Add new vector"
-msgstr ""
+msgstr "Додати новий вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:538
 #: plug-ins/gimpressionist/sizemap.c:438
@@ -10518,7 +10518,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:543
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Стерти вибраний вектор"
 
 #: plug-ins/gimpressionist/orientmap.c:563
 msgid "Change the angle of the selected vector"
@@ -10586,7 +10586,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
-msgstr ""
+msgstr "Пап╕р"
 
 #: plug-ins/gimpressionist/paper.c:130
 msgid "Paper Preview:"
@@ -10826,7 +10826,7 @@ msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:142
 msgid "Index"
-msgstr ""
+msgstr "Зм╕ст"
 
 #: plug-ins/helpbrowser/helpbrowser.c:397 plug-ins/imagemap/imap_main.c:507
 #: plug-ins/imagemap/imap_settings.c:149
@@ -11212,7 +11212,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:47 plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
-msgstr ""
+msgstr "Помилка в╕дкривання файлу"
 
 #: plug-ins/imagemap/imap_file.c:56
 msgid "Load Imagemap"
@@ -11303,7 +11303,7 @@ msgstr "Не вдалось зберегти файл:"
 
 #: plug-ins/imagemap/imap_main.c:898
 msgid "Image size changed"
-msgstr ""
+msgstr "Розм╕р зображення зм╕нено"
 
 #: plug-ins/imagemap/imap_main.c:902
 msgid ""
@@ -11313,7 +11313,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_main.c:933
 msgid "Couldn't read file:"
-msgstr ""
+msgstr "Не вдалося зчитати файл:"
 
 #: plug-ins/imagemap/imap_main.c:979
 #, c-format
@@ -11973,11 +11973,11 @@ msgstr ""
 
 #: plug-ins/print/print.c:940
 msgid "Portrait"
-msgstr ""
+msgstr "Портрет"
 
 #: plug-ins/print/print.c:942
 msgid "Landscape"
-msgstr ""
+msgstr "Ландшафт"
 
 #: plug-ins/print/print.c:965
 msgid "Output Type:"

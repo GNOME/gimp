@@ -519,49 +519,40 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
 msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Консоль..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:1
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Розширення/Script-Fu/Сервер..."
+msgstr ""
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
@@ -669,7 +660,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:6
 msgid "Add Shadow"
-msgstr ""
+msgstr "Додати т╕нь"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:7
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:9
@@ -712,7 +703,7 @@ msgstr "Азимут"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:3
 msgid "BG Opacity"
-msgstr ""
+msgstr "Непрозор╕сть тла"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:4
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:5
@@ -750,7 +741,7 @@ msgstr "Кол╕р тла"
 #: plug-ins/script-fu/scripts/carved-logo.scm:5
 #: plug-ins/script-fu/scripts/crystal-logo.scm:6
 msgid "Background Image"
-msgstr ""
+msgstr "Зображення на тл╕"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:3
 msgid "Bar Height"
@@ -1146,7 +1137,7 @@ msgstr "Назва файлу"
 
 #: plug-ins/script-fu/scripts/select_to_brush.scm:3
 msgid "Filename"
-msgstr ""
+msgstr "Назва файлу"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:5
 msgid "Fill Angle"
@@ -1168,7 +1159,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:9
 #: plug-ins/script-fu/scripts/glossy.scm:19
 msgid "Flatten Image"
-msgstr ""
+msgstr "Звести зображення"
 
 #: plug-ins/script-fu/scripts/slide.scm:5
 msgid "Font Color"
@@ -1290,7 +1281,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/neon-logo.scm:6
 #: plug-ins/script-fu/scripts/starscape-logo.scm:5
 msgid "Glow Color"
-msgstr ""
+msgstr "Кол╕р сяйва"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:8
 msgid "Glow Radius"
@@ -1385,18 +1376,17 @@ msgstr ""
 #: plug-ins/script-fu/scripts/flatland.scm:3
 #: plug-ins/script-fu/scripts/land.scm:3
 msgid "Image Height"
-msgstr ""
+msgstr "Висота зображення"
 
 #: plug-ins/script-fu/scripts/camo.scm:2
 #: plug-ins/script-fu/scripts/rendermap.scm:2
-#, fuzzy
 msgid "Image Size"
-msgstr "Типи зображень:"
+msgstr "Розм╕р зображення"
 
 #: plug-ins/script-fu/scripts/flatland.scm:2
 #: plug-ins/script-fu/scripts/land.scm:2
 msgid "Image Width"
-msgstr ""
+msgstr "Ширина зображення"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:2
 msgid "Image to Carve"
@@ -1413,7 +1403,7 @@ msgstr "Зображення"
 #: plug-ins/script-fu/scripts/gimp-labels.scm:12
 #: plug-ins/script-fu/scripts/gimp-labels.scm:21
 msgid "Index Image"
-msgstr ""
+msgstr "╤ндексоване зображення"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:5
 msgid "Index to n Colors (0 = Remain RGB):"
@@ -1524,11 +1514,11 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:23
 #: plug-ins/script-fu/scripts/gimp-labels.scm:22
 msgid "Number of Colors"
-msgstr ""
+msgstr "К╕льк╕сть кольор╕в"
 
 #: plug-ins/gap/sel-to-anim-img.scm:2
 msgid "Number of Copies"
-msgstr ""
+msgstr "К╕льк╕сть коп╕й"
 
 #: plug-ins/script-fu/scripts/color-cycling.scm:2
 #: plug-ins/script-fu/scripts/ripply-anim.scm:3
@@ -1583,12 +1573,12 @@ msgstr ""
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:7
 #: plug-ins/script-fu/scripts/xach-effect.scm:5
 msgid "Opacity"
-msgstr ""
+msgstr "Непрозор╕сть"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:3
 msgid "Orientation"
-msgstr ""
+msgstr "Ор╕╓нтац╕я"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:5
 msgid "Outer Border (>= 0)"
@@ -1694,7 +1684,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/text-circle.scm:3
 #: plug-ins/script-fu/scripts/tileblur.scm:2
 msgid "Radius"
-msgstr ""
+msgstr "Рад╕ус"
 
 #: plug-ins/script-fu/scripts/flatland.scm:4
 #: plug-ins/script-fu/scripts/land.scm:4
@@ -1807,7 +1797,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-headers.scm:19
 #: plug-ins/script-fu/scripts/gimp-labels.scm:18
 msgid "Shadow Color"
-msgstr ""
+msgstr "Кол╕р т╕н╕"
 
 #: plug-ins/script-fu/scripts/weave.scm:4
 msgid "Shadow Darkness"
@@ -1836,7 +1826,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/glossy.scm:16
 #: plug-ins/script-fu/scripts/sphere.scm:4
 msgid "Shadow"
-msgstr ""
+msgstr "Т╕нь"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:3
 msgid "Sharpness (degrees)"
@@ -1875,7 +1865,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:22
 #: plug-ins/script-fu/scripts/select_to_brush.scm:4
 msgid "Spacing"
-msgstr ""
+msgstr "╤нтервал"
 
 #: plug-ins/script-fu/scripts/sphere.scm:6
 msgid "Sphere Color"
@@ -2036,7 +2026,7 @@ msgstr "Текст"
 #: plug-ins/script-fu/scripts/add-bevel.scm:4
 #: plug-ins/script-fu/scripts/truchet.scm:3
 msgid "Thickness"
-msgstr ""
+msgstr "Товщина"
 
 #: plug-ins/script-fu/scripts/weave.scm:7
 msgid "Thread Density"
@@ -2146,4 +2136,4 @@ msgstr "Ширина"
 #: plug-ins/script-fu/scripts/slide.scm:6
 #: plug-ins/script-fu/scripts/spinning_globe.scm:6
 msgid "Work on Copy"
-msgstr ""
+msgstr "Працювати з коп╕╓ю"
