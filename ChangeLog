@@ -1,3 +1,8 @@
+2003-05-09  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* plug-ins/common/jigsaw.c: Merged fix for bug #100122 from HEAD
+	branch.
+
 2003-05-07  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* app/paint_funcs.c (initial_sub_region, combine_sub_region):
