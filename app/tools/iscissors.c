@@ -2599,7 +2599,7 @@ CR_convert (Iscissors *iscissors,
 		     iscissors->mask->drawable.width,
 		     iscissors->mask->drawable.height, TRUE);
 
-  for (i = 0; i < height; i++)
+  for (i = 0; i < height-(offy*SUPERSAMPLE); i++)
     {
       list = CR_scanlines[i];
 
@@ -2609,7 +2609,7 @@ CR_convert (Iscissors *iscissors,
 
       while (list)
         {
-          x = (long) list->data;
+          x = (long) list->data + offx;
           if ( x < 0 ) x = 0;
           
           list = list->next;
@@ -2620,7 +2620,7 @@ CR_convert (Iscissors *iscissors,
 		  if (w+x > width) w = width - x;
 		  
 	      if (!antialias)
-		 channel_add_segment (iscissors->mask, x+offx, i+offy, w, 255);
+		 channel_add_segment (iscissors->mask, x, i+offy, w, 255);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
@@ -2640,7 +2640,7 @@ CR_convert (Iscissors *iscissors,
 
 	      *b++ = (unsigned char) (val / SUPERSAMPLE2);
 	    }
-	  pixel_region_set_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, iscissors->mask->drawable.width, buf);
+	  pixel_region_set_row (&maskPR, offx/*0*/, (i / SUPERSAMPLE)+offy, iscissors->mask->drawable.width-offx, buf);
 	}
 
       g_slist_free (CR_scanlines[i]);

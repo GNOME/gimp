@@ -1,4 +1,7 @@
-Thu Mar 26 16L32:05 MST 1998 Nathan Summers <rock@gimp.org>
+Thu Mar 26 17:41:55 MST 1998 Nathan Summers <rock@gimp.org>
+	* app/iscissors.c: fixed the sigsegv if the layer is offset!
+
+Thu Mar 26 16:32:05 MST 1998 Nathan Summers <rock@gimp.org>
 	* app/iscissors.c: fix a typo (i where a j should be)
 
 Thu Mar 26 15:26:18 MST 1998 Nathan Summers <rock@gimp.org>
