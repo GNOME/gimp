@@ -85,7 +85,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 void 
 gimp_shear_tool_register (GimpToolRegisterCallback  callback,
-                          Gimp                     *gimp)
+                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SHEAR_TOOL,
                 transform_options_new,
@@ -96,7 +96,7 @@ gimp_shear_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Shear"), "<shift>F",
                 NULL, "tools/shear.html",
                 GIMP_STOCK_TOOL_SHEAR,
-                gimp);
+                data);
 }
 
 GType

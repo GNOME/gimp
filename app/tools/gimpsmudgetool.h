@@ -46,7 +46,7 @@ struct _GimpSmudgeToolClass
 
 
 void    gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
-                                   Gimp                     *gimp);
+                                   gpointer                  data);
 
 GType   gimp_smudge_tool_get_type (void) G_GNUC_CONST;
 

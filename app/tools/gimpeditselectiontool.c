@@ -292,7 +292,7 @@ init_edit_selection (GimpTool    *tool,
                                  RINT (edit_select->origy));
 
   GIMP_TOOL (edit_select)->gdisp = gdisp;
-  gimp_tool_control_activate(GIMP_TOOL (edit_select)->control);
+  gimp_tool_control_activate (GIMP_TOOL (edit_select)->control);
 
   g_object_ref (G_OBJECT (edit_select));
 
@@ -334,7 +334,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   tool_manager_pop_tool (gdisp->gimage->gimp);
 
-  gimp_tool_control_halt(tool_manager_get_active (gdisp->gimage->gimp)->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool_manager_get_active (gdisp->gimage->gimp)->control);    /* sets paused_count to 0 -- is this ok? */
 
   /* EDIT_MASK_TRANSLATE is performed here at movement end, not 'live' like
    *  the other translation types.
@@ -414,7 +414,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (!gimp_tool_control_is_active(tool->control))
+  if (!gimp_tool_control_is_active (tool->control))
     {
       g_warning ("BUG: Tracking motion while !ACTIVE");
       return;

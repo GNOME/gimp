@@ -136,18 +136,18 @@ gimp_tool_module_new (const gchar              *filename,
                       gpointer                  data)
 {
   GimpToolModule *module;
-  Gimp           *gimp = data;
 
   g_return_val_if_fail (filename != NULL, NULL);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
+
+  g_return_val_if_fail (GIMP_IS_GIMP (data), NULL);
 
   module = GIMP_TOOL_MODULE (g_object_new (GIMP_TYPE_TOOL_MODULE, NULL));
 
   module->filename = g_strdup (filename); 
   /* FIXME: check for errors! */
   gimp_tool_module_load (G_TYPE_MODULE (module));
-  module->register_tool (callback, gimp);
+  module->register_tool (callback, data);
   gimp_tool_module_unload (G_TYPE_MODULE (module));
 
   return module;

@@ -133,12 +133,11 @@ gimp_tool_class_init (GimpToolClass *klass)
 static void
 gimp_tool_init (GimpTool *tool)
 {
-  tool->ID                     = global_tool_ID++;
-
-  tool->control                = GIMP_TOOL_CONTROL (g_object_new (GIMP_TYPE_TOOL_CONTROL, NULL)); 
-
-  tool->gdisp                  = NULL;
-  tool->drawable               = NULL;
+  tool->ID       = global_tool_ID++;
+  tool->control  = GIMP_TOOL_CONTROL (g_object_new (GIMP_TYPE_TOOL_CONTROL, 
+                                                    NULL)); 
+  tool->gdisp    = NULL;
+  tool->drawable = NULL;
 }
 
 void
@@ -160,20 +159,20 @@ gimp_tool_control (GimpTool       *tool,
   switch (action)
     {
     case PAUSE:
-      if (!gimp_tool_control_is_paused(tool->control))
+      if (!gimp_tool_control_is_paused (tool->control))
         {
           GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
         }
 
-      gimp_tool_control_pause(tool->control);
+      gimp_tool_control_pause (tool->control);
       break;
 
     case RESUME:
-      if (gimp_tool_control_is_paused(tool->control))
+      if (gimp_tool_control_is_paused (tool->control))
         {
-          gimp_tool_control_resume(tool->control);
+          gimp_tool_control_resume (tool->control);
 
-          if (!gimp_tool_control_is_paused(tool->control))
+          if (!gimp_tool_control_is_paused (tool->control))
             {
               GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
             }
@@ -188,7 +187,7 @@ gimp_tool_control (GimpTool       *tool,
     case HALT:
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
 
-      gimp_tool_control_halt(tool->control);
+      gimp_tool_control_halt (tool->control);
       break;
     }
 }
@@ -352,18 +351,18 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  if (gimp_tool_control_is_toggled(tool->control))
+  if (gimp_tool_control_is_toggled (tool->control))
     {
       gimp_tool_set_cursor (tool, gdisp,
-                            gimp_tool_control_get_toggle_cursor(tool->control),
-                            gimp_tool_control_get_toggle_tool_cursor(tool->control),
-                            gimp_tool_control_get_toggle_cursor_modifier(tool->control));
+                            gimp_tool_control_get_toggle_cursor (tool->control),
+                            gimp_tool_control_get_toggle_tool_cursor (tool->control),
+                            gimp_tool_control_get_toggle_cursor_modifier (tool->control));
     }
   else
     {
       gimp_tool_set_cursor (tool, gdisp,
-                            gimp_tool_control_get_cursor(tool->control),
-                            gimp_tool_control_get_tool_cursor(tool->control),
-                            gimp_tool_control_get_cursor_modifier(tool->control));
+                            gimp_tool_control_get_cursor (tool->control),
+                            gimp_tool_control_get_tool_cursor (tool->control),
+                            gimp_tool_control_get_cursor_modifier (tool->control));
     }
 }

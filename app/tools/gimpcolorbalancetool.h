@@ -74,7 +74,7 @@ struct _ColorBalanceDialog
 
 
 void    gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
-                                          Gimp                     *gimp);
+                                          gpointer                  data);
 
 GType   gimp_color_balance_tool_get_type (void) G_GNUC_CONST;
 

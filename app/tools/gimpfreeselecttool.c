@@ -87,7 +87,7 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 void
 gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
-                                Gimp                     *gimp)
+                                gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FREE_SELECT_TOOL,
                 selection_options_new,
@@ -98,7 +98,7 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 _("/Tools/Selection Tools/Free Select"), "F",
                 NULL, "tools/free_select.html",
                 GIMP_STOCK_TOOL_FREE_SELECT,
-                gimp);
+                data);
 }
 
 GType
@@ -198,7 +198,7 @@ gimp_free_select_tool_button_press (GimpTool        *tool,
 
   free_sel = GIMP_FREE_SELECT_TOOL (tool);
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
@@ -236,7 +236,7 @@ gimp_free_select_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -280,7 +280,7 @@ gimp_free_select_tool_motion (GimpTool        *tool,
   free_sel  = GIMP_FREE_SELECT_TOOL (tool);
   sel_tool  = GIMP_SELECTION_TOOL (tool);
 
-  if (!gimp_tool_control_is_active(tool->control))
+  if (!gimp_tool_control_is_active (tool->control))
     return;
 
   if (sel_tool->op == SELECTION_ANCHOR)

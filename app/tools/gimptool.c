@@ -22,11 +22,14 @@
 
 #include "tools-types.h"
 
+#include "core/gimpimage.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpstatusbar.h"
 
 #include "libgimptool/gimptool.h"
+
 
 void
 gimp_tool_push_status (GimpTool    *tool,
@@ -109,7 +112,7 @@ gimp_tool_real_button_press (GimpTool        *tool,
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 }
 
 void
@@ -119,6 +122,6 @@ gimp_tool_real_button_release (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 

@@ -56,7 +56,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
-			     Gimp                     *gimp)
+			     gpointer                  data)
 {
   (* callback) (GIMP_TYPE_AIRBRUSH_TOOL,
                 airbrush_options_new,
@@ -67,7 +67,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Airbrush"), "A",
                 NULL, "tools/airbrush.html",
                 GIMP_STOCK_TOOL_AIRBRUSH,
-                gimp);
+                data);
 }
 
 GType
@@ -117,8 +117,8 @@ gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
   tool       = GIMP_TOOL (airbrush);
   paint_tool = GIMP_PAINT_TOOL (airbrush);
 
-  gimp_tool_control_set_motion_mode(tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor(tool->control, GIMP_AIRBRUSH_TOOL_CURSOR);
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_AIRBRUSH_TOOL_CURSOR);
 
   paint_tool->pick_colors = TRUE;
   paint_tool->core        = g_object_new (GIMP_TYPE_AIRBRUSH, NULL);

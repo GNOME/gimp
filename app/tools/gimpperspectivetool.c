@@ -68,7 +68,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 void 
 gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
-                                Gimp                     *gimp)
+                                gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PERSPECTIVE_TOOL,
                 transform_options_new,
@@ -79,7 +79,7 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Perspective"), "<shift>P",
                 NULL, "tools/perspective.html",
                 GIMP_STOCK_TOOL_PERSPECTIVE,
-                gimp);
+                data);
 }
 
 GType

@@ -82,7 +82,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 void
 gimp_scale_tool_register (GimpToolRegisterCallback  callback,
-                          Gimp                     *gimp)
+                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SCALE_TOOL,
                 transform_options_new,
@@ -93,7 +93,7 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Scale"), "<shift>T",
                 NULL, "tools/transform.html",
                 GIMP_STOCK_TOOL_SCALE,
-                gimp);
+                data);
 }
 
 GType

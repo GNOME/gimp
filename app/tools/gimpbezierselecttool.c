@@ -277,7 +277,7 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 void       
 gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
-                                  Gimp                     *gimp)
+                                  gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BEZIER_SELECT_TOOL,
                 selection_options_new,
@@ -288,7 +288,7 @@ gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
                 _("/Tools/Selection Tools/Bezier Select"), "B",
                 NULL, "tools/bezier_select.html",
                 GIMP_STOCK_TOOL_BEZIER_SELECT,
-                gimp);
+                data);
 }
 
 GType
@@ -358,8 +358,8 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   bezier_select->num_points = 0;
   bezier_select->mask       = NULL;
 
-  gimp_tool_control_set_preserve(tool->control, FALSE);
-  gimp_tool_control_set_tool_cursor(tool->control, GIMP_BEZIER_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_preserve (tool->control, FALSE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_BEZIER_SELECT_TOOL_CURSOR);
 
   curCore = draw_tool;
   curSel  = bezier_select;
@@ -392,7 +392,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
 
   /*  If the tool was being used in another image...reset it  */
-  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (bezier_sel));
       bezier_select_reset (bezier_sel);
@@ -415,7 +415,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 
       grab_pointer = TRUE;
       
-      gimp_tool_control_activate(tool->control);
+      gimp_tool_control_activate (tool->control);
       tool->gdisp  = gdisp;
 
       bezier_sel->state = BEZIER_ADD;
@@ -434,7 +434,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
       if (ModeEdit == EXTEND_EDIT)
 	{ 
 	  /* erase the handles */
-	  if(bezier_sel->closed)
+	  if (bezier_sel->closed)
 	    bezier_sel->draw_mode = BEZIER_DRAW_ALL;  
 	  else
 	    bezier_sel->draw_mode = BEZIER_DRAW_CURVE;  
@@ -469,7 +469,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 
       if (ModeEdit == EXTEND_REMOVE)
 	{ 
-/* 	  if(bezier_sel->num_points < 6) */
+/* 	  if (bezier_sel->num_points < 6) */
 /* 	    return; */
 
 	  /* erase the handles */
@@ -573,7 +573,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 	    }
 	}
 
-      curve_start = find_start_open_curve(bezier_sel);
+      curve_start = find_start_open_curve (bezier_sel);
 
       if (curve_start && bezier_check_point (curve_start,
                                              coords->x, coords->y,
@@ -596,7 +596,7 @@ gimp_bezier_select_tool_button_press (GimpTool        *tool,
 	}
       else
 	{
-	  if(bezier_sel->cur_anchor)
+	  if (bezier_sel->cur_anchor)
 	    bezier_sel->cur_anchor->pointflags = 1;
  	  bezier_sel->draw_mode = BEZIER_DRAW_HANDLES; 
  	  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
@@ -738,9 +738,9 @@ gimp_bezier_select_tool_motion (GimpTool        *tool,
   gint                   offsetx;
   gint                   offsety;
 
-  g_return_if_fail(GIMP_IS_BEZIER_SELECT_TOOL(tool)); /* never can be too careful */
+  g_return_if_fail (GIMP_IS_BEZIER_SELECT_TOOL (tool));
 
-  if (!gimp_tool_control_is_active(tool->control))
+  if (!gimp_tool_control_is_active (tool->control))
     return;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL(tool);
@@ -815,7 +815,7 @@ gimp_bezier_select_tool_motion (GimpTool        *tool,
 	    {
 	      bezier_offset_point (tmp, offsetx, offsety);
 
-	      if(tmp->next_curve)
+	      if (tmp->next_curve)
 		tmp = tmp->next_curve;
 	      else
 		tmp = tmp->next;
@@ -919,7 +919,7 @@ bezier_select_load (GimpDisplay           *gdisp,
   tool->gdisp     = gdisp;
   bezier_sel =  (GimpBezierSelectTool *) tool;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 
   bezier_sel->points     = pts;
   bezier_sel->last_point = pts->prev;
@@ -1338,7 +1338,7 @@ delete_whole_curve (GimpBezierSelectTool *bezier_sel,
 	{
 	  l_pnt = points;
 
-	  if(points->next_curve)
+	  if (points->next_curve)
 	    points = points->next_curve;
 	  else
 	    points = points->next;
@@ -1406,7 +1406,7 @@ bezier_edit_point_on_curve (gint                  x,
 		      bezier_sel->cur_anchor  = NULL;
 		      bezier_sel->cur_control = NULL;
 		      /* Where are we?  reset to first point... */
-		      /*if(last_curve == NULL)*/
+		      /*if (last_curve == NULL)*/
 		      if (start_pt == bezier_sel->points)
 			{
 			  finded = bezier_sel->points;
@@ -1642,7 +1642,7 @@ bezier_on_control_point (GimpDisplay          *gdisp,
      if (bezier_check_point (points, x, y, halfwidth, halfheight))
        return points->type;
 
-     if(points->next_curve)
+     if (points->next_curve)
        points = points->next_curve;
      else
        points = points->next;
@@ -1712,8 +1712,8 @@ points_in_box (GimpBezierSelectPoint *points,
     }
 
   /* Check if straight line ..below don't work if it is! */
-  if((xp[0] == xp[1] && yp[0] == yp[1]) || 
-     (xp[2] == xp[3] && yp[0] == yp[1]))
+  if ((xp[0] == xp[1] && yp[0] == yp[1]) || 
+      (xp[2] == xp[3] && yp[0] == yp[1]))
     return TRUE;
 
   for (i = 0, j = 3; i < 4; j = i++)
@@ -1757,7 +1757,7 @@ bezier_point_on_curve (GimpDisplay          *gdisp,
     {
       do
 	{
-	  point_counts = count_points_on_curve(points);
+	  point_counts = count_points_on_curve (points);
 	  if (point_counts >= 4)
 	    {
 	      do
@@ -2050,7 +2050,7 @@ bezier_add_point (GimpBezierSelectTool *bezier_sel,
     }
   else
     {
-      if(type == BEZIER_MOVE) 
+      if (type == BEZIER_MOVE) 
 	{
 	  newpt->type = BEZIER_ANCHOR;
 	  /* 	  g_print ("Adding MOVE point to null curve\n"); */
@@ -2786,7 +2786,7 @@ bezier_tool_selected (void)
 
   return (tool                                     &&
 	  GIMP_IS_BEZIER_SELECT_TOOL (tool)        &&
-	  gimp_tool_control_is_active(tool->control));
+	  gimp_tool_control_is_active (tool->control));
 }
 
 void
@@ -2805,7 +2805,7 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
   /*  If the tool was being used before clear it */
-  if (GIMP_IS_BEZIER_SELECT_TOOL (tool) && gimp_tool_control_is_active(tool->control))
+  if (GIMP_IS_BEZIER_SELECT_TOOL (tool) && gimp_tool_control_is_active (tool->control))
     {
       GimpBezierSelectTool *bezier_sel = (GimpBezierSelectTool *) tool;
 
@@ -2822,7 +2822,7 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
 
   tool = tool_manager_get_active (gdisp->gimage->gimp);
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);  
@@ -2883,13 +2883,13 @@ bezier_paste_bezierselect_to_current (GimpDisplay          *gdisp,
     {
       curSel->state = BEZIER_START;
       curSel->draw_mode = 0;
-      gimp_draw_tool_stop( (GimpDrawTool *) curSel);
+      gimp_draw_tool_stop ((GimpDrawTool *) curSel);
     }
   else
     {
       curSel->state = bsel->state;
       curSel->draw_mode = BEZIER_DRAW_ALL;
-      gimp_draw_tool_resume( (GimpDrawTool *) curSel);
+      gimp_draw_tool_resume ((GimpDrawTool *) curSel);
     }
 }
 
@@ -3471,7 +3471,7 @@ bezier_stroke (GimpBezierSelectTool *bezier_sel,
       next_rpnts = rpnts->next_curve;
       rpnts->stroke_points = NULL;
       rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
-      g_free(rpnts);
+      g_free (rpnts);
       rpnts = next_rpnts;
     }
   while (rpnts);
@@ -3580,7 +3580,7 @@ bezier_draw_segment_for_distance (GimpBezierSelectTool     *bezier_sel,
  	  gdouble dy = bdist->lasty - ry; 
 
  	  bdist->curdist += sqrt ((dx * dx) + (dy * dy)); 
- 	  if(bdist->curdist >= bdist->dist) 
+ 	  if (bdist->curdist >= bdist->dist) 
  	    { 
  	      *(bdist->x) = ROUND ((rx + dx / 2)); 
  	      *(bdist->y) = ROUND ((ry + dy / 2)); 

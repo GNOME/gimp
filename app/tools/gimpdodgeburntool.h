@@ -45,7 +45,7 @@ struct _GimpDodgeBurnToolClass
 
 
 void    gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
-                                      Gimp                     *gimp);
+                                      gpointer                  data);
 
 GType   gimp_dodgeburn_tool_get_type (void) G_GNUC_CONST;
 

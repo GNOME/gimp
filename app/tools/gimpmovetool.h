@@ -50,7 +50,7 @@ struct _GimpMoveToolClass
 
 
 void    gimp_move_tool_register (GimpToolRegisterCallback  callback,
-                                 Gimp                     *gimp);
+                                 gpointer                  data);
 
 GType   gimp_move_tool_get_type (void) G_GNUC_CONST;
 

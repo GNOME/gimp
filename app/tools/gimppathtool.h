@@ -71,7 +71,7 @@ struct _GimpPathToolClass
 
 
 void    gimp_path_tool_register (GimpToolRegisterCallback  callback,
-                                 Gimp                     *gimp);
+                                 gpointer                  data);
 
 GType   gimp_path_tool_get_type (void) G_GNUC_CONST;
 

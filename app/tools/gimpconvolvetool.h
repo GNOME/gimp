@@ -46,7 +46,7 @@ struct _GimpConvolveToolClass
 
 
 void    gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
-                                     Gimp                     *gimp);
+                                     gpointer                  data);
 
 GType   gimp_convolve_tool_get_type (void) G_GNUC_CONST;
 

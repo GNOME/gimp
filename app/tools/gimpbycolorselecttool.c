@@ -160,7 +160,7 @@ static GtkTargetEntry by_color_select_targets[] =
 
 void
 gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
-                                    Gimp                     *gimp)
+                                    gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BY_COLOR_SELECT_TOOL,
                 selection_options_new,
@@ -171,7 +171,7 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                 _("/Tools/Selection Tools/By Color Select"), "C",
                 NULL, "tools/by_color_select.html",
                 GIMP_STOCK_TOOL_BY_COLOR_SELECT,
-                gimp);
+                data);
 }
 
 GType
@@ -242,8 +242,8 @@ gimp_by_color_select_tool_init (GimpByColorSelectTool *by_color_select)
   tool        = GIMP_TOOL (by_color_select);
   select_tool = GIMP_SELECTION_TOOL (by_color_select);
 
-  gimp_tool_control_set_preserve(tool->control, FALSE);
-  gimp_tool_control_set_preserve(tool->control, GIMP_RECT_SELECT_TOOL_CURSOR);
+  gimp_tool_control_set_preserve (tool->control, FALSE);
+  gimp_tool_control_set_preserve (tool->control, GIMP_RECT_SELECT_TOOL_CURSOR);
 
   by_color_select->x = 0;
   by_color_select->y = 0;
@@ -318,7 +318,7 @@ by_color_select_button_press (GimpTool        *tool,
   if (! by_color_dialog)
     return;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   by_color_sel->x = coords->x;
@@ -374,7 +374,7 @@ by_color_select_button_release (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -435,7 +435,7 @@ by_color_select_oper_update (GimpTool        *tool,
   GimpSelectionTool *sel_tool;
   SelectionOptions  *sel_options;
 
-  if (gimp_tool_control_is_active(tool->control))
+  if (gimp_tool_control_is_active (tool->control))
     return;
 
   sel_tool = GIMP_SELECTION_TOOL (tool);
@@ -479,11 +479,11 @@ by_color_select_cursor_update (GimpTool        *tool,
   if (! sel_options->sample_merged &&
       layer && layer != gdisp->gimage->active_layer)
     {
-      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
     }
   else
     {
-      gimp_tool_control_set_cursor(tool->control, GIMP_MOUSE_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_MOUSE_CURSOR);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

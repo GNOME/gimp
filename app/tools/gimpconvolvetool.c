@@ -79,7 +79,7 @@ static GimpPaintToolClass *parent_class;
 
 void
 gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
-                             Gimp                     *gimp)
+                             gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CONVOLVE_TOOL,
                 convolve_options_new,
@@ -90,7 +90,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Convolve"), "B",
                 NULL, "tools/convolve.html",
                 GIMP_STOCK_TOOL_BLUR,
-                gimp);
+                data);
 }
 
 GType
@@ -194,7 +194,7 @@ gimp_convolve_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpConvolveOptions *) tool->tool_info->tool_options;
 
-  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_SHARPEN_CONVOLVE));
+  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_SHARPEN_CONVOLVE));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -128,7 +128,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_measure_tool_register (GimpToolRegisterCallback  callback,
-                            Gimp                     *gimp)
+                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_MEASURE_TOOL,
                 measure_tool_options_new,
@@ -139,7 +139,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Measure"), NULL,
                 NULL, "tools/measure.html",
                 GIMP_STOCK_TOOL_MEASURE,
-                gimp);
+                data);
 }
 
 GType
@@ -219,7 +219,7 @@ gimp_measure_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_tool_pop_status (tool);
-      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);  /* sets paused_count to 0 -- is this ok? */
       break;
 
     default:
@@ -248,14 +248,14 @@ gimp_measure_tool_button_press (GimpTool        *tool,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
-  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
       gimp_tool_pop_status (tool);
     }
   
   measure_tool->function = CREATING;
 
-  if (gimp_tool_control_is_active(tool->control) && gdisp == tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp == tool->gdisp)
     {
       /*  if the cursor is in one of the handles,
        *  the new function will be moving or adding a new point or guide
@@ -351,7 +351,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
   
   if (measure_tool->function == CREATING)
     {
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (measure_tool));
@@ -372,7 +372,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  gimp_tool_pop_status (tool);
 	  gimp_tool_push_status (tool, "");
@@ -400,7 +400,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 				      NULL);
     }
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -642,7 +642,7 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
 
-  if (gimp_tool_control_is_active(tool->control) && tool->gdisp == gdisp)
+  if (gimp_tool_control_is_active (tool->control) && tool->gdisp == gdisp)
     {
       for (i = 0; i < measure_tool->num_points; i++)
 	{
@@ -689,8 +689,8 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 	cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

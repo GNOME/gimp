@@ -93,7 +93,7 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 void
 gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
-                                 Gimp                     *gimp)
+                                 gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FUZZY_SELECT_TOOL,
                 selection_options_new,
@@ -104,7 +104,7 @@ gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                 _("/Tools/Selection Tools/Fuzzy Select"), "Z",
                 NULL, "tools/fuzzy_select.html",
                 GIMP_STOCK_TOOL_FUZZY_SELECT,
-                gimp);
+                data);
 }
 
 GType
@@ -218,7 +218,7 @@ gimp_fuzzy_select_tool_button_press (GimpTool        *tool,
   fuzzy_sel->first_y         = fuzzy_sel->y;
   fuzzy_sel->first_threshold = sel_options->threshold;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   switch (GIMP_SELECTION_TOOL (tool)->op)
@@ -255,7 +255,7 @@ gimp_fuzzy_select_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -334,7 +334,7 @@ gimp_fuzzy_select_tool_motion (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  if (!gimp_tool_control_is_active(tool->control))
+  if (!gimp_tool_control_is_active (tool->control))
     return;
 
   /* don't let the events come in too fast, ignore below a delay of 100 ms */

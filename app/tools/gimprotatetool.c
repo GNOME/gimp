@@ -87,7 +87,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 void 
 gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ROTATE_TOOL,
                 transform_options_new,
@@ -98,7 +98,7 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Rotate"), "<shift>R",
                 NULL, "tools/rotate.html",
                 GIMP_STOCK_TOOL_ROTATE,
-                gimp);
+                data);
 }
 
 GType

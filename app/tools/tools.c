@@ -79,11 +79,7 @@ void
 cheesey_module_loading_hack (const gchar *filename,
                              gpointer     loader_data) 
 {
-  Gimp *gimp = GIMP (loader_data);
-
-  gimp_tool_module_new (filename, 
-                        tool_manager_register_tool,
-                        gimp);
+  gimp_tool_module_new (filename, tool_manager_register_tool, loader_data);
 }
 
 void

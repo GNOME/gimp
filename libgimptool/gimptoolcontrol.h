@@ -29,6 +29,8 @@
 #define GIMP_TOOL_CONTROL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_TOOL_CONTROL, GimpToolControlClass))
 
 
+GType              gimp_tool_control_get_type                   (void) G_GNUC_CONST;
+
 void               gimp_tool_control_pause                      (GimpToolControl    *control);
 void               gimp_tool_control_resume                     (GimpToolControl    *control);
 gboolean           gimp_tool_control_is_paused                  (GimpToolControl    *control);

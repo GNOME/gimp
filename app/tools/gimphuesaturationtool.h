@@ -82,7 +82,7 @@ struct _HueSaturationDialog
 
 
 void    gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
-                                           Gimp                     *gimp);
+                                           gpointer                  data);
 
 GType   gimp_hue_saturation_tool_get_type (void) G_GNUC_CONST;
 

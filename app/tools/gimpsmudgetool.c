@@ -49,7 +49,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_SMUDGE_TOOL,
                 smudge_options_new,
@@ -60,7 +60,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Smudge"), "S",
                 NULL, "tools/smudge.html",
                 GIMP_STOCK_TOOL_SMUDGE,
-                gimp);
+                data);
 }
 
 GType

@@ -296,7 +296,8 @@ tool_manager_control_active (Gimp           *gimp,
     }
   else if (action == HALT)
     {
-      gimp_tool_control_halt(tool_manager->active_tool->control);    /* sets paused_count to 0 -- is this ok? */
+      /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool_manager->active_tool->control);
     }
 }
 
@@ -455,8 +456,9 @@ tool_manager_register_tool (GType                   tool_type,
 			    const gchar            *help_domain,
 			    const gchar            *help_data,
 			    const gchar            *stock_id,
-			    Gimp                   *gimp)
+			    gpointer                data)
 {
+  Gimp            *gimp = (Gimp *) data;
   GimpToolManager *tool_manager;
   GimpToolInfo    *tool_info;
   const gchar     *paint_core_name;

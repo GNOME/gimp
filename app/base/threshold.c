@@ -106,7 +106,7 @@ static GimpImageMapToolClass *parent_class = NULL;
 
 void
 gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
-                              Gimp                     *gimp)
+                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_THRESHOLD_TOOL,
                 NULL,
@@ -117,7 +117,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Layer/Colors/Threshold..."), NULL,
                 NULL, "tools/threshold.html",
                 GIMP_STOCK_TOOL_THRESHOLD,
-                gimp);
+                data);
 }
 
 GType
@@ -464,9 +464,9 @@ threshold_preview (ThresholdDialog *td)
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
   image_map_apply (td->image_map, threshold, td);
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 }
 
 static void
@@ -499,7 +499,7 @@ threshold_ok_callback (GtkWidget *widget,
 
   active_tool = tool_manager_get_active (the_gimp);
 
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 
   if (!td->preview)
     image_map_apply (td->image_map, threshold, (gpointer) td);
@@ -507,7 +507,7 @@ threshold_ok_callback (GtkWidget *widget,
   if (td->image_map)
     image_map_commit (td->image_map);
 
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
   td->image_map = NULL;
 
@@ -530,9 +530,9 @@ threshold_cancel_callback (GtkWidget *widget,
 
   if (td->image_map)
     {
-      gimp_tool_control_set_preserve(active_tool->control, TRUE);
+      gimp_tool_control_set_preserve (active_tool->control, TRUE);
       image_map_abort (td->image_map);
-      gimp_tool_control_set_preserve(active_tool->control, FALSE);
+      gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
       td->image_map = NULL;
       gdisplays_flush ();
@@ -563,9 +563,9 @@ threshold_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (td->image_map);
-	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

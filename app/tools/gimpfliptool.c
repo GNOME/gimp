@@ -87,7 +87,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 void 
 gimp_flip_tool_register (GimpToolRegisterCallback  callback,
-                         Gimp                     *gimp)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_FLIP_TOOL,
                 flip_options_new,
@@ -98,7 +98,7 @@ gimp_flip_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Flip"), "<shift>F",
                 NULL, "tools/flip.html",
                 GIMP_STOCK_TOOL_FLIP,
-                gimp);
+                data);
 }
 
 GType
@@ -232,16 +232,16 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 
   if (bad_cursor)
     {
-      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
-      gimp_tool_control_set_toggle_cursor(tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_toggle_cursor (tool->control, GIMP_BAD_CURSOR);
     }
   else
     {
-      gimp_tool_control_set_cursor(tool->control, GDK_SB_H_DOUBLE_ARROW);
-      gimp_tool_control_set_toggle_cursor(tool->control, GDK_SB_V_DOUBLE_ARROW);
+      gimp_tool_control_set_cursor (tool->control, GDK_SB_H_DOUBLE_ARROW);
+      gimp_tool_control_set_toggle_cursor (tool->control, GDK_SB_V_DOUBLE_ARROW);
     }
 
-  gimp_tool_control_set_toggle(tool->control, (options->type == ORIENTATION_VERTICAL));
+  gimp_tool_control_set_toggle (tool->control, (options->type == ORIENTATION_VERTICAL));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

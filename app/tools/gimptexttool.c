@@ -128,7 +128,7 @@ static GimpToolClass *parent_class = NULL;
 
 void
 gimp_text_tool_register (GimpToolRegisterCallback  callback,
-                         Gimp                     *gimp)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_TEXT_TOOL,
                 text_tool_options_new,
@@ -139,7 +139,7 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Text"), "T",
                 NULL, "tools/text.html",
                 GIMP_STOCK_TOOL_TEXT,
-                gimp);
+                data);
 }
 
 GType
@@ -260,7 +260,7 @@ text_tool_button_press (GimpTool        *tool,
 
   text_tool->gdisp = gdisp;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   text_tool->click_x = coords->x;
@@ -286,7 +286,7 @@ text_tool_button_release (GimpTool        *tool,
 			  GdkModifierType  state,
 			  GimpDisplay     *gdisp)
 {
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -303,11 +303,13 @@ text_tool_cursor_update (GimpTool        *tool,
     {
       /* if there is a floating selection, and this aint it ... */
 
-      gimp_tool_control_set_cursor_modifier(tool->control, GIMP_CURSOR_MODIFIER_MOVE);
+      gimp_tool_control_set_cursor_modifier (tool->control,
+                                             GIMP_CURSOR_MODIFIER_MOVE);
     }
   else
     {
-      gimp_tool_control_set_cursor_modifier(tool->control, GIMP_CURSOR_MODIFIER_NONE);
+      gimp_tool_control_set_cursor_modifier (tool->control,
+                                             GIMP_CURSOR_MODIFIER_NONE);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

@@ -34,12 +34,12 @@
 #endif
 
 #include <stdarg.h>
+
 #include "gimp.h"
 
 
-#define TILE_WIDTH     _gimp_tile_width
-#define TILE_HEIGHT    _gimp_tile_height
-#define BOUNDS(a,x,y)  ((a < x) ? x : ((a > y) ? y : a))
+#define TILE_WIDTH   _gimp_tile_width
+#define TILE_HEIGHT  _gimp_tile_height
 
 
 typedef struct _GimpPixelRgnHolder    GimpPixelRgnHolder;
@@ -86,6 +86,11 @@ gimp_pixel_rgn_init (GimpPixelRgn *pr,
 		     gboolean      dirty,
 		     gboolean      shadow)
 {
+  g_return_if_fail (pr != NULL);
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (x >= 0 && x + width  <= drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= drawable->height);
+
   pr->data      = NULL;
   pr->drawable  = drawable;
   pr->bpp       = drawable->bpp;
@@ -105,6 +110,10 @@ gimp_pixel_rgn_resize (GimpPixelRgn *pr,
 		       gint          width,
 		       gint          height)
 {
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
+
   if (pr->data != NULL)
     pr->data += ((y - pr->y) * pr->rowstride +
 		 (x - pr->x) * pr->bpp);
@@ -124,6 +133,10 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
   GimpTile *tile;
   guchar   *tile_data;
   gint      b;
+
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (x >= 0 && x < pr->drawable->width);
+  g_return_if_fail (y >= 0 && y < pr->drawable->height);
 
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
   gimp_tile_ref (tile);
@@ -151,6 +164,12 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 #ifndef MEMCPY_IS_NICE
   gint b;
 #endif
+
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x + width <= pr->drawable->width);
+  g_return_if_fail (y >= 0 && y < pr->drawable->height);
+  g_return_if_fail (width >= 0);
 
   end = x + width;
 
@@ -197,6 +216,12 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
   gint boundary;
   gint b;
 
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x < pr->drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
+  g_return_if_fail (height >= 0);
+
   end = y + height;
 
   while (y < end)
@@ -240,6 +265,13 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 #ifndef MEMCPY_IS_NICE
   gint b, tx;
 #endif
+
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
+  g_return_if_fail (width >= 0);
+  g_return_if_fail (height >= 0);
 
   bpp = pr->bpp;
   bufstride = bpp * width;
@@ -300,6 +332,11 @@ gimp_pixel_rgn_set_pixel (GimpPixelRgn *pr,
   guchar   *tile_data;
   gint b;
 
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x < pr->drawable->width);
+  g_return_if_fail (y >= 0 && y < pr->drawable->height);
+
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
   gimp_tile_ref (tile);
 
@@ -326,6 +363,12 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
 #ifndef MEMCPY_IS_NICE
   gint b;
 #endif
+
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x + width <= pr->drawable->width);
+  g_return_if_fail (y >= 0 && y < pr->drawable->height);
+  g_return_if_fail (width >= 0);
 
   end = x + width;
 
@@ -370,6 +413,12 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
   gint boundary;
   gint b;
 
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x < pr->drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
+  g_return_if_fail (height >= 0);
+
   end = y + height;
 
   while (y < end)
@@ -413,6 +462,13 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
 #ifndef MEMCPY_IS_NICE
   gint b, tx;
 #endif
+
+  g_return_if_fail (pr != NULL && pr->drawable != NULL);
+  g_return_if_fail (buf != NULL);
+  g_return_if_fail (x >= 0 && x + width  <= pr->drawable->width);
+  g_return_if_fail (y >= 0 && y + height <= pr->drawable->height);
+  g_return_if_fail (width >= 0);
+  g_return_if_fail (height >= 0);
 
   bpp = pr->bpp;
   bufstride = bpp * width;
@@ -608,7 +664,9 @@ gimp_get_portion_width (GimpPixelRgnIterator *pri)
           if (prh->pr->drawable)
             {
               width = TILE_WIDTH - (prh->pr->x % TILE_WIDTH);
-              width = BOUNDS (width, 0, (pri->region_width - (prh->pr->x - prh->startx)));
+              width = CLAMP (width,
+                             0,
+                             (pri->region_width - (prh->pr->x - prh->startx)));
             }
           else
             width = (pri->region_width - (prh->pr->x - prh->startx));
@@ -649,7 +707,9 @@ gimp_get_portion_height (GimpPixelRgnIterator *pri)
           if (prh->pr->drawable)
             {
               height = TILE_HEIGHT - (prh->pr->y % TILE_HEIGHT);
-              height = BOUNDS (height, 0, (pri->region_height - (prh->pr->y - prh->starty)));
+              height = CLAMP (height,
+                              0,
+                              (pri->region_height - (prh->pr->y - prh->starty)));
             }
           else
             height = (pri->region_height - (prh->pr->y - prh->starty));

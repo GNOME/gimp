@@ -110,7 +110,7 @@ static void              bucket_options_reset       (GimpToolOptions *tool_optio
 
 void
 gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
-                                Gimp                     *gimp)
+                                gpointer                  data) 
 {
   (* callback) (GIMP_TYPE_BUCKET_FILL_TOOL,
                 bucket_options_new,
@@ -121,7 +121,7 @@ gimp_bucket_fill_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Bucket Fill"), "<shift>B",
                 NULL, "tools/bucket_fill.html",
                 GIMP_STOCK_TOOL_BUCKET_FILL,
-                gimp);
+                data);
 }
 
 GType
@@ -177,8 +177,8 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
 
   tool = GIMP_TOOL (bucket_fill_tool);
 
-  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor(tool->control, GIMP_BUCKET_FILL_TOOL_CURSOR);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_BUCKET_FILL_TOOL_CURSOR);
 }
 
 static void
@@ -210,7 +210,7 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
     }
 
   tool->gdisp = gdisp;
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -247,7 +247,7 @@ gimp_bucket_fill_tool_button_release (GimpTool        *tool,
       gdisplays_flush ();
     }
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -323,7 +323,7 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

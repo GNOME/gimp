@@ -50,7 +50,7 @@ struct _GimpPencilToolClass
 
 
 void    gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
-                                   Gimp                     *gimp);
+                                   gpointer                  data);
 
 GType   gimp_pencil_tool_get_type (void) G_GNUC_CONST;
 

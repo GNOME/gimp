@@ -106,7 +106,7 @@ typedef struct
 /* Public functions */
 
 void    gimp_bezier_select_tool_register (GimpToolRegisterCallback  callback,
-                                          Gimp                     *gimp);
+                                          gpointer                  data);
 
 GType   gimp_bezier_select_tool_get_type (void) G_GNUC_CONST;
 

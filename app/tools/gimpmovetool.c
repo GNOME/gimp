@@ -112,7 +112,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_move_tool_register (GimpToolRegisterCallback  callback,
-                         Gimp                     *gimp)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_MOVE_TOOL,
                 move_options_new,
@@ -123,7 +123,7 @@ gimp_move_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Move"), "M",
                 NULL, "tools/move.html",
                 GIMP_STOCK_TOOL_MOVE,
-                gimp);
+                data);
 }
 
 GType
@@ -251,12 +251,12 @@ gimp_move_tool_button_press (GimpTool        *tool,
   if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
       init_edit_selection (tool, gdisp, coords, EDIT_MASK_TRANSLATE);
-      gimp_tool_control_activate(tool->control);
+      gimp_tool_control_activate (tool->control);
     }
   else if (options->move_current)
     {
       init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
-      gimp_tool_control_activate(tool->control);
+      gimp_tool_control_activate (tool->control);
     }
   else
     {
@@ -273,8 +273,8 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	  move->guide = guide;
 	  move->disp  = gdisp;
 
-	  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
-	  gimp_tool_control_activate(tool->control);
+	  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+	  gimp_tool_control_activate (tool->control);
 
           gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
 	}
@@ -297,7 +297,7 @@ gimp_move_tool_button_press (GimpTool        *tool,
 	      init_edit_selection (tool, gdisp, coords, EDIT_LAYER_TRANSLATE);
 	    }
 
-	  gimp_tool_control_activate(tool->control);
+	  gimp_tool_control_activate (tool->control);
 	}
     }
 }
@@ -316,7 +316,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
   move = GIMP_MOVE_TOOL (tool);
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   if (move->guide)
     {
@@ -324,7 +324,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
 
       shell = GIMP_DISPLAY_SHELL (tool->gdisp->shell);
 
-      gimp_tool_control_set_scroll_lock(tool->control, FALSE);
+      gimp_tool_control_set_scroll_lock (tool->control, FALSE);
 
       delete_guide = FALSE;
       gdisplay_untransform_coords (gdisp,
@@ -497,7 +497,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                                 GIMP_TOOL_CURSOR_NONE,
                                 GIMP_CURSOR_MODIFIER_HAND);
 
-	  if (!gimp_tool_control_is_active(tool->control))
+	  if (!gimp_tool_control_is_active (tool->control))
 	    {
 	      if (move->guide)
 		{
@@ -626,8 +626,8 @@ gimp_move_tool_start_guide (GimpTool        *tool,
                                            GIMP_SELECTION_PAUSE);
 
   tool->gdisp       = gdisp;
-  gimp_tool_control_activate(tool->control);
-  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
+  gimp_tool_control_activate (tool->control);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
 
   if (move->guide && move->disp && move->disp->gimage)
     gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (move->disp->shell),

@@ -250,7 +250,7 @@ static GimpToolClass *parent_class = NULL;
 
 void
 gimp_ink_tool_register (GimpToolRegisterCallback  callback,
-                        Gimp                     *gimp)
+                        gpointer                  data)
 {
   (* callback) (GIMP_TYPE_INK_TOOL,
                 ink_options_new,
@@ -261,7 +261,7 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Ink"), "K",
                 NULL, "tools/ink.html",
                 GIMP_STOCK_TOOL_INK,
-                gimp);
+                data);
 }
 
 GType
@@ -392,7 +392,7 @@ gimp_ink_tool_button_press (GimpTool        *tool,
 
   ink_init (ink_tool, drawable, coords->x, coords->y);
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp; 
 
   /*  pause the current selection  */
@@ -437,7 +437,7 @@ gimp_ink_tool_button_release (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_RESUME);
 
   /*  Set tool state to inactive -- no longer painting */
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 
   /*  free the last blob  */
   g_free (ink_tool->last_blob);
@@ -557,7 +557,7 @@ gimp_ink_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
+  gimp_tool_control_set_cursor (tool->control, ctype);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -803,7 +803,7 @@ ink_pen_ellipse (InkOptions *options,
     velocity = 3.0;
 
 #ifdef VERBOSE
-  g_print("%f (%f) -> ", (float)size, (float)velocity);
+  g_print ("%f (%f) -> ", (float)size, (float)velocity);
 #endif  
 
   size = options->vel_sensitivity *
@@ -811,7 +811,7 @@ ink_pen_ellipse (InkOptions *options,
     + (1.0 - options->vel_sensitivity) * size;
 
 #ifdef VERBOSE
-  g_print("%f\n", (float)size);
+  g_print ("%f\n", (float)size);
 #endif
 
   /* Clamp resulting size to sane limits */
@@ -1620,7 +1620,7 @@ ink_options_new (GimpToolInfo *tool_info)
   options->brush_w->state       = FALSE;
   options->brush_w->ink_options = options;
 
-  darea = gtk_drawing_area_new();
+  darea = gtk_drawing_area_new ();
   options->brush_w->widget = darea;
 
   gtk_widget_set_size_request (darea, 60, 60);

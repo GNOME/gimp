@@ -108,7 +108,7 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 void
 gimp_vector_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_VECTOR_TOOL,
                 vector_tool_options_new,
@@ -119,7 +119,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Vector"), NULL,
                 NULL, "tools/vector.html",
                 GIMP_STOCK_TOOL_PATH,
-                gimp);
+                data);
 }
 
 GType
@@ -221,7 +221,7 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case HALT:
       gimp_tool_pop_status (tool);
-      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
       break;
 
     default:
@@ -252,12 +252,12 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */ 
-  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
       gimp_tool_pop_status (tool);
     }
   
-  if (gimp_tool_control_is_active(tool->control) && gdisp == tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp == tool->gdisp)
     {
       /*  if the cursor is in one of the handles,
        *  the new function will be moving or adding a new point or guide
@@ -284,7 +284,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
   
   if (vector_tool->function == VECTORS_CREATING)
     {
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
@@ -302,7 +302,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  gimp_tool_pop_status (tool);
 	  gimp_tool_push_status (tool, "");
@@ -314,7 +314,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   if (vector_tool->function == VECTORS_ADDING)
     {
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  /* reset everything */
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (vector_tool));
@@ -326,7 +326,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       /*  set the gdisplay  */
       tool->gdisp = gdisp;
 
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	{
 	  gimp_tool_pop_status (tool);
 	  gimp_tool_push_status (tool, "");
@@ -336,7 +336,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
     }
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -402,7 +402,7 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
 
   vector_tool = GIMP_VECTOR_TOOL (tool);
 
-  if (gimp_tool_control_is_active(tool->control) && tool->gdisp == gdisp)
+  if (gimp_tool_control_is_active (tool->control) && tool->gdisp == gdisp)
     {
       anchor = gimp_vectors_anchor_get (vector_tool->vectors, coords, NULL);
 
@@ -421,8 +421,8 @@ gimp_vector_tool_cursor_update (GimpTool        *tool,
         }
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -540,7 +540,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
         }
 
       tool->gdisp = gdisp;
-      gimp_tool_control_activate(tool->control);
+      gimp_tool_control_activate (tool->control);
 
       gimp_draw_tool_start (draw_tool, tool->gdisp);
     }

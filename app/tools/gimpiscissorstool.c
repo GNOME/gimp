@@ -83,7 +83,7 @@
 
 
 /*  Other defines...  */
-#define  MAX_GRADIENT      179.606  /* == sqrt(127^2 + 127^2) */
+#define  MAX_GRADIENT      179.606  /* == sqrt (127^2 + 127^2) */
 #define  GRADIENT_SEARCH   32  /* how far to look when snapping to an edge */
 #define  TARGET_HEIGHT     25
 #define  TARGET_WIDTH      25
@@ -268,7 +268,7 @@ static GimpSelectionToolClass *parent_class = NULL;
 
 void
 gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
-                              Gimp                     *gimp)
+                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ISCISSORS_TOOL,
                 selection_options_new,
@@ -280,7 +280,7 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                 "I",
                 NULL, "tools/iscissors.html",
                 GIMP_STOCK_TOOL_ISCISSORS,
-                gimp);
+                data);
 }
 
 GType
@@ -437,13 +437,13 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
 
   /*  If the tool was being used in another image...reset it  */
 
-  if (gimp_tool_control_is_active(tool->control) && gdisp != tool->gdisp)
+  if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
       gimp_iscissors_tool_reset (iscissors);
     }
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   switch (iscissors->state)
@@ -486,7 +486,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                    iscissors->y))
 	{
 	  /*  Undraw the curve  */
-	  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+	  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 
 	  iscissors->draw = DRAW_CURVE;
 	  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
@@ -699,7 +699,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  if (!gimp_tool_control_is_active(tool->control) || iscissors->state == NO_ACTION)
+  if (!gimp_tool_control_is_active (tool->control) || iscissors->state == NO_ACTION)
     return;
 
   if (iscissors->state == SEED_PLACEMENT)

@@ -124,7 +124,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
-                                 Gimp                     *gimp)
+                                 gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_PICKER_TOOL,
                 gimp_color_picker_tool_options_new,
@@ -135,7 +135,7 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Color Picker"), "<shift>O",
                 NULL, "tools/color_picker.html",
                 GIMP_STOCK_TOOL_COLOR_PICKER,
-                gimp);
+                data);
 }
 
 GtkType
@@ -257,7 +257,7 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
   /*  Make the tool active and set it's gdisplay & drawable  */
   tool->gdisp    = gdisp;
   tool->drawable = gimp_image_active_drawable (gdisp->gimage);
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 
   /*  create the info dialog if it doesn't exist  */
   if (! gimp_color_picker_tool_info)
@@ -424,7 +424,7 @@ gimp_color_picker_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (cp_tool));
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
 }
 
 static void
@@ -482,11 +482,11 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
       coords->y > 0 &&
       coords->y < gdisp->gimage->height)
     {
-      gimp_tool_control_set_cursor(tool->control, GIMP_COLOR_PICKER_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_COLOR_PICKER_CURSOR);
     }
   else
     {
-      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
     }
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);

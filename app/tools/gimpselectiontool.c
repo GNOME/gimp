@@ -241,7 +241,7 @@ gimp_selection_tool_cursor_update (GimpTool        *tool,
 
   selection_tool = GIMP_SELECTION_TOOL (tool);
 
-  tool_cursor = gimp_tool_control_get_tool_cursor(tool->control);
+  tool_cursor = gimp_tool_control_get_tool_cursor (tool->control);
   cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   switch (selection_tool->op)

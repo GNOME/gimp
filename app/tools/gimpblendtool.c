@@ -145,7 +145,7 @@ static GtkTargetEntry blend_target_table[] =
 
 void
 gimp_blend_tool_register (GimpToolRegisterCallback  callback,
-                          Gimp                     *gimp)
+                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BLEND_TOOL,
                 blend_options_new,
@@ -156,7 +156,7 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Blend"), "L",
                 NULL, "tools/blend.html",
                 GIMP_STOCK_TOOL_BLEND,
-                gimp);
+                data);
 }
 
 GType
@@ -218,8 +218,8 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
 
   tool = GIMP_TOOL (blend_tool);
  
-  gimp_tool_control_set_scroll_lock(tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor(tool->control, GIMP_BLEND_TOOL_CURSOR);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_BLEND_TOOL_CURSOR);
 
 }
 
@@ -254,7 +254,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   tool->gdisp = gdisp;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 
   /* initialize the statusbar display */
   gimp_tool_push_status (tool, _("Blend: 0, 0"));
@@ -285,7 +285,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt(tool->control); /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
 
   /*  if the 3rd button isn't pressed, fill the selected region  */
   if (! (state & GDK_BUTTON3_MASK) &&
@@ -393,10 +393,10 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      gimp_tool_control_set_cursor(tool->control, GIMP_BAD_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_BAD_CURSOR);
       break;
     default:
-      gimp_tool_control_set_cursor(tool->control, GIMP_MOUSE_CURSOR);
+      gimp_tool_control_set_cursor (tool->control, GIMP_MOUSE_CURSOR);
       break;
     }
 

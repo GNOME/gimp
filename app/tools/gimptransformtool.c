@@ -310,14 +310,14 @@ gimp_transform_tool_button_press (GimpTool        *tool,
                 {
                   g_message (_("Transformations do not work on\n"
                                "layers that contain layer masks."));
-                  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+                  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
                   return;
                 }
 
               /*  If the tool is already active, clear the current state
                *  and reset
                */
-              if (gimp_tool_control_is_active(tool->control))
+              if (gimp_tool_control_is_active (tool->control))
                 {
                   g_warning ("%s: tool_already ACTIVE", G_GNUC_FUNCTION);
 
@@ -327,7 +327,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
               /*  Set the pointer to the active display  */
               tool->gdisp    = gdisp;
               tool->drawable = drawable;
-              gimp_tool_control_activate(tool->control);
+              gimp_tool_control_activate (tool->control);
 
               /*  Find the transform bounds for some tools (like scale,
                *  perspective) that actually need the bounds for
@@ -350,7 +350,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
         }
     }
 
-  if (tr_tool->function == TRANSFORM_CREATING && gimp_tool_control_is_active(tool->control))
+  if (tr_tool->function == TRANSFORM_CREATING && gimp_tool_control_is_active (tool->control))
     {
       gint i;
 
@@ -369,7 +369,7 @@ gimp_transform_tool_button_press (GimpTool        *tool,
       tr_tool->lastx = tr_tool->startx = coords->x;
       tr_tool->lasty = tr_tool->starty = coords->y;
 
-      gimp_tool_control_activate(tool->control);
+      gimp_tool_control_activate (tool->control);
     }
 }
 
@@ -580,8 +580,8 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -721,7 +721,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   /*  We're going to dirty this image, but we want to keep the tool
    *  around
    */
-  gimp_tool_control_set_preserve(tool->control, TRUE);
+  gimp_tool_control_set_preserve (tool->control, TRUE);
 
   /*  Start a transform undo group  */
   undo_push_group_start (gdisp->gimage, TRANSFORM_UNDO_GROUP);
@@ -779,7 +779,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   /*  We're done dirtying the image, and would like to be restarted
    *  if the image gets dirty while the tool exists
    */
-  gimp_tool_control_set_preserve(tool->control, FALSE);
+  gimp_tool_control_set_preserve (tool->control, FALSE);
 
   gimp_unset_busy (gdisp->gimage->gimp);
 
@@ -892,7 +892,7 @@ gimp_transform_tool_reset (GimpTransformTool *tr_tool,
   if (tr_tool->info_dialog)
     info_dialog_popdown (tr_tool->info_dialog);
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
   tool->gdisp    = NULL;
   tool->drawable = NULL;
 }

@@ -53,10 +53,10 @@ struct _GimpToolModuleClass
 };
 
 
-GType           gimp_tool_module_get_type (void) G_GNUC_CONST;
-GimpToolModule *gimp_tool_module_new      (const gchar              *filename, 
-                                           Gimp                     *gimp, 
-                                           GimpToolRegisterCallback  callback);
+GType            gimp_tool_module_get_type (void) G_GNUC_CONST;
+GimpToolModule * gimp_tool_module_new      (const gchar              *filename, 
+                                            GimpToolRegisterCallback  callback,
+                                            gpointer                  register_data);
 
 
 #endif  /*  __GIMP_TOOL_MODULE_H__  */

@@ -62,7 +62,7 @@ static GimpRectSelectToolClass *parent_class = NULL;
 
 void
 gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
-                                   Gimp                     *gimp)
+                                   gpointer                  data) 
 {
   (* callback) (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
                 selection_options_new,
@@ -73,7 +73,7 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 _("/Tools/Selection Tools/Ellipse Select"), "E",
                 NULL, "tools/ellipse_select.html",
                 GIMP_STOCK_TOOL_ELLIPSE_SELECT,
-                gimp);
+                data);
 }
 
 GType

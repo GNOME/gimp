@@ -1,54 +1,116 @@
+2002-05-03  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpairbrushtool.[ch]
+	* app/tools/gimpbezierselecttool.[ch]
+	* app/tools/gimpblendtool.[ch]
+	* app/tools/gimpbrightnesscontrasttool.[ch]
+	* app/tools/gimpbucketfilltool[.ch]
+	* app/tools/gimpbycolorselecttool[.ch]
+	* app/tools/gimpclonetool[.ch]
+	* app/tools/gimpcolorbalancetool[.ch]
+	* app/tools/gimpcolorpickertool[.ch]
+	* app/tools/gimpconvolvetool[.ch]
+	* app/tools/gimpcroptool[.ch]
+	* app/tools/gimpcurvestool[.ch]
+	* app/tools/gimpdodgeburntool[.ch]
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool[.ch]
+	* app/tools/gimperasertool[.ch]
+	* app/tools/gimpfliptool[.ch]
+	* app/tools/gimpfreeselecttool[.ch]
+	* app/tools/gimpfuzzyselecttool[.ch]
+	* app/tools/gimphistogramtool[.ch]
+	* app/tools/gimphuesaturationtool[.ch]
+	* app/tools/gimpinktool[.ch]
+	* app/tools/gimpiscissorstool[.ch]
+	* app/tools/gimplevelstool[.ch]
+	* app/tools/gimpmagnifytool[.ch]
+	* app/tools/gimpmeasuretool[.ch]
+	* app/tools/gimpmovetool[.ch]
+	* app/tools/gimppaintbrushtool[.ch]
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool[.ch]
+	* app/tools/gimppenciltool[.ch]
+	* app/tools/gimpperspectivetool[.ch]
+	* app/tools/gimpposterizetool[.ch]
+	* app/tools/gimprectselecttool[.ch]
+	* app/tools/gimprotatetool[.ch]
+	* app/tools/gimpscaletool[.ch]
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool[.ch]
+	* app/tools/gimpsmudgetool[.ch]
+	* app/tools/gimptexttool[.ch]
+	* app/tools/gimpthresholdtool[.ch]
+	* app/tools/gimptool.c
+	* app/tools/gimptoolcontrol.h
+	* app/tools/gimptoolmodule[.ch]
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool[.ch]
+	* app/tools/path_tool.c
+	* app/tools/tool_manager[.ch]
+	* app/tools/tools.c
+	* libgimptool/gimptool.c
+	* libgimptool/gimptoolcontrol.h
+	* libgimptool/gimptoolmodule.h: removed tons of warnings. Do we need
+	to add -Werror to the CFLAGS to avoid such a mess in the future ?!
+	Also had to enforce the GIMP coding style in lots of places :-(
+
+	* libgimp/gimppixelrgn.c: got sick and tired of debugging plug-ins,
+	so I've added checks for most parameters passed to the GimpPixelRgn
+	functions. This will slow down plug-in execution a little bit but
+	should help to find bugs early.
+
 2002-05-02  Nathan Summers  <rock@gimp.org>
         
 	* app/core/core-types.h
-        * libgimptool/gimptooltypes.h: moved GimpToolInfo back into the core.
+	* libgimptool/gimptooltypes.h: moved GimpToolInfo back into the core.
 
-        * libgimptool/gimptoolcontrol.h
-        * app/tools/gimptoolcontrol.c: got rid of gimp_tool_control_new
+	* libgimptool/gimptoolcontrol.h
+	* app/tools/gimptoolcontrol.c: got rid of gimp_tool_control_new
 
-        * libgimptool/gimptool.c (gimp_tool_init): create the GimpToolControl
+	* libgimptool/gimptool.c (gimp_tool_init): create the GimpToolControl
         here instead of in the descendant classes
 
-        * app/tools/gimpairbrushtool.c
-        * app/tools/gimpbezierselecttool.c
-        * app/tools/gimpblendtool.c
-        * app/tools/gimpbucketfilltool.c
-        * app/tools/gimpbycolorselecttool.c
-        * app/tools/gimpclonetool.c
-        * app/tools/gimpcolorbalancetool.c
-        * app/tools/gimpcolorpickertool.c
-        * app/tools/gimpconvolvetool.c
-        * app/tools/gimpcroptool.c
-        * app/tools/gimpcurvestool.c
-        * app/tools/gimpdodgeburntool.c
-        * app/tools/gimpeditselectiontool.c
-        * app/tools/gimpellipseselecttool.c
-        * app/tools/gimperasertool.c
-        * app/tools/gimpfliptool.c
-        * app/tools/gimpfreeselecttool.c
-        * app/tools/gimpfuzzyselecttool.c
-        * app/tools/gimphistogramtool.c
-        * app/tools/gimphuesaturationtool.c
-        * app/tools/gimpinktool.c
-        * app/tools/gimpiscissorstool.c
-        * app/tools/gimplevelstool.c
-        * app/tools/gimpmagnifytool.c
-        * app/tools/gimpmeasuretool.c
-        * app/tools/gimpmovetool.c
-        * app/tools/gimppaintbrushtool.c
-        * app/tools/gimppathtool.c
-        * app/tools/gimppenciltool.c
-        * app/tools/gimpperspectivetool.c
-        * app/tools/gimprectselecttool.c
-        * app/tools/gimprotatetool.c
-        * app/tools/gimpscaletool.c
-        * app/tools/gimpsheartool.c
-        * app/tools/gimpsmudgetool.c
-        * app/tools/gimptexttool.c
-        * app/tools/gimpvectortool.c
-        * plug-ins/tools/tool-safe-mode.c: changed accordingly
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimpvectortool.c
+	* plug-ins/tools/tool-safe-mode.c: changed accordingly
 
-        * libgimpproxy/gimpproxytypes.h: autogenerated
+	* libgimpproxy/gimpproxytypes.h: autogenerated
 
 2002-05-02  Sven Neumann  <sven@gimp.org>
 
@@ -190,8 +252,8 @@
 
 2002-04-23  Nathan Summers  <rock@gimp.org>
 
-        * libgimptool/gimptoolmodule.[ch]: More error checking. Also introduced
-        a versioning scheme. Increment GIMP_TOOL_MODULE_ABI_VERSION any time 
+	* libgimptool/gimptoolmodule.[ch]: More error checking. Also introduced
+	a versioning scheme. Increment GIMP_TOOL_MODULE_ABI_VERSION any time
 	you break binary compatiblity.
         
 	* plug-ins/tools/tool-safe-mode.c: call g_type_init().
@@ -203,67 +265,67 @@
 
 2002-04-21  Nathan Summers  <rock@gimp.org>
 
- 	* app/tools/gimptoolcontrol.[ch]
- 	* libgimptool/gimptool.c: resurrected the motion hints and cursor
+	* app/tools/gimptoolcontrol.[ch]
+	* libgimptool/gimptool.c: resurrected the motion hints and cursor
  	changing code.
 
- 	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpairbrushtool.c
 	* app/tools/gimpbezierselecttool.c
- 	* app/tools/gimpblendtool.c
- 	* app/tools/gimpbucketfilltool.c
- 	* app/tools/gimpbycolorselecttool.c
- 	* app/tools/gimpclonetool.c
- 	* app/tools/gimpcolorbalancetool.c
- 	* app/tools/gimpcolorpickertool.c
- 	* app/tools/gimpconvolvetool.c
- 	* app/tools/gimpcroptool.c
- 	* app/tools/gimpcurvestool.c
- 	* app/tools/gimpdodgeburntool.c
- 	* app/tools/gimpeditselectiontool.c
- 	* app/tools/gimpellipseselecttool.c
- 	* app/tools/gimperasertool.c
- 	* app/tools/gimpfliptool.c
- 	* app/tools/gimpfuzzyselecttool.c
- 	* app/tools/gimphistogramtool.c
- 	* app/tools/gimphuesaturationtool.c
- 	* app/tools/gimpimagemaptool.c
- 	* app/tools/gimpinktool.c
- 	* app/tools/gimpiscissorstool.c
- 	* app/tools/gimplevelstool.c
- 	* app/tools/gimpmagnifytool.c
- 	* app/tools/gimpmeasuretool.c
- 	* app/tools/gimpmovetool.c
- 	* app/tools/gimppaintbrushtool.c
- 	* app/tools/gimppainttool.c
- 	* app/tools/gimppathtool.c
- 	* app/tools/gimppenciltool.c
- 	* app/tools/gimpperspectivetool.c
- 	* app/tools/gimprectselecttool.c
- 	* app/tools/gimprotatetool.c
- 	* app/tools/gimpscaletool.c
- 	* app/tools/gimpselectiontool.c
- 	* app/tools/gimpsheartool.c
- 	* app/tools/gimpsmudgetool.c
- 	* app/tools/gimptexttool.c
- 	* app/tools/gimptransformtool.c
- 	* app/tools/gimpvectortool.c: set the motion mode; fix a few parameters
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpellipseselecttool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpfuzzyselecttool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimppathtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimprectselecttool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: set the motion mode; fix a few parameters
 
- 	* app/tools/gimpinktool.c (gimp_ink_tool_button_press): uncommented
+	* app/tools/gimpinktool.c (gimp_ink_tool_button_press): uncommented
  	some code I had temporarily commented out and didn't uncomment before
  	committing
 
- 	* libgimptool/gimptoolcontrol.h
- 	* app/tools/gimptoolcontrol-displayshell.[ch]: merged with
+	* libgimptool/gimptoolcontrol.h
+	* app/tools/gimptoolcontrol-displayshell.[ch]: merged with
  	gimptoolcontrol.[ch].  The distinction was fairly arbitrary.
 
- 	* plug-ins/tools/gimptoolcontrol.c: added some stubs
+	* plug-ins/tools/gimptoolcontrol.c: added some stubs
 
-        * app/tools/Makefile.am
- 	* app/tools/tool_manager.c
- 	* app/display/gimpdisplayshell-callbacks.c: changed accordingly
+	* app/tools/Makefile.am
+	* app/tools/tool_manager.c
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly
 
 	* tools/pdbgen/pdb/image.pdb
- 	* libgimp/gimpimage_pdb.c: applied a patch from Pippen to correct
+	* libgimp/gimpimage_pdb.c: applied a patch from Pippen to correct
  	documentation on the undo operations
  	
 2002-04-19  Michael Natterer  <mitch@gimp.org>
@@ -1088,7 +1150,7 @@
 
 2002-03-22  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * configure.in: Added Portuguese (pt) to ALL_LINGUAS
+	* configure.in: Added Portuguese (pt) to ALL_LINGUAS
 
 2002-03-22  Michael Natterer  <mitch@gimp.org>
 
@@ -2261,7 +2323,7 @@
 	* autogen.sh: pass --enable-gtk-doc to configure.
 
 	* Makefile.am: Added a slightly modified distcheck rule that passes
-        --enable-gtk-doc to the configure inside.
+	--enable-gtk-doc to the configure inside.
 
 	* NEWS: updated.
 	
@@ -2338,7 +2400,7 @@
 	* themes/Default/images/preferences/interface.png: wilber gimp
 	  session
 	* themes/Default/images/preferences/help-system.png: the gnome2
-          help icon (by Tuomas Kuosmanen)
+	  help icon (by Tuomas Kuosmanen)
 	
 2002-03-06  Simon Budig  <simon@gimp.org>
 
@@ -2591,7 +2653,7 @@
 	* app/gui/user-install-dialog.c: changed accordingly.
 
 2002-02-28  Michael Natterer  <mitch@gimp.org>
-            Sven Neumann  <sven@gimp.org>
+	    Sven Neumann  <sven@gimp.org>
 
 	* configure.in
 	* themes/Default/images/Makefile.am
@@ -3860,18 +3922,18 @@
 
 2002-02-12  Nathan Summers  <rock@gimp.org>
 
-        * plug-ins/tools/.cvsignore
-        * plug-ins/tools/Makefile.am: new directory for tool plug-ins
+	* plug-ins/tools/.cvsignore
+	* plug-ins/tools/Makefile.am: new directory for tool plug-ins
 
-        * plug-ins/tools/common/.cvsignore
-        * plug-ins/tools/common/Makefile.am: unified directory for single-file
-        tool plug-ins, just like the "common" subdirectory for plug-ins
+	* plug-ins/tools/common/.cvsignore
+	* plug-ins/tools/common/Makefile.am: unified directory for single-file
+	tool plug-ins, just like the "common" subdirectory for plug-ins
 
-        * plug-ins/tools/common/gimpbrushselecttool.[ch]: start of a
-        tool plug-in that uses the current brush to select from the image.
+	* plug-ins/tools/common/gimpbrushselecttool.[ch]: start of a
+	tool plug-in that uses the current brush to select from the image.
 
-        * configure.in
-        * plug-ins/Makefile.am: changed accordingly
+	* configure.in
+	* plug-ins/Makefile.am: changed accordingly
 
 
 2002-02-12  Michael Natterer  <mitch@gimp.org>
@@ -3898,16 +3960,16 @@
 
 2002-02-12  Nathan Summers  <rock@gimp.org>
 
-        * app/plug-in/plug-in-rc.c: implement a new pluginrc flag,
-        "has-init", so that only plug-ins with init functions are
-        initialized.
+	* app/plug-in/plug-in-rc.c: implement a new pluginrc flag,
+	"has-init", so that only plug-ins with init functions are
+	initialized.
 
-        * app/plug-in/plug-in.ch
-        * libgimp/gimp.c
-        * libgimpbase/gimpprotocol.ch: send a new gimpwire message,
-        GP_HAS_INIT during the query stage if the plug-in needs to be
-        initialized.  Only invoke the plug-in in init mode if the plug-in
-        has an init function.  Incremented the interface age.
+	* app/plug-in/plug-in.ch
+	* libgimp/gimp.c
+	* libgimpbase/gimpprotocol.ch: send a new gimpwire message,
+	GP_HAS_INIT during the query stage if the plug-in needs to be
+	initialized.  Only invoke the plug-in in init mode if the plug-in
+	has an init function.  Incremented the interface age.
 
 	(inspired by a patch by Tor Lillqvist available at 
 	http://bugzilla.gnome.org/showattachment.cgi?attach_id=6214)
@@ -3936,8 +3998,8 @@
 
 2002-02-11  Nathan Summers  <rock@gimp.org>
 
-        * app/plug-in/plug-in.[ch]
-        * libgimp/gimp.c: added support for the init function in plug-ins 
+	* app/plug-in/plug-in.[ch]
+	* libgimp/gimp.c: added support for the init function in plug-ins 
 	(fixes bug #66859).
 
 2002-02-12  Michael Natterer  <mitch@gimp.org>
@@ -4018,8 +4080,8 @@
 2002-02-11  Nathan Summers  <rock@gimp.org>
 
 	* gui/preferences-dialog.c: s/directory/folder/ and other
-        bex-approved proofreads
-                
+	bex-approved proofreads.
+
 2002-02-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/jpeg.c: merged fix for bug #69127 from stable branch.
@@ -4139,12 +4201,12 @@
 2002-02-08  Nathan Summers  <rock@gimp.org>
 
 	* app/tools/gimptoolmodule.[ch]: split registering classes and
-        registering tools into separate functions. Makes tool plug-ins
-        actually work!
+	registering tools into separate functions. Makes tool plug-ins
+	actually work!
 
 	* app/tools/tools.c: replaced extremely ugly temporary hack for
-        loading tool modules with ugly temporary hack for loading tool
-        modules.
+	loading tool modules with ugly temporary hack for loading tool
+	modules.
 
 2002-02-08  Sven Neumann  <sven@gimp.org>
 
@@ -4181,25 +4243,25 @@
 
 2002-02-07  Nathan Summers  <rock@gimp.org>
 
-        * app/tools/gimptoolmodule.[ch]: New class that uses GTypeModule to
-        dynamically load tool plugins.  Does not quite work yet, but builds
-        correctly.
+	* app/tools/gimptoolmodule.[ch]: New class that uses GTypeModule to
+	dynamically load tool plugins.  Does not quite work yet, but builds
+	correctly.
 
-        * app/tools/tools.c: added some code to test the GimpToolModule code.
+	* app/tools/tools.c: added some code to test the GimpToolModule code.
 
-        * app/tools/Makefile.am: added gimptoolmodule to the build.
+	* app/tools/Makefile.am: added gimptoolmodule to the build.
 
 2002-02-07  Nathan Summers  <rock@gimp.org>
 
 	* app/gimprc.c
-        * app/config/gimpcoreconfig.[ch]
-        * app/core/gimpcoreconfig.[ch]
-        * app/gui/preferences-dialog.[ch]
-        * etc/gimprc.in: add a preferences option for tool plug-ins,
-        in anticipation of future work on them. Tool plug-ins should be 
-        in a separate directory so that the plug-in codecan distinguish 
-        them.  
-        
+	* app/config/gimpcoreconfig.[ch]
+	* app/core/gimpcoreconfig.[ch]
+	* app/gui/preferences-dialog.[ch]
+	* etc/gimprc.in: add a preferences option for tool plug-ins,
+	in anticipation of future work on them. Tool plug-ins should be 
+	in a separate directory so that the plug-in codecan distinguish 
+	them.  
+	
 2002-02-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-new.[ch]: renamed the image size utility
@@ -4457,8 +4519,8 @@
 
 2002-02-03  Sven Neumann  <sven@gimp.org>
 
-        * plug-ins/script-fu/scripts/frosty-logo.scm: don't redefine min.
-        Thanks to Jeff Trefftzs <trefftzs@tcsn.net> for spotting this.
+	* plug-ins/script-fu/scripts/frosty-logo.scm: don't redefine min.
+	Thanks to Jeff Trefftzs <trefftzs@tcsn.net> for spotting this.
 
 2002-02-03  Michael Natterer  <mitch@gimp.org>
 
@@ -4522,8 +4584,8 @@
 	* plug-ins/print/Makefile.am
 	* tools/Makefile.am
 	* (the various manpages): versioned the binaries and manpages.
-        Added an --enable-default-binary switch to configure to make
-        symlinks for unversioned things (defaults to no for 1.3). The
+	Added an --enable-default-binary switch to configure to make
+	symlinks for unversioned things (defaults to no for 1.3). The
 	perl stuff isn't touched, but that's disabled in the build here
 	anyway.
 
@@ -4536,10 +4598,10 @@
 
 2002-01-31  Simon Budig  <simon@gimp.org>
 
-        * plug-ins/rcm/rcm.c: register as "plug_in_rotate_colormap"
-        instead of "plug-in-rotate-colormap". This fixes the usage
-        in gimp-python (despite the fact that there is no PDB
-        interface)
+	* plug-ins/rcm/rcm.c: register as "plug_in_rotate_colormap"
+	instead of "plug-in-rotate-colormap". This fixes the usage
+	in gimp-python (despite the fact that there is no PDB
+	interface)
 
 2002-01-31  Michael Natterer  <mitch@gimp.org>
 
@@ -5123,7 +5185,7 @@
 
 2001-12-29  Sven Neumann  <sven@gimp.org>
 
-        * data/brushes/vine.gih: fixed rank and increased spacing.
+	* data/brushes/vine.gih: fixed rank and increased spacing.
 
 2001-12-29  Michael Natterer  <mitch@gimp.org>
 
@@ -5411,8 +5473,8 @@
 	* app/base/boundary.c:
 	* app/base/pixel-surround.c:
 	* app/base/temp-buf.c: some more g_malloc -> g_new and 
-          g_realloc -> g_renew changes, foe better readability and type
-          safety.
+	  g_realloc -> g_renew changes, foe better readability and type
+	  safety.
 
 2001-12-18  Sven Neumann  <sven@gimp.org>
 
@@ -6560,10 +6622,10 @@
 
 2001-12-01  Abel Cheung  <maddog@linux.org.hk>
 
-        * tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_TW.txt
+	* tips/{Makefile.am,makefile.mingw}: Added gimp_tips.zh_TW.txt
 	  to the targets.
 
-        * tips/gimp_tips.zh_TW.txt: Added traditional Chinese translation
+	* tips/gimp_tips.zh_TW.txt: Added traditional Chinese translation
 	  in Big5 encoding.
 
 2001-11-30  Michael Natterer  <mitch@gimp.org>
@@ -9321,27 +9383,27 @@
 2001-10-27  Nathan Summers  <rock@gimp.org>
 
 	* gimppalette_pdb.c: the autogenerated code for
-          gimp_palette_get_entry won't compile.  Temporary kludge so that it
-          will compile and work correctly.
+	  gimp_palette_get_entry won't compile.  Temporary kludge so that it
+	  will compile and work correctly.
 
 2001-10-27  Nathan Summers  <rock@gimp.org>
 
-        * app/plug_in.c
-        * libgimp/gimp.c
-        * libgimpbase/gimpbasetypes.h
-        * libgimpbase/gimpprotocol.c
-        * libgimpbase/gimpprotocol.h
-        * tools/pdbgen/pdb/palette.pdb: added preliminary pdb support to
+	* app/plug_in.c
+	* libgimp/gimp.c
+	* libgimpbase/gimpbasetypes.h
+	* libgimpbase/gimpprotocol.c
+	* libgimpbase/gimpprotocol.h
+	* tools/pdbgen/pdb/palette.pdb: added preliminary pdb support to
         manipulate palettes.  Incremented plugin interface version number.
 
         * app/pdb/internal_procs.c
-        * app/pdb/palette_cmds.c
-        * app/pdb/procedural_db.c
-        * app/pdb/procedural_db_cmds.c
-        * libgimp/gimppalette_pdb.c
-        * libgimp/gimppalette_pdb.h
-        * plug-ins/script-fu/script-fu-constants.c
-        * tools/pdbgen/enums.pl: regenerated
+	* app/pdb/palette_cmds.c
+	* app/pdb/procedural_db.c
+	* app/pdb/procedural_db_cmds.c
+	* libgimp/gimppalette_pdb.c
+	* libgimp/gimppalette_pdb.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated
 
 2001-10-26  Michael Natterer  <mitch@gimp.org>
 
@@ -9974,8 +10036,8 @@
 
 2001-10-08  Dave Neary <nearyd@eircom.net>
 
-        * HACKING
-        * RELEASE-TO-CVS.patch: Added file, and instructions on
+	* HACKING
+	* RELEASE-TO-CVS.patch: Added file, and instructions on
         why/how to use it to HACKING
 
 2001-10-07  DindinX <dindinx@wanadoo.fr>
@@ -9990,7 +10052,7 @@
 	
 2001-10-02  Emese Kovacs  <emese@gnome.hu>
 
-        * tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
+	* tips/Makefile.am|makefile.mingw: Added gimp_tips.hu.txt to the
         targets.
 
         * tips/gimp_tips.hu.txt: Added Hungarian tips file in UTF-8

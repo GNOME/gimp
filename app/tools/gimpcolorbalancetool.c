@@ -100,7 +100,7 @@ static GimpImageMapToolClass *parent_class = NULL;
 
 void
 gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
-                                  Gimp                     *gimp)
+                                  gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
                 NULL,
@@ -111,7 +111,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Layer/Colors/Color Balance..."), NULL,
                 NULL, "tools/color_balance.html",
                 GIMP_STOCK_TOOL_COLOR_BALANCE,
-                gimp);
+                data);
 }
 
 GType
@@ -547,10 +547,10 @@ color_balance_preview (ColorBalanceDialog *cbd)
       return;
     }
 
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
   color_balance_create_lookup_tables (cbd);
   image_map_apply (cbd->image_map, color_balance, (void *) cbd);
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 }
 
 static void
@@ -584,7 +584,7 @@ color_balance_ok_callback (GtkWidget *widget,
   
   active_tool = tool_manager_get_active (the_gimp);
 
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 
   if (!cbd->preview)
     image_map_apply (cbd->image_map, color_balance, (void *) cbd);
@@ -592,7 +592,7 @@ color_balance_ok_callback (GtkWidget *widget,
   if (cbd->image_map)
     image_map_commit (cbd->image_map);
 
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
   cbd->image_map = NULL;
 
@@ -615,9 +615,9 @@ color_balance_cancel_callback (GtkWidget *widget,
 
   if (cbd->image_map)
     {
-      gimp_tool_control_set_preserve(active_tool->control, TRUE);
+      gimp_tool_control_set_preserve (active_tool->control, TRUE);
       image_map_abort (cbd->image_map);
-      gimp_tool_control_set_preserve(active_tool->control, FALSE);
+      gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
       gdisplays_flush ();
       cbd->image_map = NULL;
@@ -676,9 +676,9 @@ color_balance_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (cbd->image_map);
-	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }

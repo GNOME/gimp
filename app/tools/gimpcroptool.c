@@ -178,7 +178,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_crop_tool_register (GimpToolRegisterCallback  callback,
-                         Gimp                     *gimp)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CROP_TOOL,
                 crop_options_new,
@@ -189,7 +189,7 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Transform Tools/Crop Tool"), "<shift>C",
                 NULL, "tools/crop_tool.html",
                 GIMP_STOCK_TOOL_CROP,
-                gimp);
+                data);
 }
 
 GType
@@ -311,7 +311,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   crop      = GIMP_CROP_TOOL (tool);
   draw_tool = GIMP_DRAW_TOOL (tool);
 
-  if (!gimp_tool_control_is_active(tool->control) || gdisp != tool->gdisp)
+  if (!gimp_tool_control_is_active (tool->control) || gdisp != tool->gdisp)
     {
       crop->function = CREATING;
     }
@@ -380,7 +380,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
 
   if (crop->function == CREATING)
     {
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
 	gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
       tool->gdisp = gdisp;
@@ -394,7 +394,7 @@ gimp_crop_tool_button_press (GimpTool        *tool,
   crop->lastx = crop->startx = ROUND (coords->x);
   crop->lasty = crop->starty = ROUND (coords->y);
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 }
 
 static void
@@ -594,7 +594,7 @@ gimp_crop_tool_arrow_key (GimpTool    *tool,
 
   options = (CropOptions *) tool->tool_info->tool_options;
 
-  if (gimp_tool_control_is_active(tool->control))
+  if (gimp_tool_control_is_active (tool->control))
     {
       inc_x = inc_y = 0;
 
@@ -725,9 +725,9 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
 
   options = (CropOptions *) tool->tool_info->tool_options;
 
-  if (!gimp_tool_control_is_active(tool->control) ||
-      (gimp_tool_control_is_active(tool->control) && tool->gdisp != gdisp))
-      /* this expression can be simplified to !..._is_active() || t->g != g */
+  if (!gimp_tool_control_is_active (tool->control) ||
+      (gimp_tool_control_is_active (tool->control) && tool->gdisp != gdisp))
+      /* this expression can be simplified to !..._is_active () || t->g != g */
     {
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
@@ -771,10 +771,11 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
-  gimp_tool_control_set_tool_cursor(tool->control, (options->type == GIMP_CROP ? 
-                                                    GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR));
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor (tool->control, ctype);
+  gimp_tool_control_set_tool_cursor (tool->control, (options->type == GIMP_CROP ? 
+                                                     GIMP_CROP_TOOL_CURSOR : 
+                                                     GIMP_RESIZE_TOOL_CURSOR));
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -1122,10 +1123,10 @@ crop_close_callback (GtkWidget *widget,
 
   if (GIMP_IS_CROP_TOOL (tool))
     {
-      if (gimp_tool_control_is_active(tool->control))
+      if (gimp_tool_control_is_active (tool->control))
         gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);    /* sets paused_count to 0 -- is this ok? */
     }
 
   info_dialog_popdown (crop_info);
@@ -1365,7 +1366,7 @@ crop_options_new (GimpToolInfo *tool_info)
 
   /*  layer toggle  */
   options->layer_only_w =
-    gtk_check_button_new_with_label(_("Current Layer only"));
+    gtk_check_button_new_with_label (_("Current Layer only"));
   gtk_box_pack_start (GTK_BOX (vbox), options->layer_only_w,
 		      FALSE, FALSE, 0);
   g_signal_connect (G_OBJECT (options->layer_only_w), "toggled",

@@ -123,7 +123,7 @@ static GimpToolClass *parent_class = NULL;
 
 void
 gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
-                              Gimp                     *gimp)
+                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HISTOGRAM_TOOL,
                 NULL,
@@ -134,7 +134,7 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Layer/Colors/Histogram..."), NULL,
                 NULL, "tools/histogram.html",
                 GIMP_STOCK_TOOL_HISTOGRAM,
-                gimp);
+                data);
 }
 
 GType

@@ -44,7 +44,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
-                               Gimp                     *gimp)
+                               gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PAINTBRUSH_TOOL,
                 paint_options_new,
@@ -55,7 +55,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Paintbrush"), "P",
                 NULL, "tools/paintbrush.html",
                 GIMP_STOCK_TOOL_PAINTBRUSH,
-                gimp);
+                data);
 }
 
 GType

@@ -59,7 +59,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
-                              Gimp                     *gimp)
+                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_DODGEBURN_TOOL,
                 gimp_dodgeburn_tool_options_new,
@@ -70,7 +70,7 @@ gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/DodgeBurn"), "<shift>D",
                 NULL, "tools/dodgeburn.html",
                 GIMP_STOCK_TOOL_DODGE,
-                gimp);
+                data);
 }
 
 GType
@@ -159,7 +159,7 @@ gimp_dodgeburn_tool_modifier_key (GimpTool        *tool,
         }
     }
 
-  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_BURN));
+  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
 }
 
 static void
@@ -173,7 +173,7 @@ gimp_dodgeburn_tool_cursor_update (GimpTool        *tool,
   options = (GimpDodgeBurnOptions *) tool->tool_info->tool_options;
 
 
-  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_BURN));
+  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_BURN));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -44,7 +44,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PENCIL_TOOL,
                 paint_options_new,
@@ -55,7 +55,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Pencil"), "P",
                 NULL, "tools/pencil.html",
                 GIMP_STOCK_TOOL_PENCIL,
-                gimp);
+                data);
 }
 
 GType

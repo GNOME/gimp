@@ -57,7 +57,7 @@ static GimpPaintToolClass *parent_class = NULL;
 
 void
 gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ERASER_TOOL,
                 gimp_eraser_tool_options_new,
@@ -68,7 +68,7 @@ gimp_eraser_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Eraser"), "<shift>E",
                 NULL, "tools/eraser.html",
                 GIMP_STOCK_TOOL_ERASER,
-                gimp);
+                data);
 }
 
 GType
@@ -158,7 +158,7 @@ gimp_eraser_tool_cursor_update (GimpTool        *tool,
 
   options = (GimpEraserOptions *) tool->tool_info->tool_options;
 
-  gimp_tool_control_set_toggle(tool->control, options->anti_erase);
+  gimp_tool_control_set_toggle (tool->control, options->anti_erase);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

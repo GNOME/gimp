@@ -114,7 +114,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
-                            Gimp                     *gimp)
+                            gpointer                  data)
 {
   (* callback) (GIMP_TYPE_MAGNIFY_TOOL,
                 magnify_options_new,
@@ -125,7 +125,7 @@ gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Magnify"), NULL,
                 NULL, "tools/magnify.html",
                 GIMP_STOCK_TOOL_ZOOM,
-                gimp);
+                data);
 }
 
 GType
@@ -218,7 +218,7 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
   magnify->w = 0;
   magnify->h = 0;
 
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
@@ -248,7 +248,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-  gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+  gimp_tool_control_halt (tool->control); /* sets paused_count to 0 -- is this ok? */
 
   /*  First take care of the case where the user "cancels" the action  */
   if (! (state & GDK_BUTTON3_MASK))
@@ -309,7 +309,7 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 {
   GimpMagnifyTool *magnify;
 
-  if (!gimp_tool_control_is_active(tool->control))
+  if (!gimp_tool_control_is_active (tool->control))
     return;
 
   magnify = GIMP_MAGNIFY_TOOL (tool);
@@ -361,7 +361,7 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 
   options = (MagnifyOptions *) tool->tool_info->tool_options;
 
-  gimp_tool_control_set_toggle(tool->control, (options->type == GIMP_ZOOM_OUT));
+  gimp_tool_control_set_toggle (tool->control, (options->type == GIMP_ZOOM_OUT));
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

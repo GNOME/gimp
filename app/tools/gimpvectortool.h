@@ -67,7 +67,7 @@ struct _GimpVectorToolClass
 
 
 void    gimp_vector_tool_register (GimpToolRegisterCallback  callback,
-                                   Gimp                     *gimp);
+                                   gpointer                  data);
 
 GType   gimp_vector_tool_get_type (void) G_GNUC_CONST;
 

@@ -1214,7 +1214,7 @@ path_tool_motion_anchor (Tool           *tool,
 
    path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
    
-   draw_core_pause(path_tool->core, tool);
+   draw_core_pause (path_tool->core, tool);
 
    path_offset_active (path_tool->cur_path, dx, dy);
 
@@ -1262,7 +1262,7 @@ path_tool_motion_handle (Tool           *tool,
    
    path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
    
-   draw_core_pause(path_tool->core, tool);
+   draw_core_pause (path_tool->core, tool);
 
    path_curve_drag_handle (path_tool, path_tool->click_segment, dx, dy, path_tool->click_handle_id);
 
@@ -1303,7 +1303,7 @@ path_tool_motion_curve (Tool           *tool,
    
    path_tool->draw |= PATH_TOOL_REDRAW_ACTIVE;
    
-   draw_core_pause(path_tool->core, tool);
+   draw_core_pause (path_tool->core, tool);
 
    path_curve_drag_segment (path_tool, path_tool->click_segment, path_tool->click_position, dx, dy);
 
@@ -1556,7 +1556,7 @@ path_tool_on_curve (NPath *path,
 
    position = data->position;
 
-   g_free(data);
+   g_free (data);
 
    return position;
 
@@ -1630,7 +1630,7 @@ path_tool_on_anchors (NPath *path,
 
    ret_found = data->found;
 
-   g_free(data);
+   g_free (data);
 
    return ret_found;
 
@@ -1705,7 +1705,7 @@ path_tool_on_handles (NPath *path,
 
    handle_ret = data->handle_id;
 
-   g_free(data);
+   g_free (data);
 
    return handle_ret;
 }
@@ -1748,7 +1748,7 @@ path_offset_active (NPath *path,
    if (path)
       path_traverse_path (path, NULL, path_offset_active_helper, NULL, data);
    
-   g_free(data);
+   g_free (data);
 }
 
 

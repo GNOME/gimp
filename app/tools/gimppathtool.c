@@ -108,7 +108,7 @@ static GimpDrawToolClass *parent_class = NULL;
 
 void
 gimp_path_tool_register (GimpToolRegisterCallback  callback,
-                         Gimp                     *gimp)
+                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_PATH_TOOL,
                 NULL,
@@ -119,7 +119,7 @@ gimp_path_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Path"), NULL,
                 NULL, "tools/path.html",
                 GIMP_STOCK_TOOL_PATH,
-                gimp);
+                data);
 }
 
 GType
@@ -251,7 +251,7 @@ gimp_path_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      gimp_tool_control_halt(tool->control);    /* sets paused_count to 0 -- is this ok? */
+      gimp_tool_control_halt (tool->control);  /* sets paused_count to 0 -- is this ok? */
       break;
 
     default:
@@ -290,7 +290,7 @@ gimp_path_tool_button_press (GimpTool        *tool,
   path_tool->click_halfheight = halfheight;
   
   tool->gdisp = gdisp;
-  gimp_tool_control_activate(tool->control);
+  gimp_tool_control_activate (tool->control);
 
   if (! path_tool->cur_path->curves)
     gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), gdisp);
@@ -330,7 +330,7 @@ gimp_path_tool_button_press (GimpTool        *tool,
       break;
 
     default:
-      g_message("Huh? Whats happening here? (button_press_*)");
+      g_message ("Huh? Whats happening here? (button_press_*)");
     }
 }
 
@@ -533,16 +533,16 @@ gimp_path_tool_button_press_canvas (GimpPathTool *path_tool,
       path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
 
       if (cur_segment->next == NULL)
-         cur_curve->cur_segment = path_append_segment(cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
+         cur_curve->cur_segment = path_append_segment (cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
       else
-         cur_curve->cur_segment = path_prepend_segment(cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
+         cur_curve->cur_segment = path_prepend_segment (cur_path, cur_curve, SEGMENT_BEZIER, path_tool->click_x, path_tool->click_y);
       if (cur_curve->cur_segment) {
          path_set_flags (path_tool, cur_path, cur_curve, cur_curve->cur_segment, SEGMENT_ACTIVE, 0);
       }
    } else {
       if (path_tool->active_count == 0) {
          path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
-         cur_path->cur_curve = path_add_curve(cur_path, path_tool->click_x, path_tool->click_y);
+         cur_path->cur_curve = path_add_curve (cur_path, path_tool->click_x, path_tool->click_y);
          path_set_flags (path_tool, cur_path, cur_path->cur_curve, cur_path->cur_curve->segments, SEGMENT_ACTIVE, 0);
       } else {
          path_set_flags (path_tool, cur_path, NULL, NULL, 0, SEGMENT_ACTIVE);
@@ -828,7 +828,7 @@ gimp_path_tool_cursor_update (GimpTool        *tool,
       break;
     }
 
-  gimp_tool_control_set_cursor_modifier(tool->control, cmodifier);
+  gimp_tool_control_set_cursor_modifier (tool->control, cmodifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }

@@ -46,7 +46,7 @@ struct _GimpAirbrushToolClass
 
 
 void       gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
-                                        Gimp                     *gimp);
+                                        gpointer                  data);
 
 GType      gimp_airbrush_tool_get_type (void) G_GNUC_CONST;
 

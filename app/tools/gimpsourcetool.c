@@ -87,7 +87,7 @@ static GimpPaintToolClass *parent_class;
 
 void
 gimp_clone_tool_register (GimpToolRegisterCallback  callback,
-                          Gimp                     *gimp)
+                          gpointer                  data)
 {
   (* callback) (GIMP_TYPE_CLONE_TOOL,
                 clone_options_new,
@@ -98,7 +98,7 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Tools/Paint Tools/Clone"), "C",
                 NULL, "tools/clone.html",
                 GIMP_STOCK_TOOL_CLONE,
-                gimp);
+                data);
 }
 
 GType
@@ -159,8 +159,8 @@ gimp_clone_tool_init (GimpCloneTool *clone)
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
 
-  gimp_tool_control_set_motion_mode(tool->control, GIMP_MOTION_MODE_EXACT);
-  gimp_tool_control_set_tool_cursor(tool->control, GIMP_CLONE_TOOL_CURSOR);
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_CLONE_TOOL_CURSOR);
 
   clone_core->init_callback      = gimp_clone_init_callback;
   clone_core->finish_callback    = gimp_clone_finish_callback;
@@ -266,7 +266,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  gimp_tool_control_set_cursor(tool->control, ctype);
+  gimp_tool_control_set_cursor (tool->control, ctype);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
@@ -278,7 +278,7 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
   tool = GIMP_TOOL (draw_tool);
 
-  if (gimp_tool_control_is_active(tool->control))
+  if (gimp_tool_control_is_active (tool->control))
     {
       GimpCloneOptions *options;
 

@@ -205,7 +205,7 @@ static GimpImageMapToolClass *parent_class = NULL;
 
 void
 gimp_levels_tool_register (GimpToolRegisterCallback  callback,
-                           Gimp                     *gimp)
+                           gpointer                  data)
 {
   (* callback) (GIMP_TYPE_LEVELS_TOOL,
                 NULL,
@@ -216,7 +216,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                 N_("/Layer/Colors/Levels..."), NULL,
                 NULL, "tools/levels.html",
                 GIMP_STOCK_TOOL_LEVELS,
-                gimp);
+                data);
 }
 
 GType
@@ -362,9 +362,9 @@ levels_free (void)
     {
       if (levels_dialog->image_map)
 	{
-	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_abort (levels_dialog->image_map);
-	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
 	  levels_dialog->image_map = NULL;
 	}
@@ -707,7 +707,7 @@ levels_draw_slider (GdkWindow *window,
   int y;
 
   for (y = 0; y < CONTROL_HEIGHT; y++)
-    gdk_draw_line(window, fill_gc, xpos - y / 2, y,
+    gdk_draw_line (window, fill_gc, xpos - y / 2, y,
 		  xpos + y / 2, y);
 
   gdk_draw_line (window, border_gc, xpos, 0,
@@ -949,10 +949,10 @@ levels_preview (LevelsDialog *ld)
     }
   if (!ld->preview)
     return;
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
   image_map_apply (ld->image_map, (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) ld->lut);
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 }
 
 static void
@@ -1031,7 +1031,7 @@ levels_adjust_channel (LevelsDialog    *ld,
       new_count = 0.0;
       for (i = 0; i < 255; i++)
 	{
-	  new_count += gimp_histogram_get_value(hist, channel, i);
+	  new_count += gimp_histogram_get_value (hist, channel, i);
 	  percentage = new_count / count;
 	  next_percentage =
 	    (new_count + gimp_histogram_get_value (hist,
@@ -1047,7 +1047,7 @@ levels_adjust_channel (LevelsDialog    *ld,
       new_count = 0.0;
       for (i = 255; i > 0; i--)
 	{
-	  new_count += gimp_histogram_get_value(hist, channel, i);
+	  new_count += gimp_histogram_get_value (hist, channel, i);
 	  percentage = new_count / count;
 	  next_percentage =
 	    (new_count + gimp_histogram_get_value (hist,
@@ -1095,7 +1095,7 @@ levels_ok_callback (GtkWidget *widget,
 
   gtk_widget_hide (ld->shell);
 
-  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 
   if (!ld->preview)
     {
@@ -1109,7 +1109,7 @@ levels_ok_callback (GtkWidget *widget,
   if (ld->image_map)
     image_map_commit (ld->image_map);
 
-  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
   ld->image_map = NULL;
 
@@ -1132,9 +1132,9 @@ levels_cancel_callback (GtkWidget *widget,
 
   if (ld->image_map)
     {
-      gimp_tool_control_set_preserve(active_tool->control, TRUE);
+      gimp_tool_control_set_preserve (active_tool->control, TRUE);
       image_map_abort (ld->image_map);
-      gimp_tool_control_set_preserve(active_tool->control, FALSE);
+      gimp_tool_control_set_preserve (active_tool->control, FALSE);
 
       gdisplays_flush ();
       ld->image_map = NULL;
@@ -1224,9 +1224,9 @@ levels_preview_update (GtkWidget *widget,
 	{
 	  active_tool = tool_manager_get_active (the_gimp);
 
-	  gimp_tool_control_set_preserve(active_tool->control, TRUE);
+	  gimp_tool_control_set_preserve (active_tool->control, TRUE);
 	  image_map_clear (ld->image_map);
-	  gimp_tool_control_set_preserve(active_tool->control, FALSE);
+	  gimp_tool_control_set_preserve (active_tool->control, FALSE);
 	  gdisplays_flush ();
 	}
     }
@@ -1590,7 +1590,7 @@ file_dialog_ok_callback (GtkWidget *widget,
     }
   else
     {
-      f = fopen(filename, "wt");
+      f = fopen (filename, "wt");
 
       if (!f)
 	{

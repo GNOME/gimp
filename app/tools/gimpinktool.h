@@ -69,7 +69,7 @@ struct _GimpInkToolClass
 
 
 void    gimp_ink_tool_register (GimpToolRegisterCallback  callback,
-                                Gimp                     *gimp);
+                                gpointer                  data);
 
 GType   gimp_ink_tool_get_type (void) G_GNUC_CONST;
 

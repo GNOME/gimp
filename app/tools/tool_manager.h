@@ -85,7 +85,7 @@ void           tool_manager_register_tool         (GType             tool_type,
 						   const gchar      *help_domain,
 						   const gchar      *help_data,
 						   const gchar      *stock_id,
-                                                   Gimp             *gimp);
+                                                   gpointer          data);
 
 GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
 						   GType             tool_type);
