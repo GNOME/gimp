@@ -971,6 +971,9 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
       SET_SENSITIVE ("Image/Mode/Indexed...", (base_type != GIMP_INDEXED));
     }
 
+  SET_SENSITIVE ("Image/Merge Visible Layers...", gdisp && !fs && !aux && lp);
+  SET_SENSITIVE ("Image/Flatten Image", gdisp && !fs && !aux && lp);
+
   SET_SENSITIVE ("Layer/Stack", gdisp);
   if (gdisp)
     {
@@ -991,6 +994,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Layer/New Layer...", gdisp);
   SET_SENSITIVE ("Layer/Duplicate Layer", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("Layer/Anchor Layer", gdisp && fs && !aux && lp);
+  SET_SENSITIVE ("Layer/Merge Down", gdisp && !fs && !aux && lp);
   SET_SENSITIVE ("Layer/Delete Layer", gdisp && !aux && lp);
 
   SET_SENSITIVE ("Layer/Layer Boundary Size...", gdisp && !aux && lp);
@@ -998,10 +1002,6 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
   SET_SENSITIVE ("Layer/Scale Layer...", gdisp && !aux && lp);
 
   SET_SENSITIVE ("Layer/Transform/Offset...", lp);
-
-  SET_SENSITIVE ("Layer/Merge Visible Layers...", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layer/Merge Down", gdisp && !fs && !aux && lp);
-  SET_SENSITIVE ("Layer/Flatten Image", gdisp && !fs && !aux && lp);
 
   SET_SENSITIVE ("Layer/Colors", gdisp);
   SET_SENSITIVE ("Layer/Colors/Auto", gdisp);

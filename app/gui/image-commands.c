@@ -28,6 +28,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-duplicate.h"
+#include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
 #include "core/gimpimage-scale.h"
 
@@ -35,6 +36,7 @@
 #include "display/gimpdisplay-foreach.h"
 
 #include "convert-dialog.h"
+#include "image-commands.h"
 #include "resize-dialog.h"
 
 #include "gimpprogress.h"
@@ -193,6 +195,124 @@ image_duplicate_cmd_callback (GtkWidget *widget,
   gimp_create_display (new_gimage->gimp, new_gimage, 0x0101);
 
   g_object_unref (G_OBJECT (new_gimage));
+}
+
+void
+image_merge_layers_cmd_callback (GtkWidget *widget,
+                                 gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  image_layers_merge_query (gimage, TRUE);
+}
+
+void
+image_flatten_image_cmd_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpImage *gimage;
+  return_if_no_image (gimage, data);
+
+  gimp_image_flatten (gimage);
+  gdisplays_flush ();
+}
+/****************************/
+/*  The layer merge dialog  */
+/****************************/
+
+typedef struct _LayerMergeOptions LayerMergeOptions;
+
+struct _LayerMergeOptions
+{
+  GtkWidget *query_box;
+  GimpImage *gimage;
+  gboolean   merge_visible;
+  MergeType  merge_type;
+};
+
+static void
+image_layers_merge_query_ok_callback (GtkWidget *widget,
+                                      gpointer   data)
+{
+  LayerMergeOptions *options;
+  GimpImage         *gimage;
+
+  options = (LayerMergeOptions *) data;
+  if (! (gimage = options->gimage))
+    return;
+
+  if (options->merge_visible)
+    gimp_image_merge_visible_layers (gimage, options->merge_type);
+
+  gdisplays_flush ();
+
+  gtk_widget_destroy (options->query_box);
+}
+
+void
+image_layers_merge_query (GimpImage   *gimage,
+                          /*  if FALSE, anchor active layer  */
+                          gboolean     merge_visible)
+{
+  LayerMergeOptions *options;
+  GtkWidget         *vbox;
+  GtkWidget         *frame;
+
+  /*  The new options structure  */
+  options = g_new (LayerMergeOptions, 1);
+  options->gimage        = gimage;
+  options->merge_visible = merge_visible;
+  options->merge_type    = EXPAND_AS_NECESSARY;
+
+  /* The dialog  */
+  options->query_box =
+    gimp_dialog_new (_("Layers Merge Options"), "layers_merge_options",
+		     gimp_standard_help_func,
+		     "dialogs/layers/merge_visible_layers.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     GTK_STOCK_CANCEL, gtk_widget_destroy,
+		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GTK_STOCK_OK, image_layers_merge_query_ok_callback,
+		     options, NULL, NULL, TRUE, FALSE,
+
+		     NULL);
+
+  g_object_weak_ref (G_OBJECT (options->query_box),
+		     (GWeakNotify) g_free,
+		     options);
+
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
+		     vbox);
+
+  frame = gimp_radio_group_new2 (TRUE,
+				 merge_visible ?
+				 _("Final, Merged Layer should be:") :
+				 _("Final, Anchored Layer should be:"),
+				 G_CALLBACK (gimp_radio_button_update),
+				 &options->merge_type,
+				 GINT_TO_POINTER (options->merge_type),
+
+				 _("Expanded as necessary"),
+				 GINT_TO_POINTER (EXPAND_AS_NECESSARY), NULL,
+				 _("Clipped to image"),
+				 GINT_TO_POINTER (CLIP_TO_IMAGE), NULL,
+				 _("Clipped to bottom layer"),
+				 GINT_TO_POINTER (CLIP_TO_BOTTOM_LAYER), NULL,
+
+				 NULL);
+
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (options->query_box);
 }
 
 

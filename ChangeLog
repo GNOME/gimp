@@ -1,3 +1,17 @@
+2002-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/menus.c: moved "Merge Layers" and "Flatten Image" from
+	"Layer/" to "Image/", removed them from the "<Layers>" menu
+	entirely, moved "Merge Down" after "Anchor Layer" in both menus.
+
+	* app/gui/image-commands.[ch]: moved callbacks from here...
+
+	* app/gui/layers-commands.[ch]: ...to here.
+
+	* app/gui/layers-commands.[ch]
+	* app/display/gimpdisplayshell.c: changed menu_update functions
+	accordingly.
+
 2002-02-12  Nathan Summers  <rock@gimp.org>
 
         * plug-ins/tools/.cvsignore

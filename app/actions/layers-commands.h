@@ -39,6 +39,8 @@ void   layers_duplicate_cmd_callback         (GtkWidget *widet,
 					      gpointer   data);
 void   layers_anchor_cmd_callback            (GtkWidget *widet,
 					      gpointer   data);
+void   layers_merge_down_cmd_callback        (GtkWidget *widet,
+					      gpointer   data);
 void   layers_delete_cmd_callback            (GtkWidget *widet,
 					      gpointer   data);
 
@@ -65,13 +67,6 @@ void   layers_apply_layer_mask_cmd_callback  (GtkWidget *widet,
 void   layers_delete_layer_mask_cmd_callback (GtkWidget *widet,
 					      gpointer   data);
 
-void   layers_merge_layers_cmd_callback      (GtkWidget *widet,
-					      gpointer   data);
-void   layers_merge_down_cmd_callback        (GtkWidget *widet,
-					      gpointer   data);
-void   layers_flatten_image_cmd_callback     (GtkWidget *widet,
-					      gpointer   data);
-
 void   layers_alpha_select_cmd_callback      (GtkWidget *widet,
 					      gpointer   data);
 void   layers_mask_select_cmd_callback       (GtkWidget *widet,
@@ -87,9 +82,6 @@ void   layers_menu_update                    (GtkItemFactory *factory,
 void   layers_new_layer_query                (GimpImage *gimage,
                                               GimpLayer *tamplate);
 void   layers_edit_layer_query               (GimpLayer *layer);
-
-void   layers_layer_merge_query              (GimpImage *gimage,
-					      gboolean   merge_visible);
 
 
 #endif /* __LAYERS_COMMANDS_H__ */

@@ -26,12 +26,22 @@ void   image_convert_grayscale_cmd_callback (GtkWidget *widget,
 					     gpointer   data);
 void   image_convert_indexed_cmd_callback   (GtkWidget *widget,
 					     gpointer   data);
+
 void   image_resize_cmd_callback            (GtkWidget *widget,
 					     gpointer   data);
 void   image_scale_cmd_callback             (GtkWidget *widget,
 					     gpointer   data);
+
 void   image_duplicate_cmd_callback         (GtkWidget *widget,
 					     gpointer   data);
+
+void   image_merge_layers_cmd_callback      (GtkWidget *widet,
+                                             gpointer   data);
+void   image_flatten_image_cmd_callback     (GtkWidget *widet,
+                                             gpointer   data);
+
+void   image_layers_merge_query             (GimpImage *gimage,
+                                             gboolean   merge_visible);
 
 
 #endif /* __IMAGE_COMMANDS_H__ */

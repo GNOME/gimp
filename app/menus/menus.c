@@ -662,6 +662,17 @@ static GimpItemFactoryEntry image_entries[] =
 
   SEPARATOR ("/Image/---"),
 
+  { { N_("/Image/Merge Visible Layers..."), "<control>M",
+      image_merge_layers_cmd_callback, 0 },
+    NULL,
+    "layers/dialogs/merge_visible_layers.html", NULL },
+  { { N_("/Image/Flatten Image"), NULL,
+      image_flatten_image_cmd_callback, 0 },
+    NULL,
+    "layers/flatten_image.html", NULL },
+
+  SEPARATOR ("/Image/---"),
+
   /*  <Image>/Layer  */
 
   /*  <Image>/Layer/Stack  */
@@ -712,6 +723,10 @@ static GimpItemFactoryEntry image_entries[] =
       "<StockItem>", GIMP_STOCK_ANCHOR },
     NULL,
     "layers/anchor_layer.html", NULL },
+  { { N_("/Layer/Merge Down"), "<control><shift>M",
+      layers_merge_down_cmd_callback, 0 },
+    NULL,
+    "layers/merge_visible_layers.html", NULL },
   { { N_("/Layer/Delete Layer"), NULL,
       layers_delete_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -742,21 +757,6 @@ static GimpItemFactoryEntry image_entries[] =
       layers_offset_cmd_callback, 0 },
     NULL,
     "layers/dialogs/offset.html", NULL },
-
-  SEPARATOR ("/Layer/---"),
-
-  { { N_("/Layer/Merge Visible Layers..."), "<control>M",
-      layers_merge_layers_cmd_callback, 0 },
-    NULL,
-    "layers/dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Layer/Merge Down"), "<control><shift>M",
-      layers_merge_down_cmd_callback, 0 },
-    NULL,
-    "layers/merge_visible_layers.html", NULL },
-  { { N_("/Layer/Flatten Image"), NULL,
-      layers_flatten_image_cmd_callback, 0 },
-    NULL,
-    "layers/flatten_image.html", NULL },
 
   SEPARATOR ("/Layer/---"),
 
@@ -1034,6 +1034,10 @@ static GimpItemFactoryEntry layers_entries[] =
       "<StockItem>", GIMP_STOCK_ANCHOR },
     NULL,
     "anchor_layer.html", NULL },
+  { { N_("/Merge Down"), "<control><shift>M",
+      layers_merge_down_cmd_callback, 0 },
+    NULL,
+    "merge_down.html", NULL },
   { { N_("/Delete Layer"), "<control>X",
       layers_delete_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_DELETE },
@@ -1055,21 +1059,6 @@ static GimpItemFactoryEntry layers_entries[] =
       layers_resize_to_image_cmd_callback, 0 },
     NULL,
     "layer_to_image_size.html", NULL },
-
-  SEPARATOR ("/---"),
-
-  { { N_("/Merge Visible Layers..."), "<control>M",
-      layers_merge_layers_cmd_callback, 0 },
-    NULL,
-    "dialogs/merge_visible_layers.html", NULL },
-  { { N_("/Merge Down"), "<control><shift>M",
-      layers_merge_down_cmd_callback, 0 },
-    NULL,
-    "merge_down.html", NULL },
-  { { N_("/Flatten Image"), NULL,
-      layers_flatten_image_cmd_callback, 0 },
-    NULL,
-    "flatten_image.html", NULL },
 
   SEPARATOR ("/---"),
 
