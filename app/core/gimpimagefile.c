@@ -32,6 +32,12 @@
 #include <glib-object.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#ifdef G_OS_WIN32
+#  ifndef S_ISREG
+#  define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
+#  endif
+#endif
+
 #include "core-types.h"
 
 #include "base/temp-buf.h"

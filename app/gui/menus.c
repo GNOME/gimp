@@ -2594,8 +2594,6 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
 
 #ifdef ENABLE_DEBUG_ENTRIES
 
-#include <unistd.h>
-
 static void
 menus_debug_recurse_menu (GtkWidget *menu,
 			  gint       depth,
@@ -2651,7 +2649,7 @@ menus_debug_recurse_menu (GtkWidget *menu,
 	      if ((hash = strchr (help_path, '#')) != NULL)
 		*hash = '\0';
 
-	      if (access (help_path, R_OK))
+	      if (g_file_test (help_path, G_FILE_TEST_EXISTS))
 		{
 		  g_free (help_path);
 		  help_path = g_strconcat ("! ", help_page, NULL);

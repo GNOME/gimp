@@ -5,20 +5,34 @@ PACKAGE = appplug-in
 PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
+PKG_LINK = \
+	$(GLIB_LIBS) \
+	..\base\appbase-$(PKG_VER).lib \
+	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
+	\
+	..\core\appcore-$(PKG_VER).lib
+
 OBJECTS = \
 	plug-in.obj \
+	plug-in-def.obj \
+	plug-in-params.obj \
 	plug-in-proc.obj \
+	plug-in-progress.obj \
 	plug-in-rc.obj \
+	plug-ins.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
 
 all : \
 	$(PRJ_TOP)\config.h \
-	$(PACKAGE).lib
-
+	$(PACKAGE).lib \
+!IFDEF DLL_GIMP
+	$(PACKAGE)-$(PKG_VER).dll
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

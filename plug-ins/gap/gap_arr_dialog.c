@@ -57,6 +57,8 @@
  *                                   (re-implementation of gap_sld_dialog.c)
  */
 
+#include <config.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

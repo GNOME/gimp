@@ -1,4 +1,5 @@
 /* config.h.win32. Hand-generated */
+#define GETTEXT_PACKAGE "gimp14"
 
 /* Define if using alloca.c.  */
 /* #undef C_ALLOCA */

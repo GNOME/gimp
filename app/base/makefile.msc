@@ -15,6 +15,7 @@ PKG_LINK = \
 OBJECTS = \
 	base.obj \
 	base-config.obj \
+	base-enums.obj \
 	boundary.obj \
 	brush-scale.obj \
 	gimphistogram.obj \
@@ -31,6 +32,7 @@ OBJECTS = \
 	tile-swap.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I $(PRJ_TOP) \
 	-I $(PRJ_TOP)/app \
 	$(GLIB_CFLAGS) \

@@ -49,6 +49,8 @@ OBJECTS = \
 	misc_tools_cmds.obj \
 	paint_tools_cmds.obj \
 	palette_cmds.obj \
+	palette_select_cmds.obj \
+	palettes_cmds.obj \
 	parasite_cmds.obj \
 	paths_cmds.obj \
 	pattern_select_cmds.obj \
@@ -63,6 +65,7 @@ OBJECTS = \
 	unit_cmds.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \

@@ -72,12 +72,14 @@ OBJECTS = \
 	gimptool.obj \
 	gimptoolmodule.obj \
 	gimptransformtool.obj \
+	gimpvectortool.obj \
 	transform_options.obj \
 	paint_options.obj \
 	selection_options.obj \
 	tool_options.obj \
 	tool_manager.obj \
 	path_tool.obj \
+	tools-enums.obj \
 
 INCLUDES = \
 	-I$(top_srcdir) \

@@ -23,23 +23,31 @@ PKG_LINK = \
 	..\widgets\appwidgets-$(PKG_VER).lib \
 
 OBJECTS = \
-        gimpairbrush.obj \
-        gimpclone.obj \
-        gimpconvolve.obj \
-        gimpdodgeburn.obj \
-        gimperaser.obj \
-        gimppaintbrush.obj \
-        gimppaintcore.obj \
-        gimppencil.obj \
-        gimpsmudge.obj \
+	gimpairbrush.obj \
+	gimpclone.obj \
+	gimpconvolve.obj \
+	gimpdodgeburn.obj \
+	gimperaser.obj \
+	gimppaintbrush.obj \
+	gimppaintcore.obj \
+	gimppaintcore-stroke.obj \
+	gimppaintoptions.obj \
+	gimppencil.obj \
+	gimpsmudge.obj \
+	paint.obj \
+	paint-enums.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \
 	-I$(includedir)
 # $(FREETYPE2_CFLAGS) 
-	
+
+DEFINES = \
+	-DG_LOG_DOMAIN=\"Gimp-Paint\"	\
+
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \

@@ -12,21 +12,24 @@ TOP = ..\..
 
 # Nothing much configurable below
 
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 GIMP_VER = 1.3
 
-INCLUDES = -I.. 
+INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
+	-I.. 
+
 DEFINES = -DHAVE_CONFIG_H -DMODULE_COMPILATION 
-DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK_CFLAGS) 
-DEPLIBS = $(INTL_LIBS) $(GLIB_LIBS) $(GTK_LIBS)
+DEPCFLAGS = $(INTL_CFLAGS) $(GLIB_CFLAGS) $(GTK2_CFLAGS) 
+DEPLIBS = $(INTL_LIBS) $(GLIB_LIBS) $(GTK2_LIBS)
 
 BIN = $(GIMP)\modules
 
 MODULES = \
-	colorsel_gtk-$(GIMP_VER).dll \
+#	colorsel_gtk-$(GIMP_VER).dll \
 	colorsel_triangle-$(GIMP_VER).dll \
-	colorsel_water-$(GIMP_VER).dll \
+#	colorsel_water-$(GIMP_VER).dll \
 	cdisplay_gamma-$(GIMP_VER).dll \
 	cdisplay_highcontrast-$(GIMP_VER).dll
 
@@ -61,10 +64,14 @@ colorsel_water-$(GIMP_VER).dll : colorsel_water.obj module.def
 
 cdisplay_gamma-$(GIMP_VER).dll : cdisplay_gamma.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_gamma.obj $(LDFLAGS) ..\app\gimp.lib \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS) /def:module.def
 
 cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj module.def
 	$(CC) $(CFLAGS) -LD -Fe$@ cdisplay_highcontrast.obj $(LDFLAGS) ..\app\gimp.lib \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
 	$(DEPLIBS) /def:module.def
 
 # General rule for building 

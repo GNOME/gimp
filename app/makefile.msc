@@ -11,7 +11,7 @@ top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)
 includedir = $(PRJ_TOP)
 LT_RELEASE = $(PKG_VER)
-SUBDIRS = paint-funcs base xcf core file display pdb tools widgets gui
+SUBDIRS = paint-funcs base xcf core file display paint vectors pdb plug-in tools widgets gui
 
 sub-all: 
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
@@ -20,6 +20,8 @@ sub-one:
 	cd $(THIS)
 	nmake -nologo -f makefile.msc
 	cd ..
+
+LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)
 
 PKG_LINK = \
 	paint/apppaint.lib \
@@ -34,6 +36,8 @@ PKG_LINK = \
 	file/appfile.lib \
 	display/appdisplay.lib \
 	xcf/xcf.lib \
+	vectors/appvectors.lib \
+	plug-in/appplug-in.lib \
 	$(PRJ_TOP)/regexrepl/regexrepl.lib \
 	$(top_builddir)/libgimpcolor/gimpcolor-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmath/gimpmath-$(LT_RELEASE).lib \
@@ -44,7 +48,8 @@ PKG_LINK = \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \
 	$(INTL_LIBS) \
-	$(PANGO)\pango\pangoft2-$(PANGO_VER).lib
+	$(PANGO)\pango\pangoft2-$(PANGO_VER).lib \
+	$(LIBART_LIBS)
 
 gimp_LDFLAGS = \
 	-export-dynamic -export-symbols $(srcdir)/gimp.sym
@@ -62,12 +67,10 @@ mmx_sources = \
 	
 
 OBJECTS = \
-	gimpprogress.obj \
 	nav_window.obj \
 	ops_buttons.obj \
 	undo_history.obj \
 	image_map.obj \
-	floating_sel.obj \
 	general.obj \
 	gimprc.obj \
 	path.obj \
@@ -118,7 +121,7 @@ $(PACKAGE).lib : $(OBJECTS)
 $(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
-$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
+$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
 	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \
 	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
 

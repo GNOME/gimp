@@ -16,15 +16,17 @@ PKG_LINK = \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
 	..\base\appbase-$(PKG_VER).lib \
 	..\core\appcore-$(PKG_VER).lib \
-	..\gui\appgui-$(PKG_VER).lib
+#	..\gui\appgui-$(PKG_VER).lib
 
 OBJECTS = \
+	gimpbrusheditor.obj \
 	gimpbrushfactoryview.obj \
 	gimpbrushpreview.obj \
 	gimpbufferpreview.obj \
 	gimpbufferview.obj \
 	gimpchannellistitem.obj \
 	gimpchannellistview.obj \
+	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
 	gimpcomponentlistitem.obj \
 	gimpcontainereditor.obj \
@@ -35,6 +37,7 @@ OBJECTS = \
 	gimpcontainerview.obj \
 	gimpcontainerview-utils.obj \
 	gimpcursor.obj \
+	gimpdataeditor.obj \
 	gimpdatafactoryview.obj \
 	gimpdialogfactory.obj \
 	gimpdeviceinfo.obj \
@@ -47,29 +50,41 @@ OBJECTS = \
 	gimpdrawablelistitem.obj \
 	gimpdrawablelistview.obj \
 	gimpdrawablepreview.obj \
+	gimpeditor.obj \
+	gimpenummenu.obj \
 	gimpfontselection.obj \
 	gimpfontselection-dialog.obj \
+	gimpgradienteditor.obj \
 	gimpgradientpreview.obj \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimagefilepreview.obj \
 	gimpimagepreview.obj \
 	gimpitemfactory.obj \
+	gimpitemlistitem.obj \
+	gimpitemlistview.obj \
 	gimplayerlistitem.obj \
 	gimplayerlistview.obj \
 	gimplistitem.obj \
 	gimpmenuitem.obj \
 	gimpnavigationpreview.obj \
+	gimppaletteeditor.obj \
 	gimppalettepreview.obj \
 	gimppatternpreview.obj \
 	gimppreview.obj \
+	gimppreview-utils.obj \
+	gimptoolbox.obj \
+	gimptoolbox-color-area.obj \
+	gimptoolbox-indicator-area.obj \
 	gimptoolinfopreview.obj \
+	gimpvectorslistview.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \
 	gtkwrapbox.obj \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
-	gimpconstrainedhwrapbox.obj \
+	widgets-enums.obj \
+#	gimpconstrainedhwrapbox.obj \
 
 INCLUDES = \
 	-I$(top_srcdir) \

@@ -7,9 +7,13 @@ PKG_VER = 1.3
 !INCLUDE $(TOP)\glib\build\win32\make.msc
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
+
+DEFINES = \
+	-DG_LOG_DOMAIN=\"Gimp-Display\"
 
 OBJECTS = \
 	gimpdisplay.obj \
@@ -19,16 +23,17 @@ OBJECTS = \
 	gimpdisplayshell.obj \
 	gimpdisplayshell-callbacks.obj \
 	gimpdisplayshell-dnd.obj \
-#	gimpdisplayshell-filter.obj \
-#	gimpdisplayshell-filter-dialog.obj \
+	gimpdisplayshell-filter.obj \
+	gimpdisplayshell-filter-dialog.obj \
 	gimpdisplayshell-handlers.obj \
 	gimpdisplayshell-layer-select.obj \
 	gimpdisplayshell-render.obj \
 	gimpdisplayshell-scale.obj \
 	gimpdisplayshell-scroll.obj \
 	gimpdisplayshell-selection.obj \
+	gimpprogress.obj \
 	gimpstatusbar.obj \
-
+	display-enums.obj \
 
 all : \
 	$(PRJ_TOP)\config.h \

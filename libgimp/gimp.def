@@ -126,12 +126,12 @@ EXPORTS
 	gimp_gimprc_query
 	gimp_gimprc_set
 	gimp_gradients_close_popup
-	gimp_gradients_get_active
+	gimp_gradients_get_gradient
 	gimp_gradients_get_gradient_data
 	gimp_gradients_get_list
 	gimp_gradients_sample_custom
 	gimp_gradients_sample_uniform
-	gimp_gradients_set_active
+	gimp_gradients_set_gradient
 	gimp_gradients_set_popup
 	gimp_help
 	gimp_image_add_channel

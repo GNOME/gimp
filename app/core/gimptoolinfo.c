@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "core-types.h"

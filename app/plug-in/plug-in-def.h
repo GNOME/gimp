@@ -19,6 +19,7 @@
 #ifndef __PLUG_IN_DEF_H__
 #define __PLUG_IN_DEF_H__
 
+#include <time.h>
 
 struct _PlugInDef
 {

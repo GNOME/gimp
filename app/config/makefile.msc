@@ -25,9 +25,13 @@ OBJECTS = \
 	gimprc.obj \
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I $(PRJ_TOP) \
 	-I $(PRJ_TOP)/app \
 	$(GLIB_CFLAGS) \
+
+DEFINES = \
+	-DG_LOG_DOMAIN=\"Gimp-Config\"
 
 all : \
 	$(PRJ_TOP)\config.h \

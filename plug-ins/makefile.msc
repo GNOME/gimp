@@ -580,7 +580,7 @@ RTL = -MDd
 CC = cl -nologo -G5 -GF $(OPTIMIZE) $(RTL) -W2 -Zm200
 
 CFLAGS = -DHAVE_CONFIG_H $(EXTRACFLAGS) \
-	-DGETTEXT_PACKAGE=\"libgimp14\" -DLOCALEDIR=\"?\" \
+	-DLOCALEDIR=\"?\" \
 	-I. -I$(GIMPTOP) -I$(PLUGINDIR) $(GTK2_CFLAGS) $(INTL_CFLAGS)
 
 LDFLAGS = /link /subsystem:console /machine:ix86 $(LINKDEBUG)

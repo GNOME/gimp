@@ -1,3 +1,79 @@
+2001-03-28  Hans Breuer  <hans@breuer.org>
+
+	* config.h.win32 : #define GETTEXT_PACKAGE
+
+	* makefile.msc : add theme rule
+
+	* app/makefile.msc : gimp.exe depends on all the libs
+	and general update
+
+	* app/base/makefile.msc : updated
+
+	* app/config/gimpconfig-serialize.c : #include <io.h> for win32
+	* app/config/gimpconfig-types.c : #include <string.h>
+
+	* app/core/gimpcontext.c app/core/gimpcontainer.c
+	  app/core/gimptoolinfo.c : #include <string.h>
+ 
+	* app/core/gimpdocuments.c (gimp_documents_save_func) :
+	need to g_strescape() the filename to not make 
+	backslashes vanish during de-serialization
+
+	* app/core/gimpimagefile.c : #define S_ISREG for G_OS_WIN32
+
+	* app/core/makefile.msc : add -DGIMP_COMPILATION
+	required for cpercep.c build
+
+	* app/display/gimpdisplayshell.c : #include <string.h>
+
+	* app/display/makefile.msc : -FImsvc_recommended_pragmas.h,
+	G_LOG_DOMAIN definition and object file update
+
+	* app/file/makefile.msc : -FImsvc_recommended_pragmas.h,
+	G_LOG_DOMAIN definition
+
+	* app/file/file-open.c (file_open_with_proc_and_display) :
+	use absolute filename for gimp_documents_add()
+
+	* app/gui/channel-commands.c app/gui/colormap-editor-commands.c
+	  app/gui/edit-commands.c app/gui/vectors-commands.c : 
+	#include <string.h>
+
+	* app/gui/makefile.msc : updated
+
+	* app/gui/menus.c : use g_file_test() instead of access()
+	to avoid inclusion <unistd.h>
+
+	* app/paint/makefile.msc : updated
+
+	* app/plug-in/plug-in-params.c : #include <string.h>
+
+	* app/plug-in/makefile.msc : updated
+
+	* app/plug-in/plug-in-def.h : #include <time.h> for time_t
+
+	* app/plug-in/plug-in.c : remove definition of S_IFREG
+
+	* app/plug-in/gap/gap_arr_dialog.c : include <config.h>
+	before including libgimp/libgimp-intl.h
+
+	* app/tools/makefile.msc : updated
+
+	* app/vectors/makefile.msc : new file
+
+	* app/widgets/makefile.msc : updated
+
+	* libgimp/gimp.def : updated externals
+
+	* libgimpwidgets/gimpwidgets.def : updated externals
+
+	* modules/makefile.msc : updated and disabled colorsel_gtk.
+
+	* plug-in/makefile.msc : don't define GETTEXT_PACKAGE
+
+	* themes/Default/images/makefile.msc : moved makefile.msc from ..
+	and adapted pathes to images
+
 2002-03-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/Makefile.am

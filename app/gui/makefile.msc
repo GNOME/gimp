@@ -20,16 +20,13 @@ PKG_LINK = \
 
 OBJECTS = \
 	about-dialog.obj \
-	brush-editor.obj \
 	brushes-commands.obj \
 	brush-select.obj \
 	buffers-commands.obj \
 	channels-commands.obj \
-	color-area.obj \
-	colormap-dialog.obj \
+	colormap-editor-commands.obj \
 	color-notebook.obj \
 	color-select.obj \
-	commands.obj \
 	convert-dialog.obj \
 	data-commands.obj \
 	device-status-dialog.obj \
@@ -37,6 +34,7 @@ OBJECTS = \
 	dialogs-commands.obj \
 	dialogs-constructors.obj \
 	documents-commands.obj \
+	drawable-commands.obj \
 	edit-commands.obj \
 	error-console-dialog.obj \
 	file-commands.obj \
@@ -44,27 +42,27 @@ OBJECTS = \
 	file-new-dialog.obj \
 	file-open-dialog.obj \
 	file-save-dialog.obj \
-	gradient-editor.obj \
 	gradient-editor-commands.obj \
 	gradients-commands.obj \
 	gradient-select.obj \
 	gui.obj \
+	help-commands.obj \
 	image-commands.obj \
-	indicator-area.obj \
 	info-dialog.obj \
 	info-window.obj \
-	input-dialog.obj \
 	layers-commands.obj \
 	menus.obj \
 	module-browser.obj \
 	offset-dialog.obj \
-	palette-editor.obj \
+	palette-editor-commands.obj \
 	palette-import-dialog.obj \
 	palettes-commands.obj \
 	palette-select.obj \
 	paths-dialog.obj \
 	patterns-commands.obj \
 	pattern-select.obj \
+	plug-in-commands.obj \
+	plug-in-menus.obj \
 	preferences-dialog.obj \
 	qmask-commands.obj \
 	resize-dialog.obj \
@@ -74,17 +72,23 @@ OBJECTS = \
 	splash.obj \
 	test-commands.obj \
 	tips-dialog.obj \
-	toolbox.obj \
+	tips-parser.obj \
 	tool-options-dialog.obj \
 	tools-commands.obj \
 	user-install-dialog.obj \
+	vectors-commands.obj \
 	view-commands.obj \
 
+
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(top_srcdir) \
 	-I$(top_srcdir)/app \
 	$(GTK2_CFLAGS) \
 	-I$(includedir)
+
+DEFINES = \
+	-DG_LOG_DOMAIN=\"Gimp-GUI\"
 
 all : \
 	$(PRJ_TOP)\config.h \

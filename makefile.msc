@@ -2,7 +2,7 @@ TOP = ..
 PRJ_TOP = .
 PACKAGE = gimp
 PKG_VER = 1.3
-!INCLUDE $(TOP)\build\win32\make.msc
+!INCLUDE $(TOP)\glib\build\win32\make.msc
 
 # in required build order
 SUBDIRS = libgimpbase libgimpcolor libgimpmath libgimpwidgets libgimp \
@@ -21,8 +21,14 @@ clean :: sub-clean
 sub-clean:
 	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d TARGET=clean
 
+sub-themes:
+	cd themes\Default\images
+	nmake -nologo -f makefile.msc
+	cd ....
+
 all : \
 	$(PRJ_TOP)\config.h \
+	sub-themes \
 	sub-all
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32

@@ -47,9 +47,6 @@
 #ifdef G_OS_WIN32
 #include <fcntl.h>
 #include <io.h>
-#ifndef S_ISREG
-#define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
-#endif
 #endif
 
 #ifdef G_WITH_CYGWIN

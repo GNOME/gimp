@@ -144,7 +144,10 @@ static void
 gimp_documents_save_func (GimpImagefile *imagefile,
 			  FILE          *fp)
 {
-  fprintf (fp, "(document \"%s\")\n", GIMP_OBJECT (imagefile)->name);
+  gchar *escaped = g_strescape (GIMP_OBJECT (imagefile)->name, NULL);
+
+  fprintf (fp, "(document \"%s\")\n", escaped);
+  g_free (escaped);
 }
 
 void

@@ -7,14 +7,19 @@ PKG_VER = 1.3
 
 PKG_LINK = \
 	$(GLIB_LIBS) $(GTK2_LIBS) $(INTL_LIBS) \
+	$(LIBART_LIBS) \
 	..\base\appbase-$(PKG_VER).lib \
 	..\paint-funcs\apppaint-funcs-$(PKG_VER).lib \
+	..\vectors\appvectors-$(PKG_VER).lib \
 	..\xcf\xcf.lib \
 	..\..\libgimpbase\gimpbase-$(PKG_VER).lib \
 	..\..\libgimpcolor\gimpcolor-$(PKG_VER).lib \
+	..\..\libgimpmath\gimpmath-$(PKG_VER).lib \
 	..\..\libgimpwidgets\gimpwidgets-$(PKG_VER).lib
 
 OBJECTS = \
+#	..\undo.obj \
+	core-enums.obj \
 	cpercep.obj \
 	gimp.obj \
 	gimpbrush.obj \
@@ -61,13 +66,16 @@ OBJECTS = \
 	gimpimage-scale.obj \
 	gimpimage-undo.obj \
 	gimpimagefile.obj \
+	gimpitem.obj \
 	gimplayer.obj \
+	gimplayer-floating-sel.obj \
 	gimplayermask.obj \
 	gimplist.obj \
 	gimpmarshal.obj \
 	gimpmoduleinfo.obj \
 	gimpmodules.obj \
 	gimpobject.obj \
+	gimppaintinfo.obj \
 	gimppalette.obj \
 	gimppalette-import.obj \
 	gimpparasite.obj \
@@ -94,9 +102,15 @@ OTHER_FILES = \
 
 
 INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
 	-I$(PRJ_TOP) \
 	-I$(PRJ_TOP)/app \
 	$(GTK2_CFLAGS) \
+	$(LIBART_CFLAGS) \
+
+DEFINES = \
+	-DGIMP_COMPILATION \
+	-DG_LOG_DOMAIN=\"Gimp-Core\"
 
 all : \
 	$(PRJ_TOP)\config.h \
