@@ -88,7 +88,7 @@ pygimp_query_proc(void)
 }
 
 static void
-pygimp_run_proc(char *name, int nparams, GimpParam *params,
+pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
 		int *nreturn_vals, GimpParam **return_vals)
 {
     PyObject *args, *ret;

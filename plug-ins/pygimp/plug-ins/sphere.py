@@ -58,8 +58,8 @@ def python_sphere(radius, light, shadow, bg_colour, sphere_colour):
     pdb.gimp_ellipse_select(img, cx - radius, cy - radius, 2 * radius,
 			    2 * radius, CHANNEL_OP_REPLACE, TRUE, FALSE, 0)
     pdb.gimp_blend(drawable, FG_BG_RGB_MODE, NORMAL_MODE, RADIAL,
-		   100, offset, REPEAT_NONE, FALSE, 0, 0, light_x,
-		   light_y, light_end_x, light_end_y)
+		   100, offset, REPEAT_NONE, FALSE, FALSE, 0, 0, TRUE,
+		   light_x, light_y, light_end_x, light_end_y)
     pdb.gimp_selection_none(img)
     gimp.set_background(old_bg)
     gimp.set_foreground(old_fg)

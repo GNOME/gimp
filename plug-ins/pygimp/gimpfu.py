@@ -427,7 +427,7 @@ def _run(func_name, params):
     menupath = _registered_plugins_[func_name][5]
     func = _registered_plugins_[func_name][10]
 
-    if plugin_type == PLUGIN:
+    if plugin_type == PLUGIN and menupath[:10] != '<Toolbox>/':
 	if menupath[:7] == '<Save>/':
 	    end = 5
         else:

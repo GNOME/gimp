@@ -27,8 +27,8 @@ G_BEGIN_DECLS
 
 extern PyObject *pygimp_error;
 
-PyObject *pygimp_param_to_tuple(int nparams, GimpParam *params);
-GimpParam *pygimp_param_from_tuple(PyObject *args, GimpParamDef *ptype,
+PyObject *pygimp_param_to_tuple(int nparams, const GimpParam *params);
+GimpParam *pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype,
 				   int nparams);
 
 

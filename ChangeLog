@@ -1,3 +1,15 @@
+2003-07-25  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpfu.py: slight fix for arg handling, shouldn't
+	have any functional difference. This code should be redone at some
+	point.
+
+	* plug-ins/pygimp/gimpmodule.c
+	* plug-ins/pygimp/pygimp.h
+	* plug-ins/pygimp/pygimp-pdb.c: constify
+
+	* plug-ins/pygimp/plug-ins/sphere.py: use new blend pdb interface
+
 2003-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.c (gimp_image_remove_layer)

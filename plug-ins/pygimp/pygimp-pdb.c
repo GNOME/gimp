@@ -109,7 +109,7 @@ pygimp_param_print(int nparams, GimpParam *params)
 #endif
 
 PyObject *
-pygimp_param_to_tuple(int nparams, GimpParam *params)
+pygimp_param_to_tuple(int nparams, const GimpParam *params)
 {
     PyObject *args, *tmp;
     int i, j, n;
@@ -303,7 +303,7 @@ pygimp_param_to_tuple(int nparams, GimpParam *params)
 }
 
 GimpParam *
-pygimp_param_from_tuple(PyObject *args, GimpParamDef *ptype, int nparams)
+pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
 {
     PyObject *tuple, *item, *r, *g, *b, *x, *y, *w, *h;
     GimpParam *ret;
