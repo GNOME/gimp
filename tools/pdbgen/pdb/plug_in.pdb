@@ -65,7 +65,8 @@ sub plugins_query {
 
     %invoke = (
 	headers => [ qw("libgimpbase/gimpbase.h") ],
-	vars => [ 'GSList *list', 'gint i = 0', 'regex_t sregex' ],
+	vars => [ 'GSList *list', 'GSList *matched = NULL', 'gint i = 0',
+                  'regex_t sregex' ],
 	code => <<'CODE'
 {
   if (search_str && strlen (search_str))
@@ -99,10 +100,15 @@ sub plugins_query {
                 name = proc_def->menu_paths->data;
             }
 
-	  if (search_str && match_strings (&sregex, name))
-	    continue;
+          name = gimp_strip_uline (name);
 
-	  num_plugins++;
+	  if (! search_str || ! match_strings (&sregex, name))
+            {
+              num_plugins++;
+              matched = g_slist_prepend (matched, proc_def);
+            }
+
+          g_free (name);
 	}
     }
 
@@ -113,54 +119,34 @@ sub plugins_query {
   realname_strs = g_new (gchar *, num_plugins);
   time_ints     = g_new (gint   , num_plugins);
 
-  for (list = gimp->plug_in_proc_defs; list; list = g_slist_next (list))
+  matched = g_slist_reverse (matched);
+
+  for (list = matched; list; list = g_slist_next (list))
     {
       PlugInProcDef *proc_def = list->data;
+      ProcRecord    *proc_rec = &proc_def->db_info;
+      gchar         *name;
 
-      if (i > num_plugins)
-	g_error ("Internal error counting plugins");
+      if (proc_def->menu_label)
+        name = g_strdup_printf ("%s/%s",
+                                (gchar *) proc_def->menu_paths->data,
+                                proc_def->menu_label);
+      else
+        name = g_strdup (proc_def->menu_paths->data);
 
-      if (proc_def->prog && proc_def->menu_paths)
-	{
-	  ProcRecord *pr = &proc_def->db_info;
-	  gchar      *name;
+      menu_strs[i]     = gimp_strip_uline (name);
+      accel_strs[i]    = NULL;
+      prog_strs[i]     = g_strdup (proc_def->prog);
+      types_strs[i]    = g_strdup (proc_def->image_types);
+      realname_strs[i] = g_strdup (proc_rec->name);
+      time_ints[i]     = proc_def->mtime;
 
-          if (proc_def->menu_label)
-            {
-              name = proc_def->menu_label;
-            }
-          else
-            {
-              name = strrchr (proc_def->menu_paths->data, '/');
+      g_free (name);
 
-              if (name)
-                name = name + 1;
-              else
-                name = proc_def->menu_paths->data;
-            }
-
-	  if (search_str && match_strings (&sregex, name))
-	    continue;
-
-          if (proc_def->menu_label)
-            name = g_strdup_printf ("%s/%s",
-                                    (gchar *) proc_def->menu_paths->data,
-                                    proc_def->menu_label);
-          else
-            name = g_strdup (proc_def->menu_paths->data);
-
-	  menu_strs[i]     = gimp_strip_uline (name);
-	  accel_strs[i]    = NULL;
-	  prog_strs[i]     = g_strdup (proc_def->prog);
-	  types_strs[i]    = g_strdup (proc_def->image_types);
-	  realname_strs[i] = g_strdup (pr->name);
-	  time_ints[i]     = proc_def->mtime;
-
-          g_free (name);
-
-	  i++;
-	}
+      i++;
     }
+
+  g_slist_free (matched);
 
   if (search_str)
     regfree (&sregex);
