@@ -25,6 +25,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_TYPE_RGB               (gimp_rgb_get_type ())
+#define GIMP_VALUE_HOLDS_RGB(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_RGB))
+
+GType   gimp_rgb_get_type           (void) G_GNUC_CONST;
+
+
 /*  RGB and RGBA color types and operations taken from LibGCK  */
 
 typedef enum

@@ -19,13 +19,38 @@
 
 #include "config.h"
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
 
 #include "gimpcolortypes.h"
 
 #include "gimprgb.h"
+
+
+/*  RGB type  */
+
+static GimpRGB  * rgb_copy  (const GimpRGB *rgb);
+
+
+GType
+gimp_rgb_get_type (void)
+{
+  static GType rgb_type = 0;
+
+  if (!rgb_type)
+    rgb_type = g_boxed_type_register_static ("GimpRGB",
+                                             (GBoxedCopyFunc) rgb_copy,
+                                             (GBoxedFreeFunc) g_free);
+
+  return rgb_type;
+}
+
+static GimpRGB *
+rgb_copy (const GimpRGB *rgb)
+{
+  return g_memdup (rgb, sizeof (GimpRGB));
+}
 
 
 /*  RGB functions  */

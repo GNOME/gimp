@@ -22,7 +22,7 @@
 #ifndef __GIMP_H__
 #define __GIMP_H__
 
-#include <glib.h>
+#include <glib-object.h>
 
 #include <libgimpcolor/gimpcolor.h>
 #include <libgimpmath/gimpmath.h>
