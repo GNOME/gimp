@@ -317,23 +317,30 @@ gimp_paint_tool_control (GimpTool       *tool,
 
 /**
  * gimp_paint_tool_round_line:
- * @core:  the #GimpPaintCore
- * @state: the modifier state
+ * @core:          the #GimpPaintCore
+ * @center_pixels: push coordinates to pixel centers?
+ * @state:         the modifier state
  *
  * Adjusts core->last_coords and core_cur_coords in preparation to
- * drawing a straight line. The rounding of the slope to 15 degree
+ * drawing a straight line. If @center_pixels is TRUE the endpoints
+ * get pushed to the center of the pixels. This avoids artefacts
+ * for e.g. the hard mode. The rounding of the slope to 15 degree
  * steps if ctrl is pressed happens, as does rounding the start and
  * end coordinates (which may be fractional in high zoom modes) to
  * the center of pixels.
  **/
 static void
 gimp_paint_tool_round_line (GimpPaintCore   *core,
+                            gboolean         center_pixels,
                             GdkModifierType  state)
 {
-  core->last_coords.x = floor (core->last_coords.x) + 0.5;
-  core->last_coords.y = floor (core->last_coords.y) + 0.5;
-  core->cur_coords.x  = floor (core->cur_coords.x ) + 0.5;
-  core->cur_coords.y  = floor (core->cur_coords.y ) + 0.5;
+  if (center_pixels)
+    {
+      core->last_coords.x = floor (core->last_coords.x) + 0.5;
+      core->last_coords.y = floor (core->last_coords.y) + 0.5;
+      core->cur_coords.x  = floor (core->cur_coords.x ) + 0.5;
+      core->cur_coords.y  = floor (core->cur_coords.y ) + 0.5;
+    }
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
@@ -413,9 +420,11 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       /*  If shift is down and this is not the first paint
        *  stroke, then draw a line from the last coords to the pointer
        */
+      gboolean hard;
       core->start_coords = core->last_coords;
 
-      gimp_paint_tool_round_line (core, state);
+      hard = (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD);
+      gimp_paint_tool_round_line (core, hard, state);
     }
 
   /*  let the parent class activate the tool  */
@@ -622,6 +631,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
                              GimpDisplay     *gdisp)
 {
   GimpPaintTool    *paint_tool;
+  GimpPaintOptions *paint_options;
   GimpDrawTool     *draw_tool;
   GimpPaintCore    *core;
   GimpDisplayShell *shell;
@@ -629,6 +639,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
 
   paint_tool = GIMP_PAINT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
+  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
 
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (draw_tool)))
     {
@@ -672,9 +683,10 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
            *  draw a line
            */
 
-          gdouble dx, dy, dist;
-          gchar   status_str[STATUSBAR_SIZE];
-          gint    off_x, off_y;
+          gdouble  dx, dy, dist;
+          gchar    status_str[STATUSBAR_SIZE];
+          gint     off_x, off_y;
+          gboolean hard;
 
           core->cur_coords = *coords;
 
@@ -683,7 +695,8 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
           core->cur_coords.x -= off_x;
           core->cur_coords.y -= off_y;
 
-          gimp_paint_tool_round_line (core, state);
+          hard = (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD);
+          gimp_paint_tool_round_line (core, hard, state);
 
           dx = core->cur_coords.x - core->last_coords.x;
           dy = core->cur_coords.y - core->last_coords.y;
@@ -820,7 +833,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               brush_x = paint_tool->brush_x - ((gdouble) mask->width  / 2.0);
               brush_y = paint_tool->brush_y - ((gdouble) mask->height / 2.0);
 
-              if (paint_options->hard)
+              if (gimp_paint_options_get_brush_mode (paint_options) == GIMP_BRUSH_HARD)
                 {
 #define EPSILON 0.000001
 

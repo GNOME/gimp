@@ -1,3 +1,13 @@
+2004-02-18  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpmovetool.c: Adjusted snapping distance
+	to 8 pixels, probably should be a preferences option.
+
+	* app/tools/gimppainttool.c: Do not center the start and end
+	of a straight line to the center of an image-pixel unless
+	the brush mode is GIMP_BRUSH_HARD. Fixes bug #134410.
+
 2004-02-18  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile.h: exchanged TILEROWHINT_UNKNOWN and

@@ -94,7 +94,7 @@ enum
 };
 
 
-#define SNAP_WIDTH 5.0
+#define SNAP_WIDTH 8.0
 
 
 /*  local function prototypes  */
