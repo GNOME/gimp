@@ -32,6 +32,13 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 </para>
 
 
+<!-- ##### SIGNAL GimpChainButton::toggled ##### -->
+<para>
+
+</para>
+
+@gimpchainbutton: the object which received the signal.
+
 <!-- ##### ENUM GimpChainPosition ##### -->
 <para>
 
@@ -68,11 +75,4 @@ up two GimpSizeEntries (see #GimpSizeEntry) linked with a #GimpChainButton.
 @button: 
 @Returns: 
 
-
-<!-- ##### SIGNAL GimpChainButton::toggled ##### -->
-<para>
-
-</para>
-
-@gimpchainbutton: the object which received the signal.
 

@@ -21,6 +21,16 @@ It serves as a container for #GimpColorSelectors.
 </para>
 
 
+<!-- ##### ARG GimpColorNotebook:tab-border ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorNotebook:tab-icon-size ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_color_notebook_set_has_page ##### -->
 <para>
 
@@ -31,14 +41,4 @@ It serves as a container for #GimpColorSelectors.
 @has_page: 
 @Returns: 
 
-
-<!-- ##### ARG GimpColorNotebook:tab-border ##### -->
-<para>
-
-</para>
-
-<!-- ##### ARG GimpColorNotebook:tab-icon-size ##### -->
-<para>
-
-</para>
 

@@ -27,6 +27,13 @@ color, the "color_changed" signal is emitted.
 </para>
 
 
+<!-- ##### SIGNAL GimpColorButton::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorbutton: the object which received the signal.
+
 <!-- ##### FUNCTION gimp_color_button_new ##### -->
 <para>
 
@@ -93,11 +100,4 @@ color, the "color_changed" signal is emitted.
 @button: 
 @type: 
 
-
-<!-- ##### SIGNAL GimpColorButton::color-changed ##### -->
-<para>
-
-</para>
-
-@gimpcolorbutton: the object which received the signal.
 

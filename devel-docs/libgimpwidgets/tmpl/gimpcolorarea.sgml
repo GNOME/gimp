@@ -20,6 +20,13 @@ Displays a GimpRGB color, optionally with alpha-channel.
 </para>
 
 
+<!-- ##### SIGNAL GimpColorArea::color-changed ##### -->
+<para>
+
+</para>
+
+@gimpcolorarea: the object which received the signal.
+
 <!-- ##### ENUM GimpColorAreaType ##### -->
 <para>
 
@@ -84,11 +91,4 @@ Displays a GimpRGB color, optionally with alpha-channel.
 @area: 
 @draw_border: 
 
-
-<!-- ##### SIGNAL GimpColorArea::color-changed ##### -->
-<para>
-
-</para>
-
-@gimpcolorarea: the object which received the signal.
 

@@ -37,6 +37,13 @@ will be emitted.
 </para>
 
 
+<!-- ##### SIGNAL GimpFileEntry::filename-changed ##### -->
+<para>
+
+</para>
+
+@gimpfileentry: the object which received the signal.
+
 <!-- ##### FUNCTION gimp_file_entry_new ##### -->
 <para>
 
@@ -66,11 +73,4 @@ will be emitted.
 @entry: 
 @filename: 
 
-
-<!-- ##### SIGNAL GimpFileEntry::filename-changed ##### -->
-<para>
-
-</para>
-
-@gimpfileentry: the object which received the signal.
 
