@@ -49,7 +49,6 @@
 #include "gimppaintcore-kernels.h"
 #include "gimppaintoptions.h"
 
-#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"

@@ -30,8 +30,6 @@
 #include "gimpdisplay-foreach.h"
 #include "gimpdisplayshell.h"
 
-#include "app_procs.h"
-
 
 gboolean
 gimp_displays_dirty (Gimp *gimp)
@@ -40,7 +38,7 @@ gimp_displays_dirty (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
-  for (list = GIMP_LIST (the_gimp->displays)->list;
+  for (list = GIMP_LIST (gimp->displays)->list;
        list;
        list = g_list_next (list))
     {
@@ -82,7 +80,9 @@ gdisplays_check_valid (GimpDisplay *gtest,
   GimpDisplay *gdisp_found = NULL;
   GList       *list;
 
-  for (list = GIMP_LIST (the_gimp->displays)->list;
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  for (list = GIMP_LIST (gimage->gimp->displays)->list;
        list;
        list = g_list_next (list))
     {
