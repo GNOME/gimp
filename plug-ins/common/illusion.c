@@ -84,8 +84,10 @@ static IllValues parameters =
 };
 
 
-static guchar    *preview_bits;
 static GtkWidget *preview;
+static guchar    *preview_cache;
+static gint       preview_cache_rowstride;
+static gint       preview_cache_bpp;
 
 /******************************************************************************/
 
@@ -148,7 +150,7 @@ run (gchar   *name,
       if (! dialog(drawable))
 	return;
       gimp_set_data (PLUG_IN_NAME, &parameters, sizeof (IllValues));
-      g_free(preview_bits);
+      g_free(preview_cache);
       break;
 
     case RUN_NONINTERACTIVE:
@@ -300,10 +302,83 @@ filter (GDrawable *drawable)
 }
 
 static void
+preview_do_row(gint    row,
+	       gint    width,
+	       guchar *even,
+	       guchar *odd,
+	       guchar *src)
+{
+  gint    x;
+  
+  guchar *p0 = even;
+  guchar *p1 = odd;
+  
+  gdouble    r, g, b, a;
+  gdouble    c0, c1;
+  
+  for (x = 0; x < width; x++) 
+    {
+      if (preview_cache_bpp == 4)
+	{
+	  r = ((gdouble)src[x*4+0]) / 255.0;
+	  g = ((gdouble)src[x*4+1]) / 255.0;
+	  b = ((gdouble)src[x*4+2]) / 255.0;
+	  a = ((gdouble)src[x*4+3]) / 255.0;
+	}
+      else if (preview_cache_bpp == 3)
+	{
+	  r = ((gdouble)src[x*3+0]) / 255.0;
+	  g = ((gdouble)src[x*3+1]) / 255.0;
+	  b = ((gdouble)src[x*3+2]) / 255.0;
+	  a = 1.0;
+	}
+      else
+	{
+	  r = ((gdouble)src[x*preview_cache_bpp+0]) / 255.0;
+	  g = b = r;
+	  if (preview_cache_bpp == 2)
+		    a = ((gdouble)src[x*preview_cache_bpp+1]) / 255.0;
+	  else
+	    a = 1.0;
+	}
+      
+      if ((x / GIMP_CHECK_SIZE) & 1) 
+	{
+	  c0 = GIMP_CHECK_LIGHT;
+	  c1 = GIMP_CHECK_DARK;
+	} 
+      else 
+	{
+	  c0 = GIMP_CHECK_DARK;
+	  c1 = GIMP_CHECK_LIGHT;
+	}
+      
+      *p0++ = (c0 + (r - c0) * a) * 255.0;
+      *p0++ = (c0 + (g - c0) * a) * 255.0;
+      *p0++ = (c0 + (b - c0) * a) * 255.0;
+      
+      *p1++ = (c1 + (r - c1) * a) * 255.0;
+      *p1++ = (c1 + (g - c1) * a) * 255.0;
+      *p1++ = (c1 + (b - c1) * a) * 255.0;
+      
+    } /* for */
+  
+  if ((row / GIMP_CHECK_SIZE) & 1)
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)odd,  0, row, width); 
+    }
+  else
+    {
+      gtk_preview_draw_row (GTK_PREVIEW (preview), (guchar *)even, 0, row, width); 
+    }
+}
+
+static void
 filter_preview (void)
 {
   guchar  **pixels;
   guchar  **destpixels;
+  guchar  *even, *odd;
   
   gint      image_width;
   gint      image_height;
@@ -318,20 +393,23 @@ filter_preview (void)
 
   image_width  = GTK_PREVIEW (preview)->buffer_width;
   image_height = GTK_PREVIEW (preview)->buffer_height;
-  image_bpp    = GTK_PREVIEW (preview)->bpp;
+  image_bpp    = preview_cache_bpp;
   center_x     = (gdouble)image_width  / 2;
   center_y     = (gdouble)image_height / 2;
     
   pixels     = g_new (guchar *, image_height);
   destpixels = g_new (guchar *, image_height);
 
+  even = g_malloc (image_width * 3);
+  odd  = g_malloc (image_width * 3);
+
   for (y = 0; y < image_height; y++)
     {
-      pixels[y]     = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
-      destpixels[y] = g_new (guchar, GTK_PREVIEW (preview)->rowstride);
+      pixels[y]     = g_new (guchar, preview_cache_rowstride);
+      destpixels[y] = g_new (guchar, preview_cache_rowstride);
       memcpy (pixels[y], 
-	      preview_bits + GTK_PREVIEW (preview)->rowstride * y, 
-	      GTK_PREVIEW (preview)->rowstride);
+	      preview_cache + preview_cache_rowstride * y, 
+	      preview_cache_rowstride);
     }
 
   scale  = sqrt (image_width * image_width + image_height * image_height) / 2;
@@ -374,9 +452,12 @@ filter_preview (void)
 	      (1-radius) * pixels[y][x * image_bpp + b] 
 	      + radius * pixels[yy][xx * image_bpp + b];
 	}
-      memcpy (GTK_PREVIEW (preview)->buffer + GTK_PREVIEW (preview)->rowstride * y,
-	      destpixels[y], 
-	      GTK_PREVIEW (preview)->rowstride);
+
+      preview_do_row(y,
+		     image_width,
+		     even,
+		     odd,
+		     destpixels[y]);
     }
 
   for (y = 0; y < image_height; y++) 
@@ -387,20 +468,17 @@ filter_preview (void)
     g_free (destpixels[y]);
   g_free (destpixels);
 
+  g_free (even);
+  g_free (odd);
+
   gtk_widget_queue_draw (preview);
 }
 
 static GtkWidget *
 preview_widget (GDrawable *drawable)
 {
-  gint       size;
-  GtkWidget *preview;
-
   preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   fill_preview_with_thumb (preview, drawable->id);
-  size = GTK_PREVIEW (preview)->rowstride * GTK_PREVIEW (preview)->buffer_height;
-  preview_bits = g_malloc (size);
-  memcpy (preview_bits, GTK_PREVIEW (preview)->buffer, size);
 
   return preview;
 }
@@ -411,13 +489,10 @@ fill_preview_with_thumb (GtkWidget *widget,
 {
   guchar  *drawable_data;
   gint     bpp;
-  gint     x,y;
+  gint     y;
   gint     width  = PREVIEW_SIZE;
   gint     height = PREVIEW_SIZE;
   guchar  *src;
-  gdouble  r, g, b, a;
-  gdouble  c0, c1;
-  guchar  *p0, *p1;
   guchar  *even, *odd;
 
   bpp = 0; /* Only returned */
@@ -428,6 +503,10 @@ fill_preview_with_thumb (GtkWidget *widget,
   if (width < 1 || height < 1)
     return;
 
+  preview_cache = drawable_data;
+  preview_cache_rowstride = width * bpp;
+  preview_cache_bpp = bpp;
+
   gtk_preview_size (GTK_PREVIEW (widget), width, height);
 
   even = g_malloc (width * 3);
@@ -436,67 +515,11 @@ fill_preview_with_thumb (GtkWidget *widget,
 
   for (y = 0; y < height; y++)
     {
-      p0 = even;
-      p1 = odd;
-      
-      for (x = 0; x < width; x++) 
-	{
-	  if(bpp == 4)
-	    {
-	      r =  ((gdouble)src[x*4+0])/255.0;
-	      g = ((gdouble)src[x*4+1])/255.0;
-	      b = ((gdouble)src[x*4+2])/255.0;
-	      a = ((gdouble)src[x*4+3])/255.0;
-	    }
-	  else if(bpp == 3)
-	    {
-	      r =  ((gdouble)src[x*3+0])/255.0;
-	      g = ((gdouble)src[x*3+1])/255.0;
-	      b = ((gdouble)src[x*3+2])/255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = ((gdouble)src[x*bpp+0])/255.0;
-	      g = b = r;
-	      if(bpp == 2)
-		a = ((gdouble)src[x*bpp+1])/255.0;
-	      else
-		a = 1.0;
-	    }
-	  
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1) 
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    } 
-	  else 
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-	  
-	*p0++ = (c0 + (r - c0) * a) * 255.0;
-	*p0++ = (c0 + (g - c0) * a) * 255.0;
-	*p0++ = (c0 + (b - c0) * a) * 255.0;
-	
-	*p1++ = (c1 + (r - c1) * a) * 255.0;
-	*p1++ = (c1 + (g - c1) * a) * 255.0;
-	*p1++ = (c1 + (b - c1) * a) * 255.0;
-	
-      } /* for */
-      
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (widget), (guchar *)even, 0, y, width);
-
-      src += width * bpp;
+      preview_do_row(y,width,even,odd,preview_cache + (y*width*bpp));
     }
 
   g_free (even);
   g_free (odd);
-  g_free (drawable_data);
 }
 
 /******************************************************************************/

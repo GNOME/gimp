@@ -1,3 +1,9 @@
+Fri May 26 23:14:14 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/common/illusion.c
+
+	Preview tidy.
+
 2000-05-26  Michael Natterer  <mitch@gimp.org>
 
 	Final (1.2) libgimp namespace cleanup part I:
