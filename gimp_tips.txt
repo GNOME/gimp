@@ -13,7 +13,8 @@
 # - Tips should be concise: 3 lines or less.
 #
 # Tips in this file have been contributed by Zachary Beane, Mo Oishi,
-# Raphael Quinet, Sven Neumann and other people on the gimp mailing lists.
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
 # --------------------------------------------------------------------
 
 # The first tip should be a welcome message, because this is the
@@ -22,51 +23,53 @@
 
 # FIXME: re-write this welcome message:
 
-                      Welcome to the GIMP !
-   Nearly all image operations are performed by right-clicking
-   on the image.  And don't worry, you can undo most mistakes...    
+                            Welcome to the GIMP !
+      
+Nearly all image operations are performed by right-clicking
+on the image.  And don't worry, you can undo most mistakes...    
 
 # Tips for beginners start here
 #
 
-The GIMP uses layers to let you organize your image. Think of them 
+The GIMP uses layers to let you organize your image.  Think of them 
 as a stack of slides or filters, such that looking through them you 
 see a composite of their contents.
 
 You can perform many layer operations by right-clicking on the text
-label of a layer in the Layers dialog box (Dialogs->Layers & Channels).
+label of a layer in the Layers dialog (Dialogs->Layers & Channels).
 
-When trying to save files as GIF, XPM, or any other indexed color
-format, you need to convert the image to indexed using the Image menu.
+When trying to save files as GIF, XPM, or any other indexed 
+color format, you need to convert the image to indexed using 
+the Image menu.
 
-You can get the Tool Options menu to open by double-clicking any
-button in the toolbar.
+You can get the Tool Options menu to open by double-clicking 
+any button in the toolbar.
 
-You can change the name of a layer by double-clicking on its name in
-the Layers dialog box.
+You can change the name of a layer by double-clicking 
+on its name in the Layers dialog box.
 
-The layer named "Background" is special.  You can't add transparency 
-or a layer mask to it.  To add transparency, you must first 
-"add alpha" to the layer by right-clicking in the layers dialog
-and selecting "Add Alpha Channel". 
+The layer named "Background" is special.  You can't add 
+transparency or a layer mask to it.  To add transparency, you 
+must first "add alpha" to the layer by right-clicking in the 
+layers dialog and selecting "Add Alpha Channel". 
 
-When using a drawing tool (Paintbrush, Airbrush, or Pencil), Shift-click
-will draw a straight line from your last drawing point to your current
-cursor position.
+When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
+Shift-click will draw a straight line from your last drawing 
+point to your current cursor position.
 
-Most plug-ins work on the current layer of the current image.  In some
-cases, you will have to merge all layers (Layers->Flatten Image) if
-you want the plug-in to work on the whole image.
+Most plug-ins work on the current layer of the current image.  In 
+some cases, you will have to merge all layers (Layers->Flatten Image) 
+if you want the plug-in to work on the whole image.
 
-Most file-formats can't handle layers and for that reason only the active
-layer is saved. Use XCF, the GIMP's native file format to keep layers,
-channels and guides when saving.
+Most file-formats can't handle layers and for that reason only 
+the active layer is saved.  Use XCF, the GIMP's native file format 
+to keep layers, channels and guides when saving.
 
 # Tips for intermediate users start here
 #
 
-The file selection dialog box has command-line completion with Tab,
-just like the shell.  Type part of a filename, hit tab, and voila!
+The file selection dialog box has command-line completion with 
+Tab, just like the shell.  Type part of a filename, hit tab, and voila!
 It's completed.
 
 You can reassign shortcut keys on any menu by bringing up the menu,
@@ -74,39 +77,43 @@ selecting a menu item, and pressing the new shortcut key combination.
 This is dynamic and is saved when you exit GIMP.
 
 All the old channel operations have been replaced with the more
-powerful and flexible Layer and Layer Mode operations.  They may take
-getting used to, but they are simply a better way to operate.
+powerful and flexible Layer and Layer Mode operations.  They may 
+take getting used to, but they are simply a better way to operate.
 
-You can use the middle mouse button to pan around the image, if it's
-larger than its display window.
+You can use the middle mouse button to pan around 
+the image, if it's larger than its display window.
 
-Click and drag on a ruler to place a Guide on an image.  All dragged
-selections will snap to the guides.  You can remove guides by dragging
-them off the image with the Move tool.
+Click and drag on a ruler to place a Guide on an image.  All 
+dragged selections will snap to the guides.  You can remove 
+guides by dragging them off the image with the Move tool.
+
+GIMP supports gzip compression on the fly. Just add .gz (or .bz2,
+if you habe bzip2 installed) to the filename and your image will be 
+saved compressed. Of course loading compressed images works too.  
 
 # Tips for advanced users start here
 #
 
-You can adjust the selection range for fuzzy select by clicking and
-dragging left and right.
+You can adjust the selection range for fuzzy select 
+by clicking and dragging left and right.
 
-Shift-click on the eye icon in the Layers dialog to hide all layers
-but that one.  Shift-click again to show all layers.
+Shift-click on the eye icon in the Layers dialog to hide all 
+layers but that one.  Shift-click again to show all layers.
 
-Ctrl-click on the layer mask's preview in the Layers dialog toggles
-the effect of the layer mask.
+Ctrl-click on the layer mask's preview in the Layers dialog 
+toggles the effect of the layer mask.
 
-Alt-click on the layer mask's preview in the Layers dialog toggles
-viewing the mask directly.
+Alt-click on the layer mask's preview in the Layers dialog 
+toggles viewing the mask directly.
 
-You can use Alt-Tab to cycle through all layers in an image (if your
-window manager doesn't trap those keys...).
+You can use Alt-Tab to cycle through all layers in an image 
+(if your window manager doesn't trap those keys...).
 
-Shift-click with the Bucket Fill tool to have it use the background
-color instead of the foreground color.
+Shift-click with the Bucket Fill tool to have it use 
+the background color instead of the foreground color.
 
-Control-drag with the Transform tool in rotation mode will constrain
-the rotation to 15 degree angles.
+Control-drag with the Transform tool in rotation mode 
+will constrain the rotation to 15 degree angles.
 
 You can adjust and re-place a selection by using Alt-drag.
 
@@ -114,16 +121,15 @@ Selections can be constrained using the Control and Shift keys.
 
 If your fonts turn out blocky, that's because they're not scalable
 fonts.  Most X servers support scalable Type 1 Postscript fonts.
-Download them and install them.
+Download and install them.
 
-When installing a new version, be sure to delete your ~/.gimp
-directory first.
+When installing a new version, be sure to 
+delete your ~/.gimp directory first.
 
-To create a perfect circle, hold shift while doing an ellipse select.
-To place a circle precisely, drag horizontal and vertical guides
-tangent to the circle you want to select, place your cursor at the
-interesection of the guides, and the resulting selection will just
-touch the guides.
+To create a perfect circle, hold shift while doing an ellipse select. To 
+place a circle precisely, drag horizontal and vertical guides tangent to 
+the circle you want to select, place your cursor at the interesection
+of the guides, and the resulting selection will just touch the guides.
 
 
 

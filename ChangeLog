@@ -1,3 +1,8 @@
+Mon Apr 13 13:00:20 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* gimp_tips.txt: more tips and nicer line wrap
+	* app/tips_dialog.c: the last character (the final dot) was cut off
+
 Mon Apr 13 02:12:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/xcf.c: fix a tiny bug in the xcf loader that would have

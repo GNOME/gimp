@@ -233,7 +233,7 @@ read_tips_file (char *filename)
 	{
 	  if (tip != NULL)
 	    {
-	      tip[strlen (tip) - 2] = '\000';
+	      tip[strlen (tip) - 1] = '\000';
 	      store_tip (tip);
 	      tip = NULL;
 	    }
