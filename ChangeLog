@@ -1,3 +1,10 @@
+2003-08-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): moved
+	the g_signal_stop_emission_by_name() right before the calls to
+	gimp_size_entry_set_refval() so we only block the duplicate
+	"value_changed" signal, not all of them. Fixes bug #107633.
+
 2003-08-16  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/blur.c
