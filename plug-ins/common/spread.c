@@ -280,6 +280,7 @@ spread (GimpDrawable *drawable)
   iter = gimp_rgn_iterator_new (drawable, run_mode);
   gimp_rgn_iterator_dest (iter, spread_func, &param);
   gimp_rgn_iterator_free (iter);
+  g_rand_free (param.gr);
 }
 
 static gboolean
