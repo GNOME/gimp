@@ -34,8 +34,8 @@ Global data follows no strict rules.
 
 "gimp-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
-        human-readable text, preferably in utf8 encoding.  A trailing \0
-        might be included and is not part of the comment.
+        human-readable text in UTF-8 encoding.  A trailing \0 might
+        be included and is not part of the comment.
 
 "gimp-brush-pipe-parameters" (IMAGE, PERSISTENT)
 	This is all very preliminary:

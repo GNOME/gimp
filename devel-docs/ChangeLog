@@ -1,5 +1,10 @@
 2003-02-10  Sven Neumann  <sven@gimp.org>
 
+	* parasites.txt: be more strict and require UTF-8 encoding for
+	comments instead of only suggesting it.
+
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/tmpl/gimpenums.sgml: regenerated.
 
 2003-02-06  Sven Neumann  <sven@gimp.org>
