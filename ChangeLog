@@ -1,5 +1,9 @@
 2005-03-03  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: Add check for ppc64.
+
+2005-03-03  Manish Singh  <yosh@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: fix a typo in the docs.
 
 2005-03-03  Manish Singh  <yosh@gimp.org>
