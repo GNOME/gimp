@@ -177,7 +177,7 @@ gimp_dockable_new (const gchar                *name,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (short_name != NULL, NULL);
 
-  dockable = gtk_type_new (GIMP_TYPE_DOCKABLE);
+  dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
 
   dockable->name        = g_strdup (name);
   dockable->short_name  = g_strdup (short_name);

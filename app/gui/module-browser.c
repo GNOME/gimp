@@ -503,7 +503,7 @@ module_info_modified (ModuleInfo *mod)
 static ModuleInfo *
 module_info_new (void)
 {
-  return MODULE_INFO (gtk_type_new (module_info_get_type ()));
+  return MODULE_INFO (g_object_new (module_info_get_type (), NULL));
 }
 
 static void

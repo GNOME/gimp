@@ -227,7 +227,7 @@ gimp_palette_get_standard (void)
 
   if (! standard_palette)
     {
-      standard_palette = GIMP_PALETTE (gtk_type_new (GIMP_TYPE_PALETTE));
+      standard_palette = GIMP_PALETTE (g_object_new (GIMP_TYPE_PALETTE, NULL));
 
       gimp_object_set_name (GIMP_OBJECT (standard_palette), "Standard");
     }
@@ -280,7 +280,7 @@ gimp_palette_load (const gchar *filename)
       return NULL;
     }
 
-  palette = gtk_type_new (GIMP_TYPE_PALETTE);
+  palette = g_object_new (GIMP_TYPE_PALETTE, NULL);
 
   gimp_data_set_filename (GIMP_DATA (palette), filename);
 

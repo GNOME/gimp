@@ -533,7 +533,7 @@ gimp_navigation_preview_new (GimpImage *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
 
-  preview = gtk_type_new (GIMP_TYPE_NAVIGATION_PREVIEW);
+  preview = g_object_new (GIMP_TYPE_NAVIGATION_PREVIEW, NULL);
 
   preview->is_popup = TRUE;
 

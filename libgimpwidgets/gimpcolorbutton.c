@@ -229,7 +229,7 @@ gimp_color_button_new (const gchar       *title,
   
   g_return_val_if_fail (color != NULL, NULL);  
 
-  gcb = gtk_type_new (gimp_color_button_get_type ());
+  gcb = g_object_new (GIMP_TYPE_COLOR_BUTTON, NULL);
 
   gcb->title = g_strdup (title);
   

@@ -179,7 +179,7 @@ gimp_container_list_view_new (GimpContainer *container,
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
-  list_view = gtk_type_new (GIMP_TYPE_CONTAINER_LIST_VIEW);
+  list_view = g_object_new (GIMP_TYPE_CONTAINER_LIST_VIEW, NULL);
 
   view = GIMP_CONTAINER_VIEW (list_view);
 

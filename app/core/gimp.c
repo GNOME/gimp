@@ -41,6 +41,7 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
+#include "gimpimagefile.h"
 #include "gimplist.h"
 #include "gimppalette.h"
 #include "gimppattern.h"
@@ -148,6 +149,11 @@ gimp_init (Gimp *gimp)
   gtk_object_ref (GTK_OBJECT (gimp->tool_info_list));
   gtk_object_sink (GTK_OBJECT (gimp->tool_info_list));
 
+  gimp->documents           = gimp_list_new (GIMP_TYPE_IMAGEFILE,
+					     GIMP_CONTAINER_POLICY_STRONG);
+  gtk_object_ref (GTK_OBJECT (gimp->documents));
+  gtk_object_sink (GTK_OBJECT (gimp->documents));
+
   gimp->image_base_type_names   = NULL;
   gimp->fill_type_names         = NULL;
   gimp->have_current_cut_buffer = FALSE;
@@ -178,6 +184,12 @@ gimp_destroy (GtkObject *object)
     }
 
   gimp_image_new_exit (gimp);
+
+  if (gimp->documents)
+    {
+      g_object_unref (G_OBJECT (gimp->documents));
+      gimp->documents = NULL;
+    }
 
   if (gimp->tool_info_list)
     {
@@ -263,7 +275,7 @@ gimp_new (void)
   g_type_class_ref (GIMP_TYPE_CONTAINER);
   g_type_class_ref (GIMP_TYPE_IMAGE);
 
-  gimp = gtk_type_new (GIMP_TYPE_GIMP);
+  gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
   return gimp;
 }

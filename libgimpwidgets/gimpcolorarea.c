@@ -210,7 +210,7 @@ gimp_color_area_new (const GimpRGB     *color,
 
   g_return_val_if_fail (color != NULL, NULL); 
  
-  gca = gtk_type_new (gimp_color_area_get_type ());
+  gca = g_object_new (GIMP_TYPE_COLOR_AREA, NULL);
 
   gca->color = *color;
   gca->type  = type;

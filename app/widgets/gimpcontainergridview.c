@@ -206,7 +206,7 @@ gimp_container_grid_view_new (GimpContainer *container,
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
-  grid_view = gtk_type_new (GIMP_TYPE_CONTAINER_GRID_VIEW);
+  grid_view = g_object_new (GIMP_TYPE_CONTAINER_GRID_VIEW, NULL);
 
   view = GIMP_CONTAINER_VIEW (grid_view);
 

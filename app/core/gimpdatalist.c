@@ -138,7 +138,7 @@ gimp_data_list_new (GType children_type)
 
   g_return_val_if_fail (g_type_is_a (children_type, GIMP_TYPE_DATA), NULL);
 
-  list = GIMP_DATA_LIST (gtk_type_new (GIMP_TYPE_DATA_LIST));
+  list = GIMP_DATA_LIST (g_object_new (GIMP_TYPE_DATA_LIST, NULL));
 
   GIMP_CONTAINER (list)->children_type = children_type;
   GIMP_CONTAINER (list)->policy        = GIMP_CONTAINER_POLICY_STRONG;

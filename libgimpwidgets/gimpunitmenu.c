@@ -174,7 +174,7 @@ gimp_unit_menu_new (const gchar *format,
       (unit != GIMP_UNIT_PERCENT))
     show_custom = TRUE;
 
-  gum = gtk_type_new (gimp_unit_menu_get_type ());
+  gum = g_object_new (GIMP_TYPE_UNIT_MENU, NULL);
 
   gum->format       = g_strdup (format);
   gum->show_pixels  = show_pixels;

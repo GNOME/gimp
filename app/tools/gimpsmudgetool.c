@@ -470,7 +470,7 @@ gimp_smudge_tool_non_gui (GimpDrawable *drawable,
 
   if (! non_gui_smudge)
     {
-      non_gui_smudge = gtk_type_new (GIMP_TYPE_SMUDGE_TOOL);
+      non_gui_smudge = g_object_new (GIMP_TYPE_SMUDGE_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_smudge);

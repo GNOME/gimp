@@ -219,7 +219,7 @@ gimp_gradient_duplicate (GimpData *data)
   GimpGradient        *gradient;
   GimpGradientSegment *head, *prev, *cur, *orig;
 
-  gradient = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
+  gradient = GIMP_GRADIENT (g_object_new (GIMP_TYPE_GRADIENT, NULL));
 
   gimp_data_dirty (GIMP_DATA (gradient));
 
@@ -257,7 +257,7 @@ gimp_gradient_new (const gchar *name)
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  gradient = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
+  gradient = GIMP_GRADIENT (g_object_new (GIMP_TYPE_GRADIENT, NULL));
 
   gimp_object_set_name (GIMP_OBJECT (gradient), name);
 
@@ -307,7 +307,7 @@ gimp_gradient_load (const gchar *filename)
       return NULL;
     }
 
-  gradient = GIMP_GRADIENT (gtk_type_new (GIMP_TYPE_GRADIENT));
+  gradient = GIMP_GRADIENT (g_object_new (GIMP_TYPE_GRADIENT, NULL));
 
   gimp_data_set_filename (GIMP_DATA (gradient), filename);
 

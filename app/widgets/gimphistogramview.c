@@ -245,7 +245,7 @@ histogram_widget_new (gint width,
 {
   HistogramWidget *histogram;
 
-  histogram = HISTOGRAM_WIDGET (gtk_type_new (HISTOGRAM_WIDGET_TYPE));
+  histogram = HISTOGRAM_WIDGET (g_object_new (HISTOGRAM_WIDGET_TYPE, NULL));
 
   gtk_drawing_area_size (GTK_DRAWING_AREA (histogram), width + 2, height + 2);
   gtk_widget_set_events (GTK_WIDGET (histogram), HISTOGRAM_MASK);

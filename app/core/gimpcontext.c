@@ -762,12 +762,11 @@ gimp_context_new (Gimp        *gimp,
 {
   GimpContext *context;
 
-  g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (!template || GIMP_IS_CONTEXT (template), NULL);
+  g_return_val_if_fail (! template || GIMP_IS_CONTEXT (template), NULL);
 
-  context = gtk_type_new (GIMP_TYPE_CONTEXT);
+  context = g_object_new (GIMP_TYPE_CONTEXT, NULL);
 
   context->gimp = gimp;
 

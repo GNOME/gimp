@@ -234,7 +234,7 @@ gimp_tool_info_new (GimpContext  *context,
   g_return_val_if_fail (stock_id != NULL, NULL);
   g_return_val_if_fail (GDK_IS_PIXBUF (stock_pixbuf), NULL);
 
-  tool_info = gtk_type_new (GIMP_TYPE_TOOL_INFO);
+  tool_info = g_object_new (GIMP_TYPE_TOOL_INFO, NULL);
 
   gimp_object_set_name (GIMP_OBJECT (tool_info), identifier);
 

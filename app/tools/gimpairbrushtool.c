@@ -447,7 +447,7 @@ airbrush_non_gui (GimpDrawable *drawable,
 
   if (! non_gui_airbrush)
     {
-      non_gui_airbrush = gtk_type_new (GIMP_TYPE_AIRBRUSH_TOOL);
+      non_gui_airbrush = g_object_new (GIMP_TYPE_AIRBRUSH_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_airbrush);

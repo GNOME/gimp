@@ -368,7 +368,7 @@ gimp_paintbrush_tool_non_gui_default (GimpDrawable *drawable,
 
   if (! non_gui_paintbrush)
     {
-      non_gui_paintbrush = gtk_type_new (GIMP_TYPE_PAINTBRUSH_TOOL);
+      non_gui_paintbrush = g_object_new (GIMP_TYPE_PAINTBRUSH_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_paintbrush);

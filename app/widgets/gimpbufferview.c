@@ -138,7 +138,7 @@ gimp_buffer_view_new (GimpViewType              view_type,
   GimpBufferView      *buffer_view;
   GimpContainerEditor *editor;
 
-  buffer_view = gtk_type_new (GIMP_TYPE_BUFFER_VIEW);
+  buffer_view = g_object_new (GIMP_TYPE_BUFFER_VIEW, NULL);
 
   if (! gimp_container_editor_construct (GIMP_CONTAINER_EDITOR (buffer_view),
 					 view_type,

@@ -118,7 +118,7 @@ gimp_button_new (void)
 {
   GimpButton *button;
 
-  button = gtk_type_new (GIMP_TYPE_BUTTON);
+  button = g_object_new (GIMP_TYPE_BUTTON, NULL);
 
   return GTK_WIDGET (button);
 }

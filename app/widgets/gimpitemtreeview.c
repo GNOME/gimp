@@ -296,15 +296,15 @@ gimp_drawable_list_view_new (gint                     preview_size,
 
   if (drawable_type == GIMP_TYPE_LAYER)
     {
-      list_view = gtk_type_new (GIMP_TYPE_LAYER_LIST_VIEW);
+      list_view = g_object_new (GIMP_TYPE_LAYER_LIST_VIEW, NULL);
     }
   else if (drawable_type == GIMP_TYPE_CHANNEL)
     {
-      list_view = gtk_type_new (GIMP_TYPE_CHANNEL_LIST_VIEW);
+      list_view = g_object_new (GIMP_TYPE_CHANNEL_LIST_VIEW, NULL);
     }
   else
     {
-      list_view = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_VIEW);
+      list_view = g_object_new (GIMP_TYPE_DRAWABLE_LIST_VIEW, NULL);
     }
 
   view = GIMP_CONTAINER_VIEW (list_view);

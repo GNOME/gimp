@@ -271,39 +271,39 @@ gimp_preview_new_by_type (GimpViewable *viewable)
 
   if (GIMP_IS_BRUSH (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_BRUSH_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_BRUSH_PREVIEW, NULL);
     }
   else if (GIMP_IS_DRAWABLE (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_DRAWABLE_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW, NULL);
     }
   else if (GIMP_IS_IMAGE (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_IMAGE_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_IMAGE_PREVIEW, NULL);
     }
   else if (GIMP_IS_PATTERN (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_PATTERN_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_PATTERN_PREVIEW, NULL);
     }
   else if (GIMP_IS_GRADIENT (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_GRADIENT_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_GRADIENT_PREVIEW, NULL);
     }
   else if (GIMP_IS_PALETTE (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_PALETTE_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_PALETTE_PREVIEW, NULL);
     }
   else if (GIMP_IS_BUFFER (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_BUFFER_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_BUFFER_PREVIEW, NULL);
     }
   else if (GIMP_IS_TOOL_INFO (viewable))
     {
-      preview = gtk_type_new (GIMP_TYPE_TOOL_INFO_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_TOOL_INFO_PREVIEW, NULL);
     }
   else
     {
-      preview = gtk_type_new (GIMP_TYPE_PREVIEW);
+      preview = g_object_new (GIMP_TYPE_PREVIEW, NULL);
     }
 
   return preview;
@@ -317,7 +317,6 @@ gimp_preview_new (GimpViewable *viewable,
 {
   GimpPreview *preview;
 
-  g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
   g_return_val_if_fail (border_width >= 0 && border_width <= 16, NULL);
@@ -344,7 +343,6 @@ gimp_preview_new_full (GimpViewable *viewable,
 {
   GimpPreview *preview;
 
-  g_return_val_if_fail (viewable != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (width  > 0 && width  <= 256, NULL);
   g_return_val_if_fail (height > 0 && height <= 256, NULL);
@@ -367,7 +365,6 @@ void
 gimp_preview_set_viewable (GimpPreview  *preview,
 			   GimpViewable *viewable)
 {
-  g_return_if_fail (preview != NULL);
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
 
@@ -984,7 +981,10 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   color = ((channel == -1) &&
 	   (temp_buf->bytes == 3 || temp_buf->bytes == 4));
 
-  if (has_alpha)
+  /*  render the checkerboard only if the temp_buf has alpha *and*
+   *  we render a composite preview (channel == -1)
+   */
+  if (has_alpha && (channel == -1))
     {
       buf   = render_check_buf;
       alpha = ((color) ? ALPHA_PIX :
@@ -1054,7 +1054,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 	    {
 	      if (color)
 		{
-		  if (has_alpha)
+		  if (has_alpha && (channel == -1))
 		    {
 		      a = s[alpha] << 8;
 
@@ -1086,7 +1086,7 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 		}
 	      else
 		{
-		  if (has_alpha)
+		  if (has_alpha && (channel == -1))
 		    {
 		      a = s[alpha] << 8;
 

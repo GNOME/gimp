@@ -164,7 +164,7 @@ gimp_image_dock_new (GimpDialogFactory *factory,
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
 
-  image_dock = gtk_type_new (GIMP_TYPE_IMAGE_DOCK);
+  image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK, NULL);
 
   dock = GIMP_DOCK (image_dock);
 

@@ -149,7 +149,7 @@ gimp_component_list_item_new (GimpImage   *gimage,
   g_return_val_if_fail (channel >= RED_CHANNEL && channel <= ALPHA_CHANNEL,
 			NULL);
 
-  list_item = gtk_type_new (GIMP_TYPE_COMPONENT_LIST_ITEM);
+  list_item = g_object_new (GIMP_TYPE_COMPONENT_LIST_ITEM, NULL);
 
   list_item->preview_size  = preview_size;
   list_item->get_name_func = gimp_component_list_item_get_name;

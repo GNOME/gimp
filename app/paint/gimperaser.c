@@ -344,7 +344,7 @@ eraser_non_gui (GimpDrawable *drawable,
   
   if (! non_gui_eraser)
     {
-      non_gui_eraser = gtk_type_new (GIMP_TYPE_ERASER_TOOL);
+      non_gui_eraser = g_object_new (GIMP_TYPE_ERASER_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_eraser);

@@ -206,7 +206,7 @@ gimp_colormap_dialog_new (GimpImage *gimage)
 
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
 
-  ipal = gtk_type_new (GIMP_TYPE_COLORMAP_DIALOG);
+  ipal = g_object_new (GIMP_TYPE_COLORMAP_DIALOG, NULL);
 
   gtk_box_set_spacing (GTK_BOX (ipal), 2);
 

@@ -272,7 +272,7 @@ pencil_non_gui (GimpDrawable *drawable,
   
   if (! non_gui_pencil)
     {
-      non_gui_pencil = gtk_type_new (GIMP_TYPE_PENCIL_TOOL);
+      non_gui_pencil = g_object_new (GIMP_TYPE_PENCIL_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_pencil);

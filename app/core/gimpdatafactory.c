@@ -126,7 +126,7 @@ gimp_data_factory_new (GtkType                            data_type,
   g_return_val_if_fail (loader_entries != NULL, NULL);
   g_return_val_if_fail (n_loader_entries > 0, NULL);
 
-  factory = gtk_type_new (GIMP_TYPE_DATA_FACTORY);
+  factory = g_object_new (GIMP_TYPE_DATA_FACTORY, NULL);
 
   factory->container = gimp_data_list_new (data_type);
 

@@ -166,7 +166,7 @@ gimp_brush_factory_view_new (GimpViewType              view_type,
   g_return_val_if_fail (min_items_x > 0 && min_items_x <= 64, NULL);
   g_return_val_if_fail (min_items_y > 0 && min_items_y <= 64, NULL);
 
-  factory_view = gtk_type_new (GIMP_TYPE_BRUSH_FACTORY_VIEW);
+  factory_view = g_object_new (GIMP_TYPE_BRUSH_FACTORY_VIEW, NULL);
 
   factory_view->change_brush_spacing = change_brush_spacing;
 

@@ -151,7 +151,7 @@ gimp_offset_area_new (gint orig_width,
   g_return_val_if_fail (orig_width  > 0, NULL);
   g_return_val_if_fail (orig_height > 0, NULL);
 
-  offset_area = gtk_type_new (gimp_offset_area_get_type ());
+  offset_area = g_object_new (GIMP_TYPE_OFFSET_AREA, NULL);
 
   offset_area->orig_width  = offset_area->width  = orig_width;
   offset_area->orig_height = offset_area->height = orig_height;

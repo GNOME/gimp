@@ -260,18 +260,24 @@ gimp_container_child_destroy_callback (GtkObject *object,
 GType
 gimp_container_children_type (const GimpContainer *container)
 {
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), G_TYPE_NONE);
+
   return container->children_type;
 }
 
 GimpContainerPolicy
 gimp_container_policy (const GimpContainer *container)
 {
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
+
   return container->policy;
 }
 
 gint
 gimp_container_num_children (const GimpContainer *container)
 {
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), 0);
+
   return container->num_children;
 }
 

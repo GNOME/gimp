@@ -157,7 +157,7 @@ gimp_channel_new (GimpImage     *gimage,
 
   g_return_val_if_fail (color != NULL, NULL);
 
-  channel = gtk_type_new (GIMP_TYPE_CHANNEL);
+  channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (channel),
 			   gimage, width, height, GRAY_GIMAGE, name);

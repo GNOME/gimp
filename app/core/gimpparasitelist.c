@@ -117,7 +117,7 @@ gimp_parasite_list_new (void)
 {
   GimpParasiteList *list;
 
-  list = gtk_type_new (GIMP_TYPE_PARASITE_LIST);
+  list = g_object_new (GIMP_TYPE_PARASITE_LIST, NULL);
 
   return list;
 }

@@ -475,7 +475,7 @@ gimp_brush_load_brush (gint         fd,
   switch (header.bytes)
     {
     case 1:
-      brush = GIMP_BRUSH (gtk_type_new (GIMP_TYPE_BRUSH));
+      brush = GIMP_BRUSH (g_object_new (GIMP_TYPE_BRUSH, NULL));
       brush->mask = temp_buf_new (header.width, header.height, 1,
 				  0, 0, NULL);
       if (read (fd,
@@ -491,7 +491,7 @@ gimp_brush_load_brush (gint         fd,
       break;
 
     case 4:
-      brush = GIMP_BRUSH (gtk_type_new (GIMP_TYPE_BRUSH));
+      brush = GIMP_BRUSH (g_object_new (GIMP_TYPE_BRUSH, NULL));
       brush->mask =   temp_buf_new (header.width, header.height, 1, 0, 0, NULL);
       brush->pixmap = temp_buf_new (header.width, header.height, 3, 0, 0, NULL);
 

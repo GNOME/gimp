@@ -666,7 +666,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 
   if (tool_info->tool_type != GTK_TYPE_NONE)
     {
-      new_tool = gtk_type_new (tool_info->tool_type);
+      new_tool = g_object_new (tool_info->tool_type, NULL);
     }
   else
     {

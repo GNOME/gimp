@@ -266,7 +266,7 @@ gimp_brush_pipe_load (const gchar *filename)
     
   if (buffer->len > 0 && buffer->len < 1024)
     {
-      pipe = GIMP_BRUSH_PIPE (gtk_type_new (GIMP_TYPE_BRUSH_PIPE));      
+      pipe = GIMP_BRUSH_PIPE (g_object_new (GIMP_TYPE_BRUSH_PIPE, NULL));
       gimp_object_set_name (GIMP_OBJECT (pipe), buffer->str);
     }
   g_string_free (buffer, TRUE);

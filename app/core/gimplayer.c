@@ -260,7 +260,7 @@ gimp_layer_new (GimpImage        *gimage,
       return NULL;
     }
 
-  layer = gtk_type_new (GIMP_TYPE_LAYER);
+  layer = g_object_new (GIMP_TYPE_LAYER, NULL);
 
   gimp_drawable_configure (GIMP_DRAWABLE (layer),
 			   gimage, width, height, type, name);

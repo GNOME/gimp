@@ -140,7 +140,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 GtkWidget *
 gimp_dockbook_new (void)
 {
-  return GTK_WIDGET (gtk_type_new (GIMP_TYPE_DOCKBOOK));
+  return GTK_WIDGET (g_object_new (GIMP_TYPE_DOCKBOOK, NULL));
 }
 
 static void

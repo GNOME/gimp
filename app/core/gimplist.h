@@ -31,6 +31,7 @@
 #define GIMP_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LIST, GimpListClass))
 #define GIMP_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_LIST))
 #define GIMP_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LIST))
+#define GIMP_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_LIST, GimpListClass))
 
 
 typedef struct _GimpListClass GimpListClass;
@@ -48,8 +49,9 @@ struct _GimpListClass
 };
 
 
-GtkType         gimp_list_get_type (void);
-GimpContainer * gimp_list_new      (GtkType              children_type,
+GType           gimp_list_get_type (void);
+
+GimpContainer * gimp_list_new      (GType                children_type,
 				    GimpContainerPolicy  policy);
 
 

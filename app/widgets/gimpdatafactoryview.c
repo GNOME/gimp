@@ -146,7 +146,7 @@ gimp_data_factory_view_new (GimpViewType              view_type,
 {
   GimpDataFactoryView *factory_view;
 
-  factory_view = gtk_type_new (GIMP_TYPE_DATA_FACTORY_VIEW);
+  factory_view = g_object_new (GIMP_TYPE_DATA_FACTORY_VIEW, NULL);
 
   if (! gimp_data_factory_view_construct (factory_view,
 					  view_type,

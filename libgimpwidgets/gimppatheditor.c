@@ -219,7 +219,7 @@ gimp_path_editor_new (const gchar *filesel_title,
   g_return_val_if_fail ((filesel_title != NULL), NULL);
   g_return_val_if_fail ((path != NULL), NULL);
 
-  gpe = gtk_type_new (gimp_path_editor_get_type ());
+  gpe = g_object_new (GIMP_TYPE_PATH_EDITOR, NULL);
 
   gpe->file_selection = gimp_file_selection_new (filesel_title, "", TRUE, TRUE);
   gtk_widget_set_sensitive (gpe->file_selection, FALSE);

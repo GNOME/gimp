@@ -608,7 +608,7 @@ gimp_image_new (Gimp              *gimp,
   g_return_val_if_fail (gimp != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  gimage = GIMP_IMAGE (gtk_type_new (GIMP_TYPE_IMAGE));
+  gimage = GIMP_IMAGE (g_object_new (GIMP_TYPE_IMAGE, NULL));
 
   gimage->gimp        = gimp;
   gimage->ID          = gimp->next_image_ID++;

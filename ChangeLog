@@ -1,3 +1,33 @@
+2001-08-10  Michael Natterer  <mitch@convergence.de>
+
+	* app/nav_window.c: fix compiler warning.
+
+	* app/core/gimp.[ch]: added gimp->documents which will be an MRU
+	list of GimpImagefile objects.
+
+	* app/core/gimpcontainer.c: added some g_return_if_fail().
+
+	* app/gui/palette-editor.c: use GtkImage instead of GtkPixmap,
+	s/gtk_signal_*/g_signal_*/.
+
+	* app/widgets/gimppreview.c: render the checkerboard only for
+	channel == -1. In particular, don't render it for channel
+	previews.
+
+	* app/module_db.c
+	* app/core/*.c
+	* app/gui/colormap-dialog.c
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/tool_manager.c
+	* app/widgets/*.c
+	* libgimpwidgets/*.c: s/gtk_type_new/g_object_new/
+
 2001-08-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/appenums.h: removed GIMP_ZOOM_TYPE,

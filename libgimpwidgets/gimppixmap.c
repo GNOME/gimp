@@ -95,7 +95,7 @@ gimp_pixmap_new (gchar **xpm_data)
 {
   GimpPixmap *pixmap;
 
-  pixmap = gtk_type_new (GIMP_TYPE_PIXMAP);
+  pixmap = g_object_new (GIMP_TYPE_PIXMAP, NULL);
 
   gtk_pixmap_set_build_insensitive (GTK_PIXMAP (pixmap), TRUE);
   gimp_pixmap_set (pixmap, xpm_data);

@@ -587,7 +587,7 @@ gimp_dodgeburn_tool_non_gui (GimpDrawable     *drawable,
 
   if (! non_gui_dodgeburn)
     {
-      non_gui_dodgeburn = gtk_type_new (GIMP_TYPE_DODGEBURN_TOOL);
+      non_gui_dodgeburn = g_object_new (GIMP_TYPE_DODGEBURN_TOOL, NULL);
     }
 
   paint_tool = GIMP_PAINT_TOOL (non_gui_dodgeburn);

@@ -262,19 +262,19 @@ gimp_list_item_new (GimpViewable  *viewable,
 
   if (GIMP_IS_LAYER (viewable))
     {
-      list_item = gtk_type_new (GIMP_TYPE_LAYER_LIST_ITEM);
+      list_item = g_object_new (GIMP_TYPE_LAYER_LIST_ITEM, NULL);
     }
   else if (GIMP_IS_CHANNEL (viewable))
     {
-      list_item = gtk_type_new (GIMP_TYPE_CHANNEL_LIST_ITEM);
+      list_item = g_object_new (GIMP_TYPE_CHANNEL_LIST_ITEM, NULL);
     }
   else if (GIMP_IS_DRAWABLE (viewable))
     {
-      list_item = gtk_type_new (GIMP_TYPE_DRAWABLE_LIST_ITEM);
+      list_item = g_object_new (GIMP_TYPE_DRAWABLE_LIST_ITEM, NULL);
     }
   else
     {
-      list_item = gtk_type_new (GIMP_TYPE_LIST_ITEM);
+      list_item = g_object_new (GIMP_TYPE_LIST_ITEM, NULL);
     }
 
   list_item->preview_size = preview_size;

@@ -46,10 +46,10 @@ static GtkWidget * gimp_image_preview_create_popup (GimpPreview *preview);
 static GimpPreviewClass *parent_class = NULL;
 
 
-GtkType
+GType
 gimp_image_preview_get_type (void)
 {
-  static GtkType preview_type = 0;
+  static GType preview_type = 0;
 
   if (! preview_type)
     {
@@ -80,7 +80,7 @@ gimp_image_preview_class_init (GimpImagePreviewClass *klass)
   object_class  = (GtkObjectClass *) klass;
   preview_class = (GimpPreviewClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
+  parent_class = g_type_class_peek_parent (klass);
 
   preview_class->render       = gimp_image_preview_render;
   preview_class->get_size     = gimp_image_preview_get_size;

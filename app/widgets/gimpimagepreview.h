@@ -53,7 +53,7 @@ struct _GimpImagePreviewClass
 };
 
 
-GtkType   gimp_image_preview_get_type (void);
+GType   gimp_image_preview_get_type (void);
 
 
 #ifdef __cplusplus

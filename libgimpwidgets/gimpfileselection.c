@@ -201,7 +201,7 @@ gimp_file_selection_new (const gchar *title,
 {
   GimpFileSelection *gfs;
 
-  gfs = gtk_type_new (GIMP_TYPE_FILE_SELECTION);
+  gfs = g_object_new (GIMP_TYPE_FILE_SELECTION, NULL);
 
   gfs->title       = g_strdup (title);
   gfs->dir_only    = dir_only;

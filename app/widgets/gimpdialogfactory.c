@@ -193,7 +193,7 @@ gimp_dialog_factory_new (const gchar       *name,
       return NULL;
     }
 
-  factory = gtk_type_new (GIMP_TYPE_DIALOG_FACTORY);
+  factory = g_object_new (GIMP_TYPE_DIALOG_FACTORY, NULL);
 
   gimp_object_set_name (GIMP_OBJECT (factory), name);
 

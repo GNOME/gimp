@@ -190,7 +190,7 @@ gimp_list_foreach (GimpContainer *container,
 }
 
 GimpContainer *
-gimp_list_new (GtkType              children_type,
+gimp_list_new (GType                children_type,
 	       GimpContainerPolicy  policy)
 {
   GimpList *list;
@@ -199,7 +199,7 @@ gimp_list_new (GtkType              children_type,
   g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
                         policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
 
-  list = gtk_type_new (GIMP_TYPE_LIST);
+  list = g_object_new (GIMP_TYPE_LIST, NULL);
 
   GIMP_CONTAINER (list)->children_type = children_type;
   GIMP_CONTAINER (list)->policy        = policy;

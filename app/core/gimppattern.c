@@ -178,7 +178,7 @@ gimp_pattern_duplicate (GimpData *data)
 {
   GimpPattern *pattern;
 
-  pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+  pattern = GIMP_PATTERN (g_object_new (GIMP_TYPE_PATTERN, NULL));
 
   pattern->mask = temp_buf_copy (GIMP_PATTERN (data)->mask, NULL);
 
@@ -198,7 +198,7 @@ gimp_pattern_new (const gchar *name)
 
   g_return_val_if_fail (name != NULL, NULL);
 
-  pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+  pattern = GIMP_PATTERN (g_object_new (GIMP_TYPE_PATTERN, NULL));
 
   gimp_object_set_name (GIMP_OBJECT (pattern), name);
 
@@ -230,7 +230,7 @@ gimp_pattern_get_standard (void)
       guchar *data;
       gint    row, col;
 
-      standard_pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+      standard_pattern = GIMP_PATTERN (g_object_new (GIMP_TYPE_PATTERN, NULL));
 
       gimp_object_set_name (GIMP_OBJECT (standard_pattern), "Standard");
 
@@ -316,7 +316,8 @@ gimp_pattern_load (const gchar *filename)
       name = g_strdup (_("Unnamed"));
     }
 
-  pattern = GIMP_PATTERN (gtk_type_new (GIMP_TYPE_PATTERN));
+  pattern = GIMP_PATTERN (g_object_new (GIMP_TYPE_PATTERN, NULL));
+
   pattern->mask = temp_buf_new (header.width, header.height, header.bytes,
                                 0, 0, NULL);
   if (read (fd, temp_buf_data (pattern->mask), 

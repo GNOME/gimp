@@ -191,7 +191,7 @@ nav_dialog_scroll (GimpNavigationPreview *nav_preview,
 		   GdkScrollDirection     direction,
 		   NavigationDialog      *nav_dialog)
 {
-  GtkAdjustment *adj;
+  GtkAdjustment *adj = NULL;
   gdouble        value;
 
   g_print ("nav_dialog_scroll(%d)\n", direction);
@@ -208,6 +208,8 @@ nav_dialog_scroll (GimpNavigationPreview *nav_preview,
       adj = nav_dialog->gdisp->vsbdata;
       break;
     }
+
+  g_assert (adj != NULL);
 
   value = adj->value;
 

@@ -76,6 +76,9 @@ struct _Gimp
 
   GimpContainer         *tool_info_list;
 
+  /*  the opened and saved images in MRU order  */
+  GimpContainer         *documents;
+
   /*  image_new values  */
   GList                 *image_base_type_names;
   GList                 *fill_type_names;

@@ -242,7 +242,7 @@ init_edit_selection (GimpTool       *tool,
   GimpEditSelectionTool *edit_select;
   gint                   x, y;
 
-  edit_select = gtk_type_new (GIMP_TYPE_EDIT_SELECTION_TOOL);
+  edit_select = g_object_new (GIMP_TYPE_EDIT_SELECTION_TOOL, NULL);
 
   undo_push_group_start (gdisp->gimage, LAYER_DISPLACE_UNDO);
 

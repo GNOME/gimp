@@ -257,7 +257,7 @@ gimp_size_entry_new (gint                       number_of_fields,
   g_return_val_if_fail ((number_of_fields >= 0) && (number_of_fields <= 16),
 			NULL);
 
-  gse = gtk_type_new (GIMP_TYPE_SIZE_ENTRY);
+  gse = g_object_new (GIMP_TYPE_SIZE_ENTRY, NULL);
 
   gse->number_of_fields = number_of_fields;
   gse->unit             = unit;

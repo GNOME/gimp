@@ -136,7 +136,7 @@ gimp_color_panel_new (const gchar       *title,
 
   g_return_val_if_fail (color != NULL, NULL);
 
-  panel = gtk_type_new (GIMP_TYPE_COLOR_PANEL);
+  panel = g_object_new (GIMP_TYPE_COLOR_PANEL, NULL);
 
   GIMP_COLOR_BUTTON (panel)->title = g_strdup (title);
 

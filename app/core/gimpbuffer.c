@@ -170,7 +170,7 @@ gimp_buffer_new (TileManager *tiles,
   width  = tile_manager_width (tiles);
   height = tile_manager_height (tiles);
 
-  buffer = GIMP_BUFFER (gtk_type_new (GIMP_TYPE_BUFFER));
+  buffer = GIMP_BUFFER (g_object_new (GIMP_TYPE_BUFFER, NULL));
 
   gimp_object_set_name (GIMP_OBJECT (buffer), name);
 

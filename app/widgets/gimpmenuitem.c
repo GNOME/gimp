@@ -107,7 +107,7 @@ gimp_menu_item_new (GimpViewable  *viewable,
   g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
 
-  menu_item = gtk_type_new (GIMP_TYPE_MENU_ITEM);
+  menu_item = g_object_new (GIMP_TYPE_MENU_ITEM, NULL);
 
   menu_item->preview_size = preview_size;
 

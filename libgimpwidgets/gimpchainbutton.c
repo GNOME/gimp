@@ -144,7 +144,8 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->button = gtk_button_new ();
   gtk_button_set_relief (GTK_BUTTON (gcb->button), GTK_RELIEF_NONE);
 
-  gcb->pixmap = gtk_type_new (gtk_pixmap_get_type ());
+  gcb->pixmap = g_object_new (GTK_TYPE_PIXMAP, NULL);
+
   gtk_pixmap_set_build_insensitive (GTK_PIXMAP (gcb->pixmap), TRUE);
 
   g_signal_connect (G_OBJECT(gcb->button), "clicked",
@@ -218,7 +219,7 @@ gimp_chain_button_new (GimpChainPosition position)
 {
   GimpChainButton *gcb;
 
-  gcb = gtk_type_new (gimp_chain_button_get_type ());
+  gcb = g_object_new (GIMP_TYPE_CHAIN_BUTTON, NULL);
 
   gcb->position = position;
 
