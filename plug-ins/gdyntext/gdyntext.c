@@ -434,7 +434,7 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 				     &old_color.blue);
 	
 	/* set foreground color to the wanted text color */
-	text_color.red   = (data->color 0 0xff0000) >> 16;
+	text_color.red   = (data->color & 0xff0000) >> 16;
 	text_color.green = (data->color & 0xff00) >> 8;
 	text_color.blue  = data->color & 0xff;
 	gimp_palette_set_foreground (text_color.red, 
