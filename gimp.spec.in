@@ -179,11 +179,11 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/share/gimp/%{subver}/patterns/
 %{prefix}/share/gimp/%{subver}/scripts/
 
-%{sysconfdir}/gimp-%{subver}/gimprc
-%{sysconfdir}/gimp-%{subver}/gimprc_user
-%{sysconfdir}/gimp-%{subver}/gtkrc
-%{sysconfdir}/gimp-%{subver}/unitrc
-%{sysconfdir}/gimp-%{subver}/ps-menurc
+%{sysconfdir}/gimp/%{subver}/gimprc
+%{sysconfdir}/gimp/%{subver}/gimprc_user
+%{sysconfdir}/gimp/%{subver}/gtkrc
+%{sysconfdir}/gimp/%{subver}/unitrc
+%{sysconfdir}/gimp/%{subver}/ps-menurc
 
 %{prefix}/share/gimp/%{subver}/gimp_logo.ppm
 %{prefix}/share/gimp/%{subver}/gimp_splash.ppm

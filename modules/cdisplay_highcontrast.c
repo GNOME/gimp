@@ -95,9 +95,9 @@ static GimpModuleInfo info =
   NULL,
   N_("High Contrast color display filter"),
   "Jay Cox <jaycox@earthlink.net>",
-  "v0.1",
+  "v0.2",
   "(c) 2000, released under the GPL",
-  "April 28, 2000"
+  "October 14, 2000"
 };
 
 G_MODULE_EXPORT GimpModuleStatus
@@ -338,7 +338,7 @@ contrast_configure (gpointer cd_ID,
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
 
-      adjustment = gtk_adjustment_new (4.0, 1.0, 20.0, 0.5, 1.0, 0.0);
+      adjustment = gtk_adjustment_new (context->contrast, 1.0, 20.0, 0.5, 1.0, 0.0);
       context->spinner = gtk_spin_button_new (GTK_ADJUSTMENT (adjustment),
 					      0.1, 3);
       gtk_widget_set_usize (context->spinner, 100, 0);

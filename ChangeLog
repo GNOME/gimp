@@ -1,3 +1,11 @@
+2000-10-16  Sven Neumann  <sven@gimp.org>
+
+	* gimp.spec.in: make it work with my modifications of Ben's patch.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c: applied patch by Radim Kolar that
+	initializes the interface of the configure dialogs correctly.
+
 2000-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpwidgets.c: gimp_mem_size_entry_new(): fixed typo:
