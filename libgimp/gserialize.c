@@ -119,6 +119,7 @@ void g_free_serial_description(GSerialDescription *d)
     g_free(d->list->data);
     d->list = g_slist_remove_link(d->list, d->list);
   }
+  g_free (d);
 }
 
 static int g_serial_item_is_array(GSerialItem *item)

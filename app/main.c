@@ -542,9 +542,25 @@ test_gserialize (void)
   g_return_if_fail (to->test_array[1] == ts->test_array[1]);
   if (to->test_array[1] != ts->test_array[1])
     g_message("int16array value 1 test failed(please email your system configuration to jaycox@earthlink.net): %d\n", to->test_array[1]);
-  /*  really should free the memory... */
+
 #ifndef NATIVE_WIN32
   g_message("Passed serialization test\n");
 #endif
-}/* 
-    67108864 */
+
+  /*  free the memory  */
+  g_free (ts->test_array);
+  g_free (ts);
+  g_free (to->test_array);
+  g_free (to->test_string);
+  g_free (to);
+  g_free_serial_description (test_struct_descript);
+}
+
+
+
+
+
+
+
+
+
