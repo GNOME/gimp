@@ -68,14 +68,14 @@ struct _GimpPaletteEditorClass
 };
 
 
-GType            gimp_palette_editor_get_type   (void) G_GNUC_CONST;
+GType       gimp_palette_editor_get_type   (void) G_GNUC_CONST;
 
-GimpDataEditor * gimp_palette_editor_new        (Gimp               *gimp,
-                                                 GimpMenuFactory    *menu_factory);
+GtkWidget * gimp_palette_editor_new        (Gimp               *gimp,
+                                            GimpMenuFactory    *menu_factory);
 
-void             gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
-                                                 const GimpRGB      *color,
-                                                 GimpColorPickState  pick_state);
+void        gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
+                                            const GimpRGB      *color,
+                                            GimpColorPickState  pick_state);
 
 
 #endif /* __GIMP_PALETTE_EDITOR_H__ */

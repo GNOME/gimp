@@ -36,16 +36,26 @@ typedef enum
 } GimpDialogVisibilityState;
 
 
-typedef GtkWidget * (* GimpDialogNewFunc) (GimpDialogFactory *factory,
-					   GimpContext       *context,
-                                           gint               preview_size);
+typedef GtkWidget * (* GimpDialogNewFunc)     (GimpDialogFactory      *factory,
+                                               GimpContext            *context,
+                                               gint                    preview_size);
+typedef GtkWidget * (* GimpDialogConstructor) (GimpDialogFactory      *factory,
+                                               GimpDialogFactoryEntry *entry,
+                                               GimpContext            *context,
+                                               gint                    preview_size);
 
 
 struct _GimpDialogFactoryEntry
 {
   gchar             *identifier;
+  gchar             *name;
+  gchar             *blurb;
+  gchar             *stock_id;
+  gchar             *help_id;
+
   GimpDialogNewFunc  new_func;
   gint               preview_size;
+
   gboolean           singleton;
   gboolean           session_managed;
   gboolean           remember_size;
@@ -65,18 +75,19 @@ typedef struct _GimpDialogFactoryClass  GimpDialogFactoryClass;
 
 struct _GimpDialogFactory
 {
-  GimpObject         parent_instance;
+  GimpObject             parent_instance;
 
-  GimpContext       *context;
-  GimpMenuFactory   *menu_factory;
+  GimpContext           *context;
+  GimpMenuFactory       *menu_factory;
 
   /*< private >*/
-  GimpDialogNewFunc  new_dock_func;
+  GimpDialogNewFunc      new_dock_func;
+  GimpDialogConstructor  constructor;
 
-  GList             *registered_dialogs;
-  GList             *session_infos;
+  GList                 *registered_dialogs;
+  GList                 *session_infos;
 
-  GList             *open_dialogs;
+  GList                 *open_dialogs;
 };
 
 struct _GimpDialogFactoryClass
@@ -96,8 +107,15 @@ GimpDialogFactory * gimp_dialog_factory_new       (const gchar       *name,
 
 GimpDialogFactory * gimp_dialog_factory_from_name (const gchar       *name);
 
+void        gimp_dialog_factory_set_constructor   (GimpDialogFactory *factory,
+                                                   GimpDialogConstructor constructor);
+
 void        gimp_dialog_factory_register_entry    (GimpDialogFactory *factory,
 						   const gchar       *identifier,
+                                                   const gchar       *name,
+                                                   const gchar       *blurb,
+                                                   const gchar       *stock_id,
+                                                   const gchar       *help_id,
 						   GimpDialogNewFunc  new_func,
                                                    gint               preview_size,
 						   gboolean           singleton,

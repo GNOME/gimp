@@ -66,6 +66,11 @@ GtkWidget * dialogs_dock_new               (GimpDialogFactory *factory,
 
 /*  dockables  */
 
+GtkWidget * dialogs_dockable_constructor   (GimpDialogFactory      *factory,
+                                            GimpDialogFactoryEntry *entry,
+                                            GimpContext            *context,
+                                            gint                    preview_size);
+
 GtkWidget * dialogs_tool_options_get       (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
@@ -147,7 +152,7 @@ GtkWidget * dialogs_vectors_list_view_new  (GimpDialogFactory *factory,
 GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_indexed_palette_new    (GimpDialogFactory *factory,
+GtkWidget * dialogs_colormap_editor_new    (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 GtkWidget * dialogs_histogram_editor_new   (GimpDialogFactory *factory,
@@ -156,11 +161,11 @@ GtkWidget * dialogs_histogram_editor_new   (GimpDialogFactory *factory,
 GtkWidget * dialogs_selection_editor_new   (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_undo_history_new       (GimpDialogFactory *factory,
+GtkWidget * dialogs_undo_editor_new        (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 
-GtkWidget * dialogs_navigation_view_new    (GimpDialogFactory *factory,
+GtkWidget * dialogs_navigation_editor_new  (GimpDialogFactory *factory,
                                             GimpContext       *context,
                                             gint               preview_size);
 

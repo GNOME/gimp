@@ -496,24 +496,24 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
 
 /*  public functions  */
 
-GimpDataEditor *
+GtkWidget *
 gimp_palette_editor_new (Gimp            *gimp,
                          GimpMenuFactory *menu_factory)
 {
-  GimpPaletteEditor *palette_editor;
+  GimpPaletteEditor *editor;
 
-  palette_editor = g_object_new (GIMP_TYPE_PALETTE_EDITOR, NULL);
+  editor = g_object_new (GIMP_TYPE_PALETTE_EDITOR, NULL);
 
-  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (palette_editor),
+  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
                                     gimp->palette_factory,
                                     menu_factory, "<PaletteEditor>",
                                     "/palette-editor-popup"))
     {
-      g_object_unref (palette_editor);
+      g_object_unref (editor);
       return NULL;
     }
 
-  return GIMP_DATA_EDITOR (palette_editor);
+  return GTK_WIDGET (editor);
 }
 
 void

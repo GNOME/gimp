@@ -64,6 +64,11 @@ static void   gimp_dialog_factory_init       (GimpDialogFactory      *factory);
 static void   gimp_dialog_factory_dispose             (GObject           *object);
 static void   gimp_dialog_factory_finalize            (GObject           *object);
 
+static GtkWidget *
+              gimp_dialog_factory_default_constructor (GimpDialogFactory *factory,
+                                                       GimpDialogFactoryEntry *entry,
+                                                       GimpContext       *context,
+                                                       gint               preview_size);
 static void     gimp_dialog_factory_set_widget_data   (GtkWidget         *dialog,
                                                        GimpDialogFactory *factory,
                                                        GimpDialogFactoryEntry *entry);
@@ -147,6 +152,7 @@ gimp_dialog_factory_init (GimpDialogFactory *factory)
 {
   factory->menu_factory       = NULL;
   factory->new_dock_func      = NULL;
+  factory->constructor        = gimp_dialog_factory_default_constructor;
   factory->registered_dialogs = NULL;
   factory->session_infos      = NULL;
   factory->open_dialogs       = NULL;
@@ -207,6 +213,10 @@ gimp_dialog_factory_finalize (GObject *object)
       entry = (GimpDialogFactoryEntry *) list->data;
 
       g_free (entry->identifier);
+      g_free (entry->name);
+      g_free (entry->blurb);
+      g_free (entry->stock_id);
+      g_free (entry->help_id);
       g_free (entry);
     }
 
@@ -288,8 +298,24 @@ gimp_dialog_factory_from_name (const gchar *name)
 }
 
 void
+gimp_dialog_factory_set_constructor (GimpDialogFactory     *factory,
+                                     GimpDialogConstructor  constructor)
+{
+  g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
+
+  if (! constructor)
+    constructor = gimp_dialog_factory_default_constructor;
+
+  factory->constructor = constructor;
+}
+
+void
 gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
                                     const gchar       *identifier,
+                                    const gchar       *name,
+                                    const gchar       *blurb,
+                                    const gchar       *stock_id,
+                                    const gchar       *help_id,
                                     GimpDialogNewFunc  new_func,
                                     gint               preview_size,
                                     gboolean           singleton,
@@ -305,6 +331,10 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   entry = g_new0 (GimpDialogFactoryEntry, 1);
 
   entry->identifier       = g_strdup (identifier);
+  entry->name             = g_strdup (name);
+  entry->blurb            = g_strdup (blurb);
+  entry->stock_id         = g_strdup (stock_id);
+  entry->help_id          = g_strdup (help_id);
   entry->new_func         = new_func;
   entry->preview_size     = preview_size;
   entry->singleton        = singleton ? TRUE : FALSE;
@@ -440,17 +470,17 @@ gimp_dialog_factory_dialog_new_internal (GimpDialogFactory *factory,
         preview_size = entry->preview_size;
 
       if (context)
-        dialog = entry->new_func (factory,
-                                  context,
-                                  preview_size);
+        dialog = factory->constructor (factory, entry,
+                                       context,
+                                       preview_size);
       else if (dock)
-        dialog = entry->new_func (factory,
-                                  GIMP_DOCK (dock)->context,
-                                  preview_size);
+        dialog = factory->constructor (factory, entry,
+                                       GIMP_DOCK (dock)->context,
+                                       preview_size);
       else
-        dialog = entry->new_func (factory,
-                                  factory->context,
-                                  preview_size);
+        dialog = factory->constructor (factory, entry,
+                                       factory->context,
+                                       preview_size);
 
       if (dialog)
         {
@@ -1146,7 +1176,16 @@ gimp_dialog_factory_from_widget (GtkWidget               *dialog,
 
 /*  private functions  */
 
-void
+static GtkWidget *
+gimp_dialog_factory_default_constructor (GimpDialogFactory      *factory,
+                                         GimpDialogFactoryEntry *entry,
+                                         GimpContext            *context,
+                                         gint                    preview_size)
+{
+  return entry->new_func (factory, context, preview_size);
+}
+
+static void
 gimp_dialog_factory_set_widget_data (GtkWidget               *dialog,
                                      GimpDialogFactory       *factory,
                                      GimpDialogFactoryEntry  *entry)

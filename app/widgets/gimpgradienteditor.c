@@ -503,7 +503,7 @@ gimp_gradient_editor_gradient_dirty (GimpGradientEditor *editor,
 
 /*  public functions  */
 
-GimpDataEditor *
+GtkWidget *
 gimp_gradient_editor_new (Gimp            *gimp,
                           GimpMenuFactory *menu_factory)
 {
@@ -520,7 +520,7 @@ gimp_gradient_editor_new (Gimp            *gimp,
       return NULL;
     }
 
-  return GIMP_DATA_EDITOR (editor);
+  return GTK_WIDGET (editor);
 }
 
 void

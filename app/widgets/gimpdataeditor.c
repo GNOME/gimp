@@ -47,11 +47,12 @@ static void       gimp_data_editor_class_init (GimpDataEditorClass *klass);
 static void       gimp_data_editor_init       (GimpDataEditor      *view);
 
 static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+
+static void       gimp_data_editor_dispose           (GObject        *object);
+
 static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
                                                       GList          *aux_info);
 static GList    * gimp_data_editor_get_aux_info      (GimpDocked     *docked);
-
-static void       gimp_data_editor_dispose           (GObject        *object);
 
 static void       gimp_data_editor_real_set_data     (GimpDataEditor *editor,
                                                       GimpData       *data);
@@ -115,15 +116,13 @@ gimp_data_editor_get_type (void)
 static void
 gimp_data_editor_class_init (GimpDataEditorClass *klass)
 {
-  GObjectClass *object_class;
-
-  object_class = G_OBJECT_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose  = gimp_data_editor_dispose;
+  object_class->dispose = gimp_data_editor_dispose;
 
-  klass->set_data        = gimp_data_editor_real_set_data;
+  klass->set_data       = gimp_data_editor_real_set_data;
 }
 
 static void
@@ -167,6 +166,21 @@ gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
   docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+}
+
+static void
+gimp_data_editor_dispose (GObject *object)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
+
+  if (editor->data)
+    {
+      /* Save dirty data before we clear out */
+      gimp_data_editor_save_dirty (editor);
+      gimp_data_editor_set_data (editor, NULL);
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 #define AUX_INFO_CURRENT_DATA "current-data"
@@ -214,21 +228,6 @@ gimp_data_editor_get_aux_info (GimpDocked *docked)
     }
 
   return aux_info;
-}
-
-static void
-gimp_data_editor_dispose (GObject *object)
-{
-  GimpDataEditor *editor = GIMP_DATA_EDITOR (object);
-
-  if (editor->data)
-    {
-      /* Save dirty data before we clear out */
-      gimp_data_editor_save_dirty (editor);
-      gimp_data_editor_set_data (editor, NULL);
-    }
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

@@ -1,12 +1,43 @@
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdialogfactory.[ch]: added "name", "blurb",
+	"stock_id" and "help_id" to struct GimpDialogFactoryEntry and to
+	gimp_dialog_factory_dialog_register(). Added typedef
+	GimpDialogConstructor which takes a GimpDialogFactoryEntry in
+	addition to the parameters GimpDialogNewFunc takes. Added a
+	constructor function pointer to GimpDialogFactory which defaults
+	to a function that just returns entry->new_func(). Use that
+	constructor instead of entry->new_func() for creating
+	dialogs. Added public API gimp_dialog_factory_set_constructor().
+
+	* app/dialogs/dialogs.c: register name, blurb, stock_id and
+	help_id for all dockables so all the dialog info lives in one huge
+	ugly table now. For the global_toolbox_factory and the
+	global_dock_factory, set a constructor which creates a dockable
+	around the widget returned by entry->new_func().
+
+	* app/dialogs/dialogs-constructors.[ch]: don't create the dockable
+	in each dialog constructor. Removes tons of code and reduces most
+	constructors to a "return gimp_foo_new(...)" one-liner. Got rid of
+	all static variables, they were from a time when GimpDialogFactory
+	was unable to manage singletons.
+
+	* app/widgets/gimpbrusheditor.[ch]
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: return GtkWidget, not
+	GimpDataEditor from gimp_foo_editor_new().
+
+	* app/widgets/gimpdataeditor.c: minor cleanups.
+
+2004-09-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolordialog.c: moved stuff from new() to init().
 
 2004-09-26  Michael Natterer  <mitch@gimp.org>
 
 	Ported GimpNavigationView to use actions for its buttons:
 
-	* app/menus/menus.c (menus_init): register a <GimpNaviagaionEditor>
+	* app/menus/menus.c (menus_init): register a <GimpNavigationEditor>
 	UI manager containing the "view" action group.
 
 	* app/actions/actions.c (action_data_get_foo): handle "data" being

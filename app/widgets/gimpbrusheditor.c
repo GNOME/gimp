@@ -286,22 +286,22 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
 /*  public functions  */
 
-GimpDataEditor *
+GtkWidget *
 gimp_brush_editor_new (Gimp *gimp)
 {
-  GimpBrushEditor *brush_editor;
+  GimpBrushEditor *editor;
 
-  brush_editor = g_object_new (GIMP_TYPE_BRUSH_EDITOR, NULL);
+  editor = g_object_new (GIMP_TYPE_BRUSH_EDITOR, NULL);
 
-  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (brush_editor),
+  if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
                                     gimp->brush_factory,
                                     NULL, NULL, NULL))
     {
-      g_object_unref (brush_editor);
+      g_object_unref (editor);
       return NULL;
     }
 
-  return GIMP_DATA_EDITOR (brush_editor);
+  return GTK_WIDGET (editor);
 }
 
 
