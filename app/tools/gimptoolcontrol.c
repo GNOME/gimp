@@ -69,7 +69,7 @@ gimp_tool_control_class_init (GimpToolControlClass *klass)
 static void
 gimp_tool_control_init (GimpToolControl *control)
 {
-  control->state                  = INACTIVE;
+  control->active                 = FALSE;
   control->paused_count           = 0;
 
   control->toggled                = FALSE;
@@ -99,7 +99,6 @@ gimp_tool_control_pause (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
 
-  /* control->state = PAUSED ? */
   control->paused_count++;
 }
 
@@ -123,16 +122,18 @@ void
 gimp_tool_control_activate (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (control->active == FALSE);
 
-  control->state = ACTIVE;
+  control->active = TRUE;
 }
 
 void 
 gimp_tool_control_halt (GimpToolControl *control)
 {
   g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+  g_return_if_fail (control->active == TRUE);
 
-  control->state = INACTIVE;
+  control->active = FALSE;
 }
 
 gboolean
@@ -140,7 +141,7 @@ gimp_tool_control_is_active (GimpToolControl *control)
 {
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
 
-  return control->state == ACTIVE;
+  return control->active;
 }
 
 void

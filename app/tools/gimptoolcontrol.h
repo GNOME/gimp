@@ -38,7 +38,7 @@ struct _GimpToolControl
 {
   GimpObject     parent_instance;
 
-  GimpToolState  state;              /*  state of tool activity               */
+  gboolean       active;             /*  state of tool activity               */
   gint           paused_count;       /*  paused control count                 */
 
   gboolean       scroll_lock;        /*  allow scrolling or not               */

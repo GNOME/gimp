@@ -383,7 +383,8 @@ tool_manager_control_active (Gimp           *gimp,
     }
   else if (action == HALT)
     {
-      gimp_tool_control_halt (tool_manager->active_tool->control);
+      if (gimp_tool_control_is_active (tool_manager->active_tool->control))
+        gimp_tool_control_halt (tool_manager->active_tool->control);
     }
 }
 

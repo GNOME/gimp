@@ -52,25 +52,6 @@ select_ops_get_type (void)
 }
 
 
-static const GEnumValue gimp_tool_state_enum_values[] =
-{
-  { INACTIVE, "INACTIVE", "inactive" },
-  { ACTIVE, "ACTIVE", "active" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_tool_state_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpToolState", gimp_tool_state_enum_values);
-
-  return enum_type;
-}
-
-
 static const GEnumValue gimp_tool_action_enum_values[] =
 {
   { PAUSE, "PAUSE", "pause" },

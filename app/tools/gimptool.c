@@ -271,10 +271,8 @@ gimp_tool_control (GimpTool       *tool,
   switch (action)
     {
     case PAUSE:
-      if (!gimp_tool_control_is_paused (tool->control))
-        {
-          GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
-        }
+      if (! gimp_tool_control_is_paused (tool->control))
+        GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
 
       gimp_tool_control_pause (tool->control);
       break;
@@ -284,10 +282,8 @@ gimp_tool_control (GimpTool       *tool,
         {
           gimp_tool_control_resume (tool->control);
 
-          if (!gimp_tool_control_is_paused (tool->control))
-            {
-              GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
-            }
+          if (! gimp_tool_control_is_paused (tool->control))
+            GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
         }
       else
         {
@@ -299,7 +295,8 @@ gimp_tool_control (GimpTool       *tool,
     case HALT:
       GIMP_TOOL_GET_CLASS (tool)->control (tool, action, gdisp);
 
-      gimp_tool_control_halt (tool->control);
+      if (gimp_tool_control_is_active (tool->control))
+        gimp_tool_control_halt (tool->control);
       break;
     }
 }

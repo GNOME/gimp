@@ -62,13 +62,6 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
   SELECTION_ANCHOR
 } SelectOps;
 
-/*  The possible states for tools  */
-typedef enum /*< pdb-skip >*/ /*< skip >*/
-{
-  INACTIVE,
-  ACTIVE
-} GimpToolState;
-
 /*  Tool control actions  */
 typedef enum /*< pdb-skip >*/ /*< skip >*/
 {
