@@ -1,3 +1,32 @@
+2000-08-16  Garry R. Osgood <gosgood@idt.net>
+	* app/gdisplay.c
+	* app/image_map.c
+	Addresses Bug Report #14704, and an undisclosed undo system bug.
+	(1) image_map_create() freezes the undo stack and invokes 
+	    gdisplay_set_menu_sensitivity (_image_map->gdisp) to ghost
+	    Edit/Undo|Edit/Redo and disables associated accelerator keys.
+	    This routine sets up idle renderers for interactive tools
+	    (a) Color Balance... (b) Hue-Saturation... (c) Brightness-Contrast... 
+	    (d) Threshold... (e) Levels...  (f) Curves... and (g) Posterize.
+	    The change prevents disturbance of the Undo system via the GUI
+	    when idle renderers are active.
+ 	(2) gdisplay_set_menu_sensitivity () tests if the undo facility
+	    is frozen, via gboolean gimage_get_active_layer (gdisp->gimage).
+ 	    It does not set menu sensitivity for Edit/Undo and Edit/Redo
+	    if the undo/redo stacks are frozen. Otherwise (old behaviour)
+	    it sets sensitivity of these menu items only if the undo/redo
+ 	    stacks are populated.
+	(3) image_map_commit(), image_map_clear(), and image_map_abort() each
+	    thaw the undo system and invoke gdisplay_set_menu_sensitivity().
+	    when idle rendering completes or is aborted. This causes Control-Z
+	    Control-R and the Edit/Undo|Edit/Redo menu selections to be sensitive
+	    immediately after the Undo stack is populated with one item, addressing
+	    #14704. Formerly, gdisplay_set_menu_sensitivity() was lazily called.
+	    during the next gdisplay_flush(), invariably requiring prompting via
+	    a second edit before sensitivity was set.
+	Not an image lock, but Yet Another UI Lock. Oh well; merrilly we patch along...
+ 	See http://bugs.gnome.org/db/14/14704.html for gory details. Closes #14704.
+
 2000-08-17  Daniel Egger  <egger@suse.de>
 
 	* help/C/dialogs/color_selectors/*.html: Checking proofread

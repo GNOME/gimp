@@ -109,6 +109,11 @@ image_map_create (void         *gdisp_ptr,
   _image_map->undo_tiles = NULL;
   _image_map->state = WAITING;
 
+  /* Interactive tools based on image_map disable the undo stack */
+  /* to avert any unintented undo interaction through the UI     */
+
+  gimp_image_undo_freeze(_image_map->gdisp->gimage);
+  gdisplay_set_menu_sensitivity (_image_map->gdisp);
   return (ImageMap) _image_map;
 }
 
@@ -226,6 +231,9 @@ image_map_commit (ImageMap image_map)
   if (! drawable_gimage ( (_image_map->drawable)))
     return;
 
+  /* Interactive phase ends: we can commit an undo frame now */
+  gimp_image_undo_thaw(_image_map->gdisp->gimage);
+
   /*  Register an undo step  */
   if (_image_map->undo_tiles)
     {
@@ -236,6 +244,7 @@ image_map_commit (ImageMap image_map)
       drawable_apply_image ( (_image_map->drawable), x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
     }
 
+  gdisplay_set_menu_sensitivity (_image_map->gdisp);
   g_free (_image_map);
 }
 
@@ -278,6 +287,8 @@ image_map_clear (ImageMap image_map)
 	{
 	  g_message ("image depth change, unable to restore original image");
 	  tile_manager_destroy (_image_map->undo_tiles);
+          gimp_image_undo_thaw(_image_map->gdisp->gimage);
+          gdisplay_set_menu_sensitivity (_image_map->gdisp);
 	  g_free (_image_map);
 	  return;
 	}
@@ -299,7 +310,11 @@ image_map_clear (ImageMap image_map)
 void
 image_map_abort (ImageMap image_map)
 {
+  _ImageMap *_image_map = (_ImageMap *) image_map;
+
   image_map_clear(image_map);
+  gimp_image_undo_thaw(_image_map->gdisp->gimage);
+  gdisplay_set_menu_sensitivity (_image_map->gdisp);
   g_free (image_map);
 }
 

@@ -1725,8 +1725,21 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   SET_SENSITIVE ("Edit/Buffer", gdisp);
   if (gdisp)
     {
-      SET_SENSITIVE ("Edit/Undo", undo_get_undo_name (gdisp->gimage));
-      SET_SENSITIVE ("Edit/Redo", undo_get_redo_name (gdisp->gimage));
+      /* Interactive tools such as CURVES, COLOR_BALANCE, LEVELS disable */
+      /* undo to fake some kind of atomic behaviour. G. R. Osgood #14072  */
+
+      if (gimp_image_undo_is_enabled (gdisp->gimage))
+	{
+	  /* If undo/redo stacks are empty, disable respective menu */
+
+	  SET_SENSITIVE ("Edit/Undo", undo_get_undo_name (gdisp->gimage));
+	  SET_SENSITIVE ("Edit/Redo", undo_get_redo_name (gdisp->gimage));
+	}
+      else
+	{
+	  SET_SENSITIVE ("Edit/Undo", FALSE);
+	  SET_SENSITIVE ("Edit/Redo", FALSE);
+	}
       SET_SENSITIVE ("Edit/Cut", lp);
       SET_SENSITIVE ("Edit/Copy", lp);
       SET_SENSITIVE ("Edit/Buffer/Cut Named...", lp);
