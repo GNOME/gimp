@@ -1,3 +1,8 @@
+2000-08-28  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/common/gz.c (save_image): FIX OS/2 problem with loading/saving
+	gz files. Skip waitpid () for OS/2.
+
 Sun Aug 27 22:41:36 CEST 2000  Marc Lehmann <pcgqgoof.com>
 	
         * configure.in, plug-ins/perl/po/Makefile.in.in: moved po-perl to

@@ -339,7 +339,14 @@ save_image (gchar  *filename,
     }
 
 #ifndef G_OS_WIN32
-#ifndef __EMX__
+#ifdef __EMX__
+   if (spawn_gzip (filename, tmpname, "-cf", &pid) == -1)  
+    {
+      g_free (tmpname);
+      return STATUS_EXECUTION_ERROR;
+    }
+  sleep (2); /* silly wait */
+#else /* UNIX */
   /* fork off a gzip process */
   if ((pid = fork ()) < 0)
     {
@@ -368,13 +375,6 @@ save_image (gchar  *filename,
       _exit(127);
     }
   else
-#else /* __EMX__ */
-  if (spawn_gzip (filename, tmpname, "-cf", &pid) == -1)  
-    {
-      g_free (tmpname);
-      return GIMP_PDB_EXECUTION_ERROR;
-    }
-#endif
     {
       waitpid (pid, &status, 0);
 
@@ -386,6 +386,7 @@ save_image (gchar  *filename,
 	  return 0;
 	}
     }
+#endif
 #else  /* G_OS_WIN32 */
   in = fopen (tmpname, "rb");
   out = fopen (filename, "wb");
@@ -447,9 +448,16 @@ load_image (gchar             *filename,
   /* find a temp name */
   tmpname = gimp_temp_name (ext + 1);
 
-#ifndef G_OS_WIN32
-#ifndef __EMX__
-  /* fork off a g(un)zip and wait for it */
+#ifndef G_OS_WIN32  
+#ifdef __EMX__
+   if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
+     {
+       g_free (tmpname);
+       *status = STATUS_EXECUTION_ERROR;
+       return -1;
+     }
+#else /* UNIX */
+/* fork off a g(un)zip and wait for it */
   if ((pid = fork ()) < 0)
     {
       g_message ("gz: fork failed: %s\n", g_strerror (errno));
@@ -481,14 +489,6 @@ load_image (gchar             *filename,
       _exit(127);
     }
   else  /* parent process */
-#else /* __EMX__ */
-   if (spawn_gzip (tmpname, filename, "-cfd", &pid) == -1)
-     {
-       g_free (tmpname);
-       *status = GIMP_PDB_EXECUTION_ERROR;
-       return -1;
-     }
-#endif
     {
       waitpid (pid, &process_status, 0);
 
@@ -501,6 +501,7 @@ load_image (gchar             *filename,
 	  return -1;
 	}
     }
+#endif
 #else
   in = fopen (filename, "rb");
   out = fopen (tmpname, "wb");
