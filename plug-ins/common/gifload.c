@@ -292,7 +292,7 @@ load_image (const gchar *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message ("Could not open '%s' for reading: %s",
+      g_message (_("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return -1;
     }
@@ -309,7 +309,7 @@ load_image (const gchar *filename)
 
   if (strncmp ((char *) buf, "GIF", 3) != 0)
     {
-      g_message ("Not a GIF file");
+      g_message (_("This is not a GIF file"));
       return -1;
     }
 
@@ -347,7 +347,7 @@ load_image (const gchar *filename)
 
   if (GifScreen.AspectRatio != 0 && GifScreen.AspectRatio != 49)
     {
-      g_message ("Warning - non-square pixels");
+      g_message (_("Non-square pixels.  Image might look squashed."));
     }
 
 
@@ -383,7 +383,7 @@ load_image (const gchar *filename)
       if (c != ',')
 	{
 	  /* Not a valid start character */
-	  g_printerr ("GIF: bogus character 0x%02x, ignoring\n", (int) c);
+	  g_printerr ("GIF: bogus character 0x%02x, ignoring.\n", (int) c);
 	  continue;
 	}
 
@@ -760,7 +760,7 @@ LZWReadByte (FILE *fd,
 	  *sp++ = table[1][code];
 	  if (code == table[0][code])
 	    {
-	      g_message ("Circular table entry BIG ERROR");
+	      g_message ("Circular table entry.  Corrupt file.");
 	      gimp_quit ();
 	    }
 	  code = table[0][code];
@@ -855,7 +855,7 @@ ReadImage (FILE        *fd,
       if (Gif89.delayTime < 0)
 	framename = g_strdup (_("Background"));
       else
-	framename = g_strdup_printf (_("Background (%dms)"), 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Background (%d%s)"), 10*Gif89.delayTime, "ms");
 
       previous_disposal = Gif89.disposal;
 
@@ -905,7 +905,7 @@ ReadImage (FILE        *fd,
       if (Gif89.delayTime < 0)
 	framename = g_strdup_printf (_("Frame %d"), frame_number);
       else
-	framename = g_strdup_printf (_("Frame %d (%dms)"), frame_number, 10*Gif89.delayTime);
+	framename = g_strdup_printf (_("Frame %d (%d%s)"), frame_number, 10*Gif89.delayTime, "ms");
 
       switch (previous_disposal)
 	{
@@ -935,13 +935,13 @@ ReadImage (FILE        *fd,
 	  framename_ptr = framename;
 	  framename = g_strconcat (framename, " (unknown disposal)", NULL);
 	  g_free (framename_ptr);
-	  g_message ("Hmm... Composite type %d.  Interesting.\n"
-                     "Please forward this GIF to the "
-		     "GIF plugin author!\n  (adam@foxbox.org)",
-                     previous_disposal);
+ 	  g_message (_("GIF: Undocumented GIF composite type %d is "
+ 		       "not handled.  Animation might not play or "
+ 		       "re-save perfectly."),
+		     previous_disposal);
 	  break;
 	default:
-	  g_message ("Something got corrupted.");
+	  g_message ("Disposal word got corrupted.  Bug.");
 	  break;
 	}
       previous_disposal = Gif89.disposal;
@@ -976,8 +976,10 @@ ReadImage (FILE        *fd,
 
   if (!alpha_frame && promote_to_rgb)
     {
-      g_message ("Ouchie! Can't handle non-alpha RGB frames. "
-                 "Please mail the plugin author.  (adam@gimp.org)");
+      /* I don't see how one would easily construct a GIF in which
+ 	 this could happen, but it's a mad mad world. */
+      g_message ("Ouch!  Can't handle non-alpha RGB frames.\n"
+ 		 "Please file a bug report in GIMP's bugzilla.");
       gimp_quit();
     }
 
