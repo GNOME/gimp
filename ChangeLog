@@ -1,3 +1,7 @@
+2004-11-15  Niklas M <scizzo@gimp.org>
+
+	* po-script-fu/sv.po: Fixed a problem with the translation.
+
 2004-11-15  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/print-size-dialog.c: started to redo this dialog

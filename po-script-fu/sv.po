@@ -1160,7 +1160,7 @@ msgstr "Effektstorlek (bildpunkter)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 msgid "<Image>/Edit/Copy/Copy _Visible"
-msgstr "<Image>/Redigera/Kopiera _synligt"
+msgstr "<Image>/Redigera/Kopiera/Kopiera _synligt"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
