@@ -334,7 +334,6 @@ svg_parser_end_element (GMarkupParseContext  *context,
   SvgParser *parser = user_data;
 
   if (parser->gradient &&
-      parser->stops    &&
       strcmp (element_name, "linearGradient") == 0)
     {
       parser->gradient->segments = svg_parser_gradient_segments (parser->stops);
@@ -352,9 +351,16 @@ svg_parser_end_element (GMarkupParseContext  *context,
 static GimpGradientSegment *
 svg_parser_gradient_segments (GList *stops)
 {
-  GimpGradientSegment *segment = gimp_gradient_segment_new ();
-  SvgStop             *stop    = stops->data;
+  GimpGradientSegment *segment;
+  SvgStop             *stop;
   GList               *list;
+
+  if (! stops)
+    return NULL;
+
+  stop = stops->data;
+
+  segment = gimp_gradient_segment_new ();
 
   segment->left_color  = stop->color;
   segment->right_color = stop->color;

@@ -1,5 +1,9 @@
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpgradient-load.c: don't leak empty SVG gradients.
+
+2004-07-27  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-commands.c: include "libgimpbase/gimpbase.h",
 	not an individual header out of libgimpbase.
 

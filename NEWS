@@ -34,6 +34,8 @@ Overview of Changes in GIMP 2.1.3
 
 - Renamed GimpColor boxed type to GimpRGB and moved it to libgimpcolor.
 
+- Moved GIMP_TYPE_UNIT and GIMP_TYPE_MEMSIZE to libgimpbase.
+
 - Fixes to the BMP loader plug-in (bug #143682).
 
 - Fixes to the Decompose plug-in (bug #147603).
