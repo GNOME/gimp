@@ -155,6 +155,25 @@ gimp_tile_cache_ntiles (gulong ntiles)
                          gimp_tile_height () * 4 + 1023) / 1024);
 }
 
+void
+_gimp_tile_cache_flush_drawable (GimpDrawable *drawable)
+{
+  GList *list;
+
+  g_return_if_fail (drawable != NULL);
+
+  list = tile_list_head;
+  while (list)
+    {
+      GimpTile *tile = list->data;
+
+      list = list->next;
+
+      if (tile->drawable == drawable)
+        gimp_tile_cache_flush (tile);
+    }
+}
+
 
 /*  private functions  */
 

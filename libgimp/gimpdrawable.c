@@ -61,6 +61,9 @@ gimp_drawable_detach (GimpDrawable *drawable)
 
   gimp_drawable_flush (drawable);
 
+  /*  nuke all references to this drawable from the cache  */
+  _gimp_tile_cache_flush_drawable (drawable);
+
   if (drawable->tiles)
     g_free (drawable->tiles);
   if (drawable->shadow_tiles)

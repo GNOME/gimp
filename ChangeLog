@@ -1,5 +1,14 @@
 2004-02-16  Michael Natterer  <mitch@gimp.org>
 
+	* libgimp/gimptile.[ch] (_gimp_tile_cache_flush_drawable): new
+	inernal function which removes all tiles from a given drawable
+	from the cache.
+
+	* libgimp/gimpdrawable.c (gimp_drawable_detach): call the new
+	function before freeing the tiles. Fixes bug #134562.
+
+2004-02-16  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimppixelrgn.c: cleaned up a bit: added missing
 	g_return_if_fail()s, iterate lists using for() loops, indentation.
 

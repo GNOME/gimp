@@ -46,8 +46,14 @@ void    gimp_tile_ref_zero     (GimpTile  *tile);
 void    gimp_tile_unref        (GimpTile  *tile,
 				gboolean   dirty);
 void    gimp_tile_flush        (GimpTile  *tile);
+
 void    gimp_tile_cache_size   (gulong     kilobytes);
 void    gimp_tile_cache_ntiles (gulong     ntiles);
+
+
+/*  private function  */
+
+void    _gimp_tile_cache_flush_drawable (GimpDrawable *drawable);
 
 
 G_END_DECLS
