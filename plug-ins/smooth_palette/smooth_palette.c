@@ -61,6 +61,10 @@ static void query()
     {PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     {PARAM_IMAGE, "image", "Input image (unused)"},
     {PARAM_DRAWABLE, "drawable", "Input drawable"},
+    {PARAM_INT32, "width", "Width"},
+    {PARAM_INT32, "height", "Height"},
+    {PARAM_INT32, "ntries", "Search Time"},
+    {PARAM_INT32, "show_image","Show Image?"},
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof(args) / sizeof(args[0]);
@@ -85,11 +89,13 @@ static struct {
   gint height;
   gint ntries;
   gint try_size;
+  gint show_image;
 } config = {
   256,
   64,
   50,
-  10000
+  10000,
+  1
 };
 
 
@@ -122,7 +128,19 @@ run (char    *name,
       break;
 
     case RUN_NONINTERACTIVE:
-      status = STATUS_CALLING_ERROR;
+      if (nparams != 7)
+	status = STATUS_CALLING_ERROR;
+      if (status == STATUS_SUCCESS)
+	{
+	  config.width = param[3].data.d_int32;
+	  config.height = param[4].data.d_int32;
+	  config.ntries = param[5].data.d_int32;
+	  config.show_image = (param[6].data.d_int32) ? TRUE : FALSE;
+	}
+      if (status == STATUS_SUCCESS && 
+	  ((config.width <= 0) || (config.height <= 0) || config.ntries <= 0))
+	status = STATUS_CALLING_ERROR;
+      
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -142,7 +160,7 @@ run (char    *name,
       values[1].data.d_image = doit(drawable, &values[2].data.d_layer);
       if (run_mode == RUN_INTERACTIVE)
 	gimp_set_data ("plug_in_smooth_palette", &config, sizeof (config));
-      if (run_mode != RUN_NONINTERACTIVE)
+      if (config.show_image)
 	gimp_display_new (values[1].data.d_image);
     } else
       status = STATUS_EXECUTION_ERROR;

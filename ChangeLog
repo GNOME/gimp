@@ -1,3 +1,8 @@
+Fri Jan 30 11:48:04 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* More plugin non-interactive fixes:
+		DigitalSignature, hot, sinus, smooth_palette
+
 Thu Jan 29 19:25:52 EST 1998 Adrian Likins <adrian@gimp.org>
 
 	* fixed the non-iteractive modes for plugins:

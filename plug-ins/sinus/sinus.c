@@ -210,7 +210,7 @@ static void run (gchar   *name,
 
     case RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 16)
+      if (nparams != 14)
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{

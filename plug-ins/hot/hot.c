@@ -196,7 +196,7 @@ query(void){
     { PARAM_INT32, "action", "The action to perform" },
     { PARAM_INT32, "new_layerp", "Create a new layer iff True" },
   };
-  static int nargs = 3;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   static GParamDef *rets = NULL;
   static int nrets = 0;
@@ -257,12 +257,13 @@ run(char *name, int nparam, GParam *param,
 
     case RUN_NONINTERACTIVE:
       /* XXX: add code here for non-interactive running */
-      if (nparam != 3) {
+      if (nparam != 6) {
         rvals[0].data.d_status = STATUS_CALLING_ERROR;
         break;
       }
-      args.mode = param[3].data.d_drawable;
-      args.action = param[4].data.d_drawable;
+      args.mode = param[3].data.d_int32;
+      args.action = param[4].data.d_int32;
+      args.new_layerp = param[5].data.d_int32;
 
       if (pluginCore(&args)==-1) {
         rvals[0].data.d_status = STATUS_EXECUTION_ERROR;

@@ -180,11 +180,11 @@ run(char *name,
 	if (nparams != 10)
            status = STATUS_CALLING_ERROR;
 	if (status == STATUS_SUCCESS)
-           wvals.mode = param[3].data.d_int8;
-	   strncpy (wvals.signature,param[4].data.d_string, 50);
-	   strncpy (wvals.email,param[5].data.d_string, 30);
-	   strncpy (wvals.homepage,param[6].data.d_string, 50);
-	   strncpy (wvals.date,param[7].data.d_string, 20);
+           wvals.mode = param[7].data.d_int8;
+	   strncpy (wvals.signature,param[3].data.d_string, 50);
+	   strncpy (wvals.email,param[4].data.d_string, 30);
+	   strncpy (wvals.homepage,param[5].data.d_string, 50);
+	   strncpy (wvals.date,param[6].data.d_string, 20);
 	   wvals.signature[49]='\0';
            wvals.email[29]='\0';
            wvals.homepage[49]='\0';
