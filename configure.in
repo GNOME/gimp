@@ -68,10 +68,10 @@ AC_DEFUN(AC_GIMP_CHECK,
  	LDFLAGS="$saved_ldflags $X_LDFLAGS $X_LIBS"
 
 	dnl Dont cache this as it depends on CFLAGS, LDFLAGS, etc
-	AC_MSG_CHECKING([for gtk >= 0.99.3])
+	AC_MSG_CHECKING([for gtk >= 0.99.4])
         AC_TRY_COMPILE(
 [#include <gtk/gtk.h>],
-[GtkArgSetFunc arg_set_func;],
+[GtkTooltipsClass tipclass;],
 gtk_found=yes,
 gtk_found=no)
 	AC_MSG_RESULT($gtk_found)
@@ -147,18 +147,6 @@ dnl Test for libmpeg
       MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
       AC_MSG_WARN(*** MPEG plug-in will not be built ***))
   fi
-
-#dnl Test for libtcl
-#  if test -z "$LIBTCL_LIB"; then
-#	AC_CHECK_LIB(dl, dlopen, DL_LIBRARY=-ldl)
-#	AC_ARG_WITH(tcl, --with-{tcl/tk}		use this tcl/tk library,
-#    AC_CHECK_LIB($with_tcl, Tcl_StaticPackage,
-#      GIMPTCL='gimptcl'; LIBTCL_LIB="-l$with_tcl -l$with_tk $DL_LIBRARY",
-#      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY),
-#    AC_CHECK_LIB(tcl, Tcl_StaticPackage,
-#      GIMPTCL='gimptcl'; LIBTCL_LIB="-ltcl -ltk $DL_LIBRARY",
-#      AC_MSG_WARN(*** gimptcl plug-in will not be built ***), -lm $DL_LIBRARY))
-#  fi
 
 dnl Test for libxdelta
   if test -z "$LIBXDELTA_LIB"; then
@@ -256,8 +244,6 @@ AC_SUBST(PNG)
 AC_SUBST(LIBPNG_LIB)
 AC_SUBST(MPEG)
 AC_SUBST(LIBMPEG_LIB)
-#AC_SUBST(GIMPTCL)
-#AC_SUBST(LIBTCL_LIB)
 AC_SUBST(XD)
 AC_SUBST(LIBXDELTA_LIB)
 AC_SUBST(XPM)

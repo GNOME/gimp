@@ -1,3 +1,7 @@
+Tue Feb 24 04:14:36 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: change to detect GTK 0.99.4 or higher
+
 Sun Feb 22 02:43:12 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.c: use our own sort function to appease
