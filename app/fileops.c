@@ -42,6 +42,7 @@
 
 #include "appenv.h"
 #include "cursorutil.h"
+#include "dialog_handler.h"
 #include "gdisplay.h"
 #include "general.h"
 #include "gimage.h"
@@ -64,9 +65,9 @@ typedef struct _OverwriteBox OverwriteBox;
 
 struct _OverwriteBox
 {
-  GtkWidget * obox;
-  char *      full_filename;
-  char *      raw_filename;
+  GtkWidget *obox;
+  gchar     *full_filename;
+  gchar     *raw_filename;
 };
 
 static void file_overwrite              (char *filename,
@@ -112,16 +113,18 @@ static void      file_update_menus      (GSList *procs,
 					 int     image_type);
 
 
-GtkWidget  *fileload = NULL; /* Shared with dialog_handler.c */
+static GtkWidget  *fileload = NULL;
 static GtkWidget  *filesave = NULL;
 static GtkWidget  *open_options = NULL;
 static GtkWidget  *save_options = NULL;
+
 /* widgets for the open_options menu */
 static GtkPreview *open_options_preview = NULL;
 static GtkWidget  *open_options_fixed = NULL;
 static GtkWidget  *open_options_label = NULL;
 static GtkWidget  *open_options_frame = NULL;
 static GtkWidget  *open_options_genbuttonlabel = NULL;
+
 /* Some state for the thumbnailer */
 static gchar      *preview_fullname = NULL;
 
@@ -235,6 +238,9 @@ file_open_callback (GtkWidget *widget,
       fileload = gtk_file_selection_new (_("Load Image"));
       gtk_window_set_position (GTK_WINDOW (fileload), GTK_WIN_POS_MOUSE);
       gtk_window_set_wmclass (GTK_WINDOW (fileload), "load_image", "Gimp");
+
+      dialog_register_fileload (fileload);
+
       gtk_signal_connect_object (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->cancel_button),
 				 "clicked",
 				 GTK_SIGNAL_FUNC (file_dialog_hide),

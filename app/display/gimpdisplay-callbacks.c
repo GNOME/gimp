@@ -74,23 +74,20 @@ redraw (GDisplay *gdisp,
 static void
 gdisplay_check_device_cursor (GDisplay *gdisp)
 {
-  GList *tmp_list;
+  GList *list;
 
   /* gdk_input_list_devices returns an internal list, so we shouldn't
      free it afterwards */
-  tmp_list = gdk_input_list_devices();
 
-  while (tmp_list)
+  for (list = gdk_input_list_devices(); list; list = g_list_next (list))
     {
-      GdkDeviceInfo *info = (GdkDeviceInfo *)tmp_list->data;
+      GdkDeviceInfo *info = (GdkDeviceInfo *) list->data;
 
       if (info->deviceid == current_device)
 	{
 	  gdisp->draw_cursor = !info->has_cursor;
 	  break;
 	}
-      
-      tmp_list = tmp_list->next;
     }
 }
 
@@ -98,16 +95,16 @@ static int
 key_to_state (int key)
 {
   switch (key)
-  {
-   case GDK_Alt_L: case GDK_Alt_R:
-     return GDK_MOD1_MASK;
-   case GDK_Shift_L: case GDK_Shift_R:
-     return GDK_SHIFT_MASK;
-   case GDK_Control_L: case GDK_Control_R:
-     return GDK_CONTROL_MASK;
-   default:
-     return 0;
-  }
+    {
+    case GDK_Alt_L: case GDK_Alt_R:
+      return GDK_MOD1_MASK;
+    case GDK_Shift_L: case GDK_Shift_R:
+      return GDK_SHIFT_MASK;
+    case GDK_Control_L: case GDK_Control_R:
+      return GDK_CONTROL_MASK;
+    default:
+      return 0;
+    }
 }
 
 gint
@@ -524,7 +521,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 #ifdef GTK_HAVE_SIX_VALUATORS
                                             &tx, &ty, NULL, NULL, NULL, NULL, NULL);
 #else /* !GTK_HAVE_SIX_VALUATORS */
-                                            &tx, &ty, NULL, NULL, NULL, NULL);
+	                                    &tx, &ty, NULL, NULL, NULL, NULL);
 #endif /* GTK_HAVE_SIX_VALUATORS */ 
 	      (* active_tool->modifier_key_func) (active_tool, kevent, gdisp);
 	      return_val = TRUE;
@@ -570,7 +567,7 @@ gdisplay_hruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gtk_widget_activate (tool_info[(int) MOVE].tool_widget);
+      gimp_context_set_tool (gimp_context_get_user (), MOVE);
       move_tool_start_hguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }
@@ -589,7 +586,7 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
     {
       gdisp = data;
 
-      gtk_widget_activate (tool_info[(int) MOVE].tool_widget);
+      gimp_context_set_tool (gimp_context_get_user (), MOVE);
       move_tool_start_vguide (active_tool, gdisp);
       gtk_grab_add (gdisp->canvas);
     }
@@ -771,8 +768,8 @@ gdisplay_drag_drop (GtkWidget      *widget,
 static void
 gdisplay_bucket_fill (GtkWidget      *widget,
 		      BucketFillMode  fill_mode,
-		      guchar          color[],
-		      TempBuf        *pat_buf,
+		      guchar          orig_color[],
+		      TempBuf        *orig_pat_buf,
 		      gpointer        data)
 {
   GimpImage    *gimage;
@@ -783,6 +780,10 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   gint     x1, x2, y1, y2;
   gint     bytes;
   gboolean has_alpha;
+
+  guchar    color[3];
+  TempBuf  *pat_buf = NULL;
+  gboolean  new_buf = FALSE;
 
   gimage = ((GDisplay *) data)->gimage;
   drawable = gimage_active_drawable (gimage);
@@ -796,6 +797,46 @@ gdisplay_bucket_fill (GtkWidget      *widget,
     context = tool_info[BUCKET_FILL].tool_context;
   else
     context = gimp_context_get_user ();
+
+  /*  Transform the passed data for the dest image  */
+  if (fill_mode == FG_BUCKET_FILL)
+    {
+      gimp_image_transform_color (gimage, drawable, orig_color, color, RGB);
+    }
+  else
+    {
+      if (((orig_pat_buf->bytes == 3) && !drawable_color (drawable)) ||
+	  ((orig_pat_buf->bytes == 1) && !drawable_gray (drawable)))
+	{
+	  guchar *d1, *d2;
+	  gint size;
+
+	  if ((orig_pat_buf->bytes == 1) && drawable_color (drawable))
+	    pat_buf = temp_buf_new (orig_pat_buf->width, orig_pat_buf->height,
+				    3, 0, 0, NULL);
+	  else
+	    pat_buf = temp_buf_new (orig_pat_buf->width, orig_pat_buf->height,
+				    1, 0, 0, NULL);
+
+          d1 = temp_buf_data (orig_pat_buf);
+          d2 = temp_buf_data (pat_buf);
+
+          size = orig_pat_buf->width * orig_pat_buf->height;
+          while (size--)
+            {
+              gimage_transform_color (gimage, drawable, d1, d2,
+				      (orig_pat_buf->bytes == 3) ? RGB : GRAY);
+              d1 += orig_pat_buf->bytes;
+              d2 += pat_buf->bytes;
+            }
+
+          new_buf = TRUE;
+	}
+      else
+	{
+	  pat_buf = orig_pat_buf;
+	}
+    }
 
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   bytes = drawable_bytes (drawable);
@@ -818,6 +859,9 @@ gdisplay_bucket_fill (GtkWidget      *widget,
   /*  Update the displays  */
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
   gdisplays_flush ();
+
+  if (new_buf)
+    temp_buf_free (pat_buf);
 
   gimp_remove_busy_cursors (NULL);
 }

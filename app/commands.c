@@ -1150,10 +1150,10 @@ dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 }
 
 void
-dialogs_tools_options_cmd_callback (GtkWidget *widget,
-				    gpointer   client_data)
+dialogs_tool_options_cmd_callback (GtkWidget *widget,
+				   gpointer   client_data)
 {
-  tools_options_dialog_show ();
+  tool_options_dialog_show ();
 }
 
 void
@@ -1185,8 +1185,8 @@ dialogs_display_filters_cmd_callback (GtkWidget *widget,
 }
 
 void
-about_dialog_cmd_callback (GtkWidget *widget,
-                           gpointer   client_data)
+dialogs_about_cmd_callback (GtkWidget *widget,
+			    gpointer   client_data)
 {
   about_dialog_create (FALSE);
 }
@@ -1199,8 +1199,8 @@ gimp_help_cmd_callback (GtkWidget *widget,
 }
 
 void
-tips_dialog_cmd_callback (GtkWidget *widget,
-			  gpointer   client_data)
+dialogs_tips_cmd_callback (GtkWidget *widget,
+			   gpointer   client_data)
 {
   tips_dialog_create ();
 }

@@ -16,271 +16,275 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <gtk/gtk.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-
-#include "appenv.h"
 #include "cursorutil.h"
-#include "errors.h"
-#include "general.h"
-
 #include "dialog_handler.h"
 
+/*  State of individual dialogs  */
 
-static GSList * active_dialogs = NULL; /* List of dialogs that have 
-					  been created and are on 
-					  screen (may be hidden already).
-				       */
-static gint doing_update = FALSE;  /* Prevent multiple keypresses 
-				      from unsetting me.
-				   */
-
-extern GtkWidget * fileload;   /* It's in fileops.c       */
-
-/* State of individual dialogs */
-
-typedef struct _dialog_state DIALOGSTATE,*DIALOGSTATEP;
-
-typedef enum {
-  WAS_HIDDEN,
-  WAS_SHOWING,
+typedef enum
+{
+  INVISIBLE,
+  VISIBLE,
   UNKNOWN,
-} dialogstate;
+} VisibilityState;
 
-struct _dialog_state {
-  GtkWidget *d;
-  dialogstate state;
+typedef struct _DialogState DialogState;
+
+struct _DialogState
+{
+  GtkWidget       *dialog;
+  VisibilityState  saved_state;
 };
 
-/* This keeps track of the state the dialogs are in */
-/* ie how many times we have pressed the tab key */
+/*  This keeps track of the state the dialogs are in  */
+/*  ie how many times we have pressed the tab key     */
 
-typedef enum{
+typedef enum
+{
   SHOW_ALL,
   HIDE_ALL,
   SHOW_TOOLBOX,
   LAST_SHOW_STATE,
 } ShowState;
 
-static ShowState dialogs_showing = SHOW_ALL; /* Start off with all 
-						dialogs showing 
-					     */
+/*  Start off with all dialogs showing  */
+static ShowState dialogs_showing = SHOW_ALL;
 
-static DIALOGSTATEP toolbox_shell = NULL; /* Copy of the shell for the tool 
-					      box - this has special behaviour 
-					      so is not on the normal list.
-					   */
+/*  Prevent multiple keypresses from unsetting me.  */
+static gboolean doing_update = FALSE;
+
+/*  List of dialogs that have been created and are on screen
+ *  (may be hidden already).
+ */
+static GSList * active_dialogs = NULL;
+
+/*  Those have a special behaviour  */
+static DialogState * toolbox_shell  = NULL;
+static DialogState * fileload_shell = NULL;
+
 /* Private */
 
-/* Hide all currently registered dialogs */
+/*  Hide all currently registered dialogs  */
 
 static void
-dialog_hide_all()
+dialog_hide_all (void)
 {
-  GSList *list = active_dialogs;
-  DIALOGSTATEP dstate;
+  DialogState *dstate;
+  GSList *list;
 
-  while (list)
+  for (list = active_dialogs; list; list = g_slist_next (list))
     {
-      dstate = (DIALOGSTATEP) list->data;
-      list = g_slist_next (list);
+      dstate = (DialogState *) list->data;
   
-      if(GTK_WIDGET_VISIBLE (dstate->d))
+      if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  dstate->state = WAS_SHOWING;
-	  gtk_widget_hide(dstate->d);
+	  dstate->saved_state = VISIBLE;
+	  gtk_widget_hide (dstate->dialog);
 	}
       else
 	{
-	  dstate->state = WAS_HIDDEN;
+	  dstate->saved_state = INVISIBLE;
 	}
     }
 }
 
-/* Show all currently registered dialogs */
+/*  Show all currently registered dialogs  */
 
 static void
-dialog_show_all()
+dialog_show_all (void)
 {
-  GSList * list = active_dialogs;
-  DIALOGSTATEP dstate;
+  DialogState *dstate;
+  GSList *list;
 
-  while (list)
+  for (list = active_dialogs; list; list = g_slist_next (list))
     {
-      dstate = (DIALOGSTATEP) list->data;
-      list = g_slist_next (list);
+      dstate = (DialogState *) list->data;
 
-      if(dstate->state == WAS_SHOWING && !GTK_WIDGET_VISIBLE (dstate->d))
-	gtk_widget_show(dstate->d);
+      if (dstate->saved_state == VISIBLE && !GTK_WIDGET_VISIBLE (dstate->dialog))
+	gtk_widget_show(dstate->dialog);
     }
 }
 
-/* Handle the tool box in a special way */
+/*  Handle the tool box in a special way  */
 
 
 static void
-dialog_hide_toolbox()
+dialog_hide_toolbox (void)
 {
-  if(toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->d))
+  if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      gtk_widget_hide(toolbox_shell->d);
-      toolbox_shell->state = WAS_SHOWING;
+      gtk_widget_hide (toolbox_shell->dialog);
+      toolbox_shell->saved_state = VISIBLE;
     }
 }
 
-/* public */
+/*  public  */
 
 void
-dialog_show_toolbox()
+dialog_show_toolbox (void)
 {
-  if(toolbox_shell && 
-     toolbox_shell->state == WAS_SHOWING && 
-     !GTK_WIDGET_VISIBLE (toolbox_shell->d))
+  if (toolbox_shell && 
+      toolbox_shell->saved_state == VISIBLE && 
+      !GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      gtk_widget_show(toolbox_shell->d);
+      gtk_widget_show (toolbox_shell->dialog);
     }
 }
 
 
-/* Set hourglass cursor on all currently registered dialogs */
+/*  Set hourglass cursor on all currently registered dialogs  */
 
 void
-dialog_idle_all()
+dialog_idle_all (void)
 {
-  GSList *list = active_dialogs;
-  DIALOGSTATEP dstate;
+  DialogState *dstate;
+  GSList *list;
 
-  while (list)
+  for (list = active_dialogs; list; list = g_slist_next (list))
     {
-      dstate = (DIALOGSTATEP) list->data;
-      list = g_slist_next (list);
+      dstate = (DialogState *) list->data;
   
-      if(GTK_WIDGET_VISIBLE (dstate->d))
+      if(GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  change_win_cursor (dstate->d->window, GDK_WATCH);
+	  change_win_cursor (dstate->dialog->window, GDK_WATCH);
 	}
     }
 
-  if (toolbox_shell && GTK_WIDGET_VISIBLE(toolbox_shell->d))
+  if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      change_win_cursor (toolbox_shell->d->window, GDK_WATCH);
+      change_win_cursor (toolbox_shell->dialog->window, GDK_WATCH);
     }
 
-  if (fileload && GTK_WIDGET_VISIBLE (fileload))
+  if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      change_win_cursor (fileload->window, GDK_WATCH);
+      change_win_cursor (fileload_shell->dialog->window, GDK_WATCH);
     }
 }
 
-/* And remove the hourglass again. */
+/*  And remove the hourglass again.  */
 
 void
-dialog_unidle_all()
+dialog_unidle_all (void)
 {
-  GSList *list = active_dialogs;
-  DIALOGSTATEP dstate;
+  DialogState *dstate;
+  GSList *list;
 
-  while (list)
+  for (list = active_dialogs; list; list = g_slist_next (list))
     {
-      dstate = (DIALOGSTATEP) list->data;
-      list = g_slist_next (list);
-  
-      if(GTK_WIDGET_VISIBLE (dstate->d))
+      dstate = (DialogState *) list->data;
+
+      if (GTK_WIDGET_VISIBLE (dstate->dialog))
 	{
-	  unset_win_cursor (dstate->d->window);
+	  unset_win_cursor (dstate->dialog->window);
 	}
     }
 
-  if (toolbox_shell && GTK_WIDGET_VISIBLE(toolbox_shell->d))
+  if (toolbox_shell && GTK_WIDGET_VISIBLE (toolbox_shell->dialog))
     {
-      unset_win_cursor (toolbox_shell->d->window);
+      unset_win_cursor (toolbox_shell->dialog->window);
     }
 
-  if (fileload && GTK_WIDGET_VISIBLE (fileload))
+  if (fileload_shell && GTK_WIDGET_VISIBLE (fileload_shell->dialog))
     {
-      unset_win_cursor (fileload->window);
+      unset_win_cursor (fileload_shell->dialog->window);
     }
 }
 
-/* Register a dialog that we can handle */
+/*  Register a dialog that we can handle  */
 
 void
-dialog_register(GtkWidget *dialog)
+dialog_register (GtkWidget *dialog)
 {
-  DIALOGSTATEP dstatep = g_new(DIALOGSTATE,1);
-  dstatep->d = dialog;
-  dstatep->state = UNKNOWN;
-  active_dialogs = g_slist_append (active_dialogs,dstatep);
+  DialogState *dstate;
+
+  dstate = g_new (DialogState, 1);
+
+  dstate->dialog      = dialog;
+  dstate->saved_state = UNKNOWN;
+
+  active_dialogs = g_slist_append (active_dialogs, dstate);
 }
 
 void
-dialog_register_toolbox(GtkWidget *dialog)
+dialog_register_toolbox (GtkWidget *dialog)
 {
-  DIALOGSTATEP dstatep = g_new(DIALOGSTATE,1);
-  dstatep->d = dialog;
-  dstatep->state = UNKNOWN;
-  toolbox_shell = dstatep;
+  toolbox_shell = g_new (DialogState, 1);
+
+  toolbox_shell->dialog      = dialog;
+  toolbox_shell->saved_state = UNKNOWN;
 }
 
-/* unregister dialog */
+void
+dialog_register_fileload (GtkWidget *dialog)
+{
+  fileload_shell = g_new (DialogState, 1);
+
+  fileload_shell->dialog      = dialog;
+  fileload_shell->saved_state = UNKNOWN;
+}
+
+/*  unregister dialog  */
 
 void
-dialog_unregister(GtkWidget *dialog)
+dialog_unregister (GtkWidget *dialog)
 {
-  GSList * list = active_dialogs;
-  DIALOGSTATEP dstate = NULL;
+  DialogState *dstate = NULL;
+  GSList *list;
 
-  while (list)
+  for (list = active_dialogs; list; list = g_slist_next (list))
     {
-      dstate = (DIALOGSTATEP) list->data;
-      list = g_slist_next (list);
-      
-      if(dstate->d == dialog)
+      dstate = (DialogState *) list->data;
+
+      if (dstate->dialog == dialog)
 	break;
     }
-  
-  if(dstate != NULL)
-    active_dialogs = g_slist_remove (active_dialogs,dstate);
+
+  if (dstate != NULL)
+    {
+      active_dialogs = g_slist_remove (active_dialogs, dstate);
+      g_free (dstate);
+    }
 }
 
-/* Toggle showing of dialogs */
-/* States:-
- * SHOW_ALL -> HIDE_ALL -> SHOW_TOOLBOX -> SHOW_ALL ....
+/*  Toggle showing of dialogs
+ *
+ *  States:-
+ *  SHOW_ALL -> HIDE_ALL -> SHOW_TOOLBOX -> SHOW_ALL ....
  */
 
 void 
-dialog_toggle(void)
+dialog_toggle (void)
 {
   if(doing_update == FALSE)
     doing_update = TRUE;
   else
     return;
 
-  switch(dialogs_showing)
+  switch (dialogs_showing)
     {
     case SHOW_ALL:
       dialogs_showing = HIDE_ALL;
-      dialog_hide_all();
-      dialog_hide_toolbox();
+      dialog_hide_all ();
+      dialog_hide_toolbox ();
       break;
     case HIDE_ALL:
       dialogs_showing = SHOW_TOOLBOX;
-      dialog_show_toolbox();
+      dialog_show_toolbox ();
       break;
     case SHOW_TOOLBOX:
       dialogs_showing = SHOW_ALL;
-      dialog_show_all();
+      dialog_show_all ();
     default:
       break;
     }
 
-  gdk_flush();
-  while (gtk_events_pending())
+  gdk_flush ();
+  while (gtk_events_pending ())
     {
-      gtk_main_iteration();
-      gdk_flush();
+      gtk_main_iteration ();
+      gdk_flush ();
     }
 
   doing_update = FALSE;

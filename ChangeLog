@@ -1,3 +1,36 @@
+1999-10-30  Michael Natterer  <mitch@gimp.org>
+
+	* app_procs.c
+	* app/commands.[ch]
+	* app/interface.c
+	* app/menus.c
+	* app/session.c
+	* app/tools.[ch]: namespace cleanups: changed the
+	"tools_options_*" functions to "tool_options_*" and prefixed all
+	dialog menu callbacks with "dialogs_*".
+	Allow dropping a tool to the tool options dialog.
+
+	* app/bezier_select.c: change the active tool using context
+	functions.
+
+	* app/dialog_handler.[ch]: replaced the uppercase datatype names
+	by standard mixed upper/lowercase ones. Provide a function to
+	register the fileload dialog instead of accessing it as global
+	variable.
+
+	* app/disp_callbacks.c: switch to the move tool using context
+	functions. Fixed the drop color/pattern functions to convert the
+	dropped thing to the dest. image's color space.
+
+	* app/fileops.c: don't export the fileload dialog as global
+	variable but register it with the dialog handler instead.
+
+	* app/paths_dialog.[ch]: replaced all the uppercase struct names
+	defined here by mixed upper/lowercase. Introduced a
+	"set_menu_sensitivity" function like in layers/channels instead of
+	calling single button on/off functions from various places.
+	Added a menu entry for "Selection to Path".
+
 1999-10-30  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/wmf.c: Fix a couple of bugs: Must call
@@ -7,6 +40,7 @@
 	debugging printouts (behind #ifdef DEBUG).
 
 Sat Oct 30 10:14:35 BST 1999 Nick Lamb <njl195@zepler.org>
+
 	* app/fileops.c: Fix #3179 (Revert uses wrong filename)
 
 1999-10-29  Michael Natterer  <mitch@gimp.org>

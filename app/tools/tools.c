@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
 #include "airbrush.h"
 #include "bezier_select.h"
@@ -33,6 +34,7 @@
 #include "dodgeburn.h"
 #include "eraser.h"
 #include "gdisplay.h"
+#include "gimpdnd.h"
 #include "gimpui.h"
 #include "hue_saturation.h"
 #include "ellipse_select.h"
@@ -90,6 +92,8 @@ ToolInfo tool_info[] =
     RECT_SELECT,
     tools_new_rect_select,
     tools_free_rect_select, 
+    NULL,
+    NULL,
     NULL
   },
 
@@ -105,6 +109,8 @@ ToolInfo tool_info[] =
     ELLIPSE_SELECT,
     tools_new_ellipse_select,
     tools_free_ellipse_select,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -120,6 +126,8 @@ ToolInfo tool_info[] =
     FREE_SELECT,
     tools_new_free_select,
     tools_free_free_select, 
+    NULL,
+    NULL,
     NULL
   },
   
@@ -135,6 +143,8 @@ ToolInfo tool_info[] =
     FUZZY_SELECT,
     tools_new_fuzzy_select,
     tools_free_fuzzy_select, 
+    NULL,
+    NULL,
     NULL
   },
   
@@ -150,6 +160,8 @@ ToolInfo tool_info[] =
     BEZIER_SELECT,
     tools_new_bezier_select,
     tools_free_bezier_select,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -165,6 +177,8 @@ ToolInfo tool_info[] =
     ISCISSORS,
     tools_new_iscissors,
     tools_free_iscissors, 
+    NULL,
+    NULL,
     NULL
   },
   
@@ -180,6 +194,8 @@ ToolInfo tool_info[] =
     MOVE,
     tools_new_move_tool,
     tools_free_move_tool, 
+    NULL,
+    NULL,
     NULL
   },
 
@@ -195,6 +211,8 @@ ToolInfo tool_info[] =
     MAGNIFY,
     tools_new_magnify,
     tools_free_magnify, 
+    NULL,
+    NULL,
     NULL
   },
 
@@ -210,6 +228,8 @@ ToolInfo tool_info[] =
     CROP,
     tools_new_crop,
     tools_free_crop,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -225,6 +245,8 @@ ToolInfo tool_info[] =
     ROTATE,
     tools_new_transform_tool,
     tools_free_transform_tool,
+    NULL,
+    NULL,
     NULL
   }, /* rotate */
   
@@ -240,6 +262,8 @@ ToolInfo tool_info[] =
     SCALE,
     tools_new_transform_tool,
     tools_free_transform_tool, 
+    NULL,
+    NULL,
     NULL
   }, /* scale */
   
@@ -255,6 +279,8 @@ ToolInfo tool_info[] =
     SHEAR,
     tools_new_transform_tool,
     tools_free_transform_tool,
+    NULL,
+    NULL,
     NULL
   }, /* shear */
   
@@ -270,6 +296,8 @@ ToolInfo tool_info[] =
     PERSPECTIVE,
     tools_new_transform_tool,
     tools_free_transform_tool,
+    NULL,
+    NULL,
     NULL
   }, /* perspective */
   
@@ -285,6 +313,8 @@ ToolInfo tool_info[] =
     FLIP,
     tools_new_flip,
     tools_free_flip_tool,
+    NULL,
+    NULL,
     NULL
   },
     
@@ -301,6 +331,8 @@ ToolInfo tool_info[] =
     tools_new_text,
     tools_free_text,
     NULL,
+    NULL,
+    NULL,
   },
   
   {
@@ -315,6 +347,8 @@ ToolInfo tool_info[] =
     COLOR_PICKER,
     tools_new_color_picker,
     tools_free_color_picker,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -330,6 +364,8 @@ ToolInfo tool_info[] =
     BUCKET_FILL,
     tools_new_bucket_fill,
     tools_free_bucket_fill,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -345,6 +381,8 @@ ToolInfo tool_info[] =
     BLEND,
     tools_new_blend,
     tools_free_blend,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -360,6 +398,8 @@ ToolInfo tool_info[] =
     PENCIL,
     tools_new_pencil,
     tools_free_pencil,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -375,6 +415,8 @@ ToolInfo tool_info[] =
     PAINTBRUSH,
     tools_new_paintbrush,
     tools_free_paintbrush, 
+    NULL,
+    NULL,
     NULL
   },
   
@@ -390,6 +432,8 @@ ToolInfo tool_info[] =
     ERASER,
     tools_new_eraser,
     tools_free_eraser,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -405,6 +449,8 @@ ToolInfo tool_info[] =
     AIRBRUSH,
     tools_new_airbrush,
     tools_free_airbrush,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -420,6 +466,8 @@ ToolInfo tool_info[] =
     CLONE,
     tools_new_clone,
     tools_free_clone,
+    NULL,
+    NULL,
     NULL
   },
   
@@ -435,6 +483,8 @@ ToolInfo tool_info[] =
     CONVOLVE,
     tools_new_convolve,
     tools_free_convolve,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -450,6 +500,8 @@ ToolInfo tool_info[] =
     INK,
     tools_new_ink,
     tools_free_ink,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -465,6 +517,8 @@ ToolInfo tool_info[] =
     DODGEBURN,
     tools_new_dodgeburn,
     tools_free_dodgeburn,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -480,6 +534,8 @@ ToolInfo tool_info[] =
     SMUDGE,
     tools_new_smudge,
     tools_free_smudge,
+    NULL,
+    NULL,
     NULL
   },
 
@@ -495,6 +551,8 @@ ToolInfo tool_info[] =
     MEASURE,
     tools_new_measure_tool,
     tools_free_measure_tool, 
+    NULL,
+    NULL,
     NULL
   },
 
@@ -510,6 +568,8 @@ ToolInfo tool_info[] =
     XINPUT_AIRBRUSH,
     tools_new_xinput_airbrush,
     tools_free_xinput_airbrush,
+    NULL,
+    NULL,
     NULL
   },          
 
@@ -525,6 +585,8 @@ ToolInfo tool_info[] =
     PATH_TOOL,
     tools_new_path_tool,
     tools_free_path_tool, 
+    NULL,
+    NULL,
     NULL
   },
 
@@ -542,7 +604,9 @@ ToolInfo tool_info[] =
     BY_COLOR_SELECT,
     tools_new_by_color_select,
     tools_free_by_color_select,
-    by_color_select_initialize 
+    by_color_select_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -557,7 +621,9 @@ ToolInfo tool_info[] =
     COLOR_BALANCE,
     tools_new_color_balance,
     tools_free_color_balance,
-    color_balance_initialize
+    color_balance_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -572,7 +638,9 @@ ToolInfo tool_info[] =
     BRIGHTNESS_CONTRAST,
     tools_new_brightness_contrast,
     tools_free_brightness_contrast,
-    brightness_contrast_initialize
+    brightness_contrast_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -587,7 +655,9 @@ ToolInfo tool_info[] =
     HUE_SATURATION,
     tools_new_hue_saturation,
     tools_free_hue_saturation, 
-    hue_saturation_initialize
+    hue_saturation_initialize,
+    NULL,
+    NULL
   },
 
   { 
@@ -602,7 +672,9 @@ ToolInfo tool_info[] =
     POSTERIZE,
     tools_new_posterize,
     tools_free_posterize,
-    posterize_initialize
+    posterize_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -617,7 +689,9 @@ ToolInfo tool_info[] =
     THRESHOLD,
     tools_new_threshold,
     tools_free_threshold,
-    threshold_initialize
+    threshold_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -632,7 +706,9 @@ ToolInfo tool_info[] =
     CURVES,
     tools_new_curves, 
     tools_free_curves,
-    curves_initialize
+    curves_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -647,7 +723,9 @@ ToolInfo tool_info[] =
     LEVELS,
     tools_new_levels, 
     tools_free_levels,
-    levels_initialize
+    levels_initialize,
+    NULL,
+    NULL
   },
   
   { 
@@ -662,18 +740,29 @@ ToolInfo tool_info[] =
     HISTOGRAM,
     tools_new_histogram_tool,
     tools_free_histogram_tool,
-    histogram_tool_initialize 
+    histogram_tool_initialize ,
+    NULL,
+    NULL
   }
 };
 
 gint num_tools = sizeof (tool_info) / sizeof (tool_info[0]);
 
+/*  dnd stuff  */
+static GtkTargetEntry tool_target_table[] =
+{
+  GIMP_TARGET_TOOL
+};
+static guint n_tool_targets = (sizeof (tool_target_table) /
+                               sizeof (tool_target_table[0]));
+
 
 /*  Local function declarations  */
-static void tools_options_show           (ToolType);
-static void tools_options_hide           (ToolType);
-static void tools_options_reset_callback (GtkWidget *, gpointer);
-static void tools_options_close_callback (GtkWidget *, gpointer);
+static void  tool_options_show           (ToolType);
+static void  tool_options_hide           (ToolType);
+static void  tool_options_drop_tool      (GtkWidget *, ToolType, gpointer);
+static void  tool_options_reset_callback (GtkWidget *, gpointer);
+static void  tool_options_close_callback (GtkWidget *, gpointer);
 
 
 /*  Function definitions  */
@@ -684,7 +773,7 @@ active_tool_free (void)
   if (!active_tool)
     return;
 
-  tools_options_hide (active_tool->type);
+  tool_options_hide (active_tool->type);
 
   (* tool_info[(gint) active_tool->type].free_func) (active_tool);
 
@@ -700,7 +789,7 @@ tools_select (ToolType tool_type)
 
   active_tool = (* tool_info[(gint) tool_type].new_func) ();
 
-  tools_options_show (active_tool->type);
+  tool_options_show (active_tool->type);
 }
 
 void
@@ -723,19 +812,6 @@ tools_initialize (ToolType  tool_type,
     }
 
   /*  don't set gdisp_ptr here! (see commands.c)  */
-}
-
-void
-tools_options_dialog_show (void)
-{
-  if (!GTK_WIDGET_VISIBLE (options_shell)) 
-    {
-      gtk_widget_show (options_shell);
-    } 
-  else 
-    {
-      gdk_window_raise (options_shell->window);
-    }
 }
 
 void
@@ -891,10 +967,37 @@ tools_new_tool (ToolType tool_type)
   return tool;
 }
 
+void
+tools_help_func (gpointer help_data)
+{
+  gimp_help (tool_info[(gint) active_tool->type].private_tip);
+}
+
+void
+tools_register (ToolType     tool_type,
+		ToolOptions *tool_options)
+{
+  g_return_if_fail (tool_options != NULL);
+
+  tool_info [(gint) tool_type].tool_options = tool_options;
+
+  /*  need to check whether the widget is visible...this can happen
+   *  because some tools share options such as the transformation tools
+   */
+  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
+    {
+      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
+			  TRUE, TRUE, 0);
+      gtk_widget_show (tool_options->main_vbox);
+    }
+
+  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
+}
+
 /*  Tool options function  */
 
 void
-tools_options_dialog_new (void)
+tool_options_dialog_new (void)
 {
   GtkWidget *frame;
   GtkWidget *vbox;
@@ -906,14 +1009,14 @@ tools_options_dialog_new (void)
 		     GTK_WIN_POS_NONE,
 		     FALSE, TRUE, TRUE,
 
-		     _("Reset"), tools_options_reset_callback,
+		     _("Reset"), tool_options_reset_callback,
 		     NULL, &options_reset_button, FALSE, FALSE,
-		     _("Close"), tools_options_close_callback,
+		     _("Close"), tool_options_close_callback,
 		     NULL, NULL, TRUE, TRUE,
 
 		     NULL);
 
-  /*  Register dialog */
+  /*  Register dialog  */
   dialog_register (options_shell);
   session_set_window_geometry (options_shell, &tool_options_session_info,
 			       FALSE );
@@ -948,44 +1051,39 @@ tools_options_dialog_new (void)
 
   /*  hide the separator between the dialog's vbox and the action area  */
   gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_BIN (options_shell)->child)), 1)));
+
+  /*  dnd stuff  */
+  gtk_drag_dest_set (options_shell,
+		     GTK_DEST_DEFAULT_HIGHLIGHT |
+		     GTK_DEST_DEFAULT_MOTION |
+		     GTK_DEST_DEFAULT_DROP,
+		     tool_target_table, n_tool_targets,
+		     GDK_ACTION_COPY); 
+  gimp_dnd_tool_dest_set (options_shell, tool_options_drop_tool, NULL);
 }
 
 void
-tools_options_dialog_free (void)
+tool_options_dialog_free (void)
 {
   session_get_window_info (options_shell, &tool_options_session_info);
   gtk_widget_destroy (options_shell);
 }
 
 void
-tools_help_func (gpointer help_data)
+tool_options_dialog_show (void)
 {
-  gimp_help (tool_info[(gint) active_tool->type].private_tip);
-}
-
-void
-tools_register (ToolType     tool_type,
-		ToolOptions *tool_options)
-{
-  g_return_if_fail (tool_options != NULL);
-
-  tool_info [(int) tool_type].tool_options = tool_options;
-
-  /*  need to check whether the widget is visible...this can happen
-   *  because some tools share options such as the transformation tools
-   */
-  if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
+  if (!GTK_WIDGET_VISIBLE (options_shell)) 
     {
-      gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
-			  TRUE, TRUE, 0);
-      gtk_widget_show (tool_options->main_vbox);
+      gtk_widget_show (options_shell);
+    } 
+  else 
+    {
+      gdk_window_raise (options_shell->window);
     }
-
-  gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
 }
 
 static void
-tools_options_show (ToolType tool_type)
+tool_options_show (ToolType tool_type)
 {
   if (tool_info[tool_type].tool_options->main_vbox)
     gtk_widget_show (tool_info[tool_type].tool_options->main_vbox);
@@ -1001,7 +1099,7 @@ tools_options_show (ToolType tool_type)
 }
 
 static void
-tools_options_hide (ToolType tool_type)
+tool_options_hide (ToolType tool_type)
 {
   if (tool_info[tool_type].tool_options)
     gtk_widget_hide (tool_info[tool_type].tool_options->main_vbox);
@@ -1010,8 +1108,16 @@ tools_options_hide (ToolType tool_type)
 /*  Tool options callbacks  */
 
 static void
-tools_options_close_callback (GtkWidget *widget,
-			      gpointer   data)
+tool_options_drop_tool (GtkWidget *widget,
+			ToolType   tool,
+			gpointer   data)
+{
+  gimp_context_set_tool (gimp_context_get_user (), tool);
+}
+
+static void
+tool_options_close_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   GtkWidget *shell;
 
@@ -1020,8 +1126,8 @@ tools_options_close_callback (GtkWidget *widget,
 }
 
 static void
-tools_options_reset_callback (GtkWidget *widget,
-			      gpointer   data)
+tool_options_reset_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   GtkWidget *shell;
 
@@ -1030,8 +1136,8 @@ tools_options_reset_callback (GtkWidget *widget,
   if (!active_tool)
     return;
 
-  if (tool_info[(int) active_tool->type].tool_options->reset_func)
-    (* tool_info[(int) active_tool->type].tool_options->reset_func) ();
+  if (tool_info[(gint) active_tool->type].tool_options->reset_func)
+    (* tool_info[(gint) active_tool->type].tool_options->reset_func) ();
 }
 
 guchar *
@@ -1073,7 +1179,7 @@ tool_active_PDB_string (void)
       toolStr = "gimp_dodgeburn_default";
       break;
     default:
-      toolStr = "gimp_paintbrush_default";
+      break;
     }
 
   return toolStr;

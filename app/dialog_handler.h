@@ -16,17 +16,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-
 #ifndef __DIALOG_HANDLER_H_
 #define __DIALOG_HANDLER_H_
 
-void dialog_register         (GtkWidget *dialog);
-void dialog_register_toolbox (GtkWidget *dialog);
-void dialog_unregister       (GtkWidget *dialog);
-void dialog_toggle           (void);
-void dialog_idle_all         (void);
-void dialog_unidle_all       (void);
-void dialog_show_toolbox     (void);
+void dialog_register          (GtkWidget *dialog);
+void dialog_unregister        (GtkWidget *dialog);
+
+void dialog_register_toolbox  (GtkWidget *dialog);
+void dialog_register_fileload (GtkWidget *dialog);
+
+void dialog_toggle            (void);
+void dialog_idle_all          (void);
+void dialog_unidle_all        (void);
+void dialog_show_toolbox      (void);
 
 #endif  /* __DIALOG_HANDLER_H_ */
-

@@ -70,7 +70,7 @@ SessionInfo lc_dialog_session_info =
 SessionInfo info_dialog_session_info = 
   { "info-dialog", NULL, 165, 0, 0, 0, FALSE };
 SessionInfo tool_options_session_info = 
-  { "tool-options", (GtkItemFactoryCallback)dialogs_tools_options_cmd_callback, 0, 345, 0, 0, FALSE };
+  { "tool-options", (GtkItemFactoryCallback)dialogs_tool_options_cmd_callback, 0, 345, 0, 0, FALSE };
 SessionInfo palette_session_info = 
   { "palette", (GtkItemFactoryCallback)dialogs_palette_cmd_callback, 140, 180, 0, 0, FALSE };
 SessionInfo brush_select_session_info = 

@@ -162,9 +162,8 @@ tools_button_press (GtkWidget      *widget,
   GDisplay * gdisp;
   gdisp = data;
  
-  if ((event->type == GDK_2BUTTON_PRESS) &&
-      (event->button == 1))
-    tools_options_dialog_show ();
+  if ((event->type == GDK_2BUTTON_PRESS) && (event->button == 1))
+    tool_options_dialog_show ();
 
   return FALSE;
 }

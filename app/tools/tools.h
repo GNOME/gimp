@@ -107,17 +107,17 @@ void     tools_select               (ToolType     tool_type);
 void     tools_initialize           (ToolType     tool_type,
 				     GDisplay    *gdisplay);
 
-void     tools_options_dialog_new   (void);
-void     tools_options_dialog_show  (void);
-void     tools_options_dialog_free  (void);
+void     active_tool_control        (ToolAction   action,
+				     void        *gdisp_ptr);
 
 void     tools_help_func            (gpointer);
 
 void     tools_register             (ToolType     tool_type,
 				     ToolOptions *tool_options);
 
-void     active_tool_control        (ToolAction   action,
-				     void        *gdisp_ptr);
+void     tool_options_dialog_new   (void);
+void     tool_options_dialog_show  (void);
+void     tool_options_dialog_free  (void);
 
 guchar * tool_active_PDB_string     (void);
 

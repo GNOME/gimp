@@ -261,7 +261,7 @@ bezier_select_load (void        *gdisp_ptr,
   gdisp = (GDisplay *) gdisp_ptr;
 
   /*  select the bezier tool  */
-  gtk_widget_activate (tool_info[BEZIER_SELECT].tool_widget);
+  gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
   tool = active_tool;
   tool->state = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;

@@ -599,7 +599,7 @@ app_init (void)
 
       gximage_init ();
       render_setup (transparency_type, transparency_size);
-      tools_options_dialog_new ();
+      tool_options_dialog_new ();
 
       /*  EEK: force signal emission  */
       if (gimp_context_get_tool (gimp_context_get_user ()) == RECT_SELECT)
@@ -688,7 +688,7 @@ app_exit_finish (void)
       close_idea_window();
       gximage_free ();
       render_free ();
-      tools_options_dialog_free ();
+      tool_options_dialog_free ();
       save_sessionrc ();
     }
 
