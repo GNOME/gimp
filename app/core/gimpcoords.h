@@ -42,3 +42,5 @@ gdouble  gimp_bezier_coords_scalarprod  (const GimpCoords      *a,
 gdouble  gimp_bezier_coords_length      (const GimpCoords      *a);
 gdouble  gimp_bezier_coords_length2     (const GimpCoords      *a);
 
+gboolean gimp_bezier_coords_equal       (const GimpCoords      *a,
+                                         const GimpCoords      *b);

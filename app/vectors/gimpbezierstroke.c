@@ -78,6 +78,7 @@ static void gimp_bezier_stroke_point_move_absolute
                                                const GimpCoords      *coord,
                                                GimpAnchorFeatureType  feature);
 
+static void gimp_bezier_stroke_close          (GimpStroke            *stroke);
 
 static GimpStroke * gimp_bezier_stroke_open     (GimpStroke        *stroke,
                                                  GimpAnchor        *end_anchor);
@@ -169,6 +170,7 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->point_is_movable     = gimp_bezier_stroke_point_is_movable;
   stroke_class->point_move_relative  = gimp_bezier_stroke_point_move_relative;
   stroke_class->point_move_absolute  = gimp_bezier_stroke_point_move_absolute;
+  stroke_class->close                = gimp_bezier_stroke_close;
   stroke_class->open                 = gimp_bezier_stroke_open;
   stroke_class->anchor_is_insertable = gimp_bezier_stroke_anchor_is_insertable;
   stroke_class->anchor_insert        = gimp_bezier_stroke_anchor_insert;
@@ -515,6 +517,53 @@ gimp_bezier_stroke_point_move_absolute (GimpStroke            *stroke,
 
   gimp_bezier_stroke_point_move_relative (stroke, predec, position,
                                           &deltacoord, feature);
+}
+
+static void
+gimp_bezier_stroke_close (GimpStroke *stroke)
+{
+  GList *start, *end;
+  GimpAnchor *anchor;
+
+  g_return_if_fail (stroke->anchors != NULL);
+
+  stroke->closed = TRUE;
+
+  start = g_list_first (stroke->anchors);
+  end = g_list_last (stroke->anchors);
+
+  g_return_if_fail (start->next != NULL && end->prev != NULL);
+
+  if (start->next != end->prev)
+    {
+      if (gimp_bezier_coords_equal (&(GIMP_ANCHOR (start->next->data)->position),
+                                    &(GIMP_ANCHOR (start->data)->position)) &&
+          gimp_bezier_coords_equal (&(GIMP_ANCHOR (start->data)->position),
+                                    &(GIMP_ANCHOR (end->data)->position)) &&
+          gimp_bezier_coords_equal (&(GIMP_ANCHOR (end->data)->position),
+                                    &(GIMP_ANCHOR (end->prev->data)->position)))
+        {
+          /* redundant segment */
+
+          anchor = GIMP_ANCHOR (stroke->anchors->data);
+          stroke->anchors = g_list_delete_link (stroke->anchors,
+                                                stroke->anchors);
+          gimp_anchor_free (anchor);
+
+          anchor = GIMP_ANCHOR (stroke->anchors->data);
+          stroke->anchors = g_list_delete_link (stroke->anchors,
+                                                stroke->anchors);
+          gimp_anchor_free (anchor);
+
+          anchor = GIMP_ANCHOR (stroke->anchors->data);
+          stroke->anchors = g_list_delete_link (stroke->anchors,
+                                                stroke->anchors);
+
+          end = g_list_last (stroke->anchors);
+          gimp_anchor_free (GIMP_ANCHOR (end->data));
+          end->data = anchor;
+        }
+    }
 }
 
 static gdouble

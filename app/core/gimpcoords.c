@@ -145,3 +145,16 @@ gimp_bezier_coords_length (const GimpCoords *a)
 {
   return sqrt (gimp_bezier_coords_length2 (a));
 }
+
+gboolean
+gimp_bezier_coords_equal (const GimpCoords *a,
+                          const GimpCoords *b)
+{
+  return (       a->x == b->x        &&
+                 a->y == b->y        &&
+          a->pressure == b->pressure &&
+             a->xtilt == b->xtilt    &&
+             a->ytilt == b->ytilt    &&
+             a->wheel == b->wheel);
+}
+

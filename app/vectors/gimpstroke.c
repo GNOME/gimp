@@ -84,6 +84,7 @@ static void         gimp_stroke_real_point_move_absolute
                                                const GimpCoords      *coord,
                                                GimpAnchorFeatureType  feature);
 
+static void         gimp_stroke_real_close           (GimpStroke       *stroke);
 static GimpStroke * gimp_stroke_real_open            (GimpStroke       *stroke,
                                                       GimpAnchor       *end_anchor);
 static gboolean     gimp_stroke_real_anchor_is_insertable
@@ -211,6 +212,7 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->point_move_absolute     = gimp_stroke_real_point_move_absolute;
 
   klass->nearest_point_get       = gimp_stroke_real_nearest_point_get;
+  klass->close                   = gimp_stroke_real_close;
   klass->open                    = gimp_stroke_real_open;
   klass->anchor_is_insertable    = gimp_stroke_real_anchor_is_insertable;
   klass->anchor_insert           = gimp_stroke_real_anchor_insert;
@@ -561,6 +563,14 @@ gimp_stroke_real_point_move_absolute (GimpStroke           *stroke,
 
 void
 gimp_stroke_close (GimpStroke *stroke)
+{
+  g_return_if_fail (GIMP_IS_STROKE (stroke));
+
+  GIMP_STROKE_GET_CLASS (stroke)->close (stroke);
+}
+
+static void
+gimp_stroke_real_close (GimpStroke *stroke)
 {
   stroke->closed = TRUE;
 }

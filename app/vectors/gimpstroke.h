@@ -92,6 +92,7 @@ struct _GimpStrokeClass
                                           const GimpCoords      *coord,
                                           GimpAnchorFeatureType  feature);
 
+  void          (* close)                (GimpStroke            *stroke);
   GimpStroke  * (* open)                 (GimpStroke            *stroke,
                                           GimpAnchor            *end_anchor);
   gboolean      (* anchor_is_insertable) (GimpStroke            *stroke,
