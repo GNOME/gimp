@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-15 13:57+0200\n"
-"PO-Revision-Date: 2004-03-21 18:42+0100\n"
+"POT-Creation-Date: 2004-07-08 12:01+0900\n"
+"PO-Revision-Date: 2004-07-08 12:07+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -294,6 +294,10 @@ msgid ""
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
+"Kan inte öppna växlingsfilen. Gimp har slut på minnet och kan inte använda "
+"växlingsfilen. Delar av din bild kan vara förstörda. Försök att spara till "
+"ett annat filnamn, starta om Gimp och kontrollera var växlingsfilen är satt "
+"i dina inställningar."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -307,7 +311,7 @@ msgstr "ödesdigert tolkningsfel"
 #: app/config/gimpconfig-deserialize.c:453
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "\"ja\" eller \"nej\" för booleskt element %s förväntades, fick \"%s\""
+msgstr "\"yes\" eller \"no\" för booleskt element %s förväntades, fick \"%s\""
 
 #: app/config/gimpconfig-deserialize.c:527
 #, c-format
@@ -471,7 +475,6 @@ msgstr ""
 "aktiveras"
 
 #: app/config/gimprc-blurbs.h:74
-#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
 "algorithm.  The seed fill starts at the initially selected pixel and "
@@ -572,6 +575,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Sätter bildskärmens horisontella upplösning, i bildpunkter per tum "
+"(2,54 cm). Om den är satt till 0 så tillfrågas X-servern för både "
+"horisontell och vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:198
 msgid ""
@@ -579,6 +585,9 @@ msgid ""
 "forces the X server to be queried for both horizontal and vertical "
 "resolution information."
 msgstr ""
+"Sätter bildskärmens vertikala upplösning, i bildpunkter per tum "
+"(2,54 cm). Om den är satt till 0 så tillfrågas X-servern för både "
+"horisontell och vertikal upplösning."
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1293,14 +1302,12 @@ msgid "Move Item"
 msgstr "Flytta objekt"
 
 #: app/core/core-enums.c:601
-#, fuzzy
 msgid "Scale Item"
-msgstr "Skala bild"
+msgstr "Skala objekt"
 
 #: app/core/core-enums.c:602
-#, fuzzy
 msgid "Resize Item"
-msgstr "Ändra storlek på bild"
+msgstr "Ändra storlek på objekt"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
@@ -1325,9 +1332,8 @@ msgid "Anchor Floating Selection"
 msgstr "Ankra flytande markering"
 
 #: app/core/core-enums.c:608 app/core/gimplayer-floating-sel.c:98
-#, fuzzy
 msgid "Remove Floating Selection"
-msgstr "Flytande markering"
+msgstr "Ta bort flytande markering"
 
 #: app/core/core-enums.c:609 app/core/gimp-edit.c:126
 #: app/widgets/gimpbufferview.c:154
@@ -1425,9 +1431,8 @@ msgid "Set Preserve Trans"
 msgstr "Sätt spara transparens"
 
 #: app/core/core-enums.c:640
-#, fuzzy
 msgid "Text Modified"
-msgstr "Endast om ändrad"
+msgstr "Text ändrad"
 
 #: app/core/core-enums.c:641 app/gui/channels-commands.c:318
 #: app/gui/channels-commands.c:348 app/gui/channels-commands.c:387
@@ -1612,7 +1617,7 @@ msgstr "Ödesdigert tolkningsfel i penselfil \"%s\": Filen verkar avhuggen."
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
-#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1302
+#: app/core/gimpbrush.c:613 app/core/gimpcontext.c:1306
 #: app/core/gimpitem.c:466 app/core/gimppattern.c:400
 #: app/gui/templates-commands.c:150 app/tools/gimpvectortool.c:338
 msgid "Unnamed"
@@ -1977,7 +1982,7 @@ msgstr "Aktivera snabbmask"
 msgid "Disable QuickMask"
 msgstr "Inaktivera snabbmask"
 
-#: app/core/gimpimage-undo-push.c:2939
+#: app/core/gimpimage-undo-push.c:2937
 #, c-format
 msgid "Can't undo %s"
 msgstr "Kan inte ångra %s"
@@ -2393,9 +2398,8 @@ msgstr ""
 "Enheten som används för koordinatvisning när man inte har punkt till punkt."
 
 #: app/core/gimptemplate.c:150
-#, fuzzy
 msgid "The horizontal image resolution."
-msgstr "Horisontell bildupplösning."
+msgstr "Den horisontella bildupplösningen."
 
 #: app/core/gimptemplate.c:155
 msgid "The vertical image resolution."
@@ -3573,7 +3577,6 @@ msgid "/blendingfunction/_Curved"
 msgstr "/färgtoningsfunktion/_Kurvad"
 
 #: app/gui/gradient-editor-menu.c:178
-#, fuzzy
 msgid "/blendingfunction/_Sinusoidal"
 msgstr "/färgtoningsfunktion/_Sinusformad"
 
@@ -5678,7 +5681,6 @@ msgid "Fit to Window"
 msgstr "Passa till fönster"
 
 #: app/gui/preferences-dialog.c:1512
-#, fuzzy
 msgid "Initial Zoom Ratio:"
 msgstr "Initial zoomfaktor:"
 
@@ -7892,17 +7894,17 @@ msgstr "Spara kurvor"
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Kurvor för indexerade lager kan inte justeras."
 
-#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:411
+#: app/tools/gimpcurvestool.c:476 app/tools/gimplevelstool.c:412
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:425
+#: app/tools/gimpcurvestool.c:490 app/tools/gimplevelstool.c:426
 msgid "R_eset Channel"
 msgstr "_Återställ kanal"
 
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:637
+#: app/tools/gimpcurvestool.c:592 app/tools/gimplevelstool.c:638
 msgid "All Channels"
 msgstr "Alla kanaler"
 
@@ -8039,7 +8041,6 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Nyans-Mättnad fungerar endast på RGB-lager."
 
 #: app/tools/gimphuesaturationtool.c:263
-#, fuzzy
 msgid "M_aster"
 msgstr "_Huvud"
 
@@ -8171,45 +8172,45 @@ msgstr "Spara nivåer"
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Kan inte justera nivåer för indexerade lager."
 
-#: app/tools/gimplevelstool.c:351
+#: app/tools/gimplevelstool.c:352
 msgid "Pick Black Point"
 msgstr "Välj svart punkt"
 
-#: app/tools/gimplevelstool.c:355
+#: app/tools/gimplevelstool.c:356
 msgid "Pick Gray Point"
 msgstr "Välj grå punkt"
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:360
 msgid "Pick White Point"
 msgstr "Välj vit punkt"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:440
+#: app/tools/gimplevelstool.c:441
 msgid "Input Levels"
 msgstr "Inmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:535
+#: app/tools/gimplevelstool.c:536
 msgid "Gamma"
 msgstr "Gamma"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:565
+#: app/tools/gimplevelstool.c:566
 msgid "Output Levels"
 msgstr "Utmatningsnivåer"
 
-#: app/tools/gimplevelstool.c:656
+#: app/tools/gimplevelstool.c:657
 msgid "Read levels settings from file"
 msgstr "Läs nivåinställningar från fil"
 
-#: app/tools/gimplevelstool.c:662
+#: app/tools/gimplevelstool.c:663
 msgid "Save levels settings to file"
 msgstr "Spara nivåinställningar till fil"
 
-#: app/tools/gimplevelstool.c:670
+#: app/tools/gimplevelstool.c:671
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/tools/gimplevelstool.c:672
+#: app/tools/gimplevelstool.c:673
 msgid "Adjust levels automatically"
 msgstr "Justera nivåer automatiskt"
 
