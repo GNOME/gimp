@@ -6,7 +6,6 @@ libgimp/gimpexport.c
 libgimp/gimpfontmenu.c
 libgimp/gimpgradientmenu.c
 libgimp/gimpmenu.c
-libgimp/gimpmiscui.c
 libgimp/gimppatternmenu.c
 libgimp/gimpunitcache.c
 
