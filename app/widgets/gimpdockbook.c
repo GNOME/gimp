@@ -36,6 +36,7 @@
 #include "gimpdnd.h"
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
+#include "gimphelp-ids.h"
 #include "gimpimagedock.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
@@ -91,6 +92,8 @@ static gboolean    gimp_dockbook_tab_drag_drop    (GtkWidget      *widget,
                                                    gint            y,
                                                    guint           time,
                                                    gpointer        data);
+static void        gimp_dockbook_help_func        (const gchar    *help_id,
+                                                   gpointer        help_data);
 
 
 static GtkNotebookClass *parent_class = NULL;
@@ -240,6 +243,9 @@ gimp_dockbook_new (GimpMenuFactory *menu_factory)
                                                        GTK_TYPE_MENU,
                                                        menu_factory->gimp,
                                                        FALSE);
+
+  gimp_help_connect (GTK_WIDGET (dockbook), gimp_dockbook_help_func,
+                     GIMP_HELP_DOCK, dockbook);
 
   return GTK_WIDGET (dockbook);
 }
@@ -572,6 +578,9 @@ gimp_dockbook_tab_button_press (GtkWidget      *widget,
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (dockbook), page_num);
 
+  if (! GTK_WIDGET_HAS_FOCUS (dockbook))
+    gtk_widget_grab_focus (GTK_WIDGET (dockbook));
+
   if (bevent->button == 3)
     {
       GtkWidget *add_widget;
@@ -768,4 +777,24 @@ gimp_dockbook_tab_drag_drop (GtkWidget      *widget,
     }
 
   return FALSE;
+}
+
+static void
+gimp_dockbook_help_func (const gchar *help_id,
+                         gpointer     help_data)
+{
+  GimpDockbook *dockbook;
+  GtkWidget    *dockable;
+  gint          page_num;
+
+  dockbook = GIMP_DOCKBOOK (help_data);
+
+  page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+  dockable = gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+  if (GIMP_IS_DOCKABLE (dockable))
+    gimp_standard_help_func (GIMP_DOCKABLE (dockable)->help_id, NULL);
+  else
+    gimp_standard_help_func (GIMP_HELP_DOCK, NULL);
 }

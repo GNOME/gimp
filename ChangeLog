@@ -1,5 +1,14 @@
 2003-08-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdockbook.c: added gimp_dockbook_help_func()
+	which shows the help for the active page.
+
+	(gimp_dockbook_tab_button_press): grab the focus when a notebook
+	tab is clicked. Still not perfect since GtkNotebook does it
+	slightly different, but feels much better than before.
+
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/info-window.c
 	* app/widgets/gimpfontselection.c
 	* app/widgets/gimpfontselection-dialog.c: replaced the last
