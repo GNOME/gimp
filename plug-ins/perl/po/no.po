@@ -884,6 +884,10 @@ msgstr ""
 "$function: kall av $AUTOLOAD uten å spesifisere :auto import tag'en er "
 "utdatert!\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Filtre/Kart/Xach skygger..."
+
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr "kunne ikke åpne Gimp::Net kommunikasjonssocket: $!\n"
 

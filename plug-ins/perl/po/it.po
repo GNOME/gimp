@@ -921,6 +921,10 @@ msgstr ""
 ":auto viene deprecato!\n"
 
 #, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Filtri/Map/Xach ombre..."
+
+#, fuzzy
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr "impossibile aprire socket di comunicazione Gimp::Net\n"
 

@@ -891,6 +891,10 @@ msgid ""
 msgstr ""
 "$function: $AUTOLOAD sollte nicht ohne den :auto import tag aufgerufen werden!\n"
 
+#, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Filter/Abbilden/Xach-Schatten..."
+
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr "Konnte den Gimp::Net Kommunikationskanal nicht öffnen: $!\n"
 

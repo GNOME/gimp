@@ -197,9 +197,10 @@ sub try_connect {
          return start_server($_);
       } elsif (s{^unix/}{/}) {
          my $server_fh=local *FH;
-         return socket($server_fh,PF_UNIX,SOCK_STREAM,AF_UNIX)
+         return ((socket $server_fh,AF_UNIX,SOCK_STREAM,PF_UNSPEC)
+                 || (socket $server_fh,AF_LOCAL,SOCK_STREAM,PF_UNSPEC)
                 && connect($server_fh,sockaddr_un $_)
-                ? $server_fh : ();
+                ? $server_fh : ());
       } else {
          s{^tcp/}{};
          my($host,$port)=split /:/,$_;

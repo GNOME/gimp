@@ -848,6 +848,10 @@ msgid ""
 "deprecated!\n"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Enhance/Warp Sharp..."
+msgstr "<Image>/Ф╕льтри/Мапа/Xach-т╕н╕..."
+
 msgid "unable to open Gimp::Net communications socket: $!\n"
 msgstr ""
 
