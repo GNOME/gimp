@@ -614,7 +614,7 @@ devices_write_rc_device (DeviceInfo *device_info,
 
   for (i=0; i< (gdk_info ? gdk_info->num_axes : device_info->num_axes); i++)
     {
-      gchar *axis_type = NULL;	/* Quiet gcc */
+      gchar *axis_type = NULL;
 
       switch (gdk_info ? gdk_info->axes[i] : device_info->axes[i])
 	{
@@ -636,11 +636,6 @@ devices_write_rc_device (DeviceInfo *device_info,
 	case GDK_AXIS_YTILT:
 	  axis_type = "ytilt";
 	  break;
-#ifdef GTK_HAVE_SIX_VALUATORS
-	case GDK_AXIS_WHEEL:
-	  axis_type = "wheel";
-	  break;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 	}
       fprintf (fp, " %s",axis_type);
     }

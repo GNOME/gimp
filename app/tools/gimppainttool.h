@@ -62,34 +62,25 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpDrawTool      parent_instance;
+  GimpDrawTool    parent_instance;
 
   gdouble         startx;        /*  starting x coord           */
   gdouble         starty;        /*  starting y coord           */
   gdouble         startpressure; /*  starting pressure          */
   gdouble         startxtilt;    /*  starting xtilt             */
   gdouble         startytilt;    /*  starting ytilt             */
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble         startwheel;    /*  starting wheel             */
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
   gdouble         curx;          /*  current x coord            */
   gdouble         cury;          /*  current y coord            */
   gdouble         curpressure;   /*  current pressure           */
   gdouble         curxtilt;      /*  current xtilt              */
   gdouble         curytilt;      /*  current ytilt              */
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble         curwheel;      /*  current wheel              */
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
   gdouble         lastx;         /*  last x coord               */
   gdouble         lasty;         /*  last y coord               */
   gdouble         lastpressure;  /*  last pressure              */
   gdouble         lastxtilt;     /*  last xtilt                 */
   gdouble         lastytilt;     /*  last ytilt                 */
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble         lastwheel;     /*  last wheel                 */
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
   gint            state;         /*  state of buttons and keys  */
 
@@ -126,15 +117,11 @@ struct _PaintUndo
 {
   GimpPaintTool     *tool;
 
-
   gdouble  lastx;
   gdouble  lasty;
   gdouble  lastpressure;
   gdouble  lastxtilt;
   gdouble  lastytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble  lastwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 };
 
 

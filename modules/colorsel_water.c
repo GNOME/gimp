@@ -336,12 +336,7 @@ motion_notify_event (GtkWidget      *widget,
 	{
 	  if (event->is_hint)
 	    gdk_input_window_get_pointer (event->window, event->deviceid,
-#ifdef GTK_HAVE_SIX_VALUATORS
-                                          NULL, NULL, NULL, NULL, NULL, NULL, NULL
-#else /* !GTK_HAVE_SIX_VALUATORS */
-					  NULL, NULL, NULL, NULL, NULL, NULL
-#endif /* GTK_HAVE_SIX_VALUATORS */
-					  );
+					  NULL, NULL, NULL, NULL, NULL, NULL);
 
 	  draw_brush (colorsel, widget,
 		      erase,
@@ -354,12 +349,7 @@ motion_notify_event (GtkWidget      *widget,
     {
       gdk_input_window_get_pointer (event->window, event->deviceid,
 				    &event->x, &event->y,
-#ifdef GTK_HAVE_SIX_VALUATORS
-                                    NULL, NULL, NULL, NULL, NULL
-#else /* !GTK_HAVE_SIX_VALUATORS */
-				    NULL, NULL, NULL, NULL
-#endif /* GTK_HAVE_SIX_VALUATORS */
-				    );
+				    NULL, NULL, NULL, NULL);
     }
 
   return TRUE;

@@ -471,12 +471,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       if (mevent->is_hint)
 	{
 	  gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
-#ifdef GTK_HAVE_SIX_VALUATORS
-					NULL, NULL, NULL, NULL, NULL
-#else /* !GTK_HAVE_SIX_VALUATORS */	
-					NULL, NULL, NULL, NULL
-#endif /* GTK_HAVE_SIX_VALUATORS */
-					);
+					NULL, NULL, NULL, NULL);
 	}
       else
 	{
@@ -583,12 +578,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
-#ifdef GTK_HAVE_SIX_VALUATORS 
-					    &tx, &ty, NULL, NULL, NULL, NULL, NULL
-#else /* !GTK_HAVE_SIX_VALUATORS */
-					    &tx, &ty, NULL, NULL, NULL, NULL
-#endif /* GTK_HAVE_SIX_VALUATORS */
-					    );
+					    &tx, &ty, NULL, NULL, NULL, NULL);
 	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }
@@ -614,12 +604,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  if (active_tool && !gimp_image_is_empty (gdisp->gimage))
 	    {
 	      gdk_input_window_get_pointer (canvas->window, current_device,
-#ifdef GTK_HAVE_SIX_VALUATORS
-                                            &tx, &ty, NULL, NULL, NULL, NULL, NULL
-#else /* !GTK_HAVE_SIX_VALUATORS */
-	                                    &tx, &ty, NULL, NULL, NULL, NULL
-#endif /* GTK_HAVE_SIX_VALUATORS */ 
-					    );
+	                                    &tx, &ty, NULL, NULL, NULL, NULL);
 	      gimp_tool_modifier_key (active_tool, kevent, gdisp);
 	      return_val = TRUE;
 	    }

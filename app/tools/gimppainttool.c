@@ -348,12 +348,9 @@ gimp_paint_tool_button_press (GimpTool       *tool,
   draw_line = FALSE;
 
   paint_tool->curpressure = bevent->pressure;
-  paint_tool->curxtilt = bevent->xtilt;
-  paint_tool->curytilt = bevent->ytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  paint_tool->curwheel = bevent->wheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
-  paint_tool->state = bevent->state;
+  paint_tool->curxtilt    = bevent->xtilt;
+  paint_tool->curytilt    = bevent->ytilt;
+  paint_tool->state       = bevent->state;
 
   if (gdisp != tool->gdisp ||
       paint_tool->context_id < 1)
@@ -372,9 +369,6 @@ gimp_paint_tool_button_press (GimpTool       *tool,
       paint_tool->startpressure = paint_tool->lastpressure = paint_tool->curpressure;
       paint_tool->startytilt    = paint_tool->lastytilt    = paint_tool->curytilt;
       paint_tool->startxtilt    = paint_tool->lastxtilt    = paint_tool->curxtilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-      paint_tool->startwheel    = paint_tool->lastwheel    = paint_tool->curwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
     }
 
   /*  If shift is down and this is not the first paint
@@ -388,9 +382,6 @@ gimp_paint_tool_button_press (GimpTool       *tool,
       paint_tool->startpressure = paint_tool->lastpressure;
       paint_tool->startxtilt    = paint_tool->lastxtilt;
       paint_tool->startytilt    = paint_tool->lastytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-      paint_tool->startwheel    = paint_tool->lastwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
       /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (bevent->state & GDK_CONTROL_MASK)
@@ -467,9 +458,6 @@ gimp_paint_tool_button_press (GimpTool       *tool,
       paint_tool->lastpressure = paint_tool->curpressure;
       paint_tool->lastxtilt    = paint_tool->curxtilt;
       paint_tool->lastytilt    = paint_tool->curytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-      paint_tool->lastwheel    = paint_tool->curwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
     }
   else
     {
@@ -561,9 +549,6 @@ gimp_paint_tool_motion (GimpTool       *tool,
   paint_tool->curpressure = mevent->pressure;
   paint_tool->curxtilt    = mevent->xtilt;
   paint_tool->curytilt    = mevent->ytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  paint_tool->curwheel    = mevent->wheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
   paint_tool->state       = mevent->state;
 
   gimp_paint_tool_interpolate (paint_tool,
@@ -586,9 +571,6 @@ gimp_paint_tool_motion (GimpTool       *tool,
   paint_tool->lastpressure = paint_tool->curpressure;
   paint_tool->lastxtilt    = paint_tool->curxtilt;
   paint_tool->lastytilt    = paint_tool->curytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  paint_tool->lastwheel    = paint_tool->curwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 }
 
 
@@ -897,9 +879,6 @@ gimp_paint_tool_start (GimpPaintTool *paint_tool,
       paint_tool->startpressure = paint_tool->lastpressure = paint_tool->curpressure = 0.5;
       paint_tool->startxtilt = paint_tool->lastxtilt = paint_tool->curxtilt = 0;
       paint_tool->startytilt = paint_tool->lastytilt = paint_tool->curytilt = 0;
-#ifdef GTK_HAVE_SIX_VALUATORS
-      paint_tool->startwheel = paint_tool->lastwheel = paint_tool->curwheel = 0.5;
-#endif /* GTK_HAVE_SIX_VALUATORS */
     }
 #endif
 
@@ -957,9 +936,6 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
   GimpBrush   *current_brush;
   GimpVector2  delta;
   gdouble      dpressure, dxtilt, dytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  gdouble      dwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
   /*   double spacing; */
   /*   double lastscale, curscale; */
   gdouble n;
@@ -978,16 +954,9 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
   dpressure = paint_tool->curpressure - paint_tool->lastpressure;
   dxtilt    = paint_tool->curxtilt    - paint_tool->lastxtilt;
   dytilt    = paint_tool->curytilt    - paint_tool->lastytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  dwheel    = paint_tool->curwheel    - paint_tool->lastwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
-/* return if there has been no motion */
-#ifdef GTK_HAVE_SIX_VALUATORS
-  if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt && !dwheel)
-#else /* !GTK_HAVE_SIX_VALUATORS */
+  /* return if there has been no motion */
   if (!delta.x && !delta.y && !dpressure && !dxtilt && !dytilt)
-#endif /* GTK_HAVE_SIX_VALUATORS */
     return;
 
   /* calculate the distance traveled in the coordinate space of the brush */
@@ -1028,9 +997,6 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
 	  paint_tool->curpressure = paint_tool->lastpressure + dpressure * t;
 	  paint_tool->curxtilt    = paint_tool->lastxtilt + dxtilt * t;
 	  paint_tool->curytilt    = paint_tool->lastytilt + dytilt * t;
-#ifdef GTK_HAVE_SIX_VALUATORS
-          paint_tool->curwheel    = paint_tool->lastwheel + dwheel * t;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
 	  /*  save the current brush  */
 	  current_brush = paint_tool->brush;
@@ -1053,9 +1019,6 @@ gimp_paint_tool_interpolate (GimpPaintTool *paint_tool,
   paint_tool->curpressure = paint_tool->lastpressure + dpressure;
   paint_tool->curxtilt    = paint_tool->lastxtilt + dxtilt;
   paint_tool->curytilt    = paint_tool->lastytilt + dytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  paint_tool->curwheel    = paint_tool->lastwheel + dwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 }
 
 void
@@ -1085,9 +1048,6 @@ gimp_paint_tool_finish (GimpPaintTool *paint_tool,
   pu->lastpressure = paint_tool->startpressure;
   pu->lastxtilt    = paint_tool->startxtilt;
   pu->lastytilt    = paint_tool->startytilt;
-#ifdef GTK_HAVE_SIX_VALUATORS
-  pu->lastwheel    = paint_tool->startwheel;
-#endif /* GTK_HAVE_SIX_VALUATORS */
 
   /*  Push a paint undo  */
   undo_push_paint (gimage, pu);

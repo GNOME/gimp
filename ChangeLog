@@ -1,5 +1,15 @@
 2001-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/gimprc.c
+	* app/scroll.c
+	* app/tools/gimppainttool.[ch]
+	* modules/colorsel_water.c: removed the GTK_HAVE_SIX_VALUATORS stuff
+	in preparation of gtk 2.0 migration.
+
+2001-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/fileops.[ch]
 	* app/fileopsP.h: removed...
 
