@@ -1,5 +1,9 @@
 2000-06-30  Nick Lamb  <njl195@zepler.org.uk>
 
+	* C/filters/png.html: PNG documented to my satisfaction
+
+2000-06-30  Nick Lamb  <njl195@zepler.org.uk>
+
 	* makedummyhelpfile.sh
 	* makeindex.sh: Not valid SGML (DOCTYPE screw-up) now it is
 
