@@ -143,9 +143,15 @@ gimp_tool_init (GimpTool *tool)
   tool->gdisp              = NULL;
   tool->drawable           = NULL;
 
-  tool->tool_cursor        = GIMP_TOOL_CURSOR_NONE;
-  tool->toggle_cursor      = GIMP_TOOL_CURSOR_NONE;
-  tool->toggled            = FALSE;
+  tool->cursor                 = GIMP_MOUSE_CURSOR;
+  tool->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
+  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
+
+  tool->toggle_cursor          = GIMP_MOUSE_CURSOR;
+  tool->toggle_tool_cursor     = GIMP_TOOL_CURSOR_NONE;
+  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
+
+  tool->toggled                = FALSE;
 }
 
 void
@@ -273,7 +279,7 @@ gimp_tool_push_status (GimpTool    *tool,
     GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
 
   gimp_statusbar_push (statusbar,
-                       GIMP_OBJECT (tool->tool_info)->name,
+                       G_OBJECT_TYPE_NAME (tool),
                        message);
 }
 
@@ -295,7 +301,7 @@ gimp_tool_push_status_coords (GimpTool    *tool,
     GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
 
   gimp_statusbar_push_coords (statusbar,
-                              GIMP_OBJECT (tool->tool_info)->name,
+                              G_OBJECT_TYPE_NAME (tool),
                               title, x, separator, y);
 }
 
@@ -311,7 +317,23 @@ gimp_tool_pop_status (GimpTool *tool)
     GIMP_STATUSBAR (GIMP_DISPLAY_SHELL (tool->gdisp->shell)->statusbar);
 
   gimp_statusbar_pop (statusbar,
-                      GIMP_OBJECT (tool->tool_info)->name);
+                      G_OBJECT_TYPE_NAME (tool));
+}
+
+void
+gimp_tool_set_cursor (GimpTool           *tool,
+                      GimpDisplay        *gdisp,
+                      GdkCursorType       cursor,
+                      GimpToolCursorType  tool_cursor,
+                      GimpCursorModifier  modifier)
+{
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
+
+  gimp_display_shell_install_tool_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                          cursor,
+                                          tool_cursor,
+                                          modifier);
 }
 
 
@@ -392,14 +414,20 @@ gimp_tool_real_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GIMP_MOUSE_CURSOR,
-                                          tool->tool_cursor,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  if (tool->toggled)
+    {
+      gimp_tool_set_cursor (tool, gdisp,
+                            tool->toggle_cursor,
+                            tool->toggle_tool_cursor,
+                            tool->toggle_cursor_modifier);
+    }
+  else
+    {
+      gimp_tool_set_cursor (tool, gdisp,
+                            tool->cursor,
+                            tool->tool_cursor,
+                            tool->cursor_modifier);
+    }
 }
 
 

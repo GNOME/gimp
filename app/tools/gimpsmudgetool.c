@@ -171,7 +171,7 @@ gimp_smudge_tool_init (GimpSmudgeTool *smudge)
 
   tool->tool_cursor = GIMP_SMUDGE_TOOL_CURSOR;
 
-  paint_tool->pick_colors =  TRUE;
+  paint_tool->pick_colors  = TRUE;
   paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
 

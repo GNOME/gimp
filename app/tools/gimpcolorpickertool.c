@@ -511,10 +511,6 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
 			              GdkModifierType  state,
 			              GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   /*  We used to use the following code here:
    *
    *  if (gimp_image_pick_correlate_layer (gdisp->gimage, x, y)) { ... }
@@ -526,18 +522,14 @@ gimp_color_picker_tool_cursor_update (GimpTool        *tool,
       coords->y > 0 &&
       coords->y < gdisp->gimage->height)
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_COLOR_PICKER_CURSOR,
-                                              GIMP_COLOR_PICKER_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor = GIMP_COLOR_PICKER_CURSOR;
     }
   else
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_BAD_CURSOR,
-                                              GIMP_COLOR_PICKER_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor = GIMP_BAD_CURSOR;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

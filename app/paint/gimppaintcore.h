@@ -63,26 +63,26 @@ typedef struct _GimpPaintToolClass GimpPaintToolClass;
 
 struct _GimpPaintTool
 {
-  GimpDrawTool    parent_instance;
+  GimpDrawTool  parent_instance;
 
-  GimpCoords      start_coords;  /*  starting coords            */
-  GimpCoords      cur_coords;    /*  current coords             */
-  GimpCoords      last_coords;   /*  last coords                */
+  GimpCoords    start_coords;  /*  starting coords            */
+  GimpCoords    cur_coords;    /*  current coords             */
+  GimpCoords    last_coords;   /*  last coords                */
 
-  gint            state;         /*  state of buttons and keys  */
+  gint          state;         /*  state of buttons and keys  */
 
-  gdouble         distance;      /*  distance traveled by brush */
-  gdouble         pixel_dist;    /*  distance in pixels         */
-  gdouble         spacing;       /*  spacing                    */
+  gdouble       distance;      /*  distance traveled by brush */
+  gdouble       pixel_dist;    /*  distance in pixels         */
+  gdouble       spacing;       /*  spacing                    */
 
-  gint            x1, y1;        /*  image space coordinate     */
-  gint            x2, y2;        /*  image space coords         */
+  gint          x1, y1;        /*  image space coordinate     */
+  gint          x2, y2;        /*  image space coords         */
 
-  GimpBrush     * brush;         /*  current brush	        */
+  GimpBrush    *brush;         /*  current brush	      */
 
-  gboolean        pick_colors;   /*  pick color if ctrl or alt is pressed  */
-  gboolean        pick_state;    /*  was ctrl or alt pressed when clicked? */
-  ToolFlags       flags;	 /*  tool flags, see ToolFlags above       */
+  gboolean      pick_colors;   /*  pick color if ctrl or alt is pressed  */
+  gboolean      pick_state;    /*  was ctrl or alt pressed when clicked? */
+  ToolFlags     flags;         /*  tool flags, see ToolFlags above       */
 };
 
 struct _GimpPaintToolClass

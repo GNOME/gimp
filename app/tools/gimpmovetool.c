@@ -470,31 +470,28 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
                               GdkModifierType  state,
                               GimpDisplay     *gdisp)
 {
-  GimpMoveTool     *move;
-  MoveOptions      *options;
-  GimpDisplayShell *shell;
-  GimpGuide        *guide;
-  GimpLayer        *layer;
+  GimpMoveTool *move;
+  MoveOptions  *options;
+  GimpGuide    *guide;
+  GimpLayer    *layer;
 
   move = GIMP_MOVE_TOOL (tool);
 
   options = (MoveOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   if (options->move_mask && ! gimp_image_mask_is_empty (gdisp->gimage))
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_RECT_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_MOVE);
+      gimp_tool_set_cursor (tool, gdisp,
+                            GIMP_MOUSE_CURSOR,
+                            GIMP_RECT_SELECT_TOOL_CURSOR,
+                            GIMP_CURSOR_MODIFIER_MOVE);
     }
   else if (options->move_current)
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_MOVE_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      gimp_tool_set_cursor (tool, gdisp,
+                            GIMP_MOUSE_CURSOR,
+                            GIMP_MOVE_TOOL_CURSOR,
+                            GIMP_CURSOR_MODIFIER_NONE);
     }
   else
     {
@@ -503,26 +500,32 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	{
 	  tool->gdisp = gdisp;
 
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GDK_HAND2,
-                                                  GIMP_TOOL_CURSOR_NONE,
-                                                  GIMP_CURSOR_MODIFIER_HAND);
+	  gimp_tool_set_cursor (tool, gdisp,
+                                GDK_HAND2,
+                                GIMP_TOOL_CURSOR_NONE,
+                                GIMP_CURSOR_MODIFIER_HAND);
 
 	  if (tool->state != ACTIVE)
 	    {
 	      if (move->guide)
 		{
-		  gdisp = gdisplays_check_valid (move->disp, move->disp->gimage);
+                  GimpDisplay *old_guide_gdisp;
 
-		  if (gdisp)
+		  old_guide_gdisp = gdisplays_check_valid (move->disp,
+                                                           move->disp->gimage);
+
+		  if (old_guide_gdisp)
                     {
-                      shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+                      GimpDisplayShell *shell;
+
+                      shell = GIMP_DISPLAY_SHELL (old_guide_gdisp->shell);
 
                       gimp_display_shell_draw_guide (shell, move->guide, FALSE);
                     }
 		}
 
-	      gimp_display_shell_draw_guide (shell, guide, TRUE);
+	      gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                             guide, TRUE);
 
 	      move->guide = guide;
 	      move->disp  = gdisp;
@@ -535,32 +538,32 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
 	  if (gimp_image_floating_sel (gdisp->gimage) &&
 	      ! gimp_layer_is_floating_sel (layer))
 	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_ANCHOR);
+	      gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_MOUSE_CURSOR,
+                                    GIMP_RECT_SELECT_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_ANCHOR);
 	    }
 	  else if (layer == gimp_image_get_active_layer (gdisp->gimage))
 	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_MOVE_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
+	      gimp_tool_set_cursor (tool, gdisp,
+                                    GIMP_MOUSE_CURSOR,
+                                    GIMP_MOVE_TOOL_CURSOR,
+                                    GIMP_CURSOR_MODIFIER_NONE);
 	    }
 	  else
 	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GDK_HAND2,
-                                                      GIMP_TOOL_CURSOR_NONE,
-                                                      GIMP_CURSOR_MODIFIER_HAND);
+	      gimp_tool_set_cursor (tool, gdisp,
+                                    GDK_HAND2,
+                                    GIMP_TOOL_CURSOR_NONE,
+                                    GIMP_CURSOR_MODIFIER_HAND);
 	    }
 	}
       else
 	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_BAD_CURSOR,
-                                                  GIMP_MOVE_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
+	  gimp_tool_set_cursor (tool, gdisp,
+                                GIMP_BAD_CURSOR,
+                                GIMP_MOVE_TOOL_CURSOR,
+                                GIMP_CURSOR_MODIFIER_NONE);
 	}
     }
 }

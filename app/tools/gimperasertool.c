@@ -172,7 +172,10 @@ gimp_eraser_tool_init (GimpEraserTool *eraser)
   tool       = GIMP_TOOL (eraser);
   paint_tool = GIMP_PAINT_TOOL (eraser);
 
-  tool->tool_cursor = GIMP_ERASER_TOOL_CURSOR;
+  tool->tool_cursor            = GIMP_ERASER_TOOL_CURSOR;
+  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
+  tool->toggle_tool_cursor     = GIMP_ERASER_TOOL_CURSOR;
+  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
 
   paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }
@@ -194,8 +197,6 @@ gimp_eraser_tool_modifier_key (GimpTool        *tool,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->anti_erase_w),
                                     ! options->anti_erase);
     }
-
-  tool->toggled = options->anti_erase;
 }
   
 static void

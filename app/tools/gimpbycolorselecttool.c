@@ -473,29 +473,25 @@ by_color_select_cursor_update (GimpTool        *tool,
 {
   GimpByColorSelectTool *by_col_sel;
   SelectionOptions      *sel_options;
-  GimpDisplayShell      *shell;
   GimpLayer             *layer;
 
   by_col_sel = GIMP_BY_COLOR_SELECT_TOOL (tool);
 
   sel_options = (SelectionOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
   if (! sel_options->sample_merged &&
       layer && layer != gdisp->gimage->active_layer)
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_BAD_CURSOR,
-                                              tool->tool_cursor,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor = GIMP_BAD_CURSOR;
     }
   else
     {
-      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
+      tool->cursor = GIMP_MOUSE_CURSOR;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 void

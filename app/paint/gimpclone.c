@@ -227,9 +227,8 @@ gimp_clone_tool_init (GimpCloneTool *clone)
 
   tool->tool_cursor = GIMP_CLONE_TOOL_CURSOR;
 
-  paint_tool->pick_colors =  TRUE;
-  paint_tool->flags       |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
-  paint_tool->flags       |= TOOL_TRACES_ON_WINDOW;
+  paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
+  paint_tool->flags |= TOOL_TRACES_ON_WINDOW;
 }
 
 static void
@@ -396,14 +395,11 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 			       GdkModifierType  state,
 			       GimpDisplay     *gdisp)
 {
-  CloneOptions     *options;
-  GimpDisplayShell *shell;
-  GimpLayer        *layer;
-  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
+  CloneOptions  *options;
+  GimpLayer     *layer;
+  GdkCursorType  ctype = GIMP_MOUSE_CURSOR;
 
   options = (CloneOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
@@ -434,12 +430,9 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 	ctype = GIMP_BAD_CURSOR;
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          ctype == GIMP_CROSSHAIR_SMALL_CURSOR ?
-                                          GIMP_TOOL_CURSOR_NONE :
-                                          GIMP_CLONE_TOOL_CURSOR,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  tool->cursor = ctype;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

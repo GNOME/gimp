@@ -407,14 +407,6 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 		    NULL, NULL, time);
 
   tool->state = ACTIVE;
-
-  /*  set the pointer to the crosshair,
-   *  so one actually sees the cursor position
-   */
-  gimp_display_shell_install_tool_cursor (shell,
-                                          GIMP_CROSSHAIR_SMALL_CURSOR,
-                                          GIMP_MEASURE_TOOL_CURSOR,
-                                          GIMP_CURSOR_MODIFIER_NONE);
 }
 
 static void
@@ -652,15 +644,12 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
                                  GimpDisplay     *gdisp)
 {
   GimpMeasureTool   *measure_tool;
-  GimpDisplayShell  *shell;
   gboolean           in_handle = FALSE;
   GdkCursorType      ctype     = GIMP_CROSSHAIR_SMALL_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
   gint               i;
 
   measure_tool = GIMP_MEASURE_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state == ACTIVE && tool->gdisp == gdisp)
     {
@@ -709,10 +698,10 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
 	cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          GIMP_MEASURE_TOOL_CURSOR,
-                                          cmodifier);
+  tool->cursor          = ctype;
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

@@ -157,10 +157,12 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
   tool           = GIMP_TOOL (flip_tool);
   transform_tool = GIMP_TRANSFORM_TOOL (flip_tool);
 
-  tool->tool_cursor   = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
-  tool->toggle_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
+  tool->cursor             = GDK_SB_H_DOUBLE_ARROW;
+  tool->tool_cursor        = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+  tool->toggle_cursor      = GDK_SB_V_DOUBLE_ARROW;
+  tool->toggle_tool_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
 
-  tool->auto_snap_to  = FALSE;  /*  Don't snap to guides  */
+  tool->auto_snap_to       = FALSE;  /*  Don't snap to guides  */
 
   transform_tool->use_grid = FALSE;
 }
@@ -200,13 +202,9 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDisplayShell   *shell;
-  GimpDrawable       *drawable;
-  GdkCursorType       ctype       = GIMP_BAD_CURSOR;
-  GimpToolCursorType  tool_cursor = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
-  FlipOptions        *options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpDrawable *drawable;
+  FlipOptions  *options;
+  gboolean      bad_cursor = TRUE;
 
   options = (FlipOptions *) tool->tool_info->tool_options;
 
@@ -225,23 +223,25 @@ gimp_flip_tool_cursor_update (GimpTool        *tool,
 	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
 	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
-	      if (options->type == ORIENTATION_HORIZONTAL)
-		ctype = GDK_SB_H_DOUBLE_ARROW;
-	      else
-		ctype = GDK_SB_V_DOUBLE_ARROW;
+              bad_cursor = FALSE;
 	    }
 	}
     }
 
-  if (options->type == ORIENTATION_HORIZONTAL)
-    tool_cursor = GIMP_FLIP_HORIZONTAL_TOOL_CURSOR;
+  if (bad_cursor)
+    {
+      tool->cursor        = GIMP_BAD_CURSOR;
+      tool->toggle_cursor = GIMP_BAD_CURSOR;
+    }
   else
-    tool_cursor = GIMP_FLIP_VERTICAL_TOOL_CURSOR;
+    {
+      tool->cursor        = GDK_SB_H_DOUBLE_ARROW;
+      tool->toggle_cursor = GDK_SB_V_DOUBLE_ARROW;
+    }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          tool_cursor,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  tool->toggled = (options->type == ORIENTATION_VERTICAL);
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static TileManager *

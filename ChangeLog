@@ -1,3 +1,44 @@
+2002-02-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]: added fields for both the tool's
+	toggled and untoggled GdkCursorType, GimpToolCursorType and
+	GimpCursorModifier. Added a default implementation of
+	gimp_tool_cursor_update() which uses the new fields. Added
+	gimp_tool_set_cursor() as simple wrapper around the resp.
+	GimpDisplayShell functions so tools don't need to know them.
+
+	Tool implementations can either set the new fields in their
+	cursor_update() function and chain up or call the new wrapper.
+
+	* app/tools/gimpbezierselecttool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpdodgeburntool.c
+	* app/tools/gimperasertool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpinktool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.[ch]
+	* app/tools/gimppathtool.c
+	* app/tools/gimpselectiontool.c
+	* app/tools/gimpsmudgetool.c
+	* app/tools/gimptexttool.c
+	* app/tools/gimptransformtool.c: changed accordingly:
+
+	- set default values in the tools' instance_init functions.
+	- changed the cursor_update() stuff.
+	- removed inclusion of subclasses in gimppainttool.c
+	- the cursor_update() functions are better than before but still evil.
+	- i probably broke some of them...
+
 2002-02-03  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c: ref and sink the adjustment we use

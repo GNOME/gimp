@@ -233,7 +233,10 @@ gimp_convolve_tool_init (GimpConvolveTool *convolve)
 
   tool = GIMP_TOOL (convolve);
 
-  tool->tool_cursor = GIMP_BLUR_TOOL_CURSOR;
+  tool->tool_cursor            = GIMP_BLUR_TOOL_CURSOR;
+  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
+  tool->toggle_tool_cursor     = GIMP_BLUR_TOOL_CURSOR;
+  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
 }
 
 static void
@@ -258,7 +261,6 @@ gimp_convolve_tool_paint (GimpPaintTool    *paint_tool,
     default:
       break;
     }
-
 }
 
 static void
@@ -289,8 +291,6 @@ gimp_convolve_tool_modifier_key (GimpTool        *tool,
           break;
         }
     }
-
-  tool->toggled = (options->type == SHARPEN_CONVOLVE);
 }
 
 static void
@@ -367,7 +367,7 @@ gimp_convolve_tool_motion (GimpPaintTool        *paint_tool,
     rate = rate * 2.0 * paint_tool->cur_coords.pressure;
 
   calculate_matrix (type, rate); 
-    
+
   /*  Image region near edges? If so, paint area will be clipped   */
   /*  with respect to brush mask + 1 pixel border (# 19285)        */
 

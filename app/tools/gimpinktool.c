@@ -552,11 +552,8 @@ gimp_ink_tool_cursor_update (GimpTool        *tool,
                              GdkModifierType  state,
                              GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpLayer        *layer;
-  GdkCursorType     ctype = GDK_TOP_LEFT_ARROW;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpLayer     *layer;
+  GdkCursorType  ctype = GDK_TOP_LEFT_ARROW;
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
@@ -579,10 +576,9 @@ gimp_ink_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          GIMP_INK_TOOL_CURSOR,
-                                          GIMP_CURSOR_MODIFIER_NONE);
+  tool->cursor = ctype;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 

@@ -1005,76 +1005,57 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                                    GdkModifierType  state,
                                    GimpDisplay     *gdisp)
 {
-  GimpIscissorsTool *iscissors;
-  GimpDisplayShell  *shell;
+  GimpIscissorsTool  *iscissors;
+  GdkCursorType       cursor      = GIMP_MOUSE_CURSOR;
+  GimpToolCursorType  tool_cursor = GIMP_SCISSORS_TOOL_CURSOR;
+  GimpCursorModifier  cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   iscissors = GIMP_ISCISSORS_TOOL (tool);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   switch (iscissors->op)
     {
     case SELECTION_REPLACE:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_RECT_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
       break;
     case SELECTION_ADD:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_RECT_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_PLUS);
+      tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_PLUS;
       break;
     case SELECTION_SUB:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_RECT_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_MINUS);
+      tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_MINUS;
       break;
     case SELECTION_INTERSECT:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_RECT_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_INTERSECT);
+      tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+      cmodifier   = GIMP_CURSOR_MODIFIER_INTERSECT;
       break;
     case SELECTION_MOVE_MASK: /* abused */
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_SCISSORS_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_MOVE);
+      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case SELECTION_MOVE: /* abused */
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_SCISSORS_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_PLUS);
+      cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
     case -1:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_BAD_CURSOR,
-                                              GIMP_SCISSORS_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      cursor = GIMP_BAD_CURSOR;
       break;
     default:
       switch (iscissors->state)
 	{
 	case WAITING:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_SCISSORS_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_PLUS);
+          cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
 	  break;
 	case SEED_PLACEMENT:
 	case SEED_ADJUSTMENT:
 	default:
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_SCISSORS_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
 	  break;
 	}
     }
+
+  tool->cursor          = cursor;
+  tool->tool_cursor     = tool_cursor;
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 

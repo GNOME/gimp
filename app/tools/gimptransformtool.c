@@ -597,10 +597,10 @@ gimp_transform_tool_cursor_update (GimpTool        *tool,
       cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
 
-  gimp_display_shell_install_tool_cursor (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                          ctype,
-                                          tool->tool_cursor,
-                                          cmodifier);
+  tool->cursor          = ctype;
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

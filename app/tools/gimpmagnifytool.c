@@ -188,10 +188,16 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
   magnify_tool->w = 0;
   magnify_tool->h = 0;
 
-  tool->tool_cursor  = GIMP_ZOOM_TOOL_CURSOR;
+  tool->cursor                 = GIMP_ZOOM_CURSOR;
+  tool->tool_cursor            = GIMP_ZOOM_TOOL_CURSOR;
+  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_PLUS;
 
-  tool->scroll_lock  = TRUE;   /*  Disallow scrolling    */
-  tool->auto_snap_to = FALSE;  /*  Don't snap to guides  */
+  tool->toggle_cursor          = GIMP_ZOOM_CURSOR;
+  tool->toggle_tool_cursor     = GIMP_ZOOM_TOOL_CURSOR;
+  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_MINUS;
+
+  tool->scroll_lock            = TRUE;   /*  Disallow scrolling    */
+  tool->auto_snap_to           = FALSE;  /*  Don't snap to guides  */
 }
 
 static void
@@ -364,27 +370,13 @@ gimp_magnify_tool_cursor_update (GimpTool        *tool,
 				 GdkModifierType  state,
 				 GimpDisplay     *gdisp)
 {
-  MagnifyOptions   *options;
-  GimpDisplayShell *shell;
+  MagnifyOptions *options;
 
   options = (MagnifyOptions *) tool->tool_info->tool_options;
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  tool->toggled = (options->type == GIMP_ZOOM_OUT);
 
-  if (options->type == GIMP_ZOOM_IN)
-    {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_ZOOM_CURSOR,
-                                              GIMP_ZOOM_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_PLUS);
-    }
-  else
-    {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_ZOOM_CURSOR,
-                                              GIMP_ZOOM_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_MINUS);
-   }
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

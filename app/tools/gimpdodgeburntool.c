@@ -197,11 +197,11 @@ gimp_dodgeburn_tool_init (GimpDodgeBurnTool *dodgeburn)
   GimpTool	*tool;
   GimpPaintTool *paint_tool;
 
-  tool = GIMP_TOOL (dodgeburn);
+  tool       = GIMP_TOOL (dodgeburn);
   paint_tool = GIMP_PAINT_TOOL (dodgeburn);
 
-  tool->tool_cursor   = GIMP_DODGE_TOOL_CURSOR;
-  tool->toggle_cursor = GIMP_BURN_TOOL_CURSOR;
+  tool->tool_cursor         = GIMP_DODGE_TOOL_CURSOR;
+  tool->toggle_tool_cursor  = GIMP_BURN_TOOL_CURSOR;
 
   paint_tool->flags |= TOOL_CAN_HANDLE_CHANGING_BRUSH;
 }

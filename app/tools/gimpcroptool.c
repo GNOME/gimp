@@ -726,7 +726,6 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
   GimpCropTool      *crop;
   GimpDrawTool      *draw_tool;
   CropOptions       *options;
-  GimpDisplayShell  *shell;
   GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
   GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
 
@@ -734,8 +733,6 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
   draw_tool = GIMP_DRAW_TOOL (tool);
 
   options = (CropOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if (tool->state == INACTIVE ||
       (tool->state == ACTIVE && tool->gdisp != gdisp))
@@ -782,12 +779,12 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
       ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          options->type == CROP_CROP ?
-                                          GIMP_CROP_TOOL_CURSOR :
-                                          GIMP_RESIZE_TOOL_CURSOR,
-                                          cmodifier);
+  tool->cursor          = ctype;
+  tool->tool_cursor     = (options->type == CROP_CROP ? 
+                           GIMP_CROP_TOOL_CURSOR : GIMP_RESIZE_TOOL_CURSOR);
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 void

@@ -54,10 +54,6 @@
 #include "display/gimpdisplayshell.h"
 #include "display/gimpstatusbar.h"
 
-#include "gimpdrawtool.h"
-#include "gimpdodgeburntool.h"
-#include "gimperasertool.h"
-#include "gimpconvolvetool.h"
 #include "gimppainttool.h"
 
 #include "app_procs.h"
@@ -559,8 +555,6 @@ gimp_paint_tool_motion (GimpTool        *tool,
   paint_tool->last_coords = paint_tool->cur_coords;
 }
 
-
-/* FIXME: this belongs in the individual tools */
 static void
 gimp_paint_tool_cursor_update (GimpTool        *tool,
                                GimpCoords      *coords,
@@ -572,10 +566,7 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   GimpDisplayShell *shell;
   GimpLayer        *layer;
   gchar             status_str[STATUSBAR_SIZE];
-
-  GdkCursorType      ctype     = GIMP_MOUSE_CURSOR;
-  GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
-  gboolean           ctoggle   = FALSE;
+  gboolean          pick_colors = FALSE;
 
   paint_tool = GIMP_PAINT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
@@ -586,26 +577,6 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
   gimp_draw_tool_pause (draw_tool);
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "paint_tool");
-
-#ifdef __GNUC__
-#warning this doesnt belong here
-#endif
-  /* Set toggle cursors for various paint tools */
-  if (tool->toggled)
-    {
-      if (GIMP_IS_ERASER_TOOL (tool))
-	{
-	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
-	}
-      else if (GIMP_IS_CONVOLVE_TOOL (tool))
-	{
-	  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
-	}
-      else if (GIMP_IS_DODGEBURN_TOOL (tool))
-	{
-	  ctoggle = TRUE;
-	}
-    }
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage)))
     {
@@ -644,8 +615,12 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 			break;
 		    }
 
-		  dx = idx > 0 ? (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
-		  dy = idy > 0 ? (cosinus[i] * radius) >> 8 : - ((cosinus[i] * radius) >> 8);
+		  dx = (idx > 0 ?
+                        (cosinus[6-i] * radius) >> 8 :
+                        - ((cosinus[6-i] * radius) >> 8));
+		  dy = (idy > 0 ?
+                        (cosinus[i] * radius) >> 8 :
+                        - ((cosinus[i] * radius) >> 8));
 		}
 
 	      paint_tool->cur_coords.x = paint_tool->last_coords.x + dx;
@@ -661,20 +636,20 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	    }
 	  else
 	    {
-	      gchar *format_str =
-		g_strdup_printf ("%%.%df %s",
-				 gimp_unit_get_digits (gdisp->gimage->unit),
-				 gimp_unit_get_symbol (gdisp->gimage->unit));
+	      gchar format_str[64];
+
+              g_snprintf (format_str, sizeof (format_str), "%%.%df %s",
+                          gimp_unit_get_digits (gdisp->gimage->unit),
+                          gimp_unit_get_symbol (gdisp->gimage->unit));
+
 	      d = (gimp_unit_get_factor (gdisp->gimage->unit) *
 		   sqrt (SQR (dx / gdisp->gimage->xresolution) +
 			 SQR (dy / gdisp->gimage->yresolution)));
 
 	      g_snprintf (status_str, sizeof (status_str), format_str, d);
-	      g_free (format_str);
 	    }
 
-	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar),
-                               "paint_tool",
+	  gimp_statusbar_push (GIMP_STATUSBAR (shell->statusbar), "paint_tool",
                                status_str);
 
 	  if (draw_tool->gc == NULL)
@@ -693,34 +668,23 @@ gimp_paint_tool_cursor_update (GimpTool        *tool,
 	       ! (state & GDK_SHIFT_MASK) &&
 	       (state & (GDK_CONTROL_MASK | GDK_MOD1_MASK)))
         {
-	  ctype = GIMP_COLOR_PICKER_CURSOR;
+	  pick_colors = TRUE;
 	}
-      /* Normal operation -- no modifier pressed or first stroke */
-      else
-	{
-	  if (coords->x >= off_x &&
-              coords->y >= off_y &&
-	      coords->x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
-	      coords->y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
-	    {
-	      /*  One more test--is there a selected region?
-	       *  if so, is cursor inside?
-	       */
-	      if (gimp_image_mask_is_empty (gdisp->gimage))
-		ctype = GIMP_MOUSE_CURSOR;
-	      else if (gimp_image_mask_value (gdisp->gimage,
-                                              coords->x, coords->y))
-		ctype = GIMP_MOUSE_CURSOR;
-	    }
-	}
+    }
 
-      gimp_display_shell_install_tool_cursor (shell,
-                                              ctype,
-                                              ctype == GIMP_COLOR_PICKER_CURSOR ?
-                                              GIMP_COLOR_PICKER_TOOL_CURSOR :
-                                              ctoggle ?
-                                              tool->toggle_cursor : tool->tool_cursor,
-                                              cmodifier);
+  if (pick_colors)
+    {
+      gimp_tool_set_cursor (tool, gdisp,
+                            GIMP_COLOR_PICKER_CURSOR,
+                            GIMP_COLOR_PICKER_TOOL_CURSOR,
+                            GIMP_CURSOR_MODIFIER_NONE);
+    }
+  else
+    {
+      GIMP_TOOL_CLASS (parent_class)->cursor_update (tool,
+                                                     coords,
+                                                     state,
+                                                     gdisp);
     }
 }
 

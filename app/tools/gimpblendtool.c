@@ -217,6 +217,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   tool = GIMP_TOOL (blend_tool);
  
   tool->tool_cursor = GIMP_BLEND_TOOL_CURSOR;
+
   tool->scroll_lock = TRUE;  /*  Disallow scrolling  */
 }
 
@@ -427,26 +428,18 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
   switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_BAD_CURSOR,
-                                              GIMP_BLEND_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor = GIMP_BAD_CURSOR;
       break;
     default:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_BLEND_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor = GIMP_MOUSE_CURSOR;
       break;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

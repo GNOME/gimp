@@ -202,7 +202,9 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                                     gimprc.monitor_yres);
 
+  tool->cursor      = GDK_FLEUR;
   tool->tool_cursor = GIMP_TEXT_TOOL_CURSOR;
+
   tool->scroll_lock = TRUE;  /* Disallow scrolling */
 }
 
@@ -294,10 +296,7 @@ text_tool_cursor_update (GimpTool        *tool,
 			 GdkModifierType  state,
 			 GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  GimpLayer        *layer;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpLayer *layer;
 
   layer = gimp_image_pick_correlate_layer (gdisp->gimage, coords->x, coords->y);
 
@@ -305,18 +304,14 @@ text_tool_cursor_update (GimpTool        *tool,
     {
       /* if there is a floating selection, and this aint it ... */
 
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GDK_FLEUR,
-                                              GIMP_MOVE_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor_modifier = GIMP_CURSOR_MODIFIER_MOVE;
     }
   else
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GDK_XTERM,
-                                              GIMP_TEXT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      tool->cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
     }
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static void

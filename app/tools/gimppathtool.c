@@ -811,10 +811,8 @@ gimp_path_tool_cursor_update (GimpTool        *tool,
 			      GdkModifierType  state,
 			      GimpDisplay     *gdisp)
 {
-  GimpDisplayShell *shell;
-  gint              cursor_location;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+  GimpCursorModifier cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+  gint               cursor_location;
 
   cursor_location = path_tool_cursor_position (GIMP_PATH_TOOL (tool)->cur_path,
                                                coords->x,
@@ -828,33 +826,25 @@ gimp_path_tool_cursor_update (GimpTool        *tool,
   switch (cursor_location)
     {
     case ON_CANVAS:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_TOOL_CURSOR_NONE,
-                                              GIMP_CURSOR_MODIFIER_PLUS);
+      cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
     case ON_ANCHOR:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_TOOL_CURSOR_NONE,
-                                              GIMP_CURSOR_MODIFIER_MOVE);
+      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case ON_HANDLE:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_TOOL_CURSOR_NONE,
-                                              GIMP_CURSOR_MODIFIER_MOVE);
+      cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
       break;
     case ON_CURVE:
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_TOOL_CURSOR_NONE,
-                                              GIMP_CURSOR_MODIFIER_NONE);
+      cmodifier = GIMP_CURSOR_MODIFIER_NONE;
       break;
     default:
       g_warning ("gimp_path_tool_cursor_update(): bad cursor_location");
       break;
     }
+
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 

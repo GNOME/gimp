@@ -1818,199 +1818,129 @@ gimp_bezier_select_tool_cursor_update (GimpTool        *tool,
 {
   GimpBezierSelectTool *bezier_sel;
   GimpDrawTool         *draw_tool;
-  GimpDisplayShell     *shell;
-  gboolean              on_curve;
-  gboolean              on_control_pnt;
-  gboolean              in_selection_area;
-  gint                  halfwidth, halfheight;
+  GimpToolCursorType    tool_cursor = GIMP_BEZIER_SELECT_TOOL_CURSOR;
+  GimpCursorModifier    cmodifier   = GIMP_CURSOR_MODIFIER_NONE;
 
   bezier_sel = GIMP_BEZIER_SELECT_TOOL (tool);
   draw_tool  = GIMP_DRAW_TOOL (tool);
 
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if (gdisp != tool->gdisp ||
-      draw_tool->draw_state == GIMP_DRAW_TOOL_STATE_INVISIBLE)
+  if (gdisp == tool->gdisp &&
+      draw_tool->draw_state != GIMP_DRAW_TOOL_STATE_INVISIBLE)
     {
-      gimp_display_shell_install_tool_cursor (shell,
-                                              GIMP_MOUSE_CURSOR,
-                                              GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                              GIMP_CURSOR_MODIFIER_NONE);
-      return;
-    }
+      gboolean on_curve;
+      gboolean on_control_pnt;
+      gboolean in_selection_area;
+      gint     halfwidth, halfheight;
 
-  halfwidth  = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
-  halfheight = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
+      halfwidth  = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
+      halfheight = UNSCALEX (gdisp, BEZIER_HALFWIDTH);
 
-  on_control_pnt = bezier_on_control_point (gdisp, bezier_sel,
-                                            coords->x, coords->y,
-                                            halfwidth, halfheight);
+      on_control_pnt = bezier_on_control_point (gdisp, bezier_sel,
+                                                coords->x, coords->y,
+                                                halfwidth, halfheight);
 
-  on_curve = bezier_point_on_curve (gdisp, bezier_sel,
-                                    coords->x, coords->y,
-                                    halfwidth, halfheight);
+      on_curve = bezier_point_on_curve (gdisp, bezier_sel,
+                                        coords->x, coords->y,
+                                        halfwidth, halfheight);
 
-  if (bezier_sel->mask && bezier_sel->closed &&
-      gimp_channel_value (bezier_sel->mask, coords->x, coords->y) && 
-      !on_control_pnt &&
-      (!on_curve || ModeEdit != EXTEND_ADD))
-    {
-      in_selection_area = TRUE;
+      if (bezier_sel->mask && bezier_sel->closed &&
+          gimp_channel_value (bezier_sel->mask, coords->x, coords->y) && 
+          !on_control_pnt &&
+          (!on_curve || ModeEdit != EXTEND_ADD))
+        {
+          in_selection_area = TRUE;
 
-      if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
-	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_INTERSECT);
-	}
-      else if (state & GDK_SHIFT_MASK)
-	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_PLUS);
-	}
-      else if (state & GDK_CONTROL_MASK)
-	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_MINUS);
-	}
+          tool_cursor = GIMP_RECT_SELECT_TOOL_CURSOR;
+
+          if ((state & GDK_CONTROL_MASK) && (state & GDK_SHIFT_MASK))
+            {
+              cmodifier = GIMP_CURSOR_MODIFIER_INTERSECT;
+            }
+          else if (state & GDK_SHIFT_MASK)
+            {
+              cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
+            }
+          else if (state & GDK_CONTROL_MASK)
+            {
+              cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
+            }
+        }
+      else if (state & GDK_MOD1_MASK)
+        {
+          /* Moving curve */
+          if (state & GDK_SHIFT_MASK)
+            {
+              /* moving on 1 curve */
+              cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+            }
+          else
+            {
+              cmodifier = GIMP_CURSOR_MODIFIER_MOVE;
+            }
+        }
       else
-	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_RECT_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
-	}
-      return;
+        {
+          switch (ModeEdit)
+            {
+            case EXTEND_NEW:
+              if (on_control_pnt && bezier_sel->closed)
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_CONTROL;
+
+                  /* g_print ("add to curve cursor\n"); */
+                }
+              else if (on_curve)
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
+
+                  /* g_print ("edit control point cursor\n"); */
+                }
+              break;
+
+            case EXTEND_ADD:
+              if (on_curve)
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_PLUS;
+
+                  /* g_print ("add to curve cursor\n"); */
+                }
+              break;
+
+            case EXTEND_EDIT:
+              if (on_control_pnt)
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_CONTROL;
+
+                  /* g_print ("edit control point cursor\n"); */
+                }
+              break;
+
+            case EXTEND_REMOVE:
+              if (on_control_pnt && (state & GDK_SHIFT_MASK))
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
+
+                  /* g_print ("delete whole curve cursor\n"); */
+                }
+              else if (on_control_pnt)
+                {
+                  cmodifier = GIMP_CURSOR_MODIFIER_MINUS;
+
+                  /* g_print ("remove point cursor\n"); */
+                }
+              break;
+
+            default:
+              g_print ("In default\n");
+              break;
+            }
+        }
     }
 
-  if (state & GDK_MOD1_MASK)
-    {
-      /* Moving curve */
-      if (state & GDK_SHIFT_MASK)
-	{
-	  /* moving on 1 curve */
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_MOVE);
-	}
-      else
-	{
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_MOVE);
-	}
-    }
-  else
-    {
-      switch (ModeEdit)
-	{
-	case EXTEND_NEW:
-	  if (on_control_pnt && bezier_sel->closed)
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_CONTROL);
-/* 	      g_print ("add to curve cursor\n"); */
-	    }
-	  else if (on_curve)
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
-/* 	      g_print ("edit control point cursor\n"); */
-	    }
-	  else
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
-	    }
-	  break;
-
-	case EXTEND_ADD:
-	  if (on_curve)
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_PLUS);
-/* 	      g_print ("add to curve cursor\n"); */
-	    }
-	  else
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
-/* 	      g_print ("default no action cursor\n"); */
-	    }
-	  break;
-
-	case EXTEND_EDIT:
-	  if (on_control_pnt)
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_CONTROL);
-/* 	      g_print ("edit control point cursor\n"); */
-	    }
-	  else
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
-/* 	      g_print ("default no action cursor\n"); */
-	    }
-	  break;
-
-	case EXTEND_REMOVE:
-	  if (on_control_pnt && (state & GDK_SHIFT_MASK))
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_MINUS);
-/*            g_print ("delete whole curve cursor\n"); */
-	    }
-	  else if (on_control_pnt)
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_MINUS);
-/* 	      g_print ("remove point cursor\n"); */
-	    }
-	  else
-	    {
-	      gimp_display_shell_install_tool_cursor (shell,
-                                                      GIMP_MOUSE_CURSOR,
-                                                      GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                      GIMP_CURSOR_MODIFIER_NONE);
-/* 	      g_print ("default no action cursor\n"); */
-	    }
-	  break;
-
-	default:
-	  g_print ("In default\n");
-	  gimp_display_shell_install_tool_cursor (shell,
-                                                  GIMP_MOUSE_CURSOR,
-                                                  GIMP_BEZIER_SELECT_TOOL_CURSOR,
-                                                  GIMP_CURSOR_MODIFIER_NONE);
-	  break;
-	}
-    }
+  gimp_tool_set_cursor (tool, gdisp,
+                        GIMP_MOUSE_CURSOR,
+                        tool_cursor,
+                        cmodifier);
 }
 
 static void

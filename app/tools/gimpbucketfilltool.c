@@ -306,15 +306,11 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 				     GimpDisplay     *gdisp)
 {
   BucketOptions      *options;
-  GimpDisplayShell   *shell;
   GimpLayer          *layer;
-  GdkCursorType       ctype     = GDK_TOP_LEFT_ARROW;
   GimpCursorModifier  cmodifier = GIMP_CURSOR_MODIFIER_NONE;
   gint                off_x, off_y;
 
   options = (BucketOptions *) tool->tool_info->tool_options;
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
@@ -331,8 +327,6 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	  if (gimp_image_mask_is_empty (gdisp->gimage) ||
 	      gimp_image_mask_value (gdisp->gimage, coords->x, coords->y))
 	    {
-	      ctype = GIMP_MOUSE_CURSOR;
-
 	      switch (options->fill_mode)
 		{
 		case FG_BUCKET_FILL:
@@ -349,10 +343,9 @@ gimp_bucket_fill_tool_cursor_update (GimpTool        *tool,
 	}
     }
 
-  gimp_display_shell_install_tool_cursor (shell,
-                                          ctype,
-                                          GIMP_BUCKET_FILL_TOOL_CURSOR,
-                                          cmodifier);
+  tool->cursor_modifier = cmodifier;
+
+  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, gdisp);
 }
 
 static GimpToolOptions *
