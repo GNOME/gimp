@@ -790,6 +790,14 @@ the ones in dialog size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_DISPLAY_FILTER ##### -->
+<para>
+<inlinegraphic fileref="stock-display-filter-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-display-filter-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_CURVE_FREE ##### -->
 <para>
 <inlinegraphic fileref="stock-curve-free-16.png" format="png"></inlinegraphic>

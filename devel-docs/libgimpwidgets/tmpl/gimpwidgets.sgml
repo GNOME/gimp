@@ -295,6 +295,14 @@ Returns the #GtkAdjustment of the random_seed's #GtkSpinButton.
 @hbox: The #GtkHBox returned by gimp_random_seed_new().
 
 
+<!-- ##### MACRO GIMP_RANDOM_SEED_TOGGLE ##### -->
+<para>
+
+</para>
+
+@hbox: 
+
+
 <!-- ##### FUNCTION gimp_random_seed_new ##### -->
 <para>
 
