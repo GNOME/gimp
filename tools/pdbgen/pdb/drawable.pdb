@@ -339,7 +339,8 @@ HELP
     $outargs[0]->{init} = $outargs[0]->{array}->{init} = 1;
 
     %invoke = (
-	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	vars => [ 'gint8 *p', 'gint b', 
+		  'TileAccessor acc = TILE_ACCESSOR_INVALID' ],
 	code => <<'CODE'
 {
   if (x < drawable_width (drawable) && y < drawable_height (drawable))
@@ -347,17 +348,12 @@ HELP
       num_channels = drawable_bytes (drawable);
       pixel = g_new (gint8, num_channels);
 
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
-				    TRUE, TRUE);
-
-      x %= TILE_WIDTH;
-      y %= TILE_WIDTH;
-
-      p = tile_data_pointer (tile, y, x);
+      tile_accessor_start (&acc, drawable_data (drawable), TRUE, FALSE);
+      tile_accessor_position (&acc, x, y);
+      p = acc.pointer;
       for (b = 0; b < num_channels; b++)
-	pixel[b] = p[b];
-
-      tile_release (tile, FALSE);
+      pixel[b] = p[b];
+      tile_accessor_finish (&acc);
     }
   else
     success = FALSE;
@@ -382,23 +378,19 @@ HELP
     push @inargs, &pixel_arg();
 
     %invoke = (
-	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	vars => [ 'gint8 *p', 'gint b', 
+		  'TileAccessor acc = TILE_ACCESSOR_INVALID' ],
 	code => <<'CODE'
 {
   if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
       num_channels == drawable_bytes (drawable))
     {
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
-				    TRUE, TRUE);
-
-      x %= TILE_WIDTH;
-      y %= TILE_WIDTH;
-
-      p = tile_data_pointer (tile, y, x);
+      tile_accessor_start (&acc, drawable_data (drawable), TRUE, FALSE);
+      tile_accessor_position (&acc, x, y);
+      p = acc.pointer;
       for (b = 0; b < num_channels; b++)
 	*p++ = *pixel++;
-
-      tile_release (tile, TRUE);
+      tile_accessor_finish (&acc);
     }
   else
     success = FALSE;
@@ -425,7 +417,6 @@ HELP
 
     %invoke = ( code => 'gimp_drawable_set_gimage (drawable, gimage);' );
 }
-
 
 sub dim_args () {
     my @args;
@@ -503,7 +494,7 @@ CODE
     );
 }
 
-@headers = qw("drawable.h");
+@headers = qw("drawable.h" "tile_accessor.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type

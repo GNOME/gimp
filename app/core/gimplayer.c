@@ -42,6 +42,7 @@
 #include "layer_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
+#include "tile_manager.h"
 
 enum {
   REMOVED,
@@ -998,8 +999,8 @@ layer_pick_correlate (layer, x, y)
      Layer *layer;
      int x, y;
 {
-  Tile *tile;
-  Tile *mask_tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
+  TileAccessor mask_acc = TILE_ACCESSOR_INVALID;
   int val;
 
   /*  Is the point inside the layer?
@@ -1020,22 +1021,23 @@ layer_pick_correlate (layer, x, y)
       /*  Otherwise, determine if the alpha value at
        *  the given point is non-zero
        */
-      tile = tile_manager_get_tile (GIMP_DRAWABLE(layer)->tiles, x, y, TRUE, FALSE);
+      tile_accessor_start (&acc, GIMP_DRAWABLE(layer)->tiles, TRUE, FALSE);
+      tile_accessor_position (&acc, x, y);
+      g_assert (acc.valid && acc.pointer);
+      val = * ((unsigned char*) (acc.pointer) + (acc.bpp - 1));
 
-      val = * ((unsigned char*) tile_data_pointer (tile,
-						   x % TILE_WIDTH,
-						   y % TILE_HEIGHT) +
-				tile_bpp (tile) - 1);
       if (layer->mask)
 	{
 	  unsigned char *ptr;
-	  mask_tile = tile_manager_get_tile (GIMP_DRAWABLE(layer->mask)->tiles, x, y, TRUE, FALSE);
-	  ptr = tile_data_pointer (mask_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+	  tile_accessor_start (&mask_acc, GIMP_DRAWABLE(layer->mask)->tiles, TRUE, FALSE);
+	  tile_accessor_position (&mask_acc, x, y);
+	  g_assert (mask_acc.valid && mask_acc.pointer);
+	  ptr = mask_acc.pointer;
 	  val = val * (*ptr) / 255;
-	  tile_release (mask_tile, FALSE);
+	  tile_accessor_finish (&mask_acc);
 	}
 
-      tile_release (tile, FALSE);
+      tile_accessor_finish (&acc);
 
       if (val > 63)
 	return TRUE;

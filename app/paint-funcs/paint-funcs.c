@@ -28,6 +28,7 @@
 #include "paint_funcs.h"
 #include "boundary.h"
 #include "tile_manager.h"
+#include "tile_accessor.h"
 
 #include "tile_manager_pvt.h"  /* For copy-on-write */
 #include "tile.h"			/* ick. */
@@ -1145,6 +1146,13 @@ difference_pixels (const unsigned char *src1,
     }
 }
 
+#if defined(ENABLE_MP) && defined(__GLIBC__)
+#define DISSOLVE_USE_RAND48
+#elsif defined(ENABLE_MP) && !defined(__GLIBC__)
+#define DISSOLVE_USE_RAND_R
+#else
+#define DISSOLVE_USE_RAND
+#endif
 
 void
 dissolve_pixels (const unsigned char *src,
@@ -1160,7 +1168,7 @@ dissolve_pixels (const unsigned char *src,
   int alpha, b;
   int rand_val;
   
-#if defined(ENABLE_MP) && defined(__GLIBC__)
+#ifdef DISSOLVE_USE_RAND48
   /* The glibc 2.1 documentation recommends using the SVID random functions
    * instead of rand_r
    */
@@ -1168,20 +1176,27 @@ dissolve_pixels (const unsigned char *src,
   long temp_val;
 
   srand48_r (random_table[y % RANDOM_TABLE_SIZE], &seed);
-  for (b = 0; b < x; b++)
-    lrand48_r (&seed, &temp_val);
-#elif defined(ENABLE_MP) && !defined(__GLIBC__)
+#endif
+#ifdef DISSOLVE_USE_RAND_R
   /* If we are running with multiple threads rand_r give _much_ better
    * performance than rand
    */
   unsigned int seed;
   seed = random_table[y % RANDOM_TABLE_SIZE];
-  for (b = 0; b < x; b++)
-    rand_r (&seed);
-#else
+#endif
+#ifdef DISSOLVE_USE_RAND
   /* Set up the random number generator */
   srand (random_table[y % RANDOM_TABLE_SIZE]);
+#endif
+
   for (b = 0; b < x; b++)
+#ifdef DISSOLVE_USE_RAND48
+    lrand48_r (&seed, &temp_val);
+#endif
+#ifdef DISSOLVE_USE_RAND_R
+    rand_r (&seed);
+#endif
+#ifdef DISSOLVE_USE_RAND
     rand ();
 #endif
 
@@ -1194,12 +1209,14 @@ dissolve_pixels (const unsigned char *src,
 	dest[b] = src[b];
 
       /*  dissolve if random value is > opacity  */
-#if defined(ENABLE_MP) && defined(__GLIBC__)
+#ifdef DISSOLVE_USE_RAND48
       lrand48_r (&seed, &temp_val);
       rand_val = temp_val & 0xff;
-#elif defined(ENABLE_MP) && !defined(__GLIBC__)
+#endif
+#ifdef DISSOLVE_USE_RAND_R
       rand_val = (rand_r (&seed) & 0xff);
-#else
+#endif
+#ifdef DISSOLVE_USE_RAND
       rand_val = (rand () & 0xff);
 #endif
       if (has_alpha)
@@ -3138,18 +3155,18 @@ copy_region (PixelRegion *src,
        pr = pixel_regions_process (pr))
     {
       if (src->tiles && dest->tiles &&
-	  src->curtile && dest->curtile &&
+	  src->tileacc.valid && dest->tileacc.valid &&
 	  src->offx == 0 && dest->offx == 0 &&
 	  src->offy == 0 && dest->offy == 0 &&
-	  src->w == tile_ewidth(src->curtile) && 
-	  dest->w == tile_ewidth(dest->curtile) &&
-	  src->h == tile_eheight(src->curtile) && 
-	  dest->h == tile_eheight(dest->curtile)) 
+	  src->w == src->tileacc.width && 
+	  dest->w == dest->tileacc.width &&
+	  src->h == src->tileacc.height && 
+	  dest->h == dest->tileacc.height)
 	{
 #ifdef COWSHOW
 	  fputc('!',stderr);
 #endif
-	  tile_manager_map_over_tile (dest->tiles, dest->curtile, src->curtile);
+	  tile_manager_map_over_tile (dest->tiles, dest->tileacc.tile, src->tileacc.tile);
 	}
       else 
 	{
@@ -4205,11 +4222,14 @@ shapeburst_region (PixelRegion *srcPR,
 
 	      while (y >= end)
 		{
-		  tile = tile_manager_get_tile (srcPR->tiles, x, y, TRUE, FALSE);
-		  tile_data = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
-		  boundary = MINIMUM ((y % TILE_HEIGHT), (tile_ewidth(tile) - (x % TILE_WIDTH) - 1));
+		  tile_accessor_position (&srcPR->tileacc, x, y);
+		  tile_data = srcPR->tileacc.pointer;
+
+		  tile = srcPR->tileacc.tile; /* urg! */
+		  boundary = MINIMUM (y % TILE_HEIGHT, 
+				      srcPR->tileacc.width-(x%TILE_WIDTH)-1);
 		  boundary = MINIMUM (boundary, (y - end)) + 1;
-		  inc = 1 - tile_ewidth (tile);
+		  inc = 1 - srcPR->tileacc.width;
 
 		  while (boundary--)
 		    {
@@ -4227,8 +4247,6 @@ shapeburst_region (PixelRegion *srcPR,
 		      y--;
 		      tile_data += inc;
 		    }
-
-		  tile_release (tile, FALSE);
 		}
 	    }
 
@@ -5143,7 +5161,7 @@ combine_sub_region(struct combine_regions_struct *st,
       if (src1->offy != dest->offy)
 	g_error("SRC1 OFFSET != DEST OFFSET");
 #endif
-      update_tile_rowhints (src2->curtile,
+      update_tile_rowhints (src2->tileacc.tile,
 			    src2->offy, src2->offy + (src1->h - 1));
     }
   /* else it's probably a brush-composite */
@@ -5154,7 +5172,7 @@ combine_sub_region(struct combine_regions_struct *st,
 
       if (transparency_quickskip_possible)
 	{
-	  hint = tile_get_rowhint (src2->curtile, (src2->offy + h));
+	  hint = tile_get_rowhint (src2->tileacc.tile, (src2->offy + h));
 
 	  if (hint == TILEROWHINT_TRANSPARENT)
 	    {
@@ -5165,7 +5183,7 @@ combine_sub_region(struct combine_regions_struct *st,
 	{
 	  if (opacity_quickskip_possible)
 	    {
-	      hint = tile_get_rowhint (src2->curtile, (src2->offy + h));
+	      hint = tile_get_rowhint (src2->tileacc.tile, (src2->offy + h));
 	    }
 	}
       

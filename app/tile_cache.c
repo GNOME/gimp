@@ -231,27 +231,27 @@ tile_cache_init ()
 }
 
 static gint
-tile_cache_zorch_next ()
+tile_cache_zorch_next (void)
 {
   Tile *tile;
-
+  
   /* printf("cache zorch: %u/%u\n", cur_cache_size, cur_cache_dirty); */
-
+  
   if      (clean_list.first) tile = clean_list.first;
   else if (dirty_list.first) tile = dirty_list.first;
   else return FALSE;
-
-  CACHE_UNLOCK;
-  TILE_MUTEX_LOCK (tile);
-  CACHE_LOCK;
-  tile_cache_flush_internal (tile);
-  if (tile->dirty || tile->swap_offset == -1)
+  
+  if (0 == TILE_MUTEX_TRYLOCK (tile))
     {
-      tile_swap_out (tile);
+      tile_cache_flush_internal (tile);
+      if (tile->dirty || tile->swap_offset == -1)
+	{
+	  tile_swap_out (tile);
+	}
+      g_free (tile->data);
+      tile->data = NULL;
+      TILE_MUTEX_UNLOCK (tile);
     }
-  g_free (tile->data);
-  tile->data = NULL;
-  TILE_MUTEX_UNLOCK (tile);
   return TRUE;
 }
 
@@ -277,27 +277,19 @@ tile_idle_thread (void *data)
 	pthread_mutex_unlock(&dirty_mutex);
 	CACHE_LOCK;
       }
-      if ((tile = dirty_list.first)) 
+      if ((tile = dirty_list.first) &&
+	  (0 == TILE_MUTEX_TRYLOCK (tile))) 
 	{
-	  CACHE_UNLOCK;
-	  TILE_MUTEX_LOCK (tile);
-	  CACHE_LOCK;
-
 	  if (tile->dirty) 
 	    {
 	      list = tile->listhead;
 	      
 	      if (list == &dirty_list) cur_cache_dirty -= tile_size (tile);
 	      
-	      if (tile->next) 
-		tile->next->prev = tile->prev;
-	      else
-		list->last = tile->prev;
-	      
-	      if (tile->prev)
-		tile->prev->next = tile->next;
-	      else
-		list->first = tile->next;
+	      if (tile->next) tile->next->prev = tile->prev;
+	      else            list->last = tile->prev;
+	      if (tile->prev) tile->prev->next = tile->next;
+	      else  	      list->first = tile->next;
 	      
 	      tile->next = NULL;
 	      tile->prev = clean_list.last;

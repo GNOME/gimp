@@ -37,6 +37,7 @@
 #include "undo.h"
 
 #include "tile.h"
+#include "tile_accessor.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -126,12 +127,14 @@ static BlendOptions *blend_options = NULL;
 static PixelRegion distR =
 {
   NULL,  /* data */
-  NULL,  /* tiles */
-  0,     /* rowstride */
-  0, 0,  /* w, h */
-  0, 0,  /* x, y */
-  4,     /* bytes */
-  0      /* process count */
+  NULL,					/* tile manager */
+  TILE_ACCESSOR_INVALID,		/* tile accessor */
+  0, 0,					/* tile offsets */
+  0,					/* rowstride */
+  0, 0,					/* w, h */
+  0, 0,					/* x, y */
+  4,					/* bytes */
+  0					/* process count */
 };
 
 
@@ -1084,14 +1087,15 @@ gradient_calc_shapeburst_angular_factor (double x,
 					 double y)
 {
   int ix, iy;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   float value;
 
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = 1.0 - *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
-  tile_release (tile, FALSE);
+  tile_accessor_start (&acc, distR.tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, ix, iy);
+  value = 1.0 - *((float *) (acc.pointer));
+  tile_accessor_finish (&acc);
 
   return value;
 }
@@ -1102,15 +1106,16 @@ gradient_calc_shapeburst_spherical_factor (double x,
 					   double y)
 {
   int ix, iy;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   float value;
 
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
-  value = 1.0 - sin (0.5 * G_PI * value);
-  tile_release (tile, FALSE);
+  tile_accessor_start (&acc, distR.tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, ix, iy);
+  value = *((float *) (acc.pointer));
+  value = 1.0 - sin (0.5 * M_PI * value);
+  tile_accessor_finish (&acc);
 
   return value;
 }
@@ -1121,15 +1126,16 @@ gradient_calc_shapeburst_dimpled_factor (double x,
 					 double y)
 {
   int ix, iy;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   float value;
 
   ix = (int) BOUNDS (x, 0, distR.w);
   iy = (int) BOUNDS (y, 0, distR.h);
-  tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
-  value = *((float *) tile_data_pointer (tile, ix % TILE_WIDTH, iy % TILE_HEIGHT));
-  value = cos (0.5 * G_PI * value);
-  tile_release (tile, FALSE);
+  tile_accessor_start (&acc, distR.tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, ix, iy);
+  value = *((float *) (acc.pointer));
+  value = cos (0.5 * M_PI * value);
+  tile_accessor_finish (&acc);
 
   return value;
 }

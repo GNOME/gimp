@@ -39,6 +39,7 @@
 #include "drawable_pvt.h"
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -64,9 +65,7 @@ void               paths_draw_current         (GDisplay *, DrawCore *,
 					       GimpMatrix);
 
 #define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, TRUE, FALSE); \
-     src[i] = tile_data_pointer (tile[i], (x) % TILE_WIDTH, (y) % TILE_HEIGHT);
-
+     { tile_accessor_position (&acc[i], (x), (y)); src[i] = acc[i].pointer; }
 
 static void
 transform_ok_callback (GtkWidget *w,
@@ -1007,7 +1006,14 @@ transform_core_do (GImage          *gimage,
   unsigned char * dest, * d;
   unsigned char * src[16];
   double src_a[16][MAX_CHANNELS];
-  Tile *tile[16];
+  TileAccessor acc[16] = { TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID,
+			   TILE_ACCESSOR_INVALID, TILE_ACCESSOR_INVALID };
   int a[16];
   unsigned char bg_col[MAX_CHANNELS];
   int i;
@@ -1099,6 +1105,9 @@ transform_core_do (GImage          *gimage,
   pixel_region_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
   tiles->x = tx1;
   tiles->y = ty1;
+
+  for (b = 0; b < 16; b++) 
+    tile_accessor_start (&acc[i], float_tiles, TRUE, FALSE);
 
   width = tiles->width;
   height = tiles->height;
@@ -1313,9 +1322,6 @@ transform_core_do (GImage          *gimage,
                         }
 
                       *d++ = a_val;
-
-                      for (b = 0; b < 16; b++)
-                        tile_release (tile[b], FALSE);
                     }
                   else /* not in source range */
                     {
@@ -1394,9 +1400,6 @@ transform_core_do (GImage          *gimage,
                         *d++ = a_recip * BILINEAR (src_a[0][b], src_a[1][b], src_a[2][b], src_a[3][b], dx, dy);
 
                       *d++ = a_val;
-
-                      for (b = 0; b < 4; b++)
-                        tile_release (tile[b], FALSE);
                     }
                   else /* not in source range */
                     {
@@ -1422,8 +1425,6 @@ transform_core_do (GImage          *gimage,
 
                   for (b = 0; b < bytes; b++)
                     *d++ = src[0][b];
-
-                  tile_release (tile[0], FALSE);
                 }
               else /* not in source range */
                 {
@@ -1441,6 +1442,9 @@ transform_core_do (GImage          *gimage,
       /*  set the pixel region row  */
       pixel_region_set_row (&destPR, 0, (y - ty1), width, dest);
     }
+
+  for (b = 0; b < 16; b++) 
+    tile_accessor_finish (&acc[i]);
 
   g_free (dest);
   return tiles;

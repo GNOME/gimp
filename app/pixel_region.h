@@ -19,6 +19,7 @@
 #define __PIXEL_REGION_H__
 
 #include "tile_manager.h"
+#include "tile_accessor.h"
 #include "pixel_processor.h" /* this is temporary, */
 
 typedef struct _PixelRegion PixelRegion;
@@ -27,7 +28,7 @@ struct _PixelRegion
 {
   unsigned char *    data;           /*  pointer to region data  */
   TileManager *      tiles;          /*  pointer to tiles  */
-  Tile *             curtile;	     /*  current tile  */
+  TileAccessor       tileacc;	     /*  current tile  */
   int		     offx, offy;     /*  tile offsets */
   int                rowstride;      /*  bytes per pixel row  */
   int                x, y;           /*  origin  */

@@ -34,6 +34,7 @@
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 #define DEFAULT_FUZZINESS 15
 #define PREVIEW_WIDTH   256
@@ -897,7 +898,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   int x, y;
   int replace, operation;
   GimpDrawable *drawable;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *col;
 
   if (!bcd->gimage)
@@ -932,8 +933,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      tile = tile_manager_get_tile (gimage_composite (bcd->gimage), x, y, TRUE, FALSE);
-      col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      tile_accessor_start (&acc, gimage_composite (bcd->gimage), TRUE, FALSE);
     }
   else
     {
@@ -944,9 +944,12 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
       if (x < 0 || y < 0 || x >= drawable_width (drawable) || y >= drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
-      col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      tile_accessor_start (&acc, drawable_data (drawable), TRUE, FALSE);
     }
+
+  tile_accessor_position (&acc, x, y);
+  g_assert (acc.valid && acc.pointer);
+  col = acc.pointer;
 
   by_color_select (bcd->gimage, drawable, col,
 		   bcd->threshold,
@@ -956,7 +959,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 		   by_color_options->feather_radius,
 		   by_color_options->sample_merged);
 
-  tile_release (tile, FALSE);
+  tile_accessor_finish (&acc);
 
   /*  show selection on all views  */
   gdisplays_flush ();

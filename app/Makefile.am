@@ -375,6 +375,8 @@ gimp_SOURCES = \
 	threshold.h		\
 	tile.c			\
 	tile.h			\
+	tile_accessor.h		\
+	tile_accessor.c		\
 	tile_pvt.h		\
 	tile_cache.c		\
 	tile_cache.h		\

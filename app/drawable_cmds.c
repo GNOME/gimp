@@ -25,6 +25,7 @@
 #include "drawable.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
+#include "tile_accessor.h"
 
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;
@@ -1029,7 +1030,7 @@ drawable_get_pixel_invoker (Argument *args)
   gint8 *pixel = NULL;
   gint8 *p;
   gint b;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -1050,17 +1051,12 @@ drawable_get_pixel_invoker (Argument *args)
 	  num_channels = drawable_bytes (drawable);
 	  pixel = g_new (gint8, num_channels);
     
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y,
-					TRUE, TRUE);
-    
-	  x %= TILE_WIDTH;
-	  y %= TILE_WIDTH;
-    
-	  p = tile_data_pointer (tile, y, x);
+	  tile_accessor_start (&acc, drawable_data (drawable), TRUE, FALSE);
+	  tile_accessor_position (&acc, x, y);
+	  p = acc.pointer;
 	  for (b = 0; b < num_channels; b++)
-	    pixel[b] = p[b];
-    
-	  tile_release (tile, FALSE);
+	  pixel[b] = p[b];
+	  tile_accessor_finish (&acc);
 	}
       else
 	success = FALSE;
@@ -1137,7 +1133,7 @@ drawable_set_pixel_invoker (Argument *args)
   gint8 *pixel;
   gint8 *p;
   gint b;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -1160,17 +1156,12 @@ drawable_set_pixel_invoker (Argument *args)
       if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
 	  num_channels == drawable_bytes (drawable))
 	{
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y,
-					TRUE, TRUE);
-    
-	  x %= TILE_WIDTH;
-	  y %= TILE_WIDTH;
-    
-	  p = tile_data_pointer (tile, y, x);
+	  tile_accessor_start (&acc, drawable_data (drawable), TRUE, FALSE);
+	  tile_accessor_position (&acc, x, y);
+	  p = acc.pointer;
 	  for (b = 0; b < num_channels; b++)
 	    *p++ = *pixel++;
-    
-	  tile_release (tile, TRUE);
+	  tile_accessor_finish (&acc);
 	}
       else
 	success = FALSE;

@@ -634,11 +634,6 @@ undo_pop_image (GImage *gimage,
 
 		  tile_manager_map_tile (tiles, j, i, dest_tile);
 		  tile_manager_map_tile (drawable_data (image_undo->drawable), j, i, src_tile);
-#if 0
-		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
-			       tile_data_pointer (dest_tile, 0, 0),
-			       tile_size (src_tile));
-#endif
 		  
 		  tile_release (dest_tile, FALSE /* TRUE */);
 		  tile_release (src_tile, FALSE /* TRUE */);

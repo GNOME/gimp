@@ -38,6 +38,7 @@
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 /*  target size  */
 #define  TARGET_HEIGHT  15
@@ -873,11 +874,11 @@ paint_core_get_orig_image (PaintCore    *paint_core,
 			   int x1, int y1, int x2, int y2)
 {
   PixelRegion srcPR, destPR;
-  Tile *undo_tile;
+  TileAccessor undo_acc = TILE_ACCESSOR_INVALID;
   int h;
-  int refd;
   int pixelwidth;
   int dwidth, dheight;
+  int rowstride;
   unsigned char * s, * d;
   void * pr;
 
@@ -902,26 +903,23 @@ paint_core_get_orig_image (PaintCore    *paint_core,
   destPR.data = temp_buf_data (orig_buf) +
     (y1 - orig_buf->y) * destPR.rowstride + (x1 - orig_buf->x) * destPR.bytes;
 
+  tile_accessor_start (&undo_acc, undo_tiles, TRUE, FALSE);
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       /*  If the undo tile corresponding to this location is valid, use it  */
-      undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
-					 FALSE, FALSE);
-      if (tile_is_valid (undo_tile) == TRUE)
+      if (tile_accessor_probe (&undo_acc, srcPR.x, srcPR.y)) 
 	{
-	  refd = 1;
-	  undo_tile = tile_manager_get_tile (undo_tiles, srcPR.x, srcPR.y,
-					     TRUE, FALSE);
-	  s = (unsigned char*)tile_data_pointer (undo_tile, 0, 0) +
-	    srcPR.rowstride * (srcPR.y % TILE_HEIGHT) +
-	    srcPR.bytes * (srcPR.x % TILE_WIDTH); /* dubious... */
+	  tile_accessor_position (&undo_acc, srcPR.x, srcPR.y);
+	  s = undo_acc.pointer;
+	  rowstride = undo_acc.rowspan;
 	}
       else
 	{
-	  refd = 0;
 	  s = srcPR.data;
+	  rowstride = srcPR.rowstride;
 	}
 
       d = destPR.data;
@@ -930,13 +928,12 @@ paint_core_get_orig_image (PaintCore    *paint_core,
       while (h --)
 	{
 	  memcpy (d, s, pixelwidth);
-	  s += srcPR.rowstride;
+	  s += rowstride;
 	  d += destPR.rowstride;
 	}
-
-      if (refd)
-	tile_release (undo_tile, FALSE);
     }
+
+  tile_accessor_finish (&undo_acc);
 
   return orig_buf;
 }
@@ -1594,22 +1591,23 @@ static void
 set_canvas_tiles (int x, int y, int w, int h)
 {
   int i, j;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
+  
+  tile_accessor_start (&acc, canvas_tiles, TRUE, TRUE);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
-	  if (tile_is_valid (tile) == FALSE)
+	  if (!tile_accessor_probe (&acc, j, i))
 	    {
-	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
-	      memset (tile_data_pointer (tile, 0, 0), 0, 
-		      tile_size (tile));
-	      tile_release (tile, TRUE);
+	      tile_accessor_position (&acc, j, i);
+	      memset (acc.data, 0, acc.size);
 	    }
 	}
     }
+
+  tile_accessor_finish (&acc);
 }
 
 

@@ -26,6 +26,8 @@
 
 #include "tile_manager_pvt.h"
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
+
 
 
 /*********************/
@@ -55,7 +57,7 @@ pixel_region_init (PixelRegion *PR,
 		   int          dirty)
 {
   PR->tiles = tiles;
-  PR->curtile = NULL;
+  PR->tileacc.valid = FALSE;
   PR->data = NULL;
   PR->bytes = tiles->bpp;
   PR->rowstride = PR->bytes * TILE_WIDTH;
@@ -64,6 +66,7 @@ pixel_region_init (PixelRegion *PR,
   PR->w = w;
   PR->h = h;
   PR->dirty = dirty;
+  tile_accessor_start (&PR->tileacc, PR->tiles, TRUE, PR->dirty);
 }
 
 
@@ -112,7 +115,7 @@ pixel_region_get_row (PixelRegion   *PR,
 		      unsigned char *data, 
 		      int            subsample)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *tile_data;
   int inc;
   int end;
@@ -123,35 +126,37 @@ pixel_region_get_row (PixelRegion   *PR,
   end = x + w;
 
   pixel_region_get_async (PR, x, y, end, y);
+  
+  tile_accessor_start (&acc, PR->tiles, TRUE, FALSE);
 
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-      npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
+      tile_accessor_position (&acc, x, y);
+      tile_data = acc.pointer;
+      npixels = acc.edge_r - acc.x;
 
       if ((x + npixels) > end) /* make sure we don't write past the end */
 	npixels = end - x;
 
       if (subsample == 1) /* optimize for the common case */
       {
-	memcpy(data, tile_data, tile_bpp(tile)*npixels);
-	data += tile_bpp(tile)*npixels;
+	memcpy(data, tile_data, acc.bpp*npixels);
+	data += acc.bpp*npixels;
 	x += npixels;
       }
       else
       {
 	boundary = x + npixels;
-	inc = subsample * tile_bpp(tile);
+	inc = subsample * acc.bpp;
 	for ( ; x < boundary; x += subsample)
 	{
-	  for (b = 0; b < tile_bpp(tile); b++)
+	  for (b = 0; b < acc.bpp; b++)
 	    *data++ = tile_data[b];
 	  tile_data += inc;
 	}
       }
-      tile_release (tile, FALSE);
     }
+  tile_accessor_finish (&acc);
 }
 
 
@@ -162,7 +167,7 @@ pixel_region_set_row (PixelRegion   *PR,
 		      int            w, 
 		      unsigned char *data)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *tile_data;
   int end;
   int npixels;
@@ -171,23 +176,24 @@ pixel_region_set_row (PixelRegion   *PR,
 
   pixel_region_get_async (PR, x, y, end, y);
 
+  tile_accessor_start (&acc, PR->tiles, TRUE, TRUE);
+  
   while (x < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      tile_accessor_position (&acc, x, y);
+      tile_data = acc.pointer;
 
-      npixels = tile_ewidth(tile) - (x % TILE_WIDTH);
+      npixels = acc.edge_r - acc.x;
 
       if ((x + npixels) > end) /* make sure we don't write past the end */
 	npixels = end - x;
 
-      memcpy(tile_data, data, tile_bpp(tile)*npixels);
+      memcpy(tile_data, data, acc.bpp*npixels);
 
-      data += tile_bpp(tile)*npixels;
+      data += acc.bpp*npixels;
       x += npixels;
-
-      tile_release (tile, TRUE);
     }
+  tile_accessor_finish (&acc);
 }
 
 
@@ -199,7 +205,7 @@ pixel_region_get_col (PixelRegion   *PR,
 		      unsigned char *data, 
 		      int            subsample)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *tile_data;
   int inc;
   int end;
@@ -210,25 +216,27 @@ pixel_region_get_col (PixelRegion   *PR,
 
   pixel_region_get_async (PR, x, y, x, end);
 
+  tile_accessor_start (&acc, PR->tiles, TRUE, FALSE);
+
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-      boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
+      tile_accessor_position (&acc, x, y);
+      tile_data = acc.pointer;
+      boundary = acc.edge_b;
       if (boundary > end) /* make sure we don't write past the end */
 	boundary = end;
 
-      inc = subsample * tile_bpp(tile) * tile_ewidth(tile);
+      inc = subsample * acc.rowspan;
 
       for ( ; y < boundary; y += subsample)
 	{
-	  for (b = 0; b < tile_bpp(tile); b++)
+	  for (b = 0; b < acc.bpp; b++)
 	    *data++ = tile_data[b];
 	  tile_data += inc;
 	}
-
-      tile_release (tile, FALSE);
     }
+
+  tile_accessor_finish (&acc);
 }
 
 
@@ -239,7 +247,7 @@ pixel_region_set_col (PixelRegion   *PR,
 		      int            h, 
 		      unsigned char *data)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *tile_data;
   int inc;
   int end;
@@ -250,25 +258,27 @@ pixel_region_set_col (PixelRegion   *PR,
 
   pixel_region_get_async (PR, x, y, x, end);
 
+  tile_accessor_start (&acc, PR->tiles, TRUE, TRUE);
+
   while (y < end)
     {
-      tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, TRUE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-      boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
-      inc = tile_bpp(tile) * tile_ewidth(tile);
+      tile_accessor_position (&acc, x, y);
+      tile_data = acc.pointer;
+      boundary = acc.edge_b;
+      inc = acc.rowspan;
 
       if (boundary > end) /* make sure we don't write past the end */
 	boundary = end;
 
       for ( ; y < boundary; y++)
 	{
-	  for (b = 0; b < tile_bpp(tile); b++)
+	  for (b = 0; b < acc.bpp; b++)
 	    tile_data[b] = *data++;
 	  tile_data += inc;
 	}
 
-      tile_release (tile, TRUE);
     }
+  tile_accessor_finish (&acc);
 }
 
 void *
@@ -350,15 +360,6 @@ pixel_regions_process (void *PRI_ptr)
 	   */
 	  PRH->PR->process_count++;
 
-	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
-	  if (PRH->PR->tiles)
-	    {
-	      /* only set the dirty flag if PRH->dirty_tiles = true */
-	      tile_release (PRH->PR->curtile,
-			    PRH->PR->dirty * PRI->dirty_tiles);
-	      PRH->PR->curtile = NULL;
-	    }
-
 	  PRH->PR->x += PRI->portion_width;
 
 	  if ((PRH->PR->x - PRH->startx) >= PRI->region_width)
@@ -401,8 +402,7 @@ pixel_regions_process_stop (void *PRI_ptr)
 	  /*  Unref the last referenced tile if the underlying region is a tile manager  */
 	  if (PRH->PR->tiles)
 	    {
-	      tile_release (PRH->PR->curtile, PRH->PR->dirty);
-	      PRH->PR->curtile = NULL;
+	      tile_accessor_finish (&PRH->PR->tileacc);
 	    }
 	}
 
@@ -528,6 +528,10 @@ pixel_regions_configure (PixelRegionIterator *PRI)
 	  list = PRI->pixel_regions;
 	  while (list)
 	    {
+	      PRH = (PixelRegionHolder *) list->data;
+	      if (PRH->PR && PRH->PR->tiles) 
+		tile_accessor_finish (&PRH->PR->tileacc);
+
 	      g_free (list->data);
 	      list = g_slist_next (list);
 	    }
@@ -568,15 +572,15 @@ pixel_region_configure (PixelRegionHolder   *PRH,
    */
   if (PRH->PR->tiles)
     {
-      PRH->PR->curtile = 
-	tile_manager_get_tile (PRH->PR->tiles, PRH->PR->x, PRH->PR->y, TRUE, PRH->PR->dirty);
+      tile_accessor_position (&PRH->PR->tileacc,
+			      PRH->PR->x,
+			      PRH->PR->y);
 
       PRH->PR->offx = PRH->PR->x % TILE_WIDTH;
       PRH->PR->offy = PRH->PR->y % TILE_HEIGHT;
 
-      PRH->PR->rowstride = tile_ewidth(PRH->PR->curtile) * PRH->PR->bytes;
-      PRH->PR->data = tile_data_pointer(PRH->PR->curtile, 
-					PRH->PR->offx, PRH->PR->offy);
+      PRH->PR->rowstride = PRH->PR->tileacc.rowspan;
+      PRH->PR->data = PRH->PR->tileacc.pointer;
     }
   else
     {

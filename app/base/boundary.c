@@ -23,6 +23,9 @@
 
 #include "libgimp/gimpintl.h"
 
+#include "tile_accessor.h"
+#include "tile.h"
+
 /* half intensity for mask */
 #define HALF_WAY 127
 
@@ -79,7 +82,7 @@ find_empty_segs (PixelRegion  *maskPR,
   int start, end;
   int val, last;
   int tilex;
-  Tile *tile = NULL;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   int endx, l_num_empty, dstep = 0;
 
 
@@ -122,21 +125,15 @@ find_empty_segs (PixelRegion  *maskPR,
 
   l_num_empty = *num_empty;
 
+  tile_accessor_start (&acc, maskPR->tiles, TRUE, FALSE);
+
   for (x = start; x < end;)
     {
       /*  Check to see if we must advance to next tile  */
-      if ((x / TILE_WIDTH) != tilex)
-	{
-	  if (tile)
-	    tile_release (tile, FALSE);
-	  tile = tile_manager_get_tile (maskPR->tiles, x, scanline, TRUE, FALSE);
-	  data = (unsigned char*)tile_data_pointer (tile, x % TILE_WIDTH, scanline % TILE_HEIGHT) + (tile_bpp(tile) - 1);
-
-	  tilex = x / TILE_WIDTH;
-	  dstep = tile_bpp(tile);
-	}
-      endx = x + (TILE_WIDTH - (x%TILE_WIDTH));
-      endx = MINIMUM(end, endx);
+      tile_accessor_position (&acc, x, scanline);
+      data = acc.pointer + (acc.bpp - 1);
+      dstep = acc.bpp;
+      endx = acc.edge_r;
       if (type == IgnoreBounds && (endx > x1 || x < x2))
 	for (; x < endx; x++)
 	{
@@ -178,9 +175,8 @@ find_empty_segs (PixelRegion  *maskPR,
     empty_segs[(*num_empty)++] = x;
 
   empty_segs[(*num_empty)++] = G_MAXINT;
-
-  if (tile)
-    tile_release (tile, FALSE);
+  
+  tile_accessor_finish (&acc);
 }
 
 

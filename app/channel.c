@@ -36,6 +36,7 @@
 
 #include "channel_pvt.h"
 #include "tile.h"
+#include "tile_accessor.h"
 
 #include "gimplut.h"
 #include "lut_funcs.h"
@@ -610,7 +611,7 @@ channel_boundary (Channel *mask, BoundSeg **segs_in, BoundSeg **segs_out,
 int
 channel_value (Channel *mask, int x, int y)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   int val;
 
   /*  Some checks to cut back on unnecessary work  */
@@ -627,9 +628,10 @@ channel_value (Channel *mask, int x, int y)
 	return 0;
     }
 
-  tile = tile_manager_get_tile (GIMP_DRAWABLE(mask)->tiles, x, y, TRUE, FALSE);
-  val = *(unsigned char *)(tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
+  tile_accessor_start (&acc, GIMP_DRAWABLE(mask)->tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  val = *(unsigned char *)(acc.pointer);
+  tile_accessor_finish (&acc);
 
   return val;
 }

@@ -27,6 +27,7 @@
 #include "scale.h"
 
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -35,6 +36,7 @@ struct _RenderInfo
 {
   GDisplay *gdisp;
   TileManager *src_tiles;
+  TileAccessor src_acc;
   guint *alpha;
   guchar *scale;
   guchar *src;
@@ -243,7 +245,9 @@ render_image (GDisplay *gdisp,
   if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
       g_warning ("using untested projection type %d", image_type);
 
+  tile_accessor_start (&info.src_acc, info.src_tiles, TRUE, FALSE);
   (* render_funcs[image_type]) (&info);
+  tile_accessor_finish (&info.src_acc);
 }
 
 
@@ -723,6 +727,7 @@ render_image_init_info (RenderInfo *info,
 {
   info->gdisp = gdisp;
   info->src_tiles = gimage_projection (gdisp->gimage);
+  info->src_acc.valid = FALSE;
   info->x = x + gdisp->offset_x;
   info->y = y + gdisp->offset_y;
   info->w = w;
@@ -800,7 +805,6 @@ render_image_accelerate_scaling (int   width,
 static guchar*
 render_image_tile_fault (RenderInfo *info)
 {
-  Tile *tile;
   guchar *data;
   guchar *dest;
   guchar *scale;
@@ -815,15 +819,16 @@ render_image_tile_fault (RenderInfo *info)
   tilex = info->src_x / TILE_WIDTH;
   tiley = info->src_y / TILE_HEIGHT;
 
-  tile = tile_manager_get_tile (info->src_tiles,
-				srctilex=info->src_x, srctiley=info->src_y,
-				TRUE, FALSE);
-  if (!tile)
-    return NULL;
+  srctilex = info->src_x;
+  srctiley = info->src_y;
+  tile_accessor_position (&info->src_acc, srctilex, srctiley);
 
-  data = tile_data_pointer (tile, 
-			    info->src_x % TILE_WIDTH,
-			    info->src_y % TILE_HEIGHT);
+  if (!info->src_acc.valid || !info->src_acc.pointer) 
+    {
+      return NULL;
+    }
+
+  data = info->src_acc.pointer;
   scale = info->scale;
   dest = tile_buf;
 
@@ -841,23 +846,18 @@ render_image_tile_fault (RenderInfo *info)
 	  x += step;
 	  data += step * bpp;
 
-	  if ((x >> tile_shift) != tilex)
+	  if (x >= info->src_acc.edge_r)
 	    {
-	      tile_release (tile, FALSE);
-	      tilex += 1;
-
-	      tile = tile_manager_get_tile (info->src_tiles, srctilex=x,
-					    srctiley=info->src_y, TRUE, FALSE);
-	      if (!tile)
-		return tile_buf;
-
-	      data = tile_data_pointer (tile, 
-			    x % TILE_WIDTH,
-			    info->src_y % TILE_HEIGHT);
+	      srctilex = x;
+	      tile_accessor_position (&info->src_acc, srctilex, srctiley);
+	      if (!info->src_acc.valid || !info->src_acc.pointer) 
+		{
+		  return tile_buf;
+		}
+	      data = info->src_acc.pointer;
 	    }
 	}
     }
 
-  tile_release (tile, FALSE);
   return tile_buf;
 }

@@ -40,6 +40,7 @@
 #include "tile.h"
 #include "layer_pvt.h"
 #include "drawable_pvt.h"		/* ick ick. */
+#include "tile_accessor.h"
 
 
 
@@ -869,7 +870,7 @@ gimp_image_get_color_at (GimpImage *gimage,
 			 int        x, 
 			 int        y)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *src;
   unsigned char *dest;
 
@@ -878,16 +879,16 @@ gimp_image_get_color_at (GimpImage *gimage,
     return NULL;
   }
   dest = g_new(unsigned char, 5);
-  tile = tile_manager_get_tile (gimp_image_composite (gimage), x, y,
-				TRUE, FALSE);
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  tile_accessor_start (&acc, gimp_image_composite (gimage), TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  src = acc.pointer;
   gimp_image_get_color (gimage, gimp_image_composite_type (gimage), dest, src);
   if(TYPE_HAS_ALPHA(gimp_image_composite_type (gimage)))
     dest[3] = src[gimp_image_composite_bytes (gimage) - 1];
   else
     dest[3] = 255;
   dest[4] = 0;
-  tile_release (tile, FALSE);
+  tile_accessor_finish (&acc);
   return dest;
 }
 

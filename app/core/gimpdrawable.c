@@ -31,6 +31,8 @@
 #include "libgimp/parasite.h"
 #include "libgimp/gimpintl.h"
 
+#include "tile_accessor.h"
+
 enum {
   INVALIDATE_PREVIEW,
   LAST_SIGNAL
@@ -387,7 +389,7 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
 unsigned char *
 gimp_drawable_get_color_at (GimpDrawable *drawable, int x, int y)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *src;
   unsigned char *dest;
 
@@ -399,9 +401,10 @@ gimp_drawable_get_color_at (GimpDrawable *drawable, int x, int y)
     return NULL;
   }
   dest = g_new(unsigned char, 5);
-  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
-				TRUE, FALSE);
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  
+  tile_accessor_start (&acc, gimp_drawable_data (drawable), TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  src = acc.pointer;
   gimp_image_get_color (gimp_drawable_gimage(drawable),
 			gimp_drawable_type (drawable), dest, src);
   if(TYPE_HAS_ALPHA(gimp_drawable_type (drawable)))
@@ -412,7 +415,7 @@ gimp_drawable_get_color_at (GimpDrawable *drawable, int x, int y)
     dest[4] = src[0];
   else
     dest[4] = 0;
-  tile_release (tile, FALSE);
+  tile_accessor_finish (&acc);
   return dest;
 }
 

@@ -32,6 +32,7 @@
 #include "selection_options.h"
 
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -133,27 +134,6 @@ is_pixel_sufficiently_different (unsigned char *col1,
     }
 }
 
-static void
-ref_tiles (TileManager    *src, 
-	   TileManager    *mask, 
-	   Tile          **s_tile, 
-	   Tile          **m_tile,
-	   int             x, 
-	   int             y, 
-	   unsigned char **s, 
-	   unsigned char **m)
-{
-  if (*s_tile != NULL)
-    tile_release (*s_tile, FALSE);
-  if (*m_tile != NULL)
-    tile_release (*m_tile, TRUE);
-
-  *s_tile = tile_manager_get_tile (src, x, y, TRUE, FALSE);
-  *m_tile = tile_manager_get_tile (mask, x, y, TRUE, TRUE);
-
-  *s = tile_data_pointer (*s_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  *m = tile_data_pointer (*m_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-}
 
 static int
 find_contiguous_segment (unsigned char *col, 
@@ -170,17 +150,23 @@ find_contiguous_segment (unsigned char *col,
 {
   unsigned char *s, *m;
   unsigned char diff;
-  Tile *s_tile = NULL;
-  Tile *m_tile = NULL;
+  TileAccessor s_acc = TILE_ACCESSOR_INVALID;
+  TileAccessor m_acc = TILE_ACCESSOR_INVALID;
 
-  ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, src->x, src->y, &s, &m);
+  tile_accessor_start (&s_acc, src->tiles, TRUE, FALSE);
+  tile_accessor_start (&m_acc, mask->tiles, TRUE, TRUE);
+
+  tile_accessor_position (&s_acc, src->x, src->y);
+  tile_accessor_position (&m_acc, src->x, src->y);
+  s = s_acc.pointer;
+  m = m_acc.pointer;
 
   /* check the starting pixel */
   if (! (diff = is_pixel_sufficiently_different (col, s, antialias,
 						 threshold, bytes, has_alpha)))
     {
-      tile_release (s_tile, FALSE);
-      tile_release (m_tile, TRUE);
+      tile_accessor_finish (&s_acc);
+      tile_accessor_finish (&m_acc);
       return FALSE;
     }
 
@@ -190,8 +176,13 @@ find_contiguous_segment (unsigned char *col,
 
   while (*start >= 0 && diff)
     {
-      if (! ((*start + 1) % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *start, src->y, &s, &m);
+      if (! ((*start + 1) % TILE_WIDTH)) 
+	{
+	  tile_accessor_position (&s_acc, *start, src->y);
+	  tile_accessor_position (&m_acc, *start, src->y);
+	  s = s_acc.pointer;
+	  m = m_acc.pointer;
+	}
 
       diff = is_pixel_sufficiently_different (col, s, antialias,
 					      threshold, bytes, has_alpha);
@@ -205,12 +196,22 @@ find_contiguous_segment (unsigned char *col,
   diff = 1;
   *end = initial + 1;
   if (*end % TILE_WIDTH && *end < width)
-    ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
+    {
+      tile_accessor_position (&s_acc, *end, src->y);
+      tile_accessor_position (&m_acc, *end, src->y);
+      s = s_acc.pointer;
+      m = m_acc.pointer;
+    }
 
   while (*end < width && diff)
     {
       if (! (*end % TILE_WIDTH))
-	ref_tiles (src->tiles, mask->tiles, &s_tile, &m_tile, *end, src->y, &s, &m);
+	{
+	  tile_accessor_position (&s_acc, *end, src->y);
+	  tile_accessor_position (&m_acc, *end, src->y);
+	  s = s_acc.pointer;
+	  m = m_acc.pointer;
+	}
 
       diff = is_pixel_sufficiently_different (col, s, antialias,
 					      threshold, bytes, has_alpha);
@@ -221,8 +222,9 @@ find_contiguous_segment (unsigned char *col,
 	}
     }
 
-  tile_release (s_tile, FALSE);
-  tile_release (m_tile, TRUE);
+  tile_accessor_finish (&s_acc);
+  tile_accessor_finish (&m_acc);
+
   return TRUE;
 }
 
@@ -241,16 +243,17 @@ find_contiguous_region_helper (PixelRegion   *mask,
   int val;
   int bytes;
 
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
 
   if (threshold == 0) threshold = 1;
   if (x < 0 || x >= src->w) return;
   if (y < 0 || y >= src->h) return;
 
-  tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-  val = *(unsigned char *)(tile_data_pointer (tile, 
-					      x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
+  tile_accessor_start (&acc, mask->tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  val = *(unsigned char *)(acc.pointer);
+  tile_accessor_finish (&acc);
+
   if (val != 0)
     return;
 
@@ -294,7 +297,7 @@ find_contiguous_region (GImage       *gimage,
   int indexed;
   int type;
   int bytes;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
 
   if (sample_merged)
     {
@@ -324,16 +327,14 @@ find_contiguous_region (GImage       *gimage,
 		     drawable_height (GIMP_DRAWABLE(mask)), 
 		     TRUE);
 
-  tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
-  if (tile)
+  tile_accessor_start (&acc, srcPR.tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  if (acc.valid && acc.pointer)
     {
-      start = tile_data_pointer (tile, x%TILE_WIDTH, y%TILE_HEIGHT);
-
-      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, 
-				     threshold, bytes, x, y, start);
-
-      tile_release (tile, FALSE);
+      start = acc.pointer;
+      find_contiguous_region_helper (&maskPR, &srcPR, has_alpha, antialias, threshold, bytes, x, y, start);
     }
+  tile_accessor_finish (&acc);
 
   return mask;
 }
@@ -482,7 +483,7 @@ fuzzy_select_motion (Tool           *tool,
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (fuzzy_options->threshold_w), 
 			    fuzzy_options->threshold + diff);
-      
+
   /*  calculate the new fuzzy boundary  */
   new_segs = fuzzy_select_calculate (tool, gdisp_ptr, &num_new_segs);
 

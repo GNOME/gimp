@@ -26,6 +26,7 @@
 #include "gimage_mask.h"
 #include "image_map.h"
 #include "tile_manager.h"
+#include "tile_accessor.h"
 
 #include "tile_manager_pvt.h"
 
@@ -304,7 +305,7 @@ image_map_abort (ImageMap image_map)
 unsigned char *
 image_map_get_color_at (ImageMap image_map, int x, int y)
 {
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
   unsigned char *src;
   unsigned char *dest;
   _ImageMap *_image_map;
@@ -330,10 +331,9 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
 
   dest = g_new(unsigned char, 5);
 
-  tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
-				TRUE, FALSE);
-
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  tile_accessor_start (&acc, _image_map->undo_tiles, TRUE, FALSE);
+  tile_accessor_position (&acc, x, y);
+  src = acc.pointer;
 
   gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
 			gimp_drawable_type (_image_map->drawable), dest, src);
@@ -346,7 +346,8 @@ image_map_get_color_at (ImageMap image_map, int x, int y)
     dest[4] = src[0];
   else
     dest[4] = 0;
-  tile_release (tile, FALSE);
+
+  tile_accessor_finish(&acc);
   return dest;
 }
 

@@ -34,6 +34,7 @@
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
+#include "tile_accessor.h"
 
 #define SUBSAMPLE 8
 
@@ -1511,23 +1512,24 @@ static void
 ink_set_canvas_tiles (int x, int y, int w, int h)
 {
   int i, j;
-  Tile *tile;
+  TileAccessor acc = TILE_ACCESSOR_INVALID;
+  
+  tile_accessor_start (&acc, canvas_tiles, TRUE, TRUE);
 
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     {
       for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
 	{
-	  tile = tile_manager_get_tile (canvas_tiles, j, i, FALSE, FALSE);
-	  if (tile_is_valid (tile) == FALSE)
+	  if (!tile_accessor_probe (&acc, j, i))
 	    {
-	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
-	      memset (tile_data_pointer (tile, 0, 0), 
+	      tile_accessor_position (&acc, j, i);
+	      memset (acc.pointer,
 		      0, 
-		      tile_size (tile));
-	      tile_release (tile, TRUE);
+		      acc.size);
 	    }
 	}
     }
+  tile_accessor_finish (&acc);
 }
 
 /**************************/

@@ -72,10 +72,12 @@ struct _Tile
 
 #ifdef USE_PTHREADS
 #define TILE_MUTEX_LOCK(tile) pthread_mutex_lock(&((tile)->mutex))
+#define TILE_MUTEX_TRYLOCK(tile) pthread_mutex_trylock(&((tile)->mutex))
 #define TILE_MUTEX_UNLOCK(tile) pthread_mutex_unlock(&((tile)->mutex))
 #else
-#define TILE_MUTEX_LOCK(tile) /* nothing */
-#define TILE_MUTEX_UNLOCK(tile) /* nothing */
+#define TILE_MUTEX_LOCK(tile) (0) /* nothing */
+#define TILE_MUTEX_TRYLOCK(tile) (0) /* nothing */
+#define TILE_MUTEX_UNLOCK(tile) (0) /* nothing */
 #endif
 
 
