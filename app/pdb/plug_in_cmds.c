@@ -27,6 +27,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -42,9 +44,6 @@
 #else
 #include "regexrepl/regex.h"
 #endif
-
-
-#include "libgimpbase/gimpbase.h"
 
 static ProcRecord progress_init_proc;
 static ProcRecord progress_update_proc;

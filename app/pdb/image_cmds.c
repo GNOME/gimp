@@ -26,6 +26,10 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
+#include "libgimpmath/gimpmath.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -51,10 +55,6 @@
 #include "core/gimpunit.h"
 #include "core/gimpviewable.h"
 #include "gimp-intl.h"
-
-#include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 
 static ProcRecord image_list_proc;
 static ProcRecord image_new_proc;

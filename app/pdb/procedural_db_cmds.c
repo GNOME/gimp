@@ -40,7 +40,6 @@
 #include "regexrepl/regex.h"
 #endif
 
-
 #define COMPAT_BLURB "This procedure is deprecated! Use '%s' instead."
 
 

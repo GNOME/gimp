@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -34,8 +36,6 @@
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-
-#include "libgimpmath/gimpmath.h"
 
 static ProcRecord flip_proc;
 static ProcRecord perspective_proc;

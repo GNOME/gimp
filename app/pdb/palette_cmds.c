@@ -25,13 +25,13 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-
-#include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord palette_get_foreground_proc;
 static ProcRecord palette_get_background_proc;

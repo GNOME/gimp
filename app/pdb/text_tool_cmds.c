@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -32,8 +34,6 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "text/gimptext-compat.h"
-
-#include "libgimpbase/gimpbase.h"
 
 static ProcRecord text_fontname_proc;
 static ProcRecord text_get_extents_fontname_proc;

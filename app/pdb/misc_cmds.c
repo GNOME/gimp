@@ -25,12 +25,12 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
-
-#include "libgimpbase/gimpbase.h"
 
 static ProcRecord version_proc;
 static ProcRecord quit_proc;

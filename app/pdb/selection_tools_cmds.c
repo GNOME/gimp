@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -32,8 +34,6 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "gimp-intl.h"
-
-#include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord by_color_select_proc;
 static ProcRecord ellipse_select_proc;

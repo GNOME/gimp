@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -47,8 +49,6 @@
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
 #include "paint/paint-types.h"
-
-#include "libgimpmath/gimpmath.h"
 
 static ProcRecord airbrush_proc;
 static ProcRecord airbrush_default_proc;
@@ -747,7 +747,7 @@ static ProcRecord dodgeburn_proc =
 {
   "gimp_dodgeburn",
   "Dodgeburn image with varying exposure.",
-  "Dodgebure. More details here later.",
+  "Dodgeburn. More details here later.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",

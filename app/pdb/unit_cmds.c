@@ -25,12 +25,12 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimpunit.h"
-
-#include "libgimpbase/gimpbase.h"
 
 static ProcRecord unit_get_number_of_units_proc;
 static ProcRecord unit_get_number_of_built_in_units_proc;

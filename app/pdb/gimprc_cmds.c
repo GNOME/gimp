@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpmodule/gimpmodule.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -34,8 +36,6 @@
 #include "config/gimprc.h"
 #include "core/gimp.h"
 #include "core/gimptemplate.h"
-
-#include "libgimpmodule/gimpmodule.h"
 
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;

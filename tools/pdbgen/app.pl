@@ -729,13 +729,21 @@ GPL
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
 	    foreach ($x, $y) {
-		$_ = "~$_" if /libgimp/;
-		s/^</!/;
+		if (/^</) {
+		    s/^</!/;
+		}
+		elsif (!/libgimp/) {
+		    s/^/~/;
+		}
 	    }
 	    $x cmp $y;
 	} keys %{$out->{headers}};
-        my $headers = ""; my $lib = 0; my $seen = 0; my $eek = 0;
+        my $headers = ""; my $lib = 0; my $seen = 0; my $nl = 0;
+	my $sys = 0; my $base = 0;
 	foreach (@headers) {
+	    $headers .= "\n" if $nl;
+	    $nl = 0;
+
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "\n" if $seen;
 		$headers .= "#ifdef HAVE_UNISTD_H\n";
@@ -749,8 +757,8 @@ GPL
 
 	    $seen++ if /^</;
 
-	    if ($eek == 0 && !/^</) {
-		$eek      = 1;
+	    if ($sys == 0 && !/^</) {
+		$sys = 1;
 		$headers .= "\n";
 
 		if ($widgets_eek == 1 || $display_eek == 1 || $gui_eek == 1) {
@@ -762,32 +770,42 @@ GPL
 		$headers .= "\n\n";
 		$headers .= '#include "libgimpbase/gimpbasetypes.h"';
 		$headers .= "\n\n";
-		$headers .= '#include "pdb-types.h"';
-		$headers .= "\n";
-
-		if ($widgets_eek == 1) {
-		    $headers .= '#include "widgets/widgets-types.h"';
-		    $headers .= "\n";		    
-		}
-
-		if ($display_eek == 1) {
-		    $headers .= '#include "display/display-types.h"';
-		    $headers .= "\n";		    
-		}
-
-		if ($gui_eek == 1) {
-		    $headers .= '#include "gui/gui-types.h"';
-		    $headers .= "\n";		    
-		}
-
-		$headers .= '#include "procedural_db.h"';
-		$headers .= "\n";
-		$headers .= "\n";
 	    }
 
 	    $seen = 0 if !/^</;
 
-	    $headers .= "\n" if /libgimp/ && !$lib++ && $headers;
+	    if (/libgimp/) {
+		$lib = 1;
+	    }
+	    else {
+		$headers .= "\n" if $lib;
+		$lib = 0;
+
+		if ($sys == 1 && $base == 0) {
+		    $base = 1;
+
+		    $headers .= '#include "pdb-types.h"';
+		    $headers .= "\n";
+
+		    if ($widgets_eek == 1) {
+			$headers .= '#include "widgets/widgets-types.h"';
+			$headers .= "\n";		    
+		    }
+
+		    if ($display_eek == 1) {
+			$headers .= '#include "display/display-types.h"';
+			$headers .= "\n";		    
+		    }
+
+		    if ($gui_eek == 1) {
+			$headers .= '#include "gui/gui-types.h"';
+			$headers .= "\n";		    
+		    }
+
+		    $headers .= '#include "procedural_db.h"';
+		    $headers .= "\n\n";
+		}
+	    }
 
             if ($_ eq '"regexrepl/regex.h"') {
 		$headers .= "\n";
@@ -799,17 +817,20 @@ GPL
 	    $headers .= "#include $_\n";
 
             if ($_ eq '"regexrepl/regex.h"') {
-		$headers .= "#endif\n\n";
+		$headers .= "#endif\n";
+		$nl = 1;
 	    }
 
 	    if ($_ eq '<unistd.h>') {
-		$headers .= "#endif\n\n";
+		$headers .= "#endif\n";
 		$seen = 0;
+		$nl = 1;
  	    }
 
             if ($_ eq '<process.h>') {
-		$headers .= "#endif\n\n";
+		$headers .= "#endif\n";
 		$seen = 0;
+		$nl = 1;
 	    }
 
 	    $headers .= "\n" if $_ eq '"config.h"';

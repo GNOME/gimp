@@ -40,6 +40,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpthumb/gimpthumb.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -53,8 +55,6 @@
 #include "plug-in/plug-in-proc.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
-
-#include "libgimpthumb/gimpthumb.h"
 
 static ProcRecord file_load_proc;
 static ProcRecord file_save_proc;

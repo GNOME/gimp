@@ -25,14 +25,14 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpbase/gimpparasite.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp-parasites.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-
-#include "libgimpbase/gimpparasite.h"
 
 static ProcRecord parasite_find_proc;
 static ProcRecord parasite_attach_proc;

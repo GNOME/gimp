@@ -1,3 +1,12 @@
+2004-05-06  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/app.pl: make libgimp* headers always included
+	before any app headers.
+
+        * tools/pdbgen/pdb/paint_tools.pdb: Fix silly "Dodgebure" typo.
+
+	* app/pdb/*_cmds.c: regenerated.
+
 2004-05-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-preview.c

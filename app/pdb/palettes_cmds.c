@@ -26,6 +26,8 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -35,8 +37,6 @@
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
 #include "core/gimppalette.h"
-
-#include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord palettes_refresh_proc;
 static ProcRecord palettes_get_list_proc;

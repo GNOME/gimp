@@ -25,14 +25,14 @@
 
 #include "libgimpbase/gimpbasetypes.h"
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimpchannel-combine.h"
 #include "core/gimpchannel.h"
 #include "core/gimpimage.h"
-
-#include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord channel_new_proc;
 static ProcRecord channel_copy_proc;
