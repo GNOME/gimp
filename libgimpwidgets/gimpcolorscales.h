@@ -34,10 +34,7 @@ G_BEGIN_DECLS
 #define GIMP_IS_COLOR_SCALES(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_COLOR_SCALES))
 
 
-GType   gimp_color_scales_get_type              (void) G_GNUC_CONST;
-
-void    gimp_color_scales_set_toggles_sensitive (GimpColorScales *scales,
-                                                 gboolean         sensitive);
+GType   gimp_color_scales_get_type (void) G_GNUC_CONST;
 
 
 G_END_DECLS

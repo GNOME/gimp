@@ -40,6 +40,7 @@
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
+#include "widgets/gimpcoloreditor.h"
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcontainerlistview.h"
 #include "widgets/gimpcontainergridview.h"
@@ -126,6 +127,8 @@ static void   dialogs_set_view_context_func       (GimpDockable       *dockable,
                                                    GimpContext        *context);
 static void   dialogs_set_editor_context_func     (GimpDockable       *dockable,
                                                    GimpContext        *context);
+static void   dialogs_set_color_editor_context_func (GimpDockable     *dockable,
+                                                     GimpContext      *context);
 static void   dialogs_set_image_item_context_func (GimpDockable       *dockable,
                                                    GimpContext        *context);
 static void   dialogs_set_path_context_func       (GimpDockable       *dockable,
@@ -845,6 +848,22 @@ dialogs_selection_editor_new (GimpDialogFactory *factory,
 /*****  misc dockables  *****/
 
 GtkWidget *
+dialogs_color_editor_new (GimpDialogFactory *factory,
+                          GimpContext       *context,
+                          gint               preview_size)
+{
+  GtkWidget *view;
+
+  view = gimp_color_editor_new (context);
+
+  return dialogs_dockable_new (view,
+			       _("Color Editor"), _("Color"),
+                               GTK_STOCK_SELECT_COLOR,
+			       dialogs_stock_text_tab_func,
+			       dialogs_set_color_editor_context_func);
+}
+
+GtkWidget *
 dialogs_document_history_new (GimpDialogFactory *factory,
 			      GimpContext       *context,
                               gint               preview_size)
@@ -1252,6 +1271,19 @@ dialogs_set_editor_context_func (GimpDockable *dockable,
 
   if (editor)
     gimp_container_view_set_context (editor->view, context);
+}
+
+static void
+dialogs_set_color_editor_context_func (GimpDockable *dockable,
+                                       GimpContext  *context)
+{
+  GimpColorEditor *editor;
+
+  editor = (GimpColorEditor *) g_object_get_data (G_OBJECT (dockable),
+                                                  "gimp-dialogs-view");
+
+  if (editor)
+    gimp_color_editor_set_context (editor, context);
 }
 
 static void

@@ -178,6 +178,7 @@ colorsel_triangle_class_init (ColorselTriangleClass *klass)
 
   selector_class->name        = _("_Triangle");
   selector_class->help_page   = "triangle.html";
+  selector_class->stock_id    = GIMP_STOCK_COLOR_TRIANGLE;
   selector_class->set_color   = colorsel_triangle_set_color;
 }
 

@@ -41,6 +41,10 @@ static void   gimp_color_notebook_init       (GimpColorNotebook      *notebook);
 
 static void   gimp_color_notebook_finalize        (GObject           *object);
 
+static void   gimp_color_notebook_togg_visible    (GimpColorSelector *selector,
+                                                   gboolean           visible);
+static void   gimp_color_notebook_togg_sensitive  (GimpColorSelector *selector,
+                                                   gboolean           sensitive);
 static void   gimp_color_notebook_set_show_alpha  (GimpColorSelector *selector,
                                                    gboolean           show_alpha);
 static void   gimp_color_notebook_set_color       (GimpColorSelector *selector,
@@ -105,13 +109,15 @@ gimp_color_notebook_class_init (GimpColorNotebookClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize         = gimp_color_notebook_finalize;
+  object_class->finalize                = gimp_color_notebook_finalize;
 
-  selector_class->name           = "Notebook";
-  selector_class->help_page      = "notebook.html";
-  selector_class->set_show_alpha = gimp_color_notebook_set_show_alpha;
-  selector_class->set_color      = gimp_color_notebook_set_color;
-  selector_class->set_channel    = gimp_color_notebook_set_channel;
+  selector_class->name                  = "Notebook";
+  selector_class->help_page             = "notebook.html";
+  selector_class->set_toggles_visible   = gimp_color_notebook_togg_visible;
+  selector_class->set_toggles_sensitive = gimp_color_notebook_togg_sensitive;
+  selector_class->set_show_alpha        = gimp_color_notebook_set_show_alpha;
+  selector_class->set_color             = gimp_color_notebook_set_color;
+  selector_class->set_channel           = gimp_color_notebook_set_channel;
 }
 
 static void
@@ -198,6 +204,42 @@ gimp_color_notebook_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_color_notebook_togg_visible (GimpColorSelector *selector,
+                                  gboolean           visible)
+{
+  GimpColorNotebook *notebook;
+  GimpColorSelector *child;
+  GList             *list;
+
+  notebook = GIMP_COLOR_NOTEBOOK (selector);
+
+  for (list = notebook->selectors; list; list = g_list_next (list))
+    {
+      child = (GimpColorSelector *) list->data;
+
+      gimp_color_selector_set_toggles_visible (child, visible);
+    }
+}
+
+static void
+gimp_color_notebook_togg_sensitive (GimpColorSelector *selector,
+                                    gboolean           sensitive)
+{
+  GimpColorNotebook *notebook;
+  GimpColorSelector *child;
+  GList             *list;
+
+  notebook = GIMP_COLOR_NOTEBOOK (selector);
+
+  for (list = notebook->selectors; list; list = g_list_next (list))
+    {
+      child = (GimpColorSelector *) list->data;
+
+      gimp_color_selector_set_toggles_sensitive (child, sensitive);
+    }
 }
 
 static void
@@ -321,4 +363,80 @@ gimp_color_notebook_channel_changed (GimpColorSelector        *page,
   selector->channel = channel;
 
   gimp_color_selector_channel_changed (selector);
+}
+
+
+/*  public function  */
+
+GtkWidget *
+gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
+                                  GType              page_type,
+                                  gboolean           has_page)
+{
+  GimpColorSelector *selector;
+  GimpColorSelector *page;
+  GtkWidget         *label;
+  GList             *list;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook), NULL);
+  g_return_val_if_fail (g_type_is_a (page_type, GIMP_TYPE_COLOR_SELECTOR),
+                        NULL);
+  g_return_val_if_fail (! g_type_is_a (page_type, GIMP_TYPE_COLOR_NOTEBOOK),
+                        NULL);
+
+  selector = GIMP_COLOR_SELECTOR (notebook);
+
+  for (list = notebook->selectors; list; list = g_list_next (list))
+    {
+      page = GIMP_COLOR_SELECTOR (list->data);
+
+      if (G_TYPE_FROM_INSTANCE (page) == page_type)
+        {
+          if (has_page)
+            return GTK_WIDGET (page);
+
+          gtk_container_remove (GTK_CONTAINER (notebook->notebook),
+                                GTK_WIDGET (page));
+          notebook->selectors = g_list_remove (notebook->selectors, page);
+
+          if (! notebook->selectors)
+            notebook->cur_page = NULL;
+
+          return NULL;
+        }
+    }
+
+  if (! has_page)
+    return NULL;
+
+  page = GIMP_COLOR_SELECTOR (gimp_color_selector_new (page_type,
+                                                       &selector->rgb,
+                                                       &selector->hsv,
+                                                       selector->channel));
+
+  if (! page)
+    return NULL;
+
+  gimp_color_selector_set_show_alpha (page, selector->show_alpha);
+
+  label = gtk_label_new_with_mnemonic (GIMP_COLOR_SELECTOR_GET_CLASS (page)->name);
+
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook->notebook),
+                            GTK_WIDGET (page), label);
+
+  if (! notebook->cur_page)
+    notebook->cur_page = page;
+
+  notebook->selectors = g_list_append (notebook->selectors, page);
+
+  gtk_widget_show (GTK_WIDGET (page));
+
+  g_signal_connect (G_OBJECT (page), "color_changed",
+                    G_CALLBACK (gimp_color_notebook_color_changed),
+                    notebook);
+  g_signal_connect (G_OBJECT (page), "channel_changed",
+                    G_CALLBACK (gimp_color_notebook_channel_changed),
+                    notebook);
+
+  return GTK_WIDGET (page);
 }

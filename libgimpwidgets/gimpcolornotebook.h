@@ -57,7 +57,11 @@ struct _GimpColorNotebookClass
 };
 
 
-GType   gimp_color_notebook_get_type (void) G_GNUC_CONST;
+GType       gimp_color_notebook_get_type     (void) G_GNUC_CONST;
+
+GtkWidget * gimp_color_notebook_set_has_page (GimpColorNotebook *notebook,
+                                              GType              page_type,
+                                              gboolean           has_page);
 
 
 G_END_DECLS

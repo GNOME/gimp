@@ -369,6 +369,8 @@ color_notebook_new_internal (GimpViewable          *viewable,
                                            &cnp->rgb,
                                            &cnp->hsv,
                                            cnp->active_channel);
+  gimp_color_selector_set_toggles_visible (GIMP_COLOR_SELECTOR (cnp->notebook),
+                                           FALSE);
   gtk_box_pack_start (GTK_BOX (left_vbox), cnp->notebook, TRUE, TRUE, 0);
   gtk_widget_show (cnp->notebook);
 
@@ -447,6 +449,8 @@ color_notebook_new_internal (GimpViewable          *viewable,
                                          &cnp->rgb,
                                          &cnp->hsv,
                                          cnp->active_channel);
+  gimp_color_selector_set_toggles_visible (GIMP_COLOR_SELECTOR (cnp->scales),
+                                           TRUE);
   gimp_color_selector_set_show_alpha (GIMP_COLOR_SELECTOR (cnp->scales),
                                       cnp->show_alpha);
   gtk_box_pack_start (GTK_BOX (right_vbox), cnp->scales, TRUE, TRUE, 0);
@@ -570,18 +574,38 @@ color_notebook_update (ColorNotebook           *cnp,
     return;
 
   if (update & UPDATE_NOTEBOOK)
-    gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->notebook),
-                                   &cnp->rgb,
-                                   &cnp->hsv);
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (cnp->notebook),
+                                       G_CALLBACK (color_notebook_notebook_changed),
+                                       cnp);
+
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->notebook),
+                                     &cnp->rgb,
+                                     &cnp->hsv);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->notebook),
+                                         G_CALLBACK (color_notebook_notebook_changed),
+                                         cnp);
+    }
 
   if (update & UPDATE_CHANNEL)
     gimp_color_selector_set_channel (GIMP_COLOR_SELECTOR (cnp->notebook),
                                      cnp->active_channel);
 
   if (update & UPDATE_SCALES)
-    gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->scales),
-                                   &cnp->rgb,
-                                   &cnp->hsv);
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (cnp->scales),
+                                       G_CALLBACK (color_notebook_scales_changed),
+                                       cnp);
+
+      gimp_color_selector_set_color (GIMP_COLOR_SELECTOR (cnp->scales),
+                                     &cnp->rgb,
+                                     &cnp->hsv);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (cnp->scales),
+                                         G_CALLBACK (color_notebook_scales_changed),
+                                         cnp);
+    }
 
   if (update & UPDATE_ORIG_COLOR)
     gimp_color_area_set_color (GIMP_COLOR_AREA (cnp->orig_color), 
@@ -670,8 +694,8 @@ color_notebook_switch_page (GtkWidget       *widget,
   set_channel =
     (GIMP_COLOR_SELECTOR_GET_CLASS (notebook->cur_page)->set_channel != NULL);
 
-  gimp_color_scales_set_toggles_sensitive (GIMP_COLOR_SCALES (cnp->scales),
-                                           set_channel);
+  gimp_color_selector_set_toggles_sensitive (GIMP_COLOR_SELECTOR (cnp->scales),
+                                             set_channel);
 }
 
 

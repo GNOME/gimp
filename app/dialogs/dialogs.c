@@ -76,6 +76,8 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp-indexed-palette",  dialogs_indexed_palette_new,    32, FALSE, FALSE, FALSE, TRUE },
   { "gimp-selection-editor", dialogs_selection_editor_new,    0, FALSE, FALSE, FALSE, TRUE },
 
+  { "gimp-color-editor",     dialogs_color_editor_new,        0, FALSE, FALSE, FALSE, TRUE },
+
   { "gimp-document-history", dialogs_document_history_new,   48, FALSE, FALSE, FALSE, TRUE },
 
   { "gimp-brush-editor",     dialogs_brush_editor_get,        0, TRUE,  FALSE, FALSE, TRUE },

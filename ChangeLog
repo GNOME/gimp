@@ -1,5 +1,46 @@
 2002-11-05  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcolorselector.[ch]: added virtual functions
+	set_toggles_visible() and set_toggles_sensitive(). Added a
+	stock_id. Emit "color_changed" and "channel_changed" on
+	set_color() and set_channel() resp.
+
+	* libgimpwidgets/gimpcolornotebook.[ch]: implement the new
+	methods.  Added gimp_color_notebook_set_has_page() to control
+	which selectors a notebook contains.
+
+	* libgimpwidgets/gimpcolorscales.[ch]: removed the toggle
+	API and implement the new methods.
+
+	* libgimpwidgets/gimpcolorselect.c: added toggle buttons for the
+	channels so the widget doesn't need external ones.
+
+	* app/gui/color-notebook.c: changed accordingly.
+
+	* libgimpwidgets/gimpstock.[ch]
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-color-triangle-16.png: added a
+	(bad) icon for the triangle color selector.
+
+	* modules/colorsel_triangle.c: use the new icon.
+	* modules/colorsel_water.c: use the "Paintbrush" icon for now.
+
+	* app/widgets/gimpcoloreditor.[ch]: new widget for editing the
+	FG/BG color featuring a color notebook, stock buttons for
+	selecting the pages and a GimpPickButton.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h: changed accordingly.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c: added a dockable wrapper for GimpColorEditor.
+
+	* app/gui/menus.c: added it to the menus. Also added separate
+	Layers, Channels and Paths entries. Bind <ctrl>L to the new
+	callback so it doesn't always create a new layers dialog.
+
+2002-11-05  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpmodule/gimpmodule.c: on error, always close the module
 	using gimp_module_close(), not g_module_close() so all stuff gets
 	reset. Set module->state *after* calling gimp_module_close().

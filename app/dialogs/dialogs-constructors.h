@@ -127,6 +127,10 @@ GtkWidget * dialogs_selection_editor_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 
+GtkWidget * dialogs_color_editor_new       (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+
 GtkWidget * dialogs_document_history_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

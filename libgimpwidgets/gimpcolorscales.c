@@ -69,6 +69,11 @@ static void   gimp_color_scales_init       (GimpColorScales       *scales);
 
 static void   gimp_color_scales_finalize       (GObject           *object);
 
+static void   gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
+                                                gboolean           sensitive);
+static void   gimp_color_scales_togg_visible   (GimpColorSelector *selector,
+                                                gboolean           visible);
+
 static void   gimp_color_scales_set_show_alpha (GimpColorSelector *selector,
                                                 gboolean           show_alpha);
 static void   gimp_color_scales_set_color      (GimpColorSelector *selector,
@@ -132,40 +137,37 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
 
   object_class->finalize         = gimp_color_scales_finalize;
 
-  selector_class->name           = "Scales";
-  selector_class->help_page      = "scales.html";
-  selector_class->set_show_alpha = gimp_color_scales_set_show_alpha;
-  selector_class->set_color      = gimp_color_scales_set_color;
-  selector_class->set_channel    = gimp_color_scales_set_channel;
+  selector_class->name                  = "Scales";
+  selector_class->help_page             = "scales.html";
+  selector_class->stock_id              = GIMP_STOCK_TOOL_OPTIONS;
+  selector_class->set_toggles_visible   = gimp_color_scales_togg_visible;
+  selector_class->set_toggles_sensitive = gimp_color_scales_togg_sensitive;
+  selector_class->set_show_alpha        = gimp_color_scales_set_show_alpha;
+  selector_class->set_color             = gimp_color_scales_set_color;
+  selector_class->set_channel           = gimp_color_scales_set_channel;
 }
 
 static void
 gimp_color_scales_init (GimpColorScales *scales)
 {
-  GtkWidget *table;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GSList    *group;
-  gint       i;
+  GimpColorSelector *selector;
+  GtkWidget         *table;
+  GtkWidget         *hbox;
+  GtkWidget         *label;
+  GSList            *group;
+  gint               i;
 
-  static gchar *toggle_titles[] = 
+  static const gchar *toggle_titles[] = 
   { 
-    /* Hue */
     N_("_H"),
-    /* Saturation */
     N_("_S"),
-    /* Value */
     N_("_V"),
-    /* Red */
     N_("_R"),
-    /* Green */
     N_("_G"),
-    /* Blue */
     N_("_B"),
-    /* Alpha */
     N_("_A")
   };
-  static gchar *slider_tips[7] = 
+  static const gchar *slider_tips[7] = 
   {
     N_("Hue"),
     N_("Saturation"),
@@ -179,14 +181,22 @@ gimp_color_scales_init (GimpColorScales *scales)
   static gdouble slider_max_vals[]     = { 360, 100, 100, 255, 255, 255, 100 };
   static gdouble slider_incs[]         = {  30,  10,  10,  16,  16,  16,  10 };
 
+  selector = GIMP_COLOR_SELECTOR (scales);
+
+  /*  don't needs the toggles for our own operation  */
+  selector->toggles_visible = FALSE;
+
   table = gtk_table_new (7, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 3); /* hsv <-> rgb   */
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 3); /* rgb <-> alpha */
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_box_pack_start (GTK_BOX (scales), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   group = NULL;
+
   for (i = 0; i < 7; i++)
     {
       if (i == 6)
@@ -196,14 +206,16 @@ gimp_color_scales_init (GimpColorScales *scales)
       else
 	{
 	  scales->toggles[i] = gtk_radio_button_new (group);
-
-	  gimp_help_set_help_data (scales->toggles[i],
-				   gettext (slider_tips[i]), NULL);
 	  group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (scales->toggles[i]));
 	  gtk_table_attach (GTK_TABLE (table), scales->toggles[i],
 			    0, 1, i, i + 1,
 			    GTK_SHRINK, GTK_EXPAND, 0, 0);
-	  gtk_widget_show (scales->toggles[i]);
+
+          if (selector->toggles_visible)
+            gtk_widget_show (scales->toggles[i]);
+
+	  gimp_help_set_help_data (scales->toggles[i],
+				   gettext (slider_tips[i]), NULL);
 
 	  g_signal_connect (G_OBJECT (scales->toggles[i]), "toggled",
 			    G_CALLBACK (gimp_color_scales_toggle_update),
@@ -265,6 +277,37 @@ gimp_color_scales_finalize (GObject *object)
   scales = GIMP_COLOR_SCALES (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_color_scales_togg_sensitive (GimpColorSelector *selector,
+                                  gboolean           sensitive)
+{
+  GimpColorScales *scales;
+  gint             i;
+
+  scales = GIMP_COLOR_SCALES (selector);
+
+  for (i = 0; i < 6; i++)
+    gtk_widget_set_sensitive (scales->toggles[i], sensitive);
+}
+
+static void
+gimp_color_scales_togg_visible (GimpColorSelector *selector,
+                                gboolean           visible)
+{
+  GimpColorScales *scales;
+  gint             i;
+
+  scales = GIMP_COLOR_SCALES (selector);
+
+  for (i = 0; i < 6; i++)
+    {
+      if (visible)
+        gtk_widget_show (scales->toggles[i]);
+      else
+        gtk_widget_hide (scales->toggles[i]);
+    }
 }
 
 static void
@@ -330,24 +373,6 @@ gimp_color_scales_set_channel (GimpColorSelector        *selector,
                                          scales);
     }
 }
-
-
-/*  public functions  */
-
-void
-gimp_color_scales_set_toggles_sensitive (GimpColorScales *scales,
-                                         gboolean         sensitive)
-{
-  gint i;
-
-  g_return_if_fail (GIMP_IS_COLOR_SCALES (scales));
-
-  for (i = 0; i < 6; i++)
-    gtk_widget_set_sensitive (scales->toggles[i], sensitive);
-}
-
-
-/*  private functions  */
 
 static void
 gimp_color_scales_update_scales (GimpColorScales *scales,
