@@ -36,6 +36,7 @@
 #include "gimpcoloreditor.h"
 #include "gimpdocked.h"
 #include "gimpfgbgeditor.h"
+#include "gimpfgbgview.h"
 #include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
@@ -239,9 +240,29 @@ gimp_color_editor_init (GimpColorEditor *editor)
                     editor);
 }
 
+static GtkWidget *
+gimp_color_editor_get_preview (GimpDocked  *docked,
+                               GimpContext *context,
+                               GtkIconSize  size)
+{
+  GdkScreen   *screen   = gtk_widget_get_screen (GTK_WIDGET (docked));
+  GtkSettings *settings = gtk_settings_get_for_screen (screen);
+  GtkWidget   *preview;
+  gint         width;
+  gint         height;
+
+  preview = gimp_fg_bg_view_new (context);
+
+  if (gtk_icon_size_lookup_for_settings (settings, size, &width, &height))
+    gtk_widget_set_size_request (preview, width, height);
+
+  return preview;
+}
+
 static void
 gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
+  docked_iface->get_preview  = gimp_color_editor_get_preview;
   docked_iface->set_aux_info = gimp_color_editor_set_aux_info;
   docked_iface->get_aux_info = gimp_color_editor_get_aux_info;
   docked_iface->set_context  = gimp_color_editor_set_context;

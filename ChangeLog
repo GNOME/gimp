@@ -1,5 +1,18 @@
 2005-03-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/gimpfgbgview.[ch]
+	* app/widgets/widgets-types.h: added new widget GimpFgBgView;
+	somewhat similar to GimpFgBgEditor but a lot simpler.
+
+	* app/widgets/gimpcoloreditor.c: use GimpFgBgView as preview widget.
+	Closes bug #168592.
+
+	* app/widgets/gimpfgbgeditor.c: gracefully handle a very small
+	size allocation.
+
+2005-03-31  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/quit-dialog.c: enable save via DND from the image
 	list in the quit dialog.
 

@@ -132,6 +132,8 @@ libappwidgets_a_sources = \
 	gimperrordialog.h		\
 	gimpfgbgeditor.c		\
 	gimpfgbgeditor.h		\
+	gimpfgbgview.c			\
+	gimpfgbgview.h			\
 	gimpfiledialog.c		\
 	gimpfiledialog.h		\
 	gimpfileprocview.c		\

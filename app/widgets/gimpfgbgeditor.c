@@ -276,6 +276,8 @@ gimp_fg_bg_editor_draw_rect (GimpFgBgEditor *editor,
   gint    xx, yy;
   guchar *bp;
 
+  g_return_if_fail (width > 0 && height > 0);
+
   gimp_rgb_get_uchar (color, &r, &g, &b);
 
   rowstride = 3 * ((width + 3) & -4);
@@ -335,9 +337,13 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon);
   default_h = gdk_pixbuf_get_height (editor->default_icon);
-  gdk_draw_pixbuf (widget->window, NULL, editor->default_icon,
-                   0, 0, 0, height - default_h, default_w, default_h,
-                   GDK_RGB_DITHER_NORMAL, 0, 0);
+
+  if (default_w < width / 2 && default_h < height / 2)
+    gdk_draw_pixbuf (widget->window, NULL, editor->default_icon,
+                     0, 0, 0, height - default_h, default_w, default_h,
+                     GDK_RGB_DITHER_NORMAL, 0, 0);
+  else
+    default_w = default_h = 0;
 
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
@@ -347,10 +353,13 @@ gimp_fg_bg_editor_expose (GtkWidget      *widget,
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon);
   swap_h = gdk_pixbuf_get_height (editor->swap_icon);
-  gdk_draw_pixbuf (widget->window, NULL, editor->swap_icon,
-                   0, 0, width - swap_w, 0, swap_w, swap_h,
-                   GDK_RGB_DITHER_NORMAL, 0, 0);
 
+  if (swap_w < width / 2 && swap_h < height / 2)
+    gdk_draw_pixbuf (widget->window, NULL, editor->swap_icon,
+                     0, 0, width - swap_w, 0, swap_w, swap_h,
+                     GDK_RGB_DITHER_NORMAL, 0, 0);
+  else
+    swap_w = swap_h = 0;
 
   rect_h = height - MAX (default_h, swap_h) - 2;
   rect_w = width  - MAX (default_w, swap_w) - 4;
