@@ -148,25 +148,25 @@ p_clean_name(char *name, char *clean_name)
 
 gint p_gen_code_iter_ALT(char  *proc_name)
 {
-  FILE           *l_fp;
-  int             l_idx;
+  FILE             *l_fp;
+  gint              l_idx;
   
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
-  gint             l_rc;
+  gint              l_nparams;
+  gint              l_nreturn_vals;
+  GimpPDBProcType   l_proc_type;
+  gchar            *l_proc_blurb;
+  gchar            *l_proc_help;
+  gchar            *l_proc_author;
+  gchar            *l_proc_copyright;
+  gchar            *l_proc_date;
+  GimpParamDef     *l_params;
+  GimpParamDef     *l_return_vals;
+  gint              l_rc;
   
-  char             l_filename[512];
-  char             l_gendate[30];
-  char             l_clean_proc_name[256];
-  char             l_clean_par_name[256];
+  gchar             l_filename[512];
+  gchar             l_gendate[30];
+  gchar             l_clean_proc_name[256];
+  gchar             l_clean_par_name[256];
 
 
   l_rc = 0;
@@ -341,25 +341,25 @@ gint p_gen_tab_iter_ALT(char  *proc_name)
  */
 gint p_gen_code_iter(char  *proc_name)
 {
-  FILE           *l_fp;
-  int             l_idx;
+  FILE             *l_fp;
+  gint              l_idx;
   
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
-  gint             l_rc;
+  gint              l_nparams;
+  gint              l_nreturn_vals;
+  GimpPDBProcType   l_proc_type;
+  gchar            *l_proc_blurb;
+  gchar            *l_proc_help;
+  gchar            *l_proc_author;
+  gchar            *l_proc_copyright;
+  gchar            *l_proc_date;
+  GimpParamDef     *l_params;
+  GimpParamDef     *l_return_vals;
+  gint              l_rc;
   
-  char             l_filename[512];
-  char             l_gendate[30];
-  char             l_clean_proc_name[256];
-  char             l_clean_par_name[256];
+  gchar             l_filename[512];
+  gchar             l_gendate[30];
+  gchar             l_clean_proc_name[256];
+  gchar             l_clean_par_name[256];
 
   l_rc = 0;
   p_get_gendate(&l_gendate[0]);

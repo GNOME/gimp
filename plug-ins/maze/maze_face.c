@@ -572,10 +572,18 @@ static void
 maze_help (GtkWidget *widget,
 	   gpointer   foo)
 {
-  gchar *proc_blurb, *proc_help, *proc_author, *proc_copyright, *proc_date;
-  gint proc_type, nparams, nreturn_vals;
-  GParamDef *params, *return_vals;
-  gint baz;
+  gchar           *proc_blurb;
+  gchar           *proc_help;
+  gchar           *proc_author;
+  gchar           *proc_copyright;
+  gchar           *proc_date;
+  GimpPDBProcType  proc_type;
+  gint             nparams;
+  gint             nreturn_vals;
+  GimpParamDef    *params;
+  GimpParamDef    *return_vals;
+
+  gint   baz;
   gchar *message;
 
   if (gimp_query_procedure ("extension_web_browser",

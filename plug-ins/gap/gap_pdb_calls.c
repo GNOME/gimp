@@ -61,16 +61,16 @@ gint p_pdb_procedure_available(char *proc_name)
     *   if not available FALSE is returned.
     */
     
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
+  gint             l_nparams;
+  gint             l_nreturn_vals;
+  GimpPDBProcType   l_proc_type;
+  gchar            *l_proc_blurb;
+  gchar            *l_proc_help;
+  gchar            *l_proc_author;
+  gchar            *l_proc_copyright;
+  gchar            *l_proc_date;
+  GimpParamDef    *l_params;
+  GimpParamDef    *l_return_vals;
   gint             l_rc;
 
   l_rc = 0;

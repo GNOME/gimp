@@ -57,8 +57,8 @@ extern gint xjt_debug;
 
 gint p_procedure_available(gchar *proc_name)
 {
-  int              l_nparams;
-  int              l_nreturn_vals;
+  gint             l_nparams;
+  gint             l_nreturn_vals;
   GimpPDBProcType  l_proc_type;
   gchar           *l_proc_blurb;
   gchar           *l_proc_help;

@@ -1,5 +1,16 @@
 2000-06-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/gap/gap_dbbrowser_utils.h
+	* plug-ins/gap/gap_filter_codegen.c
+	* plug-ins/gap/gap_pdb_calls.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/xjt/xpdb_calls.c: fixed compiler warnings 
+	introduced by our latest libgimp changes.
+
+2000-06-13  Sven Neumann  <sven@gimp.org>
+
 	Moved various files from the docs directory to
 	devel-docs and devel-docs/pdb. Excluded papers 
 	from being distributed but left them in CVS.

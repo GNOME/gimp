@@ -252,16 +252,16 @@ static gint
 procedure_general_select_callback (PDesc *pdesc,
 				   PInfo *pinfo)
 {
-  gchar *selected_proc_blurb;
-  gchar *selected_proc_help; 
-  gchar *selected_proc_author;
-  gchar *selected_proc_copyright;
-  gchar *selected_proc_date;
-  gint   selected_proc_type; 
-  gint   selected_nparams;
-  gint   selected_nreturn_vals;
-  GParamDef *selected_params;
-  GParamDef *selected_return_vals;
+  gchar           *selected_proc_blurb;
+  gchar           *selected_proc_help; 
+  gchar           *selected_proc_author;
+  gchar           *selected_proc_copyright;
+  gchar           *selected_proc_date;
+  GimpPDBProcType  selected_proc_type; 
+  gint             selected_nparams;
+  gint             selected_nreturn_vals;
+  GimpParamDef    *selected_params;
+  GimpParamDef    *selected_return_vals;
   GtkWidget *label;
   GtkWidget *help;
   GtkWidget *text;

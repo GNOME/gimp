@@ -376,16 +376,16 @@ int gb_debug = FALSE;
 gint 
 p_pdb_procedure_available (char *proc_name)
 {    
-  int             l_nparams;
-  int             l_nreturn_vals;
-  int             l_proc_type;
-  char            *l_proc_blurb;
-  char            *l_proc_help;
-  char            *l_proc_author;
-  char            *l_proc_copyright;
-  char            *l_proc_date;
-  GParamDef       *l_params;
-  GParamDef       *l_return_vals;
+  gint             l_nparams;
+  gint             l_nreturn_vals;
+  GimpPDBProcType  l_proc_type;
+  gchar           *l_proc_blurb;
+  gchar           *l_proc_help;
+  gchar           *l_proc_author;
+  gchar           *l_proc_copyright;
+  gchar           *l_proc_date;
+  GimpParamDef    *l_params;
+  GimpParamDef    *l_return_vals;
   gint             l_rc;
 
   l_rc = 0;
@@ -393,17 +393,17 @@ p_pdb_procedure_available (char *proc_name)
   /* Query the gimp application's procedural database
    *  regarding a particular procedure.
    */
-  if(gimp_query_procedure  (proc_name,
-			        &l_proc_blurb,
-			        &l_proc_help,
-			        &l_proc_author,
-			        &l_proc_copyright,
-			        &l_proc_date,
-			        &l_proc_type,
-			        &l_nparams,
-			        &l_nreturn_vals,
-			        &l_params,
-			        &l_return_vals))
+  if (gimp_query_procedure  (proc_name,
+			     &l_proc_blurb,
+			     &l_proc_help,
+			     &l_proc_author,
+			     &l_proc_copyright,
+			     &l_proc_date,
+			     &l_proc_type,
+			     &l_nparams,
+			     &l_nreturn_vals,
+			     &l_params,
+			     &l_return_vals))
   {
      /* procedure found in PDB */
      return (l_nparams);
