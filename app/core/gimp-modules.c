@@ -44,8 +44,11 @@ gimp_modules_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->module_db = gimp_module_db_new (gimp->be_verbose);
-  gimp->write_modulerc = FALSE;
+  if (! gimp->no_interface)
+    {
+      gimp->module_db = gimp_module_db_new (gimp->be_verbose);
+      gimp->write_modulerc = FALSE;
+    }
 }
 
 void
@@ -69,6 +72,9 @@ gimp_modules_load (Gimp *gimp)
   gchar    *module_load_inhibit = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->no_interface)
+    return;
 
   filename = gimp_personal_rc_file ("modulerc");
   scanner = gimp_scanner_new_file (filename, NULL);
@@ -167,7 +173,7 @@ gimp_modules_unload (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->write_modulerc)
+  if (! gimp->no_interface && gimp->write_modulerc)
     {
       GimpConfigWriter *writer;
       GString          *str;
@@ -211,11 +217,14 @@ gimp_modules_unload (Gimp *gimp)
 void
 gimp_modules_refresh (Gimp *gimp)
 {
-  gchar *path;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
-  gimp_module_db_refresh (gimp->module_db, path);
-  g_free (path);
+  if (! gimp->no_interface)
+    {
+      gchar *path;
+
+      path = gimp_config_path_expand (gimp->config->module_path, TRUE, NULL);
+      gimp_module_db_refresh (gimp->module_db, path);
+      g_free (path);
+    }
 }

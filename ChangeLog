@@ -1,5 +1,10 @@
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-modules.c: don't do anything if gimp->no_interface
+	is TRUE.
+
+2004-07-12  Michael Natterer  <mitch@gimp.org>
+
 	Made the gimp-console binary compile.
 	Finishes core/GUI separation and fixes bug #71514:
 
