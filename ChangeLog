@@ -12,6 +12,7 @@
 2005-02-24  Michael Natterer  <mitch@gimp.org>
 
 	Allow to resize layers with the image. Fixes bug #87789.
+	Based on patch by Akkana Peck.
 
 	* app/core/core-enums.[ch]: added enum GimpImageResizeLayers which
 	can be one of { NONE, MATCHING, ALL }.
