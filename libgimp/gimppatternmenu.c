@@ -82,6 +82,18 @@ static void     gimp_pattern_select_popup_open      (PatternSelect *pattern_sel,
                                                      gint           y);
 static void     gimp_pattern_select_popup_close     (PatternSelect *pattern_sel);
 
+static void     gimp_pattern_select_drag_data_received (GtkWidget        *preview,
+                                                        GdkDragContext   *context,
+                                                        gint              x,
+                                                        gint              y,
+                                                        GtkSelectionData *selection,
+                                                        guint             info,
+                                                        guint             time,
+                                                        GtkWidget        *widget);
+
+
+static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
+
 
 /**
  * gimp_pattern_select_widget_new:
@@ -138,6 +150,17 @@ gimp_pattern_select_widget_new (const gchar            *title,
   g_signal_connect (pattern_sel->preview, "event",
                     G_CALLBACK (gimp_pattern_select_preview_events),
                     pattern_sel);
+
+  gtk_drag_dest_set (GTK_WIDGET (pattern_sel->preview),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
+
+  g_signal_connect (pattern_sel->preview, "drag-data-received",
+                    G_CALLBACK (gimp_pattern_select_drag_data_received),
+                    hbox);
 
   pattern_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_start (GTK_BOX (hbox), pattern_sel->button, TRUE, TRUE, 0);
@@ -462,5 +485,31 @@ gimp_pattern_select_popup_close (PatternSelect *pattern_sel)
     {
       gtk_widget_destroy (pattern_sel->popup);
       pattern_sel->popup = NULL;
+    }
+}
+
+static void
+gimp_pattern_select_drag_data_received (GtkWidget        *preview,
+                                        GdkDragContext   *context,
+                                        gint              x,
+                                        gint              y,
+                                        GtkSelectionData *selection,
+                                        guint             info,
+                                        guint             time,
+                                        GtkWidget        *widget)
+{
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid pattern data!");
+      return;
+    }
+
+  if (g_utf8_validate (selection->data, selection->length - 1, NULL))
+    {
+      gchar *name = g_strndup (selection->data, selection->length - 1);
+
+      gimp_pattern_select_widget_set (widget, name);
+
+      g_free (name);
     }
 }

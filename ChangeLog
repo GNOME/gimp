@@ -1,5 +1,14 @@
 2005-03-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimppalettemenu.c
+	* libgimp/gimppatternmenu.c: accept drops on selection widgets as
+	requested in bug #10677.
+
+2005-03-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpmenu.c: added gtk-doc comments explaining what
 	functions to use instead of these deprecated ones.
 

@@ -30,7 +30,7 @@
 #include "libgimp-intl.h"
 
 
-#define GRADIENT_SELECT_DATA_KEY "gimp-grdient-select-data"
+#define GRADIENT_SELECT_DATA_KEY "gimp-gradient-select-data"
 #define CELL_HEIGHT              18
 #define CELL_WIDTH               84
 
@@ -74,6 +74,17 @@ static void gimp_gradient_select_preview_size_allocate
 static void gimp_gradient_select_preview_expose  (GtkWidget      *preview,
                                                   GdkEventExpose *event,
                                                   GradientSelect *gradient_sel);
+
+static void gimp_gradient_select_drag_data_received (GtkWidget        *widget,
+                                                     GdkDragContext   *context,
+                                                     gint              x,
+                                                     gint              y,
+                                                     GtkSelectionData *selection,
+                                                     guint             info,
+                                                     guint             time);
+
+
+static const GtkTargetEntry target = { "application/x-gimp-gradient-name", 0 };
 
 
 /**
@@ -125,6 +136,17 @@ gimp_gradient_select_widget_new (const gchar             *title,
   g_signal_connect (gradient_sel->button, "destroy",
                     G_CALLBACK (gimp_gradient_select_widget_destroy),
                     gradient_sel);
+
+  gtk_drag_dest_set (GTK_WIDGET (gradient_sel->button),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
+
+  g_signal_connect (gradient_sel->button, "drag-data-received",
+                    G_CALLBACK (gimp_gradient_select_drag_data_received),
+                    NULL);
 
   gradient_sel->preview = gtk_drawing_area_new ();
   gtk_widget_set_size_request (gradient_sel->preview, CELL_WIDTH, CELL_HEIGHT);
@@ -381,4 +403,29 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
 
   g_free (odd);
   g_free (even);
+}
+
+static void
+gimp_gradient_select_drag_data_received (GtkWidget        *widget,
+                                         GdkDragContext   *context,
+                                         gint              x,
+                                         gint              y,
+                                         GtkSelectionData *selection,
+                                         guint             info,
+                                         guint             time)
+{
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid gradient data!");
+      return;
+    }
+
+  if (g_utf8_validate (selection->data, selection->length - 1, NULL))
+    {
+      gchar *name = g_strndup (selection->data, selection->length - 1);
+
+      gimp_gradient_select_widget_set (widget, name);
+
+      g_free (name);
+    }
 }

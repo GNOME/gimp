@@ -87,6 +87,17 @@ static void     gimp_brush_select_popup_open      (BrushSelect  *brush_sel,
                                                    gint          y);
 static void     gimp_brush_select_popup_close     (BrushSelect  *brush_sel);
 
+static void  gimp_brush_select_drag_data_received (GtkWidget        *preview,
+                                                   GdkDragContext   *context,
+                                                   gint              x,
+                                                   gint              y,
+                                                   GtkSelectionData *selection,
+                                                   guint             info,
+                                                   guint             time,
+                                                   GtkWidget        *widget);
+
+
+static const GtkTargetEntry target = { "application/x-gimp-brush-name", 0 };
 
 
 /**
@@ -154,6 +165,17 @@ gimp_brush_select_widget_new (const gchar          *title,
   g_signal_connect (brush_sel->preview, "event",
                     G_CALLBACK (gimp_brush_select_preview_events),
                     brush_sel);
+
+  gtk_drag_dest_set (GTK_WIDGET (brush_sel->preview),
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP,
+                     &target, 1,
+                     GDK_ACTION_COPY);
+
+  g_signal_connect (brush_sel->preview, "drag-data-received",
+                    G_CALLBACK (gimp_brush_select_drag_data_received),
+                    hbox);
 
   brush_sel->button = gtk_button_new_with_mnemonic (_("_Browse..."));
   gtk_box_pack_end (GTK_BOX (hbox), brush_sel->button, TRUE, TRUE, 0);
@@ -232,7 +254,7 @@ gimp_brush_select_widget_close (GtkWidget *widget)
  * gimp_brush_select_widget_set;
  * @widget:     A brush select widget.
  * @brush_name: Brush name to set; %NULL means no change.
- * @opacity:    Opacity to set. -1 means no change.
+ * @opacity:    Opacity to set. -1.0 means no change.
  * @spacing:    Spacing to set. -1 means no change.
  * @paint_mode: Paint mode to set.  -1 means no change.
  *
@@ -288,7 +310,7 @@ gimp_brush_select_widget_set (GtkWidget            *widget,
           if (color_data)
             g_free (color_data);
 
-          if (opacity == -1.0)
+          if (opacity < 0.0)
             opacity = gimp_context_get_opacity ();
 
           if (paint_mode == -1)
@@ -569,5 +591,31 @@ gimp_brush_select_popup_close (BrushSelect *brush_sel)
     {
       gtk_widget_destroy (brush_sel->popup);
       brush_sel->popup = NULL;
+    }
+}
+
+static void
+gimp_brush_select_drag_data_received (GtkWidget        *preview,
+                                      GdkDragContext   *context,
+                                      gint              x,
+                                      gint              y,
+                                      GtkSelectionData *selection,
+                                      guint             info,
+                                      guint             time,
+                                      GtkWidget        *widget)
+{
+  if ((selection->format != 8) || (selection->length < 1))
+    {
+      g_warning ("Received invalid brush data!");
+      return;
+    }
+
+  if (g_utf8_validate (selection->data, selection->length - 1, NULL))
+    {
+      gchar *name = g_strndup (selection->data, selection->length - 1);
+
+      gimp_brush_select_widget_set (widget, name, -1.0, -1, -1);
+
+      g_free (name);
     }
 }
