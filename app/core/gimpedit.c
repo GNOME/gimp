@@ -44,8 +44,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "tile_manager_pvt.h"
-
 
 typedef enum
 {
@@ -100,17 +98,19 @@ crop_buffer (TileManager *tiles,
   void        *pr;
   guchar       black[MAX_CHANNELS] = { 0, 0, 0, 0 };
 
-  bytes = tiles->bpp;
+  bytes = tile_manager_bpp (tiles);
   alpha = bytes - 1;
 
   /*  go through and calculate the bounds  */
-  x1 = tiles->width;
-  y1 = tiles->height;
+  x1 = tile_manager_width (tiles);
+  y1 = tile_manager_height (tiles);
   x2 = 0;
   y2 = 0;
 
   pixel_region_init (&PR, tiles, 0, 0, x1, y1, FALSE);
-  for (pr = pixel_regions_register (1, &PR); pr != NULL; pr = pixel_regions_process (pr))
+  for (pr = pixel_regions_register (1, &PR); 
+       pr != NULL; 
+       pr = pixel_regions_process (pr))
     {
       data = PR.data + alpha;
       ex = PR.x + PR.w;
@@ -138,18 +138,25 @@ crop_buffer (TileManager *tiles,
 	}
     }
 
-  x2 = CLAMP (x2 + 1, 0, tiles->width);
-  y2 = CLAMP (y2 + 1, 0, tiles->height);
+  x2 = CLAMP (x2 + 1, 0, tile_manager_width (tiles));
+  y2 = CLAMP (y2 + 1, 0, tile_manager_height (tiles));
 
-  empty = (x1 == tiles->width && y1 == tiles->height);
+  empty = (x1 == tile_manager_width (tiles) && 
+	   y1 == tile_manager_height (tiles));
 
   /*  If there are no visible pixels, return NULL */
   if (empty)
-    new_tiles = NULL;
+    {
+      new_tiles = NULL;
+    }
   /*  If no cropping, return original buffer  */
-  else if (x1 == 0 && y1 == 0 && x2 == tiles->width &&
-	   y2 == tiles->height && border == 0)
-    new_tiles = tiles;
+  else if (x1 == 0 && y1 == 0 && 
+	   x2 == tile_manager_width (tiles)  &&
+	   y2 == tile_manager_height (tiles) && 
+	   border == 0)
+    {
+      new_tiles = tiles;
+    }
   /*  Otherwise, crop the original area  */
   else
     {
@@ -173,13 +180,14 @@ crop_buffer (TileManager *tiles,
 	  color_region (&destPR, black);
 	}
 
-      pixel_region_init (&srcPR, tiles, x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, new_tiles, border, border, (x2 - x1), (y2 - y1), TRUE);
+      pixel_region_init (&srcPR, tiles, 
+			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
+      pixel_region_init (&destPR, new_tiles, 
+			 border, border, (x2 - x1), (y2 - y1), TRUE);
 
       copy_region (&srcPR, &destPR);
 
-      new_tiles->x = x1;
-      new_tiles->y = y1;
+      tile_manager_set_offsets (new_tiles, x1, y1);
     }
 
   return new_tiles;
@@ -375,7 +383,9 @@ edit_paste_as_new (GImage      *invoke,
     return FALSE;
 
   /*  create a new image  (always of type RGB)  */
-  gimage = gimage_new (paste->width, paste->height, RGB);
+  gimage = gimage_new (tile_manager_width (paste), 
+		       tile_manager_height (paste), 
+		       RGB);
   gimp_image_undo_disable (gimage);
   gimp_image_set_resolution (gimage, invoke->xresolution, invoke->yresolution);
   gimp_image_set_unit (gimage, invoke->unit);
@@ -833,19 +843,24 @@ static void
 new_named_buffer (TileManager *tiles,
 		  gchar       *name)
 {
-  PixelRegion srcPR, destPR;
+  PixelRegion  srcPR, destPR;
   NamedBuffer *nb;
+  gint         width, height;
 
-  if (! tiles) return;
+  if (! tiles) 
+    return;
+
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
 
   nb = (NamedBuffer *) g_malloc (sizeof (NamedBuffer));
 
-  nb->buf = tile_manager_new (tiles->width, tiles->height, tiles->bpp);
-  pixel_region_init (&srcPR, tiles, 0, 0, tiles->width, tiles->height, FALSE);
-  pixel_region_init (&destPR, nb->buf, 0, 0, tiles->width, tiles->height, TRUE);
+  nb->buf = tile_manager_new (width, height, tile_manager_bpp (tiles));
+  pixel_region_init (&srcPR, tiles, 0, 0, width, height, FALSE); 
+  pixel_region_init (&destPR, nb->buf, 0, 0, width, height, TRUE);
   copy_region (&srcPR, &destPR);
 
-  nb->name = g_strdup ((char *) name);
+  nb->name = g_strdup ((gchar *) name);
   named_buffers = g_slist_append (named_buffers, (void *) nb);
 }
 

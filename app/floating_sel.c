@@ -35,8 +35,6 @@
 #include "tile_manager.h"
 #include "undo.h"
 
-#include "tile_manager_pvt.h"		/* ick. */
-
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
@@ -251,9 +249,9 @@ floating_sel_store (Layer *layer,
   int x1, y1, x2, y2;
 
   /*  Check the backing store & make sure it has the correct dimensions  */
-  if (layer->fs.backing_store->width  != gimp_drawable_width (GIMP_DRAWABLE(layer)) ||
-      layer->fs.backing_store->height != gimp_drawable_height (GIMP_DRAWABLE(layer)) ||
-      layer->fs.backing_store->bpp    != gimp_drawable_bytes (layer->fs.drawable))
+  if ((tile_manager_width (layer->fs.backing_store)  != gimp_drawable_width (GIMP_DRAWABLE(layer)))  ||
+      (tile_manager_height (layer->fs.backing_store) != gimp_drawable_height (GIMP_DRAWABLE(layer))) ||
+      (tile_manager_bpp (layer->fs.backing_store)    != gimp_drawable_bytes (layer->fs.drawable)))
     {
       /*  free the backing store and allocate anew  */
       tile_manager_destroy (layer->fs.backing_store);

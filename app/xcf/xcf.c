@@ -1413,19 +1413,26 @@ xcf_save_hierarchy (XcfInfo     *info,
 {
   guint32 saved_pos;
   guint32 offset;
-  gint i;
-  gint nlevels, tmp1, tmp2;
-  gint h, w;
+  guint32 width;
+  guint32 height;
+  guint32 bpp;
+  gint    i;
+  gint    nlevels;
+  gint    tmp1, tmp2;
 
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &tiles->bpp, 1);
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
+  bpp    = tile_manager_bpp (tiles);
+
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &width, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &height, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &bpp, 1);
 
   saved_pos = info->cp;
   
-  tmp1 = xcf_calc_levels (tiles->width, TILE_WIDTH);
-  tmp2 = xcf_calc_levels (tiles->height, TILE_HEIGHT);
-  nlevels = MAX(tmp1, tmp2);
+  tmp1 = xcf_calc_levels (width, TILE_WIDTH);
+  tmp2 = xcf_calc_levels (height, TILE_HEIGHT);
+  nlevels = MAX (tmp1, tmp2);
 
   xcf_seek_pos (info, info->cp + (1 + nlevels) * 4);
 
@@ -1437,17 +1444,15 @@ xcf_save_hierarchy (XcfInfo     *info,
 	{
 	  /* write out the level. */
 	  xcf_save_level (info, tiles);
-	  w = tiles->width;
-	  h = tiles->height;
 	} 
       else 
 	{
 	  /* fake an empty level */
 	  tmp1 = 0;
-	  w /= 2;
-	  h /= 2;
-	  info->cp += xcf_write_int32 (info->fp, (guint32*) &w, 1);
-	  info->cp += xcf_write_int32 (info->fp, (guint32*) &h, 1);
+	  width  /= 2;
+	  height /= 2;
+	  info->cp += xcf_write_int32 (info->fp, (guint32*) &width, 1);
+	  info->cp += xcf_write_int32 (info->fp, (guint32*) &height, 1);
 	  info->cp += xcf_write_int32 (info->fp, (guint32*) &tmp1, 1);
 	}
 
@@ -1480,20 +1485,25 @@ static void
 xcf_save_level (XcfInfo     *info,
 		TileManager *level)
 {
-  guint32 saved_pos;
-  guint32 offset;
-  guint ntiles;
-  gint i;
-  guchar *rlebuf;
+  guint32  saved_pos;
+  guint32  offset;
+  guint32  width;
+  guint32  height;
+  guint    ntiles;
+  gint     i;
+  guchar  *rlebuf;
 
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &level->width, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &level->height, 1);
+  width  = tile_manager_width (level);
+  height = tile_manager_height (level);
+
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &width, 1);
+  info->cp += xcf_write_int32 (info->fp, (guint32*) &height, 1);
 
   saved_pos = info->cp;
 
   /* allocate a temporary buffer to store the rle data before it is
      written to disk */
-  rlebuf = g_malloc(TILE_WIDTH*TILE_HEIGHT*level->bpp * 1.5);
+  rlebuf = g_malloc (TILE_WIDTH * TILE_HEIGHT * tile_manager_bpp (level) * 1.5);
 
   if (level->tiles)
     {
@@ -1542,7 +1552,7 @@ xcf_save_level (XcfInfo     *info,
 	}
     }
 
-  g_free(rlebuf);
+  g_free (rlebuf);
 
   /* write out a '0' offset position to indicate the end
    *  of the level offsets.
@@ -1583,7 +1593,7 @@ xcf_save_tile_rle (XcfInfo *info,
 
   for (i = 0; i < bpp; i++)
     {
-      data = (guchar*)tile_data_pointer (tile, 0, 0) + i;
+      data = (guchar*) tile_data_pointer (tile, 0, 0) + i;
 
       state = 0;
       length = 0;
@@ -1668,7 +1678,7 @@ xcf_save_tile_rle (XcfInfo *info,
       if (count != (tile_ewidth (tile) * tile_eheight (tile)))
 	g_message ("xcf: uh oh! xcf rle tile saving error: %d", count);
     }
-  info->cp += xcf_write_int8(info->fp, rlebuf, len);
+  info->cp += xcf_write_int8 (info->fp, rlebuf, len);
   tile_release (tile, FALSE);
 }
 
@@ -2433,9 +2443,9 @@ xcf_load_hierarchy (XcfInfo     *info,
   /* make sure the values in the file correspond to the values
    *  calculated when the TileManager was created.
    */
-  if ((width != tiles->width) ||
-      (height != tiles->height) ||
-      (bpp != tiles->bpp))
+  if (width  != tile_manager_width (tiles)  ||
+      height != tile_manager_height (tiles) ||
+      bpp    != tile_manager_bpp (tiles))
     return FALSE;
 
   /* load in the levels...we make sure that the number of levels
@@ -2491,8 +2501,8 @@ xcf_load_level (XcfInfo     *info,
   info->cp += xcf_read_int32 (info->fp, (guint32*) &width, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32*) &height, 1);
 
-  if ((width != tiles->width) ||
-      (height != tiles->height))
+  if (width  != tile_manager_width  (tiles) ||
+      height != tile_manager_height (tiles))
     return FALSE;
 
   /* read in the first tile offset.
@@ -2530,8 +2540,9 @@ xcf_load_level (XcfInfo     *info,
       /* if the offset is 0 then we need to read in the maximum possible
 	 allowing for negative compression */
       if (offset2 == 0)
-	offset2 = offset + TILE_WIDTH*TILE_WIDTH*4*1.5; /* 1.5 is probably more
-							   than we need to allow */
+	offset2 = offset + TILE_WIDTH * TILE_WIDTH * 4* 1.5; 
+                                        /* 1.5 is probably more
+					   than we need to allow */
 
       /* seek to the tile offset */
       xcf_seek_pos (info, offset);
@@ -2577,8 +2588,8 @@ xcf_load_level (XcfInfo     *info,
 	  if (tile_ewidth (tile) == tile_ewidth (previous) &&
 	      tile_eheight (tile) == tile_eheight (previous) &&
 	      tile_bpp (tile) == tile_bpp (previous) &&
-	      memcmp (tile_data_pointer(tile, 0, 0), 
-		      tile_data_pointer(previous, 0, 0),
+	      memcmp (tile_data_pointer (tile, 0, 0), 
+		      tile_data_pointer (previous, 0, 0),
 		      tile_size (tile)) == 0)
 	    tile_manager_map (tiles, i, previous);
 	  tile_release (previous, FALSE);
@@ -2613,7 +2624,9 @@ xcf_load_tile (XcfInfo *info,
   if (!info->swap_num)
     {
       info->ref_count = g_new (int, 1);
-      info->swap_num = tile_swap_add (info->filename, xcf_swap_func, info->ref_count);
+      info->swap_num = tile_swap_add (info->filename, 
+				      xcf_swap_func, 
+				      info->ref_count);
     }
 
   tile->swap_num = info->swap_num;
@@ -2652,7 +2665,7 @@ xcf_load_tile_rle (XcfInfo *info,
 
   /* we have to use fread instead of xcf_read_* because we may be
      reading past the end of the file here */
-  nmemb_read_successfully = fread ((char*) xcfdata, sizeof (char),
+  nmemb_read_successfully = fread ((gchar*) xcfdata, sizeof (char),
 				   data_length, info->fp);
   info->cp += nmemb_read_successfully;
 
@@ -2660,7 +2673,7 @@ xcf_load_tile_rle (XcfInfo *info,
   
   for (i = 0; i < bpp; i++)
     {
-      data = (guchar*)tile_data_pointer (tile, 0, 0) + i;
+      data = (guchar*) tile_data_pointer (tile, 0, 0) + i;
       size = tile_ewidth (tile) * tile_eheight (tile);
       count = 0;
 
@@ -2757,10 +2770,10 @@ xcf_load_tile_rle (XcfInfo *info,
 #ifdef SWAP_FROM_FILE
 
 static gboolean
-xcf_swap_func (gint       fd,
+xcf_swap_func (gint      fd,
 	       Tile     *tile,
-	       gint       cmd,
-	       gpointer   user_data)
+	       gint      cmd,
+	       gpointer  user_data)
 {
   gint bytes;
   gint err;

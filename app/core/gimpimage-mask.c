@@ -34,7 +34,6 @@
 #include "paint_funcs.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"
 #include "undo.h"
 
 #include "tools/paint_core.h"
@@ -270,8 +269,7 @@ gimage_mask_extract (GImage       *gimage,
 
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
-  tiles->x = x1 + off_x;
-  tiles->y = y1 + off_y;
+  tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
 
   /* configure the pixel regions  */
   pixel_region_init (&srcPR, gimp_drawable_data (drawable),
@@ -296,8 +294,9 @@ gimage_mask_extract (GImage       *gimage,
 	  channel_clear (gimp_image_get_mask (gimage));
 
 	  /*  Update the region  */
-	  gdisplays_update_area (gimage, tiles->x, tiles->y,
-				 tiles->width, tiles->height);
+	  gdisplays_update_area (gimage, 
+				 x1 + off_x, y1 + off_y,
+				 (x2 - x1), (y2 - y1));
 
 	  /*  Invalidate the preview  */
 	  gimp_drawable_invalidate_preview (drawable, TRUE);
@@ -378,8 +377,9 @@ gimage_mask_float (GImage       *gimage,
 				OPAQUE_OPACITY, NORMAL_MODE);
 
   /*  Set the offsets  */
-  GIMP_DRAWABLE (layer)->offset_x = tiles->x + off_x;
-  GIMP_DRAWABLE (layer)->offset_y = tiles->y + off_y;
+  tile_manager_get_offsets (tiles, &x1, &y1);
+  GIMP_DRAWABLE (layer)->offset_x = x1 + off_x;
+  GIMP_DRAWABLE (layer)->offset_y = y1 + off_y;
 
   /*  Free the temp buffer  */
   tile_manager_destroy (tiles);

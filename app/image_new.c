@@ -27,13 +27,13 @@
 #include "drawable.h"
 #include "gimprc.h"
 #include "file_new_dialog.h"
-#include "tile_manager_pvt.h"
 #include "gdisplay.h"
 #include "gimpcontext.h"
 #include "gimage.h"
 #include "image_new.h"
 #include "layer.h"
 #include "paint_funcs.h"
+#include "tile_manager.h"
 
 #include "libgimp/gimpparasite.h"
 
@@ -152,8 +152,8 @@ image_new_create_window (const GimpImageNewValues *create_values,
    */
   if (global_buf && current_cut_buffer)
     {
-      values->width = global_buf->width;
-      values->height = global_buf->height;
+      values->width  = tile_manager_width (global_buf);
+      values->height = tile_manager_height (global_buf);
     }
 
   ui_new_image_window_create (values);

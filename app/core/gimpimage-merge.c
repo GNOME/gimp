@@ -767,9 +767,9 @@ gimp_image_shadow (GimpImage *gimage,
 		   gint       bpp)
 {
   if (gimage->shadow &&
-      ((width != tile_manager_level_width (gimage->shadow)) ||
-       (height != tile_manager_level_height (gimage->shadow)) ||
-       (bpp != tile_manager_level_bpp (gimage->shadow))))
+      ((width != tile_manager_width (gimage->shadow)) ||
+       (height != tile_manager_height (gimage->shadow)) ||
+       (bpp != tile_manager_bpp (gimage->shadow))))
     gimp_image_free_shadow (gimage);
   else if (gimage->shadow)
     return gimage->shadow;
@@ -3796,8 +3796,8 @@ gimp_image_projection (GimpImage *gimage)
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   if ((gimage->projection == NULL) ||
-      (tile_manager_level_width (gimage->projection) != gimage->width) ||
-      (tile_manager_level_height (gimage->projection) != gimage->height))
+      (tile_manager_width (gimage->projection) != gimage->width) ||
+      (tile_manager_height (gimage->projection) != gimage->height))
     {
       gimp_image_allocate_projection (gimage);
     }

@@ -109,7 +109,6 @@
 #include "palette_select.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"		/* ick ick ick. */
 
 #include "tools/brightness_contrast.h"
 #include "tools/color_balance.h"
@@ -3523,7 +3522,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
-  dest_bytes = new_tiles->bpp;
+  dest_bytes = tile_manager_bpp (new_tiles);
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 
@@ -3733,7 +3732,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
-  dest_bytes = new_tiles->bpp;
+  dest_bytes = tile_manager_bpp (new_tiles);
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
 

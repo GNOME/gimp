@@ -1,5 +1,34 @@
 2001-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/convert.c
+	* app/floating_sel.c
+	* app/gimage_mask.c
+	* app/gimpimage.c
+	* app/global_edit.c
+	* app/image_map.c
+	* app/image_new.c
+	* app/layer.c
+	* app/paint_funcs.c
+	* app/pixel_region.c
+	* app/tile_manager.c
+	* app/tile_manager.h
+	* app/tile_manager_pvt.h
+	* app/undo.c
+	* app/xcf.c
+	* app/pdb/tools_cmds.c
+	* app/tools/flip_tool.c
+	* app/tools/perspective_tool.c
+	* app/tools/rotate_tool.c
+	* app/tools/scale_tool.c
+	* app/tools/shear_tool.c
+	* app/tools/text_tool.c
+	* app/tools/transform_core.c
+	* tools/pdbgen/pdb/tools.pdb: made all files execpt xcf.c use the
+	TileManager accessor functions instead of accessing the TileManager
+	struct directly.
+
+2001-01-23  Sven Neumann  <sven@gimp.org>
+
 	* TODO.xml: updated, added sections about libgck and script-fu
 
 2001-01-23  Michael Natterer  <mitch@gimp.org>

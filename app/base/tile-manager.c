@@ -26,9 +26,9 @@
 
 #include "tile_cache.h"
 #include "tile_manager.h"
+#include "tile_manager_pvt.h"
 #include "tile_swap.h"
 
-#include "tile_manager_pvt.h"
 #include "tile_pvt.h"			/* ick. */
 
 
@@ -54,6 +54,8 @@ tile_manager_new (gint toplevel_width,
   width  = toplevel_width;
   height = toplevel_height;
 
+  tm->x          = 0;
+  tm->y          = 0;
   tm->width      = width;
   tm->height     = height;
   tm->bpp        = bpp;
@@ -70,6 +72,8 @@ tile_manager_destroy (TileManager *tm)
   gint ntiles;
   gint i;
 
+  g_return_if_fail (tm != NULL);
+  
   if (tm->tiles)
     {
       ntiles = tm->ntile_rows * tm->ntile_cols;
@@ -91,6 +95,8 @@ void
 tile_manager_set_validate_proc (TileManager      *tm,
 				TileValidateProc  proc)
 {
+  g_return_if_fail (tm != NULL);
+
   tm->validate_proc = proc;
 }
 
@@ -103,6 +109,8 @@ tile_manager_get_tile (TileManager *tm,
 		       gint         wantwrite)
 {
   gint tile_num;
+
+  g_return_val_if_fail (tm != NULL, NULL);
 
   tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0)
@@ -124,6 +132,8 @@ tile_manager_get (TileManager *tm,
   gint   right_tile;
   gint   bottom_tile;
   gint   i, j, k;
+
+  g_return_val_if_fail (tm != NULL, NULL);
 
   ntiles = tm->ntile_rows * tm->ntile_cols;
 
@@ -242,6 +252,8 @@ tile_manager_get_async (TileManager *tm,
   Tile *tile_ptr;
   gint  tile_num;
 
+  g_return_if_fail (tm != NULL);
+
   tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0)
     return;
@@ -255,6 +267,9 @@ void
 tile_manager_validate (TileManager *tm,
 		       Tile        *tile)
 {
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (tile != NULL);
+
   tile->valid = TRUE;
 
   if (tm->validate_proc)
@@ -280,6 +295,9 @@ tile_manager_invalidate_tiles (TileManager *tm,
   gint    row, col;
   gint    num;
 
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (toplevel_tile != NULL);
+
   col = toplevel_tile->tlink->tile_num % tm->ntile_cols;
   row = toplevel_tile->tlink->tile_num / tm->ntile_cols;
 
@@ -304,6 +322,9 @@ tile_invalidate_tile (Tile        **tile_ptr,
 {
   gint tile_num;
 
+  g_return_if_fail (tile_ptr != NULL);
+  g_return_if_fail (tm != NULL);
+
   tile_num = tile_manager_get_tile_num (tm, xpixel, ypixel);
   if (tile_num < 0)
     return;
@@ -318,6 +339,9 @@ tile_invalidate (Tile        **tile_ptr,
 		 gint          tile_num)
 {
   Tile *tile = *tile_ptr;
+
+  g_return_if_fail (tile_ptr != NULL);
+  g_return_if_fail (tm != NULL);
 
   TILE_MUTEX_LOCK (tile);
 
@@ -370,6 +394,9 @@ tile_manager_map_tile (TileManager *tm,
   gint tile_col;
   gint tile_num;
 
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (srctile != NULL);
+
   if ((xpixel < 0) || (xpixel >= tm->width) ||
       (ypixel < 0) || (ypixel >= tm->height))
     {
@@ -396,6 +423,9 @@ tile_manager_map (TileManager *tm,
   gint    right_tile;
   gint    bottom_tile;
   gint    i, j, k;
+
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (srctile != NULL);
 
   ntiles = tm->ntile_rows * tm->ntile_cols;
 
@@ -471,7 +501,7 @@ tile_manager_map (TileManager *tm,
   /*  printf("}");fflush(stdout);*/
 }
 
-static int
+static gint
 tile_manager_get_tile_num (TileManager *tm,
 		           gint         xpixel,
 		           gint         ypixel)
@@ -479,6 +509,8 @@ tile_manager_get_tile_num (TileManager *tm,
   gint tile_row;
   gint tile_col;
   gint tile_num;
+
+  g_return_val_if_fail (tm != NULL, -1);
 
   if ((xpixel < 0) || (xpixel >= tm->width) ||
       (ypixel < 0) || (ypixel >= tm->height))
@@ -495,31 +527,63 @@ void
 tile_manager_set_user_data (TileManager *tm,
 			    gpointer     user_data)
 {
+  g_return_if_fail (tm != NULL);
+
   tm->user_data = user_data;
 }
 
 gpointer
 tile_manager_get_user_data (const TileManager *tm)
 {
+  g_return_val_if_fail (tm != NULL, NULL);
+
   return tm->user_data;
 }
 
-int 
-tile_manager_level_width  (const TileManager *tm) 
+gint 
+tile_manager_width  (const TileManager *tm) 
 {
+  g_return_val_if_fail (tm != NULL, 0);
+
   return tm->width;
 }
 
-int 
-tile_manager_level_height (const TileManager *tm)
+gint 
+tile_manager_height (const TileManager *tm)
 {
+  g_return_val_if_fail (tm != NULL, 0);
+
   return tm->height;
 }
 
-int 
-tile_manager_level_bpp    (const TileManager *tm)
+gint 
+tile_manager_bpp (const TileManager *tm)
 {
+  g_return_val_if_fail (tm != NULL, 0);  
+
   return tm->bpp;
+}
+
+void
+tile_manager_get_offsets (const TileManager *tm,
+			  gint              *x,
+			  gint              *y)
+{
+  g_return_if_fail (x!= NULL && y != NULL);
+
+  *x = tm->x;
+  *y = tm->y;
+}
+
+void
+tile_manager_set_offsets (TileManager *tm,
+			  gint         x,
+			  gint         y)
+{
+  g_return_if_fail (tm != NULL);
+
+  tm->x = x;
+  tm->y = y;
 }
 
 void
@@ -529,6 +593,9 @@ tile_manager_get_tile_coordinates (TileManager *tm,
 				   gint        *y)
 {
   TileLink *tl;
+
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (x != NULL && y != NULL);
 
   for (tl = tile->tlink; tl; tl = tl->next) 
     {
@@ -552,6 +619,10 @@ tile_manager_map_over_tile (TileManager *tm,
 			    Tile        *srctile)
 {
   TileLink *tl;
+
+  g_return_if_fail (tm != NULL);
+  g_return_if_fail (tile != NULL);
+  g_return_if_fail (srctile != NULL);
 
   for (tl = tile->tlink; tl; tl = tl->next) 
     {

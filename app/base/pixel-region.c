@@ -30,7 +30,6 @@
 #include "gimprc.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"
 #include "tile.h"
 
 
@@ -64,7 +63,7 @@ pixel_region_init (PixelRegion *PR,
   PR->tiles     = tiles;
   PR->curtile   = NULL;
   PR->data      = NULL;
-  PR->bytes     = tiles->bpp;
+  PR->bytes     = tile_manager_bpp (tiles);
   PR->rowstride = PR->bytes * TILE_WIDTH;
   PR->x         = x;
   PR->y         = y;

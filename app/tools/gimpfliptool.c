@@ -28,7 +28,6 @@
 #include "appenv.h"
 #include "cursorutil.h"
 #include "drawable.h"
-#include "flip_tool.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
 #include "gimpimage.h"
@@ -38,7 +37,8 @@
 #include "pixel_region.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"
+
+#include "flip_tool.h"
 #include "tools.h"
 #include "tool_options.h"
 #include "transform_core.h"
@@ -266,14 +266,16 @@ flip_tool_flip (GimpImage               *gimage,
   gint         orig_width;
   gint         orig_height;
   gint         orig_bpp;
+  gint         orig_x, orig_y;
   gint         i;
 
   if (! orig)
     return NULL;
 
-  orig_width  = tile_manager_level_width (orig);
-  orig_height = tile_manager_level_height (orig);
-  orig_bpp    = tile_manager_level_bpp (orig);
+  orig_width  = tile_manager_width (orig);
+  orig_height = tile_manager_height (orig);
+  orig_bpp    = tile_manager_bpp (orig);
+  tile_manager_get_offsets (orig, &orig_x, &orig_y);
 
   if (flip > 0)
     {
@@ -284,17 +286,15 @@ flip_tool_flip (GimpImage               *gimage,
 			 0, 0, orig_width, orig_height, TRUE);
 
       copy_region (&srcPR, &destPR);
-      new->x = orig->x;
-      new->y = orig->y;
+      tile_manager_set_offsets (new, orig_x, orig_y);
     }
   else
     {
       new = tile_manager_new (orig_width, orig_height, orig_bpp);
-      new->x = orig->x;
-      new->y = orig->y;
+      tile_manager_set_offsets (new, orig_x, orig_y);
 
       if (type == ORIENTATION_HORIZONTAL)
-	for (i = 0; i < orig->width; i++)
+	for (i = 0; i < orig_width; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, i, 0, 1, orig_height, FALSE);
 	    pixel_region_init (&destPR, new,
@@ -302,7 +302,7 @@ flip_tool_flip (GimpImage               *gimage,
 	    copy_region (&srcPR, &destPR); 
 	  }
       else
-	for (i = 0; i < orig->height; i++)
+	for (i = 0; i < orig_height; i++)
 	  {
 	    pixel_region_init (&srcPR, orig, 0, i, orig_width, 1, FALSE);
 	    pixel_region_init (&destPR, new,

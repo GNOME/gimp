@@ -35,7 +35,6 @@
 
 #include "appenv.h"
 #include "drawable.h"
-#include "edit_selection.h"
 #include "errors.h"
 #include "floating_sel.h"
 #include "gdisplay.h"
@@ -48,13 +47,14 @@
 #include "pixel_region.h"
 #include "plug_in.h"
 #include "selection.h"
-#include "text_tool.h"
 #include "tile.h"
+#include "tile_manager.h"
+#include "undo.h"
+
+#include "edit_selection.h"
+#include "text_tool.h"
 #include "tools.h"
 #include "tool_options.h"
-#include "tile_manager.h"
-#include "tile_manager_pvt.h"
-#include "undo.h"
 
 #include "libgimp/gimplimits.h"
 
@@ -762,8 +762,10 @@ text_render (GimpImage    *gimage,
     tile_manager_destroy (mask);
 
   if (newmask && 
-      (layer = layer_new (gimage, newmask->width,
-			 newmask->height, layer_type,
+      (layer = layer_new (gimage, 
+			  tile_manager_width (newmask),
+			  tile_manager_height (newmask), 
+			  layer_type,
 			 _("Text Layer"), OPAQUE_OPACITY, NORMAL_MODE)))
     {
       /*  color the layer buffer  */

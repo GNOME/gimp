@@ -33,13 +33,13 @@
 #include "info_dialog.h"
 #include "shear_tool.h"
 #include "selection.h"
+#include "tile_manager.h"
+#include "undo.h"
+
 #include "tools.h"
 #include "tool_options.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-#include "undo.h"
-
-#include "tile_manager_pvt.h"
 
 #include "libgimp/gimpmath.h"
 

@@ -31,15 +31,15 @@
 #include "gimpprogress.h"
 #include "gimpui.h"
 #include "info_dialog.h"
-#include "scale_tool.h"
 #include "selection.h"
+#include "tile_manager.h"
+#include "undo.h"
+
+#include "scale_tool.h"
 #include "tools.h"
 #include "tool_options.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-#include "undo.h"
-
-#include "tile_manager_pvt.h"
 
 #include "libgimp/gimpmath.h"
 #include "libgimp/gimplimits.h"

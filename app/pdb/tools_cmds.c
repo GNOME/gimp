@@ -29,7 +29,6 @@
 #include "drawable.h"
 #include "gimpimage.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"
 #include "tools/airbrush.h"
 #include "tools/blend.h"
 #include "tools/bucket_fill.h"
@@ -2111,9 +2110,10 @@ perspective_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   gboolean new_layer;
-  double cx, cy;
-  double scalex, scaley;
-  double trans_info[8];
+  gint offset_x, offset_y;
+  gdouble cx, cy;
+  gdouble scalex, scaley;
+  gdouble trans_info[8];
   GimpMatrix3 m, matrix;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -2153,14 +2153,15 @@ perspective_invoker (Argument *args)
        */
       perspective_find_transform (trans_info, m);
     
-      cx     = float_tiles->x;
-      cy     = float_tiles->y;
+      tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
+      cx = (gdouble) offset_x;
+      cy = (gdouble) offset_y;                
       scalex = 1.0;
       scaley = 1.0;
-      if (float_tiles->width)
-	scalex = 1.0 / float_tiles->width;
-      if (float_tiles->height)
-	scaley = 1.0 / float_tiles->height;
+      if (tile_manager_width (float_tiles))
+	scalex = 1.0 / tile_manager_width (float_tiles);
+      if (tile_manager_height (float_tiles))
+	scaley = 1.0 / tile_manager_height (float_tiles);
     
       /* Assemble the transformation matrix */
       gimp_matrix3_identity  (matrix);
@@ -2388,7 +2389,8 @@ rotate_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   gboolean new_layer;
-  double cx, cy;
+  gint offset_x, offset_y;
+  gdouble cx, cy;
   GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -2409,8 +2411,9 @@ rotate_invoker (Argument *args)
       /* Cut/Copy from the specified drawable */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
     
-      cx = float_tiles->x + float_tiles->width / 2.0;
-      cy = float_tiles->y + float_tiles->height / 2.0;
+      tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
+      cx = offset_x + tile_manager_width (float_tiles) / 2.0;
+      cy = offset_y + tile_manager_height (float_tiles) / 2.0;
     
       /* Assemble the transformation matrix */
       gimp_matrix3_identity  (matrix);
@@ -2496,8 +2499,9 @@ scale_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   gboolean new_layer;
-  double scalex, scaley;
-  double trans_info[4];
+  gint offset_x, offset_y;
+  gdouble scalex, scaley;
+  gdouble trans_info[4];
   GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -2528,16 +2532,18 @@ scale_invoker (Argument *args)
 	  float_tiles = transform_core_cut (gimage, drawable, &new_layer);
     
 	  scalex = scaley = 1.0;
-	  if (float_tiles->width)
+	  if (tile_manager_width (float_tiles))
 	    scalex = (trans_info[X1] - trans_info[X0]) /
-		     (double) float_tiles->width;
-	  if (float_tiles->height)
+		     (gdouble) tile_manager_width (float_tiles);
+	  if (tile_manager_height (float_tiles))
 	    scaley = (trans_info[Y1] - trans_info[Y0]) /
-		     (double) float_tiles->height;
+		     (gdouble) tile_manager_height (float_tiles);
+    
+	  tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
     
 	  /* Assemble the transformation matrix */
 	  gimp_matrix3_identity  (matrix);
-	  gimp_matrix3_translate (matrix, float_tiles->x, float_tiles->y);
+	  gimp_matrix3_translate (matrix, offset_x, offset_y);
 	  gimp_matrix3_scale     (matrix, scalex, scaley);
 	  gimp_matrix3_translate (matrix, trans_info[X0], trans_info[Y0]);
     
@@ -2639,7 +2645,8 @@ shear_invoker (Argument *args)
   GimpImage *gimage;
   TileManager *float_tiles, *new_tiles;
   gboolean new_layer;
-  double cx, cy;
+  gdouble cx, cy;
+  gint offset_x, offset_y;
   GimpMatrix3 matrix;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -2664,8 +2671,10 @@ shear_invoker (Argument *args)
       /* Cut/Copy from the specified drawable */
       float_tiles = transform_core_cut (gimage, drawable, &new_layer);
     
-      cx = float_tiles->x + float_tiles->width  / 2.0;
-      cy = float_tiles->y + float_tiles->height / 2.0;
+      tile_manager_get_offsets (float_tiles, &offset_x, &offset_y);        
+    
+      cx = offset_x + tile_manager_width  (float_tiles) / 2.0;
+      cy = offset_y + tile_manager_height (float_tiles) / 2.0;
     
       gimp_matrix3_identity  (matrix);
       gimp_matrix3_translate (matrix, -cx, -cy);
@@ -2675,9 +2684,9 @@ shear_invoker (Argument *args)
 		   ORIENTATION_UNKNOWN;
     
       if (shear_type == ORIENTATION_HORIZONTAL)
-	gimp_matrix3_xshear (matrix, magnitude / float_tiles->height);
+	gimp_matrix3_xshear (matrix, magnitude / tile_manager_height (float_tiles));
       else if (shear_type == ORIENTATION_VERTICAL)
-	gimp_matrix3_yshear (matrix, magnitude / float_tiles->width);
+	gimp_matrix3_yshear (matrix, magnitude / tile_manager_width (float_tiles));
       gimp_matrix3_translate (matrix, +cx, +cy);
     
       /* Shear the buffer */

@@ -102,9 +102,16 @@ void          tile_manager_set_user_data    (TileManager       *tm,
 					     gpointer           user_data);
 gpointer      tile_manager_get_user_data    (const TileManager *tm);
 
-gint          tile_manager_level_width      (const TileManager *tm);
-gint          tile_manager_level_height     (const TileManager *tm);
-gint          tile_manager_level_bpp        (const TileManager *tm);
+gint          tile_manager_width            (const TileManager *tm);
+gint          tile_manager_height           (const TileManager *tm);
+gint          tile_manager_bpp              (const TileManager *tm);
+
+void          tile_manager_get_offsets      (const TileManager *tm,
+					     gint              *x,
+					     gint              *y);
+void          tile_manager_set_offsets      (TileManager       *tm,
+					     gint               x,
+					     gint               y);
 
 void          tile_manager_get_tile_coordinates (TileManager *tm,
 						 Tile        *tile,

@@ -42,7 +42,6 @@
 #include "path_transform.h"
 #include "pixel_region.h"
 #include "tile_manager.h"
-#include "tile_manager_pvt.h"
 #include "tile.h"
 #include "undo.h"
 
@@ -862,8 +861,11 @@ undo_push_image_mod (GImage       *gimage,
   y2 = CLAMP (y2, 0, dheight);
 
   tiles = (TileManager *) tiles_ptr;
-  size = tiles->width * tiles->height *
-    tiles->bpp + sizeof (gpointer) * 2;
+  size = 
+    tile_manager_width (tiles)  * 
+    tile_manager_height (tiles) * 
+    tile_manager_bpp (tiles) + 
+    sizeof (gpointer) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_MOD_UNDO, TRUE)))
     {
@@ -911,8 +913,8 @@ undo_pop_image (GImage    *gimage,
 
   if (image_undo->sparse == FALSE)
     {
-      w = tiles->width;
-      h = tiles->height;
+      w = tile_manager_width (tiles);
+      h = tile_manager_height (tiles);
 
       pixel_region_init (&PR1, tiles,
 			 0, 0, w, h, TRUE);
@@ -992,15 +994,17 @@ undo_push_mask (GImage   *gimage,
   mask_undo = (MaskUndo *) mask_ptr;
 
   if (mask_undo->tiles)
-    size = mask_undo->tiles->width * mask_undo->tiles->height;
+    size = 
+      tile_manager_width (mask_undo->tiles) * 
+      tile_manager_height (mask_undo->tiles);
   else
     size = 0;
 
   if ((new = undo_push (gimage, size, MASK_UNDO, FALSE)))
     {
-      new->data          = mask_undo;
-      new->pop_func      = undo_pop_mask;
-      new->free_func     = undo_free_mask;
+      new->data      = mask_undo;
+      new->pop_func  = undo_pop_mask;
+      new->free_func = undo_free_mask;
 
       return TRUE;
     }
@@ -1056,8 +1060,8 @@ undo_pop_mask (GImage     *gimage,
 
   if (mask_undo->tiles)
     {
-      width = mask_undo->tiles->width;
-      height = mask_undo->tiles->height;
+      width  = tile_manager_width (mask_undo->tiles);
+      height = tile_manager_height (mask_undo->tiles);
       pixel_region_init (&srcPR, mask_undo->tiles,
 			 0, 0, width, height, FALSE);
       pixel_region_init (&destPR, GIMP_DRAWABLE (sel_mask)->tiles,
@@ -1540,11 +1544,13 @@ undo_push_layer_mod (GImage   *gimage,
 
   layer = (Layer *) layer_ptr;
 
-  tiles    =  GIMP_DRAWABLE (layer)->tiles;
-  tiles->x =  GIMP_DRAWABLE (layer)->offset_x;
-  tiles->y =  GIMP_DRAWABLE (layer)->offset_y;
-  size     = (GIMP_DRAWABLE (layer)->width * GIMP_DRAWABLE (layer)->height * 
-	      GIMP_DRAWABLE (layer)->bytes + sizeof (gpointer) * 3);
+  tiles = GIMP_DRAWABLE (layer)->tiles;
+  tile_manager_set_offsets (tiles,
+			    GIMP_DRAWABLE (layer)->offset_x, 
+			    GIMP_DRAWABLE (layer)->offset_y);
+
+  size = (GIMP_DRAWABLE (layer)->width * GIMP_DRAWABLE (layer)->height * 
+	  GIMP_DRAWABLE (layer)->bytes + sizeof (gpointer) * 3);
 
   if ((new = undo_push (gimage, size, LAYER_MOD, TRUE)))
     {
@@ -1593,25 +1599,28 @@ undo_pop_layer_mod (GImage    *gimage,
 
   /*  Create a tile manager to store the current layer contents  */
   temp       = GIMP_DRAWABLE (layer)->tiles;
-  temp->x    = GIMP_DRAWABLE (layer)->offset_x;
-  temp->y    = GIMP_DRAWABLE (layer)->offset_y;
+  tile_manager_set_offsets (temp, 
+			    GIMP_DRAWABLE (layer)->offset_x,
+			    GIMP_DRAWABLE (layer)->offset_y);
   layer_type = (glong) data[2];
   data[2]    = (gpointer) ((glong) GIMP_DRAWABLE (layer)->type);
 
   /*  restore the layer's data  */
   GIMP_DRAWABLE (layer)->tiles     = tiles;
-  GIMP_DRAWABLE (layer)->offset_x  = tiles->x;
-  GIMP_DRAWABLE (layer)->offset_y  = tiles->y;
-  GIMP_DRAWABLE (layer)->width     = tiles->width;
-  GIMP_DRAWABLE (layer)->height    = tiles->height;
-  GIMP_DRAWABLE (layer)->bytes     = tiles->bpp;
+  GIMP_DRAWABLE (layer)->width     = tile_manager_width (tiles);
+  GIMP_DRAWABLE (layer)->height    = tile_manager_height (tiles);
+  GIMP_DRAWABLE (layer)->bytes     = tile_manager_bpp (tiles);
   GIMP_DRAWABLE (layer)->type      = layer_type;
   GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (layer_type);
+  tile_manager_get_offsets (tiles, 
+			    &(GIMP_DRAWABLE (layer)->offset_x),
+			    &(GIMP_DRAWABLE (layer)->offset_y));
 
   if (layer->mask) 
     {
-      GIMP_DRAWABLE (layer->mask)->offset_x = tiles->x;
-      GIMP_DRAWABLE (layer->mask)->offset_y = tiles->y;
+      tile_manager_get_offsets (tiles, 
+				&(GIMP_DRAWABLE (layer->mask)->offset_x),
+				&(GIMP_DRAWABLE (layer->mask)->offset_y));
     }
 
   /*  If the layer type changed, update the gdisplay titles  */
@@ -1928,10 +1937,11 @@ undo_pop_channel_mod (GImage    *gimage,
 
   temp = GIMP_DRAWABLE (channel)->tiles;
   GIMP_DRAWABLE (channel)->tiles = tiles;
-  GIMP_DRAWABLE (channel)->width = tiles->width;
-  GIMP_DRAWABLE (channel)->height = tiles->height;
-  GIMP_CHANNEL (channel)->bounds_known = FALSE; /* #4840. set to False because bounds 
-                                                  reflect previous tile set */
+  GIMP_DRAWABLE (channel)->width  = tile_manager_width (tiles);
+  GIMP_DRAWABLE (channel)->height = tile_manager_height (tiles);
+  GIMP_CHANNEL (channel)->bounds_known = FALSE; 
+                                /* #4840. set to FALSE because bounds 
+                                   reflect previous tile set */
 
   /*  Set the new buffer  */
   data[1] = temp;

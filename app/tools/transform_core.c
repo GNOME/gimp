@@ -39,13 +39,13 @@
 #include "path_transform.h"
 #include "paint_funcs.h"
 #include "pixel_region.h"
+#include "undo.h"
+#include "tile_manager.h"
+#include "tile.h"
+
 #include "transform_core.h"
 #include "transform_tool.h"
 #include "tools.h"
-#include "undo.h"
-#include "tile_manager.h"
-#include "tile_manager_pvt.h"
-#include "tile.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpmath.h"
@@ -124,7 +124,7 @@ pixel_surround_init (PixelSurround *ps,
 
   ps->tile       = NULL;
   ps->mgr        = tm;
-  ps->bpp        = tile_manager_level_bpp (tm);
+  ps->bpp        = tile_manager_bpp (tm);
   ps->w          = w;
   ps->h          = h;
   /* make sure buffer is big enough */
@@ -1001,10 +1001,10 @@ transform_core_bounds (Tool     *tool,
   /*  find the boundaries  */
   if (tiles)
     {
-      transform_core->x1 = tiles->x;
-      transform_core->y1 = tiles->y;
-      transform_core->x2 = tiles->x + tiles->width;
-      transform_core->y2 = tiles->y + tiles->height;
+      tile_manager_get_offsets (tiles, 
+				&transform_core->x1, &transform_core->y1);
+      transform_core->x2 = transform_core->x1 + tile_manager_width (tiles);
+      transform_core->y2 = transform_core->y1 + tile_manager_height (tiles);
     }
   else
     {
@@ -1206,7 +1206,7 @@ transform_core_do (GImage           *gimage,
     }
 
   /*  enable rotating un-floated non-layers  */
-  if (float_tiles->bpp == 1)
+  if (tile_manager_bpp (float_tiles) == 1)
     {
       bg_col[0] = OPAQUE_OPACITY;
 
@@ -1232,10 +1232,9 @@ transform_core_do (GImage           *gimage,
 
   path_transform_current_path (gimage, matrix, FALSE);
 
-  x1 = float_tiles->x;
-  y1 = float_tiles->y;
-  x2 = x1 + float_tiles->width;
-  y2 = y1 + float_tiles->height;
+  tile_manager_get_offsets (float_tiles, &x1, &y1);
+  x2 = x1 + tile_manager_width (float_tiles);
+  y2 = y1 + tile_manager_height (float_tiles);
 
   /*  Find the bounding coordinates  */
   if (alpha == 0 || (active_tool && transform_tool_clip ()))
@@ -1269,10 +1268,10 @@ transform_core_do (GImage           *gimage,
     }
 
   /*  Get the new temporary buffer for the transformed result  */
-  tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), float_tiles->bpp);
+  tiles = tile_manager_new ((tx2 - tx1), (ty2 - ty1), 
+			    tile_manager_bpp (float_tiles));
   pixel_region_init (&destPR, tiles, 0, 0, (tx2 - tx1), (ty2 - ty1), TRUE);
-  tiles->x = tx1;
-  tiles->y = ty1;
+  tile_manager_set_offsets (tiles, tx1, ty1);
 
   /* initialise the pixel_surround accessor */
   if (interpolation)
@@ -1292,9 +1291,9 @@ transform_core_do (GImage           *gimage,
       pixel_surround_init (&surround, float_tiles, 1, 1, bg_col);
     }
 
-  width  = tiles->width;
-  height = tiles->height;
-  bytes  = tiles->bpp;
+  width  = tile_manager_width (tiles);
+  height = tile_manager_height (tiles);
+  bytes  = tile_manager_bpp (tiles);
 
   dest = g_new (guchar, width * bytes);
 
@@ -1619,8 +1618,10 @@ transform_core_paste (GImage       *gimage,
           g_warning ("transform_core_paste: layer_new_frome_tiles() failed");
           return FALSE;
         }
-      GIMP_DRAWABLE (layer)->offset_x = tiles->x;
-      GIMP_DRAWABLE (layer)->offset_y = tiles->y;
+
+      tile_manager_get_offsets (tiles, 
+				&(GIMP_DRAWABLE (layer)->offset_x),
+				&(GIMP_DRAWABLE (layer)->offset_y));
 
       /*  Start a group undo  */
       undo_push_group_start (gimage, EDIT_PASTE_UNDO);
@@ -1667,11 +1668,11 @@ transform_core_paste (GImage       *gimage,
       drawable->tiles = tiles;
 
       /*  Fill in the new layer's attributes  */
-      drawable->width    = tiles->width;
-      drawable->height   = tiles->height;
-      drawable->bytes    = tiles->bpp;
-      drawable->offset_x = tiles->x;
-      drawable->offset_y = tiles->y;
+      drawable->width    = tile_manager_width (tiles);
+      drawable->height   = tile_manager_height (tiles);
+      drawable->bytes    = tile_manager_bpp (tiles);
+      tile_manager_get_offsets (tiles, 
+				&drawable->offset_x, &drawable->offset_y);
 
       if (floating_layer)
 	floating_sel_rigor (floating_layer, TRUE);

@@ -30,13 +30,14 @@
 #include "gimpprogress.h"
 #include "gimpui.h"
 #include "info_dialog.h"
-#include "perspective_tool.h"
 #include "selection.h"
-#include "tile_manager_pvt.h"
+#include "tile_manager.h"
+#include "undo.h"
+
+#include "perspective_tool.h"
 #include "tools.h"
 #include "transform_core.h"
 #include "transform_tool.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 

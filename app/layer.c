@@ -433,8 +433,8 @@ layer_new_from_tiles (GimpImage        *gimage,
 
    /*  Create the new layer  */
   new_layer = layer_new (0,
-			 tile_manager_level_width (tiles),
-			 tile_manager_level_height (tiles),
+			 tile_manager_width (tiles),
+			 tile_manager_height (tiles),
 			 layer_type, name, opacity, mode);
 
   if (!new_layer)
@@ -455,16 +455,16 @@ layer_new_from_tiles (GimpImage        *gimage,
 		     GIMP_DRAWABLE (new_layer)->height,
 		     FALSE);
 
-  if ((tile_manager_level_bpp (tiles) == 4 &&
+  if ((tile_manager_bpp (tiles) == 4 &&
        GIMP_DRAWABLE (new_layer)->type == RGBA_GIMAGE) ||
-      (tile_manager_level_bpp (tiles) == 2 &&
+      (tile_manager_bpp (tiles) == 2 &&
        GIMP_DRAWABLE (new_layer)->type == GRAYA_GIMAGE))
     /*  If we want a layer the same type as the buffer  */
     copy_region (&bufPR, &layerPR);
   else
     /*  Transform the contents of the buf to the new_layer  */
     transform_color (gimage, &layerPR, &bufPR, GIMP_DRAWABLE (new_layer),
-		     (tile_manager_level_bpp (tiles) == 4) ? RGB : GRAY);
+		     (tile_manager_bpp (tiles) == 4) ? RGB : GRAY);
   
   return new_layer;
 }
