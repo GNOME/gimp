@@ -116,6 +116,8 @@ main (int    argc,
     }
 
   printf ("};\n");
+
+  exit (0);
 }
 
 

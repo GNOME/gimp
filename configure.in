@@ -91,7 +91,7 @@ fi
 
 
 dnl i18n stuff
-ALL_LINGUAS="ca cs da de en_GB es fi fr gl hu it ja ko nl no pl ru sk sv uk"
+ALL_LINGUAS="ca cs da de en_GB es fi fr gl hu it ja ko nl no pl pt_BR ru sk sv uk"
 
 AM_GNU_GETTEXT
 
@@ -182,13 +182,13 @@ dnl Test for Xmu
   if test -z "$LIBXMU"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,
       AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
-	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
+	WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt -lSM -lICE',
+	AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
 	AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	  AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	    WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
-	    AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
-	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
+	    WEBBROWSER="webbrowser"; GIMP_REMOTE="gimp-remote"; LIBXMU='-lXmu -lXt',
+	    AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)),
+	AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
   fi
 
 dnl Test for libaa
@@ -693,6 +693,7 @@ AC_SUBST(brushdata)
 AC_SUBST(gradientdata)
 AC_SUBST(palettedata)
 AC_SUBST(patterndata)
+AC_SUBST(GIMP_REMOTE)	
 AC_SUBST(WEBBROWSER)
 AC_SUBST(LIBXMU)
 AC_SUBST(TIFF)

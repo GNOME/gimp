@@ -4,17 +4,23 @@ else
 D_pdbgen=
 endif
 
-bin_PROGRAMS = gimp-remote
+bin_PROGRAMS = $(GIMP_REMOTE)
+
+EXTRA_PROGRAMS = \
+	gimp-remote	\
+	kernelgen
 
 gimp_remote_SOURCES = gimp-remote.c
 
 gimp_remote_LDADD = \
 	$(GTK_LIBS)	\
-	-lXmu
+	$(LIBXMU)
+
+kernelgen_SOURCES = kernelgen.c
 
 INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GTK_CFLAGS)		\
+	-I$(top_srcdir)	\
+	$(GTK_CFLAGS)	\
 	-I$(includedir)
 
 #if WITH_GCG
@@ -24,5 +30,3 @@ INCLUDES = \
 #endif
 
 SUBDIRS = $(D_pdbgen) #$(D_gcg)
-
-EXTRA_DIST = kernelgen.c

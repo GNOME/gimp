@@ -1,5 +1,13 @@
 2000-07-15  Sven Neumann  <neo@wintermute.ochsenblut.de>
 
+	* configure.in: added pt_BR to ALL_LINGUAS
+	
+	* tools/Makefile.am: only build gimp-remote if libXmu 
+	is available. Added a target for kernelgen while I was
+	on it.
+
+2000-07-15  Sven Neumann  <neo@wintermute.ochsenblut.de>
+
 	* tools/Makefile.am: build gimp-remote
 
 	* tools/gimp-remote.c: g_error() should only be used
