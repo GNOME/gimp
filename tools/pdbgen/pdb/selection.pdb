@@ -206,14 +206,6 @@ CODE
     );
 }
 
-sub selection_clear {
-    &std_pdb_deprecated ('gimp_selection_none');
-
-    @inargs = ( &std_image_arg );
-
-    %invoke = ( code => "gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);" );
-}
-
 sub selection_invert {
     &selection_simple_proc('invert');
 
@@ -418,7 +410,7 @@ HELP
 @headers = qw("core/gimpchannel-select.h" "gimp-intl.h");
 
 @procs = qw(selection_bounds selection_value selection_is_empty
-	    selection_translate selection_float selection_clear
+	    selection_translate selection_float
 	    selection_invert selection_sharpen selection_all selection_none
 	    selection_feather selection_border selection_grow selection_shrink
 	    selection_layer_alpha selection_load selection_save

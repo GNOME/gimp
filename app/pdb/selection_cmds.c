@@ -39,7 +39,6 @@ static ProcRecord selection_value_proc;
 static ProcRecord selection_is_empty_proc;
 static ProcRecord selection_translate_proc;
 static ProcRecord selection_float_proc;
-static ProcRecord selection_clear_proc;
 static ProcRecord selection_invert_proc;
 static ProcRecord selection_sharpen_proc;
 static ProcRecord selection_all_proc;
@@ -61,7 +60,6 @@ register_selection_procs (Gimp *gimp)
   procedural_db_register (gimp, &selection_is_empty_proc);
   procedural_db_register (gimp, &selection_translate_proc);
   procedural_db_register (gimp, &selection_float_proc);
-  procedural_db_register (gimp, &selection_clear_proc);
   procedural_db_register (gimp, &selection_invert_proc);
   procedural_db_register (gimp, &selection_sharpen_proc);
   procedural_db_register (gimp, &selection_all_proc);
@@ -445,51 +443,6 @@ static ProcRecord selection_float_proc =
   1,
   selection_float_outargs,
   { { selection_float_invoker } }
-};
-
-static Argument *
-selection_clear_invoker (Gimp         *gimp,
-                         GimpContext  *context,
-                         GimpProgress *progress,
-                         Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    gimp_channel_clear (gimp_image_get_mask (gimage), NULL, TRUE);
-
-  return procedural_db_return_args (&selection_clear_proc, success);
-}
-
-static ProcArg selection_clear_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcRecord selection_clear_proc =
-{
-  "gimp_selection_clear",
-  "This procedure is deprecated! Use 'gimp_selection_none' instead.",
-  "This procedure is deprecated! Use 'gimp_selection_none' instead.",
-  "",
-  "",
-  "",
-  "gimp_selection_none",
-  GIMP_INTERNAL,
-  1,
-  selection_clear_inargs,
-  0,
-  NULL,
-  { { selection_clear_invoker } }
 };
 
 static Argument *

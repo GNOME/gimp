@@ -88,8 +88,6 @@ static ProcRecord image_merge_visible_layers_proc;
 static ProcRecord image_merge_down_proc;
 static ProcRecord image_add_layer_mask_proc;
 static ProcRecord image_remove_layer_mask_proc;
-static ProcRecord image_get_cmap_proc;
-static ProcRecord image_set_cmap_proc;
 static ProcRecord image_get_colormap_proc;
 static ProcRecord image_set_colormap_proc;
 static ProcRecord image_clean_all_proc;
@@ -156,8 +154,6 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_merge_down_proc);
   procedural_db_register (gimp, &image_add_layer_mask_proc);
   procedural_db_register (gimp, &image_remove_layer_mask_proc);
-  procedural_db_register (gimp, &image_get_cmap_proc);
-  procedural_db_register (gimp, &image_set_cmap_proc);
   procedural_db_register (gimp, &image_get_colormap_proc);
   procedural_db_register (gimp, &image_set_colormap_proc);
   procedural_db_register (gimp, &image_clean_all_proc);
@@ -2614,142 +2610,6 @@ static ProcRecord image_remove_layer_mask_proc =
   0,
   NULL,
   { { image_remove_layer_mask_invoker } }
-};
-
-static Argument *
-image_get_cmap_invoker (Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
-{
-  gboolean success = TRUE;
-  Argument *return_args;
-  GimpImage *gimage;
-  gint32 num_bytes = 0;
-  guint8 *cmap = NULL;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  if (success)
-    {
-      num_bytes = 3 * gimp_image_get_colormap_size (gimage);
-      cmap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
-    }
-
-  return_args = procedural_db_return_args (&image_get_cmap_proc, success);
-
-  if (success)
-    {
-      return_args[1].value.pdb_int = num_bytes;
-      return_args[2].value.pdb_pointer = cmap;
-    }
-
-  return return_args;
-}
-
-static ProcArg image_get_cmap_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  }
-};
-
-static ProcArg image_get_cmap_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "num_bytes",
-    "Number of bytes in the colormap array: 0 < num_bytes"
-  },
-  {
-    GIMP_PDB_INT8ARRAY,
-    "cmap",
-    "The image's colormap"
-  }
-};
-
-static ProcRecord image_get_cmap_proc =
-{
-  "gimp_image_get_cmap",
-  "This procedure is deprecated! Use 'gimp_image_get_colormap' instead.",
-  "This procedure is deprecated! Use 'gimp_image_get_colormap' instead.",
-  "",
-  "",
-  "",
-  "gimp_image_get_colormap",
-  GIMP_INTERNAL,
-  1,
-  image_get_cmap_inargs,
-  2,
-  image_get_cmap_outargs,
-  { { image_get_cmap_invoker } }
-};
-
-static Argument *
-image_set_cmap_invoker (Gimp         *gimp,
-                        GimpContext  *context,
-                        GimpProgress *progress,
-                        Argument     *args)
-{
-  gboolean success = TRUE;
-  GimpImage *gimage;
-  gint32 num_bytes;
-  guint8 *cmap;
-
-  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_IMAGE (gimage))
-    success = FALSE;
-
-  num_bytes = args[1].value.pdb_int;
-  if (num_bytes < 0 || num_bytes > 768)
-    success = FALSE;
-
-  cmap = (guint8 *) args[2].value.pdb_pointer;
-
-  if (success)
-    gimp_image_set_colormap (gimage, cmap, num_bytes / 3, TRUE);
-
-  return procedural_db_return_args (&image_set_cmap_proc, success);
-}
-
-static ProcArg image_set_cmap_inargs[] =
-{
-  {
-    GIMP_PDB_IMAGE,
-    "image",
-    "The image"
-  },
-  {
-    GIMP_PDB_INT32,
-    "num_bytes",
-    "Number of bytes in the colormap array: 0 <= num_bytes <= 768"
-  },
-  {
-    GIMP_PDB_INT8ARRAY,
-    "cmap",
-    "The new colormap values"
-  }
-};
-
-static ProcRecord image_set_cmap_proc =
-{
-  "gimp_image_set_cmap",
-  "This procedure is deprecated! Use 'gimp_image_set_colormap' instead.",
-  "This procedure is deprecated! Use 'gimp_image_set_colormap' instead.",
-  "",
-  "",
-  "",
-  "gimp_image_set_colormap",
-  GIMP_INTERNAL,
-  3,
-  image_set_cmap_inargs,
-  0,
-  NULL,
-  { { image_set_cmap_invoker } }
 };
 
 static Argument *

@@ -51,3 +51,17 @@ gimp_selection_float (gint32 image_ID,
 				offx,
 				offy);
 }
+
+/**
+ * gimp_selection_clear:
+ * @image_ID: The image.
+ *
+ * This procedure is deprecated! Use gimp_selection_none() instead.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_selection_clear (gint32 image_ID)
+{
+  return gimp_selection_none (image_ID);
+}

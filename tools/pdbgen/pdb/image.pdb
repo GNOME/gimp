@@ -948,47 +948,6 @@ HELP
     %invoke = ( code => 'base_type = gimp_image_base_type (gimage);' );
 }
 
-sub image_get_cmap {
-    &std_pdb_deprecated ('gimp_image_get_colormap');
-
-    @inargs = ( &std_image_arg );
-
-    @outargs = (
-	{ name => 'cmap', type => 'int8array', init => 1, wrap => 1,
-	  desc => "The image's colormap",
-	  array => { name => 'num_bytes', init => 1,
-		     desc => 'Number of bytes in the colormap array:
-			      %%desc%%' } }
-    );
-
-    %invoke = (
-	headers => [ qw("core/gimpimage-colormap.h") ],
-	code => <<'CODE'
-{
-  num_bytes = 3 * gimp_image_get_colormap_size (gimage);
-  cmap = g_memdup (gimp_image_get_colormap (gimage), num_bytes);
-}
-CODE
-    );
-}
-
-sub image_set_cmap {
-    &std_pdb_deprecated ('gimp_image_set_colormap');
-
-    @inargs = (
-	&std_image_arg,
-	{ name => 'cmap', type => 'int8array', wrap => 1,
-	  desc => "The new colormap values",
-	  array => { name => 'num_bytes', type => '0 <= int32 <= 768',
-		     desc => 'Number of bytes in the colormap array:
-			      %%desc%%' } }
-    );
-
-    %invoke = (
-	headers => [ qw("core/gimpimage-colormap.h") ],
-        code => 'gimp_image_set_colormap (gimage, cmap, num_bytes / 3, TRUE);' );
-}
-
 sub image_get_colormap {
     $blurb = "Returns the image's colormap";
 
@@ -1623,11 +1582,10 @@ unshift @procs, qw(image_list image_new image_duplicate image_delete
                    image_raise_channel image_lower_channel
                    image_flatten image_merge_visible_layers image_merge_down
                    image_add_layer_mask image_remove_layer_mask
-                   image_get_cmap image_set_cmap
                    image_get_colormap image_set_colormap
 		   image_clean_all image_is_dirty
                    image_thumbnail);
-%exports = (app => [@procs], lib => [@procs[0..34,39..63]]);
+%exports = (app => [@procs], lib => [@procs[0..34,37..61]]);
 
 $desc = 'Image';
 

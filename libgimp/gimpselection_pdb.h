@@ -45,9 +45,6 @@ gboolean gimp_selection_translate   (gint32          image_ID,
 gint32   _gimp_selection_float      (gint32          drawable_ID,
 				     gint            offx,
 				     gint            offy);
-#ifndef GIMP_DISABLE_DEPRECATED
-gboolean gimp_selection_clear       (gint32          image_ID);
-#endif /* GIMP_DISABLE_DEPRECATED */
 gboolean gimp_selection_invert      (gint32          image_ID);
 gboolean gimp_selection_sharpen     (gint32          image_ID);
 gboolean gimp_selection_all         (gint32          image_ID);

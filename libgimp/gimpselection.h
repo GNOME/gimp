@@ -27,10 +27,16 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gint32 gimp_selection_float (gint32 image_ID,
-			     gint32 drawable_ID,
-			     gint   offx,
-			     gint   offy);
+gint32   gimp_selection_float (gint32 image_ID,
+                               gint32 drawable_ID,
+                               gint   offx,
+                               gint   offy);
+
+#ifndef GIMP_DISABLE_DEPRECATED
+
+gboolean gimp_selection_clear (gint32 image_ID);
+
+#endif /* GIMP_DISABLE_DEPRECATED */
 
 
 G_END_DECLS

@@ -1,3 +1,21 @@
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/selection.pdb: entirely removed the deprecated
+	functions "selection_clear", "image_set_cmap" and "image_get_cmap".
+
+	* app/pdb/procedural_db.c: and added them to the compat hash table
+	because they have undeprecated replacements with identical
+	signature.
+
+	* libgimp/gimpselection.[ch]: added gimp_selection_clear() here
+	instead because we need the symbol in libgimp.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/selection_cmds.c
+	* libgimp/gimpselection_pdb.[ch]: regenerated.
+
 2004-11-16  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dobject.h: renamed the DObject type to
