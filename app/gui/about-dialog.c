@@ -51,7 +51,9 @@ static gchar *founders[] =
 static gchar *translators[] =
 {
   N_("Translation by"),
-  N_("<Translators: insert your names here, separated by newline>"),
+  /* Translators: insert your names here, separated by newline */
+  /* we'd prefer just the names, please no email adresses.     */
+  N_("translator-credits"),
 };
 
 static gchar *contri_intro[] =
