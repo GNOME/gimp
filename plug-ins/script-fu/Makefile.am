@@ -52,12 +52,12 @@ REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
 LDADD = \
+	$(libgimpprocbrowser)	\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(libgimpprocbrowser)	\
 	siod/libsiod.a		\
 	$(REGEXREPL)		\
 	$(GTK_LIBS)		\

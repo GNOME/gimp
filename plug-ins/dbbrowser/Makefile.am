@@ -40,12 +40,12 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
+	libgimpprocbrowser.a	\
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	libgimpprocbrowser.a	\
 	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)

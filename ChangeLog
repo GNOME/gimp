@@ -1,3 +1,9 @@
+2004-10-03  Michael Schumacher <schumaml@gmx.de>
+
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/script-fu/Makefile.am: moved the libgimpprocbrowser to
+	the beginning of LDADD
+	
 2004-10-03  DindinX  <dindinx@gimp.org>
 
 	* libgimp/gimpaspectpreview.c: limit the size of the preview to 512
