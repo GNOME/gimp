@@ -1,5 +1,10 @@
 2003-01-05  Manish Singh  <yosh@gimp.org>
 
+	* app/core/gimpobject.c: cast memsize to a guint instead of format
+	change. Problem perhaps if get_size really is > 4 GB?
+
+2003-01-05  Manish Singh  <yosh@gimp.org>
+
 	* many files in app, modules and libgimp*: cleanup, removed unecessary
 	G_OBJECT() casts. Should do the same for plug-ins, when more of them
 	get undeprecated.

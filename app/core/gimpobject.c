@@ -290,11 +290,12 @@ gimp_object_get_memsize (GimpObject *object)
 
       indent_buf[i] = '\0';
 
-      object_size = g_strdup_printf ("%s%s \"%s\": %lu\n",
+      /* FIXME: are we going to ever have > 4 GB objects?? */
+      object_size = g_strdup_printf ("%s%s \"%s\": %u\n",
                                      indent_buf,
                                      g_type_name (G_TYPE_FROM_INSTANCE (object)),
                                      object->name,
-                                     memsize);
+                                     (guint) memsize);
 
       aggregation_tree = g_list_prepend (aggregation_tree, object_size);
 
