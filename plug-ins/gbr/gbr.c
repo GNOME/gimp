@@ -2,6 +2,13 @@
  * gbr plug-in version 1.00
  * Loads/saves version 2 GIMP .gbr files, by Tim Newsome <drz@frody.bloke.com>
  * Some bits stolen from the .99.7 source tree.
+ * 
+ * Added in GBR version 1 support after learning that there wasn't a 
+ * tool to read them.  
+ * July 6, 1998 by Seth Burgess <sjburges@gimp.org>
+ *
+ * TODO: Give some better error reporting on not opening files/bad headers
+ *       etc. 
  */
 
 #include <setjmp.h>
@@ -192,6 +199,7 @@ static gint32 load_image (char *filename) {
 	GDrawable *drawable;
 	gint line;
 	GPixelRgn pixel_rgn;
+	int version_extra;
 
 	temp = g_malloc(strlen (filename) + 11);
 	sprintf(temp, "Loading %s:", filename);
@@ -217,23 +225,37 @@ static gint32 load_image (char *filename) {
 	ph.magic_number = ntohl(ph.magic_number);
 	ph.spacing = ntohl(ph.spacing);
 
-	if (ph.magic_number != GBRUSH_MAGIC || ph.version != 2 ||
+	/* How much extra to add ot the header seek - 1 needs a bit more */
+	version_extra = 0;
+	
+	if (ph.version == 1) {
+		/* Version 1 didn't know about spacing */	
+		ph.spacing=25;
+	 	/* And we need to rewind the handle a bit too */
+		lseek (fd, -8, SEEK_CUR);
+		version_extra=8;
+		}
+	/* Version 1 didn't know about magic either */
+	if ((ph.version != 1 && 
+			(ph.magic_number != GBRUSH_MAGIC || ph.version != 2)) ||
 			ph.header_size <= sizeof(ph)) {
 		close(fd);
 		return -1;
 	}
 
-	if (lseek(fd, ph.header_size - sizeof(ph), SEEK_CUR) !=
+	if (lseek(fd, ph.header_size - sizeof(ph) + version_extra, SEEK_CUR) !=
 			ph.header_size) {
 		close(fd);
-		return -1;
+		return -1; 
 	}
-
+ 
 	/* Now there's just raw data left. */
 
-  /*
-	 * Create a new image of the proper size and associate the filename with it.
-   */
+ 	 /*
+	  * Create a new image of the proper size and 
+          * associate the filename with it.
+	  */
+
   image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
   gimp_image_set_filename(image_ID, filename);
 
