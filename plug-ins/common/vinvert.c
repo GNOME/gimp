@@ -1,5 +1,5 @@
 /*
- *  Value-Invert plug-in v1.0 by Adam D. Moss, adam@foxbox.org.  1997/3/28
+ * Value-Invert plug-in v1.1 by Adam D. Moss, adam@foxbox.org.  1999/02/27
  */
 
 /* The GIMP -- an image manipulation program
@@ -22,8 +22,7 @@
 
 /*
  * BUGS:
- *     Is not undoable when operating on indexed images.
- *     Uses a kludge to force image redraw with indexed images.
+ *     Is not undoable when operating on indexed images - GIMP's fault.
  */
 
 
@@ -46,14 +45,14 @@ static void      run    (char      *name,
 static void      vinvert            (GDrawable  *drawable);
 static void      vinvert_render_row (const guchar *src_row,
 				     guchar *dest_row,
-				     gint row,
 				     gint row_width,
-				     gint bytes);
+				     const gint bytes);
 
 void  fp_rgb_to_hsv            (float *, float *, float *);
 void  fp_hsv_to_rgb            (float *, float *, float *);
 
 
+static GRunModeType run_mode;
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -81,7 +80,7 @@ query ()
 
   gimp_install_procedure ("plug_in_vinvert",
 			  "Invert the 'value' componant of an indexed/RGB image in HSV colourspace",
-			  "This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the colour and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Tends to produce unpleasant colour artifacts on images from lossy sources (ie. JPEG).",
+			  "This function takes an indexed/RGB image and inverts its 'value' in HSV space.  The upshot of this is that the colour and saturation at any given point remains the same, but its brightness is effectively inverted.  Quite strange.  Sometimes produces unpleasant colour artifacts on images from lossy sources (ie. JPEG).",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
@@ -239,6 +238,8 @@ run (char    *name,
   gint32 image_ID;
   GStatusType status = STATUS_SUCCESS;
 
+  run_mode = param[0].data.d_int32;
+
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -255,24 +256,19 @@ run (char    *name,
       /*  Make sure that the drawable is indexed or RGB color  */
       if (gimp_drawable_color (drawable->id))
 	{
-	  gimp_progress_init ("Value Invert...");
-	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width ()
-				       + 1));
+          if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_progress_init ("Value Invert...");
+
 	  vinvert (drawable);
-	  gimp_displays_flush ();
+          if (run_mode != RUN_NONINTERACTIVE)
+	    gimp_displays_flush ();
 	}
       else
 	if (gimp_drawable_indexed (drawable->id))
 	  {
 	    indexed_vinvert (image_ID);
-
-	    /* GIMP doesn't implicitly update an image whose cmap has
-	     changed - it probably should. */
-
-	    gimp_drawable_update (drawable->id, 0, 0,
-				  gimp_drawable_width(drawable->id),
-				  gimp_drawable_height(drawable->id));
-	    gimp_displays_flush ();
+            if (run_mode != RUN_NONINTERACTIVE)
+	      gimp_displays_flush ();
 	  }
 	else
 	  {
@@ -303,7 +299,6 @@ indexed_vinvert(gint32 image_ID)
   vinvert_render_row(
 		     cmap,
 		     cmap,
-		     0,
 		     ncols,
 		     3
 		     );
@@ -314,35 +309,58 @@ indexed_vinvert(gint32 image_ID)
 
 
 static void
-vinvert_render_row (const guchar *src_row,
-		  guchar *dest_row,
-		  gint row,
-		  gint row_width,
-		  gint bytes)
+vinvert_render_row (const guchar *src_data,
+		    guchar *dest_data,
+		    gint col,               /* row width in pixels */
+		    const gint bytes)
 {
-  gint col, bytenum;
-
-  for (col = 0; col < row_width ; col++)
+  while (col--)
     {
       float v1, v2, v3;
 
-      v1 = (float)src_row[col*bytes];
-      v2 = (float)src_row[col*bytes +1];
-      v3 = (float)src_row[col*bytes +2];
+      v1 = (float)src_data[col*bytes   ];
+      v2 = (float)src_data[col*bytes +1];
+      v3 = (float)src_data[col*bytes +2];
 
       fp_rgb_to_hsv(&v1, &v2, &v3);
       v3 = 255.0-v3;
       fp_hsv_to_rgb(&v1, &v2, &v3);
 
-      dest_row[col*bytes] = (int)v1;
-      dest_row[col*bytes +1] = (int)v2;
-      dest_row[col*bytes +2] = (int)v3;
+      dest_data[col*bytes   ] = (int)v1;
+      dest_data[col*bytes +1] = (int)v2;
+      dest_data[col*bytes +2] = (int)v3;
 
       if (bytes>3)
-	for (bytenum = 3; bytenum<bytes; bytenum++)
-	  {
-	    dest_row[col*bytes+bytenum] = src_row[col*bytes+bytenum];
-	  }
+	{
+	  gint bytenum;
+
+	  for (bytenum = 3; bytenum<bytes; bytenum++)
+	    {
+	      dest_data[col*bytes+bytenum] =
+		src_data[col*bytes+bytenum];
+	    }
+	}
+    }
+}
+
+
+
+static void
+vinvert_render_region (const GPixelRgn srcPR,
+		       const GPixelRgn destPR)
+{
+  gint row;
+  guchar* src_ptr  = srcPR.data;
+  guchar* dest_ptr = destPR.data;
+  
+  for (row = 0; row < srcPR.h ; row++)
+    {
+      vinvert_render_row (src_ptr, dest_ptr,
+			  srcPR.w,
+			  srcPR.bpp);
+
+      src_ptr  += srcPR.rowstride;
+      dest_ptr += destPR.rowstride;
     }
 }
 
@@ -354,12 +372,10 @@ static void
 vinvert (GDrawable *drawable)
 {
   GPixelRgn srcPR, destPR;
-  gint width, height;
-  gint bytes;
-  guchar *src_row;
-  guchar *dest_row;
-  gint row;
   gint x1, y1, x2, y2;
+  gpointer pr;
+  gint total_area, area_so_far;
+  gint progress_skip;
 
 
   /* Get the input area. This is the bounding box of the selection in
@@ -370,46 +386,38 @@ vinvert (GDrawable *drawable)
    */
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
 
-  /* Get the size of the input image. (This will/must be the same
-   *  as the size of the output image.
-   */
-  width = drawable->width;
-  height = drawable->height;
-  bytes = drawable->bpp;
+  total_area = (x2 - x1) * (y2 - y1);
+  area_so_far = 0;
+  progress_skip = 0;
 
-  /*  allocate row buffers  */
-  src_row = (guchar *) malloc ((x2 - x1) * bytes);
-  dest_row = (guchar *) malloc ((x2 - x1) * bytes);
-
-
-  /*  initialize the pixel regions  */
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-
-
-  for (row = y1; row < y2; row++)
+  /* Initialize the pixel regions. */
+  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+		       FALSE, FALSE);
+  gimp_pixel_rgn_init (&destPR, drawable, x1, y1, (x2 - x1), (y2 - y1),
+		       TRUE, TRUE);
+  
+  for (pr = gimp_pixel_rgns_register (2, &srcPR, &destPR);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, row, (x2 - x1));
+      vinvert_render_region (srcPR, destPR);
 
-      vinvert_render_row (src_row,
-			dest_row,
-			row,
-			(x2 - x1),
-			bytes
-			);
-
-      /*  store the dest  */
-      gimp_pixel_rgn_set_row (&destPR, dest_row, x1, row, (x2 - x1));
-
-      if ((row % 10) == 0)
-	gimp_progress_update ((double) row / (double) (y2 - y1));
+      if ((run_mode != RUN_NONINTERACTIVE))
+	{
+	  area_so_far += srcPR.w * srcPR.h;
+	  if (((progress_skip++)%10) == 0)
+	    gimp_progress_update ((double) area_so_far / (double) total_area);
+	}
     }
+
 
   /*  update the processed region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
-
-  free (src_row);
-  free (dest_row);
 }
+
+
+
+
+

@@ -18,6 +18,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+
 /* This plugin performs almost the same operation as the 'contrast
  * autostretch' plugin, except that it won't allow the colour channels
  * to normalize independently.  This is actually what most people probably
@@ -114,14 +115,8 @@ run (char    *name,
   else if (gimp_drawable_indexed (drawable->id))
     {
       indexed_norma (image_ID);
-
-      /* GIMP doesn't implicitly update an image whose cmap has
-	 changed - it probably should. */
-
-      gimp_drawable_update (drawable->id, 0, 0,
-			    gimp_drawable_width(drawable->id),
-			    gimp_drawable_height(drawable->id));
-      gimp_displays_flush ();
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
     }
   else
     {

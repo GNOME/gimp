@@ -3321,6 +3321,13 @@ gimage_set_cmap_invoker (Argument *args)
       gimage->num_cols = num_cols;
     }
 
+  if (success)
+    {
+      /* A colourmap alteration affects the whole image. */
+      gdisplays_update_area (gimage, 0, 0,
+			     gimage->width, gimage->height);
+    }
+
   return procedural_db_return_args (&gimage_set_cmap_proc, success);
 }
 

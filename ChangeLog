@@ -1,3 +1,18 @@
+Sat Feb 27 16:54:51 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* app/gimage_cmds.c: When a gimage's colourmap is changed,
+	implicitly queue an update of the whole gimage.
+
+	* plug-ins/vinvert/vinvert.c: Speed up - iterate over
+	regions, not rows.
+
+	* plug-ins/autostretch_hsv/autostretch_hsv.
+	* plug-ins/c_astretch/c_astretch.c
+	* plug-ins/normalize/normalize.c
+	* plug-ins/vinvert/vinvert.c:
+	Remove the explicit (and actually incorrect) update when
+	changing a gimage's colourmap.
+
 Fri Feb 26 21:19:10 GMT 1999  Adam D. Moss  <adam@gimp.org>
 
 	* app/convert.c: 

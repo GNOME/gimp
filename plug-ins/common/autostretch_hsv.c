@@ -120,13 +120,8 @@ run (char    *name,
     {
       indexed_autostretch_hsv (image_ID);
 
-      /* GIMP doesn't implicitly update an image whose cmap has
-	 changed - it probably should. */
-
-      gimp_drawable_update (drawable->id, 0, 0,
-			    gimp_drawable_width(drawable->id),
-			    gimp_drawable_height(drawable->id));
-      gimp_displays_flush ();
+      if (run_mode != RUN_NONINTERACTIVE)
+	gimp_displays_flush ();
     }
   else
     {
