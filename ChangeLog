@@ -1,5 +1,11 @@
 2001-11-21  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/splash.c: sink the GtkPreview created for the splash.
+	
+	* libgimpwidgets/gimphelpui.c: ref and sink the tooltips on creation.
+	
+2001-11-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpfileselection.c: set the window title for file
 	selection dialogs as we do for directory selection dialogs. Provide
 	fallbacks if gimp_file_selection_new() is called with a NULL title.

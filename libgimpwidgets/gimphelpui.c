@@ -73,6 +73,10 @@ void
 gimp_help_init (void)
 {
   tool_tips = gtk_tooltips_new ();
+
+  /* take ownership of the tooltips */
+  g_object_ref (G_OBJECT (tool_tips));
+  gtk_object_sink (GTK_OBJECT (tool_tips));
 }
 
 /**
