@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins 1.2.2\n"
-"POT-Creation-Date: 2001-07-26 14:09+0200\n"
-"PO-Revision-Date: 2001-06-26 11:59+0200\n"
+"POT-Creation-Date: 2001-09-22 14:39+0200\n"
+"PO-Revision-Date: 2001-09-22 14:27+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@eikonex.org>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -75,7 +75,7 @@ msgstr "À propos"
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1173 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tga.c:1175 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
@@ -156,7 +156,7 @@ msgstr "Valider"
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1175
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1177
 #: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
@@ -1416,7 +1416,7 @@ msgstr "%s : mauvaise palette de couleurs"
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:913 plug-ins/common/tiff.c:680
+#: plug-ins/common/tga.c:915 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
@@ -1444,7 +1444,7 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
 #: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1003 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1012 plug-ins/common/tiff.c:1337
+#: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -3671,8 +3671,7 @@ msgstr "<Image>/Filtres/Flou/Flou gaussien (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:257
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
-msgstr ""
-"Flou gaussien IIR : vous devez spécifier horizontal, vertical ou les deux."
+msgstr "gauss_iir : vous devez spécifier horizontal, vertical ou les deux."
 
 #: plug-ins/common/gauss_iir.c:307 plug-ins/common/gauss_iir.c:361
 #: plug-ins/common/gauss_iir.c:444
@@ -3713,8 +3712,7 @@ msgstr "<Image>/Filtres/Flou/Flou gaussien (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:251
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
-msgstr ""
-"Flou gaussien IIR : vous devez spécifier horizontal, vertical ou les deux."
+msgstr "gauss_rle : vous devez spécifier horizontal, vertical ou les deux."
 
 #: plug-ins/common/gauss_rle.c:302 plug-ins/common/gauss_rle.c:356
 #: plug-ins/common/gauss_rle.c:439
@@ -6254,22 +6252,22 @@ msgstr "TGA : ne peut ouvrir « %s »\n"
 msgid "TGA: Cannot read footer from \"%s\"\n"
 msgstr "TGA : ne peut lire le pied de page de « %s »\n"
 
-#: plug-ins/common/tga.c:446
+#: plug-ins/common/tga.c:447
 #, c-format
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr "TGA : ne peut lire l'extension de « %s »\n"
 
-#: plug-ins/common/tga.c:1168
+#: plug-ins/common/tga.c:1170
 msgid "Save as TGA"
 msgstr "Enregistrer en TGA"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1185
+#: plug-ins/common/tga.c:1187
 msgid "Targa Options"
 msgstr "Options du format Targa"
 
 #. rle
-#: plug-ins/common/tga.c:1195
+#: plug-ins/common/tga.c:1197
 msgid "RLE compression"
 msgstr "Compression RLE"
 
@@ -6878,11 +6876,11 @@ msgstr "Copie en cours..."
 
 #: plug-ins/common/winclipboard.c:472
 msgid "Unsupported format or Clipboard empty!"
-msgstr ""
+msgstr "Format non supporté ou presse-papiers vide !"
 
 #: plug-ins/common/winclipboard.c:483
 msgid "Can't get Clipboard data."
-msgstr ""
+msgstr "Ne peut obtenir les données du presse-papiers."
 
 #. ??? gimp_convert_rgb (image_ID);
 #.
@@ -7973,7 +7971,7 @@ msgstr "Continuer"
 #: plug-ins/gap/gap_filter_foreach.c:136
 #, c-format
 msgid "Skip %d"
-msgstr ""
+msgstr "Sauter %d"
 
 #: plug-ins/gap/gap_filter_foreach.c:155 plug-ins/gap/gap_mod_layer.c:281
 #, c-format
@@ -13187,9 +13185,8 @@ msgstr "Diverses"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: plug-ins/sel2path/pxl-outline.c:83
-#, fuzzy
 msgid "Selection to Path..."
-msgstr "selection_to_path"
+msgstr "Sélection vers chemin..."
 
 #: plug-ins/sel2path/sel2path.c:160
 msgid "<Image>/Select/To Path"
