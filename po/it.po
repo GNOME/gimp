@@ -15,11 +15,13 @@
 # emboss = rilievo
 # canvas = tele  
 #
+# feather = sfumata
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "POT-Creation-Date: 2004-05-05 20:44+0200\n"
-"PO-Revision-Date: 2004-04-26 00:59+0200\n"
+"PO-Revision-Date: 2004-05-06 19:14+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1319,6 +1321,8 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
+"Seleziona il numero di parti uniformi\n"
+"in cui si vuole dividere i segmenti selezionati."
 
 #: app/actions/gradients-actions.c:45
 msgid "Gradients Menu"
@@ -1444,24 +1448,23 @@ msgstr "Opzioni di fusione livelli"
 
 #: app/actions/image-commands.c:409
 msgid "Final, Merged Layer should be:"
-msgstr ""
+msgstr "Infine, il livello fuso dovrebbe essere:"
 
 #: app/actions/image-commands.c:410
 msgid "Final, Anchored Layer should be:"
-msgstr ""
+msgstr "Infine, il livello ancorato dovrebbe essere:"
 
 #: app/actions/image-commands.c:414
 msgid "Expanded as necessary"
-msgstr ""
+msgstr "Espanso alla bisogna"
 
 #: app/actions/image-commands.c:417
-#, fuzzy
 msgid "Clipped to image"
-msgstr "Colora l'immagine"
+msgstr "Legato all'immagine"
 
 #: app/actions/image-commands.c:420
 msgid "Clipped to bottom layer"
-msgstr ""
+msgstr "Legato al livello inferiore"
 
 #: app/actions/image-commands.c:455
 msgid "Resizing..."
@@ -1469,7 +1472,7 @@ msgstr "Ridimensionatura..."
 
 #: app/actions/image-commands.c:472
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Errore di ridimensionamento: sia la larghezza che l'altezza devono essere maggiori di zero."
 
 #: app/actions/image-commands.c:509
 #, fuzzy, c-format
@@ -1492,18 +1495,17 @@ msgstr ""
 
 #: app/actions/image-commands.c:521
 msgid "Image exceeds maximum image size"
-msgstr ""
+msgstr "L'immagine eccede l'ampiezza massima"
 
 #: app/actions/image-commands.c:529
 msgid ""
 "The chosen image size will shrink some layers completely away. Is this what "
 "you want?"
-msgstr ""
+msgstr "L'ampiezza immagine scelta annullerà completamente alcuni livelli. Sei sicuro di quello che fai?"
 
 #: app/actions/image-commands.c:533
-#, fuzzy
 msgid "Layer Too Small"
-msgstr "Molto piccolo"
+msgstr "Livello troppo piccolo"
 
 #: app/actions/image-commands.c:603 app/core/core-enums.c:583
 #: app/core/gimpimage-scale.c:70 app/gui/resize-dialog.c:212
@@ -1517,45 +1519,39 @@ msgstr "Scalatura..."
 
 #: app/actions/image-commands.c:632
 msgid "Scale Error: Both width and height must be greater than zero."
-msgstr ""
+msgstr "Errore di scalatura: sia la larghezza che l'altezza devono essere maggiori di zero."
 
 #: app/actions/images-actions.c:43
 msgid "Images Menu"
 msgstr "Menu immagini"
 
 #: app/actions/images-actions.c:47
-#, fuzzy
 msgid "_Raise Views"
-msgstr "/_Alza le viste"
+msgstr "_Alza le viste"
 
 #: app/actions/images-actions.c:52 app/actions/view-actions.c:60
-#, fuzzy
 msgid "_New View"
-msgstr "/_Nuova vista"
+msgstr "_Nuova vista"
 
 #: app/actions/images-actions.c:57
-#, fuzzy
 msgid "_Delete Image"
-msgstr "/_Elimina immagine"
+msgstr "_Elimina immagine"
 
 #: app/actions/layers-actions.c:45
 msgid "Layers Menu"
 msgstr "Menu livelli"
 
 #: app/actions/layers-actions.c:48
-#, fuzzy
 msgid "_Layer"
-msgstr "/_Livello"
+msgstr "_Livello"
 
 #: app/actions/layers-actions.c:49
-#, fuzzy
 msgid "Stac_k"
-msgstr "/Livello/Pila"
+msgstr "_Pila"
 
 #: app/actions/layers-actions.c:50 app/actions/plug-in-actions.c:62
-#, fuzzy
 msgid "_Colors"
-msgstr "Colore"
+msgstr "_Colori"
 
 #: app/actions/layers-actions.c:51 app/tools/gimplevelstool.c:671
 msgid "_Auto"
@@ -1563,162 +1559,131 @@ msgstr "_Auto"
 
 #: app/actions/layers-actions.c:52
 msgid "_Mask"
-msgstr ""
+msgstr "_Maschera"
 
 #: app/actions/layers-actions.c:53
-#, fuzzy
 msgid "Tr_ansparency"
-msgstr "Trasparenza"
+msgstr "T_rasparenza"
 
 #: app/actions/layers-actions.c:57
-#, fuzzy
 msgid "Te_xt Tool"
-msgstr "/Sr_umento testo"
+msgstr "Sr_umento testo"
 
 #: app/actions/layers-actions.c:62
-#, fuzzy
 msgid "_Edit Layer Attributes..."
-msgstr "/_Modifica attributi di livello..."
+msgstr "_Modifica attributi di livello..."
 
 #: app/actions/layers-actions.c:67
-#, fuzzy
 msgid "_New Layer..."
-msgstr "/_Nuovo livello..."
+msgstr "_Nuovo livello..."
 
 #: app/actions/layers-actions.c:72
-#, fuzzy
 msgid "D_uplicate Layer"
-msgstr "/D_uplica livello"
+msgstr "D_uplica livello"
 
 #: app/actions/layers-actions.c:77
-#, fuzzy
 msgid "_Delete Layer"
-msgstr "/_Elimina livello"
+msgstr "_Elimina livello"
 
 #: app/actions/layers-actions.c:82
-#, fuzzy
 msgid "Select _Previous Layer"
-msgstr "/Livello/Pila/Seleziona livello _precedente"
+msgstr "Seleziona livello _precedente"
 
 #: app/actions/layers-actions.c:87
-#, fuzzy
 msgid "Select _Top Layer"
-msgstr "/Livello/Pila/Seleziona il livello in _cima"
+msgstr "Seleziona il livello in _cima"
 
 #: app/actions/layers-actions.c:92
-#, fuzzy
 msgid "Select _Next Layer"
-msgstr "Scala livello di testo"
+msgstr "Selezio_na prossimo livello"
 
 #: app/actions/layers-actions.c:97
-#, fuzzy
 msgid "Select _Bottom Layer"
-msgstr "/Livello/Pila/Seleziona il livello in _fondo"
+msgstr "Seleziona il livello in _fondo"
 
 #: app/actions/layers-actions.c:102
-#, fuzzy
 msgid "_Raise Layer"
-msgstr "/_Alza livello"
+msgstr "_Alza livello"
 
 #: app/actions/layers-actions.c:107
-#, fuzzy
 msgid "Layer to _Top"
-msgstr "/Livello in _cima"
+msgstr "Livello in _cima"
 
 #: app/actions/layers-actions.c:112
-#, fuzzy
 msgid "_Lower Layer"
-msgstr "/Abbassa il _livello"
+msgstr "Abbassa il _livello"
 
 #: app/actions/layers-actions.c:117
-#, fuzzy
 msgid "Layer to _Bottom"
-msgstr "/Livello in _fondo"
+msgstr "Livello in _fondo"
 
 #: app/actions/layers-actions.c:122
-#, fuzzy
 msgid "_Anchor Layer"
-msgstr "/_Ancora livello"
+msgstr "_Ancora livello"
 
 #: app/actions/layers-actions.c:127
-#, fuzzy
 msgid "Merge Do_wn"
-msgstr "/_Fondi in basso"
+msgstr "_Fondi in basso"
 
 #: app/actions/layers-actions.c:132
-#, fuzzy
 msgid "Merge _Visible Layers..."
-msgstr "/Fondi livelli _visibili..."
+msgstr "Fondi livelli _visibili..."
 
 #: app/actions/layers-actions.c:142
-#, fuzzy
 msgid "_Discard Text Information"
-msgstr "/_Abbandona informazioni sul testo"
+msgstr "_Abbandona informazioni sul testo"
 
 #: app/actions/layers-actions.c:147
-#, fuzzy
 msgid "Layer B_oundary Size..."
-msgstr "/Dimensione _confine del livello..."
+msgstr "Dimensione _confine del livello..."
 
 #: app/actions/layers-actions.c:152
-#, fuzzy
 msgid "Layer to _Image Size"
-msgstr "/Livello a dimensione dell'_immagine"
+msgstr "Livello a dimensione dell'_immagine"
 
 #: app/actions/layers-actions.c:157
-#, fuzzy
 msgid "_Scale Layer..."
-msgstr "/_Scala livello..."
+msgstr "_Scala livello..."
 
 #: app/actions/layers-actions.c:162
-#, fuzzy
 msgid "Cr_op Layer"
-msgstr "/Livelli/_Ritaglia livello"
+msgstr "_Ritaglia livello"
 
 #: app/actions/layers-actions.c:167
-#, fuzzy
 msgid "Add La_yer Mask..."
-msgstr "/Aggiungi maschera di livello..."
+msgstr "Aggi_ungi maschera di livello..."
 
 #: app/actions/layers-actions.c:172
-#, fuzzy
 msgid "Apply Layer _Mask"
-msgstr "/Applica maschera di livello"
+msgstr "Applica _maschera di livello"
 
 #: app/actions/layers-actions.c:177
-#, fuzzy
 msgid "Delete Layer Mas_k"
-msgstr "/Elimina livello masc_hera"
+msgstr "Elimina livello masc_hera"
 
 #: app/actions/layers-actions.c:182
-#, fuzzy
 msgid "Add Alpha C_hannel"
-msgstr "/Aggiungi _canale alfa"
+msgstr "Aggiungi _canale alfa"
 
 #: app/actions/layers-actions.c:190
-#, fuzzy
 msgid "_Mask to Selection"
-msgstr "/Maschera a sele_zione"
+msgstr "_Maschera a selezione"
 
 #: app/actions/layers-actions.c:213
-#, fuzzy
 msgid "Al_pha to Selection"
-msgstr "/Al_fa a selezione"
+msgstr "Al_fa a selezione"
 
 #: app/actions/layers-actions.c:218
-#, fuzzy
 msgid "A_dd to Selection"
-msgstr "/_Aggiungi alla selezione"
+msgstr "A_ggiungi alla selezione"
 
 #: app/actions/layers-commands.c:373
-#, fuzzy
 msgid "Crop Layer"
-msgstr "Nuovo livello"
+msgstr "Ritaglia livello"
 
 #: app/actions/layers-commands.c:449
-#, fuzzy
 msgid "Layer Mask to Selection"
-msgstr "/Livelli/Maschere/_Aggiungi alla selezione"
+msgstr "Maschera livello a selezione"
 
 #: app/actions/layers-commands.c:711 app/actions/layers-commands.c:739
 #: app/actions/layers-commands.c:773 app/core/core-enums.c:631
@@ -1729,23 +1694,20 @@ msgstr "Nuovo livello"
 #: app/actions/layers-commands.c:717
 #, fuzzy
 msgid "Empty Layer"
-msgstr "Livello testo vuoto"
+msgstr "Livello vuoto"
 
 #: app/actions/layers-commands.c:741
-#, fuzzy
 msgid "Create a New Layer"
-msgstr "Crea una nuova immagine"
+msgstr "Crea un nuovo livello"
 
 #: app/actions/layers-commands.c:775
-#, fuzzy
 msgid "Layer _Name:"
-msgstr "_Nome palette:"
+msgstr "_Nome livello:"
 
 #. The size labels
 #: app/actions/layers-commands.c:779
-#, fuzzy
 msgid "Layer Width:"
-msgstr "Nuova larghezza:"
+msgstr "Larghezza livello:"
 
 #: app/actions/layers-commands.c:785 app/gui/resize-dialog.c:297
 #: app/gui/resize-dialog.c:322 app/gui/resize-dialog.c:577
@@ -1756,14 +1718,12 @@ msgid "Height:"
 msgstr "Altezza:"
 
 #: app/actions/layers-commands.c:844
-#, fuzzy
 msgid "Layer Fill Type"
-msgstr "Modalità di riempimento"
+msgstr "Tipo di riempimento livello"
 
 #: app/actions/layers-commands.c:953
-#, fuzzy
 msgid "Layer Attributes"
-msgstr "Modifica attributi livello"
+msgstr "Attributi di livello"
 
 #: app/actions/layers-commands.c:955 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
@@ -1774,117 +1734,98 @@ msgid "Floating Selection"
 msgstr "Selezione fluttuante"
 
 #: app/actions/layers-commands.c:992
-#, fuzzy
 msgid "Layer _Name"
-msgstr "_Nome palette:"
+msgstr "_Nome livello"
 
 #: app/actions/layers-commands.c:1003
-#, fuzzy
 msgid "Set Name from _Text"
-msgstr "Crea tracciato dal testo"
+msgstr "Imposta in nome dal _testo"
 
 #: app/actions/layers-commands.c:1049 app/actions/layers-commands.c:1088
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
 #: app/core/gimplayer.c:1011
 msgid "Add Layer Mask"
-msgstr "Aggiungi livello maschera..."
+msgstr "Aggiungi livello maschera"
 
 #: app/actions/layers-commands.c:1090
-#, fuzzy
 msgid "Add a Mask to the Layer"
-msgstr "Aggiungi testo all'immagine"
+msgstr "Aggiungi una maschera al livello"
 
 #: app/actions/layers-commands.c:1115
-#, fuzzy
 msgid "Initialize Layer Mask to:"
-msgstr "Elimina livello maschera"
+msgstr "Inizializza la maschera di livello a:"
 
 #: app/actions/layers-commands.c:1126
-#, fuzzy
 msgid "In_vert Mask"
-msgstr "Invertita"
+msgstr "In_verti maschera"
 
 #: app/actions/layers-commands.c:1188 app/actions/layers-commands.c:1265
 msgid "Invalid width or height. Both must be positive."
-msgstr ""
+msgstr "Larghezza o altezza non valide. Devono essere entrambe positive."
 
 #: app/actions/palette-editor-actions.c:39
 msgid "Palette Editor Menu"
 msgstr "Menu editor tavolozza"
 
 #: app/actions/palette-editor-actions.c:49
-#, fuzzy
 msgid "New Color from _FG"
-msgstr "/Nuovo colore dal _PP"
+msgstr "Nuovo colore dal _PP"
 
 #: app/actions/palette-editor-actions.c:54
-#, fuzzy
 msgid "New Color from _BG"
-msgstr "/_Nuovo colore dallo _SF"
+msgstr "Nuovo colore dallo _SF"
 
 #: app/actions/palette-editor-actions.c:59
-#, fuzzy
 msgid "_Delete Color"
-msgstr "/_Cancella colore"
+msgstr "_Cancella colore"
 
 #: app/actions/palette-editor-actions.c:64 app/actions/view-actions.c:70
-#, fuzzy
 msgid "Zoom _Out"
-msgstr "/Zoom _indietro"
+msgstr "Zoom _indietro"
 
 #: app/actions/palette-editor-actions.c:69 app/actions/view-actions.c:75
-#, fuzzy
 msgid "Zoom _In"
-msgstr "/Zoom _avanti"
+msgstr "Zoom _avanti"
 
 #: app/actions/palette-editor-actions.c:74
-#, fuzzy
 msgid "Zoom _All"
-msgstr "/Zoom _totale"
+msgstr "Zoom _totale"
 
 #: app/actions/palettes-actions.c:45
 msgid "Palettes Menu"
 msgstr "Menu tavolozze"
 
 #: app/actions/palettes-actions.c:49
-#, fuzzy
 msgid "_Edit Palette..."
-msgstr "/_Modifica tavolozza..."
+msgstr "_Modifica tavolozza..."
 
 #: app/actions/palettes-actions.c:54
-#, fuzzy
 msgid "_New Palette"
-msgstr "/_Nuova tavolozza"
+msgstr "_Nuova tavolozza"
 
 #: app/actions/palettes-actions.c:59
-#, fuzzy
 msgid "_Import Palette..."
-msgstr "/_Importa tavolozza..."
+msgstr "_Importa tavolozza..."
 
 #: app/actions/palettes-actions.c:64
-#, fuzzy
 msgid "D_uplicate Palette"
-msgstr "/D_uplica tavolozza"
+msgstr "D_uplica tavolozza"
 
 #: app/actions/palettes-actions.c:69
-#, fuzzy
 msgid "_Merge Palettes..."
-msgstr "/_Fondi tavolozze..."
+msgstr "_Fondi tavolozze..."
 
 #: app/actions/palettes-actions.c:74
-#, fuzzy
 msgid "_Delete Palette"
-msgstr "/_Elimina tavolozza"
+msgstr "_Elimina tavolozza"
 
 #: app/actions/palettes-actions.c:79
-#, fuzzy
 msgid "_Refresh Palettes"
-msgstr "/_Rinfresca tavolozza"
+msgstr "_Ricarica tavolozza"
 
 #: app/actions/palettes-commands.c:79
-#, fuzzy
 msgid "Merge Palette"
-msgstr "/_Fondi tavolozze..."
+msgstr "Fondi tavolozza"
 
 #: app/actions/palettes-commands.c:83
 #, fuzzy
@@ -1896,102 +1837,85 @@ msgid "Patterns Menu"
 msgstr "Menu motivi"
 
 #: app/actions/patterns-actions.c:48
-#, fuzzy
 msgid "_Edit Pattern..."
-msgstr "/_Modifica motivo..."
+msgstr "_Modifica motivo..."
 
 #: app/actions/patterns-actions.c:53
-#, fuzzy
 msgid "_New Pattern"
-msgstr "/_Nuovo motivo"
+msgstr "_Nuovo motivo"
 
 #: app/actions/patterns-actions.c:58
-#, fuzzy
 msgid "D_uplicate Pattern"
-msgstr "/D_uplica motivo"
+msgstr "D_uplica motivo"
 
 #: app/actions/patterns-actions.c:63
-#, fuzzy
 msgid "_Delete Pattern..."
-msgstr "/_Elimina motivo..."
+msgstr "_Elimina motivo..."
 
 #: app/actions/patterns-actions.c:68
-#, fuzzy
 msgid "_Refresh Patterns"
-msgstr "/_Rinfresca motivi"
+msgstr "_Ricarica motivi"
 
 #: app/actions/plug-in-actions.c:60
-#, fuzzy
 msgid "Filte_rs"
-msgstr "/Filt_ri"
+msgstr "Filt_ri"
 
 #: app/actions/plug-in-actions.c:61
-#, fuzzy
 msgid "_Blur"
-msgstr "Sfumata"
+msgstr "Sf_umata"
 
 #: app/actions/plug-in-actions.c:63
 msgid "Ma_p"
-msgstr ""
+msgstr "Ma_ppa"
 
 #: app/actions/plug-in-actions.c:64
-#, fuzzy
 msgid "_Noise"
-msgstr "Nessuno"
+msgstr "_Rumore"
 
 #: app/actions/plug-in-actions.c:65
-#, fuzzy
 msgid "Edge-De_tect"
-msgstr "/Filtri/Rilievo bordi"
+msgstr "Rilievo _bordi"
 
 #: app/actions/plug-in-actions.c:66
 #, fuzzy
 msgid "En_hance"
-msgstr "/Filtri/A_vanzati"
+msgstr "A_vanzati"
 
 #: app/actions/plug-in-actions.c:67
-#, fuzzy
 msgid "_Generic"
-msgstr "C_entro"
+msgstr "_Generico"
 
 #: app/actions/plug-in-actions.c:68
-#, fuzzy
 msgid "Gla_ss Effects"
-msgstr "/Filtri/Effetti _vetro"
+msgstr "Effetti _vetro"
 
 #: app/actions/plug-in-actions.c:69
-#, fuzzy
 msgid "_Light Effects"
-msgstr "/Filtri/Effetti _luce"
+msgstr "Effetti _luce"
 
 #: app/actions/plug-in-actions.c:70
-#, fuzzy
 msgid "_Distorts"
-msgstr "/Filtri/_Distorsioni"
+msgstr "_Distorsioni"
 
 #: app/actions/plug-in-actions.c:71
-#, fuzzy
 msgid "_Artistic"
-msgstr "/Filtri/_Artistici"
+msgstr "_Artistici"
 
 #: app/actions/plug-in-actions.c:72
-#, fuzzy
 msgid "_Map"
-msgstr "_M"
+msgstr "_Mappa"
 
 #: app/actions/plug-in-actions.c:73
-#, fuzzy
 msgid "_Render"
-msgstr "C_entro"
+msgstr "_Render"
 
 #: app/actions/plug-in-actions.c:74
 msgid "_Clouds"
-msgstr ""
+msgstr "N_uvole"
 
 #: app/actions/plug-in-actions.c:75
-#, fuzzy
 msgid "_Nature"
-msgstr "_Nome:"
+msgstr "_Natura"
 
 #: app/actions/plug-in-actions.c:76 app/gui/preferences-dialog.c:1392
 msgid "_Pattern"
@@ -1999,22 +1923,19 @@ msgstr "_Motivo"
 
 #: app/actions/plug-in-actions.c:77
 msgid "_Web"
-msgstr ""
+msgstr "_Web"
 
 #: app/actions/plug-in-actions.c:78
-#, fuzzy
 msgid "An_imation"
-msgstr "/Filtri/An_imazione"
+msgstr "An_imazione"
 
 #: app/actions/plug-in-actions.c:79
-#, fuzzy
 msgid "C_ombine"
-msgstr "/File/C_ombina"
+msgstr "C_ombina"
 
 #: app/actions/plug-in-actions.c:80
-#, fuzzy
 msgid "To_ys"
-msgstr "Strumenti"
+msgstr "_Giocattoli"
 
 #: app/actions/plug-in-actions.c:86 app/actions/plug-in-actions.c:241
 msgid "Repeat Last"
@@ -2035,93 +1956,76 @@ msgid "R_e-show \"%s\""
 msgstr "/Ri-mostra \"%s\""
 
 #: app/actions/qmask-actions.c:41
-#, fuzzy
 msgid "QuickMask Menu"
 msgstr "Menu maschera veloce"
 
 #: app/actions/qmask-actions.c:45
-#, fuzzy
 msgid "_Configure Color and Opacity..."
-msgstr "/_Configura colore e opacità..."
+msgstr "_Configura colore e opacità..."
 
 #: app/actions/qmask-actions.c:53
-#, fuzzy
 msgid "_QuickMask Active"
-msgstr "/_QMask Attivo"
+msgstr "Maschera _veloce attivo"
 
 #: app/actions/qmask-actions.c:59
-#, fuzzy
 msgid "Toggle _QuickMask"
-msgstr "Abilita/disabilita quickmask"
+msgstr "Commuta maschera _veloce"
 
 #: app/actions/qmask-actions.c:69
-#, fuzzy
 msgid "Mask _Selected Areas"
-msgstr "/Maschera aree _selezionate"
+msgstr "Maschera aree _selezionate"
 
 #: app/actions/qmask-actions.c:74
-#, fuzzy
 msgid "Mask _Unselected Areas"
-msgstr "/Maschera aree non selezionate"
+msgstr "Maschera aree _non selezionate"
 
 #: app/actions/qmask-commands.c:136
-#, fuzzy
 msgid "Edit QuickMask Color"
-msgstr "Modifica colore"
+msgstr "Modifica colore maschera veloce"
 
 #: app/actions/qmask-commands.c:146
-#, fuzzy
 msgid "QuickMask Attributes"
-msgstr "Modifica attributi tracciato"
+msgstr "Attributi maschera veloce"
 
 #: app/actions/qmask-commands.c:148
-#, fuzzy
 msgid "Edit QuickMask Attributes"
-msgstr "Modifica attributi tracciato"
+msgstr "Modifica attributi maschera veloce"
 
 #: app/actions/qmask-commands.c:192
-#, fuzzy
 msgid "Mask Opacity:"
-msgstr "Opacità:"
+msgstr "Opacità maschera:"
 
 #: app/actions/select-actions.c:45
-#, fuzzy
 msgid "_Select"
-msgstr "/_Seleziona"
+msgstr "_Seleziona"
 
 #: app/actions/select-actions.c:48
 msgid "_All"
-msgstr ""
+msgstr "_Tutto"
 
 #: app/actions/select-actions.c:53
-#, fuzzy
 msgid "_None"
-msgstr "Nessuno"
+msgstr "_Niente"
 
 #: app/actions/select-actions.c:58
-#, fuzzy
 msgid "_Invert"
-msgstr "Invertita"
+msgstr "_Invertita"
 
 #: app/actions/select-actions.c:63
-#, fuzzy
 msgid "Fr_om Path"
-msgstr "/Selezione/Dal tracciat_o"
+msgstr "Dal tracciat_o"
 
 #: app/actions/select-actions.c:68
-#, fuzzy
 msgid "_Float"
-msgstr "_Caratteri:"
+msgstr "_Fluttuante"
 
 #: app/actions/select-actions.c:73
-#, fuzzy
 msgid "Fea_ther..."
-msgstr "/Selezione/Sfuma_ta..."
+msgstr "Sfuma_ta..."
 
 #: app/actions/select-actions.c:78
-#, fuzzy
 msgid "_Sharpen"
-msgstr "Definita"
+msgstr "_Definita"
 
 #: app/actions/select-actions.c:83
 #, fuzzy
@@ -2156,80 +2060,69 @@ msgstr "Tracciato a selezione"
 
 #: app/actions/select-commands.c:152 app/core/gimpselection.c:203
 msgid "Feather Selection"
-msgstr "Selezione piumata"
+msgstr "Selezione sfumata"
 
 #: app/actions/select-commands.c:156
-#, fuzzy
 msgid "Feather selection by"
-msgstr "Selezione piumata"
+msgstr "Selezione sfumata di"
 
 #: app/actions/select-commands.c:188 app/core/gimpselection.c:210
 msgid "Shrink Selection"
 msgstr "Riduci selezione"
 
 #: app/actions/select-commands.c:192
-#, fuzzy
 msgid "Shrink selection by"
-msgstr "Riduci selezione"
+msgstr "Riduci selezione di"
 
 #: app/actions/select-commands.c:201
 msgid "Shrink from image border"
-msgstr ""
+msgstr "Riduci dal bordo immagine"
 
 #: app/actions/select-commands.c:222 app/core/gimpselection.c:209
 msgid "Grow Selection"
 msgstr "Espandi selezione"
 
 #: app/actions/select-commands.c:226
-#, fuzzy
 msgid "Grow selection by"
-msgstr "Espandi selezione"
+msgstr "Espandi selezione di"
 
 #: app/actions/select-commands.c:245 app/core/gimpselection.c:208
 msgid "Border Selection"
 msgstr "Selezione bordo"
 
 #: app/actions/select-commands.c:249
-#, fuzzy
 msgid "Border selection by"
-msgstr "Selezione bordo"
+msgstr "Selezione bordo di"
 
 #: app/actions/templates-actions.c:42
 msgid "Templates Menu"
 msgstr "Menu modelli"
 
 #: app/actions/templates-actions.c:47
-#, fuzzy
 msgid "_Create Image from Template..."
-msgstr "/_Crea immagine dal modello..."
+msgstr "_Crea immagine dal modello..."
 
 #: app/actions/templates-actions.c:52
-#, fuzzy
 msgid "_New Template..."
-msgstr "/_Nuovo modello..."
+msgstr "_Nuovo modello..."
 
 #: app/actions/templates-actions.c:57
-#, fuzzy
 msgid "D_uplicate Template..."
-msgstr "/D_uplica modello..."
+msgstr "D_uplica modello..."
 
 #: app/actions/templates-actions.c:62
-#, fuzzy
 msgid "_Edit Template..."
-msgstr "/_Modifica palette..."
+msgstr "_Modifica modello..."
 
 #: app/actions/templates-actions.c:67
-#, fuzzy
 msgid "_Delete Template"
-msgstr "/_Elimina modello"
+msgstr "_Elimina modello"
 
 #: app/actions/templates-commands.c:128
-#, fuzzy
 msgid "New Template"
-msgstr "/_Nuovo modello..."
+msgstr "Nuovo modello"
 
 #: app/actions/templates-commands.c:130
-#, fuzzy
 msgid "Create a New Template"
 msgstr "Crea un nuovo modello"
 
@@ -2240,209 +2133,170 @@ msgid "Unnamed"
 msgstr "Senza nome"
 
 #: app/actions/templates-commands.c:201 app/actions/templates-commands.c:203
-#, fuzzy
 msgid "Edit Template"
-msgstr "/_Modifica palette..."
+msgstr "Modifica modello"
 
 #: app/actions/tool-options-actions.c:55
 msgid "Tool Options Menu"
 msgstr "Menu opzioni strumenti"
 
 #: app/actions/tool-options-actions.c:59
-#, fuzzy
 msgid "_Save Options to"
-msgstr "/_Salva le opzioni su"
+msgstr "_Salva le opzioni su"
 
 #: app/actions/tool-options-actions.c:60
-#, fuzzy
 msgid "_Restore Options from"
-msgstr "/_Recupera le opzioni da"
+msgstr "_Recupera le opzioni da"
 
 #: app/actions/tool-options-actions.c:61
-#, fuzzy
 msgid "Re_name Saved Options"
-msgstr "/Ri_nomina le opzioni salvate"
+msgstr "Ri_nomina le opzioni salvate"
 
 #: app/actions/tool-options-actions.c:62
-#, fuzzy
 msgid "_Delete Saved Options"
-msgstr "/_Cancella le opzioni salvate"
+msgstr "_Cancella le opzioni salvate"
 
 #: app/actions/tool-options-actions.c:65
-#, fuzzy
 msgid "_New Entry..."
-msgstr "/_Nuovo tracciato..."
+msgstr "_Nuova voce..."
 
 #: app/actions/tool-options-actions.c:70
-#, fuzzy
 msgid "R_eset Tool Options"
-msgstr "/R_eimposta le opzioni strumenti"
+msgstr "R_eimposta le opzioni strumenti"
 
 #: app/actions/tool-options-actions.c:75
-#, fuzzy
 msgid "Reset _all Tool Options..."
-msgstr "/Reimpost_a tutte le opzioni strumenti..."
+msgstr "Reimpost_a tutte le opzioni strumenti..."
 
 #: app/actions/tool-options-commands.c:71
-#, fuzzy
 msgid "Save Tool Options"
-msgstr "Opzioni strumenti"
+msgstr "Salva le opzioni strumenti"
 
 #: app/actions/tool-options-commands.c:75
-#, fuzzy
 msgid "Enter a name for the saved options"
-msgstr "Elimina le opzioni salvate..."
+msgstr "Inserisci un nome per le opzioni salvate"
 
 #: app/actions/tool-options-commands.c:76
 #: app/actions/tool-options-commands.c:206
 #: app/actions/tool-options-commands.c:226
-#, fuzzy
 msgid "Saved Options"
-msgstr "/_Salva le opzioni su"
+msgstr "Opzioni salvate"
 
 #: app/actions/tool-options-commands.c:144
-#, fuzzy
 msgid "Rename Saved Tool Options"
-msgstr "/Ri_nomina le opzioni salvate"
+msgstr "Rinomina le opzioni salvate"
 
 #: app/actions/tool-options-commands.c:148
-#, fuzzy
 msgid "Enter a new name for the saved options"
-msgstr "Crea una nuova immagine dal modello selezionato"
+msgstr "Crea un nuovo nome per le opzioni salvate"
 
 #: app/actions/tools-actions.c:44
-#, fuzzy
 msgid "_Tools"
-msgstr "/S_trumenti"
+msgstr "S_trumenti"
 
 #: app/actions/tools-actions.c:45
-#, fuzzy
 msgid "_Selection Tools"
-msgstr "/Strumenti/Strumenti _selezione"
+msgstr "Strumenti _selezione"
 
 #: app/actions/tools-actions.c:46
-#, fuzzy
 msgid "_Paint Tools"
-msgstr "Strumento di disegno:"
+msgstr "Strumento di _disegno"
 
 #: app/actions/tools-actions.c:47
-#, fuzzy
 msgid "_Transform Tools"
-msgstr "/Strumenti/Strumenti _trasformazione"
+msgstr "Strumenti _trasformazione"
 
 #: app/actions/tools-actions.c:48
-#, fuzzy
 msgid "_Color Tools"
-msgstr "/Strumenti/Strumenti di _colore"
+msgstr "Strumenti di _colore"
 
 #: app/actions/tools-actions.c:51
-#, fuzzy
 msgid "_Default Colors"
-msgstr "/Strumenti/Colori _predefiniti"
+msgstr "Colori _predefiniti"
 
 #: app/actions/tools-actions.c:56
-#, fuzzy
 msgid "S_wap Colors"
-msgstr "/Strumenti/Ca_mbia colori"
+msgstr "Sca_mbia colori"
 
 #: app/actions/tools-actions.c:64
-#, fuzzy
 msgid "_By Color"
-msgstr "Colore RGB"
+msgstr "per _colore"
 
 #: app/actions/tools-actions.c:69
-#, fuzzy
 msgid "_Arbitrary Rotation..."
-msgstr "/Livelli/Trasforma/Rotazione _arbitraria..."
+msgstr "Rotazione _arbitraria..."
 
 #: app/actions/vectors-actions.c:43
 msgid "Paths Menu"
 msgstr "Menu tracciati"
 
 #: app/actions/vectors-actions.c:47
-#, fuzzy
 msgid "Path _Tool"
-msgstr "/Strumento _tracciato"
+msgstr "Strumento _tracciato"
 
 #: app/actions/vectors-actions.c:52
-#, fuzzy
 msgid "_Edit Path Attributes..."
-msgstr "/_Modifica attributi tracciato..."
+msgstr "_Modifica attributi tracciato..."
 
 #: app/actions/vectors-actions.c:57
-#, fuzzy
 msgid "_New Path..."
-msgstr "/_Nuovo tracciato..."
+msgstr "_Nuovo tracciato..."
 
 #: app/actions/vectors-actions.c:62
-#, fuzzy
 msgid "D_uplicate Path"
-msgstr "/_Duplica tracciato"
+msgstr "_Duplica tracciato"
 
 #: app/actions/vectors-actions.c:67
-#, fuzzy
 msgid "_Delete Path"
-msgstr "/_Cancella tracciato"
+msgstr "_Cancella tracciato"
 
 #: app/actions/vectors-actions.c:72
-#, fuzzy
 msgid "Merge _Visible Paths"
-msgstr "/Fondi livelli _visibili"
+msgstr "Fondi livelli _visibili"
 
 #: app/actions/vectors-actions.c:77
-#, fuzzy
 msgid "_Raise Path"
-msgstr "/_Alza tracciato"
+msgstr "_Alza tracciato"
 
 #: app/actions/vectors-actions.c:82
-#, fuzzy
 msgid "Raise Path to _Top"
-msgstr "Alza tracciato in cima"
+msgstr "Alza tracciato in _cima"
 
 #: app/actions/vectors-actions.c:87
-#, fuzzy
 msgid "_Lower Path"
-msgstr "/Ab_bassa tracciato"
+msgstr "Ab_bassa tracciato"
 
 #: app/actions/vectors-actions.c:92
-#, fuzzy
 msgid "Lower Path to _Bottom"
-msgstr "Abbassa tracciato in fondo"
+msgstr "Abbassa tracciato in _fondo"
 
 #: app/actions/vectors-actions.c:97
-#, fuzzy
 msgid "Selecti_on to Path"
-msgstr "/Selezi_one a tracciato "
+msgstr "Selezi_one a tracciato "
 
 #: app/actions/vectors-actions.c:102
-#, fuzzy
 msgid "Stro_ke Path..."
-msgstr "/Dise_gna tracciato"
+msgstr "Dise_gna tracciato..."
 
 #: app/actions/vectors-actions.c:107
-#, fuzzy
 msgid "Co_py Path"
-msgstr "/Co_pia tracciato"
+msgstr "Co_pia tracciato"
 
 #: app/actions/vectors-actions.c:112
-#, fuzzy
 msgid "Paste Pat_h"
-msgstr "/Incol_la tracciato"
+msgstr "Incol_la tracciato"
 
 #: app/actions/vectors-actions.c:117
-#, fuzzy
 msgid "I_mport Path..."
-msgstr "/I_mporta tracciato..."
+msgstr "I_mporta tracciato..."
 
 #: app/actions/vectors-actions.c:122
-#, fuzzy
 msgid "E_xport Path..."
-msgstr "/_Esporta tracciato..."
+msgstr "_Esporta tracciato..."
 
 #: app/actions/vectors-actions.c:130
-#, fuzzy
 msgid "Path to Sele_ction"
-msgstr "/Tracciato a sele_zione"
+msgstr "Tracciato a sele_zione"
 
 #: app/actions/vectors-commands.c:460
 #, fuzzy
@@ -2450,54 +2304,45 @@ msgid "Empty Path"
 msgstr "Importa tracciati"
 
 #: app/actions/vectors-commands.c:474 app/actions/vectors-commands.c:522
-#, fuzzy
 msgid "New Path"
-msgstr "/_Nuovo tracciato..."
+msgstr "Nuovo tracciato"
 
 #: app/actions/vectors-commands.c:476
-#, fuzzy
 msgid "New Path Options"
-msgstr "Opzioni generali della palette"
+msgstr "Nuove opzioni tracciato"
 
 #. The name entry hbox, label and entry
 #: app/actions/vectors-commands.c:511 app/actions/vectors-commands.c:629
-#, fuzzy
 msgid "Path name:"
-msgstr "_Nome palette:"
+msgstr "Nome tracciato:"
 
 #: app/actions/vectors-commands.c:592
-#, fuzzy
 msgid "Path Attributes"
-msgstr "Modifica attributi tracciato"
+msgstr "Attributi tracciato"
 
 #: app/actions/vectors-commands.c:594 app/widgets/gimpvectorstreeview.c:129
 msgid "Edit Path Attributes"
 msgstr "Modifica attributi tracciato"
 
 #: app/actions/vectors-commands.c:689
-#, fuzzy
 msgid "Import Paths from SVG"
-msgstr "Importa tracciati"
+msgstr "Importa tracciato da SVG"
 
 #: app/actions/vectors-commands.c:756
-#, fuzzy
 msgid "Export Path to SVG"
-msgstr "/_Esporta tracciato..."
+msgstr "Esporta tracciato a SVG"
 
 #: app/actions/view-actions.c:56
-#, fuzzy
 msgid "_View"
-msgstr "/_Visualizza"
+msgstr "_Visualizza"
 
 #: app/actions/view-actions.c:57
-#, fuzzy
 msgid "_Zoom"
-msgstr "Zoom:"
+msgstr "_Zoom"
 
 #: app/actions/view-actions.c:65
-#, fuzzy
 msgid "_Close"
-msgstr "Duplica"
+msgstr "_Chiudi"
 
 #: app/actions/view-actions.c:80
 #, fuzzy
@@ -2505,19 +2350,16 @@ msgid "Zoom to _Fit Window"
 msgstr "Zoom a finestra intera"
 
 #: app/actions/view-actions.c:85
-#, fuzzy
 msgid "_Info Window"
-msgstr "Finestra informazioni"
+msgstr "Finestra _informazioni"
 
 #: app/actions/view-actions.c:90
-#, fuzzy
 msgid "Na_vigation Window"
-msgstr "/Visualizza/Finestra na_vigazione"
+msgstr "Finestra di na_vigazione"
 
 #: app/actions/view-actions.c:95
-#, fuzzy
 msgid "Display _Filters..."
-msgstr "/Finestre/Visualizza _filtri..."
+msgstr "Mostra _filtri..."
 
 #: app/actions/view-actions.c:100
 #, fuzzy
@@ -2525,12 +2367,10 @@ msgid "Shrink _Wrap"
 msgstr "Aggiusta cornice"
 
 #: app/actions/view-actions.c:113
-#, fuzzy
 msgid "_Dot for Dot"
-msgstr "/Visualizza/_Punto per punto"
+msgstr "_Punto per punto"
 
 #: app/actions/view-actions.c:119
-#, fuzzy
 msgid "Show _Selection"
 msgstr "Mostra s_elezione"
 
@@ -2543,28 +2383,24 @@ msgid "Show _Guides"
 msgstr "Mostra le _guide"
 
 #: app/actions/view-actions.c:137
-#, fuzzy
 msgid "Sn_ap to Guides"
-msgstr "/Visualizza/Guide magnetiche"
+msgstr "Guide mag_netiche"
 
 #: app/actions/view-actions.c:143
-#, fuzzy
 msgid "S_how Grid"
 msgstr "Mostra la grig_lia"
 
 #: app/actions/view-actions.c:149
-#, fuzzy
 msgid "Sna_p to Grid"
-msgstr "/Visualizza/Griglia magnetica"
+msgstr "Griglia ma_gnetica"
 
 #: app/actions/view-actions.c:155 app/gui/preferences-dialog.c:857
 msgid "Show _Menubar"
 msgstr "Mostra barra dei _menu"
 
 #: app/actions/view-actions.c:161
-#, fuzzy
 msgid "Show R_ulers"
-msgstr "Mostra _righello"
+msgstr "Mostra _righelli"
 
 #: app/actions/view-actions.c:167 app/gui/preferences-dialog.c:863
 msgid "Show Scroll_bars"
@@ -2575,54 +2411,44 @@ msgid "Show S_tatusbar"
 msgstr "Mostra barra di s_tato"
 
 #: app/actions/view-actions.c:179
-#, fuzzy
 msgid "Fullscr_een"
-msgstr "/Visualizza/A tutto sch_ermo"
+msgstr "A tutto sch_ermo"
 
 #: app/actions/view-actions.c:188
-#, fuzzy
 msgid "16:1  (1600%)"
-msgstr "/Visualizza/Zoom/16:1  (1600%)"
+msgstr "16:1  (1600%)"
 
 #: app/actions/view-actions.c:193
-#, fuzzy
 msgid "8:1  (800%)"
-msgstr "/Visualizza/Zoom/8:1  (800%)"
+msgstr "8:1  (800%)"
 
 #: app/actions/view-actions.c:198
-#, fuzzy
 msgid "4:1  (400%)"
-msgstr "/Visualizza/Zoom/4:1  (400%)"
+msgstr "4:1  (400%)"
 
 #: app/actions/view-actions.c:203
-#, fuzzy
 msgid "2:1  (200%)"
-msgstr "/Visualizza/Zoom/2:1  (200%)"
+msgstr "2:1  (200%)"
 
 #: app/actions/view-actions.c:208
-#, fuzzy
 msgid "1:1  (100%)"
-msgstr "/Visualizza/Zoom/1:1  (100%)"
+msgstr "1:1  (100%)"
 
 #: app/actions/view-actions.c:213
-#, fuzzy
 msgid "1:2  (50%)"
-msgstr "/Visualizza/Zoom/1:2  (50%)"
+msgstr "1:2  (50%)"
 
 #: app/actions/view-actions.c:218
-#, fuzzy
 msgid "1:4  (25%)"
-msgstr "/Visualizza/Zoom/1:2  (25%)"
+msgstr "1:4  (25%)"
 
 #: app/actions/view-actions.c:223
-#, fuzzy
 msgid "1:8  (12.5%)"
-msgstr "/Visualizza/Zoom/1:1  (12.5%)"
+msgstr "1:8  (12.5%)"
 
 #: app/actions/view-actions.c:228
-#, fuzzy
 msgid "1:16  (6.25%)"
-msgstr "/Visualizza/Zoom/1:16  (6.25%)"
+msgstr "1:16  (6.25%)"
 
 #: app/actions/view-actions.c:393
 #, c-format
@@ -2733,7 +2559,7 @@ msgid ""
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
-msgstr ""
+msgstr "Impossibile aprire il file di scambio. Gimp ha terminato la memoria disponibilee non può usare il file di scambio. Alcune parti dell'immagine potrebbero essere rovinate. Provate a salvare il vostro lavoro usando un nome differente, quindi riavviate Gimp e controllate la locazione del file di scambio nelle preferenze."
 
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
@@ -5677,32 +5503,28 @@ msgstr "Sposta per (x/_2),(y/2)"
 
 #. The edge behaviour frame
 #: app/gui/offset-dialog.c:203
-#, fuzzy
 msgid "Edge Behaviour"
-msgstr "Comportamento finestre di dialogo"
+msgstr "Comportamento dei bordi"
 
 #: app/gui/offset-dialog.c:207
-#, fuzzy
 msgid "_Wrap Around"
-msgstr "_Sfondo"
+msgstr "_Bordi connessi"
 
 #: app/gui/offset-dialog.c:210
-#, fuzzy
 msgid "Fill with _Background Color"
-msgstr "Modifica colore dello sfondo"
+msgstr "Riempi con il colore dello _sfondo"
 
 #: app/gui/offset-dialog.c:213
-#, fuzzy
 msgid "Make _Transparent"
-msgstr "_Trasparente"
+msgstr "Rendi _trasparente"
 
 #: app/gui/palette-import-dialog.c:175
 msgid "Import Palette"
-msgstr "Importa palette"
+msgstr "Importa tavolozza"
 
 #: app/gui/palette-import-dialog.c:177
 msgid "Import a New Palette"
-msgstr "Importa una nuova palette"
+msgstr "Importa una nuova tavolozza"
 
 #: app/gui/palette-import-dialog.c:183
 msgid "_Import"
@@ -6148,19 +5970,16 @@ msgid "Window Management"
 msgstr "Gestione finestre"
 
 #: app/gui/preferences-dialog.c:1823
-#, fuzzy
 msgid "Window Manager Hints"
-msgstr "Gestione finestre"
+msgstr "Suggerimenti del gestione finestre"
 
 #: app/gui/preferences-dialog.c:1829
-#, fuzzy
 msgid "Hint for the _Toolbox:"
-msgstr "Tipo di suggerimento finestra per gli s_trumenti:"
+msgstr "Suggerimento per la finestra s_trumenti:"
 
 #: app/gui/preferences-dialog.c:1833
-#, fuzzy
 msgid "Hint for the _Docks:"
-msgstr "Tipo di suggerimento finestra per i _pannelli:"
+msgstr "Suggerimento finestra _pannelli:"
 
 #: app/gui/preferences-dialog.c:1836
 msgid "Focus"
@@ -6168,7 +5987,7 @@ msgstr "Focus"
 
 #: app/gui/preferences-dialog.c:1840
 msgid "Activate the _Focused Image"
-msgstr "Attiva l'immagine con il _focus"
+msgstr "Attiva l'immagine in _focus"
 
 #: app/gui/preferences-dialog.c:1849 app/gui/preferences-dialog.c:1852
 #: app/gui/preferences-dialog.c:2108
@@ -6504,12 +6323,10 @@ msgid "Choose Stroke Style"
 msgstr "Scegli stile di disegno"
 
 #: app/gui/stroke-dialog.c:161
-#, fuzzy
 msgid "Stroke Line"
-msgstr "Opzioni di disegno"
+msgstr "Disegno linea"
 
 #: app/gui/stroke-dialog.c:192
-#, fuzzy
 msgid "Stroke With a Paint Tool"
 msgstr "Disegno con uno strumento"
 
@@ -7486,9 +7303,8 @@ msgid "Airbrush with variable pressure"
 msgstr "Aerografo con pressione variabile"
 
 #: app/tools/gimpairbrushtool.c:58
-#, fuzzy
 msgid "_Airbrush"
-msgstr "Aerografo"
+msgstr "_Aerografo"
 
 #: app/tools/gimpairbrushtool.c:124 app/tools/gimpconvolvetool.c:239
 #: app/tools/gimpsmudgetool.c:125
@@ -7533,13 +7349,12 @@ msgid "Fill with a color gradient"
 msgstr "Riempi con un gradiente di colore"
 
 #: app/tools/gimpblendtool.c:102
-#, fuzzy
 msgid "Blen_d"
-msgstr "Sfumatura"
+msgstr "S_fumatura"
 
 #: app/tools/gimpblendtool.c:190
 msgid "Blend: Invalid for indexed images."
-msgstr "Sfumatura: non valida per immagini in colore indicizzato"
+msgstr "Sfumatura: non valida per immagini indicizzate."
 
 #. initialize the statusbar display
 #: app/tools/gimpblendtool.c:208 app/tools/gimpblendtool.c:332
@@ -7555,9 +7370,8 @@ msgid "Adjust brightness and contrast"
 msgstr "Regola luminosità e contrasto"
 
 #: app/tools/gimpbrightnesscontrasttool.c:87
-#, fuzzy
 msgid "B_rightness-Contrast..."
-msgstr "Liminosità-Contrasto"
+msgstr "Luminosità-Cont_rasto..."
 
 #: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
@@ -9781,7 +9595,7 @@ msgstr "[ immagine base ]"
 
 #: app/widgets/gimpundoeditor.c:403
 msgid "Really clear image's undo history?"
-msgstr ""
+msgstr "Sicuro di voler cancellare tutti gli annullamenti?"
 
 #: app/widgets/gimpvectorstreeview.c:131
 #, c-format
@@ -10002,7 +9816,7 @@ msgstr "Finestra utilità"
 
 #: app/widgets/widgets-enums.c:138
 msgid "Keep Above"
-msgstr ""
+msgstr "Mantieni sopra"
 
 #: app/xcf/xcf-load.c:297
 msgid ""
