@@ -67,7 +67,7 @@ ico_read_int32 (FILE     *fp,
   total = count;
   if (count > 0)
     {
-      ico_read_int8 (fp, (guint8*) data, count * 4);
+      ico_read_int8 (fp, (guint8 *) data, count * 4);
       for (i = 0; i < count; i++)
 	data[i] = GUINT32_FROM_LE (data[i]);
     }
@@ -86,7 +86,7 @@ ico_read_int16 (FILE     *fp,
   total = count;
   if (count > 0)
     {
-      ico_read_int8 (fp, (guint8*) data, count * 2);
+      ico_read_int8 (fp, (guint8 *) data, count * 2);
       for (i = 0; i < count; i++)
 	data[i] = GUINT16_FROM_LE (data[i]);
     }
@@ -227,7 +227,8 @@ ico_read_data (MsIcon *ico,
 	 data->used_clrs, data->bpp));
 
       data->palette = g_new0 (guint32, data->used_clrs);
-      ico->cp += ico_read_int8 (ico->fp, data->palette, data->used_clrs * 4);
+      ico->cp += ico_read_int8 (ico->fp,
+                                (guint8 *) data->palette, data->used_clrs * 4);
     }
 
   data->xor_map = ico_alloc_map (entry->width, entry->height,

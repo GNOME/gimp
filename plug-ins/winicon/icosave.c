@@ -72,7 +72,7 @@ ico_write_int32 (FILE     *fp,
         data[i] = GUINT32_FROM_LE (data[i]);
 #endif
 
-      ico_write_int8 (fp, (guint8*) data, count * 4);
+      ico_write_int8 (fp, (guint8 *) data, count * 4);
 
 #if (G_BYTE_ORDER == G_BIG_ENDIAN)
       /* Put it back like we found it */
@@ -102,7 +102,7 @@ ico_write_int16 (FILE     *fp,
         data[i] = GUINT16_FROM_LE (data[i]);
 #endif
 
-      ico_write_int8 (fp, (guint8*) data, count * 2);
+      ico_write_int8 (fp, (guint8 *) data, count * 2);
 
 #if (G_BYTE_ORDER == G_BIG_ENDIAN)
       /* Put it back like we found it */
@@ -382,7 +382,7 @@ ico_create_palette(guchar *cmap,
 	}
     }
 
-  return (guint32*) palette;
+  return (guint32 *) palette;
 }
 
 
@@ -398,7 +398,7 @@ ico_create_color_to_palette_map (guint32 *palette,
   for (i = 0; i < num_colors; i++)
     {
       gint *color, *slot;
-      guint8 *pixel = (guint8*) &palette[i];
+      guint8 *pixel = (guint8 *) &palette[i];
 
       color = g_new (gint, 1);
       slot = g_new (gint, 1);
@@ -483,7 +483,7 @@ ico_init_data (MsIcon *ico,
   /* Reduce colors in copy of image */
   ico_image_get_reduced_buf (layer, bpp, &num_colors_used,
                              &palette, &buffer, &buf_bpp);
-  buffer32 = (guint32*) buffer;
+  buffer32 = (guint32 *) buffer;
 
   /* Set up colormap and andmap when necessary: */
   if (bpp <= 8)
@@ -507,7 +507,7 @@ ico_init_data (MsIcon *ico,
   for (y = 0; y < entry->height; y++)
     for (x = 0; x < entry->width; x++)
       {
-	pixel = (guint8*) &buffer32[y * entry->width + x];
+	pixel = (guint8 *) &buffer32[y * entry->width + x];
 
 	ico_set_bit_in_data (data->and_map, entry->width,
                              (entry->height-y-1) * entry->width + x,
@@ -524,7 +524,7 @@ ico_init_data (MsIcon *ico,
       for (y = 0; y < entry->height; y++)
 	for (x = 0; x < entry->width; x++)
 	  {
-	    pixel = (guint8*) &buffer32[y * entry->width + x];
+	    pixel = (guint8 *) &buffer32[y * entry->width + x];
 	    palette_index = ico_get_palette_index (color_to_slot,
                                                    pixel[0], pixel[1], pixel[2]);
 
@@ -548,7 +548,7 @@ ico_init_data (MsIcon *ico,
       for (y = 0; y < entry->height; y++)
 	for (x = 0; x < entry->width; x++)
 	  {
-	    pixel = (guint8*) &buffer32[y * entry->width + x];
+	    pixel = (guint8 *) &buffer32[y * entry->width + x];
 	    palette_index = ico_get_palette_index(color_to_slot,
                                                   pixel[0], pixel[1], pixel[2]);
 
@@ -572,9 +572,11 @@ ico_init_data (MsIcon *ico,
       for (y = 0; y < entry->height; y++)
 	for (x = 0; x < entry->width; x++)
 	  {
-	    pixel = (guint8*) &buffer32[y * entry->width + x];
+	    pixel = (guint8 *) &buffer32[y * entry->width + x];
 	    palette_index = ico_get_palette_index (color_to_slot,
-                                                   pixel[0], pixel[1], pixel[2]);
+                                                   pixel[0],
+                                                   pixel[1],
+                                                   pixel[2]);
 
 	    if (ico_get_bit_from_data (data->and_map, entry->width,
                                        (entry->height-y-1) * entry->width + x))
@@ -597,10 +599,13 @@ ico_init_data (MsIcon *ico,
       for (y = 0; y < entry->height; y++)
 	for (x = 0; x < entry->width; x++)
 	  {
-	    pixel = (guint8*) &buffer32[y * entry->width + x];
+	    pixel = (guint8 *) &buffer32[y * entry->width + x];
 
-	    ((guint32*) data->xor_map)[(entry->height-y-1) * entry->width + x] =
-	      GUINT32_TO_LE((pixel[0] << 16) | (pixel[1] << 8) | pixel[2] | (pixel[3] << 24));
+	    ((guint32 *) data->xor_map)[(entry->height-y-1) * entry->width + x] =
+	      GUINT32_TO_LE ((pixel[0] << 16) |
+                             (pixel[1] << 8)  |
+                             (pixel[2])       |
+                             (pixel[3] << 24));
 	  }
     }
 
@@ -685,7 +690,7 @@ ico_save (MsIcon *ico)
     {
       entry = &ico->icon_dir[i];
 
-      ico->cp += ico_write_int8 (ico->fp, (guint8*) entry, 4);
+      ico->cp += ico_write_int8 (ico->fp, (guint8 *) entry, 4);
       ico->cp += ico_write_int16 (ico->fp, &entry->num_planes, 2);
       ico->cp += ico_write_int32 (ico->fp, &entry->size, 2);
     }
@@ -694,13 +699,13 @@ ico_save (MsIcon *ico)
     {
       data  = &ico->icon_data[i];
 
-      ico->cp += ico_write_int32 (ico->fp, (guint32*) data, 3);
+      ico->cp += ico_write_int32 (ico->fp, (guint32 *) data, 3);
       ico->cp += ico_write_int16 (ico->fp, &data->planes, 2);
       ico->cp += ico_write_int32 (ico->fp, &data->compression, 6);
 
       if (data->palette)
         ico->cp += ico_write_int8 (ico->fp,
-                                    data->palette, data->palette_len);
+                                   (guint8 *) data->palette, data->palette_len);
 
       ico->cp += ico_write_int8 (ico->fp, data->xor_map, data->xor_len);
       ico->cp += ico_write_int8 (ico->fp, data->and_map, data->and_len);

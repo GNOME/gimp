@@ -1,5 +1,11 @@
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icoload.c
+	* plug-ins/winicon/icosave.c: added explicit casts to please the
+	compiler.
+
+2004-07-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gimpressionist/Makefile.am (gimpressionist_sources):
 	added paper.h.
 
