@@ -1,5 +1,9 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/newsprint.c: removed an unused variable.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/user-install-dialog.c: when migrating the user
 	settings, tolerate errors and create the tmp directory that was
 	explicitely not copied.

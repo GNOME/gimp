@@ -1162,7 +1162,6 @@ newsprint_dialog (GimpDrawable *drawable)
   GtkWidget *paned;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *frame;
   GtkWidget *table;
