@@ -813,9 +813,7 @@ gimp_context_finalize (GObject *object)
 {
   GimpContext *context = GIMP_CONTEXT (object);
 
-  if (context->parent)
-    gimp_context_set_parent (context, NULL);
-
+  context->parent  = NULL;
   context->image   = NULL;
   context->display = NULL;
 

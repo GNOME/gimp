@@ -1,5 +1,11 @@
 2003-11-19  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontext.c (gimp_context_finalize): don't disconnect
+	gimp_context_parent_notify() here. The signal will be disconnected
+	automatically anyway.
+
+2003-11-19  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c (app_run): register a log handler for the
 	"Gimp-Vectors" domain.
 
