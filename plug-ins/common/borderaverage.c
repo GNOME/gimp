@@ -1,4 +1,4 @@
-/* borderaverage 0.01 - image processing plug-in for the Gimp 1.0 API
+/* borderaverage 0.01 - image processing plug-in for the Gimp.
  *
  * Copyright (C) 1998 Philipp Klaus (webmaster@access.ch)
  *
@@ -39,13 +39,16 @@ static void      run    (const gchar      *name,
 static void      borderaverage (GimpDrawable *drawable,
                                 GimpRGB      *result);
 
-static gboolean  borderaverage_dialog (void);
+static gboolean  borderaverage_dialog (gint32 	    image_ID,
+				       GimpDrawable *drawable);
 
 static void      add_new_color (gint          bytes,
                                 const guchar *buffer,
                                 gint   	     *cube,
                                 gint          bucket_expo);
 
+static void      thickness_callback (GtkWidget    *widget,
+				     gpointer       data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -114,6 +117,7 @@ run (const gchar      *name,
 {
   static GimpParam   values[3];
   GimpDrawable      *drawable;
+  gint32             image_ID;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRGB            result_color;
   GimpRunMode        run_mode;
@@ -121,6 +125,7 @@ run (const gchar      *name,
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
+  image_ID = param[1].data.d_int32;
 
   /*    Get the specified drawable      */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
@@ -131,7 +136,7 @@ run (const gchar      *name,
       gimp_get_data ("plug_in_borderaverage", &borderaverage_data);
       borderaverage_thickness       = borderaverage_data.thickness;
       borderaverage_bucket_exponent = borderaverage_data.bucket_exponent;
-      if (! borderaverage_dialog ())
+      if (! borderaverage_dialog (image_ID, drawable))
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
@@ -320,18 +325,20 @@ add_new_color (gint    	     bytes,
 }
 
 static gboolean
-borderaverage_dialog (void)
+borderaverage_dialog (gint32 	    image_ID,
+		      GimpDrawable *drawable)
 {
   GtkWidget    *dlg;
   GtkWidget    *frame;
   GtkWidget    *vbox;
   GtkWidget    *hbox;
   GtkWidget    *label;
-  GtkWidget    *spinbutton;
+  GtkWidget    *size_entry;
+  GimpUnit      unit;
   GtkWidget    *combo;
   GtkSizeGroup *group;
-  GtkObject    *adj;
   gboolean      run;
+  gdouble    	xres, yres;
 
   const gchar *labels[] =
     { "1", "2", "4", "8", "16", "32", "64", "128", "256" };
@@ -369,15 +376,31 @@ borderaverage_dialog (void)
   gtk_size_group_add_widget (group, label);
   g_object_unref (group);
 
-  spinbutton = gimp_spin_button_new (&adj, borderaverage_thickness,
-                                     0, 256, 1, 5, 0, 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
+  /*  Get the image resolution and unit  */
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+  unit = gimp_image_get_unit (image_ID);
 
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update),
-                    &borderaverage_thickness);
+  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, TRUE, FALSE, 4,
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE);
+  gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
+
+  /*  set the size (in pixels) that will be treated as 0% and 100%  */
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_entry), 0, 0.0, 
+			    drawable->width);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
+                                         1.0, 256.0);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
+  gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
+                              (gdouble) borderaverage_thickness);
+  g_signal_connect (size_entry, "value_changed",
+                    G_CALLBACK (thickness_callback),
+                    NULL);
+  gtk_widget_show (size_entry);
 
   frame = gimp_frame_new (_("Number of Colors"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
@@ -413,4 +436,12 @@ borderaverage_dialog (void)
   gtk_widget_destroy (dlg);
 
   return run;
+}
+
+static void
+thickness_callback (GtkWidget *widget,
+		    gpointer   data)
+{
+  borderaverage_thickness = 
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }

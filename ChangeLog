@@ -1,3 +1,8 @@
+2004-09-28  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/common/borderaverage.c: added size entry. Fixes #143156
+	(Use size entry widget in Borderaverage plug-in)
+
 2004-09-28  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimp.1.in: updated name of the splash image.
