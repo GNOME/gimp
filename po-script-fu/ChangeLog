@@ -1,3 +1,7 @@
+2004-12-31  Sven Neumann  <sven@gimp.org>
+
+	* es.po: fixed broken menu path translation (bug #162590).
+
 2004-12-22  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed asc2img.scm.
