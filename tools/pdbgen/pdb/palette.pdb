@@ -302,10 +302,10 @@ CODE
 }
 	
 sub palette_get_entry {
-    $blurb = 'Gets the specified palette entry from the currently active pallette.';
+    $blurb = 'Gets the specified palette entry from the currently active palette.';
 
     $help = <<'HELP';
-This procedure returns the color of the zero-based entry specifed for the current palette.
+This procedure retrieves the color of the zero-based entry specifed for the current palette.
 It returns an error if the entry does not exist.
 HELP
 
@@ -319,7 +319,7 @@ HELP
           alias => 'entry'}
     );
     @outargs = (
-        { name => 'color', type => 'color',
+        { name => 'color', type => 'color', void_ret => 1,
           desc => 'The color requested',
           alias => 'color'}
     );
@@ -332,13 +332,14 @@ HELP
 
   palette = gimp_context_get_palette (gimp_get_current_context(gimp));
 
-  if (entry >= palette->n_colors) {
-    success = FALSE;
-  }
+  if (entry < 0 || entry >= palette->n_colors) 
+    {
+      success = FALSE;
+    }
   else
-  {
-    color=*(GimpRGB *) g_list_nth(palette->colors, entry)->data;
-  }
+    {
+      color=*(GimpRGB *) g_list_nth(palette->colors, entry)->data;
+    }
 }
 CODE
     );

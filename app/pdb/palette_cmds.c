@@ -492,13 +492,14 @@ palette_get_entry_invoker (Gimp     *gimp,
 
   palette = gimp_context_get_palette (gimp_get_current_context(gimp));
 
-  if (entry >= palette->n_colors) {
-    success = FALSE;
-  }
+  if (entry < 0 || entry >= palette->n_colors) 
+    {
+      success = FALSE;
+    }
   else
-  {
-    color=*(GimpRGB *) g_list_nth(palette->colors, entry)->data;
-  }
+    {
+      color=*(GimpRGB *) g_list_nth(palette->colors, entry)->data;
+    }
 
   return_args = procedural_db_return_args (&palette_get_entry_proc, success);
 
@@ -529,8 +530,8 @@ static ProcArg palette_get_entry_outargs[] =
 static ProcRecord palette_get_entry_proc =
 {
   "gimp_palette_get_entry",
-  "Gets the specified palette entry from the currently active pallette.",
-  "This procedure returns the color of the zero-based entry specifed for the current palette. It returns an error if the entry does not exist.",
+  "Gets the specified palette entry from the currently active palette.",
+  "This procedure retrieves the color of the zero-based entry specifed for the current palette. It returns an error if the entry does not exist.",
   "Nathan Summers <rock@gimp.org>",
   "Nathan Summers",
   "2001",

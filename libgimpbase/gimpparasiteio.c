@@ -161,8 +161,8 @@ gimp_pixpipe_params_build (GimpPixPipeParams *params)
 
   for (i = 0; i < params->dim; i++)
     {
-      g_string_printfa (s, " rank%d:%d", i, params->rank[i]);
-      g_string_printfa (s, " sel%d:%s", i, params->selection[i]);
+      g_string_append_printf (s, " rank%d:%d", i, params->rank[i]);
+      g_string_append_printf (s, " sel%d:%s", i, params->selection[i]);
     }
 
   str = s->str;

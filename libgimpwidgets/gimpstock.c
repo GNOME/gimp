@@ -48,7 +48,7 @@ sized_with_same_fallback_icon_set_from_inline (const guchar *inline_data,
   gtk_icon_source_set_size (source, size);
   gtk_icon_source_set_size_wildcarded (source, FALSE);
 
-  pixbuf = gdk_pixbuf_new_from_stream (-1, inline_data, FALSE, NULL);
+  pixbuf = gdk_pixbuf_new_from_inline (-1, inline_data, FALSE, NULL);
 
   g_assert (pixbuf);
 

@@ -221,7 +221,7 @@ gimp_gradient_select_widget (gchar                   *dname,
   /* Do initial gradient setup */
   gradient_name = 
     gimp_gradients_get_gradient_data (igradient, 
-                                      &width, CELL_SIZE_WIDTH, 
+                                      CELL_SIZE_WIDTH, &width,
                                       &grad_data);
 
   if (gradient_name)
@@ -273,7 +273,7 @@ gimp_gradient_select_widget_set_popup (GtkWidget *widget,
     {
       gradient_name = 
 	gimp_gradients_get_gradient_data (gname, 
-                                          &width, gsel->sample_size, 
+                                          gsel->sample_size, &width,
                                           &grad_data);
   
       if (gradient_name)

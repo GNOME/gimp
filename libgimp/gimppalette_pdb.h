@@ -41,7 +41,8 @@ gboolean gimp_palette_refresh            (void);
 gchar**  gimp_palette_list               (gint    *num_palettes);
 gchar*   gimp_palette_get_palette        (gint    *num_colors);
 gboolean gimp_palette_set_palette        (gchar   *name);
-GimpRGB* gimp_palette_get_entry          (gint     entry_num);
+gboolean gimp_palette_get_entry          (gint     entry_num,
+					  GimpRGB *color);
 
 
 #ifdef __cplusplus

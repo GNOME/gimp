@@ -347,35 +347,35 @@ gimp_palette_set_palette (gchar *name)
 /**
  * gimp_palette_get_entry:
  * @entry_num: The entry to retrieve.
+ * @color: The color requested.
  *
- * Gets the specified palette entry from the currently active pallette.
+ * Gets the specified palette entry from the currently active palette.
  *
- * This procedure returns the color of the zero-based entry specifed
+ * This procedure retrieves the color of the zero-based entry specifed
  * for the current palette. It returns an error if the entry does not
  * exist.
  *
- * Returns: The color requested.
+ * Returns: TRUE on success.
  */
-GimpRGB *
-gimp_palette_get_entry (gint entry_num)
+gboolean
+gimp_palette_get_entry (gint     entry_num,
+			GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  GimpRGB *color = 0;
+  gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp_palette_get_entry",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, entry_num,
 				    GIMP_PDB_END);
 
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-  {
-    color = g_new(GimpRGB, 1);
-    
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
     *color = return_vals[1].data.d_color;
-  }
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return color;
+  return success;
 }
