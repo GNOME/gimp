@@ -134,10 +134,11 @@ gimp_image_pick_color (GimpImage     *gimage,
                          col[BLUE_PIX],
                          col[ALPHA_PIX]);
   else
-    gimp_rgb_set_uchar (&rgb_color,
-                        col[RED_PIX],
-                        col[GREEN_PIX],
-                        col[BLUE_PIX]);
+    gimp_rgba_set_uchar (&rgb_color,
+                         col[RED_PIX],
+                         col[GREEN_PIX],
+                         col[BLUE_PIX],
+                         OPAQUE_OPACITY);
 
   g_free (col);
 

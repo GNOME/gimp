@@ -1,3 +1,14 @@
+2002-06-20  Michael Natterer  <mitch@gimp.org>
+
+	Fixed color picking (reported by jimmac on #gimp):
+
+	* app/core/gimpimage-pick-color.c: set the returned color's alpha
+	value to opaque if the drawable we pick from has no aplha.
+
+	* app/tools/gimpcolorpickertool.c: ignore all values returned by
+	gimp_image_pick_color() if it returns FALSE (which happens if we
+	want to pick outside the drawable).
+
 2002-06-19  Michael Natterer  <mitch@gimp.org>
 
 	Fix for #85202:

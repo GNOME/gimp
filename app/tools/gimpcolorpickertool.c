@@ -532,44 +532,48 @@ gimp_color_picker_tool_pick_color (GimpImage            *gimage,
 {
   GimpRGB  color;
   gint     color_index;
-  gboolean retval;
-  guchar   r, g, b, a;
+  gboolean success;
 
-  retval = gimp_image_pick_color (gimage,
-                                  drawable,
-                                  sample_merged,
-                                  x, y,
-                                  sample_average,
-                                  average_radius,
-                                  &color,
-                                  &sample_type,
-                                  &color_index);
+  success = gimp_image_pick_color (gimage,
+                                   drawable,
+                                   sample_merged,
+                                   x, y,
+                                   sample_average,
+                                   average_radius,
+                                   &color,
+                                   &sample_type,
+                                   &color_index);
 
-  gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
-
-  col_value[RED_PIX]   = r;
-  col_value[GREEN_PIX] = g;
-  col_value[BLUE_PIX]  = b;
-  col_value[ALPHA_PIX] = a;
-  col_value[4]         = color_index;
-
-  if (update_active)
+  if (success)
     {
-      GimpContext *user_context;
+      guchar r, g, b, a;
 
-      user_context = gimp_get_user_context (gimage->gimp);
+      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
+
+      col_value[RED_PIX]   = r;
+      col_value[GREEN_PIX] = g;
+      col_value[BLUE_PIX]  = b;
+      col_value[ALPHA_PIX] = a;
+      col_value[4]         = color_index;
+
+      if (update_active)
+        {
+          GimpContext *user_context;
+
+          user_context = gimp_get_user_context (gimage->gimp);
 
 #if 0
-      gimp_palette_editor_update_color (user_context, &color, update_state);
+          gimp_palette_editor_update_color (user_context, &color, update_state);
 #endif
 
-      if (active_color == FOREGROUND)
-        gimp_context_set_foreground (user_context, &color);
-      else if (active_color == BACKGROUND)
-        gimp_context_set_background (user_context, &color);
+          if (active_color == FOREGROUND)
+            gimp_context_set_foreground (user_context, &color);
+          else if (active_color == BACKGROUND)
+            gimp_context_set_background (user_context, &color);
+        }
     }
 
-  return retval;
+  return success;
 }
 
 static void
