@@ -482,6 +482,7 @@ gimp_text_layer_set (GimpTextLayer *layer,
 {
   GimpImage *image;
   GimpText  *text;
+  gboolean   undo_group;
   va_list    var_args;
 
   g_return_if_fail (gimp_drawable_is_text_layer ((GimpDrawable *) layer));
@@ -495,7 +496,8 @@ gimp_text_layer_set (GimpTextLayer *layer,
   /*  If the layer contains a mask,
    *  gimp_text_layer_render() might have to resize it.
    */
-  if (GIMP_LAYER (layer)->mask)
+  undo_group = ((GIMP_LAYER (layer)->mask != NULL) || layer->modified);
+  if (undo_group)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, undo_desc);
 
   gimp_image_undo_push_text_layer (image, undo_desc, layer);
@@ -506,7 +508,7 @@ gimp_text_layer_set (GimpTextLayer *layer,
 
   va_end (var_args);
 
-  if (GIMP_LAYER (layer)->mask)
+  if (undo_group)
     gimp_image_undo_group_end (image);
 }
 

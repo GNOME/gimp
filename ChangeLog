@@ -1,3 +1,10 @@
+2004-03-20  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimptextlayer.c (gimp_text_layer_set): use the same
+	undo group logic as in the text tool. Not really necessary since
+	this function must not be called on modified text layers, but it's
+	more consistent this way.
+
 2004-03-20  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: Assigned "b" as the default shortcut
