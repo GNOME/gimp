@@ -1,3 +1,11 @@
+2003-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpscanner.c (gimp_scanner_parse_int): handle
+	negative integers.
+
+	(gimp_scanner_parse_string[no_validate]): return NULL for empty
+	strings (don't simply leave the return location untouched).
+
 2003-02-03  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-deserialize.c

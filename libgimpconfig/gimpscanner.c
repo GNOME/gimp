@@ -149,6 +149,10 @@ gimp_scanner_parse_string (GScanner  *scanner,
       
       *dest = g_strdup (scanner->value.v_string);
     }
+  else
+    {
+      *dest = NULL;
+    }
 
   return TRUE;
 }
@@ -164,6 +168,8 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
 
   if (*scanner->value.v_string)
     *dest = g_strdup (scanner->value.v_string);
+  else
+    *dest = NULL;
 
   return TRUE;
 }
@@ -172,12 +178,23 @@ gboolean
 gimp_scanner_parse_int (GScanner *scanner,
                         gint     *dest)
 {
+  gboolean negate = FALSE;
+
+  if (g_scanner_peek_next_token (scanner) == '-')
+    {
+      negate = TRUE;
+      g_scanner_get_next_token (scanner);
+    }
+
   if (g_scanner_peek_next_token (scanner) != G_TOKEN_INT)
     return FALSE;
 
   g_scanner_get_next_token (scanner);
 
-  *dest = scanner->value.v_int;
+  if (negate)
+    *dest = -scanner->value.v_int;
+  else
+    *dest = scanner->value.v_int;
 
   return TRUE;
 }
