@@ -186,7 +186,8 @@ load_image (const gchar       *filename,
       putenv ("LANG=C");
 #endif
 
-      execlp ("wget", "wget", "-T", TIMEOUT, filename, "-O", tmpname, NULL);
+      execlp ("wget", "wget", "-e", "server-response=off", "-T", TIMEOUT,
+              filename, "-O", tmpname, NULL);
       g_message ("exec() failed: wget: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
