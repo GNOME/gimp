@@ -22,7 +22,7 @@
 
   <tip level="start">
     <_welcome>
-      <big>Welcome to the GIMP!</big>
+      <big>Welcome to the GNU Image Manipulation Program!</big>
     </_welcome>
     <_thetip>
       The GIMP can undo most changes to the image, so feel free

@@ -1,3 +1,10 @@
+2005-02-02  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (tips_POFILES): sort alphabetically.
+
+	* gimp-tips.xml.in: expand the GIMP acronym in the welcome
+	message.
+
 2005-01-28  Jordi Mallach  <jordi@sindominio.net>
 
 	* ca.po: Updated Catalan translation by
