@@ -2408,15 +2408,15 @@ msgstr "Випадков╕сть %:"
 
 #: plug-ins/common/blur.c:658 plug-ins/common/randomize.c:747
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "Ф╕дсоток п╕ксел╕в, що ф╕льтру╓ться"
 
 #: plug-ins/common/blur.c:667 plug-ins/common/randomize.c:756
 msgid "Repeat:"
-msgstr ""
+msgstr "Повтор╕в:"
 
 #: plug-ins/common/blur.c:670 plug-ins/common/randomize.c:759
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "Ск╕льки раз╕в застосувати ф╕льтр"
 
 #: plug-ins/common/borderaverage.c:105
 msgid "<Image>/Filters/Colors/Border Average..."
@@ -2599,7 +2599,7 @@ msgstr "З:"
 
 #: plug-ins/common/colortoalpha.c:430
 msgid "Color to Alpha Color Picker"
-msgstr ""
+msgstr "Кол╕р у альфа: зм╕на кольору"
 
 #: plug-ins/common/colortoalpha.c:438
 msgid "to Alpha"
@@ -2785,15 +2785,15 @@ msgstr "Зм╕щення:"
 #: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2679
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
-msgstr ""
+msgstr "Автоматично"
 
 #: plug-ins/common/convmatrix.c:908
 msgid "Alpha-weighting"
-msgstr ""
+msgstr "Альфа-зважування"
 
 #: plug-ins/common/convmatrix.c:923
 msgid "Border"
-msgstr ""
+msgstr "Рамка"
 
 #: plug-ins/common/convmatrix.c:948
 msgid "Channels"
@@ -2934,11 +2934,11 @@ msgstr "Зберегти криву"
 #. Rotate label & spinbutton
 #: plug-ins/common/curve_bend.c:1402
 msgid "Rotate: "
-msgstr ""
+msgstr "Обертання: "
 
 #: plug-ins/common/curve_bend.c:1420
 msgid "Curve for Border: "
-msgstr ""
+msgstr "Крива для облям╕вки: "
 
 #. The option menu for selecting the drawing method
 #: plug-ins/common/curve_bend.c:1433
@@ -2948,7 +2948,7 @@ msgstr "Тип криво╖: "
 #. The preview button
 #: plug-ins/common/curve_bend.c:1494
 msgid "PreviewOnce"
-msgstr ""
+msgstr "Перегляд"
 
 #. The smoothing toggle
 #: plug-ins/common/curve_bend.c:1513
@@ -3124,15 +3124,15 @@ msgstr "Джерело 2:"
 
 #: plug-ins/common/depthmerge.c:765
 msgid "Overlap:"
-msgstr ""
+msgstr "Перекриття:"
 
 #: plug-ins/common/depthmerge.c:785
 msgid "Scale 1:"
-msgstr ""
+msgstr "Масштаб 1:"
 
 #: plug-ins/common/depthmerge.c:795
 msgid "Scale 2:"
-msgstr ""
+msgstr "Масштаб 2:"
 
 #: plug-ins/common/despeckle.c:181
 msgid "<Image>/Filters/Enhance/Despeckle..."
@@ -8007,16 +8007,16 @@ msgstr ""
 #: plug-ins/gap/gap_lib.c:2231
 #, c-format
 msgid "Exchange current Frame (%ld)"
-msgstr ""
+msgstr "Зм╕нити поточний кадр (%ld)"
 
 #: plug-ins/gap/gap_lib.c:2235
 msgid "With Frame (number)"
-msgstr ""
+msgstr "З кадру (число)"
 
 #: plug-ins/gap/gap_lib.c:2277
 #, c-format
 msgid "Framesequence Shift (%ld/%ld)"
-msgstr ""
+msgstr "Зсув посл╕довност╕ кадр╕в (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2287
 msgid "Affected Range starts at this framenumber"
@@ -8038,7 +8038,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_lib.c:2305
 msgid "Framesequence shift"
-msgstr ""
+msgstr "Зсув посл╕довност╕ кадр╕в"
 
 #: plug-ins/gap/gap_main.c:374
 msgid "<Image>/Video/Goto/Next Frame"
