@@ -185,9 +185,10 @@ gimp_display_shell_events (GtkWidget        *widget,
 
   if (set_display)
     {
+      Gimp *gimp = shell->gdisp->gimage->gimp;
+
       /*  Setting the context's display automatically sets the image, too  */
-      gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
-				shell->gdisp);
+      gimp_context_set_display (gimp_get_user_context (gimp), shell->gdisp);
     }
 
   return FALSE;
@@ -639,7 +640,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                       }
 
                     tool_manager_button_release_active (gimp,
-                                                        &image_coords, time, state,
+                                                        &image_coords,
+                                                        time, state,
                                                         gdisp);
                   }
               }
@@ -771,14 +773,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (compressed_motion)
           {
-            g_print ("gimp_display_shell_compress_motion() returned an event\n");
+            GdkDevice *device = gimp_devices_get_current (gimp);
 
             gimp_display_shell_get_event_coords (shell, compressed_motion,
-                                                 gimp_devices_get_current (gimp),
-                                                 &display_coords);
+                                                 device, &display_coords);
             gimp_display_shell_get_event_state (shell, compressed_motion,
-                                                gimp_devices_get_current (gimp),
-                                                &state);
+                                                device, &state);
             time = gdk_event_get_time (event);
 
             /*  GimpCoords passed to tools are ALWAYS in image coordinates  */
@@ -887,7 +887,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
           }
 
-        if (! (state & (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
+        if (! (state &
+               (GDK_BUTTON1_MASK | GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)))
           {
             tool_manager_oper_update_active (gimp,
                                              &image_coords, state,

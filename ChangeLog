@@ -1,5 +1,9 @@
 2003-02-26  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c: removed debugging output.
+
+2003-02-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdata.[ch]: added a writeable field to GimpData and
 	set it from gimp_data_set_filename().
 
