@@ -1,5 +1,12 @@
 2000-12-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpunitmenu.c (gimp_unit_menu_new): set empty menu_items
+	used as separators insensitive. Something seems to be wrong in GTK+
+	when it comes to separators in option_menus. This change seems to 
+	work around this problem.
+
+2000-12-03  Sven Neumann  <sven@gimp.org>
+
 	* PLUGIN_MAINTAINERS: changed email address of Wolfgang Hofer
 	
 	* plug-ins/gap/README

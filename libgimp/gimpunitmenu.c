@@ -195,6 +195,7 @@ gimp_unit_menu_new (const gchar *format,
 	    {
 	      menuitem = gtk_menu_item_new ();
 	      gtk_menu_append (GTK_MENU (menu), menuitem);
+	      gtk_widget_set_sensitive (menuitem, FALSE);
 	      gtk_widget_show (menuitem);
 	    }
 	}
@@ -215,6 +216,7 @@ gimp_unit_menu_new (const gchar *format,
     {
       menuitem = gtk_menu_item_new ();
       gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
       
       menuitem =
@@ -232,6 +234,7 @@ gimp_unit_menu_new (const gchar *format,
     {
       menuitem = gtk_menu_item_new ();
       gtk_menu_append (GTK_MENU (menu), menuitem);
+      gtk_widget_set_sensitive (menuitem, FALSE);
       gtk_widget_show (menuitem);
 
       menuitem =
@@ -573,9 +576,10 @@ gimp_unit_menu_create_selection (GimpUnitMenu *gum)
 
   if (gum->unit >= GIMP_UNIT_END)
     {
-      gtk_clist_select_row (GTK_CLIST (gum->clist), gum->unit - GIMP_UNIT_END, 0);
-      gtk_clist_moveto (GTK_CLIST (gum->clist), gum->unit - GIMP_UNIT_END,
-			0, 0.0, 0.0); 
+      gtk_clist_select_row (GTK_CLIST (gum->clist), 
+			    gum->unit - GIMP_UNIT_END, 0);
+      gtk_clist_moveto (GTK_CLIST (gum->clist), 
+			gum->unit - GIMP_UNIT_END, 0, 0.0, 0.0); 
     }
 }
 
