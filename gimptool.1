@@ -3,10 +3,13 @@
 gimptool - script to perform various Gimpy functions
 .SH SYNOPSIS
 .B gimptool
-[\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version] [\-\-libs] [\-\-cflags]
-[\-\-build \fIplug\-in.c\fP] [\-\-install \fIplug\-in.c\fP] [\-\-install-admin \fIplug-in.c\fP]
-[\-\-install\-bin \fIplug\-in\fP] [\-\-\install\-admin\-bin \fIplug\-in\fP]
-[\-\-install\-script \fIscript.scm\fP] [\-\-\install\-admin\-script \fIscript.scm\fP]
+[\-\-prefix\fI[=DIR]\fP] [\-\-exec\-prefix\fI[=DIR]\fP] [\-\-version]
+[\-\-help] [\-\-quiet] [\-\-silent] [\-n] [\-\-just-print] [\-\-dry-run] [\-\-recon]
+[\-\-libs] [\-\-libs-noui] [\-\-cflags] [\-\-cflags-noi] [\-\-build \fIplug\-in.c\fP]
+[\-\-install \fIplug\-in.c\fP]
+[\-\-install-admin \fIplug-in.c\fP] [\-\-install\-bin \fIplug\-in\fP] [
+[\-\-\install\-admin\-bin \fIplug\-in\fP] [\-\-install\-script \fIscript.scm\fP] 
+[\-\-\install\-admin\-script \fIscript.scm\fP]
 
 
 .SH DESCRIPTION
@@ -24,6 +27,28 @@ in Makefiles.
 .TP 8
 .B  \-\-version
 Print the currently installed version of \fIGimp\fP on the standard output.
+.TP 8
+.B \-\-help
+Print out the help blurb, showing commonly used commandline options.
+.TP 8
+.B \-\-quiet
+Run quietly without echoing any of the build commands.
+.TP 8
+.B \-\-silent
+Run silently without echoing any of the build commands. Same as \-\-quiet.
+.TP 8
+.B \-n
+Test mode. Print the commands but dont actually execute them. Useful for
+making dry runs for testing.
+.TP 8
+.B \-\-just-print
+Test mode. Print the commands but dont actually execute them. Same as \-n.
+.TP 8
+.B \-\-dry-run
+Test mode. Print the commands but dont actually execute them. Same as \-n.
+.TP 8
+.B \-\-recon
+Test mode. Print the commands but dont actually execute them. Same as \-n.
 .TP 8
 .B  \-\-build \fIplug-in.c\fP
 Compile and link \fIplug-in.c\fP into a \fIGimp\fP plug-in.
@@ -55,8 +80,16 @@ script directory (\fB$PREFIX\fP/share/gimp/scripts)
 .B  \-\-libs
 Print the linker flags that are necessary to link a \fIGimp\fP plug-in.
 .TP 8
+.B \-\-libs-noui
+Print the linker flags that are necessary to link a \fIGimp\fP plug-in, for
+plugins that do not require the GTK libs.
+.TP 8
 .B  \-\-cflags
 Print the compiler flags that are necessary to compile a \fIGimp\fP plug-in.
+.TP 8
+.B \-\-clags-noui
+Print the compiler flags that are necessary to compile a \fIGimp\fP plug-in
+for plugins that do not require the GTK libs.
 .TP 8
 .B  \-\-prefix=PREFIX
 If specified, use PREFIX instead of the installation prefix that \fIGimp\fP
@@ -82,11 +115,30 @@ to get the name of the desired C compiler.
 .TP 8
 .B CFLAGS
 to get the preferred flags to pass to the C compiler for plug-in building.
+.TP 8
+.B LDFLAGS
+to get the prefered flags for passing to the linker.
+.TP 8
+.B LIBS
+for passing extra libs that may be needed in the build process. For example,
+LIBS=-lintl .
+.TP 8
+.B GTK_CONFIG
+path to the gtk-config shell script used by gimptool and in the build
+process of many gtk apps.
 .SH SEE ALSO
 .BR gimp (1),
 .BR gtk-config (1)
+.SH AUTHORS
+gimptool was written by Manish Singh (yosh@gimp.org) and based on
+gtk-config by Owen Taylor (owen@gtk.org).
+
+This man page was written by Ben Gertzfield (che@debian.org), and
+tweaked by Manish Singh (yosh@gimp.org) and Adrian Likins (adrian@gimp.org).
+
+
 .SH COPYRIGHT
-Copyright \(co  1995 Spencer Kimball and Peter Mattis
+Copyright \(co  1998 Owen Taylor and Manish Singh
 
 Permission to use, copy, modify, and distribute this software and its
 documentation for any purpose and without fee is hereby granted,
