@@ -121,22 +121,25 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Must be interactive (1)" },
-    { GIMP_PDB_IMAGE, "image", "Input Image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Must be interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",    "Input Image"             },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"          }
   };
 
-  gimp_install_procedure("plug_in_the_old_egg",
-			 "A big hello from the GIMP team!",
-			 "Hay-ulp",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "1998",
-			 N_("<Image>/Filters/Toys/Gee-_Zoom"),
-			 "RGB*, INDEXED*, GRAY*",
-			 GIMP_PLUGIN,
-			 G_N_ELEMENTS (args), 0,
-			 args, NULL);
+  gimp_install_procedure ("plug_in_the_old_egg",
+                          "A big hello from the GIMP team!",
+                          "Hay-ulp",
+                          "Adam D. Moss <adam@gimp.org>",
+                          "Adam D. Moss <adam@gimp.org>",
+                          "1998",
+                          N_("Gee-_Zoom"),
+                          "RGB*, INDEXED*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_the_old_egg",
+                             N_("<Image>/Filters/Toys"));
 }
 
 static void
@@ -147,10 +150,10 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam  values[1];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
-  gr = g_rand_new();
+  gr = g_rand_new ();
 
   *nreturn_vals = 1;
   *return_vals = values;

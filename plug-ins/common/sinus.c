@@ -168,23 +168,23 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
 
-    { GIMP_PDB_FLOAT,    "xscale", "Scale value for x axis" },
-    { GIMP_PDB_FLOAT,    "yscale", "Scale value dor y axis" },
-    { GIMP_PDB_FLOAT,    "complex", "Complexity factor" },
-    { GIMP_PDB_INT32,    "seed", "Seed value for random number generator" },
-    { GIMP_PDB_INT32,    "tiling", "If set, the pattern generated will tile" },
-    { GIMP_PDB_INT32,    "perturb", "If set, the pattern is a little more distorted..." },
-    { GIMP_PDB_INT32,    "colors", "where to take the colors (0= B&W,  1= fg/bg, 2= col1/col2)"},
-    { GIMP_PDB_COLOR,    "col1", "fist color (sometimes unused)" },
-    { GIMP_PDB_COLOR,    "col2", "second color (sometimes unused)" },
-    { GIMP_PDB_FLOAT,    "alpha1", "alpha for the first color (used if the drawable has an alpha chanel)" },
-    { GIMP_PDB_FLOAT,    "alpha2", "alpha for the second color (used if the drawable has an alpha chanel)" },
-    { GIMP_PDB_INT32,    "blend", "0= linear, 1= bilinear, 2= sinusoidal" },
-    { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" },
+    { GIMP_PDB_FLOAT,    "xscale",      "Scale value for x axis" },
+    { GIMP_PDB_FLOAT,    "yscale",      "Scale value dor y axis" },
+    { GIMP_PDB_FLOAT,    "complex",     "Complexity factor" },
+    { GIMP_PDB_INT32,    "seed",        "Seed value for random number generator" },
+    { GIMP_PDB_INT32,    "tiling",      "If set, the pattern generated will tile" },
+    { GIMP_PDB_INT32,    "perturb",     "If set, the pattern is a little more distorted..." },
+    { GIMP_PDB_INT32,    "colors",      "where to take the colors (0= B&W,  1= fg/bg, 2= col1/col2)"},
+    { GIMP_PDB_COLOR,    "col1",        "fist color (sometimes unused)" },
+    { GIMP_PDB_COLOR,    "col2",        "second color (sometimes unused)" },
+    { GIMP_PDB_FLOAT,    "alpha1",      "alpha for the first color (used if the drawable has an alpha chanel)" },
+    { GIMP_PDB_FLOAT,    "alpha2",      "alpha for the second color (used if the drawable has an alpha chanel)" },
+    { GIMP_PDB_INT32,    "blend",       "0= linear, 1= bilinear, 2= sinusoidal" },
+    { GIMP_PDB_FLOAT,    "blend_power", "Power used to strech the blend" }
   };
 
   gimp_install_procedure ("plug_in_sinus",
@@ -193,11 +193,14 @@ query (void)
 			  "Xavier Bouchoux",
 			  "Xavier Bouchoux",
 			  "1997",
-			  N_("<Image>/Filters/Render/Pattern/_Sinus..."),
+			  N_("_Sinus..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_sinus",
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

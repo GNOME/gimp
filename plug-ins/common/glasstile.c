@@ -98,11 +98,11 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "tilex", "Tile width (10 - 50)" },
-    { GIMP_PDB_INT32, "tiley", "Tile height (10 - 50)" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               },
+    { GIMP_PDB_INT32,    "tilex",    "Tile width (10 - 50)"         },
+    { GIMP_PDB_INT32,    "tiley",    "Tile height (10 - 50)"        }
   };
 
   gimp_install_procedure ("plug_in_glasstile",
@@ -112,11 +112,14 @@ query (void)
                           "Karl-Johan Andersson", /* Author */
                           "Karl-Johan Andersson", /* Copyright */
                           "May 2000",
-                          N_("<Image>/Filters/Glass Effects/_Glass Tile..."),
+                          N_("_Glass Tile..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_glasstile",
+                             N_("<Image>/Filters/Glass Effects"));
 }
 
 static void

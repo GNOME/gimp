@@ -65,13 +65,14 @@ query ()
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (used for indexed images)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (used for indexed images)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
   gimp_install_procedure ("plug_in_vinvert",
-			  "Invert the 'value' component of an indexed/RGB image in HSV colorspace",
+			  "Invert the 'value' component of an indexed/RGB "
+                          "image in HSV colorspace",
 			  "This function takes an indexed/RGB image and "
 			  "inverts its 'value' in HSV space.  The upshot of "
 			  "this is that the color and saturation at any given "
@@ -82,11 +83,14 @@ query ()
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th March 1997",
-			  N_("<Image>/Filters/Colors/_Value Invert"),
+			  N_("_Value Invert"),
 			  "RGB*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_vinvert",
+                             N_("<Image>/Filters/Colors"));
 }
 
 static void

@@ -76,11 +76,14 @@ query (void)
                           "Adam D. Moss (adam@foxbox.org)",
                           "Adam D. Moss (adam@foxbox.org)",
                           "1998",
-                          N_("<Image>/Image/Transform/_Guillotine"),
+                          N_("_Guillotine"),
                           "RGB*, INDEXED*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_guillotine",
+                             N_("<Image>/Image/Transform"));
 }
 
 static void

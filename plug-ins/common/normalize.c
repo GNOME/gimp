@@ -68,8 +68,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -87,11 +87,14 @@ query (void)
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "Adam D. Moss, Federico Mena Quintero",
 			  "1997",
-			  N_("<Image>/Layer/Colors/Auto/_Normalize"),
+			  N_("_Normalize"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_normalize",
+                             N_("<Image>/Layer/Colors/Auto"));
 }
 
 static void

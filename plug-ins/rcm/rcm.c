@@ -103,11 +103,14 @@ query (void)
 			  "Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)",
 			  "Sven Anders (anderss@fmi.uni-passau.de)",
 			  "04th April 1999",
-			  N_("<Image>/Filters/Colors/Map/Colormap _Rotation..."),
+			  N_("Colormap _Rotation..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_rotate_colormap",
+                             N_("<Image>/Filters/Colors/Map"));
 }
 
 

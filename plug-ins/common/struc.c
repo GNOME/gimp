@@ -41,7 +41,10 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-static char sdata[] =
+#include "libgimp/stdplugins-intl.h"
+
+
+static const gchar sdata[] =
 {
   0, 5, -3, -13, 13, 10, -11, 6, -11, -14, 29, 43, -18, -40, 24, 4,
   -32, 26, 39, -34, -16, 25, -22, 12, 2, -40, 9, 46, -13, -47, 17, 19,
@@ -1069,8 +1072,6 @@ static char sdata[] =
   11, -4, 2, -14, -26, 3, 3, 2, 28, 13, -27, -18, 5, 5, 13, 0
 };
 
-#include "libgimp/stdplugins-intl.h"
-
 
 /* --- Typedefs --- */
 enum
@@ -1126,11 +1127,11 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "direction", "Light direction (0 - 3)" },
-    { GIMP_PDB_INT32, "depth", "Texture depth (1 - 50)" },
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
+    { GIMP_PDB_INT32,    "direction", "Light direction (0 - 3)"      },
+    { GIMP_PDB_INT32,    "depth",     "Texture depth (1 - 50)"       }
   };
 
   gimp_install_procedure ("plug_in_apply_canvas",
@@ -1139,11 +1140,14 @@ query (void)
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "1997",
-			  N_("<Image>/Filters/Artistic/_Apply Canvas..."),
+			  N_("_Apply Canvas..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_apply_canvas",
+                             N_("<Image>/Filters/Artistic"));
 }
 
 static void

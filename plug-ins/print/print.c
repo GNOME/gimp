@@ -161,11 +161,14 @@ query (void)
   gimp_install_procedure ("file_print_gimp",
 			  blurb, help, auth, copy,
 			  PLUG_IN_VERSION,
-			  N_("<Image>/File/Send/_Print..."),
+			  N_("_Print..."),
 			  types,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("file_print_gimp",
+                             N_("<Image>/File/Send"));
 }
 
 

@@ -3103,9 +3103,14 @@ query (void)
 			  "Vidar Madsen",
 			  "Vidar Madsen",
 			  "1999",
-			  N_("<Image>/Filters/Render/Sphere _Designer..."),
+			  N_("Sphere _Designer..."),
 			  "RGB*, GRAY*",
-			  GIMP_PLUGIN, G_N_ELEMENTS (args), 0, args, NULL);
+			  GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_spheredesigner",
+                             N_("<Image>/Filters/Render"));
 }
 
 static gboolean

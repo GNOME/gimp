@@ -89,10 +89,10 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "interactive / non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",     "input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",  "input drawable" },
-    { GIMP_PDB_INT32,    "division",  "the number of divisions" },
+    { GIMP_PDB_INT32,    "run_mode",  "interactive / non-interactive"    },
+    { GIMP_PDB_IMAGE,    "image",     "input image"                      },
+    { GIMP_PDB_DRAWABLE, "drawable",  "input drawable"                   },
+    { GIMP_PDB_INT32,    "division",  "the number of divisions"          },
     { GIMP_PDB_INT32,    "type",      "illusion type (0=type1, 1=type2)" }
   };
 
@@ -102,11 +102,14 @@ query (void)
                           "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
                           "Hirotsuna Mizuno",
                           PLUG_IN_VERSION,
-                          N_("<Image>/Filters/Map/_Illusion..."),
+                          N_("_Illusion..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Map"));
 }
 
 static void

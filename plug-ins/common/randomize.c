@@ -200,13 +200,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "rndm_pct", "Randomization percentage (1.0 - 100.0)" },
-    { GIMP_PDB_FLOAT, "rndm_rcount", "Repeat count (1.0 - 100.0)" },
-    { GIMP_PDB_INT32, "randomize", "Use random seed (TRUE, FALSE)" },
-    { GIMP_PDB_INT32, "seed", "Seed value (used only if randomize is FALSE)" }
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+    { GIMP_PDB_FLOAT,    "rndm_pct",    "Randomization percentage (1.0 - 100.0)" },
+    { GIMP_PDB_FLOAT,    "rndm_rcount", "Repeat count (1.0 - 100.0)" },
+    { GIMP_PDB_INT32,    "randomize",   "Use random seed (TRUE, FALSE)" },
+    { GIMP_PDB_INT32,    "seed",        "Seed value (used only if randomize is FALSE)" }
   };
 
   const gchar *hurl_blurb =
@@ -217,51 +217,63 @@ query (void)
     "Add a random factor to the image by slurring (similar to melting).";
 
   const gchar *hurl_help =
-    "This plug-in ``hurls'' randomly-valued pixels onto the selection or image.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+    "This plug-in ``hurls'' randomly-valued pixels onto the selection or "
+    "image.  You may select the percentage of pixels to modify and the number "
+    "of times to repeat the process.";
   const gchar *pick_help =
-    "This plug-in replaces a pixel with a random adjacent pixel.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+    "This plug-in replaces a pixel with a random adjacent pixel.  You may "
+    "select the percentage of pixels to modify and the number of times to "
+    "repeat the process.";
   const gchar *slur_help =
-    "This plug-in slurs (melts like a bunch of icicles) an image.  You may select the percentage of pixels to modify and the number of times to repeat the process.";
+    "This plug-in slurs (melts like a bunch of icicles) an image.  You may "
+    "select the percentage of pixels to modify and the number of times to "
+    "repeat the process.";
 
   const gchar *author = "Miles O'Neal  <meo@rru.com>";
-  const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen Norris, Daniel Cotting";
+  const gchar *copyrights = "Miles O'Neal, Spencer Kimball, Peter Mattis, "
+    "Torsten Martinsen, Brian Degenhardt, Federico Mena Quintero, Stephen "
+    "Norris, Daniel Cotting";
   const gchar *copyright_date = "1995-1998";
 
   gimp_install_procedure (PLUG_IN_NAME[0],
-			  (gchar *) hurl_blurb,
-			  (gchar *) hurl_help,
-			  (gchar *) author,
-			  (gchar *) copyrights,
-			  (gchar *) copyright_date,
-			  N_("<Image>/Filters/Noise/_Hurl..."),
+			  hurl_blurb,
+			  hurl_help,
+			  author,
+			  copyrights,
+			  copyright_date,
+			  N_("_Hurl..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[1],
-			  (gchar *) pick_blurb,
-			  (gchar *) pick_help,
-			  (gchar *) author,
-			  (gchar *) copyrights,
-			  (gchar *) copyright_date,
-			  N_("<Image>/Filters/Noise/_Pick..."),
+			  pick_blurb,
+			  pick_help,
+			  author,
+			  copyrights,
+			  copyright_date,
+			  N_("_Pick..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 
   gimp_install_procedure (PLUG_IN_NAME[2],
-			  (gchar *) slur_blurb,
-			  (gchar *) slur_help,
-			  (gchar *) author,
-			  (gchar *) copyrights,
-			  (gchar *) copyright_date,
-			  N_("<Image>/Filters/Noise/_Slur..."),
+			  slur_blurb,
+			  slur_help,
+			  author,
+			  copyrights,
+			  copyright_date,
+			  N_("_Slur..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME[0], N_("<Image>/Filters/Noise"));
+  gimp_plugin_menu_register (PLUG_IN_NAME[1], N_("<Image>/Filters/Noise"));
+  gimp_plugin_menu_register (PLUG_IN_NAME[2], N_("<Image>/Filters/Noise"));
 }
 
 /*********************************

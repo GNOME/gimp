@@ -106,14 +106,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "The Image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "The Drawable" },
-    { GIMP_PDB_FLOAT, "amplitude", "The Amplitude of the Waves" },
-    { GIMP_PDB_FLOAT, "phase", "The Phase of the Waves" },
-    { GIMP_PDB_FLOAT, "wavelength", "The Wavelength of the Waves" },
-    { GIMP_PDB_INT32, "type", "Type of waves, black/smeared" },
-    { GIMP_PDB_INT32, "reflective", "Use Reflection" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "The Image"                    },
+    { GIMP_PDB_DRAWABLE, "drawable",   "The Drawable"                 },
+    { GIMP_PDB_FLOAT,    "amplitude",  "The Amplitude of the Waves"   },
+    { GIMP_PDB_FLOAT,    "phase",      "The Phase of the Waves"       },
+    { GIMP_PDB_FLOAT,    "wavelength", "The Wavelength of the Waves"  },
+    { GIMP_PDB_INT32,    "type",       "Type of waves, black/smeared" },
+    { GIMP_PDB_INT32,    "reflective", "Use Reflection"               }
   };
 
   gimp_install_procedure ("plug_in_waves",
@@ -122,11 +122,14 @@ query (void)
                           "Eric L. Hernes, Stephen Norris",
                           "Stephen Norris",
                           "1997",
-                          N_("<Image>/Filters/Distorts/_Waves..."),
+                          N_("_Waves..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_waves",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

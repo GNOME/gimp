@@ -110,14 +110,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "independent", "Noise in channels independent" },
-    { GIMP_PDB_FLOAT, "noise_1", "Noise in the first channel (red, gray)" },
-    { GIMP_PDB_FLOAT, "noise_2", "Noise in the second channel (green, gray_alpha)" },
-    { GIMP_PDB_FLOAT, "noise_3", "Noise in the third channel (blue)" },
-    { GIMP_PDB_FLOAT, "noise_4", "Noise in the fourth channel (alpha)" }
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+    { GIMP_PDB_INT32,    "independent", "Noise in channels independent" },
+    { GIMP_PDB_FLOAT,    "noise_1",     "Noise in the first channel (red, gray)" },
+    { GIMP_PDB_FLOAT,    "noise_2",     "Noise in the second channel (green, gray_alpha)" },
+    { GIMP_PDB_FLOAT,    "noise_3",     "Noise in the third channel (blue)" },
+    { GIMP_PDB_FLOAT,    "noise_4",     "Noise in the fourth channel (alpha)" }
   };
 
   gimp_install_procedure ("plug_in_noisify",
@@ -126,11 +126,14 @@ query (void)
                           "Torsten Martinsen",
                           "Torsten Martinsen",
                           "May 2000",
-                          N_("<Image>/Filters/Noise/_Noisify..."),
+                          N_("_Noisify..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_noisify",
+                             N_("<Image>/Filters/Noise"));
 }
 
 static void

@@ -785,8 +785,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive"    },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"    },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -796,11 +796,14 @@ query (void)
                           "Tom Bech & Federico Mena Quintero",
                           "Tom Bech & Federico Mena Quintero",
                           "Version 0.14, September 24 1997",
-                          N_("<Image>/Filters/Map/_Van Gogh (LIC)..."),
+                          N_("_Van Gogh (LIC)..."),
                           "RGB",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_lic",
+                             N_("<Image>/Filters/Map"));
 }
 
 static void

@@ -156,36 +156,41 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "lum_threshold", "Luminosity threshold (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT, "flare_inten", "Flare intensity (0.0 - 1.0)" },
-    { GIMP_PDB_INT32, "spike_len", "Spike length (in pixels)" },
-    { GIMP_PDB_INT32, "spike_pts", "# of spike points" },
-    { GIMP_PDB_INT32, "spike_angle", "Spike angle (0-360 degrees, -1: random)" },
-    { GIMP_PDB_FLOAT, "density", "Spike density (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT, "opacity", "Opacity (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT, "random_hue", "Random hue (0.0 - 1.0)" },
-    { GIMP_PDB_FLOAT, "random_saturation", "Random saturation (0.0 - 1.0)" },
-    { GIMP_PDB_INT32, "preserve_luminosity", "Preserve luminosity (TRUE/FALSE)" },
-    { GIMP_PDB_INT32, "inverse", "Inverse (TRUE/FALSE)" },
-    { GIMP_PDB_INT32, "border", "Add border (TRUE/FALSE)" },
-    { GIMP_PDB_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
+    { GIMP_PDB_INT32,    "run_mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",         "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Input drawable" },
+    { GIMP_PDB_FLOAT,    "lum_threshold", "Luminosity threshold (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "flare_inten",   "Flare intensity (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "spike_len",     "Spike length (in pixels)" },
+    { GIMP_PDB_INT32,    "spike_pts",     "# of spike points" },
+    { GIMP_PDB_INT32,    "spike_angle",   "Spike angle (0-360 degrees, -1: random)" },
+    { GIMP_PDB_FLOAT,    "density",       "Spike density (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "opacity",       "Opacity (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "random_hue",    "Random hue (0.0 - 1.0)" },
+    { GIMP_PDB_FLOAT,    "random_saturation",   "Random saturation (0.0 - 1.0)" },
+    { GIMP_PDB_INT32,    "preserve_luminosity", "Preserve luminosity (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "inverse",       "Inverse (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "border",        "Add border (TRUE/FALSE)" },
+    { GIMP_PDB_INT32,    "colortype",     "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
 
   gimp_install_procedure ("plug_in_sparkle",
-              "Simulates pixel bloom and diffraction effects",
-              "Uses a percentage based luminoisty threhsold to find "
-	      "candidate pixels for adding some sparkles (spikes). ",
-              "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) & Seth Burgess & Spencer Kimball",
-              "John Beale",
-              "Version 1.27, September 2003",
-              N_("<Image>/Filters/Light Effects/_Sparkle..."),
-              "RGB*, GRAY*",
-              GIMP_PLUGIN,
-              G_N_ELEMENTS (args), 0,
-              args, NULL);
+                          "Simulates pixel bloom and diffraction effects",
+                          "Uses a percentage based luminoisty threhsold to find "
+                          "candidate pixels for adding some sparkles (spikes). ",
+                          "John Beale, & (ported to GIMP v0.54) Michael "
+                          "J. Hammel & ted to GIMP v1.0) & Seth Burgess & "
+                          "Spencer Kimball",
+                          "John Beale",
+                          "Version 1.27, September 2003",
+                          N_("_Sparkle..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_sparkle",
+                             N_("<Image>/Filters/Light Effects"));
 }
 
 static void

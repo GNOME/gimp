@@ -114,11 +114,14 @@ query (void)
                           "Michael Natterer <mitch@gimp.org>",
                           "Michael Natterer <mitch@gimp.org>",
                           "2000",
-			  N_("<Toolbox>/Xtns/Extensions/_Unit Editor"),
+			  N_("_Unit Editor"),
 			  "",
                           GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_unit_editor",
+                             N_("<Toolbox>/Xtns/Extensions"));
 }
 
 static void

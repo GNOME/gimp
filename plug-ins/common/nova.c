@@ -192,12 +192,15 @@ query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "May 2000",
-                          /* don't translate '<Image>' */
-                          N_("<Image>/Filters/Light Effects/Su_perNova..."),
+                          N_("Su_perNova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_nova",
+                             /* don't translate '<Image>' */
+                             N_("<Image>/Filters/Light Effects"));
 }
 
 static void

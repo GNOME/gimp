@@ -293,16 +293,20 @@ query (void)
     " The sample_drawable should be of type RGB or RGBA";
 
   gimp_install_procedure (PLUG_IN_NAME,
-                          "Colorize the contents of the specified drawable similar to sample drawable",
+                          "Colorize the contents of the specified drawable "
+                          "similar to sample drawable",
                           help_string,
                           "Wolfgang Hofer",
                           "hof@hotbot.com",
                           "02/2000",
-                          N_("<Image>/Filters/Colors/Map/_Sample Colorize..."),
+                          N_("_Sample Colorize..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Colors/Map"));
 }
 
 static void

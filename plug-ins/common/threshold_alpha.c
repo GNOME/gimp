@@ -82,10 +82,10 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE,    "image",     "Input image (not used)"},
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-    { GIMP_PDB_INT32,    "threshold", "Threshold" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (not used)"       },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
+    { GIMP_PDB_INT32,    "threshold", "Threshold"                    }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -94,11 +94,14 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Layer/Transparency/Modify/_Threshold Alpha..."),
+			  N_("_Threshold Alpha..."),
 			  "RGBA,GRAYA",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Layer/Transparency/Modify"));
 }
 
 static void

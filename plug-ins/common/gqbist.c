@@ -425,9 +425,9 @@ query (void)
 {
   GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)"            },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"            }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -436,11 +436,14 @@ query (void)
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Render/Pattern/_Qbist..."),
+			  N_("_Qbist..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

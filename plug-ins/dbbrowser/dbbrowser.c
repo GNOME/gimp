@@ -86,11 +86,14 @@ query (void)
                           "Thomas Noel",
                           "Thomas Noel",
                           "23th june 1997",
-                          N_("<Toolbox>/Xtns/Extensions/_DB Browser"),
+                          N_("_DB Browser"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_db_browser",
+                             N_("<Toolbox>/Xtns/Extensions"));
 }
 
 static void

@@ -126,15 +126,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "(unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to draw on" },
-    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels > 1.0)" },
-    { GIMP_PDB_FLOAT, "amount", "Strength of effect" },
-    { GIMP_PDB_FLOAT, "threshold", "Threshold" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "(unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Drawable to draw on" },
+    { GIMP_PDB_FLOAT,    "radius",    "Radius of gaussian blur (in pixels > 1.0)" },
+    { GIMP_PDB_FLOAT,    "amount",    "Strength of effect" },
+    { GIMP_PDB_FLOAT,    "threshold", "Threshold" }
   };
 
-  /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
 			  "An unsharp mask filter",
 			  "The unsharp mask is a sharpening filter that works "
@@ -146,14 +145,16 @@ query (void)
 			  "Winston Chang <winstonc@cs.wisc.edu>",
 			  "Winston Chang",
 			  "1999",
-			  N_("<Image>/Filters/Enhance/_Unsharp Mask..."),
+			  N_("_Unsharp Mask..."),
 			  "GRAY*, RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_unsharp_mask",
+                             N_("<Image>/Filters/Enhance"));
 }
 
-/* this is the actual function */
 static void
 run (const gchar      *name,
      gint              nparams,

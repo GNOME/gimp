@@ -183,7 +183,7 @@ query (void)
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
-			  N_("<Image>/File/Send/_Print"),
+			  N_("_Print"),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (print_args), 0,
@@ -195,11 +195,16 @@ query (void)
 			  "Tor Lillqvist <tml@iki.fi>",
 			  "Copyright 1999 Tor Lillqvist",
 			  "$Id$",
-			  N_("<Image>/File/Send/Page Setup"),
+			  N_("Page Setup"),
 			  "RGB*,GRAY*,INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (pagesetup_args), 0,
 			  pagesetup_args, NULL);
+
+  gimp_plugin_menu_register (NAME_PRINT,
+                             N_("<Image>/File/Send"));
+  gimp_plugin_menu_register (NAME_PAGE_SETUP,
+                             N_("<Image>/File/Send"));
 }
 
 /*

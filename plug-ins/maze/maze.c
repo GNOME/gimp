@@ -154,22 +154,25 @@ query ()
 
   gchar *help;
 
-  help = g_strdup_printf (_("Generates a maze using either the depth-first "
-                            "search method or Prim's algorithm.  Can make "
-                            "tileable mazes too.  See %s for more help."),
+  help = g_strdup_printf ("Generates a maze using either the depth-first "
+                          "search method or Prim's algorithm.  Can make "
+                          "tileable mazes too.  See %s for more help.",
                           MAZE_URL);
 
   gimp_install_procedure ("plug_in_maze",
-			  _("Draws a maze."),
+			  "Draws a maze.",
 			  help,
 			  "Kevin Turner <kevint@poboxes.com>",
 			  "Kevin Turner",
 			  "1997, 1998",
-			  N_("<Image>/Filters/Render/Pattern/_Maze..."),
+			  N_("_Maze..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_maze",
+                             N_("<Image>/Filters/Render/Pattern"));
 
   g_free (help);
 }

@@ -94,10 +94,10 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"},
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
-    { GIMP_PDB_INT32,    "max_p",    "1 for maximizing, 0 for minimizing"}
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"       },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (not used)"             },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                     },
+    { GIMP_PDB_INT32,    "max_p",    "1 for maximizing, 0 for minimizing" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -109,11 +109,14 @@ query (void)
                           "Shuji Narazaki (narazaki@InetQ.or.jp)",
                           "Shuji Narazaki",
                           "May 2000",
-                          N_("<Image>/Filters/Colors/_Max RGB..."),
+                          N_("_Max RGB..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Colors"));
 }
 
 static void

@@ -214,11 +214,14 @@ query (void)
 			  "Eric L. Hernes, Alan Wm Paeth",
 			  "Eric L. Hernes",
 			  "1997",
-			  N_("<Image>/Filters/Colors/_Hot..."),
+			  N_("_Hot..."),
 			  "RGB",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_hot",
+                             N_("<Image>/Filters/Colors"));
 }
 
 static void

@@ -147,36 +147,44 @@ query (void)
 {
   static GimpParamDef pixelize_args[]=
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "pixelwidth", "Pixel width (the decrease in resolution)" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_INT32,    "pixelwidth", "Pixel width (the decrease in resolution)" }
   };
+
   static GimpParamDef pixelize2_args[]=
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "pixelwidth", "Pixel width (the decrease in horizontal resolution)" },
-    { GIMP_PDB_INT32, "pixelheight", "Pixel height (the decrease in vertical resolution)" }
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+    { GIMP_PDB_INT32,    "pixelwidth",  "Pixel width (the decrease in horizontal resolution)" },
+    { GIMP_PDB_INT32,    "pixelheight", "Pixel height (the decrease in vertical resolution)" }
   };
 
   gimp_install_procedure ("plug_in_pixelize",
 			  "Pixelize the contents of the specified drawable",
-			  "Pixelize the contents of the specified drawable with speficied pixelizing width.",
-			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
+			  "Pixelize the contents of the specified drawable "
+                          "with speficied pixelizing width.",
+			  "Spencer Kimball & Peter Mattis, Tracy Scott, "
+                          "(ported to 1.0 by) Eiichi Takamori",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott",
 			  "1995",
-			  N_("<Image>/Filters/Blur/_Pixelize..."),
+			  N_("_Pixelize..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (pixelize_args), 0,
 			  pixelize_args, NULL);
 
+  gimp_plugin_menu_register ("plug_in_pixelize",
+                             N_("<Image>/Filters/Blur"));
+
   gimp_install_procedure ("plug_in_pixelize2",
 			  "Pixelize the contents of the specified drawable",
-			  "Pixelize the contents of the specified drawable with speficied pixelizing width.",
-			  "Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori",
+			  "Pixelize the contents of the specified drawable "
+                          "with speficied pixelizing width.",
+			  "Spencer Kimball & Peter Mattis, Tracy Scott, "
+                          "(ported to 1.0 by) Eiichi Takamori",
 			  "Spencer Kimball & Peter Mattis, Tracy Scott",
 			  "2001",
 			  NULL,

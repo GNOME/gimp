@@ -95,9 +95,9 @@ query ()
 {
   static GimpParamDef copy_args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"             }
   };
 
   gimp_install_procedure ("plug_in_clipboard_copy",
@@ -106,7 +106,7 @@ query ()
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          N_("<Image>/Edit/Copy to Clipboard"),
+                          N_("Copy to Clipboard"),
                           "INDEXED*, RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (copy_args), 0,
@@ -118,7 +118,7 @@ query ()
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          N_("<Image>/Edit/Paste from Clipboard"),
+                          N_("Paste from Clipboard"),
                           "INDEXED*, RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (copy_args), 0,
@@ -130,12 +130,18 @@ query ()
                           "Hans Breuer",
                           "Hans Breuer",
                           "1999",
-                          N_("<Toolbox>/File/Acquire/From Clipboard"),
+                          N_("From Clipboard"),
                           "",
                           GIMP_PLUGIN,
                           1, 0,
                           copy_args, NULL);
 
+  gimp_plugin_menu_register ("plug_in_clipboard_copy",
+                             N_("<Image>/Edit"));
+  gimp_plugin_menu_register ("plug_in_clipboard_paste",
+                             N_("<Image>/Edit"));
+  gimp_plugin_menu_register ("plug_in_clipboard_paste_as_new",
+                             N_("<Toolbox>/File/Acquire"));
 }
 
 static void

@@ -258,11 +258,14 @@ query (void)
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			  "Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)",
 			  "December, 1998",
-			  N_("<Image>/Filters/Render/_Fractal Explorer..."),
+			  N_("_Fractal Explorer..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_fractalexplorer",
+                             N_("<Image>/Filters/Render"));
 }
 
 /**********************************************************************

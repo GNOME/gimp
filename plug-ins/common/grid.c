@@ -149,11 +149,14 @@ void query (void)
                           "Tim Newsome",
                           "Tim Newsome, Sven Neumann, Tom Rathborne, TC",
                           "1997 - 2000",
-                          N_("<Image>/Filters/Render/Pattern/_Grid..."),
+                          N_("_Grid..."),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_grid",
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

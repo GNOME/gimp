@@ -156,27 +156,31 @@ query (void)
   static GimpParamDef args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",     "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
-    { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %" },
-    { GIMP_PDB_FLOAT,    "angle",     "Offset angle" },
-    { GIMP_PDB_INT32,    "backwards",    "Map backwards?" },
-    { GIMP_PDB_INT32,    "inverse",     "Map from top?" },
-    { GIMP_PDB_INT32,    "polrec",     "Polar to rectangular?" }
+    { GIMP_PDB_IMAGE,    "image",     "Input image"                  },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable"               },
+    { GIMP_PDB_FLOAT,    "circle",    "Circle depth in %"            },
+    { GIMP_PDB_FLOAT,    "angle",     "Offset angle"                 },
+    { GIMP_PDB_INT32,    "backwards", "Map backwards?"               },
+    { GIMP_PDB_INT32,    "inverse",   "Map from top?"                },
+    { GIMP_PDB_INT32,    "polrec",    "Polar to rectangular?"        }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Converts and image to and from polar coords",
-			  "Remaps and image from rectangular coordinates to polar coordinates "
+			  "Remaps and image from rectangular coordinates "
+                          "to polar coordinates "
 			  "or vice versa",
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  "Daniel Dunbar and Federico Mena Quintero",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Distorts/P_olar Coords..."),
+			  N_("P_olar Coords..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

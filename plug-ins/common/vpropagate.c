@@ -240,7 +240,7 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
-			  N_("<Image>/Filters/Distorts/_Value Propagate..."),
+			  N_("_Value Propagate..."),
 			  PLUG_IN_IMAGE_TYPES,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -252,7 +252,7 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
-			  N_("<Image>/Filters/Generic/E_rode"),
+			  N_("E_rode"),
 			  PLUG_IN_IMAGE_TYPES,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -264,11 +264,18 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1996-1997",
-			  N_("<Image>/Filters/Generic/_Dilate"),
+			  N_("_Dilate"),
 			  PLUG_IN_IMAGE_TYPES,
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (DEFAULT_PLUG_IN_NAME,
+                             N_("<Image>/Filters/Distorts"));
+  gimp_plugin_menu_register (ERODE_PLUG_IN_NAME,
+                             N_("<Image>/Filters/Generic"));
+  gimp_plugin_menu_register (DILATE_PLUG_IN_NAME,
+                             N_("<Image>/Filters/Generic"));
 }
 
 static void

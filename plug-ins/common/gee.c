@@ -83,22 +83,25 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Must be interactive (1)" },
-    { GIMP_PDB_IMAGE, "image", "Input Image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable" },
+    { GIMP_PDB_INT32,    "run_mode", "Must be interactive (1)" },
+    { GIMP_PDB_IMAGE,    "image",    "Input Image"             },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input Drawable"          }
   };
 
-  gimp_install_procedure("plug_in_the_slimy_egg",
-			 "A big hello from the GIMP team!",
-			 "Beyond help.",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "Adam D. Moss <adam@gimp.org>",
-			 "2000",
-			 N_("<Image>/Filters/Toys/Gee-_Slime"),
-			 "RGB*, INDEXED*, GRAY*",
-			 GIMP_PLUGIN,
-			 G_N_ELEMENTS (args), 0,
-			 args, NULL);
+  gimp_install_procedure ("plug_in_the_slimy_egg",
+                          "A big hello from the GIMP team!",
+                          "Beyond help.",
+                          "Adam D. Moss <adam@gimp.org>",
+                          "Adam D. Moss <adam@gimp.org>",
+                          "2000",
+                          N_("Gee-_Slime"),
+                          "RGB*, INDEXED*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_the_slimy_egg",
+                             N_("<Image>/Filters/Toys"));
 }
 
 static void

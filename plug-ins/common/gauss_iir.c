@@ -161,11 +161,14 @@ query (void)
                           "Spencer Kimball, Peter Mattis & Sven Neumann",
                           "Spencer Kimball, Peter Mattis & Sven Neumann",
                           "1995-2000",
-                          N_("<Image>/Filters/Blur/Gaussian Blur (_IIR)..."),
+                          N_("Gaussian Blur (_IIR)..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args2), 0,
                           args2, NULL);
+
+  gimp_plugin_menu_register ("plug_in_gauss_iir2",
+                             N_("<Image>/Filters/Blur"));
 }
 
 static void

@@ -66,11 +66,14 @@ query (void)
 			  "Adam D. Moss",
 			  "Adam D. Moss",
 			  "1997",
-			  N_("<Image>/Layer/Crop/_Zealous Crop"),
+			  N_("_Zealous Crop"),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_zealouscrop",
+                             N_("<Image>/Layer/Crop"));
 }
 
 static void

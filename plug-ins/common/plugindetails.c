@@ -150,11 +150,14 @@ query (void)
                           "Andy Thomas",
                           "Andy Thomas",
                           "1999",
-                          N_("<Toolbox>/Xtns/Extensions/_Plugin Details"),
+                          N_("_Plugin Details"),
                           "",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_plug_in_details",
+                             N_("<Toolbox>/Xtns/Extensions"));
 }
 
 static void

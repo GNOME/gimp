@@ -125,11 +125,14 @@ static void query()
 			  "Maurits Rijk",
 			  "Maurits Rijk",
 			  "1998-2002",
-			  N_("<Image>/Filters/Web/_ImageMap..."),
+			  N_("_ImageMap..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), nreturn_vals,
 			  args, return_vals);
+
+   gimp_plugin_menu_register ("plug_in_imagemap",
+                              N_("<Image>/Filters/Web"));
 }
 
 static void

@@ -176,16 +176,20 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_plasma",
-			  "Create a plasma cloud like image on the specified drawable",
+			  "Create a plasma cloud like image on the "
+                          "specified drawable",
 			  "More help",
 			  "Stephen Norris & (ported to 1.0 by) Eiichi Takamori",
 			  "Stephen Norris",
 			  "May 2000",
-			  N_("<Image>/Filters/Render/Clouds/_Plasma..."),
+			  N_("_Plasma..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_plasma",
+                             N_("<Image>/Filters/Render/Clouds"));
 }
 
 static void

@@ -51,22 +51,26 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
   gimp_install_procedure ("plug_in_make_seamless",
 			  "Seamless tile creation",
-			  "This plugin creates a seamless tileable from the input image",
+			  "This plugin creates a seamless tileable from "
+                          "the input drawable",
 			  "Tim Rowley",
 			  "Tim Rowley",
 			  "1997",
-			  N_("<Image>/Filters/Map/_Make Seamless"),
+			  N_("_Make Seamless"),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_make_seamless",
+                             N_("<Image>/Filters/Map"));
 }
 
 

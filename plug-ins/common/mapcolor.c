@@ -332,11 +332,14 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          N_("<Image>/Filters/Colors/Map/Adjust _FG-BG"),
+                          N_("Adjust _FG-BG"),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (adjust_args), 0,
                           adjust_args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_color_adjust",
+                             N_("<Image>/Filters/Colors/Map"));
 
   gimp_install_procedure ("plug_in_color_map",
                           "Map color range specified by two colors"
@@ -347,11 +350,14 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner",
                           dversio,
-                          N_("<Image>/Filters/Colors/Map/Color Range _Mapping..."),
+                          N_("Color Range _Mapping..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (map_args), 0,
                           map_args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_color_map",
+                             N_("<Image>/Filters/Colors/Map"));
 }
 
 

@@ -1,5 +1,23 @@
 2004-05-07  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/Lighting/lighting_main.c
+	* plug-ins/MapObject/mapobject_main.c
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/flame/flame.c
+	* plug-ins/gimpressionist/gimp.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/maze/maze.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/print/print.c
+	* plug-ins/rcm/rcm.c
+	* plug-ins/winsnap/winsnap.c
+	* plug-ins/common/[g-z]*.c: use gimp_plugin_menu_register(). Some
+	formatting cleanups in some query() functions.
+
+2004-05-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/plug-in-proc.[ch]: removed member "accelerator". 
 	It was never set and this is the conceptually wrong place to store
 	it anyway.

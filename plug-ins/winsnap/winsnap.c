@@ -1070,7 +1070,7 @@ query(void)
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
-                          N_("<Toolbox>/File/Acquire/_Screen Shot..."),
+                          N_("_Screen Shot..."),
                           NULL,
                           GIMP_PLUGIN,
                           NUMBER_IN_ARGS,
@@ -1078,8 +1078,8 @@ query(void)
                           args,
                           return_vals);
 
-  gimp_plugin_menu_register (PLUG_IN_NAME,
-                             N_("<Image>/File/Acquire/_Screen Shot..."));
+  gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Toolbox>/File/Acquire"));
+  /* gimp_plugin_menu_register (PLUG_IN_NAME, N_("<Image>/File/Acquire")); */
 }
 
 /* Return values storage */

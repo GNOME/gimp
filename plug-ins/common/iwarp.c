@@ -246,9 +246,9 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"               }
   };
 
   gimp_install_procedure ("plug_in_iwarp",
@@ -257,11 +257,14 @@ query (void)
 			  "Norbert Schmitz",
 			  "Norbert Schmitz",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/_IWarp..."),
+			  N_("_IWarp..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_iwarp",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

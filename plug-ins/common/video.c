@@ -1811,25 +1811,31 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "pattern_number", "Type of RGB pattern to use" },
-    { GIMP_PDB_INT32, "additive", "Whether the function adds the result to the original image" },
-    { GIMP_PDB_INT32, "rotated", "Whether to rotate the RGB pattern by ninety degrees" }
+    { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
+    { GIMP_PDB_INT32,    "pattern_number", "Type of RGB pattern to use" },
+    { GIMP_PDB_INT32,    "additive",       "Whether the function adds the result to the original image" },
+    { GIMP_PDB_INT32,    "rotated",        "Whether to rotate the RGB pattern by ninety degrees" }
   };
 
   gimp_install_procedure ("plug_in_video",
-			  "Apply low-dotpitch RGB simulation to the specified drawable",
-			  "This function simulates the degradation of being on an old low-dotpitch RGB video monitor to the specified drawable.",
+			  "Apply low-dotpitch RGB simulation to the "
+                          "specified drawable",
+			  "This function simulates the degradation of "
+                          "being on an old low-dotpitch RGB video monitor "
+                          "to the specified drawable.",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "2nd March 1997",
-			  N_("<Image>/Filters/Distorts/Vi_deo..."),
+			  N_("Vi_deo..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_video",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

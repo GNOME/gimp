@@ -153,15 +153,15 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "tilable", "Create a tilable output (n=0/y=1)" },
-    { GIMP_PDB_INT32, "turbulent", "Make a turbulent noise (n=0/y=1)" },
-    { GIMP_PDB_INT32, "seed", "Random seed" },
-    { GIMP_PDB_INT32, "detail", "Detail level (0 - 15)" },
-    { GIMP_PDB_FLOAT, "xsize", "Horizontal texture size" },
-    { GIMP_PDB_FLOAT, "ysize", "Vertical texture size" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,    "tilable",   "Create a tilable output (n=0/y=1)" },
+    { GIMP_PDB_INT32,    "turbulent", "Make a turbulent noise (n=0/y=1)" },
+    { GIMP_PDB_INT32,    "seed",      "Random seed" },
+    { GIMP_PDB_INT32,    "detail",    "Detail level (0 - 15)" },
+    { GIMP_PDB_FLOAT,    "xsize",     "Horizontal texture size" },
+    { GIMP_PDB_FLOAT,    "ysize",     "Vertical texture size" }
   };
 
   gimp_install_procedure ("plug_in_solid_noise",
@@ -170,11 +170,14 @@ query (void)
 			  "Marcelo de Gomensoro Malheiros",
 			  "Marcelo de Gomensoro Malheiros",
 			  "Apr 1998, v1.03",
-			  N_("<Image>/Filters/Render/Clouds/_Solid Noise..."),
+			  N_("_Solid Noise..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_solid_noise",
+                             N_("<Image>/Filters/Render/Clouds"));
 }
 
 

@@ -116,16 +116,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "period", "period; number of pixels for one wave to complete" },
-    { GIMP_PDB_INT32, "amplitude", "amplitude; maximum displacement of wave" },
-    { GIMP_PDB_INT32, "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
-    { GIMP_PDB_INT32, "edges", "edges; 0 = smear, 1 =  wrap, 2 = black" },
-    { GIMP_PDB_INT32, "waveform", "0 = sawtooth, 1 = sine wave" },
-    { GIMP_PDB_INT32, "antialias", "antialias; True or False" },
-    { GIMP_PDB_INT32, "tile", "tile; if this is true, the image will retain it's tilability" }
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+    { GIMP_PDB_INT32,    "period",      "period; number of pixels for one wave to complete" },
+    { GIMP_PDB_INT32,    "amplitude",   "amplitude; maximum displacement of wave" },
+    { GIMP_PDB_INT32,    "orientation", "orientation; 0 = Horizontal, 1 = Vertical" },
+    { GIMP_PDB_INT32,    "edges",       "edges; 0 = smear, 1 =  wrap, 2 = black" },
+    { GIMP_PDB_INT32,    "waveform",    "0 = sawtooth, 1 = sine wave" },
+    { GIMP_PDB_INT32,    "antialias",   "antialias; True or False" },
+    { GIMP_PDB_INT32,    "tile",        "tile; if this is true, the image will retain it's tilability" }
   };
 
   gimp_install_procedure ("plug_in_ripple",
@@ -134,11 +134,14 @@ query (void)
 			  "Brian Degenhardt <bdegenha@ucsd.edu>",
 			  "Brian Degenhardt",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/_Ripple..."),
+			  N_("_Ripple..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_ripple",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

@@ -171,14 +171,14 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "threshold", "Controls where blending will be done >= 0" },
-    { GIMP_PDB_INT32, "direction", "Left or Right: 0 or 1" },
-    { GIMP_PDB_INT32, "strength", "Controls the extent of the blending > 1" },
-    { GIMP_PDB_INT32, "alg", "WIND, BLAST" },
-    { GIMP_PDB_INT32, "edge", "LEADING, TRAILING, or BOTH" }
+    { GIMP_PDB_INT32,    "run_mode",  "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",     "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
+    { GIMP_PDB_INT32,    "threshold", "Controls where blending will be done >= 0" },
+    { GIMP_PDB_INT32,    "direction", "Left or Right: 0 or 1" },
+    { GIMP_PDB_INT32,    "strength",  "Controls the extent of the blending > 1" },
+    { GIMP_PDB_INT32,    "alg",       "WIND, BLAST" },
+    { GIMP_PDB_INT32,    "edge",      "LEADING, TRAILING, or BOTH" }
   };
 
   gimp_install_procedure ("plug_in_wind",
@@ -187,11 +187,14 @@ query (void)
                           "Nigel Wetten",
                           "Nigel Wetten",
                           "May 2000",
-                          N_("<Image>/Filters/Distorts/Wi_nd..."),
+                          N_("Wi_nd..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_wind",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

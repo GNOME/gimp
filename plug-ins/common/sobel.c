@@ -91,12 +91,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "horizontal", "Sobel in horizontal direction" },
-    { GIMP_PDB_INT32, "vertical", "Sobel in vertical direction" },
-    { GIMP_PDB_INT32, "keep_sign", "Keep sign of result (one direction only)" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable" },
+    { GIMP_PDB_INT32,    "horizontal", "Sobel in horizontal direction" },
+    { GIMP_PDB_INT32,    "vertical",   "Sobel in vertical direction" },
+    { GIMP_PDB_INT32,    "keep_sign",  "Keep sign of result (one direction only)" }
   };
 
   gimp_install_procedure ("plug_in_sobel",
@@ -113,11 +113,14 @@ query (void)
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  N_("<Image>/Filters/Edge-Detect/_Sobel..."),
+			  N_("_Sobel..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_sobel",
+                             N_("<Image>/Filters/Edge-Detect"));
 }
 
 static void

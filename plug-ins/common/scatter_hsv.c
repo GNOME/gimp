@@ -120,13 +120,13 @@ query (void)
 {
   static GimpParamDef args [] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    { GIMP_PDB_IMAGE, "image", "Input image (not used)"},
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"},
-    { GIMP_PDB_INT32, "holdness", "convolution strength"},
-    { GIMP_PDB_INT32, "hue_distance", "distribution distance on hue axis [0,255]"},
-    { GIMP_PDB_INT32, "saturation_distance", "distribution distance on saturation axis [0,255]"},
-    { GIMP_PDB_INT32, "value_distance", "distribution distance on value axis [0,255]"}
+    { GIMP_PDB_INT32,    "run_mode",            "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",               "Input image (not used)" },
+    { GIMP_PDB_DRAWABLE, "drawable",            "Input drawable" },
+    { GIMP_PDB_INT32,    "holdness",            "convolution strength" },
+    { GIMP_PDB_INT32,    "hue_distance",        "distribution distance on hue axis [0,255]" },
+    { GIMP_PDB_INT32,    "saturation_distance", "distribution distance on saturation axis [0,255]" },
+    { GIMP_PDB_INT32,    "value_distance",      "distribution distance on value axis [0,255]" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
@@ -135,11 +135,14 @@ query (void)
 			  "Shuji Narazaki (narazaki@InetQ.or.jp)",
 			  "Shuji Narazaki",
 			  "1997",
-			  N_("<Image>/Filters/Noise/S_catter HSV..."),
+			  N_("S_catter HSV..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Noise"));
 }
 
 static void

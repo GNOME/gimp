@@ -92,15 +92,16 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_FLOAT, "radius", "Radius of gaussian blur (in pixels, > 0.0)" },
-    { GIMP_PDB_INT32, "maxdelta", "Maximum delta" }
+    { GIMP_PDB_FLOAT,    "radius",   "Radius of gaussian blur (in pixels, > 0.0)" },
+    { GIMP_PDB_INT32,    "maxdelta", "Maximum delta" }
   };
 
   gimp_install_procedure ("plug_in_sel_gauss",
-			  "Applies a selective gaussian blur to the specified drawable.",
+			  "Applies a selective gaussian blur to the "
+                          "specified drawable.",
 			  "This filter functions similar to the regular "
 			  "gaussian blur filter except that neighbouring "
 			  "pixels that differ more than the given maxdelta "
@@ -111,11 +112,14 @@ query (void)
 			  "Thom van Os",
 			  "Thom van Os",
 			  "1999",
-			  N_("<Image>/Filters/Blur/_Selective Gaussian Blur..."),
+			  N_("_Selective Gaussian Blur..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_sel_gauss",
+                             N_("<Image>/Filters/Blur"));
 }
 
 static void

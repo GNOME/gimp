@@ -405,11 +405,14 @@ query (void)
 			  "Nigel Wetten",
 			  "Nigel Wetten",
 			  "May 2000",
-			  N_("<Image>/Filters/Render/Pattern/_Jigsaw..."),
+			  N_("_Jigsaw..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_jigsaw",
+                             N_("<Image>/Filters/Render/Pattern"));
 }
 
 static void

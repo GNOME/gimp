@@ -182,11 +182,14 @@ query (void)
 			  "Federico Mena Quintero and Scott Goehring",
 			  "Federico Mena Quintero and Scott Goehring",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Distorts/W_hirl and Pinch..."),
+			  N_("W_hirl and Pinch..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

@@ -821,11 +821,14 @@ plugin_query (void)
 			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
 			  "Copyright (c)1997-1999 Hirotsuna Mizuno",
 			  _("September 31, 1999"),
-			  N_("<Image>/Filters/Map/_Paper Tile..."),
+			  N_("_Paper Tile..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUGIN_PROCEDURE_NAME,
+                             N_("<Image>/Filters/Map"));
 }
 
 static void

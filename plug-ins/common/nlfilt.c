@@ -111,12 +111,12 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "img", "The Image to Filter" },
-    { GIMP_PDB_DRAWABLE, "drw", "The Drawable" },
-    { GIMP_PDB_FLOAT, "alpha", "The amount of the filter to apply" },
-    { GIMP_PDB_FLOAT, "radius", "The filter radius" },
-    { GIMP_PDB_INT32, "filter", "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "img",      "The Image to Filter" },
+    { GIMP_PDB_DRAWABLE, "drw",      "The Drawable" },
+    { GIMP_PDB_FLOAT,    "alpha",    "The amount of the filter to apply" },
+    { GIMP_PDB_FLOAT,    "radius",   "The filter radius" },
+    { GIMP_PDB_INT32,    "filter",   "The Filter to Run, 0 - alpha trimmed mean; 1 - optimal estimation (alpha controls noise variance); 2 - edge enhancement" }
   };
 
   gimp_install_procedure ("plug_in_nlfilt",
@@ -125,11 +125,14 @@ query (void)
                           "Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes",
                           "Graeme W. Gill, Eric L. Hernes",
                           "1997",
-                          N_("<Image>/Filters/Enhance/_NL Filter..."),
+                          N_("_NL Filter..."),
                           "RGB,GRAY",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_nlfilt",
+                             N_("<Image>/Filters/Enhance"));
 }
 
 static void

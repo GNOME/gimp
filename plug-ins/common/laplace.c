@@ -20,7 +20,7 @@
 /* Based on S&P's Gauss and Laplace filters              */
 
 /* updated 1/30/03: <sjburges@gimp.org>
- * fixed an off-by-1 error that was causing an attempt to read a 
+ * fixed an off-by-1 error that was causing an attempt to read a
  * get_pixel_by_row at the -1'th row
  */
 
@@ -92,11 +92,14 @@ query (void)
 			  "Thorsten Schnier",
 			  "Thorsten Schnier",
 			  "1997",
-			  N_("<Image>/Filters/Edge-Detect/_Laplace"),
+			  N_("_Laplace"),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_laplace",
+                             N_("<Image>/Filters/Edge-Detect"));
 }
 
 static void
@@ -158,7 +161,7 @@ laplace_prepare_row (GimpPixelRgn *pixel_rgn,
       gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y - 1), w);
   else
       gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
-  
+
   /*  Fill in edge pixels  */
   for (b = 0; b < pixel_rgn->bpp; b++)
     {

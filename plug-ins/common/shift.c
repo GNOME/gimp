@@ -91,24 +91,29 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
-    { GIMP_PDB_INT32, "orientation", "vertical, horizontal orientation" }
+    { GIMP_PDB_INT32,    "run_mode",     "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",        "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",     "Input drawable" },
+    { GIMP_PDB_INT32,    "shift_amount", "shift amount (0 <= shift_amount_x <= 200)" },
+    { GIMP_PDB_INT32,    "orientation",  "vertical, horizontal orientation" }
   };
 
   gimp_install_procedure ("plug_in_shift",
 			  "Shift the contents of the specified drawable",
-			  "Shifts the pixels of the specified drawable. Each row will be displaced a random value of pixels.",
-			  "Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero",
+			  "Shifts the pixels of the specified drawable. "
+                          "Each row will be displaced a random value of pixels.",
+			  "Spencer Kimball and Peter Mattis, ported by Brian "
+                          "Degenhardt and Federico Mena Quintero",
 			  "Brian Degenhardt",
 			  "1997",
-			  N_("<Image>/Filters/Distorts/_Shift..."),
+			  N_("_Shift..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_shift",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

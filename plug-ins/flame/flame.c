@@ -138,11 +138,14 @@ query (void)
 			  "Scott Draves",
 			  "Scott Draves",
 			  "1997",
-			  N_("<Image>/Filters/Render/Nature/_Flame..."),
+			  N_("_Flame..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_flame",
+                             N_("<Image>/Filters/Render/Nature"));
 }
 
 static void

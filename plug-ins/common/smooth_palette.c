@@ -64,13 +64,13 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "width", "Width" },
-    { GIMP_PDB_INT32, "height", "Height" },
-    { GIMP_PDB_INT32, "ntries", "Search Depth" },
-    { GIMP_PDB_INT32, "show_image","Show Image?" }
+    { GIMP_PDB_INT32,    "run_mode",   "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",      "Input image (unused)"         },
+    { GIMP_PDB_DRAWABLE, "drawable",   "Input drawable"               },
+    { GIMP_PDB_INT32,    "width",      "Width"                        },
+    { GIMP_PDB_INT32,    "height",     "Height"                       },
+    { GIMP_PDB_INT32,    "ntries",     "Search Depth"                 },
+    { GIMP_PDB_INT32,    "show_image", "Show Image?"                  }
   };
 
   static GimpParamDef return_vals[] =
@@ -85,11 +85,14 @@ query (void)
 			  "Scott Draves",
 			  "Scott Draves",
 			  "1997",
-			  N_("<Image>/Filters/Colors/Smoo_th Palette..."),
+			  N_("Smoo_th Palette..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), G_N_ELEMENTS (return_vals),
 			  args, return_vals);
+
+  gimp_plugin_menu_register ("plug_in_smooth_palette",
+                             N_("<Image>/Filters/Colors"));
 }
 
 static struct

@@ -61,8 +61,8 @@ query (void)
 {
   static GimpParamDef args[] =
   {
-    { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image", "  Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" }
   };
 
@@ -76,11 +76,16 @@ query (void)
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "Adam D. Moss (adam@foxbox.org)",
 			  "27th January 1998",
-			  N_("<Image>/Filters/Colors/_Semi-Flatten"),
+			  N_("_Semi-Flatten"),
 			  "RGBA",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_semiflatten",
+                             N_("<Image>/Filters/Colors"));
+  gimp_plugin_menu_register ("plug_in_semiflatten",
+                             N_("<Image>/Layer/Transparency/Modify"));
 }
 
 

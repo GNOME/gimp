@@ -211,11 +211,14 @@ query (void)
 			  "Adrian Likins, Reagan Blundell",
 			  "Adrian Likins, Reagan Blundell, Daniel Risacher, Spencer Kimball and Peter Mattis",
 			  "1995-1997",
-			  N_("<Image>/File/Send/_Mail Image..."),
+			  N_("_Mail Image..."),
 			  "RGB*, GRAY*, INDEXED*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_mail_image",
+                             N_("<Image>/File/Send"));
 }
 
 static void

@@ -535,11 +535,14 @@ query (void)
 			  "Austin Donnelly",
 			  "Austin Donnelly",
 			  "1998 (" VERSION ")",
-			  N_("<Image>/Filters/Distorts/Newsprin_t..."),
+			  N_("Newsprin_t..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_newsprint",
+                             N_("<Image>/Filters/Distorts"));
 }
 
 static void

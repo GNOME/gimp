@@ -235,7 +235,8 @@ query (void)
   };
 
   gimp_install_procedure ("plug_in_warp",
-			  "Twist or smear an image. (only first six arguments are required)",
+			  "Twist or smear an image. (only first six "
+                          "arguments are required)",
 			  "Smears an image along vector paths calculated as "
 			  "the gradient of a separate control matrix. The "
 			  "effect can look like brushstrokes of acrylic or "
@@ -243,11 +244,14 @@ query (void)
 			  "John P. Beale",
 			  "John P. Beale",
 			  "1997",
-			  N_("<Image>/Filters/Map/_Warp..."),
+			  N_("_Warp..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register ("plug_in_warp",
+                             N_("<Image>/Filters/Map"));
 }
 
 static void

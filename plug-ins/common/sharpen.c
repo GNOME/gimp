@@ -133,23 +133,28 @@ query (void)
 {
   static GimpParamDef	args[] =
   {
-    { GIMP_PDB_INT32,	"run_mode",	"Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,	"image",	"Input image" },
-    { GIMP_PDB_DRAWABLE,	"drawable",	"Input drawable" },
-    { GIMP_PDB_INT32,	"percent",	"Percent sharpening (default = 10)" }
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive"      },
+    { GIMP_PDB_IMAGE,    "image",    "Input image"                       },
+    { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                    },
+    { GIMP_PDB_INT32,    "percent",  "Percent sharpening (default = 10)" }
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Sharpen filter, typically used to 'sharpen' a photographic image.",
-			  "This plug-in selectively performs a convolution filter on an image.",
+			  "Sharpen filter, typically used to 'sharpen' a "
+                          "photographic image.",
+			  "This plug-in selectively performs a convolution "
+                          "filter on an image.",
 			  "Michael Sweet <mike@easysw.com>",
 			  "Copyright 1997-1998 by Michael Sweet",
 			  PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Enhance/_Sharpen..."),
+			  N_("_Sharpen..."),
 			  "RGB*, GRAY*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
+
+  gimp_plugin_menu_register (PLUG_IN_NAME,
+                             N_("<Image>/Filters/Enhance"));
 }
 
 static void
