@@ -1,3 +1,10 @@
+2003-09-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-layer-select.c: switch layers
+	immediately, not when finishing layer_select, so the layer
+	boundary and the layers dialog are updated, which makes this
+	feature much more useful. Fixes bug #119234.
+
 2003-09-10  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/vectors-commands.c (vectors_import_cmd_callback): call

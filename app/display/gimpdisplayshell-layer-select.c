@@ -47,7 +47,7 @@ struct _LayerSelect
   GtkWidget *label;
 
   GimpImage *gimage;
-  GimpLayer *current_layer;
+  GimpLayer *orig_layer;
 };
 
 
@@ -107,8 +107,8 @@ layer_select_new (GimpImage *gimage,
 
   layer_select = g_new0 (LayerSelect, 1);
 
-  layer_select->gimage        = gimage;
-  layer_select->current_layer = layer;
+  layer_select->gimage     = gimage;
+  layer_select->orig_layer = layer;
 
   layer_select->shell = gtk_window_new (GTK_WINDOW_POPUP);
   gtk_window_set_wmclass (GTK_WINDOW (layer_select->shell),
@@ -167,12 +167,9 @@ layer_select_destroy (LayerSelect *layer_select,
 
   gtk_widget_destroy (layer_select->shell);
 
-  /*  only reset the active layer if a new layer was specified  */
-  if (layer_select->current_layer !=
+  if (layer_select->orig_layer !=
       gimp_image_get_active_layer (layer_select->gimage))
     {
-      gimp_image_set_active_layer (layer_select->gimage,
-				   layer_select->current_layer);
       gimp_image_flush (layer_select->gimage);
     }
 
@@ -183,7 +180,8 @@ static void
 layer_select_advance (LayerSelect *layer_select,
 		      gint         move)
 {
-  GimpLayer *layer;
+  GimpLayer *current_layer;
+  GimpLayer *next_layer;
   gint       index;
 
   if (move == 0)
@@ -193,8 +191,10 @@ layer_select_advance (LayerSelect *layer_select,
   if (gimp_image_floating_sel (layer_select->gimage))
     return;
 
+  current_layer = gimp_image_get_active_layer (layer_select->gimage);
+
   index = gimp_container_get_child_index (layer_select->gimage->layers,
-                                          GIMP_OBJECT (layer_select->current_layer));
+                                          GIMP_OBJECT (current_layer));
 
   index += move;
 
@@ -203,17 +203,17 @@ layer_select_advance (LayerSelect *layer_select,
   else if (index >= gimp_container_num_children (layer_select->gimage->layers))
     index = 0;
 
-  layer = (GimpLayer *)
+  next_layer = (GimpLayer *)
     gimp_container_get_child_by_index (layer_select->gimage->layers, index);
 
-  if (layer && layer != layer_select->current_layer)
+  if (next_layer && next_layer != current_layer)
     {
-      layer_select->current_layer = layer;
-
       gimp_preview_set_viewable (GIMP_PREVIEW (layer_select->preview),
-				 GIMP_VIEWABLE (layer_select->current_layer));
+				 GIMP_VIEWABLE (next_layer));
       gtk_label_set_text (GTK_LABEL (layer_select->label),
-			  GIMP_OBJECT (layer_select->current_layer)->name);
+			  GIMP_OBJECT (next_layer)->name);
+
+      gimp_image_set_active_layer (layer_select->gimage, next_layer);
     }
 }
 
