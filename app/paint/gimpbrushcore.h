@@ -43,6 +43,7 @@ struct _GimpBrushCore
 {
   GimpPaintCore  parent_instance;
 
+  GimpBrush     *main_brush;
   GimpBrush     *brush;
   gdouble        spacing;
   gdouble        scale;
@@ -70,7 +71,6 @@ struct _GimpBrushCore
   gboolean       cache_invalid;
 
   /*  don't use these...  */
-  GimpBrush     *grr_brush;
   BoundSeg      *brush_bound_segs;
   gint           n_brush_bound_segs;
 };

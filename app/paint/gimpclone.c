@@ -140,6 +140,9 @@ gimp_clone_init (GimpClone *clone)
   clone->src_x              = 0.0;
   clone->src_y              = 0.0;
 
+  clone->orig_src_x         = 0;
+  clone->orig_src_y         = 0;
+
   clone->offset_x           = 0;
   clone->offset_y           = 0;
   clone->first_stroke       = TRUE;
@@ -158,9 +161,6 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
                   GimpPaintCoreState  paint_state,
                   guint32             time)
 {
-  static gint   orig_src_x = 0;
-  static gint   orig_src_y = 0;
-
   GimpClone        *clone   = GIMP_CLONE (paint_core);
   GimpCloneOptions *options = GIMP_CLONE_OPTIONS (paint_options);
   GimpContext      *context = GIMP_CONTEXT (paint_options);
@@ -189,8 +189,8 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 	}
       else if (options->align_mode == GIMP_CLONE_ALIGN_NO)
 	{
-	  orig_src_x = clone->src_x;
-	  orig_src_y = clone->src_y;
+	  clone->orig_src_x = clone->src_x;
+	  clone->orig_src_y = clone->src_y;
 
 	  clone->first_stroke = TRUE;
 	}
@@ -249,8 +249,8 @@ gimp_clone_paint (GimpPaintCore      *paint_core,
 
       if (options->align_mode == GIMP_CLONE_ALIGN_NO && ! clone->first_stroke)
 	{
-	  clone->src_x = orig_src_x;
-	  clone->src_y = orig_src_y;
+	  clone->src_x = clone->orig_src_x;
+	  clone->src_y = clone->orig_src_y;
 	}
       break;
 

@@ -104,6 +104,11 @@ struct _GimpPaintCoreClass
                                 GimpPaintOptions   *paint_options,
                                 GimpPaintCoreState  paint_state,
                                 guint32             time);
+  void      (* post_paint)     (GimpPaintCore      *core,
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options,
+                                GimpPaintCoreState  paint_state,
+                                guint32             time);
 
   void      (* interpolate)    (GimpPaintCore      *core,
                                 GimpDrawable       *drawable,

@@ -128,18 +128,18 @@ gimp_paint_tool_get_type (void)
       static const GTypeInfo tool_info =
       {
         sizeof (GimpPaintToolClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_paint_tool_class_init,
-	NULL,           /* class_finalize */
-	NULL,           /* class_data     */
-	sizeof (GimpPaintTool),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_paint_tool_init,
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_paint_tool_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpPaintTool),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_paint_tool_init,
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_COLOR_TOOL,
-					  "GimpPaintTool",
+                                          "GimpPaintTool",
                                           &tool_info, 0);
     }
 
@@ -359,7 +359,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   GimpPaintTool    *paint_tool = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options;
   GimpPaintCore    *core;
-  GimpBrush        *current_brush = NULL;
   GimpDrawable     *drawable;
   GdkDisplay       *gdk_display;
   GimpCoords        curr_coords;
@@ -439,10 +438,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
   /*  Let the specific painting function initialize itself  */
   gimp_paint_core_paint (core, drawable, paint_options, INIT_PAINT, time);
 
-  /*  store the current brush pointer  */
-  if (GIMP_IS_BRUSH_CORE (core))
-    current_brush = GIMP_BRUSH_CORE (core)->brush;
-
   if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, PRETRACE_PAINT, time);
 
@@ -460,10 +455,6 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 
   if (GIMP_PAINT_CORE_GET_CLASS (core)->traces_on_window)
     gimp_paint_core_paint (core, drawable, paint_options, POSTTRACE_PAINT, time);
-
-  /*  restore the current brush pointer  */
-  if (GIMP_IS_BRUSH_CORE (core))
-    GIMP_BRUSH_CORE (core)->brush = current_brush;
 }
 
 static void
@@ -798,7 +789,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           brush = gimp_context_get_brush (context);
           mask  = gimp_brush_get_mask (brush);
 
-          if (brush != brush_core->grr_brush && brush_core->brush_bound_segs)
+          if (brush != brush_core->main_brush && brush_core->brush_bound_segs)
             {
               g_free (brush_core->brush_bound_segs);
               brush_core->brush_bound_segs   = NULL;

@@ -44,6 +44,9 @@ struct _GimpClone
   gint          src_x;
   gint          src_y;
 
+  gint          orig_src_x;
+  gint          orig_src_y;
+
   gint          offset_x;
   gint          offset_y;
   gboolean      first_stroke;

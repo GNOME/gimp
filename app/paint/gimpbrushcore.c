@@ -58,6 +58,11 @@ static gboolean gimp_brush_core_pre_paint         (GimpPaintCore      *core,
                                                    GimpPaintOptions   *paint_options,
                                                    GimpPaintCoreState  paint_state,
                                                    guint32             time);
+static void     gimp_brush_core_post_paint        (GimpPaintCore      *core,
+                                                   GimpDrawable       *drawable,
+                                                   GimpPaintOptions   *paint_options,
+                                                   GimpPaintCoreState  paint_state,
+                                                   guint32             time);
 static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
                                                    GimpDrawable       *drawable,
                                                    GimpPaintOptions   *paint_options,
@@ -157,6 +162,7 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
 
   paint_core_class->start          = gimp_brush_core_start;
   paint_core_class->pre_paint      = gimp_brush_core_pre_paint;
+  paint_core_class->post_paint     = gimp_brush_core_post_paint;
   paint_core_class->interpolate    = gimp_brush_core_interpolate;
   paint_core_class->get_paint_area = gimp_brush_core_get_paint_area;
 
@@ -169,6 +175,7 @@ gimp_brush_core_init (GimpBrushCore *core)
 {
   gint i, j;
 
+  core->main_brush               = NULL;
   core->brush                    = NULL;
   core->spacing                  = 1.0;
   core->scale                    = 1.0;
@@ -201,7 +208,6 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->last_brush_mask          = NULL;
   core->cache_invalid            = FALSE;
 
-  core->grr_brush                = NULL;
   core->brush_bound_segs         = NULL;
   core->n_brush_bound_segs       = 0;
 }
@@ -246,13 +252,13 @@ gimp_brush_core_finalize (GObject *object)
           core->kernel_brushes[i][j] = NULL;
         }
 
-  if (core->grr_brush)
+  if (core->main_brush)
     {
-      g_signal_handlers_disconnect_by_func (core->grr_brush,
+      g_signal_handlers_disconnect_by_func (core->main_brush,
                                             gimp_brush_core_invalidate_cache,
                                             core);
-      g_object_unref (core->grr_brush);
-      core->grr_brush = NULL;
+      g_object_unref (core->main_brush);
+      core->main_brush = NULL;
     }
 
   if (core->brush_bound_segs)
@@ -283,7 +289,7 @@ gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
        */
       if (paint_core->last_coords.x == paint_core->cur_coords.x &&
 	  paint_core->last_coords.y == paint_core->cur_coords.y &&
-	  ! gimp_brush_want_null_motion (core->brush,
+	  ! gimp_brush_want_null_motion (core->main_brush,
                                          &paint_core->last_coords,
                                          &paint_core->cur_coords))
         {
@@ -292,13 +298,28 @@ gimp_brush_core_pre_paint (GimpPaintCore      *paint_core,
 
       if (GIMP_BRUSH_CORE_GET_CLASS (paint_core)->handles_changing_brush)
         {
-          core->brush = gimp_brush_select_brush (core->brush,
+          core->brush = gimp_brush_select_brush (core->main_brush,
                                                  &paint_core->last_coords,
                                                  &paint_core->cur_coords);
         }
     }
 
   return TRUE;
+}
+
+static void
+gimp_brush_core_post_paint (GimpPaintCore      *paint_core,
+                            GimpDrawable       *drawable,
+                            GimpPaintOptions   *paint_options,
+                            GimpPaintCoreState  paint_state,
+                            guint32             time)
+{
+  GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
+
+  if (paint_state == MOTION_PAINT)
+    {
+      core->brush = core->main_brush;
+    }
 }
 
 static gboolean
@@ -313,15 +334,15 @@ gimp_brush_core_start (GimpPaintCore    *paint_core,
    *  the maximum bounds of the active brush...
    */
 
-  if (core->grr_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
+  if (core->main_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
     {
-      if (core->grr_brush)
+      if (core->main_brush)
         {
-          g_signal_handlers_disconnect_by_func (core->grr_brush,
+          g_signal_handlers_disconnect_by_func (core->main_brush,
                                                 gimp_brush_core_invalidate_cache,
                                                 core);
-          g_object_unref (core->grr_brush);
-          core->grr_brush = NULL;
+          g_object_unref (core->main_brush);
+          core->main_brush = NULL;
         }
 
       if (core->brush_bound_segs)
@@ -332,25 +353,25 @@ gimp_brush_core_start (GimpPaintCore    *paint_core,
         }
     }
 
-  if (! core->grr_brush)
+  if (! core->main_brush)
     {
-      core->grr_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+      core->main_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
-      if (! core->grr_brush)
+      if (! core->main_brush)
         {
           g_message (_("No brushes available for use with this tool."));
           return FALSE;
         }
 
-      g_object_ref (core->grr_brush);
-      g_signal_connect (core->grr_brush, "invalidate_preview",
+      g_object_ref (core->main_brush);
+      g_signal_connect (core->main_brush, "invalidate_preview",
                         G_CALLBACK (gimp_brush_core_invalidate_cache),
                         core);
     }
 
-  core->spacing = (gdouble) gimp_brush_get_spacing (core->grr_brush) / 100.0;
+  core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
 
-  core->brush = core->grr_brush;
+  core->brush = core->main_brush;
 
   return TRUE;
 }
@@ -590,10 +611,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
   for (n = 0; n < num_points; n++)
     {
-      GimpBrush *current_brush;
-
-      gdouble    t = t0 + n * dt;
-      gdouble    p = (gdouble) n / num_points;
+      gdouble t = t0 + n * dt;
+      gdouble p = (gdouble) n / num_points;
 
       paint_core->cur_coords.x        = paint_core->last_coords.x        + t * delta_vec.x;
       paint_core->cur_coords.y        = paint_core->last_coords.y        + t * delta_vec.y;
@@ -607,14 +626,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       paint_core->distance            = initial                    + t * dist;
       paint_core->pixel_dist          = pixel_initial              + t * pixel_dist;
 
-      /*  save the current brush  */
-      current_brush = core->brush;
-
       gimp_paint_core_paint (paint_core, drawable, paint_options,
                              MOTION_PAINT, time);
-
-      /*  restore the current brush pointer  */
-      core->brush = current_brush;
     }
 
   paint_core->cur_coords.x        = paint_core->last_coords.x        + delta_vec.x;

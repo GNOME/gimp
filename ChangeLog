@@ -1,3 +1,22 @@
+2004-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimppaintcore.[ch]: added new virtual function
+	GimpPaintCore::post_paint() and call it after calling
+	GimpPaintCore::paint().
+
+	* app/paint/gimpbrushcore.[ch]: renamed brush_core->grr_brush
+	to brush_core->main_brush and reset brush_core->brush
+	to brush_core->main_brush in GimpPaintCore::post_paint().
+
+	* app/paint/gimpbrushcore.c
+	* app/paint/gimppaintcore-stroke.c
+	* app/tools/gimppainttool.c: removed all code which restores
+	the brush_core's old brush after painting since post_paint()
+	does this automatically now.
+
+	* app/paint/gimpclone.[ch]: moved static variables to the
+	GimpClone struct.
+
 2004-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs-generic.h (color_pixels): some code
