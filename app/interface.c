@@ -728,6 +728,9 @@ create_display_shell (GDisplay *gdisp,
 	(scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
       n_height = height *
 	(scaledest * SCREEN_XRES (gdisp)) / (scalesrc * gdisp->gimage->xresolution);
+
+      if (scaledest == 1 && scalesrc == 0xff)
+        break;
     }
 
   gdisp->scale = (scaledest << 8) + scalesrc;

@@ -151,22 +151,17 @@ change_scale (GDisplay *gdisp,
   sx = (gdisp->gimage->width * scaledest) / scalesrc;
   sy = (gdisp->gimage->height * scaledest) / scalesrc;
 
-  /*  The slider value is a short, so make sure we are within its
-      range.  If we are trying to scale past it, then stop the scale  */
-  if (sx < 0xffff && sy < 0xffff)
-    {
-      gdisp->scale = (scaledest << 8) + scalesrc;
+  gdisp->scale = (scaledest << 8) + scalesrc;
 
-      /*  set the offsets  */
-      offset_x *= ((double) scaledest / (double) scalesrc);
-      offset_y *= ((double) scaledest / (double) scalesrc);
-
-      gdisp->offset_x = (int) (offset_x - (gdisp->disp_width / 2));
-      gdisp->offset_y = (int) (offset_y - (gdisp->disp_height / 2));
-
-      /*  resize the image  */
-      resize_display (gdisp, allow_resize_windows, TRUE);
-    }
+  /*  set the offsets  */
+  offset_x *= ((double) scaledest / (double) scalesrc);
+  offset_y *= ((double) scaledest / (double) scalesrc);
+  
+  gdisp->offset_x = (int) (offset_x - (gdisp->disp_width / 2));
+  gdisp->offset_y = (int) (offset_y - (gdisp->disp_height / 2));
+  
+  /*  resize the image  */
+  resize_display (gdisp, allow_resize_windows, TRUE);
 }
 
 

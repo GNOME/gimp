@@ -1,3 +1,13 @@
+2003-01-10  Sven Neumann  <sven@gimp.org>
+
+	* app/interface.c (create_display_shell): break out of the loop
+	that calculates the initial zoom ratio in case we hit our limits.
+	Seems to fix bug #103030.
+
+	* app/scale.c (change_scale): removed a check that dates back to
+	the times when we used Motif for our user interface and scrollbars
+	used short values. Fixes bug #94979.
+
 2003-01-09  Sven Neumann  <sven@gimp.org>
 
 	* app/procedural_db.c (procedural_db_run_proc): always set the
