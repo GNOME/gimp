@@ -1,5 +1,10 @@
 2003-09-29  Simon Budig  <simon@gimp.org>
 
+	* app/widgets/gimppreviewrenderervectors.c: Fixed a bad
+	crash (Thanks to Sven for spotting that). Minor cleanups.
+
+2003-09-29  Simon Budig  <simon@gimp.org>
+
 	* app/widgets/gimppreviewrenderervectors.c: Made the preview
 	respect the aspect ratio and resolutions of the image. There
 	apparently still is an off-by-one error in it.
