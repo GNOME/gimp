@@ -970,7 +970,7 @@ prefs_dialog_new (Gimp    *gimp,
 
   attrs = pango_attr_list_new ();
 
-  attr = pango_attr_scale_new (PANGO_SCALE_X_LARGE);
+  attr = pango_attr_scale_new (PANGO_SCALE_LARGE);
   attr->start_index = 0;
   attr->end_index   = -1;
   pango_attr_list_insert (attrs, attr);

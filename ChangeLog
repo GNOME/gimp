@@ -1,3 +1,9 @@
+2003-07-15  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new)
+	* app/widgets/gimpviewabledialog.c (gimp_viewable_dialog_new): 
+	use a large font instead of extra-large.
+	
 2003-07-15  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-dispatch.c: added to cvs AGAIN.
