@@ -2,18 +2,32 @@
 # Copyright (C) 1999-2000 Free Software Foundation, Inc.
 # Ville Hautamäki <villeh@cs.joensuu.fi>
 # Tor Lillqvist <tml@iki.fi>
+# Sami Gerdt <sgerdt@cs.joensuu.fi>
 #
 #	Convolve = konvoluution (Signaalin käsittelyssä käytetty käännös)
 #	drawable = kuva?, eikös sillä ole gimp:ssä ihan specifi merkitys?
 #	dodge = ?
 #	burn = ? (pitäisi tarkistaa nuo finski photoshopista)
-#
+#	rivi.431 Pattern fill = Täyttö taustavärillä??? -SG
+#	1106 Anti Erase = Anti-pyyhki??? *heh* -SG
+#	1188 pixels/%a = pikseliä/%a??? ->pikseleitä/%a -SG
+#	1678 yhtevevyyden vuoksi "tiedosto" -sanaa käytettäessä.. -SG
+#	ilm. olen korjannut jotain.. -paree katsoa.. -SG(3.6)
+#	2118 "se" sana pois?->turha..? -SG	
+#	2860 ? run in batch mode = aja eräajona*..? siis *. -SG
+#	2880 no-data = no-data -> ei-dataa?
+#	3058 dump-items||vähän aikaisemmin tyhjä myös..
+#	3142 select/all valitse/kokonaan? ->valitse/kaikki.. -SG
+#	3260 shrink wrap = koko kuva? -SG
+#	3354 rotate = kierrätä (ihan vaan kierrä?) -SG
+#	5294 fuzzy = pehmeä? ->epäselvä, epätarkka, sumea tms. -SG
+#	fuzzy = normaalisti sumea, ehkä tuossa tapauksessa pehmeä käy -VH
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
-"POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-05-30 22:05+03:00\n"
+"POT-Creation-Date: 2000-05-15 22:38-0700\n"
+"PO-Revision-Date: 2000-04-26 10:26+02:00\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -68,7 +82,7 @@ msgstr "tekijöinä"
 msgid "GIMP Startup"
 msgstr "GIMP käynnistyy"
 
-#: app/app_procs.c:492 app/gimprc.c:446
+#: app/app_procs.c:492 app/gimprc.c:442
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "luen tiedostoa \"%s\"\n"
@@ -83,22 +97,22 @@ msgid "Parasites"
 msgstr "Loiset"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2461
+#: app/app_procs.c:556 app/internal_procs.c:71 app/preferences_dialog.c:2459
 msgid "Brushes"
 msgstr "Siveltimet"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:558 app/internal_procs.c:143 app/preferences_dialog.c:2469
+#: app/app_procs.c:558 app/internal_procs.c:143 app/preferences_dialog.c:2467
 msgid "Patterns"
 msgstr "Kuviot"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:560 app/preferences_dialog.c:2473
+#: app/app_procs.c:560 app/preferences_dialog.c:2471
 msgid "Palettes"
 msgstr "Paletit"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:562 app/internal_procs.c:113 app/preferences_dialog.c:2477
+#: app/app_procs.c:562 app/internal_procs.c:113 app/preferences_dialog.c:2475
 msgid "Gradients"
 msgstr "Väriliukumat"
 
@@ -123,16 +137,16 @@ msgstr "Poistu"
 #. the cancel button
 #: app/app_procs.c:757 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2502 app/channels_dialog.c:2665
-#: app/color_balance.c:275 app/color_notebook.c:126 app/convert.c:506
+#: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:562 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:135 app/gdisplay_ops.c:305 app/gimpprogress.c:112
 #: app/global_edit.c:772 app/gradient.c:1768 app/gradient.c:4840
 #: app/gradient.c:5401 app/hue_saturation.c:374 app/interface.c:1027
-#: app/layers_dialog.c:3478 app/layers_dialog.c:3660 app/layers_dialog.c:3752
-#: app/layers_dialog.c:4012 app/levels.c:340 app/palette.c:1826
+#: app/layers_dialog.c:3482 app/layers_dialog.c:3664 app/layers_dialog.c:3756
+#: app/layers_dialog.c:4008 app/levels.c:340 app/palette.c:1826
 #: app/posterize.c:202 app/preferences_dialog.c:1455 app/qmask.c:281
-#: app/resize.c:194 app/resize.c:1326 app/threshold.c:275
-#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:332
+#: app/resize.c:195 app/resize.c:1341 app/threshold.c:275
+#: app/user_install.c:548 app/user_install.c:1190 modules/cdisplay_gamma.c:331
 #: modules/cdisplay_highcontrast.c:325
 msgid "Cancel"
 msgstr "Peru"
@@ -177,65 +191,65 @@ msgstr "Räätälöity väriliukuma"
 msgid "Blend:"
 msgstr "Sekoita:"
 
-#: app/blend.c:320 app/gradient.c:532 app/preferences_dialog.c:2201
+#: app/blend.c:320 app/gradient.c:532 app/preferences_dialog.c:2199
 msgid "Linear"
-msgstr "lineaarinen"
+msgstr "Lineaarinen"
 
 #: app/blend.c:321
 msgid "Bi-Linear"
-msgstr "bilineaarinen"
+msgstr "Bilineaarinen"
 
 #: app/blend.c:322
 msgid "Radial"
-msgstr "säteitteinen"
+msgstr "Säteittäinen"
 
 #: app/blend.c:323
 msgid "Square"
-msgstr "neliömäinen"
+msgstr "Neliömäinen"
 
 #: app/blend.c:324
 msgid "Conical (symmetric)"
-msgstr "kartiomainen (symmetrinen)"
+msgstr "Kartiomainen (symmetrinen)"
 
 #: app/blend.c:325
 msgid "Conical (asymmetric)"
-msgstr "kartoimainen (epäsymmetrinen)"
+msgstr "Kartiomainen (epäsymmetrinen)"
 
 #: app/blend.c:326
 msgid "Shapeburst (angular)"
-msgstr "muotopurske (kulma)"
+msgstr "Muotopurske (kulma)"
 
 #: app/blend.c:327
 msgid "Shapeburst (spherical)"
-msgstr "muotopurske (pallo)"
+msgstr "Muotopurske (pallo)"
 
 #: app/blend.c:328
 msgid "Shapeburst (dimpled)"
-msgstr "muotopurske (näppyläinen)"
+msgstr "Muotopurske (näppyläinen)"
 
 #: app/blend.c:329
 msgid "Spiral (clockwise)"
-msgstr "spiraali (myötäpäivään)"
+msgstr "Spiraali (myötäpäivään)"
 
 #: app/blend.c:330
 msgid "Spiral (anticlockwise)"
-msgstr "spiraali (vastapäivään)"
+msgstr "Spiraali (vastapäivään)"
 
 #: app/blend.c:334
 msgid "Gradient:"
-msgstr "Värilukuma:"
+msgstr "Väriliukuma:"
 
-#: app/blend.c:342 app/by_color_select.c:817 app/preferences_dialog.c:1810
+#: app/blend.c:342 app/by_color_select.c:817 app/preferences_dialog.c:1809
 msgid "None"
-msgstr "ei mikään"
+msgstr "Ei mikään"
 
 #: app/blend.c:343
 msgid "Sawtooth Wave"
-msgstr "sahalaita-aalto"
+msgstr "Sahalaita-aalto"
 
 #: app/blend.c:344
 msgid "Triangular Wave"
-msgstr "kolmioaalto"
+msgstr "Kolmioaalto"
 
 #: app/blend.c:348
 msgid "Repeat:"
@@ -283,33 +297,35 @@ msgstr "Kirkkaus- ja kontrastisäätö ei toimi indeksoiduille kuville."
 
 #: app/brightness_contrast.c:214 app/channel_ops.c:91
 #: app/channels_dialog.c:2500 app/channels_dialog.c:2663
-#: app/color_balance.c:271 app/color_notebook.c:123 app/convert.c:504
+#: app/color_balance.c:271 app/color_notebook.c:122 app/convert.c:504
 #: app/curves.c:558 app/file_new_dialog.c:207 app/file_new_dialog.c:353
 #: app/gdisplay_color_ui.c:133 app/gimpui.c:122 app/hue_saturation.c:370
-#: app/layers_dialog.c:3476 app/layers_dialog.c:3658 app/layers_dialog.c:3750
-#: app/layers_dialog.c:4010 app/levels.c:336 app/module_db.c:314
+#: app/layers_dialog.c:3480 app/layers_dialog.c:3662 app/layers_dialog.c:3754
+#: app/layers_dialog.c:4006 app/levels.c:336 app/module_db.c:281
 #: app/posterize.c:198 app/preferences_dialog.c:1451 app/qmask.c:279
-#: app/resize.c:192 app/resize.c:1326 app/threshold.c:271
-#: app/user_install.c:1188 modules/cdisplay_gamma.c:330
+#: app/resize.c:193 app/resize.c:1341 app/threshold.c:271
+#: app/user_install.c:1188 modules/cdisplay_gamma.c:329
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
-msgstr "OK"
+msgstr ""
 
 #: app/brightness_contrast.c:216 app/by_color_select.c:694
 #: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
 #: app/hue_saturation.c:372 app/levels.c:338 app/posterize.c:200
-#: app/threshold.c:273 app/tools.c:1085 app/transform_core.c:406
+#: app/threshold.c:273 app/tools.c:1085 app/transform_core.c:409
 #: modules/colorsel_water.c:634
 msgid "Reset"
 msgstr "Palauta"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
+#, fuzzy
 msgid "Brightness:"
 msgstr "Kirkkaus:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:265
+#, fuzzy
 msgid "Contrast:"
 msgstr "Kontrasti:"
 
@@ -326,8 +342,8 @@ msgstr "Sivellinmuokkain"
 
 #. The close button
 #: app/brush_edit.c:216 app/brush_select.c:281 app/by_color_select.c:696
-#: app/color_notebook.c:123 app/color_picker.c:297 app/colormap_dialog.i.c:173
-#: app/crop.c:1054 app/devices.c:755 app/docindex.c:773 app/errorconsole.c:281
+#: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:173
+#: app/crop.c:1054 app/devices.c:755 app/docindex.c:772 app/errorconsole.c:281
 #: app/gdisplay_ops.c:305 app/gradient.c:800 app/gradient_select.c:153
 #: app/histogram_tool.c:276 app/info_window.c:255 app/lc_dialog.c:195
 #: app/measure.c:321 app/nav_window.c:1344 app/palette.c:2072
@@ -359,7 +375,7 @@ msgstr "Kulma:"
 msgid "Brush Selection"
 msgstr "Siveltimen valinta"
 
-#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:354
+#: app/brush_select.c:279 app/gradient.c:798 app/module_db.c:321
 #: app/palette.c:2070 app/pattern_select.c:170
 msgid "Refresh"
 msgstr "Virkistä"
@@ -368,11 +384,11 @@ msgstr "Virkistä"
 msgid "No Brushes available"
 msgstr "Ei siveltimiä"
 
-#: app/brush_select.c:448 app/layers_dialog.c:412 app/tool_options.c:526
+#: app/brush_select.c:448 app/layers_dialog.c:413 app/tool_options.c:526
 msgid "Opacity:"
 msgstr "Peitto:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:365 app/tool_options.c:550
+#: app/brush_select.c:456 app/layers_dialog.c:366 app/tool_options.c:550
 msgid "Mode:"
 msgstr "Toiminta:"
 
@@ -394,7 +410,7 @@ msgstr "Poista"
 
 #: app/brush_select.c:510
 msgid "Spacing:"
-msgstr "Välistys:"
+msgstr "Välitys:"
 
 #. this should never happen
 #: app/brush_select.c:1850
@@ -457,7 +473,7 @@ msgstr "Korvaa"
 msgid "Add"
 msgstr "Lisää"
 
-#: app/by_color_select.c:761 app/layers_dialog.c:380 app/tool_options.c:926
+#: app/by_color_select.c:761 app/layers_dialog.c:381 app/tool_options.c:926
 msgid "Subtract"
 msgstr "Vähennä"
 
@@ -481,12 +497,12 @@ msgstr "Käänteinen"
 msgid "All"
 msgstr "Kaikki"
 
-#: app/channel.c:188 app/channel.c:190 app/layer.c:321 app/layer.c:323
+#: app/channel.c:188 app/channel.c:190 app/layer.c:320 app/layer.c:322
 msgid "copy"
 msgstr "kopio"
 
 #. formulate the new layer_mask name
-#: app/channel.c:196 app/gradient.c:1599 app/layer.c:329 app/layer.c:1745
+#: app/channel.c:196 app/gradient.c:1599 app/layer.c:328 app/layer.c:1744
 #, c-format
 msgid "%s copy"
 msgstr "%s:n kopio"
@@ -495,7 +511,7 @@ msgstr "%s:n kopio"
 msgid "Selection Mask"
 msgstr "Valintamaski"
 
-#: app/channel_ops.c:85 app/resize.c:405
+#: app/channel_ops.c:85 app/resize.c:406
 msgid "Offset"
 msgstr "Siirtymä"
 
@@ -505,7 +521,7 @@ msgid "Offset X:"
 msgstr "Siirtymä X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
+#: app/resize.c:344 app/resize.c:429 app/resize.c:587 app/rotate_tool.c:106
 #: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1391
 msgid "Y:"
 msgstr "Y:"
@@ -515,12 +531,12 @@ msgstr "Y:"
 msgid "Wrap Around"
 msgstr "Reunan yli kierto"
 
-#: app/channel_ops.c:174 app/image_new.c:76 app/image_new.c:291
-#: app/layers_dialog.c:3578
+#: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
+#: app/layers_dialog.c:3582
 msgid "Background"
 msgstr "Taustaväri"
 
-#: app/channel_ops.c:175 app/image_new.c:86 app/layers_dialog.c:3580
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3584
 msgid "Transparent"
 msgstr "Läpinäkyvä"
 
@@ -561,18 +577,18 @@ msgstr "Poista kanava"
 msgid "Empty Channel Copy"
 msgstr "/Tyhjän kanavan kopio"
 
-#: app/channels_dialog.c:1433 app/color_balance.c:343 app/color_select.c:250
-#: app/curves.c:583 app/histogram_tool.c:304 app/levels.c:369
+#: app/channels_dialog.c:1433 app/color_balance.c:343 app/curves.c:583
+#: app/histogram_tool.c:304 app/levels.c:369
 msgid "Red"
 msgstr "Punainen"
 
-#: app/channels_dialog.c:1437 app/color_balance.c:368 app/color_select.c:251
-#: app/curves.c:584 app/histogram_tool.c:305 app/levels.c:370
+#: app/channels_dialog.c:1437 app/color_balance.c:368 app/curves.c:584
+#: app/histogram_tool.c:305 app/levels.c:370
 msgid "Green"
 msgstr "Vihreä"
 
-#: app/channels_dialog.c:1441 app/color_balance.c:393 app/color_select.c:252
-#: app/curves.c:585 app/histogram_tool.c:306 app/levels.c:371
+#: app/channels_dialog.c:1441 app/color_balance.c:393 app/curves.c:585
+#: app/histogram_tool.c:306 app/levels.c:371
 msgid "Blue"
 msgstr "Sininen"
 
@@ -679,11 +695,11 @@ msgstr "Keltainen"
 msgid "Preserve Luminosity"
 msgstr "Säilytä valoisuus"
 
-#: app/color_notebook.c:118
+#: app/color_notebook.c:117
 msgid "Color Selection"
 msgstr "Värin valinta"
 
-#: app/color_notebook.c:126
+#: app/color_notebook.c:125
 msgid "Revert to Old Color"
 msgstr "Palauta vanha väri"
 
@@ -715,7 +731,7 @@ msgstr "Sininen:"
 msgid "Alpha:"
 msgstr "Peitto:"
 
-#: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:441
+#: app/color_picker.c:259 app/color_picker.c:274 app/color_select.c:437
 #: app/colormap_dialog.i.c:278
 msgid "Hex Triplet:"
 msgstr "Heksana:"
@@ -741,46 +757,6 @@ msgstr "Voimakkuus:"
 #: app/info_window.c:425 app/info_window.c:447
 msgid "N/A"
 msgstr " - "
-
-#: app/color_select.c:238
-msgid "H"
-msgstr "H"
-
-#: app/color_select.c:239
-msgid "S"
-msgstr ""
-
-#: app/color_select.c:240
-msgid "V"
-msgstr "V"
-
-#: app/color_select.c:241 app/hue_saturation.c:352
-msgid "R"
-msgstr "R"
-
-#: app/color_select.c:242 app/hue_saturation.c:354
-msgid "G"
-msgstr "G"
-
-#: app/color_select.c:243 app/hue_saturation.c:356
-msgid "B"
-msgstr "B"
-
-#: app/color_select.c:247 app/layers_dialog.c:383 app/paint_funcs.c:94
-#: app/tool_options.c:929
-msgid "Hue"
-msgstr "Sävy (H)"
-
-#: app/color_select.c:248 app/layers_dialog.c:384 app/paint_funcs.c:95
-#: app/tool_options.c:930
-msgid "Saturation"
-msgstr "Värikylläisyys (S)"
-
-#: app/color_select.c:249 app/curves.c:582 app/histogram_tool.c:303
-#: app/layers_dialog.c:386 app/levels.c:368 app/paint_funcs.c:97
-#: app/tool_options.c:932
-msgid "Value"
-msgstr "Arvo"
 
 #: app/colormap_dialog.i.c:191
 msgid "Indexed Color Palette"
@@ -831,7 +807,7 @@ msgstr "Tee reuna valinnalle"
 msgid "Border Selection by:"
 msgstr "Reunan leveys:"
 
-#: app/commands.c:1324
+#: app/commands.c:1322
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
@@ -910,8 +886,8 @@ msgid ""
 msgstr ""
 "Yrität muuntaa kuvaa jolla on alfakanava tai tasoja täysvärimuodosta "
 "indeksoiduksi.\n"
-"Älä tee yli 255 värin palettia jos aiot tallettaa kuva osittain läpinäkyvänä "
-"tai animoituna GIFinä."
+"Älä tee yli 255 värin palettia jos aiot tallettaa kuvan osittain "
+"läpinäkyvänä tai animoituna GIFinä."
 
 #: app/convert.c:965
 msgid "Select Custom Palette"
@@ -980,7 +956,7 @@ msgid "Width:"
 msgstr "Leveys:"
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3519 app/resize.c:253 app/resize.c:278 app/resize.c:509
+#: app/layers_dialog.c:3523 app/resize.c:254 app/resize.c:279 app/resize.c:524
 #: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:364
 msgid "Height:"
 msgstr "Korkeus:"
@@ -1006,6 +982,11 @@ msgstr "Indeksoitujen kuvien käyriä ei voi muokata"
 msgid "Modify Curves for Channel:"
 msgstr "Muokkaa värikäyrät kanavalle:"
 
+#: app/curves.c:582 app/histogram_tool.c:303 app/layers_dialog.c:387
+#: app/levels.c:368 app/paint_funcs.c:97 app/tool_options.c:932
+msgid "Value"
+msgstr "Arvo"
+
 #: app/curves.c:586 app/levels.c:372
 msgid "Alpha"
 msgstr "Peitto"
@@ -1023,7 +1004,7 @@ msgstr "Pehmeä"
 msgid "Free"
 msgstr "Vapaa"
 
-#: app/curves.c:699 app/levels.c:597 app/module_db.c:864
+#: app/curves.c:699 app/levels.c:597 app/module_db.c:830
 msgid "Load"
 msgstr "Lataa"
 
@@ -1069,31 +1050,28 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
-"Avaa valittu kohde\n"
-"<Shift> Nosta ikkuna jos jo auki\n"
-"<Ctrl> Lataa Kuva -dialogi"
 
 #: app/docindex.c:118
+#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Siirrä valittu ylöspäin\n"
-"<Shift> Ensimmäiseksi"
+msgstr "Siirrä valittu ylöspäin"
 
 #: app/docindex.c:122
+#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Siirrä valittu alaspäin\n"
-"<Shift> Viimeiseksi"
+msgstr "Siirrä valittu alaspäin"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
 msgstr "Poista valittu"
 
-#: app/docindex.c:767
+#: app/docindex.c:766
 msgid "Document Index"
-msgstr "Kuvahaluettelo"
+msgstr "Kuvaluettelo"
 
 #: app/dodgeburn.c:139
 msgid "Exposure:"
@@ -1106,11 +1084,11 @@ msgstr "Tyyppi"
 
 #: app/dodgeburn.c:163
 msgid "Dodge"
-msgstr "Tummenna (dodge)"
+msgstr ""
 
 #: app/dodgeburn.c:165
 msgid "Burn"
-msgstr "Vaalenna (burn)"
+msgstr ""
 
 #: app/dodgeburn.c:175
 msgid "Mode"
@@ -1125,7 +1103,7 @@ msgid "Move: "
 msgstr "Siirrä: "
 
 #: app/equalize.c:37
-msgid "Equalize does not operate on indexed drawables."
+dmsgid "Equalize does not operate on indexed drawables."
 msgstr "Ekvalistointi ei toimi indeksoiduilla kuvilla"
 
 #. the hard toggle
@@ -1183,7 +1161,7 @@ msgid ""
 "preferences dialog."
 msgstr ""
 "Yrität luoda kuvaa jonka\n"
-"koko alunperis olisi %s.\n"
+"koko alunperin olisi %s.\n"
 "\n"
 "Valitse OK luodaksesi kuva silti.\n"
 "Valitse Peru jos et tarkoittanut\n"
@@ -1212,11 +1190,11 @@ msgid "Pixels"
 msgstr "pikseliä"
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:566
+#: app/file_new_dialog.c:524 app/resize.c:581
 msgid "Resolution X:"
 msgstr "Tarkkuus X:"
 
-#: app/file_new_dialog.c:545 app/resize.c:587
+#: app/file_new_dialog.c:545 app/resize.c:602
 msgid "pixels/%a"
 msgstr "pikseliä/%a"
 
@@ -1239,7 +1217,7 @@ msgid ""
 "Generate\n"
 "Preview"
 msgstr ""
-"tee esi-\n"
+"Tee esi-\n"
 "katselukuva"
 
 #: app/fileops.c:402
@@ -1247,12 +1225,11 @@ msgid "No Selection."
 msgstr "Ei valintaa"
 
 #: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Tallennus epäonnistui.\n"
-"%s"
+msgstr "Tallennus epäonnistui: %s"
 
 #: app/fileops.c:475 app/fileops.c:507
 msgid "Save Image"
@@ -1267,42 +1244,39 @@ msgid "Determine File Type:"
 msgstr "Päättele tiedoston tyyppi:"
 
 #: app/fileops.c:593
+#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"Kuvan palautus epäonnistui.\n"
-"Ei tietoa mistä tiedostosta kuva on alunperin luettu."
+"En voi palauttaa kuvaa ennalleen. En tiedä mistä tiedostosta kuva on "
+"alunperin luettu."
 
 #: app/fileops.c:600
+#, fuzzy
 msgid "Revert"
 msgstr "Palauta"
 
 #: app/fileops.c:611
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Palautus epäonnistui.\n"
-"%s"
+msgstr "Palautus epäonnistui."
 
 #: app/fileops.c:708
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr ""
-"%s epäonnistui.\n"
-"%s: Tuntematon tiedostotyyppi."
+msgstr "Tuntemattoman kuvatyypin käyttö ei mahdollista."
 
 #: app/fileops.c:725
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr ""
-"%s epäonnistui.\n"
-"%s ei ole tavallinen tiedosto."
+msgstr "%s ei ole tavallinen tiedosto (%s)"
 
 #: app/fileops.c:746
 #, c-format
@@ -1310,30 +1284,24 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
-"%s epäonnistui.\n"
-"%s: Ei sallittua."
 
 #: app/fileops.c:795
 msgid "Open"
 msgstr "Avaa"
 
 #: app/fileops.c:1102
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr ""
-"Tallennus epäonnistui.\n"
-"%s: Tuntematon tiedostotyyppi."
+msgstr "Tuntemattoman kuvatyypin käyttö ei mahdollista."
 
 #: app/fileops.c:1117
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr ""
-"Tallennus epäonnistui.\n"
-"%s ei ole tavallinen tiedosto"
+msgstr "%s ei ole tavallinen tiedosto (%s)"
 
 #: app/fileops.c:1136
 #, c-format
@@ -1341,8 +1309,6 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
-"Tallennus epäonnistui.\n"
-"%s: Ei sallittua."
 
 #: app/fileops.c:1386
 msgid "(This thumbnail may be out of date)"
@@ -1373,13 +1339,11 @@ msgid "(could not make preview)"
 msgstr "(esikatselukuvaa ei voitu tehdä)"
 
 #: app/fileops.c:1618 app/fileops.c:1698
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr ""
-"Avaus epäonnistui.\n"
-"%s"
+msgstr "Avaus epäonnistui: %s"
 
 #: app/fileops.c:1820
 #, c-format
@@ -1403,12 +1367,12 @@ msgid "Flip Tool"
 msgstr "Peilikuvatyökalu"
 
 #: app/flip_tool.c:92 app/preferences_dialog.c:1577
-#: app/preferences_dialog.c:2348
+#: app/preferences_dialog.c:2346
 msgid "Horizontal"
 msgstr "Vaaka"
 
 #: app/flip_tool.c:94 app/preferences_dialog.c:1579
-#: app/preferences_dialog.c:2350
+#: app/preferences_dialog.c:2348
 msgid "Vertical"
 msgstr "Pysty"
 
@@ -1434,9 +1398,9 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB-tyhjä"
 
-#: app/gdisplay.c:220 app/image_new.c:60 app/preferences_dialog.c:1623
+#: app/gdisplay.c:220 app/image_new.c:57 app/preferences_dialog.c:1623
 msgid "RGB"
-msgstr "RGB"
+msgstr ""
 
 #: app/gdisplay.c:223
 msgid "grayscale-empty"
@@ -1579,42 +1543,42 @@ msgstr ""
 "Kuvaletkun lataus epäonnostui\n"
 "\"%s\""
 
-#: app/gimpbrushpipe.c:309
+#: app/gimpbrushpipe.c:308
 msgid "Brush pipes should have at least one brush."
 msgstr "Sivellinputkessa pitäisi olla vähintään yksi sivellin."
 
-#: app/gimpbrushpipe.c:404
+#: app/gimpbrushpipe.c:403
 msgid ""
 "Failed to load one of the\n"
 "brushes in the brush pipe."
 msgstr "Yhtä sivellinputken siveltimistä ei voitu ladata."
 
-#: app/gimpbrushpipe.c:466
+#: app/gimpbrushpipe.c:465
 msgid "Failed to load pixmap brush."
 msgstr "Kuvasiveltimen lataus epäonnostui."
 
-#: app/gimpdrawable.c:171
+#: app/gimpdrawable.c:166
 msgid "Can't fill unknown image type."
 msgstr "Tuntemattoman kuvatyypin täyttö ei mahdollista."
 
-#: app/gimpdrawable.c:501
+#: app/gimpdrawable.c:496
 msgid "parasite attach to drawable"
 msgstr "parasiitin liittäminen kuvaan"
 
-#: app/gimpdrawable.c:536
+#: app/gimpdrawable.c:531
 msgid "detach parasite from drawable"
-msgstr "irrota parasiitti kuvasta"
+msgstr ""
 
-#: app/gimpdrawable.c:743
+#: app/gimpdrawable.c:738
 msgid "unnamed"
 msgstr "nimetön"
 
-#: app/gimpdrawable.c:760
+#: app/gimpdrawable.c:755
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Taso tyyppiä %d ei tuettu."
 
-#: app/gimphelp.c:166
+#: app/gimphelp.c:128
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -1668,7 +1632,7 @@ msgstr ""
 msgid "There are not enough visible layers for a merge down."
 msgstr "Ei ole tarpeeksi näkyviä tasola alaspäin yhdisteltäväksi."
 
-#: app/gimpimage.c:3027
+#: app/gimpimage.c:3028
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1676,7 +1640,7 @@ msgstr ""
 "Tasomaskin lisäys ei onnistu\n"
 "koska tasolla on jo maski."
 
-#: app/gimpimage.c:3031
+#: app/gimpimage.c:3032
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1684,7 +1648,7 @@ msgstr ""
 "Tasomaskin lisäys indeksoidun kuvan\n"
 "tasoon ei onnistu."
 
-#: app/gimpimage.c:3035
+#: app/gimpimage.c:3036
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1692,19 +1656,19 @@ msgstr ""
 "Tasomaski lisäys tasoon jolla\n"
 "ei ole alfakanavaa ei onnistu."
 
-#: app/gimpimage.c:3042
+#: app/gimpimage.c:3043
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Erikokoisen tasomaskin lisäys ei onnistu."
 
-#: app/gimpimage.c:3149
+#: app/gimpimage.c:3150
 msgid "Channel cannot be raised any further"
 msgstr "Kanavaa ei voi nostaa enempää"
 
-#: app/gimpimage.c:3200
+#: app/gimpimage.c:3201
 msgid "Channel cannot be lowered any further"
 msgstr "Kanavaa ei voi laskea enempää"
 
-#: app/gimpimage.c:3420 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3421 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Nimetön"
@@ -1717,41 +1681,41 @@ msgstr "Toiminnon eteneminen"
 msgid "Please wait..."
 msgstr "Odota..."
 
-#: app/gimprc.c:465
+#: app/gimprc.c:461
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "virhe tiedostoa \"%s\" luettaessa\n"
 
-#: app/gimprc.c:466
+#: app/gimprc.c:462
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  rivillä %d sarakkeessa %d\n"
 
-#: app/gimprc.c:467
+#: app/gimprc.c:463
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  odottamaton alkio: %s\n"
 
-#: app/gimprc.c:1434
+#: app/gimprc.c:1428
 msgid "error parsing pluginrc"
 msgstr "virhe pluginrc-tiedostoa luettaessa"
 
-#: app/gimprc.c:2869
+#: app/gimprc.c:2829
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Tiedostoa %s ei saada avattua: %s"
 
-#: app/gimprc.c:2888
+#: app/gimprc.c:2848
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr "Tiedonston %s uudelleennimeäminen %s.old:ksi epäonnistui; %s"
+msgstr "Tiedoston %s uudelleennimeäminen %s.old:ksi epäonnistui; %s"
 
-#: app/gimprc.c:2894
+#: app/gimprc.c:2854
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Tiedoston %s uudelleen avaus epäonnistui\n"
 
-#: app/gimprc.c:2906
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kirjoittaminen tiedostoon %s epäonnistui; %s"
@@ -1763,7 +1727,7 @@ msgstr "Ilmoitus toistuu %d kertaa"
 
 #: app/gimpui.c:96
 msgid "Message repeated once"
-msgstr "Ilmoisut toistui"
+msgstr "Ilmoitus toistui"
 
 #: app/gimpui.c:110
 msgid ""
@@ -1780,49 +1744,49 @@ msgid "GIMP Message"
 msgstr "GIMP-ilmoitus"
 
 #. pseudo unit
-#: app/gimpunit.c:58
+#: app/gimpunit.c:59
 msgid "pixel"
 msgstr "pikseli"
 
-#: app/gimpunit.c:58 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
+#: app/gimpunit.c:59 app/measure.c:504 app/measure.c:508 app/paint_core.c:511
 msgid "pixels"
 msgstr "pikseleitä"
 
 #. standard units
-#: app/gimpunit.c:61
+#: app/gimpunit.c:62
 msgid "inch"
 msgstr "tuuma"
 
-#: app/gimpunit.c:61
+#: app/gimpunit.c:62
 msgid "inches"
 msgstr "tuumaa"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:63
 msgid "millimeter"
 msgstr "millimetri"
 
-#: app/gimpunit.c:62
+#: app/gimpunit.c:63
 msgid "millimeters"
 msgstr "millimetrejä"
 
 #. professional units
-#: app/gimpunit.c:65
+#: app/gimpunit.c:66
 msgid "point"
 msgstr "piste"
 
-#: app/gimpunit.c:65
+#: app/gimpunit.c:66
 msgid "points"
 msgstr "pistettä"
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:67
 msgid "pica"
-msgstr "pica"
+msgstr ""
 
-#: app/gimpunit.c:66
+#: app/gimpunit.c:67
 msgid "picas"
 msgstr "picaa"
 
-#: app/gimpunit.c:73
+#: app/gimpunit.c:74
 msgid "percent"
 msgstr "prosentti"
 
@@ -1876,7 +1840,7 @@ msgstr "Pallomainen (laskeva)"
 
 #: app/gradient.c:541
 msgid "Plain RGB"
-msgstr "Tavallinen TGB"
+msgstr "Tavallinen RGB"
 
 #: app/gradient.c:542
 msgid "HSV (counter-clockwise hue)"
@@ -1893,7 +1857,7 @@ msgstr "Väriliukumien muokkain"
 #: app/gradient.c:823 app/gradient_select.c:207 app/paintbrush.c:266
 #: app/palette.c:3174
 msgid "Gradient"
-msgstr "Värilukuma"
+msgstr "Väriliukuma"
 
 #: app/gradient.c:824 app/gradient_select.c:208 app/palette.c:2211
 #: app/palette_select.c:89
@@ -1908,7 +1872,7 @@ msgstr "Väriliukumatoiminnot"
 #. Buttons for gradient functions
 #: app/gradient.c:877
 msgid "New Gradient"
-msgstr "Uusi väriluikuma"
+msgstr "Uusi väriliukuma"
 
 #: app/gradient.c:885
 msgid "Copy Gradient"
@@ -1974,7 +1938,7 @@ msgid ""
 "\"%s\" from the list and from disk?"
 msgstr ""
 "Oletko varma että haluat poistaa\n"
-"listasta ja levyltä \"%s\"?"
+"listalta ja levyltä \"%s\"?"
 
 #: app/gradient.c:2002
 #, c-format
@@ -2002,7 +1966,7 @@ msgstr "Taustaväriksi asetettu RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:2608
 msgid "Drag: move    Shift+drag: move & compress"
-msgstr "Veto: siirto    Shift+veto: siirto ja pakkaaus"
+msgstr "Veto: siirto    Shift+veto: siirto ja pakkaus"
 
 #: app/gradient.c:2610 app/gradient.c:2613
 msgid "Click: select    Shift+click: extend selection"
@@ -2017,7 +1981,7 @@ msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
 msgstr ""
-"Napsauta: valinta  Shift+napsauta: valinnan kasvatus Veta: siirto    "
+"Napsauta: valinta  Shift+napsauta: valinnan kasvatus Veto: siirto    "
 "Shift+veto: siirto ja pakkaus"
 
 #: app/gradient.c:2872 app/gradient.c:2881
@@ -2140,12 +2104,12 @@ msgstr "Kahdenna valittu alue"
 
 #: app/gradient.c:4048
 msgid "FG color"
-msgstr "edustaväri"
+msgstr "Edustaväri"
 
 #: app/gradient.c:4096
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr ""
 
 #: app/gradient.c:4616 app/gradient.c:4686
 msgid "(Varies)"
@@ -2166,7 +2130,7 @@ msgstr "johon haluat jakaa valittu polun osa"
 
 #: app/gradient.c:4859
 msgid "in which you want to split the segments in the selection"
-msgstr "johon haluat jakaa valuttuja polun osia"
+msgstr "johon haluat jakaa valittuja polun osia"
 
 #: app/gradient.c:5219
 msgid "Blend endpoints' colors"
@@ -2248,17 +2212,29 @@ msgstr "Sävy-värikylläisyys toimii vain RGB-kuvilla"
 msgid "Master"
 msgstr "Pää"
 
+#: app/hue_saturation.c:352
+msgid "R"
+msgstr ""
+
 #: app/hue_saturation.c:353
 msgid "Y"
-msgstr "Y"
+ msgstr ""
+
+#: app/hue_saturation.c:354
+msgid "G"
+msgstr ""
 
 #: app/hue_saturation.c:355
 msgid "C"
-msgstr "C"
+msgstr ""
+
+#: app/hue_saturation.c:356
+msgid "B"
+msgstr ""
 
 #: app/hue_saturation.c:357
 msgid "M"
-msgstr "M"
+msgstr ""
 
 #: app/hue_saturation.c:442
 msgid "Hue / Lightness / Saturation Adjustments"
@@ -2266,61 +2242,64 @@ msgstr "Sävyn (H) / Valoisuuden (L) / Värikylläisyyden (S) säätö"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:454
+#, fuzzy
 msgid "Hue:"
 msgstr "Sävy (H):"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:488
+#, fuzzy
 msgid "Lightness:"
 msgstr "Valoisuus (L):"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:522
+#, fuzzy
 msgid "Saturation:"
 msgstr "Värikylläisyys (S):"
 
-#: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
+#: app/image_new.c:62 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1624
 msgid "Grayscale"
 msgstr "Harmaasävy"
 
-#: app/image_new.c:71 app/layers_dialog.c:3577
+#: app/image_new.c:68 app/layers_dialog.c:3581
 msgid "Foreground"
 msgstr "Edustaväri"
 
-#: app/image_new.c:81 app/layers_dialog.c:3579
+#: app/image_new.c:78 app/layers_dialog.c:3583
 msgid "White"
 msgstr "Valkoinen"
 
-#: app/image_new.c:335
+#: app/image_new.c:330
 #, c-format
 msgid "%d Bytes"
 msgstr "%d tavua"
 
-#: app/image_new.c:337
+#: app/image_new.c:332
 #, c-format
 msgid "%.2f KB"
-msgstr "%.2f KB"
+msgstr ""
 
-#: app/image_new.c:339
+#: app/image_new.c:334
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f KB"
+msgstr ""
 
-#: app/image_new.c:341
+#: app/image_new.c:336
 #, c-format
 msgid "%d KB"
-msgstr "%d KB"
+msgstr ""
 
-#: app/image_new.c:343
+#: app/image_new.c:338
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f MB"
+msgstr ""
 
-#: app/image_new.c:345
+#: app/image_new.c:340
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f MB"
+msgstr ""
 
 #: app/indicator_area.c:138
 msgid ""
@@ -2328,7 +2307,7 @@ msgid ""
 "Click to open the Brushes Dialog."
 msgstr ""
 "Tämä on käytössä oleva sivellin.\n"
-"Napsauta avataksesi sivellinvalitsijaa."
+"Napsauta avataksesi sivellinvalitsijan."
 
 #: app/indicator_area.c:156
 msgid ""
@@ -2336,18 +2315,18 @@ msgid ""
 "Click to open the Patterns Dialog."
 msgstr ""
 "Tämä on käytössä oleva kuvio.\n"
-"Napsauta avataksesi kuviovalitsijaa."
+"Napsauta avataksesi kuviovalitsijan."
 
 #: app/indicator_area.c:175
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradients Dialog."
 msgstr ""
-"Tämä on käytössä oleva väriluikuma.\n"
-"Napsauta avataksesi väriliukumavalitsijaa."
+"Tämä on käytössä oleva väriliukuma.\n"
+"Napsauta avataksesi väriliukumavalitsijan."
 
-#: app/info_dialog.c:185 app/preferences_dialog.c:1784
-#: app/preferences_dialog.c:1890
+#: app/info_dialog.c:185 app/preferences_dialog.c:1783
+#: app/preferences_dialog.c:1889
 msgid "General"
 msgstr "Yleistä"
 
@@ -2373,19 +2352,19 @@ msgstr "Suoraväritila"
 
 #: app/info_window.c:161
 msgid "R:"
-msgstr "R:"
+msgstr ""
 
 #: app/info_window.c:167
 msgid "G:"
-msgstr "G:"
+msgstr ""
 
 #: app/info_window.c:173
 msgid "B:"
-msgstr "B:"
+msgstr ""
 
 #: app/info_window.c:179
 msgid "A:"
-msgstr "A:"
+msgstr ""
 
 #: app/info_window.c:211
 msgid "Extended"
@@ -2420,7 +2399,7 @@ msgstr "Näyttöluokan syvyys:"
 #: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr "Tietoja: %s-%d.%d"
+msgstr ""
 
 #: app/info_window.c:508
 #, c-format
@@ -2496,7 +2475,7 @@ msgstr "Kanava"
 msgid "Channel Ops"
 msgstr "Kanavatoiminnot"
 
-#: app/internal_procs.c:80 app/layers_dialog.c:385 app/paint_funcs.c:96
+#: app/internal_procs.c:80 app/layers_dialog.c:386 app/paint_funcs.c:96
 #: app/tool_options.c:816 app/tool_options.c:931
 msgid "Color"
 msgstr "Värit"
@@ -2549,8 +2528,8 @@ msgstr "Väriliukumien käyttöliittymä"
 msgid "Guide procedures"
 msgstr "Apuviivojen proseduurit"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1774
-#: app/preferences_dialog.c:1776
+#: app/internal_procs.c:122 app/preferences_dialog.c:1773
+#: app/preferences_dialog.c:1775
 msgid "Interface"
 msgstr "Käyttöliittymä"
 
@@ -2612,11 +2591,11 @@ msgstr "Ei toimi indeksoiduilla kuvilla."
 msgid "Invert operation failed."
 msgstr "Toiminto epäonnistui."
 
-#: app/layer.c:259
+#: app/layer.c:258
 msgid "Zero width or height layers not allowed."
 msgstr "Nollan mittaisia tasoja ei voi käyttää."
 
-#: app/layer.c:507
+#: app/layer.c:506
 #, c-format
 msgid "%s mask"
 msgstr "%s-maski"
@@ -2625,11 +2604,11 @@ msgstr "%s-maski"
 msgid "Layer Select"
 msgstr "Tason valinta"
 
-#: app/layers_dialog.c:264 app/layers_dialog.c:3509
+#: app/layers_dialog.c:265 app/layers_dialog.c:3513
 msgid "New Layer"
 msgstr "Uusi taso"
 
-#: app/layers_dialog.c:268
+#: app/layers_dialog.c:269
 msgid ""
 "Raise Layer    \n"
 "<Shift> To Top"
@@ -2637,7 +2616,7 @@ msgstr ""
 "Nosta tasoa    \n"
 "<Shift> päällimmäiseksi"
 
-#: app/layers_dialog.c:273
+#: app/layers_dialog.c:274
 msgid ""
 "Lower Layer       \n"
 "<Shift> To Bottom"
@@ -2645,118 +2624,126 @@ msgstr ""
 "Laske tasoa       \n"
 "<Shift> pohjimmaiseksi"
 
-#: app/layers_dialog.c:278
+#: app/layers_dialog.c:279
 msgid "Duplicate Layer"
 msgstr "Kahdenna taso"
 
-#: app/layers_dialog.c:282
+#: app/layers_dialog.c:283
 msgid "Anchor Layer"
 msgstr "Ankkuroi taso"
 
-#: app/layers_dialog.c:286
+#: app/layers_dialog.c:287
 msgid "Delete Layer"
 msgstr "Poista taso"
 
-#: app/layers_dialog.c:372 app/paint_funcs.c:83 app/tool_options.c:917
+#: app/layers_dialog.c:373 app/paint_funcs.c:83 app/tool_options.c:917
 msgid "Normal"
 msgstr "Normaali"
 
-#: app/layers_dialog.c:373 app/paint_funcs.c:84 app/tool_options.c:918
+#: app/layers_dialog.c:374 app/paint_funcs.c:84 app/tool_options.c:918
 msgid "Dissolve"
 msgstr "Liukeneminen"
 
-#: app/layers_dialog.c:374 app/paint_funcs.c:86 app/tool_options.c:920
+#: app/layers_dialog.c:375 app/paint_funcs.c:86 app/tool_options.c:920
 msgid "Multiply (Burn)"
 msgstr "Kertautuminen (Burn)"
 
-#: app/layers_dialog.c:375 app/paint_funcs.c:98 app/tool_options.c:921
+#: app/layers_dialog.c:376 app/paint_funcs.c:98 app/tool_options.c:921
 msgid "Divide (Dodge)"
 msgstr "Jakautuminen (Dodge)"
 
-#: app/layers_dialog.c:376 app/paint_funcs.c:87 app/tool_options.c:922
+#: app/layers_dialog.c:377 app/paint_funcs.c:87 app/tool_options.c:922
 msgid "Screen"
 msgstr "Kuva"
 
-#: app/layers_dialog.c:377 app/paint_funcs.c:88 app/tool_options.c:923
+#: app/layers_dialog.c:378 app/paint_funcs.c:88 app/tool_options.c:923
 msgid "Overlay"
 msgstr "Peitto"
 
-#: app/layers_dialog.c:378 app/paint_funcs.c:89 app/tool_options.c:924
+#: app/layers_dialog.c:379 app/paint_funcs.c:89 app/tool_options.c:924
 msgid "Difference"
 msgstr "Erotus"
 
-#: app/layers_dialog.c:379 app/paint_funcs.c:90 app/tool_options.c:925
+#: app/layers_dialog.c:380 app/paint_funcs.c:90 app/tool_options.c:925
 msgid "Addition"
 msgstr "Yhteenlasku"
 
-#: app/layers_dialog.c:381 app/paint_funcs.c:92 app/tool_options.c:927
+#: app/layers_dialog.c:382 app/paint_funcs.c:92 app/tool_options.c:927
 msgid "Darken Only"
 msgstr "Vain tummennus"
 
-#: app/layers_dialog.c:382 app/paint_funcs.c:93 app/tool_options.c:928
+#: app/layers_dialog.c:383 app/paint_funcs.c:93 app/tool_options.c:928
 msgid "Lighten Only"
 msgstr "Vain vaalennus"
 
-#: app/layers_dialog.c:396
-msgid "Keep Trans."
-msgstr "Säilytä läpinäkyvyys"
+#: app/layers_dialog.c:384 app/paint_funcs.c:94 app/tool_options.c:929
+msgid "Hue"
+msgstr "Sävy (H)"
 
-#: app/layers_dialog.c:1901
+#: app/layers_dialog.c:385 app/paint_funcs.c:95 app/tool_options.c:930
+msgid "Saturation"
+msgstr "Värikylläisyys (S)"
+
+#: app/layers_dialog.c:397
+msgid "Keep Trans."
+msgstr "Säilytä läpinäkyvyys."
+
+#: app/layers_dialog.c:1910
 msgid "Empty Layer Copy"
 msgstr "Tyhjä tason kopio"
 
-#: app/layers_dialog.c:2163 app/layers_dialog.c:3320 app/layers_dialog.c:3687
+#: app/layers_dialog.c:2172 app/layers_dialog.c:3324 app/layers_dialog.c:3691
 msgid "Floating Selection"
 msgstr "Kelluva valinta"
 
-#: app/layers_dialog.c:3470
+#: app/layers_dialog.c:3474
 msgid "New Layer Options"
 msgstr "Uuden tason asetukset"
 
 #. The name label and entry
-#: app/layers_dialog.c:3499
+#: app/layers_dialog.c:3503
 msgid "Layer Name:"
 msgstr "Tason nimi:"
 
 #. The size labels
-#: app/layers_dialog.c:3513
+#: app/layers_dialog.c:3517
 msgid "Layer Width:"
 msgstr "Tason leveys:"
 
-#: app/layers_dialog.c:3573
+#: app/layers_dialog.c:3577
 msgid "Layer Fill Type"
 msgstr "Tason täyttötapa"
 
-#: app/layers_dialog.c:3652
+#: app/layers_dialog.c:3656
 msgid "Edit Layer Attributes"
 msgstr "Muokkaa tason ominaisuuksia"
 
-#: app/layers_dialog.c:3679
+#: app/layers_dialog.c:3683
 msgid "Layer name:"
 msgstr "Tason nimi:"
 
-#: app/layers_dialog.c:3744
+#: app/layers_dialog.c:3748
 msgid "Add Mask Options"
 msgstr "Maskin lisäyksen asetukset"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3762
+#: app/layers_dialog.c:3766
 msgid "Initialize Layer Mask to:"
 msgstr "Alusta tason maski:"
 
-#: app/layers_dialog.c:3767
+#: app/layers_dialog.c:3771
 msgid "White (Full Opacity)"
 msgstr "Valkoinen (täysin peittävä)"
 
-#: app/layers_dialog.c:3769
+#: app/layers_dialog.c:3773
 msgid "Black (Full Transparency)"
 msgstr "Musta (täysin läpinäkyvä)"
 
-#: app/layers_dialog.c:3771
+#: app/layers_dialog.c:3775
 msgid "Layer's Alpha Channel"
 msgstr "Tason alfakanava"
 
-#: app/layers_dialog.c:3832 app/layers_dialog.c:3918
+#: app/layers_dialog.c:3833 app/layers_dialog.c:3915
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2764,27 +2751,27 @@ msgstr ""
 "Epäkelpo leveys tai korkeus.\n"
 "Molempien täytyy olla suurempi kuin nolla."
 
-#: app/layers_dialog.c:4004
+#: app/layers_dialog.c:4000
 msgid "Layer Merge Options"
 msgstr "Tasojen yhdistelyn asetukset"
 
-#: app/layers_dialog.c:4029
+#: app/layers_dialog.c:4025
 msgid "Final, Merged Layer should be:"
 msgstr "Lopullista, yhdistettyä tasoa:"
 
-#: app/layers_dialog.c:4030
+#: app/layers_dialog.c:4026
 msgid "Final, Anchored Layer should be:"
 msgstr "Lopullista, ankkuroitua tasoa:"
 
-#: app/layers_dialog.c:4035
+#: app/layers_dialog.c:4031
 msgid "Expanded as necessary"
 msgstr "laajennetaan tarvittaessa"
 
-#: app/layers_dialog.c:4037
+#: app/layers_dialog.c:4033
 msgid "Clipped to image"
 msgstr "rajataan kuvan koon mukaan"
 
-#: app/layers_dialog.c:4039
+#: app/layers_dialog.c:4035
 msgid "Clipped to bottom layer"
 msgstr "rajataan pohjimmaisen tason koon mukaan"
 
@@ -2869,7 +2856,7 @@ msgstr "Sallitut vivut ovat:\n"
 
 #: app/main.c:286
 msgid "  -h --help                Output this help.\n"
-msgstr "  -h --help               Tulosta tämä avustustekstin.\n"
+msgstr "  -h --help               Tulosta tämä avustusteksti.\n"
 
 #: app/main.c:287
 msgid "  -v --version             Output version info.\n"
@@ -2966,841 +2953,841 @@ msgstr "astetta"
 
 #. <Toolbox>/File
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:90
+#: app/menus.c:87
 msgid "/_File"
 msgstr "/_Tiedosto"
 
 #. <Image>/File
-#: app/menus.c:92 app/menus.c:198
+#: app/menus.c:89 app/menus.c:195
 msgid "/File/New..."
 msgstr "/Tiedosto/Uusi..."
 
-#: app/menus.c:94 app/menus.c:200
+#: app/menus.c:91 app/menus.c:197
 msgid "/File/Open..."
 msgstr "/Tiedosto/Avaa..."
 
-#: app/menus.c:101
+#: app/menus.c:98
 msgid "/File/Acquire"
 msgstr "/Tiedosto/Kuvan syöttö"
 
-#: app/menus.c:106
+#: app/menus.c:103
 msgid "/File/Preferences..."
 msgstr "/Tiedosto/Asetukset..."
 
-#: app/menus.c:113
+#: app/menus.c:110
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Tiedosto/Dialogit/Tasot, kanavat ja polut..."
 
-#: app/menus.c:115
+#: app/menus.c:112
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Tiedosto/Dialogit/Työkalujen asetukset..."
 
-#: app/menus.c:120
+#: app/menus.c:117
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Tiedosto/Dialogit/Siveltimet..."
 
-#: app/menus.c:122
+#: app/menus.c:119
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Tiedosto/Dialogit/Kuviot..."
 
-#: app/menus.c:124
+#: app/menus.c:121
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Tiedosto/Dialogit/Väriliukumat..."
 
-#: app/menus.c:126
+#: app/menus.c:123
 msgid "/File/Dialogs/Palette..."
 msgstr "/Tiedosto/Dialogit/Paletit..."
 
-#: app/menus.c:128
+#: app/menus.c:125
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Tiedosto/Dialogit/Indeksoitu paletti..."
 
-#: app/menus.c:133
+#: app/menus.c:130
 msgid "/File/Dialogs/Input Devices..."
-msgstr "/Tiedosto/Dialogs/Piirtolaitteet..."
+msgstr "/Tiedosto/Dialogit/Piirtolaitteet..."
 
-#: app/menus.c:135
+#: app/menus.c:132
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Tiedosto/Dialogit/Laitteiden tila..."
 
-#: app/menus.c:140
+#: app/menus.c:137
 msgid "/File/Dialogs/Document Index..."
 msgstr "/Tiedosto/Dialogit/Kuvahakemisto..."
 
-#: app/menus.c:142
+#: app/menus.c:139
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Tiedosto/Dialogit/Konsoli virheilmoituksille..."
 
-#: app/menus.c:144
+#: app/menus.c:141
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Tiedosto/Dialogit/Näyttösuotimet..."
 
-#: app/menus.c:154 app/menus.c:213
+#: app/menus.c:151 app/menus.c:210
 msgid "/File/Quit"
 msgstr "/Tiedosto/Poistu"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:160
+#: app/menus.c:157
 msgid "/_Xtns"
 msgstr "/_Lisäykset"
 
-#: app/menus.c:162
+#: app/menus.c:159
 msgid "/Xtns/Module Browser..."
 msgstr "/Lisäykset/Moduuliselain..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:171
+#: app/menus.c:168
 msgid "/_Help"
 msgstr "/_Apua"
 
-#: app/menus.c:173
+#: app/menus.c:170
 msgid "/Help/Help..."
 msgstr "/Apua/Apua..."
 
-#: app/menus.c:175
+#: app/menus.c:172
 msgid "/Help/Context Help..."
-msgstr "/Apua/Yhteysriippuva avustus..."
+msgstr "/Apua/Yhteydestä riippuva avustus..."
 
-#: app/menus.c:177
+#: app/menus.c:174
 msgid "/Help/Tip of the Day..."
 msgstr "/Apua/Päivän vihje..."
 
-#: app/menus.c:179
+#: app/menus.c:176
 msgid "/Help/About..."
 msgstr "/Apua/Tietoja..."
 
-#: app/menus.c:181
+#: app/menus.c:178
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Apua/"
 
-#: app/menus.c:202
+#: app/menus.c:199
 msgid "/File/Save"
 msgstr "/Tiedosto/Talleta"
 
-#: app/menus.c:204
+#: app/menus.c:201
 msgid "/File/Save As..."
-msgstr "/Tiedosto/Tallenna nimellä..."
+msgstr "/Tiedosto/Talleta nimellä..."
 
-#: app/menus.c:206
+#: app/menus.c:203
 msgid "/File/Revert"
 msgstr "/Tiedosto/Palauta"
 
-#: app/menus.c:211
+#: app/menus.c:208
 msgid "/File/Close"
 msgstr "/Tiedosto/Sulje"
 
 #. <Image>/Edit
-#: app/menus.c:221
+#: app/menus.c:218
 msgid "/Edit/Undo"
 msgstr "/Muokkaa/Kumoa"
 
-#: app/menus.c:223
+#: app/menus.c:220
 msgid "/Edit/Redo"
 msgstr "/Muokkaa/Uudelleen"
 
-#: app/menus.c:228
+#: app/menus.c:225
 msgid "/Edit/Cut"
 msgstr "/Muokkaa/Leikkaa"
 
-#: app/menus.c:230
+#: app/menus.c:227
 msgid "/Edit/Copy"
 msgstr "/Muokkaa/Kopioi"
 
-#: app/menus.c:232
+#: app/menus.c:229
 msgid "/Edit/Paste"
 msgstr "/Muokkaa/Liimaa"
 
-#: app/menus.c:234
+#: app/menus.c:231
 msgid "/Edit/Paste Into"
 msgstr "/Muokkaa/Liimaa johonkin"
 
-#: app/menus.c:236
+#: app/menus.c:233
 msgid "/Edit/Paste as New"
 msgstr "/Muokkaa/Liimaa uutena"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:241
+#: app/menus.c:238
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Muokkaa/Leikepöytä/Leikkaa nimetty..."
 
-#: app/menus.c:243
+#: app/menus.c:240
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Muokkaa/Leikepöytä/Kopioi nimetty..."
 
-#: app/menus.c:245
+#: app/menus.c:242
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Muokkaa/Leikepöytä/Liimaa nimetty..."
 
-#: app/menus.c:250
+#: app/menus.c:247
 msgid "/Edit/Clear"
 msgstr "/Muokkaa/Tyhjennä"
 
-#: app/menus.c:252
+#: app/menus.c:249
 msgid "/Edit/Fill with FG Color"
 msgstr "/Muokkaa/Täytä edustavärillä"
 
-#: app/menus.c:254
+#: app/menus.c:251
 msgid "/Edit/Fill with BG Color"
 msgstr "/Muokkaa/Täytä taustavärillä"
 
-#: app/menus.c:256
+#: app/menus.c:253
 msgid "/Edit/Stroke"
 msgstr "/Muokkaa/Piirrä polkua pitkin"
 
 #. <Image>/Select
-#: app/menus.c:264
+#: app/menus.c:261
 msgid "/Select/Invert"
 msgstr "/Valitse/Invertoi"
 
-#: app/menus.c:266
+#: app/menus.c:263
 msgid "/Select/All"
 msgstr "/Valitse/Kokonaan"
 
-#: app/menus.c:268
+#: app/menus.c:265
 msgid "/Select/None"
 msgstr "/Valitse/Ei mitään"
 
-#: app/menus.c:270
+#: app/menus.c:267
 msgid "/Select/Float"
 msgstr "/Valitse/Kelluva"
 
-#: app/menus.c:275
+#: app/menus.c:272
 msgid "/Select/Feather..."
 msgstr "/Valitse/Pehmennä..."
 
-#: app/menus.c:277
+#: app/menus.c:274
 msgid "/Select/Sharpen"
 msgstr "/Valitse/Terävöitä"
 
-#: app/menus.c:279
+#: app/menus.c:276
 msgid "/Select/Shrink..."
 msgstr "/Valitse/Pienennä..."
 
-#: app/menus.c:281
+#: app/menus.c:278
 msgid "/Select/Grow..."
 msgstr "/Valitse/Kasvata..."
 
-#: app/menus.c:283
+#: app/menus.c:280
 msgid "/Select/Border..."
 msgstr "/Valitse/Reuna..."
 
-#: app/menus.c:288
+#: app/menus.c:285
 msgid "/Select/Save to Channel"
-msgstr "/Valitse/Tallenna kanavalle"
+msgstr "/Valitse/Talleta kanavalle"
 
 #. <Image>/View
-#: app/menus.c:293
+#: app/menus.c:290
 msgid "/View/Zoom In"
 msgstr "/Näytä/Zoomaa sisään"
 
-#: app/menus.c:295
+#: app/menus.c:292
 msgid "/View/Zoom Out"
 msgstr "/Näytä/Zoomaa ulos"
 
 #. <Image>/View/Zoom
-#: app/menus.c:300
+#: app/menus.c:297
 msgid "/View/Zoom/16:1"
 msgstr "/Näytä/Zoom/16:1"
 
-#: app/menus.c:302
+#: app/menus.c:299
 msgid "/View/Zoom/8:1"
 msgstr "/Näytä/Zoom/8:1"
 
-#: app/menus.c:304
+#: app/menus.c:301
 msgid "/View/Zoom/4:1"
 msgstr "/Näytä/Zoom/4:1"
 
-#: app/menus.c:306
+#: app/menus.c:303
 msgid "/View/Zoom/2:1"
 msgstr "/Näytä/Zoom/2:1"
 
-#: app/menus.c:308
+#: app/menus.c:305
 msgid "/View/Zoom/1:1"
 msgstr "/Näytä/Zoom/1:1"
 
-#: app/menus.c:310
+#: app/menus.c:307
 msgid "/View/Zoom/1:2"
 msgstr "/Näytä/Zoom/1:2"
 
-#: app/menus.c:312
+#: app/menus.c:309
 msgid "/View/Zoom/1:4"
 msgstr "/Näytä/Zoom/1:4"
 
-#: app/menus.c:314
+#: app/menus.c:311
 msgid "/View/Zoom/1:8"
 msgstr "/Näytä/Zoom/1:8"
 
-#: app/menus.c:316
+#: app/menus.c:313
 msgid "/View/Zoom/1:16"
 msgstr "/Näytä/Zoom/1:16"
 
-#: app/menus.c:319
+#: app/menus.c:316
 msgid "/View/Dot for Dot"
 msgstr "/Näytä/Piste pisteeltä"
 
-#: app/menus.c:324
+#: app/menus.c:321
 msgid "/View/Info Window..."
 msgstr "/Näytä/Ikkunan tiedot..."
 
-#: app/menus.c:326
+#: app/menus.c:323
 msgid "/View/Nav. Window..."
 msgstr "/Näytä/Navigointi-ikkuna..."
 
-#: app/menus.c:331
+#: app/menus.c:328
 msgid "/View/Toggle Selection"
 msgstr "/Näytä/Vaihda valinta"
 
-#: app/menus.c:333
+#: app/menus.c:330
 msgid "/View/Toggle Rulers"
 msgstr "/Näytä/Vaihda viivottimet"
 
-#: app/menus.c:335
+#: app/menus.c:332
 msgid "/View/Toggle Statusbar"
 msgstr "/Näytä/Vaihda infopalkki"
 
-#: app/menus.c:337
+#: app/menus.c:334
 msgid "/View/Toggle Guides"
 msgstr "/Näytä/Vaihda apuviivat"
 
-#: app/menus.c:339
+#: app/menus.c:336
 msgid "/View/Snap to Guides"
 msgstr "/Näytä/Naksahda apuviivoihin"
 
-#: app/menus.c:344
+#: app/menus.c:341
 msgid "/View/New View"
 msgstr "/Näytä/Uusi näkymä"
 
-#: app/menus.c:346
+#: app/menus.c:343
 msgid "/View/Shrink Wrap"
 msgstr "/Näytä/Koko kuva"
 
 #. <Image>/Image/Mode
-#: app/menus.c:351
+#: app/menus.c:348
 msgid "/Image/Mode/RGB"
 msgstr "/Kuva/Muoto/RGB"
 
-#: app/menus.c:353
+#: app/menus.c:350
 msgid "/Image/Mode/Grayscale"
 msgstr "/Kuva/Muoto/Harmaasävy"
 
-#: app/menus.c:355
+#: app/menus.c:352
 msgid "/Image/Mode/Indexed..."
-msgstr "/Kuva/Muoto/Indeksoitu"
+msgstr "/Kuva/Muoto/Indeksoitu..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:363
+#: app/menus.c:360
 msgid "/Image/Colors/Desaturate"
 msgstr "/Kuva/Värit/Vähennä kylläisyyttä"
 
-#: app/menus.c:365
+#: app/menus.c:362
 msgid "/Image/Colors/Invert"
 msgstr "/Kuva/Värit/Invertoi"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:373
+#: app/menus.c:370
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Kuva/Värit/Automaattinen/Ekvalisoi"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:381
+#: app/menus.c:378
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Kuva/Alfakanava/Lisää alfakanava"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:386
+#: app/menus.c:383
 msgid "/Image/Transforms/Offset..."
 msgstr "/Kuva/Muunnokset/Siirtymä..."
 
-#: app/menus.c:388
+#: app/menus.c:385
 msgid "/Image/Transforms/Rotate"
 msgstr "/Kuva/Muunnokset/Kierto"
 
-#: app/menus.c:395
+#: app/menus.c:392
 msgid "/Image/Canvas Size..."
 msgstr "/Kuva/Muokkaa kokoa..."
 
-#: app/menus.c:397
+#: app/menus.c:394
 msgid "/Image/Scale Image..."
 msgstr "/Kuva/Skaalaa..."
 
-#: app/menus.c:399
+#: app/menus.c:396
 msgid "/Image/Duplicate"
 msgstr "/Kuva/Kahdenna"
 
 #. <Image>/Layers
-#: app/menus.c:407
+#: app/menus.c:404
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Tasot/Tasot, kanavat & polut..."
 
-#: app/menus.c:411
+#: app/menus.c:408
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Tasot/Tasosta kuvan kokoinen"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:416
+#: app/menus.c:413
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Tasot/Pino/Edellinen taso"
 
-#: app/menus.c:418
+#: app/menus.c:415
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Tasot/Pino/Seuraava taso"
 
-#: app/menus.c:420
+#: app/menus.c:417
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Tasot/Pino/Nosta taso"
 
-#: app/menus.c:422
+#: app/menus.c:419
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Tasot/Pino/Alenna taso"
 
-#: app/menus.c:424
+#: app/menus.c:421
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Tasot/Pino/Nosta taso päällimmäiseksi"
 
-#: app/menus.c:426
+#: app/menus.c:423
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Tasot/Pino/Laske taso pohjimmaiseksi"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:433
+#: app/menus.c:430
 msgid "/Layers/Rotate"
 msgstr "/Tasot/Kierrätä"
 
-#: app/menus.c:438
+#: app/menus.c:435
 msgid "/Layers/Anchor Layer"
 msgstr "/Tasot/Ankkuroi taso"
 
-#: app/menus.c:440
+#: app/menus.c:437
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Tasot/Yhdistä näkyvät tasot..."
 
-#: app/menus.c:442
+#: app/menus.c:439
 msgid "/Layers/Flatten Image"
 msgstr "/Tasot/Yhdistä kuva"
 
-#: app/menus.c:447
+#: app/menus.c:444
 msgid "/Layers/Mask to Selection"
 msgstr "/Tasot/Maski valinnaksi"
 
-#: app/menus.c:452
+#: app/menus.c:449
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Tasot/Lisää alfakanava"
 
-#: app/menus.c:454
+#: app/menus.c:451
 msgid "/Layers/Alpha to Selection"
 msgstr "/Tasot/Alfakanava valinnaksi"
 
 #. <Image>/Tools
-#: app/menus.c:462
+#: app/menus.c:459
 msgid "/Tools/Toolbox"
 msgstr "/Työkalut/Työkalulaatikko"
 
-#: app/menus.c:464
+#: app/menus.c:461
 msgid "/Tools/Default Colors"
 msgstr "/Työkalut/Oletusvärit"
 
-#: app/menus.c:466
+#: app/menus.c:463
 msgid "/Tools/Swap Colors"
 msgstr "/Työkalut/Vaihda värit"
 
 #. <Image>/Dialogs
-#: app/menus.c:473
+#: app/menus.c:470
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialogit/Tasot, kanavat & polut..."
 
-#: app/menus.c:475
+#: app/menus.c:472
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialogit/Työkalujen asetukset"
 
-#: app/menus.c:480
+#: app/menus.c:477
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialogit/Siveltimet..."
 
-#: app/menus.c:482
+#: app/menus.c:479
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialogit/Kuviot..."
 
-#: app/menus.c:484
+#: app/menus.c:481
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialogit/Väriliukumien muokkain..."
 
-#: app/menus.c:486
+#: app/menus.c:483
 msgid "/Dialogs/Palette..."
 msgstr "/Dialogit/Paletit..."
 
-#: app/menus.c:488
+#: app/menus.c:485
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialogit/Indeksoitu paletti..."
 
-#: app/menus.c:493
+#: app/menus.c:490
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialogit/Piirtolaitteet..."
 
-#: app/menus.c:495
+#: app/menus.c:492
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialogit/Laitteiden tila..."
 
-#: app/menus.c:500
+#: app/menus.c:497
 msgid "/Dialogs/Document Index..."
 msgstr "/Dialogit/Kuvahakemisto..."
 
-#: app/menus.c:502
+#: app/menus.c:499
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialogit/Konsoli virheilmoituksille..."
 
-#: app/menus.c:504
+#: app/menus.c:501
 msgid "/Dialogs/Display Filters..."
 msgstr "/Dialogit/Näyttösuotimet..."
 
-#: app/menus.c:506
+#: app/menus.c:503
 msgid "/Dialogs/Undo History..."
 msgstr "/Dialogit/Toimintohistoria..."
 
 #. <Image>/Filters
-#: app/menus.c:515
+#: app/menus.c:512
 msgid "/Filters/Repeat Last"
 msgstr "/Suotimet/Toista edellinen"
 
-#: app/menus.c:517
+#: app/menus.c:514
 msgid "/Filters/Re-Show Last"
 msgstr "/Suotimet/Näytä uudelleen edellinen"
 
-#: app/menus.c:522
+#: app/menus.c:519
 msgid "/Filters/Blur"
 msgstr "/Suotimet/Tee epäteräväksi"
 
-#: app/menus.c:524
+#: app/menus.c:521
 msgid "/Filters/Colors"
 msgstr "/Suotimet/Värit"
 
-#: app/menus.c:526
+#: app/menus.c:523
 msgid "/Filters/Noise"
 msgstr "/Suotimet/Lisää kohinaa"
 
-#: app/menus.c:528
+#: app/menus.c:525
 msgid "/Filters/Edge-Detect"
-msgstr "/Suotimet/Etsi reunoja"
+msgstr "/Suotimet/Löydä reunoja"
 
-#: app/menus.c:530
+#: app/menus.c:527
 msgid "/Filters/Enhance"
 msgstr "/Suotimet/Paranna"
 
-#: app/menus.c:532
+#: app/menus.c:529
 msgid "/Filters/Generic"
 msgstr "/Suotimet/Yleiset"
 
-#: app/menus.c:537
+#: app/menus.c:534
 msgid "/Filters/Glass Effects"
 msgstr "/Suotimet/Lasiefektit"
 
-#: app/menus.c:539
+#: app/menus.c:536
 msgid "/Filters/Light Effects"
 msgstr "/Suotimet/Valoefektit"
 
-#: app/menus.c:541
+#: app/menus.c:538
 msgid "/Filters/Distorts"
 msgstr "/Suotimet/Vääristykset"
 
-#: app/menus.c:543
+#: app/menus.c:540
 msgid "/Filters/Artistic"
 msgstr "/Suotimet/Taiteelliset"
 
-#: app/menus.c:545
+#: app/menus.c:542
 msgid "/Filters/Map"
 msgstr "/Suotimet/Kuvaukset"
 
-#: app/menus.c:547
+#: app/menus.c:544
 msgid "/Filters/Render"
 msgstr "/Suotimet/Muodosta kuva"
 
-#: app/menus.c:549
+#: app/menus.c:546
 msgid "/Filters/Web"
 msgstr "/Suotimet/Webbi"
 
-#: app/menus.c:554
+#: app/menus.c:551
 msgid "/Filters/Animation"
 msgstr "/Suotimet/Animaatio"
 
-#: app/menus.c:556
+#: app/menus.c:553
 msgid "/Filters/Combine"
 msgstr "/Suotimet/Yhdistä"
 
-#: app/menus.c:561
+#: app/menus.c:558
 msgid "/Filters/Toys"
 msgstr "/Suotimet/Lelut"
 
-#: app/menus.c:572
+#: app/menus.c:569
 msgid "/Automatic"
 msgstr "/Automaattinen"
 
-#: app/menus.c:586
+#: app/menus.c:583
 msgid "/By Extension"
 msgstr "/Nimen loppuliitteen mukaan"
 
-#: app/menus.c:600
+#: app/menus.c:597
 msgid "/New Layer..."
 msgstr "/Uusi taso..."
 
 #. <Layers>/Stack
-#: app/menus.c:605
+#: app/menus.c:602
 msgid "/Stack/Raise Layer"
 msgstr "/Pino/Nosta taso"
 
-#: app/menus.c:607
+#: app/menus.c:604
 msgid "/Stack/Lower Layer"
 msgstr "/Pino/Alenna taso"
 
-#: app/menus.c:609
+#: app/menus.c:606
 msgid "/Stack/Layer to Top"
 msgstr "/Pino/Nosta taso päällimmäiseksi"
 
-#: app/menus.c:611
+#: app/menus.c:608
 msgid "/Stack/Layer to Bottom"
 msgstr "/Pino/Alenna taso pohjimmaiseksi"
 
-#: app/menus.c:614
+#: app/menus.c:611
 msgid "/Duplicate Layer"
 msgstr "/Kahdenna taso"
 
-#: app/menus.c:616
+#: app/menus.c:613
 msgid "/Anchor Layer"
 msgstr "/Ankkuroi taso"
 
-#: app/menus.c:618
+#: app/menus.c:615
 msgid "/Delete Layer"
 msgstr "/Poista taso"
 
-#: app/menus.c:623
+#: app/menus.c:620
 msgid "/Layer Boundary Size..."
 msgstr "/Tason rajan koko..."
 
-#: app/menus.c:625
+#: app/menus.c:622
 msgid "/Layer to Imagesize"
 msgstr "/Taso kuvan kokoiseksi"
 
-#: app/menus.c:627
+#: app/menus.c:624
 msgid "/Scale Layer..."
 msgstr "/Skaalaa tasoa..."
 
-#: app/menus.c:632
+#: app/menus.c:629
 msgid "/Merge Visible Layers..."
 msgstr "/Yhdistä näkyvät tasot..."
 
-#: app/menus.c:634
+#: app/menus.c:631
 msgid "/Merge Down"
 msgstr "/Yhdistä alas"
 
-#: app/menus.c:636
+#: app/menus.c:633
 msgid "/Flatten Image"
 msgstr "/Yhdistä kuva"
 
-#: app/menus.c:641
+#: app/menus.c:638
 msgid "/Add Layer Mask..."
 msgstr "/Lisää tason maski..."
 
-#: app/menus.c:643
+#: app/menus.c:640
 msgid "/Apply Layer Mask"
 msgstr "/Sovella tason maskia"
 
-#: app/menus.c:645
+#: app/menus.c:642
 msgid "/Delete Layer Mask"
 msgstr "/Poista tason maski"
 
-#: app/menus.c:647
+#: app/menus.c:644
 msgid "/Mask to Selection"
 msgstr "/Maski valinnaksi"
 
-#: app/menus.c:652
+#: app/menus.c:649
 msgid "/Add Alpha Channel"
 msgstr "/Lisää alfakanava"
 
-#: app/menus.c:654
+#: app/menus.c:651
 msgid "/Alpha to Selection"
 msgstr "/Alfakanava valinnaksi"
 
-#: app/menus.c:659
+#: app/menus.c:656
 msgid "/Edit Layer Attributes..."
 msgstr "/Muokkaa tason ominaisuuksia..."
 
-#: app/menus.c:670
+#: app/menus.c:667
 msgid "/New Channel..."
 msgstr "/Uusi kanava..."
 
-#: app/menus.c:672
+#: app/menus.c:669
 msgid "/Raise Channel"
 msgstr "/Nosta kanava"
 
-#: app/menus.c:674
+#: app/menus.c:671
 msgid "/Lower Channel"
 msgstr "/Laske kanava"
 
-#: app/menus.c:676
+#: app/menus.c:673
 msgid "/Duplicate Channel"
 msgstr "/Kahdenna kanava"
 
-#: app/menus.c:681
+#: app/menus.c:678
 msgid "/Channel to Selection"
 msgstr "/Kanava valinnaksi"
 
-#: app/menus.c:683
+#: app/menus.c:680
 msgid "/Add to Selection"
 msgstr "/Lisää valintaan"
 
-#: app/menus.c:685
+#: app/menus.c:682
 msgid "/Subtract from Selection"
 msgstr "/Vähennä valinnasta"
 
-#: app/menus.c:687
+#: app/menus.c:684
 msgid "/Intersect with Selection"
 msgstr "/Leikkaa valinnan kanssa"
 
-#: app/menus.c:692
+#: app/menus.c:689
 msgid "/Delete Channel"
 msgstr "/Poista kanava"
 
-#: app/menus.c:697
+#: app/menus.c:694
 msgid "/Edit Channel Attributes..."
 msgstr "/Muokkaa kanavan ominaisuuksia..."
 
-#: app/menus.c:708
+#: app/menus.c:705
 msgid "/New Path"
 msgstr "/Uusi polku"
 
-#: app/menus.c:710
+#: app/menus.c:707
 msgid "/Duplicate Path"
 msgstr "/Kahdenna polku"
 
-#: app/menus.c:712
+#: app/menus.c:709
 msgid "/Path to Selection"
 msgstr "/Polku valinnaksi"
 
-#: app/menus.c:714
+#: app/menus.c:711
 msgid "/Selection to Path"
 msgstr "/Valinta poluksi"
 
-#: app/menus.c:716
+#: app/menus.c:713
 msgid "/Stroke Path"
-msgstr "/Piittä polkua pitkin"
+msgstr "/Piirrä polkua pitkin"
 
-#: app/menus.c:718
+#: app/menus.c:715
 msgid "/Delete Path"
 msgstr "/Poista polku"
 
-#: app/menus.c:723
+#: app/menus.c:720
 msgid "/Copy Path"
 msgstr "/Kopioi polku"
 
-#: app/menus.c:725
+#: app/menus.c:722
 msgid "/Paste Path"
 msgstr "/Liimaa polku"
 
-#: app/menus.c:727
+#: app/menus.c:724
 msgid "/Import Path..."
 msgstr "/Tuo polku tiedostosta..."
 
-#: app/menus.c:729
+#: app/menus.c:726
 msgid "/Export Path..."
 msgstr "/Vie polku tiedostoon..."
 
-#: app/menus.c:734
+#: app/menus.c:731
 msgid "/Edit Path Attributes..."
 msgstr "/Muokkaa polun ominaisuuksia"
 
-#: app/menus.c:1287
+#: app/menus.c:1284
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Virhe tiedoston avauksessa: %s\n"
 
-#: app/module_db.c:62
+#: app/module_db.c:58
 msgid "Module error"
 msgstr "Moduulivirhe"
 
-#: app/module_db.c:63
+#: app/module_db.c:59
 msgid "Loaded OK"
 msgstr "Ladattu OK"
 
-#: app/module_db.c:64
+#: app/module_db.c:60
 msgid "Load failed"
 msgstr "Lataus epäonnistui"
 
-#: app/module_db.c:65
+#: app/module_db.c:61
 msgid "Unload requested"
 msgstr "Poisto pyydetty"
 
-#: app/module_db.c:66
+#: app/module_db.c:62
 msgid "Unloaded OK"
 msgstr "Poistettu OK"
 
-#: app/module_db.c:308
+#: app/module_db.c:275
 msgid "Module DB"
 msgstr "Moduulitietokanta"
 
-#: app/module_db.c:601
+#: app/module_db.c:565
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "lataa moduuli: \"%s\"\n"
 
-#: app/module_db.c:608
+#: app/module_db.c:572
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "ohitan moduulia: \"%s\"\n"
 
-#: app/module_db.c:633
+#: app/module_db.c:597
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "moduulin latatus virhe: %s: %s"
 
-#: app/module_db.c:812
+#: app/module_db.c:778
 msgid "<No modules>"
 msgstr "<Ei moduuleja>"
 
-#: app/module_db.c:825 app/module_db.c:834
+#: app/module_db.c:791 app/module_db.c:800
 msgid "on disk"
 msgstr "levyllä"
 
-#: app/module_db.c:825
+#: app/module_db.c:791
 msgid "only in memory"
 msgstr "vain muistissa"
 
-#: app/module_db.c:834
+#: app/module_db.c:800
 msgid "nowhere (click 'refresh')"
 msgstr "ei missään (napsauta 'virkistä')"
 
-#: app/module_db.c:873
+#: app/module_db.c:839
 msgid "Unload"
 msgstr "Poista"
 
-#: app/module_db.c:889
+#: app/module_db.c:853
 msgid "Purpose:"
 msgstr "Tarkoitus:"
 
-#: app/module_db.c:890
+#: app/module_db.c:854
 msgid "Author:"
 msgstr "Tekijä:"
 
-#: app/module_db.c:891
+#: app/module_db.c:855
 msgid "Version:"
 msgstr "Versio:"
 
-#: app/module_db.c:892
+#: app/module_db.c:856
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/module_db.c:893
+#: app/module_db.c:857
 msgid "Date:"
 msgstr "Päiväys:"
 
-#: app/module_db.c:894
+#: app/module_db.c:858
 msgid "Location:"
 msgstr "Sijainti:"
 
-#: app/module_db.c:895
+#: app/module_db.c:859
 msgid "State:"
 msgstr "Tila:"
 
-#: app/module_db.c:914
+#: app/module_db.c:878
 msgid "Autoload during startup"
 msgstr "Lataa automaattisesti käynnistyksessä"
 
@@ -3836,7 +3823,7 @@ msgstr "Pyyhi"
 
 #: app/paintbrush.c:220
 msgid "Fade Out"
-msgstr "Haalistu"
+msgstr ""
 
 #. the gradient type
 #: app/paintbrush.c:299
@@ -4099,7 +4086,7 @@ msgstr "Polkutiedostossa %s ei ollut pisteitä"
 msgid "Failed to read path points from %s"
 msgstr "Polun pisteitten luku tiedostosta %s epäonnistui"
 
-#: app/paths_dialog.c:2022 app/xcf.c:436
+#: app/paths_dialog.c:2022 app/xcf.c:437
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Virhe tiedoston %s avauksessa: %s\n"
@@ -4154,46 +4141,42 @@ msgstr "Matriisi:"
 msgid "Perspective..."
 msgstr "Perspektiivi..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:314
 msgid "Resource configuration"
 msgstr "Resurssien konfigurointi"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:321
 msgid "Plug-ins"
 msgstr "Liitännäiset"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:333
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "tiedustellaan liitännäistä: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:369
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "kirjoitetaan \"%s\"\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:384
 msgid "Starting extensions: "
 msgstr "Käynnistetään lisäykset: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:385
 msgid "Extensions"
 msgstr "Lisäykset"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:781
 #, c-format
-msgid "Unable to locate Plug-In: \"%s\""
+msgid "Unable to locate plug-in: \"%s\""
 msgstr "Liitännäistä ei lötynyt: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1439
 #, c-format
 msgid ""
-"Plug-In crashed: \"%s\"\n"
-"(%s)\n"
-"\n"
-"The dying Plug-In may have messed up GIMP's internal state.\n"
-"You may want to save your images and restart GIMP\n"
-"to be on the safe side."
+"Plug-In crashed: %s\n"
+"(%s)"
 msgstr ""
 
 #: app/posterize.c:148
@@ -4238,7 +4221,7 @@ msgstr "Virhe: Oletusresoluutio liian iso."
 
 #: app/preferences_dialog.c:291
 msgid "Error: Monitor resolution must not be zero."
-msgstr "Virhe: Näytön resoluution ei voi olla nolla."
+msgstr "Virhe: Näytön resoluutio ei voi olla nolla."
 
 #: app/preferences_dialog.c:298
 msgid "Error: Image title format must not be NULL."
@@ -4308,456 +4291,456 @@ msgstr "Korkeus"
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Kuvan oletusresoluutio ja sen mittayksikkö"
 
-#: app/preferences_dialog.c:1581 app/preferences_dialog.c:2352
+#: app/preferences_dialog.c:1581 app/preferences_dialog.c:2350
 msgid "dpi"
-msgstr "dpi"
+msgstr ""
 
 #: app/preferences_dialog.c:1628
 msgid "Default Image Type:"
 msgstr "Oletuskuvamuoto"
 
-#: app/preferences_dialog.c:1640
+#: app/preferences_dialog.c:1639
 msgid "Maximum Image Size:"
 msgstr "Kuvan enimmäiskoko:"
 
-#: app/preferences_dialog.c:1645 app/preferences_dialog.c:1647
+#: app/preferences_dialog.c:1644 app/preferences_dialog.c:1646
 msgid "Default Comment"
 msgstr "Oletuskommentti"
 
-#: app/preferences_dialog.c:1655
+#: app/preferences_dialog.c:1654
 msgid "Comment Used for New Images"
 msgstr "Kommentti jota käytetään uusille kuville"
 
-#: app/preferences_dialog.c:1675 app/preferences_dialog.c:1677
+#: app/preferences_dialog.c:1674 app/preferences_dialog.c:1676
 msgid "Display"
 msgstr "Näyttö"
 
-#: app/preferences_dialog.c:1685
+#: app/preferences_dialog.c:1684
 msgid "Transparency"
 msgstr "Läpinäkyvät alueet"
 
-#: app/preferences_dialog.c:1704
+#: app/preferences_dialog.c:1703
 msgid "Light Checks"
-msgstr "vaalea ruudutus"
+msgstr "Vaalea ruudutus"
+
+#: app/preferences_dialog.c:1704
+msgid "Mid-Tone Checks"
+msgstr "Keskitumma ruudutus"
 
 #: app/preferences_dialog.c:1705
-msgid "Mid-Tone Checks"
-msgstr "keskitumma ruudutus"
+msgid "Dark Checks"
+msgstr "Tumma ruudutus"
 
 #: app/preferences_dialog.c:1706
-msgid "Dark Checks"
-msgstr "tumma ruudutus"
+msgid "White Only"
+msgstr "Pelkkää valkoista"
 
 #: app/preferences_dialog.c:1707
-msgid "White Only"
-msgstr "pelkkää valkoista"
+msgid "Gray Only"
+msgstr "Pelkkää harmaata"
 
 #: app/preferences_dialog.c:1708
-msgid "Gray Only"
-msgstr "pelkkää harmaata"
-
-#: app/preferences_dialog.c:1709
 msgid "Black Only"
-msgstr "pelkkää mustaa"
+msgstr "Pelkkää mustaa"
 
-#: app/preferences_dialog.c:1713
+#: app/preferences_dialog.c:1712
 msgid "Transparency Type:"
 msgstr "Läpinäkyvät alueet:"
 
+#: app/preferences_dialog.c:1719 app/preferences_dialog.c:1811
+#: app/preferences_dialog.c:1825
+msgid "Small"
+msgstr "Pieni"
+
 #: app/preferences_dialog.c:1720 app/preferences_dialog.c:1812
 #: app/preferences_dialog.c:1826
-msgid "Small"
-msgstr "pieni"
+msgid "Medium"
+msgstr "Keski"
 
 #: app/preferences_dialog.c:1721 app/preferences_dialog.c:1813
 #: app/preferences_dialog.c:1827
-msgid "Medium"
-msgstr "keski"
-
-#: app/preferences_dialog.c:1722 app/preferences_dialog.c:1814
-#: app/preferences_dialog.c:1828
 msgid "Large"
-msgstr "iso"
+msgstr "Iso"
 
-#: app/preferences_dialog.c:1726
+#: app/preferences_dialog.c:1725
 msgid "Check Size:"
 msgstr "Ruudutuksen koko:"
 
-#: app/preferences_dialog.c:1729
+#: app/preferences_dialog.c:1728
 msgid "8-Bit Displays"
 msgstr "8-bittiset näytöt"
 
-#: app/preferences_dialog.c:1750
+#: app/preferences_dialog.c:1749
 msgid "Minimum Number of Colors:"
-msgstr "Värien vähimmäismäärä:"
+msgstr ""
 
-#: app/preferences_dialog.c:1753
+#: app/preferences_dialog.c:1752
 msgid "Install Colormap"
 msgstr "Asenna oma väripaletti"
 
-#: app/preferences_dialog.c:1762
+#: app/preferences_dialog.c:1761
 msgid "Colormap Cycling"
 msgstr "Kierrätä palettia"
 
-#: app/preferences_dialog.c:1811
+#: app/preferences_dialog.c:1810
 msgid "Tiny"
-msgstr "hyvin pieni"
+msgstr "Hyvin pieni"
 
-#: app/preferences_dialog.c:1815
+#: app/preferences_dialog.c:1814
 msgid "Huge"
-msgstr "valtava"
+msgstr "Valtava"
 
-#: app/preferences_dialog.c:1819
+#: app/preferences_dialog.c:1818
 msgid "Preview Size:"
 msgstr "Esikatselukoko:"
 
-#: app/preferences_dialog.c:1832
+#: app/preferences_dialog.c:1831
 msgid "Nav Preview Size:"
 msgstr "Suunnistusikkunan koko:"
 
-#: app/preferences_dialog.c:1842
+#: app/preferences_dialog.c:1841
 msgid "Recent Documents List Size:"
 msgstr "Äskettäisten kuvien lukumäärä Tiedosto-valikossa:"
 
 #. Indicators
-#: app/preferences_dialog.c:1846
+#: app/preferences_dialog.c:1845
 msgid "Toolbox"
 msgstr "Työkalulaatikko"
 
-#: app/preferences_dialog.c:1849
+#: app/preferences_dialog.c:1848
 msgid "Display Brush, Pattern and Gradient Indicators"
-msgstr "Näytä sivellin, kuvio ja väriluikuma työkalulaatikossa"
+msgstr "Näytä sivellin, kuvio ja väriliukuma työkalulaatikossa"
 
-#: app/preferences_dialog.c:1858
+#: app/preferences_dialog.c:1857
 msgid "Dialog Behaviour"
 msgstr "Dialogin käyttäytyminen"
 
-#: app/preferences_dialog.c:1860
+#: app/preferences_dialog.c:1859
 msgid "Navigation Window per Display"
 msgstr "Suunnistusikkuna näyttöä kohti"
 
-#: app/preferences_dialog.c:1869
+#: app/preferences_dialog.c:1868
 msgid "Info Window Follows Mouse"
 msgstr "Infoikkuna seuraa osoitinta"
 
-#: app/preferences_dialog.c:1880 app/preferences_dialog.c:1882
+#: app/preferences_dialog.c:1879 app/preferences_dialog.c:1881
 msgid "Help System"
 msgstr "Avustukset"
 
-#: app/preferences_dialog.c:1892
+#: app/preferences_dialog.c:1891
 msgid "Show Tool Tips"
 msgstr "Näytä työkaluvihjeet"
 
-#: app/preferences_dialog.c:1902
+#: app/preferences_dialog.c:1901
 msgid "Context Sensitive Help with \"F1\""
 msgstr "Yhteysriippuvaa avustusta \"F1\":llä"
 
-#: app/preferences_dialog.c:1911
+#: app/preferences_dialog.c:1910
 msgid "Help Browser"
 msgstr "Selain avustuksille"
 
-#: app/preferences_dialog.c:1923
+#: app/preferences_dialog.c:1922
 msgid "Internal"
-msgstr "sisäinen"
+msgstr "Sisäinen"
 
-#: app/preferences_dialog.c:1924
+#: app/preferences_dialog.c:1923
 msgid "Netscape"
-msgstr "Netscape"
+msgstr ""
 
-#: app/preferences_dialog.c:1928
+#: app/preferences_dialog.c:1927
 msgid "Help Browser to Use:"
 msgstr "Käytettävä selain avustuksille"
 
-#: app/preferences_dialog.c:1933 app/preferences_dialog.c:1935
+#: app/preferences_dialog.c:1932 app/preferences_dialog.c:1934
 msgid "Image Windows"
 msgstr "Kuvaikkunat"
 
-#: app/preferences_dialog.c:1943
+#: app/preferences_dialog.c:1942
 msgid "Appearance"
 msgstr "Kuvaikkunan esitys"
 
-#: app/preferences_dialog.c:1945
+#: app/preferences_dialog.c:1944
 msgid "Use \"Dot for Dot\" by default"
-msgstr "Käytä \"piste pisteeltä\" oletuksena"
+msgstr ""
 
-#: app/preferences_dialog.c:1954
+#: app/preferences_dialog.c:1953
 msgid "Resize Window on Zoom"
 msgstr "Muuta ikkunan kokoa zoomattaessa"
 
-#: app/preferences_dialog.c:1963
+#: app/preferences_dialog.c:1962
 msgid "Show Rulers"
 msgstr "Näytä viivottimet"
 
-#: app/preferences_dialog.c:1972
+#: app/preferences_dialog.c:1971
 msgid "Show Statusbar"
 msgstr "Näytä infopalkki"
 
-#: app/preferences_dialog.c:1996
+#: app/preferences_dialog.c:1995
 msgid "Marching Ants Speed:"
 msgstr "Muurahaisten nopeus:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:2004
+#: app/preferences_dialog.c:2003
 msgid "Custom"
 msgstr "Räätälöity"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:2010
+#: app/preferences_dialog.c:2009
 msgid "Standard"
 msgstr "Vakio"
 
-#: app/preferences_dialog.c:2015
+#: app/preferences_dialog.c:2014
 msgid "Show zoom percentage"
 msgstr "Näytä zoomausprosentti"
 
-#: app/preferences_dialog.c:2020
+#: app/preferences_dialog.c:2019
 msgid "Show zoom ratio"
 msgstr "Näytä zoomaussuhde"
 
-#: app/preferences_dialog.c:2025
+#: app/preferences_dialog.c:2024
 msgid "Show reversed zoom ratio"
 msgstr "Näytä käänteinen zoomaussuhde"
 
-#: app/preferences_dialog.c:2036
+#: app/preferences_dialog.c:2035
 msgid "Image Title Format:"
 msgstr "Kuvan otsikon formaatti"
 
 #. End of the title format string
-#: app/preferences_dialog.c:2040
+#: app/preferences_dialog.c:2039
 msgid "Pointer Movement Feedback"
 msgstr "Osoittimen liikkeen palaute"
 
-#: app/preferences_dialog.c:2043
+#: app/preferences_dialog.c:2042
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Täydellinen mutta hidas osoittimen seuranta"
 
-#: app/preferences_dialog.c:2052
+#: app/preferences_dialog.c:2051
 msgid "Disable Cursor Updating"
 msgstr "Ei osoittimen päivitystä"
 
-#: app/preferences_dialog.c:2064 app/preferences_dialog.c:2066
+#: app/preferences_dialog.c:2063 app/preferences_dialog.c:2065
 #: app/tools.c:1079
 msgid "Tool Options"
 msgstr "Työkalujen asetukset"
 
-#: app/preferences_dialog.c:2074
+#: app/preferences_dialog.c:2073
 msgid "Paint Options"
 msgstr "Piirtoasetukset"
 
-#: app/preferences_dialog.c:2077
+#: app/preferences_dialog.c:2076
 msgid "Use Global Paint Options"
 msgstr "Käytä globaaleja piirtoasetuksia"
 
-#: app/preferences_dialog.c:2086
+#: app/preferences_dialog.c:2085
 msgid "Finding Contiguous Regions"
 msgstr "Väriltään yhteynäisten alueitten valinta"
 
-#: app/preferences_dialog.c:2105
+#: app/preferences_dialog.c:2104
 msgid "Default Threshold:"
 msgstr "Raja-arvo:"
 
-#: app/preferences_dialog.c:2114 app/preferences_dialog.c:2116
+#: app/preferences_dialog.c:2113 app/preferences_dialog.c:2115
 msgid "Environment"
 msgstr "Ympäristö"
 
-#: app/preferences_dialog.c:2124
+#: app/preferences_dialog.c:2123
 msgid "Resource Consumption"
 msgstr "Resurssikulutus"
 
-#: app/preferences_dialog.c:2126
+#: app/preferences_dialog.c:2125
 msgid "Conservative Memory Usage"
 msgstr "Säästä muistia"
 
-#: app/preferences_dialog.c:2154
+#: app/preferences_dialog.c:2153
 msgid "Levels of Undo:"
 msgstr "Kumoamistasoja"
 
-#: app/preferences_dialog.c:2166 app/user_install.c:1104
+#: app/preferences_dialog.c:2164 app/user_install.c:1104
 msgid "Tile Cache Size:"
 msgstr "Kuvavälimuistin koko:"
 
-#: app/preferences_dialog.c:2177
+#: app/preferences_dialog.c:2175
 msgid "Number of Processors to Use:"
 msgstr "Käytettävien suorittimien lukumäärä:"
 
-#: app/preferences_dialog.c:2181 app/transform_tool.c:215
+#: app/preferences_dialog.c:2179 app/transform_tool.c:215
 msgid "Scaling"
 msgstr "Skaalaus"
 
-#: app/preferences_dialog.c:2199
+#: app/preferences_dialog.c:2197
 msgid "Nearest Neighbor (Fast)"
-msgstr "lähin naapuri (nopea)"
+msgstr "Lähin naapuri (nopea)"
 
-#: app/preferences_dialog.c:2203
+#: app/preferences_dialog.c:2201
 msgid "Cubic (Slow)"
-msgstr "kuutiollinen (hidas)"
+msgstr "Kuutiollinen (hidas)"
 
-#: app/preferences_dialog.c:2208
+#: app/preferences_dialog.c:2206
 msgid "Interpolation Type:"
 msgstr "Interpolaatiomenetelmä:"
 
-#: app/preferences_dialog.c:2211
+#: app/preferences_dialog.c:2209
 msgid "File Saving"
 msgstr "Tiedoston tallennus"
 
-#: app/preferences_dialog.c:2228 app/preferences_dialog.c:2241
+#: app/preferences_dialog.c:2226 app/preferences_dialog.c:2239
 msgid "Always"
-msgstr "aina"
+msgstr "Aina"
 
-#: app/preferences_dialog.c:2229
+#: app/preferences_dialog.c:2227
 msgid "Never"
-msgstr "ei koskaan"
+msgstr "Ei koskaan"
 
-#: app/preferences_dialog.c:2233
+#: app/preferences_dialog.c:2231
 msgid "Try to Write a Thumbnail File:"
 msgstr "Yritä kirjoittaa esikatselukuva:"
 
-#: app/preferences_dialog.c:2240
+#: app/preferences_dialog.c:2238
 msgid "Only when Modified"
-msgstr "ainoastaan jos muokattu"
+msgstr "Ainoastaan jos muokattu"
 
-#: app/preferences_dialog.c:2245
+#: app/preferences_dialog.c:2243
 msgid "\"File > Save\" Saves the Image:"
 msgstr "'Tiedosto > Talleta' tallettaa kuvan:"
 
-#: app/preferences_dialog.c:2251
+#: app/preferences_dialog.c:2249
 msgid "Session Management"
 msgstr "Istunnon hallinta"
 
-#: app/preferences_dialog.c:2253
+#: app/preferences_dialog.c:2251
 msgid "Session"
 msgstr "Istunto"
 
-#: app/preferences_dialog.c:2261
+#: app/preferences_dialog.c:2259
 msgid "Window Positions"
 msgstr "Ikkunoiden sijainnit"
 
-#: app/preferences_dialog.c:2263
+#: app/preferences_dialog.c:2261
 msgid "Save Window Positions on Exit"
 msgstr "Talleta ikkunoiden sijainnit poistuttaessa"
 
-#: app/preferences_dialog.c:2277
+#: app/preferences_dialog.c:2275
 msgid "Clear Saved Window Positions Now"
 msgstr "Unohda tallennetut ikkunoiden sijainnit"
 
-#: app/preferences_dialog.c:2285
+#: app/preferences_dialog.c:2283
 msgid "Always Try to Restore Session"
 msgstr "Yritä aina palauttaa istunto"
 
-#: app/preferences_dialog.c:2294
+#: app/preferences_dialog.c:2292
 msgid "Devices"
 msgstr "Laitteet"
 
-#: app/preferences_dialog.c:2296
+#: app/preferences_dialog.c:2294
 msgid "Save Device Status on Exit"
 msgstr "Tallenna laitteiden tila poistuessa"
 
-#: app/preferences_dialog.c:2307 app/preferences_dialog.c:2309
+#: app/preferences_dialog.c:2305 app/preferences_dialog.c:2307
 msgid "Monitor"
 msgstr "Näyttö"
 
-#: app/preferences_dialog.c:2317
+#: app/preferences_dialog.c:2315
 msgid "Get Monitor Resolution"
 msgstr "Hae näytön resoluutio"
 
-#: app/preferences_dialog.c:2325
+#: app/preferences_dialog.c:2323
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Nyt %d x %d dpi)"
 
-#: app/preferences_dialog.c:2377
+#: app/preferences_dialog.c:2375
 msgid "From X Server"
 msgstr "Ohjelmallisesti"
 
-#: app/preferences_dialog.c:2392
+#: app/preferences_dialog.c:2390
 msgid "Manually:"
 msgstr "Manuaalisesti:"
 
-#: app/preferences_dialog.c:2405 app/preferences_dialog.c:2407
+#: app/preferences_dialog.c:2403 app/preferences_dialog.c:2405
 msgid "Directories"
 msgstr "Kansiot"
 
-#: app/preferences_dialog.c:2424
+#: app/preferences_dialog.c:2422
 msgid "Temp Dir:"
 msgstr "Tilapäistiedostoille:"
 
-#: app/preferences_dialog.c:2424
+#: app/preferences_dialog.c:2422
 msgid "Select Temp Dir"
 msgstr "Valitse tilapäistiedostojen kansio"
 
-#: app/preferences_dialog.c:2425
+#: app/preferences_dialog.c:2423
 msgid "Swap Dir:"
 msgstr "Sivutuskansio:"
 
-#: app/preferences_dialog.c:2425 app/user_install.c:1124
+#: app/preferences_dialog.c:2423 app/user_install.c:1124
 msgid "Select Swap Dir"
 msgstr "Valitse sivutuskansio"
 
-#: app/preferences_dialog.c:2461
+#: app/preferences_dialog.c:2459
 msgid "Brushes Directories"
 msgstr "Sivellinkansiot"
 
-#: app/preferences_dialog.c:2463
+#: app/preferences_dialog.c:2461
 msgid "Select Brushes Dir"
 msgstr "Valitse sivellinkansio"
 
-#: app/preferences_dialog.c:2465
+#: app/preferences_dialog.c:2463
 msgid "Generated Brushes"
 msgstr "Generoidut siveltimet"
 
-#: app/preferences_dialog.c:2465
+#: app/preferences_dialog.c:2463
 msgid "Generated Brushes Directories"
 msgstr "Generoitujen siveltimien kansiot"
 
-#: app/preferences_dialog.c:2467
+#: app/preferences_dialog.c:2465
 msgid "Select Generated Brushes Dir"
 msgstr "Valitse kansio generoiduille siveltimille"
 
-#: app/preferences_dialog.c:2469
+#: app/preferences_dialog.c:2467
 msgid "Patterns Directories"
 msgstr "Kuviokansiot"
 
-#: app/preferences_dialog.c:2471
+#: app/preferences_dialog.c:2469
 msgid "Select Patterns Dir"
 msgstr "Valitse kansio kuvioille"
 
-#: app/preferences_dialog.c:2473
+#: app/preferences_dialog.c:2471
 msgid "Palettes Directories"
 msgstr "Palettien kansiot"
 
-#: app/preferences_dialog.c:2475
+#: app/preferences_dialog.c:2473
 msgid "Select Palettes Dir"
 msgstr "Valitse kansio paleteille"
 
-#: app/preferences_dialog.c:2477
+#: app/preferences_dialog.c:2475
 msgid "Gradients Directories"
 msgstr "Väriliukumien kansiot"
 
-#: app/preferences_dialog.c:2479
+#: app/preferences_dialog.c:2477
 msgid "Select Gradients Dir"
 msgstr "Valitse kansio väriliukumille"
 
-#: app/preferences_dialog.c:2481
+#: app/preferences_dialog.c:2479
 msgid "Plug-Ins"
 msgstr "Liitännäiset"
 
-#: app/preferences_dialog.c:2481
+#: app/preferences_dialog.c:2479
 msgid "Plug-Ins Directories"
 msgstr "Liitännäisten kansiot"
 
-#: app/preferences_dialog.c:2483
+#: app/preferences_dialog.c:2481
 msgid "Select Plug-Ins Dir"
 msgstr "Valitse kansio liitännäisille"
 
-#: app/preferences_dialog.c:2485
+#: app/preferences_dialog.c:2483
 msgid "Modules"
 msgstr "Moduulit"
 
-#: app/preferences_dialog.c:2485
+#: app/preferences_dialog.c:2483
 msgid "Modules Directories"
 msgstr "Moduulien kansiot"
 
-#: app/preferences_dialog.c:2487
+#: app/preferences_dialog.c:2485
 msgid "Select Modules Dir"
 msgstr "Valitse kansio moduuleille"
 
@@ -4765,17 +4748,17 @@ msgstr "Valitse kansio moduuleille"
 msgid "Procedural Database"
 msgstr "Proseduuritietokanta"
 
-#: app/procedural_db.c:137 app/procedural_db.c:149
+#: app/procedural_db.c:136 app/procedural_db.c:148
 #, c-format
 msgid "PDB calling error %s not found"
 msgstr "PDB-kutsuvirhe: %s ei löydy"
 
-#: app/procedural_db.c:167
+#: app/procedural_db.c:166
 #, c-format
 msgid "PDB calling error %s"
 msgstr "PDB-kutsuvirhe: %s"
 
-#: app/procedural_db.c:243
+#: app/procedural_db.c:242
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -4829,62 +4812,63 @@ msgstr "VALINTA: KORVAA"
 msgid "Selection: "
 msgstr "Valinta: "
 
-#: app/resize.c:155
+#: app/resize.c:156
 msgid "Scale Layer"
 msgstr "Skaalaa layeria"
 
-#: app/resize.c:157 app/resize.c:182 app/tool_options.c:796
+#: app/resize.c:158 app/resize.c:183 app/tool_options.c:796
 msgid "Size"
 msgstr "Koko"
 
-#: app/resize.c:161
+#: app/resize.c:162
 msgid "Scale Image"
 msgstr "Skaalaa kuvaa"
 
-#: app/resize.c:163
+#: app/resize.c:164
 msgid "Pixel Dimensions"
 msgstr "Koko pikseleissä"
 
-#: app/resize.c:173
+#: app/resize.c:174
 msgid "Set Layer Boundary Size"
 msgstr "Aseta tason rajan koko"
 
-#: app/resize.c:178
+#: app/resize.c:179
 msgid "Set Canvas Size"
 msgstr "Aseta kankaan koko"
 
 #. the original width & height labels
-#: app/resize.c:247 app/scale_tool.c:77
+#: app/resize.c:248 app/scale_tool.c:77
 msgid "Original Width:"
 msgstr "Alkuperäinen leveys:"
 
 #. the new size labels
-#: app/resize.c:272 app/resize.c:503
+#: app/resize.c:273 app/resize.c:518
 msgid "New Width:"
 msgstr "Uusi leveys:"
 
 #. the scale ratio labels
-#: app/resize.c:337
+#: app/resize.c:338
 msgid "Ratio X:"
 msgstr "X-suhde:"
 
-#: app/resize.c:433
+#. the x and y offset labels
+#: app/resize.c:423
 msgid "X:"
-msgstr "X:"
+msgstr ""
 
-#: app/resize.c:489
+#: app/resize.c:504
 msgid "Print Size & Display Unit"
 msgstr "Tulostuskoko ja näyttöyksikkö"
 
-#: app/resize.c:1238
+#: app/resize.c:1253
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Virhe: Sekä leveyden että korkeuden pitää olla nollaa suurempia."
 
-#: app/resize.c:1319
+#: app/resize.c:1334
 msgid "Layer Too Small"
 msgstr "Layer liian pieni"
 
-#: app/resize.c:1323
+#: app/resize.c:1338
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
@@ -4896,7 +4880,7 @@ msgstr ""
 
 #: app/rotate_tool.c:83
 msgid "Rotation Information"
-msgstr "Kierto"
+msgstr "Tietoja kiertämisestä"
 
 #: app/rotate_tool.c:103
 msgid "Center X:"
@@ -4989,15 +4973,16 @@ msgstr "Raja:"
 
 #: app/tips_dialog.c:72
 msgid "gimp_tips.txt"
-msgstr "gimp_tips.txt"
+msgstr ""
 
 #: app/tips_dialog.c:84
 msgid "GIMP Tip of the Day"
 msgstr "Päivän GIMP-vihje"
 
 #: app/tips_dialog.c:145
+#, fuzzy
 msgid "Show tip next time GIMP starts"
-msgstr "Näytä vihjeet seuraavalla kerralla GIMPin käynnistyessä"
+msgstr "Näytä vihjeet seuraavalla kerralla"
 
 #: app/tips_dialog.c:175
 msgid "Previous Tip"
@@ -5160,7 +5145,7 @@ msgstr "/Työkalut/Valinnat/Vapaamuotoinen valinta"
 
 #: app/tools.c:129
 msgid "Select hand-drawn regions"
-msgstr "Valiten vapaamuotoisea alueita"
+msgstr "Valitse vapaamuotoisia alueita"
 
 #: app/tools.c:141
 msgid "Fuzzy Select"
@@ -5211,8 +5196,8 @@ msgid "Magnify"
 msgstr "Suurenna"
 
 #: app/tools.c:214
-msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Työkalut/Muunnokset/Suurennus"
+msgid "/Tools/Magnify"
+msgstr "/Työkalut/Suurenna"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -5228,7 +5213,7 @@ msgstr "Rajaa tai muokkaa kuvan kokoa"
 
 #. the transform type radio buttons
 #: app/tools.c:249 app/tools.c:267 app/tools.c:285 app/tools.c:303
-#: app/transform_core.c:252 app/transform_tool.c:211
+#: app/transform_core.c:255 app/transform_tool.c:211
 msgid "Transform"
 msgstr "Muunnos"
 
@@ -5460,25 +5445,25 @@ msgstr "/Kuva/Histogrammi..."
 msgid "View image histogram"
 msgstr "Näytä kuvan histogrammi"
 
-#: app/transform_core.c:249
+#: app/transform_core.c:252
 msgid "Rotate"
 msgstr "Kierrä"
 
-#: app/transform_core.c:250
+#: app/transform_core.c:253
 msgid "Scale"
 msgstr "Skaalaa"
 
-#: app/transform_core.c:251
+#: app/transform_core.c:254
 msgid "Shear"
 msgstr "Tee vinoksi"
 
-#: app/transform_core.c:360
+#: app/transform_core.c:363
 msgid ""
 "Transformations do not work on\n"
 "layers that contain layer masks."
 msgstr "Muunnokset eivät toimi tasoilla joilla on tasomaski."
 
-#: app/transform_core.c:1616
+#: app/transform_core.c:1612
 msgid "Transformation"
 msgstr "Muunnokset"
 
@@ -5535,191 +5520,191 @@ msgstr "Näytä polku"
 msgid "Clip Result"
 msgstr "Leikkaa tulos"
 
-#: app/undo.c:2889
+#: app/undo.c:2833
 #, c-format
 msgid "Can't undo %s"
 msgstr "Toiminnon '%s' peruminen ei onnistu"
 
-#: app/undo.c:2920
+#: app/undo.c:2864
 msgid "<<invalid>>"
 msgstr ""
 
-#: app/undo.c:2921
+#: app/undo.c:2865
 msgid "image"
 msgstr "kuva"
 
-#: app/undo.c:2922
+#: app/undo.c:2866
 msgid "image mod"
 msgstr "kuvan muokkaus"
 
-#: app/undo.c:2923
+#: app/undo.c:2867
 msgid "mask"
 msgstr "maski"
 
-#: app/undo.c:2924
+#: app/undo.c:2868
 msgid "layer move"
 msgstr "tason siirto"
 
 #. ok
-#: app/undo.c:2925
+#: app/undo.c:2869
 msgid "transform"
 msgstr "muunnos"
 
-#: app/undo.c:2926
+#: app/undo.c:2870
 msgid "paint"
 msgstr "piirto"
 
-#: app/undo.c:2927
+#: app/undo.c:2871
 msgid "new layer"
 msgstr "uusi taso"
 
-#: app/undo.c:2928
+#: app/undo.c:2872
 msgid "delete layer"
-msgstr "tason poista"
+msgstr "tason poisto"
 
-#: app/undo.c:2929
+#: app/undo.c:2873
 msgid "layer mod"
 msgstr "tason muokkaus"
 
-#: app/undo.c:2930
+#: app/undo.c:2874
 msgid "add layer mask"
 msgstr "tason maskin lisäys"
 
 #. ok
-#: app/undo.c:2931
+#: app/undo.c:2875
 msgid "delete layer mask"
 msgstr "tason maskin poisto"
 
 #. ok
-#: app/undo.c:2932
+#: app/undo.c:2876
 msgid "rename layer"
 msgstr "tason nimen vaihto"
 
-#: app/undo.c:2933
+#: app/undo.c:2877
 msgid "layer reposition"
 msgstr "tasojen keskinäinen siirto"
 
 #. ok
-#: app/undo.c:2934
+#: app/undo.c:2878
 msgid "new channel"
 msgstr "uusi kanava"
 
-#: app/undo.c:2935
+#: app/undo.c:2879
 msgid "delete channel"
 msgstr "kanavan poisto"
 
-#: app/undo.c:2936
+#: app/undo.c:2880
 msgid "channel mod"
 msgstr "kanavan muokkaus"
 
-#: app/undo.c:2937
+#: app/undo.c:2881
 msgid "FS to layer"
 msgstr "kelluva valinta tasoksi"
 
 #. ok
-#: app/undo.c:2938
+#: app/undo.c:2882
 msgid "gimage"
 msgstr ""
 
-#: app/undo.c:2939
+#: app/undo.c:2883
 msgid "FS rigor"
 msgstr ""
 
-#: app/undo.c:2940
+#: app/undo.c:2884
 msgid "FS relax"
 msgstr ""
 
-#: app/undo.c:2941
+#: app/undo.c:2885
 msgid "guide"
 msgstr "apu"
 
-#: app/undo.c:2942
+#: app/undo.c:2886
 msgid "text"
 msgstr "teksti"
 
-#: app/undo.c:2943
+#: app/undo.c:2887
 msgid "float selection"
 msgstr "valinnan kellutus"
 
-#: app/undo.c:2944
+#: app/undo.c:2888
 msgid "paste"
 msgstr "liimaa"
 
-#: app/undo.c:2945
+#: app/undo.c:2889
 msgid "cut"
 msgstr "leikkaa"
 
-#: app/undo.c:2946
+#: app/undo.c:2890
 msgid "transform core"
 msgstr "ydinmuunnos"
 
-#: app/undo.c:2947
+#: app/undo.c:2891
 msgid "paint core"
 msgstr "piirtäminen"
 
-#: app/undo.c:2948
+#: app/undo.c:2892
 msgid "floating layer"
 msgstr "kelluva taso"
 
 #. unused!
-#: app/undo.c:2949
+#: app/undo.c:2893
 msgid "linked layer"
 msgstr "linkitetty taso"
 
-#: app/undo.c:2950
+#: app/undo.c:2894
 msgid "apply layer mask"
 msgstr "tason maskin sovellus"
 
 #. ok
-#: app/undo.c:2951
+#: app/undo.c:2895
 msgid "layer merge"
 msgstr "tasojen yhdistäminen"
 
-#: app/undo.c:2952
+#: app/undo.c:2896
 msgid "FS anchor"
 msgstr "kelluvan valinnan ankkurointi"
 
-#: app/undo.c:2953
+#: app/undo.c:2897
 msgid "gimage mod"
 msgstr ""
 
-#: app/undo.c:2954
+#: app/undo.c:2898
 msgid "crop"
 msgstr "rajaus"
 
-#: app/undo.c:2955
+#: app/undo.c:2899
 msgid "layer scale"
 msgstr "tason skaalaus"
 
-#: app/undo.c:2956
+#: app/undo.c:2900
 msgid "layer resize"
 msgstr "tason koon muokkaus"
 
-#: app/undo.c:2957
+#: app/undo.c:2901
 msgid "quickmask"
 msgstr ""
 
-#: app/undo.c:2958
+#: app/undo.c:2902
 msgid "attach parasite"
 msgstr "liitä parasiitti"
 
-#: app/undo.c:2959
+#: app/undo.c:2903
 msgid "remove parasite"
 msgstr "poista parasiitti"
 
-#: app/undo.c:2960
+#: app/undo.c:2904
 msgid "resolution change"
 msgstr "tarkkuuden vaihto"
 
-#: app/undo.c:2961
+#: app/undo.c:2905
 msgid "image scale"
 msgstr "kuvan skaalaus"
 
-#: app/undo.c:2962
+#: app/undo.c:2906
 msgid "image resize"
 msgstr "kuvan mittojen muutos"
 
-#: app/undo.c:2963
+#: app/undo.c:2907
 msgid "misc"
 msgstr "sekalaiset"
 
@@ -5762,7 +5747,7 @@ msgid ""
 "here."
 msgstr ""
 "gimprc-tiedostoa käytetään henkilökohtaisten asetusten tallentamiseksi\n"
-"Lisäksi siinä voi myös asettaa hakupolut sivelitmiä, paletteja,\n"
+"Lisäksi siinä voi myös asettaa hakupolut siveltimiä, paletteja,\n"
 "väriliukumia, kuvioita, liitännäisiä ja moduuleja varten."
 
 #: app/user_install.c:159
@@ -5823,7 +5808,7 @@ msgid ""
 msgstr ""
 "unitrc-tiedostoon tallentuu käyttämäsi lisämittayksiköt.\n"
 "Voit ottaa käyttöön GIMPissä lisää mittayksiköitä ja käyttää\n"
-"ne samaan tapaan kuin sisäänrakennettuja yksiköitä (tuumaa, millimetri,\n"
+"ne samaan tapaan kuin sisäänrakennettuja yksiköitä (tuuma, millimetri,\n"
 "typografiset piste ja pica). Tämä tiedosto kirjoitetaan uusiksi joka\n"
 "kerta kun lopetat GIMPin."
 
@@ -5889,7 +5874,7 @@ msgid ""
 msgstr ""
 "Tämä on kansio jonne voit tallentaa luomiasi kuvioita.\n"
 "Oletusarvoisesti gimprc-tiedosto ohjaa GIMPiä etsimään\n"
-"paletteja tästä kansiosta järjestelmälaajuisesn kuviokansion lisäksi."
+"paletteja tästä kansiosta järjestelmälaajuisen kuviokansion lisäksi."
 
 #: app/user_install.c:238
 msgid ""
@@ -6015,7 +6000,7 @@ msgid ""
 "Please wait while your personal\n"
 "GIMP directory is being created..."
 msgstr ""
-"Odotota kun henkilökohtainen\n"
+"Odota kun henkilökohtaista\n"
 "GIMP hakemistoa luodaan..."
 
 #: app/user_install.c:541
@@ -6264,7 +6249,7 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibroi"
 
-#: app/xcf.c:382
+#: app/xcf.c:383
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF virhe: havaittua XCF tiedoston versiota %d ei tueta"
@@ -6276,42 +6261,45 @@ msgid ""
 "Substituting grayscale map."
 msgstr ""
 "XCF varoitus: XCF tiedosto formaatin 0 versio\n"
-"ei tallettanut indeksoitujen väripaletteja oikein.\n"
+"ei tallettanut indeksoituja väripaletteja oikein.\n"
 "Korvataan harmaasävy väripaletteja."
 
 #: modules/cdisplay_gamma.c:96
 msgid "Gamma color display filter"
 msgstr "Värien gammasuodatus"
 
-#: modules/cdisplay_gamma.c:325
+#: modules/cdisplay_gamma.c:324
 msgid "Gamma"
-msgstr "Gamma"
+msgstr ""
 
-#: modules/cdisplay_gamma.c:344
+#: modules/cdisplay_gamma.c:343
 msgid "Gamma:"
-msgstr "Gamma:"
+msgstr ""
 
 #: modules/cdisplay_highcontrast.c:96
+#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "VÄrien suurkontrastinen suodatus"
+msgstr "Värien gammasuodatus"
 
 #: modules/cdisplay_highcontrast.c:318
+#, fuzzy
 msgid "High Contrast"
-msgstr "Suuri kontrasti"
+msgstr "Kontrasti"
 
 #: modules/cdisplay_highcontrast.c:337
+#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Kontrastisyklejä:"
+msgstr "Kontrasti"
 
-#: modules/colorsel_gtk.c:53
+#: modules/colorsel_gtk.c:48
 msgid "GTK color selector as a pluggable color selector"
 msgstr "GTK-värivalitsin"
 
-#: modules/colorsel_triangle.c:79
+#: modules/colorsel_triangle.c:78
 msgid "Painter-style color selector as a pluggable color selector"
 msgstr "Painter-tyylinen värivalitsin"
 
-#: modules/colorsel_triangle.c:148 modules/colorsel_triangle.c:150
+#: modules/colorsel_triangle.c:147 modules/colorsel_triangle.c:149
 msgid "Triangle"
 msgstr "Kolmioaalto"
 
@@ -6326,9 +6314,6 @@ msgstr "Vesiväri"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Värihistoria"
-
-#~ msgid "/Tools/Magnify"
-#~ msgstr "/Työkalut/Suurenna"
 
 #~ msgid "This file cannot be moved up."
 #~ msgstr "Tätä tiedostoa ei voi siirtää ylöspäin."
