@@ -1,3 +1,12 @@
+Mon Aug 10 14:48:20 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/gdisplay.c: corrected 2 annoyances: that stupid hash table
+	== NULL warning and the pointer in the title bar instead of the
+	ID
+
+	* app/internal_procs.c: we're registering more procs, so make update
+	the total proc count
+
 Mon Aug 10 16:20:33 MEST 1998 Sven Neumann <sven@gimp.org>
 	
 	* app/internal_procs.c

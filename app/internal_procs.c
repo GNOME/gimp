@@ -77,7 +77,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 204;
+  gfloat total_pcount = 206;
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
 

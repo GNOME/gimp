@@ -178,9 +178,9 @@ gdisplay_format_title (GimpImage *gimage,
 	image_type_str = NULL;
       }
 
-  g_snprintf (title, MAX_TITLE_BUF, "%s" "-%p" ".%d (%s)",
+  g_snprintf (title, MAX_TITLE_BUF, "%s-%d.%d (%s)",
 	      prune_filename (gimage_filename (gimage)),
-	      gimage,
+	      pdb_image_to_id (gimage),
 	      gimage->instance_count,
 	      image_type_str);
 }
@@ -1197,7 +1197,7 @@ gdisplay_active ()
   GtkWidget *event_widget;
   GtkWidget *toplevel_widget;
   GdkEvent *event;
-  GDisplay *gdisp;
+  GDisplay *gdisp = NULL;
 
   /*  If the popup shell is valid, then get the gdisplay associated with that shell  */
   event = gtk_get_current_event ();
@@ -1208,7 +1208,9 @@ gdisplay_active ()
     return NULL;
 
   toplevel_widget = gtk_widget_get_toplevel (event_widget);
-  gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
+
+  if (display_ht)
+    gdisp = g_hash_table_lookup (display_ht, toplevel_widget);
 
   if (gdisp)
     return gdisp;
