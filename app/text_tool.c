@@ -16,7 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <gdk/gdkkeysyms.h>
 #include <gdk/gdkprivate.h>
@@ -53,6 +52,8 @@
 #define SET_WIDTH    4
 #define PIXEL_SIZE   6
 #define POINT_SIZE   7
+#define XRESOLUTION  8
+#define YRESOLUTION  9
 #define SPACING     10
 #define REGISTRY    12
 #define ENCODING    13
@@ -108,6 +109,7 @@ static gint       text_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static void       text_size_multiply      (char **fontname, int);
+static void       text_set_resolution     (char **fontname, int, int);
 
 Layer *           text_render             (GImage *, GimpDrawable *,
 					   int, int, char *, char *, int, int);
@@ -257,8 +259,7 @@ tools_free_text (Tool *tool)
 }
 
 static void
-text_call_gdyntext (GDisplay     *gdisp,
-		    GimpDrawable *drawable)
+text_call_gdyntext (GDisplay *gdisp)
 {
   ProcRecord *proc_rec;
   Argument   *args;
@@ -277,7 +278,7 @@ text_call_gdyntext (GDisplay     *gdisp,
   args[1].arg_type = PDB_IMAGE;
   args[1].value.pdb_int = (gint32) pdb_image_to_id (gdisp->gimage);
   args[2].arg_type = PDB_DRAWABLE;
-  args[2].value.pdb_int = (gint32) drawable->ID;
+  args[2].value.pdb_int = (gint32) gimage_active_drawable (gdisp->gimage)->ID;
 
   plug_in_run (proc_rec, args, 3, FALSE, TRUE, gdisp->ID);
 
@@ -317,7 +318,7 @@ text_button_press (Tool           *tool,
 
   if (text_options->use_dyntext)
     {
-      text_call_gdyntext (gdisp, gimage_active_drawable (gdisp->gimage));
+      text_call_gdyntext (gdisp);
       return;
     }
 
@@ -479,6 +480,16 @@ text_init_render (TextTool *text_tool)
    * grey out anti-alias on these kinds of servers. */
   if (antialias)
     text_size_multiply(&fontname, SUPERSAMPLE);
+
+  /*  If the text size is specified in points, it's size will be scaled
+   *  correctly according to the image's resolution.
+   *  FIXME: this currently can't be activated for the PDB, as the text has
+   *         to be rendered in the size "text_get_extents" returns.
+   *  TODO: add an image parameter to "text_get_extents"
+   */
+  text_set_resolution (&fontname,
+		       gdisp->gimage->xresolution,
+		       gdisp->gimage->yresolution);
 
   text = gtk_font_selection_dialog_get_preview_text(
     GTK_FONT_SELECTION_DIALOG( text_tool->shell));
@@ -846,6 +857,15 @@ text_field_edges(char  *fontname,
   *end   = t2;
 }
 
+/* convert sizes back to text */
+#define TO_TXT(x) \
+{						\
+  if (x >= 0)					\
+      g_snprintf (new_ ## x, 16, "%d", x);	\
+  else						\
+      g_snprintf (new_ ## x, 16, "*");		\
+}
+
 /* Multiply the point and pixel sizes in *fontname by "mul", which
  * must be positive.  If either point or pixel sizes are "*" then they
  * are left untouched.  The memory *fontname is g_free()d, and
@@ -880,17 +900,8 @@ text_size_multiply(char **fontname,
   point *= mul;
 
   /* convert the pixel and point sizes back to text */
-#define TO_TXT(x) \
-do {						\
-  if (x >= 0)					\
-      sprintf(new_ ## x, "%d", x);		\
-  else						\
-      sprintf(new_ ## x, "*");			\
-} while(0)
-
   TO_TXT(pixel);
   TO_TXT(point);
-#undef TO_TXT
 
   newfont = g_strdup_printf("%s-%s-%s%s", *fontname, new_pixel, new_point, end);
 
@@ -898,3 +909,35 @@ do {						\
 
   *fontname = newfont;
 }
+
+static void
+text_set_resolution (char **fontname,
+		     int    xres,
+		     int    yres)
+{
+  char *xres_str;
+  char *yres_str;
+  char *newfont;
+  char *end;
+  char new_xres[16];
+  char new_yres[16];
+
+  /* slice the font spec around the resolution fields */
+  text_field_edges (*fontname, XRESOLUTION, &xres_str, &end);
+  text_field_edges (*fontname, YRESOLUTION, &yres_str, &end);
+
+  *(xres_str - 1) = 0;
+  *(yres_str - 1) = 0;
+
+  /* convert the resolutions to text */
+  TO_TXT (xres);
+  TO_TXT (yres);
+
+  newfont = g_strdup_printf ("%s-%s-%s%s", *fontname, new_xres, new_yres, end);
+
+  g_free (*fontname);
+
+  *fontname = newfont;
+}
+
+#undef TO_TXT

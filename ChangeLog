@@ -1,3 +1,10 @@
+1999-04-25  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/text_tool.c: added resolution support if the tool is used
+	from the interface. Can't do this for the PDB because the text has
+	to be rendered in the size "text_get_extents" (which currently has
+	no access to resolution information) returns.
+
 Sat Apr 24 18:36:04 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/gimage_mask_cmds.[ch]: pdbgenned, use header file
