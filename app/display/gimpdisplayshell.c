@@ -233,92 +233,94 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
 static void
 gimp_display_shell_init (GimpDisplayShell *shell)
 {
-  shell->gdisp                 = NULL;
+  shell->gdisp                  = NULL;
 
-  shell->menubar_manager       = NULL;
-  shell->popup_manager         = NULL;
+  shell->menubar_manager        = NULL;
+  shell->popup_manager          = NULL;
 
-  shell->unit                  = GIMP_UNIT_PIXEL;
+  shell->unit                   = GIMP_UNIT_PIXEL;
 
-  shell->scale                 = 1.0;
-  shell->other_scale           = 0.0;
-  shell->dot_for_dot           = TRUE;
+  shell->scale                  = 1.0;
+  shell->other_scale            = 0.0;
+  shell->dot_for_dot            = TRUE;
 
-  shell->offset_x              = 0;
-  shell->offset_y              = 0;
+  shell->offset_x               = 0;
+  shell->offset_y               = 0;
 
-  shell->disp_width            = 0;
-  shell->disp_height           = 0;
-  shell->disp_xoffset          = 0;
-  shell->disp_yoffset          = 0;
+  shell->disp_width             = 0;
+  shell->disp_height            = 0;
+  shell->disp_xoffset           = 0;
+  shell->disp_yoffset           = 0;
 
-  shell->proximity             = FALSE;
-  shell->snap_to_guides        = TRUE;
-  shell->snap_to_grid          = FALSE;
+  shell->proximity              = FALSE;
+  shell->snap_to_guides         = TRUE;
+  shell->snap_to_grid           = FALSE;
 
-  shell->select                = NULL;
+  shell->select                 = NULL;
 
-  shell->hsbdata               = NULL;
-  shell->vsbdata               = NULL;
+  shell->hsbdata                = NULL;
+  shell->vsbdata                = NULL;
 
-  shell->canvas                = NULL;
-  shell->grid_gc               = NULL;
+  shell->canvas                 = NULL;
+  shell->grid_gc                = NULL;
 
-  shell->hsb                   = NULL;
-  shell->vsb                   = NULL;
-  shell->qmask                 = NULL;
-  shell->hrule                 = NULL;
-  shell->vrule                 = NULL;
-  shell->origin                = NULL;
+  shell->hsb                    = NULL;
+  shell->vsb                    = NULL;
+  shell->qmask                  = NULL;
+  shell->hrule                  = NULL;
+  shell->vrule                  = NULL;
+  shell->origin                 = NULL;
 
-  shell->statusbar             = NULL;
+  shell->statusbar              = NULL;
 
-  shell->render_buf            = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
+  shell->render_buf             = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
                                            3);
 
-  shell->icon_size             = 32;
-  shell->icon_idle_id          = 0;
+  shell->icon_size              = 32;
+  shell->icon_idle_id           = 0;
 
-  shell->current_cursor        = (GdkCursorType) -1;
-  shell->tool_cursor           = GIMP_TOOL_CURSOR_NONE;
-  shell->cursor_modifier       = GIMP_CURSOR_MODIFIER_NONE;
+  shell->current_cursor         = (GdkCursorType) -1;
+  shell->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
+  shell->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
 
-  shell->override_cursor       = (GdkCursorType) -1;
-  shell->using_override_cursor = FALSE;
+  shell->override_cursor        = (GdkCursorType) -1;
+  shell->using_override_cursor  = FALSE;
 
-  shell->draw_cursor           = FALSE;
-  shell->have_cursor           = FALSE;
-  shell->cursor_x              = 0;
-  shell->cursor_y              = 0;
+  shell->draw_cursor            = FALSE;
+  shell->have_cursor            = FALSE;
+  shell->cursor_x               = 0;
+  shell->cursor_y               = 0;
 
-  shell->padding_button        = NULL;
-  shell->nav_ebox              = NULL;
+  shell->show_transform_preview = FALSE;
 
-  shell->warning_dialog        = NULL;
-  shell->info_dialog           = NULL;
-  shell->scale_dialog          = NULL;
-  shell->nav_popup             = NULL;
-  shell->grid_dialog           = NULL;
+  shell->padding_button         = NULL;
+  shell->nav_ebox               = NULL;
 
-  shell->filter_stack          = NULL;
-  shell->filter_idle_id        = 0;
-  shell->filters_dialog        = NULL;
+  shell->warning_dialog         = NULL;
+  shell->info_dialog            = NULL;
+  shell->scale_dialog           = NULL;
+  shell->nav_popup              = NULL;
+  shell->grid_dialog            = NULL;
 
-  shell->window_state          = 0;
+  shell->filter_stack           = NULL;
+  shell->filter_idle_id         = 0;
+  shell->filters_dialog         = NULL;
 
-  shell->paused_count          = 0;
+  shell->window_state           = 0;
 
-  shell->options               =
+  shell->paused_count           = 0;
+
+  shell->options                =
     g_object_new (GIMP_TYPE_DISPLAY_OPTIONS, NULL);
-  shell->fullscreen_options    =
+  shell->fullscreen_options     =
     g_object_new (GIMP_TYPE_DISPLAY_OPTIONS_FULLSCREEN, NULL);
 
-  shell->space_pressed         = FALSE;
-  shell->space_release_pending = FALSE;
-  shell->scrolling             = FALSE;
-  shell->scroll_start_x        = 0;
-  shell->scroll_start_y        = 0;
+  shell->space_pressed          = FALSE;
+  shell->space_release_pending  = FALSE;
+  shell->scrolling              = FALSE;
+  shell->scroll_start_x         = 0;
+  shell->scroll_start_y         = 0;
   shell->button_press_before_focus = FALSE;
 
   gtk_window_set_role (GTK_WINDOW (shell), "gimp-image-window");

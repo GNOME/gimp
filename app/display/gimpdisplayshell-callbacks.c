@@ -61,6 +61,7 @@
 #include "gimpdisplayshell-cursor.h"
 #include "gimpdisplayshell-draw.h"
 #include "gimpdisplayshell-layer-select.h"
+#include "gimpdisplayshell-preview.h"
 #include "gimpdisplayshell-render.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
@@ -394,6 +395,9 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
 
   g_free (rects);
 
+  /* draw the transform tool preview */
+  gimp_display_shell_preview_transform (shell);
+  
   /* draw the guides */
   gimp_display_shell_draw_guides (shell);
 
@@ -674,7 +678,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             event_mask = (GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK);
 
             if (active_tool &&
-                (! GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse &&
+                (! GIMP_DISPLAY_CONFIG (gimp->config)->perfect_mouse ||
                  (gimp_tool_control_motion_mode (active_tool->control) !=
                   GIMP_MOTION_MODE_EXACT)))
               {

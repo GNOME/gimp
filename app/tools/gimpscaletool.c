@@ -320,6 +320,9 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       tr_tool->trans_info[Y2] += diff_y;
       tr_tool->trans_info[X3] += diff_x;
       tr_tool->trans_info[Y3] += diff_y;
+
+      gimp_transform_tool_expose_preview (tr_tool);
+      
       return;
 
     default:
@@ -377,6 +380,8 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
       *y1 = *y2 - dir_y * h;
       *x1 = *x2 - dir_x * w;
     }
+
+  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void
@@ -490,6 +495,8 @@ gimp_scale_tool_size_changed (GtkWidget         *widget,
       tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
       gimp_scale_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+
+      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }

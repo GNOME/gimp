@@ -48,6 +48,10 @@ void       gimp_display_shell_set_show_layer      (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_layer      (GimpDisplayShell *shell);
 
+void       gimp_display_shell_set_show_transform  (GimpDisplayShell *shell,
+                                                   gboolean          show);
+gboolean   gimp_display_shell_get_show_transform  (GimpDisplayShell *shell);
+
 void       gimp_display_shell_set_show_grid       (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_grid       (GimpDisplayShell *shell);

@@ -130,6 +130,8 @@ struct _GimpDisplayShell
   gint              cursor_x;          /* software cursor X value             */
   gint              cursor_y;          /* software cursor Y value             */
 
+  gboolean          show_transform_preview;
+
   GtkWidget        *padding_button;    /* GimpColorPanel in the NE corner     */
   GtkWidget        *nav_ebox;          /* GtkEventBox on the SE corner        */
 

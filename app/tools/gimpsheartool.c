@@ -262,6 +262,8 @@ gimp_shear_tool_motion (GimpTransformTool *tr_tool,
 	  break;
 	}
     }
+
+  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void
@@ -318,6 +320,8 @@ shear_x_mag_changed (GtkWidget         *widget,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
+
+  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void
@@ -338,4 +342,6 @@ shear_y_mag_changed (GtkWidget         *widget,
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
+  
+  gimp_transform_tool_expose_preview (tr_tool);
 }

@@ -48,6 +48,8 @@ libappdisplay_a_sources = \
 	gimpdisplayshell-filter-dialog.h	\
 	gimpdisplayshell-layer-select.c		\
 	gimpdisplayshell-layer-select.h		\
+	gimpdisplayshell-preview.c		\
+	gimpdisplayshell-preview.h		\
 	gimpdisplayshell-render.c		\
 	gimpdisplayshell-render.h		\
 	gimpdisplayshell-scale.c		\

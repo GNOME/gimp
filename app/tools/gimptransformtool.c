@@ -49,6 +49,9 @@
 
 #include "display/gimpdisplay.h"
 #include "display/gimpprogress.h"
+#include "display/gimpdisplayshell.h"
+#include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-transform.h"
 
 #ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
@@ -137,13 +140,15 @@ static void     gimp_transform_tool_response       (GtkWidget         *widget,
                                                     gint               response_id,
                                                     GimpTransformTool *tr_tool);
 
-static void     gimp_transform_tool_notify_type (GimpTransformOptions *options,
-                                                 GParamSpec           *pspec,
-                                                 GimpTransformTool    *tr_tool);
-static void     gimp_transform_tool_notify_grid (GimpTransformOptions *options,
-                                                 GParamSpec           *pspec,
-                                                 GimpTransformTool    *tr_tool);
-
+static void     gimp_transform_tool_notify_type    (GimpTransformOptions *options,
+                                                    GParamSpec           *pspec,
+                                                    GimpTransformTool    *tr_tool);
+static void     gimp_transform_tool_notify_grid    (GimpTransformOptions *options,
+                                                    GParamSpec           *pspec,
+                                                    GimpTransformTool    *tr_tool);
+static void     gimp_transform_tool_notify_preview (GimpTransformOptions *options,
+                                                    GParamSpec           *pspec,
+                                                    GimpTransformTool    *tr_tool);
 
 static GimpDrawToolClass *parent_class = NULL;
 
@@ -286,6 +291,10 @@ gimp_transform_tool_constructor (GType                  type,
       g_signal_connect_object (tool->tool_info->tool_options,
                                "notify::grid-size",
                                G_CALLBACK (gimp_transform_tool_notify_grid),
+                               tr_tool, 0);
+      g_signal_connect_object (tool->tool_info->tool_options,
+                               "notify::show-preview",
+                               G_CALLBACK (gimp_transform_tool_notify_preview),
                                tr_tool, 0);
     }
 
@@ -742,14 +751,14 @@ gimp_transform_tool_draw (GimpDrawTool *draw_tool)
       k = tr_tool->ngx + tr_tool->ngy;
 
       for (i = 0, gci = 0; i < k; i++, gci += 4)
-	{
+        {
           gimp_draw_tool_draw_line (draw_tool,
                                     tr_tool->tgrid_coords[gci],
                                     tr_tool->tgrid_coords[gci + 1],
                                     tr_tool->tgrid_coords[gci + 2],
                                     tr_tool->tgrid_coords[gci + 3],
                                     FALSE);
-	}
+        }
     }
 
   /*  draw the tool handles  */
@@ -1105,10 +1114,91 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
     }
 }
 
+void
+gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
+{
+  static gint           last_x = 0,
+                        last_y = 0,
+                        last_w = 0,
+                        last_h = 0;
+  GimpDisplayShell     *shell;
+  GimpTransformOptions *options;
+  gdouble               dx [4], dy [4];
+  gint                  area_x, area_y, area_w, area_h;
+  gint                  i;
+
+  g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
+  
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  
+  if (! (tr_tool->use_grid && options->show_preview))
+    return;
+  
+  g_return_if_fail (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp));
+
+  shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
+
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx1, tr_tool->ty1,
+                                     dx + 0, dy + 0, FALSE);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx2, tr_tool->ty2,
+                                     dx + 1, dy + 1, FALSE);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx3, tr_tool->ty3,
+                                     dx + 2, dy + 2, FALSE);
+  gimp_display_shell_transform_xy_f (shell, tr_tool->tx4, tr_tool->ty4,
+                                     dx + 3, dy + 3, FALSE);
+
+  /* find bounding box around preview */
+  area_x = area_w = (gint) dx [0];
+  area_y = area_h = (gint) dy [0];
+    
+  for (i = 1; i < 4; i++)
+    {
+      if (dx [i] < area_x)
+        area_x = (gint) dx [i];
+      else if (dx [i] > area_w)
+        area_w = (gint) dx [i];
+    
+      if (dy [i] < area_y)
+        area_y = (gint) dy [i];
+      else if (dy [i] > area_h)
+        area_h = (gint) dy [i];
+    }
+      
+  area_w -= area_x;
+  area_h -= area_y;
+          
+  gimp_display_shell_expose_area (shell,
+                                  MIN (area_x, last_x),
+                                  MIN (area_y, last_y),
+                                  MAX (area_w, last_w) + ABS (last_x - area_x),
+                                  MAX (area_h, last_h) + ABS (last_y - area_y));
+
+  /* area of last preview must be re-exposed to avoid leaving artifacts */
+  last_x = area_x;
+  last_y = area_y;
+  last_w = area_w;
+  last_h = area_h;
+}
+
 static void
 gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
+
+  if (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
+    {
+      GimpDisplayShell *shell;
+    
+      shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
+
+      if (gimp_display_shell_get_show_transform (shell))
+        {
+          gimp_display_shell_set_show_transform (shell, FALSE);
+      
+          /* get rid of preview artifacts left outside the drawable's area */
+          gimp_transform_tool_expose_preview (tr_tool);
+        }
+    }
 
   if (tr_tool->original)
     {
@@ -1328,6 +1418,12 @@ static void
 gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
                              GimpDisplay       *gdisp)
 {
+  GimpTransformOptions *options;
+  
+  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                         options->show_preview);
+
   if (tr_tool->info_dialog)
     {
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->info_dialog->shell),
@@ -1372,6 +1468,9 @@ gimp_transform_tool_response (GtkWidget         *widget,
 
         /*  recalculate the tool's transformation matrix  */
         gimp_transform_tool_recalc (tr_tool, tool->gdisp);
+
+        /* update preview */
+        gimp_transform_tool_expose_preview (tr_tool);
 
         gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
       }
@@ -1422,3 +1521,28 @@ gimp_transform_tool_notify_grid (GimpTransformOptions *options,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
 }
+
+static void
+gimp_transform_tool_notify_preview (GimpTransformOptions *options,
+                                    GParamSpec           *pspec,
+                                    GimpTransformTool    *tr_tool)
+{
+  GimpDisplayShell *shell;
+  gboolean          show_preview;
+
+  if (! GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
+      return;
+  
+  shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
+  
+  gimp_display_shell_set_show_transform (shell, options->show_preview);
+
+  /* expose area to clean up if preview is being turned off */
+  show_preview = options->show_preview;
+  options->show_preview = TRUE;
+  
+  gimp_transform_tool_expose_preview (tr_tool);
+
+  options->show_preview = show_preview;
+}
+

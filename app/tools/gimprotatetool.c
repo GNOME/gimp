@@ -270,6 +270,8 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
       tr_tool->cx                   = tr_tool->curx;
       tr_tool->cy                   = tr_tool->cury;
 
+      gimp_transform_tool_expose_preview (tr_tool);
+      
       return;
     }
 
@@ -317,6 +319,8 @@ gimp_rotate_tool_motion (GimpTransformTool *tr_tool,
     {
       tr_tool->trans_info[ANGLE] = tr_tool->trans_info[REAL_ANGLE];
     }
+
+  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void
@@ -372,6 +376,8 @@ rotate_angle_changed (GtkWidget         *widget,
 
       gimp_rotate_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
+      gimp_transform_tool_expose_preview (tr_tool);
+      
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 
@@ -400,6 +406,8 @@ rotate_center_changed (GtkWidget         *widget,
 
       gimp_rotate_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
+      gimp_transform_tool_expose_preview (tr_tool);
+      
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
 }

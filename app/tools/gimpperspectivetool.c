@@ -209,6 +209,8 @@ gimp_perspective_tool_motion (GimpTransformTool *transform_tool,
     default:
       break;
     }
+
+  gimp_transform_tool_expose_preview (transform_tool);
 }
 
 static void

@@ -1,3 +1,22 @@
+2004-06-12  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: Fixed incorrect logic that
+	caused perfect-but-slow pointer tracking to be used in tools that
+	don't request exact mode.
+
+	* app/display/Makefile.am:
+	* app/display/gimpdisplayshell-appearance.[ch]:
+	* app/display/gimpdisplayshell-callbacks.c:
+	* app/display/gimpdisplayshell.[ch]:
+	* app/display/gimpdisplayshell-preview.[ch]: added
+	* app/tools/gimpperspectivetool.c:
+	* app/tools/gimprotatetool.c:
+	* app/tools/gimpscaletool.c:
+	* app/tools/gimpsheartool.c:
+	* app/tools/gimptransformoptions.[ch]:
+	* app/tools/gimptransformtool.[ch]: Implemented live transformation
+	previews, available through tool options. Fixes bug #108172.
+
 2004-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-blend.c (gradient_render_pixel): inline
