@@ -394,7 +394,7 @@ static gboolean
 dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *vbox;
+  GtkWidget *frame;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *sizeentry;
@@ -414,7 +414,10 @@ dialog (GimpDrawable *drawable)
 
                          NULL);
 
-  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
@@ -433,7 +436,7 @@ dialog (GimpDrawable *drawable)
 				    config.height, yres,
 				    1, GIMP_MAX_IMAGE_SIZE,
 				    1, GIMP_MAX_IMAGE_SIZE);
-  gtk_container_add (GTK_CONTAINER (vbox), sizeentry);
+  gtk_container_add (GTK_CONTAINER (frame), sizeentry);
   gtk_widget_show (sizeentry);
 
   spinbutton = gimp_spin_button_new (&adj, config.ntries,

@@ -289,6 +289,7 @@ do_checkerboard_dialog (gint32        image_ID,
 			GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *size_entry;
@@ -317,7 +318,16 @@ do_checkerboard_dialog (gint32        image_ID,
   height = gimp_drawable_height (drawable->drawable_id);
   size   = MIN (width, height);
 
-  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
+  /*  parameter settings  */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

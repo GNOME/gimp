@@ -218,6 +218,7 @@ glass_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
+  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adj;
   gboolean   run;
@@ -244,7 +245,18 @@ glass_dialog (GimpDrawable *drawable)
   gtk_widget_show (preview->widget);
   glasstile (drawable, TRUE); /* filter routine, initial pass */
 
-  table = gimp_parameter_settings_new (main_vbox, 2, 3);
+  /*  Parameter settings  */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   /* Horizontal scale - Width */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

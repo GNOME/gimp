@@ -679,7 +679,15 @@ dialog (gint32        image_ID,
   /* left side of the UI is done */
 
   /* right side */
-  main_vbox = gimp_parameter_settings_new (main_hbox, 0, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 4);
+  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (frame), main_vbox);
+  gtk_widget_show (main_vbox);
 
   /*  The width entries  */
   width = gimp_size_entry_new (3,                            /*  number_of_fields  */

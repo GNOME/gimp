@@ -1008,7 +1008,14 @@ bumpmap_dialog (void)
                     G_CALLBACK (dialog_tiled_callback),
                     NULL);
 
-  vbox = gimp_parameter_settings_new (top_vbox, 0, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_box_pack_start (GTK_BOX (top_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   /* Bump map menu */
   table = gtk_table_new (1, 2, FALSE);

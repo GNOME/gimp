@@ -546,34 +546,3 @@ gimp_plug_in_get_path (const gchar *path_name,
   return path;
 }
 
-GtkWidget*
-gimp_parameter_settings_new (GtkWidget *parent,
-			     guint rows,
-			     guint columns)
-{
-  GtkWidget *frame, *table;
-
-  frame = gtk_frame_new ( _("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start ( GTK_BOX (parent), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  if (rows && columns)
-    {
-      table = gtk_table_new (rows, columns, FALSE);
-      gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-      gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-    }
-  else
-    {
-      table = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-      gtk_container_add (GTK_CONTAINER (frame), table);
-    }
-  gtk_widget_show (table);
-
-  return table;
-}

@@ -660,7 +660,17 @@ edge_dialog (GimpDrawable *drawable)
   gtk_box_pack_start_defaults (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame);
   gtk_widget_show (frame);
 
-  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
+  /*  parameter settings  */
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  Label, scale, entry for evals.amount  */
   scale_data = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,

@@ -223,6 +223,7 @@ sobel_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *toggle;
+  GtkWidget *frame;
   GtkWidget *vbox;
   gboolean   run;
 
@@ -237,7 +238,17 @@ sobel_dialog (void)
 
                          NULL);
 
-  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
+  /*  parameter settings  */
+  frame = gtk_frame_new ( _("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_mnemonic (_("Sobel _Horizontally"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);

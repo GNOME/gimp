@@ -1,5 +1,49 @@
 2003-12-09  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/vpropagate.c (vpropagate_dialog):
+	* plug-ins/common/unsharp.c (unsharp_mask_dialog):
+	* plug-ins/common/threshold_alpha.c (threshold_alpha_dialog):
+	* plug-ins/common/struc.c (struc_dialog):	
+	* plug-ins/common/sparkle.c (sparkle_dialog):
+	* plug-ins/common/sobel.c (sobel_dialog):
+	* plug-ins/common/snoise.c (solid_noise_dialog):
+	* plug-ins/common/smooth_palette.c (dialog):
+	* plug-ins/common/sharpen.c (sharpen_dialog):
+	* plug-ins/common/sel_gauss.c (sel_gauss_dialog):
+	* plug-ins/common/scatter_hsv.c (scatter_hsv_dialog):
+	* plug-ins/common/ripple.c (ripple_dialog):
+	* plug-ins/common/randomize.c (randomize_dialog):
+	* plug-ins/common/polar.c (polarize_dialog):
+	* plug-ins/common/plasma.c (plasma_dialog):
+	* plug-ins/common/pixelize.c (pixelize_dialog):
+	* plug-ins/common/oilify.c (oilify_dialog):
+	* plug-ins/common/nova.c (nova_dialog):
+	* plug-ins/common/noisify.c (noisify_dialog):
+	* plug-ins/common/nlfilt.c (pluginCoreIA):
+	* plug-ins/common/lic.c (create_main_dialog):
+	* plug-ins/common/jpeg.c (save_dialog):
+	* plug-ins/common/illusion.c (dialog):
+	* plug-ins/common/grid.c (dialog):
+	* plug-ins/common/glasstile.c (glass_dialog):
+	* plug-ins/common/gauss_rle.c (gauss_rle_dialog):
+	* plug-ins/common/gauss_iir.c (gauss_iir_dialog):
+	* plug-ins/common/engrave.c (engrave_dialog):
+	* plug-ins/common/emboss.c (pluginCoreIA):
+	* plug-ins/common/edge.c (edge_dialog):
+	* plug-ins/common/destripe.c (destripe_dialog):
+	* plug-ins/common/despeckle.c (despeckle_dialog):
+	* plug-ins/common/cubism.c (cubism_dialog):
+	* plug-ins/common/checkerboard.c (do_checkerboard_dialog):
+	* plug-ins/common/bumpmap.c (bumpmap_dialog):
+	* plug-ins/common/blur.c (blur_dialog):
+	* plug-ins/common/blinds.c (blinds_dialog):
+	* plug-ins/common/apply_lens.c (lens_dialog): reverted Maurits'
+	patch, to get rid of gimp_parameter_settings_new (see #125141)
+
+	* libgimp/gimpmiscui.[ch]: remove this function.
+
+2003-12-09  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/wind.c (pluginCoreIA):
 	* plug-ins/common/whirlpinch (whirl_pinch_dialog):
 	* plug-ins/common/waves (dialog_box): reverted Maurits' patch,

@@ -296,6 +296,7 @@ static gint
 pixelize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
+  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *sizeentry;
   guint32    image_id;
@@ -315,7 +316,16 @@ pixelize_dialog (GimpDrawable *drawable)
 			 NULL);
 
   /*  parameter settings  */
-  vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
+  frame = gtk_frame_new (_("Parameter Settings"));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   image_id = gimp_drawable_get_image (drawable->drawable_id);
   unit = gimp_image_get_unit (image_id);
