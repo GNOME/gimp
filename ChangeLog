@@ -1,6 +1,10 @@
 2005-02-16  Sven Neumann  <sven@gimp.org>
 
-	* app/core/gimpdrawable-desaturate.c: parallelized.
+	* app/core/gimpimage-contiguous-region.c
+	(gimp_image_contiguous_region_by_color): parallelized.
+
+	* app/core/gimpdrawable-desaturate.c (gimp_drawable_desaturate):
+	parallelized.
 
 2005-02-16  Sven Neumann  <sven@gimp.org>
 
