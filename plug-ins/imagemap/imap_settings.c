@@ -23,11 +23,6 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_browse.h"
@@ -36,25 +31,19 @@
 #include "imap_string.h"
 #include "imap_table.h"
 
-#ifdef __GNUC__
-#warning GTK_ENABLE_BROKEN
-#endif
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 #include "libgimp/stdplugins-intl.h"
 
 typedef struct {
-   DefaultDialog_t *dialog;
-   BrowseWidget_t *imagename;
-   GtkWidget	*filename;
-   GtkWidget	*title;
-   GtkWidget	*author;
-   GtkWidget	*default_url;
-   GtkWidget	*description;
-   GtkWidget	*ncsa;
-   GtkWidget	*cern;
-   GtkWidget	*csim;
+  DefaultDialog_t *dialog;
+  BrowseWidget_t *imagename;
+  GtkWidget	*filename;
+  GtkWidget	*title;
+  GtkWidget	*author;
+  GtkWidget	*default_url;
+  GtkWidget	*ncsa;
+  GtkWidget	*cern;
+  GtkWidget	*csim;
+  GtkTextBuffer *description;
 } SettingsDialog_t;
 
 static MapFormat_t _map_format = CSIM;
@@ -64,6 +53,8 @@ settings_ok_cb(gpointer data)
 {
    SettingsDialog_t *param = (SettingsDialog_t*) data;
    MapInfo_t *info = get_map_info();
+   gchar *description;
+   GtkTextIter start, end;
 
    g_strreplace(&info->image_name, gtk_entry_get_text(
       GTK_ENTRY(param->imagename->file)));
@@ -71,9 +62,12 @@ settings_ok_cb(gpointer data)
    g_strreplace(&info->author, gtk_entry_get_text(GTK_ENTRY(param->author)));
    g_strreplace(&info->default_url, 
 		gtk_entry_get_text(GTK_ENTRY(param->default_url)));
-   g_strreplace(&info->description, 
-		gtk_editable_get_chars(GTK_EDITABLE(param->description), 
-				       0, -1));
+   gtk_text_buffer_get_bounds(param->description, &start, &end);
+   description = gtk_text_buffer_get_text(param->description, &start, &end,
+					  FALSE);
+   g_strreplace(&info->description, description);
+   g_free(description);
+
    info->map_format = _map_format;
 }
 
@@ -88,12 +82,12 @@ static SettingsDialog_t*
 create_settings_dialog()
 {
    SettingsDialog_t *data = g_new(SettingsDialog_t, 1);
-   GtkWidget *table, *vscrollbar, *frame, *hbox, *label;
+   GtkWidget *table, *view, *frame, *hbox, *label, *swin;
    DefaultDialog_t *dialog;
 
    dialog = data->dialog = make_default_dialog(_("Settings for this Mapfile"));
    default_dialog_set_ok_cb(dialog, settings_ok_cb, (gpointer) data);
-   table = default_dialog_add_table(dialog, 9, 3);
+   table = default_dialog_add_table(dialog, 9, 2);
 
    create_label_in_table(table, 0, 0, _("Filename:"));
    data->filename = create_label_in_table(table, 0, 1, "");
@@ -111,18 +105,23 @@ create_settings_dialog()
    data->default_url = create_entry_in_table(table, label, 4, 1);
    label = create_label_in_table(table, 5, 0, _("_Description:"));
 
-   data->description = gtk_text_new(NULL, NULL);
-   gtk_text_set_editable(GTK_TEXT(data->description), TRUE);
-   gtk_table_attach(GTK_TABLE(table), data->description, 1, 2, 5, 8,
+   data->description = gtk_text_buffer_new(NULL);
+
+   view = gtk_text_view_new_with_buffer(data->description);
+   gtk_widget_set_size_request(view, -1, 128);
+   gtk_widget_show(view);
+
+   swin = gtk_scrolled_window_new(NULL, NULL);
+   gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin), 
+				       GTK_SHADOW_IN);
+   gtk_table_attach(GTK_TABLE(table), swin, 1, 2, 5, 8,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-   gtk_widget_show(data->description);
-
-   /* Add a vertical scrollbar to the GtkText widget */
-   vscrollbar = gtk_vscrollbar_new(GTK_TEXT(data->description)->vadj);
-   gtk_table_attach(GTK_TABLE(table), vscrollbar, 2, 3, 5, 8,
-		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
-   gtk_widget_show(vscrollbar);
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), 
+				  GTK_POLICY_NEVER, 
+				  GTK_POLICY_AUTOMATIC);
+   gtk_widget_show(swin);
+   gtk_container_add(GTK_CONTAINER(swin), view);
 
    frame = gtk_frame_new(_("Map file format"));
    gtk_widget_show(frame);
@@ -164,6 +163,9 @@ do_settings_dialog(void)
    if (!dialog)
       dialog = create_settings_dialog();
 
+   if (!filename)
+     filename = _("<Untitled>");
+
    gtk_label_set_text(GTK_LABEL(dialog->filename), filename);
    browse_widget_set_filename(dialog->imagename, info->image_name);
    gtk_entry_set_text(GTK_ENTRY(dialog->title), info->title);
@@ -180,7 +182,5 @@ do_settings_dialog(void)
    gtk_widget_grab_focus(dialog->imagename->file);
    default_dialog_show(dialog->dialog);
 
-   gtk_editable_delete_text(GTK_EDITABLE(dialog->description), 0, -1);
-   gtk_text_insert(GTK_TEXT(dialog->description), NULL, NULL, NULL,
-		   info->description, -1);
+   gtk_text_buffer_set_text (dialog->description, info->description, -1);
 }

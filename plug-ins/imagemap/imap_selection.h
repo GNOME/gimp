@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,10 +37,10 @@ typedef struct {
    GtkWidget	*edit;
    ObjectList_t *object_list;
    gint		selected_row;
-   gint		is_visible;
    gint		nr_rows;
-   gint 	select_lock;
-   gint 	unselect_lock;
+   gboolean	is_visible;
+   gboolean 	select_lock;
+   gboolean 	unselect_lock;
 
    CommandFactory_t cmd_move_up;
    CommandFactory_t cmd_move_down;
@@ -48,13 +48,10 @@ typedef struct {
    CommandFactory_t cmd_edit;
 } Selection_t;
 
-Selection_t *make_selection(GtkWidget *window, ObjectList_t *list);
+Selection_t *make_selection(ObjectList_t *list);
 void selection_toggle_visibility(Selection_t *selection);
-
-#define selection_freeze(selection) \
-	gtk_clist_freeze(GTK_CLIST((selection)->list))
-#define selection_thaw(selection) \
-	gtk_clist_thaw(GTK_CLIST((selection)->list))
+void selection_freeze(Selection_t *selection);
+void selection_thaw(Selection_t *selection);
 
 #define selection_set_move_up_command(selection, command) \
 	((selection)->cmd_move_up = (command))

@@ -28,11 +28,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h> /* for keyboard values */
 
@@ -93,7 +88,7 @@
 /* Global variables */
 static MapInfo_t   _map_info;
 static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
-FALSE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
+FALSE, TRUE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
 static GimpDrawable *_drawable;
@@ -263,7 +258,6 @@ init_preferences(void)
    mru_set_size(_mru, _preferences.mru_size);
    command_list_set_undo_level(_preferences.undo_levels);
 }
-
 
 gint
 get_image_width(void)
@@ -1162,7 +1156,7 @@ key_timeout_cb(gpointer data)
 static gboolean 
 key_press_cb(GtkWidget *widget, GdkEventKey *event)
 {
-   gint handled = FALSE;
+   gboolean handled = FALSE;
    gboolean shift = event->state & GDK_SHIFT_MASK;
    Command_t *command;
 
@@ -1197,7 +1191,7 @@ key_press_cb(GtkWidget *widget, GdkEventKey *event)
       break;
    }
    if (handled)
-      gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), "key_press_event");
+      g_signal_stop_emission_by_name(G_OBJECT(widget), "key_press_event");
 
    return handled;
 }
@@ -1358,7 +1352,7 @@ factory_menu_zoom_out(void)
 static Command_t*
 factory_zoom_in(void)
 {
-   return command_new((void (*)(void)) zoom_in);
+  return command_new((void (*)(void)) zoom_in);
 }
 
 static Command_t*
@@ -1448,12 +1442,12 @@ dialog(GimpDrawable *drawable)
    gimp_help_connect (dlg, gimp_standard_help_func, "filters/imagemap.html");
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-   gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-		      (GtkSignalFunc) close_callback, NULL);
-   gtk_signal_connect(GTK_OBJECT(dlg), "key_press_event", 
-		      (GtkSignalFunc) key_press_cb, NULL);
-   gtk_signal_connect(GTK_OBJECT(dlg), "key_release_event", 
-		      (GtkSignalFunc) key_release_cb, NULL);
+   g_signal_connect(G_OBJECT(dlg), "destroy", 
+		    G_CALLBACK(close_callback), NULL);
+   g_signal_connect(G_OBJECT(dlg), "key_press_event", 
+		    G_CALLBACK(key_press_cb), NULL);
+   g_signal_connect(G_OBJECT(dlg), "key_release_event", 
+		    G_CALLBACK(key_release_cb), NULL);
 
    main_vbox = gtk_vbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
@@ -1542,7 +1536,7 @@ dialog(GimpDrawable *drawable)
    object_list_add_select_cb(_shapes, data_selected, NULL);
 
    /* Selection */
-   _selection = make_selection(dlg, _shapes);
+   _selection = make_selection(_shapes);
    selection_set_move_up_command(_selection, factory_move_up);
    selection_set_move_down_command(_selection, factory_move_down);
    selection_set_delete_command(_selection, factory_clear);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,11 +26,6 @@
 #include <stdarg.h>
 #include <stdio.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_default_dialog.h"
@@ -39,57 +34,55 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#ifdef __GNUC__
-#warning GTK_ENABLE_BROKEN
-#endif
-#define GTK_ENABLE_BROKEN
-#include <gtk/gtktext.h>
-
 static void 
-save_to_view(gpointer param, const char* format, ...)
+save_to_view(GtkTextBuffer *buffer, const char* format, ...)
 {
    va_list ap;
    char scratch[1024];
+   GtkTextIter iter;
 
    va_start(ap, format);
    vsprintf(scratch, format, ap);
    va_end(ap);
 
-   gtk_text_insert(GTK_TEXT(param), NULL, NULL, NULL, scratch, -1);
+   gtk_text_buffer_get_end_iter(buffer, &iter);
+   gtk_text_buffer_insert(buffer, &iter, scratch, -1);
 }
-
 
 void 
 do_source_dialog(void)
 {
    static DefaultDialog_t *dialog;
    static GtkWidget *text;
+   static GtkTextBuffer *buffer;
+
    if (!dialog) {
-      GtkWidget *window;
+      GtkWidget *swin;
 
       dialog = make_default_dialog(_("View Source"));
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
 
-      text = gtk_text_new(NULL, NULL);
+      buffer = gtk_text_buffer_new(NULL);
+
+      text = gtk_text_view_new_with_buffer(buffer);
+      gtk_text_view_set_editable(GTK_TEXT_VIEW(text), FALSE);
       gtk_widget_show(text);
 
-      window = gtk_scrolled_window_new(GTK_TEXT(text)->hadj, 
-				       GTK_TEXT(text)->vadj);
-      gtk_widget_set_usize(window, 640, 400);
-      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), window, 
+      swin = gtk_scrolled_window_new(NULL, NULL);
+      gtk_scrolled_window_set_shadow_type(GTK_SCROLLED_WINDOW(swin), 
+					  GTK_SHADOW_IN);
+      gtk_widget_set_size_request(swin, 640, 400);
+      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), swin, 
 			 TRUE, TRUE, 0);
-      gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window), 
+      gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(swin), 
 				     GTK_POLICY_AUTOMATIC, 
 				     GTK_POLICY_AUTOMATIC);
-      gtk_widget_show(window);
-      gtk_container_add(GTK_CONTAINER(window), text);
-      
+      gtk_widget_show(swin);
+      gtk_container_add(GTK_CONTAINER(swin), text);
    }
-   gtk_text_freeze(GTK_TEXT(text));
-   gtk_editable_delete_text(GTK_EDITABLE(text), 0, -1);
-   dump_output(text, save_to_view);
-   gtk_text_thaw(GTK_TEXT(text));
+   gtk_text_buffer_set_text(buffer, "", -1);
+   dump_output(buffer, (OutputFunc_t) save_to_view);
 
    default_dialog_show(dialog);
 }

@@ -24,11 +24,6 @@
 #ifndef _IMAP_MISC_H
 #define _IMAP_MISC_H
 
-GtkWidget *make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window, 
-			     char **data, const char *identifier, 
-			     const char *tooltip,
-			     void (*callback)(GtkWidget*, gpointer), 
-			     gpointer udata);
 GtkWidget *make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 
 				   const char *identifier, 
 				   const char *tooltip, 

@@ -43,9 +43,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "arrow_up.xpm"
-#include "arrow_down.xpm"
-
 static void
 set_buttons(Selection_t *data)
 {
@@ -158,7 +155,7 @@ selection_command(GtkWidget *widget, gpointer data)
 }
 
 static GtkWidget*
-make_selection_toolbar(Selection_t *data, GtkWidget *window)
+make_selection_toolbar(Selection_t *data)
 {
    GtkWidget *toolbar;
 
@@ -167,13 +164,14 @@ make_selection_toolbar(Selection_t *data, GtkWidget *window)
    gtk_toolbar_set_orientation(GTK_TOOLBAR(toolbar), GTK_ORIENTATION_VERTICAL);
    gtk_container_set_border_width(GTK_CONTAINER(toolbar), 5);
 
-   data->arrow_up = make_toolbar_icon(toolbar, window, arrow_up_xpm, "MoveUp",
-				      _("Move Up"), selection_command, 
-				      &data->cmd_move_up);
-   data->arrow_down = make_toolbar_icon(toolbar, window, arrow_down_xpm, 
-					"MoveDown", _("Move Down"), 
-					selection_command, 
-					&data->cmd_move_down);
+   data->arrow_up = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_UP, 
+					    "MoveUp", _("Move Up"), 
+					    selection_command,
+					    &data->cmd_move_up);
+   data->arrow_down = make_toolbar_stock_icon(toolbar, GTK_STOCK_GO_DOWN, 
+					      "MoveDown", _("Move Down"), 
+					      selection_command, 
+					      &data->cmd_move_down);
    gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
    data->edit = make_toolbar_stock_icon(toolbar, GTK_STOCK_PROPERTIES,
 					"Edit", _("Edit"), selection_command, 
@@ -338,7 +336,7 @@ handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 }
 
 Selection_t*
-make_selection(GtkWidget *window, ObjectList_t *object_list)
+make_selection(ObjectList_t *object_list)
 {
    Selection_t *data = g_new(Selection_t, 1);
    GtkWidget *swin, *frame, *hbox;
@@ -362,7 +360,7 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    gtk_container_add(GTK_CONTAINER(frame), hbox); 
    gtk_widget_show(hbox);
 
-   toolbar = make_selection_toolbar(data, window);
+   toolbar = make_selection_toolbar(data);
    gtk_container_add(GTK_CONTAINER(hbox), toolbar);
 
    /* Create selection */
@@ -438,4 +436,16 @@ selection_toggle_visibility(Selection_t *selection)
       gtk_widget_show(selection->container);
       selection->is_visible = TRUE;
    }
+}
+
+void 
+selection_freeze(Selection_t *selection)
+{
+  gtk_clist_freeze(GTK_CLIST((selection)->list));
+}
+  
+void 
+selection_thaw(Selection_t *selection)
+{
+  gtk_clist_thaw(GTK_CLIST((selection)->list));
 }

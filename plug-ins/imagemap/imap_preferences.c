@@ -113,8 +113,12 @@ parse_line(PreferencesData_t *data, char *line)
       data->use_doublesized = parse_yes_no();
    } else if (!strcmp(token, "mru-size")) {
       data->mru_size = parse_int();
+      if (data->mru_size < 1)
+	data->mru_size = 1;
    } else if (!strcmp(token, "undo-levels")) {
       data->undo_levels = parse_int();
+      if (data->undo_levels < 1)
+	data->undo_levels = 1;
    } else if (!strcmp(token, "normal-fg-color")) {
       parse_color(&colors->normal_fg);
    } else if (!strcmp(token, "normal-bg-color")) {

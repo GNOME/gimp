@@ -23,35 +23,10 @@
 
 #include "config.h"
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "imap_main.h"
 #include "imap_misc.h"
-
-GtkWidget*
-make_toolbar_icon(GtkWidget *toolbar, GtkWidget *window, char **data, 
-		  const char *identifier, const char *tooltip, 
-		  void (*callback)(GtkWidget*, gpointer), gpointer udata)
-{
-   GtkWidget *iconw;
-   GdkPixmap *icon;
-   GdkBitmap *mask;
-   GtkStyle  *style;
-
-   style = gtk_widget_get_style(window);
-   icon = gdk_pixmap_create_from_xpm_d(window->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       data);
-   iconw = gtk_pixmap_new(icon, mask);
-   return gtk_toolbar_append_item(GTK_TOOLBAR(toolbar),
-				  identifier, tooltip, NULL, iconw,
-				  GTK_SIGNAL_FUNC(callback), udata);
-}
 
 GtkWidget*
 make_toolbar_stock_icon(GtkWidget *toolbar, const gchar *stock_id, 

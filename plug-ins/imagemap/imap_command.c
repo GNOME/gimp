@@ -107,7 +107,6 @@ _command_list_add(CommandList_t *list, Command_t *command)
       command_destruct(curr);
       list->list = g_list_remove_link(list->list, p);
    }
-
    if (g_list_length(list->list) == list->undo_levels) {
       GList *first = g_list_first(list->list);
       Command_t *curr = (Command_t*) first->data;

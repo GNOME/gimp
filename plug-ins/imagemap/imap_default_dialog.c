@@ -95,58 +95,33 @@ default_dialog_set_cancel_cb(DefaultDialog_t *dialog,
 DefaultDialog_t*
 make_default_dialog(const gchar *title)
 {
-   DefaultDialog_t *data = (DefaultDialog_t*) g_new(DefaultDialog_t, 1);
-   GtkWidget *dialog, *hbbox;
+   DefaultDialog_t *data = g_new(DefaultDialog_t, 1);
+   GtkWidget *dialog;
 
    data->ok_cb = NULL;
    data->apply_cb = NULL;
    data->cancel_cb = NULL;
-   data->dialog = dialog = gtk_dialog_new();
+   dialog = gimp_dialog_new (title, "imagemap",
+			     gimp_standard_help_func, "filters/imagemap.html",
+			     GTK_WIN_POS_MOUSE,
+			     FALSE, TRUE, FALSE,
 
-   if (title)
-      gtk_window_set_title(GTK_WINDOW(dialog), title);
+			     GTK_STOCK_APPLY, dialog_apply,
+			     data, NULL, &data->apply, FALSE, FALSE,
 
+			     GTK_STOCK_CANCEL, dialog_cancel,
+			     data, NULL, &data->cancel, FALSE, FALSE,
+
+			     GTK_STOCK_OK, dialog_ok,
+			     data, NULL, &data->ok, TRUE, FALSE,
+
+			     NULL);
+   data->dialog = dialog;
+
+   g_signal_connect (G_OBJECT(dialog), "destroy",
+		     G_CALLBACK(gtk_widget_destroyed), &data->dialog);
    g_signal_connect(G_OBJECT(dialog), "delete_event",
                     G_CALLBACK(dialog_destroy), (gpointer) data);
-
-   /*  Action area  */
-   gtk_container_set_border_width(GTK_CONTAINER(
-      GTK_DIALOG(dialog)->action_area), 12);
-   gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
-   hbbox = gtk_hbutton_box_new();
-   gtk_box_set_spacing(GTK_BOX(hbbox), 6);
-   gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), hbbox, FALSE, 
-		    FALSE, 0);
-   gtk_widget_show (hbbox);
-
-   data->ok = gtk_button_new_from_stock(GTK_STOCK_OK);
-   GTK_WIDGET_SET_FLAGS(data->ok, GTK_CAN_DEFAULT);
-   g_signal_connect(G_OBJECT(data->ok), "clicked",
-                    G_CALLBACK(dialog_ok), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(hbbox), data->ok, FALSE, FALSE, 0);
-   gtk_widget_grab_default(data->ok);
-   gtk_widget_show(data->ok);
-
-   data->apply = gtk_button_new_from_stock(GTK_STOCK_APPLY);
-   GTK_WIDGET_SET_FLAGS(data->apply, GTK_CAN_DEFAULT);
-   g_signal_connect(G_OBJECT(data->apply), "clicked",
-                    G_CALLBACK(dialog_apply), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(hbbox), data->apply, FALSE, FALSE, 0);
-   gtk_widget_show(data->apply);
-
-   data->cancel = gtk_button_new_from_stock(GTK_STOCK_CANCEL);
-   GTK_WIDGET_SET_FLAGS(data->cancel, GTK_CAN_DEFAULT);
-   g_signal_connect(G_OBJECT(data->cancel), "clicked",
-                    G_CALLBACK(dialog_cancel), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(hbbox), data->cancel, FALSE, FALSE, 0);
-   gtk_widget_show(data->cancel);
-
-   data->help = gtk_button_new_with_label(_("Help..."));
-  /* Fix me: no action yet
-     GTK_WIDGET_SET_FLAGS(data->help, GTK_CAN_DEFAULT);
-     gtk_box_pack_start(GTK_BOX(hbbox), data->help, FALSE, FALSE, 0);
-     gtk_widget_show(data->help);
-   */
  
    return data;
 }
@@ -172,7 +147,7 @@ default_dialog_hide_apply_button(DefaultDialog_t *dialog)
 void 
 default_dialog_hide_help_button(DefaultDialog_t *dialog)
 {
-   gtk_widget_hide(dialog->help);
+  /* gtk_widget_hide(dialog->help); */
 }
 
 void
