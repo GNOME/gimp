@@ -331,6 +331,7 @@ plug-ins/AlienMap/Makefile
 plug-ins/c_astretch/Makefile
 plug-ins/bumpmap/Makefile
 plug-ins/gflare/Makefile
+plug-ins/gflare/gflares/Makefile
 plug-ins/script-fu/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/jpeg/Makefile
@@ -353,6 +354,7 @@ plug-ins/libgck/Makefile
 plug-ins/libgck/gck/Makefile
 plug-ins/blur/Makefile
 plug-ins/gfig/Makefile
+plug-ins/gfig/gfig-examples/Makefile
 plug-ins/flame/Makefile
 plug-ins/gimptcl/Makefile
 plug-ins/gimptcl/scripts/Makefile

@@ -2,6 +2,8 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
+SUBDIRS = gflares
+
 EXTRA_DIST = README
 
 pluginlib_PROGRAMS = gflare
