@@ -40,6 +40,8 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpdisplay.h"
+
 #include "channels-commands.h"
 
 #include "undo.h"
@@ -55,15 +57,19 @@ static void   channels_color_changed  (GimpColorButton *button,
                                        gpointer         data);
 
 
-#define return_if_no_image(gimage) \
+#define return_if_no_image(gimage,data) \
   gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
-  if (! GIMP_IS_IMAGE (gimage)) \
-    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! GIMP_IS_IMAGE (gimage)) { \
+    if (GIMP_IS_DISPLAY (data)) \
+      gimage = ((GimpDisplay *) data)->gimage; \
+    else if (GIMP_IS_GIMP (data)) \
+      gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  } \
   if (! gimage) \
     return
 
-#define return_if_no_channel(gimage,channel) \
-  return_if_no_image (gimage); \
+#define return_if_no_channel(gimage,channel,data) \
+  return_if_no_image (gimage,data); \
   channel = gimp_image_get_active_channel (gimage); \
   if (! channel) \
     return
@@ -76,7 +82,7 @@ channels_new_channel_cmd_callback (GtkWidget *widget,
 				   gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  return_if_no_image (gimage, data);
 
   channels_new_channel_query (gimage, NULL, TRUE);
 }
@@ -87,7 +93,7 @@ channels_raise_channel_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_raise_channel (gimage, active_channel);
   gimp_image_flush (gimage);
@@ -99,7 +105,7 @@ channels_lower_channel_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_lower_channel (gimage, active_channel);
   gimp_image_flush (gimage);
@@ -112,7 +118,7 @@ channels_duplicate_channel_cmd_callback (GtkWidget *widget,
   GimpImage   *gimage;
   GimpChannel *active_channel;
   GimpChannel *new_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   new_channel = gimp_channel_copy (active_channel,
                                    G_TYPE_FROM_INSTANCE (active_channel),
@@ -127,7 +133,7 @@ channels_delete_channel_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_remove_channel (gimage, active_channel);
   gimp_image_flush (gimage);
@@ -140,7 +146,7 @@ channels_channel_to_sel (GtkWidget      *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   gimp_image_mask_select_channel (gimage,
                                   active_channel,
@@ -184,7 +190,7 @@ channels_edit_channel_attributes_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpChannel *active_channel;
-  return_if_no_channel (gimage, active_channel);
+  return_if_no_channel (gimage, active_channel, data);
 
   channels_edit_channel_query (active_channel);
 }

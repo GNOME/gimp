@@ -511,14 +511,10 @@ gui_exit_callback (Gimp     *gimp,
 
   if (! kill_it && gimp_displays_dirty (gimp))
     {
-      GtkItemFactory *item_factory;
-      GtkWidget      *dialog;
+      GtkWidget *dialog;
 
-      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
-      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
-
-      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", FALSE);
+      gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Quit", FALSE);
+      gimp_item_factories_set_sensitive ("<Image>",   "/File/Quit", FALSE);
 
       dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
                                        gimp_standard_help_func,
@@ -596,13 +592,8 @@ gui_really_quit_callback (GtkWidget *button,
     }
   else
     {
-      GtkItemFactory *item_factory;
-
-      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
-      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", TRUE);
-
-      item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-      gimp_item_factory_set_sensitive (item_factory, "/File/Quit", TRUE);
+      gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Quit", TRUE);
+      gimp_item_factories_set_sensitive ("<Image>",   "/File/Quit", TRUE);
     }
 }
 

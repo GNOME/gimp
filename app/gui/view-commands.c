@@ -45,7 +45,12 @@
 
 
 #define return_if_no_display(gdisp, data) \
-  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (GIMP_IS_DISPLAY (data)) \
+    gdisp = data; \
+  else if (GIMP_IS_GIMP (data)) \
+    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else \
+    gdisp = NULL; \
   if (! gdisp) \
     return
 
@@ -201,17 +206,22 @@ void
 view_toggle_rulers_cmd_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
+  GimpDisplay       *gdisp;
+  GimpDisplayShell  *shell;
+  GimpDisplayConfig *config;
   return_if_no_display (gdisp, data);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
+  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
     {
-      if (GTK_WIDGET_VISIBLE (shell->origin))
+      if (GTK_WIDGET_VISIBLE (shell->hrule))
 	{
-	  gtk_widget_hide (shell->origin);
+          if (! config->menu_bar_per_display)
+            gtk_widget_hide (shell->origin);
+
 	  gtk_widget_hide (shell->hrule);
 	  gtk_widget_hide (shell->vrule);
 
@@ -220,9 +230,11 @@ view_toggle_rulers_cmd_callback (GtkWidget *widget,
     }
   else
     {
-      if (! GTK_WIDGET_VISIBLE (shell->origin))
+      if (! GTK_WIDGET_VISIBLE (shell->hrule))
 	{
-	  gtk_widget_show (shell->origin);
+          if (! config->menu_bar_per_display)
+            gtk_widget_show (shell->origin);
+
 	  gtk_widget_show (shell->hrule);
 	  gtk_widget_show (shell->vrule);
 

@@ -50,7 +50,7 @@
 static void     gimp_item_factory_class_init      (GimpItemFactoryClass *klass);
 static void     gimp_item_factory_init            (GimpItemFactory      *factory);
 
-static void     gimp_item_factory_finalize        (GObject              *object);
+static void     gimp_item_factory_destroy         (GtkObject            *object);
 
 static void     gimp_item_factory_create_branches (GimpItemFactory      *factory,
                                                    GimpItemFactoryEntry *entry,
@@ -60,12 +60,8 @@ static void     gimp_item_factory_item_realize    (GtkWidget            *widget,
 static gboolean gimp_item_factory_item_key_press  (GtkWidget            *widget,
                                                    GdkEventKey          *kevent,
                                                    gpointer              data);
-#ifdef ENABLE_NLS
 static gchar *  gimp_item_factory_translate_func  (const gchar          *path,
                                                    gpointer              data);
-#else
-#define         gimp_item_factory_translate_func  (NULL)
-#endif
 
 
 static GtkItemFactoryClass *parent_class = NULL;
@@ -102,40 +98,63 @@ gimp_item_factory_get_type (void)
 static void
 gimp_item_factory_class_init (GimpItemFactoryClass *klass)
 {
-  GObjectClass *object_class;
+  GtkObjectClass *object_class;
 
-  object_class = G_OBJECT_CLASS (klass);
+  object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_item_factory_finalize;
+  object_class->destroy = gimp_item_factory_destroy;
 
-  klass->factories = g_hash_table_new (g_str_hash, g_str_equal);
+  klass->factories = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                            g_free, NULL);
 }
 
 static void
 gimp_item_factory_init (GimpItemFactory *factory)
 {
-  factory->factory_path = NULL;
+  factory->gimp        = NULL;
+  factory->update_func = NULL;
 }
 
 static void
-gimp_item_factory_finalize (GObject *object)
+gimp_item_factory_destroy (GtkObject *object)
 {
   GimpItemFactory *factory;
+  gchar           *factory_path;
 
   factory = GIMP_ITEM_FACTORY (object);
 
-  if (factory->factory_path)
-    {
-      g_hash_table_remove (GIMP_ITEM_FACTORY_GET_CLASS (object)->factories,
-                           factory->factory_path);
+  factory_path = GTK_ITEM_FACTORY (object)->path;
 
-      g_free (factory->factory_path);
-      factory->factory_path = NULL;
+  g_print ("gimp_item_factory_destroy (%s)\n", factory_path);
+
+  if (factory_path)
+    {
+      GimpItemFactoryClass *factory_class;
+      GList                *list;
+
+      factory_class = GIMP_ITEM_FACTORY_GET_CLASS (factory);
+
+      list = g_hash_table_lookup (factory_class->factories, factory_path);
+
+      if (list)
+        {
+          list = g_list_remove (list, factory);
+
+          g_print ("gimp_item_factory_destroy (%d %s factories remaining)\n",
+                   g_list_length (list), factory_path);
+
+          if (list)
+            g_hash_table_replace (factory_class->factories,
+                                  g_strdup (factory_path),
+                                  list);
+          else
+            g_hash_table_remove (factory_class->factories, factory_path);
+        }
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 
@@ -144,8 +163,8 @@ gimp_item_factory_finalize (GObject *object)
 GimpItemFactory *
 gimp_item_factory_new (Gimp                      *gimp,
                        GType                      container_type,
-                       const gchar               *path,
                        const gchar               *factory_path,
+                       const gchar               *help_path,
                        GimpItemFactoryUpdateFunc  update_func,
                        guint                      n_entries,
                        GimpItemFactoryEntry      *entries,
@@ -154,47 +173,43 @@ gimp_item_factory_new (Gimp                      *gimp,
 {
   GimpItemFactoryClass *factory_class;
   GimpItemFactory      *factory;
+  GList                *list;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (path != NULL, NULL);
   g_return_val_if_fail (factory_path != NULL, NULL);
+  g_return_val_if_fail (help_path != NULL, NULL);
+  g_return_val_if_fail (factory_path[0] == '<', NULL);
+  g_return_val_if_fail (factory_path[strlen (factory_path) - 1] == '>', NULL);
 
   factory_class = g_type_class_ref (GIMP_TYPE_ITEM_FACTORY);
-
-  if (g_hash_table_lookup (factory_class->factories, path))
-    {
-      g_warning ("%s: item factory with path \"%s\" already exists",
-                 G_STRLOC, path);
-
-      g_type_class_unref (factory_class);
-      return NULL;
-    }
 
   factory = g_object_new (GIMP_TYPE_ITEM_FACTORY, NULL);
 
   gtk_item_factory_construct (GTK_ITEM_FACTORY (factory),
                               container_type,
-                              path,
+                              factory_path,
                               NULL);
 
   gtk_item_factory_set_translate_func (GTK_ITEM_FACTORY (factory),
 				       gimp_item_factory_translate_func,
-				       (gpointer) path,
+				       factory,
 				       NULL);
 
-  factory->gimp = gimp;
+  factory->gimp        = gimp;
+  factory->update_func = update_func;
 
-  /*  this is correct!  <mitch>  */
-  factory->factory_path = g_strdup (path);
-  factory->update_func  = update_func;
+  list = g_hash_table_lookup (factory_class->factories, factory_path);
 
-  g_hash_table_insert (factory_class->factories,
-                       factory->factory_path,
-                       factory);
+  list = g_list_append (list, factory);
+
+  g_hash_table_replace (factory_class->factories,
+                        g_strdup (factory_path),
+                        list);
 
   /*  this will go away  <mitch>  */
-  g_object_set_data (G_OBJECT (factory), "factory_path",
-                     (gpointer) factory_path);
+  g_object_set_data_full (G_OBJECT (factory), "help_path",
+                          g_strdup (help_path),
+                          (GDestroyNotify) g_free);
 
   gimp_item_factory_create_items (factory,
                                   n_entries,
@@ -212,8 +227,21 @@ gimp_item_factory_new (Gimp                      *gimp,
 GimpItemFactory *
 gimp_item_factory_from_path (const gchar *path)
 {
+  GList *list;
+
+  list = gimp_item_factories_from_path (path);
+
+  if (list)
+    return list->data;
+
+  return NULL;
+}
+
+GList *
+gimp_item_factories_from_path (const gchar *path)
+{
   GimpItemFactoryClass *factory_class;
-  GimpItemFactory      *factory;
+  GList                *list;
   gchar                *base_path;
   gchar                *p;
 
@@ -228,13 +256,13 @@ gimp_item_factory_from_path (const gchar *path)
 
   factory_class = g_type_class_ref (GIMP_TYPE_ITEM_FACTORY);
 
-  factory = g_hash_table_lookup (factory_class->factories, base_path);
+  list = g_hash_table_lookup (factory_class->factories, base_path);
 
   g_type_class_unref (factory_class);
 
   g_free (base_path);
 
-  return factory;
+  return list;
 }
 
 void
@@ -364,7 +392,7 @@ gimp_item_factory_popup_with_data (GimpItemFactory  *item_factory,
 
 void
 gimp_item_factory_set_active (GtkItemFactory *factory,
-                              gchar          *path,
+                              const gchar    *path,
                               gboolean        active)
 {
   GtkWidget *widget;
@@ -398,8 +426,27 @@ gimp_item_factory_set_active (GtkItemFactory *factory,
 }
 
 void
+gimp_item_factories_set_active (const gchar *factory_path,
+                                const gchar *path,
+                                gboolean     active)
+{
+  GList *list;
+
+  g_return_if_fail (factory_path != NULL);
+  g_return_if_fail (path != NULL);
+
+  for (list = gimp_item_factories_from_path (factory_path);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_item_factory_set_active (GTK_ITEM_FACTORY (list->data),
+                                    path, active);
+    }
+}
+
+void
 gimp_item_factory_set_color (GtkItemFactory *factory,
-                             gchar          *path,
+                             const gchar    *path,
                              const GimpRGB  *color,
                              gboolean        set_label)
 {
@@ -557,8 +604,29 @@ gimp_item_factory_set_color (GtkItemFactory *factory,
 }
 
 void
+gimp_item_factories_set_color (const gchar   *factory_path,
+                               const gchar   *path,
+                               const GimpRGB *color,
+                               gboolean       set_label)
+{
+  GList *list;
+
+  g_return_if_fail (factory_path != NULL);
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (color != NULL);
+
+  for (list = gimp_item_factories_from_path (factory_path);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_item_factory_set_color (GTK_ITEM_FACTORY (list->data),
+                                   path, color, set_label);
+    }
+}
+
+void
 gimp_item_factory_set_label (GtkItemFactory *factory,
-                             gchar          *path,
+                             const gchar    *path,
                              const gchar    *label)
 {
   GtkWidget *widget;
@@ -586,8 +654,28 @@ gimp_item_factory_set_label (GtkItemFactory *factory,
 }
 
 void
+gimp_item_factories_set_label (const gchar *factory_path,
+                               const gchar *path,
+                               const gchar *label)
+{
+  GList *list;
+
+  g_return_if_fail (factory_path != NULL);
+  g_return_if_fail (path != NULL);
+  g_return_if_fail (label != NULL);
+
+  for (list = gimp_item_factories_from_path (factory_path);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_item_factory_set_label (GTK_ITEM_FACTORY (list->data),
+                                   path, label);
+    }
+}
+
+void
 gimp_item_factory_set_sensitive (GtkItemFactory *factory,
-                                 gchar          *path,
+                                 const gchar    *path,
                                  gboolean        sensitive)
 {
   GtkWidget *widget;
@@ -603,15 +691,34 @@ gimp_item_factory_set_sensitive (GtkItemFactory *factory,
     }
   else if (! strstr (path, "Script-Fu"))
     {
-      g_warning ("%s: Unable to set sensitivity of menu item"
+      g_warning ("%s: Unable to set sensitivity of menu item "
                  "which doesn't exist: %s",
                  G_STRLOC, path);
     }
 }
 
 void
+gimp_item_factories_set_sensitive (const gchar *factory_path,
+                                   const gchar *path,
+                                   gboolean     sensitive)
+{
+  GList *list;
+
+  g_return_if_fail (factory_path != NULL);
+  g_return_if_fail (path != NULL);
+
+  for (list = gimp_item_factories_from_path (factory_path);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (list->data),
+                                       path, sensitive);
+    }
+}
+
+void
 gimp_item_factory_set_visible (GtkItemFactory *factory,
-                               gchar          *path,
+                               const gchar    *path,
                                gboolean        visible)
 {
   GtkWidget *widget;
@@ -633,9 +740,28 @@ gimp_item_factory_set_visible (GtkItemFactory *factory,
     }
   else
     {
-      g_warning ("%s: Unable to set visibility of menu item"
+      g_warning ("%s: Unable to set visibility of menu item "
                  "which doesn't exist: %s",
                  G_STRLOC, path);
+    }
+}
+
+void
+gimp_item_factories_set_visible (const gchar *factory_path,
+                                 const gchar *path,
+                                 gboolean     visible)
+{
+  GList *list;
+
+  g_return_if_fail (factory_path != NULL);
+  g_return_if_fail (path != NULL);
+
+  for (list = gimp_item_factories_from_path (factory_path);
+       list;
+       list = g_list_next (list))
+    {
+      gimp_item_factory_set_visible (GTK_ITEM_FACTORY (list->data),
+                                     path, visible);
     }
 }
 
@@ -795,11 +921,11 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
                                   GdkEventKey *kevent,
                                   gpointer     data)
 {
-  GtkItemFactory *item_factory     = NULL;
-  GtkWidget      *active_menu_item = NULL;
-  gchar          *factory_path     = NULL;
-  gchar          *help_path        = NULL;
-  gchar          *help_page        = NULL;
+  GtkItemFactory *item_factory      = NULL;
+  GtkWidget      *active_menu_item  = NULL;
+  gchar          *factory_help_path = NULL;
+  gchar          *help_path         = NULL;
+  gchar          *help_page         = NULL;
 
   item_factory     = (GtkItemFactory *) data;
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
@@ -837,13 +963,13 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
 
   /*  ...finally, if F1 was pressed over any menu, show it's help page...  */
 
-  factory_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
-                                              "factory_path");
+  factory_help_path = (gchar *) g_object_get_data (G_OBJECT (item_factory),
+                                                   "help_path");
 
   if (! help_page)
     help_page = "index.html";
 
-  if (factory_path && help_page)
+  if (factory_help_path && help_page)
     {
       gchar *help_string;
       gchar *at;
@@ -860,7 +986,7 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
 	}
       else
 	{
-	  help_string = g_strdup_printf ("%s/%s", factory_path, help_page);
+	  help_string = g_strdup_printf ("%s/%s", factory_help_path, help_page);
 	}
 
       gimp_help (GIMP_ITEM_FACTORY (item_factory)->gimp,
@@ -877,23 +1003,20 @@ gimp_item_factory_item_key_press (GtkWidget   *widget,
   return TRUE;
 }
 
-#ifdef ENABLE_NLS
-
 static gchar *
 gimp_item_factory_translate_func (const gchar *path,
                                   gpointer     data)
 {
   static gchar   *menupath = NULL;
 
-  GtkItemFactory *item_factory = NULL;
+  GtkItemFactory *item_factory;
   gchar          *retval;
-  gchar          *factory;
   gchar          *translation;
   gchar          *domain   = NULL;
   gchar          *complete = NULL;
   gchar          *p, *t;
 
-  factory = (gchar *) data;
+  item_factory = GTK_ITEM_FACTORY (data);
 
   if (menupath)
     g_free (menupath);
@@ -905,26 +1028,20 @@ gimp_item_factory_translate_func (const gchar *path,
       (strstr (path, "/MRU")      != NULL))
     return retval;
 
-  if (factory)
-    item_factory = (GtkItemFactory *) gimp_item_factory_from_path (factory);
-
-  if (item_factory)
-    {
-      domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
-      complete = g_object_get_data (G_OBJECT (item_factory), "complete");
-    }
+  domain   = g_object_get_data (G_OBJECT (item_factory), "textdomain");
+  complete = g_object_get_data (G_OBJECT (item_factory), "complete");
 
   if (domain)  /*  use the plugin textdomain  */
     {
       g_free (menupath);
-      menupath = g_strconcat (factory, path, NULL);
+      menupath = g_strconcat (item_factory->path, path, NULL);
 
       if (complete)
 	{
           /*  This is a branch, use the complete path for translation, 
 	   *  then strip off entries from the end until it matches. 
 	   */
-	  complete    = g_strconcat (factory, complete, NULL);
+	  complete    = g_strconcat (item_factory->path, complete, NULL);
 	  translation = g_strdup (dgettext (domain, complete));
 
 	  while (*complete && *translation && strcmp (complete, menupath))
@@ -950,9 +1067,10 @@ gimp_item_factory_translate_func (const gchar *path,
       /* 
        * Work around a bug in GTK+ prior to 1.2.7 (similar workaround below)
        */
-      if (strncmp (factory, translation, strlen (factory)) == 0)
+      if (strncmp (item_factory->path, translation,
+                   strlen (item_factory->path)) == 0)
 	{
-	  retval = translation + strlen (factory);
+	  retval = translation + strlen (item_factory->path);
 	  if (complete)
 	    {
 	      g_free (menupath);
@@ -964,7 +1082,7 @@ gimp_item_factory_translate_func (const gchar *path,
 	  g_warning ("%s: bad translation for menupath: %s",
                      G_STRLOC, menupath);
 
-	  retval = menupath + strlen (factory);
+	  retval = menupath + strlen (item_factory->path);
 	  if (complete)
 	    g_free (translation);
 	}
@@ -1018,5 +1136,3 @@ gimp_item_factory_translate_func (const gchar *path,
   
   return retval;
 }
-
-#endif  /*  ENABLE_NLS  */

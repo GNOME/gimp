@@ -39,6 +39,17 @@
 #include "app_procs.h"
 
 
+#define return_if_no_display(gdisp,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    gdisp = data; \
+  else if (GIMP_IS_GIMP (data)) \
+    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else \
+    gdisp = NULL; \
+  if (! gdisp) \
+    return
+
+
 void
 plug_in_run_cmd_callback (GtkWidget *widget,
                           gpointer   data,
@@ -137,11 +148,7 @@ plug_in_repeat_cmd_callback (GtkWidget *widget,
   GimpDisplay  *gdisp;
   GimpDrawable *drawable;
   gboolean      interactive;
-
-  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data)));
-
-  if (! gdisp)
-    return;
+  return_if_no_display (gdisp, data);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 

@@ -181,13 +181,13 @@ prefs_config_copy_notify (GObject    *config_copy,
     {
       if (param_spec->flags & GIMP_PARAM_CONFIRM)
         {
-          g_print ("NOT Applying prefs change of '%s' to global config "
+          g_print ("NOT Applying prefs change of '%s' to edit_config "
                    "because it needs confirmation\n",
                    param_spec->name);
         }
       else
         {
-          g_print ("Applying prefs change of '%s' to global config\n",
+          g_print ("Applying prefs change of '%s' to edit_config\n",
                    param_spec->name);
 
           g_signal_handlers_block_by_func (config,
@@ -1145,7 +1145,10 @@ prefs_dialog_new (Gimp    *gimp,
   vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "tearoff-menus",
-                          _("Disable _Tearoff Menus"),
+                          _("Enable _Tearoff Menus"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "menu-bar-per-display",
+                          _("Menu _Bar Per Display"),
                           GTK_BOX (vbox2));
 
   /* Window Positions */

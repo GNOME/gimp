@@ -90,7 +90,6 @@
 #include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
 
-#include "gui/plug-in-menus.h"
 #include "gui/brush-select.h"
 #include "gui/gradient-select.h"
 #include "gui/palette-select.h"
@@ -1300,15 +1299,14 @@ static void
 plug_in_handle_proc_install (PlugIn        *plug_in,
                              GPProcInstall *proc_install)
 {
-  PlugInDef       *plug_in_def = NULL;
-  PlugInProcDef   *proc_def;
-  ProcRecord      *proc = NULL;
-  PlugInMenuEntry *menu_entry;
-  GSList          *tmp = NULL;
-  gchar           *prog = NULL;
-  gboolean         add_proc_def;
-  gboolean         valid;
-  gint             i;
+  PlugInDef     *plug_in_def = NULL;
+  PlugInProcDef *proc_def;
+  ProcRecord    *proc = NULL;
+  GSList        *tmp = NULL;
+  gchar         *prog = NULL;
+  gboolean       add_proc_def;
+  gboolean       valid;
+  gint           i;
 
   /*  Argument checking
    *   --only sanity check arguments when the procedure requests a menu path
@@ -1563,38 +1561,11 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	plug_in->temp_proc_defs = g_slist_prepend (plug_in->temp_proc_defs,
                                                    proc_def);
 
-      proc_defs = g_slist_append (proc_defs, proc_def);
       proc->exec_method.temporary.plug_in = plug_in;
-      procedural_db_register (plug_in->gimp, proc);
 
-      if (! plug_in->gimp->no_interface)
-        {
-          /*  If there is a menu path specified, create a menu entry  */
-          if (proc_install->menu_path)
-            {
-              menu_entry = g_new (PlugInMenuEntry, 1);
-              menu_entry->proc_def = proc_def;
-
-              /*  Below we use a hack to allow translations of Script-Fu paths.
-               *  Would be nice if we could solve this properly, but I haven't 
-               *  found a way yet ...  (Sven)
-               */
-              if (plug_in_def && plug_in_def->locale_domain)
-                menu_entry->domain = plug_in_def->locale_domain;
-              else if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
-                menu_entry->domain = "gimp14-script-fu";
-              else
-                menu_entry->domain = std_plugins_domain;
-
-              if (plug_in_def)
-                menu_entry->help_path = plug_in_def->help_path;
-              else
-                menu_entry->help_path = NULL;
-
-              /* plug_in_make_menu_entry frees the menu_entry for us */
-              plug_in_make_menu_entry (NULL, menu_entry, NULL);  
-            }
-        }
+      plug_ins_proc_def_add (proc_def, plug_in->gimp,
+                             plug_in_def ? plug_in_def->locale_domain : NULL,
+                             plug_in_def ? plug_in_def->help_path     : NULL);
       break;
     }
 }

@@ -110,16 +110,12 @@ file_dialog_new (Gimp            *gimp,
 void
 file_dialog_show (GtkWidget *filesel)
 {
-  GtkItemFactory *item_factory;
+  gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", FALSE);
 
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", FALSE);
-
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", FALSE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save", FALSE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", FALSE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy...", FALSE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Open...", FALSE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save", FALSE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
 
   gtk_widget_grab_focus (GTK_FILE_SELECTION (filesel)->selection_entry);
   gtk_widget_show (filesel);
@@ -128,18 +124,14 @@ file_dialog_show (GtkWidget *filesel)
 gboolean
 file_dialog_hide (GtkWidget *filesel)
 {
-  GtkItemFactory *item_factory;
-
   gtk_widget_hide (filesel);
   
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Toolbox>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", TRUE);
+  gimp_item_factories_set_sensitive ("<Toolbox>", "/File/Open...", TRUE);
 
-  item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-  gimp_item_factory_set_sensitive (item_factory, "/File/Open...", TRUE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save", TRUE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save as...", TRUE);
-  gimp_item_factory_set_sensitive (item_factory, "/File/Save a Copy...", TRUE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Open...", TRUE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save", TRUE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", TRUE);
+  gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", TRUE);
 
   /*  return TRUE because we are used as "delete_event" handler  */
   return TRUE;

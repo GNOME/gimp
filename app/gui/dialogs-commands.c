@@ -201,7 +201,7 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                                                       identifier,
                                                       preview_size);
 
-                  /* Maybe gimp_dialog_factory_dockable_new() returned
+                  /*  Maybe gimp_dialog_factory_dockable_new() returned
                    *  an already existing singleton dockable, so check
                    *  if it already is attached to a dockbook.
                    */
@@ -255,9 +255,7 @@ dialogs_preview_size_cmd_callback (GtkWidget *widget,
           view = gimp_container_view_get_by_dockable (dockable);
 
           if (view)
-            {
-              gimp_container_view_set_preview_size (view, preview_size);
-            }
+            gimp_container_view_set_preview_size (view, preview_size);
         }
     }
 }

@@ -52,9 +52,27 @@
 
 #define REVERT_DATA_KEY "revert-confirm-dialog"
 
+
+#define return_if_no_gimp(gimp,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    gimp = ((GimpDisplay *) data)->gimage->gimp; \
+  else if (GIMP_IS_GIMP (data)) \
+    gimp = data; \
+  else \
+    gimp = NULL; \
+  if (! gimp) \
+    return
+
+
 #define return_if_no_display(gdisp,data) \
-  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
-  if (!gdisp) return
+  if (GIMP_IS_DISPLAY (data)) \
+    gdisp = data; \
+  else if (GIMP_IS_GIMP (data)) \
+    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else \
+    gdisp = NULL; \
+  if (! gdisp) \
+    return
 
 
 /*  local function prototypes  */
@@ -72,13 +90,14 @@ file_new_cmd_callback (GtkWidget *widget,
 		       guint      action)
 {
   Gimp      *gimp;
-  GimpImage *gimage = NULL;
-
-  gimp = GIMP (data);
+  GimpImage *gimage;
+  return_if_no_gimp (gimp, data);
 
   /*  if called from the image menu  */
   if (action)
     gimage = gimp_context_get_image (gimp_get_user_context (gimp));
+  else 
+    gimage = NULL;
 
   file_new_dialog_create (gimp, gimage);
 }
@@ -97,13 +116,14 @@ file_open_cmd_callback (GtkWidget *widget,
                         guint      action)
 {
   Gimp      *gimp;
-  GimpImage *gimage = NULL;
-
-  gimp = GIMP (data);
+  GimpImage *gimage;
+  return_if_no_gimp (gimp, data);
 
   /*  if called from the image menu  */
   if (action)
     gimage = gimp_context_get_image (gimp_get_user_context (gimp));
+  else
+    gimage = NULL;
 
   file_open_dialog_show (gimp, gimage, NULL);
 }
@@ -116,8 +136,7 @@ file_last_opened_cmd_callback (GtkWidget *widget,
   Gimp          *gimp;
   GimpImagefile *imagefile;
   guint          num_entries;
-
-  gimp = GIMP (data);
+  return_if_no_gimp (gimp, data);
 
   num_entries = gimp_container_num_children (gimp->documents);
 
@@ -218,7 +237,6 @@ file_revert_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   GtkWidget   *query_box;
   const gchar *uri;
-
   return_if_no_display (gdisp, data);
 
   uri = gimp_object_get_name (GIMP_OBJECT (gdisp->gimage));
@@ -285,7 +303,10 @@ file_quit_cmd_callback (GtkWidget *widget,
 			gpointer   data,
                         guint      action)
 {
-  gimp_exit (GIMP (data), FALSE);
+  Gimp *gimp;
+  return_if_no_gimp (gimp, data);
+
+  gimp_exit (gimp, FALSE);
 }
 
 

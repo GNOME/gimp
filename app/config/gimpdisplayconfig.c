@@ -72,7 +72,8 @@ enum
   PROP_MONITOR_RES_FROM_GDK,
   PROP_NAV_PREVIEW_SIZE,
   PROP_CANVAS_PADDING_MODE,
-  PROP_CANVAS_PADDING_COLOR
+  PROP_CANVAS_PADDING_COLOR,
+  PROP_MENU_BAR_PER_DISPLAY
 };
 
 static GObjectClass *parent_class = NULL;
@@ -213,6 +214,11 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                   CANVAS_PADDING_COLOR_BLURB,
                                   &white,
                                   0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_BAR_PER_DISPLAY,
+                                    "menu-bar-per-display",
+                                    MENU_BAR_PER_DISPLAY_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_RESTART);
 }
 
 static void
@@ -299,6 +305,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_CANVAS_PADDING_COLOR:
       display_config->canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
       break;
+    case PROP_MENU_BAR_PER_DISPLAY:
+      display_config->menu_bar_per_display = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -374,6 +383,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_CANVAS_PADDING_COLOR:
       g_value_set_boxed (value, &display_config->canvas_padding_color);
+      break;
+    case PROP_MENU_BAR_PER_DISPLAY:
+      g_value_set_boolean (value, display_config->menu_bar_per_display);
       break;
 
     default:

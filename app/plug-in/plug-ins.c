@@ -35,6 +35,11 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
+
 #include "gui/plug-in-menus.h"
 
 #include "plug-in.h"
@@ -48,7 +53,19 @@
 #include "libgimp/gimpintl.h"
 
 
-typedef struct _PlugInHelpPathDef PlugInHelpPathDef;
+#define STD_PLUGINS_DOMAIN "gimp14-std-plug-ins"
+#define SCRIPT_FU_DOMAIN   "gimp14-script-fu"
+
+
+typedef struct _PlugInLocaleDomainDef PlugInLocaleDomainDef;
+typedef struct _PlugInHelpPathDef     PlugInHelpPathDef;
+
+struct _PlugInLocaleDomainDef
+{
+  gchar *prog_name;
+  gchar *locale_domain;
+  gchar *locale_path;
+};
 
 struct _PlugInHelpPathDef
 {
@@ -65,10 +82,10 @@ static void   plug_ins_proc_def_dead   (void              *freed_proc_def);
 
 
 GSList      *proc_defs          = NULL;
-const gchar *std_plugins_domain = "gimp14-std-plug-ins";
 
 static GSList   *plug_in_defs       = NULL;
 static GSList   *gimprc_proc_defs   = NULL;
+static GSList   *locale_domain_defs = NULL;
 static GSList   *help_path_defs     = NULL;
 
 static gboolean  write_pluginrc     = FALSE;
@@ -156,7 +173,7 @@ plug_ins_init (Gimp               *gimp,
 	{
 	  proc_def = tmp2->data;
 
- 	  proc_def->mtime = plug_in_def->mtime; 
+ 	  proc_def->mtime = plug_in_def->mtime;
 	  plug_ins_proc_def_insert (proc_def, plug_ins_proc_def_dead);
 	}
     }
@@ -175,63 +192,24 @@ plug_ins_init (Gimp               *gimp,
   /* add the plug-in procs to the procedure database */
   plug_ins_add_to_db (gimp);
 
-  if (! gimp->no_interface)
-    {
-      /* make the menu */
-      plug_in_make_menu (plug_in_defs, std_plugins_domain);
-    }
-
-  /* initial the plug-ins */
-  (* status_callback) (_("Initializing Plug-ins"), "", 0);
-
-  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
-    {
-      plug_in_def = tmp->data;
-
-      if (plug_in_def->has_init)
-	{
-	  if (gimp->be_verbose)
-	    g_print (_("initializing plug-in: \"%s\"\n"), plug_in_def->prog);
-
-	  plug_in_call_init (gimp, plug_in_def);
-	}
-
-      basename = g_path_get_basename (plug_in_def->prog);
-      (* status_callback) (NULL, basename, nth / nplugins);
-      g_free (basename);
-    }
-
-  /* run the available extensions */
-  if (gimp->be_verbose)
-    g_print (_("Starting extensions: "));
-
-  (* status_callback) (_("Starting Extensions"), "", 0);
-  nplugins = g_slist_length (proc_defs);
-
-  for (tmp = proc_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
-    {
-      proc_def = tmp->data;
-
-      if (proc_def->prog &&
-	  (proc_def->db_info.num_args == 0) &&
-	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
-	{
-	  if (gimp->be_verbose)
-	    g_print ("%s ", proc_def->db_info.name);
-
-	  (* status_callback) (NULL, proc_def->db_info.name, nth / nplugins);
-
-	  plug_in_run (gimp, &proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
-	}
-    }
-
-  if (gimp->be_verbose)
-    g_print ("\n");
-
-  /* create help path list and free up stuff */
+  /* create help_path and locale_domain lists */
   for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
       plug_in_def = tmp->data;
+
+      if (plug_in_def->locale_domain)
+	{
+	  PlugInLocaleDomainDef *locale_domain_def;
+
+	  locale_domain_def = g_new (PlugInLocaleDomainDef, 1);
+
+	  locale_domain_def->prog_name     = g_strdup (plug_in_def->prog);
+	  locale_domain_def->locale_domain = g_strdup (plug_in_def->locale_domain);
+          locale_domain_def->locale_path   = g_strdup (plug_in_def->locale_path);
+
+	  locale_domain_defs = g_slist_prepend (locale_domain_defs,
+                                                locale_domain_def);
+	}
 
       if (plug_in_def->help_path)
 	{
@@ -244,6 +222,61 @@ plug_ins_init (Gimp               *gimp,
 
 	  help_path_defs = g_slist_prepend (help_path_defs, help_path_def);
 	}
+    }
+
+  if (! gimp->no_interface)
+    {
+      plug_in_menus_init (plug_in_defs, STD_PLUGINS_DOMAIN);
+
+      /* make the menu */
+      plug_in_make_menu (NULL, proc_defs);
+    }
+
+  /* initial the plug-ins */
+  (* status_callback) (_("Initializing Plug-ins"), "", 0);
+
+  for (tmp = plug_in_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
+    {
+      plug_in_def = tmp->data;
+
+      if (plug_in_def->has_init)
+	{
+	  if (gimp->be_verbose)
+	    g_print (_("Initializing plug-in: \"%s\"\n"), plug_in_def->prog);
+
+	  plug_in_call_init (gimp, plug_in_def);
+	}
+
+      basename = g_path_get_basename (plug_in_def->prog);
+      (* status_callback) (NULL, basename, nth / nplugins);
+      g_free (basename);
+    }
+
+  /* run the available extensions */
+  (* status_callback) (_("Starting Extensions"), "", 0);
+  nplugins = g_slist_length (proc_defs);
+
+  for (tmp = proc_defs, nth = 0; tmp; tmp = g_slist_next (tmp), nth++)
+    {
+      proc_def = tmp->data;
+
+      if (proc_def->prog &&
+	  (proc_def->db_info.num_args == 0) &&
+	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
+	{
+	  if (gimp->be_verbose)
+	    g_print (_("Starting extension: \"%s\""), proc_def->db_info.name);
+
+	  (* status_callback) (NULL, proc_def->db_info.name, nth / nplugins);
+
+	  plug_in_run (gimp, &proc_def->db_info, NULL, 0, FALSE, TRUE, -1);
+	}
+    }
+
+  /* free up stuff */
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
+    {
+      plug_in_def = tmp->data;
 
       plug_in_def_free (plug_in_def, FALSE);
     }
@@ -491,14 +524,43 @@ plug_ins_menu_path (gchar *name)
   return NULL;
 }
 
-gchar *
-plug_ins_help_path (gchar *prog_name)
+const gchar *
+plug_ins_locale_domain (const gchar  *prog_name,
+                        const gchar **locale_path)
+{
+  PlugInLocaleDomainDef *locale_domain_def;
+  GSList                *list;
+
+  g_return_val_if_fail (prog_name != NULL, NULL);
+
+  if (locale_path)
+    *locale_path = gimp_locale_directory ();
+
+  for (list = locale_domain_defs; list; list = g_slist_next (list))
+    {
+      locale_domain_def = (PlugInLocaleDomainDef *) list->data;
+
+      if (locale_domain_def &&
+          locale_domain_def->prog_name &&
+	  strcmp (locale_domain_def->prog_name, prog_name) == 0)
+        {
+          if (locale_path && locale_domain_def->locale_path)
+            *locale_path = locale_domain_def->locale_path;
+
+          return locale_domain_def->locale_domain;
+        }
+    }
+
+  return STD_PLUGINS_DOMAIN;
+}
+
+const gchar *
+plug_ins_help_path (const gchar *prog_name)
 {
   PlugInHelpPathDef *help_path_def;
-  GSList *list;
+  GSList            *list;
 
-  if (!prog_name || !strlen (prog_name))
-    return NULL;
+  g_return_val_if_fail (prog_name != NULL, NULL);
 
   for (list = help_path_defs; list; list = g_slist_next (list))
     {
@@ -685,6 +747,39 @@ plug_ins_proc_def_dead (void *freed_proc_def)
       plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
 					       freed_proc_def);
     }
+}
+
+void
+plug_ins_proc_def_add (PlugInProcDef *proc_def,
+                       Gimp          *gimp,
+                       const gchar   *locale_domain,
+                       const gchar   *help_path)
+{
+  if (! gimp->no_interface)
+    {
+      if (proc_def->menu_path)
+        {
+          /*  Below we use a hack to allow translations of Script-Fu paths.
+           *  Would be nice if we could solve this properly, but I haven't 
+           *  found a way yet ...  (Sven)
+           */
+          if (! locale_domain)
+            {
+              if (strncmp (proc_def->db_info.name, "script_fu", 9) == 0)
+                locale_domain = SCRIPT_FU_DOMAIN;
+              else
+                locale_domain = STD_PLUGINS_DOMAIN;
+            }
+
+          plug_in_make_menu_entry (NULL, proc_def, locale_domain, help_path);
+        }
+    }
+
+  /*  Register the procedural database entry  */
+  procedural_db_register (gimp, &proc_def->db_info);
+
+  /*  Remove the defintion from the global list  */
+  proc_defs = g_slist_append (proc_defs, proc_def);
 }
 
 void

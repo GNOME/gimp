@@ -36,14 +36,22 @@ PlugInProcDef   * plug_ins_file_handler      (gchar         *name,
 /* Add a plug-in definition. */
 void              plug_ins_def_add           (PlugInDef     *plug_in_def);
 
+void              plug_ins_proc_def_add      (PlugInProcDef *proc_def,
+                                              Gimp          *gimp,
+                                              const gchar   *locale_domain,
+                                              const gchar   *help_path);
 void              plug_ins_proc_def_remove   (PlugInProcDef *proc_def,
                                               Gimp          *gimp);
 
 /* Retrieve a plug-ins menu path */
 gchar           * plug_ins_menu_path         (gchar         *name);
 
+/* Retrieve a plug-ins locale domain */
+const gchar     * plug_ins_locale_domain     (const gchar   *prog_name,
+                                              const gchar  **locale_path);
+
 /* Retrieve a plug-ins help path */
-gchar           * plug_ins_help_path         (gchar         *prog_name);
+const gchar     * plug_ins_help_path         (const gchar   *prog_name);
 
 
 /* Register an internal plug-in.  This is for file load-save
@@ -55,8 +63,7 @@ GSList          * plug_ins_extensions_parse  (gchar         *extensions);
 PlugInImageType   plug_ins_image_types_parse (gchar         *image_types);
 
 
-extern GSList      *proc_defs;
-extern const gchar *std_plugins_domain;
+extern GSList *proc_defs;
 
 
 #endif /* __PLUG_INS_H__ */

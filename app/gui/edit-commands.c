@@ -50,12 +50,22 @@
 
 
 #define return_if_no_display(gdisp,data) \
-  gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  if (GIMP_IS_DISPLAY (data)) \
+    gdisp = data; \
+  else if (GIMP_IS_GIMP (data)) \
+    gdisp = gimp_context_get_display (gimp_get_user_context (GIMP (data))); \
+  else \
+    gdisp = NULL; \
   if (! gdisp) \
     return
 
 #define return_if_no_image(gimage,data) \
-  gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (GIMP_IS_DISPLAY (data)) \
+    gimage = ((GimpDisplay *) data)->gimage; \
+  else if (GIMP_IS_GIMP (data)) \
+    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  else \
+    gimage = NULL; \
   if (! gimage) \
     return
 

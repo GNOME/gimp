@@ -45,6 +45,8 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpdisplay.h"
+
 #include "tools/gimppainttool.h"
 #include "tools/gimpvectortool.h"
 #include "tools/tool_manager.h"
@@ -56,15 +58,21 @@
 #include "libgimp/gimpintl.h"
 
 
-#define return_if_no_image(gimage) \
+#define return_if_no_image(gimage,data) \
   gimage = (GimpImage *) gimp_widget_get_callback_context (widget); \
-  if (! GIMP_IS_IMAGE (gimage)) \
-    gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+  if (! GIMP_IS_IMAGE (gimage)) { \
+    if (GIMP_IS_DISPLAY (data)) \
+      gimage = ((GimpDisplay *) data)->gimage; \
+    else if (GIMP_IS_GIMP (data)) \
+      gimage = gimp_context_get_image (gimp_get_user_context (GIMP (data))); \
+    else \
+      gimage = NULL; \
+  } \
   if (! gimage) \
     return
 
-#define return_if_no_vectors(gimage,vectors) \
-  return_if_no_image (gimage); \
+#define return_if_no_vectors(gimage,vectors,data) \
+  return_if_no_image (gimage,data); \
   vectors = gimp_image_get_active_vectors (gimage); \
   if (! vectors) \
     return
@@ -77,7 +85,7 @@ vectors_new_vectors_cmd_callback (GtkWidget *widget,
                                   gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  return_if_no_image (gimage, data);
 
   vectors_new_vectors_query (gimage, NULL, TRUE);
 }
@@ -88,7 +96,7 @@ vectors_raise_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   gimp_image_raise_vectors (gimage, active_vectors);
   gimp_image_flush (gimage);
@@ -100,7 +108,7 @@ vectors_lower_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   gimp_image_lower_vectors (gimage, active_vectors);
   gimp_image_flush (gimage);
@@ -113,9 +121,13 @@ vectors_duplicate_vectors_cmd_callback (GtkWidget *widget,
   GimpImage   *gimage;
   GimpVectors *active_vectors;
   GimpVectors *new_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   new_vectors = NULL;
+
+#ifdef __GNUC__
+#warning FIXME: need gimp_vectors_copy()
+#endif
 #if 0
   new_vectors = gimp_vectors_copy (active_vectors,
                                    G_TYPE_FROM_INSTANCE (active_vectors),
@@ -131,7 +143,7 @@ vectors_delete_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   gimp_image_remove_vectors (gimage, active_vectors);
   gimp_image_flush (gimage);
@@ -144,7 +156,7 @@ vectors_vectors_to_sel (GtkWidget      *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   gimp_image_mask_select_vectors (gimage,
                                   active_vectors,
@@ -187,9 +199,11 @@ vectors_sel_to_vectors_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  return_if_no_image (gimage, data);
 
-  /* TODO */
+#ifdef __GNUC__
+#warning FIXME: need gimp_vectors_from_mask(or something)
+#endif
 }
 
 void
@@ -198,7 +212,7 @@ vectors_stroke_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   vectors_stroke_vectors (active_vectors);
 }
@@ -209,9 +223,11 @@ vectors_copy_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
-  /* TODO */
+#ifdef __GNUC__
+#warning FIXME: need vectors clipoard
+#endif
 }
 
 void
@@ -219,9 +235,11 @@ vectors_paste_vectors_cmd_callback (GtkWidget *widget,
                                     gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  return_if_no_image (gimage, data);
 
-  /* TODO */
+#ifdef __GNUC__
+#warning FIXME: need vectors clipoard
+#endif
 }
 
 void
@@ -229,9 +247,11 @@ vectors_import_vectors_cmd_callback (GtkWidget *widget,
                                      gpointer   data)
 {
   GimpImage *gimage;
-  return_if_no_image (gimage);
+  return_if_no_image (gimage, data);
 
-  /* TODO */
+#ifdef __GNUC__
+#warning FIXME: need vectors import/export
+#endif
 }
 
 void
@@ -240,9 +260,11 @@ vectors_export_vectors_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
-  /* TODO */
+#ifdef __GNUC__
+#warning FIXME: need vectors import/export
+#endif
 }
 
 void
@@ -251,7 +273,7 @@ vectors_vectors_tool_cmd_callback (GtkWidget   *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   vectors_vectors_tool (active_vectors);
 }
@@ -262,7 +284,7 @@ vectors_edit_vectors_attributes_cmd_callback (GtkWidget *widget,
 {
   GimpImage   *gimage;
   GimpVectors *active_vectors;
-  return_if_no_vectors (gimage, active_vectors);
+  return_if_no_vectors (gimage, active_vectors, data);
 
   vectors_edit_vectors_query (active_vectors);
 }

@@ -40,101 +40,340 @@
 #include "libgimp/gimpintl.h"
 
 
-void
-plug_in_make_menu (GSList      *plug_in_defs,
-                   const gchar *std_plugins_domain)
-{
-  PlugInDef       *plug_in_def;
-  PlugInProcDef   *proc_def;
-  PlugInMenuEntry *menu_entry;
-  GSList          *domains = NULL;
-  GSList          *procs;
-  GSList          *tmp;
-  GTree           *menu_entries;
+typedef struct _PlugInMenuEntry PlugInMenuEntry;
 
-#ifdef ENABLE_NLS
+struct _PlugInMenuEntry
+{
+  PlugInProcDef *proc_def;
+  const gchar   *domain;
+  const gchar   *help_path;
+};
+
+
+/*  local function prototypes  */
+
+static gboolean plug_in_menu_tree_traverse_func (gpointer         foo,
+                                                 PlugInMenuEntry *menu_entry,
+                                                 GimpItemFactory *image_factory);
+static gchar  * plug_in_escape_uline            (const gchar     *menu_path);
+
+
+/*  public functions  */
+
+void
+plug_in_menus_init (GSList      *plug_in_defs,
+                    const gchar *std_plugins_domain)
+{
+  PlugInDef *plug_in_def;
+  GSList    *domains = NULL;
+  GSList    *tmp;
+
+  g_return_if_fail (plug_in_defs != NULL);
+  g_return_if_fail (std_plugins_domain != NULL);
+
+  domains = g_slist_append (domains, (gpointer) std_plugins_domain);
+
   bindtextdomain (std_plugins_domain, gimp_locale_directory ());
   bind_textdomain_codeset (std_plugins_domain, "UTF-8");
-  domains = g_slist_append (domains, (gpointer) std_plugins_domain);
-#endif
 
-#ifdef ENABLE_NLS
-  menu_entries = g_tree_new ((GCompareFunc) strcoll);
-#else
-  menu_entries = g_tree_new ((GCompareFunc) strcmp);
-#endif
-
-  tmp = plug_in_defs;
-  while (tmp)
+  for (tmp = plug_in_defs; tmp; tmp = g_slist_next (tmp))
     {
+      const gchar *locale_domain;
+      const gchar *locale_path;
+      GSList      *list;
+
       plug_in_def = tmp->data;
-      tmp = tmp->next;
 
-      procs = plug_in_def->proc_defs;
+      if (! plug_in_def->proc_defs)
+        continue;
 
-      if (!procs)
-	continue;
+      locale_domain = plug_ins_locale_domain (plug_in_def->prog,
+                                              &locale_path);
 
-#ifdef ENABLE_NLS
-      {
-	gchar    *domain;
-	GSList   *list;
-	gboolean  found = FALSE;
+      for (list = domains; list; list = list->next)
+        {
+          if (! strcmp (locale_domain, (gchar *) list->data))
+            break;
+        }
 
-	if (plug_in_def->locale_domain)
-	  {
-	    domain = plug_in_def->locale_domain;
-	    for (list = domains; list && !found; list = list->next)
-	      {
-		if (strcmp (domain, (gchar*)(list->data)) == 0)
-		  found = TRUE;
-	      }
-	    if (!found)
-	      {
-		domains = g_slist_append (domains, domain);
-		if (plug_in_def->locale_path)
-		  bindtextdomain (domain, plug_in_def->locale_path);
-		else
-		  bindtextdomain (domain, gimp_locale_directory ());
-                bind_textdomain_codeset (domain, "UTF-8");
-	      }
-	  }
-      }
-#endif  /*  ENABLE_NLS  */
+      if (! list)
+        {
+          domains = g_slist_append (domains, (gpointer) locale_domain);
 
-      while (procs)
-	{
-	  proc_def = procs->data;
-	  procs = procs->next;
+          bindtextdomain (locale_domain, locale_path);
+          bind_textdomain_codeset (locale_domain, "UTF-8");
+        }
+    }
 
-	  if (proc_def->prog         &&
-              proc_def->menu_path    &&
-              ! proc_def->extensions &&
-              ! proc_def->prefixes   &&
-              ! proc_def->magics)
-	    {
-	      menu_entry = g_new0 (PlugInMenuEntry, 1);
+  g_slist_free (domains);
+}
 
-	      menu_entry->proc_def = proc_def;
-	      menu_entry->domain   = (plug_in_def->locale_domain ? 
-                                      plug_in_def->locale_domain :
-                                      (gchar *) std_plugins_domain);
-	      menu_entry->help_path = plug_in_def->help_path;
+void
+plug_in_make_menu (GimpItemFactory *image_factory,
+                   GSList          *proc_defs)
+{
+  PlugInProcDef   *proc_def;
+  GSList          *procs;
+  GTree           *menu_entries;
 
-	      g_tree_insert (menu_entries, 
-			     dgettext (menu_entry->domain, 
-                                       proc_def->menu_path),
-			     menu_entry);
+  g_return_if_fail (image_factory == NULL ||
+                    GIMP_IS_ITEM_FACTORY (image_factory));
+  g_return_if_fail (proc_defs != NULL);
+
+  menu_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
+                                  NULL, g_free);
+
+  for (procs = proc_defs; procs; procs = procs->next)
+    {
+      proc_def = procs->data;
+
+      if (proc_def->prog         &&
+          proc_def->menu_path    &&
+          ! proc_def->extensions &&
+          ! proc_def->prefixes   &&
+          ! proc_def->magics)
+        {
+          PlugInMenuEntry *menu_entry;
+          const gchar     *locale_domain;
+
+          locale_domain = plug_ins_locale_domain (proc_def->prog, NULL);
+
+          menu_entry = g_new0 (PlugInMenuEntry, 1);
+
+          menu_entry->proc_def  = proc_def;
+          menu_entry->domain    = locale_domain;
+          menu_entry->help_path = plug_ins_help_path (proc_def->prog);
+
+          g_tree_insert (menu_entries, 
+                         dgettext (locale_domain, proc_def->menu_path),
+                         menu_entry);
+        }
+    }
+
+  g_tree_foreach (menu_entries, 
+                  (GTraverseFunc) plug_in_menu_tree_traverse_func,
+                  image_factory);
+  g_tree_destroy (menu_entries);
+}
+
+void
+plug_in_make_menu_entry (GimpItemFactory *image_factory,
+                         PlugInProcDef   *proc_def,
+                         const gchar     *domain,
+                         const gchar     *help_path)
+{
+  GimpItemFactoryEntry  entry;
+  gchar                *menu_path;
+  gchar                *help_page;
+  gchar                *basename;
+  gchar                *lowercase_page;
+
+  g_return_if_fail (image_factory == NULL ||
+                    GIMP_IS_ITEM_FACTORY (image_factory));
+
+  basename = g_path_get_basename (proc_def->prog);
+
+  if (help_path)
+    {
+      help_page = g_strconcat (help_path,
+			       "@",   /* HACK: locale subdir */
+			       basename,
+			       ".html",
+			       NULL);
+    }
+  else
+    {
+      help_page = g_strconcat ("filters/",  /* _not_ G_DIR_SEPARATOR_S */
+			       basename,
+			       ".html",
+			       NULL);
+    }
+
+  g_free (basename);
+
+  lowercase_page = g_ascii_strdown (help_page, -1);
+
+  g_free (help_page);
+
+  menu_path = plug_in_escape_uline (strstr (proc_def->menu_path, "/"));
+
+  entry.entry.path            = menu_path;
+  entry.entry.accelerator     = proc_def->accelerator;
+  entry.entry.callback        = plug_in_run_cmd_callback;
+  entry.entry.callback_action = 0;
+  entry.entry.item_type       = NULL;
+  entry.quark_string          = NULL;
+  entry.help_page             = lowercase_page;
+  entry.description           = NULL;
+
+  if (image_factory)
+    {
+      if (! strncmp (proc_def->menu_path, "<Image>", 7))
+        {
+          gimp_item_factory_create_item (image_factory,
+                                         &entry,
+                                         domain,
+                                         &proc_def->db_info, 2,
+                                         TRUE, FALSE);
+        }
+    }
+  else
+    {
+      GList *list;
+
+      for (list = gimp_item_factories_from_path (proc_def->menu_path);
+           list;
+           list = g_list_next (list))
+        {
+          GimpItemFactory *item_factory = list->data;
+
+          gimp_item_factory_create_item (item_factory,
+                                         &entry,
+                                         domain,
+                                         &proc_def->db_info, 2,
+                                         TRUE, FALSE);
+        }
+    }
+
+  g_free (menu_path);
+  g_free (lowercase_page);
+}
+
+void
+plug_in_delete_menu_entry (const gchar *menu_path)
+{
+  GList *list;
+
+  g_return_if_fail (menu_path != NULL);
+
+  for (list = gimp_item_factories_from_path (menu_path);
+       list;
+       list = g_list_next (list))
+    {
+      GtkItemFactory *item_factory = list->data;
+
+      gtk_item_factory_delete_item (GTK_ITEM_FACTORY (item_factory), menu_path);
+    }
+}
+
+void
+plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
+                              GimpImageType    type)
+{
+  PlugInProcDef *proc_def;
+  GSList        *tmp;
+  gboolean       sensitive = FALSE;
+
+  g_return_if_fail (image_factory == NULL ||
+                    GIMP_IS_ITEM_FACTORY (image_factory));
+
+  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
+    {
+      proc_def = tmp->data;
+
+      if (proc_def->image_types_val && proc_def->menu_path)
+        {
+          switch (type)
+            {
+            case GIMP_RGB_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
+              break;
+            case GIMP_RGBA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
+              break;
+            case GIMP_GRAY_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
+              break;
+            case GIMP_GRAYA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
+              break;
+            case GIMP_INDEXED_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
+              break;
+            case GIMP_INDEXEDA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
+              break;
+            default:
+              sensitive = FALSE;
+              break;
+            }
+
+          if (image_factory && ! strncmp (proc_def->menu_path, "<Image>", 7))
+            gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (image_factory),
+                                             proc_def->menu_path,
+                                             sensitive);
+          else
+            gimp_item_factories_set_sensitive (proc_def->menu_path,
+                                               proc_def->menu_path,
+                                               sensitive);
+
+          if (last_plug_in && (last_plug_in == &proc_def->db_info))
+            {
+              gchar *basename;
+              gchar *ellipses;
+              gchar *repeat;
+              gchar *reshow;
+
+              basename = g_path_get_basename (proc_def->menu_path);
+
+              ellipses = strstr (basename, "...");
+
+              if (ellipses && ellipses == (basename + strlen (basename) - 3))
+                *ellipses = '\0';
+
+              repeat = g_strdup_printf (_("Repeat \"%s\""), basename);
+              reshow = g_strdup_printf (_("Re-show \"%s\""), basename);
+
+              g_free (basename);
+
+              gimp_item_factories_set_label ("<Image>",
+                                             "/Filters/Repeat Last", repeat);
+              gimp_item_factories_set_label ("<Image>",
+                                             "/Filters/Re-Show Last", reshow);
+
+              g_free (repeat);
+              g_free (reshow);
+
+	      gimp_item_factories_set_sensitive ("<Image>",
+                                                 "/Filters/Repeat Last",
+                                                 sensitive);
+	      gimp_item_factories_set_sensitive ("<Image>",
+                                                 "/Filters/Re-Show Last",
+                                                 sensitive);
 	    }
 	}
     }
 
-  g_tree_foreach (menu_entries, 
-                  (GTraverseFunc) plug_in_make_menu_entry, 
-                  NULL);
-  g_tree_destroy (menu_entries);
+  if (! last_plug_in)
+    {
+      gimp_item_factories_set_label ("<Image>",
+                                     "/Filters/Repeat Last",
+                                     _("Repeat Last"));
+      gimp_item_factories_set_label ("<Image>",
+                                     "/Filters/Re-Show Last",
+                                     _("Re-Show Last"));
 
-  g_slist_free (domains);
+      gimp_item_factories_set_sensitive ("<Image>",
+                                         "/Filters/Repeat Last", FALSE);
+      gimp_item_factories_set_sensitive ("<Image>",
+                                         "/Filters/Re-Show Last", FALSE);
+    }
+}
+
+
+/*  private functions  */
+
+static gboolean
+plug_in_menu_tree_traverse_func (gpointer         foo,
+                                 PlugInMenuEntry *menu_entry,
+                                 GimpItemFactory *image_factory)
+{
+  plug_in_make_menu_entry (image_factory,
+                           menu_entry->proc_def,
+                           menu_entry->domain,
+                           menu_entry->help_path);
+
+  return FALSE;
 }
 
 static gchar *
@@ -165,187 +404,4 @@ plug_in_escape_uline (const gchar *menu_path)
     }
 
   return escaped;
-}
-
-/*  The following function has to be a GTraverseFunction, 
- *  but is also called directly. Please note that it frees the
- *  menu_entry strcuture.                --Sven 
- */ 
-gint
-plug_in_make_menu_entry (gpointer         foo,
-			 PlugInMenuEntry *menu_entry,
-			 gpointer         bar)
-{
-  GimpItemFactoryEntry  entry;
-  gchar                *menu_path;
-  gchar                *help_page;
-  gchar                *basename;
-  gchar                *lowercase_page;
-
-  basename = g_path_get_basename (menu_entry->proc_def->prog);
-
-  if (menu_entry->help_path)
-    {
-      help_page = g_strconcat (menu_entry->help_path,
-			       "@",   /* HACK: locale subdir */
-			       basename,
-			       ".html",
-			       NULL);
-    }
-  else
-    {
-      help_page = g_strconcat ("filters/",  /* _not_ G_DIR_SEPARATOR_S */
-			       basename,
-			       ".html",
-			       NULL);
-    }
-
-  g_free (basename);
-
-  lowercase_page = g_ascii_strdown (help_page, -1);
-
-  g_free (help_page);
-
-  menu_path = plug_in_escape_uline (strstr (menu_entry->proc_def->menu_path, "/"));
-
-  entry.entry.path            = menu_path;
-  entry.entry.accelerator     = menu_entry->proc_def->accelerator;
-  entry.entry.callback        = plug_in_run_cmd_callback;
-  entry.entry.callback_action = 0;
-  entry.entry.item_type       = NULL;
-  entry.quark_string          = NULL;
-  entry.help_page             = lowercase_page;
-  entry.description           = NULL;
-
-  {
-    GimpItemFactory *item_factory;
-
-    item_factory = 
-      gimp_item_factory_from_path (menu_entry->proc_def->menu_path);
-
-    gimp_item_factory_create_item (item_factory,
-                                   &entry,
-                                   menu_entry->domain,
-                                   &menu_entry->proc_def->db_info, 2,
-                                   TRUE, FALSE);
-  }
-
-  g_free (menu_path);
-  g_free (lowercase_page);
-
-  g_free (menu_entry);
-
-  return FALSE;
-}
-
-void
-plug_in_delete_menu_entry (const gchar *menu_path)
-{
-  GimpItemFactory *item_factory;
-
-  item_factory = gimp_item_factory_from_path (menu_path);
-
-  gtk_item_factory_delete_item (GTK_ITEM_FACTORY (item_factory), menu_path);
-}
-
-void
-plug_in_set_menu_sensitivity (GimpImageType type)
-{
-  GtkItemFactory *item_factory;
-  PlugInProcDef  *proc_def;
-  GSList         *tmp;
-  gboolean        sensitive = FALSE;
-
-  for (tmp = proc_defs; tmp; tmp = g_slist_next (tmp))
-    {
-      proc_def = tmp->data;
-
-      if (proc_def->image_types_val && proc_def->menu_path)
-	{
-	  switch (type)
-	    {
-	    case GIMP_RGB_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
-	      break;
-	    case GIMP_RGBA_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
-	      break;
-	    case GIMP_GRAY_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
-	      break;
-	    case GIMP_GRAYA_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
-	      break;
-	    case GIMP_INDEXED_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
-	      break;
-	    case GIMP_INDEXEDA_IMAGE:
-	      sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
-	      break;
-	    default:
-	      sensitive = FALSE;
-	      break;
-	    }
-
-          item_factory =
-            GTK_ITEM_FACTORY (gimp_item_factory_from_path (proc_def->menu_path));
-
-	  gimp_item_factory_set_sensitive (item_factory,
-                                           proc_def->menu_path,
-                                           sensitive);
-
-          if (last_plug_in && (last_plug_in == &(proc_def->db_info)))
-	    {
-              gchar *basename;
-              gchar *ellipses;
-              gchar *repeat;
-              gchar *reshow;
-
-              basename = g_path_get_basename (proc_def->menu_path);
-
-              ellipses = strstr (basename, "...");
-
-              if (ellipses && ellipses == (basename + strlen (basename) - 3))
-                *ellipses = '\0';
-
-              repeat = g_strdup_printf (_("Repeat \"%s\""), basename);
-              reshow = g_strdup_printf (_("Re-show \"%s\""), basename);
-
-              g_free (basename);
-
-              gimp_item_factory_set_label (item_factory,
-                                           "/Filters/Repeat Last", repeat);
-              gimp_item_factory_set_label (item_factory,
-                                           "/Filters/Re-Show Last", reshow);
-
-              g_free (repeat);
-              g_free (reshow);
-
-	      gimp_item_factory_set_sensitive (item_factory,
-                                               "/Filters/Repeat Last",
-                                               sensitive);
-	      gimp_item_factory_set_sensitive (item_factory,
-                                               "/Filters/Re-Show Last",
-                                               sensitive);
-	    }
-	}
-    }
-
-  if (! last_plug_in)
-    {
-      item_factory =
-        GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
-
-      gimp_item_factory_set_label (item_factory,
-                                   "/Filters/Repeat Last",
-                                   _("Repeat Last"));
-      gimp_item_factory_set_label (item_factory,
-                                   "/Filters/Re-Show Last",
-                                   _("Re-Show Last"));
-
-      gimp_item_factory_set_sensitive (item_factory,
-                                       "/Filters/Repeat Last", FALSE);
-      gimp_item_factory_set_sensitive (item_factory,
-                                       "/Filters/Re-Show Last", FALSE);
-    }
 }

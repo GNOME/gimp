@@ -1,5 +1,73 @@
 2002-12-10  Michael Natterer  <mitch@gimp.org>
 
+	The unbelievable happened: a menu bar per display (optionally)
+
+	* app/widgets/gimpitemfactory.[ch]: Added the possibility to have
+	more than one item factory per <Prefix>. Added
+	gimp_item_factories_set_foobar() variants of all functions which
+	set menu item properties (label, sensitive, ...). Removed
+	the #ifndef ENABLE_NLS code since that's no longer possible.
+
+	* app/widgets/gimptoolbox.c: made it robust againt the <Image>
+	factory not existing at the time of toolbox creation.
+
+	* app/config/gimpconfig-blurbs.h
+	* app/config/gimpdisplayconfig.[ch]: added boolean
+	"menu_bar_per_display" property.
+
+	* app/gui/preferences-dialog.c: added a toggle for the new option.
+
+	* app/gui/menus.[ch]: added menus_get_new_image_factory() as
+	temporary solution. Will add a GimpMenuFactory which creates the
+	item factories soon.
+
+	* app/display/gimpdisplayshell.c: add the menu bar if requested.
+	Changed widget packing slightly for the menu bar case.
+
+	* app/display/gimpdisplayshell-callbacks.c: changed accordingly.
+	Currently there is no right-click popup menu when we have a menu
+	bar. This will change soon.
+
+	* app/gui/file-dialog-utils.c
+	* app/gui/gui.c: use gimp_item_factories_set_foo().
+
+	* app/gui/channels-commands.c
+	* app/gui/dialogs-commands.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/drawable-commands.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/image-commands.c
+	* app/gui/layers-commands.c
+	* app/gui/plug-in-commands.c
+	* app/gui/select-commands.c
+	* app/gui/tools-commands.c
+	* app/gui/vectors-commands.c
+	* app/gui/view-commands.c: per-display item factories pass the
+	GimpDisplay as user_data to callbacks, not a Gimp. Changed all
+	return_if_no_foo() macros to handle both cases.
+
+	Cleaned up the plug-in menu stuff:
+
+	* app/plug-in/plug-in-types.h: removed PlugInMenuEntry type.
+
+	* app/plug-in/plug-ins.[ch]: added plug_ins_proc_def_add() as
+	counterpart to plug_ins_proc_def_remove(). Added
+	plug_ins_locale_domain() as counterpart to plug_ins_help_path().
+	Remember the locale domains just as the help paths. Changed
+	plug-in initialization so that their menus can be created multiple
+	times.
+
+	* app/plug-in/plug-in.[ch]: use plug_ins_proc_def_add() instead of
+	doing it manually.
+
+	* app/gui/plug-in-menus.[ch]: added plug_in_menus_init() which
+	just registers the locale domains. Changed plug_in_make_menu() to
+	take a list of proc_defs, not plug_ins_defs so it can be used
+	after plug-in query.
+
+2002-12-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c: fixed typo, use "gimp->no_interface" instead of
 	simply "no_interface" in the "exit" handler.
 
@@ -41,7 +109,7 @@
 	Added gimp_boolean_handled_accumulator() so the emission of "exit"
 	can be stopped by returning TRUE from a callback.  Removed
 	gimp_shutdown() from the public API and made it "exit"'s default
-	implementation. Addec gimp_exit() to emit the signal.
+	implementation. Added gimp_exit() to emit the signal.
 
 	* app/core/gimpmarshal.list: added BOOLEAN__BOOLEAN marshaller.
 

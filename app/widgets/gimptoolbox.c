@@ -662,6 +662,9 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
+      if (! item_factory)
+        continue;
+
       menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
                                                tool_info->menu_path);
       accel_closures = gtk_widget_list_accel_closures (menu_item);

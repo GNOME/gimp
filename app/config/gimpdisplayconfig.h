@@ -59,6 +59,7 @@ struct _GimpDisplayConfig
   GimpPreviewSize         nav_preview_size;
   GimpDisplayPaddingMode  canvas_padding_mode;
   GimpRGB                 canvas_padding_color;
+  gboolean                menu_bar_per_display;
 };
 
 struct _GimpDisplayConfigClass

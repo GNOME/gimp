@@ -33,12 +33,26 @@
 #include "tools/tool_manager.h"
 
 
+#define return_if_no_gimp(gimp,data) \
+  if (GIMP_IS_DISPLAY (data)) \
+    gimp = ((GimpDisplay *) data)->gimage->gimp; \
+  else if (GIMP_IS_GIMP (data)) \
+    gimp = data; \
+  else \
+    gimp = NULL; \
+  if (! gimp) \
+    return
+
+
 void
 tools_default_colors_cmd_callback (GtkWidget *widget,
 				   gpointer   data,
                                    guint      action)
 {
-  gimp_context_set_default_colors (gimp_get_user_context (GIMP (data)));
+  Gimp *gimp;
+  return_if_no_gimp (gimp, data);
+
+  gimp_context_set_default_colors (gimp_get_user_context (gimp));
 }
 
 void
@@ -46,7 +60,10 @@ tools_swap_colors_cmd_callback (GtkWidget *widget,
 				gpointer   data,
                                 guint      action)
 {
-  gimp_context_swap_colors (gimp_get_user_context (GIMP (data)));
+  Gimp *gimp;
+  return_if_no_gimp (gimp, data);
+
+  gimp_context_swap_colors (gimp_get_user_context (gimp));
 }
 
 void
@@ -58,8 +75,7 @@ tools_swap_contexts_cmd_callback (GtkWidget *widget,
   static GimpContext *temp_context = NULL;
 
   Gimp *gimp;
-
-  gimp = GIMP (data);
+  return_if_no_gimp (gimp, data);
 
   if (! swap_context)
     {

@@ -20,13 +20,18 @@
 #define __PLUG_IN_MENUS_H__
 
 
-void   plug_in_make_menu            (GSList          *plug_in_defs,
+void   plug_in_menus_init           (GSList          *plug_in_defs,
                                      const gchar     *std_plugins_domain);
-gint   plug_in_make_menu_entry      (gpointer         foo,
-                                     PlugInMenuEntry *menu_entry,
-                                     gpointer         bar);
+
+void   plug_in_make_menu            (GimpItemFactory *image_factory,
+                                     GSList          *proc_defs);
+void   plug_in_make_menu_entry      (GimpItemFactory *image_factory,
+                                     PlugInProcDef   *proc_def,
+                                     const gchar     *locale_domain,
+                                     const gchar     *help_path);
 void   plug_in_delete_menu_entry    (const gchar     *menu_path);
-void   plug_in_set_menu_sensitivity (GimpImageType    type);
+void   plug_in_set_menu_sensitivity (GimpItemFactory *image_factory,
+                                     GimpImageType    type);
 
 
 #endif /* __PLUG_IN_MENUS_H__ */

@@ -25,4 +25,12 @@ void   menus_exit    (Gimp *gimp);
 void   menus_restore (Gimp *gimp);
 
 
+/* FIXME: remove this and add a GimpMenuFactory class which produces
+ *        GimpItemFactories on demand
+ */
+GimpItemFactory * menus_get_new_image_factory (Gimp     *gimp,
+                                               gpointer  callback_data,
+                                               gboolean  menu_bar);
+
+
 #endif /* __MENUS_H__ */

@@ -80,7 +80,6 @@
 #include "error-console-dialog.h"
 #include "gradients-commands.h"
 #include "layers-commands.h"
-#include "menus.h"
 #include "module-browser.h"
 #include "palettes-commands.h"
 #include "paths-dialog.h"

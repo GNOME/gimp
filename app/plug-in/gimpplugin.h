@@ -57,14 +57,6 @@ struct _PlugIn
 };
 
 
-struct _PlugInMenuEntry
-{
-  PlugInProcDef *proc_def;
-  const gchar   *domain;
-  const gchar   *help_path;
-};
-
-
 void       plug_in_init       (Gimp       *gimp);
 void       plug_in_kill       (Gimp       *gimp);
 

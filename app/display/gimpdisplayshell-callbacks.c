@@ -121,40 +121,41 @@ gimp_display_shell_events (GtkWidget        *widget,
       GdkEventKey *kevent;
 
     case GDK_KEY_PRESS:
-      {
-        gchar *accel = NULL;
+      if (! GIMP_DISPLAY_CONFIG (gimp->config)->menu_bar_per_display)
+        {
+          gchar *accel = NULL;
 
-        g_object_get (G_OBJECT (gtk_widget_get_settings (widget)),
-                      "gtk-menu-bar-accel",
-                      &accel,
-                      NULL);
+          g_object_get (G_OBJECT (gtk_widget_get_settings (widget)),
+                        "gtk-menu-bar-accel", &accel,
+                        NULL);
 
-        if (accel)
-          {
-            guint           keyval = 0;
-            GdkModifierType mods = 0;
+          if (accel)
+            {
+              guint           keyval = 0;
+              GdkModifierType mods = 0;
 
-            gtk_accelerator_parse (accel, &keyval, &mods);
+              gtk_accelerator_parse (accel, &keyval, &mods);
 
-            if (keyval == 0)
-              g_warning ("Failed to parse menu bar accelerator '%s'\n", accel);
+              if (keyval == 0)
+                g_warning ("Failed to parse menu bar accelerator '%s'\n", accel);
 
-            kevent = (GdkEventKey *) event;
+              kevent = (GdkEventKey *) event;
 
-            /* FIXME this is wrong, needs to be in the global accel resolution
-             * thing, to properly consider i18n etc., but that probably requires
-             * AccelGroup changes etc.
-             */
-            if (kevent->keyval == keyval &&
-                ((kevent->state & gtk_accelerator_get_default_mod_mask ()) ==
-                 (mods & gtk_accelerator_get_default_mod_mask ())))
-              {
-                popup_menu = TRUE;
-              }
+              /* FIXME this is wrong, needs to be in the global accel
+               * resolution thing, to properly consider i18n etc., but
+               * that probably requires AccelGroup changes etc.
+               */
+              if (kevent->keyval == keyval &&
+                  ((kevent->state & gtk_accelerator_get_default_mod_mask ()) ==
+                   (mods & gtk_accelerator_get_default_mod_mask ())))
+                {
+                  popup_menu = TRUE;
+                }
 
-            g_free (accel);
-          }
-      }
+              g_free (accel);
+            }
+        }
+      /* fallthru */
 
     case GDK_KEY_RELEASE:
       kevent = (GdkEventKey *) event;
@@ -606,9 +607,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
           case 3:
             state |= GDK_BUTTON3_MASK;
-            gimp_item_factory_popup_with_data (shell->item_factory,
-                                               gimage,
-                                               NULL);
+            if (! GIMP_DISPLAY_CONFIG (gimage->gimp->config)->menu_bar_per_display)
+              gimp_item_factory_popup_with_data (shell->item_factory,
+                                                 gimage,
+                                                 NULL);
             return_val = TRUE;
             break;
 
