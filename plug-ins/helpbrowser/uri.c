@@ -161,10 +161,7 @@ uri_to_abs (const gchar *uri,
       base_type = uri_get_type (base_uri);
 
       if (base_type != URI_ABSURI)
-        {
-          g_warning ("base uri is not absolute: '%s'\n", base_uri);
-          return NULL;
-        }
+        return NULL;  /*  neither uri nor base uri are absolute  */
     }
 
   /* find missing parts in base URI */

@@ -305,8 +305,8 @@ browser_dialog_load (const gchar *ref,
     }
 
   abs = uri_to_abs (ref, current_ref);
-
-  g_return_if_fail (abs != NULL);
+  if (! abs)
+    return;
 
   anchor = strchr (ref, '#');
   if (anchor && anchor[0] && anchor[1])
