@@ -576,12 +576,19 @@ static void
 gimp_container_grid_view_item_context (GtkWidget *widget,
 				       gpointer   data)
 {
+  /*  ref the view because calling gimp_container_view_item_selected()
+   *  may destroy the widget
+   */
+  g_object_ref (data);
+
   if (gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
                                          GIMP_PREVIEW (widget)->viewable))
     {
       gimp_container_view_item_context (GIMP_CONTAINER_VIEW (data),
                                         GIMP_PREVIEW (widget)->viewable);
     }
+
+  g_object_unref (data);
 }
 
 static void

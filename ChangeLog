@@ -1,5 +1,13 @@
 2004-08-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainergridview.c
+	(gimp_container_grid_view_item_context): ref/unref the view around
+	the calls to gimp_container_view_item_selected() and _item_context()
+	because the former may destroy the view which leads to a crash
+	when trying the latter. Fixes bug #148955.
+
+2004-08-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-undo.[ch] (gimp_image_undo_can_compress):
 	new function which checks if undo compression is possible:
 
