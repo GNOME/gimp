@@ -1,5 +1,10 @@
 2004-11-04  Michael Natterer  <mitch@gimp.org>
 
+	* POTFILES.in: added app/actions/text-editor-actions.c and
+	app/actions/text-editor-commands.c (no new strings added).
+
+2004-11-04  Michael Natterer  <mitch@gimp.org>
+
 	* POTFILES.in: removed app/widgets/gimpitemfactory.h
 
 2004-11-03  Dmitry G. Mastrukov  <dmitry@taurussoft.org>

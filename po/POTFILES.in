@@ -52,6 +52,8 @@ app/actions/select-actions.c
 app/actions/select-commands.c
 app/actions/templates-actions.c
 app/actions/templates-commands.c
+app/actions/text-editor-actions.c
+app/actions/text-editor-commands.c
 app/actions/tool-options-actions.c
 app/actions/tool-options-commands.c
 app/actions/tools-actions.c
