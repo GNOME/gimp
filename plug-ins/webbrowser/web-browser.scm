@@ -10,12 +10,12 @@
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
 ; (at your option) any later version.
-; 
+;
 ; This program is distributed in the hope that it will be useful,
 ; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ; GNU General Public License for more details.
-; 
+;
 ; You should have received a copy of the GNU General Public License
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
@@ -117,11 +117,11 @@
 		    "Link to http://www.rru.com/~meo/gimp/faq-dev.html")
 
 (define (script-fu-bookmark-14)
-    (script-fu-bookmark "http://www.dtek.chalmers.se/~d95olofs/manual/"))
+    (script-fu-bookmark "http://manual.gimp.org/"))
 
 (bookmark-register  "script-fu-bookmark-14"
 		    "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-		    "Link to http://www.frozenriver.ale.se/")
+		    "Link to http://manual.gimp.org/")
 
 (define (script-fu-bookmark-15)
     (script-fu-bookmark "http://abattoir.cc.ndsu.nodak.edu/~nem/gimp/tuts/"))
@@ -136,6 +136,3 @@
 (bookmark-register  "script-fu-bookmark-16"
 		    "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 		    "Link to http://www.wilberworks.com/bugs.cgi")
-
-
-
