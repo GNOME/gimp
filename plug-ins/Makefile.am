@@ -48,7 +48,7 @@ SUBDIRS = 			\
 	gfli			\
 ##	gimpressionist		\
 	$(HELPBROWSER)		\
-	ifscompose		\
+##	ifscompose		\
 ##	imagemap		\
 	maze			\
 	mosaic			\

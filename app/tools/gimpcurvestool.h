@@ -52,36 +52,36 @@ typedef struct _CurvesDialog CurvesDialog;
 
 struct _CurvesDialog
 {
-  GtkWidget    *shell;
+  GtkWidget      *shell;
 
-  GtkWidget    *channel_menu;
-  GtkWidget    *xrange;
-  GtkWidget    *yrange;
-  GtkWidget    *graph;
-  GdkPixmap    *pixmap;
-  GtkWidget    *curve_type_menu;
+  GtkWidget      *channel_menu;
+  GtkWidget      *xrange;
+  GtkWidget      *yrange;
+  GtkWidget      *graph;
+  GdkPixmap      *pixmap;
+  GtkWidget      *curve_type_menu;
 
-  GimpDrawable *drawable;
-  ImageMap     *image_map;
+  PangoLayout    *xpos_layout;
+  PangoLayout    *cursor_layout;
+  PangoRectangle  cursor_rect;
 
-  gint          color;
-  gint          channel;
-  gboolean      preview;
+  GimpDrawable   *drawable;
+  ImageMap       *image_map;
 
-  gint          grab_point;
-  gint          last;
-  gint          leftmost;
-  gint          rightmost;
-  gint          curve_type[5];
-  gint          points[5][17][2];
-  guchar        curve[5][256];
-  gint          col_value[5];
-  
-  gint          cursor_ind_height;
-  gint          cursor_ind_width;
-  gint          cursor_ind_ascent;
+  gint            color;
+  gint            channel;
+  gboolean        preview;
 
-  GimpLut      *lut;
+  gint            grab_point;
+  gint            last;
+  gint            leftmost;
+  gint            rightmost;
+  gint            curve_type[5];
+  gint            points[5][17][2];
+  guchar          curve[5][256];
+  gint            col_value[5];
+
+  GimpLut        *lut;
 };
 
 

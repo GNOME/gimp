@@ -78,8 +78,9 @@ splash_create (void)
 {
   GtkWidget        *vbox;
   GtkWidget        *logo_hbox;
-  PangoFontMetrics  metrics;
+  PangoFontMetrics *metrics;
   PangoContext     *context;
+  gint              char_width;
 
   win_initstatus = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_type_hint (GTK_WINDOW (win_initstatus),
@@ -137,12 +138,14 @@ splash_create (void)
    *  the default_font
    */
   context = gtk_widget_get_pango_context (label2);
-  pango_context_get_metrics (context,
-                             label2->style->font_desc,
-                             pango_context_get_language (context),
-                             &metrics);
+  metrics = pango_context_get_metrics (context,
+                                       label2->style->font_desc,
+                                       pango_context_get_language (context));
+  char_width = pango_font_metrics_get_approximate_char_width (metrics);
+  pango_font_metrics_unref (metrics);
+
   max_label_length = (0.9 * (gdouble) logo_area_width /
-                      (gdouble) PANGO_PIXELS (metrics.approximate_char_width));
+                      (gdouble) PANGO_PIXELS (char_width));
 
   logo_layout = gtk_widget_create_pango_layout (logo_area, NULL);
   g_object_weak_ref (G_OBJECT (win_initstatus), 

@@ -69,7 +69,7 @@ struct _GPConfig
   gint32  shm_ID;
   gdouble gamma;
   gint8   install_cmap;
-  gint8   use_xshm;
+  gint8   unused;       /* used to be use_xshm */
   gint32  min_colors;
   gint32  gdisp_ID;
 };

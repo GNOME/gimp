@@ -1,3 +1,38 @@
+2001-09-19  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: require GTK+-1.3.8 and PangoFT2-0.19.
+	
+	* app/devices.c:
+	* app/tools/gimppainttool.c: removed intermediate hacks that are no 
+	longer needed with the new GTK+ release.
+	
+	* app/plug_in.c
+	* libgimp/gimp.[ch]
+	* libgimp/gimpui.c
+	* libgimpbase/gimpprotocol.[ch]: removed use_xshm and color_cube
+	variables and accessor functions. 
+	
+	* app/errors.c: use gtk_exit() instead of gdk_exit().
+
+	* app/gdisplay.c: use Pango API to determine cursor label width. This
+	does not work correctly, but at least it compiles...
+	
+	* app/gui/splash.c: follow Pango API changes.
+
+	* app/tools/gimpcurvestool.[ch]: use PangoLayouts to draw text.
+
+	* app/tools/gimptexttool.c: follow Pango API changes.
+	
+	* app/widgets/gimpfontselection-dialog.c
+	* app/widgets/gimpfontselection.c: mostly rewritten following the
+	changes in GtkFontSelection. This is unusable at the moment and 
+	crashes, but at least it compiles again...
+
+	* plug-ins/Makefile.am: temporarily disabled build of ifscompose since
+	it does not compile any longer after the latest GDK cleanups.
+
+	* plug-ins/common/nlfilt.c: gimp_color_cube() is obsolete.
+	
 2001-09-18  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/parasite_cmds.c

@@ -117,7 +117,7 @@ if ! pkg-config --atleast-pkgconfig-version 0.7 ; then
 fi
 
 dnl Check for GTK+
-AM_PATH_GTK_2_0(1.3.7,,
+AM_PATH_GTK_2_0(1.3.8,,
   AC_MSG_ERROR(Test for GTK failed. See the file 'INSTALL' for help.))
 
 changequote(,)dnl
@@ -143,7 +143,7 @@ changequote([,])dnl
 dnl
 dnl Check for PangoFT2
 dnl
-PANGOFT2_REQUIRED_VERSION=0.17
+PANGOFT2_REQUIRED_VERSION=0.19
 
 AC_MSG_CHECKING([for Freetype 2.0 font support for Pango])
   if $PKG_CONFIG --atleast-version $PANGOFT2_REQUIRED_VERSION pangoft2; then

@@ -22,12 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning FIXME: GDK_DISABLE_DEPRECATED
-#endif
-
-#undef GDK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -614,10 +608,21 @@ curves_free (void)
 	  curves_dialog->image_map = NULL;
 	}
 
+      gtk_widget_destroy (curves_dialog->shell);
+
       if (curves_dialog->pixmap)
 	gdk_drawable_unref (curves_dialog->pixmap);
 
-      gtk_widget_destroy (curves_dialog->shell);
+      if (curves_dialog->cursor_layout)
+        g_object_unref (curves_dialog->cursor_layout);
+      if (curves_dialog->xpos_layout)
+        g_object_unref (curves_dialog->xpos_layout);
+
+      if (curves_dialog->lut)
+        gimp_lut_free (curves_dialog->lut);
+
+      g_free (curves_dialog);
+      curves_dialog = NULL;
     }
 }
 
@@ -641,11 +646,11 @@ curves_dialog_new (void)
   gint i, j;
 
   cd = g_new (CurvesDialog, 1);
-  cd->cursor_ind_height = -1;
-  cd->cursor_ind_width  = -1;
-  cd->preview           = TRUE;
-  cd->pixmap            = NULL;
-  cd->channel           = GIMP_HISTOGRAM_VALUE;
+  cd->preview       = TRUE;
+  cd->pixmap        = NULL;
+  cd->xpos_layout   = NULL;
+  cd->cursor_layout = NULL;
+  cd->channel       = GIMP_HISTOGRAM_VALUE;
 
   for (i = 0; i < 5; i++)
     cd->curve_type[i] = SMOOTH;
@@ -838,48 +843,40 @@ curve_print_loc (CurvesDialog *cd,
 		 gint          ypos)
 {
   gchar buf[32];
-  gint  width;
-  gint  ascent;
-  gint  descent;
 
-  if (cd->cursor_ind_width < 0)
+  if (!cd->cursor_layout)
     {
-      /* Calc max extents */
-      gdk_string_extents (cd->graph->style->font,
-			  "x:888 y:888",
-			  NULL,
-			  NULL,
-			  &width,
-			  &ascent,
-			  &descent);
-	
-      cd->cursor_ind_width = width;
-      cd->cursor_ind_height = ascent + descent;
-      cd->cursor_ind_ascent = ascent;
+      cd->cursor_layout = gtk_widget_create_pango_layout (cd->graph,
+                                                          "x:888 y:888");
+      pango_layout_get_pixel_extents (cd->cursor_layout, 
+                                      NULL, &cd->cursor_rect);
     }
   
   if (xpos >= 0 && xpos <= 255 && ypos >=0 && ypos <= 255)
     {
-      g_snprintf (buf, sizeof (buf), "x:%d y:%d",xpos,ypos);
-
       gdk_draw_rectangle (cd->graph->window, 
 			  cd->graph->style->bg_gc[GTK_STATE_ACTIVE],
-			  TRUE, RADIUS*2 + 2 , RADIUS*2 + 2, 
-			  cd->cursor_ind_width+4, 
-			  cd->cursor_ind_height+5);
+			  TRUE, 
+                          RADIUS*2 + 2, 
+                          RADIUS*2 + 2, 
+			  cd->cursor_rect.width  + 4,
+			  cd->cursor_rect.height + 5);
 
       gdk_draw_rectangle (cd->graph->window, 
 			  cd->graph->style->black_gc,
-			  FALSE, RADIUS*2 + 2 , RADIUS*2 + 2, 
-			  cd->cursor_ind_width+3, 
-			  cd->cursor_ind_height+4);
-
-      gdk_draw_string (cd->graph->window,
-		       cd->graph->style->font,
-		       cd->graph->style->black_gc,
-		       RADIUS*2 + 4,
-		       RADIUS*2 + 5 + cd->cursor_ind_ascent,
-		       buf);
+			  FALSE, 
+                          RADIUS*2 + 2, 
+                          RADIUS*2 + 2, 
+			  cd->cursor_rect.width  + 3, 
+			  cd->cursor_rect.height + 4);
+      
+      g_snprintf (buf, sizeof (buf), "x:%3d y:%3d",xpos, ypos);
+      pango_layout_set_text (cd->cursor_layout, buf, 11);
+      gdk_draw_layout (cd->graph->window, 
+                       cd->graph->style->black_gc,
+		       RADIUS*2 + 4 + cd->cursor_rect.x,
+		       RADIUS*2 + 5 + cd->cursor_rect.y,
+		       cd->cursor_layout);
     }
 }
 
@@ -892,6 +889,7 @@ curves_update (CurvesDialog *cd,
   gint   i, j;
   gchar  buf[32];
   gint   offset;
+  gint   height;
   gint   sel_channel;
   
   if(cd->color) {
@@ -902,7 +900,6 @@ curves_update (CurvesDialog *cd,
     else
       sel_channel = GIMP_HISTOGRAM_VALUE;
   }
-
 
   if (update & XRANGE_TOP)
     {
@@ -1064,26 +1061,34 @@ curves_update (CurvesDialog *cd,
 
       /* and xpos indicator */
       g_snprintf (buf, sizeof (buf), "x:%d",cd->col_value[sel_channel]);
-      
+
+      if (!cd->xpos_layout)
+        cd->xpos_layout = gtk_widget_create_pango_layout (cd->graph, buf);
+      else
+        pango_layout_set_text (cd->xpos_layout, buf, -1);
+
       if ((cd->col_value[sel_channel]+RADIUS) < 127)
 	{
 	  offset = RADIUS + 4;
 	}
       else
 	{
-	  offset = - gdk_string_width (cd->graph->style->font,buf) - 2;
+          pango_layout_get_pixel_size (cd->xpos_layout, &offset, &height);
+          offset = - (offset + 2);
 	}
 
-      gdk_draw_string (cd->pixmap,
-		       cd->graph->style->font,
+      gdk_draw_layout (cd->pixmap,
 		       cd->graph->style->black_gc,
-		       cd->col_value[sel_channel]+offset,
-		       GRAPH_HEIGHT,
-		       buf);
+		       cd->col_value[sel_channel] + offset,
+		       GRAPH_HEIGHT - height - 2,
+		       cd->xpos_layout);
 
-      gdk_draw_drawable (cd->graph->window, cd->graph->style->black_gc, cd->pixmap,
-			 0, 0, 0, 0, GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
-      
+      gdk_draw_drawable (cd->graph->window, 
+                         cd->graph->style->black_gc, 
+                         cd->pixmap,
+			 0, 0, 
+                         0, 0, 
+                         GRAPH_WIDTH + RADIUS * 2, GRAPH_HEIGHT + RADIUS * 2);
     }
 }
 

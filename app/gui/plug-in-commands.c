@@ -324,7 +324,8 @@ plug_in_init (void)
     plug_in_init_shm ();
 
   /* search for binaries in the plug-in directory path */
-  gimp_datafiles_read_directories (the_gimp->config->plug_in_path, MODE_EXECUTABLE,
+  gimp_datafiles_read_directories (the_gimp->config->plug_in_path, 
+                                   MODE_EXECUTABLE,
 				   plug_in_init_file, NULL);
 
   /* read the pluginrc file for cached data */
@@ -1328,13 +1329,9 @@ plug_in_run (ProcRecord *proc_rec,
 	  config.shm_ID       = shm_ID;
 	  config.gamma        = gimprc.gamma_val;
 	  config.install_cmap = gimprc.install_cmap;
-	  config.use_xshm     = gdk_get_use_xshm ();
+          config.unused       = 0;
+          config.min_colors   = CLAMP (gimprc.min_colors, 27, 256);
 	  config.gdisp_ID     = gdisp_ID;
-
-	  if (gtk_check_version (1, 2, 8))
-	    config.min_colors = CLAMP (gimprc.min_colors, 27, 216);
-	  else
-	    config.min_colors = CLAMP (gimprc.min_colors, 27, 256);
 
 	  proc_run.name    = proc_rec->name;
 	  proc_run.nparams = argc;

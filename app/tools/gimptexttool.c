@@ -445,7 +445,7 @@ text_tool_render (GimpTextTool *text_tool)
       break;
     }
 
-  font_desc->size = (gdouble) PANGO_SCALE * MAX (1, size);
+  pango_font_description_set_size (font_desc, PANGO_SCALE * MAX (1, size));
   fontname = pango_font_description_to_string (font_desc);
   pango_font_description_free (font_desc);
 

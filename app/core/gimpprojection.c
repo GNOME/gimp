@@ -21,12 +21,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef __GNUC__
-#warning FIXME: GDK_DISABLE_DEPRECATED
-#endif
-
-#undef GDK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -1459,10 +1453,11 @@ gdisplay_set_dot_for_dot (GDisplay *gdisp,
 }
 
 
+/* Set a proper size for the coordinates display in the statusbar. */
 void
 gdisplay_resize_cursor_label (GDisplay *gdisp)
 {
-  /* Set a proper size for the coordinates display in the statusbar. */
+  PangoLayout *layout;
   gchar buffer[CURSOR_STR_LENGTH];
   gint  cursor_label_width;
   gint  label_frame_size_difference;
@@ -1492,22 +1487,27 @@ gdisplay_resize_cursor_label (GDisplay *gdisp)
 		  (gdouble) gdisp->gimage->height * unit_factor /
 		  gdisp->gimage->yresolution);
     }
-  cursor_label_width = 
-    gdk_string_width (gtk_widget_get_style (gdisp->cursor_label)->font, buffer);
+
+  layout = GTK_LABEL (gdisp->cursor_label)->layout;
+  if (layout)
+    {
+      pango_layout_set_text (layout, buffer, -1);
+      pango_layout_get_pixel_size (layout, &cursor_label_width, NULL);
   
-  /*  find out how many pixels the label's parent frame is bigger than
-   *  the label itself
-   */
-  label_frame_size_difference =
-    gdisp->cursor_label->parent->allocation.width -
-    gdisp->cursor_label->allocation.width;
-
-  gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
-
-  /* don't resize if this is a new display */
-  if (label_frame_size_difference)
-    gtk_widget_set_usize (gdisp->cursor_label->parent,
-			  cursor_label_width + label_frame_size_difference, -1);
+      /*  find out how many pixels the label's parent frame is bigger than
+       *  the label itself
+       */
+      label_frame_size_difference =
+        gdisp->cursor_label->parent->allocation.width -
+        gdisp->cursor_label->allocation.width;
+      
+      gtk_widget_set_usize (gdisp->cursor_label, cursor_label_width, -1);
+      
+      /* don't resize if this is a new display */
+      if (label_frame_size_difference)
+        gtk_widget_set_usize (gdisp->cursor_label->parent,
+                              cursor_label_width + label_frame_size_difference, -1);
+    }
 
   gdisplay_update_cursor (gdisp, gdisp->cursor_x, gdisp->cursor_y);
 }

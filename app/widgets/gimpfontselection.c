@@ -240,43 +240,23 @@ gboolean
 gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
                                   const gchar       *fontname)
 {
-  PangoFontDescription  *new_desc;
-  PangoFontDescription **descs;
-  gint      n_descs, i;
-  gboolean  found = FALSE;
+  PangoFontDescription *new_desc;
+  PangoFont            *font = NULL; 
 
   g_return_val_if_fail (GIMP_IS_FONT_SELECTION (fontsel), FALSE);
   g_return_val_if_fail (fontname != NULL, FALSE);
 
   new_desc = pango_font_description_from_string (fontname);
   if (new_desc)
-    {
-      /* Check to make sure that this is in the list of allowed fonts */
-
-      pango_context_list_fonts (fontsel->context,
-                                new_desc->family_name, &descs, &n_descs);
-      
-      for (i=0; i<n_descs; i++)
-        {
-          if (descs[i]->weight  == new_desc->weight  &&
-              descs[i]->style   == new_desc->style   &&
-              descs[i]->stretch == new_desc->stretch &&
-              descs[i]->variant == new_desc->variant)
-            {
-              found = TRUE;
-              break;
-            }
-        }
-      
-      pango_font_descriptions_free (descs, n_descs);
-    }
+    font = pango_context_load_font (fontsel->context, new_desc);
 
   if (fontsel->font_desc)
     pango_font_description_free (fontsel->font_desc);
 
-  if (found)
+  if (font)
     {
       fontsel->font_desc = new_desc;
+      g_object_unref (font);
     }
   else
     {
@@ -287,7 +267,7 @@ gimp_font_selection_set_fontname (GimpFontSelection *fontsel,
 
   gimp_font_selection_font_changed (fontsel);
 
-  return found;
+  return (font != NULL);
 }
 
 const gchar *
@@ -312,8 +292,6 @@ void
 gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,
                                    const PangoFontDescription *new_desc)
 {
-  PangoFontDescription *font_desc;
-  gboolean              changed = FALSE;
 
   g_return_if_fail (GIMP_IS_FONT_SELECTION (fontsel));
   g_return_if_fail (new_desc != NULL);
@@ -325,31 +303,12 @@ gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,
       return;
     }
 
-  font_desc = fontsel->font_desc;
-  
-  if (strcmp (font_desc->family_name, new_desc->family_name) != 0)
-    {
-      g_free (font_desc->family_name);
-      font_desc->family_name = g_strdup (new_desc->family_name);
-      
-      changed = TRUE;
-    }
-  
-  if (font_desc->style   != new_desc->style   ||
-      font_desc->variant != new_desc->variant ||
-      font_desc->weight  != new_desc->weight  ||
-      font_desc->stretch != new_desc->stretch)
-    {
-      font_desc->style   = new_desc->style;
-      font_desc->variant = new_desc->variant;
-      font_desc->weight  = new_desc->weight;
-      font_desc->stretch = new_desc->stretch;
-      
-      changed = TRUE;
-    }
+  if (pango_font_description_equal (fontsel->font_desc, new_desc))
+    return;
 
-  if (changed)
-    gimp_font_selection_font_changed (fontsel);
+  pango_font_description_merge (fontsel->font_desc, new_desc, TRUE);
+
+  gimp_font_selection_font_changed (fontsel);
 }
 
 PangoFontDescription *

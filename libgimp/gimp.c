@@ -133,8 +133,6 @@ static HANDLE shm_handle;
 
 static gdouble  _gamma_val;
 static gboolean _install_cmap;
-static gboolean _use_xshm;
-static guchar   _color_cube[4];
 static gint     _min_colors;
 static gint     _gdisp_ID = -1;
 
@@ -727,18 +725,6 @@ gimp_install_cmap (void)
   return _install_cmap;
 }
 
-gboolean
-gimp_use_xshm (void)
-{
-  return _use_xshm;
-}
-
-guchar *
-gimp_color_cube (void)
-{
-  return _color_cube;
-}
-
 gint
 gimp_min_colors (void)
 {
@@ -1094,11 +1080,6 @@ gimp_config (GPConfig *config)
   _shm_ID           = config->shm_ID;
   _gamma_val        = config->gamma;
   _install_cmap     = config->install_cmap;
-  _color_cube[0]    = 6;  /*  These are the former default values  */
-  _color_cube[1]    = 6;  /*  (for backward compatibility only)    */
-  _color_cube[2]    = 4;
-  _color_cube[3]    = 24;
-  _use_xshm         = config->use_xshm;
   _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;
 

@@ -135,7 +135,7 @@ gimp_fatal_error (const gchar *fmt, ...)
 
 #endif /* ! G_OS_WIN32 */
 
-  gdk_exit (1);
+  gtk_exit (1);
 }
 
 void
@@ -192,5 +192,5 @@ gimp_terminate (const gchar *fmt, ...)
 
 #endif /* ! G_OS_WIN32 */
 
-  gdk_exit (1);
+  gtk_exit (1);
 }

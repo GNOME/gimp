@@ -32,10 +32,9 @@
  *           used GIMP Library widgets contains a preview (like the image
  *           menu returned by gimp_image_menu_new()).
  *
- * This function initializes GTK+ with gtk_init(), instructs GDK not to
- * use X shared memory if The GIMP was invoked with the --no-xshm command
- * line option and initializes GDK's image rendering subsystem (GdkRGB) to
- * follow the GIMP main program's colormap allocation/installation policy.
+ * This function initializes GTK+ with gtk_init() and initializes GDK's 
+ * image rendering subsystem (GdkRGB) to follow the GIMP main program's 
+ * colormap allocation/installation policy.
  *
  * The GIMP's colormap policy can be determinded by the user with the
  * gimprc variables @min_colors and @install_cmap.
@@ -65,10 +64,6 @@ gimp_ui_init (const gchar *prog_name,
   user_gtkrc = gimp_personal_rc_file ("gtkrc");
   gtk_rc_parse (user_gtkrc);
   g_free (user_gtkrc);
-
-  /*  It's only safe to switch Gdk SHM usage off  */
-  if (! gimp_use_xshm ())
-    gdk_set_use_xshm (FALSE);
 
   gdk_rgb_set_min_colors (gimp_min_colors ());
   gdk_rgb_set_install (gimp_install_cmap ());
