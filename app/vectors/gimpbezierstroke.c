@@ -1508,20 +1508,25 @@ arcto_subdivide (gdouble t, gint part, GimpCoords *p)
 }
 
 static void
-arcto_ellipsesegment (gdouble radius_x,
-                      gdouble radius_y,
-                      gdouble phi0,
-                      gdouble phi1,
+arcto_ellipsesegment (gdouble     radius_x,
+                      gdouble     radius_y,
+                      gdouble     phi0,
+                      gdouble     phi1,
                       GimpCoords *ellips)
 {
   gdouble       phi_s, phi_e;
   GimpCoords    template    = { 0, 0, 1, 0.5, 0.5, 0.5 };
   const gdouble circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
-  gdouble       y[4]        = { 0.0, circlemagic, 1.0, 1.0 };
+  gdouble       y[4];
   gdouble       h0, h1;
   gdouble       t0, t1;
 
   g_return_if_fail (ellips != NULL);
+
+  y[0] = 0.0;
+  y[1] = circlemagic;
+  y[2] = 1.0;
+  y[3] = 1.0;
 
   ellips[0] = template;
   ellips[1] = template;
