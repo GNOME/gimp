@@ -52,7 +52,9 @@ FILES = \
 	pepper.gpb		\
 	pixel.gbr		\
 	thegimp.gbr		\
-	vine.gih		\
+	SketchBrush-16.gih	\
+	SketchBrush-32.gih	\
+	SketchBrush-64.gih	\
 	xcf.gbr
 
 install-data-local:

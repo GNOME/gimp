@@ -1,3 +1,12 @@
+Mon May 29 18:47:48 EDT 2000 Adrian Likins <adrian@gimp.org>
+
+	* data/brushes/vine.gbr: removed file that shouldnt 
+	of been included
+	 
+	* data/brushes/Makefile.am
+	* data/brushes/SketchBrush-*: Added the pencil sketch
+	imagepipes from tigert's site.
+
 Mon May 29 22:41:31 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* app/about_dialog.c
