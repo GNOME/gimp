@@ -21,7 +21,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
-"POT-Creation-Date: 2004-05-19 01:07+0200\n"
+"POT-Creation-Date: 2004-05-20 22:00+0200\n"
 "PO-Revision-Date: 2004-05-17 10:01+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
@@ -888,47 +888,47 @@ msgstr "Salva _tutti gli errori in un file..."
 msgid "Save _Selection to File..."
 msgstr "Salva la _selezione in un file..."
 
-#: app/actions/file-actions.c:59
+#: app/actions/file-actions.c:61
 msgid "_File"
 msgstr "_File"
 
-#: app/actions/file-actions.c:62
+#: app/actions/file-actions.c:64
 msgid "Open _Recent"
 msgstr "Apri _recenti"
 
-#: app/actions/file-actions.c:65
+#: app/actions/file-actions.c:67
 msgid "_Acquire"
 msgstr "Ac_quisizione"
 
-#: app/actions/file-actions.c:68
+#: app/actions/file-actions.c:70
 msgid "_New..."
 msgstr "_Nuovo..."
 
-#: app/actions/file-actions.c:73
+#: app/actions/file-actions.c:75
 msgid "_Open..."
 msgstr "_Apri..."
 
-#: app/actions/file-actions.c:78
+#: app/actions/file-actions.c:80
 msgid "_Save"
 msgstr "_Salva"
 
-#: app/actions/file-actions.c:83
+#: app/actions/file-actions.c:85
 msgid "Save _as..."
 msgstr "Salva _con nome..."
 
-#: app/actions/file-actions.c:88
+#: app/actions/file-actions.c:90
 msgid "Save a Cop_y..."
 msgstr "Salva _una copia..."
 
-#: app/actions/file-actions.c:93
+#: app/actions/file-actions.c:95
 msgid "Save as _Template..."
 msgstr "Salva come _modello..."
 
-#: app/actions/file-actions.c:98
+#: app/actions/file-actions.c:100
 msgid "Re_vert"
 msgstr "In_verti"
 
-#: app/actions/file-actions.c:103
+#: app/actions/file-actions.c:105
 msgid "_Quit"
 msgstr "_Esci"
 
@@ -1031,170 +1031,170 @@ msgstr "Rileggi elenco caratteri"
 msgid "Gradient Editor Menu"
 msgstr "Menu editor dei gradienti"
 
-#: app/actions/gradient-editor-actions.c:49
+#: app/actions/gradient-editor-actions.c:50
 msgid "_Load Left Color From"
 msgstr "Carica il co_lore sinistro da"
 
-#: app/actions/gradient-editor-actions.c:50
+#: app/actions/gradient-editor-actions.c:52
 msgid "_Save Left Color To"
 msgstr "_Salva il colore sinistro su"
 
-#: app/actions/gradient-editor-actions.c:51
+#: app/actions/gradient-editor-actions.c:55
 msgid "Load Right Color Fr_om"
 msgstr "Carica colore destr_o da"
 
-#: app/actions/gradient-editor-actions.c:52
+#: app/actions/gradient-editor-actions.c:57
 msgid "Sa_ve Right Color To"
 msgstr "Sal_va il colore destro su"
 
-#: app/actions/gradient-editor-actions.c:57
+#: app/actions/gradient-editor-actions.c:63
 msgid "L_eft Endpoint's Color..."
 msgstr "Color_e capo sinistro..."
 
-#: app/actions/gradient-editor-actions.c:62
+#: app/actions/gradient-editor-actions.c:68
 msgid "R_ight Endpoint's Color..."
 msgstr "Colore capo destro..."
 
-#: app/actions/gradient-editor-actions.c:102
+#: app/actions/gradient-editor-actions.c:108
 msgid "Ble_nd Endpoints' Colors"
 msgstr "Sfumatura _colori estremi"
 
-#: app/actions/gradient-editor-actions.c:107
+#: app/actions/gradient-editor-actions.c:113
 msgid "Blend Endpoints' Opacit_y"
 msgstr "Sfumatura _opacità estremi"
 
-#: app/actions/gradient-editor-actions.c:137
+#: app/actions/gradient-editor-actions.c:143
 msgid "_Left Neighbor's Right Endpoint"
 msgstr "Capo destro più vicino a _sinistra"
 
-#: app/actions/gradient-editor-actions.c:142
+#: app/actions/gradient-editor-actions.c:148
 msgid "_Right Endpoint"
 msgstr "Capo _destro"
 
-#: app/actions/gradient-editor-actions.c:147
-#: app/actions/gradient-editor-actions.c:195
+#: app/actions/gradient-editor-actions.c:153
+#: app/actions/gradient-editor-actions.c:201
 msgid "_FG Color"
 msgstr "Colore _primo piano"
 
-#: app/actions/gradient-editor-actions.c:152
-#: app/actions/gradient-editor-actions.c:200
+#: app/actions/gradient-editor-actions.c:158
+#: app/actions/gradient-editor-actions.c:206
 msgid "_BG Color"
 msgstr "Colore _sfondo"
 
-#: app/actions/gradient-editor-actions.c:185
+#: app/actions/gradient-editor-actions.c:191
 msgid "_Right Neighbor's Left Endpoint"
 msgstr "Capo sinistro più vicino a _destra"
 
-#: app/actions/gradient-editor-actions.c:190
+#: app/actions/gradient-editor-actions.c:196
 msgid "_Left Endpoint"
 msgstr "Capo _sinistro..."
 
-#: app/actions/gradient-editor-actions.c:239
+#: app/actions/gradient-editor-actions.c:245
 msgid "_Linear"
 msgstr "_Lineare"
 
-#: app/actions/gradient-editor-actions.c:244
+#: app/actions/gradient-editor-actions.c:250
 msgid "_Curved"
 msgstr "_Curvato"
 
-#: app/actions/gradient-editor-actions.c:249
+#: app/actions/gradient-editor-actions.c:255
 msgid "_Sinusodial"
 msgstr "_Sinusoidale"
 
-#: app/actions/gradient-editor-actions.c:254
+#: app/actions/gradient-editor-actions.c:260
 msgid "Spherical (i_ncreasing)"
 msgstr "Sferica (i_ncrementale)"
 
-#: app/actions/gradient-editor-actions.c:259
+#: app/actions/gradient-editor-actions.c:265
 msgid "Spherical (_decreasing)"
 msgstr "Sferica (_decrementale)"
 
-#: app/actions/gradient-editor-actions.c:264
-#: app/actions/gradient-editor-actions.c:287
+#: app/actions/gradient-editor-actions.c:270
+#: app/actions/gradient-editor-actions.c:293
 msgid "(Varies)"
 msgstr "(Varie)"
 
-#: app/actions/gradient-editor-actions.c:272 app/actions/image-actions.c:61
+#: app/actions/gradient-editor-actions.c:278 app/actions/image-actions.c:61
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/gradient-editor-actions.c:277
+#: app/actions/gradient-editor-actions.c:283
 msgid "HSV (_counter-clockwise hue)"
 msgstr "HSV (tonalità in senso _antiorario)"
 
-#: app/actions/gradient-editor-actions.c:282
+#: app/actions/gradient-editor-actions.c:288
 msgid "HSV (clockwise _hue)"
 msgstr "HSV (tonalità in senso _orario)"
 
-#: app/actions/gradient-editor-actions.c:467
+#: app/actions/gradient-editor-actions.c:473
 msgid "_Blending Function for Segment"
 msgstr "Tipo di _sfumatura per il segmento"
 
-#: app/actions/gradient-editor-actions.c:469
+#: app/actions/gradient-editor-actions.c:475
 msgid "Coloring _Type for Segment"
 msgstr "_Tipo di colorazione per il segmento"
 
-#: app/actions/gradient-editor-actions.c:472
+#: app/actions/gradient-editor-actions.c:478
 msgid "_Flip Segment"
 msgstr "Ri_fletti segmento"
 
-#: app/actions/gradient-editor-actions.c:474
+#: app/actions/gradient-editor-actions.c:480
 msgid "_Replicate Segment..."
 msgstr "D_uplica segmento..."
 
-#: app/actions/gradient-editor-actions.c:476
+#: app/actions/gradient-editor-actions.c:482
 msgid "Split Segment at _Midpoint"
 msgstr "Dividi segmento a _metà"
 
-#: app/actions/gradient-editor-actions.c:478
+#: app/actions/gradient-editor-actions.c:484
 msgid "Split Segment _Uniformly..."
 msgstr "Dividi il segmento _uniformemente..."
 
-#: app/actions/gradient-editor-actions.c:480
+#: app/actions/gradient-editor-actions.c:486
 msgid "_Delete Segment"
 msgstr "_Elimina segmento"
 
-#: app/actions/gradient-editor-actions.c:482
+#: app/actions/gradient-editor-actions.c:488
 msgid "Re-_center Segment's Midpoint"
 msgstr "Ri-_centra la metà del segmento"
 
-#: app/actions/gradient-editor-actions.c:484
+#: app/actions/gradient-editor-actions.c:490
 msgid "Re-distribute _Handles in Segment"
 msgstr "Ri-distribuzione _punti nel segmento"
 
-#: app/actions/gradient-editor-actions.c:489
+#: app/actions/gradient-editor-actions.c:495
 msgid "_Blending Function for Selection"
 msgstr "_Sfumatura della selezione"
 
-#: app/actions/gradient-editor-actions.c:491
+#: app/actions/gradient-editor-actions.c:497
 msgid "Coloring _Type for Selection"
 msgstr "_Tipo di colorazione per la selezione"
 
-#: app/actions/gradient-editor-actions.c:494
+#: app/actions/gradient-editor-actions.c:500
 msgid "_Flip Selection"
 msgstr "Ri_flessione selezione"
 
-#: app/actions/gradient-editor-actions.c:496
+#: app/actions/gradient-editor-actions.c:502
 msgid "_Replicate Selection..."
 msgstr "D_uplica della selezione..."
 
-#: app/actions/gradient-editor-actions.c:498
+#: app/actions/gradient-editor-actions.c:504
 msgid "Split Segments at _Midpoints"
 msgstr "Suddivisione seg_menti in metà"
 
-#: app/actions/gradient-editor-actions.c:500
+#: app/actions/gradient-editor-actions.c:506
 msgid "Split Segments _Uniformly..."
 msgstr "Dividi i segmenti _uniformemente..."
 
-#: app/actions/gradient-editor-actions.c:502
+#: app/actions/gradient-editor-actions.c:508
 msgid "_Delete Selection"
 msgstr "_Elimina la selezione"
 
-#: app/actions/gradient-editor-actions.c:504
+#: app/actions/gradient-editor-actions.c:510
 msgid "Re-_center Midpoints in Selection"
 msgstr "Ri-_centra le metà nella selezione"
 
-#: app/actions/gradient-editor-actions.c:506
+#: app/actions/gradient-editor-actions.c:512
 msgid "Re-distribute _Handles in Selection"
 msgstr "Ri-distribuizione dei _punti nella selezione"
 
@@ -1482,7 +1482,7 @@ msgstr ""
 
 #: app/actions/image-commands.c:519
 msgid "Image exceeds maximum image size"
-msgstr "L'immagine eccede l'ampiezza massima"
+msgstr "L'immagine eccede la dimensione massima"
 
 #: app/actions/image-commands.c:527
 msgid ""
@@ -1642,7 +1642,7 @@ msgstr "_Abbandona informazioni sul testo"
 
 #: app/actions/layers-actions.c:148
 msgid "Layer B_oundary Size..."
-msgstr "Dimensione _confine del livello..."
+msgstr "Dimensione margine del livell_o..."
 
 #: app/actions/layers-actions.c:153
 msgid "Layer to _Image Size"
@@ -2947,9 +2947,7 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr ""
-"Se abilitata, garantirà che la piena immagine sia visibile dopo che il file "
-"è stato aperto, altrimenti sarà visualizzato con scala 1:1."
+msgstr "Se abilitata, garantirà che l'intera immagine sia visibile dopo che il file è stato aperto, altrimenti sarà visualizzato con scala 1:1."
 
 #: app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on pseudocolor visuals."
@@ -2997,9 +2995,7 @@ msgstr ""
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
-msgstr ""
-"Imposta l'ampiezza dell'anteprima di navigazione accessibile nella parte "
-"bassa a destra della finestra immagine."
+msgstr "Imposta la dimensione dell'anteprima di navigazione, accessibile nella parte in basso a destra della finestra immagine."
 
 #: app/config/gimprc-blurbs.h:207
 msgid ""
@@ -3035,7 +3031,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:239
 msgid "Sets the default preview size for layers and channels."
-msgstr "Imposta l'ampiezza dell'anteprima per livelli e canali."
+msgstr "Imposta la dimensione dell'anteprima per livelli e canali."
 
 #: app/config/gimprc-blurbs.h:242
 msgid ""
@@ -3049,9 +3045,7 @@ msgstr ""
 msgid ""
 "When enabled, the image window will automatically resize itself, when "
 "zooming into and out of images."
-msgstr ""
-"Se abilitata, la finestra immagine verrà automaticamente ridimensionata se "
-"si fa zoom su di un'immagine."
+msgstr "Se abilitata, la finestra immagine verrà automaticamente ridimensionata se si zuma su un'immagine."
 
 #: app/config/gimprc-blurbs.h:250
 msgid "Let GIMP try to restore your last saved session on each startup."
@@ -3062,7 +3056,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:253
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
-msgstr "Riprende strumento, motivo, colore e pennello attraverso le sessioni."
+msgstr "Ricorda strumento, motivo, colore e pennello nelle sessioni successive."
 
 #: app/config/gimprc-blurbs.h:257
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
@@ -3074,9 +3068,7 @@ msgstr ""
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
-msgstr ""
-"Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del "
-"profilo del pennello corrente."
+msgstr "Se abilitata, tutti gli strumenti di disegno mostreranno un'anteprima del contorno del pennello corrente."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
@@ -3145,7 +3137,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:299
 msgid "Enable to display a handy GIMP tip on startup."
-msgstr "Abilita la visualizzazione di pratici suggerimenti su GIMP all'avvio."
+msgstr "Abilita la visualizzazione di un suggerimento pratico su GIMP all'avvio."
 
 #: app/config/gimprc-blurbs.h:302
 msgid "Enable to display tooltips."
@@ -3169,14 +3161,7 @@ msgid ""
 "GIMP is used with large images. Also, things can get horribly slow if the "
 "swap file is created on a directory that is mounted over NFS.  For these "
 "reasons, it may be desirable to put your swap file in \"/tmp\"."
-msgstr ""
-"Imposta la locazione del file di scambio. Gimp usa uno schema di allocazione "
-"\"tile based\". Il file di scambio viene usato per spostare facilmente e "
-"velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file "
-"di scambio di GIMP può allargarsi molto se si elaborano immagini molto "
-"grandi. Inoltre è possono diventare terribilmente lenti se il file di "
-"scambio viene creato in una directory di un file NFS. Per queste ragioni è "
-"preferibile mettere il file di scambio in \"/tmp\"."
+msgstr "Imposta la locazione del file di scambio. Gimp usa uno schema di allocazione \"tile based\". Il file di scambio viene usato per spostare facilmente e velocemente le 'tile' da e verso il disco. Attenzione al fatto che il file di scambio di GIMP può allargarsi molto se si elaborano immagini molto grandi. Inoltre le elaborazioni possono diventare terribilmente lente se il file di scambio viene creato in una cartella montata su NFS. Per queste ragioni è preferibile mettere il file di scambio in \"/tmp\"."
 
 #: app/config/gimprc-blurbs.h:319
 msgid "When enabled, menus can be torn off."
@@ -3214,9 +3199,7 @@ msgstr ""
 msgid ""
 "Sets the size of the thumbnail saved with each image. Note that GIMP can not "
 "save thumbnails if layer previews are disabled."
-msgstr ""
-"Imposta l'ampiezza delle miniature salvate per ogni immagine. Notare che "
-"GIMP non salva le miniature se le anteprime dei livelli sono disabilitate."
+msgstr "Imposta la dimensione delle miniature salvate per ogni immagine. Notare che GIMP non salva le miniature se le anteprime dei livelli sono disabilitate."
 
 #: app/config/gimprc-blurbs.h:348
 msgid ""
@@ -3224,12 +3207,7 @@ msgid ""
 "memory and disk. Setting this value higher will cause the GIMP to use less "
 "swap space, but will also cause the GIMP to use more memory. Conversely, a "
 "smaller cache size causes the GIMP to use more swap space and less memory."
-msgstr ""
-"La cache delle tile fa in modo che GIMP non perda troppo tempo continuando a "
-"scambiare tile tra la memoria e il disco. Impostando alto questo valore farà "
-"in modo che GIMP usi meno il file di scambio a scapito della memoria. "
-"Viceversa, una cache piccola provocherà un uso maggiore del file di scambio "
-"e di meno memoria da parte di GIMP."
+msgstr "La cache delle tile fa in modo che GIMP non perda troppo tempo scambiando tile tra la memoria e il disco. Impostando un valore alto si farà in modo che GIMP usi meno il file di scambio e ciò a scapito della memoria. Viceversa, una cache piccola provocherà un uso più frequente del file di scambio e una minore quantità di memoria da parte di GIMP."
 
 #: app/config/gimprc-blurbs.h:355
 msgid ""
@@ -3261,25 +3239,18 @@ msgstr ""
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
-msgstr ""
-"Imposta il numero minimo di operazioni che possono essere annullate. Vengono "
-"mantenuti disponibili più livelli di annullamento se non viene raggiunta "
-"l'ampiezza massima."
+msgstr "Imposta il numero minimo di operazioni che possono essere annullate. Se non viene raggiunta la dimensione massima, vengono mantenuti disponibili più livelli di annullamento."
 
 #: app/config/gimprc-blurbs.h:373
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr ""
-"Imposta un limite massimo di memoria usata per l'annullamento delle "
-"operazioni per ogni immagine. Indipendentemente da questa impostazione, "
-"potranno essere effettuati massimo tanti livelli di ripristino quanti sono "
-"stati configurati."
+msgstr "Imposta un limite massimo di memoria usata per l'annullamento delle operazioni per ogni immagine. Indipendentemente da questa impostazione, potranno essere effettuati al massimo tanti livelli di annullamento quanti sono stati configurati."
 
 #: app/config/gimprc-blurbs.h:378
 msgid "Sets the size of the previews in the Undo History."
-msgstr "Imposta la grandezza delle anteprime nella cronologia annullamenti."
+msgstr "Imposta la dimensione delle anteprime nella cronologia annullamenti."
 
 #: app/config/gimprc-blurbs.h:381
 msgid "When enabled, pressing F1 will open the help browser."
@@ -3292,11 +3263,7 @@ msgid ""
 "the name of an executable to search for in the user's PATH. If the command "
 "contains '%s' it will be replaced with the URL, else the URL will be "
 "appended to the command with a space separating the two."
-msgstr ""
-"Imposta il navigatore web esterno da utilizzare. Può essere un percorso "
-"assoluto o il nome dell'eseguibile da cercare nel percorso dell'utente. Se "
-"il comando contiene un '%s', esso verrà rimpiazzato dall'URL, altrimenti "
-"l'URL verrà posto alla fine del comando, separato da uno spazio."
+msgstr "Imposta il browser web esterno da utilizzare. Può essere un percorso assoluto o il nome dell'eseguibile da cercare nel percorso dell'utente. Se il comando contiene un '%s', esso verrà rimpiazzato dall'URL, altrimenti l'URL verrà posto alla fine del comando, separato da uno spazio."
 
 #: app/config/gimpscanner.c:220
 msgid "invalid UTF-8 string"
@@ -3634,7 +3601,7 @@ msgstr "Onde triangolari"
 
 #: app/core/core-enums.c:519
 msgid "No Thumbnails"
-msgstr "No miniature"
+msgstr "Senza miniature"
 
 #: app/core/core-enums.c:520
 msgid "Normal (128x128)"
@@ -3671,7 +3638,7 @@ msgstr "Ruota immagine"
 
 #: app/core/core-enums.c:607
 msgid "Convert Image"
-msgstr "Converte immagine"
+msgstr "Converti immagine"
 
 #: app/core/core-enums.c:608 app/core/gimpimage-crop.c:125
 msgid "Crop Image"
@@ -3802,11 +3769,11 @@ msgstr "Dimensione immagine"
 
 #: app/core/core-enums.c:640
 msgid "Resolution Change"
-msgstr "Cambio risoluzione"
+msgstr "Cambia risoluzione"
 
 #: app/core/core-enums.c:643
 msgid "Change Indexed Palette"
-msgstr "Palette indicizzata"
+msgstr "Cambia tavolozza indicizzata"
 
 #: app/core/core-enums.c:647
 msgid "Rename Item"
@@ -3838,7 +3805,7 @@ msgstr "Imposta opacità livello"
 
 #: app/core/core-enums.c:658
 msgid "Set Preserve Trans"
-msgstr "Imposta preserva le trans"
+msgstr "Imposta conserva le trasparenze"
 
 #: app/core/core-enums.c:660
 msgid "Text Modified"
@@ -3922,7 +3889,7 @@ msgstr "Da primo piano a sfondo (HSV in senso antiorario)"
 
 #: app/core/gimp-gradients.c:80
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Da primo piano a sfondo (hue HSV in senso orario)"
+msgstr "Da primo piano a sfondo (tonalità HSV in senso orario)"
 
 #. register all internal procedures
 #: app/core/gimp.c:660
@@ -4105,7 +4072,7 @@ msgstr "Cancella canale"
 
 #: app/core/gimpchannel.c:290
 msgid "Fill Channel"
-msgstr "Rempi canali"
+msgstr "Riempi canali"
 
 #: app/core/gimpchannel.c:291
 msgid "Invert Channel"
@@ -4320,15 +4287,15 @@ msgstr ""
 
 #: app/core/gimpimage-colormap.c:63
 msgid "Set Indexed Palette"
-msgstr "Imposta palette indicizzata"
+msgstr "Imposta tavolozza indicizzata"
 
 #: app/core/gimpimage-colormap.c:115
 msgid "Change Indexed Palette Entry"
-msgstr "Cambia voce in palette indicizzata"
+msgstr "Cambia voce in tavolozza indicizzata"
 
 #: app/core/gimpimage-colormap.c:135
 msgid "Add Color to Indexed Palette"
-msgstr "Aggiungi colore alla palette indicizzata"
+msgstr "Aggiungi colore alla tavolozza indicizzata"
 
 #: app/core/gimpimage-convert.c:768
 msgid "Convert Image to RGB"
@@ -4378,7 +4345,7 @@ msgstr "Fondi in basso"
 
 #: app/core/gimpimage-merge.c:203
 msgid "There are not enough visible layers for a merge down."
-msgstr "Non ci sono abbastanza livelli visibili per fonderli."
+msgstr "Non ci sono abbastanza livelli visibili da fondere."
 
 #: app/core/gimpimage-merge.c:544
 msgid "Merge Visible Paths"
@@ -4386,17 +4353,15 @@ msgstr "Fondi tracciati visibili"
 
 #: app/core/gimpimage-merge.c:581
 msgid "Not enough visible paths for a merge. There must be at least two."
-msgstr ""
-"Non ci sono  sufficienti tracciati visibili da fondere. Ce ne devono essere "
-"almeno due."
+msgstr "Non ci sono abbastanza tracciati visibili da fondere. Ce ne devono essere almeno due."
 
 #: app/core/gimpimage-qmask.c:67
 msgid "Enable QuickMask"
-msgstr "Abilita quickmask"
+msgstr "Abilita maschera veloce"
 
 #: app/core/gimpimage-qmask.c:117
 msgid "Disable QuickMask"
-msgstr "Disabilita quickmask"
+msgstr "Disabilita maschera veloce"
 
 #: app/core/gimpimage-undo-push.c:2939
 #, c-format
@@ -4499,7 +4464,7 @@ msgstr "Il canale non può essere abbassato ulteriormente."
 
 #: app/core/gimpimage.c:3004 app/widgets/gimpchanneltreeview.c:131
 msgid "Lower Channel"
-msgstr "Canale inferiore"
+msgstr "Abbassa il canale"
 
 #: app/core/gimpimage.c:3024
 msgid "Channel is already on the bottom."
@@ -4531,7 +4496,7 @@ msgstr "Il tracciato è già in cima."
 
 #: app/core/gimpimage.c:3220 app/widgets/gimpvectorstreeview.c:112
 msgid "Raise Path to Top"
-msgstr "Alza tracciato fino in cima"
+msgstr "Alza il tracciato fino in cima"
 
 #: app/core/gimpimage.c:3237
 msgid "Path cannot be lowered more."
@@ -4719,7 +4684,7 @@ msgstr ""
 #: app/core/gimppalette.c:419
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Stringa UTF-8 non valida nel file palette '%s'"
+msgstr "Stringa UTF-8 non valida nel file tavolozza '%s'"
 
 #: app/core/gimppalette.c:447
 #, c-format
@@ -4863,7 +4828,7 @@ msgstr "pollici"
 
 #: app/core/gimpunit.c:59
 msgid "millimeter"
-msgstr "millimetri"
+msgstr "millimetro"
 
 #: app/core/gimpunit.c:59
 msgid "millimeters"
@@ -4949,7 +4914,7 @@ msgstr "/Come in _preferenze"
 
 #: app/display/gimpdisplayshell.c:849
 msgid "Toggle QuickMask"
-msgstr "Abilita/disabilita quickmask"
+msgstr "Commuta maschera veloce"
 
 #: app/display/gimpdisplayshell.c:1389
 #, c-format
@@ -4991,15 +4956,15 @@ msgstr "Selezione livello"
 
 #: app/display/gimpdisplayshell-scale.c:500
 msgid "Zoom Ratio"
-msgstr "Zoom"
+msgstr "Coefficiente di zoom"
 
 #: app/display/gimpdisplayshell-scale.c:502
 msgid "Select Zoom Ratio"
-msgstr "Imposta zoom"
+msgstr "Seleziona il coefficiente di zoom"
 
 #: app/display/gimpdisplayshell-scale.c:537
 msgid "Zoom Ratio:"
-msgstr "Zoom"
+msgstr "Zoom:"
 
 #: app/display/gimpdisplayshell-scale.c:564
 msgid "Zoom:"
@@ -5081,7 +5046,7 @@ msgstr "Non è un file regolare"
 
 #: app/file/file-open.c:174
 msgid "Plug-In returned SUCCESS but did not return an image"
-msgstr "Il plug-in è ritornato con successo ma non ha restituito un'immagine"
+msgstr "Il plug-in ha risposto successo ma non ha restituito un'immagine"
 
 #: app/file/file-open.c:182
 msgid "Plug-In could not open image"
@@ -5111,11 +5076,11 @@ msgid "translator-credits"
 msgstr ""
 "Marco Ciampa\n"
 "Daniele Medri\n"
-"Italian Gimp Translator Team"
+"Gruppo Traduttori Italiani di Gimp"
 
 #: app/gui/about-dialog.c:59
 msgid "Contributions by"
-msgstr "Con contributi da"
+msgstr "Con i contributi di"
 
 #: app/gui/about-dialog.c:153
 msgid "About The GIMP"
@@ -5140,7 +5105,7 @@ msgstr ""
 
 #: app/gui/color-notebook.c:184
 msgid "Add the current color to the color history"
-msgstr "Aggiungi il colore corrente allo storico colori"
+msgstr "Aggiungi il colore corrente allo cronologia colori"
 
 #: app/gui/convert-dialog.c:114
 msgid "Indexed Color Conversion"
@@ -5152,11 +5117,11 @@ msgstr "Converti immagine a indicizzata"
 
 #: app/gui/convert-dialog.c:141
 msgid "General Palette Options"
-msgstr "Opzioni generali della palette"
+msgstr "Opzioni generali della tavolozza"
 
 #: app/gui/convert-dialog.c:155
 msgid "Generate Optimum Palette:"
-msgstr "Genera palette ottimale:"
+msgstr "Genera tavolozza ottimale:"
 
 #: app/gui/convert-dialog.c:180
 msgid "Max. Number of Colors:"
@@ -5164,11 +5129,11 @@ msgstr "Numero max di colori:"
 
 #: app/gui/convert-dialog.c:203
 msgid "Use WWW-Optimized Palette"
-msgstr "Usa palette ottimizzata per il Web"
+msgstr "Usa tavolozza ottimizzata per il Web"
 
 #: app/gui/convert-dialog.c:221
 msgid "Use Black and White (1-Bit) Palette"
-msgstr "Usa palette bianco/nero (1-bit)"
+msgstr "Usa tavolozza bianco/nero (1-bit)"
 
 #: app/gui/convert-dialog.c:237
 msgid "Remove Unused Colors from Final Palette"
@@ -5176,7 +5141,7 @@ msgstr "Rimuovi colori inutilizzati dalla palette"
 
 #: app/gui/convert-dialog.c:250
 msgid "Use Custom Palette:"
-msgstr "Usa palette personalizzata:"
+msgstr "Usa tavolozza personalizzata:"
 
 #. the dither type
 #: app/gui/convert-dialog.c:290
@@ -5198,10 +5163,8 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Si sta tentando di convertire un'immagine con un canale alfa a colori "
-"indicizzati.\n"
-"Non usare una palette con più di 255 colori si desidera creare un file GIF "
-"trasparente o con animazione da questo formato."
+"Si sta tentando di convertire un'immagine con un canale alfa a colori indicizzati.\n"
+"Non usare una tavolozza con più di 255 colori si desidera creare un file GIF trasparente o con animazione da questo formato."
 
 #: app/gui/convert-dialog.c:475
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -5209,7 +5172,7 @@ msgstr "Impossibile convertire in una tavolozza con più di 256 colori."
 
 #: app/gui/convert-dialog.c:495
 msgid "Select Custom Palette"
-msgstr "Seleziona palette personale"
+msgstr "Seleziona tavolozza personalizzata"
 
 #: app/gui/dialogs-constructors.c:194 app/gui/gui.c:329
 #: app/gui/preferences-dialog.c:1346 app/gui/preferences-dialog.c:1349
@@ -5246,7 +5209,7 @@ msgstr "Buffer"
 
 #: app/gui/dialogs-constructors.c:417 app/gui/dialogs-constructors.c:619
 msgid "History"
-msgstr "Storico"
+msgstr "Cronologia"
 
 #: app/gui/dialogs-constructors.c:417 app/gui/dialogs-constructors.c:619
 msgid "Document History"
@@ -5501,7 +5464,7 @@ msgstr "Numero di livelli:"
 
 #: app/gui/info-window.c:255
 msgid "Size in Memory:"
-msgstr "Ampiezza in memoria:"
+msgstr "Dimensione in memoria:"
 
 #: app/gui/info-window.c:257
 msgid "Display Type:"
@@ -5536,7 +5499,7 @@ msgstr "colori"
 
 #: app/gui/module-browser.c:122
 msgid "Module Manager"
-msgstr "Menu manager dei moduli"
+msgstr "Manager dei moduli"
 
 #: app/gui/module-browser.c:124
 msgid "Manage Loadable Modules"
@@ -5740,11 +5703,11 @@ msgstr ""
 
 #: app/gui/preferences-dialog.c:274
 msgid "You will have to restart GIMP for the following changes to take effect:"
-msgstr "È necessario riavviare GIMP per apportare i seguenti cambiamenti:"
+msgstr "È necessario riavviare GIMP affinché i seguenti cambiamenti abbiano effetto:"
 
 #: app/gui/preferences-dialog.c:862
 msgid "Show _Rulers"
-msgstr "Mostra _righello"
+msgstr "Mostra _righelli"
 
 #: app/gui/preferences-dialog.c:876
 msgid "Show S_election"
@@ -5886,15 +5849,15 @@ msgstr "_Browser di aiuto da utilizzare:"
 
 #: app/gui/preferences-dialog.c:1329 app/widgets/widgets-enums.c:55
 msgid "Web Browser"
-msgstr "Navigatore web"
+msgstr "Browser web"
 
 #: app/gui/preferences-dialog.c:1333
 msgid "Select Web Browser"
-msgstr "Seleziona navigatore web"
+msgstr "Seleziona il browser web"
 
 #: app/gui/preferences-dialog.c:1337
 msgid "Web Browser to Use:"
-msgstr "Navigatore web da utilizzare:"
+msgstr "Browser web da utilizzare:"
 
 #. Snapping Distance
 #: app/gui/preferences-dialog.c:1356
@@ -5926,7 +5889,7 @@ msgstr "_Interpolazione predefinita:"
 #. Global Brush, Pattern, ...
 #: app/gui/preferences-dialog.c:1382
 msgid "Paint Options Shared Between Tools"
-msgstr "Opzioni di disegno condivise tra strumenti"
+msgstr "Opzioni di disegno condivise dagli strumenti"
 
 #: app/gui/preferences-dialog.c:1386
 msgid "_Brush"
@@ -6072,7 +6035,7 @@ msgstr "Monitor a 8-Bit"
 
 #: app/gui/preferences-dialog.c:1682
 msgid "Minimum Number of Colors:"
-msgstr "Minimo numero di colori:"
+msgstr "Numero minimo di colori:"
 
 #: app/gui/preferences-dialog.c:1685
 msgid "Install Colormap"
@@ -6113,7 +6076,7 @@ msgstr "Gestione finestre"
 
 #: app/gui/preferences-dialog.c:1820
 msgid "Window Manager Hints"
-msgstr "Suggerimenti del gestione finestre"
+msgstr "Suggerimenti del gestore finestre"
 
 #: app/gui/preferences-dialog.c:1826
 msgid "Hint for the _Toolbox:"
@@ -6204,7 +6167,7 @@ msgstr "_Salva le posizioni delle finestre all'uscita"
 
 #: app/gui/preferences-dialog.c:1925
 msgid "R_estore Saved Window Positions on Start-up"
-msgstr "R_ecupera all'avvio la posizione delle finestre salvata"
+msgstr "All'avvio r_ecupera la posizione salvata delle finestre"
 
 #: app/gui/preferences-dialog.c:1933
 msgid "Save Window Positions Now"
@@ -6232,7 +6195,7 @@ msgstr "Cancella i tasti scorciatoia salvati"
 
 #: app/gui/preferences-dialog.c:1988
 msgid "Save Input Device Settings on Exit"
-msgstr "Salva lo stato dei dispositivi di ingresso all'uscita"
+msgstr "All'uscita salva lo stato dei dispositivi di ingresso"
 
 #: app/gui/preferences-dialog.c:1996
 msgid "Save Input Device Settings Now"
@@ -6248,19 +6211,19 @@ msgstr "Cartelle"
 
 #: app/gui/preferences-dialog.c:2038
 msgid "Temp Dir:"
-msgstr "Directory temporanea:"
+msgstr "Cartella file temporanei:"
 
 #: app/gui/preferences-dialog.c:2038
 msgid "Select Temp Dir"
-msgstr "Seleziona directory temporanea"
+msgstr "Seleziona cartella file temporanei"
 
 #: app/gui/preferences-dialog.c:2039
 msgid "Swap Dir:"
-msgstr "Directory di swap:"
+msgstr "Cartella di scambio:"
 
 #: app/gui/preferences-dialog.c:2039 app/gui/user-install-dialog.c:1171
 msgid "Select Swap Dir"
-msgstr "Selezionare directory di swap"
+msgstr "Selezionare cartella di scambio"
 
 #: app/gui/preferences-dialog.c:2073
 msgid "Brush Folders"
@@ -6373,11 +6336,11 @@ msgstr "Dimensione in pixel"
 
 #: app/gui/resize-dialog.c:228
 msgid "Layer Boundary Size"
-msgstr "Dimensione confine del livello"
+msgstr "Dimensione margine del livello"
 
 #: app/gui/resize-dialog.c:229
 msgid "Set Layer Boundary Size"
-msgstr "Configura confine del livello"
+msgstr "Configura margine del livello"
 
 #: app/gui/resize-dialog.c:235
 msgid "Canvas Size"
@@ -6454,7 +6417,7 @@ msgstr ""
 
 #: app/gui/resolution-calibrate-dialog.c:85
 msgid "Calibrate Monitor Resolution"
-msgstr "Calibratura risoluzione monitor"
+msgstr "Calibra risoluzione monitor"
 
 #: app/gui/resolution-calibrate-dialog.c:195
 msgid "Measure the rulers and enter their lengths below."
@@ -6545,18 +6508,13 @@ msgid ""
 "The gimprc is used to store personal preferences that affect GIMP's default "
 "behavior.  Paths to search for brushes, palettes, gradients, patterns, plug-"
 "ins and modules can also configured here."
-msgstr ""
-"Il file gimprc è utile per memorizzare le preferenze personali come le "
-"caratteristiche di GIMP e gli hotkey dei plug-in. Percorsi per cercare i "
-"pennelli, palette, gradienti, pattern, plug-in e moduli sono configurati qui."
+msgstr "Il file gimprc è utile per memorizzare le preferenze personali come le caratteristiche di GIMP e le scorciatoie da tastiera dei plug-in. Qui possono essere configurati anche i percorsi per cercare pennelli, tavolozze, gradienti, motivi, plug-in e moduli."
 
 #: app/gui/user-install-dialog.c:140
 msgid ""
 "GIMP uses an additional gtkrc file so you can configure it to look "
 "differently than other GTK apps."
-msgstr ""
-"GIMP utilizza un file gtkrc aggiuntivo così è possibile dare un aspetto "
-"differente dalle altre applicazioni GTK."
+msgstr "GIMP utilizza un file gtkrc aggiuntivo. Perciò è possibile dargli un aspetto diverso dalle altre applicazioni GTK."
 
 #: app/gui/user-install-dialog.c:146
 msgid ""
@@ -6564,11 +6522,7 @@ msgid ""
 "additional functionality.  These programs are searched for at run-time and "
 "information about their functionality and mod-times is cached in this file.  "
 "This file is intended to be GIMP-readable only, and should not be edited."
-msgstr ""
-"I plugin e le estensioni sono programmi esterni che aggiungono funzionalità "
-"a Gimp. Questi programmi sono ricercati all'avvio del programma e le "
-"relative informazioni sulle funzionalità sono memorizzate in questo file. "
-"Questo file è destinato alla sola lettura e non deve essere editato."
+msgstr "I plugin e le estensioni sono programmi esterni che aggiungono funzionalità a Gimp. Questi programmi vengono cercati all'avvio del programma e le relative informazioni sulle funzionalità sono memorizzate in questo file. Perciò esso è destinato alla sola lettura e non deve essere modificato."
 
 #: app/gui/user-install-dialog.c:156
 msgid ""
@@ -6915,16 +6869,11 @@ msgid ""
 "written to a swap file.  This file should be located on a local filesystem "
 "with enough free space (several hundred MB). On a UNIX system, you may want "
 "to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
-msgstr ""
-"Tutte le immagini e le informazioni di annullamento che non rientrano nella "
-"Cache Immagine verranno scritte in un file temporaneo. Questo file dovrebbe "
-"essere disposto in un filesystem con abbastanza spazio libero (diverse "
-"centinaia di Mbyte). Su un sistema UNIX, potete utilizzare la directory "
-"temporanea di sistema (\"/tmp\" o \"/var/tmp\")."
+msgstr "Tutte le immagini e le informazioni di annullamento che non rientrano nella Cache Immagine verranno scritte in un file temporaneo. Questo file dovrebbe essere disposto in un filesystem con abbastanza spazio libero (diverse centinaia di Mbyte). Su un sistema UNIX, potete utilizzare la cartella dei file temporanei di sistema (\"/tmp\" o \"/var/tmp\")."
 
 #: app/gui/user-install-dialog.c:1176
 msgid "Swap Folder:"
-msgstr "Cartella di swap:"
+msgstr "Cartella di scambio:"
 
 #: app/gui/user-install-dialog.c:1227
 msgid ""
@@ -8871,7 +8820,7 @@ msgstr "Nessun tracciato trovato nel buffer"
 msgid "Failed to import paths from '%s': %s"
 msgstr "Impossibile importare tracciati da '%s': %s"
 
-#: app/widgets/gimpactiongroup.c:687 app/widgets/gimpitemfactory.c:597
+#: app/widgets/gimpactiongroup.c:696 app/widgets/gimpitemfactory.c:597
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
@@ -9054,7 +9003,7 @@ msgstr "Modifica colore indicizzato"
 
 #: app/widgets/gimpcolormapeditor.c:918
 msgid "Edit Indexed Image Palette Color"
-msgstr "Modifica palette dei colori indicizzata"
+msgstr "Modifica il colore della tavolozza indicizzata immagine"
 
 #: app/widgets/gimpcontainergridview.c:205
 #: app/widgets/gimpcontainergridview.c:648
@@ -9316,13 +9265,11 @@ msgstr "Impossibile trovare il visualizzatore dell'aiuto di GIMP"
 msgid ""
 "Could not find the GIMP Help Browser procedure. It probably was not compiled "
 "because you don't have GtkHtml2 installed."
-msgstr ""
-"Impossibile trovare le procedure del navigatore aiuto di GIMP. Probabilmente "
-"non era stato compilato perché non era stato installato GtkHTML2."
+msgstr "Impossibile trovare le procedure del browser di aiuto di GIMP. Probabilmente non era stato compilato perché non era stato installato GtkHTML2."
 
 #: app/widgets/gimphelp.c:199 app/widgets/gimphelp.c:233
 msgid "Use web browser instead"
-msgstr "Usa il navigatore Internet"
+msgstr "Usa il browser Internet"
 
 #: app/widgets/gimphelp.c:230
 msgid "Could not start GIMP Help Browser"
