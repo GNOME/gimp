@@ -1,3 +1,8 @@
+2004-07-23  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: created a header "orientation.h"
+	for the Orientation tab specific declarations.
+	
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimppixbuf.c (gimp_pixbuf_from_data): added missing code

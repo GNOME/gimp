@@ -6,6 +6,7 @@
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
+#include "orientation.h"
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -38,6 +38,7 @@ gimpressionist_sources = \
 	gimpressionist.h	\
 	globals.c		\
 	infile.h        	\
+	orientation.h       \
 	orientation.c		\
 	orientmap.c		\
 	paper.c			\

@@ -10,6 +10,7 @@
 #include "brush.h"
 #include "color.h"
 #include "general.h"
+#include "orientation.h"
 #include "placement.h"
 #include "preview.h"
 #include "size.h"

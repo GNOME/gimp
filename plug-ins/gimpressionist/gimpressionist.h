@@ -17,7 +17,6 @@
 #define MAXORIENTVECT   50
 #define MAXSIZEVECT     50
 
-#define NUMORIENTRADIO 8
 #define NUMSIZERADIO 8
 
 /* Type declaration and definitions */
@@ -99,18 +98,6 @@ enum GENERAL_BG_TYPE_ENUM
     BG_TYPE_TRANSPARENT = 3,
 };
 
-enum ORIENTATION_ENUM
-{
-    ORIENTATION_VALUE = 0,
-    ORIENTATION_RADIUS = 1,
-    ORIENTATION_RANDOM = 2,
-    ORIENTATION_RADIAL = 3,
-    ORIENTATION_FLOWING = 4,
-    ORIENTATION_HUE = 5,
-    ORIENTATION_ADAPTIVE = 6,
-    ORIENTATION_MANUAL = 7,
-};
-
 enum PRESETS_LIST_COLUMN_ENUM
 {
   PRESETS_LIST_COLUMN_FILENAME = 0,
@@ -127,8 +114,6 @@ extern gimpressionist_vals_t pcvals;
 GList *parsepath (void);
 void free_parsepath_cache (void);
 
-void create_orientationpage (GtkNotebook *);
-
 void grabarea (void);
 void store_values (void);
 void restore_values (void);
@@ -142,7 +127,6 @@ void readdirintolist_extended (char *subdir, GtkWidget *view, char *selected,
                                gchar *(*get_object_name_cb)
                                (gchar *dir, gchar *filename, void *context),
                                void * context);
-void orientation_restore (void);
 
 GtkWidget *create_one_column_list (GtkWidget *parent,
 			           void (*changed_cb)

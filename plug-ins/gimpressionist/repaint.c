@@ -9,6 +9,7 @@
 
 #include "gimpressionist.h"
 #include "brush.h"
+#include "orientation.h"
 #include "placement.h"
 #include "ppmtool.h"
 #include "preview.h"
