@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <libart_lgpl/libart.h>
-
 #include <glib-object.h>
 
 #include "vectors-types.h"
@@ -33,7 +31,14 @@
 #include "core/gimpmarshal.h"
 #include "core/gimppaintinfo.h"
 
-#include "paint/gimppaintcore-stroke.h"
+#undef LIBART_STROKE
+
+#ifdef LIBART_STROKE
+#  include "libgimpcolor/gimpcolor.h"
+#  include "core/gimpdrawable-stroke.h"
+#else
+#  include "paint/gimppaintcore-stroke.h"
+#endif
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"
@@ -540,6 +545,7 @@ gimp_vectors_stroke (GimpItem      *item,
   GimpVectors   *vectors;
   GimpPaintCore *core;
   gboolean       retval;
+  GimpRGB        color;
 
   vectors = GIMP_VECTORS (item);
 
@@ -549,6 +555,14 @@ gimp_vectors_stroke (GimpItem      *item,
       return FALSE;
     }
 
+#ifdef LIBART_STROKE
+  gimp_rgba_set (&color, 0.0, 0.7, 0.5, 1.0);
+
+  gimp_drawable_stroke_vectors (drawable, vectors, 0.5, &color,
+                                GIMP_NORMAL_MODE, 15, GIMP_JOIN_MITER,
+                                GIMP_CAP_SQUARE, TRUE);
+  retval = TRUE;
+#else
   core = g_object_new (paint_info->paint_type, NULL);
 
   retval = gimp_paint_core_stroke_vectors (core, drawable,
@@ -556,6 +570,7 @@ gimp_vectors_stroke (GimpItem      *item,
                                            vectors);
 
   g_object_unref (core);
+#endif
 
   return retval;
 }
@@ -1000,30 +1015,3 @@ gimp_vectors_real_make_bezier (const GimpVectors *vectors)
   return NULL;
 }
 
-/*
- * gimp_vectors_art_stroke: Stroke a GimpVectors object using libart.
- * @vectors: The source path
- *
- * Traverses the stroke list of a GimpVector object, calling art_stroke 
- * on each stroke as we go. Will eventually take cap type, join type 
- * and width as arguments.
- */
-void
-gimp_vectors_art_stroke (const GimpVectors *vectors)
-{
-  GimpStroke *cur_stroke; 
-
-  /* For each Stroke in the vector, stroke it */
-
-  for (cur_stroke = gimp_vectors_stroke_get_next (vectors, NULL);
-       cur_stroke;
-       cur_stroke = gimp_vectors_stroke_get_next (vectors, cur_stroke))
-    {
-      /* Add this stroke to the art_vpath */
-      GIMP_STROKE_GET_CLASS(cur_stroke)->art_stroke (cur_stroke);
-    }
-
-  /* That's it - nothing else to see here */
-  return;
-
-}

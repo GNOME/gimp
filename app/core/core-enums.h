@@ -195,6 +195,30 @@ typedef enum  /*< pdb-skip >*/
 } GimpGridType;
 
 
+#define GIMP_TYPE_JOIN_TYPE (gimp_join_type_get_type ())
+
+GType gimp_join_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_JOIN_MITER,  /*< desc="Miter" >*/
+  GIMP_JOIN_ROUND,  /*< desc="Round" >*/
+  GIMP_JOIN_BEVEL   /*< desc="Bevel" >*/
+} GimpJoinType;
+
+
+#define GIMP_TYPE_CAP_TYPE (gimp_cap_type_get_type ())
+
+GType gimp_cap_type_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_CAP_BUTT,   /*< desc="Butt"   >*/
+  GIMP_CAP_ROUND,  /*< desc="Round"  >*/
+  GIMP_CAP_SQUARE  /*< desc="Square" >*/
+} GimpCapType;
+
+
 #define GIMP_TYPE_IMAGE_BASE_TYPE (gimp_image_base_type_get_type ())
 
 GType gimp_image_base_type_get_type (void) G_GNUC_CONST;

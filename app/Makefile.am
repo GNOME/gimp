@@ -57,7 +57,8 @@ endif
 gimp_1_3_LDFLAGS = \
 	$(mwindows)				\
 	-u $(symprefix)gimp_container_filter	\
-	-u $(symprefix)gimp_xml_parser_new
+	-u $(symprefix)gimp_xml_parser_new	\
+	-u $(symprefix)gimp_drawable_stroke_vectors
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\

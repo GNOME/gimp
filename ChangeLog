@@ -1,3 +1,41 @@
+2003-09-20  Simon Budig  <simon@gimp.org>
+            Dave Neary  <bolsh@gimp.org>
+
+	First steps towards Libart stroking. Right now the code
+	crashes and thus is disabled by default. If you want to
+	test it, change the #define LIBART_STROKE  in
+	app/vectors/gimpvectors.c. Then a click on the stroke button
+	in the paths dialog invokes the new code.
+	The crash is in gimpdrawable-stroke.c - apparently I did not
+	yet get the TileManager stuff correctly.
+
+	* app/core/gimpscanconvert.[ch]: Rewritten to be more clear
+	and have an easier API. Now can handle open Paths and
+	libart-stroke the (open/closed) polygons defined earlier.
+
+	* app/core/core-enums.h: Added Enums for LineJoin-Type and
+	EndCap-Type for stroking.
+
+	* app/core/core-enums.c: regenerated.
+	
+	* app/core/gimpimage-mask-select.c: Use the new API of
+	GimpScanConvert where appropriate.
+	
+	* app/vectors/gimpvectors.c: Added #define to enable the libart
+	stroking. Disabled by default because of the crash mentioned
+	above...
+
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpvectors.[ch]: Removed Libart stuff here.
+	Libart usage now lives exclusively in GimpScanConvert.
+	
+	* app/core/gimpdrawable-stroke.[ch]: New files for the libart
+	stroking (right now just vector objects).
+	* app/core/Makefile.am: changed accordingly.
+
+	* app/Makefile.am: Needed to tweak linking.  :-/
+
 2003-09-20  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/config/gimpconfig-dump.c (dump_gimprc): removed reference to

@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <libart_lgpl/libart.h>
-
 #include <glib-object.h>
 
 #include "vectors-types.h"
@@ -150,8 +148,6 @@ static GArray   * gimp_stroke_real_get_draw_lines    (const GimpStroke *stroke);
 static GArray *  gimp_stroke_real_control_points_get (const GimpStroke *stroke,
                                                       gboolean         *ret_closed);
 
-static void gimp_stroke_art_stroke  (const GimpStroke *stroke);
-
 /*  private variables  */
 
 static GimpObjectClass *parent_class = NULL;
@@ -245,8 +241,6 @@ gimp_stroke_class_init (GimpStrokeClass *klass)
   klass->get_draw_controls       = gimp_stroke_real_get_draw_controls;
   klass->get_draw_lines          = gimp_stroke_real_get_draw_lines;
   klass->control_points_get      = gimp_stroke_real_control_points_get;
-
-  klass->art_stroke              = gimp_stroke_art_stroke;
 
   anchor_param_spec = g_param_spec_boxed ("gimp-anchor",
                                           "Gimp Anchor",
@@ -1202,13 +1196,3 @@ gimp_stroke_real_control_points_get (const GimpStroke *stroke,
   return ret_array;
 }
 
-
-static void
-gimp_stroke_art_stroke (const GimpStroke *stroke)
-{
-  g_return_if_fail (GIMP_IS_STROKE (stroke));
-
-  GIMP_STROKE_GET_CLASS (stroke)->art_stroke (stroke);
-
-  return;
-}

@@ -33,22 +33,51 @@ GimpScanConvert * gimp_scan_convert_new        (guint            width,
 void              gimp_scan_convert_free       (GimpScanConvert *scan_converter);
 
 /* Add "npoints" from "pointlist" to the polygon currently being
- * described by "scan_converter".
+ * described by "scan_converter". DEPRECATED.
  */
 void              gimp_scan_convert_add_points (GimpScanConvert *scan_converter,
                                                 guint            n_points,
                                                 GimpVector2     *points,
                                                 gboolean         new_polygon);
 
+/* Add a polygon with "npoints" "points" that may be open or closed.
+ * It is not recommended to mix gimp_scan_convert_add_polyline with
+ * gimp_scan_convert_add_points.
+ *
+ * Please note that if you should use gimp_scan_convert_stroke() if you
+ * specify open polygons.
+ */
+void              gimp_scan_convert_add_polyline (GimpScanConvert *sc,
+                                                  guint            n_points,
+                                                  GimpVector2     *points,
+                                                  gboolean         closed);
 
-/* Scan convert the polygon described by the list of points passed to
- * scan_convert_add_points, and return a channel with a bits set if
- * they fall within the polygon defined.  The polygon is filled
- * according to the even-odd rule.  The polygon is closed by
- * joining the final point to the initial point.
+/* Stroke the content of a GimpScanConvert. The next
+ * gimp_scan_convert_to_channel will result in the outline of the polygon
+ * defined with the commands above.
+ *
+ * You cannot add additional polygons after this command.
+ */
+
+void              gimp_scan_convert_stroke     (GimpScanConvert *sc,
+                                                GimpJoinType     join,
+                                                GimpCapType      cap,
+                                                gdouble          width);
+
+/* Return a new Channel according to the polygonal shapes defined with
+ * the commands above. 
+ *
+ * You cannot add additional polygons after this command.
  */
 GimpChannel     * gimp_scan_convert_to_channel (GimpScanConvert *scan_converter,
                                                 GimpImage       *gimage);
 
 
+/* This is a more low level version. Expects a tile manager of depth 1.
+ *
+ * You cannot add additional polygons after this command.
+ */
+
+void              gimp_scan_convert_render     (GimpScanConvert *scan_converter,
+                                                TileManager     *tile_manager);
 #endif /* __GIMP_SCAN_CONVERT_H__ */

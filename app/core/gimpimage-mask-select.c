@@ -172,7 +172,8 @@ gimp_image_mask_select_polygon (GimpImage      *gimage,
   scan_convert = gimp_scan_convert_new (gimage->width,
                                         gimage->height,
                                         antialias ? SUPERSAMPLE : 1);
-  gimp_scan_convert_add_points (scan_convert, n_points, points, FALSE);
+
+  gimp_scan_convert_add_polyline (scan_convert, n_points, points, TRUE);
 
   mask = gimp_scan_convert_to_channel (scan_convert, gimage);
 
@@ -253,8 +254,8 @@ gimp_image_mask_select_vectors (GimpImage      *gimage,
               num_coords++;
             }
 
-          gimp_scan_convert_add_points (scan_convert, coords->len,
-                                        points, TRUE);
+          gimp_scan_convert_add_polyline (scan_convert, coords->len,
+                                          points, TRUE);
 
           g_free (points);
         }

@@ -254,6 +254,46 @@ gimp_grid_type_get_type (void)
 }
 
 
+static const GEnumValue gimp_join_type_enum_values[] =
+{
+  { GIMP_JOIN_MITER, N_("Miter"), "miter" },
+  { GIMP_JOIN_ROUND, N_("Round"), "round" },
+  { GIMP_JOIN_BEVEL, N_("Bevel"), "bevel" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_join_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpJoinType", gimp_join_type_enum_values);
+
+  return enum_type;
+}
+
+
+static const GEnumValue gimp_cap_type_enum_values[] =
+{
+  { GIMP_CAP_BUTT, N_("Butt"), "butt" },
+  { GIMP_CAP_ROUND, N_("Round"), "round" },
+  { GIMP_CAP_SQUARE, N_("Square"), "square" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_cap_type_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpCapType", gimp_cap_type_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_image_base_type_enum_values[] =
 {
   { GIMP_RGB, N_("RGB"), "rgb" },

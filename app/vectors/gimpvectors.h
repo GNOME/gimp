@@ -170,7 +170,4 @@ gint            gimp_vectors_interpolate        (const GimpVectors  *vectors,
 
 GimpVectors   * gimp_vectors_make_bezier        (const GimpVectors  *vectors);
 
-/* Stroke a vector with libart (needs a better name) */
-void gimp_vectors_art_stroke(const GimpVectors * vectors);
-
 #endif /* __GIMP_VECTORS_H__ */

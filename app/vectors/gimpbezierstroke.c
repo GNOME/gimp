@@ -21,8 +21,6 @@
 
 #include "config.h"
 
-#include <libart_lgpl/libart.h>
-
 #include <glib-object.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -120,8 +118,6 @@ static void gimp_bezier_coords_subdivide2 (const GimpCoords      *beziercoords,
 static gboolean gimp_bezier_coords_is_straight (const GimpCoords *beziercoords,
                                                 const gdouble     precision);
 
-static void    gimp_bezier_stroke_art_stroke (const GimpStroke  *stroke);
-
 
 /*  private variables  */
 
@@ -185,7 +181,6 @@ gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
   stroke_class->extend               = gimp_bezier_stroke_extend;
   stroke_class->connect_stroke       = gimp_bezier_stroke_connect_stroke;
   stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
-  stroke_class->art_stroke           = gimp_bezier_stroke_art_stroke;
 }
 
 static void
@@ -1919,10 +1914,3 @@ gimp_bezier_coords_subdivide2 (const GimpCoords *beziercoords,
     }
 }
 
-static void
-gimp_bezier_stroke_art_stroke (const GimpStroke *stroke)
-{
-  g_printerr ("gimp_bezier_stroke_art_stroke: implement me!\n");
-
-  return;
-}

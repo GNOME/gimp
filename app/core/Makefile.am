@@ -85,6 +85,8 @@ libappcore_a_sources = \
 	gimpdrawable-offset.h		\
 	gimpdrawable-preview.c		\
 	gimpdrawable-preview.h		\
+	gimpdrawable-stroke.c		\
+	gimpdrawable-stroke.h		\
 	gimpdrawable-transform.c	\
 	gimpdrawable-transform.h	\
 	gimpenvirontable.h		\
