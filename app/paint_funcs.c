@@ -377,6 +377,7 @@ color_pixels (unsigned char *dest,
   register unsigned char c0, c1, c2;
   register guint32 *longd, longc;
   register guint16 *shortd, shortc;
+
   switch (bytes)
   {
    case 1:
@@ -662,7 +663,7 @@ color_only_pixels (const unsigned char *src1,
       b1 = b2;
 
       /*  set the destination  */
-      hls_to_rgb (&r1, &g1, &bytes1);
+      hls_to_rgb (&r1, &g1, &b1);
 
       dest[0] = r1; dest[1] = g1; dest[2] = b1;
 
@@ -4040,11 +4041,11 @@ border_region(PixelRegion *src, gint16 radius)
   }
   if (radius == 0)
   {
-    char color[] = "\0\0\0";
+    char color[] = "\0\0\0\0";
     color_region(src, color);
     return;
   }
-  if (radius == 1) /* optomize this case specificaly */
+  if (radius == 1) /* optimize this case specifically */
   {
     guchar *transition;
     guchar *source[3];
