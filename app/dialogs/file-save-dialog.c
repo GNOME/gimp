@@ -261,9 +261,9 @@ file_save_dialog_create (void)
   gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (filesave,
-				gimp_standard_help_func,
-				"save/dialogs/file_save.html");
+  gimp_help_connect (filesave,
+		     gimp_standard_help_func,
+		     "save/dialogs/file_save.html");
 
   {
     GtkWidget *frame;

@@ -1,3 +1,46 @@
+2001-08-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base.c: g_strdup (g_get_temp_dir ()), may fix an unseen
+	crash.
+
+	* libgimpwidgets/gimphelpui.[ch]: fixed the help stuff by using
+	GtkWidget's new "show_help" signal, which is exactly what we did
+	before, only without badly hacking around.
+	Renamed gimp_help_connect_help_accel() to gimp_help_connect()
+	because that's what it does.
+
+	* app/devices.c
+	* app/errorconsole.c
+	* app/interface.c
+	* app/gui/about-dialog.c
+	* app/gui/edit-commands.c
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-open-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gradients-commands.c
+	* app/gui/gui.c
+	* app/gui/info-dialog.c
+	* app/gui/palettes-commands.c
+	* app/gui/paths-dialog.c
+	* app/gui/select-commands.c
+	* app/gui/tips-dialog.c
+	* app/gui/toolbox.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c
+	* app/widgets/gimpdatafactoryview.c
+	* libgimpwidgets/gimpdialog.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/common/CEL.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gqbist.c
+	* plug-ins/flame/flame.c
+	* plug-ins/fp/fp_gtk.c
+	* plug-ins/script-fu/script-fu-scripts.c: changed accordingly,
+	GObject stuff, sprinkled some GTK_STOCK_FOOs, minor cleanups.
+
 2001-07-31  Michael Natterer  <mitch@gimp.org>
 
 	* gtkrc: eek, my last change changed the width of all GtkRange

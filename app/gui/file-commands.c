@@ -234,7 +234,7 @@ file_revert_cmd_callback (GtkWidget *widget,
 					  FALSE,
 					  text,
 					  GTK_STOCK_YES, GTK_STOCK_NO,
-					  GTK_OBJECT (gdisp->gimage), "destroy",
+					  G_OBJECT (gdisp->gimage), "destroy",
 					  file_revert_confirm_callback,
 					  gdisp->gimage);
 

@@ -490,8 +490,7 @@ make_file_dlg (void)
      GTK_SIGNAL_FUNC (file_cancel_callback),
      GTK_OBJECT (file_dlg));
 
-  gimp_help_connect_help_accel (file_dlg,
-				gimp_standard_help_func, "filters/flame.html");
+  gimp_help_connect (file_dlg, gimp_standard_help_func, "filters/flame.html");
 }
 
 static void 

@@ -392,9 +392,9 @@ toolbox_create (void)
   gtk_window_add_accel_group (GTK_WINDOW (window), toolbox_factory->accel_group);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (window,
-				gimp_standard_help_func,
-				"toolbox/toolbox.html");
+  gimp_help_connect (window,
+		     gimp_standard_help_func,
+		     "toolbox/toolbox.html");
 
   wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (wbox), GTK_JUSTIFY_TOP);

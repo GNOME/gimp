@@ -134,7 +134,7 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
 				"dialogs/palette_editor/merge_palette.html",
 				_("Enter a name for merged palette"),
 				NULL,
-				GTK_OBJECT (editor), "destroy",
+				G_OBJECT (editor), "destroy",
 				palettes_merge_palettes_callback,
 				editor);
   gtk_widget_show (qbox);

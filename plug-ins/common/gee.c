@@ -190,7 +190,7 @@ build_dialog (GimpImageBaseType  basetype,
 		      (GtkSignalFunc) window_delete_callback,
 		      NULL);
 
-  gimp_help_connect_help_accel (dlg, gimp_standard_help_func, "filters/geeslime.html");
+  gimp_help_connect (dlg, gimp_standard_help_func, "filters/geeslime.html");
 
   /* Action area - 'close' button only. */
 

@@ -1779,7 +1779,7 @@ file_dialog_create (GtkWidget *parent)
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_dlg), temp);
   g_free (temp);
 
-  gimp_help_connect_help_accel (file_dlg, tool_manager_help_func, NULL);
+  gimp_help_connect (file_dlg, tool_manager_help_func, NULL);
 }
 
 static void

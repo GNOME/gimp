@@ -420,7 +420,7 @@ query (void)
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  "Jörn Loviscach, Jens Ch. Restemeier",
 			  PLUG_IN_VERSION,
-			  N_ ("<Image>/Filters/Render/Pattern/Qbist..."),
+			  N_("<Image>/Filters/Render/Pattern/Qbist..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  nargs, 0,
@@ -524,7 +524,7 @@ run (gchar      *name,
 
 	  optimize (qbist_info.info);
 
-	  gimp_progress_init (_ ("Qbist ..."));
+	  gimp_progress_init (_("Qbist ..."));
 
 	  for (pr = gimp_pixel_rgns_register (1, &imagePR); 
 	       pr != NULL; 
@@ -731,10 +731,10 @@ dialog_load (GtkWidget *widget,
 {
   GtkWidget *file_select;
 
-  file_select = gtk_file_selection_new (_ ("Load QBE file..."));
+  file_select = gtk_file_selection_new (_("Load QBE file..."));
 
-  gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
-				"filters/gqbist.html");
+  gimp_help_connect (file_select, gimp_standard_help_func,
+		     "filters/gqbist.html");
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), qbist_info.path);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_select)->ok_button),
@@ -756,10 +756,10 @@ dialog_save (GtkWidget *widget,
   GtkWidget *file_select;
 
   file_select =
-    gtk_file_selection_new (_ ("Save (middle transform) as QBE file..."));
+    gtk_file_selection_new (_("Save (middle transform) as QBE file..."));
 
-  gimp_help_connect_help_accel (file_select, gimp_standard_help_func,
-				"filters/gqbist.html");
+  gimp_help_connect (file_select, gimp_standard_help_func,
+		     "filters/gqbist.html");
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (file_select), 
 				   qbist_info.path);
@@ -797,14 +797,14 @@ dialog_create (void)
 
   gimp_ui_init ("gqbist", TRUE);
 
-  dialog = gimp_dialog_new (_ ("G-Qbist 1.12"), "gqbist",
+  dialog = gimp_dialog_new (_("G-Qbist 1.12"), "gqbist",
 			    gimp_standard_help_func, "filters/gqbist.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    _ ("OK"), dialog_ok,
+			    GTK_STOCK_OK, dialog_ok,
 			    NULL, NULL, NULL, TRUE, FALSE,
-			    _ ("Cancel"), gtk_widget_destroy,
+			    GTK_STOCK_CANCEL, gtk_widget_destroy,
 			    NULL, 1, NULL, FALSE, TRUE,
 
 			    NULL);
@@ -845,7 +845,7 @@ dialog_create (void)
       gtk_widget_show (preview[i]);
     }
 
-  button = gtk_check_button_new_with_label (_ ("Antialiasing"));
+  button = gtk_check_button_new_with_label (_("Antialiasing"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
 				qbist_info.oversampling > 1);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -858,7 +858,7 @@ dialog_create (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
-  button = gtk_button_new_with_label (_ ("Load"));
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
@@ -866,7 +866,7 @@ dialog_create (void)
 		      NULL);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_ ("Save"));
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",

@@ -2135,8 +2135,8 @@ CML_save_to_file_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect_help_accel (filesel, gimp_standard_help_func,
-				"filters/cml_explorer.html");
+  gimp_help_connect (filesel, gimp_standard_help_func,
+		     "filters/cml_explorer.html");
 
   gtk_widget_show (filesel);
 }
@@ -2325,8 +2325,8 @@ CML_load_from_file_callback (GtkWidget *widget,
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  gimp_help_connect_help_accel (filesel, gimp_standard_help_func,
-				"filters/cml_explorer.html");
+  gimp_help_connect (filesel, gimp_standard_help_func,
+		     "filters/cml_explorer.html");
 
   gtk_widget_show (filesel);
 }

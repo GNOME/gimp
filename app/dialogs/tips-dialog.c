@@ -187,9 +187,9 @@ tips_dialog_create (void)
   gtk_widget_show (button);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (tips_dialog,
-				gimp_standard_help_func,
-				"dialogs/tip_of_the_day.html");
+  gimp_help_connect (tips_dialog,
+		     gimp_standard_help_func,
+		     "dialogs/tip_of_the_day.html");
 
   return tips_dialog;
 }

@@ -120,13 +120,13 @@ gimp_dialog_new (const gchar       *title,
 		 gint               auto_shrink,
 
 		 /* specify action area buttons as va_list:
-		  *  const gchar    *label,
-		  *  GCallback       callback,
-		  *  gpointer        callback_data,
-		  *  GObject        *slot_object,
-		  *  GtkWidget     **widget_ptr,
-		  *  gboolean        default_action,
-		  *  gboolean        connect_delete,
+		  *  const gchar   *label,
+		  *  GCallback      callback,
+		  *  gpointer       callback_data,
+		  *  GObject       *slot_object,
+		  *  GtkWidget    **widget_ptr,
+		  *  gboolean       default_action,
+		  *  gboolean       connect_delete,
 		  */
 
 		 ...)
@@ -176,8 +176,7 @@ gimp_dialog_new (const gchar       *title,
  * gimp_dialog_create_action_areav().
  *
  * Returns: A #GtkDialog.
- *
- */
+ **/
 GtkWidget *
 gimp_dialog_newv (const gchar       *title,
 		  const gchar       *wmclass_name,
@@ -206,7 +205,7 @@ gimp_dialog_newv (const gchar       *title,
 
   /*  connect the "F1" help key  */
   if (help_func)
-    gimp_help_connect_help_accel (dialog, help_func, help_data);
+    gimp_help_connect (dialog, help_func, help_data);
 
   return dialog;
 }
@@ -219,11 +218,10 @@ gimp_dialog_newv (const gchar       *title,
  * e.g. in GNOME's or KDE's window list.
  *
  * Note that this function is automatically called by
- * gimp_help_connect_help_accel() which in turn is called by
- * gimp_dialog_newv(), so you only have to call it for #GtkWindow's which
- * have no help page (like tear-off menus).
- *
- */
+ * gimp_help_connect() which in turn is called by gimp_dialog_newv(),
+ * so you only have to call it for #GtkWindow's which have no help
+ * page (like tear-off menus).
+ **/
 void
 gimp_dialog_set_icon (GtkWindow *dialog)
 {
@@ -246,8 +244,7 @@ gimp_dialog_set_icon (GtkWindow *dialog)
  * This function simply packs the action_area arguments passed in "..."
  * into a @va_list variable and passes everything to
  * gimp_dialog_create_action_areav().
- *
- */
+ **/
 void
 gimp_dialog_create_action_area (GtkDialog *dialog,
 
@@ -283,8 +280,7 @@ gimp_dialog_create_action_area (GtkDialog *dialog,
  * to just connect the delete_event to a callback without adding a new
  * button with a special label "_delete_event_", connect_delete == true
  * and callback != NULL.
- *
- */
+ **/
 void
 gimp_dialog_create_action_areav (GtkDialog *dialog,
 				 va_list    args)

@@ -41,8 +41,8 @@ void  gimp_help_disable_tooltips   (void);
  */
 void  gimp_standard_help_func      (const gchar  *help_data);
 
-/*  connect the "F1" accelerator of a window  */
-void  gimp_help_connect_help_accel (GtkWidget    *widget,
+/*  connect the help callback of a window  */
+void  gimp_help_connect            (GtkWidget    *widget,
 				    GimpHelpFunc  help_func,
 				    const gchar  *help_data);
 

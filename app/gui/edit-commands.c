@@ -193,7 +193,7 @@ edit_named_cut_cmd_callback (GtkWidget *widget,
 				"dialogs/cut_named.html",
 				_("Enter a name for this buffer"),
 				NULL,
-				GTK_OBJECT (gdisp->gimage), "destroy",
+				G_OBJECT (gdisp->gimage), "destroy",
 				cut_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }
@@ -212,7 +212,7 @@ edit_named_copy_cmd_callback (GtkWidget *widget,
 				"dialogs/copy_named.html",
 				_("Enter a name for this buffer"),
 				NULL,
-				GTK_OBJECT (gdisp->gimage), "destroy",
+				G_OBJECT (gdisp->gimage), "destroy",
 				copy_named_buffer_callback, gdisp->gimage);
   gtk_widget_show (qbox);
 }

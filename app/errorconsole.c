@@ -222,9 +222,9 @@ error_console_menu_callback (gint textscope)
 			    filesel);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (filesel,
-				gimp_standard_help_func,
-				"dialogs/error_console.html");
+  gimp_help_connect (filesel,
+		     gimp_standard_help_func,
+		     "dialogs/error_console.html");
 
   gtk_widget_show (filesel);
 }

@@ -134,43 +134,42 @@ gui_init (Gimp *gimp)
 
   image_destroy_handler_id =
     gimp_container_add_handler (gimp->images, "destroy",
-				GTK_SIGNAL_FUNC (gui_image_destroy),
+				G_CALLBACK (gui_image_destroy),
 				gimp);
 
   image_mode_changed_handler_id =
     gimp_container_add_handler (gimp->images, "mode_changed",
-				GTK_SIGNAL_FUNC (gui_image_mode_changed),
+				G_CALLBACK (gui_image_mode_changed),
 				gimp);
 
   image_colormap_changed_handler_id =
     gimp_container_add_handler (gimp->images, "colormap_changed",
-				GTK_SIGNAL_FUNC (gui_image_colormap_changed),
+				G_CALLBACK (gui_image_colormap_changed),
 				gimp);
 
   image_name_changed_handler_id =
     gimp_container_add_handler (gimp->images, "name_changed",
-				GTK_SIGNAL_FUNC (gui_image_name_changed),
+				G_CALLBACK (gui_image_name_changed),
 				gimp);
 
   image_size_changed_handler_id =
     gimp_container_add_handler (gimp->images, "size_changed",
-				GTK_SIGNAL_FUNC (gui_image_size_changed),
+				G_CALLBACK (gui_image_size_changed),
 				gimp);
 
   image_alpha_changed_handler_id =
     gimp_container_add_handler (gimp->images, "alpha_changed",
-				GTK_SIGNAL_FUNC (gui_image_alpha_changed),
+				G_CALLBACK (gui_image_alpha_changed),
 				gimp);
 
   image_update_handler_id =
     gimp_container_add_handler (gimp->images, "update",
-				GTK_SIGNAL_FUNC (gui_image_update),
+				G_CALLBACK (gui_image_update),
 				gimp);
 
-  gtk_signal_connect (GTK_OBJECT (gimp_get_user_context (gimp)),
-		      "display_changed",
-		      GTK_SIGNAL_FUNC (gui_display_changed),
-		      gimp);
+  g_signal_connect (G_OBJECT (gimp_get_user_context (gimp)), "display_changed",
+		    G_CALLBACK (gui_display_changed),
+		    gimp);
 
   /* make sure the monitor resolution is valid */
   if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
@@ -331,7 +330,7 @@ gui_display_new (GimpImage *gimage)
 
   if (double_speed)
     gtk_signal_connect_after (GTK_OBJECT (gdisp->canvas), "expose_event",
-			      GTK_SIGNAL_FUNC (gui_rotate_the_shield_harmonics),
+			      G_CALLBACK (gui_rotate_the_shield_harmonics),
 			      NULL);
 }
 
@@ -381,9 +380,9 @@ gui_rotate_the_shield_harmonics (GtkWidget *widget,
   gint       width  = 0;
   gint       height = 0;
 
-  gtk_signal_disconnect_by_func (GTK_OBJECT (widget),
-				 GTK_SIGNAL_FUNC (gui_rotate_the_shield_harmonics),
-				 data);
+  g_signal_handlers_disconnect_by_func (G_OBJECT (widget),
+					gui_rotate_the_shield_harmonics,
+					data);
 
   pixmap = gdk_pixmap_create_from_xpm_d (widget->window,
 					 &mask,

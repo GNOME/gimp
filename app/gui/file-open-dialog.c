@@ -236,9 +236,9 @@ file_open_dialog_create (void)
      fileload);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (fileload,
-				gimp_standard_help_func,
-				"open/dialogs/file_open.html");
+  gimp_help_connect (fileload,
+		     gimp_standard_help_func,
+		     "open/dialogs/file_open.html");
 
   {
     GtkWidget *frame;

@@ -243,9 +243,9 @@ input_dialog_create (void)
                     NULL);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (inputd,
-				gimp_standard_help_func,
-				"dialogs/input_devices.html");
+  gimp_help_connect (inputd,
+		     gimp_standard_help_func,
+		     "dialogs/input_devices.html");
 
   return inputd;
 }

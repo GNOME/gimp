@@ -739,7 +739,7 @@ delete_fractal_callback (GtkWidget *widget,
 					  FALSE,
 					  str, 
 					  _("Delete"), _("Cancel"),
-					  GTK_OBJECT (widget), "destroy",
+					  G_OBJECT (widget), "destroy",
 					  delete_dialog_callback,
 					  data);
   g_free (str);

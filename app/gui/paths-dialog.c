@@ -2022,7 +2022,7 @@ make_file_dlg (gpointer data)
 		      NULL);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (file_dlg, gimp_standard_help_func, NULL);
+  gimp_help_connect (file_dlg, gimp_standard_help_func, NULL);
 }
 
 void 

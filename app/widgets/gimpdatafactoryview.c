@@ -412,7 +412,7 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
 				FALSE,
 				str,
 				_("Delete"), _("Cancel"),
-				GTK_OBJECT (data),
+				G_OBJECT (data),
 				"destroy",
 				gimp_data_factory_view_delete_callback,
 				delete_data);

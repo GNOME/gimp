@@ -1227,8 +1227,8 @@ script_fu_interface (SFScript *script)
 			    G_CALLBACK (script_fu_interface_quit),
 			    script);
 			     
-  gimp_help_connect_help_accel (dlg, gimp_standard_help_func,
-				"filters/script-fu.html");
+  gimp_help_connect (dlg, gimp_standard_help_func,
+		     "filters/script-fu.html");
   
   /* the vbox holding all widgets */
   main_box = gtk_vbox_new (FALSE, 0);

@@ -217,9 +217,9 @@ create_display_shell (GDisplay *gdisp,
 			       gdisp);
 
   /*  connect the "F1" help key  */
-  gimp_help_connect_help_accel (gdisp->shell,
-				gimp_standard_help_func,
-				"image/image_window.html");
+  gimp_help_connect (gdisp->shell,
+		     gimp_standard_help_func,
+		     "image/image_window.html");
 
   /*  GtkTable widgets are not able to shrink a row/column correctly if
    *  widgets are attached with GTK_EXPAND even if those widgets have

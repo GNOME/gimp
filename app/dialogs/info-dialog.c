@@ -179,7 +179,7 @@ info_dialog_new_extended (gchar        *title,
 
   g_signal_connect (G_OBJECT (shell), "delete_event",
 		    G_CALLBACK (info_dialog_delete_callback),
-		      idialog);
+		    idialog);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -202,9 +202,9 @@ info_dialog_new_extended (gchar        *title,
       gtk_box_pack_start (GTK_BOX (vbox), info_table, FALSE, FALSE, 0);
     }
 
-  idialog->shell = shell;
-  idialog->vbox = vbox;
-  idialog->info_table = info_table;
+  idialog->shell         = shell;
+  idialog->vbox          = vbox;
+  idialog->info_table    = info_table;
   idialog->info_notebook = info_notebook;
 
   if (in_notebook)
@@ -214,7 +214,7 @@ info_dialog_new_extended (gchar        *title,
   gtk_widget_show (idialog->vbox);
 
   /*  Connect the "F1" help key  */
-  gimp_help_connect_help_accel (idialog->shell, help_func, help_data);
+  gimp_help_connect (idialog->shell, help_func, help_data);
 
   return idialog;
 }

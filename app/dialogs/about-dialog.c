@@ -138,8 +138,8 @@ about_dialog_create (void)
       gtk_window_set_policy (GTK_WINDOW (about_dialog), FALSE, FALSE, FALSE);
       gtk_window_set_position (GTK_WINDOW (about_dialog), GTK_WIN_POS_CENTER);
 
-      gimp_help_connect_help_accel (about_dialog, gimp_standard_help_func,
-				    "dialogs/about.html");
+      gimp_help_connect (about_dialog, gimp_standard_help_func,
+			 "dialogs/about.html");
 
       gtk_signal_connect (GTK_OBJECT (about_dialog), "destroy",
 			  GTK_SIGNAL_FUNC (about_dialog_destroy),

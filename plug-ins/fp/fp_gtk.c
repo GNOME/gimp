@@ -192,7 +192,7 @@ fp_create_circle_palette (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect_help_accel (win, gimp_standard_help_func, "filters/fp.html");
+  gimp_help_connect (win, gimp_standard_help_func, "filters/fp.html");
 
   gtk_window_set_title (GTK_WINDOW (win), _("Hue Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -338,7 +338,7 @@ fp_create_lnd (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect_help_accel (win, gimp_standard_help_func, "filters/fp.html");
+  gimp_help_connect (win, gimp_standard_help_func, "filters/fp.html");
 
   gtk_window_set_title (GTK_WINDOW (win), _("Value Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -386,7 +386,7 @@ fp_create_msnls (void)
 
   win = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect_help_accel (win, gimp_standard_help_func, "filters/fp.html");
+  gimp_help_connect (win, gimp_standard_help_func, "filters/fp.html");
 
   gtk_window_set_title (GTK_WINDOW (win), _("Saturation Variations"));
   gtk_container_add (GTK_CONTAINER (win), frame);
@@ -901,11 +901,11 @@ fp_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("OK"), fp_ok_callback,
+			 GTK_STOCK_OK, fp_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 			 _("Reset"), resetFilterPacks,
 			 NULL, NULL, NULL, FALSE, FALSE,
-			 _("Cancel"), gtk_widget_destroy,
+			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
 			 NULL);
@@ -1027,8 +1027,8 @@ fp_advanced_dialog (void)
 
   AW.window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gimp_help_connect_help_accel (AW.window, gimp_standard_help_func,
-				"filters/fp.html");
+  gimp_help_connect (AW.window, gimp_standard_help_func,
+		     "filters/fp.html");
 
   gtk_window_set_title (GTK_WINDOW (AW.window),
 			_("Advanced Filter Pack Options"));

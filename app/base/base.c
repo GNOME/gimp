@@ -66,7 +66,7 @@ base_init (void)
 
   /* Add the swap file  */
   if (base_config->swap_path == NULL)
-    base_config->swap_path = g_get_tmp_dir ();
+    base_config->swap_path = g_strdup (g_get_tmp_dir ());
 
   path = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "gimpswap.%lu",
 			  base_config->swap_path,

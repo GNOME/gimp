@@ -31,23 +31,31 @@
 #include "gimphelpui.h"
 
 
+typedef enum
+{
+  GIMP_WIDGET_HELP_TYPE_HELP       = 0xff + 0,
+  GIMP_WIDGET_HELP_TYPE_TIPS_QUERY = 0xff + 1
+} GimpWidgetHelpType;
+
+
 /*  local function prototypes  */
-static void gimp_help_callback                   (GtkWidget      *widget,
-						  gpointer        data);
-static gint gimp_help_tips_query_idle_show_help  (gpointer        data);
-static gint gimp_help_tips_query_widget_selected (GtkWidget      *tips_query,
-						  GtkWidget      *widget,
-						  const gchar    *tip_text,
-						  const gchar    *tip_private,
-						  GdkEventButton *event,
-						  gpointer        func_data);
-static gint gimp_help_tips_query_idle_start      (gpointer        tips_query);
-static void gimp_help_tips_query_start           (GtkWidget      *widget,
-						  gpointer        tips_query);
+static void gimp_help_callback                   (GtkWidget         *widget,
+						  GtkWidgetHelpType  help_type,
+						  gpointer           data);
+static gint gimp_help_tips_query_idle_show_help  (gpointer           data);
+static gint gimp_help_tips_query_widget_selected (GtkWidget         *tips_query,
+						  GtkWidget         *widget,
+						  const gchar       *tip_text,
+						  const gchar        *tip_private,
+						  GdkEventButton    *event,
+						  gpointer           func_data);
+static gint gimp_help_tips_query_idle_start      (gpointer           tips_query);
+
 
 /*  local variables  */
-static GtkTooltips * tool_tips  = NULL;
-static GtkWidget   * tips_query = NULL;
+static GtkTooltips *tool_tips  = NULL;
+static GtkWidget   *tips_query = NULL;
+
 
 /**********************/
 /*  public functions  */
@@ -77,6 +85,11 @@ void
 gimp_help_free (void)
 {
   g_object_unref (G_OBJECT (tool_tips));
+  tool_tips = NULL;
+
+  tips_query->parent = NULL;
+  gtk_widget_destroy (tips_query);
+  tips_query = NULL;
 }
 
 /**
@@ -102,7 +115,7 @@ gimp_help_disable_tooltips (void)
 }
 
 /**
- * gimp_help_connect_help_accel:
+ * gimp_help_connect:
  * @widget: The widget you want to connect the help accelerator for. Will
  *          be a #GtkWindow in most cases.
  * @help_func: The function which will be called if the user presses "F1".
@@ -117,13 +130,11 @@ gimp_help_disable_tooltips (void)
  * don't have to worry about this.
  **/
 void
-gimp_help_connect_help_accel (GtkWidget    *widget,
-			      GimpHelpFunc  help_func,
-			      const gchar  *help_data)
+gimp_help_connect (GtkWidget    *widget,
+		   GimpHelpFunc  help_func,
+		   const gchar  *help_data)
 {
-  GtkAccelGroup *accel_group;
-
-  if (!help_func)
+  if (! help_func)
     return;
 
   /*  for convenience we set the wm icon here because
@@ -134,8 +145,30 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
 
   /*  set up the help signals and tips query widget
    */
-  if (!tips_query)
+  if (! tips_query)
     {
+      GtkBindingSet *binding_set;
+
+      binding_set = gtk_binding_set_by_class (GTK_WIDGET_GET_CLASS (widget));
+
+      gtk_binding_entry_add_signal (binding_set, GDK_F1, 0,
+				    "show_help", 1,
+				    GTK_TYPE_WIDGET_HELP_TYPE,
+				    GIMP_WIDGET_HELP_TYPE_HELP);
+      gtk_binding_entry_add_signal (binding_set, GDK_KP_F1, 0,
+				    "show_help", 1,
+				    GTK_TYPE_WIDGET_HELP_TYPE,
+				    GIMP_WIDGET_HELP_TYPE_HELP);
+
+      gtk_binding_entry_add_signal (binding_set, GDK_F1, GDK_SHIFT_MASK,
+				    "show_help", 1,
+				    GTK_TYPE_WIDGET_HELP_TYPE,
+				    GIMP_WIDGET_HELP_TYPE_TIPS_QUERY);
+      gtk_binding_entry_add_signal (binding_set, GDK_KP_F1, GDK_SHIFT_MASK,
+				    "show_help", 1,
+				    GTK_TYPE_WIDGET_HELP_TYPE,
+				    GIMP_WIDGET_HELP_TYPE_TIPS_QUERY);
+
       tips_query = gtk_tips_query_new ();
 
       gtk_widget_set (tips_query,
@@ -154,65 +187,13 @@ gimp_help_connect_help_accel (GtkWidget    *widget,
       gtk_widget_realize (tips_query);
     }
 
-  g_print ("FIXME: gimp_help_connect_help_accel\n");
-
-  /*
-  if (! gtk_signal_lookup ("tips_query", G_TYPE_FROM_INSTANCE (widget)))
-    {
-      gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
-					"tips_query",
-					GTK_RUN_LAST,
-					g_cclosure_marshal_VOID__VOID,
-					G_TYPE_NONE,
-					0,
-					NULL);
-
-      gtk_object_class_user_signal_new (GTK_OBJECT (widget)->klass,
-					"help",
-					GTK_RUN_LAST,
-					g_cclosure_marshal_VOID__VOID,
-					G_TYPE_NONE,
-					0,
-					NULL);
-    }
-  */
-
   gimp_help_set_help_data (widget, NULL, help_data);
 
-  /*
-  g_signal_connect (G_OBJECT (widget), "help",
+  g_signal_connect (G_OBJECT (widget), "show_help",
                     G_CALLBACK (gimp_help_callback),
-                    (gpointer) help_func);
-
-  g_signal_connect (G_OBJECT (widget), "tips_query",
-		    G_CALLBACK (gimp_help_tips_query_start),
-		    (gpointer) tips_query);
-  */
+                    help_func);
 
   gtk_widget_add_events (widget, GDK_BUTTON_PRESS_MASK);
-
-  /*  a new accelerator group for this widget  */
-#ifdef __GNUC__
-#warning FIXME: fix help
-#endif
-#if 0
-  accel_group = gtk_accel_group_new ();
-
-  /*  FIXME: does not work for some reason...
-  gtk_widget_add_accelerator (widget, "help", accel_group,
-			      GDK_F1, 0, GTK_ACCEL_LOCKED);
-  gtk_widget_add_accelerator (widget, "tips_query", accel_group,
-			      GDK_F1, GDK_SHIFT_MASK, GTK_ACCEL_LOCKED);
-  */
-
-  /*  ...while using this internal stuff works  */
-  gtk_accel_group_add (accel_group, GDK_F1, 0, 0,
-		       GTK_OBJECT (widget), "help");
-  gtk_accel_group_add (accel_group, GDK_F1, GDK_SHIFT_MASK, 0,
-		       GTK_OBJECT (widget), "tips_query");
-
-  gtk_accel_group_attach (accel_group, GTK_OBJECT (widget));
-#endif
 }
 
 /**
@@ -245,7 +226,6 @@ gimp_help_set_help_data (GtkWidget   *widget,
 			 const gchar *tooltip,
 			 const gchar *help_data)
 {
-  g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
   if (tooltip)
@@ -278,7 +258,7 @@ void
 gimp_context_help (void)
 {
   if (tips_query)
-    gimp_help_tips_query_start (NULL, tips_query);
+    gimp_help_callback (NULL, GIMP_WIDGET_HELP_TYPE_TIPS_QUERY, NULL);
 }
 
 /*********************/
@@ -286,18 +266,35 @@ gimp_context_help (void)
 /*********************/
 
 static void
-gimp_help_callback (GtkWidget *widget,
-		    gpointer   data)
+gimp_help_callback (GtkWidget          *widget,
+		    GimpWidgetHelpType  help_type,
+		    gpointer            data)
 {
-  GimpHelpFunc  help_function;
-  const gchar  *help_data;
+  switch (help_type)
+    {
+    case GIMP_WIDGET_HELP_TYPE_HELP:
+      {
+	GimpHelpFunc  help_function;
+	const gchar  *help_data;
 
-  help_function = (GimpHelpFunc) data;
-  help_data     = (const gchar *) g_object_get_data (G_OBJECT (widget),
-                                                     "gimp_help_data");
+	help_function = (GimpHelpFunc) data;
+	help_data     = (const gchar *) g_object_get_data (G_OBJECT (widget),
+							   "gimp_help_data");
 
-  if (help_function)
-    (* help_function) (help_data);
+	if (help_function)
+	  (* help_function) (help_data);
+      }
+      break;
+
+    case GIMP_WIDGET_HELP_TYPE_TIPS_QUERY:
+      if (! GTK_TIPS_QUERY (tips_query)->in_query)
+	gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_start,
+		      tips_query);
+      break;
+
+    default:
+      break;
+    }
 }
 
 /*  Do all the actual GtkTipsQuery calls in idle functions and check for
@@ -408,12 +405,4 @@ gimp_help_tips_query_idle_start (gpointer tips_query)
     gtk_tips_query_start_query (GTK_TIPS_QUERY (tips_query));
 
   return FALSE;
-}
-
-static void
-gimp_help_tips_query_start (GtkWidget *widget,
-			    gpointer   tips_query)
-{
-  if (! GTK_TIPS_QUERY (tips_query)->in_query)
-    gtk_idle_add ((GtkFunction) gimp_help_tips_query_idle_start, tips_query);
 }
