@@ -678,7 +678,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:216
 msgid "<Image>/Filters/Render/Pattern/Fractal Explorer..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Досл╕дник фрактал╕в..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Досл╕дник фрактал╕в..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:355
 msgid "Rendering Fractal..."
@@ -1872,7 +1872,7 @@ msgstr "Значення"
 
 #: plug-ins/common/CML_explorer.c:473
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Досл╕дник CML..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Досл╕дник CML..."
 
 #: plug-ins/common/CML_explorer.c:767
 msgid "CML_explorer: evoluting..."
@@ -2543,7 +2543,7 @@ msgstr "Розтягування контрасту..."
 
 #: plug-ins/common/checkerboard.c:102
 msgid "<Image>/Filters/Render/Pattern/Checkerboard..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Шах╕вниця..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Шах╕вниця..."
 
 #: plug-ins/common/checkerboard.c:165
 msgid "Adding Checkerboard..."
@@ -3240,15 +3240,15 @@ msgstr "Ширина:"
 
 #: plug-ins/common/diffraction.c:185
 msgid "<Image>/Filters/Render/Pattern/Diffraction Patterns..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Дифракц╕йн╕ шаблони..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Дифракц╕йн╕ в╕зерунки..."
 
 #: plug-ins/common/diffraction.c:331
 msgid "Creating diffraction pattern..."
-msgstr "Створення дифракц╕йних шаблон╕в..."
+msgstr "Створення дифракц╕йних в╕зерунк╕в..."
 
 #: plug-ins/common/diffraction.c:529
 msgid "Diffraction Patterns"
-msgstr "Дифракц╕йн╕ шаблони"
+msgstr "Дифракц╕йн╕ в╕зерунки"
 
 #: plug-ins/common/diffraction.c:626
 msgid "Frequencies"
@@ -3893,7 +3893,7 @@ msgstr "Шар %s не ма╓ альфа-каналу, пропущено"
 
 #: plug-ins/common/gqbist.c:338
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Q-б╕ст..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Q-б╕ст..."
 
 #: plug-ins/common/gqbist.c:435
 msgid "Qbist..."
@@ -3921,7 +3921,7 @@ msgstr "Град╕╓нтна мапа..."
 
 #: plug-ins/common/grid.c:158
 msgid "<Image>/Filters/Render/Pattern/Grid..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/С╕тка..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/С╕тка..."
 
 #: plug-ins/common/grid.c:242
 msgid "Drawing Grid..."
@@ -4240,7 +4240,7 @@ msgstr "╤нтерактивне спотворення"
 
 #: plug-ins/common/jigsaw.c:394
 msgid "<Image>/Filters/Render/Pattern/Jigsaw..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Головоломка..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Головоломка..."
 
 #: plug-ins/common/jigsaw.c:450
 msgid "Assembling Jigsaw"
@@ -4901,7 +4901,7 @@ msgstr "<Image>/Ф╕льтри/В╕дображення/Paper Tile..."
 
 #: plug-ins/common/pat.c:407
 msgid "Save as Pattern"
-msgstr "Зберегти як шаблон"
+msgstr "Зберегти як в╕зерунок"
 
 #: plug-ins/common/pixelize.c:163
 msgid "<Image>/Filters/Blur/Pixelize..."
@@ -6600,7 +6600,7 @@ msgstr "В╕део"
 #. frame for the radio buttons
 #: plug-ins/common/video.c:2177
 msgid "RGB Pattern Type"
-msgstr "Тип RGB-шаблону"
+msgstr "Тип RGB-в╕зерунку"
 
 #: plug-ins/common/video.c:2188
 msgid "Additive"
@@ -8147,19 +8147,19 @@ msgstr "<Image>/В╕део/Зм╕нити кадри..."
 #. Layer select modes
 #: plug-ins/gap/gap_mod_layer.c:82 plug-ins/gap/gap_range_ops.c:573
 msgid "Pattern is equal to LayerName"
-msgstr ""
+msgstr "В╕зерунок сп╕впада╓ з назвою шару"
 
 #: plug-ins/gap/gap_mod_layer.c:83 plug-ins/gap/gap_range_ops.c:574
 msgid "Pattern is Start of LayerName"
-msgstr ""
+msgstr "В╕зерунок сп╕впада╓ з початком назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:84 plug-ins/gap/gap_range_ops.c:575
 msgid "Pattern is End of Layername"
-msgstr ""
+msgstr "В╕зерунок сп╕впада╓ з зак╕нченням назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:85 plug-ins/gap/gap_range_ops.c:576
 msgid "Pattern is a Part of LayerName"
-msgstr ""
+msgstr "В╕зерунок сп╕впада╓ з частиною назви шару"
 
 #: plug-ins/gap/gap_mod_layer.c:86 plug-ins/gap/gap_range_ops.c:577
 msgid "Pattern is LayerstackNumber List"
@@ -8287,11 +8287,11 @@ msgstr "останн╕й оброблений шар"
 
 #: plug-ins/gap/gap_mod_layer.c:172 plug-ins/gap/gap_range_ops.c:649
 msgid "Select Layer(s):"
-msgstr "Вибрати шари:"
+msgstr "Шари:"
 
 #: plug-ins/gap/gap_mod_layer.c:181 plug-ins/gap/gap_range_ops.c:658
 msgid "Select Pattern:"
-msgstr "Вибрати шаблон:"
+msgstr "В╕зерунок:"
 
 #. pixel
 #: plug-ins/gap/gap_mod_layer.c:183 plug-ins/gap/gap_range_ops.c:660
@@ -9104,7 +9104,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
-msgstr "Шаблон:"
+msgstr "В╕зерунок:"
 
 #. pixel
 #: plug-ins/gap/gap_mpege.c:332
@@ -10132,7 +10132,7 @@ msgstr "Ол╕вець"
 
 #: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
-msgstr "Шаблон"
+msgstr "В╕зерунок"
 
 #: plug-ins/gfig/gfig.c:2364
 msgid ""
@@ -11042,7 +11042,7 @@ msgstr "Плаваючий"
 #: plug-ins/gimpressionist/orientation.c:182
 #: plug-ins/gimpressionist/size.c:181
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "Мазки в╕дпов╕дн╕ до \"плаваючого\" шаблону"
+msgstr "Мазки в╕дпов╕дн╕ до \"плаваючого\" в╕зерунку"
 
 #: plug-ins/gimpressionist/orientation.c:194
 msgid "The hue of the region determines the direction of the stroke"
@@ -12210,7 +12210,7 @@ msgstr "Конструювання розс╕ченого лаб╕ринту з використанням ал╜оритма Пр╕ма..."
 
 #: plug-ins/maze/maze.c:161
 msgid "<Image>/Filters/Render/Pattern/Maze..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Лаб╕ринт..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Лаб╕ринт..."
 
 #: plug-ins/maze/maze.c:403
 msgid "Drawing Maze..."
@@ -12271,7 +12271,7 @@ msgstr "Див╕ться %s"
 
 #: plug-ins/mosaic/mosaic.c:325
 msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Шаблон/Моза╖ка..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/В╕зерунок/Моза╖ка..."
 
 #. progress bar for gradient finding
 #: plug-ins/mosaic/mosaic.c:447
