@@ -67,6 +67,7 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-render.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-selection.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpdisplayshell-transform.h"
@@ -936,7 +937,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_display_shell_connect (shell);
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
-  gimp_display_shell_shrink_wrap (shell);
+  gimp_display_shell_scale_setup (shell);
 
   g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
 }

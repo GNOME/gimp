@@ -1,3 +1,11 @@
+2003-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_reconnect):
+	call gimp_display_shell_scale_setup() instead of
+	gimp_display_shell_shrink_wrap() so window size, zoom factor and
+	scroll offsets are preserved across File->Revert if possible.
+	Fixes bug #114383.
+
 2003-06-04  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/xjt/xjt.c: applied a patch from Wolfgang Hofer that
