@@ -150,7 +150,6 @@ plug_in_menus_setup (GimpUIManager *manager,
                   PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
                   const gchar     *progname;
                   const gchar     *locale_domain;
-                  gchar           *stripped;
                   gchar           *key;
 
                   entry->proc_def  = proc_def;
@@ -161,25 +160,34 @@ plug_in_menus_setup (GimpUIManager *manager,
                   locale_domain = plug_ins_locale_domain (manager->gimp,
                                                           progname, NULL);
 
-                  stripped = gimp_strip_uline (dgettext (locale_domain,
-                                                         path->data));
-
                   if (proc_def->menu_label)
                     {
-                      gchar *label = g_strdup_printf ("%s/%s",
-                                                      stripped,
-                                                      proc_def->menu_label);
+                      gchar *menu;
+                      gchar *strip;
 
-                      key = g_utf8_collate_key (label, -1);
+                      menu = g_strconcat (dgettext (locale_domain,
+                                                    path->data),
+                                          "/",
+                                          dgettext (locale_domain,
+                                                    proc_def->menu_label),
+                                          NULL);
 
-                      g_free (label);
+                      strip = gimp_strip_uline (menu);
+
+                      key = g_utf8_collate_key (strip, -1);
+
+                      g_free (strip);
+                      g_free (menu);
                     }
                   else
                     {
-                      key = g_utf8_collate_key (stripped, -1);
-                    }
+                      gchar *strip = gimp_strip_uline (dgettext (locale_domain,
+                                                                 path->data));
 
-                  g_free (stripped);
+                      key = g_utf8_collate_key (strip, -1);
+
+                      g_free (strip);
+                    }
 
                   g_tree_insert (menu_entries, key, entry);
                 }
