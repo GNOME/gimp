@@ -62,8 +62,7 @@ enum
   PROP_BASE_DIR,
   PROP_JUSTIFICATION,
   PROP_INDENTATION,
-  PROP_LINE_SPACING,
-  PROP_COLOR
+  PROP_LINE_SPACING
 };
 
 
@@ -79,8 +78,9 @@ static void  gimp_text_options_get_property (GObject      *object,
                                              GValue       *value,
                                              GParamSpec   *pspec);
 
-static void  gimp_text_options_notify_color (GObject      *object,
-                                             GParamSpec   *pspec);
+static void  gimp_text_options_notify_color (GimpContext  *context,
+                                             GParamSpec   *pspec,
+                                             GimpText     *text);
 static void  gimp_text_options_notify_font  (GimpContext  *context,
                                              GParamSpec   *pspec,
                                              GimpText     *text);
@@ -121,7 +121,6 @@ static void
 gimp_text_options_class_init (GimpTextOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  GimpRGB       black;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -178,23 +177,11 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    N_("Modify line spacing"),
 				   -8192.0, 8192.0, 0.0,
 				   GIMP_PARAM_DEFAULTS);
-
-  gimp_rgba_set (&black, 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
-
-  g_object_class_install_property (object_class, PROP_COLOR,
-                                   gimp_param_spec_color ("color", NULL, NULL,
-                                                          &black,
-                                                          G_PARAM_READWRITE));
 }
 
 static void
 gimp_text_options_init (GimpTextOptions *options)
 {
-  gimp_context_get_foreground (GIMP_CONTEXT (options), &options->color);
-
-  g_signal_connect (options, "notify::foreground",
-                    G_CALLBACK (gimp_text_options_notify_color),
-                    NULL);
 }
 
 static void
@@ -237,9 +224,6 @@ gimp_text_options_get_property (GObject    *object,
     case PROP_LINE_SPACING:
       g_value_set_double (value, options->line_spacing);
       break;
-    case PROP_COLOR:
-      g_value_set_boxed (value, &options->color);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -253,7 +237,6 @@ gimp_text_options_set_property (GObject      *object,
                                 GParamSpec   *pspec)
 {
   GimpTextOptions *options = GIMP_TEXT_OPTIONS (object);
-  GimpRGB         *color;
 
   switch (property_id)
     {
@@ -288,10 +271,6 @@ gimp_text_options_set_property (GObject      *object,
     case PROP_LINE_SPACING:
       options->line_spacing = g_value_get_double (value);
       break;
-    case PROP_COLOR:
-      color = g_value_get_boxed (value);
-      options->color = *color;
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -299,14 +278,15 @@ gimp_text_options_set_property (GObject      *object,
 }
 
 static void
-gimp_text_options_notify_color (GObject    *object,
-                                GParamSpec *pspec)
+gimp_text_options_notify_color (GimpContext *context,
+                                GParamSpec  *pspec,
+                                GimpText    *text)
 {
   GimpRGB  color;
 
-  gimp_context_get_foreground (GIMP_CONTEXT (object), &color);
+  gimp_context_get_foreground (context, &color);
 
-  g_object_set (object, "color", &color, NULL);
+  g_object_set (text, "color", &color, NULL);
 }
 
 static void
@@ -341,10 +321,11 @@ gimp_text_options_connect_text (GimpTextOptions *options,
   g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
   g_return_if_fail (GIMP_IS_TEXT (text));
 
-  g_signal_handlers_block_by_func (options,
-                                   gimp_text_options_notify_color, NULL);
+  gimp_context_define_property (GIMP_CONTEXT (options),
+                                GIMP_CONTEXT_PROP_FOREGROUND, TRUE);
 
   gimp_config_sync (GIMP_CONFIG (text), GIMP_CONFIG (options), 0);
+  gimp_context_set_foreground (GIMP_CONTEXT (options), &text->color);
   gimp_context_set_font_name (GIMP_CONTEXT (options), text->font);
 
   gimp_config_connect (G_OBJECT (options), G_OBJECT (text), NULL);
@@ -352,14 +333,15 @@ gimp_text_options_connect_text (GimpTextOptions *options,
   g_signal_connect_object (options, "notify::font",
                            G_CALLBACK (gimp_text_options_notify_font),
                            text, 0);
+  g_signal_connect_object (options, "notify::foreground",
+                           G_CALLBACK (gimp_text_options_notify_color),
+                           text, 0);
 }
 
 void
 gimp_text_options_disconnect_text (GimpTextOptions *options,
                                    GimpText        *text)
 {
-  GimpRGB  color;
-
   g_return_if_fail (GIMP_IS_TEXT_OPTIONS (options));
   g_return_if_fail (GIMP_IS_TEXT (text));
 
@@ -367,12 +349,11 @@ gimp_text_options_disconnect_text (GimpTextOptions *options,
 
   g_signal_handlers_disconnect_by_func (options,
                                         gimp_text_options_notify_font, text);
+  g_signal_handlers_disconnect_by_func (options,
+                                        gimp_text_options_notify_color, text);
 
-  gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
-  g_object_set (options, "color", &color, NULL);
-
-  g_signal_handlers_unblock_by_func (options,
-                                     gimp_text_options_notify_color, NULL);
+  gimp_context_define_property (GIMP_CONTEXT (options),
+                                GIMP_CONTEXT_PROP_FOREGROUND, FALSE);
 }
 
 GtkWidget *
@@ -452,7 +433,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
   row++;
 
-  button = gimp_prop_color_button_new (config, "color", _("Text Color"),
+  button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
 				       -1, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));

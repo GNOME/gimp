@@ -15,6 +15,19 @@ Bugs fixed since the last release
 - 136303: fixed translation of preview widget (Sven)
 - 136321: fixed bug in Plasma plug-in (Sven)
 - 136371: fixed a crash caused by gimp_query_boolean_box (Sven)
+- 119905: configurable undo preview size (Sven)
+- 136524: fixed Shadow Bevel script (Yosh)
+- 136535: enable i18n in SVG plug-in (Yuheng Xie, Sven)
+- 136081: allow to use the webbrowser to access help (Brix, Sven)
+- 128588: resurrected Save button in input devices dialog (Simon)
+- 136706: added missing i18n in IfsCompose plug-in (Sven)
+- 136713: added missing i18n in ImageMap plug-in (Sven)
+- 131965: cancel tools instead of resetting when image becomes dirty (Mitch)
+- 12253:  only cancel tool operation if tool is active on the image that
+          is becoming dirty (Mitch)
+- 136343: fixed wrong function prototypes (Mitch)
+- 136636: workaround a GDK problem on win32 (Mitch)
+- 136850: fixed crash when toggling tool preview (Sven)
 
 
 Bugs fixed in GIMP 2.0pre4

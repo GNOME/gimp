@@ -1,5 +1,10 @@
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.[ch]: redid the color handling.
+	differently. Still not perfect, but it is somewhat cleaner.
+
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpcontext.c: reverted a small change that I didn't
 	want to commit at all.
 	
