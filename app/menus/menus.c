@@ -438,7 +438,8 @@ static GimpItemFactoryEntry image_entries[] =
   /*  <Image>/Select  */
   
   { { N_("/Select/Invert"), "<control>I",
-      select_invert_cmd_callback, 0 },
+      select_invert_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_INVERT },
     NULL,
     "select/invert.html", NULL },
   { { N_("/Select/All"), "<control>A",
@@ -752,7 +753,7 @@ static GimpItemFactoryEntry image_entries[] =
     "layers/dialogs/layer_boundary_size.html", NULL },
   { { N_("/Layer/Layer to Imagesize"), NULL,
       layers_resize_to_image_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RESIZE },
+      "<StockItem>", GIMP_STOCK_LAYER_TO_IMAGESIZE },
     NULL,
     "layers/layer_to_image_size.html", NULL },
   { { N_("/Layer/Scale Layer..."), NULL,
@@ -787,7 +788,8 @@ static GimpItemFactoryEntry image_entries[] =
     NULL,
     "layers/colors/desaturate.html", NULL },
   { { N_("/Layer/Colors/Invert"), NULL,
-      drawable_invert_cmd_callback, 0 },
+      drawable_invert_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_INVERT },
     NULL,
     "layers/colors/invert.html", NULL },
 
@@ -1074,7 +1076,7 @@ static GimpItemFactoryEntry layers_entries[] =
     "dialogs/layer_boundary_size.html", NULL },
   { { N_("/Layer to Imagesize"), NULL,
       layers_resize_to_image_cmd_callback, 0,
-      "<StockItem>", GIMP_STOCK_RESIZE },
+      "<StockItem>", GIMP_STOCK_LAYER_TO_IMAGESIZE },
     NULL,
     "layer_to_image_size.html", NULL },
   { { N_("/Scale Layer..."), "<control>S",

@@ -1,3 +1,12 @@
+2002-06-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpstock.[ch]: register the new "invert" and
+	"layer to imagesize" PNGs as stock icons.
+
+	* app/gui/menus.c: use them here.
+
+	* themes/Default/images/Makefile.am: fixed indentation.
+
 2002-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/menus.c: use the new paste icons in the menu.

@@ -66,9 +66,9 @@ STOCK_MENU_IMAGES = \
 	stock-convert-grayscale-16.png		\
 	stock-convert-indexed-16.png		\
 	stock-convert-rgb-16.png		\
-   stock-invert-16.png           \
-   stock-layer-to-imagesize-16.png  \
+	stock-invert-16.png			\
 	stock-merge-down-16.png			\
+	stock-layer-to-imagesize-16.png		\
 	stock-plugin-16.png			\
 	stock-reshow-filter-16.png		\
 	stock-rotate-180-16.png			\
