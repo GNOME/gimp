@@ -33,6 +33,16 @@
 
 #include "path_toolP.h"
 
+typedef struct 
+{
+   gdouble x1;
+   gdouble y1;
+   gdouble x2;
+   gdouble y2;
+
+} PathBezierData;
+
+
 guint
 path_bezier_get_points (PathTool *path_tool,
                         PathSegment *segment,
@@ -72,7 +82,7 @@ path_bezier_drag_segment (PathTool *path_tool,
 			  gint x,
 			  gint y);
 
-gboolean
+gint
 path_bezier_on_handles (PathTool *path_tool,
 			PathSegment *segment,
 			gint x,
@@ -83,7 +93,8 @@ void
 path_bezier_drag_handles (PathTool *path_tool,
 			  PathSegment *segment,
 			  gint x,
-			  gint y);
+			  gint y,
+			  gint handle_id);
 
 PathSegment *
 path_bezier_insert_anchor (PathTool *path_tool,
@@ -97,6 +108,14 @@ path_bezier_update_segment (PathTool *path_tool,
 void
 path_bezier_flip_segment (PathTool *path_tool,
 			  PathSegment *segment);
+
+void
+path_bezier_init_segment (PathTool *path_tool,
+			  PathSegment *segment);
+
+void
+path_bezier_cleanup_segment (PathTool *path_tool,
+			     PathSegment *segment);
 
 #endif /*  __PATH_BEZIER_H__ */
 

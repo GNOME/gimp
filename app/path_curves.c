@@ -34,7 +34,7 @@ static CurveDescription CurveTypes[] =
 { 
     /* SEGMENT_LINE */
    {
-      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
+      NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL
     },
 
     /* SEGMENT_BEZIER */
@@ -49,7 +49,9 @@ static CurveDescription CurveTypes[] =
       path_bezier_drag_handles,
       path_bezier_insert_anchor,
       path_bezier_update_segment,
-      path_bezier_flip_segment
+      path_bezier_flip_segment,
+      path_bezier_init_segment,
+      path_bezier_cleanup_segment
     }
 };
 
@@ -91,10 +93,10 @@ path_curve_get_points (PathTool *path_tool,
 
 void
 path_curve_get_point (PathTool *path_tool,
-		       		  PathSegment *segment,
-		       		  gdouble position,
-		       		  gdouble *x,
-		       		  gdouble *y)
+		      PathSegment *segment,
+		      gdouble position,
+		      gdouble *x,
+		      gdouble *y)
 {
    if (segment && CurveTypes[segment->type].get_point)
       (* CurveTypes[segment->type].get_point) (path_tool, segment, position, x, y);
@@ -242,23 +244,22 @@ path_curve_on_segment (Tool *tool,
 
 void
 path_curve_drag_segment (PathTool *path_tool,
-				       PathSegment *segment,
-				       gdouble position,
-				       gint x,
-				       gint y
-				       )
+			 PathSegment *segment,
+			 gdouble position,
+			 gint x,
+			 gint y)
 {
    if (segment && CurveTypes[segment->type].drag_segment)
       (* CurveTypes[segment->type].drag_segment) (path_tool, segment, position, x, y);
    return;
 }
 
-gboolean
+gint
 path_curve_on_handle (PathTool *path_tool,
-				      PathSegment *segment,
-				      gint x,
-				      gint y,
-				      gint halfwidth)
+		      PathSegment *segment,
+		      gint x,
+		      gint y,
+		      gint halfwidth)
 {
    if (segment && CurveTypes[segment->type].on_handles)
       return (* CurveTypes[segment->type].on_handles) (path_tool, segment, x, y, halfwidth);
@@ -267,19 +268,19 @@ path_curve_on_handle (PathTool *path_tool,
 
 void
 path_curve_drag_handle (PathTool *path_tool,
-				      PathSegment *segment,
-				      gint x,
-				      gint y
-				      )
+			PathSegment *segment,
+			gint x,
+			gint y,
+			gint handle_id)
 {
    if (segment && CurveTypes[segment->type].drag_handle)
-      (* CurveTypes[segment->type].drag_handle) (path_tool, segment, x, y);
+      (* CurveTypes[segment->type].drag_handle) (path_tool, segment, x, y, handle_id);
 }
 
 PathSegment *
 path_curve_insert_anchor (PathTool *path_tool,
-			   	      PathSegment *segment,
-			   	      gdouble position)
+			  PathSegment *segment,
+			  gdouble position)
 {
    if (segment && CurveTypes[segment->type].insert_anchor)
       return (* CurveTypes[segment->type].insert_anchor) (path_tool, segment, position);
@@ -290,7 +291,7 @@ path_curve_insert_anchor (PathTool *path_tool,
 
 void
 path_curve_flip_segment (PathTool *path_tool,
-			    	       PathSegment *segment)
+			 PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].flip_segment)
       (* CurveTypes[segment->type].flip_segment) (path_tool, segment);
@@ -299,9 +300,27 @@ path_curve_flip_segment (PathTool *path_tool,
 
 void
 path_curve_update_segment (PathTool *path_tool,
-			    	       PathSegment *segment)
+			   PathSegment *segment)
 {
    if (segment && CurveTypes[segment->type].update_segment)
       (* CurveTypes[segment->type].update_segment) (path_tool, segment);
+   return;
+}
+
+void
+path_curve_init_segment (PathTool *path_tool,
+			 PathSegment *segment)
+{
+   if (segment && CurveTypes[segment->type].init_segment)
+      (* CurveTypes[segment->type].init_segment) (path_tool, segment);
+   return;
+}
+
+void
+path_curve_cleanup_segment (PathTool *path_tool,
+			    PathSegment *segment)
+{
+   if (segment && CurveTypes[segment->type].cleanup_segment)
+      (* CurveTypes[segment->type].cleanup_segment) (path_tool, segment);
    return;
 }

@@ -84,7 +84,7 @@ path_bezier_drag_segment (PathTool *path_tool,
    return;
 }
 
-gboolean
+gint
 path_bezier_on_handles (PathTool *path_tool,
 			PathSegment *segment,
 			gint x,
@@ -98,7 +98,8 @@ void
 path_bezier_drag_handles (PathTool *path_tool,
 			  PathSegment *segment,
 			  gint x,
-			  gint y)
+			  gint y,
+			  gint handle_id)
 {
    return;
 }
@@ -123,6 +124,22 @@ path_bezier_update_segment (PathTool *path_tool,
 void
 path_bezier_flip_segment (PathTool *path_tool,
 			  PathSegment *segment)
+{
+    return;
+}
+
+
+void
+path_bezier_init_segment (PathTool *path_tool,
+			  PathSegment *segment)
+{
+    return;
+}
+
+
+void
+path_bezier_cleanup_segment (PathTool *path_tool,
+			     PathSegment *segment)
 {
     return;
 }

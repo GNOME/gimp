@@ -1,3 +1,22 @@
+1999-10-3  Simon Budig  <Simon.Budig@unix-ag.org>  
+
+	* app/path_tool.h     
+        * app/path_tool.c
+        * app/path_toolP.h
+        * app/path_curves.h
+        * app/path_curves.c
+        * app/path_bezier.h
+        * app/path_bezer.c 
+ 
+        Minor cleanup in the Api (adding init/cleanup functions for the
+        curve-type-specific data, extending the on_handler function to
+        return a handler ID, so the tool-core can tell path_curve_drag_handle
+        which handle gets dragged around)  
+
+        Indentation madness - This must be some kind of infective: Too long
+        together with Sven and Mitch :-)                
+
+
 Wed Oct  6 23:29:53 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/palette.c
