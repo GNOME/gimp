@@ -76,10 +76,23 @@
 ; The vaule returned when the script is invoked is a string containing the 
 ; gradient name. If the above selection was not altered the string would 
 ; contain "Deep_Sea"
+;
+; ----------------------------------------------------------------------
+;
+; SF-FILENAME
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget consists of a button containing the name of a file.
+; If the button is pressed a file selection dialog will popup.
+;
+; Usage:-
+; SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"
+;
+; The vaule returned when the script is invoked is a string containing the 
+; filename.
 
 
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern gradient font size)
+(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern gradient font size filename)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -157,6 +170,7 @@
 		    SF-PATTERN "Pattern" "Maple Leaves"
 		    SF-GRADIENT "Gradient" "Deep_Sea"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
-                    SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1))
+                    SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1)
+		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg"))
 
 

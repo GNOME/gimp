@@ -30,10 +30,6 @@
    openend images is planned, but I'm still not sure how to deal with dirty
    images.
 
-   There is a problem with the offset introduced by the window-manager adding
-   decorations to the windows. This is annoying and should be fixed somehow.
-   ( Update: I was promised that this will be fixed in gtk. )
-   
    Dialogs are now reopened if the gimp is called with the command-line-option
    --restore-session or if the related entry is set in gimprc.
    Probably there should alternatively be a list of dialogs in the preferences 
@@ -92,13 +88,8 @@ session_get_window_info (GtkWidget   *window,
   if ( !save_session_info || info == NULL || window->window == NULL )
     return;
 
-  gdk_window_get_origin (window->window, &info->x, &info->y);
+  gdk_window_get_root_origin (window->window, &info->x, &info->y);
   gdk_window_get_size (window->window, &info->width, &info->height);
-
-  /* This is a very ugly hack to work against the offset 
-     introduced by window decorations.
-     The problem should be handled in gtk ... */
-  info->y += -20;
 
   if ( we_are_exiting )
     info->open = GTK_WIDGET_VISIBLE (window);

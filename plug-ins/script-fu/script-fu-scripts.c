@@ -197,30 +197,29 @@ static void       script_fu_about_dialog_close     (GtkWidget *widget,
 static gint       script_fu_about_dialog_delete    (GtkWidget *widget,
 						    GdkEvent  *event,
 						    gpointer   data);
-static void       script_fu_pattern_preview         (gchar    *name,
-						     gint     width,
-						     gint     height,
-						     gint     bytes,
-						     gchar *  mask_data,
-						     gint     closing,
-						     gpointer udata);
+static void       script_fu_pattern_preview        (gchar    *name,
+						    gint     width,
+						    gint     height,
+						    gint     bytes,
+						    gchar *  mask_data,
+						    gint     closing,
+						    gpointer udata);
 
-static void       script_fu_gradient_preview         (gchar    *name,
-						     gint     width,
-						     gdouble *  mask_data,
-						     gint     closing,
-						     gpointer udata);
+static void       script_fu_gradient_preview       (gchar    *name,
+						    gint     width,
+						    gdouble *  mask_data,
+						    gint     closing,
+						    gpointer udata);
 
-static void      script_fu_brush_preview            (char *, /* Name */
-						     gdouble, /* opacity */
-						     gint,    /* spacing */
-						     gint,    /* paint_mode */
-						     gint,    /* width */
-						     gint,    /* height */
-						     gchar *, /* mask data */
-						     gint,    /* dialog closing */
-						     gpointer /* user data */);
-
+static void       script_fu_brush_preview          (char *, /* Name */
+						    gdouble, /* opacity */
+						    gint,    /* spacing */
+						    gint,    /* paint_mode */
+						    gint,    /* width */
+						    gint,    /* height */
+						    gchar *, /* mask data */
+						    gint,    /* dialog closing */
+						    gpointer /* user data */);
 
 
 /*
@@ -1274,7 +1273,7 @@ script_fu_interface (SFScript *script)
 							       &script->arg_values[i].sfa_pattern);
 	  break;
 	case SF_GRADIENT:
-	  script->args_widgets[i] = gimp_gradient_select_widget("Script-fu Pattern Selection",
+	  script->args_widgets[i] = gimp_gradient_select_widget("Script-Fu Gradient Selection",
 								script->arg_values[i].sfa_gradient, 
 								script_fu_gradient_preview,
 								&script->arg_values[i].sfa_gradient);
@@ -1282,7 +1281,7 @@ script_fu_interface (SFScript *script)
 
 	case SF_BRUSH:
 	  script->args_widgets[i] = 
-	    gimp_brush_select_widget("Script-fu brush Selection",
+	    gimp_brush_select_widget("Script-Fu Brush Selection",
 				     script->arg_values[i].sfa_brush.name, 
 				     script->arg_values[i].sfa_brush.opacity, 
 				     script->arg_values[i].sfa_brush.spacing, 
@@ -1397,13 +1396,13 @@ script_fu_color_preview (GtkWidget *preview,
 
 
 static void
-script_fu_pattern_preview(gchar    *name,
-	     gint     width,
-	     gint     height,
-	     gint     bytes,
-	     gchar *  mask_data,
-	     gint     closing,
-	     gpointer udata)
+script_fu_pattern_preview (gchar    *name,
+			   gint     width,
+			   gint     height,
+			   gint     bytes,
+			   gchar *  mask_data,
+			   gint     closing,
+			   gpointer udata)
 {
   gchar ** pname = (gchar **) udata;
   g_free(*pname);
@@ -2075,7 +2074,7 @@ script_fu_file_preview_callback (GtkWidget *widget,
 
   if (!file->dialog)
     {
-      file->dialog = gtk_file_selection_new ("Script-Fu File Selector");
+      file->dialog = gtk_file_selection_new ("Script-Fu File Selection");
       fs = GTK_FILE_SELECTION (file->dialog);
 
       gtk_signal_connect (GTK_OBJECT (fs->ok_button), "clicked",
@@ -2146,7 +2145,7 @@ script_fu_font_preview_callback (GtkWidget *widget,
 
   if (!font->dialog)
     {
-      font->dialog = gtk_font_selection_dialog_new ("Script-Fu Font Selector");
+      font->dialog = gtk_font_selection_dialog_new ("Script-Fu Font Selection");
       fsd = GTK_FONT_SELECTION_DIALOG (font->dialog);
 
       gtk_signal_connect (GTK_OBJECT (fsd->ok_button), "clicked",
@@ -2226,4 +2225,9 @@ script_fu_about_dialog_delete (GtkWidget *widget,
   script_fu_about_dialog_close (widget, data);
   return TRUE;
 }
+
+
+
+
+
 
