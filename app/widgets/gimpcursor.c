@@ -401,6 +401,8 @@ gimp_change_win_cursor (GdkWindow      *win,
 				       bmcursor->y_hot);
   gdk_window_set_cursor (win, cursor);
   gdk_cursor_destroy (cursor);
+  gdk_bitmap_unref (bitmap);
+  gdk_bitmap_unref (mask);
 }
 
 void

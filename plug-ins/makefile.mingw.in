@@ -1,0 +1,852 @@
+## Makefile for building the GIMP plug-ins with gcc on Win32.
+## You should use GNU make running on cygwin.
+## Use: make -f makefile.mingw
+
+# I don't want to use many hand-written makefiles, so this is quite complex.
+# This same makefile is also included by sub-makes called as subroutines.
+# Various parts of this file are used when makeing from the plug-ins directory,
+# and when building individual plug-ins and what's left of the gck library.
+
+# This is what I use as installation target, from where the installer-builder
+# will pick it up.
+DEST = /install/gimp
+
+ifndef GIMPTOP
+GIMPTOP = ..
+endif
+
+TOP = ../..
+
+include $(GIMPTOP)/build/win32/make.mingw
+
+# Possibly override GIMP version from build/win32/module.defs
+GIMP_VER = @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@
+
+################################################################
+
+ifndef LIBRARY
+ifndef PLUGIN
+ifndef MODULE
+
+# This part is used when making from the plug-ins directory
+
+FROMPLUGINSDIR=YES		# Used to bypass other parts below
+
+# List plug-ins. Use several lists just so that this makefile looks more like
+# the one used with Microsoft's nmake, which has silly limits.
+
+# These are in the common subdirectory
+COMMON = 			\
+	AlienMap		\
+	AlienMap2		\
+	CEL			\
+	CML_explorer		\
+	aa			\
+	align_layers		\
+	animationplay		\
+	animoptimize		\
+	apply_lens		\
+	autocrop		\
+	autostretch_hsv		\
+	blinds			\
+	blur			\
+	borderaverage		\
+	bumpmap			\
+	c_astretch		\
+	checkerboard		\
+	colorify		\
+	compose			\
+	convmatrix		\
+	csource			\
+	cubism			\
+	curve_bend		\
+	decompose		\
+	deinterlace		\
+	depthmerge		\
+	despeckle		\
+	destripe		\
+	diffraction		\
+	displace		\
+	edge			\
+	emboss			\
+	engrave			\
+	exchange		\
+	film			\
+	flarefx			\
+	fractaltrace		\
+	gauss_iir		\
+	gauss_rle		\
+	gbr			\
+	gee			\
+	gicon			\
+	gif			\
+	gifload			\
+	glasstile		\
+	gpb			\
+	gqbist			\
+	gradmap			\
+	grid			\
+	gtm			\
+	guillotine		\
+	gz			\
+	header			\
+	hot			\
+	hrz			\
+	illusion		\
+	iwarp			\
+	jigsaw			\
+	jpeg			\
+	laplace			\
+	lic			\
+	mapcolor		\
+	max_rgb			\
+	mblur			\
+	newsprint		\
+	nlfilt			\
+	noisify			\
+	normalize		\
+	nova			\
+	oilify			\
+	papertile		\
+	pat			\
+	pcx			\
+	pix			\
+	pixelize		\
+	plasma			\
+	plugindetails		\
+	png			\
+	pnm			\
+	polar			\
+	ps			\
+	psd			\
+	psp			\
+	randomize		\
+	ripple			\
+	rotate			\
+	sample_colorize		\
+	scatter_hsv		\
+	semiflatten		\
+	sharpen			\
+	shift			\
+	sinus			\
+	smooth_palette		\
+	snoise			\
+	sobel			\
+	sparkle			\
+	spheredesigner		\
+	spread			\
+	struc			\
+	sunras			\
+	tga			\
+	threshold_alpha		\
+	tiff			\
+	tile			\
+	tileit			\
+	tiler			\
+	unsharp			\
+	video			\
+	vinvert			\
+	vpropagate		\
+	warp			\
+	waves			\
+	whirlpinch		\
+	winclipboard		\
+	wind			\
+	winprint		\
+	wmf			\
+	xbm			\
+	xwd			\
+	zealouscrop
+
+# These have own subdirectories each
+SEPARATE = 			\
+	FractalExplorer		\
+	Lighting		\
+	MapObject		\
+	bmp			\
+	dbbrowser		\
+	faxg3			\
+	fits			\
+	flame			\
+	fp			\
+	gfig			\
+	gflare			\
+	gfli			\
+	gimpressionist		\
+	gdyntext		\
+	ifscompose		\
+	imagemap		\
+	maze			\
+	mosaic			\
+	pagecurl		\
+	rcm			\
+	sel2path		\
+	sgi			\
+	twain			\
+	webbrowser		\
+	winsnap
+
+# These are unofficial, ie not in the CVS. To build these, you should
+# get tml's source snapshot and copy this makefile to the
+# ../unofficial-plug-ins directory, go there, and do "make -f
+# makefile.mingw unofficial".
+
+UNOFFICIAL = 			\
+	Anamorphose		\
+	DigitalSignature	\
+	RGB_Displace		\
+	ccanalyze		\
+	fixer			\
+	gimp_ace		\
+	guash			\
+	homogenizer		\
+	kaleidoscope		\
+	logconv			\
+	sel_gauss		\
+	magiceye		\
+	mathmap			\
+	psd_save		\
+	resynthesizer		\
+	user_filter
+
+# The main target
+
+all : ../config.h libs-all common-plugins-all separate-plugins-all
+
+../config.h : ../config.h.win32
+	cp ../config.h.win32 ../config.h
+
+install : libs-install common-plugins-install separate-plugins-install data-install
+
+unofficial:
+	for d in $(UNOFFICIAL); do $(MAKE) -f makefile.mingw sub-one-separate DIR=$$d TARGET=install EXTRADEFINES=-DGIMP_ENABLE_COMPAT_CRUFT; done
+
+clean:: libs-clean common-plugins-clean separate-plugins-clean
+
+libs-all :
+	$(MAKE) -f makefile.mingw sub-libs TARGET=all
+
+libs-install :
+	$(MAKE) -f makefile.mingw sub-libs TARGET=install
+
+libs-clean :
+	$(MAKE) -f makefile.mingw sub-libs TARGET=clean
+
+sub-libs:
+	cd libgck/gck; $(MAKE) -f ../../makefile.mingw GIMPTOP=../../.. TOP=../../$(TOP) LIBRARY=gck OBJECTS="gckcolor.o" $(TARGET)
+
+
+
+common-plugins-all :
+	$(MAKE) -f makefile.mingw sub-common-plugins TARGET=all
+
+common-plugins-install :
+	$(MAKE) -f makefile.mingw sub-common-plugins TARGET=install
+
+common-plugins-clean :
+	cd common; $(MAKE) -f ../makefile.mingw GIMPTOP=../.. LIBRARY=PLUGIN=dummy clean
+
+
+
+sub-common-plugins :
+	for d in $(COMMON); do $(MAKE) -f makefile.mingw sub-one-common DIR=$$d TARGET=$(TARGET); done
+
+sub-one-common :
+	cd common; $(MAKE) -f ../makefile.mingw GIMPTOP=../.. TOP=../$(TOP) PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+
+
+
+separate-plugins-all :
+	$(MAKE) -f makefile.mingw sub-separate-plugins TARGET=all
+
+separate-plugins-install :
+	$(MAKE) -f makefile.mingw sub-separate-plugins TARGET=install
+
+separate-plugins-clean :
+	$(MAKE) -f makefile.mingw sub-separate-plugins TARGET=clean
+
+sub-separate-plugins : sub-script-fu sub-gap
+	for d in $(SEPARATE); do $(MAKE) -f makefile.mingw sub-one-separate DIR=$$d TARGET=$(TARGET); done
+
+# We must handle script-fu separately because of the dash, sigh
+sub-script-fu :
+	cd script-fu; $(MAKE) -f ../makefile.mingw GIMPTOP=../.. TOP=../$(TOP) PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
+
+# Also GAP is special
+sub-gap :
+	cd gap; $(MAKE) -f ../makefile.mingw GIMPTOP=../.. TOP=../$(TOP) PLUGIN=gap_filter EXTRA_gap_filter=1 $(TARGET)
+	cd gap; $(MAKE) -f ../makefile.mingw GIMPTOP=../.. TOP=../$(TOP) PLUGIN=gap_plugins EXTRA_gap_plugins=1 $(TARGET)
+
+
+sub-one-separate :
+	cd $(DIR); $(MAKE) -f ../makefile.mingw GIMPTOP=../.. TOP=../$(TOP) PLUGIN=$(DIR) EXTRA_$(DIR)=1 $(TARGET)
+
+
+data-install : gap-data-install gflare-data-install gimpressionist-data-install guash-data-install script-fu-data-install
+
+gap-data-install:
+	-mkdir $(DEST)/scripts
+	$(INSTALL) gap/*.scm $(DEST)/scripts
+	
+gflare-data-install:
+	-mkdir $(DEST)/gflare
+	-$(INSTALL) gflare/gflares/* $(DEST)/gflare
+	-rm $(DEST)/gflare/Makefile.am
+
+gimpressionist-data-install :
+	-mkdir $(DEST)/gimpressionist $(DEST)/gimpressionist/Brushes $(DEST)/gimpressionist/Paper $(DEST)/gimpressionist/Presets
+	$(INSTALL) gimpressionist/Brushes/*.p?m $(DEST)/gimpressionist/Brushes
+	$(INSTALL) gimpressionist/Paper/*.p?m $(DEST)/gimpressionist/Paper
+	-$(INSTALL) gimpressionist/Presets/* $(DEST)/gimpressionist/Presets
+	-rm $(DEST)/gimpressionist/Presets/Makefile.am
+
+guash-data-install:
+
+script-fu-data-install:
+	-mkdir $(DEST)/scripts
+	$(INSTALL) script-fu/scripts/*.scm $(DEST)/scripts
+	rm $(DEST)/scripts/test-sphere.scm
+	$(INSTALL) script-fu/scripts/*.jpg $(DEST)/scripts
+	for d in FractalExplorer/fractalexplorer-examples/*; do if [ -f $$d ]; then $(INSTALL) $$d $(DEST)/fractalexplorer; fi; done
+	rm $(DEST)/fractalexplorer/Makefile.am
+
+endif # ifndef MODULE
+endif # ifndef PLUGIN
+endif # ifndef LIBRARY
+
+################################################################
+
+ifndef FROMPLUGINSDIR
+
+# This part is used when building individual plug-ins or one of
+# the libraries. 
+
+ifdef EXTRA_FractalExplorer
+OBJECTS = \
+	Dialogs.o \
+	Events.o \
+	FractalExplorer.o \
+	Globals.o
+endif
+
+ifdef EXTRA_Lighting
+OBJECTS = \
+	lighting_apply.o \
+	lighting_image.o \
+	lighting_main.o \
+	lighting_preview.o \
+	lighting_shade.o \
+	lighting_ui.o
+endif
+
+ifdef EXTRA_MapObject
+OBJECTS = \
+	arcball.o \
+	mapobject_apply.o \
+	mapobject_image.o \
+	mapobject_main.o \
+	mapobject_preview.o \
+	mapobject_shade.o \
+	mapobject_ui.o
+endif
+
+ifdef EXTRA_aa
+EXTRACFLAGS = -I $(TOP)/aalib-1.2
+EXTRALIBS = $(TOP)/aalib-1.2/libaa.a
+endif
+
+ifdef EXTRA_bmp
+OBJECTS = \
+	bmp.o \
+	bmpread.o \
+	bmpwrite.o
+endif
+
+ifdef EXTRA_dbbrowser
+OBJECTS = \
+	dbbrowser.o \
+	dbbrowser_utils.o
+endif
+
+ifdef EXTRA_faxg3
+OBJECTS = \
+	faxg3.o \
+	g3.o	\
+	run_tbl.o
+endif
+
+ifdef EXTRA_fits
+OBJECTS = \
+	fits.o \
+	fitsrw.o
+endif
+
+ifdef EXTRA_fixer
+OBJECTS = \
+	fixer.o
+EXTRALIBS = -lstdc++
+endif
+
+ifdef EXTRA_flame
+OBJECTS = \
+	cmap.o	\
+	flame.o	\
+	libifs.o \
+	rect.o
+endif
+
+ifdef EXTRA_fp
+OBJECTS = \
+	fp.o	\
+	fp_gdk.o \
+	fp_gtk.o \
+	fp_misc.o
+endif
+
+ifdef EXTRA_gap_filter
+OBJECTS = \
+	gap_filter_main.o \
+	gap_dbbrowser_utils.o \
+	gap_filter_foreach.o \
+	gap_filter_iterators.o \
+	gap_filter_pdb.o \
+	gap_filter_codegen.o \
+	gap_arr_dialog.o \
+	gap_pdb_calls.o
+endif
+	
+ifdef EXTRA_gap_plugins
+OBJECTS = \
+	gap_main.o \
+	gap_mov_exec.o \
+	gap_range_ops.o \
+	gap_arr_dialog.o \
+	gap_mov_dialog.o \
+	gap_layer_copy.o \
+	gap_split.o \
+	gap_resi_dialog.o \
+	gap_mpege.o \
+	gap_mod_layer.o \
+	gap_filter_pdb.o \
+	gap_filter_codegen.o \
+	gap_dbbrowser_utils.o \
+	gap_match.o \
+	gap_lib.o \
+	gap_exchange_image.o \
+	gap_pdb_calls.o \
+	resize.o
+endif
+
+ifdef EXTRA_gdyntext
+OBJECTS = \
+	charmap.o \
+	charmap_window.o \
+	font_selection.o \
+	gdyntext.o \
+	gdyntextcompat.o \
+	gdyntext_ui.o \
+	message_window.o
+endif
+
+ifdef EXTRA_gflare
+OBJECTS = \
+	asupsample.o \
+	gflare.o \
+	gtkmultioptionmenu.o
+endif
+
+ifdef EXTRA_gfli
+OBJECTS = \
+	fli.o \
+	gfli.o
+endif
+
+ifdef EXTRA_helpbrowser
+OBJECTS = \
+	helpbrowser.o \
+	queue.o
+endif
+
+ifdef EXTRA_homogenizer
+OBJECTS = \
+	homogenize.o
+EXTRALIBS = -lstdc++
+endif
+
+ifdef EXTRA_ifscompose
+OBJECTS = \
+	ifscompose.o \
+	ifscompose_storage.o \
+	ifscompose_utils.o
+endif
+
+ifdef EXTRA_imagemap
+OBJECTS = \
+	imap_cmd_copy_object.o \
+	imap_about.o \
+	imap_browse.o \
+	imap_cern_lex.o \
+	imap_cern_parse.o \
+	imap_circle.o \
+	imap_cmd_clear.o \
+	imap_cmd_copy.o \
+	imap_cmd_create.o \
+	imap_cmd_cut.o \
+	imap_cmd_cut_object.o \
+	imap_cmd_delete.o \
+	imap_cmd_delete_point.o \
+	imap_cmd_edit_object.o \
+	imap_cmd_guides.o \
+	imap_cmd_insert_point.o \
+	imap_cmd_move.o \
+	imap_cmd_move_down.o \
+	imap_cmd_move_sash.o \
+	imap_cmd_move_selected.o \
+	imap_cmd_move_to_front.o \
+	imap_cmd_move_up.o \
+	imap_cmd_object_down.o \
+	imap_cmd_object_move.o \
+	imap_cmd_object_up.o \
+	imap_cmd_paste.o \
+	imap_cmd_select.o \
+	imap_cmd_select_all.o \
+	imap_cmd_select_next.o \
+	imap_cmd_select_prev.o \
+	imap_cmd_select_region.o \
+	imap_cmd_send_to_back.o \
+	imap_cmd_unselect.o \
+	imap_cmd_unselect_all.o \
+	imap_command.o \
+	imap_csim_lex.o \
+	imap_csim_parse.o \
+	imap_default_dialog.o \
+	imap_edit_area_info.o \
+	imap_file.o \
+	imap_grid.o \
+	imap_main.o \
+	imap_menu.o \
+	imap_menu_funcs.o \
+	imap_misc.o \
+	imap_mru.o \
+	imap_ncsa_lex.o \
+	imap_ncsa_parse.o \
+	imap_object.o \
+	imap_object_popup.o \
+	imap_polygon.o \
+	imap_popup.o \
+	imap_preferences.o \
+	imap_preview.o \
+	imap_rectangle.o \
+	imap_selection.o \
+	imap_settings.o \
+	imap_source.o \
+	imap_statusbar.o \
+	imap_string.o \
+	imap_table.o \
+	imap_toolbar.o \
+	imap_tools.o
+endif
+
+ifdef EXTRA_jpeg
+EXTRACFLAGS = $(JPEG_CFLAGS)
+EXTRALIBS = $(JPEG_LIBS)
+endif
+
+ifdef EXTRA_maze
+OBJECTS = \
+	algorithms.o \
+	handy.o \
+	maze.o	\
+	maze_face.o
+endif
+
+ifdef EXTRA_mpeg
+EXTRACFLAGS = -I$(MPEG)
+EXTRALIBS = -L $(MPEG)/release -lmpeg
+endif
+
+ifdef EXTRA_png
+EXTRACFLAGS = $(PNG_CFLAGS)
+EXTRALIBS = $(PNG_LIBS)
+endif
+
+ifdef EXTRA_print
+OBJECTS = \
+	print.o \
+	print-escp2.o \
+	print-pcl.o \
+	print-ps.o \
+	print-util.o
+endif
+
+ifdef EXTRA_psp
+EXTRACFLAGS = $(ZLIB_CFLAGS)
+EXTRALIBS = $(ZLIB_LIBS)
+endif
+
+ifdef EXTRA_rcm
+OBJECTS = \
+	rcm.o	\
+	rcm_callback.o \
+	rcm_dialog.o \
+	rcm_gdk.o \
+	rcm_misc.o
+OPTIMIZE = 
+endif
+
+ifdef EXTRA_resynthesizer
+OBJECTS = \
+	resynth.o
+EXTRALIBS = -lstdc++
+endif
+
+ifdef EXTRA_script_fu
+OBJECTS = \
+	interp_md5.o \
+	interp_regex.o \
+	interp_slib.o \
+	interp_sliba.o \
+	interp_trace.o \
+	script-fu.o \
+	script-fu-console.o \
+	script-fu-constants.o \
+	script-fu-scripts.o \
+	regex.o \
+	dbbrowser_utils.o
+
+EXTRACFLAGS = -DREGEX_MALLOC -I../dbbrowser
+HAVE_RESOURCE = YES
+
+dbbrowser_utils.c : ../dbbrowser/dbbrowser_utils.c
+	cp $< $@
+endif
+
+ifdef EXTRA_sel2path
+OBJECTS = \
+	curve.o \
+	edge.o \
+	fit.o \
+	math.o \
+	pxl-outline.o \
+	sel2path.o \
+	sel2path_adv_dialog.o \
+	spline.o \
+	vector.o
+endif
+
+ifdef EXTRA_sgi
+OBJECTS = \
+	sgi.o	\
+	sgilib.o
+endif
+
+ifdef EXTRA_tiff
+EXTRACFLAGS = $(TIFF_CFLAGS)
+EXTRALIBS = $(TIFF_LIBS)
+endif
+
+ifdef EXTRA_gimp_ace
+EXTRACFLAGS = -DGLACE_GIMP -DPLUGIN_NAME=\"gimp_ace\" -DDATA
+OBJECTS = \
+	src/dialog.o \
+	src/gimp_ace.o \
+	src/glace.o \
+	src/glaceG.o \
+	src/preview.o
+endif
+
+ifdef EXTRA_gimpressionist
+OBJECTS = \
+	about.o \
+	brush.o \
+	color.o \
+	general.o \
+	gimp.o \
+	gimpressionist.o \
+	orientation.o \
+	orientmap.o \
+	paper.o \
+	placement.o \
+	plasma.o \
+	ppmtool.o \
+	presets.o \
+	preview.o \
+	repaint.o \
+	size.o \
+	sizemap.o
+endif
+
+ifdef EXTRA_guash
+HAVE_RESOURCE = YES
+endif
+
+ifdef EXTRA_magiceye
+OBJECTS = \
+	dialog.o \
+	magiceye.o
+endif
+
+ifdef EXTRA_mathmap
+OBJECTS = \
+	builtins.o \
+	builtins_compiler.o \
+	cgen.o \
+	colorwell.o \
+	exprtree.o \
+	internals.o \
+	jump.o \
+	lispreader.o \
+	macros.o \
+	mathmap.o \
+	noise.o \
+	overload.o \
+	parser.o \
+	postfix.o \
+	scanner.o \
+	tags.o \
+	tuples.o \
+	userval.o \
+	vars.o
+
+EXTRACFLAGS = -Drandom=g_random_int
+
+parser.c parser.h : parser.y
+	bison -p mm -d parser.y
+	mv parser.tab.c parser.c
+	mv parser.tab.h parser.h
+
+scanner.c : scanner.fl parser.h
+	flex -Pmm scanner.fl
+	mv lex.mm.c scanner.c
+
+endif
+
+ifdef EXTRA_user_filter
+
+uf_lexer.c : uf_lexer.l
+	flex -Cem -ouf_lexer.c uf_lexer.l
+uf_parser.tab.c: uf_parser.y
+	bison --defines --verbose uf_parser.y
+
+OBJECTS = \
+	libyywrap.o \
+	uf_eval.o \
+	uf_file.o \
+	uf_gui.o \
+	uf_lexer.o \
+	uf_main.o \
+	uf_parser.tab.o
+endif
+
+ifdef EXTRA_pmosaic
+EXTRACFLAGS = $(JPEG_CFLAGS)
+EXTRALIBS = $(JPEG_LIBS)
+OBJECTS = \
+	pmosaic.o \
+	pmsc.o
+endif
+
+ifdef EXTRA_twain
+OBJECTS = \
+	tw_func.o \
+	tw_util.o \
+	twain.o
+EXTRALIBS = -luser32
+endif
+
+ifdef EXTRA_winsnap
+HAVE_RESOURCE = YES
+endif
+
+PLUGINDIR = $(GIMPTOP)/plug-ins
+
+DEFINES = -DHAVE_CONFIG_H $(EXTRACFLAGS) $(EXTRADEFINES)
+INCLUDES = -I . -I $(GIMPTOP) -I $(PLUGINDIR) -I $(PLUGINDIR)/libgck 
+DEPCFLAGS = $(GLIB_CFLAGS) $(GTK_CFLAGS) $(INTL_CFLAGS)
+
+################################################################
+
+ifdef PLUGIN
+
+# This part is used when building individual plug-ins
+
+all : $(PLUGIN).exe
+
+install : all
+	$(INSTALL) $(PLUGIN).exe $(DEST)/plug-ins
+
+ifndef OBJECTS
+OBJECTS = $(PLUGIN).o
+endif
+
+ifdef HAVE_RESOURCE
+# We have our own resource file (just an icon, usually)
+RESOURCE = $(PLUGIN)res.o
+else
+# Use the Wilber icon otherwise. If gimp.exe eventually gets more resources,
+# this will have to be changed.
+RESOURCE = ../../app/gimpres.o
+endif
+
+$(PLUGIN).exe : $(OBJECTS) $(RESOURCE)
+	$(CC) $(CFLAGS) -mwindows -o $(PLUGIN).exe $(OBJECTS) $(RESOURCE) -L $(PLUGINDIR)/libgck/gck -lgck -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(INTL_LIBS) $(GLIB_LIBS) $(EXTRALIBS) $(LDFLAGS)
+
+# Kludge to get the path to the win32 headers
+WIN32APIHEADERS=$(shell echo "\#include <winver.h>" | $(CC) -M -E - | tail -1 | sed -e 's![\\/]winver.h!!' | tr -d '\015')
+
+$(PLUGIN)res.o : $(PLUGIN).rc
+	windres --include-dir $(WIN32APIHEADERS) $(PLUGIN).rc $(PLUGIN)res.o
+
+endif
+
+################################################################
+
+ifdef LIBRARY
+
+# This part is used when building a library
+
+all : lib$(LIBRARY).a
+
+install : all
+
+ifndef OBJECTS
+OBJECTS = $(LIBRARY).o
+endif
+
+lib$(LIBRARY).a : $(OBJECTS)
+	-rm $@
+	ar rc $@ $(OBJECTS)
+
+endif
+
+ifdef MODULE
+
+# This part is used when building a module
+
+# (This doesn't work, the only module so far is pygimp, and only Hans Breuer
+# builds it, with MSVC.)
+
+# Allow building libraries with specific extensions
+ifndef MODULE_EXT
+MODULE_EXT = dll
+endif
+
+all : $(MODULE).$(MODULE_EXT)
+
+install : all
+
+ifndef OBJECTS
+OBJECTS = $(MODULE).o
+endif
+
+$(MODULE).$(MODULE_EXT) : $(OBJECTS) $(MODULE).def
+	$(CC) $(CFLAGS) -mwindows -s -o $@ $(OBJECTS) $(LDFLAGS) $(EXTRALIBS) -L ../../libgimp -lgimp-$(GIMP_VER) -lgimpui-$(GIMP_VER) $(GTK_LIBS) $(GLIB_LIBS)
+endif
+
+endif # ifndef FROMPLUGINSDIR
+
+# Hack to get an updated makefile.mingw automatically after updating
+# makefile.mingw.in. Only for developer use.
+makefile.mingw: makefile.mingw.in
+	sed -e 's,@GIMP[_]MAJOR_VERSION@,@GIMP_MAJOR_VERSION@,' \
+	    -e 's,@GIMP[_]MINOR_VERSION@,@GIMP_MINOR_VERSION@,' <$< >$@
