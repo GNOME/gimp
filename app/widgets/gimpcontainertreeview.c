@@ -36,7 +36,6 @@
 #include "gimpcontainertreeview.h"
 #include "gimpcontainertreeview-dnd.h"
 #include "gimpdnd.h"
-#include "gimppreview.h"
 #include "gimppreviewrenderer.h"
 #include "gimpwidgets-utils.h"
 

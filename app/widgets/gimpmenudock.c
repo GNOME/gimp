@@ -35,10 +35,7 @@
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
 #include "gimpcontainermenuimpl.h"
-#include "gimpdnd.h"
 #include "gimpdockbook.h"
-#include "gimpmenuitem.h"
-#include "gimppreview.h"
 
 #include "libgimp/gimpintl.h"
 

@@ -1,5 +1,15 @@
 2003-03-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcellrendererviewable.c
+	(gimp_cell_renderer_viewable_clicked): show the popup preview
+	again.
+
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimptoolbox.c: removed useless #includes.
+
+2003-03-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpeditor.[ch]: added a GimpItemFactory to the
 	GimpEditor struct. Added gimp_editor_create_menu().
 

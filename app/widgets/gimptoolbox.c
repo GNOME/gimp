@@ -41,7 +41,6 @@
 #include "gimpdialogfactory.h"
 #include "gimpdnd.h"
 #include "gimpitemfactory.h"
-#include "gimppreview.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
 #include "gimptoolbox-indicator-area.h"
