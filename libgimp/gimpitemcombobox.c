@@ -32,7 +32,8 @@
 #include "gimppixbuf.h"
 
 
-#define MENU_THUMBNAIL_SIZE  24
+#define THUMBNAIL_SIZE  24
+#define WIDTH_REQUEST  200
 
 
 static gint  gimp_drawable_combo_box_model_add (GtkListStore               *store,
@@ -74,7 +75,8 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            "width-request", WIDTH_REQUEST,
+                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
@@ -133,7 +135,8 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            "width-request", WIDTH_REQUEST,
+                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
@@ -185,7 +188,8 @@ gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
   gint          i;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            "width-request", WIDTH_REQUEST,
+                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
@@ -242,8 +246,7 @@ gimp_drawable_combo_box_model_add (GtkListStore               *store,
           g_free (image_name);
 
           thumb = gimp_drawable_get_thumbnail (drawables[i],
-                                               MENU_THUMBNAIL_SIZE,
-                                               MENU_THUMBNAIL_SIZE,
+                                               THUMBNAIL_SIZE, THUMBNAIL_SIZE,
                                                GIMP_PIXBUF_SMALL_CHECKS);
 
           gtk_list_store_append (store, &iter);

@@ -32,7 +32,8 @@
 #include "gimppixbuf.h"
 
 
-#define MENU_THUMBNAIL_SIZE  24
+#define THUMBNAIL_SIZE   24
+#define WIDTH_REQUEST   200
 
 
 static void  gimp_image_combo_box_model_add (GtkListStore            *store,
@@ -72,7 +73,8 @@ gimp_image_combo_box_new (GimpImageConstraintFunc constraint,
   gint          num_images;
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
-                            "ellipsize", PANGO_ELLIPSIZE_MIDDLE,
+                            "width-request", WIDTH_REQUEST,
+                            "ellipsize",     PANGO_ELLIPSIZE_MIDDLE,
                             NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
@@ -113,8 +115,7 @@ gimp_image_combo_box_model_add (GtkListStore            *store,
           g_free (image_name);
 
           thumb = gimp_image_get_thumbnail (images[i],
-                                            MENU_THUMBNAIL_SIZE,
-                                            MENU_THUMBNAIL_SIZE,
+                                            THUMBNAIL_SIZE, THUMBNAIL_SIZE,
                                             GIMP_PIXBUF_SMALL_CHECKS);
 
           gtk_list_store_append (store, &iter);

@@ -1,3 +1,11 @@
+2005-03-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpimagecombobox.c: set a width-request on the combo boxes.
+	
+	* plug-ins/common/bumpmap.c (SCALE_WIDTH): set a minimum width on
+	the scales.
+
 2005-03-02  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimp.[ch]

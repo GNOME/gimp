@@ -119,9 +119,9 @@
 
 /***** Magic numbers *****/
 
-#define PLUG_IN_VERSION "April 2000, 3.0-pre1-ac2"
+#define PLUG_IN_VERSION   "April 2000, 3.0-pre1-ac2"
 
-#define SCALE_WIDTH       0
+#define SCALE_WIDTH       100
 
 /***** Types *****/
 
