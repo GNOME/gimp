@@ -132,6 +132,7 @@ examples/dust
 examples/clear_alpha
 examples/warp-sharp
 examples/fade-alpha
+examples/circular_text
 pxgettext
 po/ChangeLog
 po/Makefile.PL

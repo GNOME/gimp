@@ -488,10 +488,17 @@ dump_params (int nparams, GimpParam *args, GimpParamDef *params)
 	  case GIMP_PDB_STRINGARRAY:	dump_printarray (args, i, char* , d_stringarray, "'%s'"); break;
 	  
 	  case GIMP_PDB_COLOR:
+#if GIMP_CHECK_VERSION(1,3,0)
 	    trace_printf ("[%d,%d,%d]",
 	                  args[i].data.d_color.r,
 	                  args[i].data.d_color.g,
 	                  args[i].data.d_color.b);
+#else
+	    trace_printf ("[%d,%d,%d]",
+	                  args[i].data.d_color.red,
+	                  args[i].data.d_color.green,
+	                  args[i].data.d_color.blue);
+#endif
 	    break;
 
 #if GIMP_PARASITE
@@ -701,7 +708,15 @@ unbless_croak (SV *sv, char *type)
 }
 
 static void
-canonicalize_colour (char *err, SV *sv, GimpRGB *c)
+canonicalize_colour (
+    char *err,
+    SV *sv,
+#if GIMP_CHECK_VERSION(1,3,0)
+    GimpRGB *c
+#else
+    GimpParamColor *c
+#endif
+    )
 {
   dSP;
   
@@ -725,9 +740,15 @@ canonicalize_colour (char *err, SV *sv, GimpRGB *c)
 	  AV *av = (AV *)SvRV(sv);
 	  if (av_len(av) == 2)
 	    {
+#if GIMP_CHECK_VERSION(1,3,0)
 	      c->r = SvIV(*av_fetch(av, 0, 0));
 	      c->g = SvIV(*av_fetch(av, 1, 0));
 	      c->b = SvIV(*av_fetch(av, 2, 0));
+#else
+	      c->red   = SvIV(*av_fetch(av, 0, 0));
+	      c->green = SvIV(*av_fetch(av, 1, 0));
+	      c->blue  = SvIV(*av_fetch(av, 2, 0));
+#endif
 	    }
 	  else
 	    sprintf (err, __("a color must have three components (array elements)"));
@@ -857,9 +878,15 @@ push_gimp_sv (GimpParam *arg, int array_as_ref)
 	{
 	  /* difficult */
 	  AV *av = newAV ();
+#if GIMP_CHECK_VERSION(1,3,0)
 	  av_push (av, newSViv (arg->data.d_color.r));
 	  av_push (av, newSViv (arg->data.d_color.g));
 	  av_push (av, newSViv (arg->data.d_color.b));
+#else
+	  av_push (av, newSViv (arg->data.d_color.red  ));
+	  av_push (av, newSViv (arg->data.d_color.green));
+	  av_push (av, newSViv (arg->data.d_color.blue ));
+#endif
 	  sv = (SV *)av; /* no newRV_inc, since we're getting autoblessed! */
 	}
 	break;

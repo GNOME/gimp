@@ -1,5 +1,7 @@
 Revision history for Gimp-Perl extension.
 
+	- added examples/circular_text by Mike Gherlone.
+
 1.21  Fri Mar  9 18:33:04 CET 2001
 	- better Gimp::Fu argument parsing.
 	- initializing the rgb database now works after a fork.

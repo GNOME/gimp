@@ -8,7 +8,7 @@ use Gimp::Util;
 
 sub circular_text {
         my ($image, $drawable, $choice) = @_;
-        $drawable->has_alpha or die __"You can't run this script without an ALPHA CHANNEL!!";
+        $drawable->has_alpha or die __"You can't run this script without an ALPHA CHANNEL!!\n";
         my $test = 0;
         $test = $drawable->type_with_alpha;
         if ($test == INDEXEDA_IMAGE) {
@@ -72,9 +72,9 @@ register "circular_shape",
          "(c) 2001 M. Gherlone",
          "20010512",
          N_"<Image>/Filters/Map/Circular Shape...",
-         "*",
+         "GRAYA, RGBA",
          [
-         [PF_RADIO, "direction", "the text orientation", 0, [Clockwise => 0, Unclockwise => 1]],
+         [PF_RADIO, "direction", "the text orientation", 0, [Clockwise => 0, Anticlockwise => 1]],
          ],
          \&circular_text;
 
