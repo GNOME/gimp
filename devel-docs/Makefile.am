@@ -16,6 +16,7 @@ EXTRA_DIST = \
 	app			\
 	debug-plug-ins.txt	\
 	gbr.txt			\
+	ggr.txt  		\
 	gih.txt  		\
 	gpb.txt  		\
 	includes.txt		\
