@@ -1,3 +1,7 @@
+2002-05-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/tools/tool-safe-mode.c: removed another warning.
+
 2002-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* devel-docs/Makefile.am

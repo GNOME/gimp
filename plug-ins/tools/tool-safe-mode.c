@@ -68,7 +68,6 @@ tool_safe_mode_init (const gchar *tool_plug_in_path)
       const gchar   *dir_ent;
       struct stat    filestat;
 
-
 #ifdef __EMX__
   /*
    *  Change drive so opendir works.
@@ -78,20 +77,20 @@ tool_safe_mode_init (const gchar *tool_plug_in_path)
           _chdrive (tool_plug_in_path[0]);
         }
 #endif
-  g_message ("%s", tool_plug_in_path);
+
+      g_message ("tool_plug_in_path: %s", tool_plug_in_path);
 
       path = gimp_path_parse (tool_plug_in_path, 16, TRUE, NULL);
-      g_message ("%p", path);
 
       for (list = path; list; list = g_list_next (list))
         {
-          g_message("reading directory %s", list->data);
-          /* Open directory */
+          g_message ("reading datafiles directory '%s'", (gchar *) list->data);
+
           dir = g_dir_open ((gchar *) list->data, 0, NULL);
 
           if (!dir)
     	    {
-   	      g_message ("error reading datafiles directory \"%s\"",
+   	      g_message ("error reading datafiles directory '%s'",
 	    	     	 (gchar *) list->data);
 	    }
           else
@@ -106,7 +105,7 @@ tool_safe_mode_init (const gchar *tool_plug_in_path)
 
 	          if (! err && !S_ISDIR (filestat.st_mode))
 	    	    {
-	              g_message("loading tool %s\n", filename);
+	              g_message ("loading tool %s\n", filename);
                       gimp_tool_module_new (filename, 
                                             safe_mode_register_tool,
                                             NULL);
