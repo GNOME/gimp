@@ -1269,7 +1269,7 @@ gimp_display_shell_pause (GimpDisplayShell *shell)
 }
 
 /**
- * gimp_display_shell_pause:
+ * gimp_display_shell_resume:
  * @shell: a display shell
  *
  * This function decrements the pause count for the display shell.

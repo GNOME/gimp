@@ -1,5 +1,10 @@
 2004-07-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_resume):
+	s/pause/resume/ in the API docs.
+
+2004-07-22  Michael Natterer  <mitch@gimp.org>
+
 	* tools/gimp-remote.c (main): correctly convert relative paths to
 	URIs. Append the resulting URI only if it's not NULL.
 
