@@ -1,3 +1,7 @@
+Thu Dec 30 22:55:35 GMT 1999  Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/common/pcx.c: Teach it about .pcc files.
+
 1999-12-30  Kjartan Maraas  <kmaraas@online.no>
 
 	* app/file_new_dialog.c: Added comment to stop xgettext

@@ -98,9 +98,9 @@ static void query () {
                           nsave_args, 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_pcx_load", "pcx", "",
+  gimp_register_magic_load_handler ("file_pcx_load", "pcx,pcc", "",
     "0&,byte,10,2&,byte,1,3&,byte,>0,3,byte,<9");
-  gimp_register_save_handler ("file_pcx_save", "pcx", "");
+  gimp_register_save_handler ("file_pcx_save", "pcx,pcc", "");
 }
 
 /* Declare internal functions. */
