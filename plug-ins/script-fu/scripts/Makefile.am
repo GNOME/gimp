@@ -22,6 +22,7 @@ scriptdata_DATA = \
 	beveled-pattern-hrule.scm		\
 	blend-anim.scm				\
 	blended-logo.scm			\
+	bovinated-logo.scm			\
 	carve-it.scm				\
 	carved-logo.scm				\
 	chalk.scm				\
@@ -31,6 +32,7 @@ scriptdata_DATA = \
 	circuit.scm				\
 	clothify.scm				\
 	color-cycling.scm			\
+	comic-logo.scm				\
 	coolmetal-logo.scm			\
 	copy-visible.scm			\
 	crystal-logo.scm			\
@@ -42,6 +44,7 @@ scriptdata_DATA = \
 	gimp-headers.scm			\
 	gimp-labels.scm				\
 	glowing-logo.scm			\
+	gradient-bevel-logo.scm			\
 	gradient-example.scm			\
 	grid-system.scm				\
 	hsv-graph.scm				\

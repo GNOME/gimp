@@ -1,3 +1,8 @@
+Fri Apr 10 01:55:50 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* added three new logo-scripts from keebler@wco.com: 
+	bovinated-logo.scm, comic-logo.scm and gradient-bevel-logo.scm  
+
 Thu Apr  9 09:28:04 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* libgimp/gimp.c (gimp_main): strict C requires that function
