@@ -83,7 +83,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-03 16:45+0200\n"
+"POT-Creation-Date: 2005-04-03 17:44+0200\n"
 "PO-Revision-Date: 2005-04-03 17:43+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -116,7 +116,8 @@ msgid ""
 msgstr ""
 "Kunne ikke åbne en testmellemlagerfil.\n"
 "\n"
-"Kontrollér placeringen og rettighederne af mellemlagermappen defineret i indstillingerne (aktuelt \"%s\")."
+"Kontrollér placeringen og rettighederne af mellemlagermappen defineret i "
+"indstillingerne (aktuelt \"%s\")."
 
 #: ../app/app_procs.c:332 ../app/core/gimppalette-import.c:442
 #, c-format
@@ -126,7 +127,8 @@ msgstr "Åbning af \"%s\" mislykkedes: %s"
 #: ../app/batch.c:84 ../app/batch.c:101
 #, c-format
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
-msgstr "Batchfortolkeren \"%s\" er ikke tilgængelig, batchtilstand deaktiveret."
+msgstr ""
+"Batchfortolkeren \"%s\" er ikke tilgængelig, batchtilstand deaktiveret."
 
 #: ../app/main.c:121 ../tools/gimp-remote.c:78
 msgid "Show version information and exit"
@@ -3863,7 +3865,9 @@ msgstr ""
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
-msgstr "Hvis aktiveret, vises prøvningspunkter som standard. Dette kan også skiftes med kommandoen \"Vis->Vis prøvningspunkter\"."
+msgstr ""
+"Hvis aktiveret, vises prøvningspunkter som standard. Dette kan også skiftes "
+"med kommandoen \"Vis->Vis prøvningspunkter\"."
 
 #: ../app/config/gimprc-blurbs.h:330
 msgid "Enable to display a handy GIMP tip on startup."
@@ -5782,7 +5786,9 @@ msgstr "Indtast placering (URI):"
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
-msgstr "Det angivne filnavn slutter ikke med en kendt filendelse. Indtast venligst en kendt filendelse eller vælg et filformat fra listen over filformater."
+msgstr ""
+"Det angivne filnavn slutter ikke med en kendt filendelse. Indtast venligst "
+"en kendt filendelse eller vælg et filformat fra listen over filformater."
 
 #. remote URI
 #: ../app/dialogs/file-save-dialog.c:328
@@ -5790,7 +5796,10 @@ msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
-msgstr "Gemning af filer på andre maskiner kræver at filformatet afgøres fra filendelsen. Indtast en filendelse der passer med det valgte filformat eller undlad helt filendelsen."
+msgstr ""
+"Gemning af filer på andre maskiner kræver at filformatet afgøres fra "
+"filendelsen. Indtast en filendelse der passer med det valgte filformat eller "
+"undlad helt filendelsen."
 
 #: ../app/dialogs/file-save-dialog.c:398
 msgid "Extension Mismatch"
@@ -7273,7 +7282,11 @@ msgid ""
 "otherwise non-system-supported plug-in interpreters.  The GIMP checks this "
 "folder in addition to the system-wide GIMP interpreters folder when "
 "searching for plug-in interpreter configuration files."
-msgstr "Denne mappe bruges til at gemme brugeroprettede, midlertidige eller andre fortolkere som ikke installeres for alle brugere. Gimp'en tjekker denne mappe sammen med systemmappen efter fortolkerkonfigurationsfiler når der søges efter disse."
+msgstr ""
+"Denne mappe bruges til at gemme brugeroprettede, midlertidige eller andre "
+"fortolkere som ikke installeres for alle brugere. Gimp'en tjekker denne "
+"mappe sammen med systemmappen efter fortolkerkonfigurationsfiler når der "
+"søges efter disse."
 
 #: ../app/dialogs/user-install-dialog.c:252
 msgid ""
@@ -10826,7 +10839,8 @@ msgstr ""
 
 #: ../app/widgets/gimptoolbox-image-area.c:117
 msgid "Drag to an XDS enabled file-manager to save the image."
-msgstr "Træk til en filhåndtering med XDS-understøttelse for at gemme billedet."
+msgstr ""
+"Træk til en filhåndtering med XDS-understøttelse for at gemme billedet."
 
 #: ../app/widgets/gimptoolbox-indicator-area.c:149
 msgid ""
