@@ -206,7 +206,7 @@ msgstr "Множник"
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
-msgstr ""
+msgstr "Якщо кнопку \"Час\" не натиснуто, це значення використову╓ться для ╕н╕ц╕ал╕зац╕╖ генератора випадкових чисел, то це дозволя╓ вам повторити дану \"випадкову\" операц╕ю"
 
 #: libgimp/gimpwidgets.c:709
 msgid "Time"
@@ -216,7 +216,7 @@ msgstr "Час"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
+msgstr "╤н╕ц╕ал╕зувати генератор випадкових чисел поточним часом - це гаранту╓ над╕йну \"випадков╕сть\""
 
 #: libgimp/gimpwidgets.c:1030
 msgid "Bytes"
@@ -229,9 +229,3 @@ msgstr "к╕лобайт╕в"
 #: libgimp/gimpwidgets.c:1032
 msgid "MegaBytes"
 msgstr "магабайт╕в"
-
-#~ msgid "Select"
-#~ msgstr "Вибрати"
-
-#~ msgid "Close"
-#~ msgstr "Закрити"
