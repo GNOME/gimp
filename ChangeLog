@@ -1,5 +1,9 @@
 2004-03-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/gimpressionist/general.c: fixed typo (bug #136610).
+
+2004-03-09  Sven Neumann  <sven@gimp.org>
+
 	Finished some work that Brix started on the help system. It's
 	now possibly to use an external web-browser for context help
 	(bug #136081):

@@ -77,7 +77,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 1);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Preserve the original image as a background"), NULL);
 
   generalbgradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("From paper"));
@@ -85,9 +85,9 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 2);
-  gimp_help_set_help_data 
+  gimp_help_set_help_data
     (tmpw, _("Copy the texture of the selected paper as a background"), NULL);
-  
+
   box3 = gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 10);
   gtk_widget_show(box3);
@@ -105,7 +105,7 @@ void create_generalpage(GtkNotebook *notebook)
     (tmpw, _("Solid colored background"), NULL);
 
   generalcolbutton = gimp_color_button_new (_("Color"),
-					    COLORBUTTONWIDTH, 
+					    COLORBUTTONWIDTH,
 					    COLORBUTTONHEIGHT,
 					    &pcvals.color,
 					    GIMP_COLOR_AREA_FLAT);
@@ -127,7 +127,7 @@ void create_generalpage(GtkNotebook *notebook)
   if(!img_has_alpha)
     gtk_widget_set_sensitive (tmpw, FALSE);
 
-  gtk_toggle_button_set_active 
+  gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (generalbgradio[pcvals.generalbgtype]), TRUE);
 
   box1 = gtk_hbox_new (FALSE, 16);
@@ -144,7 +144,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Selects if to place strokes all the way out to the edges of the image"), NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), 
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
 			       pcvals.generalpaintedges);
 
   generaltileable = tmpw = gtk_check_button_new_with_label( _("Tileable"));
@@ -161,7 +161,7 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   gimp_help_set_help_data
     (tmpw, _("Adds a shadow effect to each brush stroke"), NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), 
+  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
 			       pcvals.generaldropshadow);
 
   table = gtk_table_new(3, 5, FALSE);
@@ -169,47 +169,47 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  generaldarkedgeadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 0, 
+  generaldarkedgeadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 0,
 			  _("Edge darken:"),
-			  150, 6, pcvals.generaldarkedge, 
-			  0.0, 1.0, 0.01, 0.1, 2, 
+			  150, 6, pcvals.generaldarkedge,
+			  0.0, 1.0, 0.01, 0.1, 2,
 			  TRUE, 0, 0,
 			  _("How much to \"darken\" the edges of each brush stroke"),
 			  NULL);
 
-  generalshadowadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 1, 
+  generalshadowadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 1,
 			  _("Shadow darken:"),
-			  150, 6, pcvals.generalshadowdarkness, 
-			  0.0, 99.0, 0.1, 1, 2, 
+			  150, 6, pcvals.generalshadowdarkness,
+			  0.0, 99.0, 0.1, 1, 2,
 			  TRUE, 0, 0,
 			  _("How much to \"darken\" the drop shadow"),
 			  NULL);
 
-  generalshadowdepth = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 2, 
+  generalshadowdepth =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 2,
 			  _("Shadow depth:"),
-			  150, 6, pcvals.generalshadowdepth, 
-			  0, 99, 1, 5, 0, 
+			  150, 6, pcvals.generalshadowdepth,
+			  0, 99, 1, 5, 0,
 			  TRUE, 0, 0,
 			  _("The depth of the drop shadow, i.e. how far apart from the object it should be"),
 			  NULL);
 
-  generalshadowblur = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 3, 
+  generalshadowblur =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 3,
 			  _("Shadow blur:"),
-			  150, 6, pcvals.generalshadowblur, 
-			  0, 99, 1, 5, 0, 
+			  150, 6, pcvals.generalshadowblur,
+			  0, 99, 1, 5, 0,
 			  TRUE, 0, 0,
 			  _("How much to blur the drop shadow"),
 			  NULL);
 
-  devthreshadjust = 
-    gimp_scale_entry_new (GTK_TABLE(table), 0, 4, 
-			  _("Deviation treshold:"),
+  devthreshadjust =
+    gimp_scale_entry_new (GTK_TABLE(table), 0, 4,
+			  _("Deviation threshold:"),
 			  150, 6, pcvals.devthresh,
-			  0.0, 1.0, 0.01, 0.01, 2, 
+			  0.0, 1.0, 0.01, 0.01, 2,
 			  TRUE, 0, 0,
 			  _("A bailout-value for adaptive selections"),
 			  NULL);
