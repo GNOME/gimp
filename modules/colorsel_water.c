@@ -34,7 +34,7 @@
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 /* definitions and variables */

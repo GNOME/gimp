@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-29 11:35+0100\n"
+"POT-Creation-Date: 2002-10-30 15:51+0100\n"
 "PO-Revision-Date: 2002-10-29 11:43+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1642,19 +1642,19 @@ msgstr "Kanaleigenschaften"
 msgid "Edit Channel Attributes"
 msgstr "Kanaleigenschaften ändern"
 
-#: app/gui/color-notebook.c:399
+#: app/gui/color-notebook.c:398
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:420
+#: app/gui/color-notebook.c:419
 msgid "Old:"
 msgstr "Alt:"
 
-#: app/gui/color-notebook.c:442
+#: app/gui/color-notebook.c:441
 msgid "Revert to old color"
 msgstr "Zurück zur alten Farbe"
 
-#: app/gui/color-notebook.c:516
+#: app/gui/color-notebook.c:515
 msgid "Add the current color to the color history"
 msgstr "Die aktuelle Farbe der Farbliste hinzufügen"
 
@@ -6389,7 +6389,7 @@ msgstr "Schwarz-Punkt wählen"
 msgid "Pick Gray Point"
 msgstr "Grau-Punkt wählen"
 
-#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:155
+#: app/tools/gimplevelstool.c:527
 msgid "Gamma"
 msgstr "Gamma"
 
@@ -7466,46 +7466,6 @@ msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "%s konnte nicht geöffnet werden: %s\n"
-
-#: modules/cdisplay_gamma.c:89
-msgid "Gamma color display filter"
-msgstr "Gamma Anzeigenfarbfilter"
-
-#: modules/cdisplay_gamma.c:316
-msgid "Gamma:"
-msgstr "Gamma:"
-
-#: modules/cdisplay_highcontrast.c:89
-msgid "High Contrast color display filter"
-msgstr "Hochkontrast Anzeigenfarbfilter"
-
-#: modules/cdisplay_highcontrast.c:155
-msgid "Contrast"
-msgstr "Kontrast"
-
-#: modules/cdisplay_highcontrast.c:314
-msgid "Contrast Cycles:"
-msgstr "Kontrastverstärkung:"
-
-#: modules/colorsel_triangle.c:107
-msgid "Painter-style triangle color selector"
-msgstr "Dreiecks-Farbauswahl im Stil von Painter"
-
-#: modules/colorsel_triangle.c:179
-msgid "Triangle"
-msgstr "Dreieck"
-
-#: modules/colorsel_water.c:103
-msgid "Watercolor style color selector"
-msgstr "Wasserfarben Farbmischer"
-
-#: modules/colorsel_water.c:175
-msgid "Watercolor"
-msgstr "Wasserfarbe"
-
-#: modules/colorsel_water.c:249
-msgid "Pressure"
-msgstr "Druck"
 
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"

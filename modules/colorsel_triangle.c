@@ -34,7 +34,7 @@
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "libgimp/gimpintl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 #define COLORWHEELRADIUS    (GIMP_COLOR_SELECTOR_SIZE / 2)

@@ -19,13 +19,16 @@ GimpColorScale
 
 </para>
 
-@parent_instance: 
 
 <!-- ##### FUNCTION gimp_color_scale_new ##### -->
 <para>
 
 </para>
 
+@orientation: 
+@channel: 
+@rgb: 
+@hsv: 
 @Returns: 
 
 

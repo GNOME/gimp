@@ -1,3 +1,16 @@
+2002-10-30  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorselect.c: use a mnemonic that doesn't
+	collide with the rest of the dialog.
+
+	* modules/Makefile.am
+	* modules/colorsel_gtk.c: removed the GTK color selector module.
+
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/colorsel_triangle.c
+	* modules/colorsel_water.c: translate in the gimp14-libgimp domain.
+
 2002-10-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolornotebook.c: create the notebook labels

@@ -20,13 +20,7 @@ lib_LTLIBRARIES = \
 	libcdisplay_highcontrast.la	\
 	libcolorsel_water.la
 
-##	libcolorsel_gtk.la		\
-
 EXTRA_LTLIBRARIES =
-
-## libcolorsel_gtk_la_SOURCES = colorsel_gtk.c
-## libcolorsel_gtk_la_LDFLAGS = -avoid-version -module
-## libcolorsel_gtk_la_LIBADD = $(GTK_LIBS)
 
 libcolorsel_triangle_la_SOURCES = colorsel_triangle.c
 libcolorsel_triangle_la_LDFLAGS = -avoid-version -module

@@ -248,7 +248,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
 
   object_class->finalize      = gimp_color_select_finalize;
 
-  selector_class->name        = "_GIMP";
+  selector_class->name        = "GI_MP";
   selector_class->help_page   = "built_in.html";
   selector_class->set_color   = gimp_color_select_set_color;
   selector_class->set_channel = gimp_color_select_set_channel;

@@ -202,11 +202,6 @@ app/xcf/xcf-load.c
 app/xcf/xcf-read.c
 app/xcf/xcf.c
 
-modules/cdisplay_gamma.c
-modules/cdisplay_highcontrast.c
-modules/colorsel_triangle.c
-modules/colorsel_water.c
-
 data/misc/gimp.desktop.in.in
 
 libgimptool/gimptoolenums.c

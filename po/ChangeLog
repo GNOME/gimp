@@ -1,3 +1,9 @@
+2002-10-30  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: moved modules to libgimp translation domain.
+
+	* de.po: updated german translation.
+
 2002-10-30  Wang Jian  <lark@linux.net.cn>
 
 	* zh_CN.po: Updated Simplified Chinese translation by

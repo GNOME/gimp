@@ -13,3 +13,8 @@ libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c
+
+modules/cdisplay_gamma.c
+modules/cdisplay_highcontrast.c
+modules/colorsel_triangle.c
+modules/colorsel_water.c
