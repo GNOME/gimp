@@ -28,13 +28,13 @@
 #include "libgimp/gimpintl.h"
 
 /*  types of magnify operations  */
-#define ZOOMIN            0
-#define ZOOMOUT           1
+#define ZOOMIN  0
+#define ZOOMOUT 1
 
 /*  the magnify structures  */
 
-typedef struct _magnify Magnify;
-struct _magnify
+typedef struct _Magnify Magnify;
+struct _Magnify
 {
   DrawCore *      core;       /*  Core select object          */
 
@@ -59,16 +59,16 @@ struct _MagnifyOptions
 static MagnifyOptions *magnify_options = NULL;
 
 
-/*  magnify utility functions  */
-static void   zoom_in                   (int *, int *, int);
-static void   zoom_out                  (int *, int *, int);
-
 /*  magnify action functions  */
 static void   magnify_button_press      (Tool *, GdkEventButton *, gpointer);
 static void   magnify_button_release    (Tool *, GdkEventButton *, gpointer);
 static void   magnify_motion            (Tool *, GdkEventMotion *, gpointer);
 static void   magnify_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-static void   magnify_control           (Tool *, int, gpointer);
+static void   magnify_control           (Tool *, ToolAction,       gpointer);
+
+/*  magnify utility functions  */
+static void   zoom_in                   (int *, int *, int);
+static void   zoom_out                  (int *, int *, int);
 
 
 /*  magnify tool options functions  */
@@ -92,7 +92,7 @@ magnify_options_new (void)
   /*  the new magnify tool options structure  */
   options = (MagnifyOptions *) g_malloc (sizeof (MagnifyOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Magnify Options"),
+		     _("Magnify Options"),
 		     magnify_options_reset);
   options->allow_resize_d = allow_resize_windows;
 
@@ -318,9 +318,9 @@ magnify_draw (Tool *tool)
 
 
 static void
-magnify_control (Tool     *tool,
-		 int       action,
-		 gpointer  gdisp_ptr)
+magnify_control (Tool       *tool,
+		 ToolAction  action,
+		 gpointer    gdisp_ptr)
 {
   Magnify * magnify;
 
@@ -328,14 +328,19 @@ magnify_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (magnify->core, tool);
       break;
-    case RESUME :
+
+    case RESUME:
       draw_core_resume (magnify->core, tool);
       break;
-    case HALT :
+
+    case HALT:
       draw_core_stop (magnify->core, tool);
+      break;
+
+    default:
       break;
     }
 }
@@ -370,7 +375,8 @@ tools_new_magnify (void)
   tool->button_press_func = magnify_button_press;
   tool->button_release_func = magnify_button_release;
   tool->motion_func = magnify_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = magnify_cursor_update;
   tool->control_func = magnify_control;
 

@@ -53,12 +53,13 @@ static GSList *last_opened_raw_filenames = NULL;
 
 static GtkItemFactoryEntry toolbox_entries[] =
 {
-  { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/File/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 0 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/About..."), NULL, about_dialog_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/Tip of the day"), NULL, tips_dialog_cmd_callback, 0 },
+
   { N_("/File/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
   { N_("/File/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { N_("/File/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
@@ -69,7 +70,8 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
-  { N_("/Xtns/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+
+  { N_("/Xtns/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" }
@@ -82,8 +84,8 @@ static GtkItemFactoryEntry toolbox_end = { N_("/File/Quit"), "<control>Q", file_
 
 static GtkItemFactoryEntry image_entries[] =
 {
-  { N_("/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
-  { N_("/File/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/File/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/File/New"), "<control>N", file_new_cmd_callback, 1 },
   { N_("/File/Open"), "<control>O", file_open_cmd_callback, 0 },
   { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
@@ -91,12 +93,12 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
   { N_("/File/Preferences..."), NULL, file_pref_cmd_callback, 0 },
   { N_("/File/---"), NULL, NULL, 0, "<Separator>" },
-  
+
   { N_("/File/Close"), "<control>W", file_close_cmd_callback, 0 },
   { N_("/File/Quit"), "<control>Q", file_quit_cmd_callback, 0 },
   { N_("/File/---moved"), NULL, NULL, 0, "<Separator>" },
-  
-  { N_("/Edit/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+
+  { N_("/Edit/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Edit/Cut"), "<control>X", edit_cut_cmd_callback, 0 },
   { N_("/Edit/Copy"), "<control>C", edit_copy_cmd_callback, 0 },
   { N_("/Edit/Paste"), "<control>V", edit_paste_cmd_callback, 0 },
@@ -112,8 +114,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Edit/Paste Named"), "<control><shift>V", edit_named_paste_cmd_callback, 0 },
   { N_("/Edit/---"), NULL, NULL, 0, "<Separator>" },
   
-  { N_("/Select/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
-  { N_("/Select/Toggle"), "<control>T", select_toggle_cmd_callback, 0 },
+  { N_("/Select/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Select/Invert"), "<control>I", select_invert_cmd_callback, 0 },
   { N_("/Select/All"), "<control>A", select_all_cmd_callback, 0 },
   { N_("/Select/None"), "<control><shift>A", select_none_cmd_callback, 0 },
@@ -125,7 +126,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Select/Shrink"), NULL, select_shrink_cmd_callback, 0 },
   { N_("/Select/Save To Channel"), NULL, select_save_cmd_callback, 0 },
 
-  { N_("/View/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/View/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/View/Zoom In"), "equal", view_zoomin_cmd_callback, 0 },
   { N_("/View/Zoom Out"), "minus", view_zoomout_cmd_callback, 0 },
   { N_("/View/Zoom/16:1"), NULL, view_zoom_16_1_callback, 0 },
@@ -139,24 +140,28 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/View/Zoom/1:16"), NULL, view_zoom_1_16_callback, 0 },
   { N_("/View/Dot for dot"), NULL, view_dot_for_dot_callback, 0, "<ToggleItem>"},
   { N_("/View/Window Info..."), "<control><shift>I", view_window_info_cmd_callback, 0 },
+
+  { N_("/View/---"), NULL, NULL, 0, "<Separator>" },
+  { N_("/View/Toggle Selection"), "<control>T", view_toggle_selection_cmd_callback, 0 },
   { N_("/View/Toggle Rulers"), "<control><shift>R", view_toggle_rulers_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Toggle Statusbar"), "<control><shift>S", view_toggle_statusbar_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Toggle Guides"), "<control><shift>T", view_toggle_guides_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/Snap To Guides"), NULL, view_snap_to_guides_cmd_callback, 0, "<ToggleItem>" },
   { N_("/View/---"), NULL, NULL, 0, "<Separator>" },
+
   { N_("/View/New View"), NULL, view_new_view_cmd_callback, 0 },
   { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
   
-  { N_("/Image/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
-  { N_("/Image/Colors/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Image/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
+  { N_("/Image/Colors/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
   { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
   { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
   { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
-  { N_("/Image/Channel Ops/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Image/Channel Ops/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Image/Channel Ops/Duplicate"), "<control>D", channel_ops_duplicate_cmd_callback, 0 },
   { N_("/Image/Channel Ops/Offset"), "<control><shift>O", channel_ops_offset_cmd_callback, 0 },
-  { N_("/Image/Alpha/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Image/Alpha/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Image/Alpha/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
@@ -167,10 +172,10 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Image/Resize"), NULL, image_resize_cmd_callback, 0 },
   { N_("/Image/Scale"), NULL, image_scale_cmd_callback, 0 },
   { N_("/Image/---"), NULL, NULL, 0, "<Separator>" },
-  
-  { N_("/Layers/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+
+  { N_("/Layers/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Layers/Layers & Channels..."), "<control>L", dialogs_lc_cmd_callback, 0 },
-  { N_("/Layers/Stack/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Layers/Stack/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Layers/Stack/Previous Layer"), "Prior", layers_previous_cmd_callback, 0 },
   { N_("/Layers/Stack/Next Layer"), "Next", layers_next_cmd_callback, 0 },
   { N_("/Layers/Stack/Raise Layer"), "<shift>Prior", layers_raise_cmd_callback, 0 },
@@ -186,52 +191,23 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Layers/Add Alpha Channel"), NULL, layers_add_alpha_channel_cmd_callback, 0 },
   { N_("/Layers/---"), NULL, NULL, 0, "<Separator>" },
   
-/* these are built on the fly */
-
-/*
-  { N_("/Tools/Ellipse Select"), "E", tools_select_cmd_callback, ELLIPSE_SELECT },
-  { N_("/Tools/Free Select"), "F", tools_select_cmd_callback, FREE_SELECT },
-  { N_("/Tools/Fuzzy Select"), "Z", tools_select_cmd_callback, FUZZY_SELECT },
-  { N_("/Tools/Bezier Select"), "B", tools_select_cmd_callback, BEZIER_SELECT },
-  { N_("/Tools/Intelligent Scissors"), "I", tools_select_cmd_callback, ISCISSORS },
-  { N_("/Tools/Move"), "M", tools_select_cmd_callback, MOVE },
-  { N_("/Tools/Magnify"), "<shift>M", tools_select_cmd_callback, MAGNIFY },
-  { N_("/Tools/Crop"), "<shift>C", tools_select_cmd_callback, CROP },
-  { N_("/Tools/Transform"), "<shift>T", tools_select_cmd_callback, ROTATE },
-  { N_("/Tools/Flip"), "<shift>F", tools_select_cmd_callback, FLIP },
-  { N_("/Tools/Text"), "T", tools_select_cmd_callback, TEXT },
-  { N_("/Tools/Color Picker"), "O", tools_select_cmd_callback, COLOR_PICKER },
-  { N_("/Tools/Bucket Fill"), "<shift>B", tools_select_cmd_callback, BUCKET_FILL },
-  { N_("/Tools/Blend"), "L", tools_select_cmd_callback, BLEND },
-  { N_("/Tools/Paintbrush"), "P", tools_select_cmd_callback, PAINTBRUSH },
-  { N_("/Tools/Pencil"), "<shift>P", tools_select_cmd_callback, PENCIL },
-  { N_("/Tools/Eraser"), "<shift>E", tools_select_cmd_callback, ERASER },
-  { N_("/Tools/Airbrush"), "A", tools_select_cmd_callback, AIRBRUSH },
-  { N_("/Tools/Clone"), "C", tools_select_cmd_callback, CLONE },
-  { N_("/Tools/Convolve"), "V", tools_select_cmd_callback, CONVOLVE },
-  { N_("/Tools/Ink"), "K", tools_select_cmd_callback, INK },
-  { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
-  { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
-  { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
-  { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
-  { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
-*/
-
-  { N_("/Tools/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Tools/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Tools/Toolbox"), NULL, toolbox_raise_callback, 0 },
   { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
   { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
   { N_("/Tools/---"), NULL, NULL, 0, "<Separator>" },  
 
-  { N_("/Filters/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  /*  the tool entries themselves are built on the fly  */
+
+  { N_("/Filters/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Filters/Repeat last"), "<alt>F", filters_repeat_cmd_callback, 0x0 },
   { N_("/Filters/Re-show last"), "<alt><shift>F", filters_repeat_cmd_callback, 0x1 },
   { N_("/Filters/---"), NULL, NULL, 0, "<Separator>" },
   
-  { N_("/Script-Fu/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Script-Fu/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Script-Fu/"), NULL, NULL, 0 },
   
-  { N_("/Dialogs/tearoff1"), NULL,  NULL,    0, "<Tearoff>" },
+  { N_("/Dialogs/tearoff1"), NULL, NULL, 0, "<Tearoff>" },
   { N_("/Dialogs/Brushes..."), "<control><shift>B", dialogs_brushes_cmd_callback, 0 },
   { N_("/Dialogs/Patterns..."), "<control><shift>P", dialogs_patterns_cmd_callback, 0 },
   { N_("/Dialogs/Palette..."), "<control>P", dialogs_palette_cmd_callback, 0 },
@@ -271,8 +247,8 @@ static GtkItemFactoryEntry layers_entries[] =
   { N_("/Stack/Layer to Top"), "<control>Prior", layers_dialog_raise_layer_to_top_callback, 0 },
   { N_("/Stack/Layer to Bottom"), "<control>Next", layers_dialog_lower_layer_to_bottom_callback, 0 },
   { N_("/Duplicate Layer"), "<control>C", layers_dialog_duplicate_layer_callback, 0 },
-  { N_("/Delete Layer"), "<control>X", layers_dialog_delete_layer_callback, 0 },
   { N_("/Anchor Layer"), "<control>H", layers_dialog_anchor_layer_callback, 0 },
+  { N_("/Delete Layer"), "<control>X", layers_dialog_delete_layer_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
   { N_("/Scale Layer"), "<control>S", layers_dialog_scale_layer_callback, 0 },
   { N_("/Resize Layer"), "<control>R", layers_dialog_resize_layer_callback, 0 },
@@ -296,12 +272,13 @@ static GtkItemFactoryEntry channels_entries[] =
   { N_("/Raise Channel"), "<control>F", channels_dialog_raise_channel_callback, 0 },
   { N_("/Lower Channel"), "<control>B", channels_dialog_lower_channel_callback, 0 },
   { N_("/Duplicate Channel"), "<control>C", channels_dialog_duplicate_channel_callback, 0 },
-  { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
   { N_("/Channel to Selection"), "<control>S", channels_dialog_channel_to_sel_callback, 0 },
   { N_("/Add to Selection"), NULL, channels_dialog_add_channel_to_sel_callback, 0 },
   { N_("/Subtract From Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
-  { N_("/Intersect With Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 }
+  { N_("/Intersect With Selection"), NULL, channels_dialog_sub_channel_from_sel_callback, 0 },
+  { "/---", NULL, NULL, 0, "<Separator>" },
+  { N_("/Delete Channel"), "<control>X", channels_dialog_delete_channel_callback, 0 }
 };
 static guint n_channels_entries = sizeof (channels_entries) / sizeof (channels_entries[0]);
 static GtkItemFactory *channels_factory = NULL;
@@ -310,9 +287,9 @@ static GtkItemFactoryEntry paths_entries[] =
 {
   { N_("/New Path"), "<control>N", paths_dialog_new_path_callback, 0 },
   { N_("/Duplicate Path"), "<control>U", paths_dialog_dup_path_callback, 0 },
-  { N_("/Delete Path"), "<control>X", paths_dialog_delete_path_callback, 0 },
   { N_("/Path to Selection"), "<control>S", paths_dialog_path_to_sel_callback, 0 },
   { N_("/Stroke Path"), "<control>T", paths_dialog_stroke_path_callback, 0 },
+  { N_("/Delete Path"), "<control>X", paths_dialog_delete_path_callback, 0 },
   { "/---", NULL, NULL, 0, "<Separator>" },
   { N_("/Copy Path"), "<control>C", paths_dialog_copy_path_callback, 0 },
   { N_("/Paste Path"), "<control>V", paths_dialog_paste_path_callback, 0 },
@@ -489,7 +466,7 @@ menus_tools_create (ToolInfo *tool_info)
   entry.callback = tools_select_cmd_callback;
   entry.callback_action = tool_info->tool_id;
   entry.item_type = NULL;
- 
+
   gtk_item_factory_create_item (image_factory,
 				&entry,
 				(gpointer) tool_info,
@@ -511,12 +488,12 @@ menus_set_sensitive (gchar *path,
   if (ifactory)
     {
       widget = gtk_item_factory_get_widget (ifactory, path);
-     
+
       gtk_widget_set_sensitive (widget, sensitive);
     }
   if (!ifactory || !widget)
     g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s", path);
-}  
+}
 
 /* The following function will enhance our localesystem because
    we don't need to have our menuentries twice in our catalog */ 
@@ -598,7 +575,6 @@ menus_quit (void)
       gtk_object_unref (GTK_OBJECT (channels_factory));
       gtk_object_unref (GTK_OBJECT (paths_factory));
     }
-
 }
 
 void
@@ -618,11 +594,11 @@ menus_last_opened_cmd_callback (GtkWidget *widget,
 void
 menus_last_opened_update_labels (void)
 {
-  GSList	*filename_slist;
-  GString	*entry_filename, *path;
-  GtkWidget	*widget;
-  gint		i;
-  guint         num_entries;
+  GSList    *filename_slist;
+  GString   *entry_filename, *path;
+  GtkWidget *widget;
+  gint	     i;
+  guint      num_entries;
 
   entry_filename = g_string_new ("");
   path = g_string_new ("");
@@ -651,20 +627,20 @@ menus_last_opened_update_labels (void)
 void
 menus_last_opened_add (gchar *filename)
 {
-  GString	*raw_filename;
-  GSList        *item;
-  GtkWidget	*widget;
-  guint         num_entries;
+  GString   *raw_filename;
+  GSList    *item;
+  GtkWidget *widget;
+  guint      num_entries;
 
   /* ignore the add if we've already got the filename on the list */
   item = last_opened_raw_filenames;
   while (item)
-  {
+    {
       raw_filename = item->data;
       if (!strcmp (raw_filename->str, filename))
-	  return;
+	return;
       item = g_slist_next (item);
-  }
+    }
 
   num_entries = g_slist_length (last_opened_raw_filenames);
 
@@ -824,7 +800,7 @@ menus_init (void)
 	{
 	  /* FIXME this need to use access functions to check a flag */
 	  if (tool_info[i].menu_path)
-	    menus_tools_create (tool_info+i);
+	    menus_tools_create (tool_info + i);
 	}
 
       filename = gimp_personal_rc_file ("menurc");

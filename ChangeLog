@@ -1,3 +1,44 @@
+1999-06-21  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/context_manager.c: namespace cleanups.
+
+	* app/commands.[ch]
+	* app/menus.c: moved the "Toggle Selection" menu entry to "View",
+	sprinkled some separators and made the layers/channels/paths popup
+	menus consistent with Tigert's last ops buttons change.
+
+	* app/fileops.c
+	* app/plug_in.c: check for gdisplay_active() returning NULL in
+	some more places.
+
+	* app/[all tool related files]:
+
+	- Turned the ToolAction and ToolState #define's into typedef'ed
+	  enums, so the compiler can do some more sanity checking.
+	- Removed one more unused global variable "active_tool_layer".
+	- Removed some #include's from tools.c.
+	- Standardized the individual tools' structure names.
+	- Moved showing/hiding the tool options to separate functions.
+	- Stuff...
+
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/tools.c: fixed the segfaults which happened when the image
+	of one of the tools which have dialogs (levels/posterize/...) was
+	deleted. My approach was to do stricter sanity checking and to set
+	some gdisplay pointers correctly where appropriate, so I can't
+	tell exactly where the bug was.
+	The curves tool now(??) updates on every _second_ display change
+	only, which is really obscure.
+	Finding/changing the display to operate on should definitely be
+	done by connecting to the user context's "display_changed"
+	signal.
+
+	* app/gimpset.c: emit the "remove" signal _after_ removing the
+	pointer from the set. If this was not a bug but a feature, please
+	let me know, we'll need two signals then.
+
 Mon Jun 21 12:51:15 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am: cosmetic change
@@ -21,7 +62,7 @@ Mon Jun 21 12:51:15 PDT 1999 Manish Singh <yosh@gimp.org>
 	order so that the Delete button (trashcan) is always the rightmost
 	button. Good for consistency. I hope nothing blows up because of
 	this :)
-	
+
 1999-06-21  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* app/layers_dialog.c: Changed the order of the layer ops buttons

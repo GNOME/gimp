@@ -106,24 +106,24 @@ static TextTool  *the_text_tool   = NULL;
 static GtkWidget *text_tool_shell = NULL;
 
 
-static void       text_button_press       (Tool *, GdkEventButton *, gpointer);
-static void       text_button_release     (Tool *, GdkEventButton *, gpointer);
-static void       text_motion             (Tool *, GdkEventMotion *, gpointer);
-static void       text_cursor_update      (Tool *, GdkEventMotion *, gpointer);
-static void       text_control            (Tool *, int, gpointer);
+static void   text_button_press   (Tool *, GdkEventButton *, gpointer);
+static void   text_button_release (Tool *, GdkEventButton *, gpointer);
+static void   text_motion         (Tool *, GdkEventMotion *, gpointer);
+static void   text_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void   text_control        (Tool *, ToolAction,       gpointer);
 
-static void       text_create_dialog      (void);
-static void       text_ok_callback        (GtkWidget *, gpointer);
-static void       text_cancel_callback    (GtkWidget *, gpointer);
-static gint       text_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
+static void   text_create_dialog   (void);
+static void   text_ok_callback     (GtkWidget *, gpointer);
+static void   text_cancel_callback (GtkWidget *, gpointer);
+static gint   text_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 
-static void       text_init_render        (TextTool *);
-static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
-static void       text_size_multiply      (char **fontname, int);
-static void       text_set_resolution     (char **fontname, double, double);
+static void   text_init_render         (TextTool *);
+static void   text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
+static void   text_size_multiply       (char **fontname, int);
+static void   text_set_resolution      (char **fontname, double, double);
 
-Layer *           text_render             (GImage *, GimpDrawable *,
-					   int, int, char *, char *, int, int);
+Layer       * text_render (GImage *, GimpDrawable *,
+			   int, int, char *, char *, int, int);
 
 
 /*  functions  */
@@ -258,6 +258,7 @@ tools_new_text ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = text_cursor_update;
   tool->control_func = text_control;
+
   tool->preserve = TRUE;
 
   return tool;
@@ -384,19 +385,24 @@ text_cursor_update (Tool           *tool,
 }
 
 static void
-text_control (Tool     *tool,
-	      int       action,
-	      gpointer  gdisp_ptr)
+text_control (Tool       *tool,
+	      ToolAction  action,
+	      gpointer    gdisp_ptr)
 {
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (text_tool_shell && GTK_WIDGET_VISIBLE (text_tool_shell))
 	gtk_widget_hide (text_tool_shell);
+      break;
+
+    default:
       break;
     }
 }

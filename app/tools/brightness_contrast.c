@@ -86,7 +86,7 @@ static void   brightness_contrast_button_press   (Tool *, GdkEventButton *, gpoi
 static void   brightness_contrast_button_release (Tool *, GdkEventButton *, gpointer);
 static void   brightness_contrast_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   brightness_contrast_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   brightness_contrast_control        (Tool *, int, gpointer);
+static void   brightness_contrast_control        (Tool *, ToolAction,       gpointer);
 
 static BrightnessContrastDialog *  brightness_contrast_new_dialog  (void);
 static void   brightness_contrast_update                  (BrightnessContrastDialog *, int);
@@ -140,17 +140,19 @@ brightness_contrast_cursor_update (Tool           *tool,
 }
 
 static void
-brightness_contrast_control (Tool     *tool,
-			     int       action,
-			     gpointer  gdisp_ptr)
+brightness_contrast_control (Tool       *tool,
+			     ToolAction  action,
+			     gpointer    gdisp_ptr)
 {
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (brightness_contrast_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -159,6 +161,9 @@ brightness_contrast_control (Tool     *tool,
 	  brightness_contrast_dialog->image_map = NULL;
 	  brightness_contrast_cancel_callback (NULL, (gpointer) brightness_contrast_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -189,7 +194,8 @@ tools_new_brightness_contrast ()
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
   tool->motion_func = brightness_contrast_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = brightness_contrast_cursor_update;
   tool->control_func = brightness_contrast_control;
   tool->preserve = FALSE;
@@ -583,5 +589,3 @@ brightness_contrast_contrast_text_update (GtkWidget *w,
 	brightness_contrast_preview (bcd);
     }
 }
-
-

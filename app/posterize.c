@@ -51,16 +51,16 @@ struct _Posterize
 typedef struct _PosterizeDialog PosterizeDialog;
 struct _PosterizeDialog
 {
-  GtkWidget   *shell;
-  GtkWidget   *levels_text;
+  GtkWidget    *shell;
+  GtkWidget    *levels_text;
 
   GimpDrawable *drawable;
-  ImageMap     image_map;
-  int          levels;
+  ImageMap      image_map;
+  int           levels;
 
-  gint         preview;
+  gint          preview;
 
-  GimpLut       *lut;
+  GimpLut      *lut;
 };
 
 
@@ -76,15 +76,16 @@ static void   posterize_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   posterize_button_release (Tool *, GdkEventButton *, gpointer);
 static void   posterize_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   posterize_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   posterize_control        (Tool *, int, gpointer);
+static void   posterize_control        (Tool *, ToolAction,       gpointer);
 
-static PosterizeDialog *  posterize_new_dialog          (void);
-static void               posterize_preview             (PosterizeDialog *);
-static void               posterize_ok_callback         (GtkWidget *, gpointer);
-static void               posterize_cancel_callback     (GtkWidget *, gpointer);
-static void               posterize_preview_update      (GtkWidget *, gpointer);
-static void               posterize_levels_text_update  (GtkWidget *, gpointer);
-static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
+static PosterizeDialog * posterize_new_dialog (void);
+
+static void   posterize_preview            (PosterizeDialog *);
+static void   posterize_ok_callback        (GtkWidget *, gpointer);
+static void   posterize_cancel_callback    (GtkWidget *, gpointer);
+static void   posterize_preview_update     (GtkWidget *, gpointer);
+static void   posterize_levels_text_update (GtkWidget *, gpointer);
+static gint   posterize_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 
 
 /*  posterize select action functions  */
@@ -126,9 +127,9 @@ posterize_cursor_update (Tool           *tool,
 }
 
 static void
-posterize_control (Tool     *tool,
-		   int       action,
-		   gpointer  gdisp_ptr)
+posterize_control (Tool       *tool,
+		   ToolAction  action,
+		   gpointer    gdisp_ptr)
 {
   Posterize * post;
 
@@ -136,11 +137,13 @@ posterize_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (posterize_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -149,6 +152,9 @@ posterize_control (Tool     *tool,
 	  posterize_dialog->image_map = NULL;
 	  posterize_cancel_callback (NULL, (gpointer) posterize_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -185,9 +191,11 @@ tools_new_posterize ()
   tool->button_press_func = posterize_button_press;
   tool->button_release_func = posterize_button_release;
   tool->motion_func = posterize_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = posterize_cursor_update;
   tool->control_func = posterize_control;
+
   tool->preserve = FALSE;
   tool->gdisp_ptr = NULL;
   tool->drawable = NULL;

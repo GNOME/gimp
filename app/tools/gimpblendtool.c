@@ -45,16 +45,16 @@
 #include "tile.h"
 
 /*  target size  */
-#define  TARGET_HEIGHT     15
-#define  TARGET_WIDTH      15
+#define  TARGET_HEIGHT  15
+#define  TARGET_WIDTH   15
 
 #define  SQR(x) ((x) * (x))
 
 #ifndef M_PI
-#define M_PI    3.14159265358979323846
+#define M_PI 3.14159265358979323846
 #endif /* M_PI */
 
-#define STATUSBAR_SIZE 128
+#define  STATUSBAR_SIZE  128
 
 /*  the blend structures  */
 
@@ -63,14 +63,14 @@ typedef double (*RepeatFunc)(double);
 typedef struct _BlendTool BlendTool;
 struct _BlendTool
 {
-  DrawCore *   core;       /*  Core select object          */
+  DrawCore * core;        /*  Core select object   */
 
-  int          startx;     /*  starting x coord            */
-  int          starty;     /*  starting y coord            */
+  int        startx;      /*  starting x coord     */
+  int        starty;      /*  starting y coord     */
 
-  int          endx;       /*  ending x coord              */
-  int          endy;       /*  ending y coord              */
-  guint        context_id; /*  for the statusbar           */
+  int        endx;        /*  ending x coord       */
+  int        endy;        /*  ending y coord       */
+  guint      context_id;  /*  for the statusbar    */
 };
 
 typedef struct _BlendOptions BlendOptions;
@@ -107,7 +107,8 @@ struct _BlendOptions
   GtkObject    *threshold_w;
 };
 
-typedef struct {
+typedef struct
+{
   double       offset;
   double       sx, sy;
   BlendMode    blend_mode;
@@ -118,7 +119,8 @@ typedef struct {
   RepeatFunc   repeat_func;
 } RenderBlendData;
 
-typedef struct {
+typedef struct
+{
   PixelRegion   *PR;
   unsigned char *row_data;
   int            bytes;
@@ -143,15 +145,16 @@ static PixelRegion distR =
 
 
 /*  local function prototypes  */
+
 static void   gradient_type_callback    (GtkWidget *, gpointer);
 static void   blend_mode_callback       (GtkWidget *, gpointer);
 static void   repeat_type_callback      (GtkWidget *, gpointer);
 
-static void   blend_button_press            (Tool *, GdkEventButton *, gpointer);
-static void   blend_button_release          (Tool *, GdkEventButton *, gpointer);
-static void   blend_motion                  (Tool *, GdkEventMotion *, gpointer);
-static void   blend_cursor_update           (Tool *, GdkEventMotion *, gpointer);
-static void   blend_control                 (Tool *, int, gpointer);
+static void   blend_button_press        (Tool *, GdkEventButton *, gpointer);
+static void   blend_button_release      (Tool *, GdkEventButton *, gpointer);
+static void   blend_motion              (Tool *, GdkEventMotion *, gpointer);
+static void   blend_cursor_update       (Tool *, GdkEventMotion *, gpointer);
+static void   blend_control             (Tool *, ToolAction,       gpointer);
 
 static double gradient_calc_conical_sym_factor           (double dist, double *axis, double offset,
 							  double x, double y);
@@ -717,9 +720,9 @@ blend_draw (Tool *tool)
 }
 
 static void
-blend_control (Tool     *tool,
-	       int       action,
-	       gpointer  gdisp_ptr)
+blend_control (Tool       *tool,
+	       ToolAction  action,
+	       gpointer    gdisp_ptr)
 {
   BlendTool * blend_tool;
 
@@ -727,14 +730,19 @@ blend_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (blend_tool->core, tool);
       break;
-    case RESUME :
+
+    case RESUME:
       draw_core_resume (blend_tool->core, tool);
       break;
-    case HALT :
+
+    case HALT:
       draw_core_stop (blend_tool->core, tool);
+      break;
+
+    default:
       break;
     }
 }

@@ -27,41 +27,35 @@
 #include <gtk/gtk.h>
 
 /*  The possible states for tools  */
-#define  INACTIVE               0
-#define  ACTIVE                 1
-#define  PAUSED                 2
-
-
-/*  Tool control actions  */
-#define  PAUSE                  0
-#define  RESUME                 1
-#define  HALT                   2
-#define  CURSOR_UPDATE          3
-#define  DESTROY                4
-#define  RECREATE               5
-
+typedef enum
+{
+  INACTIVE,
+  ACTIVE,
+  PAUSED
+} ToolState;
 
 /*  The possibilities for where the cursor lies  */
-#define  ACTIVE_LAYER           (1 << 0)
-#define  SELECTION              (1 << 1)
-#define  NON_ACTIVE_LAYER       (1 << 2)
+#define  ACTIVE_LAYER      (1 << 0)
+#define  SELECTION         (1 << 1)
+#define  NON_ACTIVE_LAYER  (1 << 2)
 
 /*  The types of tools...  */
-struct _tool
+struct _Tool
 {
   /*  Data  */
-  ToolType       type;                 /*  Tool type  */
-  int            state;                /*  state of tool activity  */
-  int            paused_count;         /*  paused control count  */
-  int            scroll_lock;          /*  allow scrolling or not  */
-  int            auto_snap_to;         /*  should the mouse snap to guides automatically */
-  void *         private;              /*  Tool-specific information  */
-  void *         gdisp_ptr;            /*  pointer to currently active gdisp  */
-  void *         drawable;             /*  pointer to the drawable that was
-					   active when the tool was created */
-  int            ID;                   /*  unique tool ID  */
+  ToolType   type;          /*  Tool type  */
+  ToolState  state;         /*  state of tool activity  */
+  int        paused_count;  /*  paused control count  */
+  int        scroll_lock;   /*  allow scrolling or not  */
+  int        auto_snap_to;  /*  should the mouse snap to guides automatically */
+  void     * private;       /*  Tool-specific information  */
+  void     * gdisp_ptr;     /*  pointer to currently active gdisp  */
+  void     * drawable;      /*  pointer to the drawable that was
+				active when the tool was created */
+  int        ID;            /*  unique tool ID  */
 
-  int            preserve;             /*  Preserve this tool through the current image changes */
+  int        preserve;      /*  Preserve this tool through the current
+				image changes  */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -72,7 +66,6 @@ struct _tool
   CursorUpdateFunc   cursor_update_func;
   ToolCtlFunc        control_func;
 };
-
 
 struct _ToolInfo
 {
@@ -99,26 +92,24 @@ struct _ToolInfo
   GtkWidget *tool_widget;
 };
 
-
 /*  Global Data Structure  */
-
 extern Tool     * active_tool;
-extern Layer    * active_tool_layer;
 extern ToolInfo   tool_info[];
 
 /*  Function declarations  */
+void   tools_select               (ToolType     tool_type);
+void   tools_initialize           (ToolType     tool_type,
+				   GDisplay    *gdisplay);
 
-void   tools_select              (ToolType);
-void   tools_initialize          (ToolType, GDisplay *);
-void   tools_options_dialog_new  (void);
-void   tools_options_dialog_show (void);
-void   tools_options_dialog_free (void);
+void   tools_options_dialog_new   (void);
+void   tools_options_dialog_show  (void);
+void   tools_options_dialog_free  (void);
 
-void   tools_register            (ToolType     tool_type,
-				  ToolOptions *tool_options);
+void   tools_register             (ToolType     tool_type,
+				   ToolOptions *tool_options);
 
-void   active_tool_control       (int, void *);
-
+void   active_tool_control        (ToolAction   action,
+				   void        *gdisp_ptr);
 
 /*  Standard member functions  */
 void   standard_arrow_keys_func   (Tool *, GdkEventKey *, gpointer);

@@ -29,7 +29,6 @@
 #include "color_picker.h"
 #include "convolve.h"
 #include "crop.h"
-#include "cursorutil.h"
 #include "curves.h"
 #include "devices.h"
 #include "eraser.h"
@@ -39,10 +38,8 @@
 #include "flip_tool.h"
 #include "free_select.h"
 #include "fuzzy_select.h"
-#include "gimprc.h"
 #include "histogram_tool.h"
 #include "ink.h"
-#include "interface.h"
 #include "iscissors.h"
 #include "levels.h"
 #include "magnify.h"
@@ -63,19 +60,16 @@
 
 #include "pixmaps2.h"
 
-/* Global Data */
+/*  Global Data  */
+Tool * active_tool = NULL;
 
-Tool  * active_tool = NULL;
-Layer * active_tool_layer = NULL;
-
-/* Local Data */
-
+/*  Local  Data  */
 static GtkWidget *options_shell = NULL;
 static GtkWidget *options_vbox = NULL;
 static GtkWidget *options_label = NULL;
 static GtkWidget *options_reset_button = NULL;
 
-static int global_tool_ID = 0;
+static int        global_tool_ID = 0;
 
 ToolInfo tool_info[] =
 {
@@ -595,10 +589,11 @@ gint num_tools = sizeof (tool_info) / sizeof (ToolInfo);
 
 
 /*  Local function declarations  */
-
-static void tools_options_reset_callback  (GtkWidget *, gpointer);
-static void tools_options_close_callback  (GtkWidget *, gpointer);
-static gint tools_options_delete_callback (GtkWidget *, GdkEvent *, gpointer);
+static void tools_options_show             (ToolType);
+static void tools_options_hide             (ToolType);
+static void tools_options_reset_callback   (GtkWidget *, gpointer);
+static void tools_options_close_callback   (GtkWidget *, gpointer);
+static gint tools_options_delete_callback  (GtkWidget *, GdkEvent *, gpointer);
 
 
 /*  Function definitions  */
@@ -609,16 +604,13 @@ active_tool_free (void)
   if (!active_tool)
     return;
 
-  if (tool_info[(int) active_tool->type].tool_options)
-    gtk_widget_hide (tool_info[(int) active_tool->type].tool_options->main_vbox);
+  tools_options_hide (active_tool->type);
   
   (* tool_info[(int) active_tool->type].free_func) (active_tool);
 
   g_free (active_tool);
   active_tool = NULL;
-  active_tool_layer = NULL;
 }
-
 
 void
 tools_select (ToolType type)
@@ -628,22 +620,9 @@ tools_select (ToolType type)
 
   active_tool = (* tool_info[(int) type].new_func) ();
 
-  /*  Show the options and the title label of the active tool
-   */
-  if (tool_info[(int) active_tool->type].tool_options->main_vbox)
-    gtk_widget_show (tool_info[(int) active_tool->type].tool_options->main_vbox);
+  tools_options_show (active_tool->type);
 
-  if (tool_info[(int) active_tool->type].tool_options->title)
-    gtk_label_set_text (GTK_LABEL (options_label),
-			_(tool_info[(int) active_tool->type].tool_options->title));
-
-  if (tool_info[(int) active_tool->type].tool_options->reset_func)
-    gtk_widget_set_sensitive (options_reset_button, TRUE);
-  else
-    gtk_widget_set_sensitive (options_reset_button, FALSE);
-
-  /*  Set the paused count variable to 0
-   */
+  /*  Set the paused count variable to 0  */
   active_tool->paused_count = 0;
   active_tool->gdisp_ptr = NULL;
   active_tool->drawable = NULL;
@@ -654,56 +633,46 @@ tools_select (ToolType type)
 }
 
 void
-tools_initialize (ToolType type, GDisplay *gdisp)
+tools_initialize (ToolType  type,
+		  GDisplay *gdisp)
 {
-  /* If you're wondering... only these dialog type tools have init functions */
   if (active_tool)
     active_tool_free ();
 
+  /* If you're wondering... only these dialog type tools have init functions */
   if (tool_info[(int) type].init_func)
     {
       if (gdisp)
 	{
 	  active_tool = (* tool_info[(int) type].new_func) ();
 	  (* tool_info[(int) type].init_func) (gdisp);
-	} 
+	}
       else
 	{
 	  active_tool = tools_new_rect_select ();
 	}
     }
-  else 
-    active_tool = (* tool_info[(int) type].new_func) ();
-
-  /*  Show the options and the title label of the active tool
-   */
-  if (tool_info[(int) active_tool->type].tool_options)
-    gtk_widget_show (tool_info[(int) active_tool->type].tool_options->main_vbox);
-
-  if (tool_info[(int) active_tool->type].tool_options->title)
-    gtk_label_set_text (GTK_LABEL (options_label),
-			_(tool_info[(int) active_tool->type].tool_options->title));
-
-  if (tool_info[(int) active_tool->type].tool_options->reset_func)
-    gtk_widget_set_sensitive (options_reset_button, TRUE);
   else
-    gtk_widget_set_sensitive (options_reset_button, FALSE);
+    {
+      active_tool = (* tool_info[(int) type].new_func) ();
+    }
 
-  /*  Set the paused count variable to 0
-   */
+  tools_options_show (active_tool->type);
+
+  /*  Set the paused count variable to 0  */
+  active_tool->paused_count = 0;
+  active_tool->gdisp_ptr = gdisp;
+  active_tool->drawable = NULL;
+  active_tool->ID = global_tool_ID++;
+
   if (gdisp)
     active_tool->drawable = gimage_active_drawable (gdisp->gimage);
-  else
-    active_tool->drawable = NULL;
-  active_tool->gdisp_ptr = NULL;
-  active_tool->ID = global_tool_ID++;
 }
 
 void
 tools_options_dialog_new ()
 {
   GtkWidget *frame;
-  /* GtkWidget *frame2; */
   GtkWidget *vbox;
 
   ActionAreaItem action_items[2] =
@@ -726,17 +695,11 @@ tools_options_dialog_new ()
 
   /*  The outer frame  */
   frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN); /* _OUT */
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options_shell)->vbox), frame);
   gtk_widget_show (frame);
 
-  /*
-  frame2 = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), frame2);
-  gtk_widget_show (frame2);
-  */
-
+  /*  The vbox containing the title frame and the options vbox  */
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
@@ -791,14 +754,12 @@ tools_options_dialog_show ()
     }
 }
 
-
 void
 tools_options_dialog_free ()
 {
   session_get_window_info (options_shell, &tool_options_session_info);
   gtk_widget_destroy (options_shell);
 }
-
 
 void
 tools_register (ToolType     tool_type,
@@ -821,10 +782,9 @@ tools_register (ToolType     tool_type,
   gtk_label_set_text (GTK_LABEL (options_label), _(tool_options->title));
 }
 
-
 void
-active_tool_control (int   action,
-		     void *gdisp_ptr)
+active_tool_control (ToolAction  action,
+		     void       *gdisp_ptr)
 {
   if (active_tool)
     {
@@ -842,8 +802,8 @@ active_tool_control (int   action,
 		    }
 		}
 	      active_tool->paused_count++;
-
 	      break;
+
 	    case RESUME :
 	      active_tool->paused_count--;
 	      if (active_tool->state == PAUSED)
@@ -855,18 +815,25 @@ active_tool_control (int   action,
 		    }
 		}
 	      break;
+
 	    case HALT :
 	      active_tool->state = INACTIVE;
 	      (* active_tool->control_func) (active_tool, action, gdisp_ptr);
 	      break;
+
 	    case DESTROY :
-              active_tool_free();
+              active_tool_free ();
               gtk_widget_hide (options_shell);
               break;
+
+	    default:
+	      break;
 	    }
 	}
       else if (action == HALT)
-	active_tool->state = INACTIVE;
+	{
+	  active_tool->state = INACTIVE;
+	}
     }
 }
 
@@ -882,6 +849,31 @@ standard_modifier_key_func (Tool        *tool,
 			    GdkEventKey *kevent,
 			    gpointer     gdisp_ptr)
 {
+}
+
+/*  tool options function  */
+
+static void
+tools_options_show (ToolType tooltype)
+{
+  if (tool_info[tooltype].tool_options->main_vbox)
+    gtk_widget_show (tool_info[tooltype].tool_options->main_vbox);
+
+  if (tool_info[tooltype].tool_options->title)
+    gtk_label_set_text (GTK_LABEL (options_label),
+			_(tool_info[tooltype].tool_options->title));
+
+  if (tool_info[tooltype].tool_options->reset_func)
+    gtk_widget_set_sensitive (options_reset_button, TRUE);
+  else
+    gtk_widget_set_sensitive (options_reset_button, FALSE);
+}
+
+static void
+tools_options_hide (ToolType tooltype)
+{
+  if (tool_info[tooltype].tool_options)
+    gtk_widget_hide (tool_info[tooltype].tool_options->main_vbox);
 }
 
 static gint

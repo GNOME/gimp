@@ -68,7 +68,7 @@ struct _ColourPickerTool
 static ColorPickerOptions * color_picker_options = NULL;
 
 /*  the color value  */
-int            col_value[5] = { 0, 0, 0, 0, 0 };
+int col_value[5] = { 0, 0, 0, 0, 0 };
 
 /*  the color picker dialog  */
 static GimpDrawable * active_drawable;
@@ -85,14 +85,15 @@ static char           hex_buf   [MAX_INFO_BUF];
 
 
 /*  local function prototypes  */
-static void  color_picker_button_press     (Tool *, GdkEventButton *, gpointer);
-static void  color_picker_button_release   (Tool *, GdkEventButton *, gpointer);
-static void  color_picker_motion           (Tool *, GdkEventMotion *, gpointer);
-static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
-static void  color_picker_control          (Tool *, int, void *);
-static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
-static void  color_picker_info_update      (Tool *, int);
+static void   color_picker_button_press   (Tool *, GdkEventButton *, gpointer);
+static void   color_picker_button_release (Tool *, GdkEventButton *, gpointer);
+static void   color_picker_motion         (Tool *, GdkEventMotion *, gpointer);
+static void   color_picker_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void   color_picker_control        (Tool *, ToolAction,       gpointer);
+
+static void   color_picker_info_window_close_callback (GtkWidget *, gpointer);
+static void   color_picker_info_update                (Tool *, int);
 
 
 /*  functions  */
@@ -124,7 +125,7 @@ color_picker_options_new (void)
   /*  the new color picker tool options structure  */
   options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Color Picker Options"),
+		     _("Color Picker Options"),
 		     color_picker_options_reset);
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;
@@ -378,9 +379,9 @@ color_picker_cursor_update (Tool           *tool,
 }
 
 static void
-color_picker_control (Tool     *tool,
-		      int       action,
-		      gpointer  gdisp_ptr)
+color_picker_control (Tool       *tool,
+		      ToolAction  action,
+		      gpointer    gdisp_ptr)
 {
   ColourPickerTool * cp_tool;
 
@@ -391,11 +392,16 @@ color_picker_control (Tool     *tool,
     case PAUSE :
       draw_core_pause (cp_tool->core, tool);
       break;
+
     case RESUME :
       draw_core_resume (cp_tool->core, tool);
       break;
+
     case HALT :
       draw_core_stop (cp_tool->core, tool);
+      break;
+
+    default:
       break;
     }
 }
@@ -620,10 +626,12 @@ tools_new_color_picker ()
   tool->scroll_lock = 0;  /*  Allow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = private;
+
   tool->button_press_func = color_picker_button_press;
   tool->button_release_func = color_picker_button_release;
   tool->motion_func = color_picker_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = color_picker_cursor_update;
   tool->control_func = color_picker_control;
   tool->preserve = TRUE;
@@ -649,12 +657,12 @@ tools_free_color_picker (Tool *tool)
       color_picker_info = NULL;
     }
 
-  g_free(cp_tool);
+  g_free (cp_tool);
 }
 
 static void
-color_picker_info_window_close_callback (GtkWidget *w,
-			    gpointer   client_data)
+color_picker_info_window_close_callback (GtkWidget *widget,
+					 gpointer   client_data)
 {
   info_dialog_popdown ((InfoDialog *) client_data);
 }

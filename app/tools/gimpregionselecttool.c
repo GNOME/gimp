@@ -34,29 +34,29 @@
 
 /*  the fuzzy selection structures  */
 
-typedef struct _fuzzy_select FuzzySelect;
-struct _fuzzy_select
+typedef struct _FuzzySelect FuzzySelect;
+struct _FuzzySelect
 {
-  DrawCore *     core;         /*  Core select object                      */
+  DrawCore * core;         /*  Core select object                      */
 
-  int            op;           /*  selection operation (ADD, SUB, etc)     */
+  int        op;           /*  selection operation (ADD, SUB, etc)     */
 
-  int            x, y;         /*  Point from which to execute seed fill  */
-  int            last_x;       /*                                         */
-  int            last_y;       /*  variables to keep track of sensitivity */
-  int            threshold;    /*  threshold value for soft seed fill     */
+  int        x, y;         /*  Point from which to execute seed fill  */
+  int        last_x;       /*                                         */
+  int        last_y;       /*  variables to keep track of sensitivity */
+  int        threshold;    /*  threshold value for soft seed fill     */
 
 };
 
 
 /*  the fuzzy selection tool options  */
-static SelectionOptions *fuzzy_options = NULL;
+static SelectionOptions * fuzzy_options = NULL;
 
 /*  XSegments which make up the fuzzy selection boundary  */
-static GdkSegment *segs = NULL;
-static int         num_segs = 0;
+static GdkSegment * segs     = NULL;
+static int          num_segs = 0;
 
-Channel *fuzzy_mask = NULL;
+Channel * fuzzy_mask = NULL;
 
 
 /*  fuzzy select action functions  */
@@ -64,7 +64,7 @@ static void   fuzzy_select_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_button_release  (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_motion          (Tool *, GdkEventMotion *, gpointer);
 static void   fuzzy_select_draw            (Tool *);
-static void   fuzzy_select_control         (Tool *, int, gpointer);
+static void   fuzzy_select_control         (Tool *, ToolAction,       gpointer);
 
 /*  fuzzy select action functions  */
 static GdkSegment * fuzzy_select_calculate (Tool *, void *, int *);
@@ -511,7 +511,9 @@ fuzzy_select_draw (Tool *tool)
 }
 
 static void
-fuzzy_select_control (Tool *tool, int action, gpointer gdisp_ptr)
+fuzzy_select_control (Tool       *tool,
+		      ToolAction  action,
+		      gpointer    gdisp_ptr)
 {
   FuzzySelect * fuzzy_sel;
 
@@ -522,11 +524,16 @@ fuzzy_select_control (Tool *tool, int action, gpointer gdisp_ptr)
     case PAUSE :
       draw_core_pause (fuzzy_sel->core, tool);
       break;
+
     case RESUME :
       draw_core_resume (fuzzy_sel->core, tool);
       break;
+
     case HALT :
       draw_core_stop (fuzzy_sel->core, tool);
+      break;
+
+    default:
       break;
     }
 }
@@ -565,7 +572,8 @@ tools_new_fuzzy_select (void)
   tool->button_press_func = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func = fuzzy_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = fuzzy_select_control;
 

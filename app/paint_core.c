@@ -40,8 +40,8 @@
 #include "tile.h"			/* ick. */
 
 /*  target size  */
-#define  TARGET_HEIGHT     15
-#define  TARGET_WIDTH      15
+#define  TARGET_HEIGHT  15
+#define  TARGET_WIDTH   15
 
 #define    SQR(x) ((x) * (x))
 #define    EPSILON  0.00001
@@ -51,16 +51,18 @@ PaintCore  non_gui_paint_core;
 
 /*  local function prototypes  */
 static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
-static MaskBuf * paint_core_pressurize_mask  (MaskBuf *, double, double, double);
+static MaskBuf * paint_core_pressurize_mask (MaskBuf *, double, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
 static MaskBuf * paint_core_get_brush_mask  (PaintCore *, int);
-static void      paint_core_paste           (PaintCore *, MaskBuf *, GimpDrawable *, int, int, int, int);
-static void      paint_core_replace         (PaintCore *, MaskBuf *, GimpDrawable *, int, int, int);
+static void      paint_core_paste           (PaintCore *, MaskBuf *,
+					     GimpDrawable *, int, int, int, int);
+static void      paint_core_replace         (PaintCore *, MaskBuf *,
+					     GimpDrawable *, int, int, int);
 static void      paint_to_canvas_tiles      (PaintCore *, MaskBuf *, int);
 static void      paint_to_canvas_buf        (PaintCore *, MaskBuf *, int);
 static void      set_undo_tiles             (GimpDrawable *, int, int, int, int);
 static void      set_canvas_tiles           (int, int, int, int);
-static int paint_core_invalidate_cache(GimpBrush *brush, gpointer *blah);
+static int     paint_core_invalidate_cache  (GimpBrush *brush, gpointer *blah);
 
 /***********************************************************************/
 
@@ -434,9 +436,9 @@ paint_core_cursor_update (Tool           *tool,
 }
 
 void
-paint_core_control (Tool    *tool, 
-		    int      action, 
-		    gpointer gdisp_ptr)
+paint_core_control (Tool       *tool, 
+		    ToolAction  action, 
+		    gpointer    gdisp_ptr)
 {
   PaintCore * paint_core;
   GDisplay *gdisp;
@@ -448,18 +450,22 @@ paint_core_control (Tool    *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       (* paint_core->paint_func) (paint_core, drawable, FINISH_PAINT);
       draw_core_stop (paint_core->core, tool);
       paint_core_cleanup ();
       break;
+
+    default:
+      break;
     }
 }
-
 
 void
 paint_core_draw (Tool *tool)
@@ -1522,6 +1528,3 @@ free_paint_buffers ()
     temp_buf_free (canvas_buf);
   canvas_buf = NULL;
 }
-
-
-

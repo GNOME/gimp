@@ -158,8 +158,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
       gdisp->disp_width = gdisp->canvas->allocation.width;
       gdisp->disp_height = gdisp->canvas->allocation.height;
 
-      /*  create GC for scrolling */
- 
+      /*  create GC for scrolling  */
       gdisp->scroll_gc = gdk_gc_new (gdisp->canvas->window);
       gdk_gc_set_exposures (gdisp->scroll_gc, TRUE);
 
@@ -175,11 +174,10 @@ gdisplay_canvas_events (GtkWidget *canvas,
       setup_scale (gdisp);
     }
 
-  /* Find out what device the event occurred upon */
-  
+  /*  Find out what device the event occurred upon  */
   if (devices_check_change (event))
     gdisplay_check_device_cursor (gdisp);
-  
+
   switch (event->type)
     {
     case GDK_EXPOSE:
@@ -238,36 +236,34 @@ gdisplay_canvas_events (GtkWidget *canvas,
 
 	  if (active_tool && ((active_tool->type == MOVE) ||
 			      !gimage_is_empty (gdisp->gimage)))
-	      {
-		if (active_tool->auto_snap_to)
-		  {
-		    gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
-		    bevent->x = tx;
-		    bevent->y = ty;
-		    update_cursor = TRUE;
-		  }
-		
-		/* reset the current tool if we're changing gdisplays */
-		/*
-		if (active_tool->gdisp_ptr) {
-		  tool_gdisp = active_tool->gdisp_ptr;
-		  if (tool_gdisp != gdisp) {
-		    tools_initialize (active_tool->type, gdisp);
-		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
-		  }
-		} else
-		*/
-		/* reset the current tool if we're changing drawables */
-		  if (active_tool->drawable) {
-		    if (((gimage_active_drawable(gdisp->gimage)) !=
-			 active_tool->drawable) &&
-			!active_tool->preserve)
-		      tools_initialize (active_tool->type, gdisp);
-		  } else
-		    active_tool->drawable = gimage_active_drawable(gdisp->gimage);
-		
-		(* active_tool->button_press_func) (active_tool, bevent, gdisp);
-	      }
+	    {
+	      if (active_tool->auto_snap_to)
+		{
+		  gdisplay_snap_point (gdisp, bevent->x, bevent->y, &tx, &ty);
+		  bevent->x = tx;
+		  bevent->y = ty;
+		  update_cursor = TRUE;
+		}
+
+	      /*  reset the current tool if ...  */
+
+	      if (/* it has no display */
+		  ! active_tool->gdisp_ptr ||   
+
+		  /* or no drawable */
+		  ! active_tool->drawable  ||   
+
+		  /* or a drawable different from it's current one... */
+		  ((gimage_active_drawable (gdisp->gimage) !=
+		    active_tool->drawable) &&
+		   /* ...and doesn't want to preserve it */
+		   ! active_tool->preserve))
+		{
+		  tools_initialize (active_tool->type, gdisp);
+		}
+
+	      (* active_tool->button_press_func) (active_tool, bevent, gdisp);
+	    }
 	  break;
 
 	case 2:

@@ -1218,6 +1218,7 @@ plug_in_repeat (int with_interface)
   if (last_plug_in)
     {
       gdisplay = gdisplay_active ();
+      if (!gdisplay) return;
 
       /* construct the procedures arguments */
       args = g_new (Argument, 3);
@@ -2286,6 +2287,7 @@ plug_in_callback (GtkWidget *widget,
 
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
+  if (!gdisplay) return;
 
   proc_rec = (ProcRecord*) client_data;
 

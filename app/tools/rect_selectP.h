@@ -3,9 +3,9 @@
 
 #include "draw_core.h"
 
-typedef struct _rect_select RectSelect, EllipseSelect;
+typedef struct _RectSelect RectSelect, EllipseSelect;
 
-struct _rect_select
+struct _RectSelect
 {
   DrawCore *      core;       /*  Core select object                      */
 

@@ -511,9 +511,9 @@ rect_select_cursor_update (Tool           *tool,
 }
 
 void
-rect_select_control (Tool     *tool,
-		     int       action,
-		     gpointer  gdisp_ptr)
+rect_select_control (Tool       *tool,
+		     ToolAction  action,
+		     gpointer    gdisp_ptr)
 {
   RectSelect * rect_sel;
 
@@ -524,11 +524,16 @@ rect_select_control (Tool     *tool,
     case PAUSE :
       draw_core_pause (rect_sel->core, tool);
       break;
+
     case RESUME :
       draw_core_resume (rect_sel->core, tool);
       break;
+
     case HALT :
       draw_core_stop (rect_sel->core, tool);
+      break;
+
+    default:
       break;
     }
 }
@@ -574,6 +579,7 @@ tools_new_rect_select ()
   tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = rect_select_control;
+
   tool->preserve = TRUE;
 
   return tool;

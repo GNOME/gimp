@@ -28,8 +28,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#define TEXT_WIDTH 45
-#define HISTOGRAM_WIDTH 256
+#define TEXT_WIDTH        45
+#define HISTOGRAM_WIDTH  256
 #define HISTOGRAM_HEIGHT 150
 
 /*  the threshold structures  */
@@ -53,21 +53,20 @@ static void   threshold_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   threshold_button_release (Tool *, GdkEventButton *, gpointer);
 static void   threshold_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   threshold_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   threshold_control        (Tool *, int, gpointer);
+static void   threshold_control        (Tool *, ToolAction,       gpointer);
 
+static ThresholdDialog * threshold_new_dialog (void);
+static void   threshold_preview                    (ThresholdDialog *);
+static void   threshold_ok_callback                (GtkWidget *, gpointer);
+static void   threshold_cancel_callback            (GtkWidget *, gpointer);
+static gint   threshold_delete_callback            (GtkWidget *, GdkEvent *,
+						    gpointer);
+static void   threshold_preview_update             (GtkWidget *, gpointer);
+static void   threshold_low_threshold_text_update  (GtkWidget *, gpointer);
+static void   threshold_high_threshold_text_update (GtkWidget *, gpointer);
 
-static ThresholdDialog *  threshold_new_dialog                 (void);
-static void               threshold_preview                    (ThresholdDialog *);
-static void               threshold_ok_callback                (GtkWidget *, gpointer);
-static void               threshold_cancel_callback            (GtkWidget *, gpointer);
-static gint               threshold_delete_callback            (GtkWidget *, GdkEvent *, gpointer);
-static void               threshold_preview_update             (GtkWidget *, gpointer);
-static void               threshold_low_threshold_text_update  (GtkWidget *, gpointer);
-static void               threshold_high_threshold_text_update (GtkWidget *, gpointer);
-
-static void       threshold (PixelRegion *, PixelRegion *, void *);
-static void       threshold_histogram_range (HistogramWidget *, int, int,
-					     void*);
+static void   threshold                 (PixelRegion *, PixelRegion *, void *);
+static void   threshold_histogram_range (HistogramWidget *, int, int, void *);
 
 
 /*  threshold machinery  */
@@ -195,9 +194,9 @@ threshold_cursor_update (Tool           *tool,
 }
 
 static void
-threshold_control (Tool     *tool,
-		   int       action,
-		   gpointer  gdisp_ptr)
+threshold_control (Tool       *tool,
+		   ToolAction  action,
+		   gpointer    gdisp_ptr)
 {
   Threshold * thresh;
 
@@ -205,11 +204,13 @@ threshold_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (threshold_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -218,6 +219,9 @@ threshold_control (Tool     *tool,
 	  threshold_dialog->image_map = NULL;
 	  threshold_cancel_callback (NULL, (gpointer) threshold_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -250,12 +254,15 @@ tools_new_threshold ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = threshold_button_press;
   tool->button_release_func = threshold_button_release;
   tool->motion_func = threshold_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = threshold_cursor_update;
   tool->control_func = threshold_control;
+
   tool->preserve = FALSE;
 
   return tool;

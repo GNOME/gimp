@@ -51,23 +51,25 @@ typedef Blob *(*BlobFunc) (double, double, double, double, double, double);
 typedef struct _InkTool InkTool;
 struct _InkTool
 {
-  DrawCore *      core;         /*  Core select object          */
+  DrawCore * core;         /*  Core select object             */
   
-  Blob     *      last_blob;	/*  blob for last cursor position */
+  Blob     * last_blob;	   /*  blob for last cursor position  */
 
-  int             x1, y1;       /*  image space coordinate      */
-  int             x2, y2;       /*  image space coords          */
+  int        x1, y1;       /*  image space coordinate         */
+  int        x2, y2;       /*  image space coords             */
 
-  gdouble dt_buffer[DIST_SMOOTHER_BUFFER]; /* circular distance history buffer */
-  gint    dt_index;
+  /* circular distance history buffer */
+  gdouble    dt_buffer[DIST_SMOOTHER_BUFFER];
+  gint       dt_index;
 
-  guint32 ts_buffer[TIME_SMOOTHER_BUFFER]; /* circular timing history buffer */
-  gint    ts_index;
+  /* circular timing history buffer */
+  guint32    ts_buffer[TIME_SMOOTHER_BUFFER];
+  gint       ts_index;
 
-  gdouble last_time;      /* previous time of a motion event     */
-  gdouble lastx, lasty;   /* previous position of a motion event */
+  gdouble    last_time;    /*  previous time of a motion event      */
+  gdouble    lastx, lasty; /*  previous position of a motion event  */
 
-  gboolean init_velocity;
+  gboolean   init_velocity;
 };
 
 typedef struct _BrushWidget BrushWidget;
@@ -133,11 +135,11 @@ static TempBuf *  canvas_buf = NULL;
 
 /*  local function prototypes  */
 
-static void   ink_button_press            (Tool *, GdkEventButton *, gpointer);
-static void   ink_button_release          (Tool *, GdkEventButton *, gpointer);
-static void   ink_motion                  (Tool *, GdkEventMotion *, gpointer);
-static void   ink_cursor_update           (Tool *, GdkEventMotion *, gpointer);
-static void   ink_control                 (Tool *, int, gpointer);
+static void   ink_button_press   (Tool *, GdkEventButton *, gpointer);
+static void   ink_button_release (Tool *, GdkEventButton *, gpointer);
+static void   ink_motion         (Tool *, GdkEventMotion *, gpointer);
+static void   ink_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void   ink_control        (Tool *, ToolAction,       gpointer);
 
 static void    time_smoother_add    (InkTool* ink_tool, guint32 value);
 static gdouble time_smoother_result (InkTool* ink_tool);
@@ -164,7 +166,7 @@ static void paint_blob (GdkDrawable  *drawable,
 			GdkGC        *gc,
 			Blob         *blob);
 
-/* Rendering functions */
+/*  Rendering functions  */
 static void ink_set_paint_area  (InkTool      *ink_tool, 
 				 GimpDrawable *drawable, 
 				 Blob         *blob);
@@ -186,7 +188,7 @@ static void ink_set_canvas_tiles(int           x,
 				 int           w, 
 				 int           h);
 
-/* Brush pseudo-widget callbacks */
+/*  Brush pseudo-widget callbacks  */
 static void brush_widget_active_rect      (BrushWidget    *brush_widget,
 					   GtkWidget      *w, 
 					   GdkRectangle   *rect);
@@ -1067,9 +1069,9 @@ ink_cursor_update (Tool           *tool,
 }
 
 static void
-ink_control (Tool     *tool,
-	     int       action,
-	     gpointer  gdisp_ptr)
+ink_control (Tool       *tool,
+	     ToolAction  action,
+	     gpointer    gdisp_ptr)
 {
   GDisplay *gdisp;
   GimpDrawable *drawable;
@@ -1081,14 +1083,19 @@ ink_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (ink_tool->core, tool);
       break;
-    case RESUME :
+
+    case RESUME:
       draw_core_resume (ink_tool->core, tool);
       break;
-    case HALT :
+
+    case HALT:
       ink_cleanup ();
+      break;
+
+    default:
       break;
     }
 }
@@ -1562,7 +1569,8 @@ tools_new_ink (void)
   tool->button_press_func = ink_button_press;
   tool->button_release_func = ink_button_release;
   tool->motion_func = ink_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = ink_cursor_update;
   tool->control_func = ink_control;
 

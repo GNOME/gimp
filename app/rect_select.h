@@ -33,19 +33,18 @@ typedef enum
 } SelectOps;
 
 /*  rect select action functions  */
-void          rect_select_button_press      (Tool *, GdkEventButton *, gpointer);
-void          rect_select_button_release    (Tool *, GdkEventButton *, gpointer);
-void          rect_select_motion            (Tool *, GdkEventMotion *, gpointer);
-void          rect_select_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-void          rect_select_control           (Tool *, int, gpointer);
+void   rect_select_button_press   (Tool *, GdkEventButton *, gpointer);
+void   rect_select_button_release (Tool *, GdkEventButton *, gpointer);
+void   rect_select_motion         (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+void   rect_select_control        (Tool *, ToolAction,       gpointer);
 
 /*  rect select functions  */
-void          rect_select_draw (Tool *);
-void          rect_select      (GimpImage *, int, int, int, int, int, int,
-    				double);
+void   rect_select_draw           (Tool *);
+void   rect_select                (GimpImage *, int, int, int, int, int, int,
+				   double);
 
-
-Tool *        tools_new_rect_select    (void);
-void          tools_free_rect_select   (Tool *);
+Tool * tools_new_rect_select      (void);
+void   tools_free_rect_select     (Tool *);
 
 #endif  /*  __RECT_SELECT_H__  */

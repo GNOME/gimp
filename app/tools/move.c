@@ -48,12 +48,12 @@ static GdkGC *move_gc = NULL;
 
 
 /*  move tool action functions  */
-
 static void   move_tool_button_press      (Tool *, GdkEventButton *, gpointer);
 static void   move_tool_button_release    (Tool *, GdkEventButton *, gpointer);
 static void   move_tool_motion            (Tool *, GdkEventMotion *, gpointer);
 static void   move_tool_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-static void   move_tool_control		  (Tool *, int, gpointer);
+static void   move_tool_control		  (Tool *, ToolAction,       gpointer);
+
 static void   move_create_gc              (GDisplay *);
 
 
@@ -347,9 +347,9 @@ move_tool_cursor_update (Tool           *tool,
 
 
 static void
-move_tool_control (Tool     *tool,
-		   int       action,
-		   gpointer  gdisp_ptr)
+move_tool_control (Tool       *tool,
+		   ToolAction  action,
+		   gpointer    gdisp_ptr)
 {
   MoveTool *move;
 
@@ -357,13 +357,18 @@ move_tool_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       if (move->guide)
 	gdisplay_draw_guide (gdisp_ptr, move->guide, TRUE);
       break;
-    case HALT :
+
+    case HALT:
+      break;
+
+    default:
       break;
     }
 }

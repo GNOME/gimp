@@ -22,6 +22,18 @@
 
 #include "gdisplayF.h"
 
+/*  Tool control actions  */
+typedef enum
+{
+  PAUSE,
+  RESUME,
+  HALT,
+  CURSOR_UPDATE,
+  DESTROY,
+  RECREATE
+} ToolAction;
+
+/*  Tool types  */
 typedef enum
 {
   FIRST_TOOLBOX_TOOL,
@@ -65,20 +77,21 @@ typedef enum
 } ToolType;
 
 /*  Structure definitions  */
-
-typedef struct _tool Tool;
+typedef struct _Tool Tool;
 typedef struct _ToolInfo ToolInfo;
-typedef void (* ButtonPressFunc)       (Tool *, GdkEventButton *, gpointer);
-typedef void (* ButtonReleaseFunc)     (Tool *, GdkEventButton *, gpointer);
-typedef void (* MotionFunc)            (Tool *, GdkEventMotion *, gpointer);
-typedef void (* ArrowKeysFunc)         (Tool *, GdkEventKey *, gpointer);
-typedef void (* ModifierKeyFunc)       (Tool *, GdkEventKey *, gpointer);
-typedef void (* CursorUpdateFunc)      (Tool *, GdkEventMotion *, gpointer);
-typedef void (* ToolCtlFunc)           (Tool *, int, gpointer);
+
+/*  Tool action function declarations  */
+typedef void   (* ButtonPressFunc)    (Tool *, GdkEventButton *, gpointer);
+typedef void   (* ButtonReleaseFunc)  (Tool *, GdkEventButton *, gpointer);
+typedef void   (* MotionFunc)         (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* ArrowKeysFunc)      (Tool *, GdkEventKey *,    gpointer);
+typedef void   (* ModifierKeyFunc)    (Tool *, GdkEventKey *,    gpointer);
+typedef void   (* CursorUpdateFunc)   (Tool *, GdkEventMotion *, gpointer);
+typedef void   (* ToolCtlFunc)        (Tool *, ToolAction,       gpointer);
 
 /*  ToolInfo function declarations  */
-typedef Tool *(* ToolInfoNewFunc)      (void);
-typedef void  (* ToolInfoFreeFunc)     (Tool *);
-typedef void  (* ToolInfoInitFunc)     (GDisplay *);
+typedef Tool * (* ToolInfoNewFunc)    (void);
+typedef void   (* ToolInfoFreeFunc)   (Tool *);
+typedef void   (* ToolInfoInitFunc)   (GDisplay *);
 
 #endif /* __TOOLS_F_H__ */

@@ -27,6 +27,7 @@
 #include "general.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "gimpset.h"
 #include "gdisplay.h"
 #include "selection_options.h"
 
@@ -46,8 +47,8 @@
 typedef struct _ByColorSelect ByColorSelect;
 struct _ByColorSelect
 {
-  int  x, y;         /*  Point from which to execute seed fill  */
-  int  operation;    /*  add, subtract, normal color selection  */
+  int  x, y;       /*  Point from which to execute seed fill  */
+  int  operation;  /*  add, subtract, normal color selection  */
 };
 
 typedef struct _ByColorDialog ByColorDialog;
@@ -57,9 +58,9 @@ struct _ByColorDialog
   GtkWidget   *preview;
   GtkWidget   *gimage_name;
 
-  int          threshold; /*  threshold value for color select  */
-  int          operation; /*  Add, Subtract, Replace  */
-  GImage      *gimage;    /*  gimage which is currently under examination  */
+  int          threshold;  /*  threshold value for color select             */
+  int          operation;  /*  Add, Subtract, Replace                       */
+  GImage      *gimage;     /*  gimage which is currently under examination  */
 };
 
 
@@ -71,25 +72,30 @@ static ByColorDialog *  by_color_dialog = NULL;
 
 
 /*  by_color select action functions  */
-static void   by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
-static void   by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
-static void   by_color_select_motion         (Tool *, GdkEventMotion *, gpointer);
-static void   by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   by_color_select_control        (Tool *, int, gpointer);
 
-static ByColorDialog *  by_color_select_new_dialog     (void);
-static void             by_color_select_render         (ByColorDialog *, GImage *);
-static void             by_color_select_draw           (ByColorDialog *, GImage *);
-static gint             by_color_select_preview_events (GtkWidget *, GdkEventButton *, ByColorDialog *);
-static void             by_color_select_type_callback  (GtkWidget *, gpointer);
-static void             by_color_select_reset_callback (GtkWidget *, gpointer);
-static void             by_color_select_close_callback (GtkWidget *, gpointer);
-static gint             by_color_select_delete_callback (GtkWidget *, GdkEvent *, gpointer);
-static void             by_color_select_fuzzy_update   (GtkAdjustment *, gpointer);
-static void             by_color_select_preview_button_press (ByColorDialog *, GdkEventButton *);
+static void by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
+static void by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
+static void by_color_select_motion         (Tool *, GdkEventMotion *, gpointer);
+static void by_color_select_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+static void by_color_select_control        (Tool *, ToolAction,       gpointer);
+
+static ByColorDialog * by_color_select_new_dialog (void);
+static void   by_color_select_render          (ByColorDialog *, GImage *);
+static void   by_color_select_draw            (ByColorDialog *, GImage *);
+static gint   by_color_select_preview_events  (GtkWidget *, GdkEventButton *,
+					       ByColorDialog *);
+static void   by_color_select_type_callback   (GtkWidget *, gpointer);
+static void   by_color_select_reset_callback  (GtkWidget *, gpointer);
+static void   by_color_select_close_callback  (GtkWidget *, gpointer);
+static gint   by_color_select_delete_callback (GtkWidget *, GdkEvent *,
+					       gpointer);
+static void   by_color_select_fuzzy_update    (GtkAdjustment *, gpointer);
+static void   by_color_select_preview_button_press (ByColorDialog *,
+						    GdkEventButton *);
 
 static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
 static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
+
 
 /*  by_color selection machinery  */
 
@@ -418,9 +424,9 @@ by_color_select_cursor_update (Tool           *tool,
 }
 
 static void
-by_color_select_control (Tool     *tool,
-			 int       action,
-			 gpointer  gdisp_ptr)
+by_color_select_control (Tool       *tool,
+			 ToolAction  action,
+			 gpointer    gdisp_ptr)
 {
   ByColorSelect * by_color_sel;
 
@@ -430,16 +436,22 @@ by_color_select_control (Tool     *tool,
     {
     case PAUSE :
       break;
+
     case RESUME :
       break;
+
     case HALT :
       if (by_color_dialog)
 	{
-	  if (by_color_dialog->gimage)
+	  if (by_color_dialog->gimage &&
+	      gimp_set_have (image_context, by_color_dialog->gimage))
 	    by_color_dialog->gimage->by_color_select = FALSE;
 	  by_color_dialog->gimage = NULL;
 	  by_color_select_close_callback (NULL, (gpointer) by_color_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -483,7 +495,8 @@ tools_new_by_color_select ()
   tool->button_press_func = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->motion_func = by_color_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = by_color_select_cursor_update;
   tool->control_func = by_color_select_control;
   tool->gdisp_ptr = NULL;

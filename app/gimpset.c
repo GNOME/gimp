@@ -249,6 +249,7 @@ gimp_set_add (GimpSet  *set,
     return FALSE;
 	
   set->list = g_slist_prepend (set->list, gimp_set_node_new (set, val));
+
   gtk_signal_emit (GTK_OBJECT (set), gimp_set_signals[ADD], val);
 
   return TRUE;
@@ -265,10 +266,10 @@ gimp_set_remove (GimpSet  *set,
   node = gimp_set_find_node (set, val);
   g_return_val_if_fail (node, FALSE);
 
-  gtk_signal_emit (GTK_OBJECT (set), gimp_set_signals[REMOVE], val);
-
   gimp_set_node_free (set, node);
   set->list = g_slist_remove (set->list, node);
+
+  gtk_signal_emit (GTK_OBJECT (set), gimp_set_signals[REMOVE], val);
 
   return TRUE;
 }

@@ -36,14 +36,13 @@
 
 /*  the free selection structures  */
 
-typedef struct _free_select FreeSelect;
-struct _free_select
+typedef struct _FreeSelect FreeSelect;
+struct _FreeSelect
 {
-  DrawCore *      core;       /*  Core select object                      */
+  DrawCore * core;       /*  Core select object                      */
 
-  int             op;         /*  selection operation (ADD, SUB, etc)     */
-
-  int             num_pts;    /*  Number of points in the polygon         */
+  int        op;         /*  selection operation (ADD, SUB, etc)     */
+  int        num_pts;    /*  Number of points in the polygon         */
 };
 
 struct _FreeSelectPoint
@@ -403,7 +402,9 @@ free_select_motion (Tool *tool, GdkEventMotion *mevent, gpointer gdisp_ptr)
 }
 
 static void
-free_select_control (Tool *tool, int action, gpointer gdisp_ptr)
+free_select_control (Tool       *tool,
+		     ToolAction  action,
+		     gpointer    gdisp_ptr)
 {
   FreeSelect * free_sel;
 
@@ -414,11 +415,16 @@ free_select_control (Tool *tool, int action, gpointer gdisp_ptr)
     case PAUSE :
       draw_core_pause (free_sel->core, tool);
       break;
+
     case RESUME :
       draw_core_resume (free_sel->core, tool);
       break;
+
     case HALT :
       draw_core_stop (free_sel->core, tool);
+      break;
+
+    default:
       break;
     }
 }

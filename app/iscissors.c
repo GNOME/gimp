@@ -51,8 +51,8 @@
 
 /*  the intelligent scissors structures  */
 
-typedef struct _kink Kink;
-struct _kink
+typedef struct _Kink Kink;
+struct _Kink
 {
   int             x, y;         /*  coordinates  */
   int             is_a_kink;    /*  is this a kink?  */
@@ -60,8 +60,8 @@ struct _kink
   double          kinkiness;    /*  kinkiness measure  */
 };
 
-typedef struct _point Point;
-struct _point
+typedef struct _Point Point;
+struct _Point
 {
   int             x, y;         /*  coordinates  */
   int             dir;          /*  direction  */
@@ -71,8 +71,8 @@ struct _point
   double          normal[2];    /*  normal vector to kink  */
 };
 
-typedef struct _iscissors Iscissors;
-struct _iscissors
+typedef struct _Iscissors Iscissors;
+struct _Iscissors
 {
   DrawCore *      core;         /*  Core select object               */
   int             x, y;         /*  upper left hand coordinate       */
@@ -199,7 +199,7 @@ static void   selection_to_bezier	(GtkWidget* , gpointer);
 static void   iscissors_button_press    (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_button_release  (Tool *, GdkEventButton *, gpointer);
 static void   iscissors_motion          (Tool *, GdkEventMotion *, gpointer);
-static void   iscissors_control         (Tool *, int, gpointer);
+static void   iscissors_control         (Tool *, ToolAction,       gpointer);
 static void   iscissors_reset           (Iscissors *);
 static void   iscissors_draw            (Tool *);
 static void   iscissors_draw_CR         (GDisplay *, Iscissors *,
@@ -436,7 +436,8 @@ tools_new_iscissors ()
   tool->button_press_func = iscissors_button_press;
   tool->button_release_func = iscissors_button_release;
   tool->motion_func = iscissors_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = rect_select_cursor_update;
   tool->control_func = iscissors_control;
   tool->auto_snap_to = 0;
@@ -865,9 +866,9 @@ iscissors_draw_CR (GDisplay  *gdisp,
 }
 
 static void
-iscissors_control (Tool     *tool,
-		   int       action,
-		   gpointer  gdisp_ptr)
+iscissors_control (Tool       *tool,
+		   ToolAction  action,
+		   gpointer    gdisp_ptr)
 {
   Iscissors * iscissors;
 
@@ -875,15 +876,20 @@ iscissors_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (iscissors->core, tool);
       break;
-    case RESUME :
+
+    case RESUME:
       draw_core_resume (iscissors->core, tool);
       break;
-    case HALT :
+
+    case HALT:
       draw_core_stop (iscissors->core, tool);
       iscissors_reset (iscissors);
+      break;
+
+    default:
       break;
     }
 }

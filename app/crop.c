@@ -52,24 +52,24 @@
 typedef struct _Crop Crop;
 struct _Crop
 {
-  DrawCore *      core;       /*  Core select object          */
+  DrawCore * core;       /*  Core select object          */
 
-  int             startx;     /*  starting x coord            */
-  int             starty;     /*  starting y coord            */
+  int        startx;     /*  starting x coord            */
+  int        starty;     /*  starting y coord            */
 
-  int             lastx;      /*  previous x coord            */
-  int             lasty;      /*  previous y coord            */
+  int        lastx;      /*  previous x coord            */
+  int        lasty;      /*  previous y coord            */
 
-  int             x1, y1;     /*  upper left hand coordinate  */
-  int             x2, y2;     /*  lower right hand coords     */
+  int        x1, y1;     /*  upper left hand coordinate  */
+  int        x2, y2;     /*  lower right hand coords     */
 
-  int             srw, srh;   /*  width and height of corners */
+  int        srw, srh;   /*  width and height of corners */
 
-  int             tx1, ty1;   /*  transformed coords          */
-  int             tx2, ty2;   /*                              */
+  int        tx1, ty1;   /*  transformed coords          */
+  int        tx2, ty2;   /*                              */
 
-  int             function;   /*  moving or resizing          */
-  guint           context_id; /*  for the statusbar           */
+  int        function;   /*  moving or resizing          */
+  guint      context_id; /*  for the statusbar           */
 };
 
 typedef struct _CropOptions CropOptions;
@@ -109,9 +109,9 @@ static void crop_button_press       (Tool *, GdkEventButton *, gpointer);
 static void crop_button_release     (Tool *, GdkEventButton *, gpointer);
 static void crop_motion             (Tool *, GdkEventMotion *, gpointer);
 static void crop_cursor_update      (Tool *, GdkEventMotion *, gpointer);
-static void crop_control            (Tool *, int, gpointer);
-static void crop_arrow_keys_func    (Tool *, GdkEventKey *, gpointer);
-static void crop_modifier_key_func    (Tool *, GdkEventKey *, gpointer);
+static void crop_control            (Tool *, ToolAction,       gpointer);
+static void crop_arrow_keys_func    (Tool *, GdkEventKey *,    gpointer);
+static void crop_modifier_key_func  (Tool *, GdkEventKey *,    gpointer);
 
 /*  Crop helper functions   */
 static void crop_recalc             (Tool *, Crop *);
@@ -172,7 +172,7 @@ crop_options_new (void)
   /*  the new crop tool options structure  */
   options = (CropOptions *) g_malloc (sizeof (CropOptions));
   tool_options_init ((ToolOptions *) options,
-		     N_("Crop & Resize Options"),
+		     _("Crop & Resize Options"),
 		     crop_options_reset);
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = FALSE;
@@ -661,9 +661,9 @@ crop_modifier_key_func (Tool        *tool,
 }
 
 static void
-crop_control (Tool     *tool,
-	      int       action,
-	      gpointer  gdisp_ptr)
+crop_control (Tool       *tool,
+	      ToolAction  action,
+	      gpointer    gdisp_ptr)
 {
   Crop * crop;
 
@@ -674,13 +674,18 @@ crop_control (Tool     *tool,
     case PAUSE :
       draw_core_pause (crop->core, tool);
       break;
+
     case RESUME :
       crop_recalc (tool, crop);
       draw_core_resume (crop->core, tool);
       break;
+
     case HALT :
       draw_core_stop (crop->core, tool);
       info_dialog_popdown (crop_info);
+      break;
+
+    default:
       break;
     }
 }
@@ -1343,11 +1348,11 @@ crop_automatic_callback (GtkWidget *w,
 static AutoCropType
 crop_guess_bgcolor (GtkObject    *get_color_obj,
 		    GetColorFunc  get_color_func,
-		    int width,
-		    int height,		   
-		    int bytes,
-		    int has_alpha,
-		    guchar *color) 
+		    int           width,
+		    int           height,
+		    int           bytes,
+		    int           has_alpha,
+		    guchar       *color) 
 {
   guchar *tl = NULL;
   guchar *tr = NULL;
@@ -1411,7 +1416,7 @@ crop_guess_bgcolor (GtkObject    *get_color_obj,
 static int 
 crop_colors_equal (guchar *col1, 
 		   guchar *col2, 
-		   int bytes) 
+		   int     bytes) 
 {
   int equal = TRUE;
   int b;
@@ -1429,7 +1434,7 @@ crop_colors_equal (guchar *col1,
 static int 
 crop_colors_alpha (guchar *dummy, 
 		   guchar *col, 
-		   int bytes) 
+		   int     bytes) 
 {
   if (col[bytes-1] == 0)
     return TRUE;

@@ -54,15 +54,16 @@ InfoDialog *       transform_info = NULL;
 static gboolean    transform_info_inited = FALSE;
 
 /*  forward function declarations  */
-static int         transform_core_bounds     (Tool *, void *);
-static void *      transform_core_recalc     (Tool *, void *);
-static void        transform_core_doit       (Tool *, gpointer);
-static double      cubic                     (double, int, int, int, int);
-static void        transform_core_setup_grid (Tool *);
+static int         transform_core_bounds      (Tool *, void *);
+static void *      transform_core_recalc      (Tool *, void *);
+static void        transform_core_doit        (Tool *, gpointer);
+static double      cubic                      (double, int, int, int, int);
+static void        transform_core_setup_grid  (Tool *);
 static void        transform_core_grid_recalc (TransformCore *);
 
 /* Hmmm... Should be in a headerfile but which? */
-void          paths_draw_current(GDisplay *,DrawCore *,GimpMatrix);
+void               paths_draw_current         (GDisplay *, DrawCore *,
+					       GimpMatrix);
 
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
@@ -538,9 +539,9 @@ transform_core_cursor_update (Tool           *tool,
 
 
 void
-transform_core_control (Tool     *tool,
-			int       action,
-			gpointer  gdisp_ptr)
+transform_core_control (Tool       *tool,
+			ToolAction  action,
+			gpointer    gdisp_ptr)
 {
   TransformCore * transform_core;
 
@@ -548,10 +549,11 @@ transform_core_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (transform_core->core, tool);
       break;
-    case RESUME :
+
+    case RESUME:
       if (transform_core_recalc (tool, gdisp_ptr))
 	draw_core_resume (transform_core->core, tool);
       else
@@ -560,8 +562,12 @@ transform_core_control (Tool     *tool,
 	  tool->state = INACTIVE;
 	}
       break;
-    case HALT :
+
+    case HALT:
       transform_core_reset (tool, gdisp_ptr);
+      break;
+
+    default:
       break;
     }
 }
@@ -1398,8 +1404,6 @@ transform_core_paste (GImage       *gimage,
 
       /*  Free the tiles  */
       tile_manager_destroy (tiles);
-
-      active_tool_layer = layer;
 
       return layer;
     }

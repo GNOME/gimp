@@ -35,9 +35,8 @@
 #define ARROW_VELOCITY          25
 #define STATUSBAR_SIZE          128
 
-typedef struct _edit_selection EditSelection;
-
-struct _edit_selection
+typedef struct _EditSelection EditSelection;
+struct _EditSelection
 {
   int                 origx, origy;      /*  last x and y coords             */
   int                 cumlx, cumly;      /*  cumulative changes to x and yed */
@@ -626,21 +625,26 @@ edit_selection_draw (Tool *tool)
 
 
 void
-edit_selection_control (Tool     *tool,
-			int       action,
-			gpointer  gdisp_ptr)
+edit_selection_control (Tool       *tool,
+			ToolAction  action,
+			gpointer    gdisp_ptr)
 {
   switch (action)
     {
     case PAUSE :
       draw_core_pause (edit_select.core, tool);
       break;
+
     case RESUME :
       draw_core_resume (edit_select.core, tool);
       break;
+
     case HALT :
       draw_core_stop (edit_select.core, tool);
       draw_core_free (edit_select.core);
+      break;
+
+    default:
       break;
     }
 }

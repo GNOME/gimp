@@ -54,9 +54,9 @@ enum BoundingBox
 typedef double  TranInfo[TRAN_INFO_SIZE];
 
 typedef void * (* TransformFunc)   (Tool *, void *, int);
-typedef struct _transform_core TransformCore;
 
-struct _transform_core
+typedef struct _TransformCore TransformCore;
+struct _TransformCore
 {
   DrawCore *      core;         /*  Core select object          */
 
@@ -111,9 +111,8 @@ struct _transform_core
 
 
 /*  Special undo type  */
-typedef struct _transform_undo TransformUndo;
-
-struct _transform_undo
+typedef struct _TransformUndo TransformUndo;
+struct _TransformUndo
 {
   int             tool_ID;
   int             tool_type;
@@ -124,29 +123,31 @@ struct _transform_undo
 
 
 /*  make this variable available to all  */
-extern        InfoDialog * transform_info;
+extern InfoDialog * transform_info;
 
 /*  transform tool action functions  */
-void          transform_core_button_press      (Tool *, GdkEventButton *, gpointer);
-void          transform_core_button_release    (Tool *, GdkEventButton *, gpointer);
-void          transform_core_motion            (Tool *, GdkEventMotion *, gpointer);
-void          transform_core_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-void          transform_core_control           (Tool *, int, gpointer);
+void          transform_core_button_press   (Tool *, GdkEventButton *, gpointer);
+void          transform_core_button_release (Tool *, GdkEventButton *, gpointer);
+void          transform_core_motion         (Tool *, GdkEventMotion *, gpointer);
+void          transform_core_cursor_update  (Tool *, GdkEventMotion *, gpointer);
+void          transform_core_control        (Tool *, ToolAction,       gpointer);
 
 /*  transform tool functions  */
-void          transform_core_draw         (Tool *);
-void          transform_core_no_draw      (Tool *);
-Tool *        transform_core_new          (int, int);
-void          transform_core_free         (Tool *);
-void          transform_core_reset        (Tool *, void *);
+void          transform_core_draw                 (Tool *);
+void          transform_core_no_draw              (Tool *);
+Tool *        transform_core_new                  (int, int);
+void          transform_core_free                 (Tool *);
+void          transform_core_reset                (Tool *, void *);
 void	      transform_core_grid_density_changed (void);
-void	      transform_core_showpath_changed (gint);
+void	      transform_core_showpath_changed     (gint);
 
 /*  transform functions  */
-TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix, progress_func_t, gpointer);
-TileManager * transform_core_cut          (GImage *, GimpDrawable *, int *);
-Layer *       transform_core_paste        (GImage *, GimpDrawable *, TileManager *, int);
+TileManager * transform_core_do      (GImage *, GimpDrawable *, TileManager *,
+				      int, GimpMatrix, progress_func_t,
+				      gpointer);
+TileManager * transform_core_cut     (GImage *, GimpDrawable *, int *);
+Layer *       transform_core_paste   (GImage *, GimpDrawable *, TileManager *,
+				      int);
 void          transform_bounding_box (Tool*);
-
 
 #endif  /*  __TRANSFORM_CORE_H__  */

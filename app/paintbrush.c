@@ -66,17 +66,18 @@ struct _PaintbrushOptions
 };
 
 /*  the paint brush tool options  */
-static PaintbrushOptions *paintbrush_options = NULL;
+static PaintbrushOptions * paintbrush_options = NULL;
 
 /*  local variables  */
-static double        non_gui_fade_out;
-static double        non_gui_gradient_length;
-static int           non_gui_gradient_type;
-static double        non_gui_incremental;
+static double  non_gui_fade_out;
+static double  non_gui_gradient_length;
+static int     non_gui_gradient_type;
+static double  non_gui_incremental;
 
 
 /*  forward function declarations  */
-static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean, int);
+static void paintbrush_motion (PaintCore *, GimpDrawable *,
+			       double, double, gboolean, int);
 
 
 /*  functions  */

@@ -31,12 +31,12 @@ typedef enum
 /*  action functions  */
 void   edit_selection_button_release (Tool *, GdkEventButton *, gpointer);
 void   edit_selection_motion         (Tool *, GdkEventMotion *, gpointer);
-void   edit_selection_control        (Tool *, int, gpointer);
+void   edit_selection_control        (Tool *, ToolAction,       gpointer);
 void   edit_selection_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 void   edit_selection_draw           (Tool *);
-void   edit_sel_arrow_keys_func      (Tool *, GdkEventKey *, gpointer);
+void   edit_sel_arrow_keys_func      (Tool *, GdkEventKey *,    gpointer);
 
-
-void   init_edit_selection           (Tool *, gpointer, GdkEventButton *, EditType);
+void   init_edit_selection           (Tool *, gpointer, GdkEventButton *,
+				      EditType);
 
 #endif  /*  __EDIT_SELECTION_H__  */

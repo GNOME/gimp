@@ -57,29 +57,32 @@ static ColorBalanceDialog *color_balance_dialog = NULL;
 
 
 /*  color balance action functions  */
+
 static void   color_balance_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   color_balance_button_release (Tool *, GdkEventButton *, gpointer);
 static void   color_balance_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   color_balance_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   color_balance_control        (Tool *, int, gpointer);
+static void   color_balance_control        (Tool *, ToolAction,       gpointer);
 
-static ColorBalanceDialog *  color_balance_new_dialog          (void);
-static void                  color_balance_update              (ColorBalanceDialog *, int);
-static void                  color_balance_preview             (ColorBalanceDialog *);
-static void                  color_balance_ok_callback         (GtkWidget *, gpointer);
-static void                  color_balance_cancel_callback     (GtkWidget *, gpointer);
-static gint                  color_balance_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
-static void                  color_balance_shadows_callback    (GtkWidget *, gpointer);
-static void                  color_balance_midtones_callback   (GtkWidget *, gpointer);
-static void                  color_balance_highlights_callback (GtkWidget *, gpointer);
-static void                  color_balance_preserve_update     (GtkWidget *, gpointer);
-static void                  color_balance_preview_update      (GtkWidget *, gpointer);
-static void                  color_balance_cr_scale_update     (GtkAdjustment *, gpointer);
-static void                  color_balance_mg_scale_update     (GtkAdjustment *, gpointer);
-static void                  color_balance_yb_scale_update     (GtkAdjustment *, gpointer);
-static void                  color_balance_cr_text_update      (GtkWidget *, gpointer);
-static void                  color_balance_mg_text_update      (GtkWidget *, gpointer);
-static void                  color_balance_yb_text_update      (GtkWidget *, gpointer);
+static ColorBalanceDialog * color_balance_new_dialog (void);
+
+static void   color_balance_update              (ColorBalanceDialog *, int);
+static void   color_balance_preview             (ColorBalanceDialog *);
+static void   color_balance_ok_callback         (GtkWidget *, gpointer);
+static void   color_balance_cancel_callback     (GtkWidget *, gpointer);
+static gint   color_balance_delete_callback     (GtkWidget *, GdkEvent *,
+						 gpointer);
+static void   color_balance_shadows_callback    (GtkWidget *, gpointer);
+static void   color_balance_midtones_callback   (GtkWidget *, gpointer);
+static void   color_balance_highlights_callback (GtkWidget *, gpointer);
+static void   color_balance_preserve_update     (GtkWidget *, gpointer);
+static void   color_balance_preview_update      (GtkWidget *, gpointer);
+static void   color_balance_cr_scale_update     (GtkAdjustment *, gpointer);
+static void   color_balance_mg_scale_update     (GtkAdjustment *, gpointer);
+static void   color_balance_yb_scale_update     (GtkAdjustment *, gpointer);
+static void   color_balance_cr_text_update      (GtkWidget *, gpointer);
+static void   color_balance_mg_text_update      (GtkWidget *, gpointer);
+static void   color_balance_yb_text_update      (GtkWidget *, gpointer);
 
 
 /*  color balance machinery  */
@@ -183,9 +186,9 @@ color_balance_cursor_update (Tool           *tool,
 }
 
 static void
-color_balance_control (Tool     *tool,
-		       int       action,
-		       gpointer  gdisp_ptr)
+color_balance_control (Tool       *tool,
+		       ToolAction  action,
+		       gpointer    gdisp_ptr)
 {
   ColorBalance * color_bal;
 
@@ -193,11 +196,13 @@ color_balance_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (color_balance_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -206,6 +211,9 @@ color_balance_control (Tool     *tool,
 	  color_balance_dialog->image_map = NULL;
 	  color_balance_cancel_callback (NULL, (gpointer) color_balance_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }

@@ -1559,7 +1559,7 @@ file_dialog_hide (GtkWidget *filesel)
   menus_set_sensitive_locale ("<Toolbox>", N_("/File/Open"), TRUE);
   menus_set_sensitive_locale ("<Image>", N_("/File/Open"), TRUE);
 
-  if (gdisplay_active())
+  if (gdisplay_active ())
     {
       menus_set_sensitive_locale ("<Image>", N_("/File/Save"), TRUE);
       menus_set_sensitive_locale ("<Image>", N_("/File/Save as"), TRUE);

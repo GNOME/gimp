@@ -83,14 +83,17 @@ static void   hue_saturation_button_press   (Tool *, GdkEventButton *, gpointer)
 static void   hue_saturation_button_release (Tool *, GdkEventButton *, gpointer);
 static void   hue_saturation_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   hue_saturation_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   hue_saturation_control        (Tool *, int, gpointer);
+static void   hue_saturation_control        (Tool *, ToolAction,       gpointer);
 
-static HueSaturationDialog *  hue_saturation_new_dialog        (void);
-static void   hue_saturation_update                  (HueSaturationDialog *, int);
+static HueSaturationDialog *  hue_saturation_new_dialog (void);
+
+static void   hue_saturation_update                  (HueSaturationDialog *,
+						      int);
 static void   hue_saturation_preview                 (HueSaturationDialog *);
 static void   hue_saturation_ok_callback             (GtkWidget *, gpointer);
 static void   hue_saturation_cancel_callback         (GtkWidget *, gpointer);
-static gint   hue_saturation_delete_callback         (GtkWidget *, GdkEvent *, gpointer);
+static gint   hue_saturation_delete_callback         (GtkWidget *, GdkEvent *,
+						      gpointer);
 static void   hue_saturation_master_callback         (GtkWidget *, gpointer);
 static void   hue_saturation_R_callback              (GtkWidget *, gpointer);
 static void   hue_saturation_Y_callback              (GtkWidget *, gpointer);
@@ -105,7 +108,8 @@ static void   hue_saturation_saturation_scale_update (GtkAdjustment *, gpointer)
 static void   hue_saturation_hue_text_update         (GtkWidget *, gpointer);
 static void   hue_saturation_lightness_text_update   (GtkWidget *, gpointer);
 static void   hue_saturation_saturation_text_update  (GtkWidget *, gpointer);
-static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *, HueSaturationDialog *);
+static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *,
+						      HueSaturationDialog *);
 
 
 /*  hue saturation machinery  */
@@ -262,9 +266,9 @@ hue_saturation_cursor_update (Tool           *tool,
 }
 
 static void
-hue_saturation_control (Tool     *tool,
-			int       action,
-			gpointer  gdisp_ptr)
+hue_saturation_control (Tool       *tool,
+			ToolAction  action,
+			gpointer    gdisp_ptr)
 {
   HueSaturation * color_bal;
 
@@ -272,11 +276,13 @@ hue_saturation_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (hue_saturation_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -285,6 +291,9 @@ hue_saturation_control (Tool     *tool,
 	  hue_saturation_dialog->image_map = NULL;
 	  hue_saturation_cancel_callback (NULL, (gpointer) hue_saturation_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -314,7 +323,8 @@ tools_new_hue_saturation ()
   tool->button_press_func = hue_saturation_button_press;
   tool->button_release_func = hue_saturation_button_release;
   tool->motion_func = hue_saturation_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = hue_saturation_cursor_update;
   tool->control_func = hue_saturation_control;
   tool->preserve = FALSE;

@@ -110,11 +110,11 @@ struct _paint_undo
 };
 
 /*  paint tool action functions  */
-void          paint_core_button_press      (Tool *, GdkEventButton *, gpointer);
-void          paint_core_button_release    (Tool *, GdkEventButton *, gpointer);
-void          paint_core_motion            (Tool *, GdkEventMotion *, gpointer);
-void          paint_core_cursor_update     (Tool *, GdkEventMotion *, gpointer);
-void          paint_core_control           (Tool *, int, gpointer);
+void          paint_core_button_press    (Tool *, GdkEventButton *, gpointer);
+void          paint_core_button_release  (Tool *, GdkEventButton *, gpointer);
+void          paint_core_motion          (Tool *, GdkEventMotion *, gpointer);
+void          paint_core_cursor_update   (Tool *, GdkEventMotion *, gpointer);
+void          paint_core_control         (Tool *, ToolAction,       gpointer);
 
 /*  paint tool functions  */
 void          paint_core_no_draw      (Tool *);

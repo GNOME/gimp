@@ -22,9 +22,9 @@
 #include "gdisplay.h"
 
 static void
-user_context_display_changed (GimpContext *context,
-			      GDisplay    *display,
-			      gpointer     data)
+context_manager_display_changed (GimpContext *context,
+				 GDisplay    *display,
+				 gpointer     data)
 {
   gdisplay_set_menu_sensitivity (display);
 }
@@ -33,9 +33,9 @@ user_context_display_changed (GimpContext *context,
  *        the image from appearing without notifying us
  */
 static void
-image_context_image_removed (GimpSet     *set,
-			     GimpImage   *gimage,
-			     GimpContext *user_context)
+context_manager_image_removed (GimpSet     *set,
+			       GimpImage   *gimage,
+			       GimpContext *user_context)
 {
   if (gimp_context_get_image (user_context) == gimage)
     gimp_context_set_image (user_context, NULL);
@@ -63,10 +63,10 @@ context_manager_init (void)
   gimp_context_set_current (context);
 
   gtk_signal_connect (GTK_OBJECT (context), "display_changed",
-		      GTK_SIGNAL_FUNC (user_context_display_changed),
+		      GTK_SIGNAL_FUNC (context_manager_display_changed),
 		      NULL);
   gtk_signal_connect (GTK_OBJECT (image_context), "remove",
-		      GTK_SIGNAL_FUNC (image_context_image_removed),
+		      GTK_SIGNAL_FUNC (context_manager_image_removed),
 		      context);
 }
 

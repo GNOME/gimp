@@ -42,8 +42,8 @@
 typedef struct _BucketTool BucketTool;
 struct _BucketTool
 {
-  int     target_x;   /*  starting x coord          */
-  int     target_y;   /*  starting y coord          */
+  int  target_x;  /*  starting x coord  */
+  int  target_y;  /*  starting y coord  */
 };
 
 typedef struct _BucketOptions BucketOptions;
@@ -70,15 +70,16 @@ static BucketOptions *bucket_options = NULL;
 
 
 /*  local function prototypes  */
+
 static void  bucket_fill_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bucket_fill_button_release  (Tool *, GdkEventButton *, gpointer);
 static void  bucket_fill_motion          (Tool *, GdkEventMotion *, gpointer);
 static void  bucket_fill_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-static void  bucket_fill_control         (Tool *, int, gpointer);
+static void  bucket_fill_control         (Tool *, ToolAction,       gpointer);
 
-static void  bucket_fill_region          (BucketFillMode, PixelRegion *, PixelRegion *,
-					  unsigned char *, TempBuf *,
-					  int, int, int);
+static void  bucket_fill_region          (BucketFillMode, PixelRegion *,
+					  PixelRegion *, unsigned char *,
+					  TempBuf *, int, int, int);
 static void  bucket_fill_line_color      (unsigned char *, unsigned char *,
 					  unsigned char *, int, int, int);
 static void  bucket_fill_line_pattern    (unsigned char *, unsigned char *,
@@ -317,12 +318,11 @@ bucket_fill_modifier_key_func (Tool        *tool,
 }
 
 static void
-bucket_fill_control (Tool     *tool,
-		     int       action,
-		     gpointer  gdisp_ptr)
+bucket_fill_control (Tool       *tool,
+		     ToolAction  action,
+		     gpointer    gdisp_ptr)
 {
 }
-
 
 void
 bucket_fill (GimpImage      *gimage,
@@ -588,7 +588,6 @@ bucket_fill_region (BucketFillMode  fill_mode,
 /*  Global bucket fill functions */
 /*********************************/
 
-
 Tool *
 tools_new_bucket_fill (void)
 {
@@ -625,7 +624,6 @@ tools_new_bucket_fill (void)
 
   return tool;
 }
-
 
 void
 tools_free_bucket_fill (Tool *tool)

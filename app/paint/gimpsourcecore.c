@@ -82,12 +82,15 @@ static CloneType     non_gui_type;
 
 
 /*  forward function declarations  */
-static void         clone_draw            (Tool *);
-static void         clone_motion          (PaintCore *, GimpDrawable *, GimpDrawable *, CloneType, int, int);
-static void	    clone_line_image      (GImage *, GImage *, GimpDrawable *, GimpDrawable *, unsigned char *,
-					   unsigned char *, int, int, int, int);
-static void         clone_line_pattern    (GImage *, GimpDrawable *, GPatternP, unsigned char *,
-					   int, int, int, int);
+
+static void   clone_draw         (Tool *);
+static void   clone_motion       (PaintCore *, GimpDrawable *, GimpDrawable *,
+				  CloneType, int, int);
+static void   clone_line_image   (GImage *, GImage *, GimpDrawable *,
+				  GimpDrawable *, unsigned char *,
+				  unsigned char *, int, int, int, int);
+static void   clone_line_pattern (GImage *, GimpDrawable *, GPatternP,
+				  unsigned char *, int, int, int, int);
 
 
 /*  functions  */
@@ -127,19 +130,22 @@ clone_options_new (void)
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
+  int        i;
 
-  int           i;
-  char *button_names[2] =
+  static gchar *source_names[] =
   {
     N_("Image Source"),
     N_("Pattern Source")
   };
-  char *align_names[3] =
+  static gint n_source_names = sizeof (source_names) / sizeof (source_names[0]);
+
+  static gchar *align_names[] =
   {
     N_("Non Aligned"),
     N_("Aligned"),
     N_("Registered")
   };
+  static gint n_align_names = sizeof (align_names) / sizeof (align_names[0]);
 
   /*  the new clone tool options structure  */
   options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
@@ -161,10 +167,10 @@ clone_options_new (void)
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
   /*  the radio buttons  */
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < n_source_names; i++)
     {
       radio_button = gtk_radio_button_new_with_label (group,
-						      gettext(button_names[i]));
+						      gettext(source_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) clone_type_callback,
@@ -187,7 +193,7 @@ clone_options_new (void)
 
   /*  the radio buttons  */
   group = NULL;  
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < n_align_names; i++)
     {
       radio_button = gtk_radio_button_new_with_label (group, align_names[i]);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
@@ -206,14 +212,14 @@ clone_options_new (void)
 }
 
 static void
-clone_src_drawable_destroyed_cb(GimpDrawable *drawable,
-				GimpDrawable **src_drawable)
+clone_src_drawable_destroyed_cb (GimpDrawable  *drawable,
+				 GimpDrawable **src_drawable)
 {
   if (drawable == *src_drawable)
-  {
-    *src_drawable = NULL;
-    the_src_gdisp = NULL;
-  }
+    {
+      *src_drawable = NULL;
+      the_src_gdisp = NULL;
+    }
 }
 
 static void
@@ -235,9 +241,9 @@ clone_set_src_drawable(GimpDrawable *drawable)
 
 
 void *
-clone_paint_func (PaintCore *paint_core,
+clone_paint_func (PaintCore    *paint_core,
 		  GimpDrawable *drawable,
-		  int        state)
+		  int           state)
 {
   GDisplay * gdisp;
   GDisplay * src_gdisp;
@@ -345,10 +351,9 @@ clone_paint_func (PaintCore *paint_core,
 }
 
 void
-clone_cursor_update (tool, mevent, gdisp_ptr)
-     Tool *tool;
-     GdkEventMotion *mevent;
-     gpointer gdisp_ptr;
+clone_cursor_update (Tool           *tool,
+		     GdkEventMotion *mevent,
+		     gpointer        gdisp_ptr)
 {
   GDisplay *gdisp;
   Layer *layer;
@@ -435,12 +440,12 @@ clone_draw (Tool *tool)
 }
 
 static void
-clone_motion (PaintCore *paint_core,
+clone_motion (PaintCore    *paint_core,
 	      GimpDrawable *drawable,
 	      GimpDrawable *src_drawable,
-	      CloneType  type,
-	      int        offset_x,
-	      int        offset_y)
+	      CloneType     type,
+	      int           offset_x,
+	      int           offset_y)
 {
   GImage *gimage;
   GImage *src_gimage = NULL;

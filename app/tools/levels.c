@@ -121,7 +121,7 @@ static void   levels_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   levels_button_release (Tool *, GdkEventButton *, gpointer);
 static void   levels_motion         (Tool *, GdkEventMotion *, gpointer);
 static void   levels_cursor_update  (Tool *, GdkEventMotion *, gpointer);
-static void   levels_control        (Tool *, int, gpointer);
+static void   levels_control        (Tool *, ToolAction,       gpointer);
 
 static LevelsDialog *  levels_new_dialog              (void);
 static void            levels_calculate_transfers     (LevelsDialog *);
@@ -200,9 +200,9 @@ levels_cursor_update (Tool           *tool,
 }
 
 static void
-levels_control (Tool     *tool,
-		int       action,
-		gpointer  gdisp_ptr)
+levels_control (Tool       *tool,
+		ToolAction  action,
+		gpointer    gdisp_ptr)
 {
   Levels * _levels;
 
@@ -210,11 +210,13 @@ levels_control (Tool     *tool,
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       break;
-    case RESUME :
+
+    case RESUME:
       break;
-    case HALT :
+
+    case HALT:
       if (levels_dialog)
 	{
 	  active_tool->preserve = TRUE;
@@ -223,6 +225,9 @@ levels_control (Tool     *tool,
 	  levels_dialog->image_map = NULL;
 	  levels_cancel_callback (NULL, (gpointer) levels_dialog);
 	}
+      break;
+
+    default:
       break;
     }
 }
@@ -252,7 +257,8 @@ tools_new_levels ()
   tool->button_press_func = levels_button_press;
   tool->button_release_func = levels_button_release;
   tool->motion_func = levels_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = levels_cursor_update;
   tool->control_func = levels_control;
   tool->preserve = FALSE;
@@ -1313,5 +1319,3 @@ levels_output_da_events (GtkWidget    *widget,
 
   return FALSE;
 }
-
-

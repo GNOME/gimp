@@ -291,15 +291,17 @@ gdisplay_delete (GDisplay *gdisp)
   /*  stop any active tool  */
   active_tool_control (HALT, (void *) gdisp);
 
-  /*  clear out the pointer to this gdisp from the active tool */
+  /*  clear out the pointer to this gdisp from the active tool  */
+  if (active_tool && active_tool->gdisp_ptr)
+    {
+      tool_gdisp = active_tool->gdisp_ptr;
 
-  if (active_tool && active_tool->gdisp_ptr) {
-    tool_gdisp = active_tool->gdisp_ptr;
-    if (gdisp == tool_gdisp) {
-      active_tool->drawable = NULL;
-      active_tool->gdisp_ptr = NULL;
+      if (gdisp == tool_gdisp)
+	{
+	  active_tool->drawable = NULL;
+	  active_tool->gdisp_ptr = NULL;
+	}
     }
-  }
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
@@ -1609,6 +1611,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   if (!gdisp)
     {
       SET_SENSITIVE ("/Image", FALSE);
+      SET_SENSITIVE ("/Image/Colors", FALSE);
+      SET_SENSITIVE ("/Image/Channel Ops", FALSE);
+      SET_SENSITIVE ("/Image/Alpha", FALSE);
     }
   else
     {
@@ -1616,6 +1621,9 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("/Image/RGB", (base_type != RGB));
       SET_SENSITIVE ("/Image/Grayscale", (base_type != GRAY));
       SET_SENSITIVE ("/Image/Indexed", (base_type != INDEXED));
+      SET_SENSITIVE ("/Image/Histogram", lp);
+
+      SET_SENSITIVE ("/Image/Colors", lp);
       SET_SENSITIVE ("/Image/Colors/Threshold", (base_type != INDEXED));
       SET_SENSITIVE ("/Image/Colors/Posterize" , (base_type != INDEXED));
       SET_SENSITIVE ("/Image/Colors/Equalize", (base_type != INDEXED));
@@ -1627,11 +1635,12 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       SET_SENSITIVE ("/Image/Colors/Curves", (base_type != INDEXED));
       SET_SENSITIVE ("/Image/Colors/Levels", (base_type != INDEXED));
       SET_SENSITIVE ("/Image/Colors/Desaturate", (base_type == RGB));
+
+      SET_SENSITIVE ("/Image/Alpha", TRUE);
       SET_SENSITIVE ("/Image/Alpha/Add Alpha Channel",
 		     !fs && !aux && lp && !lm && !alpha);
-      SET_SENSITIVE ("/Image/Colors", lp);
+
       SET_SENSITIVE ("/Image/Channel Ops/Offset", lp);
-      SET_SENSITIVE ("/Image/Histogram", lp);
     }
 
   if (!gdisp)

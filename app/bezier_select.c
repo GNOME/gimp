@@ -160,11 +160,10 @@ static int ModeEdit = EXTEND_NEW;
 
 
 /*  local function prototypes  */
-
 static void  bezier_select_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bezier_select_button_release  (Tool *, GdkEventButton *, gpointer);
 static void  bezier_select_motion          (Tool *, GdkEventMotion *, gpointer);
-static void  bezier_select_control         (Tool *, int, gpointer);
+static void  bezier_select_control         (Tool *, ToolAction,       gpointer);
 static void  bezier_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
 static void  bezier_select_draw            (Tool *);
 
@@ -230,7 +229,8 @@ tools_new_bezier_select ()
   tool->button_press_func = bezier_select_button_press;
   tool->button_release_func = bezier_select_button_release;
   tool->motion_func = bezier_select_motion;
-  tool->arrow_keys_func = standard_arrow_keys_func;  tool->modifier_key_func = standard_modifier_key_func;
+  tool->arrow_keys_func = standard_arrow_keys_func;
+  tool->modifier_key_func = standard_modifier_key_func;
   tool->cursor_update_func = bezier_select_cursor_update;
   tool->control_func = bezier_select_control;
   tool->preserve = FALSE;
@@ -1607,9 +1607,9 @@ bezier_select_cursor_update (Tool           *tool,
 }
 
 static void
-bezier_select_control (Tool     *tool,
-		       int       action,
-		       gpointer  gdisp_ptr)
+bezier_select_control (Tool       *tool,
+		       ToolAction  action,
+		       gpointer    gdisp_ptr)
 {
   BezierSelect * bezier_sel;
 
@@ -1620,13 +1620,16 @@ bezier_select_control (Tool     *tool,
     case PAUSE :
       draw_core_pause (bezier_sel->core, tool);
       break;
+
     case RESUME :
       draw_core_resume (bezier_sel->core, tool);
       break;
+
     case HALT :
       draw_core_stop (bezier_sel->core, tool);
       bezier_select_reset (bezier_sel);
       break;
+
     default:
       break;
     }
@@ -2467,7 +2470,7 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
   gtk_widget_activate (tool_info[BEZIER_SELECT].tool_widget);
   tools_select(BEZIER_SELECT);
   active_tool->paused_count = 0;
-  active_tool->gdisp_ptr = gdisp;;
+  active_tool->gdisp_ptr = gdisp;
   active_tool->drawable = gimage_active_drawable (gdisp->gimage);  
 
   tool = active_tool;
