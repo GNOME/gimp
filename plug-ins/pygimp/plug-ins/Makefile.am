@@ -6,6 +6,7 @@ pluginexec_SCRIPTS = \
 	foggify.py	\
 	gimpcons.py	\
 	pdbbrowse.py	\
+	py-slice.py	\
 	shadow_bevel.py	\
 	sphere.py	\
 	whirlpinch.py
