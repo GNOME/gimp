@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
-"POT-Creation-Date: 2002-11-06 22:59+0100\n"
-"PO-Revision-Date: 2002-09-13 12:46+0100\n"
+"POT-Creation-Date: 2002-11-10 23:30+0100\n"
+"PO-Revision-Date: 2002-11-10 23:38+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "Info"
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2965 plug-ins/common/sharpen.c:558
-#: plug-ins/common/sinus.c:2112 plug-ins/common/tileit.c:414
+#: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:414
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:947
 #: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2563
@@ -211,8 +211,8 @@ msgstr "Lambda"
 msgid "Sierpinski"
 msgstr "Sierpinski"
 
-#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/sinus.c:1855
-#: plug-ins/common/sinus.c:1873
+#: plug-ins/FractalExplorer/Dialogs.c:639 plug-ins/common/sinus.c:1861
+#: plug-ins/common/sinus.c:1879
 msgid "Colors"
 msgstr "Farben"
 
@@ -705,7 +705,7 @@ msgstr "X-Komponente des Richtungsvektors der Lichtquelle im XYZ-Raum"
 #: plug-ins/MapObject/mapobject_ui.c:840
 #: plug-ins/MapObject/mapobject_ui.c:1088
 #: plug-ins/MapObject/mapobject_ui.c:1133
-#: plug-ins/MapObject/mapobject_ui.c:1232 plug-ins/common/xbm.c:1244
+#: plug-ins/MapObject/mapobject_ui.c:1232 plug-ins/common/xbm.c:1254
 #: plug-ins/ifscompose/ifscompose.c:550
 msgid "Y:"
 msgstr "Y:"
@@ -882,14 +882,12 @@ msgid "Recompute preview image"
 msgstr "Vorschau neu errechnen"
 
 #: plug-ins/Lighting/lighting_ui.c:1191
-#, fuzzy
 msgid "I_nteractive"
-msgstr "Interlace"
+msgstr "I_nteraktiv"
 
 #: plug-ins/Lighting/lighting_ui.c:1206
-#, fuzzy
 msgid "Enable/disable real time preview of changes"
-msgstr "Vorschau in hoher Qualität an/ausschalten"
+msgstr "Echtzeit-Vorschau an/ausschalten"
 
 #: plug-ins/MapObject/mapobject_main.c:203
 msgid "<Image>/Filters/Map/Map Object..."
@@ -1158,7 +1156,7 @@ msgstr "Zeige/Verberge Vorschau-Drahtgitter"
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
-#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
+#: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:737
 #: plug-ins/common/xpm.c:332 plug-ins/common/xwd.c:436
 #: plug-ins/faxg3/faxg3.c:195 plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325
 #: plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3247
@@ -1205,7 +1203,7 @@ msgstr "%s: fehlerhafte Palette"
 #: plug-ins/common/sunras.c:929 plug-ins/common/tga.c:915
 #: plug-ins/common/tiff.c:660 plug-ins/common/tile.c:279
 #: plug-ins/common/winclipboard.c:556 plug-ins/common/wmf.c:2144
-#: plug-ins/common/xbm.c:872 plug-ins/faxg3/faxg3.c:447
+#: plug-ins/common/xbm.c:875 plug-ins/faxg3/faxg3.c:447
 #: plug-ins/fits/fits.c:518 plug-ins/gfig/gfig.c:2832
 #: plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:373 plug-ins/twain/twain.c:744
 #: plug-ins/winsnap/winsnap.c:1235
@@ -1231,7 +1229,7 @@ msgstr "Kann %s nicht öffnen"
 #: plug-ins/common/png.c:851 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:996 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
+#: plug-ins/common/xbm.c:985 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1629
 #, c-format
@@ -2225,7 +2223,7 @@ msgid "_Vertical"
 msgstr "_Vertikal"
 
 #: plug-ins/common/blinds.c:393 plug-ins/common/fractaltrace.c:776
-#: plug-ins/common/papertile.c:382
+#: plug-ins/common/papertile.c:383
 msgid "_Transparent"
 msgstr "_Transparent"
 
@@ -2251,7 +2249,7 @@ msgid "Blurring..."
 msgstr "Weichzeichnen..."
 
 #: plug-ins/common/blur.c:637 plug-ins/common/plasma.c:382
-#: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1803
+#: plug-ins/common/randomize.c:739 plug-ins/common/sinus.c:1813
 #: plug-ins/common/snoise.c:545
 msgid "_Random Seed:"
 msgstr "_Zufallssaat:"
@@ -2580,9 +2578,9 @@ msgid "<Image>/Image/Mode/Compose..."
 msgstr "<Image>/Bild/Modus/Zusammensetzen..."
 
 #: plug-ins/common/compose.c:320
-#, fuzzy, c-format
+#, c-format
 msgid "Compose: Could not get layers for image %d"
-msgstr "Zusammensetzen: Konnte Ebenen in Bild %d nicht bekommen"
+msgstr "Zusammensetzen: Konnte keine Ebenen in Bild %d finden"
 
 #: plug-ins/common/compose.c:371
 msgid "Composing..."
@@ -2712,7 +2710,7 @@ msgid "Prefixed Name:"
 msgstr "Name mit Prefix:"
 
 #: plug-ins/common/csource.c:692 plug-ins/common/mail.c:530
-#: plug-ins/common/tiff.c:1624 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:1624 plug-ins/common/xbm.c:1214
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -3336,7 +3334,7 @@ msgstr "_Relief"
 msgid "E_levation:"
 msgstr "Breitengrad (_Elevation):"
 
-#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2132
+#: plug-ins/common/emboss.c:743 plug-ins/common/sinus.c:2143
 msgid "Do _Preview"
 msgstr "_Vorschau erzeugen"
 
@@ -4318,7 +4316,7 @@ msgstr "Ma_x. Tiefe:"
 msgid "Thresho_ld:"
 msgstr "Sc_hwellwert:"
 
-#: plug-ins/common/iwarp.c:1144 plug-ins/common/sinus.c:1844
+#: plug-ins/common/iwarp.c:1144 plug-ins/common/sinus.c:1850
 #: plug-ins/gflare/gflare.c:3111
 msgid "_Settings"
 msgstr "_Einstellungen"
@@ -5014,51 +5012,55 @@ msgstr "_Erzwingen"
 msgid "C_entering"
 msgstr "_Zentrieren"
 
-#: plug-ins/common/papertile.c:347
+#: plug-ins/common/papertile.c:348
 msgid "Movement"
 msgstr "Bewegung"
 
-#: plug-ins/common/papertile.c:361
+#: plug-ins/common/papertile.c:362
 msgid "_Max (%):"
 msgstr "_Max (%):"
 
-#: plug-ins/common/papertile.c:367
+#: plug-ins/common/papertile.c:368
 msgid "_Wrap Around"
 msgstr "_Umfalten"
 
-#: plug-ins/common/papertile.c:377
+#: plug-ins/common/papertile.c:378
 msgid "Background Type"
 msgstr "Hintergrund"
 
-#: plug-ins/common/papertile.c:384
+#: plug-ins/common/papertile.c:385
 msgid "I_nverted Image"
 msgstr "I_nvertiertes Bild"
 
-#: plug-ins/common/papertile.c:386
+#: plug-ins/common/papertile.c:387
 msgid "Im_age"
 msgstr "_Bild"
 
-#: plug-ins/common/papertile.c:388
+#: plug-ins/common/papertile.c:389
 msgid "Fo_reground Color"
 msgstr "_Vordergrundfarbe"
 
-#: plug-ins/common/papertile.c:390
+#: plug-ins/common/papertile.c:391
 msgid "Bac_kground Color"
 msgstr "_Hintergrundfarbe"
 
-#: plug-ins/common/papertile.c:399
+#: plug-ins/common/papertile.c:393
+msgid "S_elect here:"
+msgstr "Benutzerdefiniert:"
+
+#: plug-ins/common/papertile.c:400
 msgid "Background Color"
 msgstr "Hintergrundfarbe"
 
-#: plug-ins/common/papertile.c:547
+#: plug-ins/common/papertile.c:549
 msgid "Paper Tile..."
 msgstr "Papierschnipsel..."
 
-#: plug-ins/common/papertile.c:832
+#: plug-ins/common/papertile.c:835
 msgid "September 31, 1999"
 msgstr "31. September 1999"
 
-#: plug-ins/common/papertile.c:833
+#: plug-ins/common/papertile.c:836
 msgid "<Image>/Filters/Map/Paper Tile..."
 msgstr "<Image>/Filter/Abbilden/Papierschnipsel..."
 
@@ -5901,118 +5903,118 @@ msgstr "_Vertikal verschieben"
 msgid "Shift _Amount:"
 msgstr "_Verschiebung:"
 
-#: plug-ins/common/sinus.c:1159
+#: plug-ins/common/sinus.c:1163
 msgid "<Image>/Filters/Render/Sinus..."
 msgstr "<Image>/Filter/Render/Sinus..."
 
-#: plug-ins/common/sinus.c:1247
+#: plug-ins/common/sinus.c:1252
 msgid "Sinus: rendering..."
 msgstr "Sinus: Rendere..."
 
 #. Create Main window with a vbox
 #. ==============================
-#: plug-ins/common/sinus.c:1691
+#: plug-ins/common/sinus.c:1697
 msgid "Sinus"
 msgstr "Sinus"
 
-#: plug-ins/common/sinus.c:1749
+#: plug-ins/common/sinus.c:1757
 msgid "Drawing Settings"
 msgstr "Bild Einstellungen"
 
-#: plug-ins/common/sinus.c:1761
+#: plug-ins/common/sinus.c:1769
 msgid "_X Scale:"
 msgstr "_X-Skalierung:"
 
-#: plug-ins/common/sinus.c:1770
+#: plug-ins/common/sinus.c:1778
 msgid "_Y Scale:"
 msgstr "_Y-Skalierung:"
 
-#: plug-ins/common/sinus.c:1779
+#: plug-ins/common/sinus.c:1787
 msgid "Co_mplexity:"
 msgstr "Ko_mplexität:"
 
-#: plug-ins/common/sinus.c:1789
+#: plug-ins/common/sinus.c:1797
 msgid "Calculation Settings"
 msgstr "Berechnung Einstellungen"
 
-#: plug-ins/common/sinus.c:1818
+#: plug-ins/common/sinus.c:1824
 msgid "_Force Tiling?"
 msgstr "Kachelung _erzwingen?"
 
-#: plug-ins/common/sinus.c:1832
+#: plug-ins/common/sinus.c:1838
 msgid "_Ideal"
 msgstr "_Ideal"
 
-#: plug-ins/common/sinus.c:1835
+#: plug-ins/common/sinus.c:1841
 msgid "_Distorted"
 msgstr "_Gestört"
 
 #. if in grey scale, the colors are necessarily black and white
-#: plug-ins/common/sinus.c:1866
+#: plug-ins/common/sinus.c:1872
 msgid "The colors are white and black."
 msgstr "Die Fraben sind schwarz und weiss."
 
-#: plug-ins/common/sinus.c:1877
+#: plug-ins/common/sinus.c:1883
 msgid "Bl_ack & White"
 msgstr "Sch_warz-Weiss"
 
-#: plug-ins/common/sinus.c:1879
+#: plug-ins/common/sinus.c:1885
 msgid "_Foreground & Background"
 msgstr "_Vorder- und Hintergrund"
 
-#: plug-ins/common/sinus.c:1881
+#: plug-ins/common/sinus.c:1887
 msgid "C_hoose here:"
 msgstr "Hier _auswählen:"
 
-#: plug-ins/common/sinus.c:1895
+#: plug-ins/common/sinus.c:1901
 msgid "First Color"
 msgstr "Erste Farbe"
 
-#: plug-ins/common/sinus.c:1905
+#: plug-ins/common/sinus.c:1911
 msgid "Second Color"
 msgstr "Zweite Farbe"
 
-#: plug-ins/common/sinus.c:1918
+#: plug-ins/common/sinus.c:1924
 msgid "Alpha Channels"
 msgstr "Alphakanäle"
 
-#: plug-ins/common/sinus.c:1930
+#: plug-ins/common/sinus.c:1936
 msgid "F_irst Color:"
 msgstr "_Erste Farbe:"
 
-#: plug-ins/common/sinus.c:1945
+#: plug-ins/common/sinus.c:1951
 msgid "S_econd Color:"
 msgstr "_Zweite Farbe:"
 
-#: plug-ins/common/sinus.c:1961 plug-ins/imagemap/imap_preferences.c:511
+#: plug-ins/common/sinus.c:1967 plug-ins/imagemap/imap_preferences.c:511
 msgid "Co_lors"
 msgstr "_Farben"
 
-#: plug-ins/common/sinus.c:1970
+#: plug-ins/common/sinus.c:1976
 msgid "Blend Settings"
 msgstr "Verlauf Einstellungen"
 
-#: plug-ins/common/sinus.c:1981
+#: plug-ins/common/sinus.c:1987
 msgid "Gradient"
 msgstr "Farbverlauf"
 
-#: plug-ins/common/sinus.c:1985
+#: plug-ins/common/sinus.c:1991
 msgid "L_inear"
 msgstr "L_inear"
 
-#: plug-ins/common/sinus.c:1986
+#: plug-ins/common/sinus.c:1992
 msgid "Bili_near"
 msgstr "Bili_near"
 
-#: plug-ins/common/sinus.c:1987
+#: plug-ins/common/sinus.c:1993
 msgid "Sin_usoidal"
 msgstr "Sin_usförmig"
 
-#: plug-ins/common/sinus.c:1999
+#: plug-ins/common/sinus.c:2005
 msgid "_Exponent:"
 msgstr "_Exponent:"
 
-#: plug-ins/common/sinus.c:2009
+#: plug-ins/common/sinus.c:2015
 msgid "_Blend"
 msgstr "_Verlauf"
 
@@ -6035,8 +6037,8 @@ msgid "_Height:"
 msgstr "_Höhe:"
 
 #: plug-ins/common/smooth_palette.c:458
-msgid "_Search Time:"
-msgstr "_Suchzeit:"
+msgid "_Search Depth:"
+msgstr "_Suchtiefe:"
 
 #: plug-ins/common/snoise.c:186
 msgid "<Image>/Filters/Render/Clouds/Solid Noise..."
@@ -7190,34 +7192,34 @@ msgstr "Interpretiere %s:"
 msgid "Transferring image"
 msgstr "Übertrage Bild"
 
-#: plug-ins/common/xbm.c:248
+#: plug-ins/common/xbm.c:251
 msgid "Created with The GIMP"
 msgstr "Erzeugt mit Gimp"
 
-#: plug-ins/common/xbm.c:730
+#: plug-ins/common/xbm.c:733
 #, c-format
 msgid "XBM: cannot open \"%s\"\n"
 msgstr "XBM: kann \"%s\" nicht öffnen\n"
 
-#: plug-ins/common/xbm.c:813
+#: plug-ins/common/xbm.c:816
 #, c-format
 msgid "XBM: cannot read header (ftell == %ld)\n"
 msgstr "XBM: Kann Header nicht lesen (ftell == %ld)\n"
 
-#: plug-ins/common/xbm.c:819
+#: plug-ins/common/xbm.c:822
 msgid "XBM: no image width specified\n"
 msgstr "XBM: Keine Bild-Breite angegeben\n"
 
-#: plug-ins/common/xbm.c:825
+#: plug-ins/common/xbm.c:828
 msgid "XBM: no image height specified\n"
 msgstr "XBM: Keine Bild-Höhe angegeben\n"
 
-#: plug-ins/common/xbm.c:831
+#: plug-ins/common/xbm.c:834
 msgid "XBM: no image data type specified\n"
 msgstr "XBM: Kein Bild-Datentyp angegeben.\n"
 
 #. The image is not black-and-white.
-#: plug-ins/common/xbm.c:964
+#: plug-ins/common/xbm.c:967
 msgid ""
 "The image which you are trying to save as\n"
 "an XBM contains more than two colors.\n"
@@ -7231,7 +7233,7 @@ msgstr ""
 "Schwarz-Weiss (1bit) indiziertes\n"
 "Bild und versuchen Sie es nochmal."
 
-#: plug-ins/common/xbm.c:975
+#: plug-ins/common/xbm.c:978
 msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
@@ -7239,48 +7241,48 @@ msgstr ""
 "Sie können keine Cursor-Maske abspeichern, \n"
 "wenn das Bild keinen Alpha-Kanal hat."
 
-#: plug-ins/common/xbm.c:1004
+#: plug-ins/common/xbm.c:1007
 #, c-format
 msgid "XBM: cannot create \"%s\"\n"
 msgstr "XBM: Kann \"%s\" nicht erstellen\n"
 
-#: plug-ins/common/xbm.c:1145
+#: plug-ins/common/xbm.c:1152
 msgid "Save as XBM"
 msgstr "Als XBM speichern"
 
 #. parameter settings
-#: plug-ins/common/xbm.c:1162
+#: plug-ins/common/xbm.c:1169
 msgid "XBM Options"
 msgstr "XBM Einstellungen"
 
 #. X10 format
-#: plug-ins/common/xbm.c:1173
+#: plug-ins/common/xbm.c:1180
 msgid "X10 Format Bitmap"
 msgstr "X10-Format Bitmap"
 
-#: plug-ins/common/xbm.c:1193
+#: plug-ins/common/xbm.c:1200
 msgid "Identifier Prefix:"
 msgstr "Variable ohne Erweiterung:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1212
+#: plug-ins/common/xbm.c:1222
 msgid "Write Hot Spot Values"
 msgstr "Hot Spot Koordinaten schreiben"
 
-#: plug-ins/common/xbm.c:1234
+#: plug-ins/common/xbm.c:1244
 msgid "Hot Spot X:"
 msgstr "Hot Spot X:"
 
 #. mask file
-#: plug-ins/common/xbm.c:1251
+#: plug-ins/common/xbm.c:1261
 msgid "Mask File"
 msgstr "Maskendatei:"
 
-#: plug-ins/common/xbm.c:1262
+#: plug-ins/common/xbm.c:1272
 msgid "Write Extra Mask File"
 msgstr "Separate Maskendatei schreiben"
 
-#: plug-ins/common/xbm.c:1275
+#: plug-ins/common/xbm.c:1285
 msgid "Mask File Extension:"
 msgstr "Maskendatei Erweiterung:"
 
@@ -8352,7 +8354,7 @@ msgid "Save"
 msgstr "Speichern"
 
 #: plug-ins/gfig/gfig.c:5272
-msgid "Save as..."
+msgid "Save As..."
 msgstr "Speichern unter..."
 
 #: plug-ins/gfig/gfig.c:6155
@@ -8405,14 +8407,14 @@ msgstr ""
 "Die folgenden Verzeichnisse konnten nicht gefunden werden:"
 
 #: plug-ins/gflare/gflare.c:1411
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "Ungültiges Format in GFlare Datei: %s\n"
+msgstr "Fehler beim Öffnen von GFlare Datei '%s': %s"
 
 #: plug-ins/gflare/gflare.c:1419
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr "'%s' ist keine gültige Datei"
+msgstr "'%s' ist keine gültige GFlare Datei."
 
 #: plug-ins/gflare/gflare.c:1479
 #, c-format
@@ -8435,14 +8437,14 @@ msgstr ""
 "dann können Sie ihre eigenen GFlare's in dem Verzeichnis speichern."
 
 #: plug-ins/gflare/gflare.c:1628
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Datei konnte nicht geschrieben werden\n"
+msgstr "GFlare konnte Datei '%s' nicht schreiben: %s"
 
 #: plug-ins/gflare/gflare.c:1830
-#, fuzzy, c-format
+#, c-format
 msgid "Error reading GFlare folder '%s'"
-msgstr "Fehler beim Lesen des GFlare Verzeichnisses \"%s\""
+msgstr "Fehler beim Lesen des GFlare Verzeichnisses '%s'"
 
 #: plug-ins/gflare/gflare.c:2530
 msgid "GFlare"
@@ -9215,7 +9217,7 @@ msgid ""
 "%s"
 msgstr ""
 "GIMPressionist:\n"
-"Speichern der PPM-Datei »%s« fehlgeschlagen:%s\n"
+"Speichern der PPM-Datei '%s' fehlgeschlagen:\n"
 "%s"
 
 #: plug-ins/gimpressionist/presets.c:605 plug-ins/gimpressionist/presets.c:610
@@ -11345,46 +11347,3 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
-
-#~ msgid "Spot"
-#~ msgstr "Spot"
-
-#~ msgid "_Update Preview"
-#~ msgstr "Vorschau _erneuern"
-
-#~ msgid "rgb-compose"
-#~ msgstr "RGB-Komposition"
-
-#~ msgid "rgba-compose"
-#~ msgstr "RGBA-Komposition"
-
-#~ msgid "hsv-compose"
-#~ msgstr "HSV-Komposition"
-
-#~ msgid "cmy-compose"
-#~ msgstr "CMY-Komposition"
-
-#~ msgid "cmyk-compose"
-#~ msgstr "CMYK-Komposition"
-
-#~ msgid ""
-#~ "PNG: Couldn't simply reduce colors further.\n"
-#~ "Saving as opaque.\n"
-#~ msgstr ""
-#~ "PNG: Farben konnten nicht weiter reduziert werden.\n"
-#~ "Wird als Deckung gespeichert.\n"
-
-#~ msgid "not valid GFlare file: %s"
-#~ msgstr "keine gültige GFlare-Datei: %s"
-
-#~ msgid "could not open \"%s\""
-#~ msgstr "Konnte \"%s\" nicht öffnen"
-
-#~ msgid "Set Defaults"
-#~ msgstr "Standardwerte setzen"
-
-#~ msgid "Close"
-#~ msgstr "Schließen"
-
-#~ msgid "Image preview"
-#~ msgstr "Bild-Vorschau"
