@@ -1,5 +1,9 @@
 2004-08-11  DindinX  <david@dindinx.org>
 
+	* plug-ins/common/plasma.c: converted to GimpPreviewArea.
+
+2004-08-11  DindinX  <david@dindinx.org>
+
 	* plug-ins/common/noisify.c: converted to GimpPreviewArea.  Also added
 	scrollbars to move around.  The preview was rather useless without
 	them.
