@@ -873,14 +873,16 @@ layers_dialog_preview_extents ()
 static void
 layers_dialog_set_menu_sensitivity ()
 {
-  gint fs;      /*  floating sel  */
-  gint ac;      /*  active channel  */
-  gint lm;      /*  layer mask  */
-  gint gimage;  /*  is there a gimage  */
-  gint lp;      /*  layers present  */
-  gint alpha;   /*  alpha channel present  */
-  gint lind;    /*  layer index  */
-  gint lnum;    /*  number of layers  */
+  gint fs;         /*  floating sel  */
+  gint ac;         /*  active channel  */
+  gint lm;         /*  layer mask  */
+  gint gimage;     /*  is there a gimage  */
+  gint lp;         /*  layers present  */
+  gint alpha;      /*  alpha channel present  */
+  gint next_alpha;
+  GSList *list; 
+  GSList *next;
+  GSList *prev;
   Layer *layer;
 
   lp = FALSE;
@@ -901,34 +903,48 @@ layers_dialog_set_menu_sensitivity ()
   if (gimage)
     lp = (layersD->gimage->layers != NULL);
 
-  lind = -1;
-  lnum = -1;
-  if (lp)
+  list = layersD->gimage->layers;
+  prev = NULL;
+  next = NULL;
+  while (list)
     {
-      lind = gimage_get_layer_index (layersD->gimage,
-				     layersD->gimage->active_layer);
-      lnum = g_slist_length (layersD->gimage->layers);
+      layer = (Layer *)list->data;
+      if (layer == (layersD->active_layer))
+	{
+	  next = g_slist_next (list);
+	  break;
+	}
+      prev = list;
+      list = g_slist_next (list);
     }
 
+  if (next)
+    {
+      layer = (Layer *)next->data;
+      next_alpha = layer_has_alpha (layer);
+    }
+  else
+    next_alpha = FALSE;
+
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Previous Layer"),
-		       fs && ac && gimage && lp && lind > 0);
+		       fs && ac && gimage && lp && prev);
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Next Layer"),
-		       fs && ac && gimage && lp && lind < (lnum - 1));
+		       fs && ac && gimage && lp && next);
 
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Raise Layer"),
-		       fs && ac && gimage && lp && alpha && lind > 0);
+		       fs && ac && gimage && lp && alpha && prev);
   gtk_widget_set_sensitive (layers_ops_buttons[1].widget,
-			    fs && ac && gimage && lp && alpha && lind > 0);
+			    fs && ac && gimage && lp && alpha && prev);
 
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Lower Layer"),
-		       fs && ac && gimage && lp && lind < (lnum - 1));
+		       fs && ac && gimage && lp && next && next_alpha);
   gtk_widget_set_sensitive (layers_ops_buttons[2].widget,
-			    fs && ac && gimage && lp && lind < (lnum - 1));
+			    fs && ac && gimage && lp && next && next_alpha);
 
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Top"),
-		       fs && ac && gimage && lp && alpha && lind > 0);
+		       fs && ac && gimage && lp && alpha && prev);
   menus_set_sensitive_locale ("<Layers>", N_("/Stack/Layer to Bottom"),
-		       fs && ac && gimage && lp && lind < (lnum - 1));
+		       fs && ac && gimage && lp && next && next_alpha);
 
   menus_set_sensitive_locale ("<Layers>", N_("/New Layer"), gimage);
   gtk_widget_set_sensitive (layers_ops_buttons[0].widget, gimage);
