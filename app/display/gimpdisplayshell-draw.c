@@ -124,31 +124,31 @@ gimp_display_shell_draw_guides (GimpDisplayShell *shell)
 }
 
 void
-gimp_display_shell_draw_grid (GimpDisplayShell *shell)
+gimp_display_shell_draw_grid (GimpDisplayShell   *shell,
+                              const GdkRectangle *area)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (area != NULL);
 
   if (gimp_display_shell_get_show_grid (shell))
     {
       GimpGrid   *grid;
       GimpCanvas *canvas;
       gdouble     x, y;
-      gint        x1, x2;
-      gint        y1, y2;
+      gint        x0, x1, x2, x3;
+      gint        y0, y1, y2, y3;
       gint        x_real, y_real;
       gint        width, height;
       const gint  length = 2;
 
       grid = GIMP_GRID (shell->gdisp->gimage->grid);
-
-      if (grid == NULL)
+      if (! grid)
         return;
 
-      gimp_display_shell_transform_xy (shell, 0, 0, &x1, &y1, FALSE);
-      gimp_display_shell_transform_xy (shell,
-                                       shell->gdisp->gimage->width,
-                                       shell->gdisp->gimage->height,
-                                       &x2, &y2, FALSE);
+      x1 = area->x;
+      y1 = area->y;
+      x2 = area->x + area->width;
+      y2 = area->y + area->height;
 
       width  = shell->gdisp->gimage->width;
       height = shell->gdisp->gimage->height;
@@ -163,19 +163,23 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         case GIMP_GRID_DOTS:
           for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
+              gimp_display_shell_transform_xy (shell,
+                                               x, 0, &x_real, &y_real,
+                                               FALSE);
+
+              if (x_real < x1 || x_real >= x2)
+                continue;
+
               for (y = grid->yoffset; y <= height; y += grid->yspacing)
                 {
                   gimp_display_shell_transform_xy (shell,
                                                    x, y, &x_real, &y_real,
                                                    FALSE);
 
-                  if (x_real >= x1 && x_real < x2 &&
-                      y_real >= y1 && y_real < y2)
-                    {
-                      gimp_canvas_draw_point (GIMP_CANVAS (shell->canvas),
-                                              GIMP_CANVAS_STYLE_CUSTOM,
-                                              x_real, y_real);
-                    }
+                  if (y_real >= y1 && y_real < y2)
+                    gimp_canvas_draw_point (GIMP_CANVAS (shell->canvas),
+                                            GIMP_CANVAS_STYLE_CUSTOM,
+                                            x_real, y_real);
                 }
             }
           break;
@@ -183,11 +187,21 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         case GIMP_GRID_INTERSECTIONS:
           for (x = grid->xoffset; x <= width; x += grid->xspacing)
             {
+              gimp_display_shell_transform_xy (shell,
+                                               x, 0, &x_real, &y_real,
+                                               FALSE);
+
+              if (x_real + length < x1 || x_real - length >= x2)
+                continue;
+
               for (y = grid->yoffset; y <= height; y += grid->yspacing)
                 {
                   gimp_display_shell_transform_xy (shell,
                                                    x, y, &x_real, &y_real,
                                                    FALSE);
+
+                  if (y_real + length < y1 || y_real - length >= y2)
+                    continue;
 
                   if (x_real >= x1 && x_real < x2)
                     gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
@@ -208,15 +222,22 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
         case GIMP_GRID_ON_OFF_DASH:
         case GIMP_GRID_DOUBLE_DASH:
         case GIMP_GRID_SOLID:
+          gimp_display_shell_transform_xy (shell,
+                                           0, 0, &x0, &y0,
+                                           FALSE);
+          gimp_display_shell_transform_xy (shell,
+                                           width, height, &x3, &y3,
+                                           FALSE);
+
           for (x = grid->xoffset; x < width; x += grid->xspacing)
             {
               gimp_display_shell_transform_xy (shell,
                                                x, 0, &x_real, &y_real,
                                                FALSE);
 
-              if (x_real > x1)
+              if (x_real >= x1 && x_real < x2)
                 gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x_real, y1, x_real, y2 - 1);
+                                       x_real, y0, x_real, y3 - 1);
             }
 
           for (y = grid->yoffset; y < height; y += grid->yspacing)
@@ -225,9 +246,9 @@ gimp_display_shell_draw_grid (GimpDisplayShell *shell)
                                                0, y, &x_real, &y_real,
                                                FALSE);
 
-              if (y_real > y1)
+              if (y_real >= y1 && y_real < y2)
                 gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_CUSTOM,
-                                       x1, y_real, x2 - 1, y_real);
+                                       x0, y_real, x3 - 1, y_real);
             }
           break;
         }

@@ -414,7 +414,7 @@ gimp_display_shell_canvas_expose (GtkWidget        *widget,
   gimp_display_shell_draw_guides (shell);
 
   /* draw the grid */
-  gimp_display_shell_draw_grid (shell);
+  gimp_display_shell_draw_grid (shell, &eevent->area);
 
   /* and the cursor (if we have a software cursor) */
   gimp_display_shell_draw_cursor (shell);
@@ -440,9 +440,7 @@ gimp_display_shell_check_device_cursor (GimpDisplayShell *shell)
 gboolean
 gimp_display_shell_popup_menu (GtkWidget *widget)
 {
-  GimpDisplayShell *shell;
-
-  shell = GIMP_DISPLAY_SHELL (widget);
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (widget);
 
   gimp_context_set_display (gimp_get_user_context (shell->gdisp->gimage->gimp),
                             shell->gdisp);

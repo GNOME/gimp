@@ -1,5 +1,12 @@
 2004-04-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-draw.[ch] pass the bounding box of
+	the exposed area to gimp_display_shell_draw_grid() and draw only
+	the relevant part of the grid. Fixes bug #138606.
+
+2004-04-04  Sven Neumann  <sven@gimp.org>
+
 	Cache the GC for drawing the grid as suggested in bug #138081:
 
 	* app/display/gimpdisplayshell.[ch]: added a grid_gc member to

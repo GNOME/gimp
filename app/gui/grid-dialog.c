@@ -91,6 +91,8 @@ grid_dialog_new (GimpImage *gimage,
 
                                      NULL);
 
+  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (grid_dialog_response),
                     dialog);
