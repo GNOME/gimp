@@ -271,15 +271,7 @@ gimp_colormap_editor_new (GimpImage *gimage)
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (editor->palette, gimp_colormap_preview_drag_color,
                              editor);
-
-  gtk_drag_dest_set (editor->palette,
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     color_palette_target_table,
-                     G_N_ELEMENTS (color_palette_target_table),
-                     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (editor->palette, gimp_colormap_preview_drop_color,
+  gimp_dnd_color_dest_add (editor->palette, gimp_colormap_preview_drop_color,
                            editor);
 
   /* some helpful hints */

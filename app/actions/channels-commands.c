@@ -78,7 +78,7 @@ channels_new_channel_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage);
 
-  channels_new_channel_query (gimage, NULL);
+  channels_new_channel_query (gimage, NULL, TRUE);
 }
 
 void
@@ -244,7 +244,8 @@ new_channel_query_ok_callback (GtkWidget *widget,
 
 void
 channels_new_channel_query (GimpImage   *gimage,
-                            GimpChannel *template)
+                            GimpChannel *template,
+                            gboolean     interactive)
 {
   NewChannelOptions *options;
   GtkWidget         *hbox;
@@ -255,32 +256,47 @@ channels_new_channel_query (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (! template || GIMP_IS_CHANNEL (template));
 
-  if (template)
+  if (template || ! interactive)
     {
       GimpChannel *new_channel;
       gint         width, height;
       gint         off_x, off_y;
+      GimpRGB      color;
 
-      width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
-      height = gimp_drawable_height (GIMP_DRAWABLE (template));
-      gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+      if (template)
+        {
+          width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
+          height = gimp_drawable_height (GIMP_DRAWABLE (template));
+          gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+          color  = template->color;
+        }
+      else
+        {
+          width  = gimp_image_get_width (gimage);
+          height = gimp_image_get_height (gimage);
+          off_x  = 0;
+          off_y  = 0;
+          gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.5);
+        }
 
       undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
       new_channel = gimp_channel_new (gimage,
                                       width, height,
                                       _("Empty Channel Copy"),
-                                      &template->color);
+                                      &color);
 
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-                                  gimp_get_user_context (gimage->gimp),
-                                  GIMP_TRANSPARENT_FILL);
-      gimp_channel_translate (new_channel, off_x, off_y, FALSE);
+      if (template)
+        {
+          gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                                      gimp_get_user_context (gimage->gimp),
+                                      GIMP_TRANSPARENT_FILL);
+          gimp_channel_translate (new_channel, off_x, off_y, FALSE);
+        }
+
       gimp_image_add_channel (gimage, new_channel, -1);
 
       undo_push_group_end (gimage);
-
-      gimp_image_flush (gimage);
       return;
     }
 

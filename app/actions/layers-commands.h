@@ -76,7 +76,8 @@ void   layers_remove_layer                   (GimpImage *gimage,
                                               GimpLayer *layer);
 void   layers_anchor_layer                   (GimpLayer *layer);
 void   layers_new_layer_query                (GimpImage *gimage,
-                                              GimpLayer *template);
+                                              GimpLayer *template,
+                                              gboolean   interactive);
 void   layers_edit_layer_query               (GimpLayer *layer);
 
 

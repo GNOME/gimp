@@ -274,13 +274,7 @@ color_select_widget_new (ColorSelect   *csp,
 		    csp);
 
   /*  dnd stuff  */
-  gtk_drag_dest_set (csp->xy_color,
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     color_select_target_table, n_color_select_targets,
-                     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (csp->xy_color, color_select_drop_color, csp);
+  gimp_dnd_color_dest_add (csp->xy_color, color_select_drop_color, csp);
 
   /*  The z component preview  */
   z_frame = gtk_frame_new (NULL);

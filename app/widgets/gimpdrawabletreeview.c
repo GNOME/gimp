@@ -33,12 +33,17 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimpmarshal.h"
+#include "core/gimppattern.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpchannellistview.h"
 #include "gimpdnd.h"
@@ -47,6 +52,8 @@
 #include "gimplayerlistview.h"
 #include "gimplistitem.h"
 #include "gimppreview.h"
+
+#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -60,6 +67,15 @@ static void   gimp_drawable_list_view_set_image  (GimpItemListView     *view,
 static void   gimp_drawable_list_view_floating_selection_changed
                                                  (GimpImage            *gimage,
                                                   GimpDrawableListView *view);
+
+static void   gimp_drawable_list_view_new_pattern_dropped
+                                                 (GtkWidget            *widget,
+                                                  GimpViewable         *viewable,
+                                                  gpointer              data);
+static void   gimp_drawable_list_view_new_color_dropped
+                                                 (GtkWidget            *widget,
+                                                  const GimpRGB        *color,
+                                                  gpointer              data);
 
 
 static GimpItemListViewClass *parent_class = NULL;
@@ -108,6 +124,16 @@ gimp_drawable_list_view_class_init (GimpDrawableListViewClass *klass)
 static void
 gimp_drawable_list_view_init (GimpDrawableListView *view)
 {
+  GimpItemListView *item_view;
+
+  item_view = GIMP_ITEM_LIST_VIEW (view);
+
+  gimp_dnd_viewable_dest_add (item_view->new_button, GIMP_TYPE_PATTERN,
+			      gimp_drawable_list_view_new_pattern_dropped,
+                              view);
+  gimp_dnd_color_dest_add (item_view->new_button,
+                           gimp_drawable_list_view_new_color_dropped,
+                           view);
 }
 
 static void
@@ -170,4 +196,69 @@ gimp_drawable_list_view_floating_selection_changed (GimpImage            *gimage
 
   /*  update button states  */
   /* gimp_drawable_list_view_drawable_changed (gimage, view); */
+}
+
+static void
+gimp_drawable_list_view_new_dropped (GimpItemListView   *view,
+                                     GimpBucketFillMode  fill_mode,
+                                     const GimpRGB      *color,
+                                     GimpPattern        *pattern)
+{
+  GimpDrawable *drawable;
+  GimpToolInfo *tool_info;
+  GimpContext  *context;
+
+  undo_push_group_start (view->gimage, EDIT_PASTE_UNDO_GROUP);
+
+  view->new_item_func (view->gimage, NULL, FALSE);
+
+  drawable = gimp_image_active_drawable (view->gimage);
+
+  /*  Get the bucket fill context  */
+  tool_info = (GimpToolInfo *)
+    gimp_container_get_child_by_name (view->gimage->gimp->tool_info_list,
+                                      "gimp-bucket-fill-tool");
+
+  if (tool_info && tool_info->context)
+    {
+      context = tool_info->context;
+    }
+  else
+    {
+      context = gimp_get_user_context (view->gimage->gimp);
+    }
+
+  gimp_drawable_bucket_fill_full (drawable,
+                                  fill_mode,
+                                  color, pattern,
+                                  gimp_context_get_paint_mode (context),
+                                  gimp_context_get_opacity (context),
+                                  FALSE /* no seed fill */,
+                                  FALSE, 0.0, FALSE, 0.0, 0.0 /* fill params */);
+
+  undo_push_group_end (view->gimage);
+
+  gimp_image_flush (view->gimage);
+}
+
+static void
+gimp_drawable_list_view_new_pattern_dropped (GtkWidget    *widget,
+                                             GimpViewable *viewable,
+                                             gpointer      data)
+{
+  gimp_drawable_list_view_new_dropped (GIMP_ITEM_LIST_VIEW (data),
+                                       GIMP_PATTERN_BUCKET_FILL,
+                                       NULL,
+                                       GIMP_PATTERN (viewable));
+}
+
+static void
+gimp_drawable_list_view_new_color_dropped (GtkWidget     *widget,
+                                           const GimpRGB *color,
+                                           gpointer       data)
+{
+  gimp_drawable_list_view_new_dropped (GIMP_ITEM_LIST_VIEW (data),
+                                       GIMP_FG_BUCKET_FILL,
+                                       color,
+                                       NULL);
 }

@@ -42,7 +42,8 @@ void   channels_edit_channel_attributes_cmd_callback    (GtkWidget   *widget,
 							 gpointer     data);
 
 void   channels_new_channel_query                       (GimpImage   *gimage,
-                                                         GimpChannel *tamplate);
+                                                         GimpChannel *template,
+                                                         gboolean     interactive);
 void   channels_edit_channel_query                      (GimpChannel *channel);
 
 void   channels_menu_update                             (GtkItemFactory *factory,

@@ -128,17 +128,6 @@ static guint  display_shell_signals[LAST_SIGNAL] = { 0 };
 static GtkWindowClass *parent_class = NULL;
 
 
-static GtkTargetEntry display_target_table[] =
-{
-  GIMP_TARGET_LAYER,
-  GIMP_TARGET_CHANNEL,
-  GIMP_TARGET_LAYER_MASK,
-  GIMP_TARGET_COLOR,
-  GIMP_TARGET_PATTERN,
-  GIMP_TARGET_BUFFER
-};
-
-
 GType
 gimp_display_shell_get_type (void)
 {
@@ -295,28 +284,22 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 		    shell);
 
   /*  dnd stuff  */
-  gtk_drag_dest_set (GTK_WIDGET (shell),
-		     GTK_DEST_DEFAULT_ALL,
-		     display_target_table,
-                     G_N_ELEMENTS (display_target_table),
-		     GDK_ACTION_COPY);
-
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_LAYER,
 			      gimp_display_shell_drop_drawable,
                               shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_LAYER_MASK,
 			      gimp_display_shell_drop_drawable,
                               shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_CHANNEL,
 			      gimp_display_shell_drop_drawable,
                               shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_PATTERN,
 			      gimp_display_shell_drop_pattern,
                               shell);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (shell), GIMP_TYPE_BUFFER,
 			      gimp_display_shell_drop_buffer,
                               shell);
-  gimp_dnd_color_dest_set    (GTK_WIDGET (shell),
+  gimp_dnd_color_dest_add    (GTK_WIDGET (shell),
 			      gimp_display_shell_drop_color,
                               shell);
 

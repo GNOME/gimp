@@ -152,7 +152,7 @@ gimp_menu_item_real_set_viewable (GimpMenuItem *menu_item,
                            G_CALLBACK (gimp_menu_item_name_changed),
                            menu_item, 0);
 
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (menu_item),
+  gimp_dnd_drag_source_set_by_type (GTK_WIDGET (menu_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 				    G_TYPE_FROM_INSTANCE (viewable),
 				    GDK_ACTION_MOVE | GDK_ACTION_COPY);

@@ -134,12 +134,6 @@ static void    blend_options_drop_tool           (GtkWidget       *widget,
 
 static GimpDrawToolClass *parent_class = NULL;
 
-static GtkTargetEntry blend_target_table[] =
-{
-  GIMP_TARGET_GRADIENT,  
-  GIMP_TARGET_TOOL
-};
-
 
 /*  public functions  */
 
@@ -466,19 +460,11 @@ blend_options_new (GimpToolInfo *tool_info)
   /*  the main vbox  */
   vbox = ((GimpToolOptions *) options)->main_vbox;
 
-  /*  dnd stuff  */
-  gtk_drag_dest_set (vbox,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     blend_target_table,
-                     G_N_ELEMENTS (blend_target_table),
-		     GDK_ACTION_COPY); 
-  gimp_dnd_viewable_dest_set (vbox,
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_GRADIENT,
                               blend_options_drop_gradient,
 			      tool_info);
-  gimp_dnd_viewable_dest_set (vbox,
+  gimp_dnd_viewable_dest_add (vbox,
                               GIMP_TYPE_TOOL_INFO,
                               blend_options_drop_tool,
 			      options);

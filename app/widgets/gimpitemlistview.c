@@ -350,11 +350,7 @@ gimp_item_list_view_new (gint                  preview_size,
   /*  connect "drop to new" manually as it makes a difference whether
    *  it was clicked or dropped
    */
-  gimp_gtk_drag_dest_set_by_type (list_view->new_button,
-				  GTK_DEST_DEFAULT_ALL,
-				  item_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (list_view->new_button,
+  gimp_dnd_viewable_dest_add (list_view->new_button,
 			      item_type,
 			      gimp_item_list_view_new_dropped,
 			      view);
@@ -540,7 +536,7 @@ static void
 gimp_item_list_view_new_clicked (GtkWidget        *widget,
                                  GimpItemListView *view)
 {
-  view->new_item_func (view->gimage, NULL);
+  view->new_item_func (view->gimage, NULL, TRUE);
 }
 
 static void
@@ -555,7 +551,9 @@ gimp_item_list_view_new_dropped (GtkWidget    *widget,
   if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
 				       GIMP_OBJECT (viewable)))
     {
-      view->new_item_func (view->gimage, viewable);
+      view->new_item_func (view->gimage, viewable, FALSE);
+
+      gimp_image_flush (view->gimage);
     }
 }
 

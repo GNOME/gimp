@@ -628,7 +628,7 @@ gimp_preview_set_viewable (GimpPreview  *preview,
     }
   else if (viewable && ! preview->is_popup)
     {
-      gimp_gtk_drag_source_set_by_type (GTK_WIDGET (preview),
+      gimp_dnd_drag_source_set_by_type (GTK_WIDGET (preview),
                                         GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
                                         viewable_type,
                                         GDK_ACTION_COPY);

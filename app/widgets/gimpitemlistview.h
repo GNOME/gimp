@@ -46,7 +46,8 @@ typedef GimpViewable  * (* GimpConvertItemFunc)  (GimpViewable       *viewable,
                                                   GimpImage          *dest_gimage);
 
 typedef void            (* GimpNewItemFunc)      (GimpImage          *gimage,
-                                                  GimpViewable       *template);
+                                                  GimpViewable       *template,
+                                                  gboolean            interactive);
 typedef void            (* GimpEditItemFunc)     (GimpViewable       *viewable);
 typedef void            (* GimpActivateItemFunc) (GimpViewable       *viewable);
 

@@ -58,7 +58,8 @@ void   vectors_edit_vectors_attributes_cmd_callback    (GtkWidget   *widget,
 void   vectors_stroke_vectors                          (GimpVectors *vectors);
 void   vectors_vectors_tool                            (GimpVectors *vectors);
 void   vectors_new_vectors_query                       (GimpImage   *gimage,
-                                                        GimpVectors *template);
+                                                        GimpVectors *template,
+                                                        gboolean     interactive);
 void   vectors_edit_vectors_query                      (GimpVectors *vectors);
 
 void   vectors_menu_update                             (GtkItemFactory *factory,

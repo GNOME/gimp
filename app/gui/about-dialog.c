@@ -150,12 +150,12 @@ about_dialog_create (void)
 			NULL);
       
       /*  dnd stuff  */
-      gimp_gtk_drag_dest_set_by_type (about_dialog,
-				      GTK_DEST_DEFAULT_MOTION |
-				      GTK_DEST_DEFAULT_DROP,
-				      GIMP_TYPE_TOOL_INFO,
-				      GDK_ACTION_COPY); 
-      gimp_dnd_viewable_dest_set (about_dialog,
+      gtk_drag_dest_set (about_dialog,
+                         GTK_DEST_DEFAULT_MOTION |
+                         GTK_DEST_DEFAULT_DROP,
+                         NULL, 0,
+                         GDK_ACTION_COPY); 
+      gimp_dnd_viewable_dest_add (about_dialog,
 				  GIMP_TYPE_TOOL_INFO,
 				  about_dialog_tool_drop, NULL);
 

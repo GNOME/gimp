@@ -148,13 +148,11 @@ tool_options_dialog_create (Gimp *gimp)
   gtk_widget_show (options_vbox);
 
   /*  dnd stuff  */
-  gimp_gtk_drag_dest_set_by_type (options_shell,
-				  GTK_DEST_DEFAULT_HIGHLIGHT |
-				  GTK_DEST_DEFAULT_MOTION    |
-				  GTK_DEST_DEFAULT_DROP,
-				  GIMP_TYPE_TOOL_INFO,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (options_shell,
+  gtk_drag_dest_set (options_shell,
+                     GTK_DEST_DEFAULT_ALL,
+                     NULL, 0,
+                     GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_add (options_shell,
 			      GIMP_TYPE_TOOL_INFO,
 			      tool_options_dialog_drop_tool,
                               user_context);

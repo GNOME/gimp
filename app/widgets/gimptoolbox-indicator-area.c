@@ -150,11 +150,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 		    G_CALLBACK (brush_preview_clicked),
 		    toolbox);
 
-  gimp_gtk_drag_dest_set_by_type (brush_preview,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_BRUSH,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (brush_preview,
+  gimp_dnd_viewable_dest_add (brush_preview,
                               GIMP_TYPE_BRUSH,
                               brush_preview_drop_brush,
                               context);
@@ -182,11 +178,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 		    G_CALLBACK (pattern_preview_clicked),
 		    toolbox);
 
-  gimp_gtk_drag_dest_set_by_type (pattern_preview,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_PATTERN,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (pattern_preview,
+  gimp_dnd_viewable_dest_add (pattern_preview,
                               GIMP_TYPE_PATTERN,
                               pattern_preview_drop_pattern,
                               context);
@@ -214,11 +206,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
 		    G_CALLBACK (gradient_preview_clicked),
 		    toolbox);
 
-  gimp_gtk_drag_dest_set_by_type (gradient_preview,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_GRADIENT,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (gradient_preview,
+  gimp_dnd_viewable_dest_add (gradient_preview,
                               GIMP_TYPE_GRADIENT,
                               gradient_preview_drop_gradient,
                               context);

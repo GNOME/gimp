@@ -76,8 +76,8 @@ static void   gimp_palette_editor_set_data         (GimpDataEditor    *editor,
 static gint   palette_editor_eventbox_button_press (GtkWidget         *widget,
 						    GdkEventButton    *bevent,
 						    GimpPaletteEditor *editor);
-static gint   palette_editor_color_area_events     (GtkWidget         *widget,
-						    GdkEvent          *event,
+static gint palette_editor_color_area_button_press (GtkWidget         *widget,
+						    GdkEventButton    *bevent,
 						    GimpPaletteEditor *editor);
 static void   palette_editor_draw_entries          (GimpPaletteEditor *editor,
                                                     gint               row_start,
@@ -215,8 +215,8 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
   gtk_container_add (GTK_CONTAINER (alignment), editor->color_area);
   gtk_widget_show (editor->color_area);
 
-  g_signal_connect (G_OBJECT (editor->color_area), "event",
-		    G_CALLBACK (palette_editor_color_area_events),
+  g_signal_connect (G_OBJECT (editor->color_area), "button_press_event",
+		    G_CALLBACK (palette_editor_color_area_button_press),
 		    editor);
 
   /*  dnd stuff  */
@@ -229,15 +229,8 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
                              palette_editor_drag_color,
 			     editor);
 
-  gtk_drag_dest_set (eventbox,
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     color_palette_target_table,
-                     G_N_ELEMENTS (color_palette_target_table),
-                     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (eventbox, palette_editor_drop_color, editor);
-  gimp_dnd_viewable_dest_set (eventbox, GIMP_TYPE_PALETTE,
+  gimp_dnd_color_dest_add (eventbox, palette_editor_drop_color, editor);
+  gimp_dnd_viewable_dest_add (eventbox, GIMP_TYPE_PALETTE,
 			      palette_editor_drop_palette,
                               editor);
 
@@ -384,7 +377,6 @@ gimp_palette_editor_set_data (GimpDataEditor *editor,
                                          palette_editor);
 
       palette_editor_scroll_top_left (palette_editor);
-
     }
 
   g_signal_handlers_unblock_by_func (G_OBJECT (palette_editor->columns_data),
@@ -459,9 +451,6 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 				      GdkEventButton    *bevent,
 				      GimpPaletteEditor *editor)
 {
-  if (gtk_get_event_widget ((GdkEvent *) bevent) == editor->color_area)
-    return FALSE;
-
   if (bevent->button == 3)
     {
       GimpItemFactory *factory;
@@ -475,13 +464,12 @@ palette_editor_eventbox_button_press (GtkWidget         *widget,
 }
 
 static gint
-palette_editor_color_area_events (GtkWidget         *widget,
-				  GdkEvent          *event,
-				  GimpPaletteEditor *editor)
+palette_editor_color_area_button_press (GtkWidget         *widget,
+                                        GdkEventButton    *bevent,
+                                        GimpPaletteEditor *editor)
 {
   GimpPalette    *palette;
   GimpContext    *user_context;
-  GdkEventButton *bevent;
   GList          *list;
   gint            entry_width;
   gint            entry_height;
@@ -492,84 +480,76 @@ palette_editor_color_area_events (GtkWidget         *widget,
 
   user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
 
-  switch (event->type)
+  entry_width  = editor->col_width + SPACING;
+  entry_height = (ENTRY_HEIGHT * editor->zoom_factor) +  SPACING;
+
+  col = (bevent->x - 1) / entry_width;
+  row = (bevent->y - 1) / entry_height;
+  pos = row * editor->columns + col;
+
+  if (palette)
+    list = g_list_nth (palette->colors, pos);
+  else
+    list = NULL;
+
+  if (list)
+    editor->dnd_color = list->data;
+  else
+    editor->dnd_color = NULL;
+
+  if ((bevent->button == 1 || bevent->button == 3) && palette)
     {
-    case GDK_EXPOSE:
-      palette_editor_redraw (editor);
-      break;
-
-    case GDK_BUTTON_PRESS:
-      bevent = (GdkEventButton *) event;
-      entry_width  = editor->col_width + SPACING;
-      entry_height = (ENTRY_HEIGHT * editor->zoom_factor) +  SPACING;
-      col = (bevent->x - 1) / entry_width;
-      row = (bevent->y - 1) / entry_height;
-      pos = row * editor->columns + col;
-
-      if (palette)
-	list = g_list_nth (palette->colors, pos);
-      else
-	list = NULL;
-
       if (list)
-	editor->dnd_color = list->data;
+        {
+          if (editor->color)
+            {
+              editor->freeze_update = TRUE;
+              palette_editor_draw_entries (editor, -1, -1);
+              editor->freeze_update = FALSE;
+            }
+          editor->color = (GimpPaletteEntry *) list->data;
+
+          if (active_color == FOREGROUND)
+            {
+              if (bevent->state & GDK_CONTROL_MASK)
+                gimp_context_set_background (user_context,
+                                             &editor->color->color);
+              else
+                gimp_context_set_foreground (user_context,
+                                             &editor->color->color);
+            }
+          else if (active_color == BACKGROUND)
+            {
+              if (bevent->state & GDK_CONTROL_MASK)
+                gimp_context_set_foreground (user_context,
+                                             &editor->color->color);
+              else
+                gimp_context_set_background (user_context,
+                                             &editor->color->color);
+            }
+
+          palette_editor_draw_entries (editor, row, col);
+
+          /*  Update the active color name  */
+          g_signal_handler_block (G_OBJECT (editor->color_name),
+                                  editor->entry_sig_id);
+
+          gtk_entry_set_text (GTK_ENTRY (editor->color_name),
+                              editor->color->name);
+
+          g_signal_handler_unblock (G_OBJECT (editor->color_name),
+                                    editor->entry_sig_id);
+
+          gtk_widget_set_sensitive (editor->color_name, TRUE);
+          /* palette_update_current_entry (editor); */
+        }
       else
-	editor->dnd_color = NULL;
-
-      if ((bevent->button == 1 || bevent->button == 3) && palette)
-	{
-	  if (list)
-	    {
-	      if (editor->color)
-		{
-		  editor->freeze_update = TRUE;
- 		  palette_editor_draw_entries (editor, -1, -1);
-		  editor->freeze_update = FALSE;
-		}
-	      editor->color = (GimpPaletteEntry *) list->data;
-
-	      if (active_color == FOREGROUND)
-		{
-		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_background (user_context,
-						 &editor->color->color);
-		  else
-		    gimp_context_set_foreground (user_context,
-						 &editor->color->color);
-		}
-	      else if (active_color == BACKGROUND)
-		{
-		  if (bevent->state & GDK_CONTROL_MASK)
-		    gimp_context_set_foreground (user_context,
-						 &editor->color->color);
-		  else
-		    gimp_context_set_background (user_context,
-						 &editor->color->color);
-		}
-
-	      palette_editor_draw_entries (editor, row, col);
-
-	      /*  Update the active color name  */
-	      g_signal_handler_block (G_OBJECT (editor->color_name),
-				      editor->entry_sig_id);
-
-	      gtk_entry_set_text (GTK_ENTRY (editor->color_name),
-				  editor->color->name);
-
-	      g_signal_handler_unblock (G_OBJECT (editor->color_name),
-					editor->entry_sig_id);
-
-	      gtk_widget_set_sensitive (editor->color_name, TRUE);
-	      /* palette_update_current_entry (editor); */
-	    }
-	}
-      break;
-
-    default:
-      break;
+        {
+          gtk_widget_set_sensitive (editor->color_name, FALSE);
+        }
     }
 
-  return FALSE;
+  return FALSE; /* continue with eventbox_button_press */
 }
 
 /*  functions for drawing & updating the palette dialog color area  **********/

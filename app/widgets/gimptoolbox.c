@@ -432,27 +432,21 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 			   G_OBJECT (toolbox->wbox),
 			   0);
 
-  gtk_drag_dest_set (toolbox->wbox,
-		     GTK_DEST_DEFAULT_ALL,
-		     toolbox_target_table,
-                     G_N_ELEMENTS (toolbox_target_table),
-		     GDK_ACTION_COPY);
+  gimp_dnd_file_dest_add (toolbox->wbox, gimp_dnd_open_files, NULL);
 
-  gimp_dnd_file_dest_set (toolbox->wbox, gimp_dnd_open_files, NULL);
-
-  gimp_dnd_viewable_dest_set (toolbox->wbox, GIMP_TYPE_LAYER,
+  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER,
 			      toolbox_drop_drawable,
 			      context);
-  gimp_dnd_viewable_dest_set (toolbox->wbox, GIMP_TYPE_LAYER_MASK,
+  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_LAYER_MASK,
 			      toolbox_drop_drawable,
 			      context);
-  gimp_dnd_viewable_dest_set (toolbox->wbox, GIMP_TYPE_CHANNEL,
+  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_CHANNEL,
 			      toolbox_drop_drawable,
 			      context);
-  gimp_dnd_viewable_dest_set (toolbox->wbox, GIMP_TYPE_TOOL_INFO,
+  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_TOOL_INFO,
 			      toolbox_drop_tool,
 			      context);
-  gimp_dnd_viewable_dest_set (toolbox->wbox, GIMP_TYPE_BUFFER,
+  gimp_dnd_viewable_dest_add (toolbox->wbox, GIMP_TYPE_BUFFER,
 			      toolbox_drop_buffer,
 			      context);
 

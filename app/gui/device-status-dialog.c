@@ -195,11 +195,7 @@ device_status_dialog_create (Gimp *gimp)
                                G_CALLBACK (gimp_preview_set_viewable),
                                G_OBJECT (deviceD->tools[i]),
                                G_CONNECT_SWAPPED);
-      gimp_gtk_drag_dest_set_by_type (deviceD->tools[i],
-				      GTK_DEST_DEFAULT_ALL,
-				      GIMP_TYPE_TOOL_INFO,
-				      GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_set (deviceD->tools[i],
+      gimp_dnd_viewable_dest_add (deviceD->tools[i],
 				  GIMP_TYPE_TOOL_INFO,
 				  device_status_drop_tool,
 				  device_info);
@@ -249,11 +245,7 @@ device_status_dialog_create (Gimp *gimp)
                                G_CALLBACK (gimp_preview_set_viewable),
                                G_OBJECT (deviceD->brushes[i]),
                                G_CONNECT_SWAPPED);
-      gimp_gtk_drag_dest_set_by_type (deviceD->brushes[i],
-				      GTK_DEST_DEFAULT_ALL,
-				      GIMP_TYPE_BRUSH,
-				      GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_set (deviceD->brushes[i],
+      gimp_dnd_viewable_dest_add (deviceD->brushes[i],
 				  GIMP_TYPE_BRUSH,
 				  device_status_drop_brush,
 				  device_info);
@@ -271,11 +263,7 @@ device_status_dialog_create (Gimp *gimp)
                                G_CALLBACK (gimp_preview_set_viewable),
                                G_OBJECT (deviceD->patterns[i]),
                                G_CONNECT_SWAPPED);
-      gimp_gtk_drag_dest_set_by_type (deviceD->patterns[i],
-				      GTK_DEST_DEFAULT_ALL,
-				      GIMP_TYPE_PATTERN,
-				      GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_set (deviceD->patterns[i],
+      gimp_dnd_viewable_dest_add (deviceD->patterns[i],
 				  GIMP_TYPE_PATTERN,
 				  device_status_drop_pattern,
 				  device_info);
@@ -293,11 +281,7 @@ device_status_dialog_create (Gimp *gimp)
                                G_CALLBACK (gimp_preview_set_viewable),
                                G_OBJECT (deviceD->gradients[i]),
                                G_CONNECT_SWAPPED);
-      gimp_gtk_drag_dest_set_by_type (deviceD->gradients[i],
-				      GTK_DEST_DEFAULT_ALL,
-				      GIMP_TYPE_GRADIENT,
-				      GDK_ACTION_COPY);
-      gimp_dnd_viewable_dest_set (deviceD->gradients[i],
+      gimp_dnd_viewable_dest_add (deviceD->gradients[i],
 				  GIMP_TYPE_GRADIENT,
 				  device_status_drop_gradient,
 				  device_info);

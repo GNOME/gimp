@@ -126,7 +126,7 @@ gimp_list_item_class_init (GimpListItemClass *klass)
 static void
 gimp_list_item_init (GimpListItem *list_item)
 {
-  list_item->hbox = gtk_hbox_new (FALSE, 6);
+  list_item->hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (list_item->hbox), 2);
   gtk_container_add (GTK_CONTAINER (list_item), list_item->hbox);
   gtk_widget_show (list_item->hbox);
@@ -254,7 +254,8 @@ gimp_list_item_drag_drop (GtkWidget      *widget,
 
   if (return_val)
     {
-      gimp_container_reorder (list_item->container, GIMP_OBJECT (src_viewable),
+      gimp_container_reorder (list_item->container,
+                              GIMP_OBJECT (src_viewable),
                               dest_index);
     }
 
@@ -330,7 +331,7 @@ gimp_list_item_real_set_viewable (GimpListItem *list_item,
                            G_CALLBACK (gimp_list_item_name_changed),
                            list_item, 0);
 
-  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (list_item),
+  gimp_dnd_drag_source_set_by_type (GTK_WIDGET (list_item),
 				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
 				    G_TYPE_FROM_INSTANCE (viewable),
 				    GDK_ACTION_MOVE | GDK_ACTION_COPY);
@@ -379,7 +380,10 @@ gimp_list_item_set_reorderable (GimpListItem  *list_item,
     {
       list_item->container = container;
 
-      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (list_item),
+#ifdef __GNUC__
+#warning make gimp_dnd_drag_dest_set_by_type() _add_by_type()
+#endif
+      gimp_dnd_drag_dest_set_by_type (GTK_WIDGET (list_item),
                                       GTK_DEST_DEFAULT_ALL,
                                       container->children_type,
                                       GDK_ACTION_MOVE | GDK_ACTION_COPY);

@@ -141,14 +141,7 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
                        GDK_ACTION_COPY | GDK_ACTION_MOVE);
   gimp_dnd_color_source_set (color_area, color_area_drag_color, context);
 
-  gtk_drag_dest_set (color_area,
-		     GTK_DEST_DEFAULT_HIGHLIGHT |
-		     GTK_DEST_DEFAULT_MOTION |
-		     GTK_DEST_DEFAULT_DROP,
-		     color_area_target_table,
-                     G_N_ELEMENTS (color_area_target_table),
-		     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (color_area, color_area_drop_color, context);
+  gimp_dnd_color_dest_add (color_area, color_area_drop_color, context);
 
   g_signal_connect_swapped (G_OBJECT (context), "foreground_changed",
                             G_CALLBACK (gtk_widget_queue_draw),

@@ -255,8 +255,8 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 	  if (view->dnd_widget)
 	    {
 	      gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
-	      gimp_dnd_viewable_dest_unset (GTK_WIDGET (view->dnd_widget),
-					    view->container->children_type);
+	      gimp_dnd_viewable_dest_remove (GTK_WIDGET (view->dnd_widget),
+                                             view->container->children_type);
 	    }
 	}
 
@@ -319,16 +319,10 @@ gimp_container_view_real_set_container (GimpContainerView *view,
 					   object ? GIMP_VIEWABLE (object): NULL);
 
 	  if (view->dnd_widget)
-	    {
-	      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->dnd_widget),
-					      GTK_DEST_DEFAULT_ALL,
-					      view->container->children_type,
-					      GDK_ACTION_COPY);
-	      gimp_dnd_viewable_dest_set (GTK_WIDGET (view->dnd_widget),
-					  view->container->children_type,
-					  gimp_container_view_viewable_dropped,
-					  view);
-	    }
+            gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
+                                        view->container->children_type,
+                                        gimp_container_view_viewable_dropped,
+                                        view);
 	}
     }
 }
@@ -352,8 +346,8 @@ gimp_container_view_set_context (GimpContainerView *view,
       if (view->dnd_widget)
 	{
 	  gtk_drag_dest_unset (GTK_WIDGET (view->dnd_widget));
-	  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view->dnd_widget),
-					view->container->children_type);
+	  gimp_dnd_viewable_dest_remove (GTK_WIDGET (view->dnd_widget),
+                                         view->container->children_type);
 	}
     }
 
@@ -379,16 +373,10 @@ gimp_container_view_set_context (GimpContainerView *view,
 				       object ? GIMP_VIEWABLE (object) : NULL);
 
       if (view->dnd_widget)
-	{
-	  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view->dnd_widget),
-					  GTK_DEST_DEFAULT_ALL,
-					  view->container->children_type,
-					  GDK_ACTION_COPY);
-	  gimp_dnd_viewable_dest_set (GTK_WIDGET (view->dnd_widget),
-				      view->container->children_type,
-				      gimp_container_view_viewable_dropped,
-				      view);
-	}
+        gimp_dnd_viewable_dest_add (GTK_WIDGET (view->dnd_widget),
+                                    view->container->children_type,
+                                    gimp_container_view_viewable_dropped,
+                                    view);
     }
 }
 
@@ -427,11 +415,7 @@ gimp_container_view_enable_dnd (GimpContainerView *view,
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
   g_return_if_fail (GTK_IS_BUTTON (button));
 
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (button),
-				  GTK_DEST_DEFAULT_ALL,
-				  children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (button),
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (button),
 			      children_type,
 			      gimp_container_view_button_viewable_dropped,
 			      view);

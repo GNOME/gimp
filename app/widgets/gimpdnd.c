@@ -618,12 +618,17 @@ gimp_dnd_data_source_unset (GtkWidget *widget)
 }
 
 static void
-gimp_dnd_data_dest_set (GimpDndType  data_type,
+gimp_dnd_data_dest_add (GimpDndType  data_type,
 			GtkWidget   *widget,
 			gpointer     set_data_func,
 			gpointer     set_data_data)
 {
-  gboolean drop_connected;
+  GtkTargetList *target_list;
+  gboolean       drop_connected;
+
+  /*  set a default drag dest if not already done  */
+  if (! g_object_get_data (G_OBJECT (widget), "gtk-drag-dest"))
+    gtk_drag_dest_set (widget, GTK_DEST_DEFAULT_ALL, NULL, 0, GDK_ACTION_COPY);
 
   drop_connected =
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
@@ -645,13 +650,25 @@ gimp_dnd_data_dest_set (GimpDndType  data_type,
   g_object_set_data (G_OBJECT (widget),
                      dnd_data_defs[data_type].set_data_data_name,
                      set_data_data);
+
+  target_list = gtk_drag_dest_get_target_list (widget);
+
+  if (target_list)
+    gtk_target_list_add_table (target_list,
+                               &dnd_data_defs[data_type].target_entry, 1);
+  else
+    target_list = gtk_target_list_new (&dnd_data_defs[data_type].target_entry,
+                                       1);
+
+  gtk_drag_dest_set_target_list (widget, target_list);
 }
 
 static void
-gimp_dnd_data_dest_unset (GimpDndType  data_type,
-			  GtkWidget   *widget)
+gimp_dnd_data_dest_remove (GimpDndType  data_type,
+                           GtkWidget   *widget)
 {
-  gboolean drop_connected;
+  GtkTargetList *target_list;
+  gboolean       drop_connected;
 
   drop_connected =
     GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
@@ -666,6 +683,23 @@ gimp_dnd_data_dest_unset (GimpDndType  data_type,
   g_object_set_data (G_OBJECT (widget),
                      dnd_data_defs[data_type].set_data_data_name,
                      NULL);
+
+  target_list = gtk_drag_dest_get_target_list (widget);
+
+  if (target_list)
+    {
+      GdkAtom atom;
+
+      atom = gdk_atom_intern (dnd_data_defs[data_type].target_entry.target,
+                              TRUE);
+
+      if (atom != GDK_NONE)
+        {
+          gtk_target_list_remove (target_list, atom);
+
+          gtk_drag_dest_set_target_list (widget, target_list);
+        }
+    }
 }
 
 
@@ -736,27 +770,27 @@ gimp_dnd_set_file_data (GtkWidget     *widget,
 }
 
 void
-gimp_dnd_file_dest_set (GtkWidget           *widget,
+gimp_dnd_file_dest_add (GtkWidget           *widget,
 			GimpDndDropFileFunc  set_file_func,
 			gpointer             data)
 {
-  gimp_dnd_data_dest_set (GIMP_DND_TYPE_URI_LIST, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_URI_LIST, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
-  gimp_dnd_data_dest_set (GIMP_DND_TYPE_TEXT_PLAIN, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_TEXT_PLAIN, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
-  gimp_dnd_data_dest_set (GIMP_DND_TYPE_NETSCAPE_URL, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_NETSCAPE_URL, widget,
 			  G_CALLBACK (set_file_func),
 			  data);
 }
 
 void
-gimp_dnd_file_dest_unset (GtkWidget *widget)
+gimp_dnd_file_dest_remove (GtkWidget *widget)
 {
-  gimp_dnd_data_dest_unset (GIMP_DND_TYPE_URI_LIST, widget);
-  gimp_dnd_data_dest_unset (GIMP_DND_TYPE_TEXT_PLAIN, widget);
-  gimp_dnd_data_dest_unset (GIMP_DND_TYPE_NETSCAPE_URL, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_URI_LIST, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_TEXT_PLAIN, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_NETSCAPE_URL, widget);
 }
 
 /*  the next two functions are straight cut'n'paste from glib/glib/gconvert.c,
@@ -1013,19 +1047,19 @@ gimp_dnd_color_source_set (GtkWidget            *widget,
 }
 
 void
-gimp_dnd_color_dest_set (GtkWidget            *widget,
+gimp_dnd_color_dest_add (GtkWidget            *widget,
 			 GimpDndDropColorFunc  set_color_func,
 			 gpointer              data)
 {
-  gimp_dnd_data_dest_set (GIMP_DND_TYPE_COLOR, widget,
+  gimp_dnd_data_dest_add (GIMP_DND_TYPE_COLOR, widget,
 			  G_CALLBACK (set_color_func),
 			  data);
 }
 
 void
-gimp_dnd_color_dest_unset (GtkWidget *widget)
+gimp_dnd_color_dest_remove (GtkWidget *widget)
 {
-  gimp_dnd_data_dest_unset (GIMP_DND_TYPE_COLOR, widget);
+  gimp_dnd_data_dest_remove (GIMP_DND_TYPE_COLOR, widget);
 }
 
 
@@ -1115,7 +1149,7 @@ gimp_dnd_data_type_get_by_g_type (GType type)
 }
 
 void
-gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
+gimp_dnd_drag_source_set_by_type (GtkWidget       *widget,
 				  GdkModifierType  start_button_mask,
 				  GType            type,
 				  GdkDragAction    actions)
@@ -1136,7 +1170,7 @@ gimp_gtk_drag_source_set_by_type (GtkWidget       *widget,
 }
 
 void
-gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
+gimp_dnd_drag_dest_set_by_type (GtkWidget       *widget,
 				GtkDestDefaults  flags,
 				GType            type,
 				GdkDragAction    actions)
@@ -1194,7 +1228,7 @@ gimp_dnd_viewable_source_unset (GtkWidget *widget,
 }
 
 void
-gimp_dnd_viewable_dest_set (GtkWidget               *widget,
+gimp_dnd_viewable_dest_add (GtkWidget               *widget,
 			    GType                    type,
 			    GimpDndDropViewableFunc  set_viewable_func,
 			    gpointer                 data)
@@ -1209,14 +1243,14 @@ gimp_dnd_viewable_dest_set (GtkWidget               *widget,
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return;
 
-  gimp_dnd_data_dest_set (dnd_type, widget,
+  gimp_dnd_data_dest_add (dnd_type, widget,
 			  G_CALLBACK (set_viewable_func),
 			  data);  
 }
 
 void
-gimp_dnd_viewable_dest_unset (GtkWidget *widget,
-			      GType      type)
+gimp_dnd_viewable_dest_remove (GtkWidget *widget,
+                               GType      type)
 {
   GimpDndType dnd_type;
 
@@ -1227,7 +1261,7 @@ gimp_dnd_viewable_dest_unset (GtkWidget *widget,
   if (dnd_type == GIMP_DND_TYPE_NONE)
     return;
 
-  gimp_dnd_data_dest_unset (dnd_type, widget);
+  gimp_dnd_data_dest_remove (dnd_type, widget);
 }
 
 GimpViewable *

@@ -173,14 +173,7 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
                     G_CALLBACK (gimp_selection_preview_button_press),
                     selection_editor);
 
-  gtk_drag_dest_set (selection_editor->preview, 
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP, 
-                     selection_editor_targets,
-                     G_N_ELEMENTS (selection_editor_targets),
-                     GDK_ACTION_COPY);
-  gimp_dnd_color_dest_set (selection_editor->preview,
+  gimp_dnd_color_dest_add (selection_editor->preview,
                            gimp_selection_editor_drop_color,
                            selection_editor);
 

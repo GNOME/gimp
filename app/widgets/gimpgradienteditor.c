@@ -321,11 +321,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
 		    G_CALLBACK (preview_events),
 		    editor);
 
-  gimp_gtk_drag_dest_set_by_type (editor->preview,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_GRADIENT,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (editor->preview),
+  gimp_dnd_viewable_dest_add (GTK_WIDGET (editor->preview),
                               GIMP_TYPE_GRADIENT,
                               gradient_editor_drop_gradient,
                               editor);

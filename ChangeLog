@@ -1,5 +1,59 @@
 2002-09-02  Michael Natterer  <mitch@gimp.org>
 
+	DND cleanup part 1:
+
+	* app/widgets/gimpdnd.[ch]: changed all gimp_dnd_*_dest_set() and
+	_unset() functions to _dest_add() and _dest_remove(). Switch from
+	using static arrays of GtkTargetEntries to dynamic GtkTargetLists.
+	The _add() and _remove() functions configure the drag dest
+	automatically if not already done, so there is no need to call
+	gtk_drag_dest_set() on the widget any more. Drag source cleanup
+	will follow...
+
+	Renamed silly function names gimp_gtk_* to gimp_dnd_*
+
+	* app/display/gimpdisplayshell.c
+	* app/tools/gimpblendtool.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpgradienteditor.c
+	* app/widgets/gimplistitem.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimptoolbox-color-area.c
+	* app/widgets/gimptoolbox-indicator-area.c
+	* app/widgets/gimptoolbox.c
+	* app/gui/about-dialog.c
+	* app/gui/color-select.c
+	* app/gui/device-status-dialog.c
+	* app/gui/tool-options-dialog.c: changed accordingly. Removed
+	all calls to gtk_drag_dest_set() and their GtkTargetEntry tables.
+
+	* app/widgets/gimpchannellistitem.c: enabled some commented out
+	dnd code (which will not work since dnd needs more love...)
+
+	* app/widgets/gimpitemlistview.[ch]: added a third
+	"gboolean interactive" parameter to GimpItemNewFunc.
+
+	* app/gui/channels-commands.[ch]
+	* app/gui/layers-commands.[ch]
+	* app/gui/vectors-commands.[ch]: if the new_item_func is called
+	with "interactive == FALSE", don't pop up a dialog but silently
+	create a new item of the image's size.
+
+	* app/widgets/gimpdrawablelistview.c: use the new feature to allow
+	color and pattern drops to the "New" button, which creates a new
+	layer/channel filled with the color/pattern.
+	(special feature for drc ;-)
+
+	* app/widgets/gimppaletteeditor.c: fixed event handling so we see
+	the context menu again. Also, don't redraw on "expose", since
+	GtkPreview does that for us.
+
+2002-09-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpviewabledialog.c: use GimpContainerView's
 	get_name_func utility stuff instead of reinventing the wheel.
 	(They should probably be renamed because they are not at all

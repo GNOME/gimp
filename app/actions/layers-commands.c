@@ -181,7 +181,7 @@ layers_new_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage);
 
-  layers_new_layer_query (gimage, NULL);
+  layers_new_layer_query (gimage, NULL, TRUE);
 }
 
 void
@@ -514,7 +514,8 @@ new_layer_query_ok_callback (GtkWidget *widget,
 
 void
 layers_new_layer_query (GimpImage *gimage,
-                        GimpLayer *template)
+                        GimpLayer *template,
+                        gboolean   interactive)
 {
   NewLayerOptions *options;
   GimpLayer       *floating_sel;
@@ -539,15 +540,31 @@ layers_new_layer_query (GimpImage *gimage,
       return;
     }
 
-  if (template)
+  if (template || ! interactive)
     {
-      GimpLayer *new_layer;
-      gint       width, height;
-      gint       off_x, off_y;
+      GimpLayer            *new_layer;
+      gint                  width, height;
+      gint                  off_x, off_y;
+      gdouble               opacity;
+      GimpLayerModeEffects  mode;
 
-      width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
-      height = gimp_drawable_height (GIMP_DRAWABLE (template));
-      gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+      if (template)
+        {
+          width  = gimp_drawable_width  (GIMP_DRAWABLE (template));
+          height = gimp_drawable_height (GIMP_DRAWABLE (template));
+          gimp_drawable_offsets (GIMP_DRAWABLE (template), &off_x, &off_y);
+          opacity = template->opacity;
+          mode    = template->mode;
+        }
+      else
+        {
+          width   = gimp_image_get_width (gimage);
+          height  = gimp_image_get_height (gimage);
+          off_x   = 0;
+          off_y   = 0;
+          opacity = 1.0;
+          mode    = GIMP_NORMAL_MODE;
+        }
 
       undo_push_group_start (gimage, EDIT_PASTE_UNDO_GROUP);
 
@@ -556,18 +573,20 @@ layers_new_layer_query (GimpImage *gimage,
                                   height,
                                   gimp_image_base_type_with_alpha (gimage),
                                   _("Empty Layer Copy"),
-                                  template->opacity,
-                                  template->mode);
+                                  opacity,
+                                  mode);
 
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
-                                  gimp_get_user_context (gimage->gimp),
-                                  GIMP_TRANSPARENT_FILL);
-      gimp_layer_translate (new_layer, off_x, off_y);
+      if (template)
+        {
+          gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_layer),
+                                      gimp_get_user_context (gimage->gimp),
+                                      GIMP_TRANSPARENT_FILL);
+          gimp_layer_translate (new_layer, off_x, off_y);
+        }
+
       gimp_image_add_layer (gimage, new_layer, -1);
 
       undo_push_group_end (gimage);
-
-      gimp_image_flush (gimage);
       return;
     }
 

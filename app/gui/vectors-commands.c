@@ -79,7 +79,7 @@ vectors_new_vectors_cmd_callback (GtkWidget *widget,
   GimpImage *gimage;
   return_if_no_image (gimage);
 
-  vectors_new_vectors_query (gimage, NULL);
+  vectors_new_vectors_query (gimage, NULL, TRUE);
 }
 
 void
@@ -403,7 +403,8 @@ new_vectors_query_ok_callback (GtkWidget *widget,
 
 void
 vectors_new_vectors_query (GimpImage   *gimage,
-                           GimpVectors *template)
+                           GimpVectors *template,
+                           gboolean     interactive)
 {
   NewVectorsOptions *options;
   GtkWidget         *hbox;
@@ -414,7 +415,7 @@ vectors_new_vectors_query (GimpImage   *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (! template || GIMP_IS_VECTORS (template));
 
-  if (template)
+  if (template || ! interactive)
     {
       GimpVectors *new_vectors;
 
@@ -426,7 +427,6 @@ vectors_new_vectors_query (GimpImage   *gimage,
 
       /* undo_push_group_end (gimage); */
 
-      gimp_image_flush (gimage);
       return;
     }
 
