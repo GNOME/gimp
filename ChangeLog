@@ -1,3 +1,8 @@
+2001-01-24  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpwidgets.c: fixed wrong for-loop boundary that caused 
+	the gimp_mem_size_entry not to accept values larger than 1023 MB.
+
 Sun Jan 21 21:54:57 PST 2001 Manish Singh <yosh@gimp.org>
 
 	* Made 1.2.1 release
