@@ -1,3 +1,11 @@
+2004-03-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-transform.c
+	(gimp_drawable_transform_tiles_affine): return NULL tiles if the
+	matrix would transform the drawable into nothing. Fixes the
+	core-crashing part of bug #138117 and makes the script fail
+	with an execution error.
+
 2004-03-25  Sven Neumann  <sven@gimp.org>
 
 	* README: mention the gimp-perl pre-release and provide a link.

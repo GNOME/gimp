@@ -231,6 +231,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
       y2 = RINT (MAX4 (dy1, dy2, dy3, dy4));
     }
 
+  /*  Check if the matrix transforms the tiles into nothing  */
+  if ((x2 - x1) < 1 || (y2 - y1) < 1)
+    return NULL;
+
   /*  Get the new temporary buffer for the transformed result  */
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                 tile_manager_bpp (orig_tiles));
