@@ -606,7 +606,7 @@ msgstr "Farbausgleich funktioniert nur bei Echtfarbbildern."
 
 #: app/color_balance.c:253 app/dodgeburn.c:128
 msgid "Shadows"
-msgstr "Shatten"
+msgstr "Schatten"
 
 #: app/color_balance.c:254 app/dodgeburn.c:127
 msgid "Midtones"

@@ -1,3 +1,9 @@
+Mon Dec 27 19:40:19 CET 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/despeckle.c: made them use the standard action_area
+	layout
+
 Mon Dec 27 17:16:14 CET 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/grid.c

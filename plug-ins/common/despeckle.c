@@ -43,6 +43,12 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.20  1999/12/27 18:43:09  neo
+ *   small dialog changes and german translation update
+ *
+ *
+ *   --Sven
+ *
  *   Revision 1.19  1997/01/03 15:15:10  yasuhiro
  *   1999-12-20  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
  *
@@ -715,6 +721,7 @@ despeckle_dialog(void)
 		*ftable,	/* Filter table */
 		*frame,		/* Frame for preview */
 		*scrollbar,	/* Horizontal + vertical scroller */
+		*hbbox,	        /* Buttonbox for the OK/Cancel buttons */
 		*button;	/* OK/Cancel buttons */
   gint		argc;		/* Fake argc for GUI */
   gchar		**argv;		/* Fake argv for GUI */
@@ -869,28 +876,30 @@ despeckle_dialog(void)
 
   dialog_create_ivalue( _("White Level"), GTK_TABLE(table), 4, &white_level, 0, 256);
 
- /*
-  * OK, cancel buttons...
-  */
+  /*  Action area  */
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 2);
+  gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dialog)->action_area), FALSE);
+  hbbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+  gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dialog)->action_area), hbbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbbox);
+ 
+  button = gtk_button_new_with_label (_("OK"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+  gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		      (GtkSignalFunc) dialog_ok_callback,
+		      dialog);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_grab_default (button);
+  gtk_widget_show (button);
 
-  gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
-
-  button = gtk_button_new_with_label( _("OK"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(button), "clicked",
-		     (GtkSignalFunc) dialog_ok_callback,
-		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_grab_default(button);
-  gtk_widget_show(button);
-
-  button = gtk_button_new_with_label( _("Cancel"));
-  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+  button = gtk_button_new_with_label (_("Cancel"));
+  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect(GTK_OBJECT(button), "clicked",
 		     (GtkSignalFunc) dialog_cancel_callback,
 		     dialog);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), button, TRUE, TRUE, 0);
-  gtk_widget_show(button);
+  gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
  /*
   * Show it and wait for the user to do something...
