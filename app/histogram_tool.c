@@ -431,7 +431,7 @@ static MenuItem color_option_items[] =
 };
 
 
-HistogramToolDialog *
+static HistogramToolDialog *
 histogram_tool_new_dialog ()
 {
   HistogramToolDialog *htd;

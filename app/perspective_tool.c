@@ -147,7 +147,7 @@ perspective_info_update (tool)
 }
 
 
-void
+static void
 perspective_tool_motion (tool, gdisp_ptr)
      Tool * tool;
      void * gdisp_ptr;

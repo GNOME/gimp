@@ -254,7 +254,7 @@ create_bucket_options (void)
 }
 
 
-void
+static void
 bucket_fill_button_press (tool, bevent, gdisp_ptr)
      Tool *tool;
      GdkEventButton *bevent;
@@ -284,7 +284,7 @@ bucket_fill_button_press (tool, bevent, gdisp_ptr)
 }
 
 
-void
+static void
 bucket_fill_button_release (tool, bevent, gdisp_ptr)
      Tool *tool;
      GdkEventButton *bevent;

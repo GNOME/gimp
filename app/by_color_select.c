@@ -521,7 +521,7 @@ by_color_select_initialize (void *gimage_ptr)
 /*  Select by Color dialog  */
 /****************************/
 
-ByColorDialog *
+static ByColorDialog *
 by_color_select_new_dialog ()
 {
   ByColorDialog *bcd;

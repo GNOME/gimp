@@ -270,7 +270,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", posterize_cancel_callback, NULL, NULL }
 };
 
-PosterizeDialog *
+static PosterizeDialog *
 posterize_new_dialog ()
 {
   PosterizeDialog *pd;

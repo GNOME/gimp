@@ -496,7 +496,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", levels_cancel_callback, NULL, NULL }
 };
 
-LevelsDialog *
+static LevelsDialog *
 levels_new_dialog ()
 {
   LevelsDialog *ld;

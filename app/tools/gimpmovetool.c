@@ -164,7 +164,7 @@ move_draw_guide (GDisplay *gdisp, Guide *guide)
   }
 }
 
-void
+static void
 move_tool_button_release (Tool           *tool,
 			  GdkEventButton *bevent,
 			  gpointer        gdisp_ptr)
@@ -242,7 +242,7 @@ move_tool_button_release (Tool           *tool,
     }
 }
 
-void
+static void
 move_tool_motion (Tool           *tool,
 		  GdkEventMotion *mevent,
 		  gpointer        gdisp_ptr)
@@ -274,7 +274,7 @@ move_tool_motion (Tool           *tool,
     }
 }
 
-void
+static void
 move_tool_cursor_update (Tool           *tool,
 			 GdkEventMotion *mevent,
 			 gpointer        gdisp_ptr)

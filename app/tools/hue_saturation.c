@@ -403,7 +403,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", hue_saturation_cancel_callback, NULL, NULL }
 };
 
-HueSaturationDialog *
+static HueSaturationDialog *
 hue_saturation_new_dialog ()
 {
   HueSaturationDialog *hsd;

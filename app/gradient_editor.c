@@ -1042,7 +1042,7 @@ grad_free_gradient_editor(void)
 
 /*****/
 
-void
+static void
 ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a)
 {
 	unsigned char r, g, b;
@@ -5828,7 +5828,7 @@ ProcRecord gradients_get_list_proc = {
 }; /* gradients_get_list_proc */
 
 
-Argument *
+static Argument *
 gradients_get_list_invoker(Argument *args)
 {
 	Argument   *return_args;
@@ -5955,7 +5955,7 @@ ProcRecord gradients_set_active_proc = {
 }; /* gradients_set_active_proc */
 
 
-Argument *
+static Argument *
 gradients_set_active_invoker(Argument *args)
 {
 	char       *name;
@@ -6052,7 +6052,7 @@ ProcRecord gradients_sample_uniform_proc = {
 }; /* gradients_sample_uniform_proc */
 
 
-Argument *
+static Argument *
 gradients_sample_uniform_invoker(Argument *args)
 {
 	Argument *return_args;
@@ -6151,7 +6151,7 @@ ProcRecord gradients_sample_custom_proc = {
 }; /* gradients_sample_custom_proc */
 
 
-Argument *
+static Argument *
 gradients_sample_custom_invoker(Argument *args)
 {
 	Argument *return_args;

@@ -87,7 +87,7 @@ tools_free_pencil (tool)
 }
 
 
-void
+static void
 pencil_motion (paint_core, drawable)
      PaintCore *paint_core;
      GimpDrawable *drawable;

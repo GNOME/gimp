@@ -373,7 +373,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", threshold_cancel_callback, NULL, NULL }
 };
 
-ThresholdDialog *
+static ThresholdDialog *
 threshold_new_dialog ()
 {
   ThresholdDialog *td;

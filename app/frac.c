@@ -270,7 +270,7 @@ xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
   return 1;
 }
 
-void
+static void
 decompressTile (Tile *destTile, gint num_channels)
 {
   gint i, j, k;
@@ -307,7 +307,7 @@ decompressTile (Tile *destTile, gint num_channels)
   return;
 }
 
-void
+static void
 decompressChannelTile (guchar *channelTileData, gint _x, gint _y)
 {
 
@@ -639,7 +639,7 @@ static void
 /* Initialize the domain information dom_info. This must be done in the
  * same manner in the compressor and the decompressor.
  */
-void dominfo_init(gint x_size, gint y_size, gint density) {
+static void dominfo_init(gint x_size, gint y_size, gint density) {
   gint s;            /* size index for domains; their size is 1<<(s+1) */
 
   for (s = MIN_BITS; s <= MAX_BITS; s++)
@@ -951,7 +951,7 @@ compress_cleanup (gint y_size)
 }
 
 /* Free a two dimensional array allocated as a set of rows. */
-void free_array (void **array, gint rows)
+static void free_array (void **array, gint rows)
 {
   gint row;
 

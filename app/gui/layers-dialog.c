@@ -3277,7 +3277,7 @@ fill_alpha_callback (GtkWidget *w,
   options->add_mask_type = AlphaMask;
 }
 
-void
+static void
 layers_dialog_add_mask_query (Layer *layer)
 {
   static ActionAreaItem action_items[2] =

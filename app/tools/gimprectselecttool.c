@@ -187,7 +187,7 @@ create_selection_options (ToolType tool_type)
 /*************************************/
 /*  Rectangular selection apparatus  */
 
-void
+static void
 rect_select (GImage *gimage,
 	     int     x,
 	     int     y,

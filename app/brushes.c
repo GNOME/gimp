@@ -161,7 +161,7 @@ create_default_brush ()
 
   brush->filename = NULL;
   brush->name = g_strdup ("Default");
-  brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);
+  brush->mask = temp_buf_new (1, 1, 1, 0, 0, (unsigned char *)filled);
   brush->spacing = 25;
 
   /*  Swap the brush to disk (if we're being stingy with memory) */

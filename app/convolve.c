@@ -230,7 +230,7 @@ tools_free_convolve (Tool *tool)
   paint_core_free (tool);
 }
 
-void
+static void
 convolve_motion (PaintCore *paint_core,
 		 GimpDrawable *drawable)
 {

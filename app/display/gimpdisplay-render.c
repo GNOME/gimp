@@ -2380,7 +2380,7 @@ render_image_init_alpha (int mult)
   if (alpha_val != mult)
     {
       if (!alpha_mult)
-	alpha_mult = g_new (int, 256);
+	alpha_mult = g_new (guint, 256);
 
       alpha_val = mult;
       for (i = 0; i < 256; i++)

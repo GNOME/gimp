@@ -101,7 +101,7 @@ static Argument *crop_invoker (Argument *);
 
 /*  Functions  */
 
-void
+static void
 crop_button_press (Tool           *tool,
 		   GdkEventButton *bevent,
 		   gpointer        gdisp_ptr)
@@ -172,7 +172,7 @@ crop_button_press (Tool           *tool,
   tool->state = ACTIVE;
 }
 
-void
+static void
 crop_button_release (Tool           *tool,
 		     GdkEventButton *bevent,
 		     gpointer        gdisp_ptr)
@@ -207,7 +207,7 @@ crop_button_release (Tool           *tool,
   tool->state = INACTIVE;
 }
 
-void
+static void
 crop_adjust_guides (GImage *gimage,
                     int x1, int y1,
                     int x2, int y2)
@@ -254,7 +254,7 @@ while (glist  != NULL)  {
 }
 		 
 
-void
+static void
 crop_motion (Tool           *tool,
 	     GdkEventMotion *mevent,
 	     gpointer        gdisp_ptr)
@@ -341,7 +341,7 @@ crop_motion (Tool           *tool,
   draw_core_resume (crop->core, tool);
 }
 
-void
+static void
 crop_cursor_update (Tool           *tool,
 		    GdkEventMotion *mevent,
 		    gpointer        gdisp_ptr)
@@ -380,7 +380,7 @@ crop_cursor_update (Tool           *tool,
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
-void
+static void
 crop_arrow_keys_func (Tool        *tool,
 		      GdkEventKey *kevent,
 		      gpointer     gdisp_ptr)
@@ -435,7 +435,7 @@ crop_arrow_keys_func (Tool        *tool,
     }
 }
 
-void
+static void
 crop_control (Tool     *tool,
 	      int       action,
 	      gpointer  gdisp_ptr)

@@ -364,7 +364,7 @@ brush_popup_open (BrushSelectP bsp,
   
   /*  Draw the brush  */
   buf = g_new (gchar, brush->mask->width);
-  src = temp_buf_data (brush->mask);
+  src = (gchar *)temp_buf_data (brush->mask);
   for (y = 0; y < brush->mask->height; y++)
     {
       /*  Invert the mask for display.  We're doing this because
@@ -374,7 +374,7 @@ brush_popup_open (BrushSelectP bsp,
        */
       for (x = 0; x < brush->mask->width; x++)
 	buf[x] = 255 - src[x];
-      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), buf, 0, y, brush->mask->width);
+      gtk_preview_draw_row (GTK_PREVIEW (bsp->brush_preview), (guchar *)buf, 0, y, brush->mask->width);
       src += brush->mask->width;
     }
   g_free(buf);

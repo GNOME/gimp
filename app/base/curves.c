@@ -413,7 +413,7 @@ curves_free ()
 /*  Select Curves dialog  */
 /**************************/
 
-CurvesDialog *
+static CurvesDialog *
 curves_new_dialog ()
 {
   CurvesDialog *cd;

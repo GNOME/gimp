@@ -1162,7 +1162,7 @@ static void file_convert_string (char *instr,
                   break;
               }
             *tmpptr = '\0';
-            sscanf (tmp, "%o", &k);
+            sscanf ((char *)tmp, "%o", &k);
             *(uout++) = k;
             break;
 

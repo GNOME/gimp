@@ -347,7 +347,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", color_balance_cancel_callback, NULL, NULL }
 };
 
-ColorBalanceDialog *
+static ColorBalanceDialog *
 color_balance_new_dialog ()
 {
   ColorBalanceDialog *cbd;

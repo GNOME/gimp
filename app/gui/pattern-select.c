@@ -251,7 +251,7 @@ pattern_popup_open (PatternSelectP psp,
 
   /*  Draw the pattern  */
   buf = g_new (gchar, pattern->mask->width * 3);
-  src = temp_buf_data (pattern->mask);
+  src = (gchar *)temp_buf_data (pattern->mask);
   for (y = 0; y < pattern->mask->height; y++)
     {
       if (pattern->mask->bytes == 1)
@@ -268,7 +268,7 @@ pattern_popup_open (PatternSelectP psp,
 	    buf[x*3+1] = src[x*3+1];
 	    buf[x*3+2] = src[x*3+2];
 	  }
-      gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), buf, 0, y, pattern->mask->width);
+      gtk_preview_draw_row (GTK_PREVIEW (psp->pattern_preview), (guchar *)buf, 0, y, pattern->mask->width);
       src += pattern->mask->width * pattern->mask->bytes;
     }
   g_free(buf);

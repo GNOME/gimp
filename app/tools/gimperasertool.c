@@ -156,12 +156,8 @@ tools_free_eraser (tool)
 }
 
 
-void
-eraser_motion (paint_core, drawable, hard, incremental)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     gboolean hard;
-     gboolean incremental;
+static void
+eraser_motion (PaintCore *paint_core, GimpDrawable *drawable, gboolean hard, gboolean incremental)
 {
   GImage *gimage;
   TempBuf * area;

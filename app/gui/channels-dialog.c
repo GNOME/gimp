@@ -526,7 +526,7 @@ channels_dialog_set_menu_sensitivity ()
 }
 
 
-void
+static void
 channels_dialog_set_channel (ChannelWidget *channel_widget)
 {
   GtkStateType state;
@@ -580,7 +580,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 }
 
 
-void
+static void
 channels_dialog_unset_channel (ChannelWidget * channel_widget)
 {
   GtkStateType state;
@@ -635,7 +635,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
 }
 
 
-void
+static void
 channels_dialog_position_channel (ChannelWidget *channel_widget,
 				  int new_index)
 {
@@ -659,7 +659,7 @@ channels_dialog_position_channel (ChannelWidget *channel_widget,
 }
 
 
-void
+static void
 channels_dialog_add_channel (Channel *channel)
 {
   GImage *gimage;
@@ -685,7 +685,7 @@ channels_dialog_add_channel (Channel *channel)
 }
 
 
-void
+static void
 channels_dialog_remove_channel (ChannelWidget *channel_widget)
 {
   GList *list = NULL;

@@ -181,7 +181,7 @@ tools_free_paintbrush (Tool *tool)
 }
 
 
-void
+static void
 paintbrush_motion (PaintCore *paint_core,
 		   GimpDrawable *drawable,
 		   double     fade_out,

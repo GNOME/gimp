@@ -181,7 +181,7 @@ scale_info_update (tool)
   info_dialog_popup (transform_info);
 }
 
-void
+static void
 scale_tool_motion (tool, gdisp_ptr)
      Tool * tool;
      void * gdisp_ptr;

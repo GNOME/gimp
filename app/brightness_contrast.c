@@ -312,7 +312,7 @@ static ActionAreaItem action_items[] =
   { "Cancel", brightness_contrast_cancel_callback, NULL, NULL }
 };
 
-BrightnessContrastDialog *
+static BrightnessContrastDialog *
 brightness_contrast_new_dialog ()
 {
   BrightnessContrastDialog *bcd;

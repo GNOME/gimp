@@ -42,7 +42,7 @@ tips_dialog_create ()
     {
       temp = g_malloc (512);
       sprintf (temp, "%s/%s", DATADIR, TIPS_FILE_NAME);
-      read_tips_file (temp);
+      read_tips_file ((char *)temp);
       g_free (temp);
     }
 
@@ -77,7 +77,7 @@ tips_dialog_create ()
       preview = gtk_preview_new (GTK_PREVIEW_COLOR);
       gtk_preview_size (GTK_PREVIEW (preview), wilber_width, wilber_height);
       temp = g_malloc (wilber_width * 3);
-      src = wilber_data;
+      src = (guchar *)wilber_data;
       for (y = 0; y < wilber_height; y++)
 	{
 	  dest = temp;

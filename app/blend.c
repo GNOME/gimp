@@ -70,7 +70,7 @@ typedef enum
 {
   REPEAT_NONE,
   REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR,
+  REPEAT_TRIANGULAR
 } RepeatMode;
 
 typedef double (*RepeatFunc)(double);
