@@ -371,8 +371,8 @@ file_open_callback (GtkWidget *widget,
 			open_options, FALSE, FALSE, 0);
     }
 
-  gtk_frame_set_label (GTK_FRAME(open_options_frame), _("Preview"));
-  gtk_label_set_text (GTK_LABEL(open_options_label), _("No Selection."));
+  gtk_frame_set_label (GTK_FRAME (open_options_frame), _("Preview"));
+  gtk_label_set_text (GTK_LABEL (open_options_label), _("No Selection."));
 
   gtk_widget_show (GTK_WIDGET (open_options_genbuttonlabel));
   gtk_widget_hide (GTK_WIDGET (open_options_preview));
@@ -843,7 +843,7 @@ file_save_thumbnail (GimpImage  *gimage,
   FILE *fp;
   struct stat statbuf;
 
-  if (stat(full_source_filename, &statbuf) != 0)
+  if (stat (full_source_filename, &statbuf) != 0)
     {
       return FALSE;
     }
@@ -972,10 +972,10 @@ file_save_thumbnail (GimpImage  *gimage,
     }
   else /* Error writing thumbnail */
     {
-      return (FALSE);
+      return FALSE;
     }
 
-  return (TRUE);
+  return TRUE;
 }
 
 gint
@@ -1083,15 +1083,15 @@ readXVThumb (const gchar  *fnam,
 
   fp = fopen (fnam, "rb");
   if (!fp)
-    return (NULL);
+    return NULL;
 
   fread (P7_buf, 6, 1, fp);
 
   if (strncmp(P7_buf, P7_332, 6)!=0)
     {
-      g_warning("Thumbnail doesn't have the 'P7 332' header.");
-      fclose(fp);
-      return(NULL);
+      g_warning ("Thumbnail doesn't have the 'P7 332' header.");
+      fclose (fp);
+      return NULL;
     }
 
   /*newline*/
@@ -1120,24 +1120,24 @@ readXVThumb (const gchar  *fnam,
   if (!ptr)
     {
       /* g_warning("Thumbnail ended - not an image?"); */
-      fclose(fp);
-      return(NULL);
+      fclose (fp);
+      return NULL;
     }
 
   sscanf(linebuf, "%d %d %d\n", w, h, &twofivefive);
 
   if (twofivefive!=255)
     {
-      g_warning("Thumbnail is of funky depth.");
-      fclose(fp);
-      return(NULL);
+      g_warning ("Thumbnail is of funky depth.");
+      fclose (fp);
+      return NULL;
     }
 
   if ((*w)<1 || (*h)<1 || (*w)>80 || (*h)>60)
     {
       g_warning ("Thumbnail size bad.  Corrupted?");
-      fclose(fp);
-      return (NULL);
+      fclose (fp);
+      return NULL;
     }
 
   buf = g_malloc ((*w) * (*h));
@@ -1146,7 +1146,7 @@ readXVThumb (const gchar  *fnam,
 
   fclose (fp);
   
-  return (buf);
+  return buf;
 }
 
 /* don't call with preview_fullname as parameter!  will be clobbered! */

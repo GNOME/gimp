@@ -107,26 +107,26 @@ static void   curves_preview          (CurvesDialog *);
 
 static void   curves_channel_callback (GtkWidget *, gpointer);
 
-static void   curves_smooth_callback  (GtkWidget *, gpointer);
-static void   curves_free_callback    (GtkWidget *, gpointer);
+static void   curves_smooth_callback      (GtkWidget *, gpointer);
+static void   curves_free_callback        (GtkWidget *, gpointer);
 
-static void   curves_reset_callback   (GtkWidget *, gpointer);
-static void   curves_ok_callback      (GtkWidget *, gpointer);
-static void   curves_cancel_callback  (GtkWidget *, gpointer);
-static void   curves_load_callback    (GtkWidget *, gpointer);
-static void   curves_save_callback    (GtkWidget *, gpointer);
-static void   curves_preview_update   (GtkWidget *, gpointer);
-static gint   curves_xrange_events    (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint   curves_yrange_events    (GtkWidget *, GdkEvent *, CurvesDialog *);
-static gint   curves_graph_events     (GtkWidget *, GdkEvent *, CurvesDialog *);
-static void   curves_CR_compose       (CRMatrix, CRMatrix, CRMatrix);
+static void   curves_reset_callback       (GtkWidget *, gpointer);
+static void   curves_ok_callback          (GtkWidget *, gpointer);
+static void   curves_cancel_callback      (GtkWidget *, gpointer);
+static void   curves_load_callback        (GtkWidget *, gpointer);
+static void   curves_save_callback        (GtkWidget *, gpointer);
+static void   curves_preview_update       (GtkWidget *, gpointer);
+static gint   curves_xrange_events        (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint   curves_yrange_events        (GtkWidget *, GdkEvent *, CurvesDialog *);
+static gint   curves_graph_events         (GtkWidget *, GdkEvent *, CurvesDialog *);
+static void   curves_CR_compose           (CRMatrix, CRMatrix, CRMatrix);
 
-static void   make_file_dlg           (gpointer);
-static void   file_ok_callback        (GtkWidget *, gpointer);
-static void   file_cancel_callback    (GtkWidget *, gpointer);
+static void   file_dialog_create          (GtkWidget *);
+static void   file_dialog_ok_callback     (GtkWidget *, gpointer);
+static void   file_dialog_cancel_callback (GtkWidget *, gpointer);
 
-static gboolean  read_curves_from_file   (FILE *f);
-static void      write_curves_to_file    (FILE *f);
+static gboolean  curves_read_from_file    (FILE *f);
+static void      curves_write_to_file     (FILE *f);
 
 
 /*  curves machinery  */
@@ -698,7 +698,7 @@ curves_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (curves_load_callback),
-		      NULL);
+		      cd->shell);
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Save"));
@@ -706,7 +706,7 @@ curves_dialog_new (void)
   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (curves_save_callback),
-		      NULL);
+		      cd->shell);
   gtk_widget_show (button);
 
   gtk_widget_show (hbbox);
@@ -1263,7 +1263,7 @@ curves_load_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   if (!file_dlg)
-    make_file_dlg (NULL);
+    file_dialog_create (GTK_WIDGET (data));
   else if (GTK_WIDGET_VISIBLE (file_dlg)) 
     return;
 
@@ -1278,7 +1278,7 @@ curves_save_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   if (!file_dlg)
-    make_file_dlg (NULL);
+    file_dialog_create (GTK_WIDGET (data));
   else if (GTK_WIDGET_VISIBLE (file_dlg)) 
     return;
 
@@ -1561,7 +1561,7 @@ curves_CR_compose (CRMatrix a,
 
 
 static void
-make_file_dlg (gpointer data)
+file_dialog_create (GtkWidget *parent)
 {
   gchar *temp;
 
@@ -1573,14 +1573,18 @@ make_file_dlg (gpointer data)
   gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_cancel_callback),
-		      data);
+		      "clicked", GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (file_cancel_callback),
-		      data);
+		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_ok_callback),
-		      data);
+		      "clicked", GTK_SIGNAL_FUNC (file_dialog_ok_callback),
+		      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (parent), "unmap",
+		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
 
   temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "curves" G_DIR_SEPARATOR_S,
       			  gimp_directory ());
@@ -1592,8 +1596,8 @@ make_file_dlg (gpointer data)
 }
 
 static void
-file_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+file_dialog_ok_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   FILE  *f;
   gchar *filename;
@@ -1610,7 +1614,7 @@ file_ok_callback (GtkWidget *widget,
 	  return;
 	}
 
-      if (!read_curves_from_file (f))
+      if (!curves_read_from_file (f))
 	{
 	  g_message (("Error in reading file %s"), filename);
 	  return;
@@ -1628,7 +1632,7 @@ file_ok_callback (GtkWidget *widget,
 	  return;
 	}
 
-      write_curves_to_file (f);
+      curves_write_to_file (f);
 
       fclose (f);
     }
@@ -1637,14 +1641,14 @@ file_ok_callback (GtkWidget *widget,
 }
 
 static void
-file_cancel_callback (GtkWidget *widget,
-		      gpointer   data)
+file_dialog_cancel_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   gtk_widget_hide (file_dlg);
 }
 
 static gboolean
-read_curves_from_file (FILE *f)
+curves_read_from_file (FILE *f)
 {
   gint i, j, fields;
   gchar buf[50];
@@ -1701,7 +1705,7 @@ read_curves_from_file (FILE *f)
 }
 
 static void
-write_curves_to_file (FILE *f)
+curves_write_to_file (FILE *f)
 {
   int i, j;
   gint32 index;

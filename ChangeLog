@@ -1,3 +1,12 @@
+2000-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/curves.c: 
+	* app/levels.c: hide the file_selector when the dialog is unmapped
+
+	* app/fileops.c: indentation (actually I have a fix for the stray
+	load/save dialogs, but I want to discuss it with a gtk+ guru
+	first, so it's not checked in yet...)
+
 2000-03-27  David Monniaux  <monniaux@quatramaran.ens.fr>
 
 	* plug-ins/gap/gap_decode_mpeg_main.c: fixed a typo (spurious

@@ -152,12 +152,12 @@ static gint   levels_input_da_events               (GtkWidget *, GdkEvent *,
 static gint   levels_output_da_events              (GtkWidget *, GdkEvent *,
 						    LevelsDialog *);
 
-static void   make_file_dlg                        (gpointer);
-static void   file_ok_callback                     (GtkWidget *, gpointer);
-static void   file_cancel_callback                 (GtkWidget *, gpointer);
+static void   file_dialog_create                   (GtkWidget *);
+static void   file_dialog_ok_callback              (GtkWidget *, gpointer);
+static void   file_dialog_cancel_callback          (GtkWidget *, gpointer);
 
-static gboolean  read_levels_from_file             (FILE *f);
-static void      write_levels_to_file              (FILE *f);
+static gboolean  levels_read_from_file             (FILE *f);
+static void      levels_write_to_file              (FILE *f);
 
 
 /*  levels action functions  */
@@ -601,7 +601,7 @@ levels_dialog_new (void)
 
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (levels_load_callback),
-		      NULL);
+		      ld->shell);
 
   gtk_widget_show (button);
 
@@ -611,7 +611,7 @@ levels_dialog_new (void)
 
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (levels_save_callback),
-		      NULL);
+		      ld->shell);
 
   gtk_widget_show (button);
 
@@ -1044,7 +1044,7 @@ levels_load_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   if (!file_dlg)
-    make_file_dlg (NULL);
+    file_dialog_create (GTK_WIDGET (data));
   else if (GTK_WIDGET_VISIBLE (file_dlg)) 
     return;
 
@@ -1059,7 +1059,7 @@ levels_save_callback (GtkWidget *widget,
 		      gpointer   data)
 {
   if (!file_dlg)
-    make_file_dlg (NULL);
+    file_dialog_create (GTK_WIDGET (data));
   else if (GTK_WIDGET_VISIBLE (file_dlg)) 
     return;
 
@@ -1380,7 +1380,7 @@ levels_output_da_events (GtkWidget    *widget,
 }
 
 static void
-make_file_dlg (gpointer data)
+file_dialog_create (GtkWidget *parent)
 {
   gchar *temp;
 
@@ -1392,14 +1392,18 @@ make_file_dlg (gpointer data)
   gtk_container_set_border_width (GTK_CONTAINER (GTK_FILE_SELECTION (file_dlg)->button_area), 2);
 
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_cancel_callback),
-		      data);
+		      "clicked", GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (file_dlg), "delete_event",
-		      GTK_SIGNAL_FUNC (file_cancel_callback),
-		      data);
+		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
   gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
-		      "clicked", GTK_SIGNAL_FUNC (file_ok_callback),
-		      data);
+		      "clicked", GTK_SIGNAL_FUNC (file_dialog_ok_callback),
+		      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (parent), "unmap",
+		      GTK_SIGNAL_FUNC (file_dialog_cancel_callback),
+		      NULL);
 
   temp = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "levels" G_DIR_SEPARATOR_S,
       			  gimp_directory ());
@@ -1411,8 +1415,8 @@ make_file_dlg (gpointer data)
 }
 
 static void
-file_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+file_dialog_ok_callback (GtkWidget *widget,
+			 gpointer   data)
 {
   FILE  *f;
   gchar *filename;
@@ -1429,7 +1433,7 @@ file_ok_callback (GtkWidget *widget,
 	  return;
 	}
 
-      if (!read_levels_from_file (f))
+      if (!levels_read_from_file (f))
 	{
 	  g_message (("Error in reading file %s"), filename);
 	  return;
@@ -1447,7 +1451,7 @@ file_ok_callback (GtkWidget *widget,
 	  return;
 	}
 
-      write_levels_to_file (f);
+      levels_write_to_file (f);
 
       fclose (f);
     }
@@ -1456,14 +1460,14 @@ file_ok_callback (GtkWidget *widget,
 }
 
 static void
-file_cancel_callback (GtkWidget *widget,
-		      gpointer   data)
+file_dialog_cancel_callback (GtkWidget *widget,
+			     gpointer   data)
 {
   gtk_widget_hide (file_dlg);
 }
 
 static gboolean
-read_levels_from_file (FILE *f)
+levels_read_from_file (FILE *f)
 {
   int low_input[5];
   int high_input[5];
@@ -1517,7 +1521,7 @@ read_levels_from_file (FILE *f)
 }
 
 static void
-write_levels_to_file (FILE *f)
+levels_write_to_file (FILE *f)
 {
   int i;
 
