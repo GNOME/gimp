@@ -140,11 +140,11 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam  values[3];
-  GimpRunMode   run_mode;
+  GimpRunMode       run_mode;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint32  new_layer;
-  gint    width;
-  gint    height;
+  gint32            new_layer;
+  gint              width;
+  gint              height;
 
   run_mode = param[0].data.d_int32;
 
@@ -408,9 +408,9 @@ tile_dialog (gint32 image_ID,
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Tile to New Size"));
@@ -442,11 +442,12 @@ tile_dialog (gint32 image_ID,
   toggle = gtk_check_button_new_with_label (_("Create New Image"));
   gtk_table_attach (GTK_TABLE (sizeentry), toggle, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &tvals.new_image);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tvals.new_image);
 
   gtk_widget_show (dlg);
 

@@ -71,10 +71,10 @@ typedef struct
 /* Declare some local functions.
  */
 static void   query   (void);
-static void   run     (gchar   *name,
-		       gint     nparams,
+static void   run     (gchar      *name,
+		       gint        nparams,
 		       GimpParam  *param,
-		       gint    *nreturn_vals,
+		       gint       *nreturn_vals,
 		       GimpParam **return_vals);
 
 static gint32 load_image    (gchar        *filename);
@@ -233,25 +233,26 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[2];
-  GimpRunMode  run_mode;
-  GimpPDBStatusType   status = GIMP_PDB_SUCCESS;
-  GimpParasite *parasite;
-  gint32        image;
-  gint32        drawable;
-  gint32        orig_image;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam      values[2];
+  GimpRunMode           run_mode;
+  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
+  GimpParasite         *parasite;
+  gint32                image;
+  gint32                drawable;
+  gint32                orig_image;
+  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -1562,27 +1563,37 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, FALSE, TRUE, 0);
 
   /*  compression  */
-  frame =
-    gimp_radio_group_new2 (TRUE, _("Compression"),
-                           G_CALLBACK (gimp_radio_button_update),
-			   &tsvals.compression, (gpointer) tsvals.compression,
+  frame = gimp_radio_group_new2 (TRUE, _("Compression"),
+                                 G_CALLBACK (gimp_radio_button_update),
+                                 &tsvals.compression,
+                                 GINT_TO_POINTER (tsvals.compression),
 
-			   _("None"),      (gpointer) COMPRESSION_NONE, NULL,
-			   _("LZW"),       (gpointer) COMPRESSION_LZW, NULL,
-			   _("Pack Bits"), (gpointer) COMPRESSION_PACKBITS, NULL,
-			   _("Deflate"),   (gpointer) COMPRESSION_DEFLATE, NULL,
-			   _("JPEG"),      (gpointer) COMPRESSION_JPEG, NULL,
+                                 _("None"),
+                                 GINT_TO_POINTER (COMPRESSION_NONE), NULL,
 
-			   NULL);
+                                 _("LZW"),
+                                 GINT_TO_POINTER (COMPRESSION_LZW), NULL,
+
+                                 _("Pack Bits"),
+                                 GINT_TO_POINTER (COMPRESSION_PACKBITS), NULL,
+
+                                 _("Deflate"),
+                                 GINT_TO_POINTER (COMPRESSION_DEFLATE), NULL,
+
+                                 _("JPEG"),
+                                 GINT_TO_POINTER (COMPRESSION_JPEG), NULL,
+
+                                 NULL);
+
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1599,9 +1610,10 @@ save_dialog (void)
   gtk_widget_show (entry);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
   gtk_entry_set_text (GTK_ENTRY (entry), image_comment);
-  gtk_signal_connect (GTK_OBJECT (entry), "changed",
-                      GTK_SIGNAL_FUNC (comment_entry_callback),
-                      NULL);
+
+  g_signal_connect (G_OBJECT (entry), "changed",
+                    G_CALLBACK (comment_entry_callback),
+                    NULL);
 
   gtk_widget_show (frame);
 

@@ -25,6 +25,15 @@
 
 #include <gtk/gtk.h>
 
+#ifdef __GNUC__
+#warning GTK_DISABLE_DEPRECATED
+#endif
+#undef GTK_DISABLE_DEPRECATED
+
+#include <gtk/gtkclist.h>
+
+#define GTK_DISABLE_DEPRECATED
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -85,8 +94,8 @@ run (gchar      *name,
      gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode   run_mode;
+  static GimpParam values[2];
+  GimpRunMode      run_mode;
 
   run_mode = param[0].data.d_int32;
 
@@ -526,9 +535,9 @@ unit_editor_dialog (void)
 
 		     NULL);
 
-  gtk_signal_connect (GTK_OBJECT (main_dialog), "destroy",
-                      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (main_dialog), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   gimp_help_init ();
 
@@ -613,9 +622,9 @@ unit_editor_dialog (void)
   gtk_container_add (GTK_CONTAINER (scrolled_win), clist);
   gtk_widget_show (clist);
 
-  gtk_signal_connect (GTK_OBJECT (clist), "select_row",
-                      GTK_SIGNAL_FUNC (select_row_callback),
-                      NULL);
+  g_signal_connect (G_OBJECT (clist), "select_row",
+                    G_CALLBACK (select_row_callback),
+                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
@@ -625,9 +634,9 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (new_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (new_callback),
+                    NULL);
 
   gimp_help_set_help_data (button, _("Create a new unit from scratch."), NULL);
 
@@ -635,9 +644,9 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (duplicate_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (duplicate_callback),
+                    NULL);
 
   gimp_help_set_help_data (button, _("Create a new unit with the currently "
 				     "seleted unit as template."), NULL);
@@ -646,9 +655,9 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (delete_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (delete_callback),
+                    NULL);
 
   gimp_help_set_help_data (button, _("Don't save the currently selected unit "
 				     "before GIMP exits."), NULL);
@@ -659,9 +668,9 @@ unit_editor_dialog (void)
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-		      GTK_SIGNAL_FUNC (undelete_callback),
-		      NULL);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (undelete_callback),
+                    NULL);
 
   gimp_help_set_help_data (button, _("Save the currently selected unit "
 				     "before GIMP exits."), NULL);

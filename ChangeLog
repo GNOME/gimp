@@ -1,3 +1,17 @@
+2002-01-08  Michael Natterer  <mitch@gimp-org>
+
+	* plug-ins/common/tga.c
+	* plug-ins/common/threshold_alpha.c
+	* plug-ins/common/tiff.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/tileit.c
+	* plug-ins/common/tiler.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/url.c
+	* plug-ins/common/zealouscrop.c: compile with
+	GTK_DISABLE_DEPRECATED, cleanup.
+
 2002-01-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/xbm.c: merged fix from stable branch.

@@ -73,10 +73,10 @@ typedef struct
 
 /* local function prototypes */
 static void query (void);
-static void run   (gchar   *name,
-		   gint     nparams,
+static void run   (gchar      *name,
+		   gint        nparams,
 		   GimpParam  *param,
-		   gint    *nreturn_vals,
+		   gint       *nreturn_vals,
 		   GimpParam **return_vals);
 
 static inline void blur_line     (gdouble    *ctable,
@@ -191,16 +191,16 @@ query (void)
 
 /* this is the actual function */
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
 #ifdef TIMER
   timerstart();
@@ -208,10 +208,11 @@ run (gchar   *name,
 
   run_mode = param[0].data.d_int32;
 
-  values[0].type = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
-  *return_vals = values;
+  *return_vals  = values;
   *nreturn_vals = 1;
+
+  values[0].type          = GIMP_PDB_STATUS;
+  values[0].data.d_status = status;
 
   INIT_I18N_UI(); 
 
@@ -790,9 +791,9 @@ unsharp_mask_dialog (void)
 
 			    NULL);
 
-  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (window), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   frame = gtk_frame_new (_("Parameter Settings"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -812,27 +813,27 @@ unsharp_mask_dialog (void)
 			      unsharp_params.radius, 1.0, 25.0, 0.1, 1.0, 1,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &unsharp_params.radius);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &unsharp_params.radius);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("Amount:"), SCALE_WIDTH, 0,
 			      unsharp_params.amount, 0.0, 5.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_double_adjustment_update),
-		      &unsharp_params.amount);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &unsharp_params.amount);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("Threshold:"), SCALE_WIDTH, 0,
 			      unsharp_params.threshold, 0.0, 255.0, 1.0, 10.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
-		      &unsharp_params.threshold);
+  g_signal_connect (G_OBJECT (adj), "value_changed",
+                    G_CALLBACK (gimp_int_adjustment_update),
+                    &unsharp_params.threshold);
 
   gtk_widget_show (window);
 

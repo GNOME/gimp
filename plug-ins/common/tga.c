@@ -270,7 +270,7 @@ run (gchar      *name,
      GimpParam **return_vals)
 {
   static GimpParam     values[2];
-  GimpRunMode      run_mode;
+  GimpRunMode          run_mode;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
   gint32               image_ID;
   gint32               drawable_ID;
@@ -1176,9 +1176,9 @@ save_dialog (void)
 
 			 NULL);
 
-  gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
-		      GTK_SIGNAL_FUNC (gtk_main_quit),
-		      NULL);
+  g_signal_connect (G_OBJECT (dlg), "destroy",
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   /* regular tga parameter settings */
   frame = gtk_frame_new (_("Targa Options"));
@@ -1193,11 +1193,12 @@ save_dialog (void)
   /*  rle  */
   toggle = gtk_check_button_new_with_label (_("RLE compression"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &tsvals.rle);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
   gtk_widget_show (toggle);
+
+  g_signal_connect (G_OBJECT (toggle), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.rle);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
