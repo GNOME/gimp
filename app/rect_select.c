@@ -202,7 +202,7 @@ create_selection_options (ToolType tool_type)
    	fixed_width_entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), fixed_width_entry, FALSE, FALSE, 0);
 	gtk_widget_set_usize(fixed_width_entry, FIXED_ENTRY_SIZE, 0);
-	snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_width);
+	g_snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_width);
 	gtk_entry_set_text(GTK_ENTRY(fixed_width_entry), buffer);
 	gtk_signal_connect(GTK_OBJECT(fixed_width_entry), "changed",
 					   (GtkSignalFunc)selection_entry_update,
@@ -218,7 +218,7 @@ create_selection_options (ToolType tool_type)
    	fixed_height_entry = gtk_entry_new();
 	gtk_box_pack_start(GTK_BOX(hbox), fixed_height_entry, FALSE, FALSE, 0);
 	gtk_widget_set_usize(fixed_height_entry, FIXED_ENTRY_SIZE, 0);
-	snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_height);
+	g_snprintf(buffer, FIXED_ENTRY_MAX_CHARS, "%i", options->fixed_height);
 	gtk_entry_set_text(GTK_ENTRY(fixed_height_entry), buffer);
 	gtk_signal_connect(GTK_OBJECT(fixed_height_entry), "changed",
 					   (GtkSignalFunc)selection_entry_update,

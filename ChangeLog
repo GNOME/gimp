@@ -1,3 +1,7 @@
+Mon Jul 13 22:00:31 EDT 1998 Adrian Likins <adrian@gimp.org>
+	
+	* app/rect_select.c : argh, s/snprintf/g_snprintf
+
 Mon Jul 13 19:07:43 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	* app/drawable.c app/commands.c app/gimpimage.h
