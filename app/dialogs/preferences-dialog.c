@@ -1351,6 +1351,9 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_keyboard_shortcuts_dialog),
                     gimp);
 
+  prefs_check_button_add (object, "menu-mnemonics",
+                          _("Show menu _mnemonics (access keys)"),
+                          GTK_BOX (vbox2));
   prefs_check_button_add (object, "can-change-accels",
                           _("Use dynamic _keyboard shortcuts"),
                           GTK_BOX (vbox2));

@@ -42,6 +42,7 @@ struct _GimpActionGroup
   Gimp                      *gimp;
   gchar                     *label;
   gchar                     *stock_id;
+  gboolean                   mnemonics;
 
   gpointer                   user_data;
 
@@ -134,6 +135,7 @@ GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
                                              const gchar           *name,
                                              const gchar           *label,
                                              const gchar           *stock_id,
+                                             gboolean               mnemonics,
                                              gpointer               user_data,
                                              GimpActionGroupUpdateFunc update_func);
 

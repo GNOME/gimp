@@ -1,3 +1,23 @@
+2004-07-28  Michael Natterer  <mitch@gimp.org>
+
+	Enabled disabling all menu mnemonics. Addresses bug #120034:
+
+	* app/config/gimpguiconfig.[ch]
+	* app/config/gimprc-blurbs.h: added boolean RESTART property
+	"menu-menonics".
+
+	* app/gui/preferences-dialog.c: added a GUI for it.
+
+	* app/widgets/gimpactiongroup.[ch]: added boolean CONSTRUCT_ONLY
+	property "mnemonics".
+
+	(gimp_action_group_add_*_actions): call gimp_strip_uline() on
+	the actions' labels if mnemonics is FALSE.
+
+	* app/widgets/gimpactionfactory.[ch]
+	* app/actions/actions.c: pass gui_config->menu_menmonics to
+	all action groups.
+
 2004-07-27  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: commented out "Context" menu now that

@@ -112,7 +112,8 @@ gimp_action_factory_finalize (GObject *object)
 }
 
 GimpActionFactory *
-gimp_action_factory_new (Gimp *gimp)
+gimp_action_factory_new (Gimp     *gimp,
+                         gboolean  mnemonics)
 {
   GimpActionFactory *factory;
 
@@ -120,7 +121,8 @@ gimp_action_factory_new (Gimp *gimp)
 
   factory = g_object_new (GIMP_TYPE_ACTION_FACTORY, NULL);
 
-  factory->gimp = gimp;
+  factory->gimp      = gimp;
+  factory->mnemonics = mnemonics ? TRUE : FALSE;
 
   return factory;
 }
@@ -175,6 +177,7 @@ gimp_action_factory_group_new (GimpActionFactory *factory,
                                          entry->identifier,
                                          entry->label,
                                          entry->stock_id,
+                                         factory->mnemonics,
                                          user_data,
                                          entry->update_func);
 

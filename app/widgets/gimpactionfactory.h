@@ -54,6 +54,8 @@ struct _GimpActionFactory
 
   Gimp       *gimp;
   GList      *registered_groups;
+
+  gboolean    mnemonics;
 };
 
 struct _GimpActionFactoryClass
@@ -64,7 +66,8 @@ struct _GimpActionFactoryClass
 
 GType               gimp_action_factory_get_type (void) G_GNUC_CONST;
 
-GimpActionFactory * gimp_action_factory_new      (Gimp              *gimp);
+GimpActionFactory * gimp_action_factory_new      (Gimp              *gimp,
+                                                  gboolean           mnemonics);
 
 void          gimp_action_factory_group_register (GimpActionFactory *factory,
                                                   const gchar       *identifier,
