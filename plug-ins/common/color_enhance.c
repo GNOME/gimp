@@ -26,7 +26,7 @@
    channel in the image, it finds the minimum and maximum values... it
    uses those values to stretch the individual histograms to the full
    range.  For some images it may do just what you want; for others
-   it may be total crap :) This version operates in HSV space
+   it may not work that well. This version operates in HSV space
    and preserves hue. Most code is taken from autostretch_hsv */
 
 
@@ -83,12 +83,12 @@ query (void)
 			  "the minimum and maximum values... it uses those "
 			  "values to stretch the individual histograms to the "
 			  "full range.  For some images it may do just what "
-			  "you want; for others it may be total crap :).  "
+			  "you want; for others it may not work that well.  "
 			  "This version differs from Contrast Autostretch in "
 			  "that it works in HSV space, and preserves hue.",
 			  "Martin Weber",
-		 	  "Martin Weber", 
-		  	  "1997", 	 	 
+		 	  "Martin Weber",
+		  	  "1997",
 			  N_("<Image>/Layer/Colors/Auto/_Color Enhance"),
 	   	  	  "RGB*, INDEXED*",
  			  GIMP_PLUGIN,
@@ -156,15 +156,15 @@ get_v (const guchar *src)
   gint c, m, y;
   gint k;
   guchar map[3];
-  
+
   c = 255 - src[0];
   m = 255 - src[1];
   y = 255 - src[2];
-      
+
   k = c;
   if (m < k) k = m;
   if (y < k) k = y;
-  
+
   map[0] = c - k;
   map[1] = m - k;
   map[2] = y - k;
@@ -181,15 +181,15 @@ enhance_it (const guchar *src, guchar *dest, gdouble vlo, gdouble vhi)
   gint c, m, y;
   gint k;
   guchar map[3];
-  
+
   c = 255 - src[0];
   m = 255 - src[1];
   y = 255 - src[2];
-      
+
   k = c;
   if (m < k) k = m;
   if (y < k) k = y;
-  
+
   map[0] = c - k;
   map[1] = m - k;
   map[2] = y - k;
@@ -200,7 +200,7 @@ enhance_it (const guchar *src, guchar *dest, gdouble vlo, gdouble vhi)
     v = (v - vlo) / (vhi - vlo);
 
   gimp_hsv_to_rgb4(map, h, z, v);
-  
+
   c = map[0];
   m = map[1];
   y = map[2];
@@ -254,7 +254,7 @@ typedef struct {
   gboolean has_alpha;
 } ColorEnhanceParam_t;
 
-static void 
+static void
 find_vhi_vlo (const guchar *src,
               gint          bpp,
               gpointer      data)
@@ -270,7 +270,7 @@ find_vhi_vlo (const guchar *src,
     }
 }
 
-static void 
+static void
 color_enhance_func (const guchar *src,
                     guchar       *dest,
                     gint          bpp,

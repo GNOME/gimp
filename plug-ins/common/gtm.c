@@ -428,8 +428,7 @@ save_dialog (gint32 image_ID)
                                       GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 4);
 
-      label = gtk_label_new (_("Are you crazy?\n\n"
-			       "You are about to create a huge\n"
+      label = gtk_label_new (_("You are about to create a huge\n"
 			       "HTML file which will most likely\n"
 			       "crash your browser."));
       gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);

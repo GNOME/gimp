@@ -25,7 +25,7 @@
    channel in the image, it finds the minimum and maximum values... it
    uses those values to stretch the individual histograms to the full
    contrast range.  For some images it may do just what you want; for
-   others it may be total crap :) */
+   others it may not work that well */
 
 #include "config.h"
 
@@ -80,8 +80,8 @@ query (void)
 			  "the minimum and maximum values... it uses those "
 			  "values to stretch the individual histograms to the "
 			  "full contrast range.  For some images it may do "
-			  "just what you want; for others it may be total "
-			  "crap :)",
+			  "just what you want; for others it may not work "
+			  "that well.",
 			  "Federico Mena Quintero",
 			  "Federico Mena Quintero",
 			  "1996",
@@ -192,7 +192,7 @@ typedef struct {
   gboolean 	has_alpha;
 } AutoStretchParam_t;
 
-static void 
+static void
 find_min_max (const guchar *src,
               gint         bpp,
               gpointer     data)
@@ -223,7 +223,7 @@ c_astretch_func (const guchar *src,
 
   for (b = 0; b < param->alpha; b++)
     dest[b] = param->lut[src[b]][b];
-  
+
   if (param->has_alpha)
     dest[param->alpha] = src[param->alpha];
 }

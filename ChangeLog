@@ -1,3 +1,10 @@
+2003-11-17  Henrik Brix Andersen  <brix@gimp.org>
+
+	* plug-ins/common/color_enhance.c
+	* plug-ins/common/c_astretch.c
+	* plug-ins/common/gtm.c: removed potentionally offensive words +
+	trailing whitespace. This fixes bug #125668.
+
 2003-11-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb.h (GIMP_RGB_INTENSITY): removed the
