@@ -77,6 +77,21 @@ typedef enum
 } GimpBucketFillMode;
 
 
+#define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
+
+GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
+
+/*< proxy-resume >*/
+typedef enum
+{
+  GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
+  GIMP_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
+  GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
+  GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
+} GimpChannelOps;
+/*< proxy-skip >*/
+
+
 #define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
 
 GType gimp_channel_type_get_type (void) G_GNUC_CONST;
@@ -254,24 +269,11 @@ typedef enum  /*< pdb-skip >*/
 } GimpTransformDirection;
 
 
-#define GIMP_TYPE_CHANNEL_OPS (gimp_channel_ops_get_type ())
-
-GType gimp_channel_ops_get_type (void) G_GNUC_CONST;
-
-typedef enum  /*< proxy-resume >*/
-{
-  GIMP_CHANNEL_OP_ADD,       /*< desc="Add to the current selection"         >*/
-  GIMP_CHANNEL_OP_SUBTRACT,  /*< desc="Subtract from the current selection"  >*/
-  GIMP_CHANNEL_OP_REPLACE,   /*< desc="Replace the current selection"        >*/
-  GIMP_CHANNEL_OP_INTERSECT  /*< desc="Intersect with the current selection" >*/
-} GimpChannelOps;
-
-
 #define GIMP_TYPE_UNDO_MODE (gimp_undo_mode_get_type ())
 
 GType gimp_undo_mode_get_type (void) G_GNUC_CONST;
 
-typedef enum  /*< proxy-skip >*/ /*< pdb-skip >*/
+typedef enum /*< pdb-skip >*/
 {
   GIMP_UNDO_MODE_UNDO,
   GIMP_UNDO_MODE_REDO
@@ -360,7 +362,7 @@ typedef enum /*< pdb-skip >*/
  * non-registered enums; register them if needed
  */
 
-typedef enum  /*< proxy-skip >*/ /*< skip >*/
+typedef enum  /*< skip >*/
 {
   GIMP_MAKE_PALETTE,
   GIMP_REUSE_PALETTE,

@@ -1,3 +1,13 @@
+2003-02-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h: fixed use of proxy-resume and proxy-skip
+	trigraphs. We should get rid of these, they are so confusing.
+
+	* app/core/core-enums.c: regenerated.
+
+	* libgimpproxy/gimpproxytypes.h: this file was regenerated for no
+	good reason.
+
 2003-02-12  Michael Natterer  <mitch@gimp.org>
 
 	Undo chopping:

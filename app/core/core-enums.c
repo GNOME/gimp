@@ -69,6 +69,27 @@ gimp_bucket_fill_mode_get_type (void)
 }
 
 
+static const GEnumValue gimp_channel_ops_enum_values[] =
+{
+  { GIMP_CHANNEL_OP_ADD, N_("Add to the current selection"), "add" },
+  { GIMP_CHANNEL_OP_SUBTRACT, N_("Subtract from the current selection"), "subtract" },
+  { GIMP_CHANNEL_OP_REPLACE, N_("Replace the current selection"), "replace" },
+  { GIMP_CHANNEL_OP_INTERSECT, N_("Intersect with the current selection"), "intersect" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_channel_ops_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpChannelOps", gimp_channel_ops_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_channel_type_enum_values[] =
 {
   { GIMP_RED_CHANNEL, "GIMP_RED_CHANNEL", "red-channel" },
@@ -341,27 +362,6 @@ gimp_transform_direction_get_type (void)
 }
 
 
-static const GEnumValue gimp_channel_ops_enum_values[] =
-{
-  { GIMP_CHANNEL_OP_ADD, N_("Add to the current selection"), "add" },
-  { GIMP_CHANNEL_OP_SUBTRACT, N_("Subtract from the current selection"), "subtract" },
-  { GIMP_CHANNEL_OP_REPLACE, N_("Replace the current selection"), "replace" },
-  { GIMP_CHANNEL_OP_INTERSECT, N_("Intersect with the current selection"), "intersect" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_channel_ops_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpChannelOps", gimp_channel_ops_enum_values);
-
-  return enum_type;
-}
-
-
 static const GEnumValue gimp_undo_mode_enum_values[] =
 {
   { GIMP_UNDO_MODE_UNDO, "GIMP_UNDO_MODE_UNDO", "undo" },
@@ -452,28 +452,6 @@ gimp_undo_type_get_type (void)
 
   if (!enum_type)
     enum_type = g_enum_register_static ("GimpUndoType", gimp_undo_type_enum_values);
-
-  return enum_type;
-}
-
-
-static const GEnumValue gimp_convert_palette_type_enum_values[] =
-{
-  { GIMP_MAKE_PALETTE, "GIMP_MAKE_PALETTE", "make-palette" },
-  { GIMP_REUSE_PALETTE, "GIMP_REUSE_PALETTE", "reuse-palette" },
-  { GIMP_WEB_PALETTE, "GIMP_WEB_PALETTE", "web-palette" },
-  { GIMP_MONO_PALETTE, "GIMP_MONO_PALETTE", "mono-palette" },
-  { GIMP_CUSTOM_PALETTE, "GIMP_CUSTOM_PALETTE", "custom-palette" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_convert_palette_type_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpConvertPaletteType", gimp_convert_palette_type_enum_values);
 
   return enum_type;
 }
