@@ -741,32 +741,26 @@ marshall_proc_db_call (LISP a)
           break;
 
         case GIMP_PDB_STRINGARRAY:
-          if (!TYPEP (car (a), tc_cons))
+          if (!TYPEP (car (a), tc_string_array))
             success = FALSE;
           if (success)
             {
-              gint    n_elements = args[i - 1].data.d_int32;
-              LISP    list       = car (a);
-              gint    j;
+              gint n_elements = args[i - 1].data.d_int32;
+              LISP list       = car (a);
+              gint j;
 
               if ((n_elements < 0) || (n_elements > nlength (list)))
                 {
                   convert_string (proc_name);
                   g_snprintf (error_str, sizeof (error_str),
-                              "String array (argument %d) for function %s has "
+                              "STRING array (argument %d) for function %s has "
                               "incorrect length (got %ld, expected %d)",
                               i + 1, proc_name, nlength (list), n_elements);
                   return my_err (error_str, NIL);
                 }
 
-              args[i].type               = GIMP_PDB_STRINGARRAY;
-              args[i].data.d_stringarray = g_new0 (gchar *, n_elements);
-
-              for (j = 0; j < n_elements; j++)
-                {
-                  args[i].data.d_stringarray[j] = get_c_string (car (list));
-                  list = cdr (list);
-                }
+              args[i].type              = GIMP_PDB_STRINGARRAY;
+              args[i].data.d_stringarray = list->storage_as.string_array.data;
             }
           break;
 
@@ -1067,25 +1061,16 @@ marshall_proc_db_call (LISP a)
 
             case GIMP_PDB_STRINGARRAY:
               {
-                LISP array = NIL;
+                LISP array;
                 gint j;
 
+                array = arcons (tc_string_array, values[i].data.d_int32, 0);
                 for (j = 0; j < values[i].data.d_int32; j++)
                   {
-                    string = (values[i + 1].data.d_stringarray)[j];
-
-                    if (string)
-                      {
-                        string_len = strlen (string);
-                        array = cons (strcons (string_len, string), array);
-                      }
-                    else
-                      {
-                        array = cons (strcons (0, ""), array);
-                      }
+                    array->storage_as.string_array.data[j] =
+                      g_strdup (values[i + 1].data.d_stringarray[j]);
                   }
-
-                return_val = cons (nreverse (array), return_val);
+                return_val = cons (array, return_val);
               }
               break;
 
