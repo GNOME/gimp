@@ -243,7 +243,7 @@ engrave_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Limit Line Width"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Limit Line Width"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), pvals.limit);
   gtk_widget_show (toggle);
@@ -253,7 +253,7 @@ engrave_dialog (void)
                     &pvals.limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Height:"), SCALE_WIDTH, 0,
+			      _("_Height:"), SCALE_WIDTH, 0,
 			      pvals.height, 2.0, 16.0, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);

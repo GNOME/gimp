@@ -2680,7 +2680,7 @@ load_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, plvals.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Width:"), 1.0, 0.5,
+			     _("_Width:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -2689,7 +2689,7 @@ load_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, plvals.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Height:"), 1.0, 0.5,
+			     _("_Height:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -2856,7 +2856,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[0], psvals.width,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Width:"), 1.0, 0.5,
+			     _("_Width:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[0], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -2865,7 +2865,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[1], psvals.height,
 				     1e-5, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Height:"), 1.0, 0.5,
+			     _("_Height:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[1], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -2874,7 +2874,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[2], psvals.x_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("X-Offset:"), 1.0, 0.5,
+			     _("_X-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[2], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -2883,13 +2883,13 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&vals->adjustment[3], psvals.y_offset,
 				     0.0, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Y-Offset:"), 1.0, 0.5,
+			     _("_Y-Offset:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (vals->adjustment[3], "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &psvals.y_offset);
 
-  toggle = gtk_check_button_new_with_label (_("Keep Aspect Ratio"));
+  toggle = gtk_check_button_new_with_label (_("_Keep Aspect Ratio"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.keep_ratio);
   gtk_widget_show (toggle);
@@ -2909,10 +2909,10 @@ save_dialog (void)
 				  vals,
                                   GINT_TO_POINTER (psvals.unit_mm),
 
-				  _("Inch"),
+				  _("_Inch"),
                                   GINT_TO_POINTER (FALSE), NULL,
 
-				  _("Millimeter"),
+				  _("_Millimeter"),
                                   GINT_TO_POINTER (TRUE), NULL,
 
 				  NULL);
@@ -2929,10 +2929,10 @@ save_dialog (void)
 				 &psvals.rotate,
                                  GINT_TO_POINTER (psvals.rotate),
 
-				 "0",   GINT_TO_POINTER (0),   NULL,
-				 "90",  GINT_TO_POINTER (90),  NULL,
-				 "180", GINT_TO_POINTER (180), NULL,
-				 "270", GINT_TO_POINTER (270), NULL,
+				 "_0",   GINT_TO_POINTER (0),   NULL,
+				 "_90",  GINT_TO_POINTER (90),  NULL,
+				 "_180", GINT_TO_POINTER (180), NULL,
+				 "_270", GINT_TO_POINTER (270), NULL,
 
 				 NULL);
 
@@ -2948,7 +2948,7 @@ save_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  toggle = gtk_check_button_new_with_label (_("PostScript Level 2"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_PostScript Level 2"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->level);
   gtk_widget_show (toggle);
@@ -2957,7 +2957,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &vals->level);
 
-  toggle = gtk_check_button_new_with_label (_("Encapsulated PostScript"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Encapsulated PostScript"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.eps);
   gtk_widget_show (toggle);
@@ -2966,7 +2966,7 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &psvals.eps);
 
-  toggle = gtk_check_button_new_with_label (_("Preview"));
+  toggle = gtk_check_button_new_with_mnemonic (_("P_review"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), psvals.preview);
   gtk_widget_show (toggle);
@@ -2987,7 +2987,7 @@ save_dialog (void)
   spinbutton = gimp_spin_button_new (&adj, psvals.preview_size,
 				     0, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Preview Size:"), 1.0, 0.5,
+			     _("Preview _Size:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   gtk_widget_show (spinbutton);
 

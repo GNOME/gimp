@@ -189,28 +189,28 @@ typedef struct
 static ModeParam modes[num_mode] = 
 {
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("More White (Larger Value)"),
+    N_("More _White (Larger Value)"),
     initialize_white,      propagate_white,       set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("More Black (Smaller Value)"),
+    N_("More Blac_k (Smaller Value)"),
     initialize_black,      propagate_black,       set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("Middle Value to Peaks"),
+    N_("_Middle Value to Peaks"),
     initialize_middle,     propagate_middle,      set_middle_to_peak },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("Foreground to Peaks"),
+    N_("_Foreground to Peaks"),
     initialize_middle,     propagate_middle,      set_foreground_to_peak },
   { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("Only Foreground"),
+    N_("O_nly Foreground"),
     initialize_foreground, propagate_a_color,     set_value },
   { VP_RGB | VP_WITH_ALPHA | VP_WO_ALPHA,
-    N_("Only Background"),
+    N_("Only B_ackground"),
     initialize_background, propagate_a_color,     set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
-    N_("More Opaque"),
+    N_("Mor_e Opaque"),
     NULL,                  propagate_opaque,      set_value },
   { VP_RGB | VP_GRAY | VP_WITH_ALPHA,
-    N_("More Transparent"),
+    N_("More T_ransparent"),
     NULL,                  propagate_transparent, set_value },
 };
 
@@ -1062,8 +1062,9 @@ vpropagate_dialog (GimpImageBaseType image_type)
     
   for (index = 0; index < num_mode; index++)
     {
-      button = gtk_radio_button_new_with_label (group,
-						gettext (modes[index].name));
+      button = 
+	gtk_radio_button_new_with_mnemonic (group,
+					    gettext (modes[index].name));
       group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (toggle_vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -1093,7 +1094,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Lower Threshold:"), SCALE_WIDTH, 4,
+			      _("Lower T_hreshold:"), SCALE_WIDTH, 4,
 			      vpvals.lower_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1102,7 +1103,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     &vpvals.lower_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Upper Threshold:"), SCALE_WIDTH, 4,
+			      _("_Upper Threshold:"), SCALE_WIDTH, 4,
 			      vpvals.upper_limit, 0, 255, 1, 8, 0,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1111,7 +1112,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
                     &vpvals.upper_limit);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Propagating Rate:"), SCALE_WIDTH, 4,
+			      _("_Propagating Rate:"), SCALE_WIDTH, 4,
 			      vpvals.propagating_rate, 0, 1, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1123,16 +1124,16 @@ vpropagate_dialog (GimpImageBaseType image_type)
   gtk_table_attach (GTK_TABLE (table), sep, 0, 3, 3, 4, GTK_FILL, 0, 0, 0);
   gtk_widget_show (sep);
 
-  gtk_table_add_toggle (table, _("To Left"), 0, 1, 5,
+  gtk_table_add_toggle (table, _("To L_eft"), 0, 1, 5,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Right2Left]);
-  gtk_table_add_toggle (table, _("To Right"), 2, 3, 5,
+  gtk_table_add_toggle (table, _("To _Right"), 2, 3, 5,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Left2Right]);
-  gtk_table_add_toggle (table, _("To Top"), 1, 2, 4,
+  gtk_table_add_toggle (table, _("To _Top"), 1, 2, 4,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Bottom2Top]);
-  gtk_table_add_toggle (table, _("To Bottom"), 1, 2, 6,
+  gtk_table_add_toggle (table, _("To _Bottom"), 1, 2, 6,
 			G_CALLBACK (gimp_toggle_button_update),
 			&direction_mask_vec[Top2Bottom]);
   if ((image_type == GIMP_RGBA_IMAGE) | (image_type == GIMP_GRAYA_IMAGE))
@@ -1145,7 +1146,7 @@ vpropagate_dialog (GimpImageBaseType image_type)
 	GtkWidget *toggle;
 	
 	toggle =
-	  gtk_table_add_toggle (table, _("Propagating Alpha Channel"),
+	  gtk_table_add_toggle (table, _("Propagating _Alpha Channel"),
 				0, 3, 8,
 				G_CALLBACK (gimp_toggle_button_update),
 				&propagate_alpha);
@@ -1199,7 +1200,7 @@ gtk_table_add_toggle (GtkWidget *table,
 {
   GtkWidget *toggle;
   
-  toggle = gtk_check_button_new_with_label(name);
+  toggle = gtk_check_button_new_with_mnemonic(name);
   gtk_table_attach (GTK_TABLE (table), toggle, x1, x2, y, y+1,
 		    GTK_FILL|GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (toggle);

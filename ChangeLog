@@ -1,3 +1,13 @@
+2003-01-19  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/vpropagate.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/csource.c: added mnemonics to dialogs.
+
 2003-01-19  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: just a minor string change.

@@ -119,7 +119,7 @@ static gint   save_image  (gchar        *filename,
 			   GimpDrawable *drawable);
 static gint   save_dialog (gint32        image_ID);
 
-static gint   color_comp               (guchar    *buffer,
+static gboolean color_comp               (guchar    *buffer,
 					guchar    *buf2);
 static void   save_ok_callback         (GtkWidget *widget,
 					gpointer   data);
@@ -423,7 +423,7 @@ save_dialog (image_ID)
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
-  toggle = gtk_check_button_new_with_label (_("Generate Full HTML Document"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Generate Full HTML Document"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.fulldoc);
   gtk_widget_show (toggle);
@@ -452,7 +452,7 @@ save_dialog (image_ID)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  toggle = gtk_check_button_new_with_label (_("Use Cellspan"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use Cellspan"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 0, 1, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.spantags);
   gtk_widget_show (toggle);
@@ -467,7 +467,7 @@ save_dialog (image_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.spantags);
 
-  toggle = gtk_check_button_new_with_label (_("Compress TD tags"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Co_mpress TD tags"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 1, 2, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.tdcomp);
   gtk_widget_show (toggle);
@@ -483,7 +483,7 @@ save_dialog (image_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &gtmvals.tdcomp);
 
-  toggle = gtk_check_button_new_with_label (_("Caption"));
+  toggle = gtk_check_button_new_with_mnemonic (_("C_aption"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), gtmvals.caption);
   gtk_widget_show (toggle);
@@ -517,7 +517,7 @@ save_dialog (image_ID)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Cell Content:"), 1.0, 0.5,
+			     _("C_ell Content:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   gtk_widget_show (entry);
 
@@ -544,7 +544,7 @@ save_dialog (image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.border,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Border:"), 1.0, 0.5,
+			     _("_Border:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -559,7 +559,7 @@ save_dialog (image_ID)
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Width:"), 1.0, 0.5,
+			     _("_Width:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
   gimp_help_set_help_data (entry,
@@ -575,7 +575,7 @@ save_dialog (image_ID)
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Height:"), 1.0, 0.5,
+			     _("_Height:"), 1.0, 0.5,
 			     entry, 1, TRUE);
 
   gimp_help_set_help_data (entry,
@@ -590,7 +590,7 @@ save_dialog (image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Cell-Padding:"), 1.0, 0.5,
+			     _("Cell-_Padding:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -603,7 +603,7 @@ save_dialog (image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Cell-Spacing:"), 1.0, 0.5,
+			     _("Cell-_Spacing:"), 1.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -624,14 +624,11 @@ save_dialog (image_ID)
   return bint.run;
 }
 
-static gint
+static gboolean
 color_comp (guchar *buffer,
 	    guchar *buf2)
 {
-  if (buffer[0] == buf2[0] && buffer[1] == buf2[1] && buffer[2] == buf2[2])
-    return 1;
-  else
-    return 0;
+  return buffer[0] == buf2[0] && buffer[1] == buf2[1] && buffer[2] == buf2[2];
 }  
 
 /*  Save interface functions  */

@@ -393,7 +393,8 @@ shoot_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
-  button = gtk_radio_button_new_with_label (radio_group, _("Single Window"));
+  button = gtk_radio_button_new_with_mnemonic (radio_group, 
+					       _("_Single Window"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));  
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), ! shootvals.root);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -410,7 +411,7 @@ shoot_dialog (void)
   hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   decor_button =
-    gtk_check_button_new_with_label (_("With Decorations"));
+    gtk_check_button_new_with_mnemonic (_("With _Decorations"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (decor_button), 
 				shootvals.decor);
   gtk_box_pack_end (GTK_BOX (hbox), decor_button, FALSE, FALSE, 0);
@@ -429,7 +430,8 @@ shoot_dialog (void)
   gtk_widget_show (sep);
 
   /*  root window  */
-  button = gtk_radio_button_new_with_label (radio_group, _("Whole Screen"));
+  button = gtk_radio_button_new_with_mnemonic (radio_group,
+					       _("_Whole Screen"));
   radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));  
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.root);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -448,7 +450,7 @@ shoot_dialog (void)
   /*  with delay  */
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("after"));
+  label = gtk_label_new_with_mnemonic (_("_after"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
  

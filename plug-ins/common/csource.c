@@ -680,7 +680,7 @@ run_save_dialog	(Config *config)
    */
   prefixed_name = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Prefixed Name:"), 1.0, 0.5,
+			     _("_Prefixed Name:"), 1.0, 0.5,
 			     prefixed_name, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
@@ -689,14 +689,14 @@ run_save_dialog	(Config *config)
    */
   centry = gtk_entry_new ();
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Comment:"), 1.0, 0.5,
+			     _("Co_mment:"), 1.0, 0.5,
 			     centry, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (centry),
 		      config->comment ? config->comment : "");
 
   /* Use Comment
    */
-  toggle = gtk_check_button_new_with_label (_("Save Comment to File"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Save Comment to File"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_comment);
@@ -708,7 +708,7 @@ run_save_dialog	(Config *config)
 
   /* GLib types
    */
-  toggle = gtk_check_button_new_with_label (_("Use GLib Types (guint8*)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Use GLib Types (guint8*)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->glib_types);
@@ -720,7 +720,7 @@ run_save_dialog	(Config *config)
 
   /* Use Macros
    */
-  toggle = gtk_check_button_new_with_label (_("Use Macros instead of Struct"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Us_e Macros instead of Struct"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_macros);
@@ -732,7 +732,7 @@ run_save_dialog	(Config *config)
 
   /* Use RLE
    */
-  toggle = gtk_check_button_new_with_label (_("Use 1 Byte Run-Length-Encoding"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Use _1 Byte Run-Length-Encoding"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->use_rle);
@@ -744,7 +744,7 @@ run_save_dialog	(Config *config)
 
   /* Alpha
    */
-  toggle = gtk_check_button_new_with_label (_("Save Alpha Channel (RGBA/RGB)"));
+  toggle = gtk_check_button_new_with_mnemonic (_("Sa_ve Alpha Channel (RGBA/RGB)"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				config->alpha);
@@ -762,7 +762,7 @@ run_save_dialog	(Config *config)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Opacity:"), 100, 0,
+			      _("Op_acity:"), 100, 0,
 			      config->opacity, 0, 100, 1, 10, 1,
 			      TRUE, 0, 0,
 			      FALSE, FALSE);
