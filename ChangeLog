@@ -1,3 +1,7 @@
+Wed Jul 14 11:42:49 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/ink.c: we were leaking a blob at each button_press
+
 Tue Jul 13 22:48:37 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/sel2path/sel2path.c

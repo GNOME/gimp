@@ -876,6 +876,10 @@ ink_button_release (Tool           *tool,
   /*  Set tool state to inactive -- no longer painting */
   tool->state = INACTIVE;
 
+  /*  free the last blob  */
+  g_free (ink_tool->last_blob);
+  ink_tool->last_blob = NULL;
+
   ink_finish (ink_tool, gimage_active_drawable (gdisp->gimage), tool->ID);
   gdisplays_flush ();
 }
@@ -1573,7 +1577,7 @@ tools_free_ink (Tool *tool)
   if (ink_tool->core)
     draw_core_free (ink_tool->core);
 
-  /*  Free the last blob, if any */
+  /*  Free the last blob, if any  */
   if (ink_tool->last_blob)
     g_free (ink_tool->last_blob);
   
