@@ -4,6 +4,9 @@
 ; Make-Brush - a script for the script-fu program
 ; by Seth Burgess 1997 <sjburges@ou.edu>
 ;
+; 18-Dec-2000 fixed to work with the new convention (not inverted) of
+;             gbr saver (jtl@gimp.org)
+;
 ; This program is free software; you can redistribute it and/or modify
 ; it under the terms of the GNU General Public License as published by
 ; the Free Software Foundation; either version 2 of the License, or
@@ -52,9 +55,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(0 0 0))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(255 255 255))
+    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-palette-set-background '(0 0 0))
     (gimp-rect-select img 0 0 width height REPLACE FALSE 0)
     
     (gimp-edit-fill    drawable BG-IMAGE-FILL)
@@ -127,9 +130,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(0 0 0))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(255 255 255))
+    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-palette-set-background '(0 0 0))
     (cond ((< 0 feathering)
            (gimp-rect-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE feathering))
           ((>= 0 feathering)
@@ -201,9 +204,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(0 0 0))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(255 255 255))
+    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-palette-set-background '(0 0 0))
     (gimp-ellipse-select img 0 0 width height REPLACE TRUE FALSE 0)
     
     (gimp-edit-fill    drawable BG-IMAGE-FILL)
@@ -278,9 +281,9 @@
     (gimp-image-add-layer img drawable 0)
 
 ; Actual code starts...
-    (gimp-palette-set-background '(0 0 0))
-    (gimp-drawable-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(255 255 255))
+    (gimp-drawable-fill drawable BG-IMAGE-FILL)
+    (gimp-palette-set-background '(0 0 0))
     (cond ((> feathering 0)   ; keep from taking out gimp with stupid entry. 
         (gimp-ellipse-select img (/ feathering 2) (/ feathering 2) width height REPLACE TRUE TRUE feathering))
           ((<= feathering 0)
