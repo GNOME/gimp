@@ -279,7 +279,6 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   PixelRegion          srcPR, destPR;
   GimpPattern         *pattern = NULL;
   gdouble              opacity;
-  gdouble              scale;
   gint                 offset_x;
   gint                 offset_y;
 
@@ -307,13 +306,8 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
       has_alpha = gimp_drawable_has_alpha (clone->src_drawable);
     }
 
-  if (pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
 
   switch (options->clone_type)
@@ -431,13 +425,11 @@ gimp_clone_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
-  /*  paste the newly painted canvas to the gimage which is being worked on  */
   gimp_brush_core_paste_canvas (GIMP_BRUSH_CORE (paint_core), drawable,
 				MIN (opacity, GIMP_OPACITY_OPAQUE),
 				gimp_context_get_opacity (context),
 				gimp_context_get_paint_mode (context),
 				gimp_paint_options_get_brush_mode (paint_options),
-				scale,
                                 GIMP_PAINT_CONSTANT);
 }
 

@@ -1,5 +1,27 @@
 2004-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.[ch]: removed "gdouble scale" parameter
+	and added "GimpPaintOptions" in GimpPaintCore::get_paint_area().
+	Check if virtual functions exist befoe calling them.
+
+	* app/paint/gimpbrushcore.[ch]: added "gdouble scale" to GimpBrushCore
+	and "gboolean use_scale" to GimpBrushCoreClass (defaults to TRUE).
+	Set scale from paint_options in GimpPaintCore::get_paint_area().
+	Removed "scale" parameter from gimp_brush_core_paste_canvas()
+	and _replace_canvas().
+
+	* app/paint/gimpsmudge.c (gimp_smudge_class_init): set use_scale
+	to FALSE.
+
+	* app/paint/gimpclone.c
+	* app/paint/gimpconvolve.c
+	* app/paint/gimpdodgeburn.c
+	* app/paint/gimperaser.c
+	* app/paint/gimppaintbrush.c: removed all scale calculations and
+	simply pass paint_options to GimpPaintCore::get_paint_area().
+
+2004-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppainttool.c (gimp_paint_tool_button_press): check
 	if the GimpPaintCore really is a GimpBrushCore before catsting and
 	fiddling with internaly.

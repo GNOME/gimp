@@ -124,8 +124,8 @@ struct _GimpPaintCoreClass
                                 GimpPaintOptions   *paint_options);
 
   TempBuf * (* get_paint_area) (GimpPaintCore      *core,
-				GimpDrawable       *drawable,
-				gdouble             scale);
+                                GimpDrawable       *drawable,
+                                GimpPaintOptions   *paint_options);
 };
 
 
@@ -157,7 +157,7 @@ void      gimp_paint_core_interpolate (GimpPaintCore       *core,
 
 TempBuf * gimp_paint_core_get_paint_area (GimpPaintCore            *core,
                                           GimpDrawable             *drawable,
-                                          gdouble                   scale);
+                                          GimpPaintOptions         *options);
 TempBuf * gimp_paint_core_get_orig_image (GimpPaintCore            *core,
                                           GimpDrawable             *drawable,
                                           gint                      x1,

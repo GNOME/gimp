@@ -193,7 +193,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
                         GimpPaintOptions *paint_options)
 {
   GimpDodgeBurn        *dodgeburn        = GIMP_DODGE_BURN (paint_core);
-  GimpDodgeBurnOptions *options          = GIMP_DODGE_BURN_OPTIONS (paint_options);
   GimpContext          *context          = GIMP_CONTEXT (paint_options);
   GimpPressureOptions  *pressure_options = paint_options->pressure_options;
   GimpImage            *gimage;
@@ -202,7 +201,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   PixelRegion           srcPR, destPR, tempPR;
   guchar               *temp_data;
   gdouble               opacity;
-  gdouble               scale;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -214,13 +212,8 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  if (pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
 
   /* Constant painting --get a copy of the orig drawable (with no
@@ -291,7 +284,6 @@ gimp_dodge_burn_motion (GimpPaintCore    *paint_core,
 			          MIN (opacity, GIMP_OPACITY_OPAQUE),
 		                  gimp_context_get_opacity (context),
 			          gimp_paint_options_get_brush_mode (paint_options),
-			          scale,
                                   GIMP_PAINT_CONSTANT);
 
   g_free (temp_data);

@@ -198,7 +198,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   PixelRegion          srcPR;
   PixelRegion          destPR;
   gdouble              opacity;
-  gdouble              scale;
   gdouble              rate;
   ConvolveClipType     area_hclip = CONVOLVE_NOT_CLIPPED;
   ConvolveClipType     area_vclip = CONVOLVE_NOT_CLIPPED;
@@ -220,12 +219,8 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  if (pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
 
   /*  configure the source pixel region  */
@@ -435,7 +430,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                                   MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
-                                  scale,
                                   GIMP_PAINT_INCREMENTAL);
 }
 

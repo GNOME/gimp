@@ -36,6 +36,7 @@
 
 #include "gimpbrushcore.h"
 #include "gimpbrushcore-kernels.h"
+#include "gimppaintoptions.h"
 
 #include "gimp-intl.h"
 
@@ -64,7 +65,7 @@ static void     gimp_brush_core_interpolate       (GimpPaintCore      *core,
 
 static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore      *paint_core,
                                                    GimpDrawable       *drawable,
-                                                   gdouble             scale);
+                                                   GimpPaintOptions   *paint_options);
 
 static void   gimp_brush_core_calc_brush_size     (GimpBrushCore    *core,
                                                    MaskBuf          *mask,
@@ -158,6 +159,8 @@ gimp_brush_core_class_init (GimpBrushCoreClass *klass)
   paint_core_class->pre_paint      = gimp_brush_core_pre_paint;
   paint_core_class->interpolate    = gimp_brush_core_interpolate;
   paint_core_class->get_paint_area = gimp_brush_core_get_paint_area;
+
+  klass->use_scale                 = TRUE;
 }
 
 static void
@@ -166,6 +169,8 @@ gimp_brush_core_init (GimpBrushCore *core)
   gint i, j;
 
   core->brush                    = NULL;
+  core->spacing                  = 1.0;
+  core->scale                    = 1.0;
 
   core->pressure_brush           = NULL;
 
@@ -622,9 +627,9 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 }
 
 static TempBuf *
-gimp_brush_core_get_paint_area (GimpPaintCore *paint_core,
-				GimpDrawable  *drawable,
-				gdouble        scale)
+gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
+				GimpDrawable     *drawable,
+                                GimpPaintOptions *paint_options)
 {
   GimpBrushCore *core = GIMP_BRUSH_CORE (paint_core);
   gint           x, y;
@@ -635,9 +640,19 @@ gimp_brush_core_get_paint_area (GimpPaintCore *paint_core,
 
   bytes = gimp_drawable_bytes_with_alpha (drawable);
 
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
+    {
+      GimpPressureOptions *pressure_options = paint_options->pressure_options;
+
+      if (pressure_options->size)
+        core->scale = paint_core->cur_coords.pressure;
+      else
+        core->scale = 1.0;
+    }
+
   gimp_brush_core_calc_brush_size (core,
                                    core->brush->mask,
-                                   scale,
+                                   core->scale,
                                    &bwidth, &bheight);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
@@ -670,12 +685,11 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
 			      gdouble		        image_opacity,
 			      GimpLayerModeEffects      paint_mode,
 			      GimpBrushApplicationMode  brush_hardness,
-			      gdouble                   brush_scale,
 			      GimpPaintApplicationMode  mode)
 {
   MaskBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         brush_hardness,
-                                                        brush_scale);
+                                                        core->scale);
 
   if (brush_mask)
     gimp_paint_core_paste (GIMP_PAINT_CORE (core), brush_mask, drawable,
@@ -694,12 +708,11 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
 				gdouble                   brush_opacity,
 				gdouble                   image_opacity,
 				GimpBrushApplicationMode  brush_hardness,
-				gdouble                   brush_scale,
 				GimpPaintApplicationMode  mode)
 {
   MaskBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         brush_hardness,
-                                                        brush_scale);
+                                                        core->scale);
 
   if (brush_mask)
     gimp_paint_core_replace (GIMP_PAINT_CORE (core), brush_mask, drawable,

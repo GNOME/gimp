@@ -141,7 +141,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpRGB                   gradient_color;
   TempBuf                  *area;
   guchar                    col[MAX_CHANNELS];
-  gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
@@ -153,13 +152,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   paint_appl_mode = paint_options->application_mode;
 
-  if (pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
 
   if (gimp_paint_options_get_gradient_color (paint_options, gimage,
@@ -186,7 +180,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
       /* if it's a pixmap, do pixmap stuff */
       gimp_brush_core_color_area_with_pixmap (brush_core, gimage, drawable,
                                               area,
-                                              scale,
+                                              brush_core->scale,
                                               gimp_paint_options_get_brush_mode (paint_options));
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
@@ -208,6 +202,5 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
                                 gimp_context_get_opacity (context),
                                 gimp_context_get_paint_mode (context),
                                 gimp_paint_options_get_brush_mode (paint_options),
-                                scale,
                                 paint_appl_mode);
 }

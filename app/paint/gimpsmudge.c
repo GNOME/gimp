@@ -50,7 +50,8 @@ static void       gimp_smudge_paint      (GimpPaintCore       *paint_core,
                                           GimpPaintOptions    *paint_options,
                                           GimpPaintCoreState   paint_state);
 static gboolean   gimp_smudge_start      (GimpPaintCore       *paint_core,
-                                          GimpDrawable        *drawable);
+                                          GimpDrawable        *drawable,
+                                          GimpPaintOptions    *paint_options);
 static void       gimp_smudge_motion     (GimpPaintCore       *paint_core,
                                           GimpDrawable        *drawable,
                                           GimpPaintOptions    *paint_options);
@@ -108,12 +109,15 @@ gimp_smudge_class_init (GimpSmudgeClass *klass)
 {
   GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
+  GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize  = gimp_smudge_finalize;
+  object_class->finalize      = gimp_smudge_finalize;
 
-  paint_core_class->paint = gimp_smudge_paint;
+  paint_core_class->paint     = gimp_smudge_paint;
+
+  brush_core_class->use_scale = FALSE;
 }
 
 static void
@@ -150,7 +154,8 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
     case MOTION_PAINT:
       /* initialization fails if the user starts outside the drawable */
       if (! smudge->initialized)
-	smudge->initialized = gimp_smudge_start (paint_core, drawable);
+	smudge->initialized = gimp_smudge_start (paint_core, drawable,
+                                                 paint_options);
 
       if (smudge->initialized)
 	gimp_smudge_motion (paint_core, drawable, paint_options);
@@ -173,8 +178,9 @@ gimp_smudge_paint (GimpPaintCore      *paint_core,
 }
 
 static gboolean
-gimp_smudge_start (GimpPaintCore *paint_core,
-                   GimpDrawable  *drawable)
+gimp_smudge_start (GimpPaintCore    *paint_core,
+                   GimpDrawable     *drawable,
+                   GimpPaintOptions *paint_options)
 {
   GimpSmudge  *smudge = GIMP_SMUDGE (paint_core);
   GimpImage   *gimage;
@@ -187,7 +193,8 @@ gimp_smudge_start (GimpPaintCore *paint_core,
   if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return FALSE;
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
@@ -276,7 +283,8 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
   gimp_smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
 
   /*  Get the paint area (Smudge won't scale!)  */
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, 1.0)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
 
   /* srcPR will be the pixels under the current painthit from the drawable */
@@ -345,7 +353,6 @@ gimp_smudge_motion (GimpPaintCore    *paint_core,
 				  MIN (opacity, GIMP_OPACITY_OPAQUE),
 				  gimp_context_get_opacity (context),
 				  gimp_paint_options_get_brush_mode (paint_options),
-				  1.0,
                                   GIMP_PAINT_INCREMENTAL);
 }
 

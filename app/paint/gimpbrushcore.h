@@ -43,6 +43,7 @@ struct _GimpBrushCore
 
   GimpBrush     *brush;
   gdouble        spacing;
+  gdouble        scale;
 
   /*  brush buffers  */
   MaskBuf       *pressure_brush;
@@ -75,6 +76,8 @@ struct _GimpBrushCore
 struct _GimpBrushCoreClass
 {
   GimpPaintCoreClass  parent_class;
+
+  gboolean            use_scale;
 };
 
 
@@ -86,14 +89,12 @@ void    gimp_brush_core_paste_canvas   (GimpBrushCore            *core,
                                         gdouble                   image_opacity,
                                         GimpLayerModeEffects      paint_mode,
                                         GimpBrushApplicationMode  brush_hardness,
-                                        gdouble                   brush_scale,
                                         GimpPaintApplicationMode  mode);
 void    gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                         GimpDrawable	         *drawable,
                                         gdouble                   brush_opacity,
                                         gdouble                   image_opacity,
                                         GimpBrushApplicationMode  brush_hardness,
-                                        gdouble                   brush_scale,
                                         GimpPaintApplicationMode  mode);
 
 void    gimp_brush_core_color_area_with_pixmap

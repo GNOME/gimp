@@ -138,7 +138,6 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   gdouble              opacity;
   TempBuf             *area;
   guchar               col[MAX_CHANNELS];
-  gdouble              scale;
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -147,16 +146,11 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
   if (opacity == 0.0)
     return;
 
-  gimp_image_get_background (gimage, drawable, context, col);
-
-  if (pressure_options->size)
-    scale = paint_core->cur_coords.pressure;
-  else
-    scale = 1.0;
-
-  /*  Get a region which can be used to paint to  */
-  if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
+  area = gimp_paint_core_get_paint_area (paint_core, drawable, paint_options);
+  if (! area)
     return;
+
+  gimp_image_get_background (gimage, drawable, context, col);
 
   /*  set the alpha channel  */
   col[area->bytes - 1] = OPAQUE_OPACITY;
@@ -174,6 +168,5 @@ gimp_eraser_motion (GimpPaintCore    *paint_core,
 				(options->anti_erase ?
                                  GIMP_ANTI_ERASE_MODE : GIMP_ERASE_MODE),
 				gimp_paint_options_get_brush_mode (paint_options),
-				scale,
 				paint_options->application_mode);
 }

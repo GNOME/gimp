@@ -159,18 +159,26 @@ gimp_paint_core_paint (GimpPaintCore      *core,
                        GimpPaintOptions   *paint_options,
 		       GimpPaintCoreState  paint_state)
 {
+  GimpPaintCoreClass *core_class;
+
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
-  if (GIMP_PAINT_CORE_GET_CLASS (core)->pre_paint (core, drawable,
-                                                   paint_options,
-                                                   paint_state))
+  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
+
+  if (! core_class->pre_paint ||
+      core_class->pre_paint (core, drawable,
+                             paint_options,
+                             paint_state))
     {
-      /* Save coordinates for gimp_paint_core_interpolate() */
-      core->last_paint.x = core->cur_coords.x;
-      core->last_paint.y = core->cur_coords.y;
+      if (paint_state == MOTION_PAINT)
+        {
+          /* Save coordinates for gimp_paint_core_interpolate() */
+          core->last_paint.x = core->cur_coords.x;
+          core->last_paint.y = core->cur_coords.y;
+        }
 
       GIMP_PAINT_CORE_GET_CLASS (core)->paint (core, drawable,
                                                paint_options,
@@ -184,7 +192,8 @@ gimp_paint_core_start (GimpPaintCore    *core,
                        GimpPaintOptions *paint_options,
                        GimpCoords       *coords)
 {
-  GimpItem *item;
+  GimpPaintCoreClass *core_class;
+  GimpItem           *item;
 
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -196,9 +205,10 @@ gimp_paint_core_start (GimpPaintCore    *core,
 
   core->cur_coords = *coords;
 
-  if (! GIMP_PAINT_CORE_GET_CLASS (core)->start (core, drawable,
-                                                 paint_options,
-                                                 coords))
+  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
+
+  if (core_class->start &&
+      ! core_class->start (core, drawable, paint_options, coords))
     {
       return FALSE;
     }
@@ -431,13 +441,19 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 			     GimpDrawable     *drawable,
                              GimpPaintOptions *paint_options)
 {
+  GimpPaintCoreClass *core_class;
+
   g_return_if_fail (GIMP_IS_PAINT_CORE (core));
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options));
 
-  GIMP_PAINT_CORE_GET_CLASS (core)->interpolate (core, drawable,
-                                                 paint_options);
+  core_class = GIMP_PAINT_CORE_GET_CLASS (core);
+
+  if (core_class->interpolate)
+    core_class->interpolate (core, drawable, paint_options);
+  else
+    core_class->paint (core, drawable, paint_options, MOTION_PAINT);
 }
 
 
@@ -446,14 +462,15 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 TempBuf *
 gimp_paint_core_get_paint_area (GimpPaintCore *core,
 				GimpDrawable  *drawable,
-				gdouble        scale)
+                                GimpPaintOptions *paint_options)
 {
   g_return_val_if_fail (GIMP_IS_PAINT_CORE (core), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_PAINT_OPTIONS (paint_options), NULL);
 
   return GIMP_PAINT_CORE_GET_CLASS (core)->get_paint_area (core, drawable,
-                                                           scale);
+                                                           paint_options);
 }
 
 TempBuf *
