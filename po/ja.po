@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 1999-09-09 21:28-0700\n"
+"POT-Creation-Date: 1999-09-09 21:03+0900\n"
 "PO-Revision-Date: 1999-09-09 14:00+0900\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -37,16 +37,16 @@ msgstr "Spencer Kimball と Peter Mattis"
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr "詳しくは http://www.gimp.org/ を見て下さい"
 
-#: app/airbrush.c:132
+#: app/airbrush.c:131
 msgid "Rate:"
 msgstr "割合:"
 
 #. the pressure scale
-#: app/airbrush.c:150 app/convolve.c:154 app/smudge.c:119
+#: app/airbrush.c:149 app/convolve.c:154 app/smudge.c:119
 msgid "Pressure:"
 msgstr "圧力:"
 
-#: app/airbrush.c:212
+#: app/airbrush.c:211
 msgid "killing stray timer, please report to lewing@gimp.org"
 msgstr "偶発タイマーを停止しました, lewing@gimp.org まで報告して下さい."
 
@@ -388,7 +388,7 @@ msgstr "インデックス画像に対しては明るさ-コントラストを操作できません."
 msgid "OK"
 msgstr "了解"
 
-#: app/brightness_contrast.c:225 app/tools.c:566
+#: app/brightness_contrast.c:225 app/tools.c:550
 msgid "Brightness-Contrast"
 msgstr "明るさ-コントラスト"
 
@@ -418,7 +418,7 @@ msgstr "プレビュー"
 #: app/histogram_tool.c:262 app/info_window.c:267 app/lc_dialog.c:196
 #: app/measure.c:179 app/nav_window.c:1092 app/palette.c:2006
 #: app/palette.c:2012 app/palette.c:2833 app/palette_select.c:55
-#: app/pattern_select.c:87 app/tips_dialog.c:146 app/tools.c:923
+#: app/pattern_select.c:87 app/tips_dialog.c:146 app/tools.c:907
 #: libgimp/gimpfileselection.c:356 libgimp/gimpunitmenu.c:518
 msgid "Close"
 msgstr "閉じる"
@@ -566,7 +566,7 @@ msgstr "ファジー度の閾値"
 
 #. The reset push button
 #: app/by_color_select.c:654 app/curves.c:526 app/file_new_dialog.c:397
-#: app/tools.c:922 app/transform_core.c:233
+#: app/tools.c:906 app/transform_core.c:233
 msgid "Reset"
 msgstr "リセット"
 
@@ -799,7 +799,7 @@ msgstr "中間色"
 msgid "Highlights"
 msgstr "ハイライト"
 
-#: app/color_balance.c:302 app/tools.c:551
+#: app/color_balance.c:302 app/tools.c:535
 msgid "Color Balance"
 msgstr "カラーバランス"
 
@@ -847,7 +847,7 @@ msgstr "色を平均を取る"
 msgid "Update Active Color"
 msgstr "有効な色の更新"
 
-#: app/color_picker.c:251 app/tools.c:309
+#: app/color_picker.c:251 app/tools.c:308
 msgid "Color Picker"
 msgstr "スポイト"
 
@@ -1130,7 +1130,7 @@ msgstr "滑らか"
 msgid "Free"
 msgstr "自由曲線"
 
-#: app/curves.c:561 app/tools.c:626
+#: app/curves.c:561 app/tools.c:610
 msgid "Curves"
 msgstr "カーブ"
 
@@ -1620,15 +1620,15 @@ msgstr "/画像/グレースケール"
 msgid "/Image/Indexed"
 msgstr "/画像/インデックス"
 
-#: app/gdisplay.c:1678 app/tools.c:658
+#: app/gdisplay.c:1678 app/tools.c:642
 msgid "/Image/Histogram"
 msgstr "/画像/ヒストグラム"
 
-#: app/gdisplay.c:1681 app/tools.c:613
+#: app/gdisplay.c:1681 app/tools.c:597
 msgid "/Image/Colors/Threshold"
 msgstr "/画像/色/閾値"
 
-#: app/gdisplay.c:1682 app/tools.c:598
+#: app/gdisplay.c:1682 app/tools.c:582
 msgid "/Image/Colors/Posterize"
 msgstr "/画像/色/ポスター化"
 
@@ -1640,23 +1640,23 @@ msgstr "/画像/色/平準化"
 msgid "/Image/Colors/Invert"
 msgstr "/画像/色/反転"
 
-#: app/gdisplay.c:1685 app/tools.c:553
+#: app/gdisplay.c:1685 app/tools.c:537
 msgid "/Image/Colors/Color Balance"
 msgstr "/画像/色/バランス"
 
-#: app/gdisplay.c:1686 app/tools.c:568
+#: app/gdisplay.c:1686 app/tools.c:552
 msgid "/Image/Colors/Brightness-Contrast"
 msgstr "/画像/色/明るさ-コントラスト"
 
-#: app/gdisplay.c:1688 app/tools.c:583
+#: app/gdisplay.c:1688 app/tools.c:567
 msgid "/Image/Colors/Hue-Saturation"
 msgstr "/画像/色/色相-彩度"
 
-#: app/gdisplay.c:1689 app/tools.c:628
+#: app/gdisplay.c:1689 app/tools.c:612
 msgid "/Image/Colors/Curves"
 msgstr "/画像/色/カーブ"
 
-#: app/gdisplay.c:1690 app/tools.c:643
+#: app/gdisplay.c:1690 app/tools.c:627
 msgid "/Image/Colors/Levels"
 msgstr "/画像/色/レベル"
 
@@ -2052,7 +2052,7 @@ msgstr "%s に書き込めません; %s"
 msgid "pixel"
 msgstr "ピクセル"
 
-#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:470
+#: app/gimpunit.c:58 app/measure.c:428 app/measure.c:432 app/paint_core.c:463
 #: libgimp/gimpunit.c:44
 msgid "pixels"
 msgstr "ピクセル"
@@ -2590,7 +2590,7 @@ msgstr "カウント:"
 msgid "Percentile:"
 msgstr "パーセント:"
 
-#: app/histogram_tool.c:296 app/tools.c:656
+#: app/histogram_tool.c:296 app/tools.c:640
 msgid "Histogram"
 msgstr "ヒストグラム"
 
@@ -2634,7 +2634,7 @@ msgstr ""
 msgid "M"
 msgstr ""
 
-#: app/hue_saturation.c:394 app/tools.c:581
+#: app/hue_saturation.c:394 app/tools.c:565
 msgid "Hue-Saturation"
 msgstr "色相-彩度"
 
@@ -3647,7 +3647,7 @@ msgstr "インデックス描画対象に対してレベルは調整できません"
 msgid "Auto Levels"
 msgstr "自動レベル"
 
-#: app/levels.c:366 app/tools.c:641
+#: app/levels.c:366 app/tools.c:625
 msgid "Levels"
 msgstr "レベル"
 
@@ -4388,11 +4388,11 @@ msgstr "移動ツールオプション"
 msgid "%s: Window Navigation"
 msgstr "%s: ウィンドウなび"
 
-#: app/paint_core.c:683
+#: app/paint_core.c:676
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
-#: app/paint_core.c:1805
+#: app/paint_core.c:1763
 msgid "set_undo_tiles: undo_tiles is null"
 msgstr "set_undo_tiles: undo_tiles が null だ"
 
@@ -4861,7 +4861,7 @@ msgstr "引き数種 \"region\" は正常にサポートされていません."
 msgid "Posterize does not operate on indexed drawables."
 msgstr "インデックス画像に対してはポスター化の操作はできません."
 
-#: app/posterize.c:207 app/tools.c:596
+#: app/posterize.c:207 app/tools.c:580
 msgid "Posterize"
 msgstr "ポスター化"
 
@@ -5124,7 +5124,7 @@ msgstr "カーソルの自動更新をしない"
 msgid "Tool Options Settings"
 msgstr "道具オプション設定"
 
-#: app/preferences_dialog.c:1989 app/tools.c:933
+#: app/preferences_dialog.c:1989 app/tools.c:917
 msgid "Tool Options"
 msgstr "道具オプション"
 
@@ -5595,7 +5595,7 @@ msgstr "閾値オプション"
 msgid "Threshold does not operate on indexed drawables."
 msgstr "インデックス描画対象には閾値操作はできません."
 
-#: app/threshold.c:291 app/tools.c:611
+#: app/threshold.c:291 app/tools.c:595
 msgid "Threshold"
 msgstr "閾値"
 
@@ -5770,328 +5770,313 @@ msgstr "不透明度"
 msgid "Pressure"
 msgstr "圧力"
 
-#: app/tools.c:84
+#: app/tools.c:83
 msgid "Rect Select"
 msgstr "矩形選択"
 
-#: app/tools.c:86
+#: app/tools.c:85
 msgid "/Tools/Rect Select"
 msgstr "/道具/矩形選択"
 
-#: app/tools.c:89
+#: app/tools.c:88
 msgid "Select rectangular regions"
 msgstr "矩形領域を選択する"
 
-#: app/tools.c:99
+#: app/tools.c:98
 msgid "Ellipse Select"
 msgstr "楕円選択"
 
-#: app/tools.c:101
+#: app/tools.c:100
 msgid "/Tools/Ellipse Select"
 msgstr "/道具/楕円選択"
 
-#: app/tools.c:104
+#: app/tools.c:103
 msgid "Select elliptical regions"
 msgstr "円形領域を選択する"
 
-#: app/tools.c:114
+#: app/tools.c:113
 msgid "Free Select"
 msgstr "自由選択"
 
-#: app/tools.c:116
+#: app/tools.c:115
 msgid "/Tools/Free Select"
 msgstr "/道具/自由選択"
 
-#: app/tools.c:119
+#: app/tools.c:118
 msgid "Select hand-drawn regions"
 msgstr "手書きで領域選択"
 
-#: app/tools.c:129
+#: app/tools.c:128
 msgid "Fuzzy Select"
 msgstr "ファジー選択"
 
-#: app/tools.c:131
+#: app/tools.c:130
 msgid "/Tools/Fuzzy Select"
 msgstr "/道具/ファジー選択"
 
-#: app/tools.c:134
+#: app/tools.c:133
 msgid "Select contiguous regions"
 msgstr "隣接(色)領域の選択"
 
-#: app/tools.c:144
+#: app/tools.c:143
 msgid "Bezier Select"
 msgstr "ベジエ選択"
 
-#: app/tools.c:146
+#: app/tools.c:145
 msgid "/Tools/Bezier Select"
 msgstr "/道具/ベジエ選択"
 
-#: app/tools.c:149
+#: app/tools.c:148
 msgid "Select regions using Bezier curves"
 msgstr "ベジエ曲線による領域選択"
 
-#: app/tools.c:159
+#: app/tools.c:158
 msgid "Intelligent Scissors"
 msgstr "電脳ばさみ"
 
-#: app/tools.c:161
+#: app/tools.c:160
 msgid "/Tools/Intelligent Scissors"
 msgstr "/道具/電脳ばさみ"
 
-#: app/tools.c:164
+#: app/tools.c:163
 msgid "Select shapes from image"
 msgstr "画像からの形状選択"
 
-#: app/tools.c:174
+#: app/tools.c:173
 msgid "Move"
 msgstr "移動"
 
-#: app/tools.c:176
+#: app/tools.c:175
 msgid "/Tools/Move"
 msgstr "/道具/移動"
 
-#: app/tools.c:179
+#: app/tools.c:178
 msgid "Move layers & selections"
 msgstr "レイヤーまたは選択領域の移動"
 
-#: app/tools.c:189
+#: app/tools.c:188
 msgid "Magnify"
 msgstr "虫めがね"
 
-#: app/tools.c:191
+#: app/tools.c:190
 msgid "/Tools/Magnify"
 msgstr "/道具/虫めがね"
 
-#: app/tools.c:194
+#: app/tools.c:193
 msgid "Zoom in & out"
 msgstr "ズームイン & ズームアウト"
 
-#: app/tools.c:204
+#: app/tools.c:203
 msgid "Crop & Resize"
 msgstr "切抜き & サイズ変更"
 
-#: app/tools.c:206
+#: app/tools.c:205
 msgid "/Tools/Crop & Resize"
 msgstr "/道具/切り抜き & サイズ変更"
 
-#: app/tools.c:209
+#: app/tools.c:208
 msgid "Crop or resize the image"
 msgstr "画像を切り抜いたり大きさを変えたりする"
 
 #. the first radio frame and box, for transform type
-#: app/tools.c:219 app/tools.c:234 app/tools.c:249 app/tools.c:264
+#: app/tools.c:218 app/tools.c:233 app/tools.c:248 app/tools.c:263
 #: app/transform_core.c:242 app/transform_tool.c:224
 msgid "Transform"
 msgstr "変形"
 
-#: app/tools.c:221
+#: app/tools.c:220
 msgid "/Tools/Transform"
 msgstr "/道具/変形"
 
-#: app/tools.c:224
+#: app/tools.c:223
 msgid "Transform the layer or selection"
 msgstr "レイヤーや選択領域を変形する"
 
-#: app/tools.c:279
+#: app/tools.c:278
 msgid "Flip"
 msgstr "反転"
 
-#: app/tools.c:281
+#: app/tools.c:280
 msgid "/Tools/Flip"
 msgstr "/道具/反転"
 
-#: app/tools.c:284
+#: app/tools.c:283
 msgid "Flip the layer or selection"
 msgstr "レイヤーや選択領域を反転させる"
 
-#: app/tools.c:294
+#: app/tools.c:293
 msgid "Text"
 msgstr "文字"
 
-#: app/tools.c:296
+#: app/tools.c:295
 msgid "/Tools/Text"
 msgstr "/道具/文字"
 
-#: app/tools.c:299
+#: app/tools.c:298
 msgid "Add text to the image"
 msgstr "画像に文字を追加"
 
-#: app/tools.c:311
+#: app/tools.c:310
 msgid "/Tools/Color Picker"
 msgstr "/道具/スポイト"
 
-#: app/tools.c:314
+#: app/tools.c:313
 msgid "Pick colors from the image"
 msgstr "画像から色を選び出す"
 
-#: app/tools.c:324
+#: app/tools.c:323
 msgid "Bucket Fill"
 msgstr "塗りつぶし"
 
-#: app/tools.c:326
+#: app/tools.c:325
 msgid "/Tools/Bucket Fill"
 msgstr "/道具/塗りつぶし"
 
-#: app/tools.c:329
+#: app/tools.c:328
 msgid "Fill with a color or pattern"
 msgstr "色やパターンで塗りつぶす"
 
-#: app/tools.c:339
+#: app/tools.c:338
 msgid "Blend"
 msgstr "ブレンド"
 
-#: app/tools.c:341
+#: app/tools.c:340
 msgid "/Tools/Blend"
 msgstr "/道具/ブレンド"
 
-#: app/tools.c:344
+#: app/tools.c:343
 msgid "Fill with a color gradient"
 msgstr "グラデーションを用いて塗りつぶす"
 
-#: app/tools.c:354
+#: app/tools.c:353
 msgid "Pencil"
 msgstr "鉛筆"
 
-#: app/tools.c:356
+#: app/tools.c:355
 msgid "/Tools/Pencil"
 msgstr "/道具/鉛筆"
 
-#: app/tools.c:359
+#: app/tools.c:358
 msgid "Draw sharp pencil strokes"
 msgstr "シャープペンシルで線を引く"
 
-#: app/tools.c:369
+#: app/tools.c:368
 msgid "Paintbrush"
 msgstr "絵筆"
 
-#: app/tools.c:371
+#: app/tools.c:370
 msgid "/Tools/Paintbrush"
 msgstr "/道具/絵筆"
 
-#: app/tools.c:374
+#: app/tools.c:373
 msgid "Paint fuzzy brush strokes"
 msgstr "絵筆で線を引く"
 
-#: app/tools.c:384
+#: app/tools.c:383
 msgid "Eraser"
 msgstr "消しゴム"
 
-#: app/tools.c:386
+#: app/tools.c:385
 msgid "/Tools/Eraser"
 msgstr "/道具/消しゴム"
 
-#: app/tools.c:389
+#: app/tools.c:388
 msgid "Erase to background or transparency"
 msgstr "消しゴムで背景色や透明に戻す"
 
-#: app/tools.c:399
+#: app/tools.c:398
 msgid "Airbrush"
 msgstr "エアブラシ"
 
-#: app/tools.c:401
+#: app/tools.c:400
 msgid "/Tools/Airbrush"
 msgstr "/道具/エアブラシ"
 
-#: app/tools.c:404
+#: app/tools.c:403
 msgid "Airbrush with variable pressure"
 msgstr "圧力調整可能なエアブラシ"
 
-#: app/tools.c:414
+#: app/tools.c:413
 msgid "Clone"
 msgstr "スタンプ"
 
-#: app/tools.c:416
+#: app/tools.c:415
 msgid "/Tools/Clone"
 msgstr "/道具/スタンプ"
 
-#: app/tools.c:419
+#: app/tools.c:418
 msgid "Paint using patterns or image regions"
 msgstr "パターンあるいは画像の一部で塗る"
 
-#: app/tools.c:429
+#: app/tools.c:428
 msgid "Convolve"
 msgstr "色混ぜ"
 
-#: app/tools.c:431
+#: app/tools.c:430
 msgid "/Tools/Convolve"
 msgstr "/道具/色混ぜ"
 
-#: app/tools.c:434
+#: app/tools.c:433
 msgid "Blur or sharpen"
 msgstr "ぼかす/シャープにする"
 
-#: app/tools.c:444
+#: app/tools.c:443
 msgid "Ink"
 msgstr "インク"
 
-#: app/tools.c:446
+#: app/tools.c:445
 msgid "/Tools/Ink"
 msgstr "/道具/インク"
 
-#: app/tools.c:449
+#: app/tools.c:448
 msgid "Draw in ink"
 msgstr "インクで描く"
 
-#: app/tools.c:459 app/tools.c:464
+#: app/tools.c:458 app/tools.c:463
 msgid "Dodge or Burn"
 msgstr "暗室"
 
-#: app/tools.c:461
+#: app/tools.c:460
 msgid "/Tools/DodgeBurn"
 msgstr "/道具/暗室"
 
-#: app/tools.c:474 app/tools.c:479
+#: app/tools.c:473 app/tools.c:478
 msgid "Smudge"
 msgstr "にじみ"
 
-#: app/tools.c:476
+#: app/tools.c:475
 msgid "/Tools/Smudge"
 msgstr "/道具/にじみ"
 
-#: app/tools.c:489
+#: app/tools.c:488
 msgid "Measure"
 msgstr "定規"
 
-#: app/tools.c:491
+#: app/tools.c:490
 msgid "/Tools/Measure"
 msgstr "/道具/定規"
 
-#: app/tools.c:494
+#: app/tools.c:493
 msgid "Measure distances and angles"
 msgstr "距離と角度をはかる"
 
-#: app/tools.c:504
+#: app/tools.c:503
 msgid "Xinput Airbrush"
 msgstr "Xinput エアブラシ"
 
-#: app/tools.c:506
+#: app/tools.c:505
 msgid "/Tools/XinputAirbrush"
 msgstr "/道具/Xinput エアブラシ"
 
-#: app/tools.c:509
+#: app/tools.c:508
 msgid "Natural Airbrush"
 msgstr "自然なエアブラシ"
 
-#: app/tools.c:519
-#, fuzzy
-msgid "Path"
-msgstr "パス"
-
-#: app/tools.c:521
-#, fuzzy
-msgid "/Tools/Path"
-msgstr "/道具/絵筆"
-
-#: app/tools.c:524
-#, fuzzy
-msgid "Manipulate paths"
-msgstr "パス複製"
-
-#: app/tools.c:536
+#: app/tools.c:520
 msgid "By Color Select"
 msgstr "色による選択"
 
-#: app/tools.c:538
+#: app/tools.c:522
 msgid "/Select/By Color..."
 msgstr "/選択/色による選択..."
 
