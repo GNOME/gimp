@@ -370,7 +370,15 @@ gimp_data_factory_view_delete_callback (GtkWidget *widget,
 			   GIMP_OBJECT (delete_data->data)))
     {
       if (delete_data->data->filename)
-	gimp_data_delete_from_disk (delete_data->data);
+        {
+          GError *error = NULL;
+
+          if (! gimp_data_delete_from_disk (delete_data->data, &error))
+            {
+              g_message (error->message);
+              g_clear_error (&error);
+            }
+        }
 
       gimp_container_remove (delete_data->factory->container,
 			     GIMP_OBJECT (delete_data->data));

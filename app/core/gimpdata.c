@@ -37,6 +37,8 @@
 #include "gimpdata.h"
 #include "gimpmarshal.h"
 
+#include "libgimp/gimpintl.h"
+
 
 enum
 {
@@ -243,18 +245,21 @@ gimp_data_real_dirty (GimpData *data)
 }
 
 gboolean
-gimp_data_delete_from_disk (GimpData *data)
+gimp_data_delete_from_disk (GimpData  *data,
+                            GError   **error)
 {
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (data->filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (data->internal)
     return TRUE;
 
   if (unlink (data->filename) == -1)
     {
-      g_message ("%s(): could not unlink() %s: %s",
-		 G_GNUC_FUNCTION, data->filename, g_strerror (errno));
+      g_set_error (error, 0, 0,
+                   _("Could not delete '%s': %s"),
+                   data->filename, g_strerror (errno));
       return FALSE;
     }
 

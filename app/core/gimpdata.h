@@ -58,20 +58,21 @@ struct _GimpDataClass
 
 GType         gimp_data_get_type         (void) G_GNUC_CONST;
 
-gboolean      gimp_data_save             (GimpData    *data);
+gboolean      gimp_data_save             (GimpData     *data);
 
-void          gimp_data_dirty            (GimpData    *data);
-gboolean      gimp_data_delete_from_disk (GimpData    *data);
+void          gimp_data_dirty            (GimpData     *data);
+gboolean      gimp_data_delete_from_disk (GimpData     *data,
+                                          GError      **error);
 
-const gchar * gimp_data_get_extension    (GimpData    *data);
+const gchar * gimp_data_get_extension    (GimpData     *data);
 
-void          gimp_data_set_filename     (GimpData    *data,
-					  const gchar *filename);
-void          gimp_data_create_filename  (GimpData    *data,
-					  const gchar *filename,
-					  const gchar *data_path);
+void          gimp_data_set_filename     (GimpData     *data,
+					  const gchar  *filename);
+void          gimp_data_create_filename  (GimpData     *data,
+					  const gchar  *filename,
+					  const gchar  *data_path);
 
-GimpData    * gimp_data_duplicate        (GimpData    *data);
+GimpData    * gimp_data_duplicate        (GimpData     *data);
 
 
 #endif /* __GIMP_DATA_H__ */
