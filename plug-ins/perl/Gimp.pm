@@ -353,7 +353,7 @@ sub quiet_die {
    $in_top ? exit(1) : die "IGNORE THIS MESSAGE\n";
 }
 
-unless($no_SIG||1) {
+unless($no_SIG) {
    $SIG{__DIE__} = sub {
       unless ($^S || !defined $^S || $in_quit) {
          die_msg $_[0];

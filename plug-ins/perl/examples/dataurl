@@ -1,0 +1,109 @@
+#!/usr/bin/perl
+# pcg@goof.com
+# this is not totally serious...
+
+use Gimp;
+use Gimp::Fu;
+use Gimp::UI;
+use Fcntl;
+
+# Gimp::set_trace(TRACE_ALL);
+
+sub encode_base64 ($;$)
+{
+    my $res = "";
+    my $eol = $_[1];
+    $eol = "\n" unless defined $eol;
+    pos($_[0]) = 0;                          # ensure start at the beginning
+    while ($_[0] =~ /(.{1,45})/gs) {
+        $res .= substr(pack('u', $1), 1);
+        chop($res);
+    }
+    $res =~ tr|` -_|AA-Za-z0-9+/|;               # `# help emacs
+    # fix padding at the end
+    my $padding = (3 - length($_[0]) % 3) % 3;
+    $res =~ s/.{$padding}$/'=' x $padding/e if $padding;
+    # break encoded string into lines of no more than 76 characters each
+    if (length $eol) {
+        $res =~ s/(.{1,76})/$1$eol/g;
+    }
+    $res;
+}
+
+
+register "file_dataurl",
+         "saves the image as many small tiles using data:-urls",
+         "Uses data:-urls to save a html table with embedded image data",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "1999-11-20",
+         "<Save>/DATAURL",
+         "*",
+         [
+          [PF_SPINNER,	"tile_x",	"tile width",	32, [0, 128, 1, 1]],
+          [PF_SPINNER,	"tile_y",	"tile height",	32, [0, 128, 1, 1]],
+         ],
+         sub {
+   my($img,$drawable,$filename,$filename2,$tx,$ty) = @_;
+   my($new_img,$new_drawable);
+   my $max;
+   my $export = Gimp::UI::export_image ($new_img=$img, $new_drawable=$drawable, "DATAURL",
+                                        CAN_HANDLE_INDEXED|CAN_HANDLE_ALPHA);
+   die "export failed" if $export == EXPORT_CANCEL;
+
+   my ($w,$h) = ($new_drawable->width, $new_drawable->height);
+
+   my $tmp = Gimp->temp_name(".gif");
+
+   sysopen FILE,$filename,O_CREAT|O_TRUNC|O_WRONLY or die "Unable to open '$filename' for writing: $!\n";
+
+   print FILE "<html><body>\n";
+
+   init Progress "Saving '$filename' as DATAURL...";
+
+   print FILE "<table width=$w cellspacing=0 cellpadding=0 border=0>";
+   for(my $y=0; $y<$h; $y+=$ty) {
+      my $wy = $h-$y < $ty ? $h-$y : $ty;
+      print FILE "<tr>";
+      for(my $x=0; $x<$w; $x+=$tx) {
+         my $wx = $w-$x < $tx ? $w-$x : $tx;
+
+         my $img = $new_img->channel_ops_duplicate;
+         $img->crop($wx,$wy,$x,$y);
+         ($img->get_layers)[0]->file_gif_save(($tmp)x2, 0, 0, 0, 0);
+         #($img->get_layers)[0]->file_png_save(($tmp)x2, 0, 1, 9);
+         #($img->get_layers)[0]->file_jpeg_save(($tmp)x2, 0.5, 0, 1, 0, "", 0, 1, 0, 0);
+         $img->delete;
+
+         my $data = do {
+            local(*TEMP,$/);
+            open TEMP, "<$tmp" or die "Unable to read temporary image tile $tmp: $!";
+            <TEMP>;
+         };
+         unlink $tmp;
+
+         $url = "data:image/gif;base64,".(encode_base64 $data, "");
+         $max = length($url) if length($url) > $max;
+
+         print FILE "<td><img src=\"", $url, "\">";
+
+         update Progress (($y*$w+$x*$ty)/($w*$h));
+      }
+   }
+
+   print FILE "</table>\n";
+   print FILE "</html>\n";
+   close FILE;
+
+   warn "url size is too large ($max > 1024)\n" if $max > 1024;
+
+   $new_img->delete if $export == EXPORT_EXPORT;
+   ();
+};
+
+Gimp::on_query {
+   Gimp->register_save_handler("file_dataurl_save", "dataurl", "");
+};
+
+exit main;
+

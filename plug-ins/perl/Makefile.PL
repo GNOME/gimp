@@ -35,7 +35,7 @@ if ($ARGV[0] ne "--writemakefile") {
       repdup centerguide stampify goldenmean triangle mirrorsplit
       layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
       logulator miff gimpmagick guide_remove guides_to_selection burst
-      fire povray avi layerfuncs bricks
+      fire povray avi layerfuncs bricks dataurl
    );
 @pdl_pins =
    qw(
