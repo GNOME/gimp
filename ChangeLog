@@ -1,3 +1,12 @@
+2004-09-24  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/core/gimpimage-undo-push.c (undo_pop_fs_to_layer): factored
+	common code out of the UNDO amd REDO cases. Use gimp_drawable_update()
+	instead of gimp_viewable_invalidate_preview() so the projection
+	gets updated correctly. Fixes bug #149558.
+
 2004-09-24  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

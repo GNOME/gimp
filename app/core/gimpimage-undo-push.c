@@ -2527,9 +2527,6 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
 
       /*  clear the selection  */
       gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
-
-      /*  Update the preview for the gimage and underlying drawable  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
       break;
 
     case GIMP_UNDO_MODE_REDO:
@@ -2549,11 +2546,13 @@ undo_pop_fs_to_layer (GimpUndo            *undo,
       /*  update the pointers  */
       fsu->floating_layer->fs.drawable = NULL;
       undo->gimage->floating_sel = NULL;
-
-      /*  Update the fs drawable  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
       break;
     }
+
+  gimp_drawable_update (GIMP_DRAWABLE (fsu->floating_layer),
+                        0, 0,
+                        GIMP_ITEM (fsu->floating_layer)->width,
+                        GIMP_ITEM (fsu->floating_layer)->height);
 
   gimp_image_floating_selection_changed (undo->gimage);
 
