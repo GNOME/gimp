@@ -10,10 +10,12 @@ Overview of Changes in GIMP 2.1.6
 =================================
 
 - Added more drawable previews (Color Exchange, DOG, Deinterlace,
-  Engrave, Oilify, Shift).
+  Engrave, Oilify, Ripple, Shift).
 
 - Added new preview widget that shows a scaled view of the full
-  drawable. Use it for Solid Noise and Plasma.
+  drawable. Use it for Apply Lens, Blinds, Channel Mixer, Destripe,
+  Emboss, Illusion, Map Color, Max RGB, Plasma, Polar, Solid Noise,
+  Supernova, Whirl and Pinch.
 
 - Added "Open as Layer" functionality to the menus.
 
@@ -38,12 +40,14 @@ Overview of Changes in GIMP 2.1.6
 
 - Made tools cancelable with <Escape>.
 
+- Let GimpDialog add a help button to give easier access to the help pages.
+
 
 Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Maurits Rijk, Dave Neary,
    Manish Singh, Robert Oegren, Kevin Cozens, Kevin Turner, Dov Grobgeld,
-   Joao S. O. Bueno
+   Joao S. O. Bueno,  Michael Schumacher, Jonathan Levi, Daniel Egger
 
 
 
