@@ -9,7 +9,7 @@ to have the following packages installed:
 These should be available by ftp from prep.ai.mit.edu or any of the
 fine GNU mirrors.  Beta software can be found at alpha.gnu.org.
 
-If you are accessing gnome via CVS, then you will need to take several
+If you are accessing gimp via CVS, then you will need to take several
 steps to get it to compile.  These are:
 
     cvsroot/gimp# aclocal; automake; autoconf
