@@ -34,24 +34,15 @@
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #ifdef G_OS_WIN32
-#  include <io.h>
-#  ifndef W_OK
-#    define W_OK 2
-#  endif
+#include <libgimpbase/gimpwin32-io.h>
 #endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk-pixbuf/gdk-pixdata.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"

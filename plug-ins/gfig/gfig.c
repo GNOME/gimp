@@ -26,32 +26,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <errno.h>
 
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 
-#include <string.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
-
-#ifdef G_OS_WIN32
-#  include <io.h>
-#  ifndef W_OK
-#    define W_OK 2
-#  endif
-#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk-pixbuf/gdk-pixdata.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
@@ -112,7 +98,7 @@ Dobject *tmp_line;     /* Needed when drawing lines */
 gint      need_to_scale;
 
 
-static gint       load_options            (GFigObj *gfig, 
+static gint       load_options            (GFigObj *gfig,
                                            FILE    *fp);
 /* globals */
 
@@ -209,7 +195,7 @@ run (const gchar      *name,
       pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
-  
+
 
   preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
   preview_height = MAX (pheight, 2);
@@ -253,10 +239,10 @@ run (const gchar      *name,
     }
 
   gimp_image_undo_group_end (gfig_context->image_id);
-  
+
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_displays_flush ();
-  else  
+  else
 #if 0
   if (run_mode == GIMP_RUN_INTERACTIVE)
     gimp_set_data ("plug_in_gfig", &selvals, sizeof (SelectItVals));
@@ -473,14 +459,14 @@ gfig_load (const gchar *filename,
   sscanf (load_buf, "Name: %100s", str_buf);
   gfig_name_decode (load_buf, str_buf);
   gfig->draw_name = g_strdup (load_buf);
-  
+
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   if (strncmp (load_buf, "Version: ", 9) == 0)
     gfig->version = g_ascii_strtod (load_buf + 9, NULL);
-  
+
   get_line (load_buf, MAX_LOAD_LINE, fp, 0);
   sscanf (load_buf, "ObjCount: %d", &load_count);
-  
+
   if (load_options (gfig, fp))
     {
       g_message ("File '%s' corrupt file - Line %d Option section incorrect",
@@ -494,22 +480,22 @@ gfig_load (const gchar *filename,
                  gimp_filename_to_utf8 (filename), line_no);
       return NULL;
     }
-  
 
-  
+
+
   gfig_load_objs (gfig, load_count, fp);
-  
+
   /* Check count ? */
-  
+
   chk_count = gfig_obj_counts (gfig->obj_list);
-  
+
   if (chk_count != load_count)
     {
       g_message ("File '%s' corrupt file - Line %d Object count to small",
                  gimp_filename_to_utf8 (filename), line_no);
       return NULL;
     }
-  
+
   fclose (fp);
 
   if (!gfig_context->current_obj)
@@ -538,7 +524,7 @@ save_options (GString *string)
     {
       g_string_append_printf (string, "GridType: ISO_GRID\n");
     }
-  else 
+  else
     {
       g_string_append_printf (string, "GridType: RECT_GRID\n"); /* default to RECT_GRID */
     }
@@ -550,8 +536,8 @@ save_options (GString *string)
   g_string_append_printf (string, "</OPTIONS>\n");
 }
 
-static void 
-gfig_save_obj_start (Dobject *obj, 
+static void
+gfig_save_obj_start (Dobject *obj,
                      GString *string)
 {
   g_string_append_printf (string, "<%s ", obj->class->name);
@@ -559,8 +545,8 @@ gfig_save_obj_start (Dobject *obj,
   g_string_append_printf (string, ">\n");
 }
 
-static void 
-gfig_save_obj_end (Dobject *obj, 
+static void
+gfig_save_obj_end (Dobject *obj,
                    GString *string)
 {
   g_string_append_printf (string, "</%s>\n",obj->class->name);
@@ -679,7 +665,7 @@ gfig_save_as_string ()
   GString       *string;
 
   string = g_string_new (GFIG_HEADER);
-  
+
   gfig_name_encode (conv_buf, gfig_context->current_obj->draw_name);
   g_string_append_printf (string, "Name: %s\n", conv_buf);
   g_string_append_printf (string, "Version: %s\n",
@@ -723,11 +709,11 @@ gfig_save_as_parasite ()
    * format has stabilized.
    */
 #if 0
-  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE, 
+  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_PERSISTENT | GIMP_PARASITE_UNDOABLE,
                                 datasize, data);
 #endif
 
-  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_UNDOABLE, 
+  parasite = gimp_parasite_new ("gfig", GIMP_PARASITE_UNDOABLE,
                                 string->len, string->str);
 
   g_string_free (string, TRUE);

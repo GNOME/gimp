@@ -1,4 +1,4 @@
- /*
+/*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * This is a plug-in for the GIMP.

@@ -1,3 +1,12 @@
+2004-07-12  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/gfig/gfig-style.c
+	* plug-ins/gfig/gfig.c: some include cleanups. Use
+	libgimpbase/gimpwin32-io.h instead of defining W_OK explicitely.
+	Don't undef GTK_DISABLE_DEPRECATED except for gfig-preview.c.
+
 2004-07-12  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/scripts/round-corners.scm: applied patch from

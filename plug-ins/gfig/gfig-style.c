@@ -2,36 +2,19 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
-
-#ifdef HAVE_UNISTD_H
-#include <unistd.h>
-#endif
 
 #include <string.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
-
-#ifdef G_OS_WIN32
-#  include <io.h>
-#  ifndef W_OK
-#    define W_OK 2
-#  endif
-#endif
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
-#include <gdk-pixbuf/gdk-pixbuf.h>
-#include <gdk-pixbuf/gdk-pixdata.h>
+
 #include "libgimp/stdplugins-intl.h"
 
 #include "gfig.h"
 #include "gfig-style.h"
+
 
 static void gfig_read_parameter_string (gchar **text,
                                         gint    nitems,
