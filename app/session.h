@@ -43,7 +43,7 @@ extern SessionInfo tool_options_session_info;
 extern SessionInfo palette_session_info;
 extern SessionInfo brush_select_session_info;
 extern SessionInfo pattern_select_session_info;
-extern SessionInfo gradient_editor_session_info;
+extern SessionInfo gradient_select_session_info;
 extern SessionInfo device_status_session_info;
 extern SessionInfo error_console_session_info;
 

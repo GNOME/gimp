@@ -80,7 +80,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 245;
+  gfloat total_pcount = 249;
 
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
@@ -356,6 +356,10 @@ internal_procs_init ()
   procedural_db_register (&gradients_set_active_proc); pcount++;
   procedural_db_register (&gradients_sample_uniform_proc); pcount++;
   procedural_db_register (&gradients_sample_custom_proc); pcount++;
+  procedural_db_register (&gradients_popup_proc); pcount++;
+  procedural_db_register (&gradients_close_popup_proc); pcount++;
+  procedural_db_register (&gradients_set_popup_proc); pcount++;
+  procedural_db_register (&gradients_get_gradient_data_proc); pcount++;
 
   app_init_update_status(NULL, "Image procedures",
 			 pcount/total_pcount);

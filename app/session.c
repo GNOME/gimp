@@ -77,7 +77,7 @@ SessionInfo brush_select_session_info =
   { "brush-select",  (GtkItemFactoryCallback)dialogs_brushes_cmd_callback, 150, 180, 0, 0, FALSE };
 SessionInfo pattern_select_session_info = 
   { "pattern-select", (GtkItemFactoryCallback)dialogs_patterns_cmd_callback, 160, 180, 0, 0, FALSE };
-SessionInfo gradient_editor_session_info = 
+SessionInfo gradient_select_session_info = 
   { "gradient-editor", (GtkItemFactoryCallback)dialogs_gradient_editor_cmd_callback, 170, 180, 0, 0, FALSE };
 SessionInfo device_status_session_info = 
   { "device-status", (GtkItemFactoryCallback)dialogs_device_status_cmd_callback, 0, 600, 0, 0, FALSE };

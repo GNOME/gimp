@@ -89,6 +89,7 @@ typedef union
   SFAdjustment  sfa_adjustment;
   SFFont        sfa_font;
   gchar *       sfa_pattern;
+  gchar *       sfa_gradient;
   SFBrush       sfa_brush;
 } SFArgValue;
 
@@ -182,6 +183,12 @@ static void       script_fu_pattern_preview         (gchar    *name,
 						     gint     height,
 						     gint     bytes,
 						     gchar *  mask_data,
+						     gint     closing,
+						     gpointer udata);
+
+static void       script_fu_gradient_preview         (gchar    *name,
+						     gint     width,
+						     gdouble *  mask_data,
 						     gint     closing,
 						     gpointer udata);
 
@@ -616,6 +623,17 @@ script_fu_add_script (LISP a)
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
 
+		case SF_GRADIENT:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: gradient defaults must be string values", NIL);
+		  script->arg_defaults[i].sfa_gradient = g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_gradient =  g_strdup (script->arg_defaults[i].sfa_pattern);
+		  
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "gradient";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		default:
 		  break;
 		}
@@ -767,6 +785,9 @@ script_fu_script_proc (char     *name,
 		  case SF_PATTERN:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
+		  case SF_GRADIENT:
+		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;
 		  case SF_BRUSH:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
@@ -817,6 +838,10 @@ script_fu_script_proc (char     *name,
 		      text = buffer;
 		      break;  
 		    case SF_PATTERN:
+		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+		      text = buffer;
+		      break;
+		    case SF_GRADIENT:
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
 		      break;
@@ -920,6 +945,10 @@ script_fu_free_script (SFScript *script)
 	    case SF_PATTERN:
 	      g_free (script->arg_defaults[i].sfa_pattern);
 	      g_free (script->arg_values[i].sfa_pattern);
+	      break;
+	    case SF_GRADIENT:
+	      g_free (script->arg_defaults[i].sfa_gradient);
+	      g_free (script->arg_values[i].sfa_gradient);
 	      break;
 	    case SF_BRUSH:
 	      g_free (script->arg_defaults[i].sfa_brush.name);
@@ -1185,6 +1214,12 @@ script_fu_interface (SFScript *script)
 							       script_fu_pattern_preview,
 							       &script->arg_values[i].sfa_pattern);
 	  break;
+	case SF_GRADIENT:
+	  script->args_widgets[i] = gimp_gradient_select_widget("Script-fu Pattern Selection",
+								script->arg_values[i].sfa_gradient, 
+								script_fu_gradient_preview,
+								&script->arg_values[i].sfa_gradient);
+	  break;
 	case SF_BRUSH:
 	  script->args_widgets[i] = 
 	    gimp_brush_select_widget("Script-fu brush Selection",
@@ -1314,6 +1349,18 @@ script_fu_pattern_preview(gchar    *name,
   *pname = g_strdup(name);
 }
 
+static void
+script_fu_gradient_preview(gchar    *name,
+			   gint     width,
+			   gdouble *  mask_data,
+			   gint     closing,
+			   gpointer udata)
+{
+  gchar ** pname = (gchar **) udata;
+  g_free(*pname);
+  *pname = g_strdup(name);
+}
+
 static void      
 script_fu_brush_preview(char * name, /* Name */
 			gdouble opacity, /* opacity */
@@ -1404,6 +1451,9 @@ script_fu_cleanup_widgets (SFScript *script)
       case SF_PATTERN:
   	gimp_pattern_select_widget_close_popup(script->args_widgets[i]); 
 	break;
+      case SF_GRADIENT:
+  	gimp_gradient_select_widget_close_popup(script->args_widgets[i]); 
+	break;
       case SF_BRUSH:
   	gimp_brush_select_widget_close_popup(script->args_widgets[i]); 
 	break;
@@ -1473,6 +1523,9 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_PATTERN:
 	length += strlen (script->arg_values[i].sfa_pattern) + 3;
 	break;
+      case SF_GRADIENT:
+	length += strlen (script->arg_values[i].sfa_gradient) + 3;
+	break;
       case SF_BRUSH:
 	length += strlen (script->arg_values[i].sfa_brush.name) + 3;
 	length += 36; /* Maximum size of three ints for opacity, spacing,mode*/
@@ -1541,6 +1594,10 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_PATTERN:
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_pattern);
+	  text = buffer;
+	  break;
+	case SF_GRADIENT:
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_gradient);
 	  text = buffer;
 	  break;
 	case SF_BRUSH:
@@ -1788,6 +1845,9 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
       case SF_PATTERN:
   	gimp_pattern_select_widget_set_popup(script->args_widgets[i],script->arg_defaults[i].sfa_pattern);  
+	break;
+      case SF_GRADIENT:
+  	gimp_gradient_select_widget_set_popup(script->args_widgets[i],script->arg_defaults[i].sfa_gradient);  
 	break;
       case SF_BRUSH:
   	gimp_brush_select_widget_set_popup(script->args_widgets[i],

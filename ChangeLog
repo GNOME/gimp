@@ -1,3 +1,33 @@
+Sat Oct 31 14:57:40 GMT 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/gradient.c
+	* app/gradient.h
+	* app/internal_procs.c
+	* app/plug_in.c
+	* app/session.c
+	* app/session.h
+	* libgimp/Makefile.am
+	* libgimp/gimpmenu.h
+	* libgimp/app/gimprc.c
+	* libgimp/libgimpmenu.c
+	* plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-scripts.c
+
+	New file:-
+
+	* libgimp/gimpgradientmenu.c
+
+	New gradient selector widget (smaller than the editor). This can now
+	be controlled via the PDB. 
+
+	New widget which gives easy way to do gradient selections. This
+	new widget is used by script-fu (see the test->sphere script).
+
+	gradient.c needs to be split up (source is almost already split
+	I will complete this RSN).
+	
 Sat Oct 31 01:37:23 CET 1998 Marc Lehmann <pcg@goof.com>
 
         * configure.in: make perl use the GLIB_CFLAGS/LIBS vars properly.

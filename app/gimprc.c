@@ -254,7 +254,7 @@ static SessionInfo *session_infos[] =
   &palette_session_info,
   &brush_select_session_info,
   &pattern_select_session_info,
-  &gradient_editor_session_info,
+  &gradient_select_session_info,
   &device_status_session_info,
   &error_console_session_info
 };

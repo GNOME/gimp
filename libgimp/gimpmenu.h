@@ -54,6 +54,13 @@ typedef void (*GRunPatternCallback) (gchar *, /* Name */
 				     gint,    /* dialog closing */
 				     gpointer /* user data */);
 
+/* Popup the gradient dialog */
+typedef void (*GRunGradientCallback) (gchar *, /* Name */
+				      gint,    /* Width */
+				      gdouble *, /* grad data */
+				      gint,    /* dialog closing */
+				      gpointer /* user data */);
+
 GtkWidget* gimp_image_menu_new    (GimpConstraintFunc constraint,
 				   GimpMenuCallback   callback,
 				   gpointer           data,
@@ -134,6 +141,30 @@ gchar *gimp_pattern_get_pattern_data (gchar *pname,
 gint gimp_pattern_set_popup(void * popup_pnt, gchar * pname);
 
 gint gimp_pattern_close_popup(void * popup_pnt);
+
+void * gimp_interactive_selection_gradient (gchar *dialogtitle,
+					    gchar *gradient_name,
+					    gint sample_sz,
+					    GRunGradientCallback callback,
+					    gpointer udata);
+
+GtkWidget * gimp_gradient_select_widget(gchar * gname,
+					gchar * igradient, 
+					GRunGradientCallback cback,
+					gpointer);
+
+gint gimp_gradient_select_widget_close_popup(GtkWidget *w);
+
+gint gimp_gradient_select_widget_set_popup(GtkWidget *w,gchar *pname);
+
+gchar *gimp_gradient_get_gradient_data (gchar *pname,
+					gint  *width,
+					gint sample_sz,
+					gdouble **mask_data);
+
+gint gimp_gradient_set_popup(void * popup_pnt, gchar * pname);
+
+gint gimp_gradient_close_popup(void * popup_pnt);
 
 #ifdef __cplusplus
 }

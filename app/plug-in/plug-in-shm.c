@@ -52,6 +52,7 @@
 #include "general.h"
 #include "gimage.h"
 #include "gimprc.h"
+#include "gradient.h"
 #include "interface.h"
 #include "menus.h"
 #include "pattern_select.h"   /* Needed for closing pattern dialogs */
@@ -1066,6 +1067,7 @@ plug_in_close (PlugIn *plug_in,
       /* Close any dialogs that this plugin might have opened */
       brushes_check_dialogs();
       patterns_check_dialogs();
+      gradients_check_dialogs();
 
       open_plug_ins = g_slist_remove (open_plug_ins, plug_in);
     }

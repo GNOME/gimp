@@ -55,11 +55,25 @@ struct _GPatternData {
 
 typedef struct _GPatternData GPatternData;
 
+/* Copy data from temp_PDB call */
+struct _GGradientData {
+  gint busy;
+  gchar *gname;
+  gint width;
+  gdouble *gradient_data;
+  GRunGradientCallback callback;
+  gint closing;
+  gpointer udata;
+};
+
+typedef struct _GGradientData GGradientData;
+
 static void    gimp_menu_callback    (GtkWidget        *w,
 				      gint32           *id);
 static void    do_brush_callback     (GBrushData       *bdata);
 static gint    idle_test_brush       (GBrushData       *bdata);
 static gint    idle_test_pattern     (GPatternData     *pdata);
+static gint    idle_test_gradient    (GGradientData    *gdata);
 static void    temp_brush_invoker    (char             *name,
 				      int               nparams,
 				      GParam           *param,
@@ -76,8 +90,10 @@ void gimp_run_temp (void);
 
 static GHashTable *gbrush_ht = NULL;
 static GHashTable *gpattern_ht = NULL;
+static GHashTable *ggradient_ht = NULL;
 static GBrushData *active_brush_pdb = NULL;
 static GPatternData *active_pattern_pdb = NULL;
+static GGradientData *active_gradient_pdb = NULL;
 
 
 GtkWidget*
@@ -487,6 +503,30 @@ do_pattern_callback(GPatternData * pdata)
   pdata->pname = pdata->pattern_mask_data = 0;
 }
 
+static void 
+do_gradient_callback(GGradientData * gdata)
+{
+  if(!gdata->busy)
+    return;
+
+  if(gdata->callback)
+    gdata->callback(gdata->gname,
+		    gdata->width,
+		    gdata->gradient_data,
+		    gdata->closing,
+		    gdata->udata);
+
+  if(gdata->gname)
+    g_free(gdata->gname);  
+  
+  if(gdata->gradient_data)
+    g_free(gdata->gradient_data); 
+
+  gdata->busy = 0;
+  gdata->gname = NULL;
+  gdata->gradient_data = NULL;
+}
+
 static gint
 idle_test_brush (GBrushData * bdata)
 {
@@ -499,6 +539,13 @@ static gint
 idle_test_pattern (GPatternData * pdata)
 {
   do_pattern_callback(pdata);
+  return FALSE;
+}
+
+static gint
+idle_test_gradient (GGradientData * gdata)
+{
+  do_gradient_callback(gdata);
   return FALSE;
 }
 
@@ -585,6 +632,50 @@ temp_pattern_invoker(char    *name,
 	  active_pattern_pdb = pdata;
 	  pdata->busy = 1;
 	  gtk_idle_add((GtkFunction) idle_test_pattern,active_pattern_pdb);
+	}
+    }
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+  
+  values[0].type = PARAM_STATUS;
+  values[0].data.d_status = status;
+}
+
+static void
+temp_gradient_invoker(char    *name,
+		      int      nparams,
+		      GParam  *param,
+		      int     *nreturn_vals,
+		      GParam **return_vals)
+{
+  static GParam values[1];
+  GStatusType status = STATUS_SUCCESS;
+  GGradientData *gdata = (GGradientData *)g_hash_table_lookup(ggradient_ht,name);
+
+  if(!gdata)
+    {
+      g_warning("Can't find internal gradient data");
+    }
+  else
+    {
+      if(!gdata->busy)
+	{
+	  int i;
+	  gdouble *pv,*values;;
+	  gdata->gname = g_strdup(param[0].data.d_string);
+	  gdata->width = param[1].data.d_int32;
+	  gdata->gradient_data = (gdouble *)g_malloc(param[1].data.d_int32*sizeof(gdouble));
+	  values = param[2].data.d_floatarray;
+	  pv = gdata->gradient_data;
+
+	  for (i = 0; i < gdata->width; i++)
+	    gdata->gradient_data[i] = param[2].data.d_floatarray[i];
+
+	  gdata->closing = param[3].data.d_int32;
+	  active_gradient_pdb = gdata;
+	  gdata->busy = 1;
+	  gtk_idle_add((GtkFunction) idle_test_gradient,active_gradient_pdb);
 	}
     }
 
@@ -928,6 +1019,137 @@ gimp_pattern_set_popup(void * popup_pnt, gchar * pname)
 				    &nreturn_vals,
 				    PARAM_STRING, popup_pnt,
 				    PARAM_STRING, pname,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
+}
+
+void *
+gimp_interactive_selection_gradient(gchar *dialogname, 
+				    gchar *gradient_name,
+				    gint sample_sz,
+				    GRunGradientCallback callback,
+				    gpointer udata)
+{
+  static GParamDef args[] =
+  {
+    { PARAM_STRING, "str", "String"},
+    { PARAM_INT32, "grad width","grad width"},
+    { PARAM_FLOATARRAY,"grad data","The gradient mask data"},
+    { PARAM_INT32, "dialog status","Registers if the dialog was closing [0 = No, 1 = Yes]"},
+  };
+  static GParamDef *return_vals = NULL;
+  static int nargs = sizeof (args) / sizeof (args[0]);
+  static int nreturn_vals = 0;
+  gint bnreturn_vals;
+  GParam *pdbreturn_vals;
+  gchar *pdbname = gen_temp_plugin_name();
+  GGradientData *gdata = g_malloc0(sizeof(struct _GGradientData));
+
+  gimp_install_temp_proc (pdbname,
+			  "Temp PDB for interactive popups",
+			  "More here later",
+			  "Andy Thomas",
+			  "Andy Thomas",
+			  "1997",
+			  NULL,
+			  "RGB*, GRAY*",
+			  PROC_TEMPORARY,
+			  nargs, nreturn_vals,
+			  args, return_vals,
+			  temp_gradient_invoker);
+
+  pdbreturn_vals =
+    gimp_run_procedure("gimp_gradients_popup",
+		       &bnreturn_vals,
+		       PARAM_STRING,pdbname,
+		       PARAM_STRING,dialogname,
+		       PARAM_STRING,gradient_name,/*name*/
+		       PARAM_INT32,sample_sz, /* size of sample to be returned */ 
+		       PARAM_END);
+
+  gimp_setup_callbacks(); /* New function to allow callbacks to be watched */
+
+  gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
+
+  /* Now add to hash table so we can find it again */
+  if(ggradient_ht == NULL)
+    ggradient_ht = g_hash_table_new (g_str_hash,
+				     g_str_equal);
+
+  gdata->callback = callback;
+  gdata->udata = udata;
+  g_hash_table_insert(ggradient_ht,pdbname,gdata);
+
+  return pdbname;
+}
+
+gchar *
+gimp_gradient_get_gradient_data (gchar *gname,
+				 gint  *width,
+				 gint sample_sz,
+				 gdouble **grad_data)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_get_gradient_data",
+				    &nreturn_vals,
+				    PARAM_STRING, gname,
+				    PARAM_INT32, sample_sz,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      int i;
+      ret_name = g_strdup(return_vals[1].data.d_string);
+      *width = return_vals[2].data.d_int32;
+      *grad_data = g_new (gdouble,*width);
+      for (i = 0; i < *width; i++)
+	(*grad_data)[i] = return_vals[3].data.d_floatarray[i];
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+
+gint 
+gimp_gradient_close_popup(void * popup_pnt)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_close_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
+}
+
+gint 
+gimp_gradient_set_popup(void * popup_pnt, gchar * gname)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_set_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_STRING, gname,
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);

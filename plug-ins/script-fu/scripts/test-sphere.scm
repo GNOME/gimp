@@ -62,11 +62,24 @@
 ; The vaule returned when the script is invoked is a string containing the 
 ; pattern name. If the above selection was not altered the string would 
 ; contain "Maple Leaves"
-
+; ----------------------------------------------------------------------
+;
+; SF-GRADIENT
+; Only useful in interactive mode. It will create a widget in the control
+; dialog. The widget consists of a button containing a preview of the selected
+; gradient. If the button is pressed a gradient selection dialog will popup.
+; 
+;
+; Usage:-
+; SF-GRADIENT "Gradient" "Deep_Sea"
+;
+; The vaule returned when the script is invoked is a string containing the 
+; gradient name. If the above selection was not altered the string would 
+; contain "Deep_Sea"
 
 
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern font size)
+(define (script-fu-test-sphere radius light shadow bg-color sphere-color brush text pattern gradient font size)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -108,6 +121,12 @@
 		FALSE 0 0 light-x light-y light-end-x light-end-y)
     (gimp-selection-none img)
 
+    (gimp-gradients-set-active gradient)
+    (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
+    (gimp-blend img drawable CUSTOM NORMAL LINEAR 100 offset REPEAT-NONE
+		FALSE 0 0 10 10 30 60)
+    (gimp-selection-none img)
+
     (gimp-palette-set-foreground '(0 0 0))
     (gimp-floating-sel-anchor (car (gimp-text-fontname img drawable 
 						       x-position y-position
@@ -123,7 +142,7 @@
 
 (script-fu-register "script-fu-test-sphere"
 		    "<Toolbox>/Xtns/Script-Fu/Test/Sphere"
-		    "Simple script to test and show the usage of the new Script-Fu API extensions. \n\nNote the use of spinbuttons, sliders, the font selector and do not forget the about dialog..."
+		    "Simple script to test and show the usage of the new Script-Fu API extensions. \n\nNote the use of spinbuttons, sliders, the font, pattern, brush and gradient selectors and do not forget the about dialog..."
 		    "Spencer Kimball, Sven Neumann"
 		    "Spencer Kimball"
 		    "1996, 1998"
@@ -136,6 +155,7 @@
 	            SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
 		    SF-STRING "Text" "Script-Fu rocks!"
 		    SF-PATTERN "Pattern" "Maple Leaves"
+		    SF-GRADIENT "Gradient" "Deep_Sea"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1))
 

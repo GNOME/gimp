@@ -52,6 +52,7 @@ libgimp_la_SOURCES = \
 libgimpui_la_SOURCES = \
 	gimpmenu.c \
 	gimpbrushmenu.c \
+	gimpgradientmenu.c \
 	gimppatternmenu.c
 
 gimpinclude_HEADERS = \
