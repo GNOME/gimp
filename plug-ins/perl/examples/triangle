@@ -3,7 +3,7 @@
 use Gimp qw( :auto );
 use Gimp::Fu;
 
-register	"Triangle", 
+register	"triangle", 
 		"Creates a triangular selection with the diagonal as one of its sides.",
 		"Tick appropriate radio buttons.",
 		"Claes G Lindblad <claesg\@algonet.se>",

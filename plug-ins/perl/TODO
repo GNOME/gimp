@@ -23,6 +23,7 @@ bugs
   
 important issues
 
+  * PF_COORDS (just as Light Effects/FlareFX)
   * PF_PREVIEW(!)
 [PF_FILE]  * PF_FILE
   * --use-interp=perl|script-fu

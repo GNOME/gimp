@@ -440,6 +440,7 @@ register "extension_pdb_explorer",
          [],
          sub {
    
+   Gimp::init_gtk;
    refresh;
    create_main;
    main Gtk;

@@ -179,7 +179,7 @@ trace_init ()
 #define trace_printf(frmt,args...) \
 	if (trace_file) PerlIO_printf (trace_file, frmt, ## args); \
 	else		sv_catpvf (trace_var, frmt, ## args)
-#elif __STDC__
+#elif defined(__STDC__)
 
 /* sigh */
 #include <stdarg.h>
@@ -205,7 +205,7 @@ error need_ansi_compiler__maybe_try_c89
 /* in case g_strdup_printf is missing.  */
 #if (GLIB_MAJOR_VERSION>1) || (GLIB_MAJOR_VERSION==1 && GLIB_MINOR_VERSION>1)
 #define strdup_printf g_strdup_printf
-#elif __STDC__
+#elif defined(__STDC__)
 #include <stdarg.h>
 static char *
 strdup_printf (char *frmt, ...)
@@ -1472,8 +1472,20 @@ gimp_install_cmap()
 gint
 gimp_use_xshm()
 
-guchar *
+void
 gimp_color_cube()
+	PPCODE:
+	{
+	 	guchar *cc = gimp_color_cube ();
+
+		EXTEND (SP, 4);
+
+		PUSHs (sv_2mortal (newSViv (cc [0])));
+		PUSHs (sv_2mortal (newSViv (cc [1])));
+		PUSHs (sv_2mortal (newSViv (cc [2])));
+		PUSHs (sv_2mortal (newSViv (cc [3])));
+	}
+	
 
 gchar *
 gimp_gtkrc()

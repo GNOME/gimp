@@ -201,10 +201,7 @@ sub interact($$$$@) {
 
    # only pull these in if _really_ required
    # gets us some speed we really need
-   eval {
-      require Gtk; import Gtk;
-      init Gtk; # gross hack...
-   };
+   eval { require Gtk };
    
    if ($@) {
       my @res = map {
@@ -216,7 +213,7 @@ sub interact($$$$@) {
       return (1,@res);
    }
 
-   parse Gtk::Rc Gimp->gtkrc;
+   Gimp::init_gtk;
 
    require Gimp::UI; import Gimp::UI;
 
@@ -903,6 +900,8 @@ sub register($$$$$$$$$;@) {
       int($p->[0]) eq $p->[0] or croak "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'";
       $p->[1]=~/^[0-9a-z_]+$/ or carp "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z and _ allowed";
    }
+
+   $function=~/^[0-9a-z_]+(-ALT)?$/ or carp "$function: function name contains unusual characters, good style is to use only 0-9, a-z and _";
    
    $function="perl_fu_".$function unless $function=~/^(?:perl_fu|extension|plug_in)/ || $function=~s/^\+//;
    

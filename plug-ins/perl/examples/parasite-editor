@@ -277,7 +277,8 @@ register "extension_parasite_editor",
          [],
          ['gimp-1.1'],
          sub {
-   
+ 
+   Gimp::init_gtk;
    create_main;
    main Gtk;
    

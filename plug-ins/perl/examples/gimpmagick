@@ -281,6 +281,7 @@ register "gimp_magick",
          sub {
    my($image,$drawable)=@_;
 
+   Gimp::init_gtk;
    gimp_magick ($drawable);
    
    $image;

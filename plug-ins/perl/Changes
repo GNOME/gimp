@@ -4,6 +4,11 @@ Revision history for Gimp-Perl extension.
 	- startet implementing Gimp::Module, for embedding perl directly into
 	  the gimp.
 	- added generic Gimp::Config module.
+	- spit out a warning for unusual function names.
+	- made Gimp->color_cube work.
+	- added Gimp::init_gtk function to initialize Gtk in a Gimp-compatible
+	  way.
+	- replaced the default colour database by something far better.
 
 1.08  Fri Apr  9 03:20:54 CEST 1999
 	- added guidegrid, git-text, roundrectsel, repdup, centerguide,
