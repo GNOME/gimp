@@ -74,6 +74,7 @@ gboolean use_shm           = FALSE;
 gboolean use_debug_handler = FALSE;
 gboolean console_messages  = FALSE;
 gboolean restore_session   = FALSE;
+gboolean double_speed      = FALSE;
 
 GimpSet *image_context = NULL;
 
@@ -249,6 +250,11 @@ main (int    argc,
 	       (strcmp (argv[i], "-r") == 0))
 	{
 	  restore_session = TRUE;
+ 	  argv[i] = NULL;
+	}
+      else if (strcmp (argv[i], "--wilber-on-lsd") == 0)
+	{
+	  double_speed = TRUE;
  	  argv[i] = NULL;
 	}
       /*

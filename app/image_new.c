@@ -19,6 +19,7 @@
 
 #include "image_new.h"
 
+#include "appenv.h"
 #include "gimprc.h"
 #include "file_new_dialog.h"
 #include "tile_manager_pvt.h"
@@ -28,6 +29,8 @@
 
 #include "libgimp/gimpintl.h"
 #include "libgimp/parasite.h"
+
+#include "pixmaps/wilber2.xpm"
 
 static GList              *image_base_type_names = NULL;
 static GList              *fill_type_names = NULL;
@@ -184,6 +187,56 @@ image_new_values_free (GimpImageNewValues *values)
   g_free (values);
 }
 
+static gint
+image_new_rotate_the_shield_harmonics (GDisplay *display)
+{
+  static GdkPixmap *pixmap = NULL;
+  static GdkBitmap *mask   = NULL;
+  static gint width  = 0;
+  static gint height = 0;
+
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
+
+  if (pixmap == NULL)
+    {
+      GtkStyle *style;
+
+      style = gtk_widget_get_style (display->canvas);
+
+      pixmap =
+	gdk_pixmap_create_from_xpm_d (display->canvas->window,
+				      &mask,
+				      &style->bg[GTK_STATE_NORMAL],
+				      wilber2_xpm);
+
+      gdk_window_get_size (pixmap, &width, &height);
+    }
+
+  if (display->canvas->allocation.width  >= width &&
+      display->canvas->allocation.height >= height)
+    {
+      gint x, y;
+
+      x = (display->canvas->allocation.width  - width) / 2;
+      y = (display->canvas->allocation.height - height) / 2;
+
+      gdk_gc_set_clip_mask (display->canvas->style->black_gc, mask);
+      gdk_gc_set_clip_origin (display->canvas->style->black_gc, x, y);
+
+      gdk_draw_pixmap (display->canvas->window,
+		       display->canvas->style->black_gc,
+		       pixmap, 0, 0,
+		       x, y,
+		       width, height);
+
+      gdk_gc_set_clip_mask (display->canvas->style->black_gc, NULL);
+      gdk_gc_set_clip_origin (display->canvas->style->black_gc, 0, 0);
+    }
+
+  return FALSE;
+}
+
 void 
 image_new_create_image (const GimpImageNewValues *values)
 {
@@ -247,6 +300,10 @@ image_new_create_image (const GimpImageNewValues *values)
       display = gdisplay_new (image, 0x0101);
 
       gimp_context_set_display (gimp_context_get_user (), display);
+
+      if (double_speed)
+	gtk_idle_add ((GtkFunction) image_new_rotate_the_shield_harmonics,
+		      display);
     }
 }
 
