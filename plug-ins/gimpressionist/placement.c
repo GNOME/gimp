@@ -55,11 +55,11 @@ void create_placementpage(GtkNotebook *notebook)
 				 _("Evenly distributed"), 1, &placeradio[1],
 				 NULL);
 
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), placeradio[0], 
-		       _("Place strokes randomly around the image"), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), placeradio[1], 
-		       _("The strokes are evenly distributed across the image")
-		       , NULL);
+  gimp_help_set_help_data 
+    (placeradio[0], _("Place strokes randomly around the image"), NULL);
+  gimp_help_set_help_data 
+    (placeradio[1], _("The strokes are evenly distributed across the image"),
+     NULL);
   gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show(frame);
 
@@ -90,7 +90,8 @@ void create_placementpage(GtkNotebook *notebook)
   placecenter = tmpw = gtk_check_button_new_with_mnemonic( _("Centerize"));
   gtk_box_pack_start(GTK_BOX(vbox), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Focus the brush strokes around the center of the image"), NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Focus the brush strokes around the center of the image"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.placecenter);
     
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);

@@ -12,29 +12,17 @@
 #include <unistd.h>
 #endif
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
+#include "logo.xpm"
+
 #include "libgimp/stdplugins-intl.h"
 
-
-#ifdef G_OS_WIN32
-# ifndef S_ISDIR
-#  define S_ISDIR(m) (((m) & _S_IFMT) == _S_IFDIR)
-#  define S_ISREG(m) (((m) & _S_IFMT) == _S_IFREG)
-# endif
-#endif
-
 static GtkWidget *dlg = NULL;
-GtkTooltips *tooltips = NULL;
 
 ppm_t infile = {0,0,NULL};
 ppm_t inalpha = {0,0,NULL};
@@ -364,9 +352,10 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
 static void showabout(void)
 {
   static GtkWidget *window = NULL;
-  GtkWidget *tmpw, *tmpvbox, *tmphbox;
+  GtkWidget *tmpw, *tmphbox;
   GtkWidget *logobox, *tmpframe;
-  int y;
+  GtkWidget *logo;
+  GdkPixbuf *pixbuf;
 
   if (window)
     {
@@ -374,33 +363,24 @@ static void showabout(void)
       return;
     }
 
-  window = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (window), _("The GIMPressionist!"));
-  gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_MOUSE);
+  window =
+    gimp_dialog_new (_("The GIMPressionist"), "gimpressionist",
+		     gimp_standard_help_func, "filters/gimpressionist.html",
+		     GTK_WIN_POS_MOUSE,
+		     FALSE, TRUE, FALSE,
+
+		     GTK_STOCK_CLOSE, gtk_widget_destroy,
+		     NULL, 1, NULL, TRUE, TRUE,
+
+		     NULL);
+
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
-  gtk_quit_add_destroy (1, GTK_OBJECT (window));
-  g_signal_connect (window, "delete_event",
-                    G_CALLBACK (gtk_widget_hide_on_delete),
-                    &window);
 
-  tmpw = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  GTK_WIDGET_SET_FLAGS(tmpw, GTK_CAN_DEFAULT);
-  g_signal_connect_swapped (tmpw, "clicked",
-                            G_CALLBACK (gtk_widget_hide),
-                            window);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(window)->action_area),
-                      tmpw, TRUE, TRUE, 0);
-  gtk_widget_grab_default(tmpw);
-  gtk_widget_show(tmpw);
-
-  tmpvbox = gtk_vbox_new(FALSE, 5);
-  gtk_container_set_border_width(GTK_CONTAINER(tmpvbox), 5);
-  gtk_container_add(GTK_CONTAINER(GTK_DIALOG(window)->vbox), tmpvbox);
-      
   tmphbox = gtk_hbox_new(TRUE, 5);
-  gtk_box_pack_start(GTK_BOX(tmpvbox), tmphbox, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox, 
+		     TRUE, TRUE, 0);
   gtk_widget_show(tmphbox);
   
   logobox = gtk_vbox_new (FALSE, 0);
@@ -411,30 +391,26 @@ static void showabout(void)
   gtk_frame_set_shadow_type (GTK_FRAME (tmpframe), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (logobox), tmpframe, TRUE, TRUE, 0);
   gtk_widget_show(tmpframe);
-  
-  tmpw = gtk_preview_new(GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW(tmpw), 177, 70);
 
-  for(y = 0; y < 70; y++) {
-    gtk_preview_draw_row (GTK_PREVIEW(tmpw), &logobuffer[y*177*3], 0, y, 177); 
-  }
-  gtk_widget_draw(tmpw, NULL);
-  gtk_container_add(GTK_CONTAINER(tmpframe), tmpw);
-  gtk_widget_show(tmpw);
-      
+  pixbuf = gdk_pixbuf_new_from_xpm_data ((const char**) logo_xpm);
+  logo = gtk_image_new_from_pixbuf (pixbuf);
+  g_object_unref (pixbuf);
+
+  gtk_container_add (GTK_CONTAINER (tmpframe), logo);
+  gtk_widget_show (logo);
+    
   tmphbox = gtk_hbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(tmpvbox), tmphbox, TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), tmphbox, 
+		     TRUE, TRUE, 0);
 
   tmpw = gtk_label_new("(C) 1999 Vidar Madsen\n"
 		       "vidar@prosalg.no\n"
 		       "http://www.prosalg.no/~vidar/gimpressionist/\n"
-		       PLUG_IN_VERSION
-		       );
+		       PLUG_IN_VERSION);
   gtk_box_pack_start(GTK_BOX(tmphbox), tmpw, TRUE, FALSE, 0);
   gtk_widget_show(tmpw);
   
   gtk_widget_show(tmphbox);
-  gtk_widget_show(tmpvbox);
   gtk_widget_show(window);
 }
 
@@ -461,16 +437,13 @@ static int create_dialog(void)
       gimp_ui_init ("gimpressionist", TRUE);
     }
 
-  tooltips = gtk_tooltips_new ();
-  gtk_tooltips_enable (tooltips);
-
   dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
 			 gimp_standard_help_func, 
 			 "filters/gimpressionist.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("A_bout..."), showabout,
+			 _("A_bout"), showabout,
 			 NULL, NULL, NULL, FALSE, FALSE,
 			    
 			 GTK_STOCK_CANCEL, dialog_cancel_callback,

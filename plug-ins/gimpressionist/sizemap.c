@@ -59,44 +59,53 @@ double getsiz(double x, double y, int from)
 
   if((x < 0.0) || (x > 1.0)) printf("HUH? x = %f\n",x);
 
-  if(from == 0) {
-    n = numsmvect;
-    vec = smvector;
-    smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
-    voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
-  } else {
-    n = pcvals.numsizevector;
-    vec = pcvals.sizevector;
-    smstrexp = pcvals.sizestrexp;
-    voronoi = pcvals.sizevoronoi;
-  }
-
-  if(voronoi) {
-    double bestdist = -1.0;
-    for(i = 0; i < n; i++) {
-      dst = dist(x,y,vec[i].x,vec[i].y);
-      if((bestdist < 0.0) || (dst < bestdist)) {
-	bestdist = dst;
-	first = i;
-      }
+  if (from == 0) 
+    {
+      n = numsmvect;
+      vec = smvector;
+      smstrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
+      voronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
+    } 
+  else 
+    {
+      n = pcvals.numsizevector;
+      vec = pcvals.sizevector;
+      smstrexp = pcvals.sizestrexp;
+      voronoi = pcvals.sizevoronoi;
     }
-    last = first+1;
-  } else {
-    first = 0;
-    last = n;
-  }
+
+  if (voronoi) 
+    {
+      gdouble bestdist = -1.0;
+      for (i = 0; i < n; i++) 
+	{
+	  dst = dist(x, y, vec[i].x, vec[i].y);
+	  if ((bestdist < 0.0) || (dst < bestdist)) 
+	    {
+	      bestdist = dst;
+	      first = i;
+	    }
+	}
+      last = first+1;
+    } 
+  else 
+    {
+      first = 0;
+      last = n;
+    }
 
   sum = ssum = 0.0;
-  for(i = first; i < last; i++) {
-    double s = vec[i].str;
-
-    dst = dist(x,y,vec[i].x,vec[i].y);
-    dst = pow(dst, smstrexp);
-    if(dst < 0.0001) dst = 0.0001;
-    s = s / dst;
-
-    sum += vec[i].siz * s;
-    ssum += 1.0/dst;
+  for (i = first; i < last; i++) 
+    {
+      gdouble s = vec[i].str;
+      
+      dst = dist(x,y,vec[i].x,vec[i].y);
+      dst = pow(dst, smstrexp);
+      if(dst < 0.0001) dst = 0.0001;
+      s = s / dst;
+      
+      sum += vec[i].siz * s;
+      ssum += 1.0/dst;
   }
   sum = sum / ssum / 100.0;
   return CLAMP(sum, 0.0, 1.0);
@@ -104,26 +113,30 @@ double getsiz(double x, double y, int from)
 
 void updatesmpreviewprev(void)
 {
-  int x, y;
-  static ppm_t nsbuffer = {0,0,NULL};
+  gint x, y;
+  static ppm_t nsbuffer;
   guchar black[3] = {0,0,0};
   guchar gray[3] = {120,120,120};
 
-  if(!nsbuffer.col) {
-    newppm(&nsbuffer,OMWIDTH,OMHEIGHT);
-  }
+  if (!nsbuffer.col) 
+    {
+      newppm(&nsbuffer,OMWIDTH,OMHEIGHT);
+    }
   fill(&nsbuffer, black);
 
-  for(y = 6; y < OMHEIGHT-4; y += 10)
-    for(x = 6; x < OMWIDTH-4; x += 10) {
-      double siz = 5 * getsiz(x/(double)OMWIDTH,y/(double)OMHEIGHT,0);
-      drawline(&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
-      drawline(&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
-      drawline(&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
-      drawline(&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
+  for (y = 6; y < OMHEIGHT-4; y += 10)
+    {
+      for (x = 6; x < OMWIDTH-4; x += 10) 
+	{
+	  gdouble siz = 5 * getsiz(x/(double)OMWIDTH,y/(double)OMHEIGHT,0);
+	  drawline (&nsbuffer, x-siz, y-siz, x+siz, y-siz, gray);
+	  drawline (&nsbuffer, x+siz, y-siz, x+siz, y+siz, gray);
+	  drawline (&nsbuffer, x+siz, y+siz, x-siz, y+siz, gray);
+	  drawline (&nsbuffer, x-siz, y+siz, x-siz, y-siz, gray);
+	}
     }
 
-  for(y = 0; y < OMHEIGHT; y++)
+  for (y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row(GTK_PREVIEW(smpreviewprev), &nsbuffer.col[y*nsbuffer.width*3], 0, y, OMWIDTH);
   gtk_widget_draw(smpreviewprev,NULL);
 }
@@ -135,9 +148,9 @@ void updatesmvectorprev(void)
   static ppm_t backup = {0,0,NULL};
   static ppm_t sbuffer = {0,0,NULL};
   static int ok = 0;
-  int i, x, y;
-  double val;
-  static double lastval = 0.0;
+  gint i, x, y;
+  gdouble val;
+  static gdouble lastval = 0.0;
   guchar gray[3] = {120,120,120};
   guchar red[3] = {255,0,0};
   guchar white[3] = {255,255,255};
@@ -147,31 +160,33 @@ void updatesmvectorprev(void)
   else
     val = 0.5;
 
-  if(!ok || (val != lastval)) {
-    if(!infile.col)
-      updatepreviewprev(NULL, (void *)2); /* Force grabarea() */
-    copyppm(&infile, &backup);
-    ppmbrightness(&backup, val, 1,1,1);
-    if((backup.width != OMWIDTH) || (backup.height != OMHEIGHT))
-      resize_fast(&backup, OMWIDTH, OMHEIGHT);
-    ok = 1;
+  if(!ok || (val != lastval)) 
+    {
+      if(!infile.col)
+	updatepreviewprev(NULL, (void *)2); /* Force grabarea() */
+      copyppm(&infile, &backup);
+      ppmbrightness(&backup, val, 1,1,1);
+      if (backup.width != OMWIDTH || backup.height != OMHEIGHT)
+	resize_fast(&backup, OMWIDTH, OMHEIGHT);
+      ok = 1;
   }
   copyppm(&backup, &sbuffer);
 
-  for(i = 0; i < numsmvect; i++) {
-    x = smvector[i].x * OMWIDTH;
-    y = smvector[i].y * OMHEIGHT;
-    if(i == selectedsmvector) {
-      drawline(&sbuffer, x-5, y, x+5, y, red);
-      drawline(&sbuffer, x, y-5, x, y+5, red);
-    } else {
-      drawline(&sbuffer, x-5, y, x+5, y, gray);
-      drawline(&sbuffer, x, y-5, x, y+5, gray);
-    }
-    putrgb(&sbuffer, x, y, white);
+  for (i = 0; i < numsmvect; i++) 
+    {
+      x = smvector[i].x * OMWIDTH;
+      y = smvector[i].y * OMHEIGHT;
+      if (i == selectedsmvector) {
+	drawline (&sbuffer, x-5, y, x+5, y, red);
+	drawline (&sbuffer, x, y-5, x, y+5, red);
+      } else {
+	drawline (&sbuffer, x-5, y, x+5, y, gray);
+	drawline (&sbuffer, x, y-5, x, y+5, gray);
+      }
+      putrgb (&sbuffer, x, y, white);
   }
 
-  for(y = 0; y < OMHEIGHT; y++)
+  for (y = 0; y < OMHEIGHT; y++)
     gtk_preview_draw_row(GTK_PREVIEW(smvectorprev), &sbuffer.col[y*sbuffer.width*3], 0, y, OMWIDTH);
   gtk_widget_draw(smvectorprev,NULL);
 
@@ -297,7 +312,7 @@ static void smstrexpsmadjmove(GtkWidget *w, gpointer data)
 
 static void smapplyclick(GtkWidget *w, GtkWidget *win)
 {
-  int i;
+  gint i;
   for (i = 0; i < numsmvect; i++)
     {
       pcvals.sizevector[i] = smvector[i];
@@ -317,10 +332,10 @@ void initsmvectors(void)
 {
   if (pcvals.numsizevector)
     {
-      int i;
+      gint i;
 
       numsmvect = pcvals.numsizevector;
-      for(i = 0; i < numsmvect; i++)
+      for (i = 0; i < numsmvect; i++)
 	{
 	  smvector[i] = pcvals.sizevector[i];
 	}
@@ -411,7 +426,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
 
   tmpw = gtk_event_box_new();
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
+  gimp_help_set_help_data (tmpw, _("The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, FALSE, 0);
   tmpw2 = tmpw;
 
@@ -431,7 +446,7 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (smvectprevbrightadjust, "value_changed",
                     G_CALLBACK (updatesmvectorprev), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adjust the preview's brightness"), NULL);
+  gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
@@ -453,32 +468,28 @@ void create_sizemap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
                     G_CALLBACK (smprevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
-		       _("Select previous smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select previous smvector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smnextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
-		       _("Select next smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select next smvector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smaddclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
-		       _("Add new smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Add new smvector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK(smdeleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw,
-		       _("Delete selected smvector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Delete selected smvector"), NULL);
 
   table2 = gtk_table_new(3, 4, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table2), 4);
@@ -525,7 +536,7 @@ void create_sizemap_dialog(void)
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.sizevoronoi);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK(smstrexpsmadjmove), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
+  gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the smvector closest to the given point have any influence"), NULL);
 
   gtk_widget_show(smwindow);
 

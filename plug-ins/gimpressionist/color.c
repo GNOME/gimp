@@ -53,10 +53,13 @@ void create_colorpage(GtkNotebook *notebook)
 				 _("C_enter of brush"), 1, &colorradio[1],
 				 NULL);
 
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), colorradio[0], 
-		       _("Color is computed from the average of all pixels under the brush"), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), colorradio[1], 
-		       _("Samples the color from the pixel in the center of the brush"), NULL);
+  gimp_help_set_help_data 
+    (colorradio[0], 
+     _("Color is computed from the average of all pixels under the brush"), 
+     NULL);
+  gimp_help_set_help_data 
+    (colorradio[1], 
+     _("Samples the color from the pixel in the center of the brush"), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show(frame);
 

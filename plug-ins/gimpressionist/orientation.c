@@ -110,9 +110,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 0);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("Let the value (brightness) of the region determine the direction of the stroke"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Let the value (brightness) of the region determine the direction of the stroke"), NULL);
 
   orientradio[1] = tmpw =
     gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw)),
@@ -121,9 +120,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 1);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("The distance from the center of the image determines the direction of the stroke"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("The distance from the center of the image determines the direction of the stroke"), NULL);
     
   orientradio[2] = tmpw = 
     gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw)),
@@ -132,9 +130,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 2);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("Selects a random direction of each stroke"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Selects a random direction of each stroke"), NULL);
 
   orientradio[3] = tmpw = 
     gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw)),
@@ -143,9 +140,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 3);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("Let the direction from the center determine the direction of the stroke"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Let the direction from the center determine the direction of the stroke"), NULL);
 
   box3 = gtk_vbox_new (FALSE,0);
   gtk_box_pack_start (GTK_BOX (box2), box3,FALSE,FALSE, 10);
@@ -158,9 +154,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 4);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("The strokes follow a \"flowing\" pattern"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("The strokes follow a \"flowing\" pattern"), NULL);
 
   orientradio[5] = tmpw =
     gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw)),
@@ -169,9 +164,9 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 5);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("The hue of the region determines the direction of the stroke"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("The hue of the region determines the direction of the stroke"),
+     NULL);
 
   orientradio[6] = tmpw =
     gtk_radio_button_new_with_label (gtk_radio_button_get_group (GTK_RADIO_BUTTON (tmpw)),
@@ -180,9 +175,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 6);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("The direction that matches the original image the closest is selected"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("The direction that matches the original image the closest is selected"), NULL);
 
   box4 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (box3), box4, FALSE, FALSE, 0);
@@ -195,9 +189,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (orientchange), (gpointer) 7);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("Manually specify the stroke orientation"),
-			NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Manually specify the stroke orientation"), NULL);
 
   gtk_toggle_button_set_active 
     (GTK_TOGGLE_BUTTON (orientradio[pcvals.orienttype]), TRUE);
@@ -207,8 +200,8 @@ create_orientationpage (GtkNotebook *notebook)
   gtk_widget_show (tmpw);
   g_signal_connect (tmpw, "clicked",
 		    G_CALLBACK (create_orientmap_dialog), NULL);
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), tmpw,
-			_("Opens up the Orientation Map Editor"), NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Opens up the Orientation Map Editor"), NULL);
 
   gtk_notebook_append_page_menu (notebook, thispage, label, NULL);
 }

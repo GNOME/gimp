@@ -124,16 +124,16 @@ GtkWidget* create_preview()
 		    G_CALLBACK (updatepreviewprev), (gpointer) 1);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Refresh the Preview window"), NULL);
+  gimp_help_set_help_data (tmpw, 
+			   _("Refresh the Preview window"), NULL);
 
   tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (updatepreviewprev), (gpointer) 2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);
   gtk_widget_show(tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Revert to the original image"), NULL);
+  gimp_help_set_help_data (tmpw, 
+			   _("Revert to the original image"), NULL);
 
   gtk_box_pack_start (GTK_BOX (box1), box2, FALSE, FALSE, 0);
   gtk_widget_show(box2);

@@ -472,11 +472,11 @@ void create_orientmap_dialog(void)
   gtk_widget_show(hbox);
 
   ebox = gtk_event_box_new ();
-  gtk_tooltips_set_tip (GTK_TOOLTIPS (tooltips), ebox,
-                        _("The vector-field. "
-                          "Left-click to move selected vector, "
-                          "Right-click to point it towards mouse, "
-                          "Middle-click to add a new vector."), NULL);
+  gimp_help_set_help_data (ebox,
+			   _("The vector-field. "
+			     "Left-click to move selected vector, "
+			     "Right-click to point it towards mouse, "
+			     "Middle-click to add a new vector."), NULL);
   gtk_box_pack_start(GTK_BOX(hbox), ebox, FALSE, FALSE, 0);
 
   tmpw = vectorprev = gtk_preview_new (GTK_PREVIEW_COLOR);
@@ -495,8 +495,7 @@ void create_orientmap_dialog(void)
   gtk_widget_show(tmpw);
   g_signal_connect (vectprevbrightadjust, "value_changed",
                     G_CALLBACK (updatevectorprev), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Adjust the preview's brightness"), NULL);
+  gimp_help_set_help_data (tmpw, _("Adjust the preview's brightness"), NULL);
 
   tmpw2 = tmpw = gtk_frame_new( _("Preview"));
   gtk_container_set_border_width (GTK_CONTAINER (tmpw), 2);
@@ -517,29 +516,25 @@ void create_orientmap_dialog(void)
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(prevclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Select previous vector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select previous vector"), NULL);
 
   next_button = tmpw = gtk_button_new_with_mnemonic("_>>");
   gtk_box_pack_start(GTK_BOX(hbox),tmpw,FALSE,TRUE,0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(nextclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Select next vector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Select next vector"), NULL);
 
   add_button = tmpw = gtk_button_new_with_mnemonic( _("A_dd"));
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(addclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Add new vector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Add new vector"), NULL);
 
   kill_button = tmpw = gtk_button_new_with_mnemonic( _("_Kill"));
   gtk_box_pack_start(GTK_BOX(hbox), tmpw, FALSE, TRUE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect (tmpw, "clicked", G_CALLBACK(deleteclick), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Delete selected vector"), NULL);
+  gimp_help_set_help_data (tmpw, _("Delete selected vector"), NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_set_spacing (GTK_BOX(hbox), 12);
@@ -567,7 +562,7 @@ void create_orientmap_dialog(void)
   gtk_widget_show (tmpw);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), pcvals.orientvoronoi);
   g_signal_connect(tmpw, "clicked", G_CALLBACK(angoffadjmove), NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
+  gimp_help_set_help_data (tmpw, _("Voronoi-mode makes only the vector closest to the given point have any influence"), NULL);
 
   table2 = gtk_table_new(4, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table2), 4);

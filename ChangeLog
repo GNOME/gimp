@@ -1,11 +1,13 @@
-2003-10-24  Dave Neary  <bolsh@gimp.org>
+2003-10-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
-	* app/pdb/path_cmds.c: Forgot to commit this generated file 
-	earlier.
-
-2003-10-24  Sven Neumann  <sven@gimp.org>
-
-	* INSTALL: an attempt to improve our installation instructions.
+	* plug-ins/gimpressionist/about.c: removed...
+	* plug-ins/gimpressionist/logo.xpm: and replaced by new .xpm file so
+	that we don't need deprecated GtkPreview widget anymore.
+	* plug-ins/gimpressionist/Makefile.am: changed accordingly
+	
+	* plug-ins/gimpressionist/*.[ch]: replaced gtk_tooltips_set_tip by
+	gimp_help_set_help_data so that tooltips will not be shown when
+	disabled in the GIMP Preferences.
 
 2003-10-24  Dave Neary  <bolsh@gimp.org>
 

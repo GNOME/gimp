@@ -395,7 +395,8 @@ void create_brushpage(GtkNotebook *notebook)
   g_signal_connect_swapped (brushgammaadjust, "value_changed",
 			    G_CALLBACK(updatebrushprev), pcvals.selectedbrush);
 
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Changes the gamma (brightness) of the selected brush"), NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start(GTK_BOX(thispage), box1,FALSE,FALSE,5);

@@ -13,7 +13,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = gimpressionist
 
 gimpressionist_SOURCES =\
-	about.c			\
 	brush.c			\
 	general.c		\
 	gimp.c			\
@@ -31,7 +30,8 @@ gimpressionist_SOURCES =\
 	repaint.c		\
 	size.c			\
 	sizemap.c		\
-	color.c
+	color.c			\
+	logo.xpm
 
 EXTRA_DIST = README
 

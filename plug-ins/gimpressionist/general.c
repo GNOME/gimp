@@ -77,16 +77,16 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 1);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Preserve the original image as a background"), NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Preserve the original image as a background"), NULL);
 
   generalbgradio[2] = tmpw = gtk_radio_button_new_with_label(gtk_radio_button_get_group(GTK_RADIO_BUTTON(tmpw)), _("From paper"));
   gtk_box_pack_start(GTK_BOX(box3), tmpw, FALSE, FALSE, 0);
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 2);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, 
-		       _("Copy the texture of the selected paper as a background"), NULL);
+  gimp_help_set_help_data 
+    (tmpw, _("Copy the texture of the selected paper as a background"), NULL);
   
   box3 = gtk_vbox_new(FALSE,0);
   gtk_box_pack_start(GTK_BOX(box2), box3,FALSE,FALSE, 10);
@@ -101,7 +101,8 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 0);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Solid colored background"), NULL);
+  gimp_help_set_help_data
+    (tmpw, _("Solid colored background"), NULL);
 
   generalcolbutton = gimp_color_button_new (_("Color"),
 					    COLORBUTTONWIDTH, 
@@ -121,7 +122,8 @@ void create_generalpage(GtkNotebook *notebook)
   gtk_widget_show(tmpw);
   g_signal_connect(tmpw, "clicked",
 		   G_CALLBACK (generalbgchange), (gpointer) 3);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
+  gimp_help_set_help_data
+    (tmpw, _("Use a transparent background; Only the strokes painted will be visible"), NULL);
   if(!img_has_alpha)
     gtk_widget_set_sensitive (tmpw, FALSE);
 
@@ -140,14 +142,16 @@ void create_generalpage(GtkNotebook *notebook)
   generalpaintedges = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects if to place strokes all the way out to the edges of the image"), NULL);
+  gimp_help_set_help_data
+    (tmpw, _("Selects if to place strokes all the way out to the edges of the image"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), 
 			       pcvals.generalpaintedges);
 
   generaltileable = tmpw = gtk_check_button_new_with_label( _("Tileable"));
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Selects if the resulting image should be seamlessly tileable"), NULL);
+  gimp_help_set_help_data
+    (tmpw, _("Selects if the resulting image should be seamlessly tileable"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw),
 			       pcvals.generaltileable);
 
@@ -155,7 +159,8 @@ void create_generalpage(GtkNotebook *notebook)
   generaldropshadow = tmpw;
   gtk_box_pack_start (GTK_BOX (box2), tmpw, FALSE, FALSE, 0);
   gtk_widget_show (tmpw);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Adds a shadow effect to each brush stroke"), NULL);
+  gimp_help_set_help_data
+    (tmpw, _("Adds a shadow effect to each brush stroke"), NULL);
   gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(tmpw), 
 			       pcvals.generaldropshadow);
 
