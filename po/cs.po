@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-18 03:34+0100\n"
-"PO-Revision-Date: 2004-03-18 19:30+0100\n"
+"POT-Creation-Date: 2004-03-19 03:37+0100\n"
+"PO-Revision-Date: 2004-03-19 13:49+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1268,20 +1268,20 @@ msgid "Linked Item"
 msgstr "Svázaná položka"
 
 #: app/core/core-enums.c:599 app/core/gimplayer.c:253 app/core/gimplayer.c:646
-#: app/gui/layers-commands.c:1139 app/gui/resize-dialog.c:204
+#: app/gui/layers-commands.c:1187 app/gui/resize-dialog.c:204
 #: app/pdb/layer_cmds.c:453
 msgid "Scale Layer"
 msgstr "Velikost vrstvy"
 
 #: app/core/core-enums.c:600 app/core/gimpimage-crop.c:117
 #: app/core/gimplayer.c:254 app/core/gimplayer.c:676
-#: app/gui/layers-commands.c:1238 app/pdb/layer_cmds.c:548
+#: app/gui/layers-commands.c:1286 app/pdb/layer_cmds.c:548
 msgid "Resize Layer"
 msgstr "Změnit velikost vrstvy"
 
 #: app/core/core-enums.c:601 app/core/core-enums.c:630
-#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1007
-#: app/gui/layers-commands.c:1046
+#: app/core/gimplayer.c:1023 app/gui/layers-commands.c:1055
+#: app/gui/layers-commands.c:1094
 msgid "Add Layer Mask"
 msgstr "Přidat masku vrstvy"
 
@@ -1311,7 +1311,7 @@ msgid "Cut"
 msgstr "Vyjmout"
 
 #: app/core/core-enums.c:608 app/core/core-enums.c:636
-#: app/tools/gimptexttool.c:114 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:120 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1375,7 +1375,7 @@ msgid "Set Item Linked"
 msgstr "Nastavit spojení položky"
 
 #: app/core/core-enums.c:628 app/gui/layers-commands.c:717
-#: app/gui/layers-commands.c:748 app/gui/layers-commands.c:782
+#: app/gui/layers-commands.c:745 app/gui/layers-commands.c:779
 #: app/widgets/gimpdrawabletreeview.c:219
 msgid "New Layer"
 msgstr "Nová vrstva"
@@ -2347,7 +2347,7 @@ msgstr "Nemohu vyříznout nebo kopírovat, protože zvolená oblast je prázdn�
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
 
-#: app/core/gimpselection.c:843 app/gui/layers-commands.c:965
+#: app/core/gimpselection.c:843 app/gui/layers-commands.c:995
 msgid "Floating Selection"
 msgstr "Plovoucí výběr"
 
@@ -3710,7 +3710,7 @@ msgstr "Překlápím..."
 msgid "Rotating..."
 msgstr "Rotuji..."
 
-#: app/gui/image-commands.c:269 app/gui/layers-commands.c:371
+#: app/gui/image-commands.c:269 app/gui/layers-commands.c:373
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nelze oříznout, protože zvolená oblast je prázdná."
 
@@ -3781,7 +3781,7 @@ msgstr ""
 msgid "Layer Too Small"
 msgstr "Vrstva je příliš malá"
 
-#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1133
+#: app/gui/image-commands.c:633 app/gui/layers-commands.c:1181
 #: app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Zvětšuji..."
@@ -4824,11 +4824,11 @@ msgstr "Indexovaná barva"
 msgid "colors"
 msgstr "barev"
 
-#: app/gui/layers-commands.c:381
+#: app/gui/layers-commands.c:383
 msgid "Crop Layer"
 msgstr "Ořezat vrstvu"
 
-#: app/gui/layers-commands.c:459
+#: app/gui/layers-commands.c:461
 msgid "Layer Mask to Selection"
 msgstr "Maska vrstvy do výběru"
 
@@ -4836,20 +4836,20 @@ msgstr "Maska vrstvy do výběru"
 msgid "Empty Layer"
 msgstr "Prázdná vrstva"
 
-#: app/gui/layers-commands.c:750
+#: app/gui/layers-commands.c:747
 msgid "Create a New Layer"
 msgstr "Vytvořit novou vrstvu"
 
-#: app/gui/layers-commands.c:784
+#: app/gui/layers-commands.c:781
 msgid "Layer _Name:"
 msgstr "_Název vrstvy:"
 
 #. The size labels
-#: app/gui/layers-commands.c:788
+#: app/gui/layers-commands.c:785
 msgid "Layer Width:"
 msgstr "Šířka vrstvy:"
 
-#: app/gui/layers-commands.c:794 app/gui/resize-dialog.c:299
+#: app/gui/layers-commands.c:791 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
 #: app/tools/gimpcroptool.c:1002 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
@@ -4857,35 +4857,39 @@ msgstr "Šířka vrstvy:"
 msgid "Height:"
 msgstr "Výška:"
 
-#: app/gui/layers-commands.c:853
+#: app/gui/layers-commands.c:850
 msgid "Layer Fill Type"
 msgstr "Typ vyplňování vrstvy"
 
-#: app/gui/layers-commands.c:930
+#: app/gui/layers-commands.c:959
 msgid "Layer Attributes"
 msgstr "Vlastností vrstvy"
 
-#: app/gui/layers-commands.c:932 app/widgets/gimplayertreeview.c:205
+#: app/gui/layers-commands.c:961 app/widgets/gimplayertreeview.c:205
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
-#: app/gui/layers-commands.c:968
+#: app/gui/layers-commands.c:998
 msgid "Layer _Name"
 msgstr "_Název vrstvy"
 
-#: app/gui/layers-commands.c:1048
+#: app/gui/layers-commands.c:1009
+msgid "Set Name from _Text"
+msgstr "Nastavit název z _textu"
+
+#: app/gui/layers-commands.c:1096
 msgid "Add a Mask to the Layer"
 msgstr "Přidat masku k vrstvě"
 
-#: app/gui/layers-commands.c:1067
+#: app/gui/layers-commands.c:1115
 msgid "Initialize Layer Mask to:"
 msgstr "Implicitní stav masky vrstvy:"
 
-#: app/gui/layers-commands.c:1084
+#: app/gui/layers-commands.c:1132
 msgid "In_vert Mask"
 msgstr "In_vertovat masku"
 
-#: app/gui/layers-commands.c:1167 app/gui/layers-commands.c:1263
+#: app/gui/layers-commands.c:1215 app/gui/layers-commands.c:1311
 msgid "Invalid width or height. Both must be positive."
 msgstr "Neplatná šířka nebo výška. Obě musí být kladné."
 
@@ -7341,7 +7345,7 @@ msgstr ""
 "Příliš žluťoučký kůň\n"
 "úpěl ďábelské kódy."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:506
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:561
 msgid "Add Text Layer"
 msgstr "Přidat textovou vrstvu"
 
@@ -7349,19 +7353,19 @@ msgstr "Přidat textovou vrstvu"
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v kódování UTF-8)"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:175
 msgid "Text Layer"
 msgstr "Textová vrstva"
 
-#: app/text/gimptextlayer.c:436
+#: app/text/gimptextlayer.c:501
 msgid "Discard Text Information"
 msgstr "Zahodit informace o textu"
 
-#: app/text/gimptextlayer.c:477
+#: app/text/gimptextlayer.c:542
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Funkce textu nejsou k dispozici kvůli nedostupnosti písem."
 
-#: app/text/gimptextlayer.c:498
+#: app/text/gimptextlayer.c:563
 msgid "Empty Text Layer"
 msgstr "Prázdná textová vrstva"
 
@@ -7373,7 +7377,7 @@ msgstr "Překlopit textovou vrstvu"
 msgid "Rotate Text Layer"
 msgstr "Rotovat textovou vrstvu"
 
-#: app/text/gimptextlayer-xcf.c:65
+#: app/text/gimptextlayer-xcf.c:73
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -8547,15 +8551,15 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Vytvořit cestu z textu"
 
-#: app/tools/gimptexttool.c:115
+#: app/tools/gimptexttool.c:121
 msgid "Add text to the image"
 msgstr "Přidání textu do obrázku"
 
-#: app/tools/gimptexttool.c:116
+#: app/tools/gimptexttool.c:122
 msgid "/Tools/Te_xt"
 msgstr "/Nástroje/_Text"
 
-#: app/tools/gimptexttool.c:539
+#: app/tools/gimptexttool.c:594
 msgid "GIMP Text Editor"
 msgstr "Textový editor pro GIMP"
 
@@ -9398,7 +9402,7 @@ msgstr "Odstranit tento obrázek"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:359
+#: app/widgets/gimpitemtreeview.c:362
 #, c-format
 msgid ""
 "%s\n"
@@ -9407,7 +9411,7 @@ msgstr ""
 "%s\n"
 "%s  Nahoru"
 
-#: app/widgets/gimpitemtreeview.c:373
+#: app/widgets/gimpitemtreeview.c:376
 #, c-format
 msgid ""
 "%s\n"
@@ -9416,11 +9420,11 @@ msgstr ""
 "%s\n"
 "%s  Dolů"
 
-#: app/widgets/gimpitemtreeview.c:1385
+#: app/widgets/gimpitemtreeview.c:1394
 msgid "Set Item Exclusive Visible"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
-#: app/widgets/gimpitemtreeview.c:1391
+#: app/widgets/gimpitemtreeview.c:1402
 msgid "Set Item Exclusive Linked"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
@@ -9914,7 +9918,7 @@ msgstr "Normální okno"
 msgid "Utility Window"
 msgstr "Okno nástrojů"
 
-#: app/xcf/xcf-load.c:295
+#: app/xcf/xcf-load.c:297
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"

@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-18 03:39+0100\n"
-"PO-Revision-Date: 2004-03-18 19:30+0100\n"
+"POT-Creation-Date: 2004-03-19 03:42+0100\n"
+"PO-Revision-Date: 2004-03-19 13:48+0100\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -481,7 +481,7 @@ msgstr "Zapsat parametry fraktálu"
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
-#: plug-ins/help/domain.c:263 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
+#: plug-ins/help/domain.c:380 plug-ins/xjt/xjt.c:2535 plug-ins/xjt/xjt.c:2543
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Nemohu otevřít '%s' pro čtení: %s"
@@ -9784,44 +9784,31 @@ msgid ""
 "influence"
 msgstr "Režim Voronoi bere v úvahu pouze vliv bodu nejbližšího vektor mv"
 
-#: plug-ins/help/domain.c:112
-#, c-format
-msgid ""
-"Failed to open help files:\n"
-"%s"
-msgstr ""
-"Nemohu otevřít soubory nápovědy:\n"
-"%s"
+#: plug-ins/help/domain.c:161
+msgid "The GIMP help files are not installed."
+msgstr "Soubory nápovědy GIMPu nejsou nainstalovány."
 
-#: plug-ins/help/domain.c:114
-#, c-format
-msgid ""
-"Parse error in help domain:\n"
-"%s\n"
-"\n"
-"(entries appearing before the error have been added anyway)"
-msgstr ""
-"Chyba při zpracovávání domény nápovědy:\n"
-"%s\n"
-"\n"
-"(přesto jsem přidal položky před chybou)"
+#: plug-ins/help/domain.c:163
+msgid "There is a problem with the GIMP help files."
+msgstr "Se soubory nápovědy GIMPu je problém."
 
-#: plug-ins/help/domain.c:133
+#: plug-ins/help/domain.c:168
+msgid "Please check your installation."
+msgstr "Zkontrolujte prosím svou instalaci."
+
+#: plug-ins/help/domain.c:174
 #, c-format
 msgid "Help ID '%s' unknown"
 msgstr "ID nápovědy '%s' není známo"
 
-#: plug-ins/help/domain.c:259
-msgid "The GIMP help files are not installed."
-msgstr "Soubory nápovědy GIMPu nejsou nainstalovány."
-
-#: plug-ins/help/domain.c:261
-msgid "The requested help files are not installed."
-msgstr "Požadované soubory nápovědy nejsou nainstalovány."
-
-#: plug-ins/help/domain.c:270
-msgid "Please check your installation."
-msgstr "Zkontrolujte prosím svou instalaci."
+#: plug-ins/help/domain.c:414
+#, c-format
+msgid ""
+"Parse error in '%s':\n"
+"%s"
+msgstr ""
+"Chyba při zpracovávání '%s':\n"
+"%s"
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
@@ -11750,6 +11737,27 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
+#~ msgid ""
+#~ "Failed to open help files:\n"
+#~ "%s"
+#~ msgstr ""
+#~ "Nemohu otevřít soubory nápovědy:\n"
+#~ "%s"
+
+#~ msgid ""
+#~ "Parse error in help domain:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(entries appearing before the error have been added anyway)"
+#~ msgstr ""
+#~ "Chyba při zpracovávání domény nápovědy:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "(přesto jsem přidal položky před chybou)"
+
+#~ msgid "The requested help files are not installed."
+#~ msgstr "Požadované soubory nápovědy nejsou nainstalovány."
 
 #~ msgid "Image dimensions: %dx%d"
 #~ msgstr "Rozměry obrázku: %d×%d"
