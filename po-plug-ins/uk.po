@@ -11128,10 +11128,14 @@ msgstr "Малювання..."
 #, c-format
 msgid ""
 "*** Warning ***\n"
+"Рекоменду╓мо додати щось типу\n"
+"  (gimpressionist-path \"%s\")\n"
+"у фаш файл gimprc.\n"
+msgstr ""
+"*** Увага ***\n"
 "It is highly recommended to add\n"
 "  (gimpressionist-path \"%s\")\n"
 "(or similar) to your gimprc file.\n"
-msgstr ""
 
 #: plug-ins/gimpressionist/gimpressionist.c:346
 #: plug-ins/gimpressionist/gimpressionist.c:442
@@ -11168,21 +11172,21 @@ msgstr "Д╕апазон кут╕в:"
 
 #: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "К╕льк╕сть напрямк╕в (тобто пензл╕в)"
 
 #: plug-ins/gimpressionist/orientation.c:105
 msgid "The angle of the first brush to create"
-msgstr ""
+msgstr "Кут першого пензля"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid "How large an angle-span to use (360 = full circle)"
-msgstr ""
+msgstr "Величина д╕апазону кут╕в (360 - полне коло)"
 
 #: plug-ins/gimpressionist/orientation.c:137
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr ""
+msgstr "Яскрав╕сть д╕лянки визнача╓ напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:141
 #: plug-ins/gimpressionist/size.c:140
