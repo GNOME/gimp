@@ -1,3 +1,9 @@
+2000-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/layers_dialog.c: corrected the usage of the 
+	"invalidate_preview" signal. Now simpler and more
+	robust. Should fix bug #11248.
+
 Tue May 16 20:26:13 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* gimp/plug-ins/gap/gap_mov_dialog.c,

@@ -122,7 +122,6 @@ struct _LayerWidget
   GimpDropType drop_type;
 
   gboolean   layer_pixmap_valid;
-  guint      invalidate_preview_handler;
 };
 
 /*  layers dialog widget routines  */
@@ -1252,11 +1251,6 @@ layers_dialog_add_layer (Layer *layer)
   layersD->layer_widgets =
     g_slist_insert (layersD->layer_widgets, layer_widget, position);
   gtk_list_insert_items (GTK_LIST (layersD->layer_list), item_list, position);
-
-  layer_widget->invalidate_preview_handler = 
-    gtk_signal_connect (GTK_OBJECT (layer), "invalidate_pr",
-			GTK_SIGNAL_FUNC (invalidate_preview_callback),
-			(gpointer)layer_widget);
 }
 
 static void
@@ -1271,9 +1265,6 @@ layers_dialog_remove_layer (Layer *layer)
 
   /*  Make sure the gimage is not notified of this change  */
   suspend_gimage_notify++;
-
-  gtk_signal_disconnect (GTK_OBJECT (layer), 
-			 layer_widget->invalidate_preview_handler);
 
   /*  Remove the requested layer from the dialog  */
   list = g_list_append (list, layer_widget->list_item);
@@ -2224,6 +2215,11 @@ layer_widget_create (GimpImage *gimage,
   gtk_widget_show (list_item);
 
   gtk_widget_ref (layer_widget->list_item);
+
+  gtk_signal_connect_while_alive (GTK_OBJECT (layer), "invalidate_pr",
+				  GTK_SIGNAL_FUNC (invalidate_preview_callback),
+				  (gpointer)layer_widget,
+				  GTK_OBJECT (layer_widget->list_item));
 
   return layer_widget;
 }
