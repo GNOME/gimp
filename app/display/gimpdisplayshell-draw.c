@@ -559,7 +559,6 @@ toolbox_free ()
   for (i = 21; i < NUM_TOOLS; i++)
     {
       gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
-      gtk_widget_destroy (GTK_WIDGET (tool_widgets[i]));
     }			  
   gtk_object_destroy (GTK_OBJECT (tool_tips));
   gtk_object_unref   (GTK_OBJECT (tool_tips));
