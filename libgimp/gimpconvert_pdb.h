@@ -29,15 +29,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_convert_rgb       (gint32                  image_ID);
-gboolean gimp_convert_grayscale (gint32                  image_ID);
-gboolean gimp_convert_indexed   (gint32                  image_ID,
-				 GimpConvertDitherType   dither_type,
-				 GimpConvertPaletteType  palette_type,
-				 gint                    num_cols,
-				 gboolean                alpha_dither,
-				 gboolean                remove_unused,
-				 const gchar            *palette);
+gboolean gimp_image_convert_rgb       (gint32                  image_ID);
+gboolean gimp_image_convert_grayscale (gint32                  image_ID);
+gboolean gimp_image_convert_indexed   (gint32                  image_ID,
+				       GimpConvertDitherType   dither_type,
+				       GimpConvertPaletteType  palette_type,
+				       gint                    num_cols,
+				       gboolean                alpha_dither,
+				       gboolean                remove_unused,
+				       const gchar            *palette);
 
 
 G_END_DECLS

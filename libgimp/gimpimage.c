@@ -32,7 +32,7 @@
  * Returns the image's colormap
  *
  * This procedure returns an actual pointer to the image's colormap, as
- * well as the number of colors contained in the colormap. If the image 
+ * well as the number of colors contained in the colormap. If the image
  * is not of base type INDEXED, this pointer will be NULL.
  *
  * Returns: The image's colormap.
@@ -117,10 +117,10 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  * See Also: gimp_image_parasite_attach()
  */
 void
-gimp_image_attach_new_parasite (gint32         image_ID, 
-				const gchar   *name, 
+gimp_image_attach_new_parasite (gint32         image_ID,
+				const gchar   *name,
 				gint           flags,
-				gint           size, 
+				gint           size,
 				gconstpointer  data)
 {
   GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);

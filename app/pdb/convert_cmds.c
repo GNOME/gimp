@@ -35,21 +35,21 @@
 #include "core/gimpimage.h"
 #include "core/gimppalette.h"
 
-static ProcRecord convert_rgb_proc;
-static ProcRecord convert_grayscale_proc;
-static ProcRecord convert_indexed_proc;
+static ProcRecord image_convert_rgb_proc;
+static ProcRecord image_convert_grayscale_proc;
+static ProcRecord image_convert_indexed_proc;
 
 void
 register_convert_procs (Gimp *gimp)
 {
-  procedural_db_register (gimp, &convert_rgb_proc);
-  procedural_db_register (gimp, &convert_grayscale_proc);
-  procedural_db_register (gimp, &convert_indexed_proc);
+  procedural_db_register (gimp, &image_convert_rgb_proc);
+  procedural_db_register (gimp, &image_convert_grayscale_proc);
+  procedural_db_register (gimp, &image_convert_indexed_proc);
 }
 
 static Argument *
-convert_rgb_invoker (Gimp     *gimp,
-                     Argument *args)
+image_convert_rgb_invoker (Gimp     *gimp,
+                           Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -62,10 +62,10 @@ convert_rgb_invoker (Gimp     *gimp,
     if ((success = (gimp_image_base_type (gimage) != GIMP_RGB)))
       gimp_image_convert ((void *) gimage, GIMP_RGB, 0, 0, 0, 1, 0, NULL);
 
-  return procedural_db_return_args (&convert_rgb_proc, success);
+  return procedural_db_return_args (&image_convert_rgb_proc, success);
 }
 
-static ProcArg convert_rgb_inargs[] =
+static ProcArg image_convert_rgb_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -74,9 +74,9 @@ static ProcArg convert_rgb_inargs[] =
   }
 };
 
-static ProcRecord convert_rgb_proc =
+static ProcRecord image_convert_rgb_proc =
 {
-  "gimp_convert_rgb",
+  "gimp_image_convert_rgb",
   "Convert specified image to RGB color",
   "This procedure converts the specified image to RGB color. This process requires an image of type GIMP_GRAY or GIMP_INDEXED. No image content is lost in this process aside from the colormap for an indexed image.",
   "Spencer Kimball & Peter Mattis",
@@ -84,15 +84,15 @@ static ProcRecord convert_rgb_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  convert_rgb_inargs,
+  image_convert_rgb_inargs,
   0,
   NULL,
-  { { convert_rgb_invoker } }
+  { { image_convert_rgb_invoker } }
 };
 
 static Argument *
-convert_grayscale_invoker (Gimp     *gimp,
-                           Argument *args)
+image_convert_grayscale_invoker (Gimp     *gimp,
+                                 Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -105,10 +105,10 @@ convert_grayscale_invoker (Gimp     *gimp,
     if ((success = (gimp_image_base_type (gimage) != GIMP_GRAY)))
       gimp_image_convert ((void *) gimage, GIMP_GRAY, 0, 0, 0, 1, 0, NULL);
 
-  return procedural_db_return_args (&convert_grayscale_proc, success);
+  return procedural_db_return_args (&image_convert_grayscale_proc, success);
 }
 
-static ProcArg convert_grayscale_inargs[] =
+static ProcArg image_convert_grayscale_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -117,9 +117,9 @@ static ProcArg convert_grayscale_inargs[] =
   }
 };
 
-static ProcRecord convert_grayscale_proc =
+static ProcRecord image_convert_grayscale_proc =
 {
-  "gimp_convert_grayscale",
+  "gimp_image_convert_grayscale",
   "Convert specified image to grayscale (256 intensity levels)",
   "This procedure converts the specified image to grayscale with 8 bits per pixel (256 intensity levels). This process requires an image of type GIMP_RGB or GIMP_INDEXED.",
   "Spencer Kimball & Peter Mattis",
@@ -127,15 +127,15 @@ static ProcRecord convert_grayscale_proc =
   "1995-1996",
   GIMP_INTERNAL,
   1,
-  convert_grayscale_inargs,
+  image_convert_grayscale_inargs,
   0,
   NULL,
-  { { convert_grayscale_invoker } }
+  { { image_convert_grayscale_invoker } }
 };
 
 static Argument *
-convert_indexed_invoker (Gimp     *gimp,
-                         Argument *args)
+image_convert_indexed_invoker (Gimp     *gimp,
+                               Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
@@ -219,10 +219,10 @@ convert_indexed_invoker (Gimp     *gimp,
 			    alpha_dither, remove_unused, palette_type, palette);
     }
 
-  return procedural_db_return_args (&convert_indexed_proc, success);
+  return procedural_db_return_args (&image_convert_indexed_proc, success);
 }
 
-static ProcArg convert_indexed_inargs[] =
+static ProcArg image_convert_indexed_inargs[] =
 {
   {
     GIMP_PDB_IMAGE,
@@ -261,9 +261,9 @@ static ProcArg convert_indexed_inargs[] =
   }
 };
 
-static ProcRecord convert_indexed_proc =
+static ProcRecord image_convert_indexed_proc =
 {
-  "gimp_convert_indexed",
+  "gimp_image_convert_indexed",
   "Convert specified image to and Indexed image",
   "This procedure converts the specified image to 'indexed' color. This process requires an image of type GIMP_GRAY or GIMP_RGB. The 'palette_type' specifies what kind of palette to use, A type of '0' means to use an optimal palette of 'num_cols' generated from the colors in the image. A type of '1' means to re-use the previous palette (not currently implemented). A type of '2' means to use the so-called WWW-optimized palette. Type '3' means to use only black and white colors. A type of '4' means to use a palette from the gimp palettes directories. The 'dither type' specifies what kind of dithering to use. '0' means no dithering, '1' means standard Floyd-Steinberg error diffusion, '2' means Floyd-Steinberg error diffusion with reduced bleeding, '3' means dithering based on pixel location ('Fixed' dithering).",
   "Spencer Kimball & Peter Mattis",
@@ -271,8 +271,8 @@ static ProcRecord convert_indexed_proc =
   "1995-1996",
   GIMP_INTERNAL,
   7,
-  convert_indexed_inargs,
+  image_convert_indexed_inargs,
   0,
   NULL,
-  { { convert_indexed_invoker } }
+  { { image_convert_indexed_invoker } }
 };

@@ -1,5 +1,30 @@
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/convert.pdb: renamed gimp_convert_*() functions
+	to gimp_image_convert_*().
+
+	* libgimp/gimpimage.[ch]: removed gimp_image_convert_* #defines.
+
+	* libgimp/gimpcompat.h: added old stuff.
+
+	* app/pdb/convert_cmds.c
+	* libgimp/gimpconvert_pdb.[ch]: regenerated.
+
+	* plug-ins/common/gifload.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/sample_colorize.c
+	* plug-ins/common/winclipboard.c
+	* plug-ins/script-fu/scripts/burn-in-anim.scm
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/crystal-logo.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/gimp-headers.scm
+	* plug-ins/script-fu/scripts/gimp-labels.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/spinning-globe.scm: changed accordingly.
+
+2003-12-04  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/layer.pdb: renamed gimp_layer_mask() to
 	gimp_layer_get_mask().
 

@@ -26,7 +26,7 @@
 #include "gimp.h"
 
 /**
- * gimp_convert_rgb:
+ * gimp_image_convert_rgb:
  * @image_ID: The image.
  *
  * Convert specified image to RGB color
@@ -39,13 +39,13 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_convert_rgb (gint32 image_ID)
+gimp_image_convert_rgb (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_convert_rgb",
+  return_vals = gimp_run_procedure ("gimp_image_convert_rgb",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -58,7 +58,7 @@ gimp_convert_rgb (gint32 image_ID)
 }
 
 /**
- * gimp_convert_grayscale:
+ * gimp_image_convert_grayscale:
  * @image_ID: The image.
  *
  * Convert specified image to grayscale (256 intensity levels)
@@ -70,13 +70,13 @@ gimp_convert_rgb (gint32 image_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_convert_grayscale (gint32 image_ID)
+gimp_image_convert_grayscale (gint32 image_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_convert_grayscale",
+  return_vals = gimp_run_procedure ("gimp_image_convert_grayscale",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_END);
@@ -89,7 +89,7 @@ gimp_convert_grayscale (gint32 image_ID)
 }
 
 /**
- * gimp_convert_indexed:
+ * gimp_image_convert_indexed:
  * @image_ID: The image.
  * @dither_type: dither type (0=none, 1=fs, 2=fs/low-bleed 3=fixed).
  * @palette_type: The type of palette to use.
@@ -117,19 +117,19 @@ gimp_convert_grayscale (gint32 image_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_convert_indexed (gint32                  image_ID,
-		      GimpConvertDitherType   dither_type,
-		      GimpConvertPaletteType  palette_type,
-		      gint                    num_cols,
-		      gboolean                alpha_dither,
-		      gboolean                remove_unused,
-		      const gchar            *palette)
+gimp_image_convert_indexed (gint32                  image_ID,
+			    GimpConvertDitherType   dither_type,
+			    GimpConvertPaletteType  palette_type,
+			    gint                    num_cols,
+			    gboolean                alpha_dither,
+			    gboolean                remove_unused,
+			    const gchar            *palette)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
   gboolean success = TRUE;
 
-  return_vals = gimp_run_procedure ("gimp_convert_indexed",
+  return_vals = gimp_run_procedure ("gimp_image_convert_indexed",
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, dither_type,

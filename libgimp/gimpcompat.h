@@ -42,6 +42,9 @@ G_BEGIN_DECLS
 #define gimp_use_xshm                           TRUE
 #define gimp_color_cube                         ((guchar *) { 6, 6, 4, 24 })
 
+#define gimp_convert_rgb                        gimp_image_convert_rgb
+#define gimp_convert_grayscale                  gimp_image_convert_grayscale
+#define gimp_convert_indexed                    gimp_image_convert_indexed
 #define gimp_crop                               gimp_image_crop
 
 #define gimp_channel_get_image_id               gimp_drawable_get_image

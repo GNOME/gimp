@@ -153,9 +153,9 @@ gimp_threshold
 
 <SECTION>
 <FILE>gimpconvert</FILE>
-gimp_convert_rgb
-gimp_convert_grayscale
-gimp_convert_indexed
+gimp_image_convert_rgb
+gimp_image_convert_grayscale
+gimp_image_convert_indexed
 </SECTION>
 
 <SECTION>
@@ -371,9 +371,6 @@ gimp_image_get_channel_by_tattoo
 gimp_image_get_cmap
 gimp_image_set_cmap
 gimp_image_get_thumbnail_data
-gimp_image_convert_rgb
-gimp_image_convert_grayscale
-gimp_image_convert_indexed
 gimp_image_duplicate
 gimp_image_parasite_find
 gimp_image_parasite_list

@@ -15,7 +15,7 @@ Conversions between RGB, indexed, and grayscale modes.
 
 </para>
 
-<!-- ##### FUNCTION gimp_convert_rgb ##### -->
+<!-- ##### FUNCTION gimp_image_convert_rgb ##### -->
 <para>
 
 </para>
@@ -24,7 +24,7 @@ Conversions between RGB, indexed, and grayscale modes.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_convert_grayscale ##### -->
+<!-- ##### FUNCTION gimp_image_convert_grayscale ##### -->
 <para>
 
 </para>
@@ -33,7 +33,7 @@ Conversions between RGB, indexed, and grayscale modes.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_convert_indexed ##### -->
+<!-- ##### FUNCTION gimp_image_convert_indexed ##### -->
 <para>
 
 </para>
