@@ -32,21 +32,24 @@ GtkType gimp_drawable_get_type (void);
 
 typedef enum
 {
+	FOREGROUND_FILL,
 	BACKGROUND_FILL,
 	WHITE_FILL,
 	TRANSPARENT_FILL,
-	NO_FILL,
-	FOREGROUND_FILL
+	NO_FILL
 } GimpFillType;
 
 
 /*  drawable access functions  */
 void             gimp_drawable_merge_shadow       (GimpDrawable *, int);
-void gimp_drawable_fill (GimpDrawable *drawable, guchar r, guchar g,
-			 guchar b, guchar a);
+void             gimp_drawable_fill               (GimpDrawable *drawable,
+						   guchar r, guchar g,
+						   guchar b, guchar a);
 
 int              gimp_drawable_mask_bounds        (GimpDrawable *,
-					      int *, int *, int *, int *);
+						   int *, int *,
+						   int *, int *);
+
 void             gimp_drawable_invalidate_preview (GimpDrawable *);
 int              gimp_drawable_dirty              (GimpDrawable *);
 int              gimp_drawable_clean              (GimpDrawable *);
@@ -61,13 +64,17 @@ TileManager *    gimp_drawable_shadow             (GimpDrawable *);
 int              gimp_drawable_bytes              (GimpDrawable *);
 int              gimp_drawable_width              (GimpDrawable *);
 int              gimp_drawable_height             (GimpDrawable *);
-int		 gimp_drawable_visible	     (GimpDrawable *);
-void             gimp_drawable_offsets            (GimpDrawable *, int *, int *);
+int		 gimp_drawable_visible	          (GimpDrawable *);
+void             gimp_drawable_offsets            (GimpDrawable *, 
+						   int *, int *);
+
 unsigned char *  gimp_drawable_cmap               (GimpDrawable *);
-char *		 gimp_drawable_name		     (GimpDrawable *);
+char *		 gimp_drawable_name	          (GimpDrawable *);
 
 GimpDrawable *   gimp_drawable_get_ID             (int);
-void		 gimp_drawable_deallocate	     (GimpDrawable *);
-GimpImage *       gimp_drawable_gimage               (GimpDrawable*);
+void		 gimp_drawable_deallocate         (GimpDrawable *);
+GimpImage *      gimp_drawable_gimage             (GimpDrawable*);
 
 #endif /* __GIMPDRAWABLE_H__ */
+
+

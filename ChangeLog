@@ -1,3 +1,9 @@
+Tue Jul 28 15:04:39 CDT 1998  Larry Ewing  <lewing@gimp.org>
+
+	* app/gimpdrawable.h: reordered the GimpFillType enum,
+	unfortunately this will cause a lot of recompilation for the
+	rest of you.
+
 Tue Jul 28 14:14:43 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/drawable.c (drawable_fill): added a case for
