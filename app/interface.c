@@ -715,9 +715,14 @@ create_display_shell (int   gdisp_id,
 
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
-  gtk_widget_show (gdisp->origin);
-  gtk_widget_show (gdisp->hrule);
-  gtk_widget_show (gdisp->vrule);
+
+  if (show_rulers)
+    {
+      gtk_widget_show (gdisp->origin);
+      gtk_widget_show (gdisp->hrule);
+      gtk_widget_show (gdisp->vrule);
+    }
+
   gtk_widget_show (gdisp->canvas);
   gtk_widget_show (table);
   gtk_widget_show (gdisp->shell);
