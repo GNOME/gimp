@@ -1,3 +1,7 @@
+2004-09-17  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/qmask-commands.c (qmask_query_response): Fixed bug #152937.
+
 2004-09-16  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: merged patch from 

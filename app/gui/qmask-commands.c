@@ -216,21 +216,21 @@ qmask_query_response (GtkWidget        *widget,
       GimpChannel *channel = gimp_image_get_qmask (options->gimage);
       GimpRGB      color;
 
-      if (options->gimage && channel)
-        {
-          gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-                                       &color);
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+                                   &color);
 
-          if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
+      if (options->gimage)
+        {
+          if (channel && gimp_rgba_distance (&color, &channel->color) > 0.0001)
             {
               gimp_channel_set_color (channel, &color, TRUE);
 
               gimp_image_flush (options->gimage);
             }
-        }
 
-      /* update the qmask color no matter what */
-      options->gimage->qmask_color = color;
+          /* update the qmask color no matter what */
+          options->gimage->qmask_color = color;
+        }
     }
 
   gtk_widget_destroy (options->query_box);
