@@ -1,3 +1,8 @@
+Mon Jan 10 02:10:15 GMT 1999 Nick Lamb <njl195@zepler.org.uk>
+
+	* PLUGIN_MAINTAINERS: Put me down for CEL, PCX, TIF and PNG
+	Consider moving unmaintained File/Open plug-ins to me?
+
 Sun Jan  9 14:58:18 PST 2000 Manish Singh <yosh@gimp.org>
 
         Applied Patch by Daniel Egger, slightly modified.

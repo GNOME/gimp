@@ -39,8 +39,8 @@ SIZE       :  36.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : CEL
-AUTHOR     : Nick Lamb
-MAINTAINER : 
+AUTHOR     : Nick Lamb <njl195@zepler.org.uk>
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  15.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -634,7 +634,7 @@ COMMENT    :
 -----------
 NAME       : pcx
 AUTHOR     : Francisco Bustamante & Nick Lamb
-MAINTAINER : 
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  16.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -670,7 +670,7 @@ COMMENT    :
 -----------
 NAME       : png
 AUTHOR     : Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>
-MAINTAINER : 
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  28.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
@@ -868,7 +868,7 @@ COMMENT    :
 -----------
 NAME       : tiff
 AUTHOR     : Spencer Kimball, Peter Mattis & Nick Lamb
-MAINTAINER : 
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  45.3 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
