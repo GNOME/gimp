@@ -94,7 +94,7 @@ static void gimp_container_grid_view_viewport_resized (GtkWidget              *w
                                                        GimpContainerGridView  *view);
 
 
-static GimpContainerViewClass *parent_class = NULL;
+static GimpContainerBoxClass *parent_class = NULL;
 
 static guint grid_view_signals[LAST_SIGNAL] = { 0 };
 
@@ -122,7 +122,7 @@ gimp_container_grid_view_get_type (void)
         (GInstanceInitFunc) gimp_container_grid_view_init,
       };
 
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_VIEW,
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_BOX,
                                           "GimpContainerGridView",
                                           &view_info, 0);
     }
@@ -191,14 +191,14 @@ gimp_container_grid_view_class_init (GimpContainerGridViewClass *klass)
 static void
 gimp_container_grid_view_init (GimpContainerGridView *grid_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (grid_view);
+  GimpContainerBox *box = GIMP_CONTAINER_BOX (grid_view);
 
   grid_view->rows          = 1;
   grid_view->columns       = 1;
   grid_view->visible_rows  = 0;
   grid_view->selected_item = NULL;
 
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win),
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                   GTK_POLICY_NEVER, GTK_POLICY_ALWAYS);
 
   grid_view->name_label = gtk_label_new (_("(None)"));
@@ -209,7 +209,7 @@ gimp_container_grid_view_init (GimpContainerGridView *grid_view)
   gtk_widget_show (grid_view->name_label);
 
   grid_view->wrap_box = gtk_hwrap_box_new (FALSE);
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (view->scrolled_win),
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                          grid_view->wrap_box);
   gtk_widget_show (grid_view->wrap_box);
 
@@ -564,6 +564,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
 					 gpointer           insert_data)
 {
   GimpContainerGridView *grid_view = GIMP_CONTAINER_GRID_VIEW (view);
+  GimpContainerBox      *box       = GIMP_CONTAINER_BOX (view);
   GimpPreview           *preview   = NULL;
 
   if (insert_data)
@@ -586,7 +587,7 @@ gimp_container_grid_view_highlight_item (GimpContainerView *view,
       gchar          *name;
 
       adj = gtk_scrolled_window_get_vadjustment
-	(GTK_SCROLLED_WINDOW (view->scrolled_win));
+	(GTK_SCROLLED_WINDOW (box->scrolled_win));
 
       gtk_widget_size_request (GTK_WIDGET (preview), &preview_requisition);
 

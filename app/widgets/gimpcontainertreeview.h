@@ -23,7 +23,7 @@
 #define __GIMP_CONTAINER_TREE_VIEW_H__
 
 
-#include "gimpcontainerview.h"
+#include "gimpcontainerbox.h"
 
 
 #define GIMP_TYPE_CONTAINER_TREE_VIEW            (gimp_container_tree_view_get_type ())
@@ -38,7 +38,7 @@ typedef struct _GimpContainerTreeViewClass  GimpContainerTreeViewClass;
 
 struct _GimpContainerTreeView
 {
-  GimpContainerView  parent_instance;
+  GimpContainerBox   parent_instance;
 
   GtkTreeModel      *model;
   gint               n_model_columns;
@@ -70,7 +70,7 @@ struct _GimpContainerTreeView
 
 struct _GimpContainerTreeViewClass
 {
-  GimpContainerViewClass  parent_class;
+  GimpContainerBoxClass  parent_class;
 
   gboolean (* drop_possible) (GimpContainerTreeView   *tree_view,
                               GimpViewable            *src_viewable,

@@ -1,3 +1,28 @@
+2004-05-10  Michael Natterer  <mitch@gimp.org>
+
+	Prepare for making an interface out of GimpContainerView:
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontainerbox.[ch]: new GimpContainerView
+	subclass which implements GimpDocked interface and contains the
+	vbox-with-scrolled-window stuff common to GimpContainerGridView
+	and GimpContainerTreeView.
+
+	* app/widgets/gimpcontainerview.[ch]: removed that functionality
+	here.
+
+	* app/widgets/gimpcontainergridview.[ch]
+	* app/widgets/gimpcontainertreeview.[ch]: derive them from
+	GimpContainerBox.
+
+	* app/gui/brush-select.c
+	* app/gui/font-select.c
+	* app/gui/gradient-select.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/widgets/gimpcontainerpopup.c: changed accordingly.
+
 2004-05-10  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/view-actions.c: added a stock icon for "view-zoom-1-1".

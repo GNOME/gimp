@@ -36,10 +36,7 @@
 
 #include "gimpcontainerview.h"
 #include "gimpdnd.h"
-#include "gimpdocked.h"
-#include "gimppreview.h"
 #include "gimppreviewrenderer.h"
-#include "gimppropwidgets.h"
 
 
 enum
@@ -61,7 +58,6 @@ enum
 static void   gimp_container_view_class_init        (GimpContainerViewClass *klass);
 static void   gimp_container_view_init              (GimpContainerView      *view,
                                                      GimpContainerViewClass *klass);
-static void   gimp_container_view_docked_iface_init (GimpDockedInterface    *docked_iface);
 
 static void   gimp_container_view_set_property      (GObject          *object,
                                                      guint             property_id,
@@ -100,13 +96,6 @@ static void   gimp_container_view_thaw        (GimpContainerView      *view,
 static void   gimp_container_view_name_changed (GimpViewable          *viewable,
                                                 GimpContainerView     *view);
 
-static GtkWidget * gimp_container_view_get_preview (GimpDocked         *docked,
-                                                    GimpContext        *context,
-                                                    GtkIconSize         size);
-static void gimp_container_view_set_docked_context (GimpDocked         *docked,
-                                                    GimpContext        *context,
-                                                    GimpContext        *prev_context);
-
 static void   gimp_container_view_context_changed  (GimpContext        *context,
 						    GimpViewable       *viewable,
 						    GimpContainerView  *view);
@@ -142,19 +131,10 @@ gimp_container_view_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_container_view_init,
       };
-      static const GInterfaceInfo docked_iface_info =
-      {
-        (GInterfaceInitFunc) gimp_container_view_docked_iface_init,
-        NULL,           /* iface_finalize */
-        NULL            /* iface_data     */
-      };
 
       type = g_type_register_static (GIMP_TYPE_EDITOR,
                                      "GimpContainerView",
                                      &view_info, 0);
-
-      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
-                                   &docked_iface_info);
     }
 
   return type;
@@ -163,11 +143,8 @@ gimp_container_view_get_type (void)
 static void
 gimp_container_view_class_init (GimpContainerViewClass *klass)
 {
-  GObjectClass   *object_class;
-  GtkObjectClass *gtk_object_class;
-
-  object_class     = G_OBJECT_CLASS (klass);
-  gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GObjectClass   *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass *gtk_object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -247,15 +224,6 @@ gimp_container_view_init (GimpContainerView      *view,
   view->preview_size         = 0;
   view->preview_border_width = 1;
   view->reorderable          = FALSE;
-
-  view->scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_box_pack_start (GTK_BOX (view), view->scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (view->scrolled_win);
-
-  GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (view->scrolled_win)->vscrollbar,
-                          GTK_CAN_FOCUS);
-
-  view->dnd_widget = view->scrolled_win;
 }
 
 static void
@@ -320,13 +288,6 @@ gimp_container_view_destroy (GtkObject *object)
     }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_container_view_docked_iface_init (GimpDockedInterface *docked_iface)
-{
-  docked_iface->get_preview = gimp_container_view_get_preview;
-  docked_iface->set_context = gimp_container_view_set_docked_context;
 }
 
 void
@@ -592,42 +553,6 @@ gimp_container_view_enable_dnd (GimpContainerView *view,
 			      view);
 }
 
-void
-gimp_container_view_set_size_request (GimpContainerView *view,
-                                      gint               width,
-                                      gint               height)
-{
-  GtkScrolledWindowClass *sw_class;
-  GtkRequisition          req;
-  gint                    scrollbar_width;
-  gint                    border_x;
-  gint                    border_y;
-
-  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (width  <= 0 || width  >= view->preview_size);
-  g_return_if_fail (height <= 0 || height >= view->preview_size);
-
-  sw_class = GTK_SCROLLED_WINDOW_GET_CLASS (view->scrolled_win);
-
-  if (sw_class->scrollbar_spacing >= 0)
-    scrollbar_width = sw_class->scrollbar_spacing;
-  else
-    gtk_widget_style_get (GTK_WIDGET (view->scrolled_win),
-                          "scrollbar_spacing", &scrollbar_width,
-                          NULL);
-
-  gtk_widget_size_request (GTK_SCROLLED_WINDOW (view->scrolled_win)->vscrollbar,
-                           &req);
-  scrollbar_width += req.width;
-
-  border_x = view->scrolled_win->style->xthickness * 2 + scrollbar_width;
-  border_y = view->scrolled_win->style->ythickness * 2;
-
-  gtk_widget_set_size_request (view->scrolled_win,
-                               width  > 0 ? width  + border_x : -1,
-                               height > 0 ? height + border_y : -1);
-}
-
 gboolean
 gimp_container_view_select_item (GimpContainerView *view,
 				 GimpViewable      *viewable)
@@ -885,47 +810,6 @@ gimp_container_view_name_changed (GimpViewable      *viewable,
 }
 
 static void
-gimp_container_view_set_docked_context (GimpDocked  *docked,
-                                        GimpContext *context,
-                                        GimpContext *prev_context)
-{
-  gimp_container_view_set_context (GIMP_CONTAINER_VIEW (docked), context);
-}
-
-static GtkWidget *
-gimp_container_view_get_preview (GimpDocked   *docked,
-                                 GimpContext  *context,
-                                 GtkIconSize   size)
-{
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (docked);
-  GtkWidget         *preview;
-  GdkScreen         *screen;
-  gint               width;
-  gint               height;
-  gint               border_width = 1;
-  const gchar       *prop_name;
-
-  g_return_val_if_fail (view->container != NULL, NULL);
-
-  screen = gtk_widget_get_screen (GTK_WIDGET (view));
-  gtk_icon_size_lookup_for_settings (gtk_settings_get_for_screen (screen),
-                                     size, &width, &height);
-
-  prop_name = gimp_context_type_to_prop_name (view->container->children_type);
-
-  if (! strcmp (prop_name, "tool") ||
-      ! strcmp (prop_name, "template"))
-    border_width = 0;
-
-  preview = gimp_prop_preview_new (G_OBJECT (context), prop_name, height);
-  GIMP_PREVIEW (preview)->renderer->size = -1;
-  gimp_preview_renderer_set_size_full (GIMP_PREVIEW (preview)->renderer,
-                                       width, height, border_width);
-
-  return preview;
-}
-
-static void
 gimp_container_view_context_changed (GimpContext       *context,
 				     GimpViewable      *viewable,
 				     GimpContainerView *view)
@@ -948,9 +832,7 @@ gimp_container_view_viewable_dropped (GtkWidget    *widget,
 				      GimpViewable *viewable,
 				      gpointer      data)
 {
-  GimpContainerView *view;
-
-  view = GIMP_CONTAINER_VIEW (data);
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
 
   gimp_context_set_by_type (view->context,
                             view->container->children_type,
@@ -962,9 +844,7 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
 					     GimpViewable *viewable,
 					     gpointer      data)
 {
-  GimpContainerView *view;
-
-  view = (GimpContainerView *) data;
+  GimpContainerView *view = GIMP_CONTAINER_VIEW (data);
 
   if (viewable && gimp_container_have (view->container,
 				       GIMP_OBJECT (viewable)))

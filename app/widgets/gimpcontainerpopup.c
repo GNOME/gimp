@@ -487,11 +487,11 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
                                    FALSE, /* reorderable */
                                    NULL, NULL, NULL);
 
-  gimp_container_view_set_size_request (GIMP_CONTAINER_VIEW (GIMP_CONTAINER_EDITOR (popup->editor)->view),
-                                        6  * (popup->default_preview_size +
-                                              2 * popup->preview_border_width),
-                                        10 * (popup->default_preview_size +
-                                              2 * popup->preview_border_width));
+  gimp_container_box_set_size_request (GIMP_CONTAINER_BOX (GIMP_CONTAINER_EDITOR (popup->editor)->view),
+                                       6  * (popup->default_preview_size +
+                                             2 * popup->preview_border_width),
+                                       10 * (popup->default_preview_size +
+                                             2 * popup->preview_border_width));
 
   if (GIMP_IS_CONTAINER_GRID_VIEW (popup->editor->view))
     gtk_widget_hide (GIMP_CONTAINER_GRID_VIEW (popup->editor->view)->name_label);

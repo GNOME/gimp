@@ -23,7 +23,7 @@
 #define __GIMP_CONTAINER_GRID_VIEW_H__
 
 
-#include "gimpcontainerview.h"
+#include "gimpcontainerbox.h"
 
 
 #define GIMP_TYPE_CONTAINER_GRID_VIEW            (gimp_container_grid_view_get_type ())
@@ -38,21 +38,21 @@ typedef struct _GimpContainerGridViewClass  GimpContainerGridViewClass;
 
 struct _GimpContainerGridView
 {
-  GimpContainerView  parent_instance;
+  GimpContainerBox  parent_instance;
 
-  GtkWidget         *name_label;
-  GtkWidget         *wrap_box;
+  GtkWidget        *name_label;
+  GtkWidget        *wrap_box;
 
-  gint               rows;
-  gint               columns;
-  gint               visible_rows;
+  gint              rows;
+  gint              columns;
+  gint              visible_rows;
 
-  GimpPreview       *selected_item;
+  GimpPreview      *selected_item;
 };
 
 struct _GimpContainerGridViewClass
 {
-  GimpContainerViewClass  parent_class;
+  GimpContainerBoxClass  parent_class;
 
   gboolean (* move_cursor) (GimpContainerGridView *grid_view,
                             GtkMovementStep        step,

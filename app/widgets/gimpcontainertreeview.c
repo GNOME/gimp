@@ -96,7 +96,7 @@ static GimpViewable * gimp_container_tree_view_drag_viewable (GtkWidget       *w
                                                               gpointer         data);
 
 
-static GimpContainerViewClass *parent_class = NULL;
+static GimpContainerBoxClass *parent_class = NULL;
 
 
 GType
@@ -119,7 +119,7 @@ gimp_container_tree_view_get_type (void)
         (GInstanceInitFunc) gimp_container_tree_view_init,
       };
 
-      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_VIEW,
+      view_type = g_type_register_static (GIMP_TYPE_CONTAINER_BOX,
                                           "GimpContainerTreeView",
                                           &view_info, 0);
     }
@@ -130,13 +130,9 @@ gimp_container_tree_view_get_type (void)
 static void
 gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 {
-  GObjectClass           *object_class;
-  GtkWidgetClass         *widget_class;
-  GimpContainerViewClass *container_view_class;
-
-  object_class         = G_OBJECT_CLASS (klass);
-  widget_class         = GTK_WIDGET_CLASS (klass);
-  container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  GObjectClass           *object_class         = G_OBJECT_CLASS (klass);
+  GtkWidgetClass         *widget_class         = GTK_WIDGET_CLASS (klass);
+  GimpContainerViewClass *container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -164,7 +160,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 static void
 gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 {
-  GimpContainerView *view = GIMP_CONTAINER_VIEW (tree_view);
+  GimpContainerBox *box = GIMP_CONTAINER_BOX (tree_view);
 
   tree_view->n_model_columns = NUM_COLUMNS;
 
@@ -176,9 +172,9 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
   tree_view->model_column_name            = COLUMN_NAME;
   tree_view->model_column_name_attributes = COLUMN_NAME_ATTRIBUTES;
 
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (view->scrolled_win),
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                        GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win),
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (box->scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 }
 
@@ -189,6 +185,7 @@ gimp_container_tree_view_constructor (GType                  type,
 {
   GimpContainerTreeView *tree_view;
   GimpContainerView     *view;
+  GimpContainerBox      *box;
   GtkListStore          *list;
   GObject               *object;
 
@@ -196,6 +193,7 @@ gimp_container_tree_view_constructor (GType                  type,
 
   tree_view = GIMP_CONTAINER_TREE_VIEW (object);
   view      = GIMP_CONTAINER_VIEW (object);
+  box       = GIMP_CONTAINER_BOX (object);
 
   list = gtk_list_store_newv (tree_view->n_model_columns,
                               tree_view->model_columns);
@@ -206,7 +204,7 @@ gimp_container_tree_view_constructor (GType                  type,
   g_object_unref (list);
 
   gtk_tree_view_set_headers_visible (tree_view->view, FALSE);
-  gtk_container_add (GTK_CONTAINER (view->scrolled_win),
+  gtk_container_add (GTK_CONTAINER (box->scrolled_win),
                      GTK_WIDGET (tree_view->view));
   gtk_widget_show (GTK_WIDGET (tree_view->view));
 
