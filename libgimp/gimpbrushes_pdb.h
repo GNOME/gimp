@@ -31,13 +31,13 @@ extern "C" {
 /* For information look into the C source or the html documentation */
 
 
-gchar* gimp_brushes_get_brush_data (gchar                 *brush_name,
+gchar* gimp_brushes_get_brush_data (gchar                 *name,
 				    gdouble               *opacity,
 				    gint                  *spacing,
 				    GimpLayerModeEffects  *paint_mode,
 				    gint                  *width,
 				    gint                  *height,
-				    gint                  *mask_data_size,
+				    gint                  *length,
 				    guint8               **mask_data);
 
 

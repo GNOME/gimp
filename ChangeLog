@@ -1,3 +1,12 @@
+Mon Aug 21 11:57:48 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl
+	* tools/pdbgen/pdb/parasite.pdb: libgimp pdbgen munging
+
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimppatterns_pdb.[ch]: new autogenned files landed
+
 Mon Aug 21 10:33:59 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Made 1.1.25 release (1.2pre)

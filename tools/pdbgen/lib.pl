@@ -136,7 +136,7 @@ CODE
 
 	    # This is what's passed into gimp_run_procedure
 	    $argpass .= "\n\t\t\t\t" . ' ' x 4;
-	    $argpass .= "PARAM_$arg->{name}, ";
+	    $argpass .= "GIMP_PDB_$arg->{name}, ";
 
 	    if (exists $_->{implicit_fill}) {
 		$argpass .= $_->{implicit_fill};
@@ -235,7 +235,7 @@ CODE
 	    }
 
 	    $return_marshal .= <<CODE;
-if (return_vals[0].data.d_status == STATUS_SUCCESS)
+if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
 CODE
 
 	    $return_marshal .= ' ' x 4 . "{\n" if $#outargs;
@@ -253,7 +253,7 @@ CODE
 		    $cf = ')';
 		}
 		elsif ($type =~ /parasite/) {
-		    $ch = 'parasite_copy (&';
+		    $ch = 'gimp_parasite_copy (&';
 		    $cf = ')';
 		}
 		elsif ($type =~ /boolean|enum|guide/) {
@@ -394,12 +394,12 @@ CODE
 $rettype
 $wrapped$funcname ($clist)
 {
-  GParam *return_vals;
+  GimpParam *return_vals;
   gint nreturn_vals;$return_args$color
 
   return_vals = gimp_run_procedure ("$funcname",
 				    \&nreturn_vals,$argpass
-				    PARAM_END);
+				    GIMP_PDB_END);
 
   $return_marshal
 }

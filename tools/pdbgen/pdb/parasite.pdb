@@ -140,21 +140,6 @@ sub parasite_list {
 @headers = qw("gimpparasite.h" "gimpdrawable.h"
 	      "gimpimage.h");
 
-$extra{lib}->{code} = <<'CODE';
-void
-gimp_parasite_attach_new (gchar    *name,
-			  gint      flags,
-			  gint      size,
-			  gpointer  data)
-{
-  GimpParasite *parasite = gimp_parasite_new (name, flags, size, data);
-
-  gimp_parasite_attach (parasite);
-  gimp_parasite_free (parasite);
-}
-
-CODE
-
 @procs = qw(parasite_find parasite_attach parasite_detach parasite_list);
 
 @types = (
