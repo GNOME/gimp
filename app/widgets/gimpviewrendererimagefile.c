@@ -33,6 +33,7 @@
 #include "core/gimpimagefile.h"
 
 #include "gimpviewrendererimagefile.h"
+#include "gimpviewrenderer-frame.h"
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
 #define GTK_FILE_SYSTEM_ENABLE_UNSUPPORTED
@@ -100,33 +101,31 @@ static void
 gimp_view_renderer_imagefile_render (GimpViewRenderer *renderer,
                                      GtkWidget        *widget)
 {
-  GdkPixbuf *pixbuf = gimp_viewable_get_pixbuf (renderer->viewable,
-                                                renderer->width,
-                                                renderer->height);
+  GdkPixbuf *pixbuf = gimp_view_renderer_get_frame_pixbuf (renderer, widget,
+                                                           renderer->width,
+                                                           renderer->height);
 
 #ifdef ENABLE_FILE_SYSTEM_ICONS
-  if (! pixbuf)
+  if (! pixbuf &&
+      GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system)
     {
-      if (GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system)
+      const gchar *uri;
+
+      uri = gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+      if (uri)
         {
           GtkFileSystem *file_system;
-          const gchar   *uri;
+          GtkFilePath   *path;
 
           file_system = GIMP_VIEW_RENDERER_IMAGEFILE (renderer)->file_system;
 
-          uri = gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+          path = gtk_file_system_uri_to_path (file_system, uri);
 
-          if (uri)
-            {
-              GtkFilePath *path;
-
-              path = gtk_file_system_uri_to_path (file_system, uri);
-              pixbuf = gtk_file_system_render_icon (file_system, path, widget,
-                                                    MIN (renderer->width,
-                                                         renderer->height),
-                                                    NULL);
-              gtk_file_path_free (path);
-            }
+          pixbuf = gtk_file_system_render_icon (file_system, path, widget,
+                                                MIN (renderer->width,
+                                                     renderer->height),
+                                                NULL);
+          gtk_file_path_free (path);
         }
     }
 #endif /* ENABLE_FILE_SYSTEM_ICONS */

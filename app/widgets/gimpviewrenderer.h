@@ -67,7 +67,13 @@ struct _GimpViewRenderer
 
 struct _GimpViewRendererClass
 {
-  GObjectClass  parent_class;
+  GObjectClass   parent_class;
+
+  GdkPixbuf     *frame;
+  gint           frame_left;
+  gint           frame_right;
+  gint           frame_bottom;
+  gint           frame_top;
 
   /*  signals  */
   void (* update) (GimpViewRenderer   *renderer);
@@ -125,7 +131,6 @@ void   gimp_view_renderer_draw             (GimpViewRenderer   *renderer,
                                             GtkWidget          *widget,
                                             const GdkRectangle *draw_area,
                                             const GdkRectangle *expose_area);
-
 
 /*  protected  */
 

@@ -224,7 +224,6 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_SELECTION_BORDER,         NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_NAVIGATION,               NULL,        0, 0, LIBGIMP_DOMAIN },
-  { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_OFF,                NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_QMASK_ON,                 NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LIST,                     NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -253,6 +252,9 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_WARNING,                  NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WILBER,                   NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_WILBER_EEK,               NULL,        0, 0, LIBGIMP_DOMAIN },
+
+  { GIMP_STOCK_FRAME,                    NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_TEXTURE,                  NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TOOL_BLEND,               NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -619,6 +621,7 @@ gimp_stock_dialog_pixbufs[] =
   { GIMP_STOCK_WILBER,               stock_wilber_64               },
   { GIMP_STOCK_WILBER_EEK,           stock_wilber_eek_64           },
 
+  { GIMP_STOCK_FRAME,                stock_frame_64                },
   { GIMP_STOCK_TEXTURE,              stock_texture_64              }
 };
 

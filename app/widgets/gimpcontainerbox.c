@@ -231,7 +231,8 @@ gimp_container_box_get_preview (GimpDocked   *docked,
 
   prop_name = gimp_context_type_to_prop_name (container->children_type);
 
-  if (! strcmp (prop_name, "tool") ||
+  if (! strcmp (prop_name, "imagefile") ||
+      ! strcmp (prop_name, "tool")      ||
       ! strcmp (prop_name, "template"))
     border_width = 0;
 

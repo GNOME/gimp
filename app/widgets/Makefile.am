@@ -248,6 +248,8 @@ libappwidgets_a_sources = \
 	gimpviewabledialog.h		\
 	gimpviewrenderer.c		\
 	gimpviewrenderer.h		\
+	gimpviewrenderer-frame.c	\
+	gimpviewrenderer-frame.h	\
 	gimpviewrenderer-utils.c	\
 	gimpviewrenderer-utils.h	\
 	gimpviewrendererbrush.c		\

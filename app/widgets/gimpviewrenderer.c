@@ -56,26 +56,27 @@ enum
 };
 
 
-static void     gimp_view_renderer_class_init   (GimpViewRendererClass *klass);
-static void     gimp_view_renderer_init         (GimpViewRenderer      *renderer);
+static void      gimp_view_renderer_class_init   (GimpViewRendererClass *klass);
 
-static void     gimp_view_renderer_dispose      (GObject            *object);
-static void     gimp_view_renderer_finalize     (GObject            *object);
+static void      gimp_view_renderer_init         (GimpViewRenderer   *renderer);
 
-static gboolean gimp_view_renderer_idle_update  (GimpViewRenderer   *renderer);
-static void     gimp_view_renderer_real_draw    (GimpViewRenderer   *renderer,
-                                                 GdkWindow          *window,
-                                                 GtkWidget          *widget,
-                                                 const GdkRectangle *draw_area,
-                                                 const GdkRectangle *expose_area);
-static void     gimp_view_renderer_real_render  (GimpViewRenderer   *renderer,
-                                                 GtkWidget          *widget);
+static void      gimp_view_renderer_dispose      (GObject            *object);
+static void      gimp_view_renderer_finalize     (GObject            *object);
 
-static void     gimp_view_renderer_size_changed (GimpViewRenderer   *renderer,
-                                                 GimpViewable       *viewable);
-static GdkGC *  gimp_view_renderer_create_gc    (GimpViewRenderer   *renderer,
-                                                 GdkWindow          *window,
-                                                 GtkWidget          *widget);
+static gboolean  gimp_view_renderer_idle_update  (GimpViewRenderer   *renderer);
+static void      gimp_view_renderer_real_draw    (GimpViewRenderer   *renderer,
+                                                  GdkWindow          *window,
+                                                  GtkWidget          *widget,
+                                                  const GdkRectangle *draw_area,
+                                                  const GdkRectangle *expose_area);
+static void      gimp_view_renderer_real_render  (GimpViewRenderer   *renderer,
+                                                  GtkWidget          *widget);
+
+static void      gimp_view_renderer_size_changed (GimpViewRenderer   *renderer,
+                                                  GimpViewable       *viewable);
+static GdkGC   * gimp_view_renderer_create_gc    (GimpViewRenderer   *renderer,
+                                                  GdkWindow          *window,
+                                                  GtkWidget          *widget);
 
 
 static guint renderer_signals[LAST_SIGNAL] = { 0 };
@@ -98,14 +99,14 @@ gimp_view_renderer_get_type (void)
       static const GTypeInfo renderer_info =
       {
         sizeof (GimpViewRendererClass),
-        NULL,           /* base_init */
-        NULL,           /* base_finalize */
+        NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
         (GClassInitFunc) gimp_view_renderer_class_init,
         NULL,           /* class_finalize */
-        NULL,           /* class_data */
+        NULL,           /* class_data     */
         sizeof (GimpViewRenderer),
-        0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_view_renderer_init,
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc)  gimp_view_renderer_init,
       };
 
       renderer_type = g_type_register_static (G_TYPE_OBJECT,
@@ -142,6 +143,12 @@ gimp_view_renderer_class_init (GimpViewRendererClass *klass)
   gimp_rgba_set (&white_color, 1.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&green_color, 0.0, 0.94, 0.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&red_color,   1.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE);
+
+  klass->frame        = NULL;
+  klass->frame_left   = 0;
+  klass->frame_right  = 0;
+  klass->frame_top    = 0;
+  klass->frame_bottom = 0;
 }
 
 static void

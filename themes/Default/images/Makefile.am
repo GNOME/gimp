@@ -222,6 +222,7 @@ STOCK_DIALOG_IMAGES = \
 	stock-channel-red-48.png		\
 	stock-error-64.png			\
 	stock-floating-selection-48.png		\
+	stock-frame-64.png			\
 	stock-image-48.png			\
 	stock-info-64.png			\
 	stock-layer-48.png			\
