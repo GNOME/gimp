@@ -742,7 +742,7 @@ gimp_layer_scale_lowlevel (GimpLayer *layer,
     {
       GIMP_DRAWABLE (layer->mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
       GIMP_DRAWABLE (layer->mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
-      channel_scale (GIMP_CHANNEL (layer->mask), new_width, new_height);
+      gimp_channel_scale (GIMP_CHANNEL (layer->mask), new_width, new_height);
     }
 
   /*  Make sure we're not caching any old selection info  */
@@ -1016,8 +1016,8 @@ gimp_layer_resize (GimpLayer *layer,
     {
       GIMP_DRAWABLE (layer->mask)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
       GIMP_DRAWABLE (layer->mask)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
-      channel_resize (GIMP_CHANNEL (layer->mask),
-		      new_width, new_height, offx, offy);
+      gimp_channel_resize (GIMP_CHANNEL (layer->mask),
+			   new_width, new_height, offx, offy);
     }
 
   /*  Make sure we're not caching any old selection info  */
@@ -1114,8 +1114,8 @@ gimp_layer_boundary (GimpLayer *layer,
 void
 gimp_layer_invalidate_boundary (GimpLayer *layer)
 {
-  GimpImage *gimage;
-  Channel   *mask;
+  GimpImage   *gimage;
+  GimpChannel *mask;
 
   /*  first get the selection mask channel  */
   if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
@@ -1130,7 +1130,7 @@ gimp_layer_invalidate_boundary (GimpLayer *layer)
   mask = gimp_image_get_mask (gimage);
 
   /*  Only bother with the bounds if there is a selection  */
-  if (! channel_is_empty (mask))
+  if (! gimp_channel_is_empty (mask))
     {
       mask->bounds_known   = FALSE;
       mask->boundary_known = FALSE;

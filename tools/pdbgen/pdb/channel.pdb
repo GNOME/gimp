@@ -45,7 +45,7 @@ sub channel_get_prop_proc {
 	  desc => "The channel $desc", no_declare => 1 }
     );
 
-    my $alias = $func ? "channel_get_$prop (channel)" : "channel->$prop";
+    my $alias = $func ? "gimp_channel_get_$prop (channel)" : "channel->$prop";
     $alias = "g_strdup ($alias)" if $type eq 'string';
     $outargs[0]->{alias} .= "$alias";
 
@@ -82,7 +82,7 @@ sub channel_set_prop_proc {
 	$inargs[1]->{desc} .= ' (%%desc%%)';
     }
 
-    $invoke{code} = $func ? "channel_set_$prop (channel, $prop);"
+    $invoke{code} = $func ? "gimp_channel_set_$prop (channel, $prop);"
 			  : "channel->$prop = $prop;";
 
     if ($type eq 'color') {
@@ -92,7 +92,7 @@ sub channel_set_prop_proc {
   GimpRGB rgb_color = color;
 
   rgb_color.a = channel->color.a;
-  channel_set_color(channel, &rgb_color);
+  gimp_channel_set_color(channel, &rgb_color);
 }
 CODE
 	);
@@ -167,7 +167,7 @@ HELP
   GimpRGB rgb_color = color;
 
   rgb_color.a = opacity / 100.0;
-  channel = channel_new (gimage, width, height, name, &rgb_color);
+  channel = gimp_channel_new (gimage, width, height, name, &rgb_color);
   success = channel != NULL;
 }
 CODE
@@ -191,7 +191,7 @@ HELP
 	  desc => 'The newly copied channel', alias => 'copy' }
     );
 
-    %invoke = ( code => 'success = (copy = channel_copy (channel)) != NULL;' );
+    %invoke = ( code => 'success = (copy = gimp_channel_copy (channel)) != NULL;' );
 }
 
 sub channel_delete {
@@ -237,7 +237,7 @@ HELP
 
     %invoke = ( code => <<'CODE' );
 {
-  channel_combine_mask (channel1, channel2, operation, offx, offy);
+  gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
 }
 CODE
 }

@@ -1782,7 +1782,7 @@ fuzzy_select_invoker (Argument *args)
   gdouble feather_radius;
   gboolean sample_merged;
   GimpImage *gimage;
-  Channel *new, *old_fuzzy_mask;
+  GimpChannel *new, *old_fuzzy_mask;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)

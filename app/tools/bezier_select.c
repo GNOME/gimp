@@ -1239,7 +1239,7 @@ bezier_select_button_press (Tool           *tool,
 	    }
 	}
 
-      if (!grab_pointer && channel_value (bezier_sel->mask, x, y))
+      if (!grab_pointer && gimp_channel_value (bezier_sel->mask, x, y))
 	{
 	  gboolean replace = FALSE;
 
@@ -1744,7 +1744,7 @@ bezier_select_cursor_update (Tool           *tool,
   on_curve = bezier_point_on_curve (gdisp, bezier_sel, x, y, halfwidth);
 
   if (bezier_sel->mask && bezier_sel->closed &&
-      channel_value(bezier_sel->mask, x, y) && 
+      gimp_channel_value (bezier_sel->mask, x, y) && 
       !on_control_pnt &&
       (!on_curve || ModeEdit != EXTEND_ADD))
     {
@@ -2472,9 +2472,9 @@ bezier_convert (BezierSelect *bezier_sel,
     }
 
   /* create a new mask */
-  bezier_sel->mask = channel_new_mask (gdisp->gimage, 
-				       gdisp->gimage->width,
-				       gdisp->gimage->height);
+  bezier_sel->mask = gimp_channel_new_mask (gdisp->gimage, 
+					    gdisp->gimage->width,
+					    gdisp->gimage->height);
 
   gtk_object_ref (GTK_OBJECT (bezier_sel->mask));
   gtk_object_sink (GTK_OBJECT (bezier_sel->mask));
@@ -2537,7 +2537,7 @@ bezier_convert (BezierSelect *bezier_sel,
 	      w = x2 - x;
 
 	      if (!antialias)
-		channel_add_segment (bezier_sel->mask, x, i, w, 255);
+		gimp_channel_add_segment (bezier_sel->mask, x, i, w, 255);
 	      else
 		for (j = 0; j < w; j++)
 		  vals[j + x] += 255;
@@ -2576,7 +2576,7 @@ bezier_convert (BezierSelect *bezier_sel,
   g_free (bezier_sel->scanlines);
   bezier_sel->scanlines = NULL;
 
-  channel_invalidate_bounds (bezier_sel->mask);
+  gimp_channel_invalidate_bounds (bezier_sel->mask);
 }
 
 static void
@@ -2879,14 +2879,14 @@ bezier_to_sel_internal (BezierSelect  *bezier_sel,
     gimage_mask_undo (gdisp->gimage);
   
   if (bezier_options->feather)
-    channel_feather (bezier_sel->mask,
-		     gimp_image_get_mask (gdisp->gimage),
-		     bezier_options->feather_radius, 
-		     bezier_options->feather_radius, 
-		     op, 0, 0);
+    gimp_channel_feather (bezier_sel->mask,
+			  gimp_image_get_mask (gdisp->gimage),
+			  bezier_options->feather_radius, 
+			  bezier_options->feather_radius, 
+			  op, 0, 0);
   else
-    channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
-			  bezier_sel->mask, op, 0, 0);
+    gimp_channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
+			       bezier_sel->mask, op, 0, 0);
   
   /*  show selection on all views  */
   gdisplays_flush ();

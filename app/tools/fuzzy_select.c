@@ -98,7 +98,7 @@ static SelectionOptions  *fuzzy_options = NULL;
 static GdkSegment *segs     = NULL;
 static gint        num_segs = 0;
 
-Channel * fuzzy_mask = NULL;
+GimpChannel * fuzzy_mask = NULL;
 
 
 /*************************************/
@@ -298,7 +298,7 @@ find_contiguous_region_helper (PixelRegion *mask,
     }
 }
 
-Channel *
+GimpChannel *
 find_contiguous_region (GImage       *gimage, 
 			GimpDrawable *drawable, 
 			gboolean      antialias,
@@ -307,14 +307,14 @@ find_contiguous_region (GImage       *gimage,
 			gint          y, 
 			gboolean      sample_merged)
 {
-  PixelRegion srcPR, maskPR;
-  Channel  *mask;
-  guchar   *start;
-  gboolean  has_alpha;
-  gboolean  indexed;
-  gint      type;
-  gint      bytes;
-  Tile     *tile;
+  PixelRegion  srcPR, maskPR;
+  GimpChannel *mask;
+  guchar      *start;
+  gboolean     has_alpha;
+  gboolean     indexed;
+  gint         type;
+  gint         bytes;
+  Tile        *tile;
 
   if (sample_merged)
     {
@@ -341,7 +341,7 @@ find_contiguous_region (GImage       *gimage,
     {
       bytes = has_alpha ? 4 : 3;
     }
-  mask = channel_new_mask (gimage, srcPR.w, srcPR.h);
+  mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
 		     0, 0, 
 		     gimp_drawable_width (GIMP_DRAWABLE(mask)), 
@@ -383,13 +383,13 @@ fuzzy_select (GImage       *gimage,
     off_x = off_y = 0;
   
   if (feather)
-    channel_feather (fuzzy_mask, gimp_image_get_mask (gimage),
-		     feather_radius,
-		     feather_radius,
-		     op, off_x, off_y);
+    gimp_channel_feather (fuzzy_mask, gimp_image_get_mask (gimage),
+			  feather_radius,
+			  feather_radius,
+			  op, off_x, off_y);
   else
-    channel_combine_mask (gimp_image_get_mask (gimage),
-			  fuzzy_mask, op, off_x, off_y);
+    gimp_channel_combine_mask (gimp_image_get_mask (gimage),
+			       fuzzy_mask, op, off_x, off_y);
 
   gtk_object_unref (GTK_OBJECT (fuzzy_mask));
   fuzzy_mask = NULL;
@@ -534,7 +534,7 @@ fuzzy_select_calculate (Tool     *tool,
 {
   PixelRegion   maskPR;
   FuzzySelect  *fuzzy_sel;
-  Channel      *new;
+  GimpChannel  *new;
   GdkSegment   *segs;
   BoundSeg     *bsegs;
   GimpDrawable *drawable;

@@ -156,12 +156,12 @@ mask_render_preview (GImage        *gimage,
 		     gint          *pwidth,
 		     gint          *pheight)
 {
-  Channel * mask;
-  MaskBuf * scaled_buf = NULL;
-  PixelRegion srcPR, destPR;
-  gint subsample;
-  gint width, height;
-  gint scale;
+  GimpChannel *mask;
+  MaskBuf     *scaled_buf = NULL;
+  PixelRegion  srcPR, destPR;
+  gint         subsample;
+  gint         width, height;
+  gint         scale;
 
   mask = gimp_image_get_mask (gimage);
   if ((gimp_drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||

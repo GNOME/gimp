@@ -16,28 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __FUZZY_SELECT_H__
-#define __FUZZY_SELECT_H__
+#ifndef __UNDO_HISTORY_H__
+#define __UNDO_HISTORY_H__
 
 
-GimpChannel * find_contiguous_region  (GimpImage    *gimage,
-				       GimpDrawable *drawable,
-				       gboolean      antialias,
-				       gint          threshold,
-				       gint          x,
-				       gint          y,
-				       gboolean      sample_merged);
-void          fuzzy_select            (GimpImage    *gimage,
-				       GimpDrawable *drawable,
-				       gint          op,
-				       gboolean      feather,
-				       gdouble       feather_radius);
-
-Tool        * tools_new_fuzzy_select  (void);
-void          tools_free_fuzzy_select (Tool         *tool);
+GtkWidget * undo_history_new (GimpImage *gimage);
 
 
-extern GimpChannel *fuzzy_mask;
-
-
-#endif  /* __FUZZY_SELECT_H__ */
+#endif  /* __UNDO_HISTORY_H__ */

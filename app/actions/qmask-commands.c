@@ -232,11 +232,11 @@ qmask_activate (GtkWidget *widget,
 	      floating_sel_to_layer (layer);
 	    }
 
-	  gmask = channel_new (gimg, 
-			       gimg->width, 
-			       gimg->height,
-			       "Qmask",
-			       &color);
+	  gmask = gimp_channel_new (gimg, 
+				    gimg->width, 
+				    gimg->height,
+				    "Qmask",
+				    &color);
 	  gimp_image_add_channel (gimg, gmask, 0);
 	  drawable_fill (GIMP_DRAWABLE (gmask), TRANSPARENT_FILL);
 	}
@@ -244,9 +244,9 @@ qmask_activate (GtkWidget *widget,
 	{
 	  /* if selection */
 
-	  gmask = channel_copy (gimp_image_get_mask (gimg));
+	  gmask = gimp_channel_copy (gimp_image_get_mask (gimg));
 	  gimp_image_add_channel (gimg, gmask, 0);
-	  channel_set_color (gmask, &color);
+	  gimp_channel_set_color (gmask, &color);
 	  gimp_object_set_name (GIMP_OBJECT (gmask), "Qmask");
 	  gimage_mask_none (gimg);           /* Clear the selection */
 	}
@@ -349,7 +349,7 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
 			      gpointer   data) 
 {
   EditQmaskOptions *options;
-  Channel          *channel;
+  GimpChannel      *channel;
   GimpRGB           color;
 
   options = (EditQmaskOptions *) data;
@@ -364,7 +364,7 @@ edit_qmask_query_ok_callback (GtkWidget *widget,
       if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
 	{
 	  channel->color = color;
-	  channel_update (channel);
+	  gimp_channel_update (channel);
 	}
     }
 

@@ -86,9 +86,9 @@ struct _GimpImage
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
   GimpLayer         *active_layer;          /*  ID of active layer           */
-  Channel           *active_channel;        /*  ID of active channel         */
+  GimpChannel       *active_channel;        /*  ID of active channel         */
   GimpLayer         *floating_sel;          /*  ID of fs layer               */
-  Channel           *selection_mask;        /*  selection mask channel       */
+  GimpChannel       *selection_mask;        /*  selection mask channel       */
 
   ParasiteList      *parasites;             /*  Plug-in parasite data        */
 
@@ -282,91 +282,91 @@ void		gimp_image_colormap_changed  (const GimpImage    *image,
 
 /*  layer/channel functions  */
 
-gint            gimp_image_get_layer_index       (const GimpImage *gimage,
-						  const GimpLayer *layer_arg);
-GimpLayer     * gimp_image_get_layer_by_index    (const GimpImage *gimage,
-						  gint             layer_index);
-gint            gimp_image_get_channel_index     (const GimpImage *gimage,
-						  const Channel   *channel_arg);
-GimpLayer     * gimp_image_get_active_layer      (const GimpImage *gimage);
-Channel       * gimp_image_get_active_channel    (const GimpImage *gimage);
-GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage *gimage,
-						  Tattoo           tatoo);
-Channel       * gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
-						  Tattoo           tatoo);
-Channel       * gimp_image_get_channel_by_name   (const GimpImage *gimage,
-						  const gchar     *name);
-Channel       * gimp_image_get_mask              (const GimpImage *gimage);
-gboolean        gimp_image_get_component_active  (const GimpImage *gimage,
-						  ChannelType      type);
-gboolean        gimp_image_get_component_visible (const GimpImage *gimage,
-						  ChannelType      type);
-gboolean        gimp_image_layer_boundary        (const GimpImage *gimage,
-						  BoundSeg       **segs,
-						  gint            *n_segs);
-GimpLayer     * gimp_image_set_active_layer      (GimpImage       *gimage,
-						  GimpLayer       *layer);
-Channel       * gimp_image_set_active_channel    (GimpImage       *gimage,
-						  Channel         *channel);
-Channel       * gimp_image_unset_active_channel  (GimpImage       *gimage);
-void            gimp_image_set_component_active  (GimpImage       *gimage,
-						  ChannelType      type,
-						  gboolean         active);
-void            gimp_image_set_component_visible (GimpImage       *gimage,
-						  ChannelType      type,
-						  gboolean         visible);
-GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage *gimage,
-						  gint             x,
-						  gint             y);
-GimpLayer     * gimp_image_raise_layer           (GimpImage       *gimage,
-						  GimpLayer       *layer_arg);
-GimpLayer     * gimp_image_lower_layer           (GimpImage       *gimage,
-						  GimpLayer       *layer_arg);
-GimpLayer     * gimp_image_raise_layer_to_top    (GimpImage       *gimage,
-						  GimpLayer       *layer_arg);
-GimpLayer     * gimp_image_lower_layer_to_bottom (GimpImage       *gimage,
-						  GimpLayer       *layer_arg);
-GimpLayer     * gimp_image_position_layer        (GimpImage       *gimage,
-						  GimpLayer       *layer_arg,
-						  gint             new_index,
-						  gboolean         push_undo);
-GimpLayer     * gimp_image_merge_visible_layers  (GimpImage       *gimage,
-						  MergeType        merge_type);
-GimpLayer     * gimp_image_merge_down            (GimpImage       *gimage,
-						  GimpLayer       *current_layer,
-						  MergeType        merge_type);
-GimpLayer     * gimp_image_flatten               (GimpImage       *gimage);
-GimpLayer     * gimp_image_merge_layers          (GimpImage       *gimage,
-						  GSList          *merge_list,
-						  MergeType        merge_type);
-GimpLayer     * gimp_image_add_layer             (GimpImage       *gimage,
-						  GimpLayer       *float_layer,
-						  gint             position);
-GimpLayer     * gimp_image_remove_layer          (GimpImage       *gimage,
-						  GimpLayer           *layer);
-GimpLayerMask * gimp_image_add_layer_mask        (GimpImage       *gimage,
-						  GimpLayer       *layer,
-						  GimpLayerMask   *mask);
-Channel       * gimp_image_remove_layer_mask     (GimpImage       *gimage,
-						  GimpLayer       *layer,
-						  MaskApplyMode    mode);
-Channel       * gimp_image_raise_channel         (GimpImage       *gimage,
-						  Channel         *channel_arg);
-Channel       * gimp_image_lower_channel         (GimpImage       *gimage,
-						  Channel         *channel_arg);
-Channel       * gimp_image_position_channel      (GimpImage       *gimage,
-						  Channel         *channel_arg,
-						  gint             position);
-Channel       * gimp_image_add_channel           (GimpImage       *gimage,
-						  Channel         *channel,
-						  gint             position);
-Channel       * gimp_image_remove_channel        (GimpImage       *gimage,
-						  Channel         *channel);
-void            gimp_image_construct             (GimpImage       *gimage,
-						  gint             x,
-						  gint             y,
-						  gint             w,
-						  gint             h);
+gint            gimp_image_get_layer_index       (const GimpImage   *gimage,
+						  const GimpLayer   *layer_arg);
+GimpLayer     * gimp_image_get_layer_by_index    (const GimpImage   *gimage,
+						  gint               layer_index);
+gint            gimp_image_get_channel_index     (const GimpImage   *gimage,
+						  const GimpChannel *channel_arg);
+GimpLayer     * gimp_image_get_active_layer      (const GimpImage   *gimage);
+GimpChannel   * gimp_image_get_active_channel    (const GimpImage   *gimage);
+GimpLayer     * gimp_image_get_layer_by_tattoo   (const GimpImage   *gimage,
+						  Tattoo             tatoo);
+GimpChannel   * gimp_image_get_channel_by_tattoo (const GimpImage   *gimage,
+						  Tattoo             tatoo);
+GimpChannel   * gimp_image_get_channel_by_name   (const GimpImage   *gimage,
+						  const gchar       *name);
+GimpChannel   * gimp_image_get_mask              (const GimpImage   *gimage);
+gboolean        gimp_image_get_component_active  (const GimpImage   *gimage,
+						  ChannelType        type);
+gboolean        gimp_image_get_component_visible (const GimpImage   *gimage,
+						  ChannelType        type);
+gboolean        gimp_image_layer_boundary        (const GimpImage   *gimage,
+						  BoundSeg         **segs,
+						  gint              *n_segs);
+GimpLayer     * gimp_image_set_active_layer      (GimpImage         *gimage,
+						  GimpLayer         *layer);
+GimpChannel   * gimp_image_set_active_channel    (GimpImage         *gimage,
+						  GimpChannel       *channel);
+GimpChannel   * gimp_image_unset_active_channel  (GimpImage         *gimage);
+void            gimp_image_set_component_active  (GimpImage         *gimage,
+						  ChannelType        type,
+						  gboolean           active);
+void            gimp_image_set_component_visible (GimpImage         *gimage,
+						  ChannelType        type,
+						  gboolean           visible);
+GimpLayer     * gimp_image_pick_correlate_layer  (const GimpImage   *gimage,
+						  gint               x,
+						  gint               y);
+GimpLayer     * gimp_image_raise_layer           (GimpImage         *gimage,
+						  GimpLayer         *layer_arg);
+GimpLayer     * gimp_image_lower_layer           (GimpImage         *gimage,
+						  GimpLayer         *layer_arg);
+GimpLayer     * gimp_image_raise_layer_to_top    (GimpImage         *gimage,
+						  GimpLayer         *layer_arg);
+GimpLayer     * gimp_image_lower_layer_to_bottom (GimpImage         *gimage,
+						  GimpLayer         *layer_arg);
+GimpLayer     * gimp_image_position_layer        (GimpImage         *gimage,
+						  GimpLayer         *layer_arg,
+						  gint               new_index,
+						  gboolean           push_undo);
+GimpLayer     * gimp_image_merge_visible_layers  (GimpImage         *gimage,
+						  MergeType          merge_type);
+GimpLayer     * gimp_image_merge_down            (GimpImage         *gimage,
+						  GimpLayer         *current_layer,
+						  MergeType          merge_type);
+GimpLayer     * gimp_image_flatten               (GimpImage         *gimage);
+GimpLayer     * gimp_image_merge_layers          (GimpImage         *gimage,
+						  GSList            *merge_list,
+						  MergeType          merge_type);
+GimpLayer     * gimp_image_add_layer             (GimpImage         *gimage,
+						  GimpLayer         *float_layer,
+						  gint               position);
+GimpLayer     * gimp_image_remove_layer          (GimpImage         *gimage,
+						  GimpLayer         *layer);
+GimpLayerMask * gimp_image_add_layer_mask        (GimpImage         *gimage,
+						  GimpLayer         *layer,
+						  GimpLayerMask     *mask);
+GimpChannel   * gimp_image_remove_layer_mask     (GimpImage         *gimage,
+						  GimpLayer         *layer,
+						  MaskApplyMode      mode);
+GimpChannel   * gimp_image_raise_channel         (GimpImage         *gimage,
+						  GimpChannel       *channel_arg);
+GimpChannel   * gimp_image_lower_channel         (GimpImage         *gimage,
+						  GimpChannel       *channel_arg);
+GimpChannel   * gimp_image_position_channel      (GimpImage         *gimage,
+						  GimpChannel       *channel_arg,
+						  gint               position);
+GimpChannel   * gimp_image_add_channel           (GimpImage         *gimage,
+						  GimpChannel       *channel,
+						  gint               position);
+GimpChannel   * gimp_image_remove_channel        (GimpImage         *gimage,
+						  GimpChannel       *channel);
+void            gimp_image_construct             (GimpImage         *gimage,
+						  gint               x,
+						  gint               y,
+						  gint               w,
+						  gint               h);
 
 
 void        gimp_image_invalidate_without_render (GimpImage       *gimage,

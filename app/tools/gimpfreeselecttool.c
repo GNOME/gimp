@@ -111,7 +111,7 @@ add_point (gint num_pts,
 }
 
 
-static Channel *
+static GimpChannel *
 scan_convert (GimpImage        *gimage,
 	      gint              num_pts,
 	      ScanConvertPoint *pts,
@@ -119,7 +119,7 @@ scan_convert (GimpImage        *gimage,
 	      gint              height,
 	      gboolean          antialias)
 {
-  Channel       *mask;
+  GimpChannel   *mask;
   ScanConverter *sc;
 
   sc = scan_converter_new (width, height, antialias ? SUPERSAMPLE : 1);
@@ -144,7 +144,7 @@ free_select (GImage           *gimage,
 	     gboolean          feather,
 	     gdouble           feather_radius)
 {
-  Channel *mask;
+  GimpChannel *mask;
 
   /*  if applicable, replace the current selection  */
   /*  or insure that a floating selection is anchored down...  */
@@ -159,13 +159,13 @@ free_select (GImage           *gimage,
   if (mask)
     {
       if (feather)
-	channel_feather (mask, gimp_image_get_mask (gimage),
-			 feather_radius,
-			 feather_radius,
-			 op, 0, 0);
+	gimp_channel_feather (mask, gimp_image_get_mask (gimage),
+			      feather_radius,
+			      feather_radius,
+			      op, 0, 0);
       else
-	channel_combine_mask (gimp_image_get_mask (gimage),
-			      mask, op, 0, 0);
+	gimp_channel_combine_mask (gimp_image_get_mask (gimage),
+				   mask, op, 0, 0);
 
       gtk_object_unref (GTK_OBJECT (mask));
     }

@@ -1448,7 +1448,8 @@ gdisplay_mask_bounds (GDisplay *gdisp,
     {
       gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
-      if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
+      if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+				 x1, y1, x2, y2))
 	{
 	  *x1 = off_x;
 	  *y1 = off_y;
@@ -1463,7 +1464,8 @@ gdisplay_mask_bounds (GDisplay *gdisp,
 	  *y2 = MAX (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), *y2);
 	}
     }
-  else if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
+  else if (! gimp_channel_bounds (gimp_image_get_mask (gdisp->gimage),
+				  x1, y1, x2, y2))
     return FALSE;
 
   gdisplay_transform_coords (gdisp, *x1, *y1, x1, y1, 0);

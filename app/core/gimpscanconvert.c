@@ -235,11 +235,11 @@ scan_converter_add_points (ScanConverter    *sc,
  * according to the even-odd rule.  The polygon is closed by
  * joining the final point to the initial point.
  */
-Channel *
+GimpChannel *
 scan_converter_to_channel (ScanConverter *sc,
 			   GimpImage     *gimage)
 {
-  Channel     *mask;
+  GimpChannel *mask;
   GSList      *list;
   PixelRegion  maskPR;
   guint        widtha;
@@ -267,7 +267,7 @@ scan_converter_to_channel (ScanConverter *sc,
 		       (int) sc->first.y * antialias);
     }
 
-  mask = channel_new_mask (gimage, sc->width, sc->height);
+  mask = gimp_channel_new_mask (gimage, sc->width, sc->height);
 
   buf = g_new0 (guchar, sc->width);
   widtha  = sc->width * antialias;
@@ -320,7 +320,7 @@ scan_converter_to_channel (ScanConverter *sc,
 		{
 		  if (antialias == 1)
 		    {
-		      channel_add_segment (mask, x, i, w, 255);
+		      gimp_channel_add_segment (mask, x, i, w, 255);
 		    }
 		  else
 		    {

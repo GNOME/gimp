@@ -155,7 +155,7 @@ static gint   is_pixel_sufficiently_different      (guchar         *,
 						    gint            ,
 						    gint            ,
 						    gint            );
-static Channel * by_color_select_color             (GImage         *,
+static GimpChannel * by_color_select_color         (GImage         *,
 						    GimpDrawable   *,
 						    guchar         *,
 						    gint            ,
@@ -214,7 +214,7 @@ is_pixel_sufficiently_different (guchar *col1,
     }
 }
 
-static Channel *
+static GimpChannel *
 by_color_select_color (GImage       *gimage,
 		       GimpDrawable *drawable,
 		       guchar       *color,
@@ -227,7 +227,7 @@ by_color_select_color (GImage       *gimage,
    *  use the same antialiasing scheme as in fuzzy_select.  Modify the gimage's
    *  mask to reflect the additional selection
    */
-  Channel     *mask;
+  GimpChannel *mask;
   PixelRegion  imagePR, maskPR;
   guchar      *image_data;
   guchar      *mask_data;
@@ -279,7 +279,7 @@ by_color_select_color (GImage       *gimage,
     }
 
   alpha = bytes - 1;
-  mask = channel_new_mask (gimage, width, height);
+  mask = gimp_channel_new_mask (gimage, width, height);
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 		     0, 0, width, height, TRUE);
 
@@ -334,8 +334,8 @@ by_color_select (GImage       *gimage,
 		 gdouble       feather_radius,
 		 gboolean      sample_merged)
 {
-  Channel *new_mask;
-  gint     off_x, off_y;
+  GimpChannel *new_mask;
+  gint         off_x, off_y;
 
   if (!drawable) 
     return;
@@ -359,13 +359,13 @@ by_color_select (GImage       *gimage,
     }
 
   if (feather)
-    channel_feather (new_mask, gimp_image_get_mask (gimage),
-		     feather_radius,
-		     feather_radius,
-		     op, off_x, off_y);
+    gimp_channel_feather (new_mask, gimp_image_get_mask (gimage),
+			  feather_radius,
+			  feather_radius,
+			  op, off_x, off_y);
   else
-    channel_combine_mask (gimp_image_get_mask (gimage),
-			  new_mask, op, off_x, off_y);
+    gimp_channel_combine_mask (gimp_image_get_mask (gimage),
+			       new_mask, op, off_x, off_y);
 
   gtk_object_unref (GTK_OBJECT (new_mask));
 }
@@ -901,16 +901,16 @@ static void
 by_color_select_render (ByColorDialog *bcd,
 			GImage        *gimage)
 {
-  Channel * mask;
-  MaskBuf * scaled_buf = NULL;
-  guchar *buf;
-  PixelRegion srcPR, destPR;
-  guchar *src;
-  gint subsample;
-  gint width, height;
-  gint srcwidth;
-  gint i;
-  gint scale;
+  GimpChannel *mask;
+  MaskBuf     *scaled_buf = NULL;
+  guchar      *buf;
+  PixelRegion  srcPR, destPR;
+  guchar      *src;
+  gint         subsample;
+  gint         width, height;
+  gint         srcwidth;
+  gint         i;
+  gint         scale;
 
   mask = gimp_image_get_mask (gimage);
   if ((gimp_drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||

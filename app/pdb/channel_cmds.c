@@ -82,7 +82,7 @@ channel_new_invoker (Argument *args)
   gchar *name;
   gdouble opacity;
   GimpRGB color;
-  Channel *channel = NULL;
+  GimpChannel *channel = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -111,7 +111,7 @@ channel_new_invoker (Argument *args)
       GimpRGB rgb_color = color;
     
       rgb_color.a = opacity / 100.0;
-      channel = channel_new (gimage, width, height, name, &rgb_color);
+      channel = gimp_channel_new (gimage, width, height, name, &rgb_color);
       success = channel != NULL;
     }
 
@@ -187,15 +187,15 @@ channel_copy_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
-  Channel *copy = NULL;
+  GimpChannel *channel;
+  GimpChannel *copy = NULL;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
   if (success)
-    success = (copy = channel_copy (channel)) != NULL;
+    success = (copy = gimp_channel_copy (channel)) != NULL;
 
   return_args = procedural_db_return_args (&channel_copy_proc, success);
 
@@ -243,7 +243,7 @@ static Argument *
 channel_delete_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -284,8 +284,8 @@ static Argument *
 channel_combine_masks_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel1;
-  Channel *channel2;
+  GimpChannel *channel1;
+  GimpChannel *channel2;
   gint32 operation;
   gint32 offx;
   gint32 offy;
@@ -308,7 +308,7 @@ channel_combine_masks_invoker (Argument *args)
 
   if (success)
     {
-      channel_combine_mask (channel1, channel2, operation, offx, offy);
+      gimp_channel_combine_mask (channel1, channel2, operation, offx, offy);
     }
 
   return procedural_db_return_args (&channel_combine_masks_proc, success);
@@ -364,7 +364,7 @@ channel_get_name_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -373,7 +373,7 @@ channel_get_name_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_get_name_proc, success);
 
   if (success)
-    return_args[1].value.pdb_pointer = g_strdup (channel_get_name (channel));
+    return_args[1].value.pdb_pointer = g_strdup (gimp_channel_get_name (channel));
 
   return return_args;
 }
@@ -416,7 +416,7 @@ static Argument *
 channel_set_name_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gchar *name;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -428,7 +428,7 @@ channel_set_name_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel_set_name (channel, name);
+    gimp_channel_set_name (channel, name);
 
   return procedural_db_return_args (&channel_set_name_proc, success);
 }
@@ -468,7 +468,7 @@ channel_get_visible_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -520,7 +520,7 @@ static Argument *
 channel_set_visible_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gboolean visible;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -570,7 +570,7 @@ channel_get_show_masked_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -622,7 +622,7 @@ static Argument *
 channel_set_show_masked_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gboolean show_masked;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -672,7 +672,7 @@ channel_get_opacity_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -724,7 +724,7 @@ static Argument *
 channel_set_opacity_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gdouble opacity;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -776,7 +776,7 @@ channel_get_color_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -834,7 +834,7 @@ static Argument *
 channel_set_color_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   GimpRGB color;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -848,7 +848,7 @@ channel_set_color_invoker (Argument *args)
       GimpRGB rgb_color = color;
     
       rgb_color.a = channel->color.a;
-      channel_set_color(channel, &rgb_color);
+      gimp_channel_set_color(channel, &rgb_color);
     }
 
   return procedural_db_return_args (&channel_set_color_proc, success);
@@ -889,7 +889,7 @@ channel_get_tattoo_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  Channel *channel;
+  GimpChannel *channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -898,7 +898,7 @@ channel_get_tattoo_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_get_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = channel_get_tattoo (channel);
+    return_args[1].value.pdb_int = gimp_channel_get_tattoo (channel);
 
   return return_args;
 }
@@ -941,7 +941,7 @@ static Argument *
 channel_set_tattoo_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gint32 tattoo;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -953,7 +953,7 @@ channel_set_tattoo_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    channel_set_tattoo (channel, tattoo);
+    gimp_channel_set_tattoo (channel, tattoo);
 
   return procedural_db_return_args (&channel_set_tattoo_proc, success);
 }

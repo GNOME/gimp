@@ -1605,9 +1605,9 @@ transform_core_paste (GImage       *gimage,
 		      TileManager  *tiles,
 		      gboolean      new_layer)
 {
-  GimpLayer *layer   = NULL;
-  Channel   *channel = NULL;
-  GimpLayer *floating_layer;
+  GimpLayer   *layer   = NULL;
+  GimpChannel *channel = NULL;
+  GimpLayer   *floating_layer;
 
   if (new_layer)
     {

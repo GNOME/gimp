@@ -659,15 +659,15 @@ toolbox_drag_drop (GtkWidget      *widget,
     {
       GimpDrawable  *drawable       = NULL;
       GimpLayer     *layer          = NULL;
-      Channel       *channel        = NULL;
+      GimpChannel   *channel        = NULL;
       GimpLayerMask *layer_mask     = NULL;
       GimpImage     *component      = NULL;
       ChannelType    component_type = -1;
 
       layer = (GimpLayer *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						 "gimp_layer");
-      channel = (Channel *) gtk_object_get_data (GTK_OBJECT (src_widget),
-						 "gimp_channel");
+      channel = (GimpChannel *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						     "gimp_channel");
       layer_mask = (GimpLayerMask *) gtk_object_get_data (GTK_OBJECT (src_widget),
 							  "gimp_layer_mask");
       component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),

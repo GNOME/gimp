@@ -44,7 +44,6 @@ typedef struct _GimpContext         GimpContext;
 typedef struct _GimpDrawable        GimpDrawable;
 
 typedef struct _GimpChannel         GimpChannel;
-typedef         GimpChannel         Channel;            /* convenience */
 
 typedef struct _GimpLayer           GimpLayer;
 typedef struct _GimpLayerMask       GimpLayerMask;

@@ -62,7 +62,7 @@ struct _BezierSelect
   BezierPoint  *cur_control;  /* the current active control point  */
   BezierPoint  *last_point;   /* the last point on the curve       */
   gint          num_points;   /* number of points in the curve     */
-  Channel      *mask;         /* null if the curve is open         */
+  GimpChannel  *mask;         /* null if the curve is open         */
   GSList      **scanlines;    /* used in converting a curve        */
 };
 

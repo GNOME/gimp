@@ -1459,7 +1459,7 @@ image_raise_channel_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  Channel *channel;
+  GimpChannel *channel;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -1561,7 +1561,7 @@ image_add_channel_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  Channel *channel;
+  GimpChannel *channel;
   gint32 position;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
@@ -1620,7 +1620,7 @@ image_remove_channel_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  Channel *channel;
+  GimpChannel *channel;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -2831,7 +2831,7 @@ image_get_active_channel_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  Channel *active_channel = NULL;
+  GimpChannel *active_channel = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -2887,7 +2887,7 @@ image_set_active_channel_invoker (Argument *args)
 {
   gboolean success = TRUE;
   GimpImage *gimage;
-  Channel *active_channel;
+  GimpChannel *active_channel;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -2939,7 +2939,7 @@ image_get_selection_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  Channel *selection = NULL;
+  GimpChannel *selection = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -3692,7 +3692,7 @@ image_get_channel_by_tattoo_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 tattoo;
-  Channel *channel = NULL;
+  GimpChannel *channel = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)

@@ -1409,7 +1409,7 @@ drawable_thumbnail_invoker (Argument *args)
 	  if (GIMP_IS_LAYER (drawable))
 	    buf = gimp_layer_preview (GIMP_LAYER (drawable), req_width, req_height);
 	  else
-	    buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
+	    buf = gimp_channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
     
 	  num_pixels = buf->height * buf->width * buf->bytes;
 	  thumbnail_data = g_new (guint8, num_pixels);

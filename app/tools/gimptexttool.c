@@ -802,7 +802,7 @@ text_render (GimpImage    *gimage,
        *  it seems like the correct behavior.
        */
       if (! gimage_mask_is_empty (gimage))
-	channel_clear (gimp_image_get_mask (gimage));
+	gimp_channel_clear (gimp_image_get_mask (gimage));
 
       /*  If the drawable id is invalid, create a new layer  */
       if (drawable == NULL)

@@ -815,7 +815,7 @@ HELP
 
     %invoke = (
 	headers => [ qw("tools/fuzzy_select.h") ],
-	vars => [ 'GimpImage *gimage', 'Channel *new, *old_fuzzy_mask' ],
+	vars => [ 'GimpImage *gimage', 'GimpChannel *new, *old_fuzzy_mask' ],
 	code => <<'CODE'
 {
   gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));

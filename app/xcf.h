@@ -28,7 +28,7 @@ struct _XcfInfo
   guint         cp;
   gchar        *filename;
   GimpLayer    *active_layer;
-  Channel      *active_channel;
+  GimpChannel  *active_channel;
   GimpDrawable *floating_sel_drawable;
   GimpLayer    *floating_sel;
   guint         floating_sel_offset;

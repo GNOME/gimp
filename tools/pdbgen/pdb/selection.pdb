@@ -358,7 +358,7 @@ HELP
     @inargs = ( &channel_arg, &operation_arg );
 	       
     %invoke = (
-	vars => [ 'GimpImage *gimage', 'Channel *new_channel' ],
+	vars => [ 'GimpImage *gimage', 'GimpChannel *new_channel' ],
 	code => <<'CODE'
 {
   gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
@@ -366,11 +366,11 @@ HELP
   if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
       gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
     {
-      new_channel = channel_copy (gimp_image_get_mask (gimage));
-      channel_combine_mask (new_channel,
-			    channel,
-			    operation, 
-			    0, 0);  /* off x/y */
+      new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
+      gimp_channel_combine_mask (new_channel,
+				 channel,
+				 operation, 
+				 0, 0);  /* off x/y */
       gimage_mask_load (gimage, new_channel);
       gtk_object_unref (GTK_OBJECT (new_channel));
     }

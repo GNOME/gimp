@@ -569,12 +569,12 @@ duplicate (GimpImage *gimage)
   GimpImage    *new_gimage;
   GimpLayer    *layer, *new_layer;
   GimpLayer    *floating_layer;
-  Channel      *channel, *new_channel;
+  GimpChannel  *channel, *new_channel;
   GSList       *list;
   GList        *glist;
   Guide        *guide = NULL;
   GimpLayer    *active_layer = NULL;
-  Channel      *active_channel = NULL;
+  GimpChannel  *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
   GimpDrawable *floating_sel_drawable = NULL;
   ParasiteList *parasites;
@@ -645,12 +645,12 @@ duplicate (GimpImage *gimage)
   count = 0;
   while (list)
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
       list = g_slist_next (list);
 
-      new_channel = channel_copy (channel);
+      new_channel = gimp_channel_copy (channel);
 
-      gimp_drawable_set_gimage(GIMP_DRAWABLE(new_channel), new_gimage);
+      gimp_drawable_set_gimage (GIMP_DRAWABLE (new_channel), new_gimage);
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       gimp_object_set_name (GIMP_OBJECT (new_channel),

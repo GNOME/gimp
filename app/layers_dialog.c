@@ -88,15 +88,15 @@ struct _LayersDialog
   GtkWidget     *layer_preview;
 
   /*  state information  */
-  GimpImage *gimage;
-  gint       image_width, image_height;
-  gint       gimage_width, gimage_height;
-  gdouble    ratio;
+  GimpImage     *gimage;
+  gint           image_width, image_height;
+  gint           gimage_width, gimage_height;
+  gdouble        ratio;
 
-  GimpLayer *active_layer;
-  Channel   *active_channel;
-  GimpLayer *floating_sel;
-  GSList    *layer_widgets;
+  GimpLayer     *active_layer;
+  GimpChannel   *active_channel;
+  GimpLayer     *floating_sel;
+  GSList        *layer_widgets;
 };
 
 typedef struct _LayerWidget LayerWidget;

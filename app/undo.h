@@ -111,12 +111,6 @@ void undo_map_over_redo_stack   (GImage      *gimage,
 UndoType undo_get_undo_top_type (GImage      *gimage);
 
 
-/* Not really appropriate here, since undo_history_new is not defined
- * in undo.c, but it saves on having a full header file for just one
- * function prototype. */
-GtkWidget *undo_history_new     (GImage      *gimage);
-
-
 /* Argument to undo_event signal emitted by gimages: */
 typedef enum 
 {

@@ -73,6 +73,7 @@
 #include "selection.h"
 #include "tips_dialog.h"
 #include "undo.h"
+#include "undo_history.h"
 
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"

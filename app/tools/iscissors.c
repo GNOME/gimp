@@ -126,7 +126,7 @@ struct _iscissors
   Iscissors_draw  draw;         /*  items to draw on a draw request         */
 
   /* XXX might be useful */
-  Channel        *mask;         /*  selection mask                   */
+  GimpChannel    *mask;         /*  selection mask                   */
   TileManager    *gradient_map; /*  lazily filled gradient map */
 };
 
@@ -460,7 +460,7 @@ iscissors_button_press (Tool           *tool,
 	}
       /*  If the iscissors is connected, check if the click was inside  */
       else if (iscissors->connected && iscissors->mask &&
-	       channel_value (iscissors->mask, iscissors->x, iscissors->y))
+	       gimp_channel_value (iscissors->mask, iscissors->x, iscissors->y))
 	{
 	  /*  Undraw the curve  */
 	  tool->state = INACTIVE;
@@ -473,14 +473,14 @@ iscissors_button_press (Tool           *tool,
 	    gimage_mask_undo (gdisp->gimage);
 
 	  if (((SelectionOptions *) iscissors_options)->feather)
-	    channel_feather (iscissors->mask,
-			     gimp_image_get_mask (gdisp->gimage),
-			     ((SelectionOptions *) iscissors_options)->feather_radius,
-			     ((SelectionOptions *) iscissors_options)->feather_radius,
-			     iscissors->op, 0, 0);
+	    gimp_channel_feather (iscissors->mask,
+				  gimp_image_get_mask (gdisp->gimage),
+				  ((SelectionOptions *) iscissors_options)->feather_radius,
+				  ((SelectionOptions *) iscissors_options)->feather_radius,
+				  iscissors->op, 0, 0);
 	  else
-	    channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
-				  iscissors->mask, iscissors->op, 0, 0);
+	    gimp_channel_combine_mask (gimp_image_get_mask (gdisp->gimage),
+				       iscissors->mask, iscissors->op, 0, 0);
 
 	  iscissors_reset (iscissors);
 
@@ -554,9 +554,8 @@ iscissors_convert (Iscissors *iscissors,
   iscissors->mask = scan_converter_to_channel (sc, gdisp->gimage);
   scan_converter_free (sc);
 
-  channel_invalidate_bounds (iscissors->mask);    
+  gimp_channel_invalidate_bounds (iscissors->mask);    
 }
-
 
 static void
 iscissors_button_release (Tool           *tool,
@@ -932,7 +931,7 @@ iscissors_oper_update (Tool           *tool,
       iscissors->op = SELECTION_MOVE; /* abused */
     }
   else if (iscissors->connected && iscissors->mask &&
-	   channel_value (iscissors->mask, x, y))
+	   gimp_channel_value (iscissors->mask, x, y))
     {
       if (mevent->state & GDK_SHIFT_MASK &&
 	  mevent->state & GDK_CONTROL_MASK)

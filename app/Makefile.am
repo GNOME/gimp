@@ -276,6 +276,7 @@ gimp_SOURCES = \
 	undo.c			\
 	undo.h			\
 	undo_history.c		\
+	undo_history.h		\
 	undo_types.h		\
 	unitrc.h		\
 	user_install.c		\

@@ -1,5 +1,61 @@
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/undo_history.h: new file.
+
+	* app/apptypes.h: removed the "Channel" typedef.
+
+	* app/channel.[ch]: renamed all functions to gimp_channel_*()
+
+	* app/channel_ops.c
+	* app/channels_dialog.c
+	* app/commands.c
+	* app/disp_callbacks.c
+	* app/gdisplay.c
+	* app/gimage_mask.[ch]
+	* app/gimpdnd.c
+	* app/gimphistogram.c
+	* app/gimpimage.[ch]
+	* app/global_edit.c
+	* app/layer.c
+	* app/layers_dialog.c
+	* app/qmask.c
+	* app/scan_convert.c
+	* app/scan_convert.h
+	* app/toolbox.c
+	* app/undo.[ch]
+	* app/undo_history.c
+	* app/xcf.[ch]
+	* app/pdb/channel_cmds.c
+	* app/pdb/color_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/pdb_glue.h
+	* app/pdb/selection_cmds.c
+	* app/pdb/tools_cmds.c
+	* app/tools/bezier_select.c
+	* app/tools/bezier_selectP.h
+	* app/tools/blend.c
+	* app/tools/bucket_fill.c
+	* app/tools/by_color_select.c
+	* app/tools/crop.c
+	* app/tools/ellipse_select.c
+	* app/tools/free_select.c
+	* app/tools/fuzzy_select.c
+	* app/tools/fuzzy_select.h
+	* app/tools/iscissors.c
+	* app/tools/rect_select.c
+	* app/tools/text_tool.c
+	* app/tools/transform_core.c
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
+
+2001-01-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/pdb/Makefile.am
 	* app/pdb/pdb_glue.h: new file which contains the stuff that makes
 	PDB code generation easier but is ugly when used in the app

@@ -591,7 +591,7 @@ HELP
 	headers => [ qw("tools/histogram_tool.h" "gimpimage.h") ],
 	vars => [ 'PixelRegion srcPR, maskPR', 'int x1, y1, x2, y2',
 		  'HistogramToolDialog htd', 'int off_x, off_y',
-		  'gboolean no_mask', 'Channel *mask' ],
+		  'gboolean no_mask', 'GimpChannel *mask' ],
 	code => <<'CODE'
 {
   if (gimp_drawable_is_indexed (drawable) ||

@@ -53,7 +53,7 @@ void            scan_converter_add_points (ScanConverter    *scan_converter,
  * according to the even-odd rule.  The polygon is closed by
  * joining the final point to the initial point.
  */
-Channel       * scan_converter_to_channel (ScanConverter    *scan_converter,
+GimpChannel   * scan_converter_to_channel (ScanConverter    *scan_converter,
 					   GimpImage        *gimage);
 
 

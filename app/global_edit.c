@@ -351,7 +351,7 @@ edit_paste (GimpImage    *gimage,
        *  it seems like the correct behavior.
        */
       if (! gimage_mask_is_empty (gimage) && !paste_into)
-	channel_clear (gimp_image_get_mask (gimage));
+	gimp_channel_clear (gimp_image_get_mask (gimage));
 
       /*  if there's a drawable, add a new floating selection  */
       if (drawable != NULL)

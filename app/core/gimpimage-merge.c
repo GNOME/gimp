@@ -113,7 +113,7 @@ static void     project_indexed_alpha            (GimpImage    *gimage,
 						  PixelRegion  *dest,
 						  PixelRegion  *mask);
 static void     project_channel                  (GimpImage    *gimage,
-						  Channel      *layer,
+						  GimpChannel  *channel,
 						  PixelRegion  *src,
 						  PixelRegion  *src2);
 
@@ -437,8 +437,9 @@ gimp_image_new (gint               width,
     }
 
   /* create the selection mask */
-  gimage->selection_mask = channel_new_mask (gimage,
-					     gimage->width, gimage->height);
+  gimage->selection_mask = gimp_channel_new_mask (gimage,
+						  gimage->width,
+						  gimage->height);
 
 
   return gimage;
@@ -552,11 +553,11 @@ gimp_image_resize (GimpImage *gimage,
 		   gint       offset_x, 
 		   gint       offset_y)
 {
-  Channel   *channel;
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  GSList    *list;
-  GList     *guide_list;
+  GimpChannel *channel;
+  GimpLayer   *layer;
+  GimpLayer   *floating_layer;
+  GSList      *list;
+  GList       *guide_list;
 
   gimp_add_busy_cursors ();
 
@@ -581,9 +582,9 @@ gimp_image_resize (GimpImage *gimage,
   /*  Resize all channels  */
   for (list = gimage->channels; list; list = g_slist_next (list))
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
 
-      channel_resize (channel, new_width, new_height, offset_x, offset_y);
+      gimp_channel_resize (channel, new_width, new_height, offset_x, offset_y);
     }
 
   /*  Reposition or remove any guides  */
@@ -617,8 +618,8 @@ gimp_image_resize (GimpImage *gimage,
     }
 
   /*  Don't forget the selection mask!  */
-  channel_resize (gimage->selection_mask,
-		  new_width, new_height, offset_x, offset_y);
+  gimp_channel_resize (gimage->selection_mask,
+		       new_width, new_height, offset_x, offset_y);
   gimage_mask_invalidate (gimage);
 
   /*  Reposition all layers  */
@@ -646,17 +647,17 @@ gimp_image_scale (GimpImage *gimage,
 		  gint       new_width, 
 		  gint       new_height)
 {
-  Channel   *channel;
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  GSList    *list;
-  GSList    *remove = NULL;
-  GList     *glist;
-  Guide     *guide;
-  gint       old_width;
-  gint       old_height;
-  gdouble    img_scale_w = 1.0;
-  gdouble    img_scale_h = 1.0;
+  GimpChannel *channel;
+  GimpLayer   *layer;
+  GimpLayer   *floating_layer;
+  GSList      *list;
+  GSList      *remove = NULL;
+  GList       *glist;
+  Guide       *guide;
+  gint         old_width;
+  gint         old_height;
+  gdouble      img_scale_w = 1.0;
+  gdouble      img_scale_h = 1.0;
 
   if ((new_width == 0) || (new_height == 0))
     {
@@ -690,17 +691,18 @@ gimp_image_scale (GimpImage *gimage,
   /*  Scale all channels  */
   for (list = gimage->channels; list; list = g_slist_next (list))
     {
-      channel = (Channel *) list->data;
-      channel_scale (channel, new_width, new_height);
+      channel = (GimpChannel *) list->data;
+
+      gimp_channel_scale (channel, new_width, new_height);
     }
 
   /*  Don't forget the selection mask!  */
   /*  if (channel_is_empty(gimage->selection_mask))
-        channel_resize(gimage->selection_mask, new_width, new_height, 0, 0)
+        gimp_channel_resize(gimage->selection_mask, new_width, new_height, 0, 0)
       else
   */
         
-  channel_scale (gimage->selection_mask, new_width, new_height);
+  gimp_channel_scale (gimage->selection_mask, new_width, new_height);
   gimage_mask_invalidate (gimage);
 
   /*  Scale all layers  */
@@ -827,7 +829,7 @@ gimp_image_apply_image (GimpImage	 *gimage,
 			gint              x,
 			gint              y)
 {
-  Channel     *mask;
+  GimpChannel *mask;
   gint         x1, y1, x2, y2;
   gint         offset_x, offset_y;
   PixelRegion  src1PR, destPR, maskPR;
@@ -932,7 +934,7 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  gint          x, 
 			  gint          y)
 {
-  Channel     *mask;
+  GimpChannel *mask;
   gint         x1, y1, x2, y2;
   gint         offset_x, offset_y;
   PixelRegion  src1PR, destPR;
@@ -1374,14 +1376,14 @@ gboolean
 gimp_image_set_tattoo_state (GimpImage *gimage, 
 			     Tattoo     val)
 {
-  GimpLayer *layer;
-  GSList    *layers;
-  gboolean   retval = TRUE;
-  Channel   *channel;
-  GSList    *channels;
-  Tattoo     maxval = 0;
-  Path      *pptr   = NULL;
-  PathList  *plist;
+  GimpLayer   *layer;
+  GSList      *layers;
+  gboolean     retval = TRUE;
+  GimpChannel *channel;
+  GSList      *channels;
+  Tattoo       maxval = 0;
+  Path        *pptr   = NULL;
+  PathList    *plist;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
 
@@ -1411,7 +1413,7 @@ gimp_image_set_tattoo_state (GimpImage *gimage,
        channels = g_slist_next (channels))
     {
       Tattoo ctattoo;
-      channel = (Channel *) channels->data;
+      channel = (GimpChannel *) channels->data;
       
       ctattoo = gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel));
       if (ctattoo > maxval)
@@ -1544,7 +1546,7 @@ project_indexed_alpha (GimpImage   *gimage,
 
 static void
 project_channel (GimpImage   *gimage, 
-		 Channel     *channel,
+		 GimpChannel *channel,
 		 PixelRegion *src, 
 		 PixelRegion *src2)
 {
@@ -1598,12 +1600,12 @@ gimp_image_free_layers (GimpImage *gimage)
 static void
 gimp_image_free_channels (GimpImage *gimage)
 {
-  GSList  *list;
-  Channel *channel;
+  GSList      *list;
+  GimpChannel *channel;
 
   for (list = gimage->channels; list; list = g_slist_next (list))
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
 
       gtk_object_unref (GTK_OBJECT (channel));
     }
@@ -1760,7 +1762,7 @@ gimp_image_construct_channels (GimpImage *gimage,
 			       gint       w, 
 			       gint       h)
 {
-  Channel     *channel;
+  GimpChannel *channel;
   PixelRegion  src1PR;
   PixelRegion  src2PR;
   GSList      *list;
@@ -1772,7 +1774,7 @@ gimp_image_construct_channels (GimpImage *gimage,
 
   while (reverse_list)
     {
-      channel = (Channel *) reverse_list->data;
+      channel = (GimpChannel *) reverse_list->data;
 
       if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
 	{
@@ -2121,15 +2123,15 @@ gimp_image_invalidate_layer_previews (GimpImage *gimage)
 void
 gimp_image_invalidate_channel_previews (GimpImage *gimage)
 {
-  GSList  *tmp;
-  Channel *channel;
+  GSList      *tmp;
+  GimpChannel *channel;
 
   g_return_if_fail (gimage != NULL);
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
   for (tmp = gimage->channels; tmp; tmp = g_slist_next (tmp))
     {
-      channel = (Channel *) tmp->data;
+      channel = (GimpChannel *) tmp->data;
 
       gimp_drawable_invalidate_preview (GIMP_DRAWABLE (channel), TRUE);      
     }
@@ -2173,12 +2175,12 @@ gimp_image_get_layer_by_index (const GimpImage *gimage,
 }
 
 gint
-gimp_image_get_channel_index (const GimpImage *gimage, 
-			      const Channel   *channel_arg)
+gimp_image_get_channel_index (const GimpImage   *gimage, 
+			      const GimpChannel *channel_arg)
 {
-  Channel *channel;
-  GSList  *channels;
-  gint     index;
+  GimpChannel *channel;
+  GSList      *channels;
+  gint         index;
 
   g_return_val_if_fail (gimage != NULL, -1);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
@@ -2187,7 +2189,7 @@ gimp_image_get_channel_index (const GimpImage *gimage,
        channels;
        channels = g_slist_next (channels), index++)
     {
-      channel = (Channel *) channels->data;
+      channel = (GimpChannel *) channels->data;
 
       if (channel == channel_arg)
 	return index;
@@ -2205,7 +2207,7 @@ gimp_image_get_active_layer (const GimpImage *gimage)
   return gimage->active_layer;
 }
 
-Channel *
+GimpChannel *
 gimp_image_get_active_channel (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -2235,12 +2237,12 @@ gimp_image_get_layer_by_tattoo (const GimpImage *gimage,
   return NULL;
 }
 
-Channel *
+GimpChannel *
 gimp_image_get_channel_by_tattoo (const GimpImage *gimage, 
 				  Tattoo           tattoo)
 {
-  Channel *channel;
-  GSList  *channels;
+  GimpChannel *channel;
+  GSList      *channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2248,7 +2250,7 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
        channels; 
        channels = g_slist_next (channels))
     {
-      channel = (Channel *) channels->data;
+      channel = (GimpChannel *) channels->data;
 
       if (gimp_drawable_get_tattoo (GIMP_DRAWABLE (channel)) == tattoo)
 	return channel;
@@ -2257,12 +2259,12 @@ gimp_image_get_channel_by_tattoo (const GimpImage *gimage,
   return NULL;
 }
 
-Channel *
+GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *gimage,
 				const gchar     *name)
 {
-  Channel *channel;
-  GSList  *channels;
+  GimpChannel *channel;
+  GSList      *channels;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2270,7 +2272,7 @@ gimp_image_get_channel_by_name (const GimpImage *gimage,
        channels; 
        channels = g_slist_next (channels))
     {
-      channel = (Channel *) channels->data;
+      channel = (GimpChannel *) channels->data;
       if (! strcmp (gimp_object_get_name (GIMP_OBJECT (channel)), name))
       return channel;
     }
@@ -2278,7 +2280,7 @@ gimp_image_get_channel_by_name (const GimpImage *gimage,
   return NULL;
 }
 
-Channel *
+GimpChannel *
 gimp_image_get_mask (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
@@ -2380,9 +2382,9 @@ gimp_image_set_active_layer (GimpImage *gimage,
   return layer;
 }
 
-Channel *
-gimp_image_set_active_channel (GimpImage *gimage, 
-			       Channel   *channel)
+GimpChannel *
+gimp_image_set_active_channel (GimpImage   *gimage, 
+			       GimpChannel *channel)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -2400,7 +2402,7 @@ gimp_image_set_active_channel (GimpImage *gimage,
 	  gimage->active_channel = NULL;
 	  return NULL;
 	}
-      channel = (Channel *) gimage->channels->data;
+      channel = (GimpChannel *) gimage->channels->data;
     }
 
   /*  Set the active channel  */
@@ -2410,10 +2412,10 @@ gimp_image_set_active_channel (GimpImage *gimage,
   return channel;
 }
 
-Channel *
+GimpChannel *
 gimp_image_unset_active_channel (GimpImage *gimage)
 {
-  Channel *channel;
+  GimpChannel *channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3308,7 +3310,7 @@ gimp_image_add_layer_mask (GimpImage     *gimage,
   return mask;
 }
 
-Channel *
+GimpChannel *
 gimp_image_remove_layer_mask (GimpImage     *gimage, 
 			      GimpLayer     *layer, 
 			      MaskApplyMode  mode)
@@ -3362,15 +3364,15 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
   return NULL;
 }
 
-Channel *
-gimp_image_raise_channel (GimpImage *gimage, 
-			  Channel   *channel_arg)
+GimpChannel *
+gimp_image_raise_channel (GimpImage   *gimage, 
+			  GimpChannel *channel_arg)
 {
-  Channel *channel;
-  Channel *prev_channel;
-  GSList  *list;
-  GSList  *prev;
-  gint     index = -1;
+  GimpChannel *channel;
+  GimpChannel *prev_channel;
+  GSList      *list;
+  GSList      *prev;
+  gint         index = -1;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3380,9 +3382,9 @@ gimp_image_raise_channel (GimpImage *gimage,
 
   while (list)
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
       if (prev)
-	prev_channel = (Channel *) prev->data;
+	prev_channel = (GimpChannel *) prev->data;
 
       if (channel == channel_arg)
 	{
@@ -3411,15 +3413,15 @@ gimp_image_raise_channel (GimpImage *gimage,
   return NULL;
 }
 
-Channel *
-gimp_image_lower_channel (GimpImage *gimage, 
-			  Channel   *channel_arg)
+GimpChannel *
+gimp_image_lower_channel (GimpImage   *gimage, 
+			  GimpChannel *channel_arg)
 {
-  Channel *channel;
-  Channel *next_channel;
-  GSList  *list;
-  GSList  *next;
-  gint     index = 0;
+  GimpChannel *channel;
+  GimpChannel *next_channel;
+  GSList      *list;
+  GSList      *next;
+  gint         index = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3428,11 +3430,11 @@ gimp_image_lower_channel (GimpImage *gimage,
 
   while (list)
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
       next = g_slist_next (list);
 
       if (next)
-	next_channel = (Channel *) next->data;
+	next_channel = (GimpChannel *) next->data;
       index++;
 
       if (channel == channel_arg)
@@ -3460,16 +3462,16 @@ gimp_image_lower_channel (GimpImage *gimage,
   return NULL;
 }
 
-Channel *
-gimp_image_position_channel (GimpImage *gimage, 
-			     Channel   *channel_arg,
-			     gint       new_index)
+GimpChannel *
+gimp_image_position_channel (GimpImage   *gimage, 
+			     GimpChannel *channel_arg,
+			     gint         new_index)
 {
-  Channel *channel;
-  GSList  *list;
-  GSList  *next;
-  gint     index;
-  gint     list_length;
+  GimpChannel *channel;
+  GSList      *list;
+  GSList      *next;
+  gint         index;
+  gint         list_length;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
@@ -3481,7 +3483,7 @@ gimp_image_position_channel (GimpImage *gimage,
        list;
        list = g_slist_next (list), index++)
     {
-      channel = (Channel *) list->data;
+      channel = (GimpChannel *) list->data;
       if (channel == channel_arg)
 	{
 	  break;
@@ -3513,10 +3515,10 @@ gimp_image_position_channel (GimpImage *gimage,
   return channel;
 }
 
-Channel *
-gimp_image_add_channel (GimpImage *gimage, 
-			Channel   *channel, 
-			gint       position)
+GimpChannel *
+gimp_image_add_channel (GimpImage   *gimage, 
+			GimpChannel *channel, 
+			gint         position)
 {
   ChannelUndo *cu;
   GSList      *cc;
@@ -3564,9 +3566,9 @@ gimp_image_add_channel (GimpImage *gimage,
   return channel;
 }
 
-Channel *
-gimp_image_remove_channel (GimpImage *gimage, 
-			   Channel   *channel)
+GimpChannel *
+gimp_image_remove_channel (GimpImage   *gimage, 
+			   GimpChannel *channel)
 {
   ChannelUndo *cu;
 
@@ -3584,7 +3586,7 @@ gimp_image_remove_channel (GimpImage *gimage,
   if (gimage->active_channel == channel)
     {
       if (gimage->channels)
-	gimage->active_channel = (((Channel *) gimage->channels->data));
+	gimage->active_channel = (((GimpChannel *) gimage->channels->data));
       else
 	gimage->active_channel = NULL;
     }

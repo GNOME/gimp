@@ -29,10 +29,10 @@
 #define gimp_layer_set_tattoo(l,t) gimp_drawable_set_tattoo(GIMP_DRAWABLE(l),(t))
 #define gimp_layer_get_tattoo(l)   gimp_drawable_get_tattoo(GIMP_DRAWABLE(l))
 
-#define channel_set_name(c,n)   gimp_object_set_name(GIMP_OBJECT(c),(n))
-#define channel_get_name(c)     gimp_object_get_name(GIMP_OBJECT(c))
-#define channel_set_tattoo(c,t) gimp_drawable_set_tattoo(GIMP_DRAWABLE(c),(t))
-#define channel_get_tattoo(c)   gimp_drawable_get_tattoo(GIMP_DRAWABLE(c))
+#define gimp_channel_set_name(c,n)   gimp_object_set_name(GIMP_OBJECT(c),(n))
+#define gimp_channel_get_name(c)     gimp_object_get_name(GIMP_OBJECT(c))
+#define gimp_channel_set_tattoo(c,t) gimp_drawable_set_tattoo(GIMP_DRAWABLE(c),(t))
+#define gimp_channel_get_tattoo(c)   gimp_drawable_get_tattoo(GIMP_DRAWABLE(c))
 
 
 #endif /* __PDB_GLUE_H__ */

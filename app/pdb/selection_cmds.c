@@ -876,7 +876,7 @@ static Argument *
 selection_load_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   GimpImage *gimage;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
@@ -928,7 +928,7 @@ selection_save_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  Channel *channel = NULL;
+  GimpChannel *channel = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -983,10 +983,10 @@ static Argument *
 selection_combine_invoker (Argument *args)
 {
   gboolean success = TRUE;
-  Channel *channel;
+  GimpChannel *channel;
   gint32 operation;
   GimpImage *gimage;
-  Channel *new_channel;
+  GimpChannel *new_channel;
 
   channel = (GimpChannel *) gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (channel == NULL)
@@ -1003,11 +1003,11 @@ selection_combine_invoker (Argument *args)
       if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
 	  gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
 	{
-	  new_channel = channel_copy (gimp_image_get_mask (gimage));
-	  channel_combine_mask (new_channel,
-				channel,
-				operation, 
-				0, 0);  /* off x/y */
+	  new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
+	  gimp_channel_combine_mask (new_channel,
+				     channel,
+				     operation, 
+				     0, 0);  /* off x/y */
 	  gimage_mask_load (gimage, new_channel);
 	  gtk_object_unref (GTK_OBJECT (new_channel));
 	}

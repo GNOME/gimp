@@ -86,9 +86,9 @@ void            gimage_mask_layer_mask    (GImage       *gimage,
 					   GimpLayer    *layer);
 
 void            gimage_mask_load          (GImage       *gimage,
-					   Channel      *channel);
+					   GimpChannel  *channel);
 
-Channel       * gimage_mask_save          (GImage       *gimage);
+GimpChannel   * gimage_mask_save          (GImage       *gimage);
 
 gboolean        gimage_mask_stroke        (GImage       *gimage,
 					   GimpDrawable *drawable);

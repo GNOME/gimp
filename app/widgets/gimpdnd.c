@@ -1097,7 +1097,7 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
     }
   else if (GIMP_IS_CHANNEL (drawable))
     {
-      tmpbuf = channel_preview (GIMP_CHANNEL (drawable), width, height);
+      tmpbuf = gimp_channel_preview (GIMP_CHANNEL (drawable), width, height);
     }
   else
     {

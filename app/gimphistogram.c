@@ -365,8 +365,8 @@ gimp_histogram_calculate_drawable (GimpHistogram *histogram,
 
   if (!no_mask)
     {
-      Channel   *sel_mask;
-      GimpImage *gimage;
+      GimpChannel *sel_mask;
+      GimpImage   *gimage;
 
       gimage = gimp_drawable_gimage (drawable);
       sel_mask = gimp_image_get_mask (gimage);

@@ -370,7 +370,7 @@ bucket_fill (GimpImage      *gimage,
 {
   TileManager *buf_tiles;
   PixelRegion  bufPR, maskPR;
-  Channel     *mask = NULL;
+  GimpChannel *mask = NULL;
   gint         bytes;
   gboolean     has_alpha;
   gint         x1, y1, x2, y2;
@@ -442,7 +442,7 @@ bucket_fill (GimpImage      *gimage,
       mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
 				     (int) x, (int) y, sample_merged);
 
-      channel_bounds (mask, &x1, &y1, &x2, &y2);
+      gimp_channel_bounds (mask, &x1, &y1, &x2, &y2);
 
       /*  make sure we handle the mask correctly if it was sample-merged  */
       if (sample_merged)

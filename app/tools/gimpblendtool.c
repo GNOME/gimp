@@ -1221,7 +1221,7 @@ gradient_precalc_shapeburst (GImage       *gimage,
 			     PixelRegion  *PR,
 			     gdouble       dist)
 {
-  Channel     *mask;
+  GimpChannel *mask;
   PixelRegion  tempR;
   gfloat       max_iteration;
   gfloat      *distp;

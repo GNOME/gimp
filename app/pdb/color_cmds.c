@@ -914,7 +914,7 @@ histogram_invoker (Argument *args)
   HistogramToolDialog htd;
   int off_x, off_y;
   gboolean no_mask;
-  Channel *mask;
+  GimpChannel *mask;
 
   drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)

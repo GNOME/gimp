@@ -874,15 +874,15 @@ crop_image (GImage   *gimage,
 	    gboolean  layer_only,
 	    gboolean  crop_layers)
 {
-  GimpLayer *layer;
-  GimpLayer *floating_layer;
-  Channel   *channel;
-  GList     *guide_list_ptr;
-  GSList    *list;
-  gint       width, height;
-  gint       lx1, ly1, lx2, ly2;
-  gint       off_x, off_y;
-  gint       doff_x, doff_y;
+  GimpLayer   *layer;
+  GimpLayer   *floating_layer;
+  GimpChannel *channel;
+  GList       *guide_list_ptr;
+  GSList      *list;
+  gint         width, height;
+  gint         lx1, ly1, lx2, ly2;
+  gint         off_x, off_y;
+  gint         doff_x, doff_y;
 
   width = x2 - x1;
   height = y2 - y1;
@@ -934,13 +934,13 @@ crop_image (GImage   *gimage,
 	  list = gimage->channels;
 	  while (list)
 	    {
-	      channel = (Channel *) list->data;
-	      channel_resize (channel, width, height, -x1, -y1);
+	      channel = (GimpChannel *) list->data;
+	      gimp_channel_resize (channel, width, height, -x1, -y1);
 	      list = g_slist_next (list);
 	    }
 
 	  /*  Don't forget the selection mask!  */
-	  channel_resize (gimage->selection_mask, width, height, -x1, -y1);
+	  gimp_channel_resize (gimage->selection_mask, width, height, -x1, -y1);
 	  gimage_mask_invalidate (gimage);
 
 	  /*  crop all layers  */

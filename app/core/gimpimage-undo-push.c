@@ -162,14 +162,14 @@ static void     undo_free_cantundo        (UndoState, UndoType, gpointer);
 
 
 /*  Sizing functions  */
-static gint          layer_size         (GimpLayer *layer);
-static gint          channel_size       (Channel   *channel);
+static gint          layer_size         (GimpLayer   *layer);
+static gint          channel_size       (GimpChannel *channel);
 
-static const gchar * undo_type_to_name  (UndoType   undo_type);
+static const gchar * undo_type_to_name  (UndoType     undo_type);
 
-static Undo        * undo_new           (UndoType   undo_type, 
-					 glong      size, 
-					 gboolean   dirties_image);
+static Undo        * undo_new           (UndoType     undo_type, 
+					 glong        size, 
+					 gboolean     dirties_image);
 
 
 static gboolean shrink_wrap = FALSE;
@@ -194,12 +194,12 @@ layer_size (GimpLayer *layer)
 
 
 static gint
-channel_size (Channel *channel)
+channel_size (GimpChannel *channel)
 {
   gint size;
 
   size =
-    sizeof (Channel) +
+    sizeof (GimpChannel) +
     GIMP_DRAWABLE (channel)->width * GIMP_DRAWABLE (channel)->height +
     strlen (GIMP_OBJECT (channel)->name);
 
@@ -1027,7 +1027,7 @@ undo_pop_mask (GimpImage *gimage,
 {
   MaskUndo    *mask_undo;
   TileManager *new_tiles;
-  Channel     *sel_mask;
+  GimpChannel *sel_mask;
   PixelRegion  srcPR, destPR;
   gint         selection;
   gint         x1, y1, x2, y2;
@@ -1040,7 +1040,7 @@ undo_pop_mask (GimpImage *gimage,
 
   /*  save current selection mask  */
   sel_mask = gimp_image_get_mask (gimage);
-  selection = channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
+  selection = gimp_channel_bounds (sel_mask, &x1, &y1, &x2, &y2);
   pixel_region_init (&srcPR, GIMP_DRAWABLE (sel_mask)->tiles,
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 
@@ -1886,13 +1886,13 @@ gboolean
 undo_push_channel_mod (GimpImage *gimage,
 		       gpointer   channel_ptr)
 {
-  Channel     *channel;
+  GimpChannel *channel;
   TileManager *tiles;
   Undo        *new;
   gpointer    *data;
   gint         size;
 
-  channel = (Channel *) channel_ptr;
+  channel = (GimpChannel *) channel_ptr;
 
   tiles = GIMP_DRAWABLE (channel)->tiles;
   size  = GIMP_DRAWABLE (channel)->width * GIMP_DRAWABLE (channel)->height +
@@ -1927,10 +1927,10 @@ undo_pop_channel_mod (GimpImage *gimage,
   gpointer    *data;
   TileManager *tiles;
   TileManager *temp;
-  Channel     *channel;
+  GimpChannel *channel;
 
   data = (gpointer *) data_ptr;
-  channel = (Channel *) data[0];
+  channel = (GimpChannel *) data[0];
 
   tiles = (TileManager *) data[1];
 
