@@ -45,32 +45,54 @@
 
 #include "libgimp/gimpintl.h"
 
-#define FOUNDRY    0
-#define FAMILY     1
-#define WEIGHT     2
-#define SLANT      3
-#define SET_WIDTH  4
-#define PIXEL_SIZE 6
-#define POINT_SIZE 7
-#define SPACING   10
-#define REGISTRY  12
-#define ENCODING  13
+#define FOUNDRY      0
+#define FAMILY       1
+#define WEIGHT       2
+#define SLANT        3
+#define SET_WIDTH    4
+#define PIXEL_SIZE   6
+#define POINT_SIZE   7
+#define SPACING     10
+#define REGISTRY    12
+#define ENCODING    13
 
-#define SUPERSAMPLE 3
+#define SUPERSAMPLE  3
 
+/*  the text tool structures  */
 
+typedef enum _SizeType SizeType;
+enum _SizeType
+{
+  PIXELS,
+  POINTS
+};
 
 typedef struct _TextTool TextTool;
 struct _TextTool
 {
-  TextToolOptions options;
   GtkWidget *shell;
-  GtkWidget *antialias_toggle;
-  int click_x;
-  int click_y;
-  void *gdisp_ptr;
+  int        click_x;
+  int        click_y;
+  void      *gdisp_ptr;
 };
 
+typedef struct _TextOptions TextOptions;
+struct _TextOptions
+{
+  int        antialias;
+  int        antialias_d;
+  GtkWidget *antialias_w;
+
+  int        border;
+  int        border_d;
+  GtkObject *border_w;
+};
+
+/*  text tool options  */
+static TextOptions *text_options = NULL;
+
+/*  local variables  */
+static TextTool    *the_text_tool = NULL;
 
 
 static void       text_button_press       (Tool *, GdkEventButton *, gpointer);
@@ -79,8 +101,6 @@ static void       text_motion             (Tool *, GdkEventMotion *, gpointer);
 static void       text_cursor_update      (Tool *, GdkEventMotion *, gpointer);
 static void       text_control            (Tool *, int, gpointer);
 
-static void       text_antialias_update   (GtkWidget *, gpointer);
-static void       text_spinbutton_update  (GtkWidget *, gpointer);
 static void       text_create_dialog      (TextTool *);
 static void       text_ok_callback        (GtkWidget *, gpointer);
 static void       text_cancel_callback    (GtkWidget *, gpointer);
@@ -89,12 +109,14 @@ static gint       text_delete_callback    (GtkWidget *, GdkEvent *, gpointer);
 static void       text_init_render        (TextTool *);
 static void       text_gdk_image_to_region (GdkImage *, int, PixelRegion *);
 static char*      text_get_field          (char *, int);
-static int        text_get_extents        (char *, char *, int *, int *, int *, int *);
+static int        text_get_extents        (char *, char *,
+					   int *, int *, int *, int *);
 static int        text_get_xlfd           (double, int, char *, char *, char *,
                                            char *, char *, char *, char *,
                                            char *, char *);
 static void       text_size_multiply      (char **fontname, int);
-static Layer *    text_render             (GImage *, GimpDrawable *, int, int, char *, char *, int, int);
+static Layer *    text_render             (GImage *, GimpDrawable *,
+					   int, int, char *, char *, int, int);
 
 static Argument * text_tool_invoker                      (Argument *);
 static Argument * text_tool_invoker_ext                  (Argument *);
@@ -103,29 +125,33 @@ static Argument * text_tool_get_extents_invoker          (Argument *);
 static Argument * text_tool_get_extents_invoker_ext      (Argument *);
 static Argument * text_tool_get_extents_invoker_fontname (Argument *);
 
-static void       init_text_options       (TextToolOptions *);
+static void          text_antialias_update   (GtkWidget *, gpointer);
+static void          text_adjustment_update  (GtkWidget *, gpointer);
 
-static TextTool *the_text_tool = NULL;
+static void          reset_text_options      ();
+static TextOptions * init_text_options       ();
 
+
+/*  Functions  */
 
 Tool*
 tools_new_text ()
 {
-  Tool * tool;
+  Tool     * tool;
 
-  tool = g_malloc (sizeof (Tool));
-  if (!the_text_tool)
-    {
-      the_text_tool = g_malloc (sizeof (TextTool));
-      init_text_options(&the_text_tool->options);
-      the_text_tool->shell = NULL;
-    }
+  if (! text_options)
+    text_options = init_text_options ();
+
+  tool = (Tool *) g_malloc (sizeof (Tool));
+  the_text_tool = (TextTool *) g_malloc (sizeof (TextTool));
+  the_text_tool->shell = NULL;
 
   tool->type = TEXT;
   tool->state = INACTIVE;
   tool->scroll_lock = 1;  /* Do not allow scrolling */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) the_text_tool;
+
   tool->button_press_func = text_button_press;
   tool->button_release_func = text_button_release;
   tool->motion_func = text_motion;
@@ -140,70 +166,101 @@ tools_new_text ()
 void
 tools_free_text (Tool *tool)
 {
+  g_free (tool->private);
 }
 
+static void
+text_antialias_update (GtkWidget *w,
+		       gpointer   data)
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  if (GTK_TOGGLE_BUTTON (w)->active)
+    *toggle_val = TRUE;
+  else
+    *toggle_val = FALSE;
+}
 
 static void
-init_text_options(TextToolOptions *options)
+text_adjustment_update (GtkWidget *widget,
+			gpointer   data)
 {
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkWidget *antialias_toggle;
-  GtkAdjustment *adj;
+  int *val;
+
+  val = data;
+  *val = GTK_ADJUSTMENT (widget)->value;
+}
+
+static void
+reset_text_options ()
+{
+  TextOptions *options = text_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				options->antialias_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
+			    options->border_d);
+}
+
+static TextOptions *
+init_text_options ()
+{
+  TextOptions *options;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *label;
+  GtkWidget   *spinbutton;
 
   /*  the new options structure  */
-  options->antialias = TRUE;
-  options->border    = 0;
+  options = (TextOptions *) g_malloc (sizeof (TextOptions));
+  options->antialias = options->antialias_d = TRUE;
+  options->border    = options->border_d    = 0;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
 
-  /*  the main label  */
-  label = gtk_label_new (_("Text Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /* antialias toggle */
-  antialias_toggle = gtk_check_button_new_with_label(_("Antialiasing"));
-  gtk_box_pack_start(GTK_BOX(vbox), antialias_toggle,
-		     FALSE, FALSE, 0);
-  gtk_signal_connect(GTK_OBJECT(antialias_toggle), "toggled",
-		     (GtkSignalFunc) text_antialias_update,
-		     &options->antialias);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(antialias_toggle),
-			       options->antialias);
-  gtk_widget_show(antialias_toggle);
+  options->antialias_w =
+    gtk_check_button_new_with_label (_("Antialiasing"));
+  gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
+		      (GtkSignalFunc) text_antialias_update,
+		      &options->antialias);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				options->antialias_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (options->antialias_w);
 
   /* Create the border hbox, border spinner, and label  */
-  hbox = gtk_hbox_new(FALSE, 2);
-  label = gtk_label_new (_("Border: "));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
+  label = gtk_label_new (_("Border:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show(label);
 
-  adj = (GtkAdjustment *) gtk_adjustment_new(options->border, 0.0,
-					     32767.0, 1.0, 50.0, 0.0);
-  spinbutton = gtk_spin_button_new(adj, 1.0, 0.0);
-  gtk_spin_button_set_shadow_type(GTK_SPIN_BUTTON(spinbutton),
-				  GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-  gtk_widget_set_usize(spinbutton, 75, 0);
-  gtk_signal_connect(GTK_OBJECT (spinbutton), "changed",
-		     (GtkSignalFunc) text_spinbutton_update,
+  options->border_w =
+    gtk_adjustment_new (options->border_d, 0.0, 32767.0, 1.0, 50.0, 0.0);
+  gtk_signal_connect(GTK_OBJECT (options->border_w), "changed",
+		     (GtkSignalFunc) text_adjustment_update,
 		     &options->border);
-  gtk_box_pack_start(GTK_BOX(hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show(spinbutton);
-  gtk_widget_show(hbox);
-  gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  spinbutton =
+    gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
+  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
+				   GTK_SHADOW_NONE);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
+  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+  gtk_widget_show (hbox);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  /* Register this selection options widget with the main tools
-   * options dialog */
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (TEXT, vbox, _("Text Tool Options"), reset_text_options);
 
-  tools_register_options (TEXT, vbox);
+  return options;
 }
-
 
 
 static void
@@ -298,12 +355,10 @@ text_control (Tool     *tool,
     }
 }
 
-
-
 static void
 text_create_dialog (TextTool *text_tool)
 {
-  /* Create the shell and vertical & horizontal boxes */
+  /* Create the shell */
   text_tool->shell = gtk_font_selection_dialog_new (_("Text Tool"));
   gtk_window_set_wmclass (GTK_WINDOW (text_tool->shell), "text_tool", "Gimp");
   gtk_window_set_title (GTK_WINDOW (text_tool->shell), _("Text Tool"));
@@ -369,41 +424,13 @@ text_cancel_callback (GtkWidget *w,
     gtk_widget_hide (text_tool->shell);
 }
 
-
-static void
-text_antialias_update (GtkWidget *w,
-		       gpointer   data)
-{
-  int *toggle_val;
-
-  toggle_val = (int *) data;
-
-  if (GTK_TOGGLE_BUTTON (w)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
-}
-
-
-static void
-text_spinbutton_update (GtkWidget *widget,
-			gpointer   data)
-{
-  int *val;
-
-  val = data;
-  *val = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (widget));
-}
-
-
-
 static void
 text_init_render (TextTool *text_tool)
 {
   GDisplay *gdisp;
   char *fontname;
   char *text;
-  int antialias = text_tool->options.antialias;
+  int antialias = text_options->antialias;
 
   fontname = gtk_font_selection_dialog_get_font_name(
     GTK_FONT_SELECTION_DIALOG( text_tool->shell));
@@ -431,7 +458,7 @@ text_init_render (TextTool *text_tool)
 
   text_render (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
-	       fontname, text, text_tool->options.border, antialias);
+	       fontname, text, text_options->border, antialias);
 
   gdisplays_flush ();
 
@@ -767,8 +794,8 @@ text_get_extents (char *fontname,
 
 
 static void
-text_field_edges(char *fontname,
-		int   field_num,
+text_field_edges(char  *fontname,
+		 int    field_num,
 		 /* RETURNS: */
 		 char **start,
 		 char **end)
@@ -816,7 +843,8 @@ text_get_field (char *fontname,
  * are left untouched.  The memory *fontname is g_free()d, and
  * *fontname is replaced by a fresh allocation of the correct size. */
 static void
-text_size_multiply(char **fontname, int mul)
+text_size_multiply(char **fontname,
+		   int    mul)
 {
   char *pixel_str;
   char *point_str;
@@ -1758,4 +1786,3 @@ text_tool_get_extents_invoker_ext (Argument *args)
 
   return return_args;
 }
-

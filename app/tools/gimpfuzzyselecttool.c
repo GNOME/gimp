@@ -31,11 +31,9 @@
 
 #include "tile.h"			/* ick. */
 
-#define NO  0
-#define YES 1
+/*  the fuzzy selection structures  */
 
 typedef struct _fuzzy_select FuzzySelect;
-
 struct _fuzzy_select
 {
   DrawCore *     core;         /*  Core select object                      */
@@ -48,9 +46,16 @@ struct _fuzzy_select
   int            op;           /*  selection operation (ADD, SUB, etc)     */
 };
 
+/*  the fuzzy selection tool options  */
+static SelectionOptions *fuzzy_options = NULL;
+
+/*  XSegments which make up the fuzzy selection boundary  */
+static GdkSegment *segs = NULL;
+static int         num_segs = 0;
+static Channel *   fuzzy_mask = NULL;
+
 
 /*  fuzzy select action functions  */
-
 static void   fuzzy_select_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_button_release (Tool *, GdkEventButton *, gpointer);
 static void   fuzzy_select_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -60,16 +65,9 @@ static void   fuzzy_select_control        (Tool *, int, gpointer);
 /*  fuzzy select action functions  */
 static GdkSegment *   fuzzy_select_calculate (Tool *, void *, int *);
 
-
-/*  XSegments which make up the fuzzy selection boundary  */
-
-static GdkSegment *segs = NULL;
-static int         num_segs = 0;
-static Channel *   fuzzy_mask = NULL;
-static SelectionOptions *fuzzy_options = NULL;
-
 static void fuzzy_select (GImage *, GimpDrawable *, int, int, double);
 static Argument *fuzzy_select_invoker (Argument *);
+
 
 /*************************************/
 /*  Fuzzy selection apparatus  */
@@ -541,6 +539,12 @@ fuzzy_select_control (Tool *tool, int action, gpointer gdisp_ptr)
     }
 }
 
+static void
+fuzzy_select_reset_options (void)
+{
+  reset_selection_options (fuzzy_options);
+}
+
 Tool *
 tools_new_fuzzy_select (void)
 {
@@ -549,7 +553,8 @@ tools_new_fuzzy_select (void)
 
   /*  The tool options  */
   if (!fuzzy_options)
-    fuzzy_options = create_selection_options (FUZZY_SELECT);
+    fuzzy_options =
+      create_selection_options (FUZZY_SELECT, fuzzy_select_reset_options);
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (FuzzySelect *) g_malloc (sizeof (FuzzySelect));
@@ -561,6 +566,7 @@ tools_new_fuzzy_select (void)
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = fuzzy_select_button_press;
   tool->button_release_func = fuzzy_select_button_release;
   tool->motion_func = fuzzy_select_motion;

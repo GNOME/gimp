@@ -28,12 +28,6 @@
 #include "libgimp/gimpintl.h"
 #include "libgimp/gimpunitmenu.h"
 
-#define NO  0
-#define YES 1
-
-#define FIXED_ENTRY_SIZE 50
-#define FIXED_ENTRY_MAX_CHARS 10
-
 #define STATUSBAR_SIZE 128
 
 extern SelectionOptions *ellipse_options;
@@ -50,7 +44,8 @@ static void
 selection_toggle_update (GtkWidget *w,
 			 gpointer   data)
 {
-  int *toggle_val;
+  GtkWidget *set_sensitive;
+  int       *toggle_val;
 
   toggle_val = (int *) data;
 
@@ -58,6 +53,22 @@ selection_toggle_update (GtkWidget *w,
     *toggle_val = TRUE;
   else
     *toggle_val = FALSE;
+
+  set_sensitive =
+    (GtkWidget*) gtk_object_get_data (GTK_OBJECT (w), "set_sensitive");
+
+  if (set_sensitive)
+    {
+      gtk_widget_set_sensitive (set_sensitive, *toggle_val);
+
+      if (GTK_IS_SCALE (set_sensitive))
+	{
+	  set_sensitive =
+	    gtk_object_get_data (GTK_OBJECT (set_sensitive), "scale_label");
+	  if (set_sensitive)
+	    gtk_widget_set_sensitive (set_sensitive, *toggle_val);
+	}
+    }
 }
 
 static void
@@ -101,65 +112,40 @@ selection_scale_update (GtkAdjustment *adjustment,
 }
 
 SelectionOptions *
-create_selection_options (ToolType tool_type)
+create_selection_options (ToolType             tool_type,
+			  ToolOptionsResetFunc reset_func)
 {
   SelectionOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label = NULL;
-  GtkWidget *antialias_toggle;
-  GtkWidget *feather_toggle;
-  GtkWidget *feather_scale;
-  GtkWidget *sample_merged_toggle;
-  GtkObject *feather_scale_data;
-  GtkWidget *fixed_size_toggle;
-  GtkAdjustment *adj;
+  GtkWidget        *vbox;
+  GtkWidget        *abox;
+  GtkWidget        *table;
+  GtkWidget        *label;
+  GtkWidget        *scale;
 
   /*  the new options structure  */
   options = (SelectionOptions *) g_malloc (sizeof (SelectionOptions));
-  options->antialias = TRUE;
-  options->feather = FALSE;
-  options->feather_radius = 10.0;
-  options->sample_merged = FALSE;
-  options->fixed_size = FALSE;
-  options->fixed_height = 1;
-  options->fixed_width = 1;
-  options->fixed_unit = UNIT_PIXEL;
-  options->sample_merged = TRUE;
+  options->antialias      = options->antialias_d      = TRUE;
+  options->feather        = options->feather_d        = FALSE;
+  options->feather_radius = options->feather_radius_d = 10.0;
+  options->sample_merged  = options->sample_merged_d  = FALSE;
+  options->fixed_size     = options->fixed_size_d     = FALSE;
+  options->fixed_height   = options->fixed_height_d   = 1;
+  options->fixed_width    = options->fixed_width_d    = 1;
+  options->fixed_unit     = options->fixed_unit_d     = UNIT_PIXEL;
+  options->sample_merged  = options->sample_merged_d  = TRUE;
+
+  options->antialias_w      = NULL;
+  options->feather_w        = NULL;
+  options->feather_radius_w = NULL;
+  options->sample_merged_w  = NULL;
+  options->fixed_size_w     = NULL;
+  options->fixed_height_w   = NULL;
+  options->fixed_width_w    = NULL;
+  options->fixed_unit_w     = NULL;
+  options->sample_merged_w  = NULL;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the main label  */
-  switch (tool_type)
-    {
-    case RECT_SELECT:
-      label = gtk_label_new (_("Rectangular Select Options"));
-      break;
-    case ELLIPSE_SELECT:
-      label = gtk_label_new (_("Elliptical Selection Options"));
-      break;
-    case FREE_SELECT:
-      label = gtk_label_new (_("Free-hand Selection Options"));
-      break;
-    case FUZZY_SELECT:
-      label = gtk_label_new (_("Fuzzy Selection Options"));
-      break;
-    case BEZIER_SELECT:
-      label = gtk_label_new (_("Bezier Selection Options"));
-      break;
-    case ISCISSORS:
-      label = gtk_label_new (_("Intelligent Scissors Options"));
-      break;
-    case BY_COLOR_SELECT:
-      label = gtk_label_new (_("By-Color Select Options"));
-      break;
-    default:
-      break;
-    }
-
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the sample merged option  */
   switch (tool_type)
@@ -172,13 +158,16 @@ create_selection_options (ToolType tool_type)
     case FUZZY_SELECT:
     case ISCISSORS:
     case BY_COLOR_SELECT:
-      sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
-      gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
+      options->sample_merged_w =
+	gtk_check_button_new_with_label (_("Sample Merged"));
+      gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w,
+			  FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
 			  &options->sample_merged);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
-      gtk_widget_show (sample_merged_toggle);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				    options->sample_merged_d);
+      gtk_widget_show (options->sample_merged_w);
       break;
     default:
       break;
@@ -187,14 +176,60 @@ create_selection_options (ToolType tool_type)
   /*  the antialias toggle button  */
   if (tool_type != RECT_SELECT)
     {
-      antialias_toggle = gtk_check_button_new_with_label (_("Antialiasing"));
-      gtk_box_pack_start (GTK_BOX (vbox), antialias_toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (antialias_toggle), "toggled",
+      options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
+      gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (options->antialias_w), "toggled",
 			  (GtkSignalFunc) selection_toggle_update,
 			  &options->antialias);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (antialias_toggle), options->antialias);
-      gtk_widget_show (antialias_toggle);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				    options->antialias_d);
+      gtk_widget_show (options->antialias_w);
     }
+
+  /*  the feather options  */
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+
+  options->feather_w = gtk_check_button_new_with_label (_("Feather"));
+  gtk_table_attach (GTK_TABLE (table), options->feather_w, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
+				options->feather_d);
+  gtk_signal_connect (GTK_OBJECT (options->feather_w), "toggled",
+		      (GtkSignalFunc) selection_toggle_update,
+		      &options->feather);
+  gtk_widget_show (options->feather_w);
+
+  label = gtk_label_new (_("Radius:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /*  the feather radius scale  */
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 0, 2,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->feather_radius_w =
+    gtk_adjustment_new (options->feather_radius_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->feather_radius_w));
+  gtk_container_add (GTK_CONTAINER (abox), scale);
+  gtk_widget_set_sensitive (scale, options->feather_d);
+  gtk_object_set_data (GTK_OBJECT (options->feather_w), "set_sensitive",
+		       scale);
+  gtk_widget_set_sensitive (label, options->feather_d);
+  gtk_object_set_data (GTK_OBJECT (scale), "scale_label",
+		       label);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->feather_radius_w), "value_changed",
+		      (GtkSignalFunc) selection_scale_update,
+		      &options->feather_radius);
+  gtk_widget_show (scale);
+  gtk_widget_show (table);
 
   /* Widgets for fixed size select */
   if (tool_type == RECT_SELECT || tool_type == ELLIPSE_SELECT) 
@@ -203,16 +238,17 @@ create_selection_options (ToolType tool_type)
       GtkWidget *table;
       GtkWidget *width_spinbutton;
       GtkWidget *height_spinbutton;
-      GtkWidget *unitmenu;
 
-      fixed_size_toggle = gtk_check_button_new_with_label (_("Fixed size / aspect ratio"));
-      gtk_box_pack_start (GTK_BOX(vbox), fixed_size_toggle, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT(fixed_size_toggle), "toggled",
+      options->fixed_size_w =
+	gtk_check_button_new_with_label (_("Fixed size / aspect ratio"));
+      gtk_box_pack_start (GTK_BOX (vbox), options->fixed_size_w,
+			  FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (options->fixed_size_w), "toggled",
 			  (GtkSignalFunc)selection_toggle_update,
 			  &options->fixed_size);
-      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(fixed_size_toggle),
-				   options->fixed_size);
-      gtk_widget_show(fixed_size_toggle);
+      gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(options->fixed_size_w),
+				   options->fixed_size_d);
+      gtk_widget_show(options->fixed_size_w);
 
       alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
       gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, FALSE, 0);
@@ -223,19 +259,25 @@ create_selection_options (ToolType tool_type)
       gtk_table_set_row_spacings (GTK_TABLE (table), 1);
       gtk_container_add (GTK_CONTAINER (alignment), table);
 
+      gtk_widget_set_sensitive (table, options->fixed_size_d);
+      gtk_object_set_data (GTK_OBJECT (options->fixed_size_w), "set_sensitive",
+			   table);
+
       label = gtk_label_new (_("Width:"));
       gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
       gtk_table_attach (GTK_TABLE (table), label,
 			0, 1, 0, 1,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_width, 1e-5,
-                                                  32767.0, 1.0, 50.0, 0.0);
-      width_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      options->fixed_width_w =
+	gtk_adjustment_new (options->fixed_width_d, 1e-5, 32767.0,
+			    1.0, 50.0, 0.0);
+      width_spinbutton =
+	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_width_w), 1.0, 0.0);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(width_spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (width_spinbutton), TRUE);
       gtk_widget_set_usize (width_spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+      gtk_signal_connect (GTK_OBJECT (options->fixed_width_w), "value_changed",
                           (GtkSignalFunc) selection_adjustment_update,
                           &options->fixed_width);
       gtk_table_attach (GTK_TABLE (table), width_spinbutton,
@@ -249,14 +291,16 @@ create_selection_options (ToolType tool_type)
       gtk_table_attach (GTK_TABLE (table), label,
 			0, 1, 1, 2,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      adj = (GtkAdjustment *) gtk_adjustment_new (options->fixed_height, 1e-5,
-                                                  32767.0, 1.0, 50.0, 0.0);
-      height_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      options->fixed_height_w =
+	gtk_adjustment_new (options->fixed_height_d, 1e-5, 32767.0,
+			    1.0, 50.0, 0.0);
+      height_spinbutton =
+	gtk_spin_button_new (GTK_ADJUSTMENT (options->fixed_height_w), 1.0, 0.0);
       gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(height_spinbutton),
 				       GTK_SHADOW_NONE);
       gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(height_spinbutton), TRUE);
       gtk_widget_set_usize (height_spinbutton, 75, 0);
-      gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+      gtk_signal_connect (GTK_OBJECT (options->fixed_height_w), "value_changed",
                           (GtkSignalFunc) selection_adjustment_update,
                           &options->fixed_height);
       gtk_table_attach (GTK_TABLE (table), height_spinbutton,
@@ -270,58 +314,95 @@ create_selection_options (ToolType tool_type)
       gtk_table_attach (GTK_TABLE (table), label,
 			0, 1, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
-      unitmenu = gimp_unit_menu_new ("%a", UNIT_PIXEL, TRUE, TRUE, TRUE);
-      gtk_signal_connect (GTK_OBJECT (unitmenu), "unit_changed",
+      options->fixed_unit_w =
+	gimp_unit_menu_new ("%a", options->fixed_unit_d, TRUE, TRUE, TRUE);
+      gtk_signal_connect (GTK_OBJECT (options->fixed_unit_w), "unit_changed",
                           (GtkSignalFunc) selection_unitmenu_update,
                           &options->fixed_unit);
-      gtk_object_set_data (GTK_OBJECT (unitmenu), "fixed_width_spinbutton",
-			   width_spinbutton);
-      gtk_object_set_data (GTK_OBJECT (unitmenu), "fixed_height_spinbutton",
-			   height_spinbutton);
-      gtk_table_attach (GTK_TABLE (table), unitmenu,
+      gtk_object_set_data (GTK_OBJECT (options->fixed_unit_w),
+			   "fixed_width_spinbutton", width_spinbutton);
+      gtk_object_set_data (GTK_OBJECT (options->fixed_unit_w),
+			   "fixed_height_spinbutton", height_spinbutton);
+      gtk_table_attach (GTK_TABLE (table), options->fixed_unit_w,
 			1, 2, 2, 3,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (label);
-      gtk_widget_show (unitmenu);
+      gtk_widget_show (options->fixed_unit_w);
       
       gtk_widget_show (table);
     }
 
-  /*  the feather toggle button  */
-  feather_toggle = gtk_check_button_new_with_label (_("Feather"));
-  gtk_box_pack_start (GTK_BOX (vbox), feather_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (feather_toggle), "toggled",
-		      (GtkSignalFunc) selection_toggle_update,
-		      &options->feather);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (feather_toggle), options->feather);
-  gtk_widget_show (feather_toggle);
-
-  /*  the feather radius scale  */
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (_("Feather Radius:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  feather_scale_data = gtk_adjustment_new (options->feather_radius, 0.0, 100.0, 1.0, 1.0, 0.0);
-  feather_scale = gtk_hscale_new (GTK_ADJUSTMENT (feather_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), feather_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (feather_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (feather_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (feather_scale_data), "value_changed",
-		      (GtkSignalFunc) selection_scale_update,
-		      &options->feather_radius);
-  gtk_widget_show (feather_scale);
-  gtk_widget_show (hbox);
-
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (tool_type, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (tool_type,
+		  vbox,
+		  ((tool_type == RECT_SELECT) ?
+		   _("Rectangular Select Options") :
+		   ((tool_type == ELLIPSE_SELECT) ?
+		    _("Elliptical Selection Options") :
+		    ((tool_type == FREE_SELECT) ?
+		     _("Free-hand Selection Options") :
+		     ((tool_type == FUZZY_SELECT) ?
+		      _("Fuzzy Selection Options") :
+		      ((tool_type == BEZIER_SELECT) ?
+		       _("Bezier Selection Options") :
+		       ((tool_type == ISCISSORS) ?
+			_("Intelligent Scissors Options") :
+			((tool_type == BY_COLOR_SELECT) ?
+			 _("By-Color Select Options") :
+			 _("Unknown Selection Type ???")))))))),
+		  reset_func);
 
   return options;
 }
 
+void
+reset_selection_options (SelectionOptions *options)
+{
+  if (options->sample_merged_w)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				  options->sample_merged_d);
+  if (options->antialias_w)
+    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
+				  options->antialias_d);
+  if (options->feather_w)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),
+				    options->feather_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->feather_radius_w),
+				options->feather_radius_d);
+    }
+  if (options->fixed_size_w)
+    {
+      GtkSpinButton *spinbutton;
+      int            digits;
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->fixed_size_w),
+				    options->fixed_size_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_width_w),
+				options->fixed_width_d);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fixed_height_w),
+				options->fixed_height_d);
+
+      options->fixed_unit = options->fixed_unit_d;
+      gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->fixed_unit_w),
+			       options->fixed_unit_d);
+
+      digits =
+	((options->fixed_unit_d == UNIT_PIXEL) ? 0 :
+	 ((options->fixed_unit_d == UNIT_PERCENT) ? 2 :
+	  (MIN (6, MAX (3, gimp_unit_get_digits (options->fixed_unit_d))))));
+
+      spinbutton =
+	GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (options->fixed_unit_w),
+					      "fixed_width_spinbutton"));
+      gtk_spin_button_set_digits (spinbutton, digits);
+      spinbutton =
+	GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (options->fixed_unit_w),
+					      "fixed_height_spinbutton"));
+      gtk_spin_button_set_digits (spinbutton, digits);
+    }
+}
 
 /*************************************/
 /*  Rectangular selection apparatus  */
@@ -783,6 +864,12 @@ rect_select_control (Tool     *tool,
     }
 }
 
+static void
+rect_select_reset_options ()
+{
+  reset_selection_options (rect_options);
+}
+
 Tool *
 tools_new_rect_select ()
 {
@@ -791,7 +878,8 @@ tools_new_rect_select ()
 
   /*  The tool options  */
   if (!rect_options)
-    rect_options = create_selection_options (RECT_SELECT);
+    rect_options = create_selection_options (RECT_SELECT,
+					     rect_select_reset_options);
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (RectSelect *) g_malloc (sizeof (RectSelect));

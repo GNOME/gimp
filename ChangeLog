@@ -1,3 +1,53 @@
+1999-04-08  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/airbrush.c
+	* app/bezier_select.c
+	* app/blend.c
+	* app/brightness_contrast.c
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/clone.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/convolve.c
+	* app/crop.[ch]
+	* app/curves.c
+	* app/ellipse_select.c
+	* app/eraser.c
+	* app/flip_tool.c
+	* app/free_select.c
+	* app/fuzzy_select.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/ink.c
+	* app/iscissors.c
+	* app/levels.c
+	* app/magnify.c
+	* app/move.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/posterize.c
+	* app/rect_select.[ch]
+	* app/text_tool.[ch]
+	* app/threshold.c
+	* app/transform_tool.c
+
+	* app/tools.[ch]
+	* app/toolsF.h: in other words: all tools
+
+	Implemented the "reset tool options" feature.
+	- All tools register with a title string and a reset function now.
+	- The tool options' variables have two related <var>_d (default)
+	  and <var>_w (widget) variables to restore the default values.
+
+	"Standardized" the tool options UI:
+	- Put the stuff info a frame to give a hint that the dialog's
+	  contents will change. 
+	- table layout, sensitive setting, spacings, borders, ...
+	
+	As I had them all in my emacs simultaneously, I couldn't resist to
+	standardize the tools' *.c files declaration parts ;) Ansi stuff.
+
 Thu Apr  8 21:19:05 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

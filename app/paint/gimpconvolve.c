@@ -31,6 +31,14 @@
 
 #include "libgimp/gimpintl.h"
 
+#define FIELD_COLS    4
+#define MIN_BLUR      64         /*  (8/9 original pixel)   */
+#define MAX_BLUR      0.25       /*  (1/33 original pixel)  */
+#define MIN_SHARPEN   -512
+#define MAX_SHARPEN   -64
+
+/*  the convolve structures  */
+
 typedef enum
 {
   Blur,
@@ -38,33 +46,25 @@ typedef enum
   Custom
 } ConvolveType;
 
-/*  forward function declarations  */
-static void         calculate_matrix     (ConvolveType, double, double);
-static void         integer_matrix       (float *, int *, int);
-static void         copy_matrix          (float *, float *, int);
-static int          sum_matrix           (int *, int);
-
-static void         convolve_motion      (PaintCore *, GimpDrawable *);
-static Argument *   convolve_invoker     (Argument *);
-
-#define FIELD_COLS    4
-#define MIN_BLUR      64         /*  (8/9 original pixel)   */
-#define MAX_BLUR      0.25       /*  (1/33 original pixel)  */
-#define MIN_SHARPEN   -512
-#define MAX_SHARPEN   -64
-
 typedef struct _ConvolveOptions ConvolveOptions;
 struct _ConvolveOptions
 {
   ConvolveType  type;
+  ConvolveType  type_d;
+  GtkWidget    *type_w;
+
   double        pressure;
+  double        pressure_d;
+  GtkObject    *pressure_w;
 };
+
+/*  convolve tool options  */
+static ConvolveOptions *convolve_options = NULL;
 
 /*  local variables  */
 static int          matrix [25];
 static int          matrix_size;
 static int          matrix_divisor;
-static ConvolveOptions *convolve_options = NULL;
 
 static float        custom_matrix [25] =
 {
@@ -94,6 +94,18 @@ static float        sharpen_matrix [25] =
 };
 
 
+/*  forward function declarations  */
+static void         calculate_matrix     (ConvolveType, double, double);
+static void         integer_matrix       (float *, int *, int);
+static void         copy_matrix          (float *, float *, int);
+static int          sum_matrix           (int *, int);
+
+static void         convolve_motion      (PaintCore *, GimpDrawable *);
+static Argument *   convolve_invoker     (Argument *);
+
+
+/* functions  */
+
 static void
 convolve_scale_update (GtkAdjustment *adjustment,
 		       double        *scale_val)
@@ -108,6 +120,16 @@ convolve_type_callback (GtkWidget *w,
   convolve_options->type = (ConvolveType) client_data;
 }
 
+static void
+reset_convolve_options (void)
+{
+  ConvolveOptions *options = convolve_options;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
+			    options->pressure_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w), TRUE);
+}
+
 static ConvolveOptions *
 create_convolve_options (void)
 {
@@ -115,11 +137,11 @@ create_convolve_options (void)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
-  GtkWidget *pressure_scale;
+  GtkWidget *scale;
+  GtkWidget *frame;
+  GSList    *group = NULL;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
-  GtkObject *pressure_scale_data;
-  GSList *group = NULL;
   int i;
   char *button_names[3] =
   {
@@ -130,62 +152,70 @@ create_convolve_options (void)
 
   /*  the new options structure  */
   options = (ConvolveOptions *) g_malloc (sizeof (ConvolveOptions));
-  options->type = Blur;
-  options->pressure = 50.0;
+  options->type     = options->type_d     = Blur;
+  options->pressure = options->pressure_d = 50.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-
-  /*  the main label  */
-  label = gtk_label_new (_("Convolver Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 3);
 
   /*  the pressure scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Pressure: "));
+  label = gtk_label_new (_("Pressure:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  pressure_scale_data = gtk_adjustment_new (50.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  pressure_scale = gtk_hscale_new (GTK_ADJUSTMENT (pressure_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), pressure_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (pressure_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (pressure_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (pressure_scale_data), "value_changed",
+  options->pressure_w =
+    gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
+  gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
 		      (GtkSignalFunc) convolve_scale_update,
 		      &options->pressure);
-  gtk_widget_show (pressure_scale);
+  gtk_widget_show (scale);
   gtk_widget_show (hbox);
 
-  radio_box = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (vbox), radio_box, FALSE, FALSE, 0);
+  frame = gtk_frame_new (_("Convolve Type"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
+  gtk_container_add (GTK_CONTAINER (frame), radio_box);
 
   /*  the radio buttons  */
   for (i = 0; i < 2; i++)
     {
-      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
+      radio_button =
+	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 			  (GtkSignalFunc) convolve_type_callback,
 			  (gpointer) ((long) i));
       gtk_widget_show (radio_button);
+
+      if (i == options->type_d)
+	options->type_w = radio_button;
     }
   gtk_widget_show (radio_box);
 
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (CONVOLVE, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (CONVOLVE, vbox, _("Convolver Options"),
+		  reset_convolve_options);
 
   return options;
 }
 
 void *
-convolve_paint_func (PaintCore *paint_core,
+convolve_paint_func (PaintCore    *paint_core,
 		     GimpDrawable *drawable,
-		     int        state)
+		     int           state)
 {
   switch (state)
     {

@@ -52,18 +52,19 @@ typedef enum
 
 typedef struct _tool Tool;
 typedef struct _ToolInfo ToolInfo;
-typedef void (* ButtonPressFunc)   (Tool *, GdkEventButton *, gpointer);
-typedef void (* ButtonReleaseFunc) (Tool *, GdkEventButton *, gpointer);
-typedef void (* MotionFunc)        (Tool *, GdkEventMotion *, gpointer);
-typedef void (* ArrowKeysFunc)     (Tool *, GdkEventKey *, gpointer);
-typedef void (* CursorUpdateFunc)  (Tool *, GdkEventMotion *, gpointer);
-typedef void (* ToolCtlFunc)       (Tool *, int, gpointer);
+typedef void (* ButtonPressFunc)       (Tool *, GdkEventButton *, gpointer);
+typedef void (* ButtonReleaseFunc)     (Tool *, GdkEventButton *, gpointer);
+typedef void (* MotionFunc)            (Tool *, GdkEventMotion *, gpointer);
+typedef void (* ArrowKeysFunc)         (Tool *, GdkEventKey *, gpointer);
+typedef void (* CursorUpdateFunc)      (Tool *, GdkEventMotion *, gpointer);
+typedef void (* ToolCtlFunc)           (Tool *, int, gpointer);
 
-/* ToolInfo function declarations */
-typedef Tool *(* ToolInfoNewFunc)  (void);
-typedef void  (* ToolInfoFreeFunc) (Tool *);
-typedef void  (* ToolInfoInitFunc) (GDisplay *);
+/*  ToolInfo function declarations  */
+typedef Tool *(* ToolInfoNewFunc)      (void);
+typedef void  (* ToolInfoFreeFunc)     (Tool *);
+typedef void  (* ToolInfoInitFunc)     (GDisplay *);
 
-
+/*  Tool options function declarations  */
+typedef void  (* ToolOptionsResetFunc) (void);
 
 #endif

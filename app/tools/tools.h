@@ -60,7 +60,7 @@ struct _tool
 					   active when the tool was created */
   int            ID;                   /*  unique tool ID  */
 
-  int            preserve;             /*  Perserve this tool through the current image changes */
+  int            preserve;             /*  Preserve this tool through the current image changes */
 
   /*  Action functions  */
   ButtonPressFunc    button_press_func;
@@ -74,7 +74,10 @@ struct _tool
 
 struct _ToolInfo
 {
-  GtkWidget *tool_options;
+  GtkWidget            *tool_options;
+  char                 *tool_options_title;
+  ToolOptionsResetFunc  tool_options_reset_func;
+
   char *tool_name;
 
   int toolbar_position;  
@@ -106,17 +109,21 @@ extern ToolInfo tool_info[];
 
 /*  Function declarations  */
 
-void     tools_select              (ToolType);
-void     tools_initialize          (ToolType, GDisplay *);
-void     tools_options_dialog_new  (void);
-void     tools_options_dialog_show (void);
-void     tools_options_dialog_free (void);
-void     tools_register_options    (ToolType, GtkWidget *);
-void *   tools_register_no_options (ToolType, char *);
-void     active_tool_control       (int, void *);
+void   tools_select              (ToolType);
+void   tools_initialize          (ToolType, GDisplay *);
+void   tools_options_dialog_new  (void);
+void   tools_options_dialog_show (void);
+void   tools_options_dialog_free (void);
+
+void   tools_register            (ToolType              tool_type,
+				  GtkWidget            *tool_options,
+				  gchar                *tool_options_title,
+				  ToolOptionsResetFunc  tool_options_reset_func);
+
+void   active_tool_control       (int, void *);
 
 
 /*  Standard member functions  */
-void     standard_arrow_keys_func  (Tool *, GdkEventKey *, gpointer);
+void   standard_arrow_keys_func  (Tool *, GdkEventKey *, gpointer);
 
 #endif  /*  __TOOLS_H__  */

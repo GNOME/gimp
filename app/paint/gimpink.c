@@ -63,13 +63,31 @@ struct _InkTool
 typedef struct _InkOptions InkOptions;
 struct _InkOptions
 {
-  double       size;
-  double       aspect;
-  double       angle;
-  double       sensitivity;
-  double       tilt_sensitivity;
-  double       tilt_angle;
-  BlobFunc     function;
+  double     size;
+  double     size_d;
+  GtkObject *size_w;
+
+  double     sensitivity;
+  double     sensitivity_d;
+  GtkObject *sensitivity_w;
+
+  double     tilt_sensitivity;
+  double     tilt_sensitivity_d;
+  GtkObject *tilt_sensitivity_w;
+
+  double     tilt_angle;
+  double     tilt_angle_d;
+  GtkObject *tilt_angle_w;
+
+  BlobFunc   function;
+  BlobFunc   function_d;
+  GtkWidget *function_w;
+
+  double     aspect;
+  double     aspect_d;
+  double     angle;
+  double     angle_d;
+  GtkWidget *shape_w;
 };
 
 typedef struct _BrushWidget BrushWidget;
@@ -78,6 +96,11 @@ struct _BrushWidget
   GtkWidget   *widget;
   gboolean     state;
 };
+
+/* the ink tool options  */
+static InkOptions *ink_options = NULL;
+
+/* local variables */
 
 /* Global variable to store brush widget */
 static BrushWidget *brush_widget;
@@ -92,9 +115,6 @@ static TileManager *  canvas_tiles = NULL;
  * for composition onto the destination drawable
  */
 static TempBuf *  canvas_buf = NULL;
-
-/*  local variables  */
-static InkOptions *ink_options = NULL;
 
 /*  local function prototypes  */
 static void   ink_button_press            (Tool *, GdkEventButton *, gpointer);
@@ -168,120 +188,167 @@ static void brush_widget_motion_notify    (GtkWidget      *w,
 					   BrushWidget    *brush_widget);
 
 
-static InkOptions *
-create_ink_options ()
+/*  functions  */
+
+static void
+reset_ink_options (void)
 {
+  InkOptions *options = ink_options;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
+			    options->size_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->sensitivity_w),
+			    options->sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_sensitivity_w),
+			    options->tilt_sensitivity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->tilt_angle_w),
+			    options->tilt_angle_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->function_w), TRUE);
+
+  options->aspect = options->aspect_d;
+  options->angle  = options->angle_d;
+  gtk_widget_draw (options->shape_w, NULL);
+}
+
+static InkOptions *
+create_ink_options (void)
+{
+  InkOptions *options;
+  GtkWidget *table;
   GtkWidget *vbox;
-  GtkWidget *util_vbox;
-  GtkWidget *hbox;
+  GtkWidget *abox;
   GtkWidget *label;
   GtkWidget *radio_button;
   GtkWidget *pixmap_widget;
   GtkWidget *slider;
-  GtkWidget *aspect_frame;
+  GtkWidget *frame;
   GtkWidget *darea;
-  GtkAdjustment *adj;
-
   GdkPixmap *pixmap;
 
-  InkOptions *options;
-
   /*  the new options structure  */
-  options = g_new (InkOptions, 1);
+  options = (InkOptions *) g_malloc (sizeof (InkOptions));
+  options->size             = options->size_d             = 3.0;
+  options->sensitivity      = options->sensitivity_d      = 1.0;
+  options->tilt_sensitivity = options->tilt_sensitivity_d = 1.0;
+  options->tilt_angle       = options->tilt_angle_d       = 0.0;
+  options->function         = options->function_d         = blob_ellipse;
+  options->aspect           = options->aspect_d           = 1.0;
+  options->angle            = options->angle_d            = 0.0;
 
-  options->size = 3.0;
-  options->sensitivity = 1.0;
-  options->aspect = 1.0;
-  options->angle = 0.0;
-  options->tilt_sensitivity = 1.0;
-  options->tilt_angle = 0.0;
-  options->function = blob_ellipse;
+  /*  the main table  */
+  table = gtk_table_new (7, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 3, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 6);
 
-  /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the main label  */
-  label = gtk_label_new (_("Ink Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  /* size slider */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  /*  size slider  */
   label = gtk_label_new (_("Size:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
   
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (3.0, 0.0, 20.0, 1.0, 5.0, 0.0));
-  slider = gtk_hscale_new (adj);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  options->size_w =
+    gtk_adjustment_new (options->size_d, 0.0, 20.0, 1.0, 5.0, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->size_w));
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  
+  gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 0, 1);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->size_w), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->size);
-  
+  gtk_widget_show (slider);
+
   /* sens slider */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
   label = gtk_label_new (_("Sensitivity:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
   
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, 1.0, 0.01, 0.1, 0.0));
-  slider = gtk_hscale_new (adj);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  options->sensitivity_w =
+    gtk_adjustment_new (options->sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->sensitivity_w));
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  
+  gtk_table_attach_defaults (GTK_TABLE (table), slider, 1, 2, 1, 2);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->sensitivity_w), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->sensitivity);
-
+  gtk_widget_show (slider);
+  
   /* tilt sens slider */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Tilt Sensitivity:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
-  
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (1.0, 0.0, 1.0, 0.01, 0.1, 0.0));
-  slider = gtk_hscale_new (adj);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  label = gtk_label_new (_("Tilt"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Sensitivity:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 2, 4,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->tilt_sensitivity_w =
+    gtk_adjustment_new (options->tilt_sensitivity_d, 0.0, 1.0, 0.01, 0.1, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_sensitivity_w));
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  
+  gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->tilt_sensitivity_w), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->tilt_sensitivity);
+  gtk_widget_show (slider);
 
   /* angle adjust slider */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Angle adjust:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
-  
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -90.0, 90.0, 1, 10.0, 0.0));
-  slider = gtk_hscale_new (adj);
-  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  label = gtk_label_new (_("Angle"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("Adjust:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 4, 6,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->tilt_angle_w =
+    gtk_adjustment_new (options->tilt_angle_d, -90.0, 90.0, 1, 10.0, 0.0);
+  slider = gtk_hscale_new (GTK_ADJUSTMENT (options->tilt_angle_w));
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
-  
+  gtk_container_add (GTK_CONTAINER (abox), slider);
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+  gtk_signal_connect (GTK_OBJECT (options->tilt_angle_w), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->tilt_angle);
 
   /* Brush type radiobuttons */
+  frame = gtk_frame_new (_("Type"));
+  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 6, 7,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
-  util_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(hbox), util_vbox, FALSE, FALSE, 5);
-
-  label = gtk_label_new (_("Type:"));
-  gtk_box_pack_start (GTK_BOX (util_vbox), label, FALSE, FALSE, 0);
-  
-  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
-			gtk_widget_get_visual (util_vbox),
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
 			blob_ellipse);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
@@ -293,58 +360,65 @@ create_ink_options ()
 		      (gpointer)blob_ellipse);
 
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
-			gtk_widget_get_visual (util_vbox),
+  options->function_w = radio_button;
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
 			blob_square);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
   gdk_pixmap_unref (pixmap);
 
-  radio_button = gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  radio_button =
+    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
   gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 		      GTK_SIGNAL_FUNC (ink_type_update), 
 		      (gpointer)blob_square);
   
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
-  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
-			gtk_widget_get_visual (util_vbox),
+  pixmap = blob_pixmap (gtk_widget_get_colormap (vbox),
+			gtk_widget_get_visual (vbox),
 			blob_diamond);
 
   pixmap_widget = gtk_pixmap_new (pixmap, NULL);
   gdk_pixmap_unref (pixmap);
 
-  radio_button = gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  radio_button =
+    gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
   gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
 		      GTK_SIGNAL_FUNC (ink_type_update), 
 		      (gpointer)blob_diamond);
 
   gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
-  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), radio_button, FALSE, FALSE, 0);
 
   /* Brush shape widget */
+  frame = gtk_frame_new (_("Shape"));
+  gtk_table_attach_defaults (GTK_TABLE (table), frame, 1, 2, 6, 7);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   brush_widget = g_new (BrushWidget, 1);
   brush_widget->state = FALSE;
   
-  util_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(hbox), util_vbox, FALSE, FALSE, 5);
-
-  label = gtk_label_new (_("Shape:"));
-  gtk_box_pack_start (GTK_BOX (util_vbox), label, FALSE, FALSE, 0);
-  
-  aspect_frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
-  gtk_frame_set_shadow_type (GTK_FRAME(aspect_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (util_vbox), aspect_frame, TRUE, TRUE, 2);
+  frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
 
   darea = gtk_drawing_area_new();
   brush_widget->widget = darea;
+  options->shape_w = darea;
   
-  gtk_drawing_area_size (GTK_DRAWING_AREA(darea), 60, 60);
-  gtk_container_add (GTK_CONTAINER(aspect_frame), darea);
+  gtk_drawing_area_size (GTK_DRAWING_AREA (darea), 60, 60);
+  gtk_container_add (GTK_CONTAINER (frame), darea);
   
   gtk_widget_set_events (darea, 
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK
@@ -364,11 +438,13 @@ create_ink_options ()
   gtk_signal_connect (GTK_OBJECT (darea), "realize",
 		      GTK_SIGNAL_FUNC (brush_widget_realize),
 		      brush_widget);
-  gtk_widget_show_all (vbox);
-  gtk_widget_hide (vbox);
-  
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (INK, vbox);
+
+  gtk_widget_show_all (table);
+  gtk_widget_hide (table);
+
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (INK, table, _("Ink Options"), reset_ink_options);
 
   return options;
 }
@@ -612,7 +688,7 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
       tsin = sin(ink_options->angle);
       tcos = cos(ink_options->angle);
     }
-  
+
   if (aspect < 1.0) 
     aspect = 1.0;
   else if (aspect > 10.0) 

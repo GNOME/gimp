@@ -26,21 +26,13 @@
 
 #include "libgimp/gimpintl.h"
 
-/*   types of magnify operations  */
+/*  types of magnify operations  */
 #define ZOOMIN            0
 #define ZOOMOUT           1
 
-/*  local structures  */
-
-typedef struct _MagnifyOptions MagnifyOptions;
-
-struct _MagnifyOptions
-{
-  int dummy;
-};
+/*  the magnify structures  */
 
 typedef struct _magnify Magnify;
-
 struct _magnify
 {
   DrawCore *      core;       /*  Core select object          */
@@ -50,6 +42,17 @@ struct _magnify
 
   int             op;         /*  magnify operation           */
 };
+
+typedef struct _MagnifyOptions MagnifyOptions;
+struct _MagnifyOptions
+{
+  /* int     allow_resize_windows; (from gimprc) */
+  int        allow_resize_d;
+  GtkWidget *allow_resize_w;
+};
+
+/*  magnify tool options  */
+static void  *magnify_options = NULL;
 
 
 /*   magnify utility functions  */
@@ -63,7 +66,6 @@ static void   magnify_motion            (Tool *, GdkEventMotion *, gpointer);
 static void   magnify_cursor_update     (Tool *, GdkEventMotion *, gpointer);
 static void   magnify_control           (Tool *, int, gpointer);
 
-static void  *magnify_options = NULL;
 
 /*   magnify utility functions  */
 
@@ -115,41 +117,42 @@ magnify_toggle_update (GtkWidget *w,
     *toggle_val = FALSE;
 }
 
+static void
+reset_magnify_options (void)
+{
+  MagnifyOptions *options = magnify_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				options->allow_resize_d);
+}
+
 static MagnifyOptions *
 create_magnify_options (void)
 {
   MagnifyOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *allow_resize_toggle;
+  GtkWidget      *vbox;
 
   /*  the new options structure  */
   options = (MagnifyOptions *) g_malloc (sizeof (MagnifyOptions));
+  options->allow_resize_d = allow_resize_windows;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
-  /*  the main label  */
-  label = gtk_label_new (_("Magnify Options"));
-
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /*  the allow_resize toggle button  */
-  allow_resize_toggle = gtk_check_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), allow_resize_toggle, FALSE, FALSE, 0);
-  label = gtk_label_new (_("Allow Window Resizing"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_container_add (GTK_CONTAINER (allow_resize_toggle), label);
-  gtk_widget_show (label);
-  gtk_signal_connect (GTK_OBJECT (allow_resize_toggle), "toggled",
+  options->allow_resize_w =
+    gtk_check_button_new_with_label (_("Allow Window Resizing"));
+  gtk_signal_connect (GTK_OBJECT (options->allow_resize_w), "toggled",
 		      (GtkSignalFunc) magnify_toggle_update,
 		      &allow_resize_windows);
-  gtk_widget_show (allow_resize_toggle);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (allow_resize_toggle), allow_resize_windows);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
+				allow_resize_windows);
+  gtk_box_pack_start (GTK_BOX (vbox), options->allow_resize_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->allow_resize_w);
 
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (MAGNIFY, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (MAGNIFY, vbox, _("Magnify Options"), reset_magnify_options);
 
   return options;
 }
@@ -367,6 +370,7 @@ tools_new_magnify (void)
   tool->scroll_lock = 1;  /*  disallow scrolling  */
   tool->auto_snap_to = FALSE;
   tool->private = (void *) private;
+
   tool->button_press_func = magnify_button_press;
   tool->button_release_func = magnify_button_release;
   tool->motion_func = magnify_motion;

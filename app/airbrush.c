@@ -31,40 +31,51 @@
 
 #include "libgimp/gimpintl.h"
 
-typedef struct _AirbrushTimeout AirbrushTimeout;
-
-struct _AirbrushTimeout
-{
-  PaintCore *paint_core;
-  GimpDrawable *drawable;
-};
-
-/*  forward function declarations  */
-static void         airbrush_motion   (PaintCore *, GimpDrawable *, double);
-static gint         airbrush_time_out (gpointer);
-static Argument *   airbrush_invoker  (Argument *);
-
-static double non_gui_pressure;
-
 /*  The maximum amount of pressure that can be exerted  */
 #define             MAX_PRESSURE  0.075
 
 #define             OFF           0
 #define             ON            1
 
+/*  the airbrush structures  */
+
+typedef struct _AirbrushTimeout AirbrushTimeout;
+struct _AirbrushTimeout
+{
+  PaintCore *paint_core;
+  GimpDrawable *drawable;
+};
+
 typedef struct _AirbrushOptions AirbrushOptions;
 struct _AirbrushOptions
 {
-  double rate;
-  double pressure;
+  double     rate;
+  double     rate_d;
+  GtkObject *rate_w;
+
+  double     pressure;
+  double     pressure_d;
+  GtkObject *pressure_w;
 };
 
+/*  airbrush tool options  */
+static AirbrushOptions *airbrush_options = NULL;
 
 /*  local variables  */
-static gint         timer;                 /*  timer for successive paint applications  */
-static int          timer_state = OFF;     /*  state of airbrush tool  */
+static gint             timer;  /*  timer for successive paint applications  */
+static int              timer_state = OFF;       /*  state of airbrush tool  */
 static AirbrushTimeout  airbrush_timeout;
-static AirbrushOptions *airbrush_options = NULL;
+
+static double           non_gui_pressure;
+
+
+/*  forward function declarations  */
+static void         airbrush_motion   (PaintCore *, GimpDrawable *, double);
+static gint         airbrush_time_out (gpointer);
+static Argument *   airbrush_invoker  (Argument *);
+
+
+/*  functions  */
 
 static void
 airbrush_scale_update (GtkAdjustment *adjustment,
@@ -73,69 +84,78 @@ airbrush_scale_update (GtkAdjustment *adjustment,
   *scale_val = adjustment->value;
 }
 
+static void
+reset_airbrush_options (void)
+{
+  AirbrushOptions *options = airbrush_options;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->rate_w),
+			    options->rate_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->pressure_w),
+			    options->pressure_d);
+}
+
 static AirbrushOptions *
 create_airbrush_options (void)
 {
   AirbrushOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *rate_scale;
-  GtkWidget *pressure_scale;
-  GtkObject *rate_scale_data;
-  GtkObject *pressure_scale_data;
+  GtkWidget       *vbox;
+  GtkWidget       *table;
+  GtkWidget       *label;
+  GtkWidget       *scale;
 
   /*  the new options structure  */
   options = (AirbrushOptions *) g_malloc (sizeof (AirbrushOptions));
-  options->rate = 80.0;
-  options->pressure = 10.0;
+  options->rate     = options->rate_d     = 80.0;
+  options->pressure = options->pressure_d = 10.0;
 
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the main label  */
-  label = gtk_label_new (_("Airbrush Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the rate scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Rate: "));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Rate:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  rate_scale_data = gtk_adjustment_new (80.0, 0.0, 150.0, 1.0, 1.0, 0.0);
-  rate_scale = gtk_hscale_new (GTK_ADJUSTMENT (rate_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), rate_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (rate_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (rate_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (rate_scale_data), "value_changed",
+  options->rate_w =
+    gtk_adjustment_new (options->rate_d, 0.0, 150.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->rate_w));
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->rate_w), "value_changed",
 		      (GtkSignalFunc) airbrush_scale_update, &options->rate);
-  gtk_widget_show (rate_scale);
+  gtk_widget_show (scale);
 
   /*  the pressure scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Pressure: "));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Pressure:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  pressure_scale_data = gtk_adjustment_new (10.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  pressure_scale = gtk_hscale_new (GTK_ADJUSTMENT (pressure_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), pressure_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (pressure_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (pressure_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (pressure_scale_data), "value_changed",
+  options->pressure_w =
+    gtk_adjustment_new (options->pressure_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->pressure_w));
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->pressure_w), "value_changed",
 		      (GtkSignalFunc) airbrush_scale_update, &options->pressure);
-  gtk_widget_show (pressure_scale);
+  gtk_widget_show (scale);
 
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (AIRBRUSH, vbox);
+  gtk_widget_show (table);
+
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (AIRBRUSH, vbox, _("Airbrush Options"), reset_airbrush_options);
 
   return options;
 }

@@ -54,7 +54,7 @@
 
 #define STATUSBAR_SIZE 128
 
-/*  the Blend structures  */
+/*  the blend structures  */
 
 typedef enum
 {
@@ -107,17 +107,43 @@ struct _BlendTool
 typedef struct _BlendOptions BlendOptions;
 struct _BlendOptions
 {
-  double       opacity;
-  double       offset;
-  BlendMode    blend_mode;
-  int          paint_mode;
-  GradientType gradient_type;
-  RepeatMode   repeat;
-  GtkWidget   *repeat_mode_menu;
-  int          supersample;
-  GtkWidget   *frame;
-  int          max_depth;
-  double       threshold;
+  double        opacity;
+  double        opacity_d;
+  GtkObject    *opacity_w;
+
+  double        offset;
+  double        offset_d;
+  GtkObject    *offset_w;
+
+  BlendMode     blend_mode;
+  BlendMode     blend_mode_d;
+  GtkWidget    *blend_mode_w;
+
+  int           paint_mode;
+  int           paint_mode_d;
+  GtkWidget    *paint_mode_w;
+
+  GradientType  gradient_type;
+  GradientType  gradient_type_d;
+  GtkWidget    *gradient_type_w;
+
+  RepeatMode    repeat;
+  RepeatMode    repeat_d;
+  GtkWidget    *repeat_w;
+
+  int           supersample;
+  int           supersample_d;
+  GtkWidget    *supersample_w;
+
+  GtkWidget    *frame;
+
+  int           max_depth;
+  int           max_depth_d;
+  GtkObject    *max_depth_w;
+
+  double        threshold;
+  double        threshold_d;
+  GtkObject    *threshold_w;
 };
 
 typedef struct {
@@ -137,6 +163,22 @@ typedef struct {
   int            bytes;
   int            width;
 } PutPixelData;
+
+/*  blend tool options  */
+static BlendOptions *blend_options = NULL;
+
+/*  variables for the shapeburst algs  */
+static PixelRegion distR =
+{
+  NULL,  /* data */
+  NULL,  /* tiles */
+  0,     /* rowstride */
+  0, 0,  /* w, h */
+  0, 0,  /* x, y */
+  4,     /* bytes */
+  0      /* process count */
+};
+
 
 /*  local function prototypes  */
 static void   blend_scale_update        (GtkAdjustment *, double *);
@@ -207,17 +249,6 @@ static void calc_hsv_to_rgb(double *h, double *s, double *v);
 static BlendOptions *create_blend_options   (void);
 static Argument *blend_invoker              (Argument *);
 
-/*  variables for the shapeburst algs  */
-static PixelRegion distR =
-{
-  NULL,  /* data */
-  NULL,  /* tiles */
-  0,     /* rowstride */
-  0, 0,  /* w, h */
-  0, 0,  /* x, y */
-  4,     /* bytes */
-  0      /* process count */
-};
 
 /*  the blend option menu items -- the blend modes  */
 static MenuItem blend_option_items[] =
@@ -246,11 +277,7 @@ static MenuItem gradient_option_items[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
-/*  blend options  */
-static BlendOptions *blend_options = NULL;
-
 /* repeat menu items */
-
 static MenuItem repeat_option_items[] =
 {
   { N_("None"), 0, 0, repeat_type_callback, (gpointer) REPEAT_NONE, NULL, NULL },
@@ -272,7 +299,7 @@ gradient_type_callback (GtkWidget *w,
 			gpointer   client_data)
 {
   blend_options->gradient_type = (GradientType) client_data;
-  gtk_widget_set_sensitive (blend_options->repeat_mode_menu, 
+  gtk_widget_set_sensitive (blend_options->repeat_w, 
 			    (blend_options->gradient_type < 6));
 }
 
@@ -329,229 +356,248 @@ threshold_scale_update(GtkAdjustment *adjustment,
   *scale_val = adjustment->value;
 }
 
+static void
+reset_blend_options ()
+{
+  BlendOptions *options = blend_options;
+
+  options->paint_mode    = options->paint_mode_d;
+  options->blend_mode    = options->blend_mode_d;
+  options->gradient_type = options->gradient_type_d;
+  options->repeat        = options->repeat_d;
+
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->paint_mode_w), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w), 0);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w), 0);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->opacity_w),
+			    blend_options->opacity_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->offset_w),
+			    blend_options->offset_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (blend_options->supersample_w),
+				blend_options->supersample_d);
+  gtk_widget_set_sensitive (blend_options->frame, blend_options->supersample_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->max_depth_w),
+			    blend_options->max_depth_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->threshold_w),
+			    blend_options->threshold_d);
+}
+
 static BlendOptions *
 create_blend_options ()
 {
   BlendOptions *options;
   GtkWidget *vbox;
-  GtkWidget *frame;
+  GtkWidget *abox;
   GtkWidget *label;
-  GtkWidget *bm_option_menu;
   GtkWidget *bm_menu;
-  GtkWidget *pm_option_menu;
   GtkWidget *pm_menu;
-  GtkWidget *gt_option_menu;
   GtkWidget *gt_menu;
-  GtkWidget *rt_option_menu;
   GtkWidget *rt_menu;
-  GtkWidget *opacity_scale;
   GtkWidget *table;
-  GtkWidget *offset_scale;
-  GtkObject *opacity_scale_data;
-  GtkObject *offset_scale_data;
-  GtkWidget *button;
-  GtkObject *depth_scale_data;
-  GtkWidget *depth_scale;
-  GtkObject *threshold_scale_data;
-  GtkWidget *threshold_scale;
+  GtkWidget *scale;
 
   /*  the new options structure  */
   options = (BlendOptions *) g_malloc (sizeof (BlendOptions));
-  options->opacity 	 = 100.0;
-  options->offset  	 = 0.0;
-  options->blend_mode 	 = FG_BG_RGB_MODE;
-  options->paint_mode 	 = NORMAL;
-  options->gradient_type = Linear;
-  options->repeat        = REPEAT_NONE;
-  options->supersample   = FALSE;
-  options->max_depth     = 3;
-  options->threshold     = 0.2;
+  options->opacity 	 = options->opacity_d       = 100.0;
+  options->offset  	 = options->offset_d  	    = 0.0;
+  options->blend_mode 	 = options->blend_mode_d    = FG_BG_RGB_MODE;
+  options->paint_mode 	 = options->paint_mode_d    = NORMAL;
+  options->gradient_type = options->gradient_type_d = Linear;
+  options->repeat        = options->repeat_d        = REPEAT_NONE;
+  options->supersample   = options->supersample_d   = FALSE;
+  options->max_depth     = options->max_depth_d     = 3;
+  options->threshold     = options->threshold_d     = 0.2;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
 
-  /*  the main label  */
-  label = gtk_label_new (_("Blend Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /*  the table  */
   table = gtk_table_new (6, 2, FALSE);
-  gtk_container_border_width (GTK_CONTAINER (table), 2);
-  gtk_box_pack_start(GTK_BOX(vbox), table, TRUE, TRUE, 0);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   /*  the opacity scale  */
   label = gtk_label_new (_("Opacity:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  opacity_scale_data = gtk_adjustment_new (100.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
-  gtk_table_attach (GTK_TABLE (table), opacity_scale, 1, 2, 0, 1,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (opacity_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (opacity_scale_data), "value_changed",
+  options->opacity_w =
+    gtk_adjustment_new (options->opacity_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
 		      (GtkSignalFunc) blend_scale_update,
 		      &options->opacity);
-  gtk_widget_show (opacity_scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_widget_show (scale);
 
   /*  the offset scale  */
   label = gtk_label_new (_("Offset:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  offset_scale_data = gtk_adjustment_new (0.0, 0.0, 100.0, 1.0, 1.0, 0.0);
-  offset_scale = gtk_hscale_new (GTK_ADJUSTMENT (offset_scale_data));
-  gtk_table_attach (GTK_TABLE (table), offset_scale, 1, 2, 1, 2,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_scale_set_value_pos (GTK_SCALE (offset_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (offset_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (offset_scale_data), "value_changed",
+  options->offset_w =
+    gtk_adjustment_new (options->offset_d, 0.0, 100.0, 1.0, 1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (options->offset_w), "value_changed",
 		      (GtkSignalFunc) blend_scale_update,
 		      &options->offset);
-  gtk_widget_show (offset_scale);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->offset_w));
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
+  gtk_widget_show (scale);
+
+  /*  eye candy  */
+  gtk_table_set_row_spacing (GTK_TABLE (table), 1, 3);
 
   /*  the paint mode menu  */
   label = gtk_label_new (_("Mode:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  pm_menu = create_paint_mode_menu (paint_mode_callback,NULL);
-  pm_option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), pm_option_menu, 1, 2, 2, 3,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  gtk_widget_show (pm_option_menu);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 2, 3);
+  gtk_widget_show (abox);
+
+  pm_menu = create_paint_mode_menu (paint_mode_callback, NULL);
+  options->paint_mode_w = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), options->paint_mode_w);
+  gtk_widget_show (options->paint_mode_w);
 
   /*  the blend mode menu  */
   label = gtk_label_new (_("Blend:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  bm_menu = build_menu (blend_option_items, NULL);
-  bm_option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), bm_option_menu, 1, 2, 3, 4,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-
   gtk_widget_show (label);
-  gtk_widget_show (bm_option_menu);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 3, 4);
+  gtk_widget_show (abox);
+
+  bm_menu = build_menu (blend_option_items, NULL);
+  options->blend_mode_w = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), options->blend_mode_w);
+  gtk_widget_show (options->blend_mode_w);
 
   /*  the gradient type menu  */
   label = gtk_label_new (_("Gradient:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gt_menu = build_menu (gradient_option_items, NULL);
-  gt_option_menu = gtk_option_menu_new ();
-  gtk_table_attach (GTK_TABLE (table), gt_option_menu, 1, 2, 4, 5,
-		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
-  gtk_widget_show (gt_option_menu);
+
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 4, 5);
+  gtk_widget_show (abox);
+
+  gt_menu = build_menu (gradient_option_items, NULL);
+  options->gradient_type_w = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), options->gradient_type_w);
+  gtk_widget_show (options->gradient_type_w);
 
   /* the repeat option */
+  label = gtk_label_new (_("Repeat:"));
+  gtk_misc_set_alignment (GTK_MISC( label), 1.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  label = gtk_label_new(_("Repeat:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 5, 6,
-		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  rt_menu = build_menu(repeat_option_items, NULL);
-  rt_option_menu = gtk_option_menu_new();
-  gtk_table_attach(GTK_TABLE(table), rt_option_menu, 1, 2, 5, 6,
-		   GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_widget_show(label);
-  gtk_widget_show(rt_option_menu);
+  abox = gtk_alignment_new (0.0, 0.5, 0.0, 0.0);
+  gtk_table_attach_defaults (GTK_TABLE (table), abox, 1, 2, 5, 6);
+  gtk_widget_show (abox);
 
-  options->repeat_mode_menu = rt_option_menu;
+  rt_menu = build_menu (repeat_option_items, NULL);
+  options->repeat_w = gtk_option_menu_new ();
+  gtk_container_add (GTK_CONTAINER (abox), options->repeat_w);
+  gtk_widget_show (options->repeat_w);
 
   /* show the whole table */
-
   gtk_widget_show (table);
 
   /* supersampling toggle */
-
-  button = gtk_check_button_new_with_label(_("Adaptive supersampling"));
-  gtk_box_pack_start(GTK_BOX(vbox), button, FALSE, FALSE, 0);
-  gtk_signal_connect(GTK_OBJECT(button), "toggled",
-		     (GtkSignalFunc) supersample_toggle_update,
-		     NULL);
-  gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), FALSE);
-  gtk_widget_show(button);
+  options->supersample_w =
+    gtk_check_button_new_with_label (_("Adaptive supersampling"));
+  gtk_signal_connect (GTK_OBJECT (options->supersample_w), "toggled",
+		      (GtkSignalFunc) supersample_toggle_update,
+		      NULL);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
+				options->supersample_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->supersample_w, FALSE, FALSE, 0);
+  gtk_widget_show (options->supersample_w);
 
   /* frame for supersampling options */
-
-  frame = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
-  gtk_box_pack_start(GTK_BOX(vbox), frame, TRUE, TRUE, 0);
+  options->frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (options->frame), GTK_SHADOW_ETCHED_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), options->frame, TRUE, TRUE, 0);
+  gtk_widget_set_sensitive (options->frame, options->supersample);
+  gtk_widget_show (options->frame);
 
   /* table for supersamplign options */
-
-  table = gtk_table_new(2, 2, FALSE);
-  gtk_container_border_width(GTK_CONTAINER(table), 2);
-  gtk_container_add(GTK_CONTAINER(frame), table);
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 1);
+  gtk_container_add (GTK_CONTAINER (options->frame), table);
 
   /* max depth scale */
+  label = gtk_label_new (_("Max depth:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  label = gtk_label_new(_("Max depth:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1,
-		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_widget_show(label);
-
-  depth_scale_data = gtk_adjustment_new(3.0, 1.0, 10.0, 1.0, 1.0, 1.0);
-  depth_scale = gtk_hscale_new(GTK_ADJUSTMENT(depth_scale_data));
-  gtk_scale_set_digits(GTK_SCALE(depth_scale), 0);
-  gtk_table_attach(GTK_TABLE(table), depth_scale, 1, 2, 0, 1,
-		   GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_scale_set_value_pos(GTK_SCALE(depth_scale), GTK_POS_TOP);
-  gtk_signal_connect(GTK_OBJECT(depth_scale_data), "value_changed",
-		     (GtkSignalFunc) max_depth_scale_update,
-		     &options->max_depth);
-  gtk_widget_show(depth_scale);
+  options->max_depth_w =
+    gtk_adjustment_new (options->max_depth_d, 1.0, 10.0, 1.0, 1.0, 1.0);
+  gtk_signal_connect (GTK_OBJECT(options->max_depth_w), "value_changed",
+		      (GtkSignalFunc) max_depth_scale_update,
+		      &options->max_depth);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->max_depth_w));
+  gtk_scale_set_digits (GTK_SCALE (scale), 0);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_widget_show (scale);
 
   /* threshold scale */
+  label = gtk_label_new (_("Threshold:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
 
-  label = gtk_label_new(_("Threshold:"));
-  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 1.0);
-  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 1, 2,
-		   GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
-  gtk_widget_show(label);
-
-  threshold_scale_data = gtk_adjustment_new(0.2, 0.0, 4.0, 0.01, 0.01, 0.0);
-  threshold_scale = gtk_hscale_new(GTK_ADJUSTMENT(threshold_scale_data));
-  gtk_scale_set_digits(GTK_SCALE(threshold_scale), 2);
-  gtk_table_attach(GTK_TABLE(table), threshold_scale, 1, 2, 1, 2,
-		   GTK_EXPAND | GTK_SHRINK | GTK_FILL, GTK_SHRINK, 4, 2);
-  gtk_scale_set_value_pos(GTK_SCALE(threshold_scale), GTK_POS_TOP);
-  gtk_signal_connect(GTK_OBJECT(threshold_scale_data), "value_changed",
-		     (GtkSignalFunc) threshold_scale_update,
-		     &options->threshold);
-  gtk_widget_show(threshold_scale);
+  options->threshold_w =
+    gtk_adjustment_new (options->threshold_d, 0.0, 4.0, 0.01, 0.01, 0.0);
+  gtk_signal_connect (GTK_OBJECT(options->threshold_w), "value_changed",
+		      (GtkSignalFunc) threshold_scale_update,
+		      &options->threshold);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->threshold_w));
+  gtk_scale_set_digits (GTK_SCALE (scale), 2);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 1, 2);
+  gtk_widget_show (scale);
 
   /* show table */
+  gtk_widget_show (table);
 
-  gtk_widget_show(table);
-
-  /* show frame */
-
-  gtk_widget_show(frame);
-  gtk_widget_set_sensitive(frame, FALSE);
-  options->frame = frame;
-
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (BLEND, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (BLEND, vbox, _("Blend Options"), reset_blend_options);
 
   /*  Post initialization  */
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (bm_option_menu), bm_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (gt_option_menu), gt_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (pm_option_menu), pm_menu);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (rt_option_menu), rt_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->blend_mode_w), bm_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->gradient_type_w), gt_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->paint_mode_w), pm_menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (options->repeat_w), rt_menu);
 
   return options;
 }

@@ -36,15 +36,15 @@
 #define HISTOGRAM_WIDTH 256
 #define HISTOGRAM_HEIGHT 150
 
-typedef struct _HistogramTool HistogramTool;
+/*  the histogram structures  */
 
+typedef struct _HistogramTool HistogramTool;
 struct _HistogramTool
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _HistogramToolDialog HistogramToolDialog;
-
 struct _HistogramToolDialog
 {
   GtkWidget       *shell;
@@ -67,8 +67,13 @@ struct _HistogramToolDialog
   int          color;
 };
 
-/*  histogram_tool action functions  */
+/*  the histogram tool options  */
+static void *histogram_tool_options = NULL;  /* dummy */
 
+/*  the histogram tool dialog  */
+static HistogramToolDialog *histogram_tool_dialog = NULL;
+
+/*  histogram_tool action functions  */
 static void   histogram_tool_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   histogram_tool_button_release (Tool *, GdkEventButton *, gpointer);
 static void   histogram_tool_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -82,9 +87,6 @@ static void                   histogram_tool_value_callback   (GtkWidget *, gpoi
 static void                   histogram_tool_red_callback     (GtkWidget *, gpointer);
 static void                   histogram_tool_green_callback   (GtkWidget *, gpointer);
 static void                   histogram_tool_blue_callback    (GtkWidget *, gpointer);
-
-static void *histogram_tool_options = NULL;
-static HistogramToolDialog *histogram_tool_dialog = NULL;
 
 static void       histogram_tool_histogram_range (HistogramWidget *, int, int,
 						  void *);
@@ -241,7 +243,10 @@ tools_new_histogram_tool ()
 
   /*  The tool options  */
   if (!histogram_tool_options)
-    histogram_tool_options = tools_register_no_options (HISTOGRAM, "Histogram Options");
+    {
+      tools_register (HISTOGRAM, NULL, _("Histogram Options"), NULL);
+      histogram_tool_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (HistogramTool *) g_malloc (sizeof (HistogramTool));
@@ -251,6 +256,7 @@ tools_new_histogram_tool ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = histogram_tool_button_press;
   tool->button_release_func = histogram_tool_button_release;
   tool->motion_func = histogram_tool_motion;

@@ -21,20 +21,9 @@
 #include "tools.h"
 #include "procedural_db.h"
 
-typedef enum {
-  PIXELS,
-  POINTS
-} SizeType;
-
-typedef struct {
-  int antialias;
-  int border;
-} TextToolOptions;
-
-
-Tool *   tools_new_text (void);
-void     tools_free_text (Tool *);
-
+/*  text functions  */
+Tool * tools_new_text  (void);
+void   tools_free_text (Tool *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord text_tool_proc;

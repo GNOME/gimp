@@ -32,12 +32,19 @@
 
 #define FLIP       0
 
-typedef struct _FlipOptions FlipOptions;
+/*  the flip structures  */
 
+typedef struct _FlipOptions FlipOptions;
 struct _FlipOptions
 {
   ToolType    type;
+  ToolType    type_d;
+  GtkWidget  *type_w;
 };
+
+/*  the flip tool options  */
+static FlipOptions *flip_options = NULL;
+
 
 /*  forward function declarations  */
 static Tool *         tools_new_flip_horz  (void);
@@ -47,9 +54,8 @@ static TileManager *  flip_tool_flip_vert  (GImage *, GimpDrawable *, TileManage
 static void           flip_change_type     (int);
 static Argument *     flip_invoker         (Argument *);
 
-/*  Static variables  */
-static FlipOptions *flip_options = NULL;
 
+/*  functions  */
 
 static void
 flip_type_callback (GtkWidget *w,
@@ -58,53 +64,57 @@ flip_type_callback (GtkWidget *w,
   flip_change_type ((long) client_data);
 }
 
+static void
+reset_flip_options (void)
+{
+  FlipOptions *options = flip_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w), TRUE);
+}
+
 static FlipOptions *
 create_flip_options (void)
 {
   FlipOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *radio_box;
-  GtkWidget *radio_button;
-  GSList *group = NULL;
-  int i;
-  char *button_names[2] =
-  {
-    N_("Horizontal"),
-    N_("Vertical"),
-  };
+  GtkWidget   *vbox;
+  GtkWidget   *radio_box;
+  GtkWidget   *radio_button;
+  GSList      *group = NULL;
 
   /*  the new options structure  */
   options = (FlipOptions *) g_malloc (sizeof (FlipOptions));
-  options->type = FLIP_HORZ;
+  options->type = options->type_d = FLIP_HORZ;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the main label  */
-  label = gtk_label_new (_("Flip Tool Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
 
   radio_box = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), radio_box, FALSE, FALSE, 0);
 
   /*  the radio buttons  */
-  for (i = 0; i < 2; i++)
-    {
-      radio_button = gtk_radio_button_new_with_label (group, gettext(button_names[i]));
-      group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
-      gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
-			  (GtkSignalFunc) flip_type_callback,
-			  (gpointer) ((long) (FLIP_HORZ + i)));
-      gtk_widget_show (radio_button);
-    }
+  options->type_w =
+    gtk_radio_button_new_with_label (group, _("Horizontal"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (options->type_w));
+  gtk_box_pack_start (GTK_BOX (radio_box), options->type_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->type_w), "toggled",
+		      (GtkSignalFunc) flip_type_callback,
+		      (gpointer) ((long) (FLIP_HORZ)));
+  gtk_widget_show (options->type_w);
+
+  radio_button = gtk_radio_button_new_with_label (group, _("Vertical"));
+  group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
+  gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      (GtkSignalFunc) flip_type_callback,
+		      (gpointer) ((long) (FLIP_VERT)));
+  gtk_widget_show (radio_button);
+
   gtk_widget_show (radio_box);
 
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (FLIP_HORZ, vbox);
-  tools_register_options (FLIP_VERT, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (FLIP_HORZ, vbox, _("Flip Tool Options"), reset_flip_options);
+  tools_register (FLIP_VERT, vbox, _("Flip Tool Options"), reset_flip_options);
 
   return options;
 }

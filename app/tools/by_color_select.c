@@ -41,9 +41,9 @@
                             GDK_BUTTON_PRESS_MASK | \
                             GDK_ENTER_NOTIFY_MASK
 
+/*  the by color selection structures  */
 
 typedef struct _ByColorSelect ByColorSelect;
-
 struct _ByColorSelect
 {
   int  x, y;         /*  Point from which to execute seed fill  */
@@ -51,7 +51,6 @@ struct _ByColorSelect
 };
 
 typedef struct _ByColorDialog ByColorDialog;
-
 struct _ByColorDialog
 {
   GtkWidget   *shell;
@@ -63,8 +62,14 @@ struct _ByColorDialog
   GImage      *gimage;    /*  gimage which is currently under examination  */
 };
 
-/*  by_color select action functions  */
+/*  by color selection tool options  */
+static SelectionOptions *by_color_options = NULL;
 
+/*  the by color selection dialog  */
+static ByColorDialog *  by_color_dialog = NULL;
+
+
+/*  by_color select action functions  */
 static void   by_color_select_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   by_color_select_button_release (Tool *, GdkEventButton *, gpointer);
 static void   by_color_select_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -81,10 +86,6 @@ static void             by_color_select_close_callback (GtkWidget *, gpointer);
 static gint             by_color_select_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void             by_color_select_fuzzy_update   (GtkAdjustment *, gpointer);
 static void             by_color_select_preview_button_press (ByColorDialog *, GdkEventButton *);
-
-
-static SelectionOptions *by_color_options = NULL;
-static ByColorDialog *by_color_dialog = NULL;
 
 static int        is_pixel_sufficiently_different (unsigned char *, unsigned char *, int, int, int, int);
 static Channel *  by_color_select_color (GImage *, GimpDrawable *, unsigned char *, int, int, int);
@@ -442,6 +443,12 @@ by_color_select_control (Tool     *tool,
     }
 }
 
+static void
+by_color_select_reset_options ()
+{
+  reset_selection_options (by_color_options);
+}
+
 Tool *
 tools_new_by_color_select ()
 {
@@ -450,7 +457,8 @@ tools_new_by_color_select ()
 
   /*  The tool options  */
   if (!by_color_options)
-    by_color_options = create_selection_options (BY_COLOR_SELECT);
+    by_color_options =
+      create_selection_options (BY_COLOR_SELECT, by_color_select_reset_options);
 
   /*  The "by color" dialog  */
   if (!by_color_dialog)
@@ -467,6 +475,7 @@ tools_new_by_color_select ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = by_color_select_button_press;
   tool->button_release_func = by_color_select_button_release;
   tool->motion_func = by_color_select_motion;
@@ -563,7 +572,7 @@ by_color_select_new_dialog ()
   bcd->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (bcd->shell), "by_color_selection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (bcd->shell), _("By Color Selection"));
-  gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->action_area), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (bcd->shell)->action_area), 2);
 
   /*  handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (bcd->shell), "delete_event",
@@ -572,7 +581,7 @@ by_color_select_new_dialog ()
 
   /*  The vbox */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  The horizontal box containing preview  & options box */
@@ -599,7 +608,7 @@ by_color_select_new_dialog ()
 
   /*  options box  */
   options_box = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (options_box), 5);
+  gtk_container_set_border_width (GTK_CONTAINER (options_box), 5);
   gtk_box_pack_start (GTK_BOX (hbox), options_box, TRUE, TRUE, 0);
 
   /*  Create the active image label  */

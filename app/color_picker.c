@@ -28,27 +28,23 @@
 
 #include "libgimp/gimpintl.h"
 
-/* maximum information buffer size */
-
+/*  maximum information buffer size  */
 #define MAX_INFO_BUF    8
 
+/*  the color picker structures  */
 
-/*  local function prototypes  */
+typedef struct _ColorPickerOptions ColorPickerOptions;
+struct _ColorPickerOptions
+{
+  int        sample_merged;
+  int        sample_merged_d;
+  GtkWidget *sample_merged_w;
+};
 
-static void  color_picker_button_press     (Tool *, GdkEventButton *, gpointer);
-static void  color_picker_button_release   (Tool *, GdkEventButton *, gpointer);
-static void  color_picker_motion           (Tool *, GdkEventMotion *, gpointer);
-static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
-static void  color_picker_control          (Tool *, int, void *);
-static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
+/*  the color picker tool options  */
+static ColorPickerOptions * color_picker_options = NULL;
 
-static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
-static void  color_picker_info_update      (Tool *, int);
-
-static Argument *color_picker_invoker (Argument *);
-
-/*  local variables  */
-
+/*  the color picker dialog  */
 static int            col_value [5] = { 0, 0, 0, 0, 0 };
 static GimpDrawable * active_drawable;
 static int            update_type;
@@ -62,14 +58,22 @@ static char           index_buf [MAX_INFO_BUF];
 static char           gray_buf  [MAX_INFO_BUF];
 static char           hex_buf   [MAX_INFO_BUF];
 
-typedef struct _ColorPickerOptions ColorPickerOptions;
-struct _ColorPickerOptions
-{
-  int sample_merged;
-};
 
-static ColorPickerOptions * color_picker_options = NULL;
+/*  local function prototypes  */
+static void  color_picker_button_press     (Tool *, GdkEventButton *, gpointer);
+static void  color_picker_button_release   (Tool *, GdkEventButton *, gpointer);
+static void  color_picker_motion           (Tool *, GdkEventMotion *, gpointer);
+static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
+static void  color_picker_control          (Tool *, int, void *);
+static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
+static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
+static void  color_picker_info_update      (Tool *, int);
+
+static Argument *color_picker_invoker (Argument *);
+
+
+/*  functions  */
 
 static void
 color_picker_toggle_update (GtkWidget *w,
@@ -85,38 +89,43 @@ color_picker_toggle_update (GtkWidget *w,
     *toggle_val = FALSE;
 }
 
+static void
+reset_color_picker_options (void)
+{
+  ColorPickerOptions *options = color_picker_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				options->sample_merged_d);
+}
+
 static ColorPickerOptions *
 create_color_picker_options (void)
 {
   ColorPickerOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *sample_merged_toggle;
+  GtkWidget          *vbox;
 
   /*  the new options structure  */
   options = (ColorPickerOptions *) g_malloc (sizeof (ColorPickerOptions));
-  options->sample_merged = 0;
+  options->sample_merged = options->sample_merged_d = FALSE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
-  /*  the main label  */
-  label = gtk_label_new (_("Color Picker Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /*  the sample merged toggle button  */
-  sample_merged_toggle = gtk_check_button_new_with_label (_("Sample Merged"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sample_merged_toggle), options->sample_merged);
-  gtk_box_pack_start (GTK_BOX (vbox), sample_merged_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (sample_merged_toggle), "toggled",
+  options->sample_merged_w =
+    gtk_check_button_new_with_label (_("Sample Merged"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
+				options->sample_merged_d);
+  gtk_box_pack_start (GTK_BOX (vbox), options->sample_merged_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->sample_merged_w), "toggled",
 		      (GtkSignalFunc) color_picker_toggle_update,
 		      &options->sample_merged);
-  gtk_widget_show (sample_merged_toggle);
+  gtk_widget_show (options->sample_merged_w);
 
-
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (COLOR_PICKER, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (COLOR_PICKER, vbox, _("Color Picker Options"),
+		  reset_color_picker_options);
 
   return options;
 }

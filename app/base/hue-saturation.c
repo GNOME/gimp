@@ -50,15 +50,15 @@
 #define DRAW              0x40
 #define ALL               0xFF
 
-typedef struct _HueSaturation HueSaturation;
+/*  the hue-saturation structures  */
 
+typedef struct _HueSaturation HueSaturation;
 struct _HueSaturation
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _HueSaturationDialog HueSaturationDialog;
-
 struct _HueSaturationDialog
 {
   GtkWidget   *shell;
@@ -82,8 +82,28 @@ struct _HueSaturationDialog
   gint         preview;
 };
 
-/*  hue saturation action functions  */
+/*  the hue-saturation tool options  */
+static void *hue_saturation_options = NULL;  /* dummy */
 
+/*  the hue-saturation tool dialog  */
+static HueSaturationDialog *hue_saturation_dialog = NULL;
+
+/*  Local variables  */
+static int hue_transfer[6][256];
+static int lightness_transfer[6][256];
+static int saturation_transfer[6][256];
+static int default_colors[6][3] =
+{
+  { 255, 0, 0 },
+  { 255, 255, 0 },
+  { 0, 255, 0 },
+  { 0, 255, 255 },
+  { 0, 0, 255 },
+  { 255, 0, 255 }
+};
+
+
+/*  hue saturation action functions  */
 static void   hue_saturation_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   hue_saturation_button_release (Tool *, GdkEventButton *, gpointer);
 static void   hue_saturation_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -112,25 +132,9 @@ static void   hue_saturation_lightness_text_update   (GtkWidget *, gpointer);
 static void   hue_saturation_saturation_text_update  (GtkWidget *, gpointer);
 static gint   hue_saturation_hue_partition_events    (GtkWidget *, GdkEvent *, HueSaturationDialog *);
 
-static void *hue_saturation_options = NULL;
-static HueSaturationDialog *hue_saturation_dialog = NULL;
-
 static void       hue_saturation          (PixelRegion *, PixelRegion *, void *);
 static Argument * hue_saturation_invoker  (Argument *);
 
-/*  Local variables  */
-static int hue_transfer[6][256];
-static int lightness_transfer[6][256];
-static int saturation_transfer[6][256];
-static int default_colors[6][3] =
-{
-  { 255, 0, 0 },
-  { 255, 255, 0 },
-  { 0, 255, 0 },
-  { 0, 255, 255 },
-  { 0, 0, 255 },
-  { 255, 0, 255 }
-};
 
 /*  hue saturation machinery  */
 
@@ -321,7 +325,10 @@ tools_new_hue_saturation ()
 
   /*  The tool options  */
   if (!hue_saturation_options)
-    hue_saturation_options = tools_register_no_options (HUE_SATURATION, _("Hue-Saturation Options"));
+    {
+      tools_register (HUE_SATURATION, NULL, _("Hue-Saturation Options"), NULL);
+      hue_saturation_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (HueSaturation *) g_malloc (sizeof (HueSaturation));
@@ -331,6 +338,7 @@ tools_new_hue_saturation ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = hue_saturation_button_press;
   tool->button_release_func = hue_saturation_button_release;
   tool->motion_func = hue_saturation_motion;
@@ -468,7 +476,7 @@ hue_saturation_new_dialog ()
 		      hsd);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (main_vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (hsd->shell)->vbox), main_vbox, TRUE, TRUE, 0);
 
   /*  The main hbox containing hue partitions and sliders  */

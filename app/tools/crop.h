@@ -21,18 +21,10 @@
 #include "tools.h"
 #include "procedural_db.h"
 
-/*   select functions  */
-void          crop_draw         (Tool *);
-Tool *        tools_new_crop    (void);
-void          tools_free_crop   (Tool *);
-
-/*   tool options  */
-typedef struct {
-  int layer_only;
-  int default_to_enlarge;
-  int default_to_crop;
-} CropToolOptions;
-
+/*  select functions  */
+void   crop_draw       (Tool *);
+Tool * tools_new_crop  (void);
+void   tools_free_crop (Tool *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord crop_proc;

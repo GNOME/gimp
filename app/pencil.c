@@ -31,17 +31,21 @@
 
 #include "libgimp/gimpintl.h"
 
+/*  pencil tool options  */
+static void *       pencil_options = NULL;  /* dummy */
+
+
 /*  forward function declarations  */
-static void         pencil_motion       (PaintCore *, GimpDrawable *);
+static void         pencil_motion   (PaintCore *, GimpDrawable *);
 static Argument *   pencil_invoker  (Argument *);
 
-static void *  pencil_options = NULL;
+
+/*  functions  */
 
 void *
-pencil_paint_func (paint_core, drawable, state)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int state;
+pencil_paint_func (PaintCore    *paint_core,
+		   GimpDrawable *drawable,
+		   int           state)
 {
   switch (state)
     {
@@ -62,7 +66,6 @@ pencil_paint_func (paint_core, drawable, state)
   return NULL;
 }
 
-
 Tool *
 tools_new_pencil ()
 {
@@ -70,7 +73,10 @@ tools_new_pencil ()
   PaintCore * private;
 
   if (!pencil_options)
-    pencil_options = tools_register_no_options (PENCIL, _("Pencil Options"));
+    {
+      tools_register (PENCIL, NULL, _("Pencil Options"), NULL);
+      pencil_options = (void *) 1;
+    }
 
   tool = paint_core_new (PENCIL);
 
@@ -80,19 +86,15 @@ tools_new_pencil ()
   return tool;
 }
 
-
 void
-tools_free_pencil (tool)
-     Tool * tool;
+tools_free_pencil (Tool *tool)
 {
   paint_core_free (tool);
 }
 
-
 static void
-pencil_motion (paint_core, drawable)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
+pencil_motion (PaintCore    *paint_core,
+	       GimpDrawable *drawable)
 {
   GImage *gimage;
   TempBuf * area;
@@ -120,9 +122,10 @@ pencil_motion (paint_core, drawable)
 			   gimp_brush_get_paint_mode (), HARD, CONSTANT);
 }
 
-
 static void *
-pencil_non_gui_paint_func (PaintCore *paint_core, GimpDrawable *drawable, int state)
+pencil_non_gui_paint_func (PaintCore    *paint_core,
+			   GimpDrawable *drawable,
+			   int           state)
 {
   pencil_motion (paint_core, drawable);
 
@@ -171,8 +174,7 @@ ProcRecord pencil_proc =
 };
 
 static Argument *
-pencil_invoker (args)
-     Argument *args;
+pencil_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;

@@ -33,28 +33,49 @@
 
 #include "libgimp/gimpintl.h"
 
+/*  defines  */
+#define  PAINT_LEFT_THRESHOLD  0.05
+
+/*  the paintbrush structures  */
+
+typedef struct _PaintOptions PaintOptions;
+struct _PaintOptions
+{
+  double     fade_out;
+  double     fade_out_d;
+  GtkObject *fade_out_w;
+
+  double     gradient_length;
+  double     gradient_length_d;
+  GtkObject *gradient_length_w;
+
+  int        gradient_type;
+  int        gradient_type_d;
+  GtkWidget *gradient_type_w;
+
+  gboolean   incremental;
+  gboolean   incremental_d;
+  GtkWidget *incremental_w;
+};
+
+/*  paint brush tool options  */
+static PaintOptions *paint_options = NULL;
+
+/*  local variables  */
+static double        non_gui_fade_out;
+static double        non_gui_gradient_length;
+static int           non_gui_gradient_type;
+static double        non_gui_incremental;
+
+
 /*  forward function declarations  */
 static void         paintbrush_motion      (PaintCore *, GimpDrawable *, double, double, gboolean, int);
 static Argument *   paintbrush_invoker     (Argument *);
 static Argument *   paintbrush_extended_invoker     (Argument *);
 static Argument *   paintbrush_extended_gradient_invoker     (Argument *);
-static double non_gui_fade_out,non_gui_gradient_length, non_gui_incremental;
-static int gradient_type;
 
-/*  defines  */
-#define  PAINT_LEFT_THRESHOLD  0.05
 
-typedef struct _PaintOptions PaintOptions;
-struct _PaintOptions
-{
-  double fade_out;
-  double gradient_length;
-  gboolean incremental;
-};
-
-/*  local variables  */
-static PaintOptions *paint_options = NULL;
-
+/*  functions  */
 
 static void
 paintbrush_toggle_update (GtkWidget *w,
@@ -72,54 +93,64 @@ paintbrush_toggle_update (GtkWidget *w,
 
 static void
 paintbrush_scale_update (GtkAdjustment *adjustment,
-			 PaintOptions   *options)
+			 PaintOptions  *options)
 {
-
   if(adjustment->value != 0)
     options->gradient_length = exp(adjustment->value/10);
   else
     options->gradient_length = 0.0;
 
- if(options->gradient_length > 0.0){
-   options->incremental = INCREMENTAL;
- }
+  if(options->gradient_length > 0.0)
+    {
+      options->incremental = INCREMENTAL;
+    }
 }
 
 static void
 paintbrush_fade_update (GtkAdjustment *adjustment,
-			 PaintOptions   *options)
+			PaintOptions   *options)
 {
- options->fade_out = adjustment->value;
+  options->fade_out = adjustment->value;
 }
 
 static void
 paintbrush_gradient_type_callback (GtkWidget *w,
-				   gpointer client_data)
+				   gpointer   client_data)
 {
-  gradient_type = (int) client_data;
+  if (paint_options)
+    paint_options->gradient_type = (int) client_data;
 }
 
 
+static void
+reset_paint_options (void)
+{
+  PaintOptions *options = paint_options;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->fade_out_w),
+			    options->fade_out_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->gradient_length_w),
+			    options->gradient_length_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w),
+				TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				options->incremental_d);
+}
 
 static PaintOptions *
 create_paint_options (void)
 {
   PaintOptions *options;
   GtkWidget *vbox;
-  GtkWidget *hbox;
+  GtkWidget *abox;
+  GtkWidget *table;
   GtkWidget *label;
-  GtkWidget *fade_out_scale;
-  GtkObject *fade_out_scale_data;
-  GtkWidget *gradient_length_scale;
-  GtkObject *gradient_length_scale_data;
-  GtkWidget *incremental_toggle;
-
-  GSList *group = NULL;
+  GtkWidget *scale;
+  GSList    *group = NULL;
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
   int i;
-
   char *gradient_types[4] =
   {
     N_("Once Forward"),
@@ -130,36 +161,37 @@ create_paint_options (void)
 
   /*  the new options structure  */
   options = (PaintOptions *) g_malloc (sizeof (PaintOptions));
-  options->fade_out = 0.0;
-  options->incremental = FALSE;
-  options->gradient_length = 0.0;
+  options->fade_out        = options->fade_out_d        = 0.0;
+  options->incremental     = options->incremental_d     = FALSE;
+  options->gradient_length = options->gradient_length_d = 0.0;
+  options->gradient_type   = options->gradient_type_d   = 3;
   
   /*  the main vbox  */
-  vbox = gtk_vbox_new (FALSE, 1);
-
-  /*  the main label  */
-  label = gtk_label_new (_("Paintbrush Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  vbox = gtk_vbox_new (FALSE, 2);
 
   /*  the fade-out scale  */
-  hbox = gtk_hbox_new (FALSE, 1);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  table = gtk_table_new (4, 2, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 3);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
-  label = gtk_label_new (_("Fade Out"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Fade Out:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  fade_out_scale_data = gtk_adjustment_new (0.0, 0.0, 1000.0, 1.0, 1.0, 0.0);
-  fade_out_scale = gtk_hscale_new (GTK_ADJUSTMENT (fade_out_scale_data));
-  gtk_box_pack_start (GTK_BOX (hbox), fade_out_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (fade_out_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (fade_out_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (fade_out_scale_data), "value_changed",
+  options->fade_out_w =
+    gtk_adjustment_new (options->fade_out_d, 0.0, 1000.0, 1.0, 1.0, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->fade_out_w));
+  gtk_table_attach_defaults (GTK_TABLE (table), scale, 1, 2, 0, 1);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->fade_out_w), "value_changed",
 		      (GtkSignalFunc) paintbrush_fade_update,
 		      options);
-  gtk_widget_show (fade_out_scale);
-  gtk_widget_show (hbox);
+  gtk_widget_show (scale);
 
   /*              gradient thingamajig */
   /* this is a little unintuitive, probabaly put the slider */
@@ -171,27 +203,42 @@ create_paint_options (void)
   //gtk_widget_show(hbox);
 #endif
   
-
-  label = gtk_label_new (_("Gradient Length"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Gradient"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
   gtk_widget_show (label);
 
-  gradient_length_scale_data = gtk_adjustment_new (0.0, 0.0, 50.0,1.1, 0.1, 0.0);
-  gradient_length_scale = gtk_hscale_new (GTK_ADJUSTMENT (gradient_length_scale_data));
-  gtk_box_pack_start (GTK_BOX (vbox), gradient_length_scale, TRUE, TRUE, 0);
-  gtk_scale_set_value_pos (GTK_SCALE (gradient_length_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (gradient_length_scale), GTK_UPDATE_DELAYED);
-  gtk_signal_connect (GTK_OBJECT (gradient_length_scale_data), "value_changed",
+  label = gtk_label_new (_("Length:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 1.0);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK, 0, 0);
+  gtk_widget_show (label);
+
+  abox = gtk_alignment_new (0.5, 1.0, 1.0, 0.0);
+  gtk_table_attach (GTK_TABLE (table), abox, 1, 2, 1, 3,
+		    GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (abox);
+
+  options->gradient_length_w =
+    gtk_adjustment_new (options->gradient_length_d, 0.0, 50.0,1.1, 0.1, 0.0);
+  scale = gtk_hscale_new (GTK_ADJUSTMENT (options->gradient_length_w));
+  gtk_container_add (GTK_CONTAINER (abox), scale);
+  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
+  gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (options->gradient_length_w), "value_changed",
 		      (GtkSignalFunc) paintbrush_scale_update,
 		      options);
-  gtk_widget_show (gradient_length_scale);
-  gtk_widget_show (hbox);
+  gtk_widget_show (scale);
+
+  gtk_widget_show (table);
 
    /*  the radio frame and box  */
   radio_frame = gtk_frame_new (_("Gradient Type"));
-  gtk_box_pack_start (GTK_BOX (vbox), radio_frame, FALSE, FALSE, 0);
+  gtk_table_attach_defaults (GTK_TABLE (table), radio_frame, 0, 2, 3, 4);
 
   radio_box = gtk_vbox_new (FALSE, 1);
+  gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
     /*  the radio buttons  */
@@ -206,24 +253,29 @@ create_paint_options (void)
       gtk_box_pack_start (GTK_BOX (radio_box), radio_button, FALSE, FALSE, 0);
       gtk_widget_show (radio_button);
 
-
+      if (i == options->gradient_type_d)
+	options->gradient_type_w = radio_button;
     }
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (radio_button), TRUE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->gradient_type_w),
+				TRUE);
   gtk_widget_show (radio_box);
   gtk_widget_show (radio_frame);
 
 
   /* the incremental toggle */
-  incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
-  gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
+  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
 		      (GtkSignalFunc) paintbrush_toggle_update,
 		      &options->incremental);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
-  gtk_widget_show (incremental_toggle);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				options->incremental_d);
+  gtk_widget_show (options->incremental_w);
   
-  /*  Register this selection options widget with the main tools options dialog  */
-  tools_register_options (PAINTBRUSH, vbox);
+  /*  Register this selection options widget with the main tools options dialog
+   */
+  tools_register (PAINTBRUSH, vbox, _("Paintbrush Options"),
+		  reset_paint_options);
 
   return options;
 }
@@ -261,7 +313,7 @@ paintbrush_paint_func (PaintCore *paint_core,
 			 paint_options->fade_out, 
 			 paint_options->gradient_length,
 			 paint_options->incremental,
-			 gradient_type);
+			 paint_options->gradient_type);
       break;
 
     case FINISH_PAINT :
@@ -392,7 +444,7 @@ paintbrush_non_gui_paint_func (PaintCore *paint_core,
 			       GimpDrawable *drawable,
 			       int        state)
 {	
-  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, gradient_type);
+  paintbrush_motion (paint_core, drawable, non_gui_fade_out,non_gui_gradient_length,  non_gui_incremental, non_gui_gradient_type);
 
   return NULL;
 }
@@ -578,6 +630,7 @@ paintbrush_invoker (Argument *args)
   if (success)
     {
       non_gui_gradient_length = 0.0;
+      non_gui_gradient_type = 0;
     }
   /*  num strokes  */
   if (success)
@@ -672,6 +725,7 @@ paintbrush_extended_invoker (Argument *args)
   if (success)
     {
       non_gui_gradient_length = 0.0;
+      non_gui_gradient_type = 3;
     }
   /*  num strokes  */
   if (success)

@@ -61,15 +61,15 @@
 			GDK_BUTTON1_MOTION_MASK | \
 			GDK_POINTER_MOTION_HINT_MASK
 
-typedef struct _Levels Levels;
+/*  the levels structures  */
 
+typedef struct _Levels Levels;
 struct _Levels
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _LevelsDialog LevelsDialog;
-
 struct _LevelsDialog
 {
   GtkWidget *    shell;
@@ -103,8 +103,14 @@ struct _LevelsDialog
   GimpLut       *lut;
 };
 
-/*  levels action functions  */
+/*  the levels tool options  */
+static void *levels_options = NULL;  /* dummy */
 
+/*  the levels tool dialog  */
+static LevelsDialog *levels_dialog = NULL;
+
+
+/*  levels action functions  */
 static void   levels_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   levels_button_release (Tool *, GdkEventButton *, gpointer);
 static void   levels_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -133,12 +139,10 @@ static void            levels_high_output_text_update (GtkWidget *, gpointer);
 static gint            levels_input_da_events         (GtkWidget *, GdkEvent *, LevelsDialog *);
 static gint            levels_output_da_events        (GtkWidget *, GdkEvent *, LevelsDialog *);
 
-static void *levels_options = NULL;
-static LevelsDialog *levels_dialog = NULL;
-
 static void       levels_histogram_range (HistogramWidget *, int, int,
 					  void *);
 static Argument * levels_invoker (Argument *);
+
 
 /*  levels machinery  */
 
@@ -280,7 +284,10 @@ tools_new_levels ()
 
   /*  The tool options  */
   if (!levels_options)
-    levels_options = tools_register_no_options (LEVELS, _("Levels Options"));
+    {
+      tools_register (LEVELS, NULL, _("Levels Options"), NULL);
+      levels_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Levels *) g_malloc (sizeof (Levels));
@@ -290,6 +297,7 @@ tools_new_levels ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = levels_button_press;
   tool->button_release_func = levels_button_release;
   tool->motion_func = levels_motion;

@@ -28,8 +28,14 @@
 
 #include "libgimp/gimpintl.h"
 
-typedef struct _free_select FreeSelect;
+#define DEFAULT_MAX_INC  1024
+#define ROUND(x) ((int) (x + 0.5))
+#define SUPERSAMPLE      3
+#define SUPERSAMPLE2     9
 
+/* the free select structures  */
+
+typedef struct _free_select FreeSelect;
 struct _free_select
 {
   DrawCore *      core;       /*  Core select object                      */
@@ -38,26 +44,24 @@ struct _free_select
 };
 
 typedef struct _FreeSelectPoint FreeSelectPoint;
-
 struct _FreeSelectPoint
 {
   double x, y;
 };
 
-#define DEFAULT_MAX_INC  1024
-#define ROUND(x) ((int) (x + 0.5))
-#define SUPERSAMPLE      3
-#define SUPERSAMPLE2     9
-
-#define NO   0
-#define YES  1
+/*  free select tool options  */
+static SelectionOptions * free_options = NULL;
 
 /*  The global array of XPoints for drawing the polygon...  */
 static GdkPoint *         global_pts = NULL;
 static int                max_segs = 0;
-static SelectionOptions * free_options = NULL;
 
+
+/*  local function prototypes  */
 static Argument *free_select_invoker (Argument *);
+
+
+/*  functions  */
 
 static int
 add_point (int num_pts, int x, int y)
@@ -443,6 +447,12 @@ free_select_draw (Tool *tool)
 		   global_pts[i].x, global_pts[i].y);
 }
 
+static void
+free_select_reset_options ()
+{
+  reset_selection_options (free_options);
+}
+
 Tool *
 tools_new_free_select (void)
 {
@@ -451,7 +461,8 @@ tools_new_free_select (void)
 
   /*  The tool options  */
   if (!free_options)
-    free_options = create_selection_options (FREE_SELECT);
+    free_options =
+      create_selection_options (FREE_SELECT, free_select_reset_options);
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (FreeSelect *) g_malloc (sizeof (FreeSelect));
@@ -464,7 +475,8 @@ tools_new_free_select (void)
   tool->scroll_lock = 1;   /*  Do not allow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
-  tool->button_press_func = free_select_button_press;
+ 
+ tool->button_press_func = free_select_button_press;
   tool->button_release_func = free_select_button_release;
   tool->motion_func = free_select_motion;
   tool->arrow_keys_func = standard_arrow_keys_func;

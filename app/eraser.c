@@ -30,22 +30,35 @@
 
 #include "libgimp/gimpintl.h"
 
+/*  the eraser structures  */
+
+typedef struct _EraserOptions EraserOptions;
+struct _EraserOptions
+{
+  gboolean   hard;
+  gboolean   hard_d;
+  GtkWidget *hard_w;
+
+  gboolean   incremental;
+  gboolean   incremental_d;
+  GtkWidget *incremental_w;
+};
+
+/*  eraser tool options  */
+static EraserOptions *eraser_options = NULL;
+
+/*  local variables  */
+static gboolean       non_gui_hard;
+static gboolean       non_gui_incremental;
+
+
 /*  forward function declarations  */
 static void        eraser_motion   (PaintCore *, GimpDrawable *, gboolean, gboolean);
 static Argument *  eraser_invoker  (Argument *);
 static Argument *  eraser_extended_invoker  (Argument *);
 
-static gboolean non_gui_hard, non_gui_incremental;
 
-
-typedef struct _EraserOptions EraserOptions;
-struct _EraserOptions
-{
-  gboolean hard;
-  gboolean incremental;
-};
-
-static EraserOptions *eraser_options = NULL;
+/*  functions  */
 
 static void
 eraser_toggle_update (GtkWidget *w,
@@ -61,56 +74,60 @@ eraser_toggle_update (GtkWidget *w,
     *toggle_val = FALSE;
 }
 
+static void
+reset_eraser_options (void)
+{
+  EraserOptions *options = eraser_options;
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
+				options->hard_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				options->incremental_d);
+}
+  
 static EraserOptions *
 create_eraser_options (void)
 {
   EraserOptions *options;
-  GtkWidget *vbox;
-  GtkWidget *label;
-  GtkWidget *hard_toggle;
-  GtkWidget *incremental_toggle;
+  GtkWidget     *vbox;
 
   options = (EraserOptions *) g_malloc (sizeof (EraserOptions));
-  options->hard = FALSE;
-  options->incremental = FALSE;
+  options->hard        = options->hard_d        = FALSE;
+  options->incremental = options->incremental_d = FALSE;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
 
-  /*  the main label  */
-  label = gtk_label_new (_("Eraser Options"));
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   /* the hard toggle */
-  hard_toggle = gtk_check_button_new_with_label (_("Hard edge"));
-  gtk_box_pack_start (GTK_BOX (vbox), hard_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (hard_toggle), "toggled",
+  options->hard_w = gtk_check_button_new_with_label (_("Hard edge"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->hard_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->hard_w), "toggled",
 		      (GtkSignalFunc) eraser_toggle_update,
 		      &options->hard);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (hard_toggle), options->hard);
-  gtk_widget_show (hard_toggle);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
+				options->hard_d);
+  gtk_widget_show (options->hard_w);
   
   /* the incremental toggle */
-  incremental_toggle = gtk_check_button_new_with_label (_("Incremental"));
-  gtk_box_pack_start (GTK_BOX (vbox), incremental_toggle, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (incremental_toggle), "toggled",
+  options->incremental_w = gtk_check_button_new_with_label (_("Incremental"));
+  gtk_box_pack_start (GTK_BOX (vbox), options->incremental_w, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (options->incremental_w), "toggled",
 		      (GtkSignalFunc) eraser_toggle_update,
 		      &options->incremental);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (incremental_toggle), options->incremental);
-  gtk_widget_show (incremental_toggle);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				options->incremental_d);
+  gtk_widget_show (options->incremental_w);
   
   /*  Register this eraser options widget with the main tools options dialog  */
-  tools_register_options (ERASER, vbox);
+  tools_register (ERASER, vbox, _("Eraser Options"), reset_eraser_options);
 
   return options;
 }
   
 void *
-eraser_paint_func (paint_core, drawable, state)
-     PaintCore *paint_core;
-     GimpDrawable *drawable;
-     int state;
+eraser_paint_func (PaintCore    *paint_core,
+		   GimpDrawable *drawable,
+		   int           state)
 {
   switch (state)
     {
@@ -159,7 +176,10 @@ tools_free_eraser (tool)
 
 
 static void
-eraser_motion (PaintCore *paint_core, GimpDrawable *drawable, gboolean hard, gboolean incremental)
+eraser_motion (PaintCore    *paint_core,
+	       GimpDrawable *drawable,
+	       gboolean      hard,
+	       gboolean      incremental)
 {
   GImage *gimage;
   gint opacity;
@@ -191,7 +211,9 @@ eraser_motion (PaintCore *paint_core, GimpDrawable *drawable, gboolean hard, gbo
 
 
 static void *
-eraser_non_gui_paint_func (PaintCore *paint_core, GimpDrawable *drawable, int state)
+eraser_non_gui_paint_func (PaintCore    *paint_core,
+			   GimpDrawable *drawable,
+			   int           state)
 {
   eraser_motion (paint_core, drawable, non_gui_hard, non_gui_incremental);
 

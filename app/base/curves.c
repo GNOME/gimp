@@ -66,15 +66,15 @@
 		    GDK_BUTTON_RELEASE_MASK | \
 		    GDK_BUTTON1_MOTION_MASK
 
-typedef struct _Curves Curves;
+/*  the curves structures  */
 
+typedef struct _Curves Curves;
 struct _Curves
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _CurvesDialog CurvesDialog;
-
 struct _CurvesDialog
 {
   GtkWidget *    shell;
@@ -104,8 +104,22 @@ struct _CurvesDialog
 
 typedef double CRMatrix[4][4];
 
-/*  curves action functions  */
+/*  the curves tool options  */
+static void *curves_options = NULL;  /* dummy */
 
+/*  the curves dialog  */
+static CurvesDialog *curves_dialog = NULL;
+
+static CRMatrix CR_basis =
+{
+  { -0.5,  1.5, -1.5,  0.5 },
+  {  1.0, -2.5,  2.0, -0.5 },
+  { -0.5,  0.0,  0.5,  0.0 },
+  {  0.0,  1.0,  0.0,  0.0 },
+};
+
+
+/*  curves action functions  */
 static void   curves_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   curves_button_release (Tool *, GdkEventButton *, gpointer);
 static void   curves_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -134,19 +148,9 @@ static gint            curves_yrange_events           (GtkWidget *, GdkEvent *, 
 static gint            curves_graph_events            (GtkWidget *, GdkEvent *, CurvesDialog *);
 static void            curves_CR_compose              (CRMatrix, CRMatrix, CRMatrix);
 
-static void *curves_options = NULL;
-static CurvesDialog *curves_dialog = NULL;
-static CRMatrix CR_basis =
-{
-  { -0.5,  1.5, -1.5,  0.5 },
-  {  1.0, -2.5,  2.0, -0.5 },
-  { -0.5,  0.0,  0.5,  0.0 },
-  {  0.0,  1.0,  0.0,  0.0 },
-};
-
-
 static Argument * curves_spline_invoker (Argument *);
 static Argument * curves_explicit_invoker (Argument *);
+
 
 /*  curves machinery  */
 
@@ -354,7 +358,10 @@ tools_new_curves ()
 
   /*  The tool options  */
   if (!curves_options)
-    curves_options = tools_register_no_options (CURVES, _("Curves Options"));
+    {
+      tools_register (CURVES, NULL, _("Curves Options"), NULL);
+      curves_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (Curves *) g_malloc (sizeof (Curves));
@@ -364,6 +371,7 @@ tools_new_curves ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = curves_button_press;
   tool->button_release_func = curves_button_release;
   tool->motion_func = curves_motion;

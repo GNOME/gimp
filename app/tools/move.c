@@ -29,14 +29,22 @@
 
 #include "libgimp/gimpintl.h"
 
-typedef struct _MoveTool MoveTool;
+/*  the move structures  */
 
+typedef struct _MoveTool MoveTool;
 struct _MoveTool
 {
   Layer *layer;
   Guide *guide;
   GDisplay *disp;
 };
+
+/*  move tool options  */
+static void  *move_options = NULL;  /* dummy */
+
+/*  local variables  */
+static GdkGC *move_gc = NULL;
+
 
 /*  move tool action functions  */
 
@@ -46,10 +54,6 @@ static void   move_tool_motion            (Tool *, GdkEventMotion *, gpointer);
 static void   move_tool_cursor_update     (Tool *, GdkEventMotion *, gpointer);
 static void   move_tool_control		  (Tool *, int, gpointer);
 static void   move_create_gc              (GDisplay *);
-
-
-static void *move_options = NULL;
-static GdkGC *move_gc = NULL;
 
 
 /*  move action functions  */
@@ -428,7 +432,10 @@ tools_new_move_tool ()
   MoveTool * private;
 
   if (! move_options)
-    move_options = tools_register_no_options (MOVE, _("Move Tool Options"));
+    {
+      tools_register (MOVE, NULL, _("Move Tool Options"), NULL);
+      move_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (MoveTool *) g_malloc (sizeof (MoveTool));
@@ -438,6 +445,7 @@ tools_new_move_tool ()
   tool->scroll_lock = 0;   /*  Allow scrolling  */
   tool->auto_snap_to = FALSE;
   tool->private = (void *) private;
+
   tool->button_press_func = move_tool_button_press;
   tool->button_release_func = move_tool_button_release;
   tool->motion_func = move_tool_motion;

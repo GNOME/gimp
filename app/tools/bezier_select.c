@@ -163,6 +163,12 @@ static DrawCore * curCore;
 static int ModeEdit = EXTEND_NEW;
 
 
+static void
+bezier_select_reset_options ()
+{
+  reset_selection_options (bezier_options);
+}
+
 Tool*
 tools_new_bezier_select ()
 {
@@ -171,7 +177,8 @@ tools_new_bezier_select ()
 
   /*  The tool options  */
   if (!bezier_options)
-    bezier_options = create_selection_options (BEZIER_SELECT);
+    bezier_options = create_selection_options (BEZIER_SELECT,
+					       bezier_select_reset_options);
 
   tool = g_malloc (sizeof (Tool));
 

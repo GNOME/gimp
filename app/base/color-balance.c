@@ -45,15 +45,15 @@
 #define YB_TEXT   0x20
 #define ALL       0xFF
 
-typedef struct _ColorBalance ColorBalance;
+/*  the color balance structures  */
 
+typedef struct _ColorBalance ColorBalance;
 struct _ColorBalance
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _ColorBalanceDialog ColorBalanceDialog;
-
 struct _ColorBalanceDialog
 {
   GtkWidget   *shell;
@@ -80,8 +80,14 @@ struct _ColorBalanceDialog
   gint         application_mode;
 };
 
-/*  color balance action functions  */
+/*  the color balance tool options  */
+static void *color_balance_options = NULL;  /* dummy */
 
+/*  the color balance dialog  */
+static ColorBalanceDialog *color_balance_dialog = NULL;
+
+
+/*  color balance action functions  */
 static void   color_balance_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   color_balance_button_release (Tool *, GdkEventButton *, gpointer);
 static void   color_balance_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -105,9 +111,6 @@ static void                  color_balance_yb_scale_update     (GtkAdjustment *,
 static void                  color_balance_cr_text_update      (GtkWidget *, gpointer);
 static void                  color_balance_mg_text_update      (GtkWidget *, gpointer);
 static void                  color_balance_yb_text_update      (GtkWidget *, gpointer);
-
-static void *color_balance_options = NULL;
-static ColorBalanceDialog *color_balance_dialog = NULL;
 
 static void       color_balance (PixelRegion *, PixelRegion *, void *);
 static Argument * color_balance_invoker (Argument *);
@@ -248,7 +251,10 @@ tools_new_color_balance ()
 
   /*  The tool options  */
   if (!color_balance_options)
-    color_balance_options = tools_register_no_options (COLOR_BALANCE, _("Color Balance Options"));
+    {
+      tools_register (COLOR_BALANCE, NULL, _("Color Balance Options"), NULL);
+      color_balance_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (ColorBalance *) g_malloc (sizeof (ColorBalance));
@@ -258,6 +264,7 @@ tools_new_color_balance ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->private = (void *) private;
   tool->auto_snap_to = TRUE;
+
   tool->button_press_func = color_balance_button_press;
   tool->button_release_func = color_balance_button_release;
   tool->motion_func = color_balance_motion;

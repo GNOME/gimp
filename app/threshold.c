@@ -34,15 +34,15 @@
 #define HISTOGRAM_WIDTH 256
 #define HISTOGRAM_HEIGHT 150
 
-typedef struct _Threshold Threshold;
+/*  the threshold structures  */
 
+typedef struct _Threshold Threshold;
 struct _Threshold
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _ThresholdDialog ThresholdDialog;
-
 struct _ThresholdDialog
 {
   GtkWidget   *shell;
@@ -60,8 +60,14 @@ struct _ThresholdDialog
   gint         preview;
 };
 
-/*  threshold action functions  */
+/*  the threshold tool options  */
+static void *threshold_options = NULL;  /* dummy */
 
+/*  the threshold tool dialog  */
+static ThresholdDialog *threshold_dialog = NULL;
+
+
+/*  threshold action functions  */
 static void   threshold_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   threshold_button_release (Tool *, GdkEventButton *, gpointer);
 static void   threshold_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -78,13 +84,11 @@ static void               threshold_preview_update             (GtkWidget *, gpo
 static void               threshold_low_threshold_text_update  (GtkWidget *, gpointer);
 static void               threshold_high_threshold_text_update (GtkWidget *, gpointer);
 
-static void *threshold_options = NULL;
-static ThresholdDialog *threshold_dialog = NULL;
-
 static void       threshold (PixelRegion *, PixelRegion *, void *);
 static void       threshold_histogram_range (HistogramWidget *, int, int,
 					     void*);
 static Argument * threshold_invoker (Argument *);
+
 
 /*  threshold machinery  */
 
@@ -246,7 +250,10 @@ tools_new_threshold ()
 
   /*  The tool options  */
   if (!threshold_options)
-    threshold_options = tools_register_no_options (THRESHOLD, _("Threshold Options"));
+    {
+      tools_register (THRESHOLD, NULL, _("Threshold Options"), NULL);
+      threshold_options = (void *) 1;
+    }
 
   /*  The threshold dialog  */
   if (!threshold_dialog)

@@ -39,15 +39,15 @@
 
 #define TEXT_WIDTH 55
 
-typedef struct _Posterize Posterize;
+/*  the posterize structures  */
 
+typedef struct _Posterize Posterize;
 struct _Posterize
 {
   int x, y;    /*  coords for last mouse click  */
 };
 
 typedef struct _PosterizeDialog PosterizeDialog;
-
 struct _PosterizeDialog
 {
   GtkWidget   *shell;
@@ -62,8 +62,14 @@ struct _PosterizeDialog
   GimpLut       *lut;
 };
 
-/*  posterize action functions  */
+/*  the posterize tool options  */
+static void *posterize_options = NULL;  /* dummy */
 
+/* the posterize tool dialog  */
+static PosterizeDialog *posterize_dialog = NULL;
+
+
+/*  posterize action functions  */
 static void   posterize_button_press   (Tool *, GdkEventButton *, gpointer);
 static void   posterize_button_release (Tool *, GdkEventButton *, gpointer);
 static void   posterize_motion         (Tool *, GdkEventMotion *, gpointer);
@@ -78,10 +84,8 @@ static void               posterize_preview_update      (GtkWidget *, gpointer);
 static void               posterize_levels_text_update  (GtkWidget *, gpointer);
 static gint               posterize_delete_callback     (GtkWidget *, GdkEvent *, gpointer);
 
-static void *posterize_options = NULL;
-static PosterizeDialog *posterize_dialog = NULL;
-
 static Argument * posterize_invoker (Argument *);
+
 
 /*  posterize machinery  */
 
@@ -178,7 +182,10 @@ tools_new_posterize ()
 
   /*  The tool options  */
   if (!posterize_options)
-    posterize_options = tools_register_no_options (POSTERIZE, _("Posterize Options"));
+    {
+      tools_register (POSTERIZE, NULL, _("Posterize Options"), NULL);
+      posterize_options = (void *) 1;
+    }
 
   /*  The posterize dialog  */
   if (!posterize_dialog)
@@ -195,6 +202,7 @@ tools_new_posterize ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = posterize_button_press;
   tool->button_release_func = posterize_button_release;
   tool->motion_func = posterize_motion;

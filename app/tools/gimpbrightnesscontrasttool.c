@@ -219,8 +219,11 @@ tools_new_brightness_contrast ()
 
   /*  The tool options  */
   if (!brightness_contrast_options)
-    brightness_contrast_options = tools_register_no_options (BRIGHTNESS_CONTRAST,
-							     _("Brightness-Contrast Options"));
+    {
+      tools_register (BRIGHTNESS_CONTRAST, NULL,
+		      _("Brightness-Contrast Options"), NULL);
+      brightness_contrast_options = (void *) 1;
+    }
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (BrightnessContrast *) g_malloc (sizeof (BrightnessContrast));
@@ -230,6 +233,7 @@ tools_new_brightness_contrast ()
   tool->scroll_lock = 1;  /*  Disallow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = brightness_contrast_button_press;
   tool->button_release_func = brightness_contrast_button_release;
   tool->motion_func = brightness_contrast_motion;
@@ -325,7 +329,7 @@ brightness_contrast_new_dialog ()
 		      bcd);
 
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (bcd->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /*  The table containing sliders  */

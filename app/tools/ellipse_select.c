@@ -27,10 +27,11 @@
 
 #include "libgimp/gimpintl.h"
 
-#define NO  0
-#define YES 1
-
+/*  ellipse select tool options  */
 SelectionOptions *ellipse_options = NULL;
+
+
+/*  local function prototypes  */
 void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
 
 static Argument *ellipse_select_invoker (Argument *);
@@ -39,14 +40,15 @@ static Argument *ellipse_select_invoker (Argument *);
 /*  Ellipsoidal selection apparatus  */
 
 void
-ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
-     GImage *gimage;
-     int x, y;
-     int w, h;
-     int op;
-     int antialias;
-     int feather;
-     double feather_radius;
+ellipse_select (GImage *gimage,
+		int     x,
+		int     y,
+		int     w,
+		int     h,
+		int     op,
+		int     antialias,
+		int     feather,
+		double  feather_radius)
 {
   Channel * new_mask;
 
@@ -79,8 +81,7 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
 }
 
 void
-ellipse_select_draw (tool)
-     Tool *tool;
+ellipse_select_draw (Tool *tool)
 {
   GDisplay * gdisp;
   EllipseSelect * ellipse_sel;
@@ -102,15 +103,22 @@ ellipse_select_draw (tool)
 		x1, y1, (x2 - x1), (y2 - y1), 0, 23040);
 }
 
+static void
+ellipse_select_reset_options (void)
+{
+  reset_selection_options (ellipse_options);
+}
+
 Tool *
-tools_new_ellipse_select ()
+tools_new_ellipse_select (void)
 {
   Tool *tool;
   EllipseSelect *private;
 
   /*  The tool options  */
   if (!ellipse_options)
-    ellipse_options = create_selection_options (ELLIPSE_SELECT);
+    ellipse_options = create_selection_options (ELLIPSE_SELECT,
+						ellipse_select_reset_options);
 
   tool = (Tool *) g_malloc (sizeof (Tool));
   private = (EllipseSelect *) g_malloc (sizeof (EllipseSelect));
@@ -125,6 +133,7 @@ tools_new_ellipse_select ()
   tool->scroll_lock = 0;  /*  Allow scrolling  */
   tool->auto_snap_to = TRUE;
   tool->private = (void *) private;
+
   tool->button_press_func = rect_select_button_press;
   tool->button_release_func = rect_select_button_release;
   tool->motion_func = rect_select_motion;
@@ -137,8 +146,7 @@ tools_new_ellipse_select ()
 }
 
 void
-tools_free_ellipse_select (tool)
-     Tool *tool;
+tools_free_ellipse_select (Tool *tool)
 {
   EllipseSelect *ellipse_sel;
 
@@ -213,8 +221,7 @@ ProcRecord ellipse_select_proc =
 
 
 static Argument *
-ellipse_select_invoker (args)
-     Argument *args;
+ellipse_select_invoker (Argument *args)
 {
   int success = TRUE;
   GImage *gimage;
