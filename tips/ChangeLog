@@ -1,3 +1,8 @@
+2002-03-13  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* ja.po: added japanese translation from <iccii@hotmail.com>.
+
 2002-03-13  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
 	* sk.po: Added Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.

@@ -5,90 +5,90 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2002-03-09 00:09+0100\n"
-"PO-Revision-Date: 2000-11-25 22:01+09:00\n"
-"Last-Translator: Çòºê ÂÙ¹° <yasuhiro@gnome.gr.jp>\n"
+"POT-Creation-Date: 2002-03-13 14:37+0100\n"
+"PO-Revision-Date: 2002-03-13 18:29+0900\n"
+"Last-Translator: ç™½å´ æ³°å¼˜ <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
-msgstr "¥ì¥¤¥ä¡¼¤ò¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "²Ä»ë¥ì¥¤¥ä¡¼¤Î·ë¹ç"
+msgstr "å¯è¦–ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®çµåˆ"
 
 #: libgimp/gimpexport.c:179
 #, fuzzy
 msgid "can't handle layer offsets, size or opacity"
-msgstr "¥ì¥¤¥ä¡¼¤ò¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
-msgstr "¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Õ¥ì¡¼¥à¤È¤·¤Æ¤·¤«¥ì¥¤¥ä¡¼¤ò¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ•ãƒ¬ãƒ¼ãƒ ã¨ã—ã¦ã—ã‹ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
-msgstr "¥¢¥Ë¥á¡¼¥·¥ç¥ó¤È¤·¤ÆÊİÂ¸"
+msgstr "ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã¨ã—ã¦ä¿å­˜"
 
 #: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
 msgid "Flatten Image"
-msgstr "²èÁü¤ÎÅı¹ç"
+msgstr "ç”»åƒã®çµ±åˆ"
 
 #: libgimp/gimpexport.c:215
 msgid "can't handle transparency"
-msgstr "Æ©ÌÀ¾ğÊó¤ò¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "é€æ˜æƒ…å ±ã‚’å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:224
 msgid "can only handle RGB images"
-msgstr "RGB ²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "RGB ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
-msgstr "RGB ¤ËÊÑ´¹"
+msgstr "RGB ã«å¤‰æ›"
 
 #: libgimp/gimpexport.c:233
 msgid "can only handle grayscale images"
-msgstr "¥°¥ì¡¼¥¹¥±¡¼¥ë²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
-msgstr "¥°¥ì¡¼¥¹¥±¡¼¥ë¤ËÊÑ´¹"
+msgstr "ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã«å¤‰æ›"
 
 #: libgimp/gimpexport.c:242
 msgid "can only handle indexed images"
-msgstr "¥¤¥ó¥Ç¥Ã¥¯¥¹²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"¥¤¥ó¥Ç¥Ã¥¯¥¹²èÁü¤ËÉ¸½àÀßÄê¤Ç¼«Æ°ÊÑ´¹¤¹¤ë\n"
-"(ÎÉ¤¤·ë²Ì¤òÆÀ¤¿¤¤¾ì¹ç¤Ë¤Ï¼êÆ°¤Ç¹Ô¤Ã¤Æ²¼¤µ¤¤)"
+"ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”»åƒã«æ¨™æº–è¨­å®šã§è‡ªå‹•å¤‰æ›ã™ã‚‹\n"
+"(è‰¯ã„çµæœã‚’å¾—ãŸã„å ´åˆã«ã¯æ‰‹å‹•ã§è¡Œã£ã¦ä¸‹ã•ã„)"
 
 #: libgimp/gimpexport.c:252
 msgid "can only handle RGB or grayscale images"
-msgstr "RGB ¤â¤·¤¯¤Ï¥°¥ì¡¼¥¹¥±¡¼¥ë²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "RGB ã‚‚ã—ãã¯ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:261
 msgid "can only handle RGB or indexed images"
-msgstr "RGB ¤â¤·¤¯¤Ï¥¤¥ó¥Ç¥Ã¥¯¥¹²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "RGB ã‚‚ã—ãã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:271
 msgid "can only handle grayscale or indexed images"
-msgstr "¥°¥ì¡¼¥¹¥±¡¼¥ë¤â¤·¤¯¤Ï¥¤¥ó¥Ç¥Ã¥¯¥¹²èÁü¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+msgstr "ã‚°ãƒ¬ãƒ¼ã‚¹ã‚±ãƒ¼ãƒ«ã‚‚ã—ãã¯ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”»åƒã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: libgimp/gimpexport.c:282
 msgid "needs an alpha channel"
-msgstr "¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤¬É¬Í×¤Ç¤¹"
+msgstr "ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ãŒå¿…è¦ã§ã™"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
-msgstr "¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤òÄÉ²Ã"
+msgstr "ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ã‚’è¿½åŠ "
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -105,7 +105,7 @@ msgstr ""
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
-msgstr "¼è¾Ã"
+msgstr "å–æ¶ˆ"
 
 #: libgimp/gimpexport.c:376
 #, c-format
@@ -121,26 +121,26 @@ msgstr ""
 #. the dialog
 #: libgimp/gimpexport.c:414
 msgid "Export File"
-msgstr "¥¨¥¯¥¹¥İ¡¼¥È¥Õ¥¡¥¤¥ë"
+msgstr "ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆãƒ•ã‚¡ã‚¤ãƒ«"
 
 #: libgimp/gimpexport.c:419
 msgid "Export"
-msgstr "¥¨¥¯¥¹¥İ¡¼¥È"
+msgstr "ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆ"
 
 #: libgimp/gimpexport.c:421
 msgid "Ignore"
-msgstr "Ìµ»ë"
+msgstr "ç„¡è¦–"
 
 #: libgimp/gimpexport.c:438
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr "°Ê²¼¤ÎÍıÍ³¤Î¤¿¤á²èÁü¤Î¥¨¥¯¥¹¥İ¡¼¥È¤ò¹Ô¤¦É¬Í×¤¬¤¢¤ê¤Ş¤¹:"
+msgstr "ä»¥ä¸‹ã®ç†ç”±ã®ãŸã‚ç”»åƒã®ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆã‚’è¡Œã†å¿…è¦ãŒã‚ã‚Šã¾ã™:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
 msgid "The export conversion won't modify your original image."
-msgstr "¥¨¥¯¥¹¥İ¡¼¥ÈÊÑ´¹¤Ï¸µ²èÁü¤Ë¤Ï±Æ¶Á¤òÍ¿¤¨¤Ş¤»¤ó."
+msgstr "ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå¤‰æ›ã¯å…ƒç”»åƒã«ã¯å½±éŸ¿ã‚’ä¸ãˆã¾ã›ã‚“."
 
 #: libgimp/gimpexport.c:571
 msgid "a layer mask"
@@ -152,17 +152,17 @@ msgstr ""
 
 #: libgimp/gimpunit.c:56
 msgid "percent"
-msgstr "¥Ñ¡¼¥»¥ó¥È"
+msgstr "ãƒ‘ãƒ¼ã‚»ãƒ³ãƒˆ"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 #, fuzzy
 msgid "/Foreground Color"
-msgstr "/Á°·Ê¿§¤ò»ÈÍÑ"
+msgstr "/å‰æ™¯è‰²ã‚’ä½¿ç”¨"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
 #, fuzzy
 msgid "/Background Color"
-msgstr "/ÇØ·Ê¿§¤ò»ÈÍÑ"
+msgstr "/èƒŒæ™¯è‰²ã‚’ä½¿ç”¨"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
@@ -175,21 +175,21 @@ msgstr ""
 #: libgimpwidgets/gimpfileselection.c:352
 #, fuzzy
 msgid "Select Folder"
-msgstr "¥Õ¥¡¥¤¥ëÁªÂò"
+msgstr "ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠ"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
-msgstr "¥Õ¥¡¥¤¥ëÁªÂò"
+msgstr "ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠ"
 
 #: libgimpwidgets/gimpstock.c:88
 #, fuzzy
 msgid "Anchor"
-msgstr "¥¤¥ó¥Á"
+msgstr "ã‚¤ãƒ³ãƒ"
 
 #: libgimpwidgets/gimpstock.c:89
 #, fuzzy
 msgid "Duplicate"
-msgstr "¥Ñ¥¤¥«"
+msgstr "ãƒ‘ã‚¤ã‚«"
 
 #: libgimpwidgets/gimpstock.c:90
 msgid "Edit"
@@ -233,39 +233,39 @@ msgstr ""
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
-msgstr "¾ÜºÙÀßÄê..."
+msgstr "è©³ç´°è¨­å®š..."
 
 #: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
-msgstr "Ã±°ÌÁªÂò"
+msgstr "å˜ä½é¸æŠ"
 
 #: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
-msgstr "Ã±°Ì"
+msgstr "å˜ä½"
 
 #: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
-msgstr "ÇÜÎ¨"
+msgstr "å€ç‡"
 
 #: libgimpwidgets/gimpwidgets.c:801
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
-"\"»ş´Ö\" ¥Ü¥¿¥ó¤¬²¡¤µ¤ì¤Æ¤¤¤Ê¤¤¾ì¹ç¤Ë¤Ï, ¤³¤ÎÃÍ¤òÍğ¿ô¤Î¼ï¤È¤·¤ÆÍÑ¤¤¤Ş¤¹ - ¤½"
-"¤¦¤¹¤ë¤³¤È¤Ç, ÆÃÄê¤Î \"Íğ¿ô\" Áàºî¤ò¹Ô¤¦¤³¤È¤¬¤Ç¤­¤Ş¤¹"
+"\"æ™‚é–“\" ãƒœã‚¿ãƒ³ãŒæŠ¼ã•ã‚Œã¦ã„ãªã„å ´åˆã«ã¯, ã“ã®å€¤ã‚’ä¹±æ•°ã®ç¨®ã¨ã—ã¦ç”¨ã„ã¾ã™ - ã"
+"ã†ã™ã‚‹ã“ã¨ã§, ç‰¹å®šã® \"ä¹±æ•°\" æ“ä½œã‚’è¡Œã†ã“ã¨ãŒã§ãã¾ã™"
 
 #: libgimpwidgets/gimpwidgets.c:806
 msgid "Time"
-msgstr "»ş´Ö"
+msgstr "æ™‚é–“"
 
 #: libgimpwidgets/gimpwidgets.c:815
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
 msgstr ""
-"¸½ºß»ş¹ï¤ò¤â¤È¤Ë¤·¤¿Íğ¿ô¤òÀ¸À®¤·¤Ş¤¹ - ½½Ê¬¤ÊÀºÅÙ¤ÎÍğ¿ô¤òÆÀ¤ë¤³¤È¤¬¤Ç¤­¤ë¤Ç"
-"¤·¤ç¤¦"
+"ç¾åœ¨æ™‚åˆ»ã‚’ã‚‚ã¨ã«ã—ãŸä¹±æ•°ã‚’ç”Ÿæˆã—ã¾ã™ - ååˆ†ãªç²¾åº¦ã®ä¹±æ•°ã‚’å¾—ã‚‹ã“ã¨ãŒã§ãã‚‹ã§"
+"ã—ã‚‡ã†"
 
 #: libgimpwidgets/gimpwidgets.c:1129
 msgid "Bytes"
@@ -280,32 +280,32 @@ msgid "MegaBytes"
 msgstr "MegaBytes"
 
 #~ msgid "pixel"
-#~ msgstr "¥Ô¥¯¥»¥ë"
+#~ msgstr "ãƒ”ã‚¯ã‚»ãƒ«"
 
 #~ msgid "pixels"
-#~ msgstr "¥Ô¥¯¥»¥ë"
+#~ msgstr "ãƒ”ã‚¯ã‚»ãƒ«"
 
 #~ msgid "inches"
-#~ msgstr "¥¤¥ó¥Á"
+#~ msgstr "ã‚¤ãƒ³ãƒ"
 
 #~ msgid "millimeter"
-#~ msgstr "¥ß¥ê¥á¡¼¥È¥ë"
+#~ msgstr "ãƒŸãƒªãƒ¡ãƒ¼ãƒˆãƒ«"
 
 #~ msgid "millimeters"
-#~ msgstr "¥ß¥ê¥á¡¼¥È¥ë"
+#~ msgstr "ãƒŸãƒªãƒ¡ãƒ¼ãƒˆãƒ«"
 
 #~ msgid "point"
-#~ msgstr "¥İ¥¤¥ó¥È"
+#~ msgstr "ãƒã‚¤ãƒ³ãƒˆ"
 
 #~ msgid "points"
-#~ msgstr "¥İ¥¤¥ó¥È"
+#~ msgstr "ãƒã‚¤ãƒ³ãƒˆ"
 
 #~ msgid "picas"
-#~ msgstr "¥Ñ¥¤¥«"
+#~ msgstr "ãƒ‘ã‚¤ã‚«"
 
 #, fuzzy
 #~ msgid "Select Directory"
-#~ msgstr "¥Õ¥¡¥¤¥ëÁªÂò"
+#~ msgstr "ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠ"
 
 #~ msgid "OK"
-#~ msgstr "Î»²ò"
+#~ msgstr "äº†è§£"

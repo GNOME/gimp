@@ -7,24 +7,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.201\n"
 "POT-Creation-Date: Wed Dec 20 08:22:38 2000\n"
-"PO-Revision-Date: 2000-12-03 22:52+09:00\n"
-"Last-Translator: Çòºê ÂÙ¹° <yasuhiro@gnome.gr.jp>\n"
+"PO-Revision-Date: 2002-03-13 18:41+0900\n"
+"Last-Translator: ç™½å´ æ³°å¼˜ <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: examples/PDB:0
 msgid " (press Tab to complete)"
-msgstr " (Tab ¥­¡¼¤ÇÊä´°¤·¤Ş¤¹)"
+msgstr " (Tab ã‚­ãƒ¼ã§è£œå®Œã—ã¾ã™)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
-msgstr " = [°ú¿ô¥¨¥é¡¼]\n"
+msgstr " = [å¼•æ•°ã‚¨ãƒ©ãƒ¼]\n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr " Å¬¹çµ¡Ç½"
+msgstr " é©åˆæ©Ÿèƒ½"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -33,10 +33,10 @@ msgid ""
 "           -i | --interact            let the user edit the values first\n"
 "       script-arguments are\n"
 msgstr ""
-"       ¥¤¥ó¥¿¡¼¥Õ¥§¥¤¥¹°ú¿ô¤Ï\n"
-"           -o | --output <filespec>   ²èÁü¤òÉ½¼¨¤»¤º¤Ë½ñ¤­¹ş¤à\n"
-"           -i | --interact            »Ï¤á¤Ë¥æ¡¼¥¶¡¼¤ËÃÍ¤òÊÔ½¸¤µ¤»¤ë\n"
-"       ¥¹¥¯¥ê¥×¥È°ú¿ô¤Ï\n"
+"       ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹å¼•æ•°ã¯\n"
+"           -o | --output <filespec>   ç”»åƒã‚’è¡¨ç¤ºã›ãšã«æ›¸ãè¾¼ã‚€\n"
+"           -i | --interact            å§‹ã‚ã«ãƒ¦ãƒ¼ã‚¶ãƒ¼ã«å€¤ã‚’ç·¨é›†ã•ã›ã‚‹\n"
+"       ã‚¹ã‚¯ãƒªãƒ—ãƒˆå¼•æ•°ã¯\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
@@ -49,85 +49,85 @@ msgid ""
 "PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
-"»È¤¤Êı: $0 [gimp-°ú¿ô..] [¥¤¥ó¥¿¥Õ¥§¡¼¥¹-°ú¿ô..] [¥¹¥¯¥ê¥×¥È-°ú¿ô..]\n"
-"       gimp-°ú¿ô ¤Ï\n"
-"           -gimp <¿§¡¹>              ÆâÉôÍøÍÑ¤Î¤ß\n"
-"           -h | -help | --help | -?  ¥Ø¥ë¥×É½¼¨\n"
-"           -v | --verbose            ¾ÜºÙÉ½¼¨\n"
-"           --host|--tcp HOST[:PORT]  HOST (PORT) ¤ØÀÜÂ³¤¹¤ë\n"
-"                                     (¾Ü¤·¤¯¤Ï Gimp::Net(3) »²¾È)\n"
+"ä½¿ã„æ–¹: $0 [gimp-å¼•æ•°..] [ã‚¤ãƒ³ã‚¿ãƒ•ã‚§ãƒ¼ã‚¹-å¼•æ•°..] [ã‚¹ã‚¯ãƒªãƒ—ãƒˆ-å¼•æ•°..]\n"
+"       gimp-å¼•æ•° ã¯\n"
+"           -gimp <è‰²ã€…>              å†…éƒ¨åˆ©ç”¨ã®ã¿\n"
+"           -h | -help | --help | -?  ãƒ˜ãƒ«ãƒ—è¡¨ç¤º\n"
+"           -v | --verbose            è©³ç´°è¡¨ç¤º\n"
+"           --host|--tcp HOST[:PORT]  HOST (PORT) ã¸æ¥ç¶šã™ã‚‹\n"
+"                                     (è©³ã—ãã¯ Gimp::Net(3) å‚ç…§)\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ ¤Ï¥Ñ¥Ã¥±¡¼¥¸ $pkg ¤Î¥¤¥ó¥İ¡¼¥È¥¿¥°¤È¤·¤ÆÉÔÀµ¤Ç¤¹"
+msgstr "$_ ã¯ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸ $pkg ã®ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚¿ã‚°ã¨ã—ã¦ä¸æ­£ã§ã™"
 
 #: Gimp/Fu.pm:0
 msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: ÉÔÀµ¤Ê¥¹¥¤¥Ã¥Á¤Ç¤¹, $0 --help ¤ò¸«¤Æ²¼¤µ¤¤\n"
+msgstr "$_: ä¸æ­£ãªã‚¹ã‚¤ãƒƒãƒã§ã™, $0 --help ã‚’è¦‹ã¦ä¸‹ã•ã„\n"
 
 #: Gimp/Fu.pm:0
 msgid "$_: unknown/illegal file-save option"
-msgstr "$_: ÉÔÌÀ/ÉÔÀµ¤Ê¥Õ¥¡¥¤¥ëÊİÂ¸¥ª¥×¥·¥ç¥ó¤Ç¤¹"
+msgstr "$_: ä¸æ˜/ä¸æ­£ãªãƒ•ã‚¡ã‚¤ãƒ«ä¿å­˜ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã™"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
 "a-z and _ allowed"
 msgstr ""
-"$function: °ú¿ôÌ¾ '$p->[1]' ¤ÏÉÔÀµ¤ÊÊ¸»ú¤ò´Ş¤ó¤Ç¤¤¤Ş¤¹, 0-9, a-z ¤È _ "
-"¤À¤±¤¬Ç§¤á¤é¤ì¤Æ¤¤¤Ş¤¹"
+"$function: å¼•æ•°å '$p->[1]' ã¯ä¸æ­£ãªæ–‡å­—ã‚’å«ã‚“ã§ã„ã¾ã™, 0-9, a-z ã¨ _ "
+"ã ã‘ãŒèªã‚ã‚‰ã‚Œã¦ã„ã¾ã™"
 
 #: Gimp/Fu.pm:0
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr "$function: °ú¿ô/ÊÖ¤êÃÍ '$p->[1]' ¤ÏÉÔÀµ¤Ê·¿ '$p->[0]' ¤Ç¤¹"
+msgstr "$function: å¼•æ•°/è¿”ã‚Šå€¤ '$p->[1]' ã¯ä¸æ­£ãªå‹ '$p->[0]' ã§ã™"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
 msgstr ""
-"$function: :auto ¥¤¥ó¥İ¡¼¥È¥¿¥°¤ò»ØÄê¤»¤º¤Ë $AUTOLOAD "
-"¤ò¸Æ½Ğ¤¹¤Î¤Ï¸Å¤¤ÊıË¡¤Ç¤¹!\n"
+"$function: :auto ã‚¤ãƒ³ãƒãƒ¼ãƒˆã‚¿ã‚°ã‚’æŒ‡å®šã›ãšã« $AUTOLOAD "
+"ã‚’å‘¼å‡ºã™ã®ã¯å¤ã„æ–¹æ³•ã§ã™!\n"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "$function: function name contains unusual characters, good style is to use "
 "only 0-9, a-z and _"
 msgstr ""
-"$function: ¥Õ¥¡¥ó¥¯¥·¥ç¥óÌ¾¤¬°Û¾ï¤ÊÊ¸»ú¤ò´Ş¤ó¤Ç¤¤¤Ş¤¹, Àµ¤·¤¤·Á¼°¤Ï 0-9, a-z "
-"¤È _ ¤À¤±¤ò»ÈÍÑ¤·¤Ş¤¹"
+"$function: ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³åãŒç•°å¸¸ãªæ–‡å­—ã‚’å«ã‚“ã§ã„ã¾ã™, æ­£ã—ã„å½¢å¼ã¯ 0-9, a-z "
+"ã¨ _ ã ã‘ã‚’ä½¿ç”¨ã—ã¾ã™"
 
 #: Gimp/Fu.pm:0
 msgid "$s: not an integer\n"
-msgstr "$s: À°¿ô¤Ç¤Ï¤¢¤ê¤Ş¤»¤ó\n"
+msgstr "$s: æ•´æ•°ã§ã¯ã‚ã‚Šã¾ã›ã‚“\n"
 
 #: Gimp/Lib.xs:0
 msgid "%s arguments for function '%s'"
-msgstr "%s ¥Õ¥¡¥ó¥¯¥·¥ç¥ó '%s' ¤Î¤¿¤á¤Î°ú¿ô¤Ç¤¹"
+msgstr "%s ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³ '%s' ã®ãŸã‚ã®å¼•æ•°ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr "%s: ¥×¥í¥·¡¼¥¸¥ã¥Ç¡¼¥¿¥Ù¡¼¥¹¤Î¼Â¹Ô¤ÏÉÔÀµ¤ÊÆşÎÏ°ú¿ô¤Ë¤è¤ê¼ºÇÔ¤·¤Ş¤·¤¿"
+msgstr "%s: ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®å®Ÿè¡Œã¯ä¸æ­£ãªå…¥åŠ›å¼•æ•°ã«ã‚ˆã‚Šå¤±æ•—ã—ã¾ã—ãŸ"
 
 #: Gimp/Lib.xs:0
 msgid "%s: procedural database execution failed"
-msgstr "%s: ¥×¥í¥·¡¼¥¸¥ã¥Ç¡¼¥¿¥Ù¡¼¥¹¤Î¼Â¹Ô¤Ë¼ºÇÔ¤·¤Ş¤·¤¿"
+msgstr "%s: ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã®å®Ÿè¡Œã«å¤±æ•—ã—ã¾ã—ãŸ"
 
 #: Gimp/Lib.xs:0
 msgid "(UNINITIALIZED)"
-msgstr "(Ì¤½é´ü²½)"
+msgstr "(æœªåˆæœŸåŒ–)"
 
 #: UI/UI.pm:0
 msgid "(none)"
-msgstr "(¤Ê¤·)"
+msgstr "(ãªã—)"
 
 #: Gimp/Lib.xs:0
 msgid ", %d bytes data]"
-msgstr ", %d ¥Ğ¥¤¥È¥Ç¡¼¥¿]"
+msgstr ", %d ãƒã‚¤ãƒˆãƒ‡ãƒ¼ã‚¿]"
 
 #: Perl-Server:0
 msgid ", authorization required"
-msgstr ", Ç§¾Ú¤¬É¬Í×¤Ç¤¹"
+msgstr ", èªè¨¼ãŒå¿…è¦ã§ã™"
 
 #: UI/UI.pm:0
 msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
@@ -139,25 +139,25 @@ msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
 
 #: examples/logulator:0
 msgid "/Filters/Logulator"
-msgstr "/¥Õ¥£¥ë¥¿/Logulator"
+msgstr "/ãƒ•ã‚£ãƒ«ã‚¿/Logulator"
 
 #: Perl-Server:0
 msgid "/Xtns/Perl"
-msgstr "/³ÈÄ¥/Perl"
+msgstr "/æ‹¡å¼µ/Perl"
 
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
-msgstr "/³ÈÄ¥/²¼ÅÉ¤ê"
+msgstr "/æ‹¡å¼µ/ä¸‹å¡—ã‚Š"
 
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0
 msgid "/Xtns/Render/Logos"
-msgstr "/³ÈÄ¥/²¼ÅÉ¤ê/¥í¥´"
+msgstr "/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ­ã‚´"
 
 #: examples/povray:0
 msgid "/Xtns/Render/Povray"
-msgstr "/³ÈÄ¥/²¼ÅÉ¤ê/Povray"
+msgstr "/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/Povray"
 
 #: UI/UI.pm:0
 msgid "9x15bold"
@@ -166,359 +166,359 @@ msgstr "9x15bold"
 #: Gimp/Fu.pm:0
 msgid "<Image> plug-in called without both image and drawable arguments!\n"
 msgstr ""
-"<Image> ¥×¥é¥°¥¤¥ó¤¬²èÁü¤ÈÉÁ²è²ÄÇ½¤Ê°ú¿ô¤ÎÎ¾Êı¤ò»ı¤¿¤º¤Ë¸Æ¤Ó½Ğ¤µ¤ì¤Ş¤·¤¿!\n"
+"<Image> ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãŒç”»åƒã¨æç”»å¯èƒ½ãªå¼•æ•°ã®ä¸¡æ–¹ã‚’æŒãŸãšã«å‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸ!\n"
 
 #: examples/repdup:0
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/ÊÔ½¸/·«¤êÊÖ¤· & Ê£À½..."
+msgstr "<Image>/ç·¨é›†/ç¹°ã‚Šè¿”ã— & è¤‡è£½..."
 
 #: examples/animate_cells:0
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Æ°²è/Æ°²è¥»¥ë..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/å‹•ç”»/å‹•ç”»ã‚»ãƒ«..."
 
 #: examples/blowinout:0
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Æ°²è/½Ğ¤·Æş¤ì..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/å‹•ç”»/å‡ºã—å…¥ã‚Œ..."
 
 #: examples/frame_filter:0
 msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Perl É½¸½Å¬ÍÑ..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Perl è¡¨ç¾é©ç”¨..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¤Ü¤«¤·/2x2 ¤Ü¤«¤·"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ã¼ã‹ã—/2x2 ã¼ã‹ã—"
 
 #: examples/colourtoalpha:0
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/¿§¤ò¥¢¥ë¥Õ¥¡¤Ë..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/è‰²/è‰²ã‚’ã‚¢ãƒ«ãƒ•ã‚¡ã«..."
 
 #: examples/fire:0
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/±ê..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/è‰²/ç‚..."
 
 #: examples/map_to_gradient:0
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¿§/¥Ş¥Ã¥×¤ò¥°¥é¥Ç¡¼¥·¥ç¥ó¤Ë..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/è‰²/ãƒãƒƒãƒ—ã‚’ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³ã«..."
 
 #: examples/mirrorsplit:0
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/ÏÄ¤ß/¶ÀÌÌÊ¬³ä..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/æ­ªã¿/é¡é¢åˆ†å‰²..."
 
 #: examples/scratches:0
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/ÏÄ¤ß/¥¹¥¯¥é¥Ã¥Á..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/æ­ªã¿/ã‚¹ã‚¯ãƒ©ãƒƒãƒ..."
 
 #: examples/windify:0
 msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/ÏÄ¤ß/¤¿¤Ê¤Ó¤«¤»..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/æ­ªã¿/ãŸãªã³ã‹ã›..."
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/ÎØ³ÔÃê½Ğ/2x2 ÎØ³ÔÃê½Ğ"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/è¼ªéƒ­æŠ½å‡º/2x2 è¼ªéƒ­æŠ½å‡º"
 
 #: examples/gouge:0
 msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¶¯Ä´/2x2 ¥³¥ó¥È¥é¥¹¥È¶¯Ä´"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/å¼·èª¿/2x2 ã‚³ãƒ³ãƒˆãƒ©ã‚¹ãƒˆå¼·èª¿"
 
 #: examples/warp-sharp:0
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¶¯Ä´/ÏÄ¤ß¥·¥ã¡¼¥×²½..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/å¼·èª¿/æ­ªã¿ã‚·ãƒ£ãƒ¼ãƒ—åŒ–..."
 
 #: examples/blended2:0
 msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/¥Ö¥ì¥ó¥É II..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/ãƒ–ãƒ¬ãƒ³ãƒ‰ II..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/Ä¦¹ï"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/å½«åˆ»"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/¥¯¥ê¥¹¥¿¥ë"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/ã‚¯ãƒªã‚¹ã‚¿ãƒ«"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Imigre-26"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/¤°¤Ë¤ã¤°¤Ë¤ã"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/ãã«ã‚ƒãã«ã‚ƒ"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/¿·Ê¹°õºş"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/æ–°èå°åˆ·"
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/SOAT ¥¯¥í¡¼¥à"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/SOAT ã‚¯ãƒ­ãƒ¼ãƒ "
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/¥¹¥Ô¡¼¥ÉÊ¸»ú"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/ã‚¹ãƒ”ãƒ¼ãƒ‰æ–‡å­—"
 
 #: examples/translogo:0
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/Æ©ÌÀ¥í¥´..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/é€æ˜ãƒ­ã‚´..."
 
 #: examples/logulator:0
 msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Logulator/Web ¥¿¥¤¥È¥ë¸«½Ğ¤·"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Logulator/Web ã‚¿ã‚¤ãƒˆãƒ«è¦‹å‡ºã—"
 
 #: examples/image_tile:0
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Ş¥Ã¥×/²èÁü¥¿¥¤¥ë..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒãƒƒãƒ—/ç”»åƒã‚¿ã‚¤ãƒ«..."
 
 #: examples/pixelmap:0
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Ş¥Ã¥×/¥Ô¥¯¥»¥ë¥Ş¥Ã¥×..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒãƒƒãƒ—/ãƒ”ã‚¯ã‚»ãƒ«ãƒãƒƒãƒ—..."
 
 #: examples/xachlego:0
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Ş¥Ã¥×/Xach ¥Ö¥í¥Ã¥¯..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒãƒƒãƒ—/Xach ãƒ–ãƒ­ãƒƒã‚¯..."
 
 #: examples/xachshadow:0
 msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Ş¥Ã¥×/Xach ±Æ¤Ä¤±..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒãƒƒãƒ—/Xach å½±ã¤ã‘..."
 
 #: examples/border:0
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¤½¤ÎÂ¾/ÏÈÊ¿¶Ñ..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãã®ä»–/æ å¹³å‡..."
 
 #: examples/gimpmagick:0
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¤½¤ÎÂ¾/Magick..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãã®ä»–/Magick..."
 
 #: examples/ditherize:0
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Î¥¤¥º/¥Ç¥£¥¶²½..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒã‚¤ã‚º/ãƒ‡ã‚£ã‚¶åŒ–..."
 
 #: examples/feedback:0
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Î¥¤¥º/¥Õ¥£¡¼¥É¥Ğ¥Ã¥¯..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒã‚¤ã‚º/ãƒ•ã‚£ãƒ¼ãƒ‰ãƒãƒƒã‚¯..."
 
 #: examples/xachvision:0
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/¥Î¥¤¥º/Xach ¸¸±Æ..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ãƒã‚¤ã‚º/Xach å¹»å½±..."
 
 #: examples/dust:0
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¥´¥ßÄÉ²Ã..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/ã‚´ãƒŸè¿½åŠ ..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/ÏÈÄÉ²Ã"
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/æ è¿½åŠ "
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¶âÂ°ÉÁ²è..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/é‡‘å±æç”»..."
 
 #: examples/burst:0
 msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/ÇËÎö..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/ç ´è£‚..."
 
 #: examples/fit-text:0
 msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¤Ô¤Ã¤¿¤êÊ¸»ú..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/ã´ã£ãŸã‚Šæ–‡å­—..."
 
 #: examples/glowing_steel:0
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/ÎØ³Ô¥Ï¥¤¥é¥¤¥È..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/è¼ªéƒ­ãƒã‚¤ãƒ©ã‚¤ãƒˆ..."
 
 #: examples/randomblends:0
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¥é¥ó¥À¥àº®¹ç..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/ãƒ©ãƒ³ãƒ€ãƒ æ··åˆ..."
 
 #: examples/stampify:0
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/¥¹¥¿¥ó¥×..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/ã‚¹ã‚¿ãƒ³ãƒ—..."
 
 #: examples/tex-to-float:0
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/TeX Ê¸»ú..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/TeX æ–‡å­—..."
 
 #: examples/terral_text:0
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/²¼ÅÉ¤ê/Terral Ê¸»ú..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/ä¸‹å¡—ã‚Š/Terral æ–‡å­—..."
 
 #: examples/perlotine:0
 msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Web/Perl Ê¬³ä..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Web/Perl åˆ†å‰²..."
 
 #: examples/prep4gif:0
 msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Web/GIF ¤ÎÍÑ°Õ..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Web/GIF ã®ç”¨æ„..."
 
 #: examples/webify:0
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/¥Õ¥£¥ë¥¿/Web/Web ²èÁü²½..."
+msgstr "<Image>/ãƒ•ã‚£ãƒ«ã‚¿/Web/Web ç”»åƒåŒ–..."
 
 #: examples/centerguide:0
 msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/¥¬¥¤¥É/Ãæ±û´ó¤»..."
+msgstr "<Image>/ã‚¬ã‚¤ãƒ‰/ä¸­å¤®å¯„ã›..."
 
 #: examples/guidegrid:0
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/¥¬¥¤¥É/¥¬¥¤¥É³Ê»Ò..."
+msgstr "<Image>/ã‚¬ã‚¤ãƒ‰/ã‚¬ã‚¤ãƒ‰æ ¼å­..."
 
 #: examples/guide_remove:0
 msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/¥¬¥¤¥É/¼è¤ê½ü¤¯"
+msgstr "<Image>/ã‚¬ã‚¤ãƒ‰/å–ã‚Šé™¤ã"
 
 #: examples/guides_to_selection:0
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/¥¬¥¤¥É/ÁªÂòÎÎ°è¤Ø..."
+msgstr "<Image>/ã‚¬ã‚¤ãƒ‰/é¸æŠé ˜åŸŸã¸..."
 
 #: examples/alpha2color:0
 msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/²èÁü/¥¢¥ë¥Õ¥¡/¥¢¥ë¥Õ¥¡¤ò¿§¤Ë..."
+msgstr "<Image>/ç”»åƒ/ã‚¢ãƒ«ãƒ•ã‚¡/ã‚¢ãƒ«ãƒ•ã‚¡ã‚’è‰²ã«..."
 
 #: examples/clear_alpha:0
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/²èÁü/¥¢¥ë¥Õ¥¡/¥¢¥ë¥Õ¥¡¤Î¾Ãµî..."
+msgstr "<Image>/ç”»åƒ/ã‚¢ãƒ«ãƒ•ã‚¡/ã‚¢ãƒ«ãƒ•ã‚¡ã®æ¶ˆå»..."
 
 #: examples/layerfuncs:0
 msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/¥ì¥¤¥ä¡¼/Ãæ¿´´ó¤»"
+msgstr "<Image>/ãƒ¬ã‚¤ãƒ¤ãƒ¼/ä¸­å¿ƒå¯„ã›"
 
 #: examples/frame_reshuffle:0
 msgid "<Image>/Layers/Stack/Reorder Layers..."
-msgstr "<Image>/¥ì¥¤¥ä¡¼/½Å¤Ê¤ê/¥ì¥¤¥ä¡¼ºÆÇÛÃÖ..."
+msgstr "<Image>/ãƒ¬ã‚¤ãƒ¤ãƒ¼/é‡ãªã‚Š/ãƒ¬ã‚¤ãƒ¤ãƒ¼å†é…ç½®..."
 
 #: examples/roundrectsel:0
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/ÁªÂò/ÌÌ¼è¤ê¶ë·Á..."
+msgstr "<Image>/é¸æŠ/é¢å–ã‚ŠçŸ©å½¢..."
 
 #: examples/roundsel:0
 msgid "<Image>/Select/Round..."
-msgstr "<Image>/ÁªÂò/ÌÌ¼è¤ê..."
+msgstr "<Image>/é¸æŠ/é¢å–ã‚Š..."
 
 #: examples/triangle:0
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/ÁªÂò/»°³Ñ·Á..."
+msgstr "<Image>/é¸æŠ/ä¸‰è§’å½¢..."
 
 #: examples/gap-vcr:0
 msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Æ°²è/VCR ¥³¥ó¥½¡¼¥ë..."
+msgstr "<Image>/å‹•ç”»/VCR ã‚³ãƒ³ã‚½ãƒ¼ãƒ«..."
 
 #: examples/view3d:0
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/É½¼¨/3D É½ÌÌ..."
+msgstr "<Image>/è¡¨ç¤º/3D è¡¨é¢..."
 
 #: Gimp/Fu.pm:0
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "<Load> ¥×¥é¥°¥¤¥ó¤¬ 3 ¤Ä¤ÎÉ¸½à°ú¿ôÌµ¤·¤Ç¸Æ¤Ó½Ğ¤µ¤ì¤Ş¤·¤¿!\n"
+msgstr "<Load> ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãŒ 3 ã¤ã®æ¨™æº–å¼•æ•°ç„¡ã—ã§å‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸ!\n"
 
 #: Gimp/Fu.pm:0
 msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> ¥×¥é¥°¥¤¥ó¤Ï 5 ¤Ä¤ÎÉ¸½à°ú¿ôÌµ¤·¤Ç¸Æ¤Ó½Ğ¤µ¤ì¤Ş¤·¤¿!\n"
+msgstr "<Save> ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã¯ 5 ã¤ã®æ¨™æº–å¼•æ•°ç„¡ã—ã§å‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸ!\n"
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/³ÈÄ¥/Æ°²è/¹­¹ğ..."
+msgstr "<Toolbox>/æ‹¡å¼µ/å‹•ç”»/åºƒå‘Š..."
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/³ÈÄ¥/Æ°²è/Seth ²óÅ¾..."
+msgstr "<Toolbox>/æ‹¡å¼µ/å‹•ç”»/Seth å›è»¢..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/³ÈÄ¥/²èÁüºîÀ®"
+msgstr "<Toolbox>/æ‹¡å¼µ/ç”»åƒä½œæˆ"
 
 #: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/³ÈÄ¥/Gimp::Fu »ÈÍÑÎã..."
+msgstr "<Toolbox>/æ‹¡å¼µ/Gimp::Fu ä½¿ç”¨ä¾‹..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/³ÈÄ¥/¥Û¡¼¥à¥Ú¡¼¥¸¥í¥´"
+msgstr "<Toolbox>/æ‹¡å¼µ/ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ãƒ­ã‚´"
 
 #: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/³ÈÄ¥/PDB ¥¨¥¯¥¹¥×¥í¡¼¥é..."
+msgstr "<Toolbox>/æ‹¡å¼µ/PDB ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ©..."
 
 #: examples/parasite-editor:0
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/³ÈÄ¥/¥Ñ¥é¥µ¥¤¥È¥¨¥Ç¥£¥¿..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ãƒ‘ãƒ©ã‚µã‚¤ãƒˆã‚¨ãƒ‡ã‚£ã‚¿..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/³ÈÄ¥/Perl ¥×¥é¥°¥¤¥óÎã"
+msgstr "<Toolbox>/æ‹¡å¼µ/Perl ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ä¾‹"
 
 #: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/³ÈÄ¥/Perl/¥³¥ó¥È¥í¡¼¥ë¥»¥ó¥¿..."
+msgstr "<Toolbox>/æ‹¡å¼µ/Perl/ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ«ã‚»ãƒ³ã‚¿..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/³ÈÄ¥/Perl/¥µ¡¼¥Ğ"
+msgstr "<Toolbox>/æ‹¡å¼µ/Perl/ã‚µãƒ¼ãƒ"
 
 #: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¤ì¤ó¤¬..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ã‚Œã‚“ãŒ..."
 
 #: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥Õ¥©¥ó¥ÈÉ½..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ•ã‚©ãƒ³ãƒˆè¡¨..."
 
 #: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/ÃæÍÇ..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ä¸­åº¸..."
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥í¥´/±êÊ¸»ú..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ­ã‚´/ç‚æ–‡å­—..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥í¥´/ÃòÅ´"
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ­ã‚´/é‹³é‰„"
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥í¥´/Æâ¸ş¤­¥Ù¥Ù¥ë..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ­ã‚´/å†…å‘ããƒ™ãƒ™ãƒ«..."
 
 #: examples/pixelmap:0
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥Ô¥¯¥»¥ëÀ¸À®..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ”ã‚¯ã‚»ãƒ«ç”Ÿæˆ..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/Povray/´Ä¶­ÀßÄê..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/Povray/ç’°å¢ƒè¨­å®š..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/Povray/¥Æ¥¯¥¹¥Á¥ã..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/Povray/ãƒ†ã‚¯ã‚¹ãƒãƒ£..."
 
 #: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥é¥ó¥À¥à¥¢¡¼¥È #1..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ãƒ©ãƒ³ãƒ€ãƒ ã‚¢ãƒ¼ãƒˆ #1..."
 
 #: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/¥¹¥¿¥ó¥×..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/ã‚¹ã‚¿ãƒ³ãƒ—..."
 
 #: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/³ÈÄ¥/²¼ÅÉ¤ê/±¢ÍÛ..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ä¸‹å¡—ã‚Š/é™°é™½..."
 
 #: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/³ÈÄ¥/¥Ó¥¸¥å¥¢¥ë¥¹¥¯¥ê¥×¥¿..."
+msgstr "<Toolbox>/æ‹¡å¼µ/ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ã‚¹ã‚¯ãƒªãƒ—ã‚¿..."
 
 #: examples/PDB:0
 msgid "Accelerator"
-msgstr "¥¢¥¯¥»¥é¥ì¡¼¥¿"
+msgstr "ã‚¢ã‚¯ã‚»ãƒ©ãƒ¬ãƒ¼ã‚¿"
 
 #: examples/sethspin:0
 msgid ""
 "An even number of frames is needed for spin back.\n"
 "Adjusted frames up to $frames"
 msgstr ""
-"µÕ²óÅ¾¤Î¤¿¤á¤Ë¶ö¿ô¤Î¥Õ¥ì¡¼¥à¿ô¤¬É¬Í×¤Ç¤¹.\n"
-"$flames ¤ËÄ´À°¤·¤Æ²¼¤µ¤¤"
+"é€†å›è»¢ã®ãŸã‚ã«å¶æ•°ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ãŒå¿…è¦ã§ã™.\n"
+"$flames ã«èª¿æ•´ã—ã¦ä¸‹ã•ã„"
 
 #: examples/PDB:0
 msgid "Author"
-msgstr "Ãø¼Ô"
+msgstr "è‘—è€…"
 
 #: UI/UI.pm:0
 msgid "BG"
-msgstr "ÇØ·Ê"
+msgstr "èƒŒæ™¯"
 
 #: UI/UI.pm:0
 msgid ""
@@ -530,305 +530,305 @@ msgid ""
 "\n"
 "$help"
 msgstr ""
-"¾Ò²ğ:\n"
+"ç´¹ä»‹:\n"
 "\n"
 "$blurb\n"
 "\n"
-"¥Ø¥ë¥×:\n"
+"ãƒ˜ãƒ«ãƒ—:\n"
 "\n"
 "$help"
 
 #: examples/example-fu:0
 msgid "Background"
-msgstr "ÇØ·Ê"
+msgstr "èƒŒæ™¯"
 
 #: UI/UI.pm:0
 msgid "Browse"
-msgstr "¥Ö¥é¥¦¥º"
+msgstr "ãƒ–ãƒ©ã‚¦ã‚º"
 
 #: UI/UI.pm:0
 msgid "Brush Selection Dialog"
-msgstr "¥Ö¥é¥·ÁªÂò¥À¥¤¥¢¥í¥°"
+msgstr "ãƒ–ãƒ©ã‚·é¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚°"
 
 #: examples/translogo:0
 msgid "Bumpmap"
-msgstr "¥Ğ¥ó¥×¥Ş¥Ã¥×"
+msgstr "ãƒãƒ³ãƒ—ãƒãƒƒãƒ—"
 
 #: UI/UI.pm:0
 msgid "Cancel"
-msgstr "¼è¾Ã"
+msgstr "å–æ¶ˆ"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "º£²ó¤Ï '$AUTOLOAD' ¤ò¸Æ¤Ó½Ğ¤»¤Ş¤»¤ó¤Ç¤·¤¿"
+msgstr "ä»Šå›ã¯ '$AUTOLOAD' ã‚’å‘¼ã³å‡ºã›ã¾ã›ã‚“ã§ã—ãŸ"
 
 #: examples/PDB:0
 msgid "Close"
-msgstr "ÊÄ¤¸¤ë"
+msgstr "é–‰ã˜ã‚‹"
 
 #: UI/UI.pm:0
 msgid "Color"
-msgstr "¿§"
+msgstr "è‰²"
 
 #: examples/PDB:0
 msgid "Command"
-msgstr "¥³¥Ş¥ó¥É"
+msgstr "ã‚³ãƒãƒ³ãƒ‰"
 
 #: examples/PDB:0
 msgid "Copyright"
-msgstr "Ãøºî¸¢"
+msgstr "è‘—ä½œæ¨©"
 
 #: examples/PDB:0
 msgid "DESCRIPTION"
-msgstr "ÀâÌÀ"
+msgstr "èª¬æ˜"
 
 #: examples/PDB:0
 msgid "Date/Version"
-msgstr "ÆüÉÕ/¥Ğ¡¼¥¸¥ç¥ó"
+msgstr "æ—¥ä»˜/ãƒãƒ¼ã‚¸ãƒ§ãƒ³"
 
 #: UI/UI.pm:0
 msgid "Defaults"
-msgstr "É¸½à"
+msgstr "æ¨™æº–"
 
 #: examples/PDB:0
 msgid "Description"
-msgstr "ÀâÌÀ"
+msgstr "èª¬æ˜"
 
 #: UI/UI.pm:0
 msgid "Edit"
-msgstr "ÊÔ½¸"
+msgstr "ç·¨é›†"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
 "string"
 msgstr ""
-"INT32 ¤¬´üÂÔ¤µ¤ì¤Ş¤¹¤¬ '%s' ¤ò¼õ¤±¼è¤ê¤Ş¤·¤¿. ¤â¤·ËÜÅö¤ËÅÏ¤¹¤Ä¤â¤ê¤Ê¤é¤Ğ "
-"'*1' ¤òÊ¸»úÎó¤ËÄÉ²Ã¤·¤Æ¤¯¤À¤µ¤¤"
+"INT32 ãŒæœŸå¾…ã•ã‚Œã¾ã™ãŒ '%s' ã‚’å—ã‘å–ã‚Šã¾ã—ãŸ. ã‚‚ã—æœ¬å½“ã«æ¸¡ã™ã¤ã‚‚ã‚Šãªã‚‰ã° "
+"'*1' ã‚’æ–‡å­—åˆ—ã«è¿½åŠ ã—ã¦ãã ã•ã„"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
 "'use strict'"
 msgstr ""
-"INT32 ¤¬´üÂÔ¤µ¤ì¤Ş¤¹¤¬ '%s' ¤ò¼õ¤±¼è¤ê¤Ş¤·¤¿. '%s' ¤È¤¹¤ë¤Ä¤â¤ê¤À¤Ã¤¿¤« 'use "
-"strict' ¤òËº¤ì¤¿¤Î¤«¤â¤·¤ì¤Ş¤»¤ó"
+"INT32 ãŒæœŸå¾…ã•ã‚Œã¾ã™ãŒ '%s' ã‚’å—ã‘å–ã‚Šã¾ã—ãŸ. '%s' ã¨ã™ã‚‹ã¤ã‚‚ã‚Šã ã£ãŸã‹ 'use "
+"strict' ã‚’å¿˜ã‚ŒãŸã®ã‹ã‚‚ã—ã‚Œã¾ã›ã‚“"
 
 #: Gimp/Lib.xs:0
 msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "Ã×Ì¿: canonicalize_colour ¤¬ÃÍ¤òÊÖ¤·¤Ş¤»¤ó¤Ç¤·¤¿!"
+msgstr "è‡´å‘½: canonicalize_colour ãŒå€¤ã‚’è¿”ã—ã¾ã›ã‚“ã§ã—ãŸ!"
 
 #: UI/UI.pm:0
 msgid "FATAL: unable to create $tmp: $!\n"
-msgstr "Ã×Ì¿: $tmp ¤òºî¤ë¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó: $!\n"
+msgstr "è‡´å‘½: $tmp ã‚’ä½œã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“: $!\n"
 
 #: UI/UI.pm:0
 msgid "FG"
-msgstr "Á°·Ê"
+msgstr "å‰æ™¯"
 
 #: UI/UI.pm:0
 msgid "Fileselector for $name"
-msgstr "$name ¤Î¥Õ¥¡¥¤¥ëÁªÂò"
+msgstr "$name ã®ãƒ•ã‚¡ã‚¤ãƒ«é¸æŠ"
 
 #: UI/UI.pm:0
 msgid "Font Selection Dialog ($desc)"
-msgstr "¥Õ¥©¥ó¥ÈÁªÂò¥À¥¤¥¢¥í¥° ($desc)"
+msgstr "ãƒ•ã‚©ãƒ³ãƒˆé¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚° ($desc)"
 
 #: examples/PDB:0
 msgid "Function Info"
-msgstr "µ¡Ç½¾ğÊó"
+msgstr "æ©Ÿèƒ½æƒ…å ±"
 
 #: UI/UI.pm:0
 msgid "Gradient Selection Dialog"
-msgstr "¥°¥é¥Ç¡¼¥·¥ç¥óÁªÂò¥À¥¤¥¢¥í¥°"
+msgstr "ã‚°ãƒ©ãƒ‡ãƒ¼ã‚·ãƒ§ãƒ³é¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚°"
 
 #: UI/UI.pm:0
 msgid "Help for "
-msgstr "¥Ø¥ë¥× "
+msgstr "ãƒ˜ãƒ«ãƒ— "
 
 #: UI/UI.pm:0
 msgid "Help"
-msgstr "¥Ø¥ë¥×"
+msgstr "ãƒ˜ãƒ«ãƒ—"
 
 #: UI/UI.pm:0
 msgid "Illegal default font description for $function: $val\n"
-msgstr "$function ¤ÎÉ¸½à¥Õ¥©¥ó¥È¤Îµ­½Ò¤ÏÉÔÀµ¤Ç¤¹: $val\n"
+msgstr "$function ã®æ¨™æº–ãƒ•ã‚©ãƒ³ãƒˆã®è¨˜è¿°ã¯ä¸æ­£ã§ã™: $val\n"
 
 #: examples/PDB:0
 msgid "Image Types"
-msgstr "²èÁü¥¿¥¤¥×"
+msgstr "ç”»åƒã‚¿ã‚¤ãƒ—"
 
 #: examples/PDB:0
 msgid "Last Modified"
-msgstr "ºÇ½ª¹¹¿·"
+msgstr "æœ€çµ‚æ›´æ–°"
 
 #: UI/UI.pm:0
 msgid "Load $name"
-msgstr "$name ¤òÆÉ¤ß¹ş¤à"
+msgstr "$name ã‚’èª­ã¿è¾¼ã‚€"
 
 #: UI/UI.pm:0
 msgid "Load"
-msgstr "ÆÉ¤ß¹ş¤ß"
+msgstr "èª­ã¿è¾¼ã¿"
 
 #: examples/PDB:0
 msgid "Menu Path"
-msgstr "¥á¥Ë¥å¡¼¥Ñ¥¹"
+msgstr "ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ‘ã‚¹"
 
 #: examples/PDB:0
 msgid "More..."
-msgstr "¾ÜºÙ..."
+msgstr "è©³ç´°..."
 
 #: examples/PDB:0
 msgid "NAME"
-msgstr "Ì¾Á°"
+msgstr "åå‰"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
-msgstr "¿åÊ¿¤«±ôÄ¾¤Î¥¬¥¤¥É¤¬¤¢¤ê¤Ş¤»¤ó. ÃæÃÇ¤·¤Ş¤·¤¿"
+msgstr "æ°´å¹³ã‹é‰›ç›´ã®ã‚¬ã‚¤ãƒ‰ãŒã‚ã‚Šã¾ã›ã‚“. ä¸­æ–­ã—ã¾ã—ãŸ"
 
 #: UI/UI.pm:0
 msgid "OK"
-msgstr "Î»²ò"
+msgstr "äº†è§£"
 
 #: examples/PDB:0
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "PDB ¥¨¥¯¥¹¥×¥í¡¼¥é - olof ÈÇ (¤Ş¤À¥¢¥ë¥Õ¥¡¥Ğ¡¼¥¸¥ç¥ó)"
+msgstr "PDB ã‚¨ã‚¯ã‚¹ãƒ—ãƒ­ãƒ¼ãƒ© - olof ç‰ˆ (ã¾ã ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ¼ã‚¸ãƒ§ãƒ³)"
 
 #: UI/UI.pm:0
 msgid "Pattern Selection Dialog"
-msgstr "¥Ñ¥¿¡¼¥óÁªÂò¥À¥¤¥¢¥í¥°"
+msgstr "ãƒ‘ã‚¿ãƒ¼ãƒ³é¸æŠãƒ€ã‚¤ã‚¢ãƒ­ã‚°"
 
 #: examples/PDB:0
 msgid "Plug-In Path"
-msgstr "¥×¥é¥°¥¤¥ó¥Ñ¥¹"
+msgstr "ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ãƒ‘ã‚¹"
 
 #: UI/UI.pm:0
 msgid "Previous"
-msgstr "Ìá¤¹"
+msgstr "æˆ»ã™"
 
 #: UI/UI.pm:0
 msgid "Reset all values to their default"
-msgstr "Á´¤Æ¤ÎÃÍ¤ò½é´üÃÍ¤Ë¥ê¥»¥Ã¥È¤¹¤ë"
+msgstr "å…¨ã¦ã®å€¤ã‚’åˆæœŸå€¤ã«ãƒªã‚»ãƒƒãƒˆã™ã‚‹"
 
 #: UI/UI.pm:0
 msgid "Restore values to the previous ones"
-msgstr "Á°²ó¤ÎÃÍ¤òÉü¸µ¤¹¤ë"
+msgstr "å‰å›ã®å€¤ã‚’å¾©å…ƒã™ã‚‹"
 
 #: UI/UI.pm:0
 msgid "Save $name"
-msgstr "$name ¤òÊİÂ¸"
+msgstr "$name ã‚’ä¿å­˜"
 
 #: UI/UI.pm:0
 msgid "Save"
-msgstr "ÊİÂ¸"
+msgstr "ä¿å­˜"
 
 #: examples/colorhtml:0
 msgid "Saving '$filename' as COLORHTML..."
-msgstr "'$filename' ¤ò COLORHTML ¤È¤·¤ÆÊİÂ¸..."
+msgstr "'$filename' ã‚’ COLORHTML ã¨ã—ã¦ä¿å­˜..."
 
 #: examples/dataurl:0
 msgid "Saving '$filename' as DATAURL..."
-msgstr "'$filename' ¤ò DATAURL ¤È¤·¤ÆÊİÂ¸..."
+msgstr "'$filename' ã‚’ DATAURL ã¨ã—ã¦ä¿å­˜..."
 
 #: examples/sethspin:0
 msgid "Seth Spin..."
-msgstr "Seth ²óÅ¾..."
+msgstr "Seth å›è»¢..."
 
 #: examples/PDB:0
 msgid "Shortcuts"
-msgstr "¥·¥ç¡¼¥È¥«¥Ã¥È"
+msgstr "ã‚·ãƒ§ãƒ¼ãƒˆã‚«ãƒƒãƒˆ"
 
 #: examples/sethspin:0
 msgid "Spin Layer DEST (250ms)"
-msgstr "¥ì¥¤¥ä¡¼ DEST ¤Î²óÅ¾ (250ms)"
+msgstr "ãƒ¬ã‚¤ãƒ¤ãƒ¼ DEST ã®å›è»¢ (250ms)"
 
 #: examples/sethspin:0
 msgid "Spin Layer SRC (250ms)"
-msgstr "¥ì¥¤¥ä¡¼ SRC ¤Î²óÅ¾ (250ms)"
+msgstr "ãƒ¬ã‚¤ãƒ¤ãƒ¼ SRC ã®å›è»¢ (250ms)"
 
 #: examples/PDB:0
 msgid "Status"
-msgstr "¥¹¥Æ¡¼¥¿¥¹"
+msgstr "ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹"
 
 #: examples/PDB:0
 msgid "Synopsis"
-msgstr "³µÍ×"
+msgstr "æ¦‚è¦"
 
 #: examples/PDB:0
 msgid "TYPE"
-msgstr "¥¿¥¤¥×"
+msgstr "ã‚¿ã‚¤ãƒ—"
 
 #: examples/translogo:0
 msgid "Text"
-msgstr "Ê¸»ú"
+msgstr "æ–‡å­—"
 
 #: Gimp/Lib.xs:0
 msgid "This module was built without support for PDL."
-msgstr "¤³¤Î¥â¥¸¥å¡¼¥ë¤Ï PDL ¤ËÂĞ±ş¤»¤º¤Ëºî¤é¤ì¤Ş¤·¤¿"
+msgstr "ã“ã®ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ã¯ PDL ã«å¯¾å¿œã›ãšã«ä½œã‚‰ã‚Œã¾ã—ãŸ"
 
 #: Gimp/Lib.xs:0
 msgid "Unable to convert a reference to type '%s'"
-msgstr "'%s' ¤Î·¿¤Î¥ê¥Õ¥¡¥ì¥ó¥¹¤È¤·¤ÆÊÑ´¹¤Ç¤­¤Ş¤»¤ó"
+msgstr "'%s' ã®å‹ã®ãƒªãƒ•ã‚¡ãƒ¬ãƒ³ã‚¹ã¨ã—ã¦å¤‰æ›ã§ãã¾ã›ã‚“"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "Unable to grok '%s' as colour specifier"
-msgstr "'%s' ¤òÆÃÄê¤Î¿§¤È¤·¤Æ²ò¼á¤Ç¤­¤Ş¤»¤ó"
+msgstr "'%s' ã‚’ç‰¹å®šã®è‰²ã¨ã—ã¦è§£é‡ˆã§ãã¾ã›ã‚“"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "'$filename' ¤ò½ñ¤­¹ş¤à¤¿¤á¤Ë³«¤±¤Ş¤»¤ó: $!\n"
+msgstr "'$filename' ã‚’æ›¸ãè¾¼ã‚€ãŸã‚ã«é–‹ã‘ã¾ã›ã‚“: $!\n"
 
 #: examples/dataurl:0
 msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "°ì»şÅª¤Ê²èÁü¥¿¥¤¥ë $tmp ¤òÆÉ¤ß¹ş¤á¤Ş¤»¤ó: $!"
+msgstr "ä¸€æ™‚çš„ãªç”»åƒã‚¿ã‚¤ãƒ« $tmp ã‚’èª­ã¿è¾¼ã‚ã¾ã›ã‚“: $!"
 
 #: UI/UI.pm:0
 msgid "Unsupported argumenttype $type"
-msgstr "Ì¤ÂĞ±ş¤Î°ú¿ô·¿ $type"
+msgstr "æœªå¯¾å¿œã®å¼•æ•°å‹ $type"
 
 #: examples/visual:0
 msgid "Visual Scriptor"
-msgstr "¥Ó¥¸¥å¥¢¥ë¥¹¥¯¥ê¥×¥¿"
+msgstr "ãƒ“ã‚¸ãƒ¥ã‚¢ãƒ«ã‚¹ã‚¯ãƒªãƒ—ã‚¿"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "WARNING"
-msgstr "·Ù¹ğ"
+msgstr "è­¦å‘Š"
 
 #: Gimp/Fu.pm:0
 msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "·Ù¹ğ: $function ¤Ï²èÁü¤Ç¤Ï¤Ê¤¤¤â¤Î¤òÊÖ¤·¤Ş¤·¤¿: \"$img\"\n"
+msgstr "è­¦å‘Š: $function ã¯ç”»åƒã§ã¯ãªã„ã‚‚ã®ã‚’è¿”ã—ã¾ã—ãŸ: \"$img\"\n"
 
 #: Perl-Server:0
 msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "·Ù¹ğ: ¥¯¥é¥¤¥¢¥ó¥È¤¬¥¢¥¯¥Æ¥£¥Ö¥í¥Ã¥¯Ãæ¤ËÀÚÃÇ¤·¤Ş¤·¤¿\n"
+msgstr "è­¦å‘Š: ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆãŒã‚¢ã‚¯ãƒ†ã‚£ãƒ–ãƒ­ãƒƒã‚¯ä¸­ã«åˆ‡æ–­ã—ã¾ã—ãŸ\n"
 
 #: Perl-Server:0
 msgid "WARNING: client tried to unlock without holding a lock"
-msgstr "·Ù¹ğ: ¥¯¥é¥¤¥¢¥ó¥È¤Ï¥í¥Ã¥¯¤·¤Æ¤¤¤Ê¤¤¥í¥Ã¥¯¤ò²ò½ü¤ò¤·¤è¤¦¤È¤·¤Ş¤·¤¿"
+msgstr "è­¦å‘Š: ã‚¯ãƒ©ã‚¤ã‚¢ãƒ³ãƒˆã¯ãƒ­ãƒƒã‚¯ã—ã¦ã„ãªã„ãƒ­ãƒƒã‚¯ã‚’è§£é™¤ã‚’ã—ã‚ˆã†ã¨ã—ã¾ã—ãŸ"
 
 #: Perl-Server:0
 msgid "WARNING: shared locking requested but not implemented"
-msgstr "·Ù¹ğ: Ì¤¼ÂÁõ¤Î¶¦Í­¥í¥Ã¥­¥ó¥°¤¬Í×µá¤µ¤ì¤Ş¤·¤¿"
+msgstr "è­¦å‘Š: æœªå®Ÿè£…ã®å…±æœ‰ãƒ­ãƒƒã‚­ãƒ³ã‚°ãŒè¦æ±‚ã•ã‚Œã¾ã—ãŸ"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "¥¤¥ó¥Ç¥Ã¥¯¥¹²èÁü¤ËÂĞ¤·¤Æ¤³¤Î¥¹¥¯¥ê¥×¥È¤Ï¼Â¹Ô¤Ç¤­¤Ş¤»¤ó!!"
+msgstr "ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹ç”»åƒã«å¯¾ã—ã¦ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯å®Ÿè¡Œã§ãã¾ã›ã‚“!!"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "¥¢¥ë¥Õ¥¡¥Á¥ã¥ó¥Í¥ë¤¬Ìµ¤¤¤Î¤Ç¤³¤Î¥¹¥¯¥ê¥×¥È¤Ï¼Â¹Ô¤Ç¤­¤Ş¤»¤ó!!"
+msgstr "ã‚¢ãƒ«ãƒ•ã‚¡ãƒãƒ£ãƒ³ãƒãƒ«ãŒç„¡ã„ã®ã§ã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆã¯å®Ÿè¡Œã§ãã¾ã›ã‚“!!"
 
 #: examples/prep4gif:0
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr "prep4gif ¤ò¼Â¹Ô¤¹¤ë¤¿¤á¤Ë¾¯¤Ê¤¯¤È¤â 2 Ëç¤Î¥ì¥¤¥ä¡¼¤¬É¬Í×¤Ç¤¹"
+msgstr "prep4gif ã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚ã«å°‘ãªãã¨ã‚‚ 2 æšã®ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒå¿…è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "[undefined]"
-msgstr "[Ì¤ÄêµÁ]"
+msgstr "[æœªå®šç¾©]"
 
 #: Gimp/Lib.xs:0
 msgid "[unfinished]\n"
-msgstr "[Ì¤´°À®]\n"
+msgstr "[æœªå®Œæˆ]\n"
 
 #: UI/UI.pm:0
 msgid ""
@@ -839,395 +839,395 @@ msgid ""
 msgstr ""
 "\n"
 "\n"
-"Ëä¤á¹ş¤Ş¤ì¤¿¥İ¥Ã¥É¥É¥­¥å¥á¥ó¥Æ¡¼¥·¥ç¥ó:\n"
+"åŸ‹ã‚è¾¼ã¾ã‚ŒãŸãƒãƒƒãƒ‰ãƒ‰ã‚­ãƒ¥ãƒ¡ãƒ³ãƒ†ãƒ¼ã‚·ãƒ§ãƒ³:\n"
 "\n"
 
 #: Gimp/Lib.xs:0
 msgid "a color must have three components (array elements)"
-msgstr "¿§¤Ï»°¤Ä¤ÎÀ®Ê¬ (ÇÛÎóÍ×ÁÇ) ¤Ç¤¢¤ëÉ¬Í×¤¬¤¢¤ê¤Ş¤¹"
+msgstr "è‰²ã¯ä¸‰ã¤ã®æˆåˆ† (é…åˆ—è¦ç´ ) ã§ã‚ã‚‹å¿…è¦ãŒã‚ã‚Šã¾ã™"
 
 #: Perl-Server:0
 msgid "accepted tcp connection from "
-msgstr "tcp ÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤·¤¿ "
+msgstr "tcp æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã—ãŸ "
 
 #: Perl-Server:0
 msgid "accepted unix connection"
-msgstr "unix domain socket ÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤·¤¿"
+msgstr "unix domain socket æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã—ãŸ"
 
 #: Perl-Server:0
 msgid "accepting connections in $host"
-msgstr "$host ¤ÇÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤¹"
+msgstr "$host ã§æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã™"
 
 #: Perl-Server:0
 msgid "accepting connections on $unix_path"
-msgstr "$unix_path ¤ÇÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤¹"
+msgstr "$unix_path ã§æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã™"
 
 #: Perl-Server:0
 msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "¥İ¡¼¥È $Gimp::Net::default_tcp_port ¤ÇÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤¹"
+msgstr "ãƒãƒ¼ãƒˆ $Gimp::Net::default_tcp_port ã§æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã™"
 
 #: Perl-Server:0
 msgid "accepting connections on port $port"
-msgstr "¥İ¡¼¥È $port ¤ÇÀÜÂ³¤ò¼õ¤±ÉÕ¤±¤Ş¤¹"
+msgstr "ãƒãƒ¼ãƒˆ $port ã§æ¥ç¶šã‚’å—ã‘ä»˜ã‘ã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "argument incompatible with type IMAGE"
-msgstr "°ú¿ô¤¬ IMAGE ·¿¤È¤ÏÈó¸ß´¹¤Ç¤¹"
+msgstr "å¼•æ•°ãŒ IMAGE å‹ã¨ã¯éäº’æ›ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "argument is not of type %s"
-msgstr "°ú¿ô¤¬ %s ·¿¤Ç¤Ï¤¢¤ê¤Ş¤»¤ó"
+msgstr "å¼•æ•°ãŒ %s å‹ã§ã¯ã‚ã‚Šã¾ã›ã‚“"
 
 #: Gimp/Lib.xs:0
 msgid "argument type %s expected (not %s)"
-msgstr "°ú¿ô·¿ %s ¤¬Ë¾¤Ş¤·¤¤ (%s ¤Ç¤Ï¤Ê¤¤)"
+msgstr "å¼•æ•°å‹ %s ãŒæœ›ã¾ã—ã„ (%s ã§ã¯ãªã„)"
 
 #: Gimp/Lib.xs:0
 msgid "arguments to main not yet supported!"
-msgstr "main ¤Ø¤Î°ú¿ô¤Ï¤Ş¤À¥µ¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó!"
+msgstr "main ã¸ã®å¼•æ•°ã¯ã¾ã ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“!"
 
 #: Net/Net.pm:0
 msgid "authorization failed: $r[1]\n"
-msgstr "Ç§¾Ú¼ºÇÔ: $r[1]\n"
+msgstr "èªè¨¼å¤±æ•—: $r[1]\n"
 
 #: Net/Net.pm:0
 msgid "authorization ok, but: $r[1]\n"
-msgstr "Ç§¾ÚÀ®¸ù, ¤·¤«¤·: $r[1]\n"
+msgstr "èªè¨¼æˆåŠŸ, ã—ã‹ã—: $r[1]\n"
 
 #: Perl-Server:0
 msgid "authorization required for tcp connections"
-msgstr "tcp ÀÜÂ³¤Ë¤ÏÇ§¾Ú¤¬É¬Í×¤Ç¤¹"
+msgstr "tcp æ¥ç¶šã«ã¯èªè¨¼ãŒå¿…è¦ã§ã™"
 
 #: Perl-Server:0
 msgid "authorization unnecessary"
-msgstr "Ç§¾Ú¤ÏÉÔÍ×¤Ç¤¹"
+msgstr "èªè¨¼ã¯ä¸è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "'%s' ¤È¤·¤Æ¸Æ¤Ó½Ğ¤µ¤ì¤Ş¤·¤¿¤¬, '%s' ¤Ï pdb ¤ËÅĞÏ¿¤µ¤ì¤Æ¤¤¤Ş¤»¤ó"
+msgstr "'%s' ã¨ã—ã¦å‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸãŒ, '%s' ã¯ pdb ã«ç™»éŒ²ã•ã‚Œã¦ã„ã¾ã›ã‚“"
 
 #: Perl-Server:0
 msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "%d ¤ÎÀÜÂ³¤òÊÄ¤¸¤Ş¤¹ (%d ²ó¤Î¥ê¥¯¥¨¥¹¥È¤¬ %g ÉÃ´Ö¤Î¤¦¤Á¤Ë¤¢¤ê¤Ş¤·¤¿)"
+msgstr "%d ã®æ¥ç¶šã‚’é–‰ã˜ã¾ã™ (%d å›ã®ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒ %g ç§’é–“ã®ã†ã¡ã«ã‚ã‚Šã¾ã—ãŸ)"
 
 #: Gimp/Fu.pm:0
 msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "$pf_type2string{$type} ·¿¤Ø¤ÎÊÑ´¹¤Ï¤Ş¤À¼ÂÁõ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó\n"
+msgstr "$pf_type2string{$type} å‹ã¸ã®å¤‰æ›ã¯ã¾ã å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã›ã‚“\n"
 
 #: Net/Net.pm:0
 msgid "could not connect to the gimp server (make sure Perl-Server is running)"
 msgstr ""
-"gimp ¥µ¡¼¥Ğ¤ËÀÜÂ³¤Ç¤­¤Ş¤»¤ó (Perl-Server ¤¬Æ°¤¤¤Æ¤¤¤ë»ö¤ò³ÎÇ§¤·¤Æ²¼¤µ¤¤)"
+"gimp ã‚µãƒ¼ãƒã«æ¥ç¶šã§ãã¾ã›ã‚“ (Perl-Server ãŒå‹•ã„ã¦ã„ã‚‹äº‹ã‚’ç¢ºèªã—ã¦ä¸‹ã•ã„)"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
-msgstr "¼¡¸µ¤¬°ã¤Ã¤Æ¤¤¤Ş¤¹, pdl ¤Ï %d ¼¡¸µ¤Ç¤¹¤¬ºÇÄã %d ¼¡¸µ¤¬É¬Í×¤Ç¤¹"
+msgstr "æ¬¡å…ƒãŒé•ã£ã¦ã„ã¾ã™, pdl ã¯ %d æ¬¡å…ƒã§ã™ãŒæœ€ä½ %d æ¬¡å…ƒãŒå¿…è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
-"¼¡¸µ¤¬°ã¤Ã¤Æ¤¤¤Ş¤¹, pdl ¤Ï %d ¼¡¸µ¤Ç¤¹¤¬ºÇÂç %d ¼¡¸µ¤Ş¤Ç¤·¤«¼è¤ê°·¤¨¤Ş¤»¤ó"
+"æ¬¡å…ƒãŒé•ã£ã¦ã„ã¾ã™, pdl ã¯ %d æ¬¡å…ƒã§ã™ãŒæœ€å¤§ %d æ¬¡å…ƒã¾ã§ã—ã‹å–ã‚Šæ‰±ãˆã¾ã›ã‚“"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to pass arg type %d"
-msgstr "°ú¿ô·¿ %d ¤Ï¤É¤¦¤ä¤Ã¤ÆÅÏ¤»¤Ğ¤¤¤¤¤ó¤À?"
+msgstr "å¼•æ•°å‹ %d ã¯ã©ã†ã‚„ã£ã¦æ¸¡ã›ã°ã„ã„ã‚“ã ?"
 
 #: Gimp/Lib.xs:0
 msgid "dunno how to return param type %d"
-msgstr "ÊÖÃÍ·¿ %d ¤Ï¤É¤¦¤ä¤Ã¤ÆÊÖ¤»¤Ğ¤¤¤¤¤ó¤À?"
+msgstr "è¿”å€¤å‹ %d ã¯ã©ã†ã‚„ã£ã¦è¿”ã›ã°ã„ã„ã‚“ã ?"
 
 #: Net/Net.pm:0
 msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "perl-server ¤Ï socket ¤Î½ªÃ¼¤ò´üÂÔ¤·¤Ş¤·¤¿¤¬, @r ¤òÆÀ¤Ş¤·¤¿\n"
+msgstr "perl-server ã¯ socket ã®çµ‚ç«¯ã‚’æœŸå¾…ã—ã¾ã—ãŸãŒ, @r ã‚’å¾—ã¾ã—ãŸ\n"
 
 #: Net/Net.pm:0
 msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
 msgstr ""
-"´üÂÔ¤µ¤ì¤ë¥×¥í¥È¥³¥ë¥Ğ¡¼¥¸¥ç¥ó¤Ï $Gimp::_PROT_VERSION ¤Ç¤¹¤¬, ¥µ¡¼¥Ğ¤Ï $r[0] "
-"¤ò»ÈÍÑ¤·¤Æ¤¤¤Ş¤¹\n"
+"æœŸå¾…ã•ã‚Œã‚‹ãƒ—ãƒ­ãƒˆã‚³ãƒ«ãƒãƒ¼ã‚¸ãƒ§ãƒ³ã¯ $Gimp::_PROT_VERSION ã§ã™ãŒ, ã‚µãƒ¼ãƒã¯ $r[0] "
+"ã‚’ä½¿ç”¨ã—ã¦ã„ã¾ã™\n"
 
 #: examples/colorhtml:0 examples/dataurl:0
 msgid "export failed"
-msgstr "¥¨¥¯¥¹¥İ¡¼¥È¼ºÇÔ"
+msgstr "ã‚¨ã‚¯ã‚¹ãƒãƒ¼ãƒˆå¤±æ•—"
 
 #: Gimp/Fu.pm:0
 msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
-"¥Õ¥¡¥ó¥¯¥·¥ç¥ó '$exe' ¤¬¤³¤Î¥¹¥¯¥ê¥×¥ÈÃæ¤Ë¸«ÉÕ¤«¤ê¤Ş¤»¤ó "
-"(°Ê²¼¤Î¤¤¤º¤ì¤«¤Ç¤Ê¤±¤ì¤Ğ¤Ê¤ê¤Ş¤»¤ó "
+"ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³ '$exe' ãŒã“ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆä¸­ã«è¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“ "
+"(ä»¥ä¸‹ã®ã„ãšã‚Œã‹ã§ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“ "
 
 #: Gimp/Fu.pm:0
 msgid "function name contains dashes instead of underscores"
-msgstr "¥Õ¥¡¥ó¥¯¥·¥ç¥óÌ¾¤¬¥¢¥ó¥À¡¼¥¹¥³¥¢¤Ç¤Ï¤Ê¤¯¥À¥Ã¥·¥å¤ò´Ş¤ó¤Ç¤¤¤Ş¤¹"
+msgstr "ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³åãŒã‚¢ãƒ³ãƒ€ãƒ¼ã‚¹ã‚³ã‚¢ã§ã¯ãªããƒ€ãƒƒã‚·ãƒ¥ã‚’å«ã‚“ã§ã„ã¾ã™"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "function/macro \"$name\" not found in $class"
-msgstr "¥Õ¥¡¥ó¥¯¥·¥ç¥ó/¥Ş¥¯¥í \"$name\" ¤¬ $class Ãæ¤Ë¸«ÉÕ¤«¤ê¤Ş¤»¤ó"
+msgstr "ãƒ•ã‚¡ãƒ³ã‚¯ã‚·ãƒ§ãƒ³/ãƒã‚¯ãƒ­ \"$name\" ãŒ $class ä¸­ã«è¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“"
 
 #: UI/UI.pm:0
 msgid "get current background colour from the gimp"
-msgstr "¸½ºß¤ÎÇØ·Ê¿§¤ò gimp ¤«¤é¼èÆÀ¤·¤Ş¤¹"
+msgstr "ç¾åœ¨ã®èƒŒæ™¯è‰²ã‚’ gimp ã‹ã‚‰å–å¾—ã—ã¾ã™"
 
 #: UI/UI.pm:0
 msgid "get current foreground colour from the gimp"
-msgstr "¸½ºß¤ÎÁ°·Ê¿§¤ò gimp ¤«¤é¼èÆÀ¤·¤Ş¤¹"
+msgstr "ç¾åœ¨ã®å‰æ™¯è‰²ã‚’ gimp ã‹ã‚‰å–å¾—ã—ã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "gimp procedure '%s' not found"
-msgstr "gimp ¥×¥í¥·¡¼¥¸¥ã '%s' ¤¬¸«ÉÕ¤«¤ê¤Ş¤»¤ó"
+msgstr "gimp ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ '%s' ãŒè¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“"
 
 #: Net/Net.xs:0
 msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "gimp-perl-pixel µ¡Ç½¤Ë¤Ï PDL:Core ¥â¥¸¥å¡¼¥ë¤¬É¬Í×¤Ç¤¹"
+msgstr "gimp-perl-pixel æ©Ÿèƒ½ã«ã¯ PDL:Core ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¿…è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
 "gimp-1.1 and report this error"
 msgstr ""
-"gimp_pixel_rgns_register ¤Ï 1, 2 ¤Ş¤¿¤Ï 3 ¤Ä¤Î°ú¿ô¤·¤«ÂĞ±ş¤·¤Æ¤¤¤Ş¤»¤ó, "
-"gimp-1.1 ¤Ë¥¢¥Ã¥×¥°¥ì¡¼¥É¤·¤Æ¤«¤é¤³¤Î¥¨¥é¡¼¤òÊó¹ğ¤·¤Æ²¼¤µ¤¤"
+"gimp_pixel_rgns_register ã¯ 1, 2 ã¾ãŸã¯ 3 ã¤ã®å¼•æ•°ã—ã‹å¯¾å¿œã—ã¦ã„ã¾ã›ã‚“, "
+"gimp-1.1 ã«ã‚¢ãƒƒãƒ—ã‚°ãƒ¬ãƒ¼ãƒ‰ã—ã¦ã‹ã‚‰ã“ã®ã‚¨ãƒ©ãƒ¼ã‚’å ±å‘Šã—ã¦ä¸‹ã•ã„"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data ¤Ï¤Ş¤À¼ÂÁõ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó\n"
+msgstr "gimp_tile_get_data ã¯ã¾ã å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã›ã‚“\n"
 
 #: Gimp/Lib.xs:0
 msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data ¤Ï¤Ş¤À¼ÂÁõ¤µ¤ì¤Æ¤¤¤Ş¤»¤ó\n"
+msgstr "gimp_tile_set_data ã¯ã¾ã å®Ÿè£…ã•ã‚Œã¦ã„ã¾ã›ã‚“\n"
 
 #: Perl-Server:0
 msgid "illegal command received, aborting connection"
-msgstr "ÉÔÀµ¤Ê¥³¥Ş¥ó¥É¤ò¼õ¤±¼è¤ê¤Ş¤·¤¿, ÀÜÂ³¤òÀÚÃÇ¤·¤Ş¤¹"
+msgstr "ä¸æ­£ãªã‚³ãƒãƒ³ãƒ‰ã‚’å—ã‘å–ã‚Šã¾ã—ãŸ, æ¥ç¶šã‚’åˆ‡æ–­ã—ã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, arrayref expected"
-msgstr "ÉÔÀµ¤Ê¥Ñ¥é¥µ¥¤¥È»ØÄê¤Ç¤¹, ÇÛÎó»²¾È¤¬´üÂÔ¤µ¤ì¤Ş¤¹"
+msgstr "ä¸æ­£ãªãƒ‘ãƒ©ã‚µã‚¤ãƒˆæŒ‡å®šã§ã™, é…åˆ—å‚ç…§ãŒæœŸå¾…ã•ã‚Œã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, expected three array members"
-msgstr "ÉÔÀµ¤Ê¥Ñ¥é¥µ¥¤¥È»ØÄê¤Ç¤¹, ÇÛÎó¤Ë3¤Ä¤Î¥á¥ó¥Ğ¡¼¤¬´üÂÔ¤µ¤ì¤Ş¤¹"
+msgstr "ä¸æ­£ãªãƒ‘ãƒ©ã‚µã‚¤ãƒˆæŒ‡å®šã§ã™, é…åˆ—ã«3ã¤ã®ãƒ¡ãƒ³ãƒãƒ¼ãŒæœŸå¾…ã•ã‚Œã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "illegal parasite specification, reference expected"
-msgstr "ÉÔÀµ¤Ê¥Ñ¥é¥µ¥¤¥È»ØÄê¤Ç¤¹, »²¾È¤¬´üÂÔ¤µ¤ì¤Ş¤¹"
+msgstr "ä¸æ­£ãªãƒ‘ãƒ©ã‚µã‚¤ãƒˆæŒ‡å®šã§ã™, å‚ç…§ãŒæœŸå¾…ã•ã‚Œã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "illegal type for colour specification"
-msgstr "¿§»ØÄê¤ÏÉÔÀµ¤Ê·¿¤Ç¤¹"
+msgstr "è‰²æŒ‡å®šã¯ä¸æ­£ãªå‹ã§ã™"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface '$interface_type' unsupported."
-msgstr "¥¤¥ó¥¿¡¼¥Õ¥§¥¤¥¹ '$interface_type' ¤Ï¥µ¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó"
+msgstr "ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ã‚¤ã‚¹ '$interface_type' ã¯ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "interface=... tag is no longer supported\n"
-msgstr "interface=... ¥¿¥°¤Ï¤â¤Ï¤ä¥µ¥İ¡¼¥È¤µ¤ì¤Æ¤¤¤Ş¤»¤ó\n"
+msgstr "interface=... ã‚¿ã‚°ã¯ã‚‚ã¯ã‚„ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ã¾ã›ã‚“\n"
 
 #: Perl-Server:0
 msgid ""
 "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr "Ìµ¸ú¤Ê GIMP_HOST: 'spawn' ¤Ï¥µ¡¼¥Ğ¤Ø¤ÎÍ­¸ú¤ÊÀÜÂ³ÊıË¡¤Ç¤Ï¤¢¤ê¤Ş¤»¤ó"
+msgstr "ç„¡åŠ¹ãª GIMP_HOST: 'spawn' ã¯ã‚µãƒ¼ãƒã¸ã®æœ‰åŠ¹ãªæ¥ç¶šæ–¹æ³•ã§ã¯ã‚ã‚Šã¾ã›ã‚“"
 
 #: UI/UI.xs:0
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "gimp_pattern_select_widget ¤ÎºÇ¸å¤Î°ú¿ô¤ÏÀ°¿ô»²¾È¤Ç¤Ê¤¯¤Æ¤Ï¤¤¤±¤Ş¤»¤ó"
+msgstr "gimp_pattern_select_widget ã®æœ€å¾Œã®å¼•æ•°ã¯æ•´æ•°å‚ç…§ã§ãªãã¦ã¯ã„ã‘ã¾ã›ã‚“"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
 "PARAM_TYPE"
 msgstr ""
-"ÉÔÅ¬ÀÚ¤Ê¥Ñ¥é¥á¡¼¥¿ÄêµÁ¤Ç¤¹, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] ¤Ş¤¿¤Ï "
-"PARAM_TYPE ¤¬´üÂÔ¤µ¤ì¤Ş¤¹"
+"ä¸é©åˆ‡ãªãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿å®šç¾©ã§ã™, [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] ã¾ãŸã¯ "
+"PARAM_TYPE ãŒæœŸå¾…ã•ã‚Œã¾ã™"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
-"¥á¥Ë¥å¡¼¥Ñ¥¹¤Ï <Image>, <Toolbox>, <Load>, <Save> ¤Ş¤¿¤Ï <None> "
-"¤Î¤¤¤º¤ì¤«¤Ç»Ï¤Ş¤é¤Ê¤±¤ì¤Ğ¤Ê¤ê¤Ş¤»¤ó."
+"ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒ‘ã‚¹ã¯ <Image>, <Toolbox>, <Load>, <Save> ã¾ãŸã¯ <None> "
+"ã®ã„ãšã‚Œã‹ã§å§‹ã¾ã‚‰ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“."
 
 #: Gimp/Fu.pm:0
 msgid "no additional information available, use --help\n"
-msgstr "ÍøÍÑ²ÄÇ½¤ÊÄÉ²Ã¾ğÊó¤Ï¤¢¤ê¤Ş¤»¤ó, --help ¤ò»È¤Ã¤Æ²¼¤µ¤¤\n"
+msgstr "åˆ©ç”¨å¯èƒ½ãªè¿½åŠ æƒ…å ±ã¯ã‚ã‚Šã¾ã›ã‚“, --help ã‚’ä½¿ã£ã¦ä¸‹ã•ã„\n"
 
 #: Gimp/Util.pm:0
 msgid "no font specified, using default"
-msgstr "¥Õ¥©¥ó¥È¤¬»ØÄê¤µ¤ì¤Æ¤¤¤Ş¤»¤ó, ¥Ç¥Õ¥©¥ë¥È¤ò»ÈÍÑ¤·¤Ş¤¹"
+msgstr "ãƒ•ã‚©ãƒ³ãƒˆãŒæŒ‡å®šã•ã‚Œã¦ã„ã¾ã›ã‚“, ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚’ä½¿ç”¨ã—ã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "not enough"
-msgstr "ÉÔ½¼Ê¬¤Ç¤¹"
+msgstr "ä¸å……åˆ†ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "only blessed scalars accepted here"
-msgstr "Ë¾¤Ş¤·¤¤¥¹¥«¥é¡¼¤Î¤ß¤³¤³¤Ç¼õ¤±Æş¤ì¤Ş¤¹"
+msgstr "æœ›ã¾ã—ã„ã‚¹ã‚«ãƒ©ãƒ¼ã®ã¿ã“ã“ã§å—ã‘å…¥ã‚Œã¾ã™"
 
 #: Gimp/Fu.pm:0
 msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "¥Ñ¥é¥á¡¼¥¿ '$entry->[1]' ¤Ï¥ª¥×¥·¥ç¥ó¤Ç¤Ï¤¢¤ê¤Ş¤»¤ó\n"
+msgstr "ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ '$entry->[1]' ã¯ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã§ã¯ã‚ã‚Šã¾ã›ã‚“\n"
 
 #: Gimp/Lib.xs:0
 msgid "params and return_vals must be array refs (even if empty)!"
 msgstr ""
-"¥Ñ¥é¥á¡¼¥¿¤ÈÊÖ¤êÃÍ¤Ï (¤¿¤È¤¨¶õ¤Ç¤¢¤Ã¤Æ¤â) ÇÛÎó»²¾È¤Ç¤Ê¤±¤ì¤Ğ¤¤¤±¤Ş¤»¤ó!"
+"ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã¨è¿”ã‚Šå€¤ã¯ (ãŸã¨ãˆç©ºã§ã‚ã£ã¦ã‚‚) é…åˆ—å‚ç…§ã§ãªã‘ã‚Œã°ã„ã‘ã¾ã›ã‚“!"
 
 #: Gimp/Lib.xs:0
 msgid "pdl height != region height"
-msgstr "pdl ¤Î¹â¤µ != ÎÎ°è¤Î¹â¤µ"
+msgstr "pdl ã®é«˜ã• != é ˜åŸŸã®é«˜ã•"
 
 #: Gimp/Lib.xs:0
 msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-arrayref ¤Ï gimp-array ¤Î¤¿¤á¤Ë datatype ¤È¤·¤ÆÉ¬Í×¤Ç¤¹"
+msgstr "perl-arrayref ã¯ gimp-array ã®ãŸã‚ã« datatype ã¨ã—ã¦å¿…è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid ""
 "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"¥Ô¥¯¥»¥ë¥µ¥¤¥º¤¬¹ç¤¤¤Ş¤»¤ó, pdl ¤Ï %d ¥Á¥ã¥ó¥Í¥ë¤Î¥Ô¥¯¥»¥ë¤ò»ı¤Ã¤Æ¤¤¤Ş¤¹¤¬ "
-"%d ¥Á¥ã¥ó¥Í¥ë¤¬É¬Í×¤Ç¤¹"
+"ãƒ”ã‚¯ã‚»ãƒ«ã‚µã‚¤ã‚ºãŒåˆã„ã¾ã›ã‚“, pdl ã¯ %d ãƒãƒ£ãƒ³ãƒãƒ«ã®ãƒ”ã‚¯ã‚»ãƒ«ã‚’æŒã£ã¦ã„ã¾ã™ãŒ "
+"%d ãƒãƒ£ãƒ³ãƒãƒ«ãŒå¿…è¦ã§ã™"
 
 #: Gimp/Lib.xs:0
 msgid "plug-in returned %d more values than expected"
-msgstr "¥×¥é¥°¥¤¥ó¤Ï´üÂÔ¤µ¤ì¤Æ¤¤¤ë¤è¤ê¤â %d ¸ÄÂ¿¤¯¤ÎÃÍ¤òÊÖ¤·¤Ş¤·¤¿"
+msgstr "ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã¯æœŸå¾…ã•ã‚Œã¦ã„ã‚‹ã‚ˆã‚Šã‚‚ %d å€‹å¤šãã®å€¤ã‚’è¿”ã—ã¾ã—ãŸ"
 
 #: Perl-Server:0
 msgid "received QUIT request"
-msgstr "QUIT Í×µá¤ò¼õ¤±¼è¤ê¤Ş¤·¤¿"
+msgstr "QUIT è¦æ±‚ã‚’å—ã‘å–ã‚Šã¾ã—ãŸ"
 
 #: Gimp/Fu.pm:0
 msgid "register called with too many or wrong arguments\n"
-msgstr "register ¤¬Â¿¤¹¤®¤ë¤«´Ö°ã¤Ã¤¿°ú¿ô¤Ç¸Æ¤Ó½Ğ¤µ¤ì¤Ş¤·¤¿\n"
+msgstr "register ãŒå¤šã™ãã‚‹ã‹é–“é•ã£ãŸå¼•æ•°ã§å‘¼ã³å‡ºã•ã‚Œã¾ã—ãŸ\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'net' not found\n"
-msgstr "É¬Í×¤Ê¥³¡¼¥ë¥Ğ¥Ã¥¯ 'net' ¤¬¸«ÉÕ¤«¤ê¤Ş¤»¤ó\n"
+msgstr "å¿…è¦ãªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ 'net' ãŒè¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'query' not found\n"
-msgstr "É¬Í×¤Ê¥³¡¼¥ë¥Ğ¥Ã¥¯ 'query' ¤¬¸«ÉÕ¤«¤ê¤Ş¤»¤ó\n"
+msgstr "å¿…è¦ãªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ 'query' ãŒè¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“\n"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "required callback 'run' not found\n"
-msgstr "É¬Í×¤Ê¥³¡¼¥ë¥Ğ¥Ã¥¯ 'run' ¤¬¸«ÉÕ¤«¤ê¤Ş¤»¤ó\n"
+msgstr "å¿…è¦ãªã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ 'run' ãŒè¦‹ä»˜ã‹ã‚Šã¾ã›ã‚“\n"
 
 #: Gimp/Fu.pm:0
 msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
 msgstr ""
-"run_mode ¤Ï INTERACTIVE, NONINTERACTIVE ¤â¤·¤¯¤Ï RUN_WITH_LAST_VALS "
-"¤Î¤¤¤º¤ì¤«¤Ç¤Ê¤±¤ì¤Ğ¤Ê¤ê¤Ş¤»¤ó\n"
+"run_mode ã¯ INTERACTIVE, NONINTERACTIVE ã‚‚ã—ãã¯ RUN_WITH_LAST_VALS "
+"ã®ã„ãšã‚Œã‹ã§ãªã‘ã‚Œã°ãªã‚Šã¾ã›ã‚“\n"
 
 #: Perl-Server:0
 msgid "server going down..."
-msgstr "¥µ¡¼¥Ğ¤ò½ªÎ»¤·¤Ş¤¹..."
+msgstr "ã‚µãƒ¼ãƒã‚’çµ‚äº†ã—ã¾ã™..."
 
 #: Net/Net.pm:0
 msgid "server requests authorization, but no authorization available\n"
-msgstr "¥µ¡¼¥Ğ¤¬Ç§¾Ú¤òÍ×µá¤·¤Ş¤·¤¿¤¬, ÍøÍÑ²ÄÇ½¤ÊÇ§¾Ú¤¬¤¢¤ê¤Ş¤»¤ó\n"
+msgstr "ã‚µãƒ¼ãƒãŒèªè¨¼ã‚’è¦æ±‚ã—ã¾ã—ãŸãŒ, åˆ©ç”¨å¯èƒ½ãªèªè¨¼ãŒã‚ã‚Šã¾ã›ã‚“\n"
 
 #: Perl-Server:0
 msgid "server version $Gimp::VERSION started"
-msgstr "¥µ¡¼¥Ğ¥Ğ¡¼¥¸¥ç¥ó $Gimp::VERSION ³«»Ï"
+msgstr "ã‚µãƒ¼ãƒãƒãƒ¼ã‚¸ãƒ§ãƒ³ $Gimp::VERSION é–‹å§‹"
 
 #: Gimp/Util.pm:0
 msgid "text string is empty"
-msgstr "Ê¸»úÎó¤¬¶õ¤Ç¤¹"
+msgstr "æ–‡å­—åˆ—ãŒç©ºã§ã™"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to open a dialog\n"
 "window, running with default values"
 msgstr ""
-"¥Ç¥Õ¥©¥ë¥ÈÃÍ¤Ç¥À¥¤¥¢¥í¥°¥¦¥¤¥ó¥É¥¦¤ò³«¤¯¤¿¤á¤Ë¤Ï\n"
-"gtk perl ¥â¥¸¥å¡¼¥ë¤¬É¬Í×¤Ç¤¹"
+"ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆå€¤ã§ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚¦ã‚¤ãƒ³ãƒ‰ã‚¦ã‚’é–‹ããŸã‚ã«ã¯\n"
+"gtk perl ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¿…è¦ã§ã™"
 
 #: Gimp/Fu.pm:0
 msgid ""
 "the gtk perl module is required to run\n"
 "this plug-in in interactive mode\n"
 msgstr ""
-"¥¤¥ó¥¿¥é¥¯¥Æ¥£¥Ö¥â¡¼¥É¤Ç¤³¤Î¥×¥é¥°¥¤¥ó¤ò\n"
-"¼Â¹Ô¤¹¤ë¤Ë¤Ï gtk perl ¥â¥¸¥å¡¼¥ë¤¬É¬Í×¤Ç¤¹\n"
+"ã‚¤ãƒ³ã‚¿ãƒ©ã‚¯ãƒ†ã‚£ãƒ–ãƒ¢ãƒ¼ãƒ‰ã§ã“ã®ãƒ—ãƒ©ã‚°ã‚¤ãƒ³ã‚’\n"
+"å®Ÿè¡Œã™ã‚‹ã«ã¯ gtk perl ãƒ¢ã‚¸ãƒ¥ãƒ¼ãƒ«ãŒå¿…è¦ã§ã™\n"
 
 #: examples/PDB:0
 msgid "too many arguments"
-msgstr "°ú¿ô¤¬Â¿¤¹¤®¤Ş¤¹"
+msgstr "å¼•æ•°ãŒå¤šã™ãã¾ã™"
 
 #: Gimp/Lib.xs:0
 msgid "too many"
-msgstr "Â¿¤¹¤®¤Ş¤¹"
+msgstr "å¤šã™ãã¾ã™"
 
 #: Net/Net.pm:0
 msgid "trying to start gimp with options \"$opt\"\n"
-msgstr " \"$opt\" ¥ª¥×¥·¥ç¥ó¤òÉÕ¤±¤Æ gimp ¤òµ¯Æ°¤·¤Æ²¼¤µ¤¤\n"
+msgstr " \"$opt\" ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’ä»˜ã‘ã¦ gimp ã‚’èµ·å‹•ã—ã¦ä¸‹ã•ã„\n"
 
 #: Perl-Server:0
 msgid "unable to accept tcp connection: $!\n"
-msgstr "tcp ÀÜÂ³¤Ï¼õ¤±Æş¤ì¤é¤ì¤Ş¤»¤ó¤Ç¤·¤¿: $!\n"
+msgstr "tcp æ¥ç¶šã¯å—ã‘å…¥ã‚Œã‚‰ã‚Œã¾ã›ã‚“ã§ã—ãŸ: $!\n"
 
 #: Perl-Server:0
 msgid "unable to accept unix connection: $!\n"
-msgstr "unix domain socket ÀÜÂ³¤Ï¼õ¤±Æş¤ì¤é¤ì¤Ş¤»¤ó¤Ç¤·¤¿: $!\n"
+msgstr "unix domain socket æ¥ç¶šã¯å—ã‘å…¥ã‚Œã‚‰ã‚Œã¾ã›ã‚“ã§ã—ãŸ: $!\n"
 
 #: Gimp/Lib.xs:0
 msgid "unable to convert Gimp::Drawable into Gimp::GimpDrawable (id %d)"
-msgstr "Gimp::Drawable ¤ò Gimp::GimpDrawable ¤ËÊÑ´¹¤Ç¤­¤Ş¤»¤ó (id %d)"
+msgstr "Gimp::Drawable ã‚’ Gimp::GimpDrawable ã«å¤‰æ›ã§ãã¾ã›ã‚“ (id %d)"
 
 #: UI/UI.pm:0
 msgid "unable to create '$fn': $!"
-msgstr "'$fn' ¤òºî¤ë¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó: $!"
+msgstr "'$fn' ã‚’ä½œã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“: $!"
 
 #: Perl-Server:0
 msgid "unable to create listening tcp socket: $!\n"
-msgstr "¼õ¿® tcp ¥½¥±¥Ã¥È¤òºî¤ë¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó: $!\n"
+msgstr "å—ä¿¡ tcp ã‚½ã‚±ãƒƒãƒˆã‚’ä½œã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“: $!\n"
 
 #: Perl-Server:0
 msgid "unable to create listening unix socket: $!\n"
-msgstr "¼õ¿® unix ¥½¥±¥Ã¥È¤òºî¤ë¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó: $!\n"
+msgstr "å—ä¿¡ unix ã‚½ã‚±ãƒƒãƒˆã‚’ä½œã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“: $!\n"
 
 #: Net/Net.pm:0
 msgid "unable to create socketpair for gimp communications: $!"
-msgstr "gimp ¤È¤ÎÄÌ¿®¤Î¤¿¤á¤Î¥½¥±¥Ã¥È¥Ú¥¢¤òºî¤ë¤³¤È¤¬¤Ç¤­¤Ş¤»¤ó: $!"
+msgstr "gimp ã¨ã®é€šä¿¡ã®ãŸã‚ã®ã‚½ã‚±ãƒƒãƒˆãƒšã‚¢ã‚’ä½œã‚‹ã“ã¨ãŒã§ãã¾ã›ã‚“: $!"
 
 #: Net/Net.pm:0
 msgid "unable to fork: $!"
-msgstr "fork ¤Ç¤­¤Ş¤»¤ó: $!"
+msgstr "fork ã§ãã¾ã›ã‚“: $!"
 
 #: Gimp/Lib.xs:0
 msgid "unable to grok colour specification"
-msgstr "¿§»ØÄê¤òÍı²ò¤Ç¤­¤Ş¤»¤ó"
+msgstr "è‰²æŒ‡å®šã‚’ç†è§£ã§ãã¾ã›ã‚“"
 
 #: Gimp.pm:0 blib/lib/Gimp.pm:0
 msgid "unable to open $rgb_db_path"
-msgstr "$rgb_db_path ¤ò³«¤±¤Ş¤»¤ó"
+msgstr "$rgb_db_path ã‚’é–‹ã‘ã¾ã›ã‚“"
 
 #: Perl-Server:0
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "Gimp::Net ÄÌ¿®¥½¥±¥Ã¥È¤ò³«¤±¤Ş¤»¤ó: $!\n"
+msgstr "Gimp::Net é€šä¿¡ã‚½ã‚±ãƒƒãƒˆã‚’é–‹ã‘ã¾ã›ã‚“: $!\n"
 
 #: UI/UI.pm:0
 msgid "unable to read '$fn': $!"
-msgstr "'$fn' ¤òÆÉ¤ß¹ş¤á¤Ş¤»¤ó: $!"
+msgstr "'$fn' ã‚’èª­ã¿è¾¼ã‚ã¾ã›ã‚“: $!"
 
 #: UI/UI.pm:0
 msgid "unable to read temporary file $tmp: $!"
-msgstr "°ì»şÅª¤Ê¥Õ¥¡¥¤¥ë $tmp ¤òÆÉ¤ß¹ş¤á¤Ş¤»¤ó: $!"
+msgstr "ä¸€æ™‚çš„ãªãƒ•ã‚¡ã‚¤ãƒ« $tmp ã‚’èª­ã¿è¾¼ã‚ã¾ã›ã‚“: $!"
 
 #: Perl-Server:0
 msgid "unauthorized command received, aborting connection"
-msgstr "Ç§¾Ú¤µ¤ì¤Æ¤¤¤Ê¤¤¥³¥Ş¥ó¥É¤ò¼õ¤±¼è¤ê¤Ş¤·¤¿, ÀÜÂ³¤òÀÚ¤ê¤Ş¤¹"
+msgstr "èªè¨¼ã•ã‚Œã¦ã„ãªã„ã‚³ãƒãƒ³ãƒ‰ã‚’å—ã‘å–ã‚Šã¾ã—ãŸ, æ¥ç¶šã‚’åˆ‡ã‚Šã¾ã™"
 
 #: examples/dataurl:0
 msgid "url size is too large ($max > 1024)\n"
-msgstr "URL ¤Î¥µ¥¤¥º¤¬Âç¤­²á¤®¤Ş¤¹ ($max > 1024)\n"
+msgstr "URL ã®ã‚µã‚¤ã‚ºãŒå¤§ãéãã¾ã™ ($max > 1024)\n"
 
 #: Perl-Server:0
 msgid "wrong authorization, aborting connection"
-msgstr "ÉÔÀµ¤ÊÇ§¾Ú¤Ç¤¹, ÀÜÂ³¤òÀÚ¤ê¤Ş¤¹"
+msgstr "ä¸æ­£ãªèªè¨¼ã§ã™, æ¥ç¶šã‚’åˆ‡ã‚Šã¾ã™"
 
 #: Gimp/Compat.pm:0
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: XLFD ¤ËÅ¬¹ç¤·¤Ş¤»¤ó '$fontname'\n"
+msgstr "xlfd_unpack: XLFD ã«é©åˆã—ã¾ã›ã‚“ '$fontname'\n"
