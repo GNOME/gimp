@@ -4,9 +4,9 @@
 	an image
 
 	* libgimp/gimpimage.c
-    * libgimp/gimp.h: some wrappers for PDB functions
+	* libgimp/gimp.h: some wrappers for PDB functions
 
-    * libgimp/gimpexport.[ch]: new files
+	* libgimp/gimpexport.[ch]: new files
 	This fixes a longstanding bug and the MostFAQ: When saving a file, the
 	file-save plug-ins can use gimp_export_image() to get the file converted
 	to a format they can handle. The conversion is performed on a duplicate
@@ -21,8 +21,8 @@
 	* plug-ins/bmp/bmpwrite.c
 	* plug-ins/common/Makefile.am
 	* plug-ins/common/gif.c
-    * plug-ins/common/jpeg.c
-    * plug-ins/common/png.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/png.c
 	* plug-ins/common/ps.c
 	* plug-ins/common/tiff.c
 	* plug-ins/print/Makefile.am
