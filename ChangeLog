@@ -1,5 +1,17 @@
 2004-06-16  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpcontroller.[ch]: added a "name" property.
+	Dispatch events only if the controller is enabled.
+
+	* app/widgets/gimpcontrollerwheel.c: added controller events for
+	all possible modifier combinations.
+
+	* etc/Makefile.am
+	* etc/controllerrc: default controllerrc which maps all unused
+	wheel+modifier combinations to more-or-less usefull stuff.
+
+2004-06-16  Michael Natterer  <mitch@gimp.org>
+
 	Started to fix bug #106920 in a more genreral way:
 
 	* libgimpwidgets/Makefile.am

@@ -6,7 +6,8 @@ gimpsysconf_DATA = \
 	templaterc	\
 	unitrc		\
 	ps-menurc	\
-	sessionrc
+	sessionrc	\
+	controllerrc
 
 EXTRA_DIST = \
 	$(gimpsysconf_DATA)

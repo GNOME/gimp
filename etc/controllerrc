@@ -1,0 +1,13 @@
+# GIMP controllerrc
+
+(controller "GimpControllerWheel"
+    (mapping 0 "context-font-next")
+    (mapping 1 "context-gradient-next")
+    (mapping 2 "context-pattern-next")
+    (mapping 3 "context-brush-next")
+    (mapping 4 "context-opacity-increase")
+    (mapping 8 "context-font-previous")
+    (mapping 9 "context-gradient-previous")
+    (mapping 10 "context-pattern-previous")
+    (mapping 11 "context-brush-previous")
+    (mapping 12 "context-opacity-decrease"))

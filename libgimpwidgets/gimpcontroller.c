@@ -35,6 +35,7 @@
 enum
 {
   PROP_0,
+  PROP_NAME,
   PROP_ENABLED
 };
 
@@ -115,6 +116,11 @@ gimp_controller_class_init (GimpControllerClass *klass)
   object_class->set_property = gimp_controller_set_property;
   object_class->get_property = gimp_controller_get_property;
 
+  g_object_class_install_property (object_class, PROP_NAME,
+                                   g_param_spec_string ("name", NULL, NULL,
+                                                        "Unnamed Controller",
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_ENABLED,
                                    g_param_spec_boolean ("enabled", NULL, NULL,
                                                          TRUE,
@@ -149,6 +155,11 @@ gimp_controller_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_NAME:
+      if (controller->name)
+        g_free (controller->name);
+      controller->name = g_value_dup_string (value);
+      break;
     case PROP_ENABLED:
       controller->enabled = g_value_get_boolean (value);
       break;
@@ -168,6 +179,9 @@ gimp_controller_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_NAME:
+      g_value_set_string (value, controller->name);
+      break;
     case PROP_ENABLED:
       g_value_set_boolean (value, controller->enabled);
       break;
@@ -245,8 +259,9 @@ gimp_controller_event (GimpController            *controller,
   g_return_val_if_fail (GIMP_IS_CONTROLLER (controller), FALSE);
   g_return_val_if_fail (event != NULL, FALSE);
 
-  g_signal_emit (controller, controller_signals[EVENT], 0,
-                 event, &retval);
+  if (controller->enabled)
+    g_signal_emit (controller, controller_signals[EVENT], 0,
+                   event, &retval);
 
   return retval;
 }

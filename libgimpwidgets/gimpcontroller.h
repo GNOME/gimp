@@ -81,9 +81,10 @@ typedef struct _GimpControllerClass GimpControllerClass;
 
 struct _GimpController
 {
-  GObject  parent_instance;
+  GObject   parent_instance;
 
-  gboolean enabled;
+  gchar    *name;
+  gboolean  enabled;
 };
 
 struct _GimpControllerClass
