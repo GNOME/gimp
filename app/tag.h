@@ -78,7 +78,15 @@ guchar *  tag_string_format     (Format);
 guchar *  tag_string_alpha      (Alpha);
 
 Tag       tag_null              (void);
+Tag       tag_from_type         (guint);
+gint      tag_to_type           (Tag);
+gint      tag_valid             (Tag);
 
+/* Hopefully temp "glue" for libgimp  */ 
+gint      tag_to_drawable_type   (Tag);
+gint      tag_to_image_type      (Tag);
+Tag       tag_from_drawable_type (gint);
+Tag       tag_from_image_type    (gint);
 
 /* hack hack */
 Tag       tag_by_bytes          (guint);

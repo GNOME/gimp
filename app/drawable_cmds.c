@@ -397,7 +397,10 @@ drawable_type_invoker (Argument *args)
     success = FALSE;
 
   if (success)
-    type = drawable_type (drawable);
+    {
+#define DRAWABLE_CMDS_C_1_cw
+      type = tag_to_drawable_type (drawable_tag (drawable));
+    }
 
   return_args = procedural_db_return_args (&drawable_type_proc, success);
 
@@ -420,7 +423,7 @@ ProcArg drawable_type_out_args[] =
 {
   { PDB_INT32,
     "type",
-    "the drawable's type: { RGB (0), RGBA (1), GRAY (2), GRAYA (3), INDEXED (4), INDEXEDA (5) }"
+    "the drawable's type: { RGB (0), RGBA (1), GRAY (2), GRAYA (3), INDEXED (4), INDEXEDA (5), U16_RGB (6), U16_RGBA (7), U16_GRAY (8), U16_GRAYA (9), U16_INDEXED (10), U16_INDEXEDA (11), FLOAT_RGB (12), FLOAT_RGBA (13), FLOAT_GRAY (14), FLOAT_GRAYA (15) }"
   }
 };
 

@@ -25,6 +25,7 @@
 #include "gimage.h"
 #include "gimage_cmds.h"
 #include "floating_sel.h"
+#include "tag.h"
 
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */
@@ -117,11 +118,10 @@ ProcRecord gimage_list_images_proc =
 static Argument *
 gimage_new_invoker (Argument *args)
 {
-  int type;
   int width, height;
   GImage *gimage;
+  Tag tag = tag_null();
 
-  type   = RGB;
   width  = 1;
   height = 1;
   gimage = NULL;
@@ -146,16 +146,16 @@ gimage_new_invoker (Argument *args)
     }
   if (success)
     {
+#define GIMAGE_CMDS_C_2_cw
       int_value = args[2].value.pdb_int;
-      if (int_value >= RGB && int_value <= INDEXED)
-	type = int_value;
-      else
+      tag = tag_from_image_type (int_value); 
+      if ( !tag_valid (tag) )
 	success = FALSE;
     }
 
   /*  create the new image  */
   if (success)
-    success = ((gimage = gimage_new (width, height, type)) != NULL);
+    success = ((gimage = gimage_new_tag (width, height, tag)) != NULL);
 
   return_args = procedural_db_return_args (&gimage_new_proc, success);
 
@@ -178,7 +178,7 @@ ProcArg gimage_new_args[] =
   },
   { PDB_INT32,
     "type",
-    "The type of image: { RGB (0), GRAY (1), INDEXED (2) }"
+    "The type of image: { RGB (0), GRAY (1), INDEXED (2), U16_RGB (3), U16_GRAY (4), U16_INDEXED (5), FLOAT_RGB (6), FLOAT_GRAY (7)}"
   }
 };
 
@@ -2458,15 +2458,25 @@ gimage_base_type_invoker (Argument *args)
   GImage *gimage;
   int base_type;
   Argument *return_args;
+  Tag tag;
 
   base_type = RGB_GIMAGE;
-
   success = TRUE;
   if (success)
     {
       int_value = args[0].value.pdb_int;
       if ((gimage = gimage_get_ID (int_value)))
-	base_type = gimage_base_type (gimage);
+      {
+#define GIMAGE_CMDS_C_1_cw
+/* base type must be RGB, GRAY, INDEXED, U16_RGB, U16_GRAY, U16_INDEXED etc */
+        if (gimage->projection_canvas)
+        {
+          tag = canvas_tag (gimage->projection_canvas);
+          base_type = tag_to_image_type (tag); 
+        }
+        else 
+          success = FALSE; 
+      }
       else
 	success = FALSE;
     }
@@ -2492,7 +2502,7 @@ ProcArg gimage_base_type_out_args[] =
 {
   { PDB_INT32,
     "base_type",
-    "the image's base type: { RGB (0), GRAY (1), INDEXED (2) }"
+    "the image's base type: { RGB (0), GRAY (1), INDEXED (2), U16_RGB (3), U16_GRAY (4), U16_INDEXED (5), FLOAT_RGB (6), FLOAT_GRAY (7)  }"
   }
 };
 

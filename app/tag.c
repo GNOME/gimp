@@ -31,6 +31,7 @@
 #define SHIFT_ALPHA     8
 
 
+
 Tag
 tag_new (
          Precision  p,
@@ -276,8 +277,6 @@ tag_string_alpha (
   return "<invalid alpha!>";
 }
 
-
-
 Tag
 tag_null (
           void
@@ -287,8 +286,332 @@ tag_null (
 }
 
 
+gint 
+tag_valid (
+	   Tag t 
+	  )
+{
+  Alpha a = tag_alpha (t);
+  Precision p = tag_precision (t);
+  Format f = tag_format (t);
+  gint valid = TRUE;
+ 
+  switch (p)
+  {
+    case PRECISION_FLOAT:
+      if (f == FORMAT_INDEXED) valid = FALSE;
+    case PRECISION_U16:
+    case PRECISION_U8:
+      break;
+    default:
+      valid = FALSE;
+      break;
+  } 
+  
+  switch (f)
+  {
+    case FORMAT_RGB:
+    case FORMAT_GRAY:
+    case FORMAT_INDEXED:
+      break;
+    default:
+      valid = FALSE;
+      break;
+  }
+  
+  switch (a)
+  {
+    case ALPHA_YES:
+    case ALPHA_NO:
+      break;
+    default:
+      valid = FALSE;
+      break;
+  }
+ return valid;
+}
+		
+/* The drawable types */
+/* These are the 8bit types */
+#define RGB_GIMAGE          0
+#define RGBA_GIMAGE         1
+#define GRAY_GIMAGE         2
+#define GRAYA_GIMAGE        3
+#define INDEXED_GIMAGE      4
+#define INDEXEDA_GIMAGE     5
+
+/* These are the 16bit types */
+#define U16_RGB_GIMAGE         6
+#define U16_RGBA_GIMAGE        7
+#define U16_GRAY_GIMAGE        8
+#define U16_GRAYA_GIMAGE       9
+#define U16_INDEXED_GIMAGE     10 
+#define U16_INDEXEDA_GIMAGE    11 
+
+/* These are the float types */
+#define FLOAT_RGB_GIMAGE          12 
+#define FLOAT_RGBA_GIMAGE         13 
+#define FLOAT_GRAY_GIMAGE         14 
+#define FLOAT_GRAYA_GIMAGE        15 
+
+/* The image types */
+#define RGB         0    /*8bit*/
+#define GRAY        1
+#define INDEXED     2
+#define U16_RGB     3    /*16bit*/
+#define U16_GRAY    4
+#define U16_INDEXED 5
+#define FLOAT_RGB   6    /*float*/
+#define FLOAT_GRAY  7
+
+gint  
+tag_to_drawable_type (
+             Tag t 
+            )
+{
+  Alpha a = tag_alpha (t);
+  Precision p = tag_precision (t);
+  Format f = tag_format (t);
+  
+  if ( !tag_valid (t) )
+    return -1;
+  
+  switch (p)
+    {
+    case PRECISION_U8:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return (a == ALPHA_YES)?  RGBA_GIMAGE: RGB_GIMAGE;
+        case FORMAT_GRAY:
+          return (a == ALPHA_YES)?  GRAYA_GIMAGE: GRAY_GIMAGE;
+        case FORMAT_INDEXED:      
+          return (a == ALPHA_YES)?  INDEXEDA_GIMAGE: INDEXED_GIMAGE;
+        default:
+          break; 
+	} 
+      break;
+    
+    case PRECISION_U16:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return (a == ALPHA_YES)?  U16_RGBA_GIMAGE: U16_RGB_GIMAGE;
+        case FORMAT_GRAY:
+          return (a == ALPHA_YES)?  U16_GRAYA_GIMAGE: U16_GRAY_GIMAGE;
+        case FORMAT_INDEXED:      
+          return (a == ALPHA_YES)?  U16_INDEXEDA_GIMAGE: U16_INDEXED_GIMAGE;
+        default:
+          break; 
+	} 
+      break;
+    
+    case PRECISION_FLOAT:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return (a == ALPHA_YES)?  FLOAT_RGBA_GIMAGE: FLOAT_RGB_GIMAGE;
+        case FORMAT_GRAY:
+          return (a == ALPHA_YES)?  FLOAT_GRAYA_GIMAGE: FLOAT_GRAY_GIMAGE;
+        default:
+          break; 
+	} 
+      break;
+    default:
+      break;
+    }
+    return -1;
+}
+
+gint  
+tag_to_image_type (
+             Tag t 
+            )
+{
+  Precision p = tag_precision (t);
+  Format f = tag_format (t);
+  
+  switch (p)
+    {
+    case PRECISION_U8:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return  RGB;
+        case FORMAT_GRAY:
+          return  GRAY;
+        case FORMAT_INDEXED:      
+          return  INDEXED;
+        default:
+          break; 
+	} 
+      break;
+    
+    case PRECISION_U16:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return  U16_RGB;
+        case FORMAT_GRAY:
+          return  U16_GRAY;
+        case FORMAT_INDEXED:      
+          return  U16_INDEXED;
+        default:
+          break; 
+	} 
+      break;
+    
+    case PRECISION_FLOAT:
+      switch (f)
+	{
+        case FORMAT_RGB:
+          return  FLOAT_RGB;
+        case FORMAT_GRAY:
+          return  FLOAT_GRAY;
+        default:
+          break; 
+	} 
+      break;
+    default:
+      break;
+    }
+    return -1;
+}
+
+Tag 
+tag_from_drawable_type (
+               gint type 
+              )
+{
+  Precision p;
+  Format f;
+  Alpha a = ALPHA_NO;
+  
+  switch (type)
+    {
+    /* The 8bit data cases */
+    case RGBA_GIMAGE:
+      a = ALPHA_YES;
+    case RGB_GIMAGE:
+      p = PRECISION_U8;
+      f = FORMAT_RGB;
+      break;
+    case GRAYA_GIMAGE:
+      a = ALPHA_YES;
+    case GRAY_GIMAGE:
+      p = PRECISION_U8;
+      f = FORMAT_GRAY;
+      break;
+    case INDEXEDA_GIMAGE:
+      a = ALPHA_YES;
+    case INDEXED_GIMAGE:
+      p = PRECISION_U8;
+      f = FORMAT_INDEXED;
+      break;
+    
+    /* The 16bit data cases */
+    case U16_RGBA_GIMAGE:
+      a = ALPHA_YES;
+    case U16_RGB_GIMAGE:
+      p = PRECISION_U16;
+      f = FORMAT_RGB;
+      break;
+    case U16_GRAYA_GIMAGE:
+      a = ALPHA_YES;
+    case U16_GRAY_GIMAGE:
+      p = PRECISION_U16;
+      f = FORMAT_GRAY;
+      break;
+    case U16_INDEXEDA_GIMAGE:
+      a = ALPHA_YES;
+    case U16_INDEXED_GIMAGE:
+      p = PRECISION_U16;
+      f = FORMAT_INDEXED;
+      break;
+    
+    /* The float data cases */
+    case FLOAT_RGBA_GIMAGE:
+      a = ALPHA_YES;
+    case FLOAT_RGB_GIMAGE:
+      p = PRECISION_FLOAT;
+      f = FORMAT_RGB;
+      break;
+    case FLOAT_GRAYA_GIMAGE:
+      a = ALPHA_YES;
+    case FLOAT_GRAY_GIMAGE:
+      p = PRECISION_FLOAT;
+      f = FORMAT_GRAY;
+      break;
+     
+    /* any undefined cases */
+    default:
+      p = PRECISION_NONE;
+      f = FORMAT_NONE;
+      a = ALPHA_NONE;
+      break;
+    }
+  return tag_new (p, f, a);
+}
 
 
+Tag 
+tag_from_image_type (
+               gint type 
+              )
+{
+  Precision p;
+  Format f;
+  Alpha a = ALPHA_NO;
+  
+  switch (type)
+    {
+    /* The 8bit data cases */
+    case RGB:
+      p = PRECISION_U8;
+      f = FORMAT_RGB;
+      break;
+    case GRAY:
+      p = PRECISION_U8;
+      f = FORMAT_GRAY;
+      break;
+    case INDEXED:
+      p = PRECISION_U8;
+      f = FORMAT_INDEXED;
+      break;
+    
+    /* The 16bit data cases */
+    case U16_RGB:
+      p = PRECISION_U16;
+      f = FORMAT_RGB;
+      break;
+    case U16_GRAY:
+      p = PRECISION_U16;
+      f = FORMAT_GRAY;
+      break;
+    case U16_INDEXED:
+      p = PRECISION_U16;
+      f = FORMAT_INDEXED;
+      break;
+    
+    /* The float data cases */
+    case FLOAT_RGB:
+      p = PRECISION_FLOAT;
+      f = FORMAT_RGB;
+      break;
+    case FLOAT_GRAY:
+      p = PRECISION_FLOAT;
+      f = FORMAT_GRAY;
+      break;
+     
+    /* any undefined cases */
+    default:
+      p = PRECISION_NONE;
+      f = FORMAT_NONE;
+      a = ALPHA_NONE;
+      break;
+    }
+  return tag_new (p, f, a);
+}
 
 /* hack hack */
 Tag 

@@ -209,7 +209,6 @@ create_default_brush (gint width, gint height)
   brush->name = g_strdup ("Default");
   brush->spacing = 25;
   
-  /*brush->mask = temp_buf_new (1, 1, 1, 0, 0, filled);*/
   
   brush->mask_canvas = canvas_new (brush_tag, width, height, STORAGE_FLAT);
   canvas_portion_ref (brush->mask_canvas,0,0);
@@ -246,7 +245,7 @@ load_brush(char *filename)
   unsigned int * hp;
   int i;
   gint bytes; 
-  Precision precision; 
+  Tag tag;
   brush = (GBrushP) g_malloc (sizeof (GBrush));
 
   brush->filename = g_strdup (filename);
@@ -289,7 +288,6 @@ load_brush(char *filename)
   /*  Check for version 1 or 2  */
   if (header.version == 1 || header.version == 2)
     {
-      Format format = FORMAT_NONE;
       /*  If this is a version 1 brush, set the fp back 8 bytes  */
       if (header.version == 1)
 	{
@@ -299,62 +297,13 @@ load_brush(char *filename)
 	  header.spacing = 25;
 	}
       
-      /* If its version 1 or 2 the tag field contains just
-         the number of bytes and must be converted to a true tag. */    
+      /* If its version 1 or 2 the type field contains just
+         the number of bytes and must be converted to a drawable type. */    
 #define BRUSHES_C_3_cw
-      if (header.tag == 1)   /* 1 byte */ 
-	{
-          precision = PRECISION_U8;
-	  format = FORMAT_GRAY;
-	}
-      else if (header.tag == 3) /* 3 bytes */
-	{
-          precision = PRECISION_U8;
-	  format = FORMAT_RGB;
-	}
-      else if (header.tag == 2) /* 2 bytes -- PRECISION_U16 */ 
-	{
-          precision = PRECISION_U16;
-	  format = FORMAT_GRAY;
-	}
-      else if (header.tag == 6) /* 4 bytes -- PRECISION_U16 */ 
-	{
-          precision = PRECISION_U16;
-	  format = FORMAT_RGB;
-	}
-      else if (header.tag == 4) /* 4 bytes -- PRECISION_FLOAT */ 
-	{
-          precision = PRECISION_FLOAT;
-	  format = FORMAT_GRAY;
-	}
-      else if (header.tag == 12) /* 12 bytes -- PRECISION_FLOAT */ 
-	{
-          precision = PRECISION_FLOAT;
-	  format = FORMAT_RGB;
-	}
-#ifdef U8_SUPPORT
-     if (header.tag != 1 && header.tag != 3 )
-     { 
-	  fclose (fp);
-	  free_brush (brush);
-	  return;
-     }
-#elif U16_SUPPORT
-     if (header.tag != 2 &&  header.tag != 6 )
-     { 
-	  fclose (fp);
-	  free_brush (brush);
-	  return;
-     }
-#elif FLOAT_SUPPORT 
-     if (header.tag != 4 && header.tag != 12 )
-     { 
-	  fclose (fp);
-	  free_brush (brush);
-	  return;
-     }
-#endif
-      header.tag = tag_new( precision, format, ALPHA_NO ); 
+      if (header.type == 1)    
+ 	header.type = GRAY_GIMAGE;	   
+      else if (header.type == 3)
+        header.type = RGB_GIMAGE;	   
 
     }
   else if (header.version != FILE_VERSION)
@@ -365,9 +314,27 @@ load_brush(char *filename)
       free_brush (brush);
       return;
     }
+  
+  tag = tag_from_drawable_type ( header.type );
 
+
+#define BRUSHES_C_5_cw
+#ifdef U8_SUPPORT
+     if (tag_precision (tag) != PRECISION_U8 )
+#elif U16_SUPPORT
+     if (tag_precision (tag) != PRECISION_U16 )
+#elif FLOAT_SUPPORT 
+     if (tag_precision (tag) != PRECISION_FLOAT )
+#endif
+     { 
+	  fclose (fp);
+	  free_brush (brush);
+	  return;
+     }
+ 
+   
   /*  Get a new brush mask  */
-  brush->mask_canvas = canvas_new ( header.tag, 
+  brush->mask_canvas = canvas_new ( tag, 
 					header.width,
 					header.height,
 					STORAGE_FLAT );					
@@ -392,7 +359,7 @@ load_brush(char *filename)
   canvas_portion_ref( brush->mask_canvas,0,0); 
   
   /*  Read the brush mask data  */
-  bytes = tag_bytes (header.tag); 
+  bytes = tag_bytes (tag); 
   if ((fread (canvas_portion_data (brush->mask_canvas,0,0), 1, header.width * header.height * bytes, fp)) <
       header.width * header.height * bytes)
     warning ("GIMP brush file appears to be truncated.");

@@ -47,6 +47,7 @@ layer_new_invoker (Argument *args)
   int opacity;
   int mode;
   Argument *return_args;
+  Tag tag;
 
   layer     = NULL;
   gimage_id = -1;
@@ -71,10 +72,10 @@ layer_new_invoker (Argument *args)
     }
   if (success)
     {
+#define LAYER_CMDS_C_1_cw
       int_value = args[3].value.pdb_int;
-      if (int_value >= RGB_GIMAGE && int_value <= INDEXEDA_GIMAGE)
-	type = int_value;
-      else
+      tag = tag_from_drawable_type (int_value);
+      if (!tag_valid (tag) )
 	success = FALSE;
     }
   if (success)
@@ -97,7 +98,7 @@ layer_new_invoker (Argument *args)
     }
 
   if (success)
-    success = ((layer = layer_new (gimage_id, width, height, type, name, opacity, mode)) != NULL);
+    success = ((layer = layer_new_tag (gimage_id, width, height, tag, name, opacity, mode)) != NULL);
 
   return_args = procedural_db_return_args (&layer_new_proc, success);
 

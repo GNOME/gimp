@@ -207,7 +207,7 @@ file_new_ok_callback (GtkWidget *widget,
       alpha =  ALPHA_YES;
       break;
     default:
-      type = RGB_IMAGE;
+      type = RGB_GIMAGE;
       break;
     }
 
