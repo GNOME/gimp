@@ -24,15 +24,6 @@
  * totally useless on others).
  * 
  * Author: robert@experimental.net
- * 
- * TODO:
- *		- locken van scales met elkaar
- */
-
-/* 
- * 1999/03/17   Fixed RUN_NONINTERACTIVE and RUN_WITH_LAST_VALS. 
- *              There were uninitialized variables.
- *                                        --Sven <sven@gimp.org>
  */
 
 #include "config.h"
@@ -68,13 +59,12 @@ static void	run   (gchar   *name,
 		       gint    *nreturn_vals,
 		       GParam **return_vals);
 
-static void	exchange      (void);
-static void	real_exchange (gint, gint, gint, gint, int);
+static void	exchange              (void);
+static void	real_exchange         (gint, gint, gint, gint, gboolean);
 
 static int	doDialog              (void);
 static void	update_preview        (void);
 static void	ok_callback           (GtkWidget *, gpointer);
-static void	lock_callback         (GtkWidget *, gpointer);
 static void	color_button_callback (GtkWidget *, gpointer);
 static void	scale_callback        (GtkAdjustment *, gpointer);
 
@@ -89,7 +79,7 @@ static GtkWidget *from_colorbutton;
 static GtkWidget *to_colorbutton;
 static gint       sel_x1, sel_y1, sel_x2, sel_y2;
 static gint       prev_width, prev_height, sel_width, sel_height;
-static gint       lock_thres = 0;
+static gboolean   lock_threshold = FALSE;
 
 /* lets declare what we want to do */
 GPlugInInfo PLUG_IN_INFO =
@@ -128,7 +118,8 @@ query (void)
 
   gimp_install_procedure ("plug_in_exchange",
 			  "Color Exchange",
-			  "Exchange one color with another, optionally setting a threshold to convert from one shade to another",
+			  "Exchange one color with another, optionally setting a threshold "
+			  "to convert from one shade to another",
 			  "robert@experimental.net",
 			  "robert@experimental.net",
 			  "June 17th, 1997",
@@ -268,6 +259,9 @@ doDialog (void)
   GtkWidget *table;
   GtkWidget *colorbutton;
   GtkObject *adj;
+  GtkObject *red_threshold   = NULL;
+  GtkObject *green_threshold = NULL;
+  GtkObject *blue_threshold  = NULL;
   guchar  *color_cube;
   gchar	 **argv;
   gint     argc;
@@ -388,15 +382,17 @@ doDialog (void)
 
       if (! framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-				      _("Red Threshold:"), SCALE_WIDTH, 0,
-				      xargs.red_threshold,
-				      0, 255, 1, 8, 0,
-				      TRUE, 0, 0,
-				      NULL, NULL);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.red_threshold);
+	  red_threshold = 
+	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
+					_("Red Threshold:"), SCALE_WIDTH, 0,
+					xargs.red_threshold,
+					0, 255, 1, 8, 0,
+					TRUE, 0, 0,
+					NULL, NULL);
+	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+				   GTK_SIGNAL_FUNC (scale_callback),
+				   &xargs.red_threshold);
+	  gtk_object_set_data (GTK_OBJECT (adj), "handler", (gpointer) id);
 	}
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 2 : 3,
@@ -414,15 +410,18 @@ doDialog (void)
 
       if (! framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-				      _("Green Threshold:"), SCALE_WIDTH, 0,
-				      xargs.green_threshold,
-				      0, 255, 1, 8, 0,
-				      TRUE, 0, 0,
-				      NULL, NULL);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.green_threshold);
+	  green_threshold =
+	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+					_("Green Threshold:"), SCALE_WIDTH, 0,
+					xargs.green_threshold,
+					0, 255, 1, 8, 0,
+					TRUE, 0, 0,
+					NULL, NULL);
+	  gtk_object_set_user_data (GTK_OBJECT (adj), red_threshold);
+	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+				   GTK_SIGNAL_FUNC (scale_callback),
+				   &xargs.green_threshold);
+	  gtk_object_set_data (GTK_OBJECT (adj), "handler", (gpointer) id);
 	}
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, framenumber ? 3 : 5,
@@ -440,15 +439,20 @@ doDialog (void)
 
       if (! framenumber)
 	{
-	  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
-				      _("Blue Threshold:"), SCALE_WIDTH, 0,
-				      xargs.blue_threshold,
-				      0, 255, 1, 8, 0,
-				      TRUE, 0, 0,
-				      NULL, NULL);
-	  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
-			      GTK_SIGNAL_FUNC (scale_callback),
-			      &xargs.blue_threshold);
+	  blue_threshold = 
+	    adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 6,
+					_("Blue Threshold:"), SCALE_WIDTH, 0,
+					xargs.blue_threshold,
+					0, 255, 1, 8, 0,
+					TRUE, 0, 0,
+					NULL, NULL);
+	  gtk_object_set_user_data (GTK_OBJECT (adj), green_threshold);
+	  id = gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+				   GTK_SIGNAL_FUNC (scale_callback),
+				   &xargs.blue_threshold);
+	  gtk_object_set_data (GTK_OBJECT (adj), "handler", (gpointer) id);
+
+	  gtk_object_set_user_data (GTK_OBJECT (red_threshold), blue_threshold);
 	}
 
       if (! framenumber)
@@ -458,9 +462,10 @@ doDialog (void)
 	  button = gtk_check_button_new_with_label (_("Lock Thresholds"));
 	  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 7, 8,
 			    GTK_FILL, 0, 0, 0);
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), lock_threshold);
 	  gtk_signal_connect (GTK_OBJECT (button), "clicked",
-			      GTK_SIGNAL_FUNC (lock_callback),
-			      dialog);
+			      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+			      &lock_threshold);
 	  gtk_widget_show (button);
 	}
     }
@@ -482,13 +487,6 @@ ok_callback (GtkWidget *widget,
   running = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-lock_callback (GtkWidget *widget,
-	       gpointer   data)
-{
-  lock_thres = 1 - lock_thres;
 }
 
 static void
@@ -542,15 +540,32 @@ static void
 scale_callback (GtkAdjustment *adj,
 		gpointer       data)
 {
-  GtkWidget *colorbutton;
+  GtkObject *object;
   guchar *val = data;
+  guint handler;
+  gint i;
 
   *val = (guchar) adj->value;
 
-  colorbutton = gtk_object_get_user_data (GTK_OBJECT (adj));
+  object = gtk_object_get_user_data (GTK_OBJECT (adj));
 
-  if (colorbutton)
-    gimp_color_button_update (GIMP_COLOR_BUTTON (colorbutton));
+  if (GIMP_IS_COLOR_BUTTON (object))
+    {
+      gimp_color_button_update (GIMP_COLOR_BUTTON (object));
+    }
+  else if (GTK_IS_ADJUSTMENT (object) && lock_threshold == TRUE)
+    {
+      for (i = 0; i < 2; i++)
+	{
+	  handler = (guint) gtk_object_get_data (GTK_OBJECT (object), "handler");
+	  gtk_signal_handler_block (GTK_OBJECT (object), handler);
+	  gtk_adjustment_set_value (GTK_ADJUSTMENT (object), adj->value);
+	  gtk_signal_handler_unblock (GTK_OBJECT (object), handler);
+
+	  object = gtk_object_get_user_data (GTK_OBJECT (object));
+	}
+      xargs.red_threshold = xargs.green_threshold = xargs.blue_threshold = *val;
+    }
 
   update_preview ();
 }
@@ -571,7 +586,7 @@ real_exchange (gint x1,
 	       gint y1,
 	       gint x2,
 	       gint y2,
-	       gint dopreview)
+	       gboolean do_preview)
 {
   GPixelRgn  srcPR, destPR;
   guchar    *src_row, *dest_row;
@@ -594,7 +609,7 @@ real_exchange (gint x1,
   /* allocate memory */
   src_row  = g_new (guchar, drw->width * bpp);
 
-  if (dopreview && has_alpha)
+  if (do_preview && has_alpha)
     dest_row = g_new (guchar, drw->width * (bpp - 1));
   else
     dest_row = g_new (guchar, drw->width * bpp);
@@ -605,7 +620,7 @@ real_exchange (gint x1,
   */
   gimp_pixel_rgn_init (&srcPR, drw, 0, 0, drw->width, drw->height, FALSE, FALSE);
 
-  if (! dopreview)
+  if (! do_preview)
     gimp_pixel_rgn_init (&destPR, drw, 0, 0, width, height, TRUE, TRUE);
 
   for (y = y1; y < y2; y++)
@@ -633,7 +648,7 @@ real_exchange (gint x1,
 	  pixel_blue  = src_row[x * bpp + 2];
 
 	  /* shift down for preview */
-	  if (dopreview)
+	  if (do_preview)
 	    {
 	      if (has_alpha)
 		idx = (x - x1) * (bpp - 1);
@@ -677,17 +692,17 @@ real_exchange (gint x1,
 	    dest_row[idx + rest] = src_row[x * bpp + rest];
 	}
       /* store the dest */
-      if (dopreview)
+      if (do_preview)
 	gtk_preview_draw_row (GTK_PREVIEW (preview), dest_row, 0, y - y1, width);
       else
 	gimp_pixel_rgn_set_row (&destPR, dest_row, 0, y, drw->width);
       /* and tell the user what we're doing */
-      if (! dopreview && (y % 10) == 0)
+      if (! do_preview && (y % 10) == 0)
 	gimp_progress_update ((double) y / (double) height);
     }
   g_free(src_row);
   g_free(dest_row);
-  if (! dopreview)
+  if (! do_preview)
     {
       /* update the processed region */
       gimp_drawable_flush (drw);
