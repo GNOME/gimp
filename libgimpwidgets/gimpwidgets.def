@@ -46,8 +46,9 @@ EXPORTS
 	gimp_color_display_stack_remove
 	gimp_color_display_stack_reorder_down
 	gimp_color_display_stack_reorder_up
-	gimp_color_hex_entry_get_type
 	gimp_color_hex_entry_get_color
+	gimp_color_hex_entry_get_type
+	gimp_color_hex_entry_new
 	gimp_color_hex_entry_set_color
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
@@ -78,11 +79,13 @@ EXPORTS
 	gimp_color_selector_set_toggles_sensitive
 	gimp_color_selector_set_toggles_visible
 	gimp_context_help
+	gimp_controller_boolean_handled_accumulator
 	gimp_controller_event
 	gimp_controller_get_event_blurb
 	gimp_controller_get_event_name
 	gimp_controller_get_n_events
 	gimp_controller_get_type
+	gimp_controller_new
 	gimp_coordinates_new
 	gimp_dialog_add_buttons_valist
 	gimp_dialog_get_type
@@ -152,12 +155,13 @@ EXPORTS
 	gimp_preview_area_blend
 	gimp_preview_area_draw
 	gimp_preview_area_fill
-	gimp_preview_area_mask
 	gimp_preview_area_get_type
+	gimp_preview_area_mask
 	gimp_preview_area_menu_popup
 	gimp_preview_area_new
 	gimp_preview_area_set_cmap
 	gimp_preview_area_set_max_size
+	gimp_preview_area_set_offsets
 	gimp_preview_draw
 	gimp_preview_get_position
 	gimp_preview_get_size
@@ -176,6 +180,7 @@ EXPORTS
 	gimp_radio_group_new2
 	gimp_radio_group_set_active
 	gimp_random_seed_new
+	gimp_scale_entry_get_logarithmic
 	gimp_scale_entry_new
 	gimp_scale_entry_set_logarithmic
 	gimp_scale_entry_set_sensitive
