@@ -1,3 +1,11 @@
+2004-07-07  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Don't try to load EXIF data if any warnings
+	happened, cause that likely means corruption and libexif doesn't
+	handle that very happily. Addresses bug #145212. Perhaps the error and
+	warning messages should be propagated to the user in the GUI somehow,
+	currently they are not.
+
 2004-07-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/edit-actions.c (edit_actions): added "..." to "Clear
