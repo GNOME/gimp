@@ -113,3 +113,12 @@ GimpPreview
 @preview: 
 
 
+<!-- ##### FUNCTION gimp_preview_set_default_cursor ##### -->
+<para>
+
+</para>
+
+@preview: 
+@cursor: 
+
+

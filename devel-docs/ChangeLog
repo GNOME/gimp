@@ -1,3 +1,10 @@
+2004-10-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: added
+	gimp_preview_set_default_cursor.
+
+	* libgimpwidgets/tmpl/gimppreview.sgml: regenerated.
+
 2004-10-13  Sven Neumann  <sven@gimp.org>
 
 	* app/app-docs.sgml
