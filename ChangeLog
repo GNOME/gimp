@@ -1,3 +1,10 @@
+Fri Jun 26 11:00:35 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/scripts.c: define DIVIDE here too (auf,
+	script-fu sucks)
+
+	* plug-ins/illusion/illusion.c: parse gtkrc
+
 Fri Jun 26 00:59:16 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/Makefile.am: corrected typo

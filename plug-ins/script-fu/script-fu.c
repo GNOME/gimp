@@ -362,6 +362,7 @@ init_constants ()
   setvar (cintern ("SATURATION"), flocons (12), NIL);
   setvar (cintern ("COLOR"), flocons (13), NIL);
   setvar (cintern ("VALUE"), flocons (14), NIL);
+  setvar (cintern ("DIVIDE"), flocons (15), NIL);
 
   setvar (cintern ("FG-BG-RGB"), flocons (0), NIL);
   setvar (cintern ("FG-BG-HSV"), flocons (1), NIL);
