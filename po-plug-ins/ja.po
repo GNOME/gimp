@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.0\n"
-"POT-Creation-Date: 2000-12-19 11:26-0800\n"
+"POT-Creation-Date: 2000-12-23 11:40-0800\n"
 "PO-Revision-Date: 2000-12-07 00:41+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -71,28 +71,28 @@ msgstr "このプラグインについて"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2208
-#: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
-#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
-#: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
-#: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
-#: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
-#: plug-ins/common/warp.c:437 plug-ins/common/waves.c:349
-#: plug-ins/common/whirlpinch.c:808 plug-ins/common/wind.c:1012
-#: plug-ins/common/wmf.c:931 plug-ins/common/xbm.c:1150
-#: plug-ins/common/xpm.c:800 plug-ins/fits/fits.c:987
-#: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
-#: plug-ins/fp/fp_gtk.c:904 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:178
-#: plug-ins/gap/gap_lib.c:230 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mov_dialog.c:498 plug-ins/gap/gap_mpege.c:191
-#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
-#: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
-#: plug-ins/gfig/gfig.c:4425 plug-ins/gfig/gfig.c:4508
-#: plug-ins/gfig/gfig.c:4813 plug-ins/gflare/gflare.c:2463
-#: plug-ins/gflare/gflare.c:3477 plug-ins/gfli/gfli.c:821
-#: plug-ins/gfli/gfli.c:890 plug-ins/gimpressionist/gimpressionist.c:356
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
+#: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
+#: plug-ins/common/tga.c:1183 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
+#: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
+#: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
+#: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
+#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
+#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
+#: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:904
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
+#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:230
+#: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
+#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
+#: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4508 plug-ins/gfig/gfig.c:4813
+#: plug-ins/gflare/gflare.c:2463 plug-ins/gflare/gflare.c:3477
+#: plug-ins/gfli/gfli.c:821 plug-ins/gfli/gfli.c:890
+#: plug-ins/gimpressionist/gimpressionist.c:356
 #: plug-ins/gimpressionist/gimpressionist.c:477
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
@@ -153,19 +153,19 @@ msgstr "了解"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2212 plug-ins/common/spread.c:384
-#: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
-#: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
-#: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
-#: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
-#: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
-#: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:1152 plug-ins/common/xpm.c:802
-#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
-#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:908
-#: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
+#: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1185
+#: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
+#: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
+#: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
+#: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
+#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
+#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
+#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
+#: plug-ins/flame/flame.c:633 plug-ins/flame/flame.c:922
+#: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
+#: plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
 #: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
@@ -202,12 +202,11 @@ msgstr "取消"
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
 #: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
-#: plug-ins/common/sinus.c:2123 plug-ins/common/spheredesigner.c:2230
-#: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
-#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1031
-#: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3956
-#: plug-ins/gflare/gflare.c:2490 plug-ins/gflare/gflare.c:3502
-#: plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
+#: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
+#: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
+#: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
+#: plug-ins/gflare/gflare.c:3502 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -342,8 +341,7 @@ msgstr ""
 "全てのフラクタルのアスペクト比が変わる.)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2305
-#: plug-ins/gfig/gfig.c:3548
+#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "読み込み"
 
@@ -353,8 +351,7 @@ msgstr "フラクタルをファイルから読み込み"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:858
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
-#: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2210 plug-ins/common/tileit.c:467
+#: plug-ins/common/sample_colorize.c:1372 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -365,9 +362,9 @@ msgid "Reset parameters to default values"
 msgstr "パラメータを初期値に戻す"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2312
-#: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
-#: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "保存"
 
@@ -1097,7 +1094,6 @@ msgid "Options"
 msgstr "オプション"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1551 plug-ins/common/spheredesigner.c:2590
 msgid "Light"
 msgstr "光源"
 
@@ -1269,7 +1265,6 @@ msgid "Map Images to Box Faces"
 msgstr "画像を直方体の表面にマップ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2418
 msgid "Scale X:"
 msgstr "拡大縮小 X:"
 
@@ -1353,7 +1348,7 @@ msgstr "プレビューワイヤーフレームの表示/非表示"
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:326
 #: plug-ins/common/png.c:426 plug-ins/common/png.c:428
 #: plug-ins/common/pnm.c:411 plug-ins/common/psd.c:1731
-#: plug-ins/common/sunras.c:441 plug-ins/common/tga.c:429
+#: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:430
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330
@@ -1396,7 +1391,7 @@ msgstr "%s: 不正なカラーマップです"
 #: plug-ins/common/pcx.c:332 plug-ins/common/pcx.c:338
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
-#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:931
+#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
 #: plug-ins/common/tga.c:923 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:515
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
@@ -1423,7 +1418,7 @@ msgstr "%s が開けません"
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
 #: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
-#: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:524
+#: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:525
 #: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
 #: plug-ins/common/xwd.c:534 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
@@ -1758,7 +1753,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
+#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1607
 #: plug-ins/print/gimp_main_window.c:1093
 msgid "Standard"
 msgstr "標準"
@@ -2128,7 +2123,7 @@ msgstr "テキスト形式で保存"
 
 #. file save type
 #: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:942
-#: plug-ins/common/sunras.c:1601
+#: plug-ins/common/sunras.c:1602
 msgid "Data Formatting"
 msgstr "データフォーマット"
 
@@ -3340,8 +3335,7 @@ msgstr "輪郭を抽出しています..."
 msgid "Edge Detection"
 msgstr "輪郭抽出"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2609
-#: plug-ins/common/unsharp.c:821
+#: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "量:"
 
@@ -3358,7 +3352,7 @@ msgstr "エンボス"
 msgid "Function"
 msgstr "機能"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1550
+#: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
 msgstr "バンプマップ"
 
@@ -4983,7 +4977,7 @@ msgstr "プラズマ..."
 msgid "Plasma"
 msgstr "プラズマ"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2401
+#: plug-ins/common/plasma.c:371
 msgid "Turbulence:"
 msgstr "乱れ:"
 
@@ -5047,8 +5041,7 @@ msgid "Help:"
 msgstr "ヘルプ:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2333
-#: plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "種類:"
 
@@ -6044,165 +6037,6 @@ msgstr "前景色を使う"
 msgid "Use the Background Color"
 msgstr "背景色を使う"
 
-#: plug-ins/common/spheredesigner.c:247 plug-ins/gimpressionist/general.c:217
-msgid "Solid"
-msgstr "ソリッド"
-
-#: plug-ins/common/spheredesigner.c:248
-msgid "Checker"
-msgstr "格子模様"
-
-#: plug-ins/common/spheredesigner.c:249
-msgid "Marble"
-msgstr "マーブル模様"
-
-#: plug-ins/common/spheredesigner.c:250
-msgid "Lizard"
-msgstr "うろこ模様"
-
-#: plug-ins/common/spheredesigner.c:251
-msgid "Phong"
-msgstr "フォン"
-
-#: plug-ins/common/spheredesigner.c:252
-msgid "Noise"
-msgstr "ノイズ"
-
-#: plug-ins/common/spheredesigner.c:253
-msgid "Wood"
-msgstr "木目"
-
-#: plug-ins/common/spheredesigner.c:254
-msgid "Spiral"
-msgstr "渦巻"
-
-#: plug-ins/common/spheredesigner.c:255
-msgid "Spots"
-msgstr "斑模様"
-
-#: plug-ins/common/spheredesigner.c:1549 plug-ins/common/spheredesigner.c:2578
-msgid "Texture"
-msgstr "テクスチャ"
-
-#: plug-ins/common/spheredesigner.c:1552
-msgid "(unknown!?)"
-msgstr "(不明!?)"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Open file"
-msgstr "ファイルを開く"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Save file"
-msgstr "ファイルに保存"
-
-#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/spheredesigner.c:2125
-#: plug-ins/gimpressionist/general.c:99
-msgid "Color Selection Dialog"
-msgstr "色選択ダイアログ"
-
-#: plug-ins/common/spheredesigner.c:2203
-msgid "Sphere Designer"
-msgstr "球面デザイナー"
-
-#: plug-ins/common/spheredesigner.c:2244 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
-#: plug-ins/imagemap/imap_polygon.c:446
-msgid "Update"
-msgstr "更新"
-
-#: plug-ins/common/spheredesigner.c:2253
-msgid "Textures"
-msgstr "テクスチャ"
-
-#: plug-ins/common/spheredesigner.c:2278 plug-ins/gfig/gfig.c:3137
-#: plug-ins/gimpressionist/orientmap.c:531
-#: plug-ins/gimpressionist/sizemap.c:431
-msgid "Add"
-msgstr "追加"
-
-#: plug-ins/common/spheredesigner.c:2285
-msgid "Dup"
-msgstr "複製"
-
-#: plug-ins/common/spheredesigner.c:2292
-msgid "Del"
-msgstr "削除"
-
-#: plug-ins/common/spheredesigner.c:2319
-msgid "Texture Properties"
-msgstr "テクスチャ設定"
-
-#: plug-ins/common/spheredesigner.c:2340
-msgid "Texture:"
-msgstr "テクスチャ"
-
-#: plug-ins/common/spheredesigner.c:2347
-msgid "Colors:"
-msgstr "色:"
-
-#. Scale
-#: plug-ins/common/spheredesigner.c:2384 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:563
-msgid "Scale:"
-msgstr "拡大縮小:"
-
-#: plug-ins/common/spheredesigner.c:2435
-msgid "Scale Y:"
-msgstr "拡大縮小 Y:"
-
-#: plug-ins/common/spheredesigner.c:2452
-msgid "Scale Z:"
-msgstr "拡大縮小 Z:"
-
-#: plug-ins/common/spheredesigner.c:2470
-msgid "Rotate X:"
-msgstr "回転 X:"
-
-#: plug-ins/common/spheredesigner.c:2487
-msgid "Rotate Y:"
-msgstr "回転 Y:"
-
-#: plug-ins/common/spheredesigner.c:2504
-msgid "Rotate Z:"
-msgstr "回転 Z:"
-
-#: plug-ins/common/spheredesigner.c:2521
-msgid "Pos X:"
-msgstr "位置 X:"
-
-#: plug-ins/common/spheredesigner.c:2538
-msgid "Pos Y:"
-msgstr "位置 Y:"
-
-#: plug-ins/common/spheredesigner.c:2555
-msgid "Pos Z:"
-msgstr "位置 Z:"
-
-#: plug-ins/common/spheredesigner.c:2584
-msgid "Bump"
-msgstr "バンプ"
-
-#: plug-ins/common/spheredesigner.c:2626
-msgid "Exp:"
-msgstr "指数:"
-
-#: plug-ins/common/spheredesigner.c:2643
-msgid ""
-"by Vidar Madsen\n"
-"September 1999"
-msgstr ""
-"Vidar Madsen\n"
-"1999 年 9月 作"
-
-#: plug-ins/common/spheredesigner.c:2763
-msgid "Rendering..."
-msgstr "レンダリングしています..."
-
-#: plug-ins/common/spheredesigner.c:2813
-msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/フィルタ/下塗り/球面デザイナー..."
-
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/フィルタ/ノイズ/拡散..."
@@ -6255,60 +6089,60 @@ msgstr "左下"
 msgid "Bottom-Right"
 msgstr "右下"
 
-#: plug-ins/common/sunras.c:388 plug-ins/fits/fits.c:354
+#: plug-ins/common/sunras.c:389 plug-ins/fits/fits.c:354
 msgid "Can't open file for reading"
 msgstr "読み込にファイルが開けない"
 
-#: plug-ins/common/sunras.c:397
+#: plug-ins/common/sunras.c:398
 msgid "Can't open file as SUN-raster-file"
 msgstr "SUN-raster ファイル形式でファイルが開けない"
 
-#: plug-ins/common/sunras.c:404
+#: plug-ins/common/sunras.c:405
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "この形式の SUN-taster ファイルは使用できません"
 
-#: plug-ins/common/sunras.c:427
+#: plug-ins/common/sunras.c:428
 msgid "Can't read color entries"
 msgstr "色情報が読み込めない"
 
-#: plug-ins/common/sunras.c:434
+#: plug-ins/common/sunras.c:435
 msgid "Type of colormap not supported"
 msgstr "このカラーマップ形式は使用できません"
 
-#: plug-ins/common/sunras.c:475
+#: plug-ins/common/sunras.c:476
 msgid "This image depth is not supported"
 msgstr "この色深度は使用できません"
 
-#: plug-ins/common/sunras.c:498
+#: plug-ins/common/sunras.c:499
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr "SUNRAS による保存はアルファチャンネルを持った画像を取り扱えません"
 
-#: plug-ins/common/sunras.c:509
+#: plug-ins/common/sunras.c:510
 msgid "Can't operate on unknown image types"
 msgstr "不明な画像種は扱えません"
 
-#: plug-ins/common/sunras.c:518 plug-ins/fits/fits.c:466
+#: plug-ins/common/sunras.c:519 plug-ins/fits/fits.c:466
 msgid "Can't open file for writing"
 msgstr "書き出しファイルが開けません"
 
-#: plug-ins/common/sunras.c:1038 plug-ins/common/sunras.c:1129
-#: plug-ins/common/sunras.c:1210 plug-ins/common/sunras.c:1305
+#: plug-ins/common/sunras.c:1039 plug-ins/common/sunras.c:1130
+#: plug-ins/common/sunras.c:1211 plug-ins/common/sunras.c:1306
 #: plug-ins/common/xwd.c:1273 plug-ins/common/xwd.c:1435
 #: plug-ins/common/xwd.c:1632 plug-ins/common/xwd.c:1883
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
 msgstr "読み込み中に EOF が現れた"
 
-#: plug-ins/common/sunras.c:1460 plug-ins/common/sunras.c:1568
+#: plug-ins/common/sunras.c:1461 plug-ins/common/sunras.c:1569
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
 msgid "Write error occured"
 msgstr "書き出しエラー発生"
 
-#: plug-ins/common/sunras.c:1584
+#: plug-ins/common/sunras.c:1585
 msgid "Save as SUNRAS"
 msgstr "SUNRAS 形式で保存する"
 
-#: plug-ins/common/sunras.c:1605
+#: plug-ins/common/sunras.c:1606
 msgid "RunLength Encoded"
 msgstr "RLE エンコード"
 
@@ -10551,6 +10385,11 @@ msgstr "圧力:"
 msgid "No Options..."
 msgstr "オプションなし..."
 
+#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/sizemap.c:431
+msgid "Add"
+msgstr "追加"
+
 #: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "置換"
@@ -11183,6 +11022,10 @@ msgstr "色ノイズ:"
 msgid "Adds random noise to the color"
 msgstr "色にランダムノイズを付加する"
 
+#: plug-ins/gimpressionist/general.c:99
+msgid "Color Selection Dialog"
+msgstr "色選択ダイアログ"
+
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
 msgstr "端を暗く:"
@@ -11210,6 +11053,10 @@ msgstr "紙から"
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
 msgstr "選択した紙のテクスチャを背景にコピーする"
+
+#: plug-ins/gimpressionist/general.c:217
+msgid "Solid"
+msgstr "ソリッド"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
@@ -11523,6 +11370,11 @@ msgstr "紙テクスチャを反転する"
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "浮き彫りにせずにそのまま紙を適用する"
 
+#. Scale
+#: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
+msgid "Scale:"
+msgstr "拡大縮小:"
+
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "テクスチャの拡大率 (パーセントで指定する)"
@@ -11613,6 +11465,11 @@ msgstr ""
 "(またはブラシとその材質のための紙などを)\n"
 "お気軽に私までどうぞ <vidar@prosalg.no>\n"
 "次のリリースに含まれるかもね!\n"
+
+#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+msgid "Update"
+msgstr "更新"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
@@ -13238,6 +13095,106 @@ msgstr "エラー: XJT プロパティファイル %s が読めません"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "エラー: XJT プロパティファイル %s が空です"
+
+#~ msgid "Checker"
+#~ msgstr "格子模様"
+
+#~ msgid "Marble"
+#~ msgstr "マーブル模様"
+
+#~ msgid "Lizard"
+#~ msgstr "うろこ模様"
+
+#~ msgid "Phong"
+#~ msgstr "フォン"
+
+#~ msgid "Noise"
+#~ msgstr "ノイズ"
+
+#~ msgid "Wood"
+#~ msgstr "木目"
+
+#~ msgid "Spiral"
+#~ msgstr "渦巻"
+
+#~ msgid "Spots"
+#~ msgstr "斑模様"
+
+#~ msgid "Texture"
+#~ msgstr "テクスチャ"
+
+#~ msgid "(unknown!?)"
+#~ msgstr "(不明!?)"
+
+#~ msgid "Open file"
+#~ msgstr "ファイルを開く"
+
+#~ msgid "Save file"
+#~ msgstr "ファイルに保存"
+
+#~ msgid "Sphere Designer"
+#~ msgstr "球面デザイナー"
+
+#~ msgid "Textures"
+#~ msgstr "テクスチャ"
+
+#~ msgid "Dup"
+#~ msgstr "複製"
+
+#~ msgid "Del"
+#~ msgstr "削除"
+
+#~ msgid "Texture Properties"
+#~ msgstr "テクスチャ設定"
+
+#~ msgid "Texture:"
+#~ msgstr "テクスチャ"
+
+#~ msgid "Colors:"
+#~ msgstr "色:"
+
+#~ msgid "Scale Y:"
+#~ msgstr "拡大縮小 Y:"
+
+#~ msgid "Scale Z:"
+#~ msgstr "拡大縮小 Z:"
+
+#~ msgid "Rotate X:"
+#~ msgstr "回転 X:"
+
+#~ msgid "Rotate Y:"
+#~ msgstr "回転 Y:"
+
+#~ msgid "Rotate Z:"
+#~ msgstr "回転 Z:"
+
+#~ msgid "Pos X:"
+#~ msgstr "位置 X:"
+
+#~ msgid "Pos Y:"
+#~ msgstr "位置 Y:"
+
+#~ msgid "Pos Z:"
+#~ msgstr "位置 Z:"
+
+#~ msgid "Bump"
+#~ msgstr "バンプ"
+
+#~ msgid "Exp:"
+#~ msgstr "指数:"
+
+#~ msgid ""
+#~ "by Vidar Madsen\n"
+#~ "September 1999"
+#~ msgstr ""
+#~ "Vidar Madsen\n"
+#~ "1999 年 9月 作"
+
+#~ msgid "Rendering..."
+#~ msgstr "レンダリングしています..."
+
+#~ msgid "<Image>/Filters/Render/Sphere Designer..."
+#~ msgstr "<Image>/フィルタ/下塗り/球面デザイナー..."
 
 #~ msgid "GEE!  The GIMP E'er Egg!"
 #~ msgstr "GEE! The GIMP E'er Egg!"

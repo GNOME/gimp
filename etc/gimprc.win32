@@ -6,7 +6,7 @@
 # Blank lines are ignored.
 
 # The variable gimp_dir refers to your personal gimp directory. It is
-# set to either the value _gimp1.1 or the value of the environment
+# set to either the value _gimp1.2 or the value of the environment
 # variable GIMP_DIRECTORY.  If the path in gimp_dir is relative, it is
 # considered relative to your home directory (value of environment
 # variable %HOME%, or %HOMEDRIVE%:%HOMEPATH%).  If you don't have a

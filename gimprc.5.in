@@ -198,7 +198,7 @@ gamma-correction turned on.  If you are going to work with images of
 this sort, turn gamma correction off by setting the value to 1.0.
 .TP
 .I color-cube COLORCUBE
-Set the displays color cube.  No longer used in gimp-1.1.x since the
+Set the displays color cube.  No longer used in gimp-1.2.x since the
 introduction of GdkRgb.
 .TP
 .I install-colormap BOOLEAN

@@ -8,7 +8,7 @@
 # only, it probably is best to keep them in the GIMP's bin directory.
 BIN = C:\install\gimp\bin
 
-GIMP_VER = 1.1
+GIMP_VER = 1.2
 
 # The name of the directory in your %HOME% where the GIMP's personal settings
 # and stuff is saved.

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.32\n"
-"POT-Creation-Date: 2000-12-21 12:48+0300\n"
+"POT-Creation-Date: 2000-12-24 12:22-0800\n"
 "PO-Revision-Date: 2000-12-21 12:53+03:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
@@ -39,66 +39,66 @@ msgid "Pressure:"
 msgstr "Нажим:"
 
 #. this is a font, provide only one single font definition
-#: app/app_procs.c:269
+#: app/app_procs.c:272
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:280 app/app_procs.c:282 app/interface.c:564
+#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
 msgid "The GIMP"
 msgstr "GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/app_procs.c:287
+#: app/app_procs.c:290
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
-#: app/app_procs.c:304 app/app_procs.c:306
+#: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
 msgstr "создана для Вас"
 
-#: app/app_procs.c:375
+#: app/app_procs.c:378
 msgid "GIMP Startup"
 msgstr "Запуск GIMP"
 
-#: app/app_procs.c:492 app/app_procs.c:500 app/gimprc.c:455
+#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:455
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "синтаксический анализ \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:564
+#: app/app_procs.c:569
 msgid "Looking for data files"
 msgstr "Поиск файлов данных"
 
-#: app/app_procs.c:564
+#: app/app_procs.c:569
 msgid "Parasites"
 msgstr "Паразиты (FIX?)"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:566 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Кисти"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:568 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Шаблоны"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:570 app/preferences_dialog.c:2547
+#: app/app_procs.c:575 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Палитры"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:572 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Градиенты"
 
-#: app/app_procs.c:762
+#: app/app_procs.c:767
 msgid "Really Quit?"
 msgstr "Хотите выйти?"
 
-#: app/app_procs.c:766
+#: app/app_procs.c:771
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -108,18 +108,18 @@ msgstr ""
 "\n"
 " Выйти из GIMP?"
 
-#: app/app_procs.c:767
+#: app/app_procs.c:772
 msgid "Quit"
 msgstr "Выход"
 
 #. the cancel button
-#: app/app_procs.c:767 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:772 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
 #: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4976 app/gradient.c:5537 app/hue_saturation.c:383
+#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
 #: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
 #: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
 #: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
@@ -169,7 +169,7 @@ msgstr "Градиент пользователя"
 msgid "Blend:"
 msgstr "Бленда:"
 
-#: app/blend.c:325 app/gradient.c:641 app/preferences_dialog.c:2253
+#: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
 msgstr "Линейный"
 
@@ -321,7 +321,7 @@ msgstr "Редактор кистей"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:913 app/gradient_select.c:160
+#: app/gdisplay_ops.c:310 app/gradient.c:915 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
 #: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
@@ -352,7 +352,7 @@ msgstr "Угол:"
 msgid "Brush Selection"
 msgstr "Выбор кисти"
 
-#: app/brush_select.c:285 app/gradient.c:911 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:913 app/module_db.c:359
 #: app/palette.c:2055 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Обновить"
@@ -375,7 +375,7 @@ msgid "New"
 msgstr "Новая"
 
 #: app/brush_select.c:479 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:158 app/palette.c:1177 app/palette.c:2071
+#: app/gradient_select.c:159 app/palette.c:1177 app/palette.c:2071
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Правка"
@@ -479,7 +479,7 @@ msgid "copy"
 msgstr "копия"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1712 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
 #, c-format
 msgid "%s copy"
 msgstr "%s скопировать"
@@ -788,43 +788,43 @@ msgstr "Изображение:"
 msgid "none"
 msgstr "нет"
 
-#: app/commands.c:337
+#: app/commands.c:340
 msgid "Feather Selection"
 msgstr "Выбор пера"
 
-#: app/commands.c:340
+#: app/commands.c:343
 msgid "Feather Selection by:"
 msgstr "Выбрать перо по:"
 
-#: app/commands.c:373
+#: app/commands.c:376
 msgid "Shrink Selection"
 msgstr "Сокращение выделения"
 
-#: app/commands.c:376
+#: app/commands.c:379
 msgid "Shrink Selection by:"
 msgstr "Сократить выделение по:"
 
-#: app/commands.c:385
+#: app/commands.c:388
 msgid "Shrink from image border"
 msgstr "Сократить по границе изображения"
 
-#: app/commands.c:407
+#: app/commands.c:410
 msgid "Grow Selection"
 msgstr "Увеличение выделения"
 
-#: app/commands.c:410
+#: app/commands.c:413
 msgid "Grow Selection by:"
 msgstr "Увеличить выделение по:"
 
-#: app/commands.c:430
+#: app/commands.c:433
 msgid "Border Selection"
 msgstr "Выбор рамки"
 
-#: app/commands.c:433
+#: app/commands.c:436
 msgid "Border Selection by:"
 msgstr "Выбрать рамку по:"
 
-#: app/commands.c:1330
+#: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Ошибка изменения размера: и ширина и высота должны быть больше нуля."
 
@@ -1447,27 +1447,27 @@ msgstr ""
 "выделения, потому что оно принадлежит\n"
 "маске слоя или каналу."
 
-#: app/gdisplay.c:232
+#: app/gdisplay.c:237
 msgid "RGB-empty"
 msgstr "RGB-пусто"
 
-#: app/gdisplay.c:232 app/image_new.c:64 app/preferences_dialog.c:1653
+#: app/gdisplay.c:237 app/image_new.c:64 app/preferences_dialog.c:1653
 msgid "RGB"
 msgstr "RGB"
 
-#: app/gdisplay.c:235
+#: app/gdisplay.c:240
 msgid "grayscale-empty"
 msgstr "градации серого- пусто"
 
-#: app/gdisplay.c:235
+#: app/gdisplay.c:240
 msgid "grayscale"
 msgstr "градации серого"
 
-#: app/gdisplay.c:238
+#: app/gdisplay.c:243
 msgid "indexed-empty"
 msgstr "индексированное-пусто"
 
-#: app/gdisplay.c:238
+#: app/gdisplay.c:243
 msgid "indexed"
 msgstr "индексированное"
 
@@ -1870,112 +1870,112 @@ msgstr "Введите имя для этого буфера"
 msgid "Copy Named"
 msgstr "Скопировать из буфера с именем"
 
-#: app/gradient.c:642
+#: app/gradient.c:644
 msgid "Curved"
 msgstr "Искривленный"
 
-#: app/gradient.c:643
+#: app/gradient.c:645
 msgid "Sinusoidal"
 msgstr "Синусоидальный"
 
-#: app/gradient.c:644
+#: app/gradient.c:646
 msgid "Spherical (increasing)"
 msgstr "Сферический (увеличивающийся)"
 
-#: app/gradient.c:645
+#: app/gradient.c:647
 msgid "Spherical (decreasing)"
 msgstr "Сферический (уменьшающийся)"
 
-#: app/gradient.c:650
+#: app/gradient.c:652
 msgid "Plain RGB"
 msgstr "Чистый RGB"
 
-#: app/gradient.c:651
+#: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (Тон от центра [FixMe])"
 
-#: app/gradient.c:652
+#: app/gradient.c:654
 msgid "HSV (clockwise hue)"
 msgstr "HSV (Тон по часовой)"
 
-#: app/gradient.c:905
+#: app/gradient.c:907
 msgid "Gradient Editor"
 msgstr "Редактор градиентов"
 
-#: app/gradient.c:936 app/gradient_select.c:214 app/paintbrush.c:270
+#: app/gradient.c:938 app/gradient_select.c:215 app/paintbrush.c:270
 #: app/palette.c:3160
 msgid "Gradient"
 msgstr "Градиент"
 
-#: app/gradient.c:937 app/gradient_select.c:215 app/palette.c:2197
+#: app/gradient.c:939 app/gradient_select.c:216 app/palette.c:2197
 #: app/palette_select.c:93
 msgid "Name"
 msgstr "Название"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:982
+#: app/gradient.c:984
 msgid "Gradient Ops"
 msgstr "Градиенты"
 
 #. Buttons for gradient functions
-#: app/gradient.c:990
+#: app/gradient.c:992
 msgid "New Gradient"
 msgstr "Новый градиент"
 
-#: app/gradient.c:998
+#: app/gradient.c:1000
 msgid "Copy Gradient"
 msgstr "Скопировать градиент"
 
-#: app/gradient.c:1006 app/gradient.c:1876
+#: app/gradient.c:1008 app/gradient.c:1876
 msgid "Delete Gradient"
 msgstr "Удалить градиент"
 
-#: app/gradient.c:1014
+#: app/gradient.c:1016
 msgid "Rename Gradient"
 msgstr "Переименовать градиент"
 
-#: app/gradient.c:1022 app/gradient.c:1962
+#: app/gradient.c:1024 app/gradient.c:1937
 msgid "Save as POV-Ray"
 msgstr "Сохранить как POV-Ray файл"
 
 #. Zoom all button
-#: app/gradient.c:1040
+#: app/gradient.c:1042
 msgid "Zoom all"
 msgstr "Масштабировать все"
 
-#: app/gradient.c:1091
+#: app/gradient.c:1093
 msgid "Instant update"
 msgstr "Быстрое обновление"
 
-#: app/gradient.c:1226 app/gradient.c:2084
+#: app/gradient.c:1228 app/gradient.c:2062
 msgid "Default"
 msgstr "По умолчанию"
 
-#: app/gradient.c:1654
+#: app/gradient.c:1661
 msgid "New gradient"
 msgstr "Новый градиент"
 
-#: app/gradient.c:1657
+#: app/gradient.c:1664
 msgid "Enter a name for the new gradient"
 msgstr "Введите название для нового градиента"
 
-#: app/gradient.c:1658
+#: app/gradient.c:1665
 msgid "untitled"
 msgstr "безымянный"
 
-#: app/gradient.c:1714
+#: app/gradient.c:1722
 msgid "Copy gradient"
 msgstr "Скопировать градиент"
 
-#: app/gradient.c:1717
+#: app/gradient.c:1725
 msgid "Enter a name for the copied gradient"
 msgstr "Введите название для скопированного градиента"
 
-#: app/gradient.c:1797
+#: app/gradient.c:1808
 msgid "Rename gradient"
 msgstr "Переименовать градиент"
 
-#: app/gradient.c:1800
+#: app/gradient.c:1811
 msgid "Enter a new name for the gradient"
 msgstr "Введите новое название для градиента"
 
@@ -1988,12 +1988,12 @@ msgstr ""
 "Вы действительно хотите удалить\n"
 "\"%s\" из списка и с диска?"
 
-#: app/gradient.c:2121
+#: app/gradient.c:2099
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Масштаб: %d:1    Изображение [%0.6f, %0.6f]"
 
-#: app/gradient.c:2377
+#: app/gradient.c:2355
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -2002,31 +2002,31 @@ msgstr ""
 "Позиция: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Непрозрачность: %0.3f"
 
-#: app/gradient.c:2402
+#: app/gradient.c:2380
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Цвет переднего плана установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2426
+#: app/gradient.c:2404
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "Цвет фона установлен в RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2735
+#: app/gradient.c:2695
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Drag: перемещение  Shift+drag: перемещение и сжатие"
 
-#: app/gradient.c:2737 app/gradient.c:2741
+#: app/gradient.c:2697 app/gradient.c:2701
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Щелчок: выделение    Shift+Щелчок: расширить выделение"
 
-#: app/gradient.c:2747
+#: app/gradient.c:2707
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr ""
 "Щелчок: выделение    Shift+Щелчок: расширение выделения   Drag: перемещение"
 
-#: app/gradient.c:2759
+#: app/gradient.c:2719
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -2034,181 +2034,181 @@ msgstr ""
 "Щелчок: выделение    Shift+щелчок: расширение выделения    Drag: перемещение "
 "   Shift+drag: перемещение и сжатие"
 
-#: app/gradient.c:3003 app/gradient.c:3012
+#: app/gradient.c:2968 app/gradient.c:2977
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "Позиция метки: %0.6f"
 
-#: app/gradient.c:3030
+#: app/gradient.c:2995
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Расстояние: %0.6f"
 
-#: app/gradient.c:3522 app/gradient.c:4585
+#: app/gradient.c:3487 app/gradient.c:4550
 msgid "Left endpoint's color"
 msgstr "Цвет крайней левой точки"
 
-#: app/gradient.c:3533 app/gradient.c:3575
+#: app/gradient.c:3498 app/gradient.c:3540
 msgid "Load from"
 msgstr "Загрузить из"
 
-#: app/gradient.c:3537
+#: app/gradient.c:3502
 msgid "Left neighbor's right endpoint"
 msgstr "Соседние слева к крайней правой точке"
 
-#: app/gradient.c:3538
+#: app/gradient.c:3503
 msgid "Right endpoint"
 msgstr "Крайняя правая точка"
 
-#: app/gradient.c:3548 app/gradient.c:3590
+#: app/gradient.c:3513 app/gradient.c:3555
 msgid "Save to"
 msgstr "Сохранить в"
 
-#: app/gradient.c:3564 app/gradient.c:4663
+#: app/gradient.c:3529 app/gradient.c:4628
 msgid "Right endpoint's color"
 msgstr "Цвет крайней правой точки"
 
-#: app/gradient.c:3579
+#: app/gradient.c:3544
 msgid "Right neighbor's left endpoint"
 msgstr "Соседние справа к крайней левой точке"
 
-#: app/gradient.c:3580
+#: app/gradient.c:3545
 msgid "Left endpoint"
 msgstr "Крайняя левая точка"
 
-#: app/gradient.c:3691
+#: app/gradient.c:3656
 msgid "Selection operations"
 msgstr "Операции выделения области"
 
-#: app/gradient.c:3863
+#: app/gradient.c:3828
 msgid "Blending function for segment"
 msgstr "Функция затемнения для сегмента"
 
-#: app/gradient.c:3865
+#: app/gradient.c:3830
 msgid "Coloring type for segment"
 msgstr "Тип окрашивания для сегмента"
 
-#: app/gradient.c:3867
+#: app/gradient.c:3832
 msgid "Split segment at midpoint"
 msgstr "Расщепить сегмент в средней точке"
 
-#: app/gradient.c:3869 app/gradient.c:4966
+#: app/gradient.c:3834 app/gradient.c:4931
 msgid "Split segment uniformly"
 msgstr "Расщепить сегмент на равные части"
 
-#: app/gradient.c:3871
+#: app/gradient.c:3836
 msgid "Delete segment"
 msgstr "Удалить сегмент"
 
-#: app/gradient.c:3873
+#: app/gradient.c:3838
 msgid "Re-center segment's midpoint"
 msgstr "Переопределить среднюю точку сегмента"
 
-#: app/gradient.c:3875
+#: app/gradient.c:3840
 msgid "Re-distribute handles in segment"
 msgstr "Перераспределить метки в сегменте"
 
-#: app/gradient.c:3877
+#: app/gradient.c:3842
 msgid "Flip segment"
 msgstr "Зеркально отразить сегмент"
 
-#: app/gradient.c:3879 app/gradient.c:5527
+#: app/gradient.c:3844 app/gradient.c:5492
 msgid "Replicate segment"
 msgstr "Размножить сегмент"
 
-#: app/gradient.c:3884
+#: app/gradient.c:3849
 msgid "Blending function for selection"
 msgstr "Функция затемнения выделенной области"
 
-#: app/gradient.c:3886
+#: app/gradient.c:3851
 msgid "Coloring type for selection"
 msgstr "Тип окрашивания выделенной области"
 
-#: app/gradient.c:3888
+#: app/gradient.c:3853
 msgid "Split segments at midpoints"
 msgstr "Расщепить сегменты в средних точках"
 
-#: app/gradient.c:3890 app/gradient.c:4967
+#: app/gradient.c:3855 app/gradient.c:4932
 msgid "Split segments uniformly"
 msgstr "Расщепить сегменты на равные части"
 
-#: app/gradient.c:3892
+#: app/gradient.c:3857
 msgid "Delete selection"
 msgstr "Удалить выделение"
 
-#: app/gradient.c:3894
+#: app/gradient.c:3859
 msgid "Re-center midpoints in selection"
 msgstr "Переопределить средние точки в выделении"
 
-#: app/gradient.c:3896
+#: app/gradient.c:3861
 msgid "Re-distribute handles in selection"
 msgstr "Перераспределить метки в выделении"
 
-#: app/gradient.c:3898
+#: app/gradient.c:3863
 msgid "Flip selection"
 msgstr "Зеркально отразить выделение"
 
-#: app/gradient.c:3900 app/gradient.c:5528
+#: app/gradient.c:3865 app/gradient.c:5493
 msgid "Replicate selection"
 msgstr "Размножить выделение"
 
-#: app/gradient.c:4184
+#: app/gradient.c:4149
 msgid "FG color"
 msgstr "Цвет переднего плана"
 
-#: app/gradient.c:4232
+#: app/gradient.c:4197
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4752 app/gradient.c:4822
+#: app/gradient.c:4717 app/gradient.c:4787
 msgid "(Varies)"
 msgstr "(Вариации)"
 
-#: app/gradient.c:4974
+#: app/gradient.c:4939
 msgid "Split"
 msgstr "Расщепить"
 
 #. Instructions
-#: app/gradient.c:4988
+#: app/gradient.c:4953
 msgid "Please select the number of uniform parts"
 msgstr "Выберите число частей,"
 
-#: app/gradient.c:4994
+#: app/gradient.c:4959
 msgid "in which you want to split the selected segment"
 msgstr "на которое Вы хотите расщепить выделенный сегмент"
 
-#: app/gradient.c:4995
+#: app/gradient.c:4960
 msgid "in which you want to split the segments in the selection"
 msgstr "на которое Вы хотите расщепить сегменты в выделении"
 
-#: app/gradient.c:5355
+#: app/gradient.c:5320
 msgid "Blend endpoints' colors"
 msgstr "Цвета крайних точек затемнения"
 
-#: app/gradient.c:5367
+#: app/gradient.c:5332
 msgid "Blend endpoints' opacity"
 msgstr "Непрозрачность крайних точек затемнения"
 
-#: app/gradient.c:5535
+#: app/gradient.c:5500
 msgid "Replicate"
 msgstr "Размножить"
 
 #. Instructions
-#: app/gradient.c:5548
+#: app/gradient.c:5513
 msgid "Please select the number of times"
 msgstr "Выберите сколько раз"
 
-#: app/gradient.c:5553
+#: app/gradient.c:5518
 msgid "you want to replicate the selected segment"
 msgstr "Вы хотите воспроизвести выделенный сегмент"
 
-#: app/gradient.c:5554
+#: app/gradient.c:5519
 msgid "you want to replicate the selection"
 msgstr "Вы хотите воспроизвести выделение"
 
 #. The shell
-#: app/gradient_select.c:151
+#: app/gradient_select.c:152
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
@@ -3029,11 +3029,11 @@ msgid "/_File"
 msgstr "/Файл"
 
 #. <Image>/File
-#: app/menus.c:101 app/menus.c:209
+#: app/menus.c:101 app/menus.c:211
 msgid "/File/New..."
 msgstr "/Файл/Новый..."
 
-#: app/menus.c:103 app/menus.c:211
+#: app/menus.c:103 app/menus.c:213
 msgid "/File/Open..."
 msgstr "/Файл/Открыть..."
 
@@ -3089,684 +3089,684 @@ msgstr "/Файл/Диалоги/Индекс документов..."
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Файл/Диалоги/Консоль ошибок..."
 
-#: app/menus.c:153
+#: app/menus.c:154
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Файл/Диалоги/Дисплейные фильтры..."
 
-#: app/menus.c:163 app/menus.c:224
+#: app/menus.c:165 app/menus.c:226
 msgid "/File/Quit"
 msgstr "/Файл/Выход"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:169
+#: app/menus.c:171
 msgid "/_Xtns"
 msgstr "/Расш."
 
-#: app/menus.c:171
+#: app/menus.c:173
 msgid "/Xtns/Module Browser..."
 msgstr "/Расш./Просмотр модулей..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:180
+#: app/menus.c:182
 msgid "/_Help"
 msgstr "/Справка"
 
-#: app/menus.c:182
+#: app/menus.c:184
 msgid "/Help/Help..."
 msgstr "/Справка/Справка..."
 
-#: app/menus.c:184
+#: app/menus.c:186
 msgid "/Help/Context Help..."
 msgstr "/Справка/Контекстная помощь..."
 
-#: app/menus.c:186
+#: app/menus.c:188
 msgid "/Help/Tip of the Day..."
 msgstr "/Справка/Совет дня..."
 
-#: app/menus.c:188
+#: app/menus.c:190
 msgid "/Help/About..."
 msgstr "/Справка/О программе..."
 
-#: app/menus.c:191
+#: app/menus.c:193
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Справка/Dump Items (Отладка)"
 
-#: app/menus.c:213
+#: app/menus.c:215
 msgid "/File/Save"
 msgstr "/Файл/Сохранить"
 
-#: app/menus.c:215
+#: app/menus.c:217
 msgid "/File/Save As..."
 msgstr "/Файл/Сохранить как..."
 
-#: app/menus.c:217
+#: app/menus.c:219
 msgid "/File/Revert..."
 msgstr "/Файл/Восстановить..."
 
-#: app/menus.c:222
+#: app/menus.c:224
 msgid "/File/Close"
 msgstr "/Файл/Закрыть"
 
 #. <Image>/Edit
-#: app/menus.c:232
+#: app/menus.c:234
 msgid "/Edit/Undo"
 msgstr "/Правка/Отменить"
 
-#: app/menus.c:234
+#: app/menus.c:236
 msgid "/Edit/Redo"
 msgstr "/Правка/Повторить"
 
-#: app/menus.c:239
+#: app/menus.c:241
 msgid "/Edit/Cut"
 msgstr "/Правка/Вырезать"
 
-#: app/menus.c:241
+#: app/menus.c:243
 msgid "/Edit/Copy"
 msgstr "/Правка/Скопировать"
 
-#: app/menus.c:243
+#: app/menus.c:245
 msgid "/Edit/Paste"
 msgstr "/Правка/Вставить"
 
-#: app/menus.c:245
+#: app/menus.c:247
 msgid "/Edit/Paste Into"
 msgstr "/Правка/Вставить в..."
 
-#: app/menus.c:247
+#: app/menus.c:249
 msgid "/Edit/Paste as New"
 msgstr "/Правка/Вставить как новое"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:252
+#: app/menus.c:254
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Правка/Буфер/Вырезать в буфер с именем..."
 
-#: app/menus.c:254
+#: app/menus.c:256
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Правка/Буфер/Скопировать из буфера с именем..."
 
-#: app/menus.c:256
+#: app/menus.c:258
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Правка/Буфер/Вставить из буфера с именем..."
 
-#: app/menus.c:261
+#: app/menus.c:263
 msgid "/Edit/Clear"
 msgstr "/Правка/Очистить"
 
-#: app/menus.c:263
+#: app/menus.c:265
 msgid "/Edit/Fill with FG Color"
 msgstr "/Правка/Заливка цветом переднего плана"
 
-#: app/menus.c:265
+#: app/menus.c:267
 msgid "/Edit/Fill with BG Color"
 msgstr "/Правка/Заливка цветом фона"
 
-#: app/menus.c:267
+#: app/menus.c:269
 msgid "/Edit/Stroke"
 msgstr "/Правка/Обводка"
 
 #. <Image>/Select
-#: app/menus.c:275
+#: app/menus.c:277
 msgid "/Select/Invert"
 msgstr "/Выделение/Инвертировать"
 
-#: app/menus.c:277
+#: app/menus.c:279
 msgid "/Select/All"
 msgstr "/Выделение/Выделить все"
 
-#: app/menus.c:279
+#: app/menus.c:281
 msgid "/Select/None"
 msgstr "/Выделение/Снять"
 
-#: app/menus.c:281
+#: app/menus.c:283
 msgid "/Select/Float"
 msgstr "/Выделение/Плавающее"
 
-#: app/menus.c:286
+#: app/menus.c:288
 msgid "/Select/Feather..."
 msgstr "/Выделение/Растушевка..."
 
-#: app/menus.c:288
+#: app/menus.c:290
 msgid "/Select/Sharpen"
 msgstr "/Выделение/Резкость"
 
-#: app/menus.c:290
+#: app/menus.c:292
 msgid "/Select/Shrink..."
 msgstr "/Выделение/Уменьшение..."
 
-#: app/menus.c:292
+#: app/menus.c:294
 msgid "/Select/Grow..."
 msgstr "/Выделение/Увеличение..."
 
-#: app/menus.c:294
+#: app/menus.c:296
 msgid "/Select/Border..."
 msgstr "/Выделение/Граница..."
 
-#: app/menus.c:299
+#: app/menus.c:301
 msgid "/Select/Save to Channel"
 msgstr "/Выделение/Сохранить в канале"
 
 #. <Image>/View
-#: app/menus.c:304
+#: app/menus.c:306
 msgid "/View/Zoom In"
 msgstr "/Просмотр/Увеличить масштаб"
 
-#: app/menus.c:306
+#: app/menus.c:308
 msgid "/View/Zoom Out"
 msgstr "/Просмотр/Уменьшить масштаб"
 
 #. <Image>/View/Zoom
-#: app/menus.c:311
+#: app/menus.c:313
 msgid "/View/Zoom/16:1"
 msgstr "/Просмотр/Масштаб/16:1"
 
-#: app/menus.c:313
+#: app/menus.c:315
 msgid "/View/Zoom/8:1"
 msgstr "/Просмотр/Масштаб/8:1"
 
-#: app/menus.c:315
+#: app/menus.c:317
 msgid "/View/Zoom/4:1"
 msgstr "/Просмотр/Масштаб/4:1"
 
-#: app/menus.c:317
+#: app/menus.c:319
 msgid "/View/Zoom/2:1"
 msgstr "/Просмотр/Масштаб/2:1"
 
-#: app/menus.c:319
+#: app/menus.c:321
 msgid "/View/Zoom/1:1"
 msgstr "/Просмотр/Масштаб/1:1"
 
-#: app/menus.c:321
+#: app/menus.c:323
 msgid "/View/Zoom/1:2"
 msgstr "/Просмотр/Масштаб/1:2"
 
-#: app/menus.c:323
+#: app/menus.c:325
 msgid "/View/Zoom/1:4"
 msgstr "/Просмотр/Масштаб/1:4"
 
-#: app/menus.c:325
+#: app/menus.c:327
 msgid "/View/Zoom/1:8"
 msgstr "/Просмотр/Масштаб/1:8"
 
-#: app/menus.c:327
+#: app/menus.c:329
 msgid "/View/Zoom/1:16"
 msgstr "/Просмотр/Масштаб/1:16"
 
-#: app/menus.c:330
+#: app/menus.c:332
 msgid "/View/Dot for Dot"
 msgstr "/Просмотр/Точка за точкой"
 
-#: app/menus.c:335
+#: app/menus.c:337
 msgid "/View/Info Window..."
 msgstr "/Просмотр/Информация об окне..."
 
-#: app/menus.c:337
+#: app/menus.c:339
 msgid "/View/Nav. Window..."
 msgstr "/Просмотр/Окно навигации..."
 
-#: app/menus.c:342
+#: app/menus.c:344
 msgid "/View/Toggle Selection"
 msgstr "/Просмотр/Переключить выделение"
 
-#: app/menus.c:344
+#: app/menus.c:346
 msgid "/View/Toggle Rulers"
 msgstr "/Просмотр/Переключить линейки"
 
-#: app/menus.c:346
+#: app/menus.c:348
 msgid "/View/Toggle Statusbar"
 msgstr "/Просмотр/Переключить строка состояния"
 
-#: app/menus.c:348
+#: app/menus.c:350
 msgid "/View/Toggle Guides"
 msgstr "/Просмотр/Переключить направляющие"
 
-#: app/menus.c:350
+#: app/menus.c:352
 msgid "/View/Snap to Guides"
 msgstr "/Просмотр/Выравнивание по направляющим"
 
-#: app/menus.c:355
+#: app/menus.c:357
 msgid "/View/New View"
 msgstr "/Просмотр/Новое окно"
 
-#: app/menus.c:357
+#: app/menus.c:359
 msgid "/View/Shrink Wrap"
 msgstr "/Просмотр/Сокращение обернуть[FixMe]"
 
 #. <Image>/Image/Mode
-#: app/menus.c:362
+#: app/menus.c:364
 msgid "/Image/Mode/RGB"
 msgstr "/Изображение/Режим/RGB"
 
-#: app/menus.c:364
+#: app/menus.c:366
 msgid "/Image/Mode/Grayscale"
 msgstr "/Изображение/Режим/Градации серого"
 
-#: app/menus.c:366
+#: app/menus.c:368
 msgid "/Image/Mode/Indexed..."
 msgstr "/Изображение/Режим/Индексированное..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:374
+#: app/menus.c:376
 msgid "/Image/Colors/Desaturate"
 msgstr "/Изображение/Цвета/Обесцветить"
 
-#: app/menus.c:376
+#: app/menus.c:378
 msgid "/Image/Colors/Invert"
 msgstr "/Изображение/Цвета/Инвертировать"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:384
+#: app/menus.c:386
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Изображение/Цвета/Авто/Выровнять"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:392
+#: app/menus.c:394
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Изображение/Альфа-канал/Добавить альфа-канал"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:397
+#: app/menus.c:399
 msgid "/Image/Transforms/Offset..."
 msgstr "/Изображение/Преобразования/Смещение..."
 
-#: app/menus.c:399
+#: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
 msgstr "/Изображение/Преобразования/Вращение"
 
-#: app/menus.c:406
+#: app/menus.c:408
 msgid "/Image/Canvas Size..."
 msgstr "/Изображение/Размер холста..."
 
-#: app/menus.c:408
+#: app/menus.c:410
 msgid "/Image/Scale Image..."
 msgstr "/Изображение/Масштабировать..."
 
-#: app/menus.c:410
+#: app/menus.c:412
 msgid "/Image/Duplicate"
 msgstr "/Изображение/Создать копию"
 
 #. <Image>/Layers
-#: app/menus.c:418
+#: app/menus.c:420
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Слои/Слои, каналы и контуры..."
 
-#: app/menus.c:422
+#: app/menus.c:424
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Слои/Изм. размер по изображению"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:427
+#: app/menus.c:429
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Слои/Стопка/Предыдущий слой"
 
-#: app/menus.c:429
+#: app/menus.c:431
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Слои/Стопка/Следующий слой"
 
-#: app/menus.c:431
+#: app/menus.c:433
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Слои/Стопка/Поднять слой"
 
-#: app/menus.c:433
+#: app/menus.c:435
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Слои/Стопка/Опустить слой"
 
-#: app/menus.c:435
+#: app/menus.c:437
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Слои/Стопка/Поднять слой до верху"
 
-#: app/menus.c:437
+#: app/menus.c:439
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Слои/Стопка/Опустить слой до низу"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:444
+#: app/menus.c:446
 msgid "/Layers/Rotate"
 msgstr "/Слои/Вращение"
 
-#: app/menus.c:449
+#: app/menus.c:451
 msgid "/Layers/Anchor Layer"
 msgstr "/Слои/Прицепить слой"
 
-#: app/menus.c:451
+#: app/menus.c:453
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Слои/Объединить видимые слои..."
 
-#: app/menus.c:453
+#: app/menus.c:455
 msgid "/Layers/Flatten Image"
 msgstr "/Слои/Свести изображение"
 
-#: app/menus.c:458
+#: app/menus.c:460
 msgid "/Layers/Mask to Selection"
 msgstr "/Слои/Маска -> Выделение"
 
-#: app/menus.c:463
+#: app/menus.c:465
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Слои/Новый альфа-канал"
 
-#: app/menus.c:465
+#: app/menus.c:467
 msgid "/Layers/Alpha to Selection"
 msgstr "/Слои/Альфа-канал -> Выделение"
 
 #. <Image>/Tools
-#: app/menus.c:473
+#: app/menus.c:475
 msgid "/Tools/Toolbox"
 msgstr "/Инструменты/Панель инструментов"
 
-#: app/menus.c:475
+#: app/menus.c:477
 msgid "/Tools/Default Colors"
 msgstr "/Инструменты/Цвета по умолчанию"
 
-#: app/menus.c:477
+#: app/menus.c:479
 msgid "/Tools/Swap Colors"
 msgstr "/Инструменты/Поменять цвета"
 
 #. <Image>/Dialogs
-#: app/menus.c:484
+#: app/menus.c:486
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Диалоги/Слои, каналы и контуры..."
 
-#: app/menus.c:486
+#: app/menus.c:488
 msgid "/Dialogs/Tool Options..."
 msgstr "/Диалоги/Параметры инструментов..."
 
-#: app/menus.c:491
+#: app/menus.c:493
 msgid "/Dialogs/Brushes..."
 msgstr "/Диалоги/Кисти..."
 
-#: app/menus.c:493
+#: app/menus.c:495
 msgid "/Dialogs/Patterns..."
 msgstr "/Диалоги/Шаблоны..."
 
-#: app/menus.c:495
+#: app/menus.c:497
 msgid "/Dialogs/Gradients..."
 msgstr "/Диалоги/Градиенты..."
 
-#: app/menus.c:497
+#: app/menus.c:499
 msgid "/Dialogs/Palette..."
 msgstr "/Диалоги/Палитра...."
 
-#: app/menus.c:499
+#: app/menus.c:501
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Диалоги/Индексированная палитра..."
 
-#: app/menus.c:504
+#: app/menus.c:506
 msgid "/Dialogs/Input Devices..."
 msgstr "/Диалоги/Устройства ввода..."
 
-#: app/menus.c:506
+#: app/menus.c:508
 msgid "/Dialogs/Device Status..."
 msgstr "/Диалоги/Состояние устройства..."
 
-#: app/menus.c:511
+#: app/menus.c:513
 msgid "/Dialogs/Document Index..."
 msgstr "/Диалоги/Индекс документов..."
 
-#: app/menus.c:513
+#: app/menus.c:515
 msgid "/Dialogs/Error Console..."
 msgstr "/Диалоги/Консоль ошибок..."
 
-#: app/menus.c:515
+#: app/menus.c:518
 msgid "/Dialogs/Display Filters..."
 msgstr "/Диалоги/Экранные фильтры..."
 
-#: app/menus.c:517
+#: app/menus.c:521
 msgid "/Dialogs/Undo History..."
 msgstr "/Просмотр/История отмен..."
 
 #. <Image>/Filters
-#: app/menus.c:526
+#: app/menus.c:530
 msgid "/Filters/Repeat Last"
 msgstr "/Фильтры/Повторить последний"
 
-#: app/menus.c:528
+#: app/menus.c:532
 msgid "/Filters/Re-Show Last"
 msgstr "/Фильтры/Показать последний"
 
-#: app/menus.c:533
+#: app/menus.c:537
 msgid "/Filters/Blur"
 msgstr "/Фильтры/Размывание"
 
-#: app/menus.c:535
+#: app/menus.c:539
 msgid "/Filters/Colors"
 msgstr "/Фильтры/Цвета"
 
-#: app/menus.c:537
+#: app/menus.c:541
 msgid "/Filters/Noise"
 msgstr "/Фильтры/Шум"
 
-#: app/menus.c:539
+#: app/menus.c:543
 msgid "/Filters/Edge-Detect"
 msgstr "/Фильтры/Выделение края"
 
-#: app/menus.c:541
+#: app/menus.c:545
 msgid "/Filters/Enhance"
 msgstr "/Фильтры/Enhance"
 
-#: app/menus.c:543
+#: app/menus.c:547
 msgid "/Filters/Generic"
 msgstr "/Фильтры/Общие"
 
-#: app/menus.c:548
+#: app/menus.c:552
 msgid "/Filters/Glass Effects"
 msgstr "/Фильтры/Эффекты стекол"
 
-#: app/menus.c:550
+#: app/menus.c:554
 msgid "/Filters/Light Effects"
 msgstr "/Фильтры/Световый эффекты"
 
-#: app/menus.c:552
+#: app/menus.c:556
 msgid "/Filters/Distorts"
 msgstr "/Фильтры/Искажения"
 
-#: app/menus.c:554
+#: app/menus.c:558
 msgid "/Filters/Artistic"
 msgstr "/Фильтры/Имитация"
 
-#: app/menus.c:556
+#: app/menus.c:560
 msgid "/Filters/Map"
 msgstr "/Фильтры/Карта"
 
-#: app/menus.c:558
+#: app/menus.c:562
 msgid "/Filters/Render"
 msgstr "/Фильтры/Визуализация"
 
-#: app/menus.c:560
+#: app/menus.c:564
 msgid "/Filters/Web"
 msgstr "/Фильтры/Веб"
 
-#: app/menus.c:565
+#: app/menus.c:569
 msgid "/Filters/Animation"
 msgstr "/Фильтры/Анимация"
 
-#: app/menus.c:567
+#: app/menus.c:571
 msgid "/Filters/Combine"
 msgstr "/Фильтры/Объединение"
 
-#: app/menus.c:572
+#: app/menus.c:576
 msgid "/Filters/Toys"
 msgstr "/Фильтры/Развлечения"
 
-#: app/menus.c:583
+#: app/menus.c:587
 msgid "/Automatic"
 msgstr "/Автоматически"
 
-#: app/menus.c:597
+#: app/menus.c:601
 msgid "/By Extension"
 msgstr "/По расширению"
 
-#: app/menus.c:611
+#: app/menus.c:615
 msgid "/New Layer..."
 msgstr "/Новый слой..."
 
 #. <Layers>/Stack
-#: app/menus.c:616
+#: app/menus.c:620
 msgid "/Stack/Raise Layer"
 msgstr "/Стопка/Поднять слой"
 
-#: app/menus.c:618
+#: app/menus.c:622
 msgid "/Stack/Lower Layer"
 msgstr "/Стопка/Опустить слой"
 
-#: app/menus.c:620
+#: app/menus.c:624
 msgid "/Stack/Layer to Top"
 msgstr "/Стопка/Поднять слой до верху"
 
-#: app/menus.c:622
+#: app/menus.c:626
 msgid "/Stack/Layer to Bottom"
 msgstr "/Стопка/Опустить слой до низу"
 
-#: app/menus.c:625
+#: app/menus.c:629
 msgid "/Duplicate Layer"
 msgstr "/Создать копию слоя"
 
-#: app/menus.c:627
+#: app/menus.c:631
 msgid "/Anchor Layer"
 msgstr "/Прицепить слой"
 
-#: app/menus.c:629
+#: app/menus.c:633
 msgid "/Delete Layer"
 msgstr "/Удалить слой"
 
-#: app/menus.c:634
+#: app/menus.c:638
 msgid "/Layer Boundary Size..."
 msgstr "/Слой Boundary Size..."
 
-#: app/menus.c:636
+#: app/menus.c:640
 msgid "/Layer to Imagesize"
 msgstr "/Изм. размер по изображению"
 
-#: app/menus.c:638
+#: app/menus.c:642
 msgid "/Scale Layer..."
 msgstr "/Масштабировать слой..."
 
-#: app/menus.c:643
+#: app/menus.c:647
 msgid "/Merge Visible Layers..."
 msgstr "/Объединить видимые слои..."
 
-#: app/menus.c:645
+#: app/menus.c:649
 msgid "/Merge Down"
 msgstr "/Объединить с предыдущим"
 
-#: app/menus.c:647
+#: app/menus.c:651
 msgid "/Flatten Image"
 msgstr "/Свести изображение"
 
-#: app/menus.c:652
+#: app/menus.c:656
 msgid "/Add Layer Mask..."
 msgstr "/Добавить маску слоя..."
 
-#: app/menus.c:654
+#: app/menus.c:658
 msgid "/Apply Layer Mask"
 msgstr "/Применить маску слоя"
 
-#: app/menus.c:656
+#: app/menus.c:660
 msgid "/Delete Layer Mask"
 msgstr "/Удалить маску слоя"
 
-#: app/menus.c:658
+#: app/menus.c:662
 msgid "/Mask to Selection"
 msgstr "/Маска -> Выделенная область"
 
-#: app/menus.c:663
+#: app/menus.c:667
 msgid "/Add Alpha Channel"
 msgstr "/Добавить альфа-канал"
 
-#: app/menus.c:665
+#: app/menus.c:669
 msgid "/Alpha to Selection"
 msgstr "/Альфа-канал -> Выделенная область"
 
-#: app/menus.c:670
+#: app/menus.c:674
 msgid "/Edit Layer Attributes..."
 msgstr "/Правка атрибутов слоя..."
 
-#: app/menus.c:681
+#: app/menus.c:685
 msgid "/New Channel..."
 msgstr "/Новый канал..."
 
-#: app/menus.c:683
+#: app/menus.c:687
 msgid "/Raise Channel"
 msgstr "/Поднять канал"
 
-#: app/menus.c:685
+#: app/menus.c:689
 msgid "/Lower Channel"
 msgstr "/Опустить канал"
 
-#: app/menus.c:687
+#: app/menus.c:691
 msgid "/Duplicate Channel"
 msgstr "/Создать копию канала"
 
-#: app/menus.c:692
+#: app/menus.c:696
 msgid "/Channel to Selection"
 msgstr "/Канал -> Выделение"
 
-#: app/menus.c:694
+#: app/menus.c:698
 msgid "/Add to Selection"
 msgstr "/Добавить к выделению"
 
-#: app/menus.c:696
+#: app/menus.c:700
 msgid "/Subtract from Selection"
 msgstr "/Вычесть из выделения"
 
-#: app/menus.c:698
+#: app/menus.c:702
 msgid "/Intersect with Selection"
 msgstr "/Пересечь с выделением"
 
-#: app/menus.c:703
+#: app/menus.c:707
 msgid "/Delete Channel"
 msgstr "/Удалить канал"
 
-#: app/menus.c:708
+#: app/menus.c:712
 msgid "/Edit Channel Attributes..."
 msgstr "/Правка атрибутов канала..."
 
-#: app/menus.c:719
+#: app/menus.c:723
 msgid "/New Path"
 msgstr "/Новый контур"
 
-#: app/menus.c:721
+#: app/menus.c:725
 msgid "/Duplicate Path"
 msgstr "/Создать копию контура"
 
-#: app/menus.c:723
+#: app/menus.c:727
 msgid "/Path to Selection"
 msgstr "/Контур -> Выделенная область"
 
-#: app/menus.c:725
+#: app/menus.c:729
 msgid "/Selection to Path"
 msgstr "/Контур -> Выделенная область"
 
-#: app/menus.c:727
+#: app/menus.c:731
 msgid "/Stroke Path"
 msgstr "/Обвести по контуру"
 
-#: app/menus.c:729
+#: app/menus.c:733
 msgid "/Delete Path"
 msgstr "/Удалить контур"
 
-#: app/menus.c:734
+#: app/menus.c:738
 msgid "/Copy Path"
 msgstr "/Скопировать контур"
 
-#: app/menus.c:736
+#: app/menus.c:740
 msgid "/Paste Path"
 msgstr "/Вставить контур"
 
-#: app/menus.c:738
+#: app/menus.c:742
 msgid "/Import Path..."
 msgstr "/Импортировать контур..."
 
-#: app/menus.c:740
+#: app/menus.c:744
 msgid "/Export Path..."
 msgstr "/Экспортировать контур..."
 
-#: app/menus.c:745
+#: app/menus.c:749
 msgid "/Edit Path Attributes..."
 msgstr "/Правка атрибутов контура..."
 
-#: app/menus.c:1298
+#: app/menus.c:1302
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Ошибка при открытии файла: %s\n"

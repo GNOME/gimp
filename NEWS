@@ -1,231 +1,799 @@
-GIMP 1.1 - New features                    -*- text -*-
+GIMP 1.2 - Hadjaha - New features          -*- text -*-
 
 The following list tries to describe all the new features that are
-already implemented or currently being worked on. I cannot guarantee
-that I describe everything correctly, since for most items I haven't
-read the code but only looked at the ChangeLog entry. I can however
-guarantee that a few things are missing.
+already implemented or currently being worked on. I cannot
+guarantee that I describe everything correctly, since for most
+items I haven't read the code but only looked at the ChangeLog
+entry. I can however guarantee that a few things are missing...
 
-Older items are on top, newer ones further down the list. At the end a
-few common things are listed.
 
-XInput support
-   GIMP does now support special input devices like drawing tablets by
-   default. It depends on the device being supported by your
-   XServer. This is true for example for Wacom drawing
-   tablets. Support for multiple devices, pressure and tilt
-   sensitivity is slowly added to all paint tools.
+   [ Changes in versions 1.1.21 to 1.1.32 ]
 
-Ink tool
-   A nice new toy that really comes to life if you have an extended
-   input device as described above. If you don't happen to have a
-   special device, Ink will vary its size based on the speed of your
-   cursor. The results can be remarkably natural-looking.
+   Bug fixes             We are getting ready for 1.2 ...
 
-Smudge tool
-   This tool lets you push pixels around on the image as if you were
-   using your finger and "smudging" wet paint.
+   [ Changes in version 1.1.20 ]
 
-Dodge & Burn tool
-   This tool lets you selectively darken or lighten the image.
+   Bug fixes             Squeezing, squashing, crushing them ....
 
-Quick Mask
-   With quick mask, you can quickly convert a selection to a visible
-   red mask and back again. You can edit the mask directly with
-   painting tools or plugins.
+   [ Changes in version 1.1.19 ]
 
-Image selection thumbnails
-   For dialogs that allow you to choose which image they're associated
-   with, the menu now has a small thumbnail image to help you
-   determine which image you're selecting.
+   Bug fixes             The GIMP developers crew is working hard to
+                         fix all known bugs. If you find a bug, please
+                         check if it is still present in the latest
+                         version. Then report it using the Bug Report
+                         Form or send an email as described here.
 
-'File New' dialog
-   The new dialog for creating new images allows to use real life
-   units like centimeters and inches along with a resolution entry.
+   Installation dialog   A new much improved installation dialogs
+                         guides you through the user-installation and
+                         asks the user to set important values like
+                         the tile_cache_size and the monitor
+                         resolution.
 
-Hex display
-   A small but nifty feature was added to the Color Picker: It know
-   displays the HEX triplet of the selected color. Useful for WEB
-   artists.
+   I18n of Script-Fu     Finally the UI of Script-Fu is fully
+                         internationalized.
 
-Pop-up button
-   The small rectangle between the rulers in the upper left corner of
-   the image window now gives access to the menu. Useful for people
-   with tablets or two-button mice.
+   [ Changes in version 1.1.18 ]
 
-Status bar
-   The image display know has a status bar. Plug-ins display their
-   progress there and your mouse coordinates are displayed. Most tools
-   use it too. The Selection tool for example shows the selection size
-   while you drag.  And don't worry, it's possible to hide the
-   status bar to save screen estate.
+   Bug fixes             The GIMP developers crew is working hard to
+                         fix all known bugs. If you find a bug, please
+                         check if it is still present in the latest
+                         version. Then report it using the Bug Report
+                         Form or send an email as described here.
 
-GUI enhancements
-   Lots of nifty enhancements to the user interface. Spinbuttons are
-   used in a lot of places. More stuff like that has to be added in
-   the future...
+   [ Changes in version 1.1.17 ]
 
-Session management
-   GIMP remembers window positions and sizes and restores them on
-   startup.
+   Bug fixes             The latest versions shipped with broken
+                         message catalogs that triggered a bug in
+                         gtk+-1.2.6. This bug will be fixed in the
+                         upcoming gtk+-1.2.7 and we have added a
+                         workaround to prevent GIMP from crashing.
+                         Lots of other bugs have been fixed too.
 
-Selections
-   New algorithms are now used to grow and shrink the selection. The
-   result looks much better!
+   LibGimp               We have started to document libgimp using
+   documentation         gtk-doc. This should make it easier for
+                         plug-in developers and will help them
+                         especially to use all the new widgets and
+                         convenience functions in libgimpui which make
+                         the plug-ins look so nice.
 
-PDB interface
-   A lot more internal functions are now exported to the PDB. This
-   should for example allow the GIMP Animation Plugin to work without
-   changes to the GIMP core.
+   [ Changes in version 1.1.16 ]
 
-Better tile-caching
-   Tiles are now more intelligently cached and a threaded process
-   tries to swap out dirty tiles before you run out of physical
-   memory.
+   Bug fixes             The GIMP developers crew is working hard to
+                         fix all known bugs. If you find a bug, please
+                         check if it is still present in the latest
+                         version. Then report it using the Bug Report
+                         Form or send an email as described here.
 
-Copy On Write
-   The MAD-COW patches that appeared too late to get integrated into
-   GIMP-1.0 are now integrated. And...its FASTER!!
+   Localisation          The internationalisation of GIMP's UI is
+                         pretty much complete, which means that the
+                         strings are marked for translation. Now,
+                         those strings have to be translated of
+                         course. Check out the translation status.
 
-Document Index
-   The document index keeps track of the images you used with The
-   GIMP. You can even drag in an image from a file-manager (GNOME MC
-   for example).
+   [ Changes in version 1.1.15 ]
 
-Editable Brushes
-   Well, editable brushes still need some work, but the basics are
-   there...
+   Arrival of the help   A first set of help pages for our new online
+   pages                 help system was added. If you want to help
+                         Olof and Karin with that task, contact
+                         olof@gimp.org.
 
-Fixed size selections
-   The size or the aspect ratio of selections can now be entered
-   numerically as well.
+                         It is also now possible to use Netscape to
+                         read the help pages, if you don't want to (or
+                         can't) use the internal helpbrowser.
 
-Script-Fu interface improvements
-   The Script-Fu dialog now allows a whole bunch of entry widgets,
-   like selectors for fonts, brushes, gradients and patterns. Strings
-   can be entered without the nasty quotes and numerical entries can
-   use sliders and spinbuttons.  Most of the scripts were already
-   updated.
+   Plugins overhaul      Several GTK wrappers had made their way into
+                         The GIMP over the last years making live hard
+                         for developers and pushing a bad (IMHO)
+                         coding style. We are now trying to get rid of
+                         those libraries like gpc (RIP), megawidget
+                         and libgck.
 
-Quick Reference
-   The Quick Reference sheet looks much better and holds more
-   information. A must-have for your desktop.
+                         Most plug-ins now use helpful widgets from
+                         libgimpui, which give much nicer layout and
+                         better functionality (pressing F1 for Help
+                         works in most plug-in windows now).
 
-Transform Tool UI
-   The user interface for the Transform tool has seen a major
-   overhaul. It now offers a new 'Corrective' mode that for example
-   makes it easy to correct slightly rotated scans.
+   GAP Navigator         Working with GIMP Animations is getting more
+                         comfortable with the new GAP VCR Naviagtor
+                         which provides a view on your GAP animation
+                         frames in the style of the L&C-dialog.
 
-Color representation
-   GIMP now uses GdkRGB to provide better dithering for non truecolor
-   displays. This should also speed GIMP up a bit.
+   [ Changes in version 1.1.14 ]
 
-Parasites
-   Arbitrary data can be attached to an image and be retrieved later.
+   Internationalization  I18n has been improved a lot lately. The core
+                         is now fully marked for translation and the
+                         plug-ins are following. Now what we need are
+                         translators. Only very few languages are
+                         supported by now.
 
-Tattoos
-   A unique stamp can be attached to drawables. That way a plug-in can
-   easily keep track of layers.
+   Dialog layouts        In an attempt to make the interface more
+   unification           consistent, most plug-ins saw some small
+                         changes to their dialog layout. You should
+                         soon find the default buttons at the same
+                         place in all dialogs.
 
-Dialogs
-   A few dialogs can now be controlled via the PDB. That allows a
-   plug-in to use the internal dialogs to select brushes, patterns and
-   gradients.
+   [ Changes in version 1.1.13 ]
 
-Idle-Renderer
-   Display re-rendering is now handled in an interruptible
-   asynchronous thread. This makes The GIMP more responsive especially
-   when working with the Layers-dialog.
+   Not much              There were some problems with the 1.1.12
+                         release, that made it necessary to release
+                         1.1.13 only a day later.
 
-Resolution support
-   Each image now has a resolution associated with it. This needs to
-   be integrated better into the GUI, but there are already a few file
-   plug-ins that make use of this.
+   [ Changes in version 1.1.12 ]
 
-GimpPerl
-   The GIMP-Perl extension and several Perl-Fu scripts are now part of
-   GIMP 1.1.
+   Script-Fu bug fixed   One of the most annoying bugs in the last
+                         releases was fixed. Script-Fu scripts used to
+                         crash the GIMP pretty regulary. Well, GDK
+                         refcounting can be confusing...
 
-Monitor resolution
-   The image can now be displayed in float scale factors. If GIMP
-   knows about your monitor resolution it displays one inch as one
-   inch. Still needs some work...
+   Memleaks plugged      With the help of memprof a whole bunch of
+                         memleaks were found and lots of them plugged.
 
-Help in the DB Browser
-   The DB Browser now also display the help that is available for a
-   lot of functions in the PDB.
+   Layer move speedups   Layer moving has been speed up by avoiding to
+                         put each and every one-pixel move onto the
+                         undo-stack.
 
-Internationalization
-   National Language Support is coming!
+   Multiple previews     The File Open dialog now allows to create
+                         previews for multiple files at once. To
+                         create previews for a whole directory, simply
+                         select all files and press the Preview
+                         button.
 
-New plug-ins
-   Various new plug-ins were added. More have appeared in the Registry
-   and wait to be added or updated. A few nice ones that are now
-   included:
+   Menu Reorganization   The core and plug-in menus were reorganized.
+                         The new structure might take some time to get
+                         used to, but it is more intuitive and
+                         consistent.
 
-      * WaterSelect - a nifty way to select colors
-      * NewsPrint - whee, you have to see that 
-      * Guillotine - slices the image up along its guides 
-      * Unsharp Mask
+   [ Changes in version 1.1.11 ]
 
-Internals
-   Lots of changes were made to GIMP internals that I don't understand
-   correctly, like objectification and removal of the image ID
-   system. Read the ChangeLog yourself to figure this out.
+   Bug fixes             The GIMP developers crew is working hard to
+                         fix all known bugs. If you find a bug, please
+                         check if it is still present in the latest
+                         version. Then report it using the Bug Report
+                         Form or send an email as described here.
 
-Plug-ins and Scripts
-   Various plug-ins and scripts not mentioned above have been updated
-   or fixed to work with changes in the GIMP core or GTK+. One day I
-   might add a list of all changed plug-ins to this list...
+   [ Changes in version 1.1.10 ]
 
-Color selectors
-   An API has been added to allow the addition of any number of
-   different color selection systems via pluggable modules. The GTK
-   color selector and a triangle color selector have been added to the
-   color selection dialog through this new system.
+   Intelligent Scissors  Finally Intelligent Scissors work again the
+                         way they worked back in the old 0.54 days.
+                         Hooray for Austin!!
 
-Better feedback 
-   Internal operations that take a long time to complete (transforms,
-   gradients, etc.) now display a progress bar and cursor change to
-   inform the user about what's going on.
+   Undo History          the undo system was overworked and on the
+                         surface a new dialog showed up showing a
+                         history of the undoable steps performed on
+                         the image. Very nice!
 
-Unit representation 
-   You can now work directly in inches, centimeters, millimeters, and
-   other units without having to do pixel math to figure things out.
+   Export                Finally The GIMP knows how to export files.
+                         Or to be exact: it provides a way for
+                         plug-ins to propagate their capabilities to
+                         the core which will take care of opening a
+                         dialog that proposes suitable conversion to
+                         the user. These conversions are then
+                         performed on a duplicate of the original
+                         image.
 
-Paths dialog 
-   Manipulating paths is much easier, and the Paths dialog is
-   integrated into the Layers & Channels dialog. Paths are quite
-   flexible and will soon replace the Bezier tool entirely.
+   Help System           The GIMP now has a builtin help system.
+                         Pressing F1 on whatever dialog starts the
+                         helpbrowser on the related help-page. The
+                         same works on a menu-entry. Olof and Karin
+                         Kylander are already busy at writing the
+                         documentation...
 
-Thumbnails
-   The Open dialog now displays a thumbnail if it exists, and gives
-   the option to generate one if it doesn't.
+                         DnD was added to the helpbrowser so you can
+                         now drag help to Netscape if you prefer
+                         reading it there.
 
-Indexed images
-   Converting images from RGB to Indexed color has been improved.
+   Brush Pipe            Brush Pipes are now marked in the Brush
+   indicators            Selection Dialog and the popup animates
+                         through the pipe.
 
-Win32 merging
-   The patches required for compiling under Win32 are being integrated
-   into the main GIMP source.
+   Bug fixes             The GIMP developers crew is working hard to
+                         fix all known bugs. If you find a bug, please
+                         check that it is still present in the latest
+                         version. Then report it using the Bug Report
+                         Form or send an email as described here.
 
-Cursor changes
-   The cursors now visually indicate selection modes. It's much easier
-   to tell if you're adding, subtracting, or intersecting a selection
-   now. Cursors also change depending on your Path mode.
+   [ New features in version 1.1.9 ]
 
-Miscellaneous
-   - The painting functions (brush, pencil, airbrush, etc.) have been
-     optimized, and a new painting option allows you to color with a
-     gradient.
-   - The GAP plugin, which has some essential animation features, is
-     now integrated into GIMP.
-   - The font selector has been redesigned.
-   - The new, slightly incomplete MAINTAINERS file should help track
-     responsibility and expertise for various GIMP parts.
-   - There's now a man page for the gimprc file.
-   - The titlebar layout can be customized to display information in
-     various ways.
+   Enhanced pressure     Using a pressure sensitive device you can now
+   support               control what is affected by the pressure.
+                         This can be opacity, brush-size and color.
 
-Copyright 1998 by Sven Neumann
-Modified by Zach Beane
+   New Path tool         A new path manipulation tool was added that
+                         is in early development stage and aims to be
+                         a replacement for the bezier tool combining
+                         bezier, spline and iscissor paths.
+
+   New Airbrush tool     A new airbrush is under development that
+                         promises to give you a much more natural
+                         airbrush feeling with extended input devices
+                         (graphic tablets).
+
+   Resizable toolbox     Got annoyed so often that those GIMP windows
+                         just don't fit to the screen the way you like
+                         them? Now you can come closer since the
+                         toolbox is resizable. Would you like a
+                         horizontal toolbox better?
+
+   Navigation popup      In the lower right corner of the image window
+                         you will now find a button that pops up a
+                         very handy navigation window similar to the
+                         one you can access through the menus.
+
+   Indicators overhaul   The small area at the bottom of the toolbox
+                         has seen a total rewrite. Now the gradient is
+                         displayed as well and all the preview code is
+                         in one generic widget that is reused in the
+                         devices status too.
+
+   Lotsa new plug-ins    The GIMPressionist was added to the
+                         distribution and its author directly came up
+                         with a new thing out of the Vidar-Labs:
+                         SphereDesigner. Other new plug-ins include
+                         ImageMap, GFlare, PyGimp (Python scripting
+                         support), AlienMap2, Color Enhance and Warp.
+
+   Deterministic         Deterministic colour dithering to arbitrary
+   dithering             palettes and deterministic alpha dithering
+                         over layers. Don't ask, it's cool!
+
+   Twain Plugin for      The new Twain plug-in gives you access to
+   Win32                 Twain image sources like scanners on Win32
+                         platforms.
+
+   Real-life units in    This is more a call for help then a new
+   plug-ins              feature. The framework has been there for
+                         long, but still most plug-ins ignore
+                         real-life units. I have changed the Grid
+                         plug-in to make use of the nice widgets that
+                         libgimp offers to handle all the unit stuff.
+                         The code is heavily commented to make it more
+                         easy to copy from it. So if you read this and
+                         are a plugin author or you fell you could
+                         help anyway, go hack those plug-ins! If you
+                         need help, drop me a line.
+
+   JPEG saving with      Not only offers the new JPEG plug-in much
+   Preview               more control over the saving parameters, it
+                         also shows you what the result will look
+                         like.
+
+   More Drag'n'Drop      Support for Dnd is coming along. You can now
+                         drag layers from the Layers'n'Channels-dialog
+                         to the toolbox to create a new image with
+                         only that layer. Or drop the layer on an
+                         image to add it to the images layerstack.
+                         Also Color DnD is now supported almost
+                         everywhere and you can drag brushes and
+                         patterns around in the device status dialog.
+
+   Image Pipe            Pixmap brushes were just recently added, but
+                         it doesn't end there. Now there's an image
+                         pipe. This is a brush that draws with a
+                         pixmap out of a list of pixmaps. The pixmap
+                         is either choosen randomly or based on cursor
+                         direction, pressure or tilt. You'll love it!
+
+   New measure tool      A new tool that allows to measure arbitray
+                         distances and angles in an image was added.
+                         See a (dumb) screenshot here.
+
+   Image navigation      The new navigation window helps you to
+                         navigate through large images. Have a look at
+                         it here.
+
+   Scaled brush          The brush selector now scales the brushes so
+   previews              that they fit into the preview area. Click
+                         here for a screenshot.
+
+   Pixmap brushes        Pixmap brushes are being added. This will
+                         allow you to paint with small colored images.
+
+   New Win32 plugin      A new plug-in allows you to copy and paste
+                         between different Windoze applications and
+                         The GIMP using the clipboard.
+
+   [ New features in version 1.1.8 ]
+
+   Better cubic          The algorithms for the cubic interpolation
+   interpolation         for transformation were replaced by faster/
+                         better ones.
+
+   Wheel mouse support   Wheel mice are now supported in a variety of
+                         Gimp dialogs.
+
+   New Plugins           Sample Colorize and Curve Bend were added to
+                         the distribution. Additionally two new
+                         plug-ins for the Win32 port were added that
+                         allow to print and to take screenshots on Win
+                         platforms.
+
+   [ New features in version 1.1.7 ]
+
+   Selection to Path     A new plug-in allows you to convert a
+                         selection into an editable bezierpath.
+
+   Drag'n'Drop           You can now drop a file (out of GMC for
+                         example) onto the toolbox and The GIMP will
+                         try to load it. This also works with URLs
+                         (that you can drag out of netscape).
+
+   QuickMask             Finally we have QuickMask in The GIMP. IMHO
+                         the UI still needs a little tweak, but it
+                         works perfectly as you can see here.
+
+   Paste As New          You can know directly paste the content of
+                         the buffer into a new image. Saves a few
+                         mouse-clicks.
+
+   Win32 portability     It is now possible to build a fully
+                         functioning GIMP on Win32 with free tools
+                         only.
+
+   IFS Compose saves     One day you did that wonderful tree with IFS
+   and loads             Compose and since then you've never ever
+                         managed to get those parameters right again?
+                         Now IFS Compose can save and load his
+                         settings.
+
+   New tools             Finally the empty holes in the toolbox got
+                         filled and we have Dodge and Burn and Smudge
+                         tools.
+
+   Help Browser          Work has started on a Help System for The
+                         GIMP and the helpbrowser is already done! Now
+                         Karin and Olof (authors of The GUM) can start
+                         to work on the documentation.
+
+   Image preview cache   Thumbnail previews of an image are now
+                         handled in a central place, so that small
+                         previews can be computed from larger ones in
+                         the cache. Right now this is used in the
+                         image-menu (e.g. in the L&C-Dialog), more
+                         will follow.
+
+   Tear-off menus        The rumours have come true and while the
+                         concept of an active image evolves, tear-off
+                         menus sprang to life.
+
+   [ New features in version 1.1.6 ]
+
+   Active image concept  Preliminary code to add an active image
+                         concept has been added. So far the first cool
+                         thing you get from this is that the
+                         Layers-n-Channels-dialog automagically tracks
+                         the image you're currently working on.
+                         Interesting things will happen here. Tear-off
+                         menus are rumoured to appear soon...
+
+   Indicator area        The toolbox has been extended to show the
+                         current brush and pattern you are using
+                         giving direct access to the related dialogs.
+                         This will soon be extended to also show you
+                         the current gradient.
+
+   Bug fixes             Bug fixes, bug fixes, bug fixes all over the
+                         place. Hopefully not too much new ones were
+                         added...
+
+   Colored Curves        Color in the previously greyscale bars to the
+   dialog                left and below the curve itself. This still
+                         needs to be done for the Levels dialog too.
+
+   New File-New dialog   Yep, another change to the dialog. Hopefully
+                         everyone is content with the layout/
+                         functionality this time.
+
+   Line draw preview     You do know that you can draw a straight line
+                         using the Shift key with the paint tools,
+                         don't you? Now you can even position this
+                         line precisely using the new line-preview.
+                         Unfortunately this is quite buggy right now
+                         and absolutely needs to be redone (and I can
+                         say this as I've implemented this
+                         feature...). UPDATE: This should work now.
+
+   Tile Row Hinting      The image compositing has been speed up by
+                         implementing hints to the tile structure.
+                         That way the render-engine knows for example
+                         if a row is totally transparent and can skip
+                         the calculation.
+
+   Waterselect           The waterselect plug-in has been integrated
+   color-selector        as a pluggable color-selector module.
+
+   Context cursors       Work has begun on giving better user feedback
+                         through context cursors. For example the
+                         selection tools now indicate whether you are
+                         adding or subtracting the selection by adding
+                         a small plus or minus sign to the cursor.
+
+   [ New features in version 1.1.5 ]
+
+   New Scale/Resize UI   The Scale and Resize dialogs have been
+                         overworked and it is now possible to change
+                         the image resolution interactively.
+
+   OS/2 portability      Lots of changes to make this version of The
+                         Gimp compile on OS/2. This is still a work in
+                         progress as is the Win32 portability.
+
+   Tool toggles          Tools behaviuor for tools like Flip, Crop,
+                         Convolve can be easily toggled on the fly
+                         using the Shift key.
+
+   Opaque layer moves    Layer are moved opaque now. That is you don't
+                         only see the dashed outline move but the
+                         whole content. Helps a lot when positioning
+                         layers.
+
+   Per tool paint        This is toggleable in the Preferences and
+   options               adds the paintbrush options like Opacity to
+                         every tool so you can have different settings
+                         for different tools.
+
+   Sample average        The color-picker can now optionally average
+   color-picker          the neighborhood of pixels instead only
+                         giving you the pixel you click at.
+
+   Speedups              The color-correction functions as well as the
+                         histogram functions have been optimized and
+                         make use of multi-processor machines.
+
+   Global parasites      Global parasites (arbitrary data attached to
+                         the Gimp process) have been there for longer,
+                         but now they are saved and can be retrieved
+                         through the PDB.
+
+   Tool options          The layout of all tools has changed slightly.
+   redesign              They look more uniform, have a nice
+                         Reset-button and inactive widgets are greyed
+                         about giving better user feedback.
+
+   Crop tool overhaul    The former crop tool is now called Crop &
+                         Resize and allows you to interactively resize
+                         layers or the image. Autocrop functionality
+                         has also been added.
+
+   Interactive Curves    Curves dialog now has interactive feedback.
+                         Press and drag the mouse button in the image
+                         window and a marker will appear in the curves
+                         dialog showing the channel value at that
+                         point.
+
+   New plug-ins          New plug-ins were added: Rotate ColorMap
+                         allows you to shift ranges of colors to new
+                         values much like the way you know it from XV.
+                         GDynText has been added and integrated as an
+                         optional replacement for the text tool. It
+                         allows you to add editable text layers. Oh,
+                         it really rocks!!
+
+   PDBgen integration    The PDB (Procedural Database) calls for the
+                         gimp functions that allow you to call gimp
+                         internals from scripts and plug-ins are now
+                         autogenerated using some Perl-magic.
+
+   More work on unit     Support for real-world units is coming along
+   support               and is now supported by the gimp core in most
+                         of the places where it makes sense.
+
+   [ New features in version 1.1.4 ]
+
+   New plug-ins          Three new plug-ins were added to the
+                         distribution: The wmf plug-in loads files of
+                         the Windows(tm) metafile file format. GAP,
+                         the Gimp Animation Plug-in, gives access to a
+                         bunch of functions for working on and
+                         creation of animations. The xjt plug-in
+                         combines the functionality of the XCF file
+                         format with JPEG compression.
+
+   Gradient              The paintbrush can now be configured to use
+   brush-strokes         the current gradient as its color-source.
+                         This allows for some very nice effects. A
+                         not-so-nice one can be seen here.
+
+   User-defined units    The framework for user-defined units has been
+                         added. If you like to measure your images in
+                         lightyears, you can now do so and the unit
+                         definition will be saved with your work in
+                         the XCF file.
+
+   Power-user shortcuts  Modifier keys (Shift|Ctrl|Alt) can now be
+                         used with the buttons in the L&C-dialog and
+                         give quick access to functions like Move
+                         Layer to Top and others. Additionally a
+                         button for Channel To Selection has been
+                         added.
+
+   XCF loading/saving    XCF files do not only load and save much
+   speedups              faster, they also compress a little better
+                         then before. However full backward
+                         compatibilty is preserved.
+
+   More preferences      The preferences dialog is seeing a major
+   cosmetic              overhaul. There's a new widget to select
+                         directories and recently the dialog has been
+                         reordered to use a tree instead of notebook
+                         tabs.
+
+   Plug-in updates       A bunch of plug-ins including but not limited
+                         to wind, bumpmap, exchange, sharpen and mail
+                         have seen bugfixes and/or enhancements.
+
+   [ New features in version 1.1.3 ]
+
+   Paths dialog          The Layers&Channels-dialog now features a new
+                         page: Paths. This allows you to conveniently
+                         add and remove points from your bezier paths
+                         and to save, delete and modify paths.
+                         Additionally it is an easy way to crash your
+                         Gimp.
+
+   Real-world unit       The integration of real-world units into The
+   support               Gimp is going on nicely. The basics are
+                         there: You can choose your favorite unit/
+                         resolution in the Preferences, use it when
+                         creating a new image and the information is
+                         displayed in the statusbar.
+
+   Better RGB->Indexed   The box-cut quantizer used in RGB->INDEXED
+   conversion            conversion has been revised and should give
+                         better results now.
+
+   Win32 merges          Tor Lillqvist started to merge his changes
+                         for Win32 into The Gimp source. For more info
+                         have a look at the GIMP Win32 page.
+
+   Configurable image    The string that is displayed in the image
+   title                 title is now configurable. It can for example
+                         show the display zoom factor.
+
+   Perl                  A lot of work has been put into the Perl
+                         plugin recently, but as long as I haven't
+                         managed to build it on my system, I can't say
+                         anything about this...
+
+   [ New features in version 1.1.2 ]
+
+   New plugin:           This new plugin allows you to browse the
+   Plugindetails         plugin menu system and helps to find the
+                         plug-in you've lost in the menu jungle weeks
+                         ago. See it in action here.
+
+   Thumbnails            Gimp now automagically saves xv-compatible
+                         thumbnails upon image saves. And of course,
+                         the load dialog shows them.
+
+   More fun with Ink     The Ink-tool now allows the user to choose
+                         between elliptical, square, and diamond
+                         shaped brushes.
+
+   Parallelization       In addition to all the work that's been put
+                         into threads, true parallelization is now
+                         being added. Choose your number of processors
+                         and make The Gimp fly...
+
+   Triangular            Due to the ease of adding new color-selectors
+   Color-Selector        via modules, a nice new triangular one has
+                         appeared. Have a look at this screenshot.
+
+   [ New features in version 1.1.1 ]
+
+   File->Revert          A function that reverts your image to the
+                         version on disk was added.
+
+   Pluggable             There's now the possibility to add
+   Color-Selectors       color-selector modules to the Gimp. Next to
+                         the standard rectangular one you'll now find
+                         the circle that is used for Script-Fu.
+
+   More speed, less      Optimizations using copy-on-write were
+   memory                applied to more internal functions to bring
+                         you a faster, less memory-consuming Gimp.
+
+   Improved JPEG         The JPEG plugin now handles comments,
+   handling              resolution and progressive saving.
+
+   Progress indicators   Most if not all timeintensive core-functions
+                         now change the cursor to indicate that gimp
+                         is busy and show their progress in the
+                         statusbar.
+
+   Tab hides dialogs     Ever wished to get rid of all the dialogs
+                         floating around on your screen? Well, with
+                         the new version, you press the TAB-key and
+                         they go away ... and can be brought back
+                         using the TAB-key again.
+
+   Gimp class generator  Well, I'm not sure if I got this right, so
+                         here's what Yosh said about it: "[GCG] is
+                         autogening that gtk+ class drugdery". Should
+                         make coding easier.
+
+   Spiral gradients      A new gradient type was introduced: spiral
+                         gradients. Have a look at this small sample.
+
+   Palette dialog        The palette dialog has seen an overhaul.
+                         Things haven't settled yet, but the new
+                         dialog looks much nicer and, unlike the old
+                         one, can handle large amounts of palettes.
+
+   [ New features in version 1.1.0 ]
+
+   XInput support        GIMP now supports special input devices like
+                         drawing tablets by default. It depends on the
+                         device being supported by your XServer. For
+                         example, Wacom drawing tablets are often
+                         supported. Support for multiple devices,
+                         pressure and tilt sensitivity is slowly being
+                         added to all paint tools.
+
+   Ink tool              A nice new toy that really comes to life if
+                         you have an extended input device as
+                         described above. Have a look at this
+                         screenshot.
+
+   'File New' dialog     The New Image dialog allows the use of real
+                         life units like centimeters and inches along
+                         with a resolution entry. Have a look at this
+                         screenshot.
+
+   Hex display           A small but nifty feature was added to the
+                         Color Picker: It now displays the HEX triplet
+                         of the selected color. Useful for WEB
+                         artists.
+
+   Popup button          The small rectangle between the rulers in the
+                         upper left corner of the image window now
+                         gives access to the menu. Usefule for people
+                         with tablets or two-button mice.
+
+   Statusbar             The image display now has a statusbar.
+                         Plug-ins write their progress there and your
+                         mouse coordinates are also displayed. Most
+                         tools use it too. The Selection tool, for
+                         example, shows the selection size while you
+                         drag. Have a look at this screenshot. And
+                         don't worry, it's possible to hide the
+                         statusbar to save screen estate.
+
+   GUI enhancements      Lots of nifty enhancements to the user
+                         interface. Spinbuttons are used in a lot of
+                         places. More stuff like that has to be added
+                         in the future...
+
+   Session management    GIMP remembers window positions and sizes
+                         (eeek, not working currently, but its almost
+                         there) and restores them on startup.
+
+   Selections            New algorithms are now used to grow and
+                         shrink the selection. The result looks much
+                         better!
+
+   PDB interface         A lot more internal functions are now
+                         exported to the PDB. For example, this should
+                         allow the GIMP Animation Plugin to work
+                         without changes to the GIMP core.
+
+   Better tile-caching   Tiles are now more intelligently cached and a
+                         threaded process tries to swap out dirty
+                         tiles before you run out of physical memory.
+                         (Hmm, have I got this right? IIRC, there's a
+                         thread to swap in stuff ahead of the time,
+                         too.)
+
+   Copy On Write         The MAD-COW patches that appeared too late to
+                         get integrated into GIMP-1.0 are now
+                         integrated. And...its FASTER!!
+
+   Document Index        The document index keeps track of the images
+                         you used with The GIMP. You can even drag in
+                         an image from a file-manager (GNOME MC for
+                         example).
+
+   Editable Brushes      Well, editable brushes still need some work,
+                         but the basics are there...
+
+   Fixed size            The size or the aspect ratio of selections
+   selections            can now be entered numerically as well.
+
+   Script-Fu interface   The Script-Fu dialog now allows a whole bunch
+   improvements          of entry widgets, like selectors for fonts,
+                         brushes, gradients and patterns. Strings can
+                         be entered without the nasty quotes and
+                         numerical entries can use sliders and
+                         spinbuttons. Have a look at this screenshot.
+                         Most of the scripts were already updated.
+
+   Quick Reference       The Quick Reference sheet looks much better
+                         and holds more information. A must-have for
+                         your desktop.
+
+   Transform Tool UI     The user interface for the Transform tool has
+                         seen a major overhaul. It now offers a new
+                         'Corrective' mode that for example makes it
+                         easy to correct slightly rotated scans. Have
+                         a look at this screenshot.
+
+   Color representation  GIMP now uses GdkRGB to provide better
+                         dithering for non truecolor displays. This
+                         should also speed GIMP up a bit.
+
+   Parasites             Arbitrary data can be attached to an image
+                         and be retrieved later. (Is this already
+                         saved in the XCF file? I think not...)
+
+   Tatoos                A unique stamp can be attached to drawables.
+                         That way a plug-in can easily keep track of
+                         layers.
+
+   Dialogs               A few dialogs can now be controlled via the
+                         PDB. That allows a plug-in to use the
+                         internal dialogs to select brushes, patterns
+                         and gradients.
+
+   Idle-Renderer         Display re-rendering is now handled in an
+                         interruptible asynchronous thread. This makes
+                         The GIMP more responsive, especially when
+                         working with the Layers-dialog.
+
+   Resolution support    Each image now has a resolution associated
+                         with it. This needs to be integrated better
+                         into the GUI, but there are already a few
+                         file plug-ins that make use of this.
+
+   GimpPerl              The GIMP-Perl extension is now part of
+                         GIMP-1.1.
+
+   Monitor resolution    The image can now be displayed in float scale
+                         factrors. If GIMP knows about your monitor
+                         resolution it displays one inch as one inch.
+                         Still needs some work...
+
+   Help in the DB        The DB Browser now also display the help that
+   Browser               is available for a lot of functions in the
+                         PDB.
+
+   Internationalization  National Language Support is coming!
+
+   New plug-ins          Various new plug-ins were added. More have
+                         appeared in the Registry and wait to be added
+                         or updated. A few nice ones that are now
+                         included:
+
+                           * WaterSelect - a nifty way to select
+                             colors
+                           * NewsPrint - whee, you have to see that
+                           * Guillotine - slices the image up along
+                             its guides
+
+   Internals             Lots of changes were made to GIMP internals
+                         that I don't understand correctly, like
+                         objectification and removal of the image ID
+                         system. Read the ChangeLog yourself to figure
+                         this out.
+
+   GTK+ compatibilty     GIMP 1.1 makes use of the development version
+                         of GTK+. Therefore a whole lot of work has
+                         been put in following the GTK+ development
+                         and keeping The GIMP in sync.
+
+   Plug-ins and Scripts  Various plug-ins and scripts not mentioned
+                         above have been updated or fixed to work with
+                         changes in the GIMP core or GTK+. One day I
+                         might add a list of all changed plug-ins to
+                         this list...
+
+   Miscellaneous           * The painting functions (brush, pencil,
+                             airbrush, etc.) have been optimized.
+                           * The GAP plugin, which has some essential
+                             animation features, is being integrated
+                             into GIMP.
+                           * The font selector has been redesigned.
+                           * The new, slightly incomplete MAINTAINERS
+                             file should help track responsibility and
+                             expertise for various parts of The GIMP.
+
+
+Copyright 1998-2000 by Sven Neumann <sven@gimp.org>

@@ -545,7 +545,7 @@ HAVE_RESOURCE = YES
 EXTRALIBS = user32.lib gdi32.lib
 !endif
 
-GIMP_VER = 1.1
+GIMP_VER = 1.2
 GTK_VER = 1.3
 GLIB_VER = 1.3
 

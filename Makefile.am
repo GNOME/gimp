@@ -181,19 +181,13 @@ EXTRA_DIST = \
 	unitrc					\
 	gimp_logo.ppm				\
 	gimp_splash.ppm				\
-	gimp1_0_splash.ppm			\
 	rmshm					\
 	user_install				\
 	user_install.bat			\
 	ps-menurc				\
-	gimp.1					\
-	gimprc.5				\
-	gimptool.1				\
-	gimp-remote.1				\
 	gimp.m4					\
 	gimprc.win32				\
-	config.h.win32				\
-	gimp.spec
+	config.h.win32
 
 gimpdata_DATA = \
 	gimp_logo.ppm		 \

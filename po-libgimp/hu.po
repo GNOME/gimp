@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2000-12-22 12:57+0100\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-12-22 13:29+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -125,7 +125,8 @@ msgstr "A képet exportálni kellene mentés elõtt a következõ okból:"
 #. the footline
 #: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
-msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr ""
+"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpfileselection.c:388
 msgid "Select File"
@@ -206,8 +207,8 @@ msgid ""
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
 "Ha az \"Idõ\" gomb nincs lenyomva, ezt a számot használja a "
-"véletlenszám-generálás kiindulópontjaként. Így az adott \"véletlen\" "
-"sorozat megismételhetõ."
+"véletlenszám-generálás kiindulópontjaként. Így az adott \"véletlen\" sorozat "
+"megismételhetõ."
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
@@ -217,7 +218,9 @@ msgstr "Idõ"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr "A véletlenszám-generálás kiindulópontja a pontos idõ, ez garantálja a megfelelõ véletlenséget."
+msgstr ""
+"A véletlenszám-generálás kiindulópontja a pontos idõ, ez garantálja a "
+"megfelelõ véletlenséget."
 
 #: libgimp/gimpwidgets.c:1041
 msgid "Bytes"
@@ -230,4 +233,3 @@ msgstr "kilobájt"
 #: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
 msgstr "megabájt"
-

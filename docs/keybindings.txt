@@ -15,7 +15,7 @@ assigned, the old command will lose it's binding.
 The GIMP also comes with a menurc that will implement Adobe 
 Photoshop style keybindings, if you are used to Photoshop, this 
 may prove helpful. To use it, rename ps-menurc to menurc and
-put it in ~/gimp-1.1, overwriting the one that is already there
+put it in ~/gimp-1.2, overwriting the one that is already there
 (you may want to make a backup first).
 
 1. ToolBox

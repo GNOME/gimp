@@ -40,7 +40,6 @@ app/flip_tool.c
 app/floating_sel.c
 app/fuzzy_select.c
 app/gdisplay.c
-app/gdisplay_color_ui.c
 app/gdisplay_ops.c
 app/gimage_mask.c
 app/gimpbrush.c
@@ -113,8 +112,6 @@ app/undo.c
 app/undo_history.c
 app/user_install.c
 app/xcf.c
-modules/cdisplay_gamma.c
-modules/cdisplay_highcontrast.c
 modules/colorsel_gtk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c

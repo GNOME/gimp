@@ -5289,15 +5289,15 @@ GIOChannel      *channel,gchar          **data,gint             count
 </MACRO>
 <MACRO>
 <NAME>GIMP_MINOR_VERSION</NAME>
-#define GIMP_MINOR_VERSION				(1)
+#define GIMP_MINOR_VERSION				(2)
 </MACRO>
 <MACRO>
 <NAME>GIMP_MICRO_VERSION</NAME>
-#define GIMP_MICRO_VERSION				(29)
+#define GIMP_MICRO_VERSION				(0)
 </MACRO>
 <MACRO>
 <NAME>GIMP_VERSION</NAME>
-#define GIMP_VERSION					"1.1.29"
+#define GIMP_VERSION					"1.2.0"
 </MACRO>
 <MACRO>
 <NAME>GIMP_CHECK_VERSION</NAME>

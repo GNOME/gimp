@@ -57,7 +57,7 @@ PREREQUISITES
        http://www.gimp.org/
        ftp://ftp.gimp.org/pub/gimp/
 
-          gimp-1.1 (or newer, e.g. CVS or CVS snapshots) is recommended
+          gimp-1.2 (or newer, e.g. CVS or CVS snapshots) is recommended
           for full functionality, but any version since 1.0.2 should do,
           some features not implemented in 1.0 don't work, though.
 
@@ -247,7 +247,7 @@ register "gimp_fu_example_script",			# fill in a function name
    
    fill $l BG_IMAGE_FILL;
 
-   # the next function only works in gimp-1.1
+   # the next function only works in gimp-1.2
    $text_layer=$img->text_fontname(-1,10,10,$text,5,1,xlfd_size($font),$font);
 
    gimp_palette_set_foreground("green");

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins\n"
-"POT-Creation-Date: 2000-12-19 11:26-0800\n"
+"POT-Creation-Date: 2000-12-23 11:40-0800\n"
 "PO-Revision-Date: 2000-11-14 23:15+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -69,28 +69,28 @@ msgstr "Informacje o"
 #: plug-ins/common/sharpen.c:523 plug-ins/common/shift.c:376
 #: plug-ins/common/sinus.c:1704 plug-ins/common/smooth_palette.c:403
 #: plug-ins/common/snoise.c:512 plug-ins/common/sobel.c:251
-#: plug-ins/common/sparkle.c:349 plug-ins/common/spheredesigner.c:2208
-#: plug-ins/common/spread.c:382 plug-ins/common/struc.c:1281
-#: plug-ins/common/sunras.c:1589 plug-ins/common/tga.c:1183
-#: plug-ins/common/threshold_alpha.c:271 plug-ins/common/tiff.c:1585
-#: plug-ins/common/tile.c:405 plug-ins/common/tileit.c:386
-#: plug-ins/common/uniteditor.c:173 plug-ins/common/unsharp.c:787
-#: plug-ins/common/video.c:2155 plug-ins/common/vpropagate.c:935
-#: plug-ins/common/warp.c:437 plug-ins/common/waves.c:349
-#: plug-ins/common/whirlpinch.c:808 plug-ins/common/wind.c:1012
-#: plug-ins/common/wmf.c:931 plug-ins/common/xbm.c:1150
-#: plug-ins/common/xpm.c:800 plug-ins/fits/fits.c:987
-#: plug-ins/flame/flame.c:631 plug-ins/flame/flame.c:920
-#: plug-ins/fp/fp_gtk.c:904 plug-ins/gap/gap_arr_dialog.c:768
-#: plug-ins/gap/gap_arr_dialog.c:1010 plug-ins/gap/gap_decode_xanim.c:178
-#: plug-ins/gap/gap_lib.c:230 plug-ins/gap/gap_mod_layer.c:147
-#: plug-ins/gap/gap_mov_dialog.c:498 plug-ins/gap/gap_mpege.c:191
-#: plug-ins/gap/gap_resi_dialog.c:149 plug-ins/gdyntext/gdyntext_ui.c:199
-#: plug-ins/gdyntext/gdyntext_ui.c:573 plug-ins/gfig/gfig.c:4080
-#: plug-ins/gfig/gfig.c:4425 plug-ins/gfig/gfig.c:4508
-#: plug-ins/gfig/gfig.c:4813 plug-ins/gflare/gflare.c:2463
-#: plug-ins/gflare/gflare.c:3477 plug-ins/gfli/gfli.c:821
-#: plug-ins/gfli/gfli.c:890 plug-ins/gimpressionist/gimpressionist.c:356
+#: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
+#: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
+#: plug-ins/common/tga.c:1183 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tiff.c:1585 plug-ins/common/tile.c:405
+#: plug-ins/common/tileit.c:386 plug-ins/common/uniteditor.c:173
+#: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
+#: plug-ins/common/vpropagate.c:935 plug-ins/common/warp.c:437
+#: plug-ins/common/waves.c:349 plug-ins/common/whirlpinch.c:808
+#: plug-ins/common/wind.c:1012 plug-ins/common/wmf.c:931
+#: plug-ins/common/xbm.c:1150 plug-ins/common/xpm.c:800
+#: plug-ins/fits/fits.c:987 plug-ins/flame/flame.c:631
+#: plug-ins/flame/flame.c:920 plug-ins/fp/fp_gtk.c:904
+#: plug-ins/gap/gap_arr_dialog.c:768 plug-ins/gap/gap_arr_dialog.c:1010
+#: plug-ins/gap/gap_decode_xanim.c:178 plug-ins/gap/gap_lib.c:230
+#: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
+#: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
+#: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:573
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4508 plug-ins/gfig/gfig.c:4813
+#: plug-ins/gflare/gflare.c:2463 plug-ins/gflare/gflare.c:3477
+#: plug-ins/gfli/gfli.c:821 plug-ins/gfli/gfli.c:890
+#: plug-ins/gimpressionist/gimpressionist.c:356
 #: plug-ins/gimpressionist/gimpressionist.c:477
 #: plug-ins/gimpressionist/orientmap.c:626
 #: plug-ins/gimpressionist/presets.c:392 plug-ins/gimpressionist/sizemap.c:485
@@ -151,19 +151,19 @@ msgstr "OK"
 #: plug-ins/common/shift.c:378 plug-ins/common/sinus.c:1706
 #: plug-ins/common/smooth_palette.c:405 plug-ins/common/snoise.c:514
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
-#: plug-ins/common/spheredesigner.c:2212 plug-ins/common/spread.c:384
-#: plug-ins/common/struc.c:1283 plug-ins/common/sunras.c:1591
-#: plug-ins/common/tga.c:1185 plug-ins/common/threshold_alpha.c:273
-#: plug-ins/common/tiff.c:1587 plug-ins/common/tile.c:407
-#: plug-ins/common/tileit.c:388 plug-ins/common/uniteditor.c:175
-#: plug-ins/common/unsharp.c:789 plug-ins/common/video.c:2157
-#: plug-ins/common/vpropagate.c:937 plug-ins/common/warp.c:439
-#: plug-ins/common/waves.c:351 plug-ins/common/whirlpinch.c:810
-#: plug-ins/common/wind.c:1014 plug-ins/common/wmf.c:933
-#: plug-ins/common/xbm.c:1152 plug-ins/common/xpm.c:802
-#: plug-ins/fits/fits.c:989 plug-ins/flame/flame.c:633
-#: plug-ins/flame/flame.c:922 plug-ins/fp/fp_gtk.c:908
-#: plug-ins/gap/gap_arr_dialog.c:1012 plug-ins/gap/gap_dbbrowser_utils.c:210
+#: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1185
+#: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1587
+#: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:388
+#: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
+#: plug-ins/common/video.c:2157 plug-ins/common/vpropagate.c:937
+#: plug-ins/common/warp.c:439 plug-ins/common/waves.c:351
+#: plug-ins/common/whirlpinch.c:810 plug-ins/common/wind.c:1014
+#: plug-ins/common/wmf.c:933 plug-ins/common/xbm.c:1152
+#: plug-ins/common/xpm.c:802 plug-ins/fits/fits.c:989
+#: plug-ins/flame/flame.c:633 plug-ins/flame/flame.c:922
+#: plug-ins/fp/fp_gtk.c:908 plug-ins/gap/gap_arr_dialog.c:1012
+#: plug-ins/gap/gap_dbbrowser_utils.c:210
 #: plug-ins/gap/gap_decode_mpeg_main.c:337 plug-ins/gap/gap_decode_xanim.c:176
 #: plug-ins/gap/gap_decode_xanim.c:341 plug-ins/gap/gap_filter_foreach.c:134
 #: plug-ins/gap/gap_lib.c:1027 plug-ins/gap/gap_mod_layer.c:149
@@ -200,12 +200,11 @@ msgstr "Anuluj"
 #: plug-ins/common/nlfilt.c:587 plug-ins/common/noisify.c:506
 #: plug-ins/common/plasma.c:326 plug-ins/common/polar.c:935
 #: plug-ins/common/ps.c:2936 plug-ins/common/sharpen.c:550
-#: plug-ins/common/sinus.c:2123 plug-ins/common/spheredesigner.c:2230
-#: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
-#: plug-ins/common/whirlpinch.c:826 plug-ins/common/wind.c:1031
-#: plug-ins/flame/flame.c:940 plug-ins/gfig/gfig.c:3956
-#: plug-ins/gflare/gflare.c:2490 plug-ins/gflare/gflare.c:3502
-#: plug-ins/gimpressionist/orientmap.c:502
+#: plug-ins/common/sinus.c:2123 plug-ins/common/tileit.c:407
+#: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
+#: plug-ins/common/wind.c:1031 plug-ins/flame/flame.c:940
+#: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2490
+#: plug-ins/gflare/gflare.c:3502 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
 #: plug-ins/imagemap/imap_edit_area_info.c:287
@@ -341,8 +340,7 @@ msgstr ""
 "wyj±tkiem Mandelbrota i Sierpiñskiego)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/common/spheredesigner.c:2305
-#: plug-ins/gfig/gfig.c:3548
+#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Wczytaj"
 
@@ -352,8 +350,7 @@ msgstr "Wczytuje fraktal z pliku"
 
 #: plug-ins/FractalExplorer/Dialogs.c:528 plug-ins/common/convmatrix.c:858
 #: plug-ins/common/curve_bend.c:1361 plug-ins/common/iwarp.c:1144
-#: plug-ins/common/sample_colorize.c:1372
-#: plug-ins/common/spheredesigner.c:2210 plug-ins/common/tileit.c:467
+#: plug-ins/common/sample_colorize.c:1372 plug-ins/common/tileit.c:467
 #: plug-ins/fp/fp_gtk.c:906 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:809 plug-ins/sel2path/sel2path.c:339
 msgid "Reset"
@@ -364,9 +361,9 @@ msgid "Reset parameters to default values"
 msgstr "Przywraca domy¶lne warto¶ci parametrów"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/common/spheredesigner.c:2312
-#: plug-ins/gfig/gfig.c:3927 plug-ins/gfig/gfig.c:5256
-#: plug-ins/imagemap/imap_menu.c:218 plug-ins/imagemap/imap_toolbar.c:112
+#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
+#: plug-ins/gfig/gfig.c:5256 plug-ins/imagemap/imap_menu.c:218
+#: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
 msgstr "Zapisz"
 
@@ -1112,7 +1109,6 @@ msgid "Options"
 msgstr "Opcje"
 
 #: plug-ins/Lighting/lighting_ui.c:1076 plug-ins/MapObject/mapobject_ui.c:1318
-#: plug-ins/common/spheredesigner.c:1551 plug-ins/common/spheredesigner.c:2590
 msgid "Light"
 msgstr "¦wiat³o"
 
@@ -1286,7 +1282,6 @@ msgid "Map Images to Box Faces"
 msgstr "Obrazy na p³aszczyznach prostopad³o¶cianu"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
-#: plug-ins/common/spheredesigner.c:2418
 msgid "Scale X:"
 msgstr "Skala X:"
 
@@ -1370,7 +1365,7 @@ msgstr "Prze³±cza wy¶wietlanie szkieletu obiektu"
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:326
 #: plug-ins/common/png.c:426 plug-ins/common/png.c:428
 #: plug-ins/common/pnm.c:411 plug-ins/common/psd.c:1731
-#: plug-ins/common/sunras.c:441 plug-ins/common/tga.c:429
+#: plug-ins/common/sunras.c:442 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:454 plug-ins/common/xbm.c:734
 #: plug-ins/common/xpm.c:334 plug-ins/common/xwd.c:430
 #: plug-ins/faxg3/faxg3.c:196 plug-ins/gfli/gfli.c:459 plug-ins/sgi/sgi.c:330
@@ -1413,7 +1408,7 @@ msgstr "%s: z³a mapa kolorów"
 #: plug-ins/common/pcx.c:332 plug-ins/common/pcx.c:338
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:547
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
-#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:931
+#: plug-ins/common/smooth_palette.c:241 plug-ins/common/sunras.c:932
 #: plug-ins/common/tga.c:923 plug-ins/common/tiff.c:680
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:515
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:872
@@ -1440,7 +1435,7 @@ msgstr "Nie mo¿na otworzyæ %s"
 #: plug-ins/common/pat.c:384 plug-ins/common/pcx.c:547
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:775
 #: plug-ins/common/png.c:777 plug-ins/common/pnm.c:783
-#: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:524
+#: plug-ins/common/ps.c:1001 plug-ins/common/sunras.c:525
 #: plug-ins/common/tga.c:1022 plug-ins/common/tiff.c:1337
 #: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:653
 #: plug-ins/common/xwd.c:534 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
@@ -1781,7 +1776,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1606
+#: plug-ins/common/CML_explorer.c:200 plug-ins/common/sunras.c:1607
 #: plug-ins/print/gimp_main_window.c:1093
 msgid "Standard"
 msgstr "Standard"
@@ -2150,7 +2145,7 @@ msgstr "Zapis jako tekst"
 
 #. file save type
 #: plug-ins/common/aa.c:356 plug-ins/common/pnm.c:942
-#: plug-ins/common/sunras.c:1601
+#: plug-ins/common/sunras.c:1602
 msgid "Data Formatting"
 msgstr "Formatowanie danych"
 
@@ -3361,8 +3356,7 @@ msgstr "Wykrywanie krawêdzi..."
 msgid "Edge Detection"
 msgstr "Wykrywanie krawêdzi"
 
-#: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2609
-#: plug-ins/common/unsharp.c:821
+#: plug-ins/common/edge.c:675 plug-ins/common/unsharp.c:821
 msgid "Amount:"
 msgstr "Rozmiar:"
 
@@ -3379,7 +3373,7 @@ msgstr "Wyt³oczenie"
 msgid "Function"
 msgstr "Funkcja"
 
-#: plug-ins/common/emboss.c:551 plug-ins/common/spheredesigner.c:1550
+#: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
 msgstr "Mapowanie wypuk³o¶ci"
 
@@ -5010,7 +5004,7 @@ msgstr "Plazma..."
 msgid "Plasma"
 msgstr "Plazma"
 
-#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2401
+#: plug-ins/common/plasma.c:371
 msgid "Turbulence:"
 msgstr "Turbulencje:"
 
@@ -5074,8 +5068,7 @@ msgid "Help:"
 msgstr "Pomoc:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:443 plug-ins/common/spheredesigner.c:2333
-#: plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/common/plugindetails.c:443 plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Typ:"
 
@@ -6065,163 +6058,6 @@ msgstr "Wykorzystanie koloru narzêdzia"
 msgid "Use the Background Color"
 msgstr "Wykorzystanie koloru t³a"
 
-#: plug-ins/common/spheredesigner.c:247 plug-ins/gimpressionist/general.c:217
-msgid "Solid"
-msgstr "Jednolite"
-
-#: plug-ins/common/spheredesigner.c:248
-msgid "Checker"
-msgstr "Szachownica"
-
-#: plug-ins/common/spheredesigner.c:249
-msgid "Marble"
-msgstr "Marmur"
-
-#: plug-ins/common/spheredesigner.c:250
-msgid "Lizard"
-msgstr "Skóra jaszczurki"
-
-#: plug-ins/common/spheredesigner.c:251
-msgid "Phong"
-msgstr "Phong"
-
-#: plug-ins/common/spheredesigner.c:252
-msgid "Noise"
-msgstr "Szum"
-
-#: plug-ins/common/spheredesigner.c:253
-msgid "Wood"
-msgstr "Drewno"
-
-#: plug-ins/common/spheredesigner.c:254
-msgid "Spiral"
-msgstr "Spirala"
-
-#: plug-ins/common/spheredesigner.c:255
-msgid "Spots"
-msgstr "Kropki"
-
-#: plug-ins/common/spheredesigner.c:1549 plug-ins/common/spheredesigner.c:2578
-msgid "Texture"
-msgstr "Tekstura"
-
-#: plug-ins/common/spheredesigner.c:1552
-msgid "(unknown!?)"
-msgstr "(nieznana!?)"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Open file"
-msgstr "Otwórz plik"
-
-#: plug-ins/common/spheredesigner.c:1826
-msgid "Save file"
-msgstr "Zapisz plik"
-
-#: plug-ins/common/spheredesigner.c:2087 plug-ins/common/spheredesigner.c:2125
-#: plug-ins/gimpressionist/general.c:99
-msgid "Color Selection Dialog"
-msgstr "Wybór koloru"
-
-#: plug-ins/common/spheredesigner.c:2203
-msgid "Sphere Designer"
-msgstr "Tworzenie sfery"
-
-#: plug-ins/common/spheredesigner.c:2244 plug-ins/gimpressionist/preview.c:117
-#: plug-ins/gimpressionist/repaint.c:877 plug-ins/gimpressionist/repaint.c:879
-#: plug-ins/imagemap/imap_polygon.c:446
-msgid "Update"
-msgstr "Aktualizuj"
-
-#: plug-ins/common/spheredesigner.c:2253
-msgid "Textures"
-msgstr "Tekstury"
-
-#: plug-ins/common/spheredesigner.c:2278 plug-ins/gfig/gfig.c:3137
-#: plug-ins/gimpressionist/orientmap.c:531
-#: plug-ins/gimpressionist/sizemap.c:431
-msgid "Add"
-msgstr "Dodaj"
-
-#: plug-ins/common/spheredesigner.c:2285
-msgid "Dup"
-msgstr "Duplikuj"
-
-#: plug-ins/common/spheredesigner.c:2292
-msgid "Del"
-msgstr "Usuñ"
-
-#: plug-ins/common/spheredesigner.c:2319
-msgid "Texture Properties"
-msgstr "Ustawienia tekstur"
-
-#: plug-ins/common/spheredesigner.c:2340
-msgid "Texture:"
-msgstr "Tekstura:"
-
-#: plug-ins/common/spheredesigner.c:2347
-msgid "Colors:"
-msgstr "Kolory:"
-
-#. Scale
-#: plug-ins/common/spheredesigner.c:2384 plug-ins/gimpressionist/paper.c:169
-#: plug-ins/ifscompose/ifscompose.c:563
-msgid "Scale:"
-msgstr "Skala:"
-
-#: plug-ins/common/spheredesigner.c:2435
-msgid "Scale Y:"
-msgstr "Skala Y:"
-
-#: plug-ins/common/spheredesigner.c:2452
-msgid "Scale Z:"
-msgstr "Skala Z:"
-
-#: plug-ins/common/spheredesigner.c:2470
-msgid "Rotate X:"
-msgstr "Obrót X:"
-
-#: plug-ins/common/spheredesigner.c:2487
-msgid "Rotate Y:"
-msgstr "Obrót Y:"
-
-#: plug-ins/common/spheredesigner.c:2504
-msgid "Rotate Z:"
-msgstr "Obrót Z:"
-
-#: plug-ins/common/spheredesigner.c:2521
-msgid "Pos X:"
-msgstr "Wsp. X:"
-
-#: plug-ins/common/spheredesigner.c:2538
-msgid "Pos Y:"
-msgstr "Wsp. Y:"
-
-#: plug-ins/common/spheredesigner.c:2555
-msgid "Pos Z:"
-msgstr "Wsp. Z:"
-
-#: plug-ins/common/spheredesigner.c:2584
-msgid "Bump"
-msgstr "Wypuk³o¶æ"
-
-#: plug-ins/common/spheredesigner.c:2626
-msgid "Exp:"
-msgstr "Wyk³adnik:"
-
-#: plug-ins/common/spheredesigner.c:2643
-msgid ""
-"by Vidar Madsen\n"
-"September 1999"
-msgstr "autor: Vidar Madsen, Wrzesieñ 1999"
-
-#: plug-ins/common/spheredesigner.c:2763
-msgid "Rendering..."
-msgstr "Renderowanie..."
-
-#: plug-ins/common/spheredesigner.c:2813
-msgid "<Image>/Filters/Render/Sphere Designer..."
-msgstr "<Image>/Filtry/Renderowanie/Tworzenie sfery..."
-
 #: plug-ins/common/spread.c:133
 msgid "<Image>/Filters/Noise/Spread..."
 msgstr "<Image>/Filtry/Szum/Rozrzut..."
@@ -6274,60 +6110,60 @@ msgstr "Dolny-lewy"
 msgid "Bottom-Right"
 msgstr "Dolny-prawy"
 
-#: plug-ins/common/sunras.c:388 plug-ins/fits/fits.c:354
+#: plug-ins/common/sunras.c:389 plug-ins/fits/fits.c:354
 msgid "Can't open file for reading"
 msgstr "Nie mo¿na otworzyæ pliku do odczytu"
 
-#: plug-ins/common/sunras.c:397
+#: plug-ins/common/sunras.c:398
 msgid "Can't open file as SUN-raster-file"
 msgstr "Nie mo¿na otworzyæ pliku jako SUN-raster"
 
-#: plug-ins/common/sunras.c:404
+#: plug-ins/common/sunras.c:405
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Typ tego SUN-rastra nie jest obs³ugiwany"
 
-#: plug-ins/common/sunras.c:427
+#: plug-ins/common/sunras.c:428
 msgid "Can't read color entries"
 msgstr "Nie mo¿na odczytaæ kolorów"
 
-#: plug-ins/common/sunras.c:434
+#: plug-ins/common/sunras.c:435
 msgid "Type of colormap not supported"
 msgstr "Nieobs³ugiwany typ palety kolorów "
 
-#: plug-ins/common/sunras.c:475
+#: plug-ins/common/sunras.c:476
 msgid "This image depth is not supported"
 msgstr "Ta g³êbia kolorów nie jest obs³ugiwana"
 
-#: plug-ins/common/sunras.c:498
+#: plug-ins/common/sunras.c:499
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr "SUNRAS nie zapisuje obrazków z kana³ami alfa"
 
-#: plug-ins/common/sunras.c:509
+#: plug-ins/common/sunras.c:510
 msgid "Can't operate on unknown image types"
 msgstr "Nie mo¿na pracowaæ na nieznanych formatach obrazów"
 
-#: plug-ins/common/sunras.c:518 plug-ins/fits/fits.c:466
+#: plug-ins/common/sunras.c:519 plug-ins/fits/fits.c:466
 msgid "Can't open file for writing"
 msgstr "Nie mo¿na otworzyæ pliku do zapisu"
 
-#: plug-ins/common/sunras.c:1038 plug-ins/common/sunras.c:1129
-#: plug-ins/common/sunras.c:1210 plug-ins/common/sunras.c:1305
+#: plug-ins/common/sunras.c:1039 plug-ins/common/sunras.c:1130
+#: plug-ins/common/sunras.c:1211 plug-ins/common/sunras.c:1306
 #: plug-ins/common/xwd.c:1273 plug-ins/common/xwd.c:1435
 #: plug-ins/common/xwd.c:1632 plug-ins/common/xwd.c:1883
 #: plug-ins/fits/fits.c:688
 msgid "EOF encountered on reading"
 msgstr "Podczas odczytu napotkano koniec pliku"
 
-#: plug-ins/common/sunras.c:1460 plug-ins/common/sunras.c:1568
+#: plug-ins/common/sunras.c:1461 plug-ins/common/sunras.c:1569
 #: plug-ins/fits/fits.c:840 plug-ins/fits/fits.c:964
 msgid "Write error occured"
 msgstr "Wyst±pi³ b³±d zapisu"
 
-#: plug-ins/common/sunras.c:1584
+#: plug-ins/common/sunras.c:1585
 msgid "Save as SUNRAS"
 msgstr "Zapis jako SUNRAS"
 
-#: plug-ins/common/sunras.c:1605
+#: plug-ins/common/sunras.c:1606
 msgid "RunLength Encoded"
 msgstr "Kompresja RLE"
 
@@ -10615,6 +10451,11 @@ msgstr "Nacisk:"
 msgid "No Options..."
 msgstr "Brak opcji..."
 
+#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gimpressionist/sizemap.c:431
+msgid "Add"
+msgstr "Dodaj"
+
 #: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "Zast±p"
@@ -11252,6 +11093,10 @@ msgstr "Szum koloru:"
 msgid "Adds random noise to the color"
 msgstr "Dodaje losowy szum do koloru"
 
+#: plug-ins/gimpressionist/general.c:99
+msgid "Color Selection Dialog"
+msgstr "Wybór koloru"
+
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
 msgstr "Przyciemnianie krawêdzi:"
@@ -11280,6 +11125,10 @@ msgstr "Z papieru"
 #: plug-ins/gimpressionist/general.c:204
 msgid "Copy the texture of the selected paper as a background"
 msgstr "Kopiuje teksturê wybranego papieru jako t³o"
+
+#: plug-ins/gimpressionist/general.c:217
+msgid "Solid"
+msgstr "Jednolite"
 
 #: plug-ins/gimpressionist/general.c:223
 msgid "Solid colored background"
@@ -11598,6 +11447,11 @@ msgstr "Odwraca teksturê papieru"
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Zastosowuje papier bez zmian (bez uwypuklania)"
 
+#. Scale
+#: plug-ins/gimpressionist/paper.c:169 plug-ins/ifscompose/ifscompose.c:563
+msgid "Scale:"
+msgstr "Skala:"
+
 #: plug-ins/gimpressionist/paper.c:188
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Okre¶la skalê tekstury (jako procent orygina³u)"
@@ -11688,6 +11542,11 @@ msgstr ""
 "(równie¿ pêdzle lub papiery), wy¶lij je do autora\n"
 "na adres <vidar@prosalg.no> (w jêzyku angielskim), aby\n"
 "mog³y zostaæ do³±czone w kolejnej wersji.\n"
+
+#: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
+#: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
+msgid "Update"
+msgstr "Aktualizuj"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
@@ -13327,6 +13186,104 @@ msgstr "B³±d: Nie mo¿na odczytaæ pliku z w³a¶ciwo¶ciami XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "B³±d: Plik z w³a¶ciwo¶ciami XJT %s jest pusty"
+
+#~ msgid "Checker"
+#~ msgstr "Szachownica"
+
+#~ msgid "Marble"
+#~ msgstr "Marmur"
+
+#~ msgid "Lizard"
+#~ msgstr "Skóra jaszczurki"
+
+#~ msgid "Phong"
+#~ msgstr "Phong"
+
+#~ msgid "Noise"
+#~ msgstr "Szum"
+
+#~ msgid "Wood"
+#~ msgstr "Drewno"
+
+#~ msgid "Spiral"
+#~ msgstr "Spirala"
+
+#~ msgid "Spots"
+#~ msgstr "Kropki"
+
+#~ msgid "Texture"
+#~ msgstr "Tekstura"
+
+#~ msgid "(unknown!?)"
+#~ msgstr "(nieznana!?)"
+
+#~ msgid "Open file"
+#~ msgstr "Otwórz plik"
+
+#~ msgid "Save file"
+#~ msgstr "Zapisz plik"
+
+#~ msgid "Sphere Designer"
+#~ msgstr "Tworzenie sfery"
+
+#~ msgid "Textures"
+#~ msgstr "Tekstury"
+
+#~ msgid "Dup"
+#~ msgstr "Duplikuj"
+
+#~ msgid "Del"
+#~ msgstr "Usuñ"
+
+#~ msgid "Texture Properties"
+#~ msgstr "Ustawienia tekstur"
+
+#~ msgid "Texture:"
+#~ msgstr "Tekstura:"
+
+#~ msgid "Colors:"
+#~ msgstr "Kolory:"
+
+#~ msgid "Scale Y:"
+#~ msgstr "Skala Y:"
+
+#~ msgid "Scale Z:"
+#~ msgstr "Skala Z:"
+
+#~ msgid "Rotate X:"
+#~ msgstr "Obrót X:"
+
+#~ msgid "Rotate Y:"
+#~ msgstr "Obrót Y:"
+
+#~ msgid "Rotate Z:"
+#~ msgstr "Obrót Z:"
+
+#~ msgid "Pos X:"
+#~ msgstr "Wsp. X:"
+
+#~ msgid "Pos Y:"
+#~ msgstr "Wsp. Y:"
+
+#~ msgid "Pos Z:"
+#~ msgstr "Wsp. Z:"
+
+#~ msgid "Bump"
+#~ msgstr "Wypuk³o¶æ"
+
+#~ msgid "Exp:"
+#~ msgstr "Wyk³adnik:"
+
+#~ msgid ""
+#~ "by Vidar Madsen\n"
+#~ "September 1999"
+#~ msgstr "autor: Vidar Madsen, Wrzesieñ 1999"
+
+#~ msgid "Rendering..."
+#~ msgstr "Renderowanie..."
+
+#~ msgid "<Image>/Filters/Render/Sphere Designer..."
+#~ msgstr "<Image>/Filtry/Renderowanie/Tworzenie sfery..."
 
 #~ msgid "GEE!  The GIMP E'er Egg!"
 #~ msgstr "£a³! Jajo wielkanocne GIMP-a!"

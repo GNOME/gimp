@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2000-12-22 20:11+0200\n"
+"POT-Creation-Date: 2000-12-18 23:30-0800\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"

@@ -1,11 +1,9 @@
-The GIMP: The GNU Image Manipulation Program
-============================================
-
-This is an unstable release of the GIMP, intended for developers only.
-For production use, please use the 1.0.x series.
+The GIMP: The GNU Image Manipulation Program: The Hadjaha Release
+=================================================================
 
 The GIMP is designed to be a professional image manipulation program 
-for both print and on-line based outputs.
+suitable for such tasks as photo retouching, image composition and image
+authoring.
 
 For installation instructions, see the file INSTALL.
 
@@ -84,13 +82,13 @@ Many of the developers hang out there.  One of the Byxnet servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc file or by using "themes" (ready-made 
 customizations). For downloadable themes and further details, see
-http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.1/gtkrc so you 
+http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.2/gtkrc so you 
 can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop (tm).
 You can find them in the ps-menurc file.  To use them, copy this file to
-~/.gimp-1.1/menurc. You can also manually change the keybindings to any of
-your choice by editing ~/.gimp-1.1/menurc.
+~/.gimp-1.2/menurc. You can also manually change the keybindings to any of
+your choice by editing ~/.gimp-1.2/menurc.
 
 5. Bugs
 =======

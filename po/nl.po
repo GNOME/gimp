@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.19\n"
-"POT-Creation-Date: 2000-12-19 14:22-0800\n"
+"POT-Creation-Date: 2000-12-24 12:22-0800\n"
 "PO-Revision-Date: 2000-06-26 01:05+02:00\n"
 "Last-Translator: Gert Dewit <Gert.Dewit@sos.be>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -41,66 +41,66 @@ msgid "Pressure:"
 msgstr "Druk: "
 
 #. this is a font, provide only one single font definition
-#: app/app_procs.c:269
+#: app/app_procs.c:272
 msgid "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/app_procs.c:280 app/app_procs.c:282 app/interface.c:564
+#: app/app_procs.c:283 app/app_procs.c:285 app/interface.c:564
 msgid "The GIMP"
 msgstr "De GIMP"
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/app_procs.c:287
+#: app/app_procs.c:290
 msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 
-#: app/app_procs.c:304 app/app_procs.c:306
+#: app/app_procs.c:307 app/app_procs.c:309
 msgid "brought to you by"
 msgstr "u gebracht door"
 
-#: app/app_procs.c:375
+#: app/app_procs.c:378
 msgid "GIMP Startup"
 msgstr "Opstarten van GIMP"
 
-#: app/app_procs.c:492 app/app_procs.c:500 app/gimprc.c:455
+#: app/app_procs.c:495 app/app_procs.c:503 app/gimprc.c:455
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "bezig met parsen van \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:564
+#: app/app_procs.c:569
 msgid "Looking for data files"
 msgstr "Bezig met zoeken naar data bestanden"
 
-#: app/app_procs.c:564
+#: app/app_procs.c:569
 msgid "Parasites"
 msgstr "Parasieten"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:566 app/internal_procs.c:71 app/preferences_dialog.c:2535
+#: app/app_procs.c:571 app/internal_procs.c:71 app/preferences_dialog.c:2535
 msgid "Brushes"
 msgstr "Penselen"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:568 app/internal_procs.c:140 app/preferences_dialog.c:2543
+#: app/app_procs.c:573 app/internal_procs.c:140 app/preferences_dialog.c:2543
 msgid "Patterns"
 msgstr "Patronen"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:570 app/preferences_dialog.c:2547
+#: app/app_procs.c:575 app/preferences_dialog.c:2547
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:572 app/internal_procs.c:104 app/preferences_dialog.c:2551
+#: app/app_procs.c:577 app/internal_procs.c:104 app/preferences_dialog.c:2551
 msgid "Gradients"
 msgstr "Gradiënten"
 
-#: app/app_procs.c:762
+#: app/app_procs.c:767
 msgid "Really Quit?"
 msgstr "Echt afsluiten?"
 
-#: app/app_procs.c:766
+#: app/app_procs.c:771
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -110,18 +110,18 @@ msgstr ""
 "\n"
 "De GIMP afsluiten?"
 
-#: app/app_procs.c:767
+#: app/app_procs.c:772
 msgid "Quit"
 msgstr "Afsluiten"
 
 #. the cancel button
-#: app/app_procs.c:767 app/brightness_contrast.c:230 app/channel_ops.c:99
+#: app/app_procs.c:772 app/brightness_contrast.c:230 app/channel_ops.c:99
 #: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:286 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:571 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_color_ui.c:160 app/gdisplay_ops.c:310 app/gimphelp.c:196
 #: app/gimpprogress.c:120 app/global_edit.c:779 app/gradient.c:1881
-#: app/gradient.c:4976 app/gradient.c:5537 app/hue_saturation.c:383
+#: app/gradient.c:4941 app/gradient.c:5502 app/hue_saturation.c:383
 #: app/interface.c:1047 app/layers_dialog.c:3555 app/layers_dialog.c:3739
 #: app/layers_dialog.c:3834 app/layers_dialog.c:4095 app/levels.c:350
 #: app/palette.c:1824 app/posterize.c:212 app/preferences_dialog.c:1485
@@ -171,7 +171,7 @@ msgstr "Aangepast gradiënt"
 msgid "Blend:"
 msgstr "Meng:"
 
-#: app/blend.c:325 app/gradient.c:641 app/preferences_dialog.c:2253
+#: app/blend.c:325 app/gradient.c:643 app/preferences_dialog.c:2253
 msgid "Linear"
 msgstr "Lineair"
 
@@ -325,7 +325,7 @@ msgstr "Penseel Editor"
 #: app/brush_edit.c:233 app/brush_select.c:287 app/by_color_select.c:727
 #: app/color_notebook.c:125 app/color_picker.c:303 app/colormap_dialog.i.c:173
 #: app/crop.c:1074 app/devices.c:760 app/docindex.c:776 app/errorconsole.c:284
-#: app/gdisplay_ops.c:310 app/gradient.c:913 app/gradient_select.c:160
+#: app/gdisplay_ops.c:310 app/gradient.c:915 app/gradient_select.c:161
 #: app/histogram_tool.c:281 app/info_window.c:261 app/lc_dialog.c:217
 #: app/measure.c:326 app/nav_window.c:1426 app/palette.c:2057
 #: app/palette.c:2073 app/palette.c:3104 app/palette_select.c:70
@@ -356,7 +356,7 @@ msgstr "Hoek:"
 msgid "Brush Selection"
 msgstr "Penseel Selectie"
 
-#: app/brush_select.c:285 app/gradient.c:911 app/module_db.c:359
+#: app/brush_select.c:285 app/gradient.c:913 app/module_db.c:359
 #: app/palette.c:2055 app/pattern_select.c:176
 msgid "Refresh"
 msgstr "Hernieuw"
@@ -379,7 +379,7 @@ msgid "New"
 msgstr "Nieuw"
 
 #: app/brush_select.c:479 app/colormap_dialog.i.c:139
-#: app/gradient_select.c:158 app/palette.c:1177 app/palette.c:2071
+#: app/gradient_select.c:159 app/palette.c:1177 app/palette.c:2071
 #: app/palette_select.c:68
 msgid "Edit"
 msgstr "Verander"
@@ -485,7 +485,7 @@ msgid "copy"
 msgstr "kopieer"
 
 #. formulate the new layer_mask name
-#: app/channel.c:205 app/gradient.c:1712 app/layer.c:345 app/layer.c:1802
+#: app/channel.c:205 app/gradient.c:1720 app/layer.c:345 app/layer.c:1802
 #, c-format
 msgid "%s copy"
 msgstr ""
@@ -792,43 +792,43 @@ msgstr "Beeld :"
 msgid "none"
 msgstr "geen"
 
-#: app/commands.c:337
+#: app/commands.c:340
 msgid "Feather Selection"
 msgstr "Straalselectie"
 
-#: app/commands.c:340
+#: app/commands.c:343
 msgid "Feather Selection by:"
 msgstr "Straalselectie door :"
 
-#: app/commands.c:373
+#: app/commands.c:376
 msgid "Shrink Selection"
 msgstr "Krimpselectie"
 
-#: app/commands.c:376
+#: app/commands.c:379
 msgid "Shrink Selection by:"
 msgstr "Krimpselectie door :"
 
-#: app/commands.c:385
+#: app/commands.c:388
 msgid "Shrink from image border"
 msgstr "Krimp vanaf de beeldrand"
 
-#: app/commands.c:407
+#: app/commands.c:410
 msgid "Grow Selection"
 msgstr "Groeiselectie"
 
-#: app/commands.c:410
+#: app/commands.c:413
 msgid "Grow Selection by:"
 msgstr "Groeiselectie door :"
 
-#: app/commands.c:430
+#: app/commands.c:433
 msgid "Border Selection"
 msgstr "Randselectie"
 
-#: app/commands.c:433
+#: app/commands.c:436
 msgid "Border Selection by:"
 msgstr "Randselectie door:"
 
-#: app/commands.c:1330
+#: app/commands.c:1335
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr ""
 "Fout bij instellen van afmeting: breedte en hoogte moeten groter zijn dan 0"
@@ -1406,27 +1406,27 @@ msgstr ""
 "selectie omdat it toebehoort aan een\n"
 "laagmasker of kanaal."
 
-#: app/gdisplay.c:232
+#: app/gdisplay.c:237
 msgid "RGB-empty"
 msgstr "RGB-leeg"
 
-#: app/gdisplay.c:232 app/image_new.c:64 app/preferences_dialog.c:1653
+#: app/gdisplay.c:237 app/image_new.c:64 app/preferences_dialog.c:1653
 msgid "RGB"
 msgstr ""
 
-#: app/gdisplay.c:235
+#: app/gdisplay.c:240
 msgid "grayscale-empty"
 msgstr "grijswaardenleeg"
 
-#: app/gdisplay.c:235
+#: app/gdisplay.c:240
 msgid "grayscale"
 msgstr "grijswaarden"
 
-#: app/gdisplay.c:238
+#: app/gdisplay.c:243
 msgid "indexed-empty"
 msgstr "geindexeerd-leeg"
 
-#: app/gdisplay.c:238
+#: app/gdisplay.c:243
 msgid "indexed"
 msgstr "geindexeerd"
 
@@ -1808,112 +1808,112 @@ msgstr "Geef een naam voor deze buffer"
 msgid "Copy Named"
 msgstr "Kopieer benoemde buffer"
 
-#: app/gradient.c:642
+#: app/gradient.c:644
 msgid "Curved"
 msgstr "Krom"
 
-#: app/gradient.c:643
+#: app/gradient.c:645
 msgid "Sinusoidal"
 msgstr "Sinusiodaal"
 
-#: app/gradient.c:644
+#: app/gradient.c:646
 msgid "Spherical (increasing)"
 msgstr "Sferisch (incrementerend)"
 
-#: app/gradient.c:645
+#: app/gradient.c:647
 msgid "Spherical (decreasing)"
 msgstr "Sferisch (decrementerend)"
 
-#: app/gradient.c:650
+#: app/gradient.c:652
 msgid "Plain RGB"
 msgstr "Enkel RGB"
 
-#: app/gradient.c:651
+#: app/gradient.c:653
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (hue tegenwijzersin)"
 
-#: app/gradient.c:652
+#: app/gradient.c:654
 msgid "HSV (clockwise hue)"
 msgstr "HSV (heu wijzerszin)"
 
-#: app/gradient.c:905
+#: app/gradient.c:907
 msgid "Gradient Editor"
 msgstr "Gradiënt Editor"
 
-#: app/gradient.c:936 app/gradient_select.c:214 app/paintbrush.c:270
+#: app/gradient.c:938 app/gradient_select.c:215 app/paintbrush.c:270
 #: app/palette.c:3160
 msgid "Gradient"
 msgstr "Gradiënt"
 
-#: app/gradient.c:937 app/gradient_select.c:215 app/palette.c:2197
+#: app/gradient.c:939 app/gradient_select.c:216 app/palette.c:2197
 #: app/palette_select.c:93
 msgid "Name"
 msgstr "Naam"
 
 #. Frame & vbox for gradient functions
-#: app/gradient.c:982
+#: app/gradient.c:984
 msgid "Gradient Ops"
 msgstr "Gradiënt operaties"
 
 #. Buttons for gradient functions
-#: app/gradient.c:990
+#: app/gradient.c:992
 msgid "New Gradient"
 msgstr "Nieuw gradiënt"
 
-#: app/gradient.c:998
+#: app/gradient.c:1000
 msgid "Copy Gradient"
 msgstr "Kopieer gradiënt"
 
-#: app/gradient.c:1006 app/gradient.c:1876
+#: app/gradient.c:1008 app/gradient.c:1876
 msgid "Delete Gradient"
 msgstr "Verwijder gradiënt"
 
-#: app/gradient.c:1014
+#: app/gradient.c:1016
 msgid "Rename Gradient"
 msgstr "Hernoem Gradiënt"
 
-#: app/gradient.c:1022 app/gradient.c:1962
+#: app/gradient.c:1024 app/gradient.c:1937
 msgid "Save as POV-Ray"
 msgstr "Bewaar als POV-Ray"
 
 #. Zoom all button
-#: app/gradient.c:1040
+#: app/gradient.c:1042
 msgid "Zoom all"
 msgstr "Zoom alle"
 
-#: app/gradient.c:1091
+#: app/gradient.c:1093
 msgid "Instant update"
 msgstr "Onmiddelijke update"
 
-#: app/gradient.c:1226 app/gradient.c:2084
+#: app/gradient.c:1228 app/gradient.c:2062
 msgid "Default"
 msgstr "Standaard"
 
-#: app/gradient.c:1654
+#: app/gradient.c:1661
 msgid "New gradient"
 msgstr "Nieuwe gradatie"
 
-#: app/gradient.c:1657
+#: app/gradient.c:1664
 msgid "Enter a name for the new gradient"
 msgstr "Geef naam voor de nieuwe gradient"
 
-#: app/gradient.c:1658
+#: app/gradient.c:1665
 msgid "untitled"
 msgstr "ongetiteld"
 
-#: app/gradient.c:1714
+#: app/gradient.c:1722
 msgid "Copy gradient"
 msgstr "Kopieer gradatie"
 
-#: app/gradient.c:1717
+#: app/gradient.c:1725
 msgid "Enter a name for the copied gradient"
 msgstr "Geef een naam voor de gekopieerde gradatie"
 
-#: app/gradient.c:1797
+#: app/gradient.c:1808
 msgid "Rename gradient"
 msgstr "Hernoem gradatie"
 
-#: app/gradient.c:1800
+#: app/gradient.c:1811
 msgid "Enter a new name for the gradient"
 msgstr "Geef een nieuwe naam voor de gradatie"
 
@@ -1926,12 +1926,12 @@ msgstr ""
 "Bent u zeker dat u \"%s\" van de \n"
 "lijst en van schijf wil verwijderen ?"
 
-#: app/gradient.c:2121
+#: app/gradient.c:2099
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "Zoomfactor: %d:1    Weergave [%0.6f, %0.6f]"
 
-#: app/gradient.c:2377
+#: app/gradient.c:2355
 #, c-format
 msgid ""
 "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
@@ -1940,31 +1940,31 @@ msgstr ""
 "Positie: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %0.3f)    "
 "Ondoorzichtigheid: %0.3f"
 
-#: app/gradient.c:2402
+#: app/gradient.c:2380
 #, c-format
 msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Voorgrond kleur ingesteld op RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2426
+#: app/gradient.c:2404
 #, c-format
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr ""
 "Achtergrondkleur ingesteld op RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2735
+#: app/gradient.c:2695
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "Sleep: verplaats    Shift+sleep: verplaats & comprimeer"
 
-#: app/gradient.c:2737 app/gradient.c:2741
+#: app/gradient.c:2697 app/gradient.c:2701
 msgid "Click: select    Shift+click: extend selection"
 msgstr "Klik: selecteer    Shift+klik: breidt selectie uit"
 
-#: app/gradient.c:2747
+#: app/gradient.c:2707
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "Klik: selecteer   Shift+klik: breidt selectie uit   Sleep: verplaats"
 
-#: app/gradient.c:2759
+#: app/gradient.c:2719
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1972,181 +1972,181 @@ msgstr ""
 "Klik: selecteer   Shift+klil: uitbreiden selectie    Sleep: verplaats    "
 "Shift+sleep: verplaats en comprimeer"
 
-#: app/gradient.c:3003 app/gradient.c:3012
+#: app/gradient.c:2968 app/gradient.c:2977
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr ""
 
-#: app/gradient.c:3030
+#: app/gradient.c:2995
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "Afstand: %0.6f"
 
-#: app/gradient.c:3522 app/gradient.c:4585
+#: app/gradient.c:3487 app/gradient.c:4550
 msgid "Left endpoint's color"
 msgstr "Kleur van linkereindpunt"
 
-#: app/gradient.c:3533 app/gradient.c:3575
+#: app/gradient.c:3498 app/gradient.c:3540
 msgid "Load from"
 msgstr "Laad van"
 
-#: app/gradient.c:3537
+#: app/gradient.c:3502
 msgid "Left neighbor's right endpoint"
 msgstr "Rechtereindpunt van linkerbuur"
 
-#: app/gradient.c:3538
+#: app/gradient.c:3503
 msgid "Right endpoint"
 msgstr "Rechtereindpunt"
 
-#: app/gradient.c:3548 app/gradient.c:3590
+#: app/gradient.c:3513 app/gradient.c:3555
 msgid "Save to"
 msgstr "Bewaar in"
 
-#: app/gradient.c:3564 app/gradient.c:4663
+#: app/gradient.c:3529 app/gradient.c:4628
 msgid "Right endpoint's color"
 msgstr "Kleur van rechtereindpunt"
 
-#: app/gradient.c:3579
+#: app/gradient.c:3544
 msgid "Right neighbor's left endpoint"
 msgstr "Linkereindpunt van rechterbuur"
 
-#: app/gradient.c:3580
+#: app/gradient.c:3545
 msgid "Left endpoint"
 msgstr "Linkereindpunt"
 
-#: app/gradient.c:3691
+#: app/gradient.c:3656
 msgid "Selection operations"
 msgstr "Selectieopertaties"
 
-#: app/gradient.c:3863
+#: app/gradient.c:3828
 msgid "Blending function for segment"
 msgstr "Mengfunctie voor segment"
 
-#: app/gradient.c:3865
+#: app/gradient.c:3830
 msgid "Coloring type for segment"
 msgstr "Kleurtype voor segment"
 
-#: app/gradient.c:3867
+#: app/gradient.c:3832
 msgid "Split segment at midpoint"
 msgstr "Splits segment in middelpunt"
 
-#: app/gradient.c:3869 app/gradient.c:4966
+#: app/gradient.c:3834 app/gradient.c:4931
 msgid "Split segment uniformly"
 msgstr "Splits segment uniform"
 
-#: app/gradient.c:3871
+#: app/gradient.c:3836
 msgid "Delete segment"
 msgstr "Verwijder segment"
 
-#: app/gradient.c:3873
+#: app/gradient.c:3838
 msgid "Re-center segment's midpoint"
 msgstr "Hercentreer middelpunt van segment"
 
-#: app/gradient.c:3875
+#: app/gradient.c:3840
 msgid "Re-distribute handles in segment"
 msgstr "Herverdeel handles in segment"
 
-#: app/gradient.c:3877
+#: app/gradient.c:3842
 msgid "Flip segment"
 msgstr "Draai segment om"
 
-#: app/gradient.c:3879 app/gradient.c:5527
+#: app/gradient.c:3844 app/gradient.c:5492
 msgid "Replicate segment"
 msgstr "Repliceer segment"
 
-#: app/gradient.c:3884
+#: app/gradient.c:3849
 msgid "Blending function for selection"
 msgstr "Megfunctie voor selectie"
 
-#: app/gradient.c:3886
+#: app/gradient.c:3851
 msgid "Coloring type for selection"
 msgstr "Kleurtype voor selectie"
 
-#: app/gradient.c:3888
+#: app/gradient.c:3853
 msgid "Split segments at midpoints"
 msgstr "Split segmenten op middelpunten"
 
-#: app/gradient.c:3890 app/gradient.c:4967
+#: app/gradient.c:3855 app/gradient.c:4932
 msgid "Split segments uniformly"
 msgstr "Split segmenten uniform"
 
-#: app/gradient.c:3892
+#: app/gradient.c:3857
 msgid "Delete selection"
 msgstr "Verwijder selectie"
 
-#: app/gradient.c:3894
+#: app/gradient.c:3859
 msgid "Re-center midpoints in selection"
 msgstr "Hercentreer middelpunten in selectie"
 
-#: app/gradient.c:3896
+#: app/gradient.c:3861
 msgid "Re-distribute handles in selection"
 msgstr "Herverdeel handles in de selectie"
 
-#: app/gradient.c:3898
+#: app/gradient.c:3863
 msgid "Flip selection"
 msgstr "Draai selectie om"
 
-#: app/gradient.c:3900 app/gradient.c:5528
+#: app/gradient.c:3865 app/gradient.c:5493
 msgid "Replicate selection"
 msgstr "Repliceer selectie"
 
-#: app/gradient.c:4184
+#: app/gradient.c:4149
 msgid "FG color"
 msgstr "FG kleur"
 
-#: app/gradient.c:4232
+#: app/gradient.c:4197
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:4752 app/gradient.c:4822
+#: app/gradient.c:4717 app/gradient.c:4787
 msgid "(Varies)"
 msgstr "(Allerlei)"
 
-#: app/gradient.c:4974
+#: app/gradient.c:4939
 msgid "Split"
 msgstr "Splits"
 
 #. Instructions
-#: app/gradient.c:4988
+#: app/gradient.c:4953
 msgid "Please select the number of uniform parts"
 msgstr "Gelieve het aantal uniforme delen te selecteren"
 
-#: app/gradient.c:4994
+#: app/gradient.c:4959
 msgid "in which you want to split the selected segment"
 msgstr "waarin u het geselecteerde segment wil splitsen"
 
-#: app/gradient.c:4995
+#: app/gradient.c:4960
 msgid "in which you want to split the segments in the selection"
 msgstr "waarin u de segmenten van de selectie splitsen"
 
-#: app/gradient.c:5355
+#: app/gradient.c:5320
 msgid "Blend endpoints' colors"
 msgstr "Kleuren van Mengeindpunten"
 
-#: app/gradient.c:5367
+#: app/gradient.c:5332
 msgid "Blend endpoints' opacity"
 msgstr "Ondoorzichtigheid van mengeindpunten"
 
-#: app/gradient.c:5535
+#: app/gradient.c:5500
 msgid "Replicate"
 msgstr "Repliceer"
 
 #. Instructions
-#: app/gradient.c:5548
+#: app/gradient.c:5513
 msgid "Please select the number of times"
 msgstr "Gelieve het aantal keren te selecteren"
 
-#: app/gradient.c:5553
+#: app/gradient.c:5518
 msgid "you want to replicate the selected segment"
 msgstr "u wil het geselecteerde segment repliceren"
 
-#: app/gradient.c:5554
+#: app/gradient.c:5519
 msgid "you want to replicate the selection"
 msgstr "u wil de selectie repliceren"
 
 #. The shell
-#: app/gradient_select.c:151
+#: app/gradient_select.c:152
 msgid "Gradient Selection"
 msgstr "Gradiënt Selectie"
 
@@ -2937,11 +2937,11 @@ msgid "/_File"
 msgstr "/_Bestand"
 
 #. <Image>/File
-#: app/menus.c:101 app/menus.c:209
+#: app/menus.c:101 app/menus.c:211
 msgid "/File/New..."
 msgstr "/Bestand/Nieuw..."
 
-#: app/menus.c:103 app/menus.c:211
+#: app/menus.c:103 app/menus.c:213
 msgid "/File/Open..."
 msgstr "/Bestand/Open..."
 
@@ -2997,686 +2997,686 @@ msgstr "/Bestand/Dialogen/Documentindex..."
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Bestand/Dialogen/Foutenconsole..."
 
-#: app/menus.c:153
+#: app/menus.c:154
 msgid "/File/Dialogs/Display Filters..."
 msgstr "/Bestand/Dialogen/Filters..."
 
-#: app/menus.c:163 app/menus.c:224
+#: app/menus.c:165 app/menus.c:226
 msgid "/File/Quit"
 msgstr "/Bestand/Afsluiten"
 
 #. <Toolbox>/Xtns
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:169
+#: app/menus.c:171
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/menus.c:171
+#: app/menus.c:173
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/Modulebrowser..."
 
 #. <Toolbox>/Help
 #. the underscore installs an accelerator using the character that follows
-#: app/menus.c:180
+#: app/menus.c:182
 msgid "/_Help"
 msgstr "/_Help"
 
-#: app/menus.c:182
+#: app/menus.c:184
 msgid "/Help/Help..."
 msgstr "/Help/Help..."
 
-#: app/menus.c:184
+#: app/menus.c:186
 msgid "/Help/Context Help..."
 msgstr "/Help/Context Help..."
 
-#: app/menus.c:186
+#: app/menus.c:188
 msgid "/Help/Tip of the Day..."
 msgstr "/Help/Tip van de dag..."
 
-#: app/menus.c:188
+#: app/menus.c:190
 msgid "/Help/About..."
 msgstr "/Help/Info..."
 
-#: app/menus.c:191
+#: app/menus.c:193
 msgid "/Help/Dump Items (Debug)"
 msgstr "/Help/Dump Items (Debug)"
 
-#: app/menus.c:213
+#: app/menus.c:215
 msgid "/File/Save"
 msgstr "/Bestand/Bewaar"
 
-#: app/menus.c:215
+#: app/menus.c:217
 msgid "/File/Save As..."
 msgstr "/Bestand/Bewaar als"
 
-#: app/menus.c:217
+#: app/menus.c:219
 #, fuzzy
 msgid "/File/Revert..."
 msgstr "/Bestand/Haal terug"
 
-#: app/menus.c:222
+#: app/menus.c:224
 msgid "/File/Close"
 msgstr "/Bestand/Sluit"
 
 #. <Image>/Edit
-#: app/menus.c:232
+#: app/menus.c:234
 msgid "/Edit/Undo"
 msgstr "/Bewerk/Kopieer"
 
-#: app/menus.c:234
+#: app/menus.c:236
 msgid "/Edit/Redo"
 msgstr "/Bewerk/Kopieer"
 
-#: app/menus.c:239
+#: app/menus.c:241
 msgid "/Edit/Cut"
 msgstr "/Bewerk/Knip"
 
-#: app/menus.c:241
+#: app/menus.c:243
 msgid "/Edit/Copy"
 msgstr "/Bewerk/Kopieer"
 
-#: app/menus.c:243
+#: app/menus.c:245
 msgid "/Edit/Paste"
 msgstr "/Bewerk/Plak"
 
-#: app/menus.c:245
+#: app/menus.c:247
 msgid "/Edit/Paste Into"
 msgstr "/Bewerk/Plak op"
 
-#: app/menus.c:247
+#: app/menus.c:249
 msgid "/Edit/Paste as New"
 msgstr "/Bewerk/Plak met naam"
 
 #. <Image>/Edit/Buffer
-#: app/menus.c:252
+#: app/menus.c:254
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Bewerk/Knip met naam"
 
-#: app/menus.c:254
+#: app/menus.c:256
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Bewerk/Kopieer met naam"
 
-#: app/menus.c:256
+#: app/menus.c:258
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Bewerk/Plak met naam"
 
-#: app/menus.c:261
+#: app/menus.c:263
 msgid "/Edit/Clear"
 msgstr "/Bewerk/Wis"
 
-#: app/menus.c:263
+#: app/menus.c:265
 msgid "/Edit/Fill with FG Color"
 msgstr "/Bewerk/Vul met VG kleur"
 
-#: app/menus.c:265
+#: app/menus.c:267
 msgid "/Edit/Fill with BG Color"
 msgstr "/Bewerk/Vul met AG kleur"
 
-#: app/menus.c:267
+#: app/menus.c:269
 msgid "/Edit/Stroke"
 msgstr "/Bewerk/Stroke"
 
 #. <Image>/Select
-#: app/menus.c:275
+#: app/menus.c:277
 msgid "/Select/Invert"
 msgstr "/Selecteer/Inverteer"
 
-#: app/menus.c:277
+#: app/menus.c:279
 msgid "/Select/All"
 msgstr "/Selecteer/Alles"
 
-#: app/menus.c:279
+#: app/menus.c:281
 msgid "/Select/None"
 msgstr "/Selecteer/Niets"
 
-#: app/menus.c:281
+#: app/menus.c:283
 msgid "/Select/Float"
 msgstr "/Selecteer/Vlottend"
 
-#: app/menus.c:286
+#: app/menus.c:288
 msgid "/Select/Feather..."
 msgstr "/Selecteer/Straal..."
 
-#: app/menus.c:288
+#: app/menus.c:290
 msgid "/Select/Sharpen"
 msgstr "/Selecteer/Scherp"
 
-#: app/menus.c:290
+#: app/menus.c:292
 msgid "/Select/Shrink..."
 msgstr "/Selecteer/Krimp..."
 
-#: app/menus.c:292
+#: app/menus.c:294
 msgid "/Select/Grow..."
 msgstr "/Selecteer/Groei..."
 
-#: app/menus.c:294
+#: app/menus.c:296
 msgid "/Select/Border..."
 msgstr "/Selecteer/Rand..."
 
-#: app/menus.c:299
+#: app/menus.c:301
 msgid "/Select/Save to Channel"
 msgstr "/Selecteer/Bewaar in kanaal"
 
 #. <Image>/View
-#: app/menus.c:304
+#: app/menus.c:306
 msgid "/View/Zoom In"
 msgstr ""
 
-#: app/menus.c:306
+#: app/menus.c:308
 msgid "/View/Zoom Out"
 msgstr "/Zicht/Uitzoemen"
 
 #. <Image>/View/Zoom
-#: app/menus.c:311
+#: app/menus.c:313
 msgid "/View/Zoom/16:1"
 msgstr "/Zicht/Zoem/16:1"
 
-#: app/menus.c:313
+#: app/menus.c:315
 msgid "/View/Zoom/8:1"
 msgstr "/Zicht/Zoem/8:1"
 
-#: app/menus.c:315
+#: app/menus.c:317
 msgid "/View/Zoom/4:1"
 msgstr "/Zicht/Zoem/4:1"
 
-#: app/menus.c:317
+#: app/menus.c:319
 msgid "/View/Zoom/2:1"
 msgstr "/Zicht/Zoem/2:1"
 
-#: app/menus.c:319
+#: app/menus.c:321
 msgid "/View/Zoom/1:1"
 msgstr "/Zicht/Zoem/1:1"
 
-#: app/menus.c:321
+#: app/menus.c:323
 msgid "/View/Zoom/1:2"
 msgstr "/Zicht/Zoem/1:2"
 
-#: app/menus.c:323
+#: app/menus.c:325
 msgid "/View/Zoom/1:4"
 msgstr "/Zicht/Zoem/1:4"
 
-#: app/menus.c:325
+#: app/menus.c:327
 msgid "/View/Zoom/1:8"
 msgstr "/Zicht/Zoem/1:8"
 
-#: app/menus.c:327
+#: app/menus.c:329
 msgid "/View/Zoom/1:16"
 msgstr "/Zicht/Zoem/1:16"
 
-#: app/menus.c:330
+#: app/menus.c:332
 msgid "/View/Dot for Dot"
 msgstr "/Zicht/Punt voor punt"
 
-#: app/menus.c:335
+#: app/menus.c:337
 msgid "/View/Info Window..."
 msgstr "/Zicht/Info Venster..."
 
-#: app/menus.c:337
+#: app/menus.c:339
 msgid "/View/Nav. Window..."
 msgstr "/Zicht/Nav. Venster..."
 
-#: app/menus.c:342
+#: app/menus.c:344
 msgid "/View/Toggle Selection"
 msgstr "/Zicht/Selectie"
 
-#: app/menus.c:344
+#: app/menus.c:346
 msgid "/View/Toggle Rulers"
 msgstr "/Zicht/Linealen"
 
-#: app/menus.c:346
+#: app/menus.c:348
 msgid "/View/Toggle Statusbar"
 msgstr "/Zicht/Statusbalk"
 
-#: app/menus.c:348
+#: app/menus.c:350
 msgid "/View/Toggle Guides"
 msgstr "/Zicht/Hulplijnen"
 
-#: app/menus.c:350
+#: app/menus.c:352
 msgid "/View/Snap to Guides"
 msgstr "/Zicht/Snap To Guides"
 
-#: app/menus.c:355
+#: app/menus.c:357
 msgid "/View/New View"
 msgstr "/Zicht/Nieuw zicht"
 
-#: app/menus.c:357
+#: app/menus.c:359
 msgid "/View/Shrink Wrap"
 msgstr ""
 
 #. <Image>/Image/Mode
-#: app/menus.c:362
+#: app/menus.c:364
 msgid "/Image/Mode/RGB"
 msgstr "/Beeld/Modus/RGB"
 
-#: app/menus.c:364
+#: app/menus.c:366
 msgid "/Image/Mode/Grayscale"
 msgstr "/Beeld/Modus/Grijswaarden"
 
-#: app/menus.c:366
+#: app/menus.c:368
 msgid "/Image/Mode/Indexed..."
 msgstr "/Beeld/Modus/Geïndexeerd..."
 
 #. <Image>/Image/Colors
-#: app/menus.c:374
+#: app/menus.c:376
 msgid "/Image/Colors/Desaturate"
 msgstr "/Beeld/Kleuren/Desaturate"
 
-#: app/menus.c:376
+#: app/menus.c:378
 msgid "/Image/Colors/Invert"
 msgstr "/Beeld/Kleuren/Inverteren"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:384
+#: app/menus.c:386
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Beeld/Kleuren/Krommen"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:392
+#: app/menus.c:394
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Beeld/Alfa/Voeg Alfa Kanaal toe"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:397
+#: app/menus.c:399
 msgid "/Image/Transforms/Offset..."
 msgstr "/Beeld/Tranformaties/Offset..."
 
-#: app/menus.c:399
+#: app/menus.c:401
 msgid "/Image/Transforms/Rotate"
 msgstr "/Beeld/Tranformaties/Rotatie..."
 
-#: app/menus.c:406
+#: app/menus.c:408
 msgid "/Image/Canvas Size..."
 msgstr "/Beeld/Canvasgrootte..."
 
-#: app/menus.c:408
+#: app/menus.c:410
 msgid "/Image/Scale Image..."
 msgstr ""
 
-#: app/menus.c:410
+#: app/menus.c:412
 msgid "/Image/Duplicate"
 msgstr "/Beeld/Dupliceren"
 
 #. <Image>/Layers
-#: app/menus.c:418
+#: app/menus.c:420
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Lagen/Lagen, kanalen & paden..."
 
-#: app/menus.c:422
+#: app/menus.c:424
 msgid "/Layers/Layer to Imagesize"
 msgstr ""
 
 #. <Image>/Layers/Stack
-#: app/menus.c:427
+#: app/menus.c:429
 msgid "/Layers/Stack/Previous Layer"
 msgstr ""
 
-#: app/menus.c:429
+#: app/menus.c:431
 msgid "/Layers/Stack/Next Layer"
 msgstr ""
 
-#: app/menus.c:431
+#: app/menus.c:433
 msgid "/Layers/Stack/Raise Layer"
 msgstr ""
 
-#: app/menus.c:433
+#: app/menus.c:435
 msgid "/Layers/Stack/Lower Layer"
 msgstr ""
 
-#: app/menus.c:435
+#: app/menus.c:437
 msgid "/Layers/Stack/Layer to Top"
 msgstr ""
 
-#: app/menus.c:437
+#: app/menus.c:439
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr ""
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:444
+#: app/menus.c:446
 msgid "/Layers/Rotate"
 msgstr ""
 
-#: app/menus.c:449
+#: app/menus.c:451
 msgid "/Layers/Anchor Layer"
 msgstr ""
 
-#: app/menus.c:451
+#: app/menus.c:453
 msgid "/Layers/Merge Visible Layers..."
 msgstr ""
 
-#: app/menus.c:453
+#: app/menus.c:455
 msgid "/Layers/Flatten Image"
 msgstr ""
 
-#: app/menus.c:458
+#: app/menus.c:460
 msgid "/Layers/Mask to Selection"
 msgstr ""
 
-#: app/menus.c:463
+#: app/menus.c:465
 msgid "/Layers/Add Alpha Channel"
 msgstr ""
 
-#: app/menus.c:465
+#: app/menus.c:467
 msgid "/Layers/Alpha to Selection"
 msgstr ""
 
 #. <Image>/Tools
-#: app/menus.c:473
+#: app/menus.c:475
 msgid "/Tools/Toolbox"
 msgstr ""
 
-#: app/menus.c:475
+#: app/menus.c:477
 msgid "/Tools/Default Colors"
 msgstr ""
 
-#: app/menus.c:477
+#: app/menus.c:479
 msgid "/Tools/Swap Colors"
 msgstr ""
 
 #. <Image>/Dialogs
-#: app/menus.c:484
+#: app/menus.c:486
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr ""
 
-#: app/menus.c:486
+#: app/menus.c:488
 msgid "/Dialogs/Tool Options..."
 msgstr ""
 
-#: app/menus.c:491
+#: app/menus.c:493
 msgid "/Dialogs/Brushes..."
 msgstr ""
 
-#: app/menus.c:493
+#: app/menus.c:495
 msgid "/Dialogs/Patterns..."
 msgstr ""
 
-#: app/menus.c:495
+#: app/menus.c:497
 msgid "/Dialogs/Gradients..."
 msgstr ""
 
-#: app/menus.c:497
+#: app/menus.c:499
 msgid "/Dialogs/Palette..."
 msgstr ""
 
-#: app/menus.c:499
+#: app/menus.c:501
 msgid "/Dialogs/Indexed Palette..."
 msgstr ""
 
-#: app/menus.c:504
+#: app/menus.c:506
 msgid "/Dialogs/Input Devices..."
 msgstr ""
 
-#: app/menus.c:506
+#: app/menus.c:508
 msgid "/Dialogs/Device Status..."
 msgstr ""
 
-#: app/menus.c:511
+#: app/menus.c:513
 msgid "/Dialogs/Document Index..."
 msgstr ""
 
-#: app/menus.c:513
+#: app/menus.c:515
 msgid "/Dialogs/Error Console..."
 msgstr ""
 
-#: app/menus.c:515
+#: app/menus.c:518
 msgid "/Dialogs/Display Filters..."
 msgstr ""
 
-#: app/menus.c:517
+#: app/menus.c:521
 msgid "/Dialogs/Undo History..."
 msgstr ""
 
 #. <Image>/Filters
-#: app/menus.c:526
+#: app/menus.c:530
 msgid "/Filters/Repeat Last"
 msgstr ""
 
-#: app/menus.c:528
+#: app/menus.c:532
 msgid "/Filters/Re-Show Last"
 msgstr ""
 
-#: app/menus.c:533
+#: app/menus.c:537
 msgid "/Filters/Blur"
 msgstr ""
 
-#: app/menus.c:535
+#: app/menus.c:539
 msgid "/Filters/Colors"
 msgstr ""
 
-#: app/menus.c:537
+#: app/menus.c:541
 msgid "/Filters/Noise"
 msgstr ""
 
-#: app/menus.c:539
+#: app/menus.c:543
 msgid "/Filters/Edge-Detect"
 msgstr ""
 
-#: app/menus.c:541
+#: app/menus.c:545
 msgid "/Filters/Enhance"
 msgstr ""
 
-#: app/menus.c:543
+#: app/menus.c:547
 msgid "/Filters/Generic"
 msgstr "/Filters/Generiek"
 
-#: app/menus.c:548
+#: app/menus.c:552
 msgid "/Filters/Glass Effects"
 msgstr ""
 
-#: app/menus.c:550
+#: app/menus.c:554
 msgid "/Filters/Light Effects"
 msgstr ""
 
-#: app/menus.c:552
+#: app/menus.c:556
 msgid "/Filters/Distorts"
 msgstr ""
 
-#: app/menus.c:554
+#: app/menus.c:558
 msgid "/Filters/Artistic"
 msgstr ""
 
-#: app/menus.c:556
+#: app/menus.c:560
 msgid "/Filters/Map"
 msgstr ""
 
-#: app/menus.c:558
+#: app/menus.c:562
 msgid "/Filters/Render"
 msgstr "/Filters/Render"
 
-#: app/menus.c:560
+#: app/menus.c:564
 msgid "/Filters/Web"
 msgstr "/Filters/Web"
 
-#: app/menus.c:565
+#: app/menus.c:569
 msgid "/Filters/Animation"
 msgstr "/Filters/Animatie"
 
-#: app/menus.c:567
+#: app/menus.c:571
 msgid "/Filters/Combine"
 msgstr ""
 
-#: app/menus.c:572
+#: app/menus.c:576
 #, fuzzy
 msgid "/Filters/Toys"
 msgstr "Vultype"
 
-#: app/menus.c:583
+#: app/menus.c:587
 msgid "/Automatic"
 msgstr "/Automatisch"
 
-#: app/menus.c:597
+#: app/menus.c:601
 msgid "/By Extension"
 msgstr "/Volgens extensie"
 
-#: app/menus.c:611
+#: app/menus.c:615
 msgid "/New Layer..."
 msgstr "/Nieuwe laag..."
 
 #. <Layers>/Stack
-#: app/menus.c:616
+#: app/menus.c:620
 msgid "/Stack/Raise Layer"
 msgstr "/Lagen/Verhoog Laag"
 
-#: app/menus.c:618
+#: app/menus.c:622
 msgid "/Stack/Lower Layer"
 msgstr "/Lagen/Verlaag Laag"
 
-#: app/menus.c:620
+#: app/menus.c:624
 msgid "/Stack/Layer to Top"
 msgstr "/Lagen/Laag bovenaan"
 
-#: app/menus.c:622
+#: app/menus.c:626
 msgid "/Stack/Layer to Bottom"
 msgstr "/Lagen/Laag onderaan"
 
-#: app/menus.c:625
+#: app/menus.c:629
 msgid "/Duplicate Layer"
 msgstr "/Dupliceer Laag"
 
-#: app/menus.c:627
+#: app/menus.c:631
 msgid "/Anchor Layer"
 msgstr "/Lagen/Veranker Laag"
 
-#: app/menus.c:629
+#: app/menus.c:633
 msgid "/Delete Layer"
 msgstr ""
 
-#: app/menus.c:634
+#: app/menus.c:638
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/menus.c:636
+#: app/menus.c:640
 msgid "/Layer to Imagesize"
 msgstr ""
 
-#: app/menus.c:638
+#: app/menus.c:642
 msgid "/Scale Layer..."
 msgstr ""
 
-#: app/menus.c:643
+#: app/menus.c:647
 msgid "/Merge Visible Layers..."
 msgstr "/Voeg Zichtbare Lagen Samen..."
 
-#: app/menus.c:645
+#: app/menus.c:649
 msgid "/Merge Down"
 msgstr ""
 
-#: app/menus.c:647
+#: app/menus.c:651
 msgid "/Flatten Image"
 msgstr ""
 
-#: app/menus.c:652
+#: app/menus.c:656
 msgid "/Add Layer Mask..."
 msgstr ""
 
-#: app/menus.c:654
+#: app/menus.c:658
 msgid "/Apply Layer Mask"
 msgstr ""
 
-#: app/menus.c:656
+#: app/menus.c:660
 msgid "/Delete Layer Mask"
 msgstr ""
 
-#: app/menus.c:658
+#: app/menus.c:662
 msgid "/Mask to Selection"
 msgstr ""
 
-#: app/menus.c:663
+#: app/menus.c:667
 msgid "/Add Alpha Channel"
 msgstr ""
 
-#: app/menus.c:665
+#: app/menus.c:669
 msgid "/Alpha to Selection"
 msgstr ""
 
-#: app/menus.c:670
+#: app/menus.c:674
 msgid "/Edit Layer Attributes..."
 msgstr "/Bewerk laagattributen..."
 
-#: app/menus.c:681
+#: app/menus.c:685
 msgid "/New Channel..."
 msgstr "/Nieuw kanaal..."
 
-#: app/menus.c:683
+#: app/menus.c:687
 msgid "/Raise Channel"
 msgstr "/Verhoog Kanaal"
 
-#: app/menus.c:685
+#: app/menus.c:689
 msgid "/Lower Channel"
 msgstr "/Verlaag Kanaal"
 
-#: app/menus.c:687
+#: app/menus.c:691
 msgid "/Duplicate Channel"
 msgstr "/Dupliceer Kanaal"
 
-#: app/menus.c:692
+#: app/menus.c:696
 msgid "/Channel to Selection"
 msgstr ""
 
-#: app/menus.c:694
+#: app/menus.c:698
 msgid "/Add to Selection"
 msgstr ""
 
-#: app/menus.c:696
+#: app/menus.c:700
 msgid "/Subtract from Selection"
 msgstr ""
 
-#: app/menus.c:698
+#: app/menus.c:702
 msgid "/Intersect with Selection"
 msgstr ""
 
-#: app/menus.c:703
+#: app/menus.c:707
 msgid "/Delete Channel"
 msgstr "/Verwijder Kanaal"
 
-#: app/menus.c:708
+#: app/menus.c:712
 msgid "/Edit Channel Attributes..."
 msgstr "/Bewerk Kanaalattributen..."
 
-#: app/menus.c:719
+#: app/menus.c:723
 msgid "/New Path"
 msgstr "/Nieuw pad"
 
-#: app/menus.c:721
+#: app/menus.c:725
 msgid "/Duplicate Path"
 msgstr "/Dupliceer Kanaal"
 
-#: app/menus.c:723
+#: app/menus.c:727
 msgid "/Path to Selection"
 msgstr ""
 
-#: app/menus.c:725
+#: app/menus.c:729
 msgid "/Selection to Path"
 msgstr ""
 
-#: app/menus.c:727
+#: app/menus.c:731
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/menus.c:729
+#: app/menus.c:733
 msgid "/Delete Path"
 msgstr "/Verwijder pad"
 
-#: app/menus.c:734
+#: app/menus.c:738
 msgid "/Copy Path"
 msgstr "/Kopieer pad"
 
-#: app/menus.c:736
+#: app/menus.c:740
 msgid "/Paste Path"
 msgstr "/Pad Plakken"
 
-#: app/menus.c:738
+#: app/menus.c:742
 msgid "/Import Path..."
 msgstr "/Importeer pad..."
 
-#: app/menus.c:740
+#: app/menus.c:744
 msgid "/Export Path..."
 msgstr "/Exporteer pad..."
 
-#: app/menus.c:745
+#: app/menus.c:749
 msgid "/Edit Path Attributes..."
 msgstr "/Bewerk padattributen..."
 
-#: app/menus.c:1298
+#: app/menus.c:1302
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr ""

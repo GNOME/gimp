@@ -15,7 +15,7 @@ endif
 
 TOP = ../..
 
-GIMP_VER = 1.1
+GIMP_VER = 1.2
 
 include $(GIMPTOP)/build/win32/make.mingw
 

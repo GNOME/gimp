@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2000-12-22 13:43+0100\n"
+"POT-Creation-Date: 2000-12-23 11:40-0800\n"
 "PO-Revision-Date: 2000-12-22 14:55+0100\n"
 "Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
 "Language-Team: Hungarian <hu@gnome.hu>\n"
@@ -711,7 +711,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1166
-msgid "fractalexplorer-path misconfigured - the following directories were not found"
+msgid ""
+"fractalexplorer-path misconfigured - the following directories were not found"
 msgstr ""
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1342
@@ -1469,7 +1470,8 @@ msgid "Use cosine-function for green component."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1504
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1523
@@ -1481,7 +1483,8 @@ msgid "Use cosine-function for blue component."
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1527
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 
 #: plug-ins/common/AlienMap.c:1657
@@ -6279,7 +6282,8 @@ msgid ""
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:539
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 
 #: plug-ins/common/uniteditor.c:541
@@ -7514,7 +7518,8 @@ msgid "    you can get xanim exporting edition at"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:146
-msgid "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
+msgid ""
+"2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:150
@@ -9803,7 +9808,8 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:975
 #, c-format
-msgid "Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
+msgid ""
+"Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"
 msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:986
@@ -10792,7 +10798,8 @@ msgid "Shadow depth:"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:313
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 
 #: plug-ins/gimpressionist/general.c:319
@@ -11184,11 +11191,13 @@ msgid "The largest brush to create"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:136
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr ""
 
 #: plug-ins/gimpressionist/size.c:156
@@ -12732,4 +12741,3 @@ msgstr ""
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr ""
-
