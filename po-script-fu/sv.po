@@ -1,24 +1,24 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright (C) 2000, 2001 Free Software Foundation, Inc.
-# Christian Rose <menthos@menthos.com>, 2000, 2001.
-# Tomas Ögren <stric@ing.umu.se>, 2001.
+# Copyright (C) 2000, 2001, 2002 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
+# Tomas Ã–gren <stric@ing.umu.se>, 2001.
 #
 # $Id$
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2001-12-29 18:05+0100\n"
-"PO-Revision-Date: 2001-10-30 16:38+0100\n"
+"POT-Creation-Date: 2002-01-28 02:37+0100\n"
+"PO-Revision-Date: 2002-01-28 02:38+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:143
 msgid "Script-Fu console mode allows only interactive invocation"
-msgstr "Script-Fu-konsolläget tillåter endast interaktiv användning"
+msgstr "Script-Fu-konsollÃ¤get tillÃ¥ter endast interaktiv anvÃ¤ndning"
 
 #: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
@@ -35,19 +35,19 @@ msgstr "Aktuellt kommando"
 
 #: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
-msgstr "Bläddra..."
+msgstr "BlÃ¤ddra..."
 
 #: plug-ins/script-fu/script-fu-console.c:570
 msgid "Unable to open a stream on the SIOD output pipe"
-msgstr "Kan inte öppna en ström på SIOD-utdataröret"
+msgstr "Kan inte Ã¶ppna en strÃ¶m pÃ¥ SIOD-utdatarÃ¶ret"
 
 #: plug-ins/script-fu/script-fu-console.c:576
 msgid "Unable to open the SIOD output pipe"
-msgstr "Kan inte öppna SIOD-utdataröret"
+msgstr "Kan inte Ã¶ppna SIOD-utdatarÃ¶ret"
 
 #: plug-ins/script-fu/script-fu-console.c:621
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "Script-Fu-evalueringsläget tillåter endast interaktiv användning"
+msgstr "Script-Fu-evalueringslÃ¤get tillÃ¥ter endast interaktiv anvÃ¤ndning"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-scripts.c:1189
@@ -73,32 +73,31 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1288
 msgid "Script-Fu Color Selection"
-msgstr "Script-Fu-färgväljare"
+msgstr "Script-Fu-fÃ¤rgvÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1371
 msgid "Script-Fu File Selection"
-msgstr "Script-Fu-filväljare"
+msgstr "Script-Fu-filvÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1376
-#, fuzzy
 msgid "Script-Fu Directory Selection"
-msgstr "Script-Fu-filväljare"
+msgstr "Script-Fu-katalogvÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1411
 msgid "Script-fu Pattern Selection"
-msgstr "Script-Fu-mönsterväljare"
+msgstr "Script-Fu-mÃ¶nstervÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1418
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu-färgskaleväljare"
+msgstr "Script-Fu-fÃ¤rgskalevÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1426
 msgid "Script-Fu Brush Selection"
-msgstr "Script-Fu-penselväljare"
+msgstr "Script-Fu-penselvÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1474
 msgid "Reset to Defaults"
-msgstr "Återställ till standardvärden"
+msgstr "Ã…terstÃ¤ll till standardvÃ¤rden"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1502
 msgid "About"
@@ -109,20 +108,20 @@ msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
 msgstr ""
-"Åtminstone en av typsnitten du angett är ogiltigt.\n"
-"Var vänlig och kontrollera dina inställningar.\n"
+"Ã…tminstone en av typsnitten du angett Ã¤r ogiltigt.\n"
+"Var vÃ¤nlig och kontrollera dina instÃ¤llningar.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:510
+#: plug-ins/dbbrowser/dbbrowser_utils.c:485
 #: plug-ins/script-fu/script-fu-scripts.c:1997
 msgid "Author:"
-msgstr "Författare:"
+msgstr "FÃ¶rfattare:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:526
+#: plug-ins/dbbrowser/dbbrowser_utils.c:501
 #: plug-ins/script-fu/script-fu-scripts.c:2003
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
+#: plug-ins/dbbrowser/dbbrowser_utils.c:493
 #: plug-ins/script-fu/script-fu-scripts.c:2009
 msgid "Date:"
 msgstr "Datum:"
@@ -133,7 +132,7 @@ msgstr "Bildtyper:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2162
 msgid "Script-Fu Font Selection"
-msgstr "Script-Fu-typsnittsväljare"
+msgstr "Script-Fu-typsnittsvÃ¤ljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2232
 #, c-format
@@ -142,7 +141,7 @@ msgid ""
 " %s\n"
 "%s"
 msgstr ""
-"Script-Fu-fel under körning\n"
+"Script-Fu-fel under kÃ¶rning\n"
 " %s\n"
 "%s"
 
@@ -160,74 +159,74 @@ msgstr "Serverloggfil:"
 
 #: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Konsoll..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Konsoll..."
 
 #: plug-ins/script-fu/script-fu.c:152
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Server..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Server..."
 
 #: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
-msgstr "Läs om alla tillgängliga skript..."
+msgstr "LÃ¤s om alla tillgÃ¤ngliga skript..."
 
 #: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Utökningar/Script-Fu/Uppdatera"
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Uppdatera"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:149
-#: plug-ins/dbbrowser/dbbrowser_utils.c:168
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "DB Browser (init...)"
-msgstr "DB-bläddrare (init...)"
+msgstr "DB-blÃ¤ddrare (init...)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:154
-#: plug-ins/dbbrowser/dbbrowser_utils.c:173
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
 msgid "Search by Name"
-msgstr "Sök efter namn"
+msgstr "SÃ¶k efter namn"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:156
-#: plug-ins/dbbrowser/dbbrowser_utils.c:175
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
 msgid "Search by Blurb"
-msgstr "Sök efter blurb"
+msgstr "SÃ¶k efter blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:227
+#: plug-ins/dbbrowser/dbbrowser_utils.c:215
 msgid "Search:"
-msgstr "Sök:"
+msgstr "SÃ¶k:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:358
+#: plug-ins/dbbrowser/dbbrowser_utils.c:344
 msgid "Name:"
 msgstr "Namn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:353
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:379
+#: plug-ins/dbbrowser/dbbrowser_utils.c:365
 msgid "In:"
 msgstr "In:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:426
+#: plug-ins/dbbrowser/dbbrowser_utils.c:413
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:480
+#: plug-ins/dbbrowser/dbbrowser_utils.c:467
 msgid "Help:"
-msgstr "Hjälp:"
+msgstr "HjÃ¤lp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:601
+#: plug-ins/dbbrowser/dbbrowser_utils.c:570
 msgid "DB Browser (by name - please wait)"
-msgstr "DB-bläddrare (efter namn - var vänlig vänta)"
+msgstr "DB-blÃ¤ddrare (efter namn - var vÃ¤nlig vÃ¤nta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:594
 msgid "DB Browser (by blurb - please wait)"
-msgstr "DB-bläddrare (efter blurb - var vänlig vänta)"
+msgstr "DB-blÃ¤ddrare (efter blurb - var vÃ¤nlig vÃ¤nta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:604
 msgid "DB Browser (please wait)"
-msgstr "DB-bläddrare (var vänlig vänta)"
+msgstr "DB-blÃ¤ddrare (var vÃ¤nlig vÃ¤nta)"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:701
+#: plug-ins/dbbrowser/dbbrowser_utils.c:630
 msgid "DB Browser"
-msgstr "DB-bläddrare"
+msgstr "DB-blÃ¤ddrare"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid ""
@@ -235,8 +234,8 @@ msgid ""
 "        A foreground text layer with transparency\n"
 "        and a background layer.\n"
 msgstr ""
-"Inbränning: Behöver totalt två lager!\n"
-"        Ett förgrundstextlager med transparens\n"
+"InbrÃ¤nning: BehÃ¶ver totalt tvÃ¥ lager!\n"
+"        Ett fÃ¶rgrundstextlager med transparens\n"
 "        och ett bakgrundslager.\n"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
@@ -249,7 +248,7 @@ msgstr "<Image>/Filter/Utsmetning/Brickutsmetning..."
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Image>/Script-Fu/Alkemi/Klädgör..."
+msgstr "<Image>/Script-Fu/Alkemi/KlÃ¤dgÃ¶r..."
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
@@ -261,11 +260,11 @@ msgstr "<Image>/Script-Fu/Alkemi/Rovdjur..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Image>/Script-Fu/Alkemi/Oskärpemask..."
+msgstr "<Image>/Script-Fu/Alkemi/OskÃ¤rpemask..."
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Image>/Script-Fu/Alkemi/Väv..."
+msgstr "<Image>/Script-Fu/Alkemi/VÃ¤v..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
@@ -273,7 +272,7 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/3D-kontur..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Rymdglöd..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/RymdglÃ¶d..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
@@ -281,17 +280,17 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Rymdneon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Grundläggande I..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/GrundlÃ¤ggande I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Grundläggande I..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/GrundlÃ¤ggande I..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Färgtonad..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/FÃ¤rgtonad..."
 
-# Kommer inte på något bättre
+# Kommer inte pÃ¥ nÃ¥got bÃ¤ttre
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
 msgstr "<Image>/Script-Fu/Alfa till logotyp/Koskinn..."
@@ -326,11 +325,11 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Glansig..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Glödande hett..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/GlÃ¶dande hett..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Färgtoningsavfasning..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/FÃ¤rgtoningsavfasning..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
@@ -338,15 +337,15 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Neon..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Partikelspår..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/PartikelspÃ¥r..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Stjärnutbrott..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/StjÃ¤rnutbrott..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Image>/Script-Fu/Alfa till logotyp/Stjärnlandskap..."
+msgstr "<Image>/Script-Fu/Alfa till logotyp/StjÃ¤rnlandskap..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
@@ -354,31 +353,35 @@ msgstr "<Image>/Script-Fu/Alfa till logotyp/Textur..."
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Image>/Script-Fu/Animatörer/Färgtoning..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/FÃ¤rgtoning..."
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Image>/Script-Fu/Animatörer/Krusning..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/Krusning..."
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/Markering till AnimeraBild..."
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Image>/Script-Fu/Animatörer/Roterande jordglob..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/Roterande jordglob..."
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Image>/Script-Fu/Animatörer/Vågor..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/VÃ¥gor..."
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Image>/Script-Fu/Animatörer/Lägg till avfasning..."
+msgstr "<Image>/Script-Fu/AnimatÃ¶rer/LÃ¤gg till avfasning..."
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr "<Image>/Script-Fu/Dekor/Lägg till kant..."
+msgstr "<Image>/Script-Fu/Dekor/LÃ¤gg till kant..."
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Image>/Script-Fu/Dekor/Kaffestänk..."
+msgstr "<Image>/Script-Fu/Dekor/KaffestÃ¤nk..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
@@ -390,7 +393,7 @@ msgstr "<Image>/Script-Fu/Dekor/Gammalt foto..."
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Image>/Script-Fu/Dekor/Runda hörn..."
+msgstr "<Image>/Script-Fu/Dekor/Runda hÃ¶rn..."
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "<Image>/Script-Fu/Decor/Slide..."
@@ -410,7 +413,7 @@ msgstr "<Image>/Script-Fu/Rendering/Linjenova..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Image>/Script-Fu/Rendering/Skapa rutnätssystem..."
+msgstr "<Image>/Script-Fu/Rendering/Skapa rutnÃ¤tssystem..."
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
@@ -446,11 +449,11 @@ msgstr "<Image>/Script-Fu/Skugga/Xach-effekt..."
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Image>/Script-Fu/Stencilåtgärder/Karva den..."
+msgstr "<Image>/Script-Fu/StencilÃ¥tgÃ¤rder/Karva den..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Image>/Script-Fu/Stencilåtgärder/Kroma den..."
+msgstr "<Image>/Script-Fu/StencilÃ¥tgÃ¤rder/Kroma den..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
@@ -466,362 +469,362 @@ msgstr "<Image>/Script-Fu/Verktyg/Visa bildstruktur..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Knappar/Runda knapp..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Knappar/Runda knapp..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Knappar/Enkel avfasad knapp..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Knappar/Enkel avfasad knapp..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/3D-kontur..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/3D-kontur..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Rymdglöd..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/RymdglÃ¶d..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Rymdneon..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Rymdneon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Grundläggande I..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/GrundlÃ¤ggande I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Grundläggande II..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/GrundlÃ¤ggande II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Färgtonad..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/FÃ¤rgtonad..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Koskinn..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Koskinn..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Karvad..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Karvad..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Krita..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Krita..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Hacka loss..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Hacka loss..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Krom..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Krom..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Seriebok..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Seriebok..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Kall metall..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Kall metall..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Kristall..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Kristall..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Frostig..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Frostig..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Glansig..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Glansig..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Glödande het..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/GlÃ¶dande het..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Färgtoningsavfasning..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/FÃ¤rgtoningsavfasning..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Imigre-26..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Neon..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Neon..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Nyhetstext..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Nyhetstext..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Partikelspår..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/PartikelspÃ¥r..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/SOTA-krom..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/SOTA-krom..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Snabb text..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Snabb text..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Stjärnutbrott..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/StjÃ¤rnutbrott..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Stjärnlandskap..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/StjÃ¤rnlandskap..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Textcirkel..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Textcirkel..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Textur..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Textur..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Logotyper/Webbtitelhuvud..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Logotyper/Webbtitelhuvud..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Skapa pensel/Elliptisk, fjädrad..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Skapa pensel/Elliptisk, fjÃ¤drad..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Skapa pensel/Elliptisk..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Skapa pensel/Elliptisk..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Skapa pensel/Rektangulär, fjädrad..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Skapa pensel/RektangulÃ¤r, fjÃ¤drad..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Skapa pensel/Rektangulär..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Skapa pensel/RektangulÃ¤r..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Diverse/Sfär..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Diverse/SfÃ¤r..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/3D-truchet..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/3D-truchet..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Kamouflage..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Kamouflage..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Slätt..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/SlÃ¤tt..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Land..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Land..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Rendera karta..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Rendera karta..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvelbricka..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Virvelbricka..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Virvlande (brickor)..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Virvlande (brickor)..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Trokoid..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Trokoid..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Mönster/Truchet..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/MÃ¶nster/Truchet..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Verktyg/ASCII till bild..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Verktyg/ASCII till bild..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Verktyg/Anpassad färgtoning..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Verktyg/Anpassad fÃ¤rgtoning..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Verktyg/Typsnittstabell..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Verktyg/Typsnittstabell..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Rymdglöd/Pil..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/RymdglÃ¶d/Pil..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Rymdglöd/Punkt..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/RymdglÃ¶d/Punkt..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Rymdglöd/Knapp..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/RymdglÃ¶d/Knapp..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Rymdglöd/Horisontell linje..."
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/RymdglÃ¶d/Horisontell linje..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster/Pil..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Avfasat mÃ¶nster/Pil..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster/Punkt..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Avfasat mÃ¶nster/Punkt..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster/Knapp..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Avfasat mÃ¶nster/Knapp..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster/Rubrik..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Avfasat mÃ¶nster/Rubrik..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Avfasat mönster/Horisontell "
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Avfasat mÃ¶nster/Horisontell "
 "linje..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Stor rubrik..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Stor rubrik..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Generella "
-"röretiketter..."
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Generella "
+"rÃ¶retiketter..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Liten rubrik..."
+msgstr "<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Liten rubrik..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för rörknapp..."
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Etikett fÃ¶r rÃ¶rknapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
-"rörunderknapp..."
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Etikett fÃ¶r "
+"rÃ¶runderknapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
-"rörunderunderknapp..."
+"<Toolbox>/UtÃ¶kningar/Script-Fu/Webbsideteman/Gimp.org/Etikett fÃ¶r "
+"rÃ¶runderunderknapp..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Frågor och svar för utvecklare"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/FrÃ¥gor och svar fÃ¶r utvecklare"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Fel i GIMP"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/Fel i GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP-manual"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP-manual"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP-nyheter"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP-nyheter"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Kom igång med GIMP"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/Kom igÃ¥ng med GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Dokumentation"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/Dokumentation"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Hämta"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/HÃ¤mta"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/GIMP-grafik"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/GIMP-grafik"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/GTK"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Länkar"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/LÃ¤nkar"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Sändlistor"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/SÃ¤ndlistor"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Resurser"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/Resurser"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/GIMP"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Gimp-Savvy.com"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Förstå GIMP"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/FÃ¶rstÃ¥ GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Register över insticksmoduler"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/Register Ã¶ver insticksmoduler"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Utökningar/Webbläsare/Frågor och svar för användare"
+msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/FrÃ¥gor och svar fÃ¶r anvÃ¤ndare"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
-msgstr "Lägg till bakgrund"
+msgstr "LÃ¤gg till bakgrund"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Drop-Shadow"
-msgstr "Lägg till kastad skugga"
+msgstr "LÃ¤gg till kastad skugga"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Add Glowing"
-msgstr "Lägg till glöd"
+msgstr "LÃ¤gg till glÃ¶d"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Add Shadow"
-msgstr "Lägg till skugga"
+msgstr "LÃ¤gg till skugga"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "After Glow"
-msgstr "Efterglöd"
+msgstr "EfterglÃ¶d"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Allow Resizing"
-msgstr "Tillåt storleksändring"
+msgstr "TillÃ¥t storleksÃ¤ndring"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Amplitude"
@@ -831,21 +834,25 @@ msgstr "Amplitud"
 msgid "Angle"
 msgstr "Vinkel"
 
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Anim-Filter for all Copies"
+msgstr "Animeringsfilter fÃ¶r alla kopior"
+
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Antialias"
 msgstr "Antialias"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Apply Generated Layermask"
-msgstr "Tillämpa genererad lagermask"
+msgstr "TillÃ¤mpa genererad lagermask"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Apply Layer Mask (or discard)"
-msgstr "Tillämpa lagermask (eller kasta bort)"
+msgstr "TillÃ¤mpa lagermask (eller kasta bort)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "AutoCrop"
-msgstr "Beskär automatiskt"
+msgstr "BeskÃ¤r automatiskt"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
@@ -887,7 +894,7 @@ msgstr "Bakgrundsopacitet"
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Background Color"
-msgstr "Bakgrundsfärg"
+msgstr "BakgrundsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
@@ -896,15 +903,15 @@ msgstr "Bakgrundsbild"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Height"
-msgstr "Stapelhöjd"
+msgstr "StapelhÃ¶jd"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "Bar Length"
-msgstr "Stapellängd"
+msgstr "StapellÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Base Color"
-msgstr "Basfärg"
+msgstr "BasfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Base Radius (pixels)"
@@ -916,7 +923,7 @@ msgstr "Beteende"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "Bevel Height (Sharpness)"
-msgstr "Avfasningshöjd (skärpa)"
+msgstr "AvfasningshÃ¶jd (skÃ¤rpa)"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
@@ -926,15 +933,15 @@ msgstr "Avfasningsbredd"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Outline)"
-msgstr "Färgtoningsskala (kontur)"
+msgstr "FÃ¤rgtoningsskala (kontur)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Blend Gradient (Text)"
-msgstr "Färgtoningsskala (text)"
+msgstr "FÃ¤rgtoningsskala (text)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Blend Mode"
-msgstr "Färgtoningsläge"
+msgstr "FÃ¤rgtoningslÃ¤ge"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
@@ -943,7 +950,7 @@ msgstr "Blockstorlek"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Blur Amount"
-msgstr "Mängd utsmetning"
+msgstr "MÃ¤ngd utsmetning"
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Blur Border"
@@ -979,7 +986,7 @@ msgstr "Utsmetning i Y-led"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
-msgstr "Kantfärg"
+msgstr "KantfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
@@ -994,11 +1001,11 @@ msgstr "Kantstorlek"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border X Size"
-msgstr "X-storlek för kant"
+msgstr "X-storlek fÃ¶r kant"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Y Size"
-msgstr "Y-storlek för kant"
+msgstr "Y-storlek fÃ¶r kant"
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 #: plug-ins/script-fu/scripts/old_photo.scm:0
@@ -1007,7 +1014,7 @@ msgstr "Kant"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "Buffer Amount (% Height of Text)"
-msgstr "Buffertmängd (% höjd av text)"
+msgstr "BuffertmÃ¤ngd (% hÃ¶jd av text)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Bumpmap (Alpha Layer) Blur Radius"
@@ -1015,15 +1022,15 @@ msgstr "Bumpmappsutsmetningsradie (alfalager)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Burst Color"
-msgstr "Utbrottsfärg"
+msgstr "UtbrottsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "Carve Raised Text"
-msgstr "Skär ut höjd text"
+msgstr "SkÃ¤r ut hÃ¶jd text"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Carve White Areas"
-msgstr "Skär ut vita ytor"
+msgstr "SkÃ¤r ut vita ytor"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
@@ -1031,11 +1038,11 @@ msgstr "Cellstorlek (bildpunkter)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "Chalk Color"
-msgstr "Kritfärg"
+msgstr "KritfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Chip Amount"
-msgstr "Hackmängd"
+msgstr "HackmÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -1056,37 +1063,37 @@ msgstr "Kromljusstyrka"
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Saturation"
-msgstr "Krommättnad"
+msgstr "KrommÃ¤ttnad"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
-msgstr "Krom på vita ytor"
+msgstr "Krom pÃ¥ vita ytor"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Circuit Seed"
-msgstr "Kretsfrö"
+msgstr "KretsfrÃ¶"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Clear Unselected Maskarea"
-msgstr "Töm omarkerad maskyta"
+msgstr "TÃ¶m omarkerad maskyta"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 1"
-msgstr "Färg 1"
+msgstr "FÃ¤rg 1"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 2"
-msgstr "Färg 2"
+msgstr "FÃ¤rg 2"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "Color 3"
-msgstr "Färg 3"
+msgstr "FÃ¤rg 3"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Color"
-msgstr "Färg"
+msgstr "FÃ¤rg"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
@@ -1106,24 +1113,24 @@ msgstr "Skapa skugga"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Custom Gradient"
-msgstr "Anpassad färgskala"
+msgstr "Anpassad fÃ¤rgskala"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "Dark Color"
-msgstr "Mörk färg"
+msgstr "MÃ¶rk fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
-"Gör endast mörkare\n"
-"(bättre, men bara för bilder med mycket vitt)"
+"GÃ¶r endast mÃ¶rkare\n"
+"(bÃ¤ttre, men bara fÃ¶r bilder med mycket vitt)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Default Bumpmap Settings"
-msgstr "Standardinställningar för bumpmapp"
+msgstr "StandardinstÃ¤llningar fÃ¶r bumpmapp"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Defocus"
@@ -1131,7 +1138,7 @@ msgstr "Avfokusera"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Delta Value on Color"
-msgstr "Deltavärde på färg"
+msgstr "DeltavÃ¤rde pÃ¥ fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
@@ -1151,7 +1158,7 @@ msgstr "Beskrivning"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Detail Level"
-msgstr "Detaljnivå"
+msgstr "DetaljnivÃ¥"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Detail in Middle"
@@ -1168,11 +1175,11 @@ msgstr "Ner"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Blur Radius"
-msgstr "Utsmetningsradie för skuggkastning"
+msgstr "Utsmetningsradie fÃ¶r skuggkastning"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Color"
-msgstr "Skuggkastningsfärg"
+msgstr "SkuggkastningsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Opacity"
@@ -1180,11 +1187,11 @@ msgstr "Skuggkastningsopacitet"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow X Offset"
-msgstr "X-avstånd för skuggkastning"
+msgstr "X-avstÃ¥nd fÃ¶r skuggkastning"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Drop Shadow Y Offset"
-msgstr "Y-avstånd för skuggkastning"
+msgstr "Y-avstÃ¥nd fÃ¶r skuggkastning"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Drop Shadow"
@@ -1192,35 +1199,35 @@ msgstr "Skuggkastning"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Edge Amount"
-msgstr "Hörnmängd"
+msgstr "HÃ¶rnmÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Only"
-msgstr "Endast hörn"
+msgstr "Endast hÃ¶rn"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Edge Radius"
-msgstr "Hörnradie"
+msgstr "HÃ¶rnradie"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Edge Width"
-msgstr "Hörnbredd"
+msgstr "HÃ¶rnbredd"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "Effect Size (pixels * 3)"
-msgstr "Effektstorlek (bildpunkter × 3)"
+msgstr "Effektstorlek (bildpunkter Ã— 3)"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "Effect Size (pixels * 30)"
-msgstr "Effektstorlek (bildpunkter × 30)"
+msgstr "Effektstorlek (bildpunkter Ã— 30)"
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Effect Size (pixels * 4)"
-msgstr "Effektstorlek (bildpunkter × 4)"
+msgstr "Effektstorlek (bildpunkter Ã— 4)"
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "Effect Size (pixels * 5)"
-msgstr "Effektstorlek (bildpunkter × 5)"
+msgstr "Effektstorlek (bildpunkter Ã— 5)"
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
@@ -1230,12 +1237,12 @@ msgstr "Effektstorlek (bildpunkter)"
 #: plug-ins/script-fu/scripts/clothify.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Elevation"
-msgstr "Höjd"
+msgstr "HÃ¶jd"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "End Blend"
-msgstr "Avsluta färgtoning"
+msgstr "Avsluta fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "End X"
@@ -1247,13 +1254,13 @@ msgstr "Y-slut"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Ending Blend"
-msgstr "Avslutar färgtoning"
+msgstr "Avslutar fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Environment Map"
-msgstr "Miljökarta"
+msgstr "MiljÃ¶karta"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Erase before Draw"
@@ -1269,11 +1276,11 @@ msgstr "Ta bort/Fyll"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even"
-msgstr "Jämn"
+msgstr "JÃ¤mn"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Even/Odd"
-msgstr "Jämn/Udda"
+msgstr "JÃ¤mn/Udda"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "FG-BG-HSV"
@@ -1293,7 +1300,7 @@ msgstr "Tyna bort"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade From %"
-msgstr "Tyna från %"
+msgstr "Tyna frÃ¥n %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Fade To   %"
@@ -1309,7 +1316,7 @@ msgstr "Utfasning"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "Feathering"
-msgstr "Fjäder"
+msgstr "FjÃ¤der"
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 #: plug-ins/script-fu/scripts/select_to_brush.scm:0
@@ -1322,7 +1329,11 @@ msgstr "Fyllningsvinkel"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Fill BG with Pattern"
-msgstr "Fyll bakgrund med mönster"
+msgstr "Fyll bakgrund med mÃ¶nster"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Fill with BG Color"
+msgstr "Fyll med bakgrundsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Fill with BG"
@@ -1339,7 +1350,7 @@ msgstr "Platta till bilden"
 
 #: plug-ins/script-fu/scripts/slide.scm:0
 msgid "Font Color"
-msgstr "Typsnittsfärg"
+msgstr "TypsnittsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -1429,11 +1440,11 @@ msgstr "Typsnitt"
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "Foreground Color"
-msgstr "Förgrundsfärg"
+msgstr "FÃ¶rgrundsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Color"
-msgstr "Ramfärg"
+msgstr "RamfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "Frame Size"
@@ -1445,7 +1456,7 @@ msgstr "Ramar"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr "Från övre vänsterkant till nedre högerkant"
+msgstr "FrÃ¥n Ã¶vre vÃ¤nsterkant till nedre hÃ¶gerkant"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1457,15 +1468,15 @@ msgstr "Från övre vänsterkant till nedre högerkant"
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "Glow Color"
-msgstr "Glödfärg"
+msgstr "GlÃ¶dfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "Glow Radius"
-msgstr "Glödradie"
+msgstr "GlÃ¶dradie"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "Glow Size (pixels * 4)"
-msgstr "Glödstorlek (bildpunkter × 4)"
+msgstr "GlÃ¶dstorlek (bildpunkter Ã— 4)"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
@@ -1473,12 +1484,12 @@ msgstr "Glödstorlek (bildpunkter × 4)"
 #: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Gradient"
-msgstr "Färgskala"
+msgstr "FÃ¤rgskala"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 msgid "Granularity (1 is Low)"
-msgstr "Granularitet (1 är låg)"
+msgstr "Granularitet (1 Ã¤r lÃ¥g)"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -1503,7 +1514,7 @@ msgstr "Rutor i Y-led"
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr "Höjd"
+msgstr "HÃ¶jd"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Hexagons"
@@ -1517,7 +1528,7 @@ msgstr "Markeringsbalans"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Color"
-msgstr "Markeringsfärg"
+msgstr "MarkeringsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Opacity"
@@ -1525,19 +1536,19 @@ msgstr "Markeringsopacitet"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight X Offset"
-msgstr "X-avstånd för markering"
+msgstr "X-avstÃ¥nd fÃ¶r markering"
 
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Highlight Y Offset"
-msgstr "Y-avstånd för markering"
+msgstr "Y-avstÃ¥nd fÃ¶r markering"
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "Hit Rate"
-msgstr "Mängd träffar"
+msgstr "MÃ¤ngd trÃ¤ffar"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Hue Rate"
-msgstr "Mängd nyans"
+msgstr "MÃ¤ngd nyans"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "IIR"
@@ -1546,7 +1557,7 @@ msgstr "IIR"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Image Height"
-msgstr "Bildhöjd"
+msgstr "BildhÃ¶jd"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/rendermap.scm:0
@@ -1560,7 +1571,7 @@ msgstr "Bildbredd"
 
 #: plug-ins/script-fu/scripts/carve-it.scm:0
 msgid "Image to Carve"
-msgstr "Bild att skära ut"
+msgstr "Bild att skÃ¤ra ut"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
@@ -1569,7 +1580,7 @@ msgstr "Indexbild"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "Indexera till n färger (0 = behåll RGB)"
+msgstr "Indexera till n fÃ¤rger (0 = behÃ¥ll RGB)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Insert Layer Names"
@@ -1593,32 +1604,32 @@ msgstr "Invertera"
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Background"
-msgstr "Behåll bakgrund"
+msgstr "BehÃ¥ll bakgrund"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "Keep Bump Layer"
-msgstr "Behåll bumplager"
+msgstr "BehÃ¥ll bumplager"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/predator.scm:0
 #: plug-ins/script-fu/scripts/xach-effect.scm:0
 msgid "Keep Selection"
-msgstr "Behåll markering"
+msgstr "BehÃ¥ll markering"
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Land Height"
-msgstr "Landhöjd"
+msgstr "LandhÃ¶jd"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Left"
-msgstr "Vänster"
+msgstr "VÃ¤nster"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Lighting (degrees)"
-msgstr "Ljussättning (grader)"
+msgstr "LjussÃ¤ttning (grader)"
 
 #: plug-ins/script-fu/scripts/blend-anim.scm:0
 msgid "Looped"
@@ -1626,15 +1637,15 @@ msgstr "Evig slinga"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color (Active)"
-msgstr "Nedre färg (aktiv)"
+msgstr "Nedre fÃ¤rg (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Lower Color"
-msgstr "Nedre färg"
+msgstr "Nedre fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Lower-Right color"
-msgstr "Nedre högra färg"
+msgstr "Nedre hÃ¶gra fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Make New Background"
@@ -1658,11 +1669,11 @@ msgstr "Mosaikbricktyp"
 
 #: plug-ins/script-fu/scripts/old_photo.scm:0
 msgid "Mottle"
-msgstr "Fläck"
+msgstr "FlÃ¤ck"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "No Background (only for separate layer)"
-msgstr "Ingen bakgrund (endast för separat lager)"
+msgstr "Ingen bakgrund (endast fÃ¶r separat lager)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Not Pressed (Active)"
@@ -1679,7 +1690,11 @@ msgstr "Antal band"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Number of Colors"
-msgstr "Antal färger"
+msgstr "Antal fÃ¤rger"
+
+#: plug-ins/gap/sel-to-anim-img.scm:0
+msgid "Number of Copies"
+msgstr "Antal kopior"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
@@ -1692,7 +1707,7 @@ msgstr "Antal linjer"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Number of Times to Whirl"
-msgstr "Antal gånger att virvla"
+msgstr "Antal gÃ¥nger att virvla"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/truchet.scm:0
@@ -1718,29 +1733,29 @@ msgstr "Udda"
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Offset (pixels)"
-msgstr "Avstånd (bildpunkter)"
+msgstr "AvstÃ¥nd (bildpunkter)"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Offset Radius"
-msgstr "Avståndsradie"
+msgstr "AvstÃ¥ndsradie"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset X"
-msgstr "Avstånd i X-led"
+msgstr "AvstÃ¥nd i X-led"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Offset Y"
-msgstr "Avstånd i Y-led"
+msgstr "AvstÃ¥nd i Y-led"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "Offsets (pixels * 2)"
-msgstr "Avstånd (bildpunkter × 2)"
+msgstr "AvstÃ¥nd (bildpunkter Ã— 2)"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 msgid "Oilify Mask Size"
-msgstr "Storlek på oljningsmask"
+msgstr "Storlek pÃ¥ oljningsmask"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
@@ -1758,11 +1773,11 @@ msgstr "Yttre kant"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "Outline Blur Radius"
-msgstr "Utsmetningsradie för kontur"
+msgstr "Utsmetningsradie fÃ¶r kontur"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "Outline Color"
-msgstr "Konturfärg"
+msgstr "KonturfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
@@ -1771,7 +1786,7 @@ msgstr "Konturstorlek"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Color"
-msgstr "Utfyllnadsfärg"
+msgstr "UtfyllnadsfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Pad Opacity"
@@ -1791,7 +1806,7 @@ msgstr "Utfyllnad i Y-led"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Padding for Transparent Regions"
-msgstr "Utfyllnad för genomskinliga områden"
+msgstr "Utfyllnad fÃ¶r genomskinliga omrÃ¥den"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
@@ -1800,15 +1815,15 @@ msgstr "Utfyllnad"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Outline)"
-msgstr "Mönster (kontur)"
+msgstr "MÃ¶nster (kontur)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Overlay)"
-msgstr "Mönster (överlagring)"
+msgstr "MÃ¶nster (Ã¶verlagring)"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Pattern (Text)"
-msgstr "Mönster (text)"
+msgstr "MÃ¶nster (text)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -1819,7 +1834,7 @@ msgstr "Mönster (text)"
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Pattern"
-msgstr "Mönster"
+msgstr "MÃ¶nster"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
@@ -1827,7 +1842,7 @@ msgstr "Pennradie / Hjulradie [0.0:1.0]"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixel Amount"
-msgstr "Mängd bildpunkter"
+msgstr "MÃ¤ngd bildpunkter"
 
 #: plug-ins/script-fu/scripts/predator.scm:0
 msgid "Pixelize"
@@ -1835,7 +1850,7 @@ msgstr "Pixelisera"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm:0
 msgid "Prepare for GIF"
-msgstr "Förbered för GIF"
+msgstr "FÃ¶rbered fÃ¶r GIF"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
@@ -1864,19 +1879,19 @@ msgstr "Radie"
 #: plug-ins/script-fu/scripts/flatland.scm:0
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "Random Seed"
-msgstr "Slumpfrö"
+msgstr "SlumpfrÃ¶"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Randomness"
-msgstr "Slumpmässighet"
+msgstr "SlumpmÃ¤ssighet"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Distance of Horizon"
-msgstr "Relativt avstånd till horisont"
+msgstr "Relativt avstÃ¥nd till horisont"
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Relative Length of Shadow"
-msgstr "Relativ längd på skugga"
+msgstr "Relativ lÃ¤ngd pÃ¥ skugga"
 
 #: plug-ins/script-fu/scripts/selection-round.scm:0
 msgid "Relative Radius"
@@ -1893,12 +1908,12 @@ msgstr "Mellanrum mellan remsor"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Ribbon Width"
-msgstr "Bredd på remsor"
+msgstr "Bredd pÃ¥ remsor"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "Right"
-msgstr "Höger"
+msgstr "HÃ¶ger"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm:0
 msgid "Rippling Strength"
@@ -1907,11 +1922,11 @@ msgstr "Krusningsstyrka"
 #: plug-ins/script-fu/scripts/lava.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Roughness"
-msgstr "Strävhet"
+msgstr "StrÃ¤vhet"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Round Ratio"
-msgstr "Rundningsförhållande"
+msgstr "RundningsfÃ¶rhÃ¥llande"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Rows"
@@ -1937,12 +1952,12 @@ msgstr "Havsdjup"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Seed"
-msgstr "Slumptalsfrö"
+msgstr "SlumptalsfrÃ¶"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Select-By-Color Threshold"
-msgstr "Tröskel för markera-med-färg"
+msgstr "TrÃ¶skel fÃ¶r markera-med-fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/circuit.scm:0
 #: plug-ins/script-fu/scripts/lava.scm:0
@@ -1961,11 +1976,11 @@ msgstr "Skuggutsmetningsradie"
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "Shadow Color"
-msgstr "Skuggfärg"
+msgstr "SkuggfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Darkness"
-msgstr "Skuggmörkhet"
+msgstr "SkuggmÃ¶rkhet"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Shadow Depth"
@@ -1979,13 +1994,13 @@ msgstr "Skuggvikt (%)"
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow X Offset"
-msgstr "X-avstånd för skugga"
+msgstr "X-avstÃ¥nd fÃ¶r skugga"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Shadow Y Offset"
-msgstr "Y-avstånd för skugga"
+msgstr "Y-avstÃ¥nd fÃ¶r skugga"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 #: plug-ins/script-fu/scripts/sphere.scm:0
@@ -1994,11 +2009,11 @@ msgstr "Skugga"
 
 #: plug-ins/script-fu/scripts/line-nova.scm:0
 msgid "Sharpness (degrees)"
-msgstr "Skärpa (grader)"
+msgstr "SkÃ¤rpa (grader)"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Shear Length"
-msgstr "Skärlängd"
+msgstr "SkÃ¤rlÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2008,16 +2023,16 @@ msgstr "Storlek"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Horizontally"
-msgstr "Utjämna horisontellt"
+msgstr "UtjÃ¤mna horisontellt"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth Vertically"
-msgstr "Utjämna vertikalt"
+msgstr "UtjÃ¤mna vertikalt"
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Smooth"
-msgstr "Utjämna"
+msgstr "UtjÃ¤mna"
 
 #: plug-ins/script-fu/scripts/image-structure.scm:0
 msgid "Space Between Layers"
@@ -2034,15 +2049,15 @@ msgstr "Hastighet (bildpunkter/ram)"
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "Sphere Color"
-msgstr "Färg på sfär"
+msgstr "FÃ¤rg pÃ¥ sfÃ¤r"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density X"
-msgstr "X-densitet för punkter"
+msgstr "X-densitet fÃ¶r punkter"
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "Spots density Y"
-msgstr "Y-densitet för punkter"
+msgstr "Y-densitet fÃ¶r punkter"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Spread"
@@ -2054,7 +2069,7 @@ msgstr "Fyrkanter"
 
 #: plug-ins/script-fu/scripts/coffee.scm:0
 msgid "Stains"
-msgstr "Stänk"
+msgstr "StÃ¤nk"
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "Start Angle"
@@ -2063,7 +2078,7 @@ msgstr "Startvinkel"
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "Start Blend"
-msgstr "Starta färgtoning"
+msgstr "Starta fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Start X"
@@ -2075,15 +2090,15 @@ msgstr "Start i Y-led"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Starting Blend"
-msgstr "Startar färgtoning"
+msgstr "Startar fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "Supersample"
-msgstr "Översampla"
+msgstr "Ã–versampla"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Text Color (Active)"
-msgstr "Textfärg (aktiv)"
+msgstr "TextfÃ¤rg (aktiv)"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 #: plug-ins/script-fu/scripts/asc2img.scm:0
@@ -2099,11 +2114,11 @@ msgstr "Textfärg (aktiv)"
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "Text Color"
-msgstr "Textfärg"
+msgstr "TextfÃ¤rg"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "Text Pattern"
-msgstr "Textmönster"
+msgstr "TextmÃ¶nster"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
@@ -2153,19 +2168,19 @@ msgstr "Tjocklek"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Density"
-msgstr "Tråddensitet"
+msgstr "TrÃ¥ddensitet"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Intensity"
-msgstr "Trådintensitet"
+msgstr "TrÃ¥dintensitet"
 
 #: plug-ins/script-fu/scripts/weave.scm:0
 msgid "Thread Length"
-msgstr "Trådlängd"
+msgstr "TrÃ¥dlÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/distress_selection.scm:0
 msgid "Threshold (Bigger 1<-->255 Smaller)"
-msgstr "Tröskel (större 1<-->255 mindre)"
+msgstr "TrÃ¶skel (stÃ¶rre 1<-->255 mindre)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "Tile"
@@ -2180,7 +2195,7 @@ msgstr "Genomskinlig bakgrund"
 
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Turn from Left to Right"
-msgstr "Vänd från vänster till höger"
+msgstr "VÃ¤nd frÃ¥n vÃ¤nster till hÃ¶ger"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
@@ -2189,47 +2204,47 @@ msgstr "Upp"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color (Active)"
-msgstr "Övre färg (aktiv)"
+msgstr "Ã–vre fÃ¤rg (aktiv)"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "Upper Color"
-msgstr "Övre färg"
+msgstr "Ã–vre fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "Upper-Left color"
-msgstr "Övre vänstra färg"
+msgstr "Ã–vre vÃ¤nstra fÃ¤rg"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Use Brush"
-msgstr "Använd pensel"
+msgstr "AnvÃ¤nd pensel"
 
 #: plug-ins/script-fu/scripts/lava.scm:0
 msgid "Use Current Gradient"
-msgstr "Använd aktuell färgtoning"
+msgstr "AnvÃ¤nd aktuell fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm:0
 msgid "Use Growing Selection"
-msgstr "Använd växande markering"
+msgstr "AnvÃ¤nd vÃ¤xande markering"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern Overlay"
-msgstr "Använd mönsteröverlagring"
+msgstr "AnvÃ¤nd mÃ¶nsterÃ¶verlagring"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Använd mönster för kontur istället för färgtoning"
+msgstr "AnvÃ¤nd mÃ¶nster fÃ¶r kontur istÃ¤llet fÃ¶r fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Använd mönster för text istället för färgtoning"
+msgstr "AnvÃ¤nd mÃ¶nster fÃ¶r text istÃ¤llet fÃ¶r fÃ¤rgtoning"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Use Selection Bounds Instead of Belows"
-msgstr "Använd markeringsgränser istället för trösklar"
+msgstr "AnvÃ¤nd markeringsgrÃ¤nser istÃ¤llet fÃ¶r trÃ¶sklar"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Wavelength"
-msgstr "Våglängd"
+msgstr "VÃ¥glÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "Wheel Radius (hypo < 0 < epi)"
@@ -2237,7 +2252,7 @@ msgstr "Hjulradie (hypo < 0 < epi)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Whirl Amount"
-msgstr "Virvelmängd"
+msgstr "VirvelmÃ¤ngd"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "Whirl Angle"
@@ -2245,11 +2260,11 @@ msgstr "Virvelvinkel"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Bands"
-msgstr "Bredd på band"
+msgstr "Bredd pÃ¥ band"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "Width of Gaps"
-msgstr "Bredd på mellanrum"
+msgstr "Bredd pÃ¥ mellanrum"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
@@ -2265,25 +2280,13 @@ msgstr "Bredd"
 #: plug-ins/script-fu/scripts/slide.scm:0
 #: plug-ins/script-fu/scripts/spinning_globe.scm:0
 msgid "Work on Copy"
-msgstr "Arbeta på kopia"
+msgstr "Arbeta pÃ¥ kopia"
 
 #~ msgid "NOT SET"
 #~ msgstr "INTE SATT"
 
-#~ msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
-#~ msgstr "<Image>/Script-Fu/Animatörer/Markering till AnimeraBild..."
-
-#~ msgid "Anim-Filter for all Copies"
-#~ msgstr "Animeringsfilter för alla kopior"
-
-#~ msgid "Fill with BG Color"
-#~ msgstr "Fyll med bakgrundsfärg"
-
-#~ msgid "Number of Copies"
-#~ msgstr "Antal kopior"
-
 #~ msgid "Close"
-#~ msgstr "Stäng"
+#~ msgstr "StÃ¤ng"
 
 #~ msgid "OK"
 #~ msgstr "OK"
@@ -2292,4 +2295,4 @@ msgstr "Arbeta på kopia"
 #~ msgstr "Avbryt"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documentation"
-#~ msgstr "<Toolbox>/Utökningar/Webbläsare/GIMP.ORG/Dokumentation"
+#~ msgstr "<Toolbox>/UtÃ¶kningar/WebblÃ¤sare/GIMP.ORG/Dokumentation"
