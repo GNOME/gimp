@@ -1,3 +1,16 @@
+2004-08-08  Pablo Saratxaga  <pablo@mandrakesoft.com>
+
+	* ca.po: Fixed Catalan file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+	* hr.po: Fixed Croatian file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+	* sr*.po: Fixed Serbian files ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+	* pa.po: Fixed Punjabi file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+	* vi.po: Fixed Vietnamese file ("<Image>/" and "<Toolbox>/" MUST NOT 
+	be translated)
+
 2004-08-02  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.

@@ -2725,52 +2725,52 @@ msgstr "Tonjolkan Kelegapan"
 #~ msgstr "Fon"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/FAQ Pembangun"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pembangun"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Pepijat GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Pepijat GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Manual GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Manual GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Berita GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Berita GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Tutorial GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Tutorial GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Dokumentasi"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Dokumentasi"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Muat turun "
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Muat turun "
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Seni GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Seni GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GTK"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/Sumber"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Sumber"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/GIMP.ORG/GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Gimp-Savvy.com"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/Memahamkan GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Memahamkan GIMP"
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-#~ msgstr "<Kotak Alatan>/Xtns/Pelayar Web/FAQ Pengguna"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pengguna"
 
 #~ msgid ""
 #~ "Burn-In: Need two layers in total!\n"
@@ -2782,7 +2782,7 @@ msgstr "Tonjolkan Kelegapan"
 #~ "        dan lapisan latar belakang"
 
 #~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
-#~ msgstr "<Imej>/Script-Fu/Berikan/Bercahaya Terang..."
+#~ msgstr "<Image>/Script-Fu/Berikan/Bercahaya Terang..."
 
 #~ msgid "Grids X"
 #~ msgstr "Grid X"
@@ -2791,7 +2791,7 @@ msgstr "Tonjolkan Kelegapan"
 #~ msgstr "Grid Y"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-#~ msgstr "<Kotak Alatan>/Xtns/Script-Fu/Logo/Bertekstur..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Bertekstur..."
 
 #~ msgid "Base Radius (pixels)"
 #~ msgstr "Jejari Asas (piksel)"

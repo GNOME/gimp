@@ -150,9 +150,8 @@ msgstr "Consola de l'Script-Fu"
 
 #
 #: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
-#, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
-msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/N_eó..."
+msgstr "<Toolbox>/Extensions/Script-Fu"
 
 #: plug-ins/script-fu/script-fu.c:153
 msgid "_Start Server..."
@@ -1340,7 +1339,7 @@ msgstr "Mida de l'efecte (píxels)"
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
 #, fuzzy
 msgid "<Image>/Edit/Copy/Copy _Visible"
-msgstr "<Imatge>/Edita/Copia el _visible"
+msgstr "<Image>/Edita/Copia el _visible"
 
 #
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1876,18 +1875,16 @@ msgid "<Image>/Script-Fu/Render/_Grid..."
 msgstr "<Image>/Script-Fu/Composició d'imatges/_Graella..."
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:2
-#, fuzzy
 msgid "X divisions"
 msgstr "Divisions d'X"
 
 #: plug-ins/script-fu/scripts/grid-system.scm.h:3
-#, fuzzy
 msgid "Y divisions"
 msgstr "Divisions d'Y"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "<Image>/Script-Fu/Utils/Draw _HSV Graph..."
-msgstr "<Imatge>/Script-Fu/Utilitats/Dibuixa gràfic _HSV..."
+msgstr "<Image>/Script-Fu/Utilitats/Dibuixa gràfic _HSV..."
 
 #
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
@@ -2049,7 +2046,7 @@ msgstr "Utilitza el degradat actual"
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "<Image>/Script-Fu/Render/Line _Nova..."
-msgstr "<Imatge>/Script-Fu/Render/_Nova de línies..."
+msgstr "<Image>/Script-Fu/Render/_Nova de línies..."
 
 #: plug-ins/script-fu/scripts/line-nova.scm.h:2
 #, fuzzy
@@ -2163,7 +2160,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Text de paper de diari..."
 
 #: plug-ins/script-fu/scripts/news-text.scm.h:4
-#, fuzzy
 msgid "Cell size (pixels)"
 msgstr "Mida de la cel·la (píxels)"
 
@@ -2235,19 +2231,15 @@ msgstr "Quantitat de píxels"
 msgid "Pixelize"
 msgstr "Pixelitza"
 
-#
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Botons/Botons a_rrodonits..."
 
-#
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:5
-#, fuzzy
 msgid "Lower color"
 msgstr "Color inferior"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:6
-#, fuzzy
 msgid "Lower color (active)"
 msgstr "Color inferior (actiu)"
 
@@ -2277,27 +2269,21 @@ msgid "Round ratio"
 msgstr "Relació d'arrodoniment"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:15
-#, fuzzy
 msgid "Text color (active)"
 msgstr "Color del text (actiu)"
 
-#
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:16
-#, fuzzy
 msgid "Upper color"
 msgstr "Color superior"
 
 #: plug-ins/script-fu/scripts/pupi-button.scm.h:17
-#, fuzzy
 msgid "Upper color (active)"
 msgstr "Color superior (actiu)"
 
-#
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Patrons/Dibuixa un _mapa..."
 
-#
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
 msgstr "Comportament"
@@ -2421,30 +2407,24 @@ msgstr "Radi relatiu"
 
 #: plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "<Image>/Script-Fu/Decor/_Slide..."
-msgstr "<Imatge>/Script-Fu/Decoració/_Diapositiva..."
+msgstr "<Image>/Script-Fu/Decoració/_Diapositiva..."
 
-#
 #: plug-ins/script-fu/scripts/slide.scm.h:3
-#, fuzzy
 msgid "Font color"
 msgstr "Color del tipus de lletra"
 
-#
 #: plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
 msgstr "Número"
 
-#
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Cromat SOTA..."
 
-#
 #: plug-ins/script-fu/scripts/speed-text.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Text ràpid..."
 
-#
 #: plug-ins/script-fu/scripts/sphere.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Miscel·lània/E_sfera..."
@@ -2624,19 +2604,16 @@ msgstr "Tipus"
 msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
 msgstr "<Image>/Script-Fu/Alfa a logotipus/Ll_um d'estel..."
 
-#
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Ll_um d'estel..."
 
-#
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 #, fuzzy
 msgid "Burst color"
 msgstr "Color de l'explosió"
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#, fuzzy
 msgid "Effect size (pixels * 30)"
 msgstr "Mida de l'efecte (píxels * 30)"
 
@@ -2644,35 +2621,27 @@ msgstr "Mida de l'efecte (píxels * 30)"
 msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
 msgstr "<Image>/Script-Fu/Alfa a logotipus/Cua d'e_stel..."
 
-#
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Cua d'e_stel..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#, fuzzy
 msgid "Effect size (pixels * 4)"
 msgstr "Mida de l'efecte (píxels * 4)"
 
-#
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Patrons/_Mosaic de remolins..."
 
-#
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
-#, fuzzy
 msgid "Whirl amount"
 msgstr "Quantitat de remolins"
 
-#
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Patrons/Arremolina_t..."
 
-#
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
-#, fuzzy
 msgid "Number of times to whirl"
 msgstr "Nombre de vegades que fa remolins"
 
@@ -2681,9 +2650,7 @@ msgstr "Nombre de vegades que fa remolins"
 msgid "Quarter size"
 msgstr "Quart de mida"
 
-#
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
-#, fuzzy
 msgid "Whirl angle"
 msgstr "Angle del remolí"
 
@@ -2691,46 +2658,37 @@ msgstr "Angle del remolí"
 msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
 msgstr "<Image>/Script-Fu/Alfa a logotipus/Traça de _partícula..."
 
-#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Traça de _partícula..."
 
-#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
-#, fuzzy
 msgid "Base color"
 msgstr "Color base"
 
-#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 #, fuzzy
 msgid "Edge only"
 msgstr "Només fil"
 
-#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 #, fuzzy
 msgid "Edge width"
 msgstr "Amplada de fil"
 
-#
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 #, fuzzy
 msgid "Hit rate"
 msgstr "Relació d'encerts"
 
-#
 #: plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Cercle de text..."
 
-#
 #: plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Antialias"
 msgstr "Suavitzat"
 
-#
 #: plug-ins/script-fu/scripts/text-circle.scm.h:3
 #, fuzzy
 msgid "Fill angle"
@@ -2740,7 +2698,6 @@ msgstr "Angle d'emplenat"
 msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
 msgstr "<Image>/Script-Fu/Alfa a logotipus/_Texturitzat..."
 
-#
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/_Texturitzat..."
@@ -2810,19 +2767,15 @@ msgstr "IIR"
 msgid "RLE"
 msgstr "RLE"
 
-#
 #: plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Logotipus/Capçalera de títol de web..."
 
-#
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
 msgstr "<Toolbox>/Extensions/Script-Fu/Patrons/T_ruchet..."
 
-#
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
-#, fuzzy
 msgid "Foreground color"
 msgstr "Color de primer pla"
 
@@ -2830,15 +2783,11 @@ msgstr "Color de primer pla"
 msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
 msgstr "<Image>/Script-Fu/Alquímia/Màscara sense _definició..."
 
-#
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
-#, fuzzy
 msgid "Mask opacity"
 msgstr "Opacitat de la màscara"
 
-#
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-#, fuzzy
 msgid "Mask size"
 msgstr "Mida de la màscara"
 
@@ -2850,7 +2799,6 @@ msgstr "<Image>/Script-Fu/Animadors/O_nes..."
 msgid "Amplitude"
 msgstr "Amplada"
 
-#
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
 msgstr "Inverteix la direcció"
@@ -2969,7 +2917,6 @@ msgstr "Opacitat del ressaltat"
 #~ msgid "Unable to open the SIOD output pipe"
 #~ msgstr "No es pot obrir el conducte de sortida SIOD"
 
-#
 #, fuzzy
 #~ msgid "Blend gradient (sext)"
 #~ msgstr "Barreja el degradat(text)"

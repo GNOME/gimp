@@ -462,7 +462,7 @@ msgstr "Afegeix el camí FractalExplorer"
 #: plug-ins/common/spheredesigner.c:3128 plug-ins/gfig/gfig.c:140
 #, fuzzy
 msgid "<Image>/Filters/Render"
-msgstr "<Imatge>/Filtres/Genera/Gfig..."
+msgstr "<Image>/Filtres/Genera/Gfig..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:392
 msgid "Rendering Fractal..."
@@ -546,9 +546,8 @@ msgstr "Efectes de llum"
 #: plug-ins/Lighting/lighting_main.c:204 plug-ins/common/flarefx.c:198
 #: plug-ins/common/nova.c:204 plug-ins/common/sparkle.c:193
 #: plug-ins/gflare/gflare.c:835
-#, fuzzy
 msgid "<Image>/Filters/Light Effects"
-msgstr "<Imatge>/Filtres/Efectes de llum/GFlare..."
+msgstr "<Image>/Filtres/Efectes de llum"
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:261
@@ -951,15 +950,13 @@ msgstr "Mapa de l'objecte"
 #: plug-ins/common/papertile.c:821 plug-ins/common/tile.c:120
 #: plug-ins/common/tileit.c:235 plug-ins/common/tiler.c:73
 #: plug-ins/common/warp.c:254
-#, fuzzy
 msgid "<Image>/Filters/Map"
-msgstr "<Imatge>/Filtres/Mapa/Trama..."
+msgstr "<Image>/Filtres/Mapa"
 
 #: plug-ins/MapObject/mapobject_ui.c:248
 #: plug-ins/MapObject/mapobject_ui.c:1340
-#, fuzzy
 msgid "_Box"
-msgstr "Quadre"
+msgstr "_Quadre"
 
 #: plug-ins/MapObject/mapobject_ui.c:266
 #: plug-ins/MapObject/mapobject_ui.c:1346
@@ -969,7 +966,6 @@ msgstr "Cilindre"
 
 #. General options
 #: plug-ins/MapObject/mapobject_ui.c:496
-#, fuzzy
 msgid "General options"
 msgstr "Opcions generals"
 
@@ -1472,9 +1468,8 @@ msgstr "AlienMap2"
 #: plug-ins/common/gradmap.c:96 plug-ins/common/mapcolor.c:337
 #: plug-ins/common/mapcolor.c:355 plug-ins/common/sample_colorize.c:304
 #: plug-ins/rcm/rcm.c:113
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map"
-msgstr "<Imatge>/Filtres/Colors/RGB màxim..."
+msgstr "<Image>/Filtres/Colors/Mapa"
 
 #: plug-ins/common/AlienMap2.c:336
 msgid "AlienMap2: Transforming..."
@@ -1747,9 +1742,8 @@ msgstr "CML_explorer: s'està desenvolupant..."
 #: plug-ins/common/diffraction.c:186 plug-ins/common/gqbist.c:422
 #: plug-ins/common/grid.c:159 plug-ins/common/jigsaw.c:415
 #: plug-ins/common/sinus.c:198 plug-ins/maze/maze.c:175
-#, fuzzy
 msgid "<Image>/Filters/Render/Pattern"
-msgstr "<Imatge>/Filtres/Executa/Patró/Maze..."
+msgstr "<Image>/Filtres/Executa/Patró"
 
 #: plug-ins/common/CML_explorer.c:759
 msgid "CML_explorer: evoluting..."
@@ -2038,9 +2032,8 @@ msgid "Align _Visible Layers..."
 msgstr "Alinea les capes visibles"
 
 #: plug-ins/common/align_layers.c:142
-#, fuzzy
 msgid "<Image>/Layer"
-msgstr "Font de la imatge/capa:"
+msgstr "<Image>/Capa"
 
 #: plug-ins/common/align_layers.c:174
 msgid "There are not enough layers to align."
@@ -2145,19 +2138,16 @@ msgstr "Playback: "
 #: plug-ins/common/animationplay.c:188 plug-ins/common/animoptimize.c:183
 #: plug-ins/common/animoptimize.c:185 plug-ins/common/animoptimize.c:187
 #: plug-ins/common/animoptimize.c:222 plug-ins/common/animoptimize.c:224
-#, fuzzy
 msgid "<Image>/Filters/Animation"
-msgstr "<Imatge>/Filtres/Animació/Desoptimitza l'animació"
+msgstr "<Image>/Filtres/Animació"
 
 #: plug-ins/common/animationplay.c:413
-#, fuzzy
 msgid "Animation Playback:"
-msgstr "Animació Playback: "
+msgstr "Animació Playback:"
 
 #: plug-ins/common/animationplay.c:431
-#, fuzzy
 msgid "Playback:"
-msgstr "Playback: "
+msgstr "Playback:"
 
 #: plug-ins/common/animationplay.c:457
 msgid "Play/Stop"
@@ -2172,18 +2162,16 @@ msgid "Step"
 msgstr "Pas"
 
 #: plug-ins/common/animationplay.c:1138
-#, fuzzy, c-format
 msgid "Frame %d of %d"
-msgstr "Marc %v de %u"
+msgstr "Marc %d de %d"
 
 #: plug-ins/common/animoptimize.c:140
 msgid "Optimize (for _GIF)"
 msgstr ""
 
 #: plug-ins/common/animoptimize.c:158
-#, fuzzy
 msgid "_Optimize (Difference)"
-msgstr "<Imatge>/Filtres/Animació/Optimitza l'animació"
+msgstr ""
 
 #: plug-ins/common/animoptimize.c:175
 #, fuzzy
@@ -2221,9 +2209,8 @@ msgid "Apply _Lens..."
 msgstr "S'està aplicant la lent..."
 
 #: plug-ins/common/apply_lens.c:119 plug-ins/common/glasstile.c:121
-#, fuzzy
 msgid "<Image>/Filters/Glass Effects"
-msgstr "<Imatge>/Filtres/Efectes òptics/Mosaic òptic..."
+msgstr "<Image>/Filtres/Efectes de lent"
 
 #: plug-ins/common/apply_lens.c:179
 msgid "Applying lens..."
@@ -2264,9 +2251,8 @@ msgid "_Autocrop Image"
 msgstr "Imatge sencera"
 
 #: plug-ins/common/autocrop.c:92 plug-ins/common/zealouscrop.c:76
-#, fuzzy
 msgid "<Image>/Image/Crop"
-msgstr "<Imatge>/Imatge/Mode/Composa..."
+msgstr "<Image>/Imatge/Escapça"
 
 #: plug-ins/common/autocrop.c:100
 #, fuzzy
@@ -2274,9 +2260,8 @@ msgid "_Autocrop Layer"
 msgstr "Capa del Rínxol"
 
 #: plug-ins/common/autocrop.c:107
-#, fuzzy
 msgid "<Image>/Layer/Crop"
-msgstr "<Imatge>/Imatge/Transformacions/Zealous Crop"
+msgstr "<Image>/Capa/Escapça"
 
 #: plug-ins/common/autocrop.c:149
 msgid "Cropping..."
@@ -2289,9 +2274,8 @@ msgstr "Amplia"
 
 #: plug-ins/common/autostretch_hsv.c:88 plug-ins/common/c_astretch.c:86
 #: plug-ins/common/color_enhance.c:88 plug-ins/common/normalize.c:97
-#, fuzzy
 msgid "<Image>/Layer/Colors/Auto"
-msgstr "<Imatge>/Imatge/Colors/Automàtic/Normalitza"
+msgstr "<Image>/Capa/Colors/Automàtic"
 
 #: plug-ins/common/autostretch_hsv.c:116
 msgid "Auto-Stretching HSV..."
@@ -2314,9 +2298,8 @@ msgstr "Angles morts"
 #: plug-ins/common/video.c:1825 plug-ins/common/vpropagate.c:274
 #: plug-ins/common/waves.c:132 plug-ins/common/whirlpinch.c:184
 #: plug-ins/common/wind.c:195 plug-ins/pagecurl/pagecurl.c:244
-#, fuzzy
 msgid "<Image>/Filters/Distorts"
-msgstr "<Imatge>/Filtres/Distorsions/Vent..."
+msgstr "<Image>/Filtres/Distorsions"
 
 #: plug-ins/common/blinds.c:216
 msgid "Adding Blinds..."
@@ -2368,9 +2351,8 @@ msgstr "Ressenya:"
 #: plug-ins/common/blur.c:154 plug-ins/common/gauss.c:241
 #: plug-ins/common/mblur.c:164 plug-ins/common/pixelize.c:180
 #: plug-ins/common/sel_gauss.c:112
-#, fuzzy
 msgid "<Image>/Filters/Blur"
-msgstr "<Imatge>/Filtres/Difumina/Difumina..."
+msgstr "<Image>/Filtres/Difumina"
 
 #: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:275
 #: plug-ins/common/unsharp.c:906
@@ -2389,9 +2371,8 @@ msgstr "Vora mitjana..."
 #: plug-ins/common/max_rgb.c:119 plug-ins/common/semiflatten.c:86
 #: plug-ins/common/smooth_palette.c:95 plug-ins/common/vinvert.c:93
 #: plug-ins/fp/fp.c:329
-#, fuzzy
 msgid "<Image>/Filters/Colors"
-msgstr "<Imatge>/Filtres/Colors/Càlids..."
+msgstr "<Image>/Filtres/Colors"
 
 #: plug-ins/common/borderaverage.c:164
 msgid "Border Average..."
@@ -2530,14 +2511,12 @@ msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr ""
 
 #: plug-ins/common/ccanalyze.c:110
-#, fuzzy
 msgid "Colorcube A_nalysis..."
-msgstr "<Imatge>/Filtres/Colors/Acoloreix..."
+msgstr ""
 
 #: plug-ins/common/ccanalyze.c:119
-#, fuzzy
 msgid "<Image>/Layer/Colors/Info"
-msgstr "<Imatge>/Imatge/Colors/Automàtic/Normalitza"
+msgstr "<Image>/Capa/Colors/Informació"
 
 #: plug-ins/common/ccanalyze.c:202
 msgid "Colorcube Analysis..."
@@ -2727,7 +2706,7 @@ msgstr "Acoloreix a l'Alfa"
 #: plug-ins/common/threshold_alpha.c:104
 #, fuzzy
 msgid "<Image>/Layer/Transparency/Modify"
-msgstr "<Imatge>/Imatge/Alfa/Llindar alfa..."
+msgstr "<Image>/Imatge/Alfa/Llindar alfa..."
 
 #: plug-ins/common/colortoalpha.c:178
 msgid "Removing color..."
@@ -2867,9 +2846,8 @@ msgid "C_ompose..."
 msgstr "S'està composant..."
 
 #: plug-ins/common/compose.c:304 plug-ins/common/decompose.c:253
-#, fuzzy
 msgid "<Image>/Image/Mode"
-msgstr "<Imatge>/Imatge/Mode/Composa..."
+msgstr "<Image>/Imatge/Mode"
 
 #: plug-ins/common/compose.c:362
 #, fuzzy, c-format
@@ -2965,9 +2943,8 @@ msgstr "Matriu de circumvolució"
 
 #: plug-ins/common/convmatrix.c:202 plug-ins/common/vpropagate.c:276
 #: plug-ins/common/vpropagate.c:278
-#, fuzzy
 msgid "<Image>/Filters/Generic"
-msgstr "<Imatge>/Filtres/Detector de vores/Vora..."
+msgstr "<Image>/Filtres/Genèric"
 
 #: plug-ins/common/convmatrix.c:230
 #, fuzzy
@@ -3082,9 +3059,8 @@ msgstr "Cubisme"
 
 #: plug-ins/common/cubism.c:153 plug-ins/common/oilify.c:113
 #: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:84
-#, fuzzy
 msgid "<Image>/Filters/Artistic"
-msgstr "<Imatge>/Filtres/Artístic/Cubisme..."
+msgstr "<Image>/Filtres/Artístic"
 
 #: plug-ins/common/cubism.c:257
 msgid "Cubism"
@@ -3447,9 +3423,8 @@ msgstr "Desentrellaça..."
 #: plug-ins/common/deinterlace.c:94 plug-ins/common/despeckle.c:165
 #: plug-ins/common/destripe.c:141 plug-ins/common/nlfilt.c:131
 #: plug-ins/common/sharpen.c:150 plug-ins/common/unsharp.c:166
-#, fuzzy
 msgid "<Image>/Filters/Enhance"
-msgstr "<Imatge>/Filtres/Millora/Afila..."
+msgstr "<Image>/Filtres/Millora"
 
 #: plug-ins/common/deinterlace.c:145
 msgid "Deinterlace..."
@@ -3475,9 +3450,8 @@ msgid "_Depth Merge..."
 msgstr "Fusió profunda"
 
 #: plug-ins/common/depthmerge.c:199 plug-ins/common/film.c:248
-#, fuzzy
 msgid "<Image>/Filters/Combine"
-msgstr "<Imatge>/Filtres/Combina/Pel·lícula..."
+msgstr "<Image>/Filtres/Combina"
 
 #: plug-ins/common/depthmerge.c:383
 msgid "Depth-merging..."
@@ -3727,9 +3701,8 @@ msgstr "Difusió gaussiana selectiva"
 
 #: plug-ins/common/dog.c:174 plug-ins/common/edge.c:167
 #: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:123
-#, fuzzy
 msgid "<Image>/Filters/Edge-Detect"
-msgstr "<Imatge>/Filtres/Detecció de vores/Laplace"
+msgstr "<Image>/Filtres/Detecció de vores"
 
 #: plug-ins/common/dog.c:251 plug-ins/common/dog.c:301
 #, fuzzy
@@ -4143,19 +4116,16 @@ msgid "X_2:"
 msgstr "X2:"
 
 #: plug-ins/common/fractaltrace.c:774
-#, fuzzy
 msgid "Y_1:"
-msgstr "Y1:"
+msgstr "Y_1:"
 
 #: plug-ins/common/fractaltrace.c:783
-#, fuzzy
 msgid "Y_2:"
-msgstr "Y2:"
+msgstr "Y_2:"
 
 #: plug-ins/common/gauss.c:154
-#, fuzzy
 msgid "_Gaussian Blur..."
-msgstr "<Imatge>/Filtres/Difuminació/Difuminació gaussiana (IIR)..."
+msgstr ""
 
 #: plug-ins/common/gauss.c:389 plug-ins/common/gauss.c:437
 #, fuzzy
@@ -4241,18 +4211,16 @@ msgid "Gee-_Slime"
 msgstr ""
 
 #: plug-ins/common/gee.c:101 plug-ins/common/gee_zoom.c:131
-#, fuzzy
 msgid "<Image>/Filters/Toys"
-msgstr "<Imatge>/Filtres/Joguines/Gee-Zoom"
+msgstr "<Image>/Filtres/Joguines"
 
 #: plug-ins/common/gee.c:153
 msgid "GEE-SLIME"
 msgstr "GEE-SLIME"
 
 #: plug-ins/common/gee.c:159 plug-ins/common/gee_zoom.c:192
-#, fuzzy
 msgid "Thank you for choosing GIMP"
-msgstr "** Gràcies per triar el GIMP **"
+msgstr "Gràcies per triar el GIMP"
 
 #: plug-ins/common/gee.c:167
 msgid ""
@@ -4768,14 +4736,12 @@ msgid "The amount of cellspacing."
 msgstr "La quantitat d'espaiat de les cel·les."
 
 #: plug-ins/common/guillotine.c:71
-#, fuzzy
 msgid "_Guillotine"
-msgstr "Guillotina..."
+msgstr "_Guillotina"
 
 #: plug-ins/common/guillotine.c:78
-#, fuzzy
 msgid "<Image>/Image/Transform"
-msgstr "<Imatge>/Imatge/Transformacions/Escapçament automàtic"
+msgstr "<Image>/Imatge/Transformacions"
 
 #: plug-ins/common/guillotine.c:104
 msgid "Guillotine..."
@@ -5237,20 +5203,17 @@ msgid "M_aximum value:"
 msgstr "Valor màxim:"
 
 #: plug-ins/common/lic.c:784
-#, fuzzy
 msgid "_Van Gogh (LIC)..."
-msgstr "Van Gogh (LIC)"
+msgstr "_Van Gogh (LIC)"
 
 #: plug-ins/common/mail.c:214
-#, fuzzy
 msgid "_Mail Image..."
-msgstr "<Imatge>/Fitxer/Imatge de correu..."
+msgstr ""
 
 #: plug-ins/common/mail.c:221 plug-ins/common/winprint.c:243
 #: plug-ins/common/winprint.c:245 plug-ins/print/print.c:171
-#, fuzzy
 msgid "<Image>/File/Send"
-msgstr "<Imatge>/Fitxer/Imprimeix"
+msgstr "<Image>/Fitxer/Envia"
 
 #: plug-ins/common/mail.c:434
 msgid "Send to Mail"
@@ -5422,9 +5385,8 @@ msgid "Blur Parameters"
 msgstr "Paràmetres de difuminació"
 
 #: plug-ins/common/mblur.c:830 plug-ins/common/newsprint.c:1011
-#, fuzzy
 msgid "_Angle:"
-msgstr "Angle:"
+msgstr "_Angle:"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
@@ -5828,18 +5790,16 @@ msgstr "Dispersió HSV"
 #: plug-ins/common/noisify.c:136 plug-ins/common/randomize.c:274
 #: plug-ins/common/randomize.c:275 plug-ins/common/randomize.c:276
 #: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:107
-#, fuzzy
 msgid "<Image>/Filters/Noise"
-msgstr "<Imatge>/Filtres/Soroll/Murmuri..."
+msgstr "<Image>/Filtres/Soroll"
 
 #: plug-ins/common/noisify.c:209
 msgid "Adding Noise..."
 msgstr "S'està afegint soroll..."
 
 #: plug-ins/common/noisify.c:334
-#, fuzzy
 msgid "Scatter RGB"
-msgstr "Dispersió HSV"
+msgstr "Dispersió RGB"
 
 #: plug-ins/common/noisify.c:362
 #, fuzzy
@@ -6083,9 +6043,8 @@ msgid "_Plasma..."
 msgstr "Plasma..."
 
 #: plug-ins/common/plasma.c:193 plug-ins/common/snoise.c:196
-#, fuzzy
 msgid "<Image>/Filters/Render/Clouds"
-msgstr "<Imatge>/Filtres/Genera una visualització realista/Núvols/Plasma..."
+msgstr "<Image>/Filtres/Genera/Núvols"
 
 #: plug-ins/common/plasma.c:271
 msgid "Plasma..."
@@ -6128,9 +6087,8 @@ msgstr "Descripcions dels connectors"
 
 #: plug-ins/common/plugindetails.c:159 plug-ins/common/uniteditor.c:124
 #: plug-ins/dbbrowser/dbbrowser.c:96
-#, fuzzy
 msgid "<Toolbox>/Xtns/Extensions"
-msgstr "<Quadre d'eines>/Xtns/Editor d'unitat..."
+msgstr "<Toolbox>/Xtns/Extensions"
 
 #: plug-ins/common/plugindetails.c:229
 msgid "Details <<"
@@ -7553,9 +7511,8 @@ msgid "Rendering Sphere..."
 msgstr "S'està generant la Supernova"
 
 #: plug-ins/common/spheredesigner.c:3121
-#, fuzzy
 msgid "Sphere _Designer..."
-msgstr "<Imatge>/Filtres/Genera una visualització realista/Sinus..."
+msgstr ""
 
 #: plug-ins/common/spread.c:100
 #, fuzzy
@@ -8527,14 +8484,12 @@ msgid "_Pinch amount:"
 msgstr "Quantitat de contraccions:"
 
 #: plug-ins/common/winclipboard.c:109
-#, fuzzy
 msgid "Copy to Clipboard"
-msgstr "<Imatge>/Edita/Copia al porta-retalls"
+msgstr ""
 
 #: plug-ins/common/winclipboard.c:121
-#, fuzzy
 msgid "Paste from Clipboard"
-msgstr "<Imatge>/Edita/Enganxa del porta-retalls"
+msgstr ""
 
 #: plug-ins/common/winclipboard.c:133
 #, fuzzy
@@ -8544,7 +8499,7 @@ msgstr "Des del color"
 #: plug-ins/common/winclipboard.c:140 plug-ins/common/winclipboard.c:142
 #, fuzzy
 msgid "<Image>/Edit"
-msgstr "<Imatge>/Fitxer/Imprimeix"
+msgstr "<Image>/Fitxer/Imprimeix"
 
 #: plug-ins/common/winclipboard.c:331
 #, fuzzy
@@ -9038,9 +8993,8 @@ msgid "_Flame..."
 msgstr "Flama"
 
 #: plug-ins/flame/flame.c:148 plug-ins/ifscompose/ifscompose.c:373
-#, fuzzy
 msgid "<Image>/Filters/Render/Nature"
-msgstr "<Imatge>/Filters/Genera/Natura/Flama..."
+msgstr "<Image>/Filters/Genera/Natura"
 
 #: plug-ins/flame/flame.c:233
 msgid "Drawing Flame..."
@@ -11351,9 +11305,8 @@ msgid "_ImageMap..."
 msgstr "Quant al mapa d'imatges"
 
 #: plug-ins/imagemap/imap_main.c:135
-#, fuzzy
 msgid "<Image>/Filters/Web"
-msgstr "<Imatge>/Filtres/Web/ImageMap..."
+msgstr "<Image>/Filtres/Web"
 
 #: plug-ins/imagemap/imap_main.c:595 plug-ins/imagemap/imap_settings.c:169
 msgid "<Untitled>"
@@ -13131,9 +13084,8 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "Blur Radius:"
 #~ msgstr "Radi de difuminació:"
 
-#, fuzzy
 #~ msgid "Gaussian Blur (_RLE)..."
-#~ msgstr "<Imatge>/Filtres/Difuminació/Difumanació gaussiana (RLE)..."
+#~ msgstr "Difumanació gaussiana (_RLE)..."
 
 #~ msgid "RLE Gaussian Blur"
 #~ msgstr "RLE difuminació gaussiana"
@@ -13226,13 +13178,8 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "Select _All"
 #~ msgstr "Selecciona tot"
 
-#, fuzzy
-#~ msgid "Select Contiguous Region"
-#~ msgstr "Selecciona la regió"
-
-#, fuzzy
 #~ msgid "Image Type:"
-#~ msgstr "Tipus d'imatge"
+#~ msgstr "Tipus d'imatge:"
 
 #~ msgid "RLE Compression"
 #~ msgstr "Compressió RLE"
@@ -13243,32 +13190,17 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "Save: No filename given"
 #~ msgstr "Desa: No heu posat un nom al fitxer"
 
-#, fuzzy
-#~ msgid "Cannot save to a folder."
-#~ msgstr "Desa: No es pot desar al directori"
-
-#, fuzzy
 #~ msgid "<Image>/Filters/Render/_Fractal Explorer..."
-#~ msgstr "<Image>/Filtres/Executa/Patró/Fractal Explorer..."
+#~ msgstr "<Image>/Filtres/Visualització realista/_Fractal Explorer..."
 
-#, fuzzy
-#~ msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-#~ msgstr "<Image>/Filtres/Efectes de llum/Efectes d'il·luminació..."
-
-#, fuzzy
-#~ msgid "Preview Options"
-#~ msgstr "Desa les opcions"
-
-#, fuzzy
 #~ msgid "<Image>/Filters/Map/Map _Object..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Objecte del mapa..."
+#~ msgstr "<Image>/Filtres/Mapa/_Objecte del mapa..."
 
 #~ msgid "Save Options"
 #~ msgstr "Desa les opcions"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/AlienMap..."
+#~ msgstr "<Image>/Filtres/Colors/Mapa/_AlienMap..."
 
 #~ msgid "AlienMap: Transforming..."
 #~ msgstr "AlienMap: s'està transformant..."
@@ -13284,10 +13216,6 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #~ msgid "Change intensity of the blue channel"
 #~ msgstr "Canvia la intensitat del canal blau"
-
-#, fuzzy
-#~ msgid "Cos_ine"
-#~ msgstr "Cosinus"
 
 #~ msgid "Use sine-function for red component."
 #~ msgstr "Fes servir la funció sinus per al component vermell."
@@ -13328,9 +13256,8 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "About AlienMap"
 #~ msgstr "Quant a l'AlienMap"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Alien Map 2..."
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Alien Map _2..."
 
 #~ msgid "Change frequency of the red/hue channel"
 #~ msgstr "Canvia la freqüència del canal tinta/vermella"
@@ -13362,9 +13289,8 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "About AlienMap2"
 #~ msgstr "Quant a l'AlienMap2"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-#~ msgstr "<Imatge>/Filtres/Visualització realista/Patró/CML Explorer..."
+#~ msgstr "<Image>/Filtres/Visualització realista/Patró/CML _Explorer..."
 
 #~ msgid "NULL"
 #~ msgstr "CAP"
@@ -13382,37 +13308,36 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "Parameter Settings"
 #~ msgstr "Configuració dels paràmetres"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Animation/_Playback..."
-#~ msgstr "<Imatge>/Filtres/Animació/Animació Playback..."
+#~ msgstr "<Image>/Filtres/Animació/Animació _Playback..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-#~ msgstr "<Imatge>/Filtres/Animació/Optimitza l'animació"
+#~ msgstr "<Image>/Filtres/Animació/Optimitza l'animació"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Animation/_Remove Backdrop"
-#~ msgstr "<Imatge>/Filtres/Animació/Animació: suprimeix el fons"
+#~ msgstr "<Image>/Filtres/Animació/Animació: suprimeix el fons"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Animation/_Find Backdrop"
-#~ msgstr "<Imatge>/Filtres/Animació/Animació: cerca el fons"
+#~ msgstr "<Image>/Filtres/Animació/Animació: cerca el fons"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-#~ msgstr "<Imatge>/Filtres/Efectes òptics/Aplica la lent..."
+#~ msgstr "<Image>/Filtres/Efectes òptics/Aplica la lent..."
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-#~ msgstr "<Imatge>/Imatge/Colors/Automàtic/Amplia l'HSV"
+#~ msgstr "<Image>/Imatge/Colors/Automàtic/Amplia l'HSV"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Blinds..."
-#~ msgstr "<Imatge>/Filtres/Disorsions/Angles morts..."
+#~ msgstr "<Image>/Filtres/Disorsions/Angles morts..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Border Average..."
-#~ msgstr "<Imatge>/Filtres/Colors/Vora mitjana..."
+#~ msgstr "<Image>/Filtres/Colors/Vora mitjana..."
 
 #~ msgid "1 (nonsense?)"
 #~ msgstr "1 (sense sentit?)"
@@ -13422,7 +13347,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Bump Map..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Mapa la memòria annexa..."
+#~ msgstr "<Image>/Filtres/Mapa/Mapa la memòria annexa..."
 
 #, fuzzy
 #~ msgid "_Linear Map"
@@ -13438,7 +13363,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
-#~ msgstr "<Imatge>/Imatge/Colors/Automàtic/Amplia el contrast"
+#~ msgstr "<Image>/Imatge/Colors/Automàtic/Amplia el contrast"
 
 #, fuzzy
 #~ msgid "Results"
@@ -13446,101 +13371,99 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-#~ msgstr "<Imatge>/Filtres/Colors/Càlids..."
+#~ msgstr "<Image>/Filtres/Colors/Càlids..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
 #~ msgstr ""
-#~ "<Imatge>/Filtres/Visualització realista/Patró/Targeta de comprovació..."
+#~ "<Image>/Filtres/Visualització realista/Patró/Targeta de comprovació..."
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
-#~ msgstr "<Imatge>/Imatge/Colors/Automàtic/Millora del color"
+#~ msgstr "<Image>/Imatge/Colors/Automàtic/Millora del color"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Colorify..."
-#~ msgstr "<Imatge>/Filtres/Colors/Acoloreix..."
+#~ msgstr "<Image>/Filtres/Colors/Acoloreix..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Color to _Alpha..."
-#~ msgstr "<Imatge>/Filtres/Colors/Acoloreix a Alfa..."
+#~ msgstr "<Image>/Filtres/Colors/Acoloreix a Alfa..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/C_ompose..."
-#~ msgstr "<Imatge>/Filtres/Colors/Càlids..."
+#~ msgstr "<Image>/Filtres/Colors/Càlids..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-#~ msgstr "<Imatge>/Filtres/Genèric/Matriu de circumvolució..."
+#~ msgstr "<Image>/Filtres/Genèric/Matriu de circumvolució..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Curve Bend..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/CurveBend..."
+#~ msgstr "<Image>/Filtres/Distorsions/CurveBend..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Decompose..."
-#~ msgstr "<Imatge>/Filtres/Colors/Càlids..."
+#~ msgstr "<Image>/Filtres/Colors/Càlids..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/_Deinterlace..."
-#~ msgstr "<Imatge>/Filtres/Millora/Desentrellaça"
+#~ msgstr "<Image>/Filtres/Millora/Desentrellaça"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Combine/_Depth Merge..."
-#~ msgstr "<Imatge>/Filtres/Combina/Refosa profunda..."
+#~ msgstr "<Image>/Filtres/Combina/Refosa profunda..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/Des_peckle..."
-#~ msgstr "<Imatge>/Filtres/Millora/Treu els pics"
+#~ msgstr "<Image>/Filtres/Millora/Treu els pics"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/Des_tripe..."
-#~ msgstr "<Imatge>/Filtres/Millora/Treu les bandes..."
+#~ msgstr "<Image>/Filtres/Millora/Treu les bandes..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
 #~ msgstr ""
-#~ "<Imatge>/Filtres/Generació d'una visualització realista/Patró/Patrons de "
+#~ "<Image>/Filtres/Generació d'una visualització realista/Patró/Patrons de "
 #~ "difracció"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Map/_Displace..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Desplaça..."
+#~ msgstr "<Image>/Filtres/Mapa/_Desplaça..."
 
 #~ msgid "Displace Options"
 #~ msgstr "Desplaça les opcions"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Edge-Detect/_Edge..."
-#~ msgstr "<Imatge>/Filtres/Detector de vores/Vora..."
+#~ msgstr "<Image>/Filtres/Detector de vores/Vora..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Emboss..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Relleu..."
+#~ msgstr "<Image>/Filtres/Distorsions/Relleu..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/En_grave..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Grava..."
+#~ msgstr "<Image>/Filtres/Distorsions/Grava..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Canvi de color..."
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Canvi de color..."
 
-#, fuzzy
 #~ msgid "_Selection"
-#~ msgstr "Selecció"
+#~ msgstr "_Selecció"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Light Effects/_FlareFX..."
-#~ msgstr "<Imatge>/Filtres/Efectes de llum/FlareFX..."
+#~ msgstr "<Image>/Filtres/Efectes de llum/FlareFX..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Fractal Trace..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Traça fractal..."
+#~ msgstr "<Image>/Filtres/Mapa/Traça fractal..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Toys/Gee-_Slime"
-#~ msgstr "<Imatge>/Filtres/Joguines/Gee-Slime"
+#~ msgstr "<Image>/Filtres/Joguines/Gee-Slime"
 
 #~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 #~ msgstr ""
@@ -13559,90 +13482,89 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Qbist..."
 #~ msgstr ""
-#~ "<Imatge>/Filtres/Generació d'una visualització realista/Patró/Qbist..."
+#~ "<Image>/Filtres/Generació d'una visualització realista/Patró/Qbist..."
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Mapa amb gradient"
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Mapa amb _gradient"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Grid..."
-#~ msgstr "<Imatge>/Filtres/Genera una visualització realista/Patró/Graella..."
+#~ msgstr "<Image>/Filtres/Genera una visualització realista/Patró/Graella..."
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/_Guillotine"
-#~ msgstr "<Imatge>/Imatge/Transformacions/Guillotina"
+#~ msgstr "<Image>/Imatge/Transformacions/Guillotina"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Illusion..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Il·lusió..."
+#~ msgstr "<Image>/Filtres/Mapa/Il·lusió..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_IWarp..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/IWarp..."
+#~ msgstr "<Image>/Filtres/Distorsions/IWarp..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-#~ msgstr "<Imatge>/Filtres/Genera una visualització realista/Patró/Encaix..."
+#~ msgstr "<Image>/Filtres/Genera una visualització realista/Patró/Encaix..."
 
 #~ msgid "Image comments"
 #~ msgstr "Comentaris de la imatge"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Van Gogh (LIC)..."
+#~ msgstr "<Image>/Filtres/Mapa/Van Gogh (LIC)..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Ajusta FG-BG"
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Ajusta FG-BG"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Mapatge de l'abast del color..."
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Mapatge de l'abast del color..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Blur/_Motion Blur..."
-#~ msgstr "<Imatge>/Filtres/Difuminació/Moviment de difuminació..."
+#~ msgstr "<Image>/Filtres/Difuminació/Moviment de difuminació..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Mosaic..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Relleu..."
+#~ msgstr "<Image>/Filtres/Distorsions/Relleu..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/Newsprin_t..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Full de mà..."
+#~ msgstr "<Image>/Filtres/Distorsions/Full de mà..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/_NL Filter..."
-#~ msgstr "<Imatge>/Filtres/Millora/Filtre NL..."
+#~ msgstr "<Image>/Filtres/Millora/Filtre NL..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Noise/_Noisify..."
-#~ msgstr "<Imatge>/Filtres/Soroll/Fes soroll..."
+#~ msgstr "<Image>/Filtres/Soroll/Fes soroll..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Light Effects/Su_perNova..."
-#~ msgstr "<Imatge>/Filtres/Efectes de llum/Supernova..."
+#~ msgstr "<Image>/Filtres/Efectes de llum/Supernova..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Artistic/Oili_fy..."
-#~ msgstr "<Imatge>/Filtres/Artístic/Olifica..."
+#~ msgstr "<Image>/Filtres/Artístic/Olifica..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Paper Tile..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Paper mosaic..."
+#~ msgstr "<Image>/Filtres/Mapa/Paper mosaic..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Blur/_Pixelize..."
-#~ msgstr "<Imatge>/Filtres/Difumina/Pixelitzar"
+#~ msgstr "<Image>/Filtres/Difumina/Pixelitzar"
 
 #, fuzzy
 #~ msgid "<Toolbox>/Xtns/_Plugin Details"
-#~ msgstr "<Quadre d'eines>/Xtns/Detalls del connector..."
+#~ msgstr "<Toolbox>/Xtns/Detalls del connector..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Coordenades polars..."
+#~ msgstr "<Image>/Filtres/Distorsions/Coordenades polars..."
 
 #~ msgid "write error occured"
 #~ msgstr "S'ha produït un error en escriure"
@@ -13657,71 +13579,68 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Noise/_Hurl..."
-#~ msgstr "<Imatge>/Filtres/Soroll/Emissió..."
+#~ msgstr "<Image>/Filtres/Soroll/Emissió..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Noise/_Pick..."
-#~ msgstr "<Imatge>/Filtres/Soroll/Tria..."
+#~ msgstr "<Image>/Filtres/Soroll/Tria..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Ripple..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/So de mar..."
+#~ msgstr "<Image>/Filtres/Distorsions/So de mar..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-#~ msgstr "<Imatge>/Filtres/Colors/Mapa/Acoloreix la mostra..."
+#~ msgstr "<Image>/Filtres/Colors/Mapa/Acoloreix la mostra..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Noise/S_catter HSV..."
-#~ msgstr "<Imatge>/Filtres/Soroll/Dispersió HSV..."
+#~ msgstr "<Image>/Filtres/Soroll/Dispersió HSV..."
 
 #~ msgid "Preview (1:4) - Right Click to Jump"
 #~ msgstr "Visualització prèvia - Feu un clic a la dreta per saltar"
 
 #, fuzzy
 #~ msgid "<Toolbox>/File/Acquire/_Screen Shot..."
-#~ msgstr "<Quadre d'eines>/Fitxer/Adquireix/Mostra la pantalla..."
+#~ msgstr "<Toolbox>/Fitxer/Adquireix/Mostra la pantalla..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-#~ msgstr "<Imatge>/Filtres/Difumina/Difusió selectiva gaussiana..."
+#~ msgstr "<Image>/Filtres/Difumina/Difusió selectiva gaussiana..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Semi-Flatten"
-#~ msgstr "<Imatge>/Filtres/Colors/Mig pla"
+#~ msgstr "<Image>/Filtres/Colors/Mig pla"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Shift..."
-#~ msgstr "<Imatge>/Filters/Distorsions/Decalatge..."
+#~ msgstr "<Image>/Filters/Distorsions/Decalatge..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Pattern/_Sinus..."
 #~ msgstr ""
-#~ "<Imatge>/Filtres/Generació d'una visualització realista/Patró/Qbist..."
+#~ "<Image>/Filtres/Generació d'una visualització realista/Patró/Qbist..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-#~ msgstr "<Imatge>/Filtres/Colors/Paleta suau..."
+#~ msgstr "<Image>/Filtres/Colors/Paleta suau..."
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-#~ msgstr "<Imatge>/Filtres/Genera/Núvols/Soroll sòlid..."
+#~ msgstr "<Image>/Filtres/Genera/Núvols/Soroll _sòlid..."
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-#~ msgstr "<Imatge>/Filtres/Detecció de vores/Sobel..."
+#~ msgstr "<Image>/Filtres/Detecció de vores/_Sobel..."
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Light Effects/_Sparkle..."
-#~ msgstr "<Imatge>/Filtres/Efectes de llum/Centelleig..."
+#~ msgstr "<Image>/Filtres/Efectes de llum/_Centelleig..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Noise/Sp_read..."
-#~ msgstr "<Imatge>/Filtres/Soroll/Escampa..."
+#~ msgstr "<Image>/Filtres/Soroll/Escampa..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-#~ msgstr "<Imatge>/Filtres/Artístic/Aplica el canemàs..."
+#~ msgstr "<Image>/Filtres/Artístic/Aplica el canemàs..."
 
 #, fuzzy
 #~ msgid "Open SVG"
@@ -13736,11 +13655,11 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Tile..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Mosaic..."
+#~ msgstr "<Image>/Filtres/Mapa/Mosaic..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Small Tiles..."
-#~ msgstr "<Imatge>/Filtres/Mapa/Mosaics petits..."
+#~ msgstr "<Image>/Filtres/Mapa/Mosaics petits..."
 
 #~ msgid "Flipping"
 #~ msgstr "S'està girant"
@@ -13753,30 +13672,30 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Map/_Make Seamless"
-#~ msgstr "<Imatge>/Filtres/Mapa/Fes-ho sense soldadura"
+#~ msgstr "<Image>/Filtres/Mapa/Fes-ho sense soldadura"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-#~ msgstr "<Imatge>/Filtres/Millora/Fes la màscara borrosa..."
+#~ msgstr "<Image>/Filtres/Millora/Fes la màscara borrosa..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/Vi_deo..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Vídeo..."
+#~ msgstr "<Image>/Filtres/Distorsions/Vídeo..."
 
 #~ msgid "RGB Pattern Type"
 #~ msgstr "Tipus de patró RGB"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Value Invert"
-#~ msgstr "<Imatge>/Filtres/Colors/Inverteix el valor"
+#~ msgstr "<Image>/Filtres/Colors/Inverteix el valor"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Value Propagate..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Propaga el valor..."
+#~ msgstr "<Image>/Filtres/Distorsions/Propaga el valor..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Generic/_Dilate"
-#~ msgstr "<Imatge>/Filtres/Genera/Gfig..."
+#~ msgstr "<Image>/Filtres/Genera/Gfig..."
 
 #~ msgid "Secondary Options"
 #~ msgstr "Opcions secundàries"
@@ -13789,25 +13708,24 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Waves..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Ones..."
+#~ msgstr "<Image>/Filtres/Distorsions/Ones..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-#~ msgstr "<Imatge>/Filtres/Distorsions/Gira i contreu..."
+#~ msgstr "<Image>/Filtres/Distorsions/Gira i contreu..."
 
 #~ msgid "<Toolbox>/File/Acquire/From Clipboard"
-#~ msgstr "<Quadre d'eines>/Fitxer/Adquireix/Del porta-retalls"
+#~ msgstr "<Toolbox>/Fitxer/Adquireix/Del porta-retalls"
 
 #~ msgid "<Image>/File/Page Setup"
-#~ msgstr "<Imatge>/Fitxer/Configuració de la pàgina"
+#~ msgstr "<Image>/Fitxer/Configuració de la pàgina"
 
-#, fuzzy
 #~ msgid "<Toolbox>/Xtns/_DB Browser"
-#~ msgstr "<Quadre d'eines>/Xtns/Navegador DB..."
+#~ msgstr "<Toolbox>/Xtns/Navegador _DB..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/_Filter Pack..."
-#~ msgstr "<Imatge>/Imatge/Colors/Paquet de filtratge..."
+#~ msgstr "<Image>/Imatge/Colors/Paquet de filtratge..."
 
 #~ msgid "Display"
 #~ msgstr "Visualització"
@@ -13838,7 +13756,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-#~ msgstr "<Imatge>/Filtres/Artístic/GIMPressionist..."
+#~ msgstr "<Image>/Filtres/Artístic/GIMPressionist..."
 
 #~ msgid "Paper Preview:"
 #~ msgstr "Visualització prèvia del paper"
@@ -13861,7 +13779,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-#~ msgstr "<Imatge>/Filtres/Executa/Natura/IfsCompose..."
+#~ msgstr "<Image>/Filtres/Executa/Natura/Ifs_Compose..."
 
 #~ msgid "File exists!"
 #~ msgstr "El fitxer ja existeix!"
@@ -13873,17 +13791,16 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "Selection is %dx%d"
 #~ msgstr "La selecció és %dx%d"
 
-#, fuzzy
 #~ msgid "<Image>/Filters/Distorts/_Pagecurl..."
-#~ msgstr "<Imatge>/Filtres/Distorts/Pagecurl..."
+#~ msgstr "<Image>/Filtres/Distorts/_Pagecurl..."
 
 #, fuzzy
 #~ msgid "<Image>/File/_Print..."
-#~ msgstr "<Imatge>/Fitxer/Impressora..."
+#~ msgstr "<Image>/Fitxer/Impressora..."
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-#~ msgstr "<Imatge>/Imatge/Colors/Rotació del mapa de colors..."
+#~ msgstr "<Image>/Imatge/Colors/Rotació del mapa de colors..."
 
 #~ msgid "What is Gray?"
 #~ msgstr "Què és Gray?"
@@ -14041,7 +13958,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Ajuda"
 
 #~ msgid "<Toolbox>/File/Acquire/Screen Shot..."
-#~ msgstr "<Quadre d'eines>/Fitxer/Adquireix/Mostra la pantalla..."
+#~ msgstr "<Toolbox>/Fitxer/Adquireix/Mostra la pantalla..."
 
 #~ msgid "Can't open (write): %s"
 #~ msgstr "No es pot obrir (escriu): %s"
@@ -14088,7 +14005,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/_Sinus..."
-#~ msgstr "<Imatge>/Filtres/Genera una visualització realista/Sinus..."
+#~ msgstr "<Image>/Filtres/Genera una visualització realista/Sinus..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
 #~ msgstr "<Toolbox>/Xtns/Navegador de web/Obre URL..."
@@ -14125,7 +14042,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ "(%s)"
 
 #~ msgid "<Image>/Select/To Path"
-#~ msgstr "<Imatge>/Selecciona/al camí"
+#~ msgstr "<Image>/Selecciona/al camí"
 
 #, fuzzy
 #~ msgid "Your comment string is too long."
@@ -14257,30 +14174,30 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 90 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/90 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/90 graus"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 180 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/180 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/180 graus"
 
 #, fuzzy
 #~ msgid "<Image>/Layer/Transform/Rotate 270 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/270 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/270 graus"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 90 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/90 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/90 graus"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 180 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/180 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/180 graus"
 
 #, fuzzy
 #~ msgid "<Image>/Image/Transform/Rotate 270 degrees"
-#~ msgstr "<Imatge>/Imatge/Transforma/Rota/270 graus"
+#~ msgstr "<Image>/Imatge/Transforma/Rota/270 graus"
 
 #~ msgid "<Image>/Image/Mode/Decompose..."
-#~ msgstr "<Imatge>/Imatge/Mode/Descomposa..."
+#~ msgstr "<Image>/Imatge/Mode/Descomposa..."
 
 #, fuzzy
 #~ msgid "Del"
@@ -14583,13 +14500,13 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Torna a la configuració per defecte"
 
 #~ msgid "<Image>/Layers/Rotate/90 degrees"
-#~ msgstr "<Imatge>/Capes/Rota/90 graus"
+#~ msgstr "<Image>/Capes/Rota/90 graus"
 
 #~ msgid "<Image>/Layers/Rotate/180 degrees"
 #~ msgstr "<Image>/Capes/Rota/180 graus"
 
 #~ msgid "<Image>/Layers/Rotate/270 degrees"
-#~ msgstr "<Imatge>/Capes/Rota/270 graus"
+#~ msgstr "<Image>/Capes/Rota/270 graus"
 
 #~ msgid "Wind Strength must be greater than 0."
 #~ msgstr "La força del vent ha de ser més gran de 0."
@@ -14634,16 +14551,16 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Aplica el filtre animat"
 
 #~ msgid "<Image>/Video/Split Video to Frames"
-#~ msgstr "<Imatge>/Vídeo/Divideix el vídeo en marcs"
+#~ msgstr "<Image>/Vídeo/Divideix el vídeo en marcs"
 
 #~ msgid "<Toolbox>/Xtns/Split Video to Frames"
-#~ msgstr "<Quadre d'eines>/Xtns/Divideix el vídeo en marcs"
+#~ msgstr "<Toolbox>/Xtns/Divideix el vídeo en marcs"
 
 #~ msgid "<Image>/Video/Split Video to Frames/MPEG1"
-#~ msgstr "<Imatge>/Vídeo/Divideix el vídeo en marcs/MPEG1"
+#~ msgstr "<Image>/Vídeo/Divideix el vídeo en marcs/MPEG1"
 
 #~ msgid "<Toolbox>/Xtns/Split Video to Frames/MPEG1"
-#~ msgstr "<Quadre d'eines>/Xtns/Divideix el vídeo en marcs/MPEG1"
+#~ msgstr "<Toolbox>/Xtns/Divideix el vídeo en marcs/MPEG1"
 
 #~ msgid "Overwrite Frame"
 #~ msgstr "Sobreescriu el marc"
@@ -14927,22 +14844,22 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Aplicació variable"
 
 #~ msgid "<Image>/Filters/Filter all Layers..."
-#~ msgstr "<Imatge>/Filtres/Filtra totes les capes..."
+#~ msgstr "<Image>/Filtres/Filtra totes les capes..."
 
 #~ msgid "<Image>/Video/Split Video to Frames/Any XANIM readable..."
 #~ msgstr ""
-#~ "<Imatge>/Vídeo/Divideix el vídeo en marcs/Qualsevol XANIM llegible..."
+#~ "<Image>/Vídeo/Divideix el vídeo en marcs/Qualsevol XANIM llegible..."
 
 #~ msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
 #~ msgstr ""
-#~ "<Quadre d'eines>/Xtns/Divideix el vídeo en marcs/Qualsevol XANIM "
+#~ "<Toolbox>/Xtns/Divideix el vídeo en marcs/Qualsevol XANIM "
 #~ "llegible..."
 
 #~ msgid "<Image>/Video/Encode/MPEG1..."
-#~ msgstr "<Imatge>/Vídeo/Codifica/MPEG1..."
+#~ msgstr "<Image>/Vídeo/Codifica/MPEG1..."
 
 #~ msgid "<Image>/Video/Encode/MPEG2..."
-#~ msgstr "<Imatge>/Vídeo/Codifica/MPEG2..."
+#~ msgstr "<Image>/Vídeo/Codifica/MPEG2..."
 
 #~ msgid "GAP Message"
 #~ msgstr "Missatge GAP"
@@ -15069,61 +14986,61 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ "IDENTIFICADOR DE BLOCATGE:%s\n"
 
 #~ msgid "<Image>/Video/Goto/Next Frame"
-#~ msgstr "<Imatge>/Vídeo/Vés a/Marc següent"
+#~ msgstr "<Image>/Vídeo/Vés a/Marc següent"
 
 #~ msgid "<Image>/Video/Goto/Previous Frame"
-#~ msgstr "<Imatge>/Vídeo/Vés a/Marc anterior"
+#~ msgstr "<Image>/Vídeo/Vés a/Marc anterior"
 
 #~ msgid "<Image>/Video/Goto/First Frame"
-#~ msgstr "<Imatge>/Vídeo/Vés a/Primer marc"
+#~ msgstr "<Image>/Vídeo/Vés a/Primer marc"
 
 #~ msgid "<Image>/Video/Goto/Last Frame"
-#~ msgstr "<Imatge>/Vídeo/Vés a/Darrer marc"
+#~ msgstr "<Image>/Vídeo/Vés a/Darrer marc"
 
 #~ msgid "<Image>/Video/Goto/Any Frame..."
-#~ msgstr "<Imatge>/Vídeo/Vés a/Qualsevol marc..."
+#~ msgstr "<Image>/Vídeo/Vés a/Qualsevol marc..."
 
 #~ msgid "<Image>/Video/Delete Frames..."
-#~ msgstr "<Imatge>/Vídeo/Suprimeix marc..."
+#~ msgstr "<Image>/Vídeo/Suprimeix marc..."
 
 #~ msgid "<Image>/Video/Duplicate Frames..."
-#~ msgstr "<Imatge>/Vídeo/Duplica els marcs..."
+#~ msgstr "<Image>/Vídeo/Duplica els marcs..."
 
 #~ msgid "<Image>/Video/Exchange Frame..."
-#~ msgstr "<Imatge>/Vídeo/Intercanvia el marc..."
+#~ msgstr "<Image>/Vídeo/Intercanvia el marc..."
 
 #~ msgid "<Image>/Video/Move Path..."
-#~ msgstr "<Imatge>/Vídeo/Mou el camí..."
+#~ msgstr "<Image>/Vídeo/Mou el camí..."
 
 #~ msgid "<Image>/Video/Frames to Image..."
-#~ msgstr "<Imatge>/Vídeo/Marcs a la imatge..."
+#~ msgstr "<Image>/Vídeo/Marcs a la imatge..."
 
 #~ msgid "<Image>/Video/Frames Flatten..."
-#~ msgstr "<Imatge>/Vídeo/Marcs complets..."
+#~ msgstr "<Image>/Vídeo/Marcs complets..."
 
 #~ msgid "<Image>/Video/Frames LayerDel..."
-#~ msgstr "<Imatge>/Vídeo/Marcs SupCapes..."
+#~ msgstr "<Image>/Vídeo/Marcs SupCapes..."
 
 #~ msgid "<Image>/Video/Frames Convert..."
-#~ msgstr "<Imatge>/Vídeo/Converteix marcs..."
+#~ msgstr "<Image>/Vídeo/Converteix marcs..."
 
 #~ msgid "<Image>/Video/Frames Resize..."
-#~ msgstr "<Imatge>/Vídeo/Redimensiona els marcs..."
+#~ msgstr "<Image>/Vídeo/Redimensiona els marcs..."
 
 #~ msgid "<Image>/Video/Frames Crop..."
-#~ msgstr "<Imatge>/Vídeo/Escapça els marcs..."
+#~ msgstr "<Image>/Vídeo/Escapça els marcs..."
 
 #~ msgid "<Image>/Video/Frames Scale..."
-#~ msgstr "<Imatge>/Vídeo/Redueix els marcs..."
+#~ msgstr "<Image>/Vídeo/Redueix els marcs..."
 
 #~ msgid "<Image>/Video/Split Image to Frames..."
-#~ msgstr "<Imatge>/Vídeo/Divideix la imatge en marcs..."
+#~ msgstr "<Image>/Vídeo/Divideix la imatge en marcs..."
 
 #~ msgid "<Image>/Video/Framesequence Shift..."
-#~ msgstr "<Imatge>/Vídeo/Decala la seqüència de marcs..."
+#~ msgstr "<Image>/Vídeo/Decala la seqüència de marcs..."
 
 #~ msgid "<Image>/Video/Frames Modify..."
-#~ msgstr "<Imatge>/Vídeo/Modifica els marcs..."
+#~ msgstr "<Image>/Vídeo/Modifica els marcs..."
 
 #~ msgid "Pattern is equal to LayerName"
 #~ msgstr "El patró és igual al nom de la capa"
@@ -15977,7 +15894,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Vés al darrer marc"
 
 #~ msgid "<Image>/Video/VCR Navigator..."
-#~ msgstr "<Imatge>/Vídeo/Navegador VCR..."
+#~ msgstr "<Image>/Vídeo/Navegador VCR..."
 
 #~ msgid "Cant open two or more Video Navigator Windows."
 #~ msgstr "No es poden obrir dues o més finestres del navegador."
@@ -16385,7 +16302,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 
 #, fuzzy
 #~ msgid "<Image>/Filters/Render/Dynamic Text..."
-#~ msgstr "<Imatge>/Filtres/Genera/Text dinàmic..."
+#~ msgstr "<Image>/Filtres/Genera/Text dinàmic..."
 
 #~ msgid ""
 #~ " Current layer isn't a GDynText layer or it has no alpha channel. Forcing "
@@ -16608,7 +16525,7 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgstr "Sortida"
 
 #~ msgid "<Image>/Filters/Render/Pattern/Mosaic..."
-#~ msgstr "<Imatge>/Filtres/Executa/Patró/Mosaic..."
+#~ msgstr "<Image>/Filtres/Executa/Patró/Mosaic..."
 
 #~ msgid "Center Image"
 #~ msgstr "Centra la imatge"
@@ -16625,13 +16542,11 @@ msgstr "Error: El fitxer de propietats %s és buit"
 #~ msgid "B&W"
 #~ msgstr "B&N"
 
-#, fuzzy
 #~ msgid "<Image>/File/Print (Gtk)..."
-#~ msgstr "<Imatge>/Fitxer/Impresora  (gtk)..."
+#~ msgstr "<Image>/Fitxer/Impresora  (gtk)..."
 
-#, fuzzy
 #~ msgid "<Image>/File/Print (Gimp)..."
-#~ msgstr "<Imatge>/Fitxer/Impressora (Gimp)..."
+#~ msgstr "<Image>/Fitxer/Impressora (Gimp)..."
 
 #~ msgid "Sinusodial"
 #~ msgstr "Sinusoïdal"

@@ -450,7 +450,7 @@ msgstr "Dodaj FractalExplorer Stazu"
 #: plug-ins/common/spheredesigner.c:3128 plug-ins/gfig/gfig.c:140
 #, fuzzy
 msgid "<Image>/Filters/Render"
-msgstr "<Slika>/Filteri/Iscrtavanje/_Gfig..."
+msgstr "<Image>/Filteri/Iscrtavanje/_Gfig..."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:392
 msgid "Rendering Fractal..."
@@ -532,7 +532,7 @@ msgstr "Svjetlostni efekti..."
 #: plug-ins/gflare/gflare.c:835
 #, fuzzy
 msgid "<Image>/Filters/Light Effects"
-msgstr "<Slika>/Filteri/Svjetlostni efekti/_GFlare..."
+msgstr "<Image>/Filteri/Svjetlostni efekti/_GFlare..."
 
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:261
@@ -922,7 +922,7 @@ msgstr "Mapiraj u Objekt"
 #: plug-ins/common/warp.c:254
 #, fuzzy
 msgid "<Image>/Filters/Map"
-msgstr "<Slika>/Filteri/Mapa/Izobličeno..."
+msgstr "<Image>/Filteri/Mapa/Izobličeno..."
 
 #: plug-ins/MapObject/mapobject_ui.c:248
 #: plug-ins/MapObject/mapobject_ui.c:1340
@@ -1426,7 +1426,7 @@ msgstr "AlienMap2"
 #: plug-ins/rcm/rcm.c:113
 #, fuzzy
 msgid "<Image>/Filters/Colors/Map"
-msgstr "<Slika>/Filteri/Boje/Maks. RGB..."
+msgstr "<Image>/Filteri/Boje/Maks. RGB..."
 
 #: plug-ins/common/AlienMap2.c:336
 msgid "AlienMap2: Transforming..."
@@ -1700,7 +1700,7 @@ msgstr "CML_explorer: evoluiram..."
 #: plug-ins/common/sinus.c:198 plug-ins/maze/maze.c:175
 #, fuzzy
 msgid "<Image>/Filters/Render/Pattern"
-msgstr "<Slika>/Filteri/Iscrtavanje/Uzorak/Lavirint..."
+msgstr "<Image>/Filteri/Iscrtavanje/Uzorak/Lavirint..."
 
 #: plug-ins/common/CML_explorer.c:759
 msgid "CML_explorer: evoluting..."
@@ -2084,7 +2084,7 @@ msgstr "Kreni:"
 #: plug-ins/common/animoptimize.c:222 plug-ins/common/animoptimize.c:224
 #, fuzzy
 msgid "<Image>/Filters/Animation"
-msgstr "<Slika>/Filteri/Animacija/_Deoptimizacija"
+msgstr "<Image>/Filteri/Animacija/_Deoptimizacija"
 
 #: plug-ins/common/animationplay.c:413
 #, fuzzy
@@ -2120,7 +2120,7 @@ msgstr ""
 #: plug-ins/common/animoptimize.c:158
 #, fuzzy
 msgid "_Optimize (Difference)"
-msgstr "<Slika>/Filteri/Animacija/_Optimizacija (razlika)"
+msgstr "<Image>/Filteri/Animacija/_Optimizacija (razlika)"
 
 #: plug-ins/common/animoptimize.c:175
 #, fuzzy
@@ -2160,7 +2160,7 @@ msgstr "Prihvaćam leće..."
 #: plug-ins/common/apply_lens.c:119 plug-ins/common/glasstile.c:121
 #, fuzzy
 msgid "<Image>/Filters/Glass Effects"
-msgstr "<Slika>/Filteri/Stakleni efekti/Djelići stakla..."
+msgstr "<Image>/Filteri/Stakleni efekti/Djelići stakla..."
 
 #: plug-ins/common/apply_lens.c:179
 msgid "Applying lens..."
@@ -2203,7 +2203,7 @@ msgstr "Cijela Slika"
 #: plug-ins/common/autocrop.c:92 plug-ins/common/zealouscrop.c:76
 #, fuzzy
 msgid "<Image>/Image/Crop"
-msgstr "<Slika>/Slika/Transformacije/_Automatsko odsjecanje"
+msgstr "<Image>/Slika/Transformacije/_Automatsko odsjecanje"
 
 #: plug-ins/common/autocrop.c:100
 #, fuzzy
@@ -2213,7 +2213,7 @@ msgstr "Sloj Svijenog"
 #: plug-ins/common/autocrop.c:107
 #, fuzzy
 msgid "<Image>/Layer/Crop"
-msgstr "<Slika>/Slika/Transformacije/_Zealous odsječak"
+msgstr "<Image>/Slika/Transformacije/_Zealous odsječak"
 
 #: plug-ins/common/autocrop.c:149
 msgid "Cropping..."
@@ -2253,7 +2253,7 @@ msgstr "Separatori"
 #: plug-ins/common/wind.c:195 plug-ins/pagecurl/pagecurl.c:244
 #, fuzzy
 msgid "<Image>/Filters/Distorts"
-msgstr "<Slika>/Filteri/Izobličenja/Vjetar..."
+msgstr "<Image>/Filteri/Izobličenja/Vjetar..."
 
 #: plug-ins/common/blinds.c:216
 msgid "Adding Blinds..."
@@ -2303,7 +2303,7 @@ msgstr "Zamućivanje"
 #: plug-ins/common/sel_gauss.c:112
 #, fuzzy
 msgid "<Image>/Filters/Blur"
-msgstr "<Slika>/Filteri/Zamućenje/Zamućenje..."
+msgstr "<Image>/Filteri/Zamućenje/Zamućenje..."
 
 #: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:275
 #: plug-ins/common/unsharp.c:906
@@ -2324,7 +2324,7 @@ msgstr "Prosječni rub..."
 #: plug-ins/fp/fp.c:329
 #, fuzzy
 msgid "<Image>/Filters/Colors"
-msgstr "<Slika>/Filteri/Boje/Vruće..."
+msgstr "<Image>/Filteri/Boje/Vruće..."
 
 #: plug-ins/common/borderaverage.c:164
 msgid "Border Average..."
@@ -2638,7 +2638,7 @@ msgstr "Boja u Alfu"
 #: plug-ins/common/threshold_alpha.c:104
 #, fuzzy
 msgid "<Image>/Layer/Transparency/Modify"
-msgstr "<Slika>/Sloj/Prozirnost/Prag Alfe..."
+msgstr "<Image>/Sloj/Prozirnost/Prag Alfe..."
 
 #: plug-ins/common/colortoalpha.c:178
 msgid "Removing color..."
@@ -2867,7 +2867,7 @@ msgstr "Svijanje Matrice"
 #: plug-ins/common/vpropagate.c:278
 #, fuzzy
 msgid "<Image>/Filters/Generic"
-msgstr "<Slika>/Filteri/Opći/Erozija"
+msgstr "<Image>/Filteri/Opći/Erozija"
 
 #: plug-ins/common/convmatrix.c:230
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
@@ -2975,7 +2975,7 @@ msgstr "Kubizam"
 #: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:84
 #, fuzzy
 msgid "<Image>/Filters/Artistic"
-msgstr "<Slika>/Filteri/Umjetnički/Kubizam..."
+msgstr "<Image>/Filteri/Umjetnički/Kubizam..."
 
 #: plug-ins/common/cubism.c:257
 msgid "Cubism"
@@ -3323,7 +3323,7 @@ msgstr "Isprepletenost..."
 #: plug-ins/common/sharpen.c:150 plug-ins/common/unsharp.c:166
 #, fuzzy
 msgid "<Image>/Filters/Enhance"
-msgstr "<Slika>/Filteri/Enhance/Izoštravanje... "
+msgstr "<Image>/Filteri/Enhance/Izoštravanje... "
 
 #: plug-ins/common/deinterlace.c:145
 msgid "Deinterlace..."
@@ -3351,7 +3351,7 @@ msgstr "Stopi Dubinu"
 #: plug-ins/common/depthmerge.c:199 plug-ins/common/film.c:248
 #, fuzzy
 msgid "<Image>/Filters/Combine"
-msgstr "<Slika>/Filteri/Kombiniranje/Film..."
+msgstr "<Image>/Filteri/Kombiniranje/Film..."
 
 #: plug-ins/common/depthmerge.c:383
 msgid "Depth-merging..."
@@ -3595,7 +3595,7 @@ msgstr "Selektivno Gausian zamućenje..."
 #: plug-ins/common/laplace.c:102 plug-ins/common/sobel.c:123
 #, fuzzy
 msgid "<Image>/Filters/Edge-Detect"
-msgstr "<Slika>/Filteri/Detekcija ruba/_Laplace"
+msgstr "<Image>/Filteri/Detekcija ruba/_Laplace"
 
 #: plug-ins/common/dog.c:251 plug-ins/common/dog.c:301
 #, fuzzy
@@ -3997,7 +3997,7 @@ msgstr "Y_2:"
 #: plug-ins/common/gauss.c:154
 #, fuzzy
 msgid "_Gaussian Blur..."
-msgstr "<Slika>/Filteri/Zamućenje/Gausian zamućenje (_IIR)..."
+msgstr "<Image>/Filteri/Zamućenje/Gausian zamućenje (_IIR)..."
 
 #: plug-ins/common/gauss.c:389 plug-ins/common/gauss.c:437
 #, fuzzy
@@ -4081,7 +4081,7 @@ msgstr ""
 #: plug-ins/common/gee.c:101 plug-ins/common/gee_zoom.c:131
 #, fuzzy
 msgid "<Image>/Filters/Toys"
-msgstr "<Slika>/Filteri/Igračke/Gee-_Zoom..."
+msgstr "<Image>/Filteri/Igračke/Gee-_Zoom..."
 
 #: plug-ins/common/gee.c:153
 msgid "GEE-SLIME"
@@ -4601,7 +4601,7 @@ msgstr "Giljotina..."
 #: plug-ins/common/guillotine.c:78
 #, fuzzy
 msgid "<Image>/Image/Transform"
-msgstr "<Slika>/Slika/Transformacije/_Automatsko odsjecanje"
+msgstr "<Image>/Slika/Transformacije/_Automatsko odsjecanje"
 
 #: plug-ins/common/guillotine.c:104
 msgid "Guillotine..."
@@ -5591,7 +5591,7 @@ msgstr "HSV _Raspršivanje..."
 #: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:107
 #, fuzzy
 msgid "<Image>/Filters/Noise"
-msgstr "<Slika>/Filteri/Šum/_Slur..."
+msgstr "<Image>/Filteri/Šum/_Slur..."
 
 #: plug-ins/common/noisify.c:209
 msgid "Adding Noise..."
@@ -5833,7 +5833,7 @@ msgstr "Plazma..."
 #: plug-ins/common/plasma.c:193 plug-ins/common/snoise.c:196
 #, fuzzy
 msgid "<Image>/Filters/Render/Clouds"
-msgstr "<Slika>/Filteri/Iscrtavanje/Oblaci/Plazma..."
+msgstr "<Image>/Filteri/Iscrtavanje/Oblaci/Plazma..."
 
 #: plug-ins/common/plasma.c:271
 msgid "Plasma..."
@@ -8673,7 +8673,7 @@ msgstr "Plamen"
 #: plug-ins/flame/flame.c:148 plug-ins/ifscompose/ifscompose.c:373
 #, fuzzy
 msgid "<Image>/Filters/Render/Nature"
-msgstr "<Slika>/Filteri/Iscrtavanje/Priroda/Plamen..."
+msgstr "<Image>/Filteri/Iscrtavanje/Priroda/Plamen..."
 
 #: plug-ins/flame/flame.c:233
 msgid "Drawing Flame..."
@@ -10837,7 +10837,7 @@ msgstr "O ImageMapu..."
 #: plug-ins/imagemap/imap_main.c:135
 #, fuzzy
 msgid "<Image>/Filters/Web"
-msgstr "<Slika>/Filteri/Web/Mapa slike..."
+msgstr "<Image>/Filteri/Web/Mapa slike..."
 
 #: plug-ins/imagemap/imap_main.c:595 plug-ins/imagemap/imap_settings.c:169
 msgid "<Untitled>"
@@ -12600,7 +12600,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 
 #, fuzzy
 #~ msgid "Gaussian Blur (_RLE)..."
-#~ msgstr "<Slika>/Filteri/Zamućenje/Gausian Zamućenje (_RLE)..."
+#~ msgstr "<Image>/Filteri/Zamućenje/Gausian Zamućenje (_RLE)..."
 
 #~ msgid "RLE Gaussian Blur"
 #~ msgstr "RLE Gaussian Zamućenje"
@@ -12667,22 +12667,22 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Ne mogu spremiti u mapu."
 
 #~ msgid "<Image>/Filters/Render/_Fractal Explorer..."
-#~ msgstr "<Slika>/Filteri/Iscrtavanje/Fractal explorer..."
+#~ msgstr "<Image>/Filteri/Iscrtavanje/Fractal explorer..."
 
 #~ msgid "<Image>/Filters/Light Effects/_Lighting Effects..."
-#~ msgstr "<Slika>/Filteri/Svjetlostni efekti/Svjetlostni efekti..."
+#~ msgstr "<Image>/Filteri/Svjetlostni efekti/Svjetlostni efekti..."
 
 #~ msgid "Preview Options"
 #~ msgstr "Opcije pregleda"
 
 #~ msgid "<Image>/Filters/Map/Map _Object..."
-#~ msgstr "<Slika>/Filteri/Mapa/Mapiraj Objekt..."
+#~ msgstr "<Image>/Filteri/Mapa/Mapiraj Objekt..."
 
 #~ msgid "Save Options"
 #~ msgstr "Mogućnosti Spremanja"
 
 #~ msgid "<Image>/Filters/Colors/Map/_Alien Map..."
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Izvanzemaljska mapa..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Izvanzemaljska mapa..."
 
 #~ msgid "AlienMap: Transforming..."
 #~ msgstr "AlienMap: Transformacija..."
@@ -12739,7 +12739,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "O Alien Map"
 
 #~ msgid "<Image>/Filters/Colors/Map/Alien Map _2..."
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Izvanzemaljska Mapa 2..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Izvanzemaljska Mapa 2..."
 
 #~ msgid "Change frequency of the red/hue channel"
 #~ msgstr "Promijeni frekvenciju kanala - nijanse crvene"
@@ -12772,7 +12772,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "O Alien Map 2"
 
 #~ msgid "<Image>/Filters/Render/Pattern/CML _Explorer..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/CML Istraživač..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/CML Istraživač..."
 
 #~ msgid "NULL"
 #~ msgstr "NULL"
@@ -12784,34 +12784,34 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Operacija s CML datotekom:POZOR"
 
 #~ msgid "<Image>/Layer/Align _Visible Layers..."
-#~ msgstr "<Slika>/Filteri/Poravnaj _vidljive slojeve..."
+#~ msgstr "<Image>/Filteri/Poravnaj _vidljive slojeve..."
 
 #~ msgid "Parameter Settings"
 #~ msgstr "Odredi Osobitosti"
 
 #~ msgid "<Image>/Filters/Animation/_Playback..."
-#~ msgstr "<Slika>/Filteri/Animacija/Pogledaj..."
+#~ msgstr "<Image>/Filteri/Animacija/Pogledaj..."
 
 #~ msgid "<Image>/Filters/Animation/Optimize (for _GIF)"
-#~ msgstr "<Slika>/Filteri/Animacija/Optimizacija (za _GIF)"
+#~ msgstr "<Image>/Filteri/Animacija/Optimizacija (za _GIF)"
 
 #~ msgid "<Image>/Filters/Animation/_Remove Backdrop"
-#~ msgstr "<Slika>/Filteri/Animacija/Ukloni _pozadinu"
+#~ msgstr "<Image>/Filteri/Animacija/Ukloni _pozadinu"
 
 #~ msgid "<Image>/Filters/Animation/_Find Backdrop"
-#~ msgstr "<Slika>/Filteri/Animacija/Nađi pozadinu..."
+#~ msgstr "<Image>/Filteri/Animacija/Nađi pozadinu..."
 
 #~ msgid "<Image>/Filters/Glass Effects/Apply _Lens..."
-#~ msgstr "<Slika>/Filteri/Efekti čaše/Prihvati leće..."
+#~ msgstr "<Image>/Filteri/Efekti čaše/Prihvati leće..."
 
 #~ msgid "<Image>/Layer/Colors/Auto/Stretch _HSV"
-#~ msgstr "<Slika>/Sloj/Boje/Auto/Razvuci _HSV"
+#~ msgstr "<Image>/Sloj/Boje/Auto/Razvuci _HSV"
 
 #~ msgid "<Image>/Filters/Distorts/_Blinds..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Povezi..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Povezi..."
 
 #~ msgid "<Image>/Filters/Colors/_Border Average..."
-#~ msgstr "<Slika>/Filteri/Boje/Prosječni rub..."
+#~ msgstr "<Image>/Filteri/Boje/Prosječni rub..."
 
 #~ msgid "1 (nonsense?)"
 #~ msgstr "1 (besmisleno?)"
@@ -12820,7 +12820,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "256 (besmisleno?)"
 
 #~ msgid "<Image>/Filters/Map/_Bump Map..."
-#~ msgstr "<Slika>/Filteri/Mapa/Grbavi teren..."
+#~ msgstr "<Image>/Filteri/Mapa/Grbavi teren..."
 
 #~ msgid "_Linear Map"
 #~ msgstr "_Linearna mapa"
@@ -12835,82 +12835,82 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "<Image>/Slika/Boje/Auto/Razvlačenje kontrasta"
 
 #~ msgid "<Image>/Filters/Colors/Colorcube A_nalysis..."
-#~ msgstr "<Slika>/Filteri/Boje/Analiza obojene kocke..."
+#~ msgstr "<Image>/Filteri/Boje/Analiza obojene kocke..."
 
 #~ msgid "Results"
 #~ msgstr "Rezultati"
 
 #~ msgid "<Image>/Filters/Colors/Channel Mi_xer.."
-#~ msgstr "<Slika>/Filteri/Boje/_Mješanje kanala..."
+#~ msgstr "<Image>/Filteri/Boje/_Mješanje kanala..."
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Checkerboard..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/Šahovska tabla..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/Šahovska tabla..."
 
 #~ msgid "<Image>/Layer/Colors/Auto/_Color Enhance"
 #~ msgstr "<Image>/Slika/Boje/Auto/Pojačanje _boje"
 
 #~ msgid "<Image>/Filters/Colors/_Colorify..."
-#~ msgstr "<Slika>/Filteri/Boje/Oboji..."
+#~ msgstr "<Image>/Filteri/Boje/Oboji..."
 
 #~ msgid "<Image>/Filters/Colors/Color to _Alpha..."
-#~ msgstr "<Slika>/Filteri/Boje/Boja u Alfu..."
+#~ msgstr "<Image>/Filteri/Boje/Boja u Alfu..."
 
 #~ msgid "<Image>/Filters/Colors/C_ompose..."
-#~ msgstr "<Slika>/Filteri/Boje/Sastavi..."
+#~ msgstr "<Image>/Filteri/Boje/Sastavi..."
 
 #~ msgid "<Image>/Filters/Generic/_Convolution Matrix..."
-#~ msgstr "<Slika>/Filteri/Generički/Matrica savijanja..."
+#~ msgstr "<Image>/Filteri/Generički/Matrica savijanja..."
 
 #~ msgid "<Image>/Filters/Distorts/_Curve Bend..."
-#~ msgstr "<Slika>/Filteri/Zamućenje/Savijanje krivulje..."
+#~ msgstr "<Image>/Filteri/Zamućenje/Savijanje krivulje..."
 
 #~ msgid "<Image>/Filters/Colors/_Decompose..."
-#~ msgstr "<Slika>/Filteri/Boje/Rastavi..."
+#~ msgstr "<Image>/Filteri/Boje/Rastavi..."
 
 #~ msgid "<Image>/Filters/Enhance/_Deinterlace..."
-#~ msgstr "<Slika>/Filteri/Poboljšaj/_Raspleti..."
+#~ msgstr "<Image>/Filteri/Poboljšaj/_Raspleti..."
 
 #~ msgid "<Image>/Filters/Combine/_Depth Merge..."
-#~ msgstr "<Slika>/Filteri/Kombiniranje/_Stopi dubinu..."
+#~ msgstr "<Image>/Filteri/Kombiniranje/_Stopi dubinu..."
 
 #~ msgid "<Image>/Filters/Enhance/Des_peckle..."
-#~ msgstr "<Slika>/Filteri/Poboljšaj/Des_peckle..."
+#~ msgstr "<Image>/Filteri/Poboljšaj/Des_peckle..."
 
 #~ msgid "<Image>/Filters/Enhance/Des_tripe..."
-#~ msgstr "<Slika>/Filteri/Poboljšaj/Des_tripe..."
+#~ msgstr "<Image>/Filteri/Poboljšaj/Des_tripe..."
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Diffraction Patterns..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/Difrakcija uzoraka..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/Difrakcija uzoraka..."
 
 #~ msgid "<Image>/Filters/Map/_Displace..."
-#~ msgstr "<Slika>/Filteri/Mapa/Promijeni položaj..."
+#~ msgstr "<Image>/Filteri/Mapa/Promijeni položaj..."
 
 #~ msgid "Displace Options"
 #~ msgstr "Mogućnosti Izmještanja"
 
 #~ msgid "<Image>/Filters/Edge-Detect/_Edge..."
-#~ msgstr "<Slika>/Filteri/Detekcija ruba/Rub... "
+#~ msgstr "<Image>/Filteri/Detekcija ruba/Rub... "
 
 #~ msgid "<Image>/Filters/Distorts/_Emboss..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Reljefno..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Reljefno..."
 
 #~ msgid "<Image>/Filters/Distorts/En_grave..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Izrezbari..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Izrezbari..."
 
 #~ msgid "<Image>/Filters/Colors/Map/_Color Exchange..."
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Razmjena Boja..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Razmjena Boja..."
 
 #~ msgid "_Selection"
 #~ msgstr "_Odabir"
 
 #~ msgid "<Image>/Filters/Light Effects/_FlareFX..."
-#~ msgstr "<Slika>/Filteri/Svjetlostni efekti/Odsjaj..."
+#~ msgstr "<Image>/Filteri/Svjetlostni efekti/Odsjaj..."
 
 #~ msgid "<Image>/Filters/Map/_Fractal Trace..."
-#~ msgstr "<Slika>/Filteri/Mapa/Fraktalno praćenje..."
+#~ msgstr "<Image>/Filteri/Mapa/Fraktalno praćenje..."
 
 #~ msgid "<Image>/Filters/Toys/Gee-_Slime"
-#~ msgstr "<Slika>/Filteri/Igračke/Gee-_Slime..."
+#~ msgstr "<Image>/Filteri/Igračke/Gee-_Slime..."
 
 #~ msgid "GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""
 #~ msgstr "GEE-ZOOM: Umetak ranije poznat kao \"Gimpovo jaje\""
@@ -12925,22 +12925,22 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Milisekundi"
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Qbist..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/_Qbist..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/_Qbist..."
 
 #~ msgid "<Image>/Filters/Colors/Map/_Gradient Map"
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Mapa gradijenta..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Mapa gradijenta..."
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Grid..."
-#~ msgstr "<Slika>/Filteri/Iscrtavanje/Uzorak/Mreža..."
+#~ msgstr "<Image>/Filteri/Iscrtavanje/Uzorak/Mreža..."
 
 #~ msgid "<Image>/Filters/Map/_Illusion..."
-#~ msgstr "<Slika>/Filteri/Mapa/Iluzija..."
+#~ msgstr "<Image>/Filteri/Mapa/Iluzija..."
 
 #~ msgid "<Image>/Filters/Distorts/_IWarp..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/_omatanjæ..."
+#~ msgstr "<Image>/Filteri/Izobličenja/_omatanjæ..."
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Jigsaw..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/_Jigsaw..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/_Jigsaw..."
 
 #~ msgid "Preview (in image window, will modify image's undo history!)"
 #~ msgstr ""
@@ -12950,46 +12950,46 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Komentar slike"
 
 #~ msgid "<Image>/Filters/Map/_Van Gogh (LIC)..."
-#~ msgstr "<Slika>/Filteri/Mapa/Van Gogh (LIC)..."
+#~ msgstr "<Image>/Filteri/Mapa/Van Gogh (LIC)..."
 
 #~ msgid "<Image>/Filters/Colors/Map/Adjust _FG-BG"
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Podesi _FG-BG"
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Podesi _FG-BG"
 
 #~ msgid "<Image>/Filters/Colors/Map/Color Range _Mapping..."
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Mapiranje raspona boja..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Mapiranje raspona boja..."
 
 #~ msgid "<Image>/Filters/Blur/_Motion Blur..."
-#~ msgstr "<Slika>/Filteri/Zamućenje/Zamućenje pokreta..."
+#~ msgstr "<Image>/Filteri/Zamućenje/Zamućenje pokreta..."
 
 #~ msgid "<Image>/Filters/Distorts/_Mosaic..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Mozaik..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Mozaik..."
 
 #~ msgid "<Image>/Filters/Distorts/Newsprin_t..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Novinski tekst..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Novinski tekst..."
 
 #~ msgid "<Image>/Filters/Enhance/_NL Filter..."
-#~ msgstr "<Slika>/Filteri/Poboljšaj/_NL Filter... "
+#~ msgstr "<Image>/Filteri/Poboljšaj/_NL Filter... "
 
 #~ msgid "<Image>/Filters/Noise/_Noisify..."
-#~ msgstr "<Slika>/Filteri/Šum/Šum..."
+#~ msgstr "<Image>/Filteri/Šum/Šum..."
 
 #~ msgid "<Image>/Filters/Light Effects/Su_perNova..."
-#~ msgstr "<Slika>/Filteri/Svjetlostni Efekti/SuperNova..."
+#~ msgstr "<Image>/Filteri/Svjetlostni Efekti/SuperNova..."
 
 #~ msgid "<Image>/Filters/Artistic/Oili_fy..."
-#~ msgstr "<Slika>/Filteri/Umjetnički/Slikanje Uljem..."
+#~ msgstr "<Image>/Filteri/Umjetnički/Slikanje Uljem..."
 
 #~ msgid "<Image>/Filters/Map/_Paper Tile..."
-#~ msgstr "<Slika>/Filteri/Mapa/Djelići papira..."
+#~ msgstr "<Image>/Filteri/Mapa/Djelići papira..."
 
 #~ msgid "<Image>/Filters/Blur/_Pixelize..."
-#~ msgstr "<Slika>/Filteri/Zamućenje/Pikselizacija..."
+#~ msgstr "<Image>/Filteri/Zamućenje/Pikselizacija..."
 
 #~ msgid "<Toolbox>/Xtns/_Plugin Details"
-#~ msgstr "<Alati>/Xtns/Detalji umetaka..."
+#~ msgstr "<Toolbox>/Xtns/Detalji umetaka..."
 
 #~ msgid "<Image>/Filters/Distorts/P_olar Coords..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Polarne koordinate..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Polarne koordinate..."
 
 #~ msgid "write error occured"
 #~ msgstr "pogreška pri zapisivanju"
@@ -13001,19 +13001,19 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "_Y-pomak:"
 
 #~ msgid "<Image>/Filters/Noise/_Hurl..."
-#~ msgstr "<Slika>/Filteri/Šum/_Hurl..."
+#~ msgstr "<Image>/Filteri/Šum/_Hurl..."
 
 #~ msgid "<Image>/Filters/Noise/_Pick..."
-#~ msgstr "<Slika>/Filteri/Šum/Pokupi..."
+#~ msgstr "<Image>/Filteri/Šum/Pokupi..."
 
 #~ msgid "<Image>/Filters/Distorts/_Ripple..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Mreškanje... "
+#~ msgstr "<Image>/Filteri/Izobličenja/Mreškanje... "
 
 #~ msgid "<Image>/Filters/Colors/Map/_Sample Colorize..."
-#~ msgstr "<Slika>/Filteri/Boje/Mapa/Primjer bojenja..."
+#~ msgstr "<Image>/Filteri/Boje/Mapa/Primjer bojenja..."
 
 #~ msgid "<Image>/Filters/Noise/S_catter HSV..."
-#~ msgstr "<Slika>/Filteri/Šum/HSV rasipanje..."
+#~ msgstr "<Image>/Filteri/Šum/HSV rasipanje..."
 
 #~ msgid "Preview (1:4) - Right Click to Jump"
 #~ msgstr "Pregled (1:4) - Desni klik za Skok"
@@ -13022,37 +13022,37 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "_<Toolbox>/Datoteka/Izvuci/Screen Shot..."
 
 #~ msgid "<Image>/Filters/Blur/_Selective Gaussian Blur..."
-#~ msgstr "<Slika>/Filteri/Zamućenje/Selektivno Gausian zamućenje..."
+#~ msgstr "<Image>/Filteri/Zamućenje/Selektivno Gausian zamućenje..."
 
 #~ msgid "<Image>/Filters/Colors/_Semi-Flatten"
-#~ msgstr "<Slika>/Filteri/Boje/Polu-Ravno"
+#~ msgstr "<Image>/Filteri/Boje/Polu-Ravno"
 
 #~ msgid "<Image>/Filters/Distorts/_Shift..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Pomak..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Pomak..."
 
 #~ msgid "<Image>/Filters/Render/Pattern/_Sinus..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Uzorak/Sinus..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Uzorak/Sinus..."
 
 #~ msgid "<Image>/Filters/Colors/Smoo_th Palette..."
-#~ msgstr "<Slika>/Filteri/Boje/Izglađena paleta..."
+#~ msgstr "<Image>/Filteri/Boje/Izglađena paleta..."
 
 #~ msgid "<Image>/Filters/Render/Clouds/_Solid Noise..."
-#~ msgstr "<Slika>/Filteri/Iscrtavanje/Oblaci/Jaki Šum..."
+#~ msgstr "<Image>/Filteri/Iscrtavanje/Oblaci/Jaki Šum..."
 
 #~ msgid "<Image>/Filters/Edge-Detect/_Sobel..."
-#~ msgstr "<Slika>/Filteri/Detekcija ruba/_Sobel... "
+#~ msgstr "<Image>/Filteri/Detekcija ruba/_Sobel... "
 
 #~ msgid "<Image>/Filters/Light Effects/_Sparkle..."
-#~ msgstr "<Slika>/Filteri/Svjetlostni efekti/_Blistanje..."
+#~ msgstr "<Image>/Filteri/Svjetlostni efekti/_Blistanje..."
 
 #~ msgid "<Image>/Filters/Render/Sphere _Designer..."
-#~ msgstr "<Slika>/Filteri/Renderiranje/Dizajner sfere..."
+#~ msgstr "<Image>/Filteri/Renderiranje/Dizajner sfere..."
 
 #~ msgid "<Image>/Filters/Noise/Sp_read..."
-#~ msgstr "<Slika>/Filteri/Šum/Rastegni..."
+#~ msgstr "<Image>/Filteri/Šum/Rastegni..."
 
 #~ msgid "<Image>/Filters/Artistic/_Apply Canvas..."
-#~ msgstr "<Slika>/Filteri/Umjetnički/Primijeni platno..."
+#~ msgstr "<Image>/Filteri/Umjetnički/Primijeni platno..."
 
 #~ msgid "Open SVG"
 #~ msgstr "Otvori SVG"
@@ -13064,10 +13064,10 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Targa Osobnosti"
 
 #~ msgid "<Image>/Filters/Map/_Tile..."
-#~ msgstr "<Slika>/Filteri/Mapa/Djelići..."
+#~ msgstr "<Image>/Filteri/Mapa/Djelići..."
 
 #~ msgid "<Image>/Filters/Map/_Small Tiles..."
-#~ msgstr "<Slika>/Filteri/Mapa/Mali djelići..."
+#~ msgstr "<Image>/Filteri/Mapa/Mali djelići..."
 
 #~ msgid "Flipping"
 #~ msgstr "Zrcaljenje"
@@ -13079,25 +13079,25 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Podešavanje Segmenata"
 
 #~ msgid "<Image>/Filters/Map/_Make Seamless"
-#~ msgstr "<Slika>/Filteri/Mapa/Uklopi"
+#~ msgstr "<Image>/Filteri/Mapa/Uklopi"
 
 #~ msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
-#~ msgstr "<Slika>/Filteri/Enhance/Skini oštrinu maske... "
+#~ msgstr "<Image>/Filteri/Enhance/Skini oštrinu maske... "
 
 #~ msgid "<Image>/Filters/Distorts/Vi_deo..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Video..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Video..."
 
 #~ msgid "RGB Pattern Type"
 #~ msgstr "Vrsta RGB uzorka"
 
 #~ msgid "<Image>/Filters/Colors/_Value Invert"
-#~ msgstr "<Slika>/Filteri/Boje/Obrnuta vrijednost..."
+#~ msgstr "<Image>/Filteri/Boje/Obrnuta vrijednost..."
 
 #~ msgid "<Image>/Filters/Distorts/_Value Propagate..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/_Širenje vrijednosti..."
+#~ msgstr "<Image>/Filteri/Izobličenja/_Širenje vrijednosti..."
 
 #~ msgid "<Image>/Filters/Generic/_Dilate"
-#~ msgstr "<Slika>/Filteri/Opći/_Proširenje"
+#~ msgstr "<Image>/Filteri/Opći/_Proširenje"
 
 #~ msgid "Secondary Options"
 #~ msgstr "Sekundarne opcije"
@@ -13109,10 +13109,10 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Druge opcije"
 
 #~ msgid "<Image>/Filters/Distorts/_Waves..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Valovi..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Valovi..."
 
 #~ msgid "<Image>/Filters/Distorts/W_hirl and Pinch..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Savijeno i ispupčeno..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Savijeno i ispupčeno..."
 
 #~ msgid "<Toolbox>/File/Acquire/From Clipboard"
 #~ msgstr "<Toolbox>/Datoteka/Izvuci/Iz Clipboarda"
@@ -13121,7 +13121,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "<Toolbox>/Xtns/_DB Pretraživač..."
 
 #~ msgid "<Image>/Filters/Colors/_Filter Pack..."
-#~ msgstr "<Slika>/Slika/Boje/Paketni Filter..."
+#~ msgstr "<Image>/Slika/Boje/Paketni Filter..."
 
 #~ msgid "Display"
 #~ msgstr "Prikaz"
@@ -13151,7 +13151,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Pregled kista:"
 
 #~ msgid "<Image>/Filters/Artistic/_GIMPressionist..."
-#~ msgstr "<Slika>/Filteri/Umjetnički/GIMPressionist..."
+#~ msgstr "<Image>/Filteri/Umjetnički/GIMPressionist..."
 
 #~ msgid "Paper Preview:"
 #~ msgstr "Pregled papira:"
@@ -13173,7 +13173,7 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ "kako bi bili uključeni u sljedećem izdanju!\n"
 
 #~ msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-#~ msgstr "<Slika>/Filteri/Iscrtavanje/Priroda/Ifs_sastavljanje..."
+#~ msgstr "<Image>/Filteri/Iscrtavanje/Priroda/Ifs_sastavljanje..."
 
 #~ msgid "lpeek.mrijk@consunet.nl"
 #~ msgstr "lpeek.mrijk@consunet.nl"
@@ -13193,13 +13193,13 @@ msgstr "Greška XJT datoteka %s je prazna."
 #~ msgstr "Odabir je %dx%d"
 
 #~ msgid "<Image>/Filters/Distorts/_Pagecurl..."
-#~ msgstr "<Slika>/Filteri/Izobličenja/Magareće uši..."
+#~ msgstr "<Image>/Filteri/Izobličenja/Magareće uši..."
 
 #~ msgid "<Image>/File/_Print..."
-#~ msgstr "<Slika>/Datoteka/Ispis..."
+#~ msgstr "<Image>/Datoteka/Ispis..."
 
 #~ msgid "<Image>/Filters/Colors/Map/Colormap _Rotation..."
-#~ msgstr "<Slika>/Slika/Boje/Rotacija Mape Boja..."
+#~ msgstr "<Image>/Slika/Boje/Rotacija Mape Boja..."
 
 #~ msgid "What is Gray?"
 #~ msgstr "Što je Siva?"

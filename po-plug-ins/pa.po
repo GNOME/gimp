@@ -2022,7 +2022,7 @@ msgstr ""
 #: plug-ins/common/animoptimize.c:222 plug-ins/common/animoptimize.c:224
 #, fuzzy
 msgid "<Image>/Filters/Animation"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/animationplay.c:413
 msgid "Animation Playback:"
@@ -2153,7 +2153,7 @@ msgstr "ਖਿੱਚੋਂ"
 #: plug-ins/common/color_enhance.c:88 plug-ins/common/normalize.c:97
 #, fuzzy
 msgid "<Image>/Layer/Colors/Auto"
-msgstr "<ਚਿੱਤਰ>/ਪਰਤ/ਰੰਗ/ਸਵੈ/ਰੰਗ ਵਾਧਾ"
+msgstr "<Image>/ਪਰਤ/ਰੰਗ/ਸਵੈ/ਰੰਗ ਵਾਧਾ"
 
 #: plug-ins/common/autostretch_hsv.c:116
 msgid "Auto-Stretching HSV..."
@@ -2177,7 +2177,7 @@ msgstr ""
 #: plug-ins/common/wind.c:195 plug-ins/pagecurl/pagecurl.c:244
 #, fuzzy
 msgid "<Image>/Filters/Distorts"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/blinds.c:216
 msgid "Adding Blinds..."
@@ -2227,7 +2227,7 @@ msgstr "ਨੀਲਾ"
 #: plug-ins/common/sel_gauss.c:112
 #, fuzzy
 msgid "<Image>/Filters/Blur"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/blur.c:192 plug-ins/common/unsharp.c:275
 #: plug-ins/common/unsharp.c:906
@@ -2247,7 +2247,7 @@ msgstr ""
 #: plug-ins/fp/fp.c:329
 #, fuzzy
 msgid "<Image>/Filters/Colors"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/borderaverage.c:164
 msgid "Border Average..."
@@ -2377,7 +2377,7 @@ msgstr ""
 #: plug-ins/common/ccanalyze.c:119
 #, fuzzy
 msgid "<Image>/Layer/Colors/Info"
-msgstr "<ਚਿੱਤਰ>/ਪਰਤ/ਰੰਗ/ਸਵੈ/ਰੰਗ ਵਾਧਾ"
+msgstr "<Image>/ਪਰਤ/ਰੰਗ/ਸਵੈ/ਰੰਗ ਵਾਧਾ"
 
 #: plug-ins/common/ccanalyze.c:202
 msgid "Colorcube Analysis..."
@@ -2774,7 +2774,7 @@ msgstr ""
 #: plug-ins/common/vpropagate.c:278
 #, fuzzy
 msgid "<Image>/Filters/Generic"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/convmatrix.c:230
 msgid "Convolution Matrix does not work on layers smaller than 3 pixels."
@@ -2876,7 +2876,7 @@ msgstr ""
 #: plug-ins/common/struc.c:1150 plug-ins/gimpressionist/gimp.c:84
 #, fuzzy
 msgid "<Image>/Filters/Artistic"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/cubism.c:257
 msgid "Cubism"
@@ -3240,7 +3240,7 @@ msgstr ""
 #: plug-ins/common/depthmerge.c:199 plug-ins/common/film.c:248
 #, fuzzy
 msgid "<Image>/Filters/Combine"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/depthmerge.c:383
 msgid "Depth-merging..."
@@ -3937,7 +3937,7 @@ msgstr ""
 #: plug-ins/common/gee.c:101 plug-ins/common/gee_zoom.c:131
 #, fuzzy
 msgid "<Image>/Filters/Toys"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/gee.c:153
 msgid "GEE-SLIME"
@@ -4831,7 +4831,7 @@ msgstr ""
 #: plug-ins/common/winprint.c:245 plug-ins/print/print.c:171
 #, fuzzy
 msgid "<Image>/File/Send"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/mail.c:434
 msgid "Send to Mail"
@@ -5342,7 +5342,7 @@ msgstr ""
 #: plug-ins/common/scatter_hsv.c:141 plug-ins/common/spread.c:107
 #, fuzzy
 msgid "<Image>/Filters/Noise"
-msgstr "<ਚਿੱਤਰ>/ਫਾਇਲ/ਛਾਪੋ..."
+msgstr "<Image>/ਫਾਇਲ/ਛਾਪੋ..."
 
 #: plug-ins/common/noisify.c:209
 msgid "Adding Noise..."
@@ -6294,7 +6294,7 @@ msgstr "ਪਰਦੇ ਦੀ ਤਸਵੀਰ"
 #: plug-ins/twain/twain.c:363 plug-ins/winsnap/winsnap.c:1081
 #, fuzzy
 msgid "<Toolbox>/File/Acquire"
-msgstr "<ਸੰਦਖਾਨਾ>/ਫਾਇਲ਼/ਪ੍ਰਾਪਤ ਕਰੋ/ਪਰਦਾ ਤਸਵੀਰ..."
+msgstr "<Toolbox>/ਫਾਇਲ਼/ਪ੍ਰਾਪਤ ਕਰੋ/ਪਰਦਾ ਤਸਵੀਰ..."
 
 #: plug-ins/common/screenshot.c:395
 msgid "Error grabbing the pointer"
