@@ -395,7 +395,7 @@ mask_buf_free (MaskBuf *mask)
 guchar *
 mask_buf_data (MaskBuf *mask_buf)
 {
-  return temp_buf_data_clear; 
+  return temp_buf_data ((TempBuf *) mask_buf); 
 }
 
 guchar *
