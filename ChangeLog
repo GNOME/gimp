@@ -1,3 +1,7 @@
+2001-01-29  Sven Neumann  <sven@gimp.org>
+
+	* HACKING: defined The GIMP Hackordnung (ACHTUNG!)
+
 2001-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am
