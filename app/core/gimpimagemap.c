@@ -213,6 +213,9 @@ gimp_image_map_apply (GimpImageMap          *image_map,
   /*  The application should occur only within selection bounds  */
   gimp_drawable_mask_bounds (image_map->drawable, &x1, &y1, &x2, &y2);
 
+  if ((x2 - x1 < 1) || (y2 - y1 < 1))
+    return;
+
   /*  If undo tiles don't exist, or change size, (re)allocate  */
   if (image_map->undo_tiles)
     {
