@@ -4,7 +4,8 @@
 	* autogen.sh
 	* configure.in: added AC_SYS_LARGEFILE as a first prerequisite to
 	handle bug #74478 (cannot handle swap size of 2GB). This requires
-	autoconf-2.52.
+	autoconf-2.52. Unified and documented our use of AC_DEFINE() to 
+	please autoheader.
 
 	* acconfig.h: removed since it is now obsolete.
 
