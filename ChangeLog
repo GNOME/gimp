@@ -1,3 +1,9 @@
+2003-05-19  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-flip-horizontal-16.png:
+	* themes/Default/images/stock-flip-vertical-16.png: fix shadows
+	  a little
+	
 2003-05-19  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.[ch]: Implemented closed paths. Not
