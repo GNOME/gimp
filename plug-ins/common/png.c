@@ -1281,6 +1281,11 @@ save_dialog (void)
                              scale, 1, FALSE);
   gtk_widget_show (scale);
 
+  gimp_help_set_help_data (scale,
+			   _("Choose a high compression level "
+			     "for small file size"),
+			   NULL);
+
   g_signal_connect (scale_data, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &pngvals.compression_level);

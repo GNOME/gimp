@@ -1,5 +1,10 @@
 2003-01-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c: added a tooltip describing the
+	compression level scale as suggested in #68485.
+
+2003-01-26  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc-blurbs.h: removed the description of the image
 	title format string from the blurb ...
 	
