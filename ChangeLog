@@ -1,4 +1,20 @@
+Sun Mar 15 06:15:37 1998  Tim Janik  <timj@gimp.org>
+
+	* plug-ins/exchange/exchange.c (doDialog): also destroy the main dialog
+	if the "Cancel" button is clicked.
+
+	* plug-ins/flame/flame.c: use gtk_quit_add_destroy instead of
+	gtk_quit_add (,gtk_widget_destroy,), i should have really known
+ 	better since i wrote gtk_quit_add_destroy() exclusively for the gimp ;)
+	* app/tips_dialog.c (tips_dialog_create): likewise.
+	* app/indexed_palette.c (indexed_palette_create): likewise.
+	* app/fileops.c (file_open_callback): likewise.
+	* app/fileops.c	(file_save_as_callback): likewise.
+
 Sun Mar 15 03:54:58 1998  Tim Janik  <timj@gimp.org>
+
+	* plug-ins/AlienMap/AlienMap.c: show/hide about dialog, don't affect
+	the main dialog.
 
 	* plug-ins/flame/flame.c (edit_callback): hide the dialog on delete.
 	(make_file_dlg): hide the dialog on delete.

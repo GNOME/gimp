@@ -137,7 +137,7 @@ indexed_palette_create (int gimage_id)
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
 			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 			  NULL);
-      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, indexedP->shell);
+      gtk_quit_add_destroy (1, GTK_OBJECT (indexedP->shell));
 
       indexedP->vbox = vbox = gtk_vbox_new (FALSE, 1);
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);

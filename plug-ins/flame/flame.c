@@ -394,7 +394,7 @@ make_file_dlg() {
 		     "delete_event",
 		     (GtkSignalFunc) gtk_widget_hide_on_delete,
 		     NULL);
-  gtk_quit_add (1, gtk_widget_destroy, file_dlg);
+  gtk_quit_add_destroy (1, GTK_OBJECT (file_dlg));
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->cancel_button),
 		     "clicked", (GtkSignalFunc) file_cancel_callback, file_dlg);
   gtk_signal_connect(GTK_OBJECT (GTK_FILE_SELECTION (file_dlg)->ok_button),
@@ -525,7 +525,7 @@ edit_callback(GtkWidget * widget, gpointer data) {
     gtk_window_position(GTK_WINDOW(edit_dlg), GTK_WIN_POS_MOUSE);
     gtk_signal_connect(GTK_OBJECT(edit_dlg), "destroy",
 		       (GtkSignalFunc) edit_close_callback, NULL);
-    gtk_quit_add (1, gtk_widget_destroy, edit_dlg);
+    gtk_quit_add_destroy (1, GTK_OBJECT (edit_dlg));
     gtk_signal_connect(GTK_OBJECT(edit_dlg), "delete_event",
 		       (GtkSignalFunc) gtk_widget_hide_on_delete, NULL);
 

@@ -481,7 +481,7 @@ file_open_callback (GtkWidget *w,
 			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (fileload)->ok_button), "clicked", (GtkSignalFunc) file_open_ok_callback, fileload);
-      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, fileload);
+      gtk_quit_add_destroy (1, GTK_OBJECT (fileload));
     }
   else
     {
@@ -571,7 +571,7 @@ file_save_as_callback (GtkWidget *w,
 			  GTK_SIGNAL_FUNC (file_dialog_hide),
 			  NULL);
       gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (filesave)->ok_button), "clicked", (GtkSignalFunc) file_save_ok_callback, filesave);
-      gtk_quit_add (1, (GtkFunction) gtk_widget_destroy, filesave);
+      gtk_quit_add_destroy (1, GTK_OBJECT (filesave));
     }
   else
     {

@@ -104,7 +104,7 @@ static void      dialog_ok_callback(GtkWidget *widget, gpointer data);
 static void      dialog_cancel_callback(GtkWidget *widget, gpointer data);
 static void      alienmap_toggle_update    (GtkWidget *widget,
         				    gpointer   data);
-GtkWidget * alienmap_logo_dialog(void);
+void alienmap_logo_dialog (void);
 
 
 
@@ -602,28 +602,6 @@ build_preview_source_image(void)
 
 
 static void
-alienmap_logo_ok_callback(GtkWidget *widget, gpointer   data)
-{
-  gtk_widget_set_sensitive (maindlg, TRUE);
-  gtk_widget_destroy(logodlg);
-}
-
-static void
-alienmap_close_callback(GtkWidget *widget,  gpointer   data)
-{ 
-  gtk_main_quit();
-}
-
-
-
-static void
-alienmap_about_callback(GtkWidget *widget, gpointer   data)
-{
-  gtk_widget_set_sensitive (maindlg, FALSE);
-  alienmap_logo_dialog();
-}
-
-static void
 set_tooltip (GtkTooltips *tooltips, GtkWidget *widget, const char *desc)
 {
   if (desc && desc[0])
@@ -679,7 +657,7 @@ alienmap_dialog(void)
 
         build_preview_source_image();
         dialog = maindlg = gtk_dialog_new();
-        gtk_window_set_title(GTK_WINDOW(dialog), "alienmap");
+        gtk_window_set_title(GTK_WINDOW(dialog), "AlienMap");
         gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
         gtk_container_border_width(GTK_CONTAINER(dialog), 0);
         gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
@@ -896,7 +874,8 @@ gtk_container_border_width(GTK_CONTAINER(GTK_DIALOG(dialog)->action_area), 6);
 	button = gtk_button_new_with_label("About...");
         GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
         gtk_signal_connect(GTK_OBJECT(button), "clicked",
-                     (GtkSignalFunc)alienmap_about_callback,button);
+			   GTK_SIGNAL_FUNC (alienmap_logo_dialog),
+			   NULL);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 		     button, TRUE, TRUE, 0);
         gtk_widget_show(button);
@@ -1145,10 +1124,9 @@ alienmap_toggle_update (GtkWidget *widget,
 
 }
 
-GtkWidget * 
+void
 alienmap_logo_dialog()
 {
-  GtkWidget *xdlg;
   GtkWidget *xlabel;
   GtkWidget *xbutton;
   GtkWidget *xlogo_box;
@@ -1160,82 +1138,93 @@ alienmap_logo_dialog()
   guchar *temp,*temp2;
   guchar *datapointer;
   gint y,x;
-  xdlg = logodlg = gtk_dialog_new();
-  gtk_window_set_title(GTK_WINDOW(xdlg), "About");
-  gtk_window_position(GTK_WINDOW(xdlg), GTK_WIN_POS_MOUSE);
-  gtk_signal_connect(GTK_OBJECT(xdlg), "destroy",
-                     (GtkSignalFunc)alienmap_close_callback,
-		     NULL);
 
-  xbutton = gtk_button_new_with_label("OK");
-  GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
-  gtk_signal_connect(GTK_OBJECT(xbutton), "clicked",
-                     (GtkSignalFunc)alienmap_logo_ok_callback,
-		     xdlg);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(xdlg)->action_area),
-		     xbutton, TRUE, TRUE, 0);
-  gtk_widget_grab_default(xbutton);
-  gtk_widget_show(xbutton);
-  set_tooltip(tips,xbutton,"This closes the information box");
-
-  xframe = gtk_frame_new(NULL);
-  gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width(GTK_CONTAINER(xframe), 10);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(xdlg)->vbox), xframe, TRUE, TRUE, 0);
-  xvbox = gtk_vbox_new(FALSE, 5);
-  gtk_container_border_width(GTK_CONTAINER(xvbox), 10);
-  gtk_container_add(GTK_CONTAINER(xframe), xvbox);
-
-  /*  The logo frame & drawing area  */
-  xhbox = gtk_hbox_new (FALSE, 5);
-  gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
-
-  xlogo_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
-
-  xframe2 = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (xframe2), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (xlogo_box), xframe2, FALSE, FALSE, 0);
-
-  xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
-  temp = g_malloc((logo_width+10)*3);
-  datapointer=header_data+logo_width*logo_height-1;
-  for (y = 0; y < logo_height; y++){
-    temp2=temp;
-    for (x = 0; x< logo_width; x++) {
-      HEADER_PIXEL(datapointer,temp2); temp2+=3;}
-    gtk_preview_draw_row (GTK_PREVIEW (xpreview),
-			  temp,
-			  0, y, logo_width); 
-  }			  
-  g_free(temp);
-  gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
-  gtk_widget_show (xpreview);
-  gtk_widget_show (xframe2);
-  gtk_widget_show (xlogo_box);
-  gtk_widget_show (xhbox);
-
-  xhbox = gtk_hbox_new(FALSE, 5);
-  gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-  text = "\nCotting Software Productions\n"
-         "Bahnhofstrasse 31\n"
-  	 "CH-3066 Stettlen (Switzerland)\n\n"
-	 "cotting@mygale.org\n"
-	 "http://www.mygale.org/~cotting\n\n"
-          "AlienMap Plug-In for the GIMP\n"
-          "Version 1.01\n";
-  xlabel = gtk_label_new(text);
-  gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
-  gtk_widget_show(xlabel);
-
-  gtk_widget_show(xhbox);
-
-  gtk_widget_show(xvbox);
-  gtk_widget_show(xframe);
-  gtk_widget_show(xdlg);
-
-  gtk_main();
-  gdk_flush();
-  return xdlg;
+  if (!logodlg)
+    {
+      logodlg = gtk_dialog_new();
+      gtk_window_set_title(GTK_WINDOW(logodlg), "About Alien Map");
+      gtk_window_position(GTK_WINDOW(logodlg), GTK_WIN_POS_MOUSE);
+      gtk_signal_connect(GTK_OBJECT(logodlg),
+			 "destroy",
+			 GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+			 &logodlg);
+      gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));
+      gtk_signal_connect(GTK_OBJECT(logodlg),
+			 "delete_event",
+			 GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
+			 &logodlg);
+      
+      xbutton = gtk_button_new_with_label("OK");
+      GTK_WIDGET_SET_FLAGS(xbutton, GTK_CAN_DEFAULT);
+      gtk_signal_connect_object (GTK_OBJECT(xbutton), "clicked",
+				 GTK_SIGNAL_FUNC (gtk_widget_hide),
+				 logodlg);
+      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(logodlg)->action_area),
+			 xbutton, TRUE, TRUE, 0);
+      gtk_widget_grab_default(xbutton);
+      gtk_widget_show(xbutton);
+      set_tooltip(tips,xbutton,"This closes the information box");
+      
+      xframe = gtk_frame_new(NULL);
+      gtk_frame_set_shadow_type(GTK_FRAME(xframe), GTK_SHADOW_ETCHED_IN);
+      gtk_container_border_width(GTK_CONTAINER(xframe), 10);
+      gtk_box_pack_start(GTK_BOX(GTK_DIALOG(logodlg)->vbox), xframe, TRUE, TRUE, 0);
+      xvbox = gtk_vbox_new(FALSE, 5);
+      gtk_container_border_width(GTK_CONTAINER(xvbox), 10);
+      gtk_container_add(GTK_CONTAINER(xframe), xvbox);
+      
+      /*  The logo frame & drawing area  */
+      xhbox = gtk_hbox_new (FALSE, 5);
+      gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
+      
+      xlogo_box = gtk_vbox_new (FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
+      
+      xframe2 = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (xframe2), GTK_SHADOW_IN);
+      gtk_box_pack_start (GTK_BOX (xlogo_box), xframe2, FALSE, FALSE, 0);
+      
+      xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
+      gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
+      temp = g_malloc((logo_width+10)*3);
+      datapointer=header_data+logo_width*logo_height-1;
+      for (y = 0; y < logo_height; y++){
+	temp2=temp;
+	for (x = 0; x< logo_width; x++) {
+	  HEADER_PIXEL(datapointer,temp2); temp2+=3;}
+	gtk_preview_draw_row (GTK_PREVIEW (xpreview),
+			      temp,
+			      0, y, logo_width); 
+      }			  
+      g_free(temp);
+      gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
+      gtk_widget_show (xpreview);
+      gtk_widget_show (xframe2);
+      gtk_widget_show (xlogo_box);
+      gtk_widget_show (xhbox);
+      
+      xhbox = gtk_hbox_new(FALSE, 5);
+      gtk_box_pack_start(GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
+      text = "\nCotting Software Productions\n"
+	"Bahnhofstrasse 31\n"
+	"CH-3066 Stettlen (Switzerland)\n\n"
+	"cotting@mygale.org\n"
+	"http://www.mygale.org/~cotting\n\n"
+	"AlienMap Plug-In for the GIMP\n"
+	"Version 1.01\n";
+      xlabel = gtk_label_new(text);
+      gtk_box_pack_start(GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
+      gtk_widget_show(xlabel);
+      
+      gtk_widget_show(xhbox);
+      
+      gtk_widget_show(xvbox);
+      gtk_widget_show(xframe);
+      gtk_widget_show(logodlg);
+    }
+  else
+    {
+      gtk_widget_show (logodlg);
+      gdk_window_raise (logodlg->window);
+    }
 }

@@ -57,7 +57,6 @@ static void	exchange(GDrawable *);
 static void	doLabelAndScale(char *, GtkWidget *, guchar *);
 
 static void	ok_callback(GtkWidget *, gpointer);
-static void	close_callback(GtkWidget *, gpointer);
 static void	scale_callback(GtkAdjustment *, gpointer);
 
 /* some global variables */
@@ -316,7 +315,7 @@ int	doDialog()
 	gtk_window_set_title(GTK_WINDOW(dialog), "Color Exchange");
 	gtk_window_position(GTK_WINDOW(dialog), GTK_WIN_POS_MOUSE);
 	gtk_signal_connect(GTK_OBJECT(dialog), "destroy",
-			   (GtkSignalFunc) close_callback,
+			   (GtkSignalFunc) gtk_main_quit,
 			   NULL);
 
 	/* lets create some buttons */
@@ -332,9 +331,9 @@ int	doDialog()
 	
 	button = gtk_button_new_with_label("Cancel");
 	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-			   (GtkSignalFunc) close_callback,
-			   dialog);
+	gtk_signal_connect_object (GTK_OBJECT(button), "clicked",
+				   (GtkSignalFunc) gtk_widget_destroy,
+				   dialog);
 	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area),
 	                   button, TRUE, TRUE, 0);
 	gtk_widget_show(button); 
@@ -412,12 +411,6 @@ void	ok_callback(GtkWidget *widget, gpointer data)
 {
 	running = 1;
 	gtk_widget_destroy(GTK_WIDGET(data));
-}
-
-static
-void	close_callback(GtkWidget *widget, gpointer data)
-{
-	gtk_main_quit();
 }
 
 static
