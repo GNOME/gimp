@@ -93,7 +93,6 @@ enum
   PROP_LAYER_PREVIEWS,
   PROP_LAYER_PREVIEW_SIZE,
   PROP_THUMBNAIL_SIZE,
-  PROP_GAMMA_CORRECTION,
   PROP_INSTALL_COLORMAP,
   PROP_MIN_COLORS
 };
@@ -244,11 +243,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                  GIMP_TYPE_THUMBNAIL_SIZE,
                                  GIMP_THUMBNAIL_SIZE_NORMAL,
                                  0);
-  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_GAMMA_CORRECTION,
-                                   "gamma-correction",
-                                   GAMMA_CORRECTION_BLURB,
-                                   0.0, 100.0, 1.0,
-                                   0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_INSTALL_COLORMAP,
                                     "install-colormap", INSTALL_COLORMAP_BLURB,
                                     FALSE,
@@ -402,9 +396,6 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_THUMBNAIL_SIZE:
       core_config->thumbnail_size = g_value_get_enum (value);
       break;
-    case PROP_GAMMA_CORRECTION:
-      core_config->gamma_val = g_value_get_double (value);
-      break;
     case PROP_INSTALL_COLORMAP:
       core_config->install_cmap = g_value_get_boolean (value);
       break;
@@ -495,9 +486,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_THUMBNAIL_SIZE:
       g_value_set_enum (value, core_config->thumbnail_size);
-      break;
-    case PROP_GAMMA_CORRECTION:
-      g_value_set_double (value, core_config->gamma_val);
       break;
     case PROP_INSTALL_COLORMAP:
       g_value_set_boolean (value, core_config->install_cmap);

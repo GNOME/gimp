@@ -1,5 +1,12 @@
 2003-11-15  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimcoreconfig.[ch]	
+	* app/plug-in/plug-in-run.c (plug_in_run): removed references to the
+	unused gamma value. If we ever implement proper gamma correction, we
+	will need individual gamma values for each channel anyway.
+
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpui.c (gimp_ui_init): reverted Yosh's change and
 	removed the call to gtk_preview_set_gamma() instead. The gamma
 	value isn't used anywhere else so it would only be confusing to

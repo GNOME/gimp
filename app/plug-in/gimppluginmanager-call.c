@@ -98,7 +98,7 @@ plug_in_run (Gimp       *gimp,
       config.tile_width     = TILE_WIDTH;
       config.tile_height    = TILE_HEIGHT;
       config.shm_ID         = plug_in_shm_get_ID (gimp);
-      config.gamma          = gimp->config->gamma_val;
+      config.gamma          = 1.0;
       config.install_cmap   = gimp->config->install_cmap;
       config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
       config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);

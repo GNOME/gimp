@@ -62,7 +62,6 @@ struct _GimpCoreConfig
   gboolean               layer_previews;
   GimpPreviewSize        layer_preview_size;
   GimpThumbnailSize      thumbnail_size;
-  gdouble                gamma_val;
   gboolean               install_cmap;
   gint                   min_colors;
 };
