@@ -1426,7 +1426,7 @@ gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
 gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
 gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
 
-localedir='${prefix}/${DATADIRNAME}/locale'
+localedir="$datadir/locale"
 
 AC_SUBST(gimpdir)
 AC_SUBST(gimpdatadir)
