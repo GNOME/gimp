@@ -37,9 +37,12 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "core/core-types.h"
+
+#include "base/tile.h"
+
 #include "config/gimpconfig-dump.h"
 
-#include "core/core-types.h"
 #include "core/gimp.h"
 
 #include "app_procs.h"
@@ -462,7 +465,7 @@ gimp_init_malloc (void)
    * An alternative to tuning this parameter would be to use
    * malloc_trim(), for example after releasing a large tile-manager.
    */
-  mallopt (M_MMAP_THRESHOLD, 64 * 64 - 1);
+  mallopt (M_MMAP_THRESHOLD, TILE_WIDTH * TILE_HEIGHT);
 #endif
 }
 
