@@ -1,5 +1,15 @@
 2004-10-11  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/documents-commands.c
+	(documents_recreate_preview_cmd_callback): when recreating the
+	thumbnail, delete old thumbnails and create it in the configured
+	thumbnail size instead of the container view preview size.
+
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_update_thumb):
+	reset the image info when the thumbnail state changes.
+
+2004-10-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.c: construct a case-insensitive glob
 	pattern to use when filtering for file extensions.
 

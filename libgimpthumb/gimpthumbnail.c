@@ -708,7 +708,14 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
   thumbnail->thumb_mtime    = mtime;
 
   if (state != thumbnail->thumb_state)
-    g_object_set (thumbnail, "thumb-state", state, NULL);
+    {
+      g_object_freeze_notify (G_OBJECT (thumbnail));
+
+      g_object_set (thumbnail, "thumb-state", state, NULL);
+      gimp_thumbnail_reset_info (thumbnail);
+
+      g_object_thaw_notify (G_OBJECT (thumbnail));
+    }
 }
 
 static void

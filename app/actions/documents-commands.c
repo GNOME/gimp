@@ -27,6 +27,8 @@
 
 #include "actions-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -192,11 +194,16 @@ documents_recreate_preview_cmd_callback (GtkAction *action,
 
   if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
     {
-      gint preview_size;
+      const gchar *uri  = gimp_object_get_name (GIMP_OBJECT (imagefile));
+      gint         size = imagefile->gimp->config->thumbnail_size;
 
-      preview_size = gimp_container_view_get_preview_size (editor->view, NULL);
+      if (!size)
+        return;
 
-      gimp_imagefile_create_thumbnail (imagefile, context, NULL, preview_size);
+      if (uri)
+        gimp_thumbs_delete_for_uri (uri);
+
+      gimp_imagefile_create_thumbnail (imagefile, context, NULL, size);
     }
 }
 
