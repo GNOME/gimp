@@ -1,5 +1,8 @@
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreviewarea.c (CHECK_COLOR): oops, swapped x
+	and y variables.
+
 	* libgimpwidgets/gimppreview.c: some minor changes, mainly cleanup.
 
 2004-09-01  Manish Singh  <yosh@gimp.org>

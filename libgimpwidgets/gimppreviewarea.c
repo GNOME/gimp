@@ -31,8 +31,8 @@
 
 
 #define CHECK_COLOR(area, row, col)                     \
-  (((((area)->offset_x + (row)) & GIMP_CHECK_SIZE) ^    \
-    (((area)->offset_y + (col)) & GIMP_CHECK_SIZE)) ?   \
+  (((((area)->offset_y + (row)) & GIMP_CHECK_SIZE) ^    \
+    (((area)->offset_x + (col)) & GIMP_CHECK_SIZE)) ?   \
    (GIMP_CHECK_LIGHT * 255) :                           \
    (GIMP_CHECK_DARK  * 255))
 
