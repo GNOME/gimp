@@ -32,13 +32,11 @@ msgstr ""
 msgid "<Image>/Filters/Web/Prepare for GIF..."
 msgstr "<Image>/Filtri/Web/Prepara per GIF"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/3D Outline..."
-msgstr "<Image>/Filtri/Logulator/3D Outline"
+msgstr "<Image>/Filtri/Logulator/3D Outline..."
 
-#, fuzzy
 msgid "<Image>/Filters/Animation/Animate Cells..."
-msgstr "<Image>/Filtri/Animazione/Animazione Celle"
+msgstr "<Image>/Filtri/Animazione/Animazione Celle..."
 
 msgid ""
 "       interface-arguments are\n"
@@ -51,9 +49,8 @@ msgstr ""
 "           -i | --interact            permette all'utente di prima interagire\n"
 "       script-argiments sono\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
+msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri..."
 
 msgid "being called as '%s', but '%s' not registered in the pdb"
 msgstr "being called as '%s', but '%s' not registered in the pdb"
@@ -114,9 +111,8 @@ msgstr "Carico"
 msgid "/Xtns/Render"
 msgstr "/Xtns/Render"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Xtns/Perl/Centro di controllo"
+msgstr "<Toolbox>/Xtns/Perl/Centro di controllo..."
 
 msgid "illegal parasite specification, reference expected"
 msgstr "specifica di parametro aggiuntivo illegale, riferimento atteso"
@@ -137,13 +133,11 @@ msgstr "Autorizzazione scorretta, ora interrompo la connessione"
 msgid "BG"
 msgstr "Colore Sfondo"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Xtns/Render/Bricks"
+msgstr "<Toolbox>/Xtns/Render/Bricks..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Xtns/Animation/Seth Spin"
+msgstr "<Toolbox>/Xtns/Animazione/Seth Spin..."
 
 msgid "illegal type for colour specification"
 msgstr "colore specificato di tipo illegale"
@@ -151,28 +145,23 @@ msgstr "colore specificato di tipo illegale"
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: carattere XLFD '$fontname' non riscontrato\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Xtns/Render/Povray/Preferenze"
+msgstr "<Toolbox>/Xtns/Render/Povray/Preferenze..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Random Blends..."
-msgstr "<Image>/Filtri/Render/Sfumature Casuali"
+msgstr "<Image>/Filtri/Render/Sfumature casuali..."
 
 msgid "Plug-In Path"
-msgstr "Percorso su disco per Plug-In"
+msgstr "Percorso plugin"
 
 msgid "You can't run this script with an INDEXED image!!"
-msgstr ""
-"Non è possibile eseguire lo script se l'immagine non è in Scala di Colore!!"
+msgstr "Non è possibile eseguire lo script su una immagine in scala di colore!!"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Terral Text..."
-msgstr "<Image>/Filtri/Render/Terral Text"
+msgstr "<Image>/Filtri/Render/Terral Text..."
 
-#, fuzzy
 msgid "<Image>/Guides/Guide Grid..."
-msgstr "<Image>/Guide/Griglia di Guide"
+msgstr "<Image>/Guide/Griglia di Guide..."
 
 msgid "accepted unix connection"
 msgstr "connessione unix accettata"
@@ -192,9 +181,8 @@ msgstr "attendendo il perl-server durante la connessione socket, si riceve @r\n"
 msgid "received QUIT request"
 msgstr "richiesta di abbandono (QUIT) ricevuta"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Xtns/Esempio Gimp::Fu"
+msgstr "<Toolbox>/Xtns/Esempio Gimp::Fu..."
 
 msgid " = [argument error]\n"
 msgstr " = [argomento errato]\n"
@@ -206,10 +194,10 @@ msgid " matching functions"
 msgstr " abbinando funzioni"
 
 # msgid "Internal error: unable to convert reference in sv2net, please report!"
-# msgstr ""
-#, fuzzy
+# msgstr "Errore interno: impossibile convertire referenze in sv2net!"
+
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Xtns/Render/Arte Casuale #1"
+msgstr "<Toolbox>/Xtns/Render/Arte Casuale #1..."
 
 msgid ""
 "Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
@@ -289,9 +277,8 @@ msgstr "<Image>/Filtri/Logulator/Imigre-26"
 msgid "Text"
 msgstr "Testo"
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Colour To Alpha..."
-msgstr "<Image>/Filtri/Colori/Colore ad Alfa"
+msgstr "<Image>/Filtri/Colori/Colore a alfa..."
 
 msgid "/Xtns/Perl"
 msgstr "/Xtns/Perl"
@@ -299,9 +286,8 @@ msgstr "/Xtns/Perl"
 msgid "no additional information available, use --help\n"
 msgstr "informazioni addizionali non disponibili, usare --help\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Xtns/Parasite Editor"
+msgstr "<Toolbox>/Xtns/Parasite Editor..."
 
 msgid "gimp_tile_set_data is not yet implemented\n"
 msgstr "gimp_tile_set_data non e` ancora implementato\n"
@@ -312,13 +298,11 @@ msgstr "Visual Scriptor"
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr "Nessuna guida orizzontale o verticale. Operazione Annullata."
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Image Tile..."
-msgstr "<Image>/Filtri/Map/Tile Immagine"
+msgstr "<Image>/Filtri/Map/Tile Immagine..."
 
-#, fuzzy
 msgid "<Image>/Guides/To Selection..."
-msgstr "<Image>/Guide/A Selezione"
+msgstr "<Image>/Guide/A selezione..."
 
 msgid "<Image>/Filters/Logulator/Comic Book"
 msgstr "<Image>/Filtri/Logulator/Comic Book"
@@ -331,9 +315,8 @@ msgstr "<Image>/Guide/Rimuovi Guide"
 msgid "get current background colour from the gimp"
 msgstr "ottiene il corrente colore di sfondo da gimp"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Xtns/Esploratore PDB"
+msgstr "<Toolbox>/Xtns/PDB Explorer..."
 
 msgid "WARNING: shared locking requested but not implemented"
 msgstr "ATTENZIONE: richiesta condivisa di lock, ma non implementata"
@@ -356,9 +339,8 @@ msgstr "funzione/macro \"$name\" non trovata in $class"
 msgid "accepted tcp connection from "
 msgstr "accettata connessione tcp da "
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Xtns/Render/Generatore Pixel"
+msgstr "<Toolbox>/Xtns/Render/Generatore pixel..."
 
 msgid "illegal parasite specification, expected three array members"
 msgstr "specificazione di parasite illegale, attesi tre membri di array"
@@ -366,9 +348,8 @@ msgstr "specificazione di parasite illegale, attesi tre membri di array"
 msgid "unable to read temporary file $tmp: $!"
 msgstr "non riesco a leggere il file temporaneo $tmp: $!"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Xtns/Render/Yin-Yang"
+msgstr "<Toolbox>/Xtns/Render/Yin-Yang..."
 
 msgid "PDB Explorer - the olof edition (yet still an alpha version)"
 msgstr "PDB Explorer - edizione olof (versione alpha)"
@@ -382,9 +363,8 @@ msgstr "<Image>/Filtri/Logulator/Chalk"
 msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
 
-#, fuzzy
 msgid "<Image>/Select/Round Rectangular Selection..."
-msgstr "<Image>/Selezione/Rettangolo Arrotondato"
+msgstr "<Image>/Selezione/Rettangolo arrotondato..."
 
 msgid ""
 "BLURB:\n"
@@ -409,9 +389,8 @@ msgstr "Selettore di file per $name"
 msgid "accepting connections on port $port"
 msgstr "ora accetto connessioni alla porta $port"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Blended II..."
-msgstr "<Image>/Filtri/Logulator/Blended II"
+msgstr "<Image>/Filtri/Logulator/Blended II..."
 
 # msgid "Internal error: Gimp::Net #100, please report!"
 # msgstr ""
@@ -426,9 +405,8 @@ msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 "menupath _deve_ cominciare con <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Highlight Edges..."
-msgstr "<Image>/Filtri/Render/Evidenzia contorni"
+msgstr "<Image>/Filtri/Render/Illumina margini..."
 
 msgid "Spin Layer DEST (250ms)"
 msgstr "Spin livello DEST (250ms)"
@@ -444,13 +422,11 @@ msgstr ""
 "parametri e valori di ritorno devono essere riferimenti ad array (anche quando "
 "vuoti)!"
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map To Gradient..."
-msgstr "<Image>/Filtri/Colori/Mappa a Gradiente"
+msgstr "<Image>/Filtri/Colori/Mappa a gradiente..."
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Xtns/Render/Logo/Testo di fuoco"
+msgstr "<Toolbox>/Xtns/Render/Logo/Testo di fuoco..."
 
 msgid "unable to accept unix connection: $!\n"
 msgstr "impossibile accettare connessioni unix: $!\n"
@@ -488,9 +464,8 @@ msgstr "interfaccia '$interface_type' non supportata.'"
 msgid "unable to accept tcp connection: $!\n"
 msgstr "non riesco ad accettare connessione tcp: $!\n"
 
-#, fuzzy
 msgid "<Image>/Image/Alpha/Clear Alpha..."
-msgstr "<Image>/Immagine/Alpha/Alfa a colore"
+msgstr "<Image>/Immagine/Alpha/Pulisci alpha..."
 
 msgid ""
 "dimension mismatch, pdl has dimension %d but at least %d dimensions required"
@@ -512,23 +487,20 @@ msgstr "<Image>/Filtri/Logulator/Crystal"
 msgid "Cannot call '$AUTOLOAD' at this time"
 msgstr "Ora non posso chiamare '$AUTOLOAD'"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Xtns/Render/Povray/Texture"
+msgstr "<Toolbox>/Xtns/Render/Povray/Texture..."
 
 msgid "unauthorized command received, aborting connection"
 msgstr "ricevuto comando di mancata autorizzazione, chiudo connessione"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Xtns/Animation/Billboard"
+msgstr "<Toolbox>/Xtns/Animazione/Billboard..."
 
 msgid "Defaults"
 msgstr "Preimpostati"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filtri/Render/Burst..."
+msgstr "<Image>/Filtri/Render/Aggiungi Dust..."
 
 msgid "text string is empty"
 msgstr "stringa di testo vuota"
@@ -536,9 +508,8 @@ msgstr "stringa di testo vuota"
 msgid "server requests authorization, but no authorization available\n"
 msgstr "il server richiede autorizzazioni che non sono state passate\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Xtns/Visual Scriptor"
+msgstr "<Toolbox>/Xtns/Visual scriptor..."
 
 msgid "/Xtns/Render/Logos"
 msgstr "/Xtns/Render/Logos"
@@ -614,9 +585,8 @@ msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
 msgid "Synopsis"
 msgstr "Sinoposi"
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Pixelmap..."
-msgstr "<Image>/Filtri/Map/Pixelmap"
+msgstr "<Image>/Filtri/Map/Pixelmap..."
 
 msgid "Color"
 msgstr "Colore"
@@ -638,9 +608,8 @@ msgstr "DESCRIZIONE"
 msgid "Unable to open '$filename' for writing: $!\n"
 msgstr "Impossibile aprire '$filename' in scrittura: $!\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/MirrorSplit..."
-msgstr "<Image>/Filtri/Distorts/Divide Specchiato"
+msgstr "<Image>/Filtri/Distorsioni/Effetto specchio..."
 
 msgid "accepting connections in $host"
 msgstr "ora accetto connessioni in $host"
@@ -702,9 +671,8 @@ msgstr ""
 "Atteso un INT32 ma ottenuto '%s'. Forse intendevate %s e avete dimenticato 'use "
 "strict'"
 
-#, fuzzy
 msgid "<Image>/Filters/Logulator/Transparent Logo..."
-msgstr "<Image>/Filtri/Logulator/Logo trasparente"
+msgstr "<Image>/Filtri/Logulator/Logo trasparente..."
 
 msgid ""
 "malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
@@ -713,16 +681,15 @@ msgstr ""
 "PARAM_TYPE"
 
 msgid "Background"
-msgstr ""
+msgstr "Sfondo"
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
 msgstr ""
 "l'ultimo argomento di gimp_pattern_select_widget deve essere un riferinmento "
 "scalare"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Xtns/Render/Francobolli"
+msgstr "<Toolbox>/Xtns/Render/Francobolli..."
 
 msgid "accepting connections on $unix_path"
 msgstr "ricezione connessioni su $unix_path"
@@ -730,9 +697,8 @@ msgstr "ricezione connessioni su $unix_path"
 msgid "Load $name"
 msgstr "Carico $name"
 
-#, fuzzy
 msgid "<Image>/Filters/Noise/Ditherize..."
-msgstr "<Image>/Filtri/Noise/Ditherize"
+msgstr "<Image>/Filtri/Disturbo/Ditherize..."
 
 msgid "Saving '$filename' as DATAURL..."
 msgstr "Salvataggio di '$filename' come DATAURL..."
@@ -750,9 +716,8 @@ msgstr ""
 "gimp_pixel_rgns_register supporta solo 1, 2 o 3 argomenti, aggiornare a gimp-1.1 "
 "e riportare questo errore"
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Brushed Metal..."
-msgstr "<Image>/Filtri/Render/Punte metallizzate"
+msgstr "<Image>/Filtri/Render/Metallo dipinto..."
 
 msgid "Bumpmap"
 msgstr "Bumpmap"
@@ -785,7 +750,7 @@ msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Filtri/Logulator/Newsprint text"
 
 msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtri/Noise/Xach Vision..."
+msgstr "<Image>/Filtri/Disturbo/Xach Vision..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "ATTENZIONE: sconnessione client durante un lock attivo\n"
@@ -817,9 +782,8 @@ msgstr "gimp_tile_get_data non e` ancora implementata\n"
 msgid "<Image>/Filters/Map/Xach Shadows..."
 msgstr "<Image>/Filtri/Map/Xach ombre..."
 
-#, fuzzy
 msgid "<Image>/Filters/Map/Xach Blocks..."
-msgstr "<Image>/Filtri/Map/Xach Blocks"
+msgstr "<Image>/Filtri/Map/Xach blocchi..."
 
 msgid "<Image>/Filters/Logulator/Speed text"
 msgstr "<Image>/Filtri/Logulator/Speed text"
@@ -830,9 +794,8 @@ msgstr "impossibile accettare specificazione di colore"
 msgid "You need at least 2 layers to perform prep4gif"
 msgstr "E' necessario avere almeno 2 livelli per utilizzare prep4gif"
 
-#, fuzzy
 msgid "<Image>/Edit/Repeat & Duplicate..."
-msgstr "<Image>/Modifica/Ripeti e Duplica"
+msgstr "<Image>/Modifica/Ripeti e duplica..."
 
 msgid "too many arguments"
 msgstr "troppi argomenti"
@@ -858,9 +821,8 @@ msgstr "<Image> plug-in chiamato senza argomenti dell'image e della figura!\n"
 msgid ", authorization required"
 msgstr ", autorizzazione richiesta"
 
-#, fuzzy
 msgid "<Image>/Filters/Noise/Feedback..."
-msgstr "<Image>/Filters/Noise/Feedback"
+msgstr "<Image>/Filtri/Disturbo/Feedback..."
 
 msgid "unable to create listening unix socket: $!\n"
 msgstr "impossibile creare socket di connessione unix: $!\n"
@@ -872,9 +834,8 @@ msgstr ""
 msgid "Last Modified"
 msgstr "Ultima modifica"
 
-#, fuzzy
 msgid "<Image>/View/3D Surface..."
-msgstr "<Image>/Visualizza/3D Surface"
+msgstr "<Image>/Visualizza/Superficie 3D"
 
 msgid "Shortcuts"
 msgstr "Scorciatoie"
@@ -889,9 +850,8 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Web title header"
 msgstr "<Image>/Filtri/Logulator/Titolo pagina web"
 
-#, fuzzy
 msgid "<Image>/Filters/Web/Webify..."
-msgstr "<Image>/Filtri/Web/Webify"
+msgstr "<Image>/Filtri/Web/Webify..."
 
 msgid "<Load> plug-in called without the 3 standard arguments!\n"
 msgstr "<Load> plug-in chiamato senza i 3 argomenti standard!\n"
@@ -913,16 +873,14 @@ msgstr "ora chiudo connessione %d (%d richiesto in %g secondi)"
 msgid "<Image>/Filters/Logulator/Frosty"
 msgstr "<Image>/Filtri/Logulator/Frosty"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Xtns/Render/Golden Mean"
+msgstr "<Toolbox>/Xtns/Render/Effetto oro..."
 
 msgid "authorization failed: $r[1]\n"
 msgstr "autorizzazuione negata: $r[1]\n"
 
-#, fuzzy
 msgid "<Image>/Guides/Center Guide..."
-msgstr "<Image>/Guide/Linee guida"
+msgstr "<Image>/Guide/Centra guide..."
 
 msgid "server version $Gimp::VERSION started"
 msgstr "versione del server $Gimp::VERSION avviata"
@@ -937,21 +895,17 @@ msgstr ""
 "$function: il richiamo a $AUTOLOAD senza specificare il tag di importazione "
 ":auto viene deprecato!\n"
 
-#, fuzzy
 msgid "<Image>/Filters/Enhance/Warp Sharp..."
-msgstr "<Image>/Filtri/Map/Xach ombre..."
+msgstr "<Image>/Filtri/Avanzati/Warp Sharp..."
 
-#, fuzzy
 msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "impossibile aprire socket di comunicazione Gimp::Net\n"
+msgstr "impossibile aprire socket di comunicazione Gimp::Net: $!\n"
 
-#, fuzzy
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgstr "<Toolbox>/Xtns/Render/Logotipi/Rilievo interno..."
 
-#, fuzzy
 msgid "<Image>/Filters/Distorts/Scratches..."
-msgstr "<Image>/Filtri/Distorts/Graffiatura"
+msgstr "<Image>/Filtri/Distorsioni/Graffiatura..."
 
 msgid "Close"
 msgstr "Chiudi"
@@ -959,9 +913,8 @@ msgstr "Chiudi"
 msgid "illegal parasite specification, arrayref expected"
 msgstr "specifica di parasite illegale, arrayref atteso"
 
-#, fuzzy
 msgid "<Image>/Filters/Misc/Border Average..."
-msgstr "<Image>/Filtri/Misc/Media Bordo"
+msgstr "<Image>/Filtri/Varie/Bordo medio..."
 
 msgid "unable to fork: $!"
 msgstr "non riesco a compiere operazione fork: $!"
@@ -984,13 +937,11 @@ msgstr "<Image>/Filtri/Logulator/Neon"
 msgid "<Image>/Filters/Logulator/Chrome"
 msgstr "<Image>/Filtri/Logulator/Chrome"
 
-#, fuzzy
 msgid "<Image>/Filters/Misc/Magick..."
-msgstr "<Image>/Filtri/Misc/Magick"
+msgstr "<Image>/Filtri/Misc/Magick..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/Stampify..."
-msgstr "<Image>/Filtri/Render/Stampify"
+msgstr "<Image>/Filtri/Render/Stampify..."
 
 msgid "<Image>/Select/Round..."
 msgstr "<Image>/Selezione/Arrotondata..."
@@ -1029,7 +980,7 @@ msgid "<Toolbox>/Xtns/Homepage-Logo"
 msgstr "<Toolbox>/Xtns/Logo per Homepage"
 
 msgid "FG"
-msgstr "Primo Piano"
+msgstr "Primo piano"
 
 msgid "url size is too large ($max > 1024)\n"
 msgstr "dimensione url troppo grande ($max > 1024)\n"
@@ -1042,13 +993,11 @@ msgstr ""
 msgid "Edit"
 msgstr "Modifica"
 
-#, fuzzy
 msgid "<Image>/Select/Triangle..."
-msgstr "<Image>/Selezione/Triangolo"
+msgstr "<Image>/Selezione/Triangolo..."
 
-#, fuzzy
 msgid "<Image>/Filters/Animation/BlowInOut..."
-msgstr "<Image>/Filtri/Animazione/BlowInOut"
+msgstr "<Image>/Filtri/Animazione/BlowInOut..."
 
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Filtri/Logulator/Starscape"
@@ -1066,13 +1015,11 @@ msgstr ""
 "$function: nome di argumento '$p->[1]' contiene caratteri illegal, solo 0-9, a-z "
 "and _ allowed"
 
-#, fuzzy
 msgid "<Image>/Filters/Colors/Fire..."
-msgstr "<Image>/Filtri/Colori/Fuoco"
+msgstr "<Image>/Filtri/Colori/Fuoco..."
 
-#, fuzzy
 msgid "<Image>/Filters/Render/TeX String..."
-msgstr "<Image>/Filtri/Render/Stringa TeX"
+msgstr "<Image>/Filtri/Render/Stringa TeX..."
 
 # msgid "Unable to grok '%s' as colour specifier"
 # msgstr ""
