@@ -56,17 +56,26 @@ gimp_image_set_colormap (GimpImage *gimage,
                          gboolean   push_undo)
 {
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (n_colors == 0 || cmap != 0);
+  g_return_if_fail (cmap != NULL || n_colors == 0);
   g_return_if_fail (n_colors >= 0 && n_colors <= 256);
-
-  if (! gimage->cmap)
-    gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
   if (push_undo)
     gimp_image_undo_push_image_colormap (gimage, _("Set Indexed Palette"));
 
-  if (n_colors)
-    memcpy (gimage->cmap, cmap, n_colors * 3);
+  if (cmap)
+    {
+      if (! gimage->cmap)
+        gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+
+      memcpy (gimage->cmap, cmap, n_colors * 3);
+    }
+  else
+    {
+      if (gimage->cmap)
+        g_free (gimage->cmap);
+
+      gimage->cmap = NULL;
+    }
 
   gimage->num_cols = n_colors;
 

@@ -1,3 +1,26 @@
+2004-02-12  Michael Natterer  <mitch@gimp.org>
+
+	Make sure that non-indexed images never have a colormap.
+	Fixes bug #121033.
+
+	* app/core/gimpimage-colormap.c (gimp_image_set_colormap): set
+	image->cmap to NULL when called with a NULL colormap.
+
+	* app/core/gimpimage-undo-push.c: made colormap undo/redo aware
+	of NULL colormaps.
+
+	* app/core/gimpimage-convert.c (gimp_image_convert): remove the
+	colormap using gimp_image_set_colormap() instead of freeing it
+	manually.
+
+	* app/widgets/gimpcolormapeditor.c: always check if the image
+	is INDEXED *and* has a colormap before accessing the colormap.
+
+	(need this new check because the fixed behaviour of colormap undo
+	produces undo groups which, when being popped, make the image have
+	no colormap while still being INDEXED in the small time frame
+	between the emission of "colormap_changed" and "mode_changed").
+
 2004-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptexttool.[ch]: derive the text tool from GimpTool

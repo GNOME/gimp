@@ -796,10 +796,6 @@ gimp_image_convert (GimpImage              *gimage,
   old_type = gimage->base_type;
   gimage->base_type = new_type;
 
-  /*  If the image was INDEXED, push its colormap to the undo stack  */
-  if (old_type == GIMP_INDEXED)
-    gimp_image_undo_push_image_colormap (gimage, NULL);
-
   /* initialize the colour conversion routines */
   cpercep_init_conversions ();
 
@@ -956,26 +952,21 @@ gimp_image_convert (GimpImage              *gimage,
       GIMP_DRAWABLE (layer)->has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (new_layer_type);
     }
 
-  /* colourmap stuff */
-  if (gimage->cmap)
-    {
-      g_free (gimage->cmap);
-      gimage->cmap = NULL;
-    }
-
   switch (new_type)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
-      gimage->num_cols = 0;
+      if (old_type == GIMP_INDEXED)
+        gimp_image_set_colormap (gimage, NULL, 0, TRUE);
       break;
 
     case GIMP_INDEXED:
+      gimp_image_undo_push_image_colormap (gimage, NULL);
+
       gimage->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
-      if (remove_dups &&
-          ((palette_type == GIMP_WEB_PALETTE) ||
-           (palette_type == GIMP_CUSTOM_PALETTE)))
+      if (remove_dups && ((palette_type == GIMP_WEB_PALETTE) ||
+                          (palette_type == GIMP_CUSTOM_PALETTE)))
         {
           gint   i, j;
           guchar old_palette [256 * 3];

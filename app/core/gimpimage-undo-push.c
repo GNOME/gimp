@@ -814,8 +814,8 @@ typedef struct _ColormapUndo ColormapUndo;
 
 struct _ColormapUndo
 {
-  guchar cmap[GIMP_IMAGE_COLORMAP_SIZE];
-  gint   num_colors;
+  gint    num_colors;
+  guchar *cmap;
 };
 
 static gboolean undo_pop_image_colormap  (GimpUndo            *undo,
@@ -831,7 +831,6 @@ gimp_image_undo_push_image_colormap (GimpImage   *gimage,
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (gimp_image_get_colormap (gimage) != NULL, FALSE);
 
   if ((new = gimp_image_undo_push (gimage,
                                    sizeof (ColormapUndo),
@@ -841,12 +840,11 @@ gimp_image_undo_push_image_colormap (GimpImage   *gimage,
                                    undo_pop_image_colormap,
                                    undo_free_image_colormap)))
     {
-      ColormapUndo *cu;
-
-      cu = new->data;
+      ColormapUndo *cu = new->data;
 
       cu->num_colors = gimp_image_get_colormap_size (gimage);
-      memcpy (cu->cmap, gimp_image_get_colormap (gimage), cu->num_colors * 3);
+      cu->cmap       = g_memdup (gimp_image_get_colormap (gimage),
+                                 cu->num_colors * 3);
 
       return TRUE;
     }
@@ -859,19 +857,21 @@ undo_pop_image_colormap (GimpUndo            *undo,
                          GimpUndoMode         undo_mode,
                          GimpUndoAccumulator *accum)
 {
-  ColormapUndo *cu;
-  guchar        cmap[GIMP_IMAGE_COLORMAP_SIZE];
+  ColormapUndo *cu = undo->data;
+  guchar       *cmap;
   gint          num_colors;
 
-  cu = (ColormapUndo *) undo->data;
-
   num_colors = gimp_image_get_colormap_size (undo->gimage);
-  memcpy (cmap, gimp_image_get_colormap (undo->gimage), num_colors * 3);
+  cmap       = g_memdup (gimp_image_get_colormap (undo->gimage),
+                         num_colors * 3);
 
   gimp_image_set_colormap (undo->gimage, cu->cmap, cu->num_colors, FALSE);
 
-  memcpy (cu->cmap, cmap, sizeof (cmap));
+  if (cu->cmap)
+    g_free (cu->cmap);
+
   cu->num_colors = num_colors;
+  cu->cmap       = cmap;
 
   return TRUE;
 }
@@ -880,7 +880,12 @@ static void
 undo_free_image_colormap (GimpUndo     *undo,
                           GimpUndoMode  undo_mode)
 {
-  g_free (undo->data);
+  ColormapUndo *cu = undo->data;
+
+  if (cu->cmap)
+    g_free (cu->cmap);
+
+  g_free (cu);
 }
 
 
