@@ -310,6 +310,8 @@ gimp_gradients_get_gradient_data (const gchar  *name,
  * This procedure creates a new, uninitialized gradient
  *
  * Returns: The actual new gradient name.
+ *
+ * Since: GIMP 2.2
  */
 gchar *
 gimp_gradients_new (const gchar *name)
@@ -340,6 +342,8 @@ gimp_gradients_new (const gchar *name)
  * This procedure creates an identical gradient by a different name
  *
  * Returns: The name of the gradient's copy.
+ *
+ * Since: GIMP 2.2
  */
 gchar *
 gimp_gradients_duplicate (const gchar *name)
@@ -370,6 +374,8 @@ gimp_gradients_duplicate (const gchar *name)
  * This procedure deletes a gradient
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
  */
 gboolean
 gimp_gradients_delete (const gchar *name)
@@ -400,6 +406,8 @@ gimp_gradients_delete (const gchar *name)
  * This procedure renames a gradient
  *
  * Returns: The actual new name of the gradient.
+ *
+ * Since: GIMP 2.2
  */
 gchar *
 gimp_gradients_rename (const gchar *name,

@@ -17,7 +17,8 @@
 
 sub pdb_misc {
     $author = $copyright = 'Shlomi Fish';
-    $date = '2003';
+    $date   = '2003';
+    $since  = '2.2';
 }
 
 my $_get_gradient_from_name_code = <<'CODE';

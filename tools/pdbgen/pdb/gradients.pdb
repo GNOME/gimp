@@ -344,6 +344,7 @@ sub gradients_new
 {
     $blurb = "Creates a new gradient";
     $help  = "This procedure creates a new, uninitialized gradient";
+    $since = '2.2';
 
     &shlomi_misc;
 
@@ -387,6 +388,7 @@ sub gradients_duplicate
 {
     $blurb = "Duplicates a gradient";
     $help  = "This procedure creates an identical gradient by a different name";
+    $since = '2.2';
 
     &shlomi_misc;
 
@@ -431,6 +433,7 @@ sub gradients_delete
 {
     $blurb = "Deletes a gradient";
     $help  = "This procedure deletes a gradient";
+    $since = '2.2';
 
     &shlomi_misc;
 
@@ -471,6 +474,7 @@ sub gradients_rename
 {
     $blurb = "Rename a gradient";
     $help  = "This procedure renames a gradient";
+    $since = '2.2';
 
     &shlomi_misc;
 

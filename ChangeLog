@@ -1,3 +1,11 @@
+2004-06-02  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/gradient_edit.pdb
+	* tools/pdbgen/pdb/gradients.pdb: mark new API as new using $since.
+
+	* libgimp/gimpgradientedit_pdb.c
+	* libgimp/gimpgradients_pdb.c: regenerated.
+
 2004-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/gradient_edit.pdb: forgot two more s/int32/enum/.
