@@ -1,3 +1,12 @@
+Mon Jul 13 19:07:43 EDT 1998  Adrian Likins <adrian@gimp.org>
+
+	* app/drawable.c app/commands.c app/gimpimage.h
+          app/layers_dialog.c: applied gimp-kc-980707-1 from
+	  Kevin Cozens <kcozens@interlog.com>
+
+	* Dialog boxes for creating a new image or a new layer now include
+          as a fill type option.
+
 Mon Jul 13 18:08:35 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* plug-ins/script-fu/scripts/3dTruchet.scm

@@ -22,6 +22,7 @@
 #include "about_dialog.h"
 #include "actionarea.h"
 #include "app_procs.h"
+#include "batch_convert.h"
 #include "brightness_contrast.h"
 #include "gimpbrushlist.h"
 #include "by_color_select.h"
@@ -94,6 +95,8 @@ extern double gimage_mask_feather_radius;
 extern int    gimage_mask_border_radius;
 extern int    gimage_mask_grow_pixels;
 extern int    gimage_mask_shrink_pixels;
+
+
 
 
 void

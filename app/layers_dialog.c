@@ -3010,6 +3010,17 @@ new_layer_background_callback (GtkWidget *w,
   options->fill_type = BACKGROUND_FILL;
 }
 
+
+static void
+new_layer_foreground_callback (GtkWidget *w,
+			       gpointer   client_data)
+{
+  NewLayerOptions *options;
+
+  options = (NewLayerOptions *) client_data;
+  options->fill_type = FOREGROUND_FILL;
+}
+
 static void
 new_layer_white_callback (GtkWidget *w,
 			  gpointer   client_data)
@@ -3048,17 +3059,19 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GSList *group = NULL;
   int i;
   char size[12];
-  char *button_names[3] =
+  char *button_names[4] =
   {
     "Background",
     "White",
-    "Transparent"
+    "Transparent",
+    "Foreground"
   };
-  ActionCallback button_callbacks[3] =
+  ActionCallback button_callbacks[4] =
   {
     new_layer_background_callback,
     new_layer_white_callback,
-    new_layer_transparent_callback
+    new_layer_transparent_callback,
+    new_layer_foreground_callback
   };
 
   /*  the new options structure  */
@@ -3137,7 +3150,7 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
   /*  the radio buttons  */
-  for (i = 0; i < 3; i++)
+  for (i = 0; i < 4; i++)
     {
       radio_button = gtk_radio_button_new_with_label (group, button_names[i]);
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (radio_button));
