@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
-"PO-Revision-Date: 2004-04-12 21:25+0200\n"
+"POT-Creation-Date: 2004-05-14 11:35+0200\n"
+"PO-Revision-Date: 2004-05-14 11:39+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -51,80 +51,80 @@ msgstr ""
 "interattive"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1115
-#: plug-ins/script-fu/script-fu-scripts.c:1117
+#: plug-ins/script-fu/script-fu-scripts.c:1111
+#: plug-ins/script-fu/script-fu-scripts.c:1113
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1129
+#: plug-ins/script-fu/script-fu-scripts.c:1125
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1164
+#: plug-ins/script-fu/script-fu-scripts.c:1160
 msgid "About"
 msgstr "Informazioni"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1174
+#: plug-ins/script-fu/script-fu-scripts.c:1170
 msgid "Script Arguments"
 msgstr "Argomenti dello script"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1202
+#: plug-ins/script-fu/script-fu-scripts.c:1199
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1246
+#: plug-ins/script-fu/script-fu-scripts.c:1242
 msgid "Script-Fu Color Selection"
 msgstr "Selezione colore Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 msgid "Script-Fu File Selection"
 msgstr "Selezione file Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1323
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu Folder Selection"
 msgstr "Selezione cartella Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1337
+#: plug-ins/script-fu/script-fu-scripts.c:1333
 msgid "Script-Fu Font Selection"
 msgstr "Selezione carattere Script-fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1344
+#: plug-ins/script-fu/script-fu-scripts.c:1340
 msgid "Script-fu Pattern Selection"
 msgstr "Selezione modello Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1350
+#: plug-ins/script-fu/script-fu-scripts.c:1346
 msgid "Script-Fu Gradient Selection"
 msgstr "Selezione gradiente Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1357
+#: plug-ins/script-fu/script-fu-scripts.c:1353
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1942
+#: plug-ins/script-fu/script-fu-scripts.c:1931
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autore:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1948
+#: plug-ins/script-fu/script-fu-scripts.c:1937
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1954
+#: plug-ins/script-fu/script-fu-scripts.c:1943
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1962
+#: plug-ins/script-fu/script-fu-scripts.c:1951
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1991
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -147,19 +147,23 @@ msgstr "Porta server:"
 msgid "Server Logfile:"
 msgstr "File di log server:"
 
-#: plug-ins/script-fu/script-fu.c:122
-msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
-msgstr "<Toolbox>/Xtns/Script-Fu/_Console Script-Fu"
+#: plug-ins/script-fu/script-fu.c:123
+msgid "Script-Fu _Console"
+msgstr "_Console Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:147
-msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
-msgstr "<Toolbox>/Xtns/Script-Fu/E_segui server..."
+#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Toolbox>/Xtns/Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
+#: plug-ins/script-fu/script-fu.c:153
+msgid "_Start Server..."
+msgstr "Partenza _server..."
+
+#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
 msgid "Re-read all available scripts"
 msgstr "Ri-leggi script disponibili"
 
-#: plug-ins/script-fu/script-fu.c:276
+#: plug-ins/script-fu/script-fu.c:286
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/Aggio_rna gli script"
 
@@ -1148,8 +1152,8 @@ msgid "Effect Size (pixels)"
 msgstr "Dimensione effetto (pixel)"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy _Visible"
-msgstr "<Image>/Modifica/Copia _visibile"
+msgid "<Image>/Edit/Copy/Copy _Visible"
+msgstr "<Image>/Modifica/Copia/Copia _visibile"
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
@@ -1391,12 +1395,14 @@ msgid "Shadow Weight (%)"
 msgstr "Peso ombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Titoli _grandi..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _grandi..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Titoli _piccoli..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Titoli _piccoli..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1438,31 +1444,27 @@ msgstr "Colore ombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
-msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Etichetta sotto-bottone a "
-"T_ubo..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta sotto-bottone a T_ubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
-msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/_Etichetta sotto-sotto-"
-"bottone a tubo..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/_Etichetta sotto-sotto-bottone a tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
-msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Etichette _generali a "
-"tubo..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichette _generali a tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
-msgstr ""
-"<Toolbox>/Xtns/Script-Fu/Temi pagina web/Gimp.Org/Etichetta bottone a "
-"_tubo..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Temi pagina web/Classico.Gimp.Org/Etichetta bottone a _tubo..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."

@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "POT-Creation-Date: 2004-05-12 22:17+0200\n"
-"PO-Revision-Date: 2004-05-06 19:14+0200\n"
+"PO-Revision-Date: 2004-05-14 11:29+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -47,10 +47,7 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr ""
-"Impossibilr aprire un file di scambio di prova. Per evitare di perdere dati "
-"controllare la locazione ed i permessi della cartella di scambio nelle "
-"preferenze (attualmente è \"%s\")."
+msgstr "Impossibile aprire un file di scambio di prova. Per evitare di perdere dati controllare la locazione ed i permessi della cartella di scambio nelle preferenze (attualmente è \"%s\")."
 
 #: app/app_procs.c:283 app/core/gimppalette-import.c:391
 #, c-format
@@ -581,7 +578,7 @@ msgstr "Mostra _menu immagine"
 
 #: app/actions/dockable-actions.c:81
 msgid "Auto Follow Active _Image"
-msgstr "Auto segui _immagine attiva"
+msgstr "Inseguimento _immagine attiva"
 
 #: app/actions/dockable-actions.c:100
 msgid "_Tiny"
@@ -709,11 +706,11 @@ msgstr "Sp_ostamento..."
 
 #: app/actions/drawable-actions.c:69 app/actions/image-actions.c:114
 msgid "Flip _Horizontally"
-msgstr "Riflessione _orizzontale"
+msgstr "Rifletti _orizzontalmente"
 
 #: app/actions/drawable-actions.c:74 app/actions/image-actions.c:119
 msgid "Flip _Vertically"
-msgstr "Riflessione _verticale"
+msgstr "Rifletti _verticalmente"
 
 #. please use the degree symbol in the translation
 #: app/actions/drawable-actions.c:82 app/actions/image-actions.c:128
@@ -897,7 +894,7 @@ msgstr "Apri _recenti"
 
 #: app/actions/file-actions.c:61
 msgid "_Acquire"
-msgstr "_Acquisizione"
+msgstr "Ac_quisizione"
 
 #: app/actions/file-actions.c:64
 msgid "_New..."
@@ -1412,7 +1409,7 @@ msgstr "Configura g_riglia..."
 
 #: app/actions/image-commands.c:213
 msgid "Flipping..."
-msgstr "Ribaltatura..."
+msgstr "Riflessione..."
 
 #: app/actions/image-commands.c:233 app/tools/gimprotatetool.c:166
 msgid "Rotating..."
@@ -1424,7 +1421,7 @@ msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 
 #: app/actions/image-commands.c:386 app/core/core-enums.c:589
 msgid "Merge Layers"
-msgstr "Fondi i ivelli"
+msgstr "Fondi i livelli"
 
 #: app/actions/image-commands.c:388
 msgid "Layers Merge Options"
@@ -1440,7 +1437,7 @@ msgstr "Infine, il livello ancorato dovrebbe essere:"
 
 #: app/actions/image-commands.c:414
 msgid "Expanded as necessary"
-msgstr "Espanso alla bisogna"
+msgstr "Espandi se necessario"
 
 #: app/actions/image-commands.c:417
 msgid "Clipped to image"
@@ -1452,16 +1449,14 @@ msgstr "Legato al livello inferiore"
 
 #: app/actions/image-commands.c:453
 msgid "Resizing..."
-msgstr "Ridimensionatura..."
+msgstr "Ridimensionamento..."
 
 #: app/actions/image-commands.c:470
 msgid "Resize Error: Both width and height must be greater than zero."
-msgstr ""
-"Errore di ridimensionamento: sia la larghezza che l'altezza devono essere "
-"maggiori di zero."
+msgstr "Errore di ridimensionamento: sia la larghezza che l'altezza devono essere maggiori di zero."
 
 #: app/actions/image-commands.c:507
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are trying to create an image with a size of %s.\n"
 "\n"
@@ -1471,13 +1466,12 @@ msgid ""
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
 msgstr ""
-"State cercando di creare una immagine di dimensione iniziale %s.\n"
+"State cercando di creare un'immagine di dimensione iniziale %s.\n"
 "\n"
-"Segliere OK per creare questa immagine comunque.\n"
-"Segliere Cancella se non intendete creare un immagine così ampia.\n"
+"Segliere OK per creare comunque l'immagine.\n"
+"Segliere Cancella se non intendete creare un'immagine così ampia.\n"
 "\n"
-"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione "
-"immagine\" (attualmente %s) nelle finestra preferenze."
+"Per evitare questa finestra di dialogo, aumentate la \"Massima dimensione immagine\" (attualmente %s) nelle finestra preferenze."
 
 #: app/actions/image-commands.c:519
 msgid "Image exceeds maximum image size"
@@ -1743,7 +1737,7 @@ msgstr "_Nome livello"
 
 #: app/actions/layers-commands.c:1000
 msgid "Set Name from _Text"
-msgstr "Imposta in nome dal _testo"
+msgstr "Imposta il nome dal _testo"
 
 #: app/actions/layers-commands.c:1046 app/actions/layers-commands.c:1085
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
@@ -2496,9 +2490,8 @@ msgid "Display _Filters..."
 msgstr "Mostra _filtri..."
 
 #: app/actions/view-actions.c:100
-#, fuzzy
 msgid "Shrink _Wrap"
-msgstr "Aggiusta cornice"
+msgstr "Aggi_usta cornice"
 
 #: app/actions/view-actions.c:113
 msgid "_Dot for Dot"
@@ -3397,7 +3390,6 @@ msgid "Foreground Color"
 msgstr "Colore di primo piano:"
 
 #: app/core/core-enums.c:189
-#, fuzzy
 msgid "Background Color"
 msgstr "Colore di sfondo"
 
@@ -3645,7 +3637,7 @@ msgstr "Ridimensiona immagine"
 
 #: app/core/core-enums.c:585
 msgid "Flip Image"
-msgstr "Riflessione immagine"
+msgstr "Rifletti immagine"
 
 #: app/core/core-enums.c:586
 msgid "Rotate Image"
@@ -4059,7 +4051,7 @@ msgstr "Ridimensiona canale"
 
 #: app/core/gimpchannel.c:262
 msgid "Flip Channel"
-msgstr "Riflessione canale"
+msgstr "Rifletti canale"
 
 #: app/core/gimpchannel.c:263
 msgid "Rotate Channel"
@@ -5179,10 +5171,8 @@ msgid ""
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Si sta tentando di convertire una immagine con un canale alfa a colori "
-"indicizzati.\n"
-"Non usare una palette con più di 255 colori si desidera creare un file GIF "
-"trasparente o con animazione da questo formato."
+"Si sta tentando di convertire un'immagine con un canale alfa a colori indicizzati.\n"
+"Non usare una palette con più di 255 colori si desidera creare un file GIF trasparente o con animazione da questo formato."
 
 #: app/gui/convert-dialog.c:475
 msgid "Cannot convert to a palette with more than 256 colors."
@@ -5321,13 +5311,12 @@ msgid ""
 "To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
 "setting (currently %s) in the Preferences dialog."
 msgstr ""
-"State cercando di creare una immagine di dimensione iniziale %s.\n"
+"State cercando di creare un'immagine di dimensione iniziale %s.\n"
 "\n"
 "Segliere OK per creare questa immagine comunque.\n"
 "Segliere Cancella se non intendete creare un immagine così ampia.\n"
 "\n"
-"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione "
-"immagine\" (attualmente %s) nelle finestra preferenze."
+"Per prevenire questa finestra di dialogo, aumentate la \"Massima dimensione immagine\" (attualmente %s) nelle finestra preferenze."
 
 #: app/gui/file-new-dialog.c:274
 msgid "Confirm Image Size"
@@ -7328,7 +7317,7 @@ msgstr "Ridimensiona livello di testo"
 
 #: app/text/gimptextlayer.c:175
 msgid "Flip Text Layer"
-msgstr "Riflessione del livello testo"
+msgstr "Rifletti livello testo"
 
 #: app/text/gimptextlayer.c:176
 msgid "Rotate Text Layer"
@@ -7723,9 +7712,8 @@ msgid "Blur or Sharpen"
 msgstr "Sfoca o contrasta"
 
 #: app/tools/gimpconvolvetool.c:92
-#, fuzzy
 msgid "Con_volve"
-msgstr "Arrotolamento"
+msgstr "_Arrotolamento"
 
 #. the type radio box
 #: app/tools/gimpconvolvetool.c:221
@@ -7738,7 +7726,7 @@ msgstr "Tipo di arrotolamento %s"
 #: app/tools/gimpmoveoptions.c:228
 #, c-format
 msgid "Tool Toggle  %s"
-msgstr "Abilita-disabilita strumento %s"
+msgstr "Commuta strumento %s"
 
 #: app/tools/gimpcropoptions.c:209
 msgid "Current Layer only"
@@ -7853,9 +7841,8 @@ msgid "Dodge or Burn strokes"
 msgstr "Scherma o Brucia tratti"
 
 #: app/tools/gimpdodgeburntool.c:72
-#, fuzzy
 msgid "Dod_geBurn"
-msgstr "Scherma/Brucia"
+msgstr "Sc_hermaBrucia"
 
 #. the type (dodge or burn)
 #: app/tools/gimpdodgeburntool.c:198
@@ -8410,7 +8397,7 @@ msgstr "Antialiasing"
 
 #: app/tools/gimpselectionoptions.c:426
 msgid "Feather Edges"
-msgstr "Spigoli piumati"
+msgstr "Spigoli sfumati"
 
 #: app/tools/gimpselectionoptions.c:461
 msgid "Show Interactive Boundary"
@@ -8446,12 +8433,11 @@ msgstr "Ritagliatura..."
 
 #: app/tools/gimpsheartool.c:168
 msgid "Shear Magnitude X:"
-msgstr "Cesoia Magnitude X:"
+msgstr "Grandezza cesoia X:"
 
 #: app/tools/gimpsheartool.c:175
-#, fuzzy
 msgid "Shear Magnitude Y:"
-msgstr "Cesoia Magnitude X:"
+msgstr "Grandezza cesoia Y:"
 
 #: app/tools/gimpsmudgetool.c:57
 msgid "Smudge image"
@@ -8592,9 +8578,9 @@ msgid "Supersampling"
 msgstr "Supercampionamento"
 
 #. the clip resulting image toggle button
-#: app/tools/gimptransformoptions.c:358
+#: app/tools/gimptr
 msgid "Clip Result"
-msgstr "Movimento riflesso"
+msgstr "Aggancia risultato"
 
 #: app/tools/gimptransformoptions.c:385
 msgid "Density:"
@@ -9034,7 +9020,7 @@ msgstr "Modifica palette dei colori indicizzata"
 #: app/widgets/gimpcontainergridview.c:657
 #: app/widgets/gimphistogrameditor.c:141 app/widgets/gimphistogrameditor.c:333
 msgid "(None)"
-msgstr "(nessuno)"
+msgstr "(Nessuno)"
 
 #: app/widgets/gimpcontainerpopup.c:500
 msgid "Smaller Previews"
