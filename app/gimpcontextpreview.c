@@ -727,7 +727,7 @@ gimp_context_preview_animate_pipe (GimpContextPreview *gcp)
   brush = GIMP_BRUSH (pipe->brushes[gcp_pipe_index]);
   draw_brush (GTK_PREVIEW (gcp_popup_preview), brush,
 	      gcp->popup_width, gcp->popup_height, TRUE);
-  gtk_widget_draw (gcp_popup_preview, NULL);
+  gtk_widget_queue_draw (gcp_popup_preview);
   
   return (TRUE);
 }
